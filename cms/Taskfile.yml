@@ -1,0 +1,61 @@
+# This is a go-task file for various developer tasks
+# e.g. building docker images and setting up local development.
+# You can read about the Task files here: https://taskfile.dev.
+version: '3'
+
+dotenv: [".task.env"]
+
+vars:
+  # Docker file registry.
+  REGISTRY: '{{.REGISTRY | default "ghcr.io"}}'
+  # Github organization.
+  ORG: '{{.ORG | default "danskernesdigitalebibliotek"}}'
+  # Get total amout of commits on the main branch. Used as build number.
+  COMMIT_COUNT:
+    sh: git rev-list --count main
+  # Build number. Used for separating each build. 
+  # It can be specified by adding BUILD_NUMBER=XX when running command.
+  # Otherwise it will default to the COMMIT_COUNT variable.
+  BUILD_NUMBER: '{{.BUILD_NUMBER | default .COMMIT_COUNT }}'
+  # Using the name of this project as a namespace of the docker image.
+  DOCKER_IMAGE_NAMESPACE: '{{.DOCKER_IMAGE_NAMESPACE | default "dpl-cms"}}'
+  # Constructing docker image name.
+  DOCKER_IMAGE_PREFIX: "{{ .REGISTRY }}/{{ .ORG }}/{{ .DOCKER_IMAGE_NAMESPACE }}"
+  # Constructing docker image name.
+  IMAGE_SOURCE: "{{ .DOCKER_IMAGE_PREFIX }}-source:{{ .BUILD_NUMBER }}"
+  # Where is the docker file(s) we use for our builds residing?
+  DOCKER_IMAGE_DIR: "docker"
+
+tasks:
+  ghcr:login:
+    summary: Login into Github Container Registry
+    cmds:
+      - echo {{ .CR_PAT }} | docker login {{ .REGISTRY }} -u username-not-used --password-stdin
+    preconditions:
+      - sh: "[ ! -z {{.CR_PAT}} ]"
+        msg: "Env variable CR_PAT is not set or empty."
+
+  composer:install:
+    summary: Install drupal.
+    cmds:
+      - composer install
+    preconditions:
+  
+  source:build:
+    summary: Build core source image.
+    deps: [composer:install]
+    cmds:
+      - docker build -f {{ .DOCKER_IMAGE_DIR }}/source.dockerfile --tag {{ .IMAGE_SOURCE }} .
+
+  source:push:
+    summary: Push core source image to container registry.
+    deps: [ghcr:login]
+    cmds:
+      - docker push {{ .IMAGE_SOURCE }}
+
+  source:deploy:
+    desc: Build and push core source docker image.
+    cmds:
+      - task: composer:install
+      - task: source:build
+      - task: source:push
