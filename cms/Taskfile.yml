@@ -35,15 +35,18 @@ tasks:
       - sh: "[ ! -z {{.CR_PAT}} ]"
         msg: "Env variable CR_PAT is not set or empty."
 
-  composer:install:
+  dev:composer:install:
     summary: Install drupal.
     cmds:
-      - composer install
-    preconditions:
+      - docker-compose run cli sh -c "COMPOSER_MEMORY_LIMIT=-1 composer install"
   
+  dev:run:
+    summary: Run docker compose
+    cmds:
+      - docker-compose up -d
+
   source:build:
     summary: Build core source image.
-    deps: [composer:install]
     cmds:
       - docker build -f {{ .DOCKER_IMAGE_DIR }}/source.dockerfile --tag {{ .IMAGE_SOURCE }} .
 
@@ -56,6 +59,11 @@ tasks:
   source:deploy:
     desc: Build and push core source docker image.
     cmds:
-      - task: composer:install
       - task: source:build
       - task: source:push
+  
+  dev:setup:
+    desc: Create local development setup
+    cmds:
+      - task: dev:composer:install
+      - task: dev:run

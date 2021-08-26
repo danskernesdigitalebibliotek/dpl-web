@@ -1,0 +1,49 @@
+version: '2.3'
+
+services:
+  cli: # cli container, will be used for executing composer and any local commands (drush, drupal, etc.)
+    image: uselagoon/php-7.4-cli-drupal:latest
+    volumes:
+      - 'projectroot:/app'
+    environment:
+      WEBROOT: web
+    labels:
+      # Lagoon Labels
+      lagoon.type: cli-persistent
+      lagoon.persistent.name: nginx # mount the persistent storage of nginx into this container
+      lagoon.persistent: /app/web/sites/default/files/ # location where the persistent storage should be mounted
+
+  nginx:
+    image: uselagoon/nginx-drupal:latest
+    volumes:
+      - 'projectroot:/app'
+    environment:
+      WEBROOT: web
+      VIRTUAL_HOST: dpl-cms.docker
+    labels:
+      lagoon.type: nginx-php-persistent
+      lagoon.persistent: /app/web/sites/default/files/ # define where the persistent storage should be mounted too
+
+  php:
+    image: uselagoon/php-7.4-fpm:latest
+    volumes:
+      - 'projectroot:/app'
+    labels:
+      lagoon.type: nginx-php-persistent
+      lagoon.name: nginx # we want this service be part of the nginx pod in Lagoon
+      lagoon.persistent: /app/web/sites/default/files/ # define where the persistent storage should be mounted too
+
+  mariadb:    
+    image: uselagoon/mariadb-drupal:latest
+    labels:
+      lagoon.type: mariadb
+    ports:
+      - "3306" # exposes the port 3306 with a random local port, find it with `docker-compose port mariadb 3306`
+
+volumes:
+  projectroot:
+    driver: local
+    driver_opts:
+      type: none
+      device: ${PWD}
+      o: bind
