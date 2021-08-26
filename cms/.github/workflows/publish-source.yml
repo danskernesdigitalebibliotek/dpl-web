@@ -1,0 +1,18 @@
+# This workflow takes care of building and publishing the source code of the Danish Public Libraries CMS.
+name: Publish source
+
+on:
+  pull_request:
+    types: [closed]
+    branches: [main]
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@master
+      with:
+        fetch-depth: 0
+    - name: Install go-task
+      uses: arduino/setup-task@v1
+    - name: Build and publish source
+      run: CR_PAT=${{ secrets.GITHUB_TOKEN }} task source:deploy

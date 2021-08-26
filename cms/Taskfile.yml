@@ -12,7 +12,7 @@ vars:
   ORG: '{{.ORG | default "danskernesdigitalebibliotek"}}'
   # Get total amout of commits on the main branch. Used as build number.
   COMMIT_COUNT:
-    sh: git rev-list --count main
+    sh: git rev-list --count origin/main
   # Build number. Used for separating each build. 
   # It can be specified by adding BUILD_NUMBER=XX when running command.
   # Otherwise it will default to the COMMIT_COUNT variable.
