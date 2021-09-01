@@ -35,10 +35,15 @@ tasks:
       - sh: "[ ! -z {{.CR_PAT}} ]"
         msg: "Env variable CR_PAT is not set or empty."
 
+  dev:composer:
+    summary: Performs composer command inside container. Expects parameter.
+    cmds:
+      - docker-compose run cli sh -c "COMPOSER_MEMORY_LIMIT=-1 composer {{.CLI_ARGS}}"
+
   dev:composer:install:
     summary: Install drupal.
     cmds:
-      - docker-compose run cli sh -c "COMPOSER_MEMORY_LIMIT=-1 composer install"
+      - task dev:composer -- install
   
   dev:run:
     summary: Run docker compose
