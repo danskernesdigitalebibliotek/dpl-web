@@ -1,0 +1,44 @@
+base:
+  remote: https://github.com/danskernesdigitalebibliotek/ddb-react
+  license:
+    name: GNU GPL
+    url: https://github.com/danskernesdigitalebibliotek/ddb-react/blob/master/LICENSE
+    gpl-compatible: true
+  js:
+    /libraries/ddb-react/runtime.js: { weight: -19 }
+    /libraries/ddb-react/bundle.js: { weight: -18 }
+    /libraries/ddb-react/polyfills.js: { weight: -17 }
+    /libraries/ddb-react/mount.js: { weight: -16 }
+
+checklist:
+  remote: https://github.com/danskernesdigitalebibliotek/ddb-react
+  license:
+    name: GNU GPL
+    url: https://github.com/danskernesdigitalebibliotek/ddb-react/blob/master/LICENSE
+    gpl-compatible: true
+  js:
+    /libraries/ddb-react/checklist.js: {}
+  css:
+    /libraries/ddb-react/checklist.css: {}
+  dependencies:
+    - ddb_react_demo_mk6/base
+
+checklist-material-button:
+  remote: https://github.com/danskernesdigitalebibliotek/ddb-react
+  license:
+    name: GNU GPL
+    url: https://github.com/danskernesdigitalebibliotek/ddb-react/blob/master/LICENSE
+    gpl-compatible: true
+  js:
+    /libraries/ddb-react/checklist-material-button.js: {}
+  css:
+    /libraries/ddb-react/checklist-css: {}
+  dependencies:
+    - ddb_react_demo_mk6/base
+
+demo:
+  version: 1.0
+  js:
+    js/demo.js: {}
+  dependencies:
+    - core/drupal
