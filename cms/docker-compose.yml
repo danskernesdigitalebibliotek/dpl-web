@@ -1,12 +1,23 @@
 version: '2.3'
 
+x-environment:
+  &default-environment
+    # Route that should be used locally.
+    VIRTUAL_HOST: ${COMPOSE_PROJECT_NAME}.docker
+    LAGOON_ROUTE: &default-url http://${COMPOSE_PROJECT_NAME}.docker
+    WEBROOT: web
+    # Uncomment if you like to have the system behave like in production
+    #LAGOON_ENVIRONMENT_TYPE: production
+    # Uncomment to enable xdebug and then restart via `docker-compose up -d`
+    #XDEBUG_ENABLE: "true"
+
 services:
   cli: # cli container, will be used for executing composer and any local commands (drush, drupal, etc.)
     image: uselagoon/php-7.4-cli-drupal:latest
     volumes:
       - 'projectroot:/app'
     environment:
-      WEBROOT: web
+      << : *default-environment # loads the defined environment variables from the top
     labels:
       # Lagoon Labels
       lagoon.type: cli-persistent
@@ -28,6 +39,8 @@ services:
     image: uselagoon/php-7.4-fpm:latest
     volumes:
       - 'projectroot:/app'
+    environment:
+      << : *default-environment # loads the defined environment variables from the top
     labels:
       lagoon.type: nginx-php-persistent
       lagoon.name: nginx # we want this service be part of the nginx pod in Lagoon

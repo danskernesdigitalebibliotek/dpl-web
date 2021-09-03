@@ -36,3 +36,7 @@ drush/Commands/contrib
 drush/sites/lagoon.site.yml
 
 .drush-lock-update
+
+# Used for local docker setup.
+.env
+

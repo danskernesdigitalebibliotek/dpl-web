@@ -40,6 +40,11 @@ tasks:
     cmds:
       - docker-compose run cli sh -c "COMPOSER_MEMORY_LIMIT=-1 composer {{.CLI_ARGS}}"
 
+  dev:prepare:
+    summary: Prepare local development setup
+    cmds:
+      - cp -n .env.example .env
+
   dev:composer:install:
     summary: Install drupal.
     cmds:
@@ -70,5 +75,6 @@ tasks:
   dev:setup:
     desc: Create local development setup
     cmds:
+      - task: dev:prepare
       - task: dev:composer:install
       - task: dev:run
