@@ -40,3 +40,5 @@ drush/sites/lagoon.site.yml
 # Used for local docker setup.
 .env
 
+# Ignore docker compose override file. Not everybody needs it.
+docker-compose.override.yml
