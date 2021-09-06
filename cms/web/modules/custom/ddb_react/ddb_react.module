@@ -61,7 +61,6 @@ function ddb_react_render($name, array $data = []) {
     '#value' => '',
     '#attached' => [
       'library' => [
-        'ddb_react/demo',
         sprintf('ddb_react/%s', $name),
       ],
     ],
