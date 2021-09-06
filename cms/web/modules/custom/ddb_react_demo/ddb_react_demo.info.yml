@@ -1,6 +1,8 @@
 name: DDB React Demo
 description: Demonstrating that we can include the ddb react assets and use them in rendering a page.
 package: Custom
+dependencies:
+  - ddb_react:ddb_react
 
 type: module
 core_version_requirement: ^8 || ^9

@@ -1,0 +1,101 @@
+<?php
+
+/**
+ * @file
+ * Ddb_react drupal module file.
+ *
+ * General handling of importing
+ * and using the DDB react components as libraries.
+ */
+
+use Drupal\Component\Serialization\Json;
+use Drupal\ddb_react\DdbReactInterface;
+
+/**
+ * Implements hook_library_info_alter().
+ */
+function ddb_react_library_info_alter(array &$libraries, $module) {
+  if ($module != 'ddb_react') {
+    return;
+  }
+
+  // Check if a version json file exists and decode the json configuration.
+  if ($library_info_json = file_get_contents('libraries/ddb-react/version.json')) {
+    $library_info = Json::decode($library_info_json);
+  }
+  if (!$library_info || !isset($library_info['version'])) {
+    return;
+  }
+
+  // Set the version from the assets on all libraries.
+  foreach ($libraries as $library) {
+    $libraries[$library]['version'] == $library_info['version'];
+  }
+}
+
+/**
+ * Return render array for an app.
+ *
+ * @param string $name
+ *   Name of the app.
+ * @param array $data
+ *   Data for the app.
+ *
+ * @return array
+ *   The app render array.
+ */
+function ddb_react_render($name, array $data = []) {
+  $attributes = [];
+
+  $attributes['data-ddb-app'] = $name;
+
+  foreach ($data as $prop => $value) {
+    $attributes['data-' . $prop] = $value;
+  }
+
+  $build = [
+    '#type' => 'html_tag',
+    '#tag' => 'div',
+    '#attributes' => $attributes,
+    // Supply an empty string so we don't create a self closing element.
+    '#value' => '',
+    '#attached' => [
+      'library' => [
+        'ddb_react/demo',
+        sprintf('ddb_react/%s', $name),
+      ],
+    ],
+  ];
+
+  return $build;
+}
+
+/**
+ * Returns the url to the instance of the Material List service to use.
+ *
+ * @return string
+ *   Url to Material List service instance.
+ */
+function ddb_react_material_list_url() {
+  return DdbReactInterface::DDB_REACT_MATERIAL_LIST_URL;
+}
+
+/**
+ * Returns the url to the instance of the Follow Searches service to use.
+ *
+ * @return string
+ *   Url to Follow Searches service instance.
+ */
+function ddb_react_follow_searches_url() {
+  return DdbReactInterface::DDB_REACT_FOLLOW_SEARCHES_URL;
+}
+
+/**
+ * Returns the url to the instance of the Cover service to use.
+ *
+ * @return string
+ *   Url to Cover service instance.
+ */
+function ddb_react_cover_service_url() {
+  return DdbReactInterface::DDB_REACT_COVER_SERVICE_URL;
+}

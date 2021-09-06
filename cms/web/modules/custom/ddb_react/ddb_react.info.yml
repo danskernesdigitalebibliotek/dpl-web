@@ -1,0 +1,6 @@
+name: DDB React
+description: General handling of importing and using the DDB react components as libraries
+package: Custom
+
+type: module
+core_version_requirement: ^8 || ^9
