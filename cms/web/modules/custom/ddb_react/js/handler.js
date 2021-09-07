@@ -17,13 +17,13 @@
     return element;
   }
 
-  Drupal.behaviors.myModuleBehavior = {
+  Drupal.behaviors.ddbReactHandler = {
       attach: function (context, settings) {
         window.ddbReact.mount(context);
-          // Ensure that we have a DOM element.
           var element = getElement(context);
-          window.ddbReact.mount(element);
-
+          if (element) {
+            window.ddbReact.mount(element);
+          }
       },
       detach: function(context) {
           var element = getElement(context);
@@ -31,6 +31,5 @@
             window.ddbReact.unmount(element);
           }
         }
-    
     };
   }(Drupal));

@@ -1,9 +1,13 @@
 version: '2.3'
 
+# This block is used for inclusion in the environment section of each container.
+# It is copied from the Lagoon documentation.
 x-environment:
   &default-environment
     # Route that should be used locally.
+    # Is used by [nginx-proxy](https://github.com/nginx-proxy/nginx-proxy) or [dory](https://github.com/FreedomBen/dory)
     VIRTUAL_HOST: ${COMPOSE_PROJECT_NAME}.docker
+    # The php cli container needs this to be defined. Otherwise it is not possible to execute drush commands.
     LAGOON_ROUTE: &default-url http://${COMPOSE_PROJECT_NAME}.docker
     WEBROOT: web
     # Uncomment if you like to have the system behave like in production

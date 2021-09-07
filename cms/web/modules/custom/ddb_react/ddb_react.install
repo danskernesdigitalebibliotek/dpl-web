@@ -1,0 +1,31 @@
+<?php
+
+/**
+ * @file
+ * DDB React module install file.
+ */
+
+/**
+ * Implements hook_requirements().
+ */
+function ddb_react_requirements($phase) {
+  $requirements = [];
+
+  $library_dir = 'libraries/ddb-react';
+  $library_dir_exists = @is_dir($library_dir);
+
+  $requirements['react_ddb_library'] = [
+    'title' => t('React DDB Library'),
+    'value' => t('Library is present'),
+    'severity' => REQUIREMENT_OK,
+  ];
+
+  if (!$library_dir_exists) {
+    $requirements['react_ddb_library'] = [
+      'value' => t('DDB React library is missing (@dir)', ['@dir' => $library_dir]),
+      'severity' => REQUIREMENT_ERROR,
+    ] + $requirements['react_ddb_library'];
+  }
+
+  return $requirements;
+}

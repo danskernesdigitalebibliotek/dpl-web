@@ -13,7 +13,7 @@ vars:
   # Get total amout of commits on the main branch. Used as build number.
   COMMIT_COUNT:
     sh: git rev-list --count origin/main
-  # Build number. Used for separating each build. 
+  # Build number. Used for separating each build.
   # It can be specified by adding BUILD_NUMBER=XX when running command.
   # Otherwise it will default to the COMMIT_COUNT variable.
   BUILD_NUMBER: '{{.BUILD_NUMBER | default .COMMIT_COUNT }}'
@@ -43,13 +43,13 @@ tasks:
   dev:prepare:
     summary: Prepare local development setup
     cmds:
-      - cp -n .env.example .env
+      - cp -n .env.example .env || true
 
   dev:composer:install:
     summary: Install drupal.
     cmds:
       - task dev:composer -- install
-  
+
   dev:run:
     summary: Run docker compose
     cmds:
@@ -71,7 +71,7 @@ tasks:
     cmds:
       - task: source:build
       - task: source:push
-  
+
   dev:setup:
     desc: Create local development setup
     cmds:

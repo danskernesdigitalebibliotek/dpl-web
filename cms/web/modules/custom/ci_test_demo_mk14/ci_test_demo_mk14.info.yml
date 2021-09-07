@@ -1,6 +1,6 @@
 name: Phpcs and PhpUnit testing demo
 description: We are testing if the phpcs and PhpUnit setup work (not meant for production)
-package: Custom
+package: DDB Development
 
 type: module
 core_version_requirement: ^8 || ^9
