@@ -1,9 +1,5 @@
 # dpl-cms
-CMS of the Danish Public Libraries.
-
-# Publishing new version of source image
-When you run: `task source:deploy` a new docker image will be build and deployed to the container registry.
-The image contains the source code of the DPL cms project.
+This is the main repository used for building the core Drupal CMS which is used by the danish public libraries.
 
 # Running a local development
 If you want to develop and maintain the DPL cms project locally you can run: `dev:setup`.
@@ -55,3 +51,7 @@ After you've done all this, either restart your mac or:
 * `sudo nfsd restart`
 * restart docker for mac
 * close and re-open your terminal (not just a new prompt!)
+
+# Publishing new version of source image
+When you run: `task source:deploy` a new docker image will be build and deployed to the container registry.
+The image contains the source code of the DPL cms project.
