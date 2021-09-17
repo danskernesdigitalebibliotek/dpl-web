@@ -14,7 +14,7 @@ In order to run local development you need:
 
 If you are using a mac/OSX it is recommended to use nfs on the mounted volumes in docker-compose.
 
-Look at mac-nfs.readme.md in order to set it up.
+Look at [mac-nfs.readme.md](mac-nfs.readme.md) in order to set it up.
 
 # Publishing new version of source image
 When you run: `task source:deploy` a new docker image will be build and deployed to the container registry.
