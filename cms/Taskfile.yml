@@ -13,16 +13,16 @@ vars:
   # Get total amout of commits on the main branch. Used as build number.
   COMMIT_COUNT:
     sh: git rev-list --count origin/main
-  # Build number. Used for separating each build.
-  # It can be specified by adding BUILD_NUMBER=XX when running command.
+  # The version number we want to tag the source build with.
+  # It can be specified by adding SOURCE_VERSION=XX when running command.
   # Otherwise it will default to the COMMIT_COUNT variable.
-  BUILD_NUMBER: '{{.BUILD_NUMBER | default .COMMIT_COUNT }}'
+  SOURCE_VERSION: '{{.SOURCE_VERSION | default .COMMIT_COUNT }}'
   # Using the name of this project as a namespace of the docker image.
   DOCKER_IMAGE_NAMESPACE: '{{.DOCKER_IMAGE_NAMESPACE | default "dpl-cms"}}'
   # Constructing docker image name.
   DOCKER_IMAGE_PREFIX: "{{ .REGISTRY }}/{{ .ORG }}/{{ .DOCKER_IMAGE_NAMESPACE }}"
   # Constructing docker image name.
-  IMAGE_SOURCE: "{{ .DOCKER_IMAGE_PREFIX }}-source:{{ .BUILD_NUMBER }}"
+  IMAGE_SOURCE: "{{ .DOCKER_IMAGE_PREFIX }}-source:{{ .SOURCE_VERSION }}"
   # Where is the docker file(s) we use for our builds residing?
   DOCKER_IMAGE_DIR: "docker"
 

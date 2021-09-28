@@ -2,9 +2,7 @@
 name: Publish source
 
 on:
-  pull_request:
-    types: [closed]
-    branches: [main]
+  create
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -12,7 +10,14 @@ jobs:
     - uses: actions/checkout@master
       with:
         fetch-depth: 0
+    - name: Get version
+      id: get_version
+      run: |
+        echo ::set-output name=SOURCE_VERSION::$(echo ${GITHUB_REF#refs/tags/} | cut -d '_' -f 2)
     - name: Install go-task
       uses: arduino/setup-task@v1
     - name: Build and publish source
-      run: CR_PAT=${{ secrets.GITHUB_TOKEN }} task source:deploy
+      run: task source:deploy
+      env:
+        CR_PAT: ${{ secrets.GITHUB_TOKEN }}
+        SOURCE_VERSION: ${{ steps.get_version.outputs.SOURCE_VERSION }}
