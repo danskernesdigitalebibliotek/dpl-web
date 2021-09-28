@@ -1,6 +1,5 @@
 # This workflow takes care of building and publishing the source code of the Danish Public Libraries CMS.
 name: Publish source
-
 on:
   create
 jobs:
@@ -10,13 +9,28 @@ jobs:
     - uses: actions/checkout@master
       with:
         fetch-depth: 0
+    # Validate the format of the tag. We only want to react on a precise pattern.
+    - name: Validate tag
+      id: tag_validate
+      run: |
+        if [[ "${{ github.ref }}" =~ ^refs/tags/dpl-cms-source_[0-9]+\.[0-9]+\.[0-9]+$ ]]
+        then
+          echo ::set-output name=IS_VALID::true
+        else
+          echo ::set-output name=IS_VALID::false
+        fi
+    # Extract version from tag.
     - name: Get version
+      if: ${{ steps.tag_validate.outputs.IS_VALID == 'true' }}
       id: get_version
       run: |
         echo ::set-output name=SOURCE_VERSION::$(echo ${GITHUB_REF#refs/tags/} | cut -d '_' -f 2)
+    # Install go-task since we need it for building the source package.
     - name: Install go-task
+      if: ${{ steps.tag_validate.outputs.IS_VALID == 'true' }}
       uses: arduino/setup-task@v1
     - name: Build and publish source
+      if: ${{ steps.tag_validate.outputs.IS_VALID == 'true' }}
       run: task source:deploy
       env:
         CR_PAT: ${{ secrets.GITHUB_TOKEN }}
