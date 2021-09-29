@@ -10,28 +10,28 @@ jobs:
       with:
         fetch-depth: 0
     # Validate the format of the tag. We only want to react on a precise pattern.
-    - name: Validate tag
-      id: tag_validate
+    - name: Detect release tag
+      id: detect_tag
       run: |
         if [[ "${{ github.ref }}" =~ ^refs/tags/dpl-cms-source_[0-9]+\.[0-9]+\.[0-9]+$ ]]
         then
-          echo ::set-output name=IS_VALID::true
+          echo ::set-output name=IS_RELEASE_TAG::true
         else
-          echo ::set-output name=IS_VALID::false
+          echo ::set-output name=IS_RELEASE_TAG::false
         fi
     # Extract version from tag.
     - name: Get version
-      if: ${{ steps.tag_validate.outputs.IS_VALID == 'true' }}
       id: get_version
       run: |
         echo ::set-output name=SOURCE_VERSION::$(echo ${GITHUB_REF#refs/tags/} | cut -d '_' -f 2)
+      if: ${{ steps.detect_tag.outputs.IS_RELEASE_TAG == 'true' }}
     # Install go-task since we need it for building the source package.
     - name: Install go-task
-      if: ${{ steps.tag_validate.outputs.IS_VALID == 'true' }}
       uses: arduino/setup-task@v1
+      if: ${{ steps.detect_tag.outputs.IS_RELEASE_TAG == 'true' }}
     - name: Build and publish source
-      if: ${{ steps.tag_validate.outputs.IS_VALID == 'true' }}
       run: task source:deploy
+      if: ${{ steps.detect_tag.outputs.IS_RELEASE_TAG == 'true' }}
       env:
         CR_PAT: ${{ secrets.GITHUB_TOKEN }}
         SOURCE_VERSION: ${{ steps.get_version.outputs.SOURCE_VERSION }}
