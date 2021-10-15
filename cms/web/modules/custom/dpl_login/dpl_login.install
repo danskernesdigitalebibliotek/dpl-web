@@ -1,0 +1,30 @@
+<?php
+
+/**
+ * @file
+ * Dpl Login Install.
+ */
+
+use Drupal\Core\Config\Config;
+
+/**
+ * Implements hook_install().
+ */
+function dpl_login_install() {
+  $openid_connect_conf = \Drupal::configFactory()
+    ->getEditable('openid_connect.settings')
+    ->set('always_save_userinfo', TRUE)
+    ->set('connect_existing_users', TRUE)
+    ->set('override_registration_settings', TRUE)
+    ->set('user_login_display', 'below')
+    ->save();
+
+  // If the global openid_connect settings were saved
+  // we enable the Adgangsplatform plugin.
+  if ($openid_connect_conf instanceof Config) {
+    \Drupal::configFactory()->getEditable('openid_connect.settings.adgangsplatformen')
+      ->set('enabled', TRUE)
+      ->save();
+  }
+
+}

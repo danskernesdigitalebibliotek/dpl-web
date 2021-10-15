@@ -1,0 +1,42 @@
+<?php
+
+/**
+ * @file
+ * DPL Login module.
+ *
+ * Handles authentication against Adgangsplatformen.
+ */
+
+use Drupal\Core\Site\Settings;
+
+/**
+ * Implements hook_openid_connect_userinfo_alter().
+ */
+function dpl_login_openid_connect_userinfo_alter(&$userinfo, $context) {
+
+  // If we cannot resolve uinque id we cannot continue.
+  if (!$id = $userinfo['attributes']['uniqueId'] ?? FALSE) {
+    $userinfo = [];
+    return;
+  }
+
+  $id_hash = crypt($id, Settings::getHashSalt());
+
+  // TODO: This a temporary mapping.
+  // The final decision on the mapping is made in the work of:
+  // https://reload.atlassian.net/browse/DDFDPDEL-166
+  //
+  // Drupal needs an email. We set a unique one to apply to that rule.
+  $userinfo['email'] = sprintf('%s@dpl-cms.invalid', $id_hash);
+  // Drupal needs a user name. We use the unique id to apply to that rule.
+  $userinfo['name'] = $id_hash;
+  // openid_connect module needs the sub for creating the auth map.
+  $userinfo['sub'] = $id_hash;
+}
+
+/**
+ * Implements hook_openid_connect_post_authorize().
+ */
+function dpl_login_openid_connect_post_authorize($account, $context) {
+  // TODO: Handle access token storage here.
+}

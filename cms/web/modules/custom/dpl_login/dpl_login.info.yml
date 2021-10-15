@@ -1,0 +1,9 @@
+name: DPL Login
+description: Handles authentication/login via Adgangsplatformen
+package: DPL
+
+type: module
+core_version_requirement: ^9
+
+dependencies:
+  - openid_connect:openid_connect
