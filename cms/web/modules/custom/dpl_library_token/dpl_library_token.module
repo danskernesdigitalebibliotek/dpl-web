@@ -1,0 +1,17 @@
+<?php
+
+/**
+ * @file
+ * DPL Library Token module.
+ *
+ * Handles fetching and storage of a library token.
+ */
+
+/**
+ * Implements hook_cron().
+ */
+function dpl_library_token_cron() {
+  /** @var Drupal\dpl_library_token\LibraryTokenHandler $handler */
+  $handler = Drupal::service('dpl_library_token.handler');
+  $handler->retrieveAndStoreToken();
+}

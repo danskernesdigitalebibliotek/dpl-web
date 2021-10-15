@@ -1,0 +1,6 @@
+name: DPL Library Token
+description: Handles fetching and storage of a library token
+package: DPL
+
+type: module
+core_version_requirement: ^9
