@@ -4,3 +4,6 @@ package: DPL
 
 type: module
 core_version_requirement: ^9
+
+dependencies:
+  - dpl_login:dpl_login

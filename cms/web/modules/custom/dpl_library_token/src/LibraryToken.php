@@ -2,6 +2,8 @@
 
 namespace Drupal\dpl_library_token;
 
+use Drupal\dpl_library_token\Exception\LibraryTokenResponseException;
+
 /**
  * Library Token.
  */
@@ -35,10 +37,16 @@ class LibraryToken {
     if (!$token_data = json_decode($response_body, TRUE)) {
       throw new LibraryTokenResponseException('Could not decode library token response');
     }
+    if (empty($token_data['access_token'])) {
+      throw new LibraryTokenResponseException('Access token is missing');
+    }
+    if (empty($token_data['expires_in'])) {
+      throw new LibraryTokenResponseException('Expire is missing');
+    }
 
     $token = new static();
-    $token->token = $token_data['data']['token'];
-    $token->expire = $token_data['data']['expire'];
+    $token->token = $token_data['access_token'];
+    $token->expire = $token_data['expires_in'];
 
     return $token;
   }

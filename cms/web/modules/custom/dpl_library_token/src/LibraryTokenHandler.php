@@ -7,6 +7,7 @@ use GuzzleHttp\Exception\RequestException;
 use Drupal\Core\Config\ConfigFactoryInterface;
 use Drupal\Core\Logger\LoggerChannelFactoryInterface;
 use Drupal\Core\KeyValueStore\KeyValueExpirableFactoryInterface;
+use Psr\Log\LogLevel;
 
 /**
  * Library Token Handler Service.
@@ -14,8 +15,10 @@ use Drupal\Core\KeyValueStore\KeyValueExpirableFactoryInterface;
 class LibraryTokenHandler {
 
   const LIBRARY_TOKEN_KEY = 'library_token';
+  const TOKEN_COLLECTION_KEY = 'dpl_cms_library_tokens';
   const NEXT_EXECUTION_KEY = 'dpl_library_token.next_execution';
-  const LIBRARY_TOKEN_ENDPOINT_DEFAULT = 'https://run.mocky.io/v3/ea0dd0ee-046e-43fc-a45f-cf1d9691a395';
+  const SETTINGS_KEY = 'openid_connect.settings.adgangsplatformen';
+  const LOGGER_KEY = 'dpl_library_tokens';
 
   /**
    * The key value expire keyValueFactory.
@@ -63,7 +66,7 @@ class LibraryTokenHandler {
    *   Configuration.
    * @param \GuzzleHttp\ClientInterface $http_client
    *   The HTTP client.
-   * @param Drupal\Core\Logger\LoggerChannelFactoryInterface $logger
+   * @param \Drupal\Core\Logger\LoggerChannelFactoryInterface $logger
    *   The library token logger channel.
    */
   public function __construct(
@@ -74,12 +77,12 @@ class LibraryTokenHandler {
   ) {
     $this->keyValueFactory = $keyValueFactory;
     /** @var \Drupal\Core\KeyValueStore\KeyValueStoreExpirableInterface */
-    $this->tokenCollection = $keyValueFactory->get('dpl_cms_library_tokens');
+    $this->tokenCollection = $keyValueFactory->get(self::TOKEN_COLLECTION_KEY);
     $this->configFactory = $configFactory;
     $this->settings = $this->configFactory
-      ->get('dpl_library_token.settings');
+      ->get(self::SETTINGS_KEY)->get('settings');
     $this->httpClient = $http_client;
-    $this->logger = $logger->get('dpl_library_tokens');
+    $this->logger = $logger->get(self::LOGGER_KEY);
   }
 
   /**
@@ -87,42 +90,52 @@ class LibraryTokenHandler {
    */
   public function retrieveAndStoreToken(): void {
     if (!$this->tokenCollection->get(self::LIBRARY_TOKEN_KEY)) {
-      $token = $this->fectchToken();
-      // Set token and expire time to half the given one.
-      // In that way we are sure that the token is always valid.
-      $this->tokenCollection
-        ->setWithExpireIfNotExists(
-          self::LIBRARY_TOKEN_KEY,
-          $this->fectchToken(),
-          round($token->expire / 2)
-      );
+      if ($token = $this->fectchToken()) {
+        // Set token and expire time to half the given one.
+        // In that way we are sure that the token is always valid.
+        $this->tokenCollection
+          ->setWithExpireIfNotExists(
+            self::LIBRARY_TOKEN_KEY,
+            $token->token,
+            round($token->expire / 2)
+        );
+      }
     }
   }
 
   /**
    * Fetches and returns library token from remote service.
    *
-   * @return Drupal\dpl_library_token\LibraryToken|null
+   * @return \Drupal\dpl_library_token\LibraryToken|null
    *   If token was fetched it is returned. Otherwise NULL.
    */
-  protected function fectchToken() {
+  protected function fectchToken(): ?LibraryToken {
     $token = NULL;
-    $request_options = [];
 
     try {
-      $endpoint = $this->settings
-        ->get('endpoint') ?? self::LIBRARY_TOKEN_ENDPOINT_DEFAULT;
+      // TODO: Agency id should be moved to adgangsplatformen settings.
+      $agency_token = sprintf('@%d', 710100);
+
       $response = $this->httpClient
-        ->request('GET', $endpoint, $request_options);
+        ->request('POST', $this->settings['token_endpoint'], [
+          'form_params' => [
+            'grant_type' => 'password',
+            'username' => $agency_token,
+            'password' => $agency_token,
+          ],
+          'auth' => [
+            $this->settings['client_id'],
+            $this->settings['client_secret'],
+          ],
+        ]);
 
       $response_body = (string) $response->getBody();
-
       // Get token from payload.
       if (!$token = LibraryToken::createFromResponseBody($response_body) ?? NULL) {
         throw new LibraryTokenResponseException('Could not retrieve token from response body');
       }
 
-      $this->logger->log('New token was fetched.');
+      $this->logger->log(LogLevel::INFO, 'New token was fetched.');
     }
     catch (\Exception $e) {
       $variables = [
@@ -134,10 +147,20 @@ class LibraryTokenHandler {
         $response_body = $e->getResponse()->getBody()->getContents();
         $variables['@error_message'] .= ' Response: ' . $response_body;
       }
-      $this->logger->error('@message. Details: @error_message', $variables);
+      $this->logger->log(LogLevel::ERROR, '@message. Details: @error_message', $variables);
     }
 
     return $token;
+  }
+
+  /**
+   * Get stored library token.
+   *
+   * @return string|null
+   *   The token if found or else NULL.
+   */
+  public function getToken(): ?string {
+    return $this->tokenCollection->get(self::LIBRARY_TOKEN_KEY, NULL);
   }
 
 }
