@@ -125,15 +125,14 @@ class LibraryTokenHandler {
     $token = NULL;
 
     try {
-      // TODO: Agency id should be moved to adgangsplatformen settings.
-      $agency_token = sprintf('@%d', 710100);
+      $agency = sprintf('@%d', $this->settings['agency_id']);
 
       $response = $this->httpClient
         ->request('POST', $this->settings['token_endpoint'], [
           'form_params' => [
             'grant_type' => 'password',
-            'username' => $agency_token,
-            'password' => $agency_token,
+            'username' => $agency,
+            'password' => $agency,
           ],
           'auth' => [
             $this->settings['client_id'],
