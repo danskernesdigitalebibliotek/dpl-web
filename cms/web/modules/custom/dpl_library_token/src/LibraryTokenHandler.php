@@ -183,4 +183,22 @@ class LibraryTokenHandler {
     }
   }
 
+  /**
+   * Validate settings. Exception is thrown if a setting is missing.
+   */
+  protected function validateSettings(): void {
+    foreach ([
+      'token_endpoint',
+      'client_id',
+      'client_secret',
+      'agency_id',
+    ] as $config_key) {
+      if (empty($this->settings[$config_key])) {
+        throw new MissingConfigurationException(
+          sprintf('Config variable %s is missing.', $config_key)
+        );
+      }
+    }
+  }
+
 }
