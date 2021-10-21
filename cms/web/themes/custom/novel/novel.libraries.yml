@@ -1,0 +1,11 @@
+base:
+  version: '1.0'
+  css:
+    theme:
+      libraries/css/base.css: {}
+  js:
+    theme:
+      libraries/js/initaccordion.js: {}
+      libraries/js/initheader.js: {}
+  dependencies:
+    - core/drupal
