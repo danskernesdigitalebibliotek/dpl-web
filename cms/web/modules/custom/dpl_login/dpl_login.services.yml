@@ -3,3 +3,6 @@ services:
     class: Drupal\dpl_login\Routing\RouteSubscriber
     tags:
       - { name: event_subscriber }
+  dpl_login.user_tokens:
+    class: Drupal\dpl_login\UserTokensProvider
+    arguments: ['@tempstore.private']

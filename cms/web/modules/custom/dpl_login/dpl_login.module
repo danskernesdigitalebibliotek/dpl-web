@@ -8,6 +8,7 @@
  */
 
 use Drupal\Core\Site\Settings;
+use Drupal\dpl_login\AccessToken;
 
 /**
  * Implements hook_openid_connect_userinfo_alter().
@@ -36,5 +37,8 @@ function dpl_login_openid_connect_userinfo_alter(&$userinfo, $context) {
  * Implements hook_openid_connect_post_authorize().
  */
 function dpl_login_openid_connect_post_authorize($account, $context) {
-  // TODO: Handle access token storage here.
+  $access_token = AccessToken::createFromOpenidConnectContext($context);
+  /** @var Drupal\dpl_login\UserTokensProvider $token_provider */
+  $token_provider = \Drupal::service('dpl_login.user_tokens');
+  $token_provider->setAccessToken($access_token);
 }

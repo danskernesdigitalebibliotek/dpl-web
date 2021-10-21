@@ -21,7 +21,7 @@ function ddb_react_library_info_alter(array &$libraries, $module) {
 
   $version_file = 'libraries/ddb-react/version.json';
 
-  if (!file_exists($$version_file)) {
+  if (!file_exists($version_file)) {
     \Drupal::logger('ddb_react')
       ->error('Version file in libraries/ddb-react is missing!');
     return;

@@ -29,7 +29,7 @@ class LibraryToken {
    * @param string $response_body
    *   The body of the token request response.
    *
-   * @return LibrsearyToken
+   * @return LibraryToken
    *   Token object created based on a json formed response.
    */
   public static function createFromResponseBody(string $response_body): self {
