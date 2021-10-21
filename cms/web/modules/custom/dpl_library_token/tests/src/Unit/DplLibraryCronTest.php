@@ -15,6 +15,7 @@ use Drupal\dpl_library_token\LibraryTokenHandler;
 use Drupal\Core\Logger\LoggerChannelFactoryInterface;
 use Drupal\Core\KeyValueStore\KeyValueStoreExpirableInterface;
 use Drupal\Core\KeyValueStore\KeyValueExpirableFactoryInterface;
+use Drupal\dpl_library_token\Exception\MissingConfigurationException;
 
 /**
  * Unit tests proving that the phpUnit setup works.
@@ -105,6 +106,67 @@ class DplLibraryCronTest extends UnitTestCase {
   }
 
   /**
+   * Test that application will fail if the needed configuratin is not set.
+   *
+   * @dataProvider provideExceptionMessages
+   */
+  public function testItComplainsIfConfigurationIsNotSet(?array $settings, string $message): void {
+    $collection = $this->prophesize(KeyValueStoreExpirableInterface::class);
+    $key_value_factory = $this->prophesize(KeyValueExpirableFactoryInterface::class);
+    $key_value_factory->get(LibraryTokenHandler::TOKEN_COLLECTION_KEY)
+      ->willReturn($collection->reveal())
+      ->shouldBeCalledTimes(1);
+
+    $logger = $this->prophesize(LoggerChannelInterface::class);
+    $logger_factory = $this->prophesize(LoggerChannelFactoryInterface::class);
+    $logger_factory->get(LibraryTokenHandler::LOGGER_KEY)->willReturn($logger->reveal());
+
+    $client = $this->prophesize(ClientInterface::class);
+
+    $config = $this->prophesize(ImmutableConfig::class);
+    $config->get('settings')->willReturn($settings);
+
+    $this->expectException(MissingConfigurationException::class);
+    $this->expectExceptionMessage($message);
+    $handler = $this->createTokenHandler($key_value_factory, $client, $logger, $config);
+
+    $handler->retrieveAndStoreToken();
+  }
+
+  /**
+   * Dataprovider with settings and expected exception messages.
+   */
+  public function provideExceptionMessages() {
+    return [
+      [
+        NULL,
+        'Config variable token_endpoint is missing',
+      ],
+      [
+        [
+          'token_endpoint' => 'token_endpoint',
+        ],
+        'Config variable client_id is missing',
+      ],
+      [
+        [
+          'token_endpoint' => 'token_endpoint',
+          'client_id' => 'client_id',
+        ],
+        'Config variable client_secret is missing',
+      ],
+      [
+        [
+          'token_endpoint' => 'token_endpoint',
+          'client_id' => 'client_id',
+          'client_secret' => 'client_secret',
+        ],
+        'Config variable agency_id is missing',
+      ],
+    ];
+  }
+
+  /**
    * Creates a Library Token Handler with mocked dependencies.
    *
    * @param Prophecy\Prophecy\ObjectProphecy $key_value_factory
@@ -113,6 +175,8 @@ class DplLibraryCronTest extends UnitTestCase {
    *   Mocked http client.
    * @param Prophecy\Prophecy\ObjectProphecy|null $logger
    *   Mocked logger service.
+   * @param Prophecy\Prophecy\ObjectProphecy|null $config
+   *   Mocked config service.
    *
    * @return Drupal\dpl_library_token\LibraryTokenHandler
    *   The Library Token handler service.
@@ -120,20 +184,24 @@ class DplLibraryCronTest extends UnitTestCase {
   protected function createTokenHandler(
     ObjectProphecy $key_value_factory,
     ObjectProphecy $client,
-    ?ObjectProphecy $logger = NULL
+    ?ObjectProphecy $logger = NULL,
+    ?ObjectProphecy $config = NULL
   ): LibraryTokenHandler {
-    $immutable_config = $this->prophesize(ImmutableConfig::class);
-    $immutable_config->get('settings')->willReturn([
-      'client_id' => 'client_id',
-      'client_secret' => 'client_secret',
-      'redirect_url' => 'redirect_url',
-      'authorization_endpoint' => 'authorization_endpoint',
-      'token_endpoint' => 'token_endpoint',
-      'userinfo_endpoint' => 'userinfo_endpoint',
-      'agency_id' => 99999,
-    ]);
+
+    if (!$config) {
+      $config = $this->prophesize(ImmutableConfig::class);
+      $config->get('settings')->willReturn([
+        'client_id' => 'client_id',
+        'client_secret' => 'client_secret',
+        'redirect_url' => 'redirect_url',
+        'authorization_endpoint' => 'authorization_endpoint',
+        'token_endpoint' => 'token_endpoint',
+        'userinfo_endpoint' => 'userinfo_endpoint',
+        'agency_id' => 99999,
+      ]);
+    }
     $config_factory = $this->prophesize(ConfigFactoryInterface::class);
-    $config_factory->get(LibraryTokenHandler::SETTINGS_KEY)->willReturn($immutable_config->reveal());
+    $config_factory->get(LibraryTokenHandler::SETTINGS_KEY)->willReturn($config->reveal());
 
     if (!$logger) {
       $logger = $this->prophesize(LoggerChannelInterface::class);

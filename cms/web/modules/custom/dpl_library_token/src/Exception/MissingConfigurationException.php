@@ -3,6 +3,6 @@
 namespace Drupal\dpl_library_token\Exception;
 
 /**
- * MissingConfigurationException.
+ * Exception used for missing configuration.
  */
 class MissingConfigurationException extends \Exception {}
