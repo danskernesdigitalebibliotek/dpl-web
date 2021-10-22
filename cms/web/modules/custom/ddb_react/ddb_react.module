@@ -36,8 +36,8 @@ function ddb_react_library_info_alter(array &$libraries, $module) {
   }
 
   // Set the version from the assets on all libraries.
-  foreach ($libraries as $library) {
-    $libraries[$library]['version'] == $library_info['version'];
+  foreach (array_keys($libraries) as $library) {
+    $libraries[$library]['version'] = $library_info['version'];
   }
 }
 
