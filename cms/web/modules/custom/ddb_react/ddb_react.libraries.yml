@@ -111,6 +111,7 @@ base:
 
 handler:
   version: 1.0
+  header: true
   js:
     js/handler.js: {}
   dependencies:

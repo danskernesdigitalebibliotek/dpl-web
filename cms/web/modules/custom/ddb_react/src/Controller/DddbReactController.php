@@ -76,8 +76,8 @@ class DddbReactController extends ControllerBase {
 
     $content = <<<EOD
 window.ddbReact = window.ddbReact || {};
-window.ddbReact.setToken('user', $token_user);
-window.ddbReact.setToken('library', $token_agency);
+window.ddbReact.setToken('user', '$token_user');
+window.ddbReact.setToken('library', '$token_agency');
 EOD;
 
     $response = new Response();

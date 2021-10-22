@@ -1,6 +1,5 @@
 (function (Drupal) {
   "use strict";
-
   // Behaviors might be called with a DOM element (document on page
   // load) or a jQuery object (on AJAX load). DDB React expects a DOM
   // element with querySelectorAll, so this tries to do the right
@@ -19,9 +18,8 @@
 
   Drupal.behaviors.ddbReactHandler = {
       attach: function (context, settings) {
-        window.ddbReact.mount(context);
           var element = getElement(context);
-          if (element) {
+          if (element && typeof jQuery !== 'undefined') {
             jQuery.ajax({
               url: '/ddb-react/user.js',
               dataType: 'script',
