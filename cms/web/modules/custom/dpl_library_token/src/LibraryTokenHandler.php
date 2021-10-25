@@ -2,12 +2,12 @@
 
 namespace Drupal\dpl_library_token;
 
+use Psr\Log\LogLevel;
 use GuzzleHttp\ClientInterface;
 use GuzzleHttp\Exception\RequestException;
 use Drupal\Core\Config\ConfigFactoryInterface;
 use Drupal\Core\Logger\LoggerChannelFactoryInterface;
 use Drupal\Core\KeyValueStore\KeyValueExpirableFactoryInterface;
-use Psr\Log\LogLevel;
 
 /**
  * Library Token Handler Service.
@@ -15,29 +15,11 @@ use Psr\Log\LogLevel;
 class LibraryTokenHandler {
 
   const LIBRARY_TOKEN_KEY = 'library_token';
-  const TOKEN_COLLECTION_KEY = 'dpl_cms_library_tokens';
+  const TOKEN_COLLECTION_KEY = 'dpl_library_token';
   const NEXT_EXECUTION_KEY = 'dpl_library_token.next_execution';
   const SETTINGS_KEY = 'openid_connect.settings.adgangsplatformen';
   const LOGGER_KEY = 'dpl_library_tokens';
 
-  /**
-   * The key value expire keyValueFactory.
-   *
-   * @var \Drupal\Core\KeyValueStore\KeyValueExpirableFactoryInterface
-   */
-  protected $keyValueFactory;
-  /**
-   * The state key value store.
-   *
-   * @var \Drupal\Core\State\State
-   */
-  protected $state;
-  /**
-   * Configuration.
-   *
-   * @var \Drupal\Core\Config\ConfigFactoryInterface
-   */
-  protected $configFactory;
   /**
    * Cron Configuration.
    *
@@ -56,6 +38,12 @@ class LibraryTokenHandler {
    * @var \GuzzleHttp\Client
    */
   protected $httpClient;
+  /**
+   * The logger.
+   *
+   * @var \Drupal\Core\Logger\LoggerChannel
+   */
+  protected $logger;
 
   /**
    * Constructs the LibraryTokenHandler service.
@@ -75,11 +63,9 @@ class LibraryTokenHandler {
     ClientInterface $http_client,
     LoggerChannelFactoryInterface $logger
   ) {
-    $this->keyValueFactory = $keyValueFactory;
     /** @var \Drupal\Core\KeyValueStore\KeyValueStoreExpirableInterface */
     $this->tokenCollection = $keyValueFactory->get(self::TOKEN_COLLECTION_KEY);
-    $this->configFactory = $configFactory;
-    $this->settings = $this->configFactory
+    $this->settings = $configFactory
       ->get(self::SETTINGS_KEY)->get('settings');
     $this->httpClient = $http_client;
     $this->logger = $logger->get(self::LOGGER_KEY);
@@ -89,18 +75,41 @@ class LibraryTokenHandler {
    * Retrieve token from external service and save it.
    */
   public function retrieveAndStoreToken(): void {
-    if (!$this->tokenCollection->get(self::LIBRARY_TOKEN_KEY)) {
+    // If no token stored.
+    if (!$this->getToken()) {
+      // Then try to fetch one.
       if ($token = $this->fectchToken()) {
-        // Set token and expire time to half the given one.
-        // In that way we are sure that the token is always valid.
-        $this->tokenCollection
-          ->setWithExpireIfNotExists(
-            self::LIBRARY_TOKEN_KEY,
-            $token->token,
-            round($token->expire / 2)
-        );
+        // And store it.
+        $this->setToken($token);
       }
     }
+  }
+
+  /**
+   * Store a new Library Token.
+   *
+   * @param \Drupal\dpl_library_token\LibraryToken $token
+   *   The Token to store.
+   */
+  public function setToken(LibraryToken $token): void {
+    // Set token and expire time to half the given one.
+    // In that way we are sure that the token is always valid.
+    $this->tokenCollection
+      ->setWithExpireIfNotExists(
+        self::LIBRARY_TOKEN_KEY,
+        $token->token,
+        round($token->expire / 2)
+      );
+  }
+
+  /**
+   * Get stored library token.
+   *
+   * @return string|null
+   *   The token if found or else NULL.
+   */
+  public function getToken(): ?string {
+    return $this->tokenCollection->get(self::LIBRARY_TOKEN_KEY);
   }
 
   /**
@@ -109,7 +118,7 @@ class LibraryTokenHandler {
    * @return \Drupal\dpl_library_token\LibraryToken|null
    *   If token was fetched it is returned. Otherwise NULL.
    */
-  protected function fectchToken(): ?LibraryToken {
+  public function fectchToken(): ?LibraryToken {
     $token = NULL;
 
     try {
@@ -131,9 +140,10 @@ class LibraryTokenHandler {
 
       $response_body = (string) $response->getBody();
       // Get token from payload.
-      if (!$token = LibraryToken::createFromResponseBody($response_body) ?? NULL) {
-        throw new LibraryTokenResponseException('Could not retrieve token from response body');
-      }
+      // If createFromResponseBody is not able to create a token
+      // from $response_body, an exception is thrown
+      // and the success log entry will not be created.
+      $token = LibraryToken::createFromResponseBody($response_body);
 
       $this->logger->log(LogLevel::INFO, 'New token was fetched.');
     }
@@ -151,16 +161,6 @@ class LibraryTokenHandler {
     }
 
     return $token;
-  }
-
-  /**
-   * Get stored library token.
-   *
-   * @return string|null
-   *   The token if found or else NULL.
-   */
-  public function getToken(): ?string {
-    return $this->tokenCollection->get(self::LIBRARY_TOKEN_KEY, NULL);
   }
 
 }
