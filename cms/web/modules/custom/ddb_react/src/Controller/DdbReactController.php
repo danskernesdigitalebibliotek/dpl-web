@@ -11,7 +11,7 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
 /**
  * DDB React Controller.
  */
-class DddbReactController extends ControllerBase {
+class DdbReactController extends ControllerBase {
 
   /**
    * The Library token handler.
@@ -20,7 +20,7 @@ class DddbReactController extends ControllerBase {
    */
   protected LibraryTokenHandler $libraryTokenHandler;
   /**
-   * The Uuser token provider.
+   * The User token provider.
    *
    * @var \Drupal\dpl_login\UserTokensProvider
    */
@@ -37,7 +37,7 @@ class DddbReactController extends ControllerBase {
   public function __construct(
     LibraryTokenHandler $library_token_handler,
     UserTokensProvider $user_token_provider
-    ) {
+  ) {
     $this->libraryTokenHandler = $library_token_handler;
     $this->userTokensProvider = $user_token_provider;
   }
@@ -60,26 +60,23 @@ class DddbReactController extends ControllerBase {
   /**
    * Render user.js javascript.
    *
-   * @return array|\Symfony\Component\HttpFoundation\Response
-   *   If something goes wrong empty render array otherwise js.
+   * @return \Symfony\Component\HttpFoundation\Response
+   *   Set tokens for the ddb react js application.
    */
   public function user() {
-    if (!$acces_token = $this->userTokensProvider->getAccessToken()) {
-      return [];
-    }
-    if (!$token_user = $acces_token->token ?? FALSE) {
-      return [];
-    }
-    if (!$token_agency = $this->libraryTokenHandler->getToken()) {
-      return [];
+    $content_lines = ['window.ddbReact = window.ddbReact || {};'];
+
+    if ($token_agency = $this->libraryTokenHandler->getToken()) {
+      $content_lines[] = sprintf('window.ddbReact.setToken("library", "%s")', $token_agency);
     }
 
-    $content = <<<EOD
-window.ddbReact = window.ddbReact || {};
-window.ddbReact.setToken('user', '$token_user');
-window.ddbReact.setToken('library', '$token_agency');
-EOD;
+    if ($acces_token = $this->userTokensProvider->getAccessToken()) {
+      if ($token_user = $acces_token->token ?? FALSE) {
+        $content_lines[] = sprintf('window.ddbReact.setToken("user", "%s")', $token_user);
+      }
+    }
 
+    $content = implode("\n", $content_lines);
     $response = new Response();
     $response->setContent($content);
     $response->headers->set('Content-Type', 'application/javascript');

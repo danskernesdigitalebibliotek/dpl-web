@@ -1,4 +1,4 @@
-(function (Drupal) {
+(function (Drupal, $) {
   "use strict";
   // Behaviors might be called with a DOM element (document on page
   // load) or a jQuery object (on AJAX load). DDB React expects a DOM
@@ -19,8 +19,8 @@
   Drupal.behaviors.ddbReactHandler = {
       attach: function (context, settings) {
           var element = getElement(context);
-          if (element && typeof jQuery !== 'undefined') {
-            jQuery.ajax({
+          if (element) {
+            $.ajax({
               url: '/ddb-react/user.js',
               dataType: 'script',
               cache: true,
@@ -37,4 +37,4 @@
           }
         }
     };
-  }(Drupal));
+  }(Drupal, jQuery));
