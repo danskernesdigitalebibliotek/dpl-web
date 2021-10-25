@@ -22,16 +22,14 @@ function dpl_login_openid_connect_userinfo_alter(&$userinfo, $context) {
 
   $id_hash = crypt($id, Settings::getHashSalt());
 
-  // TODO: This a temporary mapping.
-  // The final decision on the mapping is made in the work of:
-  // https://reload.atlassian.net/browse/DDFDPDEL-166
-  //
+  $name = uniqid();
   // Drupal needs an email. We set a unique one to apply to that rule.
-  $userinfo['email'] = sprintf('%s@dpl-cms.invalid', $id_hash);
+  $userinfo['email'] = sprintf('%s@dpl-cms.invalid', $name);
   // Drupal needs a user name. We use the unique id to apply to that rule.
-  $userinfo['name'] = $id_hash;
+  $userinfo['name'] = $name;
   // openid_connect module needs the sub for creating the auth map.
   $userinfo['sub'] = $id_hash;
+
 }
 
 /**
