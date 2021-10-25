@@ -2,10 +2,9 @@ base:
   version: '1.0'
   css:
     theme:
-      libraries/css/base.css: {}
+      libraries/dpl-design-system/css/base.css: {}
   js:
-    theme:
-      libraries/js/initaccordion.js: {}
-      libraries/js/initheader.js: {}
+    libraries/dpl-design-system/js/initaccordion.js: {}
+    libraries/dpl-design-system/js/initheader.js: {}
   dependencies:
     - core/drupal
