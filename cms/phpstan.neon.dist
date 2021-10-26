@@ -16,15 +16,11 @@ parameters:
       message: "#^Function ddb_react_library_info_alter\\(\\) has parameter \\$libraries with no value type specified in iterable type array\\.$#"
       count: 1
       path: web/modules/custom/ddb_react/ddb_react.module
+
     -
       message: "#^Function dpl_login_install\\(\\) has no return typehint specified\\.$#"
       count: 1
       path: web/modules/custom/dpl_login/dpl_login.install
-
-    -
-      message: "#^Function dpl_login_openid_connect_post_authorize\\(\\) has no return typehint specified\\.$#"
-      count: 1
-      path: web/modules/custom/dpl_login/dpl_login.module
 
     -
       message: "#^Function dpl_login_openid_connect_post_authorize\\(\\) has parameter \\$account with no typehint specified\\.$#"
