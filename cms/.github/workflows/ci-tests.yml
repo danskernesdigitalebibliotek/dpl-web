@@ -3,8 +3,24 @@ on: pull_request
 name: CI Tests
 env:
   PHP_VERSION: 7.4
+  COMPOSER_VERSION: v2
 
 jobs:
+  ValidateComposer:
+    name: Validate Composer
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Setup PHP, with composer and extensions
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: ${{ env.PHP_VERSION }}
+          coverage: none
+          tools: composer:${{ env.COMPOSER_VERSION }}
+      - name: Validate composer.json
+        run: |
+          composer validate --no-check-all --no-check-publish
+
   Phpcs:
     name: Lint PHP
     runs-on: ubuntu-latest
@@ -14,7 +30,7 @@ jobs:
       uses: shivammathur/setup-php@v2
       with:
         php-version: ${{ env.PHP_VERSION }}
-        tools: composer
+        tools: composer:${{ env.COMPOSER_VERSION }}
         coverage: none
         extensions: gd
     - name: Install Dependencies
@@ -35,10 +51,7 @@ jobs:
         with:
           php-version: ${{ env.PHP_VERSION }}
           coverage: none
-          tools: composer:v2
-      - name: Validate composer.json
-        run: |
-          composer validate --no-check-all --no-check-publish
+          tools: composer:${{ env.COMPOSER_VERSION }}
       - name: Install composer dependencies
         run: |
           composer install --no-interaction --no-progress
@@ -57,7 +70,7 @@ jobs:
         uses: shivammathur/setup-php@v2
         with:
           php-version: ${{ env.PHP_VERSION }}
-          tools: composer
+          tools: composer:${{ env.COMPOSER_VERSION }}
           coverage: none
           extensions: gd
       - name: Install Dependencies
