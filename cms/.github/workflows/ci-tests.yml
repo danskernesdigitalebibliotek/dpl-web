@@ -25,6 +25,29 @@ jobs:
       with:
         reviewdog_token: ${{ secrets.GITHUB_TOKEN }}
 
+  Phpstan:
+    name: Analyse
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Setup PHP, with composer and extensions
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: ${{ env.PHP_VERSION }}
+          coverage: none
+          tools: composer:v2
+      - name: Validate composer.json
+        run: |
+          composer validate --no-check-all --no-check-publish
+      - name: Install composer dependencies
+        run: |
+          composer install --no-interaction --no-progress
+          # Add vendor/bin to PATH for subsequent steps, see https://docs.github.com/en/actions/reference/workflow-commands-for-github-actions#adding-a-system-path
+          composer config bin-dir --absolute >> "${GITHUB_PATH}"
+      - name: PHPStan analyse
+        run: |
+          phpstan
+
   PhpUnit:
     name: Run PHP unit tests
     runs-on: ubuntu-latest
