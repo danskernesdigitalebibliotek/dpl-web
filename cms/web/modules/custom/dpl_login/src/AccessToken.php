@@ -26,7 +26,7 @@ class AccessToken {
    *
    * From the data of the openid connect context.
    *
-   * @param array $context
+   * @param mixed[] $context
    *   The openid connect context.
    *
    * @return AccessToken

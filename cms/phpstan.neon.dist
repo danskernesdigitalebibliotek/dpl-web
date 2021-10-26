@@ -2,7 +2,12 @@ parameters:
   level: max
   paths:
     - web/modules/custom
+  excludePaths:
+    # Ignore false negatives from test mock objects. 
+    - web/modules/custom/dpl_library_token/tests
   ignoreErrors:
+    - '#Unsafe usage of new static\(\).#'
+
     # We have a conflict between what phpcs and phpstan wants.
     # Phpcs says: No documentation in dockblocks for drupal hooks.
     # Phpstan says: You have to specify the format in the docblock

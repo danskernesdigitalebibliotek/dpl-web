@@ -24,7 +24,7 @@ class LibraryTokenHandler {
   /**
    * Cron Configuration.
    *
-   * @var \Drupal\Core\Config\Config|\Drupal\Core\Config\ImmutableConfig
+   * @var mixed[]
    */
   protected $settings;
   /**
@@ -36,13 +36,13 @@ class LibraryTokenHandler {
   /**
    * The HTTP client.
    *
-   * @var \GuzzleHttp\Client
+   * @var \GuzzleHttp\ClientInterface
    */
   protected $httpClient;
   /**
    * The logger.
    *
-   * @var \Drupal\Core\Logger\LoggerChannel
+   * @var \Drupal\Core\Logger\LoggerChannelInterface
    */
   protected $logger;
 
@@ -64,7 +64,6 @@ class LibraryTokenHandler {
     ClientInterface $http_client,
     LoggerChannelFactoryInterface $logger
   ) {
-    /** @var \Drupal\Core\KeyValueStore\KeyValueStoreExpirableInterface */
     $this->tokenCollection = $keyValueFactory->get(self::TOKEN_COLLECTION_KEY);
     $this->settings = $configFactory
       ->get(self::SETTINGS_KEY)->get('settings');
@@ -101,7 +100,7 @@ class LibraryTokenHandler {
       ->setWithExpireIfNotExists(
         self::LIBRARY_TOKEN_KEY,
         $token->token,
-        round($token->expire / 2)
+        (int) round($token->expire / 2)
       );
   }
 
@@ -156,8 +155,10 @@ class LibraryTokenHandler {
       ];
 
       if ($e instanceof RequestException && $e->hasResponse()) {
-        $response_body = $e->getResponse()->getBody()->getContents();
-        $variables['@error_message'] .= ' Response: ' . $response_body;
+        if ($response = $e->getResponse()) {
+          $response_body = $response->getBody()->getContents();
+          $variables['@error_message'] .= ' Response: ' . $response_body;
+        }
       }
       $this->logger->log(LogLevel::ERROR, '@message. Details: @error_message', $variables);
     }
