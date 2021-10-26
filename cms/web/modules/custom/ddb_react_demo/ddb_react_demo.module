@@ -8,37 +8,13 @@
  * and render components.
  */
 
-use Drupal\Component\Serialization\Json;
-
-/**
- * Implements hook_library_info_alter().
- */
-function ddb_react_demo_library_info_alter(array &$libraries, $module) {
-  if ($module != 'ddb_react_demo') {
-    return;
-  }
-
-  // Check if a version json file exists and decode the json configuration.
-  if ($library_info_json = file_get_contents('libraries/ddb-react/version.json')) {
-    $library_info = Json::decode($library_info_json);
-  }
-  if (!$library_info || !isset($library_info['version'])) {
-    return;
-  }
-
-  // Set the version from the assets on all libraries.
-  foreach ($libraries as $library) {
-    $libraries[$library]['version'] == $library_info['version'];
-  }
-}
-
 /**
  * Construct button render array.
  *
- * @return array
+ * @return mixed[]
  *   Render array with button.
  */
-function ddb_react_demo_button() {
+function ddb_react_demo_button(): array {
   $data = [
     'material-list-url' => ddb_react_material_list_url(),
     'id' => 100,

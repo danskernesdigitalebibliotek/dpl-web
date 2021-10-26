@@ -10,9 +10,12 @@ use Drupal\Core\Controller\ControllerBase;
 class DddbReactDemoController extends ControllerBase {
 
   /**
-   * Render react components.
+   * Demo react rendering.
+   *
+   * @return mixed[]
+   *   Render array.
    */
-  public function index() {
+  public function index(): array {
     $data = [
       'material-list-url' => ddb_react_material_list_url(),
       'cover-service-url' => ddb_react_cover_service_url(),

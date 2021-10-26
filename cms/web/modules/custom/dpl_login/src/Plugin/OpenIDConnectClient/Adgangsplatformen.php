@@ -18,8 +18,11 @@ class Adgangsplatformen extends OpenIDConnectClientBase {
 
   /**
    * {@inheritdoc}
+   *
+   * @return mixed[]
+   *   Default configuration.
    */
-  public function defaultConfiguration() {
+  public function defaultConfiguration(): array {
     return [
       'authorization_endpoint' => 'https://login.bib.dk/oauth/authorize',
       'token_endpoint' => 'https://login.bib.dk/oauth/token/',
@@ -30,6 +33,14 @@ class Adgangsplatformen extends OpenIDConnectClientBase {
 
   /**
    * {@inheritdoc}
+   *
+   * @param mixed[] $form
+   *   Drupal form.
+   * @param \Drupal\Core\Form\FormStateInterface $form_state
+   *   Drupal form state.
+   *
+   * @return mixed[]
+   *   Drupla form array.
    */
   public function buildConfigurationForm(array $form, FormStateInterface $form_state) {
     $form = parent::buildConfigurationForm($form, $form_state);
@@ -60,8 +71,11 @@ class Adgangsplatformen extends OpenIDConnectClientBase {
 
   /**
    * {@inheritdoc}
+   *
+   * @return mixed[]
+   *   Various endpoints.
    */
-  public function getEndpoints() {
+  public function getEndpoints(): array {
     return [
       'authorization' => $this->configuration['authorization_endpoint'],
       'token' => $this->configuration['token_endpoint'],
@@ -71,8 +85,16 @@ class Adgangsplatformen extends OpenIDConnectClientBase {
 
   /**
    * {@inheritdoc}
+   *
+   * @param string $scope
+   *   Oauth2 scope.
+   * @param \Drupal\Core\GeneratedUrl $redirect_uri
+   *   The redirect uri.
+   *
+   * @return mixed[]
+   *   Url options array.
    */
-  protected function getUrlOptions($scope, GeneratedUrl $redirect_uri) {
+  protected function getUrlOptions($scope, GeneratedUrl $redirect_uri): array {
     $options = parent::getUrlOptions($scope, $redirect_uri);
 
     return [
@@ -88,8 +110,11 @@ class Adgangsplatformen extends OpenIDConnectClientBase {
    * Adgangsplatformen doesn't return an ID Token. The inherited method cannot
    * handle / decode the missing / null value so we hardcode the decoded value
    * to be an empty array.
+   *
+   * @return mixed[]
+   *   Decoded id token.
    */
-  public function decodeIdToken($id_token) {
+  public function decodeIdToken($id_token): array {
     return [];
   }
 

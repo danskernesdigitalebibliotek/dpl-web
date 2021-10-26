@@ -14,7 +14,8 @@ use Drupal\ddb_react\DdbReactInterface;
 /**
  * Implements hook_library_info_alter().
  */
-function ddb_react_library_info_alter(array &$libraries, $module) {
+function ddb_react_library_info_alter(array &$libraries, string $module): void {
+  $library_info = NULL;
   if ($module != 'ddb_react') {
     return;
   }
@@ -46,13 +47,13 @@ function ddb_react_library_info_alter(array &$libraries, $module) {
  *
  * @param string $name
  *   Name of the app.
- * @param array $data
+ * @param mixed[] $data
  *   Data for the app.
  *
- * @return array
+ * @return mixed[]
  *   The app render array.
  */
-function ddb_react_render($name, array $data = []) {
+function ddb_react_render($name, array $data = []): array {
   $attributes = [];
 
   $attributes['data-ddb-app'] = $name;
@@ -83,7 +84,7 @@ function ddb_react_render($name, array $data = []) {
  * @return string
  *   Url to Material List service instance.
  */
-function ddb_react_material_list_url() {
+function ddb_react_material_list_url(): string {
   return DdbReactInterface::DDB_REACT_MATERIAL_LIST_URL;
 }
 
@@ -93,7 +94,7 @@ function ddb_react_material_list_url() {
  * @return string
  *   Url to Follow Searches service instance.
  */
-function ddb_react_follow_searches_url() {
+function ddb_react_follow_searches_url(): string {
   return DdbReactInterface::DDB_REACT_FOLLOW_SEARCHES_URL;
 }
 
@@ -103,6 +104,6 @@ function ddb_react_follow_searches_url() {
  * @return string
  *   Url to Cover service instance.
  */
-function ddb_react_cover_service_url() {
+function ddb_react_cover_service_url(): string {
   return DdbReactInterface::DDB_REACT_COVER_SERVICE_URL;
 }

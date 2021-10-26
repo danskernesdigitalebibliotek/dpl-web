@@ -14,7 +14,7 @@ class CiTestDemoMk14 extends UnitTestCase {
   /**
    * Test that the phpUnit setup works.
    */
-  public function testExpectedOutputFromRandomFunction() {
+  public function testExpectedOutputFromRandomFunction(): void {
     $this->assertEquals('I guess phpUnit works!', 'I guess phpUnit works!');
   }
 

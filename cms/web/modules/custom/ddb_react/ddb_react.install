@@ -8,7 +8,7 @@
 /**
  * Implements hook_requirements().
  */
-function ddb_react_requirements($phase) {
+function ddb_react_requirements(string $phase): array {
   $requirements = [];
 
   $library_dir = 'libraries/ddb-react';

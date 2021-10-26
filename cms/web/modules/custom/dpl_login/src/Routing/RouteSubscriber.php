@@ -13,7 +13,7 @@ class RouteSubscriber extends RouteSubscriberBase {
   /**
    * {@inheritdoc}
    */
-  protected function alterRoutes(RouteCollection $collection) {
+  protected function alterRoutes(RouteCollection $collection): void {
     // The oauth client setting is validating the redirect url
     // and expect it to be: /adgangsplatformen/callback.
     // We rewire the routing and point the route
