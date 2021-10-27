@@ -12,8 +12,13 @@ use Drupal\dpl_login\AccessToken;
 
 /**
  * Implements hook_openid_connect_userinfo_alter().
+ *
+ * @param mixed[] $userinfo
+ *   User info from external service.
+ * @param mixed[] $context
+ *   Various openid_connect context. Tokens etc.
  */
-function dpl_login_openid_connect_userinfo_alter(&$userinfo, $context) {
+function dpl_login_openid_connect_userinfo_alter(array &$userinfo, array $context): void {
 
   // If we cannot resolve uinque id we cannot continue.
   if (!$id = $userinfo['attributes']['uniqueId'] ?? FALSE) {
@@ -30,13 +35,21 @@ function dpl_login_openid_connect_userinfo_alter(&$userinfo, $context) {
   $userinfo['name'] = $name;
   // openid_connect module needs the sub for creating the auth map.
   $userinfo['sub'] = $id_hash;
-
 }
 
 /**
  * Implements hook_openid_connect_post_authorize().
  */
-function dpl_login_openid_connect_post_authorize($account, $context): void {
+
+/**
+ * Implements hook_openid_connect_post_authorize().
+ *
+ * @param mixed[] $account
+ *   User account.
+ * @param mixed[] $context
+ *   Various openid_connect context. Tokens etc.
+ */
+function dpl_login_openid_connect_post_authorize(array $account, array $context): void {
   $access_token = AccessToken::createFromOpenidConnectContext($context);
   /** @var Drupal\dpl_login\UserTokensProvider $token_provider */
   $token_provider = \Drupal::service('dpl_login.user_tokens');

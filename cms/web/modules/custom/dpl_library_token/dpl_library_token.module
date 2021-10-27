@@ -8,7 +8,7 @@
  */
 
 /**
- * Implements hook_cron().
+ * Implements hook_cron.
  */
 function dpl_library_token_cron(): void {
   /** @var Drupal\dpl_library_token\LibraryTokenHandler $handler */

@@ -10,7 +10,7 @@ use Drupal\Core\Config\Config;
 /**
  * Implements hook_install().
  */
-function dpl_login_install() {
+function dpl_login_install(): void {
   $openid_connect_conf = \Drupal::configFactory()
     ->getEditable('openid_connect.settings')
     ->set('always_save_userinfo', TRUE)

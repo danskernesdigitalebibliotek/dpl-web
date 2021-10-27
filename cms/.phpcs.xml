@@ -5,4 +5,9 @@
 
   <rule ref="Drupal" />
   <rule ref="DrupalPractice"/>
+  <rule ref="Drupal.Commenting">
+    <exclude name="Drupal.Commenting.HookComment.HookParamDoc"/>
+    <exclude name="Drupal.Commenting.HookComment.HookReturnDoc"/>
+    <exclude name="Drupal.Commenting.HookComment.HookCommentFormat"/>
+  </rule>
 </ruleset>

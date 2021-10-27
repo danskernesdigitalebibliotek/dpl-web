@@ -2,7 +2,7 @@
 
 /**
  * @file
- * Ddb_react drupal module file.
+ * Ddb_react drupal extension file.
  *
  * General handling of importing
  * and using the DDB react components as libraries.
@@ -13,10 +13,16 @@ use Drupal\ddb_react\DdbReactInterface;
 
 /**
  * Implements hook_library_info_alter().
+ *
+ * @param mixed[] $libraries
+ *   An associative array of libraries registered by $extension.
+ * @param string $extension
+ *   Can either be 'core' or the machine name of the extension
+ *   that registered the libraries.
  */
-function ddb_react_library_info_alter(array &$libraries, string $module): void {
+function ddb_react_library_info_alter(array &$libraries, string $extension): void {
   $library_info = NULL;
-  if ($module != 'ddb_react') {
+  if ($extension != 'ddb_react') {
     return;
   }
 

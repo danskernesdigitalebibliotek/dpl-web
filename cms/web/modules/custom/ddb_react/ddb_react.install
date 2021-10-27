@@ -7,6 +7,12 @@
 
 /**
  * Implements hook_requirements().
+ *
+ * @param string $phase
+ *   The phase in which requirements are checked.
+ *
+ * @return mixed[]
+ *   Module requirements.
  */
 function ddb_react_requirements(string $phase): array {
   $requirements = [];
