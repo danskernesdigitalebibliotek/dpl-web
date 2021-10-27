@@ -155,10 +155,11 @@ class LibraryTokenHandler {
       ];
 
       if ($e instanceof RequestException && $e->hasResponse()) {
-        if ($response = $e->getResponse()) {
-          $response_body = $response->getBody()->getContents();
-          $variables['@error_message'] .= ' Response: ' . $response_body;
-        }
+        // Since we already checked via RequestException::hasResponse
+        // we do not need additional checking.
+        /* @phpstan-ignore-next-line */
+        $response_body = $e->getResponse()->getBody()->getContents();
+        $variables['@error_message'] .= ' Response: ' . $response_body;
       }
       $this->logger->log(LogLevel::ERROR, '@message. Details: @error_message', $variables);
     }
