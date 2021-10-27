@@ -6,6 +6,11 @@
   <rule ref="Drupal" />
   <rule ref="DrupalPractice"/>
   <rule ref="Drupal.Commenting">
+    <!--
+      We want to be able to use strict typing even in hooks.
+      But that conflicts with the Drupal Hook Comment rules.
+      By disabling the rules we are able to document params and return.
+    -->
     <exclude name="Drupal.Commenting.HookComment.HookParamDoc"/>
     <exclude name="Drupal.Commenting.HookComment.HookReturnDoc"/>
     <exclude name="Drupal.Commenting.HookComment.HookCommentFormat"/>
