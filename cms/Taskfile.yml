@@ -66,6 +66,10 @@ tasks:
       - task: dev:prepare
       - task: dev:composer:install
       - task: dev:run
+      - task: dev:drush
+        vars: {CLI_ARGS: "site-install -y"}
+      - task: dev:drush
+        vars: {CLI_ARGS: "user-login"}
 
   source:build:
     summary: Build core source image.
