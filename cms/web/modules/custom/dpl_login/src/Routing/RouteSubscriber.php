@@ -26,6 +26,12 @@ class RouteSubscriber extends RouteSubscriberBase {
       $route->setPath('/adgangsplatformen/callback');
       $route->setDefault('client_name', 'adgangsplatformen');
     }
+
+    // Rewire the core logout route to ours
+    // so we can logout users remotely as well.
+    if ($route = $collection->get('user.logout')) {
+      $route->setPath('/logout');
+    }
   }
 
 }

@@ -27,6 +27,7 @@ class Adgangsplatformen extends OpenIDConnectClientBase {
       'authorization_endpoint' => 'https://login.bib.dk/oauth/authorize',
       'token_endpoint' => 'https://login.bib.dk/oauth/token/',
       'userinfo_endpoint' => 'https://login.bib.dk/userinfo/',
+      'logout_endpoint' => 'https://login.bib.dk/logout',
       'agency_id' => NULL,
     ] + parent::defaultConfiguration();
   }
@@ -59,6 +60,11 @@ class Adgangsplatformen extends OpenIDConnectClientBase {
       '#title' => $this->t('UserInfo endpoint'),
       '#type' => 'textfield',
       '#default_value' => $this->configuration['userinfo_endpoint'],
+    ];
+    $form['logout_endpoint'] = [
+      '#title' => $this->t('Logout endpoint'),
+      '#type' => 'textfield',
+      '#default_value' => $this->configuration['logout_endpoint'],
     ];
     $form['agency_id'] = [
       '#title' => $this->t('Agency ID'),
@@ -96,12 +102,9 @@ class Adgangsplatformen extends OpenIDConnectClientBase {
    */
   protected function getUrlOptions($scope, GeneratedUrl $redirect_uri): array {
     $options = parent::getUrlOptions($scope, $redirect_uri);
+    $options['query'] += ['agency' => $this->configuration['agency_id']];
 
-    return [
-      'query' => [
-        'agency' => $this->configuration['agency_id'],
-      ] + $options['query'],
-    ] + $options;
+    return $options;
   }
 
   /**
