@@ -18,11 +18,9 @@ use Drupal\Core\KeyValueStore\KeyValueExpirableFactoryInterface;
 use Drupal\dpl_library_token\Exception\MissingConfigurationException;
 
 /**
- * Unit tests proving that the phpUnit setup works.
- *
- * @group ci_test_demo_mk14
+ * Unit tests for the Library Token Handler.
  */
-class DplLibraryCronTest extends UnitTestCase {
+class LibraryTokenHandlerTest extends UnitTestCase {
 
   /**
    * Test behaviour when no token has been stored yet.
