@@ -140,20 +140,20 @@ class DplLibraryCronTest extends UnitTestCase {
     return [
       [
         NULL,
-        'Config variable token_endpoint is missing',
+        'Adgangsplatformen plugin config variable token_endpoint is missing',
       ],
       [
         [
           'token_endpoint' => 'token_endpoint',
         ],
-        'Config variable client_id is missing',
+        'Adgangsplatformen plugin config variable client_id is missing',
       ],
       [
         [
           'token_endpoint' => 'token_endpoint',
           'client_id' => 'client_id',
         ],
-        'Config variable client_secret is missing',
+        'Adgangsplatformen plugin config variable client_secret is missing',
       ],
       [
         [
@@ -161,7 +161,7 @@ class DplLibraryCronTest extends UnitTestCase {
           'client_id' => 'client_id',
           'client_secret' => 'client_secret',
         ],
-        'Config variable agency_id is missing',
+        'Adgangsplatformen plugin config variable agency_id is missing',
       ],
     ];
   }

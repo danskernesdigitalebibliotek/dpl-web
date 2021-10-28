@@ -179,7 +179,7 @@ class LibraryTokenHandler {
     ] as $config_key) {
       if (empty($this->settings[$config_key])) {
         throw new MissingConfigurationException(
-          sprintf('Config variable %s is missing', $config_key)
+          sprintf('Adgangsplatformen plugin config variable %s is missing', $config_key)
         );
       }
     }
