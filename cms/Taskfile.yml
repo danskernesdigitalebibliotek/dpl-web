@@ -55,6 +55,13 @@ tasks:
     cmds:
       - docker-compose up -d
 
+  dev:setup:
+    desc: Create local development setup
+    cmds:
+      - task: dev:prepare
+      - task: dev:composer:install
+      - task: dev:run
+
   source:build:
     summary: Build core source image.
     cmds:
@@ -71,10 +78,3 @@ tasks:
     cmds:
       - task: source:build
       - task: source:push
-
-  dev:setup:
-    desc: Create local development setup
-    cmds:
-      - task: dev:prepare
-      - task: dev:composer:install
-      - task: dev:run
