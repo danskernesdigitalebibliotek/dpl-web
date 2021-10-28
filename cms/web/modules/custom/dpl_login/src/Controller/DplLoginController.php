@@ -6,7 +6,6 @@ use Drupal\Core\Url;
 use Psr\Log\LogLevel;
 use Drupal\dpl_login\UserTokensProvider;
 use Drupal\Core\Controller\ControllerBase;
-use Symfony\Component\HttpFoundation\Request;
 use Drupal\Core\Config\ConfigFactoryInterface;
 use Drupal\Core\Routing\TrustedRedirectResponse;
 use Drupal\Core\PageCache\ResponsePolicy\KillSwitch;
@@ -100,14 +99,12 @@ class DplLoginController extends ControllerBase {
   /**
    * Logs out user externally and internally.
    *
-   * @param \Symfony\Component\HttpFoundation\Request $request
-   *   Current request.
    * @todo Insert TrustedRedirectResponse|RedirectResponse as return type when going to PHP ^8.0.
    *
    * @return \Drupal\Core\Routing\TrustedRedirectResponse|\Symfony\Component\HttpFoundation\RedirectResponse
    *   Redirect to external logout service or front if not possible.
    */
-  public function logout(Request $request) {
+  public function logout() {
     // We need this to prevent the redircet to be cached.
     $this->killSwitch->trigger();
 
@@ -128,20 +125,25 @@ class DplLoginController extends ControllerBase {
     // We do not want the user to get stuck on the site in a logged in state.
     user_logout();
 
+    // Create url for logout service that it should redirect back to.
+    // Since toString(TRUE) is called
+    // we know that the return value of toString() is GeneratedUrl
+    // and consequently we are able to call getGeneratedUrl in the end.
+    /* @phpstan-ignore-next-line */
+    $redirect_uri = Url::fromRoute('<front>', [], ["absolute" => TRUE])
+      ->toString(TRUE)
+      ->getGeneratedUrl();
+
     // Remote logout service url.
     $url = Url::fromUri($logout_endpoint, [
       'query' => [
         'singlelogout' => 'true',
         'access_token' => $access_token->token,
-        'redirect_uri' => $request->getSchemeAndHttpHost(),
+        'redirect_uri' => $redirect_uri,
       ],
-    ])->toString();
+    ]);
 
-    // Since we do not give Url::toString() TRUE as parameter
-    // we know that $url is a string although the docblock of the function
-    // says: @return string|\Drupal\Core\GeneratedUrl.
-    /* @phpstan-ignore-next-line */
-    return TrustedRedirectResponse::create($url);
+    return TrustedRedirectResponse::create($url->toUriString());
   }
-  
+
 }
