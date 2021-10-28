@@ -77,4 +77,4 @@ jobs:
         run: |
           composer install --no-interaction --no-progress
       - name: Run PhpUnit
-        run: ./vendor/bin/phpunit web/modules/custom/ci_test_demo_mk14/tests/src/Unit/CiTestDemoMk14.php
+        run: ./vendor/bin/phpunit
