@@ -7,9 +7,9 @@
  * Handles authentication against Adgangsplatformen.
  */
 
-use Drupal\user\Entity\User;
 use Drupal\Core\Site\Settings;
 use Drupal\dpl_login\AccessToken;
+use Drupal\Core\Session\AccountInterface;
 
 /**
  * Implements hook_openid_connect_userinfo_alter().
@@ -45,12 +45,12 @@ function dpl_login_openid_connect_userinfo_alter(array &$userinfo, array $contex
 /**
  * Implements hook_openid_connect_post_authorize().
  *
- * @param \Drupal\user\Entity\User $account
+ * @param \Drupal\Core\Session\AccountInterface $account
  *   User account.
  * @param mixed[] $context
  *   Various openid_connect context. Tokens etc.
  */
-function dpl_login_openid_connect_post_authorize(User $account, array $context): void {
+function dpl_login_openid_connect_post_authorize(AccountInterface $account, array $context): void {
   $access_token = AccessToken::createFromOpenidConnectContext($context);
   /** @var Drupal\dpl_login\UserTokensProvider $token_provider */
   $token_provider = \Drupal::service('dpl_login.user_tokens');
