@@ -35,6 +35,7 @@
         "cweagans/composer-patches": "1.7.0",
         "danskernesdigitalebibliotek/ddb-react": "2.4.0",
         "dealerdirect/phpcodesniffer-composer-installer": "^0.7.1",
+        "drupal/config_ignore": "^2.3",
         "drupal/core-project-message": "9.1.7",
         "drupal/core-recommended": "9.1.7",
         "drupal/libraries": "^3.0@beta",
