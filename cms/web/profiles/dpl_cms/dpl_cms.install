@@ -1,0 +1,8 @@
+<?php
+/**
+ * @file
+ * Install, update and uninstall functions for the dpl_cms install profile.
+ */
+
+// Do not implement dpl_cms_install(). We run site installs with existing
+// configuration. This explicitly does not support install hooks in profiles.
