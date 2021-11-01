@@ -10,6 +10,7 @@
 use Drupal\Core\Site\Settings;
 use Drupal\dpl_login\AccessToken;
 use Drupal\Core\Session\AccountInterface;
+use Drupal\dpl_login\DplLoginInterface;
 
 /**
  * Implements hook_openid_connect_userinfo_alter().
@@ -40,10 +41,6 @@ function dpl_login_openid_connect_userinfo_alter(array &$userinfo, array $contex
 
 /**
  * Implements hook_openid_connect_post_authorize().
- */
-
-/**
- * Implements hook_openid_connect_post_authorize().
  *
  * @param \Drupal\Core\Session\AccountInterface $account
  *   User account.
@@ -55,4 +52,45 @@ function dpl_login_openid_connect_post_authorize(AccountInterface $account, arra
   /** @var Drupal\dpl_login\UserTokensProvider $token_provider */
   $token_provider = \Drupal::service('dpl_login.user_tokens');
   $token_provider->setAccessToken($access_token);
+}
+
+/**
+ * Implements hook_openid_connect_userinfo_save().
+ *
+ * @param \Drupal\Core\Session\AccountInterface $account
+ *   The user account being saved.
+ * @param mixed[] $context
+ *   Various openid_connect context. Tokens etc.
+ */
+function dpl_login_openid_connect_userinfo_save(AccountInterface $account, array $context): void {
+  // If the user is new we attach a role to the user.
+  if (!_dpl_login_user_has_been_processed($context)) {
+    // We had to add AccountInterface in order to prevent Phpstan
+    // throwing an iterable type error.
+    // But the interface does not have the addRole method
+    // because it is the UserInterface that is used (which has the method).
+    // TODO: Find a proper solution to this problem.
+    // @phpstan-ignore-next-line
+    $account->addRole(DplLoginInterface::DPL_ROLES_AUTHENTICATED_REGISTERED_READER);
+    // Same as above.
+    // @phpstan-ignore-next-line
+    $account->save();
+  }
+}
+
+/**
+ * Decide if the user has already been processed.
+ *
+ * @param mixed[] $openid_connect_context
+ *   Various openid_connect context. Tokens etc.
+ *
+ * @return bool
+ *   Yes or no?
+ */
+function _dpl_login_user_has_been_processed(array $openid_connect_context): bool {
+  // If we for some reason do not have the information
+  // about the user.
+  // Or if we are sure that the user is an already created user
+  // then we do not attach any information.
+  return !$openid_connect_context['is_new'] ?? FALSE;
 }

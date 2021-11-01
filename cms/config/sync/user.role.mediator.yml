@@ -1,0 +1,9 @@
+uuid: 9cb4763e-19ed-475b-8582-2cddd9002d25
+langcode: en
+status: true
+dependencies: {  }
+id: mediator
+label: Formidler
+weight: 5
+is_admin: null
+permissions: {  }

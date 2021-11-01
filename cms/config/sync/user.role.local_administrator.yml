@@ -1,0 +1,9 @@
+uuid: 7408de3c-bbe4-43db-86fa-a78fc72fa05a
+langcode: en
+status: true
+dependencies: {  }
+id: local_administrator
+label: Lokaladministrator
+weight: 3
+is_admin: null
+permissions: {  }
