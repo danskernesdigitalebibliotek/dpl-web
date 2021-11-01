@@ -1,6 +1,6 @@
 {
     "name": "danskernesdigitalebibliotek/dpl-cms",
-    "description": "Biblioteks core cms Drupal projekt",
+    "description": "Web platform for the Danish Public Libraries",
     "type": "project",
     "license": "GPL-2.0+",
     "authors": [
