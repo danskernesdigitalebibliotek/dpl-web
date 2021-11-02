@@ -38,12 +38,12 @@ tasks:
   dev:composer:
     summary: Performs composer command inside container. Expects parameter.
     cmds:
-      - docker-compose run cli sh -c "COMPOSER_MEMORY_LIMIT=-1 composer {{.CLI_ARGS}}"
+      - docker-compose run cli sh -c "composer {{.CLI_ARGS}}"
 
   dev:drush:
     summary: Runs drush command inside container. Expects parameter.
     cmds:
-      - docker-compose run cli sh -c "COMPOSER_MEMORY_LIMIT=-1 drush {{.CLI_ARGS}}"
+      - docker-compose run cli sh -c "drush {{.CLI_ARGS}}"
 
   dev:prepare:
     summary: Prepare local development setup
