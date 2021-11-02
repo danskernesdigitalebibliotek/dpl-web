@@ -40,6 +40,9 @@ services:
 
   php:
     image: uselagoon/php-7.4-fpm:latest
+    depends_on:
+      mariadb:
+        condition: service_healthy
     volumes:
       - 'projectroot:/app'
     environment:
@@ -53,6 +56,11 @@ services:
     image: uselagoon/mariadb-drupal:latest
     labels:
       lagoon.type: mariadb
+    # Do a periodic healthcheck. This is mainly used to block the php service
+    # from starting up before we have a healthy database.
+    healthcheck:
+      test: "/usr/share/container-scripts/mysql/readiness-probe.sh"
+      interval: 10s
     ports:
       - "3306" # exposes the port 3306 with a random local port, find it with `docker-compose port mariadb 3306`
 
