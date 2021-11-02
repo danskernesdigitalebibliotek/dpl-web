@@ -13,6 +13,14 @@ ignored_config_entities:
   - ~file.settings
   - ~filter.format.plain_text
   - ~filter.settings
+  - ~language.entity.da
+  - ~language.entity.en
+  - ~language.entity.und
+  - ~language.entity.zxx
+  - ~language.mappings
+  - ~language.negotiation
+  - ~language.types
+  - ~locale.settings
   - ~node.settings
   - '~system.action.node_*_action'
   - '~system.action.user_*_action'
