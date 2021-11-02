@@ -7,6 +7,6 @@ namespace Drupal\dpl_login;
  */
 interface DplLoginInterface {
 
-  const DPL_ROLES_AUTHENTICATED_REGISTERED_READER = 'authenticated_registered_reader';
+  const ROLE_PATRON = 'patron';
 
 }

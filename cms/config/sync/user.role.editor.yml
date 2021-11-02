@@ -3,7 +3,7 @@ langcode: en
 status: true
 dependencies: {  }
 id: editor
-label: Redaktør
+label: 'Editor'
 weight: 4
 is_admin: null
 permissions: {  }

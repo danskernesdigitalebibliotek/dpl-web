@@ -3,7 +3,7 @@ langcode: en
 status: true
 dependencies: {  }
 id: local_administrator
-label: Lokaladministrator
+label: 'Local Administrator'
 weight: 3
 is_admin: null
 permissions: {  }

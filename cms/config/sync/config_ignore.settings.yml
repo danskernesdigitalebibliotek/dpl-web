@@ -45,7 +45,11 @@ ignored_config_entities:
   - ~user.flood
   - ~user.mail
   - ~user.role.anonymous
+  - ~user.role.administrator
   - ~user.role.authenticated
+  - ~user.role.editor
+  - ~user.role.local_administrator
+  - ~user.role.patron
   - ~user.settings
 _core:
   default_config_hash: UVH1aJ4b44UM-VdPVN7hNNuuVqfReJxwfVeDQH1Hvsk
