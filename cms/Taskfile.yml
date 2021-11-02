@@ -53,7 +53,7 @@ tasks:
         vars: {CLI_ARGS: "composer install"}
       - task: dev:run
       - task: dev:cli
-        vars: {CLI_ARGS: "drush site-install -y"}
+        vars: {CLI_ARGS: "drush site-install --existing-config -y"}
       - task: dev:cli
         vars: {CLI_ARGS: "drush user-login"}
 
