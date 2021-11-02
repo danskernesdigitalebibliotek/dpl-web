@@ -35,25 +35,15 @@ tasks:
       - sh: "[ ! -z {{.CR_PAT}} ]"
         msg: "Env variable CR_PAT is not set or empty."
 
-  dev:composer:
-    summary: Performs composer command inside container. Expects parameter.
+  dev:cli:
+    summary: Performs command inside container. Expects parameter(s).
     cmds:
-      - docker-compose run cli sh -c "composer {{.CLI_ARGS}}"
-
-  dev:drush:
-    summary: Runs drush command inside container. Expects parameter.
-    cmds:
-      - docker-compose run cli sh -c "drush {{.CLI_ARGS}}"
+      - docker-compose run cli sh -c "{{.CLI_ARGS}}"
 
   dev:prepare:
     summary: Prepare local development setup
     cmds:
       - cp -n .env.example .env || true
-
-  dev:composer:install:
-    summary: Install drupal.
-    cmds:
-      - task dev:composer -- install
 
   dev:run:
     summary: Run docker compose
@@ -64,12 +54,13 @@ tasks:
     desc: Create local development setup
     cmds:
       - task: dev:prepare
-      - task: dev:composer:install
+      - task: dev:cli
+        vars: {CLI_ARGS: "composer install"}
       - task: dev:run
-      - task: dev:drush
-        vars: {CLI_ARGS: "site-install -y"}
-      - task: dev:drush
-        vars: {CLI_ARGS: "user-login"}
+      - task: dev:cli
+        vars: {CLI_ARGS: "drush site-install -y"}
+      - task: dev:cli
+        vars: {CLI_ARGS: "drush user-login"}
 
   source:build:
     summary: Build core source image.
