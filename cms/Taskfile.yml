@@ -55,15 +55,12 @@ tasks:
   dev:reset:
     desc: Create local development setup in a clean state
     cmds:
-      - task: dev:stop
+      - task dev:stop
       - cp -n .env.example .env || true
-      - task: dev:cli
-        vars: {CLI_ARGS: "composer install"}
-      - task: dev:run
-      - task: dev:cli
-        vars: {CLI_ARGS: "drush site-install --existing-config -y"}
-      - task: dev:cli
-        vars: {CLI_ARGS: "drush user-login"}
+      - task dev:cli -- composer install
+      - task dev:start
+      - task dev:cli -- drush site-install --existing-config -y
+      - task dev:cli -- drush user-login
 
   source:build:
     summary: Build core source image.
