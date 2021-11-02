@@ -9,6 +9,7 @@ The command builds the site with dependencies and starts the required docker con
 In order to run local development you need:
 * go-task, https://taskfile.dev
 * docker
+* Perferably support for `VIRTUAL_HOST` environment variables for Docker containers. Examples: [Dory (OSX)](https://github.com/FreedomBen/dory) or [`nginx-proxy`](https://github.com/nginx-proxy/nginx-proxy).
 
 ## Other initial steps
 
