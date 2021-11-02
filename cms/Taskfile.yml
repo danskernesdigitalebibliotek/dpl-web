@@ -62,6 +62,11 @@ tasks:
       - task dev:cli -- drush site-install --existing-config -y
       - task dev:cli -- drush user-login
 
+  dev:phpunit:
+    desc: Run PHPUnit tests with code coverage
+    cmds:
+      - docker compose run -e XDEBUG_ENABLE=true cli vendor/bin/phpunit --coverage-text
+
   source:build:
     summary: Build core source image.
     cmds:
