@@ -2,7 +2,7 @@
 This is the main repository used for building the core Drupal CMS which is used by the danish public libraries.
 
 # Running a local development
-If you want to develop and maintain the DPL cms project locally you can run: `dev:setup`.
+If you want to develop and maintain the DPL cms project locally you can run: `dev:reset`.
 The command builds the site with dependencies and starts the required docker containers.
 
 ## Prerequisities

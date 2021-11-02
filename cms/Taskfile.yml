@@ -40,22 +40,27 @@ tasks:
     cmds:
       - docker compose run cli sh -c "{{.CLI_ARGS}}"
 
-  dev:run:
+  dev:start:
     summary: Run docker compose
     cmds:
       - docker compose up -d
 
-  dev:setup:
-    desc: Create local development setup
+  dev:stop:
+    summary: Stop docker compose environment
     cmds:
+      # DNS proxies such as Dory may hang on to the network for a bit which
+      # causes the process to fail. Wait and retry if that is the case
+      - docker-compose down --volumes --remove-orphans || (sleep 3 && docker-compose down)
+
+  dev:reset:
+    desc: Create local development setup in a clean state
+    cmds:
+      - task dev:stop
       - cp -n .env.example .env || true
-      - task: dev:cli
-        vars: {CLI_ARGS: "composer install"}
-      - task: dev:run
-      - task: dev:cli
-        vars: {CLI_ARGS: "drush site-install --existing-config -y"}
-      - task: dev:cli
-        vars: {CLI_ARGS: "drush user-login"}
+      - task dev:cli -- composer install
+      - task dev:start
+      - task dev:cli -- drush site-install --existing-config -y
+      - task dev:cli -- drush user-login
 
   source:build:
     summary: Build core source image.
