@@ -21,3 +21,6 @@ distribution:
 # List any themes that should be installed as part of the profile installation.
 # Note that this will not set any theme as the default theme.
 #themes:
+
+'interface translation project': dpl_cms
+'interface translation server pattern': profiles/dpl_cms/translations/%language.po
