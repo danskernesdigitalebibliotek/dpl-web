@@ -38,12 +38,12 @@ tasks:
   dev:cli:
     summary: Performs command inside container. Expects parameter(s).
     cmds:
-      - docker-compose run cli sh -c "{{.CLI_ARGS}}"
+      - docker compose run cli sh -c "{{.CLI_ARGS}}"
 
   dev:run:
     summary: Run docker compose
     cmds:
-      - docker-compose up -d
+      - docker compose up -d
 
   dev:setup:
     desc: Create local development setup
