@@ -16,10 +16,10 @@ module:
   toolbar: 0
   update: 0
   user: 0
-  minimal: 1000
+  dpl_cms: 1000
 theme:
   stark: 0
   claro: 0
-profile: minimal
+profile: dpl_cms
 _core:
   default_config_hash: R4IF-ClDHXxblLcG0L7MgsLvfBIMAvi_skumNFQwkDc

@@ -45,6 +45,10 @@ This can be split into different types of configuration:
 
 ## Howtos
 
+### Install a new site from scratch
+
+1. Run `drush site-install --existing-config -y`
+
 ### Add new core configuration
 
 1. Create the relevant configuration through the administration interface
@@ -68,3 +72,49 @@ NB: The keys for these configuration files should already be in
 1. Update the relevant configuration through the administration interface
 2. Run `drush config-export -y`
 3. Commit the updated configuration files
+
+### Enable a new module
+
+1. Add the module to the project code base or as a Composer dependency
+2. Create an update hook in the DPL CMS installation profile which enables the
+   module[^1]
+
+```php
+function dpl_cms_update_9000() {
+   \Drupal::service('module_installer')->install(['shortcut']);
+}
+```
+
+3. Run the update hook locally `drush updatedb -y`
+4. Export configuration `drush config-export -y`
+5. Commit the resulting changes to the site configuration, codebase and/or
+   Composer files
+
+### Uninstall a existing module
+
+1. Create an update hook in the DPL CMS installation profile which uninstalls
+   the module[^1]
+
+```php
+function dpl_cms_update_9001() {
+   \Drupal::service('module_installer')->uninstall(['shortcut']);
+}
+```
+
+2. Run the update hook locally `drush updatedb -y`
+3. Commit the resulting changes to the site configuration
+4. Export configuration `drush config-export -y`
+5. Plan for a future removal of code for the module
+
+### Deploy configuration changes
+
+1. Run `drush deploy`
+
+NB: It is important that the official Drupal deployment procedure is followed.
+Database updates must be executed before configuration is imported. Otherwise
+we risk ending up in a situation where the configuration contains references
+to modules which are not enabled.
+
+[^1]: Creating update hooks for modules is only necessary once we have sites
+running in production which will not be reinstalled. Until then it is OK to
+enable/uninstall modules as normal and committing changes to `core.extensions`.

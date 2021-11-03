@@ -1,0 +1,23 @@
+name: DPL CMS
+type: profile
+description: 'Web platform for the Danish Public Libraries'
+core_version_requirement: '^9'
+
+distribution:
+  name: DPL CMS
+
+# The following distribution options are intentionally left out.
+# The installation process should be run with the --existing-config option. This
+# will enable all dependencies.
+
+# Modules to install to support the profile.
+#install:
+
+# Required modules
+# Note that any dependencies of the modules listed here will be installed
+# automatically.
+#dependencies:
+
+# List any themes that should be installed as part of the profile installation.
+# Note that this will not set any theme as the default theme.
+#themes:
