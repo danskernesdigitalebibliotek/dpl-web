@@ -1,6 +1,6 @@
 name: Novel
 type: theme
-base theme: classy
+base theme: stable
 description: 'Custom theme for the Danish Public Libraries'
 core_version_requirement: ^8 || ^9
 
