@@ -40,7 +40,9 @@
         "drupal/core-recommended": "^9.2.7",
         "drupal/libraries": "^3.0@beta",
         "drupal/openid_connect": "^1.1",
+        "drupal/purge": "^3.2",
         "drupal/redis": "^1.5",
+        "drupal/varnish_purge": "^2.1",
         "drush/drush": "10.4.3",
         "zaporylie/composer-drupal-optimizations": "1.2.0"
     },

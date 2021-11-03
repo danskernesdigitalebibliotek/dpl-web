@@ -22,6 +22,9 @@ ignored_config_entities:
   - ~language.types
   - ~locale.settings
   - ~node.settings
+  - ~purge_queuer_coretags
+  - ~purge.logger_channels
+  - ~purge.plugins
   - ~system.action.node_*_action
   - ~system.action.user_*_action
   - ~system.authorize
@@ -59,5 +62,6 @@ ignored_config_entities:
   - ~user.role.local_administrator
   - ~user.role.patron
   - ~user.settings
+  - ~varnish_purger.settings.65fc931232
 _core:
   default_config_hash: UVH1aJ4b44UM-VdPVN7hNNuuVqfReJxwfVeDQH1Hvsk

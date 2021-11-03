@@ -34,6 +34,23 @@ x-environment:
     #XDEBUG_ENABLE: "true"
 
 services:
+  varnish: # Caching HTTP reverse proxy that serves (mostly) anonymous requests.
+    # https://docs.lagoon.sh/lagoon/docker-images/varnish
+    image: uselagoon/varnish-6-drupal:latest
+    depends_on:
+      - nginx
+    labels:
+      lagoon.type: varnish
+    links:
+      - nginx # links varnish to the nginx in this docker-compose project, or it would try to connect to any nginx running in docker
+    << : *default-user # uses the defined user from top
+    environment:
+      << : *default-environment
+      # VARNISH_BYPASS: "true" # Add this to disable caching in varnish.
+      # Is used by [nginx-proxy](https://github.com/nginx-proxy/nginx-proxy) or [dory](https://github.com/FreedomBen/dory)
+      VIRTUAL_HOST: ${COMPOSE_PROJECT_NAME}.docker
+      VIRTUAL_PORT: 8080
+
   nginx: # Webserver in front of php-fpm. Serves static assets.
     # https://docs.lagoon.sh/lagoon/docker-images/nginx/nginx-drupal
     image: uselagoon/nginx-drupal:latest
@@ -44,7 +61,7 @@ services:
     environment:
       << : *default-environment # loads the defined environment variables from the top
       # Route that should be used locally.
-      VIRTUAL_HOST: ${COMPOSE_PROJECT_NAME}.docker
+      VIRTUAL_HOST: nginx.${COMPOSE_PROJECT_NAME}.docker
     labels:
       lagoon.type: nginx-php-persistent
       lagoon.persistent: /app/web/sites/default/files/ # define where the persistent storage should be mounted too
