@@ -3,7 +3,7 @@ langcode: en
 status: true
 dependencies: {  }
 id: patron
-label: 'Patron'
+label: Patron
 weight: 6
 is_admin: null
 permissions: {  }

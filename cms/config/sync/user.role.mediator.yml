@@ -3,7 +3,7 @@ langcode: en
 status: true
 dependencies: {  }
 id: mediator
-label: 'Mediator'
+label: Mediator
 weight: 5
 is_admin: null
 permissions: {  }
