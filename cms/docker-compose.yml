@@ -14,7 +14,7 @@ x-environment:
 
 services:
   cli: # cli container, will be used for executing composer and any local commands (drush, drupal, etc.)
-    image: uselagoon/php-7.4-cli-drupal:latest
+    image: uselagoon/php-8.0-cli-drupal:latest
     volumes:
       - 'projectroot:/app'
     environment:
@@ -39,7 +39,7 @@ services:
       lagoon.persistent: /app/web/sites/default/files/ # define where the persistent storage should be mounted too
 
   php:
-    image: uselagoon/php-7.4-fpm:latest
+    image: uselagoon/php-8.0-fpm:latest
     depends_on:
       mariadb:
         condition: service_healthy

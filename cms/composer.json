@@ -36,15 +36,15 @@
         "danskernesdigitalebibliotek/ddb-react": "2.4.0",
         "dealerdirect/phpcodesniffer-composer-installer": "^0.7.1",
         "drupal/config_ignore": "^2.3",
-        "drupal/core-project-message": "9.1.7",
-        "drupal/core-recommended": "9.1.7",
+        "drupal/core-project-message": "^9.2.7",
+        "drupal/core-recommended": "^9.2.7",
         "drupal/libraries": "^3.0@beta",
         "drupal/openid_connect": "^1.1",
         "drush/drush": "10.4.3",
         "zaporylie/composer-drupal-optimizations": "1.2.0"
     },
     "require-dev": {
-        "drupal/core-dev-pinned": "9.1.7",
+        "drupal/core-dev-pinned": "^9.2.7",
         "mglaman/phpstan-drupal": "^0.12.15",
         "phpstan/extension-installer": "^1.1"
     },
