@@ -1,7 +1,28 @@
+# This docker-compose file follows the best-practicis for a docker-compose setup
+# used by a Lagoon based project.
+# https://docs.lagoon.sh/lagoon/using-lagoon-the-basics/docker-compose-yml
+#
+# Note that this file is not actually processed by lagoon. Instead a specialized
+# version is injected during deployment by the dpl-platform. As a consequence
+# any major changes made to his file, will also need to be made to the version
+# used during deployment.
+#
+# Consult https://github.com/danskernesdigitalebibliotek/dpl-platform for
+# further details.
 version: '2.3'
 
 # This block is used for inclusion in the environment section of each container.
-# It is copied from the Lagoon documentation.
+x-volumes:
+  &default-volumes
+    # Define all volumes you would like to have real-time mounted into the docker containers
+    volumes:
+      - 'projectroot:/app'
+
+x-user:
+  &default-user
+    # The default user under which the containers should run. Change this if you are on linux and run with another user than id `1000`
+    user: '1000'
+
 x-environment:
   &default-environment
     # The php cli container needs this to be defined. Otherwise it is not possible to execute drush commands.
@@ -13,38 +34,29 @@ x-environment:
     #XDEBUG_ENABLE: "true"
 
 services:
-  cli: # cli container, will be used for executing composer and any local commands (drush, drupal, etc.)
-    image: uselagoon/php-8.0-cli-drupal:latest
-    volumes:
-      - 'projectroot:/app'
-    environment:
-      << : *default-environment # loads the defined environment variables from the top
-    labels:
-      # Lagoon Labels
-      lagoon.type: cli-persistent
-      lagoon.persistent.name: nginx # mount the persistent storage of nginx into this container
-      lagoon.persistent: /app/web/sites/default/files/ # location where the persistent storage should be mounted
-
-  nginx:
+  nginx: # Webserver in front of php-fpm. Serves static assets.
+    # https://docs.lagoon.sh/lagoon/docker-images/nginx/nginx-drupal
     image: uselagoon/nginx-drupal:latest
-    volumes:
-      - 'projectroot:/app'
+    depends_on:
+      - php
+    << : *default-volumes # loads the defined volumes from the top
+    << : *default-user # uses the defined user from top
     environment:
       << : *default-environment # loads the defined environment variables from the top
       # Route that should be used locally.
-      # Is used by [nginx-proxy](https://github.com/nginx-proxy/nginx-proxy) or [dory](https://github.com/FreedomBen/dory)
       VIRTUAL_HOST: ${COMPOSE_PROJECT_NAME}.docker
     labels:
       lagoon.type: nginx-php-persistent
       lagoon.persistent: /app/web/sites/default/files/ # define where the persistent storage should be mounted too
 
-  php:
+  php: # php-fpm server that executes php requests.
+    # https://docs.lagoon.sh/lagoon/docker-images/php-fpm
     image: uselagoon/php-8.0-fpm:latest
     depends_on:
       mariadb:
         condition: service_healthy
-    volumes:
-      - 'projectroot:/app'
+    << : *default-user # uses the defined user from top
+    << : *default-volumes # loads the defined volumes from the top
     environment:
       << : *default-environment # loads the defined environment variables from the top
     labels:
@@ -52,7 +64,8 @@ services:
       lagoon.name: nginx # we want this service be part of the nginx pod in Lagoon
       lagoon.persistent: /app/web/sites/default/files/ # define where the persistent storage should be mounted too
 
-  mariadb:
+  mariadb: # Main site database.
+    # https://docs.lagoon.sh/lagoon/docker-images/mariadb/mariadb-drupal
     image: uselagoon/mariadb-drupal:latest
     labels:
       lagoon.type: mariadb
@@ -63,6 +76,24 @@ services:
       interval: 10s
     ports:
       - "3306" # exposes the port 3306 with a random local port, find it with `docker-compose port mariadb 3306`
+    << : *default-user # uses the defined user from top
+    environment:
+      << : *default-environment
+
+  cli: # cli container, will be used for executing composer and any local commands (drush, drupal, etc.)
+    # https://docs.lagoon.sh/lagoon/docker-images/nginx/nginx-drupal
+    image: uselagoon/php-8.0-cli-drupal:latest
+    << : *default-volumes # loads the defined volumes from the top
+    user: root
+    environment:
+      << : *default-environment # loads the defined environment variables from the top
+    labels:
+      # Lagoon Labels
+      lagoon.type: cli-persistent
+      lagoon.persistent.name: nginx # mount the persistent storage of nginx into this container
+      lagoon.persistent: /app/web/sites/default/files/ # location where the persistent storage should be mounted
+    environment:
+      << : *default-environment # loads the defined environment variables from the top
 
 volumes:
   projectroot:
