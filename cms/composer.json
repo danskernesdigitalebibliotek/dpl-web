@@ -40,6 +40,7 @@
         "drupal/core-recommended": "^9.2.7",
         "drupal/libraries": "^3.0@beta",
         "drupal/openid_connect": "^1.1",
+        "drupal/redis": "^1.5",
         "drush/drush": "10.4.3",
         "zaporylie/composer-drupal-optimizations": "1.2.0"
     },
@@ -57,6 +58,7 @@
         "sort-packages": true
     },
     "extra": {
+        "composer-exit-on-patch-failure": true,
         "installer-paths": {
             "web/core": ["type:drupal-core"],
             "web/libraries/{$name}": ["type:drupal-library"],
@@ -76,6 +78,11 @@
             },
             "locations": {
                 "web-root": "web/"
+            }
+        },
+        "patches": {
+            "drupal/redis": {
+                "3207574: Patch against redis being include too late": "https://www.drupal.org/files/issues/2021-04-07/redis-report_warnings-3207574-2.patch"
             }
         }
     }

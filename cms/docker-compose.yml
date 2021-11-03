@@ -53,6 +53,8 @@ services:
     # https://docs.lagoon.sh/lagoon/docker-images/php-fpm
     image: uselagoon/php-8.0-fpm:latest
     depends_on:
+      redis:
+        condition: service_started
       mariadb:
         condition: service_healthy
     << : *default-user # uses the defined user from top
@@ -76,6 +78,15 @@ services:
       interval: 10s
     ports:
       - "3306" # exposes the port 3306 with a random local port, find it with `docker-compose port mariadb 3306`
+    << : *default-user # uses the defined user from top
+    environment:
+      << : *default-environment
+
+  redis: # In-memory key-value database used as the Drupal Core cache backend.
+    # https://docs.lagoon.sh/lagoon/docker-images/redis
+    image: uselagoon/redis-6:latest
+    labels:
+      lagoon.type: redis
     << : *default-user # uses the defined user from top
     environment:
       << : *default-environment
