@@ -24,7 +24,7 @@ Editors and administrators a.k.a normal Drupal users and does not require additi
 
 ## Consequences
 
-- By having a Drupal user tied to the external user we can use that context and make the server side rendering show different content according to the inlogged user.
+- By having a Drupal user tied to the external user we can use that context and make the server side rendering show different content according to the authenticated user.
 - Adgangsplatform settings have to be configured in the plugin in order to work.
 
 ## Future considerations
