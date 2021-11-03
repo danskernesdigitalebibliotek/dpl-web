@@ -24,10 +24,6 @@ $settings['container_yamls'][] = __DIR__ . '/services.yml';
  */
 include __DIR__ . "/settings.lagoon.php";
 
-// Hardcode a Site UUID to enable sharing of configuration between sites beyond
-// site install.
-$config['system.site']['uuid'] = '13ef1a53-dfb4-4c82-9b64-44586a366729';
-
 /**
  * Skipping permissions hardening.
  *

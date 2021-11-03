@@ -1,0 +1,25 @@
+uuid: bfc812bf-a92e-4fe5-90a2-227016b8d92f
+langcode: en
+status: true
+dependencies: {  }
+id: 65fc931232
+name: 'DPL CMS Varnish'
+invalidationtype: tag
+hostname: varnish
+port: 8080
+path: /
+request_method: BAN
+scheme: http
+verify: '1'
+headers:
+  -
+    field: Cache-Tags
+    value: '[invalidations:separated_pipe]'
+body: null
+body_content_type: null
+runtime_measurement: true
+timeout: !!float 1
+connect_timeout: !!float 1
+cooldown_time: !!float 0
+max_requests: 100
+http_errors: true
