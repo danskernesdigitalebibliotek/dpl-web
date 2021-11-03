@@ -1,0 +1,11 @@
+jsonlog_severity_threshold: 6
+jsonlog_truncate: 0
+jsonlog_siteid: c5375a474bad__drupal
+jsonlog_canonical: ''
+jsonlog_file_time: Ymd
+jsonlog_dir: ''
+jsonlog_stdout: true
+jsonlog_newline_prepend: false
+jsonlog_tags: ''
+_core:
+  default_config_hash: oZNaD81_Lm69pHa73xOTY2BCRKm1oIIotw0r0lqYBiI

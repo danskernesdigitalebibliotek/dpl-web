@@ -38,6 +38,7 @@
         "drupal/config_ignore": "^2.3",
         "drupal/core-project-message": "^9.2.7",
         "drupal/core-recommended": "^9.2.7",
+        "drupal/jsonlog": "^3.0",
         "drupal/libraries": "^3.0@beta",
         "drupal/openid_connect": "^1.1",
         "drupal/purge": "^3.2",
