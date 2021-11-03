@@ -8,6 +8,10 @@
  * It contains some defaults that the amazee.io team suggests, please edit them as required.
  */
 
+// Hardcode a Site UUID to enable sharing of configuration between sites beyond
+// site install.
+$config['system.site']['uuid'] = '13ef1a53-dfb4-4c82-9b64-44586a366729';
+
 // Defines where the sync folder of your configuration lives. In this case it's inside
 // the Drupal root, which is protected by amazee.io Nginx configs, so it cannot be read
 // via the browser. If your Drupal root is inside a subfolder (like 'web') you can put the config
