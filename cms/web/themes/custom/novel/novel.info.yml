@@ -3,8 +3,10 @@ type: theme
 base theme: classy
 description: 'A custom theme'
 core_version_requirement: ^8 || ^9
+
 libraries:
   - novel/base
+
 regions:
   header: 'Header'
   content: 'Content'
