@@ -71,10 +71,10 @@ jobs:
         with:
           php-version: ${{ env.PHP_VERSION }}
           tools: composer:${{ env.COMPOSER_VERSION }}
-          coverage: none
+          coverage: xdebug
           extensions: gd
       - name: Install Dependencies
         run: |
           composer install --no-interaction --no-progress
       - name: Run PhpUnit
-        run: ./vendor/bin/phpunit
+        run: ./vendor/bin/phpunit --coverage-text

@@ -49,8 +49,8 @@
       <directory>./web/modules/custom</directory>
       <!-- By definition test classes have no tests. -->
       <exclude>
-        <directory suffix="Test.php">../</directory>
-        <directory suffix="TestBase.php">../</directory>
+        <directory suffix="Test.php">./web/modules/custom</directory>
+        <directory suffix="TestBase.php">./web/modules/custom</directory>
       </exclude>
     </whitelist>
   </filter>
