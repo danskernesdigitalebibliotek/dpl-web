@@ -28,8 +28,9 @@ module:
   varnish_purger: 0
   dpl_cms: 1000
 theme:
-  stark: 0
   claro: 0
+  stable: 0
+  novel: 0
 profile: dpl_cms
 _core:
   default_config_hash: R4IF-ClDHXxblLcG0L7MgsLvfBIMAvi_skumNFQwkDc

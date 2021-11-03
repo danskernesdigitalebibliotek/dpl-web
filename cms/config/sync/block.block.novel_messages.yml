@@ -1,16 +1,16 @@
-uuid: e5d48fab-9f87-41f7-a683-920cef8ccdc3
+uuid: f71235fc-f909-4c22-9ec9-59bd7dd9e7f0
 langcode: en
 status: true
 dependencies:
   module:
     - system
   theme:
-    - stark
+    - novel
 _core:
   default_config_hash: 5MNdk3fpMKx_xxBTcz2T11DL4XEU1H5SgHl8BsYdFsA
-id: stark_messages
-theme: stark
-region: highlighted
+id: novel_messages
+theme: novel
+region: header
 weight: 0
 provider: null
 plugin: system_messages_block

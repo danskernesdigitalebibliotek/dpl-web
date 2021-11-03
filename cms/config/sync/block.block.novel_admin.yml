@@ -1,4 +1,4 @@
-uuid: 595cea24-fc12-41d8-9e32-b7078db0f979
+uuid: a60bc529-945d-4b43-ae11-c7c525fa3190
 langcode: en
 status: true
 dependencies:
@@ -7,12 +7,12 @@ dependencies:
   module:
     - system
   theme:
-    - stark
+    - novel
 _core:
   default_config_hash: OFEDxrButmQ8Vac1kiVr1gtw6vYKuSJPr9cJQZVKCKg
-id: stark_admin
-theme: stark
-region: sidebar_first
+id: novel_admin
+theme: novel
+region: header
 weight: 1
 provider: null
 plugin: 'system_menu_block:admin'
