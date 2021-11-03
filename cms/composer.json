@@ -98,6 +98,9 @@
             }
         },
         "patches": {
+            "drupal/core": {
+                "2936067: CSS aggregation fails on many variations of @import": "https://git.drupalcode.org/project/drupal/-/commit/5aa154d.patch"
+            },
             "drupal/redis": {
                 "3207574: Patch against redis being include too late": "https://www.drupal.org/files/issues/2021-04-07/redis-report_warnings-3207574-2.patch"
             }
