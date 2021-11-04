@@ -38,14 +38,33 @@ if (getenv('LAGOON_ENVIRONMENT_TYPE') !== 'production') {
 
 // Setup Redis.
 if (getenv('LAGOON')) {
+  // Prepare the module configuration.
   $settings['redis.connection']['interface'] = 'PhpRedis';
   $settings['redis.connection']['host'] = getenv('REDIS_HOST') ?: 'redis';
   $settings['redis.connection']['port'] = getenv('REDIS_SERVICE_PORT') ?: '6379';
   $settings['cache_prefix']['default'] = getenv('LAGOON_PROJECT') . '_' . getenv('LAGOON_GIT_SAFE_BRANCH');
 
-  // Do not set the cache during installations of Drupal.
-  if (!InstallerKernel::installationAttempted() && extension_loaded('redis')) {
+  // But only enable the module if we are ready.
+  if (
+    // Do not enable the cache during install.
+    !InstallerKernel::installationAttempted()
+    // Do not enable the the cache if php does not have the extension enabled.
+    && extension_loaded('redis')
+  ) {
+    // Enable the cache backend.
     $settings['cache']['default'] = 'cache.backend.redis';
+
+    // The default example configuration that ships with the module works fine.
+    // By using it, we rely on future developers that updates the module to
+    // spot if any major changes happens to the config, but as we're using the
+    // same version of redis in all environment including our local environment
+    // and automated tests, breaking changes should be detected.
+    // This is the tradeoff for on the other hand to get an updated example-
+    // file.
+    $settings['container_yamls'][] = 'modules/contrib/redis/example.services.yml';
+
+    // Allow the services to work before the Redis module itself is enabled.
+    $settings['container_yamls'][] = 'modules/contrib/redis/redis.services.yml';
 
     // And allows to use it without the Redis module being enabled.
     $class_loader->addPsr4('Drupal\\redis\\', 'modules/contrib/redis/src');
