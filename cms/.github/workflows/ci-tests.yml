@@ -91,6 +91,8 @@ jobs:
       - name: Install go-task
         uses: arduino/setup-task@v1
       - name: Setup site
-        run: task dev:reset
+        run: task ci:reset
+      - name: Setup DNS for containers
+        run: echo "127.0.0.1 dpl-cms.docker" | sudo tee -a /etc/hosts
       - name: Setup tmate session
         uses: mxschmitt/action-tmate@v3
