@@ -3,11 +3,11 @@ module:
   breakpoint: 0
   config_filter: 0
   config_ignore: 0
-  dblog: 0
   dynamic_page_cache: 0
   field: 0
   file: 0
   filter: 0
+  jsonlog: 0
   language: 0
   locale: 0
   node: 0
