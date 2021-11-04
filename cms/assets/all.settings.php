@@ -21,6 +21,13 @@ $config['system.site']['uuid'] = '13ef1a53-dfb4-4c82-9b64-44586a366729';
 // environment.
 $config['jsonlog.settings']['jsonlog_siteid'] = getenv('LAGOON_PROJECT') . '_' . getenv('LAGOON_ENVIRONMENT');
 $config['jsonlog.settings']['jsonlog_canonical'] = getenv('LAGOON_PROJECT') . '_' . getenv('LAGOON_ENVIRONMENT');
+if (InstallerKernel::installationAttempted()) {
+  // During the installation we can end up in situations where both JSONLog ond
+  // Drupal will output messages. Squash any messages coming from JSONLog by
+  // setting a low (meaning high) threshold.
+  $config['jsonlog.settings']['jsonlog_stdout'] = TRUE;
+  $config['jsonlog.settings']['jsonlog_severity_threshold'] = 0;
+}
 
 // Defines where the sync folder of your configuration lives. In this case it's
 // inside the Drupal root, which is protected by amazee.io Nginx configs, so it
