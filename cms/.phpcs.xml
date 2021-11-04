@@ -2,6 +2,7 @@
 <ruleset>
   <arg name="extensions" value="php,module,inc,install,test,profile,theme,css,info,txt,md,yml"/>
   <file>web/modules/custom</file>
+  <file>assets/all.settings.php</file>
 
   <rule ref="Drupal" />
   <rule ref="DrupalPractice"/>
