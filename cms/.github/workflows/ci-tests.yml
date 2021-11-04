@@ -79,8 +79,8 @@ jobs:
       - name: Run PhpUnit
         run: ./vendor/bin/phpunit --coverage-text
 
-  DockerCompose:
-    name: Setup site using Docker Compose
+  LightHouse:
+    name: Test site performance using Lighthouse
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
@@ -94,5 +94,16 @@ jobs:
         run: task ci:reset
       - name: Setup DNS for containers
         run: echo "127.0.0.1 dpl-cms.docker" | sudo tee -a /etc/hosts
-      - name: Setup tmate session
-        uses: mxschmitt/action-tmate@v3
+      - name: Run Lighthouse test
+        uses: treosh/lighthouse-ci-action@v8
+        with:
+          urls: |
+            http://dpl-cms.docker
+          # Use 3 runs to test both cold and warm caches.
+          runs: 3
+          # Update to Googles public storage to make reports easily accessible.
+          # The fact that the storage is public is fine. The project is open.
+          temporaryPublicStorage: true
+          # Keep artifacts since temporary reports may not be available during
+          # reviews which may occur later in time.
+          uploadArtifacts: true
