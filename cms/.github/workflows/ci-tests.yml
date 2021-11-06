@@ -99,6 +99,7 @@ jobs:
         with:
           urls: |
             http://dpl-cms.docker
+          configPath: './.lighthouserc.js'
           # Use 3 runs to test both cold and warm caches.
           runs: 3
           # Update to Googles public storage to make reports easily accessible.
