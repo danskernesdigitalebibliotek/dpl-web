@@ -1,0 +1,8 @@
+{
+  "name": "dpl-cms",
+  "description": "Node.js tools for working with DPL CMS",
+  "license": "AGPL-3.0",
+  "devDependencies": {
+    "pa11y-ci": "^2.4.2"
+  }
+}
