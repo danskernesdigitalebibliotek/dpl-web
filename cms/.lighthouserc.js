@@ -1,5 +1,13 @@
 module.exports = {
   "ci": {
+    "collect": {
+      "settings": {
+        // Lighthouse best practices require HTTPS but we do not this available
+        // on our CI environments so disable that check. It should not keep our
+        // score down.
+        "skipAudits": ["is-on-https"]
+      }
+    },
     "assert": {
       "assertions": {
         // Our quality standard requires all categories to be green. Green
