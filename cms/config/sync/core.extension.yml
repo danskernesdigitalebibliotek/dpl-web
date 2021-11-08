@@ -29,7 +29,7 @@ module:
   dpl_cms: 1000
 theme:
   claro: 0
-  stable: 0
+  stable9: 0
   novel: 0
 profile: dpl_cms
 _core:
