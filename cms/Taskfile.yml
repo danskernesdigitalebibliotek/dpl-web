@@ -25,6 +25,7 @@ vars:
   IMAGE_SOURCE: "{{ .DOCKER_IMAGE_PREFIX }}-source:{{ .SOURCE_VERSION }}"
   # Where is the docker file(s) we use for our builds residing?
   DOCKER_IMAGE_DIR: "docker"
+  DOCKER_COMPOSE_FILES: '{{.DOCKER_COMPOSE_FILES | default "-f docker-compose.yml"}}'
 
 tasks:
   ghcr:login:
@@ -38,19 +39,19 @@ tasks:
   dev:cli:
     summary: Performs command inside container. Expects parameter(s).
     cmds:
-      - docker compose run cli sh -c "{{.CLI_ARGS}}"
+      - docker compose {{ .DOCKER_COMPOSE_FILES }} run cli sh -c "{{.CLI_ARGS}}"
 
   dev:start:
     summary: Run docker compose
     cmds:
-      - docker compose up -d
+      - docker compose {{ .DOCKER_COMPOSE_FILES }} up -d
 
   dev:stop:
     summary: Stop docker compose environment
     cmds:
       # DNS proxies such as Dory may hang on to the network for a bit which
       # causes the process to fail. Wait and retry if that is the case
-      - docker-compose down --volumes --remove-orphans || (sleep 3 && docker-compose down)
+      - docker compose {{ .DOCKER_COMPOSE_FILES }} down --volumes --remove-orphans || (sleep 3 && docker-compose down)
 
   dev:reset:
     desc: Create local development setup in a clean state
@@ -66,6 +67,13 @@ tasks:
     desc: Run PHPUnit tests with code coverage
     cmds:
       - docker compose run -e XDEBUG_ENABLE=true cli vendor/bin/phpunit --coverage-text
+
+  ci:reset:
+    desc: Create CI setup in a clean state
+    cmds:
+      - task dev:reset
+    env:
+      DOCKER_COMPOSE_FILES: "-f docker-compose.yml -f docker-compose.ci.yml"
 
   source:build:
     summary: Build core source image.

@@ -1,0 +1,13 @@
+{
+  "defaults": {
+    "chromeLaunchConfig": {
+      "args": [
+        "--no-sandbox"
+      ]
+    },
+    "runners": ["axe"]
+  },
+  "urls": [
+    "http://dpl-cms.docker/"
+  ]
+}
