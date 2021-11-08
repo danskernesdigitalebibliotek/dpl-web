@@ -1,4 +1,4 @@
-uuid: 38fe62dc-4674-4be3-b771-bd8c874f8ab7
+uuid: b7f953f7-522d-4be0-961c-a2ff9c4e7c35
 langcode: en
 status: true
 dependencies:
@@ -7,12 +7,12 @@ dependencies:
   module:
     - system
   theme:
-    - stark
+    - novel
 _core:
   default_config_hash: uUF2GYN2x5fcmOu26M-gwqUA-yVWMDD_MRmnYfmPzlM
-id: stark_tools
-theme: stark
-region: sidebar_first
+id: novel_tools
+theme: novel
+region: header
 weight: 0
 provider: null
 plugin: 'system_menu_block:tools'

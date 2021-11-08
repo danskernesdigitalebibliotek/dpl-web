@@ -27,6 +27,18 @@
                     "composer/installers": "^1.2.0"
                 }
             }
+        },
+        {
+            "type": "package",
+            "package": {
+                "name": "danskernesdigitalebibliotek/dpl-design-system",
+                "type": "drupal-library",
+                "version": "v1.0.1",
+                "dist": {
+                    "url": "https://github.com/danskernesdigitalebibliotek/dpl-design-system/releases/download/v1.0.1/dist.zip",
+                    "type": "zip"
+                }
+            }
         }
     ],
     "require": {
@@ -34,6 +46,7 @@
         "composer/installers": "1.11.0",
         "cweagans/composer-patches": "1.7.0",
         "danskernesdigitalebibliotek/ddb-react": "2.4.0",
+        "danskernesdigitalebibliotek/dpl-design-system": "^1.0",
         "dealerdirect/phpcodesniffer-composer-installer": "^0.7.1",
         "drupal/config_ignore": "^2.3",
         "drupal/core-project-message": "^9.2.7",
@@ -63,6 +76,7 @@
     "extra": {
         "composer-exit-on-patch-failure": true,
         "installer-paths": {
+            "web/themes/custom/novel/assets/{$name}": ["danskernesdigitalebibliotek/dpl-design-system"],
             "web/core": ["type:drupal-core"],
             "web/libraries/{$name}": ["type:drupal-library"],
             "web/modules/contrib/{$name}": ["type:drupal-module"],
@@ -84,6 +98,9 @@
             }
         },
         "patches": {
+            "drupal/core": {
+                "2936067: CSS aggregation fails on many variations of @import": "https://git.drupalcode.org/project/drupal/-/commit/5aa154d.patch"
+            },
             "drupal/redis": {
                 "3207574: Patch against redis being include too late": "https://www.drupal.org/files/issues/2021-04-07/redis-report_warnings-3207574-2.patch"
             }

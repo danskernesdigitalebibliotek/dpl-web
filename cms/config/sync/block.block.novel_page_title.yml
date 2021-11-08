@@ -1,13 +1,13 @@
-uuid: 2f73018e-d174-46c1-ac56-55966a71cfb4
+uuid: 92c468ad-a3b1-41fc-9558-9038355eb5bb
 langcode: en
 status: true
 dependencies:
   theme:
-    - stark
+    - novel
 _core:
   default_config_hash: 8yptDf6WrXxeyevUz4nP5vfr7BtxQqCBMninhV2IJ1g
-id: stark_page_title
-theme: stark
+id: novel_page_title
+theme: novel
 region: content
 weight: -30
 provider: null

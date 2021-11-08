@@ -1,13 +1,13 @@
-uuid: 6a136729-6967-496e-af4e-2917926d67fd
+uuid: f455087f-4cf8-4011-952f-be8a1a1cb897
 langcode: en
 status: true
 dependencies:
   theme:
-    - stark
+    - novel
 _core:
   default_config_hash: PffmQ-ABSz5tFjWmVsR7NesunDnEivvopnJnBjl8KNE
-id: stark_local_actions
-theme: stark
+id: novel_local_actions
+theme: novel
 region: content
 weight: -10
 provider: null

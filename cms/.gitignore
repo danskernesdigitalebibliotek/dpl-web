@@ -8,6 +8,7 @@
 /web/themes/contrib/
 /web/profiles/contrib/
 /web/libraries/
+/web/themes/custom/novel/assets/
 
 # Ignore Drupal's file directory
 /web/sites/*/files/
