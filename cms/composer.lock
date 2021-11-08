@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "c82bbd3acff40c6c595fb1e9669b2302",
+    "content-hash": "3b6efb1d2990cee7adf543c71e35e37b",
     "packages": [
         {
             "name": "amazeeio/drupal_integrations",
@@ -7095,6 +7095,7 @@
                 "issues": "https://github.com/webmozart/path-util/issues",
                 "source": "https://github.com/webmozart/path-util/tree/2.3.0"
             },
+            "abandoned": "symfony/filesystem",
             "time": "2015-12-17T08:42:14+00:00"
         },
         {
