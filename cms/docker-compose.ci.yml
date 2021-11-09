@@ -12,3 +12,10 @@ services:
     image: justinribeiro/chrome-headless:stable
     cap_add:
       - SYS_ADMIN
+
+  pa11y:
+    build:
+      context: .
+      dockerfile: docker/pa11y.dockerfile
+    volumes:
+      - 'projectroot:/app'

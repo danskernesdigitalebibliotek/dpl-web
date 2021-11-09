@@ -119,22 +119,12 @@ jobs:
           # Our Taskfile requires a proper checkout to function because of
           # certain vars.
           fetch-depth: 0
-          # Needed to make HTTP authentication work
-          persist-credentials: false
       - name: Install go-task
         uses: arduino/setup-task@v1
       - name: Setup site
         run: task ci:reset
-      - name: Setup DNS for containers
-        run: echo "127.0.0.1  ${{ env.HOST_NAME }}" | sudo tee -a /etc/hosts
-        # git with HTTP authentication provides an easy way for us to install
-        # unreleased commits of NPM projects.
-      - name: Reconfigure git to use HTTP authentication
-        run: git config --global url."https://${{ secrets.GITHUB_TOKEN }}@github.com/".insteadOf ssh://git@github.com/
-      - name: Install node packages
-        uses: bahmutov/npm-install@v1
       - name: Run Pa11y
-        run: npx pa11y-ci
+        run: task ci:pa11y
 
   Behat:
     name: Run Behat functional tests
