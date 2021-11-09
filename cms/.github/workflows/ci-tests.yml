@@ -23,7 +23,7 @@ jobs:
           composer validate --no-check-all --no-check-publish
 
   Phpcs:
-    name: Lint PHP
+    name: Check code style
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v2
@@ -43,7 +43,7 @@ jobs:
         reviewdog_token: ${{ secrets.GITHUB_TOKEN }}
 
   Phpstan:
-    name: Analyse
+    name: Analyse code using PHPStan
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
