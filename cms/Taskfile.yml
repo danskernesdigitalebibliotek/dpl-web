@@ -10,7 +10,7 @@ vars:
   REGISTRY: '{{.REGISTRY | default "ghcr.io"}}'
   # Github organization.
   ORG: '{{.ORG | default "danskernesdigitalebibliotek"}}'
-  # Get total amout of commits on the main branch. Used as build number.
+  # Get total amount of commits on the main branch. Used as build number.
   COMMIT_COUNT:
     sh: git rev-list --count origin/main
   # The version number we want to tag the source build with.

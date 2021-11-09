@@ -28,8 +28,8 @@ As for the remaining files and directories
 
 We strive to keep the diagrams and illustrations used in the documentation as
 maintainable as possible. A big part of this is our use of programmatic
-diagramming via [PlantUML](https://plantuml.com/) and opensourced based
-manual diagramming via [diagramms.net](https://www.diagrams.net/) (formerly
+diagramming via [PlantUML](https://plantuml.com/) and Open Source based
+manual diagramming via [diagrams.net](https://www.diagrams.net/) (formerly
 known as draw.io).
 
 When a change has been made to a *.puml *.drawio file, you should re-render
