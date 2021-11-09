@@ -11,6 +11,10 @@ default:
   extensions:
     Drupal\DrupalExtension:
       blackbox: ~
+    FriendsOfBehat\MinkDebugExtension:
+      directory: "%paths.base%/tests/behat/logs"
+      screenshot: true
+      clean_start: true
     DMore\ChromeExtension\Behat\ServiceContainer\ChromeExtension: ~
     Behat\MinkExtension:
       base_url: "http://varnish:8080/"
