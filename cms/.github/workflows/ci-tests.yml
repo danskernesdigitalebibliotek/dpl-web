@@ -135,3 +135,25 @@ jobs:
         uses: bahmutov/npm-install@v1
       - name: Run Pa11y
         run: npx pa11y-ci
+
+  Behat:
+    name: Run Behat functional tests
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+        with:
+          # Our Taskfile requires a proper checkout to function because of
+          # certain vars.
+          fetch-depth: 0
+      - name: Install go-task
+        uses: arduino/setup-task@v1
+      - name: Setup site
+        run: task ci:reset
+      - name: Run Behat
+        run: task ci:behat
+      - name: Archive logs
+        if: ${{ failure() }}
+        uses: actions/upload-artifact@v2
+        with:
+          name: behat-logs
+          path: tests/behat/logs
