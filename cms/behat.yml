@@ -1,0 +1,22 @@
+default:
+  suites:
+    default:
+      paths:
+        - "%paths.base%/tests/behat/features"
+      contexts:
+        - Drupal\DrupalExtension\Context\DrupalContext
+        - Drupal\DrupalExtension\Context\MinkContext
+        - Drupal\DrupalExtension\Context\MarkupContext
+        - Drupal\DrupalExtension\Context\DrushContext
+  extensions:
+    Drupal\DrupalExtension:
+      blackbox: ~
+    DMore\ChromeExtension\Behat\ServiceContainer\ChromeExtension: ~
+    Behat\MinkExtension:
+      base_url: "http://varnish:8080/"
+      browser_name: chrome
+      sessions:
+        default:
+          chrome:
+            api_url: "http://chrome:9222"
+            socket_timeout: 600

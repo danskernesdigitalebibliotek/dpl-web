@@ -79,6 +79,13 @@ tasks:
     env:
       DOCKER_COMPOSE_FILES: "-f docker-compose.yml -f docker-compose.ci.yml"
 
+  ci:behat:
+    desc: Run Behat functional tests
+    cmds:
+      - task dev:cli -- vendor/bin/behat
+    vars:
+      DOCKER_COMPOSE_FILES: "-f docker-compose.yml -f docker-compose.ci.yml"
+
   source:build:
     summary: Build core source image.
     cmds:
