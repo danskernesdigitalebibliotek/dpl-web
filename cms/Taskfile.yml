@@ -61,6 +61,10 @@ tasks:
       - task dev:cli -- composer install
       - task dev:start
       - task dev:cli -- drush site-install --existing-config -y
+      # We don't really need to purge the external cache
+      # since we are working with fresh containers.
+      # But we want catch if something is wrong with the setup.
+      - task dev:cli -- drush cache:rebuild-external -y
       - task dev:cli -- drush user-login
 
   dev:phpunit:

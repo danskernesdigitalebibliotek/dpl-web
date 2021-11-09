@@ -66,5 +66,6 @@ ignored_config_entities:
   - ~user.role.patron
   - ~user.settings
   - ~varnish_purger.settings.65fc931232
+  - ~varnish_purger.settings.30cd45a1b1
 _core:
   default_config_hash: UVH1aJ4b44UM-VdPVN7hNNuuVqfReJxwfVeDQH1Hvsk

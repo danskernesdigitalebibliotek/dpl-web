@@ -1,0 +1,22 @@
+uuid: 45c6eb3c-839d-4b99-90f2-85f3798058f1
+langcode: en
+status: true
+dependencies: {  }
+id: 30cd45a1b1
+name: 'DPL CMS Varnish All'
+invalidationtype: everything
+hostname: varnish
+port: 8080
+path: /
+request_method: PURGE
+scheme: http
+verify: '1'
+headers: {  }
+body: null
+body_content_type: null
+runtime_measurement: true
+timeout: !!float 1
+connect_timeout: !!float 1
+cooldown_time: !!float 0
+max_requests: 100
+http_errors: true
