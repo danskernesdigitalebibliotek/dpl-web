@@ -2,6 +2,7 @@ parameters:
   level: max
   paths:
     - web/modules/custom
+    - tests/behat/features/bootstrap
   excludePaths:
     # Ignore false negatives from test mock objects.
     - web/modules/custom/dpl_library_token/tests
