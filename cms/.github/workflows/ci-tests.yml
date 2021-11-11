@@ -4,7 +4,6 @@ name: CI Tests
 env:
   PHP_VERSION: 8.0
   COMPOSER_VERSION: v2
-  HOST_NAME: dpl-cms.docker
 
 jobs:
   ValidateComposer:
@@ -93,22 +92,13 @@ jobs:
         uses: arduino/setup-task@v1
       - name: Setup site
         run: task ci:reset
-      - name: Setup DNS for containers
-        run: echo "127.0.0.1 ${{ env.HOST_NAME }}" | sudo tee -a /etc/hosts
       - name: Run Lighthouse test
-        uses: treosh/lighthouse-ci-action@v8
+        run: task ci:lighthouse
+      - name: Archive logs
+        uses: actions/upload-artifact@v2
         with:
-          urls: |
-            http://dpl-cms.docker
-          configPath: './.lighthouserc.js'
-          # Use 3 runs to test both cold and warm caches.
-          runs: 3
-          # Update to Googles public storage to make reports easily accessible.
-          # The fact that the storage is public is fine. The project is open.
-          temporaryPublicStorage: true
-          # Keep artifacts since temporary reports may not be available during
-          # reviews which may occur later in time.
-          uploadArtifacts: true
+          name: lighthouse-results
+          path: .lighthouseci
 
   Pa11y:
     name: Test accessibility using Pa11y
