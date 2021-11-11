@@ -29,6 +29,9 @@ if (InstallerKernel::installationAttempted()) {
   $config['jsonlog.settings']['jsonlog_severity_threshold'] = 0;
 }
 
+// Exclude development modules from configuration export.
+$settings['config_exclude_modules'] = ['devel'];
+
 // Defines where the sync folder of your configuration lives. In this case it's
 // inside the Drupal root, which is protected by amazee.io Nginx configs, so it
 // cannot be read via the browser. If your Drupal root is inside a subfolder
