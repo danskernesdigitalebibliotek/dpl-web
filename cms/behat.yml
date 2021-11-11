@@ -1,0 +1,29 @@
+default:
+  autoload:
+    "": "%paths.base%/tests/behat/features/bootstrap"
+  suites:
+    default:
+      paths:
+        - "%paths.base%/tests/behat/features"
+      contexts:
+        - FeatureContext
+        - Drupal\DrupalExtension\Context\DrupalContext
+        - Drupal\DrupalExtension\Context\MinkContext
+        - Drupal\DrupalExtension\Context\MarkupContext
+        - Drupal\DrupalExtension\Context\DrushContext
+  extensions:
+    Drupal\DrupalExtension:
+      blackbox: ~
+    FriendsOfBehat\MinkDebugExtension:
+      directory: "%paths.base%/tests/behat/logs"
+      screenshot: true
+      clean_start: true
+    DMore\ChromeExtension\Behat\ServiceContainer\ChromeExtension: ~
+    Behat\MinkExtension:
+      base_url: "http://varnish:8080/"
+      browser_name: chrome
+      sessions:
+        default:
+          chrome:
+            api_url: "http://chrome:9222"
+            socket_timeout: 600

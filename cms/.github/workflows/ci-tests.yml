@@ -23,7 +23,7 @@ jobs:
           composer validate --no-check-all --no-check-publish
 
   Phpcs:
-    name: Lint PHP
+    name: Check code style
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v2
@@ -43,7 +43,7 @@ jobs:
         reviewdog_token: ${{ secrets.GITHUB_TOKEN }}
 
   Phpstan:
-    name: Analyse
+    name: Analyse code using PHPStan
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
@@ -119,19 +119,31 @@ jobs:
           # Our Taskfile requires a proper checkout to function because of
           # certain vars.
           fetch-depth: 0
-          # Needed to make HTTP authentication work
-          persist-credentials: false
       - name: Install go-task
         uses: arduino/setup-task@v1
       - name: Setup site
         run: task ci:reset
-      - name: Setup DNS for containers
-        run: echo "127.0.0.1  ${{ env.HOST_NAME }}" | sudo tee -a /etc/hosts
-        # git with HTTP authentication provides an easy way for us to install
-        # unreleased commits of NPM projects.
-      - name: Reconfigure git to use HTTP authentication
-        run: git config --global url."https://${{ secrets.GITHUB_TOKEN }}@github.com/".insteadOf ssh://git@github.com/
-      - name: Install node packages
-        uses: bahmutov/npm-install@v1
       - name: Run Pa11y
-        run: npx pa11y-ci
+        run: task ci:pa11y
+
+  Behat:
+    name: Run Behat functional tests
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+        with:
+          # Our Taskfile requires a proper checkout to function because of
+          # certain vars.
+          fetch-depth: 0
+      - name: Install go-task
+        uses: arduino/setup-task@v1
+      - name: Setup site
+        run: task ci:reset
+      - name: Run Behat
+        run: task ci:behat
+      - name: Archive logs
+        if: ${{ failure() }}
+        uses: actions/upload-artifact@v2
+        with:
+          name: behat-logs
+          path: tests/behat/logs

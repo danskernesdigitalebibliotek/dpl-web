@@ -1,6 +1,7 @@
 {
   "defaults": {
     "chromeLaunchConfig": {
+      "executablePath": "/usr/bin/chromium-browser",
       "args": [
         "--no-sandbox"
       ]
@@ -8,6 +9,6 @@
     "runners": ["axe"]
   },
   "urls": [
-    "http://dpl-cms.docker/"
+    "http://varnish:8080/"
   ]
 }

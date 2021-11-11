@@ -79,6 +79,21 @@ tasks:
     env:
       DOCKER_COMPOSE_FILES: "-f docker-compose.yml -f docker-compose.ci.yml"
 
+  ci:behat:
+    desc: Run Behat functional tests
+    cmds:
+      - task dev:cli -- vendor/bin/behat
+    vars:
+      DOCKER_COMPOSE_FILES: "-f docker-compose.yml -f docker-compose.ci.yml"
+
+  ci:pa11y:
+    desc: Run Pa11y to test accessiblity
+    cmds:
+      - docker compose {{ .DOCKER_COMPOSE_FILES }} run pa11y npm ci
+      - docker compose {{ .DOCKER_COMPOSE_FILES }} run pa11y npx pa11y-ci
+    vars:
+      DOCKER_COMPOSE_FILES: "-f docker-compose.yml -f docker-compose.ci.yml"
+
   source:build:
     summary: Build core source image.
     cmds:
