@@ -1,21 +1,14 @@
 version: '2.3'
 
 services:
-  nginx-proxy:
-    image: nginxproxy/nginx-proxy:0.9.3
-    ports:
-      - "80:80"
-    volumes:
-      - /var/run/docker.sock:/tmp/docker.sock:ro
-
   chrome:
     image: justinribeiro/chrome-headless:stable
     cap_add:
       - SYS_ADMIN
 
-  pa11y:
+  node-chrome:
     build:
       context: .
-      dockerfile: docker/pa11y.dockerfile
+      dockerfile: docker/node-chromium.dockerfile
     volumes:
       - 'projectroot:/app'
