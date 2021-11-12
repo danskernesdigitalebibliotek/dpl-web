@@ -1,0 +1,12 @@
+name: Example content for DPL CMS
+type: module
+description: Provides example content for demo sites.
+package: DPL
+core_version_requirement: ^9
+dependencies:
+  - default_content:default_content
+default_content:
+  node:
+    - 3ab54c20-e400-426c-bf4d-da471808e2a9
+  file:
+    - 5c35e0de-d8f1-4289-b3fd-014ea2361ed7
