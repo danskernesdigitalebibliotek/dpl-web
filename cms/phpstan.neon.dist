@@ -2,6 +2,7 @@ parameters:
   level: max
   paths:
     - web/modules/custom
+    - web/themes/custom
     - tests/behat/features/bootstrap
   excludePaths:
     # Ignore false negatives from test mock objects.
