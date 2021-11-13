@@ -26,6 +26,8 @@ vars:
   # Where is the docker file(s) we use for our builds residing?
   DOCKER_IMAGE_DIR: "docker"
   DOCKER_COMPOSE_FILES: '{{.DOCKER_COMPOSE_FILES | default "-f docker-compose.yml"}}'
+  # Sql dump files directory
+  SQL_DUMP_DIR: 'database-dump'
 
 tasks:
   ghcr:login:
@@ -71,6 +73,24 @@ tasks:
     desc: Run PHPUnit tests with code coverage
     cmds:
       - docker compose run -e XDEBUG_ENABLE=true cli vendor/bin/phpunit --coverage-text
+
+  dev:db:restore:
+    desc: 'Restore database from db dump file. Only one sql should be present the "{{ .SQL_DUMP_DIR }}" directory.'
+    cmds:
+      - docker-compose exec -T {{ .MYSQL_CONTAINER }} mysql < {{ .SQL_FILE }}
+    preconditions:
+      - sh: "[ {{ .SQL_FILES_COUNT }} -gt 0 ]"
+        msg: "There are no sql files in {{ .SQL_DUMP_DIR }}/. Cannot continue."
+      - sh: "[ {{ .SQL_FILES_COUNT }} -eq 1 ]"
+        msg: "There are {{ .SQL_FILES_COUNT }} valid files in {{ .SQL_DUMP_DIR }}/:\n{{ .SQL_DUMP_DIR_CONTENT }}\n...there should be just one."
+    vars:
+      SQL_FILES_COUNT:
+        sh: ls {{ .SQL_DUMP_DIR }}/*.sql | wc -l 2> /dev/null | xargs
+      SQL_FILE:
+        sh: ls -t "{{ .SQL_DUMP_DIR }}"/*.sql
+      SQL_DUMP_DIR_CONTENT:
+       sh: ls {{ .SQL_DUMP_DIR }}
+      MYSQL_CONTAINER: 'mariadb'
 
   ci:reset:
     desc: Create CI setup in a clean state
