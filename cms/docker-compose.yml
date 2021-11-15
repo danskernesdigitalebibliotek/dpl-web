@@ -54,9 +54,31 @@ services:
       VIRTUAL_HOST: ${COMPOSE_PROJECT_NAME}.docker
       VIRTUAL_PORT: 8080
 
+  cli: # cli container, will be used for executing composer and any local commands (drush, drupal, etc.)
+    # https://docs.lagoon.sh/lagoon/docker-images/nginx/nginx-drupal
+    build:
+      context: .
+      dockerfile: lagoon/cli.dockerfile
+    image: &cli-image uselagoon/php-8.0-cli-drupal:latest # this image will be reused as `CLI_IMAGE` in subsequent Docker builds
+    << : *default-volumes # loads the defined volumes from the top
+    user: root
+    environment:
+      << : *default-environment # loads the defined environment variables from the top
+    labels:
+      # Lagoon Labels
+      lagoon.type: cli-persistent
+      lagoon.persistent.name: nginx # mount the persistent storage of nginx into this container
+      lagoon.persistent: /app/web/sites/default/files/ # location where the persistent storage should be mounted
+    environment:
+      << : *default-environment # loads the defined environment variables from the top
+
   nginx: # Webserver in front of php-fpm. Serves static assets.
     # https://docs.lagoon.sh/lagoon/docker-images/nginx/nginx-drupal
-    image: uselagoon/nginx-drupal:latest
+    build:
+      context: .
+      dockerfile: lagoon/nginx.dockerfile
+      args:
+        CLI_IMAGE: *cli-image # Inject the name of the cli image
     depends_on:
       - php
     << : *default-volumes # loads the defined volumes from the top
@@ -71,7 +93,11 @@ services:
 
   php: # php-fpm server that executes php requests.
     # https://docs.lagoon.sh/lagoon/docker-images/php-fpm
-    image: uselagoon/php-8.0-fpm:latest
+    build:
+      context: .
+      dockerfile: lagoon/php.dockerfile
+      args:
+        CLI_IMAGE: *cli-image
     depends_on:
       redis:
         condition: service_started
@@ -110,21 +136,6 @@ services:
     << : *default-user # uses the defined user from top
     environment:
       << : *default-environment
-
-  cli: # cli container, will be used for executing composer and any local commands (drush, drupal, etc.)
-    # https://docs.lagoon.sh/lagoon/docker-images/nginx/nginx-drupal
-    image: uselagoon/php-8.0-cli-drupal:latest
-    << : *default-volumes # loads the defined volumes from the top
-    user: root
-    environment:
-      << : *default-environment # loads the defined environment variables from the top
-    labels:
-      # Lagoon Labels
-      lagoon.type: cli-persistent
-      lagoon.persistent.name: nginx # mount the persistent storage of nginx into this container
-      lagoon.persistent: /app/web/sites/default/files/ # location where the persistent storage should be mounted
-    environment:
-      << : *default-environment # loads the defined environment variables from the top
 
 volumes:
   projectroot:
