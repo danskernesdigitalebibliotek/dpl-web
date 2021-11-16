@@ -39,6 +39,21 @@ $settings['config_exclude_modules'] = ['devel'];
 // advanced security measure: '../config/sync'.
 $settings['config_sync_directory'] = '../config/sync';
 
+if (getenv('CI')) {
+  // Curl settings needed to make PHP ignore SSL errors when using Wiremock as
+  // a proxy. We do not have a proper SSL setup with trusted certificates.
+  $settings['http_client_config']['verify'] = FALSE;
+  $settings['http_client_config']['curl'] = [
+    CURLOPT_PROXY_SSL_VERIFYHOST => 0,
+    CURLOPT_PROXY_SSL_VERIFYPEER => FALSE,
+  ];
+  // The actual values here are not important. The primary thing is that the
+  // Adgangsplatformen OpenID Connect client is configured.
+  $config['openid_connect.settings.adgangsplatformen']['settings']['client_id'] = 'dummy-id';
+  $config['openid_connect.settings.adgangsplatformen']['settings']['client_id'] = 'dummy-secret';
+  $config['openid_connect.settings.adgangsplatformen']['settings']['agency_id'] = '100200';
+}
+
 if (getenv('LAGOON_ENVIRONMENT_TYPE') !== 'production') {
   // Skip file system permissions hardening.
   //

@@ -57,3 +57,4 @@ services:
     environment:
       HTTP_PROXY: http://wiremock
       HTTPS_PROXY: https://wiremock
+      CI: true
