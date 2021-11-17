@@ -24,7 +24,7 @@ vars:
   # Constructing docker image name.
   IMAGE_SOURCE: "{{ .DOCKER_IMAGE_PREFIX }}-source:{{ .SOURCE_VERSION }}"
   # Where is the docker file(s) we use for our builds residing?
-  DOCKER_IMAGE_DIR: "docker"
+  LAGOON_DIR: "lagoon"
   DOCKER_COMPOSE_FILES: '{{.DOCKER_COMPOSE_FILES | default "-f docker-compose.yml"}}'
   # Sql dump files directory
   SQL_DUMP_DIR: 'database-dump'
@@ -125,7 +125,8 @@ tasks:
   source:build:
     summary: Build core source image.
     cmds:
-      - docker build -f {{ .DOCKER_IMAGE_DIR }}/source.dockerfile --tag {{ .IMAGE_SOURCE }} .
+      - docker build -f {{ .LAGOON_DIR }}/cli.dockerfile --tag dpl-cms-cli:0.0.0 .
+      - docker build -f {{ .LAGOON_DIR }}/source.dockerfile --tag {{ .IMAGE_SOURCE }} .
 
   source:push:
     summary: Push core source image to container registry.
