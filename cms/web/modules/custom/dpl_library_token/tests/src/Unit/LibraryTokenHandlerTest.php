@@ -93,7 +93,7 @@ class LibraryTokenHandlerTest extends UnitTestCase {
       '@message. Details: @error_message',
       [
         '@message' => 'Could not retrieve library token',
-        '@error_message' => 'Could not decode library token response',
+        '@error_message' => 'Syntax error',
       ]
     )->shouldBeCalledTimes(1);
     $logger_factory = $this->prophesize(LoggerChannelFactoryInterface::class);

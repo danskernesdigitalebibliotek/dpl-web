@@ -3,6 +3,7 @@
 namespace Drupal\dpl_library_token;
 
 use Drupal\dpl_library_token\Exception\LibraryTokenResponseException;
+use function Safe\json_decode as json_decode;
 
 /**
  * Library Token.
@@ -34,8 +35,11 @@ class LibraryToken {
    */
   public static function createFromResponseBody(string $response_body): self {
     // Get token data by decoding json.
-    if (!$token_data = json_decode($response_body, TRUE)) {
-      throw new LibraryTokenResponseException('Could not decode library token response');
+    try {
+      $token_data = json_decode($response_body, TRUE);
+    }
+    catch (\JsonException $e) {
+      throw new LibraryTokenResponseException('Could not decode library token response', $e);
     }
     if (empty($token_data['access_token'])) {
       throw new LibraryTokenResponseException('Access token is missing');

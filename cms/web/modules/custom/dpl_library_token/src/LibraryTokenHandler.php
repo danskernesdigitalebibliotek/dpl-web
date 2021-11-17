@@ -9,6 +9,7 @@ use Drupal\Core\Config\ConfigFactoryInterface;
 use Drupal\Core\Logger\LoggerChannelFactoryInterface;
 use Drupal\Core\KeyValueStore\KeyValueExpirableFactoryInterface;
 use Drupal\dpl_library_token\Exception\MissingConfigurationException;
+use function Safe\sprintf as sprintf;
 
 /**
  * Library Token Handler Service.
