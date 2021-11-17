@@ -5,11 +5,11 @@ This is the main repository used for building the core Drupal CMS which is used 
 If you want to develop and maintain the DPL cms project locally you can run: `dev:reset`.
 The command builds the site with dependencies and starts the required docker containers.
 
-## Prerequisities
+## Prerequisites
 In order to run local development you need:
 * go-task, https://taskfile.dev
 * docker
-* Perferably support for `VIRTUAL_HOST` environment variables for Docker containers. Examples: [Dory (OSX)](https://github.com/FreedomBen/dory) or [`nginx-proxy`](https://github.com/nginx-proxy/nginx-proxy).
+* Preferably support for `VIRTUAL_HOST` environment variables for Docker containers. Examples: [Dory (OSX)](https://github.com/FreedomBen/dory) or [`nginx-proxy`](https://github.com/nginx-proxy/nginx-proxy).
 
 ## Other initial steps
 
