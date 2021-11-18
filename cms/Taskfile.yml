@@ -66,7 +66,7 @@ tasks:
       # We don't really need to purge the external cache
       # since we are working with fresh containers.
       # But we want catch if something is wrong with the setup.
-      - task dev:cli -- drush cache:rebuild-external -y
+      - task dev:cache:clear:external
       - task dev:cli -- drush user-login
 
   dev:phpunit:
@@ -78,6 +78,7 @@ tasks:
     desc: 'Restore database from db dump file. Only one sql should be present the "{{ .SQL_DUMP_DIR }}" directory.'
     cmds:
       - docker-compose exec -T {{ .MYSQL_CONTAINER }} mysql < {{ .SQL_FILE }}
+      - task dev:cache:clear:all
     preconditions:
       - sh: "[ {{ .SQL_FILES_COUNT }} -gt 0 ]"
         msg: "There are no sql files in {{ .SQL_DUMP_DIR }}/. Cannot continue."
@@ -91,6 +92,20 @@ tasks:
       SQL_DUMP_DIR_CONTENT:
        sh: ls {{ .SQL_DUMP_DIR }}
       MYSQL_CONTAINER: 'mariadb'
+
+  dev:cache:clear:all:
+    summary: Clears all cache
+    deps: [dev:cache:clear:drupal, dev:cache:clear:external]
+
+  dev:cache:clear:drupal:
+    summary: Runs Drupal cache rebuild
+    cmds:
+      - task dev:cli -- drush cache:rebuild -y
+
+  dev:cache:clear:external:
+    summary: Purges the varnish cache
+    cmds:
+      - task dev:cli -- drush cache:rebuild-external -y
 
   ci:reset:
     desc: Create CI setup in a clean state
