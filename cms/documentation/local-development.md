@@ -13,6 +13,3 @@ database, not any files from the site.
    that the directory is only allowed to contain a single `.sql` file.
 3. Start a local environment using `task dev:reset`
 4. Import the database by running `task dev:db:restore`
-5. Clear the cache to ensure the updated database takes effect
-   * `task dev:cli -- drush cache:rebuild -y`
-   * `task dev:cli -- drush cache:rebuild-external -y`
