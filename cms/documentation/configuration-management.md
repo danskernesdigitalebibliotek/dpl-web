@@ -12,6 +12,7 @@ Configuration management for DPL CMS is a complex issue. The complexity stems
 from the following factors:
 
 ### Site types
+
 There are multiple types of DPL CMS sites all using the same code base:
 
 1. *Developer* (In Danish: Programmør) sites where the library is entirely free
@@ -32,6 +33,7 @@ All these site types must support the following properties:
    overridden by new versions of DPL CMS.
 
 ### Configuration types
+
 This can be split into different types of configuration:
 
 1. *Core configuration*: This is the configuration for the base installation of
@@ -41,7 +43,6 @@ This can be split into different types of configuration:
    site. The level of configuration depends on the site type but no matter the
    type this configuration must not be overridden on deployment of new versions
    of DPL CMS.
-
 
 ## Howtos
 
@@ -75,6 +76,7 @@ NB: The keys for these configuration files should already be in
 
 ### Enable a new module
 
+<!-- markdownlint-disable ol-prefix -->
 1. Add the module to the project code base or as a Composer dependency
 2. Create an update hook in the DPL CMS installation profile which enables the
    module[^1]
@@ -105,6 +107,7 @@ function dpl_cms_update_9001() {
 3. Commit the resulting changes to the site configuration
 4. Export configuration `drush config-export -y`
 5. Plan for a future removal of code for the module
+<!-- markdownlint-enable ol-prefix -->
 
 ### Deploy configuration changes
 

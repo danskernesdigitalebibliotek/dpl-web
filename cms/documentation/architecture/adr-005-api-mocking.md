@@ -29,8 +29,8 @@ the following feature relevant to the project:
   instance and mock requests to all external APIs
 - We can use the [`wiremock-php`](https://github.com/rowanhill/wiremock-php)
   client library to instrument WireMock from PHP code. We modernized the
-  [`behat-wiremock-extension`]() to instrument with Behat tests which we use
-  for integration testing.
+  [`behat-wiremock-extension`](https://github.com/danskernesdigitalebibliotek/behat-wiremock-extension/)
+  to instrument with Behat tests which we use for integration testing.
 
 ### Instrumentation vs. record/replay
 
@@ -54,8 +54,9 @@ There are many other tools which provide features similar to Wiremock. These
 include:
 
 - [Hoverfly](https://docs.hoverfly.io/en/latest/): FOSS, Docker image and proxy
-  support. [PHP](https://github.com/ns3777k/hoverfly-php) [clients](https://github.com/pachico/hoverphp)
-  are less mature and no Behat integration.
+  support. [PHP](https://github.com/ns3777k/hoverfly-php)
+  [clients](https://github.com/pachico/hoverphp) are less mature and no Behat
+  integration.
 - [Mountebank](http://www.mbtest.org/): FOSS and Docker image. No proxy support,
   [PHP client](https://packagist.org/packages/demyan112rv/mountebank-api-php)
   is less mature and no Behat integration.
