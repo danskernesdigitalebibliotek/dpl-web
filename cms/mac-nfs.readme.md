@@ -1,11 +1,7 @@
 
-### Setup NFS (for mac/OSX users)
+# Setup NFS (for mac/OSX users)
 
-First copy the docker-compose.mac-nfs.yml file to override some of the network settings:
-
-`cp docker-compose.mac-nfs.yml docker-compose.override.yml`
-
-#### First-time setup of NFS
+## First-time setup of NFS
 
 If you want to use NFS, you'll need to do various things the very first time.
 
@@ -15,13 +11,13 @@ Assuming you're keeping your docker/code projects in ~/code, you'll want to add 
 
 /System/Volumes/Data/Users/<USERNAME>/code -mapall=<USERNAME>:staff -alldirs localhost
 
-#### Full access
+## Full access
 
 /sbin/nfsd and your terminal program needs "full disk access":
 
 ![](documentation/images/nftd.png)
 
-#### Update your nfs.conf
+## Update your nfs.conf
 
 Your /etc/nfs.conf file should contain the following line:
 

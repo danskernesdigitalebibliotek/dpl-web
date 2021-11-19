@@ -25,7 +25,10 @@ vars:
   IMAGE_SOURCE: "{{ .DOCKER_IMAGE_PREFIX }}-source:{{ .SOURCE_VERSION }}"
   # Where is the docker file(s) we use for our builds residing?
   LAGOON_DIR: "lagoon"
-  DOCKER_COMPOSE_FILES: '{{.DOCKER_COMPOSE_FILES | default "-f docker-compose.yml"}}'
+  DOCKER_COMPOSE_FILES_OSX: '{{if eq OS "darwin"}}-f docker-compose.mac-nfs.yml{{end}}'
+  DOCKER_COMPOSE_FILES_DEFAULT: '-f docker-compose.yml {{ .DOCKER_COMPOSE_FILES_OSX }}'
+  DOCKER_COMPOSE_FILES: '{{.DOCKER_COMPOSE_FILES | default .DOCKER_COMPOSE_FILES_DEFAULT }}'
+  DOCKER_COMPOSE_FILES_CI: '{{.DOCKER_COMPOSE_FILES}} -f docker-compose.ci.yml'
   # Sql dump files directory
   SQL_DUMP_DIR: 'database-dump'
 
@@ -112,30 +115,26 @@ tasks:
     cmds:
       - task dev:reset
     env:
-      DOCKER_COMPOSE_FILES: "-f docker-compose.yml -f docker-compose.ci.yml"
+      DOCKER_COMPOSE_FILES: "{{ .DOCKER_COMPOSE_FILES_CI }}"
 
   ci:behat:
     desc: Run Behat functional tests
     cmds:
       - task dev:cli -- vendor/bin/behat
-    vars:
-      DOCKER_COMPOSE_FILES: "-f docker-compose.yml -f docker-compose.ci.yml"
+    env:
+      DOCKER_COMPOSE_FILES: "{{ .DOCKER_COMPOSE_FILES_CI }}"
 
   ci:pa11y:
     desc: Run Pa11y to test accessiblity
     cmds:
-      - docker compose {{ .DOCKER_COMPOSE_FILES }} run node-chrome npm ci
-      - docker compose {{ .DOCKER_COMPOSE_FILES }} run node-chrome npx pa11y-ci
-    vars:
-      DOCKER_COMPOSE_FILES: "-f docker-compose.yml -f docker-compose.ci.yml"
+      - docker compose {{ .DOCKER_COMPOSE_FILES_CI }} run node-chrome npm ci
+      - docker compose {{ .DOCKER_COMPOSE_FILES_CI }} run node-chrome npx pa11y-ci
 
   ci:lighthouse:
     desc: Run Lighthouse to test performance
     cmds:
-      - docker compose {{ .DOCKER_COMPOSE_FILES }} run node-chrome npm ci
-      - docker compose {{ .DOCKER_COMPOSE_FILES }} run node-chrome npx lhci autorun
-    vars:
-      DOCKER_COMPOSE_FILES: "-f docker-compose.yml -f docker-compose.ci.yml"
+      - docker compose {{ .DOCKER_COMPOSE_FILES_CI }} run node-chrome npm ci
+      - docker compose {{ .DOCKER_COMPOSE_FILES_CI }} run node-chrome npx lhci autorun
 
   source:build:
     summary: Build core source image.
