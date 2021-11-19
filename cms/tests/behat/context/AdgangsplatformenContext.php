@@ -8,6 +8,7 @@ use VPX\WiremockExtension\Context\WiremockAware;
 use VPX\WiremockExtension\Context\WiremockAwareInterface;
 use WireMock\Client\WireMock;
 
+// Ignore short comment requirement. @Given and @Then should provide the same.
 // phpcs:disable Drupal.Commenting.DocComment.MissingShort
 
 /**
