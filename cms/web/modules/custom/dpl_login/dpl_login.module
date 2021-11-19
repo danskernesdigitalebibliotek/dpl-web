@@ -12,6 +12,7 @@ use Drupal\dpl_login\AccessToken;
 use Drupal\Core\Session\AccountInterface;
 use Drupal\dpl_login\DplLoginInterface;
 use Drupal\user\UserInterface;
+use function Safe\sprintf as sprintf;
 
 /**
  * Implements hook_openid_connect_userinfo_alter().

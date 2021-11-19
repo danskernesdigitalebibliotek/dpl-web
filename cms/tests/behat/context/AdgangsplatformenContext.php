@@ -7,6 +7,8 @@ use Drupal\DrupalExtension\MinkAwareTrait;
 use VPX\WiremockExtension\Context\WiremockAware;
 use VPX\WiremockExtension\Context\WiremockAwareInterface;
 use WireMock\Client\WireMock;
+use function Safe\json_encode as json_encode;
+use function Safe\preg_match as preg_match;
 
 // Ignore short comment requirement. @Given and @Then should provide the same.
 // phpcs:disable Drupal.Commenting.DocComment.MissingShort
@@ -68,7 +70,7 @@ class AdgangsplatformenContext implements MinkAwareContext, WiremockAwareInterfa
             "access_token" => $access_token,
             "token_type" => "Bearer",
             "expires_in" => 2591999,
-          ]) ?: "")
+          ]))
         )
     );
 
@@ -84,7 +86,7 @@ class AdgangsplatformenContext implements MinkAwareContext, WiremockAwareInterfa
             'attributes' => [
               'uniqueId' => $user_guid,
             ],
-          ]) ?: "")
+          ]))
         )
     );
 
