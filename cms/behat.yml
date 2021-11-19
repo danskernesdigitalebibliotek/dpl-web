@@ -1,12 +1,10 @@
 default:
-  autoload:
-    "": "%paths.base%/tests/behat/features/bootstrap"
   suites:
     default:
       paths:
         - "%paths.base%/tests/behat/features"
       contexts:
-        - AdgangsplatformenContext
+        - Dpl\Tests\Behat\Context\AdgangsplatformenContext
         - VPX\WiremockExtension\Context\WiremockContext
         - Drupal\DrupalExtension\Context\DrupalContext
         - Drupal\DrupalExtension\Context\MinkContext

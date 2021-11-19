@@ -3,7 +3,7 @@ parameters:
   paths:
     - web/modules/custom
     - web/themes/custom
-    - tests/behat/features/bootstrap
+    - tests/behat/context
   excludePaths:
     # Ignore false negatives from test mock objects.
     - web/modules/custom/dpl_library_token/tests

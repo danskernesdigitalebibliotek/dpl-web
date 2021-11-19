@@ -84,6 +84,9 @@
     "config":{
         "sort-packages": true
     },
+    "autoload-dev": {
+        "psr-4": {"Dpl\\Tests\\Behat\\Context\\": "tests/behat/context"}
+    },
     "extra": {
         "composer-exit-on-patch-failure": true,
         "installer-paths": {

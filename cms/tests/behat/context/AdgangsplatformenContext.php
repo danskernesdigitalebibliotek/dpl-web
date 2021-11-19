@@ -1,13 +1,14 @@
 <?php
 
-// phpcs:disable Drupal.Commenting.DocComment.MissingShort
-// phpcs:disable PSR1.Classes.ClassDeclaration.MissingNamespace
+namespace Dpl\Tests\Behat\Context;
 
 use Behat\MinkExtension\Context\MinkAwareContext;
 use Drupal\DrupalExtension\MinkAwareTrait;
 use VPX\WiremockExtension\Context\WiremockAware;
 use VPX\WiremockExtension\Context\WiremockAwareInterface;
 use WireMock\Client\WireMock;
+
+// phpcs:disable Drupal.Commenting.DocComment.MissingShort
 
 /**
  * Behat content for dealing with Adgangsplatformen.
