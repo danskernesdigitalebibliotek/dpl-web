@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "ce49ccdaf6a4232e00fa186e4c7ec74c",
+    "content-hash": "16da8f89d07e4699cb6c16366dfd6521",
     "packages": [
         {
             "name": "amazeeio/drupal_integrations",
@@ -12279,13 +12279,13 @@
             "version": "dev-master",
             "source": {
                 "type": "git",
-                "url": "https://github.com/kasperg/behat-wiremock-extension.git",
-                "reference": "674e0181bec6f6f3e21a0d77178d1248b64ae55a"
+                "url": "https://github.com/danskernesdigitalebibliotek/behat-wiremock-extension.git",
+                "reference": "a9bd57f677a4acb01fcd0604315b09317a198e19"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/kasperg/behat-wiremock-extension/zipball/674e0181bec6f6f3e21a0d77178d1248b64ae55a",
-                "reference": "674e0181bec6f6f3e21a0d77178d1248b64ae55a",
+                "url": "https://api.github.com/repos/danskernesdigitalebibliotek/behat-wiremock-extension/zipball/a9bd57f677a4acb01fcd0604315b09317a198e19",
+                "reference": "a9bd57f677a4acb01fcd0604315b09317a198e19",
                 "shasum": ""
             },
             "require": {
@@ -12332,7 +12332,7 @@
                 "issues": "https://github.com/vpx/behat-wiremock-extension/issues",
                 "source": "https://github.com/vpx/behat-wiremock-extension"
             },
-            "time": "2021-11-15T08:03:45+00:00"
+            "time": "2021-11-18T10:40:19+00:00"
         },
         {
             "name": "wiremock-php/wiremock-php",
