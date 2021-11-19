@@ -1,0 +1,11 @@
+globs:
+  - './**/*.{md,markdown}'
+  - 'web/modules/custom'
+  - 'web/themes/custom'
+
+ignores:
+  - 'node_modules'
+  - 'vendor'
+  - 'web'
+  - 'assets'
+  - 'drush'
