@@ -1,17 +1,19 @@
 default:
-  autoload:
-    "": "%paths.base%/tests/behat/features/bootstrap"
   suites:
     default:
       paths:
         - "%paths.base%/tests/behat/features"
       contexts:
-        - FeatureContext
+        - Dpl\Tests\Behat\Context\AdgangsplatformenContext
+        - VPX\WiremockExtension\Context\WiremockContext
         - Drupal\DrupalExtension\Context\DrupalContext
         - Drupal\DrupalExtension\Context\MinkContext
         - Drupal\DrupalExtension\Context\MarkupContext
         - Drupal\DrupalExtension\Context\DrushContext
   extensions:
+    VPX\WiremockExtension\ServiceContainer\WiremockExtension:
+      base_url: http://wiremock:80
+      mapping_path: "%paths.base%/tests/behat/fixtures"
     Drupal\DrupalExtension:
       blackbox: ~
     FriendsOfBehat\MinkDebugExtension:

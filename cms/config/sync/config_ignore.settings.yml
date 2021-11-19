@@ -1,11 +1,11 @@
 ignored_config_entities:
   - '*'
-  - ~block.block.claro.*
-  - ~block.block.novel:*
+  - '~block.block.claro.*'
+  - '~block.block.novel:*'
   - ~config_ignore.settings
-  - ~core.date_format.*
-  - ~core.entity_form_mode.user_register.*
-  - ~core.entity_view_mode.node.*
+  - '~core.date_format.*'
+  - '~core.entity_form_mode.user_register.*'
+  - '~core.entity_view_mode.node.*'
   - ~core.menu.static_menu_link_overrides
   - ~dblog.settings
   - ~field.settings
@@ -28,8 +28,8 @@ ignored_config_entities:
   - ~purge_queuer_coretags
   - ~purge.logger_channels
   - ~purge.plugins
-  - ~system.action.node_*_action
-  - ~system.action.user_*_action
+  - '~system.action.node_*_action'
+  - '~system.action.user_*_action'
   - ~system.authorize
   - ~system.cron
   - ~system.date
@@ -47,11 +47,11 @@ ignored_config_entities:
   - ~system.menu.tools
   - ~system.performance
   - ~system.rss
-  - ~system.site:admin_compact_mode
-  - ~system.site:default_langcode
-  - ~system.site:langcode
-  - ~system.site:page
-  - ~system.site:weight_select_max
+  - '~system.site:admin_compact_mode'
+  - '~system.site:default_langcode'
+  - '~system.site:langcode'
+  - '~system.site:page'
+  - '~system.site:weight_select_max'
   - ~system.theme
   - ~system.theme.global
   - ~text.settings

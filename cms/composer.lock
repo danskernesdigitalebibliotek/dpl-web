@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "7eb8ea63d6f75ec71223de07dc0d79e2",
+    "content-hash": "16da8f89d07e4699cb6c16366dfd6521",
     "packages": [
         {
             "name": "amazeeio/drupal_integrations",
@@ -12273,13 +12273,121 @@
                 }
             ],
             "time": "2020-07-12T23:59:07+00:00"
+        },
+        {
+            "name": "vpx/behat-wiremock-extension",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/danskernesdigitalebibliotek/behat-wiremock-extension.git",
+                "reference": "a9bd57f677a4acb01fcd0604315b09317a198e19"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/danskernesdigitalebibliotek/behat-wiremock-extension/zipball/a9bd57f677a4acb01fcd0604315b09317a198e19",
+                "reference": "a9bd57f677a4acb01fcd0604315b09317a198e19",
+                "shasum": ""
+            },
+            "require": {
+                "behat/behat": "~3.2",
+                "php": ">=7.0.0",
+                "symfony/config": "~2.8|~3.0|~4.0",
+                "symfony/dependency-injection": "~2.6|~3.0|~4.0",
+                "wiremock-php/wiremock-php": "^2.27"
+            },
+            "require-dev": {
+                "behat/mink-extension": "^2.1",
+                "behat/mink-goutte-driver": "^1.2",
+                "phpunit/phpunit": "^8.5",
+                "squizlabs/php_codesniffer": "^3.5.7"
+            },
+            "default-branch": true,
+            "type": "behat-extension",
+            "autoload": {
+                "psr-4": {
+                    "VPX\\WiremockExtension\\": "src/"
+                }
+            },
+            "autoload-dev": {
+                "psr-4": {
+                    "Tests\\VPX\\WiremockExtension\\": "tests/"
+                }
+            },
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Vitalii Piskovyi",
+                    "email": "vitalii.piskovyi@gmail.com"
+                }
+            ],
+            "description": "This Behat extension provides support for using Wiremock to mock external API calls",
+            "keywords": [
+                "behat",
+                "mock",
+                "wiremock"
+            ],
+            "support": {
+                "issues": "https://github.com/vpx/behat-wiremock-extension/issues",
+                "source": "https://github.com/vpx/behat-wiremock-extension"
+            },
+            "time": "2021-11-18T10:40:19+00:00"
+        },
+        {
+            "name": "wiremock-php/wiremock-php",
+            "version": "2.27.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/rowanhill/wiremock-php.git",
+                "reference": "b1d38fa2d6d1cbb5064e361a84883d01efc8ccbd"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/rowanhill/wiremock-php/zipball/b1d38fa2d6d1cbb5064e361a84883d01efc8ccbd",
+                "reference": "b1d38fa2d6d1cbb5064e361a84883d01efc8ccbd",
+                "shasum": ""
+            },
+            "require": {
+                "ext-json": "*"
+            },
+            "require-dev": {
+                "hafriedlander/phockito": "^1.0",
+                "phpunit/phpunit": "^4.0 | ^5.0"
+            },
+            "suggest": {
+                "phpunit/phpunit": "Thrown VerificationExceptions automatically fail tests"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-0": {
+                    "WireMock\\": "src"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Rowan Hill"
+                }
+            ],
+            "description": "PHP API for WireMock JSON interface",
+            "homepage": "http://github.com/rowanhill/wiremock-php",
+            "support": {
+                "issues": "https://github.com/rowanhill/wiremock-php/issues",
+                "source": "https://github.com/rowanhill/wiremock-php/tree/master"
+            },
+            "time": "2020-07-25T15:23:35+00:00"
         }
     ],
     "aliases": [],
     "minimum-stability": "dev",
     "stability-flags": {
         "drupal/default_content": 15,
-        "drupal/libraries": 10
+        "drupal/libraries": 10,
+        "vpx/behat-wiremock-extension": 20
     },
     "prefer-stable": true,
     "prefer-lowest": false,
