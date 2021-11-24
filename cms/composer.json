@@ -73,7 +73,9 @@
         "drupal/core-dev-pinned": "^9.2.7",
         "drupal/drupal-extension": "^4.1",
         "friends-of-behat/mink-debug-extension": "^2.0",
+        "jangregor/phpstan-prophecy": "^0.8.1",
         "mglaman/phpstan-drupal": "^0.12.15",
+        "php-mock/php-mock-phpunit": "^2.6",
         "phpstan/extension-installer": "^1.1",
         "thecodingmachine/phpstan-safe-rule": "^1.0",
         "vpx/behat-wiremock-extension": "dev-master"
