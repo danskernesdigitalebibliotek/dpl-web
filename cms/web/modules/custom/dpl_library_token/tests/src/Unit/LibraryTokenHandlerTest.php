@@ -1,13 +1,17 @@
 <?php
 
+// dataProvider tag ordering conflicts with short descriptions.
+// phpcs:ignoreFile Drupal.Commenting.DocComment.ParamNotFirst
+
 namespace Drupal\Tests\dpl_library_token\Unit;
 
+use Drupal\Core\Config\ConfigBase;
+use Psr\Log\LoggerInterface;
 use Psr\Log\LogLevel;
 use Prophecy\Argument;
 use GuzzleHttp\Psr7\Response;
 use Drupal\Tests\UnitTestCase;
 use GuzzleHttp\ClientInterface;
-use Prophecy\Prophecy\ObjectProphecy;
 use Drupal\Core\Config\ImmutableConfig;
 use Drupal\Core\Config\ConfigFactoryInterface;
 use Drupal\Core\Logger\LoggerChannelInterface;
@@ -16,6 +20,7 @@ use Drupal\Core\Logger\LoggerChannelFactoryInterface;
 use Drupal\Core\KeyValueStore\KeyValueStoreExpirableInterface;
 use Drupal\Core\KeyValueStore\KeyValueExpirableFactoryInterface;
 use Drupal\dpl_library_token\Exception\MissingConfigurationException;
+use function Safe\json_encode as json_encode;
 
 /**
  * Unit tests for the Library Token Handler.
@@ -59,7 +64,10 @@ class LibraryTokenHandlerTest extends UnitTestCase {
         );
       })->shouldBeCalledTimes(1);
 
-    $handler = $this->createTokenHandler($key_value_factory, $client);
+    $handler = $this->createTokenHandler(
+      $key_value_factory->reveal(),
+      $client->reveal()
+    );
     $handler->retrieveAndStoreToken();
   }
 
@@ -99,14 +107,23 @@ class LibraryTokenHandlerTest extends UnitTestCase {
     $logger_factory = $this->prophesize(LoggerChannelFactoryInterface::class);
     $logger_factory->get(LibraryTokenHandler::LOGGER_KEY)->willReturn($logger->reveal());
 
-    $handler = $this->createTokenHandler($key_value_factory, $client, $logger);
+    $handler = $this->createTokenHandler(
+      $key_value_factory->reveal(),
+      $client->reveal(),
+      $logger->reveal()
+    );
     $handler->retrieveAndStoreToken();
   }
 
   /**
-   * Test that application will fail if the needed configuratin is not set.
-   *
    * @dataProvider provideExceptionMessages
+   *
+   * Test that application will fail if the needed configuration is not set.
+   *
+   * @param string[]|null $settings
+   *   Faulty configuration of the library token handler.
+   * @param string $message
+   *   The expected error message.
    */
   public function testItComplainsIfConfigurationIsNotSet(?array $settings, string $message): void {
     $collection = $this->prophesize(KeyValueStoreExpirableInterface::class);
@@ -126,15 +143,22 @@ class LibraryTokenHandlerTest extends UnitTestCase {
 
     $this->expectException(MissingConfigurationException::class);
     $this->expectExceptionMessage($message);
-    $handler = $this->createTokenHandler($key_value_factory, $client, $logger, $config);
+    $handler = $this->createTokenHandler(
+      $key_value_factory->reveal(),
+      $client->reveal(),
+      $logger->reveal(),
+      $config->reveal()
+    );
 
     $handler->retrieveAndStoreToken();
   }
 
   /**
    * Dataprovider with settings and expected exception messages.
+   *
+   * @return array[]
    */
-  public function provideExceptionMessages() {
+  public function provideExceptionMessages(): array {
     return [
       [
         NULL,
@@ -166,24 +190,12 @@ class LibraryTokenHandlerTest extends UnitTestCase {
 
   /**
    * Creates a Library Token Handler with mocked dependencies.
-   *
-   * @param Prophecy\Prophecy\ObjectProphecy $key_value_factory
-   *   Mocked key/value store.
-   * @param Prophecy\Prophecy\ObjectProphecy $client
-   *   Mocked http client.
-   * @param Prophecy\Prophecy\ObjectProphecy|null $logger
-   *   Mocked logger service.
-   * @param Prophecy\Prophecy\ObjectProphecy|null $config
-   *   Mocked config service.
-   *
-   * @return Drupal\dpl_library_token\LibraryTokenHandler
-   *   The Library Token handler service.
    */
   protected function createTokenHandler(
-    ObjectProphecy $key_value_factory,
-    ObjectProphecy $client,
-    ?ObjectProphecy $logger = NULL,
-    ?ObjectProphecy $config = NULL
+    KeyValueExpirableFactoryInterface $key_value_factory,
+    ClientInterface $client,
+    ?LoggerInterface $logger = NULL,
+    ?ConfigBase $config = NULL
   ): LibraryTokenHandler {
 
     if (!$config) {
@@ -199,19 +211,19 @@ class LibraryTokenHandlerTest extends UnitTestCase {
       ]);
     }
     $config_factory = $this->prophesize(ConfigFactoryInterface::class);
-    $config_factory->get(LibraryTokenHandler::SETTINGS_KEY)->willReturn($config->reveal());
+    $config_factory->get(LibraryTokenHandler::SETTINGS_KEY)->willReturn($config);
 
     if (!$logger) {
-      $logger = $this->prophesize(LoggerChannelInterface::class);
+      $logger = $this->prophesize(LoggerChannelInterface::class)->reveal();
     }
 
     $logger_factory = $this->prophesize(LoggerChannelFactoryInterface::class);
-    $logger_factory->get(LibraryTokenHandler::LOGGER_KEY)->willReturn($logger->reveal());
+    $logger_factory->get(LibraryTokenHandler::LOGGER_KEY)->willReturn($logger);
 
     return new LibraryTokenHandler(
-      $key_value_factory->reveal(),
+      $key_value_factory,
       $config_factory->reveal(),
-      $client->reveal(),
+      $client,
       $logger_factory->reveal()
     );
   }

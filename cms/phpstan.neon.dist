@@ -4,10 +4,6 @@ parameters:
     - web/modules/custom
     - web/themes/custom
     - tests/behat/context
-  excludePaths:
-    # Ignore false negatives from test mock objects.
-    - web/modules/custom/dpl_library_token/tests
-    - web/modules/custom/dpl_login/tests
   ignoreErrors:
     - '#Unsafe usage of new static\(\).#'
     # Drupal Form API makes extensive use for arrays which we cannot provide
