@@ -2,7 +2,8 @@
 
 namespace Drupal\Tests\dpl_library_token\Unit;
 
-use phpmock\phpunit\PHPMock;
+use phpmock\Mock;
+use phpmock\MockBuilder;
 use Prophecy\Argument;
 use Psr\Log\LoggerInterface;
 use Drupal\Core\GeneratedUrl;
@@ -25,14 +26,17 @@ use Drupal\dpl_login\Exception\MissingConfigurationException;
  * Unit tests for the Library Token Handler.
  */
 class DplLoginControllerTest extends UnitTestCase {
-  use PHPMock;
 
   /**
    * {@inheritdoc}
    */
   protected function setUp(): void {
-    $mock = $this->getFunctionMock('Drupal\dpl_login\Controller', 'user_logout');
-    $mock->expects($this->any())->willReturn(NULL);
+    $builder = new MockBuilder();
+    $builder->setNamespace('Drupal\dpl_login\Controller')
+      ->setName("user_logout")
+      ->setFunction(fn() => NULL)
+      ->build()
+      ->enable();
 
     $logger = $this->prophesize(LoggerInterface::class);
     $logger->error(Argument::any(), Argument::any())->shouldNotBeCalled();
@@ -134,6 +138,13 @@ class DplLoginControllerTest extends UnitTestCase {
       'https://local.site',
       $response->headers->get('location')
     );
+  }
+
+  /**
+   * {@inheritDoc}
+   */
+  public function tearDown(): void {
+    Mock::disableAll();
   }
 
 }

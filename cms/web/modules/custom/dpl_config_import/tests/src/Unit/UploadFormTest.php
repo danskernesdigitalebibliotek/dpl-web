@@ -13,7 +13,8 @@ use Drupal\Core\StringTranslation\TranslationInterface;
 use Drupal\dpl_config_import\Form\UploadForm;
 use Drupal\file\FileInterface;
 use Drupal\Tests\UnitTestCase;
-use phpmock\phpunit\PHPMock;
+use phpmock\Mock;
+use phpmock\MockBuilder;
 use Prophecy\Argument;
 use Symfony\Component\Yaml\Exception\ParseException;
 use Symfony\Component\Yaml\Parser;
@@ -22,7 +23,6 @@ use Symfony\Component\Yaml\Parser;
  * Unit test for upload form.
  */
 class UploadFormTest extends UnitTestCase {
-  use PHPMock;
 
   /**
    * The YAML parser which provides data read from a file.
@@ -87,8 +87,13 @@ class UploadFormTest extends UnitTestCase {
     // Setup mocks with default values.
     $file = $this->prophesize(FileInterface::class);
     $file->getFileUri()->willReturn($this->yamlFilePath);
-    $mock = $this->getFunctionMock('Drupal\dpl_config_import\Form', 'file_save_upload');
-    $mock->expects($this->any())->willReturn($file->reveal());
+
+    $builder = new MockBuilder();
+    $builder->setNamespace('Drupal\dpl_config_import\Form')
+      ->setName("file_save_upload")
+      ->setFunction(fn() => $file->reveal())
+      ->build()
+      ->enable();
 
     $this->configFactory = $this->prophesize(ConfigFactoryInterface::class);
     $this->yamlParser = $this->prophesize(Parser::class);
@@ -273,6 +278,13 @@ class UploadFormTest extends UnitTestCase {
 
     $this->messenger->addError(Argument::any())->shouldHaveBeenCalled();
     $this->moduleInstaller->install([])->shouldHaveBeenCalled();
+  }
+
+  /**
+   * {@inheritDoc}
+   */
+  public function tearDown(): void {
+    Mock::disableAll();
   }
 
 }
