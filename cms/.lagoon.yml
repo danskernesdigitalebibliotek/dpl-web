@@ -18,9 +18,25 @@ tasks:
             if [[ -f config/sync/system.site.yml ]]; then
                 echo "Config detected, doing a drush deploy"
                 drush deploy
+
+                # Purge all varnish cache to make sure
+                # that new changes will come through
+                # eg. js assets.
+                echo "...and clearing the external cache."
+                drush cache:rebuild-external -y || true
             else
                 echo "No config detected, clearing cache"
                 drush cr
+            fi
+        service: cli
+    - run:
+        # We need this because if we create the directory before volume mount
+        # it will be gone.
+        name: Create module upload directory in public files
+        command: |
+            if [[ ! -d "web/sites/default/files/modules_local" ]]; then
+                echo "Creating directory for module uploads"
+                mkdir web/sites/default/files/modules_local
             fi
         service: cli
 

@@ -5,6 +5,7 @@
 /vendor/
 /web/core/
 /web/modules/contrib/
+/web/modules/local/
 /web/themes/contrib/
 /web/profiles/contrib/
 /web/libraries/
