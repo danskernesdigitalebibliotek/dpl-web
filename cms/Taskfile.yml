@@ -30,7 +30,9 @@ vars:
   DOCKER_COMPOSE_FILES: '{{.DOCKER_COMPOSE_FILES | default .DOCKER_COMPOSE_FILES_DEFAULT }}'
   DOCKER_COMPOSE_FILES_CI: '{{.DOCKER_COMPOSE_FILES}} -f docker-compose.ci.yml'
   # Sql dump files directory
-  SQL_DUMP_DIR: 'database-dump'
+  DIR_RESTORE_DATABASE: 'restore/database'
+  # Directory with lagoon backup files.
+  DIR_RESTORE_FILES: 'restore/files'
 
 tasks:
   ghcr:login:
@@ -77,24 +79,30 @@ tasks:
     cmds:
       - docker compose run -e XDEBUG_ENABLE=true cli vendor/bin/phpunit --coverage-text
 
-  dev:db:restore:
-    desc: 'Restore database from db dump file. Only one sql should be present the "{{ .SQL_DUMP_DIR }}" directory.'
+  dev:restore:database:
+    desc: 'Restore database from db dump file. Only one sql should be present the "{{ .DIR_RESTORE_DATABASE }}" directory.'
     cmds:
       - docker-compose exec -T {{ .MYSQL_CONTAINER }} mysql < {{ .SQL_FILE }}
       - task dev:cache:clear:all
     preconditions:
       - sh: "[ {{ .SQL_FILES_COUNT }} -gt 0 ]"
-        msg: "There are no sql files in {{ .SQL_DUMP_DIR }}/. Cannot continue."
+        msg: "There are no sql files in {{ .DIR_RESTORE_DATABASE }}/. Cannot continue."
       - sh: "[ {{ .SQL_FILES_COUNT }} -eq 1 ]"
-        msg: "There are {{ .SQL_FILES_COUNT }} valid files in {{ .SQL_DUMP_DIR }}/:\n{{ .SQL_DUMP_DIR_CONTENT }}\n...there should be just one."
+        msg: "There are {{ .SQL_FILES_COUNT }} valid files in {{ .DIR_RESTORE_DATABASE }}/:\n{{ .DIR_RESTORE_DATABASE_CONTENT }}\n...there should be just one."
     vars:
       SQL_FILES_COUNT:
-        sh: ls {{ .SQL_DUMP_DIR }}/*.sql | wc -l 2> /dev/null | xargs
+        sh: ls {{ .DIR_RESTORE_DATABASE }}/*.sql | wc -l 2> /dev/null | xargs
       SQL_FILE:
-        sh: ls -t "{{ .SQL_DUMP_DIR }}"/*.sql
-      SQL_DUMP_DIR_CONTENT:
-       sh: ls {{ .SQL_DUMP_DIR }}
+        sh: ls -t "{{ .DIR_RESTORE_DATABASE }}"/*.sql
+      DIR_RESTORE_DATABASE_CONTENT:
+       sh: ls {{ .DIR_RESTORE_DATABASE }}
       MYSQL_CONTAINER: 'mariadb'
+
+  dev:restore:files:
+    desc: 'Restore files by overwriting existing with the ones from the Lagoon backup package'
+    cmds:
+      - docker-compose exec cli sh dev-scripts/cli-restore-lagoon-files.sh {{ .DIR_RESTORE_FILES }}
+      - task dev:cache:clear:all
 
   dev:cache:clear:all:
     summary: Clears all cache
