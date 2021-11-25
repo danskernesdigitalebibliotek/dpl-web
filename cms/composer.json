@@ -76,7 +76,9 @@
         "jangregor/phpstan-prophecy": "^0.8.1",
         "mglaman/phpstan-drupal": "^0.12.15",
         "php-mock/php-mock": "^2.3",
+        "phpspec/prophecy-phpunit": "^2",
         "phpstan/extension-installer": "^1.1",
+        "phpunit/phpunit": "^9.5",
         "thecodingmachine/phpstan-safe-rule": "^1.0",
         "vpx/behat-wiremock-extension": "dev-master"
     },
