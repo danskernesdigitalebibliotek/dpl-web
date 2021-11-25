@@ -11,11 +11,11 @@ of the system is in Danish.
 
 This is based on [an approach described by the LimoenGroen Drupal agency](https://medium.com/limoengroen/how-to-deploy-drupal-interface-translations-5653294c4af6).
 
-
 ## Howtos
 
 ### Add new translation
 
+<!-- markdownlint-disable ol-prefix -->
 1. Add the translation to the `web/profiles/dpl_cms/translations/da.po` file
 
 ```po
@@ -35,6 +35,7 @@ msgstr "Lav indhold klistret"
 ```
 
 2. Commit the changes
+<!-- markdownlint-enable ol-prefix -->
 
 ### Import updated translations
 

@@ -17,19 +17,18 @@ A solution to configuration management must live up to the following test:
    `drush site-install --existing-config -y`
 3. Log in to see that Core configuration is imported. This can be verified if
    the site name is set to DPL CMS.
-4. Change a Core configuration value e.g. on http://dpl-cms.docker/admin/config/development/performance
+4. Change a Core configuration value e.g. on <http://dpl-cms.docker/admin/config/development/performance>
 5. Run `drush config-import -y` and see that the change is rolled back and the
    configuration value is back to default. This shows that Core configuration
    will remain managed by the configuration system.
-6. Change a local configuration value like the site name on http://dpl-cms.docker/admin/config/system/site-information
+6. Change a local configuration value like the site name on <http://dpl-cms.docker/admin/config/system/site-information>
 7. Run `drush config-import -y` to see that no configuration is imported. This
    shows that local configuration which can be managed by Editor libraries will
    be left unchanged.
 8. Enable and configure the Shortcut module and add a new Shortcut set.
 9. Run `drush config-import -y` to see that the module is not disabled and the
-   configuration remains unchanged. This shows that local configuration in the form
-   of new modules added by Webmaster libraries will be left unchanged.
-
+   configuration remains unchanged. This shows that local configuration in the
+   form of new modules added by Webmaster libraries will be left unchanged.
 
 ## Decision
 
@@ -50,7 +49,6 @@ updated to match what is in the core configuration.
 Config Ignore also has the option of ignoring specific values within settings.
 This is relevant for settings such as `system.site` where we consider the site
 name local configuration but 404 page paths core configuration.
-
 
 ## Alternatives considered
 
@@ -105,11 +103,11 @@ settings.
 We have not been able to configure this module in a meaningful way which also
 passed the provided test.
 
-
 ## Consequences
 
 - Core developers will have to explicitly select new configuration to not ignore
   during the development process. One can not simply run `drush config-export`
   and have the appropriate configuration not ignored.
 - Because `core.extension` is ignored Core developers will have to explicitly
-  enable and uninstall modules through code as a part of the development process.
+  enable and uninstall modules through code as a part of the development
+  process.

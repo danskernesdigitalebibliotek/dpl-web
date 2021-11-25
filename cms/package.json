@@ -4,6 +4,7 @@
   "license": "AGPL-3.0",
   "devDependencies": {
     "@lhci/cli": "^0.8.2",
+    "markdownlint-cli2": "^0.3.2",
     "pa11y-ci": "git+https://github.com/pa11y/pa11y-ci#5c842cf"
   }
 }
