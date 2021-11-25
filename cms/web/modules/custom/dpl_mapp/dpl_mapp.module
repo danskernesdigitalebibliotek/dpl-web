@@ -1,0 +1,31 @@
+<?php
+
+/**
+ * @file
+ * Primary module hooks for Mapp Intelligence module.
+ */
+
+use Drupal\Core\Cache\Cache;
+
+/**
+ * Implements hook_page_attachments().
+ *
+ * @param array[] $page
+ *   The page render array.
+ */
+function dpl_mapp_page_attachments(array &$page): void {
+  if (\Drupal::routeMatch()->getRouteObject()?->getOption('_admin_route')) {
+    return;
+  }
+
+  $config = \Drupal::config('dpl_mapp.settings');
+
+  $page['#cache']['tags'] = Cache::mergeTags($page['#cache']['tags'] ?? [], $config->getCacheTags());
+  if ($config->get('id')) {
+    $page['#attached']['library'][] = 'dpl_mapp/dpl_mapp';
+    $page['#attached']['drupalSettings']['dpl_mapp'] = [
+      'domain' => $config->get('domain'),
+      'id' => $config->get('id'),
+    ];
+  }
+}

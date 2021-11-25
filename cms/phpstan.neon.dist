@@ -8,4 +8,4 @@ parameters:
     - '#Unsafe usage of new static\(\).#'
     # Drupal Form API makes extensive use for arrays which we cannot provide
     # more detailed typing of.
-    - '#.*\:\:(build|submit)Form\(\) .* no value type specified in iterable type array\.#'
+    - '#.*\:\:(buildForm|getEditableConfigNames|submitForm)\(\) .* no value type specified in iterable type array\.#'
