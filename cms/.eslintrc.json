@@ -2,6 +2,12 @@
   "extends": [
     "drupal"
   ],
+  "globals": {
+    "once": true
+  },
+  "rules": {
+    "no-console": ["error", { "allow": ["debug", "warn", "error"] }]
+  },
   "ignorePatterns": [
     "**/vendor/",
     "**/web/core/",
