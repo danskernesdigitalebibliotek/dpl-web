@@ -119,6 +119,7 @@
             "file-mapping": {
                 "[web-root]/sites/default/all.settings.php": "assets/all.settings.php"
             },
+            "gitignore": true,
             "locations": {
                 "web-root": "web/"
             }
