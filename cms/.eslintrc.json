@@ -1,0 +1,14 @@
+{
+  "extends": [
+    "drupal"
+  ],
+  "ignorePatterns": [
+    "**/vendor/",
+    "**/web/core/",
+    "**/web/libraries/",
+    "**/web/modules/contrib/",
+    "**/web/sites/**/files/",
+    "**/web/themes/custom/novel/assets/",
+    "**/web/themes/contrib/"
+  ]
+}
