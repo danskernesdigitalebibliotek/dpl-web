@@ -18,7 +18,7 @@ class DplLoginController extends ControllerBase {
   use StringTranslationTrait;
 
   const LOGGER_KEY = 'dpl_login';
-  // TODO: This could be moved to a new service
+  // @todo This could be moved to a new service
   // handling adgangsplatform configuration.
   // @see dpl_login_install() and \Drupal\dpl_library_token\LibraryTokenHandler.
   const SETTINGS_KEY = 'openid_connect.settings.adgangsplatformen';
@@ -84,7 +84,7 @@ class DplLoginController extends ControllerBase {
    */
   public function logout() {
     // It is a global problem if the logout endpoint has not been configured.
-    // TODO: This could be moved to a new service
+    // @todo This could be moved to a new service
     // handling adgangsplatform configuration.
     // @see dpl_login_install() and \Drupal\dpl_library_token\LibraryTokenHandler.
     if (!$logout_endpoint = $this->settings['logout_endpoint'] ?? NULL) {

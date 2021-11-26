@@ -19,7 +19,7 @@ class LibraryTokenHandler {
   const LIBRARY_TOKEN_KEY = 'library_token';
   const TOKEN_COLLECTION_KEY = 'dpl_library_token';
   const NEXT_EXECUTION_KEY = 'dpl_library_token.next_execution';
-  // TODO: This could be moved to a new service
+  // @todo This could be moved to a new service
   // handling adgangsplatform configuration.
   // @see dpl_login_install() and \Drupal\dpl_login\Controller\DplLoginController
   const SETTINGS_KEY = 'openid_connect.settings.adgangsplatformen';

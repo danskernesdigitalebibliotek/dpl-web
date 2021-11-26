@@ -2,6 +2,8 @@
 
 namespace Drupal\Tests\dpl_library_token\Unit;
 
+use phpmock\Mock;
+use phpmock\MockBuilder;
 use Prophecy\Argument;
 use Psr\Log\LoggerInterface;
 use Drupal\Core\GeneratedUrl;
@@ -20,10 +22,6 @@ use Drupal\Core\Utility\UnroutedUrlAssemblerInterface;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Drupal\dpl_login\Exception\MissingConfigurationException;
 
-// Mocking user_logout function.
-// TODO: Could be solved with php-mock in the future.
-require_once 'user_logout.mock.php';
-
 /**
  * Unit tests for the Library Token Handler.
  */
@@ -33,6 +31,13 @@ class DplLoginControllerTest extends UnitTestCase {
    * {@inheritdoc}
    */
   protected function setUp(): void {
+    $builder = new MockBuilder();
+    $builder->setNamespace('Drupal\dpl_login\Controller')
+      ->setName("user_logout")
+      ->setFunction(fn() => NULL)
+      ->build()
+      ->enable();
+
     $logger = $this->prophesize(LoggerInterface::class);
     $logger->error(Argument::any(), Argument::any())->shouldNotBeCalled();
     $logger_factory = $this->prophesize(LoggerChannelFactoryInterface::class);
@@ -133,6 +138,13 @@ class DplLoginControllerTest extends UnitTestCase {
       'https://local.site',
       $response->headers->get('location')
     );
+  }
+
+  /**
+   * {@inheritDoc}
+   */
+  public function tearDown(): void {
+    Mock::disableAll();
   }
 
 }
