@@ -5,7 +5,7 @@ jsonlog_canonical: ''
 jsonlog_file_time: Ymd
 jsonlog_dir: ''
 jsonlog_stderr: true
-jsonlog_newline_prepend: false
+jsonlog_newline_prepend: true
 jsonlog_tags: ''
 _core:
   default_config_hash: oZNaD81_Lm69pHa73xOTY2BCRKm1oIIotw0r0lqYBiI
