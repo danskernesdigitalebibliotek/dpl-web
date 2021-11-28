@@ -4,7 +4,7 @@ jsonlog_siteid: c5375a474bad__drupal
 jsonlog_canonical: ''
 jsonlog_file_time: Ymd
 jsonlog_dir: ''
-jsonlog_stdout: true
+jsonlog_stderr: true
 jsonlog_newline_prepend: false
 jsonlog_tags: ''
 _core:
