@@ -63,15 +63,24 @@ tasks:
   dev:reset:
     desc: Create local development setup in a clean state
     cmds:
+      # Stop potential running environment.
       - task dev:stop
+      # Create a .env file with recommended defaults.
       - cp -n .env.example .env || true
+      # Build site.
       - task dev:cli -- composer install
+      # Start local environment.
       - task dev:start
+      # Install site.
       - task dev:cli -- drush site-install --existing-config -y
+      # Import translations.
+      - task dev:cli -- drush locale-check
+      - task dev:cli -- drush locale-update
       # We don't really need to purge the external cache
       # since we are working with fresh containers.
       # But we want catch if something is wrong with the setup.
       - task dev:cache:clear:external
+      # Show a one-time login to the local site.
       - task dev:cli -- drush user-login
 
   dev:phpunit:
