@@ -7,47 +7,52 @@ tasks:
     - run:
         name: If drupal is not installed
         command: |
-            if tables=$(drush sqlq "show tables like 'node';") && [ -z "$tables" ]; then
-                drush si --existing-config -y
-            fi
+          if tables=$(drush sqlq "show tables like 'node';") && [ -z "$tables" ]; then
+            drush si --existing-config -y
+          fi
         service: cli
         shell: bash
     - run:
         name: drush deploy
         command: |
-            if [[ -f config/sync/system.site.yml ]]; then
-                echo "Config detected, doing a drush deploy"
-                drush deploy
+          if [[ -f config/sync/system.site.yml ]]; then
+            echo "Config detected, doing a drush deploy"
+            drush deploy
 
-                # Purge all varnish cache to make sure
-                # that new changes will come through
-                # eg. js assets.
-                echo "...and clearing the external cache."
-                drush cache:rebuild-external -y || true
-            else
-                echo "No config detected, clearing cache"
-                drush cr
-            fi
+          # Purge all varnish cache to make sure
+          # that new changes will come through
+          # eg. js assets.
+          echo "...and clearing the external cache."
+          drush cache:rebuild-external -y || true
+          else
+            echo "No config detected, clearing cache"
+            drush cr
+          fi
         service: cli
     - run:
         # We need this because if we create the directory before volume mount
         # it will be gone.
         name: Create module upload directory in public files
         command: |
-            if [[ ! -d "web/sites/default/files/modules_local" ]]; then
-                echo "Creating directory for module uploads"
-                mkdir web/sites/default/files/modules_local
-            fi
+          if [[ ! -d "web/sites/default/files/modules_local" ]]; then
+            echo "Creating directory for module uploads"
+            mkdir web/sites/default/files/modules_local
+          fi
+        service: cli
+    - run:
+        name: Import translations
+        command: |
+          drush locale-check
+          drush locale-update
         service: cli
 
 environments:
-  mains:
-    # routes:
+  main:
     cronjobs:
-      - name: drush cron
-        schedule: "*/15 * * * *"
-        command: drush cron
-        service: cli
+    - name: drush cron
+      schedule: "M/15 * * * *"
+      command: drush cron
+      service: cli
 
 container-registries:
   github:
