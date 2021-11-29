@@ -60,10 +60,11 @@ class AdgangsplatformenContext implements MinkAwareContext, WiremockAwareInterfa
       WireMock::post(
         WireMock::urlPathEqualTo("/oauth/token/")
       )
-        ->withMultipartRequestBody(
-          Wiremock::aMultipart()
-            ->withMultipartBody(WireMock::containing("grant_type=authorization_code"))
-            ->withMultipartBody(WireMock::containing("code=$authorization_code"))
+        ->withRequestBody(
+          Wiremock::containing("grant_type=authorization_code")
+        )
+        ->withRequestBody(
+          WireMock::containing("code=$authorization_code")
         )
         ->willReturn(WireMock::aResponse()
           ->withBody(json_encode([
@@ -106,14 +107,16 @@ class AdgangsplatformenContext implements MinkAwareContext, WiremockAwareInterfa
   /**
    * @Then I am authenticated as a patron
    */
-  public function assertLoggedInAsPatron(): bool {
+  public function assertLoggedInAsPatron(): void {
     // @todo Determine if user has patron role.
     // We do not have a proper way to determine that the user is actually
     // authenticated as a patron. For now we simply check whether the user is
     // logged in. If that is the case then the /user route will redirect to
     // the user/id route.
     $this->getSession()->visit($this->locatePath('/user'));
-    return (bool) preg_match("/user\/\d+/", $this->getSession()->getCurrentUrl());
+    if (!preg_match("/user\/\d+/", $this->getSession()->getCurrentUrl())) {
+      throw new \RuntimeException('Patron does not appear to be logged in. The generic /user does not redirect to a specific /user/[id] url');
+    }
   }
 
 }

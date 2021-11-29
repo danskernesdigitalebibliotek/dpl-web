@@ -1,0 +1,13 @@
+# Custom module library for general purposes.
+mapp_tag_integration:
+  js:
+    js/tiLoader.min.js: {}
+  dependencies:
+    - core/drupalSettings
+
+dpl_mapp:
+  js:
+    js/dpl_mapp.js: {}
+  dependencies:
+    - dpl_mapp/mapp_tag_integration
+    - core/once

@@ -5,6 +5,7 @@ default:
         - "%paths.base%/tests/behat/features"
       contexts:
         - Dpl\Tests\Behat\Context\AdgangsplatformenContext
+        - Dpl\Tests\Behat\Context\MappContext
         - VPX\WiremockExtension\Context\WiremockContext
         - Drupal\DrupalExtension\Context\DrupalContext
         - Drupal\DrupalExtension\Context\MinkContext
@@ -15,7 +16,14 @@ default:
       base_url: http://wiremock:80
       mapping_path: "%paths.base%/tests/behat/fixtures"
     Drupal\DrupalExtension:
+      api_driver: 'drupal'
       blackbox: ~
+      drupal:
+        drupal_root: "%paths.base%/web"
+      text:
+        log_in: "Log ind"
+        password_field: "Adgangskode"
+        username_field: "Brugernavn"
     FriendsOfBehat\MinkDebugExtension:
       directory: "%paths.base%/tests/behat/logs"
       screenshot: true

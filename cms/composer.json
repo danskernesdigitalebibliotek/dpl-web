@@ -117,8 +117,10 @@
                 "amazeeio/drupal_integrations"
             ],
             "file-mapping": {
-                "[web-root]/sites/default/all.settings.php": "assets/all.settings.php"
+                "[web-root]/sites/default/all.settings.php": "assets/all.settings.php",
+                "[web-root]/.eslintrc.json": false
             },
+            "gitignore": true,
             "locations": {
                 "web-root": "web/"
             }

@@ -5,6 +5,7 @@ module:
   config_ignore: 0
   dpl_library_token: 0
   dpl_login: 0
+  dpl_mapp: 0
   dynamic_page_cache: 0
   field: 0
   file: 0
