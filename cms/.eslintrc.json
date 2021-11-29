@@ -15,6 +15,7 @@
     "**/web/modules/contrib/",
     "**/web/sites/**/files/",
     "**/web/themes/custom/novel/assets/",
-    "**/web/themes/contrib/"
+    "**/web/themes/contrib/",
+    "**/web/modules/local/"
   ]
 }
