@@ -23,7 +23,7 @@ function dpl_mapp_page_attachments(array &$page): void {
   $config = \Drupal::config('dpl_mapp.settings');
 
   $page['#cache']['tags'] = Cache::mergeTags($page['#cache']['tags'] ?? [], $config->getCacheTags());
-  if ($config->get('id')) {
+  if ($config->get('id') && $config->get('domain')) {
     $page['#attached']['library'][] = 'dpl_mapp/dpl_mapp';
     $page['#attached']['drupalSettings']['dpl_mapp'] = [
       'domain' => $config->get('domain'),
