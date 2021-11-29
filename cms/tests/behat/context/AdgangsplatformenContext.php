@@ -14,7 +14,7 @@ use function Safe\preg_match as preg_match;
 // phpcs:disable Drupal.Commenting.DocComment.MissingShort
 
 /**
- * Behat content for dealing with Adgangsplatformen.
+ * Behat context for dealing with Adgangsplatformen.
  *
  * Adgangsplatformen is the single signon solution used by the Danish Public
  * Libraries.

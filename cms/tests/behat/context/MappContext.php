@@ -10,7 +10,7 @@ use WireMock\Client\WireMock;
 // phpcs:disable Drupal.Commenting.DocComment.MissingShort
 
 /**
- * Behat content for dealing with Mapp.
+ * Behat context for dealing with Mapp.
  *
  * Adgangsplatformen is the single signon solution used by the Danish Public
  * Libraries.
