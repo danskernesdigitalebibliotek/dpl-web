@@ -5,6 +5,7 @@ default:
         - "%paths.base%/tests/behat/features"
       contexts:
         - Dpl\Tests\Behat\Context\AdgangsplatformenContext
+        - Dpl\Tests\Behat\Context\MappContext
         - VPX\WiremockExtension\Context\WiremockContext
         - Drupal\DrupalExtension\Context\DrupalContext
         - Drupal\DrupalExtension\Context\MinkContext
