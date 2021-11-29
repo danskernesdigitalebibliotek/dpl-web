@@ -6,23 +6,23 @@ version: '3'
 dotenv: [".task.env"]
 
 vars:
-  # Docker file registry.
-  REGISTRY: '{{.REGISTRY | default "ghcr.io"}}'
-  # Github organization.
-  ORG: '{{.ORG | default "danskernesdigitalebibliotek"}}'
+  # Docker image registry.
+  # Eg.
+  #   - ghcr.io/danskernesdigitalebibliotek
+  #   - docker.io/someregistry
+  RELEASE_IMAGE_REGISTRY: '{{.RELEASE_IMAGE_REGISTRY | default "ghcr.io/danskernesdigitalebibliotek"}}'
   # Get total amount of commits on the main branch. Used as build number.
   COMMIT_COUNT:
     sh: git rev-list --count origin/main
   # The version number we want to tag the source build with.
-  # It can be specified by adding SOURCE_VERSION=XX when running command.
+  # It can be specified by adding RELEASE_TAG=XX when running command.
   # Otherwise it will default to the COMMIT_COUNT variable.
-  SOURCE_VERSION: '{{.SOURCE_VERSION | default .COMMIT_COUNT }}'
-  # Using the name of this project as a namespace of the docker image.
-  DOCKER_IMAGE_NAMESPACE: '{{.DOCKER_IMAGE_NAMESPACE | default "dpl-cms"}}'
+  RELEASE_IMAGE_TAG: '{{.RELEASE_IMAGE_TAG | default .COMMIT_COUNT }}'
   # Constructing docker image name.
-  DOCKER_IMAGE_PREFIX: "{{ .REGISTRY }}/{{ .ORG }}/{{ .DOCKER_IMAGE_NAMESPACE }}"
+  DOCKER_IMAGE_PREFIX: "{{ .RELEASE_IMAGE_REGISTRY }}/{{ .DOCKER_IMAGE_NAMESPACE }}"
   # Constructing docker image name.
-  IMAGE_SOURCE: "{{ .DOCKER_IMAGE_PREFIX }}-source:{{ .SOURCE_VERSION }}"
+  RELEASE_IMAGE_NAME: '{{.RELEASE_IMAGE_NAME | default "dpl-cms-source"}}'
+  RELEASE_FULL_NAME: '{{.RELEASE_IMAGE_REGISTRY}}/{{.RELEASE_IMAGE_NAME}}:{{.RELEASE_IMAGE_TAG}}'
   # Where is the docker file(s) we use for our builds residing?
   LAGOON_DIR: "lagoon"
   DOCKER_COMPOSE_FILES_OSX: '{{if eq OS "darwin"}}-f docker-compose.mac-nfs.yml{{end}}'
@@ -38,7 +38,7 @@ tasks:
   ghcr:login:
     summary: Login into Github Container Registry
     cmds:
-      - echo {{ .CR_PAT }} | docker login {{ .REGISTRY }} -u username-not-used --password-stdin
+      - echo {{ .CR_PAT }} | docker login {{ .RELEASE_IMAGE_REGISTRY }} -u username-not-used --password-stdin
     preconditions:
       - sh: "[ ! -z {{.CR_PAT}} ]"
         msg: "Env variable CR_PAT is not set or empty."
@@ -157,13 +157,13 @@ tasks:
     summary: Build core source image.
     cmds:
       - docker build -f {{ .LAGOON_DIR }}/cli.dockerfile --tag dpl-cms-cli:0.0.0 .
-      - docker build -f {{ .LAGOON_DIR }}/source.dockerfile --tag {{ .IMAGE_SOURCE }} .
+      - docker build -f {{ .LAGOON_DIR }}/source.dockerfile --tag {{ .RELEASE_FULL_NAME }} .
 
   source:push:
     summary: Push core source image to container registry.
     deps: [ghcr:login]
     cmds:
-      - docker push {{ .IMAGE_SOURCE }}
+      - docker push {{ .RELEASE_FULL_NAME }}
 
   source:deploy:
     desc: Build and push core source docker image.

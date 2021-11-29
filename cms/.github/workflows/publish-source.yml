@@ -23,7 +23,7 @@ jobs:
     - name: Get version
       id: get_version
       run: |
-        echo ::set-output name=SOURCE_VERSION::$(echo ${GITHUB_REF#refs/tags/} | cut -d '_' -f 2)
+        echo ::set-output name=RELEASE_TAG::$(echo ${GITHUB_REF#refs/tags/} | cut -d '_' -f 2)
       if: ${{ steps.detect_tag.outputs.IS_RELEASE_TAG == 'true' }}
     # Install go-task since we need it for building the source package.
     - name: Install go-task
@@ -34,4 +34,4 @@ jobs:
       if: ${{ steps.detect_tag.outputs.IS_RELEASE_TAG == 'true' }}
       env:
         CR_PAT: ${{ secrets.GITHUB_TOKEN }}
-        SOURCE_VERSION: ${{ steps.get_version.outputs.SOURCE_VERSION }}
+        RELEASE_TAG: ${{ steps.get_version.outputs.RELEASE_TAG }}
