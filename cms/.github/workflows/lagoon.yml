@@ -1,6 +1,15 @@
 on:
   pull_request:
-    types: [ opened, synchronize, reopened, closed ]
+    # We have two groups of jobs in this workflow that reacts on actions:
+    #
+    # 1. We update the status of a Github Deployment on:
+    # - opened
+    # - synchronize
+    # - reopened
+    # - closed
+    #
+    # 2. We forward all events to lagoon via InformLagoon
+    types: [ opened, synchronize, reopened, closed, edited ]
 name: Lagoon integration
 
 env:
@@ -70,3 +79,24 @@ jobs:
           token: ${{ secrets.GITHUB_TOKEN }}
           env: ${{ steps.environment.outputs.id }}
           log_args: true
+
+  # We only permit the integration with Lagoon to run if the user is
+  # authorized. This saves on resources and ensures we only spin up sites for
+  # legitimate contributions.
+  # The integration is controlled by creating synthetic events related to select
+  # pull-request events, and send them to Lagoon.
+  #
+  # The job expects the following secrets:
+  # LAGOON_WEBHOOK_URL: The url events are to be delivered to
+  # LAGOON_WEBHOOK_SECRET: Shared lagoon webhook secret
+  #
+  InformLagoon:
+    name: Send synthetic event to Lagoon
+    runs-on: ubuntu-latest
+    steps:
+    - name: Send pull request event
+      uses: distributhor/workflow-webhook@v2
+      env:
+        webhook_url: ${{ secrets.LAGOON_WEBHOOK_URL }}
+        webhook_secret: ${{ secrets.LAGOON_WEBHOOK_SECRET }}
+        webhook_type: 'json-extended'
