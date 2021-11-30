@@ -59,7 +59,7 @@ services:
     environment:
       HTTP_PROXY: http://wiremock
       HTTPS_PROXY: https://wiremock
-      NO_PROXY: "chrome,nginx,varnish"
+      NO_PROXY: "chrome,nginx,varnish,*.github.com,*.drupalcode.org"
       CI: true
 
   php:
