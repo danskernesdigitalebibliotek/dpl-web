@@ -53,15 +53,6 @@ services:
       VIRTUAL_HOST: wiremock.${COMPOSE_PROJECT_NAME}.docker
       VIRTUAL_PORT: 80
 
-  cli:
-    depends_on:
-      - wiremock
-    environment:
-      HTTP_PROXY: http://wiremock
-      HTTPS_PROXY: https://wiremock
-      NO_PROXY: "chrome,nginx,varnish,*.github.com,*.drupalcode.org"
-      CI: true
-
   php:
     depends_on:
       - wiremock

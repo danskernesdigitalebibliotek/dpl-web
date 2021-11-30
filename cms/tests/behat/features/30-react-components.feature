@@ -5,7 +5,7 @@ Feature: React components
   Scenario: Tokens are available
     Given I enable modules "ddb_react, ddb_react_demo"
     And a library token can be fetched
-    And I run cron
+    And I run cron from the web UI
     And I am authenticated on Adgangsplatformen
     And I log in with Adgangsplatformen
     Then I should have a "library" token
@@ -15,7 +15,7 @@ Feature: React components
   Scenario: Add to checklist works
     Given I enable modules "ddb_react, ddb_react_demo"
     And a library token can be fetched
-    And I run cron
+    And I run cron from the web UI
     And I am authenticated on Adgangsplatformen
     And my checklist is empty
     And I log in with Adgangsplatformen

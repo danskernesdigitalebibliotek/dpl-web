@@ -5,7 +5,7 @@ default:
         - "%paths.base%/tests/behat/features"
       contexts:
         - Dpl\Tests\Behat\Context\AdgangsplatformenContext
-        - Dpl\Tests\Behat\Context\DrupalModulesContext
+        - Dpl\Tests\Behat\Context\DrupalContext
         - Dpl\Tests\Behat\Context\MappContext
         - Dpl\Tests\Behat\Context\MaterialListContext
         - Dpl\Tests\Behat\Context\ReactContext
