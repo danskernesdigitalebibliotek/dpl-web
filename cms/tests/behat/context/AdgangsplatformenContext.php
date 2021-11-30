@@ -14,7 +14,7 @@ use function Safe\preg_match as preg_match;
 // phpcs:disable Drupal.Commenting.DocComment.MissingShort
 
 /**
- * Behat content for dealing with Adgangsplatformen.
+ * Behat context for dealing with Adgangsplatformen.
  *
  * Adgangsplatformen is the single signon solution used by the Danish Public
  * Libraries.
@@ -102,6 +102,39 @@ class AdgangsplatformenContext implements MinkAwareContext, WiremockAwareInterfa
     // It should be refactored when user profile handling is implemented.
     $this->getSession()->visit($this->locatePath("/user/login"));
     $this->getSession()->getPage()->pressButton("Log in with Adgangsplatformen");
+  }
+
+  /**
+   * @Given a library token can be fetched
+   */
+  public function assertLibraryTokenCanBeFetched(): void {
+    // Value resembling actual data which might be returned from
+    // Adgangsplatformen.
+    $access_token = "447131b0a03fe0421204c54e5c21a60d70030fd2";
+
+    $this->getWiremock()->stubFor(
+      WireMock::post(
+        WireMock::urlPathEqualTo('/oauth/token/')
+      )
+        ->withHeader('Authorization',
+          WireMock::containing('Basic')
+        )
+        ->withRequestBody(
+          WireMock::containing('grant_type=password'),
+        )
+        ->withRequestBody(
+          WireMock::containing('username='),
+        )
+        ->withRequestBody(
+          WireMock::containing('password='),
+        )
+        ->willReturn(WireMock::aResponse()
+          ->withBody(json_encode([
+            'access_token' => $access_token,
+            'expires_in' => 2591999,
+          ]))
+        )
+    );
   }
 
   /**

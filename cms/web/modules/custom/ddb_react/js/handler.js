@@ -20,7 +20,7 @@
       const element = getElement(context);
       if (element) {
         $.ajax({
-          url: "/ddb-react/user.js",
+          url: "/ddb-react/user-tokens",
           dataType: "script",
           cache: true,
           success() {

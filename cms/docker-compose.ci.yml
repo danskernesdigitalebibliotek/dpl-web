@@ -45,9 +45,11 @@ services:
       # services  with HTTP(s)_PROXY pointing at it.
       # --local-response-templating lets WireMock transfer values from request
       # to mocked response
+      # --enable-stub-cors is required to make a browser running React
+      # components request resources.
       # --verbose makes it easier to see requests and whether they are matched
       # or not.
-      WIREMOCK_OPTIONS: "--port=80,--https-port=443,--enable-browser-proxying,--local-response-templating,--verbose,--disable-banner"
+      WIREMOCK_OPTIONS: "--port=80,--https-port=443,--enable-browser-proxying,--local-response-templating,--enable-stub-cors,--verbose,--disable-banner"
       VIRTUAL_HOST: wiremock.${COMPOSE_PROJECT_NAME}.docker
       VIRTUAL_PORT: 80
 
