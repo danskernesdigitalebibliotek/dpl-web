@@ -105,6 +105,39 @@ class AdgangsplatformenContext implements MinkAwareContext, WiremockAwareInterfa
   }
 
   /**
+   * @Given a library token can be fetched
+   */
+  public function assertLibraryTokenCanBeFetched(): void {
+    // Value resembling actual data which might be returned from
+    // Adgangsplatformen.
+    $access_token = "447131b0a03fe0421204c54e5c21a60d70030fd2";
+
+    $this->getWiremock()->stubFor(
+      WireMock::post(
+        WireMock::urlPathEqualTo('/oauth/token/')
+      )
+        ->withHeader('Authorization',
+          WireMock::containing('Basic')
+        )
+        ->withRequestBody(
+          WireMock::containing('grant_type=password'),
+        )
+        ->withRequestBody(
+          WireMock::containing('username='),
+        )
+        ->withRequestBody(
+          WireMock::containing('password='),
+        )
+        ->willReturn(WireMock::aResponse()
+          ->withBody(json_encode([
+            'access_token' => $access_token,
+            'expires_in' => 2591999,
+          ]))
+        )
+    );
+  }
+
+  /**
    * @Then I am authenticated as a patron
    */
   public function assertLoggedInAsPatron(): void {
