@@ -126,6 +126,9 @@
             }
         },
         "patches": {
+            "drupal/config_ignore": {
+                "3252291: Support force exclude for keys": "https://www.drupal.org/files/issues/2021-12-02/config_ignore-force-exclude-keys-3252291-3.patch"
+            },
             "drupal/core": {
                 "2936067: CSS aggregation fails on many variations of @import": "https://git.drupalcode.org/project/drupal/-/commit/5aa154d.patch",
                 "Configure core to not check permissions before accepting an updated module": "patches/disable-core-upload-permission-check.diff"
