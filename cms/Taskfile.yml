@@ -46,7 +46,7 @@ tasks:
   dev:cli:
     summary: Performs command inside container. Expects parameter(s).
     cmds:
-      - docker compose {{ .DOCKER_COMPOSE_FILES }} run cli sh -c "{{.CLI_ARGS}}"
+      - docker compose {{ .DOCKER_COMPOSE_FILES }} run --rm cli sh -c "{{.CLI_ARGS}}"
 
   dev:start:
     summary: Run docker compose
