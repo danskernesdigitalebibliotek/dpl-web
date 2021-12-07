@@ -47,7 +47,7 @@ class AdgangsplatformenContext implements MinkAwareContext, WiremockAwareInterfa
           // Use templating to transfer state from request to response.
           // Otherwise the client will not accept the redirect.
           WireMock::temporaryRedirect(
-            "http://varnish:8080/adgangsplatformen/callback?code=$authorization_code&state={{request.query.[state]}}"
+            "http://varnish:8080/openid-connect/adgangsplatformen?code=$authorization_code&state={{request.query.[state]}}"
           )
             ->withTransformers("response-template")
         )
