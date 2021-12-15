@@ -32,11 +32,11 @@ A release of dpl-cms can be build by pushing a tag that matches the following
 pattern:
 
 ```shell
-# Replace <version> with the version
-git tag dpl-cms-source_<version>
+# Replace <version> with the version.
+git tag <version>
 
 # Eg.
-git tag dpl-cms-source_1.2.3
+git tag 1.2.3
 ```
 
 The actual release is performed by the `Publish source` Github action which
