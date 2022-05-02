@@ -1,7 +1,0 @@
-ddb_react_demo.demo:
-  path: '/react-ddb-demo'
-  defaults:
-    _controller: '\Drupal\ddb_react_demo\Controller\DddbReactDemoController::index'
-    _title: 'Ddb React Demo'
-  requirements:
-    _permission: 'access content'

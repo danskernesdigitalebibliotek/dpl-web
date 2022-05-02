@@ -23,7 +23,7 @@ class ReactContext implements MinkAwareContext {
    * @Then I should have a :type token
    */
   public function assertToken(string $type): void {
-    $this->visitPath('/ddb-react/user-tokens');
+    $this->visitPath('/dpl-react/user-tokens');
     $session = $this->getSession();
     if ($session->getStatusCode() !== 200) {
       throw new \RuntimeException(

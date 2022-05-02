@@ -2,14 +2,14 @@
 
 /**
  * @file
- * Ddb_react drupal extension file.
+ * Dpl_react drupal extension file.
  *
  * General handling of importing
- * and using the DDB react components as libraries.
+ * and using the DPL react components as libraries.
  */
 
 use Drupal\Component\Serialization\Json;
-use Drupal\ddb_react\DdbReactInterface;
+use Drupal\dpl_react\DplReactInterface;
 use function Safe\file_get_contents as file_get_contents;
 use function Safe\sprintf as sprintf;
 
@@ -22,17 +22,17 @@ use function Safe\sprintf as sprintf;
  *   Can either be 'core' or the machine name of the extension
  *   that registered the libraries.
  */
-function ddb_react_library_info_alter(array &$libraries, string $extension): void {
+function dpl_react_library_info_alter(array &$libraries, string $extension): void {
   $library_info = NULL;
-  if ($extension != 'ddb_react') {
+  if ($extension != 'dpl_react') {
     return;
   }
 
-  $version_file = 'libraries/ddb-react/version.json';
+  $version_file = 'libraries/dpl-react/version.json';
 
   if (!file_exists($version_file)) {
-    \Drupal::logger('ddb_react')
-      ->error('Version file in libraries/ddb-react is missing!');
+    \Drupal::logger('dpl_react')
+      ->error('Version file in libraries/dpl-react is missing!');
     return;
   }
 
@@ -61,10 +61,10 @@ function ddb_react_library_info_alter(array &$libraries, string $extension): voi
  * @return mixed[]
  *   The app render array.
  */
-function ddb_react_render(string $name, array $data = []): array {
+function dpl_react_render(string $name, array $data = []): array {
   $attributes = [];
 
-  $attributes['data-ddb-app'] = $name;
+  $attributes['data-dpl-app'] = $name;
 
   foreach ($data as $prop => $value) {
     $attributes['data-' . $prop] = $value;
@@ -78,7 +78,7 @@ function ddb_react_render(string $name, array $data = []): array {
     '#value' => '',
     '#attached' => [
       'library' => [
-        sprintf('ddb_react/%s', $name),
+        sprintf('dpl_react/%s', $name),
       ],
     ],
   ];
@@ -92,8 +92,8 @@ function ddb_react_render(string $name, array $data = []): array {
  * @return string
  *   Url to Material List service instance.
  */
-function ddb_react_material_list_url(): string {
-  return DdbReactInterface::DDB_REACT_MATERIAL_LIST_URL;
+function dpl_react_material_list_url(): string {
+  return DplReactInterface::DPL_REACT_MATERIAL_LIST_URL;
 }
 
 /**
@@ -102,8 +102,8 @@ function ddb_react_material_list_url(): string {
  * @return string
  *   Url to Follow Searches service instance.
  */
-function ddb_react_follow_searches_url(): string {
-  return DdbReactInterface::DDB_REACT_FOLLOW_SEARCHES_URL;
+function dpl_react_follow_searches_url(): string {
+  return DplReactInterface::DPL_REACT_FOLLOW_SEARCHES_URL;
 }
 
 /**
@@ -112,6 +112,6 @@ function ddb_react_follow_searches_url(): string {
  * @return string
  *   Url to Cover service instance.
  */
-function ddb_react_cover_service_url(): string {
-  return DdbReactInterface::DDB_REACT_COVER_SERVICE_URL;
+function dpl_react_cover_service_url(): string {
+  return DplReactInterface::DPL_REACT_COVER_SERVICE_URL;
 }

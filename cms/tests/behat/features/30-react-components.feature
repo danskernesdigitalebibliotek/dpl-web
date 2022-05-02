@@ -3,7 +3,7 @@ Feature: React components
 
   @api
   Scenario: Tokens are available
-    Given I enable modules "ddb_react, ddb_react_demo"
+    Given I enable modules "dpl_react, dpl_react_demo"
     And a library token can be fetched
     And I run cron from the web UI
     And I am authenticated on Adgangsplatformen
@@ -13,13 +13,13 @@ Feature: React components
 
   @api
   Scenario: Add to checklist works
-    Given I enable modules "ddb_react, ddb_react_demo"
+    Given I enable modules "dpl_react, dpl_react_demo"
     And a library token can be fetched
     And I run cron from the web UI
     And I am authenticated on Adgangsplatformen
     And my checklist is empty
     And I log in with Adgangsplatformen
-    And I go to "/react-ddb-demo"
+    And I go to "/react-dpl-demo"
     And I wait for async requests to complete
     And I press the "Add to checklist" button
     And I wait for async requests to complete

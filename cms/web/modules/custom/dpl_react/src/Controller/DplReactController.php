@@ -1,6 +1,6 @@
 <?php
 
-namespace Drupal\ddb_react\Controller;
+namespace Drupal\dpl_react\Controller;
 
 use Drupal\Core\Controller\ControllerBase;
 use Symfony\Component\HttpFoundation\Response;
@@ -12,7 +12,7 @@ use function Safe\sprintf as sprintf;
 /**
  * DDB React Controller.
  */
-class DdbReactController extends ControllerBase {
+class DplReactController extends ControllerBase {
 
   /**
    * The Library token handler.
@@ -28,7 +28,7 @@ class DdbReactController extends ControllerBase {
   protected userTokensProvider $userTokensProvider;
 
   /**
-   * DddbReactController constructor.
+   * DdplReactController constructor.
    *
    * @param \Drupal\dpl_library_token\LibraryTokenHandler $library_token_handler
    *   The Library token handler.
@@ -65,15 +65,15 @@ class DdbReactController extends ControllerBase {
    *   Set tokens for the ddb react js application.
    */
   public function user() {
-    $content_lines = ['window.ddbReact = window.ddbReact || {};'];
+    $content_lines = ['window.dplReact = window.dplReact || {};'];
 
     if ($token_agency = $this->libraryTokenHandler->getToken()) {
-      $content_lines[] = sprintf('window.ddbReact.setToken("library", "%s")', $token_agency);
+      $content_lines[] = sprintf('window.dplReact.setToken("library", "%s")', $token_agency);
     }
 
     if ($acces_token = $this->userTokensProvider->getAccessToken()) {
       if ($token_user = $acces_token->token ?? FALSE) {
-        $content_lines[] = sprintf('window.ddbReact.setToken("user", "%s")', $token_user);
+        $content_lines[] = sprintf('window.dplReact.setToken("user", "%s")', $token_user);
       }
     }
 

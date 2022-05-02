@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "ffca6ae0c5fe24ccfe8c3c9c471c5b36",
+    "content-hash": "d2f9280e9b98e4af17e4606f6622318d",
     "packages": [
         {
             "name": "amazeeio/drupal_integrations",
@@ -1076,23 +1076,23 @@
             "time": "2020-09-30T17:56:20+00:00"
         },
         {
-            "name": "danskernesdigitalebibliotek/ddb-react",
-            "version": "2.4.0",
-            "dist": {
-                "type": "zip",
-                "url": "https://github.com/danskernesdigitalebibliotek/ddb-react/releases/download/2.4.0/dist.zip"
-            },
-            "require": {
-                "composer/installers": "^1.2.0"
-            },
-            "type": "drupal-library"
-        },
-        {
             "name": "danskernesdigitalebibliotek/dpl-design-system",
             "version": "v1.0.2",
             "dist": {
                 "type": "zip",
                 "url": "https://github.com/danskernesdigitalebibliotek/dpl-design-system/releases/download/v1.0.2/dist.zip"
+            },
+            "type": "drupal-library"
+        },
+        {
+            "name": "danskernesdigitalebibliotek/dpl-react",
+            "version": "0.1.0",
+            "dist": {
+                "type": "zip",
+                "url": "https://github.com/danskernesdigitalebibliotek/dpl-react/releases/download/0.1.0/dist.zip"
+            },
+            "require": {
+                "composer/installers": "^1.2.0"
             },
             "type": "drupal-library"
         },
@@ -13019,5 +13019,5 @@
     "prefer-lowest": false,
     "platform": [],
     "platform-dev": [],
-    "plugin-api-version": "2.1.0"
+    "plugin-api-version": "2.2.0"
 }

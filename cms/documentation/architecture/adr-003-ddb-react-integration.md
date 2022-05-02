@@ -1,8 +1,8 @@
-# Architecture Decision Record: DDB React integration
+# Architecture Decision Record: DPL React integration
 
 ## Context
 
-The DDB React components needs to be integrated and available for rendering in
+The DPL React components needs to be integrated and available for rendering in
 Drupal. The components are depending on a library token and an access token
 being set in javascript.
 
@@ -20,5 +20,5 @@ and saved in a `KeyValueExpirable` store which automatically expires the token
 when it is outdated.
 
 The library token and the access token are set in javascript on the endpoint:
-`/ddb-react/user.js`. By loading the script asynchronically when mounting the
+`/dpl-react/user.js`. By loading the script asynchronically when mounting the
 components i javascript we are able to complete the rendering.

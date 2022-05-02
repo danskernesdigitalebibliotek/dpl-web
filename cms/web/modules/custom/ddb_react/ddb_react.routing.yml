@@ -1,9 +1,0 @@
-ddb_react.user_token:
-  path: '/ddb-react/user-tokens'
-  defaults:
-    _controller: '\Drupal\ddb_react\Controller\DdbReactController::user'
-    _title: 'Ddb React User Token'
-  requirements:
-    _permission: 'access content'
-  options:
-    no_cache: 'TRUE'

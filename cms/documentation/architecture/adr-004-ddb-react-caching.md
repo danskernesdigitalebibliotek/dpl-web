@@ -1,16 +1,16 @@
-# Architecture Decision Record: Caching of DDB React and other js resources
+# Architecture Decision Record: Caching of DPL React and other js resources
 
 ## Context
 
 The general caching strategy is defined in another document and this focused on
-describing the caching strategy of DDB react and other js resources.
+describing the caching strategy of DPL react and other js resources.
 
 We need to have a caching strategy that makes sure that:
 
-* The js files defined as Drupal libraries (which ddb react is) and pages that
+* The js files defined as Drupal libraries (which DPL react is) and pages that
   make use of them are being cached.
 * The same cache is being flushed upon deploy because that is the moment where
-  new versions of DDB React can be introduced.
+  new versions of DPL React can be introduced.
 
 ## Decision
 

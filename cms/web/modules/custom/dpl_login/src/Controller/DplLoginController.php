@@ -12,7 +12,7 @@ use Drupal\dpl_login\Exception\MissingConfigurationException;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
 /**
- * DDB React Controller.
+ * DPL React Controller.
  */
 class DplLoginController extends ControllerBase {
   use StringTranslationTrait;
@@ -43,7 +43,7 @@ class DplLoginController extends ControllerBase {
   protected $settings;
 
   /**
-   * DddbReactController constructor.
+   * DdplReactController constructor.
    *
    * @param \Drupal\dpl_login\UserTokensProvider $user_token_provider
    *   The Uuser token provider.

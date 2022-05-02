@@ -1,0 +1,8 @@
+name: DPL React Demo
+description: Demonstrating that we can include the dpl react assets and use them in rendering a page.
+package: DPL
+dependencies:
+  - dpl_react:dpl_react
+
+type: module
+core_version_requirement: ^9

@@ -1,0 +1,34 @@
+
+hello-world:
+  remote: https://github.com/danskernesdigitalebibliotek/dpl-react
+  license:
+    name: GNU GPL
+    url: https://github.com/danskernesdigitalebibliotek/dpl-react/blob/master/LICENSE
+    gpl-compatible: true
+  js:
+    /libraries/dpl-react/hello-world.js: {}
+  dependencies:
+    - dpl_react/base
+    - dpl_react/handler
+
+base:
+  remote: https://github.com/danskernesdigitalebibliotek/dpl-react
+  license:
+    name: GNU GPL
+    url: https://github.com/danskernesdigitalebibliotek/dpl-react/blob/master/LICENSE
+    gpl-compatible: true
+  js:
+    /libraries/dpl-react/runtime.js: { weight: -19 }
+    /libraries/dpl-react/bundle.js: { weight: -18 }
+    /libraries/dpl-react/mount.js: { weight: -16 }
+  css:
+    theme:
+      /libraries/dpl-react/components.css: {}
+
+handler:
+  version: 1.0
+  js:
+    js/handler.js: {}
+  dependencies:
+    - core/drupal
+    - core/jquery
