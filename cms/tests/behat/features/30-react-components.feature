@@ -12,16 +12,7 @@ Feature: React components
     And I should have a "user" token
 
   @api
-  Scenario: Add to checklist works
+  Scenario: Hello World is shown
     Given I enable modules "dpl_react, dpl_react_demo"
-    And a library token can be fetched
-    And I run cron from the web UI
-    And I am authenticated on Adgangsplatformen
-    And my checklist is empty
-    And I log in with Adgangsplatformen
     And I go to "/react-dpl-demo"
-    And I wait for async requests to complete
-    And I press the "Add to checklist" button
-    And I wait for async requests to complete
-    Then the material should be added to my checklist
-    And I should see "Added to checklist"
+    And I should see "Hello World"

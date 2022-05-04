@@ -43,15 +43,4 @@ class ReactContext implements MinkAwareContext {
     }
   }
 
-  /**
-   * @Then I wait for async requests to complete
-   */
-  public function assertAsyncRequestsComplete(): void {
-    // This is a rather simplistic way to ensure that async requests have
-    // completed. Since we do not rely solely on jQuery we cannot use existing
-    // code to achieve this. Waiting it simple but it should work - especially
-    // for mocked services which respond quickly.
-    $this->getMink()->getSession()->wait(1000);
-  }
-
 }
