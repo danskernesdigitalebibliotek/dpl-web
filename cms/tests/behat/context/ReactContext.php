@@ -43,4 +43,14 @@ class ReactContext implements MinkAwareContext {
     }
   }
 
+  /**
+   * @Then I wait for components to render
+   */
+  public function waitForComponentsToRender(): void {
+    // This is a rather simplistic way to ensure that React componets have
+    // had a chance to load and render but it should work for simple situations
+    // which is what we need at the moment.
+    $this->getMink()->getSession()->wait(1000);
+  }
+
 }

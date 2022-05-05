@@ -15,4 +15,5 @@ Feature: React components
   Scenario: Hello World is shown
     Given I enable modules "dpl_react, dpl_react_demo"
     And I go to "/react-dpl-demo"
-    And I should see "Hello World"
+    And I wait for components to render
+    Then I should see "Hello World"
