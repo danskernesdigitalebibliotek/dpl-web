@@ -56,6 +56,11 @@ tasks:
   dev:stop:
     summary: Stop docker compose environment
     cmds:
+      - docker compose {{ .DOCKER_COMPOSE_FILES }} stop
+
+  dev:down:
+    summary: Stop and remove docker compose environment
+    cmds:
       # DNS proxies such as Dory may hang on to the network for a bit which
       # causes the process to fail. Wait and retry if that is the case
       - docker compose {{ .DOCKER_COMPOSE_FILES }} down --volumes --remove-orphans || (sleep 3 && docker-compose down)
@@ -64,7 +69,7 @@ tasks:
     desc: Create local development setup in a clean state
     cmds:
       # Stop potential running environment.
-      - task dev:stop
+      - task dev:down
       # Create a .env file with recommended defaults.
       - cp -n .env.example .env || true
       # Build site.
