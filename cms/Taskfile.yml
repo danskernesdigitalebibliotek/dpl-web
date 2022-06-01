@@ -74,6 +74,8 @@ tasks:
       - cp -n .env.example .env || true
       # Build site.
       - task dev:cli -- composer install
+      # Build dev scripts
+      - task dev:cli -- $(cd dev-scripts/dpl-react; composer install)
       # Start local environment.
       - task dev:start
       # Install site.
@@ -135,7 +137,11 @@ tasks:
   dev:dpl-react:get-asset-url:
     summary: Outputs the url to the build in Github
     cmds:
-      - ./dev-scripts/get-dpl-react-assets.py {{ .BRANCH }}
+      - cmd: task dev:cli -- dev-scripts/dpl-react/bin/console construct-assets-url {{ .BRANCH }}
+        # Getting an xdebug error from the cli image right now:
+        # "...Could not connect to debugging client..."
+        # When that is fixed the ignore_error can be removed:
+        ignore_error: true
     preconditions:
     - sh: "[ ! -z {{.BRANCH}} ]"
       msg: "Env variable BRANCH is not set or empty."
