@@ -132,6 +132,30 @@ tasks:
     cmds:
       - task dev:cli -- drush cache:rebuild-external -y
 
+  dev:dpl-react:get-asset-url:
+    summary: Outputs the url to the build in Github
+    cmds:
+      - ./dev-scripts/get-dpl-react-assets.py {{ .BRANCH }}
+    preconditions:
+    - sh: "[ ! -z {{.BRANCH}} ]"
+      msg: "Env variable BRANCH is not set or empty."
+
+  dev:dpl-react:download:
+    desc: Downloads assets from Github and overwrites existing dpl-react library
+    cmds:
+      - curl {{ .ASSET_URL }} -L -o dist.zip
+      - rm -rf web/libraries/dpl-react
+      - unzip dist.zip -d web/libraries/dpl-react
+      - echo "{{ .BRANCH }}" > web/libraries/dpl-react/RELEASE.txt
+      - echo "[Success] The dpl-react library was overwritten with the one fetched from {{ .BRANCH }}."
+      - defer: rm dist.zip
+    vars:
+      ASSET_URL:
+        sh: task dev:dpl-react:get-asset-url
+    preconditions:
+    - sh: "[ ! -z {{.BRANCH}} ]"
+      msg: "Env variable BRANCH is not set or empty."
+
   ci:reset:
     desc: Create CI setup in a clean state
     cmds:
