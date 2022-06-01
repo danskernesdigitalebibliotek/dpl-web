@@ -140,7 +140,7 @@ tasks:
     - sh: "[ ! -z {{.BRANCH}} ]"
       msg: "Env variable BRANCH is not set or empty."
 
-  dev:dpl-react:download:
+  dev:dpl-react:overwrite:
     desc: Downloads assets from Github and overwrites existing dpl-react library
     cmds:
       - curl {{ .ASSET_URL }} -L -o dist.zip
