@@ -152,6 +152,7 @@ tasks:
       - curl {{ .ASSET_URL }} -L -o dist.zip
       - rm -rf web/libraries/dpl-react
       - unzip dist.zip -d web/libraries/dpl-react
+      - task dev:cache:clear:all
       - echo "[Success] The dpl-react library was overwritten with the one fetched from {{ .BRANCH }}."
       - defer: rm dist.zip
     vars:
