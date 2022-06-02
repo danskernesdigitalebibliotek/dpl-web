@@ -1,0 +1,22 @@
+<?php
+
+/**
+ * @file
+ * Novel Theme.
+ */
+
+/**
+ * Implements template_preprocess_page().
+ *
+ * @param mixed[] $variables
+ *   Theme variables.
+ */
+function novel_preprocess_page(array &$variables): void {
+  $data = [
+    'search-header-url' => '/search',
+    'alt-text' => t('Search field'),
+    'input-placeholder' => t('Start typing in order to search'),
+  ];
+
+  $variables['search_header'] = dpl_react_render('search-header', $data);
+}
