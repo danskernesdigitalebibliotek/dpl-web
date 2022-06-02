@@ -20,7 +20,7 @@
                 "version": "0.1.0",
                 "type": "drupal-library",
                 "dist": {
-                    "url": "https://github.com/danskernesdigitalebibliotek/dpl-react/releases/download/release-fix%2Fsearch-bar/dist.zip",
+                    "url": "https://github.com/danskernesdigitalebibliotek/dpl-react/releases/download/release-release%2F1/dist.zip",
                     "type": "zip"
                 },
                 "require": {
