@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "2d067c78c0e20f45261019ac9f05a38e",
+    "content-hash": "b424eab76c9875e9bdf401433c01c3d4",
     "packages": [
         {
             "name": "amazeeio/drupal_integrations",
@@ -1077,19 +1077,19 @@
         },
         {
             "name": "danskernesdigitalebibliotek/dpl-design-system",
-            "version": "v1.0.2",
+            "version": "v1.0.3",
             "dist": {
                 "type": "zip",
-                "url": "https://github.com/danskernesdigitalebibliotek/dpl-design-system/releases/download/v1.0.2/dist.zip"
+                "url": "https://github.com/danskernesdigitalebibliotek/dpl-design-system/releases/download/release-release%2F1/dist.zip"
             },
             "type": "drupal-library"
         },
         {
             "name": "danskernesdigitalebibliotek/dpl-react",
-            "version": "0.1.1",
+            "version": "0.1.0",
             "dist": {
                 "type": "zip",
-                "url": "https://github.com/danskernesdigitalebibliotek/dpl-react/releases/download/release-release%2F1/dist.zip"
+                "url": "https://github.com/danskernesdigitalebibliotek/dpl-react/releases/download/release-fix%2Fsearch-bar/dist.zip"
             },
             "require": {
                 "composer/installers": "^1.2.0"
