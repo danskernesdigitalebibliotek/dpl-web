@@ -138,10 +138,6 @@ tasks:
     summary: Outputs the url to the build in Github
     cmds:
       - cmd: task dev:cli -- dev-scripts/dpl-react/bin/console construct-assets-url {{ .BRANCH }}
-        # Getting an xdebug error from the cli image right now:
-        # "...Could not connect to debugging client..."
-        # When that is fixed the ignore_error can be removed:
-        ignore_error: true
     preconditions:
     - sh: "[ ! -z {{.BRANCH}} ]"
       msg: "Env variable BRANCH is not set or empty."
@@ -149,18 +145,11 @@ tasks:
   dev:dpl-react:overwrite:
     desc: Downloads assets from Github and overwrites existing dpl-react library
     cmds:
-      - curl {{ .ASSET_URL }} -L -o dist.zip
-      - rm -rf web/libraries/dpl-react
-      - unzip dist.zip -d web/libraries/dpl-react
-      - task dev:cache:clear:all
-      - echo "[Success] The dpl-react library was overwritten with the one fetched from {{ .BRANCH }}."
-      - defer: rm dist.zip
+      - cmd: echo {{ .ASSET_URL }}
+      - cmd: task dev:cli -- dev-scripts/dpl-react/bin/console download-and-overwrite-library {{ .ASSET_URL }}
     vars:
       ASSET_URL:
         sh: task dev:dpl-react:get-asset-url
-    preconditions:
-    - sh: "[ ! -z {{.BRANCH}} ]"
-      msg: "Env variable BRANCH is not set or empty."
 
   ci:reset:
     desc: Create CI setup in a clean state

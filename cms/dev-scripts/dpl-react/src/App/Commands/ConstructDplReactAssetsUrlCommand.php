@@ -14,7 +14,7 @@ use Symfony\Component\Console\Input\InputArgument;
 class ConstructDplReactAssetsUrlCommand extends Command {
 
   /**
-   * Implements Command::confgure().
+   * Implements Command::configure().
    */
   protected function configure() {
     $this->setName('construct-assets-url')
@@ -37,7 +37,7 @@ class ConstructDplReactAssetsUrlCommand extends Command {
     ];
 
     $output->writeln(implode('/', $urlFragments));
-    return 1;
+    return 0;
   }
 
 }
