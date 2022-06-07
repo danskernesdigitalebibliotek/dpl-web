@@ -20,3 +20,21 @@ function novel_preprocess_page(array &$variables): void {
 
   $variables['search_header'] = dpl_react_render('search-header', $data);
 }
+
+/**
+ * Implements hook_page_attachments()
+ *
+ * @param mixed[] $page
+ *   Drupal render array.
+ */
+function novel_page_attachments(array &$page): void {
+  $metatag = [
+    '#tag' => 'meta',
+    '#attributes' => [
+      'name' => 'description',
+      'content' => t('This is the meta description of the DPL CMS site'),
+    ],
+  ];
+
+  $page['#attached']['html_head'][] = [$metatag, 'description'];
+}

@@ -3,6 +3,8 @@ type: theme
 base theme: stable9
 description: 'Custom theme for the Danish Public Libraries'
 core_version_requirement: ^8 || ^9
+dependencies:
+  - dpl_react:dpl_react
 
 libraries:
   - novel/base
