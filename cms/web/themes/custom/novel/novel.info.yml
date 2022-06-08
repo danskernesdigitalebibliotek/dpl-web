@@ -3,8 +3,17 @@ type: theme
 base theme: stable9
 description: 'Custom theme for the Danish Public Libraries'
 core_version_requirement: ^8 || ^9
-dependencies:
-  - dpl_react:dpl_react
+
+# We want to add dpl_react as a module dependency
+# but we get an error upon theme install.
+# Apparently others are getting same error since there is
+# an issue about it:
+# https://www.drupal.org/project/drupal/is-sues/3176625
+# But no seemingly stable patch is created at this point.
+# When a proper fix has been created we can uncomment the
+# "dependencies" block.
+# dependencies:
+#   - dpl_react:dpl_react
 
 libraries:
   - novel/base

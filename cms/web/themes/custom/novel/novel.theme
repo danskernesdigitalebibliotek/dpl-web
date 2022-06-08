@@ -13,28 +13,13 @@
  */
 function novel_preprocess_page(array &$variables): void {
   $data = [
+    // @todo Something Insert the right search result page url when it is ready.
     'search-header-url' => '/search',
-    'alt-text' => t('Search field'),
-    'input-placeholder' => t('Start typing in order to search'),
+    'alt-text' => t('Search field', [], ['context' => 'Search Header']),
+    'input-placeholder' => t('Start typing in order to search', [], ['context' => 'Search Header']),
   ];
 
-  $variables['search_header'] = dpl_react_render('search-header', $data);
-}
-
-/**
- * Implements hook_page_attachments()
- *
- * @param mixed[] $page
- *   Drupal render array.
- */
-function novel_page_attachments(array &$page): void {
-  $metatag = [
-    '#tag' => 'meta',
-    '#attributes' => [
-      'name' => 'description',
-      'content' => t('This is the meta description of the DPL CMS site'),
-    ],
+  $variables['search'] = [
+    'header' => dpl_react_render('search-header', $data),
   ];
-
-  $page['#attached']['html_head'][] = [$metatag, 'description'];
 }
