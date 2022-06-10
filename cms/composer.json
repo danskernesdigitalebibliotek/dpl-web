@@ -17,10 +17,10 @@
             "type": "package",
             "package": {
                 "name": "danskernesdigitalebibliotek/dpl-react",
-                "version": "0.2.0",
+                "version": "0.2.1",
                 "type": "drupal-library",
                 "dist": {
-                    "url": "https://github.com/danskernesdigitalebibliotek/dpl-react/releases/download/0.2.0-rc.1/dist.zip",
+                    "url": "https://github.com/danskernesdigitalebibliotek/dpl-react/releases/download/release-feature%2Fsearch-result-app/dist.zip",
                     "type": "zip"
                 },
                 "require": {
@@ -50,7 +50,7 @@
         "composer/installers": "1.11.0",
         "cweagans/composer-patches": "1.7.0",
         "danskernesdigitalebibliotek/dpl-design-system": "^1.1",
-        "danskernesdigitalebibliotek/dpl-react": "^0.2.0",
+        "danskernesdigitalebibliotek/dpl-react": "^0.2.1",
         "dealerdirect/phpcodesniffer-composer-installer": "^0.7.1",
         "drupal/config_ignore": "^2.3",
         "drupal/core-project-message": "^9.2.7",
