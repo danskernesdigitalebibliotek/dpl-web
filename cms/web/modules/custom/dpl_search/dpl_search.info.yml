@@ -1,0 +1,8 @@
+name: DPL Search
+description: For material search functionality on the site.
+package: DPL
+dependencies:
+  - dpl_react:dpl_react
+
+type: module
+core_version_requirement: ^9

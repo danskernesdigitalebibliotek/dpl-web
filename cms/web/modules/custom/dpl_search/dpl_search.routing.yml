@@ -1,0 +1,7 @@
+dpl_search.result:
+  path: '/search'
+  defaults:
+    _controller: '\Drupal\dpl_search\Controller\DplSearchResultController::index'
+    _title: 'DPL Search'
+  requirements:
+    _permission: 'access content'
