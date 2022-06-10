@@ -5,6 +5,8 @@
  * Novel Theme.
  */
 
+use Drupal\Core\Url;
+
 /**
  * Implements template_preprocess_page().
  *
@@ -12,14 +14,16 @@
  *   Theme variables.
  */
 function novel_preprocess_page(array &$variables): void {
+  $search_result_url = Url::fromRoute('dpl_search.result')->toString();
   $data = [
-    // @todo Something Insert the right search result page url when it is ready.
-    'search-header-url' => '/search',
-    'alt-text' => t('Search field', [], ['context' => 'Search Header']),
-    'input-placeholder' => t('Start typing in order to search', [], ['context' => 'Search Header']),
+    'search-header' => [
+      'search-header-url' => $search_result_url,
+      'alt-text' => t('Search field', [], ['context' => 'Search Header']),
+      'input-placeholder' => t('Start typing in order to search', [], ['context' => 'Search Header']),
+    ],
   ];
 
   $variables['search'] = [
-    'header' => dpl_react_render('search-header', $data),
+    'header' => dpl_react_render('search-header', $data['search-header']),
   ];
 }
