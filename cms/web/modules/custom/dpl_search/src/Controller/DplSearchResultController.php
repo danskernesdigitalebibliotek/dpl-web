@@ -5,7 +5,7 @@ namespace Drupal\dpl_search\Controller;
 use Drupal\Core\Controller\ControllerBase;
 
 /**
- * This is used for demoing the react components.
+ * Controller for handling search related routes.
  */
 class DplSearchResultController extends ControllerBase {
 
@@ -16,7 +16,6 @@ class DplSearchResultController extends ControllerBase {
    *   Render array.
    */
   public function index(): array {
-
     return [
       'search-result' => dpl_react_render('search-result'),
     ];
