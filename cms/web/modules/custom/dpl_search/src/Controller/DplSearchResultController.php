@@ -10,7 +10,7 @@ use Drupal\Core\Controller\ControllerBase;
 class DplSearchResultController extends ControllerBase {
 
   /**
-   * Demo react rendering.
+   * Render search result app.
    *
    * @return mixed[]
    *   Render array.
