@@ -1,0 +1,33 @@
+<?php
+
+/**
+ * @file
+ * Dpl_search drupal module file.
+ *
+ * Is providing theme variables
+ * in order to integrate the DPL react apps in the site
+ * and various other tasks eg. providing rides and controllers for rendering.
+ */
+
+use Drupal\Core\Url;
+
+/**
+ * Implements template_preprocess_page().
+ *
+ * @param mixed[] $variables
+ *   Theme variables.
+ */
+function dpl_search_preprocess_page(array &$variables): void {
+  $search_result_url = Url::fromRoute('dpl_search.result')->toString();
+  $data = [
+    'search-header' => [
+      'search-header-url' => $search_result_url,
+      'alt-text' => t('Search field', [], ['context' => 'Search Header']),
+      'input-placeholder' => t('Start typing in order to search', [], ['context' => 'Search Header']),
+    ],
+  ];
+
+  $variables['search'] = [
+    'header' => dpl_react_render('search-header', $data['search-header']),
+  ];
+}
