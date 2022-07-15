@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "914d697d420bd14505b2ba589cc5ce56",
+    "content-hash": "60c8b9a22e4507e87b9d4c449807b3a9",
     "packages": [
         {
             "name": "amazeeio/drupal_integrations",
@@ -1077,19 +1077,19 @@
         },
         {
             "name": "danskernesdigitalebibliotek/dpl-design-system",
-            "version": "v1.1.0",
+            "version": "v1.2.0",
             "dist": {
                 "type": "zip",
-                "url": "https://github.com/danskernesdigitalebibliotek/dpl-design-system/releases/download/v1.1.0-rc.1/dist.zip"
+                "url": "https://github.com/danskernesdigitalebibliotek/dpl-design-system/releases/download/v1.2.0/dist.zip"
             },
             "type": "drupal-library"
         },
         {
             "name": "danskernesdigitalebibliotek/dpl-react",
-            "version": "0.2.1",
+            "version": "0.2.0-rc.4",
             "dist": {
                 "type": "zip",
-                "url": "https://github.com/danskernesdigitalebibliotek/dpl-react/releases/download/release-feature%2Fsearch-result-app/dist.zip"
+                "url": "https://github.com/danskernesdigitalebibliotek/dpl-react/releases/download/0.2.0-rc.4/dist.zip"
             },
             "require": {
                 "composer/installers": "^1.2.0"
@@ -13011,6 +13011,7 @@
     "aliases": [],
     "minimum-stability": "dev",
     "stability-flags": {
+        "danskernesdigitalebibliotek/dpl-react": 5,
         "drupal/default_content": 15,
         "drupal/libraries": 10,
         "vpx/behat-wiremock-extension": 20
