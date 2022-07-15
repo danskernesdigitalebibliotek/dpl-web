@@ -2,7 +2,7 @@
 
 /**
  * @file
- * Dpl_search drupal module file.
+ * Dpl_react_app drupal module file.
  *
  * Is providing theme variables
  * in order to integrate the DPL react apps in the site
@@ -17,8 +17,8 @@ use Drupal\Core\Url;
  * @param mixed[] $variables
  *   Theme variables.
  */
-function dpl_search_preprocess_page(array &$variables): void {
-  $search_result_url = Url::fromRoute('dpl_search.result')->toString();
+function dpl_react_apps_preprocess_page(array &$variables): void {
+  $search_result_url = Url::fromRoute('dpl_react_apps.search_result')->toString();
   $data = [
     'search-header' => [
       'search-header-url' => $search_result_url,
