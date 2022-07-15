@@ -1,7 +1,0 @@
-dpl_react_demo.demo:
-  path: '/react-dpl-demo'
-  defaults:
-    _controller: '\Drupal\dpl_react_demo\Controller\DplReactDemoController::index'
-    _title: 'DPL React Demo'
-  requirements:
-    _permission: 'access content'
