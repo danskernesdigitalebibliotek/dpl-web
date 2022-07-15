@@ -1,5 +1,5 @@
-name: DPL Search
-description: For material search functionality on the site.
+name: DPL React Apps
+description: For integration of dpl_react apps on the site.
 package: DPL
 dependencies:
   - dpl_react:dpl_react
