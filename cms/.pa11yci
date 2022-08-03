@@ -6,7 +6,8 @@
         "--no-sandbox"
       ]
     },
-    "runners": ["axe"]
+    "runners": ["axe"],
+    "timeout": 600000
   },
   "urls": [
     "http://varnish:8080/"
