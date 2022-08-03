@@ -67,4 +67,3 @@ handler:
     js/handler.js: {}
   dependencies:
     - core/drupal
-    - core/jquery
