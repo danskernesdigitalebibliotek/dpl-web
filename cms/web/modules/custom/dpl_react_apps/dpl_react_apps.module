@@ -19,11 +19,18 @@ use Drupal\Core\Url;
  */
 function dpl_react_apps_preprocess_page(array &$variables): void {
   $search_result_url = Url::fromRoute('dpl_react_apps.search_result')->toString();
+
+  $options = ['context' => 'Search Header'];
+
   $data = [
     'search-header' => [
       'search-header-url' => $search_result_url,
-      'alt-text' => t('Search field', [], ['context' => 'Search Header']),
-      'input-placeholder' => t('Start typing in order to search', [], ['context' => 'Search Header']),
+      'alt-text' => t('Search field', [], $options),
+      'input-placeholder-text' => t('Start typing in order to search', [],
+        $options),
+      'string-suggestion-author-text' => t('Author', [], $options),
+      'string-suggestion-topic-text' => t('Topic', [], $options),
+      'string-suggestion-work-text' => t('Work', [], $options),
     ],
   ];
 
