@@ -20,7 +20,7 @@
                 "version": "0.2.0-rc.5",
                 "type": "drupal-library",
                 "dist": {
-                    "url": "https://github.com/reload/dpl-react/releases/download/release-feature%2Fautocomplete-accessibility/dist.zip",
+                    "url": "https://github.com/danskernesdigitalebibliotek/dpl-react/releases/download/0.2.0-rc.5/dist.zip",
                     "type": "zip"
                 },
                 "require": {
