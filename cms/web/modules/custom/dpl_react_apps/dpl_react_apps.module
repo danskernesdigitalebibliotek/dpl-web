@@ -9,7 +9,6 @@
  * and various other tasks eg. providing rides and controllers for rendering.
  */
 
-use Drupal\Core\Url;
 use Drupal\dpl_react_apps\Controller\DplReactAppsController;
 
 /**
@@ -19,13 +18,11 @@ use Drupal\dpl_react_apps\Controller\DplReactAppsController;
  *   Theme variables.
  */
 function dpl_react_apps_preprocess_page(array &$variables): void {
-  $search_result_url = Url::fromRoute('dpl_react_apps.search_result')->toString();
-
   $options = ['context' => 'Search Header'];
 
   $data = [
     'search-header' => [
-      'search-url' => $search_result_url,
+      'search-url' => DplReactAppsController::searchResultUrl(),
       'material-url' => DplReactAppsController::materialUrl(),
       'alt-text' => t('Search field', [], $options),
       'input-placeholder-text' => t('Start typing in order to search', [],

@@ -17,13 +17,11 @@ class DplReactAppsController extends ControllerBase {
    *   Render array.
    */
   public function search(): array {
-    $search_result_url = Url::fromRoute('dpl_react_apps.search_result')->toString();
-
     $options = ['context' => 'Search Result'];
 
     return [
       'search-result' => dpl_react_render('search-result', [
-        'search-url' => $search_result_url,
+        'search-url' => self::searchResultUrl(),
         'material-url' => self::materialUrl(),
         'et-al-text' => t('et. al.', [], $options),
         'by-author-text' => t('By', [], $options),
@@ -49,15 +47,13 @@ class DplReactAppsController extends ControllerBase {
    *   Render array.
    */
   public function work(string $wid): array {
-    $search_result_url = Url::fromRoute('dpl_react_apps.search_result')->toString();
-
     // Translation context.
     $c = ['context' => 'Work Page'];
 
     return [
       'material' => dpl_react_render('material', [
         'wid' => $wid,
-        'search-url' => $search_result_url,
+        'search-url' => self::searchResultUrl(),
         'material-url' => self::materialUrl(),
         'material-header-author-by-text' => $this->t('By', [], $c),
         'periodikum-select-year-text' => $this->t('Year', [], $c),
@@ -91,6 +87,14 @@ class DplReactAppsController extends ControllerBase {
         'unavailable-text' => $this->t('Unavailable', [], $c),
       ]),
     ];
+  }
+
+  /**
+   * Builds an url for the local search result route.
+   */
+  public static function searchResultUrl(): string
+  {
+    return Url::fromRoute('dpl_react_apps.search_result')->toString();
   }
 
   /**
