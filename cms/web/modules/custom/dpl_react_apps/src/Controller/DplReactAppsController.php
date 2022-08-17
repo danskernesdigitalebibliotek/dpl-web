@@ -24,9 +24,7 @@ class DplReactAppsController extends ControllerBase {
     return [
       'search-result' => dpl_react_render('search-result', [
         'search-url' => $search_result_url,
-        // TODO Consider if we can get this value from the routing instead of
-        // hardcoding it.
-        'material-url' => 'work/:workid',
+        'material-url' => self::materialUrl(),
         'et-al-text' => t('et. al.', [], $options),
         'by-author-text' => t('By', [], $options),
         'show-more-text' => t('Show more', [], $options),
@@ -60,9 +58,7 @@ class DplReactAppsController extends ControllerBase {
       'material' => dpl_react_render('material', [
         'wid' => $wid,
         'search-url' => $search_result_url,
-        // TODO Consider if we can get this value from the routing instead of
-        // hardcoding it.
-        'material-url' => '/work/:workid',
+        'material-url' => self::materialUrl(),
         'material-header-author-by-text' => $this->t('By', [], $c),
         'periodikum-select-year-text' => $this->t('Year', [], $c),
         'periodikum-select-week-text' => $this->t('Week', [], $c),
@@ -95,6 +91,21 @@ class DplReactAppsController extends ControllerBase {
         'unavailable-text' => $this->t('Unavailable', [], $c),
       ]),
     ];
+  }
+
+  /**
+   * Builds an url for the material/work route.
+   */
+  public static function materialUrl(): string
+  {
+    // React applications support variable replacement where variables are
+    // prefixed with :. Specify the variable :workid as a parameter to let the
+    // route build the url. Unfortunatly : will be encoded as %3A so we have to
+    // decode the url again to make replacement work.
+    $url = Url::fromRoute('dpl_react_apps.work')
+      ->setRouteParameter('wid', ':workid')
+      ->toString();
+    return urldecode($url);
   }
 
 }

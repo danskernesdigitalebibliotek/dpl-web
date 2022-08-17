@@ -10,6 +10,7 @@
  */
 
 use Drupal\Core\Url;
+use Drupal\dpl_react_apps\Controller\DplReactAppsController;
 
 /**
  * Implements template_preprocess_page().
@@ -25,6 +26,7 @@ function dpl_react_apps_preprocess_page(array &$variables): void {
   $data = [
     'search-header' => [
       'search-url' => $search_result_url,
+      'material-url' => DplReactAppsController::materialUrl(),
       'alt-text' => t('Search field', [], $options),
       'input-placeholder-text' => t('Start typing in order to search', [],
         $options),
