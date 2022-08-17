@@ -42,25 +42,21 @@ class DplReactAppsController extends ControllerBase {
   }
 
   /**
-   * Render material page.
-   */
-
-  /**
-   * Render material page.
+   * Render work page.
    *
-   * @param string $pid
-   *   A material post id.
+   * @param string $wid
+   *   A work id.
    *
    * @return mixed[]
    *   Render array.
    */
-  public function material(string $pid): array {
+  public function work(string $wid): array {
     // Translation context.
-    $c = ['context' => 'Material Page'];
+    $c = ['context' => 'Work Page'];
 
     return [
       'material' => dpl_react_render('material', [
-        'pid' => $pid,
+        'wid' => $wid,
         'material-header-author-by-text' => $this->t('By', [], $c),
         'periodikum-select-year-text' => $this->t('Year', [], $c),
         'periodikum-select-week-text' => $this->t('Week', [], $c),
