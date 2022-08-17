@@ -3,6 +3,7 @@
 namespace Drupal\dpl_react_apps\Controller;
 
 use Drupal\Core\Controller\ControllerBase;
+use Drupal\Core\Url;
 
 /**
  * Controller for rendering full page DPL React apps.
@@ -16,8 +17,27 @@ class DplReactAppsController extends ControllerBase {
    *   Render array.
    */
   public function search(): array {
+    $search_result_url = Url::fromRoute('dpl_react_apps.search_result')->toString();
+
+    $options = ['context' => 'Search Result'];
+
     return [
-      'search-result' => dpl_react_render('search-result'),
+      'search-result' => dpl_react_render('search-result', [
+        'search-url' => $search_result_url,
+        // TODO Consider if we can get this value from the routing instead of
+        // hardcoding it.
+        'material-url' => 'work/:workid',
+        'et-al-text' => t('et. al.', [], $options),
+        'by-author-text' => t('By', [], $options),
+        'show-more-text' => t('Show more', [], $options),
+        'showing-text' => t('Showing', [], $options),
+        'out-of-text' => t('out of', [], $options),
+        'results-text' => t('results', [], $options),
+        'number-description-text' => t('Nr.', [], $options),
+        'in-series-text' => t('In series', [], $options),
+        'available-text' => t('Available', [], $options),
+        'unavailable-text' => t('Unavailable', [], $options)
+      ]),
     ];
   }
 
