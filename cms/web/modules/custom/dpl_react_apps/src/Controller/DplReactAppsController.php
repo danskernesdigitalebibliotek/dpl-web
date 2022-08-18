@@ -3,6 +3,7 @@
 namespace Drupal\dpl_react_apps\Controller;
 
 use Drupal\Core\Controller\ControllerBase;
+use Drupal\Core\GeneratedUrl;
 use Drupal\Core\Url;
 
 /**
@@ -94,7 +95,12 @@ class DplReactAppsController extends ControllerBase {
    */
   public static function searchResultUrl(): string
   {
-    return Url::fromRoute('dpl_react_apps.search_result')->toString();
+    $url = Url::fromRoute('dpl_react_apps.search_result')
+      ->toString();
+    if ($url instanceof GeneratedUrl) {
+      $url = $url->getGeneratedUrl();
+    }
+    return $url;
   }
 
   /**
@@ -109,6 +115,9 @@ class DplReactAppsController extends ControllerBase {
     $url = Url::fromRoute('dpl_react_apps.work')
       ->setRouteParameter('wid', ':workid')
       ->toString();
+    if ($url instanceof GeneratedUrl) {
+      $url = $url->getGeneratedUrl();
+    }
     return urldecode($url);
   }
 
