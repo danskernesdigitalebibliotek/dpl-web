@@ -24,16 +24,16 @@ class DplReactAppsController extends ControllerBase {
       'search-result' => dpl_react_render('search-result', [
         'search-url' => self::searchResultUrl(),
         'material-url' => self::materialUrl(),
-        'et-al-text' => t('et. al.', [], $options),
-        'by-author-text' => t('By', [], $options),
-        'show-more-text' => t('Show more', [], $options),
-        'showing-text' => t('Showing', [], $options),
-        'out-of-text' => t('out of', [], $options),
-        'results-text' => t('results', [], $options),
-        'number-description-text' => t('Nr.', [], $options),
-        'in-series-text' => t('In series', [], $options),
-        'available-text' => t('Available', [], $options),
-        'unavailable-text' => t('Unavailable', [], $options)
+        'et-al-text' => $this->t('et. al.', [], $options),
+        'by-author-text' => $this->t('By', [], $options),
+        'show-more-text' => $this->t('Show more', [], $options),
+        'showing-text' => $this->t('Showing', [], $options),
+        'out-of-text' => $this->t('out of', [], $options),
+        'results-text' => $this->t('results', [], $options),
+        'number-description-text' => $this->t('Nr.', [], $options),
+        'in-series-text' => $this->t('In series', [], $options),
+        'available-text' => $this->t('Available', [], $options),
+        'unavailable-text' => $this->t('Unavailable', [], $options),
       ]),
     ];
   }
@@ -93,8 +93,7 @@ class DplReactAppsController extends ControllerBase {
   /**
    * Builds an url for the local search result route.
    */
-  public static function searchResultUrl(): string
-  {
+  public static function searchResultUrl(): string {
     $url = Url::fromRoute('dpl_react_apps.search_result')
       ->toString();
     if ($url instanceof GeneratedUrl) {
@@ -106,8 +105,7 @@ class DplReactAppsController extends ControllerBase {
   /**
    * Builds an url for the material/work route.
    */
-  public static function materialUrl(): string
-  {
+  public static function materialUrl(): string {
     // React applications support variable replacement where variables are
     // prefixed with :. Specify the variable :workid as a parameter to let the
     // route build the url. Unfortunatly : will be encoded as %3A so we have to
