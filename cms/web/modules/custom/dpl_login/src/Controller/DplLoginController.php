@@ -91,6 +91,10 @@ class DplLoginController extends ControllerBase {
     return new static(
       $container->get('dpl_login.user_tokens'),
       $container->get('config.factory'),
+<<<<<<< HEAD
+=======
+      $container->get('openid_connect.session'),
+>>>>>>> 245e0b6 (Implement authorize_from_app endpoint)
       $container->get('plugin.manager.openid_connect_client'),
     );
   }
