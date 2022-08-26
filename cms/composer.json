@@ -20,7 +20,7 @@
                 "version": "0.3.0-rc6",
                 "type": "drupal-library",
                 "dist": {
-                    "url": "https://github.com/reload/dpl-react/releases/download/release-demo-22-08-18/dist.zip",
+                    "url": "https://github.com/reload/dpl-react/releases/download/release-indloggetudlogget-funktionalitet-DDFSOEG-178/dist.zip",
                     "type": "zip"
                 },
                 "require": {
@@ -50,7 +50,7 @@
         "composer/installers": "1.11.0",
         "cweagans/composer-patches": "1.7.0",
         "danskernesdigitalebibliotek/dpl-design-system": "^1.7@rc",
-        "danskernesdigitalebibliotek/dpl-react": "^0.3@rc",
+        "danskernesdigitalebibliotek/dpl-react": "^0.3.0@RC",
         "dealerdirect/phpcodesniffer-composer-installer": "^0.7.1",
         "drupal/config_ignore": "^2.3",
         "drupal/core-project-message": "^9.2.7",
