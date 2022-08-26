@@ -21,6 +21,8 @@ use Drupal\Core\Logger\LoggerChannelFactoryInterface;
 use Drupal\Core\Utility\UnroutedUrlAssemblerInterface;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Drupal\dpl_login\Exception\MissingConfigurationException;
+use Drupal\openid_connect\Plugin\OpenIDConnectClientBase;
+use Drupal\openid_connect\Plugin\OpenIDConnectClientManager;
 
 /**
  * Unit tests for the Library Token Handler.
@@ -63,12 +65,18 @@ class DplLoginControllerTest extends UnitTestCase {
     $url_generator = $this->prophesize(UrlGenerator::class);
     $url_generator->generateFromRoute('<front>', Argument::cetera())->willReturn($generated_url);
 
+    $openid_client = $this->prophesize(OpenIDConnectClientBase::class);
+    $openid_client->getAuthorizationEndpointUrl()->willReturn("https://some-url");
+    $openid_client_manager = $this->prophesize(OpenIDConnectClientManager::class);
+    $openid_client_manager->createInstance()->willReturn($openid_client);
+
     $container = new ContainerBuilder();
     $container->set('logger.factory', $logger_factory->reveal());
     $container->set('dpl_login.user_tokens', $user_token_provider->reveal());
     $container->set('config.factory', $config_factory->reveal());
     $container->set('unrouted_url_assembler', $unrouted_url_assembler->reveal());
     $container->set('url_generator', $url_generator->reveal());
+    $container->set('plugin.manager.openid_connect_client', $openid_client_manager->reveal());
 
     \Drupal::setContainer($container);
   }
