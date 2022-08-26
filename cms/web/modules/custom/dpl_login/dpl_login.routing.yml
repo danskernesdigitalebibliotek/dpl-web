@@ -6,3 +6,13 @@ dpl_login.logout:
   requirements:
     _user_is_logged_in: 'TRUE'
   no_cache: TRUE
+
+dpl_login.authorize_from_app:
+  path: '/dpl-login/authorization-url'
+  defaults:
+    _controller: '\Drupal\dpl_login\Controller\DplLoginController::authorizeFromApp'
+    _title: 'Authorize From App'
+  requirements:
+    _permission: 'access content'
+  options:
+    no_cache: 'TRUE'

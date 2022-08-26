@@ -9,7 +9,9 @@ use Drupal\Core\Config\ConfigFactoryInterface;
 use Drupal\Core\Routing\TrustedRedirectResponse;
 use Drupal\Core\StringTranslation\StringTranslationTrait;
 use Drupal\dpl_login\Exception\MissingConfigurationException;
+use Drupal\openid_connect\Plugin\OpenIDConnectClientManager;
 use Symfony\Component\DependencyInjection\ContainerInterface;
+use Symfony\Component\HttpFoundation\Request;
 
 /**
  * DPL React Controller.
@@ -18,10 +20,7 @@ class DplLoginController extends ControllerBase {
   use StringTranslationTrait;
 
   const LOGGER_KEY = 'dpl_login';
-  // @todo This could be moved to a new service
-  // handling adgangsplatform configuration.
-  // @see dpl_login_install() and \Drupal\dpl_library_token\LibraryTokenHandler.
-  const SETTINGS_KEY = 'openid_connect.settings.adgangsplatformen';
+  const CLIENT_NAME = 'adgangsplatformen';
 
   /**
    * The User token provider.
@@ -41,22 +40,43 @@ class DplLoginController extends ControllerBase {
    * @var mixed[]
    */
   protected $settings;
+  /**
+   * Openid Connect Plugin Manager.
+   *
+   * @var \Drupal\openid_connect\Plugin\OpenIDConnectClientManager
+   */
+  protected $pluginManager;
 
   /**
    * DdplReactController constructor.
    *
-   * @param \Drupal\dpl_login\UserTokensProvider $user_token_provider
-   *   The Uuser token provider.
+   * @param \Drupal\dpl_login\UserTokensProvider $userTokensProvider
+   *   The User token provider.
    * @param \Drupal\Core\Config\ConfigFactoryInterface $configFactory
    *   Configuration.
+   * @param \Drupal\openid_connect\Plugin\OpenIDConnectClientManager $pluginManager
+   *   Openid Connect Plugin Manager.
    */
   public function __construct(
-    UserTokensProvider $user_token_provider,
-    ConfigFactoryInterface $configFactory
+    UserTokensProvider $userTokensProvider,
+    ConfigFactoryInterface $configFactory,
+    OpenIDConnectClientManager $pluginManager,
   ) {
-    $this->userTokensProvider = $user_token_provider;
+    $this->userTokensProvider = $userTokensProvider;
     $this->settings = $configFactory
-      ->get(self::SETTINGS_KEY)->get('settings');
+      ->get($this->getSettingsKey())->get('settings');
+    $this->pluginManager = $pluginManager;
+    $this->configFactory = $configFactory;
+  }
+
+  /**
+   * Get the settings scope for the openid_connect settings.
+   *
+   * @return string
+   *   The settings scope for the openid_connect settings.
+   */
+  protected function getSettingsKey(): string {
+    return 'openid_connect.settings.' . self::CLIENT_NAME;
   }
 
   /**
@@ -70,7 +90,9 @@ class DplLoginController extends ControllerBase {
   public static function create(ContainerInterface $container) {
     return new static(
       $container->get('dpl_login.user_tokens'),
-      $container->get('config.factory')
+      $container->get('config.factory'),
+      $container->get('openid_connect.session'),
+      $container->get('plugin.manager.openid_connect_client'),
     );
   }
 
@@ -124,6 +146,32 @@ class DplLoginController extends ControllerBase {
     ]);
 
     return TrustedRedirectResponse::create($url->toUriString());
+  }
+
+  /**
+   * Authorize user from embedded app.
+   *
+   * Retrieve current path parameter, store it in session for later redirect
+   * and authorize user.
+   *
+   * @param \Symfony\Component\HttpFoundation\Request $request
+   *   Symfony request object.
+   *
+   * @return \Drupal\Core\Routing\TrustedRedirectResponse
+   *   A redirect to the authorization endpoint.
+   */
+  public function authorizeFromApp(Request $request): TrustedRedirectResponse {
+    if ($current_path = $request->query->get('current-path')) {
+      $_SESSION['openid_connect_destination'] = $current_path;
+    }
+
+    /** @var \Drupal\openid_connect\Plugin\OpenIDConnectClientInterface $client */
+    $client = $this->pluginManager->createInstance(
+      self::CLIENT_NAME,
+      $this->settings
+    );
+
+    return new TrustedRedirectResponse($client->getAuthorizationEndpointUrl("openid email profile"));
   }
 
 }

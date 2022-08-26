@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "4cd22c4cdcbc767bc7dfb0c0ff9afe6a",
+    "content-hash": "67d5e74f4cee9fc404275e7f38c61b45",
     "packages": [
         {
             "name": "amazeeio/drupal_integrations",
@@ -2848,17 +2848,17 @@
         },
         {
             "name": "drupal/openid_connect",
-            "version": "1.1.0",
+            "version": "1.2.0",
             "source": {
                 "type": "git",
                 "url": "https://git.drupalcode.org/project/openid_connect.git",
-                "reference": "8.x-1.1"
+                "reference": "8.x-1.2"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://ftp.drupal.org/files/projects/openid_connect-8.x-1.1.zip",
-                "reference": "8.x-1.1",
-                "shasum": "9153c4ecbadd1ea11b2dff41de30b8c90103ea9b"
+                "url": "https://ftp.drupal.org/files/projects/openid_connect-8.x-1.2.zip",
+                "reference": "8.x-1.2",
+                "shasum": "b00290161d7dc54fe1dccca1b0ab91bed920f051"
             },
             "require": {
                 "drupal/core": "^8.8 || ^9",
@@ -2867,8 +2867,8 @@
             "type": "drupal-module",
             "extra": {
                 "drupal": {
-                    "version": "8.x-1.1",
-                    "datestamp": "1622902228",
+                    "version": "8.x-1.2",
+                    "datestamp": "1640195069",
                     "security-coverage": {
                         "status": "covered",
                         "message": "Covered by Drupal's security advisory policy"
@@ -2881,10 +2881,6 @@
             ],
             "authors": [
                 {
-                    "name": "Mario Steinitz",
-                    "homepage": "https://www.drupal.org/user/2536014"
-                },
-                {
                     "name": "balintk",
                     "homepage": "https://www.drupal.org/user/613760"
                 },
@@ -2895,6 +2891,10 @@
                 {
                     "name": "jcnventura",
                     "homepage": "https://www.drupal.org/user/122464"
+                },
+                {
+                    "name": "Mario Steinitz",
+                    "homepage": "https://www.drupal.org/user/2536014"
                 },
                 {
                     "name": "pfrilling",
