@@ -122,7 +122,7 @@ class DplReactAppsController extends ControllerBase {
    */
   public static function authUrl(): string {
     return self::ensureUrlIsString(
-      Url::fromRoute('dpl_login.authorize_from_app')->toString()
+      Url::fromRoute('dpl_login.login')->toString()
     );
   }
 

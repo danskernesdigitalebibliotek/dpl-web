@@ -9,9 +9,11 @@ use Drupal\Core\Config\ConfigFactoryInterface;
 use Drupal\Core\Routing\TrustedRedirectResponse;
 use Drupal\Core\StringTranslation\StringTranslationTrait;
 use Drupal\dpl_login\Exception\MissingConfigurationException;
+use Drupal\openid_connect\OpenIDConnectClaims;
 use Drupal\openid_connect\Plugin\OpenIDConnectClientManager;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 
 /**
  * DPL React Controller.
@@ -46,6 +48,12 @@ class DplLoginController extends ControllerBase {
    * @var \Drupal\openid_connect\Plugin\OpenIDConnectClientManager
    */
   protected $pluginManager;
+  /**
+   * The OpenID Connect claims.
+   *
+   * @var \Drupal\openid_connect\OpenIDConnectClaims
+   */
+  protected $claims;
 
   /**
    * DdplReactController constructor.
@@ -56,17 +64,21 @@ class DplLoginController extends ControllerBase {
    *   Configuration.
    * @param \Drupal\openid_connect\Plugin\OpenIDConnectClientManager $pluginManager
    *   Openid Connect Plugin Manager.
+   * @param \Drupal\openid_connect\OpenIDConnectClaims $claims
+   *   The OpenID Connect claims.
    */
   public function __construct(
     UserTokensProvider $userTokensProvider,
     ConfigFactoryInterface $configFactory,
     OpenIDConnectClientManager $pluginManager,
+    OpenIDConnectClaims $claims,
   ) {
     $this->userTokensProvider = $userTokensProvider;
     $this->settings = $configFactory
       ->get($this->getSettingsKey())->get('settings');
     $this->pluginManager = $pluginManager;
     $this->configFactory = $configFactory;
+    $this->claims = $claims;
   }
 
   /**
@@ -91,11 +103,8 @@ class DplLoginController extends ControllerBase {
     return new static(
       $container->get('dpl_login.user_tokens'),
       $container->get('config.factory'),
-<<<<<<< HEAD
-=======
-      $container->get('openid_connect.session'),
->>>>>>> 245e0b6 (Implement authorize_from_app endpoint)
       $container->get('plugin.manager.openid_connect_client'),
+      $container->get('openid_connect.claims'),
     );
   }
 
@@ -160,10 +169,11 @@ class DplLoginController extends ControllerBase {
    * @param \Symfony\Component\HttpFoundation\Request $request
    *   Symfony request object.
    *
-   * @return \Drupal\Core\Routing\TrustedRedirectResponse
+   * @return \Symfony\Component\HttpFoundation\Response
    *   A redirect to the authorization endpoint.
    */
-  public function authorizeFromApp(Request $request): TrustedRedirectResponse {
+  public function login(Request $request): Response {
+    $_SESSION['openid_connect_op'] = 'login';
     if ($current_path = $request->query->get('current-path')) {
       $_SESSION['openid_connect_destination'] = $current_path;
     }
@@ -174,7 +184,8 @@ class DplLoginController extends ControllerBase {
       $this->settings
     );
 
-    return new TrustedRedirectResponse($client->getAuthorizationEndpointUrl("openid email profile"));
+    $scopes = $this->claims->getScopes($client);
+    return $client->authorize($scopes);
   }
 
 }

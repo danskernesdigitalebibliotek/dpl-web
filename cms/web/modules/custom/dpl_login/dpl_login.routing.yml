@@ -7,11 +7,11 @@ dpl_login.logout:
     _user_is_logged_in: 'TRUE'
   no_cache: TRUE
 
-dpl_login.authorize_from_app:
-  path: '/dpl-login/authorization-url'
+dpl_login.login:
+  path: '/login'
   defaults:
-    _controller: '\Drupal\dpl_login\Controller\DplLoginController::authorizeFromApp'
-    _title: 'Authorize From App'
+    _controller: '\Drupal\dpl_login\Controller\DplLoginController::login'
+    _title: 'Login via Adgangsplatformen'
   requirements:
     _permission: 'access content'
   options:

@@ -147,9 +147,6 @@
             },
             "drupal/jsonlog": {
                 "3251587: Change logging from stdout to stderr": "https://www.drupal.org/files/issues/2021-11-29/jsonlog-change-stdout-to-stderr-3251587-3.patch"
-            },
-            "drupal/openid_connect": {
-                "Expose authorization url endpoint": "https://www.drupal.org/files/issues/2022-08-26/openid_connect-auth-endpoint.patch"
             }
         }
     }

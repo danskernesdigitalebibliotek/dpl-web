@@ -21,8 +21,10 @@ use Drupal\Core\Logger\LoggerChannelFactoryInterface;
 use Drupal\Core\Utility\UnroutedUrlAssemblerInterface;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Drupal\dpl_login\Exception\MissingConfigurationException;
+use Drupal\openid_connect\OpenIDConnectClaims;
 use Drupal\openid_connect\Plugin\OpenIDConnectClientBase;
 use Drupal\openid_connect\Plugin\OpenIDConnectClientManager;
+use Symfony\Component\HttpFoundation\Response;
 
 /**
  * Unit tests for the Library Token Handler.
@@ -65,10 +67,14 @@ class DplLoginControllerTest extends UnitTestCase {
     $url_generator = $this->prophesize(UrlGenerator::class);
     $url_generator->generateFromRoute('<front>', Argument::cetera())->willReturn($generated_url);
 
-    $openid_client = $this->prophesize(OpenIDConnectClientBase::class);
-    $openid_client->getAuthorizationEndpointUrl()->willReturn("https://some-url");
-    $openid_client_manager = $this->prophesize(OpenIDConnectClientManager::class);
-    $openid_client_manager->createInstance()->willReturn($openid_client);
+    $redirect_response = $this->prophesize(Response::class);
+    $openid_connect_client = $this->prophesize(OpenIDConnectClientBase::class);
+    $openid_connect_client->authorize()->willReturn($redirect_response);
+    $openid_connect_client_manager = $this->prophesize(OpenIDConnectClientManager::class);
+    $openid_connect_client_manager->createInstance()->willReturn($openid_connect_client);
+
+    $openid_connect_claims = $this->prophesize(OpenIDConnectClaims::class);
+    $openid_connect_claims->getScopes()->willReturn('some scopes');
 
     $container = new ContainerBuilder();
     $container->set('logger.factory', $logger_factory->reveal());
@@ -76,7 +82,8 @@ class DplLoginControllerTest extends UnitTestCase {
     $container->set('config.factory', $config_factory->reveal());
     $container->set('unrouted_url_assembler', $unrouted_url_assembler->reveal());
     $container->set('url_generator', $url_generator->reveal());
-    $container->set('plugin.manager.openid_connect_client', $openid_client_manager->reveal());
+    $container->set('plugin.manager.openid_connect_client', $openid_connect_client_manager->reveal());
+    $container->set('openid_connect.claims', $openid_connect_claims->reveal());
 
     \Drupal::setContainer($container);
   }
