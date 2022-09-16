@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "4cd22c4cdcbc767bc7dfb0c0ff9afe6a",
+    "content-hash": "c65ee3aa13602580846a2a3b334c9740",
     "packages": [
         {
             "name": "amazeeio/drupal_integrations",
@@ -1080,7 +1080,7 @@
             "version": "v1.7.0-rc1",
             "dist": {
                 "type": "zip",
-                "url": "https://github.com/danskernesdigitalebibliotek/dpl-design-system/releases/download/release-release%2F3/dist.zip"
+                "url": "https://github.com/danskernesdigitalebibliotek/dpl-design-system/releases/download/release-release%2F4/dist.zip"
             },
             "type": "drupal-library"
         },
@@ -1089,7 +1089,7 @@
             "version": "0.3.0-rc6",
             "dist": {
                 "type": "zip",
-                "url": "https://github.com/reload/dpl-react/releases/download/release-indloggetudlogget-funktionalitet-DDFSOEG-178/dist.zip"
+                "url": "https://github.com/danskernesdigitalebibliotek/dpl-react/releases/download/release-release%2F4/dist.zip"
             },
             "require": {
                 "composer/installers": "^1.2.0"
