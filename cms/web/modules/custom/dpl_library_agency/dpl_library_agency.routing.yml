@@ -1,0 +1,17 @@
+dpl_library_agency.settings:
+  path: '/admin/config/dpl-library-agency'
+  defaults:
+    _controller: '\Drupal\system\Controller\SystemController::systemAdminMenuBlockPage'
+    _title: 'Library Agency'
+  requirements:
+    _permission: 'administer library agency configuration'
+
+dpl_library_agency.general_settings:
+  path: '/admin/config/dpl-library-agency/general-settings'
+  defaults:
+    _form: '\Drupal\dpl_library_agency\Form\GeneralSettingsForm'
+    _title: 'Dpl Library Agency General Settings'
+  requirements:
+    _permission: 'administer library agency configuration'
+  options:
+    _admin_route: TRUE

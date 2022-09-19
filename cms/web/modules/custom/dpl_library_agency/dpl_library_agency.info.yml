@@ -1,0 +1,6 @@
+name: 'DPL Library Agency'
+type: module
+description: 'Module for handling library agency configuration and functionality'
+core: 8.x
+package: 'DPL'
+core_version_requirement: ^9 || ^8

@@ -1,0 +1,39 @@
+<?php
+
+/**
+ * @file
+ * Contains dpl_library_agency.module.
+ */
+
+use Drupal\Core\Routing\RouteMatchInterface;
+
+/**
+ * Implements hook_help().
+ */
+function dpl_library_agency_help(string $route_name, RouteMatchInterface $route_match): string {
+  switch ($route_name) {
+    // Help for the dpl_library_agency module.
+    case 'help.page.dpl_library_agency':
+      $output = '';
+      $output .= '<h3>' . t('About') . '</h3>';
+      $output .= '<p>' . t('Module for handling library agency configuration and functionality') . '</p>';
+      return $output;
+
+    default:
+      return '';
+  }
+}
+
+/**
+ * Checks wether sms notifications for reservations are enabled.
+ *
+ * @return bool
+ *   TRUE if sms notifications are enabled, FALSE otherwise.
+ */
+function dpl_library_agency_reservation_sms_notifications_is_enabled(): bool {
+  $config = \Drupal::config('dpl_library_agency.general_settings');
+  if ($config->get('reservation_sms_notifications_disabled')) {
+    return FALSE;
+  }
+  return TRUE;
+}

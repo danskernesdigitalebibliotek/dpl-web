@@ -3,6 +3,7 @@ description: For integration of dpl_react apps on the site.
 package: DPL
 dependencies:
   - dpl_react:dpl_react
+  - dpl_library_agency:dpl_library_agency
 
 type: module
 core_version_requirement: ^9

@@ -55,6 +55,8 @@ class DplReactAppsController extends ControllerBase {
     return [
       'material' => dpl_react_render('material', [
         'wid' => $wid,
+        'sms-notifications-for-reservations-enabled' =>
+        (int) dpl_library_agency_reservation_sms_notifications_is_enabled(),
         'search-url' => self::searchResultUrl(),
         'material-url' => self::materialUrl(),
         'auth-url' => self::authUrl(),
