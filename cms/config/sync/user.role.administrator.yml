@@ -6,4 +6,5 @@ id: administrator
 label: Administrator
 weight: 2
 is_admin: null
-permissions: {  }
+permissions:
+  - 'administer library agency configuration'
