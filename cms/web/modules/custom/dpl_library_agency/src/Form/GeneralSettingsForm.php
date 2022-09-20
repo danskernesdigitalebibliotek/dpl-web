@@ -54,7 +54,6 @@ class GeneralSettingsForm extends ConfigFormBase {
    */
   public function submitForm(array &$form, FormStateInterface $form_state): void {
     $this->config('dpl_library_agency.general_settings')
-      ->set('library_agency_name', $form_state->getValue('library_agency_name'))
       ->set('reservation_sms_notifications_disabled', $form_state->getValue('reservation_sms_notifications_disabled'))
       ->save();
 

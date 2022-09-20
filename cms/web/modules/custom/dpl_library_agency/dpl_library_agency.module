@@ -5,25 +5,6 @@
  * Contains dpl_library_agency.module.
  */
 
-use Drupal\Core\Routing\RouteMatchInterface;
-
-/**
- * Implements hook_help().
- */
-function dpl_library_agency_help(string $route_name, RouteMatchInterface $route_match): string {
-  switch ($route_name) {
-    // Help for the dpl_library_agency module.
-    case 'help.page.dpl_library_agency':
-      $output = '';
-      $output .= '<h3>' . t('About') . '</h3>';
-      $output .= '<p>' . t('Module for handling library agency configuration and functionality') . '</p>';
-      return $output;
-
-    default:
-      return '';
-  }
-}
-
 /**
  * Checks wether sms notifications for reservations are enabled.
  *

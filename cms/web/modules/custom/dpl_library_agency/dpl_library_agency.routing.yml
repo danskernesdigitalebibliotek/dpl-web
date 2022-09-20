@@ -10,7 +10,7 @@ dpl_library_agency.general_settings:
   path: '/admin/config/dpl-library-agency/general-settings'
   defaults:
     _form: '\Drupal\dpl_library_agency\Form\GeneralSettingsForm'
-    _title: 'Dpl Library Agency General Settings'
+    _title: 'General Settings'
   requirements:
     _permission: 'administer library agency configuration'
   options:
