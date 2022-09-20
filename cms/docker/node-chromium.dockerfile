@@ -4,6 +4,5 @@ FROM uselagoon/node-16-builder
 ENV PUPPETEER_SKIP_CHROMIUM_DOWNLOAD=true
 
 RUN apk update \
-    && apk upgrade \
     && apk add chromium \
     && rm -rf /var/cache/apk/*
