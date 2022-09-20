@@ -4,17 +4,3 @@
  * @file
  * Contains dpl_library_agency.module.
  */
-
-/**
- * Checks wether sms notifications for reservations are enabled.
- *
- * @return bool
- *   TRUE if sms notifications are enabled, FALSE otherwise.
- */
-function dpl_library_agency_reservation_sms_notifications_is_enabled(): bool {
-  $config = \Drupal::config('dpl_library_agency.general_settings');
-  if ($config->get('reservation_sms_notifications_disabled')) {
-    return FALSE;
-  }
-  return TRUE;
-}

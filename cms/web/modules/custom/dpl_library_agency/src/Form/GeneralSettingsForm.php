@@ -2,13 +2,47 @@
 
 namespace Drupal\dpl_library_agency\Form;
 
+use Drupal\Core\Cache\CacheTagsInvalidator;
 use Drupal\Core\Form\ConfigFormBase;
 use Drupal\Core\Form\FormStateInterface;
+use Drupal\dpl_library_agency\ReservationSettings;
+use Symfony\Component\DependencyInjection\ContainerInterface;
 
 /**
  * General Settings form for a library agency.
  */
 class GeneralSettingsForm extends ConfigFormBase {
+
+
+  /**
+   * The cache tags invalidator.
+   *
+   * @var \Drupal\Core\Cache\CacheTagsInvalidator
+   */
+  protected $cacheTagsInvalidator;
+
+  /**
+   * GeneralSettingsForm constructor.
+   */
+  public function __construct(
+    CacheTagsInvalidator $cacheTagsInvalidator,
+  ) {
+    $this->cacheTagsInvalidator = $cacheTagsInvalidator;
+  }
+
+  /**
+   * {@inheritdoc}
+   *
+   * @param \Symfony\Component\DependencyInjection\ContainerInterface $container
+   *   The Drupal service container.
+   *
+   * @return static
+   */
+  public static function create(ContainerInterface $container) {
+    return new static(
+      $container->get('cache_tags.invalidator'),
+    );
+  }
 
   /**
    * {@inheritdoc}
@@ -58,6 +92,7 @@ class GeneralSettingsForm extends ConfigFormBase {
       ->save();
 
     parent::submitForm($form, $form_state);
+    $this->cacheTagsInvalidator->invalidateTags(ReservationSettings::getCacheTagsSmsNotificationsIsEnabled());
   }
 
 }

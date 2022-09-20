@@ -81,6 +81,9 @@ function dpl_react_render(string $name, array $data = []): array {
         sprintf('dpl_react/%s', $name),
       ],
     ],
+    '#cache' => [
+      'tags' => ['dpl_react_app', 'dpl_react_app:' . $name],
+    ],
   ];
 
   return $build;

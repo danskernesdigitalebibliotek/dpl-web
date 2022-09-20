@@ -5,11 +5,43 @@ namespace Drupal\dpl_react_apps\Controller;
 use Drupal\Core\Controller\ControllerBase;
 use Drupal\Core\GeneratedUrl;
 use Drupal\Core\Url;
+use Drupal\dpl_library_agency\ReservationSettings;
+use Symfony\Component\DependencyInjection\ContainerInterface;
 
 /**
  * Controller for rendering full page DPL React apps.
  */
 class DplReactAppsController extends ControllerBase {
+
+  /**
+   * Reservation settings service.
+   *
+   * @var \Drupal\dpl_library_agency\ReservationSettings
+   */
+  protected $reservationSettings;
+
+  /**
+   * DdplReactAppsController constructor.
+   */
+  public function __construct(
+    ReservationSettings $reservationSettings,
+  ) {
+    $this->reservationSettings = $reservationSettings;
+  }
+
+  /**
+   * {@inheritdoc}
+   *
+   * @param \Symfony\Component\DependencyInjection\ContainerInterface $container
+   *   The Drupal service container.
+   *
+   * @return static
+   */
+  public static function create(ContainerInterface $container) {
+    return new static(
+      $container->get('dpl_library_agency.reservation_settings'),
+    );
+  }
 
   /**
    * Render search result app.
@@ -56,7 +88,9 @@ class DplReactAppsController extends ControllerBase {
       'material' => dpl_react_render('material', [
         'wid' => $wid,
         'sms-notifications-for-reservations-enabled' =>
-        (int) dpl_library_agency_reservation_sms_notifications_is_enabled(),
+        // Data attributes can only be strings
+        // so we need to convert the boolean to a number (0/1).
+        (int) $this->reservationSettings->smsNotificationsIsEnabled(),
         'search-url' => self::searchResultUrl(),
         'material-url' => self::materialUrl(),
         'auth-url' => self::authUrl(),
