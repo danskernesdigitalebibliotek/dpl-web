@@ -28,6 +28,23 @@ services:
       dockerfile: docker/node-chromium.dockerfile
     volumes:
       - 'projectroot:/app'
+    environment:
+      CYPRESS_INSTALL_BINARY: 0
+
+  cypress:
+    image: cypress/included:10.8.0
+    volumes:
+      - 'projectroot:/app'
+    working_dir: '/app'
+    depends_on:
+      - wiremock
+    environment:
+      HTTP_PROXY: http://wiremock
+      HTTPS_PROXY: https://wiremock
+      # Do not proxy traffic to the website nor to Google services serving
+      # frontend assets. This pollutes the WireMock log output.
+      NO_PROXY: "varnish,*.gstatic.com,*.googleapis.com"
+      CYPRESS_BASE_URL: "http://varnish:8080"
 
   wiremock:
     # We use wiremock-gui as it exposes a UI for inspecting the state of

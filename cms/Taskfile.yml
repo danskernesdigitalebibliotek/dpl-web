@@ -165,6 +165,12 @@ tasks:
     env:
       DOCKER_COMPOSE_FILES: "{{ .DOCKER_COMPOSE_FILES_CI }}"
 
+  ci:cypress:
+    desc: Run Cypress functional tests
+    cmds:
+      - docker compose {{ .DOCKER_COMPOSE_FILES_CI }} run node-chrome npm ci
+      - docker compose {{ .DOCKER_COMPOSE_FILES_CI }} run cypress
+
   ci:pa11y:
     desc: Run Pa11y to test accessiblity
     cmds:

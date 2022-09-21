@@ -16,6 +16,8 @@
     "**/web/sites/**/files/",
     "**/web/themes/custom/novel/assets/",
     "**/web/themes/contrib/",
-    "**/web/modules/local/"
+    "**/web/modules/local/",
+    "cypress.config.js",
+    "**/cypress/"
   ]
 }

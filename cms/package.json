@@ -5,6 +5,7 @@
   "devDependencies": {
     "@apidevtools/swagger-cli": "^4.0.4",
     "@lhci/cli": "^0.8.2",
+    "cypress": "^10.8.0",
     "eslint": "^8.3.0",
     "eslint-config-drupal": "^5.0.2",
     "jsome": "^2.5.0",
