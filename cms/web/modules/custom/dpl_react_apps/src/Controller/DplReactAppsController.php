@@ -87,7 +87,7 @@ class DplReactAppsController extends ControllerBase {
     return [
       'material' => dpl_react_render('material', [
         'wid' => $wid,
-        'sms-notifications-for-reservations-enabled' =>
+        'sms-notifications-for-reservations-enabled-config' =>
         // Data attributes can only be strings
         // so we need to convert the boolean to a number (0/1).
         (int) $this->reservationSettings->smsNotificationsIsEnabled(),
