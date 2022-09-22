@@ -83,10 +83,8 @@ tasks:
       # Import translations.
       - task dev:cli -- drush locale-check
       - task dev:cli -- drush locale-update
-      # We don't really need to purge the external cache
-      # since we are working with fresh containers.
-      # But we want catch if something is wrong with the setup.
-      - task dev:cache:clear:external
+      # Clear all caches to ensure we have a pristine setup.
+      - task dev:cache:clear:all
       # Ensure site is reachable and warm any caches
       - task dev:cli -- curl --silent --show-error --fail --output /dev/null http://varnish:8080/
       # Show a one-time login to the local site.
