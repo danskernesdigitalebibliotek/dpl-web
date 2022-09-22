@@ -87,6 +87,8 @@ tasks:
       # since we are working with fresh containers.
       # But we want catch if something is wrong with the setup.
       - task dev:cache:clear:external
+      # Ensure site is reachable and warm any caches
+      - task dev:cli -- curl --silent --show-error --fail --output /dev/null http://varnish:8080/
       # Show a one-time login to the local site.
       - task dev:cli -- drush user-login
 
