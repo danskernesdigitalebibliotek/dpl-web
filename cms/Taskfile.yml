@@ -51,7 +51,7 @@ tasks:
   dev:start:
     summary: Run docker compose
     cmds:
-      - docker compose {{ .DOCKER_COMPOSE_FILES }} up -d
+      - docker compose {{ .DOCKER_COMPOSE_FILES }} up -d {{if eq .CI "true"}}--quiet-pull{{end}}
 
   dev:stop:
     summary: Stop docker compose environment
