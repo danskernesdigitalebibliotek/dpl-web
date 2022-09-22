@@ -10,6 +10,7 @@
     "eslint-config-drupal": "^5.0.2",
     "jsome": "^2.5.0",
     "markdownlint-cli2": "^0.3.2",
-    "pa11y-ci": "git+https://github.com/pa11y/pa11y-ci#5c842cf"
+    "pa11y-ci": "git+https://github.com/pa11y/pa11y-ci#5c842cf",
+    "typescript": "^4.8.3"
   }
 }
