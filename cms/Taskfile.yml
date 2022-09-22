@@ -124,7 +124,9 @@ tasks:
 
   dev:cache:clear:all:
     summary: Clears all cache
-    deps: [dev:cache:clear:drupal, dev:cache:clear:external]
+    cmds:
+      - task dev:cache:clear:drupal
+      - task dev:cache:clear:external
 
   dev:cache:clear:drupal:
     summary: Runs Drupal cache rebuild
