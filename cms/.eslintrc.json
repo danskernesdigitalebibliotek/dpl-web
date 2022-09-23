@@ -17,7 +17,7 @@
     "**/web/themes/custom/novel/assets/",
     "**/web/themes/contrib/",
     "**/web/modules/local/",
-    "cypress.config.js",
-    "**/cypress/"
+    "**/cypress/",
+    "cypress.config.js"
   ]
 }
