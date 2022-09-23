@@ -31,7 +31,9 @@ class ProxyUrlConfigurationForm extends ConfigFormBase {
   }
 
   protected function getFormStateValues (FormStateInterface $form_state) {
-    return array_reduce($form_state->getValue(['hostnames']), function($carry, $item) {
+    return array_reduce($form_state->getValue(['hostnames']), function(
+      $carry, $item
+    ) {
       if(!empty($item['name'])) {
         unset($item['remove_this']);
         $carry[] = $item;
@@ -54,17 +56,37 @@ class ProxyUrlConfigurationForm extends ConfigFormBase {
     return [0];
   }
 
-  public function buildForm(array $form, FormStateInterface $form_state) {
-    $form['description'] = [
-      '#type' => 'item',
-      '#markup' => $this->t('This configuration form is for administering proxy url generation.'),
-    ];
+  protected function regexIsConfiguredLabel($values): string {
+    if(
+      empty($values['regex'])
+      && empty($values['replacement'])
+    ) {
+      return "";
+    }
 
+    return sprintf('(%s)', $this->t('configured'), [], self::translateOptions());
+  }
+
+  protected static function translateOptions(): array {
+    return [
+      'context' => 'dpl_url_proxy',
+    ];
+  }
+
+  public function buildForm(array $form, FormStateInterface $form_state): array {
+    $t_opts = self::translateOptions();
     $indexes = $this->constructIndexes($form_state, $this->getSavedValues());
     $form_state->set('indexes', $indexes);
     $saved_values = $this->getSavedValues();
 
     $form['#tree'] = TRUE;
+    $form['description'] = [
+      '#type' => 'item',
+      '#markup' => $this->t(
+        'This configuration form is for administering proxy url generation.'
+      ),
+    ];
+
     $form['hostnames'] = [
       '#type' => 'fieldset',
       '#title' => $this->t('Hostnames'),
@@ -77,21 +99,59 @@ class ProxyUrlConfigurationForm extends ConfigFormBase {
         '#type' => 'fieldset',
         '#title' => $this->t('Hostname'),
       ];
-      $form['hostnames'][$index]['name'] = [
+      $form['hostnames'][$index]['hostname'] = [
         '#type' => 'textfield',
-        '#title' => $this->t('Name'),
-        '#default_value' => $saved_values[$index]['name'] ?? '',
+        '#title' => $this->t('Hostname'),
+        '#default_value' => $saved_values[$index]['hostname'] ?? '',
+        '#required' => TRUE,
       ];
-      $form['hostnames'][$index]['shoe_size'] = [
+
+      $form['hostnames'][$index]['expression'] = [
+        '#type' => 'details',
+        '#title' => $this->t(
+          'Replacement %configured',
+          [
+            '%configured' =>
+            $this->regexIsConfiguredLabel($saved_values[$index]['expression'])
+          ],
+          $t_opts
+        ),
+      ];
+
+      $form['hostnames'][$index]['expression']['regex'] = [
         '#type' => 'textfield',
-        '#title' => $this->t('Shoe size'),
-        '#default_value' => $saved_values[$index]['shoe_size'] ?? '',
+        '#title' => $this->t('Regular expression'),
+        '#size' => 30,
+        '#default_value' => $saved_values[$index]['expression']['regex'] ?? '',
+        '#description' => $this->t(
+          'Use regular expression to substitut parts of the url, e.g. "<em>%regex</em>".',
+          ['%regex' => '/bib\w{5,6}/'],
+          $t_opts
+        ),
       ];
+
+      $form['hostnames'][$index]['expression']['replacement'] = [
+        '#type' => 'textfield',
+        '#title' => $this->t('Replacement'),
+        '#size' => 30,
+        '#default_value' => $saved_values[$index]['expression']['replacement'] ?? '',
+        '#description' => $this->t('The replacement value for the regular expression.'),
+      ];
+
+      $form['hostnames'][$index]['disable_prefix'] = [
+        '#type' => 'checkbox',
+        '#title' => $this->t('Do not use proxy prefix for this hostname'),
+        '#default_value' => isset($saved_values[$index]['disable_prefix'])
+          ? $saved_values[$index]['disable_prefix']
+          : FALSE,
+      ];
+
       $form['hostnames'][$index]['remove_this'] = [
         '#name' => $index,
         '#type' => 'submit',
         '#value' => $this->t('Remove this'),
         '#submit' => ['::removeOne'],
+        '#limit_validation_errors' => [],
         '#ajax' => [
           'callback' => '::addmoreCallback',
           'wrapper' => 'hostnames-fieldset-wrapper',
@@ -106,6 +166,7 @@ class ProxyUrlConfigurationForm extends ConfigFormBase {
       '#type' => 'submit',
       '#value' => $this->t('Add one more'),
       '#submit' => ['::addOne'],
+      '#limit_validation_errors' => [],
       '#ajax' => [
         'callback' => '::addmoreCallback',
         'wrapper' => 'hostnames-fieldset-wrapper',
@@ -123,15 +184,15 @@ class ProxyUrlConfigurationForm extends ConfigFormBase {
   /**
    * {@inheritdoc}
    */
-  public function getFormId() {
+  public function getFormId(): string {
     return 'form_api_example_ajax_addmore';
   }
 
-  public function addmoreCallback(array &$form, FormStateInterface $form_state) {
+  public function addmoreCallback(array &$form, FormStateInterface $form_state): array {
     return $form['hostnames'];
   }
 
-  public function addOne(array &$form, FormStateInterface $form_state) {
+  public function addOne(array &$form, FormStateInterface $form_state): void {
     $indexes = $form_state->get('indexes');
     $last = end($indexes);
     $indexes[] = $last + 1;
@@ -140,7 +201,7 @@ class ProxyUrlConfigurationForm extends ConfigFormBase {
   }
 
 
-  public function removeOne(array &$form, FormStateInterface $form_state) {
+  public function removeOne(array &$form, FormStateInterface $form_state): void {
     $remove_value = $form_state->getTriggeringElement()['#name'];
     $key = array_search($remove_value, $form_state->get('indexes'));
     if ($key !== false) {
@@ -149,9 +210,9 @@ class ProxyUrlConfigurationForm extends ConfigFormBase {
     $form_state->setRebuild();
   }
 
-  public function submitForm(array &$form, FormStateInterface $form_state) {
+  public function submitForm(array &$form, FormStateInterface $form_state): void {
     $values = array_reduce($form_state->getValue(['hostnames']), function($carry, $item) {
-      if(!empty($item['name'])) {
+      if(!empty($item['hostname'])) {
         unset($item['remove_this']);
         $carry[] = $item;
       }
@@ -167,4 +228,5 @@ class ProxyUrlConfigurationForm extends ConfigFormBase {
 
     parent::submitForm($form, $form_state);
   }
+
 }
