@@ -1,0 +1,6 @@
+name: 'dpl_url_proxy'
+type: module
+description: 'Module for generating specially formatted external urls'
+core: 8.x
+package: 'DPL'
+core_version_requirement: ^8 | ^9
