@@ -6,6 +6,7 @@ use Drupal\Core\Form\ConfigFormBase;
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\Messenger\MessengerTrait;
 use Drupal\Core\StringTranslation\StringTranslationTrait;
+use Drupal\dpl_url_proxy\DplUrlProxyInterface;
 
 /**
  * Class ProxyUrlConfigurationForm.
@@ -16,18 +17,23 @@ class ProxyUrlConfigurationForm extends ConfigFormBase {
   use StringTranslationTrait;
   use MessengerTrait;
 
+  public const CONFIG_NAME = 'dpl_url_proxy.settings';
+
   /**
    * {@inheritdoc}
    */
   protected function getEditableConfigNames() {
     return [
-      'dpl_url_proxy.settings',
+     self::CONFIG_NAME,
     ];
   }
 
   protected function getSavedValues() {
-    $config = $this->config('dpl_url_proxy.settings');
-    return $config->get('values');
+    $config = $this->config(self::CONFIG_NAME);
+    return $config->get('values', [
+      'prefix' => '',
+      'hostnames' => [],
+    ]);
   }
 
   protected function getFormStateValues (FormStateInterface $form_state) {
@@ -42,15 +48,15 @@ class ProxyUrlConfigurationForm extends ConfigFormBase {
     }, []);
   }
 
-  protected function constructIndexes ($form_state, $values) {
+  protected function constructHostnameIndexes ($form_state, $values) {
     $indexes = $form_state->get('indexes');
 
     if ($indexes !== NULL) {
       return $indexes;
     }
 
-    if ($values) {
-      return array_keys($values);
+    if ($values && !empty($values['hostnames'])) {
+      return array_keys($values['hostnames']);
     }
 
     return [0];
@@ -58,24 +64,21 @@ class ProxyUrlConfigurationForm extends ConfigFormBase {
 
   protected function regexIsConfiguredLabel($values): string {
     if(
-      empty($values['regex'])
-      && empty($values['replacement'])
+      empty($values['expression']['regex'])
+      && empty($values['expression']['replacement'])
     ) {
       return "";
     }
 
-    return sprintf('(%s)', $this->t('configured'), [], self::translateOptions());
-  }
-
-  protected static function translateOptions(): array {
-    return [
-      'context' => 'dpl_url_proxy',
-    ];
+    return sprintf(
+      '(%s)',
+      $this->t('configured', [], DplUrlProxyInterface::TRANSLATION_OPTIONS)
+    );
   }
 
   public function buildForm(array $form, FormStateInterface $form_state): array {
-    $t_opts = self::translateOptions();
-    $indexes = $this->constructIndexes($form_state, $this->getSavedValues());
+    $t_opts = DplUrlProxyInterface::TRANSLATION_OPTIONS;
+    $indexes = $this->constructHostnameIndexes($form_state, $this->getSavedValues());
     $form_state->set('indexes', $indexes);
     $saved_values = $this->getSavedValues();
 
@@ -83,13 +86,28 @@ class ProxyUrlConfigurationForm extends ConfigFormBase {
     $form['description'] = [
       '#type' => 'item',
       '#markup' => $this->t(
-        'This configuration form is for administering proxy url generation.'
+        'This configuration form is for administering proxy url generation.',
+        [],
+        $t_opts
       ),
+    ];
+
+    $form['prefix'] = [
+      '#type' => 'textfield',
+      '#title' => $this->t('Proxy server URL prefix'),
+      '#default_value' => $saved_values['prefix'] ?? '',
+      '#description' => $this->t(
+        'The prefix to use for proxy server URLs. This is the part of the URL
+        that comes before the hostname',
+        [],
+        $t_opts
+      ),
+      '#required' => TRUE,
     ];
 
     $form['hostnames'] = [
       '#type' => 'fieldset',
-      '#title' => $this->t('Hostnames'),
+      '#title' => $this->t('Hostnames', [], $t_opts),
       '#prefix' => '<div id="hostnames-fieldset-wrapper">',
       '#suffix' => '</div>',
     ];
@@ -97,12 +115,12 @@ class ProxyUrlConfigurationForm extends ConfigFormBase {
     foreach($indexes as $index) {
       $form['hostnames'][$index] = [
         '#type' => 'fieldset',
-        '#title' => $this->t('Hostname'),
+        '#title' => $this->t('Host configuration', [], $t_opts),
       ];
       $form['hostnames'][$index]['hostname'] = [
         '#type' => 'textfield',
-        '#title' => $this->t('Hostname'),
-        '#default_value' => $saved_values[$index]['hostname'] ?? '',
+        '#title' => $this->t('Hostname', [], $t_opts),
+        '#default_value' => $saved_values['hostnames'][$index]['hostname'] ?? '',
         '#required' => TRUE,
       ];
 
@@ -112,7 +130,7 @@ class ProxyUrlConfigurationForm extends ConfigFormBase {
           'Replacement %configured',
           [
             '%configured' =>
-            $this->regexIsConfiguredLabel($saved_values[$index]['expression'])
+            $this->regexIsConfiguredLabel($saved_values['hostnames'][$index] ?? [])
           ],
           $t_opts
         ),
@@ -122,7 +140,7 @@ class ProxyUrlConfigurationForm extends ConfigFormBase {
         '#type' => 'textfield',
         '#title' => $this->t('Regular expression'),
         '#size' => 30,
-        '#default_value' => $saved_values[$index]['expression']['regex'] ?? '',
+        '#default_value' => $saved_values['hostnames'][$index]['expression']['regex'] ?? '',
         '#description' => $this->t(
           'Use regular expression to substitut parts of the url, e.g. "<em>%regex</em>".',
           ['%regex' => '/bib\w{5,6}/'],
@@ -134,22 +152,22 @@ class ProxyUrlConfigurationForm extends ConfigFormBase {
         '#type' => 'textfield',
         '#title' => $this->t('Replacement'),
         '#size' => 30,
-        '#default_value' => $saved_values[$index]['expression']['replacement'] ?? '',
-        '#description' => $this->t('The replacement value for the regular expression.'),
+        '#default_value' => $saved_values['hostnames'][$index]['expression']['replacement'] ?? '',
+        '#description' => $this->t('The replacement value for the regular expression.', [], $t_opts),
       ];
 
       $form['hostnames'][$index]['disable_prefix'] = [
         '#type' => 'checkbox',
-        '#title' => $this->t('Do not use proxy prefix for this hostname'),
-        '#default_value' => isset($saved_values[$index]['disable_prefix'])
-          ? $saved_values[$index]['disable_prefix']
+        '#title' => $this->t('Do not use proxy prefix for this hostname', [], $t_opts),
+        '#default_value' => isset($saved_values['hostnames'][$index]['disable_prefix'])
+          ? $saved_values['hostnames'][$index]['disable_prefix']
           : FALSE,
       ];
 
       $form['hostnames'][$index]['remove_this'] = [
         '#name' => $index,
         '#type' => 'submit',
-        '#value' => $this->t('Remove this'),
+        '#value' => $this->t('Remove this', [], $t_opts),
         '#submit' => ['::removeOne'],
         '#limit_validation_errors' => [],
         '#ajax' => [
@@ -164,7 +182,7 @@ class ProxyUrlConfigurationForm extends ConfigFormBase {
     ];
     $form['hostnames']['actions']['add'] = [
       '#type' => 'submit',
-      '#value' => $this->t('Add one more'),
+      '#value' => $this->t('Add one more', [], $t_opts),
       '#submit' => ['::addOne'],
       '#limit_validation_errors' => [],
       '#ajax' => [
@@ -175,7 +193,7 @@ class ProxyUrlConfigurationForm extends ConfigFormBase {
 
     $form['actions']['submit'] = [
       '#type' => 'submit',
-      '#value' => $this->t('Submit'),
+      '#value' => $this->t('Submit', [], $t_opts),
     ];
 
     return $form;
@@ -211,16 +229,17 @@ class ProxyUrlConfigurationForm extends ConfigFormBase {
   }
 
   public function submitForm(array &$form, FormStateInterface $form_state): void {
-    $values = array_reduce($form_state->getValue(['hostnames']), function($carry, $item) {
+    $values = [];
+    if ($form_state->getValue('prefix')) {
+      $values['prefix'] = $form_state->getValue('prefix');
+    }
+    $values['hostnames'] = array_reduce($form_state->getValue(['hostnames']), function($carry, $item) {
       if(!empty($item['hostname'])) {
         unset($item['remove_this']);
         $carry[] = $item;
       }
       return $carry;
     }, []);
-
-    $output = json_encode($values, JSON_PRETTY_PRINT);
-    $this->messenger()->addMessage($output);
 
     $this->config('dpl_url_proxy.settings')
       ->set('values', $values)
