@@ -4,7 +4,7 @@ dpl_url_proxy.configure:
     _form: '\Drupal\dpl_url_proxy\Form\ProxyUrlConfigurationForm'
     _title: 'Configure proxy urls'
   requirements:
-    _permission: 'access administration pages'
+    _permission: 'administer library agency configuration'
   options:
     _admin_route: TRUE
 
@@ -13,7 +13,8 @@ dpl_url_proxy.generate_url:
   defaults:
     _controller: '\Drupal\dpl_url_proxy\Controller\DplUrlProxyController::generateUrl'
     _title: 'Generate proxy url'
+  methods:  [POST]
   requirements:
     _permission: 'access content'
   options:
-    no_cache: 'TRUE'
+    no_cache: TRUE

@@ -2,6 +2,7 @@
 
 namespace Drupal\dpl_url_proxy\Controller;
 
+use Safe\Exceptions\JsonException;
 use Drupal\Core\Controller\ControllerBase;
 use Drupal\dpl_url_proxy\DplUrlProxyInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
@@ -9,9 +10,11 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\Exception\HttpException;
 use function Safe\json_decode;
+use function Safe\parse_url;
+use function Safe\preg_replace;
 
 /**
- * Class DplUrlProxyController.
+ * The controller for handling url proxy endpoint(s).
  */
 class DplUrlProxyController extends ControllerBase {
 
@@ -33,43 +36,44 @@ class DplUrlProxyController extends ControllerBase {
   }
 
   /**
-   *
    * Get the url proxy configuration.
    *
    * @return mixed[]
-   *  The url proxy configuration.
+   *   The url proxy configuration.
    */
   protected function getConfiguration(): array {
     // We need to provide a default value here if the configuration is not
     // available. But Phpstan does not get it :).
+    // phpcs:ignore
     /** @phpstan-ignore-next-line */
     return $this->configManager
-    ->getConfigFactory()
-    ->get(DplUrlProxyInterface::CONFIG_NAME)
-    ->get('values', [
-      'prefix' => '',
-      'hostnames' => [],
-    ]);
+      ->getConfigFactory()
+      ->get(DplUrlProxyInterface::CONFIG_NAME)
+      ->get('values', [
+        'prefix' => '',
+        'hostnames' => [],
+      ]);
   }
 
-/**
- * Generate url endpoint.
- *
- * @param \Symfony\Component\HttpFoundation\Request $request
- *  The request object.
- *
- * @return JsonResponse
- *   Either the generated url or the url that was given.
- */
+  /**
+   * Generate url endpoint.
+   *
+   * @param \Symfony\Component\HttpFoundation\Request $request
+   *   The request object.
+   *
+   * @return \Symfony\Component\HttpFoundation\JsonResponse
+   *   Either the generated url or the url that was given.
+   */
   public function generateUrl(Request $request): JsonResponse {
     $conf = $this->getConfiguration();
+    $url = '';
 
     try {
-      if($post_data = json_decode((string) $request->getContent(), TRUE)) {
+      if ($post_data = json_decode((string) $request->getContent(), TRUE)) {
         $url = $post_data['url'] ?? NULL;
       }
     }
-    catch (\Safe\Exceptions\JsonException $e) {
+    catch (JsonException $e) {
       throw new HttpException(400, 'Post body could not be decoded');
     }
 
@@ -77,7 +81,7 @@ class DplUrlProxyController extends ControllerBase {
       throw new HttpException(400, 'Provided url is not in the right format');
     }
 
-    if (!$prefix = $conf['prefix'] ?? null) {
+    if (!$prefix = $conf['prefix'] ?? NULL) {
       throw new HttpException(500, 'Could not generate url. Insufficient configuration');
     }
 
@@ -89,7 +93,7 @@ class DplUrlProxyController extends ControllerBase {
             (isset($config['expression']['regex']) && !empty($config['expression']['regex']))
             && (isset($config['expression']['replacement']) && !empty($config['expression']['replacement']))
           ) {
-            $url = preg_replace(
+          $url = preg_replace(
               $config['expression']['regex'],
               $config['expression']['replacement'],
               $url

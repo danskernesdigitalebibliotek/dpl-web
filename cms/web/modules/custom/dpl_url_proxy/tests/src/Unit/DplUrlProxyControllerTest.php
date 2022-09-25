@@ -2,20 +2,18 @@
 
 namespace Drupal\Tests\dpl_library_token\Unit;
 
-use phpmock\MockBuilder;
 use Prophecy\Argument;
-use Psr\Log\LoggerInterface;
 use Drupal\Tests\UnitTestCase;
 use Drupal\Core\Config\ConfigFactoryInterface;
 use Drupal\Core\Config\ConfigManagerInterface;
 use Drupal\Core\Config\ImmutableConfig;
 use Drupal\Core\DependencyInjection\ContainerBuilder;
-use Drupal\Core\Logger\LoggerChannelFactoryInterface;
 use Drupal\Core\StringTranslation\TranslationManager;
 use Drupal\dpl_url_proxy\Controller\DplUrlProxyController;
 use Drupal\dpl_url_proxy\DplUrlProxyInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\Exception\HttpException;
+use function Safe\json_encode;
 
 /**
  * Unit tests for the Library Token Handler.
@@ -26,11 +24,6 @@ class DplUrlProxyControllerTest extends UnitTestCase {
    * {@inheritdoc}
    */
   protected function setUp(): void {
-    // $logger = $this->prophesize(LoggerInterface::class);
-    // $logger->error(Argument::any(), Argument::any())->shouldNotBeCalled();
-    // $logger_factory = $this->prophesize(LoggerChannelFactoryInterface::class);
-    // $logger_factory->get(Argument::any())->willReturn($logger->reveal());
-
     $config = $this->prophesize(ImmutableConfig::class);
     $config->get('values', [
       'prefix' => '',
@@ -47,8 +40,8 @@ class DplUrlProxyControllerTest extends UnitTestCase {
     $config_manager->getConfigFactory()->willReturn($config_factory->reveal());
 
     $string_translation = $this->prophesize(TranslationManager::class);
+
     $container = new ContainerBuilder();
-    // $container->set('logger.factory', $logger_factory->reveal());
     $container->set('config.manager', $config_manager->reveal());
     $container->set('string_translation', $string_translation->reveal());
 
@@ -56,7 +49,7 @@ class DplUrlProxyControllerTest extends UnitTestCase {
   }
 
   /**
-   *
+   * Exception should be thrown if post data is missing.
    */
   public function testThatExceptionIsThrownIfPostDataIsMissing(): void {
     $container = \Drupal::getContainer();
@@ -70,7 +63,7 @@ class DplUrlProxyControllerTest extends UnitTestCase {
   }
 
   /**
-   *
+   * Exception should be thrown if post data do not contain an url.
    */
   public function testThatExceptionIsThrownIfPostDataIsNotContainingUrlProperty(): void {
     $container = \Drupal::getContainer();
@@ -84,7 +77,7 @@ class DplUrlProxyControllerTest extends UnitTestCase {
   }
 
   /**
-   *
+   * Exception should be thrown if url is not valid.
    */
   public function testThatExceptionIsThrownIfPostDataIsContainingMalignUrl(): void {
     $container = \Drupal::getContainer();
@@ -101,25 +94,38 @@ class DplUrlProxyControllerTest extends UnitTestCase {
     $controller->generateUrl($request);
   }
 
+  /**
+   * Exception should be thrown if the required prefix has not been configured.
+   */
   public function testThatExceptionIsThrownIfPrefixIsNotSet(): void {
     $container = \Drupal::getContainer();
     $controller = DplUrlProxyController::create($container);
 
     $this->expectException(HttpException::class);
-    $this->expectExceptionMessage('Could not resolve url. Insufficient configuration');
+    $this->expectExceptionMessage('Could not generate url. Insufficient configuration');
 
-    $request = Request::create(
-      '/dpl-url-proxy/generate-url',
-      'POST', [], [], [], [], json_encode(['url' => 'http://foo.bar'])
-    );
-
-    $controller->generateUrl($request);
+    if ($request_body = json_encode(['url' => 'http://foo.bar'])) {
+      $request = Request::create(
+        '/dpl-url-proxy/generate-url',
+        'POST', [], [], [], [], $request_body
+      );
+      $controller->generateUrl($request);
+    }
   }
 
   /**
+   * Data provider for testThatUrlIsGenerated.
+   *
+   * @param mixed[] $input
+   *   The input from the request body.
+   * @param mixed[] $expected_output
+   *   The expected output from the endpoint.
+   * @param mixed[] $conf
+   *   The proxy url configuration to use.
+   *
    * @dataProvider testThatEndpointChangesUrlProvider
    */
-  public function testThatEndpointChangesUrl($input, $expected_output, $conf): void {
+  public function testThatEndpointChangesUrl(array $input, array $expected_output, array $conf): void {
     $config = $this->prophesize(ImmutableConfig::class);
     $config->get(Argument::any(), Argument::any())->willReturn($conf);
 
@@ -147,9 +153,12 @@ class DplUrlProxyControllerTest extends UnitTestCase {
   }
 
   /**
+   * Data provider for testThatEndpointChangesUrl.
    *
+   * @return mixed[]
+   *   The test data.
    */
-  public function testThatEndpointChangesUrlProvider() {
+  public function testThatEndpointChangesUrlProvider(): array {
     $conf = [
       'prefix' => 'http://bib101.bibbaser.dk/login?url=',
       'hostnames' => [
@@ -178,12 +187,12 @@ class DplUrlProxyControllerTest extends UnitTestCase {
       [
         ['url' => 'http://john.com'],
         ['data' => 'http://bib101.bibbaser.dk/login?url=http://jane.com'],
-        $conf
+        $conf,
       ],
       [
         ['url' => 'http://sally.com?foo=palle'],
         ['data' => 'http://sally.com?foo=polle'],
-        $conf
+        $conf,
       ],
     ];
   }

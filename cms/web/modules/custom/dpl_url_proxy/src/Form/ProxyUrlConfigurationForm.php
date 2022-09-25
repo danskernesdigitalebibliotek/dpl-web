@@ -7,9 +7,10 @@ use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\Messenger\MessengerTrait;
 use Drupal\Core\StringTranslation\StringTranslationTrait;
 use Drupal\dpl_url_proxy\DplUrlProxyInterface;
+use function Safe\sprintf;
 
 /**
- * Class ProxyUrlConfigurationForm.
+ * The administration form for handling the configuration of the DPL URL Proxy.
  *
  * @package Drupal\dpl_url_proxy\Form
  */
@@ -24,42 +25,36 @@ class ProxyUrlConfigurationForm extends ConfigFormBase {
    */
   protected function getEditableConfigNames() {
     return [
-     self::CONFIG_NAME,
+      self::CONFIG_NAME,
     ];
   }
 
-
   /**
-   *
    * Get the url proxy configuration.
    *
    * @return mixed[]
-   *  The url proxy configuration.
+   *   The url proxy configuration.
    */
   protected function getConfiguration() {
     $config = $this->config(self::CONFIG_NAME);
-    return $config->get('values', [
+    return $config->get('values') ?? [
       'prefix' => '',
       'hostnames' => [],
-    ]);
+    ];
   }
-
-  // protected function getFormStateValues (FormStateInterface $form_state) {
-  //   return array_reduce($form_state->getValue(['hostnames']), function(
-  //     $carry, $item
-  //   ) {
-  //     if(!empty($item['name'])) {
-  //       unset($item['remove_this']);
-  //       $carry[] = $item;
-  //     }
-  //     return $carry;
-  //   }, []);
-  // }
 
   /**
    * Create indexes used for the host names add more/delete part.
+   *
+   * @param \Drupal\Core\Form\FormStateInterface $form_state
+   *   Drupal form state.
+   * @param mixed[] $values
+   *   Saved configuration.
+   *
+   * @return arrayint|string
+   *   The indexes.
    */
-  protected function constructHostnameIndexes ($form_state, $values) {
+  protected function constructHostnameIndexes(FormStateInterface $form_state, array $values): array {
     $indexes = $form_state->get('indexes');
 
     if ($indexes !== NULL) {
@@ -76,12 +71,11 @@ class ProxyUrlConfigurationForm extends ConfigFormBase {
   /**
    * Creates a label for an "expression" fieldset if configured.
    *
-   * @param array $element
+   * @param mixed[] $element
    *   Host name element.
-   *
    */
-  protected function regexIsConfiguredLabel($element): string {
-    if(
+  protected function regexIsConfiguredLabel(array $element): string {
+    if (
       empty($element['expression']['regex'])
       && empty($element['expression']['replacement'])
     ) {
@@ -133,7 +127,7 @@ class ProxyUrlConfigurationForm extends ConfigFormBase {
       '#suffix' => '</div>',
     ];
 
-    foreach($indexes as $index) {
+    foreach ($indexes as $index) {
       $form['hostnames'][$index] = [
         '#type' => 'fieldset',
         '#title' => $this->t('Host configuration', [], $t_opts),
@@ -151,7 +145,7 @@ class ProxyUrlConfigurationForm extends ConfigFormBase {
           'Replacement %configured',
           [
             '%configured' =>
-            $this->regexIsConfiguredLabel($saved_values['hostnames'][$index] ?? [])
+            $this->regexIsConfiguredLabel($saved_values['hostnames'][$index] ?? []),
           ],
           $t_opts
         ),
@@ -181,8 +175,8 @@ class ProxyUrlConfigurationForm extends ConfigFormBase {
         '#type' => 'checkbox',
         '#title' => $this->t('Do not use proxy prefix for this hostname', [], $t_opts),
         '#default_value' => isset($saved_values['hostnames'][$index]['disable_prefix'])
-          ? $saved_values['hostnames'][$index]['disable_prefix']
-          : FALSE,
+        ? $saved_values['hostnames'][$index]['disable_prefix']
+        : FALSE,
       ];
 
       $form['hostnames'][$index]['remove_this'] = [
@@ -227,6 +221,17 @@ class ProxyUrlConfigurationForm extends ConfigFormBase {
     return 'form_api_example_ajax_addmore';
   }
 
+  /**
+   * Callback for the "Add one more" button.
+   *
+   * @param mixed[] $form
+   *   Drupal form array.
+   * @param \Drupal\Core\Form\FormStateInterface $form_state
+   *   Drupal form state object.
+   *
+   * @return mixed[]
+   *   THe "hostnames" fieldset.
+   */
   public function addmoreCallback(array &$form, FormStateInterface $form_state): array {
     return $form['hostnames'];
   }
@@ -234,12 +239,10 @@ class ProxyUrlConfigurationForm extends ConfigFormBase {
   /**
    * Adds one more host name element.
    *
-   * @param array $form
-   *   Drupal form array
+   * @param mixed[] $form
+   *   Drupal form array.
    * @param \Drupal\Core\Form\FormStateInterface $form_state
-   *  Drupal form state
-   *
-   * @return void
+   *   Drupal form state.
    */
   public function addOne(array &$form, FormStateInterface $form_state): void {
     $indexes = $form_state->get('indexes');
@@ -252,20 +255,20 @@ class ProxyUrlConfigurationForm extends ConfigFormBase {
   /**
    * Removed one host name element.
    *
-   * @param array $form
-   *   Drupal form array
+   * @param mixed[] $form
+   *   Drupal form array.
    * @param \Drupal\Core\Form\FormStateInterface $form_state
-   *  Drupal form state
-   *
-   * @return void
+   *   Drupal form state.
    */
   public function removeOne(array &$form, FormStateInterface $form_state): void {
-    $remove_value = $form_state->getTriggeringElement()['#name'];
-    $key = array_search($remove_value, $form_state->get('indexes'));
-    if ($key !== false) {
-      unset($form_state->get('indexes')[$key]);
+    if ($triggerring_element = $form_state->getTriggeringElement()) {
+      $remove_value = $triggerring_element['#name'];
+      $key = array_search($remove_value, $form_state->get('indexes'));
+      if ($key !== FALSE) {
+        unset($form_state->get('indexes')[$key]);
+      }
+      $form_state->setRebuild();
     }
-    $form_state->setRebuild();
   }
 
   /**
@@ -276,13 +279,14 @@ class ProxyUrlConfigurationForm extends ConfigFormBase {
     if ($form_state->getValue('prefix')) {
       $values['prefix'] = $form_state->getValue('prefix');
     }
-    $values['hostnames'] = array_reduce($form_state->getValue(['hostnames']), function($carry, $item) {
-      if(!empty($item['hostname'])) {
-        unset($item['remove_this']);
-        $carry[] = $item;
-      }
-      return $carry;
-    }, []);
+    $values['hostnames'] = array_reduce($form_state->getValue(['hostnames']),
+      function ($carry, $item) {
+        if (!empty($item['hostname'])) {
+          unset($item['remove_this']);
+          $carry[] = $item;
+        }
+        return $carry;
+      }, []);
 
     $this->config('dpl_url_proxy.settings')
       ->set('values', $values)
