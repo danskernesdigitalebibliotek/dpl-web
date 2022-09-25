@@ -4,11 +4,11 @@ namespace Drupal\dpl_url_proxy\Controller;
 
 use Drupal\Core\Controller\ControllerBase;
 use Drupal\dpl_url_proxy\DplUrlProxyInterface;
-use Drupal\dpl_url_proxy\Form\ProxyUrlConfigurationForm;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\Exception\HttpException;
+use function Safe\json_decode;
 
 /**
  * Class DplUrlProxyController.
@@ -25,16 +25,24 @@ class DplUrlProxyController extends ControllerBase {
   /**
    * {@inheritdoc}
    */
-  public static function create(ContainerInterface $container) {
+  public static function create(ContainerInterface $container): DplUrlProxyController {
     $instance = parent::create($container);
     $instance->configManager = $container->get('config.manager');
-    // $logger_factory = $container->get('logger.factory');
-    // $instance->loggger = $logger_factory->get('dpl_url_proxy');
 
     return $instance;
   }
 
-  protected function getSavedValues() {
+  /**
+   *
+   * Get the url proxy configuration.
+   *
+   * @return mixed[]
+   *  The url proxy configuration.
+   */
+  protected function getConfiguration(): array {
+    // We need to provide a default value here if the configuration is not
+    // available. But Phpstan does not get it :).
+    /** @phpstan-ignore-next-line */
     return $this->configManager
     ->getConfigFactory()
     ->get(DplUrlProxyInterface::CONFIG_NAME)
@@ -43,29 +51,38 @@ class DplUrlProxyController extends ControllerBase {
       'hostnames' => [],
     ]);
   }
-  /**
-   * John.
-   *
-   * @return string
-   *   Return Hello string.
-   */
-  public function generateUrl(Request $request) {
-    $t_opts = DplUrlProxyInterface::TRANSLATION_OPTIONS;
-    $saved_values = $this->getSavedValues();
-    $post_data = json_decode($request->getContent(), TRUE);
-    $url = $post_data['url'] ?? NULL;
 
-    if (!$host = parse_url($post_data['url'], PHP_URL_HOST)) {
-      throw new HttpException(400, $this->t('Provided url is not in the right format', [], $t_opts));
+/**
+ * Generate url endpoint.
+ *
+ * @param \Symfony\Component\HttpFoundation\Request $request
+ *  The request object.
+ *
+ * @return JsonResponse
+ *   Either the generated url or the url that was given.
+ */
+  public function generateUrl(Request $request): JsonResponse {
+    $conf = $this->getConfiguration();
+
+    try {
+      if($post_data = json_decode((string) $request->getContent(), TRUE)) {
+        $url = $post_data['url'] ?? NULL;
+      }
+    }
+    catch (\Safe\Exceptions\JsonException $e) {
+      throw new HttpException(400, 'Post body could not be decoded');
     }
 
-    if (!$prefix = $saved_values['prefix'] ?? null) {
-      $this->getLogger('dpl_url_proxy')->error('Prefix is not set');
-      throw new HttpException(500, $this->t('Could not resolve url. Insufficient configuration', [], $t_opts));
+    if (!$host = parse_url($url, PHP_URL_HOST)) {
+      throw new HttpException(400, 'Provided url is not in the right format');
+    }
+
+    if (!$prefix = $conf['prefix'] ?? null) {
+      throw new HttpException(500, 'Could not generate url. Insufficient configuration');
     }
 
     // Search host names.
-    foreach ($saved_values['hostnames'] as $config) {
+    foreach ($conf['hostnames'] as $config) {
       if ($host == $config['hostname']) {
         // Rewrite/convert url using regex.
         if (

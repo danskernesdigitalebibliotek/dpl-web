@@ -28,7 +28,15 @@ class ProxyUrlConfigurationForm extends ConfigFormBase {
     ];
   }
 
-  protected function getSavedValues() {
+
+  /**
+   *
+   * Get the url proxy configuration.
+   *
+   * @return mixed[]
+   *  The url proxy configuration.
+   */
+  protected function getConfiguration() {
     $config = $this->config(self::CONFIG_NAME);
     return $config->get('values', [
       'prefix' => '',
@@ -36,18 +44,21 @@ class ProxyUrlConfigurationForm extends ConfigFormBase {
     ]);
   }
 
-  protected function getFormStateValues (FormStateInterface $form_state) {
-    return array_reduce($form_state->getValue(['hostnames']), function(
-      $carry, $item
-    ) {
-      if(!empty($item['name'])) {
-        unset($item['remove_this']);
-        $carry[] = $item;
-      }
-      return $carry;
-    }, []);
-  }
+  // protected function getFormStateValues (FormStateInterface $form_state) {
+  //   return array_reduce($form_state->getValue(['hostnames']), function(
+  //     $carry, $item
+  //   ) {
+  //     if(!empty($item['name'])) {
+  //       unset($item['remove_this']);
+  //       $carry[] = $item;
+  //     }
+  //     return $carry;
+  //   }, []);
+  // }
 
+  /**
+   * Create indexes used for the host names add more/delete part.
+   */
   protected function constructHostnameIndexes ($form_state, $values) {
     $indexes = $form_state->get('indexes');
 
@@ -62,10 +73,17 @@ class ProxyUrlConfigurationForm extends ConfigFormBase {
     return [0];
   }
 
-  protected function regexIsConfiguredLabel($values): string {
+  /**
+   * Creates a label for an "expression" fieldset if configured.
+   *
+   * @param array $element
+   *   Host name element.
+   *
+   */
+  protected function regexIsConfiguredLabel($element): string {
     if(
-      empty($values['expression']['regex'])
-      && empty($values['expression']['replacement'])
+      empty($element['expression']['regex'])
+      && empty($element['expression']['replacement'])
     ) {
       return "";
     }
@@ -76,11 +94,14 @@ class ProxyUrlConfigurationForm extends ConfigFormBase {
     );
   }
 
+  /**
+   * {@inheritdoc}
+   */
   public function buildForm(array $form, FormStateInterface $form_state): array {
     $t_opts = DplUrlProxyInterface::TRANSLATION_OPTIONS;
-    $indexes = $this->constructHostnameIndexes($form_state, $this->getSavedValues());
+    $indexes = $this->constructHostnameIndexes($form_state, $this->getConfiguration());
     $form_state->set('indexes', $indexes);
-    $saved_values = $this->getSavedValues();
+    $saved_values = $this->getConfiguration();
 
     $form['#tree'] = TRUE;
     $form['description'] = [
@@ -210,6 +231,16 @@ class ProxyUrlConfigurationForm extends ConfigFormBase {
     return $form['hostnames'];
   }
 
+  /**
+   * Adds one more host name element.
+   *
+   * @param array $form
+   *   Drupal form array
+   * @param \Drupal\Core\Form\FormStateInterface $form_state
+   *  Drupal form state
+   *
+   * @return void
+   */
   public function addOne(array &$form, FormStateInterface $form_state): void {
     $indexes = $form_state->get('indexes');
     $last = end($indexes);
@@ -218,7 +249,16 @@ class ProxyUrlConfigurationForm extends ConfigFormBase {
     $form_state->setRebuild();
   }
 
-
+  /**
+   * Removed one host name element.
+   *
+   * @param array $form
+   *   Drupal form array
+   * @param \Drupal\Core\Form\FormStateInterface $form_state
+   *  Drupal form state
+   *
+   * @return void
+   */
   public function removeOne(array &$form, FormStateInterface $form_state): void {
     $remove_value = $form_state->getTriggeringElement()['#name'];
     $key = array_search($remove_value, $form_state->get('indexes'));
@@ -228,6 +268,9 @@ class ProxyUrlConfigurationForm extends ConfigFormBase {
     $form_state->setRebuild();
   }
 
+  /**
+   * {@inheritdoc}
+   */
   public function submitForm(array &$form, FormStateInterface $form_state): void {
     $values = [];
     if ($form_state->getValue('prefix')) {
