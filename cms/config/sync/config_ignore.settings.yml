@@ -10,6 +10,7 @@ ignored_config_entities:
   - ~dblog.settings
   - '~dpl_library_agency.general_settings:reservation_sms_notifications_disabled'
   - '~dpl_mapp.settings:domain'
+  - '~dpl_url_proxy.settings'
   - ~field.settings
   - ~field.storage.node.body
   - ~file.settings
