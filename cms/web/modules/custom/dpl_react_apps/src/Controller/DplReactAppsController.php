@@ -94,6 +94,7 @@ class DplReactAppsController extends ControllerBase {
         'search-url' => self::searchResultUrl(),
         'material-url' => self::materialUrl(),
         'auth-url' => self::authUrl(),
+        'url-proxy-url' => self::urlProxyUrl(),
         'material-header-author-by-text' => $this->t('By', [], $c),
         'periodikum-select-year-text' => $this->t('Year', [], $c),
         'periodikum-select-week-text' => $this->t('Week', [], $c),
@@ -159,6 +160,15 @@ class DplReactAppsController extends ControllerBase {
   public static function authUrl(): string {
     return self::ensureUrlIsString(
       Url::fromRoute('dpl_login.login')->toString()
+    );
+  }
+
+  /**
+   * Builds an url for the react apps to for proxy urls.
+   */
+  public static function urlProxyUrl(): string {
+    return self::ensureUrlIsString(
+      Url::fromRoute('dpl_url_proxy.generate_url')->toString()
     );
   }
 

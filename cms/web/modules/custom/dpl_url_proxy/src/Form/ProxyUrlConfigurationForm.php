@@ -43,6 +43,9 @@ class ProxyUrlConfigurationForm extends ConfigFormBase {
     ];
   }
 
+  // Phpstan and phpcs is conflicting about the return type.
+  // phpcs:disable Drupal.Commenting.FunctionComment.InvalidReturn
+
   /**
    * Create indexes used for the host names add more/delete part.
    *
@@ -51,7 +54,7 @@ class ProxyUrlConfigurationForm extends ConfigFormBase {
    * @param mixed[] $values
    *   Saved configuration.
    *
-   * @return arrayint|string
+   * @return array<int|string>
    *   The indexes.
    */
   protected function constructHostnameIndexes(FormStateInterface $form_state, array $values): array {
@@ -67,6 +70,8 @@ class ProxyUrlConfigurationForm extends ConfigFormBase {
 
     return [0];
   }
+
+  // phpcs:enable
 
   /**
    * Creates a label for an "expression" fieldset if configured.
