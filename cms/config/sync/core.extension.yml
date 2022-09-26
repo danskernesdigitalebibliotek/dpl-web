@@ -9,6 +9,7 @@ module:
   dpl_mapp: 0
   dpl_react: 0
   dpl_react_apps: 0
+  dpl_url_proxy: 0
   dynamic_page_cache: 0
   field: 0
   file: 0
