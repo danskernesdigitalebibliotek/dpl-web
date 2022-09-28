@@ -4,7 +4,7 @@ dpl_url_proxy.configure:
     _form: '\Drupal\dpl_url_proxy\Form\ProxyUrlConfigurationForm'
     _title: 'Configure proxy urls'
   requirements:
-    _permission: 'administer library agency configuration'
+    _permission: 'administer url proxy configuration'
   options:
     _admin_route: TRUE
 
