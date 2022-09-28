@@ -4,14 +4,12 @@ namespace Drupal\dpl_url_proxy\Controller;
 
 use Drupal\Core\Cache\CacheableJsonResponse;
 use Drupal\Core\Cache\CacheableMetadata;
-use Safe\Exceptions\JsonException;
 use Drupal\Core\Controller\ControllerBase;
 use Drupal\dpl_url_proxy\DplUrlProxyInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\Exception\HttpException;
-use function Safe\json_decode;
 use function Safe\parse_url;
 use function Safe\preg_replace;
 
@@ -107,8 +105,18 @@ class DplUrlProxyController extends ControllerBase {
       }
     }
 
-    $data = ['data' => ['url' => $url]];
-    $response = new CacheableJsonResponse($data);
+    $cacheTags = $this->configManager
+      ->getConfigFactory()
+      ->get(DplUrlProxyInterface::CONFIG_NAME)
+      ->getCacheTags();
+
+    $data = [
+      'data' => ['url' => $url],
+      '#cache' => [
+        'tags' => $cacheTags,
+      ],
+    ];
+    $response = new CacheableJsonResponse(['data' => $data['data']]);
     $response->addCacheableDependency(
       CacheableMetadata::createFromRenderArray($data)
     );

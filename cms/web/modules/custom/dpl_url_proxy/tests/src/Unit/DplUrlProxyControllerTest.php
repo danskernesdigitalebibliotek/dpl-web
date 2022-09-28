@@ -105,6 +105,7 @@ class DplUrlProxyControllerTest extends UnitTestCase {
    */
   public function testThatEndpointChangesUrl(array $input, array $expected_output, array $conf): void {
     $config = $this->prophesize(ImmutableConfig::class);
+    $config->getCacheTags()->willReturn([]);
     $config->get(Argument::any(), Argument::any())->willReturn($conf);
 
     $config_factory = $this->prophesize(ConfigFactoryInterface::class);
