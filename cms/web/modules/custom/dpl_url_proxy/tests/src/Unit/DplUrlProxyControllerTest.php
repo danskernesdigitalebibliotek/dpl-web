@@ -92,7 +92,7 @@ class DplUrlProxyControllerTest extends UnitTestCase {
   }
 
   /**
-   * Data provider for testThatUrlIsGenerated.
+   * Test that the url is generated correctly.
    *
    * @param mixed[] $input
    *   The input from the request body.

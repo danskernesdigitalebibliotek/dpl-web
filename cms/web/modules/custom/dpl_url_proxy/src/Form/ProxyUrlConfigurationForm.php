@@ -18,14 +18,12 @@ class ProxyUrlConfigurationForm extends ConfigFormBase {
   use StringTranslationTrait;
   use MessengerTrait;
 
-  public const CONFIG_NAME = 'dpl_url_proxy.settings';
-
   /**
    * {@inheritdoc}
    */
   protected function getEditableConfigNames() {
     return [
-      self::CONFIG_NAME,
+      DplUrlProxyInterface::CONFIG_NAME,
     ];
   }
 
@@ -36,7 +34,7 @@ class ProxyUrlConfigurationForm extends ConfigFormBase {
    *   The url proxy configuration.
    */
   protected function getConfiguration() {
-    $config = $this->config(self::CONFIG_NAME);
+    $config = $this->config(DplUrlProxyInterface::CONFIG_NAME);
     return $config->get('values') ?? [
       'prefix' => '',
       'hostnames' => [],
@@ -223,7 +221,7 @@ class ProxyUrlConfigurationForm extends ConfigFormBase {
    * {@inheritdoc}
    */
   public function getFormId(): string {
-    return 'form_api_example_ajax_addmore';
+    return 'proxy-url-configuration';
   }
 
   /**

@@ -9,7 +9,7 @@ interface DplUrlProxyInterface {
 
   const CONFIG_NAME = 'dpl_url_proxy.settings';
   const TRANSLATION_OPTIONS = [
-    'context' => 'dpl_url_proxy',
+    'context' => 'Url Proxy',
   ];
 
 }
