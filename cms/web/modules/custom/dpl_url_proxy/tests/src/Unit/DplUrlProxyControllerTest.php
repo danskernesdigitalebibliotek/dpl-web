@@ -25,10 +25,7 @@ class DplUrlProxyControllerTest extends UnitTestCase {
    */
   protected function setUp(): void {
     $config = $this->prophesize(ImmutableConfig::class);
-    $config->get('values', [
-      'prefix' => '',
-      'hostnames' => [],
-    ])->willReturn([
+    $config->get('values')->willReturn([
       'prefix' => '',
       'hostnames' => [],
     ]);
@@ -49,30 +46,16 @@ class DplUrlProxyControllerTest extends UnitTestCase {
   }
 
   /**
-   * Exception should be thrown if post data is missing.
+   * Exception should be thrown if the url does not contain an url.
    */
-  public function testThatExceptionIsThrownIfPostDataIsMissing(): void {
+  public function testThatExceptionIsThrownIfUrlParamMissing(): void {
     $container = \Drupal::getContainer();
     $controller = DplUrlProxyController::create($container);
 
     $this->expectException(HttpException::class);
-    $this->expectExceptionMessage('Post body could not be decoded');
+    $this->expectExceptionMessage('Url parameter is missing');
 
     $request = new Request();
-    $controller->generateUrl($request);
-  }
-
-  /**
-   * Exception should be thrown if post data do not contain an url.
-   */
-  public function testThatExceptionIsThrownIfPostDataIsNotContainingUrlProperty(): void {
-    $container = \Drupal::getContainer();
-    $controller = DplUrlProxyController::create($container);
-
-    $this->expectException(HttpException::class);
-    $this->expectExceptionMessage('Post body could not be decoded');
-
-    $request = new Request([], ['foo' => 'bar']);
     $controller->generateUrl($request);
   }
 
@@ -86,11 +69,7 @@ class DplUrlProxyControllerTest extends UnitTestCase {
     $this->expectException(HttpException::class);
     $this->expectExceptionMessage('Provided url is not in the right format');
 
-    $request = Request::create(
-      '/dpl-url-proxy/generate-url',
-      'POST', [], [], [], [], json_encode(['url' => 'foo'])
-    );
-
+    $request = Request::create('/dpl-url-proxy/generate-url', 'GET', ['url' => 'foo']);
     $controller->generateUrl($request);
   }
 
@@ -104,13 +83,12 @@ class DplUrlProxyControllerTest extends UnitTestCase {
     $this->expectException(HttpException::class);
     $this->expectExceptionMessage('Could not generate url. Insufficient configuration');
 
-    if ($request_body = json_encode(['url' => 'http://foo.bar'])) {
-      $request = Request::create(
-        '/dpl-url-proxy/generate-url',
-        'POST', [], [], [], [], $request_body
-      );
-      $controller->generateUrl($request);
-    }
+    $request = Request::create(
+      '/dpl-url-proxy/generate-url',
+      'GET',
+      ['url' => 'http://foo.bar']
+    );
+    $controller->generateUrl($request);
   }
 
   /**
@@ -139,10 +117,7 @@ class DplUrlProxyControllerTest extends UnitTestCase {
     $container->set('config.manager', $config_manager->reveal());
     $controller = DplUrlProxyController::create($container);
 
-    $request = Request::create(
-      '/dpl-url-proxy/generate-url',
-      'POST', [], [], [], [], json_encode($input)
-    );
+    $request = Request::create('/dpl-url-proxy/generate-url', 'GET', $input);
 
     $response = $controller->generateUrl($request);
 
@@ -186,12 +161,12 @@ class DplUrlProxyControllerTest extends UnitTestCase {
     return [
       [
         ['url' => 'http://john.com'],
-        ['data' => 'http://bib101.bibbaser.dk/login?url=http://jane.com'],
+        ['data' => ['url' => 'http://bib101.bibbaser.dk/login?url=http://jane.com']],
         $conf,
       ],
       [
         ['url' => 'http://sally.com?foo=palle'],
-        ['data' => 'http://sally.com?foo=polle'],
+        ['data' => ['url' => 'http://sally.com?foo=polle']],
         $conf,
       ],
     ];

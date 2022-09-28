@@ -2,6 +2,8 @@
 
 namespace Drupal\dpl_url_proxy\Controller;
 
+use Drupal\Core\Cache\CacheableJsonResponse;
+use Drupal\Core\Cache\CacheableMetadata;
 use Safe\Exceptions\JsonException;
 use Drupal\Core\Controller\ControllerBase;
 use Drupal\dpl_url_proxy\DplUrlProxyInterface;
@@ -64,15 +66,10 @@ class DplUrlProxyController extends ControllerBase {
    */
   public function generateUrl(Request $request): JsonResponse {
     $conf = $this->getConfiguration();
-    $url = '';
+    $url = $request->get('url') ?? '';
 
-    try {
-      if ($post_data = json_decode((string) $request->getContent(), TRUE)) {
-        $url = $post_data['url'] ?? NULL;
-      }
-    }
-    catch (JsonException $e) {
-      throw new HttpException(400, 'Post body could not be decoded');
+    if (!$url) {
+      throw new HttpException(400, 'Url parameter is missing');
     }
 
     if (!$host = parse_url($url, PHP_URL_HOST)) {
@@ -110,7 +107,12 @@ class DplUrlProxyController extends ControllerBase {
       }
     }
 
-    return new JsonResponse(['data' => $url]);
+    $data = ['data' => ['url' => $url]];
+    $response = new CacheableJsonResponse($data);
+    $response->addCacheableDependency(
+      CacheableMetadata::createFromRenderArray($data)
+    );
+    return $response;
   }
 
 }
