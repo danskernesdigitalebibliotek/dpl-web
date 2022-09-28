@@ -43,16 +43,14 @@ class DplUrlProxyController extends ControllerBase {
    */
   protected function getConfiguration(): array {
     // We need to provide a default value here if the configuration is not
-    // available. But Phpstan does not get it :).
-    // phpcs:ignore
-    /** @phpstan-ignore-next-line */
+    // available.
     return $this->configManager
       ->getConfigFactory()
       ->get(DplUrlProxyInterface::CONFIG_NAME)
-      ->get('values', [
+      ->get('values') ?? [
         'prefix' => '',
         'hostnames' => [],
-      ]);
+      ];
   }
 
   /**
