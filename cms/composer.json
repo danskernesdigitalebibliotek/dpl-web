@@ -17,7 +17,7 @@
             "type": "package",
             "package": {
                 "name": "danskernesdigitalebibliotek/dpl-react",
-                "version": "0.3.0-rc6",
+                "version": "0.3.0-rc7",
                 "type": "drupal-library",
                 "dist": {
                     "url": "https://github.com/danskernesdigitalebibliotek/dpl-react/releases/download/release-release%2F4/dist.zip",
@@ -33,7 +33,7 @@
             "package": {
                 "name": "danskernesdigitalebibliotek/dpl-design-system",
                 "type": "drupal-library",
-                "version": "v1.7.0-rc1",
+                "version": "v1.7.0-rc2",
                 "dist": {
                     "url": "https://github.com/danskernesdigitalebibliotek/dpl-design-system/releases/download/release-release%2F4/dist.zip",
                     "type": "zip"
