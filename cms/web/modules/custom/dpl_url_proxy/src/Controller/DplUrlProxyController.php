@@ -114,6 +114,7 @@ class DplUrlProxyController extends ControllerBase {
       'data' => ['url' => $url],
       '#cache' => [
         'tags' => $cacheTags,
+        'contexts' => ['url.query_args'],
       ],
     ];
     $response = new CacheableJsonResponse(['data' => $data['data']]);
