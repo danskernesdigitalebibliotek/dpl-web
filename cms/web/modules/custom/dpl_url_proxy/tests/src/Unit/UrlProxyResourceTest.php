@@ -13,11 +13,9 @@ use Drupal\Core\Logger\LoggerChannelInterface;
 use Drupal\Core\StringTranslation\TranslationManager;
 use Drupal\dpl_url_proxy\DplUrlProxyInterface;
 use Drupal\dpl_url_proxy\Plugin\rest\resource\UrlProxyResource;
-use Psr\Log\LoggerInterface;
 use Symfony\Component\DependencyInjection\ParameterBag\ParameterBag;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\Exception\HttpException;
-use Symfony\Component\Serializer\Serializer;
 
 use function Safe\json_encode;
 

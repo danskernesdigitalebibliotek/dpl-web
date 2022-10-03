@@ -51,6 +51,20 @@ class UrlProxyResource extends ResourceBase {
   }
 
   /**
+   * {@inheritdoc}
+   */
+  protected function getBaseRoute($canonical_path, $method) {
+    $route = parent::getBaseRoute($canonical_path, $method);
+    $route->setOption('parameters', [
+      'url' => [
+        'type' => 'dpl_url_proxy',
+      ],
+    ]);
+
+    return $route;
+  }
+
+  /**
    * Get the url proxy configuration.
    *
    * @return mixed[]
@@ -78,14 +92,11 @@ class UrlProxyResource extends ResourceBase {
    */
   public function get(Request $request) {
     $conf = $this->getConfiguration();
-    $url = $request->get('url') ?? '';
+    $url_param = $request->get('url');
+    $url = "";
 
-    if (!$url) {
+    if (!$url_param) {
       throw new HttpException(400, 'Url parameter is missing');
-    }
-
-    if (!$host = parse_url($url, PHP_URL_HOST)) {
-      throw new HttpException(400, 'Provided url is not in the right format');
     }
 
     if (!$prefix = $conf['prefix'] ?? NULL) {
@@ -94,7 +105,7 @@ class UrlProxyResource extends ResourceBase {
 
     // Search host names.
     foreach ($conf['hostnames'] as $config) {
-      if ($host == $config['hostname']) {
+      if ($url_param->host == $config['hostname']) {
         // Rewrite/convert url using regex.
         if (
           !empty($config['expression']['regex'])
@@ -103,7 +114,7 @@ class UrlProxyResource extends ResourceBase {
           $url = preg_replace(
               $config['expression']['regex'],
               $config['expression']['replacement'],
-              $url
+              $url_param->url
             );
         }
 
@@ -124,13 +135,14 @@ class UrlProxyResource extends ResourceBase {
       ->get(DplUrlProxyInterface::CONFIG_NAME)
       ->getCacheTags();
 
-    return (new ResourceResponse(['data' => ['url' => $url]], 200))
-    ->addCacheableDependency(CacheableMetadata::createFromRenderArray([
-      '#cache' => [
-        'tags' => $cacheTags,
-        'contexts' => ['url.query_args'],
-      ],
-    ]));
+    $response = new ResourceResponse(['data' => ['url' => $url]], 200);
+    return $response
+      ->addCacheableDependency(CacheableMetadata::createFromRenderArray([
+        '#cache' => [
+          'tags' => $cacheTags,
+          'contexts' => ['url.query_args'],
+        ],
+      ]));
   }
 
 }
