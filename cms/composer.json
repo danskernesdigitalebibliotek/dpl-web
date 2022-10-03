@@ -57,11 +57,17 @@
         "drupal/core-recommended": "^9.2.7",
         "drupal/default_content": "^2.0@alpha",
         "drupal/devel": "^4.1",
+        "drupal/jsonapi_resources": "^1.0@beta",
         "drupal/jsonlog": "^3.0",
         "drupal/libraries": "^3.0@beta",
+        "drupal/openapi": "^2.0",
+        "drupal/openapi_jsonapi": "^3.0",
+        "drupal/openapi_rest": "^2.0@RC",
+        "drupal/openapi_ui_redoc": "^1.0@RC",
         "drupal/openid_connect": "^1.1",
         "drupal/purge": "^3.2",
         "drupal/redis": "^1.5",
+        "drupal/restui": "^1.21",
         "drupal/varnish_purge": "^2.1",
         "drush/drush": "10.4.3",
         "thecodingmachine/safe": "^1.3",
@@ -96,7 +102,8 @@
             "dealerdirect/phpcodesniffer-composer-installer": true,
             "drupal/core-project-message": true,
             "phpstan/extension-installer": true,
-            "zaporylie/composer-drupal-optimizations": true
+            "zaporylie/composer-drupal-optimizations": true,
+            "drupal/console-extend-plugin": true
         }
     },
     "autoload-dev": {
