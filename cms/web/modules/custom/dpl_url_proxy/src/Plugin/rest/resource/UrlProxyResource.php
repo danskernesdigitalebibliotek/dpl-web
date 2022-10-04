@@ -140,7 +140,7 @@ class UrlProxyResource extends ResourceBase {
       ->addCacheableDependency(CacheableMetadata::createFromRenderArray([
         '#cache' => [
           'tags' => $cacheTags,
-          'contexts' => ['url.query_args'],
+          'contexts' => ['url'],
         ],
       ]));
   }
