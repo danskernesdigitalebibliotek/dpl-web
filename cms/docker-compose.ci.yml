@@ -53,7 +53,7 @@ services:
     # We use wiremock-gui as it exposes a UI for inspecting the state of
     # WireMock. This can make debugging easier. It can seamlessly be replaced
     # with the official wiremock/wiremock image.
-    image: holomekc/wiremock-gui:2.29.1
+    image: holomekc/wiremock-gui:2.33.2.1
     volumes:
       - 'projectroot:/app'
     ports:
@@ -77,6 +77,6 @@ services:
     depends_on:
       - wiremock
     environment:
-      HTTP_PROXY: http://wiremock
-      HTTPS_PROXY: https://wiremock
+      http_proxy: http://wiremock:80
+      https_proxy: https://wiremock:443
       CI: true
