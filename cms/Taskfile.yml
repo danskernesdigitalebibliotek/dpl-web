@@ -93,7 +93,7 @@ tasks:
   dev:phpunit:
     desc: Run PHPUnit tests with code coverage
     cmds:
-      - docker compose run -e XDEBUG_ENABLE=true cli vendor/bin/phpunit --coverage-text
+      - docker compose run -e XDEBUG_ENABLE=true -e XDEBUG_MODE=coverage,debug cli vendor/bin/phpunit --coverage-text
 
   dev:restore:database:
     desc: 'Restore database from db dump file. Only one sql should be present the "{{ .DIR_RESTORE_DATABASE }}" directory.'
