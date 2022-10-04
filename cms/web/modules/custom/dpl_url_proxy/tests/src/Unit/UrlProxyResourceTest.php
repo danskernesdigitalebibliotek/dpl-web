@@ -79,7 +79,7 @@ class UrlProxyResourceTest extends UnitTestCase {
     $resource = UrlProxyResource::create($container, [], '', []);
 
     $this->expectException(HttpException::class);
-    $this->expectExceptionMessage('Provided url is not in the right format');
+    $this->expectExceptionMessage('Url foo does not contain a host name. Urls to be proxied must contain a host name.');
 
     $request = Request::create('/dpl-url-proxy/generate-url', 'GET', ['url' => 'foo']);
     $resource->get($request);

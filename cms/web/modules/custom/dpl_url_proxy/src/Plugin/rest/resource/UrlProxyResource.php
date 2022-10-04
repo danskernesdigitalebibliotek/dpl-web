@@ -7,9 +7,11 @@ use Drupal\Core\Cache\CacheableMetadata;
 use Drupal\dpl_url_proxy\DplUrlProxyInterface;
 use Drupal\rest\Plugin\ResourceBase;
 use Drupal\rest\ResourceResponse;
+use Safe\Exceptions\UrlException;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\Exception\HttpException;
+use function Safe\parse_url as parse_url;
 
 /**
  * Provides a Demo Resource.
@@ -20,7 +22,19 @@ use Symfony\Component\HttpKernel\Exception\HttpException;
  *   serialization_class = "",
  *
  *   uri_paths = {
- *     "canonical" = "/dpl-url-proxy/{url}",
+ *     "canonical" = "/dpl-url-proxy",
+ *   },
+ *
+ *   route_parameters = {
+ *     "GET" = {
+ *       "url" = {
+ *          "name" = "url",
+ *          "description" = "A url to an online resource which may be accessible through a proxy which requires rewriting of the url",
+ *          "type" = "string",
+ *          "in" = "query",
+ *          "required" = TRUE,
+ *       },
+ *     },
  *   }
  * )
  */
@@ -48,20 +62,6 @@ class UrlProxyResource extends ResourceBase {
 
     $instance->configManager = $container->get('config.manager');
     return $instance;
-  }
-
-  /**
-   * {@inheritdoc}
-   */
-  protected function getBaseRoute($canonical_path, $method) {
-    $route = parent::getBaseRoute($canonical_path, $method);
-    $route->setOption('parameters', [
-      'url' => [
-        'type' => 'dpl_url_proxy',
-      ],
-    ]);
-
-    return $route;
   }
 
   /**
@@ -99,13 +99,24 @@ class UrlProxyResource extends ResourceBase {
       throw new HttpException(400, 'Url parameter is missing');
     }
 
+    try {
+      /* @var string $url_host */
+      $url_host = parse_url($url_param,  PHP_URL_HOST);
+    } catch (UrlException $e) {
+      throw new HttpException(400, "Url $url_param is not a valid url");
+    }
+
+    if (!$url_host) {
+      throw new HttpException(400, "Url $url_param does not contain a host name. Urls to be proxied must contain a host name.");
+    }
+
     if (!$prefix = $conf['prefix'] ?? NULL) {
       throw new HttpException(500, 'Could not generate url. Insufficient configuration');
     }
 
     // Search host names.
     foreach ($conf['hostnames'] as $config) {
-      if ($url_param->host == $config['hostname']) {
+      if ($url_host == $config['hostname']) {
         // Rewrite/convert url using regex.
         if (
           !empty($config['expression']['regex'])
@@ -114,7 +125,7 @@ class UrlProxyResource extends ResourceBase {
           $url = preg_replace(
               $config['expression']['regex'],
               $config['expression']['replacement'],
-              $url_param->url
+              $url_param
             );
         }
 
