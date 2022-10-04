@@ -173,6 +173,27 @@ tasks:
       - docker compose {{ .DOCKER_COMPOSE_FILES_CI }} run node-chrome yarn install --frozen-lockfile
       - docker compose {{ .DOCKER_COMPOSE_FILES_CI }} run cypress
 
+  ci:cypress:local:
+    desc: Run Cypress functional tests locally
+    cmds:
+      - yarn install --frozen-lockfile
+      - http_proxy=http://localhost:{{ .WIREMOCK_HTTP_PORT }} https_proxy=http://localhost:{{ .WIREMOCK_HTTPS_PORT }} npx cypress open
+    env:
+      CYPRESS_BASE_URL: http://localhost:{{ .CYPRESS_BASE_PORT }}
+      CYPRESS_WIREMOCK_URL: http://localhost:{{ .WIREMOCK_HTTP_PORT }}
+      # Enable this to help with debugging with network and proxy requests.
+      # https://docs.cypress.io/guides/references/troubleshooting#Print-DEBUG-logs
+      # DEBUG: cypress:network:*,cypress:server:request,-cypress:network:cors
+    vars:
+      # Using ports exposed on localhost is important. Host names or ports exposed by Dory or other similar projects
+      # introduce multiple layers of proxies and cause problems.
+      CYPRESS_BASE_PORT:
+        sh: docker compose port varnish 8080 | cut -d ":" -f2
+      WIREMOCK_HTTP_PORT:
+        sh: docker compose port wiremock 80 | cut -d ":" -f2
+      WIREMOCK_HTTPS_PORT:
+        sh: docker compose port wiremock 443 | cut -d ":" -f2
+
   ci:pa11y:
     desc: Run Pa11y to test accessiblity
     cmds:

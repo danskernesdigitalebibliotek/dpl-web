@@ -47,6 +47,9 @@ services:
     links:
       - nginx # links varnish to the nginx in this docker-compose project, or it would try to connect to any nginx running in docker
     << : *default-user # uses the defined user from top
+    ports:
+      # Exposing the port to make it accessible locally without proxies.
+      - "8080"
     environment:
       << : *default-environment
       # VARNISH_BYPASS: "true" # Add this to disable caching in varnish.

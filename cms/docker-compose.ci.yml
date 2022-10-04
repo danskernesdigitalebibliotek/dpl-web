@@ -47,6 +47,7 @@ services:
       # frontend assets. This pollutes the WireMock log output.
       NO_PROXY: "varnish,*.gstatic.com,*.googleapis.com"
       CYPRESS_BASE_URL: "http://varnish:8080"
+      CYPRESS_WIREMOCK_URL: "http://wiremock"
 
   wiremock:
     # We use wiremock-gui as it exposes a UI for inspecting the state of
