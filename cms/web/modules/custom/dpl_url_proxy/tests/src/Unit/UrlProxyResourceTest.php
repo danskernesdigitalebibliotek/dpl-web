@@ -173,12 +173,12 @@ class UrlProxyResourceTest extends UnitTestCase {
     return [
       [
         ['url' => 'http://john.com'],
-        ['data' => ['url' => 'http://bib101.bibbaser.dk/login?url=http://jane.com']],
+        ['url' => 'http://bib101.bibbaser.dk/login?url=http://jane.com'],
         $conf,
       ],
       [
         ['url' => 'http://sally.com?foo=palle'],
-        ['data' => ['url' => 'http://sally.com?foo=polle']],
+        ['url' => 'http://sally.com?foo=polle'],
         $conf,
       ],
     ];

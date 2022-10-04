@@ -35,6 +35,27 @@ use function Safe\parse_url as parse_url;
  *          "required" = TRUE,
  *       },
  *     },
+ *   },
+ *
+ *   responses = {
+ *     200 = {
+ *       "description" = "OK",
+ *       "schema" = {
+ *         "type" = "object",
+ *         "properties" = {
+ *           "url" = {
+ *             "type" = "string",
+ *             "description" = "The url with any configured proxies applied",
+ *           },
+ *         },
+ *       },
+ *     },
+ *     400 = {
+ *       "description" = "Invalid url provided",
+ *     },
+ *     500 = {
+ *       "description" = "Internal server error"
+ *     },
  *   }
  * )
  */
@@ -146,7 +167,7 @@ class UrlProxyResource extends ResourceBase {
       ->get(DplUrlProxyInterface::CONFIG_NAME)
       ->getCacheTags();
 
-    $response = new ResourceResponse(['data' => ['url' => $url]], 200);
+    $response = new ResourceResponse(['url' => $url], 200);
     return $response
       ->addCacheableDependency(CacheableMetadata::createFromRenderArray([
         '#cache' => [
