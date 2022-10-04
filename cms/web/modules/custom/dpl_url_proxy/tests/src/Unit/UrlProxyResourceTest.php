@@ -81,7 +81,7 @@ class UrlProxyResourceTest extends UnitTestCase {
     $this->expectException(HttpException::class);
     $this->expectExceptionMessage('Url foo does not contain a host name. Urls to be proxied must contain a host name.');
 
-    $request = Request::create('/dpl-url-proxy/generate-url', 'GET', ['url' => 'foo']);
+    $request = Request::create('/dpl-url-proxy', 'GET', ['url' => 'foo']);
     $resource->get($request);
   }
 
@@ -96,7 +96,7 @@ class UrlProxyResourceTest extends UnitTestCase {
     $this->expectExceptionMessage('Could not generate url. Insufficient configuration');
 
     $request = Request::create(
-      '/dpl-url-proxy/generate-url',
+      '/dpl-url-proxy',
       'GET',
       ['url' => 'http://foo.bar']
     );
