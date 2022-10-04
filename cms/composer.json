@@ -154,6 +154,9 @@
             },
             "drupal/redis": {
                 "3207574: Patch against redis being include too late": "https://www.drupal.org/files/issues/2021-04-07/redis-report_warnings-3207574-2.patch"
+            },
+            "drupal/openapi": {
+                "3313521: OpenAPI security field does not validate": "https://git.drupalcode.org/project/openapi/-/merge_requests/6.patch"
             }
         }
     }
