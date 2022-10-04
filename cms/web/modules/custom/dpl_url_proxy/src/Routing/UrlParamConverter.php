@@ -34,7 +34,7 @@ class UrlParamConverter implements ParamConverterInterface {
   /**
    * {@inheritdoc}
    */
-  public function convert($value, $definition, $name, array $defaults): stdClass {
+  public function convert($value, $definition, $name, array $defaults): \stdClass {
     $url_components = json_decode($value);
     $url = sprintf('%s://%s%s%s%s%s',
       $url_components->scheme,
