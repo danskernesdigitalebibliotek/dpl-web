@@ -149,11 +149,11 @@
                 "2936067: CSS aggregation fails on many variations of @import": "https://git.drupalcode.org/project/drupal/-/commit/5aa154d.patch",
                 "Configure core to not check permissions before accepting an updated module": "patches/disable-core-upload-permission-check.diff"
             },
-            "drupal/redis": {
-                "3207574: Patch against redis being include too late": "https://www.drupal.org/files/issues/2021-04-07/redis-report_warnings-3207574-2.patch"
-            },
             "drupal/jsonlog": {
                 "3251587: Change logging from stdout to stderr": "https://www.drupal.org/files/issues/2021-11-29/jsonlog-change-stdout-to-stderr-3251587-3.patch"
+            },
+            "drupal/redis": {
+                "3207574: Patch against redis being include too late": "https://www.drupal.org/files/issues/2021-04-07/redis-report_warnings-3207574-2.patch"
             }
         }
     }
