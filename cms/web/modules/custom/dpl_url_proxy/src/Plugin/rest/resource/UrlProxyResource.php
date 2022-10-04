@@ -148,6 +148,8 @@ class UrlProxyResource extends ResourceBase {
               $config['expression']['replacement'],
               $url_param
             );
+        } else {
+          $url = $url_param;
         }
 
         // Add prefix, if chosen.
