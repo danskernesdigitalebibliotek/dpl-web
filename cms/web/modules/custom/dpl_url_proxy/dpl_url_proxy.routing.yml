@@ -7,11 +7,3 @@ dpl_url_proxy.configure:
     _permission: 'administer url proxy configuration'
   options:
     _admin_route: TRUE
-
-dpl_url_proxy.generate_url:
-  path: '/dpl-url-proxy/generate-url'
-  defaults:
-    _controller: '\Drupal\dpl_url_proxy\Controller\DplUrlProxyController::generateUrl'
-    _title: 'Generate proxy url'
-  requirements:
-    _permission: 'access content'

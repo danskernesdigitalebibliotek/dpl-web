@@ -1,5 +1,0 @@
-services:
-  dpl_url_proxy.upcasting.url_param_connverter:
-    class: Drupal\dpl_url_proxy\Routing\UrlParamConverter
-    tags:
-      - { name: paramconverter }

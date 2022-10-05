@@ -57,13 +57,10 @@
         "drupal/core-recommended": "^9.2.7",
         "drupal/default_content": "^2.0@alpha",
         "drupal/devel": "^4.1",
-        "drupal/jsonapi_resources": "^1.0@beta",
         "drupal/jsonlog": "^3.0",
         "drupal/libraries": "^3.0@beta",
         "drupal/openapi": "^2.0",
-        "drupal/openapi_jsonapi": "^3.0",
         "drupal/openapi_rest": "^2.0@RC",
-        "drupal/openapi_ui_redoc": "^1.0@RC",
         "drupal/openid_connect": "^1.1",
         "drupal/purge": "^3.2",
         "drupal/redis": "^1.5",
@@ -149,11 +146,17 @@
                 "2936067: CSS aggregation fails on many variations of @import": "https://git.drupalcode.org/project/drupal/-/commit/5aa154d.patch",
                 "Configure core to not check permissions before accepting an updated module": "patches/disable-core-upload-permission-check.diff"
             },
+            "drupal/jsonlog": {
+                "3251587: Change logging from stdout to stderr": "https://www.drupal.org/files/issues/2021-11-29/jsonlog-change-stdout-to-stderr-3251587-3.patch"
+            },
             "drupal/redis": {
                 "3207574: Patch against redis being include too late": "https://www.drupal.org/files/issues/2021-04-07/redis-report_warnings-3207574-2.patch"
             },
-            "drupal/jsonlog": {
-                "3251587: Change logging from stdout to stderr": "https://www.drupal.org/files/issues/2021-11-29/jsonlog-change-stdout-to-stderr-3251587-3.patch"
+            "drupal/openapi": {
+                "3313521: OpenAPI security field does not validate": "https://git.drupalcode.org/project/openapi/-/merge_requests/6.patch"
+            },
+            "drupal/openapi_rest": {
+                "3171530 + 3116760: Add support for parameter and response descriptions": "patches/openapi-parameter-response-descriptions.patch"
             }
         }
     }
