@@ -132,7 +132,7 @@ class UrlProxyResource extends ResourceBase {
   public function get(Request $request) {
     $conf = $this->getConfiguration();
     $url_param = $request->get('url');
-    $url = "";
+    $url = $url_param;
 
     if (!$url_param) {
       throw new HttpException(400, 'Url parameter is missing');
@@ -165,9 +165,6 @@ class UrlProxyResource extends ResourceBase {
           $url = preg_replace($config['expression']['regex'],
             $config['expression']['replacement'],
             $url_param);
-        }
-        else {
-          $url = $url_param;
         }
 
         // Add prefix, if chosen.
