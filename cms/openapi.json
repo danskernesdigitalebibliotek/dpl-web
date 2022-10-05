@@ -6,14 +6,14 @@
     "title": "DPL CMS - REST API",
     "version": "Versioning not supported"
   },
-  "host": "dpl-cms.docker",
+  "host": "varnish:8080",
   "basePath": "/",
   "securityDefinitions": {
     "csrf_token": {
       "type": "apiKey",
       "name": "X-CSRF-Token",
       "in": "header",
-      "x-tokenUrl": "http://dpl-cms.docker/user/token"
+      "x-tokenUrl": "http://varnish:8080/user/token"
     }
   },
   "security": [
@@ -50,9 +50,14 @@
             "schema": {
               "type": "object",
               "properties": {
-                "url": {
-                  "type": "string",
-                  "description": "The url with any configured proxies applied"
+                "data": {
+                  "type": "object",
+                  "properties": {
+                    "url": {
+                      "type": "string",
+                      "description": "The url with any configured proxies applied"
+                    }
+                  }
                 }
               }
             }

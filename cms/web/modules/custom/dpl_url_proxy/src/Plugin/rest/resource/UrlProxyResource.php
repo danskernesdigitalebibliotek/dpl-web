@@ -13,6 +13,9 @@ use Symfony\Component\HttpKernel\Exception\HttpException;
 use function Safe\parse_url as parse_url;
 use function Safe\preg_replace as preg_replace;
 
+// Descriptions quickly become long and Doctrine annotations have no good way
+// of handling multiline strings.
+// phpcs:disable Drupal.Files.LineLength.TooLong
 /**
  * Provides a Demo Resource.
  *
@@ -29,9 +32,7 @@ use function Safe\preg_replace as preg_replace;
  *     "GET" = {
  *       "url" = {
  *          "name" = "url",
- *          "description" = "A url to an online resource which may be
- *                           accessible through a proxy which requires
- *                           rewriting of the url",
+ *          "description" = "A url to an online resource which may be accessible through a proxy which requires rewriting of the url",
  *          "type" = "string",
  *          "in" = "query",
  *          "required" = TRUE,
@@ -45,9 +46,14 @@ use function Safe\preg_replace as preg_replace;
  *       "schema" = {
  *         "type" = "object",
  *         "properties" = {
- *           "url" = {
- *             "type" = "string",
- *             "description" = "The url with any configured proxies applied",
+ *           "data" = {
+ *             "type" = "object",
+ *             "properties" = {
+ *               "url" = {
+ *                 "type" = "string",
+ *                 "description" = "The url with any configured proxies applied",
+ *               },
+ *             },
  *           },
  *         },
  *       },
@@ -62,7 +68,7 @@ use function Safe\preg_replace as preg_replace;
  * )
  */
 class UrlProxyResource extends ResourceBase {
-
+// phpcs:enable Drupal.Files.LineLength.TooLong
 
   /**
    * Drupal\Core\Config\ConfigManagerInterface definition.
@@ -181,7 +187,7 @@ class UrlProxyResource extends ResourceBase {
       ->get(DplUrlProxyInterface::CONFIG_NAME)
       ->getCacheTags();
 
-    $response = new ResourceResponse(['url' => $url], 200);
+    $response = new ResourceResponse(['data' => ['url' => $url]], 200);
     return $response
       ->addCacheableDependency(CacheableMetadata::createFromRenderArray([
         '#cache' => [
