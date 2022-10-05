@@ -10,15 +10,17 @@ module.exports = {
         // on our CI environments so disable that check. It should not keep our
         // score down.
         skipAudits: ["is-on-https"],
-        // Lighthouse will throttle CPU by 4x by default to mimick the
-        // performance of a midrange smartphone instead of a desktop
-        // workstation. Experience shows that Docker containers and GitHub
-        // Actions runners have significantly fewer resources than a desktop and
-        // thus should be throttled less. This value is based on a benchmark
-        // index of 1000. The actual benchmark in a run can be seen under
-        // CPU/Memory Power in the generated report.
-        // https://lighthouse-cpu-throttling-calculator.vercel.app/
-        cpuSlowdownMultiplier: 2.9,
+        throttling: {
+          // Lighthouse will throttle CPU by 4x by default to mimick the
+          // performance of a midrange smartphone instead of a desktop
+          // workstation. Experience shows that Docker containers and GitHub
+          // Actions runners have significantly fewer resources than a desktop and
+          // thus should be throttled less. This value is based on a benchmark
+          // index of 1000. The actual benchmark in a run can be seen under
+          // CPU/Memory Power in the generated report.
+          // https://lighthouse-cpu-throttling-calculator.vercel.app/
+          cpuSlowdownMultiplier: 2.9,
+        },
       },
     },
     assert: {
