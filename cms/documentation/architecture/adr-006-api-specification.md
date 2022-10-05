@@ -51,7 +51,7 @@ Drupal:
   changes leading to unintended changes this we keep the [latest version of the
   specification](/openapi.json) in VCS and [setup automations to ensure that the
   generated specification matches the inteded one](/.github/workflows/ci-tests.yml).
-  When developers update the API they have to use [the provided tasks](./Taskfile.yml)
+  When developers update the API they have to use [the provided tasks](/Taskfile.yml)
   to update the stored API accordingly.
 - OpenAPI and OpenAPI REST are Drupal modules which have not seen updates for a
   while. We have to apply patches to get them to work for us. Also they do not
