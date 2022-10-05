@@ -17,7 +17,7 @@ use function Safe\preg_replace as preg_replace;
 // of handling multiline strings.
 // phpcs:disable Drupal.Files.LineLength.TooLong
 /**
- * Provides a Demo Resource.
+ * A resource for transforming urls to urls with proxy information added.
  *
  * @RestResource(
  *   id = "proxy-url",
