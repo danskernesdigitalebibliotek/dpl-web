@@ -2,7 +2,6 @@
 
 namespace Drupal\dpl_url_proxy\Plugin\rest\resource;
 
-use Drupal\Core\Cache\CacheableJsonResponse;
 use Drupal\Core\Cache\CacheableMetadata;
 use Drupal\dpl_url_proxy\DplUrlProxyInterface;
 use Drupal\rest\Plugin\ResourceBase;
@@ -12,6 +11,7 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\Exception\HttpException;
 use function Safe\parse_url as parse_url;
+use function Safe\preg_replace as preg_replace;
 
 /**
  * Provides a Demo Resource.
@@ -29,7 +29,9 @@ use function Safe\parse_url as parse_url;
  *     "GET" = {
  *       "url" = {
  *          "name" = "url",
- *          "description" = "A url to an online resource which may be accessible through a proxy which requires rewriting of the url",
+ *          "description" = "A url to an online resource which may be
+ *                           accessible through a proxy which requires
+ *                           rewriting of the url",
  *          "type" = "string",
  *          "in" = "query",
  *          "required" = TRUE,
@@ -70,7 +72,19 @@ class UrlProxyResource extends ResourceBase {
   protected $configManager;
 
   /**
-   * {@inheritdoc}
+   * Creates an instance of the plugin.
+   *
+   * @param \Symfony\Component\DependencyInjection\ContainerInterface $container
+   *   The container to pull out services used in the plugin.
+   * @param mixed[] $configuration
+   *   A configuration array containing information about the plugin instance.
+   * @param string $plugin_id
+   *   The plugin ID for the plugin instance.
+   * @param mixed $plugin_definition
+   *   The plugin implementation definition.
+   *
+   * @return static
+   *   Returns an instance of this plugin.
    */
   public static function create(ContainerInterface $container, array $configuration, $plugin_id, $plugin_definition) {
     $instance = new static(
@@ -94,8 +108,6 @@ class UrlProxyResource extends ResourceBase {
   protected function getConfiguration(): array {
     // We need to provide a default value here if the configuration is not
     // available.
-    // $this->configManager->getConfigFactory()
-    // var_dump(array_keys((array) $this)); die;
     return $this->configManager
       ->getConfigFactory()
       ->get(DplUrlProxyInterface::CONFIG_NAME)
@@ -121,9 +133,10 @@ class UrlProxyResource extends ResourceBase {
     }
 
     try {
-      /* @var string $url_host */
-      $url_host = parse_url($url_param,  PHP_URL_HOST);
-    } catch (UrlException $e) {
+      /** @var string $url_host */
+      $url_host = parse_url($url_param, PHP_URL_HOST);
+    }
+    catch (UrlException $e) {
       throw new HttpException(400, "Url $url_param is not a valid url");
     }
 
@@ -143,12 +156,11 @@ class UrlProxyResource extends ResourceBase {
           !empty($config['expression']['regex'])
           && !empty($config['expression']['replacement'])
         ) {
-          $url = preg_replace(
-              $config['expression']['regex'],
-              $config['expression']['replacement'],
-              $url_param
-            );
-        } else {
+          $url = preg_replace($config['expression']['regex'],
+            $config['expression']['replacement'],
+            $url_param);
+        }
+        else {
           $url = $url_param;
         }
 
