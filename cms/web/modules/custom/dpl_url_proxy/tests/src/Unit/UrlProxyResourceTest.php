@@ -17,8 +17,6 @@ use Symfony\Component\DependencyInjection\ParameterBag\ParameterBag;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\Exception\HttpException;
 
-use function Safe\json_encode;
-
 /**
  * Unit tests for the Library Token Handler.
  */
@@ -71,9 +69,9 @@ class UrlProxyResourceTest extends UnitTestCase {
     $resource->get($request);
   }
 
-  // /**
-  //  * Exception should be thrown if url is not valid.
-  //  */
+  /**
+   * Exception should be thrown if url is not valid.
+   */
   public function testThatExceptionIsThrownIfPostDataIsContainingMalignUrl(): void {
     $container = \Drupal::getContainer();
     $resource = UrlProxyResource::create($container, [], '', []);
@@ -85,9 +83,9 @@ class UrlProxyResourceTest extends UnitTestCase {
     $resource->get($request);
   }
 
-  // /**
-  //  * Exception should be thrown if the required prefix has not been configured.
-  //  */
+  /**
+   * Exception should be thrown if the required prefix has not been configured.
+   */
   public function testThatExceptionIsThrownIfPrefixIsNotSet(): void {
     $container = \Drupal::getContainer();
     $resource = UrlProxyResource::create($container, [], '', []);
