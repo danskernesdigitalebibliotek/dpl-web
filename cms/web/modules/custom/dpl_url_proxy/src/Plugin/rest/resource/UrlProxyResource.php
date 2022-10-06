@@ -179,7 +179,7 @@ class UrlProxyResource extends ResourceBase {
       }
     }
 
-    $cacheTags = $this->configManager
+    $cache_tags = $this->configManager
       ->getConfigFactory()
       ->get(DplUrlProxyInterface::CONFIG_NAME)
       ->getCacheTags();
@@ -188,8 +188,8 @@ class UrlProxyResource extends ResourceBase {
     return $response
       ->addCacheableDependency(CacheableMetadata::createFromRenderArray([
         '#cache' => [
-          'tags' => $cacheTags,
-          'contexts' => ['url'],
+          'tags' => $cache_tags,
+          'contexts' => ['url.query_args'],
         ],
       ]));
   }
