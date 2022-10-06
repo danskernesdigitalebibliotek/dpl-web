@@ -3,9 +3,11 @@
   "description": "Node.js tools for working with DPL CMS",
   "license": "AGPL-3.0",
   "devDependencies": {
+    "@apidevtools/swagger-cli": "^4.0.4",
     "@lhci/cli": "^0.8.2",
     "eslint": "^8.3.0",
     "eslint-config-drupal": "^5.0.2",
+    "jsome": "^2.5.0",
     "markdownlint-cli2": "^0.3.2",
     "pa11y-ci": "git+https://github.com/pa11y/pa11y-ci#5c842cf"
   }

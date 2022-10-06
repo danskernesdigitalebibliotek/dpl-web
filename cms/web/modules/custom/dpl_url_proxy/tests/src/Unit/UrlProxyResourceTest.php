@@ -8,17 +8,19 @@ use Drupal\Core\Config\ConfigFactoryInterface;
 use Drupal\Core\Config\ConfigManagerInterface;
 use Drupal\Core\Config\ImmutableConfig;
 use Drupal\Core\DependencyInjection\ContainerBuilder;
+use Drupal\Core\Logger\LoggerChannelFactory;
+use Drupal\Core\Logger\LoggerChannelInterface;
 use Drupal\Core\StringTranslation\TranslationManager;
-use Drupal\dpl_url_proxy\Controller\DplUrlProxyController;
 use Drupal\dpl_url_proxy\DplUrlProxyInterface;
+use Drupal\dpl_url_proxy\Plugin\rest\resource\UrlProxyResource;
+use Symfony\Component\DependencyInjection\ParameterBag\ParameterBag;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\Exception\HttpException;
-use function Safe\json_encode;
 
 /**
  * Unit tests for the Library Token Handler.
  */
-class DplUrlProxyControllerTest extends UnitTestCase {
+class UrlProxyResourceTest extends UnitTestCase {
 
   /**
    * {@inheritdoc}
@@ -38,9 +40,17 @@ class DplUrlProxyControllerTest extends UnitTestCase {
 
     $string_translation = $this->prophesize(TranslationManager::class);
 
-    $container = new ContainerBuilder();
+    $logger = $this->prophesize(LoggerChannelInterface::class);
+    $logger_factory = $this->prophesize(LoggerChannelFactory::class);
+    $logger_factory->get('rest')->willReturn($logger->reveal());
+
+    $params = new ParameterBag([
+      'serializer.formats' => [],
+    ]);
+    $container = new ContainerBuilder($params);
     $container->set('config.manager', $config_manager->reveal());
     $container->set('string_translation', $string_translation->reveal());
+    $container->set('logger.factory', $logger_factory->reveal());
 
     \Drupal::setContainer($container);
   }
@@ -50,13 +60,13 @@ class DplUrlProxyControllerTest extends UnitTestCase {
    */
   public function testThatExceptionIsThrownIfUrlParamMissing(): void {
     $container = \Drupal::getContainer();
-    $controller = DplUrlProxyController::create($container);
+    $resource = UrlProxyResource::create($container, [], '', []);
 
     $this->expectException(HttpException::class);
     $this->expectExceptionMessage('Url parameter is missing');
 
     $request = new Request();
-    $controller->generateUrl($request);
+    $resource->get($request);
   }
 
   /**
@@ -64,13 +74,13 @@ class DplUrlProxyControllerTest extends UnitTestCase {
    */
   public function testThatExceptionIsThrownIfPostDataIsContainingMalignUrl(): void {
     $container = \Drupal::getContainer();
-    $controller = DplUrlProxyController::create($container);
+    $resource = UrlProxyResource::create($container, [], '', []);
 
     $this->expectException(HttpException::class);
-    $this->expectExceptionMessage('Provided url is not in the right format');
+    $this->expectExceptionMessage('Url foo does not contain a host name. Urls to be proxied must contain a host name.');
 
-    $request = Request::create('/dpl-url-proxy/generate-url', 'GET', ['url' => 'foo']);
-    $controller->generateUrl($request);
+    $request = Request::create('/dpl-url-proxy', 'GET', ['url' => 'foo']);
+    $resource->get($request);
   }
 
   /**
@@ -78,17 +88,17 @@ class DplUrlProxyControllerTest extends UnitTestCase {
    */
   public function testThatExceptionIsThrownIfPrefixIsNotSet(): void {
     $container = \Drupal::getContainer();
-    $controller = DplUrlProxyController::create($container);
+    $resource = UrlProxyResource::create($container, [], '', []);
 
     $this->expectException(HttpException::class);
     $this->expectExceptionMessage('Could not generate url. Insufficient configuration');
 
     $request = Request::create(
-      '/dpl-url-proxy/generate-url',
+      '/dpl-url-proxy',
       'GET',
       ['url' => 'http://foo.bar']
     );
-    $controller->generateUrl($request);
+    $resource->get($request);
   }
 
   /**
@@ -114,17 +124,16 @@ class DplUrlProxyControllerTest extends UnitTestCase {
     $config_manager = $this->prophesize(ConfigManagerInterface::class);
     $config_manager->getConfigFactory()->willReturn($config_factory->reveal());
 
-    $container = new ContainerBuilder();
+    $container = \Drupal::getContainer();
     $container->set('config.manager', $config_manager->reveal());
-    $controller = DplUrlProxyController::create($container);
 
-    $request = Request::create('/dpl-url-proxy/generate-url', 'GET', $input);
-
-    $response = $controller->generateUrl($request);
+    $resource = UrlProxyResource::create($container, [], '', []);
+    $request = Request::create('/dpl-url-proxy', 'GET', $input);
+    $response = $resource->get($request);
 
     $this->assertEquals(
-      json_encode($expected_output),
-      $response->getContent()
+      $expected_output,
+      $response->getResponseData()
     );
   }
 

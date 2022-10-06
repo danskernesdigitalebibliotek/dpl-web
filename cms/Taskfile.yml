@@ -93,7 +93,7 @@ tasks:
   dev:phpunit:
     desc: Run PHPUnit tests with code coverage
     cmds:
-      - docker compose run -e XDEBUG_ENABLE=true cli vendor/bin/phpunit --coverage-text
+      - docker compose run -e XDEBUG_ENABLE=true -e XDEBUG_MODE=coverage,debug cli vendor/bin/phpunit --coverage-text
 
   dev:restore:database:
     desc: 'Restore database from db dump file. Only one sql should be present the "{{ .DIR_RESTORE_DATABASE }}" directory.'
@@ -176,6 +176,18 @@ tasks:
     cmds:
       - docker compose {{ .DOCKER_COMPOSE_FILES_CI }} run node-chrome npm ci
       - docker compose {{ .DOCKER_COMPOSE_FILES_CI }} run node-chrome npx lhci autorun
+
+  ci:openapi:validate:
+    desc: Validate the Drupal OpenAPI specification
+    cmds:
+      - docker compose {{ .DOCKER_COMPOSE_FILES_CI }} run node-chrome npm ci
+      - docker compose {{ .DOCKER_COMPOSE_FILES_CI }} run node-chrome npx swagger-cli validate http://varnish:8080/openapi/rest?_format=json
+
+  ci:openapi:download:
+    desc: Download the Drupal OpenAPI specification from the running local site to the local filesystem
+    cmds:
+      - docker compose {{ .DOCKER_COMPOSE_FILES_CI }} run node-chrome npm ci
+      - docker compose {{ .DOCKER_COMPOSE_FILES_CI }} run node-chrome curl http://varnish:8080/openapi/rest?_format=json | npx jsome -r > openapi.json
 
   source:build:
     summary: Build core source image.
