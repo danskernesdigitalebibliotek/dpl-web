@@ -171,16 +171,23 @@ tasks:
     desc: Run Cypress functional tests
     cmds:
       - docker compose {{ .DOCKER_COMPOSE_FILES_CI }} run node-chrome yarn install --frozen-lockfile
-      - docker compose {{ .DOCKER_COMPOSE_FILES_CI }} run cypress
+      - task dev:cli -- drush user:password $CYPRESS_DRUPAL_USERNAME $CYPRESS_DRUPAL_PASSWORD
+      - docker compose {{ .DOCKER_COMPOSE_FILES_CI }} run -e CYPRESS_DRUPAL_USERNAME=$CYPRESS_DRUPAL_USERNAME -e CYPRESS_DRUPAL_PASSWORD=$CYPRESS_DRUPAL_PASSWORD cypress
+    env:
+      CYPRESS_DRUPAL_USERNAME: admin
+      CYPRESS_DRUPAL_PASSWORD: admin
 
   ci:cypress:local:
     desc: Run Cypress functional tests locally
     cmds:
       - yarn install --frozen-lockfile
+      - task dev:cli -- drush user:password $CYPRESS_DRUPAL_USERNAME $CYPRESS_DRUPAL_PASSWORD
       - http_proxy=http://localhost:{{ .WIREMOCK_HTTP_PORT }} https_proxy=http://localhost:{{ .WIREMOCK_HTTPS_PORT }} npx cypress open
     env:
       CYPRESS_BASE_URL: http://localhost:{{ .CYPRESS_BASE_PORT }}
       CYPRESS_WIREMOCK_URL: http://localhost:{{ .WIREMOCK_HTTP_PORT }}
+      CYPRESS_DRUPAL_USERNAME: admin
+      CYPRESS_DRUPAL_PASSWORD: admin
       # Enable this to help with debugging with network and proxy requests.
       # https://docs.cypress.io/guides/references/troubleshooting#Print-DEBUG-logs
       # DEBUG: cypress:network:*,cypress:server:request,-cypress:network:cors

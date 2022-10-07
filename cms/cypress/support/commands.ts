@@ -41,6 +41,33 @@ Cypress.Commands.add("logMappingRequests", () => {
   );
 });
 
+Cypress.Commands.add("drupalLogin", () => {
+  cy.visit("/user/login");
+  cy.get('[name="name"]')
+    .type(Cypress.env("DRUPAL_USERNAME"))
+    .parent()
+    .get('[name="pass"]')
+    .type(Cypress.env("DRUPAL_USERNAME"));
+  cy.get('[value="Log ind"]').click();
+});
+
+Cypress.Commands.add("drupalLogout", () => {
+  cy.visit("/logout");
+});
+
+Cypress.Commands.add("drupalCron", () => {
+  // Because we run Wiremock as a proxy only services configured with the
+  //  proxy will use it. We need to proxy requests during cron and only the
+  // web container is configured to use the proxy and thus we have to run
+  // cron through the web frontend. Using the proxy with the CLI container would
+  // cause too many irrelevant requests to pass throuh the proxy.
+  cy.drupalLogin();
+  cy.visit("/admin/config/system/cron");
+  cy.get('[value="Kør cron"]').click();
+  cy.contains("Cron-opgave fuldført.");
+  cy.drupalLogout();
+});
+
 Cypress.Commands.add(
   "adgangsplatformenLogin",
   (authorizationCode: string, accessToken: string, userGuid: string) => {
@@ -118,6 +145,9 @@ declare global {
       createMapping(stub: StubMapping): Chainable<null>;
       resetMappings(): Chainable<null>;
       logMappingRequests(): Chainable<null>;
+      drupalLogin(): Chainable<null>;
+      drupalLogout(): Chainable<null>;
+      drupalCron(): Chainable<null>;
       adgangsplatformenLogin(
         authorizationCode: string,
         accessToken: string,
