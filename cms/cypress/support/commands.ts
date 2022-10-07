@@ -41,6 +41,74 @@ Cypress.Commands.add("logMappingRequests", () => {
   );
 });
 
+Cypress.Commands.add(
+  "adgangsplatformenLogin",
+  (authorizationCode: string, accessToken: string, userGuid: string) => {
+    cy.createMapping({
+      request: {
+        method: "GET",
+        urlPath: "/oauth/authorize",
+        queryParameters: {
+          response_type: {
+            equalTo: "code",
+          },
+        },
+      },
+      response: {
+        status: 302,
+        headers: {
+          location: `{{request.query.[redirect_uri]}}?code=${authorizationCode}&state={{request.query.[state]}}`,
+        },
+        transformers: ["response-template"],
+      },
+    });
+
+    cy.createMapping({
+      request: {
+        method: "POST",
+        urlPath: "/oauth/token/",
+        bodyPatterns: [
+          {
+            contains: "grant_type=authorization_code",
+          },
+          {
+            contains: `code=${authorizationCode}`,
+          },
+        ],
+      },
+      response: {
+        jsonBody: {
+          access_token: accessToken,
+          token_type: "Bearer",
+          expires_in: 2591999,
+        },
+      },
+    });
+
+    cy.createMapping({
+      request: {
+        method: "GET",
+        urlPath: "/userinfo/",
+        headers: {
+          Authorization: {
+            equalTo: `Bearer ${accessToken}`,
+          },
+        },
+      },
+      response: {
+        jsonBody: {
+          attributes: {
+            uniqueId: userGuid,
+          },
+        },
+      },
+    });
+
+    cy.visit("/user/login");
+    cy.contains("Log in with Adgangsplatformen").click();
+  }
+);
+
 // According to the documentation of types and Cypress commands
 // the namespace is declared like it is done here. Therefore we'll bypass errors about it.
 /* eslint-disable @typescript-eslint/no-namespace */
@@ -50,6 +118,11 @@ declare global {
       createMapping(stub: StubMapping): Chainable<null>;
       resetMappings(): Chainable<null>;
       logMappingRequests(): Chainable<null>;
+      adgangsplatformenLogin(
+        authorizationCode: string,
+        accessToken: string,
+        userGuid: string
+      ): Chainable<null>;
     }
   }
 }
