@@ -14,6 +14,7 @@ negotiation:
       language-url-fallback: 1
   language_interface:
     enabled:
+      language-user-admin: -10
       language-selected: 12
     method_weights:
       language-user-admin: -10

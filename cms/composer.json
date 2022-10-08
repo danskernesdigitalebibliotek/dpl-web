@@ -58,6 +58,7 @@
         "drupal/openapi": "^2.0",
         "drupal/openapi_rest": "^2.0@RC",
         "drupal/openid_connect": "^1.1",
+        "drupal/paragraphs": "^1.14",
         "drupal/purge": "^3.2",
         "drupal/redis": "^1.5",
         "drupal/restui": "^1.21",

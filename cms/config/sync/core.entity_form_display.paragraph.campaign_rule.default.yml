@@ -1,0 +1,38 @@
+uuid: 0279afc4-8778-4911-87fa-e8733cecfad7
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.field.paragraph.campaign_rule.field_campaign_rule_facet
+    - field.field.paragraph.campaign_rule.field_campaign_rule_term
+    - field.field.paragraph.campaign_rule.field_campaign_rule_term_ranking
+    - paragraphs.paragraphs_type.campaign_rule
+id: paragraph.campaign_rule.default
+targetEntityType: paragraph
+bundle: campaign_rule
+mode: default
+content:
+  field_campaign_rule_facet:
+    weight: 3
+    settings: {  }
+    third_party_settings: {  }
+    type: options_select
+    region: content
+  field_campaign_rule_term:
+    weight: 5
+    settings:
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+    type: string_textfield
+    region: content
+  field_campaign_rule_term_ranking:
+    weight: 4
+    settings:
+      placeholder: ''
+    third_party_settings: {  }
+    type: number
+    region: content
+hidden:
+  created: true
+  status: true

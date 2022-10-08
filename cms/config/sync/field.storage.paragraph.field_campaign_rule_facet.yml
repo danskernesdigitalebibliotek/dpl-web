@@ -1,0 +1,126 @@
+uuid: 49692e98-ea96-45ff-9ba1-bd08759d0af2
+langcode: en
+status: true
+dependencies:
+  module:
+    - options
+    - paragraphs
+id: paragraph.field_campaign_rule_facet
+field_name: field_campaign_rule_facet
+entity_type: paragraph
+type: list_string
+settings:
+  allowed_values:
+    -
+      value: access
+      label: Adgang
+    -
+      value: department
+      label: Afdeling
+    -
+      value: audienceCategory
+      label: Brugerniveau
+    -
+      value: dk5
+      label: 'DK5 Klassifikation'
+    -
+      value: date
+      label: Dato
+    -
+      value: partOf
+      label: 'Del af'
+    -
+      value: extraTitles
+      label: 'Ekstra e-bøger'
+    -
+      value: 'subject" selected="selected'
+      label: Emne
+    -
+      value: nonFictionSubject
+      label: 'Fag emne'
+    -
+      value: level
+      label: 'Fagligt niveau'
+    -
+      value: branch
+      label: Filial
+    -
+      value: publisher
+      label: Forlag
+    -
+      value: form
+      label: Form
+    -
+      value: genre
+      label: Genre
+    -
+      value: genreCategory
+      label: Genrekategori
+    -
+      value: geographic
+      label: 'Geografisk emne'
+    -
+      value: primaryCreator
+      label: Hovedophav
+    -
+      value: acSource
+      label: Kilde
+    -
+      value: let
+      label: Lettal
+    -
+      value: literaryForm
+      label: 'Litterær form'
+    -
+      value: lix
+      label: Lix
+    -
+      value: type
+      label: Materialetype
+    -
+      value: musicSubject
+      label: 'Musik emne'
+    -
+      value: audience
+      label: Målgruppe
+    -
+      value: nationality
+      label: 'Nationalitet for film'
+    -
+      value: sheetMusic
+      label: Noder
+    -
+      value: creator
+      label: Ophav
+    -
+      value: creatorFunction
+      label: 'Ophav funktion'
+    -
+      value: period
+      label: 'Periode som emne'
+    -
+      value: titleSeries
+      label: Serietitle
+    -
+      value: fictionSubject
+      label: 'Skønlitterært emne'
+    -
+      value: gamePlatform
+      label: Spilplatform
+    -
+      value: language
+      label: Sprog
+    -
+      value: dateFirstEdition
+      label: 'Udgivelsesår for første udgave'
+    -
+      value: category
+      label: 'Voksen- eller børnematerialer'
+  allowed_values_function: ''
+module: options
+locked: false
+cardinality: 1
+translatable: true
+indexes: {  }
+persist_with_no_fields: false
+custom_storage: false

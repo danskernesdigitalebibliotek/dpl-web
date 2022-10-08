@@ -1,0 +1,23 @@
+uuid: bc64c9ae-f84b-476c-b795-42072675b21b
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.paragraph.field_campaign_rule_term_ranking
+    - paragraphs.paragraphs_type.campaign_rule
+id: paragraph.campaign_rule.field_campaign_rule_term_ranking
+field_name: field_campaign_rule_term_ranking
+entity_type: paragraph
+bundle: campaign_rule
+label: 'Facet Term Ranking'
+description: ''
+required: true
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings:
+  min: 1
+  max: 8
+  prefix: ''
+  suffix: ''
+field_type: integer
