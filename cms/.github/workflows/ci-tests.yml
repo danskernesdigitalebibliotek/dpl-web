@@ -201,7 +201,7 @@ jobs:
       - name: Install dependencies
         run: yarn install --frozen-lockfile
       - name: Run ESLint
-        run: npx eslint .
+        run: npx eslint web -c .eslintrc.json
 
   CheckOpenApiSpec:
     name: Check OpenAPI specification
