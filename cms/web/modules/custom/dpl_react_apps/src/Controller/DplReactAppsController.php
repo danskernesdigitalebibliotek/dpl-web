@@ -240,7 +240,7 @@ class DplReactAppsController extends ControllerBase {
    */
   public static function urlProxyUrl(): string {
     return self::ensureUrlIsString(
-      Url::fromRoute('dpl_url_proxy.generate_url')->toString()
+      Url::fromRoute('rest.proxy-url.GET')->toString()
     );
   }
 
