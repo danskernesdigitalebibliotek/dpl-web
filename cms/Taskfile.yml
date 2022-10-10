@@ -160,13 +160,6 @@ tasks:
     env:
       DOCKER_COMPOSE_FILES: "{{ .DOCKER_COMPOSE_FILES_CI }}"
 
-  ci:behat:
-    desc: Run Behat functional tests
-    cmds:
-      - task dev:cli -- vendor/bin/behat
-    env:
-      DOCKER_COMPOSE_FILES: "{{ .DOCKER_COMPOSE_FILES_CI }}"
-
   ci:cypress:
     desc: Run Cypress functional tests
     cmds:

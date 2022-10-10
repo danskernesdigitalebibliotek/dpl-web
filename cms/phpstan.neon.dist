@@ -3,7 +3,6 @@ parameters:
   paths:
     - web/modules/custom
     - web/themes/custom
-    - tests/behat/context
   ignoreErrors:
     - '#Unsafe usage of new static\(\).#'
     # Drupal Form API makes extensive use for arrays which we cannot provide

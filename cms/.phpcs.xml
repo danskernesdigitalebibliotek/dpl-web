@@ -5,7 +5,6 @@
   <file>web/themes/custom</file>
   <!-- Exclude built assets used by Novel -->
   <exclude-pattern>web/themes/custom/novel/assets/*</exclude-pattern>
-  <file>tests/behat/context</file>
   <file>assets/all.settings.php</file>
 
   <rule ref="Drupal" />

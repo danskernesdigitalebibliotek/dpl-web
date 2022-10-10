@@ -1,27 +1,6 @@
 version: '2.3'
 
 services:
-  chrome:
-    image: justinribeiro/chrome-headless:stable
-    cap_add:
-      - SYS_ADMIN
-    depends_on:
-      - wiremock
-    environment:
-      HTTP_PROXY: http://wiremock
-      HTTPS_PROXY: https://wiremock
-      # Do not proxy traffic to the website nor to Google services serving
-      # frontend assets. This pollutes the WireMock log output.
-      NO_PROXY: "varnish,*.gstatic.com,*.googleapis.com"
-    command:
-      - "--headless"
-      - "--disable-gpu"
-      - "--remote-debugging-address=0.0.0.0"
-      - "--remote-debugging-port=9222"
-      # We do not have a proper SSL setup with trusted certificates from
-      # WireMock so ignore certificate errors for now.
-      - "--ignore-certificate-errors"
-
   node-chrome:
     build:
       context: .
