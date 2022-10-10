@@ -1,6 +1,7 @@
 import { WireMockRestClient } from "wiremock-rest-client";
 import { Options } from "wiremock-rest-client/dist/model/options.model";
 import { StubMapping } from "wiremock-rest-client/dist/model/stub-mapping.model";
+import { RequestPattern } from "wiremock-rest-client/dist/model/request-pattern.model";
 
 const wiremock = (baseUri?: string, options?: Options) => {
   return new WireMockRestClient(
@@ -36,6 +37,36 @@ Cypress.Commands.add("logMappingRequests", () => {
                 message: `${stub.request.method}: ${requestUrlPath}: ${request.count} hit`,
               });
             });
+        });
+      })
+  );
+});
+
+Cypress.Commands.add("getRequestCount", (request: RequestPattern) => {
+  cy.wrap(
+    wiremock()
+      .requests.getCount(request)
+      .then((response: { count: number }) => {
+        return response.count;
+      })
+  );
+});
+
+Cypress.Commands.add("resetRequests", () => {
+  cy.wrap(wiremock().requests.resetAllRequests());
+});
+
+Cypress.Commands.add("logRequests", () => {
+  cy.wrap(
+    wiremock()
+      .requests.getAllRequests()
+      .then((data) => {
+        data.requests.forEach((requestResponse) => {
+          const request = requestResponse.request;
+          Cypress.log({
+            name: "Wiremock",
+            message: `${request.method}: ${request.url}`,
+          });
         });
       })
   );
@@ -145,6 +176,9 @@ declare global {
       createMapping(stub: StubMapping): Chainable<null>;
       resetMappings(): Chainable<null>;
       logMappingRequests(): Chainable<null>;
+      logRequests(): Chainable<null>;
+      getRequestCount(request: RequestPattern): Chainable<number>;
+      resetRequests(): Chainable<null>;
       drupalLogin(): Chainable<null>;
       drupalLogout(): Chainable<null>;
       drupalCron(): Chainable<null>;
