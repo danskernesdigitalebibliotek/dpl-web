@@ -46,6 +46,8 @@ drush/Commands/contrib
 # We don't need that.
 drush/sites/lagoon.site.yml
 
+# Cache folder
+.cache
 .drush-lock-update
 
 # Used for local docker setup.

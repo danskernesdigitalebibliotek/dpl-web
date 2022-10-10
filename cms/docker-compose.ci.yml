@@ -30,6 +30,7 @@ services:
       - 'projectroot:/app'
     environment:
       CYPRESS_INSTALL_BINARY: 0
+      YARN_CACHE_FOLDER: '/app/.cache/yarn'
 
   cypress:
     image: cypress/included:10.8.0
