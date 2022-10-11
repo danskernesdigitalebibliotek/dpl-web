@@ -99,7 +99,7 @@ class DplReactAppsController extends ControllerBase {
         'auth-url' => self::authUrl(),
         'material-url' => self::materialUrl(),
         'search-url' => self::searchResultUrl(),
-        'url-proxy-url' => self::urlProxyUrl(),
+        'dpl-cms-base-url' => self::dplCmsBaseUrl(),
         // Text.
         'already-reserved-text' => $this->t('Already reserved', [], $c),
         'approve-reservation-text' => $this->t('Approve reservation', [], $c),
@@ -236,11 +236,11 @@ class DplReactAppsController extends ControllerBase {
   }
 
   /**
-   * Builds an url for the react apps to for proxy urls.
+   * Get the base url of the API exposed by this site.
    */
-  public static function urlProxyUrl(): string {
+  public static function dplCmsBaseUrl(): string {
     return self::ensureUrlIsString(
-      Url::fromRoute('rest.proxy-url.GET')->toString()
+      Url::fromRoute('<front>', [], ['absolute' => TRUE])->toString()
     );
   }
 
