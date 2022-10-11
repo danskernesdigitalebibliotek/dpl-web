@@ -181,6 +181,24 @@ jobs:
       - name: Run ESLint
         run: npx eslint web -c .eslintrc.json
 
+  EslintCypress:
+    name: Lint Cypress tests
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+        # git with HTTP authentication provides an easy way for us to install
+        # unreleased commits of NPM projects. Currently: Pa11yCI
+      - name: Reconfigure git to use HTTP authentication
+        run: git config --global url."https://${{ secrets.GITHUB_TOKEN }}@github.com/".insteadOf ssh://git@github.com/
+      - name: Setup Node
+        uses: actions/setup-node@v3
+        with:
+          cache: 'yarn'
+      - name: Install dependencies
+        run: yarn install --frozen-lockfile
+      - name: Run ESLint
+        run: npx eslint cypress -c cypress/.eslintrc.json
+
   CheckOpenApiSpec:
     name: Check OpenAPI specification
     runs-on: ubuntu-latest
