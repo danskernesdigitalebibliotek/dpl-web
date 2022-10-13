@@ -1,4 +1,4 @@
 services:
   dpl_library_agency.reservation_settings:
     class: Drupal\dpl_library_agency\ReservationSettings
-    arguments: ['@config.manager']
+    arguments: ["@config.manager"]

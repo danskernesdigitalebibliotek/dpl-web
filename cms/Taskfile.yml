@@ -51,7 +51,7 @@ tasks:
   dev:start:
     summary: Run docker compose
     cmds:
-      - docker compose {{ .DOCKER_COMPOSE_FILES }} up -d
+      - docker compose {{ .DOCKER_COMPOSE_FILES }} up -d {{if eq .CI "true"}}--quiet-pull{{end}}
 
   dev:stop:
     summary: Stop docker compose environment
@@ -83,10 +83,10 @@ tasks:
       # Import translations.
       - task dev:cli -- drush locale-check
       - task dev:cli -- drush locale-update
-      # We don't really need to purge the external cache
-      # since we are working with fresh containers.
-      # But we want catch if something is wrong with the setup.
-      - task dev:cache:clear:external
+      # Clear all caches to ensure we have a pristine setup.
+      - task dev:cache:clear:all
+      # Ensure site is reachable and warm any caches
+      - task dev:cli -- curl --silent --show-error --fail --output /dev/null http://varnish:8080/
       # Show a one-time login to the local site.
       - task dev:cli -- drush user-login
 
@@ -122,7 +122,9 @@ tasks:
 
   dev:cache:clear:all:
     summary: Clears all cache
-    deps: [dev:cache:clear:drupal, dev:cache:clear:external]
+    cmds:
+      - task dev:cache:clear:drupal
+      - task dev:cache:clear:external
 
   dev:cache:clear:drupal:
     summary: Runs Drupal cache rebuild
@@ -158,35 +160,62 @@ tasks:
     env:
       DOCKER_COMPOSE_FILES: "{{ .DOCKER_COMPOSE_FILES_CI }}"
 
-  ci:behat:
-    desc: Run Behat functional tests
+  ci:cypress:
+    desc: Run Cypress functional tests
     cmds:
-      - task dev:cli -- vendor/bin/behat
+      - docker compose {{ .DOCKER_COMPOSE_FILES_CI }} run node-chrome yarn install --frozen-lockfile
+      - task dev:cli -- drush user:password $CYPRESS_DRUPAL_USERNAME $CYPRESS_DRUPAL_PASSWORD
+      - docker compose {{ .DOCKER_COMPOSE_FILES_CI }} run -e CYPRESS_DRUPAL_USERNAME=$CYPRESS_DRUPAL_USERNAME -e CYPRESS_DRUPAL_PASSWORD=$CYPRESS_DRUPAL_PASSWORD cypress
     env:
-      DOCKER_COMPOSE_FILES: "{{ .DOCKER_COMPOSE_FILES_CI }}"
+      CYPRESS_DRUPAL_USERNAME: admin
+      CYPRESS_DRUPAL_PASSWORD: admin
+
+  ci:cypress:local:
+    desc: Run Cypress functional tests locally
+    cmds:
+      - yarn install --frozen-lockfile
+      - task dev:cli -- drush user:password $CYPRESS_DRUPAL_USERNAME $CYPRESS_DRUPAL_PASSWORD
+      - http_proxy=http://localhost:{{ .WIREMOCK_HTTP_PORT }} https_proxy=http://localhost:{{ .WIREMOCK_HTTPS_PORT }} npx cypress open
+    env:
+      CYPRESS_BASE_URL: http://localhost:{{ .CYPRESS_BASE_PORT }}
+      CYPRESS_WIREMOCK_URL: http://localhost:{{ .WIREMOCK_HTTP_PORT }}
+      CYPRESS_DRUPAL_USERNAME: admin
+      CYPRESS_DRUPAL_PASSWORD: admin
+      # Enable this to help with debugging with network and proxy requests.
+      # https://docs.cypress.io/guides/references/troubleshooting#Print-DEBUG-logs
+      # DEBUG: cypress:network:*,cypress:server:request,-cypress:network:cors
+    vars:
+      # Using ports exposed on localhost is important. Host names or ports exposed by Dory or other similar projects
+      # introduce multiple layers of proxies and cause problems.
+      CYPRESS_BASE_PORT:
+        sh: docker compose port varnish 8080 | cut -d ":" -f2
+      WIREMOCK_HTTP_PORT:
+        sh: docker compose port wiremock 80 | cut -d ":" -f2
+      WIREMOCK_HTTPS_PORT:
+        sh: docker compose port wiremock 443 | cut -d ":" -f2
 
   ci:pa11y:
     desc: Run Pa11y to test accessiblity
     cmds:
-      - docker compose {{ .DOCKER_COMPOSE_FILES_CI }} run node-chrome npm ci
+      - docker compose {{ .DOCKER_COMPOSE_FILES_CI }} run node-chrome yarn install --frozen-lockfile
       - docker compose {{ .DOCKER_COMPOSE_FILES_CI }} run node-chrome npx pa11y-ci
 
   ci:lighthouse:
     desc: Run Lighthouse to test performance
     cmds:
-      - docker compose {{ .DOCKER_COMPOSE_FILES_CI }} run node-chrome npm ci
+      - docker compose {{ .DOCKER_COMPOSE_FILES_CI }} run node-chrome yarn install --frozen-lockfile
       - docker compose {{ .DOCKER_COMPOSE_FILES_CI }} run node-chrome npx lhci autorun
 
   ci:openapi:validate:
     desc: Validate the Drupal OpenAPI specification
     cmds:
-      - docker compose {{ .DOCKER_COMPOSE_FILES_CI }} run node-chrome npm ci
+      - docker compose {{ .DOCKER_COMPOSE_FILES_CI }} run node-chrome yarn install --frozen-lockfile
       - docker compose {{ .DOCKER_COMPOSE_FILES_CI }} run node-chrome npx swagger-cli validate http://varnish:8080/openapi/rest?_format=json
 
   ci:openapi:download:
     desc: Download the Drupal OpenAPI specification from the running local site to the local filesystem
     cmds:
-      - docker compose {{ .DOCKER_COMPOSE_FILES_CI }} run node-chrome npm ci
+      - docker compose {{ .DOCKER_COMPOSE_FILES_CI }} run node-chrome yarn install --frozen-lockfile
       - docker compose {{ .DOCKER_COMPOSE_FILES_CI }} run node-chrome curl http://varnish:8080/openapi/rest?_format=json | npx jsome -r > openapi.json
 
   source:build:

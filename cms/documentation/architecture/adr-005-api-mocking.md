@@ -69,3 +69,8 @@ include:
 
 - Developers may have to engage in maintenance of the `wiremock-php` and
   `behat-wiremock-extension` library
+
+## Status
+
+Instrumentation of Wiremock with PHP is made obsolete with [the migration from
+Behat to Cypress](./adr-007-cypress-functional-testing.md).

@@ -33,10 +33,10 @@
           headers: {
             Accept:
               "text/javascript, application/javascript, " +
-              "application/ecmascript, application/x-ecmascript"
-          }
+              "application/ecmascript, application/x-ecmascript",
+          },
         })
-          .then(response => {
+          .then((response) => {
             if (!response.ok) {
               throw new Error(
                 `HTTP error response: ${response.status} - ${response.statusText}`
@@ -44,7 +44,7 @@
             }
             return response.text();
           })
-          .then(response => {
+          .then((response) => {
             DOMEval(response);
             window.dplReact.mount(element);
           });
@@ -55,6 +55,6 @@
       if (element) {
         window.dplReact.unmount(element);
       }
-    }
+    },
   };
 })(Drupal);

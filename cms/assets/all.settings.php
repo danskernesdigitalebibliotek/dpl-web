@@ -47,6 +47,13 @@ if (getenv('CI')) {
     CURLOPT_PROXY_SSL_VERIFYHOST => 0,
     CURLOPT_PROXY_SSL_VERIFYPEER => FALSE,
   ];
+  // Specify non-HTTP versions of endpoints. This is required to make Cypress
+  // mocking work. It does not support ignoring self-signed certificates from
+  // Wiremock.
+  $config['openid_connect.settings.adgangsplatformen']['settings']['authorization_endpoint'] = 'http://login.bib.dk/oauth/authorize';
+  $config['openid_connect.settings.adgangsplatformen']['settings']['token_endpoint'] = 'http://login.bib.dk/oauth/token/';
+  $config['openid_connect.settings.adgangsplatformen']['settings']['userinfo_endpoint'] = 'http://login.bib.dk/userinfo/';
+  $config['openid_connect.settings.adgangsplatformen']['settings']['logout_endpoint'] = 'http://login.bib.dk/logout';
   // The actual values here are not important. The primary thing is that the
   // Adgangsplatformen OpenID Connect client is configured.
   $config['openid_connect.settings.adgangsplatformen']['settings']['client_id'] = 'dummy-id';
