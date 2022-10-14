@@ -1,0 +1,23 @@
+uuid: 981de8bb-b4a8-48a1-9350-3f7c5b8252f0
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.paragraph.field_campaign_rule_ranking_max
+    - paragraphs.paragraphs_type.campaign_rule
+id: paragraph.campaign_rule.field_campaign_rule_ranking_max
+field_name: field_campaign_rule_ranking_max
+entity_type: paragraph
+bundle: campaign_rule
+label: 'Term Ranking Maximum'
+description: 'The upper limit for a placement/ranking of a term inside a facet group'
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings:
+  min: 1
+  max: null
+  prefix: ''
+  suffix: ''
+field_type: integer

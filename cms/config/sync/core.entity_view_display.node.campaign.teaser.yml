@@ -7,6 +7,7 @@ dependencies:
     - field.field.node.campaign.body
     - field.field.node.campaign.field_campaign_image
     - field.field.node.campaign.field_campaign_rules
+    - field.field.node.campaign.field_campaign_rules_logic
     - node.type.campaign
   module:
     - text
@@ -32,4 +33,5 @@ content:
 hidden:
   field_campaign_image: true
   field_campaign_rules: true
+  field_campaign_rules_logic: true
   langcode: true

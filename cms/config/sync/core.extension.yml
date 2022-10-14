@@ -3,6 +3,7 @@ module:
   breakpoint: 0
   config_filter: 0
   config_ignore: 0
+  dpl_campaign: 0
   dpl_library_agency: 0
   dpl_library_token: 0
   dpl_login: 0
@@ -13,7 +14,6 @@ module:
   dynamic_page_cache: 0
   entity_reference_revisions: 0
   field: 0
-  field_ui: 0
   file: 0
   filter: 0
   image: 0

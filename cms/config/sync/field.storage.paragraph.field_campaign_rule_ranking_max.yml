@@ -1,11 +1,11 @@
-uuid: f9f4dfb4-9bab-40a9-9d29-37312b201188
+uuid: 458275c0-5704-46f4-8eb4-937d5273f21d
 langcode: en
 status: true
 dependencies:
   module:
     - paragraphs
-id: paragraph.field_campaign_rule_term_ranking
-field_name: field_campaign_rule_term_ranking
+id: paragraph.field_campaign_rule_ranking_max
+field_name: field_campaign_rule_ranking_max
 entity_type: paragraph
 type: integer
 settings:

@@ -4,8 +4,8 @@ status: true
 dependencies:
   config:
     - field.field.paragraph.campaign_rule.field_campaign_rule_facet
+    - field.field.paragraph.campaign_rule.field_campaign_rule_ranking_max
     - field.field.paragraph.campaign_rule.field_campaign_rule_term
-    - field.field.paragraph.campaign_rule.field_campaign_rule_term_ranking
     - paragraphs.paragraphs_type.campaign_rule
   module:
     - options
@@ -21,6 +21,15 @@ content:
     third_party_settings: {  }
     type: list_default
     region: content
+  field_campaign_rule_ranking_max:
+    weight: 6
+    label: above
+    settings:
+      thousand_separator: ''
+      prefix_suffix: true
+    third_party_settings: {  }
+    type: number_integer
+    region: content
   field_campaign_rule_term:
     weight: 5
     label: above
@@ -28,14 +37,5 @@ content:
       link_to_entity: false
     third_party_settings: {  }
     type: string
-    region: content
-  field_campaign_rule_term_ranking:
-    weight: 4
-    label: above
-    settings:
-      thousand_separator: ''
-      prefix_suffix: true
-    third_party_settings: {  }
-    type: number_integer
     region: content
 hidden: {  }

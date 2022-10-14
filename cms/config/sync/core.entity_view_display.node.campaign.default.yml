@@ -6,10 +6,12 @@ dependencies:
     - field.field.node.campaign.body
     - field.field.node.campaign.field_campaign_image
     - field.field.node.campaign.field_campaign_rules
+    - field.field.node.campaign.field_campaign_rules_logic
     - node.type.campaign
   module:
     - entity_reference_revisions
     - image
+    - options
     - text
     - user
 id: node.campaign.default
@@ -41,6 +43,13 @@ content:
       view_mode: default
       link: ''
     third_party_settings: {  }
+    region: content
+  field_campaign_rules_logic:
+    weight: 107
+    label: above
+    settings: {  }
+    third_party_settings: {  }
+    type: list_default
     region: content
   links:
     weight: 100

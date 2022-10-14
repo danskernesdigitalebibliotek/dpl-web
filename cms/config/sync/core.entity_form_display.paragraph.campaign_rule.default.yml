@@ -4,8 +4,8 @@ status: true
 dependencies:
   config:
     - field.field.paragraph.campaign_rule.field_campaign_rule_facet
+    - field.field.paragraph.campaign_rule.field_campaign_rule_ranking_max
     - field.field.paragraph.campaign_rule.field_campaign_rule_term
-    - field.field.paragraph.campaign_rule.field_campaign_rule_term_ranking
     - paragraphs.paragraphs_type.campaign_rule
 id: paragraph.campaign_rule.default
 targetEntityType: paragraph
@@ -18,6 +18,13 @@ content:
     third_party_settings: {  }
     type: options_select
     region: content
+  field_campaign_rule_ranking_max:
+    weight: 6
+    settings:
+      placeholder: ''
+    third_party_settings: {  }
+    type: number
+    region: content
   field_campaign_rule_term:
     weight: 5
     settings:
@@ -25,13 +32,6 @@ content:
       placeholder: ''
     third_party_settings: {  }
     type: string_textfield
-    region: content
-  field_campaign_rule_term_ranking:
-    weight: 4
-    settings:
-      placeholder: ''
-    third_party_settings: {  }
-    type: number
     region: content
 hidden:
   created: true

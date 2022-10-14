@@ -11,4 +11,5 @@ is_admin: false
 permissions:
   - 'access content'
   - 'access openapi api docs'
+  - 'restful get campaign'
   - 'restful get proxy-url'

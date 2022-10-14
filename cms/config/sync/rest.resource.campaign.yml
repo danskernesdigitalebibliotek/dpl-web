@@ -1,0 +1,18 @@
+uuid: bbef3a99-b80c-4240-8850-cf021691bbaa
+langcode: en
+status: true
+dependencies:
+  module:
+    - dpl_campaign
+    - serialization
+    - user
+id: campaign
+plugin_id: campaign
+granularity: resource
+configuration:
+  methods:
+    - GET
+  formats:
+    - json
+  authentication:
+    - cookie

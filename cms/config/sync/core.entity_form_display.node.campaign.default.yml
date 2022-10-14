@@ -6,6 +6,7 @@ dependencies:
     - field.field.node.campaign.body
     - field.field.node.campaign.field_campaign_image
     - field.field.node.campaign.field_campaign_rules
+    - field.field.node.campaign.field_campaign_rules_logic
     - image.style.thumbnail
     - node.type.campaign
   module:
@@ -43,7 +44,7 @@ content:
     region: content
   field_campaign_rules:
     type: paragraphs
-    weight: 7
+    weight: 8
     settings:
       title: Paragraph
       title_plural: Paragraphs
@@ -58,6 +59,12 @@ content:
         collapse_edit_all: collapse_edit_all
         duplicate: duplicate
     third_party_settings: {  }
+    region: content
+  field_campaign_rules_logic:
+    weight: 7
+    settings: {  }
+    third_party_settings: {  }
+    type: options_select
     region: content
   langcode:
     type: language_select
