@@ -16,6 +16,7 @@ module:
   field: 0
   file: 0
   filter: 0
+  handy_cache_tags: 0
   image: 0
   jsonlog: 0
   language: 0

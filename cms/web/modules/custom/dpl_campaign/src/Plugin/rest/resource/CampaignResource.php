@@ -90,6 +90,14 @@ class CampaignResource extends ResourceBase {
   protected $entityTypeManager;
 
   /**
+   * Handy Cache Tag Manager.
+   *
+   * @var \Drupal\handy_cache_tags\HandyCacheTagsManager
+   */
+  protected $handyCacheTagManager;
+
+
+  /**
    * Creates an instance of the plugin.
    *
    * @param \Symfony\Component\DependencyInjection\ContainerInterface $container
@@ -116,6 +124,7 @@ class CampaignResource extends ResourceBase {
     $instance->configManager = $container->get('config.manager');
     $instance->entityTypeManager = $container->get('entity_type.manager');
     $instance->urlGenerator = $container->get('url_generator');
+    $instance->handyCacheTagManager = $container->get('handy_cache_tags.manager');
 
     return $instance;
   }
@@ -139,9 +148,9 @@ class CampaignResource extends ResourceBase {
    * @return mixed[]
    *   Either an array of rules or an empty array if no rules could be parsed.
    */
-  protected function transformFacetTermPairsToRules(string $transformFacetTermPairs): array {
+  protected function transformFacetTermPairsToRules(string $transform_facet_term_pairs): array {
     $rules = [];
-    foreach (explode('|', $transformFacetTermPairs) as $pair) {
+    foreach (explode('|', $transform_facet_term_pairs) as $pair) {
       list($facet, $term, $ranking) = explode(':', $pair);
       $rules[] = [
         'facet' => $facet,
@@ -256,7 +265,7 @@ class CampaignResource extends ResourceBase {
 
     return $response->addCacheableDependency(CacheableMetadata::createFromRenderArray([
       '#cache' => [
-        'tags' => [],
+        'tags' => [$this->handyCacheTagManager->getBundleTag('node', 'campaign')],
         'contexts' => ['url.query_args'],
       ],
     ]));

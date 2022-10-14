@@ -53,6 +53,7 @@
         "drupal/core-recommended": "^9.2.7",
         "drupal/default_content": "^2.0@alpha",
         "drupal/devel": "^4.1",
+        "drupal/handy_cache_tags": "^1.4",
         "drupal/jsonlog": "^3.0",
         "drupal/libraries": "^3.0@beta",
         "drupal/openapi": "^2.0",
