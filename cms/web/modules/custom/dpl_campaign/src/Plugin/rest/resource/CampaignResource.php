@@ -174,7 +174,7 @@ class CampaignResource extends ResourceBase {
     $body = !$campaign->get('body')->isEmpty ? $campaign->body->getValue()[0]['value'] : '';
     $image = NULL;
 
-    if (!$campaign->get('field_campaign_image')->isEmpty) {
+    if (!$campaign->get('field_campaign_image')->isEmpty()) {
       $file = $campaign->field_campaign_image->entity;
       $image = [
         'url' => sprintf('%s%s', $this->getBaseUrl(), $file->createFileUrl()),
