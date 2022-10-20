@@ -7,9 +7,11 @@ use Drupal\node\Entity\Node;
 use Drupal\node\NodeInterface;
 use Drupal\rest\Plugin\ResourceBase;
 use Drupal\rest\ResourceResponse;
+use Safe\Exceptions\JsonException;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\Exception\HttpException;
+use function Safe\json_decode as json_decode;
 
 // Descriptions quickly become long and Doctrine annotations have no good way
 // of handling multiline strings.
@@ -26,21 +28,31 @@ use Symfony\Component\HttpKernel\Exception\HttpException;
  *     "canonical" = "/campaign",
  *   },
  *
- *   route_parameters = {
- *     "GET" = {
- *       "facet" = {
- *          "name" = "facet",
- *          "description" = "A facet to match against",
- *          "type" = "string",
- *          "in" = "query",
- *          "required" = TRUE,
- *       },
- *       "term" = {
- *          "name" = "term",
- *          "description" = "A term to match against",
- *          "type" = "string",
- *          "in" = "query",
- *          "required" = TRUE,
+ *   payload = {
+ *     "name" = "facets",
+ *     "description" = "A facet to match against",
+ *     "in" = "body",
+ *     "required" = TRUE,
+ *     "schema" = {
+ *       "type" = "object",
+ *       "properties" = {
+ *         "name" = {
+ *           "type" = "string",
+ *         },
+ *         "values" = {
+ *           "type" = "object",
+ *           "schema" = {
+ *             "key" = {
+ *               "type" = "string",
+ *             },
+ *             "term" = {
+ *               "type" = "string",
+ *             },
+ *             "score" = {
+ *               "type" = "int",
+ *             },
+ *           },
+ *         },
  *       },
  *     },
  *   },
@@ -142,21 +154,22 @@ class CampaignResource extends ResourceBase {
   /**
    * Takes a facet-term-pairs query param and transforms it into a rules array.
    *
-   * @param string $transformFacetTermPairs
+   * @param mixed[] $facets
    *   The facet-term-pairs query param. Eg.: "level:advanceret:2|access:basis:4".
    *
    * @return mixed[]
    *   Either an array of rules or an empty array if no rules could be parsed.
    */
-  protected function transformFacetTermPairsToRules(string $transform_facet_term_pairs): array {
+  protected function transformFacetTermPairsToRules(array $facets): array {
     $rules = [];
-    foreach (explode('|', $transform_facet_term_pairs) as $pair) {
-      list($facet, $term, $ranking) = explode(':', $pair);
-      $rules[] = [
-        'facet' => $facet,
-        'term' => $term,
-        'ranking' => $ranking,
-      ];
+    foreach ($facets as $facet) {
+      foreach ($facet['values'] as $facet_values) {
+        $rules[] = [
+          'facet' => $facet['name'],
+          'term' => $facet_values['term'],
+          'ranking' => $facet_values['score'],
+        ];
+      }
     }
 
     return $rules;
@@ -237,18 +250,18 @@ class CampaignResource extends ResourceBase {
    * @return \Drupal\rest\ResourceResponse
    *   The response containing matching campaign.
    */
-  public function get(Request $request): ResourceResponse {
-    $facet_term_pairs = $request->get('facet-term-pairs');
-
-    if (!$facet_term_pairs) {
-      throw new HttpException(400, 'Facet term pairs is missing');
+  public function post(Request $request): ResourceResponse {
+    $facets = $request->getContent();
+    if (!$facets) {
+      throw new HttpException(400, 'No facet data provided');
     }
 
-    $rules = $this->transformFacetTermPairsToRules($facet_term_pairs);
-    // print_r($rules);
-    if (!$rules) {
-      throw new HttpException(400, 'Facet term pairs is invalid');
+    try {
+      $facet_data = json_decode($facets, true);
+    } catch (JsonException $e) {
+      throw new HttpException(400, "Invalid facet data: {$e->getMessage()}}");
     }
+    $rules = $this->transformFacetTermPairsToRules($facet_data);
 
     // Default response is 404 if no matching campaign is found.
     $response = new ResourceResponse(NULL, 404);
