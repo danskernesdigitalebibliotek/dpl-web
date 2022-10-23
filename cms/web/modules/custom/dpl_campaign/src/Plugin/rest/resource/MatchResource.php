@@ -28,7 +28,7 @@ use function Safe\usort as usort;
  *   serialization_class = "",
  *
  *   uri_paths = {
- *     "canonical" = "/dpl_campaign/match",
+ *     "create" = "/dpl_campaign/match",
  *   },
  *
  *   payload = {
