@@ -37,22 +37,28 @@ use function Safe\usort as usort;
  *     "in" = "body",
  *     "required" = TRUE,
  *     "schema" = {
- *       "type" = "object",
- *       "properties" = {
- *         "name" = {
- *           "type" = "string",
- *         },
- *         "values" = {
- *           "type" = "object",
- *           "schema" = {
- *             "key" = {
- *               "type" = "string",
- *             },
- *             "term" = {
- *               "type" = "string",
- *             },
- *             "score" = {
- *               "type" = "int",
+ *       "type" = "array",
+ *       "items" = {
+ *         "type" = "object",
+ *         "schema" = {
+ *           "name" = {
+ *             "type" = "string",
+ *           },
+ *           "values" = {
+ *             "type" = "array",
+ *             "items" = {
+ *               "type" = "object",
+ *               "schema" = {
+ *                 "key" = {
+ *                   "type" = "string",
+ *                 },
+ *                 "term" = {
+ *                   "type" = "string",
+ *                 },
+ *                 "score" = {
+ *                   "type" = "int",
+ *                 },
+ *               },
  *             },
  *           },
  *         },
