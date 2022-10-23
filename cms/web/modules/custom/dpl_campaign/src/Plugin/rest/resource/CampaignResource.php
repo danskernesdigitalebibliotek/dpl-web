@@ -9,6 +9,7 @@ use Drupal\dpl_campaign\Input\Value;
 use Drupal\node\NodeInterface;
 use Drupal\rest\Plugin\ResourceBase;
 use Drupal\rest\ResourceResponse;
+use Drupal\rest\ResourceResponseInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\Exception\HttpException;
@@ -269,12 +270,10 @@ class CampaignResource extends ResourceBase {
   /**
    * Responds to entity GET requests.
    *
-   * @throws \Symfony\Component\HttpKernel\Exception\HttpException
-   *
-   * @return \Drupal\rest\ResourceResponse
+   * @return \Drupal\rest\ResourceResponseInterface
    *   The response containing matching campaign.
    */
-  public function post(Request $request): ResourceResponse {
+  public function post(Request $request): ResourceResponseInterface {
     $facet_data = $request->getContent();
     if (!$facet_data) {
       throw new HttpException(400, 'No facet data provided');
