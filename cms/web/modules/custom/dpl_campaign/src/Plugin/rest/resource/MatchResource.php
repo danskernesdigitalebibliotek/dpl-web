@@ -40,7 +40,7 @@ use function Safe\usort as usort;
  *       "type" = "array",
  *       "items" = {
  *         "type" = "object",
- *         "schema" = {
+ *         "properties" = {
  *           "name" = {
  *             "type" = "string",
  *           },
@@ -48,7 +48,7 @@ use function Safe\usort as usort;
  *             "type" = "array",
  *             "items" = {
  *               "type" = "object",
- *               "schema" = {
+ *               "properties" = {
  *                 "key" = {
  *                   "type" = "string",
  *                 },
@@ -56,7 +56,7 @@ use function Safe\usort as usort;
  *                   "type" = "string",
  *                 },
  *                 "score" = {
- *                   "type" = "int",
+ *                   "type" = "integer",
  *                 },
  *               },
  *             },
