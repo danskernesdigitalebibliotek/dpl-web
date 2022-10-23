@@ -65,6 +65,9 @@
         "drupal/restui": "^1.21",
         "drupal/varnish_purge": "^2.1",
         "drush/drush": "10.4.3",
+        "phpdocumentor/reflection-docblock": "^5.3",
+        "symfony/property-access": "^4.4",
+        "symfony/property-info": "^4.4",
         "thecodingmachine/safe": "^1.3",
         "zaporylie/composer-drupal-optimizations": "1.2.0"
     },

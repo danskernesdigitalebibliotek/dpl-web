@@ -3,15 +3,19 @@
 namespace Drupal\dpl_campaign\Plugin\rest\resource;
 
 use Drupal\Core\Cache\CacheableMetadata;
-use Drupal\node\Entity\Node;
+use Drupal\Core\GeneratedUrl;
+use Drupal\dpl_campaign\Input\Facet;
+use Drupal\dpl_campaign\Input\Rule;
+use Drupal\dpl_campaign\Input\Value;
 use Drupal\node\NodeInterface;
 use Drupal\rest\Plugin\ResourceBase;
 use Drupal\rest\ResourceResponse;
-use Safe\Exceptions\JsonException;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\Exception\HttpException;
-use function Safe\json_decode as json_decode;
+use Symfony\Component\Serializer\Exception\UnexpectedValueException;
+use function Safe\sprintf as sprintf;
+use function Safe\usort as usort;
 
 // Descriptions quickly become long and Doctrine annotations have no good way
 // of handling multiline strings.
@@ -75,6 +79,9 @@ use function Safe\json_decode as json_decode;
  *         },
  *       },
  *     },
+ *     400 = {
+ *      "descriptions" = "Invalid input"
+ *     },
  *     404 = {
  *       "description" = "No matching campaign found"
  *     },
@@ -102,12 +109,25 @@ class CampaignResource extends ResourceBase {
   protected $entityTypeManager;
 
   /**
+   * The url generator.
+   *
+   * @var \Drupal\Core\Routing\UrlGeneratorInterface
+   */
+  protected $urlGenerator;
+
+  /**
+   * The serializer.
+   *
+   * @var \Symfony\Component\Serializer\SerializerInterface
+   */
+  protected $serializer;
+
+  /**
    * Handy Cache Tag Manager.
    *
    * @var \Drupal\handy_cache_tags\HandyCacheTagsManager
    */
   protected $handyCacheTagManager;
-
 
   /**
    * Creates an instance of the plugin.
@@ -136,6 +156,7 @@ class CampaignResource extends ResourceBase {
     $instance->configManager = $container->get('config.manager');
     $instance->entityTypeManager = $container->get('entity_type.manager');
     $instance->urlGenerator = $container->get('url_generator');
+    $instance->serializer = $container->get('dpl_campaign.serializer');
     $instance->handyCacheTagManager = $container->get('handy_cache_tags.manager');
 
     return $instance;
@@ -145,34 +166,31 @@ class CampaignResource extends ResourceBase {
    * The base url for the site which is the same base url for the REST API.
    */
   protected function getBaseUrl(): string {
-    $url = $this->urlGenerator
-      ->generateFromRoute('<front>', [], ['absolute' => TRUE], TRUE)
-      ->getGeneratedUrl();
+    $url = $this->urlGenerator->generateFromRoute('<front>', [], ['absolute' => TRUE], TRUE);
+    $url = ($url instanceof GeneratedUrl) ? $url->getGeneratedUrl() : $url;
     return rtrim($url, '/');
   }
 
   /**
    * Takes a facet-term-pairs query param and transforms it into a rules array.
    *
-   * @param mixed[] $facets
-   *   The facet-term-pairs query param. Eg.: "level:advanceret:2|access:basis:4".
+   * @param \Drupal\dpl_campaign\Input\Facet[] $facets
+   *   Facets for a search result.
    *
-   * @return mixed[]
-   *   Either an array of rules or an empty array if no rules could be parsed.
+   * @return \Drupal\dpl_campaign\Input\Rule[]
+   *   Rules corresponding to the facets.
    */
-  protected function transformFacetTermPairsToRules(array $facets): array {
-    $rules = [];
-    foreach ($facets as $facet) {
-      foreach ($facet['values'] as $facet_values) {
-        $rules[] = [
-          'facet' => $facet['name'],
-          'term' => $facet_values['term'],
-          'ranking' => $facet_values['score'],
-        ];
-      }
-    }
-
-    return $rules;
+  protected function transformFacetsToRules(array $facets): array {
+    return array_merge(... array_map(function (Facet $facet) {
+      $sorted_values = $facet->values;
+      usort($sorted_values, function (Value $a, Value $b) {
+        return $a->score - $b->score;
+      });
+      return array_map(function (Value $value, int $index) use ($facet) {
+        // With values being sorted the index will correspond to the rank.
+        return new Rule($facet->name, $value->term, $index + 1);
+      }, $sorted_values, array_keys($sorted_values));
+    }, $facets));
   }
 
   /**
@@ -182,20 +200,22 @@ class CampaignResource extends ResourceBase {
    *   The campaign node.
    *
    * @return mixed[]
+   *   A normalized data structure which can be output.
    */
-  protected function formatCampaignOutput(Node $campaign): array {
-    $body = !$campaign->get('body')->isEmpty ? $campaign->body->getValue()[0]['value'] : '';
+  protected function formatCampaignOutput(NodeInterface $campaign): array {
+    $body = !$campaign->get('body')->isEmpty() ? $campaign->get('body')->getValue()[0]['value'] : '';
     $image = NULL;
 
     if (!$campaign->get('field_campaign_image')->isEmpty()) {
-      $file = $campaign->field_campaign_image->entity;
+      /** @var \Drupal\file\FileInterface $file */
+      $file = $campaign->get('field_campaign_image')->getEntity();
       $image = [
         'url' => sprintf('%s%s', $this->getBaseUrl(), $file->createFileUrl()),
       ];
     }
 
     return [
-      "title" => $campaign->title->getValue()[0]['value'],
+      "title" => $campaign->getTitle(),
       "body" => $body,
       "image" => $image,
     ];
@@ -204,7 +224,7 @@ class CampaignResource extends ResourceBase {
   /**
    * A query method to get a campaign node based on a set of rules and logic.
    *
-   * @param mixed[] $facet_term_rules
+   * @param \Drupal\dpl_campaign\Input\Rule[] $rules
    *   An array of facet-term rules. see self::transformFacetTermPairsToRules().
    * @param string $rules_logic
    *   The logic to use when matching the rules. Either "AND" or "OR".
@@ -212,7 +232,7 @@ class CampaignResource extends ResourceBase {
    * @return \Drupal\node\NodeInterface|null
    *   A campaign node or NULL if no campaign could be found.
    */
-  protected function findCampaignByFacetAndTerms(array $facet_term_rules, string $rules_logic): NodeInterface | NULL {
+  protected function findCampaign(array $rules, string $rules_logic): ?NodeInterface {
     $storage = $this->entityTypeManager->getStorage('node');
     $query = $storage->getQuery();
 
@@ -221,25 +241,32 @@ class CampaignResource extends ResourceBase {
       ->condition('status', 1)
       ->condition('field_campaign_rules_logic', $rules_logic);
 
-    $conditionGroup = $rules_logic == "AND" ? $query->andConditionGroup() : $query->orConditionGroup();
-    foreach ($facet_term_rules as $rule) {
+    if ($rules_logic == "AND") {
+      $conditionGroup = $query->andConditionGroup();
+    }
+    else {
+      $conditionGroup = $query->orConditionGroup();
+    }
+    foreach ($rules as $rule) {
       $facetTermGroup = $query->andConditionGroup()
-        ->condition('field_campaign_rules.entity:paragraph.field_campaign_rule_facet', $rule['facet'])
-        ->condition('field_campaign_rules.entity:paragraph.field_campaign_rule_term', $rule['term'])
-        // If the position of the term inside a facet is lower than the maximum ranking we have a hit.
-        ->condition('field_campaign_rules.entity:paragraph.field_campaign_rule_ranking_max', $rule['ranking'], '>=');
+        ->condition('field_campaign_rules.entity:paragraph.field_campaign_rule_facet', $rule->facetName)
+        ->condition('field_campaign_rules.entity:paragraph.field_campaign_rule_term', $rule->valueTerm)
+        // If the position of the term inside a facet is lower than the maximum
+        // ranking we have a hit.
+        ->condition('field_campaign_rules.entity:paragraph.field_campaign_rule_ranking_max', $rule->ranking, '>=');
       $conditionGroup->condition($facetTermGroup);
     }
     $query->condition($conditionGroup);
 
-    if (!$entity_ids = $query->execute()) {
-      return NULL;
-    }
+    /** @var int[] $entity_ids */
+    $entity_ids = $query->execute();
 
     // If there is multiple campaign matches, we return the first one.
     $entity_id = reset($entity_ids);
 
-    return $storage->load($entity_id);
+    /** @var \Drupal\node\NodeInterface $campaign */
+    $campaign = $storage->load($entity_id);
+    return $campaign;
   }
 
   /**
@@ -251,24 +278,27 @@ class CampaignResource extends ResourceBase {
    *   The response containing matching campaign.
    */
   public function post(Request $request): ResourceResponse {
-    $facets = $request->getContent();
-    if (!$facets) {
+    $facet_data = $request->getContent();
+    if (!$facet_data) {
       throw new HttpException(400, 'No facet data provided');
     }
 
     try {
-      $facet_data = json_decode($facets, true);
-    } catch (JsonException $e) {
+      /** @var \Drupal\dpl_campaign\Input\Facet[] $facets */
+      $facets = $this->serializer->deserialize($facet_data, Facet::class . "[]", 'json');
+    }
+    catch (UnexpectedValueException $e) {
       throw new HttpException(400, "Invalid facet data: {$e->getMessage()}}");
     }
-    $rules = $this->transformFacetTermPairsToRules($facet_data);
+
+    $rules = $this->transformFacetsToRules($facets);
 
     // Default response is 404 if no matching campaign is found.
     $response = new ResourceResponse(NULL, 404);
 
     // Try to find a matching campaign. AND matches takes precedence over OR.
     foreach (['AND', 'OR'] as $logic) {
-      if ($campaign = $this->findCampaignByFacetAndTerms($rules, $logic)) {
+      if ($campaign = $this->findCampaign($rules, $logic)) {
         $response = new ResourceResponse([
           'data' => $this->formatCampaignOutput($campaign),
         ]);
@@ -276,12 +306,14 @@ class CampaignResource extends ResourceBase {
       }
     }
 
-    return $response->addCacheableDependency(CacheableMetadata::createFromRenderArray([
+    $cacheable_response = $response->addCacheableDependency(CacheableMetadata::createFromRenderArray([
       '#cache' => [
         'tags' => [$this->handyCacheTagManager->getBundleTag('node', 'campaign')],
         'contexts' => ['url.query_args'],
       ],
     ]));
+
+    return $cacheable_response;
   }
 
 }
