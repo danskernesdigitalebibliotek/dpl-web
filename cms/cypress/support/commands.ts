@@ -95,7 +95,7 @@ Cypress.Commands.add("drupalCron", () => {
   cy.drupalLogin();
   cy.visit("/admin/config/system/cron");
   cy.get('[value="Run cron"]').click();
-  cy.contains("Cron-opgave fuldført.");
+  cy.contains("Cron ran successfully.");
   cy.drupalLogout();
 });
 
