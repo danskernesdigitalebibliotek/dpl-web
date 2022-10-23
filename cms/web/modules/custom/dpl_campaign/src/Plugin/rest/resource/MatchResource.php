@@ -20,15 +20,15 @@ use function Safe\usort as usort;
 // of handling multiline strings.
 // phpcs:disable Drupal.Files.LineLength.TooLong
 /**
- * A resource for transforming urls to urls with proxy information added.
+ * A resource for retrieving a campaign matching the facets in a search result.
  *
  * @RestResource(
- *   id = "campaign",
- *   label = @Translation("Get matching campaign"),
+ *   id = "campaign:match",
+ *   label = @Translation("Get campaign matching search result facets"),
  *   serialization_class = "",
  *
  *   uri_paths = {
- *     "canonical" = "/campaign",
+ *     "canonical" = "/dpl_campaign/match",
  *   },
  *
  *   payload = {
@@ -109,7 +109,7 @@ use function Safe\usort as usort;
  *   }
  * )
  */
-class CampaignResource extends ResourceBase {
+class MatchResource extends ResourceBase {
 // phpcs:enable Drupal.Files.LineLength.TooLong
 
   /**

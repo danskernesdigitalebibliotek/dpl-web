@@ -1,4 +1,4 @@
-uuid: bbef3a99-b80c-4240-8850-cf021691bbaa
+uuid: 3bae3fac-424c-4004-b928-60cc08ef4b0f
 langcode: en
 status: true
 dependencies:
@@ -6,8 +6,8 @@ dependencies:
     - dpl_campaign
     - serialization
     - user
-id: campaign
-plugin_id: campaign
+id: campaign.match
+plugin_id: 'campaign:match'
 granularity: resource
 configuration:
   methods:
