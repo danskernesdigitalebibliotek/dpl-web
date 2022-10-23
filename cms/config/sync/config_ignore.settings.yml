@@ -30,10 +30,10 @@ ignored_config_entities:
   - ~filter.format.plain_text
   - ~filter.settings
   - ~image.settings
+  - ~image.style.campaign_image
   - ~image.style.large
   - ~image.style.medium
   - ~image.style.thumbnail
-  - ~image.style.wide
   - '~jsonlog.settings:jsonlog_severity_threshold'
   - '~jsonlog.settings:jsonlog_truncate'
   - '~jsonlog.settings:jsonlog_stderr'

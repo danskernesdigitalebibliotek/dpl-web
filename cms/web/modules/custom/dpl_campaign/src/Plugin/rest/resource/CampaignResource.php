@@ -205,13 +205,16 @@ class CampaignResource extends ResourceBase {
     if (!$campaign->get('body')->isEmpty()) {
       $output['text'] = $campaign->get('body')->getValue()[0]['value'];
     }
+
     if (!$campaign->get('field_campaign_image')->isEmpty()) {
       /** @var \Drupal\image\Plugin\Field\FieldType\ImageItem $image_item */
       $image_item = $campaign->get('field_campaign_image')->get(0);
       /** @var \Drupal\file\FileInterface $image_file */
       $image_file = $this->entityTypeManager->getStorage('file')->load($image_item->get('target_id')->getValue());
+      /** @var \Drupal\image\Entity\ImageStyle $image_style */
+      $image_style = $this->entityTypeManager->getStorage('image_style')->load('campaign_image');
       $output['image'] = [
-        'url' => $image_file->createFileUrl(FALSE),
+        'url' => $image_style->buildUrl($image_file->getFileUri()),
         'alt' => $image_item->get('alt')->getValue(),
       ];
     }
