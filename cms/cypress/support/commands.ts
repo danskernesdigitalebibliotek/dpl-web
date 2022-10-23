@@ -94,7 +94,7 @@ Cypress.Commands.add("drupalCron", () => {
   // cause too many irrelevant requests to pass throuh the proxy.
   cy.drupalLogin();
   cy.visit("/admin/config/system/cron");
-  cy.get('[value="Kør cron"]').click();
+  cy.get('[value="Run cron"]').click();
   cy.contains("Cron-opgave fuldført.");
   cy.drupalLogout();
 });
