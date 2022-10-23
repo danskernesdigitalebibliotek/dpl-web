@@ -88,6 +88,10 @@ use function Safe\usort as usort;
  *                   },
  *                 },
  *               },
+ *               "url" = {
+ *                 "type" = "string",
+ *                 "description" = "The url the campaign should link to",
+ *               },
  *             },
  *           },
  *         },
@@ -217,6 +221,14 @@ class CampaignResource extends ResourceBase {
         'url' => $image_style->buildUrl($image_file->getFileUri()),
         'alt' => $image_item->get('alt')->getValue(),
       ];
+    }
+
+    /** @var \Drupal\link\LinkItemInterface|null $link */
+    $link = $campaign->get('field_campaign_link')->first();
+    if ($link) {
+      /** @var \Drupal\Core\GeneratedUrl $url */
+      $url = $link->getUrl()->setAbsolute(TRUE)->toString(TRUE);
+      $output['url'] = $url->getGeneratedUrl();
     }
 
     return $output;
