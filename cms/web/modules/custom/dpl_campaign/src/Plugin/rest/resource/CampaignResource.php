@@ -3,7 +3,6 @@
 namespace Drupal\dpl_campaign\Plugin\rest\resource;
 
 use Drupal\Core\Cache\CacheableMetadata;
-use Drupal\Core\GeneratedUrl;
 use Drupal\dpl_campaign\Input\Facet;
 use Drupal\dpl_campaign\Input\Rule;
 use Drupal\dpl_campaign\Input\Value;
@@ -14,7 +13,6 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\Exception\HttpException;
 use Symfony\Component\Serializer\Exception\UnexpectedValueException;
-use function Safe\sprintf as sprintf;
 use function Safe\usort as usort;
 
 // Descriptions quickly become long and Doctrine annotations have no good way
@@ -69,10 +67,25 @@ use function Safe\usort as usort;
  *         "properties" = {
  *           "data" = {
  *             "type" = "object",
+ *             "description" = "The matching campaign",
  *             "properties" = {
- *               "campaign" = {
+ *               "text" = {
  *                 "type" = "string",
- *                 "description" = "The matching campaign",
+ *                 "description" = "The text to be shown for the campaign",
+ *               },
+ *               "image" = {
+ *                 "type" = "object",
+ *                 "description" = "The image to be shown for the campaign",
+ *                 "properties" = {
+ *                   "url" = {
+ *                     "type" = "string",
+ *                     "description" = "The url to the image",
+ *                   },
+ *                   "alt" = {
+ *                     "type" = "string",
+ *                     "description" = "The alt text for the image",
+ *                   },
+ *                 },
  *               },
  *             },
  *           },
@@ -107,13 +120,6 @@ class CampaignResource extends ResourceBase {
    * @var \Drupal\Core\Entity\EntityTypeManagerInterface
    */
   protected $entityTypeManager;
-
-  /**
-   * The url generator.
-   *
-   * @var \Drupal\Core\Routing\UrlGeneratorInterface
-   */
-  protected $urlGenerator;
 
   /**
    * The serializer.
@@ -155,20 +161,10 @@ class CampaignResource extends ResourceBase {
 
     $instance->configManager = $container->get('config.manager');
     $instance->entityTypeManager = $container->get('entity_type.manager');
-    $instance->urlGenerator = $container->get('url_generator');
     $instance->serializer = $container->get('dpl_campaign.serializer');
     $instance->handyCacheTagManager = $container->get('handy_cache_tags.manager');
 
     return $instance;
-  }
-
-  /**
-   * The base url for the site which is the same base url for the REST API.
-   */
-  protected function getBaseUrl(): string {
-    $url = $this->urlGenerator->generateFromRoute('<front>', [], ['absolute' => TRUE], TRUE);
-    $url = ($url instanceof GeneratedUrl) ? $url->getGeneratedUrl() : $url;
-    return rtrim($url, '/');
   }
 
   /**
@@ -203,22 +199,23 @@ class CampaignResource extends ResourceBase {
    *   A normalized data structure which can be output.
    */
   protected function formatCampaignOutput(NodeInterface $campaign): array {
-    $body = !$campaign->get('body')->isEmpty() ? $campaign->get('body')->getValue()[0]['value'] : '';
-    $image = NULL;
+    $output = [];
 
+    if (!$campaign->get('body')->isEmpty()) {
+      $output['text'] = $campaign->get('body')->getValue()[0]['value'];
+    }
     if (!$campaign->get('field_campaign_image')->isEmpty()) {
-      /** @var \Drupal\file\FileInterface $file */
-      $file = $campaign->get('field_campaign_image')->getEntity();
-      $image = [
-        'url' => sprintf('%s%s', $this->getBaseUrl(), $file->createFileUrl()),
+      /** @var \Drupal\image\Plugin\Field\FieldType\ImageItem $image_item */
+      $image_item = $campaign->get('field_campaign_image')->get(0);
+      /** @var \Drupal\file\FileInterface $image_file */
+      $image_file = $this->entityTypeManager->getStorage('file')->load($image_item->get('target_id')->getValue());
+      $output['image'] = [
+        'url' => $image_file->createFileUrl(FALSE),
+        'alt' => $image_item->get('alt')->getValue(),
       ];
     }
 
-    return [
-      "title" => $campaign->getTitle(),
-      "body" => $body,
-      "image" => $image,
-    ];
+    return $output;
   }
 
   /**

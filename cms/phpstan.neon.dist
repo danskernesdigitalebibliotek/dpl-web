@@ -11,3 +11,4 @@ parameters:
     # Drupal has many different iterable interfaces we do not want to provide
     # iterable typing for.
     - '#no value type specified in iterable type Drupal\\.*Interface#'
+    - '#no value type specified in iterable type Drupal\\.*\\Plugin\\Field\\FieldType\\.*Item#'
