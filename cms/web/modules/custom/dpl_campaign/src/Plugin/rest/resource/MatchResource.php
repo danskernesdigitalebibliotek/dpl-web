@@ -188,11 +188,20 @@ class MatchResource extends ResourceBase {
    *   Rules corresponding to the facets.
    */
   protected function transformFacetsToRules(array $facets): array {
-    return array_merge(... array_map(function (Facet $facet) {
+    $known_facets = [];
+    return array_merge(... array_map(function (Facet $facet) use (&$known_facets) {
+      // Throw an exception if we have a duplicate facet.
+      if (in_array($facet->name, $known_facets)) {
+        throw new HttpException(400, "Facet group can only be presented once: {$facet->name}");
+      }
+
       $sorted_values = $facet->values;
       usort($sorted_values, function (Value $a, Value $b) {
         return $a->score - $b->score;
       });
+
+      // Store the facet name so we can check for duplicates.
+      $known_facets[] = $facet->name;
       return array_map(function (Value $value, int $index) use ($facet) {
         // With values being sorted the index will correspond to the rank.
         return new Rule($facet->name, $value->term, $index + 1);
@@ -254,38 +263,106 @@ class MatchResource extends ResourceBase {
   protected function findCampaign(array $rules, string $rules_logic): ?NodeInterface {
     $storage = $this->entityTypeManager->getStorage('node');
     $query = $storage->getQuery();
-
     $query->accessCheck(FALSE)
       ->condition('type', 'campaign')
       ->condition('status', 1)
       ->condition('field_campaign_rules_logic', $rules_logic);
-
-    if ($rules_logic == "AND") {
-      $conditionGroup = $query->andConditionGroup();
-    }
-    else {
-      $conditionGroup = $query->orConditionGroup();
-    }
-    foreach ($rules as $rule) {
-      $facetTermGroup = $query->andConditionGroup()
-        ->condition('field_campaign_rules.entity:paragraph.field_campaign_rule_facet', $rule->facetName)
-        ->condition('field_campaign_rules.entity:paragraph.field_campaign_rule_term', $rule->valueTerm)
-        // If the position of the term inside a facet is lower than the maximum
-        // ranking we have a hit.
-        ->condition('field_campaign_rules.entity:paragraph.field_campaign_rule_ranking_max', $rule->ranking, '>=');
-      $conditionGroup->condition($facetTermGroup);
-    }
-    $query->condition($conditionGroup);
-
-    /** @var int[] $entity_ids */
     $entity_ids = $query->execute();
+    $campaigns = $storage->loadMultiple($entity_ids);
 
-    // If there is multiple campaign matches, we return the first one.
-    $entity_id = reset($entity_ids);
+    foreach($campaigns as $campaign) {
+      // print_r($campaign->title->value);
+      // print_r("\r\n");
+      // print_r($campaign->field_campaign_rules_logic->value);
+      // print_r("\r\n");
+      // print_r("\r\n");
+      $campaign_rules = $this->getCampaignRules($campaign);
+      $campaign_rules_count = count($campaign_rules);
+      $processed_facets = [];
+      $matched_campaign_rules_count = 0;
+      foreach($campaign_rules as $campaign_rule) {
+        $campaign_facet = $campaign_rule->get('field_campaign_rule_facet')->value;
+        // $campaign_debug = [
+        //   $campaign_rule->get('field_campaign_rule_facet')->value,
+        //   $campaign_rule->get('field_campaign_rule_term')->value,
+        //   $campaign_rule->get('field_campaign_rule_ranking_max')->value
+        // ];
+        // print_r("Campaign rule: ");
+        // print_r($campaign_debug);
+        // print_r("\r\n");
+        // print_r([$campaign_facet, $processed_facets]);
+        // print_r("\r\n");
 
-    /** @var \Drupal\node\NodeInterface $campaign */
-    $campaign = $storage->load($entity_id);
-    return $campaign;
+        if (in_array($campaign_rule->facetName, $processed_facets)) {
+          continue;
+        }
+
+        if ($this->campaignRuleMatched($campaign_rule, $rules)) {
+         $processed_facets[] = $campaign_facet;
+         $matched_campaign_rules_count++;
+        }
+      }
+
+      // print_r("\r\n");
+      // print_r("campaign_rules_count: " . $campaign_rules_count);
+      // print_r("\r\n");
+
+      // print_r("matched_campaign_rules_count: " . $matched_campaign_rules_count);
+      // print_r("\r\n");
+
+      // print_r(str_repeat('*', 20));
+      // print_r("\r\n");
+      // print_r("\r\n");
+      // print_r("\r\n");
+      // print_r("\r\n");
+
+      if ($rules_logic == 'AND' && $matched_campaign_rules_count == $campaign_rules_count) {
+        return $campaign;
+      }
+
+      if ($rules_logic == 'OR' && $matched_campaign_rules_count) {
+        return $campaign;
+      }
+
+
+    }
+    return null;
+  }
+
+  protected function campaignRuleMatched($campaign_rule, $rules) {
+    return array_reduce($rules, function($carry, $rule) use ($campaign_rule) {
+        // print_r("\r\n");
+        // print_r($rule);
+        // print_r("\r\n");
+        // print_r("\r\n");
+        // print_r("\r\n");
+      if (
+        $campaign_rule->get('field_campaign_rule_facet')->value == $rule->facetName
+        && $campaign_rule->get('field_campaign_rule_term')->value == $rule->valueTerm
+        && $campaign_rule->get('field_campaign_rule_ranking_max')->value >= $rule->ranking
+      ) {
+        return $carry = TRUE;
+      }
+
+      return $carry;
+    }, FALSE);
+  }
+
+  protected function getCampaignRules($campaign) {
+    // Load all Component Paragraph entities.
+    $rules = $campaign->hasField('field_campaign_rules') ? $campaign->get('field_campaign_rules')->getValue() : [];
+    $target_ids = array_map(
+      function ($value) {
+        return $value['target_id'];
+      },
+      $rules
+    );
+
+    return $target_ids
+      ? $this->entityTypeManager
+        ->getStorage('paragraph')
+        ->loadMultiple((array) $target_ids)
+      : [];
   }
 
   /**
