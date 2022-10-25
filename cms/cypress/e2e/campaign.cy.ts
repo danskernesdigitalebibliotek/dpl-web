@@ -1,21 +1,149 @@
 describe("Campaign creation and endpoint", () => {
   it("Select the expected campaign based on OR rules", () => {
-    //.
+    cy.request("POST", "/dpl_campaign/match", [
+      {
+        name: "type",
+        values: [
+          {
+            key: "Bog",
+            term: "Bog",
+            score: 1,
+          },
+          {
+            key: "E-bog",
+            term: "E-bog",
+            score: 1,
+          },
+        ],
+      },
+      {
+        name: "creator",
+        values: [
+          {
+            key: "Stephen King",
+            term: "Stephen King",
+            score: 1,
+          },
+          {
+            key: "Suzanne Bjerrehuus",
+            term: "Suzanne Bjerrehuus",
+            score: 1,
+          },
+        ],
+      },
+    ]).then((response) => {
+      expect(response.body).to.deep.equal({
+        data: {
+          text: "Promote authors: H. P. Lovecraft and Stephen King",
+          url: "https://example.com/promote-authors-h-p-lovecraft-and-stephen-king",
+        },
+      });
+    });
+  });
+
+  it("Select OR campaign when not all AND rules are met", () => {
+    cy.request("POST", "/dpl_campaign/match", [
+      {
+        name: "creator",
+        values: [
+          {
+            key: "Stephen King",
+            term: "Stephen King",
+            score: 1,
+          },
+        ],
+      },
+      {
+        name: "language",
+        values: [
+          {
+            key: "Dansk",
+            term: "Dansk",
+            score: 1,
+          },
+        ],
+      },
+      {
+        name: "type",
+        values: [
+          {
+            key: "Bog",
+            term: "Bog",
+            score: 1,
+          },
+        ],
+      },
+    ]).then((response) => {
+      expect(response.body).to.deep.equal({
+        data: {
+          text: "Promote authors: H. P. Lovecraft and Stephen King",
+          url: "https://example.com/promote-authors-h-p-lovecraft-and-stephen-king",
+        },
+      });
+    });
+  });
+
+  it("Select AND campaign that are more specific than OR campaigns", () => {
+    cy.request("POST", "/dpl_campaign/match", [
+      {
+        name: "creator",
+        values: [
+          {
+            key: "J. K. Rowling",
+            term: "J. K. Rowling",
+            score: 1,
+          },
+          {
+            key: "Stephen King",
+            term: "Stephen King",
+            score: 1,
+          },
+        ],
+      },
+      {
+        name: "language",
+        values: [
+          {
+            key: "Dansk",
+            term: "Dansk",
+            score: 1,
+          },
+        ],
+      },
+      {
+        name: "type",
+        values: [
+          {
+            key: "Bog",
+            term: "Bog",
+            score: 1,
+          },
+        ],
+      },
+    ]).then((response) => {
+      cy.log(response.body);
+      expect(response.body).to.deep.equal({
+        data: {
+          text: "Read books by J. K. Rowling",
+          url: "https://example.com/read-books-by-j-k-rowling",
+        },
+      });
+    });
   });
 
   before(() => {
-    // Login and create four campaigns. Two with OR and two with AND.
+    // Login as admin.
     cy.clearCookies();
     cy.drupalLogin();
 
-    // Create campaign 1 with OR trigger rules:
-    createCampaignOne();
-    // Create campaign 2 with OR trigger rules:
-    createCampaignTwo();
-    // Create campaign 3 with AND trigger rules:
-    createCampaignThree();
-    // Create campaign 4 with AND trigger rules:
-    createCampaignFour();
+    // Create campaigns.
+    createAuthorCampaign();
+    createCampaignBooksByJKRowling();
+    createAndCampaignWithLowMaxValues();
+    createAndCampaignWithHighMaxValues();
+
+    // Logout (obviously).
+    cy.drupalLogout();
   });
 
   beforeEach(() => {
@@ -29,94 +157,97 @@ describe("Campaign creation and endpoint", () => {
   });
 });
 
-const createCampaignOne = () => {
+const createAuthorCampaign = () => {
   createCampaign(() => {
-    createCampaignMainProperties("Read some more Harry Potter", "OR");
-    createCampaignRule(0, {
-      facet: "creator",
-      term: "J. K. Rowling",
-      maxValue: 3,
-    });
-    cy.get("[id^=field-campaign-rules-campaign-rule-add-more]").click();
-    createCampaignRule(1, {
-      facet: "language",
-      term: "Dansk",
-      maxValue: 3,
-    });
-    cy.get("[id^=field-campaign-rules-campaign-rule-add-more]").click();
-    createCampaignRule(2, {
-      facet: "type",
-      term: "Bog",
-      maxValue: 3,
-    });
-  });
-};
-
-const createCampaignTwo = () => {
-  createCampaign(() => {
-    createCampaignMainProperties("Read some more Stephen King", "OR");
-    createCampaignRule(0, {
-      facet: "creator",
-      term: "Stephen King",
-      maxValue: 3,
-    });
-    cy.get("[id^=field-campaign-rules-campaign-rule-add-more]").click();
-    createCampaignRule(1, {
-      facet: "language",
-      term: "Dansk",
-      maxValue: 3,
-    });
-    cy.get("[id^=field-campaign-rules-campaign-rule-add-more]").click();
-    createCampaignRule(2, {
-      facet: "type",
-      term: "Bog",
-      maxValue: 3,
-    });
-  });
-};
-
-const createCampaignThree = () => {
-  createCampaign(() => {
-    createCampaignMainProperties("Read some more L. Ron Hubbard", "AND");
-    createCampaignRule(0, {
-      facet: "creator",
-      term: "L. Ron Hubbard",
-      maxValue: 3,
-    });
-    cy.get("[id^=field-campaign-rules-campaign-rule-add-more]").click();
-    createCampaignRule(1, {
-      facet: "language",
-      term: "Dansk",
-      maxValue: 3,
-    });
-    cy.get("[id^=field-campaign-rules-campaign-rule-add-more]").click();
-    createCampaignRule(2, {
-      facet: "type",
-      term: "Bog",
-      maxValue: 3,
-    });
-  });
-};
-
-const createCampaignFour = () => {
-  createCampaign(() => {
-    createCampaignMainProperties("Read some more H. P. Lovecraft", "AND");
+    createCampaignMainProperties(
+      "Promote authors: H. P. Lovecraft and Stephen King",
+      "OR"
+    );
     createCampaignRule(0, {
       facet: "creator",
       term: "H. P. Lovecraft",
-      maxValue: 3,
+      maxValue: 1,
     });
     cy.get("[id^=field-campaign-rules-campaign-rule-add-more]").click();
     createCampaignRule(1, {
-      facet: "language",
-      term: "Dansk",
-      maxValue: 3,
+      facet: "creator",
+      term: "Stephen King",
+      maxValue: 2,
     });
     cy.get("[id^=field-campaign-rules-campaign-rule-add-more]").click();
     createCampaignRule(2, {
       facet: "type",
       term: "Bog",
       maxValue: 3,
+    });
+  });
+};
+
+const createCampaignBooksByJKRowling = () => {
+  createCampaign(() => {
+    createCampaignMainProperties("Read books by J. K. Rowling", "AND");
+    createCampaignRule(0, {
+      facet: "creator",
+      term: "J. K. Rowling",
+      maxValue: 1,
+    });
+    cy.get("[id^=field-campaign-rules-campaign-rule-add-more]").click();
+    createCampaignRule(1, {
+      facet: "language",
+      term: "Dansk",
+      maxValue: 2,
+    });
+    cy.get("[id^=field-campaign-rules-campaign-rule-add-more]").click();
+    createCampaignRule(2, {
+      facet: "type",
+      term: "Bog",
+      maxValue: 3,
+    });
+  });
+};
+
+const createAndCampaignWithLowMaxValues = () => {
+  createCampaign(() => {
+    createCampaignMainProperties("And campaign with low max values", "AND");
+    createCampaignRule(0, {
+      facet: "creator",
+      term: "lowMaxValue",
+      maxValue: 1,
+    });
+    cy.get("[id^=field-campaign-rules-campaign-rule-add-more]").click();
+    createCampaignRule(1, {
+      facet: "language",
+      term: "lowMaxValue",
+      maxValue: 1,
+    });
+    cy.get("[id^=field-campaign-rules-campaign-rule-add-more]").click();
+    createCampaignRule(2, {
+      facet: "type",
+      term: "lowMaxValue",
+      maxValue: 1,
+    });
+  });
+};
+
+const createAndCampaignWithHighMaxValues = () => {
+  createCampaign(() => {
+    createCampaignMainProperties("And campaign with high max values", "AND");
+    createCampaignRule(0, {
+      facet: "creator",
+      term: "highMaxValue",
+      maxValue: 10,
+    });
+    cy.get("[id^=field-campaign-rules-campaign-rule-add-more]").click();
+    createCampaignRule(1, {
+      facet: "language",
+      term: "highMaxValue",
+      maxValue: 10,
+    });
+    cy.get("[id^=field-campaign-rules-campaign-rule-add-more]").click();
+    createCampaignRule(2, {
+      facet: "type",
+      term: "highMaxValue",
+      maxValue: 10,
     });
   });
 };
@@ -128,14 +259,17 @@ const createCampaign = (callback: () => void) => {
 };
 
 const createCampaignMainProperties = (name: string, logic: "AND" | "OR") => {
-  const campaignUri = name.replace(/ /g, "-").replace(/\./g, "").toLowerCase();
+  const campaignUri = name
+    .replace(/ /g, "-")
+    .replace(/[.:]/g, "")
+    .toLowerCase();
 
   cy.get("#edit-title-0-value").type(name);
   cy.get("#edit-field-campaign-link-0-uri").type(
     `https://example.com/${campaignUri}`
   );
-  cy.get("#edit-body-0-value").type(`${name} body`);
-  cy.get("#edit-field-campaign-rules-logic").type(logic);
+  cy.get("#edit-body-0-value").type(name);
+  cy.get("#edit-field-campaign-rules-logic").select(logic);
 };
 const createCampaignRule = (
   index: number,
