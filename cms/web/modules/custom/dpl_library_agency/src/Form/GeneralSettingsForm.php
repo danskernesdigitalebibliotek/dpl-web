@@ -3,6 +3,7 @@
 namespace Drupal\dpl_library_agency\Form;
 
 use DanskernesDigitaleBibliotek\FBS\Api\ExternalV1AgencyidApi;
+use DanskernesDigitaleBibliotek\FBS\ApiException;
 use DanskernesDigitaleBibliotek\FBS\Model\AgencyBranch;
 use Drupal\Core\Cache\CacheTagsInvalidator;
 use Drupal\Core\Form\ConfigFormBase;
@@ -97,16 +98,22 @@ class GeneralSettingsForm extends ConfigFormBase {
   public function buildForm(array $form, FormStateInterface $form_state): array {
     $config = $this->config('dpl_library_agency.general_settings');
 
-    $branches = $this->agencyApi->getBranches();
-    $branch_options = array_combine(
-      array_map(function (AgencyBranch $branch) {
-        return $branch->getBranchId();
-      }, $branches),
-      array_map(function (AgencyBranch $branch) {
-        return $branch->getTitle();
-      }, $branches)
-    );
-    sort($branch_options);
+    try {
+      $branches = $this->agencyApi->getBranches();
+      $branch_options = array_combine(
+        array_map(function (AgencyBranch $branch) {
+          return $branch->getBranchId();
+        }, $branches),
+        array_map(function (AgencyBranch $branch) {
+          return $branch->getTitle();
+        }, $branches)
+      );
+      sort($branch_options);
+    } catch (ApiException $api_exception) {
+      $this->logger('dpl_library_agency')->error('Unable to retrieve agency branches: %message', ['%message' => $api_exception->getMessage()]);
+      $this->messenger()->addError('Unable to retrieve branch information from FBS.');
+      $branch_options = [];
+    }
 
     $form['reservations'] = [
       '#type' => 'fieldset',
