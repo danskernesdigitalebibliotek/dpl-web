@@ -12,3 +12,6 @@ parameters:
     # iterable typing for.
     - '#no value type specified in iterable type Drupal\\.*Interface#'
     - '#no value type specified in iterable type Drupal\\.*\\Plugin\\Field\\FieldType\\.*Item#'
+    # For some reason Phpstan cannot resolve that FieldItemListInterface
+    # can have a value property:
+    - '#Access to an undefined property Drupal\\Core\\Field\\FieldItemListInterface::\$value#'

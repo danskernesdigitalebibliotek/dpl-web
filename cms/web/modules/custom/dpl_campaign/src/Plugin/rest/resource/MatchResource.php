@@ -3,10 +3,12 @@
 namespace Drupal\dpl_campaign\Plugin\rest\resource;
 
 use Drupal\Core\Cache\CacheableMetadata;
+use Drupal\Core\Entity\EntityInterface;
 use Drupal\dpl_campaign\Input\Facet;
 use Drupal\dpl_campaign\Input\Rule;
 use Drupal\dpl_campaign\Input\Value;
 use Drupal\node\NodeInterface;
+use Drupal\paragraphs\ParagraphInterface;
 use Drupal\rest\Plugin\ResourceBase;
 use Drupal\rest\ResourceResponse;
 use Drupal\rest\ResourceResponseInterface;
@@ -197,7 +199,7 @@ class MatchResource extends ResourceBase {
 
       $sorted_values = $facet->values;
       usort($sorted_values, function (Value $a, Value $b) {
-        return $a->score - $b->score;
+        return $b->score - $a->score;
       });
 
       // Store the facet name so we can check for duplicates.
@@ -257,64 +259,44 @@ class MatchResource extends ResourceBase {
    * @param string $rules_logic
    *   The logic to use when matching the rules. Either "AND" or "OR".
    *
-   * @return \Drupal\node\NodeInterface|null
+   * @return \Drupal\Core\Entity\EntityInterface|null
    *   A campaign node or NULL if no campaign could be found.
    */
-  protected function findCampaign(array $rules, string $rules_logic): ?NodeInterface {
+  protected function findCampaign(array $rules, string $rules_logic): ?EntityInterface {
     $storage = $this->entityTypeManager->getStorage('node');
     $query = $storage->getQuery();
     $query->accessCheck(FALSE)
       ->condition('type', 'campaign')
       ->condition('status', 1)
       ->condition('field_campaign_rules_logic', $rules_logic);
-    $entity_ids = $query->execute();
-    $campaigns = $storage->loadMultiple($entity_ids);
 
-    foreach($campaigns as $campaign) {
-      // print_r($campaign->title->value);
-      // print_r("\r\n");
-      // print_r($campaign->field_campaign_rules_logic->value);
-      // print_r("\r\n");
-      // print_r("\r\n");
+    if (!$entity_ids = $query->execute()) {
+      return NULL;
+    }
+
+    // @todo Don't get the error. Investigate...
+    // phpcs:ignore
+    /** @phpstan-ignore-next-line */
+    $campaigns = $storage->loadMultiple($entity_ids ?? NULL);
+    foreach ($campaigns as $campaign) {
+      // @todo Investigate the mess with EntityInterface / NodeInterface.
+      // phpcs:ignore
+      /** @phpstan-ignore-next-line */
       $campaign_rules = $this->getCampaignRules($campaign);
       $campaign_rules_count = count($campaign_rules);
       $processed_facets = [];
       $matched_campaign_rules_count = 0;
-      foreach($campaign_rules as $campaign_rule) {
+      foreach ($campaign_rules as $campaign_rule) {
         $campaign_facet = $campaign_rule->get('field_campaign_rule_facet')->value;
-        // $campaign_debug = [
-        //   $campaign_rule->get('field_campaign_rule_facet')->value,
-        //   $campaign_rule->get('field_campaign_rule_term')->value,
-        //   $campaign_rule->get('field_campaign_rule_ranking_max')->value
-        // ];
-        // print_r("Campaign rule: ");
-        // print_r($campaign_debug);
-        // print_r("\r\n");
-        // print_r([$campaign_facet, $processed_facets]);
-        // print_r("\r\n");
-
         if (in_array($campaign_rule->facetName, $processed_facets)) {
           continue;
         }
 
         if ($this->campaignRuleMatched($campaign_rule, $rules)) {
-         $processed_facets[] = $campaign_facet;
-         $matched_campaign_rules_count++;
+          $processed_facets[] = $campaign_facet;
+          $matched_campaign_rules_count++;
         }
       }
-
-      // print_r("\r\n");
-      // print_r("campaign_rules_count: " . $campaign_rules_count);
-      // print_r("\r\n");
-
-      // print_r("matched_campaign_rules_count: " . $matched_campaign_rules_count);
-      // print_r("\r\n");
-
-      // print_r(str_repeat('*', 20));
-      // print_r("\r\n");
-      // print_r("\r\n");
-      // print_r("\r\n");
-      // print_r("\r\n");
 
       if ($rules_logic == 'AND' && $matched_campaign_rules_count == $campaign_rules_count) {
         return $campaign;
@@ -324,19 +306,27 @@ class MatchResource extends ResourceBase {
         return $campaign;
       }
 
-
     }
-    return null;
+    return NULL;
   }
 
-  protected function campaignRuleMatched($campaign_rule, $rules) {
-    return array_reduce($rules, function($carry, $rule) use ($campaign_rule) {
-        // print_r("\r\n");
-        // print_r($rule);
-        // print_r("\r\n");
-        // print_r("\r\n");
-        // print_r("\r\n");
+  /**
+   * Lookup campaign rule in the requested facets and terms.
+   *
+   * @param \Drupal\paragraphs\ParagraphInterface $campaign_rule
+   *   A campaign rule.
+   * @param \Drupal\dpl_campaign\Input\Rule[] $rules
+   *   An array of facet-term rules. see self::transformFacetTermPairsToRules().
+   *
+   * @return bool
+   *   TRUE if the campaign rule matches the requested facets and terms.
+   */
+  protected function campaignRuleMatched(ParagraphInterface $campaign_rule, array $rules): bool {
+    return array_reduce($rules, function ($carry, $rule) use ($campaign_rule) {
       if (
+        // @todo PPHPStan is complaining about missing "value" property although it works.
+        // phpcs:ignore
+        /** @phpstan-ignore-next-line */
         $campaign_rule->get('field_campaign_rule_facet')->value == $rule->facetName
         && $campaign_rule->get('field_campaign_rule_term')->value == $rule->valueTerm
         && $campaign_rule->get('field_campaign_rule_ranking_max')->value >= $rule->ranking
@@ -348,7 +338,16 @@ class MatchResource extends ResourceBase {
     }, FALSE);
   }
 
-  protected function getCampaignRules($campaign) {
+  /**
+   * Get the rules for a campaign.
+   *
+   * @param \Drupal\node\NodeInterface $campaign
+   *   A campaign node.
+   *
+   * @return \Drupal\paragraphs\ParagraphInterface[]|mixed[]
+   *   An array of campaign rules.
+   */
+  protected function getCampaignRules(NodeInterface $campaign): array {
     // Load all Component Paragraph entities.
     $rules = $campaign->hasField('field_campaign_rules') ? $campaign->get('field_campaign_rules')->getValue() : [];
     $target_ids = array_map(
@@ -394,6 +393,9 @@ class MatchResource extends ResourceBase {
     foreach (['AND', 'OR'] as $logic) {
       if ($campaign = $this->findCampaign($rules, $logic)) {
         $response = new ResourceResponse([
+          // @todo Investigate the mess with EntityInterface / NodeInterface.
+          // phpcs:ignore
+          /** @phpstan-ignore-next-line */
           'data' => $this->formatCampaignOutput($campaign),
         ]);
         break;
