@@ -153,6 +153,15 @@ tasks:
       ASSET_URL:
         sh: task dev:dpl-react:get-asset-url
 
+  dev:codegen:fbs:
+    desc: Generate FBS client package from OpenAPI specification
+    cmds:
+      - cmd: |
+            docker run --rm -v ${PWD}:/local -v ${PWD}/openapi-generator.config.fbs.yaml:/openapi-generator.config.fbs.yaml \
+            openapitools/openapi-generator-cli:v5.2.1 generate \
+            -i https://raw.githubusercontent.com/danskernesdigitalebibliotek/dpl-react/main/src/core/fbs/fbs-adapter.yaml \
+            -g php -o /local/packages/fbs -c /openapi-generator.config.fbs.yaml
+
   ci:reset:
     desc: Create CI setup in a clean state
     cmds:
