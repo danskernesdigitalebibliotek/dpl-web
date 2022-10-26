@@ -9,7 +9,7 @@ use Drupal\Core\Config\ConfigManagerInterface;
 /**
  * Class that handles reservation settings for a library agency.
  */
-class ReservationSettings implements ReservationSettingsInterface, CacheableDependencyInterface {
+class ReservationSettings implements CacheableDependencyInterface {
 
   /**
    * Constructs a new ReservationSettings object.
