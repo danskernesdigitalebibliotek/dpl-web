@@ -12,7 +12,7 @@ use Drupal\dpl_library_agency\Branch\BranchRepositoryInterface;
 use Drupal\dpl_library_agency\ReservationSettings;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use function Safe\array_combine as array_combine;
-use function Safe\sort as sort;
+use function Safe\usort as usort;
 
 /**
  * General Settings form for a library agency.
@@ -100,6 +100,11 @@ class GeneralSettingsForm extends ConfigFormBase {
 
     try {
       $branches = $this->branchRepository->getBranches();
+      // Sort branches by ID/ISIL number. This order should mimick the expected
+      // order of the branches used elsewhere by library staff.
+      usort($branches, function (Branch $a, Branch $b) {
+        return strcmp($a->id, $b->id);
+      });
       $branch_options = array_combine(
         array_map(function (Branch $branch) {
           return $branch->id;
@@ -108,7 +113,6 @@ class GeneralSettingsForm extends ConfigFormBase {
           return $branch->title;
         }, $branches)
       );
-      sort($branch_options);
     }
     catch (ApiException $api_exception) {
       $this->logger('dpl_library_agency')->error('Unable to retrieve agency branches: %message', ['%message' => $api_exception->getMessage()]);
