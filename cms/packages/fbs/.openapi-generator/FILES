@@ -1,6 +1,3 @@
-.gitignore
-.php_cs
-.travis.yml
 README.md
 composer.json
 docs/Api/ExternalAgencyidCatalogApi.md
@@ -63,7 +60,6 @@ docs/Model/UpdateGuardianRequest.md
 docs/Model/UpdatePatronRequestV4.md
 docs/Model/UpdateReservation.md
 docs/Model/UpdateReservationBatch.md
-git_push.sh
 lib/Api/ExternalAgencyidCatalogApi.php
 lib/Api/ExternalAgencyidPatronPatronidApi.php
 lib/Api/ExternalAgencyidPatronsApi.php
@@ -129,4 +125,3 @@ lib/Model/UpdatePatronRequestV4.php
 lib/Model/UpdateReservation.php
 lib/Model/UpdateReservationBatch.php
 lib/ObjectSerializer.php
-phpunit.xml.dist
