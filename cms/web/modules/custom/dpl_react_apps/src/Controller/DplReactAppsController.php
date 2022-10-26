@@ -6,8 +6,12 @@ use Drupal\Core\Controller\ControllerBase;
 use Drupal\Core\GeneratedUrl;
 use Drupal\Core\Render\RendererInterface;
 use Drupal\Core\Url;
+use Drupal\dpl_library_agency\Branch\Branch;
+use Drupal\dpl_library_agency\Branch\BranchRepositoryInterface;
+use Drupal\dpl_library_agency\BranchSettings;
 use Drupal\dpl_library_agency\ReservationSettings;
 use Symfony\Component\DependencyInjection\ContainerInterface;
+use function Safe\json_encode as json_encode;
 
 /**
  * Controller for rendering full page DPL React apps.
@@ -19,7 +23,9 @@ class DplReactAppsController extends ControllerBase {
    */
   public function __construct(
     protected RendererInterface $renderer,
-    protected ReservationSettings $reservationSettings
+    protected ReservationSettings $reservationSettings,
+    protected BranchSettings $branchSettings,
+    protected BranchRepositoryInterface $branchRepository,
   ) {}
 
   /**
@@ -34,7 +40,48 @@ class DplReactAppsController extends ControllerBase {
     return new static(
       $container->get('renderer'),
       $container->get('dpl_library_agency.reservation_settings'),
+      $container->get('dpl_library_agency.branch_settings'),
+      $container->get('dpl_library_agency.branch.repository.cache'),
     );
+  }
+
+  /**
+   * Build a string of JSON data containing information about branches.
+   *
+   * Uses the format:
+   *
+   * [{
+   *    "branchId":"DK-775120",
+   *    "title":"Højbjerg"
+   * }, {
+   *    "branchId":"DK-775122",
+   *    "title":"Beder-Malling"
+   * }]
+   *
+   * This is to be used as props/attributes for React apps.
+   *
+   * @param \Drupal\dpl_library_agency\Branch\Branch[] $branches
+   *   The branches to build the string with.
+   */
+  protected function buildBranchesJsonProp(array $branches) : string {
+    return json_encode(array_map(function (Branch $branch) {
+      return [
+        'branchId' => $branch->id,
+        'title' => $branch->title,
+      ];
+    }, $branches));
+  }
+
+  /**
+   * Builds a comma separated list of branch ids.
+   *
+   * This is to be used as props/attributes for React apps.
+   *
+   * @param string[] $branchIds
+   *   The ids of the branches to use.
+   */
+  protected function buildBranchesListProp(array $branchIds) : string {
+    return implode(',', $branchIds);
   }
 
   /**
@@ -48,6 +95,10 @@ class DplReactAppsController extends ControllerBase {
 
     $build = [
       'search-result' => dpl_react_render('search-result', [
+        // Config.
+        'branches-config' => $this->buildBranchesJsonProp($this->branchRepository->getBranches()),
+        'blacklisted-search-branches-config' => $this->buildBranchesListProp($this->branchSettings->getExcludedSearchBranches()),
+        'blacklisted-availability-branches-config' => $this->buildBranchesListProp($this->branchSettings->getExcludedAvailabilityBranches()),
         // Urls.
         'auth-url' => self::authUrl(),
         'material-url' => self::materialUrl(),
@@ -66,6 +117,8 @@ class DplReactAppsController extends ControllerBase {
         'showing-results-for-text' => $this->t('Showing results for', [], $options),
       ]),
     ];
+
+    $this->renderer->addCacheableDependency($build, $this->branchSettings);
 
     return $build;
   }
@@ -87,10 +140,12 @@ class DplReactAppsController extends ControllerBase {
       'material' => dpl_react_render('material', [
         'wid' => $wid,
         // Config.
-        'sms-notifications-for-reservations-enabled-config' =>
         // Data attributes can only be strings
         // so we need to convert the boolean to a number (0/1).
-        (int) $this->reservationSettings->smsNotificationsIsEnabled(),
+        'sms-notifications-for-reservations-enabled-config' => (int) $this->reservationSettings->smsNotificationsIsEnabled(),
+        'branches-config' => $this->buildBranchesJsonProp($this->branchRepository->getBranches()),
+        'blacklisted-availability-branches-config' => $this->buildBranchesListProp($this->branchSettings->getExcludedAvailabilityBranches()),
+        'blacklisted-pickup-branches-config' => $this->buildBranchesListProp($this->branchSettings->getExcludedReservationBranches()),
         // Urls.
         'auth-url' => self::authUrl(),
         'material-url' => self::materialUrl(),
@@ -197,6 +252,7 @@ class DplReactAppsController extends ControllerBase {
     ];
 
     $this->renderer->addCacheableDependency($build, $this->reservationSettings);
+    $this->renderer->addCacheableDependency($build, $this->branchSettings);
 
     return $build;
   }
