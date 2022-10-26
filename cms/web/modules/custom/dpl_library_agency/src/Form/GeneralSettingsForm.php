@@ -9,6 +9,7 @@ use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\StringTranslation\TranslatableMarkup;
 use Drupal\dpl_library_agency\Branch\Branch;
 use Drupal\dpl_library_agency\Branch\BranchRepositoryInterface;
+use Drupal\dpl_library_agency\Branch\IdBranchRepository;
 use Drupal\dpl_library_agency\BranchSettings;
 use Drupal\dpl_library_agency\ReservationSettings;
 use Symfony\Component\DependencyInjection\ContainerInterface;
@@ -112,11 +113,21 @@ class GeneralSettingsForm extends ConfigFormBase {
         return strcmp($a->id, $b->id);
       });
       $branch_options = $this->buildBranchOptions($branches);
+      $availability_options = $search_options = $reservation_options = $branch_options;
+
+      $disabled = FALSE;
     }
     catch (ApiException $api_exception) {
       $this->logger('dpl_library_agency')->error('Unable to retrieve agency branches: %message', ['%message' => $api_exception->getMessage()]);
       $this->messenger()->addError('Unable to retrieve branch information from FBS.');
-      $branch_options = [];
+
+      // Build options from the stored configuration. This way we at least have
+      // something to show in the UI.
+      $availability_options = $this->buildBranchOptions((new IdBranchRepository($this->branchSettings->getAllowedAvailabilityBranches()))->getBranches());
+      $reservation_options = $this->buildBranchOptions((new IdBranchRepository($this->branchSettings->getAllowedReservationBranches()))->getBranches());
+      $search_options = $this->buildBranchOptions((new IdBranchRepository($this->branchSettings->getAllowedSearchBranches()))->getBranches());
+
+      $disabled = TRUE;
     }
 
     $form['reservations'] = [
@@ -143,23 +154,26 @@ class GeneralSettingsForm extends ConfigFormBase {
     $form['branches']['search'] = [
       '#type' => 'checkboxes',
       '#title' => $this->t('Search results'),
-      '#options' => $branch_options,
+      '#options' => $search_options,
       '#default_value' => $this->branchSettings->getAllowedSearchBranches(),
       '#description' => $this->t('Only works with holdings belonging to the selected branches will be shown in search results.'),
+      "#disabled" => $disabled,
     ];
     $form['branches']['availability'] = [
       '#type' => 'checkboxes',
       '#title' => $this->t('Availability'),
-      '#options' => $branch_options,
+      '#options' => $availability_options,
       '#default_value' => $this->branchSettings->getAllowedAvailabilityBranches(),
       '#description' => $this->t('Only holdings belonging to the selected branches will considered when showing work availability.'),
+      "#disabled" => $disabled,
     ];
     $form['branches']['reservation'] = [
       '#type' => 'checkboxes',
       '#title' => $this->t('Reservations'),
-      '#options' => $branch_options,
+      '#options' => $reservation_options,
       '#default_value' => $this->branchSettings->getAllowedReservationBranches(),
       '#description' => $this->t('Only selected branches will be available as pickup locations for reservations.'),
+      "#disabled" => $disabled,
     ];
 
     return parent::buildForm($form, $form_state);
