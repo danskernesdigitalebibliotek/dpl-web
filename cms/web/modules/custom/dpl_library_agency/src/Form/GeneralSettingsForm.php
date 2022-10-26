@@ -9,6 +9,7 @@ use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\StringTranslation\TranslatableMarkup;
 use Drupal\dpl_library_agency\Branch\Branch;
 use Drupal\dpl_library_agency\Branch\BranchRepositoryInterface;
+use Drupal\dpl_library_agency\BranchSettings;
 use Drupal\dpl_library_agency\ReservationSettings;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use function Safe\array_combine as array_combine;
@@ -20,29 +21,13 @@ use function Safe\usort as usort;
 class GeneralSettingsForm extends ConfigFormBase {
 
   /**
-   * The cache tags invalidator.
-   *
-   * @var \Drupal\Core\Cache\CacheTagsInvalidator
-   */
-  protected $cacheTagsInvalidator;
-
-  /**
-   * Branch API instance for fetching branch information.
-   *
-   * @var \Drupal\dpl_library_agency\Branch\BranchRepositoryInterface
-   */
-  protected $branchRepository;
-
-  /**
    * GeneralSettingsForm constructor.
    */
   public function __construct(
-    CacheTagsInvalidator $cacheTagsInvalidator,
-    BranchRepositoryInterface $branchApi,
-  ) {
-    $this->cacheTagsInvalidator = $cacheTagsInvalidator;
-    $this->branchRepository = $branchApi;
-  }
+    protected CacheTagsInvalidator $cacheTagsInvalidator,
+    protected BranchRepositoryInterface $branchRepository,
+    protected BranchSettings $branchSettings
+  ) {}
 
   /**
    * {@inheritdoc}
@@ -55,7 +40,8 @@ class GeneralSettingsForm extends ConfigFormBase {
   public static function create(ContainerInterface $container) {
     return new static(
       $container->get('cache_tags.invalidator'),
-      $container->get('dpl_library_agency.branch.repository.cache')
+      $container->get('dpl_library_agency.branch.repository.cache'),
+      $container->get('dpl_library_agency.branch_settings')
     );
   }
 
@@ -64,6 +50,26 @@ class GeneralSettingsForm extends ConfigFormBase {
    */
   public function getFormId() {
     return 'dpl_library_agency_general_settings';
+  }
+
+  /**
+   * Build an options array for form elements from an array of branches.
+   *
+   * @param \Drupal\dpl_library_agency\Branch\Branch[] $branches
+   *   The branches to use.
+   *
+   * @return string[]
+   *   The options array with keys for form values and values for labels.
+   */
+  public function buildBranchOptions(array $branches): array {
+    return array_combine(
+      array_map(function (Branch $branch) {
+        return $branch->id;
+      }, $branches),
+      array_map(function (Branch $branch) {
+        return $branch->title;
+      }, $branches)
+    );
   }
 
   /**
@@ -105,14 +111,7 @@ class GeneralSettingsForm extends ConfigFormBase {
       usort($branches, function (Branch $a, Branch $b) {
         return strcmp($a->id, $b->id);
       });
-      $branch_options = array_combine(
-        array_map(function (Branch $branch) {
-          return $branch->id;
-        }, $branches),
-        array_map(function (Branch $branch) {
-          return $branch->title;
-        }, $branches)
-      );
+      $branch_options = $this->buildBranchOptions($branches);
     }
     catch (ApiException $api_exception) {
       $this->logger('dpl_library_agency')->error('Unable to retrieve agency branches: %message', ['%message' => $api_exception->getMessage()]);
@@ -145,21 +144,21 @@ class GeneralSettingsForm extends ConfigFormBase {
       '#type' => 'checkboxes',
       '#title' => $this->t('Search results'),
       '#options' => $branch_options,
-      '#default_value' => [],
+      '#default_value' => $this->branchSettings->getAllowedSearchBranches(),
       '#description' => $this->t('Only works with holdings belonging to the selected branches will be shown in search results.'),
     ];
     $form['branches']['availability'] = [
       '#type' => 'checkboxes',
       '#title' => $this->t('Availability'),
       '#options' => $branch_options,
-      '#default_value' => [],
+      '#default_value' => $this->branchSettings->getAllowedAvailabilityBranches(),
       '#description' => $this->t('Only holdings belonging to the selected branches will considered when showing work availability.'),
     ];
-    $form['branches']['reservations'] = [
+    $form['branches']['reservation'] = [
       '#type' => 'checkboxes',
       '#title' => $this->t('Reservations'),
       '#options' => $branch_options,
-      '#default_value' => [],
+      '#default_value' => $this->branchSettings->getAllowedReservationBranches(),
       '#description' => $this->t('Only selected branches will be available as pickup locations for reservations.'),
     ];
 
@@ -173,6 +172,10 @@ class GeneralSettingsForm extends ConfigFormBase {
     $this->config('dpl_library_agency.general_settings')
       ->set('reservation_sms_notifications_disabled', $form_state->getValue('reservation_sms_notifications_disabled'))
       ->save();
+
+    $this->branchSettings->setAllowedAvailabilityBranches(array_filter($form_state->getValue('availability')));
+    $this->branchSettings->setAllowedReservationBranches(array_filter($form_state->getValue('reservation')));
+    $this->branchSettings->setAllowedSearchBranches(array_filter($form_state->getValue('search')));
 
     parent::submitForm($form, $form_state);
     $this->cacheTagsInvalidator->invalidateTags(ReservationSettings::getCacheTagsSmsNotificationsIsEnabled());
