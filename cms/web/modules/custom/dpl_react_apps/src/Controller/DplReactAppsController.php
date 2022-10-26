@@ -4,6 +4,7 @@ namespace Drupal\dpl_react_apps\Controller;
 
 use Drupal\Core\Controller\ControllerBase;
 use Drupal\Core\GeneratedUrl;
+use Drupal\Core\Render\RendererInterface;
 use Drupal\Core\Url;
 use Drupal\dpl_library_agency\ReservationSettings;
 use Symfony\Component\DependencyInjection\ContainerInterface;
@@ -14,20 +15,12 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
 class DplReactAppsController extends ControllerBase {
 
   /**
-   * Reservation settings service.
-   *
-   * @var \Drupal\dpl_library_agency\ReservationSettings
-   */
-  protected $reservationSettings;
-
-  /**
    * DdplReactAppsController constructor.
    */
   public function __construct(
-    ReservationSettings $reservationSettings,
-  ) {
-    $this->reservationSettings = $reservationSettings;
-  }
+    protected RendererInterface $renderer,
+    protected ReservationSettings $reservationSettings
+  ) {}
 
   /**
    * {@inheritdoc}
@@ -39,6 +32,7 @@ class DplReactAppsController extends ControllerBase {
    */
   public static function create(ContainerInterface $container) {
     return new static(
+      $container->get('renderer'),
       $container->get('dpl_library_agency.reservation_settings'),
     );
   }
@@ -52,7 +46,7 @@ class DplReactAppsController extends ControllerBase {
   public function search(): array {
     $options = ['context' => 'Search Result'];
 
-    return [
+    $build = [
       'search-result' => dpl_react_render('search-result', [
         // Urls.
         'auth-url' => self::authUrl(),
@@ -72,6 +66,8 @@ class DplReactAppsController extends ControllerBase {
         'showing-results-for-text' => $this->t('Showing results for', [], $options),
       ]),
     ];
+
+    return $build;
   }
 
   /**
@@ -87,7 +83,7 @@ class DplReactAppsController extends ControllerBase {
     // Translation context.
     $c = ['context' => 'Work Page'];
 
-    return [
+    $build = [
       'material' => dpl_react_render('material', [
         'wid' => $wid,
         // Config.
@@ -199,6 +195,10 @@ class DplReactAppsController extends ControllerBase {
         'you-have-borrowed-text' => $this->t('You have borrowed', [], $c),
       ]),
     ];
+
+    $this->renderer->addCacheableDependency($build, $this->reservationSettings);
+
+    return $build;
   }
 
   /**

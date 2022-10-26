@@ -3,7 +3,7 @@
 namespace Drupal\dpl_library_agency\Form;
 
 use DanskernesDigitaleBibliotek\FBS\ApiException;
-use Drupal\Core\Cache\CacheTagsInvalidator;
+use Drupal\Core\Config\ConfigFactoryInterface;
 use Drupal\Core\Form\ConfigFormBase;
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\StringTranslation\TranslatableMarkup;
@@ -25,10 +25,13 @@ class GeneralSettingsForm extends ConfigFormBase {
    * GeneralSettingsForm constructor.
    */
   public function __construct(
-    protected CacheTagsInvalidator $cacheTagsInvalidator,
+    ConfigFactoryInterface $configFactory,
     protected BranchRepositoryInterface $branchRepository,
+    protected ReservationSettings $reservationSettings,
     protected BranchSettings $branchSettings
-  ) {}
+  ) {
+    parent::__construct($configFactory);
+  }
 
   /**
    * {@inheritdoc}
@@ -40,8 +43,9 @@ class GeneralSettingsForm extends ConfigFormBase {
    */
   public static function create(ContainerInterface $container) {
     return new static(
-      $container->get('cache_tags.invalidator'),
+      $container->get('config.factory'),
       $container->get('dpl_library_agency.branch.repository.cache'),
+      $container->get('dpl_library_agency.reservation_settings'),
       $container->get('dpl_library_agency.branch_settings')
     );
   }
@@ -192,7 +196,6 @@ class GeneralSettingsForm extends ConfigFormBase {
     $this->branchSettings->setExcludedSearchBranches(array_filter($form_state->getValue('search')));
 
     parent::submitForm($form, $form_state);
-    $this->cacheTagsInvalidator->invalidateTags(ReservationSettings::getCacheTagsSmsNotificationsIsEnabled());
   }
 
 }
