@@ -1,3 +1,11 @@
+// The campaign types and titles.
+const campaigns = {
+  authorCampaign: "Promote authors: H. P. Lovecraft and Stephen King",
+  booksByJKRowling: "Read books by J. K. Rowling",
+  rankingAndCampaign: "An AND campaign for testing ranking matching",
+  rankingOrCampaign: "An OR campaign for testing ranking matching",
+} as const;
+
 describe("Campaign creation and endpoint", () => {
   it("Select the expected campaign based on OR rules", () => {
     cy.request("POST", "/dpl_campaign/match", [
@@ -131,6 +139,134 @@ describe("Campaign creation and endpoint", () => {
     });
   });
 
+  it("Select campaigns by matching an 'AND campaign' with matching ranking", () => {
+    cy.request("POST", "/dpl_campaign/match", [
+      {
+        name: "creator",
+        values: [
+          {
+            key: "A",
+            term: "A",
+            score: 4,
+          },
+          {
+            key: "B",
+            term: "B",
+            score: 3,
+          },
+          {
+            key: "rankingTestAnd",
+            term: "rankingTestAnd",
+            // This score is supposed to give a ranking of 3
+            // which is the max value of the rule and therefore a match:
+            score: 2,
+          },
+          {
+            key: "C",
+            term: "C",
+            score: 1,
+          },
+        ],
+      },
+      {
+        name: "language",
+        values: [
+          {
+            key: "rankingTestAnd",
+            term: "rankingTestAnd",
+            score: 5,
+          },
+        ],
+      },
+      {
+        name: "type",
+        values: [
+          {
+            key: "rankingTestAnd",
+            term: "rankingTestAnd",
+            score: 5,
+          },
+        ],
+      },
+    ]).then((response) => {
+      cy.log(response.body);
+      expect(response.body).to.deep.equal({
+        data: {
+          text: "An AND campaign for testing ranking matching",
+          url: "https://example.com/an-and-campaign-for-testing-ranking-matching",
+        },
+      });
+    });
+  });
+
+  it("Return NOT FOUND when ranking does not match ranking span in 'AND campaign'", () => {
+    cy.request({
+      url: "/dpl_campaign/match",
+      method: "POST",
+      failOnStatusCode: false,
+      body: [
+        {
+          name: "creator",
+          values: [
+            {
+              key: "A",
+              term: "A",
+              score: 6,
+            },
+            {
+              key: "B",
+              term: "B",
+              score: 5,
+            },
+            {
+              key: "C",
+              term: "C",
+              score: 4,
+            },
+            {
+              key: "D",
+              term: "D",
+              score: 3,
+            },
+            {
+              key: "E",
+              term: "E",
+              score: 2,
+            },
+            {
+              key: "rankingTestAnd",
+              term: "rankingTestAnd",
+              // This is supposed to be outside of the ranking span.
+              score: 1,
+            },
+          ],
+        },
+        {
+          name: "language",
+          values: [
+            {
+              key: "rankingTestAnd",
+              term: "rankingTestAnd",
+              score: 5,
+            },
+          ],
+        },
+        {
+          name: "type",
+          values: [
+            {
+              key: "rankingTestAnd",
+              term: "rankingTestAnd",
+              score: 5,
+            },
+          ],
+        },
+      ],
+    })
+      .its("status")
+      .should("equal", 404);
+  });
+
   before(() => {
     // Login as admin.
     cy.clearCookies();
@@ -139,8 +275,23 @@ describe("Campaign creation and endpoint", () => {
     // Create campaigns.
     createAuthorCampaign();
     createCampaignBooksByJKRowling();
-    createAndCampaignWithLowMaxValues();
-    createAndCampaignWithHighMaxValues();
+    createRankingAndCampaign();
+    createRankingOrCampaign();
+
+    // Logout (obviously).
+    cy.drupalLogout();
+  });
+
+  after(() => {
+    // Login as admin.
+    cy.clearCookies();
+    cy.drupalLogin();
+
+    // Delete campaigns.
+    deleteCampaign(campaigns.authorCampaign);
+    deleteCampaign(campaigns.booksByJKRowling);
+    deleteCampaign(campaigns.rankingAndCampaign);
+    deleteCampaign(campaigns.rankingOrCampaign);
 
     // Logout (obviously).
     cy.drupalLogout();
@@ -150,7 +301,6 @@ describe("Campaign creation and endpoint", () => {
     Cypress.Cookies.debug(true);
     cy.resetRequests();
   });
-
   afterEach(() => {
     cy.logRequests();
     Cypress.Cookies.debug(false);
@@ -159,10 +309,7 @@ describe("Campaign creation and endpoint", () => {
 
 const createAuthorCampaign = () => {
   createCampaign(() => {
-    createCampaignMainProperties(
-      "Promote authors: H. P. Lovecraft and Stephen King",
-      "OR"
-    );
+    createCampaignMainProperties(campaigns.authorCampaign, "OR");
     createCampaignRule(0, {
       facet: "creator",
       term: "H. P. Lovecraft",
@@ -185,7 +332,7 @@ const createAuthorCampaign = () => {
 
 const createCampaignBooksByJKRowling = () => {
   createCampaign(() => {
-    createCampaignMainProperties("Read books by J. K. Rowling", "AND");
+    createCampaignMainProperties(campaigns.booksByJKRowling, "AND");
     createCampaignRule(0, {
       facet: "creator",
       term: "J. K. Rowling",
@@ -206,48 +353,48 @@ const createCampaignBooksByJKRowling = () => {
   });
 };
 
-const createAndCampaignWithLowMaxValues = () => {
+const createRankingAndCampaign = () => {
   createCampaign(() => {
-    createCampaignMainProperties("And campaign with low max values", "AND");
+    createCampaignMainProperties(campaigns.rankingAndCampaign, "AND");
     createCampaignRule(0, {
       facet: "creator",
-      term: "lowMaxValue",
-      maxValue: 1,
+      term: "rankingTestAnd",
+      maxValue: 3,
     });
     cy.get("[id^=field-campaign-rules-campaign-rule-add-more]").click();
     createCampaignRule(1, {
       facet: "language",
-      term: "lowMaxValue",
-      maxValue: 1,
+      term: "rankingTestAnd",
+      maxValue: 3,
     });
     cy.get("[id^=field-campaign-rules-campaign-rule-add-more]").click();
     createCampaignRule(2, {
       facet: "type",
-      term: "lowMaxValue",
-      maxValue: 1,
+      term: "rankingTestAnd",
+      maxValue: 3,
     });
   });
 };
 
-const createAndCampaignWithHighMaxValues = () => {
+const createRankingOrCampaign = () => {
   createCampaign(() => {
-    createCampaignMainProperties("And campaign with high max values", "AND");
+    createCampaignMainProperties(campaigns.rankingOrCampaign, "OR");
     createCampaignRule(0, {
       facet: "creator",
-      term: "highMaxValue",
-      maxValue: 10,
+      term: "rankingTestOr",
+      maxValue: 5,
     });
     cy.get("[id^=field-campaign-rules-campaign-rule-add-more]").click();
     createCampaignRule(1, {
       facet: "language",
-      term: "highMaxValue",
-      maxValue: 10,
+      term: "rankingTestOr",
+      maxValue: 5,
     });
     cy.get("[id^=field-campaign-rules-campaign-rule-add-more]").click();
     createCampaignRule(2, {
       facet: "type",
-      term: "highMaxValue",
-      maxValue: 10,
+      term: "rankingTestOr",
+      maxValue: 5,
     });
   });
 };
@@ -256,6 +403,22 @@ const createCampaign = (callback: () => void) => {
   cy.visit("/node/add/campaign");
   callback();
   cy.get("#edit-submit").click();
+};
+
+const deleteCampaign = (title: string) => {
+  cy.visit("/admin/content");
+  cy.contains(title)
+    .parents("tr")
+    .find("td li.dropbutton-toggle button")
+    .click()
+    .then(($button) => {
+      cy.wrap($button)
+        .parent(".dropbutton-toggle")
+        .parent("ul.dropbutton")
+        .find("li.delete a")
+        .click();
+      cy.get("#edit-submit").should("exist").click();
+    });
 };
 
 const createCampaignMainProperties = (name: string, logic: "AND" | "OR") => {
