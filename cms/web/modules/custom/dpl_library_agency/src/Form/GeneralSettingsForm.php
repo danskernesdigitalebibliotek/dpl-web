@@ -123,9 +123,9 @@ class GeneralSettingsForm extends ConfigFormBase {
 
       // Build options from the stored configuration. This way we at least have
       // something to show in the UI.
-      $availability_options = $this->buildBranchOptions((new IdBranchRepository($this->branchSettings->getAllowedAvailabilityBranches()))->getBranches());
-      $reservation_options = $this->buildBranchOptions((new IdBranchRepository($this->branchSettings->getAllowedReservationBranches()))->getBranches());
-      $search_options = $this->buildBranchOptions((new IdBranchRepository($this->branchSettings->getAllowedSearchBranches()))->getBranches());
+      $availability_options = $this->buildBranchOptions((new IdBranchRepository($this->branchSettings->getExcludedAvailabilityBranches()))->getBranches());
+      $reservation_options = $this->buildBranchOptions((new IdBranchRepository($this->branchSettings->getExcludedReservationBranches()))->getBranches());
+      $search_options = $this->buildBranchOptions((new IdBranchRepository($this->branchSettings->getExcludedSearchBranches()))->getBranches());
 
       $disabled = TRUE;
     }
@@ -146,33 +146,33 @@ class GeneralSettingsForm extends ConfigFormBase {
 
     $form['branches'] = [
       '#type' => 'fieldset',
-      '#title' => $this->t('Branches'),
+      '#title' => $this->t('Excluded branches'),
       '#collapsible' => FALSE,
       '#collapsed' => FALSE,
-      '#description' => $this->t('Select which branches should be available in different parts of the system.'),
+      '#description' => $this->t('Select which branches should be excluded in different parts of the system.'),
     ];
     $form['branches']['search'] = [
       '#type' => 'checkboxes',
       '#title' => $this->t('Search results'),
       '#options' => $search_options,
-      '#default_value' => $this->branchSettings->getAllowedSearchBranches(),
-      '#description' => $this->t('Only works with holdings belonging to the selected branches will be shown in search results.'),
+      '#default_value' => $this->branchSettings->getExcludedSearchBranches(),
+      '#description' => $this->t('Holdings belonging to the selected branches will not be shown in search results.'),
       "#disabled" => $disabled,
     ];
     $form['branches']['availability'] = [
       '#type' => 'checkboxes',
       '#title' => $this->t('Availability'),
       '#options' => $availability_options,
-      '#default_value' => $this->branchSettings->getAllowedAvailabilityBranches(),
-      '#description' => $this->t('Only holdings belonging to the selected branches will considered when showing work availability.'),
+      '#default_value' => $this->branchSettings->getExcludedAvailabilityBranches(),
+      '#description' => $this->t('Holdings belonging to the selected branches will not considered when showing work availability.'),
       "#disabled" => $disabled,
     ];
     $form['branches']['reservation'] = [
       '#type' => 'checkboxes',
       '#title' => $this->t('Reservations'),
       '#options' => $reservation_options,
-      '#default_value' => $this->branchSettings->getAllowedReservationBranches(),
-      '#description' => $this->t('Only selected branches will be available as pickup locations for reservations.'),
+      '#default_value' => $this->branchSettings->getExcludedReservationBranches(),
+      '#description' => $this->t('Selected branches will not be available as pickup locations for reservations.'),
       "#disabled" => $disabled,
     ];
 
@@ -187,9 +187,9 @@ class GeneralSettingsForm extends ConfigFormBase {
       ->set('reservation_sms_notifications_disabled', $form_state->getValue('reservation_sms_notifications_disabled'))
       ->save();
 
-    $this->branchSettings->setAllowedAvailabilityBranches(array_filter($form_state->getValue('availability')));
-    $this->branchSettings->setAllowedReservationBranches(array_filter($form_state->getValue('reservation')));
-    $this->branchSettings->setAllowedSearchBranches(array_filter($form_state->getValue('search')));
+    $this->branchSettings->setExcludedAvailabilityBranches(array_filter($form_state->getValue('availability')));
+    $this->branchSettings->setExcludedReservationBranches(array_filter($form_state->getValue('reservation')));
+    $this->branchSettings->setExcludedSearchBranches(array_filter($form_state->getValue('search')));
 
     parent::submitForm($form, $form_state);
     $this->cacheTagsInvalidator->invalidateTags(ReservationSettings::getCacheTagsSmsNotificationsIsEnabled());

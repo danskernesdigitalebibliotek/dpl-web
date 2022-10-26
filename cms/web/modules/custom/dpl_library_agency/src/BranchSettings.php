@@ -57,62 +57,62 @@ class BranchSettings implements CacheableDependencyInterface {
   }
 
   /**
-   * Get the branches which patrons can pick up reservations.
+   * Get the branches where patrons cannot pick up reservations.
    *
    * @return string[]
-   *   The ids of the allowed branches.
+   *   The ids of the excluded branches.
    */
-  public function getAllowedReservationBranches() : array {
+  public function getExcludedReservationBranches() : array {
     return $this->getBranchConfig()->get(self::RESERVATION_KEY) ?? [];
   }
 
   /**
-   * Set the branches which patrons can pickup reservations.
+   * Set the branches where patrons cannot pick up reservations.
    *
    * @param string[] $branchIds
-   *   The ids of the allowed branches.
+   *   The ids of the excluded branches.
    */
-  public function setAllowedReservationBranches(array $branchIds): void {
+  public function setExcludedReservationBranches(array $branchIds): void {
     $this->getBranchConfig()->set(self::RESERVATION_KEY, $branchIds)->save();
   }
 
   /**
-   * Get the branches whose materials should be displayed in search results.
+   * Get the branches whose materials should not be displayed in search results.
    *
    * @return string[]
-   *   The ids of the allowed branches.
+   *   The ids of the excluded branches.
    */
-  public function getAllowedSearchBranches(): array {
+  public function getExcludedSearchBranches(): array {
     return $this->getBranchConfig()->get(self::SEARCH_KEY) ?? [];
   }
 
   /**
-   * Set the branches whose materials should be displayed in search results.
+   * Set the branches whose materials should not be displayed in search results.
    *
    * @param string[] $branchIds
-   *   The ids of the allowed branches.
+   *   The ids of the excluded branches.
    */
-  public function setAllowedSearchBranches(array $branchIds): void {
+  public function setExcludedSearchBranches(array $branchIds): void {
     $this->getBranchConfig()->set(self::SEARCH_KEY, $branchIds)->save();
   }
 
   /**
-   * Get the branches whose materials should be considered for availability.
+   * Get the branches whose materials should not be considered for availability.
    *
    * @return string[]
-   *   The ids of the allowed branches.
+   *   The ids of the excluded branches.
    */
-  public function getAllowedAvailabilityBranches(): array {
+  public function getExcludedAvailabilityBranches(): array {
     return $this->getBranchConfig()->get(self::AVAILABILITY_KEY) ?? [];
   }
 
   /**
-   * Set the branches whose materials should be considered for availability.
+   * Set the branches whose materials should not be considered for availability.
    *
    * @param string[] $branchIds
-   *   The ids of the allowed branches.
+   *   The ids of the excluded branches.
    */
-  public function setAllowedAvailabilityBranches(array $branchIds): void {
+  public function setExcludedAvailabilityBranches(array $branchIds): void {
     $this->getBranchConfig()->set(self::AVAILABILITY_KEY, $branchIds)->save();
   }
 
