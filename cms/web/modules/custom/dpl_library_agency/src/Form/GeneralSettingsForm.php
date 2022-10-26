@@ -2,13 +2,13 @@
 
 namespace Drupal\dpl_library_agency\Form;
 
-use DanskernesDigitaleBibliotek\FBS\Api\ExternalV1AgencyidApi;
 use DanskernesDigitaleBibliotek\FBS\ApiException;
-use DanskernesDigitaleBibliotek\FBS\Model\AgencyBranch;
 use Drupal\Core\Cache\CacheTagsInvalidator;
 use Drupal\Core\Form\ConfigFormBase;
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\StringTranslation\TranslatableMarkup;
+use Drupal\dpl_library_agency\Branch\Branch;
+use Drupal\dpl_library_agency\Branch\BranchRepositoryInterface;
 use Drupal\dpl_library_agency\ReservationSettings;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use function Safe\array_combine as array_combine;
@@ -27,21 +27,21 @@ class GeneralSettingsForm extends ConfigFormBase {
   protected $cacheTagsInvalidator;
 
   /**
-   * FBS API instance for fetching branch information.
+   * Branch API instance for fetching branch information.
    *
-   * @var \DanskernesDigitaleBibliotek\FBS\Api\ExternalV1AgencyidApi
+   * @var \Drupal\dpl_library_agency\Branch\BranchRepositoryInterface
    */
-  protected $agencyApi;
+  protected $branchRepository;
 
   /**
    * GeneralSettingsForm constructor.
    */
   public function __construct(
     CacheTagsInvalidator $cacheTagsInvalidator,
-    ExternalV1AgencyidApi $agencyApi,
+    BranchRepositoryInterface $branchApi,
   ) {
     $this->cacheTagsInvalidator = $cacheTagsInvalidator;
-    $this->agencyApi = $agencyApi;
+    $this->branchRepository = $branchApi;
   }
 
   /**
@@ -55,7 +55,7 @@ class GeneralSettingsForm extends ConfigFormBase {
   public static function create(ContainerInterface $container) {
     return new static(
       $container->get('cache_tags.invalidator'),
-      $container->get('dpl_library_agency.fbs_agency_api')
+      $container->get('dpl_library_agency.branch.repository.cache')
     );
   }
 
@@ -99,17 +99,18 @@ class GeneralSettingsForm extends ConfigFormBase {
     $config = $this->config('dpl_library_agency.general_settings');
 
     try {
-      $branches = $this->agencyApi->getBranches();
+      $branches = $this->branchRepository->getBranches();
       $branch_options = array_combine(
-        array_map(function (AgencyBranch $branch) {
-          return $branch->getBranchId();
+        array_map(function (Branch $branch) {
+          return $branch->id;
         }, $branches),
-        array_map(function (AgencyBranch $branch) {
-          return $branch->getTitle();
+        array_map(function (Branch $branch) {
+          return $branch->title;
         }, $branches)
       );
       sort($branch_options);
-    } catch (ApiException $api_exception) {
+    }
+    catch (ApiException $api_exception) {
       $this->logger('dpl_library_agency')->error('Unable to retrieve agency branches: %message', ['%message' => $api_exception->getMessage()]);
       $this->messenger()->addError('Unable to retrieve branch information from FBS.');
       $branch_options = [];

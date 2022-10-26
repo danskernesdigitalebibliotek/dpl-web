@@ -2,6 +2,18 @@ services:
   dpl_library_agency.reservation_settings:
     class: Drupal\dpl_library_agency\ReservationSettings
     arguments: ["@config.manager"]
+  dpl_library_agency.branch.repository.cache:
+    class: Drupal\dpl_library_agency\Branch\CacheableBranchRepository
+    arguments:
+      - "@dpl_library_agency.branch.repository.fbs"
+      - "@cache.default"
+      - "@datetime.time"
+      # A lifetime of 12 hours should ensure that fresh data arrives at latest
+      # one workday after being made available in FBS.
+      - 43200
+  dpl_library_agency.branch.repository.fbs:
+    class: Drupal\dpl_library_agency\Branch\FbsBranchRepository
+    arguments: ["@dpl_library_agency.fbs_agency_api"]
   dpl_library_agency.fbs_api_factory:
     class: Drupal\dpl_library_agency\FbsApiFactory
     arguments:
