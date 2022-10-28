@@ -299,10 +299,8 @@ describe("Campaign creation and endpoint", () => {
 
   beforeEach(() => {
     Cypress.Cookies.debug(true);
-    cy.resetRequests();
   });
   afterEach(() => {
-    cy.logRequests();
     Cypress.Cookies.debug(false);
   });
 });
