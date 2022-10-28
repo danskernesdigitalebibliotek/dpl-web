@@ -8,7 +8,7 @@ const campaigns = {
 
 describe("Campaign creation and endpoint", () => {
   it("Select the expected campaign based on OR rules", () => {
-    cy.request("POST", "/dpl_campaign/match", [
+    cy.api("POST", "/dpl_campaign/match", [
       {
         name: "type",
         values: [
@@ -50,7 +50,7 @@ describe("Campaign creation and endpoint", () => {
   });
 
   it("Select OR campaign when not all AND rules are met", () => {
-    cy.request("POST", "/dpl_campaign/match", [
+    cy.api("POST", "/dpl_campaign/match", [
       {
         name: "creator",
         values: [
@@ -92,7 +92,7 @@ describe("Campaign creation and endpoint", () => {
   });
 
   it("Select AND campaign that are more specific than OR campaigns", () => {
-    cy.request("POST", "/dpl_campaign/match", [
+    cy.api("POST", "/dpl_campaign/match", [
       {
         name: "creator",
         values: [
@@ -200,7 +200,7 @@ describe("Campaign creation and endpoint", () => {
   });
 
   it("Return NOT FOUND when ranking does not match ranking span in 'AND campaign'", () => {
-    cy.request({
+    cy.api({
       url: "/dpl_campaign/match",
       method: "POST",
       failOnStatusCode: false,
