@@ -39,6 +39,8 @@ class FbsApiFactory {
    */
   protected function getConfiguration(): Configuration {
     $configuration = (new Configuration())
+      // @todo FBS host name should be configurable.
+      // This would preferably be managed in a central FBS module.
       ->setHost('https://fbs-openplatform.dbc.dk');
 
     $token = $this->tokenHandler->getToken();
