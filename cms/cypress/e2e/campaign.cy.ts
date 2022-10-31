@@ -25,7 +25,7 @@ describe("Campaign creation and endpoint", () => {
         ],
       },
       {
-        name: "creator",
+        name: "creators",
         values: [
           {
             key: "Stephen King",
@@ -52,7 +52,7 @@ describe("Campaign creation and endpoint", () => {
   it("Select OR campaign when not all AND rules are met", () => {
     cy.api("POST", "/dpl_campaign/match", [
       {
-        name: "creator",
+        name: "creators",
         values: [
           {
             key: "Stephen King",
@@ -62,7 +62,7 @@ describe("Campaign creation and endpoint", () => {
         ],
       },
       {
-        name: "language",
+        name: "mainLanguages",
         values: [
           {
             key: "Dansk",
@@ -72,7 +72,7 @@ describe("Campaign creation and endpoint", () => {
         ],
       },
       {
-        name: "type",
+        name: "materialTypes",
         values: [
           {
             key: "Bog",
@@ -94,7 +94,7 @@ describe("Campaign creation and endpoint", () => {
   it("Select AND campaign that are more specific than OR campaigns", () => {
     cy.api("POST", "/dpl_campaign/match", [
       {
-        name: "creator",
+        name: "creators",
         values: [
           {
             key: "J. K. Rowling",
@@ -109,7 +109,7 @@ describe("Campaign creation and endpoint", () => {
         ],
       },
       {
-        name: "language",
+        name: "mainLanguages",
         values: [
           {
             key: "Dansk",
@@ -119,7 +119,7 @@ describe("Campaign creation and endpoint", () => {
         ],
       },
       {
-        name: "type",
+        name: "materialTypes",
         values: [
           {
             key: "Bog",
@@ -142,7 +142,7 @@ describe("Campaign creation and endpoint", () => {
   it("Select campaigns by matching an 'AND campaign' with matching ranking", () => {
     cy.request("POST", "/dpl_campaign/match", [
       {
-        name: "creator",
+        name: "creators",
         values: [
           {
             key: "A",
@@ -169,7 +169,7 @@ describe("Campaign creation and endpoint", () => {
         ],
       },
       {
-        name: "language",
+        name: "mainLanguages",
         values: [
           {
             key: "rankingTestAnd",
@@ -179,7 +179,7 @@ describe("Campaign creation and endpoint", () => {
         ],
       },
       {
-        name: "type",
+        name: "materialTypes",
         values: [
           {
             key: "rankingTestAnd",
@@ -206,7 +206,7 @@ describe("Campaign creation and endpoint", () => {
       failOnStatusCode: false,
       body: [
         {
-          name: "creator",
+          name: "creators",
           values: [
             {
               key: "A",
@@ -242,7 +242,7 @@ describe("Campaign creation and endpoint", () => {
           ],
         },
         {
-          name: "language",
+          name: "mainLanguages",
           values: [
             {
               key: "rankingTestAnd",
@@ -252,7 +252,7 @@ describe("Campaign creation and endpoint", () => {
           ],
         },
         {
-          name: "type",
+          name: "materialTypes",
           values: [
             {
               key: "rankingTestAnd",
@@ -309,19 +309,19 @@ const createAuthorCampaign = () => {
   createCampaign(() => {
     createCampaignMainProperties(campaigns.authorCampaign, "OR");
     createCampaignRule(0, {
-      facet: "creator",
+      facet: "creators",
       term: "H. P. Lovecraft",
       maxValue: 1,
     });
     cy.get("[id^=field-campaign-rules-campaign-rule-add-more]").click();
     createCampaignRule(1, {
-      facet: "creator",
+      facet: "creators",
       term: "Stephen King",
       maxValue: 2,
     });
     cy.get("[id^=field-campaign-rules-campaign-rule-add-more]").click();
     createCampaignRule(2, {
-      facet: "type",
+      facet: "materialTypes",
       term: "Bog",
       maxValue: 3,
     });
@@ -332,19 +332,19 @@ const createCampaignBooksByJKRowling = () => {
   createCampaign(() => {
     createCampaignMainProperties(campaigns.booksByJKRowling, "AND");
     createCampaignRule(0, {
-      facet: "creator",
+      facet: "creators",
       term: "J. K. Rowling",
       maxValue: 1,
     });
     cy.get("[id^=field-campaign-rules-campaign-rule-add-more]").click();
     createCampaignRule(1, {
-      facet: "language",
+      facet: "mainLanguages",
       term: "Dansk",
       maxValue: 2,
     });
     cy.get("[id^=field-campaign-rules-campaign-rule-add-more]").click();
     createCampaignRule(2, {
-      facet: "type",
+      facet: "materialTypes",
       term: "Bog",
       maxValue: 3,
     });
@@ -355,19 +355,19 @@ const createRankingAndCampaign = () => {
   createCampaign(() => {
     createCampaignMainProperties(campaigns.rankingAndCampaign, "AND");
     createCampaignRule(0, {
-      facet: "creator",
+      facet: "creators",
       term: "rankingTestAnd",
       maxValue: 3,
     });
     cy.get("[id^=field-campaign-rules-campaign-rule-add-more]").click();
     createCampaignRule(1, {
-      facet: "language",
+      facet: "mainLanguages",
       term: "rankingTestAnd",
       maxValue: 3,
     });
     cy.get("[id^=field-campaign-rules-campaign-rule-add-more]").click();
     createCampaignRule(2, {
-      facet: "type",
+      facet: "materialTypes",
       term: "rankingTestAnd",
       maxValue: 3,
     });
@@ -378,19 +378,19 @@ const createRankingOrCampaign = () => {
   createCampaign(() => {
     createCampaignMainProperties(campaigns.rankingOrCampaign, "OR");
     createCampaignRule(0, {
-      facet: "creator",
+      facet: "creators",
       term: "rankingTestOr",
       maxValue: 5,
     });
     cy.get("[id^=field-campaign-rules-campaign-rule-add-more]").click();
     createCampaignRule(1, {
-      facet: "language",
+      facet: "mainLanguages",
       term: "rankingTestOr",
       maxValue: 5,
     });
     cy.get("[id^=field-campaign-rules-campaign-rule-add-more]").click();
     createCampaignRule(2, {
-      facet: "type",
+      facet: "materialTypes",
       term: "rankingTestOr",
       maxValue: 5,
     });

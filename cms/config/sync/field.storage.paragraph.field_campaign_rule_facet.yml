@@ -12,110 +12,35 @@ type: list_string
 settings:
   allowed_values:
     -
-      value: access
-      label: Adgang
+      value: accessTypes
+      label: Access
     -
-      value: department
-      label: Afdeling
+      value: childrenOrAdults
+      label: 'Children or adult materials'
     -
-      value: audienceCategory
-      label: Brugerniveau
+      value: creators
+      label: Creators
     -
-      value: dk5
-      label: 'DK5 Klassifikation'
+      value: fictionNonfiction
+      label: 'Fiction or non-fiction'
     -
-      value: date
-      label: Dato
+      value: fictionalCharacter
+      label: 'Fictional character'
     -
-      value: partOf
-      label: 'Del af'
+      value: genreAndForm
+      label: 'Genre and form'
     -
-      value: extraTitles
-      label: 'Ekstra e-bøger'
+      value: mainLanguages
+      label: 'Main languages'
     -
-      value: 'subject" selected="selected'
-      label: Emne
+      value: materialTypes
+      label: 'Material types'
     -
-      value: nonFictionSubject
-      label: 'Fag emne'
+      value: subjects
+      label: Subjects
     -
-      value: level
-      label: 'Fagligt niveau'
-    -
-      value: branch
-      label: Filial
-    -
-      value: publisher
-      label: Forlag
-    -
-      value: form
-      label: Form
-    -
-      value: genre
-      label: Genre
-    -
-      value: genreCategory
-      label: Genrekategori
-    -
-      value: geographic
-      label: 'Geografisk emne'
-    -
-      value: primaryCreator
-      label: Hovedophav
-    -
-      value: acSource
-      label: Kilde
-    -
-      value: let
-      label: Lettal
-    -
-      value: literaryForm
-      label: 'Litterær form'
-    -
-      value: lix
-      label: Lix
-    -
-      value: type
-      label: Materialetype
-    -
-      value: musicSubject
-      label: 'Musik emne'
-    -
-      value: audience
-      label: Målgruppe
-    -
-      value: nationality
-      label: 'Nationalitet for film'
-    -
-      value: sheetMusic
-      label: Noder
-    -
-      value: creator
-      label: Ophav
-    -
-      value: creatorFunction
-      label: 'Ophav funktion'
-    -
-      value: period
-      label: 'Periode som emne'
-    -
-      value: titleSeries
-      label: Serietitle
-    -
-      value: fictionSubject
-      label: 'Skønlitterært emne'
-    -
-      value: gamePlatform
-      label: Spilplatform
-    -
-      value: language
-      label: Sprog
-    -
-      value: dateFirstEdition
-      label: 'Udgivelsesår for første udgave'
-    -
-      value: category
-      label: 'Voksen- eller børnematerialer'
+      value: workTypes
+      label: 'Work types'
   allowed_values_function: ''
 module: options
 locked: false
