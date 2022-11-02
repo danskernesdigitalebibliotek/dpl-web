@@ -53,11 +53,3 @@ environments:
       schedule: "M/15 * * * *"
       command: drush cron
       service: cli
-
-container-registries:
-  github:
-    username: any-user-works
-    # The password gets replaced with the value of an lagoon project environment-
-    # variable during lagoons build/deploy process.
-    password: GITHUB_REGISTRY_CREDENTIALS
-    url: ghcr.io
