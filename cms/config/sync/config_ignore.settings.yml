@@ -4,17 +4,36 @@ ignored_config_entities:
   - '~block.block.novel.*'
   - ~config_ignore.settings
   - '~core.date_format.*'
+  - '~core.base_field_override.node.campaign.*'
+  - '~core.entity_form_display.node.campaign.*'
+  - '~core.entity_form_display.paragraph.campaign_rule.*'
   - '~core.entity_form_mode.user_register.*'
+  - '~core.entity_view_display.node.campaign.*'
+  - '~core.entity_view_display.paragraph.campaign_rule.*'
+  - '~core.entity_view_mode.display.*'
   - '~core.entity_view_mode.node.*'
+  - '~core.entity_view_mode.paragraph.*'
   - ~core.menu.static_menu_link_overrides
   - ~dblog.settings
   - '~dpl_library_agency.general_settings:reservation_sms_notifications_disabled'
   - '~dpl_mapp.settings:domain'
+  - '~field.field.node.campaign.*'
+  - '~field.field.paragraph.campaign_rule.*'
   - ~field.settings
   - ~field.storage.node.body
+  - ~field.storage.node.field_campaign_image
+  - ~field.storage.node.field_campaign_rules
+  - ~field.storage.paragraph.field_campaign_rule_facet
+  - ~field.storage.paragraph.field_campaign_rule_term
+  - ~field.storage.paragraph.field_campaign_rule_term_ranking
   - ~file.settings
   - ~filter.format.plain_text
   - ~filter.settings
+  - ~image.settings
+  - ~image.style.campaign_image
+  - ~image.style.large
+  - ~image.style.medium
+  - ~image.style.thumbnail
   - '~jsonlog.settings:jsonlog_severity_threshold'
   - '~jsonlog.settings:jsonlog_truncate'
   - '~jsonlog.settings:jsonlog_stderr'
@@ -28,6 +47,9 @@ ignored_config_entities:
   - ~language.types
   - ~locale.settings
   - ~node.settings
+  - ~node.type.campaign
+  - ~paragraphs.paragraphs_type.campaign_rule
+  - ~paragraphs.settings
   - ~purge_queuer_coretags
   - ~purge.logger_channels
   - ~purge.plugins

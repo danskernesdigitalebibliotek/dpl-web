@@ -1,0 +1,8 @@
+name: "dpl_campaign"
+type: module
+description: "A module that deliveres possibility for campaign CRUD and integration with Dpl React Apps"
+core: 8.x
+package: "DPL"
+core_version_requirement: ^9 || ^8
+dependencies:
+  - handy_cache_tags:handy_cache_tags

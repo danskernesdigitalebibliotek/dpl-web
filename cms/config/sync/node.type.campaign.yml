@@ -1,0 +1,11 @@
+uuid: 37edecd9-3cc1-4ab7-81b9-7a34d0c2c913
+langcode: en
+status: true
+dependencies: {  }
+name: Campaign
+type: campaign
+description: 'Campaign to be shown among search results depending on matching facets and terms'
+help: ''
+new_revision: true
+preview_mode: 1
+display_submitted: false

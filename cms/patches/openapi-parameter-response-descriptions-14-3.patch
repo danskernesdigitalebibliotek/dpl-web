@@ -1,14 +1,14 @@
-From 11d0095a72280fed02c2fcaf3af5970d137e4aae Mon Sep 17 00:00:00 2001
+From 3bd89234ce7f316c801d9d061c1ddb0400ffb5ab Mon Sep 17 00:00:00 2001
 From: =?UTF-8?q?Kasper=20Garn=C3=A6s?= <kasperg@users.noreply.github.com>
-Date: Wed, 5 Oct 2022 00:10:54 +0200
-Subject: [PATCH] Add parameter description
+Date: Mon, 24 Oct 2022 02:55:25 +0200
+Subject: [PATCH] Applied openapi_rest-parameter_description-3116760-14.patch
 
 ---
  .../OpenApiGenerator/RestGenerator.php        | 74 +++++++++++++++----
  1 file changed, 60 insertions(+), 14 deletions(-)
 
 diff --git a/src/Plugin/openapi/OpenApiGenerator/RestGenerator.php b/src/Plugin/openapi/OpenApiGenerator/RestGenerator.php
-index e3fae55..817685d 100644
+index e3fae55..1d71b81 100644
 --- a/src/Plugin/openapi/OpenApiGenerator/RestGenerator.php
 +++ b/src/Plugin/openapi/OpenApiGenerator/RestGenerator.php
 @@ -12,6 +12,7 @@ use Drupal\Core\Config\Entity\ConfigEntityTypeInterface;
@@ -115,7 +115,7 @@ index e3fae55..817685d 100644
      }
 +
 +    $query_route_parameters = array_filter(
-+        $definitions['route_parameters'][$method],
++        $definitions['route_parameters'][$method] ?? [],
 +        function($parameter) {
 +            return $parameter['in'] == "query";
 +        }
@@ -132,17 +132,17 @@ index e3fae55..817685d 100644
 2.37.3+GitX
 
 
-From 3bf8c1b37ee5816d37159a17c788a561e510ab1b Mon Sep 17 00:00:00 2001
+From e670e2e8a732f2f562253fabf9f3dd8b52e5238e Mon Sep 17 00:00:00 2001
 From: =?UTF-8?q?Kasper=20Garn=C3=A6s?= <kasperg@users.noreply.github.com>
-Date: Wed, 5 Oct 2022 00:11:49 +0200
-Subject: [PATCH] Add response description
+Date: Mon, 24 Oct 2022 02:57:35 +0200
+Subject: [PATCH] Applied response_description_functionality-3171530-3.patch
 
 ---
  .../OpenApiGenerator/RestGenerator.php        | 43 ++++++++++++++++---
  1 file changed, 38 insertions(+), 5 deletions(-)
 
 diff --git a/src/Plugin/openapi/OpenApiGenerator/RestGenerator.php b/src/Plugin/openapi/OpenApiGenerator/RestGenerator.php
-index 817685d..0c84fe8 100644
+index 1d71b81..aa5fa21 100644
 --- a/src/Plugin/openapi/OpenApiGenerator/RestGenerator.php
 +++ b/src/Plugin/openapi/OpenApiGenerator/RestGenerator.php
 @@ -218,7 +218,8 @@ class RestGenerator extends OpenApiGeneratorBase {

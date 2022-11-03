@@ -1,0 +1,11 @@
+uuid: 6a30d88a-e582-4b0a-b5c4-f4adf3e6a22d
+langcode: da
+status: true
+dependencies:
+  config:
+    - paragraphs.paragraphs_type.campaign_rule
+id: paragraph.campaign_rule
+target_entity_type_id: paragraph
+target_bundle: campaign_rule
+default_langcode: da
+language_alterable: false

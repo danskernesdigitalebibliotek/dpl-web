@@ -6,4 +6,14 @@ id: mediator
 label: Mediator
 weight: 5
 is_admin: null
-permissions: {  }
+permissions:
+  - 'access content overview'
+  - 'create campaign content'
+  - 'delete any campaign content'
+  - 'delete campaign revisions'
+  - 'delete own campaign content'
+  - 'edit any campaign content'
+  - 'edit own campaign content'
+  - 'revert campaign revisions'
+  - 'view campaign revisions'
+  - 'view own unpublished content'

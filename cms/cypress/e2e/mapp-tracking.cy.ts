@@ -11,7 +11,7 @@ describe("Mapp Tracking", () => {
       .clear()
       .type(customerId)
       .parent()
-      .get('[value="Gem indstillinger"]')
+      .get('[value="Save configuration"]')
       .click();
     cy.visit("/");
     cy.getRequestCount({

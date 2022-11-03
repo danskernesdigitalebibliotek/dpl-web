@@ -9,3 +9,4 @@ is_admin: null
 permissions:
   - 'administer library agency configuration'
   - 'administer url proxy configuration'
+  - 'view own unpublished content'

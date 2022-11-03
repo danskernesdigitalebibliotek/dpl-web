@@ -1,0 +1,10 @@
+uuid: d2050f18-57d7-4791-ba90-a4e15399f0fb
+langcode: en
+status: true
+dependencies: {  }
+id: campaign_rule
+label: 'Campaign Rule'
+icon_uuid: null
+icon_default: null
+description: 'A rule for selecting a matching campaign'
+behavior_plugins: {  }

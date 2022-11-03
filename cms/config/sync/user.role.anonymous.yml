@@ -12,3 +12,4 @@ permissions:
   - 'access content'
   - 'access openapi api docs'
   - 'restful get proxy-url'
+  - 'restful post campaign:match'

@@ -30,7 +30,7 @@ if (InstallerKernel::installationAttempted()) {
 }
 
 // Exclude development modules from configuration export.
-$settings['config_exclude_modules'] = ['devel'];
+$settings['config_exclude_modules'] = ['devel', 'field_ui', 'restui'];
 
 // Defines where the sync folder of your configuration lives. In this case it's
 // inside the Drupal root, which is protected by amazee.io Nginx configs, so it

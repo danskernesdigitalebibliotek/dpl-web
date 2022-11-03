@@ -24,6 +24,107 @@
   "consumes": ["application/json"],
   "produces": ["application/json"],
   "paths": {
+    "/dpl_campaign/match": {
+      "post": {
+        "parameters": [
+          {
+            "name": "_format",
+            "in": "query",
+            "type": "string",
+            "enum": ["json"],
+            "required": true,
+            "description": "Request format",
+            "default": "json"
+          }, 
+          {
+            "name": "facets",
+            "description": "A facet to match against",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "name": {
+                    "type": "string"
+                  },
+                  "values": {
+                    "type": "array",
+                    "items": {
+                      "type": "object",
+                      "properties": {
+                        "key": {
+                          "type": "string"
+                        },
+                        "term": {
+                          "type": "string"
+                        },
+                        "score": {
+                          "type": "integer"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "data": {
+                  "type": "object",
+                  "description": "The matching campaign",
+                  "properties": {
+                    "text": {
+                      "type": "string",
+                      "description": "The text to be shown for the campaign"
+                    },
+                    "image": {
+                      "type": "object",
+                      "description": "The image to be shown for the campaign",
+                      "properties": {
+                        "url": {
+                          "type": "string",
+                          "description": "The url to the image"
+                        },
+                        "alt": {
+                          "type": "string",
+                          "description": "The alt text for the image"
+                        }
+                      }
+                    },
+                    "url": {
+                      "type": "string",
+                      "description": "The url the campaign should link to"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "No matching campaign found"
+          },
+          "500": {
+            "description": "Internal server error"
+          }
+        },
+        "summary": "Get campaign matching search result facets",
+        "operationId": "campaign:match:POST",
+        "schemes": ["http"],
+        "security": [
+          {
+            "cookie": []
+          }
+        ]
+      }
+    },
     "/dpl-url-proxy": {
       "get": {
         "parameters": [
