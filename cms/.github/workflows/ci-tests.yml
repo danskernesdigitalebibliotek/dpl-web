@@ -20,6 +20,11 @@ jobs:
       - name: Validate composer.json
         run: |
           composer validate --no-check-all --no-check-publish
+      - name: Install Dependencies
+        run: |
+          composer install --no-interaction --no-progress
+      - name: Ensure install does not modify VCS
+        run: git diff --exit-code
 
   Phpcs:
     name: Check code style
