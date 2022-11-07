@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "13e8e7b5ca57900df5390d75d816ca96",
+    "content-hash": "3bd76c7cfdf484994f2f277e49fdbe28",
     "packages": [
         {
             "name": "amazeeio/drupal_integrations",
@@ -1097,12 +1097,12 @@
             "type": "drupal-library"
         },
         {
-            "name": "danskernesdigitalebibliotek/fbs",
+            "name": "danskernesdigitalebibliotek/fbs-client",
             "version": "dev-main",
             "dist": {
                 "type": "path",
-                "url": "packages/fbs",
-                "reference": "10453bb840da1d2888f3f1f731a6559920139953"
+                "url": "packages/fbs-client",
+                "reference": "311087cee2bc1d9a479da828c6f879db98e6cb2f"
             },
             "require": {
                 "ext-curl": "*",

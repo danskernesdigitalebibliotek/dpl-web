@@ -42,7 +42,7 @@
         },
         {
             "type": "path",
-            "url": "packages/fbs"
+            "url": "packages/fbs-client"
         }
 
     ],
@@ -52,7 +52,7 @@
         "cweagans/composer-patches": "1.7.0",
         "danskernesdigitalebibliotek/dpl-design-system": "^1.7@RC",
         "danskernesdigitalebibliotek/dpl-react": "^0.3.0@RC",
-        "danskernesdigitalebibliotek/fbs": "*",
+        "danskernesdigitalebibliotek/fbs-client": "*",
         "dealerdirect/phpcodesniffer-composer-installer": "^0.7.1",
         "drupal/config_ignore": "^2.3",
         "drupal/core-project-message": "^9.2.7",

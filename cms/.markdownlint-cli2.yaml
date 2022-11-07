@@ -9,4 +9,4 @@ ignores:
   - 'web'
   - 'assets'
   - 'drush'
-  - 'packages/fbs'
+  - 'packages/fbs-client'
