@@ -126,7 +126,7 @@
                 "[web-root]/sites/default/all.settings.php": "assets/all.settings.php",
                 "[web-root]/.eslintrc.json": false
             },
-            "gitignore": true,
+            "gitignore": false,
             "locations": {
                 "web-root": "web/"
             }
