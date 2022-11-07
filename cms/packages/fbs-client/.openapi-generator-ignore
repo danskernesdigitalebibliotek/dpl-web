@@ -4,9 +4,20 @@
 # Use this file to prevent files from being overwritten by the generator.
 # The patterns follow closely to .gitignore or .dockerignore.
 
-test/**/*.*
+# Exclude all APIs and models except for the ones actively in use.
+lib/Api/*.*
+!lib/Api/ExternalV1AgencyidApi.php
+lib/Model/*.*
+!lib/Model/AgencyBranch.php
+!lib/Model/ModelInterface.php
+# Ignore test files.
+# We do not intend to run tests for auto-generated code.
 phpunit.xml.dist
+test/**/*.*
+# Ignore files related to package generation for separate repos.
+# This package is included as a part of the main repo.
 .gitignore
 .php_cs
 .travis.yml
 git_push.sh
+docs/**/*.*
