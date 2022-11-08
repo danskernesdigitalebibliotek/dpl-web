@@ -17,7 +17,7 @@
             "type": "package",
             "package": {
                 "name": "danskernesdigitalebibliotek/dpl-react",
-                "version": "0.3.0-rc7",
+                "version": "0.3.0-rc8",
                 "type": "drupal-library",
                 "dist": {
                     "url": "https://github.com/danskernesdigitalebibliotek/dpl-react/releases/download/release-release%2F4/dist.zip",
@@ -39,7 +39,12 @@
                     "type": "zip"
                 }
             }
+        },
+        {
+            "type": "path",
+            "url": "packages/fbs-client"
         }
+
     ],
     "require": {
         "amazeeio/drupal_integrations": "0.3.5",
@@ -47,6 +52,7 @@
         "cweagans/composer-patches": "1.7.0",
         "danskernesdigitalebibliotek/dpl-design-system": "^1.7@RC",
         "danskernesdigitalebibliotek/dpl-react": "^0.3.0@RC",
+        "danskernesdigitalebibliotek/fbs-client": "*",
         "dealerdirect/phpcodesniffer-composer-installer": "^0.7.1",
         "drupal/config_ignore": "^2.3",
         "drupal/core-project-message": "^9.2.7",
@@ -124,7 +130,10 @@
             ],
             "file-mapping": {
                 "[web-root]/sites/default/all.settings.php": "assets/all.settings.php",
-                "[web-root]/.eslintrc.json": false
+                "[web-root]/.eslintrc.json": false,
+                "[project-root]/.gitattributes": {
+                    "append": "assets/.gitattributes"
+                }
             },
             "gitignore": false,
             "locations": {

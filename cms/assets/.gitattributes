@@ -1,0 +1,2 @@
+# Mark FBS client produced by OpenAPI Generator as generated.
+packages/fbs-client/**/*.* linguist-generated=true

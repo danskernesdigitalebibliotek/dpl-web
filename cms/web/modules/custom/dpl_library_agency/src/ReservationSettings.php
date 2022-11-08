@@ -2,51 +2,71 @@
 
 namespace Drupal\dpl_library_agency;
 
+use Drupal\Core\Cache\CacheableDependencyInterface;
+use Drupal\Core\Config\Config;
 use Drupal\Core\Config\ConfigManagerInterface;
 
 /**
  * Class that handles reservation settings for a library agency.
  */
-class ReservationSettings implements ReservationSettingsInterface {
-
-  /**
-   * Drupal\Core\Config\ConfigManagerInterface definition.
-   *
-   * @var \Drupal\Core\Config\ConfigManagerInterface
-   */
-  protected $configManager;
+class ReservationSettings implements CacheableDependencyInterface {
 
   /**
    * Constructs a new ReservationSettings object.
    */
-  public function __construct(ConfigManagerInterface $config_manager) {
-    $this->configManager = $config_manager;
+  public function __construct(
+    protected ConfigManagerInterface $configManager
+  ) {}
+
+  /**
+   * Get the configuration entity containing reservation settings.
+   */
+  protected function getConfig(): Config {
+    return $this->configManager->getConfigFactory()->get('dpl_library_agency.general_settings');
   }
 
   /**
-   * Checks wether sms notifications for reservations are enabled.
+   * Checks whether sms notifications for reservations are enabled.
    *
    * @return bool
    *   TRUE if sms notifications are enabled, FALSE otherwise.
    */
   public function smsNotificationsIsEnabled(): bool {
-    $config = $this->configManager->getConfigFactory()->get('dpl_library_agency.general_settings');
-    if ($config->get('reservation_sms_notifications_disabled')) {
-      return FALSE;
-    }
-    return TRUE;
+    $config = $this->getConfig();
+    return ($config->get('reservation_sms_notifications_disabled')) ? FALSE : TRUE;
   }
 
   /**
-   * Returns cache tags that is touched.
+   * Sets whether sms notifications for reservations should be enabled.
    *
-   * The cache tags are related to sms notification settings.
-   *
-   * @return string[]
-   *   An array of cache tags.
+   * @param bool $enabled
+   *   TRUE if sms notifications should be enabled, FALSE otherwise.
    */
-  public static function getCacheTagsSmsNotificationsIsEnabled(): array {
-    return ['dpl_react_app:material'];
+  public function enableSmsNotifications(bool $enabled) : void {
+    $this->getConfig()
+      ->set('reservation_sms_notifications_disabled', $enabled)
+      ->save();
+  }
+
+  /**
+   * {@inheritdoc}
+   */
+  public function getCacheContexts() : array {
+    return $this->getConfig()->getCacheContexts();
+  }
+
+  /**
+   * {@inheritdoc}
+   */
+  public function getCacheTags() : array {
+    return $this->getConfig()->getCacheTags();
+  }
+
+  /**
+   * {@inheritdoc}
+   */
+  public function getCacheMaxAge() : int {
+    return $this->getConfig()->getCacheMaxAge();
   }
 
 }
