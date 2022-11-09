@@ -17,12 +17,12 @@ class Value {
    * @param int $score
    *   The relevance of the term within the search result. This will usually be
    *   the number of times the term occurs within works contained in the search
-   *   result.
+   *   result. Default to 0 (no occurrences) if not specified.
    */
   public function __construct(
     public string $key,
     public string $term,
-    public int $score
+    public int $score = 0
   ) {
   }
 
