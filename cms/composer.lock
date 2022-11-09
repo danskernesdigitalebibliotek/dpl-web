@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "0bdf1209c2c8d4695a1320ae419443b9",
+    "content-hash": "f4db9fda13638bac8515c5f1c7574998",
     "packages": [
         {
             "name": "amazeeio/drupal_integrations",
@@ -1077,7 +1077,7 @@
         },
         {
             "name": "danskernesdigitalebibliotek/dpl-design-system",
-            "version": "v1.7.0-rc3",
+            "version": "v1.7.0-rc2",
             "dist": {
                 "type": "zip",
                 "url": "https://github.com/danskernesdigitalebibliotek/dpl-design-system/releases/download/release-release%2F4/dist.zip"
@@ -1089,7 +1089,7 @@
             "version": "0.3.0-rc9",
             "dist": {
                 "type": "zip",
-                "url": "https://github.com/reload/dpl-react/releases/download/release-release-4-demo/dist.zip"
+                "url": "https://github.com/reload/dpl-react/releases/download/release-fix-campaign-dependencies/dist.zip"
             },
             "require": {
                 "composer/installers": "^1.2.0"
