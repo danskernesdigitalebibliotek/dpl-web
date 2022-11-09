@@ -317,9 +317,12 @@ class DplReactAppsController extends ControllerBase {
    * Get the base url of the API exposed by this site.
    */
   public static function dplCmsBaseUrl(): string {
-    return self::ensureUrlIsString(
+    $url = self::ensureUrlIsString(
       Url::fromRoute('<front>', [], ['absolute' => TRUE])->toString()
     );
+    // The url must not have a trailing slash. The generated client will append
+    // it. Double slashes can lead to all kinds of oddities.
+    return rtrim($url, "/");
   }
 
   /**
