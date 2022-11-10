@@ -10,6 +10,7 @@
 
 use Drupal\Component\Serialization\Json;
 use Drupal\dpl_react\DplReactInterface;
+
 use function Safe\file_get_contents as file_get_contents;
 use function Safe\sprintf as sprintf;
 
@@ -67,6 +68,9 @@ function dpl_react_render(string $name, array $data = []): array {
   $attributes['data-dpl-app'] = $name;
 
   foreach ($data as $prop => $value) {
+    if (is_array($value)) {
+      $value = json_encode($value);
+    }
     $attributes['data-' . $prop] = $value;
   }
 
