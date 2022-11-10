@@ -20,7 +20,7 @@
                 "version": "0.3.0-rc9",
                 "type": "drupal-library",
                 "dist": {
-                    "url": "https://github.com/reload/dpl-react/releases/download/release-fix-campaign-dependencies/dist.zip",
+                    "url": "https://github.com/reload/dpl-react/releases/download/release-handtering-af-placeholders-og-flertal-i-tekstrenge-DDFSOEG-279/dist.zip",
                     "type": "zip"
                 },
                 "require": {
