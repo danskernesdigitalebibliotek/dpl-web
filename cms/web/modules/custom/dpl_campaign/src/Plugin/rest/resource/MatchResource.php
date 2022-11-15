@@ -77,6 +77,14 @@ use function Safe\usort as usort;
  *             "type" = "object",
  *             "description" = "The matching campaign",
  *             "properties" = {
+ *                "id" = {
+ *                 "type" = "string",
+ *                 "description" = "The campaign id",
+ *               },
+ *                "title" = {
+ *                 "type" = "string",
+ *                 "description" = "The title of the campaign",
+ *               },
  *               "text" = {
  *                 "type" = "string",
  *                 "description" = "The text to be shown for the campaign",
@@ -220,7 +228,11 @@ class MatchResource extends ResourceBase {
    *   A normalized data structure which can be output.
    */
   protected function formatCampaignOutput(NodeInterface $campaign): array {
-    $output = [];
+    $output = ['id' => $campaign->id()];
+
+    if (!$campaign->get('title')->isEmpty()) {
+      $output['title'] = $campaign->get('title')->getValue()[0]['value'];
+    }
 
     if (!$campaign->get('body')->isEmpty()) {
       $output['text'] = $campaign->get('body')->getValue()[0]['value'];
