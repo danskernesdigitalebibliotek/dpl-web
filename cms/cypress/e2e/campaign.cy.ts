@@ -40,7 +40,6 @@ describe("Campaign creation and endpoint", () => {
         ],
       },
     ]).then((response) => {
-      cy.log(response.body);
       const campaign = getCampaignFromResponse(response);
 
       expect(campaign.title).to.eq(
@@ -88,7 +87,6 @@ describe("Campaign creation and endpoint", () => {
         ],
       },
     ]).then((response) => {
-      cy.log(response.body);
       const campaign = getCampaignFromResponse(response);
 
       expect(Object.keys(campaign).length).to.eq(4);
@@ -143,7 +141,6 @@ describe("Campaign creation and endpoint", () => {
         ],
       },
     ]).then((response) => {
-      cy.log(response.body);
       const campaign = getCampaignFromResponse(response);
 
       expect(Object.keys(campaign).length).to.eq(4);
@@ -206,7 +203,6 @@ describe("Campaign creation and endpoint", () => {
         ],
       },
     ]).then((response) => {
-      cy.log(response.body);
       const campaign = getCampaignFromResponse(response);
 
       expect(Object.keys(campaign).length).to.eq(4);
