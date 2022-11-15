@@ -35,7 +35,7 @@
             "required": true,
             "description": "Request format",
             "default": "json"
-          }, 
+          },
           {
             "name": "facets",
             "description": "A facet to match against",
@@ -81,6 +81,14 @@
                   "type": "object",
                   "description": "The matching campaign",
                   "properties": {
+                    "id": {
+                      "type": "string",
+                      "description": "The campaign id"
+                    },
+                    "title": {
+                      "type": "string",
+                      "description": "The title of the campaign"
+                    },
                     "text": {
                       "type": "string",
                       "description": "The text to be shown for the campaign"
@@ -136,7 +144,7 @@
             "required": true,
             "description": "Request format",
             "default": "json"
-          }, 
+          },
           {
             "name": "url",
             "description": "A url to an online resource which may be accessible through a proxy which requires rewriting of the url",
