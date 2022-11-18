@@ -40,12 +40,17 @@ describe("Campaign creation and endpoint", () => {
         ],
       },
     ]).then((response) => {
-      expect(response.body).to.deep.equal({
-        data: {
-          text: "Promote authors: H. P. Lovecraft and Stephen King",
-          url: "https://example.com/promote-authors-h-p-lovecraft-and-stephen-king",
-        },
-      });
+      const campaign = getCampaignFromResponse(response);
+
+      expect(campaign.title).to.eq(
+        "Promote authors: H. P. Lovecraft and Stephen King"
+      );
+      expect(campaign.text).to.eq(
+        "Promote authors: H. P. Lovecraft and Stephen King"
+      );
+      expect(campaign.url).to.eq(
+        "https://example.com/promote-authors-h-p-lovecraft-and-stephen-king"
+      );
     });
   });
 
@@ -82,12 +87,19 @@ describe("Campaign creation and endpoint", () => {
         ],
       },
     ]).then((response) => {
-      expect(response.body).to.deep.equal({
-        data: {
-          text: "Promote authors: H. P. Lovecraft and Stephen King",
-          url: "https://example.com/promote-authors-h-p-lovecraft-and-stephen-king",
-        },
-      });
+      const campaign = getCampaignFromResponse(response);
+
+      expect(Object.keys(campaign).length).to.eq(4);
+      expect(campaign).to.have.property("id");
+      expect(campaign.title).to.eq(
+        "Promote authors: H. P. Lovecraft and Stephen King"
+      );
+      expect(campaign.text).to.eq(
+        "Promote authors: H. P. Lovecraft and Stephen King"
+      );
+      expect(campaign.url).to.eq(
+        "https://example.com/promote-authors-h-p-lovecraft-and-stephen-king"
+      );
     });
   });
 
@@ -129,13 +141,15 @@ describe("Campaign creation and endpoint", () => {
         ],
       },
     ]).then((response) => {
-      cy.log(response.body);
-      expect(response.body).to.deep.equal({
-        data: {
-          text: "Read books by J. K. Rowling",
-          url: "https://example.com/read-books-by-j-k-rowling",
-        },
-      });
+      const campaign = getCampaignFromResponse(response);
+
+      expect(Object.keys(campaign).length).to.eq(4);
+      expect(campaign).to.have.property("id");
+      expect(campaign.title).to.eq("Read books by J. K. Rowling");
+      expect(campaign.text).to.eq("Read books by J. K. Rowling");
+      expect(campaign.url).to.eq(
+        "https://example.com/read-books-by-j-k-rowling"
+      );
     });
   });
 
@@ -189,13 +203,19 @@ describe("Campaign creation and endpoint", () => {
         ],
       },
     ]).then((response) => {
-      cy.log(response.body);
-      expect(response.body).to.deep.equal({
-        data: {
-          text: "An AND campaign for testing ranking matching",
-          url: "https://example.com/an-and-campaign-for-testing-ranking-matching",
-        },
-      });
+      const campaign = getCampaignFromResponse(response);
+
+      expect(Object.keys(campaign).length).to.eq(4);
+      expect(campaign).to.have.property("id");
+      expect(campaign.title).to.eq(
+        "An AND campaign for testing ranking matching"
+      );
+      expect(campaign.text).to.eq(
+        "An AND campaign for testing ranking matching"
+      );
+      expect(campaign.url).to.eq(
+        "https://example.com/an-and-campaign-for-testing-ranking-matching"
+      );
     });
   });
 
@@ -445,4 +465,17 @@ const createCampaignRule = (
   cy.get(
     `input[id*="-${index}-subform-field-campaign-rule-ranking-max-0-value"]`
   ).type(maxValue.toString());
+};
+
+const getCampaignFromResponse = (response: {
+  body: {
+    data: {
+      id: number;
+      title: string;
+      text: string;
+      url: string;
+    };
+  };
+}) => {
+  return response.body.data;
 };

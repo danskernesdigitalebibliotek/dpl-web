@@ -222,4 +222,4 @@ jobs:
       - name: Download current specification
         run: task ci:openapi:download
       - name: Ensure specification has not drifted
-        run: git diff --exit-code openapi.json
+        run: git diff --ignore-space-at-eol --exit-code openapi.json
