@@ -52,6 +52,9 @@ tasks:
     summary: Run docker compose
     cmds:
       - docker compose {{ .DOCKER_COMPOSE_FILES }} up -d {{if eq .CI "true"}}--quiet-pull{{end}}
+    vars:
+      CI:
+        sh: '[[ -z "${CI}" ]] && echo "false" || echo "true"'
 
   dev:stop:
     summary: Stop docker compose environment
