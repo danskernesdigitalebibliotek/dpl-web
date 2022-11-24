@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "574526afdc8ddb3167027ef0a072958b",
+    "content-hash": "8072e5b169d988c07946277c57db4bae",
     "packages": [
         {
             "name": "amazeeio/drupal_integrations",
@@ -1077,19 +1077,19 @@
         },
         {
             "name": "danskernesdigitalebibliotek/dpl-design-system",
-            "version": "v1.7.0-rc2",
+            "version": "v1.7.0-rc3",
             "dist": {
                 "type": "zip",
-                "url": "https://github.com/danskernesdigitalebibliotek/dpl-design-system/releases/download/release-release%2F4/dist.zip"
+                "url": "https://github.com/danskernesdigitalebibliotek/dpl-design-system/releases/download/release-develop/dist.zip"
             },
             "type": "drupal-library"
         },
         {
             "name": "danskernesdigitalebibliotek/dpl-react",
-            "version": "0.3.0-rc9",
+            "version": "0.3.0-rc10",
             "dist": {
                 "type": "zip",
-                "url": "https://github.com/reload/dpl-react/releases/download/release-handtering-af-placeholders-og-flertal-i-tekstrenge-DDFSOEG-279/dist.zip"
+                "url": "https://github.com/danskernesdigitalebibliotek/dpl-react/releases/download/release-develop/dist.zip"
             },
             "require": {
                 "composer/installers": "^1.2.0"
