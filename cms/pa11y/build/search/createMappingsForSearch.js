@@ -76,7 +76,7 @@ exports.default = (baseUri, options) => {
         (0, general_1.default)(baseUri, options).mappings.createMapping({
             request: {
                 method: "GET",
-                urlPath: "/api/v2/covers**",
+                urlPattern: "/api/v2/covers.*",
             },
             response: {
                 jsonBody: json,
@@ -87,7 +87,7 @@ exports.default = (baseUri, options) => {
     (0, general_1.default)(baseUri, options).mappings.createMapping({
         request: {
             method: "HEAD",
-            urlPath: "/list/default/**",
+            urlPath: "/list/default/.*",
         },
         response: {
             "status": 404
