@@ -10,6 +10,7 @@
     "timeout": 600000
   },
   "urls": [
-    "http://varnish:8080/"
+    "http://varnish:8080/",
+    "http://varnish:8080/search?q=harry+potter&x=0&y=0"
   ]
 }
