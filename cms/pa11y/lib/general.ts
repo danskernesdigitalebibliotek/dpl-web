@@ -11,22 +11,5 @@ export const wiremock = (baseUri?: string, options?: Options) => {
   );
 };
 
-export const simpleGraphqlMapping = (id: string) => {
-  import(`/data/${id}.json`).then((json) => {
-    wiremock().mappings.createMapping({
-      request: {
-        method: "POST",
-        urlPath: "/opac/graphql",
-        "bodyPatterns" : [ {
-          "matchesJsonPath" : matchGraphqlQuery(id)
-        } ]
-      },
-      response: {
-        jsonBody: json,
-      },
-    })
-  });
-}
-
 export default wiremock;
 
