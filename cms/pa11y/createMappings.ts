@@ -1,4 +1,12 @@
+import { wiremock } from "./lib/general";
 import createMappingsForSearch from "./search/createMappingsForSearch";
 
-createMappingsForSearch();
+const create = async () => {
+
+  await wiremock().mappings.deleteAllMappings();
+  createMappingsForSearch();
+};
+
+create();
+
 

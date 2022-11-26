@@ -73,7 +73,7 @@ export default (baseUri?: string, options?: Options) => {
       urlPath: "/list/default/**",
     },
     response: {
-      "status": 404
+      "status": 401
     },
   });
 
@@ -84,9 +84,6 @@ export default (baseUri?: string, options?: Options) => {
       urlPath: "/dpl-react/user-tokens",
     },
     response: {
-      headers: {
-        "Content-Type": "application/txt"
-      },
       body: 'window.dplReact = window.dplReact || {};\nwindow.dplReact.setToken("library", "fcd5c29a171f97b626d71eceffe1313f00a284b0")',
     },
   });
@@ -94,22 +91,21 @@ export default (baseUri?: string, options?: Options) => {
   // Get campaign.
   wiremock(baseUri, options).mappings.createMapping({
     request: {
-      method: "GET",
+      method: "HEAD",
       urlPath: "/dpl_campaign/match",
     },
     response: {
-      "status": 404
+      "status": 401
     },
   });
 
   // Get availability.
   wiremock(baseUri, options).mappings.createMapping({
     request: {
-      method: "GET",
-      urlPattern: "/external/agencyid/catalog/availability/v3\\?recordid=.*"
+      method: "HEAD",
+      urlPath: "/external/agencyid/catalog/availability/v3?recordid=**",
     },
     response: {
-      "transformers": ["response-template"],
       jsonBody: [{
         "recordId": "{{request.query.recordid}}",
         "reservable": "{{pickRandom true false}}",
@@ -120,3 +116,7 @@ export default (baseUri?: string, options?: Options) => {
   });
 
 };
+
+
+
+
