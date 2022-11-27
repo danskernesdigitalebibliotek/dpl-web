@@ -1,17 +1,18 @@
 
 import { Options } from "wiremock-rest-client/dist/model/options.model";
+import { availabilityMapping, materialListMapping, userTokenMapping } from "../lib/commonMappings";
 import wiremock, { matchGraphqlQuery } from "../lib/general";
 
 export default (baseUri?: string, options?: Options) => {
 
-  // Search for "Harry Potter".
-  import('./data/fbi/searchWithPagination.json').then((json) => {
+  // Get Work.
+  import('./data/fbi/getMaterial.json').then((json) => {
     wiremock(baseUri, options).mappings.createMapping({
       request: {
         method: "POST",
         urlPath: "/opac/graphql",
         "bodyPatterns": [{
-          "matchesJsonPath": matchGraphqlQuery("searchWithPagination")
+          "matchesJsonPath": matchGraphqlQuery("getMaterial")
         }]
       },
       response: {
@@ -20,14 +21,14 @@ export default (baseUri?: string, options?: Options) => {
     })
   });
 
-  // Get intelligent facets.
-  import('./data/fbi/intelligentFacets.json').then((json) => {
+  // Get Infomedia.
+  import('./data/fbi/getInfomedia.json').then((json) => {
     wiremock(baseUri, options).mappings.createMapping({
       request: {
         method: "POST",
         urlPath: "/opac/graphql",
         "bodyPatterns": [{
-          "matchesJsonPath": matchGraphqlQuery("intelligentFacets")
+          "matchesJsonPath": matchGraphqlQuery("getInfomedia")
         }]
       },
       response: {
@@ -36,30 +37,20 @@ export default (baseUri?: string, options?: Options) => {
     })
   });
 
-  // Get searchFacets.
-  import('./data/fbi/searchFacet.json').then((json) => {
+  // Get holdings.
+  import('./data/fbs/holdings.json').then((json) => {
     wiremock(baseUri, options).mappings.createMapping({
       request: {
-        method: "POST",
-        urlPath: "/opac/graphql",
-        "bodyPatterns": [{
-          "matchesJsonPath": matchGraphqlQuery("searchFacet")
-        }]
+        method: "GET",
+        urlPattern: "/external/agencyid/catalog/holdings/v3\\?recordid=.*"
       },
       response: {
         jsonBody: json,
       },
     })
-  });
-
-  // Get campaign.
-  wiremock(baseUri, options).mappings.createMapping({
-    request: {
-      method: "GET",
-      urlPath: "/dpl_campaign/match",
-    },
-    response: {
-      "status": 404
-    },
   });
 };
+
+
+
+
