@@ -23,7 +23,8 @@ var __importStar = (this && this.__importStar) || function (mod) {
     return result;
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-const general_1 = __importStar(require("../lib/general"));
+const commonMappings_1 = require("../../lib/commonMappings");
+const general_1 = __importStar(require("../../lib/general"));
 exports.default = (baseUri, options) => {
     // Get Work.
     Promise.resolve().then(() => __importStar(require('./data/fbi/getMaterial.json'))).then((json) => {
@@ -68,44 +69,47 @@ exports.default = (baseUri, options) => {
         });
     });
     // Get material list.
-    (0, general_1.default)(baseUri, options).mappings.createMapping({
-        request: {
-            method: "HEAD",
-            urlPath: "/list/default/.*",
-        },
-        response: {
-            "status": 404
-        },
-    });
+    (0, commonMappings_1.materialListMapping)();
+    // wiremock(baseUri, options).mappings.createMapping({
+    //   request: {
+    //     method: "HEAD",
+    //     urlPath: "/list/default/.*",
+    //   },
+    //   response: {
+    //     "status": 404
+    //   },
+    // });
     // Get user-tokens.
-    (0, general_1.default)(baseUri, options).mappings.createMapping({
-        request: {
-            method: "GET",
-            urlPath: "/dpl-react/user-tokens",
-        },
-        response: {
-            headers: {
-                "Content-Type": "application/txt"
-            },
-            body: 'window.dplReact = window.dplReact || {};\nwindow.dplReact.setToken("library", "fcd5c29a171f97b626d71eceffe1313f00a284b0")',
-        },
-    });
+    (0, commonMappings_1.userTokenMapping)();
+    // wiremock(baseUri, options).mappings.createMapping({
+    //   request: {
+    //     method: "GET",
+    //     urlPath: "/dpl-react/user-tokens",
+    //   },
+    //   response: {
+    //     headers: {
+    //       "Content-Type": "application/txt"
+    //     },
+    //     body: 'window.dplReact = window.dplReact || {};\nwindow.dplReact.setToken("library", "fcd5c29a171f97b626d71eceffe1313f00a284b0")',
+    //   },
+    // });
     // Get availability.
-    (0, general_1.default)(baseUri, options).mappings.createMapping({
-        request: {
-            method: "GET",
-            urlPattern: "/external/agencyid/catalog/availability/v3\\?recordid=.*"
-        },
-        response: {
-            "transformers": ["response-template"],
-            jsonBody: [{
-                    "recordId": "{{request.query.recordid}}",
-                    "reservable": "{{pickRandom true false}}",
-                    "available": "{{pickRandom true false}}",
-                    "reservations": "{{randomInt lower=0 upper=10}}"
-                }],
-        },
-    });
+    (0, commonMappings_1.availabilityMapping)();
+    // wiremock(baseUri, options).mappings.createMapping({
+    //   request: {
+    //     method: "GET",
+    //     urlPattern: "/external/agencyid/catalog/availability/v3\\?recordid=.*"
+    //   },
+    //   response: {
+    //     "transformers": ["response-template"],
+    //     jsonBody: [{
+    //       "recordId": "{{request.query.recordid}}",
+    //       "reservable": "{{pickRandom true false}}",
+    //       "available": "{{pickRandom true false}}",
+    //       "reservations": "{{randomInt lower=0 upper=10}}"
+    //     }],
+    //   },
+    // });
     // Get holdings.
     Promise.resolve().then(() => __importStar(require('./data/fbs/holdings.json'))).then((json) => {
         (0, general_1.default)(baseUri, options).mappings.createMapping({

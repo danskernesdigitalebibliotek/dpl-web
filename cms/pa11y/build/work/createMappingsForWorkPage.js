@@ -25,14 +25,14 @@ var __importStar = (this && this.__importStar) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 const general_1 = __importStar(require("../lib/general"));
 exports.default = (baseUri, options) => {
-    // Search for "Harry Potter".
-    Promise.resolve().then(() => __importStar(require('./data/fbi/searchWithPagination.json'))).then((json) => {
+    // Get Work.
+    Promise.resolve().then(() => __importStar(require('./data/fbi/getMaterial.json'))).then((json) => {
         (0, general_1.default)(baseUri, options).mappings.createMapping({
             request: {
                 method: "POST",
                 urlPath: "/opac/graphql",
                 "bodyPatterns": [{
-                        "matchesJsonPath": (0, general_1.matchGraphqlQuery)("searchWithPagination")
+                        "matchesJsonPath": (0, general_1.matchGraphqlQuery)("getMaterial")
                     }]
             },
             response: {
@@ -40,14 +40,14 @@ exports.default = (baseUri, options) => {
             },
         });
     });
-    // Get intelligent facets.
-    Promise.resolve().then(() => __importStar(require('./data/fbi/intelligentFacets.json'))).then((json) => {
+    // Get Infomedia.
+    Promise.resolve().then(() => __importStar(require('./data/fbi/getInfomedia.json'))).then((json) => {
         (0, general_1.default)(baseUri, options).mappings.createMapping({
             request: {
                 method: "POST",
                 urlPath: "/opac/graphql",
                 "bodyPatterns": [{
-                        "matchesJsonPath": (0, general_1.matchGraphqlQuery)("intelligentFacets")
+                        "matchesJsonPath": (0, general_1.matchGraphqlQuery)("getInfomedia")
                     }]
             },
             response: {
@@ -55,29 +55,16 @@ exports.default = (baseUri, options) => {
             },
         });
     });
-    // Get searchFacets.
-    Promise.resolve().then(() => __importStar(require('./data/fbi/searchFacet.json'))).then((json) => {
+    // Get holdings.
+    Promise.resolve().then(() => __importStar(require('./data/fbs/holdings.json'))).then((json) => {
         (0, general_1.default)(baseUri, options).mappings.createMapping({
             request: {
-                method: "POST",
-                urlPath: "/opac/graphql",
-                "bodyPatterns": [{
-                        "matchesJsonPath": (0, general_1.matchGraphqlQuery)("searchFacet")
-                    }]
+                method: "GET",
+                urlPattern: "/external/agencyid/catalog/holdings/v3\\?recordid=.*"
             },
             response: {
                 jsonBody: json,
             },
         });
-    });
-    // Get campaign.
-    (0, general_1.default)(baseUri, options).mappings.createMapping({
-        request: {
-            method: "GET",
-            urlPath: "/dpl_campaign/match",
-        },
-        response: {
-            "status": 404
-        },
     });
 };
