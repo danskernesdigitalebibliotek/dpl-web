@@ -13,10 +13,9 @@
     "wiremock-rest-client": "^1.10.0"
   },
   "scripts": {
-    "build": "tsc",
+    "create-mappings": "tsc && node build/createMappings.js",
+    "pa11y-ci": "tsc && node build/createMappings.js && pa11y-ci",
     "dev": "tsc -w",
-    "test": "tsc && node build/createMappings.js && pa11y-ci",
-    "format": "prettier --write .",
-    "create-mappings": "tsc && node build/createMappings.js"
+    "format": "prettier --write ."
   }
 }
