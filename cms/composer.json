@@ -17,10 +17,10 @@
             "type": "package",
             "package": {
                 "name": "danskernesdigitalebibliotek/dpl-react",
-                "version": "0.3.0-rc9",
+                "version": "0.3.0-rc10",
                 "type": "drupal-library",
                 "dist": {
-                    "url": "https://github.com/reload/dpl-react/releases/download/release-handtering-af-placeholders-og-flertal-i-tekstrenge-DDFSOEG-279/dist.zip",
+                    "url": "https://github.com/danskernesdigitalebibliotek/dpl-react/releases/download/release-develop/dist.zip",
                     "type": "zip"
                 },
                 "require": {
@@ -33,9 +33,9 @@
             "package": {
                 "name": "danskernesdigitalebibliotek/dpl-design-system",
                 "type": "drupal-library",
-                "version": "v1.7.0-rc2",
+                "version": "v1.7.0-rc3",
                 "dist": {
-                    "url": "https://github.com/danskernesdigitalebibliotek/dpl-design-system/releases/download/release-release%2F4/dist.zip",
+                    "url": "https://github.com/danskernesdigitalebibliotek/dpl-design-system/releases/download/release-develop/dist.zip",
                     "type": "zip"
                 }
             }
