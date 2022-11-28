@@ -1,26 +1,16 @@
-import { availabilityMapping, coverMapping, materialListMapping, userTokenMapping } from "./lib/commonMappings";
 import { wiremock } from "./lib/general";
-import createMappingsForSearch from "./search/createMappingsForSearch";
-import createMappingsForWorkPage from "./work/createMappingsForWorkPage";
+import createCommonMappings from "./mappings/common/createCommonMappings";
+import createMappingsForSearch from "./mappings/search/createMappingsForSearch";
+import createMappingsForWorkPage from "./mappings/work/createMappingsForWorkPage";
 
 const create = async () => {
-
   await wiremock().mappings.deleteAllMappings();
   // Create common mappings.
-  // Get cover.
-  coverMapping();
-   // Get material list.
-   materialListMapping();
-   // Get user-tokens.
-   userTokenMapping();
-   // Get availability.
-   availabilityMapping();
+  createCommonMappings();
 
-   // Create page specific mappings.
+  // Create page specific mappings.
   createMappingsForSearch();
   createMappingsForWorkPage();
 };
 
 create();
-
-
