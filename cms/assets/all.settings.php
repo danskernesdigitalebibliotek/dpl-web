@@ -50,6 +50,7 @@ if (getenv('CI')) {
   // Specify non-HTTP versions of endpoints. This is required to make Cypress
   // mocking work. It does not support ignoring self-signed certificates from
   // Wiremock.
+  $config['dpl_fbs.settings'] = ['host' => 'http://fbs-openplatform.dbc.dk'];
   $config['openid_connect.settings.adgangsplatformen']['settings']['authorization_endpoint'] = 'http://login.bib.dk/oauth/authorize';
   $config['openid_connect.settings.adgangsplatformen']['settings']['token_endpoint'] = 'http://login.bib.dk/oauth/token/';
   $config['openid_connect.settings.adgangsplatformen']['settings']['userinfo_endpoint'] = 'http://login.bib.dk/userinfo/';

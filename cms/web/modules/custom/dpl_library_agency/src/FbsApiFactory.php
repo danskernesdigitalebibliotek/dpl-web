@@ -4,6 +4,7 @@ namespace Drupal\dpl_library_agency;
 
 use DanskernesDigitaleBibliotek\FBS\Api\ExternalV1AgencyidApi;
 use DanskernesDigitaleBibliotek\FBS\Configuration;
+use Drupal\Core\Config\ConfigManagerInterface;
 use Drupal\dpl_library_token\LibraryTokenHandler;
 use GuzzleHttp\ClientInterface;
 
@@ -29,7 +30,8 @@ class FbsApiFactory {
   /**
    * FBS API factory constructor.
    */
-  public function __construct(ClientInterface $client, LibraryTokenHandler $tokenHandler) {
+  public function __construct(ConfigManagerInterface $configManager, ClientInterface $client, LibraryTokenHandler $tokenHandler) {
+    $this->configManager = $configManager;
     $this->client = $client;
     $this->tokenHandler = $tokenHandler;
   }
@@ -38,10 +40,13 @@ class FbsApiFactory {
    * Assemble the API configuration.
    */
   protected function getConfiguration(): Configuration {
+    // @todo FBS host name should be configurable through a central FBS module.
+    // This configuration assumes that we know what a future structure will be
+    // but the primary point to allow external control through *.settings.php
+    $config = $this->configManager->getConfigFactory()->get('dpl_fbs.settings');
+    $host = $config->get('host') ?? 'https://fbs-openplatform.dbc.dk';
     $configuration = (new Configuration())
-      // @todo FBS host name should be configurable.
-      // This would preferably be managed in a central FBS module.
-      ->setHost('https://fbs-openplatform.dbc.dk');
+      ->setHost($host);
 
     $token = $this->tokenHandler->getToken();
     if ($token) {
