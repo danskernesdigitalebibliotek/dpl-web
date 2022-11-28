@@ -1,0 +1,6 @@
+name: Digital Archive Service
+type: module
+description: Allow patrons to order digital copies of articles from the Royal Danish Library
+package: DPL
+core: 8.x
+core_version_requirement: ^8 || ^9
