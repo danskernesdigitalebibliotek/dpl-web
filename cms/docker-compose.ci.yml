@@ -7,6 +7,8 @@ services:
       dockerfile: docker/node-chromium.dockerfile
     volumes:
       - 'projectroot:/app'
+    depends_on:
+      - wiremock
     environment:
       CYPRESS_INSTALL_BINARY: 0
       YARN_CACHE_FOLDER: '/app/.cache/yarn'
