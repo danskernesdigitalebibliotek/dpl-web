@@ -28,6 +28,7 @@ services:
   dpl_library_agency.fbs_api_factory:
     class: Drupal\dpl_library_agency\FbsApiFactory
     arguments:
+      - "@config.manager"
       - "@http_client"
       - "@dpl_library_token.handler"
   dpl_library_agency.fbs_agency_api:
