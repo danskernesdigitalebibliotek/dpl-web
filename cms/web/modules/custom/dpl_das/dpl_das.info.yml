@@ -4,3 +4,5 @@ description: Allow patrons to order digital copies of articles from the Royal Da
 package: DPL
 core: 8.x
 core_version_requirement: ^8 || ^9
+dependencies:
+  - drupal:serialization
