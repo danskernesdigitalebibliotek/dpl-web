@@ -13,3 +13,4 @@ permissions:
   - 'access openapi api docs'
   - 'restful get proxy-url'
   - 'restful post campaign:match'
+  - 'restful post dpl_das_digital_article_order'
