@@ -201,7 +201,6 @@ class DplReactAppsController extends ControllerBase {
         'find-on-shelf-modal-screen-reader-modal-description-text' => $this->t('Reservation modal screen reader description', [], $c),
         'genre-and-form-text' => $this->t('Genre', [], $c),
         'get-online-text' => $this->t('Get online', [], $c),
-        'go-to-e-reolen-text' => $this->t('Go to e-Reolen', [], $c),
         'go-to-text' => $this->t('Go to @source', [], $c),
         'have-no-interest-after-text' => $this->t('Have no interest after', [], $c),
         'hearts-icon-text' => $this->t('hearts', [], $c),
