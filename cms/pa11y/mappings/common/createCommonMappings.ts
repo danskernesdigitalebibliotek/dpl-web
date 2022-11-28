@@ -68,4 +68,19 @@ export default (baseUri?: string, options?: Options) => {
       ],
     },
   });
+
+  // Mapings for branches
+  import("./data/fbs/getBranches.json").then((json) => {
+
+    wiremock(baseUri, options).mappings.createMapping({
+      request: {
+        method: "GET",
+        urlPattern: "/fbs-openplatform.dbc.dk/external/v1/agencyid/branches",
+      },
+      response: {
+        jsonBody: json
+      }
+    });
+  });
+
 };
