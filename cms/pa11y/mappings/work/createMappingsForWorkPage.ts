@@ -46,7 +46,7 @@ export default (baseUri?: string, options?: Options) => {
         urlPattern: "/external/agencyid/catalog/holdings/v3\\?recordid=.*",
       },
       response: {
-        jsonBody: json,
+        jsonBody: json.default,
       },
     });
   });

@@ -660,7 +660,8 @@
         }
       ],
       "fictionNonfiction": { "display": "skønlitteratur", "code": "FICTION" },
-      "workYear": "2003"
+      "workYear": "2003",
+      "dk5MainEntry": { "display": "Skønlitteratur" }
     }
   }
 }
