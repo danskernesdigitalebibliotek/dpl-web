@@ -11,6 +11,7 @@
   },
   "urls": [
     "http://varnish:8080/",
-    "http://varnish:8080/search?q=harry+potter&x=0&y=0"
+    "http://varnish:8080/search?q=harry+potter&x=0&y=0",
+    "http://varnish:8080/work/work-of:870970-basis:25245784?type=bog"
   ]
 }
