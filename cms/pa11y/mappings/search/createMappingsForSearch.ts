@@ -59,7 +59,7 @@ export default (baseUri?: string, options?: Options) => {
   // Get campaign.
   wiremock(baseUri, options).mappings.createMapping({
     request: {
-      method: "GET",
+      method: "POST",
       urlPath: "/dpl_campaign/match",
     },
     response: {

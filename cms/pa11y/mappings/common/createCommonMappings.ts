@@ -15,9 +15,14 @@ export default (baseUri?: string, options?: Options) => {
           type: "pid",
           imageUrls: {
             small: {
-              url: "https://res.cloudinary.com/dandigbib/image/upload/t_ddb_cover_small/v1647612411/bogportalen.dk/9788702307566.jpg",
+              url: "https://picsum.photos/98/160",
               format: "jpeg",
               size: "small",
+            },
+            large: {
+              url: "https://picsum.photos/142/172",
+              format: "jpeg",
+              size: "large",
             },
           },
         },
@@ -29,10 +34,10 @@ export default (baseUri?: string, options?: Options) => {
   wiremock(baseUri, options).mappings.createMapping({
     request: {
       method: "HEAD",
-      urlPath: "/list/default/.*",
+      urlPattern: "/list/default/.*",
     },
     response: {
-      status: 404,
+      jsonBody: {},
     },
   });
 
