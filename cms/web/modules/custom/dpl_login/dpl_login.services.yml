@@ -1,6 +1,6 @@
 services:
-  dpl_login.route_subscriber:
-    class: Drupal\dpl_login\Routing\RouteSubscriber
+  dpl_login.route_rewire_logout:
+    class: Drupal\dpl_login\Routing\RewireLogoutSubscriber
     tags:
       - { name: event_subscriber }
   dpl_login.route_disable_csrf:
