@@ -41,7 +41,7 @@ class DplReactAppsController extends ControllerBase {
       $container->get('renderer'),
       $container->get('dpl_library_agency.reservation_settings'),
       $container->get('dpl_library_agency.branch_settings'),
-      $container->get('dpl_library_agency.branch.repository.cache'),
+      $container->get('dpl_library_agency.branch.repository'),
     );
   }
 
