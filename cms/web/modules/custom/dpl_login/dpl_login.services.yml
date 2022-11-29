@@ -3,6 +3,24 @@ services:
     class: Drupal\dpl_login\Routing\RouteSubscriber
     tags:
       - { name: event_subscriber }
+  dpl_login.route_disable_csrf:
+    class: Drupal\dpl_login\Routing\DisableCsrfCheckSubscriber
+    tags:
+      - { name: event_subscriber }
   dpl_login.user_tokens:
     class: Drupal\dpl_login\UserTokensProvider
     arguments: ["@tempstore.private"]
+  dpl_login.authentication.user_token:
+    class: Drupal\dpl_login\UserTokenAuthProvider
+    arguments:
+      - "adgangsplatformen"
+      - "@config.factory"
+      - "@module_handler"
+      - "@plugin.manager.openid_connect_client"
+      - "@openid_connect.authmap"
+    tags:
+      - {
+          name: authentication_provider,
+          provider_id: "dpl_login_user_token",
+          priority: 0,
+        }

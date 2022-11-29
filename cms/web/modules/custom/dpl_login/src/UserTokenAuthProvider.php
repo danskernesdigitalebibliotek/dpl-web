@@ -1,0 +1,83 @@
+<?php
+
+namespace Drupal\dpl_login;
+
+use Drupal\Core\Authentication\AuthenticationProviderInterface;
+use Drupal\Core\Config\ConfigFactoryInterface;
+use Drupal\Core\Extension\ModuleHandlerInterface;
+use Drupal\Core\Session\AccountInterface;
+use Drupal\openid_connect\OpenIDConnectAuthmap;
+use Drupal\openid_connect\Plugin\OpenIDConnectClientManager;
+use Symfony\Component\HttpFoundation\Request;
+use function Safe\preg_match as preg_match;
+
+/**
+ * Authentication provider with OAuth2 / OpenID Connect user token support.
+ */
+class UserTokenAuthProvider implements AuthenticationProviderInterface {
+
+  /**
+   * Constructor.
+   */
+  public function __construct(
+    private string $clientId,
+    private ConfigFactoryInterface $config,
+    private ModuleHandlerInterface $moduleHandler,
+    private OpenIDConnectClientManager $openIdManager,
+    private OpenIDConnectAuthmap $authmap,
+  ) {}
+
+  /**
+   * Extract a bearer token from the authorization header of a request.
+   */
+  private function getToken(Request $request) : ?string {
+    $header = $request->headers->get('Authorization');
+    if (!$header) {
+      return NULL;
+    }
+
+    preg_match('/^Bearer\s+(\w+)/', $header, $matches);
+    return $matches[1] ?? NULL;
+  }
+
+  /**
+   * {@inheritdoc}
+   */
+  public function applies(Request $request) : bool {
+    // If the request has a bearer token this provider applies. In general we
+    // might have tokens for different systems and we might not know if a
+    // specific token actually works with this setup but at least we can try.
+    return (bool) $this->getToken($request);
+  }
+
+  /**
+   * {@inheritdoc}
+   */
+  public function authenticate(Request $request) : ?AccountInterface {
+    $token = $this->getToken($request);
+    if (!$token) {
+      return NULL;
+    }
+
+    // The OpenID Connect module builds plugin instances based on configuration.
+    $config = $this->config->get('openid_connect.settings.' . $this->clientId)->get('settings');
+    /** @var \Drupal\openid_connect\Plugin\OpenIDConnectClientInterface $client */
+    $client = $this->openIdManager->createInstance($this->clientId, $config);
+
+    $user_info = $client->retrieveUserInfo($token);
+    if (!$user_info) {
+      // No need to log here. Error logging is already handled by the client.
+      return NULL;
+    }
+    // Allow modules to alter the user info.
+    // This allows this module to add a "sub" entry denoting the unique
+    // end-user (subject) identifier. This is needed for us to load the
+    // associated Drupal user from the OpenID Connect authmap.
+    $context = [];
+    $this->moduleHandler->alter('openid_connect_userinfo', $user_info, $context);
+
+    $user = $this->authmap->userLoadBySub($user_info['sub'], $this->clientId);
+    return ($user instanceof AccountInterface) ? $user : NULL;
+  }
+
+}
