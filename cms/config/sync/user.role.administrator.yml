@@ -7,6 +7,7 @@ label: Administrator
 weight: 2
 is_admin: null
 permissions:
+  - 'administer dpl_das configuration'
   - 'administer library agency configuration'
   - 'administer url proxy configuration'
   - 'view own unpublished content'
