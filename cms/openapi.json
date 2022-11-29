@@ -173,11 +173,7 @@
         "summary": "Digital Article Order",
         "operationId": "dpl_das_digital_article_order:POST",
         "schemes": ["http"],
-        "security": [
-          {
-            "cookie": []
-          }
-        ]
+        "security": []
       }
     },
     "/dpl-url-proxy": {
