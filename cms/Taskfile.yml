@@ -208,15 +208,14 @@ tasks:
 
   ci:pa11y:
     desc: Run Pa11y to test accessiblity
+    deps: [ci:pa11y:pre]
+    cmds:
+      - docker compose {{ .DOCKER_COMPOSE_FILES_CI }} run -e HTTP_PROXY=http://wiremock -w /app/pa11y node-chrome yarn pa11y-ci
+
+  ci:pa11y:pre:
+    desc: Prepare for Pa11y testing
     cmds:
       - docker compose {{ .DOCKER_COMPOSE_FILES_CI }} run -w /app/pa11y node-chrome yarn install --frozen-lockfile
-      - docker compose {{ .DOCKER_COMPOSE_FILES_CI }} run -w /app/pa11y node-chrome yarn pa11y-ci
-    env:
-      HTTP_PROXY: http://wiremock
-      HTTPS_PROXY: https://wiremock
-      # # Do not proxy traffic to the website nor to Google services serving
-      # # frontend assets. This pollutes the WireMock log output.
-      NO_PROXY: "varnish,*.gstatic.com,*.googleapis.com"
 
   ci:lighthouse:
     desc: Run Lighthouse to test performance
