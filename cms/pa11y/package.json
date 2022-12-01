@@ -14,7 +14,7 @@
   },
   "scripts": {
     "create-mappings": "tsc && node build/createMappings.js",
-    "pa11y-ci": "tsc && node build/createMappings.js && pa11y-ci",
+    "pa11y-ci": "tsc -p ./ && node build/createMappings.js && pa11y-ci",
     "dev": "tsc -w",
     "format": "prettier --write ."
   }
