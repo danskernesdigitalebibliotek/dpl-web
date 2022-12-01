@@ -14,6 +14,13 @@ use GuzzleHttp\ClientInterface;
 class FbsApiFactory {
 
   /**
+   * The config manager.
+   *
+   * @var \Drupal\Core\Config\ConfigManagerInterface
+   */
+  protected $configManager;
+
+  /**
    * The Guzzle client to use to connect to FBS.
    *
    * @var \GuzzleHttp\ClientInterface
