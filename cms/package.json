@@ -20,5 +20,10 @@
     "prettier": "^2.7.1",
     "typescript": "^4.8.3",
     "wiremock-rest-client": "^1.10.0"
+  },
+  "scripts": {
+    "pa11y:create-mappings": "tsc -p pa11y && node pa11y/build/createMappings.js",
+    "pa11y:ci": "tsc -p pa11y && node pa11y/build/createMappings.js && pa11y-ci",
+    "pa11y:dev:watch": "tsc -w"
   }
 }
