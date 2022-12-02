@@ -26,7 +26,7 @@ function dpl_react_apps_preprocess_page(array &$variables): void {
       'material-url' => DplReactAppsController::materialUrl(),
       // Text.
       'search-header-icon-alt-text' => t('Search button', [], $options),
-      'search-header-input-label' => t('Search header input', [], $options)
+      'search-header-input-label' => t('Search header input', [], $options),
       'autosuggest-animated-series-category-text' => t('Animated series', [], $options),
       'autosuggest-audio-book-category-text' => t('Audio books', [], $options),
       'autosuggest-book-category-text' => t('Books', [], $options),
