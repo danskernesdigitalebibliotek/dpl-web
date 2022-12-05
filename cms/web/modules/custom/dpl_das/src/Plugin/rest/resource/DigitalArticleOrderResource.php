@@ -7,6 +7,7 @@ use Drupal\dpl_das\Elba\Client;
 use Drupal\dpl_das\Elba\Exception;
 use Drupal\dpl_das\Elba\PlaceCopyRequest;
 use Drupal\dpl_das\Input\ArticleOrder;
+use Drupal\dpl_login\LibraryAgencyIdProvider;
 use Drupal\rest\ModifiedResourceResponse;
 use Drupal\rest\Plugin\ResourceBase;
 use Drupal\rest\ResourceResponseInterface;
@@ -91,6 +92,13 @@ class DigitalArticleOrderResource extends ResourceBase {
   private ConfigManagerInterface $configManager;
 
   /**
+   * Access to library agency id.
+   *
+   * @var \Drupal\dpl_login\LibraryAgencyIdProvider
+   */
+  private LibraryAgencyIdProvider $libraryAgencyIdProvider;
+
+  /**
    * Creates an instance of the plugin.
    *
    * @param \Symfony\Component\DependencyInjection\ContainerInterface $container
@@ -117,6 +125,7 @@ class DigitalArticleOrderResource extends ResourceBase {
     $instance->serializer = $container->get('dpl_das.serializer');
     $instance->client = $container->get('dpl_das.client');
     $instance->configManager = $container->get('config.manager');
+    $instance->libraryAgencyIdProvider = $container->get('dpl_login.library_agency_id_provider');
 
     return $instance;
   }
@@ -143,7 +152,7 @@ class DigitalArticleOrderResource extends ResourceBase {
     $request = new PlaceCopyRequest(
       $config->get('username'),
       $config->get("password"),
-      "775100",
+      $this->libraryAgencyIdProvider->getAgencyId(),
       $order->pid,
       $order->email
     );
