@@ -56,14 +56,4 @@ export default (baseUri?: string, options?: Options) => {
     });
   });
 
-  // Get campaign.
-  wiremock(baseUri, options).mappings.createMapping({
-    request: {
-      method: "POST",
-      urlPath: "/dpl_campaign/match",
-    },
-    response: {
-      status: 404,
-    },
-  });
 };
