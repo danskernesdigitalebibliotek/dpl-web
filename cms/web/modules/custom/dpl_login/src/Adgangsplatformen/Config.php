@@ -49,7 +49,11 @@ class Config {
    */
   private function getValue(string $key) : string {
     $settings = $this->asArray();
-    return $settings[$key] ?? throw new MissingConfigurationException(
+    $setting = $settings[$key] ?? '';
+    // Assume that the Adgangsplatformen configuration should always be set so
+    // throw exception instead of returning a nullable or empty string.
+    // @see dpl_login_requirements().
+    return ($setting) ? $setting : throw new MissingConfigurationException(
       sprintf('Adgangsplatformen plugin config variable %s is missing', $key)
     );
   }

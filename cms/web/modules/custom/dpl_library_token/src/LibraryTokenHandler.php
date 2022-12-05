@@ -8,7 +8,6 @@ use GuzzleHttp\ClientInterface;
 use GuzzleHttp\Exception\RequestException;
 use Drupal\Core\Logger\LoggerChannelFactoryInterface;
 use Drupal\Core\KeyValueStore\KeyValueExpirableFactoryInterface;
-use Drupal\dpl_library_token\Exception\MissingConfigurationException;
 use function Safe\sprintf as sprintf;
 
 /**
@@ -68,8 +67,6 @@ class LibraryTokenHandler {
     $this->tokenCollection = $keyValueFactory->get(self::TOKEN_COLLECTION_KEY);
     $this->httpClient = $http_client;
     $this->logger = $logger->get(self::LOGGER_KEY);
-
-    $this->validateSettings();
   }
 
   /**
@@ -164,24 +161,6 @@ class LibraryTokenHandler {
     }
 
     return $token;
-  }
-
-  /**
-   * Validate settings. Exception is thrown if a setting is missing.
-   */
-  protected function validateSettings(): void {
-    foreach ([
-      'token_endpoint',
-      'client_id',
-      'client_secret',
-      'agency_id',
-    ] as $config_key) {
-      if (empty($this->adgangsplatformenConfig->asArray()[$config_key])) {
-        throw new MissingConfigurationException(
-          sprintf('Adgangsplatformen plugin config variable %s is missing', $config_key)
-        );
-      }
-    }
   }
 
 }
