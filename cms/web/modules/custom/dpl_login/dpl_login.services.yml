@@ -13,10 +13,8 @@ services:
   dpl_login.authentication.user_token:
     class: Drupal\dpl_login\UserTokenAuthProvider
     arguments:
-      - "adgangsplatformen"
-      - "@config.factory"
+      - "@dpl_login.adgangsplatformen.client"
       - "@module_handler"
-      - "@plugin.manager.openid_connect_client"
       - "@openid_connect.authmap"
     tags:
       - {
@@ -24,3 +22,19 @@ services:
           provider_id: "dpl_login_user_token",
           priority: 0,
         }
+  dpl_login.library_agency_id_provider:
+    class: Drupal\dpl_login\LibraryAgencyIdProvider
+    arguments: ["@dpl_login.adgangsplatformen.config"]
+  dpl_login.adgangsplatformen.client:
+    class: Drupal\dpl_login\Plugin\OpenIDConnectClient\Adgangsplatformen
+    factory: ["@dpl_login.adgangsplatformen.factory", "createInstance"]
+  dpl_login.adgangsplatformen.factory:
+    class: Drupal\dpl_login\Adgangsplatformen\Factory
+    arguments:
+      [
+        "@plugin.manager.openid_connect_client",
+        "@dpl_login.adgangsplatformen.config",
+      ]
+  dpl_login.adgangsplatformen.config:
+    class: Drupal\dpl_login\Adgangsplatformen\Config
+    arguments: ["@config.factory"]

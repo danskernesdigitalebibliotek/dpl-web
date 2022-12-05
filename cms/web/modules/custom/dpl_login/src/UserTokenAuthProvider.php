@@ -3,11 +3,10 @@
 namespace Drupal\dpl_login;
 
 use Drupal\Core\Authentication\AuthenticationProviderInterface;
-use Drupal\Core\Config\ConfigFactoryInterface;
 use Drupal\Core\Extension\ModuleHandlerInterface;
 use Drupal\Core\Session\AccountInterface;
 use Drupal\openid_connect\OpenIDConnectAuthmap;
-use Drupal\openid_connect\Plugin\OpenIDConnectClientManager;
+use Drupal\openid_connect\Plugin\OpenIDConnectClientInterface;
 use Symfony\Component\HttpFoundation\Request;
 use function Safe\preg_match as preg_match;
 
@@ -20,10 +19,8 @@ class UserTokenAuthProvider implements AuthenticationProviderInterface {
    * Constructor.
    */
   public function __construct(
-    private string $clientId,
-    private ConfigFactoryInterface $config,
+    private OpenIDConnectClientInterface $client,
     private ModuleHandlerInterface $moduleHandler,
-    private OpenIDConnectClientManager $openIdManager,
     private OpenIDConnectAuthmap $authmap,
   ) {}
 
@@ -59,12 +56,7 @@ class UserTokenAuthProvider implements AuthenticationProviderInterface {
       return NULL;
     }
 
-    // The OpenID Connect module builds plugin instances based on configuration.
-    $config = $this->config->get('openid_connect.settings.' . $this->clientId)->get('settings');
-    /** @var \Drupal\openid_connect\Plugin\OpenIDConnectClientInterface $client */
-    $client = $this->openIdManager->createInstance($this->clientId, $config);
-
-    $user_info = $client->retrieveUserInfo($token);
+    $user_info = $this->client->retrieveUserInfo($token);
     if (!$user_info) {
       // No need to log here. Error logging is already handled by the client.
       return NULL;
@@ -76,7 +68,7 @@ class UserTokenAuthProvider implements AuthenticationProviderInterface {
     $context = [];
     $this->moduleHandler->alter('openid_connect_userinfo', $user_info, $context);
 
-    $user = $this->authmap->userLoadBySub($user_info['sub'], $this->clientId);
+    $user = $this->authmap->userLoadBySub($user_info['sub'], $this->client->getPluginId());
     return ($user instanceof AccountInterface) ? $user : NULL;
   }
 

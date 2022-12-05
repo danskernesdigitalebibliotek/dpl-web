@@ -6,6 +6,7 @@
 namespace Drupal\Tests\dpl_library_token\Unit;
 
 use Drupal\Core\Config\ConfigBase;
+use Drupal\dpl_login\Adgangsplatformen\Config;
 use Psr\Log\LoggerInterface;
 use Psr\Log\LogLevel;
 use Prophecy\Argument;
@@ -211,7 +212,8 @@ class LibraryTokenHandlerTest extends UnitTestCase {
       ]);
     }
     $config_factory = $this->prophesize(ConfigFactoryInterface::class);
-    $config_factory->get(LibraryTokenHandler::SETTINGS_KEY)->willReturn($config);
+    $config_factory->get(Config::CONFIG_KEY)->willReturn($config);
+    $adgangsplatformen_config = new Config($config_factory->reveal());
 
     if (!$logger) {
       $logger = $this->prophesize(LoggerChannelInterface::class)->reveal();
@@ -221,8 +223,8 @@ class LibraryTokenHandlerTest extends UnitTestCase {
     $logger_factory->get(LibraryTokenHandler::LOGGER_KEY)->willReturn($logger);
 
     return new LibraryTokenHandler(
+      $adgangsplatformen_config,
       $key_value_factory,
-      $config_factory->reveal(),
       $client,
       $logger_factory->reveal()
     );

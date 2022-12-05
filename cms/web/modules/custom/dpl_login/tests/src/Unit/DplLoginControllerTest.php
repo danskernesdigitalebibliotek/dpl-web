@@ -2,6 +2,7 @@
 
 namespace Drupal\Tests\dpl_library_token\Unit;
 
+use Drupal\dpl_login\Adgangsplatformen\Config;
 use phpmock\Mock;
 use phpmock\MockBuilder;
 use Prophecy\Argument;
@@ -14,7 +15,6 @@ use Drupal\Core\Config\ImmutableConfig;
 use Drupal\dpl_login\UserTokensProvider;
 use Drupal\Core\Config\ConfigFactoryInterface;
 use Drupal\Core\Routing\TrustedRedirectResponse;
-use Drupal\dpl_library_token\LibraryTokenHandler;
 use Drupal\dpl_login\Controller\DplLoginController;
 use Drupal\Core\DependencyInjection\ContainerBuilder;
 use Drupal\Core\Logger\LoggerChannelFactoryInterface;
@@ -23,7 +23,6 @@ use Symfony\Component\HttpFoundation\RedirectResponse;
 use Drupal\dpl_login\Exception\MissingConfigurationException;
 use Drupal\openid_connect\OpenIDConnectClaims;
 use Drupal\openid_connect\Plugin\OpenIDConnectClientBase;
-use Drupal\openid_connect\Plugin\OpenIDConnectClientManager;
 use Symfony\Component\HttpFoundation\Response;
 
 /**
@@ -59,7 +58,7 @@ class DplLoginControllerTest extends UnitTestCase {
     $config_factory = $this->prophesize(ConfigFactoryInterface::class);
     $config = $this->prophesize(ImmutableConfig::class);
     $config_factory = $this->prophesize(ConfigFactoryInterface::class);
-    $config_factory->get(LibraryTokenHandler::SETTINGS_KEY)->willReturn($config->reveal());
+    $config_factory->get(Config::CONFIG_KEY)->willReturn($config->reveal());
 
     $unrouted_url_assembler = $this->prophesize(UnroutedUrlAssemblerInterface::class);
     $generated_url = $this->prophesize(GeneratedUrl::class);
@@ -70,8 +69,6 @@ class DplLoginControllerTest extends UnitTestCase {
     $redirect_response = $this->prophesize(Response::class);
     $openid_connect_client = $this->prophesize(OpenIDConnectClientBase::class);
     $openid_connect_client->authorize()->willReturn($redirect_response);
-    $openid_connect_client_manager = $this->prophesize(OpenIDConnectClientManager::class);
-    $openid_connect_client_manager->createInstance()->willReturn($openid_connect_client);
 
     $openid_connect_claims = $this->prophesize(OpenIDConnectClaims::class);
     $openid_connect_claims->getScopes()->willReturn('some scopes');
@@ -82,8 +79,9 @@ class DplLoginControllerTest extends UnitTestCase {
     $container->set('config.factory', $config_factory->reveal());
     $container->set('unrouted_url_assembler', $unrouted_url_assembler->reveal());
     $container->set('url_generator', $url_generator->reveal());
-    $container->set('plugin.manager.openid_connect_client', $openid_connect_client_manager->reveal());
     $container->set('openid_connect.claims', $openid_connect_claims->reveal());
+    $container->set('dpl_login.adgangsplatformen.config', new Config($config_factory->reveal()));
+    $container->set('dpl_login.adgangsplatformen.client', $openid_connect_client->reveal());
 
     \Drupal::setContainer($container);
   }
@@ -108,10 +106,10 @@ class DplLoginControllerTest extends UnitTestCase {
       'logout_endpoint' => 'https://valid.uri',
     ])->shouldBeCalledTimes(1);
     $config_factory = $this->prophesize(ConfigFactoryInterface::class);
-    $config_factory->get(LibraryTokenHandler::SETTINGS_KEY)->willReturn($config->reveal());
+    $config_factory->get(Config::CONFIG_KEY)->willReturn($config->reveal());
 
     $container = \Drupal::getContainer();
-    $container->set('config.factory', $config_factory->reveal());
+    $container->set('dpl_login.adgangsplatformen.config', new Config($config_factory->reveal()));
     \Drupal::setContainer($container);
 
     $controller = DplLoginController::create($container);
@@ -133,14 +131,14 @@ class DplLoginControllerTest extends UnitTestCase {
       'logout_endpoint' => 'https://valid.uri',
     ])->shouldBeCalledTimes(1);
     $config_factory = $this->prophesize(ConfigFactoryInterface::class);
-    $config_factory->get(LibraryTokenHandler::SETTINGS_KEY)->willReturn($config->reveal());
+    $config_factory->get(Config::CONFIG_KEY)->willReturn($config->reveal());
     $user_token_provider = $this->prophesize(UserTokensProvider::class);
     $user_token_provider->getAccessToken()->willReturn(NULL);
     $url_generator = $this->prophesize(UrlGenerator::class);
     $url_generator->generateFromRoute('<front>', Argument::cetera())->willReturn('https://local.site');
 
     $container = \Drupal::getContainer();
-    $container->set('config.factory', $config_factory->reveal());
+    $container->set('dpl_login.adgangsplatformen.config', new Config($config_factory->reveal()));
     $container->set('dpl_login.user_tokens', $user_token_provider->reveal());
     $container->set('url_generator', $url_generator->reveal());
     \Drupal::setContainer($container);
