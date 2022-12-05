@@ -54,6 +54,9 @@ ignored_config_entities:
   - ~purge_queuer_coretags
   - ~purge.logger_channels
   - ~purge.plugins
+  - ~rest.resource.campaign.match
+  - ~rest.resource.dpl_das_digital_article_order
+  - ~rest.resource.proxy-url
   - '~system.action.node_*_action'
   - '~system.action.user_*_action'
   - ~system.authorize
