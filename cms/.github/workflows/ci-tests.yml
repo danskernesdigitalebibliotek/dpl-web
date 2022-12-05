@@ -120,6 +120,11 @@ jobs:
         run: task ci:reset
       - name: Run Pa11y
         run: task ci:pa11y
+      - name: Archive screenshots
+        uses: actions/upload-artifact@v3
+        with:
+          name: pa11y-screenshots
+          path: pa11y/screenshots
 
   Cypress:
     name: Run Cypress functional tests
