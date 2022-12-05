@@ -9,9 +9,10 @@ export default (baseUri?: string, options?: Options) => {
       urlPattern: "/api/v2/covers.*",
     },
     response: {
+      transformers: ["response-template"],
       jsonBody: [
         {
-          id: "870970-basis:134693959",
+          id: "{{request.query.identifiers}}",
           type: "pid",
           imageUrls: {
             small: {
