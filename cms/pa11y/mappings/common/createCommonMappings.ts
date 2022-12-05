@@ -68,8 +68,13 @@ export default (baseUri?: string, options?: Options) => {
       jsonBody: [
         {
           recordId: "{{request.query.recordid}}",
+          // We simulate that the service can return true/false
+          // depending on if it is reservable.
+          // In that way we should eg. get different availability labels.
           reservable: "{{pickRandom true false}}",
+          // Same goes for the availability property.
           available: "{{pickRandom true false}}",
+          // We also want to simulate how many reservations there are.
           reservations: "{{randomInt lower=0 upper=10}}",
         },
       ],
