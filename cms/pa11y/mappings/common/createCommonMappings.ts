@@ -15,6 +15,8 @@ export default (baseUri?: string, options?: Options) => {
           type: "pid",
           imageUrls: {
             small: {
+              // We use picsum as a service to generate random images.
+              // The size of the image reflects the size of the cover we usually get.
               url: "https://picsum.photos/98/160",
               format: "jpeg",
               size: "small",
