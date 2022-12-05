@@ -44,20 +44,6 @@ export default (baseUri?: string, options?: Options) => {
     },
   });
 
-  // Mapping for tokens (anonymous session).
-  wiremock(baseUri, options).mappings.createMapping({
-    request: {
-      method: "GET",
-      urlPath: "/dpl-react/user-tokens",
-    },
-    response: {
-      headers: {
-        "Content-Type": "application/txt",
-      },
-      body: 'window.dplReact = window.dplReact || {};\nwindow.dplReact.setToken("library", "fcd5c29a171f97b626d71eceffe1313f00a284b0")',
-    },
-  });
-
   // Mapping for availability.
   wiremock(baseUri, options).mappings.createMapping({
     request: {
