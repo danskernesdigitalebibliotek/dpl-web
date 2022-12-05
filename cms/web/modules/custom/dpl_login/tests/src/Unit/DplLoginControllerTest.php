@@ -1,6 +1,6 @@
 <?php
 
-namespace Drupal\Tests\dpl_library_token\Unit;
+namespace Drupal\Tests\dpl_login\Unit;
 
 use Drupal\dpl_login\Adgangsplatformen\Config;
 use phpmock\Mock;
