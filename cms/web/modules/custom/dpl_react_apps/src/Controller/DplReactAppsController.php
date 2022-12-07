@@ -355,11 +355,28 @@ class DplReactAppsController extends ControllerBase {
    *   An array of base urls.
    */
   public static function externalApiBaseUrls(): array {
-    $services = \Drupal::configFactory()->get('dpl_react_apps.services');
+    $react_apps_settings = \Drupal::configFactory()->get('dpl_react_apps.settings');
+    $fbs_settings = \Drupal::configFactory()->get('dpl_fbs.settings');
+    $publizon_settings = \Drupal::configFactory()->get('dpl_publizon.settings');
+
+    // Get base urls from this module.
+    $services = $react_apps_settings->get('services') ?? [];
+
+    // Get base urls from other modules.
+    $services['fbs'] = ['base_url' => $fbs_settings->get('base_url') ?? 'https://fbs-openplatform.dbc.dk'];
+    $services['publizon'] = ['base_url' => $publizon_settings->get('base_url') ?? 'https://pubhub-openplatform.test.dbc.dk'];
+
+    // Make sure to use http urls in urls from other modules when running in CI.
+    if (getenv('CI')) {
+      $services['fbs']['base_url'] = 'http://fbs-openplatform.dbc.dk';
+      $services['publizon']['base_url'] = 'http://pubhub-openplatform.test.dbc.dk';
+    }
+
     $urls = [];
-    foreach ($services->get() as $api => $definition) {
+    foreach ($services as $api => $definition) {
       $urls[sprintf('%s-base-url', $api)] = $definition['base_url'];
     }
+
     return $urls;
   }
 
