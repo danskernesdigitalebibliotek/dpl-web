@@ -222,12 +222,16 @@ tasks:
       - docker compose {{ .DOCKER_COMPOSE_FILES_CI }} run -e HTTP_PROXY={{ .WIREMOCK_HOST_DOCKER }} node-chrome yarn pa11y:ci
 
   ci:pa11y:browser:
-    desc: Watch the site with a wiremock http proxy
-    deps: [ci:pa11y:pre]
+    desc: Watch the site with a wiremock http proxy. ⚠️  Depends on Chrome installed on OS ⚠️
+    deps: [ci:pa11y:browser:warning, ci:pa11y:pre]
     cmds:
       - yarn pa11y:browser
     env:
       HTTP_PROXY: '{{ .WIREMOCK_HOST_LOCAL }}'
+
+  ci:pa11y:browser:warning:
+    cmds:
+      - echo '⚠️  Please make sure that Chrome is installed in your OS.'
 
   ci:pa11y:pre:
     cmds:

@@ -9,7 +9,7 @@ export const wiremock = (baseUri?: string, options?: Options) => {
   if (!wiremockEndpoint) {
     throw new Error("HTTP_PROXY environment variable is not set");
   }
-  return new WireMockRestClient(wiremockEndpoint,  options);
+  return new WireMockRestClient(wiremockEndpoint, options);
 };
 
 export default wiremock;

@@ -47,5 +47,12 @@ launch({
   ]
 }).then(chrome => {
   console.log(`😎 Pa11y goggles are ON! See the world like Pa11y does...`);
+}).catch((error: NodeJS.ErrnoException) => {
+  if (error.code === 'ERR_LAUNCHER_NOT_INSTALLED') {
+    console.error('⚠️  This command depends on Chrome, but it was not found on your system.');
+    return;
+  }
+
+  console.error(error);
 });
 
