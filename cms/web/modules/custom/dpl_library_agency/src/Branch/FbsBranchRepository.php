@@ -22,6 +22,8 @@ class FbsBranchRepository implements BranchRepositoryInterface {
 
   /**
    * {@inheritdoc}
+   *
+   * @throws \DanskernesDigitaleBibliotek\FBS\ApiException
    */
   public function getBranches(): array {
     return array_map(function (AgencyBranch $branch) {

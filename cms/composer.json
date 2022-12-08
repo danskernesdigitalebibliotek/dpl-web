@@ -130,6 +130,7 @@
             ],
             "file-mapping": {
                 "[web-root]/sites/default/all.settings.php": "assets/all.settings.php",
+                "[web-root]/sites/default/development.settings.php": "assets/development.settings.php",
                 "[web-root]/.eslintrc.json": false,
                 "[project-root]/.gitattributes": {
                     "append": "assets/.gitattributes"
