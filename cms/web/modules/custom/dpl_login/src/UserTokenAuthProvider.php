@@ -67,6 +67,9 @@ class UserTokenAuthProvider implements AuthenticationProviderInterface {
     // associated Drupal user from the OpenID Connect authmap.
     $context = [];
     $this->moduleHandler->alter('openid_connect_userinfo', $user_info, $context);
+    if (!isset($user_info['sub'])) {
+      return NULL;
+    }
 
     $user = $this->authmap->userLoadBySub($user_info['sub'], $this->client->getPluginId());
     return ($user instanceof AccountInterface) ? $user : NULL;
