@@ -12,6 +12,7 @@ use Drupal\dpl_library_agency\BranchSettings;
 use Drupal\dpl_library_agency\ReservationSettings;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use function Safe\json_encode as json_encode;
+use function Safe\sprintf;
 
 /**
  * Controller for rendering full page DPL React apps.
@@ -132,7 +133,8 @@ class DplReactAppsController extends ControllerBase {
         'showing-results-for-text' => $this->t('Showing results for', [], $options),
         'showing-text' => $this->t('Showing', [], $options),
         'unavailable-text' => $this->t('Unavailable', [], $options),
-      ]),
+      // Add external API base urls.
+      ] + self::externalApiBaseUrls()),
     ];
 
     $this->renderer->addCacheableDependency($build, $this->branchSettings);
@@ -289,7 +291,8 @@ class DplReactAppsController extends ControllerBase {
         'unavailable-text' => $this->t('Unavailable', [], $c),
         'we-have-shopped-text' => $this->t('In stock:', [], $c),
         'you-have-borrowed-text' => $this->t('You have borrowed', [], $c),
-      ]),
+        // Add external API base urls.
+      ] + self::externalApiBaseUrls()),
     ];
 
     $this->renderer->addCacheableDependency($build, $this->reservationSettings);
@@ -342,6 +345,32 @@ class DplReactAppsController extends ControllerBase {
     // The url must not have a trailing slash. The generated client will append
     // it. Double slashes can lead to all kinds of oddities.
     return rtrim($url, "/");
+  }
+
+  /**
+   * Get the base url of the API's exposed by this site.
+   *
+   * @return mixed[]
+   *   An array of base urls.
+   */
+  public static function externalApiBaseUrls(): array {
+    $react_apps_settings = \Drupal::configFactory()->get('dpl_react_apps.settings');
+    $fbs_settings = \Drupal::configFactory()->get('dpl_fbs.settings');
+    $publizon_settings = \Drupal::configFactory()->get('dpl_publizon.settings');
+
+    // Get base urls from this module.
+    $services = $react_apps_settings->get('services') ?? [];
+
+    // Get base urls from other modules.
+    $services['fbs'] = ['base_url' => $fbs_settings->get('base_url')];
+    $services['publizon'] = ['base_url' => $publizon_settings->get('base_url')];
+
+    $urls = [];
+    foreach ($services as $api => $definition) {
+      $urls[sprintf('%s-base-url', $api)] = $definition['base_url'];
+    }
+
+    return $urls;
   }
 
   /**

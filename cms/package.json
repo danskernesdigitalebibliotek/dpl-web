@@ -5,8 +5,10 @@
   "devDependencies": {
     "@apidevtools/swagger-cli": "^4.0.4",
     "@lhci/cli": "^0.8.2",
+    "@types/node": "^18.11.11",
     "@typescript-eslint/eslint-plugin": "^5.38.0",
     "@typescript-eslint/parser": "^5.38.0",
+    "chrome-launcher": "^0.15.1",
     "cypress": "^10.8.0",
     "cypress-plugin-api": "^1.5.0",
     "eslint": "^8.3.0",
@@ -20,5 +22,12 @@
     "prettier": "^2.7.1",
     "typescript": "^4.8.3",
     "wiremock-rest-client": "^1.10.0"
+  },
+  "scripts": {
+    "pa11y:create-mappings": "yarn pa11y:build && node pa11y/build/createMappings.js",
+    "pa11y:ci": "pa11y-ci",
+    "pa11y:dev:watch": "tsc -p pa11y -w",
+    "pa11y:build": "tsc -p pa11y",
+    "pa11y:browser": "yarn pa11y:build && node pa11y/build/pa11yGoggles.js"
   }
 }

@@ -39,6 +39,17 @@ $settings['config_exclude_modules'] = ['devel', 'field_ui', 'restui'];
 // advanced security measure: '../config/sync'.
 $settings['config_sync_directory'] = '../config/sync';
 
+// Set service base urls for the external APIs.
+$config['dpl_fbs.settings'] = ['base_url' => 'https://fbs-openplatform.dbc.dk'];
+$config['dpl_publizon.settings'] = ['base_url' => 'https://pubhub-openplatform.test.dbc.dk'];
+
+// Set service base urls for the react apps.
+$config['dpl_react_apps.settings']['services'] = [
+  'cover' => ['base_url' => 'https://cover.dandigbib.org'],
+  'fbi' => ['base_url' => 'https://fbi-api.dbc.dk/opac/graphql'],
+  'material-list' => ['base_url' => 'https://prod.materiallist.dandigbib.org'],
+];
+
 if (getenv('CI')) {
   // Curl settings needed to make PHP ignore SSL errors when using Wiremock as
   // a proxy. We do not have a proper SSL setup with trusted certificates.
@@ -50,6 +61,10 @@ if (getenv('CI')) {
   // Specify non-HTTP versions of endpoints. This is required to make Cypress
   // mocking work. It does not support ignoring self-signed certificates from
   // Wiremock.
+  // Service base urls for the external APIs.
+  $config['dpl_fbs.settings'] = ['base_url' => 'http://fbs-openplatform.dbc.dk'];
+  $config['dpl_publizon.settings'] = ['base_url' => 'http://pubhub-openplatform.test.dbc.dk'];
+  // Adgangsplatformen OpenID Connect client.
   $config['openid_connect.settings.adgangsplatformen']['settings']['authorization_endpoint'] = 'http://login.bib.dk/oauth/authorize';
   $config['openid_connect.settings.adgangsplatformen']['settings']['token_endpoint'] = 'http://login.bib.dk/oauth/token/';
   $config['openid_connect.settings.adgangsplatformen']['settings']['userinfo_endpoint'] = 'http://login.bib.dk/userinfo/';
@@ -59,6 +74,14 @@ if (getenv('CI')) {
   $config['openid_connect.settings.adgangsplatformen']['settings']['client_id'] = 'dummy-id';
   $config['openid_connect.settings.adgangsplatformen']['settings']['client_id'] = 'dummy-secret';
   $config['openid_connect.settings.adgangsplatformen']['settings']['agency_id'] = '100200';
+
+  // Set service base urls for the react apps.
+  // We need http domains for testing in CI context.
+  $config['dpl_react_apps.settings']['services'] = [
+    'cover' => ['base_url' => 'http://cover.dandigbib.org'],
+    'fbi' => ['base_url' => 'http://fbi-api.dbc.dk/opac/graphql'],
+    'material-list' => ['base_url' => 'http://prod.materiallist.dandigbib.org'],
+  ];
 }
 
 if (getenv('LAGOON_ENVIRONMENT_TYPE') !== 'production') {

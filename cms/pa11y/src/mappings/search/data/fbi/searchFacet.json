@@ -1,0 +1,165 @@
+{
+  "data": {
+    "search": {
+      "facets": [
+        {
+          "name": "mainLanguages",
+          "values": [
+            { "key": "eng", "term": "Engelsk", "score": 374 },
+            { "key": "dan", "term": "Dansk", "score": 331 },
+            { "key": "mul", "term": "flere sprog", "score": 65 },
+            { "key": "ger", "term": "Tysk", "score": 55 },
+            { "key": "fre", "term": "Fransk", "score": 34 },
+            { "key": "ita", "term": "Italiensk", "score": 32 },
+            { "key": "spa", "term": "Spansk", "score": 32 },
+            { "key": "dut", "term": "Nederlandsk (Hollandsk)", "score": 25 },
+            { "key": "swe", "term": "Svensk", "score": 17 },
+            { "key": "chi", "term": "Kinesisk", "score": 16 }
+          ]
+        },
+        {
+          "name": "accessTypes",
+          "values": [
+            { "key": "physical", "term": "Fysisk", "score": 587 },
+            { "key": "online", "term": "Digital", "score": 369 }
+          ]
+        },
+        {
+          "name": "childrenOrAdults",
+          "values": [
+            {
+              "key": "voksenmaterialer",
+              "term": "voksenmaterialer",
+              "score": 677
+            },
+            {
+              "key": "børnematerialer",
+              "term": "børnematerialer",
+              "score": 392
+            }
+          ]
+        },
+        {
+          "name": "creators",
+          "values": [
+            {
+              "key": "Joanne K. Rowling",
+              "term": "Joanne K. Rowling",
+              "score": 210
+            },
+            { "key": "J.K. Rowling", "term": "J.K. Rowling", "score": 37 },
+            { "key": "J. K. Rowling", "term": "J. K. Rowling", "score": 33 },
+            { "key": "Steve Kloves", "term": "Steve Kloves", "score": 19 },
+            { "key": "G. N. Clark", "term": "G. N. Clark", "score": 14 },
+            {
+              "key": "Joanne K Rowling",
+              "term": "Joanne K Rowling",
+              "score": 13
+            },
+            { "key": "David Yates", "term": "David Yates", "score": 11 },
+            { "key": "J K Rowling", "term": "J K Rowling", "score": 10 },
+            { "key": "J.K Rowling", "term": "J.K Rowling", "score": 10 },
+            {
+              "key": "John Williams (f. 1932)",
+              "term": "John Williams (f. 1932)",
+              "score": 9
+            }
+          ]
+        },
+        {
+          "name": "fictionNonfiction",
+          "values": [
+            { "key": "nonfiktion", "term": "Faglitteratur", "score": 493 },
+            { "key": "fiktion", "term": "Skønlitteratur", "score": 215 }
+          ]
+        },
+        { "name": "fictionalCharacter", "values": [] },
+        {
+          "name": "genreAndForm",
+          "values": [
+            {
+              "key": "eventyrlige fortællinger",
+              "term": "eventyrlige fortællinger",
+              "score": 117
+            },
+            { "key": "fantasy", "term": "fantasy", "score": 75 },
+            { "key": "adventurespil", "term": "adventurespil", "score": 16 },
+            {
+              "key": "filmmusik - soundtracks",
+              "term": "filmmusik - soundtracks",
+              "score": 13
+            },
+            { "key": "actionspil", "term": "actionspil", "score": 9 },
+            { "key": "jazz", "term": "jazz", "score": 5 },
+            { "key": "børnefilm", "term": "børnefilm", "score": 3 },
+            { "key": "kor", "term": "kor", "score": 2 },
+            { "key": "operetter", "term": "operetter", "score": 2 },
+            { "key": "shooters", "term": "shooters", "score": 2 }
+          ]
+        },
+        {
+          "name": "materialTypes",
+          "values": [
+            { "key": "bog", "term": "bog", "score": 304 },
+            { "key": "dvd", "term": "dvd", "score": 23 },
+            { "key": "cd (musik)", "term": "cd (musik)", "score": 23 },
+            { "key": "artikel", "term": "artikel", "score": 113 },
+            { "key": "lydbog (cd)", "term": "lydbog (cd)", "score": 45 },
+            { "key": "lyd (podcast)", "term": "lyd (podcast)", "score": 104 },
+            { "key": "avisartikel", "term": "avisartikel", "score": 99 },
+            { "key": "blu-ray", "term": "blu-ray", "score": 20 },
+            { "key": "ebog", "term": "e-bog", "score": 46 },
+            { "key": "grammofonplade", "term": "grammofonplade", "score": 6 }
+          ]
+        },
+        {
+          "name": "subjects",
+          "values": [
+            { "key": "Harry Potter", "term": "Harry Potter", "score": 399 },
+            { "key": "magi", "term": "magi", "score": 306 },
+            { "key": "troldmænd", "term": "troldmænd", "score": 290 },
+            { "key": "fantasy", "term": "fantasy", "score": 250 },
+            {
+              "key": "Joanne K. Rowling",
+              "term": "Joanne K. Rowling",
+              "score": 244
+            },
+            {
+              "key": "engelsk litteratur",
+              "term": "engelsk litteratur",
+              "score": 237
+            },
+            {
+              "key": "Hermione Granger",
+              "term": "Hermione Granger",
+              "score": 205
+            },
+            { "key": "Ron Weasley", "term": "Ron Weasley", "score": 205 },
+            {
+              "key": "Harry Potter-bøger",
+              "term": "Harry Potter-bøger",
+              "score": 185
+            },
+            {
+              "key": "eventyrlige fortællinger",
+              "term": "eventyrlige fortællinger",
+              "score": 124
+            }
+          ]
+        },
+        {
+          "name": "workTypes",
+          "values": [
+            { "key": "literature", "term": "Bøger", "score": 353 },
+            { "key": "article", "term": "Artikler", "score": 240 },
+            { "key": "music", "term": "Musik", "score": 34 },
+            { "key": "review", "term": "Anmeldelser", "score": 28 },
+            { "key": "movie", "term": "Film", "score": 27 },
+            { "key": "game", "term": "Spil", "score": 20 },
+            { "key": "sheetmusic", "term": "Noder", "score": 7 }
+          ]
+        }
+      ]
+    }
+  }
+}

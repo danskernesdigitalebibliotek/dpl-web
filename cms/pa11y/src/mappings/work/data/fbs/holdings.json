@@ -1,0 +1,242 @@
+[
+  {
+    "recordId": "134693959",
+    "reservable": true,
+    "reservations": 3,
+    "holdings": [
+      {
+        "branch": { "branchId": "FBS-751026", "title": "Fælles undervejs" },
+        "department": { "departmentId": "bø", "title": "Børn" },
+        "location": { "locationId": "fanta", "title": "Fantasy" },
+        "sublocation": null,
+        "materials": [
+          {
+            "itemNumber": "A1011423955A",
+            "available": false,
+            "periodical": null,
+            "materialGroup": {
+              "name": "standard",
+              "description": "31 dages lånetid til alm lånere"
+            }
+          },
+          {
+            "itemNumber": "A1011423956A",
+            "available": false,
+            "periodical": null,
+            "materialGroup": {
+              "name": "standard",
+              "description": "31 dages lånetid til alm lånere"
+            }
+          },
+          {
+            "itemNumber": "A1011423957A",
+            "available": false,
+            "periodical": null,
+            "materialGroup": {
+              "name": "standard",
+              "description": "31 dages lånetid til alm lånere"
+            }
+          },
+          {
+            "itemNumber": "A1011423958A",
+            "available": false,
+            "periodical": null,
+            "materialGroup": {
+              "name": "standard",
+              "description": "31 dages lånetid til alm lånere"
+            }
+          },
+          {
+            "itemNumber": "A1011423959A",
+            "available": false,
+            "periodical": null,
+            "materialGroup": {
+              "name": "standard",
+              "description": "31 dages lånetid til alm lånere"
+            }
+          },
+          {
+            "itemNumber": "A1011423960A",
+            "available": false,
+            "periodical": null,
+            "materialGroup": {
+              "name": "standard",
+              "description": "31 dages lånetid til alm lånere"
+            }
+          },
+          {
+            "itemNumber": "A1011423961A",
+            "available": false,
+            "periodical": null,
+            "materialGroup": {
+              "name": "standard",
+              "description": "31 dages lånetid til alm lånere"
+            }
+          },
+          {
+            "itemNumber": "A1011423962A",
+            "available": false,
+            "periodical": null,
+            "materialGroup": {
+              "name": "standard",
+              "description": "31 dages lånetid til alm lånere"
+            }
+          },
+          {
+            "itemNumber": "A1011423963A",
+            "available": false,
+            "periodical": null,
+            "materialGroup": {
+              "name": "standard",
+              "description": "31 dages lånetid til alm lånere"
+            }
+          },
+          {
+            "itemNumber": "A1011423964A",
+            "available": false,
+            "periodical": null,
+            "materialGroup": {
+              "name": "standard",
+              "description": "31 dages lånetid til alm lånere"
+            }
+          },
+          {
+            "itemNumber": "A1011423965A",
+            "available": false,
+            "periodical": null,
+            "materialGroup": {
+              "name": "standard",
+              "description": "31 dages lånetid til alm lånere"
+            }
+          },
+          {
+            "itemNumber": "A1011423966A",
+            "available": false,
+            "periodical": null,
+            "materialGroup": {
+              "name": "standard",
+              "description": "31 dages lånetid til alm lånere"
+            }
+          },
+          {
+            "itemNumber": "A1011423967A",
+            "available": false,
+            "periodical": null,
+            "materialGroup": {
+              "name": "standard",
+              "description": "31 dages lånetid til alm lånere"
+            }
+          },
+          {
+            "itemNumber": "A1011423968A",
+            "available": false,
+            "periodical": null,
+            "materialGroup": {
+              "name": "standard",
+              "description": "31 dages lånetid til alm lånere"
+            }
+          },
+          {
+            "itemNumber": "A1011423969A",
+            "available": false,
+            "periodical": null,
+            "materialGroup": {
+              "name": "standard",
+              "description": "31 dages lånetid til alm lånere"
+            }
+          },
+          {
+            "itemNumber": "A1011423970A",
+            "available": false,
+            "periodical": null,
+            "materialGroup": {
+              "name": "standard",
+              "description": "31 dages lånetid til alm lånere"
+            }
+          },
+          {
+            "itemNumber": "A1011423971A",
+            "available": false,
+            "periodical": null,
+            "materialGroup": {
+              "name": "standard",
+              "description": "31 dages lånetid til alm lånere"
+            }
+          },
+          {
+            "itemNumber": "A1011423972A",
+            "available": false,
+            "periodical": null,
+            "materialGroup": {
+              "name": "standard",
+              "description": "31 dages lånetid til alm lånere"
+            }
+          },
+          {
+            "itemNumber": "A1011423973A",
+            "available": false,
+            "periodical": null,
+            "materialGroup": {
+              "name": "standard",
+              "description": "31 dages lånetid til alm lånere"
+            }
+          },
+          {
+            "itemNumber": "A1011423974A",
+            "available": false,
+            "periodical": null,
+            "materialGroup": {
+              "name": "standard",
+              "description": "31 dages lånetid til alm lånere"
+            }
+          },
+          {
+            "itemNumber": "A1011423975A",
+            "available": false,
+            "periodical": null,
+            "materialGroup": {
+              "name": "standard",
+              "description": "31 dages lånetid til alm lånere"
+            }
+          },
+          {
+            "itemNumber": "A1011423976A",
+            "available": false,
+            "periodical": null,
+            "materialGroup": {
+              "name": "standard",
+              "description": "31 dages lånetid til alm lånere"
+            }
+          },
+          {
+            "itemNumber": "A1011423977A",
+            "available": false,
+            "periodical": null,
+            "materialGroup": {
+              "name": "standard",
+              "description": "31 dages lånetid til alm lånere"
+            }
+          },
+          {
+            "itemNumber": "A1011423978A",
+            "available": false,
+            "periodical": null,
+            "materialGroup": {
+              "name": "standard",
+              "description": "31 dages lånetid til alm lånere"
+            }
+          },
+          {
+            "itemNumber": "A1011423979A",
+            "available": false,
+            "periodical": null,
+            "materialGroup": {
+              "name": "standard",
+              "description": "31 dages lånetid til alm lånere"
+            }
+          }
+        ]
+      }
+    ]
+  }
+]

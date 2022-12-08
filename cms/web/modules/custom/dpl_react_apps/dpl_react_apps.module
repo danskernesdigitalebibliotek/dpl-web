@@ -41,7 +41,8 @@ function dpl_react_apps_preprocess_page(array &$variables): void {
       'string-suggestion-author-text' => t('Author', [], $options),
       'string-suggestion-topic-text' => t('Topic', [], $options),
       'string-suggestion-work-text' => t('Work', [], $options),
-    ],
+    // Add external API base urls.
+    ] + DplReactAppsController::externalApiBaseUrls(),
   ];
 
   $variables['search'] = [

@@ -7,6 +7,8 @@ services:
       dockerfile: docker/node-chromium.dockerfile
     volumes:
       - 'projectroot:/app'
+    depends_on:
+      - wiremock
     environment:
       CYPRESS_INSTALL_BINARY: 0
       YARN_CACHE_FOLDER: '/app/.cache/yarn'
@@ -51,6 +53,10 @@ services:
       WIREMOCK_OPTIONS: "--port=80,--https-port=443,--enable-browser-proxying,--local-response-templating,--enable-stub-cors,--verbose,--disable-banner"
       VIRTUAL_HOST: wiremock.${COMPOSE_PROJECT_NAME}.docker
       VIRTUAL_PORT: 80
+
+  cli:
+    environment:
+      CI: true
 
   php:
     depends_on:
