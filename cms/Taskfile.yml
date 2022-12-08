@@ -34,6 +34,24 @@ vars:
   # Directory with lagoon backup files.
   DIR_RESTORE_FILES: 'restore/files'
 
+  # Ports and host names:
+  # Using ports exposed on localhost is important.
+  # Host names or ports exposed by Dory or other similar projects
+  # introduce multiple layers of proxies and cause problems.
+  #
+  # Cypress.
+  CYPRESS_BASE_PORT:
+    sh: docker compose port varnish 8080 | cut -d ":" -f2
+  CYPRESS_HOST_LOCAL: 'http://localhost:{{ .CYPRESS_BASE_PORT }}'
+  # Wiremock.
+  WIREMOCK_HTTP_PORT:
+    sh: docker compose port wiremock 80 | cut -d ":" -f2
+  WIREMOCK_HTTPS_PORT:
+    sh: docker compose port wiremock 443 | cut -d ":" -f2
+  WIREMOCK_HOST_DOCKER: http://wiremock
+  WIREMOCK_HOST_LOCAL: 'http://localhost:{{ .WIREMOCK_HTTP_PORT }}'
+  WIREMOCK_HOST_LOCAL_HTTPS: 'https://localhost:{{ .WIREMOCK_HTTPS_PORT }}'
+
 tasks:
   ghcr:login:
     summary: Login into Github Container Registry
@@ -187,37 +205,38 @@ tasks:
     cmds:
       - yarn install --frozen-lockfile
       - task dev:cli -- drush user:password $CYPRESS_DRUPAL_USERNAME $CYPRESS_DRUPAL_PASSWORD
-      - http_proxy=http://localhost:{{ .WIREMOCK_HTTP_PORT }} https_proxy=http://localhost:{{ .WIREMOCK_HTTPS_PORT }} npx cypress open
+      - http_proxy={{ .WIREMOCK_HOST_LOCAL }} https_proxy={{ .WIREMOCK_HOST_LOCAL_HTTPS }} npx cypress open
     env:
       CYPRESS_BASE_URL: http://localhost:{{ .CYPRESS_BASE_PORT }}
-      CYPRESS_WIREMOCK_URL: http://localhost:{{ .WIREMOCK_HTTP_PORT }}
+      CYPRESS_WIREMOCK_URL: '{{ .WIREMOCK_HOST_LOCAL }}'
       CYPRESS_DRUPAL_USERNAME: admin
       CYPRESS_DRUPAL_PASSWORD: admin
       # Enable this to help with debugging with network and proxy requests.
       # https://docs.cypress.io/guides/references/troubleshooting#Print-DEBUG-logs
       # DEBUG: cypress:network:*,cypress:server:request,-cypress:network:cors
-    vars:
-      # Using ports exposed on localhost is important. Host names or ports exposed by Dory or other similar projects
-      # introduce multiple layers of proxies and cause problems.
-      CYPRESS_BASE_PORT:
-        sh: docker compose port varnish 8080 | cut -d ":" -f2
-      WIREMOCK_HTTP_PORT:
-        sh: docker compose port wiremock 80 | cut -d ":" -f2
-      WIREMOCK_HTTPS_PORT:
-        sh: docker compose port wiremock 443 | cut -d ":" -f2
 
   ci:pa11y:
     desc: Run Pa11y to test accessiblity
     deps: [ci:pa11y:pre]
     cmds:
-      - docker compose {{ .DOCKER_COMPOSE_FILES_CI }} run -e HTTP_PROXY={{ .HTTP_PROXY }} node-chrome yarn pa11y:ci
-    vars:
-      HTTP_PROXY: http://wiremock
+      - docker compose {{ .DOCKER_COMPOSE_FILES_CI }} run -e HTTP_PROXY={{ .WIREMOCK_HOST_DOCKER }} node-chrome yarn pa11y:ci
+
+  ci:pa11y:browser:
+    desc: Watch the site with a wiremock http proxy. ⚠️  Depends on Chrome installed on OS ⚠️
+    deps: [ci:pa11y:browser:warning, ci:pa11y:pre]
+    cmds:
+      - yarn pa11y:browser
+    env:
+      HTTP_PROXY: '{{ .WIREMOCK_HOST_LOCAL }}'
+
+  ci:pa11y:browser:warning:
+    cmds:
+      - echo '⚠️  Please make sure that Chrome is installed in your OS.'
 
   ci:pa11y:pre:
-    desc: Prepare for Pa11y testing
     cmds:
       - docker compose {{ .DOCKER_COMPOSE_FILES_CI }} run node-chrome yarn install --frozen-lockfile
+      - docker compose {{ .DOCKER_COMPOSE_FILES_CI }} run -e HTTP_PROXY={{ .WIREMOCK_HOST_DOCKER }} node-chrome yarn pa11y:create-mappings
 
   ci:lighthouse:
     desc: Run Lighthouse to test performance

@@ -1,3 +1,6 @@
+/*
+* This script is used to create wiremock mappings used by pa11y tests.
+*/
 import { wiremock } from "./lib/general";
 import createCommonMappings from "./mappings/common/createCommonMappings";
 import createMappingsForSearch from "./mappings/search/createMappingsForSearch";
