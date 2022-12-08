@@ -363,14 +363,8 @@ class DplReactAppsController extends ControllerBase {
     $services = $react_apps_settings->get('services') ?? [];
 
     // Get base urls from other modules.
-    $services['fbs'] = ['base_url' => $fbs_settings->get('base_url') ?? 'https://fbs-openplatform.dbc.dk'];
-    $services['publizon'] = ['base_url' => $publizon_settings->get('base_url') ?? 'https://pubhub-openplatform.test.dbc.dk'];
-
-    // Make sure to use http urls in urls from other modules when running in CI.
-    if (getenv('CI')) {
-      $services['fbs']['base_url'] = 'http://fbs-openplatform.dbc.dk';
-      $services['publizon']['base_url'] = 'http://pubhub-openplatform.test.dbc.dk';
-    }
+    $services['fbs'] = ['base_url' => $fbs_settings->get('base_url')];
+    $services['publizon'] = ['base_url' => $publizon_settings->get('base_url')];
 
     $urls = [];
     foreach ($services as $api => $definition) {

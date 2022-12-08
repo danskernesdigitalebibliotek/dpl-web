@@ -51,7 +51,7 @@ class FbsApiFactory {
     // This configuration assumes that we know what a future structure will be
     // but the primary point to allow external control through *.settings.php
     $config = $this->configManager->getConfigFactory()->get('dpl_fbs.settings');
-    $host = $config->get('host') ?? 'https://fbs-openplatform.dbc.dk';
+    $host = $config->get('base_url') ?? 'https://fbs-openplatform.dbc.dk';
     $configuration = (new Configuration())
       ->setHost($host);
 
