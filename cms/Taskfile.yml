@@ -95,6 +95,10 @@ tasks:
       - cp -n .env.example .env || true
       # Build site.
       - task dev:cli -- composer install
+      # Always reinstall packages tracking develop builds. The content of such
+      # packages may change without composer package version changes so ensure
+      # we have the latest version.
+      - task dev:cli -- composer reinstall danskernesdigitalebibliotek/dpl-design-system danskernesdigitalebibliotek/dpl-react --no-cache
       # Build dev scripts
       - task dev:cli -- $(cd dev-scripts/dpl-react; composer install)
       # Start local environment.
