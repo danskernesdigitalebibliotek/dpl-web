@@ -21,10 +21,12 @@ In order to run local development you need:
 
 ## Other initial steps
 
-If you are using a mac/OSX it is recommended to use nfs on the mounted volumes
+If you are using a mac/OSX it is recommended to use [VirtioFS](https://virtio-fs.gitlab.io) on the mounted volumes
 in docker-compose.
 
-Look at [mac-nfs.readme.md](mac-nfs.readme.md) in order to set it up.
+In your Docker for mac preference you need to activate VirtioFS for directory sharing:
+
+![OSX preference pane providing access to NFSD](documentation/images/virtiofs.png)
 
 ## Building and publishing releases
 
