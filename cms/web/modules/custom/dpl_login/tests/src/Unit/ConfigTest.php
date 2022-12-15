@@ -40,6 +40,10 @@ class ConfigTest extends UnitTestCase {
       'client_id' => 'abcd-1234',
       'client_secret' => 'something_super_secret',
       'token_endpoint' => 'http://auth.tld/token',
+      // Even though this config entry is not supported with an accessor it is
+      // important for OpenID Connect plugins to work so ensure it is handled
+      // correctly.
+      'userinfo_endpoint' => 'http://auth.tld/userinfo',
       'logout_endpoint' => 'http://auth.tld/logout',
     ]);
 
@@ -60,6 +64,7 @@ class ConfigTest extends UnitTestCase {
       'client_id' => 'abcd-1234',
       'client_secret' => 'something_super_secret',
       'token_endpoint' => 'http://auth.tld/token',
+      'userinfo_endpoint' => 'http://auth.tld/userinfo',
       'logout_endpoint' => 'http://auth.tld/logout',
     ], $config->asArray());
   }
