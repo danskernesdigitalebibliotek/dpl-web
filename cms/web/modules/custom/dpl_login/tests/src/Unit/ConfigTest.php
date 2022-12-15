@@ -57,7 +57,7 @@ class ConfigTest extends UnitTestCase {
   /**
    * Ensure configuration is returned in a format expected by plugins.
    */
-  public function testAsArray(): void {
+  public function testPluginConfig(): void {
     $config = new Config($this->configFactory->reveal());
     $this->assertSame([
       'agency_id' => '775100',
@@ -66,16 +66,16 @@ class ConfigTest extends UnitTestCase {
       'token_endpoint' => 'http://auth.tld/token',
       'userinfo_endpoint' => 'http://auth.tld/userinfo',
       'logout_endpoint' => 'http://auth.tld/logout',
-    ], $config->asArray());
+    ], $config->pluginConfig());
   }
 
   /**
    * If configuration is missing an empty array must be returned.
    */
-  public function testAsArrayMissingConfig(): void {
+  public function testMissingPluginConfig(): void {
     $this->config->get('settings')->willReturn(NULL);
     $config = new Config($this->configFactory->reveal());
-    $this->assertSame([], $config->asArray());
+    $this->assertSame([], $config->pluginConfig());
   }
 
   /**

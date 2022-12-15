@@ -29,16 +29,15 @@ class Config {
   ) {}
 
   /**
-   * Returns the configuration as an array.
-   *
-   * This is primarily for usage with the OpenID Connect plugin system which
-   * also expects array storage.
+   * Returns the configuration formatted for an OpenID Connect plugin.
    *
    * @return string[]
    *   Map of Adgangsplatformen configuration.
    */
-  public function asArray() : array {
+  public function pluginConfig() : array {
     $settings = $this->config->get(self::CONFIG_KEY)->get('settings');
+    // Do not throw an exception here even if configuration is missing. Errors
+    // are handled is passed to the OpenID Connect plugin.
     return (is_array($settings)) ? $settings : [];
   }
 
@@ -48,7 +47,7 @@ class Config {
    * @throws \Drupal\dpl_login\Exception\MissingConfigurationException
    */
   private function getValue(string $key) : string {
-    $settings = $this->asArray();
+    $settings = $this->config->get(self::CONFIG_KEY)->get('settings');
     $setting = $settings[$key] ?? '';
     // Assume that the Adgangsplatformen configuration should always be set so
     // throw exception instead of returning a nullable or empty string.
