@@ -12,7 +12,7 @@
 		"birthday": "1999-01-01",
 		"blockStatus": null,
 		"defaultInterestPeriod": 180,
-		"emailAddress": "john.johnson@johnmail.com",
+		"emailAddress": "john.johnson@example.com",
 		"name": "John Johnson",
 		"notificationProtocols": [],
 		"onHold": null,
