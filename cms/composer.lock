@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "7db51d0915e4f0312fe2fa430704b365",
+    "content-hash": "66da6f72f489d09ba0c066bdcb83c613",
     "packages": [
         {
             "name": "amazeeio/drupal_integrations",
@@ -1098,7 +1098,7 @@
         },
         {
             "name": "danskernesdigitalebibliotek/fbs-client",
-            "version": "dev-opsaetning-af-a11y-check-i-gh-actions-pa-dpl-cms-DDFSOEG-324",
+            "version": "dev-main",
             "dist": {
                 "type": "path",
                 "url": "packages/fbs-client",
