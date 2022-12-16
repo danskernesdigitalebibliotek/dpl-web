@@ -21,8 +21,8 @@ In order to run local development you need:
 
 ## Other initial steps
 
-If you are using a mac/OSX it is recommended to use [VirtioFS](https://virtio-fs.gitlab.io) on the mounted volumes
-in docker-compose.
+If you are using a mac/OSX it is recommended to use [VirtioFS](https://virtio-fs.gitlab.io)
+on the mounted volumes in docker-compose.
 
 In your Docker for mac preference you need to activate VirtioFS for directory sharing:
 
