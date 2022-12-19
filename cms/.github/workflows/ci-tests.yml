@@ -95,6 +95,8 @@ jobs:
           fetch-depth: 0
       - name: Install go-task
         uses: arduino/setup-task@v1
+        with:
+          repo-token: ${{ secrets.GITHUB_TOKEN }}
       - name: Setup site
         run: task ci:reset
       - name: Run Lighthouse test
@@ -116,6 +118,8 @@ jobs:
           fetch-depth: 0
       - name: Install go-task
         uses: arduino/setup-task@v1
+        with:
+          repo-token: ${{ secrets.GITHUB_TOKEN }}
       - name: Setup site
         run: task ci:reset
       - name: Run Pa11y
@@ -137,6 +141,8 @@ jobs:
           fetch-depth: 0
       - name: Install go-task
         uses: arduino/setup-task@v1
+        with:
+          repo-token: ${{ secrets.GITHUB_TOKEN }}
       - name: Setup site
         run: task ci:reset
       - name: Run Cypress
@@ -220,6 +226,8 @@ jobs:
           fetch-depth: 0
       - name: Install go-task
         uses: arduino/setup-task@v1
+        with:
+          repo-token: ${{ secrets.GITHUB_TOKEN }}
       - name: Setup site
         run: task ci:reset
       - name: Validate specification
