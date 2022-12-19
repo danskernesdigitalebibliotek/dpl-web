@@ -24,10 +24,10 @@
     "wiremock-rest-client": "^1.10.0"
   },
   "scripts": {
-    "pa11y:create-mappings": "yarn pa11y:build && node pa11y/build/createMappings.js",
+    "wiremock:create-mappings": "yarn wiremock:build && node wiremock/build/createMappings.js",
     "pa11y:ci": "pa11y-ci",
-    "pa11y:dev:watch": "tsc -p pa11y -w",
-    "pa11y:build": "tsc -p pa11y",
-    "pa11y:browser": "yarn pa11y:build && node pa11y/build/pa11yGoggles.js"
+    "wiremock:dev:watch": "tsc -p wiremock -w",
+    "wiremock:build": "tsc -p wiremock",
+    "wiremock:browser": "yarn wiremock:build && node wiremock/build/goggles.js"
   }
 }

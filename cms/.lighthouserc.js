@@ -1,7 +1,11 @@
 module.exports = {
   ci: {
     collect: {
-      url: ["http://varnish:8080/"],
+      url: [
+        "http://varnish:8080/",
+        "http://varnish:8080/search?q=harry+potter&x=0&y=0",
+        "http://varnish:8080/work/work-of:870970-basis:25245784?type=bog"
+      ],
       // Use 3 runs to test both cold and warm caches.
       numberOfRuns: 3,
       settings: {
