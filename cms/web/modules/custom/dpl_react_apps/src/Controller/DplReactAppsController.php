@@ -248,7 +248,7 @@ class DplReactAppsController extends ControllerBase {
         'modal-reservation-form-sms-input-field-description-text' => $this->t('Input phone number', [], $c),
         'modal-reservation-form-sms-input-field-label-text' => $this->t('Phone', [], $c),
         'number-description-text' => $this->t('Nr.', [], $c),
-        'number-in-queue-text' => $this->t('You are number', [], $c),
+        'number-in-queue-text' => $this->t('You are number @number in the queue', [], $c),
         'ok-button-text' => $this->t('Ok', [], $c),
         'one-month-text' => $this->t('1 month', [], $c),
         'one-year-text' => $this->t('1 year', [], $c),
