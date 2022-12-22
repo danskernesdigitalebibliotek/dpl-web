@@ -5,4 +5,5 @@ core: 8.x
 package: "DPL"
 core_version_requirement: ^9 || ^8
 dependencies:
+  - drupal:serialization
   - handy_cache_tags:handy_cache_tags

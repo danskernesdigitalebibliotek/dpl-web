@@ -16,6 +16,7 @@ ignored_config_entities:
   - '~core.entity_view_mode.paragraph.*'
   - ~core.menu.static_menu_link_overrides
   - ~dblog.settings
+  - '~dpl_das.settings:url'
   - '~dpl_library_agency.general_settings:reservation_sms_notifications_disabled'
   - '~dpl_mapp.settings:domain'
   - '~field.field.node.campaign.*'
@@ -54,6 +55,9 @@ ignored_config_entities:
   - ~purge_queuer_coretags
   - ~purge.logger_channels
   - ~purge.plugins
+  - ~rest.resource.campaign.match
+  - ~rest.resource.dpl_das_digital_article_order
+  - ~rest.resource.proxy-url
   - '~system.action.node_*_action'
   - '~system.action.user_*_action'
   - ~system.authorize

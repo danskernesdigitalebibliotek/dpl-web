@@ -3,14 +3,14 @@
 namespace Drupal\dpl_login\Controller;
 
 use Drupal\Core\Url;
+use Drupal\dpl_login\Adgangsplatformen\Config;
 use Drupal\dpl_login\UserTokensProvider;
 use Drupal\Core\Controller\ControllerBase;
-use Drupal\Core\Config\ConfigFactoryInterface;
 use Drupal\Core\Routing\TrustedRedirectResponse;
 use Drupal\Core\StringTranslation\StringTranslationTrait;
 use Drupal\dpl_login\Exception\MissingConfigurationException;
 use Drupal\openid_connect\OpenIDConnectClaims;
-use Drupal\openid_connect\Plugin\OpenIDConnectClientManager;
+use Drupal\openid_connect\Plugin\OpenIDConnectClientInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -22,7 +22,6 @@ class DplLoginController extends ControllerBase {
   use StringTranslationTrait;
 
   const LOGGER_KEY = 'dpl_login';
-  const CLIENT_NAME = 'adgangsplatformen';
 
   /**
    * The User token provider.
@@ -39,15 +38,15 @@ class DplLoginController extends ControllerBase {
   /**
    * Configuration.
    *
-   * @var mixed[]
+   * @var \Drupal\dpl_login\Adgangsplatformen\Config
    */
-  protected $settings;
+  protected $config;
   /**
-   * Openid Connect Plugin Manager.
+   * Openid Connect Client.
    *
-   * @var \Drupal\openid_connect\Plugin\OpenIDConnectClientManager
+   * @var \Drupal\openid_connect\Plugin\OpenIDConnectClientInterface
    */
-  protected $pluginManager;
+  protected $client;
   /**
    * The OpenID Connect claims.
    *
@@ -60,35 +59,23 @@ class DplLoginController extends ControllerBase {
    *
    * @param \Drupal\dpl_login\UserTokensProvider $userTokensProvider
    *   The User token provider.
-   * @param \Drupal\Core\Config\ConfigFactoryInterface $configFactory
-   *   Configuration.
-   * @param \Drupal\openid_connect\Plugin\OpenIDConnectClientManager $pluginManager
-   *   Openid Connect Plugin Manager.
+   * @param \Drupal\dpl_login\Adgangsplatformen\Config $config
+   *   Adgangsplatformen Config.
+   * @param \Drupal\openid_connect\Plugin\OpenIDConnectClientInterface $client
+   *   Adgangsplatformen Client.
    * @param \Drupal\openid_connect\OpenIDConnectClaims $claims
    *   The OpenID Connect claims.
    */
   public function __construct(
     UserTokensProvider $userTokensProvider,
-    ConfigFactoryInterface $configFactory,
-    OpenIDConnectClientManager $pluginManager,
+    Config $config,
+    OpenIDConnectClientInterface $client,
     OpenIDConnectClaims $claims,
   ) {
     $this->userTokensProvider = $userTokensProvider;
-    $this->settings = $configFactory
-      ->get($this->getSettingsKey())->get('settings');
-    $this->pluginManager = $pluginManager;
-    $this->configFactory = $configFactory;
+    $this->config = $config;
+    $this->client = $client;
     $this->claims = $claims;
-  }
-
-  /**
-   * Get the settings scope for the openid_connect settings.
-   *
-   * @return string
-   *   The settings scope for the openid_connect settings.
-   */
-  protected function getSettingsKey(): string {
-    return 'openid_connect.settings.' . self::CLIENT_NAME;
   }
 
   /**
@@ -102,8 +89,8 @@ class DplLoginController extends ControllerBase {
   public static function create(ContainerInterface $container) {
     return new static(
       $container->get('dpl_login.user_tokens'),
-      $container->get('config.factory'),
-      $container->get('plugin.manager.openid_connect_client'),
+      $container->get('dpl_login.adgangsplatformen.config'),
+      $container->get('dpl_login.adgangsplatformen.client'),
       $container->get('openid_connect.claims'),
     );
   }
@@ -118,10 +105,7 @@ class DplLoginController extends ControllerBase {
    */
   public function logout() {
     // It is a global problem if the logout endpoint has not been configured.
-    // @todo This could be moved to a new service
-    // handling adgangsplatform configuration.
-    // @see dpl_login_install() and \Drupal\dpl_library_token\LibraryTokenHandler.
-    if (!$logout_endpoint = $this->settings['logout_endpoint'] ?? NULL) {
+    if (!$logout_endpoint = $this->config->getLogoutEndpoint()) {
       throw new MissingConfigurationException('Adgangsplatformen plugin config variable logout_endpoint is missing');
     }
 
@@ -178,14 +162,8 @@ class DplLoginController extends ControllerBase {
       $_SESSION['openid_connect_destination'] = $current_path;
     }
 
-    /** @var \Drupal\openid_connect\Plugin\OpenIDConnectClientInterface $client */
-    $client = $this->pluginManager->createInstance(
-      self::CLIENT_NAME,
-      $this->settings
-    );
-
-    $scopes = $this->claims->getScopes($client);
-    return $client->authorize($scopes);
+    $scopes = $this->claims->getScopes($this->client);
+    return $this->client->authorize($scopes);
   }
 
 }

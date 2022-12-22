@@ -6,6 +6,7 @@
 namespace Drupal\Tests\dpl_library_token\Unit;
 
 use Drupal\Core\Config\ConfigBase;
+use Drupal\dpl_login\Adgangsplatformen\Config;
 use Psr\Log\LoggerInterface;
 use Psr\Log\LogLevel;
 use Prophecy\Argument;
@@ -133,6 +134,9 @@ class LibraryTokenHandlerTest extends UnitTestCase {
       ->shouldBeCalledTimes(1);
 
     $logger = $this->prophesize(LoggerChannelInterface::class);
+    $logger->log(LogLevel::ERROR, Argument::any(), Argument::that(function(array $context) use ($message) {
+      return $context['@error_message'] == $message;
+    }))->shouldBeCalledTimes(1);
     $logger_factory = $this->prophesize(LoggerChannelFactoryInterface::class);
     $logger_factory->get(LibraryTokenHandler::LOGGER_KEY)->willReturn($logger->reveal());
 
@@ -141,8 +145,6 @@ class LibraryTokenHandlerTest extends UnitTestCase {
     $config = $this->prophesize(ImmutableConfig::class);
     $config->get('settings')->willReturn($settings);
 
-    $this->expectException(MissingConfigurationException::class);
-    $this->expectExceptionMessage($message);
     $handler = $this->createTokenHandler(
       $key_value_factory->reveal(),
       $client->reveal(),
@@ -161,17 +163,24 @@ class LibraryTokenHandlerTest extends UnitTestCase {
   public function provideExceptionMessages(): array {
     return [
       [
-        NULL,
+        [
+          'agency_id' => 'agency_id',
+          'client_id' => 'client_id',
+          'client_secret' => 'client_secret',
+        ],
         'Adgangsplatformen plugin config variable token_endpoint is missing',
       ],
       [
         [
+          'agency_id' => 'agency_id',
           'token_endpoint' => 'token_endpoint',
+          'client_secret' => 'client_secret',
         ],
         'Adgangsplatformen plugin config variable client_id is missing',
       ],
       [
         [
+          'agency_id' => 'agency_id',
           'token_endpoint' => 'token_endpoint',
           'client_id' => 'client_id',
         ],
@@ -211,7 +220,8 @@ class LibraryTokenHandlerTest extends UnitTestCase {
       ]);
     }
     $config_factory = $this->prophesize(ConfigFactoryInterface::class);
-    $config_factory->get(LibraryTokenHandler::SETTINGS_KEY)->willReturn($config);
+    $config_factory->get(Config::CONFIG_KEY)->willReturn($config);
+    $adgangsplatformen_config = new Config($config_factory->reveal());
 
     if (!$logger) {
       $logger = $this->prophesize(LoggerChannelInterface::class)->reveal();
@@ -221,8 +231,8 @@ class LibraryTokenHandlerTest extends UnitTestCase {
     $logger_factory->get(LibraryTokenHandler::LOGGER_KEY)->willReturn($logger);
 
     return new LibraryTokenHandler(
+      $adgangsplatformen_config,
       $key_value_factory,
-      $config_factory->reveal(),
       $client,
       $logger_factory->reveal()
     );

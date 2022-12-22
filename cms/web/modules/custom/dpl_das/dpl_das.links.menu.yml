@@ -1,0 +1,5 @@
+dpl_das.settings_form:
+  title: "Digital Archive Service"
+  description: "Configure Digital Archive Service."
+  parent: "system.admin_config_services"
+  route_name: dpl_das.settings_form

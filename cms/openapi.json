@@ -35,7 +35,7 @@
             "required": true,
             "description": "Request format",
             "default": "json"
-          },
+          }, 
           {
             "name": "facets",
             "description": "A facet to match against",
@@ -133,6 +133,49 @@
         ]
       }
     },
+    "/dpl_das/order": {
+      "post": {
+        "parameters": [
+          {
+            "name": "_format",
+            "in": "query",
+            "type": "string",
+            "enum": ["json"],
+            "required": true,
+            "description": "Request format",
+            "default": "json"
+          }, 
+          {
+            "name": "order",
+            "description": "Digital article order",
+            "in": "body",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "pid": {
+                  "type": "string"
+                },
+                "email": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "OK"
+          },
+          "500": {
+            "description": "Internal server error"
+          }
+        },
+        "summary": "Digital Article Order",
+        "operationId": "dpl_das_digital_article_order:POST",
+        "schemes": ["http"],
+        "security": []
+      }
+    },
     "/dpl-url-proxy": {
       "get": {
         "parameters": [
@@ -144,7 +187,7 @@
             "required": true,
             "description": "Request format",
             "default": "json"
-          },
+          }, 
           {
             "name": "url",
             "description": "A url to an online resource which may be accessible through a proxy which requires rewriting of the url",
