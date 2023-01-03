@@ -134,7 +134,7 @@ class DplReactAppsController extends ControllerBase {
         'showing-text' => $this->t('Showing', [], $options),
         'unavailable-text' => $this->t('Unavailable', [], $options),
       // Add external API base urls.
-      ] + self::externalApiBaseUrls()),
+      ] + self::externalApiBaseUrls(), "page"),
     ];
 
     $this->renderer->addCacheableDependency($build, $this->branchSettings);
@@ -292,7 +292,7 @@ class DplReactAppsController extends ControllerBase {
         'we-have-shopped-text' => $this->t('In stock:', [], $c),
         'you-have-borrowed-text' => $this->t('You have borrowed', [], $c),
         // Add external API base urls.
-      ] + self::externalApiBaseUrls()),
+      ] + self::externalApiBaseUrls(), "page"),
     ];
 
     $this->renderer->addCacheableDependency($build, $this->reservationSettings);

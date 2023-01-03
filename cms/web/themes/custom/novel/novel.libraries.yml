@@ -3,6 +3,7 @@ base:
   css:
     theme:
       assets/dpl-design-system/css/base.css: {}
+      css/novel.css: {}
   js:
     assets/dpl-design-system/js/initheader.js: {}
     assets/dpl-design-system/js/initaccordion.js: {}

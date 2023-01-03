@@ -63,7 +63,7 @@ function dpl_react_library_info_alter(array &$libraries, string $extension): voi
  * @return mixed[]
  *   The app render array.
  */
-function dpl_react_render(string $name, array $data = []): array {
+function dpl_react_render(string $name, array $data = [], string | NULL $view_mode = NULL): array {
   $attributes = [];
 
   $attributes['data-dpl-app'] = $name;
@@ -90,6 +90,16 @@ function dpl_react_render(string $name, array $data = []): array {
       'tags' => ['dpl_react_app', 'dpl_react_app:' . $name],
     ],
   ];
+
+  if ($view_mode === 'page') {
+    return [
+      '#type' => 'container',
+      '#attributes' => [
+        'class' => 'dpl-react-app-container--page',
+      ],
+      'app' => $build,
+    ];
+  }
 
   return $build;
 }
