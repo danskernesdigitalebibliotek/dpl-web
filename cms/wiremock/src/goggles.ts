@@ -42,7 +42,7 @@ launch({
     `--proxy-server=${httpProxy}`,
     `--proxy-bypass-list=${httpProxyBypassList}`,
     '--args',
-    '--user-data-dir="/tmp/chrome_dev_test"',
+    '--user-data-dir=/tmp/chrome_dev_test',
     '--disable-web-security'
   ]
 }).then(chrome => {
