@@ -34,23 +34,23 @@ services:
     # We use wiremock-gui as it exposes a UI for inspecting the state of
     # WireMock. This can make debugging easier. It can seamlessly be replaced
     # with the official wiremock/wiremock image.
-    image: holomekc/wiremock-gui:2.33.2.1
+    image: wiremock/wiremock:2.32.0-alpine
+    # The following options are used:
+    # --enable-browser-proxying: Allows Wiremock to intercept all traffic from
+    # services  with HTTP(s)_PROXY pointing at it.
+    # --local-response-templating lets WireMock transfer values from request
+    # to mocked response
+    # --enable-stub-cors is required to make a browser running React
+    # components request resources.
+    # --verbose makes it easier to see requests and whether they are matched
+    # or not.
+    command: "--port=80 --https-port=443 --enable-browser-proxying --local-response-templating --enable-stub-cors --verbose --disable-banner"
     volumes:
       - 'projectroot:/app'
     ports:
       - 80
       - 443
     environment:
-      # The following options are used:
-      # --enable-browser-proxying: Allows Wiremock to intercept all traffic from
-      # services  with HTTP(s)_PROXY pointing at it.
-      # --local-response-templating lets WireMock transfer values from request
-      # to mocked response
-      # --enable-stub-cors is required to make a browser running React
-      # components request resources.
-      # --verbose makes it easier to see requests and whether they are matched
-      # or not.
-      WIREMOCK_OPTIONS: "--port=80,--https-port=443,--enable-browser-proxying,--local-response-templating,--enable-stub-cors,--verbose,--disable-banner"
       VIRTUAL_HOST: wiremock.${COMPOSE_PROJECT_NAME}.docker
       VIRTUAL_PORT: 80
 
