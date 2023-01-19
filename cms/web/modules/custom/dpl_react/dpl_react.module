@@ -101,6 +101,7 @@ function dpl_react_render(string $name, array $data = [], string | NULL $view_mo
         'app' => $build,
       ];
     case 'search-page':
+      $q = \Drupal::request()->query->get('q') ?? "";
       return [
         '#type' => 'container',
         '#attributes' => [
@@ -109,7 +110,7 @@ function dpl_react_render(string $name, array $data = [], string | NULL $view_mo
         'app' => [
           '#value' => <<<EOD
           <div class="search-result-page">
-            <h1 class="text-header-h2 mb-16 search-result-title text-loading" data-cy="search-result-title">Showing results for “harry potter” man</h1>
+            <h1 class="text-header-h2 mb-16 search-result-title text-loading" data-cy="search-result-title">Showing results for “{$q}”</h1>
             <div className="ssc mt-48">
               <div className="ssc-head-line" />
             </div>
