@@ -89,7 +89,7 @@ function dpl_react_render(string $name, array $data = [], string | NULL $view_mo
     '#cache' => [
       'tags' => ['dpl_react_app', 'dpl_react_app:' . $name],
     ],
-    ];
+  ];
 
   switch ($view_mode) {
     case 'page':
@@ -100,67 +100,27 @@ function dpl_react_render(string $name, array $data = [], string | NULL $view_mo
         ],
         'app' => $build,
       ];
+
     case 'search-page':
-      $q = \Drupal::request()->query->get('q') ?? "";
       return [
         '#type' => 'container',
         '#attributes' => [
           'class' => 'dpl-react-app-container--page',
         ],
         'app' => [
-          '#value' => <<<EOD
-          <div class="search-result-page">
-            <h1 class="text-header-h2 mb-16 search-result-title text-loading" data-cy="search-result-title">Showing results for “{$q}”</h1>
-            <div className="ssc mt-48">
-              <div className="ssc-head-line" />
-            </div>
-            <article className="search-result-item ssc">
-              <div className="ssc-square">&nbsp;</div>
-              <div className="ssc-wrapper w-80">
-                <div className="ssc-head-line w-60 mb" />
-                <div className="ssc-line w-60 mbs">&nbsp;</div>
-                <div className="ssc-line w-60 mbs">&nbsp;</div>
-              </div>
-            </article>
-            <article className="search-result-item ssc">
-              <div className="ssc-square">&nbsp;</div>
-              <div className="ssc-wrapper w-80">
-                <div className="ssc-head-line w-60 mb" />
-                <div className="ssc-line w-60 mbs">&nbsp;</div>
-                <div className="ssc-line w-60 mbs">&nbsp;</div>
-              </div>
-            </article>
-            <article className="search-result-item ssc">
-              <div className="ssc-square">&nbsp;</div>
-              <div className="ssc-wrapper w-80">
-                <div className="ssc-head-line w-60 mb" />
-                <div className="ssc-line w-60 mbs">&nbsp;</div>
-                <div className="ssc-line w-60 mbs">&nbsp;</div>
-              </div>
-            </article>
-            <article className="search-result-item ssc">
-              <div className="ssc-square">&nbsp;</div>
-              <div className="ssc-wrapper w-80">
-                <div className="ssc-head-line w-60 mb" />
-                <div className="ssc-line w-60 mbs">&nbsp;</div>
-                <div className="ssc-line w-60 mbs">&nbsp;</div>
-              </div>
-            </article>
-            <article className="search-result-item ssc">
-              <div className="ssc-square">&nbsp;</div>
-              <div className="ssc-wrapper w-80">
-                <div className="ssc-head-line w-60 mb" />
-                <div className="ssc-line w-60 mbs">&nbsp;</div>
-                <div className="ssc-line w-60 mbs">&nbsp;</div>
-              </div>
-            </article>
-          </div>
-        EOD,
-        ] + $build,
+          '#theme' => 'search_page',
+          '#q' => \Drupal::request()->query->get('q') ?? "",
+          '#showing_results_for_text' => $data['showing-results-for-text'] ?? "",
+          '#search_result_skeleton_item_fakes' => [1, 2, 3, 4 , 5],
+          '#attributes' => $build['#attributes'],
+          '#attached' => $build['#attached'],
+          '#cache' => $build['#cache'],
+        ],
       ];
+
     default:
       return $build;
-    }
+  }
 
 }
 
@@ -192,4 +152,42 @@ function dpl_react_follow_searches_url(): string {
  */
 function dpl_react_cover_service_url(): string {
   return DplReactInterface::DPL_REACT_COVER_SERVICE_URL;
+}
+
+/**
+ * Implements hook_theme().
+ *
+ * @param mixed[] $existing
+ *   An array of existing implementations that may be used
+ *   for override purposes.
+ * @param string $type
+ *   Whether a theme, module, etc. is being processed.
+ * @param string $theme
+ *   The actual name of theme, module, etc. that is being being processed.
+ * @param string $path
+ *   The directory path of the theme or module,
+ *   so that it doesn't need to be looked up.
+ *
+ * @return mixed[]
+ *   An associative array of information about theme implementations.
+ */
+function dpl_react_theme(
+  array $existing,
+  string $type,
+  string $theme,
+  string $path
+): array {
+  return [
+    'search_page' => [
+      'variables' => [
+        'q' => NULL,
+        'showing_results_for_text' => NULL,
+        'attributes' => NULL,
+        'search_result_skeleton_item_fakes' => [],
+      ],
+    ],
+    'search_result_item' => [
+      'variables' => [],
+    ],
+  ];
 }
