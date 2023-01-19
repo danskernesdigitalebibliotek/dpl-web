@@ -134,7 +134,7 @@ class DplReactAppsController extends ControllerBase {
         'showing-text' => $this->t('Showing', [], $options),
         'unavailable-text' => $this->t('Unavailable', [], $options),
       // Add external API base urls.
-      ] + self::externalApiBaseUrls(), "page"),
+      ] + self::externalApiBaseUrls(), "search-page"),
     ];
 
     $this->renderer->addCacheableDependency($build, $this->branchSettings);

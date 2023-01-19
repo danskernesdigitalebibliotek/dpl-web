@@ -89,19 +89,78 @@ function dpl_react_render(string $name, array $data = [], string | NULL $view_mo
     '#cache' => [
       'tags' => ['dpl_react_app', 'dpl_react_app:' . $name],
     ],
-  ];
-
-  if ($view_mode === 'page') {
-    return [
-      '#type' => 'container',
-      '#attributes' => [
-        'class' => 'dpl-react-app-container--page',
-      ],
-      'app' => $build,
     ];
-  }
 
-  return $build;
+  switch ($view_mode) {
+    case 'page':
+      return [
+        '#type' => 'container',
+        '#attributes' => [
+          'class' => 'dpl-react-app-container--page',
+        ],
+        'app' => $build,
+      ];
+    case 'search-page':
+      return [
+        '#type' => 'container',
+        '#attributes' => [
+          'class' => 'dpl-react-app-container--page',
+        ],
+        'app' => [
+          '#value' => <<<EOD
+          <div class="search-result-page">
+            <h1 class="text-header-h2 mb-16 search-result-title text-loading" data-cy="search-result-title">Showing results for “harry potter” man</h1>
+            <div className="ssc mt-48">
+              <div className="ssc-head-line" />
+            </div>
+            <article className="search-result-item ssc">
+              <div className="ssc-square">&nbsp;</div>
+              <div className="ssc-wrapper w-80">
+                <div className="ssc-head-line w-60 mb" />
+                <div className="ssc-line w-60 mbs">&nbsp;</div>
+                <div className="ssc-line w-60 mbs">&nbsp;</div>
+              </div>
+            </article>
+            <article className="search-result-item ssc">
+              <div className="ssc-square">&nbsp;</div>
+              <div className="ssc-wrapper w-80">
+                <div className="ssc-head-line w-60 mb" />
+                <div className="ssc-line w-60 mbs">&nbsp;</div>
+                <div className="ssc-line w-60 mbs">&nbsp;</div>
+              </div>
+            </article>
+            <article className="search-result-item ssc">
+              <div className="ssc-square">&nbsp;</div>
+              <div className="ssc-wrapper w-80">
+                <div className="ssc-head-line w-60 mb" />
+                <div className="ssc-line w-60 mbs">&nbsp;</div>
+                <div className="ssc-line w-60 mbs">&nbsp;</div>
+              </div>
+            </article>
+            <article className="search-result-item ssc">
+              <div className="ssc-square">&nbsp;</div>
+              <div className="ssc-wrapper w-80">
+                <div className="ssc-head-line w-60 mb" />
+                <div className="ssc-line w-60 mbs">&nbsp;</div>
+                <div className="ssc-line w-60 mbs">&nbsp;</div>
+              </div>
+            </article>
+            <article className="search-result-item ssc">
+              <div className="ssc-square">&nbsp;</div>
+              <div className="ssc-wrapper w-80">
+                <div className="ssc-head-line w-60 mb" />
+                <div className="ssc-line w-60 mbs">&nbsp;</div>
+                <div className="ssc-line w-60 mbs">&nbsp;</div>
+              </div>
+            </article>
+          </div>
+        EOD,
+        ] + $build,
+      ];
+    default:
+      return $build;
+    }
+
 }
 
 /**
