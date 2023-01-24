@@ -167,6 +167,11 @@ Cypress.Commands.add(
   }
 );
 
+const visible = (checkVisible: boolean) => (checkVisible ? ":visible" : "");
+Cypress.Commands.add("getBySel", (selector, checkVisible = false, ...args) => {
+  return cy.get(`[data-cy="${selector}"]${visible(checkVisible)}`, ...args);
+});
+
 // According to the documentation of types and Cypress commands
 // the namespace is declared like it is done here. Therefore we'll bypass errors about it.
 /* eslint-disable @typescript-eslint/no-namespace */
@@ -187,6 +192,11 @@ declare global {
         accessToken: string,
         userGuid: string
       ): Chainable<null>;
+      getBySel(
+        selector: string,
+        checkVisible?: boolean,
+        ...args: unknown[]
+      ): Chainable;
     }
   }
 }
