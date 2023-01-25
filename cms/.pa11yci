@@ -31,7 +31,7 @@
       "screenCapture": "/app/pa11y/screenshots/reservation-modal.png",
       "actions": [
         "click element button[data-cy=\"material-header-buttons-physical\"",
-        "wait for element button[data-cy=\"modal-reservation-modal-134693959-close-button\"] to be visible"
+        "wait for element button[data-cy=\"reservation-modal-submit-button\"] to be visible"
       ]
     }
   ]
