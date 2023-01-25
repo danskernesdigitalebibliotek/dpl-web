@@ -20,32 +20,33 @@ use Drupal\dpl_react_apps\Controller\DplReactAppsController;
 function dpl_react_apps_preprocess_page(array &$variables): void {
   $options = ['context' => 'Search Header'];
 
-  $data = [
-    'search-header' => [
-      'search-url' => DplReactAppsController::searchResultUrl(),
-      'material-url' => DplReactAppsController::materialUrl(),
-      // Text.
-      'search-header-icon-alt-text' => t('Search button', [], $options),
-      'search-header-input-label' => t('Search header input', [], $options),
-      'autosuggest-animated-series-category-text' => t('Animated series', [], $options),
-      'autosuggest-audio-book-category-text' => t('Audio books', [], $options),
-      'autosuggest-book-category-text' => t('Books', [], $options),
-      'autosuggest-ebook-category-text' => t('E-books', [], $options),
-      'autosuggest-film-category-text' => t('Movies', [], $options),
-      'autosuggest-game-category-text' => t('Games', [], $options),
-      'autosuggest-music-category-text' => t('Music', [], $options),
-      'et-al-text' => t('et al.', [], $options),
-      'in-text' => t('in', [], $options),
-      'input-placeholder-text' => t('Start typing in order to search', [], $options),
-      'loading-text' => t('Loading', [], $options),
-      'string-suggestion-author-text' => t('Author', [], $options),
-      'string-suggestion-topic-text' => t('Topic', [], $options),
-      'string-suggestion-work-text' => t('Work', [], $options),
-    // Add external API base urls.
-    ] + DplReactAppsController::externalApiBaseUrls(),
+  $variables['search'] = [
+    'header' => [
+      '#theme' => 'dpl_react_app',
+      '#name' => 'search-header',
+      '#data' => [
+        'search-url' => DplReactAppsController::searchResultUrl(),
+        'material-url' => DplReactAppsController::materialUrl(),
+        // Text.
+        'search-header-icon-alt-text' => t('Search button', [], $options),
+        'search-header-input-label' => t('Search header input', [], $options),
+        'autosuggest-animated-series-category-text' => t('Animated series', [], $options),
+        'autosuggest-audio-book-category-text' => t('Audio books', [], $options),
+        'autosuggest-book-category-text' => t('Books', [], $options),
+        'autosuggest-ebook-category-text' => t('E-books', [], $options),
+        'autosuggest-film-category-text' => t('Movies', [], $options),
+        'autosuggest-game-category-text' => t('Games', [], $options),
+        'autosuggest-music-category-text' => t('Music', [], $options),
+        'et-al-text' => t('et al.', [], $options),
+        'in-text' => t('in', [], $options),
+        'input-placeholder-text' => t('Start typing in order to search', [], $options),
+        'loading-text' => t('Loading', [], $options),
+        'string-suggestion-author-text' => t('Author', [], $options),
+        'string-suggestion-topic-text' => t('Topic', [], $options),
+        'string-suggestion-work-text' => t('Work', [], $options),
+      // Add external API base urls.
+      ] + DplReactAppsController::externalApiBaseUrls(),
+    ],
   ];
 
-  $variables['search'] = [
-    'header' => dpl_react_render('search-header', $data['search-header']),
-  ];
 }
