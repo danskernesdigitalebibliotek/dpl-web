@@ -96,14 +96,14 @@ class DplReactAppsController extends ControllerBase {
 
     $data = [
       // Config.
-      'branches-config' => $this->buildBranchesJsonProp($this->branchRepository->getBranches()),
-      'blacklisted-search-branches-config' => $this->buildBranchesListProp($this->branchSettings->getExcludedSearchBranches()),
       'blacklisted-availability-branches-config' => $this->buildBranchesListProp($this->branchSettings->getExcludedAvailabilityBranches()),
+      'blacklisted-search-branches-config' => $this->buildBranchesListProp($this->branchSettings->getExcludedSearchBranches()),
+      'branches-config' => $this->buildBranchesJsonProp($this->branchRepository->getBranches()),
       // Urls.
       'auth-url' => self::authUrl(),
+      'dpl-cms-base-url' => self::dplCmsBaseUrl(),
       'material-url' => self::materialUrl(),
       'search-url' => self::searchResultUrl(),
-      'dpl-cms-base-url' => self::dplCmsBaseUrl(),
       // Text.
       'add-more-filters-text' => $this->t('+ more filters', [], $options),
       'available-text' => $this->t('Available', [], $options),
@@ -217,10 +217,20 @@ class DplReactAppsController extends ControllerBase {
       'isbn-text' => $this->t('ISBN', [], $c),
       'language-text' => $this->t('Language', [], $c),
       'libraries-have-the-material-text' => $this->t('Libraries have the material', [], $c),
+      'listen-online-text' => $this->t('Listen online', [], $c),
       'loading-text' => $this->t('Loading', [], $c),
       'login-to-see-review-text' => $this->t('Log in to read the review', [], $c),
       'material-header-all-editions-text' => $this->t('All editions', [], $c),
       'material-header-author-by-text' => $this->t('By', [], $c),
+      // TODO: something is wrong with the use of plural here.
+      // It needs to be fixed in both dpl-react and dpl-cms.
+      'material-is-available-in-another-edition-text' => [
+        'type' => 'plural',
+        'text' => [
+          $this->t('Skip the queue - The material is available in another edition - @title @authorAndYear - reservations: @reservation', [], $c),
+          $this->t('Skip the queue - The material is available in another edition - @title @authorAndYear - reservations: @reservations', [], $c),
+        ],
+      ],
       'material-is-included-text' => $this->t('Material is included', [], $c),
       'material-is-loaned-out-text' => $this->t('Material is loaned out', [], $c),
       'material-reservation-info-text' => [
@@ -256,6 +266,19 @@ class DplReactAppsController extends ControllerBase {
       'one-month-text' => $this->t('1 month', [], $c),
       'one-year-text' => $this->t('1 year', [], $c),
       'online-limit-month-info-text' => $this->t('You have borrowed @count out of @limit possible e-books this month', [], $c),
+      'order-digital-copy-button-loading-text' => $this->t('Order digital copy button loading text', [], $c),
+      'order-digital-copy-button-text' => $this->t('Order digital copy', [], $c),
+      'order-digital-copy-description-text' => $this->t('Order digital copy description text', [], $c),
+      'order-digital-copy-email-label-text' => $this->t('Email', [], $c),
+      'order-digital-copy-error-button-text' => $this->t('Close', [], $c),
+      'order-digital-copy-error-description-text' => $this->t('An error occurred while ordering the digital copy. Please try again later.', [], $c),
+      'order-digital-copy-error-title-text' => $this->t('Error ordering digital copy', [], $c),
+      'order-digital-copy-modal-close-modal-aria-label-text' => $this->t('Close Order digital copy modal', [], $c),
+      'order-digital-copy-modal-screen-reader-modal-description-text' => $this->t('Modal for Order digital copy ', [], $c),
+      'order-digital-copy-success-button-text' => $this->t('Close', [], $c),
+      'order-digital-copy-success-description-text' => $this->t('The digital copy has been ordered. You will receive an email when the digital copy is ready.', [], $c),
+      'order-digital-copy-success-title-text' => $this->t('Digital copy ordered', [], $c),
+      'order-digital-copy-title-text' => $this->t('Order digital copy', [], $c),
       'original-title-text' => $this->t('Original title', [], $c),
       'out-of-text' => $this->t('out of', [], $c),
       'periodical-select-edition-text' => $this->t('Edition', [], $c),
@@ -282,6 +305,7 @@ class DplReactAppsController extends ControllerBase {
       'reserve-book-text' => $this->t('Reserve book', [], $c),
       'reserve-text' => $this->t('Reserve', [], $c),
       'reviews-text' => $this->t('Reviews', [], $c),
+      'save-button-text' => $this->t('Save', [], $c),
       'scope-text' => $this->t('Scope', [], $c),
       'see-online-text' => $this->t('See online', [], $c),
       'shift-text' => $this->t('Shift', [], $c),
