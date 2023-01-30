@@ -13,7 +13,7 @@ describe("User journey", () => {
       .should("include", "search?q=Harry%2520Potter");
   });
 
-  beforeEach(() => {
-    cy.resetMappings();
+  afterEach(() => {
+    cy.logMappingRequests();
   });
 });
