@@ -195,6 +195,7 @@ tasks:
 
   ci:cypress:
     desc: Run Cypress functional tests
+    deps: [ci:wiremock:create-mappings]
     cmds:
       - docker compose {{ .DOCKER_COMPOSE_FILES_CI }} run --rm node-chrome yarn install --frozen-lockfile
       - task dev:cli -- drush user:password $CYPRESS_DRUPAL_USERNAME $CYPRESS_DRUPAL_PASSWORD
@@ -205,6 +206,7 @@ tasks:
 
   ci:cypress:local:
     desc: Run Cypress functional tests locally
+    deps: [ci:wiremock:create-mappings]
     cmds:
       - yarn install --frozen-lockfile
       - task dev:cli -- drush user:password $CYPRESS_DRUPAL_USERNAME $CYPRESS_DRUPAL_PASSWORD
