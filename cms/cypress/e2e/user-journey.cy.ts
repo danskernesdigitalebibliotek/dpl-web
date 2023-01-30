@@ -1,13 +1,13 @@
 describe("User journey", () => {
   it("Shows search suggestions & redirects to search result page", () => {
     cy.visit("/")
-      .get(".header__menu-search-input")
+      .getBySel("search-header-input")
       .focus()
       .type("harry")
-      .get(".autosuggest")
+      .getBySel("autosuggest")
       .should("be.visible")
-      .get(".autosuggest__text")
-      .eq(0)
+      .getBySel("autosuggest-text-item")
+      .first()
       .click()
       .url()
       .should("include", "search?q=Harry%2520Potter");
