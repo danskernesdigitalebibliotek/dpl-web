@@ -23,6 +23,10 @@ Cypress.Commands.add("logMappingRequests", () => {
     wiremock()
       .mappings.getAllMappings()
       .then((mappings) => {
+        Cypress.log({
+          name: "Wiremock",
+          message: `Mappings: ${mappings.meta.total}`,
+        });
         mappings.mappings.forEach((stub) => {
           wiremock()
             .requests.getCount(stub.request)
@@ -34,7 +38,7 @@ Cypress.Commands.add("logMappingRequests", () => {
                 stub.request.urlPathPattern;
               Cypress.log({
                 name: "Wiremock",
-                message: `${stub.request.method}: ${requestUrlPath}: ${request.count} hit`,
+                message: `${stub.request.method}: ${requestUrlPath}: ${request.count} hit(s)`,
               });
             });
         });
