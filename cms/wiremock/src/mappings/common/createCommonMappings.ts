@@ -1,5 +1,5 @@
 import { Options } from "wiremock-rest-client/dist/model/options.model";
-import wiremock from "../../lib/general";
+import wiremock, { matchGraphqlQuery } from "../../lib/general";
 
 export default (baseUri?: string, options?: Options) => {
   // Mapping for covers.
@@ -78,5 +78,23 @@ export default (baseUri?: string, options?: Options) => {
       }
     });
   });
+
+    // Mapings for autosuggest
+    import("../search/data/fbi/autosugggest.json").then((json) => {
+      wiremock(baseUri, options).mappings.createMapping({
+        request: {
+          method: "POST",
+          url: "/opac/graphql",
+          bodyPatterns: [
+            {
+              matchesJsonPath: matchGraphqlQuery("suggestionsFromQueryString"),
+            },
+          ],
+        },
+        response: {
+          jsonBody: json.default
+        }
+      });
+    });
 
 };
