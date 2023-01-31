@@ -222,19 +222,7 @@ class DplReactAppsController extends ControllerBase {
       'login-to-see-review-text' => $this->t('Log in to read the review', [], $c),
       'material-header-all-editions-text' => $this->t('All editions', [], $c),
       'material-header-author-by-text' => $this->t('By', [], $c),
-<<<<<<< HEAD
-      // TODO: something is wrong with the use of plural here.
-=======
-      // @todo something is wrong with the use of plural here.
->>>>>>> 9ecac3d (Adding newest data props from dpl-react)
-      // It needs to be fixed in both dpl-react and dpl-cms.
-      'material-is-available-in-another-edition-text' => [
-        'type' => 'plural',
-        'text' => [
-          $this->t('Skip the queue - The material is available in another edition - @title @authorAndYear - reservations: @reservation', [], $c),
-          $this->t('Skip the queue - The material is available in another edition - @title @authorAndYear - reservations: @reservations', [], $c),
-        ],
-      ],
+      'material-is-available-in-another-edition-text' => $this->t('Skip the queue - The material is available in another edition - @title @authorAndYear - reservations: @reservations', [], $c),
       'material-is-included-text' => $this->t('Material is included', [], $c),
       'material-is-loaned-out-text' => $this->t('Material is loaned out', [], $c),
       'material-reservation-info-text' => [
@@ -278,11 +266,7 @@ class DplReactAppsController extends ControllerBase {
       'order-digital-copy-error-description-text' => $this->t('An error occurred while ordering the digital copy. Please try again later.', [], $c),
       'order-digital-copy-error-title-text' => $this->t('Error ordering digital copy', [], $c),
       'order-digital-copy-modal-close-modal-aria-label-text' => $this->t('Close Order digital copy modal', [], $c),
-<<<<<<< HEAD
-      'order-digital-copy-modal-screen-reader-modal-description-text' => $this->t('Modal for Order digital copy ', [], $c),
-=======
       'order-digital-copy-modal-screen-reader-modal-description-text' => $this->t('Modal for Order digital copy', [], $c),
->>>>>>> 9ecac3d (Adding newest data props from dpl-react)
       'order-digital-copy-success-button-text' => $this->t('Close', [], $c),
       'order-digital-copy-success-description-text' => $this->t('The digital copy has been ordered. You will receive an email when the digital copy is ready.', [], $c),
       'order-digital-copy-success-title-text' => $this->t('Digital copy ordered', [], $c),
