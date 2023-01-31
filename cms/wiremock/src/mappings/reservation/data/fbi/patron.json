@@ -1,0 +1,29 @@
+{
+	"authenticateStatus": "VALID",
+	"patron": {
+		"address": {
+			"coName": "",
+			"street": "Kongens Nytorv 34",
+			"postalCode": "1050",
+			"city": "København",
+			"country": "DK"
+		},
+		"allowBookings": false,
+		"birthday": "1999-01-01",
+		"blockStatus": null,
+		"defaultInterestPeriod": 180,
+		"emailAddress": "john.johnson@example.com",
+		"name": "John Johnson",
+		"notificationProtocols": [],
+		"onHold": null,
+		"patronId": 12345678,
+		"phoneNumber": "12345678",
+		"preferredLanguage": null,
+		"preferredPickupBranch": "DK-775100",
+		"receiveEmail": true,
+		"receivePostalMail": false,
+		"receiveSms": false,
+		"resident": false,
+		"secondaryAddress": null
+	}
+}

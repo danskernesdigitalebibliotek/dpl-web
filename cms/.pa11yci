@@ -24,6 +24,15 @@
       "url": "http://varnish:8080/work/work-of:870970-basis:25245784?type=bog",
       "timeout": 50000,
       "screenCapture": "/app/pa11y/screenshots/work-page.png"
+    },
+    {
+      "url": "http://varnish:8080/work/work-of:870970-basis:25245784?type=bog",
+      "timeout": 50000,
+      "screenCapture": "/app/pa11y/screenshots/reservation-modal.png",
+      "actions": [
+        "click element button[data-cy=\"material-header-buttons-physical\"",
+        "wait for element button[data-cy=\"reservation-modal-submit-button\"] to be visible"
+      ]
     }
   ]
 }

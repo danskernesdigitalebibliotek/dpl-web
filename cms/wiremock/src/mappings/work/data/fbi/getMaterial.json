@@ -2,607 +2,1418 @@
   "data": {
     "work": {
       "workId": "work-of:870970-basis:25245784",
-      "titles": { "full": ["Harry Potter og Fønixordenen"], "original": [] },
+      "titles": {
+        "full": [
+          "Harry Potter og Fønixordenen"
+        ],
+        "original": [
+          "Harry Potter and the Order of the Phoenix"
+        ]
+      },
       "abstract": [
-        "Fantasy. Da Harry Potter vender tilbage til Hogwarts er meget ændret. Man tror, at han lyver angående Voldemort, og ministeriet sender en repræsentant til skolen, der snart er delt i to fjendtlige lejre"
+        "Stor, flot og gennemillustreret udgave af bind 5 i \"Harry Potter\"-serien. Harry går stadig på kostskolen Hogwarts, men det bliver ikke et let år.  Bogen er meget velegnet til oplæsning for børn fra 8 år - og kan selvlæses fra 12 år"
       ],
-      "creators": [{ "display": "Joanne K. Rowling", "__typename": "Person" }],
-      "series": [
+      "creators": [
         {
-          "title": "Harry Potter og De Vises Sten.",
-          "isPopular": null,
-          "numberInSeries": { "display": "5", "number": [5] },
-          "readThisFirst": null,
-          "readThisWhenever": null
+          "display": "Joanne K. Rowling",
+          "__typename": "Person"
         }
       ],
+      "series": [],
       "seriesMembers": [
         {
           "workId": "work-of:870970-basis:22629344",
           "titles": {
-            "main": ["Harry Potter og de vises sten"],
-            "full": ["Harry Potter og de vises sten"],
-            "original": []
+            "main": [
+              "Harry Potter og de vises sten"
+            ],
+            "full": [
+              "Harry Potter og de vises sten"
+            ],
+            "original": [
+              "Harry Potter and the philosopher's stone"
+            ]
           }
         },
         {
           "workId": "work-of:870970-basis:22677780",
           "titles": {
-            "main": ["Harry Potter og Hemmelighedernes Kammer"],
-            "full": ["Harry Potter og Hemmelighedernes Kammer"],
-            "original": []
+            "main": [
+              "Harry Potter og Hemmelighedernes Kammer"
+            ],
+            "full": [
+              "Harry Potter og Hemmelighedernes Kammer"
+            ],
+            "original": [
+              "Harry Potter and the Chamber of Secrets"
+            ]
           }
         },
         {
           "workId": "work-of:870970-basis:22995154",
           "titles": {
-            "main": ["Harry Potter og fangen fra Azkaban"],
-            "full": ["Harry Potter og fangen fra Azkaban"],
-            "original": []
+            "main": [
+              "Harry Potter og fangen fra Azkaban"
+            ],
+            "full": [
+              "Harry Potter og fangen fra Azkaban"
+            ],
+            "original": [
+              "Harry Potter and the prisoner of Azkaban"
+            ]
           }
         },
         {
           "workId": "work-of:870970-basis:23540703",
           "titles": {
-            "main": ["Harry Potter og Flammernes Pokal"],
-            "full": ["Harry Potter og Flammernes Pokal"],
-            "original": []
+            "main": [
+              "Harry Potter og Flammernes Pokal"
+            ],
+            "full": [
+              "Harry Potter og Flammernes Pokal"
+            ],
+            "original": [
+              "Harry Potter and the goblet of fire"
+            ]
           }
         },
         {
           "workId": "work-of:870970-basis:25245784",
           "titles": {
-            "main": ["Harry Potter og Fønixordenen"],
-            "full": ["Harry Potter og Fønixordenen"],
-            "original": []
+            "main": [
+              "Harry Potter og Fønixordenen"
+            ],
+            "full": [
+              "Harry Potter og Fønixordenen"
+            ],
+            "original": [
+              "Harry Potter and the Order of the Phoenix"
+            ]
           }
         },
         {
           "workId": "work-of:870970-basis:25807995",
           "titles": {
-            "main": ["Harry Potter og halvblodsprinsen"],
-            "full": ["Harry Potter og halvblodsprinsen"],
-            "original": []
+            "main": [
+              "Harry Potter og halvblodsprinsen"
+            ],
+            "full": [
+              "Harry Potter og halvblodsprinsen"
+            ],
+            "original": [
+              "Harry Potter and the half-blood prince"
+            ]
           }
         },
         {
           "workId": "work-of:870970-basis:27267912",
           "titles": {
-            "main": ["Harry Potter og dødsregalierne"],
-            "full": ["Harry Potter og dødsregalierne"],
-            "original": []
+            "main": [
+              "Harry Potter og dødsregalierne"
+            ],
+            "full": [
+              "Harry Potter og dødsregalierne"
+            ],
+            "original": [
+              "Harry Potter and the deathly hallows"
+            ]
           }
         },
         {
           "workId": "work-of:870970-basis:52646251",
           "titles": {
-            "main": ["Harry Potter og det forbandede barn"],
-            "full": ["Harry Potter og det forbandede barn : del et & to"],
-            "original": ["Harry Potter and the cursed child"]
+            "main": [
+              "Harry Potter og det forbandede barn"
+            ],
+            "full": [
+              "Harry Potter og det forbandede barn : del et & to"
+            ],
+            "original": [
+              "Harry Potter and the cursed child"
+            ]
           }
         }
       ],
-      "genreAndForm": ["roman", "fantasy", "eventyrlige fortællinger"],
+      "workYear": {
+        "year": 2003
+      },
+      "genreAndForm": [
+        "roman",
+        "fantasy",
+        "eventyrlige fortællinger",
+        "romaner"
+      ],
       "manifestations": {
         "all": [
           {
             "pid": "870970-basis:134693959",
-            "genreAndForm": ["roman", "fantasy"],
-            "source": ["Bibliotekskatalog"],
+            "genreAndForm": [
+              "roman",
+              "fantasy",
+              "romaner"
+            ],
+            "source": [
+              "Bibliotekskatalog"
+            ],
             "titles": {
-              "main": ["Harry Potter og Fønixordenen (Ill. Jim Kay)"],
-              "original": ["Harry Potter and the Order of the Phoenix"]
+              "main": [
+                "Harry Potter og Fønixordenen (Ill. Jim Kay)"
+              ],
+              "original": [
+                "Harry Potter and the Order of the Phoenix"
+              ]
             },
             "fictionNonfiction": {
               "display": "skønlitteratur",
               "code": "FICTION"
             },
-            "materialTypes": [{ "specific": "bog" }],
+            "materialTypes": [
+              {
+                "specific": "bog"
+              }
+            ],
             "creators": [
-              { "display": "Joanne K. Rowling", "__typename": "Person" }
+              {
+                "display": "Joanne K. Rowling",
+                "__typename": "Person"
+              }
             ],
             "hostPublication": null,
-            "languages": { "main": [{ "display": "dansk" }] },
-            "identifiers": [{ "value": "9788702307566" }],
+            "languages": {
+              "main": [
+                {
+                  "display": "dansk"
+                }
+              ]
+            },
+            "identifiers": [
+              {
+                "value": "9788702307566"
+              }
+            ],
             "contributors": [
-              { "display": "Jim Kay" },
-              { "display": "Neil Packer" },
-              { "display": "Hanna Lützen" }
+              {
+                "display": "Jim Kay"
+              },
+              {
+                "display": "Neil Packer"
+              },
+              {
+                "display": "Hanna Lützen"
+              }
             ],
             "edition": {
               "summary": "Illustreret udgave, 7. udgave, 2022",
-              "publicationYear": { "display": "2022" }
+              "publicationYear": {
+                "display": "2022"
+              }
             },
-            "audience": { "generalAudience": [] },
-            "physicalDescriptions": [{ "numberOfPages": null }],
-            "accessTypes": [{ "code": "PHYSICAL" }],
-            "access": [
-              { "__typename": "InterLibraryLoan", "loanIsPossible": true }
+            "audience": {
+              "generalAudience": [
+                "Højtlæsning fra 8 år. Selvlæsning fra 12 år",
+                "for højtlæsning"
+              ]
+            },
+            "physicalDescriptions": [
+              {
+                "numberOfPages": 565
+              }
             ],
-            "shelfmark": null
+            "accessTypes": [
+              {
+                "code": "PHYSICAL"
+              }
+            ],
+            "access": [
+              {
+                "__typename": "InterLibraryLoan",
+                "loanIsPossible": true
+              }
+            ],
+            "shelfmark": {
+              "postfix": "Rowling",
+              "shelfmark": "83"
+            }
           },
           {
-            "pid": "870970-basis:24880605",
-            "genreAndForm": ["roman", "fantasy"],
-            "source": ["Bibliotekskatalog"],
+            "pid": "870970-basis:54871996",
+            "genreAndForm": [
+              "roman",
+              "fantasy"
+            ],
+            "source": [
+              "Bibliotekskatalog"
+            ],
             "titles": {
-              "main": ["Harry Potter og Fønixordenen"],
-              "original": ["Harry Potter and the Order of the Phoenix"]
+              "main": [
+                "Harry Potter og Fønixordenen"
+              ],
+              "original": [
+                "Harry Potter and the Order of the Phoenix"
+              ]
             },
             "fictionNonfiction": {
               "display": "skønlitteratur",
               "code": "FICTION"
             },
-            "materialTypes": [{ "specific": "bog" }],
+            "materialTypes": [
+              {
+                "specific": "bog"
+              }
+            ],
             "creators": [
-              { "display": "Joanne K. Rowling", "__typename": "Person" }
+              {
+                "display": "Joanne K. Rowling",
+                "__typename": "Person"
+              }
             ],
             "hostPublication": null,
-            "languages": { "main": [{ "display": "dansk" }] },
-            "identifiers": [{ "value": "87-02-02222-2" }],
-            "contributors": [],
-            "edition": {
-              "summary": "2003",
-              "publicationYear": { "display": "2003" }
+            "languages": {
+              "main": [
+                {
+                  "display": "dansk"
+                }
+              ]
             },
-            "audience": { "generalAudience": [] },
-            "physicalDescriptions": [{ "numberOfPages": null }],
-            "accessTypes": [{ "code": "PHYSICAL" }],
-            "access": [
-              { "__typename": "InterLibraryLoan", "loanIsPossible": true }
-            ],
-            "shelfmark": null
-          },
-          {
-            "pid": "870970-basis:24973670",
-            "genreAndForm": ["roman"],
-            "source": ["Bibliotekskatalog"],
-            "titles": {
-              "main": ["Harry Potter og Fønixordenen"],
-              "original": ["Harry Potter and the Order of the Phoenix"]
-            },
-            "fictionNonfiction": {
-              "display": "skønlitteratur",
-              "code": "FICTION"
-            },
-            "materialTypes": [{ "specific": "lydbog (bånd)" }],
-            "creators": [
-              { "display": "Joanne K. Rowling", "__typename": "Person" }
-            ],
-            "hostPublication": null,
-            "languages": { "main": [{ "display": "dansk" }] },
-            "identifiers": [{ "value": "Best.nr. 14948" }],
-            "contributors": [{ "display": "Mikkel Schou" }],
-            "edition": {
-              "summary": "2003",
-              "publicationYear": { "display": "2003" }
-            },
-            "audience": { "generalAudience": [] },
-            "physicalDescriptions": [{ "numberOfPages": null }],
-            "accessTypes": [{ "code": "PHYSICAL" }],
-            "access": [
-              { "__typename": "InterLibraryLoan", "loanIsPossible": true }
-            ],
-            "shelfmark": null
-          },
-          {
-            "pid": "870970-basis:25040007",
-            "genreAndForm": ["roman", "eventyrlige fortællinger"],
-            "source": ["Bibliotekskatalog"],
-            "titles": {
-              "main": ["Harry Potter og Fønixordenen"],
-              "original": ["Harry Potter and the Order of the Phoenix"]
-            },
-            "fictionNonfiction": {
-              "display": "skønlitteratur",
-              "code": "FICTION"
-            },
-            "materialTypes": [{ "specific": "diskette" }],
-            "creators": [
-              { "display": "Joanne K. Rowling", "__typename": "Person" }
-            ],
-            "hostPublication": null,
-            "languages": { "main": [{ "display": "dansk" }] },
             "identifiers": [
-              { "value": "Best.nr. ascii 503142" },
-              { "value": "Best.nr. html 603142" }
+              {
+                "value": "9788702272482"
+              }
             ],
-            "contributors": [],
+            "contributors": [
+              {
+                "display": "Hanna Lützen"
+              }
+            ],
             "edition": {
-              "summary": "2003",
-              "publicationYear": { "display": "2003" }
+              "summary": "6. udgave, 2018",
+              "publicationYear": {
+                "display": "2018"
+              }
             },
-            "audience": { "generalAudience": [] },
-            "physicalDescriptions": [{ "numberOfPages": null }],
-            "accessTypes": [{ "code": "PHYSICAL" }],
-            "access": [
-              { "__typename": "InterLibraryLoan", "loanIsPossible": true }
+            "audience": {
+              "generalAudience": []
+            },
+            "physicalDescriptions": [
+              {
+                "numberOfPages": 841
+              }
             ],
-            "shelfmark": null
+            "accessTypes": [
+              {
+                "code": "PHYSICAL"
+              }
+            ],
+            "access": [
+              {
+                "__typename": "InterLibraryLoan",
+                "loanIsPossible": true
+              }
+            ],
+            "shelfmark": {
+              "postfix": "Rowling",
+              "shelfmark": "83"
+            }
           },
           {
-            "pid": "870970-basis:25082427",
-            "genreAndForm": ["roman"],
-            "source": ["Bibliotekskatalog"],
+            "pid": "870970-basis:51980204",
+            "genreAndForm": [
+              "roman",
+              "fantasy"
+            ],
+            "source": [
+              "Bibliotekskatalog"
+            ],
             "titles": {
-              "main": ["Harry Potter og Fønixordenen"],
-              "original": ["Harry Potter and the Order of the Phoenix"]
+              "main": [
+                "Harry Potter og Fønixordenen"
+              ],
+              "original": [
+                "Harry Potter and the Order of the Phoenix"
+              ]
             },
             "fictionNonfiction": {
               "display": "skønlitteratur",
               "code": "FICTION"
             },
-            "materialTypes": [{ "specific": "bog" }],
+            "materialTypes": [
+              {
+                "specific": "bog"
+              }
+            ],
             "creators": [
-              { "display": "Joanne K. Rowling", "__typename": "Person" }
+              {
+                "display": "Joanne K. Rowling",
+                "__typename": "Person"
+              }
             ],
             "hostPublication": null,
-            "languages": { "main": [{ "display": "dansk" }] },
-            "identifiers": [{ "value": "87-03-00004-4" }],
-            "contributors": [],
-            "edition": {
-              "summary": "1. bogklubudgave, 2004",
-              "publicationYear": { "display": "2004" }
+            "languages": {
+              "main": [
+                {
+                  "display": "dansk"
+                }
+              ]
             },
-            "audience": { "generalAudience": [] },
-            "physicalDescriptions": [{ "numberOfPages": null }],
-            "accessTypes": [{ "code": "PHYSICAL" }],
-            "access": [
-              { "__typename": "InterLibraryLoan", "loanIsPossible": true }
-            ],
-            "shelfmark": null
-          },
-          {
-            "pid": "870970-basis:25096517",
-            "genreAndForm": ["roman"],
-            "source": ["Bibliotekskatalog"],
-            "titles": {
-              "main": ["Harry Potter og Fønixordenen"],
-              "original": ["Harry Potter and the Order of the Phoenix"]
-            },
-            "fictionNonfiction": {
-              "display": "skønlitteratur",
-              "code": "FICTION"
-            },
-            "materialTypes": [{ "specific": "punktskrift" }],
-            "creators": [
-              { "display": "Joanne K. Rowling", "__typename": "Person" }
-            ],
-            "hostPublication": null,
-            "languages": { "main": [{ "display": "dansk" }] },
-            "identifiers": [{ "value": "Best.nr. 103081" }],
-            "contributors": [],
-            "edition": {
-              "summary": "2003",
-              "publicationYear": { "display": "2003" }
-            },
-            "audience": { "generalAudience": [] },
-            "physicalDescriptions": [{ "numberOfPages": null }],
-            "accessTypes": [{ "code": "PHYSICAL" }],
-            "access": [
-              { "__typename": "InterLibraryLoan", "loanIsPossible": true }
-            ],
-            "shelfmark": null
-          },
-          {
-            "pid": "870970-basis:25245784",
-            "genreAndForm": ["roman", "fantasy"],
-            "source": ["Bibliotekskatalog"],
-            "titles": {
-              "main": ["Harry Potter og Fønixordenen"],
-              "original": ["Harry Potter and the Order of the Phoenix"]
-            },
-            "fictionNonfiction": {
-              "display": "skønlitteratur",
-              "code": "FICTION"
-            },
-            "materialTypes": [{ "specific": "bog" }],
-            "creators": [
-              { "display": "Joanne K. Rowling", "__typename": "Person" }
-            ],
-            "hostPublication": null,
-            "languages": { "main": [{ "display": "dansk" }] },
             "identifiers": [
-              { "value": "9788702029444" },
-              { "value": "87-02-02944-8" }
+              {
+                "value": "9788702173260"
+              }
             ],
-            "contributors": [],
+            "contributors": [
+              {
+                "display": "Hanna Lützen"
+              }
+            ],
             "edition": {
-              "summary": "2. udgave, 2004",
-              "publicationYear": { "display": "2004" }
+              "summary": "5. udgave, 2015",
+              "publicationYear": {
+                "display": "2015"
+              }
             },
-            "audience": { "generalAudience": [] },
-            "physicalDescriptions": [{ "numberOfPages": null }],
-            "accessTypes": [{ "code": "PHYSICAL" }],
-            "access": [
-              { "__typename": "InterLibraryLoan", "loanIsPossible": true }
+            "audience": {
+              "generalAudience": []
+            },
+            "physicalDescriptions": [
+              {
+                "numberOfPages": 841
+              }
             ],
-            "shelfmark": null
+            "accessTypes": [
+              {
+                "code": "PHYSICAL"
+              }
+            ],
+            "access": [
+              {
+                "__typename": "InterLibraryLoan",
+                "loanIsPossible": true
+              }
+            ],
+            "shelfmark": {
+              "postfix": "Rowling",
+              "shelfmark": "83"
+            }
           },
           {
-            "pid": "870970-basis:26167663",
-            "genreAndForm": ["roman"],
-            "source": ["Bibliotekskatalog"],
+            "pid": "870970-basis:29368872",
+            "genreAndForm": [
+              "roman",
+              "fantasy"
+            ],
+            "source": [
+              "Bibliotekskatalog"
+            ],
             "titles": {
-              "main": ["Harry Potter og Fønixordenen"],
-              "original": ["Harry Potter and the Order of the Phoenix"]
+              "main": [
+                "Harry Potter og Fønixordenen"
+              ],
+              "original": [
+                "Harry Potter and the Order of the Phoenix"
+              ]
             },
             "fictionNonfiction": {
               "display": "skønlitteratur",
               "code": "FICTION"
             },
-            "materialTypes": [{ "specific": "lydbog (cd)" }],
+            "materialTypes": [
+              {
+                "specific": "bog"
+              }
+            ],
             "creators": [
-              { "display": "Joanne K. Rowling", "__typename": "Person" }
+              {
+                "display": "Joanne K. Rowling",
+                "__typename": "Person"
+              }
             ],
             "hostPublication": null,
-            "languages": { "main": [{ "display": "dansk" }] },
-            "identifiers": [{ "value": "87-02-04746-2" }],
-            "contributors": [{ "display": "Jesper Christensen (f. 1948)" }],
-            "edition": {
-              "summary": "2006",
-              "publicationYear": { "display": "2006" }
+            "languages": {
+              "main": [
+                {
+                  "display": "dansk"
+                }
+              ]
             },
-            "audience": { "generalAudience": [] },
-            "physicalDescriptions": [{ "numberOfPages": null }],
-            "accessTypes": [{ "code": "PHYSICAL" }],
-            "access": [
-              { "__typename": "InterLibraryLoan", "loanIsPossible": true }
+            "identifiers": [
+              {
+                "value": "9788702114393"
+              }
             ],
-            "shelfmark": null
+            "contributors": [
+              {
+                "display": "Hanna Lützen"
+              }
+            ],
+            "edition": {
+              "summary": "4. udgave, 2012",
+              "publicationYear": {
+                "display": "2012"
+              }
+            },
+            "audience": {
+              "generalAudience": []
+            },
+            "physicalDescriptions": [
+              {
+                "numberOfPages": 923
+              }
+            ],
+            "accessTypes": [
+              {
+                "code": "PHYSICAL"
+              }
+            ],
+            "access": [
+              {
+                "__typename": "InterLibraryLoan",
+                "loanIsPossible": true
+              }
+            ],
+            "shelfmark": {
+              "postfix": "Rowling",
+              "shelfmark": "83"
+            }
           },
           {
             "pid": "870970-basis:26470498",
-            "genreAndForm": ["roman"],
-            "source": ["Bibliotekskatalog"],
+            "genreAndForm": [
+              "roman"
+            ],
+            "source": [
+              "Bibliotekskatalog"
+            ],
             "titles": {
-              "main": ["Harry Potter og Fønixordenen"],
-              "original": ["Harry Potter and the Order of the Phoenix"]
+              "main": [
+                "Harry Potter og Fønixordenen"
+              ],
+              "original": [
+                "Harry Potter and the Order of the Phoenix"
+              ]
             },
             "fictionNonfiction": {
               "display": "skønlitteratur",
               "code": "FICTION"
             },
-            "materialTypes": [{ "specific": "bog" }],
+            "materialTypes": [
+              {
+                "specific": "bog"
+              }
+            ],
             "creators": [
-              { "display": "Joanne K. Rowling", "__typename": "Person" }
+              {
+                "display": "Joanne K. Rowling",
+                "__typename": "Person"
+              }
             ],
             "hostPublication": null,
-            "languages": { "main": [{ "display": "dansk" }] },
+            "languages": {
+              "main": [
+                {
+                  "display": "dansk"
+                }
+              ]
+            },
             "identifiers": [
-              { "value": "9788703014807" },
-              { "value": "87-03-01480-0" }
+              {
+                "value": "9788703014807"
+              },
+              {
+                "value": "87-03-01480-0"
+              }
             ],
             "contributors": [],
             "edition": {
               "summary": "2. bogklubudgave, 2006",
-              "publicationYear": { "display": "2006" }
+              "publicationYear": {
+                "display": "2006"
+              }
             },
-            "audience": { "generalAudience": [] },
-            "physicalDescriptions": [{ "numberOfPages": null }],
-            "accessTypes": [{ "code": "PHYSICAL" }],
-            "access": [
-              { "__typename": "InterLibraryLoan", "loanIsPossible": true }
+            "audience": {
+              "generalAudience": []
+            },
+            "physicalDescriptions": [
+              {
+                "numberOfPages": 923
+              }
             ],
-            "shelfmark": null
+            "accessTypes": [
+              {
+                "code": "PHYSICAL"
+              }
+            ],
+            "access": [
+              {
+                "__typename": "InterLibraryLoan",
+                "loanIsPossible": true
+              }
+            ],
+            "shelfmark": {
+              "postfix": "Rowling",
+              "shelfmark": "83"
+            }
+          },
+          {
+            "pid": "870970-basis:25245784",
+            "genreAndForm": [
+              "roman",
+              "fantasy"
+            ],
+            "source": [
+              "Bibliotekskatalog"
+            ],
+            "titles": {
+              "main": [
+                "Harry Potter og Fønixordenen"
+              ],
+              "original": [
+                "Harry Potter and the Order of the Phoenix"
+              ]
+            },
+            "fictionNonfiction": {
+              "display": "skønlitteratur",
+              "code": "FICTION"
+            },
+            "materialTypes": [
+              {
+                "specific": "bog"
+              }
+            ],
+            "creators": [
+              {
+                "display": "Joanne K. Rowling",
+                "__typename": "Person"
+              }
+            ],
+            "hostPublication": null,
+            "languages": {
+              "main": [
+                {
+                  "display": "dansk"
+                }
+              ]
+            },
+            "identifiers": [
+              {
+                "value": "9788702029444"
+              },
+              {
+                "value": "87-02-02944-8"
+              }
+            ],
+            "contributors": [],
+            "edition": {
+              "summary": "2. udgave, 2004",
+              "publicationYear": {
+                "display": "2004"
+              }
+            },
+            "audience": {
+              "generalAudience": []
+            },
+            "physicalDescriptions": [
+              {
+                "numberOfPages": 923
+              }
+            ],
+            "accessTypes": [
+              {
+                "code": "PHYSICAL"
+              }
+            ],
+            "access": [
+              {
+                "__typename": "InterLibraryLoan",
+                "loanIsPossible": true
+              }
+            ],
+            "shelfmark": {
+              "postfix": "Rowling",
+              "shelfmark": "83"
+            }
+          },
+          {
+            "pid": "870970-basis:25082427",
+            "genreAndForm": [
+              "roman"
+            ],
+            "source": [
+              "Bibliotekskatalog"
+            ],
+            "titles": {
+              "main": [
+                "Harry Potter og Fønixordenen"
+              ],
+              "original": [
+                "Harry Potter and the Order of the Phoenix"
+              ]
+            },
+            "fictionNonfiction": {
+              "display": "skønlitteratur",
+              "code": "FICTION"
+            },
+            "materialTypes": [
+              {
+                "specific": "bog"
+              }
+            ],
+            "creators": [
+              {
+                "display": "Joanne K. Rowling",
+                "__typename": "Person"
+              }
+            ],
+            "hostPublication": null,
+            "languages": {
+              "main": [
+                {
+                  "display": "dansk"
+                }
+              ]
+            },
+            "identifiers": [
+              {
+                "value": "87-03-00004-4"
+              }
+            ],
+            "contributors": [],
+            "edition": {
+              "summary": "1. bogklubudgave, 2004",
+              "publicationYear": {
+                "display": "2004"
+              }
+            },
+            "audience": {
+              "generalAudience": []
+            },
+            "physicalDescriptions": [
+              {
+                "numberOfPages": 923
+              }
+            ],
+            "accessTypes": [
+              {
+                "code": "PHYSICAL"
+              }
+            ],
+            "access": [
+              {
+                "__typename": "InterLibraryLoan",
+                "loanIsPossible": true
+              }
+            ],
+            "shelfmark": {
+              "postfix": "Rowling",
+              "shelfmark": "83"
+            }
+          },
+          {
+            "pid": "870970-basis:24880605",
+            "genreAndForm": [
+              "roman",
+              "fantasy"
+            ],
+            "source": [
+              "Bibliotekskatalog"
+            ],
+            "titles": {
+              "main": [
+                "Harry Potter og Fønixordenen"
+              ],
+              "original": [
+                "Harry Potter and the Order of the Phoenix"
+              ]
+            },
+            "fictionNonfiction": {
+              "display": "skønlitteratur",
+              "code": "FICTION"
+            },
+            "materialTypes": [
+              {
+                "specific": "bog"
+              }
+            ],
+            "creators": [
+              {
+                "display": "Joanne K. Rowling",
+                "__typename": "Person"
+              }
+            ],
+            "hostPublication": null,
+            "languages": {
+              "main": [
+                {
+                  "display": "dansk"
+                }
+              ]
+            },
+            "identifiers": [
+              {
+                "value": "87-02-02222-2"
+              }
+            ],
+            "contributors": [],
+            "edition": {
+              "summary": "2003",
+              "publicationYear": {
+                "display": "2003"
+              }
+            },
+            "audience": {
+              "generalAudience": []
+            },
+            "physicalDescriptions": [
+              {
+                "numberOfPages": 923
+              }
+            ],
+            "accessTypes": [
+              {
+                "code": "PHYSICAL"
+              }
+            ],
+            "access": [
+              {
+                "__typename": "InterLibraryLoan",
+                "loanIsPossible": true
+              }
+            ],
+            "shelfmark": {
+              "postfix": "Rowling",
+              "shelfmark": "83"
+            }
           },
           {
             "pid": "870970-basis:27639534",
-            "genreAndForm": ["roman"],
-            "source": ["Bibliotekskatalog"],
+            "genreAndForm": [
+              "roman"
+            ],
+            "source": [
+              "Bibliotekskatalog"
+            ],
             "titles": {
-              "main": ["Harry Potter og Fønixordenen (mp3)"],
-              "original": ["Harry Potter and the Order of the Phoenix"]
+              "main": [
+                "Harry Potter og Fønixordenen (mp3)"
+              ],
+              "original": [
+                "Harry Potter and the Order of the Phoenix"
+              ]
             },
             "fictionNonfiction": {
               "display": "skønlitteratur",
               "code": "FICTION"
             },
-            "materialTypes": [{ "specific": "lydbog (cd-mp3)" }],
+            "materialTypes": [
+              {
+                "specific": "lydbog (cd-mp3)"
+              }
+            ],
             "creators": [
-              { "display": "Joanne K. Rowling", "__typename": "Person" }
+              {
+                "display": "Joanne K. Rowling",
+                "__typename": "Person"
+              }
             ],
             "hostPublication": null,
-            "languages": { "main": [{ "display": "dansk" }] },
-            "identifiers": [{ "value": "9788702075427" }],
-            "contributors": [{ "display": "Jesper Christensen (f. 1948)" }],
+            "languages": {
+              "main": [
+                {
+                  "display": "dansk"
+                }
+              ]
+            },
+            "identifiers": [
+              {
+                "value": "9788702075427"
+              }
+            ],
+            "contributors": [
+              {
+                "display": "Jesper Christensen (f. 1948)"
+              }
+            ],
             "edition": {
               "summary": "2009",
-              "publicationYear": { "display": "2009" }
+              "publicationYear": {
+                "display": "2009"
+              }
             },
-            "audience": { "generalAudience": [] },
-            "physicalDescriptions": [{ "numberOfPages": null }],
-            "accessTypes": [{ "code": "PHYSICAL" }],
-            "access": [
-              { "__typename": "InterLibraryLoan", "loanIsPossible": true }
+            "audience": {
+              "generalAudience": []
+            },
+            "physicalDescriptions": [
+              {
+                "numberOfPages": null
+              }
             ],
-            "shelfmark": null
+            "accessTypes": [
+              {
+                "code": "PHYSICAL"
+              }
+            ],
+            "access": [
+              {
+                "__typename": "InterLibraryLoan",
+                "loanIsPossible": true
+              }
+            ],
+            "shelfmark": {
+              "postfix": "Rowling",
+              "shelfmark": "83"
+            }
           },
           {
-            "pid": "870970-basis:29368872",
-            "genreAndForm": ["roman", "fantasy"],
-            "source": ["Bibliotekskatalog"],
+            "pid": "870970-basis:26167663",
+            "genreAndForm": [
+              "roman"
+            ],
+            "source": [
+              "Bibliotekskatalog"
+            ],
             "titles": {
-              "main": ["Harry Potter og Fønixordenen"],
-              "original": ["Harry Potter and the Order of the Phoenix"]
+              "main": [
+                "Harry Potter og Fønixordenen"
+              ],
+              "original": [
+                "Harry Potter and the Order of the Phoenix"
+              ]
             },
             "fictionNonfiction": {
               "display": "skønlitteratur",
               "code": "FICTION"
             },
-            "materialTypes": [{ "specific": "bog" }],
+            "materialTypes": [
+              {
+                "specific": "lydbog (cd)"
+              }
+            ],
             "creators": [
-              { "display": "Joanne K. Rowling", "__typename": "Person" }
+              {
+                "display": "Joanne K. Rowling",
+                "__typename": "Person"
+              }
             ],
             "hostPublication": null,
-            "languages": { "main": [{ "display": "dansk" }] },
-            "identifiers": [{ "value": "9788702114393" }],
-            "contributors": [{ "display": "Hanna Lützen" }],
-            "edition": {
-              "summary": "4. udgave, 2012",
-              "publicationYear": { "display": "2012" }
+            "languages": {
+              "main": [
+                {
+                  "display": "dansk"
+                }
+              ]
             },
-            "audience": { "generalAudience": [] },
-            "physicalDescriptions": [{ "numberOfPages": null }],
-            "accessTypes": [{ "code": "PHYSICAL" }],
-            "access": [
-              { "__typename": "InterLibraryLoan", "loanIsPossible": true }
+            "identifiers": [
+              {
+                "value": "87-02-04746-2"
+              }
             ],
-            "shelfmark": null
+            "contributors": [
+              {
+                "display": "Jesper Christensen (f. 1948)"
+              }
+            ],
+            "edition": {
+              "summary": "2006",
+              "publicationYear": {
+                "display": "2006"
+              }
+            },
+            "audience": {
+              "generalAudience": []
+            },
+            "physicalDescriptions": [
+              {
+                "numberOfPages": null
+              }
+            ],
+            "accessTypes": [
+              {
+                "code": "PHYSICAL"
+              }
+            ],
+            "access": [
+              {
+                "__typename": "InterLibraryLoan",
+                "loanIsPossible": true
+              }
+            ],
+            "shelfmark": {
+              "postfix": "Rowling",
+              "shelfmark": "83"
+            }
           },
           {
-            "pid": "870970-basis:51980204",
-            "genreAndForm": ["roman", "fantasy"],
-            "source": ["Bibliotekskatalog"],
+            "pid": "870970-basis:25096517",
+            "genreAndForm": [
+              "roman"
+            ],
+            "source": [
+              "Bibliotekskatalog"
+            ],
             "titles": {
-              "main": ["Harry Potter og Fønixordenen"],
-              "original": ["Harry Potter and the Order of the Phoenix"]
+              "main": [
+                "Harry Potter og Fønixordenen"
+              ],
+              "original": [
+                "Harry Potter and the Order of the Phoenix"
+              ]
             },
             "fictionNonfiction": {
               "display": "skønlitteratur",
               "code": "FICTION"
             },
-            "materialTypes": [{ "specific": "bog" }],
+            "materialTypes": [
+              {
+                "specific": "punktskrift"
+              }
+            ],
             "creators": [
-              { "display": "Joanne K. Rowling", "__typename": "Person" }
+              {
+                "display": "Joanne K. Rowling",
+                "__typename": "Person"
+              }
             ],
             "hostPublication": null,
-            "languages": { "main": [{ "display": "dansk" }] },
-            "identifiers": [{ "value": "9788702173260" }],
-            "contributors": [{ "display": "Hanna Lützen" }],
-            "edition": {
-              "summary": "5. udgave, 2015",
-              "publicationYear": { "display": "2015" }
+            "languages": {
+              "main": [
+                {
+                  "display": "dansk"
+                }
+              ]
             },
-            "audience": { "generalAudience": [] },
-            "physicalDescriptions": [{ "numberOfPages": null }],
-            "accessTypes": [{ "code": "PHYSICAL" }],
-            "access": [
-              { "__typename": "InterLibraryLoan", "loanIsPossible": true }
+            "identifiers": [
+              {
+                "value": "Best.nr. 103081"
+              }
             ],
-            "shelfmark": null
+            "contributors": [],
+            "edition": {
+              "summary": "2003",
+              "publicationYear": {
+                "display": "2003"
+              }
+            },
+            "audience": {
+              "generalAudience": []
+            },
+            "physicalDescriptions": [
+              {
+                "numberOfPages": 21
+              }
+            ],
+            "accessTypes": [
+              {
+                "code": "PHYSICAL"
+              }
+            ],
+            "access": [
+              {
+                "__typename": "InterLibraryLoan",
+                "loanIsPossible": true
+              }
+            ],
+            "shelfmark": {
+              "postfix": "Rowling",
+              "shelfmark": "83"
+            }
           },
           {
-            "pid": "870970-basis:54871996",
-            "genreAndForm": ["roman", "fantasy"],
-            "source": ["Bibliotekskatalog"],
+            "pid": "870970-basis:25040007",
+            "genreAndForm": [
+              "roman",
+              "eventyrlige fortællinger"
+            ],
+            "source": [
+              "Bibliotekskatalog"
+            ],
             "titles": {
-              "main": ["Harry Potter og Fønixordenen"],
-              "original": ["Harry Potter and the Order of the Phoenix"]
+              "main": [
+                "Harry Potter og Fønixordenen"
+              ],
+              "original": [
+                "Harry Potter and the Order of the Phoenix"
+              ]
             },
             "fictionNonfiction": {
               "display": "skønlitteratur",
               "code": "FICTION"
             },
-            "materialTypes": [{ "specific": "bog" }],
+            "materialTypes": [
+              {
+                "specific": "diskette"
+              }
+            ],
             "creators": [
-              { "display": "Joanne K. Rowling", "__typename": "Person" }
+              {
+                "display": "Joanne K. Rowling",
+                "__typename": "Person"
+              }
             ],
             "hostPublication": null,
-            "languages": { "main": [{ "display": "dansk" }] },
-            "identifiers": [{ "value": "9788702272482" }],
-            "contributors": [{ "display": "Hanna Lützen" }],
-            "edition": {
-              "summary": "6. udgave, 2018",
-              "publicationYear": { "display": "2018" }
+            "languages": {
+              "main": [
+                {
+                  "display": "dansk"
+                }
+              ]
             },
-            "audience": { "generalAudience": [] },
-            "physicalDescriptions": [{ "numberOfPages": null }],
-            "accessTypes": [{ "code": "PHYSICAL" }],
-            "access": [
-              { "__typename": "InterLibraryLoan", "loanIsPossible": true }
+            "identifiers": [
+              {
+                "value": "Best.nr. ascii 503142"
+              },
+              {
+                "value": "Best.nr. html 603142"
+              }
             ],
-            "shelfmark": null
+            "contributors": [],
+            "edition": {
+              "summary": "2003",
+              "publicationYear": {
+                "display": "2003"
+              }
+            },
+            "audience": {
+              "generalAudience": []
+            },
+            "physicalDescriptions": [
+              {
+                "numberOfPages": null
+              }
+            ],
+            "accessTypes": [
+              {
+                "code": "PHYSICAL"
+              }
+            ],
+            "access": [
+              {
+                "__typename": "InterLibraryLoan",
+                "loanIsPossible": true
+              }
+            ],
+            "shelfmark": {
+              "postfix": "Rowling",
+              "shelfmark": "83"
+            }
+          },
+          {
+            "pid": "870970-basis:24973670",
+            "genreAndForm": [
+              "roman"
+            ],
+            "source": [
+              "Bibliotekskatalog"
+            ],
+            "titles": {
+              "main": [
+                "Harry Potter og Fønixordenen"
+              ],
+              "original": [
+                "Harry Potter and the Order of the Phoenix"
+              ]
+            },
+            "fictionNonfiction": {
+              "display": "skønlitteratur",
+              "code": "FICTION"
+            },
+            "materialTypes": [
+              {
+                "specific": "lydbog (bånd)"
+              }
+            ],
+            "creators": [
+              {
+                "display": "Joanne K. Rowling",
+                "__typename": "Person"
+              }
+            ],
+            "hostPublication": null,
+            "languages": {
+              "main": [
+                {
+                  "display": "dansk"
+                }
+              ]
+            },
+            "identifiers": [
+              {
+                "value": "Best.nr. 14948"
+              }
+            ],
+            "contributors": [
+              {
+                "display": "Mikkel Schou"
+              },
+              {
+                "display": "Mikkel Schou"
+              }
+            ],
+            "edition": {
+              "summary": "2003",
+              "publicationYear": {
+                "display": "2003"
+              }
+            },
+            "audience": {
+              "generalAudience": []
+            },
+            "physicalDescriptions": [
+              {
+                "numberOfPages": null
+              }
+            ],
+            "accessTypes": [
+              {
+                "code": "PHYSICAL"
+              }
+            ],
+            "access": [
+              {
+                "__typename": "InterLibraryLoan",
+                "loanIsPossible": true
+              }
+            ],
+            "shelfmark": {
+              "postfix": "Rowling",
+              "shelfmark": "83"
+            }
           }
         ],
         "latest": {
           "pid": "870970-basis:134693959",
-          "genreAndForm": ["roman", "fantasy"],
-          "source": ["Bibliotekskatalog"],
+          "genreAndForm": [
+            "roman",
+            "fantasy",
+            "romaner"
+          ],
+          "source": [
+            "Bibliotekskatalog"
+          ],
           "titles": {
-            "main": ["Harry Potter og Fønixordenen (Ill. Jim Kay)"],
-            "original": ["Harry Potter and the Order of the Phoenix"]
+            "main": [
+              "Harry Potter og Fønixordenen (Ill. Jim Kay)"
+            ],
+            "original": [
+              "Harry Potter and the Order of the Phoenix"
+            ]
           },
           "fictionNonfiction": {
             "display": "skønlitteratur",
             "code": "FICTION"
           },
-          "materialTypes": [{ "specific": "bog" }],
+          "materialTypes": [
+            {
+              "specific": "bog"
+            }
+          ],
           "creators": [
-            { "display": "Joanne K. Rowling", "__typename": "Person" }
+            {
+              "display": "Joanne K. Rowling",
+              "__typename": "Person"
+            }
           ],
           "hostPublication": null,
-          "languages": { "main": [{ "display": "dansk" }] },
-          "identifiers": [{ "value": "9788702307566" }],
+          "languages": {
+            "main": [
+              {
+                "display": "dansk"
+              }
+            ]
+          },
+          "identifiers": [
+            {
+              "value": "9788702307566"
+            }
+          ],
           "contributors": [
-            { "display": "Jim Kay" },
-            { "display": "Neil Packer" },
-            { "display": "Hanna Lützen" }
+            {
+              "display": "Jim Kay"
+            },
+            {
+              "display": "Neil Packer"
+            },
+            {
+              "display": "Hanna Lützen"
+            }
           ],
           "edition": {
             "summary": "Illustreret udgave, 7. udgave, 2022",
-            "publicationYear": { "display": "2022" }
+            "publicationYear": {
+              "display": "2022"
+            }
           },
-          "audience": { "generalAudience": [] },
-          "physicalDescriptions": [{ "numberOfPages": null }],
-          "accessTypes": [{ "code": "PHYSICAL" }],
-          "access": [
-            { "__typename": "InterLibraryLoan", "loanIsPossible": true }
+          "audience": {
+            "generalAudience": [
+              "Højtlæsning fra 8 år. Selvlæsning fra 12 år",
+              "for højtlæsning"
+            ]
+          },
+          "physicalDescriptions": [
+            {
+              "numberOfPages": 565
+            }
           ],
-          "shelfmark": null
+          "accessTypes": [
+            {
+              "code": "PHYSICAL"
+            }
+          ],
+          "access": [
+            {
+              "__typename": "InterLibraryLoan",
+              "loanIsPossible": true
+            }
+          ],
+          "shelfmark": {
+            "postfix": "Rowling",
+            "shelfmark": "83"
+          }
         }
       },
       "materialTypes": [
-        { "specific": "lydbog (bånd)" },
-        { "specific": "bog" },
-        { "specific": "diskette" },
-        { "specific": "punktskrift" },
-        { "specific": "lydbog (cd)" },
-        { "specific": "lydbog (net)" },
-        { "specific": "ebog" },
-        { "specific": "lydbog (cd-mp3)" }
+        {
+          "specific": "bog"
+        },
+        {
+          "specific": "lydbog (cd)"
+        },
+        {
+          "specific": "punktskrift"
+        },
+        {
+          "specific": "diskette"
+        },
+        {
+          "specific": "lydbog (bånd)"
+        },
+        {
+          "specific": "lydbog (cd-mp3)"
+        }
       ],
-      "mainLanguages": [{ "display": "dansk", "isoCode": "dan" }],
+      "mainLanguages": [
+        {
+          "display": "dansk",
+          "isoCode": "dan"
+        }
+      ],
       "subjects": {
         "all": [
-          { "display": "troldmænd" },
-          { "display": "magi" },
-          { "display": "Harry Potter" },
-          { "display": "Ron Weasley" },
-          { "display": "Hermione Granger" },
-          { "display": "Børnebøger" },
-          { "display": "fantasy" },
-          { "display": "for 12 år" },
-          { "display": "for 13 år" },
-          { "display": "for 14 år" },
-          { "display": "for 15 år" },
-          { "display": "for 16 år" },
-          { "display": "Fantasy" },
-          { "display": "Seriebog" },
-          { "display": "for børn" },
-          { "display": "romaner" },
-          { "display": "Anbefales: 6. klasse" },
-          { "display": "eventyrlige fortællinger" },
-          { "display": "Fantasi" },
-          { "display": "gandakallar" },
-          { "display": "gandur" },
-          { "display": "fant" },
-          { "display": "bø" },
-          { "display": "4.- 7.kl" },
-          { "display": "Del af serie" },
-          { "display": "Magi" },
-          { "display": "Trolde" },
-          { "display": "Hekse" },
-          { "display": "Fantasia" },
-          { "display": "Fantastiske fortællinger" },
-          { "display": "Spændende bøger" },
-          { "display": "Fantacy" },
-          { "display": "Fantastiske fortæll" },
-          { "display": "Frilæs/5.-7. kl" },
-          { "display": "Frilæs/6.-10. kl" },
-          { "display": "Eventyrlige fortællinger" },
-          { "display": "Troldmænd" },
-          { "display": "MP3" }
+          {
+            "display": "eventyrlige fortællinger"
+          },
+          {
+            "display": "troldmænd"
+          },
+          {
+            "display": "magi"
+          },
+          {
+            "display": "Harry Potter"
+          },
+          {
+            "display": "Ron Weasley"
+          },
+          {
+            "display": "Hermione Granger"
+          },
+          {
+            "display": "Fantasy"
+          },
+          {
+            "display": "Seriebog"
+          },
+          {
+            "display": "for børn"
+          },
+          {
+            "display": "romaner"
+          },
+          {
+            "display": "Anbefales: 6. klasse"
+          },
+          {
+            "display": "Fantasi"
+          },
+          {
+            "display": "fantasy"
+          },
+          {
+            "display": "gandakallar"
+          },
+          {
+            "display": "gandur"
+          },
+          {
+            "display": "Børnebøger"
+          },
+          {
+            "display": "Magi"
+          },
+          {
+            "display": "MP3"
+          },
+          {
+            "display": "4.- 7.kl"
+          },
+          {
+            "display": "Del af serie"
+          },
+          {
+            "display": "Trolde"
+          },
+          {
+            "display": "Hekse"
+          },
+          {
+            "display": "Fantasia"
+          },
+          {
+            "display": "Fantastiske fortællinger"
+          },
+          {
+            "display": "Spændende bøger"
+          },
+          {
+            "display": "Fantacy"
+          },
+          {
+            "display": "Fantastiske fortæll"
+          },
+          {
+            "display": "Frilæs/5.-7. kl"
+          },
+          {
+            "display": "Frilæs/6.-10. kl"
+          },
+          {
+            "display": "Eventyrlige fortællinger"
+          },
+          {
+            "display": "Troldmænd"
+          },
+          {
+            "display": "for 12 år"
+          },
+          {
+            "display": "for 13 år"
+          },
+          {
+            "display": "for 14 år"
+          },
+          {
+            "display": "for 15 år"
+          },
+          {
+            "display": "for 16 år"
+          },
+          {
+            "display": "kostskoler"
+          },
+          {
+            "display": "fant"
+          },
+          {
+            "display": "bø"
+          }
         ]
       },
       "reviews": [
@@ -659,9 +1470,13 @@
           ]
         }
       ],
-      "fictionNonfiction": { "display": "skønlitteratur", "code": "FICTION" },
-      "workYear": "2003",
-      "dk5MainEntry": { "display": "Skønlitteratur" }
+      "fictionNonfiction": {
+        "display": "skønlitteratur",
+        "code": "FICTION"
+      },
+      "dk5MainEntry": {
+        "display": "Skønlitteratur"
+      }
     }
   }
 }
