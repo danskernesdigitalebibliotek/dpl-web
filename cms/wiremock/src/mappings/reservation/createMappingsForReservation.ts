@@ -15,4 +15,16 @@ export default (baseUri?: string, options?: Options) => {
     });
   });
 
+  // Get reservations.
+  import("./data/fbs/reservations.json").then((json) => {
+    wiremock(baseUri, options).mappings.createMapping({
+      request: {
+        method: "GET",
+        urlPattern: ".*/patrons/patronid/reservations/.*",
+      },
+      response: {
+        jsonBody: json.default,
+      },
+    });
+  });
 };
