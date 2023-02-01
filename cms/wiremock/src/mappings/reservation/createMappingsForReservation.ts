@@ -19,7 +19,7 @@ export default (baseUri?: string, options?: Options) => {
   import("./data/fbs/reservations.json").then((json) => {
     wiremock(baseUri, options).mappings.createMapping({
       request: {
-        method: "GET",
+        method: "POST",
         urlPattern: ".*/patrons/patronid/reservations/.*",
       },
       response: {
