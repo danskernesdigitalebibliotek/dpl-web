@@ -22,11 +22,11 @@ describe("User journey", () => {
       .first()
       .click()
       .url()
-      .should("include", "work/work-of:870970-basis:25245784");
+      .should("include", "work/work-of:870970-basis:54181744");
   });
 
   it("Shows material page & reservation button is rendered", () => {
-    cy.visit("/work/work-of:870970-basis:25245784")
+    cy.visit("/work/work-of:870970-basis:54181744")
       .contains("Harry Potter og Fønixordenen")
       .getBySel("material-header-buttons-physical")
       .should("contain", "Reserve bog");
