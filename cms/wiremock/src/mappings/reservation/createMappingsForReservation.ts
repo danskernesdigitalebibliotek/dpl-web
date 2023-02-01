@@ -3,7 +3,7 @@ import wiremock from "../../lib/general";
 
 export default (baseUri?: string, options?: Options) => {
 
-  // Get searchFacets.
+  // Get user info.
   import("./data/fbi/patron.json").then((json) => {
     wiremock(baseUri, options).mappings.createMapping({
       request: {
