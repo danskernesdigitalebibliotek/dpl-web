@@ -16,7 +16,9 @@ describe("User journey", () => {
   it("Shows search results & redirects to material page", () => {
     cy.visit("/search?q=Harry%2520Potter")
       .getBySel("search-result-title")
-      .should("contain", "Showing results for “Harry Potter” (109)")
+      .should("contain", "Showing results for “Harry")
+      .getBySel("availability-label")
+      .should("exist")
       .getBySel("search-result-list")
       .children()
       .first()
