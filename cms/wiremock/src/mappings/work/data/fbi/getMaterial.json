@@ -19,7 +19,27 @@
           "__typename": "Person"
         }
       ],
-      "series": [],
+      "series": [
+        {
+          "title": "Fantastic beasts",
+          "isPopular": null,
+          "numberInSeries": null,
+          "readThisFirst": null,
+          "readThisWhenever": null
+        },
+        {
+          "title": "Harry Potter",
+          "isPopular": null,
+          "numberInSeries": {
+            "display": "1",
+            "number": [
+              1
+            ]
+          },
+          "readThisFirst": null,
+          "readThisWhenever": null
+        }
+      ],
       "seriesMembers": [
         {
           "workId": "work-of:870970-basis:22629344",
@@ -178,7 +198,9 @@
                 "__typename": "Person"
               }
             ],
-            "hostPublication": null,
+            "publisher": [
+              "Cicero"
+            ],
             "languages": {
               "main": [
                 {
@@ -216,7 +238,8 @@
             },
             "physicalDescriptions": [
               {
-                "numberOfPages": 565
+                "numberOfPages": 565,
+                "playingTime": null
               }
             ],
             "accessTypes": [
@@ -267,7 +290,9 @@
                 "__typename": "Person"
               }
             ],
-            "hostPublication": null,
+            "publisher": [
+              "Cicero"
+            ],
             "languages": {
               "main": [
                 {
@@ -296,7 +321,8 @@
             },
             "physicalDescriptions": [
               {
-                "numberOfPages": 841
+                "numberOfPages": 841,
+                "playingTime": null
               }
             ],
             "accessTypes": [
@@ -347,7 +373,9 @@
                 "__typename": "Person"
               }
             ],
-            "hostPublication": null,
+            "publisher": [
+              "Gyldendals Bogklubber"
+            ],
             "languages": {
               "main": [
                 {
@@ -376,7 +404,8 @@
             },
             "physicalDescriptions": [
               {
-                "numberOfPages": 841
+                "numberOfPages": 523,
+                "playingTime": null
               }
             ],
             "accessTypes": [
@@ -427,7 +456,9 @@
                 "__typename": "Person"
               }
             ],
-            "hostPublication": null,
+            "publisher": [
+              "Cicero"
+            ],
             "languages": {
               "main": [
                 {
@@ -456,7 +487,8 @@
             },
             "physicalDescriptions": [
               {
-                "numberOfPages": 923
+                "numberOfPages": 523,
+                "playingTime": null
               }
             ],
             "accessTypes": [
@@ -506,86 +538,9 @@
                 "__typename": "Person"
               }
             ],
-            "hostPublication": null,
-            "languages": {
-              "main": [
-                {
-                  "display": "dansk"
-                }
-              ]
-            },
-            "identifiers": [
-              {
-                "value": "9788703014807"
-              },
-              {
-                "value": "87-03-01480-0"
-              }
+            "publisher": [
+              "Rosinante"
             ],
-            "contributors": [],
-            "edition": {
-              "summary": "2. bogklubudgave, 2006",
-              "publicationYear": {
-                "display": "2006"
-              }
-            },
-            "audience": {
-              "generalAudience": []
-            },
-            "physicalDescriptions": [
-              {
-                "numberOfPages": 923
-              }
-            ],
-            "accessTypes": [
-              {
-                "code": "PHYSICAL"
-              }
-            ],
-            "access": [
-              {
-                "__typename": "InterLibraryLoan",
-                "loanIsPossible": true
-              }
-            ],
-            "shelfmark": {
-              "postfix": "Rowling",
-              "shelfmark": "83"
-            }
-          },
-          {
-            "pid": "870970-basis:25245784",
-            "genreAndForm": [
-              "roman",
-              "fantasy"
-            ],
-            "source": [
-              "Bibliotekskatalog"
-            ],
-            "titles": {
-              "main": [
-                "Harry Potter og Fønixordenen"
-              ],
-              "original": [
-                "Harry Potter and the Order of the Phoenix"
-              ]
-            },
-            "fictionNonfiction": {
-              "display": "skønlitteratur",
-              "code": "FICTION"
-            },
-            "materialTypes": [
-              {
-                "specific": "bog"
-              }
-            ],
-            "creators": [
-              {
-                "display": "Joanne K. Rowling",
-                "__typename": "Person"
-              }
-            ],
-            "hostPublication": null,
             "languages": {
               "main": [
                 {
@@ -601,82 +556,12 @@
                 "value": "87-02-02944-8"
               }
             ],
-            "contributors": [],
-            "edition": {
-              "summary": "2. udgave, 2004",
-              "publicationYear": {
-                "display": "2004"
-              }
-            },
-            "audience": {
-              "generalAudience": []
-            },
-            "physicalDescriptions": [
+            "contributors": [
               {
-                "numberOfPages": 923
+                "display": "J. K. Rowling"
               }
+
             ],
-            "accessTypes": [
-              {
-                "code": "PHYSICAL"
-              }
-            ],
-            "access": [
-              {
-                "__typename": "InterLibraryLoan",
-                "loanIsPossible": true
-              }
-            ],
-            "shelfmark": {
-              "postfix": "Rowling",
-              "shelfmark": "83"
-            }
-          },
-          {
-            "pid": "870970-basis:25082427",
-            "genreAndForm": [
-              "roman"
-            ],
-            "source": [
-              "Bibliotekskatalog"
-            ],
-            "titles": {
-              "main": [
-                "Harry Potter og Fønixordenen"
-              ],
-              "original": [
-                "Harry Potter and the Order of the Phoenix"
-              ]
-            },
-            "fictionNonfiction": {
-              "display": "skønlitteratur",
-              "code": "FICTION"
-            },
-            "materialTypes": [
-              {
-                "specific": "bog"
-              }
-            ],
-            "creators": [
-              {
-                "display": "Joanne K. Rowling",
-                "__typename": "Person"
-              }
-            ],
-            "hostPublication": null,
-            "languages": {
-              "main": [
-                {
-                  "display": "dansk"
-                }
-              ]
-            },
-            "identifiers": [
-              {
-                "value": "87-03-00004-4"
-              }
-            ],
-            "contributors": [],
             "edition": {
               "summary": "1. bogklubudgave, 2004",
               "publicationYear": {
@@ -688,7 +573,8 @@
             },
             "physicalDescriptions": [
               {
-                "numberOfPages": 923
+                "numberOfPages": 923,
+                "playingTime": "16 t., 30 min."
               }
             ],
             "accessTypes": [
@@ -739,7 +625,9 @@
                 "__typename": "Person"
               }
             ],
-            "hostPublication": null,
+            "publisher": [
+              "Rosinante"
+            ],
             "languages": {
               "main": [
                 {
@@ -750,81 +638,6 @@
             "identifiers": [
               {
                 "value": "87-02-02222-2"
-              }
-            ],
-            "contributors": [],
-            "edition": {
-              "summary": "2003",
-              "publicationYear": {
-                "display": "2003"
-              }
-            },
-            "audience": {
-              "generalAudience": []
-            },
-            "physicalDescriptions": [
-              {
-                "numberOfPages": 923
-              }
-            ],
-            "accessTypes": [
-              {
-                "code": "PHYSICAL"
-              }
-            ],
-            "access": [
-              {
-                "__typename": "InterLibraryLoan",
-                "loanIsPossible": true
-              }
-            ],
-            "shelfmark": {
-              "postfix": "Rowling",
-              "shelfmark": "83"
-            }
-          },
-          {
-            "pid": "870970-basis:27639534",
-            "genreAndForm": [
-              "roman"
-            ],
-            "source": [
-              "Bibliotekskatalog"
-            ],
-            "titles": {
-              "main": [
-                "Harry Potter og Fønixordenen (mp3)"
-              ],
-              "original": [
-                "Harry Potter and the Order of the Phoenix"
-              ]
-            },
-            "fictionNonfiction": {
-              "display": "skønlitteratur",
-              "code": "FICTION"
-            },
-            "materialTypes": [
-              {
-                "specific": "lydbog (cd-mp3)"
-              }
-            ],
-            "creators": [
-              {
-                "display": "Joanne K. Rowling",
-                "__typename": "Person"
-              }
-            ],
-            "hostPublication": null,
-            "languages": {
-              "main": [
-                {
-                  "display": "dansk"
-                }
-              ]
-            },
-            "identifiers": [
-              {
-                "value": "9788702075427"
               }
             ],
             "contributors": [
@@ -843,7 +656,8 @@
             },
             "physicalDescriptions": [
               {
-                "numberOfPages": null
+                "numberOfPages": null,
+                "playingTime": "16 t., 30 min."
               }
             ],
             "accessTypes": [
@@ -893,7 +707,9 @@
                 "__typename": "Person"
               }
             ],
-            "hostPublication": null,
+            "publisher": [
+              "Cicero"
+            ],
             "languages": {
               "main": [
                 {
@@ -903,238 +719,8 @@
             },
             "identifiers": [
               {
-                "value": "87-02-04746-2"
-              }
-            ],
-            "contributors": [
-              {
-                "display": "Jesper Christensen (f. 1948)"
-              }
-            ],
-            "edition": {
-              "summary": "2006",
-              "publicationYear": {
-                "display": "2006"
-              }
-            },
-            "audience": {
-              "generalAudience": []
-            },
-            "physicalDescriptions": [
-              {
-                "numberOfPages": null
-              }
-            ],
-            "accessTypes": [
-              {
-                "code": "PHYSICAL"
-              }
-            ],
-            "access": [
-              {
-                "__typename": "InterLibraryLoan",
-                "loanIsPossible": true
-              }
-            ],
-            "shelfmark": {
-              "postfix": "Rowling",
-              "shelfmark": "83"
-            }
-          },
-          {
-            "pid": "870970-basis:25096517",
-            "genreAndForm": [
-              "roman"
-            ],
-            "source": [
-              "Bibliotekskatalog"
-            ],
-            "titles": {
-              "main": [
-                "Harry Potter og Fønixordenen"
-              ],
-              "original": [
-                "Harry Potter and the Order of the Phoenix"
-              ]
-            },
-            "fictionNonfiction": {
-              "display": "skønlitteratur",
-              "code": "FICTION"
-            },
-            "materialTypes": [
-              {
-                "specific": "punktskrift"
-              }
-            ],
-            "creators": [
-              {
-                "display": "Joanne K. Rowling",
-                "__typename": "Person"
-              }
-            ],
-            "hostPublication": null,
-            "languages": {
-              "main": [
-                {
-                  "display": "dansk"
-                }
-              ]
-            },
-            "identifiers": [
-              {
-                "value": "Best.nr. 103081"
-              }
-            ],
-            "contributors": [],
-            "edition": {
-              "summary": "2003",
-              "publicationYear": {
-                "display": "2003"
-              }
-            },
-            "audience": {
-              "generalAudience": []
-            },
-            "physicalDescriptions": [
-              {
-                "numberOfPages": 21
-              }
-            ],
-            "accessTypes": [
-              {
-                "code": "PHYSICAL"
-              }
-            ],
-            "access": [
-              {
-                "__typename": "InterLibraryLoan",
-                "loanIsPossible": true
-              }
-            ],
-            "shelfmark": {
-              "postfix": "Rowling",
-              "shelfmark": "83"
-            }
-          },
-          {
-            "pid": "870970-basis:25040007",
-            "genreAndForm": [
-              "roman",
-              "eventyrlige fortællinger"
-            ],
-            "source": [
-              "Bibliotekskatalog"
-            ],
-            "titles": {
-              "main": [
-                "Harry Potter og Fønixordenen"
-              ],
-              "original": [
-                "Harry Potter and the Order of the Phoenix"
-              ]
-            },
-            "fictionNonfiction": {
-              "display": "skønlitteratur",
-              "code": "FICTION"
-            },
-            "materialTypes": [
-              {
-                "specific": "diskette"
-              }
-            ],
-            "creators": [
-              {
-                "display": "Joanne K. Rowling",
-                "__typename": "Person"
-              }
-            ],
-            "hostPublication": null,
-            "languages": {
-              "main": [
-                {
-                  "display": "dansk"
-                }
-              ]
-            },
-            "identifiers": [
-              {
-                "value": "Best.nr. ascii 503142"
+                "value": "9788763844123"
               },
-              {
-                "value": "Best.nr. html 603142"
-              }
-            ],
-            "contributors": [],
-            "edition": {
-              "summary": "2003",
-              "publicationYear": {
-                "display": "2003"
-              }
-            },
-            "audience": {
-              "generalAudience": []
-            },
-            "physicalDescriptions": [
-              {
-                "numberOfPages": null
-              }
-            ],
-            "accessTypes": [
-              {
-                "code": "PHYSICAL"
-              }
-            ],
-            "access": [
-              {
-                "__typename": "InterLibraryLoan",
-                "loanIsPossible": true
-              }
-            ],
-            "shelfmark": {
-              "postfix": "Rowling",
-              "shelfmark": "83"
-            }
-          },
-          {
-            "pid": "870970-basis:24973670",
-            "genreAndForm": [
-              "roman"
-            ],
-            "source": [
-              "Bibliotekskatalog"
-            ],
-            "titles": {
-              "main": [
-                "Harry Potter og Fønixordenen"
-              ],
-              "original": [
-                "Harry Potter and the Order of the Phoenix"
-              ]
-            },
-            "fictionNonfiction": {
-              "display": "skønlitteratur",
-              "code": "FICTION"
-            },
-            "materialTypes": [
-              {
-                "specific": "lydbog (bånd)"
-              }
-            ],
-            "creators": [
-              {
-                "display": "Joanne K. Rowling",
-                "__typename": "Person"
-              }
-            ],
-            "hostPublication": null,
-            "languages": {
-              "main": [
-                {
-                  "display": "dansk"
-                }
-              ]
-            },
-            "identifiers": [
               {
                 "value": "Best.nr. 14948"
               }
@@ -1142,9 +728,6 @@
             "contributors": [
               {
                 "display": "Mikkel Schou"
-              },
-              {
-                "display": "Mikkel Schou"
               }
             ],
             "edition": {
@@ -1156,11 +739,7 @@
             "audience": {
               "generalAudience": []
             },
-            "physicalDescriptions": [
-              {
-                "numberOfPages": null
-              }
-            ],
+            "physicalDescriptions": [],
             "accessTypes": [
               {
                 "code": "PHYSICAL"
@@ -1211,7 +790,9 @@
               "__typename": "Person"
             }
           ],
-          "hostPublication": null,
+          "publisher": [
+            "Cicero"
+          ],
           "languages": {
             "main": [
               {
@@ -1249,7 +830,8 @@
           },
           "physicalDescriptions": [
             {
-              "numberOfPages": 565
+              "numberOfPages": 565,
+              "playingTime": null
             }
           ],
           "accessTypes": [
@@ -1275,15 +857,6 @@
         },
         {
           "specific": "lydbog (cd)"
-        },
-        {
-          "specific": "punktskrift"
-        },
-        {
-          "specific": "diskette"
-        },
-        {
-          "specific": "lydbog (bånd)"
         },
         {
           "specific": "lydbog (cd-mp3)"

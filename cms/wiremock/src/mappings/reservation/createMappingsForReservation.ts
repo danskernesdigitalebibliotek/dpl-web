@@ -3,7 +3,7 @@ import wiremock from "../../lib/general";
 
 export default (baseUri?: string, options?: Options) => {
 
-  // Get searchFacets.
+  // Get user info.
   import("./data/fbi/patron.json").then((json) => {
     wiremock(baseUri, options).mappings.createMapping({
       request: {
@@ -15,4 +15,16 @@ export default (baseUri?: string, options?: Options) => {
     });
   });
 
+  // Get reservations.
+  import("./data/fbs/reservations.json").then((json) => {
+    wiremock(baseUri, options).mappings.createMapping({
+      request: {
+        method: "POST",
+        urlPattern: ".*/patrons/patronid/reservations/.*",
+      },
+      response: {
+        jsonBody: json.default,
+      },
+    });
+  });
 };

@@ -23,6 +23,10 @@ Cypress.Commands.add("logMappingRequests", () => {
     wiremock()
       .mappings.getAllMappings()
       .then((mappings) => {
+        Cypress.log({
+          name: "Wiremock",
+          message: `Mappings: ${mappings.meta.total}`,
+        });
         mappings.mappings.forEach((stub) => {
           wiremock()
             .requests.getCount(stub.request)
@@ -34,7 +38,7 @@ Cypress.Commands.add("logMappingRequests", () => {
                 stub.request.urlPathPattern;
               Cypress.log({
                 name: "Wiremock",
-                message: `${stub.request.method}: ${requestUrlPath}: ${request.count} hit`,
+                message: `${stub.request.method}: ${requestUrlPath}: ${request.count} hit(s)`,
               });
             });
         });
@@ -167,6 +171,11 @@ Cypress.Commands.add(
   }
 );
 
+const visible = (checkVisible: boolean) => (checkVisible ? ":visible" : "");
+Cypress.Commands.add("getBySel", (selector, checkVisible = false, ...args) => {
+  return cy.get(`[data-cy="${selector}"]${visible(checkVisible)}`, ...args);
+});
+
 // According to the documentation of types and Cypress commands
 // the namespace is declared like it is done here. Therefore we'll bypass errors about it.
 /* eslint-disable @typescript-eslint/no-namespace */
@@ -187,6 +196,11 @@ declare global {
         accessToken: string,
         userGuid: string
       ): Chainable<null>;
+      getBySel(
+        selector: string,
+        checkVisible?: boolean,
+        ...args: unknown[]
+      ): Chainable;
     }
   }
 }
