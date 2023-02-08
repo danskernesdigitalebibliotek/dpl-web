@@ -69,4 +69,8 @@ function novel_preprocess_dpl_react_app__search_result(array &$variables): void 
     'showing_results_for_text' => $variables['data']['showing-results-for-text'] ?? "",
     'number_of_fake_result_items' => 5,
   ];
+
+  // Make sure that the app is re-rendered when the query string changes.
+  // That enables us to vary the "searching" title line.
+  $variables['#cache']['contexts'][] = "url.query_args:q";
 }
