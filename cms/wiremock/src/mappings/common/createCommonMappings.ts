@@ -84,7 +84,7 @@ export default (baseUri?: string, options?: Options) => {
       wiremock(baseUri, options).mappings.createMapping({
         request: {
           method: "POST",
-          url: "/opac/graphql",
+          url: "/next/graphql",
           bodyPatterns: [
             {
               matchesJsonPath: matchGraphqlQuery("suggestionsFromQueryString"),
