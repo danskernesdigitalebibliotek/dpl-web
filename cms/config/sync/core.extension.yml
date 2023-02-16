@@ -8,6 +8,7 @@ module:
   dpl_fbs: 0
   dpl_library_agency: 0
   dpl_library_token: 0
+  dpl_loans: 0
   dpl_login: 0
   dpl_mapp: 0
   dpl_publizon: 0

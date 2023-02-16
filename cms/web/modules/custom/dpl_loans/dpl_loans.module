@@ -1,0 +1,8 @@
+<?php
+
+/**
+ * @file
+ * Dpl_loans drupal module file.
+ *
+ * Renders the loan list.
+ */

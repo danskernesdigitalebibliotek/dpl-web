@@ -1,0 +1,16 @@
+dpl_loans.list:
+  path: "/user/me/loans"
+  defaults:
+    _controller: '\Drupal\dpl_loans\Controller\DplLoansController::list'
+  requirements:
+    _permission: "access content"
+
+dpl_loans.settings:
+  path: "/admin/config/dpl-library-agency/loan-list-settings"
+  defaults:
+    _form: '\Drupal\dpl_loans\Form\LoanListSettingsForm'
+    _title: "Loans settings"
+  requirements:
+    _permission: "administer site configuration"
+  options:
+    _admin_route: TRUE
