@@ -148,6 +148,19 @@ class GeneralSettingsForm extends ConfigFormBase {
       '#description' => $this->t('If checked, SMS notifications for patrons will be disabled.'),
     ];
 
+    $form['thresholds'] = [
+      '#type' => 'fieldset',
+      '#title' => $this->t('Thresholds'),
+      '#collapsible' => FALSE,
+      '#collapsed' => FALSE,
+    ];
+
+    $form['thresholds']['threshold_config'] = [
+      '#type' => 'textfield',
+      '#title' => $this->t('Set thresholds'),
+      '#default_value' => $config->get('threshold_config') ?? '{ "colorThresholds": { "danger": "0", "warning": "6" } }',
+    ];
+
     $form['branches'] = [
       '#type' => 'fieldset',
       '#title' => $this->t('Excluded branches'),
@@ -189,6 +202,7 @@ class GeneralSettingsForm extends ConfigFormBase {
   public function submitForm(array &$form, FormStateInterface $form_state): void {
     $this->config('dpl_library_agency.general_settings')
       ->set('reservation_sms_notifications_disabled', $form_state->getValue('reservation_sms_notifications_disabled'))
+      ->set('threshold_config', $form_state->getValue('threshold_config'))
       ->save();
 
     $this->branchSettings->setExcludedAvailabilityBranches(array_filter($form_state->getValue('availability')));
