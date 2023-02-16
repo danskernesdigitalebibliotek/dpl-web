@@ -39,10 +39,6 @@ $settings['config_exclude_modules'] = ['devel', 'field_ui', 'restui'];
 // advanced security measure: '../config/sync'.
 $settings['config_sync_directory'] = '../config/sync';
 
-// Set service base urls for the external APIs.
-$config['dpl_fbs.settings'] = ['base_url' => 'https://fbs-openplatform.dbc.dk'];
-$config['dpl_publizon.settings'] = ['base_url' => 'https://pubhub-openplatform.test.dbc.dk'];
-
 // Set service base urls for the react apps.
 $config['dpl_react_apps.settings']['services'] = [
   'cover' => ['base_url' => 'https://cover.dandigbib.org'],
@@ -58,12 +54,6 @@ if (getenv('CI')) {
     CURLOPT_PROXY_SSL_VERIFYHOST => 0,
     CURLOPT_PROXY_SSL_VERIFYPEER => FALSE,
   ];
-  // Specify non-HTTP versions of endpoints. This is required to make Cypress
-  // mocking work. It does not support ignoring self-signed certificates from
-  // Wiremock.
-  // Service base urls for the external APIs.
-  $config['dpl_fbs.settings'] = ['base_url' => 'http://fbs-openplatform.dbc.dk'];
-  $config['dpl_publizon.settings'] = ['base_url' => 'http://pubhub-openplatform.test.dbc.dk'];
   // Adgangsplatformen OpenID Connect client.
   $config['openid_connect.settings.adgangsplatformen']['settings']['authorization_endpoint'] = 'http://login.bib.dk/oauth/authorize';
   $config['openid_connect.settings.adgangsplatformen']['settings']['token_endpoint'] = 'http://login.bib.dk/oauth/token/';
