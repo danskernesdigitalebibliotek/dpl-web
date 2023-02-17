@@ -71,6 +71,18 @@ class FavoritesListBlock extends BlockBase implements ContainerFactoryPluginInte
       // Page sige.
       "page-size-desktop" => $loanListSettings->get('page_size_desktop'),
       "page-size-mobile" => $loanListSettings->get('page_size_mobile'),
+            'group-modal-checkbox-text' => $this->t("Choose all renewable", [], $context),
+
+  "favorites-list-materials-text" => $this->t("@count materials"),
+  "favorites-list-header-text" => $this->t("Favorites"),
+  "by-author-text" => $this->t("By"),
+  "et-al-text" => $this->t("..."),
+  "show-more-text" => $this->t("show more"),
+  "result-pager-status-text" => $this->t(),
+  "favorites-list-empty-text" => $this->t("Your favorites list is empty"),
+  "in-series-text" => $this->t("in series"),
+  "number-description-text" => $this->t("Number description"),
+
     ] + DplReactAppsController::externalApiBaseUrls();
 
     $app = [
