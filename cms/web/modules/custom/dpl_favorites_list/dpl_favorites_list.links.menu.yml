@@ -1,0 +1,11 @@
+dpl_favorite.list:
+  title: "Favorites"
+  menu_name: user-profile-menu
+  route_name: dpl_favorites.list
+  description: "List user favorites"
+
+dpl_favorites.settings_form:
+  title: "Favorites list settings"
+  route_name: dpl_favorites-list.settings
+  description: "Change favorites list settings"
+  parent: dpl_library_agency.settings
