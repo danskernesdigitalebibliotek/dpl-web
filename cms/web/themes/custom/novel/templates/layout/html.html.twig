@@ -31,20 +31,32 @@
 <!DOCTYPE html>
 <html{{html_attributes}}>
 	<head>
-		<head-placeholder token="{{ placeholder_token }}">
-			<title>{{ head_title|safe_join(' | ') }}</title>
-			<link rel="preload" fetchpriority="low" href="/themes/custom/novel/assets/dpl-design-system/fonts/gochi-hand-v19-latin-regular.woff2" as="font" type="font/woff2" crossorigin="anonymous"/>
-			<link rel="preload" fetchpriority="low" href="/themes/custom/novel/assets/dpl-design-system/fonts/lora-v26-latin-italic.woff2" as="font" type="font/woff2" crossorigin="anonymous"/>
-			<link rel="preload" href="/themes/custom/novel/assets/dpl-design-system/fonts/lora-v26-latin-regular.woff2" as="font" type="font/woff2" crossorigin="anonymous"/>
-			<link rel="preload" href="/themes/custom/novel/assets/dpl-design-system/fonts/noto-sans-jp-v42-latin-500.woff2" as="font" type="font/woff2" crossorigin="anonymous"/>
-			<link rel="preload" href="/themes/custom/novel/assets/dpl-design-system/fonts/noto-sans-jp-v42-latin-700.woff2" as="font" type="font/woff2" crossorigin="anonymous"/>
-			<link rel="preload" href="/themes/custom/novel/assets/dpl-design-system/fonts/noto-sans-jp-v42-latin-regular.woff2" as="font" type="font/woff2" crossorigin="anonymous"/>
-			<link rel="preconnect" href="http://cover.dandigbib.org"/>
-			<link rel="preconnect" href="https://res.cloudinary.com"/>
-			<css-placeholder token="{{ placeholder_token }}">
-      <js-placeholder token="{{ placeholder_token }}">
+    <head-placeholder token="{{ placeholder_token }}">
+    <title>{{ head_title|safe_join(' | ') }}</title>
+    {#
+      1. We preload fonts to improve performance with regard to first contentful paint/largest contentful paint
+      2. We inline all CSS to improve performance with regard to first contentful paint/largest contentful paint. We choose to inline all CSS because the alternative, inlining the critical CSS, is more complex to setup and maintain. We do not serve so much CSS at the moment that inling everything should be a problem.
+      3. We have to preload all fonts because we inline all CSS. Inlining all CSS does support relative urls to font files by design.
+      4. We mark fonts which are not likely to be used in the FCP/LCP with a low fetch priority. It would be preferable not to preload them at all but that is not possible due to 2.
+      5. We decide not to preload *.woff fonts even though they are included in the design system and in our CSS to avoid preloading too many files. All supported browsers as defined by our code guidelines support woff2 anyway.
+      TODO: Write an ADR for these decisions.
+    #}
+    <link rel="preload" fetchpriority="low" href="/themes/custom/novel/assets/dpl-design-system/fonts/gochi-hand-v19-latin-regular.woff2" as="font" type="font/woff2" crossorigin="anonymous"/>
+    <link rel="preload" fetchpriority="low" href="/themes/custom/novel/assets/dpl-design-system/fonts/lora-v26-latin-italic.woff2" as="font" type="font/woff2" crossorigin="anonymous"/>
+    <link rel="preload" href="/themes/custom/novel/assets/dpl-design-system/fonts/lora-v26-latin-regular.woff2" as="font" type="font/woff2" crossorigin="anonymous"/>
+    <link rel="preload" href="/themes/custom/novel/assets/dpl-design-system/fonts/noto-sans-jp-v42-latin-500.woff2" as="font" type="font/woff2" crossorigin="anonymous"/>
+    <link rel="preload" href="/themes/custom/novel/assets/dpl-design-system/fonts/noto-sans-jp-v42-latin-700.woff2" as="font" type="font/woff2" crossorigin="anonymous"/>
+    <link rel="preload" href="/themes/custom/novel/assets/dpl-design-system/fonts/noto-sans-jp-v42-latin-regular.woff2" as="font" type="font/woff2" crossorigin="anonymous"/>
+    {#
+      We preconnect to the cover urls in order to speed up DNS and SSL negotiaon.
+      This improves performance with regard to first contentful paint/largest contentful paint.
+    #}
+    <link rel="preconnect" href="http://cover.dandigbib.org"/>
+    <link rel="preconnect" href="https://res.cloudinary.com"/>
+    <css-placeholder token="{{ placeholder_token }}">
+    <js-placeholder token="{{ placeholder_token }}">
   </head>
-  <body{{ attributes.addClass(body_classes) }}>
+  <body{{attributes.addClass(body_classes)}}>
     {#
       Keyboard navigation/accessibility link to main content section in
       page.html.twig.
