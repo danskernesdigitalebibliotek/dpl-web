@@ -47,8 +47,6 @@ class ReservationListBlock extends BlockBase implements ContainerFactoryPluginIn
     parent::__construct($configuration, $plugin_id, $plugin_definition);
     $this->configuration = $configuration;
     $this->configFactory = $configFactory;
-    $this->branchSettings = $branchSettings;
-    $this->branchRepository = $branchRepository;
   }
 
   /**
@@ -189,7 +187,7 @@ class ReservationListBlock extends BlockBase implements ContainerFactoryPluginIn
         ],
       ],
     ] + DplReactAppsController::externalApiBaseUrls();
-    
+
     $app = [
       '#theme' => 'dpl_react_app',
       "#name" => 'reservation-list',
