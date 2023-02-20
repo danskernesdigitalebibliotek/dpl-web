@@ -41,7 +41,7 @@ patron-page:
     url: https://github.com/danskernesdigitalebibliotek/dpl-react/blob/master/LICENSE
     gpl-compatible: true
   js:
-    /libraries/dpl-react/patron-page.js: {}
+    /libraries/dpl-react/PatronPage.js: {}
   dependencies:
     - dpl_react/base
     - dpl_react/handler

@@ -65,7 +65,6 @@ class DplPatronPageController extends ControllerBase {
       // You might need to add some cache tags/contexts.
       return [];
     }
-
     
     // Add the cache tags/contexts.
     $render = $plugin_block->build();
