@@ -1086,15 +1086,7 @@
         },
         {
             "name": "danskernesdigitalebibliotek/dpl-react",
-<<<<<<< HEAD
             "version": "0.3.0-rc29",
-=======
-<<<<<<< HEAD
-            "version": "0.3.0-rc28",
-=======
-            "version": "0.3.0-rc14",
->>>>>>> 7302793 (use specific branches for design and react)
->>>>>>> 1488d9d (ITK: Use specific branches for design and react)
             "dist": {
                 "type": "zip",
                 "url": "https://github.com/itk-dev/dpl-react/releases/download/release-feature%2Fpatron-page-shine-up/dist.zip"

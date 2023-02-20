@@ -143,7 +143,6 @@ class PatronPageBlock extends BlockBase implements ContainerFactoryPluginInterfa
       'text-notifications-enabled-config' => $this->textNotificationsEnabled(),
       'blacklisted-pickup-branches-config' => $this->buildBranchesListProp($this->branchSettings->getExcludedReservationBranches()),
       'branches-config' => $this->buildBranchesJsonProp($this->branchRepository->getBranches()),
-      'blacklisted-availability-branches-config' => $this->buildBranchesListProp($this->branchSettings->getExcludedAvailabilityBranches()),
       'pincode-length-min-config' => $patron_page_settings->get('pincode_length_min'),
       'pincode-length-max-config' => $patron_page_settings->get('pincode_length_max'),
       'pause-reservation-info-url' => $general_config->get('pause_reservation_info_url'),
