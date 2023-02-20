@@ -148,6 +148,20 @@ class GeneralSettingsForm extends ConfigFormBase {
       '#description' => $this->t('If checked, SMS notifications for patrons will be disabled.'),
     ];
 
+    $form['settings']['pause_reservation_info_url'] = [
+      '#type' => 'textfield',
+      '#title' => $this->t('Pause reservation link'),
+      '#description' => $this->t('The link with infomation about reservations'),
+      '#default_value' => $config->get('pause_reservation_info_url') ?? '',
+    ];
+
+    $form['settings']['pause_reservation_start_date_config'] = [
+      '#type' => 'date',
+      '#title' => $this->t('Start date'),
+      '#description' => $this->t('Pause reservation start date'),
+      '#default_value' => $config->get('pause_reservation_start_date_config'),
+    ];
+
     $form['thresholds'] = [
       '#type' => 'fieldset',
       '#title' => $this->t('Thresholds'),
@@ -199,10 +213,23 @@ class GeneralSettingsForm extends ConfigFormBase {
   /**
    * {@inheritdoc}
    */
+  public function validateForm(array &$form, FormStateInterface $form_state): void {
+    $feesUrl = $form_state->getValue('pause_reservation_info_url');
+    if (!filter_var($feesUrl, FILTER_VALIDATE_URL)) {
+      $form_state->setErrorByName('pause_reservation_info_url', $this->t('The url "%url" is not a valid URL.', ['%url' => $feesUrl]));
+    }
+
+  }
+
+  /**
+   * {@inheritdoc}
+   */
   public function submitForm(array &$form, FormStateInterface $form_state): void {
     $this->config('dpl_library_agency.general_settings')
-      ->set('reservation_sms_notifications_disabled', $form_state->getValue('reservation_sms_notifications_disabled'))
       ->set('threshold_config', $form_state->getValue('threshold_config'))
+      ->set('reservation_sms_notifications_disabled', $form_state->getValue('reservation_sms_notifications_disabled'))
+      ->set('pause_reservation_info_url', $form_state->getValue('pause_reservation_info_url'))
+      ->set('pause_reservation_start_date_config', $form_state->getValue('pause_reservation_start_date_config'))
       ->save();
 
     $this->branchSettings->setExcludedAvailabilityBranches(array_filter($form_state->getValue('availability')));
