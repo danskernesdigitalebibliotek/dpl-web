@@ -3,7 +3,6 @@ description: Handle the patron page
 package: DPL
 dependencies:
   - drupal:block
-  - dpl_user_profile:dpl_user_profile
   - dpl_fbs:dpl_fbs
   - dpl_publizon:dpl_publizon
 type: module
