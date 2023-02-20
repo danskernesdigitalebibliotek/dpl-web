@@ -34,6 +34,18 @@ search-result:
     - dpl_react/base
     - dpl_react/handler
 
+patron-page:
+  remote: https://github.com/danskernesdigitalebibliotek/dpl-react
+  license:
+    name: GNU AFFERO
+    url: https://github.com/danskernesdigitalebibliotek/dpl-react/blob/master/LICENSE
+    gpl-compatible: true
+  js:
+    /libraries/dpl-react/patron-page.js: {}
+  dependencies:
+    - dpl_react/base
+    - dpl_react/handler
+
 material:
   remote: https://github.com/danskernesdigitalebibliotek/dpl-react
   license:
