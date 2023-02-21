@@ -39,10 +39,6 @@ $settings['config_exclude_modules'] = ['devel', 'field_ui', 'restui'];
 // advanced security measure: '../config/sync'.
 $settings['config_sync_directory'] = '../config/sync';
 
-// Set service base urls for the external APIs.
-$config['dpl_fbs.settings'] = ['base_url' => 'https://fbs-openplatform.dbc.dk'];
-$config['dpl_publizon.settings'] = ['base_url' => 'https://pubhub-openplatform.test.dbc.dk'];
-
 // Set service base urls for the react apps.
 $config['dpl_react_apps.settings']['services'] = [
   'cover' => ['base_url' => 'https://cover.dandigbib.org'],
@@ -108,7 +104,7 @@ if (getenv('LAGOON')) {
   if (
     // Do not enable the cache during install.
     !InstallerKernel::installationAttempted()
-    // Do not enable the the cache if php does not have the extension enabled.
+    // Do not enable the cache if php does not have the extension enabled.
     && extension_loaded('redis')
   ) {
     // Enable the cache backend.
