@@ -10,12 +10,14 @@
         aria-label="{{ input_placeholder_text }}"
         value=""
       />
-      <input
-        type="image"
-        src="data:image/svg+xml,{{ search_icon }}"
-        alt="Search button"
-        class="header__menu-search-icon"
-      />
+      {% if search_icon %}
+        <input
+          type="image"
+          src="data:image/svg+xml,{{ search_icon }}"
+          alt="Search button"
+          class="header__menu-search-icon"
+        />
+      {% endif %}
 		</div>
 	</form>
 </div>
