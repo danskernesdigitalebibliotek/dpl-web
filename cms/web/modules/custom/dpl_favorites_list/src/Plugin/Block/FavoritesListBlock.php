@@ -78,23 +78,23 @@ class FavoritesListBlock extends BlockBase implements ContainerFactoryPluginInte
     $fbsConfig = $this->configFactory->get('dpl_fbs.settings');
     $publizonConfig = $this->configFactory->get('dpl_publizon.settings');
     $data = [
-      // Page size.
-            'blacklisted-availability-branches-config' => DplReactAppsController::buildBranchesListProp($this->branchSettings->getExcludedAvailabilityBranches()),
+      // Branches.
+      'blacklisted-availability-branches-config' => DplReactAppsController::buildBranchesListProp($this->branchSettings->getExcludedAvailabilityBranches()),
       'branches-config' => DplReactAppsController::buildBranchesJsonProp($this->branchRepository->getBranches()),
+      // Page size.
       "page-size-desktop" => $favoritesListSettings->get('page_size_desktop'),
       "page-size-mobile" => $favoritesListSettings->get('page_size_mobile'),
-            'group-modal-checkbox-text' => $this->t("Choose all renewable", [], $context),
-
-  "favorites-list-materials-text" => $this->t("@count materials", [], $context),
-  "favorites-list-header-text" => $this->t("Favorites", [], $context),
-  "by-author-text" => $this->t("By", [], $context),
-  "et-al-text" => $this->t("...", [], $context),
-  "show-more-text" => $this->t("show more", [], $context),
-  "result-pager-status-text" => $this->t("", [], $context),
-  "favorites-list-empty-text" => $this->t("Your favorites list is empty", [], $context),
-  "in-series-text" => $this->t("in series", [], $context),
-  "number-description-text" => $this->t("Number description", [], $context),
-
+      // Texts.
+      'group-modal-checkbox-text' => $this->t("Choose all renewable", [], $context),
+      "favorites-list-materials-text" => $this->t("@count materials", [], $context),
+      "favorites-list-header-text" => $this->t("Favorites", [], $context),
+      "by-author-text" => $this->t("By", [], $context),
+      "et-al-text" => $this->t("...", [], $context),
+      "show-more-text" => $this->t("show more", [], $context),
+      "result-pager-status-text" => $this->t("Showing @itemsShown out of @hitcount results", [], $context),
+      "favorites-list-empty-text" => $this->t("Your favorites list is empty", [], $context),
+      "in-series-text" => $this->t("in series", [], $context),
+      "number-description-text" => $this->t("Number description", [], $context),
     ] + DplReactAppsController::externalApiBaseUrls();
 
     $app = [
