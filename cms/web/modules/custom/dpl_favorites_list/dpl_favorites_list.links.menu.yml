@@ -6,6 +6,6 @@ dpl_favorite.list:
 
 dpl_favorites.settings_form:
   title: "Favorites list settings"
-  route_name: dpl_favorites-list.settings
+  route_name: dpl_favorites_list.settings
   description: "Change favorites list settings"
   parent: dpl_library_agency.settings

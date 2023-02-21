@@ -7,6 +7,8 @@ use Drupal\Core\Config\ConfigFactoryInterface;
 use Drupal\Core\Plugin\ContainerFactoryPluginInterface;
 use Drupal\dpl_react_apps\Controller\DplReactAppsController;
 use Symfony\Component\DependencyInjection\ContainerInterface;
+use Drupal\dpl_library_agency\Branch\BranchRepositoryInterface;
+use Drupal\dpl_library_agency\BranchSettings;
 
 /**
  * Provides user favorites list.
@@ -36,11 +38,17 @@ class FavoritesListBlock extends BlockBase implements ContainerFactoryPluginInte
    *   The plugin implementation definition.
    * @param \Drupal\Core\Config\ConfigFactoryInterface $configFactory
    *   Drupal config factory to get FBS and Publizon settings.
+   * @param \Drupal\dpl_library_agency\BranchSettings $branchSettings
+   *   The branchsettings for branch config.
+   * @param \Drupal\dpl_library_agency\Branch\BranchRepositoryInterface $branchRepository
+   *   The branchsettings for getting branches.
    */
-  public function __construct(array $configuration, $plugin_id, $plugin_definition, ConfigFactoryInterface $configFactory) {
+  public function __construct(array $configuration, $plugin_id, $plugin_definition, ConfigFactoryInterface $configFactory, protected BranchSettings $branchSettings, protected BranchRepositoryInterface $branchRepository) {
     parent::__construct($configuration, $plugin_id, $plugin_definition);
     $this->configuration = $configuration;
     $this->configFactory = $configFactory;
+    $this->branchSettings = $branchSettings;
+    $this->branchRepository = $branchRepository;
   }
 
   /**
@@ -52,6 +60,8 @@ class FavoritesListBlock extends BlockBase implements ContainerFactoryPluginInte
       $plugin_id,
       $plugin_definition,
       $container->get('config.factory'),
+      $container->get('dpl_library_agency.branch_settings'),
+      $container->get('dpl_library_agency.branch.repository'),
     );
   }
 
@@ -62,26 +72,28 @@ class FavoritesListBlock extends BlockBase implements ContainerFactoryPluginInte
    *   The app render array.
    */
   public function build() {
-    $loanListSettings = $this->configFactory->get('loan_list.settings');
+    $favoritesListSettings = $this->configFactory->get('favorites_list.settings');
     $context = ['context' => 'Loan list'];
     $contextAria = ['context' => 'Loan list (Aria)'];
     $fbsConfig = $this->configFactory->get('dpl_fbs.settings');
     $publizonConfig = $this->configFactory->get('dpl_publizon.settings');
     $data = [
-      // Page sige.
-      "page-size-desktop" => $loanListSettings->get('page_size_desktop'),
-      "page-size-mobile" => $loanListSettings->get('page_size_mobile'),
+      // Page size.
+            'blacklisted-availability-branches-config' => DplReactAppsController::buildBranchesListProp($this->branchSettings->getExcludedAvailabilityBranches()),
+      'branches-config' => DplReactAppsController::buildBranchesJsonProp($this->branchRepository->getBranches()),
+      "page-size-desktop" => $favoritesListSettings->get('page_size_desktop'),
+      "page-size-mobile" => $favoritesListSettings->get('page_size_mobile'),
             'group-modal-checkbox-text' => $this->t("Choose all renewable", [], $context),
 
-  "favorites-list-materials-text" => $this->t("@count materials"),
-  "favorites-list-header-text" => $this->t("Favorites"),
-  "by-author-text" => $this->t("By"),
-  "et-al-text" => $this->t("..."),
-  "show-more-text" => $this->t("show more"),
-  "result-pager-status-text" => $this->t(),
-  "favorites-list-empty-text" => $this->t("Your favorites list is empty"),
-  "in-series-text" => $this->t("in series"),
-  "number-description-text" => $this->t("Number description"),
+  "favorites-list-materials-text" => $this->t("@count materials", [], $context),
+  "favorites-list-header-text" => $this->t("Favorites", [], $context),
+  "by-author-text" => $this->t("By", [], $context),
+  "et-al-text" => $this->t("...", [], $context),
+  "show-more-text" => $this->t("show more", [], $context),
+  "result-pager-status-text" => $this->t("", [], $context),
+  "favorites-list-empty-text" => $this->t("Your favorites list is empty", [], $context),
+  "in-series-text" => $this->t("in series", [], $context),
+  "number-description-text" => $this->t("Number description", [], $context),
 
     ] + DplReactAppsController::externalApiBaseUrls();
 
