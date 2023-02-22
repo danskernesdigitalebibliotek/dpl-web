@@ -1,7 +1,0 @@
-dpl_das.settings_form:
-  path: "/admin/config/system/dpl-das"
-  defaults:
-    _title: "Digital Archive Service settings"
-    _form: 'Drupal\dpl_das\Form\SettingsForm'
-  requirements:
-    _permission: "administer dpl_das configuration"
