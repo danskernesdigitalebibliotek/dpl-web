@@ -6,8 +6,17 @@
           {{ showing_results_for_text }} "{{ q }}"
         </h1>
       {% endif %}
-      <div class="ssc mt-48">
-        <div class="ssc-head-line"/>
+      <div class="search-result-page__skeleton-facet-line--mobile">
+        <div class="ssc mt-48">
+          <div class="ssc-head-line mb"></div>
+          <div class="ssc-head-line mb"></div>
+          <div class="ssc-head-line mb"></div>
+        </div>
+      </div>
+      <div class="search-result-page__skeleton-facet-line--desktop">
+        <div class="ssc mt-48">
+          <div class="ssc-head-line mb"></div>
+        </div>
       </div>
       <ul class="search-result-page__list my-32">
         {% for i in 1..number_of_fake_result_items %}

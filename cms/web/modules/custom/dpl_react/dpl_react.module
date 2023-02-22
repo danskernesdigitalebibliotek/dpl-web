@@ -139,6 +139,7 @@ function dpl_react_preprocess_dpl_react_app(array &$variables): void {
   );
 
   $variables['#attached']['library'][] = sprintf('dpl_react/%s', $variables['name']);
+
   $variables['#cache']['tags'][] = 'dpl_react_app';
   $variables['#cache']['tags'][] = 'dpl_react_app:' . $variables['name'];
 }

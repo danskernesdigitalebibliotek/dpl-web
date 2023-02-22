@@ -17,7 +17,7 @@
             "type": "package",
             "package": {
                 "name": "danskernesdigitalebibliotek/dpl-react",
-                "version": "0.3.0-rc13",
+                "version": "0.3.0-rc27",
                 "type": "drupal-library",
                 "dist": {
                     "url": "https://github.com/danskernesdigitalebibliotek/dpl-react/releases/download/release-develop/dist.zip",
@@ -33,7 +33,7 @@
             "package": {
                 "name": "danskernesdigitalebibliotek/dpl-design-system",
                 "type": "drupal-library",
-                "version": "v1.7.0-rc6",
+                "version": "v1.7.0-rc19",
                 "dist": {
                     "url": "https://github.com/danskernesdigitalebibliotek/dpl-design-system/releases/download/release-develop/dist.zip",
                     "type": "zip"
@@ -42,9 +42,13 @@
         },
         {
             "type": "path",
-            "url": "packages/fbs-client"
+            "url": "packages/fbs-client",
+            "options": {
+                "versions": {
+                    "danskernesdigitalebibliotek/fbs-client": "dev-main"
+                }
+            }
         }
-
     ],
     "require": {
         "amazeeio/drupal_integrations": "0.3.5",
@@ -60,6 +64,7 @@
         "drupal/default_content": "^2.0@alpha",
         "drupal/devel": "^4.1",
         "drupal/handy_cache_tags": "^1.4",
+        "drupal/inline_all_css": "^1.0@RC",
         "drupal/jsonlog": "^3.0",
         "drupal/libraries": "^3.0@beta",
         "drupal/openapi": "^2.0",

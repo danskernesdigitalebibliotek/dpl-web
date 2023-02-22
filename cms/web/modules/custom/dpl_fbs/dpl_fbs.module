@@ -1,0 +1,9 @@
+<?php
+
+/**
+ * @file
+ * Dpl_fbs drupal module file.
+ *
+ * Demonstrates how to use the dpl_react module
+ * and render components.
+ */

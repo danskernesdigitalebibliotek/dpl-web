@@ -5,6 +5,9 @@
  * Novel Theme.
  */
 
+use function Safe\file_get_contents;
+use function Safe\sprintf;
+
 /**
  * Implements hook_theme().
  *
@@ -41,10 +44,33 @@ function novel_theme(
  * @param mixed[] $variables
  *   The variables for the theme hook.
  */
+function novel_preprocess_dpl_react_app__search_header(array &$variables): void {
+  $search_svg = file_get_contents(sprintf('%s/%s',
+    \Drupal::theme()->getActiveTheme()->getPath(),
+    '/assets/dpl-design-system/icons/collection/Search.svg'
+  ));
+
+  $variables += [
+    'search_icon' => $search_svg ?? NULL,
+    'search_action' => $variables['data']['search-url'] ?? "",
+    'input_placeholder_text' => $variables['data']['input-placeholder-text'] ?? "",
+  ];
+}
+
+/**
+ * Implements hook_preprocess_HOOK().
+ *
+ * @param mixed[] $variables
+ *   The variables for the theme hook.
+ */
 function novel_preprocess_dpl_react_app__search_result(array &$variables): void {
   $variables += [
     'q' => \Drupal::request()->query->get('q') ?? "",
     'showing_results_for_text' => $variables['data']['showing-results-for-text'] ?? "",
     'number_of_fake_result_items' => 5,
   ];
+
+  // Make sure that the app is re-rendered when the query string changes.
+  // That enables us to vary the "searching" title line.
+  $variables['#cache']['contexts'][] = "url.query_args:q";
 }

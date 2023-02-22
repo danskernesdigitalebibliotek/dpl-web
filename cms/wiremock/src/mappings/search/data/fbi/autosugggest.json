@@ -3,120 +3,179 @@
     "suggest": {
       "result": [
         {
-          "type": "TITLE",
-          "term": "Harry Potter og De Vises Sten",
+          "type": "COMPOSIT",
+          "term": "Joanne K. Rowling Harry Potter og De Vises Sten",
           "work": {
             "workId": "work-of:870970-basis:22629344",
-            "titles": { "main": ["Harry Potter og De Vises Sten"] },
+            "titles": {
+              "main": [
+                "Harry Potter og de vises sten"
+              ]
+            },
             "creators": [
-              { "display": "Dummy Jens Jensen" },
-              { "display": "Dummy Some Corporation" }
+              {
+                "display": "Joanne K. Rowling"
+              }
             ],
-            "manifestations": { "first": { "pid": "870970-basis:22629344" } }
+            "manifestations": {
+              "bestRepresentation": {
+                "pid": "870970-basis:38289977"
+              }
+            }
+          }
+        },
+        {
+          "type": "TITLE",
+          "term": "Harry Potter og Hemmelighedernes Kammer",
+          "work": {
+            "workId": "work-of:870970-basis:22677780",
+            "titles": {
+              "main": [
+                "Harry Potter og Hemmelighedernes Kammer"
+              ]
+            },
+            "creators": [
+              {
+                "display": "Joanne K. Rowling"
+              }
+            ],
+            "manifestations": {
+              "bestRepresentation": {
+                "pid": "870970-basis:61636935"
+              }
+            }
           }
         },
         {
           "type": "SUBJECT",
           "term": "Harry Potter",
           "work": {
-            "workId": "work-of:870970-basis:22677780",
-            "titles": { "main": ["Dummy Some Title"] },
-            "creators": [
-              { "display": "Dummy Jens Jensen" },
-              { "display": "Dummy Some Corporation" }
-            ],
-            "manifestations": { "first": { "pid": "870970-basis:22677780" } }
-          }
-        },
-        {
-          "type": "SUBJECT",
-          "term": "Harry Hole",
-          "work": {
             "workId": "work-of:870970-basis:53045650",
-            "titles": { "main": ["Dummy Some Title"] },
+            "titles": {
+              "main": [
+                "Harry Potter"
+              ]
+            },
             "creators": [
-              { "display": "Dummy Jens Jensen" },
-              { "display": "Dummy Some Corporation" }
+              {
+                "display": "Jo Nesbø"
+              }
             ],
-            "manifestations": { "first": { "pid": "870970-basis:53045650" } }
+            "manifestations": {
+              "bestRepresentation": {
+                "pid": "870970-basis:54215797"
+              }
+            }
           }
         },
         {
-          "type": "CREATOR",
-          "term": "Hartmut Rosa",
+          "type": "COMPOSIT",
+          "term": "Joanne K. Rowling Harry Potter og halvblodsprinsen",
           "work": {
-            "workId": "work-of:870970-basis:50999335",
-            "titles": { "main": ["Dummy Some Title"] },
+            "workId": "work-of:870970-basis:25807995",
+            "titles": {
+              "main": [
+                "Harry Potter og halvblodsprinsen"
+              ]
+            },
             "creators": [
-              { "display": "Dummy Jens Jensen" },
-              { "display": "Dummy Some Corporation" }
+              {
+                "display": "Joanne K. Rowling"
+              }
             ],
-            "manifestations": { "first": { "pid": "870970-basis:50999335" } }
-          }
-        },
-        {
-          "type": "CREATOR",
-          "term": "Susan Hart (f. 1956)",
-          "work": {
-            "workId": "work-of:870970-basis:28028881",
-            "titles": { "main": ["Dummy Some Title"] },
-            "creators": [
-              { "display": "Dummy Jens Jensen" },
-              { "display": "Dummy Some Corporation" }
-            ],
-            "manifestations": { "first": { "pid": "870970-basis:28028881" } }
+            "manifestations": {
+              "bestRepresentation": {
+                "pid": "870970-basis:54872003"
+              }
+            }
           }
         },
         {
           "type": "TITLE",
-          "term": "Harry Potter og fangen fra Azkaban",
+          "term": "Harry Potter og Flammernes Pokal",
           "work": {
-            "workId": "work-of:870970-basis:22995154",
-            "titles": { "main": ["Dummy Some Title"] },
+            "workId": "work-of:870970-basis:23540703",
+            "titles": {
+              "main": [
+                "Harry Potter og Flammernes Pokal"
+              ]
+            },
             "creators": [
-              { "display": "Dummy Jens Jensen" },
-              { "display": "Dummy Some Corporation" }
+              {
+                "display": "Joanne K. Rowling"
+              }
             ],
-            "manifestations": { "first": { "pid": "870970-basis:22995154" } }
+            "manifestations": {
+              "bestRepresentation": {
+                "pid": "870970-basis:47092183"
+              }
+            }
           }
         },
         {
-          "type": "SUBJECT",
-          "term": "Harry Dresden",
-          "work": {
-            "workId": "work-of:870970-basis:53182623",
-            "titles": { "main": ["Dummy Some Title"] },
-            "creators": [
-              { "display": "Dummy Jens Jensen" },
-              { "display": "Dummy Some Corporation" }
-            ],
-            "manifestations": { "first": { "pid": "870970-basis:53182623" } }
-          }
-        },
-        {
-          "type": "TITLE",
-          "term": "Harry Potter og Fønixordenen",
+          "type": "COMPOSIT",
+          "term": "Joanne K. Rowling Harry Potter og Fønixordenen",
           "work": {
             "workId": "work-of:870970-basis:25245784",
-            "titles": { "main": ["Dummy Some Title"] },
+            "titles": {
+              "main": [
+                "Harry Potter og Fønixordenen"
+              ]
+            },
             "creators": [
-              { "display": "Dummy Jens Jensen" },
-              { "display": "Dummy Some Corporation" }
+              {
+                "display": "Joanne K. Rowling"
+              }
             ],
-            "manifestations": { "first": { "pid": "870970-basis:25245784" } }
+            "manifestations": {
+              "bestRepresentation": {
+                "pid": "870970-basis:134693959"
+              }
+            }
           }
         },
         {
-          "type": "CREATOR",
-          "term": "Yuval Noah Harari",
+          "type": "COMPOSIT",
+          "term": "Joanne K. Rowling Harry Potter and the cursed child",
           "work": {
-            "workId": "work-of:870970-basis:51725832",
-            "titles": { "main": ["Dummy Some Title"] },
+            "workId": "work-of:870970-basis:52232309",
+            "titles": {
+              "main": [
+                "Harry Potter and the cursed child"
+              ]
+            },
             "creators": [
-              { "display": "Dummy Jens Jensen" },
-              { "display": "Dummy Some Corporation" }
+              {
+                "display": "Joanne K. Rowling"
+              }
             ],
-            "manifestations": { "first": { "pid": "870970-basis:51725832" } }
+            "manifestations": {
+              "bestRepresentation": {
+                "pid": "870970-basis:52232309"
+              }
+            }
+          }
+        },
+        {
+          "type": "TITLE",
+          "term": "Harry Potter og det forbandede barn",
+          "work": {
+            "workId": "work-of:870970-basis:52646251",
+            "titles": {
+              "main": [
+                "Harry Potter og det forbandede barn"
+              ]
+            },
+            "creators": [
+              {
+                "display": "Joanne K. Rowling"
+              }
+            ],
+            "manifestations": {
+              "bestRepresentation": {
+                "pid": "870970-basis:52646251"
+              }
+            }
           }
         },
         {
@@ -124,12 +183,43 @@
           "term": "Harry Potter and the philosopher's stone",
           "work": {
             "workId": "work-of:870970-basis:42042455",
-            "titles": { "main": ["Dummy Some Title"] },
+            "titles": {
+              "main": [
+                "Harry Potter and the philosopher's stone"
+              ]
+            },
             "creators": [
-              { "display": "Dummy Jens Jensen" },
-              { "display": "Dummy Some Corporation" }
+              {
+                "display": "Joanne K. Rowling"
+              }
             ],
-            "manifestations": { "first": { "pid": "870970-basis:42042455" } }
+            "manifestations": {
+              "bestRepresentation": {
+                "pid": "870970-basis:134987766"
+              }
+            }
+          }
+        },
+        {
+          "type": "COMPOSIT",
+          "term": "Joanne K. Rowling Harry Potter og fangen fra Azkaban",
+          "work": {
+            "workId": "work-of:870970-basis:22995154",
+            "titles": {
+              "main": [
+                "Harry Potter og fangen fra Azkaban"
+              ]
+            },
+            "creators": [
+              {
+                "display": "Joanne K. Rowling"
+              }
+            ],
+            "manifestations": {
+              "bestRepresentation": {
+                "pid": "870970-basis:54871945"
+              }
+            }
           }
         }
       ]

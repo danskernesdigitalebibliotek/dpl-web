@@ -29,6 +29,8 @@ describe("User journey", () => {
 
   it("Shows material page & reservation button is rendered", () => {
     cy.visit("/work/work-of:870970-basis:54181744")
+      .getBySel("material-header-content")
+      .scrollIntoView()
       .contains("Harry Potter og Fønixordenen")
       .getBySel("material-header-buttons-physical")
       .should("contain", "Reserve bog");
@@ -40,6 +42,8 @@ describe("User journey", () => {
     const userGuid = "19a4ae39-be07-4db9-a8b7-8bbb29f03da6";
     cy.adgangsplatformenLogin(authorizationCode, accessToken, userGuid);
     cy.visit("/work/work-of:870970-basis:54181744")
+      .getBySel("material-header-author-text")
+      .scrollIntoView()
       .getBySel("material-header-buttons-physical")
       .click()
       .getBySel("modal")
