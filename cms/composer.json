@@ -165,7 +165,8 @@
                 "3313521: OpenAPI security field does not validate": "https://git.drupalcode.org/project/openapi/-/merge_requests/6.patch"
             },
             "drupal/openapi_rest": {
-                "3171530 + 3116760: Add support for parameter and response descriptions": "patches/openapi-parameter-response-descriptions-14-3.patch"
+                "3171530 + 3116760: Add support for parameter and response descriptions": "patches/openapi-parameter-response-descriptions-14-3.patch",
+                "3343816: Specification includes disabled resources": "https://git.drupalcode.org/project/openapi_rest/-/merge_requests/4.patch"
             }
         }
     }
