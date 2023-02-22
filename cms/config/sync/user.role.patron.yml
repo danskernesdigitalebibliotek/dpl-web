@@ -14,7 +14,6 @@ permissions:
   - 'delete own campaign content'
   - 'edit any campaign content'
   - 'edit own campaign content'
-  - 'restful post dpl_das_digital_article_order'
   - 'revert campaign revisions'
   - 'view campaign revisions'
   - 'view own unpublished content'
