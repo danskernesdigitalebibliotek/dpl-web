@@ -1,6 +1,6 @@
 uuid: 75f4b568-1125-4d30-8251-a330a0f5d66e
 langcode: en
-status: true
+status: false
 dependencies:
   module:
     - dpl_das
