@@ -5,7 +5,6 @@ module:
   config_filter: 0
   config_ignore: 0
   dpl_campaign: 0
-  dpl_das: 0
   dpl_fbs: 0
   dpl_library_agency: 0
   dpl_library_token: 0
