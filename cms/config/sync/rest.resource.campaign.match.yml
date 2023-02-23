@@ -4,8 +4,8 @@ status: true
 dependencies:
   module:
     - dpl_campaign
+    - dpl_login
     - serialization
-    - user
 id: campaign.match
 plugin_id: 'campaign:match'
 granularity: resource
@@ -15,4 +15,4 @@ configuration:
   formats:
     - json
   authentication:
-    - cookie
+    - dpl_login_user_token
