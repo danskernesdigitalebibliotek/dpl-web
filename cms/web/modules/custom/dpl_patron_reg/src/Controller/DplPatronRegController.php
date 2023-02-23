@@ -45,7 +45,7 @@ class DplPatronRegController extends ControllerBase {
   /**
    * Build and return information page as page.
    *
-   * @return array<string, string>
+   * @return array<string,array>
    *   The page as a render array.
    */
   public function informationPage(): array {
@@ -81,7 +81,7 @@ class DplPatronRegController extends ControllerBase {
   /**
    * Redirect callback that redirects to log in service.
    *
-   * @param Request $request
+   * @param \Symfony\Component\HttpFoundation\Request $request
    *   Http request object.
    * @param string $client_name
    *   OpenID connect client name.
@@ -104,7 +104,7 @@ class DplPatronRegController extends ControllerBase {
     $scopes = $this->claims->getScopes($client);
     $_SESSION['openid_connect_op'] = 'login';
 
-    /** @var TrustedRedirectResponse $response */
+    /** @var \Drupal\Core\Routing\TrustedRedirectResponse $response */
     $response = $client->authorize($scopes);
 
     // Get redirect URL from OpenID connect and add forced nem-login idp into
@@ -123,15 +123,20 @@ class DplPatronRegController extends ControllerBase {
   }
 
   /**
+   * Load the user registration create user react application.
+   *
    * @return array[]
    */
-  public function userRegistrationReactAppLoad() {
+  public function userRegistrationReactAppLoad(): array {
     $config = $this->config('dpl_patron_reg.settings');
     $userToken = $this->user_token_provider->getAccessToken()?->token;
 
     return [
-      'placeholder' => [
-        '#markup' => 'INSET REACT APP HERE',
+      '#theme' => 'dpl_react_app',
+      "#name" => 'patron-create',
+      '#data' => [
+        'age-limit' => $config['age_limit'] ?? '18',
+        'user-token' => $userToken,
       ],
     ];
   }

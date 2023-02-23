@@ -33,5 +33,6 @@ dpl_patron_reg.create:
     _title: "Patron create"
   requirements:
     _permission: "access content"
+    _user_is_logged_in: 'TRUE'
   options:
     no_cache: true
