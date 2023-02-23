@@ -1,5 +1,5 @@
 always_save_userinfo: true
-connect_existing_users: true
+connect_existing_users: false
 override_registration_settings: true
 user_login_display: below
 userinfo_mappings:
