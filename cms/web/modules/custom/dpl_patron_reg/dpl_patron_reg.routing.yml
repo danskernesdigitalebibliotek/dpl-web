@@ -6,7 +6,7 @@ dpl_patron_reg.settings:
   requirements:
     _permission: "administer site configuration"
   options:
-    _admin_route: TRUE
+    _admin_route: true
 
 dpl_patron_reg.information:
   path: "/user/registration"
@@ -19,7 +19,19 @@ dpl_patron_reg.information:
 dpl_patron_reg.auth:
   path: '/user/registration/{client_name}/auth'
   defaults:
-    _controller: '\Drupal\dpl_patron_reg\Controller\DplPatronRegController::auth'
-    _title: "Patron registration authentication"
+    _controller: '\Drupal\dpl_patron_reg\Controller\DplPatronRegController::authRedirect'
+    _title: "Patron nem-login authentication"
   requirements:
     _permission: "access content"
+  options:
+    no_cache: true
+
+dpl_patron_reg.create:
+  path: '/user/registration/create'
+  defaults:
+    _controller: '\Drupal\dpl_patron_reg\Controller\DplPatronRegController::userRegistrationReactAppLoad'
+    _title: "Patron create"
+  requirements:
+    _permission: "access content"
+  options:
+    no_cache: true

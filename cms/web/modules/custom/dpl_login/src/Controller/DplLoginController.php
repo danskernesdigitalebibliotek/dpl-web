@@ -12,6 +12,7 @@ use Drupal\dpl_login\Exception\MissingConfigurationException;
 use Drupal\openid_connect\OpenIDConnectClaims;
 use Drupal\openid_connect\Plugin\OpenIDConnectClientInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
@@ -98,12 +99,12 @@ class DplLoginController extends ControllerBase {
   /**
    * Logs out user externally and internally.
    *
-   * @todo Insert TrustedRedirectResponse|RedirectResponse as return type when going to PHP ^8.0.
-   *
-   * @return \Drupal\Core\Routing\TrustedRedirectResponse|\Symfony\Component\HttpFoundation\RedirectResponse
+   * @return TrustedRedirectResponse|RedirectResponse
    *   Redirect to external logout service or front if not possible.
+   *
+   * @throws \Drupal\dpl_login\Exception\MissingConfigurationException
    */
-  public function logout() {
+  public function logout(): TrustedRedirectResponse|RedirectResponse {
     // It is a global problem if the logout endpoint has not been configured.
     if (!$logout_endpoint = $this->config->getLogoutEndpoint()) {
       throw new MissingConfigurationException('Adgangsplatformen plugin config variable logout_endpoint is missing');
@@ -112,7 +113,7 @@ class DplLoginController extends ControllerBase {
     $access_token = $this->userTokensProvider->getAccessToken();
 
     // Log out user in Drupal.
-    // We do this regardless wether it is possible to logout remotely or not.
+    // We do this regardless whether it is possible to logout remotely or not.
     // We do not want the user to get stuck on the site in a logged in state.
     user_logout();
 
