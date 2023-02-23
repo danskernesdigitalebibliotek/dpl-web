@@ -33,7 +33,7 @@ class DplPatronRegController extends ControllerBase {
   /**
    * {@inheritdoc}
    */
-  public static function create(ContainerInterface $container) {
+  public static function create(ContainerInterface $container): DplPatronRegController|static {
     return new static(
       $container->get('dpl_login.user_tokens'),
       $container->get('openid_connect.session'),
@@ -45,7 +45,7 @@ class DplPatronRegController extends ControllerBase {
   /**
    * Build and return information page as page.
    *
-   * @return array
+   * @return array<string, string>
    *   The page as a render array.
    */
   public function informationPage(): array {
@@ -74,13 +74,15 @@ class DplPatronRegController extends ControllerBase {
         '#text' => $config->get('information')['value'] ?? 'Please fill out the information page in the administration',
         '#format' => $config->get('information')['format'] ?? 'plain_text',
       ],
-      'logins' => $logins
+      'logins' => $logins,
     ];
   }
 
   /**
    * Redirect callback that redirects to log in service.
    *
+   * @param Request $request
+   *   Http request object.
    * @param string $client_name
    *   OpenID connect client name.
    *
@@ -101,6 +103,8 @@ class DplPatronRegController extends ControllerBase {
     );
     $scopes = $this->claims->getScopes($client);
     $_SESSION['openid_connect_op'] = 'login';
+
+    /** @var TrustedRedirectResponse $response */
     $response = $client->authorize($scopes);
 
     // Get redirect URL from OpenID connect and add forced nem-login idp into
@@ -113,14 +117,17 @@ class DplPatronRegController extends ControllerBase {
     // Set redirect Url after login. If you use the $request->getSession()
     // object this trick simply do not work and the redirect after login is
     // ignored.
-    $_SESSION['openid_connect_destination'] = Url::fromRoute('dpl_patron_reg.create')->toString(true)->getGeneratedUrl();
+    $_SESSION['openid_connect_destination'] = Url::fromRoute('dpl_patron_reg.create')->toString(TRUE)->getGeneratedUrl();
 
     return new TrustedRedirectResponse($url->toString());
   }
 
+  /**
+   * @return array[]
+   */
   public function userRegistrationReactAppLoad() {
     $config = $this->config('dpl_patron_reg.settings');
-    $userToken = $this->user_token_provider->getAccessToken()->token;
+    $userToken = $this->user_token_provider->getAccessToken()?->token;
 
     return [
       'placeholder' => [

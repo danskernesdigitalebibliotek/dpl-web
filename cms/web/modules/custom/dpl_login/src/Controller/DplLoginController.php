@@ -99,7 +99,7 @@ class DplLoginController extends ControllerBase {
   /**
    * Logs out user externally and internally.
    *
-   * @return TrustedRedirectResponse|RedirectResponse
+   * @return \Drupal\Core\Routing\TrustedRedirectResponse|\Symfony\Component\HttpFoundation\RedirectResponse
    *   Redirect to external logout service or front if not possible.
    *
    * @throws \Drupal\dpl_login\Exception\MissingConfigurationException
