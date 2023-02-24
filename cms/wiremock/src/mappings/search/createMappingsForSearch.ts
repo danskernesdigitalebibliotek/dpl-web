@@ -7,7 +7,7 @@ export default (baseUri?: string, options?: Options) => {
     wiremock(baseUri, options).mappings.createMapping({
       request: {
         method: "POST",
-        urlPath: "/opac/graphql",
+        urlPath: "/next/graphql",
         bodyPatterns: [
           {
             matchesJsonPath: matchGraphqlQuery("searchWithPagination"),
@@ -25,7 +25,7 @@ export default (baseUri?: string, options?: Options) => {
     wiremock(baseUri, options).mappings.createMapping({
       request: {
         method: "POST",
-        urlPath: "/opac/graphql",
+        urlPath: "/next/graphql",
         bodyPatterns: [
           {
             matchesJsonPath: matchGraphqlQuery("intelligentFacets"),
@@ -43,7 +43,7 @@ export default (baseUri?: string, options?: Options) => {
     wiremock(baseUri, options).mappings.createMapping({
       request: {
         method: "POST",
-        urlPath: "/opac/graphql",
+        urlPath: "/next/graphql",
         bodyPatterns: [
           {
             matchesJsonPath: matchGraphqlQuery("searchFacet"),
