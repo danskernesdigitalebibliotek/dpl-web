@@ -48,19 +48,20 @@ needed to test certain functionalities. This can be achieved in two ways:
 
 1. Contact administrators of the DPL Platform Lagoon instance to apply for an
    user account.
-2. Log into the platform at <https://ui.lagoon.dplplat01.dpl.reload.dk/>
-3. Go to the dpl-cms project
+2. Access the URL for the UI of the instance e.g <https://ui.lagoon.dplplat01.dpl.reload.dk/>
+3. Log in with your user account (see above)
+4. Go to the dpl-cms project
 
-### Use the Lagoon CLI
+### Setup the Lagoon CLI
 
-1. Log into the platform at <https://ui.lagoon.dplplat01.dpl.reload.dk/> with your
-   user account (see above)
-2. Go to the Settings page
-3. Add your SSH public key to your account
-4. Install the [Lagoon CLI](https://uselagoon.github.io/lagoon-cli/)
-5. Locate [information about the Lagoon instance to use in the DPL Platform
+1. Locate [information about the Lagoon instance to use in the DPL Platform
    documentation](https://github.com/danskernesdigitalebibliotek/dpl-platform/blob/main/documentation/platform-environments.md)
-6. Configure the Lagoon CLI to use the DPL Platform instance:
+2. Access the URL for the UI of the instance
+3. Log in with your user account (see above)
+4. Go to the Settings page
+5. Add your SSH public key to your account
+6. Install the [Lagoon CLI](https://uselagoon.github.io/lagoon-cli/)
+7. Configure the Lagoon CLI to use the instance:
 
    ```sh
    lagoon config add \
@@ -71,14 +72,14 @@ needed to test certain functionalities. This can be achieved in two ways:
      --ui [url to UI] \
    ```
 
-7. Verify the installation:
+8. Verify the installation:
 
    ```sh
    lagoon login --lagoon [instance name]
    lagoon whoami --lagoon [instance name]
    ```
 
-8. Use the DPL Platform as your default Lagoon instance:
+9. Use the DPL Platform as your default Lagoon instance:
 
    ```sh
    lagoon config default --lagoon [instance name]
