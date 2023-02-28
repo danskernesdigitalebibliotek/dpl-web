@@ -13,7 +13,8 @@ owners to test the result before the change is accepted.
 
 ### Create an environment for a pull request
 
-1. Create a pull request for the change on GitHub
+1. Create a pull request for the change on GitHub. The pull request must be
+   created from a branch in the same repository as the target branch.
 2. Wait for GitHub Actions related to Lagoon deployment to complete. Note: This
    deployment process can take a while. Be patient.
 3. A link to the deployed environment is available in the section between pull
