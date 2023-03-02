@@ -148,13 +148,14 @@ jobs:
         run: task ci:reset
       - name: Run Cypress
         run: task ci:cypress
-      - name: Archive vidoes
+      - name: Archive videoes
+        if: always()
         uses: actions/upload-artifact@v3
         with:
           name: cypress-videos
           path: cypress/videos
       - name: Archive screenshots
-        if: ${{ failure() }}
+        if: always()
         uses: actions/upload-artifact@v3
         with:
           name: cypress-screenshots
