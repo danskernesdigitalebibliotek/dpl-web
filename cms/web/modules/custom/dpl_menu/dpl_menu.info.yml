@@ -1,0 +1,9 @@
+name: DPL menu
+description: Handle the user profile menu page
+package: DPL
+dependencies:
+  - drupal:block
+  - dpl_fbs:dpl_fbs
+  - dpl_publizon:dpl_publizon
+type: module
+core_version_requirement: ^9
