@@ -8,7 +8,7 @@ dpl_menu.list:
 dpl_menu.settings:
   path: "/admin/config/services/loanerstatusmenu"
   defaults:
-    _form: '\Drupal\dpl_fbs\Form\MenuSettingsForm'
+    _form: '\Drupal\dpl_menu\Form\MenuSettingsForm'
     _title: "Menu settings"
   requirements:
     _permission: "administer site configuration"

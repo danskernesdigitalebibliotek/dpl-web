@@ -50,6 +50,20 @@ class MenuSettingsForm extends ConfigFormBase
       '#default_value' => $config->get('menu_navigation_data_config') ?? '',
     ];
 
+    $form['settings']['menu_login_link'] = [
+      '#type' => 'textfield',
+      '#title' => $this->t('Login link'),
+      '#description' => $this->t('Link to the place where the user logs in'),
+      '#default_value' => $config->get('menu_login_link') ?? '',
+    ];
+
+    $form['settings']['menu_create_user_link'] = [
+      '#type' => 'textfield',
+      '#title' => $this->t('Create user link'),
+      '#description' => $this->t('Link to the place where the user creates a profile'),
+      '#default_value' => $config->get('menu_create_user_link') ?? '',
+    ];
+
 
     return parent::buildForm($form, $form_state);
   }
@@ -59,6 +73,14 @@ class MenuSettingsForm extends ConfigFormBase
    */
   public function validateForm(array &$form, FormStateInterface $form_state): void
   {
+    $loginUrl = $form_state->getValue('menu_login_link');
+    if (!filter_var($loginUrl, FILTER_VALIDATE_URL)) {
+      $form_state->setErrorByName('menu_login_link', $this->t('The url "%url" is not a valid URL.', ['%url' => $loginUrl]));
+    }
+    $createUserUrl = $form_state->getValue('menu_create_user_link');
+    if (!filter_var($loginUrl, FILTER_VALIDATE_URL)) {
+      $form_state->setErrorByName('menu_create_user_link', $this->t('The url "%url" is not a valid URL.', ['%url' => $createUserUrl]));
+    }
   }
 
   /**
@@ -70,6 +92,8 @@ class MenuSettingsForm extends ConfigFormBase
 
     $this->config('dpl_menu.settings')
       ->set('menu_navigation_data_config', $form_state->getValue('menu_navigation_data_config'))
+      ->set('menu_login_link', $form_state->getValue('menu_login_link'))
+      ->set('menu_create_user_link', $form_state->getValue('menu_create_user_link'))
       ->save();
   }
 }

@@ -70,12 +70,15 @@ class MenuBlock extends BlockBase implements ContainerFactoryPluginInterface
 
     $fbsConfig = $this->configFactory->get('dpl_fbs.settings');
     $publizonConfig = $this->configFactory->get('dpl_publizon.settings');
+    $menuConfig = $this->configFactory->get("dpl_menu.settings");
 
     $data = [
       // Config.
       "threshold-config" => $this->configFactory->get('dpl_library_agency.general_settings')->get('threshold_config'),
       // "menu-navigation-data-config" => $this->configFactory->get('dpl_menu.settings')->get('menu_navigation_data_config'),
-      "menu-navigation-data-config" => '[{"name": "Loans","link": "","dataId": "1"},{"name": "Reservations","link": "","dataId": "2"},{"name": "My list","link": "","dataId": "3"},{"name": "Fees & Replacement costs","link": "","dataId": "4"},{"name": "My account","link": "","dataId": "5"}]',
+      "menu-navigation-data-config" => $menuConfig->get("menu_navigation_data_config"),
+      "menu-login-url" => $menuConfig->get("menu_login_link"),
+      "menu-sign-up-url" => $menuConfig->get("menu_create_user_link"),
       "fbs-base-url" => $fbsConfig->get('base_url'),
       "publizon-base-url" => $publizonConfig->get('base_url'),
       "page-size-desktop" => "25",
@@ -99,9 +102,7 @@ class MenuBlock extends BlockBase implements ContainerFactoryPluginInterface
       "menu-log-out-text" => $this->t("Log Out", [], $context),
       "menu-log-out-url" => $this->t("https://unsplash.com/photos/tNJdaBc-r5c", [], $context),
       "menu-login-text" => $this->t("Log in", [], $context),
-      "menu-login-url" => $this->t("https://unsplash.com/photos/tNJdaBc-r5c", [], $context),
       "menu-sign-up-text" => $this->t("Sign up", [], $context),
-      "menu-sign-up-url" => $this->t("https://unsplash.com/photos/tNJdaBc-r5c", [], $context),
     ] + DplReactAppsController::externalApiBaseUrls();
 
     $app = [

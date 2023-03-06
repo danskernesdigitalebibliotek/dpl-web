@@ -8,4 +8,6 @@ dpl_menu.settings_form:
   title: "Menu settings"
   route_name: dpl_menu.settings
   description: "Change Menu Settings"
-  parent: system.admin_config_services
+  parent: dpl_library_agency.settings
+
+
