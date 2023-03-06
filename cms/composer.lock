@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "99bf53c87cb8de6e64ec6b30a4814feb",
+    "content-hash": "8f05868ff003366eac31c9616c7350de",
     "packages": [
         {
             "name": "amazeeio/drupal_integrations",
@@ -1086,7 +1086,11 @@
         },
         {
             "name": "danskernesdigitalebibliotek/dpl-react",
+<<<<<<< HEAD
             "version": "0.3.0-rc28",
+=======
+            "version": "0.3.0-rc29",
+>>>>>>> 4ad1d21 (react bump)
             "dist": {
                 "type": "zip",
                 "url": "https://github.com/itk-dev/dpl-react/releases/download/release-fix%2Fdashboard-array-length-prints/dist.zip"
