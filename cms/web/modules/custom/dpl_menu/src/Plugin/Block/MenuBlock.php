@@ -76,7 +76,7 @@ class MenuBlock extends BlockBase implements ContainerFactoryPluginInterface
       // Config.
       "threshold-config" => $this->configFactory->get('dpl_library_agency.general_settings')->get('threshold_config'),
       // "menu-navigation-data-config" => $this->configFactory->get('dpl_menu.settings')->get('menu_navigation_data_config'),
-      "menu-navigation-data-config" => $menuConfig->get("menu_navigation_data_config"),
+      "menu-navigation-data-config" => '[{"name": "Loans","link": "","dataId": "1"},{"name": "Reservations","link": "","dataId": "2"},{"name": "My list","link": "","dataId": "3"},{"name": "Fees & Replacement costs","link": "","dataId": "4"},{"name": "My account","link": "","dataId": "5"}]',
       "menu-login-url" => $menuConfig->get("menu_login_link"),
       "menu-sign-up-url" => $menuConfig->get("menu_create_user_link"),
       "fbs-base-url" => $fbsConfig->get('base_url'),

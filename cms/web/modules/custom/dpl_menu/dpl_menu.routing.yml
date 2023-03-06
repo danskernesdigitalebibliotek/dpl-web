@@ -6,7 +6,7 @@ dpl_menu.list:
     _permission: "access content"
 
 dpl_menu.settings:
-  path: "/admin/config/services/loanerstatusmenu"
+  path: "/admin/config/dpl-library-agency/loanerstatusmenu"
   defaults:
     _form: '\Drupal\dpl_menu\Form\MenuSettingsForm'
     _title: "Menu settings"
