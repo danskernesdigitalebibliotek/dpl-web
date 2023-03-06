@@ -110,6 +110,8 @@ class DashboardBlock extends BlockBase implements ContainerFactoryPluginInterfac
       'publizon-ebook-text' => $this->t("E-book", [], $context),
       'publizon-podcast-text' => $this->t("Podcast", [], $context),
       'group-modal-due-date-header-text' => $this->t("Due date @date", [], $context),
+      'choose-all-text' => $this->t("Select all", [], $context),
+      'remove-all-reservations-text' => $this->t("Select all", [], $context),
       // 'group-modal-return-library-text' => $this->t("", [], $context),
       'group-modal-checkbox-text' => $this->t("Choose all renewable", [], $context),
       'group-modal-button-text' => $this->t("Renewable (@count)", [], $context),
