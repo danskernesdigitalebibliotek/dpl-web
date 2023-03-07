@@ -34,7 +34,7 @@ class ReservationListBlock extends BlockBase implements ContainerFactoryPluginIn
    *   A configuration array containing information about the plugin instance.
    * @param string $plugin_id
    *   The plugin ID for the plugin instance.
-   * @param mixed $plugin_definition
+   * @param array $plugin_definition
    *   The plugin implementation definition.
    * @param \Drupal\Core\Config\ConfigFactoryInterface $configFactory
    *   Drupal config factory to get FBS and Publizon settings.
@@ -43,7 +43,7 @@ class ReservationListBlock extends BlockBase implements ContainerFactoryPluginIn
    * @param \Drupal\dpl_library_agency\Branch\BranchRepositoryInterface $branchRepository
    *   The branchsettings for getting branches.
    */
-  public function __construct(array $configuration, $plugin_id, $plugin_definition, ConfigFactoryInterface $configFactory, protected BranchSettings $branchSettings, protected BranchRepositoryInterface $branchRepository) {
+  public function __construct(array $configuration, string $plugin_id, array $plugin_definition, ConfigFactoryInterface $configFactory, protected BranchSettings $branchSettings, protected BranchRepositoryInterface $branchRepository) {
     parent::__construct($configuration, $plugin_id, $plugin_definition);
     $this->configuration = $configuration;
     $this->configFactory = $configFactory;
@@ -69,7 +69,7 @@ class ReservationListBlock extends BlockBase implements ContainerFactoryPluginIn
    * @return mixed[]
    *   The app render array.
    */
-  public function build() {
+  public function build(): array {
     $context = ['context' => 'Reservation list'];
     $contextAria = ['context' => 'Reservation list (Aria)'];
     $reservation_list_settings = $this->configFactory->get('dpl_reservation_list.settings');

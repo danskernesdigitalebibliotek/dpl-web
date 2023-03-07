@@ -12,3 +12,8 @@ parameters:
     # iterable typing for.
     - '#no value type specified in iterable type Drupal\\.*Interface#'
     - '#no value type specified in iterable type Drupal\\.*\\Plugin\\Field\\FieldType\\.*Item#'
+    # Ignore block inject create configuration parameter.
+    - '#Drupal\\.*\\Plugin\\Block\\.*Block::__construct\(\) .* no value type specified in iterable type array\.#'
+    - '#Drupal\\.*\\Plugin\\Block\\.*Block::create\(\) .* no value type specified in iterable type array\.#'
+
+
