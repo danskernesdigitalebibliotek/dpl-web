@@ -63,12 +63,16 @@ class ReservationListSettingsForm extends ConfigFormBase {
       '#type' => 'number',
       '#title' => $this->t('Page size mobile', [], $context),
       '#default_value' => $config->get('page_size_mobile') ?? 25,
+      '#min' => 0,
+      '#step' => 1,
     ];
 
     $form['settings']['page_size_desktop'] = [
       '#type' => 'number',
       '#title' => $this->t('Page size desktop', [], $context),
       '#default_value' => $config->get('page_size_desktop') ?? 25,
+      '#min' => 0,
+      '#step' => 1,
     ];
 
     return parent::buildForm($form, $form_state);
@@ -88,16 +92,6 @@ class ReservationListSettingsForm extends ConfigFormBase {
     $materialUrl = $form_state->getValue('ereolen_my_page_url');
     if (!filter_var($materialUrl, FILTER_VALIDATE_URL)) {
       $form_state->setErrorByName('ereolen_my_page_url', $this->t('The url "%url" is not a valid URL.', ['%url' => $materialUrl], $context));
-    }
-
-    $pageSizeMobile = $form_state->getValue('page_size_mobile');
-    if (is_int($pageSizeMobile) && $pageSizeMobile <= 0) {
-      $form_state->setErrorByName('page_size_mobile', $this->t('Page size mobile has to be a positive integer', [], $context));
-    }
-
-    $pageSizeDesktop = $form_state->getValue('page_size_desktop');
-    if (is_int($pageSizeDesktop) && $pageSizeDesktop <= 0) {
-      $form_state->setErrorByName('page_size_desktop', $this->t('Page size desktop has to be a positive integer', [], $context));
     }
   }
 

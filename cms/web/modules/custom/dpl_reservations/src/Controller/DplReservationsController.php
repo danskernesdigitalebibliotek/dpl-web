@@ -6,6 +6,7 @@ use Drupal\Core\Block\BlockManagerInterface;
 use Drupal\Core\Controller\ControllerBase;
 use Drupal\Core\Render\RendererInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
+use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
 
 /**
  * Render reservation list react app.
@@ -59,11 +60,8 @@ class DplReservationsController extends ControllerBase {
     // Some blocks might implement access check.
     $access_result = $plugin_block->access($this->currentUser());
 
-    // Return empty render array if user doesn't have access.
-    // $access_result can be boolean or an AccessResult class.
     if (is_object($access_result) && $access_result->isForbidden() || is_bool($access_result) && !$access_result) {
-      // You might need to add some cache tags/contexts.
-      return [];
+      throw new AccessDeniedHttpException();
     }
 
     // Add the cache tags/contexts.
