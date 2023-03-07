@@ -72,7 +72,7 @@ class ReservationListBlock extends BlockBase implements ContainerFactoryPluginIn
   public function build() {
     $context = ['context' => 'Reservation list'];
     $contextAria = ['context' => 'Reservation list (Aria)'];
-    $reservation_list_settings = $this->configFactory->get('reservation_list.settings');
+    $reservation_list_settings = $this->configFactory->get('dpl_reservation_list.settings');
     $fbsConfig = $this->configFactory->get('dpl_fbs.settings');
     $publizonConfig = $this->configFactory->get('dpl_publizon.settings');
 

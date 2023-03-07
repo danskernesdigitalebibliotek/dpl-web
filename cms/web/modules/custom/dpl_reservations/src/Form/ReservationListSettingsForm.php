@@ -15,7 +15,7 @@ class ReservationListSettingsForm extends ConfigFormBase {
    */
   protected function getEditableConfigNames(): array {
     return [
-      'reservation_list.settings',
+      'dpl_reservation_list.settings',
     ];
   }
 
@@ -30,7 +30,7 @@ class ReservationListSettingsForm extends ConfigFormBase {
    * {@inheritdoc}
    */
   public function buildForm(array $form, FormStateInterface $form_state): array {
-    $config = $this->config('reservation_list.settings');
+    $config = $this->config('dpl_reservation_list.settings');
 
     $form['settings'] = [
       '#type' => 'fieldset',
@@ -104,7 +104,7 @@ class ReservationListSettingsForm extends ConfigFormBase {
   public function submitForm(array &$form, FormStateInterface $form_state): void {
     parent::submitForm($form, $form_state);
 
-    $this->config('reservation_list.settings')
+    $this->config('dpl_reservation_list.settings')
       ->set('pause_reservation_info_url', $form_state->getValue('pause_reservation_info_url'))
       ->set('ereolen_my_page_url', $form_state->getValue('ereolen_my_page_url'))
       ->set('pause_reservation_start_date_config', $form_state->getValue('pause_reservation_start_date_config'))

@@ -42,7 +42,7 @@ class DplReservationsController extends ControllerBase {
   }
 
   /**
-   * Demo react rendering.
+   * Build the reservation list page.
    *
    * @return mixed[]
    *   Render array.
