@@ -73,13 +73,14 @@ class LoanListBlock extends BlockBase implements ContainerFactoryPluginInterface
    *   The app render array.
    */
   public function build() {
-    $loanListSettings = $this->configFactory->get('loan_list.settings');
+    $loanListSettings = $this->configFactory->get('dpl_loan_list.settings');
     $context = ['context' => 'Loan list'];
     $contextAria = ['context' => 'Loan list (Aria)'];
     $fbsConfig = $this->configFactory->get('dpl_fbs.settings');
     $publizonConfig = $this->configFactory->get('dpl_publizon.settings');
+
     $data = [
-      // Page sige.
+      // Page size.
       "page-size-desktop" => $loanListSettings->get('page_size_desktop'),
       "page-size-mobile" => $loanListSettings->get('page_size_mobile'),
       // Config.
@@ -154,14 +155,11 @@ class LoanListBlock extends BlockBase implements ContainerFactoryPluginInterface
       'group-modal-go-to-material-aria-label-text' => $this->t("Go to @label material details", [], $contextAria),
     ] + DplReactAppsController::externalApiBaseUrls();
 
-    $app = [
+    return [
       '#theme' => 'dpl_react_app',
       "#name" => 'loan-list',
       '#data' => $data,
     ];
-
-    return $app;
-
   }
 
 }

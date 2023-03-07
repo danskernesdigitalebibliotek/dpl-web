@@ -15,7 +15,7 @@ class LoanListSettingsForm extends ConfigFormBase {
    */
   protected function getEditableConfigNames(): array {
     return [
-      'loan_list.settings',
+      'dpl_loan_list.settings',
     ];
   }
 
@@ -30,36 +30,43 @@ class LoanListSettingsForm extends ConfigFormBase {
    * {@inheritdoc}
    */
   public function buildForm(array $form, FormStateInterface $form_state): array {
-    $config = $this->config('loan_list.settings');
+    $context = ['context' => 'Loan list (settings)'];
+    $config = $this->config('dpl_loan_list.settings');
 
     $form['settings'] = [
       '#type' => 'fieldset',
-      '#title' => $this->t('Basic settings'),
+      '#title' => $this->t('Basic settings', [], $context),
       '#tree' => FALSE,
     ];
 
     $form['settings']['fees_page_url'] = [
       '#type' => 'textfield',
-      '#title' => $this->t('Fee page url'),
-      '#description' => $this->t('The link to the relevant fee page'),
+      '#title' => $this->t('Fee page url', [], $context),
+      '#description' => $this->t('The link to the relevant fee page', [], $context),
       '#default_value' => $config->get('fees_page_url') ?? '',
     ];
 
     $form['settings']['material_overdue_url'] = [
       '#type' => 'textfield',
-      '#title' => $this->t('Material overdue url'),
-      '#description' => $this->t('The link to the material overdue page'),
+      '#title' => $this->t('Material overdue url', [], $context),
+      '#description' => $this->t('The link to the material overdue page', [], $context),
       '#default_value' => $config->get('material_overdue_url') ?? '',
     ];
+
     $form['settings']['page_size_mobile'] = [
       '#type' => 'number',
-      '#title' => $this->t('Page size mobile'),
+      '#title' => $this->t('Page size mobile', [], $context),
       '#default_value' => $config->get('page_size_mobile') ?? 25,
+      '#min' => 0,
+      '#step' => 1,
     ];
+
     $form['settings']['page_size_desktop'] = [
       '#type' => 'number',
-      '#title' => $this->t('Page size desktop'),
+      '#title' => $this->t('Page size desktop', [], $context),
       '#default_value' => $config->get('page_size_desktop') ?? 25,
+      '#min' => 0,
+      '#step' => 1,
     ];
 
     return parent::buildForm($form, $form_state);
@@ -71,22 +78,12 @@ class LoanListSettingsForm extends ConfigFormBase {
   public function validateForm(array &$form, FormStateInterface $form_state): void {
     $feesUrl = $form_state->getValue('fees_page_url');
     if (!filter_var($feesUrl, FILTER_VALIDATE_URL)) {
-      $form_state->setErrorByName('fees_page_url', $this->t('The url "%url" is not a valid URL.', ['%url' => $feesUrl]));
+      $form_state->setErrorByName('fees_page_url', $this->t('The url "%url" is not a valid URL.', ['%url' => $feesUrl], ['context' => 'Loan list (settings)']));
     }
 
     $materialUrl = $form_state->getValue('material_overdue_url');
     if (!filter_var($materialUrl, FILTER_VALIDATE_URL)) {
-      $form_state->setErrorByName('material_overdue_url', $this->t('The url "%url" is not a valid URL.', ['%url' => $materialUrl]));
-    }
-
-    $pageSizeMobile = $form_state->getValue('page_size_mobile');
-    if (!is_int($pageSizeMobile) && $pageSizeMobile <= 0) {
-      $form_state->setErrorByName('page_size_mobile', $this->t('Page size mobile has to be a positive integer'));
-    }
-
-    $pageSizeDesktop = $form_state->getValue('page_size_desktop');
-    if (!is_int($pageSizeDesktop) && $pageSizeDesktop <= 0) {
-      $form_state->setErrorByName('page_size_desktop', $this->t('Page size desktop has to be a positive integer'));
+      $form_state->setErrorByName('material_overdue_url', $this->t('The url "%url" is not a valid URL.', ['%url' => $materialUrl], ['context' => 'Loan list (settings)']));
     }
   }
 
@@ -96,7 +93,7 @@ class LoanListSettingsForm extends ConfigFormBase {
   public function submitForm(array &$form, FormStateInterface $form_state): void {
     parent::submitForm($form, $form_state);
 
-    $this->config('loan_list.settings')
+    $this->config('dpl_loan_list.settings')
       ->set('fees_page_url', $form_state->getValue('fees_page_url'))
       ->set('material_overdue_url', $form_state->getValue('material_overdue_url'))
       ->set('page_size_desktop', $form_state->getValue('page_size_desktop'))
