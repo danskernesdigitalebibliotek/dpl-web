@@ -75,9 +75,7 @@ class ReservationListBlock extends BlockBase implements ContainerFactoryPluginIn
     $reservation_list_settings = $this->configFactory->get('dpl_reservation_list.settings');
     $fbsConfig = $this->configFactory->get('dpl_fbs.settings');
     $publizonConfig = $this->configFactory->get('dpl_publizon.settings');
-
     $dateConfig = $reservation_list_settings->get('pause_reservation_start_date_config') ?? '';
-    }
 
     $data = [
       // Branches.
@@ -148,10 +146,10 @@ class ReservationListBlock extends BlockBase implements ContainerFactoryPluginIn
       'delete-reservation-modal-delete-button-text' => $this->t('Cancel reservation', [], $context),
       'delete-reservation-modal-not-regrettable-text' => $this->t('You cannot regret this action', [], $context),
       'delete-reservation-modal-close-modal-text' => $this->t('Close delete reservation modal', [], $context),
-      'delete-reservation-modal-aria-description-text' => $this->t('This button opens a modal that covers the entire page and contains the possibility to delete a selected reservation, or multiple selected reservations', [], $context),
-      'reservation-list-on-hold-aria-text' => $this->t('Reservations have been paused in the following time span:', [], $context),
-      'reservation-list-pause-reservation-aria-modal-text' => $this->t('This button opens a modal that covers the entire page and contains the possibility to pause physical reservations', [], $context),
-      'pause-reservation-modal-aria-description-text' => $this->t('This modal makes it possible to pause your physical reservations', [], $context),
+      'delete-reservation-modal-aria-description-text' => $this->t('This button opens a modal that covers the entire page and contains the possibility to delete a selected reservation, or multiple selected reservations', [], $contextAria),
+      'reservation-list-on-hold-aria-text' => $this->t('Reservations have been paused in the following time span:', [], $contextAria),
+      'reservation-list-pause-reservation-aria-modal-text' => $this->t('This button opens a modal that covers the entire page and contains the possibility to pause physical reservations', [], $contextAria),
+      'pause-reservation-modal-aria-description-text' => $this->t('This modal makes it possible to pause your physical reservations', [], $contextAria),
       'pause-reservation-modal-header-text' => $this->t('Pause reservations on physical items', [], $context),
       'pause-reservation-modal-body-text' => $this->t('Pause your reservations early, since reservations that are already being processed, will not be paused.', [], $context),
       'pause-reservation-modal-close-modal-text' => $this->t('Close pause reservations modal', [], $context),
@@ -169,30 +167,28 @@ class ReservationListBlock extends BlockBase implements ContainerFactoryPluginIn
       'list-details-nothing-selected-label-text' => $this->t('Pick', [], $context),
       'show-more-text' => $this->t('show more', [], $context),
       'result-pager-status-text' => $this->t('Showing @itemsShown out of @hitcount results', [], $context),
-      'reservation-list-status-icon-ready-for-pickup-aria-label-text' => $this->t('This material is ready for pickup', [], $context),
+      'reservation-list-status-icon-ready-for-pickup-aria-label-text' => $this->t('This material is ready for pickup', [], $contextAria),
       'reservation-list-status-icon-queued-aria-label-text' => [
         'type' => 'plural',
         'text' => [
-          $this->t('You are the only person queued for this material', [], $context),
-          $this->t('This material has @count people in queue before you', [], $context),
+          $this->t('You are the only person queued for this material', [], $contextAria),
+          $this->t('This material has @count people in queue before you', [], $contextAria),
         ],
       ],
       'reservation-list-status-icon-ready-in-aria-label-text' => [
         'type' => 'plural',
         'text' => [
-          $this->t('This material is ready in 1 day', [], $context),
-          $this->t('This material is ready in @count days', [], $context),
+          $this->t('This material is ready in 1 day', [], $contextAria),
+          $this->t('This material is ready in @count days', [], $contextAria),
         ],
       ],
     ] + DplReactAppsController::externalApiBaseUrls();
 
-    $app = [
+    return [
       '#theme' => 'dpl_react_app',
       "#name" => 'reservation-list',
       '#data' => $data,
     ];
-
-    return $app;
   }
 
 }
