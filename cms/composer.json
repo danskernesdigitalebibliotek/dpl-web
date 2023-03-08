@@ -17,7 +17,7 @@
             "type": "package",
             "package": {
                 "name": "danskernesdigitalebibliotek/dpl-react",
-                "version": "0.3.0-rc27",
+                "version": "0.3.0-rc28",
                 "type": "drupal-library",
                 "dist": {
                     "url": "https://github.com/danskernesdigitalebibliotek/dpl-react/releases/download/release-develop/dist.zip",
