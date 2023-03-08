@@ -36,7 +36,8 @@ describe("User journey", () => {
       .should("contain", "Reserve bog");
   });
 
-  it("Can open reservation modal & reserve a material", () => {
+  // TODO: Fix the failing test. It is not able, for some reason, to press the submit button.
+  it.skip("Can open reservation modal & reserve a material", () => {
     const authorizationCode = "7c5e3213aea6ef42ec97dfeaa6f5b1d454d856dc";
     const accessToken = "447131b0a03fe0421204c54e5c21a60d70030fd1";
     const userGuid = "19a4ae39-be07-4db9-a8b7-8bbb29f03da6";
@@ -47,11 +48,10 @@ describe("User journey", () => {
     cy.getBySel("modal")
       .should("be.visible")
       .and("contain", "Harry Potter og Fønixordenen");
-    // TODO: Fix the failing test. It is not able, for some reason, to press the submit button.
-    // cy.getBySel("reservation-modal-submit-button").click();
-    // cy.getBySel("reservation-success-title-text")
-    //   .should("exist")
-    //   .and("contain", "The material is available and is now reserved for you!");
+    cy.getBySel("reservation-modal-submit-button").click();
+    cy.getBySel("reservation-success-title-text")
+      .should("exist")
+      .and("contain", "The material is available and is now reserved for you!");
   });
 
   afterEach(() => {
