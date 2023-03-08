@@ -47,7 +47,7 @@ describe("User journey", () => {
     cy.getBySel("modal")
       .should("be.visible")
       .and("contain", "Harry Potter og Fønixordenen");
-    // This is skipped because it does not press the "Reserve" button / call the API: fbs-openplatform.dbc.dk/external/v1/agencyid/patrons/patronid/reservations/v2
+    // TODO: Fix the failing test. It is not able, for some reason, to press the submit button.
     // cy.getBySel("reservation-modal-submit-button").click();
     // cy.getBySel("reservation-success-title-text")
     //   .should("exist")
