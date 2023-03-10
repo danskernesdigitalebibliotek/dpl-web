@@ -9,6 +9,9 @@ tasks:
         command: |
           if tables=$(drush sqlq "show tables like 'node';") && [ -z "$tables" ]; then
             drush si --existing-config -y
+            # Practice shows that the cache needs to be cleared to avoid
+            # configuration errors even after a site install.
+            drush cr
           fi
         service: cli
         shell: bash

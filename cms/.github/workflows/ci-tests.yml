@@ -125,6 +125,7 @@ jobs:
       - name: Run Pa11y
         run: task ci:pa11y
       - name: Archive screenshots
+        if: ${{ always() }}
         uses: actions/upload-artifact@v3
         with:
           name: pa11y-screenshots

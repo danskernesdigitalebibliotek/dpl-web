@@ -104,6 +104,9 @@ tasks:
       - task dev:start
       # Install site.
       - task dev:cli -- drush site-install --existing-config -y
+      # Practice shows that the cache needs to be cleared to avoid configuration
+      # errors even after a site install.
+      - task dev:cache:clear:drupal
       # Import translations.
       - task dev:cli -- drush locale-check
       - task dev:cli -- drush locale-update
