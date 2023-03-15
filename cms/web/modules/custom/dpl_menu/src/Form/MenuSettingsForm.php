@@ -51,7 +51,7 @@ class MenuSettingsForm extends ConfigFormBase
     ];
 
     $form['settings']['menu_login_link'] = [
-      '#type' => 'textfield',
+      '#type' => 'textarea',
       '#title' => $this->t('Login link'),
       '#description' => $this->t('Link to the place where the user logs in'),
       '#default_value' => $config->get('menu_login_link') ?? '',
