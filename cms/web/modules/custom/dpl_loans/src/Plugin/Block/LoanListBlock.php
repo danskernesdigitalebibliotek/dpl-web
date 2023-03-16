@@ -28,7 +28,7 @@ class LoanListBlock extends BlockBase implements ContainerFactoryPluginInterface
   /**
    * LoanListBlock constructor.
    *
-   * @param array $configuration
+   * @param mixed[] $configuration
    *   A configuration array containing information about the plugin instance.
    * @param string $plugin_id
    *   The plugin ID for the plugin instance.
@@ -45,6 +45,8 @@ class LoanListBlock extends BlockBase implements ContainerFactoryPluginInterface
 
   /**
    * {@inheritDoc}
+   *
+   * @param mixed[] $configuration
    */
   public static function create(ContainerInterface $container, array $configuration, $plugin_id, $plugin_definition) {
     return new static(
