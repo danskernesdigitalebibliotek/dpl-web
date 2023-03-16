@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "3344f9f24b3250a3c64081ad7f4081b3",
+    "content-hash": "e82c215c7aa74b5e45f654ee3bce5cc5",
     "packages": [
         {
             "name": "amazeeio/drupal_integrations",
@@ -2921,7 +2921,7 @@
                     "datestamp": "1645900154",
                     "security-coverage": {
                         "status": "not-covered",
-                        "message": "Project has not opted into security advisory coverage!"
+                        "message": "RC releases are not covered by Drupal security advisories."
                     }
                 }
             },
@@ -13201,6 +13201,8 @@
     "aliases": [],
     "minimum-stability": "dev",
     "stability-flags": {
+        "danskernesdigitalebibliotek/dpl-design-system": 5,
+        "danskernesdigitalebibliotek/dpl-react": 5,
         "drupal/default_content": 15,
         "drupal/inline_all_css": 5,
         "drupal/libraries": 10,
