@@ -73,8 +73,7 @@ class PatronMenuBlock extends BlockBase implements ContainerFactoryPluginInterfa
    *   The app render array.
    */
   public function build() {
-    $context = ["context" => 'menu list'];
-    $contextAria = ["context" => 'menu list (Aria)'];
+    $context = ["context" => 'Patron menu'];
 
     $fbsConfig = $this->configFactory->get('dpl_fbs.settings');
     $publizonConfig = $this->configFactory->get('dpl_publizon.settings');
