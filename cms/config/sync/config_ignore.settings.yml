@@ -36,7 +36,6 @@ ignored_config_entities:
   - ~image.style.large
   - ~image.style.medium
   - ~image.style.thumbnail
-  - ~dpl_patron_menu.settings
   - '~jsonlog.settings:jsonlog_severity_threshold'
   - '~jsonlog.settings:jsonlog_truncate'
   - '~jsonlog.settings:jsonlog_stderr'
