@@ -10,9 +10,7 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
 /**
  * Render intermediate list react app.
  */
-class DplMenuController extends ControllerBase
-{
-
+class DplMenuController extends ControllerBase {
   /**
    * DplMenuController constructor.
    *
@@ -35,8 +33,7 @@ class DplMenuController extends ControllerBase
    *
    * @return static
    */
-  public static function create(ContainerInterface $container)
-  {
+  public static function create(ContainerInterface $container) {
     return new static(
       $container->get('plugin.manager.block'),
       $container->get('renderer'),
@@ -51,13 +48,12 @@ class DplMenuController extends ControllerBase
    *
    * @throws \Drupal\Component\Plugin\Exception\PluginException
    */
-  public function list(): array
-  {
+  public function list(): array {
 
     // You can hard code configuration, or you load from settings.
     $config = [];
 
-    /** @var \Drupal\dpl_menu\Plugin\Block\MenuBlock $plugin_block */
+    /** @var \Drupal\dpl_menu\Plugin\Block\PatronMenuBlock $plugin_block */
     $plugin_block = $this->blockManager->createInstance('dpl_menu_block', $config);
 
     // Some blocks might implement access check.
