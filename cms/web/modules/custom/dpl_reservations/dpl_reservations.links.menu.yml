@@ -1,0 +1,11 @@
+dpl_reservations.list:
+  title: "Reservations"
+  menu_name: user-profile-menu
+  route_name: dpl_reservations.list
+  description: "List user reservations"
+
+dpl_reservations.settings_form:
+  title: "Reservation list settings"
+  route_name: dpl_reservations.settings
+  description: "Change reservation list settings"
+  parent: dpl_library_agency.settings

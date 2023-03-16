@@ -97,5 +97,6 @@ ignored_config_entities:
   - ~varnish_purger.settings.65fc931232
   - ~varnish_purger.settings.30cd45a1b1
   - ~dpl_loan_list.settings
+  - reservation_list.settings
 _core:
   default_config_hash: UVH1aJ4b44UM-VdPVN7hNNuuVqfReJxwfVeDQH1Hvsk
