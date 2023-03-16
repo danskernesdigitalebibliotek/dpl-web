@@ -9,5 +9,3 @@ dpl_menu.settings_form:
   route_name: dpl_patron_menu.settings
   description: "Change Menu Settings"
   parent: dpl_library_agency.settings
-
-

@@ -28,6 +28,7 @@ module:
   dpl_reservations: 0
   dpl_dashboard: 0
   dpl_menu: 0
+  dpl_patron_menu: 0
   dynamic_page_cache: 0
   entity_reference_revisions: 0
   field: 0

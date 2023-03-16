@@ -1,6 +1,6 @@
 <?php
 
-namespace Drupal\dpl_menu\Controller;
+namespace Drupal\dpl_patron_menu\Controller;
 
 use Drupal\Core\Block\BlockManagerInterface;
 use Drupal\Core\Controller\ControllerBase;
@@ -10,9 +10,10 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
 /**
  * Render intermediate list react app.
  */
-class DplMenuController extends ControllerBase {
+class DplPatronMenuController extends ControllerBase {
+
   /**
-   * DplMenuController constructor.
+   * DplPatronMenuController constructor.
    *
    * @param \Drupal\Core\Block\BlockManagerInterface $blockManager
    *   Drupal block manager.
@@ -71,4 +72,5 @@ class DplMenuController extends ControllerBase {
     $this->renderer->addCacheableDependency($render, $plugin_block);
     return $render;
   }
+
 }

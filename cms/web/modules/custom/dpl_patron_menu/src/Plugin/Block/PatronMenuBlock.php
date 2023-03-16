@@ -1,6 +1,6 @@
 <?php
 
-namespace Drupal\dpl_menu\Plugin\Block;
+namespace Drupal\dpl_patron_menu\Plugin\Block;
 
 use Drupal\Core\Block\BlockBase;
 use Drupal\Core\Config\ConfigFactoryInterface;
@@ -16,8 +16,7 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
  *   admin_label = "List user menu"
  * )
  */
-class MenuBlock extends BlockBase implements ContainerFactoryPluginInterface
-{
+class PatronMenuBlock extends BlockBase implements ContainerFactoryPluginInterface {
   /**
    * Drupal config factory.
    *
@@ -26,9 +25,9 @@ class MenuBlock extends BlockBase implements ContainerFactoryPluginInterface
   private ConfigFactoryInterface $configFactory;
 
   /**
-   * MenuBlock constructor.
+   * PatronMenuBlock constructor.
    *
-   * @param array $configuration
+   * @param mixed[] $configuration
    *   A configuration array containing information about the plugin instance.
    * @param string $plugin_id
    *   The plugin ID for the plugin instance.
@@ -37,8 +36,7 @@ class MenuBlock extends BlockBase implements ContainerFactoryPluginInterface
    * @param \Drupal\Core\Config\ConfigFactoryInterface $configFactory
    *   Drupal config factory to get FBS and Publizon settings.
    */
-  public function __construct(array $configuration, $plugin_id, $plugin_definition, ConfigFactoryInterface $configFactory)
-  {
+  public function __construct(array $configuration, $plugin_id, $plugin_definition, ConfigFactoryInterface $configFactory) {
     parent::__construct($configuration, $plugin_id, $plugin_definition);
     $this->configuration = $configuration;
     $this->configFactory = $configFactory;
@@ -46,9 +44,20 @@ class MenuBlock extends BlockBase implements ContainerFactoryPluginInterface
 
   /**
    * {@inheritDoc}
+   *
+   * @param \Symfony\Component\DependencyInjection\ContainerInterface $container
+   *   The service container.
+   * @param mixed[] $configuration
+   *   A configuration array containing information about the plugin instance.
+   * @param string $plugin_id
+   *   The plugin ID for the plugin instance.
+   * @param int $plugin_definition
+   *   The plugin implementation definition.
+   *
+   * @return \Drupal\dpl_loans\Plugin\Block\LoanListBlock|static
+   *   Loan list block.
    */
-  public static function create(ContainerInterface $container, array $configuration, $plugin_id, $plugin_definition)
-  {
+  public static function create(ContainerInterface $container, array $configuration, $plugin_id, $plugin_definition) {
     return new static(
       $configuration,
       $plugin_id,
@@ -63,8 +72,7 @@ class MenuBlock extends BlockBase implements ContainerFactoryPluginInterface
    * @return mixed[]
    *   The app render array.
    */
-  public function build()
-  {
+  public function build() {
     $context = ["context" => 'menu list'];
     $contextAria = ["context" => 'menu list (Aria)'];
 
@@ -112,5 +120,5 @@ class MenuBlock extends BlockBase implements ContainerFactoryPluginInterface
     ];
     return $app;
   }
-}
 
+}

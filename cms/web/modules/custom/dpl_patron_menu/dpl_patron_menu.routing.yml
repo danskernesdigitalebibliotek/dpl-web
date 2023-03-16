@@ -1,7 +1,7 @@
 dpl_menu.list:
   path: "/user/me/loanerstatusmenu"
   defaults:
-    _controller: '\Drupal\dpl_menu\Controller\DplMenuController::list'
+    _controller: '\Drupal\dpl_patron_menu\Controller\DplPatronMenuController::list'
   requirements:
     _permission: "access content"
 
