@@ -63,6 +63,11 @@ class DplReactAppsController extends ControllerBase {
    *
    * @param \Drupal\dpl_library_agency\Branch\Branch[] $branches
    *   The branches to build the string with.
+   *
+   * @todo This should be moved into an service to make it more sharable
+   *       between modules.
+   *
+   * @throws \Safe\Exceptions\JsonException
    */
   public static function buildBranchesJsonProp(array $branches) : string {
     return json_encode(array_map(function (Branch $branch) {
@@ -80,6 +85,9 @@ class DplReactAppsController extends ControllerBase {
    *
    * @param string[] $branchIds
    *   The ids of the branches to use.
+   *
+   * @todo This should be moved into an service to make it more sharable
+   *       between modules.
    */
   public static function buildBranchesListProp(array $branchIds) : string {
     return implode(',', $branchIds);
