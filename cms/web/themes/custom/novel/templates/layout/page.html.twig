@@ -47,7 +47,8 @@
   {% include '@novel/layout/header.html.twig'
     with {
     'header': page.header,
-    'search_header': search.header
+    'search_header': search.header,
+    'patron_menu': patron.menu
   } only %}
 
   <main id="main-content" role="main">

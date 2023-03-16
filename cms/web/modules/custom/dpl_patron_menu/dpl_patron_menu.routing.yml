@@ -1,10 +1,3 @@
-dpl_menu.list:
-  path: "/user/me/loanerstatusmenu"
-  defaults:
-    _controller: '\Drupal\dpl_patron_menu\Controller\DplPatronMenuController::list'
-  requirements:
-    _permission: "access content"
-
 dpl_menu.settings:
   path: "/admin/config/dpl-library-agency/loanerstatusmenu"
   defaults:
