@@ -1,9 +1,0 @@
-dpl_menu.settings:
-  path: "/admin/config/dpl-library-agency/loanerstatusmenu"
-  defaults:
-    _form: '\Drupal\dpl_menu\Form\MenuSettingsForm'
-    _title: "Menu settings"
-  requirements:
-    _permission: "administer site configuration"
-  options:
-    _admin_route: TRUE

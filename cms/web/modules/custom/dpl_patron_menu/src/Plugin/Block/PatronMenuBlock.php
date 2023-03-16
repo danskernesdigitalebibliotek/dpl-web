@@ -5,6 +5,7 @@ namespace Drupal\dpl_patron_menu\Plugin\Block;
 use Drupal\Core\Block\BlockBase;
 use Drupal\Core\Config\ConfigFactoryInterface;
 use Drupal\Core\Plugin\ContainerFactoryPluginInterface;
+use Drupal\Core\Url;
 use Drupal\dpl_react_apps\Controller\DplReactAppsController;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
@@ -71,53 +72,77 @@ class PatronMenuBlock extends BlockBase implements ContainerFactoryPluginInterfa
    *
    * @return mixed[]
    *   The app render array.
+   *
+   * @throws \JsonException
    */
-  public function build() {
+  public function build(): array {
     $context = ["context" => 'Patron menu'];
 
-    $fbsConfig = $this->configFactory->get('dpl_fbs.settings');
-    $publizonConfig = $this->configFactory->get('dpl_publizon.settings');
-    $menuConfig = $this->configFactory->get("dpl_patron_menu.settings");
+    // Alternative to this menu array here this could be loaded from a drupal
+    // generated menu. A place for further improvements.
+    $menu = [
+      [
+        "name" => $this->t("Loans", $context),
+        "link" => Url::fromRoute('dpl_loans.list', [], ['absolute' => TRUE])->toString(),
+        "dataId" => "0",
+      ],
+      [
+        "name" => $this->t("Reservations", $context),
+        //"link" => Url::fromRoute('dpl_reservation.list', [], ['absolute' => TRUE])->toString(),
+        "link" => "",
+        "dataId" => "10",
+      ],
+      [
+        "name" => $this->t("My list", $context),
+        //"link" => Url::fromRoute('dpl_favorites_list.list', [], ['absolute' => TRUE])->toString()
+        "link" => "",
+        "dataId" => "20",
+      ],
+      [
+        "name" => $this->t("Fees & Replacement costs", $context),
+        //"link" => Url::fromRoute('dpl_fees.list', [], ['absolute' => TRUE])->toString()
+        "link" => "",
+        "dataId" => "30",
+      ],
+      [
+        "name" => $this->t("My account", $context),
+        //"link" => Url::fromRoute('dpl_dashboard.list', [], ['absolute' => TRUE])->toString()
+        "link" => "",
+        "dataId" => "40",
+      ],
+    ];
 
     $data = [
       // Config.
       "threshold-config" => $this->configFactory->get('dpl_library_agency.general_settings')->get('threshold_config'),
-      // "menu-navigation-data-config" => $this->configFactory->get('dpl_patron_menu.settings')->get('menu_navigation_data_config'),
-      "menu-navigation-data-config" => '[{"name": "Loans","link": "","dataId": "1"},{"name": "Reservations","link": "","dataId": "2"},{"name": "My list","link": "","dataId": "3"},{"name": "Fees & Replacement costs","link": "","dataId": "4"},{"name": "My account","link": "","dataId": "5"}]',
-      "menu-login-url" => $menuConfig->get("menu_login_link"),
-      "menu-sign-up-url" => $menuConfig->get("menu_create_user_link"),
-      "fbs-base-url" => $fbsConfig->get('base_url'),
-      "publizon-base-url" => $publizonConfig->get('base_url'),
+      "menu-navigation-data-config" => json_encode($menu, JSON_THROW_ON_ERROR),
       "page-size-desktop" => "25",
       "page-size-mobile" => "25",
+
       // Urls.
-      // @todo update placeholder URL's
-      // 'menu-page-url" => "https://unsplash.com/photos/wd6YQy0PJt8",
-      // 'material-overdue-url" => "https://unsplash.com/photos/wd6YQy0PJt8",
-      "search-url" => DplReactAppsController::searchResultUrl(),
-      "dpl-cms-base-url" => DplReactAppsController::dplCmsBaseUrl(),
+      "menu-login-url" => Url::fromRoute('dpl_login.login', [], ['absolute' => TRUE])->toString(),
+      "menu-log-out-url" => Url::fromRoute('dpl_login.logout', [], ['absolute' => TRUE])->toString(),
+      "menu-sign-up-url" => '#', //Url::fromRoute('dpl_patron_reg.information', [], ['absolute' => TRUE])->toString(),
 
       // Texts.
       "menu-view-your-profile-text" => $this->t("My Account", [], $context),
-      "menu-view-your-profile-text-url" => $this->t("https://unsplash.com/photos/tNJdaBc-r5c", [], $context),
       "menu-notification-loans-expired-text" => $this->t("loans expired", [], $context),
-      "menu-notification-loans-expired-url" => $this->t("https://unsplash.com/photos/tNJdaBc-r5c", [], $context),
       "menu-notification-loans-expiring-soon-text" => $this->t("loans expiring soon", [], $context),
-      "menu-notification-loans-expiring-soon-url" => $this->t("https://unsplash.com/photos/tNJdaBc-r5c", [], $context),
       "menu-notification-ready-for-pickup-text" => $this->t("reservations ready for pickup", [], $context),
       "menu-notification-ready-for-pickup-url" => $this->t("https://unsplash.com/photos/tNJdaBc-r5c", [], $context),
+      "menu-notification-loans-expiring-soon-url" => $this->t("https://unsplash.com/photos/tNJdaBc-r5c", [], $context),
+      "menu-notification-loans-expired-url" => $this->t("https://unsplash.com/photos/tNJdaBc-r5c", [], $context),
+      "menu-view-your-profile-text-url" => $this->t("https://unsplash.com/photos/tNJdaBc-r5c", [], $context),
       "menu-log-out-text" => $this->t("Log Out", [], $context),
-      "menu-log-out-url" => $this->t("https://unsplash.com/photos/tNJdaBc-r5c", [], $context),
       "menu-login-text" => $this->t("Log in", [], $context),
       "menu-sign-up-text" => $this->t("Sign up", [], $context),
     ] + DplReactAppsController::externalApiBaseUrls();
 
-    $app = [
+    return [
       "#theme" => "dpl_react_app",
       "#name" => "menu",
       "#data" => $data,
     ];
-    return $app;
   }
 
 }

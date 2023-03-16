@@ -1,9 +1,3 @@
-dpl_menu.list:
-  title: "menu"
-  menu_name: user-profile-menu
-  route_name: dpl_patron_menu.list
-  description: "List user menu"
-
 dpl_menu.settings_form:
   title: "Menu settings"
   route_name: dpl_patron_menu.settings
