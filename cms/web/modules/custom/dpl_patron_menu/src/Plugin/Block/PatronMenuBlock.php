@@ -13,8 +13,8 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
  * Provides user intermediate list.
  *
  * @Block(
- *   id = "dpl_menu_block",
- *   admin_label = "List user menu"
+ *   id = "dpl_patron_menu_block",
+ *   admin_label = "Patron menu"
  * )
  */
 class PatronMenuBlock extends BlockBase implements ContainerFactoryPluginInterface {
