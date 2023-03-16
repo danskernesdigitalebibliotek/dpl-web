@@ -46,7 +46,17 @@ class LoanListBlock extends BlockBase implements ContainerFactoryPluginInterface
   /**
    * {@inheritDoc}
    *
+   * @param \Symfony\Component\DependencyInjection\ContainerInterface $container
+   *   The service container.
    * @param mixed[] $configuration
+   *   A configuration array containing information about the plugin instance.
+   * @param string $plugin_id
+   *   The plugin ID for the plugin instance.
+   * @param int $plugin_definition
+   *   The plugin implementation definition.
+   *
+   * @return \Drupal\dpl_loans\Plugin\Block\LoanListBlock|static
+   *   Loan list block.
    */
   public static function create(ContainerInterface $container, array $configuration, $plugin_id, $plugin_definition) {
     return new static(
