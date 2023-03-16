@@ -20,7 +20,7 @@
                 "version": "0.3.0-rc28",
                 "type": "drupal-library",
                 "dist": {
-                    "url": "https://github.com/itk-dev/dpl-react/releases/download/release-fix%2Fdashboard-array-length-prints/dist.zip",
+                    "url": "https://github.com/danskernesdigitalebibliotek/dpl-react/releases/download/release-develop/dist.zip",
                     "type": "zip"
                 },
                 "require": {
