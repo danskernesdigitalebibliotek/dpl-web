@@ -7,7 +7,7 @@
  * Renders the patron menu.
  */
 
-use Drupal\dpl_react_apps\Controller\DplReactAppsController;
+use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
 
 /**
  * Implements template_preprocess_page().
@@ -16,45 +16,17 @@ use Drupal\dpl_react_apps\Controller\DplReactAppsController;
  *   Theme variables.
  */
 function dpl_patron_menu_preprocess_page(array &$variables): void {
-  $options = ['context' => 'Patron menu'];
+
+  $blockManager = \Drupal::getContainer()->get('plugin.manager.block');
+  $plugin_block = $blockManager->createInstance('dpl_menu_block', []);
+
+  // Some blocks might implement access check.
+  $access_result = $plugin_block->access(\Drupal::currentUser());
+  if (is_object($access_result) && $access_result->isForbidden() || is_bool($access_result) && !$access_result) {
+    throw new AccessDeniedHttpException();
+  }
 
   $variables['patron'] = [
-    'menu' => [
-      '#theme' => 'dpl_react_app',
-      '#name' => 'menu',
-      '#data' => [
-//          // Config.
-//          "threshold-config" => $this->configFactory->get('dpl_library_agency.general_settings')->get('threshold_config'),
-//          // "menu-navigation-data-config" => $this->configFactory->get('dpl_patron_menu.settings')->get('menu_navigation_data_config'),
-//          "menu-navigation-data-config" => '[{"name": "Loans","link": "","dataId": "1"},{"name": "Reservations","link": "","dataId": "2"},{"name": "My list","link": "","dataId": "3"},{"name": "Fees & Replacement costs","link": "","dataId": "4"},{"name": "My account","link": "","dataId": "5"}]',
-//          "menu-login-url" => $menuConfig->get("menu_login_link"),
-//          "menu-sign-up-url" => $menuConfig->get("menu_create_user_link"),
-//          "fbs-base-url" => $fbsConfig->get('base_url'),
-//          "publizon-base-url" => $publizonConfig->get('base_url'),
-//          "page-size-desktop" => "25",
-//          "page-size-mobile" => "25",
-//          // Urls.
-//          // @todo update placeholder URL's
-//          // 'menu-page-url" => "https://unsplash.com/photos/wd6YQy0PJt8",
-//          // 'material-overdue-url" => "https://unsplash.com/photos/wd6YQy0PJt8",
-//          "search-url" => DplReactAppsController::searchResultUrl(),
-//          "dpl-cms-base-url" => DplReactAppsController::dplCmsBaseUrl(),
-//
-//          // Texts.
-//          "menu-view-your-profile-text" => $this->t("My Account", [], $context),
-//          "menu-view-your-profile-text-url" => $this->t("https://unsplash.com/photos/tNJdaBc-r5c", [], $context),
-//          "menu-notification-loans-expired-text" => $this->t("loans expired", [], $context),
-//          "menu-notification-loans-expired-url" => $this->t("https://unsplash.com/photos/tNJdaBc-r5c", [], $context),
-//          "menu-notification-loans-expiring-soon-text" => $this->t("loans expiring soon", [], $context),
-//          "menu-notification-loans-expiring-soon-url" => $this->t("https://unsplash.com/photos/tNJdaBc-r5c", [], $context),
-//          "menu-notification-ready-for-pickup-text" => $this->t("reservations ready for pickup", [], $context),
-//          "menu-notification-ready-for-pickup-url" => $this->t("https://unsplash.com/photos/tNJdaBc-r5c", [], $context),
-//          "menu-log-out-text" => $this->t("Log Out", [], $context),
-//          "menu-log-out-url" => $this->t("https://unsplash.com/photos/tNJdaBc-r5c", [], $context),
-//          "menu-login-text" => $this->t("Log in", [], $context),
-//          "menu-sign-up-text" => $this->t("Sign up", [], $context),
-        ] + DplReactAppsController::externalApiBaseUrls(),
-    ],
+    'menu' => $plugin_block->build()
   ];
-
 }
