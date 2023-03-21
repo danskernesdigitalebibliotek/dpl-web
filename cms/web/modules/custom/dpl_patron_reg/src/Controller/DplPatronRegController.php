@@ -133,7 +133,7 @@ class DplPatronRegController extends ControllerBase {
 
     return [
       '#theme' => 'dpl_react_app',
-      "#name" => 'patron-create',
+      "#name" => 'create-patron',
       '#data' => [
         'age-limit' => $config['age_limit'] ?? '18',
         'user-token' => $userToken,
