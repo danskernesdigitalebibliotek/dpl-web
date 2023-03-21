@@ -36,6 +36,11 @@ vars:
   DIR_RESTORE_DATABASE: 'restore/database'
   # Directory with lagoon backup files.
   DIR_RESTORE_FILES: 'restore/files'
+  # Directory with translation sources.
+  PO_DIR: "profiles/dpl_cms/translations"
+
+  # Default language
+  LANGUAGE: "da"
 
   # Ports and host names:
   # Using ports exposed on localhost is important.
@@ -329,3 +334,19 @@ tasks:
     preconditions:
       - sh: jq --version
         msg: jq is not installed. Please check https://stedolan.github.io/jq/.
+  translations:scan:
+    desc: Scan and generate translations
+    cmds:
+     # Generate translations for custom modules
+      - task dev:cli -- drush potion:generate $LANGUAGE modules/custom/ {{ .PO_DIR }} --recursive --default-write-mode=override
+    # Generate translations for custom themes
+      - task dev:cli -- drush potion:generate $LANGUAGE themes/custom/ {{ .PO_DIR }} --recursive --default-write-mode=merge
+    # Fill translations from db
+      - task dev:cli -- drush potion:fill $LANGUAGE {{ .PO_DIR }}/$LANGUAGE.po
+    # We need to chown the PO file in the container with the user of the host
+    # in order to be able to commit the file afterwards.
+    # NB: Using a fixed UID/GID might gives us problems in the future.
+      - task dev:cli -- chown 1001:1001 web/{{ .PO_DIR }}/$LANGUAGE.po
+    # Default language if nothing else is set:
+    env:
+      LANGUAGE: "{{ .LANGUAGE }}"
