@@ -13,6 +13,7 @@ use Drupal\openid_connect\Plugin\OpenIDConnectClientManager;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Drupal\dpl_login\UserTokensProvider;
 use Symfony\Component\HttpFoundation\Request;
+use Drupal\dpl_react_apps\Controller\DplReactAppsController;
 
 /**
  * Patron registration Controller.
@@ -130,14 +131,46 @@ class DplPatronRegController extends ControllerBase {
   public function userRegistrationReactAppLoad(): array {
     $config = $this->config('dpl_patron_reg.settings');
     $userToken = $this->user_token_provider->getAccessToken()?->token;
+    // Todo, this does not exist, it is in another pr, perhaps a seperate pr or we wait?
+    $patron_page_settings = $this->configFactory->get('patron_page.settings');
 
     return [
       '#theme' => 'dpl_react_app',
       "#name" => 'create-patron',
       '#data' => [
-        'age-limit' => $config['age_limit'] ?? '18',
+        'pickup-branches-dropdown-label-text' => $this->t("Choose pickup branch", [], $context),
+        'blacklisted-pickup-branches-config' => DplReactAppsController::buildBranchesListProp($this->branchSettings->getExcludedReservationBranches()),
+        'branches-config' => DplReactAppsController::buildBranchesJsonProp($this->branchRepository->getBranches()),
+        // 'pincode-length-min-config' => $patron_page_settings->get('pincode_length_min'),
+        // 'pincode-length-max-config' => $patron_page_settings->get('pincode_length_max'),
+        // todo connected to todo in l135
+        'pincode-length-min-config' => '4',
+        'pincode-length-max-config' => '4',
+        'patron-page-change-pincode-header-text' => $this->t("Pincode", [], $context),
+        'pickup-branches-dropdown-nothing-selected-text' => $this->t("Nothing selected", [], $context),
+        'patron-page-change-pincode-body-text' => $this->t("Change current pin by entering a new pin and saving", [], $context),
+        'patron-page-pincode-label-text' => $this->t("New pin", [], $context),
+        'patron-page-confirm-pincode-label-text' => $this->t("Confirm new pin", [], $context),
+        'patron-contact-name-label-text' => $this->t("Name", [], $context),
+        'patron-page-pincode-too-short-validation-text' => $this->t("The pincode should be minimum @pincodeLengthMin and maximum @pincodeLengthMax characters long", [], $context),
+        'patron-page-pincodes-not-the-same-text' => $this->t("The pincodes are not the same", [], $context),
+        'patron-contact-phone-label-text' => $this->t("Phone number", [], $context),
+        'patron-contact-info-body-text' => $this->t("", [], $context),
+        'patron-contact-info-header-text' => $this->t("", [], $context),
+        'patron-contact-phone-checkbox-text' => $this->t("Receive text messages about your loans, reservations, and so forth", [], $context),
+        'patron-contact-email-label-text' => $this->t("E-mail", [], $context),
+        'patron-contact-email-checkbox-text' => $this->t("Receive emails about your loans, reservations, and so forth", [], $context),
+        'create-patron-change-pickup-header-text' => $this->t("", [], $context),
+        'create-patron-change-pickup-body-text' => $this->t("", [], $context),
+        'create-patron-header-text' => $this->t("Register as patron", [], $context),
+        'create-patron-invalid-ssn-header-text' => $this->t("Invalid SSN", [], $context),
+        'create-patron-invalid-ssn-body-text' => $this->t("This SSN is invalid", [], $context),
+        'create-patron-confirm-button-text' => $this->t("Confirm", [], $context),
+        'create-patron-cancel-button-text' => $this->t("Cancel", [], $context),
+        'min-age-config' => $config['age_limit'] ?? '18',
+        'redirect-on-user-created-url' => $config['redirect_on_user_created_url'],
         'user-token' => $userToken,
-      ],
+      ]+ DplReactAppsController::externalApiBaseUrls(),
     ];
   }
 
