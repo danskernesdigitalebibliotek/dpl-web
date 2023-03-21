@@ -38,6 +38,13 @@ class PatronRegSettingsForm extends ConfigFormBase {
       '#default_value' => $config->get('age_limit') ?? '18',
     ];
 
+    $form['redirect_on_user_created_url'] = [
+      '#type' => 'textfield',
+      '#title' => $this->t('Redirect on create', [], $context),
+      '#description' => $this->t('Redirect to this on user successful created', [], $context),
+      '#default_value' => $config->get('redirect_on_user_created_url') ?? '',
+    ];
+
     $form['information'] = [
       '#type' => 'text_format',
       '#title' => $this->t('Information page'),
@@ -52,7 +59,10 @@ class PatronRegSettingsForm extends ConfigFormBase {
    * {@inheritdoc}
    */
   public function validateForm(array &$form, FormStateInterface $form_state): void {
-
+    $feesUrl = $form_state->getValue('redirect_on_user_created_url');
+    if (!filter_var($feesUrl, FILTER_VALIDATE_URL)) {
+      $form_state->setErrorByName('redirect_on_user_created_url', $this->t('The url "%url" is not a valid URL.', ['%url' => $feesUrl], ['context' => 'Loan list (settings)']));
+    }
   }
 
   /**
