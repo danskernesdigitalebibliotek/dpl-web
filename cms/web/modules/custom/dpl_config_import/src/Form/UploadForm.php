@@ -111,9 +111,9 @@ class UploadForm extends FormBase {
       ));
     }
     catch (MissingDependencyException $e) {
-      // Drupal provides a meaningful error message out of the box.
-      // phpcs:ignore Drupal.Semantics.FunctionT.NotLiteralString
-      $this->messenger->addError($this->t($e->getMessage()));
+      $this->messenger->addError(
+        $this->t('Failed to install modules: @reason', ['@reason' => $e->getMessage()])
+      );
     }
 
     $uninstall_modules = $modules['uninstall'] ?? [];
@@ -125,9 +125,9 @@ class UploadForm extends FormBase {
       ));
     }
     catch (ModuleUninstallValidatorException $e) {
-      // Drupal provides a meaningful error message out of the box.
-      // phpcs:ignore Drupal.Semantics.FunctionT.NotLiteralString
-      $this->messenger->addError($this->t($e->getMessage()));
+      $this->messenger->addError(
+        $this->t('Failed to uninstall modules: @reason', ['@reason' => $e->getMessage()])
+      );
     }
   }
 
