@@ -1,0 +1,8 @@
+@startuml
+Developer -> GitHubActions: Merge PR into develop
+GitHubActions -> GitHubActions: Scan codebase and write strings to .po file
+GitHubActions -> GitHubActions: Fill .po file with already imported translations
+GitHubActions -> GitHub: Commit updated *.po file
+GitHub -> Poeditor: Webhook tells POEditor to import new strings from GitHub
+Poeditor -> GitHub: Import updated *.po file
+@enduml
