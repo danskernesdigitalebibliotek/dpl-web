@@ -35,6 +35,7 @@ jobs:
       uses: distributhor/workflow-webhook@v2
       env:
         webhook_url: ${{ secrets.POEDITOR_WEBHOOK_URL }}
+        # POEditor webhooks to not use secrets but the action requires a value.
         webhook_secret: 'xxxx'
 
   # Publish translations to GitHub Pages to support consumption by Drupal.
