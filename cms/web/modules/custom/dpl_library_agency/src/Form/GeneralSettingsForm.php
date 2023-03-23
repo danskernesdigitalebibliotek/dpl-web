@@ -162,6 +162,27 @@ class GeneralSettingsForm extends ConfigFormBase {
       '#default_value' => $config->get('pause_reservation_start_date_config'),
     ];
 
+    $form['blocked_user'] = [
+      '#type' => 'fieldset',
+      '#title' => $this->t('Blocked user'),
+      '#collapsible' => FALSE,
+      '#collapsed' => FALSE,
+    ];
+
+    $form['settings']['redirect_on_blocked_url'] = [
+      '#type' => 'textfield',
+      '#title' => $this->t('Redirect blocked user link'),
+      '#description' => $this->t('The link to redirect the blocked user to'),
+      '#default_value' => $config->get('redirect_on_blocked_url') ?? '',
+    ];
+
+    $form['settings']['blocked_patron_e_link_url'] = [
+      '#type' => 'textfield',
+      '#title' => $this->t('Blocked user link for modal'),
+      '#description' => $this->t('If a user has blocked status e, this link appears in the modal'),
+      '#default_value' => $config->get('blocked_patron_e_link_url') ?? '',
+    ];
+
     $form['thresholds'] = [
       '#type' => 'fieldset',
       '#title' => $this->t('Thresholds'),
@@ -217,6 +238,16 @@ class GeneralSettingsForm extends ConfigFormBase {
     $feesUrl = $form_state->getValue('pause_reservation_info_url');
     if (!filter_var($feesUrl, FILTER_VALIDATE_URL)) {
       $form_state->setErrorByName('pause_reservation_info_url', $this->t('The url "%url" is not a valid URL.', ['%url' => $feesUrl]));
+    }
+    
+    $blockedUrl = $form_state->getValue('redirect_on_blocked_url');
+    if (!filter_var($blockedUrl, FILTER_VALIDATE_URL)) {
+      $form_state->setErrorByName('redirect_on_blocked_url', $this->t('The url "%url" is not a valid URL.', ['%url' => $blockedUrl]));
+    }
+
+    $blockedPatronEUrl = $form_state->getValue('blocked_patron_e_link_url');
+    if (!filter_var($blockedPatronEUrl, FILTER_VALIDATE_URL)) {
+      $form_state->setErrorByName('blocked_patron_e_link_url', $this->t('The url "%url" is not a valid URL.', ['%url' => $blockedPatronEUrl]));
     }
 
   }
