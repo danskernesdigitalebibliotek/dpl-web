@@ -177,14 +177,14 @@ class LoanListBlock extends BlockBase implements ContainerFactoryPluginInterface
   /**
    * Get the strings and config for blocked user.
    *
-   * @return mixed[]
-   *   An array of strings and config.
-   *
    * @param mixed[] $context
    *   String context.
    * @param mixed[] $contextAria
    *   String context aria.
-  */
+   *
+   * @return mixed[]
+   *   An array of strings and config.
+   */
   public static function getBlockedSettings(array $context, array $contextAria): array {
     $blockedSettings = \Drupal::configFactory()->get('dpl_library_agency.general_settings');
     $blockedData = [
