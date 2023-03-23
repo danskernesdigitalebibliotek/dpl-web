@@ -239,7 +239,7 @@ class GeneralSettingsForm extends ConfigFormBase {
     if (!filter_var($feesUrl, FILTER_VALIDATE_URL)) {
       $form_state->setErrorByName('pause_reservation_info_url', $this->t('The url "%url" is not a valid URL.', ['%url' => $feesUrl]));
     }
-    
+
     $blockedUrl = $form_state->getValue('redirect_on_blocked_url');
     if (!filter_var($blockedUrl, FILTER_VALIDATE_URL)) {
       $form_state->setErrorByName('redirect_on_blocked_url', $this->t('The url "%url" is not a valid URL.', ['%url' => $blockedUrl]));
