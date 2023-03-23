@@ -36,7 +36,7 @@ jobs:
         commit_message: New translations were found
     - name: Make Poeditor look for changes
       uses: distributhor/workflow-webhook@v2
-      env:
+      with:
         webhook_url: ${{ secrets.POEDITOR_WEBHOOK_URL }}
         # POEditor webhooks to not use secrets but the action requires a value.
         webhook_secret: 'xxxx'
