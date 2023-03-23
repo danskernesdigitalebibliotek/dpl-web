@@ -162,21 +162,21 @@ class GeneralSettingsForm extends ConfigFormBase {
       '#default_value' => $config->get('pause_reservation_start_date_config'),
     ];
 
-    $form['blocked_user'] = [
+    $form['settings']['blocked_user'] = [
       '#type' => 'fieldset',
       '#title' => $this->t('Blocked user'),
       '#collapsible' => FALSE,
       '#collapsed' => FALSE,
     ];
 
-    $form['settings']['redirect_on_blocked_url'] = [
+    $form['settings']['blocked_user']['redirect_on_blocked_url'] = [
       '#type' => 'textfield',
       '#title' => $this->t('Redirect blocked user link'),
       '#description' => $this->t('The link to redirect the blocked user to'),
       '#default_value' => $config->get('redirect_on_blocked_url') ?? '',
     ];
 
-    $form['settings']['blocked_patron_e_link_url'] = [
+    $form['settings']['blocked_user']['blocked_patron_e_link_url'] = [
       '#type' => 'textfield',
       '#title' => $this->t('Blocked user link for modal'),
       '#description' => $this->t('If a user has blocked status e, this link appears in the modal'),
@@ -260,6 +260,8 @@ class GeneralSettingsForm extends ConfigFormBase {
       ->set('threshold_config', $form_state->getValue('threshold_config'))
       ->set('reservation_sms_notifications_disabled', $form_state->getValue('reservation_sms_notifications_disabled'))
       ->set('pause_reservation_info_url', $form_state->getValue('pause_reservation_info_url'))
+      ->set('redirect_on_blocked_url', $form_state->getValue('redirect_on_blocked_url'))
+      ->set('blocked_patron_e_link_url', $form_state->getValue('blocked_patron_e_link_url'))
       ->set('pause_reservation_start_date_config', $form_state->getValue('pause_reservation_start_date_config'))
       ->save();
 
