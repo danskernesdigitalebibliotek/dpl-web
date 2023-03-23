@@ -9,33 +9,71 @@ to use Danish for all users through language negotiation. This allows us to
 follow a process where English is the default for the codebase but actual usage
 of the system is in Danish.
 
-This is based on [an approach described by the LimoenGroen Drupal agency](https://medium.com/limoengroen/how-to-deploy-drupal-interface-translations-5653294c4af6).
+## Translation system
+
+To make the "translation traffic" work following components are being used:
+
+* GitHub
+  * [Stores `.po` files in git](web/profiles/dpl_cms/translations/da.po) with
+    translatable strings and translations
+* [GitHub Actions](.github/workflows/translations.yml)
+  * Scans codebase for new translatable strings and commits them to GitHub
+  * Notifies POEditor that new translatable strings are available
+  * Publishes `.po` files to GitHub Pages
+* POEditor
+  * Provides an interface for translators
+  * Links translations with `.po` files on GitHub
+  * Provides webhooks where external systems can notify of new translations
+* DPL CMS
+  * Drupal installation which is [configured to use GitHub Pages as an interface
+    translation server](web/profiles/dpl_cms/dpl_cms.info.yml) from which `.po`
+    files can be consumed.
+
+The following diagrams show how these systems interact to support typical use
+cases:
+
+### New translatable string
+
+```mermaid
+sequenceDiagram
+  Actor Developer
+  Developer ->> GitHubActions: Merge pull request into develop
+  GitHubActions ->> GitHubActions: Scan codebase and write strings to .po file
+  GitHubActions ->> GitHubActions: Fill .po file with existing translations
+  GitHubActions ->> GitHub: Commit .po file with updated strings
+  GitHubActions ->> Poeditor: Call webhook
+  Poeditor ->> GitHub: Fetch updated .po file
+  Poeditor ->> Poeditor: Synchronize translations with latest strings and translations
+```
+
+### Add or update translation
+
+```mermaid
+sequenceDiagram
+  Actor Translator
+  Translator ->> Poeditor: Translate strings
+  Translator ->> Poeditor: Export strings to GitHub
+  Poeditor ->> GitHub: Commit .po file with updated translations to develop
+  DplCms ->> GitHub: Fetch .po file with latest translations
+  DplCms ->> DplCms: Import updated translations
+```
 
 ## Howtos
 
-### Add new translation
+### Add new or update existing translation
 
-<!-- markdownlint-disable ol-prefix -->
-1. Add the translation to the `web/profiles/dpl_cms/translations/da.po` file
+1. Log into POEditor.com and go to the `dpl-cms` project
+2. Go to the relevant language
+3. Locate the string (term) to be translated
+4. Translate the string
 
-```po
-msgid "Make content sticky"
-msgstr "Lav indhold klæbrigt"
-```
+### Publish updated translations
 
-2. Commit the changes
-
-### Update existing translation
-
-1. Locate the translation in the `web/profiles/dpl_cms/translations/da.po` file
-
-```po
-msgid "Make content sticky"
-msgstr "Lav indhold klistret"
-```
-
-2. Commit the changes
-<!-- markdownlint-enable ol-prefix -->
+1. Log into POEditor.com
+2. Select the "Settings" tab
+3. Click the GitHub code hosting service
+4. Check the relevant language(s)
+5. Select "Export to GitHub" and click "Go"
 
 ### Import updated translations
 
