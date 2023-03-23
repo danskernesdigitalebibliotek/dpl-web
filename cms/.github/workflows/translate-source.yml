@@ -9,6 +9,9 @@ jobs:
   SendToPoeditor:
     name: Send translatable strings to POEditor
     runs-on: ubuntu-latest
+    # Avoid systems crossing each other by not looking for string changes
+    # in commits coming from POEditor.
+    # Commits from POEditor are in the format: "Update [file] (POEditor.com)"
     if: ${{ !contains(github.event.head_commit.message, 'POEditor.com') }}
     permissions:
       # Give the default GITHUB_TOKEN write permission to commit and push the
