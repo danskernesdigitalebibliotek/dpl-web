@@ -21,8 +21,22 @@ on the individual library sites.
 
 ## New translation
 
-![New translation](diagrams/render-png/new-translation.png)
+```mermaid
+sequenceDiagram
+  Developer -> GitHubActions: Merge PR into develop
+  GitHubActions -> GitHubActions: Scan codebase and write strings to .po file
+  GitHubActions -> GitHubActions: Fill .po file with already imported translations
+  GitHubActions -> GitHub: Commit updated *.po file
+  GitHub -> Poeditor: Webhook tells POEditor to import new strings from GitHub
+  Poeditor -> GitHub: Import updated *.po file
+```
 
 ## Add or update translation
 
-![Add or update translation](diagrams/render-png/add-or-update-translation.png)
+```mermaid
+sequenceDiagram
+  Translator -> Poeditor: Translates strings
+  Translator -> Poeditor: Pushes button to export strings to GitHub
+  Poeditor -> GitHub: Commits translations to GitHub (develop)
+  DplCms -> GitHub: By manually requesting or by a cron job translations are imported to DPL CMS.
+```
