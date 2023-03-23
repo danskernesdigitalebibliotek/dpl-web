@@ -7,6 +7,7 @@ on:
 jobs:
 
   SendToPoeditor:
+    name: Send translatable strings to POEditor
     runs-on: ubuntu-latest
     if: ${{ !contains(github.event.head_commit.message, 'POEditor.com') }}
     permissions:
@@ -40,6 +41,7 @@ jobs:
   # The localization system requires translation files to be served with a
   # proper Last-Modified header. This is not possible raw GitHub files.
   PublishToGithubPages:
+    name: Publish translations to Github Pages
     runs-on: ubuntu-latest
     if: ${{ contains(github.event.head_commit.message, 'POEditor.com') }}
     steps:
