@@ -29,14 +29,17 @@ To make the "translation traffic" work following components are being used:
     translation server](web/profiles/dpl_cms/dpl_cms.info.yml) from which `.po`
     files can be consumed.
 
-The following diagrams show how these systems interact to support typical use
-cases:
+The following diagram show how these systems interact to support the flow of
+from introducing a new translateable string in the codebase to DPL CMS consuming
+an updated translation with said string.
 
-### New translatable string
+case
 
 ```mermaid
 sequenceDiagram
+  Actor Translator
   Actor Developer
+  Developer ->> Developer: Open pull request with new translatable string
   Developer ->> GitHubActions: Merge pull request into develop
   GitHubActions ->> GitHubActions: Scan codebase and write strings to .po file
   GitHubActions ->> GitHubActions: Fill .po file with existing translations
@@ -44,13 +47,6 @@ sequenceDiagram
   GitHubActions ->> Poeditor: Call webhook
   Poeditor ->> GitHub: Fetch updated .po file
   Poeditor ->> Poeditor: Synchronize translations with latest strings and translations
-```
-
-### Add or update translation
-
-```mermaid
-sequenceDiagram
-  Actor Translator
   Translator ->> Poeditor: Translate strings
   Translator ->> Poeditor: Export strings to GitHub
   Poeditor ->> GitHub: Commit .po file with updated translations to develop
