@@ -337,6 +337,8 @@ tasks:
   translations:scan:
     desc: Scan and generate translations
     cmds:
+     # Make sure that the potion module is active
+      - task dev:cli -- drush en -y potion
      # Generate translations for custom modules
       - task dev:cli -- drush potion:generate $LANGUAGE modules/custom/ {{ .PO_DIR }} --recursive --default-write-mode=override
     # Generate translations for custom themes
@@ -345,8 +347,9 @@ tasks:
       - task dev:cli -- drush potion:fill $LANGUAGE {{ .PO_DIR }}/$LANGUAGE.po
     # We need to chown the PO file in the container with the user of the host
     # in order to be able to commit the file afterwards.
-    # NB: Using a fixed UID/GID might gives us problems in the future.
-      - task dev:cli -- chown 1001:1001 web/{{ .PO_DIR }}/$LANGUAGE.po
+      - |
+        export ME=$(id -u);
+        task dev:cli -- chown $ME:$ME web/{{ .PO_DIR }}/$LANGUAGE.po
     # Default language if nothing else is set:
     env:
       LANGUAGE: "{{ .LANGUAGE }}"
