@@ -40,8 +40,8 @@ class PatronRegSettingsForm extends ConfigFormBase {
 
     $form['redirect_on_user_created_url'] = [
       '#type' => 'textfield',
-      '#title' => $this->t('Redirect on create', [], $context),
-      '#description' => $this->t('Redirect to this on user successful created', [], $context),
+      '#title' => $this->t('Redirect on create'),
+      '#description' => $this->t('Redirect to this on user successful created'),
       '#default_value' => $config->get('redirect_on_user_created_url') ?? '',
     ];
 
