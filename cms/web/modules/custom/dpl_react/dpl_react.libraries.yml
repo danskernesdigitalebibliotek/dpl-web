@@ -46,6 +46,30 @@ material:
     - dpl_react/base
     - dpl_react/handler
 
+loan-list:
+  remote: https://github.com/danskernesdigitalebibliotek/dpl-react
+  license:
+    name: GNU AFFERO
+    url: https://github.com/danskernesdigitalebibliotek/dpl-react/blob/master/LICENSE
+    gpl-compatible: true
+  js:
+    /libraries/dpl-react/loan-list.js: {}
+  dependencies:
+    - dpl_react/base
+    - dpl_react/handler
+
+reservation-list:
+  remote: https://github.com/danskernesdigitalebibliotek/dpl-react
+  license:
+    name: GNU AFFERO
+    url: https://github.com/danskernesdigitalebibliotek/dpl-react/blob/master/LICENSE
+    gpl-compatible: true
+  js:
+    /libraries/dpl-react/reservation-list.js: {}
+  dependencies:
+    - dpl_react/base
+    - dpl_react/handler
+
 base:
   remote: https://github.com/danskernesdigitalebibliotek/dpl-react
   license:
@@ -59,18 +83,6 @@ base:
   css:
     theme:
       /libraries/dpl-react/components.css: {}
-
-loan-list:
-  remote: https://github.com/danskernesdigitalebibliotek/dpl-react
-  license:
-    name: GNU AFFERO
-    url: https://github.com/danskernesdigitalebibliotek/dpl-react/blob/master/LICENSE
-    gpl-compatible: true
-  js:
-    /libraries/dpl-react/loan-list.js: {}
-  dependencies:
-    - dpl_react/base
-    - dpl_react/handler
 
 handler:
   version: 1.0
