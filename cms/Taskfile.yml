@@ -40,13 +40,13 @@ vars:
   #
   # Cypress.
   CYPRESS_BASE_PORT:
-    sh: docker compose port varnish 8080 | cut -d ":" -f2
+    sh: docker compose port varnish 8080 2>/dev/null | cut -d ":" -f2
   CYPRESS_HOST_LOCAL: 'http://localhost:{{ .CYPRESS_BASE_PORT }}'
   # Wiremock.
   WIREMOCK_HTTP_PORT:
-    sh: docker compose port wiremock 80 | cut -d ":" -f2
+    sh: docker compose port wiremock 80 2>/dev/null | cut -d ":" -f2
   WIREMOCK_HTTPS_PORT:
-    sh: docker compose port wiremock 443 | cut -d ":" -f2
+    sh: docker compose port wiremock 443 2>/dev/null | cut -d ":" -f2
   WIREMOCK_HOST_DOCKER: http://wiremock
   WIREMOCK_HOST_LOCAL: 'http://localhost:{{ .WIREMOCK_HTTP_PORT }}'
   WIREMOCK_HOST_LOCAL_HTTPS: 'https://localhost:{{ .WIREMOCK_HTTPS_PORT }}'
