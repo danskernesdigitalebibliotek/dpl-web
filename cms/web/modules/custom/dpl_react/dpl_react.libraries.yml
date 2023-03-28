@@ -166,7 +166,7 @@ favorites-list:
     - dpl_react/base
     - dpl_react/handler
 
-menu:
+patron-menu:
   remote: https://github.com/danskernesdigitalebibliotek/dpl-react
   license:
     name: GNU AFFERO
