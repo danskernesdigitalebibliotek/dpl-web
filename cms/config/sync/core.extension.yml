@@ -7,6 +7,7 @@ module:
   customerror: 0
   dpl_campaign: 0
   dpl_fbs: 0
+  dpl_instant_loan: 0
   dpl_library_agency: 0
   dpl_library_token: 0
   dpl_loans: 0

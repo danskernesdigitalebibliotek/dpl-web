@@ -1,0 +1,5 @@
+dpl_instant_loan.settings_form:
+  title: "Instant Loan Settings"
+  route_name: dpl_instant_loan.settings
+  description: "Change settings of the instant loan feature"
+  parent: system.admin_config_services
