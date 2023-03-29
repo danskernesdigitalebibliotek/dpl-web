@@ -137,14 +137,20 @@ class PatronPageBlock extends BlockBase implements ContainerFactoryPluginInterfa
     }
 
     $data = [
+      # Configuration.
       'text-notifications-enabled-config' => $this->textNotificationsEnabled(),
       'blacklisted-pickup-branches-config' => $this->buildBranchesListProp($this->branchSettings->getExcludedReservationBranches()),
       'branches-config' => $this->buildBranchesJsonProp($this->branchRepository->getBranches()),
       'pincode-length-min-config' => $patron_page_settings->get('pincode_length_min'),
       'pincode-length-max-config' => $patron_page_settings->get('pincode_length_max'),
-
-      'pause-reservation-info-url' => $general_config->get('pause_reservation_info_url'),
       'pause-reservation-start-date-config' => $dateConfig,
+
+      # Urls.
+      'pause-reservation-info-url' => $general_config->get('pause_reservation_info_url'),
+      'delete-patron-url' => $patron_page_settings->get('delete_patron_url'),
+      'always-available-ereolen-url' => $patron_page_settings->get('always_available_ereolen'),
+
+      # Text strings.
       'pause-reservation-modal-aria-description-text' => $this->t('This modal makes it possible to pause your physical reservations', [], ['context' => 'Fees list (Aria)']),
       'pause-reservation-modal-header-text' => $this->t('Pause reservations on physical items', [], ['context' => 'Fees list (Aria)']),
       'pause-reservation-modal-body-text' => $this->t('Pause your reservations early, since reservations that are already being processed, will not be paused.', [], ['context' => 'Fees list (Aria)']),
@@ -152,9 +158,6 @@ class PatronPageBlock extends BlockBase implements ContainerFactoryPluginInterfa
       'pause-reservation-modal-below-inputs-text-text' => $this->t('Pause reservation below inputs text', [], ['context' => 'Fees list (Aria)']),
       'pause-reservation-modal-link-text' => $this->t('Read more', [], ['context' => 'Fees list (Aria)']),
       'pause-reservation-modal-save-button-label-text' => $this->t('Save', [], ['context' => 'Fees list (Aria)']),
-
-      'delete-patron-url' => $patron_page_settings->get('delete_patron_url'),
-      'always-available-ereolen-url' => $patron_page_settings->get('always_available_ereolen'),
       'patron-page-header-text' => $this->t('Patron profile page'),
       'patron-page-basic-details-header-text' => $this->t('BASIC DETAILS'),
       'patron-page-basic-details-name-label-text' => $this->t('Name'),
