@@ -2,8 +2,7 @@
 
 /**
  * @file
- * Dpl_react_demo drupal module file.
+ * Dpl_patron_page.
  *
- * Demonstrates how to use the dpl_react module
- * and render components.
+ * Display patron page (user information page).
  */

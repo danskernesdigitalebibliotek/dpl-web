@@ -14,4 +14,3 @@ dpl_patron_page.settings:
     _permission: "administer site configuration"
   options:
     _admin_route: TRUE
-

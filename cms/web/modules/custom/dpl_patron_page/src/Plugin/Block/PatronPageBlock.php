@@ -10,7 +10,7 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
 use Drupal\dpl_library_agency\Branch\BranchRepositoryInterface;
 use Drupal\dpl_library_agency\BranchSettings;
 use Drupal\dpl_library_agency\Branch\Branch;
-
+use function Safe\json_encode;
 
 /**
  * Provides patron page.
@@ -40,16 +40,16 @@ class PatronPageBlock extends BlockBase implements ContainerFactoryPluginInterfa
    *   The plugin implementation definition.
    * @param \Drupal\Core\Config\ConfigFactoryInterface $configFactory
    *   Drupal config factory to get FBS and Publizon settings.
+   * @param \Drupal\dpl_library_agency\BranchSettings $branchSettings
+   *   Branch settings.
+   * @param \Drupal\dpl_library_agency\Branch\BranchRepositoryInterface $branchRepository
+   *   Branch repository.
    */
-  public function __construct(array $configuration, $plugin_id, $plugin_definition, ConfigFactoryInterface $configFactory, protected BranchSettings $branchSettings, protected BranchRepositoryInterface $branchRepository) {
+  public function __construct(array $configuration, $plugin_id, $plugin_definition, ConfigFactoryInterface $configFactory, private BranchSettings $branchSettings, private BranchRepositoryInterface $branchRepository) {
     parent::__construct($configuration, $plugin_id, $plugin_definition);
     $this->configuration = $configuration;
     $this->configFactory = $configFactory;
-    $this->branchSettings = $branchSettings;
-    $this->branchRepository = $branchRepository;
-
   }
-
 
   /**
    * {@inheritDoc}
@@ -64,7 +64,6 @@ class PatronPageBlock extends BlockBase implements ContainerFactoryPluginInterfa
       $container->get('dpl_library_agency.branch.repository'),
     );
   }
-
 
   /**
    * Build a string of JSON data containing information about branches.
@@ -83,8 +82,10 @@ class PatronPageBlock extends BlockBase implements ContainerFactoryPluginInterfa
    *
    * @param \Drupal\dpl_library_agency\Branch\Branch[] $branches
    *   The branches to build the string with.
+   *
+   * @throws \Safe\Exceptions\JsonException
    */
-  protected function buildBranchesJsonProp(array $branches) : string {
+  private function buildBranchesJsonProp(array $branches): string {
     return json_encode(array_map(function (Branch $branch) {
       return [
         'branchId' => $branch->id,
@@ -101,39 +102,35 @@ class PatronPageBlock extends BlockBase implements ContainerFactoryPluginInterfa
    * @param string[] $branchIds
    *   The ids of the branches to use.
    */
-  protected function buildBranchesListProp(array $branchIds) : string {
+  private function buildBranchesListProp(array $branchIds): string {
     return implode(',', $branchIds);
   }
 
-
   /**
-   * Checks whether the library has enable text messages.
+   * Checks whether the library has enabled text messages.
    *
    * @return string
-   *  true on enabled, false on disabled
+   *   True if enabled, false if disabled.
    */
-  public function textNotificationsEnabled(): string {
+  private function textNotificationsEnabled(): string {
     $patron_page_settings = $this->configFactory->get('patron_page.settings');
     return empty($patron_page_settings->get('text_notifications_enabled')) ? 'false' : 'true';
   }
-
-
 
   /**
    * {@inheritDoc}
    *
    * @return mixed[]
    *   The app render array.
+   *
+   * @throws \Safe\Exceptions\JsonException
    */
   public function build() {
-    $context = ['context' => 'Patron page list'];
     $contextAria = ['context' => 'Patron page list (Aria)'];
 
-    $fbsConfig = $this->configFactory->get('dpl_fbs.settings');
-    $publizonConfig = $this->configFactory->get('dpl_publizon.settings');
     $patron_page_settings = $this->configFactory->get('patron_page.settings');
-    $general_config =  $this->configFactory->get('dpl_library_agency.general_settings');
-    
+    $general_config = $this->configFactory->get('dpl_library_agency.general_settings');
+
     $dateConfig = $general_config->get('pause_reservation_start_date_config');
     if (is_null($dateConfig)) {
       $dateConfig = "";
@@ -145,17 +142,17 @@ class PatronPageBlock extends BlockBase implements ContainerFactoryPluginInterfa
       'branches-config' => $this->buildBranchesJsonProp($this->branchRepository->getBranches()),
       'pincode-length-min-config' => $patron_page_settings->get('pincode_length_min'),
       'pincode-length-max-config' => $patron_page_settings->get('pincode_length_max'),
+
       'pause-reservation-info-url' => $general_config->get('pause_reservation_info_url'),
       'pause-reservation-start-date-config' => $dateConfig,
-      'pause-reservation-modal-aria-description-text' => $this->t('This modal makes it possible to pause your physical reservations', [], $context),
-      'pause-reservation-modal-header-text' => $this->t('Pause reservations on physical items', [], $context),
-      'pause-reservation-modal-body-text' => $this->t('Pause your reservations early, since reservations that are already being processed, will not be paused.', [], $context),
-      'pause-reservation-modal-close-modal-text' => $this->t('Close pause reservations modal', [], $context),
-      'date-inputs-start-date-label-text' => $this->t('Start date', [], $context),
-      'date-inputs-end-date-label-text' => $this->t('End date', [], $context),
-      'pause-reservation-modal-below-inputs-text-text' => $this->t('Pause reservation below inputs text', [], $context),
-      'pause-reservation-modal-link-text' => $this->t('Read more', [], $context),
-      'pause-reservation-modal-save-button-label-text' => $this->t('Save', [], $context),
+      'pause-reservation-modal-aria-description-text' => $this->t('This modal makes it possible to pause your physical reservations', [], ['context' => 'Fees list (Aria)']),
+      'pause-reservation-modal-header-text' => $this->t('Pause reservations on physical items', [], ['context' => 'Fees list (Aria)']),
+      'pause-reservation-modal-body-text' => $this->t('Pause your reservations early, since reservations that are already being processed, will not be paused.', [], ['context' => 'Fees list (Aria)']),
+      'pause-reservation-modal-close-modal-text' => $this->t('Close pause reservations modal', [], ['context' => 'Fees list (Aria)']),
+      'pause-reservation-modal-below-inputs-text-text' => $this->t('Pause reservation below inputs text', [], ['context' => 'Fees list (Aria)']),
+      'pause-reservation-modal-link-text' => $this->t('Read more', [], ['context' => 'Fees list (Aria)']),
+      'pause-reservation-modal-save-button-label-text' => $this->t('Save', [], ['context' => 'Fees list (Aria)']),
+
       'delete-patron-url' => $patron_page_settings->get('delete_patron_url'),
       'always-available-ereolen-url' => $patron_page_settings->get('always_available_ereolen'),
       'patron-page-header-text' => $this->t('Patron profile page'),
@@ -201,13 +198,11 @@ class PatronPageBlock extends BlockBase implements ContainerFactoryPluginInterfa
       'patron-page-status-section-out-of-aria-label-ebooks-text' => $this->t('You used @this ebooks out of you quota of @that ebooks'),
     ] + DplReactAppsController::externalApiBaseUrls();
 
-    $app = [
+    return [
       '#theme' => 'dpl_react_app',
       "#name" => 'patron-page',
       '#data' => $data,
     ];
-
-    return $app;
   }
 
 }
