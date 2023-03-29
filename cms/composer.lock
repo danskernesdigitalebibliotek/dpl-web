@@ -4,7 +4,11 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
+<<<<<<< HEAD
     "content-hash": "c1244e4ff92a1c53c148252e1520d53e",
+=======
+    "content-hash": "2659f56d48e5ac6a4bbb6f2c9c78b414",
+>>>>>>> c4c469b (ITK: Resovled compose lock conflict)
     "packages": [
         {
             "name": "amazeeio/drupal_integrations",
@@ -1080,7 +1084,7 @@
             "version": "v1.7.0-rc19",
             "dist": {
                 "type": "zip",
-                "url": "https://github.com/danskernesdigitalebibliotek/dpl-design-system/releases/download/release-develop/dist.zip"
+                "url": "https://github.com/itk-dev/dpl-design-system/releases/download/release-feature%2Fpatron-page-shine-up/dist.zip"
             },
             "type": "drupal-library"
         },
