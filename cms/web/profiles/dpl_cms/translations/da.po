@@ -1172,7 +1172,7 @@ msgstr ""
 #: 
 msgctxt "Search Header"
 msgid "Start typing in order to search"
-msgstr "Skriv dog noget. Systemet søger jo ikke af sig selv, vel?!"
+msgstr ""
 
 #: 
 msgctxt "Search Header"
