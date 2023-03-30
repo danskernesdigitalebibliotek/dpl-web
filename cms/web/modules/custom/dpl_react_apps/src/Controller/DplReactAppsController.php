@@ -469,7 +469,7 @@ class DplReactAppsController extends ControllerBase {
    * @return mixed[]
    *   The instant loan configuration.
    */
-  public static function getInstantLoanConfig() {
+  public static function getInstantLoanConfig(): array {
     return \Drupal::configFactory()->get('dpl_instant_loan.settings')->get() ?? [];
   }
 
