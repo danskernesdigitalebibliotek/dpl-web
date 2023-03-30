@@ -31,6 +31,14 @@ class DplInstantLoanSettingsForm extends ConfigFormBase {
    */
   public function buildForm(array $form, FormStateInterface $form_state) {
     $config = $this->config('dpl_instant_loan.settings');
+    $config_field_states =  [
+      'required' => [
+        ':input[name="enabled"]' => ['checked' => TRUE],
+      ],
+      'visible' => [
+        ':input[name="enabled"]' => ['checked' => TRUE],
+      ],
+    ];
 
     $form['enabled'] = [
       '#type' => 'checkbox',
@@ -52,6 +60,7 @@ class DplInstantLoanSettingsForm extends ConfigFormBase {
         ['context' => 'dpl_instant_loan']
       ),
       '#default_value' => $config->get('match_string'),
+      '#states' => $config_field_states,
     ];
 
     $form['threshold'] = [
@@ -63,6 +72,7 @@ class DplInstantLoanSettingsForm extends ConfigFormBase {
         ['context' => 'dpl_instant_loan']
       ),
       '#default_value' => $config->get('threshold'),
+      '#states' => $config_field_states,
     ];
 
     return parent::buildForm($form, $form_state);
