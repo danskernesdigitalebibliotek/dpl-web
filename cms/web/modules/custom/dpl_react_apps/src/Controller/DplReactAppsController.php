@@ -6,6 +6,7 @@ use Drupal\Core\Controller\ControllerBase;
 use Drupal\Core\GeneratedUrl;
 use Drupal\Core\Render\RendererInterface;
 use Drupal\Core\Url;
+use Drupal\dpl_instant_loan\DplInstantLoanSettings;
 use Drupal\dpl_library_agency\Branch\Branch;
 use Drupal\dpl_library_agency\Branch\BranchRepositoryInterface;
 use Drupal\dpl_library_agency\BranchSettings;
@@ -27,6 +28,7 @@ class DplReactAppsController extends ControllerBase {
     protected ReservationSettings $reservationSettings,
     protected BranchSettings $branchSettings,
     protected BranchRepositoryInterface $branchRepository,
+    protected DplInstantLoanSettings $instantLoanSettings
   ) {}
 
   /**
@@ -43,6 +45,7 @@ class DplReactAppsController extends ControllerBase {
       $container->get('dpl_library_agency.reservation_settings'),
       $container->get('dpl_library_agency.branch_settings'),
       $container->get('dpl_library_agency.branch.repository'),
+      $container->get('dpl_instant_loan.settings'),
     );
   }
 
@@ -173,7 +176,7 @@ class DplReactAppsController extends ControllerBase {
       'blacklisted-pickup-branches-config' => $this->buildBranchesListProp($this->branchSettings->getExcludedReservationBranches()),
      // @todo Remove when instant loans branches are used.
       'blacklisted-instant-loan-branches-config' => "",
-      'instant-loan-config' => $this->getInstantLoanConfig(),
+      'instant-loan-config' => $this->instantLoanSettings->getSettings(),
       // Urls.
       'auth-url' => self::authUrl(),
       'material-url' => self::materialUrl(),
@@ -340,6 +343,7 @@ class DplReactAppsController extends ControllerBase {
 
     $this->renderer->addCacheableDependency($app, $this->reservationSettings);
     $this->renderer->addCacheableDependency($app, $this->branchSettings);
+    $this->renderer->addCacheableDependency($app, $this->instantLoanSettings);
 
     return $app;
   }

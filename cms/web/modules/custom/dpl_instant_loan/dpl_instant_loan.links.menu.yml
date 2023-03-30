@@ -2,4 +2,4 @@ dpl_instant_loan.settings_form:
   title: "Instant Loan Settings"
   route_name: dpl_instant_loan.settings
   description: "Configure promotion of materials available for instant loans."
-  parent: system.admin_config_services
+  parent: dpl_library_agency.settings

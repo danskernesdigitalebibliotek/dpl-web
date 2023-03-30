@@ -4,6 +4,7 @@ namespace Drupal\dpl_instant_loan\Form;
 
 use Drupal\Core\Form\ConfigFormBase;
 use Drupal\Core\Form\FormStateInterface;
+use Drupal\dpl_instant_loan\DplInstantLoanSettings;
 
 /**
  * Instant Loan settings form.
@@ -15,7 +16,7 @@ class DplInstantLoanSettingsForm extends ConfigFormBase {
    */
   protected function getEditableConfigNames(): array {
     return [
-      'dpl_instant_loan.settings',
+      DplInstantLoanSettings::SETTINGS_KEY,
     ];
   }
 
@@ -30,8 +31,8 @@ class DplInstantLoanSettingsForm extends ConfigFormBase {
    * {@inheritdoc}
    */
   public function buildForm(array $form, FormStateInterface $form_state) {
-    $config = $this->config('dpl_instant_loan.settings');
-    $config_field_states =  [
+    $config = $this->config(DplInstantLoanSettings::SETTINGS_KEY);
+    $config_field_states = [
       'required' => [
         ':input[name="enabled"]' => ['checked' => TRUE],
       ],
@@ -82,7 +83,7 @@ class DplInstantLoanSettingsForm extends ConfigFormBase {
    * {@inheritdoc}
    */
   public function submitForm(array &$form, FormStateInterface $form_state): void {
-    $this->config('dpl_instant_loan.settings')
+    $this->config(DplInstantLoanSettings::SETTINGS_KEY)
       ->set('enabled', $form_state->getValue('enabled'))
       ->set('match_string', $form_state->getValue('match_string'))
       ->set('threshold', $form_state->getValue('threshold'))
