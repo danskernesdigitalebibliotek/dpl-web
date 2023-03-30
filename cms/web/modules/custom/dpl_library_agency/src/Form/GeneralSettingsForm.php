@@ -118,7 +118,7 @@ class GeneralSettingsForm extends ConfigFormBase {
 
     $form['reservations'] = [
       '#type' => 'fieldset',
-      '#title' => $this->t('Reservations'),
+      '#title' => $this->t('Reservations', [], ['context' => 'Library Agency Configuration']),
       '#collapsible' => FALSE,
       '#collapsed' => FALSE,
     ];
@@ -182,7 +182,7 @@ class GeneralSettingsForm extends ConfigFormBase {
     ];
     $form['branches']['reservation'] = [
       '#type' => 'checkboxes',
-      '#title' => $this->t('Reservations'),
+      '#title' => $this->t('Reservations', [], ['context' => 'Library Agency Configuration']),
       '#options' => $reservation_options,
       '#default_value' => $this->branchSettings->getExcludedReservationBranches(),
       '#description' => $this->t('Selected branches will not be available as pickup locations for reservations.', [], ['context' => 'Library Agency Configuration']),

@@ -8,8 +8,5 @@ namespace Drupal\dpl_url_proxy;
 interface DplUrlProxyInterface {
 
   const CONFIG_NAME = 'dpl_url_proxy.settings';
-  const TRANSLATION_OPTIONS = [
-    'context' => 'Url Proxy',
-  ];
 
 }

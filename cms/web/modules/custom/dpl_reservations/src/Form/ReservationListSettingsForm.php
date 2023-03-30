@@ -31,37 +31,36 @@ class ReservationListSettingsForm extends ConfigFormBase {
    */
   public function buildForm(array $form, FormStateInterface $form_state): array {
     $config = $this->config('dpl_reservation_list.settings');
-    $context = ['context' => 'Reservation list (settings)'];
 
     $form['settings'] = [
       '#type' => 'fieldset',
-      '#title' => $this->t('Basic settings', [], $context),
+      '#title' => $this->t('Basic settings', [], ['context' => 'Reservation list (settings)']),
       '#tree' => FALSE,
     ];
 
     $form['settings']['pause_reservation_info_url'] = [
       '#type' => 'textfield',
-      '#title' => $this->t('Pause reservation link', [], $context),
-      '#description' => $this->t('The link in the pause reservation modal', [], $context),
+      '#title' => $this->t('Pause reservation link', [], ['context' => 'Reservation list (settings)']),
+      '#description' => $this->t('The link in the pause reservation modal', [], ['context' => 'Reservation list (settings)']),
       '#default_value' => $config->get('pause_reservation_info_url') ?? '',
     ];
 
     $form['settings']['ereolen_my_page_url'] = [
       '#type' => 'textfield',
-      '#title' => $this->t('Ereolen link', [], $context),
-      '#description' => $this->t('My page in ereolen', [], $context),
+      '#title' => $this->t('Ereolen link', [], ['context' => 'Reservation list (settings)']),
+      '#description' => $this->t('My page in ereolen', [], ['context' => 'Reservation list (settings)']),
       '#default_value' => $config->get('ereolen_my_page_url') ?? '',
     ];
     $form['settings']['pause_reservation_start_date_config'] = [
       '#type' => 'date',
-      '#title' => $this->t('Start date', [], $context),
-      '#description' => $this->t('Pause reservation start date', [], $context),
+      '#title' => $this->t('Start date', [], ['context' => 'Reservation list (settings)']),
+      '#description' => $this->t('Pause reservation start date', [], ['context' => 'Reservation list (settings)']),
       '#default_value' => $config->get('pause_reservation_start_date_config'),
     ];
 
     $form['settings']['page_size_mobile'] = [
       '#type' => 'number',
-      '#title' => $this->t('Page size mobile', [], $context),
+      '#title' => $this->t('Page size mobile', [], ['context' => 'Reservation list (settings)']),
       '#default_value' => $config->get('page_size_mobile') ?? 25,
       '#min' => 0,
       '#step' => 1,
@@ -69,7 +68,7 @@ class ReservationListSettingsForm extends ConfigFormBase {
 
     $form['settings']['page_size_desktop'] = [
       '#type' => 'number',
-      '#title' => $this->t('Page size desktop', [], $context),
+      '#title' => $this->t('Page size desktop', [], ['context' => 'Reservation list (settings)']),
       '#default_value' => $config->get('page_size_desktop') ?? 25,
       '#min' => 0,
       '#step' => 1,
@@ -82,16 +81,14 @@ class ReservationListSettingsForm extends ConfigFormBase {
    * {@inheritdoc}
    */
   public function validateForm(array &$form, FormStateInterface $form_state): void {
-    $context = ['context' => 'Reservation list (settings)'];
-
     $feesUrl = $form_state->getValue('pause_reservation_info_url');
     if (!filter_var($feesUrl, FILTER_VALIDATE_URL)) {
-      $form_state->setErrorByName('pause_reservation_info_url', $this->t('The url "%url" is not a valid URL.', ['%url' => $feesUrl], $context));
+      $form_state->setErrorByName('pause_reservation_info_url', $this->t('The url "%url" is not a valid URL.', ['%url' => $feesUrl], ['context' => 'Reservation list (settings)']));
     }
 
     $materialUrl = $form_state->getValue('ereolen_my_page_url');
     if (!filter_var($materialUrl, FILTER_VALIDATE_URL)) {
-      $form_state->setErrorByName('ereolen_my_page_url', $this->t('The url "%url" is not a valid URL.', ['%url' => $materialUrl], $context));
+      $form_state->setErrorByName('ereolen_my_page_url', $this->t('The url "%url" is not a valid URL.', ['%url' => $materialUrl], ['context' => 'Reservation list (settings)']));
     }
   }
 

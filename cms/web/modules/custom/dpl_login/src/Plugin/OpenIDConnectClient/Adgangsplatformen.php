@@ -47,27 +47,27 @@ class Adgangsplatformen extends OpenIDConnectClientBase {
     $form = parent::buildConfigurationForm($form, $form_state);
 
     $form['authorization_endpoint'] = [
-      '#title' => $this->t('Authorization endpoint'),
+      '#title' => $this->t('Authorization endpoint', [], ['context' => 'Dpl Login']),
       '#type' => 'textfield',
       '#default_value' => $this->configuration['authorization_endpoint'],
     ];
     $form['token_endpoint'] = [
-      '#title' => $this->t('Token endpoint'),
+      '#title' => $this->t('Token endpoint', [], ['context' => 'Dpl Login']),
       '#type' => 'textfield',
       '#default_value' => $this->configuration['token_endpoint'],
     ];
     $form['userinfo_endpoint'] = [
-      '#title' => $this->t('UserInfo endpoint'),
+      '#title' => $this->t('UserInfo endpoint', [], ['context' => 'Dpl Login']),
       '#type' => 'textfield',
       '#default_value' => $this->configuration['userinfo_endpoint'],
     ];
     $form['logout_endpoint'] = [
-      '#title' => $this->t('Logout endpoint'),
+      '#title' => $this->t('Logout endpoint', [], ['context' => 'Dpl Login']),
       '#type' => 'textfield',
       '#default_value' => $this->configuration['logout_endpoint'],
     ];
     $form['agency_id'] = [
-      '#title' => $this->t('Agency ID'),
+      '#title' => $this->t('Agency ID', [], ['context' => 'Dpl Login']),
       '#type' => 'textfield',
       '#default_value' => $this->configuration['agency_id'],
     ];
