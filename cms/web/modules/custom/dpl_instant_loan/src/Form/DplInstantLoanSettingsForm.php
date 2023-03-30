@@ -36,7 +36,7 @@ class DplInstantLoanSettingsForm extends ConfigFormBase {
       '#type' => 'checkbox',
       '#title' => $this->t('Enabled', [], ['context' => 'dpl_instant_loan']),
       '#description' => $this->t(
-        'Should the instant loan functionality be activated?',
+        'Should materials available for instant loans be promoted to patrons?',
         [],
         ['context' => 'dpl_instant_loan']
       ),
@@ -47,7 +47,7 @@ class DplInstantLoanSettingsForm extends ConfigFormBase {
       '#type' => 'textfield',
       '#title' => $this->t('Match String', [], ['context' => 'dpl_instant_loan']),
       '#description' => $this->t(
-        'Which string should be matched in order to activate the instant loan feature?',
+        'Text used to identify materials which are available for instant loans. This text must be present in the material group of such materials.',
         [],
         ['context' => 'dpl_instant_loan']
       ),
@@ -58,7 +58,7 @@ class DplInstantLoanSettingsForm extends ConfigFormBase {
       '#type' => 'number',
       '#title' => $this->t('Threshold', [], ['context' => 'dpl_instant_loan']),
       '#description' => $this->t(
-        'The number of available materials for instant loan has to be same as the threshold or above.',
+        'The minimum number of materials which must be available for instant loan at a library branch to notify patrons of the option when making reservations.',
         [],
         ['context' => 'dpl_instant_loan']
       ),

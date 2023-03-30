@@ -1,4 +1,4 @@
 name: Instant Loan
 type: module
-description: Makes it possible for a library to administer the settings around the "Instant Loan" feature
+description: Supports promoting materials available for instant loans to patrons.
 core_version_requirement: ^8 || ^9
