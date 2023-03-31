@@ -4,6 +4,7 @@ package: DPL
 dependencies:
   - dpl_react:dpl_react
   - dpl_library_agency:dpl_library_agency
+  - dpl_instant_loan:dpl_instant_loan
 
 type: module
 core_version_requirement: ^9
