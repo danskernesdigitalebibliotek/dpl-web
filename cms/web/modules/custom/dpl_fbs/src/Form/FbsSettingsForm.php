@@ -34,13 +34,13 @@ class FbsSettingsForm extends ConfigFormBase {
 
     $form['settings'] = [
       '#type' => 'fieldset',
-      '#title' => $this->t('Basic settings'),
+      '#title' => $this->t('Basic settings', [], ['context' => 'Dpl Fbs']),
       '#tree' => FALSE,
     ];
 
     $form['settings']['base_url'] = [
       '#type' => 'textfield',
-      '#title' => $this->t('FBS service url'),
+      '#title' => $this->t('FBS service url', [], ['context' => 'Dpl Fbs']),
       '#default_value' => $config->get('base_url'),
     ];
 
@@ -53,7 +53,11 @@ class FbsSettingsForm extends ConfigFormBase {
   public function validateForm(array &$form, FormStateInterface $form_state): void {
     $url = $form_state->getValue('base_url');
     if (!filter_var($url, FILTER_VALIDATE_URL)) {
-      $form_state->setErrorByName('base_url', $this->t('The url "%url" is not a valid URL.', ['%url' => $url]));
+      $form_state->setErrorByName('base_url', $this->t(
+        'The url "%url" is not a valid URL.',
+        ['%url' => $url],
+        ['context' => 'Dpl Fbs']
+      ));
     }
   }
 

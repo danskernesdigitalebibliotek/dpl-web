@@ -30,32 +30,31 @@ class LoanListSettingsForm extends ConfigFormBase {
    * {@inheritdoc}
    */
   public function buildForm(array $form, FormStateInterface $form_state): array {
-    $context = ['context' => 'Loan list (settings)'];
     $config = $this->config('dpl_loan_list.settings');
 
     $form['settings'] = [
       '#type' => 'fieldset',
-      '#title' => $this->t('Basic settings', [], $context),
+      '#title' => $this->t('Basic settings', [], ['context' => 'Loan list (settings)']),
       '#tree' => FALSE,
     ];
 
     $form['settings']['fees_page_url'] = [
       '#type' => 'textfield',
-      '#title' => $this->t('Fee page url', [], $context),
-      '#description' => $this->t('The link to the relevant fee page', [], $context),
+      '#title' => $this->t('Fee page url', [], ['context' => 'Loan list (settings)']),
+      '#description' => $this->t('The link to the relevant fee page', [], ['context' => 'Loan list (settings)']),
       '#default_value' => $config->get('fees_page_url') ?? '',
     ];
 
     $form['settings']['material_overdue_url'] = [
       '#type' => 'textfield',
-      '#title' => $this->t('Material overdue url', [], $context),
-      '#description' => $this->t('The link to the material overdue page', [], $context),
+      '#title' => $this->t('Material overdue url', [], ['context' => 'Loan list (settings)']),
+      '#description' => $this->t('The link to the material overdue page', [], ['context' => 'Loan list (settings)']),
       '#default_value' => $config->get('material_overdue_url') ?? '',
     ];
 
     $form['settings']['page_size_mobile'] = [
       '#type' => 'number',
-      '#title' => $this->t('Page size mobile', [], $context),
+      '#title' => $this->t('Page size mobile', [], ['context' => 'Loan list (settings)']),
       '#default_value' => $config->get('page_size_mobile') ?? 25,
       '#min' => 0,
       '#step' => 1,
@@ -63,7 +62,7 @@ class LoanListSettingsForm extends ConfigFormBase {
 
     $form['settings']['page_size_desktop'] = [
       '#type' => 'number',
-      '#title' => $this->t('Page size desktop', [], $context),
+      '#title' => $this->t('Page size desktop', [], ['context' => 'Loan list (settings)']),
       '#default_value' => $config->get('page_size_desktop') ?? 25,
       '#min' => 0,
       '#step' => 1,

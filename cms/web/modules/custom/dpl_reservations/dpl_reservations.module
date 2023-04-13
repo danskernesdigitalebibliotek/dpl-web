@@ -1,0 +1,8 @@
+<?php
+
+/**
+ * @file
+ * Dpl_reservations drupal module file.
+ *
+ * Shows the reservation list.
+ */

@@ -1,0 +1,62 @@
+# This workflow takes care of sending translations to POEditor or Github Pages.
+name: Translate source
+on:
+  push:
+    branches:
+      - develop
+jobs:
+
+  SendToPoeditor:
+    name: Send translatable strings to POEditor
+    runs-on: ubuntu-latest
+    # Avoid systems crossing each other by not looking for string changes
+    # in commits coming from POEditor or from the job itself.
+    # Commits from POEditor are in the format: "Update [file] (POEditor.com)"
+    # Commits from the this job says: "New translations were found"
+    if: ${{ !contains(github.event.head_commit.message, 'POEditor.com') && !contains(github.event.head_commit.message, 'New translations were found') }}
+    permissions:
+      # Give the default GITHUB_TOKEN write permission to commit and push the
+      # added or changed files to the repository.
+      contents: write
+    steps:
+    - uses: actions/checkout@master
+      with:
+        fetch-depth: 0
+        token: ${{ secrets.AUTOCOMMIT_GITHUB_TOKEN }}
+    - name: Install go-task
+      uses: arduino/setup-task@v1
+      with:
+        repo-token: ${{ secrets.GITHUB_TOKEN }}
+    - name: Setup site
+      run: task ci:reset
+    - name: Scan translations
+      run: LANGUAGE=da task translations:scan
+    - name: Commit translations
+      uses: stefanzweifel/git-auto-commit-action@v4
+      with:
+        file_pattern: './web/profiles/dpl_cms/translations/*.po'
+        commit_message: New translations were found
+    - name: Make Poeditor look for changes
+      uses: distributhor/workflow-webhook@v2
+      env:
+        webhook_url: ${{ secrets.POEDITOR_WEBHOOK_URL }}
+        # POEditor webhooks to not use secrets but the action requires a value.
+        webhook_secret: 'xxxx'
+
+  # Publish translations to GitHub Pages to support consumption by Drupal.
+  # The localization system requires translation files to be served with a
+  # proper Last-Modified header. This is not possible raw GitHub files.
+  PublishToGithubPages:
+    name: Publish translations to Github Pages
+    runs-on: ubuntu-latest
+    if: ${{ contains(github.event.head_commit.message, 'POEditor.com') }}
+    steps:
+    - uses: actions/checkout@master
+      with:
+        fetch-depth: 0
+    - name: Publish translations to GitHub Pages
+      uses: peaceiris/actions-gh-pages@v3
+      with:
+        github_token: ${{ secrets.GITHUB_TOKEN }}
+        publish_dir: ./web/profiles/dpl_cms/translations
+        destination_dir: translations

@@ -23,8 +23,12 @@ vars:
   # Constructing docker image name.
   RELEASE_IMAGE_NAME: '{{.RELEASE_IMAGE_NAME | default "dpl-cms-source"}}'
   RELEASE_FULL_NAME: '{{.RELEASE_IMAGE_REGISTRY}}/{{.RELEASE_IMAGE_NAME}}:{{.RELEASE_IMAGE_TAG}}'
+
   # Where is the docker file(s) we use for our builds residing?
   LAGOON_DIR: "lagoon"
+  # The name of the project on Lagoon.
+  LAGOON_PROJECT: "dpl-cms"
+
   DOCKER_COMPOSE_FILES_DEFAULT: '-f docker-compose.yml'
   DOCKER_COMPOSE_FILES: '{{.DOCKER_COMPOSE_FILES | default .DOCKER_COMPOSE_FILES_DEFAULT }}'
   DOCKER_COMPOSE_FILES_CI: '{{.DOCKER_COMPOSE_FILES}} -f docker-compose.ci.yml'
@@ -32,6 +36,11 @@ vars:
   DIR_RESTORE_DATABASE: 'restore/database'
   # Directory with lagoon backup files.
   DIR_RESTORE_FILES: 'restore/files'
+  # Directory with translation sources.
+  PO_DIR: "profiles/dpl_cms/translations"
+
+  # Default language
+  LANGUAGE: "da"
 
   # Ports and host names:
   # Using ports exposed on localhost is important.
@@ -40,13 +49,13 @@ vars:
   #
   # Cypress.
   CYPRESS_BASE_PORT:
-    sh: docker compose port varnish 8080 | cut -d ":" -f2
+    sh: docker compose port varnish 8080 2>/dev/null | cut -d ":" -f2
   CYPRESS_HOST_LOCAL: 'http://localhost:{{ .CYPRESS_BASE_PORT }}'
   # Wiremock.
   WIREMOCK_HTTP_PORT:
-    sh: docker compose port wiremock 80 | cut -d ":" -f2
+    sh: docker compose port wiremock 80 2>/dev/null | cut -d ":" -f2
   WIREMOCK_HTTPS_PORT:
-    sh: docker compose port wiremock 443 | cut -d ":" -f2
+    sh: docker compose port wiremock 443 2>/dev/null | cut -d ":" -f2
   WIREMOCK_HOST_DOCKER: http://wiremock
   WIREMOCK_HOST_LOCAL: 'http://localhost:{{ .WIREMOCK_HTTP_PORT }}'
   WIREMOCK_HOST_LOCAL_HTTPS: 'https://localhost:{{ .WIREMOCK_HTTPS_PORT }}'
@@ -281,3 +290,66 @@ tasks:
     cmds:
       - task: source:build
       - task: source:push
+
+  lagoon:drush:uli:
+    desc: Get an Drupal one-time login link for a Lagoon environment through Drush
+    cmds:
+      - task lagoon:cli -- drush uli
+
+  lagoon:cli:
+    desc: Performs a command in a Lagoon environment and display the output. Expects parameter(s).
+    deps: [deps:lagoon, deps:jq, lagoon:login]
+    cmds:
+      - |
+        RUN=$(lagoon run -p {{.LAGOON_PROJECT}} -e pr-"$PR" custom --command "{{.CLI_ARGS}}" --name "{{.CLI_ARGS}} from Taskfile" --output-json);
+        TASK_ID=$(echo $RUN | jq .data.id);
+        STATUS="pending";
+        while [ $STATUS != "complete" ]; do
+          sleep 0.5;
+          echo -n ".";
+          TASK=$(lagoon get task-by-id --id=$TASK_ID --logs --output-json);
+          STATUS=$(echo $TASK | jq -r .data[0].status);
+        done
+        echo -e "\n$(echo $TASK | jq -r .data[0].logs)";
+    preconditions:
+      - sh: '[ -v PR ]'
+        msg: Please provide a PR environment variable with the pull request number for the environment
+
+  lagoon:login:
+    internal: true
+    deps: [deps:lagoon]
+    cmds:
+      - lagoon login
+
+  # Tasks used to ensure that non-required CLI tools are available.
+  # Use these as dependencies for specific tasks.
+  deps:lagoon:
+    internal: true
+    preconditions:
+      - sh: lagoon --version
+        msg: Lagoon CLI is not installed. Please check https://uselagoon.github.io/lagoon-cli/.
+
+  deps:jq:
+    internal: true
+    preconditions:
+      - sh: jq --version
+        msg: jq is not installed. Please check https://stedolan.github.io/jq/.
+  translations:scan:
+    desc: Scan and generate translations
+    cmds:
+     # Make sure that the potion module is active
+      - task dev:cli -- drush en -y potion
+     # Generate translations for custom modules
+      - task dev:cli -- drush potion:generate $LANGUAGE modules/custom/ {{ .PO_DIR }} --recursive --default-write-mode=override
+    # Generate translations for custom themes
+      - task dev:cli -- drush potion:generate $LANGUAGE themes/custom/ {{ .PO_DIR }} --recursive --default-write-mode=merge
+    # Fill translations from db
+      - task dev:cli -- drush potion:fill $LANGUAGE {{ .PO_DIR }}/$LANGUAGE.po
+    # We need to chown the PO file in the container with the user of the host
+    # in order to be able to commit the file afterwards.
+      - |
+        export ME=$(id -u);
+        task dev:cli -- chown $ME:$ME web/{{ .PO_DIR }}/$LANGUAGE.po
+    # Default language if nothing else is set:
+    env:
+      LANGUAGE: "{{ .LANGUAGE }}"
