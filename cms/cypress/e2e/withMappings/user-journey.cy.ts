@@ -43,6 +43,9 @@ describe("User journey", () => {
     cy.visit("/work/work-of:870970-basis:54181744");
     cy.getBySel("material-header-author-text").scrollIntoView();
     cy.getBySel("material-header-buttons-physical").click();
+    // We have to wait for the modal to be fully rendered.
+    // eslint-disable-next-line cypress/no-unnecessary-waiting
+    cy.wait(2000);
     cy.getBySel("reservation-modal-parallel")
       .should("be.visible")
       .and("contain", "Harry Potter og Fønixordenen");
