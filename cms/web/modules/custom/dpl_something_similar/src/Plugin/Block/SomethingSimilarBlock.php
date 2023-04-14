@@ -7,7 +7,6 @@ use Drupal\Core\Config\ConfigFactoryInterface;
 use Drupal\Core\Plugin\ContainerFactoryPluginInterface;
 use Drupal\dpl_react_apps\Controller\DplReactAppsController;
 use Symfony\Component\DependencyInjection\ContainerInterface;
-use Drupal\Core\Url;
 
 /**
  * Provides a "something similar" component.
@@ -57,7 +56,7 @@ class SomethingSimilarBlock extends BlockBase implements ContainerFactoryPluginI
    *   The plugin implementation definition.
    *
    * @return \Drupal\dpl_something_similar\Plugin\Block\SomethingSimilarBlock|static
-   *   Something similar. 
+   *   Something similar.
    */
   public static function create(ContainerInterface $container, array $configuration, $plugin_id, $plugin_definition) {
     return new static(
@@ -100,14 +99,11 @@ class SomethingSimilarBlock extends BlockBase implements ContainerFactoryPluginI
     ];
   }
 
-
-
   /**
    * Get faust from url.
    */
   public static function faustFromUrl(): string {
     return \Drupal::routeMatch()->getParameters()->get('faust');
   }
-
 
 }
