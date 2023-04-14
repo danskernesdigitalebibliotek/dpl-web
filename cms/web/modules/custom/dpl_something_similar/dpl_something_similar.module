@@ -1,0 +1,8 @@
+<?php
+
+/**
+ * @file
+ * Dpl_something_similar drupal module file.
+ *
+ * Renders the something similar component.
+ */
