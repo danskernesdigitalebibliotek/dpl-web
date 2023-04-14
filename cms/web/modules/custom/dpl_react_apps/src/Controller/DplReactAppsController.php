@@ -176,7 +176,7 @@ class DplReactAppsController extends ControllerBase {
       'blacklisted-pickup-branches-config' => $this->buildBranchesListProp($this->branchSettings->getExcludedReservationBranches()),
      // @todo Remove when instant loans branches are used.
       'blacklisted-instant-loan-branches-config' => "",
-      'instant-loan-config' => $this->instantLoanSettings->getSettings(),
+      'instant-loan-config' => $this->instantLoanSettings->getConfig(),
       // Urls.
       'auth-url' => self::authUrl(),
       'material-url' => self::materialUrl(),
