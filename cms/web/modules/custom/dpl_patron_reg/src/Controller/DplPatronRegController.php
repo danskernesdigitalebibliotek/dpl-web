@@ -3,8 +3,10 @@
 namespace Drupal\dpl_patron_reg\Controller;
 
 use Drupal\Component\Utility\UrlHelper;
+use Drupal\Core\Block\BlockManagerInterface;
 use Drupal\Core\Controller\ControllerBase;
 use Drupal\Core\Link;
+use Drupal\Core\Render\RendererInterface;
 use Drupal\Core\Routing\TrustedRedirectResponse;
 use Drupal\Core\Url;
 use Drupal\openid_connect\OpenIDConnectClaims;
@@ -13,10 +15,9 @@ use Drupal\openid_connect\Plugin\OpenIDConnectClientManager;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Drupal\dpl_login\UserTokensProvider;
 use Symfony\Component\HttpFoundation\Request;
-use Drupal\dpl_react_apps\Controller\DplReactAppsController;
 use Drupal\dpl_library_agency\Branch\BranchRepositoryInterface;
 use Drupal\dpl_library_agency\BranchSettings;
-use Drupal\dpl_library_agency\Branch\Branch;
+use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
 
 /**
  * Patron registration Controller.
@@ -33,6 +34,8 @@ class DplPatronRegController extends ControllerBase {
     protected OpenIDConnectClaims $claims,
     protected BranchSettings $branchSettings,
     protected BranchRepositoryInterface $branchRepository,
+    protected BlockManagerInterface $blockManager,
+    protected RendererInterface $renderer
   ) {
   }
 
@@ -47,13 +50,15 @@ class DplPatronRegController extends ControllerBase {
       $container->get('openid_connect.claims'),
       $container->get('dpl_library_agency.branch_settings'),
       $container->get('dpl_library_agency.branch.repository'),
+      $container->get('plugin.manager.block'),
+      $container->get('renderer'),
     );
   }
 
   /**
    * Build and return information page as page.
    *
-   * @return array<string,array>
+   * @return mixed[]
    *   The page as a render array.
    */
   public function informationPage(): array {
@@ -125,102 +130,36 @@ class DplPatronRegController extends ControllerBase {
     // Set redirect Url after login. If you use the $request->getSession()
     // object this trick simply do not work and the redirect after login is
     // ignored.
-    $_SESSION['openid_connect_destination'] = Url::fromRoute('dpl_patron_reg.create')->toString(TRUE)->getGeneratedUrl();
+    /** @var \Drupal\Core\GeneratedUrl $url */
+    $url = Url::fromRoute('dpl_patron_reg.create')->toString(TRUE);
+    $_SESSION['openid_connect_destination'] = $url->getGeneratedUrl();
 
     return new TrustedRedirectResponse($url->toString());
-  }
-
- /**
-   * Build a string of JSON data containing information about branches.
-   *
-   * Uses the format:
-   *
-   * [{
-   *    "branchId":"DK-775120",
-   *    "title":"Højbjerg"
-   * }, {
-   *    "branchId":"DK-775122",
-   *    "title":"Beder-Malling"
-   * }]
-   *
-   * This is to be used as props/attributes for React apps.
-   *
-   * @param \Drupal\dpl_library_agency\Branch\Branch[] $branches
-   *   The branches to build the string with.
-   */
-  protected function buildBranchesJsonProp(array $branches) : string {
-    return json_encode(array_map(function (Branch $branch) {
-      return [
-        'branchId' => $branch->id,
-        'title' => $branch->title,
-      ];
-    }, $branches));
-  }
-
-  /**
-   * Builds a comma separated list of branch ids.
-   *
-   * This is to be used as props/attributes for React apps.
-   *
-   * @param string[] $branchIds
-   *   The ids of the branches to use.
-   */
-  protected function buildBranchesListProp(array $branchIds) : string {
-    return implode(',', $branchIds);
   }
 
   /**
    * Load the user registration create user react application.
    *
-   * @return array[]
+   * @return mixed[]
+   *   Render array with registration block.
+   *
+   * @throws \Drupal\Component\Plugin\Exception\PluginException
    */
   public function userRegistrationReactAppLoad(): array {
-    $config = $this->config('dpl_patron_reg.settings');
-    $userToken = $this->user_token_provider->getAccessToken()?->token;
-    // Todo, this does not exist, it is in another pr, perhaps a seperate pr or we wait?
-    $patron_page_settings = $this->configFactory->get('patron_page.settings');
-    $context = ['context' => 'Create patron'];
+    /** @var \Drupal\dpl_patron_reg\Plugin\Block\PatronRegistrationBlock $plugin_block */
+    $plugin_block = $this->blockManager->createInstance('dpl_patron_reg_block', []);
 
-    $data = [
-      'pickup-branches-dropdown-label-text' => $this->t("Choose pickup branch", [], $context),
-      'blacklisted-pickup-branches-config' => $this->buildBranchesListProp($this->branchSettings->getExcludedReservationBranches()),
-      'branches-config' => $this->buildBranchesJsonProp($this->branchRepository->getBranches()),
-      // 'pincode-length-min-config' => $patron_page_settings->get('pincode_length_min'),
-      // 'pincode-length-max-config' => $patron_page_settings->get('pincode_length_max'),
-      // todo connected to todo in l135
-      'pincode-length-min-config' => '4',
-      'pincode-length-max-config' => '4',
-      'patron-page-change-pincode-header-text' => $this->t("Pincode", [], $context),
-      'pickup-branches-dropdown-nothing-selected-text' => $this->t("Nothing selected", [], $context),
-      'patron-page-change-pincode-body-text' => $this->t("Change current pin by entering a new pin and saving", [], $context),
-      'patron-page-pincode-label-text' => $this->t("New pin", [], $context),
-      'patron-page-confirm-pincode-label-text' => $this->t("Confirm new pin", [], $context),
-      'patron-contact-name-label-text' => $this->t("Name", [], $context),
-      'patron-page-pincode-too-short-validation-text' => $this->t("The pincode should be minimum @pincodeLengthMin and maximum @pincodeLengthMax characters long", [], $context),
-      'patron-page-pincodes-not-the-same-text' => $this->t("The pincodes are not the same", [], $context),
-      'patron-contact-phone-label-text' => $this->t("Phone number", [], $context),
-      'patron-contact-info-body-text' => $this->t("", [], $context),
-      'patron-contact-info-header-text' => $this->t("", [], $context),
-      'patron-contact-phone-checkbox-text' => $this->t("Receive text messages about your loans, reservations, and so forth", [], $context),
-      'patron-contact-email-label-text' => $this->t("E-mail", [], $context),
-      'patron-contact-email-checkbox-text' => $this->t("Receive emails about your loans, reservations, and so forth", [], $context),
-      'create-patron-change-pickup-header-text' => $this->t("", [], $context),
-      'create-patron-change-pickup-body-text' => $this->t("", [], $context),
-      'create-patron-header-text' => $this->t("Register as patron", [], $context),
-      'create-patron-invalid-ssn-header-text' => $this->t("Invalid SSN", [], $context),
-      'create-patron-invalid-ssn-body-text' => $this->t("This SSN is invalid", [], $context),
-      'create-patron-confirm-button-text' => $this->t("Confirm", [], $context),
-      'create-patron-cancel-button-text' => $this->t("Cancel", [], $context),
-      'min-age-config' => $config->get('age_limit') ?? '18',
-      'redirect-on-user-created-url' => $config->get('redirect_on_user_created_url'),
-      'user-token' => $userToken,
-    ]+ DplReactAppsController::externalApiBaseUrls();
+    // Some blocks might implement access check.
+    $access_result = $plugin_block->access($this->currentUser());
+    if (is_object($access_result) && $access_result->isForbidden() || is_bool($access_result) && !$access_result) {
+      throw new AccessDeniedHttpException();
+    }
 
-    return [
-      '#theme' => 'dpl_react_app',
-      "#name" => 'create-patron',
-      '#data' => $data,
-    ];
+    // Add the cache tags/contexts.
+    $render = $plugin_block->build();
+    $this->renderer->addCacheableDependency($render, $plugin_block);
+
+    return $render;
   }
 
 }

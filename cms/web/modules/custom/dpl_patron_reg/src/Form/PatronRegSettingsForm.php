@@ -33,9 +33,11 @@ class PatronRegSettingsForm extends ConfigFormBase {
     $config = $this->config('dpl_patron_reg.settings');
 
     $form['age_limit'] = [
-      '#type' => 'textfield',
+      '#type' => 'number',
       '#title' => $this->t('Minimum age to allow self registration'),
       '#default_value' => $config->get('age_limit') ?? '18',
+      '#min' => 1,
+      '#step' => 1,
     ];
 
     $form['redirect_on_user_created_url'] = [
