@@ -126,8 +126,6 @@ class PatronPageBlock extends BlockBase implements ContainerFactoryPluginInterfa
    * @throws \Safe\Exceptions\JsonException
    */
   public function build() {
-    $contextAria = ['context' => 'Patron page list (Aria)'];
-
     $patron_page_settings = $this->configFactory->get('patron_page.settings');
     $general_config = $this->configFactory->get('dpl_library_agency.general_settings');
 
@@ -137,7 +135,7 @@ class PatronPageBlock extends BlockBase implements ContainerFactoryPluginInterfa
     }
 
     $data = [
-      # Configuration.
+      // Configuration.
       'text-notifications-enabled-config' => $this->textNotificationsEnabled(),
       'blacklisted-pickup-branches-config' => $this->buildBranchesListProp($this->branchSettings->getExcludedReservationBranches()),
       'branches-config' => $this->buildBranchesJsonProp($this->branchRepository->getBranches()),
@@ -145,12 +143,12 @@ class PatronPageBlock extends BlockBase implements ContainerFactoryPluginInterfa
       'pincode-length-max-config' => $patron_page_settings->get('pincode_length_max'),
       'pause-reservation-start-date-config' => $dateConfig,
 
-      # Urls.
+      // Urls.
       'pause-reservation-info-url' => $general_config->get('pause_reservation_info_url'),
       'delete-patron-url' => $patron_page_settings->get('delete_patron_url'),
       'always-available-ereolen-url' => $patron_page_settings->get('always_available_ereolen'),
 
-      # Text strings.
+      // Text strings.
       'pause-reservation-modal-aria-description-text' => $this->t('This modal makes it possible to pause your physical reservations', [], ['context' => 'Fees list (Aria)']),
       'pause-reservation-modal-header-text' => $this->t('Pause reservations on physical items', [], ['context' => 'Fees list (Aria)']),
       'pause-reservation-modal-body-text' => $this->t('Pause your reservations early, since reservations that are already being processed, will not be paused.', [], ['context' => 'Fees list (Aria)']),
