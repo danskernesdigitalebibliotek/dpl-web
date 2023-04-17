@@ -1,7 +1,7 @@
-dpl_patron_page.createPage:
+dpl_patron_page.profile:
   path: "/user/me"
   defaults:
-    _controller: '\Drupal\dpl_patron_page\Controller\DplPatronPageController::createPage'
+    _controller: '\Drupal\dpl_patron_page\Controller\DplPatronPageController::profile'
   requirements:
     _permission: "access content"
 

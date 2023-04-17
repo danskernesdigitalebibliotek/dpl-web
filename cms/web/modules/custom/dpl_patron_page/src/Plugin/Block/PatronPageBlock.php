@@ -156,6 +156,7 @@ class PatronPageBlock extends BlockBase implements ContainerFactoryPluginInterfa
       'pause-reservation-modal-below-inputs-text-text' => $this->t('Pause reservation below inputs text', [], ['context' => 'Fees list (Aria)']),
       'pause-reservation-modal-link-text' => $this->t('Read more', [], ['context' => 'Fees list (Aria)']),
       'pause-reservation-modal-save-button-label-text' => $this->t('Save', [], ['context' => 'Fees list (Aria)']),
+
       'patron-page-header-text' => $this->t('Patron profile page'),
       'patron-page-basic-details-header-text' => $this->t('BASIC DETAILS'),
       'patron-page-basic-details-name-label-text' => $this->t('Name'),

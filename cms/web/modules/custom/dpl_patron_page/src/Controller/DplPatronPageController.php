@@ -43,28 +43,22 @@ class DplPatronPageController extends ControllerBase {
   }
 
   /**
-   * Demo react rendering.
+   * Create page with the patron's profile.
    *
    * @return mixed[]
    *   Render array.
    *
    * @throws \Drupal\Component\Plugin\Exception\PluginException
    */
-  public function createPage(): array {
-    // You can hard code configuration, or you load from settings.
-    $config = [];
-
+  public function profile(): array {
     /** @var \Drupal\dpl_patron_page\Plugin\Block\PatronPageBlock $plugin_block */
-    $plugin_block = $this->blockManager->createInstance('dpl_patron_page_block', $config);
+    $plugin_block = $this->blockManager->createInstance('dpl_patron_page_block', []);
 
-    // Some blocks might implement access check.
     $access_result = $plugin_block->access($this->currentUser());
-
     if (is_object($access_result) && $access_result->isForbidden() || is_bool($access_result) && !$access_result) {
       throw new AccessDeniedHttpException();
     }
 
-    // Add the cache tags/contexts.
     $render = $plugin_block->build();
     $this->renderer->addCacheableDependency($render, $plugin_block);
 
