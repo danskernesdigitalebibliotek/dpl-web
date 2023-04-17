@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "99bf53c87cb8de6e64ec6b30a4814feb",
+    "content-hash": "b011889f36786108efb28f4775f0d829",
     "packages": [
         {
             "name": "amazeeio/drupal_integrations",
@@ -3790,10 +3790,6 @@
             ],
             "authors": [
                 {
-                    "name": "MiSc",
-                    "homepage": "https://www.drupal.org/user/382892"
-                },
-                {
                     "name": "deadbeef",
                     "homepage": "https://www.drupal.org/user/93644"
                 },
@@ -3804,6 +3800,10 @@
                 {
                     "name": "littlethoughts",
                     "homepage": "https://www.drupal.org/user/2479724"
+                },
+                {
+                    "name": "MiSc",
+                    "homepage": "https://www.drupal.org/user/382892"
                 }
             ],
             "homepage": "https://www.drupal.org/project/varnish_purge",
@@ -10153,6 +10153,7 @@
                 "issues": "https://github.com/FriendsOfPHP/Goutte/issues",
                 "source": "https://github.com/FriendsOfPHP/Goutte/tree/v3.3.1"
             },
+            "abandoned": "symfony/browser-kit",
             "time": "2020-11-01T09:30:18+00:00"
         },
         {
