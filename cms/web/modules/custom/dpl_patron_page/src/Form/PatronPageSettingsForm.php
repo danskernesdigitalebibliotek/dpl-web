@@ -61,12 +61,16 @@ class PatronPageSettingsForm extends ConfigFormBase {
       '#type' => 'number',
       '#title' => $this->t('Pincode length (min)'),
       '#default_value' => $config->get('pincode_length_min') ?? 4,
+      '#min' => 4,
+      '#step' => 1,
     ];
 
     $form['settings']['pincode_length_max'] = [
       '#type' => 'number',
       '#title' => $this->t('Pincode length max'),
       '#default_value' => $config->get('pincode_length_max') ?? 4,
+      '#min' => 4,
+      '#step' => 1,
     ];
 
     return parent::buildForm($form, $form_state);
@@ -85,17 +89,6 @@ class PatronPageSettingsForm extends ConfigFormBase {
     if (!filter_var($materialUrl, FILTER_VALIDATE_URL)) {
       $form_state->setErrorByName('always_available_ereolen', $this->t('The url "%url" is not a valid URL.', ['%url' => $materialUrl]));
     }
-
-    $pincodeLengthMin = $form_state->getValue('pincode_length_min');
-    if (!is_int($pincodeLengthMin) && $pincodeLengthMin <= 0) {
-      $form_state->setErrorByName('pincode_length_min', $this->t('Pincode length has to be a positive integer'));
-    }
-
-    $pincodeLengthMax = $form_state->getValue('pincode_length_max');
-    if (!is_int($pincodeLengthMax) && $pincodeLengthMax <= 0) {
-      $form_state->setErrorByName('pincode_length', $this->t('Pincode length has to be a positive integer'));
-    }
-
   }
 
   /**
