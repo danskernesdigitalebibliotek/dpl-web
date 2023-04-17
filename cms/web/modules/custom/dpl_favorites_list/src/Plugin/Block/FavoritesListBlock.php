@@ -39,9 +39,9 @@ class FavoritesListBlock extends BlockBase implements ContainerFactoryPluginInte
    * @param \Drupal\Core\Config\ConfigFactoryInterface $configFactory
    *   Drupal config factory to get FBS and Publizon settings.
    * @param \Drupal\dpl_library_agency\BranchSettings $branchSettings
-   *   The branchsettings for branch config.
+   *   The branch settings for branch config.
    * @param \Drupal\dpl_library_agency\Branch\BranchRepositoryInterface $branchRepository
-   *   The branchsettings for getting branches.
+   *   The branch settings for getting branches.
    */
   public function __construct(array $configuration, $plugin_id, $plugin_definition, ConfigFactoryInterface $configFactory, protected BranchSettings $branchSettings, protected BranchRepositoryInterface $branchRepository) {
     parent::__construct($configuration, $plugin_id, $plugin_definition);
@@ -70,41 +70,39 @@ class FavoritesListBlock extends BlockBase implements ContainerFactoryPluginInte
    *
    * @return mixed[]
    *   The app render array.
+   *
+   * @throws \Safe\Exceptions\JsonException
    */
   public function build() {
     $favoritesListSettings = $this->configFactory->get('favorites_list.settings');
-    $context = ['context' => 'Loan list'];
-    $contextAria = ['context' => 'Loan list (Aria)'];
-    $fbsConfig = $this->configFactory->get('dpl_fbs.settings');
-    $publizonConfig = $this->configFactory->get('dpl_publizon.settings');
+
     $data = [
       // Branches.
       'blacklisted-availability-branches-config' => DplReactAppsController::buildBranchesListProp($this->branchSettings->getExcludedAvailabilityBranches()),
       'branches-config' => DplReactAppsController::buildBranchesJsonProp($this->branchRepository->getBranches()),
+
       // Page size.
       "page-size-desktop" => $favoritesListSettings->get('page_size_desktop'),
       "page-size-mobile" => $favoritesListSettings->get('page_size_mobile'),
+
       // Texts.
-      'group-modal-checkbox-text' => $this->t("Choose all renewable", [], $context),
-      "favorites-list-materials-text" => $this->t("@count materials", [], $context),
-      "favorites-list-header-text" => $this->t("Favorites", [], $context),
-      "by-author-text" => $this->t("By", [], $context),
-      "et-al-text" => $this->t("...", [], $context),
-      "show-more-text" => $this->t("show more", [], $context),
-      "result-pager-status-text" => $this->t("Showing @itemsShown out of @hitcount results", [], $context),
-      "favorites-list-empty-text" => $this->t("Your favorites list is empty", [], $context),
-      "in-series-text" => $this->t("in series", [], $context),
-      "number-description-text" => $this->t("Number description", [], $context),
+      'group-modal-checkbox-text' => $this->t("Choose all renewable", [], ['context' => 'Loan list']),
+      "favorites-list-materials-text" => $this->t("@count materials", [], ['context' => 'Loan list']),
+      "favorites-list-header-text" => $this->t("Favorites", [], ['context' => 'Loan list']),
+      "by-author-text" => $this->t("By", [], ['context' => 'Loan list']),
+      "et-al-text" => $this->t("...", [], ['context' => 'Loan list']),
+      "show-more-text" => $this->t("show more", [], ['context' => 'Loan list']),
+      "result-pager-status-text" => $this->t("Showing @itemsShown out of @hitcount results", [], ['context' => 'Loan list']),
+      "favorites-list-empty-text" => $this->t("Your favorites list is empty", [], ['context' => 'Loan list']),
+      "in-series-text" => $this->t("in series", [], ['context' => 'Loan list']),
+      "number-description-text" => $this->t("Number description", [], ['context' => 'Loan list']),
     ] + DplReactAppsController::externalApiBaseUrls();
 
-    $app = [
+    return [
       '#theme' => 'dpl_react_app',
       "#name" => 'favorites-list',
       '#data' => $data,
     ];
-
-    return $app;
-
   }
 
 }

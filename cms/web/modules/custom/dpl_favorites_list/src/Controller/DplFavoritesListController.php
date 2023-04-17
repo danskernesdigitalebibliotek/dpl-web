@@ -43,7 +43,7 @@ class DplFavoritesListController extends ControllerBase {
   }
 
   /**
-   * Demo react rendering.
+   * Favorites page react rendering.
    *
    * @return mixed[]
    *   Render array.
