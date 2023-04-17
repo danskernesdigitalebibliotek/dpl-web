@@ -6,6 +6,7 @@ use Drupal\Core\Block\BlockManagerInterface;
 use Drupal\Core\Controller\ControllerBase;
 use Drupal\Core\Render\RendererInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
+use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
 
 /**
  * Render favorites list react app.
@@ -52,18 +53,16 @@ class DplFavoritesListController extends ControllerBase {
   public function list(): array {
     $config = [];
 
-    /** @var \Drupal\dpl_favoritess\Plugin\Block\FavoritesListBlock $plugin_block */
+    /** @var \Drupal\dpl_favorites_list\Plugin\Block\FavoritesListBlock $plugin_block */
     $plugin_block = $this->blockManager->createInstance('dpl_favorites_list_block', $config);
+
     // Some blocks might implement access check.
     $access_result = $plugin_block->access($this->currentUser());
-    
-    // Return empty render array if user doesn't have access.
-    // $access_result can be boolean or an AccessResult class.
+
     if (is_object($access_result) && $access_result->isForbidden() || is_bool($access_result) && !$access_result) {
-      // You might need to add some cache tags/contexts.
-      return [];
+      throw new AccessDeniedHttpException();
     }
-    
+
     // Add the cache tags/contexts.
     $render = $plugin_block->build();
     $this->renderer->addCacheableDependency($render, $plugin_block);
