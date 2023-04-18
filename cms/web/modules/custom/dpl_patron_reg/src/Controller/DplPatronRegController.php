@@ -120,19 +120,19 @@ class DplPatronRegController extends ControllerBase {
     /** @var \Drupal\Core\Routing\TrustedRedirectResponse $response */
     $response = $client->authorize($scopes);
 
-    // Get redirect URL from OpenID connect and add forced nem-login idp into
-    // the URL.
-    $url = UrlHelper::parse($response->getTargetUrl());
-    $url['query']['idp'] = 'nemlogin';
-    $url = Url::fromUri($url['path'], ['query' => $url['query']]);
-    $url->setAbsolute();
-
     // Set redirect Url after login. If you use the $request->getSession()
     // object this trick simply do not work and the redirect after login is
     // ignored.
     /** @var \Drupal\Core\GeneratedUrl $url */
     $url = Url::fromRoute('dpl_patron_reg.create')->toString(TRUE);
     $_SESSION['openid_connect_destination'] = $url->getGeneratedUrl();
+
+    // Get redirect URL from OpenID connect and add forced nem-login idp into
+    // the URL.
+    $url = UrlHelper::parse($response->getTargetUrl());
+    $url['query']['idp'] = 'nemlogin';
+    $url = Url::fromUri($url['path'], ['query' => $url['query']]);
+    $url->setAbsolute();
 
     return new TrustedRedirectResponse($url->toString());
   }
