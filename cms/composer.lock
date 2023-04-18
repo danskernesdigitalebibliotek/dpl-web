@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "99bf53c87cb8de6e64ec6b30a4814feb",
+    "content-hash": "dbac43629f2b8331fd083d92cc132d92",
     "packages": [
         {
             "name": "amazeeio/drupal_integrations",
@@ -1089,7 +1089,7 @@
             "version": "0.3.0-rc28",
             "dist": {
                 "type": "zip",
-                "url": "https://github.com/danskernesdigitalebibliotek/dpl-react/releases/download/release-develop/dist.zip"
+                "url": "https://github.com/itk-dev/dpl-react/releases/download/release-feature%2Fblocked-null-value/dist.zip"
             },
             "require": {
                 "composer/installers": "^1.2.0"
