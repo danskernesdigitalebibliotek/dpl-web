@@ -133,8 +133,10 @@ class DplPatronRegController extends ControllerBase {
     $url['query']['idp'] = 'nemlogin';
     $url = Url::fromUri($url['path'], ['query' => $url['query']]);
     $url->setAbsolute();
+    $url = $url->toString();
 
-    return new TrustedRedirectResponse($url->toString());
+    /** @var string $url */
+    return new TrustedRedirectResponse($url);
   }
 
   /**
