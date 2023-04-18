@@ -163,7 +163,7 @@ class LoanListBlock extends BlockBase implements ContainerFactoryPluginInterface
       'result-pager-status-text' => $this->t("Showing @itemsShown out of @hitcount loans", [], ['context' => 'Loan list']),
       'show-more-text' => $this->t("show more", [], ['context' => 'Loan list']),
       'group-modal-go-to-material-aria-label-text' => $this->t("Go to @label material details", [], ['context' => 'Loan list (Aria)']),
-    ] + DplReactAppsController::externalApiBaseUrls() + DplReactAppsController::getBlockedSettings(['context' => 'Loan list'], ['context' => 'Loan list (Aria)']);
+    ] + DplReactAppsController::externalApiBaseUrls() + DplReactAppsController::getBlockedSettings();
 
     return [
       '#theme' => 'dpl_react_app',
