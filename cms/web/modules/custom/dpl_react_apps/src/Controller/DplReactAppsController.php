@@ -427,4 +427,42 @@ class DplReactAppsController extends ControllerBase {
     return $url;
   }
 
+
+   /**
+   * Get the strings and config for blocked user.
+   *
+   * @param mixed[] $context
+   *   String context.
+   * @param mixed[] $contextAria
+   *   String context aria.
+   *
+   * @return mixed[]
+   *   An array of strings and config.
+   */
+  public static function getBlockedSettings(array $context, array $contextAria): array {
+    $blockedSettings = \Drupal::configFactory()->get('dpl_library_agency.general_settings');
+    $blockedData = [
+      'redirect-on-blocked-url' => $blockedSettings->get('redirect_on_blocked_url'),
+      'blocked-patron-e-link-url' => $blockedSettings->get('blocked_patron_e_link_url'),
+      'blocked-patron-d-title-text' => t('Blocked patron d title text', [], $context),
+      'blocked-patron-d-body-text' => t('Blocked patron d body text', [], $context),
+      'blocked-patron-s-title-text' => t('Blocked patron s title text', [], $context),
+      'blocked-patron-s-body-text' => t('Blocked patron s body text', [], $context),
+      'blocked-patron-f-title-text' => t('Blocked patron f title text', [], $context),
+      'blocked-patron-f-body-text' => t('Blocked patron f body text', [], $context),
+      'blocked-patron-e-title-text' => t('You have exceeded your fee limit', [], $context),
+      'blocked-patron-e-body-text' => t('You are therefore not able to borrow or reserve materials from the library', [], $context),
+      'blocked-patron-w-title-text' => t('Your user is blocked', [], $context),
+      'blocked-patron-w-body-text' => t('You therefore cannot reserve, borrow or renew loans. Please contact the library for further information', [], $context),
+      'blocked-patron-o-title-text' => t('Blocked reason O modal title', [], $context),
+      'blocked-patron-o-body-text' => t('Blocked patron o body text', [], $context),
+      'blocked-patron-u-title-text' => t('Your user is blocked', [], $context),
+      'blocked-patron-u-body-text' => t('You therefore cannot reserve, borrow or renew loans. Please contact the library for further information', [], $context),
+      'blocked-patron-e-link-text' => t('Pay your fees here', [], $context),
+      'blocked-patron-close-modal-aria-label-text' => t('Close blocked patron modal', [], $contextAria),
+      'blocked-patron-modal-aria-description-text' => t('This modal alerts you, that your patron has been blocked', [], $contextAria),
+    ];
+
+    return $blockedData;
+  }
 }

@@ -180,7 +180,7 @@ class ReservationListBlock extends BlockBase implements ContainerFactoryPluginIn
           $this->t('This material is ready in @count days', [], ['context' => 'Reservation list (Aria)']),
         ],
       ],
-    ] + DplReactAppsController::externalApiBaseUrls();
+    ] + DplReactAppsController::externalApiBaseUrls() + DplReactAppsController::getBlockedSettings(['context' => 'Reservation list'], ['context' => 'Reservation list (Aria)']);
 
     return [
       '#theme' => 'dpl_react_app',
