@@ -6,6 +6,7 @@ use Drupal\Core\Block\BlockManagerInterface;
 use Drupal\Core\Controller\ControllerBase;
 use Drupal\Core\Render\RendererInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
+use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
 
 /**
  * Render intermediate list react app.
@@ -50,27 +51,19 @@ class DplDashboardController extends ControllerBase {
    * @throws \Drupal\Component\Plugin\Exception\PluginException
    */
   public function list(): array {
-
-    // You can hard code configuration, or you load from settings.
-    $config = [];
-
     /** @var \Drupal\dpl_dashboard\Plugin\Block\DashboardBlock $plugin_block */
-    $plugin_block = $this->blockManager->createInstance('dpl_dashboard_block', $config);
+    $plugin_block = $this->blockManager->createInstance('dpl_dashboard_block', []);
 
     // Some blocks might implement access check.
     $access_result = $plugin_block->access($this->currentUser());
-
-    // Return empty render array if user doesn't have access.
-    // $access_result can be boolean or an AccessResult class.
     if (is_object($access_result) && $access_result->isForbidden() || is_bool($access_result) && !$access_result) {
-      // You might need to add some cache tags/contexts.
-      return [];
+      throw new AccessDeniedHttpException();
     }
 
     // Add the cache tags/contexts.
     $render = $plugin_block->build();
-
     $this->renderer->addCacheableDependency($render, $plugin_block);
+
     return $render;
   }
 

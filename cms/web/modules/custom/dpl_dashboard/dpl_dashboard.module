@@ -2,8 +2,5 @@
 
 /**
  * @file
- * Dpl_react_demo drupal module file.
- *
- * Demonstrates how to use the dpl_react module
- * and render components.
+ * DPL dashboard drupal module file.
  */
