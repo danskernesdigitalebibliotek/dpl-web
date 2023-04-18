@@ -70,7 +70,7 @@ reservation-list:
     - dpl_react/base
     - dpl_react/handler
 
-DashBoard:
+dashboard:
   remote: https://github.com/danskernesdigitalebibliotek/dpl-react
   license:
     name: GNU AFFERO

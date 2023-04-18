@@ -16,8 +16,7 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
  *   admin_label = "List user dashboard"
  * )
  */
-class DashboardBlock extends BlockBase implements ContainerFactoryPluginInterface
-{
+class DashboardBlock extends BlockBase implements ContainerFactoryPluginInterface {
   /**
    * Drupal config factory.
    *
@@ -37,8 +36,12 @@ class DashboardBlock extends BlockBase implements ContainerFactoryPluginInterfac
    * @param \Drupal\Core\Config\ConfigFactoryInterface $configFactory
    *   Drupal config factory to get FBS and Publizon settings.
    */
-  public function __construct(array $configuration, $plugin_id, $plugin_definition, ConfigFactoryInterface $configFactory)
-  {
+  public function __construct(
+    array $configuration,
+    $plugin_id,
+    $plugin_definition,
+    ConfigFactoryInterface $configFactory
+  ) {
     parent::__construct($configuration, $plugin_id, $plugin_definition);
     $this->configuration = $configuration;
     $this->configFactory = $configFactory;
@@ -47,8 +50,7 @@ class DashboardBlock extends BlockBase implements ContainerFactoryPluginInterfac
   /**
    * {@inheritDoc}
    */
-  public static function create(ContainerInterface $container, array $configuration, $plugin_id, $plugin_definition)
-  {
+  public static function create(ContainerInterface $container, array $configuration, $plugin_id, $plugin_definition) {
     return new static(
       $configuration,
       $plugin_id,
@@ -63,27 +65,22 @@ class DashboardBlock extends BlockBase implements ContainerFactoryPluginInterfac
    * @return mixed[]
    *   The app render array.
    */
-  public function build()
-  {
-
+  public function build(): array {
     $context = ['context' => 'dashboard list'];
-
-    $fbsConfig = $this->configFactory->get('dpl_fbs.settings');
-    $publizonConfig = $this->configFactory->get('dpl_publizon.settings');
 
     $data = [
       // Config.
-      "fbs-base-url" => $fbsConfig->get('base_url'),
-      "publizon-base-url" => $publizonConfig->get('base_url'),
       "page-size-desktop" => "25",
       "page-size-mobile" => "25",
       "threshold-config" => $this->configFactory->get('dpl_library_agency.general_settings')->get('threshold_config'),
-      // Urls.
+
+        // Urls.
       // @todo update placeholder URL's
       // 'dashboard-page-url' => "https://unsplash.com/photos/wd6YQy0PJt8",
       // 'material-overdue-url' => "https://unsplash.com/photos/wd6YQy0PJt8",
       'search-url' => DplReactAppsController::searchResultUrl(),
       'dpl-cms-base-url' => DplReactAppsController::dplCmsBaseUrl(),
+
       // Texts.
       'your-profile-text' => $this->t("Your profile", [], $context),
       'intermediate-text' => $this->t("Intermediates", [], $context),
@@ -131,13 +128,11 @@ class DashboardBlock extends BlockBase implements ContainerFactoryPluginInterfac
       'warning-icon-alt-text' => $this->t("warningIconAltText", [], $context),
     ] + DplReactAppsController::externalApiBaseUrls();
 
-    $app = [
+    return [
       "#theme" => "dpl_react_app",
-      "#name" => "DashBoard",
+      "#name" => "dashboard",
       "#data" => $data,
     ];
-
-    return $app;
   }
-}
 
+}
