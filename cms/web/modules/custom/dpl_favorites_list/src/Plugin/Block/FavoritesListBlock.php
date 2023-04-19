@@ -86,16 +86,18 @@ class FavoritesListBlock extends BlockBase implements ContainerFactoryPluginInte
       "page-size-mobile" => $favoritesListSettings->get('page_size_mobile'),
 
       // Texts.
-      'group-modal-checkbox-text' => $this->t("Choose all renewable", [], ['context' => 'Loan list']),
-      "favorites-list-materials-text" => $this->t("@count materials", [], ['context' => 'Loan list']),
-      "favorites-list-header-text" => $this->t("Favorites", [], ['context' => 'Loan list']),
-      "by-author-text" => $this->t("By", [], ['context' => 'Loan list']),
-      "et-al-text" => $this->t("...", [], ['context' => 'Loan list']),
-      "show-more-text" => $this->t("show more", [], ['context' => 'Loan list']),
-      "result-pager-status-text" => $this->t("Showing @itemsShown out of @hitcount results", [], ['context' => 'Loan list']),
-      "favorites-list-empty-text" => $this->t("Your favorites list is empty", [], ['context' => 'Loan list']),
-      "in-series-text" => $this->t("in series", [], ['context' => 'Loan list']),
-      "number-description-text" => $this->t("Number description", [], ['context' => 'Loan list']),
+      'group-modal-checkbox-text' => $this->t("Choose all renewable", [], ['context' => 'Favorites list']),
+      "favorites-list-materials-text" => $this->t("@count materials", [], ['context' => 'Favorites list']),
+      "favorites-list-header-text" => $this->t("Favorites", [], ['context' => 'Favorites list']),
+      "by-author-text" => $this->t("By", [], ['context' => 'Favorites list']),
+      "et-al-text" => $this->t("...", [], ['context' => 'Favorites list']),
+      "show-more-text" => $this->t("show more", [], ['context' => 'Favorites list']),
+      "result-pager-status-text" => $this->t("Showing @itemsShown out of @hitcount results", [], ['context' => 'Favorites list']),
+      "favorites-list-empty-text" => $this->t("Your favorites list is empty", [], ['context' => 'Favorites list']),
+      "in-series-text" => $this->t("in series", [], ['context' => 'Favorites list']),
+      "number-description-text" => $this->t("Number description", [], ['context' => 'Favorites list']),
+      "remove-from-favorites-aria-label-text" => $this->t("Remove element from favorites list", [], ['context' => 'Favorites list (aria)']),
+      "add-to-favorites-aria-label-text" => $this->t("Add element to favorites list", [], ['context' => 'Favorites list (aria)']),
     ] + DplReactAppsController::externalApiBaseUrls();
 
     return [
