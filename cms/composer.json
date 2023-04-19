@@ -17,7 +17,7 @@
             "type": "package",
             "package": {
                 "name": "danskernesdigitalebibliotek/dpl-react",
-                "version": "0.3.0-rc28",
+                "version": "0.3.0-rc29",
                 "type": "drupal-library",
                 "dist": {
                     "url": "https://github.com/itk-dev/dpl-react/releases/download/release-feature%2F5396-favorites-list/dist.zip",
@@ -33,9 +33,9 @@
             "package": {
                 "name": "danskernesdigitalebibliotek/dpl-design-system",
                 "type": "drupal-library",
-                "version": "v1.7.0-rc19",
+                "version": "v1.7.0-rc20",
                 "dist": {
-                    "url": "https://github.com/danskernesdigitalebibliotek/dpl-design-system/releases/download/release-develop/dist.zip",
+                    "url": "https://github.com/itk-dev/dpl-design-system/releases/download/release-feature%2F5396-search-result-item-to-card-list-item/dist.zip",
                     "type": "zip"
                 }
             }
