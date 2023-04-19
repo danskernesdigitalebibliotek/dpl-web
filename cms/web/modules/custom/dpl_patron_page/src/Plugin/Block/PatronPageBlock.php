@@ -9,8 +9,6 @@ use Drupal\dpl_react_apps\Controller\DplReactAppsController;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Drupal\dpl_library_agency\Branch\BranchRepositoryInterface;
 use Drupal\dpl_library_agency\BranchSettings;
-use Drupal\dpl_library_agency\Branch\Branch;
-use function Safe\json_encode;
 
 /**
  * Provides patron page.
@@ -115,7 +113,6 @@ class PatronPageBlock extends BlockBase implements ContainerFactoryPluginInterfa
       'pause-reservation-modal-below-inputs-text-text' => $this->t('Pause reservation below inputs text', [], ['context' => 'Patron page']),
       'pause-reservation-modal-link-text' => $this->t('Read more', [], ['context' => 'Patron page']),
       'pause-reservation-modal-save-button-label-text' => $this->t('Save', [], ['context' => 'Patron page']),
-      
       'patron-page-header-text' => $this->t('Patron profile page', [], ['context' => 'Patron page']),
       'patron-page-basic-details-header-text' => $this->t('BASIC DETAILS', [], ['context' => 'Patron page']),
       'patron-page-basic-details-name-label-text' => $this->t('Name', [], ['context' => 'Patron page']),
