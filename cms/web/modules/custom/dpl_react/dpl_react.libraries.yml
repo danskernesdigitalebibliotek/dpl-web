@@ -57,7 +57,7 @@ loan-list:
   dependencies:
     - dpl_react/base
     - dpl_react/handler
-    
+
 recommender:
   remote: https://github.com/danskernesdigitalebibliotek/dpl-react
   license:
