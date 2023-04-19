@@ -45,6 +45,7 @@ class FavoritesListSettingsForm extends ConfigFormBase {
       '#min' => 1,
       '#step' => 1,
     ];
+
     $form['settings']['page_size_desktop'] = [
       '#type' => 'number',
       '#title' => $this->t('Page size desktop'),

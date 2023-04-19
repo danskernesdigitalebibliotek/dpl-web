@@ -94,7 +94,7 @@ ignored_config_entities:
   - ~user.role.local_administrator
   - ~user.role.patron
   - ~user.settings
-  - favorites_list.settings
+  - ~favorites_list.settings
   - ~varnish_purger.settings.65fc931232
   - ~varnish_purger.settings.30cd45a1b1
   - ~dpl_loan_list.settings
