@@ -78,8 +78,6 @@ class SomethingSimilarBlock extends BlockBase implements ContainerFactoryPluginI
     $publizonConfig = $this->configFactory->get('dpl_publizon.settings');
     $data = [
       // Urls.
-      "fbs-base-url" => $fbsConfig->get('base_url'),
-      "publizon-base-url" => $publizonConfig->get('base_url'),
       'dpl-cms-base-url' => DplReactAppsController::dplCmsBaseUrl(),
       'material-url' => DplReactAppsController::materialUrl(),
       'something-similar-title-text' => $this->t("Other materials", [], ['context' => 'Something similar']),
