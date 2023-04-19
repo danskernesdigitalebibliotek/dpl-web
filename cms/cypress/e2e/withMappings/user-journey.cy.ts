@@ -17,7 +17,7 @@ describe("User journey", () => {
     cy.visit("/search?q=Harry%2520Potter")
       .getBySel("search-result-title")
       .should("contain", "Showing results for “Harry")
-      .getBySel("search-result-item-availability")
+      .getBySel("card-list-item-availability")
       .should("exist")
       .getBySel("search-result-list")
       .children()
