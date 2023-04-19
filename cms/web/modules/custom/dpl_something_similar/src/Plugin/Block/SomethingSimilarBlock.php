@@ -74,8 +74,6 @@ class SomethingSimilarBlock extends BlockBase implements ContainerFactoryPluginI
    *   The app render array.
    */
   public function build() {
-    $fbsConfig = $this->configFactory->get('dpl_fbs.settings');
-    $publizonConfig = $this->configFactory->get('dpl_publizon.settings');
     $data = [
       // Urls.
       'dpl-cms-base-url' => DplReactAppsController::dplCmsBaseUrl(),
