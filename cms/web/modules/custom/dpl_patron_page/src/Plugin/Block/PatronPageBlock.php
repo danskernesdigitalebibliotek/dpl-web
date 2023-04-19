@@ -66,47 +66,6 @@ class PatronPageBlock extends BlockBase implements ContainerFactoryPluginInterfa
   }
 
   /**
-   * Build a string of JSON data containing information about branches.
-   *
-   * Uses the format:
-   *
-   * [{
-   *    "branchId":"DK-775120",
-   *    "title":"Højbjerg"
-   * }, {
-   *    "branchId":"DK-775122",
-   *    "title":"Beder-Malling"
-   * }]
-   *
-   * This is to be used as props/attributes for React apps.
-   *
-   * @param \Drupal\dpl_library_agency\Branch\Branch[] $branches
-   *   The branches to build the string with.
-   *
-   * @throws \Safe\Exceptions\JsonException
-   */
-  private function buildBranchesJsonProp(array $branches): string {
-    return json_encode(array_map(function (Branch $branch) {
-      return [
-        'branchId' => $branch->id,
-        'title' => $branch->title,
-      ];
-    }, $branches));
-  }
-
-  /**
-   * Builds a comma separated list of branch ids.
-   *
-   * This is to be used as props/attributes for React apps.
-   *
-   * @param string[] $branchIds
-   *   The ids of the branches to use.
-   */
-  private function buildBranchesListProp(array $branchIds): string {
-    return implode(',', $branchIds);
-  }
-
-  /**
    * Checks whether the library has enabled text messages.
    *
    * @return string
@@ -137,8 +96,8 @@ class PatronPageBlock extends BlockBase implements ContainerFactoryPluginInterfa
     $data = [
       // Configuration.
       'text-notifications-enabled-config' => $this->textNotificationsEnabled(),
-      'blacklisted-pickup-branches-config' => $this->buildBranchesListProp($this->branchSettings->getExcludedReservationBranches()),
-      'branches-config' => $this->buildBranchesJsonProp($this->branchRepository->getBranches()),
+      'blacklisted-pickup-branches-config' => DplReactAppsController::buildBranchesListProp($this->branchSettings->getExcludedReservationBranches()),
+      'branches-config' => DplReactAppsController::buildBranchesJsonProp($this->branchRepository->getBranches()),
       'pincode-length-min-config' => $patron_page_settings->get('pincode_length_min'),
       'pincode-length-max-config' => $patron_page_settings->get('pincode_length_max'),
       'pause-reservation-start-date-config' => $dateConfig,
@@ -149,55 +108,55 @@ class PatronPageBlock extends BlockBase implements ContainerFactoryPluginInterfa
       'always-available-ereolen-url' => $patron_page_settings->get('always_available_ereolen'),
 
       // Text strings.
-      'pause-reservation-modal-aria-description-text' => $this->t('This modal makes it possible to pause your physical reservations', [], ['context' => 'Fees list (Aria)']),
-      'pause-reservation-modal-header-text' => $this->t('Pause reservations on physical items', [], ['context' => 'Fees list (Aria)']),
-      'pause-reservation-modal-body-text' => $this->t('Pause your reservations early, since reservations that are already being processed, will not be paused.', [], ['context' => 'Fees list (Aria)']),
-      'pause-reservation-modal-close-modal-text' => $this->t('Close pause reservations modal', [], ['context' => 'Fees list (Aria)']),
-      'pause-reservation-modal-below-inputs-text-text' => $this->t('Pause reservation below inputs text', [], ['context' => 'Fees list (Aria)']),
-      'pause-reservation-modal-link-text' => $this->t('Read more', [], ['context' => 'Fees list (Aria)']),
-      'pause-reservation-modal-save-button-label-text' => $this->t('Save', [], ['context' => 'Fees list (Aria)']),
-
-      'patron-page-header-text' => $this->t('Patron profile page'),
-      'patron-page-basic-details-header-text' => $this->t('BASIC DETAILS'),
-      'patron-page-basic-details-name-label-text' => $this->t('Name'),
-      'patron-page-text-fee-text' => $this->t('patron page text fee text'),
-      'patron-page-basic-details-address-label-text' => $this->t('Address'),
-      'patron-page-contact-info-header-text' => $this->t('CONTACT INFORMATION'),
-      'patron-page-contact-info-body-text' => $this->t('patron page contact info body text'),
-      'patron-page-contact-phone-label-text' => $this->t('Phone number'),
-      'patron-page-contact-phone-checkbox-text' => $this->t('Receive text messages about your loans, reservations, and so forth'),
-      'patron-page-contact-email-label-text' => $this->t('E-mail'),
-      'patron-page-contact-email-checkbox-text' => $this->t('Receive emails about your loans, reservations, and so forth'),
-      'patron-page-status-section-header-text' => $this->t('DIGITAL LOANS (EREOLEN)'),
-      'patron-page-status-section-body-text' => $this->t('There is a number of materials without limitation to amounts of loans per month.'),
-      'patron-page-status-section-link-text' => $this->t('Click here, to see titles always eligible to be loaned'),
-      'patron-page-status-section-loan-header-text' => $this->t('Loans per month'),
-      'patron-page-status-section-loans-ebooks-text' => $this->t('E-books'),
-      'patron-page-status-section-loans-audio-books-text' => $this->t('Audiobooks'),
-      'patron-page-change-pickup-header-text' => $this->t('RESERVATIONS'),
-      'patron-page-change-pickup-body-text' => $this->t('patron page change pickup body text'),
-      'pickup-branches-dropdown-label-text' => $this->t('Choose pickup branch'),
-      'pickup-branches-dropdown-nothing-selected-text' => $this->t('Nothing selected'),
-      'patron-page-pause-reservations-header-text' => $this->t('Pause physical reservations'),
-      'patron-page-pause-reservations-body-text' => $this->t('patron page pause reservations body text'),
-      'patron-page-open-pause-reservations-section-text' => $this->t('Pause your reservations'),
-      'patron-page-open-pause-reservations-section-aria-text' => $this->t('This checkbox opens a section where you can put your current reservations on a pause, when the time period picked has ended, the reservations will be resumed'),
-      'date-inputs-start-date-label-text' => $this->t('From'),
-      'date-inputs-end-date-label-text' => $this->t('To'),
-      'patron-page-change-pincode-header-text' => $this->t('PINCODE'),
-      'patron-page-change-pincode-body-text' => $this->t('Change current pin by entering a new pin and saving'),
-      'patron-page-pincode-label-text' => $this->t('New pin'),
-      'patron-page-confirm-pincode-label-text' => $this->t('Confirm new pin'),
-      'patron-pin-saved-success-text' => $this->t('Your pincode was saved'),
-      'patron-page-pincode-too-short-validation-text' => $this->t('The pincode should be minimum @pincodeLengthMin and maximum @pincodeLengthMax characters long'),
-      'patron-page-pincodes-not-the-same-text' => $this->t('The pincodes are not the same'),
-      'patron-page-save-button-text' => $this->t('Save'),
-      'patron-page-delete-profile-text' => $this->t('Do you wish to delete your library profile?'),
-      'patron-page-delete-profile-link-text' => $this->t('Delete your profile'),
-      'patron-page-status-section-reservations-text' => $this->t('You can reserve @countEbooks ebooks and @countAudiobooks audiobooks'),
-      'patron-page-status-section-out-of-text' => $this->t('@this out of @that'),
-      'patron-page-status-section-out-of-aria-label-audio-books-text' => $this->t('You used @this audiobooks out of you quota of @that audiobooks'),
-      'patron-page-status-section-out-of-aria-label-ebooks-text' => $this->t('You used @this ebooks out of you quota of @that ebooks'),
+      'pause-reservation-modal-aria-description-text' => $this->t('This modal makes it possible to pause your physical reservations', [], ['context' => 'Patron page (aria)']),
+      'pause-reservation-modal-header-text' => $this->t('Pause reservations on physical items', [], ['context' => 'Patron page']),
+      'pause-reservation-modal-body-text' => $this->t('Pause your reservations early, since reservations that are already being processed, will not be paused.', [], ['context' => 'Patron page']),
+      'pause-reservation-modal-close-modal-text' => $this->t('Close pause reservations modal', [], ['context' => 'Patron page']),
+      'pause-reservation-modal-below-inputs-text-text' => $this->t('Pause reservation below inputs text', [], ['context' => 'Patron page']),
+      'pause-reservation-modal-link-text' => $this->t('Read more', [], ['context' => 'Patron page']),
+      'pause-reservation-modal-save-button-label-text' => $this->t('Save', [], ['context' => 'Patron page']),
+      
+      'patron-page-header-text' => $this->t('Patron profile page', [], ['context' => 'Patron page']),
+      'patron-page-basic-details-header-text' => $this->t('BASIC DETAILS', [], ['context' => 'Patron page']),
+      'patron-page-basic-details-name-label-text' => $this->t('Name', [], ['context' => 'Patron page']),
+      'patron-page-text-fee-text' => $this->t('patron page text fee text', [], ['context' => 'Patron page']),
+      'patron-page-basic-details-address-label-text' => $this->t('Address', [], ['context' => 'Patron page']),
+      'patron-page-contact-info-header-text' => $this->t('CONTACT INFORMATION', [], ['context' => 'Patron page']),
+      'patron-page-contact-info-body-text' => $this->t('patron page contact info body text', [], ['context' => 'Patron page']),
+      'patron-page-contact-phone-label-text' => $this->t('Phone number', [], ['context' => 'Patron page']),
+      'patron-page-contact-phone-checkbox-text' => $this->t('Receive text messages about your loans, reservations, and so forth', [], ['context' => 'Patron page']),
+      'patron-page-contact-email-label-text' => $this->t('E-mail', [], ['context' => 'Patron page']),
+      'patron-page-contact-email-checkbox-text' => $this->t('Receive emails about your loans, reservations, and so forth', [], ['context' => 'Patron page']),
+      'patron-page-status-section-header-text' => $this->t('DIGITAL LOANS (EREOLEN)', [], ['context' => 'Patron page']),
+      'patron-page-status-section-body-text' => $this->t('There is a number of materials without limitation to amounts of loans per month.', [], ['context' => 'Patron page']),
+      'patron-page-status-section-link-text' => $this->t('Click here, to see titles always eligible to be loaned', [], ['context' => 'Patron page']),
+      'patron-page-status-section-loan-header-text' => $this->t('Loans per month', [], ['context' => 'Patron page']),
+      'patron-page-status-section-loans-ebooks-text' => $this->t('E-books', [], ['context' => 'Patron page']),
+      'patron-page-status-section-loans-audio-books-text' => $this->t('Audiobooks', [], ['context' => 'Patron page']),
+      'patron-page-change-pickup-header-text' => $this->t('RESERVATIONS', [], ['context' => 'Patron page']),
+      'patron-page-change-pickup-body-text' => $this->t('patron page change pickup body text', [], ['context' => 'Patron page']),
+      'pickup-branches-dropdown-label-text' => $this->t('Choose pickup branch', [], ['context' => 'Patron page']),
+      'pickup-branches-dropdown-nothing-selected-text' => $this->t('Nothing selected', [], ['context' => 'Patron page']),
+      'patron-page-pause-reservations-header-text' => $this->t('Pause physical reservations', [], ['context' => 'Patron page']),
+      'patron-page-pause-reservations-body-text' => $this->t('patron page pause reservations body text', [], ['context' => 'Patron page']),
+      'patron-page-open-pause-reservations-section-text' => $this->t('Pause your reservations', [], ['context' => 'Patron page']),
+      'patron-page-open-pause-reservations-section-aria-text' => $this->t('This checkbox opens a section where you can put your current reservations on a pause, when the time period picked has ended, the reservations will be resumed', [], ['context' => 'Patron page (aria)']),
+      'date-inputs-start-date-label-text' => $this->t('From', [], ['context' => 'Patron page']),
+      'date-inputs-end-date-label-text' => $this->t('To', [], ['context' => 'Patron page']),
+      'patron-page-change-pincode-header-text' => $this->t('PINCODE', [], ['context' => 'Patron page']),
+      'patron-page-change-pincode-body-text' => $this->t('Change current pin by entering a new pin and saving', [], ['context' => 'Patron page']),
+      'patron-page-pincode-label-text' => $this->t('New pin', [], ['context' => 'Patron page']),
+      'patron-page-confirm-pincode-label-text' => $this->t('Confirm new pin', [], ['context' => 'Patron page']),
+      'patron-pin-saved-success-text' => $this->t('Your pincode was saved', [], ['context' => 'Patron page']),
+      'patron-page-pincode-too-short-validation-text' => $this->t('The pincode should be minimum @pincodeLengthMin and maximum @pincodeLengthMax characters long', [], ['context' => 'Patron page']),
+      'patron-page-pincodes-not-the-same-text' => $this->t('The pincodes are not the same', [], ['context' => 'Patron page']),
+      'patron-page-save-button-text' => $this->t('Save', [], ['context' => 'Patron page']),
+      'patron-page-delete-profile-text' => $this->t('Do you wish to delete your library profile?', [], ['context' => 'Patron page']),
+      'patron-page-delete-profile-link-text' => $this->t('Delete your profile', [], ['context' => 'Patron page']),
+      'patron-page-status-section-reservations-text' => $this->t('You can reserve @countEbooks ebooks and @countAudiobooks audiobooks', [], ['context' => 'Patron page']),
+      'patron-page-status-section-out-of-text' => $this->t('@this out of @that', [], ['context' => 'Patron page']),
+      'patron-page-status-section-out-of-aria-label-audio-books-text' => $this->t('You used @this audiobooks out of you quota of @that audiobooks', [], ['context' => 'Patron page (aria)']),
+      'patron-page-status-section-out-of-aria-label-ebooks-text' => $this->t('You used @this ebooks out of you quota of @that ebooks', [], ['context' => 'Patron page (aria)']),
     ] + DplReactAppsController::externalApiBaseUrls();
 
     return [
