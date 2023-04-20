@@ -1,0 +1,6 @@
+<?php
+
+/**
+ * @file
+ * Dpl patron redirect, ensure user login on protected paths.
+ */

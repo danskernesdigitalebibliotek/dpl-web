@@ -1,0 +1,12 @@
+services:
+  dpl_patron_redirect.event_subscriber:
+    class: Drupal\dpl_patron_redirect\EventSubscriber\RedirectPatronSubscriber
+    arguments: [
+      "@path_alias.manager",
+      "@path.matcher",
+      "@path.current",
+      "@config.factory",
+      "@current_user",
+    ]
+    tags:
+      - { name: event_subscriber }
