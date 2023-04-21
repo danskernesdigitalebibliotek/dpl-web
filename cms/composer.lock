@@ -1089,7 +1089,7 @@
             "version": "0.3.0-rc29",
             "dist": {
                 "type": "zip",
-                "url": "https://github.com/danskernesdigitalebibliotek/dpl-react/releases/download/release-develop/dist.zip"
+                "url": "https://github.com/itk-dev/dpl-react/releases/download/release-feature%2Fpatron-page-error/dist.zip"
             },
             "require": {
                 "composer/installers": "^1.2.0"
