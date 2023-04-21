@@ -34,7 +34,8 @@ class PatronRedirectSettingsForm extends ConfigFormBase {
 
     $form['settings'] = [
       '#type' => 'fieldset',
-      '#title' => $this->t('Basic settings', [], ['context' => 'Dpl patron redirect']),
+      '#title' => $this->t('Redirect settings', [], ['context' => 'Dpl patron redirect']),
+      '#description' => $this->t('Set the paths that requires the patron to be logged in and if the user is not logged in an redirect to Adgangsplatformen will automatically be enforced.', [], ['context' => 'Dpl patron redirect']),
       '#tree' => FALSE,
     ];
 
