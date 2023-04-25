@@ -55,7 +55,7 @@ needed to test certain functionalities. This can be achieved in two ways:
 ### Setup the Lagoon CLI
 
 1. Locate [information about the Lagoon instance to use in the DPL Platform
-   documentation](https://github.com/danskernesdigitalebibliotek/dpl-platform/blob/main/documentation/platform-environments.md)
+   documentation](https://github.com/danskernesdigitalebibliotek/dpl-platform/blob/main/docs/platform-environments.md)
 2. Access the URL for the UI of the instance
 3. Log in with your user account (see above)
 4. Go to the Settings page
