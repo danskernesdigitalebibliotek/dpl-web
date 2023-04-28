@@ -135,7 +135,7 @@ class DplReactAppsController extends ControllerBase {
       'results-text' => $this->t('results', [], ['context' => 'Search Result']),
       'show-more-text' => $this->t('Show more', [], ['context' => 'Search Result']),
       'show-results-text' => $this->t('Show results', [], ['context' => 'Search Result']),
-      'showing-results-for-text' => $this->t('Showing results for', [], ['context' => 'Search Result'])->__toString(),
+      'showing-results-for-text' => $this->t('Showing results for "@query"', [], ['context' => 'Search Result'])->__toString(),
       'showing-text' => $this->t('Showing', [], ['context' => 'Search Result']),
       'unavailable-text' => $this->t('Unavailable', [], ['context' => 'Search Result']),
     // Add external API base urls.

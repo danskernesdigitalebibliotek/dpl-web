@@ -5,6 +5,8 @@
  * Novel Theme.
  */
 
+use Drupal\Core\StringTranslation\TranslatableMarkup;
+
 use function Safe\file_get_contents;
 use function Safe\sprintf;
 
@@ -64,9 +66,16 @@ function novel_preprocess_dpl_react_app__search_header(array &$variables): void 
  *   The variables for the theme hook.
  */
 function novel_preprocess_dpl_react_app__search_result(array &$variables): void {
+  $q = \Drupal::request()->query->get('q') ?? "";
+  $loading_text = $variables['data']['showing-results-for-text'] ?? "";
+  $showing_results_for_text = (
+    // We have already translated the string in the react app.
+    // phpcs:ignore Drupal.Semantics.FunctionT.NotLiteralString
+    new TranslatableMarkup($loading_text, ['@query' => $q])
+  )->__toString();
+
   $variables += [
-    'q' => \Drupal::request()->query->get('q') ?? "",
-    'showing_results_for_text' => $variables['data']['showing-results-for-text'] ?? "",
+    'showing_results_for_text' => $showing_results_for_text,
     'number_of_fake_result_items' => 5,
   ];
 
