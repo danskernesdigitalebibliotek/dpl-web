@@ -20,7 +20,7 @@
                 "version": "0.3.0-rc29",
                 "type": "drupal-library",
                 "dist": {
-                    "url": "https://github.com/itk-dev/dpl-react/releases/download/release-feature%2F5396-favorites-list/dist.zip",
+                    "url": "https://github.com/danskernesdigitalebibliotek/dpl-react/releases/download/release-develop/dist.zip",
                     "type": "zip"
                 },
                 "require": {
@@ -35,7 +35,7 @@
                 "type": "drupal-library",
                 "version": "v1.7.0-rc20",
                 "dist": {
-                    "url": "https://github.com/itk-dev/dpl-design-system/releases/download/release-feature%2F5396-search-result-item-to-card-list-item/dist.zip",
+                    "url": "https://github.com/danskernesdigitalebibliotek/dpl-design-system/releases/download/release-develop/dist.zip",
                     "type": "zip"
                 }
             }
