@@ -15,7 +15,7 @@ describe("User journey", () => {
 
   it("Shows search results & redirects to material page", () => {
     cy.visit("/search?q=Harry%2520Potter")
-      .getBySel("search-result-title")
+      .getBySel("search-result-header")
       .should("contain", "Showing results for “Harry")
       .getBySel("search-result-item-availability")
       .should("exist")
