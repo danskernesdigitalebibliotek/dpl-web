@@ -49,11 +49,11 @@ The logout route in Drupal is rewired to use the external logout as well.
 So if you click the logout link you will be logged out remotely as well.
 
 ## Login flow sequence
-![login flow](../../../../documentation/diagrams/render-png/adgangsplatform-login.png)
+![login flow](../../../../docs/diagrams/render-png/adgangsplatform-login.png)
 
 ## Logout flow sequence
-![logut flow](../../../../documentation/diagrams/render-png/adgangsplatform-login.png)
+![logut flow](../../../../docs/diagrams/render-png/adgangsplatform-login.png)
 
 
-[1]: <../../../../documentation/architecture/adr-002-user-handling.md>
+[1]: <../../../../docs/architecture/adr-002-user-handling.md>
 [2]: <https://slks.dk/omraader/kulturinstitutioner/biblioteker/biblioteksstandardisering/biblioteksnumre>
