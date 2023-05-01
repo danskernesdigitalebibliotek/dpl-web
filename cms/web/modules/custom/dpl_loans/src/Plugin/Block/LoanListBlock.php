@@ -75,7 +75,7 @@ class LoanListBlock extends BlockBase implements ContainerFactoryPluginInterface
    */
   public function getThresholdConfig(): string {
     $generalSettings = $this->configFactory->get('dpl_library_agency.general_settings');
-    return $generalSettings->get('threshold_config');
+    return $generalSettings->get('threshold_config') ?? "{ 'colorThresholds': { 'danger': '0', 'warning': '6' } }";
   }
 
   /**

@@ -131,7 +131,7 @@ class GeneralSettingsForm extends ConfigFormBase {
     ];
 
     $form['settings']['pause_reservation_info_url'] = [
-      '#type' => 'textfield',
+      '#type' => 'url',
       '#title' => $this->t('Pause reservation link', [], ['context' => 'Library Agency Configuration']),
       '#description' => $this->t('The link with infomation about reservations', [], ['context' => 'Library Agency Configuration']),
       '#default_value' => $config->get('pause_reservation_info_url') ?? '',
@@ -152,14 +152,14 @@ class GeneralSettingsForm extends ConfigFormBase {
     ];
 
     $form['settings']['blocked_user']['redirect_on_blocked_url'] = [
-      '#type' => 'textfield',
+      '#type' => 'url',
       '#title' => $this->t('Redirect blocked user link'),
       '#description' => $this->t('The link to redirect the blocked user to'),
       '#default_value' => $config->get('redirect_on_blocked_url') ?? '',
     ];
 
     $form['settings']['blocked_user']['blocked_patron_e_link_url'] = [
-      '#type' => 'textfield',
+      '#type' => 'url',
       '#title' => $this->t('Blocked user link for modal'),
       '#description' => $this->t('If a user has blocked status e, this link appears in the modal'),
       '#default_value' => $config->get('blocked_patron_e_link_url') ?? '',
@@ -217,21 +217,6 @@ class GeneralSettingsForm extends ConfigFormBase {
    * {@inheritdoc}
    */
   public function validateForm(array &$form, FormStateInterface $form_state): void {
-    $feesUrl = $form_state->getValue('pause_reservation_info_url');
-    if (!filter_var($feesUrl, FILTER_VALIDATE_URL)) {
-      $form_state->setErrorByName('pause_reservation_info_url', $this->t('The url "%url" is not a valid URL.', ['%url' => $feesUrl], ['context' => 'Library Agency Configuration']));
-    }
-
-    $blockedUrl = $form_state->getValue('redirect_on_blocked_url');
-    if (!filter_var($blockedUrl, FILTER_VALIDATE_URL)) {
-      $form_state->setErrorByName('redirect_on_blocked_url', $this->t('The url "%url" is not a valid URL.', ['%url' => $blockedUrl]));
-    }
-
-    $blockedPatronEUrl = $form_state->getValue('blocked_patron_e_link_url');
-    if (!filter_var($blockedPatronEUrl, FILTER_VALIDATE_URL)) {
-      $form_state->setErrorByName('blocked_patron_e_link_url', $this->t('The url "%url" is not a valid URL.', ['%url' => $blockedPatronEUrl]));
-    }
-
   }
 
   /**
