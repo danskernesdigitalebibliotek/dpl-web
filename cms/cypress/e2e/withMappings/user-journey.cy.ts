@@ -14,13 +14,13 @@ describe("User journey", () => {
   });
 
   it("Shows search results & redirects to material page", () => {
-    cy.visit("/search?q=Harry%2520Potter")
+    cy.visit("/search?q=Harry+Potter")
       .getBySel("search-result-header")
-      .should("contain", "Showing results for “Harry")
-      .getBySel("search-result-item-availability")
-      .should("exist")
-      .getBySel("search-result-list")
-      .children()
+      .should("contain", 'Showing results for "Harry Potter"')
+      .getBySel("card-list-item-availability")
+      .should("exist");
+
+    cy.getBySel("card-list-item")
       .first()
       .click()
       .url()
