@@ -6,7 +6,6 @@
  */
 
 use Drupal\Component\Render\FormattableMarkup;
-
 use function Safe\file_get_contents;
 use function Safe\sprintf;
 
@@ -67,7 +66,7 @@ function novel_preprocess_dpl_react_app__search_header(array &$variables): void 
  */
 function novel_preprocess_dpl_react_app__search_result(array &$variables): void {
   $q = \Drupal::request()->query->get('q') ?? "";
-  $loading_text = $variables['data']['showing-results-for-text'] ?? "";
+  $loading_text = (string) ($variables['data']['showing-results-for-text'] ?? "");
   // We deliberately do not use the translation API here.
   // The text data prop has already been translated
   // and now we need to replace the placeholder.
