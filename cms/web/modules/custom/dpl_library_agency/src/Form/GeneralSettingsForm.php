@@ -175,7 +175,7 @@ class GeneralSettingsForm extends ConfigFormBase {
     $form['thresholds']['threshold_config'] = [
       '#type' => 'textfield',
       '#title' => $this->t('Set thresholds', [], ['context' => 'Library Agency Configuration']),
-      '#default_value' => $config->get('threshold_config') ?? '{ "colorThresholds": { "danger": "0", "warning": "6" } }',
+      '#default_value' => $config->get('threshold_config'),
     ];
 
     $form['branches'] = [
