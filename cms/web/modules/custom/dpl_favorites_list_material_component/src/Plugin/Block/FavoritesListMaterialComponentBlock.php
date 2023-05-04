@@ -66,6 +66,7 @@ class FavoritesListMaterialComponentBlock extends BlockBase implements Container
       $container->get('config.factory'),
     );
   }
+
   /**
    * {@inheritDoc}
    *
