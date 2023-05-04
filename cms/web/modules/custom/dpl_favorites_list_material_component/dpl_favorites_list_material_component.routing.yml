@@ -1,5 +1,5 @@
 dpl_favorites_list_material_component.list:
-  path: "/user/me/favorites-mc"
+  path: "/favorites-mc"
   defaults:
     _controller: '\Drupal\dpl_favorites_list_material_component\Controller\DplFavoritesListMaterialComponentController::list'
   requirements:
