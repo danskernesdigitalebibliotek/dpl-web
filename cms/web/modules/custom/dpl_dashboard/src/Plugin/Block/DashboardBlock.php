@@ -128,7 +128,7 @@ class DashboardBlock extends BlockBase implements ContainerFactoryPluginInterfac
 
     return [
       "#theme" => "dpl_react_app",
-      "#name" => "dashboard",
+      "#name" => "DashBoard",
       "#data" => $data,
     ];
   }
