@@ -52,6 +52,7 @@ describe("User journey", () => {
     // We have to wait for the modal to be fully rendered
     // and the event listeners to be attached.
     // Read more: https://www.cypress.io/blog/2019/01/22/when-can-the-test-click/
+    // TODO: Consider using the pipe package in the future...
     // eslint-disable-next-line cypress/no-unnecessary-waiting
     cy.wait(2000);
     cy.getBySel("reservation-modal-submit-button").click();
