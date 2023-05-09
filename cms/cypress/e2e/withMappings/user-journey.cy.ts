@@ -30,9 +30,15 @@ describe("User journey", () => {
     cy.visit("/work/work-of:870970-basis:54181744")
       .getBySel("material-header-content")
       .scrollIntoView()
-      .contains("Harry Potter og Fønixordenen")
-      .getBySel("material-header-buttons-physical")
-      .should("contain", "Reserve bog");
+      .contains("Harry Potter og Fønixordenen");
+    // Wait for service to fill reserve button with the right text.
+    // TODO: Consider using the pipe package in the future...
+    // eslint-disable-next-line cypress/no-unnecessary-waiting
+    cy.wait(2000);
+    cy.getBySel("material-header-buttons-physical").should(
+      "contain",
+      "Reserve bog"
+    );
   });
 
   it("Can open reservation modal & reserve a material", () => {
