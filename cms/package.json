@@ -25,7 +25,7 @@
   },
   "scripts": {
     "wiremock:create-mappings": "yarn wiremock:build && node wiremock/build/createMappings.js",
-    "pa11y:ci": "pa11y-ci --config .pa11yci.js",
+    "pa11y:ci": "pa11y-ci",
     "wiremock:dev:watch": "tsc -p wiremock -w",
     "wiremock:build": "tsc -p wiremock",
     "wiremock:browser": "yarn wiremock:build && node wiremock/build/goggles.js"
