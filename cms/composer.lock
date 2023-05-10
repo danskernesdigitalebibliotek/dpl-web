@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "463e8463ddc0423dcb97f4a631df9909",
+    "content-hash": "def9701864e16674d1b78a55a1ec137c",
     "packages": [
         {
             "name": "amazeeio/drupal_integrations",
@@ -1080,13 +1080,13 @@
             "version": "v1.7.0-rc19",
             "dist": {
                 "type": "zip",
-                "url": "https://github.com/danskernesdigitalebibliotek/dpl-design-system/releases/download/release-develop/dist.zip"
+                "url": "https://github.com/itk-dev/dpl-design-system/releases/download/release-feature%2F5374-dashboard-page-styling/dist.zip"
             },
             "type": "drupal-library"
         },
         {
             "name": "danskernesdigitalebibliotek/dpl-react",
-            "version": "0.3.0-rc35",
+            "version": "0.3.0-rc36",
             "dist": {
                 "type": "zip",
                 "url": "https://github.com/itk-dev/dpl-react/releases/download/release-fix%2Fdashboard-array-length-prints/dist.zip"
