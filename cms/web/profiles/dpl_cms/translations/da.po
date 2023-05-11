@@ -3,8 +3,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2023-05-02 15:11+0000\n"
-"PO-Revision-Date: 2023-05-02 15:11+0000\n"
+"POT-Creation-Date: 2023-05-11 12:44+0000\n"
+"PO-Revision-Date: 2023-05-11 12:44+0000\n"
 "Last-Translator: NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
 "MIME-Version: 1.0\n"
@@ -12,349 +12,38 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
 
-msgctxt "Dpl Login"
-msgid "Authorization endpoint"
+msgid "Configuration file"
 msgstr ""
 
-msgctxt "Dpl Login"
-msgid "Token endpoint"
+msgctxt "DPL Config Import"
+msgid "Select a configuration file in YAML format to upload."
 msgstr ""
 
-msgctxt "Dpl Login"
-msgid "UserInfo endpoint"
-msgstr ""
-
-msgctxt "Dpl Login"
-msgid "Logout endpoint"
-msgstr ""
-
-msgctxt "Dpl Login"
-msgid "Agency ID"
-msgstr ""
-
-msgid "Adgangsplatformen"
-msgstr ""
-
-msgid "Integration configured"
-msgstr ""
-
-msgctxt "Dpl Publizon"
-msgid "Basic settings"
-msgstr ""
-
-msgctxt "Dpl Publizon"
-msgid "Publizon service url"
-msgstr ""
-
-msgctxt "Dpl Publizon"
-msgid "The url \"%url\" is not a valid URL."
-msgstr ""
-
-msgctxt "Loan list"
-msgid "Read more about fees"
-msgstr ""
-
-msgctxt "Loan list (Aria)"
-msgid "Close renew loans modal"
-msgstr ""
-
-msgctxt "Loan list (Aria)"
-msgid ""
-"This modal groups loans after due date and makes it possible to renew "
-"said loans"
-msgstr ""
-
-msgctxt "Loan list"
-msgid "Choose all renewable"
-msgstr ""
-
-msgctxt "Loan list"
-msgid "Due date @date"
-msgstr ""
-
-msgctxt "Loan list"
-msgid ""
-"The due date of return is exceeded, therefore you will be charged a "
-"fee, when the item is returned"
-msgstr ""
-
-msgctxt "Loan list"
-msgid "Go to material details"
-msgstr ""
-
-msgctxt "Loan list"
-msgid "Can be returned to all branches of the municipalities libraries"
-msgstr ""
-
-msgctxt "Loan list (Aria)"
-msgid "This button shows all loans in the list"
-msgstr ""
-
-msgctxt "Loan list (Aria)"
-msgid ""
-"This button filters the list, so only one the materials that have the "
-"same due date is shown"
-msgstr ""
-
-msgctxt "Loan list"
-msgid ""
-"The item has been lent to you by another library and renewal is "
-"therefore conditional of the acceptance by that library"
-msgstr ""
-
-msgctxt "Loan list"
-msgid "The item cannot be renewed further"
-msgstr ""
-
-msgctxt "Loan list"
-msgid "The item is reserved by another patron"
-msgstr ""
-
-msgctxt "Loan list"
-msgid "You have no digital loans at the moment"
-msgstr ""
-
-msgctxt "Loan list"
-msgid "Digital loans"
-msgstr ""
-
-msgctxt "Loan list"
-msgid "You have 0 loans at the moment"
-msgstr ""
-
-msgctxt "Loan list (Aria)"
-msgid ""
-"This button opens a modal that covers the entire page and contains "
-"loans with the same due date as the loan currently in focus"
-msgstr ""
-
-msgctxt "Loan list"
-msgid "Select @label for renewal"
-msgstr ""
-
-msgctxt "Loan list"
-msgid "You will be charged a fee, when the item is returned"
-msgstr ""
-
-msgctxt "Loan list"
-msgid "days"
-msgstr ""
-
-msgctxt "Loan list"
-msgid "day"
-msgstr ""
-
-msgctxt "Loan list"
-msgid "+ 1 other material"
-msgstr ""
-
-msgctxt "Loan list"
-msgid "+ @count other materials"
-msgstr ""
-
-msgctxt "Loan list"
-msgid "You have no physical loans at the moment"
-msgstr ""
-
-msgctxt "Loan list"
-msgid "Physical loans"
-msgstr ""
-
-msgctxt "Loan list"
-msgid ""
-"This button opens a modal that covers the entire page and contains "
-"loans with different due dates, if some of the loans in the modal are "
-"renewable you can renew them"
-msgstr ""
-
-msgctxt "Loan list"
-msgid "Renew several"
-msgstr ""
-
-msgctxt "Loan list"
-msgid "Expired"
-msgstr ""
-
-msgctxt "Loan list"
-msgid "Expiring soon"
-msgstr ""
-
-msgctxt "Loan list"
-msgid "Your loans"
-msgstr ""
-
-msgctxt "Loan list"
-msgid "and"
-msgstr ""
-
-msgctxt "Loan list"
-msgid "By"
-msgstr ""
-
-msgctxt "Loan list (Aria)"
-msgid "Close material details modal"
-msgstr ""
-
-msgctxt "Loan list"
-msgid "Expires"
-msgstr ""
-
-msgctxt "Loan list"
-msgid "Due date"
-msgstr ""
-
-msgctxt "Loan list"
-msgid "Go to eReolen"
-msgstr ""
-
-msgctxt "Loan list"
-msgid "Loan date"
-msgstr ""
-
-msgctxt "Loan list"
-msgid "Material Item Number"
-msgstr ""
-
-msgctxt "Loan list (Aria)"
-msgid ""
-"This modal shows material details, and makes it possible to renew a "
-"material, of that material is renewable"
-msgstr ""
-
-msgctxt "Loan list"
-msgid "Renew your loans"
-msgstr ""
-
-msgctxt "Loan list"
-msgid "Audiobook"
-msgstr ""
-
-msgctxt "Loan list"
-msgid "E-book"
-msgstr ""
-
-msgctxt "Loan list"
-msgid "Podcast"
-msgstr ""
-
-msgctxt "Loan list (Aria)"
-msgid "This modal makes it possible to renew materials"
-msgstr ""
-
-msgctxt "Loan list"
-msgid "Renewable (@count)"
-msgstr ""
-
-msgctxt "Loan list (Aria)"
-msgid "Close modal with grouped loans"
-msgstr ""
-
-msgctxt "Loan list"
-msgid "Showing @itemsShown out of @hitcount loans"
-msgstr ""
-
-msgctxt "Loan list"
-msgid "show more"
-msgstr ""
-
-msgctxt "Loan list (Aria)"
-msgid "Go to @label material details"
-msgstr ""
-
-msgctxt "Loan list (settings)"
-msgid "Basic settings"
-msgstr ""
-
-msgctxt "Loan list (settings)"
-msgid "Fee page url"
-msgstr ""
-
-msgctxt "Loan list (settings)"
-msgid "The link to the relevant fee page"
-msgstr ""
-
-msgctxt "Loan list (settings)"
-msgid "Material overdue url"
-msgstr ""
-
-msgctxt "Loan list (settings)"
-msgid "The link to the material overdue page"
-msgstr ""
-
-msgctxt "Loan list (settings)"
-msgid "Page size mobile"
-msgstr ""
-
-msgctxt "Loan list (settings)"
-msgid "Page size desktop"
-msgstr ""
-
-msgctxt "Loan list (settings)"
-msgid "The url \"%url\" is not a valid URL."
-msgstr ""
-
-msgctxt "Search Header"
-msgid "Search button"
-msgstr ""
-
-msgctxt "Search Header"
-msgid "Search header input"
-msgstr ""
-
-msgctxt "Search Header"
-msgid "Animated series"
-msgstr ""
-
-msgctxt "Search Header"
-msgid "Audio books"
-msgstr ""
-
-msgctxt "Search Header"
-msgid "Books"
-msgstr ""
-
-msgctxt "Search Header"
-msgid "E-books"
-msgstr ""
-
-msgctxt "Search Header"
-msgid "Movies"
-msgstr ""
-
-msgctxt "Search Header"
-msgid "Games"
-msgstr ""
-
-msgctxt "Search Header"
-msgid "Music"
-msgstr ""
-
-msgctxt "Search Header"
-msgid "et al."
-msgstr ""
+msgid "Upload"
+msgstr "Upload"
 
-msgctxt "Search Header"
-msgid "in"
+msgctxt "DPL Config Import"
+msgid "Unable to handle the uploaded file"
 msgstr ""
 
-msgctxt "Search Header"
-msgid "Start typing in order to search"
+msgctxt "DPL Config Import"
+msgid "Unable to parse YAML file: %reason"
 msgstr ""
 
-msgctxt "Search Header"
-msgid "Loading"
+msgctxt "DPL Config Import"
+msgid "Installed modules: %modules_list"
 msgstr ""
 
-msgctxt "Search Header"
-msgid "Author"
+msgctxt "DPL Config Import"
+msgid "Failed to install modules: @reason"
 msgstr ""
 
-msgctxt "Search Header"
-msgid "Topic"
+msgctxt "DPL Config Import"
+msgid "Uninstalled modules: %modules_list"
 msgstr ""
 
-msgctxt "Search Header"
-msgid "Work"
+msgctxt "DPL Config Import"
+msgid "Failed to uninstall modules: @reason"
 msgstr ""
 
 msgctxt "Search Result"
@@ -965,38 +654,163 @@ msgctxt "Work Page"
 msgid "You have borrowed"
 msgstr ""
 
-msgid "Configuration file"
+msgctxt "Search Header"
+msgid "Search button"
 msgstr ""
 
-msgctxt "DPL Config Import"
-msgid "Select a configuration file in YAML format to upload."
+msgctxt "Search Header"
+msgid "Search header input"
 msgstr ""
 
-msgid "Upload"
-msgstr "Upload"
-
-msgctxt "DPL Config Import"
-msgid "Unable to handle the uploaded file"
+msgctxt "Search Header"
+msgid "Animated series"
 msgstr ""
 
-msgctxt "DPL Config Import"
-msgid "Unable to parse YAML file: %reason"
+msgctxt "Search Header"
+msgid "Audio books"
 msgstr ""
 
-msgctxt "DPL Config Import"
-msgid "Installed modules: %modules_list"
+msgctxt "Search Header"
+msgid "Books"
 msgstr ""
 
-msgctxt "DPL Config Import"
-msgid "Failed to install modules: @reason"
+msgctxt "Search Header"
+msgid "E-books"
 msgstr ""
 
-msgctxt "DPL Config Import"
-msgid "Uninstalled modules: %modules_list"
+msgctxt "Search Header"
+msgid "Movies"
 msgstr ""
 
-msgctxt "DPL Config Import"
-msgid "Failed to uninstall modules: @reason"
+msgctxt "Search Header"
+msgid "Games"
+msgstr ""
+
+msgctxt "Search Header"
+msgid "Music"
+msgstr ""
+
+msgctxt "Search Header"
+msgid "et al."
+msgstr ""
+
+msgctxt "Search Header"
+msgid "in"
+msgstr ""
+
+msgctxt "Search Header"
+msgid "Start typing in order to search"
+msgstr ""
+
+msgctxt "Search Header"
+msgid "Loading"
+msgstr ""
+
+msgctxt "Search Header"
+msgid "Author"
+msgstr ""
+
+msgctxt "Search Header"
+msgid "Topic"
+msgstr ""
+
+msgctxt "Search Header"
+msgid "Work"
+msgstr ""
+
+msgid "Adgangsplatformen"
+msgstr ""
+
+msgid "Integration configured"
+msgstr ""
+
+msgctxt "Dpl Login"
+msgid "Authorization endpoint"
+msgstr ""
+
+msgctxt "Dpl Login"
+msgid "Token endpoint"
+msgstr ""
+
+msgctxt "Dpl Login"
+msgid "UserInfo endpoint"
+msgstr ""
+
+msgctxt "Dpl Login"
+msgid "Logout endpoint"
+msgstr ""
+
+msgctxt "Dpl Login"
+msgid "Agency ID"
+msgstr ""
+
+msgctxt "Url Proxy"
+msgid "configured"
+msgstr ""
+
+msgctxt "Url Proxy"
+msgid "This configuration form is for administering proxy url generation."
+msgstr ""
+
+msgctxt "Url Proxy"
+msgid "Proxy server URL prefix"
+msgstr ""
+
+msgctxt "Url Proxy"
+msgid ""
+"The prefix to use for proxy server URLs. This is the part of the "
+"URL\n"
+"        that comes before the hostname"
+msgstr ""
+
+msgctxt "Url Proxy"
+msgid "Hostnames"
+msgstr ""
+
+msgctxt "Url Proxy"
+msgid "Host configuration"
+msgstr ""
+
+msgctxt "Url Proxy"
+msgid "Hostname"
+msgstr ""
+
+msgctxt "Url Proxy"
+msgid "Replacement %configured"
+msgstr ""
+
+msgctxt "Url Proxy"
+msgid "Regular expression"
+msgstr ""
+
+msgctxt "Url Proxy"
+msgid ""
+"Use regular expression to substitut parts of the url, e.g. "
+"\"<em>%regex</em>\"."
+msgstr ""
+
+msgctxt "Url Proxy"
+msgid "Replacement"
+msgstr ""
+
+msgctxt "Url Proxy"
+msgid "The replacement value for the regular expression."
+msgstr ""
+
+msgctxt "Url Proxy"
+msgid "Do not use proxy prefix for this hostname"
+msgstr ""
+
+msgctxt "Url Proxy"
+msgid "Remove this"
+msgstr ""
+
+msgctxt "Url Proxy"
+msgid "Add one more"
+msgstr ""
+
+msgctxt "Url Proxy"
+msgid "Submit"
 msgstr ""
 
 msgid "React DDB Library"
@@ -1008,15 +822,16 @@ msgstr ""
 msgid "DDB React library is missing (@dir)"
 msgstr ""
 
-msgid "Library token"
+msgctxt "Dpl Publizon"
+msgid "Basic settings"
 msgstr ""
 
-msgid "Token available"
+msgctxt "Dpl Publizon"
+msgid "Publizon service url"
 msgstr ""
 
-msgid ""
-"No valid token available. <a href=\":url\">Run cron</a> to retrieve a "
-"new token."
+msgctxt "Dpl Publizon"
+msgid "The url \"%url\" is not a valid URL."
 msgstr ""
 
 msgctxt "Dpl Mapp"
@@ -1037,6 +852,347 @@ msgctxt "Dpl Mapp"
 msgid ""
 "Enter your Tag Integration customer ID if the JavaScript-file should "
 "be loaded from the Mapp server."
+msgstr ""
+
+msgctxt "Dpl Fbs"
+msgid "Basic settings"
+msgstr ""
+
+msgctxt "Dpl Fbs"
+msgid "FBS service url"
+msgstr ""
+
+msgctxt "Dpl Fbs"
+msgid "The url \"%url\" is not a valid URL."
+msgstr ""
+
+msgctxt "Library Agency Configuration"
+msgid "Reservations"
+msgstr ""
+
+msgctxt "Library Agency Configuration"
+msgid "Disable SMS notifications for reservations"
+msgstr ""
+
+msgctxt "Library Agency Configuration"
+msgid "If checked, SMS notifications for patrons will be disabled."
+msgstr ""
+
+msgctxt "Library Agency Configuration"
+msgid "Pause reservation link"
+msgstr ""
+
+msgctxt "Library Agency Configuration"
+msgid "The link with infomation about reservations"
+msgstr ""
+
+msgctxt "Library Agency Configuration"
+msgid "Start date"
+msgstr ""
+
+msgctxt "Library Agency Configuration"
+msgid "Pause reservation start date"
+msgstr ""
+
+msgctxt "Library Agency Configuration"
+msgid "Thresholds"
+msgstr ""
+
+msgctxt "Library Agency Configuration"
+msgid "Set thresholds"
+msgstr ""
+
+msgctxt "Library Agency Configuration"
+msgid "Excluded branches"
+msgstr ""
+
+msgctxt "Library Agency Configuration"
+msgid ""
+"Select which branches should be excluded in different parts of the "
+"system."
+msgstr ""
+
+msgctxt "Library Agency Configuration"
+msgid "Search results"
+msgstr ""
+
+msgctxt "Library Agency Configuration"
+msgid ""
+"Holdings belonging to the selected branches will not be shown in "
+"search results."
+msgstr ""
+
+msgid "Availability"
+msgstr ""
+
+msgctxt "Library Agency Configuration"
+msgid ""
+"Holdings belonging to the selected branches will not considered when "
+"showing work availability."
+msgstr ""
+
+msgctxt "Library Agency Configuration"
+msgid ""
+"Selected branches will not be available as pickup locations for "
+"reservations."
+msgstr ""
+
+msgctxt "Library Agency Configuration"
+msgid "The url \"%url\" is not a valid URL."
+msgstr ""
+
+msgid "Library token"
+msgstr ""
+
+msgid "Token available"
+msgstr ""
+
+msgid ""
+"No valid token available. <a href=\":url\">Run cron</a> to retrieve a "
+"new token."
+msgstr ""
+
+msgctxt "Loan list"
+msgid "Read more about fees"
+msgstr ""
+
+msgctxt "Loan list (Aria)"
+msgid "Close renew loans modal"
+msgstr ""
+
+msgctxt "Loan list (Aria)"
+msgid ""
+"This modal groups loans after due date and makes it possible to renew "
+"said loans"
+msgstr ""
+
+msgctxt "Loan list"
+msgid "Choose all renewable"
+msgstr ""
+
+msgctxt "Loan list"
+msgid "Due date @date"
+msgstr ""
+
+msgctxt "Loan list"
+msgid ""
+"The due date of return is exceeded, therefore you will be charged a "
+"fee, when the item is returned"
+msgstr ""
+
+msgctxt "Loan list"
+msgid "Go to material details"
+msgstr ""
+
+msgctxt "Loan list"
+msgid "Can be returned to all branches of the municipalities libraries"
+msgstr ""
+
+msgctxt "Loan list (Aria)"
+msgid "This button shows all loans in the list"
+msgstr ""
+
+msgctxt "Loan list (Aria)"
+msgid ""
+"This button filters the list, so only one the materials that have the "
+"same due date is shown"
+msgstr ""
+
+msgctxt "Loan list"
+msgid ""
+"The item has been lent to you by another library and renewal is "
+"therefore conditional of the acceptance by that library"
+msgstr ""
+
+msgctxt "Loan list"
+msgid "The item cannot be renewed further"
+msgstr ""
+
+msgctxt "Loan list"
+msgid "The item is reserved by another patron"
+msgstr ""
+
+msgctxt "Loan list"
+msgid "You have no digital loans at the moment"
+msgstr ""
+
+msgctxt "Loan list"
+msgid "Digital loans"
+msgstr ""
+
+msgctxt "Loan list"
+msgid "You have 0 loans at the moment"
+msgstr ""
+
+msgctxt "Loan list (Aria)"
+msgid ""
+"This button opens a modal that covers the entire page and contains "
+"loans with the same due date as the loan currently in focus"
+msgstr ""
+
+msgctxt "Loan list"
+msgid "Select @label for renewal"
+msgstr ""
+
+msgctxt "Loan list"
+msgid "You will be charged a fee, when the item is returned"
+msgstr ""
+
+msgctxt "Loan list"
+msgid "days"
+msgstr ""
+
+msgctxt "Loan list"
+msgid "day"
+msgstr ""
+
+msgctxt "Loan list"
+msgid "+ 1 other material"
+msgstr ""
+
+msgctxt "Loan list"
+msgid "+ @count other materials"
+msgstr ""
+
+msgctxt "Loan list"
+msgid "You have no physical loans at the moment"
+msgstr ""
+
+msgctxt "Loan list"
+msgid "Physical loans"
+msgstr ""
+
+msgctxt "Loan list"
+msgid ""
+"This button opens a modal that covers the entire page and contains "
+"loans with different due dates, if some of the loans in the modal are "
+"renewable you can renew them"
+msgstr ""
+
+msgctxt "Loan list"
+msgid "Renew several"
+msgstr ""
+
+msgctxt "Loan list"
+msgid "Expired"
+msgstr ""
+
+msgctxt "Loan list"
+msgid "Expiring soon"
+msgstr ""
+
+msgctxt "Loan list"
+msgid "Your loans"
+msgstr ""
+
+msgctxt "Loan list"
+msgid "and"
+msgstr ""
+
+msgctxt "Loan list"
+msgid "By"
+msgstr ""
+
+msgctxt "Loan list (Aria)"
+msgid "Close material details modal"
+msgstr ""
+
+msgctxt "Loan list"
+msgid "Expires"
+msgstr ""
+
+msgctxt "Loan list"
+msgid "Due date"
+msgstr ""
+
+msgctxt "Loan list"
+msgid "Go to eReolen"
+msgstr ""
+
+msgctxt "Loan list"
+msgid "Loan date"
+msgstr ""
+
+msgctxt "Loan list"
+msgid "Material Item Number"
+msgstr ""
+
+msgctxt "Loan list (Aria)"
+msgid ""
+"This modal shows material details, and makes it possible to renew a "
+"material, of that material is renewable"
+msgstr ""
+
+msgctxt "Loan list"
+msgid "Renew your loans"
+msgstr ""
+
+msgctxt "Loan list"
+msgid "Audiobook"
+msgstr ""
+
+msgctxt "Loan list"
+msgid "E-book"
+msgstr ""
+
+msgctxt "Loan list"
+msgid "Podcast"
+msgstr ""
+
+msgctxt "Loan list (Aria)"
+msgid "This modal makes it possible to renew materials"
+msgstr ""
+
+msgctxt "Loan list"
+msgid "Renewable (@count)"
+msgstr ""
+
+msgctxt "Loan list (Aria)"
+msgid "Close modal with grouped loans"
+msgstr ""
+
+msgctxt "Loan list"
+msgid "Showing @itemsShown out of @hitcount loans"
+msgstr ""
+
+msgctxt "Loan list"
+msgid "show more"
+msgstr ""
+
+msgctxt "Loan list (Aria)"
+msgid "Go to @label material details"
+msgstr ""
+
+msgctxt "Loan list (settings)"
+msgid "Basic settings"
+msgstr ""
+
+msgctxt "Loan list (settings)"
+msgid "Fee page url"
+msgstr ""
+
+msgctxt "Loan list (settings)"
+msgid "The link to the relevant fee page"
+msgstr ""
+
+msgctxt "Loan list (settings)"
+msgid "Material overdue url"
+msgstr ""
+
+msgctxt "Loan list (settings)"
+msgid "The link to the material overdue page"
+msgstr ""
+
+msgctxt "Loan list (settings)"
+msgid "Page size mobile"
+msgstr ""
+
+msgctxt "Loan list (settings)"
+msgid "Page size desktop"
+msgstr ""
+
+msgctxt "Loan list (settings)"
+msgid "The url \"%url\" is not a valid URL."
 msgstr ""
 
 msgctxt "Reservation list"
@@ -1350,166 +1506,25 @@ msgctxt "Reservation list (settings)"
 msgid "The url \"%url\" is not a valid URL."
 msgstr ""
 
-msgctxt "Library Agency Configuration"
-msgid "Reservations"
-msgstr ""
-
-msgctxt "Library Agency Configuration"
-msgid "Disable SMS notifications for reservations"
-msgstr ""
-
-msgctxt "Library Agency Configuration"
-msgid "If checked, SMS notifications for patrons will be disabled."
-msgstr ""
-
-msgctxt "Library Agency Configuration"
-msgid "Pause reservation link"
-msgstr ""
-
-msgctxt "Library Agency Configuration"
-msgid "The link with infomation about reservations"
-msgstr ""
-
-msgctxt "Library Agency Configuration"
-msgid "Start date"
-msgstr ""
-
-msgctxt "Library Agency Configuration"
-msgid "Pause reservation start date"
-msgstr ""
-
-msgctxt "Library Agency Configuration"
-msgid "Thresholds"
-msgstr ""
-
-msgctxt "Library Agency Configuration"
-msgid "Set thresholds"
-msgstr ""
-
-msgctxt "Library Agency Configuration"
-msgid "Excluded branches"
-msgstr ""
-
-msgctxt "Library Agency Configuration"
-msgid ""
-"Select which branches should be excluded in different parts of the "
-"system."
-msgstr ""
-
-msgctxt "Library Agency Configuration"
-msgid "Search results"
-msgstr ""
-
-msgctxt "Library Agency Configuration"
-msgid ""
-"Holdings belonging to the selected branches will not be shown in "
-"search results."
-msgstr ""
-
-msgid "Availability"
-msgstr ""
-
-msgctxt "Library Agency Configuration"
-msgid ""
-"Holdings belonging to the selected branches will not considered when "
-"showing work availability."
-msgstr ""
-
-msgctxt "Library Agency Configuration"
-msgid ""
-"Selected branches will not be available as pickup locations for "
-"reservations."
-msgstr ""
-
-msgctxt "Library Agency Configuration"
-msgid "The url \"%url\" is not a valid URL."
-msgstr ""
-
-msgctxt "Dpl Fbs"
-msgid "Basic settings"
-msgstr ""
-
-msgctxt "Dpl Fbs"
-msgid "FBS service url"
-msgstr ""
-
-msgctxt "Dpl Fbs"
-msgid "The url \"%url\" is not a valid URL."
-msgstr ""
-
-msgctxt "Url Proxy"
-msgid "configured"
-msgstr ""
-
-msgctxt "Url Proxy"
-msgid "This configuration form is for administering proxy url generation."
-msgstr ""
-
-msgctxt "Url Proxy"
-msgid "Proxy server URL prefix"
-msgstr ""
-
-msgctxt "Url Proxy"
-msgid ""
-"The prefix to use for proxy server URLs. This is the part of the "
-"URL\n"
-"        that comes before the hostname"
-msgstr ""
-
-msgctxt "Url Proxy"
-msgid "Hostnames"
-msgstr ""
-
-msgctxt "Url Proxy"
-msgid "Host configuration"
-msgstr ""
-
-msgctxt "Url Proxy"
-msgid "Hostname"
-msgstr ""
-
-msgctxt "Url Proxy"
-msgid "Replacement %configured"
-msgstr ""
-
-msgctxt "Url Proxy"
-msgid "Regular expression"
-msgstr ""
-
-msgctxt "Url Proxy"
-msgid ""
-"Use regular expression to substitut parts of the url, e.g. "
-"\"<em>%regex</em>\"."
-msgstr ""
-
-msgctxt "Url Proxy"
-msgid "Replacement"
-msgstr ""
-
-msgctxt "Url Proxy"
-msgid "The replacement value for the regular expression."
-msgstr ""
-
-msgctxt "Url Proxy"
-msgid "Do not use proxy prefix for this hostname"
-msgstr ""
-
-msgctxt "Url Proxy"
-msgid "Remove this"
-msgstr ""
-
-msgctxt "Url Proxy"
-msgid "Add one more"
-msgstr ""
-
-msgctxt "Url Proxy"
-msgid "Submit"
-msgstr ""
-
 msgid "Generate proxy url"
 msgstr ""
 
 msgid "Get campaign matching search result facets"
+msgstr ""
+
+msgid "Upload configuration"
+msgstr ""
+
+msgid "Configuration Import"
+msgstr ""
+
+msgid "Import configuration from YAML files."
+msgstr ""
+
+msgid "DPL React Apps"
+msgstr ""
+
+msgid "For integration of dpl_react apps on the site."
 msgstr ""
 
 msgid "DPL Login"
@@ -1522,101 +1537,6 @@ msgid "Dpl Login Logout Route"
 msgstr ""
 
 msgid "Login via Adgangsplatformen"
-msgstr ""
-
-msgid "Publizon settings"
-msgstr ""
-
-msgid "DPL Publizon"
-msgstr ""
-
-msgid "Handle publizon configuration"
-msgstr ""
-
-msgid "DPL loans"
-msgstr ""
-
-msgid "Handle the user profile loan pages"
-msgstr ""
-
-msgid "Loans settings"
-msgstr ""
-
-msgid "DPL React Apps"
-msgstr ""
-
-msgid "For integration of dpl_react apps on the site."
-msgstr ""
-
-msgid "Upload configuration"
-msgstr ""
-
-msgid "Configuration Import"
-msgstr ""
-
-msgid "Import configuration from YAML files."
-msgstr ""
-
-msgid "DDB React"
-msgstr ""
-
-msgid ""
-"General handling of importing and using the DDB react components as "
-"libraries"
-msgstr ""
-
-msgid "DPL React User Token"
-msgstr ""
-
-msgid "DPL Library Token"
-msgstr ""
-
-msgid "Handles fetching and storage of a library token"
-msgstr ""
-
-msgid "Mapp Intelligence settings"
-msgstr ""
-
-msgid "Mapp Intelligence"
-msgstr ""
-
-msgid "Integration with Mapp Intelligence to track site usage."
-msgstr ""
-
-msgid "Reservations settings"
-msgstr ""
-
-msgid "DPL Reservations"
-msgstr ""
-
-msgid "Handle the user profile reservations pages"
-msgstr ""
-
-msgid "Example content for DPL CMS"
-msgstr ""
-
-msgid "Provides example content for demo sites."
-msgstr ""
-
-msgid "Library Agency"
-msgstr ""
-
-msgid "General Settings"
-msgstr ""
-
-msgid "DPL Library Agency"
-msgstr ""
-
-msgid "Module for handling library agency configuration and functionality"
-msgstr ""
-
-msgid "FBS settings"
-msgstr ""
-
-msgid "DPL FBS"
-msgstr ""
-
-msgid "Handle FBS configuration"
 msgstr ""
 
 msgid "DPL Url Proxy"
@@ -1634,6 +1554,86 @@ msgstr ""
 msgid ""
 "A module that deliveres possibility for campaign CRUD and integration "
 "with Dpl React Apps"
+msgstr ""
+
+msgid "DDB React"
+msgstr ""
+
+msgid ""
+"General handling of importing and using the DDB react components as "
+"libraries"
+msgstr ""
+
+msgid "DPL React User Token"
+msgstr ""
+
+msgid "Publizon settings"
+msgstr ""
+
+msgid "DPL Publizon"
+msgstr ""
+
+msgid "Handle publizon configuration"
+msgstr ""
+
+msgid "Mapp Intelligence settings"
+msgstr ""
+
+msgid "Mapp Intelligence"
+msgstr ""
+
+msgid "Integration with Mapp Intelligence to track site usage."
+msgstr ""
+
+msgid "Example content for DPL CMS"
+msgstr ""
+
+msgid "Provides example content for demo sites."
+msgstr ""
+
+msgid "DPL FBS"
+msgstr ""
+
+msgid "Handle FBS configuration"
+msgstr ""
+
+msgid "FBS settings"
+msgstr ""
+
+msgid "Library Agency"
+msgstr ""
+
+msgid "General Settings"
+msgstr ""
+
+msgid "DPL Library Agency"
+msgstr ""
+
+msgid "Module for handling library agency configuration and functionality"
+msgstr ""
+
+msgid "DPL Library Token"
+msgstr ""
+
+msgid "Handles fetching and storage of a library token"
+msgstr ""
+
+msgid "Loans settings"
+msgstr ""
+
+msgid "DPL loans"
+msgstr ""
+
+msgid "Handle the user profile loan pages"
+msgstr ""
+
+msgid "Reservations settings"
+msgstr ""
+
+msgid "DPL Reservations"
+msgstr ""
+
+msgid "Handle the user profile reservations pages"
 msgstr ""
 
 msgid "Skip to main content"
