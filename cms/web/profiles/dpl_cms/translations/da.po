@@ -3,8 +3,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2023-04-17 10:35+0000\n"
-"PO-Revision-Date: 2023-04-17 10:35+0000\n"
+"POT-Creation-Date: 2023-05-02 15:11+0000\n"
+"PO-Revision-Date: 2023-05-02 15:11+0000\n"
 "Last-Translator: NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
 "MIME-Version: 1.0\n"
@@ -12,90 +12,42 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
 
-msgctxt "Library Agency Configuration"
-msgid "Reservations"
+msgctxt "Dpl Login"
+msgid "Authorization endpoint"
 msgstr ""
 
-msgctxt "Library Agency Configuration"
-msgid "Disable SMS notifications for reservations"
+msgctxt "Dpl Login"
+msgid "Token endpoint"
 msgstr ""
 
-msgctxt "Library Agency Configuration"
-msgid "If checked, SMS notifications for patrons will be disabled."
+msgctxt "Dpl Login"
+msgid "UserInfo endpoint"
 msgstr ""
 
-msgctxt "Library Agency Configuration"
-msgid "Pause reservation link"
+msgctxt "Dpl Login"
+msgid "Logout endpoint"
 msgstr ""
 
-msgctxt "Library Agency Configuration"
-msgid "The link with infomation about reservations"
+msgctxt "Dpl Login"
+msgid "Agency ID"
 msgstr ""
 
-msgctxt "Library Agency Configuration"
-msgid "Start date"
+msgid "Adgangsplatformen"
 msgstr ""
 
-msgctxt "Library Agency Configuration"
-msgid "Pause reservation start date"
+msgid "Integration configured"
 msgstr ""
 
-msgctxt "Library Agency Configuration"
-msgid "Thresholds"
+msgctxt "Dpl Publizon"
+msgid "Basic settings"
 msgstr ""
 
-msgctxt "Library Agency Configuration"
-msgid "Set thresholds"
+msgctxt "Dpl Publizon"
+msgid "Publizon service url"
 msgstr ""
 
-msgctxt "Library Agency Configuration"
-msgid "Excluded branches"
-msgstr ""
-
-msgctxt "Library Agency Configuration"
-msgid ""
-"Select which branches should be excluded in different parts of the "
-"system."
-msgstr ""
-
-msgctxt "Library Agency Configuration"
-msgid "Search results"
-msgstr ""
-
-msgctxt "Library Agency Configuration"
-msgid ""
-"Holdings belonging to the selected branches will not be shown in "
-"search results."
-msgstr ""
-
-msgid "Availability"
-msgstr ""
-
-msgctxt "Library Agency Configuration"
-msgid ""
-"Holdings belonging to the selected branches will not considered when "
-"showing work availability."
-msgstr ""
-
-msgctxt "Library Agency Configuration"
-msgid ""
-"Selected branches will not be available as pickup locations for "
-"reservations."
-msgstr ""
-
-msgctxt "Library Agency Configuration"
+msgctxt "Dpl Publizon"
 msgid "The url \"%url\" is not a valid URL."
-msgstr ""
-
-msgid "Library token"
-msgstr ""
-
-msgid "Token available"
-msgstr ""
-
-msgid ""
-"No valid token available. <a href=\":url\">Run cron</a> to retrieve a "
-"new token."
 msgstr ""
 
 msgctxt "Loan list"
@@ -341,463 +293,68 @@ msgctxt "Loan list (settings)"
 msgid "The url \"%url\" is not a valid URL."
 msgstr ""
 
-msgctxt "Url Proxy"
-msgid "configured"
+msgctxt "Search Header"
+msgid "Search button"
 msgstr ""
 
-msgctxt "Url Proxy"
-msgid "This configuration form is for administering proxy url generation."
+msgctxt "Search Header"
+msgid "Search header input"
 msgstr ""
 
-msgctxt "Url Proxy"
-msgid "Proxy server URL prefix"
+msgctxt "Search Header"
+msgid "Animated series"
 msgstr ""
 
-msgctxt "Url Proxy"
-msgid ""
-"The prefix to use for proxy server URLs. This is the part of the "
-"URL\n"
-"        that comes before the hostname"
+msgctxt "Search Header"
+msgid "Audio books"
 msgstr ""
 
-msgctxt "Url Proxy"
-msgid "Hostnames"
+msgctxt "Search Header"
+msgid "Books"
 msgstr ""
 
-msgctxt "Url Proxy"
-msgid "Host configuration"
+msgctxt "Search Header"
+msgid "E-books"
 msgstr ""
 
-msgctxt "Url Proxy"
-msgid "Hostname"
+msgctxt "Search Header"
+msgid "Movies"
 msgstr ""
 
-msgctxt "Url Proxy"
-msgid "Replacement %configured"
+msgctxt "Search Header"
+msgid "Games"
 msgstr ""
 
-msgctxt "Url Proxy"
-msgid "Regular expression"
+msgctxt "Search Header"
+msgid "Music"
 msgstr ""
 
-msgctxt "Url Proxy"
-msgid ""
-"Use regular expression to substitut parts of the url, e.g. "
-"\"<em>%regex</em>\"."
+msgctxt "Search Header"
+msgid "et al."
 msgstr ""
 
-msgctxt "Url Proxy"
-msgid "Replacement"
+msgctxt "Search Header"
+msgid "in"
 msgstr ""
 
-msgctxt "Url Proxy"
-msgid "The replacement value for the regular expression."
+msgctxt "Search Header"
+msgid "Start typing in order to search"
 msgstr ""
 
-msgctxt "Url Proxy"
-msgid "Do not use proxy prefix for this hostname"
+msgctxt "Search Header"
+msgid "Loading"
 msgstr ""
 
-msgctxt "Url Proxy"
-msgid "Remove this"
+msgctxt "Search Header"
+msgid "Author"
 msgstr ""
 
-msgctxt "Url Proxy"
-msgid "Add one more"
+msgctxt "Search Header"
+msgid "Topic"
 msgstr ""
 
-msgctxt "Url Proxy"
-msgid "Submit"
-msgstr ""
-
-msgid "React DDB Library"
-msgstr ""
-
-msgid "Library is present"
-msgstr ""
-
-msgid "DDB React library is missing (@dir)"
-msgstr ""
-
-msgctxt "Dpl Mapp"
-msgid "Domain"
-msgstr ""
-
-msgctxt "Dpl Mapp"
-msgid ""
-"Specify the Tag Integration domain if the JavaScript-file should be "
-"loaded from the Mapp server."
-msgstr ""
-
-msgctxt "Dpl Mapp"
-msgid "Id"
-msgstr ""
-
-msgctxt "Dpl Mapp"
-msgid ""
-"Enter your Tag Integration customer ID if the JavaScript-file should "
-"be loaded from the Mapp server."
-msgstr ""
-
-msgctxt "Reservation list"
-msgid "Your reservations"
-msgstr ""
-
-msgctxt "Reservation list"
-msgid "Physical reservations"
-msgstr ""
-
-msgctxt "Reservation list"
-msgid "Pause reservations on physical items"
-msgstr ""
-
-msgctxt "Reservation list"
-msgid "Digital reservations"
-msgstr ""
-
-msgctxt "Reservation list"
-msgid "Ready for pickup"
-msgstr ""
-
-msgctxt "Reservation list"
-msgid "At the moment you have 0 reservations ready for pickup"
-msgstr ""
-
-msgctxt "Reservation list"
-msgid "At the moment you have 0 physical reservations"
-msgstr ""
-
-msgctxt "Reservation list"
-msgid "At the moment you have 0 reservations"
-msgstr ""
-
-msgctxt "Reservation list"
-msgid "At the moment you have 0 reservations on digital items"
-msgstr ""
-
-msgctxt "Reservation list"
-msgid "Ready"
-msgstr ""
-
-msgctxt "Reservation list"
-msgid "By"
-msgstr ""
-
-msgctxt "Reservation list"
-msgid "and"
-msgstr ""
-
-msgctxt "Reservation list"
-msgid "There are @count people in the queue before you"
-msgstr ""
-
-msgctxt "Reservation list"
-msgid "You are at the front of the queue"
-msgstr ""
-
-msgctxt "Reservation list"
-msgid "queued"
-msgstr ""
-
-msgctxt "Reservation list"
-msgid "Pick up before @date"
-msgstr ""
-
-msgctxt "Reservation list"
-msgid "E-book"
-msgstr ""
-
-msgctxt "Reservation list"
-msgid "Audiobook"
-msgstr ""
-
-msgctxt "Reservation list"
-msgid "Podcast"
-msgstr ""
-
-msgctxt "Reservation list"
-msgid "Borrow before @date"
-msgstr ""
-
-msgctxt "Reservation list"
-msgid "Available in @count days"
-msgstr ""
-
-msgctxt "Reservation list"
-msgid "days"
-msgstr ""
-
-msgctxt "Reservation list"
-msgid "day"
-msgstr ""
-
-msgctxt "Reservation list"
-msgid "Remove your reservation"
-msgstr ""
-
-msgctxt "Reservation list"
-msgid "Others are queueing for this material"
-msgstr ""
-
-msgctxt "Reservation list"
-msgid "@count queued"
-msgstr ""
-
-msgctxt "Reservation list"
-msgid "Status"
-msgstr ""
-
-msgctxt "Reservation list"
-msgid "Pickup deadline"
-msgstr ""
-
-msgctxt "Reservation list"
-msgid "Borrow before"
-msgstr ""
-
-msgctxt "Reservation list"
-msgid "Pickup branch"
-msgstr ""
-
-msgctxt "Reservation list"
-msgid "Apply changes"
-msgstr ""
-
-msgctxt "Reservation list"
-msgid "Date of reservation"
-msgstr ""
-
-msgctxt "Reservation list"
-msgid "Not interested after"
-msgstr ""
-
-msgctxt "Reservation list"
-msgid "Go to eReolen"
-msgstr ""
-
-msgctxt "Reservation list"
-msgid "Your reservation expires @date!"
-msgstr ""
-
-msgctxt "Reservation list"
-msgid "Save"
-msgstr ""
-
-msgctxt "Reservation list"
-msgid "Cancel"
-msgstr ""
-
-msgctxt "Reservation list"
-msgid "Cancel reservation"
-msgstr ""
-
-msgctxt "Reservation list"
-msgid "Cancel reservations"
-msgstr ""
-
-msgctxt "Reservation list"
-msgid "Do you want to cancel your reservation?"
-msgstr ""
-
-msgctxt "Reservation list"
-msgid "You cannot regret this action"
-msgstr ""
-
-msgctxt "Reservation list"
-msgid "Close delete reservation modal"
-msgstr ""
-
-msgctxt "Reservation list (Aria)"
-msgid ""
-"This button opens a modal that covers the entire page and contains the "
-"possibility to delete a selected reservation, or multiple selected "
-"reservations"
-msgstr ""
-
-msgctxt "Reservation list (Aria)"
-msgid "Reservations have been paused in the following time span:"
-msgstr ""
-
-msgctxt "Reservation list (Aria)"
-msgid ""
-"This button opens a modal that covers the entire page and contains the "
-"possibility to pause physical reservations"
-msgstr ""
-
-msgctxt "Reservation list (Aria)"
-msgid "This modal makes it possible to pause your physical reservations"
-msgstr ""
-
-msgctxt "Reservation list"
-msgid ""
-"Pause your reservations early, since reservations that are already "
-"being processed, will not be paused."
-msgstr ""
-
-msgctxt "Reservation list"
-msgid "Close pause reservations modal"
-msgstr ""
-
-msgctxt "Reservation list"
-msgid "Start date"
-msgstr ""
-
-msgctxt "Reservation list (Aria)"
-msgid "Close material details modal"
-msgstr ""
-
-msgctxt "Reservation list"
-msgid "End date"
-msgstr ""
-
-msgctxt "Reservation list"
-msgid "Pause reservation below inputs text"
-msgstr ""
-
-msgctxt "Reservation list"
-msgid "Read more about pausing reservertions and what that means here"
-msgstr ""
-
-msgctxt "Reservation list"
-msgid "1 month"
-msgstr ""
-
-msgctxt "Reservation list"
-msgid "2 months"
-msgstr ""
-
-msgctxt "Reservation list"
-msgid "3 months"
-msgstr ""
-
-msgctxt "Reservation list"
-msgid "6 months"
-msgstr ""
-
-msgctxt "Reservation list"
-msgid "1 year"
-msgstr ""
-
-msgctxt "Reservation list"
-msgid "Pick"
-msgstr ""
-
-msgctxt "Reservation list"
-msgid "show more"
-msgstr ""
-
-msgctxt "Reservation list"
-msgid "Showing @itemsShown out of @hitcount results"
-msgstr ""
-
-msgctxt "Reservation list (Aria)"
-msgid "This material is ready for pickup"
-msgstr ""
-
-msgctxt "Reservation list (Aria)"
-msgid "You are the only person queued for this material"
-msgstr ""
-
-msgctxt "Reservation list (Aria)"
-msgid "This material has @count people in queue before you"
-msgstr ""
-
-msgctxt "Reservation list (Aria)"
-msgid "This material is ready in 1 day"
-msgstr ""
-
-msgctxt "Reservation list (Aria)"
-msgid "This material is ready in @count days"
-msgstr ""
-
-msgctxt "Reservation list (settings)"
-msgid "Basic settings"
-msgstr ""
-
-msgctxt "Reservation list (settings)"
-msgid "Pause reservation link"
-msgstr ""
-
-msgctxt "Reservation list (settings)"
-msgid "The link in the pause reservation modal"
-msgstr ""
-
-msgctxt "Reservation list (settings)"
-msgid "Ereolen link"
-msgstr ""
-
-msgctxt "Reservation list (settings)"
-msgid "My page in ereolen"
-msgstr ""
-
-msgctxt "Reservation list (settings)"
-msgid "Start date"
-msgstr ""
-
-msgctxt "Reservation list (settings)"
-msgid "Pause reservation start date"
-msgstr ""
-
-msgctxt "Reservation list (settings)"
-msgid "Page size mobile"
-msgstr ""
-
-msgctxt "Reservation list (settings)"
-msgid "Page size desktop"
-msgstr ""
-
-msgctxt "Reservation list (settings)"
-msgid "The url \"%url\" is not a valid URL."
-msgstr ""
-
-msgctxt "Dpl Publizon"
-msgid "Basic settings"
-msgstr ""
-
-msgctxt "Dpl Publizon"
-msgid "Publizon service url"
-msgstr ""
-
-msgctxt "Dpl Publizon"
-msgid "The url \"%url\" is not a valid URL."
-msgstr ""
-
-msgctxt "Dpl Fbs"
-msgid "Basic settings"
-msgstr ""
-
-msgctxt "Dpl Fbs"
-msgid "FBS service url"
-msgstr ""
-
-msgctxt "Dpl Fbs"
-msgid "The url \"%url\" is not a valid URL."
-msgstr ""
-
-msgctxt "Dpl Login"
-msgid "Authorization endpoint"
-msgstr ""
-
-msgctxt "Dpl Login"
-msgid "Token endpoint"
-msgstr ""
-
-msgctxt "Dpl Login"
-msgid "UserInfo endpoint"
-msgstr ""
-
-msgctxt "Dpl Login"
-msgid "Logout endpoint"
-msgstr ""
-
-msgctxt "Dpl Login"
-msgid "Agency ID"
-msgstr ""
-
-msgid "Adgangsplatformen"
-msgstr ""
-
-msgid "Integration configured"
+msgctxt "Search Header"
+msgid "Work"
 msgstr ""
 
 msgctxt "Search Result"
@@ -897,7 +454,7 @@ msgid "Show results"
 msgstr ""
 
 msgctxt "Search Result"
-msgid "Showing results for"
+msgid "Showing results for \"@query\""
 msgstr ""
 
 msgctxt "Search Result"
@@ -1408,70 +965,6 @@ msgctxt "Work Page"
 msgid "You have borrowed"
 msgstr ""
 
-msgctxt "Search Header"
-msgid "Search button"
-msgstr ""
-
-msgctxt "Search Header"
-msgid "Search header input"
-msgstr ""
-
-msgctxt "Search Header"
-msgid "Animated series"
-msgstr ""
-
-msgctxt "Search Header"
-msgid "Audio books"
-msgstr ""
-
-msgctxt "Search Header"
-msgid "Books"
-msgstr ""
-
-msgctxt "Search Header"
-msgid "E-books"
-msgstr ""
-
-msgctxt "Search Header"
-msgid "Movies"
-msgstr ""
-
-msgctxt "Search Header"
-msgid "Games"
-msgstr ""
-
-msgctxt "Search Header"
-msgid "Music"
-msgstr ""
-
-msgctxt "Search Header"
-msgid "et al."
-msgstr ""
-
-msgctxt "Search Header"
-msgid "in"
-msgstr ""
-
-msgctxt "Search Header"
-msgid "Start typing in order to search"
-msgstr ""
-
-msgctxt "Search Header"
-msgid "Loading"
-msgstr ""
-
-msgctxt "Search Header"
-msgid "Author"
-msgstr ""
-
-msgctxt "Search Header"
-msgid "Topic"
-msgstr ""
-
-msgctxt "Search Header"
-msgid "Work"
-msgstr ""
-
 msgid "Configuration file"
 msgstr ""
 
@@ -1506,31 +999,538 @@ msgctxt "DPL Config Import"
 msgid "Failed to uninstall modules: @reason"
 msgstr ""
 
-msgid "Get campaign matching search result facets"
+msgid "React DDB Library"
+msgstr ""
+
+msgid "Library is present"
+msgstr ""
+
+msgid "DDB React library is missing (@dir)"
+msgstr ""
+
+msgid "Library token"
+msgstr ""
+
+msgid "Token available"
+msgstr ""
+
+msgid ""
+"No valid token available. <a href=\":url\">Run cron</a> to retrieve a "
+"new token."
+msgstr ""
+
+msgctxt "Dpl Mapp"
+msgid "Domain"
+msgstr ""
+
+msgctxt "Dpl Mapp"
+msgid ""
+"Specify the Tag Integration domain if the JavaScript-file should be "
+"loaded from the Mapp server."
+msgstr ""
+
+msgctxt "Dpl Mapp"
+msgid "Id"
+msgstr ""
+
+msgctxt "Dpl Mapp"
+msgid ""
+"Enter your Tag Integration customer ID if the JavaScript-file should "
+"be loaded from the Mapp server."
+msgstr ""
+
+msgctxt "Reservation list"
+msgid "Your reservations"
+msgstr ""
+
+msgctxt "Reservation list"
+msgid "Physical reservations"
+msgstr ""
+
+msgctxt "Reservation list"
+msgid "Pause reservations on physical items"
+msgstr ""
+
+msgctxt "Reservation list"
+msgid "Digital reservations"
+msgstr ""
+
+msgctxt "Reservation list"
+msgid "Ready for pickup"
+msgstr ""
+
+msgctxt "Reservation list"
+msgid "At the moment you have 0 reservations ready for pickup"
+msgstr ""
+
+msgctxt "Reservation list"
+msgid "At the moment you have 0 physical reservations"
+msgstr ""
+
+msgctxt "Reservation list"
+msgid "At the moment you have 0 reservations"
+msgstr ""
+
+msgctxt "Reservation list"
+msgid "At the moment you have 0 reservations on digital items"
+msgstr ""
+
+msgctxt "Reservation list"
+msgid "Ready"
+msgstr ""
+
+msgctxt "Reservation list"
+msgid "By"
+msgstr ""
+
+msgctxt "Reservation list"
+msgid "and"
+msgstr ""
+
+msgctxt "Reservation list"
+msgid "There are @count people in the queue before you"
+msgstr ""
+
+msgctxt "Reservation list"
+msgid "You are at the front of the queue"
+msgstr ""
+
+msgctxt "Reservation list"
+msgid "queued"
+msgstr ""
+
+msgctxt "Reservation list"
+msgid "Pick up before @date"
+msgstr ""
+
+msgctxt "Reservation list"
+msgid "E-book"
+msgstr ""
+
+msgctxt "Reservation list"
+msgid "Audiobook"
+msgstr ""
+
+msgctxt "Reservation list"
+msgid "Podcast"
+msgstr ""
+
+msgctxt "Reservation list"
+msgid "Borrow before @date"
+msgstr ""
+
+msgctxt "Reservation list"
+msgid "Available in @count days"
+msgstr ""
+
+msgctxt "Reservation list"
+msgid "days"
+msgstr ""
+
+msgctxt "Reservation list"
+msgid "day"
+msgstr ""
+
+msgctxt "Reservation list"
+msgid "Remove your reservation"
+msgstr ""
+
+msgctxt "Reservation list"
+msgid "Others are queueing for this material"
+msgstr ""
+
+msgctxt "Reservation list"
+msgid "@count queued"
+msgstr ""
+
+msgctxt "Reservation list"
+msgid "Status"
+msgstr ""
+
+msgctxt "Reservation list"
+msgid "Pickup deadline"
+msgstr ""
+
+msgctxt "Reservation list"
+msgid "Borrow before"
+msgstr ""
+
+msgctxt "Reservation list"
+msgid "Pickup branch"
+msgstr ""
+
+msgctxt "Reservation list"
+msgid "Apply changes"
+msgstr ""
+
+msgctxt "Reservation list"
+msgid "Date of reservation"
+msgstr ""
+
+msgctxt "Reservation list"
+msgid "Not interested after"
+msgstr ""
+
+msgctxt "Reservation list"
+msgid "Go to eReolen"
+msgstr ""
+
+msgctxt "Reservation list"
+msgid "Your reservation expires @date!"
+msgstr ""
+
+msgctxt "Reservation list"
+msgid "Save"
+msgstr ""
+
+msgctxt "Reservation list"
+msgid "Cancel"
+msgstr ""
+
+msgctxt "Reservation list"
+msgid "Cancel reservation"
+msgstr ""
+
+msgctxt "Reservation list"
+msgid "Cancel reservations"
+msgstr ""
+
+msgctxt "Reservation list"
+msgid "Do you want to cancel your reservation?"
+msgstr ""
+
+msgctxt "Reservation list"
+msgid "You cannot regret this action"
+msgstr ""
+
+msgctxt "Reservation list"
+msgid "Close delete reservation modal"
+msgstr ""
+
+msgctxt "Reservation list (Aria)"
+msgid ""
+"This button opens a modal that covers the entire page and contains the "
+"possibility to delete a selected reservation, or multiple selected "
+"reservations"
+msgstr ""
+
+msgctxt "Reservation list (Aria)"
+msgid "Reservations have been paused in the following time span:"
+msgstr ""
+
+msgctxt "Reservation list (Aria)"
+msgid ""
+"This button opens a modal that covers the entire page and contains the "
+"possibility to pause physical reservations"
+msgstr ""
+
+msgctxt "Reservation list (Aria)"
+msgid "This modal makes it possible to pause your physical reservations"
+msgstr ""
+
+msgctxt "Reservation list"
+msgid ""
+"Pause your reservations early, since reservations that are already "
+"being processed, will not be paused."
+msgstr ""
+
+msgctxt "Reservation list"
+msgid "Close pause reservations modal"
+msgstr ""
+
+msgctxt "Reservation list"
+msgid "Start date"
+msgstr ""
+
+msgctxt "Reservation list (Aria)"
+msgid "Close material details modal"
+msgstr ""
+
+msgctxt "Reservation list"
+msgid "End date"
+msgstr ""
+
+msgctxt "Reservation list"
+msgid "Pause reservation below inputs text"
+msgstr ""
+
+msgctxt "Reservation list"
+msgid "Read more about pausing reservertions and what that means here"
+msgstr ""
+
+msgctxt "Reservation list"
+msgid "1 month"
+msgstr ""
+
+msgctxt "Reservation list"
+msgid "2 months"
+msgstr ""
+
+msgctxt "Reservation list"
+msgid "3 months"
+msgstr ""
+
+msgctxt "Reservation list"
+msgid "6 months"
+msgstr ""
+
+msgctxt "Reservation list"
+msgid "1 year"
+msgstr ""
+
+msgctxt "Reservation list"
+msgid "Pick"
+msgstr ""
+
+msgctxt "Reservation list"
+msgid "show more"
+msgstr ""
+
+msgctxt "Reservation list"
+msgid "Showing @itemsShown out of @hitcount results"
+msgstr ""
+
+msgctxt "Reservation list (Aria)"
+msgid "This material is ready for pickup"
+msgstr ""
+
+msgctxt "Reservation list (Aria)"
+msgid "You are the only person queued for this material"
+msgstr ""
+
+msgctxt "Reservation list (Aria)"
+msgid "This material has @count people in queue before you"
+msgstr ""
+
+msgctxt "Reservation list (Aria)"
+msgid "This material is ready in 1 day"
+msgstr ""
+
+msgctxt "Reservation list (Aria)"
+msgid "This material is ready in @count days"
+msgstr ""
+
+msgctxt "Reservation list (settings)"
+msgid "Basic settings"
+msgstr ""
+
+msgctxt "Reservation list (settings)"
+msgid "Pause reservation link"
+msgstr ""
+
+msgctxt "Reservation list (settings)"
+msgid "The link in the pause reservation modal"
+msgstr ""
+
+msgctxt "Reservation list (settings)"
+msgid "Ereolen link"
+msgstr ""
+
+msgctxt "Reservation list (settings)"
+msgid "My page in ereolen"
+msgstr ""
+
+msgctxt "Reservation list (settings)"
+msgid "Start date"
+msgstr ""
+
+msgctxt "Reservation list (settings)"
+msgid "Pause reservation start date"
+msgstr ""
+
+msgctxt "Reservation list (settings)"
+msgid "Page size mobile"
+msgstr ""
+
+msgctxt "Reservation list (settings)"
+msgid "Page size desktop"
+msgstr ""
+
+msgctxt "Reservation list (settings)"
+msgid "The url \"%url\" is not a valid URL."
+msgstr ""
+
+msgctxt "Library Agency Configuration"
+msgid "Reservations"
+msgstr ""
+
+msgctxt "Library Agency Configuration"
+msgid "Disable SMS notifications for reservations"
+msgstr ""
+
+msgctxt "Library Agency Configuration"
+msgid "If checked, SMS notifications for patrons will be disabled."
+msgstr ""
+
+msgctxt "Library Agency Configuration"
+msgid "Pause reservation link"
+msgstr ""
+
+msgctxt "Library Agency Configuration"
+msgid "The link with infomation about reservations"
+msgstr ""
+
+msgctxt "Library Agency Configuration"
+msgid "Start date"
+msgstr ""
+
+msgctxt "Library Agency Configuration"
+msgid "Pause reservation start date"
+msgstr ""
+
+msgctxt "Library Agency Configuration"
+msgid "Thresholds"
+msgstr ""
+
+msgctxt "Library Agency Configuration"
+msgid "Set thresholds"
+msgstr ""
+
+msgctxt "Library Agency Configuration"
+msgid "Excluded branches"
+msgstr ""
+
+msgctxt "Library Agency Configuration"
+msgid ""
+"Select which branches should be excluded in different parts of the "
+"system."
+msgstr ""
+
+msgctxt "Library Agency Configuration"
+msgid "Search results"
+msgstr ""
+
+msgctxt "Library Agency Configuration"
+msgid ""
+"Holdings belonging to the selected branches will not be shown in "
+"search results."
+msgstr ""
+
+msgid "Availability"
+msgstr ""
+
+msgctxt "Library Agency Configuration"
+msgid ""
+"Holdings belonging to the selected branches will not considered when "
+"showing work availability."
+msgstr ""
+
+msgctxt "Library Agency Configuration"
+msgid ""
+"Selected branches will not be available as pickup locations for "
+"reservations."
+msgstr ""
+
+msgctxt "Library Agency Configuration"
+msgid "The url \"%url\" is not a valid URL."
+msgstr ""
+
+msgctxt "Dpl Fbs"
+msgid "Basic settings"
+msgstr ""
+
+msgctxt "Dpl Fbs"
+msgid "FBS service url"
+msgstr ""
+
+msgctxt "Dpl Fbs"
+msgid "The url \"%url\" is not a valid URL."
+msgstr ""
+
+msgctxt "Url Proxy"
+msgid "configured"
+msgstr ""
+
+msgctxt "Url Proxy"
+msgid "This configuration form is for administering proxy url generation."
+msgstr ""
+
+msgctxt "Url Proxy"
+msgid "Proxy server URL prefix"
+msgstr ""
+
+msgctxt "Url Proxy"
+msgid ""
+"The prefix to use for proxy server URLs. This is the part of the "
+"URL\n"
+"        that comes before the hostname"
+msgstr ""
+
+msgctxt "Url Proxy"
+msgid "Hostnames"
+msgstr ""
+
+msgctxt "Url Proxy"
+msgid "Host configuration"
+msgstr ""
+
+msgctxt "Url Proxy"
+msgid "Hostname"
+msgstr ""
+
+msgctxt "Url Proxy"
+msgid "Replacement %configured"
+msgstr ""
+
+msgctxt "Url Proxy"
+msgid "Regular expression"
+msgstr ""
+
+msgctxt "Url Proxy"
+msgid ""
+"Use regular expression to substitut parts of the url, e.g. "
+"\"<em>%regex</em>\"."
+msgstr ""
+
+msgctxt "Url Proxy"
+msgid "Replacement"
+msgstr ""
+
+msgctxt "Url Proxy"
+msgid "The replacement value for the regular expression."
+msgstr ""
+
+msgctxt "Url Proxy"
+msgid "Do not use proxy prefix for this hostname"
+msgstr ""
+
+msgctxt "Url Proxy"
+msgid "Remove this"
+msgstr ""
+
+msgctxt "Url Proxy"
+msgid "Add one more"
+msgstr ""
+
+msgctxt "Url Proxy"
+msgid "Submit"
 msgstr ""
 
 msgid "Generate proxy url"
 msgstr ""
 
-msgid "Library Agency"
+msgid "Get campaign matching search result facets"
 msgstr ""
 
-msgid "General Settings"
+msgid "DPL Login"
 msgstr ""
 
-msgid "DPL Library Agency"
+msgid "Handles authentication/login via Adgangsplatformen"
 msgstr ""
 
-msgid "Module for handling library agency configuration and functionality"
+msgid "Dpl Login Logout Route"
 msgstr ""
 
-msgid "DPL Library Token"
+msgid "Login via Adgangsplatformen"
 msgstr ""
 
-msgid "Handles fetching and storage of a library token"
+msgid "Publizon settings"
 msgstr ""
 
-msgid "Loans settings"
+msgid "DPL Publizon"
+msgstr ""
+
+msgid "Handle publizon configuration"
 msgstr ""
 
 msgid "DPL loans"
@@ -1539,21 +1539,22 @@ msgstr ""
 msgid "Handle the user profile loan pages"
 msgstr ""
 
-msgid "dpl_campaign"
+msgid "Loans settings"
 msgstr ""
 
-msgid ""
-"A module that deliveres possibility for campaign CRUD and integration "
-"with Dpl React Apps"
+msgid "DPL React Apps"
 msgstr ""
 
-msgid "Configure proxy urls"
+msgid "For integration of dpl_react apps on the site."
 msgstr ""
 
-msgid "DPL Url Proxy"
+msgid "Upload configuration"
 msgstr ""
 
-msgid "Module for generating specially formatted external urls"
+msgid "Configuration Import"
+msgstr ""
+
+msgid "Import configuration from YAML files."
 msgstr ""
 
 msgid "DDB React"
@@ -1565,6 +1566,12 @@ msgid ""
 msgstr ""
 
 msgid "DPL React User Token"
+msgstr ""
+
+msgid "DPL Library Token"
+msgstr ""
+
+msgid "Handles fetching and storage of a library token"
 msgstr ""
 
 msgid "Mapp Intelligence settings"
@@ -1585,19 +1592,22 @@ msgstr ""
 msgid "Handle the user profile reservations pages"
 msgstr ""
 
-msgid "Publizon settings"
-msgstr ""
-
-msgid "DPL Publizon"
-msgstr ""
-
-msgid "Handle publizon configuration"
-msgstr ""
-
 msgid "Example content for DPL CMS"
 msgstr ""
 
 msgid "Provides example content for demo sites."
+msgstr ""
+
+msgid "Library Agency"
+msgstr ""
+
+msgid "General Settings"
+msgstr ""
+
+msgid "DPL Library Agency"
+msgstr ""
+
+msgid "Module for handling library agency configuration and functionality"
 msgstr ""
 
 msgid "FBS settings"
@@ -1609,31 +1619,21 @@ msgstr ""
 msgid "Handle FBS configuration"
 msgstr ""
 
-msgid "Dpl Login Logout Route"
+msgid "DPL Url Proxy"
 msgstr ""
 
-msgid "Login via Adgangsplatformen"
+msgid "Module for generating specially formatted external urls"
 msgstr ""
 
-msgid "DPL Login"
+msgid "Configure proxy urls"
 msgstr ""
 
-msgid "Handles authentication/login via Adgangsplatformen"
+msgid "dpl_campaign"
 msgstr ""
 
-msgid "DPL React Apps"
-msgstr ""
-
-msgid "For integration of dpl_react apps on the site."
-msgstr ""
-
-msgid "Upload configuration"
-msgstr ""
-
-msgid "Configuration Import"
-msgstr ""
-
-msgid "Import configuration from YAML files."
+msgid ""
+"A module that deliveres possibility for campaign CRUD and integration "
+"with Dpl React Apps"
 msgstr ""
 
 msgid "Skip to main content"
