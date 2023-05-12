@@ -3,8 +3,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2023-05-11 12:44+0000\n"
-"PO-Revision-Date: 2023-05-11 12:44+0000\n"
+"POT-Creation-Date: 2023-05-12 11:23+0000\n"
+"PO-Revision-Date: 2023-05-12 11:23+0000\n"
 "Last-Translator: NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
 "MIME-Version: 1.0\n"
@@ -867,6 +867,18 @@ msgid "The url \"%url\" is not a valid URL."
 msgstr ""
 
 msgctxt "Library Agency Configuration"
+msgid "Fee page"
+msgstr ""
+
+msgctxt "Loan list (settings)"
+msgid "Fee page url"
+msgstr ""
+
+msgctxt "Loan list (settings)"
+msgid "The link to the relevant fee page"
+msgstr ""
+
+msgctxt "Library Agency Configuration"
 msgid "Reservations"
 msgstr ""
 
@@ -1168,14 +1180,6 @@ msgid "Basic settings"
 msgstr ""
 
 msgctxt "Loan list (settings)"
-msgid "Fee page url"
-msgstr ""
-
-msgctxt "Loan list (settings)"
-msgid "The link to the relevant fee page"
-msgstr ""
-
-msgctxt "Loan list (settings)"
 msgid "Material overdue url"
 msgstr ""
 
@@ -1189,10 +1193,6 @@ msgstr ""
 
 msgctxt "Loan list (settings)"
 msgid "Page size desktop"
-msgstr ""
-
-msgctxt "Loan list (settings)"
-msgid "The url \"%url\" is not a valid URL."
 msgstr ""
 
 msgctxt "Reservation list"
