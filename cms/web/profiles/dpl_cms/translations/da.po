@@ -3,8 +3,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2023-05-12 11:23+0000\n"
-"PO-Revision-Date: 2023-05-12 11:23+0000\n"
+"POT-Creation-Date: 2023-05-12 11:43+0000\n"
+"PO-Revision-Date: 2023-05-12 11:43+0000\n"
 "Last-Translator: NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
 "MIME-Version: 1.0\n"
@@ -654,6 +654,70 @@ msgctxt "Work Page"
 msgid "You have borrowed"
 msgstr ""
 
+msgctxt "Blocked user"
+msgid "Blocked patron d title text"
+msgstr ""
+
+msgctxt "Blocked user"
+msgid "Blocked patron d body text"
+msgstr ""
+
+msgctxt "Blocked user"
+msgid "Blocked patron s title text"
+msgstr ""
+
+msgctxt "Blocked user"
+msgid "Blocked patron s body text"
+msgstr ""
+
+msgctxt "Blocked user"
+msgid "Blocked patron f title text"
+msgstr ""
+
+msgctxt "Blocked user"
+msgid "Blocked patron f body text"
+msgstr ""
+
+msgctxt "Blocked user"
+msgid "You have exceeded your fee limit"
+msgstr ""
+
+msgctxt "Blocked user"
+msgid ""
+"You are therefore not able to borrow or reserve materials from the "
+"library"
+msgstr ""
+
+msgctxt "Blocked user"
+msgid "Your user is blocked"
+msgstr ""
+
+msgctxt "Blocked user"
+msgid ""
+"You therefore cannot reserve, borrow or renew loans. Please contact "
+"the library for further information"
+msgstr ""
+
+msgctxt "Blocked user"
+msgid "Blocked reason O modal title"
+msgstr ""
+
+msgctxt "Blocked user"
+msgid "Blocked patron o body text"
+msgstr ""
+
+msgctxt "Blocked user"
+msgid "Pay your fees here"
+msgstr ""
+
+msgctxt "Blocked user (Aria)"
+msgid "Close blocked patron modal"
+msgstr ""
+
+msgctxt "Blocked user (Aria)"
+msgid "This modal alerts you, that your patron has been blocked"
+msgstr ""
+
 msgctxt "Search Header"
 msgid "Search button"
 msgstr ""
@@ -906,6 +970,21 @@ msgctxt "Library Agency Configuration"
 msgid "Pause reservation start date"
 msgstr ""
 
+msgid "Blocked user"
+msgstr ""
+
+msgid "Redirect blocked user link"
+msgstr ""
+
+msgid "The link to redirect the blocked user to"
+msgstr ""
+
+msgid "Blocked user link for modal"
+msgstr ""
+
+msgid "If a user has blocked status e, this link appears in the modal"
+msgstr ""
+
 msgctxt "Library Agency Configuration"
 msgid "Thresholds"
 msgstr ""
@@ -947,10 +1026,6 @@ msgctxt "Library Agency Configuration"
 msgid ""
 "Selected branches will not be available as pickup locations for "
 "reservations."
-msgstr ""
-
-msgctxt "Library Agency Configuration"
-msgid "The url \"%url\" is not a valid URL."
 msgstr ""
 
 msgid "Library token"
