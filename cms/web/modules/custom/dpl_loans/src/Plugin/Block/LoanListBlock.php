@@ -88,6 +88,7 @@ class LoanListBlock extends BlockBase implements ContainerFactoryPluginInterface
     $loanListSettings = $this->configFactory->get('dpl_loan_list.settings');
     $fbsConfig = $this->configFactory->get('dpl_fbs.settings');
     $publizonConfig = $this->configFactory->get('dpl_publizon.settings');
+    $generalSettings = $this->configFactory->get('dpl_library_agency.general_settings');
 
     $data = [
       // Page size.
@@ -98,7 +99,7 @@ class LoanListBlock extends BlockBase implements ContainerFactoryPluginInterface
       // Urls.
       "fbs-base-url" => $fbsConfig->get('base_url'),
       "publizon-base-url" => $publizonConfig->get('base_url'),
-      'fees-page-url' => $loanListSettings->get('fees_page_url'),
+      'fees-page-url' => $generalSettings->get('fees_page_url'),
       'material-overdue-url' => $loanListSettings->get('material_overdue_url'),
       'dpl-cms-base-url' => DplReactAppsController::dplCmsBaseUrl(),
       // Texts.

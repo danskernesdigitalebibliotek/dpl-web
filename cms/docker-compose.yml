@@ -72,8 +72,6 @@ services:
       lagoon.type: cli-persistent
       lagoon.persistent.name: nginx # mount the persistent storage of nginx into this container
       lagoon.persistent: /app/web/sites/default/files/ # location where the persistent storage should be mounted
-    environment:
-      << : *default-environment # loads the defined environment variables from the top
 
   nginx: # Webserver in front of php-fpm. Serves static assets.
     # https://docs.lagoon.sh/lagoon/docker-images/nginx/nginx-drupal
@@ -84,8 +82,8 @@ services:
         CLI_IMAGE: *cli-image # Inject the name of the cli image
     depends_on:
       - php
-    << : *default-volumes # loads the defined volumes from the top
-    << : *default-user # uses the defined user from top
+    # loads the defined volumes and user from the top
+    <<: [*default-volumes, *default-user]
     environment:
       << : *default-environment # loads the defined environment variables from the top
       # Route that should be used locally.
@@ -106,8 +104,8 @@ services:
         condition: service_started
       mariadb:
         condition: service_healthy
-    << : *default-user # uses the defined user from top
-    << : *default-volumes # loads the defined volumes from the top
+      # loads the defined volumes and user from the top
+    <<: [*default-volumes, *default-user]
     environment:
       << : *default-environment # loads the defined environment variables from the top
       # Uncomment to enable xdebug for web requests and then restart via `docker-compose up -d`
