@@ -61,6 +61,7 @@
         "drupal/config_ignore": "^2.3",
         "drupal/core-project-message": "^9.2.7",
         "drupal/core-recommended": "^9.2.7",
+        "drupal/customerror": "^1.0@beta",
         "drupal/default_content": "^2.0@alpha",
         "drupal/devel": "^4.1",
         "drupal/handy_cache_tags": "^1.4",

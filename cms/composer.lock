@@ -2644,6 +2644,66 @@
             "time": "2021-10-06T10:34:39+00:00"
         },
         {
+            "name": "drupal/customerror",
+            "version": "1.0.0-beta2",
+            "source": {
+                "type": "git",
+                "url": "https://git.drupalcode.org/project/customerror.git",
+                "reference": "8.x-1.0-beta2"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://ftp.drupal.org/files/projects/customerror-8.x-1.0-beta2.zip",
+                "reference": "8.x-1.0-beta2",
+                "shasum": "8fe6604bb687e14aefb6267850dcc3c34502ebda"
+            },
+            "require": {
+                "drupal/core": "^8.8 || ^9"
+            },
+            "type": "drupal-module",
+            "extra": {
+                "drupal": {
+                    "version": "8.x-1.0-beta2",
+                    "datestamp": "1647057890",
+                    "security-coverage": {
+                        "status": "not-covered",
+                        "message": "Beta releases are not covered by Drupal security advisories."
+                    }
+                }
+            },
+            "notification-url": "https://packages.drupal.org/8/downloads",
+            "license": [
+                "GPL-2.0-or-later"
+            ],
+            "authors": [
+                {
+                    "name": "gisle",
+                    "homepage": "https://www.drupal.org/user/409554"
+                },
+                {
+                    "name": "kbahey",
+                    "homepage": "https://www.drupal.org/user/4063"
+                },
+                {
+                    "name": "me-taras",
+                    "homepage": "https://www.drupal.org/user/2526320"
+                },
+                {
+                    "name": "mlncn",
+                    "homepage": "https://www.drupal.org/user/64383"
+                },
+                {
+                    "name": "wafaa",
+                    "homepage": "https://www.drupal.org/user/50133"
+                }
+            ],
+            "description": "Enables the creation of custom error pages for 404 and 403 errors, as well as redirects for 404s.",
+            "homepage": "https://www.drupal.org/project/customerror",
+            "support": {
+                "source": "https://git.drupalcode.org/project/customerror"
+            }
+        },
+        {
             "name": "drupal/default_content",
             "version": "2.0.0-alpha1",
             "source": {

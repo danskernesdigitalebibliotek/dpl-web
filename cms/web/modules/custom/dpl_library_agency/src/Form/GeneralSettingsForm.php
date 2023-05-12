@@ -116,6 +116,20 @@ class GeneralSettingsForm extends ConfigFormBase {
       $disabled = TRUE;
     }
 
+    $form['fee_page'] = [
+      '#type' => 'fieldset',
+      '#title' => $this->t('Fee page', [], ['context' => 'Library Agency Configuration']),
+      '#collapsible' => FALSE,
+      '#collapsed' => FALSE,
+    ];
+
+    $form['fee_page']['fees_page_url'] = [
+      '#type' => 'url',
+      '#title' => $this->t('Fee page url', [], ['context' => 'Loan list (settings)']),
+      '#description' => $this->t('The link to the relevant fee page', [], ['context' => 'Loan list (settings)']),
+      '#default_value' => $config->get('fees_page_url') ?? '',
+    ];
+
     $form['reservations'] = [
       '#type' => 'fieldset',
       '#title' => $this->t('Reservations', [], ['context' => 'Library Agency Configuration']),
@@ -164,6 +178,7 @@ class GeneralSettingsForm extends ConfigFormBase {
       '#collapsed' => FALSE,
       '#description' => $this->t('Select which branches should be excluded in different parts of the system.', [], ['context' => 'Library Agency Configuration']),
     ];
+
     $form['branches']['search'] = [
       '#type' => 'checkboxes',
       '#title' => $this->t('Search results', [], ['context' => 'Library Agency Configuration']),
@@ -172,6 +187,7 @@ class GeneralSettingsForm extends ConfigFormBase {
       '#description' => $this->t('Holdings belonging to the selected branches will not be shown in search results.', [], ['context' => 'Library Agency Configuration']),
       "#disabled" => $disabled,
     ];
+
     $form['branches']['availability'] = [
       '#type' => 'checkboxes',
       '#title' => $this->t('Availability'),
@@ -180,6 +196,7 @@ class GeneralSettingsForm extends ConfigFormBase {
       '#description' => $this->t('Holdings belonging to the selected branches will not considered when showing work availability.', [], ['context' => 'Library Agency Configuration']),
       "#disabled" => $disabled,
     ];
+
     $form['branches']['reservation'] = [
       '#type' => 'checkboxes',
       '#title' => $this->t('Reservations', [], ['context' => 'Library Agency Configuration']),
@@ -209,6 +226,7 @@ class GeneralSettingsForm extends ConfigFormBase {
   public function submitForm(array &$form, FormStateInterface $form_state): void {
     $this->config('dpl_library_agency.general_settings')
       ->set('threshold_config', $form_state->getValue('threshold_config'))
+      ->set('fees_page_url', $form_state->getValue('fees_page_url'))
       ->set('reservation_sms_notifications_disabled', $form_state->getValue('reservation_sms_notifications_disabled'))
       ->set('pause_reservation_info_url', $form_state->getValue('pause_reservation_info_url'))
       ->set('pause_reservation_start_date_config', $form_state->getValue('pause_reservation_start_date_config'))

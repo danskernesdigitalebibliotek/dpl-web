@@ -26,7 +26,7 @@ on the mounted volumes in docker-compose.
 
 In your Docker for mac preference you need to activate VirtioFS for directory sharing:
 
-![OSX preference pane providing access to VirtioFS](documentation/images/virtiofs.png)
+![OSX preference pane providing access to VirtioFS](docs/images/virtiofs.png)
 
 ## Building and publishing releases
 
