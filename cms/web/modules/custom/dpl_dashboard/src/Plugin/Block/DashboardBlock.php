@@ -66,19 +66,26 @@ class DashboardBlock extends BlockBase implements ContainerFactoryPluginInterfac
    *   The app render array.
    */
   public function build(): array {
+    $loanListSettings = $this->configFactory->get('dpl_loan_list.settings');
+    $dashboardSettings = $this->configFactory->get('dashboard.settings');
+    $generalSettings = $this->configFactory->get('dpl_library_agency.general_settings');
+
     $data = [
       // Config.
-      "page-size-desktop" => "25",
-      "page-size-mobile" => "25",
+      "page-size-desktop" => $dashboardSettings->get('page_size_desktop'),
+      "page-size-mobile" => $dashboardSettings->get('page_size_mobile'),
       "threshold-config" => $this->configFactory->get('dpl_library_agency.general_settings')->get('threshold_config'),
-
-        // Urls.
-      // @todo update placeholder URL's
-      // 'dashboard-page-url' => "https://unsplash.com/photos/wd6YQy0PJt8",
-      // 'material-overdue-url' => "https://unsplash.com/photos/wd6YQy0PJt8",
+      // Urls.
       'search-url' => DplReactAppsController::searchResultUrl(),
       'dpl-cms-base-url' => DplReactAppsController::dplCmsBaseUrl(),
-
+      'fees-page-url' => $generalSettings->get('fees_page_url'),
+      'intermediate-url' => $dashboardSettings->get(""),
+      'pay-owed-url' => $dashboardSettings->get(""),
+      'physical-loans-url' => $dashboardSettings->get(""),
+      'loans-overdue-url' => $dashboardSettings->get(""),
+      'loans-soon-overdue-url' => $dashboardSettings->get(""),
+      'loans-not-overdue-url' => $dashboardSettings->get(""),
+      'reservations-url' => $dashboardSettings->get(""),
       // Texts.
       'your-profile-text' => $this->t("Your profile", [], ['context' => 'Dashboard']),
       'intermediate-text' => $this->t("Intermediates", [], ['context' => 'Dashboard']),
@@ -92,13 +99,6 @@ class DashboardBlock extends BlockBase implements ContainerFactoryPluginInterfac
       'reservations-ready-text' => $this->t("Ready for you", [], ['context' => 'Dashboard']),
       'no-physical-loans-text' => $this->t("At the moment, you have 0 physical loans", [], ['context' => 'Dashboard']),
       'no-reservations-text' => $this->t("At the moment, you have 0 reservations", [], ['context' => 'Dashboard']),
-      'intermediate-url' => $this->t("https://unsplash.com/photos/7LzKELgdzzI", [], ['context' => 'Dashboard']),
-      'pay-owed-url' => $this->t("https://unsplash.com/photos/KRztl5I6xac", [], ['context' => 'Dashboard']),
-      'physical-loans-url' => $this->t("https://unsplash.com/photos/7LzKELgdzzI", [], ['context' => 'Dashboard']),
-      'loans-overdue-url' => $this->t("https://unsplash.com/photos/7LzKELgdzzI", [], ['context' => 'Dashboard']),
-      'loans-soon-overdue-url' => $this->t("https://unsplash.com/photos/7LzKELgdzzI", [], ['context' => 'Dashboard']),
-      'loans-not-overdue-url' => $this->t("https://unsplash.com/photos/7LzKELgdzzI", [], ['context' => 'Dashboard']),
-      'reservations-url' => $this->t("https://unsplash.com/photos/7LzKELgdzzI", [], ['context' => 'Dashboard']),
       'reservations-still-in-queue-for-text' => $this->t("Still in queue", [], ['context' => 'Dashboard']),
       'ready-for-loan-text' => $this->t("Ready for loan", [], ['context' => 'Dashboard']),
       'publizon-audio-book-text' => $this->t("Audiobook", [], ['context' => 'Dashboard']),
@@ -119,12 +119,20 @@ class DashboardBlock extends BlockBase implements ContainerFactoryPluginInterfac
       'loan-list-material-days-text' => $this->t("days", [], ['context' => 'Dashboard']),
       'group-modal-due-date-warning-loan-overdue-text' => $this->t("The due date of return is exceeded, therefore you will be charged a fee, when the item is returned", [], ['context' => 'Dashboard']),
       'group-modal-due-date-link-to-page-with-fees-text' => $this->t("Read more about fees", [], ['context' => 'Dashboard']),
-      'fees-page-url' => $this->t("https://unsplash.com/photos/wd6YQy0PJt8", [], ['context' => 'Dashboard']),
       'group-modal-renew-loan-denied-reserved-text' => $this->t("The item is reserved by another patron", [], ['context' => 'Dashboard']),
       'group-modal-renew-loan-denied-inter-library-loan-text' => $this->t("The item has been lent to you by another library and renewal is therefore conditional of the acceptance by that library", [], ['context' => 'Dashboard']),
       'pick-up-latest-text' => $this->t("Pick up before", [], ['context' => 'Dashboard']),
       'dashboard-number-in-line-text' => $this->t("Number @count in line", [], ['context' => 'Dashboard']),
       'warning-icon-alt-text' => $this->t("warningIconAltText", [], ['context' => 'Dashboard']),
+      'material-and-author-text' => $this->t("and", [], ['context' => 'Dashboard']),
+      'material-by-author-text' => $this->t("By", [], ['context' => 'Dashboard']),
+      'ready-for-loan-counter-label-text'=> $this->t("Ready", [], ['context' => 'Dashboard']),
+      'group-modal-due-date-aria-description-text'=> $this->t("This modal groups loans after due date and makes it possible to renew said loans", [], ['context' => 'Dashboard']),
+      'group-modal-due-date-renew-loan-close-modal-aria-label-text'=> $this->t("Close renew loans modal", [], ['context' => 'Dashboard']),
+      'still-in-queue-modal-aria-description-text'=> $this->t("This modal shows materials that are still in queue", [], ['context' => 'Dashboard']),
+      'ready-for-loan-modal-aria-description-text'=> $this->t("This modal shows materials that are ready for loan", [], ['context' => 'Dashboard']),
+      'ready-to-loan-close-modal-aria-label-text'=> $this->t("Close ready to loan details modal", [], ['context' => 'Dashboard']),
+      'still-in-queue-close-modal-aria-label-text'=> $this->t("Close still in queue details modal", [], ['context' => 'Dashboard']),
     ] + DplReactAppsController::externalApiBaseUrls();
 
     return [

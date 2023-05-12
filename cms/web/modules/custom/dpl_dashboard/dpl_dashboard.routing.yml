@@ -4,3 +4,13 @@ dpl_dashboard.list:
     _controller: '\Drupal\dpl_dashboard\Controller\DplDashboardController::list'
   requirements:
     _permission: "access content"
+
+dpl_dashboard.settings:
+  path: "/admin/config/dpl-library-agency/dashboard-settings"
+  defaults:
+    _form: '\Drupal\dpl_dashboard\Form\DashboardSettingsForm'
+    _title: "Dashboard settings"
+  requirements:
+    _permission: "administer site configuration"
+  options:
+    _admin_route: TRUE

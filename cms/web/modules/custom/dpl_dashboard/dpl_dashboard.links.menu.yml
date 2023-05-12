@@ -3,3 +3,9 @@ dpl_dashboard.list:
   menu_name: user-profile-menu
   route_name: dpl_dashboard.list
   description: "User dashboard"
+
+dpl_dashboard.settings_form:
+  title: "Dashboard settings"
+  route_name: dpl_dashboard.settings
+  description: "Change Dashboard settings"
+  parent: dpl_library_agency.settings
