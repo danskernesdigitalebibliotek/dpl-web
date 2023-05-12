@@ -17,7 +17,7 @@
             "type": "package",
             "package": {
                 "name": "danskernesdigitalebibliotek/dpl-react",
-                "version": "0.3.0-rc39",
+                "version": "0.3.0-rc40",
                 "type": "drupal-library",
                 "dist": {
                     "url": "https://github.com/itk-dev/dpl-react/releases/download/release-fix%2Fremoving-zeros-from-menu/dist.zip",

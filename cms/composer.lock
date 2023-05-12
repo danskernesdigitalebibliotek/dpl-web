@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "1697d44a60a0b1a1f035869bf4c2632d",
+    "content-hash": "0a39a781d40240c061e501c0eb64c702",
     "packages": [
         {
             "name": "amazeeio/drupal_integrations",
@@ -1086,7 +1086,7 @@
         },
         {
             "name": "danskernesdigitalebibliotek/dpl-react",
-            "version": "0.3.0-rc39",
+            "version": "0.3.0-rc40",
             "dist": {
                 "type": "zip",
                 "url": "https://github.com/itk-dev/dpl-react/releases/download/release-fix%2Fremoving-zeros-from-menu/dist.zip"
@@ -13337,6 +13337,7 @@
     "stability-flags": {
         "danskernesdigitalebibliotek/dpl-design-system": 5,
         "danskernesdigitalebibliotek/dpl-react": 5,
+        "drupal/customerror": 10,
         "drupal/default_content": 15,
         "drupal/inline_all_css": 5,
         "drupal/libraries": 10,
