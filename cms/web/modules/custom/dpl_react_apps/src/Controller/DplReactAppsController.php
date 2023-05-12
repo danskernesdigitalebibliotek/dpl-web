@@ -427,4 +427,37 @@ class DplReactAppsController extends ControllerBase {
     return $url;
   }
 
+  /**
+   * Get the strings and config for blocked user.
+   *
+   * @return mixed[]
+   *   An array of strings and config.
+   */
+  public static function getBlockedSettings(): array {
+    $blockedSettings = \Drupal::configFactory()->get('dpl_library_agency.general_settings');
+    $blockedData = [
+      'redirect-on-blocked-url' => $blockedSettings->get('redirect_on_blocked_url') ?? '',
+      'blocked-patron-e-link-url' => $blockedSettings->get('blocked_patron_e_link_url') ?? '',
+      'blocked-patron-d-title-text' => t('Blocked patron d title text', [], ['context' => 'Blocked user']),
+      'blocked-patron-d-body-text' => t('Blocked patron d body text', [], ['context' => 'Blocked user']),
+      'blocked-patron-s-title-text' => t('Blocked patron s title text', [], ['context' => 'Blocked user']),
+      'blocked-patron-s-body-text' => t('Blocked patron s body text', [], ['context' => 'Blocked user']),
+      'blocked-patron-f-title-text' => t('Blocked patron f title text', [], ['context' => 'Blocked user']),
+      'blocked-patron-f-body-text' => t('Blocked patron f body text', [], ['context' => 'Blocked user']),
+      'blocked-patron-e-title-text' => t('You have exceeded your fee limit', [], ['context' => 'Blocked user']),
+      'blocked-patron-e-body-text' => t('You are therefore not able to borrow or reserve materials from the library', [], ['context' => 'Blocked user']),
+      'blocked-patron-w-title-text' => t('Your user is blocked', [], ['context' => 'Blocked user']),
+      'blocked-patron-w-body-text' => t('You therefore cannot reserve, borrow or renew loans. Please contact the library for further information', [], ['context' => 'Blocked user']),
+      'blocked-patron-o-title-text' => t('Blocked reason O modal title', [], ['context' => 'Blocked user']),
+      'blocked-patron-o-body-text' => t('Blocked patron o body text', [], ['context' => 'Blocked user']),
+      'blocked-patron-u-title-text' => t('Your user is blocked', [], ['context' => 'Blocked user']),
+      'blocked-patron-u-body-text' => t('You therefore cannot reserve, borrow or renew loans. Please contact the library for further information', [], ['context' => 'Blocked user']),
+      'blocked-patron-e-link-text' => t('Pay your fees here', [], ['context' => 'Blocked user']),
+      'blocked-patron-close-modal-aria-label-text' => t('Close blocked patron modal', [], ['context' => 'Blocked user (Aria)']),
+      'blocked-patron-modal-aria-description-text' => t('This modal alerts you, that your patron has been blocked', [], ['context' => 'Blocked user (Aria)']),
+    ];
+
+    return $blockedData;
+  }
+
 }

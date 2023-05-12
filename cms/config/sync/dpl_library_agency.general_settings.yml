@@ -1,1 +1,2 @@
 reservation_sms_notifications_disabled: 0
+threshold_config: '{ "colorThresholds": { "danger": "0", "warning": "6" } }'
