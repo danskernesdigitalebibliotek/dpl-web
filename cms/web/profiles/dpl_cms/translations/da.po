@@ -3,8 +3,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2023-05-12 11:43+0000\n"
-"PO-Revision-Date: 2023-05-12 11:43+0000\n"
+"POT-Creation-Date: 2023-05-15 11:06+0000\n"
+"PO-Revision-Date: 2023-05-15 11:06+0000\n"
 "Last-Translator: NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
 "MIME-Version: 1.0\n"
@@ -1028,6 +1028,63 @@ msgid ""
 "reservations."
 msgstr ""
 
+msgctxt "Favorites list"
+msgid "Choose all renewable"
+msgstr ""
+
+msgctxt "Favorites list"
+msgid "@count materials"
+msgstr ""
+
+msgctxt "Favorites list"
+msgid "Favorites"
+msgstr ""
+
+msgctxt "Favorites list"
+msgid "By"
+msgstr ""
+
+msgctxt "Favorites list"
+msgid "et al"
+msgstr ""
+
+msgctxt "Favorites list"
+msgid "show more"
+msgstr ""
+
+msgctxt "Favorites list"
+msgid "Showing @itemsShown out of @hitcount results"
+msgstr ""
+
+msgctxt "Favorites list"
+msgid "Your favorites list is empty"
+msgstr ""
+
+msgctxt "Favorites list"
+msgid "in series"
+msgstr ""
+
+msgctxt "Favorites list"
+msgid "Number description"
+msgstr ""
+
+msgctxt "Favorites list (aria)"
+msgid "Remove element from favorites list"
+msgstr ""
+
+msgctxt "Favorites list (aria)"
+msgid "Add element to favorites list"
+msgstr ""
+
+msgid "Basic settings"
+msgstr ""
+
+msgid "Page size mobile"
+msgstr ""
+
+msgid "Page size desktop"
+msgstr ""
+
 msgid "Library token"
 msgstr ""
 
@@ -1685,6 +1742,15 @@ msgid "DPL Library Agency"
 msgstr ""
 
 msgid "Module for handling library agency configuration and functionality"
+msgstr ""
+
+msgid "Favorites list settings"
+msgstr ""
+
+msgid "DPL favorites"
+msgstr ""
+
+msgid "Handle the favorites list"
 msgstr ""
 
 msgid "DPL Library Token"
