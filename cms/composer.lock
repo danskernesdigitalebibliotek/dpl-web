@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "5894bc49c0dff7a416d499a52ad2642d",
+    "content-hash": "f1a1fc5137cf39840fd9dac070847115",
     "packages": [
         {
             "name": "amazeeio/drupal_integrations",
@@ -1080,7 +1080,7 @@
             "version": "v1.7.0-rc19",
             "dist": {
                 "type": "zip",
-                "url": "https://github.com/itk-dev/dpl-design-system/releases/download/release-feature%2FCMN-541-recommender-fixes/dist.zip"
+                "url": "https://github.com/danskernesdigitalebibliotek/dpl-design-system/releases/download/release-develop/dist.zip"
             },
             "type": "drupal-library"
         },
@@ -1089,7 +1089,7 @@
             "version": "0.3.0-rc29",
             "dist": {
                 "type": "zip",
-                "url": "https://github.com/itk-dev/dpl-react/releases/download/release-feature%2Ftsx-to-ts-on-mount-files/dist.zip"
+                "url": "https://github.com/danskernesdigitalebibliotek/dpl-react/releases/download/release-develop/dist.zip"
             },
             "require": {
                 "composer/installers": "^1.2.0"
