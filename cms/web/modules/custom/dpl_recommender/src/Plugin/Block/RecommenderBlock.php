@@ -80,8 +80,7 @@ class RecommenderBlock extends BlockBase implements ContainerFactoryPluginInterf
       // Urls.
       'dpl-cms-base-url' => DplReactAppsController::dplCmsBaseUrl(),
       'material-url' => DplReactAppsController::materialUrl(),
-
-      // Texts
+      // Texts.
       'add-to-favorites-aria-label-text' => $this->t("Add element to favorites list", [], ['context' => 'Recommender (Aria)']),
       'empty-recommender-search-config' => $recommenderSettings->get('search_text'),
       'material-and-author-text' => $this->t("and", [], ['context' => 'Recommender']),
