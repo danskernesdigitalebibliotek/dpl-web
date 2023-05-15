@@ -66,7 +66,6 @@ class DashboardBlock extends BlockBase implements ContainerFactoryPluginInterfac
    *   The app render array.
    */
   public function build(): array {
-    $loanListSettings = $this->configFactory->get('dpl_loan_list.settings');
     $dashboardSettings = $this->configFactory->get('dashboard.settings');
     $generalSettings = $this->configFactory->get('dpl_library_agency.general_settings');
 
@@ -126,13 +125,13 @@ class DashboardBlock extends BlockBase implements ContainerFactoryPluginInterfac
       'warning-icon-alt-text' => $this->t("warningIconAltText", [], ['context' => 'Dashboard']),
       'material-and-author-text' => $this->t("and", [], ['context' => 'Dashboard']),
       'material-by-author-text' => $this->t("By", [], ['context' => 'Dashboard']),
-      'ready-for-loan-counter-label-text'=> $this->t("Ready", [], ['context' => 'Dashboard']),
-      'group-modal-due-date-aria-description-text'=> $this->t("This modal groups loans after due date and makes it possible to renew said loans", [], ['context' => 'Dashboard']),
-      'group-modal-due-date-renew-loan-close-modal-aria-label-text'=> $this->t("Close renew loans modal", [], ['context' => 'Dashboard']),
-      'still-in-queue-modal-aria-description-text'=> $this->t("This modal shows materials that are still in queue", [], ['context' => 'Dashboard']),
-      'ready-for-loan-modal-aria-description-text'=> $this->t("This modal shows materials that are ready for loan", [], ['context' => 'Dashboard']),
-      'ready-to-loan-close-modal-aria-label-text'=> $this->t("Close ready to loan details modal", [], ['context' => 'Dashboard']),
-      'still-in-queue-close-modal-aria-label-text'=> $this->t("Close still in queue details modal", [], ['context' => 'Dashboard']),
+      'ready-for-loan-counter-label-text' => $this->t("Ready", [], ['context' => 'Dashboard']),
+      'group-modal-due-date-aria-description-text' => $this->t("This modal groups loans after due date and makes it possible to renew said loans", [], ['context' => 'Dashboard']),
+      'group-modal-due-date-renew-loan-close-modal-aria-label-text' => $this->t("Close renew loans modal", [], ['context' => 'Dashboard']),
+      'still-in-queue-modal-aria-description-text' => $this->t("This modal shows materials that are still in queue", [], ['context' => 'Dashboard']),
+      'ready-for-loan-modal-aria-description-text' => $this->t("This modal shows materials that are ready for loan", [], ['context' => 'Dashboard']),
+      'ready-to-loan-close-modal-aria-label-text' => $this->t("Close ready to loan details modal", [], ['context' => 'Dashboard']),
+      'still-in-queue-close-modal-aria-label-text' => $this->t("Close still in queue details modal", [], ['context' => 'Dashboard']),
     ] + DplReactAppsController::externalApiBaseUrls();
 
     return [
