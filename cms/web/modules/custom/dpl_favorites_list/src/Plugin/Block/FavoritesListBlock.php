@@ -90,7 +90,7 @@ class FavoritesListBlock extends BlockBase implements ContainerFactoryPluginInte
       "favorites-list-materials-text" => $this->t("@count materials", [], ['context' => 'Favorites list']),
       "favorites-list-header-text" => $this->t("Favorites", [], ['context' => 'Favorites list']),
       "by-author-text" => $this->t("By", [], ['context' => 'Favorites list']),
-      "et-al-text" => $this->t("...", [], ['context' => 'Favorites list']),
+      "et-al-text" => $this->t("et al", [], ['context' => 'Favorites list']),
       "show-more-text" => $this->t("show more", [], ['context' => 'Favorites list']),
       "result-pager-status-text" => $this->t("Showing @itemsShown out of @hitcount results", [], ['context' => 'Favorites list']),
       "favorites-list-empty-text" => $this->t("Your favorites list is empty", [], ['context' => 'Favorites list']),
