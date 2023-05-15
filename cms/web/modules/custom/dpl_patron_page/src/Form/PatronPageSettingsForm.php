@@ -45,14 +45,14 @@ class PatronPageSettingsForm extends ConfigFormBase {
     ];
 
     $form['settings']['delete_patron_url'] = [
-      '#type' => 'textfield',
+      '#type' => 'url',
       '#title' => $this->t('Delete patron link'),
       '#description' => $this->t('Link to a page where it is possible to delete patron'),
       '#default_value' => $config->get('delete_patron_url') ?? '',
     ];
 
     $form['settings']['always_available_ereolen'] = [
-      '#type' => 'textfield',
+      '#type' => 'url',
       '#title' => $this->t('Ereolen always available'),
       '#default_value' => $config->get('always_available_ereolen') ?? '',
     ];
@@ -74,21 +74,6 @@ class PatronPageSettingsForm extends ConfigFormBase {
     ];
 
     return parent::buildForm($form, $form_state);
-  }
-
-  /**
-   * {@inheritdoc}
-   */
-  public function validateForm(array &$form, FormStateInterface $form_state): void {
-    $feesUrl = $form_state->getValue('delete_patron_url');
-    if (!filter_var($feesUrl, FILTER_VALIDATE_URL)) {
-      $form_state->setErrorByName('delete_patron_url', $this->t('The url "%url" is not a valid URL.', ['%url' => $feesUrl]));
-    }
-
-    $materialUrl = $form_state->getValue('always_available_ereolen');
-    if (!filter_var($materialUrl, FILTER_VALIDATE_URL)) {
-      $form_state->setErrorByName('always_available_ereolen', $this->t('The url "%url" is not a valid URL.', ['%url' => $materialUrl]));
-    }
   }
 
   /**
