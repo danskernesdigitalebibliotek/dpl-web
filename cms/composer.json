@@ -20,7 +20,7 @@
                 "version": "0.3.0-rc40",
                 "type": "drupal-library",
                 "dist": {
-                    "url": "https://github.com/itk-dev/dpl-react/releases/download/release-fix%2Fremoving-zeros-from-menu/dist.zip",
+                    "url": "https://github.com/danskernesdigitalebibliotek/dpl-react/releases/download/release-develop/dist.zip",
                     "type": "zip"
                 },
                 "require": {
@@ -35,7 +35,7 @@
                 "type": "drupal-library",
                 "version": "v1.7.0-rc19",
                 "dist": {
-                    "url": "https://github.com/itk-dev/dpl-design-system/releases/download/release-feature%2F5374-dashboard-page-styling/dist.zip",
+                    "url": "https://github.com/danskernesdigitalebibliotek/dpl-design-system/releases/download/release-develop/dist.zip",
                     "type": "zip"
                 }
             }
