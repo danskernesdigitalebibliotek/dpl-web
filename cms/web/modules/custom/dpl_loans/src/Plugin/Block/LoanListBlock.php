@@ -75,7 +75,7 @@ class LoanListBlock extends BlockBase implements ContainerFactoryPluginInterface
    */
   public function getThresholdConfig(): string {
     $generalSettings = $this->configFactory->get('dpl_library_agency.general_settings');
-    return $generalSettings->get('threshold_config');
+    return $generalSettings->get('threshold_config') ?? "{ 'colorThresholds': { 'danger': '0', 'warning': '6' } }";
   }
 
   /**
@@ -164,7 +164,7 @@ class LoanListBlock extends BlockBase implements ContainerFactoryPluginInterface
       'result-pager-status-text' => $this->t("Showing @itemsShown out of @hitcount loans", [], ['context' => 'Loan list']),
       'show-more-text' => $this->t("show more", [], ['context' => 'Loan list']),
       'group-modal-go-to-material-aria-label-text' => $this->t("Go to @label material details", [], ['context' => 'Loan list (Aria)']),
-    ] + DplReactAppsController::externalApiBaseUrls();
+    ] + DplReactAppsController::externalApiBaseUrls() + DplReactAppsController::getBlockedSettings();
 
     return [
       '#theme' => 'dpl_react_app',

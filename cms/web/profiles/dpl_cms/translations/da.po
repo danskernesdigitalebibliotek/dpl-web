@@ -3,8 +3,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2023-05-11 12:44+0000\n"
-"PO-Revision-Date: 2023-05-11 12:44+0000\n"
+"POT-Creation-Date: 2023-05-15 11:06+0000\n"
+"PO-Revision-Date: 2023-05-15 11:06+0000\n"
 "Last-Translator: NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
 "MIME-Version: 1.0\n"
@@ -654,6 +654,70 @@ msgctxt "Work Page"
 msgid "You have borrowed"
 msgstr ""
 
+msgctxt "Blocked user"
+msgid "Blocked patron d title text"
+msgstr ""
+
+msgctxt "Blocked user"
+msgid "Blocked patron d body text"
+msgstr ""
+
+msgctxt "Blocked user"
+msgid "Blocked patron s title text"
+msgstr ""
+
+msgctxt "Blocked user"
+msgid "Blocked patron s body text"
+msgstr ""
+
+msgctxt "Blocked user"
+msgid "Blocked patron f title text"
+msgstr ""
+
+msgctxt "Blocked user"
+msgid "Blocked patron f body text"
+msgstr ""
+
+msgctxt "Blocked user"
+msgid "You have exceeded your fee limit"
+msgstr ""
+
+msgctxt "Blocked user"
+msgid ""
+"You are therefore not able to borrow or reserve materials from the "
+"library"
+msgstr ""
+
+msgctxt "Blocked user"
+msgid "Your user is blocked"
+msgstr ""
+
+msgctxt "Blocked user"
+msgid ""
+"You therefore cannot reserve, borrow or renew loans. Please contact "
+"the library for further information"
+msgstr ""
+
+msgctxt "Blocked user"
+msgid "Blocked reason O modal title"
+msgstr ""
+
+msgctxt "Blocked user"
+msgid "Blocked patron o body text"
+msgstr ""
+
+msgctxt "Blocked user"
+msgid "Pay your fees here"
+msgstr ""
+
+msgctxt "Blocked user (Aria)"
+msgid "Close blocked patron modal"
+msgstr ""
+
+msgctxt "Blocked user (Aria)"
+msgid "This modal alerts you, that your patron has been blocked"
+msgstr ""
+
 msgctxt "Search Header"
 msgid "Search button"
 msgstr ""
@@ -867,6 +931,18 @@ msgid "The url \"%url\" is not a valid URL."
 msgstr ""
 
 msgctxt "Library Agency Configuration"
+msgid "Fee page"
+msgstr ""
+
+msgctxt "Loan list (settings)"
+msgid "Fee page url"
+msgstr ""
+
+msgctxt "Loan list (settings)"
+msgid "The link to the relevant fee page"
+msgstr ""
+
+msgctxt "Library Agency Configuration"
 msgid "Reservations"
 msgstr ""
 
@@ -892,6 +968,21 @@ msgstr ""
 
 msgctxt "Library Agency Configuration"
 msgid "Pause reservation start date"
+msgstr ""
+
+msgid "Blocked user"
+msgstr ""
+
+msgid "Redirect blocked user link"
+msgstr ""
+
+msgid "The link to redirect the blocked user to"
+msgstr ""
+
+msgid "Blocked user link for modal"
+msgstr ""
+
+msgid "If a user has blocked status e, this link appears in the modal"
 msgstr ""
 
 msgctxt "Library Agency Configuration"
@@ -937,8 +1028,61 @@ msgid ""
 "reservations."
 msgstr ""
 
-msgctxt "Library Agency Configuration"
-msgid "The url \"%url\" is not a valid URL."
+msgctxt "Favorites list"
+msgid "Choose all renewable"
+msgstr ""
+
+msgctxt "Favorites list"
+msgid "@count materials"
+msgstr ""
+
+msgctxt "Favorites list"
+msgid "Favorites"
+msgstr ""
+
+msgctxt "Favorites list"
+msgid "By"
+msgstr ""
+
+msgctxt "Favorites list"
+msgid "et al"
+msgstr ""
+
+msgctxt "Favorites list"
+msgid "show more"
+msgstr ""
+
+msgctxt "Favorites list"
+msgid "Showing @itemsShown out of @hitcount results"
+msgstr ""
+
+msgctxt "Favorites list"
+msgid "Your favorites list is empty"
+msgstr ""
+
+msgctxt "Favorites list"
+msgid "in series"
+msgstr ""
+
+msgctxt "Favorites list"
+msgid "Number description"
+msgstr ""
+
+msgctxt "Favorites list (aria)"
+msgid "Remove element from favorites list"
+msgstr ""
+
+msgctxt "Favorites list (aria)"
+msgid "Add element to favorites list"
+msgstr ""
+
+msgid "Basic settings"
+msgstr ""
+
+msgid "Page size mobile"
+msgstr ""
+
+msgid "Page size desktop"
 msgstr ""
 
 msgid "Library token"
@@ -1168,14 +1312,6 @@ msgid "Basic settings"
 msgstr ""
 
 msgctxt "Loan list (settings)"
-msgid "Fee page url"
-msgstr ""
-
-msgctxt "Loan list (settings)"
-msgid "The link to the relevant fee page"
-msgstr ""
-
-msgctxt "Loan list (settings)"
 msgid "Material overdue url"
 msgstr ""
 
@@ -1189,10 +1325,6 @@ msgstr ""
 
 msgctxt "Loan list (settings)"
 msgid "Page size desktop"
-msgstr ""
-
-msgctxt "Loan list (settings)"
-msgid "The url \"%url\" is not a valid URL."
 msgstr ""
 
 msgctxt "Reservation list"
@@ -1610,6 +1742,15 @@ msgid "DPL Library Agency"
 msgstr ""
 
 msgid "Module for handling library agency configuration and functionality"
+msgstr ""
+
+msgid "Favorites list settings"
+msgstr ""
+
+msgid "DPL favorites"
+msgstr ""
+
+msgid "Handle the favorites list"
 msgstr ""
 
 msgid "DPL Library Token"
