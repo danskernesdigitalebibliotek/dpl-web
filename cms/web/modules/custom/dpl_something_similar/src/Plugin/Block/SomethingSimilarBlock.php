@@ -78,14 +78,15 @@ class SomethingSimilarBlock extends BlockBase implements ContainerFactoryPluginI
       // Urls.
       'dpl-cms-base-url' => DplReactAppsController::dplCmsBaseUrl(),
       'material-url' => DplReactAppsController::materialUrl(),
-      'something-similar-title-text' => $this->t("Other materials", [], ['context' => 'Something similar']),
-      'material-by-author-text' => $this->t("By", [], ['context' => 'Something similar']),
+      'faust' => self::faustFromUrl(),
+      // Texts.
+      'add-to-favorites-aria-label-text' => $this->t("Add element to favorites list", [], ['context' => 'Something similar (Aria)']),
       'material-and-author-text' => $this->t("and", [], ['context' => 'Something similar']),
+      'material-by-author-text' => $this->t("By", [], ['context' => 'Something similar']),
+      'remove-from-favorites-aria-label-text' => $this->t("Remove element from favorites list", [], ['context' => 'Something similar (Aria)']),
       'something-similar-by-the-same-author-text' => $this->t("By the same author", [], ['context' => 'Something similar']),
       'something-similar-something-similar-author-text' => $this->t("Something similar", [], ['context' => 'Something similar']),
-      'add-to-favorites-aria-label-text' => $this->t("Add element to favorites list", [], ['context' => 'Something similar (Aria)']),
-      'remove-from-favorites-aria-label-text' => $this->t("Remove element from favorites list", [], ['context' => 'Something similar (Aria)']),
-      'faust' => self::faustFromUrl(),
+      'something-similar-title-text' => $this->t("Other materials", [], ['context' => 'Something similar']),
     ] + DplReactAppsController::externalApiBaseUrls();
 
     return [
