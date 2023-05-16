@@ -93,7 +93,7 @@ class PatronPageBlock extends BlockBase implements ContainerFactoryPluginInterfa
 
     $data = [
       // Configuration.
-      // TODO: Write service for getting branches.
+      // @todo write service for getting branches.
       'blacklisted-pickup-branches-config' => DplReactAppsController::buildBranchesListProp($this->branchSettings->getExcludedReservationBranches()),
       'branches-config' => DplReactAppsController::buildBranchesJsonProp($this->branchRepository->getBranches()),
       'pincode-length-min-config' => $patron_page_settings->get('pincode_length_min'),
