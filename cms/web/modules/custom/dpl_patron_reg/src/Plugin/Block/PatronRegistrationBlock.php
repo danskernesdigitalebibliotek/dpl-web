@@ -118,8 +118,6 @@ class PatronRegistrationBlock extends BlockBase implements ContainerFactoryPlugi
     $config = $this->configFactory->get('dpl_patron_reg.settings');
 
     $userToken = $this->user_token_provider->getAccessToken()?->token;
-    // @todo This does not exist, it is in another pr, perhaps a separate pr or
-    // we wait?
     $patron_page_settings = $this->configFactory->get('patron_page.settings');
 
     $data = [
@@ -129,38 +127,37 @@ class PatronRegistrationBlock extends BlockBase implements ContainerFactoryPlugi
       'min-age-config' => $config->get('age_limit') ?? '18',
       'redirect-on-user-created-url' => $config->get('redirect_on_user_created_url'),
       'user-token' => $userToken,
-      // @todo Connected to todo in l118.
-      // 'pincode-length-min-config' => $patron_page_settings->get('pincode_length_min'),
-      // 'pincode-length-max-config' => $patron_page_settings->get('pincode_length_max'),
+      'pincode-length-min-config' => $patron_page_settings->get('pincode_length_min'),
+      'pincode-length-max-config' => $patron_page_settings->get('pincode_length_max'),
       'pincode-length-min-config' => '5',
       'pincode-length-max-config' => '5',
 
       // Texts.
-      'pickup-branches-dropdown-label-text' => $this->t("Choose pickup branch", [], ['context' => 'Create patron']),
-      'patron-page-change-pincode-header-text' => $this->t("Pincode", [], ['context' => 'Create patron']),
-      'pickup-branches-dropdown-nothing-selected-text' => $this->t("Nothing selected", [], ['context' => 'Create patron']),
-      'patron-page-change-pincode-body-text' => $this->t("Change current pin by entering a new pin and saving", [], ['context' => 'Create patron']),
-      'patron-page-pincode-label-text' => $this->t("New pin", [], ['context' => 'Create patron']),
-      'patron-page-confirm-pincode-label-text' => $this->t("Confirm new pin", [], ['context' => 'Create patron']),
-      'patron-contact-name-label-text' => $this->t("Name", [], ['context' => 'Create patron']),
-      'patron-page-pincode-too-short-validation-text' => $this->t("The pincode should be minimum @pincodeLengthMin and maximum @pincodeLengthMax characters long", [], ['context' => 'Create patron']),
-      'patron-page-pincodes-not-the-same-text' => $this->t("The pincodes are not the same", [], ['context' => 'Create patron']),
-      'patron-contact-phone-label-text' => $this->t("Phone number", [], ['context' => 'Create patron']),
+      'patron-contact-email-checkbox-text' => $this->t("Receive emails about your loans, reservations, and so forth", [], ['context' => 'Create patron']),
+      'patron-contact-email-label-text' => $this->t("E-mail", [], ['context' => 'Create patron']),
       'patron-contact-info-body-text' => $this->t("", [], ['context' => 'Create patron']),
       'patron-contact-info-header-text' => $this->t("", [], ['context' => 'Create patron']),
+      'patron-contact-name-label-text' => $this->t("Name", [], ['context' => 'Create patron']),
       'patron-contact-phone-checkbox-text' => $this->t("Receive text messages about your loans, reservations, and so forth", [], ['context' => 'Create patron']),
-      'patron-contact-email-label-text' => $this->t("E-mail", [], ['context' => 'Create patron']),
-      'patron-contact-email-checkbox-text' => $this->t("Receive emails about your loans, reservations, and so forth", [], ['context' => 'Create patron']),
+      'patron-contact-phone-label-text' => $this->t("Phone number", [], ['context' => 'Create patron']),
+      'patron-page-change-pincode-body-text' => $this->t("Change current pin by entering a new pin and saving", [], ['context' => 'Create patron']),
+      'patron-page-change-pincode-header-text' => $this->t("Pincode", [], ['context' => 'Create patron']),
+      'patron-page-confirm-pincode-label-text' => $this->t("Confirm new pin", [], ['context' => 'Create patron']),
+      'patron-page-pincode-label-text' => $this->t("New pin", [], ['context' => 'Create patron']),
+      'patron-page-pincode-too-short-validation-text' => $this->t("The pincode should be minimum @pincodeLengthMin and maximum @pincodeLengthMax characters long", [], ['context' => 'Create patron']),
+      'patron-page-pincodes-not-the-same-text' => $this->t("The pincodes are not the same", [], ['context' => 'Create patron']),
+      'pickup-branches-dropdown-label-text' => $this->t("Choose pickup branch", [], ['context' => 'Create patron']),
+      'pickup-branches-dropdown-nothing-selected-text' => $this->t("Nothing selected", [], ['context' => 'Create patron']),
 
       // @todo Add strings to this translations.
-      'create-patron-change-pickup-header-text' => $this->t("", [], ['context' => 'Create patron']),
       'create-patron-change-pickup-body-text' => $this->t("", [], ['context' => 'Create patron']),
-
-      'create-patron-header-text' => $this->t("Register as patron", [], ['context' => 'Create patron']),
-      'create-patron-invalid-ssn-header-text' => $this->t("Invalid SSN", [], ['context' => 'Create patron']),
-      'create-patron-invalid-ssn-body-text' => $this->t("This SSN is invalid", [], ['context' => 'Create patron']),
-      'create-patron-confirm-button-text' => $this->t("Confirm", [], ['context' => 'Create patron']),
+      'create-patron-change-pickup-header-text' => $this->t("", [], ['context' => 'Create patron']),
+      
       'create-patron-cancel-button-text' => $this->t("Cancel", [], ['context' => 'Create patron']),
+      'create-patron-confirm-button-text' => $this->t("Confirm", [], ['context' => 'Create patron']),
+      'create-patron-header-text' => $this->t("Register as patron", [], ['context' => 'Create patron']),
+      'create-patron-invalid-ssn-body-text' => $this->t("This SSN is invalid", [], ['context' => 'Create patron']),
+      'create-patron-invalid-ssn-header-text' => $this->t("Invalid SSN", [], ['context' => 'Create patron']),
     ] + DplReactAppsController::externalApiBaseUrls();
 
     return [
