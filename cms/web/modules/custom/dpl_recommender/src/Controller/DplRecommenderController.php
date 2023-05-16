@@ -56,6 +56,7 @@ class DplRecommenderController extends ControllerBase {
     /** @var \Drupal\dpl_recommender\Plugin\Block\RecommenderBlock $plugin_block */
     $plugin_block = $this->blockManager->createInstance('dpl_recommender_block', $config);
 
+    // @todo create service for access check.
     $access_result = $plugin_block->access($this->currentUser());
     if (is_object($access_result) && $access_result->isForbidden() || is_bool($access_result) && !$access_result) {
       throw new AccessDeniedHttpException();
