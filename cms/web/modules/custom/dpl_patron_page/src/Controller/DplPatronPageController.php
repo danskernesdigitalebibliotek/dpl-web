@@ -54,6 +54,7 @@ class DplPatronPageController extends ControllerBase {
     /** @var \Drupal\dpl_patron_page\Plugin\Block\PatronPageBlock $plugin_block */
     $plugin_block = $this->blockManager->createInstance('dpl_patron_page_block', []);
 
+    // @todo add a service for access check.
     $access_result = $plugin_block->access($this->currentUser());
     if (is_object($access_result) && $access_result->isForbidden() || is_bool($access_result) && !$access_result) {
       throw new AccessDeniedHttpException();
