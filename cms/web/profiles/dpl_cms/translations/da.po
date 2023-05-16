@@ -3,8 +3,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2023-05-15 11:06+0000\n"
-"PO-Revision-Date: 2023-05-15 11:06+0000\n"
+"POT-Creation-Date: 2023-05-16 11:16+0000\n"
+"PO-Revision-Date: 2023-05-16 11:16+0000\n"
 "Last-Translator: NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
 "MIME-Version: 1.0\n"
@@ -1096,6 +1096,236 @@ msgid ""
 "new token."
 msgstr ""
 
+msgctxt "Dashboard"
+msgid "Select all"
+msgstr ""
+
+msgctxt "Dashboard"
+msgid "Number @count in line"
+msgstr ""
+
+msgctxt "Dashboard"
+msgid "Digital"
+msgstr ""
+
+msgctxt "Dashboard"
+msgid "Renewable (@count)"
+msgstr ""
+
+msgctxt "Dashboard"
+msgid "Choose all renewable"
+msgstr ""
+
+msgctxt "Dashboard"
+msgid ""
+"This modal groups loans after due date and makes it possible to renew "
+"said loans"
+msgstr ""
+
+msgctxt "Dashboard"
+msgid "Due date @date"
+msgstr ""
+
+msgctxt "Dashboard"
+msgid "Read more about fees"
+msgstr ""
+
+msgctxt "Dashboard"
+msgid "To be returned @date"
+msgstr ""
+
+msgctxt "Dashboard"
+msgid "Close renew loans modal"
+msgstr ""
+
+msgctxt "Dashboard"
+msgid ""
+"The due date of return is exceeded, therefore you will be charged a "
+"fee, when the item is returned"
+msgstr ""
+
+msgctxt "Dashboard"
+msgid "Go to material details"
+msgstr ""
+
+msgctxt "Dashboard"
+msgid ""
+"The item has been lent to you by another library and renewal is "
+"therefore conditional of the acceptance by that library"
+msgstr ""
+
+msgctxt "Dashboard"
+msgid "The item cannot be renewed further"
+msgstr ""
+
+msgctxt "Dashboard"
+msgid "The item is reserved by another patron"
+msgstr ""
+
+msgctxt "Dashboard"
+msgid "Can be returned to all branches of (library) libraries"
+msgstr ""
+
+msgctxt "Dashboard"
+msgid "Intermediates"
+msgstr ""
+
+msgctxt "Dashboard"
+msgid "days"
+msgstr ""
+
+msgctxt "Dashboard"
+msgid "Longer return time"
+msgstr ""
+
+msgctxt "Dashboard"
+msgid "Returned too late"
+msgstr ""
+
+msgctxt "Dashboard"
+msgid "To be returned soon"
+msgstr ""
+
+msgctxt "Dashboard"
+msgid "and"
+msgstr ""
+
+msgctxt "Dashboard"
+msgid "By"
+msgstr ""
+
+msgctxt "Dashboard"
+msgid "At the moment, you have 0 physical loans"
+msgstr ""
+
+msgctxt "Dashboard"
+msgid "At the moment, you have 0 reservations"
+msgstr ""
+
+msgctxt "Dashboard"
+msgid "Read more"
+msgstr ""
+
+msgctxt "Dashboard"
+msgid "Physical loans"
+msgstr ""
+
+msgctxt "Dashboard"
+msgid "Physical"
+msgstr ""
+
+msgctxt "Dashboard"
+msgid "Pick up before"
+msgstr ""
+
+msgctxt "Dashboard"
+msgid "Audiobook"
+msgstr ""
+
+msgctxt "Dashboard"
+msgid "E-book"
+msgstr ""
+
+msgctxt "Dashboard"
+msgid "Podcast"
+msgstr ""
+
+msgctxt "Dashboard"
+msgid "Ready"
+msgstr ""
+
+msgctxt "Dashboard"
+msgid "This modal shows materials that are ready for loan"
+msgstr ""
+
+msgctxt "Dashboard"
+msgid "Ready for loan"
+msgstr ""
+
+msgctxt "Dashboard"
+msgid "Close ready to loan details modal"
+msgstr ""
+
+msgctxt "Dashboard"
+msgid "Remove reservations"
+msgstr ""
+
+msgctxt "Dashboard"
+msgid "Ready for you"
+msgstr ""
+
+msgctxt "Dashboard"
+msgid "Still in queue"
+msgstr ""
+
+msgctxt "Dashboard"
+msgid "Reservations"
+msgstr ""
+
+msgctxt "Dashboard"
+msgid "Showing @itemsShown out of @hitcount loans"
+msgstr ""
+
+msgctxt "Dashboard"
+msgid "Close still in queue details modal"
+msgstr ""
+
+msgctxt "Dashboard"
+msgid "This modal shows materials that are still in queue"
+msgstr ""
+
+msgctxt "Dashboard"
+msgid "You owe in total"
+msgstr ""
+
+msgctxt "Dashboard"
+msgid "warningIconAltText"
+msgstr ""
+
+msgctxt "Dashboard"
+msgid "Your profile"
+msgstr ""
+
+msgctxt "Dashboard (settings)"
+msgid "Basic settings"
+msgstr ""
+
+msgctxt "Dashboard (settings)"
+msgid "Fees url"
+msgstr ""
+
+msgctxt "Dashboard (settings)"
+msgid "Pay owed url"
+msgstr ""
+
+msgctxt "Dashboard (settings)"
+msgid "Physical loans url"
+msgstr ""
+
+msgctxt "Dashboard (settings)"
+msgid "Loans overdue url"
+msgstr ""
+
+msgctxt "Dashboard (settings)"
+msgid "Loans soon overdue url"
+msgstr ""
+
+msgctxt "Dashboard (settings)"
+msgid "Loans not overdue url"
+msgstr ""
+
+msgctxt "Dashboard (settings)"
+msgid "Reservations url"
+msgstr ""
+
+msgctxt "Dashboard (settings)"
+msgid "Page size mobile"
+msgstr ""
+
+msgctxt "Dashboard (settings)"
+msgid "Page size desktop"
+msgstr ""
+
 msgctxt "Loan list"
 msgid "Read more about fees"
 msgstr ""
@@ -1757,6 +1987,15 @@ msgid "DPL Library Token"
 msgstr ""
 
 msgid "Handles fetching and storage of a library token"
+msgstr ""
+
+msgid "Dashboard settings"
+msgstr ""
+
+msgid "DPL dashboard"
+msgstr ""
+
+msgid "Handle the user profile dashboard page"
 msgstr ""
 
 msgid "Loans settings"
