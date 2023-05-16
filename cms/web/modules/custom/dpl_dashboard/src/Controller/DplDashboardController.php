@@ -54,6 +54,7 @@ class DplDashboardController extends ControllerBase {
     /** @var \Drupal\dpl_dashboard\Plugin\Block\DashboardBlock $plugin_block */
     $plugin_block = $this->blockManager->createInstance('dpl_dashboard_block', []);
 
+    // TODO: create service for access check.
     // Some blocks might implement access check.
     $access_result = $plugin_block->access($this->currentUser());
     if (is_object($access_result) && $access_result->isForbidden() || is_bool($access_result) && !$access_result) {
