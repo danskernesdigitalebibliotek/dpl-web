@@ -93,8 +93,7 @@ class PatronMenuBlock extends BlockBase implements ContainerFactoryPluginInterfa
       ],
       [
         "name" => $this->t("My list", $context),
-        //"link" => Url::fromRoute('dpl_favorites_list.list', [], ['absolute' => TRUE])->toString()
-        "link" => "",
+        "link" => Url::fromRoute('dpl_favorites_list.list', [], ['absolute' => TRUE])->toString(),
         "dataId" => "20",
       ],
       [
@@ -105,8 +104,7 @@ class PatronMenuBlock extends BlockBase implements ContainerFactoryPluginInterfa
       ],
       [
         "name" => $this->t("My account", $context),
-        //"link" => Url::fromRoute('dpl_dashboard.list', [], ['absolute' => TRUE])->toString()
-        "link" => "",
+        "link" => Url::fromRoute('dpl_dashboard.list', [], ['absolute' => TRUE])->toString(),
         "dataId" => "40",
       ],
     ];
