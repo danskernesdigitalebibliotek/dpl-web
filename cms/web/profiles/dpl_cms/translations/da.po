@@ -3,8 +3,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2023-05-16 11:16+0000\n"
-"PO-Revision-Date: 2023-05-16 11:16+0000\n"
+"POT-Creation-Date: 2023-05-17 10:36+0000\n"
+"PO-Revision-Date: 2023-05-17 10:36+0000\n"
 "Last-Translator: NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
 "MIME-Version: 1.0\n"
@@ -1557,6 +1557,34 @@ msgctxt "Loan list (settings)"
 msgid "Page size desktop"
 msgstr ""
 
+msgctxt "Something similar (Aria)"
+msgid "Add element to favorites list"
+msgstr ""
+
+msgctxt "Something similar"
+msgid "and"
+msgstr ""
+
+msgctxt "Something similar"
+msgid "By"
+msgstr ""
+
+msgctxt "Something similar (Aria)"
+msgid "Remove element from favorites list"
+msgstr ""
+
+msgctxt "Something similar"
+msgid "By the same author"
+msgstr ""
+
+msgctxt "Something similar"
+msgid "Something similar"
+msgstr ""
+
+msgctxt "Something similar"
+msgid "Other materials"
+msgstr ""
+
 msgctxt "Reservation list"
 msgid "Your reservations"
 msgstr ""
@@ -2005,6 +2033,12 @@ msgid "DPL loans"
 msgstr ""
 
 msgid "Handle the user profile loan pages"
+msgstr ""
+
+msgid "DPL something similar"
+msgstr ""
+
+msgid "Something similar component"
 msgstr ""
 
 msgid "Reservations settings"
