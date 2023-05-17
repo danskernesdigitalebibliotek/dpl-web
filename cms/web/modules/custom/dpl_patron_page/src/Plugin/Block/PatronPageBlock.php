@@ -66,10 +66,13 @@ class PatronPageBlock extends BlockBase implements ContainerFactoryPluginInterfa
   /**
    * Checks whether the library has enabled text messages.
    *
-   * @return string
+   * @return bool
    *   True if enabled, false if disabled.
    */
-    return empty($patron_page_settings->get('text_notifications_enabled')) ? 0 : 1;
+  private function textNotificationsEnabled(): bool {
+    $patron_page_settings = $this->configFactory->get('patron_page.settings');
+    return !empty($patron_page_settings->get('text_notifications_enabled'));
+  }
 
   /**
    * {@inheritDoc}
@@ -96,7 +99,7 @@ class PatronPageBlock extends BlockBase implements ContainerFactoryPluginInterfa
       'pincode-length-min-config' => $patron_page_settings->get('pincode_length_min'),
       'pincode-length-max-config' => $patron_page_settings->get('pincode_length_max'),
       'pause-reservation-start-date-config' => $dateConfig,
-      'text-notifications-enabled-config' => $this->textNotificationsEnabled(),
+      'text-notifications-enabled-config' => (int) $this->textNotificationsEnabled(),
 
       // Urls.
       'pause-reservation-info-url' => $general_config->get('pause_reservation_info_url'),
