@@ -3,8 +3,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2023-05-17 10:36+0000\n"
-"PO-Revision-Date: 2023-05-17 10:36+0000\n"
+"POT-Creation-Date: 2023-05-17 11:18+0000\n"
+"PO-Revision-Date: 2023-05-17 11:18+0000\n"
 "Last-Translator: NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
 "MIME-Version: 1.0\n"
@@ -1326,6 +1326,42 @@ msgctxt "Dashboard (settings)"
 msgid "Page size desktop"
 msgstr ""
 
+msgctxt "Recommender (Aria)"
+msgid "Add element to favorites list"
+msgstr ""
+
+msgctxt "Recommender"
+msgid "and"
+msgstr ""
+
+msgctxt "Recommender"
+msgid "By"
+msgstr ""
+
+msgctxt "Recommender"
+msgid "For your inspiration"
+msgstr ""
+
+msgctxt "Recommender"
+msgid "Because you have borrowed @title you may also like"
+msgstr ""
+
+msgctxt "Recommender"
+msgid "Because you have reserved @title you may also like"
+msgstr ""
+
+msgctxt "Recommender (Aria)"
+msgid "Remove element from favorites list"
+msgstr ""
+
+msgctxt "Recommender (settings)"
+msgid "Search text"
+msgstr ""
+
+msgctxt "Recommender (settings)"
+msgid "Search text for recommender when no loan/no reservation"
+msgstr ""
+
 msgctxt "Loan list"
 msgid "Read more about fees"
 msgstr ""
@@ -2024,6 +2060,15 @@ msgid "DPL dashboard"
 msgstr ""
 
 msgid "Handle the user profile dashboard page"
+msgstr ""
+
+msgid "Recommender settings"
+msgstr ""
+
+msgid "DPL recommender"
+msgstr ""
+
+msgid "recommender component"
 msgstr ""
 
 msgid "Loans settings"
