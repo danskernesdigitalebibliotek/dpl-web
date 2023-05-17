@@ -91,20 +91,17 @@ class PatronMenuBlock extends BlockBase implements ContainerFactoryPluginInterfa
       ],
       [
         "name" => $this->t("My list", ["context" => 'Patron menu']),
-        //"link" => Url::fromRoute('dpl_favorites_list.list', [], ['absolute' => TRUE])->toString()
-        "link" => "",
+        "link" => Url::fromRoute('dpl_favorites_list.list', [], ['absolute' => TRUE])->toString(),
         "dataId" => "20",
       ],
       [
         "name" => $this->t("Fees & Replacement costs", ["context" => 'Patron menu']),
-        //"link" => Url::fromRoute('dpl_fees.list', [], ['absolute' => TRUE])->toString()
-        "link" => "",
+        "link" => Url::fromRoute('dpl_fees.list', [], ['absolute' => TRUE])->toString(),
         "dataId" => "30",
       ],
       [
         "name" => $this->t("My account", ["context" => 'Patron menu']),
-        //"link" => Url::fromRoute('dpl_dashboard.list', [], ['absolute' => TRUE])->toString()
-        "link" => "",
+        "link" => Url::fromRoute('dpl_dashboard.list', [], ['absolute' => TRUE])->toString(),
         "dataId" => "40",
       ],
     ];
