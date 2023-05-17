@@ -76,35 +76,35 @@ class PatronMenuBlock extends BlockBase implements ContainerFactoryPluginInterfa
    * @throws \JsonException
    */
   public function build(): array {
-    $context = ["context" => 'Patron menu'];
-
     // Alternative to this menu array here this could be loaded from a drupal
     // generated menu. A place for further improvements.
     $menu = [
       [
-        "name" => $this->t("Loans", $context),
+        "name" => $this->t("Loans", ["context" => 'Patron menu']),
         "link" => Url::fromRoute('dpl_loans.list', [], ['absolute' => TRUE])->toString(),
         "dataId" => "0",
       ],
       [
-        "name" => $this->t("Reservations", $context),
+        "name" => $this->t("Reservations", ["context" => 'Patron menu']),
         "link" => Url::fromRoute('dpl_reservation.list', [], ['absolute' => TRUE])->toString(),
         "dataId" => "10",
       ],
       [
-        "name" => $this->t("My list", $context),
-        "link" => Url::fromRoute('dpl_favorites_list.list', [], ['absolute' => TRUE])->toString(),
+        "name" => $this->t("My list", ["context" => 'Patron menu']),
+        //"link" => Url::fromRoute('dpl_favorites_list.list', [], ['absolute' => TRUE])->toString()
+        "link" => "",
         "dataId" => "20",
       ],
       [
-        "name" => $this->t("Fees & Replacement costs", $context),
+        "name" => $this->t("Fees & Replacement costs", ["context" => 'Patron menu']),
         //"link" => Url::fromRoute('dpl_fees.list', [], ['absolute' => TRUE])->toString()
         "link" => "",
         "dataId" => "30",
       ],
       [
-        "name" => $this->t("My account", $context),
-        "link" => Url::fromRoute('dpl_dashboard.list', [], ['absolute' => TRUE])->toString(),
+        "name" => $this->t("My account", ["context" => 'Patron menu']),
+        //"link" => Url::fromRoute('dpl_dashboard.list', [], ['absolute' => TRUE])->toString()
+        "link" => "",
         "dataId" => "40",
       ],
     ];
@@ -113,8 +113,6 @@ class PatronMenuBlock extends BlockBase implements ContainerFactoryPluginInterfa
       // Config.
       "threshold-config" => $this->configFactory->get('dpl_library_agency.general_settings')->get('threshold_config'),
       "menu-navigation-data-config" => json_encode($menu, JSON_THROW_ON_ERROR),
-      "page-size-desktop" => "25",
-      "page-size-mobile" => "25",
       // Added in THEME_preprocess_dpl_react_app__menu to use the theme defined
       // icon.
       "profile_svg" => '',
@@ -125,17 +123,20 @@ class PatronMenuBlock extends BlockBase implements ContainerFactoryPluginInterfa
       "menu-sign-up-url" => '#', //Url::fromRoute('dpl_patron_reg.information', [], ['absolute' => TRUE])->toString(),
 
       // Texts.
-      "menu-view-your-profile-text" => $this->t("My Account", [], $context),
-      "menu-notification-loans-expired-text" => $this->t("loans expired", [], $context),
-      "menu-notification-loans-expiring-soon-text" => $this->t("loans expiring soon", [], $context),
-      "menu-notification-ready-for-pickup-text" => $this->t("reservations ready for pickup", [], $context),
-      "menu-notification-ready-for-pickup-url" => $this->t("https://unsplash.com/photos/tNJdaBc-r5c", [], $context),
-      "menu-notification-loans-expiring-soon-url" => $this->t("https://unsplash.com/photos/tNJdaBc-r5c", [], $context),
-      "menu-notification-loans-expired-url" => $this->t("https://unsplash.com/photos/tNJdaBc-r5c", [], $context),
-      "menu-view-your-profile-text-url" => $this->t("https://unsplash.com/photos/tNJdaBc-r5c", [], $context),
-      "menu-log-out-text" => $this->t("Log Out", [], $context),
-      "menu-login-text" => $this->t("Log in", [], $context),
-      "menu-sign-up-text" => $this->t("Sign up", [], $context),
+      "menu-notifications-menu-aria-label-text" => $this->t("Notifications menu", [], ["context" => 'Patron menu (Aria)']),
+      "menu-user-icon-aria-label-text" => $this->t("Open user menu", [], ["context" => 'Patron menu (Aria)']),
+      "menu-profile-links-aria-label-text" => $this->t("Profile links", [], ["context" => 'Profile links (Aria)']),
+      "menu-view-your-profile-text" => $this->t("My Account", [], ["context" => 'Patron menu']),
+      "menu-notification-loans-expired-text" => $this->t("Loans expired", [], ["context" => 'Patron menu']),
+      "menu-notification-loans-expiring-soon-text" => $this->t("Loans expiring soon", [], ["context" => 'Patron menu']),
+      "menu-notification-ready-for-pickup-text" => $this->t("Reservations ready for pickup", [], ["context" => 'Patron menu']),
+      "menu-notification-ready-for-pickup-url" => $this->t("https://unsplash.com/photos/tNJdaBc-r5c", [], ["context" => 'Patron menu']),
+      "menu-notification-loans-expiring-soon-url" => $this->t("https://unsplash.com/photos/tNJdaBc-r5c", [], ["context" => 'Patron menu']),
+      "menu-notification-loans-expired-url" => $this->t("https://unsplash.com/photos/tNJdaBc-r5c", [], ["context" => 'Patron menu']),
+      "menu-view-your-profile-text-url" => $this->t("https://unsplash.com/photos/tNJdaBc-r5c", [], ["context" => 'Patron menu']),
+      "menu-log-out-text" => $this->t("Log out", [], ["context" => 'Patron menu']),
+      "menu-login-text" => $this->t("Log in", [], ["context" => 'Patron menu']),
+      "menu-sign-up-text" => $this->t("Sign up", [], ["context" => 'Patron menu']),
     ] + DplReactAppsController::externalApiBaseUrls();
 
     return [
