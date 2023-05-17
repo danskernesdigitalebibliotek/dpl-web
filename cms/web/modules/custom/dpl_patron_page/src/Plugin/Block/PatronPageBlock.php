@@ -69,10 +69,7 @@ class PatronPageBlock extends BlockBase implements ContainerFactoryPluginInterfa
    * @return string
    *   True if enabled, false if disabled.
    */
-  private function textNotificationsEnabled(): string {
-    $patron_page_settings = $this->configFactory->get('patron_page.settings');
-    return empty($patron_page_settings->get('text_notifications_enabled')) ? 'false' : 'true';
-  }
+    return empty($patron_page_settings->get('text_notifications_enabled')) ? 0 : 1;
 
   /**
    * {@inheritDoc}
