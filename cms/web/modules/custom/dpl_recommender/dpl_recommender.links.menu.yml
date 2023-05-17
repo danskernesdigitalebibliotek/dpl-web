@@ -1,0 +1,5 @@
+dpl_recommender.settings_form:
+  title: "Recommender settings"
+  route_name: dpl_recommender.settings
+  description: "Change recommender settings"
+  parent: dpl_library_agency.settings

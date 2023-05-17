@@ -1,0 +1,8 @@
+<?php
+
+/**
+ * @file
+ * Dpl_recommender drupal module file.
+ *
+ * Renders the recommender component.
+ */
