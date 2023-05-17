@@ -13337,6 +13337,7 @@
     "stability-flags": {
         "danskernesdigitalebibliotek/dpl-design-system": 5,
         "danskernesdigitalebibliotek/dpl-react": 5,
+        "drupal/customerror": 10,
         "drupal/default_content": 15,
         "drupal/inline_all_css": 5,
         "drupal/libraries": 10,

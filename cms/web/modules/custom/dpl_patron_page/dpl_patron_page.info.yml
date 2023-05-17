@@ -1,0 +1,9 @@
+name: DPL patron page
+description: Handle the patron page
+package: DPL
+dependencies:
+  - drupal:block
+  - dpl_fbs:dpl_fbs
+  - dpl_publizon:dpl_publizon
+type: module
+core_version_requirement: ^9

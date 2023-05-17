@@ -1,0 +1,8 @@
+<?php
+
+/**
+ * @file
+ * Dpl_patron_page.
+ *
+ * Display patron page (user information page).
+ */
