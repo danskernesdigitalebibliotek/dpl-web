@@ -3,8 +3,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2023-05-17 11:18+0000\n"
-"PO-Revision-Date: 2023-05-17 11:18+0000\n"
+"POT-Creation-Date: 2023-05-17 11:45+0000\n"
+"PO-Revision-Date: 2023-05-17 11:45+0000\n"
 "Last-Translator: NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
 "MIME-Version: 1.0\n"
@@ -918,6 +918,224 @@ msgid ""
 "be loaded from the Mapp server."
 msgstr ""
 
+msgctxt "Patron page (aria)"
+msgid "This modal makes it possible to pause your physical reservations"
+msgstr ""
+
+msgctxt "Patron page"
+msgid "Pause reservations on physical items"
+msgstr ""
+
+msgctxt "Patron page"
+msgid ""
+"Pause your reservations early, since reservations that are already "
+"being processed, will not be paused."
+msgstr ""
+
+msgctxt "Patron page"
+msgid "Close pause reservations modal"
+msgstr ""
+
+msgctxt "Patron page"
+msgid "Pause reservation below inputs text"
+msgstr ""
+
+msgctxt "Patron page"
+msgid "Read more"
+msgstr ""
+
+msgctxt "Patron page"
+msgid "Save"
+msgstr ""
+
+msgctxt "Patron page"
+msgid "Patron profile page"
+msgstr ""
+
+msgctxt "Patron page"
+msgid "BASIC DETAILS"
+msgstr ""
+
+msgctxt "Patron page"
+msgid "Name"
+msgstr ""
+
+msgctxt "Patron page"
+msgid "patron page text fee text"
+msgstr ""
+
+msgctxt "Patron page"
+msgid "Address"
+msgstr ""
+
+msgctxt "Patron page"
+msgid "CONTACT INFORMATION"
+msgstr ""
+
+msgctxt "Patron page"
+msgid "patron page contact info body text"
+msgstr ""
+
+msgctxt "Patron page"
+msgid "Phone number"
+msgstr ""
+
+msgctxt "Patron page"
+msgid "Receive text messages about your loans, reservations, and so forth"
+msgstr ""
+
+msgctxt "Patron page"
+msgid "E-mail"
+msgstr ""
+
+msgctxt "Patron page"
+msgid "Receive emails about your loans, reservations, and so forth"
+msgstr ""
+
+msgctxt "Patron page"
+msgid "DIGITAL LOANS (EREOLEN)"
+msgstr ""
+
+msgctxt "Patron page"
+msgid ""
+"There is a number of materials without limitation to amounts of loans "
+"per month."
+msgstr ""
+
+msgctxt "Patron page"
+msgid "Click here, to see titles always eligible to be loaned"
+msgstr ""
+
+msgctxt "Patron page"
+msgid "Loans per month"
+msgstr ""
+
+msgctxt "Patron page"
+msgid "E-books"
+msgstr ""
+
+msgctxt "Patron page"
+msgid "Audiobooks"
+msgstr ""
+
+msgctxt "Patron page"
+msgid "RESERVATIONS"
+msgstr ""
+
+msgctxt "Patron page"
+msgid "patron page change pickup body text"
+msgstr ""
+
+msgctxt "Patron page"
+msgid "Choose pickup branch"
+msgstr ""
+
+msgctxt "Patron page"
+msgid "Nothing selected"
+msgstr ""
+
+msgctxt "Patron page"
+msgid "Pause physical reservations"
+msgstr ""
+
+msgctxt "Patron page"
+msgid "patron page pause reservations body text"
+msgstr ""
+
+msgctxt "Patron page"
+msgid "Pause your reservations"
+msgstr ""
+
+msgctxt "Patron page (aria)"
+msgid ""
+"This checkbox opens a section where you can put your current "
+"reservations on a pause, when the time period picked has ended, the "
+"reservations will be resumed"
+msgstr ""
+
+msgctxt "Patron page"
+msgid "From"
+msgstr ""
+
+msgctxt "Patron page"
+msgid "To"
+msgstr ""
+
+msgctxt "Patron page"
+msgid "PINCODE"
+msgstr ""
+
+msgctxt "Patron page"
+msgid "Change current pin by entering a new pin and saving"
+msgstr ""
+
+msgctxt "Patron page"
+msgid "New pin"
+msgstr ""
+
+msgctxt "Patron page"
+msgid "Confirm new pin"
+msgstr ""
+
+msgctxt "Patron page"
+msgid "Your pincode was saved"
+msgstr ""
+
+msgctxt "Patron page"
+msgid ""
+"The pincode should be minimum @pincodeLengthMin and maximum "
+"@pincodeLengthMax characters long"
+msgstr ""
+
+msgctxt "Patron page"
+msgid "The pincodes are not the same"
+msgstr ""
+
+msgctxt "Patron page"
+msgid "Do you wish to delete your library profile?"
+msgstr ""
+
+msgctxt "Patron page"
+msgid "Delete your profile"
+msgstr ""
+
+msgctxt "Patron page"
+msgid "You can reserve @countEbooks ebooks and @countAudiobooks audiobooks"
+msgstr ""
+
+msgctxt "Patron page"
+msgid "@this out of @that"
+msgstr ""
+
+msgctxt "Patron page (aria)"
+msgid "You used @this audiobooks out of you quota of @that audiobooks"
+msgstr ""
+
+msgctxt "Patron page (aria)"
+msgid "You used @this ebooks out of you quota of @that ebooks"
+msgstr ""
+
+msgid "Basic settings"
+msgstr ""
+
+msgid "Enable SMS notifications"
+msgstr ""
+
+msgid "Delete patron link"
+msgstr ""
+
+msgid "Link to a page where it is possible to delete patron"
+msgstr ""
+
+msgid "Ereolen always available"
+msgstr ""
+
+msgid "Pincode length (min)"
+msgstr ""
+
+msgid "Pincode length max"
+msgstr ""
+
 msgctxt "Dpl Fbs"
 msgid "Basic settings"
 msgstr ""
@@ -1074,9 +1292,6 @@ msgstr ""
 
 msgctxt "Favorites list (aria)"
 msgid "Add element to favorites list"
-msgstr ""
-
-msgid "Basic settings"
 msgstr ""
 
 msgid "Page size mobile"
@@ -2015,6 +2230,15 @@ msgid "Example content for DPL CMS"
 msgstr ""
 
 msgid "Provides example content for demo sites."
+msgstr ""
+
+msgid "DPL patron page"
+msgstr ""
+
+msgid "Handle the patron page"
+msgstr ""
+
+msgid "Patron page settings"
 msgstr ""
 
 msgid "DPL FBS"
