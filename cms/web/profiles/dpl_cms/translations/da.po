@@ -3,8 +3,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2023-05-19 11:22+0000\n"
-"PO-Revision-Date: 2023-05-19 11:22+0000\n"
+"POT-Creation-Date: 2023-05-22 09:35+0000\n"
+"PO-Revision-Date: 2023-05-22 09:35+0000\n"
 "Last-Translator: NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
 "MIME-Version: 1.0\n"
@@ -1836,6 +1836,35 @@ msgctxt "Something similar"
 msgid "Other materials"
 msgstr ""
 
+msgctxt "dpl_instant_loan"
+msgid "Enabled"
+msgstr ""
+
+msgctxt "dpl_instant_loan"
+msgid "Should materials available for instant loans be promoted to patrons?"
+msgstr ""
+
+msgctxt "dpl_instant_loan"
+msgid "Match String"
+msgstr ""
+
+msgctxt "dpl_instant_loan"
+msgid ""
+"Text used to identify materials which are available for instant loans. "
+"This text must be present in the material group of such materials."
+msgstr ""
+
+msgctxt "dpl_instant_loan"
+msgid "Threshold"
+msgstr ""
+
+msgctxt "dpl_instant_loan"
+msgid ""
+"The minimum number of materials which must be available for instant "
+"loan at a library branch to notify patrons of the option when making "
+"reservations."
+msgstr ""
+
 msgctxt "Reservation list"
 msgid "Your reservations"
 msgstr ""
@@ -2308,6 +2337,15 @@ msgid "DPL something similar"
 msgstr ""
 
 msgid "Something similar component"
+msgstr ""
+
+msgid "Instant Loan"
+msgstr ""
+
+msgid "Supports promoting materials available for instant loans to patrons."
+msgstr ""
+
+msgid "Instant loan settings"
 msgstr ""
 
 msgid "Reservations settings"
