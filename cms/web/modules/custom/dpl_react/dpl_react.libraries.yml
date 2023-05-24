@@ -94,6 +94,18 @@ something-similar:
     - dpl_react/base
     - dpl_react/handler
 
+favorites-list-material-component:
+  remote: https://github.com/danskernesdigitalebibliotek/dpl-react
+  license:
+    name: GNU AFFERO
+    url: https://github.com/danskernesdigitalebibliotek/dpl-react/blob/master/LICENSE
+    gpl-compatible: true
+  js:
+    /libraries/dpl-react/FavoritesListMaterialComponent.js: {}
+  dependencies:
+    - dpl_react/base
+    - dpl_react/handler
+
 reservation-list:
   remote: https://github.com/danskernesdigitalebibliotek/dpl-react
   license:

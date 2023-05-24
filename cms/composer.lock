@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "6aa84451c3a5c93888a92e49752163fe",
+    "content-hash": "41127190273695592550c35e7daf425a",
     "packages": [
         {
             "name": "amazeeio/drupal_integrations",
@@ -1080,7 +1080,7 @@
             "version": "v1.7.0-rc19",
             "dist": {
                 "type": "zip",
-                "url": "https://github.com/danskernesdigitalebibliotek/dpl-design-system/releases/download/release-develop/dist.zip"
+                "url": "https://github.com/itk-dev/dpl-design-system/releases/download/release-feature%2FCMN-577-rename-recommender-to-simple-material/dist.zip"
             },
             "type": "drupal-library"
         },
@@ -1089,7 +1089,7 @@
             "version": "0.3.0-rc29",
             "dist": {
                 "type": "zip",
-                "url": "https://github.com/danskernesdigitalebibliotek/dpl-react/releases/download/release-develop/dist.zip"
+                "url": "https://github.com/itk-dev/dpl-react/releases/download/release-feature%2FCMN-577-favorites-list-material-component/dist.zip"
             },
             "require": {
                 "composer/installers": "^1.2.0"

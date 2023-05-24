@@ -12,6 +12,7 @@ module:
   dpl_library_token: 0
   dpl_loans: 0
   dpl_login: 0
+  dpl_favorites_list_material_component: 0
   dpl_mapp: 0
   dpl_publizon: 0
   dpl_favorites_list: 0
