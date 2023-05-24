@@ -2,8 +2,11 @@
 
 namespace Drupal\dpl_reservations\Form;
 
+use Drupal\Core\Config\ConfigFactoryInterface;
 use Drupal\Core\Form\ConfigFormBase;
 use Drupal\Core\Form\FormStateInterface;
+use Drupal\dpl_react\DplReactConfigInterface;
+use Symfony\Component\DependencyInjection\ContainerInterface;
 
 /**
  * Reservation list setting form.
@@ -11,11 +14,36 @@ use Drupal\Core\Form\FormStateInterface;
 class ReservationListSettingsForm extends ConfigFormBase {
 
   /**
+   * Default constructor.
+   *
+   * @param \Drupal\Core\Config\ConfigFactoryInterface $config_factory
+   *   Config factory.
+   * @param \Drupal\dpl_react\DplReactConfigInterface $configService
+   *   Reservation list configuration object.
+   */
+  public function __construct(
+      ConfigFactoryInterface $config_factory,
+      protected DplReactConfigInterface $configService
+  ) {
+    parent::__construct($config_factory);
+  }
+
+  /**
+   * {@inheritdoc}
+   */
+  public static function create(ContainerInterface $container): self {
+    return new static(
+      $container->get('config.factory'),
+      \Drupal::service('dpl_reservation.settings')
+    );
+  }
+
+  /**
    * {@inheritdoc}
    */
   protected function getEditableConfigNames(): array {
     return [
-      'dpl_reservation_list.settings',
+      $this->configService->getConfigKey(),
     ];
   }
 
@@ -49,7 +77,7 @@ class ReservationListSettingsForm extends ConfigFormBase {
       '#type' => 'textfield',
       '#title' => $this->t('Ereolen link', [], ['context' => 'Reservation list (settings)']),
       '#description' => $this->t('My page in ereolen', [], ['context' => 'Reservation list (settings)']),
-      '#default_value' => $config->get('ereolen_my_page_url') ?? '',
+      '#default_value' => $config->get('ereolen_my_page_url') ?? 'https://ereolen.dk/user/me',
     ];
     $form['settings']['pause_reservation_start_date_config'] = [
       '#type' => 'date',
