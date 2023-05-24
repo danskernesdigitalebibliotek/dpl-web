@@ -3,8 +3,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2023-05-24 07:24+0000\n"
-"PO-Revision-Date: 2023-05-24 07:24+0000\n"
+"POT-Creation-Date: 2023-05-24 12:54+0000\n"
+"PO-Revision-Date: 2023-05-24 12:54+0000\n"
 "Last-Translator: NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
 "MIME-Version: 1.0\n"
@@ -780,6 +780,42 @@ msgstr ""
 
 msgctxt "Search Header"
 msgid "Work"
+msgstr ""
+
+msgctxt "Favorites list material component (aria)"
+msgid "Add element to favorites list"
+msgstr ""
+
+msgctxt "Favorites list material component"
+msgid "Go to My list"
+msgstr ""
+
+msgctxt "Favorites list material component"
+msgid "Your list"
+msgstr ""
+
+msgctxt "Favorites list material component"
+msgid "and"
+msgstr ""
+
+msgctxt "Favorites list material component"
+msgid "By"
+msgstr ""
+
+msgctxt "Favorites list material component (aria)"
+msgid "Remove element from favorites list"
+msgstr ""
+
+msgctxt "Favorites list material component (settings)"
+msgid "Basic settings"
+msgstr ""
+
+msgctxt "Favorites list material component (settings)"
+msgid "Favorites list url"
+msgstr ""
+
+msgctxt "Favorites list material component (settings)"
+msgid "The link to the favorites list"
 msgstr ""
 
 msgid "Adgangsplatformen"
@@ -2195,6 +2231,15 @@ msgid "DPL React Apps"
 msgstr ""
 
 msgid "For integration of dpl_react apps on the site."
+msgstr ""
+
+msgid "DPL favorites list material component"
+msgstr ""
+
+msgid "Handle the favorites list material component pages"
+msgstr ""
+
+msgid "Favorites list material component settings"
 msgstr ""
 
 msgid "DPL Login"
