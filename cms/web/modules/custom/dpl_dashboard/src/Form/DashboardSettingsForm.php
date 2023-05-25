@@ -2,8 +2,11 @@
 
 namespace Drupal\dpl_dashboard\Form;
 
+use Drupal\Core\Config\ConfigFactoryInterface;
 use Drupal\Core\Form\ConfigFormBase;
 use Drupal\Core\Form\FormStateInterface;
+use Drupal\dpl_react\DplReactConfigInterface;
+use Symfony\Component\DependencyInjection\ContainerInterface;
 
 /**
  * Dashboard list setting form.
@@ -11,11 +14,36 @@ use Drupal\Core\Form\FormStateInterface;
 class DashboardSettingsForm extends ConfigFormBase {
 
   /**
+   * Default constructor.
+   *
+   * @param \Drupal\Core\Config\ConfigFactoryInterface $config_factory
+   *   Config factory.
+   * @param \Drupal\dpl_react\DplReactConfigInterface $configService
+   *   Reservation list configuration object.
+   */
+  public function __construct(
+    ConfigFactoryInterface $config_factory,
+    protected DplReactConfigInterface $configService,
+  ) {
+    parent::__construct($config_factory);
+  }
+
+  /**
+   * {@inheritdoc}
+   */
+  public static function create(ContainerInterface $container): self {
+    return new static(
+      $container->get('config.factory'),
+      \Drupal::service('dpl_dashboard.settings')
+    );
+  }
+
+  /**
    * {@inheritdoc}
    */
   protected function getEditableConfigNames(): array {
     return [
-      'dashboard.settings',
+      $this->configService->getConfigKey(),
     ];
   }
 
