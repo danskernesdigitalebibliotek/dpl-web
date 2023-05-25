@@ -310,6 +310,8 @@ class DplReactAppsController extends ControllerBase {
       'ok-button-text' => $this->t('Ok', [], ['context' => 'Work Page']),
       'one-month-text' => $this->t('1 month', [], ['context' => 'Work Page']),
       'one-year-text' => $this->t('1 year', [], ['context' => 'Work Page']),
+      'online-limit-month-audiobook-info-text' => $this->t('You have borrowed @count out of @limit possible e-books this month', [], ['context' => 'Work Page']),
+      'online-limit-month-ebook-info-text' => $this->t('You have borrowed @count out of @limit possible audio-books this month', [], ['context' => 'Work Page']),
       'online-limit-month-info-text' => $this->t('You have borrowed @count out of @limit possible e-books this month', [], ['context' => 'Work Page']),
       'order-digital-copy-button-loading-text' => $this->t('Order digital copy button loading text', [], ['context' => 'Work Page']),
       'order-digital-copy-button-text' => $this->t('Order digital copy', [], ['context' => 'Work Page']),
