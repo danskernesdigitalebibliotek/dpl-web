@@ -80,7 +80,7 @@ class FeesListSettingsForm extends ConfigFormBase {
       '#step' => 1,
     ];
 
-    // TODO Images to be done in future tender.
+    // @todo images to be done in future tender.
     $form['settings']['image'] = [
       '#type' => 'textfield',
       '#title' => $this->t('Payment options image'),

@@ -102,7 +102,7 @@ class FeesListBlock extends BlockBase implements ContainerFactoryPluginInterface
       'plus-x-other-materials-text' => $this->t("+ @amount other materials", [], ['context' => 'Fees list']),
       'item-fee-amount-text' => $this->t("Fee @fee,-", [], ['context' => 'Fees list']),
       'fee-created-text' => $this->t("Fees charged @date", [], ['context' => 'Fees list']),
-      // TODO Images to be done in future tender.
+      // @todo images to be done in future tender.
       'available-payment-types-url' => $feesConfig->get('available_payment_types_url'),
       'payment-overview-url' => $feesConfig->get('payment_overview_url'),
       'view-fees-and-compensation-rates-url' => $feesConfig->get('fees_and_replacement_costs_url'),
