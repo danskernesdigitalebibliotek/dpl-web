@@ -5,7 +5,8 @@
  * Novel Theme.
  */
 
-use Drupal\Component\Render\FormattableMarkup;
+use Drupal\Core\StringTranslation\TranslatableMarkup;
+
 use function Safe\file_get_contents;
 use function Safe\sprintf;
 
@@ -71,7 +72,9 @@ function novel_preprocess_dpl_react_app__search_result(array &$variables): void 
   // The text data prop has already been translated
   // and now we need to replace the placeholder.
   $showing_results_for_text = (
-    new FormattableMarkup($loading_text, ['@query' => $q])
+    // We have already translated the string in the react app.
+    // phpcs:ignore Drupal.Semantics.FunctionT.NotLiteralString
+    new TranslatableMarkup($loading_text, ['@query' => $q])
   )->__toString();
 
   $variables += [
