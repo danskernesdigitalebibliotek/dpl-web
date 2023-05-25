@@ -13,8 +13,8 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
  * Provides user intermediate list.
  *
  * @Block(
- *   id = 'dpl_dashboard_block',
- *   admin_label = 'List user dashboard'
+ *   id = "dpl_dashboard_block",
+ *   admin_label = "List user dashboard"
  * )
  */
 class DashboardBlock extends BlockBase implements ContainerFactoryPluginInterface {
