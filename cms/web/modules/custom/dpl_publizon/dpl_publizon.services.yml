@@ -1,0 +1,4 @@
+services:
+  dpl_publizon.settings:
+    class: Drupal\dpl_publizon\DplPublizonSettings
+    arguments: ["@config.manager"]

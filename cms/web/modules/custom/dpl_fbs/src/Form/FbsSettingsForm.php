@@ -34,7 +34,7 @@ class FbsSettingsForm extends ConfigFormBase {
   public static function create(ContainerInterface $container): self {
     return new static(
       $container->get('config.factory'),
-      \Drupal::service('dpl_loans.settings')
+      \Drupal::service('dpl_fbs.settings')
     );
   }
 
