@@ -5,6 +5,7 @@ namespace Drupal\dpl_patron_page\Controller;
 use Drupal\Core\Block\BlockManagerInterface;
 use Drupal\Core\Controller\ControllerBase;
 use Drupal\Core\Render\RendererInterface;
+use Drupal\dpl_react\DplReactConfigInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
 
@@ -20,10 +21,13 @@ class DplPatronPageController extends ControllerBase {
    *   Drupal block manager.
    * @param \Drupal\Core\Render\RendererInterface $renderer
    *   Drupal renderer service.
+   * @param \Drupal\dpl_react\DplReactConfigInterface $patronPageSettings
+   *   Patron page setttings.
    */
   public function __construct(
     private BlockManagerInterface $blockManager,
-    private RendererInterface $renderer
+    private RendererInterface $renderer,
+    private DplReactConfigInterface $patronPageSettings
   ) {
   }
 
@@ -39,6 +43,7 @@ class DplPatronPageController extends ControllerBase {
     return new static(
       $container->get('plugin.manager.block'),
       $container->get('renderer'),
+      \Drupal::service('dpl_patron_page.settings'),
     );
   }
 
@@ -62,6 +67,7 @@ class DplPatronPageController extends ControllerBase {
 
     $render = $plugin_block->build();
     $this->renderer->addCacheableDependency($render, $plugin_block);
+    $this->renderer->addCacheableDependency($render, $this->patronPageSettings);
 
     return $render;
   }

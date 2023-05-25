@@ -28,8 +28,6 @@ class RecommenderBlock extends BlockBase implements ContainerFactoryPluginInterf
    *   The plugin ID for the plugin instance.
    * @param mixed $plugin_definition
    *   The plugin implementation definition.
-   * @param \Drupal\Core\Config\ConfigFactoryInterface $configFactory
-   *   Drupal config factory to get FBS and Publizon settings.
    * @param \Drupal\dpl_react\DplReactConfigInterface $recommenderSettings
    *   Recommender settings.
    */
@@ -37,8 +35,7 @@ class RecommenderBlock extends BlockBase implements ContainerFactoryPluginInterf
       array $configuration,
       $plugin_id,
       $plugin_definition,
-      protected ConfigFactoryInterface $configFactory,
-      protected DplReactConfigInterface $recommenderSettings
+      private DplReactConfigInterface $recommenderSettings
     ) {
     parent::__construct($configuration, $plugin_id, $plugin_definition);
     $this->configuration = $configuration;
@@ -64,7 +61,6 @@ class RecommenderBlock extends BlockBase implements ContainerFactoryPluginInterf
       $configuration,
       $plugin_id,
       $plugin_definition,
-      $container->get('config.factory'),
       \Drupal::service('recommender.settings')
     );
   }
