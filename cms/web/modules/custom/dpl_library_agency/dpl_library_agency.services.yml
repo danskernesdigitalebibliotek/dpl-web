@@ -37,6 +37,7 @@ services:
       - "@config.manager"
       - "@http_client"
       - "@dpl_library_token.handler"
+      - "@dpl_fbs.settings"
 
   dpl_library_agency.fbs_agency_api:
     class: DanskernesDigitaleBibliotek\FBS\Api\ExternalV1AgencyidApi
