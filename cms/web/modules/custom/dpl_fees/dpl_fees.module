@@ -1,0 +1,8 @@
+<?php
+
+/**
+ * @file
+ * Dpl_fees drupal module file.
+ *
+ * Renders the fees list.
+ */

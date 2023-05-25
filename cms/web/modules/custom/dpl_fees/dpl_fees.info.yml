@@ -1,0 +1,11 @@
+name: DPL Fees
+description: Handle the user profile fees page
+package: DPL
+dependencies:
+  - drupal:block
+  - dpl_fbs:dpl_fbs
+  - dpl_publizon:dpl_publizon
+  - dpl_react:dpl_react
+  - dpl_library_agency:dpl_library_agency
+type: module
+core_version_requirement: ^9

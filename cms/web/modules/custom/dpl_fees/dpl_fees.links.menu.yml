@@ -1,0 +1,11 @@
+dpl_fees.list:
+  title: "Fees"
+  menu_name: user-profile-menu
+  route_name: dpl_fees.list
+  description: "List user fees"
+
+dpl_fees.settings_form:
+  title: "Fees List settings"
+  route_name: dpl_fees.settings
+  description: "Change Fees List Settings"
+  parent: dpl_library_agency.settings
