@@ -5,6 +5,7 @@ namespace Drupal\dpl_favorites_list\Plugin\Block;
 use Drupal\Core\Block\BlockBase;
 use Drupal\Core\Config\ConfigFactoryInterface;
 use Drupal\Core\Plugin\ContainerFactoryPluginInterface;
+use Drupal\dpl_react\DplReactConfigInterface;
 use Drupal\dpl_react_apps\Controller\DplReactAppsController;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Drupal\dpl_library_agency\Branch\BranchRepositoryInterface;
@@ -19,13 +20,6 @@ use Drupal\dpl_library_agency\BranchSettings;
  * )
  */
 class FavoritesListBlock extends BlockBase implements ContainerFactoryPluginInterface {
-
-  /**
-   * Drupal config factory.
-   *
-   * @var \Drupal\Core\Config\ConfigFactoryInterface
-   */
-  private ConfigFactoryInterface $configFactory;
 
   /**
    * FavoritesListBlock constructor.
@@ -43,12 +37,17 @@ class FavoritesListBlock extends BlockBase implements ContainerFactoryPluginInte
    * @param \Drupal\dpl_library_agency\Branch\BranchRepositoryInterface $branchRepository
    *   The branch settings for getting branches.
    */
-  public function __construct(array $configuration, $plugin_id, $plugin_definition, ConfigFactoryInterface $configFactory, protected BranchSettings $branchSettings, protected BranchRepositoryInterface $branchRepository) {
+  public function __construct(
+    array $configuration,
+    $plugin_id,
+    $plugin_definition,
+    private ConfigFactoryInterface $configFactory,
+    private BranchSettings $branchSettings,
+    private BranchRepositoryInterface $branchRepository,
+    private DplReactConfigInterface $favoritesListSettings
+  ) {
     parent::__construct($configuration, $plugin_id, $plugin_definition);
     $this->configuration = $configuration;
-    $this->configFactory = $configFactory;
-    $this->branchSettings = $branchSettings;
-    $this->branchRepository = $branchRepository;
   }
 
   /**
@@ -62,6 +61,7 @@ class FavoritesListBlock extends BlockBase implements ContainerFactoryPluginInte
       $container->get('config.factory'),
       $container->get('dpl_library_agency.branch_settings'),
       $container->get('dpl_library_agency.branch.repository'),
+      \Drupal::service('dpl_favorites_list.settings')
     );
   }
 
@@ -74,7 +74,7 @@ class FavoritesListBlock extends BlockBase implements ContainerFactoryPluginInte
    * @throws \Safe\Exceptions\JsonException
    */
   public function build() {
-    $favoritesListSettings = $this->configFactory->get('favorites_list.settings');
+    $favoritesListSettings = $this->favoritesListSettings->getConfig();
 
     $data = [
       // Branches.
@@ -82,22 +82,22 @@ class FavoritesListBlock extends BlockBase implements ContainerFactoryPluginInte
       'branches-config' => DplReactAppsController::buildBranchesJsonProp($this->branchRepository->getBranches()),
 
       // Page size.
-      "page-size-desktop" => $favoritesListSettings->get('page_size_desktop'),
-      "page-size-mobile" => $favoritesListSettings->get('page_size_mobile'),
+      "page-size-desktop" => $favoritesListSettings['pageSizeDesktop'],
+      "page-size-mobile" => $favoritesListSettings['pageSizeMobile'],
 
       // Texts.
-      'group-modal-checkbox-text' => $this->t("Choose all renewable", [], ['context' => 'Favorites list']),
-      "favorites-list-materials-text" => $this->t("@count materials", [], ['context' => 'Favorites list']),
-      "favorites-list-header-text" => $this->t("Favorites", [], ['context' => 'Favorites list']),
+      "add-to-favorites-aria-label-text" => $this->t("Add element to favorites list", [], ['context' => 'Favorites list (aria)']),
       "by-author-text" => $this->t("By", [], ['context' => 'Favorites list']),
       "et-al-text" => $this->t("et al", [], ['context' => 'Favorites list']),
-      "show-more-text" => $this->t("show more", [], ['context' => 'Favorites list']),
-      "result-pager-status-text" => $this->t("Showing @itemsShown out of @hitcount results", [], ['context' => 'Favorites list']),
       "favorites-list-empty-text" => $this->t("Your favorites list is empty", [], ['context' => 'Favorites list']),
+      "favorites-list-header-text" => $this->t("Favorites", [], ['context' => 'Favorites list']),
+      "favorites-list-materials-text" => $this->t("@count materials", [], ['context' => 'Favorites list']),
       "in-series-text" => $this->t("in series", [], ['context' => 'Favorites list']),
       "number-description-text" => $this->t("Number description", [], ['context' => 'Favorites list']),
       "remove-from-favorites-aria-label-text" => $this->t("Remove element from favorites list", [], ['context' => 'Favorites list (aria)']),
-      "add-to-favorites-aria-label-text" => $this->t("Add element to favorites list", [], ['context' => 'Favorites list (aria)']),
+      "result-pager-status-text" => $this->t("Showing @itemsShown out of @hitcount results", [], ['context' => 'Favorites list']),
+      "show-more-text" => $this->t("show more", [], ['context' => 'Favorites list']),
+      'group-modal-checkbox-text' => $this->t("Choose all renewable", [], ['context' => 'Favorites list']),
     ] + DplReactAppsController::externalApiBaseUrls();
 
     return [
