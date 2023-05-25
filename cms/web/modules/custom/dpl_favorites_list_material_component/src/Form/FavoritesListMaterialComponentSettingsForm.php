@@ -2,8 +2,11 @@
 
 namespace Drupal\dpl_favorites_list_material_component\Form;
 
+use Drupal\Core\Config\ConfigFactoryInterface;
 use Drupal\Core\Form\ConfigFormBase;
 use Drupal\Core\Form\FormStateInterface;
+use Drupal\dpl_react\DplReactConfigInterface;
+use Symfony\Component\DependencyInjection\ContainerInterface;
 
 /**
  * Favorites list material component setting form.
@@ -11,11 +14,35 @@ use Drupal\Core\Form\FormStateInterface;
 class FavoritesListMaterialComponentSettingsForm extends ConfigFormBase {
 
   /**
+   * Default constructor.
+   *
+   * @param \Drupal\Core\Config\ConfigFactoryInterface $config_factory
+   *   Config factory.
+   * @param \Drupal\dpl_react\DplReactConfigInterface $configService
+   *   Reservation list configuration object.
+   */
+  public function __construct(
+    ConfigFactoryInterface $config_factory,
+    protected DplReactConfigInterface $configService,
+  ) {
+    parent::__construct($config_factory);
+  }
+
+  /**
+   * {@inheritdoc}
+   */
+  public static function create(ContainerInterface $container): self {
+    return new static(
+      $container->get('config.factory'),
+      \Drupal::service('dpl_favorites_list_material_component.settings')
+    );
+  }
+  /**
    * {@inheritdoc}
    */
   protected function getEditableConfigNames(): array {
     return [
-      'favorites_list_material_component.settings',
+      $this->configService->getConfigKey(),
     ];
   }
 
