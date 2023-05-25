@@ -19,7 +19,7 @@ class LoanListSettingsForm extends ConfigFormBase {
    * @param \Drupal\Core\Config\ConfigFactoryInterface $config_factory
    *   Config factory.
    * @param \Drupal\dpl_react\DplReactConfigInterface $configService
-   *   Reservation list configuration object.
+   *   Loan list configuration object.
    */
   public function __construct(
     ConfigFactoryInterface $config_factory,
