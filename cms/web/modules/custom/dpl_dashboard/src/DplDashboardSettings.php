@@ -13,7 +13,7 @@ class DplDashboardSettings extends DplReactConfigBase {
    * Gets the configuration key for dashboard settings.
    */
   public function getConfigKey(): string {
-    return 'dashboard.settings';
+    return 'dpl_dashboard.settings';
   }
 
 }

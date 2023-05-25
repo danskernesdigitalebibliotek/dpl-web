@@ -37,6 +37,7 @@ class FavoritesListMaterialComponentSettingsForm extends ConfigFormBase {
       \Drupal::service('dpl_favorites_list_material_component.settings')
     );
   }
+
   /**
    * {@inheritdoc}
    */
@@ -57,7 +58,7 @@ class FavoritesListMaterialComponentSettingsForm extends ConfigFormBase {
    * {@inheritdoc}
    */
   public function buildForm(array $form, FormStateInterface $form_state): array {
-    $config = $this->config('favorites_list_material_component.settings');
+    $config = $this->configService->getConfig();
 
     $form['settings'] = [
       '#type' => 'fieldset',
@@ -69,7 +70,7 @@ class FavoritesListMaterialComponentSettingsForm extends ConfigFormBase {
       '#type' => 'url',
       '#title' => $this->t('Favorites list url', [], ['context' => 'Favorites list material component (settings)']),
       '#description' => $this->t('The link to the favorites list', [], ['context' => 'Favorites list material component (settings)']),
-      '#default_value' => $config->get('favorites_list_url') ?? '',
+      '#default_value' => $config['favoritesListUrl'] ?? '',
     ];
 
     return parent::buildForm($form, $form_state);
@@ -81,8 +82,8 @@ class FavoritesListMaterialComponentSettingsForm extends ConfigFormBase {
   public function submitForm(array &$form, FormStateInterface $form_state): void {
     parent::submitForm($form, $form_state);
 
-    $this->config('favorites_list_material_component.settings')
-      ->set('favorites_list_url', $form_state->getValue('favorites_list_url'))
+    $this->config($this->configService->getConfigKey())
+      ->set('favoritesListUrl', $form_state->getValue('favorites_list_url'))
       ->save();
   }
 

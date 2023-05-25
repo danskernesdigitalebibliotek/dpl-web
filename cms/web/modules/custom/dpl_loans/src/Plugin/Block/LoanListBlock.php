@@ -31,7 +31,7 @@ class LoanListBlock extends BlockBase implements ContainerFactoryPluginInterface
    * @param \Drupal\Core\Config\ConfigFactoryInterface $configFactory
    *   Drupal config factory to get FBS and Publizon settings.
    * @param \Drupal\dpl_react\DplReactConfigInterface $loanSettings
-   *
+   *   Loans settings.
    */
   public function __construct(
     array $configuration,

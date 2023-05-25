@@ -22,7 +22,7 @@ class DplFavoritesListMaterialComponentController extends ControllerBase {
    * @param \Drupal\Core\Render\RendererInterface $renderer
    *   Drupal renderer service.
    * @param \Drupal\dpl_react\DplReactConfigInterface $favoritesListMaterialComponentSettings
-   *   FavoritesListMaterialComponent
+   *   Favorites list material component settings.
    */
   public function __construct(
     private BlockManagerInterface $blockManager,

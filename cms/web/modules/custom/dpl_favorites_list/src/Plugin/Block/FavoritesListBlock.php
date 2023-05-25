@@ -3,7 +3,6 @@
 namespace Drupal\dpl_favorites_list\Plugin\Block;
 
 use Drupal\Core\Block\BlockBase;
-use Drupal\Core\Config\ConfigFactoryInterface;
 use Drupal\Core\Plugin\ContainerFactoryPluginInterface;
 use Drupal\dpl_react\DplReactConfigInterface;
 use Drupal\dpl_react_apps\Controller\DplReactAppsController;
@@ -30,18 +29,17 @@ class FavoritesListBlock extends BlockBase implements ContainerFactoryPluginInte
    *   The plugin ID for the plugin instance.
    * @param mixed $plugin_definition
    *   The plugin implementation definition.
-   * @param \Drupal\Core\Config\ConfigFactoryInterface $configFactory
-   *   Drupal config factory to get FBS and Publizon settings.
    * @param \Drupal\dpl_library_agency\BranchSettings $branchSettings
    *   The branch settings for branch config.
    * @param \Drupal\dpl_library_agency\Branch\BranchRepositoryInterface $branchRepository
    *   The branch settings for getting branches.
+   * @param \Drupal\dpl_react\DplReactConfigInterface $favoritesListSettings
+   *   Favorites list settings.
    */
   public function __construct(
     array $configuration,
     $plugin_id,
     $plugin_definition,
-    private ConfigFactoryInterface $configFactory,
     private BranchSettings $branchSettings,
     private BranchRepositoryInterface $branchRepository,
     private DplReactConfigInterface $favoritesListSettings
@@ -58,7 +56,6 @@ class FavoritesListBlock extends BlockBase implements ContainerFactoryPluginInte
       $configuration,
       $plugin_id,
       $plugin_definition,
-      $container->get('config.factory'),
       $container->get('dpl_library_agency.branch_settings'),
       $container->get('dpl_library_agency.branch.repository'),
       \Drupal::service('dpl_favorites_list.settings')

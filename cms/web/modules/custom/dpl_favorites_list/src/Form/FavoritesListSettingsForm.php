@@ -58,7 +58,7 @@ class FavoritesListSettingsForm extends ConfigFormBase {
    * {@inheritdoc}
    */
   public function buildForm(array $form, FormStateInterface $form_state): array {
-    $config = $this->config('favorites_list.settings');
+    $config = $this->configService->getConfig();
 
     $form['settings'] = [
       '#type' => 'fieldset',
@@ -69,7 +69,7 @@ class FavoritesListSettingsForm extends ConfigFormBase {
     $form['settings']['page_size_mobile'] = [
       '#type' => 'number',
       '#title' => $this->t('Page size mobile'),
-      '#default_value' => $config->get('page_size_mobile') ?? 25,
+      '#default_value' => $config['pageSizeMobile'] ?? 25,
       '#min' => 1,
       '#step' => 1,
     ];
@@ -77,7 +77,7 @@ class FavoritesListSettingsForm extends ConfigFormBase {
     $form['settings']['page_size_desktop'] = [
       '#type' => 'number',
       '#title' => $this->t('Page size desktop'),
-      '#default_value' => $config->get('page_size_desktop') ?? 25,
+      '#default_value' => $config['pageSizeDesktop'] ?? 25,
       '#min' => 1,
       '#step' => 1,
     ];
@@ -91,9 +91,9 @@ class FavoritesListSettingsForm extends ConfigFormBase {
   public function submitForm(array &$form, FormStateInterface $form_state): void {
     parent::submitForm($form, $form_state);
 
-    $this->config('favorites_list.settings')
-      ->set('page_size_desktop', $form_state->getValue('page_size_desktop'))
-      ->set('page_size_mobile', $form_state->getValue('page_size_mobile'))
+    $this->config($this->configService->getConfigKey())
+      ->set('pageSizeDesktop', $form_state->getValue('page_size_desktop'))
+      ->set('pageSizeMobile', $form_state->getValue('page_size_mobile'))
       ->save();
   }
 

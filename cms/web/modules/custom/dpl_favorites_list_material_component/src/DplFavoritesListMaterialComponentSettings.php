@@ -13,7 +13,7 @@ class DplFavoritesListMaterialComponentSettings extends DplReactConfigBase {
    * Gets the configuration key for reservation settings.
    */
   public function getConfigKey(): string {
-    return 'favorites_list_material_component.settings';
+    return 'dpl_favorites_list_material_component.settings';
   }
 
 }

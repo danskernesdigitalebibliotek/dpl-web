@@ -13,7 +13,7 @@ class DplPatronPageSettings extends DplReactConfigBase {
    * Gets the configuration key for reservation settings.
    */
   public function getConfigKey(): string {
-    return 'patron_page.settings';
+    return 'dpl_patron_page.settings';
   }
 
 }

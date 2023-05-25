@@ -58,7 +58,7 @@ class LoanListSettingsForm extends ConfigFormBase {
    * {@inheritdoc}
    */
   public function buildForm(array $form, FormStateInterface $form_state): array {
-    $config = $this->config('dpl_loan_list.settings');
+    $config = $this->configService->getConfig();
 
     $form['settings'] = [
       '#type' => 'fieldset',
@@ -70,13 +70,13 @@ class LoanListSettingsForm extends ConfigFormBase {
       '#type' => 'url',
       '#title' => $this->t('Material overdue url', [], ['context' => 'Loan list (settings)']),
       '#description' => $this->t('The link to the material overdue page', [], ['context' => 'Loan list (settings)']),
-      '#default_value' => $config->get('material_overdue_url') ?? '',
+      '#default_value' => $config['materialOverdueUrl'] ?? '',
     ];
 
     $form['settings']['page_size_mobile'] = [
       '#type' => 'number',
       '#title' => $this->t('Page size mobile', [], ['context' => 'Loan list (settings)']),
-      '#default_value' => $config->get('page_size_mobile') ?? 25,
+      '#default_value' => $config['pageSizeMobile'] ?? 25,
       '#min' => 0,
       '#step' => 1,
     ];
@@ -84,7 +84,7 @@ class LoanListSettingsForm extends ConfigFormBase {
     $form['settings']['page_size_desktop'] = [
       '#type' => 'number',
       '#title' => $this->t('Page size desktop', [], ['context' => 'Loan list (settings)']),
-      '#default_value' => $config->get('page_size_desktop') ?? 25,
+      '#default_value' => $config['pageSizeDesktop'] ?? 25,
       '#min' => 0,
       '#step' => 1,
     ];
@@ -95,19 +95,13 @@ class LoanListSettingsForm extends ConfigFormBase {
   /**
    * {@inheritdoc}
    */
-  public function validateForm(array &$form, FormStateInterface $form_state): void {
-  }
-
-  /**
-   * {@inheritdoc}
-   */
   public function submitForm(array &$form, FormStateInterface $form_state): void {
     parent::submitForm($form, $form_state);
 
-    $this->config('dpl_loan_list.settings')
-      ->set('material_overdue_url', $form_state->getValue('material_overdue_url'))
-      ->set('page_size_desktop', $form_state->getValue('page_size_desktop'))
-      ->set('page_size_mobile', $form_state->getValue('page_size_mobile'))
+    $this->config($this->configService->getConfigKey())
+      ->set('materialOverdueUrl', $form_state->getValue('material_overdue_url'))
+      ->set('pageSizeDesktop', $form_state->getValue('page_size_desktop'))
+      ->set('pageSizeMobile', $form_state->getValue('page_size_mobile'))
       ->save();
   }
 

@@ -58,7 +58,7 @@ class ReservationListSettingsForm extends ConfigFormBase {
    * {@inheritdoc}
    */
   public function buildForm(array $form, FormStateInterface $form_state): array {
-    $config = $this->config('dpl_reservation_list.settings');
+    $config = $this->configService->getConfig();
 
     $form['settings'] = [
       '#type' => 'fieldset',
@@ -70,26 +70,26 @@ class ReservationListSettingsForm extends ConfigFormBase {
       '#type' => 'textfield',
       '#title' => $this->t('Pause reservation link', [], ['context' => 'Reservation list (settings)']),
       '#description' => $this->t('The link in the pause reservation modal', [], ['context' => 'Reservation list (settings)']),
-      '#default_value' => $config->get('pause_reservation_info_url') ?? '',
+      '#default_value' => $config['pauseReservationInfoUrl'] ?? '',
     ];
 
     $form['settings']['ereolen_my_page_url'] = [
       '#type' => 'textfield',
       '#title' => $this->t('Ereolen link', [], ['context' => 'Reservation list (settings)']),
       '#description' => $this->t('My page in ereolen', [], ['context' => 'Reservation list (settings)']),
-      '#default_value' => $config->get('ereolen_my_page_url') ?? 'https://ereolen.dk/user/me',
+      '#default_value' => $config['ereolenMyPageUrl'] ?? 'https://ereolen.dk/user/me',
     ];
     $form['settings']['pause_reservation_start_date_config'] = [
       '#type' => 'date',
       '#title' => $this->t('Start date', [], ['context' => 'Reservation list (settings)']),
       '#description' => $this->t('Pause reservation start date', [], ['context' => 'Reservation list (settings)']),
-      '#default_value' => $config->get('pause_reservation_start_date_config'),
+      '#default_value' => $config['pauseReservationStartDateConfig'],
     ];
 
     $form['settings']['page_size_mobile'] = [
       '#type' => 'number',
       '#title' => $this->t('Page size mobile', [], ['context' => 'Reservation list (settings)']),
-      '#default_value' => $config->get('page_size_mobile') ?? 25,
+      '#default_value' => $config['pageSizeMobile'] ?? 25,
       '#min' => 0,
       '#step' => 1,
     ];
@@ -97,7 +97,7 @@ class ReservationListSettingsForm extends ConfigFormBase {
     $form['settings']['page_size_desktop'] = [
       '#type' => 'number',
       '#title' => $this->t('Page size desktop', [], ['context' => 'Reservation list (settings)']),
-      '#default_value' => $config->get('page_size_desktop') ?? 25,
+      '#default_value' => $config['pageSizeDesktop'] ?? 25,
       '#min' => 0,
       '#step' => 1,
     ];
@@ -126,12 +126,12 @@ class ReservationListSettingsForm extends ConfigFormBase {
   public function submitForm(array &$form, FormStateInterface $form_state): void {
     parent::submitForm($form, $form_state);
 
-    $this->config('dpl_reservation_list.settings')
-      ->set('pause_reservation_info_url', $form_state->getValue('pause_reservation_info_url'))
-      ->set('ereolen_my_page_url', $form_state->getValue('ereolen_my_page_url'))
-      ->set('pause_reservation_start_date_config', $form_state->getValue('pause_reservation_start_date_config'))
-      ->set('page_size_desktop', $form_state->getValue('page_size_desktop'))
-      ->set('page_size_mobile', $form_state->getValue('page_size_mobile'))
+    $this->config($this->configService->getConfigKey())
+      ->set('pauseReservationInfoUrl', $form_state->getValue('pause_reservation_info_url'))
+      ->set('ereolenMyPageUrl', $form_state->getValue('ereolen_my_page_url'))
+      ->set('pauseReservationStartDateConfig', $form_state->getValue('pause_reservation_start_date_config'))
+      ->set('pageSizeDesktop', $form_state->getValue('page_size_desktop'))
+      ->set('pageSizeMobile', $form_state->getValue('page_size_mobile'))
       ->save();
   }
 

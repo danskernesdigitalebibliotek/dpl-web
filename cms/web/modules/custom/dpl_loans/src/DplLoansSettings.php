@@ -1,6 +1,6 @@
 <?php
 
-namespace Drupal\dpl_reservations;
+namespace Drupal\dpl_loans;
 
 use Drupal\dpl_react\DplReactConfigBase;
 

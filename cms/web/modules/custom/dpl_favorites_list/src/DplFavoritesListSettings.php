@@ -13,7 +13,7 @@ class DplFavoritesListSettings extends DplReactConfigBase {
    * Gets the configuration key for favorites list settings.
    */
   public function getConfigKey(): string {
-    return 'favorites_list.settings';
+    return 'dpl_favorites_list.settings';
   }
 
 }
