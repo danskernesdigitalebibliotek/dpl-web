@@ -43,7 +43,7 @@ class DplReservationsController extends ControllerBase {
     return new static(
       $container->get('plugin.manager.block'),
       $container->get('renderer'),
-      \Drupal::service('dpl_reservation.settings'),
+      \Drupal::service('dpl_reservations.settings'),
     );
   }
 

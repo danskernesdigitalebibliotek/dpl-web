@@ -34,7 +34,7 @@ class ReservationListSettingsForm extends ConfigFormBase {
   public static function create(ContainerInterface $container): self {
     return new static(
       $container->get('config.factory'),
-      \Drupal::service('dpl_reservation.settings')
+      \Drupal::service('dpl_reservations.settings')
     );
   }
 

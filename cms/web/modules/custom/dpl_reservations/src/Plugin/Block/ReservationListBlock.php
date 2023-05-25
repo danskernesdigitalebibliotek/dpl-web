@@ -63,7 +63,7 @@ class ReservationListBlock extends BlockBase implements ContainerFactoryPluginIn
       $container->get('config.factory'),
       $container->get('dpl_library_agency.branch_settings'),
       $container->get('dpl_library_agency.branch.repository'),
-      \Drupal::service('dpl_reservation.settings'),
+      \Drupal::service('dpl_reservations.settings'),
     );
   }
 
