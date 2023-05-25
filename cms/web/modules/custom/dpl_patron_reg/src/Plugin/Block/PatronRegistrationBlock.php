@@ -129,14 +129,12 @@ class PatronRegistrationBlock extends BlockBase implements ContainerFactoryPlugi
       'user-token' => $userToken,
       'pincode-length-min-config' => $patron_page_settings->get('pincode_length_min'),
       'pincode-length-max-config' => $patron_page_settings->get('pincode_length_max'),
-      'pincode-length-min-config' => '5',
-      'pincode-length-max-config' => '5',
 
       // Texts.
       'patron-contact-email-checkbox-text' => $this->t("Receive emails about your loans, reservations, and so forth", [], ['context' => 'Create patron']),
       'patron-contact-email-label-text' => $this->t("E-mail", [], ['context' => 'Create patron']),
-      'patron-contact-info-body-text' => $this->t("", [], ['context' => 'Create patron']),
-      'patron-contact-info-header-text' => $this->t("", [], ['context' => 'Create patron']),
+      'patron-contact-info-body-text' => $this->t("contact info body text", [], ['context' => 'Create patron']),
+      'patron-contact-info-header-text' => $this->t("contact info header text", [], ['context' => 'Create patron']),
       'patron-contact-name-label-text' => $this->t("Name", [], ['context' => 'Create patron']),
       'patron-contact-phone-checkbox-text' => $this->t("Receive text messages about your loans, reservations, and so forth", [], ['context' => 'Create patron']),
       'patron-contact-phone-label-text' => $this->t("Phone number", [], ['context' => 'Create patron']),
@@ -150,9 +148,9 @@ class PatronRegistrationBlock extends BlockBase implements ContainerFactoryPlugi
       'pickup-branches-dropdown-nothing-selected-text' => $this->t("Nothing selected", [], ['context' => 'Create patron']),
 
       // @todo Add strings to this translations.
-      'create-patron-change-pickup-body-text' => $this->t("", [], ['context' => 'Create patron']),
-      'create-patron-change-pickup-header-text' => $this->t("", [], ['context' => 'Create patron']),
-      
+      'create-patron-change-pickup-body-text' => $this->t("create patron change pickup body text", [], ['context' => 'Create patron']),
+      'create-patron-change-pickup-header-text' => $this->t("create patron change pickup header text", [], ['context' => 'Create patron']),
+
       'create-patron-cancel-button-text' => $this->t("Cancel", [], ['context' => 'Create patron']),
       'create-patron-confirm-button-text' => $this->t("Confirm", [], ['context' => 'Create patron']),
       'create-patron-header-text' => $this->t("Register as patron", [], ['context' => 'Create patron']),
