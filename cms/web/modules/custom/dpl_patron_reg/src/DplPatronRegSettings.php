@@ -13,7 +13,7 @@ class DplPatronRegSettings extends DplReactConfigBase {
    * Gets the configuration key for the instant patron registration settings.
    */
   public function getConfigKey(): string {
-    return 'dpl_instant_loan.settings';
+    return 'dpl_patron_reg.settings';
   }
 
 }
