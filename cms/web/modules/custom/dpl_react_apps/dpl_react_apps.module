@@ -26,8 +26,6 @@ function dpl_react_apps_preprocess_page(array &$variables): void {
         'search-url' => DplReactAppsController::searchResultUrl(),
         'material-url' => DplReactAppsController::materialUrl(),
         // Text.
-        'search-header-icon-alt-text' => t('Search button', [], ['context' => 'Search Header']),
-        'search-header-input-label' => t('Search header input', [], ['context' => 'Search Header']),
         'autosuggest-animated-series-category-text' => t('Animated series', [], ['context' => 'Search Header']),
         'autosuggest-audio-book-category-text' => t('Audio books', [], ['context' => 'Search Header']),
         'autosuggest-book-category-text' => t('Books', [], ['context' => 'Search Header']),
@@ -39,6 +37,9 @@ function dpl_react_apps_preprocess_page(array &$variables): void {
         'in-text' => t('in', [], ['context' => 'Search Header']),
         'input-placeholder-text' => t('Start typing in order to search', [], ['context' => 'Search Header']),
         'loading-text' => t('Loading', [], ['context' => 'Search Header']),
+        'search-header-icon-alt-text' => t('Search button', [], ['context' => 'Search Header']),
+        'search-header-input-label' => t('Search header input', [], ['context' => 'Search Header']),
+        'search-no-valid-characters-error-text' => t('Input must contain at least one non-whitespace character.', [], ['context' => 'Search Header']),
         'string-suggestion-author-text' => t('Author', [], ['context' => 'Search Header']),
         'string-suggestion-topic-text' => t('Topic', [], ['context' => 'Search Header']),
         'string-suggestion-work-text' => t('Work', [], ['context' => 'Search Header']),
