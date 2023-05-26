@@ -7,6 +7,7 @@ use Drupal\Core\Config\ConfigFactoryInterface;
 use Drupal\Core\Plugin\ContainerFactoryPluginInterface;
 use Drupal\dpl_library_agency\Branch\Branch;
 use Drupal\dpl_login\UserTokensProvider;
+use Drupal\dpl_react\DplReactConfigInterface;
 use Drupal\dpl_react_apps\Controller\DplReactAppsController;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Drupal\dpl_library_agency\Branch\BranchRepositoryInterface;
@@ -37,9 +38,11 @@ class PatronRegistrationBlock extends BlockBase implements ContainerFactoryPlugi
    * @param \Drupal\Core\Config\ConfigFactoryInterface $configFactory
    *   Drupal config factory to get FBS and Publizon settings.
    * @param \Drupal\dpl_library_agency\BranchSettings $branchSettings
-   *   The branchsettings for branch config.
+   *   The branch-settings for branch config.
    * @param \Drupal\dpl_library_agency\Branch\BranchRepositoryInterface $branchRepository
-   *   The branchsettings for getting branches.
+   *   The branch-settings for getting branches.
+   * @param \Drupal\dpl_react\DplReactConfigInterface $patronRegSettings
+   *   Patron registration settings.
    */
   public function __construct(
     array $configuration,
@@ -48,7 +51,8 @@ class PatronRegistrationBlock extends BlockBase implements ContainerFactoryPlugi
     private UserTokensProvider $user_token_provider,
     private ConfigFactoryInterface $configFactory,
     private BranchSettings $branchSettings,
-    private BranchRepositoryInterface $branchRepository
+    private BranchRepositoryInterface $branchRepository,
+    private DplReactConfigInterface $patronRegSettings
   ) {
     parent::__construct($configuration, $plugin_id, $plugin_definition);
     $this->configuration = $configuration;
@@ -66,6 +70,7 @@ class PatronRegistrationBlock extends BlockBase implements ContainerFactoryPlugi
       $container->get('config.factory'),
       $container->get('dpl_library_agency.branch_settings'),
       $container->get('dpl_library_agency.branch.repository'),
+      \Drupal::service('dpl_patron_reg.settings')
     );
   }
 
@@ -86,6 +91,8 @@ class PatronRegistrationBlock extends BlockBase implements ContainerFactoryPlugi
    *
    * @param \Drupal\dpl_library_agency\Branch\Branch[] $branches
    *   The branches to build the string with.
+   *
+   * @throws \Safe\Exceptions\JsonException
    */
   protected function buildBranchesJsonProp(array $branches) : string {
     return json_encode(array_map(function (Branch $branch) {
@@ -113,10 +120,11 @@ class PatronRegistrationBlock extends BlockBase implements ContainerFactoryPlugi
    *
    * @return mixed[]
    *   The app render array.
+   *
+   * @throws \Safe\Exceptions\JsonException
    */
   public function build(): array {
-    $config = $this->configFactory->get('dpl_patron_reg.settings');
-
+    $config = $this->patronRegSettings->getConfig();
     $userToken = $this->user_token_provider->getAccessToken()?->token;
 
     // @todo change to use patron_page settings inject, if approved in other PR.
@@ -126,13 +134,20 @@ class PatronRegistrationBlock extends BlockBase implements ContainerFactoryPlugi
       // Configuration.
       'blacklisted-pickup-branches-config' => $this->buildBranchesListProp($this->branchSettings->getExcludedReservationBranches()),
       'branches-config' => $this->buildBranchesJsonProp($this->branchRepository->getBranches()),
-      'min-age-config' => $config->get('age_limit') ?? '18',
-      'redirect-on-user-created-url' => $config->get('redirect_on_user_created_url'),
-      'user-token' => $userToken,
-      'pincode-length-min-config' => $patron_page_settings->get('pincode_length_min'),
+      'min-age-config' => $config['ageLimit'] ?? '18',
       'pincode-length-max-config' => $patron_page_settings->get('pincode_length_max'),
+      'pincode-length-min-config' => $patron_page_settings->get('pincode_length_min'),
+      'redirect-on-user-created-url' => $config['redirectOnUserCreatedUrl'],
+      'user-token' => $userToken,
 
       // Texts.
+      'create-patron-cancel-button-text' => $this->t("Cancel", [], ['context' => 'Create patron']),
+      'create-patron-change-pickup-body-text' => $this->t("create patron change pickup body text", [], ['context' => 'Create patron']),
+      'create-patron-change-pickup-header-text' => $this->t("create patron change pickup header text", [], ['context' => 'Create patron']),
+      'create-patron-confirm-button-text' => $this->t("Confirm", [], ['context' => 'Create patron']),
+      'create-patron-header-text' => $this->t("Register as patron", [], ['context' => 'Create patron']),
+      'create-patron-invalid-ssn-body-text' => $this->t("This SSN is invalid", [], ['context' => 'Create patron']),
+      'create-patron-invalid-ssn-header-text' => $this->t("Invalid SSN", [], ['context' => 'Create patron']),
       'patron-contact-email-checkbox-text' => $this->t("Receive emails about your loans, reservations, and so forth", [], ['context' => 'Create patron']),
       'patron-contact-email-label-text' => $this->t("E-mail", [], ['context' => 'Create patron']),
       'patron-contact-info-body-text' => $this->t("contact info body text", [], ['context' => 'Create patron']),
@@ -148,16 +163,6 @@ class PatronRegistrationBlock extends BlockBase implements ContainerFactoryPlugi
       'patron-page-pincodes-not-the-same-text' => $this->t("The pincodes are not the same", [], ['context' => 'Create patron']),
       'pickup-branches-dropdown-label-text' => $this->t("Choose pickup branch", [], ['context' => 'Create patron']),
       'pickup-branches-dropdown-nothing-selected-text' => $this->t("Nothing selected", [], ['context' => 'Create patron']),
-
-      // @todo Add strings to this translations.
-      'create-patron-change-pickup-body-text' => $this->t("create patron change pickup body text", [], ['context' => 'Create patron']),
-      'create-patron-change-pickup-header-text' => $this->t("create patron change pickup header text", [], ['context' => 'Create patron']),
-
-      'create-patron-cancel-button-text' => $this->t("Cancel", [], ['context' => 'Create patron']),
-      'create-patron-confirm-button-text' => $this->t("Confirm", [], ['context' => 'Create patron']),
-      'create-patron-header-text' => $this->t("Register as patron", [], ['context' => 'Create patron']),
-      'create-patron-invalid-ssn-body-text' => $this->t("This SSN is invalid", [], ['context' => 'Create patron']),
-      'create-patron-invalid-ssn-header-text' => $this->t("Invalid SSN", [], ['context' => 'Create patron']),
     ] + DplReactAppsController::externalApiBaseUrls();
 
     return [

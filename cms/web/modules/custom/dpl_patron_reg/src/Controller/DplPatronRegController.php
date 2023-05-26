@@ -9,6 +9,7 @@ use Drupal\Core\Link;
 use Drupal\Core\Render\RendererInterface;
 use Drupal\Core\Routing\TrustedRedirectResponse;
 use Drupal\Core\Url;
+use Drupal\dpl_react\DplReactConfigInterface;
 use Drupal\openid_connect\OpenIDConnectClaims;
 use Drupal\openid_connect\OpenIDConnectSession;
 use Drupal\openid_connect\Plugin\OpenIDConnectClientManager;
@@ -35,7 +36,8 @@ class DplPatronRegController extends ControllerBase {
     protected BranchSettings $branchSettings,
     protected BranchRepositoryInterface $branchRepository,
     protected BlockManagerInterface $blockManager,
-    protected RendererInterface $renderer
+    protected RendererInterface $renderer,
+    protected DplReactConfigInterface $patronRegSettings
   ) {
   }
 
@@ -52,6 +54,7 @@ class DplPatronRegController extends ControllerBase {
       $container->get('dpl_library_agency.branch.repository'),
       $container->get('plugin.manager.block'),
       $container->get('renderer'),
+      \Drupal::service('dpl_patron_reg.settings')
     );
   }
 
@@ -62,7 +65,7 @@ class DplPatronRegController extends ControllerBase {
    *   The page as a render array.
    */
   public function informationPage(): array {
-    $config = $this->config('dpl_patron_reg.settings');
+    $config = $this->patronRegSettings->getConfig();
     $logins = [];
 
     // Loop over all open id connect definitions and build login links for each
@@ -84,8 +87,8 @@ class DplPatronRegController extends ControllerBase {
     return [
       'info' => [
         '#type' => 'processed_text',
-        '#text' => $config->get('information')['value'] ?? 'Please fill out the information page in the administration',
-        '#format' => $config->get('information')['format'] ?? 'plain_text',
+        '#text' => $config['information']['value'] ?? 'Please fill out the information page in the administration',
+        '#format' => $config['information']['format'] ?? 'plain_text',
       ],
       'logins' => $logins,
     ];
@@ -160,6 +163,7 @@ class DplPatronRegController extends ControllerBase {
     // Add the cache tags/contexts.
     $render = $plugin_block->build();
     $this->renderer->addCacheableDependency($render, $plugin_block);
+    $this->renderer->addCacheableDependency($render, $this->patronRegSettings);
 
     return $render;
   }
