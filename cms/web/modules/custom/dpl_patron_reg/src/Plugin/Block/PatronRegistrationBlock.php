@@ -118,6 +118,8 @@ class PatronRegistrationBlock extends BlockBase implements ContainerFactoryPlugi
     $config = $this->configFactory->get('dpl_patron_reg.settings');
 
     $userToken = $this->user_token_provider->getAccessToken()?->token;
+
+    // @todo change to use patron_page settings inject, if approved in other PR.
     $patron_page_settings = $this->configFactory->get('patron_page.settings');
 
     $data = [
