@@ -5,6 +5,7 @@ namespace Drupal\dpl_fees\Controller;
 use Drupal\Core\Block\BlockManagerInterface;
 use Drupal\Core\Controller\ControllerBase;
 use Drupal\Core\Render\RendererInterface;
+use Drupal\dpl_react\DplReactConfigInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
 
@@ -20,10 +21,13 @@ class DplFeesController extends ControllerBase {
    *   Drupal block manager.
    * @param \Drupal\Core\Render\RendererInterface $renderer
    *   Drupal renderer service.
+   * @param \Drupal\dpl_react\DplReactConfigInterface $feesSettings
+   *   Fees settings.
    */
   public function __construct(
     private BlockManagerInterface $blockManager,
-    private RendererInterface $renderer
+    private RendererInterface $renderer,
+    private DplReactConfigInterface $feesSettings
   ) {
   }
 
@@ -39,6 +43,7 @@ class DplFeesController extends ControllerBase {
     return new static(
       $container->get('plugin.manager.block'),
       $container->get('renderer'),
+      \Drupal::service('dpl_instant_loan.settings')
     );
   }
 
@@ -64,6 +69,7 @@ class DplFeesController extends ControllerBase {
     // Add the cache tags/contexts.
     $render = $plugin_block->build();
     $this->renderer->addCacheableDependency($render, $plugin_block);
+    $this->renderer->addCacheableDependency($render, $this->feesSettings);
 
     return $render;
   }
