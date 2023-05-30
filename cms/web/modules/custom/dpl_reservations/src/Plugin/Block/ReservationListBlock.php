@@ -75,6 +75,7 @@ class ReservationListBlock extends BlockBase implements ContainerFactoryPluginIn
    */
   public function build(): array {
     $config = $this->reservationListSettings->loadConfig();
+    $generalSettings = $this->configFactory->get('dpl_library_agency.general_settings');
 
     $data = [
       // Branches.
@@ -88,10 +89,12 @@ class ReservationListBlock extends BlockBase implements ContainerFactoryPluginIn
       'pause-reservation-info-url' => $config->get('pause_reservation_info_url'),
 
       // Config.
+      'interest-periods-config' => DplReactAppsController::getInterestPeriods(),
       'page-size-desktop' => $config->get('page_size_desktop'),
       'page-size-mobile' => $config->get('page_size_mobile'),
       'pause-reservation-start-date-config' => $config->get('pause_reservation_start_date_config') ?? '',
-      'threshold-config' => $this->configFactory->get('dpl_library_agency.general_settings')->get('threshold_config'),
+      'reservation-detail-allow-remove-ready-reservations-config' => $generalSettings->get('reservation_detail_allow_remove_ready_reservations_config'),
+      'threshold-config' => $generalSettings->get('threshold_config'),
 
       // Texts.
       'material-and-author-text' => $this->t('and', [], ['context' => 'Reservation list']),

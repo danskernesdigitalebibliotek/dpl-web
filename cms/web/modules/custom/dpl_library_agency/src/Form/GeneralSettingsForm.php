@@ -144,14 +144,26 @@ class GeneralSettingsForm extends ConfigFormBase {
       '#description' => $this->t('If checked, SMS notifications for patrons will be disabled.', [], ['context' => 'Library Agency Configuration']),
     ];
 
-    $form['settings']['pause_reservation_info_url'] = [
+    $form['reservations']['interest_periods_config'] = [
+      '#type' => 'textarea',
+      '#title' => $this->t('Interest periods for reservation', [], ['context' => 'Library Agency Configuration']),
+      '#default_value' => $config->get('interest_periods_config'),
+    ];
+
+    $form['reservations']['reservation_detail_allow_remove_ready_reservations_config'] = [
+      '#type' => 'checkbox',
+      '#title' => $this->t('Allow removing ready reservations', [], ['context' => 'Library Agency Configuration']),
+      '#default_value' => $config->get('reservation_detail_allow_remove_ready_reservations_config'),
+    ];
+
+    $form['reservations']['pause_reservation_info_url'] = [
       '#type' => 'url',
       '#title' => $this->t('Pause reservation link', [], ['context' => 'Library Agency Configuration']),
       '#description' => $this->t('The link with infomation about reservations', [], ['context' => 'Library Agency Configuration']),
       '#default_value' => $config->get('pause_reservation_info_url') ?? '',
     ];
 
-    $form['settings']['pause_reservation_start_date_config'] = [
+    $form['reservations']['pause_reservation_start_date_config'] = [
       '#type' => 'date',
       '#title' => $this->t('Start date', [], ['context' => 'Library Agency Configuration']),
       '#description' => $this->t('Pause reservation start date', [], ['context' => 'Library Agency Configuration']),
@@ -242,6 +254,8 @@ class GeneralSettingsForm extends ConfigFormBase {
   public function submitForm(array &$form, FormStateInterface $form_state): void {
     $this->config('dpl_library_agency.general_settings')
       ->set('threshold_config', $form_state->getValue('threshold_config'))
+      ->set('reservation_detail_allow_remove_ready_reservations_config', $form_state->getValue('reservation_detail_allow_remove_ready_reservations_config'))
+      ->set('interest_periods_config', $form_state->getValue('interest_periods_config'))
       ->set('fees_page_url', $form_state->getValue('fees_page_url'))
       ->set('reservation_sms_notifications_disabled', $form_state->getValue('reservation_sms_notifications_disabled'))
       ->set('pause_reservation_info_url', $form_state->getValue('pause_reservation_info_url'))
