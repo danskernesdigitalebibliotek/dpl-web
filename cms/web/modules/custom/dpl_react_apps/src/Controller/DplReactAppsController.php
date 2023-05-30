@@ -156,7 +156,7 @@ class DplReactAppsController extends ControllerBase {
   }
 
   /**
-   * Get a string with interest periods
+   * Get a string with interest periods.
    *
    * @return string
    *   A string with interest periods
