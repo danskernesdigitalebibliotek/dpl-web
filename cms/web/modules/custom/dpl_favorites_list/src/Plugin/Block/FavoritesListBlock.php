@@ -71,7 +71,7 @@ class FavoritesListBlock extends BlockBase implements ContainerFactoryPluginInte
    * @throws \Safe\Exceptions\JsonException
    */
   public function build() {
-    $favoritesListSettings = $this->favoritesListSettings->getConfig();
+    $favoritesListSettings = $this->favoritesListSettings->loadConfig();
 
     $data = [
       // Branches.
@@ -79,8 +79,8 @@ class FavoritesListBlock extends BlockBase implements ContainerFactoryPluginInte
       'branches-config' => DplReactAppsController::buildBranchesJsonProp($this->branchRepository->getBranches()),
 
       // Page size.
-      "page-size-desktop" => $favoritesListSettings['pageSizeDesktop'],
-      "page-size-mobile" => $favoritesListSettings['pageSizeMobile'],
+      "page-size-desktop" => $favoritesListSettings->get('page_size_desktop'),
+      "page-size-mobile" => $favoritesListSettings->get('page_size_mobile'),
 
       // Texts.
       "add-to-favorites-aria-label-text" => $this->t("Add element to favorites list", [], ['context' => 'Favorites list (aria)']),

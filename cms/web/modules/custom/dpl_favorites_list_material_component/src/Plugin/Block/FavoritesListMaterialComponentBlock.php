@@ -76,12 +76,12 @@ class FavoritesListMaterialComponentBlock extends BlockBase implements Container
    *   The app render array.
    */
   public function build() {
-    $favoritesListMaterialComponentSettings = $this->favoritesListMaterialComponentSettings->getConfig();
+    $favoritesListMaterialComponentSettings = $this->favoritesListMaterialComponentSettings->loadConfig();
 
     $data = [
       // Urls.
       'dpl-cms-base-url' => DplReactAppsController::dplCmsBaseUrl(),
-      'favorites-list-material-component-go-to-list-url' => $favoritesListMaterialComponentSettings['favoritesListUrl'],
+      'favorites-list-material-component-go-to-list-url' => $favoritesListMaterialComponentSettings->get('favorites_list_url'),
 
       // Texts.
       'add-to-favorites-aria-label-text' => $this->t("Add element to favorites list", [], ['context' => 'Favorites list material component (aria)']),

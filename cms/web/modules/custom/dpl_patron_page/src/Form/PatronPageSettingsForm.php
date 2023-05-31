@@ -58,7 +58,7 @@ class PatronPageSettingsForm extends ConfigFormBase {
    * {@inheritdoc}
    */
   public function buildForm(array $form, FormStateInterface $form_state): array {
-    $config = $this->configService->getConfig();
+    $config = $this->configService->loadConfig();
 
     $form['settings'] = [
       '#type' => 'fieldset',
@@ -69,26 +69,26 @@ class PatronPageSettingsForm extends ConfigFormBase {
     $form['settings']['text_notifications_enabled'] = [
       '#type' => 'checkbox',
       '#title' => $this->t('Enable SMS notifications'),
-      '#default_value' => $config['textNotificationsEnabled'],
+      '#default_value' => $config->get('text_notifications_enabled'),
     ];
 
     $form['settings']['delete_patron_url'] = [
       '#type' => 'url',
       '#title' => $this->t('Delete patron link'),
       '#description' => $this->t('Link to a page where it is possible to delete patron'),
-      '#default_value' => $config['deletePatronUrl'] ?? '',
+      '#default_value' => $config->get('delete_patron_url') ?? '',
     ];
 
     $form['settings']['always_available_ereolen'] = [
       '#type' => 'url',
       '#title' => $this->t('Ereolen always available'),
-      '#default_value' => $config['alwaysAvailableEreolen'] ?? '',
+      '#default_value' => $config->get('always_available_ereolen') ?? '',
     ];
 
     $form['settings']['pincode_length_min'] = [
       '#type' => 'number',
       '#title' => $this->t('Pincode length (min)'),
-      '#default_value' => $config['pincodeLengthMin'] ?? 4,
+      '#default_value' => $config->get('pincode_length_min') ?? 4,
       '#min' => 4,
       '#step' => 1,
     ];
@@ -96,7 +96,7 @@ class PatronPageSettingsForm extends ConfigFormBase {
     $form['settings']['pincode_length_max'] = [
       '#type' => 'number',
       '#title' => $this->t('Pincode length max'),
-      '#default_value' => $config['pincodeLengthMax'] ?? 4,
+      '#default_value' => $config->get('pincode_length_max') ?? 4,
       '#min' => 4,
       '#step' => 1,
     ];
@@ -111,11 +111,11 @@ class PatronPageSettingsForm extends ConfigFormBase {
     parent::submitForm($form, $form_state);
 
     $this->config($this->configService->getConfigKey())
-      ->set('deletePatronUrl', $form_state->getValue('delete_patron_url'))
-      ->set('alwaysAvailableEreolen', $form_state->getValue('always_available_ereolen'))
-      ->set('textNotificationsEnabled', $form_state->getValue('text_notifications_enabled'))
-      ->set('pincodeLengthMin', $form_state->getValue('pincode_length_min'))
-      ->set('pincodeLengthMax', $form_state->getValue('pincode_length_max'))
+      ->set('delete_patron_url', $form_state->getValue('delete_patron_url'))
+      ->set('always_available_ereolen', $form_state->getValue('always_available_ereolen'))
+      ->set('text_notifications_enabled', $form_state->getValue('text_notifications_enabled'))
+      ->set('pincode_length_min', $form_state->getValue('pincode_length_min'))
+      ->set('pincode_length_max', $form_state->getValue('pincode_length_max'))
       ->save();
   }
 

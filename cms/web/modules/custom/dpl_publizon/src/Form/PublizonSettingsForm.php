@@ -58,7 +58,7 @@ class PublizonSettingsForm extends ConfigFormBase {
    * {@inheritdoc}
    */
   public function buildForm(array $form, FormStateInterface $form_state): array {
-    $config = $this->configService->getConfig();
+    $config = $this->configService->loadConfig();
 
     $form['settings'] = [
       '#type' => 'fieldset',
@@ -69,7 +69,7 @@ class PublizonSettingsForm extends ConfigFormBase {
     $form['settings']['base_url'] = [
       '#type' => 'url',
       '#title' => $this->t('Publizon service url', [], ['context' => 'Dpl Publizon']),
-      '#default_value' => $config['baseUrl'],
+      '#default_value' => $config->get('base_url'),
     ];
 
     return parent::buildForm($form, $form_state);
@@ -81,7 +81,7 @@ class PublizonSettingsForm extends ConfigFormBase {
   public function submitForm(array &$form, FormStateInterface $form_state): void {
     parent::submitForm($form, $form_state);
     $this->config($this->configService->getConfigKey())
-      ->set('baseUrl', $form_state->getValue('base_url'))
+      ->set('base_url', $form_state->getValue('base_url'))
       ->save();
   }
 

@@ -64,25 +64,25 @@ class DashboardBlock extends BlockBase implements ContainerFactoryPluginInterfac
    *   The app render array.
    */
   public function build(): array {
-    $dashboardSettings = $this->dashboardSettings->getConfig();
+    $dashboardSettings = $this->dashboardSettings->loadConfig();
     $generalSettings = $this->configFactory->get('dpl_library_agency.general_settings');
 
     $data = [
       // Config.
-      'page-size-desktop' => $dashboardSettings['pageSizeDesktop'],
-      'page-size-mobile' => $dashboardSettings['pageSizeMobile'],
+      'page-size-desktop' => $dashboardSettings->get('page_size_desktop'),
+      'page-size-mobile' => $dashboardSettings->get('page_size_mobile'),
       'threshold-config' => $this->configFactory->get('dpl_library_agency.general_settings')->get('threshold_config'),
 
       // Urls.
       'dpl-cms-base-url' => DplReactAppsController::dplCmsBaseUrl(),
-      'fees-page-url' => $generalSettings->get('feesPageUrl'),
-      'intermediate-url' => $dashboardSettings['intermediateUrl'],
-      'loans-not-overdue-url' => $dashboardSettings['loansNotOverdueUrl'],
-      'loans-overdue-url' => $dashboardSettings['loansOverdueUrl'],
-      'loans-soon-overdue-url' => $dashboardSettings['loansSoonOverdueUrl'],
-      'pay-owed-url' => $dashboardSettings['payOwedUrl'],
-      'physical-loans-url' => $dashboardSettings['physicalLoansUrl'],
-      'reservations-url' => $dashboardSettings['reservationsUrl'],
+      'fees-page-url' => $generalSettings->get('fees_page_url'),
+      'intermediate-url' => $dashboardSettings->get('intermediate_url'),
+      'loans-not-overdue-url' => $dashboardSettings->get('loans_not_overdue_url'),
+      'loans-overdue-url' => $dashboardSettings->get('loans_overdue_url'),
+      'loans-soon-overdue-url' => $dashboardSettings->get('loans_soon_overdue_url'),
+      'pay-owed-url' => $dashboardSettings->get('pay_owed_url'),
+      'physical-loans-url' => $dashboardSettings->get('physical_loans_url'),
+      'reservations-url' => $dashboardSettings->get('reservations_url'),
       'search-url' => DplReactAppsController::searchResultUrl(),
 
       // Texts.

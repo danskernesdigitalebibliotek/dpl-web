@@ -58,7 +58,7 @@ class FavoritesListMaterialComponentSettingsForm extends ConfigFormBase {
    * {@inheritdoc}
    */
   public function buildForm(array $form, FormStateInterface $form_state): array {
-    $config = $this->configService->getConfig();
+    $config = $this->configService->loadConfig();
 
     $form['settings'] = [
       '#type' => 'fieldset',
@@ -70,7 +70,7 @@ class FavoritesListMaterialComponentSettingsForm extends ConfigFormBase {
       '#type' => 'url',
       '#title' => $this->t('Favorites list url', [], ['context' => 'Favorites list material component (settings)']),
       '#description' => $this->t('The link to the favorites list', [], ['context' => 'Favorites list material component (settings)']),
-      '#default_value' => $config['favoritesListUrl'] ?? '',
+      '#default_value' => $config->get('favorites_list_url') ?? '',
     ];
 
     return parent::buildForm($form, $form_state);

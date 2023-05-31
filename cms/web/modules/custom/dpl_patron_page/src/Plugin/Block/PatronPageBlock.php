@@ -87,7 +87,7 @@ class PatronPageBlock extends BlockBase implements ContainerFactoryPluginInterfa
    * @throws \Safe\Exceptions\JsonException
    */
   public function build() {
-    $patron_page_settings = $this->patronPageSettings->getConfig();
+    $patron_page_settings = $this->patronPageSettings->loadConfig();
 
     $general_config = $this->configFactory->get('dpl_library_agency.general_settings');
     $dateConfig = $general_config->get('pause_reservation_start_date_config');
@@ -101,13 +101,13 @@ class PatronPageBlock extends BlockBase implements ContainerFactoryPluginInterfa
       'blacklisted-pickup-branches-config' => DplReactAppsController::buildBranchesListProp($this->branchSettings->getExcludedReservationBranches()),
       'branches-config' => DplReactAppsController::buildBranchesJsonProp($this->branchRepository->getBranches()),
       'pause-reservation-start-date-config' => $dateConfig,
-      'pincode-length-max-config' => $patron_page_settings['pincodeLengthMax'],
-      'pincode-length-min-config' => $patron_page_settings['pincodeLengthMin'],
+      'pincode-length-max-config' => $patron_page_settings->get('pincode_length_max'),
+      'pincode-length-min-config' => $patron_page_settings->get('pincode_length_min'),
       'text-notifications-enabled-config' => (int) $this->textNotificationsEnabled(),
 
       // Urls.
-      'always-available-ereolen-url' => $patron_page_settings['alwaysAvailableEreolen'],
-      'delete-patron-url' => $patron_page_settings['deletePatronUrl'],
+      'always-available-ereolen-url' => $patron_page_settings->get('always_available_ereolen'),
+      'delete-patron-url' => $patron_page_settings->get('delete_patron_url'),
       'pause-reservation-info-url' => $general_config->get('pause_reservation_info_url'),
 
       // Text strings.

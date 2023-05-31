@@ -74,7 +74,7 @@ class ReservationListBlock extends BlockBase implements ContainerFactoryPluginIn
    *   The app render array.
    */
   public function build(): array {
-    $config = $this->reservationListSettings->getConfig();
+    $config = $this->reservationListSettings->loadConfig();
 
     $data = [
       // Branches.
@@ -84,13 +84,13 @@ class ReservationListBlock extends BlockBase implements ContainerFactoryPluginIn
       'branches-config' => DplReactAppsController::buildBranchesJsonProp($this->branchRepository->getBranches()),
 
       // Url.
-      'ereolen-my-page-url' => $config['ereolenMyPageUrl'],
-      'pause-reservation-info-url' => $config['pauseReservationInfoUrl'],
+      'ereolen-my-page-url' => $config->get('ereolen_my_page_url'),
+      'pause-reservation-info-url' => $config->get('pause_reservation_info_url'),
 
       // Config.
-      'page-size-desktop' => $config['pageSizeDesktop'],
-      'page-size-mobile' => $config['pageSizeMobile'],
-      'pause-reservation-start-date-config' => $config['pauseReservationStartDateConfig'] ?? '',
+      'page-size-desktop' => $config->get('page_size_desktop'),
+      'page-size-mobile' => $config->get('page_size_mobile'),
+      'pause-reservation-start-date-config' => $config->get('pause_reservation_start_date_config') ?? '',
       'threshold-config' => $this->configFactory->get('dpl_library_agency.general_settings')->get('threshold_config'),
 
       // Texts.

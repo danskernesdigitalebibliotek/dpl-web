@@ -71,7 +71,7 @@ class RecommenderBlock extends BlockBase implements ContainerFactoryPluginInterf
    *   The app render array.
    */
   public function build() {
-    $recommenderSettings = $this->recommenderSettings->getConfig();
+    $recommenderSettings = $this->recommenderSettings->loadConfig();
 
     $data = [
       // Urls.
@@ -80,7 +80,7 @@ class RecommenderBlock extends BlockBase implements ContainerFactoryPluginInterf
 
       // Texts.
       'add-to-favorites-aria-label-text' => $this->t("Add element to favorites list", [], ['context' => 'Recommender (Aria)']),
-      'empty-recommender-search-config' => $recommenderSettings['searchText'],
+      'empty-recommender-search-config' => $recommenderSettings->get('search_text'),
       'material-and-author-text' => $this->t("and", [], ['context' => 'Recommender']),
       'material-by-author-text' => $this->t("By", [], ['context' => 'Recommender']),
       'recommender-title-inspiration-text' => $this->t("For your inspiration", [], ['context' => 'Recommender']),

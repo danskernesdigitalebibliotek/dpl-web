@@ -87,13 +87,13 @@ class LoanListBlock extends BlockBase implements ContainerFactoryPluginInterface
    *   The app render array.
    */
   public function build() {
-    $loanListSettings = $this->loanSettings->getConfig();
+    $loanListSettings = $this->loanSettings->loadConfig();
     $generalSettings = $this->configFactory->get('dpl_library_agency.general_settings');
 
     $data = [
       // Page size.
-      "page-size-desktop" => $loanListSettings['pageSizeDesktop'],
-      "page-size-mobile" => $loanListSettings['pageSizeMobile'],
+      "page-size-desktop" => $loanListSettings->get('page_size_desktop'),
+      "page-size-mobile" => $loanListSettings->get('page_size_mobile'),
 
       // Config.
       "threshold-config" => $this->getThresholdConfig(),
@@ -101,7 +101,7 @@ class LoanListBlock extends BlockBase implements ContainerFactoryPluginInterface
       // Urls.
       'dpl-cms-base-url' => DplReactAppsController::dplCmsBaseUrl(),
       'fees-page-url' => $generalSettings->get('fees_page_url'),
-      'material-overdue-url' => $loanListSettings['materialOverdueUrl'],
+      'material-overdue-url' => $loanListSettings->get('material_overdue_url'),
 
       // Texts.
       'group-modal-aria-description-text' => $this->t("This modal makes it possible to renew materials", [], ['context' => 'Loan list (Aria)']),

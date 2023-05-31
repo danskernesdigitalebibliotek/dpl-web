@@ -58,13 +58,13 @@ class RecommenderSettingsForm extends ConfigFormBase {
    * {@inheritdoc}
    */
   public function buildForm(array $form, FormStateInterface $form_state): array {
-    $config = $this->configService->getConfig();
+    $config = $this->configService->loadConfig();
 
     $form['settings']['search_text'] = [
       '#type' => 'textfield',
       '#title' => $this->t('Search text', [], ['context' => 'Recommender (settings)']),
       '#description' => $this->t('Search text for recommender when no loan/no reservation', [], ['context' => 'Recommender (settings)']),
-      '#default_value' => $config['searchText'] ?? '',
+      '#default_value' => $config->get('search_text') ?? '',
     ];
 
     return parent::buildForm($form, $form_state);
@@ -77,7 +77,7 @@ class RecommenderSettingsForm extends ConfigFormBase {
     parent::submitForm($form, $form_state);
 
     $this->config($this->configService->getConfigKey())
-      ->set('searchText', $form_state->getValue('search_text'))
+      ->set('search_text', $form_state->getValue('search_text'))
       ->save();
   }
 

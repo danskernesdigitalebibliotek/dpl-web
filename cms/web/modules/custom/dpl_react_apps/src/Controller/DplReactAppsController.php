@@ -413,8 +413,8 @@ class DplReactAppsController extends ControllerBase {
     $services = $react_apps_settings->get('services') ?? [];
 
     // Get base urls from other modules.
-    $services['fbs'] = ['base_url' => $fbs_settings->getConfig()['baseUrl']];
-    $services['publizon'] = ['base_url' => $publizon_settings->getConfig()['baseUrl']];
+    $services['fbs'] = ['base_url' => $fbs_settings->loadConfig()->get('base_url')];
+    $services['publizon'] = ['base_url' => $publizon_settings->loadConfig()->get('base_url')];
 
     $urls = [];
     foreach ($services as $api => $definition) {
