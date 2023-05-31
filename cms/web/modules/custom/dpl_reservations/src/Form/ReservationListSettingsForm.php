@@ -2,8 +2,11 @@
 
 namespace Drupal\dpl_reservations\Form;
 
+use Drupal\Core\Config\ConfigFactoryInterface;
 use Drupal\Core\Form\ConfigFormBase;
 use Drupal\Core\Form\FormStateInterface;
+use Drupal\dpl_react\DplReactConfigInterface;
+use Symfony\Component\DependencyInjection\ContainerInterface;
 
 /**
  * Reservation list setting form.
@@ -11,11 +14,36 @@ use Drupal\Core\Form\FormStateInterface;
 class ReservationListSettingsForm extends ConfigFormBase {
 
   /**
+   * Default constructor.
+   *
+   * @param \Drupal\Core\Config\ConfigFactoryInterface $config_factory
+   *   Config factory.
+   * @param \Drupal\dpl_react\DplReactConfigInterface $configService
+   *   Reservation list configuration object.
+   */
+  public function __construct(
+      ConfigFactoryInterface $config_factory,
+      protected DplReactConfigInterface $configService,
+  ) {
+    parent::__construct($config_factory);
+  }
+
+  /**
+   * {@inheritdoc}
+   */
+  public static function create(ContainerInterface $container): self {
+    return new static(
+      $container->get('config.factory'),
+      \Drupal::service('dpl_reservations.settings')
+    );
+  }
+
+  /**
    * {@inheritdoc}
    */
   protected function getEditableConfigNames(): array {
     return [
-      'dpl_reservation_list.settings',
+      $this->configService->getConfigKey(),
     ];
   }
 
@@ -30,7 +58,7 @@ class ReservationListSettingsForm extends ConfigFormBase {
    * {@inheritdoc}
    */
   public function buildForm(array $form, FormStateInterface $form_state): array {
-    $config = $this->config('dpl_reservation_list.settings');
+    $config = $this->configService->loadConfig();
 
     $form['settings'] = [
       '#type' => 'fieldset',
@@ -39,17 +67,17 @@ class ReservationListSettingsForm extends ConfigFormBase {
     ];
 
     $form['settings']['pause_reservation_info_url'] = [
-      '#type' => 'textfield',
+      '#type' => 'url',
       '#title' => $this->t('Pause reservation link', [], ['context' => 'Reservation list (settings)']),
       '#description' => $this->t('The link in the pause reservation modal', [], ['context' => 'Reservation list (settings)']),
       '#default_value' => $config->get('pause_reservation_info_url') ?? '',
     ];
 
     $form['settings']['ereolen_my_page_url'] = [
-      '#type' => 'textfield',
+      '#type' => 'url',
       '#title' => $this->t('Ereolen link', [], ['context' => 'Reservation list (settings)']),
       '#description' => $this->t('My page in ereolen', [], ['context' => 'Reservation list (settings)']),
-      '#default_value' => $config->get('ereolen_my_page_url') ?? '',
+      '#default_value' => $config->get('ereolen_my_page_url') ?? 'https://ereolen.dk/user/me',
     ];
     $form['settings']['pause_reservation_start_date_config'] = [
       '#type' => 'date',
@@ -80,25 +108,10 @@ class ReservationListSettingsForm extends ConfigFormBase {
   /**
    * {@inheritdoc}
    */
-  public function validateForm(array &$form, FormStateInterface $form_state): void {
-    $feesUrl = $form_state->getValue('pause_reservation_info_url');
-    if (!filter_var($feesUrl, FILTER_VALIDATE_URL)) {
-      $form_state->setErrorByName('pause_reservation_info_url', $this->t('The url "%url" is not a valid URL.', ['%url' => $feesUrl], ['context' => 'Reservation list (settings)']));
-    }
-
-    $materialUrl = $form_state->getValue('ereolen_my_page_url');
-    if (!filter_var($materialUrl, FILTER_VALIDATE_URL)) {
-      $form_state->setErrorByName('ereolen_my_page_url', $this->t('The url "%url" is not a valid URL.', ['%url' => $materialUrl], ['context' => 'Reservation list (settings)']));
-    }
-  }
-
-  /**
-   * {@inheritdoc}
-   */
   public function submitForm(array &$form, FormStateInterface $form_state): void {
     parent::submitForm($form, $form_state);
 
-    $this->config('dpl_reservation_list.settings')
+    $this->config($this->configService->getConfigKey())
       ->set('pause_reservation_info_url', $form_state->getValue('pause_reservation_info_url'))
       ->set('ereolen_my_page_url', $form_state->getValue('ereolen_my_page_url'))
       ->set('pause_reservation_start_date_config', $form_state->getValue('pause_reservation_start_date_config'))

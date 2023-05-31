@@ -2,8 +2,11 @@
 
 namespace Drupal\dpl_fbs\Form;
 
+use Drupal\Core\Config\ConfigFactoryInterface;
 use Drupal\Core\Form\ConfigFormBase;
 use Drupal\Core\Form\FormStateInterface;
+use Drupal\dpl_react\DplReactConfigInterface;
+use Symfony\Component\DependencyInjection\ContainerInterface;
 
 /**
  * FBS setting form.
@@ -11,11 +14,36 @@ use Drupal\Core\Form\FormStateInterface;
 class FbsSettingsForm extends ConfigFormBase {
 
   /**
+   * Default constructor.
+   *
+   * @param \Drupal\Core\Config\ConfigFactoryInterface $config_factory
+   *   Config factory.
+   * @param \Drupal\dpl_react\DplReactConfigInterface $configService
+   *   FBS configuration object.
+   */
+  public function __construct(
+    ConfigFactoryInterface $config_factory,
+    protected DplReactConfigInterface $configService,
+  ) {
+    parent::__construct($config_factory);
+  }
+
+  /**
+   * {@inheritdoc}
+   */
+  public static function create(ContainerInterface $container): self {
+    return new static(
+      $container->get('config.factory'),
+      \Drupal::service('dpl_fbs.settings')
+    );
+  }
+
+  /**
    * {@inheritdoc}
    */
   protected function getEditableConfigNames(): array {
     return [
-      'dpl_fbs.settings',
+      $this->configService->getConfigKey(),
     ];
   }
 
@@ -30,7 +58,7 @@ class FbsSettingsForm extends ConfigFormBase {
    * {@inheritdoc}
    */
   public function buildForm(array $form, FormStateInterface $form_state): array {
-    $config = $this->config('dpl_fbs.settings');
+    $config = $this->configService->loadConfig();
 
     $form['settings'] = [
       '#type' => 'fieldset',
@@ -39,7 +67,7 @@ class FbsSettingsForm extends ConfigFormBase {
     ];
 
     $form['settings']['base_url'] = [
-      '#type' => 'textfield',
+      '#type' => 'url',
       '#title' => $this->t('FBS service url', [], ['context' => 'Dpl Fbs']),
       '#default_value' => $config->get('base_url'),
     ];
@@ -50,24 +78,10 @@ class FbsSettingsForm extends ConfigFormBase {
   /**
    * {@inheritdoc}
    */
-  public function validateForm(array &$form, FormStateInterface $form_state): void {
-    $url = $form_state->getValue('base_url');
-    if (!filter_var($url, FILTER_VALIDATE_URL)) {
-      $form_state->setErrorByName('base_url', $this->t(
-        'The url "%url" is not a valid URL.',
-        ['%url' => $url],
-        ['context' => 'Dpl Fbs']
-      ));
-    }
-  }
-
-  /**
-   * {@inheritdoc}
-   */
   public function submitForm(array &$form, FormStateInterface $form_state): void {
     parent::submitForm($form, $form_state);
 
-    $this->config('dpl_fbs.settings')
+    $this->config($this->configService->getConfigKey())
       ->set('base_url', $form_state->getValue('base_url'))
       ->save();
   }

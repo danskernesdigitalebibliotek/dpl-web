@@ -28,7 +28,7 @@ class DplReactAppsController extends ControllerBase {
     protected ReservationSettings $reservationSettings,
     protected BranchSettings $branchSettings,
     protected BranchRepositoryInterface $branchRepository,
-    protected DplInstantLoanSettings $instantLoanSettings
+    protected DplInstantLoanSettings $instantLoanSettings,
   ) {}
 
   /**
@@ -402,15 +402,19 @@ class DplReactAppsController extends ControllerBase {
    */
   public static function externalApiBaseUrls(): array {
     $react_apps_settings = \Drupal::configFactory()->get('dpl_react_apps.settings');
-    $fbs_settings = \Drupal::configFactory()->get('dpl_fbs.settings');
-    $publizon_settings = \Drupal::configFactory()->get('dpl_publizon.settings');
+
+    /** @var \Drupal\dpl_fbs\DplFbsSettings $fbs_settings*/
+    $fbs_settings = \Drupal::service('dpl_fbs.settings');
+
+    /** @var \Drupal\dpl_publizon\DplPublizonSettings $publizon_settings*/
+    $publizon_settings = \Drupal::service('dpl_publizon.settings');
 
     // Get base urls from this module.
     $services = $react_apps_settings->get('services') ?? [];
 
     // Get base urls from other modules.
-    $services['fbs'] = ['base_url' => $fbs_settings->get('base_url')];
-    $services['publizon'] = ['base_url' => $publizon_settings->get('base_url')];
+    $services['fbs'] = ['base_url' => $fbs_settings->loadConfig()->get('base_url')];
+    $services['publizon'] = ['base_url' => $publizon_settings->loadConfig()->get('base_url')];
 
     $urls = [];
     foreach ($services as $api => $definition) {

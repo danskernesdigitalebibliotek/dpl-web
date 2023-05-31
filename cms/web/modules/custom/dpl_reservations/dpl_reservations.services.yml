@@ -1,0 +1,4 @@
+services:
+  dpl_reservations.settings:
+    class: Drupal\dpl_reservations\DplReservationsSettings
+    arguments: ["@config.manager"]

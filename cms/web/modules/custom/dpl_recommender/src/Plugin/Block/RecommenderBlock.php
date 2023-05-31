@@ -3,8 +3,8 @@
 namespace Drupal\dpl_recommender\Plugin\Block;
 
 use Drupal\Core\Block\BlockBase;
-use Drupal\Core\Config\ConfigFactoryInterface;
 use Drupal\Core\Plugin\ContainerFactoryPluginInterface;
+use Drupal\dpl_react\DplReactConfigInterface;
 use Drupal\dpl_react_apps\Controller\DplReactAppsController;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
@@ -19,13 +19,6 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
 class RecommenderBlock extends BlockBase implements ContainerFactoryPluginInterface {
 
   /**
-   * Drupal config factory.
-   *
-   * @var \Drupal\Core\Config\ConfigFactoryInterface
-   */
-  private ConfigFactoryInterface $configFactory;
-
-  /**
    * RecommenderBlock constructor.
    *
    * @param mixed[] $configuration
@@ -34,13 +27,17 @@ class RecommenderBlock extends BlockBase implements ContainerFactoryPluginInterf
    *   The plugin ID for the plugin instance.
    * @param mixed $plugin_definition
    *   The plugin implementation definition.
-   * @param \Drupal\Core\Config\ConfigFactoryInterface $configFactory
-   *   Drupal config factory to get FBS and Publizon settings.
+   * @param \Drupal\dpl_react\DplReactConfigInterface $recommenderSettings
+   *   Recommender settings.
    */
-  public function __construct(array $configuration, $plugin_id, $plugin_definition, ConfigFactoryInterface $configFactory) {
+  public function __construct(
+      array $configuration,
+      $plugin_id,
+      $plugin_definition,
+      private DplReactConfigInterface $recommenderSettings
+    ) {
     parent::__construct($configuration, $plugin_id, $plugin_definition);
     $this->configuration = $configuration;
-    $this->configFactory = $configFactory;
   }
 
   /**
@@ -63,7 +60,7 @@ class RecommenderBlock extends BlockBase implements ContainerFactoryPluginInterf
       $configuration,
       $plugin_id,
       $plugin_definition,
-      $container->get('config.factory'),
+      \Drupal::service('recommender.settings')
     );
   }
 
@@ -74,12 +71,13 @@ class RecommenderBlock extends BlockBase implements ContainerFactoryPluginInterf
    *   The app render array.
    */
   public function build() {
-    $recommenderSettings = $this->configFactory->get('recommender.settings');
+    $recommenderSettings = $this->recommenderSettings->loadConfig();
 
     $data = [
       // Urls.
       'dpl-cms-base-url' => DplReactAppsController::dplCmsBaseUrl(),
       'material-url' => DplReactAppsController::materialUrl(),
+
       // Texts.
       'add-to-favorites-aria-label-text' => $this->t("Add @title to favorites list", [], ['context' => 'Recommender (Aria)']),
       'empty-recommender-search-config' => $recommenderSettings->get('search_text'),
