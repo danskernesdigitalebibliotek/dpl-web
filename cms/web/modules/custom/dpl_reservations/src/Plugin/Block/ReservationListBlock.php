@@ -161,7 +161,7 @@ class ReservationListBlock extends BlockBase implements ContainerFactoryPluginIn
       'pause-reservation-modal-body-text' => $this->t('Pause your reservations early, since reservations that are already being processed, will not be paused.', [], ['context' => 'Reservation list']),
       'pause-reservation-modal-close-modal-text' => $this->t('Close pause reservations modal', [], ['context' => 'Reservation list']),
       'pause-reservation-modal-header-text' => $this->t('Pause reservations on physical items', [], ['context' => 'Reservation list']),
-      'pause-reservation-modal-link-text' => $this->t('Read more about pausing reservertions and what that means here', [], ['context' => 'Reservation list']),
+      'pause-reservation-modal-link-text' => $this->t('Read more about pausing reservations and what that means here', [], ['context' => 'Reservation list']),
       'pause-reservation-modal-save-button-label-text' => $this->t('Save', [], ['context' => 'Reservation list']),
       'reservation-list-on-hold-aria-text' => $this->t('Reservations have been paused in the following time span:', [], ['context' => 'Reservation list (Aria)']),
       'reservation-list-pause-reservation-aria-modal-text' => $this->t('This button opens a modal that covers the entire page and contains the possibility to pause physical reservations', [], ['context' => 'Reservation list (Aria)']),
