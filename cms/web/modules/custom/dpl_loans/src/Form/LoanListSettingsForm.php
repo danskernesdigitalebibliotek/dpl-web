@@ -2,8 +2,11 @@
 
 namespace Drupal\dpl_loans\Form;
 
+use Drupal\Core\Config\ConfigFactoryInterface;
 use Drupal\Core\Form\ConfigFormBase;
 use Drupal\Core\Form\FormStateInterface;
+use Drupal\dpl_react\DplReactConfigInterface;
+use Symfony\Component\DependencyInjection\ContainerInterface;
 
 /**
  * Loan list setting form.
@@ -11,11 +14,36 @@ use Drupal\Core\Form\FormStateInterface;
 class LoanListSettingsForm extends ConfigFormBase {
 
   /**
+   * Default constructor.
+   *
+   * @param \Drupal\Core\Config\ConfigFactoryInterface $config_factory
+   *   Config factory.
+   * @param \Drupal\dpl_react\DplReactConfigInterface $configService
+   *   Loan list configuration object.
+   */
+  public function __construct(
+    ConfigFactoryInterface $config_factory,
+    protected DplReactConfigInterface $configService,
+  ) {
+    parent::__construct($config_factory);
+  }
+
+  /**
+   * {@inheritdoc}
+   */
+  public static function create(ContainerInterface $container): self {
+    return new static(
+      $container->get('config.factory'),
+      \Drupal::service('dpl_loans.settings')
+    );
+  }
+
+  /**
    * {@inheritdoc}
    */
   protected function getEditableConfigNames(): array {
     return [
-      'dpl_loan_list.settings',
+      $this->configService->getConfigKey(),
     ];
   }
 
@@ -30,7 +58,7 @@ class LoanListSettingsForm extends ConfigFormBase {
    * {@inheritdoc}
    */
   public function buildForm(array $form, FormStateInterface $form_state): array {
-    $config = $this->config('dpl_loan_list.settings');
+    $config = $this->configService->loadConfig();
 
     $form['settings'] = [
       '#type' => 'fieldset',
@@ -67,16 +95,10 @@ class LoanListSettingsForm extends ConfigFormBase {
   /**
    * {@inheritdoc}
    */
-  public function validateForm(array &$form, FormStateInterface $form_state): void {
-  }
-
-  /**
-   * {@inheritdoc}
-   */
   public function submitForm(array &$form, FormStateInterface $form_state): void {
     parent::submitForm($form, $form_state);
 
-    $this->config('dpl_loan_list.settings')
+    $this->config($this->configService->getConfigKey())
       ->set('material_overdue_url', $form_state->getValue('material_overdue_url'))
       ->set('page_size_desktop', $form_state->getValue('page_size_desktop'))
       ->set('page_size_mobile', $form_state->getValue('page_size_mobile'))

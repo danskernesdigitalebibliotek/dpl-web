@@ -2,17 +2,21 @@ services:
   dpl_library_agency.reservation_settings:
     class: Drupal\dpl_library_agency\ReservationSettings
     arguments: ["@config.manager"]
+
   dpl_library_agency.branch_settings:
     class: Drupal\dpl_library_agency\BranchSettings
     arguments: ["@config.manager"]
+
   dpl_library_agency.branch.repository:
     class: Drupal\dpl_library_agency\Branch\FallbackBranchRepository
     arguments:
       - "@dpl_library_agency.branch.repository.cache"
       - "@dpl_library_agency.branch.repository.empty"
       - "@dpl_library_agency.logger"
+
   dpl_library_agency.branch.repository.empty:
     class: Drupal\dpl_library_agency\Branch\EmptyBranchRepository
+
   dpl_library_agency.branch.repository.cache:
     class: Drupal\dpl_library_agency\Branch\CacheableBranchRepository
     arguments:
@@ -22,18 +26,23 @@ services:
       # A lifetime of 12 hours should ensure that fresh data arrives at latest
       # one workday after being made available in FBS.
       - 43200
+
   dpl_library_agency.branch.repository.fbs:
     class: Drupal\dpl_library_agency\Branch\FbsBranchRepository
     arguments: ["@dpl_library_agency.fbs_agency_api"]
+
   dpl_library_agency.fbs_api_factory:
     class: Drupal\dpl_library_agency\FbsApiFactory
     arguments:
       - "@config.manager"
       - "@http_client"
       - "@dpl_library_token.handler"
+      - "@dpl_fbs.settings"
+
   dpl_library_agency.fbs_agency_api:
     class: DanskernesDigitaleBibliotek\FBS\Api\ExternalV1AgencyidApi
     factory: ["@dpl_library_agency.fbs_api_factory", "getAgencyApi"]
+
   dpl_library_agency.logger:
     parent: logger.channel_base
     arguments: ["DPL Library Agency"]

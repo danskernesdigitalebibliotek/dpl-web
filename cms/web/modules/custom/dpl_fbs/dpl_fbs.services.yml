@@ -1,0 +1,4 @@
+services:
+  dpl_fbs.settings:
+    class: Drupal\dpl_fbs\DplFbsSettings
+    arguments: ["@config.manager"]

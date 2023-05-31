@@ -5,6 +5,7 @@ namespace Drupal\dpl_loans\Controller;
 use Drupal\Core\Block\BlockManagerInterface;
 use Drupal\Core\Controller\ControllerBase;
 use Drupal\Core\Render\RendererInterface;
+use Drupal\dpl_react\DplReactConfigInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
 
@@ -20,10 +21,13 @@ class DplLoansController extends ControllerBase {
    *   Drupal block manager.
    * @param \Drupal\Core\Render\RendererInterface $renderer
    *   Drupal renderer service.
+   * @param \Drupal\dpl_react\DplReactConfigInterface $loansSettings
+   *   Loans settings.
    */
   public function __construct(
     private BlockManagerInterface $blockManager,
-    private RendererInterface $renderer
+    private RendererInterface $renderer,
+    private DplReactConfigInterface $loansSettings
   ) {
   }
 
@@ -39,6 +43,7 @@ class DplLoansController extends ControllerBase {
     return new static(
       $container->get('plugin.manager.block'),
       $container->get('renderer'),
+      \Drupal::service('dpl_loans.settings')
     );
   }
 
@@ -64,6 +69,7 @@ class DplLoansController extends ControllerBase {
     // Add the cache tags/contexts.
     $render = $plugin_block->build();
     $this->renderer->addCacheableDependency($render, $plugin_block);
+    $this->renderer->addCacheableDependency($render, $this->loansSettings);
 
     return $render;
   }
