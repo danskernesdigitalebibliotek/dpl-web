@@ -65,7 +65,7 @@ class DplPatronRegController extends ControllerBase {
    *   The page as a render array.
    */
   public function informationPage(): array {
-    $config = $this->patronRegSettings->getConfig();
+    $config = $this->patronRegSettings->loadConfig();
     $logins = [];
 
     // Loop over all open id connect definitions and build login links for each
@@ -87,8 +87,8 @@ class DplPatronRegController extends ControllerBase {
     return [
       'info' => [
         '#type' => 'processed_text',
-        '#text' => $config['information']['value'] ?? 'Please fill out the information page in the administration',
-        '#format' => $config['information']['format'] ?? 'plain_text',
+        '#text' => $config->get('information')['value'] ?? 'Please fill out the information page in the administration',
+        '#format' => $config->get('information')['format'] ?? 'plain_text',
       ],
       'logins' => $logins,
     ];

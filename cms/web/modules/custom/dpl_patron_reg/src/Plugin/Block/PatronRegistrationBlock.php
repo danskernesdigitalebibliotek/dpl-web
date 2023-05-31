@@ -124,7 +124,7 @@ class PatronRegistrationBlock extends BlockBase implements ContainerFactoryPlugi
    * @throws \Safe\Exceptions\JsonException
    */
   public function build(): array {
-    $config = $this->patronRegSettings->getConfig();
+    $config = $this->patronRegSettings->loadConfig();
     $userToken = $this->user_token_provider->getAccessToken()?->token;
 
     // @todo change to use patron_page settings inject, if approved in other PR.
@@ -134,10 +134,10 @@ class PatronRegistrationBlock extends BlockBase implements ContainerFactoryPlugi
       // Configuration.
       'blacklisted-pickup-branches-config' => $this->buildBranchesListProp($this->branchSettings->getExcludedReservationBranches()),
       'branches-config' => $this->buildBranchesJsonProp($this->branchRepository->getBranches()),
-      'min-age-config' => $config['ageLimit'] ?? '18',
+      'min-age-config' => $config->get('age_limit') ?? '18',
       'pincode-length-max-config' => $patron_page_settings->get('pincode_length_max'),
       'pincode-length-min-config' => $patron_page_settings->get('pincode_length_min'),
-      'redirect-on-user-created-url' => $config['redirectOnUserCreatedUrl'],
+      'redirect-on-user-created-url' => $config->get('redirect_on_user_created_url'),
       'user-token' => $userToken,
 
       // Texts.
