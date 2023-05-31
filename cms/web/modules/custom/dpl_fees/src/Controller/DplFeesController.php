@@ -61,6 +61,7 @@ class DplFeesController extends ControllerBase {
     /** @var \Drupal\dpl_fees\Plugin\Block\FeesListBlock $plugin_block */
     $plugin_block = $this->blockManager->createInstance('dpl_fees_list_block', $config);
 
+    // @todo create service for access check.
     $access_result = $plugin_block->access($this->currentUser());
     if (is_object($access_result) && $access_result->isForbidden() || is_bool($access_result) && !$access_result) {
       throw new AccessDeniedHttpException();

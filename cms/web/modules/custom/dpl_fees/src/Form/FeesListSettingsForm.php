@@ -58,7 +58,7 @@ class FeesListSettingsForm extends ConfigFormBase {
    * {@inheritdoc}
    */
   public function buildForm(array $form, FormStateInterface $form_state): array {
-    $config = $this->configService->getConfig();
+    $config = $this->configService->loadConfig();
 
     $form['settings'] = [
       '#type' => 'fieldset',
@@ -70,32 +70,32 @@ class FeesListSettingsForm extends ConfigFormBase {
       '#type' => 'url',
       '#title' => $this->t('Fees and Replacement costs URL'),
       '#description' => $this->t('File or URL containing the fees and replacement costs'),
-      '#default_value' => $config['feesAndReplacementCostsUrl'] ?? '',
+      '#default_value' => $config->get('fees_and_replacement_costs_url') ?? '',
     ];
 
     $form['settings']['available_payment_types_url'] = [
       '#type' => 'url',
       '#title' => $this->t('Available payment types url'),
-      '#default_value' => $config['availablePaymentTypesUrl'] ?? '',
+      '#default_value' => $config->get('available_payment_types_url') ?? '',
     ];
 
     $form['settings']['terms_of_trade_text'] = [
       '#type' => 'textfield',
       '#title' => $this->t('Terms of trade text'),
       '#description' => $this->t('Terms of trade text'),
-      '#default_value' => $config['termsOfTradeText'] ?? '',
+      '#default_value' => $config->get('terms_of_trade_text') ?? '',
     ];
 
     $form['settings']['terms_of_trade_url'] = [
       '#type' => 'url',
       '#title' => $this->t('Terms of trade redirect url'),
-      '#default_value' => $config['termsOfTradeUrl'] ?? '',
+      '#default_value' => $config->get('terms_of_trade_url') ?? '',
     ];
 
     $form['settings']['page_size_mobile'] = [
       '#type' => 'number',
       '#title' => $this->t('Page size mobile', [], ['context' => 'Dashboard (settings)']),
-      '#default_value' => $config['pageSizeMobile'] ?? 25,
+      '#default_value' => $config->get('page_size_mobile') ?? 25,
       '#min' => 0,
       '#step' => 1,
     ];
@@ -103,7 +103,7 @@ class FeesListSettingsForm extends ConfigFormBase {
     $form['settings']['page_size_desktop'] = [
       '#type' => 'number',
       '#title' => $this->t('Page size desktop', [], ['context' => 'Dashboard (settings)']),
-      '#default_value' => $config['pageSizeDesktop'] ?? 25,
+      '#default_value' => $config->get('page_size_desktop') ?? 25,
       '#min' => 0,
       '#step' => 1,
     ];
@@ -113,20 +113,20 @@ class FeesListSettingsForm extends ConfigFormBase {
       '#type' => 'textfield',
       '#title' => $this->t('Payment options image'),
       '#description' => $this->t('Image containing the available payment options (300x35)'),
-      '#default_value' => $config['image'] ?? '',
+      '#default_value' => $config->get('image') ?? '',
     ];
 
     $form['settings']['payment_overview_url'] = [
       '#type' => 'url',
       '#title' => $this->t('Payment overview url'),
-      '#default_value' => $config['paymentOverviewUrl'] ?? '',
+      '#default_value' => $config->get('payment_overview_url') ?? '',
     ];
 
     $form['settings']['fee_list_body_text'] = [
       '#type' => 'textarea',
       '#title' => $this->t('Intro text'),
       '#description' => $this->t('Display an intro-text below the headline'),
-      '#default_value' => $config['feeListBodyText'] ?? $this->t('Fees and replacement costs are handled through the new system "Mit betalingsoverblik.'),
+      '#default_value' => $config->get('fee_list_body_text') ?? $this->t('Fees and replacement costs are handled through the new system "Mit betalingsoverblik.'),
     ];
 
     return parent::buildForm($form, $form_state);
@@ -139,14 +139,14 @@ class FeesListSettingsForm extends ConfigFormBase {
     parent::submitForm($form, $form_state);
 
     $this->config($this->configService->getConfigKey())
-      ->set('feesAndReplacementCostsUrl', $form_state->getValue('fees_and_replacement_costs_url'))
-      ->set('termsOfTradeText', $form_state->getValue('terms_of_trade_text'))
-      ->set('termsOfTradeUrl', $form_state->getValue('terms_of_trade_url'))
-      ->set('paymentOverviewUrl', $form_state->getValue('payment_overview_url'))
-      ->set('feeListBodyText', $form_state->getValue('fee_list_body_text'))
-      ->set('pageSizeDesktop', $form_state->getValue('page_size_desktop'))
-      ->set('pageSizeMobile', $form_state->getValue('page_size_mobile'))
-      ->set('availablePaymentTypesUrl', $form_state->getValue('available_payment_types_url'))
+      ->set('fees_and_replacement_costs_url', $form_state->getValue('fees_and_replacement_costs_url'))
+      ->set('terms_of_trade_text', $form_state->getValue('terms_of_trade_text'))
+      ->set('terms_of_trade_url', $form_state->getValue('terms_of_trade_url'))
+      ->set('payment_overview_url', $form_state->getValue('payment_overview_url'))
+      ->set('fee_list_body_text', $form_state->getValue('fee_list_body_text'))
+      ->set('page_size_desktop', $form_state->getValue('page_size_desktop'))
+      ->set('page_size_mobile', $form_state->getValue('page_size_mobile'))
+      ->set('available_payment_types_url', $form_state->getValue('available_payment_types_url'))
       ->save();
   }
 

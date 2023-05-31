@@ -59,16 +59,16 @@ class FeesListBlock extends BlockBase implements ContainerFactoryPluginInterface
    *   The app render array.
    */
   public function build() {
-    $feesConfig = $this->feesSettings->getConfig();
+    $feesConfig = $this->feesSettings->loadConfig();
 
     $data = [
       // Config.
-      "page-size-desktop" => $feesConfig['pageSizeDesktop'],
-      "page-size-mobile" => $feesConfig['pageSizeMobile'],
+      "page-size-desktop" => $feesConfig->get('page_size_desktop'),
+      "page-size-mobile" => $feesConfig->get('page_size_mobile'),
 
       // Urls.
       // @todo images to be done in future tender.
-      'available-payment-types-url' => $feesConfig['availablePaymentTypesUrl'],
+      'available-payment-types-url' => $feesConfig->get('available_payment_types_url'),
       'dpl-cms-base-url' => DplReactAppsController::dplCmsBaseUrl(),
       'search-url' => DplReactAppsController::searchResultUrl(),
 
@@ -79,7 +79,7 @@ class FeesListBlock extends BlockBase implements ContainerFactoryPluginInterface
       'fee-details-modal-close-modal-aria-label-text' => $this->t("Close fee details modal", [], ['context' => 'Fees list (Aria)']),
       'fee-details-modal-description-text' => $this->t("Modal containing information about this element or group of elements fees", [], ['context' => 'Fees list']),
       'fee-details-modal-screen-reader-text' => $this->t("A modal containing details about a fee", [], ['context' => 'Fees list']),
-      'fee-list-body-text' => $feesConfig['feeListBodyText'],
+      'fee-list-body-text' => $feesConfig->get('fee_list_body_text'),
       'fee-list-days-text' => $this->t("Days", [], ['context' => 'Fees list']),
       'fee-list-headline-text' => $this->t("Fees & replacement costs", [], ['context' => 'Fees list']),
       'fee-payment-modal-body-text' => $this->t("You will be redirected to Mit Betalingsoverblik.", [], ['context' => 'Fees list']),
@@ -93,18 +93,18 @@ class FeesListBlock extends BlockBase implements ContainerFactoryPluginInterface
       'material-by-author-text' => $this->t("By", [], ['context' => 'Fees list']),
       'other-materials-text' => $this->t("Other materials", [], ['context' => 'Fees list']),
       'pay-text' => $this->t("Pay", [], ['context' => 'Fees list']),
-      'payment-overview-url' => $feesConfig['paymentOverviewUrl'],
+      'payment-overview-url' => $feesConfig->get('payment_overview_url'),
       'plus-x-other-materials-text' => $this->t("+ @amount other materials", [], ['context' => 'Fees list']),
       'post-payment-type-change-date-text' => $this->t("AFTER 27/10 2020", [], ['context' => 'Fees list']),
       'pre-payment-type-change-date-text' => $this->t("BEFORE 27/10 2020", [], ['context' => 'Fees list']),
-      'terms-of-trade-text' => $feesConfig['termsOfTradeText'],
-      'terms-of-trade-url' => $feesConfig['termsOfTradeUrl'],
+      'terms-of-trade-text' => $feesConfig->get('terms_of_trade_text'),
+      'terms-of-trade-url' => $feesConfig->get('terms_of_trade_url'),
       'total-fee-amount-text' => $this->t("Fee", [], ['context' => 'Fees list']),
       'total-text' => $this->t("Total", [], ['context' => 'Fees list']),
       'turned-in-text' => $this->t("Turned in @date", [], ['context' => 'Fees list']),
       'unpaid-fees-text' => $this->t("Unsettled debt", [], ['context' => 'Fees list']),
       'view-fees-and-compensation-rates-text' => $this->t("see our fees and replacement costs", [], ['context' => 'Fees list']),
-      'view-fees-and-compensation-rates-url' => $feesConfig['feesAndReplacementCostsUrl'],
+      'view-fees-and-compensation-rates-url' => $feesConfig->get('fees_and_replacement_costs_url'),
     ] + DplReactAppsController::externalApiBaseUrls();
 
     return [
