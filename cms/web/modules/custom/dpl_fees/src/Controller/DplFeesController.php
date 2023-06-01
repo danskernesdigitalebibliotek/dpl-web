@@ -43,7 +43,7 @@ class DplFeesController extends ControllerBase {
     return new static(
       $container->get('plugin.manager.block'),
       $container->get('renderer'),
-      \Drupal::service('dpl_instant_loan.settings')
+      \Drupal::service('dpl_fees.settings')
     );
   }
 
