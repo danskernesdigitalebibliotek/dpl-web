@@ -34,7 +34,7 @@ class RecommenderSettingsForm extends ConfigFormBase {
   public static function create(ContainerInterface $container): self {
     return new static(
       $container->get('config.factory'),
-      \Drupal::service('recommender.settings')
+       \Drupal::service('dpl_recommender.settings'),
     );
   }
 
