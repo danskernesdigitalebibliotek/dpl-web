@@ -95,7 +95,6 @@ class DashboardBlock extends BlockBase implements ContainerFactoryPluginInterfac
       'reservations-url' => $dashboardSettings->get('reservations_url'),
       'search-url' => DplReactAppsController::searchResultUrl(),
       'fees-url' => $dashboardSettings->get('fees_url'),
-      'intermediate-url' => $dashboardSettings->get('intermediate_url'),
       'ereolen-my-page-url' => $generalSettings->get('ereolen_my_page_url'),
 
       // Texts.
