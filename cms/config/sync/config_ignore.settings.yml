@@ -98,6 +98,7 @@ ignored_config_entities:
   - ~varnish_purger.settings.65fc931232
   - ~varnish_purger.settings.30cd45a1b1
   - ~dpl_loan_list.settings
+  - ~dpl_fees.settings
   - ~recommender.settings
   - ~dpl_reservation_list.settings
 _core:
