@@ -3,8 +3,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2023-05-31 12:06+0000\n"
-"PO-Revision-Date: 2023-05-31 12:06+0000\n"
+"POT-Creation-Date: 2023-06-01 07:00+0000\n"
+"PO-Revision-Date: 2023-06-01 07:00+0000\n"
 "Last-Translator: NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
 "MIME-Version: 1.0\n"
@@ -1569,6 +1569,154 @@ msgctxt "Dashboard (settings)"
 msgid "Page size desktop"
 msgstr ""
 
+msgctxt "Fees list"
+msgid ""
+"Please note that paid fees are not registered up until 72 hours after "
+"your payment after which your debt is updated and your user unblocked "
+"if it has been blocked."
+msgstr ""
+
+msgctxt "Fees list"
+msgid "You have 0 unpaid fees or replacement costs"
+msgstr ""
+
+msgctxt "Fees list"
+msgid "Fees charged @date"
+msgstr ""
+
+msgctxt "Fees list (Aria)"
+msgid "Close fee details modal"
+msgstr ""
+
+msgctxt "Fees list"
+msgid ""
+"Modal containing information about this element or group of elements "
+"fees"
+msgstr ""
+
+msgctxt "Fees list"
+msgid "A modal containing details about a fee"
+msgstr ""
+
+msgctxt "Fees list"
+msgid "Days"
+msgstr ""
+
+msgctxt "Fees list"
+msgid "Fees & replacement costs"
+msgstr ""
+
+msgctxt "Fees list"
+msgid "You will be redirected to Mit Betalingsoverblik."
+msgstr ""
+
+msgctxt "Fees list"
+msgid "Cancel"
+msgstr ""
+
+msgctxt "Fees list"
+msgid "Go to Mit Betalingsoverblik"
+msgstr ""
+
+msgctxt "Fees list"
+msgid "Unpaid fees post 27/10 2020"
+msgstr ""
+
+msgctxt "Fees list"
+msgid "Paid fees can take up to 24 hours to registrer."
+msgstr ""
+
+msgctxt "Fees list"
+msgid "I accept the"
+msgstr ""
+
+msgctxt "Fees list"
+msgid "Fee @fee,-"
+msgstr ""
+
+msgctxt "Fees list"
+msgid "and"
+msgstr ""
+
+msgctxt "Fees list"
+msgid "By"
+msgstr ""
+
+msgctxt "Fees list"
+msgid "Other materials"
+msgstr ""
+
+msgctxt "Fees list"
+msgid "Pay"
+msgstr ""
+
+msgctxt "Fees list"
+msgid "+ @amount other materials"
+msgstr ""
+
+msgctxt "Fees list"
+msgid "AFTER 27/10 2020"
+msgstr ""
+
+msgctxt "Fees list"
+msgid "BEFORE 27/10 2020"
+msgstr ""
+
+msgctxt "Fees list"
+msgid "Fee"
+msgstr ""
+
+msgctxt "Fees list"
+msgid "Total"
+msgstr ""
+
+msgctxt "Fees list"
+msgid "Turned in @date"
+msgstr ""
+
+msgctxt "Fees list"
+msgid "Unsettled debt"
+msgstr ""
+
+msgctxt "Fees list"
+msgid "see our fees and replacement costs"
+msgstr ""
+
+msgid "Fees and Replacement costs URL"
+msgstr ""
+
+msgid "File or URL containing the fees and replacement costs"
+msgstr ""
+
+msgid "Available payment types url"
+msgstr ""
+
+msgid "Terms of trade text"
+msgstr ""
+
+msgid "Terms of trade redirect url"
+msgstr ""
+
+msgid "Payment options image"
+msgstr ""
+
+msgid "Image containing the available payment options (300x35)"
+msgstr ""
+
+msgid "Payment overview url"
+msgstr ""
+
+msgid "Intro text"
+msgstr ""
+
+msgid "Display an intro-text below the headline"
+msgstr ""
+
+msgid ""
+"Fees and replacement costs are handled through the new system \"Mit "
+"betalingsoverblik."
+msgstr ""
+
 msgctxt "Recommender (Aria)"
 msgid "Add element to favorites list"
 msgstr ""
@@ -2346,6 +2494,15 @@ msgid "DPL dashboard"
 msgstr ""
 
 msgid "Handle the user profile dashboard page"
+msgstr ""
+
+msgid "DPL Fees"
+msgstr ""
+
+msgid "Handle the user profile fees page"
+msgstr ""
+
+msgid "Fees settings"
 msgstr ""
 
 msgid "Recommender settings"
