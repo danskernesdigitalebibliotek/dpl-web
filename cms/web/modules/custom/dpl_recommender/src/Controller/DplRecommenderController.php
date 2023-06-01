@@ -43,7 +43,7 @@ class DplRecommenderController extends ControllerBase {
     return new static(
       $container->get('plugin.manager.block'),
       $container->get('renderer'),
-      \Drupal::service('recommender.settings'),
+       \Drupal::service('dpl_recommender.settings'),
     );
   }
 

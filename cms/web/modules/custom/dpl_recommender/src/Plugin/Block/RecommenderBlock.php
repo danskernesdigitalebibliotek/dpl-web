@@ -60,7 +60,7 @@ class RecommenderBlock extends BlockBase implements ContainerFactoryPluginInterf
       $configuration,
       $plugin_id,
       $plugin_definition,
-      \Drupal::service('recommender.settings')
+       \Drupal::service('dpl_recommender.settings'),
     );
   }
 
