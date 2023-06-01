@@ -10,6 +10,7 @@ use Drupal\dpl_react_apps\Controller\DplReactAppsController;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Drupal\dpl_library_agency\Branch\BranchRepositoryInterface;
 use Drupal\dpl_library_agency\BranchSettings;
+use Drupal\dpl_library_agency\ReservationSettings;
 
 /**
  * Provides patron page.
@@ -44,6 +45,7 @@ class PatronPageBlock extends BlockBase implements ContainerFactoryPluginInterfa
     $plugin_id,
     $plugin_definition,
     private ConfigFactoryInterface $configFactory,
+    protected ReservationSettings $reservationSettings,
     private BranchSettings $branchSettings,
     private BranchRepositoryInterface $branchRepository,
     private DplReactConfigInterface $patronPageSettings
@@ -61,21 +63,11 @@ class PatronPageBlock extends BlockBase implements ContainerFactoryPluginInterfa
       $plugin_id,
       $plugin_definition,
       $container->get('config.factory'),
+      $container->get('dpl_library_agency.reservation_settings'),
       $container->get('dpl_library_agency.branch_settings'),
       $container->get('dpl_library_agency.branch.repository'),
       \Drupal::service('dpl_patron_page.settings'),
     );
-  }
-
-  /**
-   * Checks whether the library has enabled text messages.
-   *
-   * @return bool
-   *   True if enabled, false if disabled.
-   */
-  private function textNotificationsEnabled(): bool {
-    $patron_page_settings = $this->patronPageSettings->getConfig();
-    return !empty($patron_page_settings['textNotificationsEnabled']);
   }
 
   /**
@@ -103,7 +95,7 @@ class PatronPageBlock extends BlockBase implements ContainerFactoryPluginInterfa
       'pause-reservation-start-date-config' => $dateConfig,
       'pincode-length-max-config' => $patron_page_settings->get('pincode_length_max'),
       'pincode-length-min-config' => $patron_page_settings->get('pincode_length_min'),
-      'text-notifications-enabled-config' => (int) $this->textNotificationsEnabled(),
+      'text-notifications-enabled-config' => (int) $this->reservationSettings->smsNotificationsIsEnabled(),
 
       // Urls.
       'always-available-ereolen-url' => $patron_page_settings->get('always_available_ereolen'),
