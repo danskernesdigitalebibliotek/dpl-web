@@ -156,6 +156,13 @@ class GeneralSettingsForm extends ConfigFormBase {
       '#default_value' => $config->get('reservation_detail_allow_remove_ready_reservations_config'),
     ];
 
+    $form['reservations']['ereolen_my_page_url'] = [
+      '#type' => 'url',
+      '#title' => $this->t('Ereolen link', [], ['context' => 'Library Agency Configuration']),
+      '#description' => $this->t('My page in ereolen', [], ['context' => 'Library Agency Configuration']),
+      '#default_value' => $config->get('ereolen_my_page_url'),
+    ];
+
     $form['reservations']['pause_reservation_info_url'] = [
       '#type' => 'url',
       '#title' => $this->t('Pause reservation link', [], ['context' => 'Library Agency Configuration']),
@@ -261,6 +268,7 @@ class GeneralSettingsForm extends ConfigFormBase {
       ->set('pause_reservation_info_url', $form_state->getValue('pause_reservation_info_url'))
       ->set('redirect_on_blocked_url', $form_state->getValue('redirect_on_blocked_url'))
       ->set('blocked_patron_e_link_url', $form_state->getValue('blocked_patron_e_link_url'))
+      ->set('ereolen_my_page_url', $form_state->getValue('ereolen_my_page_url'))
       ->set('pause_reservation_start_date_config', $form_state->getValue('pause_reservation_start_date_config'))
       ->save();
 

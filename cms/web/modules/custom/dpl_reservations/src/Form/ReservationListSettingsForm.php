@@ -73,12 +73,6 @@ class ReservationListSettingsForm extends ConfigFormBase {
       '#default_value' => $config->get('pause_reservation_info_url') ?? '',
     ];
 
-    $form['settings']['ereolen_my_page_url'] = [
-      '#type' => 'url',
-      '#title' => $this->t('Ereolen link', [], ['context' => 'Reservation list (settings)']),
-      '#description' => $this->t('My page in ereolen', [], ['context' => 'Reservation list (settings)']),
-      '#default_value' => $config->get('ereolen_my_page_url') ?? 'https://ereolen.dk/user/me',
-    ];
     $form['settings']['pause_reservation_start_date_config'] = [
       '#type' => 'date',
       '#title' => $this->t('Start date', [], ['context' => 'Reservation list (settings)']),
@@ -113,7 +107,6 @@ class ReservationListSettingsForm extends ConfigFormBase {
 
     $this->config($this->configService->getConfigKey())
       ->set('pause_reservation_info_url', $form_state->getValue('pause_reservation_info_url'))
-      ->set('ereolen_my_page_url', $form_state->getValue('ereolen_my_page_url'))
       ->set('pause_reservation_start_date_config', $form_state->getValue('pause_reservation_start_date_config'))
       ->set('page_size_desktop', $form_state->getValue('page_size_desktop'))
       ->set('page_size_mobile', $form_state->getValue('page_size_mobile'))
