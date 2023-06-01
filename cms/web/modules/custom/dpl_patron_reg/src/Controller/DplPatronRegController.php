@@ -154,6 +154,7 @@ class DplPatronRegController extends ControllerBase {
     /** @var \Drupal\dpl_patron_reg\Plugin\Block\PatronRegistrationBlock $plugin_block */
     $plugin_block = $this->blockManager->createInstance('dpl_patron_reg_block', []);
 
+    // @todo create service for access check.
     // Some blocks might implement access check.
     $access_result = $plugin_block->access($this->currentUser());
     if (is_object($access_result) && $access_result->isForbidden() || is_bool($access_result) && !$access_result) {
