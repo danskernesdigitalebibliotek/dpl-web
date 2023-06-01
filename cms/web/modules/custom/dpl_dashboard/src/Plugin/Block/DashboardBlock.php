@@ -32,6 +32,10 @@ class DashboardBlock extends BlockBase implements ContainerFactoryPluginInterfac
    *   The plugin implementation definition.
    * @param \Drupal\Core\Config\ConfigFactoryInterface $configFactory
    *   Drupal config factory to get FBS and Publizon settings.
+   * @param \Drupal\dpl_library_agency\BranchSettings $branchSettings
+   *   Branch settings.
+   * @param \Drupal\dpl_library_agency\Branch\BranchRepositoryInterface $branchRepository
+   *   Branch repository.
    * @param \Drupal\dpl_react\DplReactConfigInterface $dashboardSettings
    *   Dashboard settings.
    */
@@ -148,7 +152,7 @@ class DashboardBlock extends BlockBase implements ContainerFactoryPluginInterfac
       'reservation-details-pick-up-at-title-text' => $this->t('Pickup branch', [], ['context' => 'Dashboard']),
       'reservation-details-button-remove-text' => $this->t('Remove your reservation', [], ['context' => 'Dashboard']),
       'dashboard-number-in-line-text' => $this->t('Number @count in line', [], ['context' => 'Dashboard']),
-      'group-modal-renew-loan-denied-max-renewals-reached-text' => $this->t('The item cannot be renewed further ', [], ['context' => 'Dashboard']),
+      'group-modal-renew-loan-denied-max-renewals-reached-text' => $this->t('The item cannot be renewed further', [], ['context' => 'Dashboard']),
       'group-modal-due-date-material-text' => $this->t('To be returned @date', [], ['context' => 'Dashboard']),
       'group-modal-go-to-material-text' => $this->t('Go to material details', [], ['context' => 'Dashboard']),
       'reservation-details-status-title-text' => $this->t('Status', [], ['context' => 'Dashboard']),

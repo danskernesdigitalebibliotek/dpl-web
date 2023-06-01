@@ -33,6 +33,8 @@ class PatronPageBlock extends BlockBase implements ContainerFactoryPluginInterfa
    *   The plugin implementation definition.
    * @param \Drupal\Core\Config\ConfigFactoryInterface $configFactory
    *   Drupal config factory to get FBS and Publizon settings.
+   * @param \Drupal\dpl_library_agency\ReservationSettings $reservationSettings
+   *   Reservation settings.
    * @param \Drupal\dpl_library_agency\BranchSettings $branchSettings
    *   Branch settings.
    * @param \Drupal\dpl_library_agency\Branch\BranchRepositoryInterface $branchRepository
