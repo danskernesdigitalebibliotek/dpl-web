@@ -86,7 +86,7 @@ class PatronMenuBlock extends BlockBase implements ContainerFactoryPluginInterfa
       ],
       [
         "name" => $this->t("Reservations", ["context" => 'Patron menu']),
-        "link" => Url::fromRoute('dpl_reservation.list', [], ['absolute' => TRUE])->toString(),
+        "link" => Url::fromRoute('dpl_reservations.list', [], ['absolute' => TRUE])->toString(),
         "dataId" => "10",
       ],
       [
