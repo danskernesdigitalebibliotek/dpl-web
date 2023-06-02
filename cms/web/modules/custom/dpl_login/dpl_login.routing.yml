@@ -5,7 +5,8 @@ dpl_login.logout:
     _title: "Dpl Login Logout Route"
   requirements:
     _user_is_logged_in: "TRUE"
-  no_cache: TRUE
+  options:
+    no_cache: TRUE
 
 dpl_login.login:
   path: "/login"
@@ -15,4 +16,4 @@ dpl_login.login:
   requirements:
     _permission: "access content"
   options:
-    no_cache: "TRUE"
+    no_cache: TRUE
