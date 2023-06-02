@@ -117,7 +117,7 @@ class PatronMenuBlock extends BlockBase implements ContainerFactoryPluginInterfa
       // Urls.
       "menu-login-url" => Url::fromRoute('dpl_login.login', [], ['absolute' => TRUE])->toString(),
       "menu-log-out-url" => Url::fromRoute('dpl_login.logout', [], ['absolute' => TRUE])->toString(),
-      "menu-sign-up-url" => '#', //Url::fromRoute('dpl_patron_reg.information', [], ['absolute' => TRUE])->toString(),
+      "menu-sign-up-url" => Url::fromRoute('dpl_patron_reg.information', [], ['absolute' => TRUE])->toString(),
 
       // Texts.
       "menu-notifications-menu-aria-label-text" => $this->t("Notifications menu", [], ["context" => 'Patron menu (Aria)']),
