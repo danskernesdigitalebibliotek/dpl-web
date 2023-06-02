@@ -93,7 +93,7 @@ function novel_preprocess_dpl_react_app__search_result(array &$variables): void 
  * @throws \Safe\Exceptions\FilesystemException
  * @throws \Safe\Exceptions\StringsException
  */
-function novel_preprocess_dpl_react_app__menu(array &$variables): void {
+function novel_preprocess_dpl_react_app__patron_menu(array &$variables): void {
   $profile_svg = file_get_contents(sprintf('%s/%s',
     \Drupal::theme()->getActiveTheme()->getPath(),
     '/assets/dpl-design-system/icons/collection/Profile.svg'
