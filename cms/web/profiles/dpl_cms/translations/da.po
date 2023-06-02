@@ -3,8 +3,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2023-06-02 11:44+0000\n"
-"PO-Revision-Date: 2023-06-02 11:44+0000\n"
+"POT-Creation-Date: 2023-06-02 11:47+0000\n"
+"PO-Revision-Date: 2023-06-02 11:47+0000\n"
 "Last-Translator: NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
 "MIME-Version: 1.0\n"
@@ -2010,6 +2010,111 @@ msgctxt "Favorites list material component (aria)"
 msgid "Remove element from favorites list"
 msgstr ""
 
+msgid "Log in with @client_title"
+msgstr ""
+
+msgid "Minimum age to allow self registration"
+msgstr ""
+
+msgid "Redirect on create"
+msgstr ""
+
+msgid "Redirect to this on user successful created"
+msgstr ""
+
+msgid "Information page"
+msgstr ""
+
+msgctxt "Create patron"
+msgid "Cancel"
+msgstr ""
+
+msgctxt "Create patron"
+msgid "create patron change pickup body text"
+msgstr ""
+
+msgctxt "Create patron"
+msgid "create patron change pickup header text"
+msgstr ""
+
+msgctxt "Create patron"
+msgid "Confirm"
+msgstr ""
+
+msgctxt "Create patron"
+msgid "Register as patron"
+msgstr ""
+
+msgctxt "Create patron"
+msgid "This SSN is invalid"
+msgstr ""
+
+msgctxt "Create patron"
+msgid "Invalid SSN"
+msgstr ""
+
+msgctxt "Create patron"
+msgid "Receive emails about your loans, reservations, and so forth"
+msgstr ""
+
+msgctxt "Create patron"
+msgid "E-mail"
+msgstr ""
+
+msgctxt "Create patron"
+msgid "contact info body text"
+msgstr ""
+
+msgctxt "Create patron"
+msgid "contact info header text"
+msgstr ""
+
+msgctxt "Create patron"
+msgid "Name"
+msgstr ""
+
+msgctxt "Create patron"
+msgid "Receive text messages about your loans, reservations, and so forth"
+msgstr ""
+
+msgctxt "Create patron"
+msgid "Phone number"
+msgstr ""
+
+msgctxt "Create patron"
+msgid "Change current pin by entering a new pin and saving"
+msgstr ""
+
+msgctxt "Create patron"
+msgid "Pincode"
+msgstr ""
+
+msgctxt "Create patron"
+msgid "Confirm new pin"
+msgstr ""
+
+msgctxt "Create patron"
+msgid "New pin"
+msgstr ""
+
+msgctxt "Create patron"
+msgid ""
+"The pincode should be minimum @pincodeLengthMin and maximum "
+"@pincodeLengthMax characters long"
+msgstr ""
+
+msgctxt "Create patron"
+msgid "The pincodes are not the same"
+msgstr ""
+
+msgctxt "Create patron"
+msgid "Choose pickup branch"
+msgstr ""
+
+msgctxt "Create patron"
+msgid "Nothing selected"
+msgstr ""
+
 msgid "Page size mobile"
 msgstr ""
 
@@ -2521,6 +2626,21 @@ msgid "DPL favorites list material component"
 msgstr ""
 
 msgid "Handle the favorites list material component pages"
+msgstr ""
+
+msgid "Patron registration"
+msgstr ""
+
+msgid "Enable registration of new patrons"
+msgstr ""
+
+msgid "Patron registration information"
+msgstr ""
+
+msgid "Patron nem-login authentication"
+msgstr ""
+
+msgid "Patron create"
 msgstr ""
 
 msgid "Favorites list settings"
