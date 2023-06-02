@@ -162,6 +162,9 @@ class DplReactAppsController extends ControllerBase {
    *   A string with interest periods
    */
   public static function getInterestPeriods(): string {
+    // @todo the general setting should be converted into an settings object and
+    // injected into the places it is needed and then remove thies static
+    // functions.
     return \Drupal::configFactory()->get('dpl_library_agency.general_settings')->get('interest_periods_config');
   }
 
