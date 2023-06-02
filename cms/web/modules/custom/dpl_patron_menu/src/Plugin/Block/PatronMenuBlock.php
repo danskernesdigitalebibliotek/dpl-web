@@ -112,7 +112,7 @@ class PatronMenuBlock extends BlockBase implements ContainerFactoryPluginInterfa
       "menu-navigation-data-config" => json_encode($menu, JSON_THROW_ON_ERROR),
       // Added in THEME_preprocess_dpl_react_app__menu to use the theme defined
       // icon.
-      "profile_svg" => '',
+      "profile_svg" => '/'.\Drupal::theme()->getActiveTheme()->getPath().'/assets/dpl-design-system/icons/collection/Profile.svg',
 
       // Urls.
       "menu-login-url" => Url::fromRoute('dpl_login.login', [], ['absolute' => TRUE])->toString(),

@@ -83,23 +83,3 @@ function novel_preprocess_dpl_react_app__search_result(array &$variables): void 
   // That enables us to vary the "searching" title line.
   $variables['#cache']['contexts'][] = "url.query_args:q";
 }
-
-/**
- * Implements hook_preprocess_HOOK().
- *
- * @param mixed[] $variables
- *   The variables for the theme hook.
- *
- * @throws \Safe\Exceptions\FilesystemException
- * @throws \Safe\Exceptions\StringsException
- */
-function novel_preprocess_dpl_react_app__patron_menu(array &$variables): void {
-  $profile_svg = file_get_contents(sprintf('%s/%s',
-    \Drupal::theme()->getActiveTheme()->getPath(),
-    '/assets/dpl-design-system/icons/collection/Profile.svg'
-  ));
-
-  $variables += [
-    'profile_svg' => $profile_svg ?? NULL,
-  ];
-}

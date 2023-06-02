@@ -21,6 +21,7 @@ function dpl_patron_menu_preprocess_page(array &$variables): void {
   /** @var \Drupal\dpl_patron_menu\Plugin\Block\PatronMenuBlock $plugin_block */
   $plugin_block = $blockManager->createInstance('dpl_patron_menu_block', []);
 
+  // @todo create service for access check.
   $access_result = $plugin_block->access(\Drupal::currentUser());
   if (is_object($access_result) && $access_result->isForbidden() || is_bool($access_result) && !$access_result) {
     throw new AccessDeniedHttpException();
