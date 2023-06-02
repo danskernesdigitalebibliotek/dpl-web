@@ -75,6 +75,7 @@ class ReservationListBlock extends BlockBase implements ContainerFactoryPluginIn
    */
   public function build(): array {
     $config = $this->reservationListSettings->loadConfig();
+    $generalSettings = $this->configFactory->get('dpl_library_agency.general_settings');
 
     $data = [
       // Branches.
@@ -88,10 +89,12 @@ class ReservationListBlock extends BlockBase implements ContainerFactoryPluginIn
       'pause-reservation-info-url' => $config->get('pause_reservation_info_url'),
 
       // Config.
+      'interest-periods-config' => DplReactAppsController::getInterestPeriods(),
       'page-size-desktop' => $config->get('page_size_desktop'),
       'page-size-mobile' => $config->get('page_size_mobile'),
       'pause-reservation-start-date-config' => $config->get('pause_reservation_start_date_config') ?? '',
-      'threshold-config' => $this->configFactory->get('dpl_library_agency.general_settings')->get('threshold_config'),
+      'reservation-detail-allow-remove-ready-reservations-config' => $generalSettings->get('reservation_detail_allow_remove_ready_reservations_config'),
+      'threshold-config' => $generalSettings->get('threshold_config'),
 
       // Texts.
       'material-and-author-text' => $this->t('and', [], ['context' => 'Reservation list']),
@@ -158,7 +161,7 @@ class ReservationListBlock extends BlockBase implements ContainerFactoryPluginIn
       'pause-reservation-modal-body-text' => $this->t('Pause your reservations early, since reservations that are already being processed, will not be paused.', [], ['context' => 'Reservation list']),
       'pause-reservation-modal-close-modal-text' => $this->t('Close pause reservations modal', [], ['context' => 'Reservation list']),
       'pause-reservation-modal-header-text' => $this->t('Pause reservations on physical items', [], ['context' => 'Reservation list']),
-      'pause-reservation-modal-link-text' => $this->t('Read more about pausing reservertions and what that means here', [], ['context' => 'Reservation list']),
+      'pause-reservation-modal-link-text' => $this->t('Read more about pausing reservations and what that means here', [], ['context' => 'Reservation list']),
       'pause-reservation-modal-save-button-label-text' => $this->t('Save', [], ['context' => 'Reservation list']),
       'reservation-list-on-hold-aria-text' => $this->t('Reservations have been paused in the following time span:', [], ['context' => 'Reservation list (Aria)']),
       'reservation-list-pause-reservation-aria-modal-text' => $this->t('This button opens a modal that covers the entire page and contains the possibility to pause physical reservations', [], ['context' => 'Reservation list (Aria)']),

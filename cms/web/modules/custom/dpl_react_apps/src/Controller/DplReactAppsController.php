@@ -156,6 +156,19 @@ class DplReactAppsController extends ControllerBase {
   }
 
   /**
+   * Get a string with interest periods.
+   *
+   * @return string
+   *   A string with interest periods
+   */
+  public static function getInterestPeriods(): string {
+    // @todo the general setting should be converted into an settings object and
+    // injected into the places it is needed and then remove thies static
+    // functions.
+    return \Drupal::configFactory()->get('dpl_library_agency.general_settings')->get('interest_periods_config');
+  }
+
+  /**
    * Render work page.
    *
    * @param string $wid
@@ -174,9 +187,10 @@ class DplReactAppsController extends ControllerBase {
       'branches-config' => $this->buildBranchesJsonProp($this->branchRepository->getBranches()),
       'blacklisted-availability-branches-config' => $this->buildBranchesListProp($this->branchSettings->getExcludedAvailabilityBranches()),
       'blacklisted-pickup-branches-config' => $this->buildBranchesListProp($this->branchSettings->getExcludedReservationBranches()),
-     // @todo Remove when instant loans branches are used.
+      // @todo Remove when instant loans branches are used.
       'blacklisted-instant-loan-branches-config' => "",
       'instant-loan-config' => $this->instantLoanSettings->getConfig(),
+      "interest-periods-config" => $this->getInterestPeriods(),
       // Urls.
       'auth-url' => self::authUrl(),
       'material-url' => self::materialUrl(),
