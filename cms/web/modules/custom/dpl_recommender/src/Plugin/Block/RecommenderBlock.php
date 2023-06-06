@@ -79,14 +79,14 @@ class RecommenderBlock extends BlockBase implements ContainerFactoryPluginInterf
       'material-url' => DplReactAppsController::materialUrl(),
 
       // Texts.
-      'add-to-favorites-aria-label-text' => $this->t("Add element to favorites list", [], ['context' => 'Recommender (Aria)']),
+      'add-to-favorites-aria-label-text' => $this->t("Add @title to favorites list", [], ['context' => 'Recommender (Aria)']),
       'empty-recommender-search-config' => $recommenderSettings->get('search_text'),
       'material-and-author-text' => $this->t("and", [], ['context' => 'Recommender']),
       'material-by-author-text' => $this->t("By", [], ['context' => 'Recommender']),
       'recommender-title-inspiration-text' => $this->t("For your inspiration", [], ['context' => 'Recommender']),
       'recommender-title-loans-text' => $this->t("Because you have borrowed @title you may also like", [], ['context' => 'Recommender']),
       'recommender-title-reservations-text' => $this->t("Because you have reserved @title you may also like", [], ['context' => 'Recommender']),
-      'remove-from-favorites-aria-label-text' => $this->t("Remove element from favorites list", [], ['context' => 'Recommender (Aria)']),
+      'remove-from-favorites-aria-label-text' => $this->t("Remove @title from favorites list", [], ['context' => 'Recommender (Aria)']),
     ] + DplReactAppsController::externalApiBaseUrls();
 
     return [

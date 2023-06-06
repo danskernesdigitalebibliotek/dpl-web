@@ -83,7 +83,6 @@ class FavoritesListBlock extends BlockBase implements ContainerFactoryPluginInte
       "page-size-mobile" => $favoritesListSettings->get('page_size_mobile'),
 
       // Texts.
-      "add-to-favorites-aria-label-text" => $this->t("Add element to favorites list", [], ['context' => 'Favorites list (aria)']),
       "by-author-text" => $this->t("By", [], ['context' => 'Favorites list']),
       "et-al-text" => $this->t("et al", [], ['context' => 'Favorites list']),
       "favorites-list-empty-text" => $this->t("Your favorites list is empty", [], ['context' => 'Favorites list']),
@@ -91,7 +90,8 @@ class FavoritesListBlock extends BlockBase implements ContainerFactoryPluginInte
       "favorites-list-materials-text" => $this->t("@count materials", [], ['context' => 'Favorites list']),
       "in-series-text" => $this->t("in series", [], ['context' => 'Favorites list']),
       "number-description-text" => $this->t("Number description", [], ['context' => 'Favorites list']),
-      "remove-from-favorites-aria-label-text" => $this->t("Remove element from favorites list", [], ['context' => 'Favorites list (aria)']),
+      "remove-from-favorites-aria-label-text" => $this->t("Remove @title from favorites list", [], ['context' => 'Favorites list (aria)']),
+      "add-to-favorites-aria-label-text" => $this->t("Add @title to favorites list", [], ['context' => 'Favorites list (aria)']),
       "result-pager-status-text" => $this->t("Showing @itemsShown out of @hitcount results", [], ['context' => 'Favorites list']),
       "show-more-text" => $this->t("show more", [], ['context' => 'Favorites list']),
       'group-modal-checkbox-text' => $this->t("Choose all renewable", [], ['context' => 'Favorites list']),
