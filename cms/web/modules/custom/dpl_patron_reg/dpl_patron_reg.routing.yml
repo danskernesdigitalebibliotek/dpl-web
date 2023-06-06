@@ -15,6 +15,8 @@ dpl_patron_reg.information:
     _title: "Patron registration information"
   requirements:
     _permission: "access content"
+  options:
+    no_cache: true
 
 dpl_patron_reg.auth:
   path: "/user/registration/{client_name}/auth"

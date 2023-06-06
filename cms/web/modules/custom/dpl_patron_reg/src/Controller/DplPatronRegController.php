@@ -61,37 +61,48 @@ class DplPatronRegController extends ControllerBase {
   /**
    * Build and return information page as page.
    *
-   * @return mixed[]
-   *   The page as a render array.
+   * @return mixed
+   *   The page as a render array or a redirect if user is logged in.
    */
-  public function informationPage(): array {
+  public function informationPage(): mixed {
     $config = $this->patronRegSettings->loadConfig();
     $logins = [];
 
-    // Loop over all open id connect definitions and build login links for each
-    // one.
-    $definitions = $this->pluginManager->getDefinitions();
-    foreach ($definitions as $client_id => $client) {
-      if (!$this->config('openid_connect.settings.' . $client_id)
-        ->get('enabled')) {
-        continue;
+    $output = [];
+
+    if ($this->currentUser()->isAnonymous()) {
+      // Loop over all open id connect definitions and build login links for
+      // each one.
+      $definitions = $this->pluginManager->getDefinitions();
+      foreach ($definitions as $client_id => $client) {
+        if (!$this->config('openid_connect.settings.' . $client_id)
+          ->get('enabled')) {
+          continue;
+        }
+
+        $url = Url::fromRoute('dpl_patron_reg.auth', ['client_name' => $client_id], ['absolute' => TRUE]);
+        $link = Link::fromTextAndUrl($this->t('Log in with @client_title', [
+          '@client_title' => $client['label'],
+        ]), $url);
+        $logins[$client_id] = $link->toRenderable();
       }
 
-      $url = Url::fromRoute('dpl_patron_reg.auth', ['client_name' => $client_id], ['absolute' => TRUE]);
-      $link = Link::fromTextAndUrl($this->t('Log in with @client_title', [
-        '@client_title' => $client['label'],
-      ]), $url);
-      $logins[$client_id] = $link->toRenderable();
+      $output = [
+        'info' => [
+          '#type' => 'processed_text',
+          '#text' => $config->get('information')['value'] ?? 'Please fill out the information page in the administration',
+          '#format' => $config->get('information')['format'] ?? 'plain_text',
+        ],
+        'logins' => $logins,
+      ];
+    }
+    else {
+      /** @var \Drupal\Core\GeneratedUrl $url */
+      $url = Url::fromRoute('dpl_patron_page.profile')->toString(TRUE);
+      return new TrustedRedirectResponse($url->getGeneratedUrl());
     }
 
-    return [
-      'info' => [
-        '#type' => 'processed_text',
-        '#text' => $config->get('information')['value'] ?? 'Please fill out the information page in the administration',
-        '#format' => $config->get('information')['format'] ?? 'plain_text',
-      ],
-      'logins' => $logins,
-    ];
+    return $output;
   }
 
   /**
