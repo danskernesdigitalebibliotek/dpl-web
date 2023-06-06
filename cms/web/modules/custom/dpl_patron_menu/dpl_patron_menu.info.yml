@@ -9,7 +9,7 @@ dependencies:
   - dpl_library_agency:dpl_library_agency
   - dpl_loans:dpl_loans
   - dpl_patron_reg:dpl_patron_reg
-  - dpl_reservation:dpl_reservation
+  - dpl_reservations:dpl_reservations
 
 type: module
 core_version_requirement: ^9
