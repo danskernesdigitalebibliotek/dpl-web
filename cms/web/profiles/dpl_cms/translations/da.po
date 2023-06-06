@@ -3,8 +3,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2023-06-06 08:36+0000\n"
-"PO-Revision-Date: 2023-06-06 08:36+0000\n"
+"POT-Creation-Date: 2023-06-06 09:08+0000\n"
+"PO-Revision-Date: 2023-06-06 09:08+0000\n"
 "Last-Translator: NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
 "MIME-Version: 1.0\n"
@@ -1905,6 +1905,73 @@ msgctxt "Search Header"
 msgid "Work"
 msgstr ""
 
+msgid "Loans"
+msgstr ""
+
+msgid "Reservations"
+msgstr ""
+
+msgid "My list"
+msgstr ""
+
+msgid "Fees & Replacement costs"
+msgstr ""
+
+msgid "My account"
+msgstr "Min konto"
+
+msgctxt "Patron menu"
+msgid "My Account"
+msgstr ""
+
+msgctxt "Patron menu"
+msgid "loans expired"
+msgstr ""
+
+msgctxt "Patron menu"
+msgid "loans expiring soon"
+msgstr ""
+
+msgctxt "Patron menu"
+msgid "reservations ready for pickup"
+msgstr ""
+
+msgctxt "Patron menu"
+msgid "Close user menu"
+msgstr ""
+
+msgctxt "Patron menu"
+msgid "The user modal"
+msgstr ""
+
+msgctxt "Patron menu"
+msgid "The user modal, log in or create a user"
+msgstr ""
+
+msgctxt "Patron menu"
+msgid "Log out"
+msgstr ""
+
+msgctxt "Patron menu"
+msgid "Log in"
+msgstr ""
+
+msgctxt "Patron menu"
+msgid "Sign up"
+msgstr ""
+
+msgctxt "Patron menu (aria)"
+msgid "Open user menu"
+msgstr ""
+
+msgctxt "Patron menu (aria)"
+msgid "Notifications menu"
+msgstr ""
+
+msgctxt "Patron menu (aria)"
+msgid "Profile links"
+msgstr ""
+
 msgctxt "Url Proxy"
 msgid "configured"
 msgstr ""
@@ -2608,6 +2675,12 @@ msgid "DPL React Apps"
 msgstr ""
 
 msgid "For integration of dpl_react apps on the site."
+msgstr ""
+
+msgid "DPL menu"
+msgstr ""
+
+msgid "Handle the patron user menu"
 msgstr ""
 
 msgid "Configure proxy urls"
