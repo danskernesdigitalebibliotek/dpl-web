@@ -84,3 +84,47 @@ needed to test certain functionalities. This can be achieved in two ways:
    ```sh
    lagoon config default --lagoon [instance name]
    ```
+
+### Using cron in pull request environments
+
+The `.lagoon.yml` has an environments section where it is possible to control
+various settings.
+On root level you specify the environment you want to address (eg.: `main`).
+And on the sub level of that you can define the cron settings.
+The cron settings for the main branch looks (in the moment of this writing)
+like this:
+
+```yaml
+environments:
+  main:
+    cronjobs:
+    - name: drush cron
+      schedule: "M/15 * * * *"
+      command: drush cron
+      service: cli
+```
+
+If you want to have cron running on a pull request environment, you have to
+make a similar block under the environment name of the PR.
+Example: In case you would have a PR with the number #135 it would look
+like this:
+
+```yaml
+environments:
+  pr-135:
+    cronjobs:
+    - name: drush cron
+      schedule: "M/15 * * * *"
+      command: drush cron
+      service: cli
+```
+
+#### Workflow with cron in pull request environments
+
+This way of making sure cronb is running in the PR environments is
+a bit tedious but it follows the way Lagoon is handling it.
+A suggested workflow with it could be:
+
++ Create PR with code changes as normally
++ Write the `.lagoon.yml` configuration block connected to the current PR #
++ When the PR has been approved you delete the configuration block again
