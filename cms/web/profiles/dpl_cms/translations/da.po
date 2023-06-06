@@ -3,8 +3,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2023-06-02 11:47+0000\n"
-"PO-Revision-Date: 2023-06-02 11:47+0000\n"
+"POT-Creation-Date: 2023-06-06 08:36+0000\n"
+"PO-Revision-Date: 2023-06-06 08:36+0000\n"
 "Last-Translator: NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
 "MIME-Version: 1.0\n"
@@ -1987,7 +1987,7 @@ msgid "The link to the favorites list"
 msgstr ""
 
 msgctxt "Favorites list material component (aria)"
-msgid "Add element to favorites list"
+msgid "Add @title to favorites list"
 msgstr ""
 
 msgctxt "Favorites list material component"
@@ -2007,7 +2007,7 @@ msgid "By"
 msgstr ""
 
 msgctxt "Favorites list material component (aria)"
-msgid "Remove element from favorites list"
+msgid "Remove @title from favorites list"
 msgstr ""
 
 msgid "Log in with @client_title"
@@ -2121,10 +2121,6 @@ msgstr ""
 msgid "Page size desktop"
 msgstr ""
 
-msgctxt "Favorites list (aria)"
-msgid "Add element to favorites list"
-msgstr ""
-
 msgctxt "Favorites list"
 msgid "By"
 msgstr ""
@@ -2154,7 +2150,11 @@ msgid "Number description"
 msgstr ""
 
 msgctxt "Favorites list (aria)"
-msgid "Remove element from favorites list"
+msgid "Remove @title from favorites list"
+msgstr ""
+
+msgctxt "Favorites list (aria)"
+msgid "Add @title to favorites list"
 msgstr ""
 
 msgctxt "Favorites list"
@@ -2178,7 +2178,7 @@ msgid "Search text for recommender when no loan/no reservation"
 msgstr ""
 
 msgctxt "Recommender (Aria)"
-msgid "Add element to favorites list"
+msgid "Add @title to favorites list"
 msgstr ""
 
 msgctxt "Recommender"
@@ -2202,7 +2202,7 @@ msgid "Because you have reserved @title you may also like"
 msgstr ""
 
 msgctxt "Recommender (Aria)"
-msgid "Remove element from favorites list"
+msgid "Remove @title from favorites list"
 msgstr ""
 
 msgid "React DDB Library"
@@ -2454,7 +2454,7 @@ msgid "FBS service url"
 msgstr ""
 
 msgctxt "Something similar (Aria)"
-msgid "Add element to favorites list"
+msgid "Add @title to favorites list"
 msgstr ""
 
 msgctxt "Something similar"
@@ -2466,7 +2466,7 @@ msgid "By"
 msgstr ""
 
 msgctxt "Something similar (Aria)"
-msgid "Remove element from favorites list"
+msgid "Remove @title from favorites list"
 msgstr ""
 
 msgctxt "Something similar"
