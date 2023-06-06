@@ -110,9 +110,6 @@ class PatronMenuBlock extends BlockBase implements ContainerFactoryPluginInterfa
       // Config.
       "threshold-config" => $this->configFactory->get('dpl_library_agency.general_settings')->get('threshold_config'),
       "menu-navigation-data-config" => json_encode($menu, JSON_THROW_ON_ERROR),
-      // Added in THEME_preprocess_dpl_react_app__menu to use the theme defined
-      // icon.
-      "profile_svg" => '/'.\Drupal::theme()->getActiveTheme()->getPath().'/assets/dpl-design-system/icons/collection/Profile.svg',
 
       // Urls.
       "menu-login-url" => Url::fromRoute('dpl_login.login', [], ['absolute' => TRUE])->toString(),
@@ -120,16 +117,20 @@ class PatronMenuBlock extends BlockBase implements ContainerFactoryPluginInterfa
       "menu-sign-up-url" => Url::fromRoute('dpl_patron_reg.information', [], ['absolute' => TRUE])->toString(),
 
       // Texts.
-      "menu-notifications-menu-aria-label-text" => $this->t("Notifications menu", [], ["context" => 'Patron menu (Aria)']),
-      "menu-user-icon-aria-label-text" => $this->t("Open user menu", [], ["context" => 'Patron menu (Aria)']),
-      "menu-profile-links-aria-label-text" => $this->t("Profile links", [], ["context" => 'Profile links (Aria)']),
-      "menu-view-your-profile-text" => $this->t("My Account", [], ["context" => 'Patron menu']),
-      "menu-notification-loans-expired-text" => $this->t("Loans expired", [], ["context" => 'Patron menu']),
-      "menu-notification-loans-expiring-soon-text" => $this->t("Loans expiring soon", [], ["context" => 'Patron menu']),
-      "menu-notification-ready-for-pickup-text" => $this->t("Reservations ready for pickup", [], ["context" => 'Patron menu']),
-      "menu-log-out-text" => $this->t("Log out", [], ["context" => 'Patron menu']),
-      "menu-login-text" => $this->t("Log in", [], ["context" => 'Patron menu']),
-      "menu-sign-up-text" => $this->t("Sign up", [], ["context" => 'Patron menu']),
+      "menu-view-your-profile-text" => $this->t('My Account', [], ['context'=>'Patron menu']),
+      "menu-notification-loans-expired-text" => $this->t('loans expired', [], ['context'=>'Patron menu']),
+      "menu-notification-loans-expiring-soon-text" => $this->t('loans expiring soon', [], ['context'=>'Patron menu']),
+      "menu-notification-ready-for-pickup-text" => $this->t('reservations ready for pickup', [], ['context'=>'Patron menu']),
+      "menu-not-authenticated-close-button-text" => $this->t('Close user menu', [], ['context'=>'Patron menu']),
+      "menu-authenticated-close-button-text" => $this->t('Close user menu', [], ['context'=>'Patron menu']),
+      "menu-authenticated-modal-description-text" => $this->t('The user modal', [], ['context'=>'Patron menu']),
+      "menu-not-authenticated-modal-description-text" => $this->t('The user modal, log in or create a user', [], ['context'=>'Patron menu']),
+      "menu-log-out-text" => $this->t('Log out', [], ['context'=>'Patron menu']),
+      "menu-login-text" => $this->t('Log in', [], ['context'=>'Patron menu']),
+      "menu-sign-up-text" => $this->t('Sign up', [], ['context'=>'Patron menu']),
+      "menu-user-icon-aria-label-text" => $this->t('Open user menu', [], ['context'=>'Patron menu (aria)']),
+      "menu-notifications-menu-aria-label-text" => $this->t('Notifications menu', [], ['context'=>'Patron menu (aria)']),
+      "menu-profile-links-aria-label-text" => $this->t('Profile links', [], ['context'=>'Patron menu (aria)']),
     ] + DplReactAppsController::externalApiBaseUrls();
 
     return [
