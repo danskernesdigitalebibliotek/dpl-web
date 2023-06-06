@@ -1,6 +1,5 @@
 ignored_config_entities:
   - '*'
-  - ~automated_cron.settings
   - '~block.block.claro.*'
   - '~block.block.novel.*'
   - ~config_ignore.settings
