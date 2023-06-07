@@ -42,8 +42,10 @@ class PatronMenuBlock extends BlockBase implements ContainerFactoryPluginInterfa
    *   The branch settings for branch config.
    * @param \Drupal\dpl_library_agency\Branch\BranchRepositoryInterface $branchRepository
    *   The branch settings for getting branches.
+   * @param \Drupal\dpl_react\DplReactConfigInterface $menuSettings
+   *   Dashboard settings.
    */
-  public function __construct(array $configuration, $plugin_id, $plugin_definition, ConfigFactoryInterface $configFactory, private BranchSettings $branchSettings, private BranchRepositoryInterface $branchRepository) {
+  public function __construct(array $configuration, $plugin_id, $plugin_definition, ConfigFactoryInterface $configFactory, private BranchSettings $branchSettings, private BranchRepositoryInterface $branchRepository, private DplReactConfigInterface $menuSettings) {
     parent::__construct($configuration, $plugin_id, $plugin_definition);
     $this->configuration = $configuration;
     $this->configFactory = $configFactory;
@@ -70,6 +72,9 @@ class PatronMenuBlock extends BlockBase implements ContainerFactoryPluginInterfa
       $plugin_id,
       $plugin_definition,
       $container->get('config.factory'),
+      $container->get('dpl_library_agency.branch_settings'),
+      $container->get('dpl_library_agency.branch.repository'),
+      \Drupal::service('dpl_menu.settings')
     );
   }
 
@@ -82,6 +87,7 @@ class PatronMenuBlock extends BlockBase implements ContainerFactoryPluginInterfa
    * @throws \JsonException
    */
   public function build(): array {
+    $menuSettings = $this->menuSettings->loadConfig();
     $generalSettings = $this->configFactory->get('dpl_library_agency.general_settings');
     // Alternative to this menu array here this could be loaded from a drupal
     // generated menu. A place for further improvements.
@@ -115,6 +121,8 @@ class PatronMenuBlock extends BlockBase implements ContainerFactoryPluginInterfa
 
     $data = [
       // Config.
+      'page-size-desktop' => $menuSettings->get('page_size_desktop'),
+      'page-size-mobile' => $menuSettings->get('page_size_mobile'),
       'blacklisted-pickup-branches-config' => DplReactAppsController::buildBranchesListProp($this->branchSettings->getExcludedReservationBranches()),
       'branches-config' => DplReactAppsController::buildBranchesJsonProp($this->branchRepository->getBranches()),
       "threshold-config" => $this->configFactory->get('dpl_library_agency.general_settings')->get('threshold_config'),
