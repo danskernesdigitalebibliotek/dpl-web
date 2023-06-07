@@ -13,7 +13,7 @@ class DplMenuSettings extends DplReactConfigBase {
    * Gets the configuration key for menu settings.
    */
   public function getConfigKey(): string {
-    return 'dpl_menu.settings';
+    return 'dpl_patron_menu.settings';
   }
 
 }

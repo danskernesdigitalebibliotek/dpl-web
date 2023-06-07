@@ -34,7 +34,7 @@ class MenuSettingsForm extends ConfigFormBase {
   public static function create(ContainerInterface $container): self {
     return new static(
       $container->get('config.factory'),
-      \Drupal::service('dpl_menu.settings')
+      \Drupal::service('dpl_patron_menu.settings')
     );
   }
 

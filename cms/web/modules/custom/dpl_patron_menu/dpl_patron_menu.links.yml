@@ -1,5 +1,5 @@
 dpl_patron_menu.settings_form:
   title: "Menu settings"
-  route_name: dpl_menu.settings
+  route_name: dpl_patron_menu.settings
   description: "Change Menu settings"
   parent: dpl_library_agency.settings

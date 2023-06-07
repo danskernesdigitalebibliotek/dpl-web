@@ -74,7 +74,7 @@ class PatronMenuBlock extends BlockBase implements ContainerFactoryPluginInterfa
       $container->get('config.factory'),
       $container->get('dpl_library_agency.branch_settings'),
       $container->get('dpl_library_agency.branch.repository'),
-      \Drupal::service('dpl_menu.settings')
+      \Drupal::service('dpl_patron_menu.settings')
     );
   }
 
