@@ -120,6 +120,7 @@ class DashboardBlock extends BlockBase implements ContainerFactoryPluginInterfac
       'reservations-ready-for-pickup-text' => $this->t('Reservations ready for pickup', [], ['context' => 'Dashboard']),
       'queued-reservations-text' => $this->t('Queued reservations', [], ['context' => 'Dashboard']),
       'remove-all-reservations-text' => $this->t('Remove reservations (@amount)', [], ['context' => 'Dashboard']),
+      'et-al-text' => $this->t('et al.', [], ['context' => 'Dashboard']),
       'reservations-ready-text' => $this->t('Ready for you', [], ['context' => 'Dashboard']),
       'reservations-still-in-queue-for-text' => $this->t('Still in queue', [], ['context' => 'Dashboard']),
       'no-physical-loans-text' => $this->t('At the moment, you have 0 physical loans', [], ['context' => 'Dashboard']),
