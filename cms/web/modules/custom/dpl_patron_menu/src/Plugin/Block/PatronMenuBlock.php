@@ -10,9 +10,10 @@ use Drupal\dpl_react_apps\Controller\DplReactAppsController;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Drupal\dpl_library_agency\Branch\BranchRepositoryInterface;
 use Drupal\dpl_library_agency\BranchSettings;
+use Drupal\dpl_react\DplReactConfigInterface;
 
 /**
- * Provides user intermediate list.
+ * Provides patron menu.
  *
  * @Block(
  *   id = "dpl_patron_menu_block",
