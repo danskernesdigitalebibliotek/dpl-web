@@ -64,7 +64,7 @@ class PatronMenuBlock extends BlockBase implements ContainerFactoryPluginInterfa
    *   The plugin implementation definition.
    *
    * @return \Drupal\dpl_patron_menu\Plugin\Block\PatronMenuBlock|static
-   *   Loan list block.
+   *   Patron menu block.
    */
   public static function create(ContainerInterface $container, array $configuration, $plugin_id, $plugin_definition) {
     return new static(
