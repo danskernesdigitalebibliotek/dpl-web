@@ -103,6 +103,7 @@ class FeesListBlock extends BlockBase implements ContainerFactoryPluginInterface
       'total-text' => $this->t("Total", [], ['context' => 'Fees list']),
       'turned-in-text' => $this->t("Turned in @date", [], ['context' => 'Fees list']),
       'unpaid-fees-text' => $this->t("Unsettled debt", [], ['context' => 'Fees list']),
+      'material-and-author-text' => $this->t('and', [], ['context' => 'Fees list']),
       'view-fees-and-compensation-rates-text' => $this->t("see our fees and replacement costs", [], ['context' => 'Fees list']),
       'view-fees-and-compensation-rates-url' => $feesConfig->get('fees_and_replacement_costs_url'),
     ] + DplReactAppsController::externalApiBaseUrls();

@@ -104,6 +104,7 @@ class LoanListBlock extends BlockBase implements ContainerFactoryPluginInterface
       'material-overdue-url' => $loanListSettings->get('material_overdue_url'),
 
       // Texts.
+      'material-and-author-text' => $this->t('and', [], ['context' => 'Loan list']),
       'group-modal-aria-description-text' => $this->t("This modal makes it possible to renew materials", [], ['context' => 'Loan list (Aria)']),
       'group-modal-button-text' => $this->t("Renewable (@count)", [], ['context' => 'Loan list']),
       'group-modal-checkbox-text' => $this->t("Choose all renewable", [], ['context' => 'Loan list']),

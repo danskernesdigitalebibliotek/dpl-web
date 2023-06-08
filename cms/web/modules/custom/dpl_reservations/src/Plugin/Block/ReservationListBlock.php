@@ -97,6 +97,7 @@ class ReservationListBlock extends BlockBase implements ContainerFactoryPluginIn
       'threshold-config' => $generalSettings->get('threshold_config'),
 
       // Texts.
+      'material-and-author-text' => $this->t('and', [], ['context' => 'Reservation list']),
       'et-al-text' => $this->t('et al.', [], ['context' => 'Reservation list']),
       'material-by-author-text' => $this->t('By', [], ['context' => 'Reservation list']),
       'publizon-audio-book-text' => $this->t('Audiobook', [], ['context' => 'Reservation list']),

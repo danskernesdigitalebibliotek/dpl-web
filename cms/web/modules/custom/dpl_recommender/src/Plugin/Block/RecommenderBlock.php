@@ -79,6 +79,7 @@ class RecommenderBlock extends BlockBase implements ContainerFactoryPluginInterf
       'material-url' => DplReactAppsController::materialUrl(),
 
       // Texts.
+      'material-and-author-text' => $this->t('and', [], ['context' => 'Recommender']),
       'add-to-favorites-aria-label-text' => $this->t("Add @title to favorites list", [], ['context' => 'Recommender (Aria)']),
       'empty-recommender-search-config' => $recommenderSettings->get('search_text'),
       'et-al-text' => $this->t("et al.", [], ['context' => 'Recommender']),
