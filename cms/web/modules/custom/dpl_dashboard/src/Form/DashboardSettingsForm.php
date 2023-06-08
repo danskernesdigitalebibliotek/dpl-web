@@ -108,6 +108,12 @@ class DashboardSettingsForm extends ConfigFormBase {
       '#default_value' => $config->get('reservations_url') ?? '',
     ];
 
+    $form['settings']['fees_url'] = [
+      '#type' => 'url',
+      '#title' => $this->t('Fees url', [], ['context' => 'Dashboard (settings)']),
+      '#default_value' => $config->get('fees_url') ?? '',
+    ];
+
     $form['settings']['page_size_mobile'] = [
       '#type' => 'number',
       '#title' => $this->t('Page size mobile', [], ['context' => 'Dashboard (settings)']),
@@ -137,6 +143,7 @@ class DashboardSettingsForm extends ConfigFormBase {
       ->set('pay_owed_url', $form_state->getValue('pay_owed_url'))
       ->set('physical_loans_url', $form_state->getValue('physical_loans_url'))
       ->set('loans_overdue_url', $form_state->getValue('loans_overdue_url'))
+      ->set('fees_url', $form_state->getValue('fees_url'))
       ->set('loans_soon_overdue_url', $form_state->getValue('loans_soon_overdue_url'))
       ->set('loans_not_overdue_url', $form_state->getValue('loans_not_overdue_url'))
       ->set('reservations_url', $form_state->getValue('reservations_url'))

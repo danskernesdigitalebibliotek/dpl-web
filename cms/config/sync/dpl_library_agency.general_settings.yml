@@ -22,3 +22,4 @@ interest_periods_config: '[
         "label": "1 year"
     }
 ]'
+ereolen_my_page_url: 'https://ereolen.dk/user/me'

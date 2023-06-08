@@ -66,12 +66,6 @@ class PatronPageSettingsForm extends ConfigFormBase {
       '#tree' => FALSE,
     ];
 
-    $form['settings']['text_notifications_enabled'] = [
-      '#type' => 'checkbox',
-      '#title' => $this->t('Enable SMS notifications'),
-      '#default_value' => $config->get('text_notifications_enabled'),
-    ];
-
     $form['settings']['delete_patron_url'] = [
       '#type' => 'url',
       '#title' => $this->t('Delete patron link'),
@@ -113,7 +107,6 @@ class PatronPageSettingsForm extends ConfigFormBase {
     $this->config($this->configService->getConfigKey())
       ->set('delete_patron_url', $form_state->getValue('delete_patron_url'))
       ->set('always_available_ereolen', $form_state->getValue('always_available_ereolen'))
-      ->set('text_notifications_enabled', $form_state->getValue('text_notifications_enabled'))
       ->set('pincode_length_min', $form_state->getValue('pincode_length_min'))
       ->set('pincode_length_max', $form_state->getValue('pincode_length_max'))
       ->save();
