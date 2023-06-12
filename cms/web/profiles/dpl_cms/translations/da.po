@@ -3,8 +3,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2023-06-12 13:37+0000\n"
-"PO-Revision-Date: 2023-06-12 13:37+0000\n"
+"POT-Creation-Date: 2023-06-12 13:49+0000\n"
+"PO-Revision-Date: 2023-06-12 13:49+0000\n"
 "Last-Translator: NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
 "MIME-Version: 1.0\n"
@@ -788,6 +788,10 @@ msgid "Reservations url"
 msgstr ""
 
 msgctxt "Dashboard"
+msgid "Others are queueing for this material"
+msgstr ""
+
+msgctxt "Dashboard"
 msgid "Your profile"
 msgstr ""
 
@@ -808,6 +812,14 @@ msgstr ""
 
 msgctxt "Dashboard"
 msgid "Fees"
+msgstr ""
+
+msgctxt "Dashboard"
+msgid "@count queued"
+msgstr ""
+
+msgctxt "Dashboard"
+msgid "Number @count in line"
 msgstr ""
 
 msgctxt "Dashboard"
@@ -2076,6 +2088,38 @@ msgstr ""
 msgid "My account"
 msgstr "Min konto"
 
+msgctxt "Patron menu"
+msgid "Others are queueing for this material"
+msgstr ""
+
+msgctxt "Patron menu"
+msgid "@count queued"
+msgstr ""
+
+msgctxt "Patron menu"
+msgid "Number @count in line"
+msgstr ""
+
+msgctxt "Patron menu"
+msgid "Ready for pickup"
+msgstr ""
+
+msgctxt "Patron menu"
+msgid "Expires soon"
+msgstr ""
+
+msgctxt "Patron menu"
+msgid "Returned too late"
+msgstr ""
+
+msgctxt "Patron menu"
+msgid "To be returned soon"
+msgstr ""
+
+msgctxt "Patron menu"
+msgid "Ready for you"
+msgstr ""
+
 msgctxt "Patron menu (Aria)"
 msgid ""
 "This button opens a modal that covers the entire page and contains the "
@@ -2230,10 +2274,6 @@ msgid "Close modal with grouped reservations"
 msgstr ""
 
 msgctxt "Patron menu"
-msgid "Ready for pickup"
-msgstr ""
-
-msgctxt "Patron menu"
 msgid "Pickup deadline"
 msgstr ""
 
@@ -2384,18 +2424,6 @@ msgstr ""
 
 msgctxt "Url Proxy"
 msgid "Submit"
-msgstr ""
-
-msgctxt "Favorites list material component (settings)"
-msgid "Basic settings"
-msgstr ""
-
-msgctxt "Favorites list material component (settings)"
-msgid "Favorites list url"
-msgstr ""
-
-msgctxt "Favorites list material component (settings)"
-msgid "The link to the favorites list"
 msgstr ""
 
 msgctxt "Favorites list material component (aria)"
@@ -3054,9 +3082,6 @@ msgid "DPL Url Proxy"
 msgstr ""
 
 msgid "Module for generating specially formatted external urls"
-msgstr ""
-
-msgid "Favorites list material component settings"
 msgstr ""
 
 msgid "DPL favorites list material component"
