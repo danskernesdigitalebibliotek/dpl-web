@@ -4,6 +4,7 @@ namespace Drupal\dpl_patron_redirect\EventSubscriber;
 
 use Drupal\Core\Config\ConfigFactoryInterface;
 use Drupal\Core\Config\ImmutableConfig;
+use Drupal\Core\PageCache\ResponsePolicy\KillSwitch;
 use Drupal\Core\Path\CurrentPathStack;
 use Drupal\Core\Path\PathMatcherInterface;
 use Drupal\Core\Routing\TrustedRedirectResponse;
@@ -39,13 +40,16 @@ class RedirectPatronSubscriber implements EventSubscriberInterface {
    *   Core configuration factory.
    * @param \Drupal\Core\Session\AccountProxyInterface $account
    *   Current user account.
+   * @param \Drupal\Core\PageCache\ResponsePolicy\KillSwitch $killSwitch
+   *   Page cache kill switch to disable cache for these redirects.
    */
   public function __construct(
     private AliasManagerInterface $aliasManager,
     private PathMatcherInterface $pathMatcher,
     private CurrentPathStack $currentPath,
     ConfigFactoryInterface $configFactory,
-    private AccountProxyInterface $account
+    private AccountProxyInterface $account,
+    private KillSwitch $killSwitch
   ) {
     $this->configuration = $configFactory->get('dpl_patron_redirect.settings');
   }
@@ -78,7 +82,7 @@ class RedirectPatronSubscriber implements EventSubscriberInterface {
         // But the problem here is the page cache for anonymous requests, which
         // caches all responses, even redirects and no matter if they are
         // cacheable or not. This will kill that cache.
-        \Drupal::service('page_cache_kill_switch')->trigger();
+        $this->killSwitch->trigger();
 
         /** @var \Drupal\Core\GeneratedUrl $url */
         $url = Url::fromRoute('dpl_login.login')->toString(TRUE);
