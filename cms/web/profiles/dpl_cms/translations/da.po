@@ -3,8 +3,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2023-06-12 08:03+0000\n"
-"PO-Revision-Date: 2023-06-12 08:03+0000\n"
+"POT-Creation-Date: 2023-06-12 08:10+0000\n"
+"PO-Revision-Date: 2023-06-12 08:10+0000\n"
 "Last-Translator: NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
 "MIME-Version: 1.0\n"
@@ -826,8 +826,38 @@ msgctxt "Dashboard"
 msgid "Loans"
 msgstr ""
 
-msgctxt "Dashboard (aria)"
+msgctxt "Dashboard (Aria)"
+msgid "This modal makes it possible to renew materials"
+msgstr ""
+
+msgctxt "Patron menu (Aria)"
 msgid "Close modal with grouped loans"
+msgstr ""
+
+msgctxt "Dashboard (aria)"
+msgid "This modal makes it possible to delete reservations"
+msgstr ""
+
+msgctxt "Dashboard (aria)"
+msgid "Close modal with grouped reservations"
+msgstr ""
+
+msgctxt "Dashboard"
+msgid "Digital"
+msgstr ""
+
+msgctxt "Dashboard"
+msgid ""
+"This modal groups loans after due date and makes it possible to renew "
+"said loans"
+msgstr ""
+
+msgctxt "Dashboard"
+msgid "Close renew loans modal"
+msgstr ""
+
+msgctxt "Dashboard"
+msgid "Intermediates"
 msgstr ""
 
 msgctxt "Dashboard"
@@ -848,10 +878,6 @@ msgstr ""
 
 msgctxt "Dashboard"
 msgid "Reservations"
-msgstr ""
-
-msgctxt "Dashboard"
-msgid "Reservations ready for pickup"
 msgstr ""
 
 msgctxt "Dashboard"
@@ -947,10 +973,6 @@ msgid "Due date @date"
 msgstr ""
 
 msgctxt "Dashboard"
-msgid "Can be returned to all branches of Samsøs libraries"
-msgstr ""
-
-msgctxt "Dashboard"
 msgid "Choose all"
 msgstr ""
 
@@ -987,22 +1009,6 @@ msgid "Pickup branch"
 msgstr ""
 
 msgctxt "Dashboard"
-msgid "Number @count in line"
-msgstr ""
-
-msgctxt "Dashboard"
-msgid "The item cannot be renewed further"
-msgstr ""
-
-msgctxt "Dashboard"
-msgid "To be returned @date"
-msgstr ""
-
-msgctxt "Dashboard"
-msgid "Go to material details"
-msgstr ""
-
-msgctxt "Dashboard"
 msgid "Status"
 msgstr ""
 
@@ -1019,21 +1025,7 @@ msgid "Go to eReolen"
 msgstr ""
 
 msgctxt "Dashboard"
-msgid "days"
-msgstr ""
-
-msgctxt "Dashboard"
 msgid "Pickup deadline"
-msgstr ""
-
-msgctxt "Dashboard"
-msgid "The item is reserved by another patron"
-msgstr ""
-
-msgctxt "Dashboard"
-msgid ""
-"The item has been lent to you by another library and renewal is "
-"therefore conditional of the acceptance by that library"
 msgstr ""
 
 msgctxt "Dashboard"
@@ -2061,6 +2053,14 @@ msgctxt "Search Header"
 msgid "Work"
 msgstr ""
 
+msgctxt "Menu (settings)"
+msgid "Page size mobile"
+msgstr ""
+
+msgctxt "Menu (settings)"
+msgid "Page size desktop"
+msgstr ""
+
 msgid "Loans"
 msgstr ""
 
@@ -2075,6 +2075,195 @@ msgstr ""
 
 msgid "My account"
 msgstr "Min konto"
+
+msgctxt "Patron menu (Aria)"
+msgid ""
+"This button opens a modal that covers the entire page and contains the "
+"possibility to delete a selected reservation, or multiple selected "
+"reservations"
+msgstr ""
+
+msgctxt "Patron menu"
+msgid "Close delete reservation modal"
+msgstr ""
+
+msgctxt "Patron menu"
+msgid "Cancel reservation"
+msgstr ""
+
+msgctxt "Patron menu"
+msgid "Do you want to cancel your reservation?"
+msgstr ""
+
+msgctxt "Patron menu"
+msgid "You cannot regret this action"
+msgstr ""
+
+msgctxt "Patron menu"
+msgid "Cancel reservations"
+msgstr ""
+
+msgctxt "Patron menu"
+msgid "show more"
+msgstr ""
+
+msgctxt "Patron menu"
+msgid "Select @label"
+msgstr ""
+
+msgctxt "Patron menu"
+msgid "Choose all renewable"
+msgstr ""
+
+msgctxt "Patron menu"
+msgid "Can be returned to all branches of (library) libraries"
+msgstr ""
+
+msgctxt "Patron menu"
+msgid "Showing @itemsShown out of @hitcount loans"
+msgstr ""
+
+msgctxt "Patron menu"
+msgid "Due date @date"
+msgstr ""
+
+msgctxt "Patron menu"
+msgid "Go to material details"
+msgstr ""
+
+msgctxt "Patron menu"
+msgid "To be returned @date"
+msgstr ""
+
+msgctxt "Patron menu"
+msgid "Read more about fees"
+msgstr ""
+
+msgctxt "Patron menu"
+msgid "Renewable (@count)"
+msgstr ""
+
+msgctxt "Patron menu (Aria)"
+msgid "This modal makes it possible to renew materials"
+msgstr ""
+
+msgctxt "Patron menu"
+msgid ""
+"The item has been lent to you by another library and renewal is "
+"therefore conditional of the acceptance by that library"
+msgstr ""
+
+msgctxt "Patron menu"
+msgid "The item is reserved by another patron"
+msgstr ""
+
+msgctxt "Patron menu"
+msgid ""
+"The due date of return is exceeded, therefore you will be charged a "
+"fee, when the item is returned"
+msgstr ""
+
+msgctxt "Patron menu"
+msgid "The item cannot be renewed further"
+msgstr ""
+
+msgctxt "Patron menu"
+msgid "Renew your loans"
+msgstr ""
+
+msgctxt "Patron menu"
+msgid "Expires"
+msgstr ""
+
+msgctxt "Patron menu"
+msgid "Go to eReolen"
+msgstr ""
+
+msgctxt "Patron menu (Aria)"
+msgid ""
+"This modal shows material details, and makes it possible to renew a "
+"material, of that material is renewable"
+msgstr ""
+
+msgctxt "Patron menu"
+msgid "Expired"
+msgstr ""
+
+msgctxt "Patron menu (Aria)"
+msgid "Close material details modal"
+msgstr ""
+
+msgctxt "Patron menu"
+msgid "Material Item Number"
+msgstr ""
+
+msgctxt "Patron menu"
+msgid "Loan date"
+msgstr ""
+
+msgctxt "Patron menu"
+msgid "Due date"
+msgstr ""
+
+msgctxt "Patron menu"
+msgid "Reservations ready for pickup"
+msgstr ""
+
+msgctxt "Patron menu"
+msgid "Pick up before"
+msgstr ""
+
+msgctxt "Patron menu"
+msgid "Remove reservations"
+msgstr ""
+
+msgctxt "Patron menu"
+msgid "Ready"
+msgstr ""
+
+msgctxt "Patron menu"
+msgid "This modal makes it possible to delete reservations"
+msgstr ""
+
+msgctxt "Patron menu"
+msgid "Close modal with grouped reservations"
+msgstr ""
+
+msgctxt "Patron menu"
+msgid "Ready for pickup"
+msgstr ""
+
+msgctxt "Patron menu"
+msgid "Pickup deadline"
+msgstr ""
+
+msgctxt "Patron menu"
+msgid "Borrow before @date"
+msgstr ""
+
+msgctxt "Patron menu"
+msgid "Status"
+msgstr ""
+
+msgctxt "Patron menu"
+msgid "Remove your reservation"
+msgstr ""
+
+msgctxt "Patron menu"
+msgid "Pickup branch"
+msgstr ""
+
+msgctxt "Patron menu"
+msgid "Apply changes"
+msgstr ""
+
+msgctxt "Patron menu"
+msgid "Not interested after"
+msgstr ""
+
+msgctxt "Patron menu"
+msgid "Date of reservation"
+msgstr ""
 
 msgctxt "Patron menu"
 msgid "My Account"
@@ -2848,6 +3037,9 @@ msgstr ""
 
 msgid "For integration of dpl_react apps on the site."
 msgstr ""
+
+msgid "Menu settings"
+msgstr "Menu"
 
 msgid "DPL menu"
 msgstr ""
