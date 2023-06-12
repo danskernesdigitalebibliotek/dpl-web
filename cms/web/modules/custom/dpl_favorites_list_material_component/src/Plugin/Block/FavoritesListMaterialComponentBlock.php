@@ -75,7 +75,7 @@ class FavoritesListMaterialComponentBlock extends BlockBase implements Container
     $data = [
       // Urls.
       'dpl-cms-base-url' => DplReactAppsController::dplCmsBaseUrl(),
-'favorites-list-material-component-go-to-list-url' => Url::fromRoute('dpl_favorites_list.list', [], ['absolute' => TRUE])->toString(),
+      'favorites-list-material-component-go-to-list-url' => Url::fromRoute('dpl_favorites_list.list', [], ['absolute' => TRUE])->toString(),
 
       // Texts.
       'add-to-favorites-aria-label-text' => $this->t("Add @title to favorites list", [], ['context' => 'Favorites list material component (aria)']),
