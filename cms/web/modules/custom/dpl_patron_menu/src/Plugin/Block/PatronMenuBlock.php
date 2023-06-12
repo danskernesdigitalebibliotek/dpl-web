@@ -96,12 +96,12 @@ class PatronMenuBlock extends BlockBase implements ContainerFactoryPluginInterfa
       [
         "name" => $this->t("Loans", ["context" => 'Patron menu']),
         "link" => Url::fromRoute('dpl_loans.list', [], ['absolute' => TRUE])->toString(),
-        "dataId" => "0",
+        "dataId" => "1",
       ],
       [
         "name" => $this->t("Reservations", ["context" => 'Patron menu']),
         "link" => Url::fromRoute('dpl_reservations.list', [], ['absolute' => TRUE])->toString(),
-        "dataId" => "10",
+        "dataId" => "2",
       ],
       [
         "name" => $this->t("My list", ["context" => 'Patron menu']),
@@ -111,7 +111,7 @@ class PatronMenuBlock extends BlockBase implements ContainerFactoryPluginInterfa
       [
         "name" => $this->t("Fees & Replacement costs", ["context" => 'Patron menu']),
         "link" => Url::fromRoute('dpl_fees.list', [], ['absolute' => TRUE])->toString(),
-        "dataId" => "30",
+        "dataId" => "4",
       ],
       [
         "name" => $this->t("My account", ["context" => 'Patron menu']),
