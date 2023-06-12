@@ -99,16 +99,17 @@ class LoanListBlock extends BlockBase implements ContainerFactoryPluginInterface
       "threshold-config" => $this->getThresholdConfig(),
 
       // Urls.
+      'ereolen-my-page-url' => $generalSettings->get('ereolen_my_page_url'),
       'dpl-cms-base-url' => DplReactAppsController::dplCmsBaseUrl(),
       'fees-page-url' => $generalSettings->get('fees_page_url'),
       'material-overdue-url' => $loanListSettings->get('material_overdue_url'),
 
       // Texts.
       'material-and-author-text' => $this->t('and', [], ['context' => 'Loan list']),
-      'group-modal-aria-description-text' => $this->t("This modal makes it possible to renew materials", [], ['context' => 'Loan list (Aria)']),
+      'group-modal-loans-aria-description-text' => $this->t("This modal makes it possible to renew materials", [], ['context' => 'Loan list (Aria)']),
       'group-modal-button-text' => $this->t("Renewable (@count)", [], ['context' => 'Loan list']),
       'group-modal-checkbox-text' => $this->t("Choose all renewable", [], ['context' => 'Loan list']),
-      'group-modal-close-modal-aria-label-text' => $this->t("Close modal with grouped loans", [], ['context' => 'Loan list (Aria)']),
+      'group-modal-loans-close-modal-aria-label-text' => $this->t("Close modal with grouped loans", [], ['context' => 'Loan list (Aria)']),
       'group-modal-due-date-aria-description-text' => $this->t("This modal groups loans after due date and makes it possible to renew said loans", [], ['context' => 'Loan list (Aria)']),
       'group-modal-due-date-header-text' => $this->t("Due date @date", [], ['context' => 'Loan list']),
       'group-modal-due-date-link-to-page-with-fees-text' => $this->t("Read more about fees", [], ['context' => 'Loan list']),
