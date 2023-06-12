@@ -140,6 +140,8 @@ class PatronMenuBlock extends BlockBase implements ContainerFactoryPluginInterfa
       'menu-view-your-profile-text-url' => Url::fromRoute('dpl_patron_page.profile', [], ['absolute' => TRUE])->toString(),
 
       // Texts.
+      'reservation-details-others-in-queue-text' => $this->t('Others are queueing for this material', [], ['context' => 'Dashboard']),
+      'dashboard-number-in-line-text' => $this->t('Number @count in line', [], ['context' => 'Dashboard']),
       'ready-for-loan-text' => $this->t('Ready for pickup', [], ['context' => 'Patron menu']),
       'status-badge-warning-text' => $this->t('Expires soon', [], ['context' => 'Patron menu']),
       'loans-overdue-text' => $this->t('Returned too late', [], ['context' => 'Patron menu']),
