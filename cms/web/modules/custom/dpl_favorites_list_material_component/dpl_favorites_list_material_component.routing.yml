@@ -4,13 +4,3 @@ dpl_favorites_list_material_component.list:
     _controller: '\Drupal\dpl_favorites_list_material_component\Controller\DplFavoritesListMaterialComponentController::list'
   requirements:
     _permission: "access content"
-
-dpl_favorites_list_material_component.settings:
-  path: "/admin/config/dpl-library-agency/favorites-list-material-component-settings"
-  defaults:
-    _form: '\Drupal\dpl_favorites_list_material_component\Form\FavoritesListMaterialComponentSettingsForm'
-    _title: "Favorites list material component settings"
-  requirements:
-    _permission: "administer site configuration"
-  options:
-    _admin_route: TRUE

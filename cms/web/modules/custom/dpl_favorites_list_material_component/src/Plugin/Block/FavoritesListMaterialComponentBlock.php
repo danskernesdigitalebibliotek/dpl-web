@@ -5,7 +5,7 @@ namespace Drupal\dpl_favorites_list_material_component\Plugin\Block;
 use Drupal\Core\Block\BlockBase;
 use Drupal\Core\Config\ConfigFactoryInterface;
 use Drupal\Core\Plugin\ContainerFactoryPluginInterface;
-use Drupal\dpl_react\DplReactConfigInterface;
+use Drupal\Core\Url;
 use Drupal\dpl_react_apps\Controller\DplReactAppsController;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
@@ -30,15 +30,12 @@ class FavoritesListMaterialComponentBlock extends BlockBase implements Container
    *   The plugin implementation definition.
    * @param \Drupal\Core\Config\ConfigFactoryInterface $configFactory
    *   Drupal config factory to get FBS and Publizon settings.
-   * @param \Drupal\dpl_react\DplReactConfigInterface $favoritesListMaterialComponentSettings
-   *   Favorites list material component settings.
    */
   public function __construct(
     array $configuration,
     $plugin_id,
     $plugin_definition,
     private ConfigFactoryInterface $configFactory,
-    private DplReactConfigInterface $favoritesListMaterialComponentSettings
   ) {
     parent::__construct($configuration, $plugin_id, $plugin_definition);
     $this->configuration = $configuration;
@@ -65,7 +62,6 @@ class FavoritesListMaterialComponentBlock extends BlockBase implements Container
       $plugin_id,
       $plugin_definition,
       $container->get('config.factory'),
-      \Drupal::service('dpl_favorites_list_material_component.settings'),
     );
   }
 
@@ -76,12 +72,10 @@ class FavoritesListMaterialComponentBlock extends BlockBase implements Container
    *   The app render array.
    */
   public function build() {
-    $favoritesListMaterialComponentSettings = $this->favoritesListMaterialComponentSettings->loadConfig();
-
     $data = [
       // Urls.
       'dpl-cms-base-url' => DplReactAppsController::dplCmsBaseUrl(),
-      'favorites-list-material-component-go-to-list-url' => $favoritesListMaterialComponentSettings->get('favorites_list_url'),
+'favorites-list-material-component-go-to-list-url' => Url::fromRoute('dpl_favorites_list.list', [], ['absolute' => TRUE])->toString(),
 
       // Texts.
       'add-to-favorites-aria-label-text' => $this->t("Add @title to favorites list", [], ['context' => 'Favorites list material component (aria)']),

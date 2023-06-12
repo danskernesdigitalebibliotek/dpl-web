@@ -5,7 +5,6 @@ namespace Drupal\dpl_favorites_list_material_component\Controller;
 use Drupal\Core\Block\BlockManagerInterface;
 use Drupal\Core\Controller\ControllerBase;
 use Drupal\Core\Render\RendererInterface;
-use Drupal\dpl_react\DplReactConfigInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
 
@@ -21,13 +20,10 @@ class DplFavoritesListMaterialComponentController extends ControllerBase {
    *   Drupal block manager.
    * @param \Drupal\Core\Render\RendererInterface $renderer
    *   Drupal renderer service.
-   * @param \Drupal\dpl_react\DplReactConfigInterface $favoritesListMaterialComponentSettings
-   *   Favorites list material component settings.
    */
   public function __construct(
     private BlockManagerInterface $blockManager,
     private RendererInterface $renderer,
-    private DplReactConfigInterface $favoritesListMaterialComponentSettings
   ) {
   }
 
@@ -43,7 +39,6 @@ class DplFavoritesListMaterialComponentController extends ControllerBase {
     return new static(
       $container->get('plugin.manager.block'),
       $container->get('renderer'),
-      \Drupal::service('dpl_favorites_list_material_component.settings'),
     );
   }
 
@@ -69,7 +64,6 @@ class DplFavoritesListMaterialComponentController extends ControllerBase {
     // Add the cache tags/contexts.
     $render = $plugin_block->build();
     $this->renderer->addCacheableDependency($render, $plugin_block);
-    $this->renderer->addCacheableDependency($render, $this->favoritesListMaterialComponentSettings);
 
     return $render;
   }
