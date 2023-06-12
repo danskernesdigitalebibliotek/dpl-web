@@ -1,4 +1,4 @@
 services:
   dpl_favorites_list_material_component.settings:
-    class: Drupal\dpl_reservations\DplFavoritesListMaterialComponentSettings
+    class: Drupal\dpl_favorites_list_material_component\DplFavoritesListMaterialComponentSettings
     arguments: ["@config.manager"]
