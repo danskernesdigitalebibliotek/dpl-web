@@ -89,7 +89,7 @@ class FeesListBlock extends BlockBase implements ContainerFactoryPluginInterface
       'fee-payment-modal-notice-text' => $this->t("Paid fees can take up to 24 hours to registrer.", [], ['context' => 'Fees list']),
       'i-accept-text' => $this->t("I accept the", [], ['context' => 'Fees list']),
       'item-fee-amount-text' => $this->t("Fee @fee,-", [], ['context' => 'Fees list']),
-      'material-and-author-text' => $this->t("and", [], ['context' => 'Fees list']),
+      'et-al-text' => $this->t("et al.", [], ['context' => 'Fees list']),
       'material-by-author-text' => $this->t("By", [], ['context' => 'Fees list']),
       'other-materials-text' => $this->t("Other materials", [], ['context' => 'Fees list']),
       'pay-text' => $this->t("Pay", [], ['context' => 'Fees list']),
@@ -103,6 +103,7 @@ class FeesListBlock extends BlockBase implements ContainerFactoryPluginInterface
       'total-text' => $this->t("Total", [], ['context' => 'Fees list']),
       'turned-in-text' => $this->t("Turned in @date", [], ['context' => 'Fees list']),
       'unpaid-fees-text' => $this->t("Unsettled debt", [], ['context' => 'Fees list']),
+      'material-and-author-text' => $this->t('and', [], ['context' => 'Fees list']),
       'view-fees-and-compensation-rates-text' => $this->t("see our fees and replacement costs", [], ['context' => 'Fees list']),
       'view-fees-and-compensation-rates-url' => $feesConfig->get('fees_and_replacement_costs_url'),
     ] + DplReactAppsController::externalApiBaseUrls();

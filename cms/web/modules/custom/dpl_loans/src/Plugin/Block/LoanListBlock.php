@@ -104,6 +104,7 @@ class LoanListBlock extends BlockBase implements ContainerFactoryPluginInterface
       'material-overdue-url' => $loanListSettings->get('material_overdue_url'),
 
       // Texts.
+      'material-and-author-text' => $this->t('and', [], ['context' => 'Loan list']),
       'group-modal-aria-description-text' => $this->t("This modal makes it possible to renew materials", [], ['context' => 'Loan list (Aria)']),
       'group-modal-button-text' => $this->t("Renewable (@count)", [], ['context' => 'Loan list']),
       'group-modal-checkbox-text' => $this->t("Choose all renewable", [], ['context' => 'Loan list']),
@@ -146,7 +147,7 @@ class LoanListBlock extends BlockBase implements ContainerFactoryPluginInterface
       'loan-list-title-text' => $this->t("Your loans", [], ['context' => 'Loan list']),
       'loan-list-to-be-delivered-digital-material-text' => $this->t("Due date @date", [], ['context' => 'Loan list']),
       'loan-list-to-be-delivered-text' => $this->t("Due date @date", [], ['context' => 'Loan list']),
-      'material-and-author-text' => $this->t("and", [], ['context' => 'Loan list']),
+      'et-al-text' => $this->t("et al.", [], ['context' => 'Loan list']),
       'material-by-author-text' => $this->t("By", [], ['context' => 'Loan list']),
       'material-details-close-modal-aria-label-text' => $this->t("Close material details modal", [], ['context' => 'Loan list (Aria)']),
       'material-details-digital-due-date-label-text' => $this->t("Expires", [], ['context' => 'Loan list']),

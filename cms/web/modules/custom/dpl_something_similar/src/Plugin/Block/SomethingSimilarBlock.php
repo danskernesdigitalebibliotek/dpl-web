@@ -81,8 +81,9 @@ class SomethingSimilarBlock extends BlockBase implements ContainerFactoryPluginI
       'material-url' => DplReactAppsController::materialUrl(),
 
       // Texts.
+      'material-and-author-text' => $this->t('and', [], ['context' => 'Something similar']),
       'add-to-favorites-aria-label-text' => $this->t("Add @title to favorites list", [], ['context' => 'Something similar (Aria)']),
-      'material-and-author-text' => $this->t("and", [], ['context' => 'Something similar']),
+      'et-al-text' => $this->t("et al.", [], ['context' => 'Something similar']),
       'material-by-author-text' => $this->t("By", [], ['context' => 'Something similar']),
       'remove-from-favorites-aria-label-text' => $this->t("Remove @title from favorites list", [], ['context' => 'Something similar (Aria)']),
       'something-similar-by-the-same-author-text' => $this->t("By the same author", [], ['context' => 'Something similar']),
