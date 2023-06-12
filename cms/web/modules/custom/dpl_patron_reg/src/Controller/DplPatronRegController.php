@@ -61,15 +61,22 @@ class DplPatronRegController extends ControllerBase {
   /**
    * Build and return information page as page.
    *
-   * @return mixed[]
-   *   The page as a render array.
+   * @return mixed
+   *   The page as a render array or a redirect if user is logged in.
    */
-  public function informationPage(): array {
+  public function informationPage(): mixed {
+    // If user is logged in try redirect to the users profile page.
+    if (!$this->currentUser()->isAnonymous()) {
+      /** @var \Drupal\Core\GeneratedUrl $url */
+      $url = Url::fromRoute('dpl_patron_page.profile')->toString(TRUE);
+      return new TrustedRedirectResponse($url->getGeneratedUrl());
+    }
+
     $config = $this->patronRegSettings->loadConfig();
     $logins = [];
 
-    // Loop over all open id connect definitions and build login links for each
-    // one.
+    // Loop over all open id connect definitions and build login links for
+    // each one.
     $definitions = $this->pluginManager->getDefinitions();
     foreach ($definitions as $client_id => $client) {
       if (!$this->config('openid_connect.settings.' . $client_id)
