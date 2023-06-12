@@ -74,6 +74,12 @@ class RedirectPatronSubscriber implements EventSubscriberInterface {
         // ignored.
         $_SESSION['openid_connect_destination'] = $path;
 
+        // Response built from the ThrustedRedirectReponse class is not cached.
+        // But the problem here is the page cache for anonymous requests, which
+        // caches all responses, even redirects and no matter if they are
+        // cacheable or not. This will kill that cache.
+        \Drupal::service('page_cache_kill_switch')->trigger();
+
         /** @var \Drupal\Core\GeneratedUrl $url */
         $url = Url::fromRoute('dpl_login.login')->toString(TRUE);
         $response = new TrustedRedirectResponse($url->getGeneratedUrl(), 307);
