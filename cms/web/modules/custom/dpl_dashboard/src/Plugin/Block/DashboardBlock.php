@@ -108,6 +108,7 @@ class DashboardBlock extends BlockBase implements ContainerFactoryPluginInterfac
       'delete-reservation-modal-close-modal-text' => $this->t('Close delete reservation modal', [], ['context' => 'Dashboard']),
       'delete-reservation-modal-not-regrettable-text' => $this->t('You cannot regret this action', [], ['context' => 'Dashboard']),
       'fees-text' => $this->t('Fees', [], ['context' => 'Dashboard']),
+      'reservation-details-number-in-queue-label-text' => $this->t('@count queued', [], ['context' => 'Dashboard']),
       'dashboard-number-in-line-text' => $this->t('Number @count in line', [], ['context' => 'Dashboard']),
       'total-owed-text' => $this->t('You owe in total', [], ['context' => 'Dashboard']),
       'pay-owed-text' => $this->t('Pay', [], ['context' => 'Dashboard']),
