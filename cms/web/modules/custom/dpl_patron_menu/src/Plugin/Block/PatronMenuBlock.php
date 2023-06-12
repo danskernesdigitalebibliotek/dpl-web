@@ -137,8 +137,17 @@ class PatronMenuBlock extends BlockBase implements ContainerFactoryPluginInterfa
       "menu-log-out-url" => Url::fromRoute('dpl_login.logout', [], ['absolute' => TRUE])->toString(),
       "menu-sign-up-url" => Url::fromRoute('dpl_patron_reg.information', [], ['absolute' => TRUE])->toString(),
       'ereolen-my-page-url' => $generalSettings->get('ereolen_my_page_url'),
+      'menu-view-your-profile-text-url' => Url::fromRoute('dpl_patron_page.profile', [], ['absolute' => TRUE])->toString(),
 
       // Texts.
+      'reservation-details-others-in-queue-text' => $this->t('Others are queueing for this material', [], ['context' => 'Patron menu']),
+      'reservation-details-number-in-queue-label-text' => $this->t('@count queued', [], ['context' => 'Patron menu']),
+      'dashboard-number-in-line-text' => $this->t('Number @count in line', [], ['context' => 'Patron menu']),
+      'ready-for-loan-text' => $this->t('Ready for pickup', [], ['context' => 'Patron menu']),
+      'status-badge-warning-text' => $this->t('Expires soon', [], ['context' => 'Patron menu']),
+      'loans-overdue-text' => $this->t('Returned too late', [], ['context' => 'Patron menu']),
+      'loans-soon-overdue-text' => $this->t('To be returned soon', [], ['context' => 'Patron menu']),
+      'reservations-ready-text' => $this->t('Ready for you', [], ['context' => 'Patron menu']),
       'delete-reservation-modal-aria-description-text' => $this->t('This button opens a modal that covers the entire page and contains the possibility to delete a selected reservation, or multiple selected reservations', [], ['context' => 'Patron menu (Aria)']),
       'delete-reservation-modal-close-modal-text' => $this->t('Close delete reservation modal', [], ['context' => 'Patron menu']),
       'delete-reservation-modal-delete-button-text' => $this->t('Cancel reservation', [], ['context' => 'Patron menu']),

@@ -102,11 +102,14 @@ class DashboardBlock extends BlockBase implements ContainerFactoryPluginInterfac
       'ereolen-my-page-url' => $generalSettings->get('ereolen_my_page_url'),
 
       // Texts.
+      'reservation-details-others-in-queue-text' => $this->t('Others are queueing for this material', [], ['context' => 'Dashboard']),
       'your-profile-text' => $this->t('Your profile', [], ['context' => 'Dashboard']),
       'delete-reservation-modal-aria-description-text' => $this->t('This button opens a modal that covers the entire page and contains the possibility to delete a selected reservation, or multiple selected reservations', [], ['context' => 'Dashboard (aria)']),
       'delete-reservation-modal-close-modal-text' => $this->t('Close delete reservation modal', [], ['context' => 'Dashboard']),
       'delete-reservation-modal-not-regrettable-text' => $this->t('You cannot regret this action', [], ['context' => 'Dashboard']),
       'fees-text' => $this->t('Fees', [], ['context' => 'Dashboard']),
+      'reservation-details-number-in-queue-label-text' => $this->t('@count queued', [], ['context' => 'Dashboard']),
+      'dashboard-number-in-line-text' => $this->t('Number @count in line', [], ['context' => 'Dashboard']),
       'total-owed-text' => $this->t('You owe in total', [], ['context' => 'Dashboard']),
       'pay-owed-text' => $this->t('Pay', [], ['context' => 'Dashboard']),
       'total-amount-fee-text' => $this->t('@total,-', [], ['context' => 'Dashboard']),
