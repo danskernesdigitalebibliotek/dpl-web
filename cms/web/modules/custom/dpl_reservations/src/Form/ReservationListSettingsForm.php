@@ -66,20 +66,6 @@ class ReservationListSettingsForm extends ConfigFormBase {
       '#tree' => FALSE,
     ];
 
-    $form['settings']['pause_reservation_info_url'] = [
-      '#type' => 'url',
-      '#title' => $this->t('Pause reservation link', [], ['context' => 'Reservation list (settings)']),
-      '#description' => $this->t('The link in the pause reservation modal', [], ['context' => 'Reservation list (settings)']),
-      '#default_value' => $config->get('pause_reservation_info_url') ?? '',
-    ];
-
-    $form['settings']['pause_reservation_start_date_config'] = [
-      '#type' => 'date',
-      '#title' => $this->t('Start date', [], ['context' => 'Reservation list (settings)']),
-      '#description' => $this->t('Pause reservation start date', [], ['context' => 'Reservation list (settings)']),
-      '#default_value' => $config->get('pause_reservation_start_date_config'),
-    ];
-
     $form['settings']['page_size_mobile'] = [
       '#type' => 'number',
       '#title' => $this->t('Page size mobile', [], ['context' => 'Reservation list (settings)']),
@@ -106,8 +92,6 @@ class ReservationListSettingsForm extends ConfigFormBase {
     parent::submitForm($form, $form_state);
 
     $this->config($this->configService->getConfigKey())
-      ->set('pause_reservation_info_url', $form_state->getValue('pause_reservation_info_url'))
-      ->set('pause_reservation_start_date_config', $form_state->getValue('pause_reservation_start_date_config'))
       ->set('page_size_desktop', $form_state->getValue('page_size_desktop'))
       ->set('page_size_mobile', $form_state->getValue('page_size_mobile'))
       ->save();
