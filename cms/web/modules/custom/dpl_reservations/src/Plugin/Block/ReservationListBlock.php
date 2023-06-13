@@ -86,13 +86,13 @@ class ReservationListBlock extends BlockBase implements ContainerFactoryPluginIn
 
       // Url.
       'ereolen-my-page-url' => $config->get('ereolen_my_page_url'),
-      'pause-reservation-info-url' => $config->get('pause_reservation_info_url'),
+      'pause-reservation-info-url' => $generalSettings->get('pause_reservation_info_url'),
 
       // Config.
       'interest-periods-config' => DplReactAppsController::getInterestPeriods(),
       'page-size-desktop' => $config->get('page_size_desktop'),
       'page-size-mobile' => $config->get('page_size_mobile'),
-      'pause-reservation-start-date-config' => $config->get('pause_reservation_start_date_config') ?? '',
+      'pause-reservation-start-date-config' => $generalSettings->get('pause_reservation_start_date_config') ?? '',
       'reservation-detail-allow-remove-ready-reservations-config' => $generalSettings->get('reservation_detail_allow_remove_ready_reservations_config'),
       'threshold-config' => $generalSettings->get('threshold_config'),
 
