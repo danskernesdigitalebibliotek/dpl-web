@@ -75,35 +75,6 @@ class PatronRegistrationBlock extends BlockBase implements ContainerFactoryPlugi
   }
 
   /**
-   * Build a string of JSON data containing information about branches.
-   *
-   * Uses the format:
-   *
-   * [{
-   *    "branchId":"DK-775120",
-   *    "title":"Højbjerg"
-   * }, {
-   *    "branchId":"DK-775122",
-   *    "title":"Beder-Malling"
-   * }]
-   *
-   * This is to be used as props/attributes for React apps.
-   *
-   * @param \Drupal\dpl_library_agency\Branch\Branch[] $branches
-   *   The branches to build the string with.
-   *
-   * @throws \Safe\Exceptions\JsonException
-   */
-  protected function buildBranchesJsonProp(array $branches) : string {
-    return json_encode(array_map(function (Branch $branch) {
-      return [
-        'branchId' => $branch->id,
-        'title' => $branch->title,
-      ];
-    }, $branches));
-  }
-
-  /**
    * Builds a comma separated list of branch ids.
    *
    * This is to be used as props/attributes for React apps.
@@ -133,7 +104,7 @@ class PatronRegistrationBlock extends BlockBase implements ContainerFactoryPlugi
     $data = [
       // Configuration.
       'blacklisted-pickup-branches-config' => $this->buildBranchesListProp($this->branchSettings->getExcludedReservationBranches()),
-      'branches-config' => $this->buildBranchesJsonProp($this->branchRepository->getBranches()),
+      'branches-config' => DplReactAppsController::buildBranchesJsonProp($this->branchRepository->getBranches()),
       'min-age-config' => $config->get('age_limit') ?? '18',
       'pincode-length-max-config' => $patron_page_settings->get('pincode_length_max'),
       'pincode-length-min-config' => $patron_page_settings->get('pincode_length_min'),
