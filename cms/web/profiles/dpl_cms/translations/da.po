@@ -105,7 +105,7 @@ msgstr ""
 #: 
 msgctxt "Loan list"
 msgid "The item is reserved by another patron"
-msgstr ""
+msgstr "Materialet er reserveret af en anden bruger"
 
 #: 
 msgctxt "Loan list"
@@ -702,7 +702,7 @@ msgstr ""
 #: 
 msgctxt "Work Page"
 msgid "Log in to read the review"
-msgstr ""
+msgstr "Log ind for at læse anmeldelsen"
 
 #: 
 msgctxt "Work Page"
@@ -2361,12 +2361,12 @@ msgstr ""
 #: 
 msgctxt "Patron page"
 msgid "Pause reservations on physical items"
-msgstr ""
+msgstr "Sæt fysiske reserveringer på pause"
 
 #: 
 msgctxt "Patron page"
 msgid "Pause your reservations early, since reservations that are already being processed, will not be paused."
-msgstr ""
+msgstr "Sæt dine reserveringer på pause i god tid, da reserveringer der er på vej til dig ikke kan sættes på pause"
 
 #: 
 msgctxt "Patron page"
@@ -2928,7 +2928,7 @@ msgstr ""
 
 #: 
 msgid "Log in with @client_title"
-msgstr ""
+msgstr "Log ind med @client_title"
 
 #: 
 msgid "Minimum age to allow self registration"
@@ -2949,7 +2949,7 @@ msgstr ""
 #: 
 msgctxt "Create patron"
 msgid "Cancel"
-msgstr ""
+msgstr "Fortryd"
 
 #: 
 msgctxt "Create patron"
@@ -2959,17 +2959,17 @@ msgstr ""
 #: 
 msgctxt "Create patron"
 msgid "create patron change pickup header text"
-msgstr ""
+msgstr "Skift afhentningsbibliotek"
 
 #: 
 msgctxt "Create patron"
 msgid "Confirm"
-msgstr ""
+msgstr "Bekræft"
 
 #: 
 msgctxt "Create patron"
 msgid "Register as patron"
-msgstr ""
+msgstr "Opret bruger"
 
 #: 
 msgctxt "Create patron"
@@ -2984,12 +2984,12 @@ msgstr ""
 #: 
 msgctxt "Create patron"
 msgid "Receive emails about your loans, reservations, and so forth"
-msgstr ""
+msgstr "Modtag e-mails om dine lån, reserveringer osv."
 
 #: 
 msgctxt "Create patron"
 msgid "E-mail"
-msgstr ""
+msgstr "E-mail"
 
 #: 
 msgctxt "Create patron"
@@ -3004,57 +3004,57 @@ msgstr ""
 #: 
 msgctxt "Create patron"
 msgid "Name"
-msgstr ""
+msgstr "Navn"
 
 #: 
 msgctxt "Create patron"
 msgid "Receive text messages about your loans, reservations, and so forth"
-msgstr ""
+msgstr "Få beskeder om dine lån, reserveringer osv"
 
 #: 
 msgctxt "Create patron"
 msgid "Phone number"
-msgstr ""
+msgstr "Telefonnummer"
 
 #: 
 msgctxt "Create patron"
 msgid "Change current pin by entering a new pin and saving"
-msgstr ""
+msgstr "Skift kode ved at indtaste din nuværende pinkode og gem"
 
 #: 
 msgctxt "Create patron"
 msgid "Pincode"
-msgstr ""
+msgstr "Pinkode"
 
 #: 
 msgctxt "Create patron"
 msgid "Confirm new pin"
-msgstr ""
+msgstr "Bekræft ny pinkode"
 
 #: 
 msgctxt "Create patron"
 msgid "New pin"
-msgstr ""
+msgstr "Ny pinkode"
 
 #: 
 msgctxt "Create patron"
 msgid "The pincode should be minimum @pincodeLengthMin and maximum @pincodeLengthMax characters long"
-msgstr ""
+msgstr "Pinkoden skal være minimum @pincodeLengthMin og maksimum @pincodeLengthMax karakterer lang"
 
 #: 
 msgctxt "Create patron"
 msgid "The pincodes are not the same"
-msgstr ""
+msgstr "Pinkoderne er ikke ens"
 
 #: 
 msgctxt "Create patron"
 msgid "Choose pickup branch"
-msgstr ""
+msgstr "Vælg afhentningssted"
 
 #: 
 msgctxt "Create patron"
 msgid "Nothing selected"
-msgstr ""
+msgstr "Intet valgt"
 
 #: 
 msgid "Patron registration"
@@ -3074,7 +3074,7 @@ msgstr ""
 
 #: 
 msgid "Patron create"
-msgstr ""
+msgstr "Opret bruger"
 
 #: 
 msgctxt "Favorites list material component (aria)"
@@ -3134,12 +3134,12 @@ msgstr ""
 
 #: 
 msgid "My account"
-msgstr "Min brugerprofil"
+msgstr "Min profil"
 
 #: 
 msgctxt "Patron menu"
 msgid "My Account"
-msgstr ""
+msgstr "Min konto"
 
 #: 
 msgctxt "Patron menu"
@@ -3179,7 +3179,7 @@ msgstr ""
 #: 
 msgctxt "Patron menu"
 msgid "Log in"
-msgstr ""
+msgstr "Log ind"
 
 #: 
 msgctxt "Patron menu"
