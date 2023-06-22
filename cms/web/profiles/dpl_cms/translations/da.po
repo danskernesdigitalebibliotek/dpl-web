@@ -582,7 +582,7 @@ msgstr ""
 #: 
 msgctxt "Work Page"
 msgid "Find on bookshelf"
-msgstr ""
+msgstr "Hej Lotte"
 
 #: 
 msgctxt "Work Page"
