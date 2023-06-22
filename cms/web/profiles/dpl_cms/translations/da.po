@@ -432,7 +432,7 @@ msgstr ""
 #: 
 msgctxt "Work Page"
 msgid "Already reserved"
-msgstr ""
+msgstr "Allerede reserveret"
 
 #: 
 msgctxt "Work Page"
@@ -882,7 +882,7 @@ msgstr ""
 #: 
 msgctxt "Work Page"
 msgid "The digital copy has been ordered. You will receive an email when the digital copy is ready."
-msgstr ""
+msgstr "Du har bestilt en digital kopi. Du modtager en e-mail når den er klar til dig."
 
 #: 
 msgctxt "Work Page"
@@ -932,12 +932,12 @@ msgstr ""
 #: 
 msgctxt "Work Page"
 msgid "Receive mail when the material is ready"
-msgstr ""
+msgstr "Modtag e-mail når materialet er klar til dig"
 
 #: 
 msgctxt "Work Page"
 msgid "Receive SMS when the material is ready"
-msgstr ""
+msgstr "Modtag sms når materialet er klar til dig"
 
 #: 
 msgctxt "Work Page"
@@ -962,7 +962,7 @@ msgstr ""
 #: 
 msgctxt "Work Page"
 msgid "Material is available and you will get a message when it is ready for pickup - pickup at @branch"
-msgstr ""
+msgstr "Materialet er tilgængeligt og du vil få en besked når det er klar til afhentning - afhentes på @branch"
 
 #: 
 msgctxt "Work Page"
@@ -1625,7 +1625,7 @@ msgstr "Digitale reserveringer"
 #: 
 msgctxt "Reservation list"
 msgid "Ready for pickup"
-msgstr ""
+msgstr "Klar til afhentning"
 
 #: 
 msgctxt "Reservation list"
@@ -1650,7 +1650,7 @@ msgstr "Du har 0 reserveringer på digitale materialer"
 #: 
 msgctxt "Reservation list"
 msgid "Ready"
-msgstr ""
+msgstr "Klar"
 
 #: 
 msgctxt "Reservation list"
@@ -2184,12 +2184,12 @@ msgstr ""
 #: 
 msgctxt "Dashboard"
 msgid "Ready"
-msgstr ""
+msgstr "Klar"
 
 #: 
 msgctxt "Dashboard"
 msgid "Ready for you"
-msgstr ""
+msgstr "Klar til dig"
 
 #: 
 msgctxt "Dashboard"
@@ -3154,7 +3154,7 @@ msgstr ""
 #: 
 msgctxt "Patron menu"
 msgid "reservations ready for pickup"
-msgstr ""
+msgstr "Reserveringer klar til afhentning"
 
 #: 
 msgctxt "Patron menu"
@@ -3337,7 +3337,7 @@ msgstr ""
 #: 
 msgctxt "Dashboard"
 msgid "Ready for pickup"
-msgstr ""
+msgstr "Klar til afhentning"
 
 #: 
 msgctxt "Dashboard (aria)"
@@ -3707,7 +3707,7 @@ msgstr ""
 #: 
 msgctxt "Patron menu"
 msgid "Reservations ready for pickup"
-msgstr ""
+msgstr "Reserveringer klar til afhentning"
 
 #: 
 msgctxt "Patron menu"
@@ -3722,7 +3722,7 @@ msgstr ""
 #: 
 msgctxt "Patron menu"
 msgid "Ready"
-msgstr ""
+msgstr "Klar"
 
 #: 
 msgctxt "Patron menu"
@@ -3737,7 +3737,7 @@ msgstr ""
 #: 
 msgctxt "Patron menu"
 msgid "Ready for pickup"
-msgstr ""
+msgstr "Klar til afhentning"
 
 #: 
 msgctxt "Patron menu"
@@ -3831,5 +3831,5 @@ msgstr ""
 #: 
 msgctxt "Patron menu"
 msgid "Ready for you"
-msgstr ""
+msgstr "Klar til dig"
 
