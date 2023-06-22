@@ -60,7 +60,7 @@ msgstr ""
 #: 
 msgctxt "Loan list"
 msgid "Choose all renewable"
-msgstr ""
+msgstr "Vælg alle med mulighed for fornyelse"
 
 #: 
 msgctxt "Loan list"
@@ -792,7 +792,7 @@ msgstr ""
 #: 
 msgctxt "Work Page"
 msgid "Choose pickup library"
-msgstr ""
+msgstr "Vælg afhentningssted"
 
 #: 
 msgctxt "Work Page"
@@ -1680,7 +1680,7 @@ msgstr ""
 #: 
 msgctxt "Reservation list"
 msgid "Pick up before @date"
-msgstr ""
+msgstr "Afhentes senest: @date"
 
 #: 
 msgctxt "Reservation list"
@@ -2035,7 +2035,7 @@ msgstr ""
 #: 
 msgctxt "Favorites list"
 msgid "Choose all renewable"
-msgstr ""
+msgstr "Vælg alle med mulighed for fornyelse"
 
 #: 
 msgctxt "Favorites list"
@@ -2486,7 +2486,7 @@ msgstr ""
 #: 
 msgctxt "Patron page"
 msgid "Choose pickup branch"
-msgstr ""
+msgstr "Vælg afhentningssted"
 
 #: 
 msgctxt "Patron page"
@@ -3372,7 +3372,7 @@ msgstr ""
 #: 
 msgctxt "Dashboard"
 msgid "Choose all"
-msgstr ""
+msgstr "Vælg alle"
 
 #: 
 msgctxt "Dashboard (aria)"
@@ -3437,7 +3437,7 @@ msgstr ""
 #: 
 msgctxt "Dashboard"
 msgid "Pick up before @date"
-msgstr ""
+msgstr "Afhentes senest: @date"
 
 #: 
 msgctxt "Dashboard"
@@ -3597,7 +3597,7 @@ msgstr ""
 #: 
 msgctxt "Patron menu"
 msgid "Choose all renewable"
-msgstr ""
+msgstr "Vælg alle med mulighed for fornyelse"
 
 #: 
 msgctxt "Patron menu"
@@ -3712,7 +3712,7 @@ msgstr "Reserveringer klar til afhentning"
 #: 
 msgctxt "Patron menu"
 msgid "Pick up before"
-msgstr ""
+msgstr "Afhentes senest"
 
 #: 
 msgctxt "Patron menu"
