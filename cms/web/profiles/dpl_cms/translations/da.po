@@ -717,7 +717,7 @@ msgstr ""
 #: 
 msgctxt "Work Page"
 msgid "Skip the queue - The material is available in another edition - @title @authorAndYear - reservations: @reservations"
-msgstr ""
+msgstr "Spring køen over - materialet er tilgængeligt i en anden udgave @title @authorAndYear - reserveringer: @reservations"
 
 #: 
 msgctxt "Work Page"
@@ -1605,22 +1605,22 @@ msgstr ""
 #: 
 msgctxt "Reservation list"
 msgid "Your reservations"
-msgstr ""
+msgstr "Dine reserveringer"
 
 #: 
 msgctxt "Reservation list"
 msgid "Physical reservations"
-msgstr ""
+msgstr "Fysiske reserveringer"
 
 #: 
 msgctxt "Reservation list"
 msgid "Pause reservations on physical items"
-msgstr ""
+msgstr "Sæt fysiske reserveringer på pause"
 
 #: 
 msgctxt "Reservation list"
 msgid "Digital reservations"
-msgstr ""
+msgstr "Digitale reserveringer"
 
 #: 
 msgctxt "Reservation list"
@@ -1630,22 +1630,22 @@ msgstr ""
 #: 
 msgctxt "Reservation list"
 msgid "At the moment you have 0 reservations ready for pickup"
-msgstr ""
+msgstr "Du har 0 reserveringer klar til afhentning"
 
 #: 
 msgctxt "Reservation list"
 msgid "At the moment you have 0 physical reservations"
-msgstr ""
+msgstr "Du har 0 fysiske reserveringer"
 
 #: 
 msgctxt "Reservation list"
 msgid "At the moment you have 0 reservations"
-msgstr ""
+msgstr "Du har 0 reserveringer"
 
 #: 
 msgctxt "Reservation list"
 msgid "At the moment you have 0 reservations on digital items"
-msgstr ""
+msgstr "Du har 0 reserveringer på digitale materialer"
 
 #: 
 msgctxt "Reservation list"
@@ -1785,22 +1785,22 @@ msgstr ""
 #: 
 msgctxt "Reservation list"
 msgid "Cancel"
-msgstr ""
+msgstr "Fortryd"
 
 #: 
 msgctxt "Reservation list"
 msgid "Cancel reservation"
-msgstr ""
+msgstr "Slet reservering"
 
 #: 
 msgctxt "Reservation list"
 msgid "Cancel reservations"
-msgstr ""
+msgstr "Slet reserveringer"
 
 #: 
 msgctxt "Reservation list"
 msgid "Do you want to cancel your reservation?"
-msgstr ""
+msgstr "Vil du slette din reservering?"
 
 #: 
 msgctxt "Reservation list"
@@ -1835,7 +1835,7 @@ msgstr ""
 #: 
 msgctxt "Reservation list"
 msgid "Pause your reservations early, since reservations that are already being processed, will not be paused."
-msgstr ""
+msgstr "Sæt fysiske reserveringer på pause i god tid, da reserveringer der allerede bliver behandlet ikke bliver sat på pause."
 
 #: 
 msgctxt "Reservation list"
@@ -2164,7 +2164,7 @@ msgstr ""
 #: 
 msgctxt "Dashboard"
 msgid "At the moment, you have 0 reservations"
-msgstr ""
+msgstr "Du har 0 reservernger"
 
 #: 
 msgctxt "Dashboard"
@@ -2199,7 +2199,7 @@ msgstr ""
 #: 
 msgctxt "Dashboard"
 msgid "Reservations"
-msgstr ""
+msgstr "Reserveringer"
 
 #: 
 msgctxt "Dashboard"
@@ -2366,7 +2366,7 @@ msgstr "Sæt fysiske reserveringer på pause"
 #: 
 msgctxt "Patron page"
 msgid "Pause your reservations early, since reservations that are already being processed, will not be paused."
-msgstr "Sæt dine reserveringer på pause i god tid, da reserveringer der er på vej til dig ikke kan sættes på pause"
+msgstr "Sæt fysiske reserveringer på pause i god tid, da reserveringer der allerede bliver behandlet ikke bliver sat på pause."
 
 #: 
 msgctxt "Patron page"
@@ -2431,7 +2431,7 @@ msgstr ""
 #: 
 msgctxt "Patron page"
 msgid "Receive text messages about your loans, reservations, and so forth"
-msgstr ""
+msgstr "Modtag sms om dine lån, reserveringer, osv."
 
 #: 
 msgctxt "Patron page"
@@ -2441,7 +2441,7 @@ msgstr ""
 #: 
 msgctxt "Patron page"
 msgid "Receive emails about your loans, reservations, and so forth"
-msgstr ""
+msgstr "Modtag e-mails om dine lån, reserveringer osv."
 
 #: 
 msgctxt "Patron page"
@@ -2476,7 +2476,7 @@ msgstr ""
 #: 
 msgctxt "Patron page"
 msgid "RESERVATIONS"
-msgstr ""
+msgstr "Reserveringer"
 
 #: 
 msgctxt "Patron page"
@@ -2496,7 +2496,7 @@ msgstr ""
 #: 
 msgctxt "Patron page"
 msgid "Pause physical reservations"
-msgstr ""
+msgstr "Sæt fysiske reserveringer på pause"
 
 #: 
 msgctxt "Patron page"
@@ -2506,7 +2506,7 @@ msgstr ""
 #: 
 msgctxt "Patron page"
 msgid "Pause your reservations"
-msgstr ""
+msgstr "Sæt dine reserveringer på pause"
 
 #: 
 msgctxt "Patron page (aria)"
@@ -2738,7 +2738,7 @@ msgstr ""
 #: 
 msgctxt "Fees list"
 msgid "Cancel"
-msgstr ""
+msgstr "Fortryd"
 
 #: 
 msgctxt "Fees list"
@@ -2884,7 +2884,7 @@ msgstr ""
 #: 
 msgctxt "Reservation list"
 msgid "Read more about pausing reservations and what that means here"
-msgstr ""
+msgstr "Læs mere om hvordan du sætter reserveringer på pause og hvad det betyder"
 
 #: 
 msgctxt "Dpl patron redirect"
@@ -3009,7 +3009,7 @@ msgstr "Navn"
 #: 
 msgctxt "Create patron"
 msgid "Receive text messages about your loans, reservations, and so forth"
-msgstr "Få beskeder om dine lån, reserveringer osv"
+msgstr "Modtag sms om dine lån, reserveringer, osv."
 
 #: 
 msgctxt "Create patron"
@@ -3174,7 +3174,7 @@ msgstr ""
 #: 
 msgctxt "Patron menu"
 msgid "Log out"
-msgstr ""
+msgstr "Log ud"
 
 #: 
 msgctxt "Patron menu"
@@ -3452,17 +3452,17 @@ msgstr ""
 #: 
 msgctxt "Dashboard"
 msgid "Do you want to cancel your reservation?"
-msgstr ""
+msgstr "Vil du slette din reservering?"
 
 #: 
 msgctxt "Dashboard"
 msgid "Cancel reservation"
-msgstr ""
+msgstr "Slet reservering"
 
 #: 
 msgctxt "Dashboard"
 msgid "Cancel reservations"
-msgstr ""
+msgstr "Slet reserveringer"
 
 #: 
 msgctxt "Library Agency Configuration"
@@ -3567,12 +3567,12 @@ msgstr ""
 #: 
 msgctxt "Patron menu"
 msgid "Cancel reservation"
-msgstr ""
+msgstr "Slet reservering"
 
 #: 
 msgctxt "Patron menu"
 msgid "Do you want to cancel your reservation?"
-msgstr ""
+msgstr "Vil du slette din reservering?"
 
 #: 
 msgctxt "Patron menu"
@@ -3582,7 +3582,7 @@ msgstr ""
 #: 
 msgctxt "Patron menu"
 msgid "Cancel reservations"
-msgstr ""
+msgstr "Slet reserveringer"
 
 #: 
 msgctxt "Patron menu"
