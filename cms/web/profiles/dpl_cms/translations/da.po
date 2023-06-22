@@ -2818,7 +2818,7 @@ msgstr "Afleveret @date"
 #: 
 msgctxt "Fees list"
 msgid "Unsettled debt"
-msgstr "Mellemværender"
+msgstr "UBETALTE GEBYRER"
 
 #: 
 msgctxt "Fees list"
