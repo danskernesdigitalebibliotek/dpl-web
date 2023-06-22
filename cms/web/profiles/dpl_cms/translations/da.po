@@ -110,17 +110,17 @@ msgstr "Materialet er reserveret af en anden bruger"
 #: 
 msgctxt "Loan list"
 msgid "You have no digital loans at the moment"
-msgstr ""
+msgstr "Du har ingen digitale lån i øjeblikket"
 
 #: 
 msgctxt "Loan list"
 msgid "Digital loans"
-msgstr ""
+msgstr "Digitale lån"
 
 #: 
 msgctxt "Loan list"
 msgid "You have 0 loans at the moment"
-msgstr ""
+msgstr "Du har ingen lån i øjeblikket"
 
 #: 
 msgctxt "Loan list (Aria)"
@@ -160,12 +160,12 @@ msgstr ""
 #: 
 msgctxt "Loan list"
 msgid "You have no physical loans at the moment"
-msgstr ""
+msgstr "Du har ingen fysiske lån i øjeblikket"
 
 #: 
 msgctxt "Loan list"
 msgid "Physical loans"
-msgstr ""
+msgstr "Fysiske lån"
 
 #: 
 msgctxt "Loan list"
@@ -190,7 +190,7 @@ msgstr ""
 #: 
 msgctxt "Loan list"
 msgid "Your loans"
-msgstr ""
+msgstr "Dine lån"
 
 #: 
 msgctxt "Loan list"
@@ -240,7 +240,7 @@ msgstr ""
 #: 
 msgctxt "Loan list"
 msgid "Renew your loans"
-msgstr ""
+msgstr "Forny dine lån"
 
 #: 
 msgctxt "Loan list"
@@ -275,7 +275,7 @@ msgstr ""
 #: 
 msgctxt "Loan list"
 msgid "Showing @itemsShown out of @hitcount loans"
-msgstr ""
+msgstr "Viser @itemsShown ud af @hitcount lån"
 
 #: 
 msgctxt "Loan list"
@@ -1985,7 +1985,7 @@ msgstr ""
 #: 
 msgctxt "Blocked user"
 msgid "You therefore cannot reserve, borrow or renew loans. Please contact the library for further information"
-msgstr ""
+msgstr "Du kan derfor ikke reservere, låne eller forny dine lån. Kontakt venligst biblioteket for yderligere information"
 
 #: 
 msgctxt "Blocked user"
@@ -2159,7 +2159,7 @@ msgstr ""
 #: 
 msgctxt "Dashboard"
 msgid "At the moment, you have 0 physical loans"
-msgstr ""
+msgstr "Du har ingen fysiske lån i øjeblikket"
 
 #: 
 msgctxt "Dashboard"
@@ -2743,12 +2743,12 @@ msgstr "Fortryd"
 #: 
 msgctxt "Fees list"
 msgid "Go to Mit Betalingsoverblik"
-msgstr ""
+msgstr "Gå til Mit betalingsoverblik"
 
 #: 
 msgctxt "Fees list"
 msgid "Unpaid fees post 27/10 2020"
-msgstr ""
+msgstr "Ubetalte gebyrer efter 27/10 2020"
 
 #: 
 msgctxt "Fees list"
@@ -2778,52 +2778,52 @@ msgstr ""
 #: 
 msgctxt "Fees list"
 msgid "Other materials"
-msgstr ""
+msgstr "Andre materialer"
 
 #: 
 msgctxt "Fees list"
 msgid "Pay"
-msgstr ""
+msgstr "Betal"
 
 #: 
 msgctxt "Fees list"
 msgid "+ @amount other materials"
-msgstr ""
+msgstr "+ @amount andre materialer"
 
 #: 
 msgctxt "Fees list"
 msgid "AFTER 27/10 2020"
-msgstr ""
+msgstr "EFTER 27/10 2020"
 
 #: 
 msgctxt "Fees list"
 msgid "BEFORE 27/10 2020"
-msgstr ""
+msgstr "FØR 27/10 2020"
 
 #: 
 msgctxt "Fees list"
 msgid "Fee"
-msgstr ""
+msgstr "Gebyr"
 
 #: 
 msgctxt "Fees list"
 msgid "Total"
-msgstr ""
+msgstr "I alt"
 
 #: 
 msgctxt "Fees list"
 msgid "Turned in @date"
-msgstr ""
+msgstr "Afleveret @date"
 
 #: 
 msgctxt "Fees list"
 msgid "Unsettled debt"
-msgstr ""
+msgstr "Mellemværender"
 
 #: 
 msgctxt "Fees list"
 msgid "see our fees and replacement costs"
-msgstr ""
+msgstr "Se vores takster"
 
 #: 
 msgid "Fees and Replacement costs URL"
@@ -2867,7 +2867,7 @@ msgstr ""
 
 #: 
 msgid "Fees and replacement costs are handled through the new system \"Mit betalingsoverblik."
-msgstr ""
+msgstr "Gebyrer og erstatninger håndteres via \"Mit Betalingsoverblik\"."
 
 #: 
 msgid "DPL Fees"
@@ -3130,7 +3130,7 @@ msgstr ""
 
 #: 
 msgid "Fees & Replacement costs"
-msgstr ""
+msgstr "Mellemværender"
 
 #: 
 msgid "My account"
@@ -3297,7 +3297,7 @@ msgstr ""
 #: 
 msgctxt "Dashboard"
 msgid "Fees"
-msgstr ""
+msgstr "Gebyrer"
 
 #: 
 msgctxt "Dashboard"
@@ -3482,7 +3482,7 @@ msgstr ""
 #: 
 msgctxt "Fees list"
 msgid "et al."
-msgstr ""
+msgstr "o.a."
 
 #: 
 msgctxt "Dashboard"
@@ -3627,7 +3627,7 @@ msgstr ""
 #: 
 msgctxt "Patron menu"
 msgid "Read more about fees"
-msgstr ""
+msgstr "Læs mere om gebyrer"
 
 #: 
 msgctxt "Patron menu"
