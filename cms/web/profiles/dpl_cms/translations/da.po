@@ -45,7 +45,7 @@ msgstr ""
 #: 
 msgctxt "Loan list"
 msgid "Read more about fees"
-msgstr ""
+msgstr "Læs mere om gebyrer"
 
 #: 
 msgctxt "Loan list (Aria)"
@@ -65,12 +65,12 @@ msgstr "Vælg alle med mulighed for fornyelse"
 #: 
 msgctxt "Loan list"
 msgid "Due date @date"
-msgstr ""
+msgstr "Afleveres senest @date"
 
 #: 
 msgctxt "Loan list"
 msgid "The due date of return is exceeded, therefore you will be charged a fee, when the item is returned"
-msgstr ""
+msgstr "Afleveringsdatoen er overskredet, du vil derfor blive pålagt et gebyr ved aflevering"
 
 #: 
 msgctxt "Loan list"
@@ -80,7 +80,7 @@ msgstr ""
 #: 
 msgctxt "Loan list"
 msgid "Can be returned to all branches of the municipalities libraries"
-msgstr ""
+msgstr "Kan afleveres på alle kommunens biblioteker"
 
 #: 
 msgctxt "Loan list (Aria)"
@@ -95,12 +95,12 @@ msgstr ""
 #: 
 msgctxt "Loan list"
 msgid "The item has been lent to you by another library and renewal is therefore conditional of the acceptance by that library"
-msgstr ""
+msgstr "Materialet er udlånt fra en anden kommune og fornyelsen er derfor betinget af et andet biblioteks accept"
 
 #: 
 msgctxt "Loan list"
 msgid "The item cannot be renewed further"
-msgstr ""
+msgstr "Materialet kan ikke fornyes flere gange"
 
 #: 
 msgctxt "Loan list"
@@ -130,7 +130,7 @@ msgstr ""
 #: 
 msgctxt "Loan list"
 msgid "Select @label for renewal"
-msgstr ""
+msgstr "Vælg @label til fornyelse"
 
 #: 
 msgctxt "Loan list"
@@ -175,7 +175,7 @@ msgstr ""
 #: 
 msgctxt "Loan list"
 msgid "Renew several"
-msgstr ""
+msgstr "Forny flere"
 
 #: 
 msgctxt "Loan list"
@@ -265,7 +265,7 @@ msgstr ""
 #: 
 msgctxt "Loan list"
 msgid "Renewable (@count)"
-msgstr ""
+msgstr "Forny (@count)"
 
 #: 
 msgctxt "Loan list (Aria)"
@@ -842,7 +842,7 @@ msgstr ""
 #: 
 msgctxt "Work Page"
 msgid "You have borrowed @count out of @limit possible e-books this month"
-msgstr ""
+msgstr "Du har lånt @count ud af @limit mulige e-bøger denne måned"
 
 #: 
 msgctxt "Work Page"
@@ -1970,7 +1970,7 @@ msgstr ""
 #: 
 msgctxt "Blocked user"
 msgid "You have exceeded your fee limit"
-msgstr ""
+msgstr "Du har overskredet din gebyrgrænse"
 
 #: 
 msgctxt "Blocked user"
@@ -2000,7 +2000,7 @@ msgstr ""
 #: 
 msgctxt "Blocked user"
 msgid "Pay your fees here"
-msgstr ""
+msgstr "Betal dit mellemværende her"
 
 #: 
 msgctxt "Blocked user (Aria)"
@@ -2114,7 +2114,7 @@ msgstr ""
 #: 
 msgctxt "Dashboard"
 msgid "Renewable (@count)"
-msgstr ""
+msgstr "Forny (@count)"
 
 #: 
 msgctxt "Dashboard"
@@ -2124,7 +2124,7 @@ msgstr ""
 #: 
 msgctxt "Dashboard"
 msgid "Read more about fees"
-msgstr ""
+msgstr "Læs mere om grbyrer"
 
 #: 
 msgctxt "Dashboard"
@@ -2451,7 +2451,7 @@ msgstr ""
 #: 
 msgctxt "Patron page"
 msgid "There is a number of materials without limitation to amounts of loans per month."
-msgstr ""
+msgstr "Der findes materialer uden begrænsning på antal lån pr. måned."
 
 #: 
 msgctxt "Patron page"
@@ -2698,12 +2698,12 @@ msgstr ""
 #: 
 msgctxt "Fees list"
 msgid "You have 0 unpaid fees or replacement costs"
-msgstr ""
+msgstr "Du har 0 ubetalte gebyrer eller erstaninger"
 
 #: 
 msgctxt "Fees list"
 msgid "Fees charged @date"
-msgstr ""
+msgstr "Gebyrer oprettet @date"
 
 #: 
 msgctxt "Fees list (Aria)"
@@ -2723,17 +2723,17 @@ msgstr ""
 #: 
 msgctxt "Fees list"
 msgid "Days"
-msgstr ""
+msgstr "Dage"
 
 #: 
 msgctxt "Fees list"
 msgid "Fees & replacement costs"
-msgstr ""
+msgstr "Gebyrer & erstatninger"
 
 #: 
 msgctxt "Fees list"
 msgid "You will be redirected to Mit Betalingsoverblik."
-msgstr ""
+msgstr "Du vil blive videresendt til \"Mit Betalingsoverblik\""
 
 #: 
 msgctxt "Fees list"
@@ -2743,7 +2743,7 @@ msgstr "Fortryd"
 #: 
 msgctxt "Fees list"
 msgid "Go to Mit Betalingsoverblik"
-msgstr "Gå til Mit betalingsoverblik"
+msgstr "Gå til \"Mit betalingsoverblik\""
 
 #: 
 msgctxt "Fees list"
@@ -3272,7 +3272,7 @@ msgstr ""
 #: 
 msgctxt "Work Page"
 msgid "You have borrowed @count out of @limit possible audio-books this month"
-msgstr ""
+msgstr "Du har lånt @count ud af @limit mulige e-lydbøger denne måned"
 
 #: 
 msgctxt "Search Header"
@@ -3632,7 +3632,7 @@ msgstr "Læs mere om gebyrer"
 #: 
 msgctxt "Patron menu"
 msgid "Renewable (@count)"
-msgstr ""
+msgstr "Forny (@count)"
 
 #: 
 msgctxt "Patron menu (Aria)"
@@ -3657,12 +3657,12 @@ msgstr ""
 #: 
 msgctxt "Patron menu"
 msgid "The item cannot be renewed further"
-msgstr ""
+msgstr "Materialet kan ikke fornyes flere gange"
 
 #: 
 msgctxt "Patron menu"
 msgid "Renew your loans"
-msgstr ""
+msgstr "Forny dine lån"
 
 #: 
 msgctxt "Patron menu"
