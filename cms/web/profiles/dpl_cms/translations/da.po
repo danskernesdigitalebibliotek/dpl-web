@@ -3317,7 +3317,7 @@ msgstr ""
 #: 
 msgctxt "Dashboard"
 msgid "Select @label for renewal"
-msgstr ""
+msgstr "Vælg @label til fornyelse test"
 
 #: 
 msgctxt "Dashboard"
