@@ -582,7 +582,7 @@ msgstr ""
 #: 
 msgctxt "Work Page"
 msgid "Find on bookshelf"
-msgstr "Hej Lotte"
+msgstr "Find på hylden"
 
 #: 
 msgctxt "Work Page"
@@ -3014,7 +3014,7 @@ msgstr "Modtag sms om dine lån, reserveringer, osv."
 #: 
 msgctxt "Create patron"
 msgid "Phone number"
-msgstr "Telefonnummer"
+msgstr "Mobilnummer"
 
 #: 
 msgctxt "Create patron"
