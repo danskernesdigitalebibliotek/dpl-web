@@ -1097,7 +1097,7 @@ msgstr ""
 #: 
 msgctxt "Search Header"
 msgid "Start typing in order to search"
-msgstr "Mikkel tester 11:31"
+msgstr "Mikkel tester 11:36"
 
 #: 
 msgctxt "Search Header"
@@ -2391,7 +2391,7 @@ msgstr ""
 #: 
 msgctxt "Patron page"
 msgid "Patron profile page"
-msgstr "Brugerpro"
+msgstr "Din brugerprofil"
 
 #: 
 msgctxt "Patron page"
