@@ -2665,7 +2665,7 @@ msgstr ""
 #: 
 msgctxt "Favorites list material component"
 msgid "Go to My list"
-msgstr ""
+msgstr "Gå til Huskeliste"
 
 #: 
 msgctxt "Favorites list material component"
@@ -3118,7 +3118,7 @@ msgstr ""
 
 #: 
 msgid "Loans"
-msgstr ""
+msgstr "Dine lånte materialer"
 
 #: 
 msgid "Reservations"
@@ -3126,7 +3126,7 @@ msgstr ""
 
 #: 
 msgid "My list"
-msgstr ""
+msgstr "Huskeliste"
 
 #: 
 msgid "Fees & Replacement costs"
@@ -3144,12 +3144,12 @@ msgstr "Brugeroplysninger"
 #: 
 msgctxt "Patron menu"
 msgid "loans expired"
-msgstr ""
+msgstr "Overskredne lån"
 
 #: 
 msgctxt "Patron menu"
 msgid "loans expiring soon"
-msgstr ""
+msgstr "Udløber snart"
 
 #: 
 msgctxt "Patron menu"
@@ -3312,7 +3312,7 @@ msgstr ""
 #: 
 msgctxt "Dashboard"
 msgid "Loans"
-msgstr ""
+msgstr "Dine lånte materialer"
 
 #: 
 msgctxt "Dashboard"
@@ -3607,7 +3607,7 @@ msgstr ""
 #: 
 msgctxt "Patron menu"
 msgid "Showing @itemsShown out of @hitcount loans"
-msgstr ""
+msgstr "Viser @itemsShown ud af @hitcount lån"
 
 #: 
 msgctxt "Patron menu"
