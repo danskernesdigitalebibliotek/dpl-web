@@ -1097,7 +1097,7 @@ msgstr ""
 #: 
 msgctxt "Search Header"
 msgid "Start typing in order to search"
-msgstr "Mikkel tester 11:36"
+msgstr "Mikkel tester 11:53"
 
 #: 
 msgctxt "Search Header"
@@ -2376,57 +2376,57 @@ msgstr ""
 #: 
 msgctxt "Patron page"
 msgid "Pause reservation below inputs text"
-msgstr ""
+msgstr "Du kan sætte dine reserveringer på pause mens du f.eks er på ferie. Gælder kun fysiske materialer."
 
 #: 
 msgctxt "Patron page"
 msgid "Read more"
-msgstr ""
+msgstr "Læs mere"
 
 #: 
 msgctxt "Patron page"
 msgid "Save"
-msgstr ""
+msgstr "Gem"
 
 #: 
 msgctxt "Patron page"
 msgid "Patron profile page"
-msgstr "Din brugerprofil"
+msgstr "Brugeroplysninger"
 
 #: 
 msgctxt "Patron page"
 msgid "BASIC DETAILS"
-msgstr ""
+msgstr "Stamoplysninger"
 
 #: 
 msgctxt "Patron page"
 msgid "Name"
-msgstr ""
+msgstr "Navn"
 
 #: 
 msgctxt "Patron page"
 msgid "patron page text fee text"
-msgstr ""
+msgstr "Lorem ipsum her mangler tekst om takster?? test"
 
 #: 
 msgctxt "Patron page"
 msgid "Address"
-msgstr ""
+msgstr "Adresse"
 
 #: 
 msgctxt "Patron page"
 msgid "CONTACT INFORMATION"
-msgstr ""
+msgstr "Kontaktinformation"
 
 #: 
 msgctxt "Patron page"
 msgid "patron page contact info body text"
-msgstr ""
+msgstr "Husk at opdatere dine oplysninger hvis du skifter adresse, mobilnummer eller e-mail"
 
 #: 
 msgctxt "Patron page"
 msgid "Phone number"
-msgstr ""
+msgstr "Mobilnummer"
 
 #: 
 msgctxt "Patron page"
@@ -2436,7 +2436,7 @@ msgstr "Modtag sms om dine lån, reserveringer, osv."
 #: 
 msgctxt "Patron page"
 msgid "E-mail"
-msgstr ""
+msgstr "E-mail"
 
 #: 
 msgctxt "Patron page"
@@ -2446,7 +2446,7 @@ msgstr "Modtag e-mails om dine lån, reserveringer osv."
 #: 
 msgctxt "Patron page"
 msgid "DIGITAL LOANS (EREOLEN)"
-msgstr ""
+msgstr "DIGITALE LÅN (eREOLEN)"
 
 #: 
 msgctxt "Patron page"
@@ -2456,22 +2456,22 @@ msgstr "Der findes materialer uden begrænsning på antal lån pr. måned."
 #: 
 msgctxt "Patron page"
 msgid "Click here, to see titles always eligible to be loaned"
-msgstr ""
+msgstr "Se titler du altid kan låne"
 
 #: 
 msgctxt "Patron page"
 msgid "Loans per month"
-msgstr ""
+msgstr "Lån pr. måned"
 
 #: 
 msgctxt "Patron page"
 msgid "E-books"
-msgstr ""
+msgstr "E-bøger"
 
 #: 
 msgctxt "Patron page"
 msgid "Audiobooks"
-msgstr ""
+msgstr "Lydbøger"
 
 #: 
 msgctxt "Patron page"
@@ -2481,17 +2481,17 @@ msgstr "Reserveringer"
 #: 
 msgctxt "Patron page"
 msgid "patron page change pickup body text"
-msgstr ""
+msgstr "Vælg hvor du vil afhente dine reserveringer"
 
 #: 
 msgctxt "Patron page"
 msgid "Choose pickup branch"
-msgstr "Vælg afhentningssted"
+msgstr "Afhent reserveringer på"
 
 #: 
 msgctxt "Patron page"
 msgid "Nothing selected"
-msgstr ""
+msgstr "Intet valgt"
 
 #: 
 msgctxt "Patron page"
@@ -2516,17 +2516,17 @@ msgstr ""
 #: 
 msgctxt "Patron page"
 msgid "From"
-msgstr ""
+msgstr "Fra"
 
 #: 
 msgctxt "Patron page"
 msgid "To"
-msgstr ""
+msgstr "Til"
 
 #: 
 msgctxt "Patron page"
 msgid "PINCODE"
-msgstr ""
+msgstr "PINKODE"
 
 #: 
 msgctxt "Patron page"
