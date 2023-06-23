@@ -1097,7 +1097,7 @@ msgstr ""
 #: 
 msgctxt "Search Header"
 msgid "Start typing in order to search"
-msgstr "Mikkel tester 11:53"
+msgstr "Mikkel tester 12:02"
 
 #: 
 msgctxt "Search Header"
@@ -2376,7 +2376,7 @@ msgstr ""
 #: 
 msgctxt "Patron page"
 msgid "Pause reservation below inputs text"
-msgstr "Du kan sætte dine reserveringer på pause mens du f.eks er på ferie. Gælder kun fysiske materialer."
+msgstr "Du kan sætte dine reserveringer på pause mens du f.eks. er på ferie. Gælder kun fysiske materialer."
 
 #: 
 msgctxt "Patron page"
@@ -2501,7 +2501,7 @@ msgstr "Sæt fysiske reserveringer på pause"
 #: 
 msgctxt "Patron page"
 msgid "patron page pause reservations body text"
-msgstr ""
+msgstr "Du kan sætte dine reserveringer på pause mens du f.eks. er på ferie. Gælder kun fysiske materialer."
 
 #: 
 msgctxt "Patron page"
@@ -2531,57 +2531,57 @@ msgstr "PINKODE"
 #: 
 msgctxt "Patron page"
 msgid "Change current pin by entering a new pin and saving"
-msgstr ""
+msgstr "Skift nuværende kode ved at indtaste en ny kode og gem"
 
 #: 
 msgctxt "Patron page"
 msgid "New pin"
-msgstr ""
+msgstr "Ny pinkode"
 
 #: 
 msgctxt "Patron page"
 msgid "Confirm new pin"
-msgstr ""
+msgstr "Bekræft ny pinkode"
 
 #: 
 msgctxt "Patron page"
 msgid "Your pincode was saved"
-msgstr ""
+msgstr "Din pinkode blev gemt"
 
 #: 
 msgctxt "Patron page"
 msgid "The pincode should be minimum @pincodeLengthMin and maximum @pincodeLengthMax characters long"
-msgstr ""
+msgstr "Pinkoden skal være minimum @pincodeLengthMin og maksimum @pincodeLengthMax karakterer lang "
 
 #: 
 msgctxt "Patron page"
 msgid "The pincodes are not the same"
-msgstr ""
+msgstr "Pinkoderne er ikke ens"
 
 #: 
 msgctxt "Patron page"
 msgid "Do you wish to delete your library profile?"
-msgstr ""
+msgstr "Ønsker du ikke længere at have en profil på biblioteket?"
 
 #: 
 msgctxt "Patron page"
 msgid "Delete your profile"
-msgstr ""
+msgstr "Slet din profil"
 
 #: 
 msgctxt "Patron page"
 msgid "You can reserve @countEbooks ebooks and @countAudiobooks audiobooks"
-msgstr ""
+msgstr "Du kan reservere @countEbooks e-bøger og @countAudiobooks lydbøger"
 
 #: 
 msgctxt "Patron page"
 msgid "@this out of @that"
-msgstr ""
+msgstr "@this ud af @that"
 
 #: 
 msgctxt "Patron page (aria)"
 msgid "You used @this audiobooks out of you quota of @that audiobooks"
-msgstr ""
+msgstr "Du har brugt @this audiobooks ud af din kvote på @that lydbøger"
 
 #: 
 msgctxt "Patron page (aria)"
@@ -2602,11 +2602,11 @@ msgstr ""
 
 #: 
 msgid "Pincode length (min)"
-msgstr ""
+msgstr "Pinkode længde (min)"
 
 #: 
 msgid "Pincode length max"
-msgstr ""
+msgstr "Pinkode længe (max)"
 
 #: 
 msgid "DPL patron page"
