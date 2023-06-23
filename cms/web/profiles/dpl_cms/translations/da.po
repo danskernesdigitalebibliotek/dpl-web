@@ -2209,7 +2209,7 @@ msgstr ""
 #: 
 msgctxt "Dashboard"
 msgid "Your profile"
-msgstr ""
+msgstr "Din profil (misvisende tekst Lotte)"
 
 #: 
 msgctxt "Dashboard (settings)"
@@ -3139,7 +3139,7 @@ msgstr "Min profil"
 #: 
 msgctxt "Patron menu"
 msgid "My Account"
-msgstr "Min konto"
+msgstr "Brugeroplysninger"
 
 #: 
 msgctxt "Patron menu"
