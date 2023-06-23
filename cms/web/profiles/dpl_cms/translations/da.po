@@ -50,12 +50,12 @@ msgstr "Læs mere om gebyrer"
 #: 
 msgctxt "Loan list (Aria)"
 msgid "Close renew loans modal"
-msgstr ""
+msgstr "Luk pop-up til at forny lån"
 
 #: 
 msgctxt "Loan list (Aria)"
 msgid "This modal groups loans after due date and makes it possible to renew said loans"
-msgstr ""
+msgstr "Denne modal grupperer lån efter afleveringsdato og gør det muligt at forny disse lån"
 
 #: 
 msgctxt "Loan list"
@@ -75,7 +75,7 @@ msgstr "Afleveringsdatoen er overskredet, du vil derfor blive pålagt et gebyr v
 #: 
 msgctxt "Loan list"
 msgid "Go to material details"
-msgstr ""
+msgstr "Vis detaljer for materialet"
 
 #: 
 msgctxt "Loan list"
@@ -85,12 +85,12 @@ msgstr "Kan afleveres på alle kommunens biblioteker"
 #: 
 msgctxt "Loan list (Aria)"
 msgid "This button shows all loans in the list"
-msgstr ""
+msgstr "Denne knap viser alle lån på listen"
 
 #: 
 msgctxt "Loan list (Aria)"
 msgid "This button filters the list, so only one the materials that have the same due date is shown"
-msgstr ""
+msgstr "Denne knap filtrerer listen, så der kun vises ét af de materialer som har den viste afleveringsdato"
 
 #: 
 msgctxt "Loan list"
@@ -125,7 +125,7 @@ msgstr "Du har ingen lån i øjeblikket"
 #: 
 msgctxt "Loan list (Aria)"
 msgid "This button opens a modal that covers the entire page and contains loans with the same due date as the loan currently in focus"
-msgstr ""
+msgstr "Denne knap åbner en pop-up som dækker hele siden og indeholder lån med samme afleveringsdato som lånet der er i fokus"
 
 #: 
 msgctxt "Loan list"
@@ -135,27 +135,27 @@ msgstr "Vælg @label til fornyelse"
 #: 
 msgctxt "Loan list"
 msgid "You will be charged a fee, when the item is returned"
-msgstr ""
+msgstr "Du vil blive opkrævet er gebyr, når materialet afleveres"
 
 #: 
 msgctxt "Loan list"
 msgid "days"
-msgstr ""
+msgstr "dage"
 
 #: 
 msgctxt "Loan list"
 msgid "day"
-msgstr ""
+msgstr "dag"
 
 #: 
 msgctxt "Loan list"
 msgid "+ 1 other material"
-msgstr ""
+msgstr "+ 1 andet materiale"
 
 #: 
 msgctxt "Loan list"
 msgid "+ @count other materials"
-msgstr ""
+msgstr "+ @count flere materialer"
 
 #: 
 msgctxt "Loan list"
@@ -170,7 +170,7 @@ msgstr "Fysiske lån"
 #: 
 msgctxt "Loan list"
 msgid "This button opens a modal that covers the entire page and contains loans with different due dates, if some of the loans in the modal are renewable you can renew them"
-msgstr ""
+msgstr "Denne knap åbner en pop-up som dækker hele siden og indeholder lån med forskellige afleveringsdatoer, hvis nogle af lånene kan fornyes har du mulighed for at forny dem"
 
 #: 
 msgctxt "Loan list"
@@ -180,62 +180,62 @@ msgstr "Forny flere"
 #: 
 msgctxt "Loan list"
 msgid "Expired"
-msgstr ""
+msgstr "Overskredet"
 
 #: 
 msgctxt "Loan list"
 msgid "Expiring soon"
-msgstr ""
+msgstr "Udløber snart"
 
 #: 
 msgctxt "Loan list"
 msgid "Your loans"
-msgstr "Dine lån"
+msgstr "Dine lånte materialer"
 
 #: 
 msgctxt "Loan list"
 msgid "and"
-msgstr ""
+msgstr "og"
 
 #: 
 msgctxt "Loan list"
 msgid "By"
-msgstr ""
+msgstr "Af"
 
 #: 
 msgctxt "Loan list (Aria)"
 msgid "Close material details modal"
-msgstr ""
+msgstr "Luk pop-up med detaljevisning af materialet"
 
 #: 
 msgctxt "Loan list"
 msgid "Expires"
-msgstr ""
+msgstr "Udløber"
 
 #: 
 msgctxt "Loan list"
 msgid "Due date"
-msgstr ""
+msgstr "Afleveringsdato"
 
 #: 
 msgctxt "Loan list"
 msgid "Go to eReolen"
-msgstr ""
+msgstr "Gå til eReolen"
 
 #: 
 msgctxt "Loan list"
 msgid "Loan date"
-msgstr ""
+msgstr "Udlånsdato"
 
 #: 
 msgctxt "Loan list"
 msgid "Material Item Number"
-msgstr ""
+msgstr "Materialenummer"
 
 #: 
 msgctxt "Loan list (Aria)"
 msgid "This modal shows material details, and makes it possible to renew a material, of that material is renewable"
-msgstr ""
+msgstr "Denne pop-up viser detaljer for materialet og gør det muligt at forny materialet såfremt det er muligt"
 
 #: 
 msgctxt "Loan list"
@@ -245,22 +245,22 @@ msgstr "Forny dine lån"
 #: 
 msgctxt "Loan list"
 msgid "Audiobook"
-msgstr ""
+msgstr "Lydbog"
 
 #: 
 msgctxt "Loan list"
 msgid "E-book"
-msgstr ""
+msgstr "E-bog"
 
 #: 
 msgctxt "Loan list"
 msgid "Podcast"
-msgstr ""
+msgstr "Podcast"
 
 #: 
 msgctxt "Loan list (Aria)"
 msgid "This modal makes it possible to renew materials"
-msgstr ""
+msgstr "Denne pop-up gør det muligt at forny materialer"
 
 #: 
 msgctxt "Loan list"
@@ -270,7 +270,7 @@ msgstr "Forny (@count)"
 #: 
 msgctxt "Loan list (Aria)"
 msgid "Close modal with grouped loans"
-msgstr ""
+msgstr "Luk pop-up med grupperede lån"
 
 #: 
 msgctxt "Loan list"
@@ -280,12 +280,12 @@ msgstr "Viser @itemsShown ud af @hitcount lån"
 #: 
 msgctxt "Loan list"
 msgid "show more"
-msgstr ""
+msgstr "Vis mere"
 
 #: 
 msgctxt "Loan list (Aria)"
 msgid "Go to @label material details"
-msgstr ""
+msgstr "Gå til detaljevisning af @label "
 
 #: 
 msgid "React DDB Library"
@@ -302,27 +302,27 @@ msgstr ""
 #: 
 msgctxt "Search Result"
 msgid "+ more filters"
-msgstr ""
+msgstr "+ flere filtre"
 
 #: 
 msgctxt "Search Result"
 msgid "Available"
-msgstr ""
+msgstr "Tilgængelige"
 
 #: 
 msgctxt "Search Result"
 msgid "By"
-msgstr ""
+msgstr "Af"
 
 #: 
 msgctxt "Search Result"
 msgid "Clear all"
-msgstr ""
+msgstr "Ryd alle"
 
 #: 
 msgctxt "Search Result"
 msgid "et. al."
-msgstr ""
+msgstr "et. al."
 
 #: 
 msgctxt "Search Result"
@@ -332,47 +332,47 @@ msgstr ""
 #: 
 msgctxt "Search Result"
 msgid "Close facet browser modal"
-msgstr ""
+msgstr "Luk pop-up med facetbrowser"
 
 #: 
 msgctxt "Search Result"
 msgid "Modal for facet browser"
-msgstr ""
+msgstr "Pop-up med facetbrowser"
 
 #: 
 msgctxt "Search Result"
 msgid "Children or adults"
-msgstr ""
+msgstr "Børn eller voksne"
 
 #: 
 msgctxt "Search Result"
 msgid "Creators"
-msgstr ""
+msgstr "Ophav"
 
 #: 
 msgctxt "Search Result"
 msgid "Fiction or non-fiction"
-msgstr ""
+msgstr "Fiktion eller non-fiktion"
 
 #: 
 msgctxt "Search Result"
 msgid "Genre and form"
-msgstr ""
+msgstr "Genre og form"
 
 #: 
 msgctxt "Search Result"
 msgid "Main languages"
-msgstr ""
+msgstr "Hovedsprog"
 
 #: 
 msgctxt "Search Result"
 msgid "Material types"
-msgstr ""
+msgstr "Materialetyper"
 
 #: 
 msgctxt "Search Result"
 msgid "Subjects"
-msgstr ""
+msgstr "Emner"
 
 #: 
 msgctxt "Search Result"
@@ -387,47 +387,47 @@ msgstr ""
 #: 
 msgctxt "Search Result"
 msgid "In series"
-msgstr ""
+msgstr "I serien"
 
 #: 
 msgctxt "Search Result"
 msgid "Nr."
-msgstr ""
+msgstr "Nr. "
 
 #: 
 msgctxt "Search Result"
 msgid "out of"
-msgstr ""
+msgstr "ud af"
 
 #: 
 msgctxt "Search Result"
 msgid "Showing @itemsShown out of @hitcount results"
-msgstr ""
+msgstr "Viser @itemsShown ud af @hitcount resultater"
 
 #: 
 msgctxt "Search Result"
 msgid "results"
-msgstr ""
+msgstr "resultater"
 
 #: 
 msgctxt "Search Result"
 msgid "Show more"
-msgstr ""
+msgstr "Vis flere"
 
 #: 
 msgctxt "Search Result"
 msgid "Show results"
-msgstr ""
+msgstr "Vis resultater"
 
 #: 
 msgctxt "Search Result"
 msgid "Showing"
-msgstr ""
+msgstr "Viser"
 
 #: 
 msgctxt "Search Result"
 msgid "Unavailable"
-msgstr ""
+msgstr "Utilgængelige"
 
 #: 
 msgctxt "Work Page"
@@ -437,112 +437,112 @@ msgstr "Allerede reserveret"
 #: 
 msgctxt "Work Page"
 msgid "Approve reservation"
-msgstr ""
+msgstr "Godkend reservering"
 
 #: 
 msgctxt "Work Page"
 msgid "Audience"
-msgstr ""
+msgstr "Målgruppe"
 
 #: 
 msgctxt "Work Page"
 msgid "Available"
-msgstr ""
+msgstr "Tilgængelig"
 
 #: 
 msgctxt "Work Page"
 msgid "The review is not accessible"
-msgstr ""
+msgstr "Anmeldelsen er ikke tilgængelig"
 
 #: 
 msgctxt "Work Page"
 msgid "Can't be reserved"
-msgstr ""
+msgstr "Kan ikke reserveres"
 
 #: 
 msgctxt "Work Page"
 msgid "Cannot view review"
-msgstr ""
+msgstr "Kan ikke vise anmeldelse"
 
 #: 
 msgctxt "Work Page"
 msgid "Choose one"
-msgstr ""
+msgstr "Vælg én"
 
 #: 
 msgctxt "Work Page"
 msgid "Close"
-msgstr ""
+msgstr "Luk"
 
 #: 
 msgctxt "Work Page"
 msgid "Contributors"
-msgstr ""
+msgstr "Bidragsydere"
 
 #: 
 msgctxt "Work Page"
 msgid "copies there is"
-msgstr ""
+msgstr "kopier der er"
 
 #: 
 msgctxt "Work Page"
 msgid "Creators are missing"
-msgstr ""
+msgstr "Ophav mangler"
 
 #: 
 msgctxt "Work Page"
 msgid "Days"
-msgstr ""
+msgstr "Dage"
 
 #: 
 msgctxt "Work Page"
 msgid "Description"
-msgstr ""
+msgstr "Beskrivelse"
 
 #: 
 msgctxt "Work Page"
 msgid "Edition"
-msgstr ""
+msgstr "Udgave"
 
 #: 
 msgctxt "Work Page"
 msgid "Edition year"
-msgstr ""
+msgstr "Udgivelsesår"
 
 #: 
 msgctxt "Work Page"
 msgid "Unknown"
-msgstr ""
+msgstr "Ukendt"
 
 #: 
 msgctxt "Work Page"
 msgid "Genre and form"
-msgstr ""
+msgstr "Genre og form"
 
 #: 
 msgctxt "Work Page"
 msgid "Isbn"
-msgstr ""
+msgstr "Isbn"
 
 #: 
 msgctxt "Work Page"
 msgid "Language"
-msgstr ""
+msgstr "Sprog"
 
 #: 
 msgctxt "Work Page"
 msgid "Original title"
-msgstr ""
+msgstr "Original titel"
 
 #: 
 msgctxt "Work Page"
 msgid "Play time"
-msgstr ""
+msgstr "Spilletid"
 
 #: 
 msgctxt "Work Page"
 msgid "Publisher"
-msgstr ""
+msgstr "Forlag"
 
 #: 
 msgctxt "Work Page"
@@ -552,32 +552,32 @@ msgstr ""
 #: 
 msgctxt "Work Page"
 msgid "Type"
-msgstr ""
+msgstr "Type"
 
 #: 
 msgctxt "Work Page"
 msgid "Details of the material"
-msgstr ""
+msgstr "Detaljer for materialet"
 
 #: 
 msgctxt "Work Page"
 msgid "Details"
-msgstr ""
+msgstr "Detaljer"
 
 #: 
 msgctxt "Work Page"
 msgid "Editions"
-msgstr ""
+msgstr "Udgaver"
 
 #: 
 msgctxt "Work Page"
 msgid "et al."
-msgstr ""
+msgstr "et. al."
 
 #: 
 msgctxt "Work Page"
 msgid "Fiction/nonfiction"
-msgstr ""
+msgstr "Fiktion/nonfiktion"
 
 #: 
 msgctxt "Work Page"
@@ -592,32 +592,32 @@ msgstr ""
 #: 
 msgctxt "Work Page"
 msgid "Close reservation modal"
-msgstr ""
+msgstr "Luk pop-up for reservering"
 
 #: 
 msgctxt "Work Page"
 msgid "Find it on shelf"
-msgstr ""
+msgstr "Find det på hylden"
 
 #: 
 msgctxt "Work Page"
 msgid "Home"
-msgstr ""
+msgstr "Hjem"
 
 #: 
 msgctxt "Work Page"
 msgid "Material"
-msgstr ""
+msgstr "Materiale"
 
 #: 
 msgctxt "Work Page"
 msgid "No location for find on shelf specified"
-msgstr ""
+msgstr "Ingen lokation for \"find på hylden\" tilgængelig"
 
 #: 
 msgctxt "Work Page"
 msgid "Find on shelf modal periodical dropdown - choose edition/volume"
-msgstr ""
+msgstr "Pop-up med drop-down menu for find på hylden for et periodikum. Vælg udgave/nummer"
 
 #: 
 msgctxt "Work Page"
@@ -1850,7 +1850,7 @@ msgstr ""
 #: 
 msgctxt "Reservation list (Aria)"
 msgid "Close material details modal"
-msgstr ""
+msgstr "Luk pop-up med detaljevisning"
 
 #: 
 msgctxt "Reservation list"
@@ -1905,27 +1905,27 @@ msgstr ""
 #: 
 msgctxt "Reservation list (Aria)"
 msgid "This material is ready for pickup"
-msgstr ""
+msgstr "Dette materiale er klar til afhentning"
 
 #: 
 msgctxt "Reservation list (Aria)"
 msgid "You are the only person queued for this material"
-msgstr ""
+msgstr "Du er den eneste i kø til dette materiale"
 
 #: 
 msgctxt "Reservation list (Aria)"
 msgid "This material has @count people in queue before you"
-msgstr ""
+msgstr "Der står @count brugere i kø før dig til dette materiale"
 
 #: 
 msgctxt "Reservation list (Aria)"
 msgid "This material is ready in 1 day"
-msgstr ""
+msgstr "Materiale er klar om 1 dag"
 
 #: 
 msgctxt "Reservation list (Aria)"
 msgid "This material is ready in @count days"
-msgstr ""
+msgstr "Materialet er klar til dig om @count dage"
 
 #: 
 msgctxt "Search Result"
@@ -2005,12 +2005,12 @@ msgstr "Betal dit mellemværende her"
 #: 
 msgctxt "Blocked user (Aria)"
 msgid "Close blocked patron modal"
-msgstr ""
+msgstr "Luk pop-up til blokeret bruger"
 
 #: 
 msgctxt "Blocked user (Aria)"
 msgid "This modal alerts you, that your patron has been blocked"
-msgstr ""
+msgstr "Denne pop-up advarer dig om at din bruger er blevet blokeret"
 
 #: 
 msgid "Blocked user"
@@ -2708,7 +2708,7 @@ msgstr "Gebyrer oprettet @date"
 #: 
 msgctxt "Fees list (Aria)"
 msgid "Close fee details modal"
-msgstr ""
+msgstr "Luk pop-up med detaljer for gebyr"
 
 #: 
 msgctxt "Fees list"
@@ -3079,42 +3079,42 @@ msgstr "Opret bruger"
 #: 
 msgctxt "Favorites list material component (aria)"
 msgid "Add @title to favorites list"
-msgstr ""
+msgstr "Tilføj @title til huskelisten"
 
 #: 
 msgctxt "Favorites list material component (aria)"
 msgid "Remove @title from favorites list"
-msgstr ""
+msgstr "Fjern @title fra huskelisten"
 
 #: 
 msgctxt "Favorites list (aria)"
 msgid "Remove @title from favorites list"
-msgstr ""
+msgstr "Fjern @title fra huskelisten"
 
 #: 
 msgctxt "Favorites list (aria)"
 msgid "Add @title to favorites list"
-msgstr ""
+msgstr "Tilføj @title til huskelisten"
 
 #: 
 msgctxt "Recommender (Aria)"
 msgid "Add @title to favorites list"
-msgstr ""
+msgstr "Tilføj @title til huskelisten"
 
 #: 
 msgctxt "Recommender (Aria)"
 msgid "Remove @title from favorites list"
-msgstr ""
+msgstr "Fjern @title fra huskelisten"
 
 #: 
 msgctxt "Something similar (Aria)"
 msgid "Add @title to favorites list"
-msgstr ""
+msgstr "Fjern @title fra huskelisten"
 
 #: 
 msgctxt "Something similar (Aria)"
 msgid "Remove @title from favorites list"
-msgstr ""
+msgstr "Fjern @title fra huskelisten"
 
 #: 
 msgid "Loans"
@@ -3134,7 +3134,7 @@ msgstr "Mellemværender"
 
 #: 
 msgid "My account"
-msgstr "Min profil"
+msgstr "Din profil (misvisende Lotte)"
 
 #: 
 msgctxt "Patron menu"
@@ -3189,17 +3189,17 @@ msgstr ""
 #: 
 msgctxt "Patron menu (aria)"
 msgid "Open user menu"
-msgstr ""
+msgstr "Åben din brugerprofil/menu (test Lotte)"
 
 #: 
 msgctxt "Patron menu (aria)"
 msgid "Notifications menu"
-msgstr ""
+msgstr "Notifikations menu"
 
 #: 
 msgctxt "Patron menu (aria)"
 msgid "Profile links"
-msgstr ""
+msgstr "Links til profil (test Lotte) "
 
 #: 
 msgid "DPL menu"
@@ -3312,7 +3312,7 @@ msgstr ""
 #: 
 msgctxt "Dashboard"
 msgid "Loans"
-msgstr "Dine lånte materialer"
+msgstr "Lån"
 
 #: 
 msgctxt "Dashboard"
@@ -3342,12 +3342,12 @@ msgstr "Klar til afhentning"
 #: 
 msgctxt "Dashboard (aria)"
 msgid "Close material details modal"
-msgstr ""
+msgstr "Luk pop-up med detaljevisning af materialet"
 
 #: 
 msgctxt "Dashboard (aria)"
 msgid "This modal shows material details, and makes it possible to renew a material, of that material is renewable"
-msgstr ""
+msgstr "Denne pop-up viser detaljer for materialet og gør det muligt at forny materialet såfremt det er muligt"
 
 #: 
 msgctxt "Dashboard"
@@ -3377,7 +3377,7 @@ msgstr "Vælg alle"
 #: 
 msgctxt "Dashboard (aria)"
 msgid "This modal makes it possible to renew materials"
-msgstr ""
+msgstr "Denne pop-up gør det muligt at forny materialer"
 
 #: 
 msgctxt "Dashboard"
@@ -3512,7 +3512,7 @@ msgstr ""
 #: 
 msgctxt "Patron menu (Aria)"
 msgid "Close modal with grouped loans"
-msgstr ""
+msgstr "Luk pop-up med grupperede lån"
 
 #: 
 msgctxt "Dashboard (aria)"
@@ -3637,7 +3637,7 @@ msgstr "Forny (@count)"
 #: 
 msgctxt "Patron menu (Aria)"
 msgid "This modal makes it possible to renew materials"
-msgstr ""
+msgstr "Denne pop-up gør det muligt at forny materialer"
 
 #: 
 msgctxt "Patron menu"
@@ -3677,7 +3677,7 @@ msgstr ""
 #: 
 msgctxt "Patron menu (Aria)"
 msgid "This modal shows material details, and makes it possible to renew a material, of that material is renewable"
-msgstr ""
+msgstr "Denne pop-up viser detaljer for materialet og gør det muligt at forny materialet såfremt det er muligt"
 
 #: 
 msgctxt "Patron menu"
@@ -3687,7 +3687,7 @@ msgstr ""
 #: 
 msgctxt "Patron menu (Aria)"
 msgid "Close material details modal"
-msgstr ""
+msgstr "Luk pop-up med detaljevisning af materialet "
 
 #: 
 msgctxt "Patron menu"
