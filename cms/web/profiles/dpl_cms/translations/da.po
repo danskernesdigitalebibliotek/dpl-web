@@ -522,7 +522,7 @@ msgstr "Genre og form"
 #: 
 msgctxt "Work Page"
 msgid "Isbn"
-msgstr "Isbn"
+msgstr "ISBN"
 
 #: 
 msgctxt "Work Page"
@@ -622,7 +622,7 @@ msgstr "Pop-up med drop-down menu for find på hylden for et periodikum. Vælg u
 #: 
 msgctxt "Work Page"
 msgid "Choose periodical year"
-msgstr ""
+msgstr "Vælg årgang"
 
 #: 
 msgctxt "Work Page"
@@ -632,27 +632,27 @@ msgstr ""
 #: 
 msgctxt "Work Page"
 msgid "Genre"
-msgstr ""
+msgstr "Genre"
 
 #: 
 msgctxt "Work Page"
 msgid "Get online"
-msgstr ""
+msgstr "Se online"
 
 #: 
 msgctxt "Work Page"
 msgid "Go to @source"
-msgstr ""
+msgstr "Gå til @source"
 
 #: 
 msgctxt "Work Page"
 msgid "Have no interest after"
-msgstr ""
+msgstr "Ingen interesse efter"
 
 #: 
 msgctxt "Work Page"
 msgid "hearts"
-msgstr ""
+msgstr "hjerter"
 
 #: 
 msgctxt "Work Page"
@@ -662,17 +662,17 @@ msgstr ""
 #: 
 msgctxt "Work Page"
 msgid "In the same series"
-msgstr ""
+msgstr "I samme serie"
 
 #: 
 msgctxt "Work Page"
 msgid "in the series"
-msgstr ""
+msgstr "i serien"
 
 #: 
 msgctxt "Work Page"
 msgid "Close infomedia modal"
-msgstr ""
+msgstr "Luk pop-up med Infomedia"
 
 #: 
 msgctxt "Work Page"
@@ -682,22 +682,22 @@ msgstr ""
 #: 
 msgctxt "Work Page"
 msgid "ISBN"
-msgstr ""
+msgstr "ISBN"
 
 #: 
 msgctxt "Work Page"
 msgid "Libraries have the material"
-msgstr ""
+msgstr "biblioteker har materialet"
 
 #: 
 msgctxt "Work Page"
 msgid "Listen online"
-msgstr ""
+msgstr "Lyt online"
 
 #: 
 msgctxt "Work Page"
 msgid "Loading"
-msgstr ""
+msgstr "Indlæser"
 
 #: 
 msgctxt "Work Page"
@@ -707,12 +707,12 @@ msgstr "Log ind for at læse anmeldelsen"
 #: 
 msgctxt "Work Page"
 msgid "All editions"
-msgstr ""
+msgstr "Alle udgaver"
 
 #: 
 msgctxt "Work Page"
 msgid "By"
-msgstr ""
+msgstr "Af"
 
 #: 
 msgctxt "Work Page"
@@ -727,67 +727,67 @@ msgstr ""
 #: 
 msgctxt "Work Page"
 msgid "Material is loaned out"
-msgstr ""
+msgstr "Materialet er udlånt"
 
 #: 
 msgctxt "Work Page"
 msgid "1 copy has been reserved"
-msgstr ""
+msgstr "1 eksemplar er reserveret"
 
 #: 
 msgctxt "Work Page"
 msgid "@count copies have been reserved"
-msgstr ""
+msgstr "@count eksemplarer er reserveret"
 
 #: 
 msgctxt "Work Page"
 msgid "We have 1 copy of the material in stock"
-msgstr ""
+msgstr "Vi har 1 eksemplar af materialet hjemme"
 
 #: 
 msgctxt "Work Page"
 msgid "We have @count copies of the material in stock"
-msgstr ""
+msgstr "Vi har @count eksemplarer af materialet hjemme"
 
 #: 
 msgctxt "Work Page"
 msgid "Missing data"
-msgstr ""
+msgstr "Data mangler"
 
 #: 
 msgctxt "Work Page"
 msgid "If you want to receive notifications by e-mail, you can enter or change the desired e-mail here."
-msgstr ""
+msgstr "Hvis du vil ønsker at modtage notifikationer på e-mail, kan du skrive eller ændre din mailadresse her."
 
 #: 
 msgctxt "Work Page"
 msgid "Change email"
-msgstr ""
+msgstr "Skift e-mail"
 
 #: 
 msgctxt "Work Page"
 msgid "Type in email"
-msgstr ""
+msgstr "Skriv din e-mail"
 
 #: 
 msgctxt "Work Page"
 msgid "Email"
-msgstr ""
+msgstr "E-mail"
 
 #: 
 msgctxt "Work Page"
 msgid "Set date for when your interest for the material will expire."
-msgstr ""
+msgstr "Angiv hvornår din interesse for materialet udløber"
 
 #: 
 msgctxt "Work Page"
 msgid "Change interest deadline"
-msgstr ""
+msgstr "Skift interessedato"
 
 #: 
 msgctxt "Work Page"
 msgid "Decide at which library you want to pickup the material."
-msgstr ""
+msgstr "Vælg hvor du vil afhente materialet"
 
 #: 
 msgctxt "Work Page"
@@ -797,47 +797,47 @@ msgstr "Vælg afhentningssted"
 #: 
 msgctxt "Work Page"
 msgid "If you want to receive SMS, you can enter or change your phone number here."
-msgstr ""
+msgstr "Hvis du ønsker at modtage en SMS, kan du angive eller ændre dit mobilnummer her"
 
 #: 
 msgctxt "Work Page"
 msgid "Change phone number"
-msgstr ""
+msgstr "Skift mobilnummer"
 
 #: 
 msgctxt "Work Page"
 msgid "Input phone number"
-msgstr ""
+msgstr "Angiv dit mobilnummer"
 
 #: 
 msgctxt "Work Page"
 msgid "Phone"
-msgstr ""
+msgstr "Monilnummer"
 
 #: 
 msgctxt "Work Page"
 msgid "Nr."
-msgstr ""
+msgstr "Nr."
 
 #: 
 msgctxt "Work Page"
 msgid "You are number @number in the queue"
-msgstr ""
+msgstr "Du er nummer @count i køen"
 
 #: 
 msgctxt "Work Page"
 msgid "Ok"
-msgstr ""
+msgstr "OK"
 
 #: 
 msgctxt "Work Page"
 msgid "1 month"
-msgstr ""
+msgstr "1 måned"
 
 #: 
 msgctxt "Work Page"
 msgid "1 year"
-msgstr ""
+msgstr "1 år"
 
 #: 
 msgctxt "Work Page"
@@ -847,37 +847,37 @@ msgstr "Du har lånt @count ud af @limit mulige e-bøger denne måned"
 #: 
 msgctxt "Work Page"
 msgid "Order digital copy button loading text"
-msgstr ""
+msgstr "Bestiller digital kopi"
 
 #: 
 msgctxt "Work Page"
 msgid "Order digital copy"
-msgstr ""
+msgstr "Bestil digital kopi"
 
 #: 
 msgctxt "Work Page"
 msgid "Order digital copy description text"
-msgstr ""
+msgstr "bestil en digital kopi og modtag artiklen direkte på mail (test)"
 
 #: 
 msgctxt "Work Page"
 msgid "An error occurred while ordering the digital copy. Please try again later."
-msgstr ""
+msgstr "Der opstod en fejl under din bestilling af en digital kopi. Prøv igen senere."
 
 #: 
 msgctxt "Work Page"
 msgid "Error ordering digital copy"
-msgstr ""
+msgstr "Fejl i bestilling af digital kopi"
 
 #: 
 msgctxt "Work Page"
 msgid "Close Order digital copy modal"
-msgstr ""
+msgstr "Luk pop-up til bestilling af digital kopi"
 
 #: 
 msgctxt "Work Page"
 msgid "Modal for Order digital copy"
-msgstr ""
+msgstr "Pop-up til bestilling af digital kopi"
 
 #: 
 msgctxt "Work Page"
@@ -887,22 +887,22 @@ msgstr "Du har bestilt en digital kopi. Du modtager en e-mail når den er klar t
 #: 
 msgctxt "Work Page"
 msgid "Digital copy ordered"
-msgstr ""
+msgstr "Digital kopi er bestilt"
 
 #: 
 msgctxt "Work Page"
 msgid "out of"
-msgstr ""
+msgstr "ud af"
 
 #: 
 msgctxt "Work Page"
 msgid "Year"
-msgstr ""
+msgstr "År"
 
 #: 
 msgctxt "Work Page"
 msgid "Week"
-msgstr ""
+msgstr "Uge"
 
 #: 
 msgctxt "Work Page"
@@ -1885,7 +1885,7 @@ msgstr ""
 #: 
 msgctxt "Reservation list"
 msgid "1 year"
-msgstr ""
+msgstr "1 år"
 
 #: 
 msgctxt "Reservation list"
