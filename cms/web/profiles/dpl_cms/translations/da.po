@@ -307,7 +307,7 @@ msgstr "+ flere filtre"
 #: 
 msgctxt "Search Result"
 msgid "Available"
-msgstr "Tilgængelige"
+msgstr "Hjemme"
 
 #: 
 msgctxt "Search Result"
@@ -427,7 +427,7 @@ msgstr "Viser"
 #: 
 msgctxt "Search Result"
 msgid "Unavailable"
-msgstr "Utilgængelige"
+msgstr "Udlånt"
 
 #: 
 msgctxt "Work Page"
@@ -447,7 +447,7 @@ msgstr "Målgruppe"
 #: 
 msgctxt "Work Page"
 msgid "Available"
-msgstr "Tilgængelig"
+msgstr "Hjemme"
 
 #: 
 msgctxt "Work Page"
@@ -907,7 +907,7 @@ msgstr "Uge"
 #: 
 msgctxt "Work Page"
 msgid "Pick up at"
-msgstr ""
+msgstr "Afhentes på"
 
 #: 
 msgctxt "Work Page"
@@ -917,7 +917,7 @@ msgstr ""
 #: 
 msgctxt "Work Page"
 msgid "in queue"
-msgstr ""
+msgstr "i kø"
 
 #: 
 msgctxt "Work Page"
@@ -927,7 +927,7 @@ msgstr ""
 #: 
 msgctxt "Work Page"
 msgid "Read article"
-msgstr ""
+msgstr "Læs artikel"
 
 #: 
 msgctxt "Work Page"
@@ -942,7 +942,7 @@ msgstr "Modtag sms når materialet er klar til dig"
 #: 
 msgctxt "Work Page"
 msgid "Reservation error"
-msgstr ""
+msgstr "Reserveringsfejl"
 
 #: 
 msgctxt "Work Page"
@@ -952,12 +952,12 @@ msgstr ""
 #: 
 msgctxt "Work Page"
 msgid "is reserved for you"
-msgstr ""
+msgstr "er reserveret til dig"
 
 #: 
 msgctxt "Work Page"
 msgid "The material is available and is now reserved for you!"
-msgstr ""
+msgstr "Materialet er hjemme og er nu reserveret til dig!"
 
 #: 
 msgctxt "Work Page"
@@ -972,62 +972,62 @@ msgstr "Reserveringer på dette materiale"
 #: 
 msgctxt "Work Page"
 msgid "Reserve book"
-msgstr ""
+msgstr "Reserver bog"
 
 #: 
 msgctxt "Work Page"
 msgid "Reserve"
-msgstr ""
+msgstr "Reserver"
 
 #: 
 msgctxt "Work Page"
 msgid "Reviews"
-msgstr ""
+msgstr "Anmeldelser"
 
 #: 
 msgctxt "Work Page"
 msgid "Save"
-msgstr ""
+msgstr "Gem"
 
 #: 
 msgctxt "Work Page"
 msgid "See online"
-msgstr ""
+msgstr "Se online"
 
 #: 
 msgctxt "Work Page"
 msgid "Shift"
-msgstr ""
+msgstr "Skift"
 
 #: 
 msgctxt "Work Page"
 msgid "6 months"
-msgstr ""
+msgstr "6 måneder"
 
 #: 
 msgctxt "Work Page"
 msgid "This month"
-msgstr ""
+msgstr "Denne måned"
 
 #: 
 msgctxt "Work Page"
 msgid "3 months"
-msgstr ""
+msgstr "3 måneder"
 
 #: 
 msgctxt "Work Page"
 msgid "Try again"
-msgstr ""
+msgstr "Prøv igen"
 
 #: 
 msgctxt "Work Page"
 msgid "2 months"
-msgstr ""
+msgstr "2 måneder"
 
 #: 
 msgctxt "Work Page"
 msgid "Unavailable"
-msgstr ""
+msgstr "Udlånt"
 
 #: 
 msgctxt "Work Page"
