@@ -967,7 +967,7 @@ msgstr "Materialet er tilgængeligt og du vil få en besked når det er klar til
 #: 
 msgctxt "Work Page"
 msgid "reservations for this material"
-msgstr ""
+msgstr "Reserveringer på dette materiale"
 
 #: 
 msgctxt "Work Page"
@@ -1815,22 +1815,22 @@ msgstr ""
 #: 
 msgctxt "Reservation list (Aria)"
 msgid "This button opens a modal that covers the entire page and contains the possibility to delete a selected reservation, or multiple selected reservations"
-msgstr ""
+msgstr "Denne knap åbner en pop-up som dækker hele siden og indeholder mulighed for at slette en valgt reservering eller flere valgte reserveringer"
 
 #: 
 msgctxt "Reservation list (Aria)"
 msgid "Reservations have been paused in the following time span:"
-msgstr ""
+msgstr "Reserveringer er sat på pause i det følgende tidsrum:"
 
 #: 
 msgctxt "Reservation list (Aria)"
 msgid "This button opens a modal that covers the entire page and contains the possibility to pause physical reservations"
-msgstr ""
+msgstr "Denne knap åbner en pop-up som dækker hele siden og indeholder mulighed for at sætte fysiske reserveringer på pause"
 
 #: 
 msgctxt "Reservation list (Aria)"
 msgid "This modal makes it possible to pause your physical reservations"
-msgstr ""
+msgstr "Denne pop-up gør det muligt at sætte dine fysiske reserveringer på pause"
 
 #: 
 msgctxt "Reservation list"
@@ -1840,7 +1840,7 @@ msgstr "Sæt fysiske reserveringer på pause i god tid, da reserveringer der all
 #: 
 msgctxt "Reservation list"
 msgid "Close pause reservations modal"
-msgstr ""
+msgstr "Luk pop-up som sætter reserveringer på pause"
 
 #: 
 msgctxt "Reservation list"
@@ -2209,7 +2209,7 @@ msgstr ""
 #: 
 msgctxt "Dashboard"
 msgid "Your profile"
-msgstr "Din profil (misvisende tekst Lotte)"
+msgstr "Din profil (misvisende tekst Lotte test)"
 
 #: 
 msgctxt "Dashboard (settings)"
@@ -2356,7 +2356,7 @@ msgstr ""
 #: 
 msgctxt "Patron page (aria)"
 msgid "This modal makes it possible to pause your physical reservations"
-msgstr ""
+msgstr "Denne pop-up gør det muligt at sætte dine fysiske reserveringer på pause"
 
 #: 
 msgctxt "Patron page"
@@ -2371,7 +2371,7 @@ msgstr "Sæt fysiske reserveringer på pause i god tid, da reserveringer der all
 #: 
 msgctxt "Patron page"
 msgid "Close pause reservations modal"
-msgstr ""
+msgstr "Luk pop-up som sætter reserveringer på pause"
 
 #: 
 msgctxt "Patron page"
@@ -2511,7 +2511,7 @@ msgstr "Sæt dine reserveringer på pause"
 #: 
 msgctxt "Patron page (aria)"
 msgid "This checkbox opens a section where you can put your current reservations on a pause, when the time period picked has ended, the reservations will be resumed"
-msgstr ""
+msgstr "Denne tjekboks åbner en sektion hvor du kan sætte dine reserveringer på pause, når den valgte periode slutter vil reserveringerne blive genaktiveret"
 
 #: 
 msgctxt "Patron page"
@@ -3122,7 +3122,7 @@ msgstr "Dine lånte materialer"
 
 #: 
 msgid "Reservations"
-msgstr ""
+msgstr "Reserveringer"
 
 #: 
 msgid "My list"
@@ -3282,7 +3282,7 @@ msgstr ""
 #: 
 msgctxt "Dashboard (aria)"
 msgid "This button opens a modal that covers the entire page and contains the possibility to delete a selected reservation, or multiple selected reservations"
-msgstr ""
+msgstr "Denne knap åbner en pop-up som dækker hele siden og indeholder mulighed for at slette en valgt reservering eller flere valgte reserveringer"
 
 #: 
 msgctxt "Dashboard"
@@ -3322,12 +3322,12 @@ msgstr "Vælg @label til fornyelse test"
 #: 
 msgctxt "Dashboard"
 msgid "Queued reservations"
-msgstr ""
+msgstr "Reserveringer i kø"
 
 #: 
 msgctxt "Dashboard"
 msgid "Remove reservations (@amount)"
-msgstr ""
+msgstr "Slet reserveringer (@amount)"
 
 #: 
 msgctxt "Dashboard"
@@ -3442,12 +3442,12 @@ msgstr "Afhentes senest: @date"
 #: 
 msgctxt "Dashboard"
 msgid "Physical reservations"
-msgstr ""
+msgstr "Fysiske reserveringer"
 
 #: 
 msgctxt "Dashboard"
 msgid "Digital reservations"
-msgstr ""
+msgstr "Digitale reserveringer"
 
 #: 
 msgctxt "Dashboard"
@@ -3517,12 +3517,12 @@ msgstr ""
 #: 
 msgctxt "Dashboard (aria)"
 msgid "This modal makes it possible to delete reservations"
-msgstr ""
+msgstr "Denne pop-up gør det muligt at slette reserveringer"
 
 #: 
 msgctxt "Dashboard (aria)"
 msgid "Close modal with grouped reservations"
-msgstr ""
+msgstr "Luk pop-up med grupperede reserveringer"
 
 #: 
 msgctxt "Dashboard"
@@ -3557,7 +3557,7 @@ msgstr ""
 #: 
 msgctxt "Patron menu (Aria)"
 msgid "This button opens a modal that covers the entire page and contains the possibility to delete a selected reservation, or multiple selected reservations"
-msgstr ""
+msgstr "Denne knap åbner en pop-up som dækker hele siden og indeholder mulighed for at slette en valgt reservering eller flere valgte reserveringer"
 
 #: 
 msgctxt "Patron menu"
@@ -3717,7 +3717,7 @@ msgstr "Afhentes senest"
 #: 
 msgctxt "Patron menu"
 msgid "Remove reservations"
-msgstr ""
+msgstr "Slet reserveringer"
 
 #: 
 msgctxt "Patron menu"
@@ -3727,12 +3727,12 @@ msgstr "Klar"
 #: 
 msgctxt "Patron menu"
 msgid "This modal makes it possible to delete reservations"
-msgstr ""
+msgstr "Denne pop-up gør det muligt at slette reserveringer"
 
 #: 
 msgctxt "Patron menu"
 msgid "Close modal with grouped reservations"
-msgstr ""
+msgstr "Luk pop-up med grupperede reserveringer "
 
 #: 
 msgctxt "Patron menu"
