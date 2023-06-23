@@ -2586,7 +2586,7 @@ msgstr "Du har brugt @this audiobooks ud af din kvote på @that lydbøger"
 #: 
 msgctxt "Patron page (aria)"
 msgid "You used @this ebooks out of you quota of @that ebooks"
-msgstr ""
+msgstr "Du har brugt @this ebooks ud af din kvote på @that e-bøger"
 
 #: 
 msgid "Delete patron link"
