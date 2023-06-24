@@ -657,7 +657,7 @@ msgstr "hjerter"
 #: 
 msgctxt "Work Page"
 msgid "Identifiers"
-msgstr ""
+msgstr "Emneord"
 
 #: 
 msgctxt "Work Page"
@@ -757,7 +757,7 @@ msgstr "Data mangler"
 #: 
 msgctxt "Work Page"
 msgid "If you want to receive notifications by e-mail, you can enter or change the desired e-mail here."
-msgstr "Hvis du vil ønsker at modtage notifikationer på e-mail, kan du skrive eller ændre din mailadresse her."
+msgstr "Hvis du vil ønsker at modtage notifikationer på e-mail, kan du skrive eller ændre din mailadresse her"
 
 #: 
 msgctxt "Work Page"
@@ -1097,7 +1097,7 @@ msgstr ""
 #: 
 msgctxt "Search Header"
 msgid "Start typing in order to search"
-msgstr "Mikkel tester 12:02"
+msgstr "Mikkel tester 13:21"
 
 #: 
 msgctxt "Search Header"
