@@ -68,8 +68,6 @@ function dpl_cms_batch_alter(&$batch) {
 /**
  * Implements callback_batch_finished().
  *
- * Set result message.
- *
  * @param bool $success
  *   TRUE if batch successfully completed.
  * @param array $results
