@@ -144,9 +144,7 @@ function dpl_react_preprocess_dpl_react_app(array &$variables): void {
   $variables['#cache']['tags'][] = 'dpl_react_app:' . $variables['name'];
 
   // When changes to the interface language occurs then skip cache.
-  if (!in_array('languages:language_interface', $variables['#cache']['contexts'] ?? [])) {
-    $variables['#cache']['contexts'][] = 'languages:language_interface';
-  }
+  $variables['#cache']['tags'][] = 'locale';
 }
 
 /**
