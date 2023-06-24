@@ -75,8 +75,8 @@ function dpl_cms_batch_alter(&$batch) {
  * @see hook_batch_alter
  */
 function dpl_cms_locale_translation_batch_fetch_finished($success, $results) {
-  if ($success && !empty($results) && !empty($results['languages'])) {
-    _locale_refresh_translations(array_values($results['languages']));
+  if ($success && $languages = array_values($result['languages'] ?? [])) {
+    _locale_refresh_translations($languages);
   }
   locale_translation_batch_fetch_finished($success, $results);
 }
