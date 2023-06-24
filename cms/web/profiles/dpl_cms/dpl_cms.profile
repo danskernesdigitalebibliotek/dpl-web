@@ -43,3 +43,42 @@ function dpl_cms_modules_installed(array $modules, bool $is_syncing): void {
       ->error('Failed in setting the admin lang for user 1');
   }
 }
+
+/**
+ * Implements hook_batch_alter().
+ */
+function dpl_cms_batch_alter(&$batch) { 
+  if (empty($batch['sets'])) {
+    return;
+  }
+
+  // Since the locale cache tag is not invalidated when running
+  // `drush locale-update` we need to make sure it happens ourselves
+  // by injecting our own batch finished callback.
+  foreach ($batch['sets'] as $key => $set) {
+    if (
+      array_key_exists('finished', $set)
+      && $set['finished'] === 'locale_translation_batch_fetch_finished'
+    ) {
+      $batch['sets'][$key]['finished'] = 'dpl_cms_locale_translation_batch_fetch_finished';
+    }
+  }
+}
+
+/**
+ * Implements callback_batch_finished().
+ *
+ * Set result message.
+ *
+ * @param bool $success
+ *   TRUE if batch successfully completed.
+ * @param array $results
+ *   Batch results.
+ * @see hook_batch_alter
+ */
+function dpl_cms_locale_translation_batch_fetch_finished($success, $results) {
+  if ($success && !empty($results) && !empty($results['languages'])) {
+    _locale_refresh_translations(array_values($results['languages']));
+  }
+  locale_translation_batch_fetch_finished($success, $results);
+}
