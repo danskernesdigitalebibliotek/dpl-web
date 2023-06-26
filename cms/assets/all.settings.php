@@ -78,6 +78,10 @@ if (getenv('CI')) {
     'fbi' => ['base_url' => 'http://fbi-api.dbc.dk/next/graphql'],
     'material-list' => ['base_url' => 'http://prod.materiallist.dandigbib.org'],
   ];
+
+  // We need to be fixed language in our UI texts
+  // because we use them for assertions in tests.
+  $config['language.negotiation']['selected_langcode'] = 'en';
 }
 
 if (getenv('LAGOON_ENVIRONMENT_TYPE') !== 'production') {
