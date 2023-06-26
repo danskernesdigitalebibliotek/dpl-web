@@ -1680,7 +1680,7 @@ msgstr ""
 #: 
 msgctxt "Reservation list"
 msgid "Pick up before @date"
-msgstr "Afhentes senest: @date"
+msgstr "Hent før @date"
 
 #: 
 msgctxt "Reservation list"
@@ -3437,7 +3437,7 @@ msgstr ""
 #: 
 msgctxt "Dashboard"
 msgid "Pick up before @date"
-msgstr "Afhentes senest: @date"
+msgstr "Hent før @date"
 
 #: 
 msgctxt "Dashboard"
