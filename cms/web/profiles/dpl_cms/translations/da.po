@@ -342,7 +342,7 @@ msgstr "Pop-up med facetbrowser"
 #: 
 msgctxt "Search Result"
 msgid "Children or adults"
-msgstr "Børn eller voksne"
+msgstr "Børn eller voksen"
 
 #: 
 msgctxt "Search Result"
@@ -377,7 +377,7 @@ msgstr "Emner"
 #: 
 msgctxt "Search Result"
 msgid "Work types"
-msgstr "Materialetyper"
+msgstr "Værktyper"
 
 #: 
 msgctxt "Search Result"
@@ -577,7 +577,7 @@ msgstr "et al."
 #: 
 msgctxt "Work Page"
 msgid "Fiction/nonfiction"
-msgstr "Fiktion/nonfiktion"
+msgstr "Fiktion/non-fiktion"
 
 #: 
 msgctxt "Work Page"
@@ -602,7 +602,7 @@ msgstr "Find det på hylden"
 #: 
 msgctxt "Work Page"
 msgid "Home"
-msgstr "Hjem"
+msgstr "Hjemme"
 
 #: 
 msgctxt "Work Page"
@@ -857,7 +857,7 @@ msgstr "Bestil digital kopi"
 #: 
 msgctxt "Work Page"
 msgid "Order digital copy description text"
-msgstr "bestil en digital kopi og modtag artiklen direkte på mail (test)"
+msgstr "Bestil en digital kopi og modtag artiklen direkte på mail (test)"
 
 #: 
 msgctxt "Work Page"
@@ -922,7 +922,7 @@ msgstr "i kø"
 #: 
 msgctxt "Work Page"
 msgid "Rating of this item is"
-msgstr ""
+msgstr "Bedømmelse af materialet:"
 
 #: 
 msgctxt "Work Page"
@@ -947,7 +947,7 @@ msgstr "Reserveringsfejl"
 #: 
 msgctxt "Work Page"
 msgid "modal for reservation"
-msgstr ""
+msgstr "Pop-up til reservering"
 
 #: 
 msgctxt "Work Page"
@@ -1032,17 +1032,17 @@ msgstr "Udlånt"
 #: 
 msgctxt "Work Page"
 msgid "In stock:"
-msgstr ""
+msgstr "Hjemme:"
 
 #: 
 msgctxt "Work Page"
 msgid "You have borrowed"
-msgstr ""
+msgstr "Du har lånt"
 
 #: 
 msgctxt "Search Header"
 msgid "Search button"
-msgstr ""
+msgstr "Søg"
 
 #: 
 msgctxt "Search Header"
@@ -1057,12 +1057,12 @@ msgstr ""
 #: 
 msgctxt "Search Header"
 msgid "Audio books"
-msgstr ""
+msgstr "Lydbøger"
 
 #: 
 msgctxt "Search Header"
 msgid "Books"
-msgstr ""
+msgstr "Bøger"
 
 #: 
 msgctxt "Search Header"
@@ -1097,7 +1097,7 @@ msgstr ""
 #: 
 msgctxt "Search Header"
 msgid "Start typing in order to search"
-msgstr ""
+msgstr "Skriv en titel, emne eller navnet på en forfatter"
 
 #: 
 msgctxt "Search Header"
@@ -1705,7 +1705,7 @@ msgstr ""
 #: 
 msgctxt "Reservation list"
 msgid "Available in @count days"
-msgstr ""
+msgstr "Tilgængelig om @count dage"
 
 #: 
 msgctxt "Reservation list"
@@ -2598,7 +2598,7 @@ msgstr ""
 
 #: 
 msgid "Ereolen always available"
-msgstr ""
+msgstr "E-bøger du altid kan låne"
 
 #: 
 msgid "Pincode length (min)"
@@ -3212,12 +3212,12 @@ msgstr ""
 #: 
 msgctxt "Search Result"
 msgid "Your search has 0 results"
-msgstr ""
+msgstr "Din søgning giver 0 resultater"
 
 #: 
 msgctxt "Search Result"
 msgid "Subject number"
-msgstr ""
+msgstr "Emnetal"
 
 #: 
 msgctxt "Work Page"
@@ -3237,7 +3237,7 @@ msgstr ""
 #: 
 msgctxt "Work Page"
 msgid "Fictional characters"
-msgstr "Hovedkarakter"
+msgstr "Hovedperson"
 
 #: 
 msgctxt "Work Page"
@@ -3247,7 +3247,7 @@ msgstr ""
 #: 
 msgctxt "Work Page"
 msgid "First available edition"
-msgstr ""
+msgstr "Første tilgængelige udgave"
 
 #: 
 msgctxt "Work Page"
@@ -3262,7 +3262,7 @@ msgstr ""
 #: 
 msgctxt "Work Page"
 msgid "The material is available at these nearby libraries"
-msgstr ""
+msgstr "Materialet er hjemme på disse biblioteker i nærheden"
 
 #: 
 msgctxt "Work Page"
