@@ -1665,17 +1665,17 @@ msgstr ""
 #: 
 msgctxt "Reservation list"
 msgid "There are @count people in the queue before you"
-msgstr ""
+msgstr "Der er @count i køen før dig"
 
 #: 
 msgctxt "Reservation list"
 msgid "You are at the front of the queue"
-msgstr ""
+msgstr "Du er forrest i køen"
 
 #: 
 msgctxt "Reservation list"
 msgid "queued"
-msgstr ""
+msgstr "I kø"
 
 #: 
 msgctxt "Reservation list"
@@ -1725,12 +1725,12 @@ msgstr ""
 #: 
 msgctxt "Reservation list"
 msgid "Others are queueing for this material"
-msgstr ""
+msgstr "Andre står i kø til dette materiale"
 
 #: 
 msgctxt "Reservation list"
 msgid "@count queued"
-msgstr ""
+msgstr "@count i kø"
 
 #: 
 msgctxt "Reservation list"
@@ -2194,7 +2194,7 @@ msgstr "Klar til dig"
 #: 
 msgctxt "Dashboard"
 msgid "Still in queue"
-msgstr ""
+msgstr "Stadig i kø"
 
 #: 
 msgctxt "Dashboard"
@@ -3252,7 +3252,7 @@ msgstr ""
 #: 
 msgctxt "Work Page"
 msgid "Avoid the queue and pick up the material now"
-msgstr ""
+msgstr "Undgå ventetid og hente materialet nu"
 
 #: 
 msgctxt "Work Page"
@@ -3713,7 +3713,7 @@ msgstr "Reserveringer klar til afhentning"
 #: 
 msgctxt "Patron menu"
 msgid "Pick up before"
-msgstr "Afhentes senest"
+msgstr "Hent før @date"
 
 #: 
 msgctxt "Patron menu"
@@ -3787,12 +3787,12 @@ msgstr "Menu"
 #: 
 msgctxt "Dashboard"
 msgid "Others are queueing for this material"
-msgstr ""
+msgstr "Andre står i kø til dette materiale "
 
 #: 
 msgctxt "Dashboard"
 msgid "@count queued"
-msgstr ""
+msgstr "@count i kø"
 
 #: 
 msgctxt "Dashboard"
@@ -3802,12 +3802,12 @@ msgstr ""
 #: 
 msgctxt "Patron menu"
 msgid "Others are queueing for this material"
-msgstr ""
+msgstr "Andre står i kø til dette materiale"
 
 #: 
 msgctxt "Patron menu"
 msgid "@count queued"
-msgstr ""
+msgstr "@count i kø"
 
 #: 
 msgctxt "Patron menu"
