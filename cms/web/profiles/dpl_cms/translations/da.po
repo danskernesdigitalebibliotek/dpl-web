@@ -60,7 +60,7 @@ msgstr "Denne modal grupperer lån efter afleveringsdato og gør det muligt at f
 #: 
 msgctxt "Loan list"
 msgid "Choose all renewable"
-msgstr "Vælg alle med mulighed for fornyelse test 1"
+msgstr "Vælg mulige"
 
 #: 
 msgctxt "Loan list"
@@ -2035,7 +2035,7 @@ msgstr ""
 #: 
 msgctxt "Favorites list"
 msgid "Choose all renewable"
-msgstr "Vælg alle med mulighed for fornyelse test 2"
+msgstr "Vælg mulige"
 
 #: 
 msgctxt "Favorites list"
@@ -2209,7 +2209,7 @@ msgstr ""
 #: 
 msgctxt "Dashboard"
 msgid "Your profile"
-msgstr "Din profil (misvisende tekst Lotte test)"
+msgstr "Din side"
 
 #: 
 msgctxt "Dashboard (settings)"
@@ -3134,7 +3134,7 @@ msgstr "Mellemværender"
 
 #: 
 msgid "My account"
-msgstr "Din profil (misvisende Lotte)"
+msgstr "Din side"
 
 #: 
 msgctxt "Patron menu"
@@ -3594,10 +3594,11 @@ msgctxt "Patron menu"
 msgid "Select @label"
 msgstr ""
 
+#. Den engelske tekst er misvisende, teksten vises ved Slet reserveringer
 #: 
 msgctxt "Patron menu"
 msgid "Choose all renewable"
-msgstr "Vælg alle med mulighed for fornyelse test 3"
+msgstr "Vælg alle"
 
 #: 
 msgctxt "Patron menu"
