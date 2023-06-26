@@ -377,12 +377,12 @@ msgstr "Emner"
 #: 
 msgctxt "Search Result"
 msgid "Work types"
-msgstr ""
+msgstr "Materialetyper"
 
 #: 
 msgctxt "Search Result"
 msgid "Filter list"
-msgstr ""
+msgstr "Flere filtre"
 
 #: 
 msgctxt "Search Result"
@@ -572,7 +572,7 @@ msgstr "Udgaver"
 #: 
 msgctxt "Work Page"
 msgid "et al."
-msgstr "et. al."
+msgstr "et al."
 
 #: 
 msgctxt "Work Page"
@@ -722,7 +722,7 @@ msgstr "Spring køen over - materialet er tilgængeligt i en anden udgave @title
 #: 
 msgctxt "Work Page"
 msgid "Material is included"
-msgstr ""
+msgstr "Materiale er inkluderet"
 
 #: 
 msgctxt "Work Page"
@@ -912,7 +912,7 @@ msgstr "Afhentes på"
 #: 
 msgctxt "Work Page"
 msgid "possible"
-msgstr ""
+msgstr "mulige"
 
 #: 
 msgctxt "Work Page"
@@ -1087,7 +1087,7 @@ msgstr ""
 #: 
 msgctxt "Search Header"
 msgid "et al."
-msgstr ""
+msgstr "et al."
 
 #: 
 msgctxt "Search Header"
@@ -1107,7 +1107,7 @@ msgstr ""
 #: 
 msgctxt "Search Header"
 msgid "Author"
-msgstr ""
+msgstr "Forfatter"
 
 #: 
 msgctxt "Search Header"
@@ -1805,7 +1805,7 @@ msgstr "Vil du slette din reservering?"
 #: 
 msgctxt "Reservation list"
 msgid "You cannot regret this action"
-msgstr ""
+msgstr "Du kan ikke fortryde denne handling"
 
 #: 
 msgctxt "Reservation list"
@@ -2040,27 +2040,27 @@ msgstr "Vælg mulige"
 #: 
 msgctxt "Favorites list"
 msgid "@count materials"
-msgstr ""
+msgstr "@count materialer"
 
 #: 
 msgctxt "Favorites list"
 msgid "Favorites"
-msgstr ""
+msgstr "Huskeliste"
 
 #: 
 msgctxt "Favorites list"
 msgid "By"
-msgstr ""
+msgstr "Af"
 
 #: 
 msgctxt "Favorites list"
 msgid "et al"
-msgstr ""
+msgstr "et al."
 
 #: 
 msgctxt "Favorites list"
 msgid "show more"
-msgstr ""
+msgstr "vis flere"
 
 #: 
 msgctxt "Favorites list"
@@ -2070,17 +2070,17 @@ msgstr "Viser @itemsShown ud af @hitcount resultater"
 #: 
 msgctxt "Favorites list"
 msgid "Your favorites list is empty"
-msgstr ""
+msgstr "Din huskeliste er tom"
 
 #: 
 msgctxt "Favorites list"
 msgid "in series"
-msgstr ""
+msgstr "i serien"
 
 #: 
 msgctxt "Favorites list"
 msgid "Number description"
-msgstr ""
+msgstr "Nummer"
 
 #: 
 msgid "Basic settings"
@@ -2286,7 +2286,7 @@ msgstr ""
 #: 
 msgctxt "Something similar"
 msgid "By the same author"
-msgstr ""
+msgstr "Af samme forfatter"
 
 #: 
 msgctxt "Something similar"
@@ -2670,17 +2670,17 @@ msgstr "Gå til Huskeliste"
 #: 
 msgctxt "Favorites list material component"
 msgid "Your list"
-msgstr ""
+msgstr "Huskeliste"
 
 #: 
 msgctxt "Favorites list material component"
 msgid "and"
-msgstr ""
+msgstr "og"
 
 #: 
 msgctxt "Favorites list material component"
 msgid "By"
-msgstr ""
+msgstr "Af"
 
 #: 
 msgid "DPL favorites list material component"
@@ -3237,7 +3237,7 @@ msgstr ""
 #: 
 msgctxt "Work Page"
 msgid "Fictional characters"
-msgstr ""
+msgstr "Hovedkarakter"
 
 #: 
 msgctxt "Work Page"
@@ -3292,7 +3292,7 @@ msgstr ""
 #: 
 msgctxt "Dashboard"
 msgid "You cannot regret this action"
-msgstr ""
+msgstr "Du kan ikke fortryde denne handling"
 
 #: 
 msgctxt "Dashboard"
@@ -3477,37 +3477,37 @@ msgstr ""
 #: 
 msgctxt "Reservation list"
 msgid "et al."
-msgstr ""
+msgstr "et al."
 
 #: 
 msgctxt "Fees list"
 msgid "et al."
-msgstr "o.a."
+msgstr "et al."
 
 #: 
 msgctxt "Dashboard"
 msgid "et al."
-msgstr ""
+msgstr "et al."
 
 #: 
 msgctxt "Favorites list material component"
 msgid "et al."
-msgstr ""
+msgstr "et al."
 
 #: 
 msgctxt "Recommender"
 msgid "et al."
-msgstr ""
+msgstr "et al."
 
 #: 
 msgctxt "Loan list"
 msgid "et al."
-msgstr ""
+msgstr "et al."
 
 #: 
 msgctxt "Something similar"
 msgid "et al."
-msgstr ""
+msgstr "et al."
 
 #: 
 msgctxt "Patron menu (Aria)"
@@ -3577,7 +3577,7 @@ msgstr "Vil du slette din reservering?"
 #: 
 msgctxt "Patron menu"
 msgid "You cannot regret this action"
-msgstr ""
+msgstr "Du kan ikke fortryde denne handling"
 
 #: 
 msgctxt "Patron menu"
