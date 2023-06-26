@@ -60,7 +60,7 @@ msgstr "Denne modal grupperer lån efter afleveringsdato og gør det muligt at f
 #: 
 msgctxt "Loan list"
 msgid "Choose all renewable"
-msgstr "Vælg alle med mulighed for fornyelse"
+msgstr "Vælg alle med mulighed for fornyelse test 1"
 
 #: 
 msgctxt "Loan list"
@@ -2035,7 +2035,7 @@ msgstr ""
 #: 
 msgctxt "Favorites list"
 msgid "Choose all renewable"
-msgstr "Vælg alle med mulighed for fornyelse"
+msgstr "Vælg alle med mulighed for fornyelse test 2"
 
 #: 
 msgctxt "Favorites list"
@@ -3597,7 +3597,7 @@ msgstr ""
 #: 
 msgctxt "Patron menu"
 msgid "Choose all renewable"
-msgstr "Vælg alle med mulighed for fornyelse"
+msgstr "Vælg alle med mulighed for fornyelse test 3"
 
 #: 
 msgctxt "Patron menu"
