@@ -1625,7 +1625,7 @@ msgstr "Digitale reserveringer"
 #: 
 msgctxt "Reservation list"
 msgid "Ready for pickup"
-msgstr "Klar til afhentning"
+msgstr "Klar til lån"
 
 #: 
 msgctxt "Reservation list"
@@ -1900,7 +1900,7 @@ msgstr ""
 #: 
 msgctxt "Reservation list"
 msgid "Showing @itemsShown out of @hitcount results"
-msgstr ""
+msgstr "Viser @itemsShown ud af @hitcount resultater"
 
 #: 
 msgctxt "Reservation list (Aria)"
@@ -1930,7 +1930,7 @@ msgstr "Materialet er klar til dig om @count dage"
 #: 
 msgctxt "Search Result"
 msgid "Showing results for \"@query\""
-msgstr ""
+msgstr "Viser resultater for \"@query\""
 
 #: 
 msgctxt "Library Agency Configuration"
@@ -2065,7 +2065,7 @@ msgstr ""
 #: 
 msgctxt "Favorites list"
 msgid "Showing @itemsShown out of @hitcount results"
-msgstr ""
+msgstr "Viser @itemsShown ud af @hitcount resultater"
 
 #: 
 msgctxt "Favorites list"
@@ -3337,7 +3337,7 @@ msgstr ""
 #: 
 msgctxt "Dashboard"
 msgid "Ready for pickup"
-msgstr "Klar til afhentning"
+msgstr "Klar til lån"
 
 #: 
 msgctxt "Dashboard (aria)"
@@ -3422,7 +3422,7 @@ msgstr ""
 #: 
 msgctxt "Dashboard"
 msgid "Showing @itemsShown out of @hitcount elements"
-msgstr ""
+msgstr "Viser @itemsShown ud af @hitcount elementer"
 
 #: 
 msgctxt "Dashboard"
@@ -3738,7 +3738,7 @@ msgstr "Luk pop-up med grupperede reserveringer "
 #: 
 msgctxt "Patron menu"
 msgid "Ready for pickup"
-msgstr "Klar til afhentning"
+msgstr "Klar til lån"
 
 #: 
 msgctxt "Patron menu"
