@@ -1117,7 +1117,7 @@ msgstr ""
 #: 
 msgctxt "Search Header"
 msgid "Work"
-msgstr ""
+msgstr "Værk"
 
 #: 
 msgctxt "Library Agency Configuration"
@@ -3222,17 +3222,17 @@ msgstr "Emnetal"
 #: 
 msgctxt "Work Page"
 msgid "Change pickup location"
-msgstr ""
+msgstr "Skift afhentningssted"
 
 #: 
 msgctxt "Work Page"
 msgid "Change SMS number"
-msgstr ""
+msgstr "Skift mobilnummer"
 
 #: 
 msgctxt "Work Page"
 msgid "Change interest period"
-msgstr ""
+msgstr "Skift interesseperiode"
 
 #: 
 msgctxt "Work Page"
@@ -3242,7 +3242,7 @@ msgstr "Hovedperson"
 #: 
 msgctxt "Work Page"
 msgid "Film adaptations"
-msgstr ""
+msgstr "Filmatisering"
 
 #: 
 msgctxt "Work Page"
@@ -3257,7 +3257,7 @@ msgstr "Undgå ventetid og hente materialet nu"
 #: 
 msgctxt "Work Page"
 msgid "Instant loan"
-msgstr ""
+msgstr "Strakslån"
 
 #: 
 msgctxt "Work Page"
@@ -3267,7 +3267,7 @@ msgstr "Materialet er hjemme på disse biblioteker i nærheden"
 #: 
 msgctxt "Work Page"
 msgid "1"
-msgstr ""
+msgstr "1"
 
 #: 
 msgctxt "Work Page"
