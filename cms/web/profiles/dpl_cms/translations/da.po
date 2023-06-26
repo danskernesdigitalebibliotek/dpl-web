@@ -3713,7 +3713,7 @@ msgstr "Reserveringer klar til afhentning"
 #: 
 msgctxt "Patron menu"
 msgid "Pick up before"
-msgstr "Hent før @date"
+msgstr "Klar til lån"
 
 #: 
 msgctxt "Patron menu"
