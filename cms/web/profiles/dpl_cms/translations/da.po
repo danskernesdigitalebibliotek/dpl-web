@@ -135,7 +135,7 @@ msgstr "Vælg @label til fornyelse"
 #: 
 msgctxt "Loan list"
 msgid "You will be charged a fee, when the item is returned"
-msgstr "Du vil blive opkrævet er gebyr ved aflevering"
+msgstr "Du vil blive pålagt er gebyr ved aflevering"
 
 #: 
 msgctxt "Loan list"
