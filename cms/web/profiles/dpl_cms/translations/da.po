@@ -2391,7 +2391,7 @@ msgstr "Gem"
 #: 
 msgctxt "Patron page"
 msgid "Patron profile page"
-msgstr "Brugeroplysninger"
+msgstr "Din profil"
 
 #: 
 msgctxt "Patron page"
@@ -3130,7 +3130,7 @@ msgstr "Huskeliste"
 
 #: 
 msgid "Fees & Replacement costs"
-msgstr "Mellemværender"
+msgstr "Gebyrer & Erstatninger"
 
 #: 
 msgid "My account"
@@ -3139,7 +3139,7 @@ msgstr "Din side"
 #: 
 msgctxt "Patron menu"
 msgid "My Account"
-msgstr "Brugeroplysninger"
+msgstr "Din profil"
 
 #: 
 msgctxt "Patron menu"
@@ -3184,12 +3184,12 @@ msgstr "Log ind"
 #: 
 msgctxt "Patron menu"
 msgid "Sign up"
-msgstr ""
+msgstr "Opret profil"
 
 #: 
 msgctxt "Patron menu (aria)"
 msgid "Open user menu"
-msgstr "Åben din brugerprofil/menu (test Lotte)"
+msgstr "Åben din profil"
 
 #: 
 msgctxt "Patron menu (aria)"
