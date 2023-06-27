@@ -1860,7 +1860,7 @@ msgstr ""
 #: 
 msgctxt "Reservation list"
 msgid "Pause reservation below inputs text"
-msgstr ""
+msgstr "Bemærk at der kan være en forsinkelse på hvornår pausen begynder."
 
 #: 
 msgctxt "Reservation list"
