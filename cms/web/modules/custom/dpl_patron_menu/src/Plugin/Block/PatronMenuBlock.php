@@ -160,6 +160,8 @@ class PatronMenuBlock extends BlockBase implements ContainerFactoryPluginInterfa
           $this->t('Cancel reservations', [], ['context' => 'Patron menu']),
         ],
       ],
+      'physical-reservations-header-text' => $this->t('Physical reservations', [], ['context' => 'Patron menu']),
+      'digital-reservations-header-text' => $this->t('Digital reservations', [], ['context' => 'Patron menu']),
       'material-and-author-text' => $this->t('and', [], ['context' => 'Patron menu']),
       'material-by-author-text' => $this->t('By', [], ['context' => 'Patron menu']),
       'show-more-text' => $this->t("show more", [], ['context' => 'Patron menu']),
