@@ -105,7 +105,7 @@ msgstr "Materialet kan ikke fornyes flere gange"
 #: 
 msgctxt "Loan list"
 msgid "The item is reserved by another patron"
-msgstr "Materialet er reserveret af en anden bruger"
+msgstr "Materialet er reserveret af en anden"
 
 #: 
 msgctxt "Loan list"
@@ -240,7 +240,7 @@ msgstr "Denne pop-up viser detaljer for materialet og gør det muligt at forny m
 #: 
 msgctxt "Loan list"
 msgid "Renew your loans"
-msgstr "Forny dine lån"
+msgstr "Forny"
 
 #: 
 msgctxt "Loan list"
@@ -1655,7 +1655,7 @@ msgstr "Klar"
 #: 
 msgctxt "Reservation list"
 msgid "By"
-msgstr ""
+msgstr "Af"
 
 #: 
 msgctxt "Reservation list"
@@ -1720,7 +1720,7 @@ msgstr ""
 #: 
 msgctxt "Reservation list"
 msgid "Remove your reservation"
-msgstr "Slet din reservering"
+msgstr "Fjern din reservering"
 
 #: 
 msgctxt "Reservation list"
@@ -1800,7 +1800,7 @@ msgstr "Slet reserveringer"
 #: 
 msgctxt "Reservation list"
 msgid "Do you want to cancel your reservation?"
-msgstr "Vil du slette din reservering?"
+msgstr "Vil du fjerne din reservering?"
 
 #: 
 msgctxt "Reservation list"
@@ -2154,7 +2154,7 @@ msgstr ""
 #: 
 msgctxt "Dashboard"
 msgid "By"
-msgstr ""
+msgstr "Af"
 
 #: 
 msgctxt "Dashboard"
@@ -2281,7 +2281,7 @@ msgstr ""
 #: 
 msgctxt "Something similar"
 msgid "By"
-msgstr ""
+msgstr "Af"
 
 #: 
 msgctxt "Something similar"
@@ -2314,7 +2314,7 @@ msgstr ""
 #: 
 msgctxt "Recommender"
 msgid "By"
-msgstr ""
+msgstr "Af"
 
 #: 
 msgctxt "Recommender"
@@ -2773,7 +2773,7 @@ msgstr ""
 #: 
 msgctxt "Fees list"
 msgid "By"
-msgstr ""
+msgstr "Af"
 
 #: 
 msgctxt "Fees list"
@@ -3452,7 +3452,7 @@ msgstr "Digitale reserveringer"
 #: 
 msgctxt "Dashboard"
 msgid "Do you want to cancel your reservation?"
-msgstr "Vil du slette din reservering?"
+msgstr "Vil du fjerne din reservering?"
 
 #: 
 msgctxt "Dashboard"
@@ -3572,7 +3572,7 @@ msgstr "Slet reservering"
 #: 
 msgctxt "Patron menu"
 msgid "Do you want to cancel your reservation?"
-msgstr "Vil du slette din reservering?"
+msgstr "Vil du fjerne din reservering?"
 
 #: 
 msgctxt "Patron menu"
@@ -3643,12 +3643,12 @@ msgstr "Denne pop-up gør det muligt at forny materialer"
 #: 
 msgctxt "Patron menu"
 msgid "The item has been lent to you by another library and renewal is therefore conditional of the acceptance by that library"
-msgstr ""
+msgstr "Materialet er udlånt fra en anden kommune og fornyelsen er derfor betinget af et andet biblioteks accept"
 
 #: 
 msgctxt "Patron menu"
 msgid "The item is reserved by another patron"
-msgstr ""
+msgstr "Materialet er reserveret af en anden"
 
 #: 
 msgctxt "Patron menu"
@@ -3663,7 +3663,7 @@ msgstr "Materialet kan ikke fornyes flere gange"
 #: 
 msgctxt "Patron menu"
 msgid "Renew your loans"
-msgstr "Forny dine lån"
+msgstr "Forny"
 
 #: 
 msgctxt "Patron menu"
