@@ -1675,7 +1675,7 @@ msgstr "Du er forrest i køen"
 #: 
 msgctxt "Reservation list"
 msgid "queued"
-msgstr "I kø"
+msgstr "i kø"
 
 #: 
 msgctxt "Reservation list"
@@ -1730,7 +1730,7 @@ msgstr "Andre står i kø til dette materiale"
 #: 
 msgctxt "Reservation list"
 msgid "@count queued"
-msgstr "@count i kø"
+msgstr "@count i køen"
 
 #: 
 msgctxt "Reservation list"
@@ -3807,7 +3807,7 @@ msgstr "Andre står i kø til dette materiale"
 #: 
 msgctxt "Patron menu"
 msgid "@count queued"
-msgstr "@count i kø"
+msgstr "@count i køen"
 
 #: 
 msgctxt "Patron menu"
