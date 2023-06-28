@@ -2164,7 +2164,7 @@ msgstr "Du har ingen fysiske lån i øjeblikket"
 #: 
 msgctxt "Dashboard"
 msgid "At the moment, you have 0 reservations"
-msgstr "Du har 0 reservernger"
+msgstr "Du har 0 reserveringer"
 
 #: 
 msgctxt "Dashboard"
@@ -2586,7 +2586,7 @@ msgstr "Du har brugt @this audiobooks ud af din kvote på @that lydbøger"
 #: 
 msgctxt "Patron page (aria)"
 msgid "You used @this ebooks out of you quota of @that ebooks"
-msgstr "Du har brugt @this ebooks ud af din kvote på @that e-bøger"
+msgstr "Du har brugt @this ud af din kvote på @that e-bøger"
 
 #: 
 msgid "Delete patron link"
@@ -2698,7 +2698,7 @@ msgstr "Bemærk at betalte gebyrer først registreres op til 72 timer efter beta
 #: 
 msgctxt "Fees list"
 msgid "You have 0 unpaid fees or replacement costs"
-msgstr "Du har 0 ubetalte gebyrer eller erstaninger"
+msgstr "Du har 0 ubetalte gebyrer eller erstatninger"
 
 #: 
 msgctxt "Fees list"
