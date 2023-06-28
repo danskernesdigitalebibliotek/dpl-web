@@ -857,7 +857,7 @@ msgstr "Bestil digital kopi"
 #: 
 msgctxt "Work Page"
 msgid "Order digital copy description text"
-msgstr "Bestil en digital kopi og modtag artiklen direkte på mail (test)"
+msgstr "Bestil en digital kopi og modtag artiklen direkte på mail"
 
 #: 
 msgctxt "Work Page"
@@ -1067,22 +1067,22 @@ msgstr "Bøger"
 #: 
 msgctxt "Search Header"
 msgid "E-books"
-msgstr ""
+msgstr "E-bøger"
 
 #: 
 msgctxt "Search Header"
 msgid "Movies"
-msgstr ""
+msgstr "Film"
 
 #: 
 msgctxt "Search Header"
 msgid "Games"
-msgstr ""
+msgstr "Spil"
 
 #: 
 msgctxt "Search Header"
 msgid "Music"
-msgstr ""
+msgstr "Musik"
 
 #: 
 msgctxt "Search Header"
@@ -1181,7 +1181,7 @@ msgstr ""
 
 #: 
 msgid "Availability"
-msgstr ""
+msgstr "Tilgængelighed"
 
 #: 
 msgctxt "Library Agency Configuration"
@@ -1395,7 +1395,7 @@ msgstr "Gå til hovedindhold"
 
 #: 
 msgid "Novel"
-msgstr ""
+msgstr "Roman"
 
 #: 
 msgid "Custom theme for the Danish Public Libraries"
@@ -1660,7 +1660,7 @@ msgstr "Af"
 #: 
 msgctxt "Reservation list"
 msgid "and"
-msgstr ""
+msgstr "og"
 
 #: 
 msgctxt "Reservation list"
@@ -1685,22 +1685,22 @@ msgstr "Hent før @date"
 #: 
 msgctxt "Reservation list"
 msgid "E-book"
-msgstr ""
+msgstr "E-bog"
 
 #: 
 msgctxt "Reservation list"
 msgid "Audiobook"
-msgstr ""
+msgstr "Lydbog"
 
 #: 
 msgctxt "Reservation list"
 msgid "Podcast"
-msgstr ""
+msgstr "Podcast"
 
 #: 
 msgctxt "Reservation list"
 msgid "Borrow before @date"
-msgstr ""
+msgstr "Lån før @date"
 
 #: 
 msgctxt "Reservation list"
@@ -1710,17 +1710,17 @@ msgstr "Tilgængelig om @count dage"
 #: 
 msgctxt "Reservation list"
 msgid "days"
-msgstr ""
+msgstr "dage"
 
 #: 
 msgctxt "Reservation list"
 msgid "day"
-msgstr ""
+msgstr "dag"
 
 #: 
 msgctxt "Reservation list"
 msgid "Remove your reservation"
-msgstr "Fjern din reservering"
+msgstr "Slet reservering"
 
 #: 
 msgctxt "Reservation list"
@@ -1735,7 +1735,7 @@ msgstr "@count i køen"
 #: 
 msgctxt "Reservation list"
 msgid "Status"
-msgstr ""
+msgstr "Status"
 
 #: 
 msgctxt "Reservation list"
@@ -1745,7 +1745,7 @@ msgstr "Afhent senest"
 #: 
 msgctxt "Reservation list"
 msgid "Borrow before"
-msgstr ""
+msgstr "Lån før"
 
 #: 
 msgctxt "Reservation list"
@@ -1770,17 +1770,17 @@ msgstr "Ikke interesseret efter"
 #: 
 msgctxt "Reservation list"
 msgid "Go to eReolen"
-msgstr ""
+msgstr "Gå til eReolen"
 
 #: 
 msgctxt "Reservation list"
 msgid "Your reservation expires @date!"
-msgstr ""
+msgstr "Din reservering udløber @date!"
 
 #: 
 msgctxt "Reservation list"
 msgid "Save"
-msgstr ""
+msgstr "Gem"
 
 #: 
 msgctxt "Reservation list"
@@ -1800,7 +1800,7 @@ msgstr "Slet reserveringer"
 #: 
 msgctxt "Reservation list"
 msgid "Do you want to cancel your reservation?"
-msgstr "Vil du fjerne din reservering?"
+msgstr "Vil du slette din reservering?"
 
 #: 
 msgctxt "Reservation list"
@@ -1810,7 +1810,7 @@ msgstr "Du kan ikke fortryde denne handling"
 #: 
 msgctxt "Reservation list"
 msgid "Close delete reservation modal"
-msgstr ""
+msgstr "Luk pop-up til at slette reserveringer"
 
 #: 
 msgctxt "Reservation list (Aria)"
@@ -1845,7 +1845,7 @@ msgstr "Luk pop-up som sætter reserveringer på pause"
 #: 
 msgctxt "Reservation list"
 msgid "Start date"
-msgstr ""
+msgstr "Begyndelsesdato"
 
 #: 
 msgctxt "Reservation list (Aria)"
@@ -1855,7 +1855,7 @@ msgstr "Luk pop-up med detaljevisning"
 #: 
 msgctxt "Reservation list"
 msgid "End date"
-msgstr ""
+msgstr "Slutdato"
 
 #: 
 msgctxt "Reservation list"
@@ -1865,22 +1865,22 @@ msgstr "Bemærk at der kan være en forsinkelse på hvornår pausen begynder."
 #: 
 msgctxt "Reservation list"
 msgid "1 month"
-msgstr ""
+msgstr "1 måned"
 
 #: 
 msgctxt "Reservation list"
 msgid "2 months"
-msgstr ""
+msgstr "2 måneder"
 
 #: 
 msgctxt "Reservation list"
 msgid "3 months"
-msgstr ""
+msgstr "3 måneder"
 
 #: 
 msgctxt "Reservation list"
 msgid "6 months"
-msgstr ""
+msgstr "6 måneder"
 
 #: 
 msgctxt "Reservation list"
@@ -2109,7 +2109,7 @@ msgstr ""
 #: 
 msgctxt "Dashboard"
 msgid "Select all"
-msgstr ""
+msgstr "Vælg alle"
 
 #: 
 msgctxt "Dashboard"
@@ -2119,7 +2119,7 @@ msgstr "Forny (@count)"
 #: 
 msgctxt "Dashboard"
 msgid "Due date @date"
-msgstr ""
+msgstr "Afleveringsdato @date"
 
 #: 
 msgctxt "Dashboard"
@@ -2134,22 +2134,22 @@ msgstr "Afleveringsdatoen er overskredet, du vil derfor blive pålagt et gebyr v
 #: 
 msgctxt "Dashboard"
 msgid "Longer return time"
-msgstr ""
+msgstr "Længere afleveringstid"
 
 #: 
 msgctxt "Dashboard"
 msgid "Returned too late"
-msgstr ""
+msgstr "Afleveret for sent"
 
 #: 
 msgctxt "Dashboard"
 msgid "To be returned soon"
-msgstr ""
+msgstr "Afleveres snart"
 
 #: 
 msgctxt "Dashboard"
 msgid "and"
-msgstr ""
+msgstr "og"
 
 #: 
 msgctxt "Dashboard"
@@ -2169,17 +2169,17 @@ msgstr "Du har 0 reservernger"
 #: 
 msgctxt "Dashboard"
 msgid "Audiobook"
-msgstr ""
+msgstr "Lydbog"
 
 #: 
 msgctxt "Dashboard"
 msgid "E-book"
-msgstr ""
+msgstr "E-bog"
 
 #: 
 msgctxt "Dashboard"
 msgid "Podcast"
-msgstr ""
+msgstr "Podcast"
 
 #: 
 msgctxt "Dashboard"
@@ -2204,7 +2204,7 @@ msgstr "Reserveringer"
 #: 
 msgctxt "Dashboard"
 msgid "You owe in total"
-msgstr ""
+msgstr "Du skylder i alt"
 
 #: 
 msgctxt "Dashboard"
@@ -2291,12 +2291,12 @@ msgstr "Af samme forfatter"
 #: 
 msgctxt "Something similar"
 msgid "Something similar"
-msgstr ""
+msgstr "Noget der ligner"
 
 #: 
 msgctxt "Something similar"
 msgid "Other materials"
-msgstr ""
+msgstr "Andre materialer"
 
 #: 
 msgid "DPL something similar"
@@ -2309,7 +2309,7 @@ msgstr ""
 #: 
 msgctxt "Recommender"
 msgid "and"
-msgstr ""
+msgstr "og"
 
 #: 
 msgctxt "Recommender"
@@ -2319,17 +2319,17 @@ msgstr "Af"
 #: 
 msgctxt "Recommender"
 msgid "For your inspiration"
-msgstr ""
+msgstr "Inspiration til dig"
 
 #: 
 msgctxt "Recommender"
 msgid "Because you have borrowed @title you may also like"
-msgstr ""
+msgstr "Fordi du har lånt @title kan du måske også lide"
 
 #: 
 msgctxt "Recommender"
 msgid "Because you have reserved @title you may also like"
-msgstr ""
+msgstr "Fordi du har lånt @title kan du måske også lide"
 
 #: 
 msgctxt "Recommender (settings)"
@@ -2693,7 +2693,7 @@ msgstr ""
 #: 
 msgctxt "Fees list"
 msgid "Please note that paid fees are not registered up until 72 hours after your payment after which your debt is updated and your user unblocked if it has been blocked."
-msgstr ""
+msgstr "Bemærk at betalte gebyrer først registreres op til 72 timer efter betalingen har fundet sted, hvorefter mellemværender opdateres og eventuelle blokeringer pga. udestående mellemværender ophæves"
 
 #: 
 msgctxt "Fees list"
@@ -2713,12 +2713,12 @@ msgstr "Luk pop-up med detaljer for gebyr"
 #: 
 msgctxt "Fees list"
 msgid "Modal containing information about this element or group of elements fees"
-msgstr ""
+msgstr "Pop-up som indeholder information om dette gebyr eller en gruppe af gebyrer"
 
 #: 
 msgctxt "Fees list"
 msgid "A modal containing details about a fee"
-msgstr ""
+msgstr "En pop-up som indeholder information om et gebyr"
 
 #: 
 msgctxt "Fees list"
@@ -2753,22 +2753,22 @@ msgstr "Ubetalte gebyrer efter 27/10 2020"
 #: 
 msgctxt "Fees list"
 msgid "Paid fees can take up to 24 hours to registrer."
-msgstr ""
+msgstr "Betalte gebyrer kan tage op til 72 timer om at blive registreret."
 
 #: 
 msgctxt "Fees list"
 msgid "I accept the"
-msgstr ""
+msgstr "Jeg godkender dette"
 
 #: 
 msgctxt "Fees list"
 msgid "Fee @fee,-"
-msgstr ""
+msgstr "Gebyr @fee,-"
 
 #: 
 msgctxt "Fees list"
 msgid "and"
-msgstr ""
+msgstr "og"
 
 #: 
 msgctxt "Fees list"
@@ -2839,7 +2839,7 @@ msgstr ""
 
 #: 
 msgid "Terms of trade text"
-msgstr ""
+msgstr "Betalingsbetingelser"
 
 #: 
 msgid "Terms of trade redirect url"
@@ -2954,7 +2954,7 @@ msgstr "Fortryd"
 #: 
 msgctxt "Create patron"
 msgid "create patron change pickup body text"
-msgstr ""
+msgstr "Her kan du vælge afhentningssted"
 
 #: 
 msgctxt "Create patron"
@@ -3159,7 +3159,7 @@ msgstr "Reserveringer klar til afhentning"
 #: 
 msgctxt "Patron menu"
 msgid "Close user menu"
-msgstr ""
+msgstr "Luk brugermenu"
 
 #: 
 msgctxt "Patron menu"
@@ -3199,7 +3199,7 @@ msgstr "Notifikations menu"
 #: 
 msgctxt "Patron menu (aria)"
 msgid "Profile links"
-msgstr "Links til profil (test Lotte) "
+msgstr "Links til din profil"
 
 #: 
 msgid "DPL menu"
@@ -3287,7 +3287,7 @@ msgstr "Denne knap åbner en pop-up som dækker hele siden og indeholder mulighe
 #: 
 msgctxt "Dashboard"
 msgid "Close delete reservation modal"
-msgstr ""
+msgstr "Luk pop-up til at slette reserveringer"
 
 #: 
 msgctxt "Dashboard"
@@ -3302,12 +3302,12 @@ msgstr "Gebyrer"
 #: 
 msgctxt "Dashboard"
 msgid "Pay"
-msgstr ""
+msgstr "Betal"
 
 #: 
 msgctxt "Dashboard"
 msgid "@total,-"
-msgstr ""
+msgstr "@total,-"
 
 #: 
 msgctxt "Dashboard"
@@ -3317,7 +3317,7 @@ msgstr "Lån"
 #: 
 msgctxt "Dashboard"
 msgid "Select @label for renewal"
-msgstr "Vælg @label til fornyelse test"
+msgstr "Vælg @label til fornyelse"
 
 #: 
 msgctxt "Dashboard"
@@ -3332,7 +3332,7 @@ msgstr "Slet reserveringer (@amount)"
 #: 
 msgctxt "Dashboard"
 msgid "Expires soon"
-msgstr ""
+msgstr "Udløber snart"
 
 #: 
 msgctxt "Dashboard"
@@ -3352,22 +3352,22 @@ msgstr "Denne pop-up viser detaljer for materialet og gør det muligt at forny m
 #: 
 msgctxt "Dashboard"
 msgid "Expired"
-msgstr ""
+msgstr "Udløbet"
 
 #: 
 msgctxt "Dashboard"
 msgid "Material Item Number"
-msgstr ""
+msgstr "Materialenummer"
 
 #: 
 msgctxt "Dashboard"
 msgid "Loan date"
-msgstr ""
+msgstr "Udlånsdato"
 
 #: 
 msgctxt "Dashboard"
 msgid "Afleveres"
-msgstr ""
+msgstr "Afleveres"
 
 #: 
 msgctxt "Dashboard"
@@ -3392,7 +3392,7 @@ msgstr "Reserveringsdato"
 #: 
 msgctxt "Dashboard"
 msgid "Pick"
-msgstr ""
+msgstr "Vælg"
 
 #: 
 msgctxt "Dashboard"
@@ -3412,12 +3412,12 @@ msgstr "Afhentningssted"
 #: 
 msgctxt "Dashboard"
 msgid "Status"
-msgstr ""
+msgstr "Status"
 
 #: 
 msgctxt "Dashboard"
 msgid "Borrow before @date"
-msgstr ""
+msgstr "Lån før @date"
 
 #: 
 msgctxt "Dashboard"
@@ -3427,7 +3427,7 @@ msgstr "Viser @itemsShown ud af @hitcount elementer"
 #: 
 msgctxt "Dashboard"
 msgid "Go to eReolen"
-msgstr ""
+msgstr "Gå til eReolen"
 
 #: 
 msgctxt "Dashboard"
@@ -3452,7 +3452,7 @@ msgstr "Digitale reserveringer"
 #: 
 msgctxt "Dashboard"
 msgid "Do you want to cancel your reservation?"
-msgstr "Vil du fjerne din reservering?"
+msgstr "Vil du slette din reservering?"
 
 #: 
 msgctxt "Dashboard"
@@ -3527,17 +3527,17 @@ msgstr "Luk pop-up med grupperede reserveringer"
 #: 
 msgctxt "Dashboard"
 msgid "Digital"
-msgstr ""
+msgstr "Digitale"
 
 #: 
 msgctxt "Dashboard"
 msgid "This modal groups loans after due date and makes it possible to renew said loans"
-msgstr ""
+msgstr "Denne pop-up grupperer lån efter afleveringsdato og gør det muligt at forny disse lån"
 
 #: 
 msgctxt "Dashboard"
 msgid "Close renew loans modal"
-msgstr ""
+msgstr "Luk pop-up til at forny lån"
 
 #: 
 msgctxt "Dashboard"
@@ -3562,7 +3562,7 @@ msgstr "Denne knap åbner en pop-up som dækker hele siden og indeholder mulighe
 #: 
 msgctxt "Patron menu"
 msgid "Close delete reservation modal"
-msgstr ""
+msgstr "Luk pop-up til at reservere"
 
 #: 
 msgctxt "Patron menu"
@@ -3572,7 +3572,7 @@ msgstr "Slet reservering"
 #: 
 msgctxt "Patron menu"
 msgid "Do you want to cancel your reservation?"
-msgstr "Vil du fjerne din reservering?"
+msgstr "Vil du slette din reservering?"
 
 #: 
 msgctxt "Patron menu"
@@ -3673,7 +3673,7 @@ msgstr ""
 #: 
 msgctxt "Patron menu"
 msgid "Go to eReolen"
-msgstr ""
+msgstr "Gå til eReolen"
 
 #: 
 msgctxt "Patron menu (Aria)"
@@ -3817,17 +3817,17 @@ msgstr ""
 #: 
 msgctxt "Patron menu"
 msgid "Expires soon"
-msgstr ""
+msgstr "Udløber snart"
 
 #: 
 msgctxt "Patron menu"
 msgid "Returned too late"
-msgstr ""
+msgstr "Afleveret for sent"
 
 #: 
 msgctxt "Patron menu"
 msgid "To be returned soon"
-msgstr ""
+msgstr "Afleveres snart"
 
 #: 
 msgctxt "Patron menu"
@@ -3837,10 +3837,10 @@ msgstr "Klar til dig"
 #: 
 msgctxt "Patron menu"
 msgid "and"
-msgstr ""
+msgstr "og"
 
 #: 
 msgctxt "Patron menu"
 msgid "By"
-msgstr ""
+msgstr "Af"
 
