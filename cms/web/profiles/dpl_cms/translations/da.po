@@ -2451,7 +2451,7 @@ msgstr "DIGITALE LÅN (eREOLEN)"
 #: 
 msgctxt "Patron page"
 msgid "There is a number of materials without limitation to amounts of loans per month."
-msgstr "Der findes materialer uden begrænsning på antal lån pr. måned."
+msgstr "Der findes titler uden begrænsning på antal lån pr. måned."
 
 #: 
 msgctxt "Patron page"
@@ -2531,7 +2531,7 @@ msgstr "PINKODE"
 #: 
 msgctxt "Patron page"
 msgid "Change current pin by entering a new pin and saving"
-msgstr "Skift nuværende kode ved at indtaste en ny kode og gem"
+msgstr "Skift nuværende kode ved at indtaste en ny kode og gem."
 
 #: 
 msgctxt "Patron page"
