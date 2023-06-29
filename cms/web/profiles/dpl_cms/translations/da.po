@@ -2526,7 +2526,7 @@ msgstr "Til"
 #: 
 msgctxt "Patron page"
 msgid "PINCODE"
-msgstr "PINKODE"
+msgstr "Pinkode"
 
 #: 
 msgctxt "Patron page"
