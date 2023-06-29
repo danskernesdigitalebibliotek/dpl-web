@@ -3797,7 +3797,7 @@ msgstr "@count i kø"
 #: 
 msgctxt "Dashboard"
 msgid "Number @count in line"
-msgstr ""
+msgstr "Nummer @count i køen"
 
 #: 
 msgctxt "Patron menu"
@@ -3812,7 +3812,7 @@ msgstr "@count i køen"
 #: 
 msgctxt "Patron menu"
 msgid "Number @count in line"
-msgstr ""
+msgstr "Nummer @count i køen"
 
 #: 
 msgctxt "Patron menu"
