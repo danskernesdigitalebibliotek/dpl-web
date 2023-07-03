@@ -327,7 +327,7 @@ msgstr "et. al."
 #: 
 msgctxt "Search Result"
 msgid "Access types"
-msgstr ""
+msgstr "Fysisk/digital"
 
 #: 
 msgctxt "Search Result"
@@ -377,7 +377,7 @@ msgstr "Emner"
 #: 
 msgctxt "Search Result"
 msgid "Work types"
-msgstr "Værktyper"
+msgstr "Formater"
 
 #: 
 msgctxt "Search Result"
@@ -3237,7 +3237,7 @@ msgstr "Skift interesseperiode"
 #: 
 msgctxt "Work Page"
 msgid "Fictional characters"
-msgstr "Hovedperson"
+msgstr "Fiktive karakterer"
 
 #: 
 msgctxt "Work Page"
