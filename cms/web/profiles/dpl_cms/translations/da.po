@@ -3847,7 +3847,7 @@ msgstr "Af"
 #: 
 msgctxt "Patron menu"
 msgid "Physical reservations"
-msgstr ""
+msgstr "Fysiske reserveringer"
 
 #: 
 msgctxt "Patron menu"
