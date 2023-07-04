@@ -2406,7 +2406,7 @@ msgstr "Navn"
 #: 
 msgctxt "Patron page"
 msgid "patron page text fee text"
-msgstr "Lorem ipsum her mangler tekst om takster?? test"
+msgstr "Bemærk at dit telefonselskab kan opkræve gebyr for sms"
 
 #: 
 msgctxt "Patron page"
