@@ -1975,7 +1975,7 @@ msgstr "Du har overskredet din gebyrgrænse"
 #: 
 msgctxt "Blocked user"
 msgid "You are therefore not able to borrow or reserve materials from the library"
-msgstr "Du kan derfor ikke låne eller reservere materialer fra biblioteket"
+msgstr "Du kan derfor ikke låne eller reservere materialer fra biblioteket."
 
 #: 
 msgctxt "Blocked user"
@@ -1985,7 +1985,7 @@ msgstr "Din bruger er blokeret"
 #: 
 msgctxt "Blocked user"
 msgid "You therefore cannot reserve, borrow or renew loans. Please contact the library for further information"
-msgstr "Du kan derfor ikke reservere, låne eller forny dine lån. Kontakt venligst biblioteket for yderligere information"
+msgstr "Du kan derfor ikke reservere, låne eller forny dine lån. Kontakt venligst biblioteket for yderligere information."
 
 #: 
 msgctxt "Blocked user"
