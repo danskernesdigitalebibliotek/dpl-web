@@ -1940,32 +1940,32 @@ msgstr ""
 #: 
 msgctxt "Blocked user"
 msgid "Blocked patron d title text"
-msgstr ""
+msgstr "Blokeret låner årsag D"
 
 #: 
 msgctxt "Blocked user"
 msgid "Blocked patron d body text"
-msgstr ""
+msgstr "Blokeret låner årsag D. Her skal stå en meningsfuld besked"
 
 #: 
 msgctxt "Blocked user"
 msgid "Blocked patron s title text"
-msgstr ""
+msgstr "Blokeret låner årsag S"
 
 #: 
 msgctxt "Blocked user"
 msgid "Blocked patron s body text"
-msgstr ""
+msgstr "Blokeret låner årsag S. Her skal stå en meningsfuld besked"
 
 #: 
 msgctxt "Blocked user"
 msgid "Blocked patron f title text"
-msgstr ""
+msgstr "Blokeret låner årsag F"
 
 #: 
 msgctxt "Blocked user"
 msgid "Blocked patron f body text"
-msgstr ""
+msgstr "Blokeret låner årsag F. Her skal stå en meningsfuld besked"
 
 #: 
 msgctxt "Blocked user"
@@ -1975,7 +1975,7 @@ msgstr "Du har overskredet din gebyrgrænse"
 #: 
 msgctxt "Blocked user"
 msgid "You are therefore not able to borrow or reserve materials from the library"
-msgstr ""
+msgstr "Du kan derfor ikke låne eller reservere materialer fra biblioteket"
 
 #: 
 msgctxt "Blocked user"
@@ -1990,12 +1990,12 @@ msgstr "Du kan derfor ikke reservere, låne eller forny dine lån. Kontakt venli
 #: 
 msgctxt "Blocked user"
 msgid "Blocked reason O modal title"
-msgstr ""
+msgstr "Blokeret låner årsag O"
 
 #: 
 msgctxt "Blocked user"
 msgid "Blocked patron o body text"
-msgstr ""
+msgstr "Blokeret låner årsag O. Her skal stå en meningsfuld besked"
 
 #: 
 msgctxt "Blocked user"
