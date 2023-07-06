@@ -280,7 +280,7 @@ msgstr "Viser @itemsShown ud af @hitcount lån"
 #: 
 msgctxt "Loan list"
 msgid "show more"
-msgstr "Vis mere"
+msgstr "Vis flere"
 
 #: 
 msgctxt "Loan list (Aria)"
@@ -1895,7 +1895,7 @@ msgstr ""
 #: 
 msgctxt "Reservation list"
 msgid "show more"
-msgstr ""
+msgstr "Vis flere"
 
 #: 
 msgctxt "Reservation list"
@@ -2060,7 +2060,7 @@ msgstr "et al."
 #: 
 msgctxt "Favorites list"
 msgid "show more"
-msgstr "vis flere"
+msgstr "Vis flere"
 
 #: 
 msgctxt "Favorites list"
@@ -3587,7 +3587,7 @@ msgstr "Slet reserveringer"
 #: 
 msgctxt "Patron menu"
 msgid "show more"
-msgstr ""
+msgstr "Vis flere"
 
 #: 
 msgctxt "Patron menu"
