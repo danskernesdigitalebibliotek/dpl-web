@@ -1097,7 +1097,7 @@ msgstr ""
 #: 
 msgctxt "Search Header"
 msgid "Start typing in order to search"
-msgstr "Ha en god sommerferie alle sammen :D ... TEST 09:19"
+msgstr "Ha en god sommerferie alle sammen :D ... TEST 10:18"
 
 #: 
 msgctxt "Search Header"
@@ -3698,7 +3698,7 @@ msgstr "Materialenummer"
 #: 
 msgctxt "Patron menu"
 msgid "Loan date"
-msgstr "Dato for lån"
+msgstr "Udlånsdato"
 
 #: 
 msgctxt "Patron menu"
