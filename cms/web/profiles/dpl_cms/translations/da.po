@@ -1097,7 +1097,7 @@ msgstr ""
 #: 
 msgctxt "Search Header"
 msgid "Start typing in order to search"
-msgstr "Ha en god sommerferie alle sammen :D ... TEST 12:32"
+msgstr "Ha en god sommerferie alle sammen :D ... TEST 09:19"
 
 #: 
 msgctxt "Search Header"
@@ -3592,7 +3592,7 @@ msgstr "Vis flere"
 #: 
 msgctxt "Patron menu"
 msgid "Select @label"
-msgstr ""
+msgstr "Vælg @label"
 
 #. Den engelske tekst er misvisende, teksten vises ved Slet reserveringer
 #: 
@@ -3603,7 +3603,7 @@ msgstr "Vælg alle"
 #: 
 msgctxt "Patron menu"
 msgid "Can be returned to all branches of (library) libraries"
-msgstr ""
+msgstr "Kan afleveres på alle kommunens biblioteker"
 
 #: 
 msgctxt "Patron menu"
@@ -3613,7 +3613,7 @@ msgstr "Viser @itemsShown ud af @hitcount lån"
 #: 
 msgctxt "Patron menu"
 msgid "Due date @date"
-msgstr ""
+msgstr "Afleveres @date"
 
 #: 
 msgctxt "Patron menu"
@@ -3668,7 +3668,7 @@ msgstr "Forny"
 #: 
 msgctxt "Patron menu"
 msgid "Expires"
-msgstr ""
+msgstr "Udløber"
 
 #: 
 msgctxt "Patron menu"
@@ -3683,7 +3683,7 @@ msgstr "Denne pop-up viser detaljer for materialet og gør det muligt at forny m
 #: 
 msgctxt "Patron menu"
 msgid "Expired"
-msgstr ""
+msgstr "Udløbet"
 
 #: 
 msgctxt "Patron menu (Aria)"
@@ -3693,17 +3693,17 @@ msgstr "Luk pop-up med detaljevisning af materialet "
 #: 
 msgctxt "Patron menu"
 msgid "Material Item Number"
-msgstr ""
+msgstr "Materialenummer"
 
 #: 
 msgctxt "Patron menu"
 msgid "Loan date"
-msgstr ""
+msgstr "Dato for lån"
 
 #: 
 msgctxt "Patron menu"
 msgid "Due date"
-msgstr ""
+msgstr "Afleveringsdato"
 
 #: 
 msgctxt "Patron menu"
@@ -3748,12 +3748,12 @@ msgstr "Afhent senest"
 #: 
 msgctxt "Patron menu"
 msgid "Borrow before @date"
-msgstr ""
+msgstr "Lån før @date"
 
 #: 
 msgctxt "Patron menu"
 msgid "Status"
-msgstr ""
+msgstr "Status"
 
 #: 
 msgctxt "Patron menu"
@@ -3852,5 +3852,5 @@ msgstr "Fysiske reserveringer"
 #: 
 msgctxt "Patron menu"
 msgid "Digital reservations"
-msgstr ""
+msgstr "Digitale reserveringer"
 
