@@ -47,7 +47,7 @@ function dpl_cms_modules_installed(array $modules, bool $is_syncing): void {
 /**
  * Implements hook_batch_alter().
  */
-function dpl_cms_batch_alter(&$batch) { 
+function dpl_cms_batch_alter(&$batch) {
   if (empty($batch['sets'])) {
     return;
   }
@@ -75,8 +75,15 @@ function dpl_cms_batch_alter(&$batch) {
  * @see hook_batch_alter
  */
 function dpl_cms_locale_translation_batch_fetch_finished($success, $results) {
-  if ($success && $languages = array_values($result['languages'] ?? [])) {
+  if ($success && $languages = array_values($results['languages'] ?? [])) {
     _locale_refresh_translations($languages);
+    \Drupal::logger('dpl_cms')->notice("New translations were imported and translation cache was cleared.");
   }
+  // TODO: remove this logging when we are sure that
+  // the translation cache functionality works.
+  else {
+    \Drupal::logger('dpl_cms')->notice("No new translations were imported.");
+  }
+
   locale_translation_batch_fetch_finished($success, $results);
 }
