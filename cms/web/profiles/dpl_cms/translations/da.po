@@ -1775,7 +1775,7 @@ msgstr "Gå til eReolen"
 #: 
 msgctxt "Reservation list"
 msgid "Your reservation expires @date!"
-msgstr "Din reservering udløber @date!"
+msgstr "Din reservering udløber @date"
 
 #: 
 msgctxt "Reservation list"
