@@ -10,37 +10,37 @@ msgstr ""
 #: 
 msgctxt "Loan list (settings)"
 msgid "Basic settings"
-msgstr ""
+msgstr "Grundlæggende indstillinger"
 
 #: 
 msgctxt "Loan list (settings)"
 msgid "Fee page url"
-msgstr ""
+msgstr "Informationsside om takster 1"
 
 #: 
 msgctxt "Loan list (settings)"
 msgid "The link to the relevant fee page"
-msgstr ""
+msgstr "Her angives linket til informationsside om takster"
 
 #: 
 msgctxt "Loan list (settings)"
 msgid "Material overdue url"
-msgstr ""
+msgstr "Link til overskredne lån"
 
 #: 
 msgctxt "Loan list (settings)"
 msgid "The link to the material overdue page"
-msgstr ""
+msgstr "Link til siden med overskredne lån"
 
 #: 
 msgctxt "Loan list (settings)"
 msgid "Page size mobile"
-msgstr ""
+msgstr "Antal listeelemeter på side (mobil)"
 
 #: 
 msgctxt "Loan list (settings)"
 msgid "Page size desktop"
-msgstr ""
+msgstr "Antal listeelemeter på side (desktop)"
 
 #: 
 msgctxt "Loan list"
@@ -1122,62 +1122,62 @@ msgstr "Værk"
 #: 
 msgctxt "Library Agency Configuration"
 msgid "Disable SMS notifications for reservations"
-msgstr ""
+msgstr "Slå SMS notifikationer  for reserveringer fra"
 
 #: 
 msgctxt "Library Agency Configuration"
 msgid "If checked, SMS notifications for patrons will be disabled."
-msgstr ""
+msgstr "Hvis markeret, vil brugere ikke kunne modtage SMS notifikationer."
 
 #: 
 msgctxt "Library Agency Configuration"
 msgid "Pause reservation link"
-msgstr ""
+msgstr "Link til side om reserveringspause"
 
 #: 
 msgctxt "Library Agency Configuration"
 msgid "The link with infomation about reservations"
-msgstr ""
+msgstr "Her kan brugeren læse om at sætte sine reserveringer på pause"
 
 #: 
 msgctxt "Library Agency Configuration"
 msgid "Start date"
-msgstr ""
+msgstr "Startdato"
 
 #: 
 msgctxt "Library Agency Configuration"
 msgid "Pause reservation start date"
-msgstr ""
+msgstr "Startdato for at kunne sætte reserveringer på pause"
 
 #: 
 msgctxt "Library Agency Configuration"
 msgid "Thresholds"
-msgstr ""
+msgstr "Advarsler"
 
 #: 
 msgctxt "Library Agency Configuration"
 msgid "Set thresholds"
-msgstr ""
+msgstr "Angivelse af hvor mange dage før udløb bruger skal modtage en advarsel "
 
 #: 
 msgctxt "Library Agency Configuration"
 msgid "Excluded branches"
-msgstr ""
+msgstr "Blacklistede filialer"
 
 #: 
 msgctxt "Library Agency Configuration"
 msgid "Select which branches should be excluded in different parts of the system."
-msgstr ""
+msgstr "Vælg, hvilke filialer der ikke skal vises hvor, forskellige steder i systemet."
 
 #: 
 msgctxt "Library Agency Configuration"
 msgid "Search results"
-msgstr ""
+msgstr "Søge resultater"
 
 #: 
 msgctxt "Library Agency Configuration"
 msgid "Holdings belonging to the selected branches will not be shown in search results."
-msgstr ""
+msgstr "Beholdning på de valgte filialer vil ikke blive vist i søgeresultatet."
 
 #: 
 msgid "Availability"
@@ -1186,12 +1186,12 @@ msgstr "Tilgængelighed"
 #: 
 msgctxt "Library Agency Configuration"
 msgid "Holdings belonging to the selected branches will not considered when showing work availability."
-msgstr ""
+msgstr "Beholdning på de valgte filialer vil ikke blive vist som tilgængelige."
 
 #: 
 msgctxt "Library Agency Configuration"
 msgid "Selected branches will not be available as pickup locations for reservations."
-msgstr ""
+msgstr "Valgte filialer vil ikke kunne vælges som afhentningssted."
 
 #: 
 msgid "Configuration file"
@@ -1239,7 +1239,7 @@ msgstr ""
 
 #: 
 msgid "Loans settings"
-msgstr ""
+msgstr "Låneindstillinger"
 
 #: 
 msgid "DPL React User Token"
@@ -1275,11 +1275,11 @@ msgstr ""
 
 #: 
 msgid "Library Agency"
-msgstr ""
+msgstr "Biblioteksindstillinger"
 
 #: 
 msgid "General Settings"
-msgstr ""
+msgstr "Generelle indstillinger"
 
 #: 
 msgid "DPL Library Agency"
@@ -1303,7 +1303,7 @@ msgstr ""
 
 #: 
 msgid "FBS settings"
-msgstr ""
+msgstr "FBS indstillinger"
 
 #: 
 msgid "DPL FBS"
@@ -1323,7 +1323,7 @@ msgstr ""
 
 #: 
 msgid "Publizon settings"
-msgstr ""
+msgstr "Publizon indstillinger"
 
 #: 
 msgid "DPL Publizon"
@@ -1335,7 +1335,7 @@ msgstr ""
 
 #: 
 msgid "Mapp Intelligence settings"
-msgstr ""
+msgstr "Mapp indstillinger"
 
 #: 
 msgid "Mapp Intelligence"
@@ -1379,7 +1379,7 @@ msgstr ""
 
 #: 
 msgid "Reservations settings"
-msgstr ""
+msgstr "Reserveringsindstillinger"
 
 #: 
 msgid "DPL Reservations"
@@ -1485,7 +1485,7 @@ msgstr ""
 #: 
 msgctxt "Library Agency Configuration"
 msgid "Reservations"
-msgstr ""
+msgstr "Reserveringer"
 
 #: 
 msgctxt "DPL Config Import"
@@ -1525,7 +1525,7 @@ msgstr ""
 #: 
 msgctxt "Dpl Fbs"
 msgid "Basic settings"
-msgstr ""
+msgstr "Grundlæggende indstillinger"
 
 #: 
 msgctxt "Dpl Fbs"
@@ -1535,7 +1535,7 @@ msgstr ""
 #: 
 msgctxt "Dpl Publizon"
 msgid "Basic settings"
-msgstr ""
+msgstr "Grundlæggende indstillinger"
 
 #: 
 msgctxt "Dpl Publizon"
@@ -1590,17 +1590,17 @@ msgstr ""
 #: 
 msgctxt "Reservation list (settings)"
 msgid "Basic settings"
-msgstr ""
+msgstr "Grundlæggende indstillinger"
 
 #: 
 msgctxt "Reservation list (settings)"
 msgid "Page size mobile"
-msgstr ""
+msgstr "Antal listeelemeter på side (mobil)"
 
 #: 
 msgctxt "Reservation list (settings)"
 msgid "Page size desktop"
-msgstr ""
+msgstr "Antal listeelemeter på side (desktop)"
 
 #: 
 msgctxt "Reservation list"
@@ -1935,7 +1935,7 @@ msgstr "Viser resultater for \"@query\""
 #: 
 msgctxt "Library Agency Configuration"
 msgid "Fee page"
-msgstr ""
+msgstr "Takster for gebyrer og erstatninger"
 
 #: 
 msgctxt "Blocked user"
@@ -2084,19 +2084,19 @@ msgstr "Nummer"
 
 #: 
 msgid "Basic settings"
-msgstr ""
+msgstr "Grundlæggende indstillinger"
 
 #: 
 msgid "Page size mobile"
-msgstr ""
+msgstr "Antal listeelemeter på side (mobil)"
 
 #: 
 msgid "Page size desktop"
-msgstr ""
+msgstr "Antal listeelemeter på side (desktop)"
 
 #: 
 msgid "Favorites list settings"
-msgstr ""
+msgstr "Huskeliste indstillinger"
 
 #: 
 msgid "DPL favorites"
@@ -2124,7 +2124,7 @@ msgstr "Afleveringsdato @date"
 #: 
 msgctxt "Dashboard"
 msgid "Read more about fees"
-msgstr "Læs mere om grbyrer"
+msgstr "Læs mere om gebyrer"
 
 #: 
 msgctxt "Dashboard"
@@ -2214,17 +2214,17 @@ msgstr "Din side"
 #: 
 msgctxt "Dashboard (settings)"
 msgid "Basic settings"
-msgstr ""
+msgstr "Grundlæggende indstillinger"
 
 #: 
 msgctxt "Dashboard (settings)"
 msgid "Fees url"
-msgstr ""
+msgstr "Link til menupunktet Gebyrer & erstatninger"
 
 #: 
 msgctxt "Dashboard (settings)"
 msgid "Pay owed url"
-msgstr ""
+msgstr "Betalingslink"
 
 #: 
 msgctxt "Dashboard (settings)"
@@ -2254,12 +2254,12 @@ msgstr ""
 #: 
 msgctxt "Dashboard (settings)"
 msgid "Page size mobile"
-msgstr ""
+msgstr "Antal listeelemeter på side (mobil)"
 
 #: 
 msgctxt "Dashboard (settings)"
 msgid "Page size desktop"
-msgstr ""
+msgstr "Antal listeelemeter på side (desktop)"
 
 #: 
 msgid "Dashboard settings"
@@ -2827,11 +2827,11 @@ msgstr "Se vores takster"
 
 #: 
 msgid "Fees and Replacement costs URL"
-msgstr ""
+msgstr "Informationsside om takster 3"
 
 #: 
 msgid "File or URL containing the fees and replacement costs"
-msgstr ""
+msgstr "Informationsside om takster 2"
 
 #: 
 msgid "Available payment types url"
@@ -2879,7 +2879,7 @@ msgstr ""
 
 #: 
 msgid "Fees settings"
-msgstr ""
+msgstr "Gebyrindstillinger"
 
 #: 
 msgctxt "Reservation list"
@@ -2907,12 +2907,12 @@ msgstr ""
 #: 
 msgctxt "Library Agency Configuration"
 msgid "Interest periods for reservation"
-msgstr ""
+msgstr "Interesseperiode for reserveringer"
 
 #: 
 msgctxt "Library Agency Configuration"
 msgid "Allow removing ready reservations"
-msgstr ""
+msgstr "Tillad sletning af opfyldte reserveringer"
 
 #: 
 msgid "DPL Patron redirect"
@@ -3467,12 +3467,12 @@ msgstr "Slet reserveringer"
 #: 
 msgctxt "Library Agency Configuration"
 msgid "Ereolen link"
-msgstr ""
+msgstr "Link til blå titler på eReolen"
 
 #: 
 msgctxt "Library Agency Configuration"
 msgid "My page in ereolen"
-msgstr ""
+msgstr "Min side på eReolen"
 
 #: 
 msgctxt "Reservation list"
@@ -3547,12 +3547,12 @@ msgstr "Mellemværender"
 #: 
 msgctxt "Menu (settings)"
 msgid "Page size mobile"
-msgstr ""
+msgstr "Antal listeelemeter på side (mobil)"
 
 #: 
 msgctxt "Menu (settings)"
 msgid "Page size desktop"
-msgstr ""
+msgstr "Antal listeelemeter på side (desktop)"
 
 #: 
 msgctxt "Patron menu (Aria)"
