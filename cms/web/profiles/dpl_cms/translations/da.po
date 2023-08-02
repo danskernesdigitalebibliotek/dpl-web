@@ -677,7 +677,7 @@ msgstr "Luk pop-up med Infomedia"
 #: 
 msgctxt "Work Page"
 msgid "Infomedia modal screen reader description"
-msgstr ""
+msgstr "Infomedia pop-up beskrivelse til skærmlæser"
 
 #: 
 msgctxt "Work Page"
@@ -1203,7 +1203,7 @@ msgstr "Upload"
 
 #: 
 msgid "Library token"
-msgstr ""
+msgstr "Bibliotekstoken"
 
 #: 
 msgid "Token available"
@@ -1227,7 +1227,7 @@ msgstr ""
 
 #: 
 msgid "Get campaign matching search result facets"
-msgstr ""
+msgstr "Hent kampagne som matcher facetter fra søgeresultatet"
 
 #: 
 msgid "DPL loans"
@@ -1247,7 +1247,7 @@ msgstr ""
 
 #: 
 msgid "DDB React"
-msgstr ""
+msgstr " "
 
 #: 
 msgid "General handling of importing and using the DDB react components as libraries"
@@ -1545,7 +1545,7 @@ msgstr ""
 #: 
 msgctxt "Dpl Mapp"
 msgid "Domain"
-msgstr ""
+msgstr "Domæne"
 
 #: 
 msgctxt "Dpl Mapp"
@@ -2030,7 +2030,7 @@ msgstr ""
 
 #: 
 msgid "If a user has blocked status e, this link appears in the modal"
-msgstr ""
+msgstr "Hvis en bruger er blokeret pga. status e (overskredet gebyrgrænse) vises dette link i beskeden til brugeren"
 
 #: 
 msgctxt "Favorites list"
@@ -2624,12 +2624,12 @@ msgstr "Indstillinger for brugerprofil"
 #: 
 msgctxt "dpl_instant_loan"
 msgid "Enabled"
-msgstr ""
+msgstr "Tilvælg"
 
 #: 
 msgctxt "dpl_instant_loan"
 msgid "Should materials available for instant loans be promoted to patrons?"
-msgstr ""
+msgstr "Skal materialer som er tilgængelige som strakslån vises til brugerne?"
 
 #: 
 msgctxt "dpl_instant_loan"
@@ -2649,7 +2649,7 @@ msgstr "Varsel"
 #: 
 msgctxt "dpl_instant_loan"
 msgid "The minimum number of materials which must be available for instant loan at a library branch to notify patrons of the option when making reservations."
-msgstr ""
+msgstr "Det mindste antal materialer, der skal være tilgængelige som strakslån på en filial, før brugerne bliver gjort opmærksomme på muligheden i reserveringsflowet."
 
 #: 
 msgid "Instant Loan"
@@ -2836,7 +2836,7 @@ msgstr "Oplysningsside om takster 2"
 
 #: 
 msgid "Available payment types url"
-msgstr ""
+msgstr "Betalingsmuligheder"
 
 #: 
 msgid "Terms of trade text"
@@ -2844,19 +2844,19 @@ msgstr "Betalingsbetingelser"
 
 #: 
 msgid "Terms of trade redirect url"
-msgstr ""
+msgstr "Betalingsbetingelser"
 
 #: 
 msgid "Payment options image"
-msgstr ""
+msgstr "Ikoner for betalingsmuligheder"
 
 #: 
 msgid "Image containing the available payment options (300x35)"
-msgstr ""
+msgstr "Billede som indeholder betalingsmuligheder (300 x 35px)"
 
 #: 
 msgid "Payment overview url"
-msgstr ""
+msgstr "URL til Mit betalingsoverblik"
 
 #: 
 msgid "Intro text"
@@ -2903,7 +2903,7 @@ msgstr "Sider"
 
 #: 
 msgid "Specify pages by using their paths. Enter one path per line. The '*' character is a wildcard. An example path is %user-wildcard for every user page. %front is the front page."
-msgstr ""
+msgstr "Angiv sider med en sti. Angiv en sti pr. kodelinie. Tegnet * er et wildcard. Et eksempel på en sti er %user-wildcard for hver brugerside. %front er forsiden."
 
 #: 
 msgctxt "Library Agency Configuration"
@@ -3063,7 +3063,7 @@ msgstr ""
 
 #: 
 msgid "Enable registration of new patrons"
-msgstr ""
+msgstr "Tilvælg registrering af nye brugere"
 
 #: 
 msgid "Patron registration information"
