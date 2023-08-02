@@ -15,12 +15,12 @@ msgstr "Grundlæggende indstillinger"
 #: 
 msgctxt "Loan list (settings)"
 msgid "Fee page url"
-msgstr "Informationsside om takster 1"
+msgstr "Oplysningsside om takster 1"
 
 #: 
 msgctxt "Loan list (settings)"
 msgid "The link to the relevant fee page"
-msgstr "Her angives linket til informationsside om takster"
+msgstr "Her angives linket til oplysningsside om takster"
 
 #: 
 msgctxt "Loan list (settings)"
@@ -1152,12 +1152,12 @@ msgstr "Startdato for at kunne sætte reserveringer på pause"
 #: 
 msgctxt "Library Agency Configuration"
 msgid "Thresholds"
-msgstr "Advarsler"
+msgstr "Varsler"
 
 #: 
 msgctxt "Library Agency Configuration"
 msgid "Set thresholds"
-msgstr "Angivelse af hvor mange dage før udløb bruger skal modtage en advarsel "
+msgstr "Angivelse af hvor mange dage før udløb bruger skal modtage et varsel "
 
 #: 
 msgctxt "Library Agency Configuration"
@@ -2263,7 +2263,7 @@ msgstr "Antal listeelemeter på side (desktop)"
 
 #: 
 msgid "Dashboard settings"
-msgstr ""
+msgstr "Indstillinger for Din side (Dashboard)"
 
 #: 
 msgid "DPL dashboard"
@@ -2334,16 +2334,16 @@ msgstr "Fordi du har lånt @title kan du måske også lide"
 #: 
 msgctxt "Recommender (settings)"
 msgid "Search text"
-msgstr ""
+msgstr "Søgetekst"
 
 #: 
 msgctxt "Recommender (settings)"
 msgid "Search text for recommender when no loan/no reservation"
-msgstr ""
+msgstr "Søgetekst for anbefalinger hvis bruger har 0 lån/reserveringer"
 
 #: 
 msgid "Recommender settings"
-msgstr ""
+msgstr "Indstillinger for anbefalinger"
 
 #: 
 msgid "DPL recommender"
@@ -2590,11 +2590,12 @@ msgstr "Du har brugt @this ud af din kvote på @that e-bøger"
 
 #: 
 msgid "Delete patron link"
-msgstr ""
+msgstr "Slet bruger (link)"
 
 #: 
 msgid "Link to a page where it is possible to delete patron"
-msgstr ""
+msgstr "\n"
+"Link til oplysningsside om at få slettet sin bruger"
 
 #: 
 msgid "Ereolen always available"
@@ -2618,7 +2619,7 @@ msgstr ""
 
 #: 
 msgid "Patron page settings"
-msgstr ""
+msgstr "Indstillinger for brugerprofil"
 
 #: 
 msgctxt "dpl_instant_loan"
@@ -2643,7 +2644,7 @@ msgstr ""
 #: 
 msgctxt "dpl_instant_loan"
 msgid "Threshold"
-msgstr ""
+msgstr "Varsel"
 
 #: 
 msgctxt "dpl_instant_loan"
@@ -2660,7 +2661,7 @@ msgstr ""
 
 #: 
 msgid "Instant loan settings"
-msgstr ""
+msgstr "Indstillinger for strakslån"
 
 #: 
 msgctxt "Favorites list material component"
@@ -2827,11 +2828,11 @@ msgstr "Se vores takster"
 
 #: 
 msgid "Fees and Replacement costs URL"
-msgstr "Informationsside om takster 3"
+msgstr "Oplysningsside om takster 3"
 
 #: 
 msgid "File or URL containing the fees and replacement costs"
-msgstr "Informationsside om takster 2"
+msgstr "Oplysningsside om takster 2"
 
 #: 
 msgid "Available payment types url"
@@ -3467,7 +3468,7 @@ msgstr "Slet reserveringer"
 #: 
 msgctxt "Library Agency Configuration"
 msgid "Ereolen link"
-msgstr "Link til blå titler på eReolen"
+msgstr "eReolen link"
 
 #: 
 msgctxt "Library Agency Configuration"
