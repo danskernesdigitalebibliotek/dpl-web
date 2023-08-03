@@ -1235,7 +1235,7 @@ msgstr "DPL lån"
 
 #: 
 msgid "Handle the user profile loan pages"
-msgstr "Indstillinger for brugerprofilens låneoversigt"
+msgstr "Håndter indstillinger for brugerprofilens låneoversigt"
 
 #: 
 msgid "Loans settings"
@@ -1331,7 +1331,7 @@ msgstr "DPL Publizon"
 
 #: 
 msgid "Handle publizon configuration"
-msgstr "Indstillinger for Publizon"
+msgstr "Håndter indstillinger for Publizon"
 
 #: 
 msgid "Mapp Intelligence settings"
@@ -1387,7 +1387,7 @@ msgstr "DPL Reserveringer"
 
 #: 
 msgid "Handle the user profile reservations pages"
-msgstr "Indstillinger for brugerprofilens reserveringsoversigt"
+msgstr "Håndter indstillinger for brugerprofilens reserveringsoversigt"
 
 #: 
 msgid "Skip to main content"
@@ -1835,7 +1835,7 @@ msgstr "Denne pop-up gør det muligt at sætte dine fysiske reserveringer på pa
 #: 
 msgctxt "Reservation list"
 msgid "Pause your reservations early, since reservations that are already being processed, will not be paused."
-msgstr "Sæt fysiske reserveringer på pause i god tid, da reserveringer der allerede bliver behandlet ikke bliver sat på pause."
+msgstr "Sæt fysiske reserveringer på pause i god tid, da reserveringer, der allerede bliver behandlet, ikke bliver sat på pause."
 
 #: 
 msgctxt "Reservation list"
@@ -2104,7 +2104,7 @@ msgstr "DPL Huskeliste"
 
 #: 
 msgid "Handle the favorites list"
-msgstr "Indstillinger for huskeliste"
+msgstr "Håndter indstillinger for huskeliste"
 
 #: 
 msgctxt "Dashboard"
@@ -2271,7 +2271,7 @@ msgstr "DPL dashboard"
 
 #: 
 msgid "Handle the user profile dashboard page"
-msgstr "Indstillinger for brugerens dashboard (Din side)"
+msgstr "Håndter indstillinger for brugerens dashboard (Din side)"
 
 #: 
 msgctxt "Something similar"
@@ -2615,7 +2615,7 @@ msgstr "DPL brugerprofil"
 
 #: 
 msgid "Handle the patron page"
-msgstr "Indstillinger for brugeroprettelse"
+msgstr "Håndter indstillinger for brugeroprettelse"
 
 #: 
 msgid "Patron page settings"
@@ -2689,7 +2689,7 @@ msgstr "DPL huskeliste materialekomponent"
 
 #: 
 msgid "Handle the favorites list material component pages"
-msgstr "Indstillinger for huskeliste komponent"
+msgstr "Håndter indstillinger for huskeliste komponent"
 
 #: 
 msgctxt "Fees list"
@@ -2876,7 +2876,7 @@ msgstr "DPL gebyrer"
 
 #: 
 msgid "Handle the user profile fees page"
-msgstr "Indstillinger for brugerprofilens gebyrside"
+msgstr "Håndter indstillinger for brugerprofilens gebyrside"
 
 #: 
 msgid "Fees settings"
@@ -3208,7 +3208,7 @@ msgstr "DPL menu"
 
 #: 
 msgid "Handle the patron user menu"
-msgstr "Indstillinger for brugermenu"
+msgstr "Håndter indstillinger for brugermenuen"
 
 #: 
 msgctxt "Search Result"
