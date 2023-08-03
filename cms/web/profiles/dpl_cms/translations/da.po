@@ -2018,11 +2018,11 @@ msgstr ""
 
 #: 
 msgid "Redirect blocked user link"
-msgstr ""
+msgstr "Link til side som blokeret bruger sendes videre til"
 
 #: 
 msgid "The link to redirect the blocked user to"
-msgstr ""
+msgstr "Linket som blokeret bruger sendes videre til"
 
 #: 
 msgid "Blocked user link for modal"
@@ -2615,7 +2615,7 @@ msgstr "DPL brugerprofil"
 
 #: 
 msgid "Handle the patron page"
-msgstr ""
+msgstr "Indstillinger for brugeroprettelse"
 
 #: 
 msgid "Patron page settings"
@@ -2734,7 +2734,7 @@ msgstr "Gebyrer & erstatninger"
 #: 
 msgctxt "Fees list"
 msgid "You will be redirected to Mit Betalingsoverblik."
-msgstr "Du vil blive videresendt til \"Mit Betalingsoverblik\""
+msgstr "Du vil blive sendt videre til \"Mit Betalingsoverblik\""
 
 #: 
 msgctxt "Fees list"
@@ -2890,12 +2890,12 @@ msgstr "Læs mere om hvordan du sætter reserveringer på pause og hvad det bety
 #: 
 msgctxt "Dpl patron redirect"
 msgid "Redirect settings"
-msgstr "Redirect settings / Indstillinger for videresendelse"
+msgstr "Redirect settings / Indstillinger for viderestilling"
 
 #: 
 msgctxt "Dpl patron redirect"
 msgid "Set the paths that requires the patron to be logged in and if the user is not logged in an redirect to Adgangsplatformen will automatically be enforced."
-msgstr "Angiv de stier som kræver at brugeren er logget ind, og hvis brugeren ikke er logget ind sendes denne automatisk videre til Adgangsplatformen"
+msgstr "Angiv de stier som kræver at brugeren er logget ind, og hvis brugeren ikke er logget ind sendes denne automatisk videre til Adgangsplatformen."
 
 #: 
 msgid "Pages"
@@ -2921,11 +2921,11 @@ msgstr "DPL Patron redirect / DPL bruger redirect"
 
 #: 
 msgid "Redirect patron to login if required."
-msgstr ""
+msgstr "Send bruger til login hvis påkrævet"
 
 #: 
 msgid "Patron redirect settings"
-msgstr ""
+msgstr "Indstillinger for viderestilling af bruger"
 
 #: 
 msgid "Log in with @client_title"
@@ -2933,19 +2933,19 @@ msgstr "Log ind med @client_title"
 
 #: 
 msgid "Minimum age to allow self registration"
-msgstr ""
+msgstr "Minimumsalder for tilladelse til selvoprettelse"
 
 #: 
 msgid "Redirect on create"
-msgstr ""
+msgstr "Send til denne side ved oprettelse"
 
 #: 
 msgid "Redirect to this on user successful created"
-msgstr ""
+msgstr "Send bruger til denne side ved succesfuld oprettelse"
 
 #: 
 msgid "Information page"
-msgstr ""
+msgstr "Informationsside"
 
 #: 
 msgctxt "Create patron"
