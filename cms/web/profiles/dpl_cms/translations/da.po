@@ -1203,11 +1203,11 @@ msgstr "Upload"
 
 #: 
 msgid "Library token"
-msgstr "Bibliotekstoken"
+msgstr "Biblioteks token"
 
 #: 
 msgid "Token available"
-msgstr ""
+msgstr "Token tilgængelig"
 
 #: 
 msgid "No valid token available. <a href=\":url\">Run cron</a> to retrieve a new token."
@@ -1235,7 +1235,7 @@ msgstr "DPL lån"
 
 #: 
 msgid "Handle the user profile loan pages"
-msgstr ""
+msgstr "Indstillinger for brugerprofilens låneoversigt"
 
 #: 
 msgid "Loans settings"
@@ -1243,15 +1243,15 @@ msgstr "Låneindstillinger"
 
 #: 
 msgid "DPL React User Token"
-msgstr "DPL React User Token"
+msgstr "DPL React bruger token"
 
 #: 
 msgid "DDB React"
-msgstr " "
+msgstr "DPL React"
 
 #: 
 msgid "General handling of importing and using the DDB react components as libraries"
-msgstr ""
+msgstr "Generel håndtering af import og brug af DPL react komponenter som biblioteker"
 
 #: 
 msgid "DPL Url Proxy"
@@ -1259,7 +1259,7 @@ msgstr "DPL (Danish Public Library)  URL proxy"
 
 #: 
 msgid "Module for generating specially formatted external urls"
-msgstr ""
+msgstr "Modul til at generere specielt formatterede eksterne URL'er"
 
 #: 
 msgid "Configure proxy urls"
@@ -1287,19 +1287,19 @@ msgstr "DPL Library Agency"
 
 #: 
 msgid "Module for handling library agency configuration and functionality"
-msgstr ""
+msgstr "Modul til at håndtere indstillinger for biblioteket og funktionalitet"
 
 #: 
 msgid "Upload configuration"
-msgstr ""
+msgstr "Upload indstillinger / Upload configuration"
 
 #: 
 msgid "Configuration Import"
-msgstr ""
+msgstr "Import af indstillinger / Configuration Import"
 
 #: 
 msgid "Import configuration from YAML files."
-msgstr ""
+msgstr "Indstillinger for import af YAML filer."
 
 #: 
 msgid "FBS settings"
@@ -1331,7 +1331,7 @@ msgstr "DPL Publizon"
 
 #: 
 msgid "Handle publizon configuration"
-msgstr ""
+msgstr "Indstillinger for Publizon"
 
 #: 
 msgid "Mapp Intelligence settings"
@@ -1355,11 +1355,11 @@ msgstr "Indeholder eksempelindhold til demosider."
 
 #: 
 msgid "DPL Library Token"
-msgstr "DPL Library token"
+msgstr "DPL biblioteks token"
 
 #: 
 msgid "Handles fetching and storage of a library token"
-msgstr ""
+msgstr "Håndterer hentning og lagring af en biblioteks token"
 
 #: 
 msgid "DPL Login"
@@ -1367,7 +1367,7 @@ msgstr "DPL Login"
 
 #: 
 msgid "Handles authentication/login via Adgangsplatformen"
-msgstr ""
+msgstr "Håndterer autentificering/login via Adgangsplatformen"
 
 #: 
 msgid "Dpl Login Logout Route"
@@ -1375,7 +1375,7 @@ msgstr "DPL Login Logout Route"
 
 #: 
 msgid "Login via Adgangsplatformen"
-msgstr ""
+msgstr "Login via Adgangsplatformen"
 
 #: 
 msgid "Reservations settings"
@@ -1387,7 +1387,7 @@ msgstr "DPL Reserveringer"
 
 #: 
 msgid "Handle the user profile reservations pages"
-msgstr ""
+msgstr "Indstillinger for brugerprofilens reserveringsoversigt"
 
 #: 
 msgid "Skip to main content"
@@ -1495,12 +1495,12 @@ msgstr ""
 #: 
 msgctxt "DPL Config Import"
 msgid "Unable to handle the uploaded file"
-msgstr ""
+msgstr "Ude af stand til at indlæse den uploadede fil"
 
 #: 
 msgctxt "DPL Config Import"
 msgid "Unable to parse YAML file: %reason"
-msgstr ""
+msgstr "Ude af stand til at parse YAML fil: %reason"
 
 #: 
 msgctxt "DPL Config Import"
@@ -2014,7 +2014,7 @@ msgstr "Denne pop-up advarer dig om at din bruger er blevet blokeret"
 
 #: 
 msgid "Blocked user"
-msgstr ""
+msgstr "Blokeret bruger"
 
 #: 
 msgid "Redirect blocked user link"
@@ -2026,7 +2026,7 @@ msgstr "Linket som blokeret bruger sendes videre til"
 
 #: 
 msgid "Blocked user link for modal"
-msgstr ""
+msgstr "Blokeret bruger link til modal"
 
 #: 
 msgid "If a user has blocked status e, this link appears in the modal"
@@ -2104,7 +2104,7 @@ msgstr "DPL Huskeliste"
 
 #: 
 msgid "Handle the favorites list"
-msgstr ""
+msgstr "Indstillinger for huskeliste"
 
 #: 
 msgctxt "Dashboard"
@@ -2271,7 +2271,7 @@ msgstr "DPL dashboard"
 
 #: 
 msgid "Handle the user profile dashboard page"
-msgstr ""
+msgstr "Indstillinger for brugerens dashboard (Din side)"
 
 #: 
 msgctxt "Something similar"
@@ -2304,7 +2304,7 @@ msgstr "DPL noget der ligner"
 
 #: 
 msgid "Something similar component"
-msgstr ""
+msgstr "Komponenten \"Noget der ligner\""
 
 #: 
 msgctxt "Recommender"
@@ -2351,7 +2351,7 @@ msgstr "DPL recommender"
 
 #: 
 msgid "recommender component"
-msgstr ""
+msgstr "Komponent til anbefalinger (recommender)"
 
 #: 
 msgctxt "Patron page (aria)"
@@ -2653,11 +2653,11 @@ msgstr "Det mindste antal materialer, der skal være tilgængelige som strakslå
 
 #: 
 msgid "Instant Loan"
-msgstr ""
+msgstr "Strakslån"
 
 #: 
 msgid "Supports promoting materials available for instant loans to patrons."
-msgstr ""
+msgstr "Understøtter visning af materialer som kan lånes med det samme (strakslån)"
 
 #: 
 msgid "Instant loan settings"
@@ -2689,7 +2689,7 @@ msgstr "DPL huskeliste materialekomponent"
 
 #: 
 msgid "Handle the favorites list material component pages"
-msgstr ""
+msgstr "Indstillinger for huskeliste komponent"
 
 #: 
 msgctxt "Fees list"
@@ -2876,7 +2876,7 @@ msgstr "DPL gebyrer"
 
 #: 
 msgid "Handle the user profile fees page"
-msgstr ""
+msgstr "Indstillinger for brugerprofilens gebyrside"
 
 #: 
 msgid "Fees settings"
@@ -2975,12 +2975,12 @@ msgstr "Opret bruger"
 #: 
 msgctxt "Create patron"
 msgid "This SSN is invalid"
-msgstr ""
+msgstr "Denne SSN er ugyldig"
 
 #: 
 msgctxt "Create patron"
 msgid "Invalid SSN"
-msgstr ""
+msgstr "Ugyldig SSN"
 
 #: 
 msgctxt "Create patron"
@@ -2995,12 +2995,12 @@ msgstr "E-mail"
 #: 
 msgctxt "Create patron"
 msgid "contact info body text"
-msgstr ""
+msgstr "Kontaktinformation brødtekst"
 
 #: 
 msgctxt "Create patron"
 msgid "contact info header text"
-msgstr ""
+msgstr "Kontaktoplysninger overskrift"
 
 #: 
 msgctxt "Create patron"
@@ -3059,7 +3059,7 @@ msgstr "Intet valgt"
 
 #: 
 msgid "Patron registration"
-msgstr ""
+msgstr "Brugeroprettelse"
 
 #: 
 msgid "Enable registration of new patrons"
@@ -3067,11 +3067,11 @@ msgstr "Tilvælg registrering af nye brugere"
 
 #: 
 msgid "Patron registration information"
-msgstr ""
+msgstr "Information om brugeroprettelse"
 
 #: 
 msgid "Patron nem-login authentication"
-msgstr ""
+msgstr "Bruger autentificering med Nem-login"
 
 #: 
 msgid "Patron create"
@@ -3170,7 +3170,7 @@ msgstr ""
 #: 
 msgctxt "Patron menu"
 msgid "The user modal, log in or create a user"
-msgstr ""
+msgstr "Brugermodal til at logge ind eller oprette bruger"
 
 #: 
 msgctxt "Patron menu"
@@ -3208,7 +3208,7 @@ msgstr "DPL menu"
 
 #: 
 msgid "Handle the patron user menu"
-msgstr ""
+msgstr "Indstillinger for brugermenu"
 
 #: 
 msgctxt "Search Result"
@@ -3278,7 +3278,7 @@ msgstr "Du har lånt @count ud af @limit mulige e-lydbøger denne måned"
 #: 
 msgctxt "Search Header"
 msgid "Input must contain at least one non-whitespace character."
-msgstr ""
+msgstr "Input skal indehold minimum ét tegn"
 
 #: 
 msgctxt "Dashboard (aria)"
