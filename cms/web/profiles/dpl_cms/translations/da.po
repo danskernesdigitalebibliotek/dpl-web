@@ -2860,11 +2860,11 @@ msgstr "URL til Mit betalingsoverblik"
 
 #: 
 msgid "Intro text"
-msgstr ""
+msgstr "Beskrivelse"
 
 #: 
 msgid "Display an intro-text below the headline"
-msgstr ""
+msgstr "Vis en beskrivelse under overskriften"
 
 #: 
 msgid "Fees and replacement costs are handled through the new system \"Mit betalingsoverblik."
