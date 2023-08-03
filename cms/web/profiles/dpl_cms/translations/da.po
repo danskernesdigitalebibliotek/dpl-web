@@ -289,15 +289,15 @@ msgstr "Gå til detaljevisning af @label "
 
 #: 
 msgid "React DDB Library"
-msgstr ""
+msgstr "React DPL Library"
 
 #: 
 msgid "Library is present"
-msgstr ""
+msgstr "Library er "
 
 #: 
 msgid "DDB React library is missing (@dir)"
-msgstr ""
+msgstr "DPL React library mangler (@dir) "
 
 #: 
 msgctxt "Search Result"
@@ -587,7 +587,7 @@ msgstr "Find på hylden"
 #: 
 msgctxt "Work Page"
 msgid "Find on shelf expand button explanation"
-msgstr ""
+msgstr "Forklarende tekst til \"Find på hylden\" knap"
 
 #: 
 msgctxt "Work Page"
@@ -627,7 +627,7 @@ msgstr "Vælg årgang"
 #: 
 msgctxt "Work Page"
 msgid "Reservation modal screen reader description"
-msgstr ""
+msgstr "Beskrivelse af reserverings pop-up til skærmlæsere"
 
 #: 
 msgctxt "Work Page"
@@ -1047,7 +1047,7 @@ msgstr "Søg"
 #: 
 msgctxt "Search Header"
 msgid "Search header input"
-msgstr ""
+msgstr "Søgefelt input"
 
 #: 
 msgctxt "Search Header"
@@ -1211,11 +1211,11 @@ msgstr ""
 
 #: 
 msgid "No valid token available. <a href=\":url\">Run cron</a> to retrieve a new token."
-msgstr ""
+msgstr "Gyldig token er ikke tilgængelig. <a href=\":url\">Run cron</a> for at hente en ny token."
 
 #: 
 msgid "Adgangsplatformen"
-msgstr ""
+msgstr "Adgangsplatformen"
 
 #: 
 msgid "Integration configured"
@@ -1223,7 +1223,7 @@ msgstr ""
 
 #: 
 msgid "Generate proxy url"
-msgstr ""
+msgstr "Generate proxy URL / Generer proxy URL"
 
 #: 
 msgid "Get campaign matching search result facets"
@@ -1231,7 +1231,7 @@ msgstr "Hent kampagne som matcher facetter fra søgeresultatet"
 
 #: 
 msgid "DPL loans"
-msgstr ""
+msgstr "DPL lån"
 
 #: 
 msgid "Handle the user profile loan pages"
@@ -1243,7 +1243,7 @@ msgstr "Låneindstillinger"
 
 #: 
 msgid "DPL React User Token"
-msgstr ""
+msgstr "DPL React User Token"
 
 #: 
 msgid "DDB React"
@@ -1255,7 +1255,7 @@ msgstr ""
 
 #: 
 msgid "DPL Url Proxy"
-msgstr ""
+msgstr "DPL (Danish Public Library)  URL proxy"
 
 #: 
 msgid "Module for generating specially formatted external urls"
@@ -1263,15 +1263,15 @@ msgstr ""
 
 #: 
 msgid "Configure proxy urls"
-msgstr ""
+msgstr "Opsæt proxy URL'er"
 
 #: 
 msgid "DPL React Apps"
-msgstr ""
+msgstr "DPL React apps"
 
 #: 
 msgid "For integration of dpl_react apps on the site."
-msgstr ""
+msgstr "For integering af dpl_react apps på hjemmesiden."
 
 #: 
 msgid "Library Agency"
@@ -1283,7 +1283,7 @@ msgstr "Generelle indstillinger"
 
 #: 
 msgid "DPL Library Agency"
-msgstr ""
+msgstr "DPL Library Agency"
 
 #: 
 msgid "Module for handling library agency configuration and functionality"
@@ -1307,15 +1307,15 @@ msgstr "FBS indstillinger"
 
 #: 
 msgid "DPL FBS"
-msgstr ""
+msgstr "DPL FBS"
 
 #: 
 msgid "Handle FBS configuration"
-msgstr ""
+msgstr "Håndter indstillinger for FBS"
 
 #: 
 msgid "dpl_campaign"
-msgstr ""
+msgstr "dpl_campaign"
 
 #: 
 msgid "A module that deliveres possibility for campaign CRUD and integration with Dpl React Apps"
@@ -1327,7 +1327,7 @@ msgstr "Publizon indstillinger"
 
 #: 
 msgid "DPL Publizon"
-msgstr ""
+msgstr "DPL Publizon"
 
 #: 
 msgid "Handle publizon configuration"
@@ -1335,27 +1335,27 @@ msgstr ""
 
 #: 
 msgid "Mapp Intelligence settings"
-msgstr "Mapp indstillinger"
+msgstr "Mapp Intelligence indstillinger"
 
 #: 
 msgid "Mapp Intelligence"
-msgstr ""
+msgstr "Mapp Intelligence"
 
 #: 
 msgid "Integration with Mapp Intelligence to track site usage."
-msgstr ""
+msgstr "Integration med Mapp Intelligence for at tracke brugen af hjemmesiden"
 
 #: 
 msgid "Example content for DPL CMS"
-msgstr ""
+msgstr "Eksempelindhold 2for DPL CMS"
 
 #: 
 msgid "Provides example content for demo sites."
-msgstr ""
+msgstr "Indeholder eksempelindhold til demosider."
 
 #: 
 msgid "DPL Library Token"
-msgstr ""
+msgstr "DPL Library token"
 
 #: 
 msgid "Handles fetching and storage of a library token"
@@ -1363,7 +1363,7 @@ msgstr ""
 
 #: 
 msgid "DPL Login"
-msgstr ""
+msgstr "DPL Login"
 
 #: 
 msgid "Handles authentication/login via Adgangsplatformen"
@@ -1371,7 +1371,7 @@ msgstr ""
 
 #: 
 msgid "Dpl Login Logout Route"
-msgstr ""
+msgstr "DPL Login Logout Route"
 
 #: 
 msgid "Login via Adgangsplatformen"
@@ -1383,7 +1383,7 @@ msgstr "Reserveringsindstillinger"
 
 #: 
 msgid "DPL Reservations"
-msgstr ""
+msgstr "DPL Reserveringer"
 
 #: 
 msgid "Handle the user profile reservations pages"
@@ -1399,7 +1399,7 @@ msgstr "Roman"
 
 #: 
 msgid "Custom theme for the Danish Public Libraries"
-msgstr ""
+msgstr "Standardtema for Folkebibliotekernes CMS"
 
 #: 
 msgctxt "Url Proxy"
@@ -1409,33 +1409,33 @@ msgstr ""
 #: 
 msgctxt "Url Proxy"
 msgid "This configuration form is for administering proxy url generation."
-msgstr ""
+msgstr "Denne formular er til administration af proxy URL'er for at give adgang til e-ressourcer."
 
 #: 
 msgctxt "Url Proxy"
 msgid "Proxy server URL prefix"
-msgstr ""
+msgstr "Præfiks til proxy-serverens URL"
 
 #: 
 msgctxt "Url Proxy"
 msgid "The prefix to use for proxy server URLs. This is the part of the URL\n"
 "        that comes before the hostname"
-msgstr ""
+msgstr "Præfikset er den del af URL'en, som kommer før værtsnavnet (hostname)"
 
 #: 
 msgctxt "Url Proxy"
 msgid "Hostnames"
-msgstr ""
+msgstr "Hostnames / Værtsnavne"
 
 #: 
 msgctxt "Url Proxy"
 msgid "Host configuration"
-msgstr ""
+msgstr "Opsætning af værtsnavne"
 
 #: 
 msgctxt "Url Proxy"
 msgid "Hostname"
-msgstr ""
+msgstr "Hostname / Værtsnavn"
 
 #: 
 msgctxt "Url Proxy"
@@ -1445,42 +1445,42 @@ msgstr ""
 #: 
 msgctxt "Url Proxy"
 msgid "Regular expression"
-msgstr ""
+msgstr "Regular expression / Regulært udtryk"
 
 #: 
 msgctxt "Url Proxy"
 msgid "Use regular expression to substitut parts of the url, e.g. \"<em>%regex</em>\"."
-msgstr ""
+msgstr "Brug et regulært udtryk som erstatning for dele af URL'en, fx. \"<em>%regex</em>\"."
 
 #: 
 msgctxt "Url Proxy"
 msgid "Replacement"
-msgstr ""
+msgstr "Replacement / Erstatning"
 
 #: 
 msgctxt "Url Proxy"
 msgid "The replacement value for the regular expression."
-msgstr ""
+msgstr "Erstatning for det regulære udtryk."
 
 #: 
 msgctxt "Url Proxy"
 msgid "Do not use proxy prefix for this hostname"
-msgstr ""
+msgstr "Brug ikke præfiks for dette værtnavn/ hostname"
 
 #: 
 msgctxt "Url Proxy"
 msgid "Remove this"
-msgstr ""
+msgstr "Fjern denne"
 
 #: 
 msgctxt "Url Proxy"
 msgid "Add one more"
-msgstr ""
+msgstr "Tilføj en mere"
 
 #: 
 msgctxt "Url Proxy"
 msgid "Submit"
-msgstr ""
+msgstr "Gem"
 
 #: 
 msgctxt "Library Agency Configuration"
@@ -1505,22 +1505,22 @@ msgstr ""
 #: 
 msgctxt "DPL Config Import"
 msgid "Installed modules: %modules_list"
-msgstr ""
+msgstr "Installerede moduler: %modules_list"
 
 #: 
 msgctxt "DPL Config Import"
 msgid "Failed to install modules: @reason"
-msgstr ""
+msgstr "Kunne ikke installere modul: @reason"
 
 #: 
 msgctxt "DPL Config Import"
 msgid "Uninstalled modules: %modules_list"
-msgstr ""
+msgstr "Ikke-installerede moduler: %modules_list"
 
 #: 
 msgctxt "DPL Config Import"
 msgid "Failed to uninstall modules: @reason"
-msgstr ""
+msgstr "Kunne ikke installere modul: @reason"
 
 #: 
 msgctxt "Dpl Fbs"
@@ -1530,7 +1530,7 @@ msgstr "Grundlæggende indstillinger"
 #: 
 msgctxt "Dpl Fbs"
 msgid "FBS service url"
-msgstr ""
+msgstr "FBS service URL"
 
 #: 
 msgctxt "Dpl Publizon"
@@ -1540,7 +1540,7 @@ msgstr "Grundlæggende indstillinger"
 #: 
 msgctxt "Dpl Publizon"
 msgid "Publizon service url"
-msgstr ""
+msgstr "Publizon service URL"
 
 #: 
 msgctxt "Dpl Mapp"
@@ -1550,42 +1550,42 @@ msgstr "Domæne"
 #: 
 msgctxt "Dpl Mapp"
 msgid "Specify the Tag Integration domain if the JavaScript-file should be loaded from the Mapp server."
-msgstr ""
+msgstr "Angiv Tag Integration domænet, hvis JavaScript-filen skal loades fra Mapp serveren."
 
 #: 
 msgctxt "Dpl Mapp"
 msgid "Id"
-msgstr ""
+msgstr "ID"
 
 #: 
 msgctxt "Dpl Mapp"
 msgid "Enter your Tag Integration customer ID if the JavaScript-file should be loaded from the Mapp server."
-msgstr ""
+msgstr "Angiv dit Tag Integration kundeID, hvis JavaScript-filen skal loades fra Mapp serveren."
 
 #: 
 msgctxt "Dpl Login"
 msgid "Authorization endpoint"
-msgstr ""
+msgstr "Autorisations endpoint"
 
 #: 
 msgctxt "Dpl Login"
 msgid "Token endpoint"
-msgstr ""
+msgstr "Token endpoint"
 
 #: 
 msgctxt "Dpl Login"
 msgid "UserInfo endpoint"
-msgstr ""
+msgstr "UserInfo endpoint"
 
 #: 
 msgctxt "Dpl Login"
 msgid "Logout endpoint"
-msgstr ""
+msgstr "Logout endpoint"
 
 #: 
 msgctxt "Dpl Login"
 msgid "Agency ID"
-msgstr ""
+msgstr "Agency ID"
 
 #: 
 msgctxt "Reservation list (settings)"
@@ -2100,7 +2100,7 @@ msgstr "Huskeliste indstillinger"
 
 #: 
 msgid "DPL favorites"
-msgstr ""
+msgstr "DPL Huskeliste"
 
 #: 
 msgid "Handle the favorites list"
@@ -2267,7 +2267,7 @@ msgstr "Indstillinger for Din side (Dashboard)"
 
 #: 
 msgid "DPL dashboard"
-msgstr ""
+msgstr "DPL dashboard"
 
 #: 
 msgid "Handle the user profile dashboard page"
@@ -2300,7 +2300,7 @@ msgstr "Andre materialer"
 
 #: 
 msgid "DPL something similar"
-msgstr ""
+msgstr "DPL noget der ligner"
 
 #: 
 msgid "Something similar component"
@@ -2347,7 +2347,7 @@ msgstr "Indstillinger for anbefalinger"
 
 #: 
 msgid "DPL recommender"
-msgstr ""
+msgstr "DPL recommender"
 
 #: 
 msgid "recommender component"
@@ -2611,7 +2611,7 @@ msgstr "Pinkode længe (max)"
 
 #: 
 msgid "DPL patron page"
-msgstr ""
+msgstr "DPL brugerprofil"
 
 #: 
 msgid "Handle the patron page"
@@ -2634,12 +2634,12 @@ msgstr "Skal materialer som er tilgængelige som strakslån vises til brugerne?"
 #: 
 msgctxt "dpl_instant_loan"
 msgid "Match String"
-msgstr ""
+msgstr "Match String"
 
 #: 
 msgctxt "dpl_instant_loan"
 msgid "Text used to identify materials which are available for instant loans. This text must be present in the material group of such materials."
-msgstr ""
+msgstr "Tekststreng som bruges til at identificere materialer, som er tilgængelige som strakslån. Denne tekststreng skal indgå i gruppen af materialer af denne type."
 
 #: 
 msgctxt "dpl_instant_loan"
@@ -2685,7 +2685,7 @@ msgstr "Af"
 
 #: 
 msgid "DPL favorites list material component"
-msgstr ""
+msgstr "DPL huskeliste materialekomponent"
 
 #: 
 msgid "Handle the favorites list material component pages"
@@ -2872,7 +2872,7 @@ msgstr "Gebyrer og erstatninger håndteres via \"Mit Betalingsoverblik\"."
 
 #: 
 msgid "DPL Fees"
-msgstr ""
+msgstr "DPL gebyrer"
 
 #: 
 msgid "Handle the user profile fees page"
@@ -2890,12 +2890,12 @@ msgstr "Læs mere om hvordan du sætter reserveringer på pause og hvad det bety
 #: 
 msgctxt "Dpl patron redirect"
 msgid "Redirect settings"
-msgstr ""
+msgstr "Redirect settings / Indstillinger for videresendelse"
 
 #: 
 msgctxt "Dpl patron redirect"
 msgid "Set the paths that requires the patron to be logged in and if the user is not logged in an redirect to Adgangsplatformen will automatically be enforced."
-msgstr ""
+msgstr "Angiv de stier som kræver at brugeren er logget ind, og hvis brugeren ikke er logget ind sendes denne automatisk videre til Adgangsplatformen"
 
 #: 
 msgid "Pages"
@@ -2917,7 +2917,7 @@ msgstr "Tillad sletning af opfyldte reserveringer"
 
 #: 
 msgid "DPL Patron redirect"
-msgstr ""
+msgstr "DPL Patron redirect / DPL bruger redirect"
 
 #: 
 msgid "Redirect patron to login if required."
@@ -3204,7 +3204,7 @@ msgstr "Links til din profil"
 
 #: 
 msgid "DPL menu"
-msgstr ""
+msgstr "DPL menu"
 
 #: 
 msgid "Handle the patron user menu"
