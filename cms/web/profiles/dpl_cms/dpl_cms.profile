@@ -13,7 +13,7 @@ use Drupal\user\Entity\User;
  * @param mixed[] $updaters
  *   An associative array of information about the updater(s) being provided.
  */
-function dpl_cms_updater_info_alter(&$updaters): void {
+function dpl_cms_updater_info_alter(array &$updaters): void {
   // Extending the core updater module class.
   // We need to change the path
   // because we want to persist the modules in a volume.
@@ -57,7 +57,7 @@ function dpl_cms_modules_installed(array $modules, bool $is_syncing): void {
  * @param mixed[] $batch
  *   An associative array of batches.
  */
-function dpl_cms_batch_alter(&$batch): void {
+function dpl_cms_batch_alter(array &$batch): void {
   if (empty($batch['sets'])) {
     return;
   }
@@ -82,9 +82,10 @@ function dpl_cms_batch_alter(&$batch): void {
  *   TRUE if batch successfully completed.
  * @param mixed[] $results
  *   Batch results.
+ *
  * @see hook_batch_alter
  */
-function dpl_cms_locale_translation_batch_fetch_finished($success, $results): void {
+function dpl_cms_locale_translation_batch_fetch_finished(bool $success, array $results): void {
   if ($success && $languages = array_values($results['languages'] ?? [])) {
     _locale_refresh_translations($languages);
     \Drupal::logger('dpl_cms')->notice("New translations were imported and translation cache was cleared.");
