@@ -9,6 +9,9 @@ use Drupal\user\Entity\User;
 
 /**
  * Implements hook_updater_info_alter().
+ *
+ * @param mixed[] $updaters
+ *   An associative array of information about the updater(s) being provided.
  */
 function dpl_cms_updater_info_alter(&$updaters): void {
   // Extending the core updater module class.
@@ -19,8 +22,12 @@ function dpl_cms_updater_info_alter(&$updaters): void {
 
 /**
  * Implements hook_modules_installed().
+ *
+ * @param string[] $modules
+ *   An array of the modules that were installed.
  */
 function dpl_cms_modules_installed(array $modules, bool $is_syncing): void {
+  /** @var \Drupal\user\UserInterface $user */
   $user = User::load(1);
 
   // Make sure that the admin language of the admin user is set to english.
@@ -46,8 +53,11 @@ function dpl_cms_modules_installed(array $modules, bool $is_syncing): void {
 
 /**
  * Implements hook_batch_alter().
+ *
+ * @param mixed[] $batch
+ *   An associative array of batches.
  */
-function dpl_cms_batch_alter(&$batch) {
+function dpl_cms_batch_alter(&$batch): void {
   if (empty($batch['sets'])) {
     return;
   }
@@ -70,11 +80,11 @@ function dpl_cms_batch_alter(&$batch) {
  *
  * @param bool $success
  *   TRUE if batch successfully completed.
- * @param array $results
+ * @param mixed[] $results
  *   Batch results.
  * @see hook_batch_alter
  */
-function dpl_cms_locale_translation_batch_fetch_finished($success, $results) {
+function dpl_cms_locale_translation_batch_fetch_finished($success, $results): void {
   if ($success && $languages = array_values($results['languages'] ?? [])) {
     _locale_refresh_translations($languages);
     \Drupal::logger('dpl_cms')->notice("New translations were imported and translation cache was cleared.");
