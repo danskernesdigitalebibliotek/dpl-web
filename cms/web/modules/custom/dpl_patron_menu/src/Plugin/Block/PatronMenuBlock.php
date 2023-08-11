@@ -132,7 +132,6 @@ class PatronMenuBlock extends BlockBase implements ContainerFactoryPluginInterfa
       'interest-periods-config' => DplReactAppsController::getInterestPeriods(),
 
       // Urls.
-      'fees-page-url' => $generalSettings->get('fees_page_url'),
       "menu-login-url" => Url::fromRoute('dpl_login.login', [], ['absolute' => TRUE])->toString(),
       "menu-log-out-url" => Url::fromRoute('dpl_login.logout', [], ['absolute' => TRUE])->toString(),
       "menu-sign-up-url" => Url::fromRoute('dpl_patron_reg.information', [], ['absolute' => TRUE])->toString(),
