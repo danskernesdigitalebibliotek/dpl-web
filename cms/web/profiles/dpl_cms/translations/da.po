@@ -1347,7 +1347,7 @@ msgstr "Integration med Mapp Intelligence for at tracke brugen af hjemmesiden"
 
 #: 
 msgid "Example content for DPL CMS"
-msgstr "Eksempelindhold 2for DPL CMS"
+msgstr "Eksempelindhold for DPL CMS"
 
 #: 
 msgid "Provides example content for demo sites."
@@ -2639,7 +2639,7 @@ msgstr "Match String"
 #: 
 msgctxt "dpl_instant_loan"
 msgid "Text used to identify materials which are available for instant loans. This text must be present in the material group of such materials."
-msgstr "Tekststreng som bruges til at identificere materialer, som er tilgængelige som strakslån. Denne tekststreng skal indgå i gruppen af materialer af denne type."
+msgstr "Tekststreng som bruges til at identificere materialer, som er tilgængelige som strakslån. Tekststrengen skal indgå i gruppen af materialer af denne type."
 
 #: 
 msgctxt "dpl_instant_loan"
