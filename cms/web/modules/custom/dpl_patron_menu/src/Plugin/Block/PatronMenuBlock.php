@@ -192,7 +192,7 @@ class PatronMenuBlock extends BlockBase implements ContainerFactoryPluginInterfa
       'material-details-physical-due-date-label-text' => $this->t("Due date", [], ['context' => 'Patron menu']),
       'material-details-warning-loan-overdue-text' => $this->t("The due date of return is exceeded, therefore you will be charged a fee, when the item is returned", [], ['context' => 'Patron menu']),
       'reservations-ready-for-pickup-text' => $this->t('Reservations ready for pickup', [], ['context' => 'Patron menu']),
-      'pick-up-latest-text' => $this->t('Pick up before', [], ['context' => 'Patron menu']),
+      'pick-up-latest-text' => $this->t('Pick up before @date', [], ['context' => 'Patron menu']),
       'remove-all-reservations-text' => $this->t('Remove reservations', [], ['context' => 'Patron menu']),
       'ready-for-loan-counter-label-text' => $this->t('Ready', [], ['context' => 'Patron menu']),
       'group-modal-reservations-loans-aria-description-text' => $this->t('This modal makes it possible to delete reservations', [], ['context' => 'Patron menu']),
