@@ -123,13 +123,6 @@ class GeneralSettingsForm extends ConfigFormBase {
       '#collapsed' => FALSE,
     ];
 
-    $form['fee_page']['fees_page_url'] = [
-      '#type' => 'url',
-      '#title' => $this->t('Fee page url', [], ['context' => 'Loan list (settings)']),
-      '#description' => $this->t('The link to the relevant fee page', [], ['context' => 'Loan list (settings)']),
-      '#default_value' => $config->get('fees_page_url') ?? '',
-    ];
-
     $form['reservations'] = [
       '#type' => 'fieldset',
       '#title' => $this->t('Reservations', [], ['context' => 'Library Agency Configuration']),
@@ -263,7 +256,6 @@ class GeneralSettingsForm extends ConfigFormBase {
       ->set('threshold_config', $form_state->getValue('threshold_config'))
       ->set('reservation_detail_allow_remove_ready_reservations_config', $form_state->getValue('reservation_detail_allow_remove_ready_reservations_config'))
       ->set('interest_periods_config', $form_state->getValue('interest_periods_config'))
-      ->set('fees_page_url', $form_state->getValue('fees_page_url'))
       ->set('reservation_sms_notifications_disabled', $form_state->getValue('reservation_sms_notifications_disabled'))
       ->set('pause_reservation_info_url', $form_state->getValue('pause_reservation_info_url'))
       ->set('redirect_on_blocked_url', $form_state->getValue('redirect_on_blocked_url'))

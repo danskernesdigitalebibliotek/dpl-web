@@ -89,16 +89,11 @@ class DashboardBlock extends BlockBase implements ContainerFactoryPluginInterfac
 
       // Urls.
       'dpl-cms-base-url' => DplReactAppsController::dplCmsBaseUrl(),
-      'fees-page-url' => $generalSettings->get('fees_page_url'),
-      'intermediate-url' => $dashboardSettings->get('intermediate_url'),
-      'loans-not-overdue-url' => $dashboardSettings->get('loans_not_overdue_url'),
-      'loans-overdue-url' => $dashboardSettings->get('loans_overdue_url'),
-      'loans-soon-overdue-url' => $dashboardSettings->get('loans_soon_overdue_url'),
-      'pay-owed-url' => $dashboardSettings->get('pay_owed_url'),
-      'physical-loans-url' => $dashboardSettings->get('physical_loans_url'),
-      'reservations-url' => $dashboardSettings->get('reservations_url'),
+      'fees-page-url' => '/user/me/fees',
+      'intermediate-url' => '/user/me/intermediates',
+      'reservations-url' => '/user/me/reservations',
+      'physical-loans-url' => '/user/me/loans',
       'search-url' => DplReactAppsController::searchResultUrl(),
-      'fees-url' => $dashboardSettings->get('fees_url'),
       'ereolen-my-page-url' => $generalSettings->get('ereolen_my_page_url'),
 
       // Texts.

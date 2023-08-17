@@ -99,9 +99,9 @@ class LoanListBlock extends BlockBase implements ContainerFactoryPluginInterface
       "threshold-config" => $this->getThresholdConfig(),
 
       // Urls.
+      'fees-page-url' => '/user/me/fees',
       'ereolen-my-page-url' => $generalSettings->get('ereolen_my_page_url'),
       'dpl-cms-base-url' => DplReactAppsController::dplCmsBaseUrl(),
-      'fees-page-url' => $generalSettings->get('fees_page_url'),
       'material-overdue-url' => $loanListSettings->get('material_overdue_url'),
 
       // Texts.
