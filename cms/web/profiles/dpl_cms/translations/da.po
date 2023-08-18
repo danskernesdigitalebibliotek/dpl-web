@@ -55,7 +55,7 @@ msgstr "Vælg mulige"
 #: 
 msgctxt "Loan list"
 msgid "Due date @date"
-msgstr "Afleveres senest @date"
+msgstr "Afleveres @date"
 
 #: 
 msgctxt "Loan list"
@@ -2059,7 +2059,7 @@ msgstr "Forny (@count)"
 #: 
 msgctxt "Dashboard"
 msgid "Due date @date"
-msgstr "Afleveringsdato @date"
+msgstr "Afleveres @date"
 
 #: 
 msgctxt "Dashboard"
@@ -3828,5 +3828,5 @@ msgstr "Udløbsdato @date"
 #: 
 msgctxt "Loan list"
 msgid "Due date physical @date"
-msgstr "Afleveringsdato @date"
+msgstr "Afleveres @date"
 
