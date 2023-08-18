@@ -1930,12 +1930,12 @@ msgstr "Takster for gebyrer og erstatninger"
 #: 
 msgctxt "Blocked user"
 msgid "You have exceeded your fee limit"
-msgstr "Du har overskredet din gebyrgrænse"
+msgstr "Du har overskredet din gebyrgrænse."
 
 #: 
 msgctxt "Blocked user"
 msgid "You are therefore not able to borrow or reserve materials from the library"
-msgstr "Du kan derfor ikke låne eller reservere materialer fra biblioteket."
+msgstr "Du kan derfor ikke reservere, låne eller forny dine lån. Kontakt venligst biblioteket for yderligere information."
 
 #: 
 msgctxt "Blocked user"
@@ -1950,7 +1950,7 @@ msgstr "Luk pop-up til blokeret bruger"
 #: 
 msgctxt "Blocked user (Aria)"
 msgid "This modal alerts you, that your patron has been blocked"
-msgstr "Denne pop-up advarer dig om at din bruger er blevet blokeret"
+msgstr "Denne pop-up advarer dig om at din bruger er blevet blokeret. Kontakt venligst biblioteket for yderligere information."
 
 #: 
 msgid "Blocked user"
@@ -2599,7 +2599,7 @@ msgstr "Håndter indstillinger for huskeliste komponent"
 #: 
 msgctxt "Fees list"
 msgid "Please note that paid fees are not registered up until 72 hours after your payment after which your debt is updated and your user unblocked if it has been blocked."
-msgstr "Bemærk at betalte gebyrer først registreres op til 72 timer efter betalingen har fundet sted, hvorefter mellemværender opdateres og eventuelle blokeringer pga. udestående mellemværender ophæves"
+msgstr "Bemærk at betalte gebyrer først registreres op til 72 timer efter betalingen har fundet sted, hvorefter mellemværender opdateres og eventuelle blokeringer pga. udestående mellemværender ophæves."
 
 #: 
 msgctxt "Fees list"
