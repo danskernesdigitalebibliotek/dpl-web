@@ -2326,7 +2326,7 @@ msgstr "Kontaktinformation"
 #: 
 msgctxt "Patron page"
 msgid "patron page contact info body text"
-msgstr "Husk at opdatere dine oplysninger hvis du skifter adresse, mobilnummer eller e-mail"
+msgstr "Husk at opdatere dine oplysninger hvis du skifter mobilnummer eller e-mail"
 
 #: 
 msgctxt "Patron page"
