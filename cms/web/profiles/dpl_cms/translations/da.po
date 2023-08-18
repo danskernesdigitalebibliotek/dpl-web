@@ -3758,67 +3758,67 @@ msgstr "Digitale reserveringer"
 #: 
 msgctxt "Blocked user"
 msgid "Blocked patron title text (d)"
-msgstr ""
+msgstr "Din bruger er blokeret"
 
 #: 
 msgctxt "Blocked user"
 msgid "Blocked patron body text (d)"
-msgstr ""
+msgstr "Din bruger er blokeret"
 
 #: 
 msgctxt "Blocked user"
 msgid "Blocked patron title text (s)"
-msgstr ""
+msgstr "Din bruger er blokeret"
 
 #: 
 msgctxt "Blocked user"
 msgid "Blocked patron body text (s)"
-msgstr ""
+msgstr "Din bruger er blokeret"
 
 #: 
 msgctxt "Blocked user"
 msgid "Blocked patron title text (f)"
-msgstr ""
+msgstr "Din bruger er blokeret"
 
 #: 
 msgctxt "Blocked user"
 msgid "Blocked patron body text (f)"
-msgstr ""
+msgstr "Din bruger er blokeret"
 
 #: 
 msgctxt "Blocked user"
 msgid "Your user is blocked (w)"
-msgstr ""
+msgstr "Din bruger er blokeret"
 
 #: 
 msgctxt "Blocked user"
 msgid "You therefore cannot reserve, borrow or renew loans. Please contact the library for further information (w)"
-msgstr ""
+msgstr "Du kan derfor ikke reservere, låne eller forny dine lån. Kontakt venligst biblioteket for yderligere information."
 
 #: 
 msgctxt "Blocked user"
 msgid "Blocked reason modal title (o)"
-msgstr ""
+msgstr "Din bruger er blokeret"
 
 #: 
 msgctxt "Blocked user"
 msgid "Blocked patron body text (o)"
-msgstr ""
+msgstr "Din bruger er blokeret"
 
 #: 
 msgctxt "Blocked user"
 msgid "Your user is blocked (u)"
-msgstr ""
+msgstr "Din bruger er blokeret"
 
 #: 
 msgctxt "Blocked user"
 msgid "You therefore cannot reserve, borrow or renew loans. Please contact the library for further information (u)"
-msgstr ""
+msgstr "Du kan derfor ikke reservere, låne eller forny dine lån. Kontakt venligst biblioteket for yderligere information."
 
 #: 
 msgctxt "Patron menu"
 msgid "Pick up before @date"
-msgstr ""
+msgstr "Hent før @date"
 
 #: 
 msgctxt "Loan list"
