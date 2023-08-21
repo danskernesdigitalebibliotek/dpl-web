@@ -1615,7 +1615,7 @@ msgstr "Digitale reserveringer"
 #: 
 msgctxt "Reservation list"
 msgid "Ready for pickup"
-msgstr "Klar til lån"
+msgstr "Klar til afhentning"
 
 #: 
 msgctxt "Reservation list"
@@ -3243,7 +3243,7 @@ msgstr "Udløber snart"
 #: 
 msgctxt "Dashboard"
 msgid "Ready for pickup"
-msgstr "Klar til lån"
+msgstr "Klar til afhentning"
 
 #: 
 msgctxt "Dashboard (aria)"
@@ -3639,7 +3639,7 @@ msgstr "Luk pop-up med grupperede reserveringer "
 #: 
 msgctxt "Patron menu"
 msgid "Ready for pickup"
-msgstr "Klar til lån"
+msgstr "Klar til afhentning"
 
 #: 
 msgctxt "Patron menu"
