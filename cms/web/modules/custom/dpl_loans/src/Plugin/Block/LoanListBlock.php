@@ -167,6 +167,13 @@ class LoanListBlock extends BlockBase implements ContainerFactoryPluginInterface
       'result-pager-status-text' => $this->t("Showing @itemsShown out of @hitcount loans", [], ['context' => 'Loan list']),
       'show-more-text' => $this->t("show more", [], ['context' => 'Loan list']),
       'group-modal-go-to-material-aria-label-text' => $this->t("Go to @label material details", [], ['context' => 'Loan list (Aria)']),
+      'accept-modal-header-text' => $this->t("Your fee is raised", [], ['context' => 'Loan list']),
+      'accept-modal-body-text' => $this->t("If you renew your fee will be raised", [], ['context' => 'Loan list']),
+      'accept-modal-are-you-sure-text' => $this->t("Are you sure you want to renew?", [], ['context' => 'Loan list']),
+      'accept-modal-accept-button-text' => $this->t("Yes, renew", [], ['context' => 'Loan list']),
+      'accept-modal-cancel-button-text' => $this->t("Cancel renewal", [], ['context' => 'Loan list']),
+      'accept-modal-aria-description-text' => $this->t("accept modal aria description text", [], ['context' => 'Loan list (Aria)']),
+      'accept-modal-aria-label-text' => $this->t("accept modal aria label text", [], ['context' => 'Loan list (Aria)']),
     ] + DplReactAppsController::externalApiBaseUrls() + DplReactAppsController::getBlockedSettings();
 
     return [
