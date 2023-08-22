@@ -2745,11 +2745,11 @@ msgstr "Betalingsmuligheder"
 
 #: 
 msgid "Terms of trade text"
-msgstr "Betalingsbetingelser"
+msgstr "Betalingsbetingelser tekst"
 
 #: 
 msgid "Terms of trade redirect url"
-msgstr "Betalingsbetingelser"
+msgstr "URL til side om betalingsbetingelser"
 
 #: 
 msgid "Payment options image"
