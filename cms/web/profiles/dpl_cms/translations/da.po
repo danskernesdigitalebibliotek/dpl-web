@@ -2733,11 +2733,11 @@ msgstr "Se vores takster"
 
 #: 
 msgid "Fees and Replacement costs URL"
-msgstr "Oplysningsside om takster 3"
+msgstr "Oplysningsside om takster"
 
 #: 
 msgid "File or URL containing the fees and replacement costs"
-msgstr "Oplysningsside om takster 2"
+msgstr "Oplysningsside om takster"
 
 #: 
 msgid "Available payment types url"
