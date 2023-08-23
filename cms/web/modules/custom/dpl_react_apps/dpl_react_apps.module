@@ -49,3 +49,17 @@ function dpl_react_apps_preprocess_page(array &$variables): void {
   ];
 
 }
+
+/**
+ * Implements hook_preprocess_HOOK().
+ *
+ * @param mixed[] $variables
+ *   The variables for the theme hook.
+ */
+function dpl_react_apps_preprocess_dpl_react_app(array &$variables): void {
+  // Since we need these texts in all the apps we add them here.
+  $variables['attributes'] += [
+    'data-alert-error-close-text' => t('Close', [], ['context' => 'React apps global: Error handling']),
+    'data-alert-error-message-text' => t('An error occurred', [], ['context' => 'React apps global: Error handling']),
+  ];
+}
