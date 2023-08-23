@@ -3818,7 +3818,7 @@ msgstr "Du kan derfor ikke reservere, låne eller forny dine lån. Kontakt venli
 #: 
 msgctxt "Patron menu"
 msgid "Pick up before @date"
-msgstr "Hent før @date"
+msgstr "Hent senest @date"
 
 #: 
 msgctxt "Loan list"
