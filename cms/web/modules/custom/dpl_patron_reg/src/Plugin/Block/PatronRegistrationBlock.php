@@ -5,14 +5,12 @@ namespace Drupal\dpl_patron_reg\Plugin\Block;
 use Drupal\Core\Block\BlockBase;
 use Drupal\Core\Config\ConfigFactoryInterface;
 use Drupal\Core\Plugin\ContainerFactoryPluginInterface;
-use Drupal\dpl_library_agency\Branch\Branch;
 use Drupal\dpl_login\UserTokensProvider;
 use Drupal\dpl_react\DplReactConfigInterface;
 use Drupal\dpl_react_apps\Controller\DplReactAppsController;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Drupal\dpl_library_agency\Branch\BranchRepositoryInterface;
 use Drupal\dpl_library_agency\BranchSettings;
-use function Safe\json_encode as json_encode;
 
 /**
  * Provides user registration block.

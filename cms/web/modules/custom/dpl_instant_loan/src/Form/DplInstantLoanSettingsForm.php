@@ -84,15 +84,13 @@ class DplInstantLoanSettingsForm extends ConfigFormBase {
       '#default_value' => $config->get('enabled'),
     ];
 
-    $form['match_string'] = [
-      '#type' => 'textfield',
-      '#title' => $this->t('Match String', [], ['context' => 'dpl_instant_loan']),
-      '#description' => $this->t(
-        'Text used to identify materials which are available for instant loans. This text must be present in the material group of such materials.',
-        [],
-        ['context' => 'dpl_instant_loan']
-      ),
-      '#default_value' => $config->get('match_string'),
+    $form['match_strings'] = [
+      '#type' => 'textarea',
+      '#title' => $this->t('Match Strings', [], ['context' => 'dpl_instant_loan']),
+    // Set the number of visible rows for the textarea.
+      '#rows' => 5,
+      '#description' => $this->t('Text used to identify materials which are available for instant loans.<br/> You can write multiple strings - each on a spearate line.<br/> To find a match one of the strings must be present in the material group of such materials.'),
+      '#default_value' => implode("\n", $config->get('match_strings')),
       '#states' => $config_field_states,
     ];
 
@@ -117,7 +115,7 @@ class DplInstantLoanSettingsForm extends ConfigFormBase {
   public function submitForm(array &$form, FormStateInterface $form_state): void {
     $this->config($this->configService->getConfigKey())
       ->set('enabled', $form_state->getValue('enabled'))
-      ->set('match_string', $form_state->getValue('match_string'))
+      ->set('match_strings', explode("\n", $form_state->getValue('match_strings')) ?? [])
       ->set('threshold', $form_state->getValue('threshold'))
       ->save();
 
