@@ -275,7 +275,7 @@ msgstr "Vis flere"
 #: 
 msgctxt "Loan list (Aria)"
 msgid "Go to @label material details"
-msgstr "Gå til detaljevisning af @label "
+msgstr "Gå til detaljevisning af @label"
 
 #: 
 msgid "React DDB Library"
@@ -3095,7 +3095,7 @@ msgstr "Opret profil"
 #: 
 msgctxt "Patron menu (aria)"
 msgid "Open user menu"
-msgstr "Åben din profil"
+msgstr "Åbn din profil"
 
 #: 
 msgctxt "Patron menu (aria)"
