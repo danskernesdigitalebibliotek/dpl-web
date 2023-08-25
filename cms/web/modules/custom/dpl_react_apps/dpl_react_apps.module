@@ -59,7 +59,7 @@ function dpl_react_apps_preprocess_page(array &$variables): void {
 function dpl_react_apps_preprocess_dpl_react_app(array &$variables): void {
   // Since we need these texts in all the apps we add them here.
   $variables['attributes'] += [
-    'data-alert-error-close-text' => t('Close', [], ['context' => 'React apps global: Error handling']),
-    'data-alert-error-message-text' => t('An error occurred', [], ['context' => 'React apps global: Error handling']),
+    'data-alert-error-close-text' => t('Close', [], ['context' => 'React apps (Global error handling)']),
+    'data-alert-error-message-text' => t('An error occurred', [], ['context' => 'React apps (Global error handling)']),
   ];
 }
