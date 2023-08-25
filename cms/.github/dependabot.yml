@@ -1,0 +1,38 @@
+version: 2
+updates:
+- package-ecosystem: github-actions
+  directory: "/"
+  open-pull-requests-limit: 10
+  schedule:
+    interval: weekly
+    timezone: Europe/Copenhagen
+  labels:
+    - "dependencies"
+    - "github_actions"
+- package-ecosystem: composer
+  directory: "/"
+  open-pull-requests-limit: 10
+  schedule:
+    interval: weekly
+    timezone: Europe/Copenhagen
+  labels:
+    - "dependencies"
+    - "drupal"
+- package-ecosystem: composer
+  directory: "dev-scripts/"
+  open-pull-requests-limit: 10
+  schedule:
+    interval: weekly
+    timezone: Europe/Copenhagen
+  labels:
+    - "dependencies"
+    - "dev-scripts"
+- package-ecosystem: npm
+  directory: "/"
+  open-pull-requests-limit: 10
+  schedule:
+    interval: weekly
+    timezone: Europe/Copenhagen
+  labels:
+    - "dependencies"
+    - "js-dependencies"
