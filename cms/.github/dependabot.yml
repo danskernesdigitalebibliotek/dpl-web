@@ -2,7 +2,12 @@ version: 2
 updates:
 - package-ecosystem: github-actions
   directory: "/"
-  open-pull-requests-limit: 10
+  open-pull-requests-limit: 1
+  groups:
+    minor-github-actions-dependencies:
+      update-types:
+        - "minor"
+        - "patch"
   schedule:
     interval: weekly
     timezone: Europe/Copenhagen
@@ -11,7 +16,14 @@ updates:
     - "github_actions"
 - package-ecosystem: composer
   directory: "/"
-  open-pull-requests-limit: 10
+  open-pull-requests-limit: 2
+  groups:
+    minor-github-actions-dependencies:
+      update-types:
+        - "minor"
+        - "patch"
+      exclude-patterns:
+        - "drupal/core*"
   schedule:
     interval: weekly
     timezone: Europe/Copenhagen
@@ -20,7 +32,12 @@ updates:
     - "drupal"
 - package-ecosystem: composer
   directory: "dev-scripts/"
-  open-pull-requests-limit: 10
+  open-pull-requests-limit: 2
+  groups:
+    minor-composer-dependencies:
+      update-types:
+        - "minor"
+        - "patch"
   schedule:
     interval: weekly
     timezone: Europe/Copenhagen
@@ -29,7 +46,12 @@ updates:
     - "dev-scripts"
 - package-ecosystem: npm
   directory: "/"
-  open-pull-requests-limit: 10
+  open-pull-requests-limit: 2
+  groups:
+    minor-js-dependencies:
+      update-types:
+        - "minor"
+        - "patch"
   schedule:
     interval: weekly
     timezone: Europe/Copenhagen
