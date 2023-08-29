@@ -3085,7 +3085,7 @@ msgstr "Opret profil"
 #: 
 msgctxt "Patron menu (aria)"
 msgid "Open user menu"
-msgstr "Åbn din profil"
+msgstr "Åbn brugermenu"
 
 #: 
 msgctxt "Patron menu (aria)"
