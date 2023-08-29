@@ -89,7 +89,7 @@ class DplInstantLoanSettingsForm extends ConfigFormBase {
       '#title' => $this->t('Match Strings', [], ['context' => 'dpl_instant_loan']),
       // Set the number of visible rows for the textarea.
       '#rows' => 5,
-      '#description' => $this->t('Text used to identify materials which are available for instant loans.<br/> You can write multiple strings - each on a spearate line.<br/> To find a match one of the strings must be present in the material group of such materials.'),
+      '#description' => $this->t('Text used to identify materials which are available for instant loans.<br/> You can write multiple strings - each on a spearate line.<br/> To find a match one of the strings must be present in the material group of such materials.', [], ['context' => 'dpl_instant_loan']),
       '#default_value' => implode("\n", $config->get('match_strings')),
       '#states' => $config_field_states,
     ];
