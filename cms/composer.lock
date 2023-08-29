@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "46c291a7932ddf96eecb7f6210512ab3",
+    "content-hash": "b4a52c30b26fc390bfbe0244392a3603",
     "packages": [
         {
             "name": "amazeeio/drupal_integrations",
@@ -1077,10 +1077,10 @@
         },
         {
             "name": "danskernesdigitalebibliotek/dpl-design-system",
-            "version": "v1.7.0-rc22",
+            "version": "v1.7.0-rc23",
             "dist": {
                 "type": "zip",
-                "url": "https://github.com/danskernesdigitalebibliotek/dpl-design-system/releases/download/release-develop/dist.zip"
+                "url": "https://github.com/reload/dpl-design-system/releases/download/release-DDFDPDEL-215-semi-sticky-headers-pa-mobil/dist.zip"
             },
             "type": "drupal-library"
         },
