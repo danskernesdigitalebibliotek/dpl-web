@@ -787,7 +787,7 @@ msgstr "Vælg afhentningssted"
 #: 
 msgctxt "Work Page"
 msgid "If you want to receive SMS, you can enter or change your phone number here."
-msgstr "Hvis du ønsker at modtage servicemeddelelser om reserveringer og afleveringer, kan du angive eller ændre dit mobilnummer her."
+msgstr "Hvis du ønsker at modtage servicemeddelelser om reserveringer og afleveringer, kan du angive eller ændre dit nummer her."
 
 #: 
 msgctxt "Work Page"
