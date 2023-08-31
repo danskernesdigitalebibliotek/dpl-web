@@ -33,9 +33,9 @@
             "package": {
                 "name": "danskernesdigitalebibliotek/dpl-design-system",
                 "type": "drupal-library",
-                "version": "v1.7.0-rc23",
+                "version": "v1.7.0-rc24",
                 "dist": {
-                    "url": "https://github.com/reload/dpl-design-system/releases/download/release-DDFDPDEL-215-semi-sticky-headers-pa-mobil/dist.zip",
+                    "url": "https://github.com/danskernesdigitalebibliotek/dpl-design-system/releases/download/release-develop/dist.zip",
                     "type": "zip"
                 }
             }
