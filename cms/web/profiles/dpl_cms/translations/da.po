@@ -2149,7 +2149,7 @@ msgstr "Du skylder i alt"
 #: 
 msgctxt "Dashboard"
 msgid "Your profile"
-msgstr "Din side"
+msgstr "Dit overblik"
 
 #: 
 msgctxt "Dashboard (settings)"
@@ -2168,7 +2168,7 @@ msgstr "Antal listeelemeter på side (desktop)"
 
 #: 
 msgid "Dashboard settings"
-msgstr "Indstillinger for Din side (Dashboard)"
+msgstr "Indstillinger for Dit overblik (Dashboard)"
 
 #: 
 msgid "DPL dashboard"
@@ -2176,7 +2176,7 @@ msgstr "DPL dashboard"
 
 #: 
 msgid "Handle the user profile dashboard page"
-msgstr "Håndter indstillinger for brugerens dashboard (Din side)"
+msgstr "Håndter indstillinger for brugerens dashboard (Dit overblik)"
 
 #: 
 msgctxt "Something similar"
@@ -3030,7 +3030,7 @@ msgstr "Gebyrer & Erstatninger"
 
 #: 
 msgid "My account"
-msgstr "Din side"
+msgstr "Dit overblik"
 
 #: 
 msgctxt "Patron menu"
