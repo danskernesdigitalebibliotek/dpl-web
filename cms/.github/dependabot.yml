@@ -1,8 +1,10 @@
+# Dependabot configuration files that automate our dependency updates by creating pull requests.
+# The PRs are labeled and grouped by package ecosystem and semver update type.
 version: 2
 updates:
 - package-ecosystem: github-actions
   directory: "/"
-  open-pull-requests-limit: 1
+  open-pull-requests-limit: 2
   groups:
     minor-github-actions-dependencies:
       update-types:
@@ -16,14 +18,19 @@ updates:
     - "github_actions"
 - package-ecosystem: composer
   directory: "/"
-  open-pull-requests-limit: 2
+  open-pull-requests-limit: 3
   groups:
-    minor-composer-dependencies:
-      update-types:
-        - "minor"
-        - "patch"
-      exclude-patterns:
+    drupal-core-minor-major-releases:
+      include-patterns:
         - "drupal/core*"
+      update-types:
+        - "major"
+        - "minor"
+    drupal-core-patch-releases:
+      include-patterns:
+        - "drupal/core*"
+      update-types:
+        - "patch"
   schedule:
     interval: weekly
     timezone: Europe/Copenhagen
