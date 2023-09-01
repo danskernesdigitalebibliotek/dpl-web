@@ -2500,7 +2500,7 @@ msgstr "Slet bruger (link)"
 #: 
 msgid "Link to a page where it is possible to delete patron"
 msgstr "\n"
-"Link til oplysningsside om at få slettet sin bruger"
+"Link til oplysningsside om hvordan man kan få slettet sin bruger"
 
 #: 
 msgid "Ereolen always available"
