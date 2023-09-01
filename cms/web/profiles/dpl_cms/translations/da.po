@@ -3903,17 +3903,17 @@ msgstr ""
 #: 
 msgctxt "Work Page"
 msgid "Can't be viewed"
-msgstr ""
+msgstr "Kan ikke vises"
 
 #: 
 msgctxt "Work Page"
 msgid "Authors"
-msgstr ""
+msgstr "Forfattere"
 
 #: 
 msgctxt "Work Page"
 msgid "You don't live in the municipality where this library is located."
-msgstr ""
+msgstr "Du er ikke bosiddende i kommunen som dette bibliotek er tilknyttet"
 
 #: 
 msgctxt "Work Page"
@@ -3923,10 +3923,10 @@ msgstr ""
 #: 
 msgctxt "React apps (Global error handling)"
 msgid "Close"
-msgstr ""
+msgstr "Luk"
 
 #: 
 msgctxt "React apps (Global error handling)"
 msgid "An error occurred"
-msgstr ""
+msgstr "Der opstod en fejl"
 
