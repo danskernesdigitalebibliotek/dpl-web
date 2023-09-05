@@ -75,12 +75,12 @@ msgstr "Kan afleveres på alle kommunens biblioteker"
 #: 
 msgctxt "Loan list (Aria)"
 msgid "This button shows all loans in the list"
-msgstr "Denne knap viser alle lån på listen"
+msgstr "Oplist lån efter afleveringsdato"
 
 #: 
 msgctxt "Loan list (Aria)"
 msgid "This button filters the list, so only one the materials that have the same due date is shown"
-msgstr "Denne knap filtrerer listen, så der kun vises ét af de materialer som har den viste afleveringsdato"
+msgstr "Gruppér materialer med samme afleveringsdato"
 
 #: 
 msgctxt "Loan list"
@@ -115,7 +115,7 @@ msgstr "Du har ingen lån i øjeblikket"
 #: 
 msgctxt "Loan list (Aria)"
 msgid "This button opens a modal that covers the entire page and contains loans with the same due date as the loan currently in focus"
-msgstr "Denne knap åbner en pop-up som dækker hele siden og indeholder lån med samme afleveringsdato som lånet der er i fokus"
+msgstr "Åbner en pop-up som indeholder lån med samme afleveringsdato som lånet der er i fokus"
 
 #: 
 msgctxt "Loan list"
@@ -160,7 +160,7 @@ msgstr "Fysiske lån"
 #: 
 msgctxt "Loan list"
 msgid "This button opens a modal that covers the entire page and contains loans with different due dates, if some of the loans in the modal are renewable you can renew them"
-msgstr "Denne knap åbner en pop-up som dækker hele siden og indeholder lån med forskellige afleveringsdatoer, hvis nogle af lånene kan fornyes har du mulighed for at forny dem"
+msgstr "Åbner en pop-up som giver mulighed for at forny flere lån på én gang"
 
 #: 
 msgctxt "Loan list"
@@ -260,7 +260,7 @@ msgstr "Forny (@count)"
 #: 
 msgctxt "Loan list (Aria)"
 msgid "Close modal with grouped loans"
-msgstr "Luk pop-up med grupperede lån"
+msgstr "Luk pop-up  med grupperede lån"
 
 #: 
 msgctxt "Loan list"
@@ -1805,7 +1805,7 @@ msgstr "Luk pop-up til at slette reserveringer"
 #: 
 msgctxt "Reservation list (Aria)"
 msgid "This button opens a modal that covers the entire page and contains the possibility to delete a selected reservation, or multiple selected reservations"
-msgstr "Denne knap åbner en pop-up som dækker hele siden og indeholder mulighed for at slette en valgt reservering eller flere valgte reserveringer"
+msgstr "Slet én eller flere valgte reserveringer"
 
 #: 
 msgctxt "Reservation list (Aria)"
@@ -1815,7 +1815,7 @@ msgstr "Reserveringer er sat på pause i det følgende tidsrum:"
 #: 
 msgctxt "Reservation list (Aria)"
 msgid "This button opens a modal that covers the entire page and contains the possibility to pause physical reservations"
-msgstr "Denne knap åbner en pop-up som dækker hele siden og indeholder mulighed for at sætte fysiske reserveringer på pause"
+msgstr "Sæt fysiske reserveringer på pause"
 
 #: 
 msgctxt "Reservation list (Aria)"
@@ -3173,7 +3173,7 @@ msgstr "Input skal indehold minimum ét tegn"
 #: 
 msgctxt "Dashboard (aria)"
 msgid "This button opens a modal that covers the entire page and contains the possibility to delete a selected reservation, or multiple selected reservations"
-msgstr "Denne knap åbner en pop-up som dækker hele siden og indeholder mulighed for at slette en valgt reservering eller flere valgte reserveringer"
+msgstr "Slet én eller flere valgte reserveringer"
 
 #: 
 msgctxt "Dashboard"
@@ -3448,7 +3448,7 @@ msgstr "Antal listeelemeter på side (desktop)"
 #: 
 msgctxt "Patron menu (Aria)"
 msgid "This button opens a modal that covers the entire page and contains the possibility to delete a selected reservation, or multiple selected reservations"
-msgstr "Denne knap åbner en pop-up som dækker hele siden og indeholder mulighed for at slette en valgt reservering eller flere valgte reserveringer"
+msgstr "Slet én eller flere valgte reserveringer"
 
 #: 
 msgctxt "Patron menu"
