@@ -40,7 +40,7 @@ msgstr "Læs mere om gebyrer"
 #: 
 msgctxt "Loan list (Aria)"
 msgid "Close renew loans modal"
-msgstr "Luk pop-up til at forny lån"
+msgstr "Luk pop-up"
 
 #: 
 msgctxt "Loan list (Aria)"
@@ -195,7 +195,7 @@ msgstr "Af"
 #: 
 msgctxt "Loan list (Aria)"
 msgid "Close material details modal"
-msgstr "Luk pop-up med detaljevisning af materialet"
+msgstr "Luk pop-up"
 
 #: 
 msgctxt "Loan list"
@@ -260,7 +260,7 @@ msgstr "Forny (@count)"
 #: 
 msgctxt "Loan list (Aria)"
 msgid "Close modal with grouped loans"
-msgstr "Luk pop-up  med grupperede lån"
+msgstr "Luk pop-up"
 
 #: 
 msgctxt "Loan list"
@@ -322,7 +322,7 @@ msgstr "Fysisk/digital"
 #: 
 msgctxt "Search Result"
 msgid "Close facet browser modal"
-msgstr "Luk pop-up med facetbrowser"
+msgstr "Luk pop-up"
 
 #: 
 msgctxt "Search Result"
@@ -582,7 +582,7 @@ msgstr "Forklarende tekst til \"Find på hylden\" knap"
 #: 
 msgctxt "Work Page"
 msgid "Close reservation modal"
-msgstr "Luk pop-up for reservering"
+msgstr "Luk pop-up"
 
 #: 
 msgctxt "Work Page"
@@ -662,7 +662,7 @@ msgstr "i serien"
 #: 
 msgctxt "Work Page"
 msgid "Close infomedia modal"
-msgstr "Luk pop-up med Infomedia"
+msgstr "Luk pop-up"
 
 #: 
 msgctxt "Work Page"
@@ -862,7 +862,7 @@ msgstr "Fejl i bestilling af digital kopi"
 #: 
 msgctxt "Work Page"
 msgid "Close Order digital copy modal"
-msgstr "Luk pop-up til bestilling af digital kopi"
+msgstr "Luk pop-up"
 
 #: 
 msgctxt "Work Page"
@@ -1800,7 +1800,7 @@ msgstr "Du kan ikke fortryde denne handling"
 #: 
 msgctxt "Reservation list"
 msgid "Close delete reservation modal"
-msgstr "Luk pop-up til at slette reserveringer"
+msgstr "Luk pop-up"
 
 #: 
 msgctxt "Reservation list (Aria)"
@@ -1830,7 +1830,7 @@ msgstr "Sæt fysiske reserveringer på pause i god tid, da reserveringer, der al
 #: 
 msgctxt "Reservation list"
 msgid "Close pause reservations modal"
-msgstr "Luk pop-up som sætter reserveringer på pause"
+msgstr "Luk pop-up"
 
 #: 
 msgctxt "Reservation list"
@@ -1840,7 +1840,7 @@ msgstr "Begyndelsesdato"
 #: 
 msgctxt "Reservation list (Aria)"
 msgid "Close material details modal"
-msgstr "Luk pop-up med detaljevisning"
+msgstr "Luk pop-up"
 
 #: 
 msgctxt "Reservation list"
@@ -1945,7 +1945,7 @@ msgstr "Betal dit mellemværende her"
 #: 
 msgctxt "Blocked user (Aria)"
 msgid "Close blocked patron modal"
-msgstr "Luk pop-up til blokeret bruger"
+msgstr "Luk pop-up"
 
 #: 
 msgctxt "Blocked user (Aria)"
@@ -2276,7 +2276,7 @@ msgstr "Sæt fysiske reserveringer på pause i god tid, da reserveringer der all
 #: 
 msgctxt "Patron page"
 msgid "Close pause reservations modal"
-msgstr "Luk pop-up som sætter reserveringer på pause"
+msgstr "Luk pop-up"
 
 #: 
 msgctxt "Patron page"
@@ -2604,7 +2604,7 @@ msgstr "Gebyrer oprettet @date"
 #: 
 msgctxt "Fees list (Aria)"
 msgid "Close fee details modal"
-msgstr "Luk pop-up med detaljer for gebyr"
+msgstr "Luk pop-up"
 
 #: 
 msgctxt "Fees list"
@@ -3178,7 +3178,7 @@ msgstr "Slet én eller flere valgte reserveringer"
 #: 
 msgctxt "Dashboard"
 msgid "Close delete reservation modal"
-msgstr "Luk pop-up til at slette reserveringer"
+msgstr "Luk pop-up"
 
 #: 
 msgctxt "Dashboard"
@@ -3233,7 +3233,7 @@ msgstr "Klar til afhentning"
 #: 
 msgctxt "Dashboard (aria)"
 msgid "Close material details modal"
-msgstr "Luk pop-up med detaljevisning af materialet"
+msgstr "Luk pop-up"
 
 #: 
 msgctxt "Dashboard (aria)"
@@ -3403,7 +3403,7 @@ msgstr "et al."
 #: 
 msgctxt "Patron menu (Aria)"
 msgid "Close modal with grouped loans"
-msgstr "Luk pop-up med grupperede lån"
+msgstr "Luk pop-up"
 
 #: 
 msgctxt "Dashboard (aria)"
@@ -3413,7 +3413,7 @@ msgstr "Denne pop-up gør det muligt at slette reserveringer"
 #: 
 msgctxt "Dashboard (aria)"
 msgid "Close modal with grouped reservations"
-msgstr "Luk pop-up med grupperede reserveringer"
+msgstr "Luk pop-up"
 
 #: 
 msgctxt "Dashboard"
@@ -3428,7 +3428,7 @@ msgstr "Denne pop-up grupperer lån efter afleveringsdato og gør det muligt at 
 #: 
 msgctxt "Dashboard"
 msgid "Close renew loans modal"
-msgstr "Luk pop-up til at forny lån"
+msgstr "Luk pop-up"
 
 #: 
 msgctxt "Dashboard"
@@ -3453,7 +3453,7 @@ msgstr "Slet én eller flere valgte reserveringer"
 #: 
 msgctxt "Patron menu"
 msgid "Close delete reservation modal"
-msgstr "Luk pop-up til at reservere"
+msgstr "Luk pop-up"
 
 #: 
 msgctxt "Patron menu"
@@ -3579,7 +3579,7 @@ msgstr "Udløbet"
 #: 
 msgctxt "Patron menu (Aria)"
 msgid "Close material details modal"
-msgstr "Luk pop-up med detaljevisning af materialet "
+msgstr "Luk pop-up"
 
 #: 
 msgctxt "Patron menu"
@@ -3619,7 +3619,7 @@ msgstr "Denne pop-up gør det muligt at slette reserveringer"
 #: 
 msgctxt "Patron menu"
 msgid "Close modal with grouped reservations"
-msgstr "Luk pop-up med grupperede reserveringer "
+msgstr "Luk pop-up"
 
 #: 
 msgctxt "Patron menu"
