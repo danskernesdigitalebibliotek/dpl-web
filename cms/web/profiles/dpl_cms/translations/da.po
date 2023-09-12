@@ -1780,7 +1780,7 @@ msgstr "Fortryd"
 #: 
 msgctxt "Reservation list"
 msgid "Cancel reservation"
-msgstr "Slet reserveringer"
+msgstr "Slet reservering"
 
 #: 
 msgctxt "Reservation list"
@@ -3273,7 +3273,7 @@ msgstr "Denne pop-up gør det muligt at forny materialer"
 #: 
 msgctxt "Dashboard"
 msgid "Remove your reservation"
-msgstr "Slet reserveringer"
+msgstr "Slet reservering"
 
 #: 
 msgctxt "Dashboard"
@@ -3348,7 +3348,7 @@ msgstr "Vil du slette dine reserveringer?"
 #: 
 msgctxt "Dashboard"
 msgid "Cancel reservation"
-msgstr "Slet reserveringer"
+msgstr "Slet reservering"
 
 #: 
 msgctxt "Dashboard"
@@ -3458,7 +3458,7 @@ msgstr "Luk pop-up"
 #: 
 msgctxt "Patron menu"
 msgid "Cancel reservation"
-msgstr "Slet reserveringer"
+msgstr "Slet reservering"
 
 #: 
 msgctxt "Patron menu"
@@ -3644,7 +3644,7 @@ msgstr "Status"
 #: 
 msgctxt "Patron menu"
 msgid "Remove your reservation"
-msgstr "Slet reserveringer"
+msgstr "Slet reservering"
 
 #: 
 msgctxt "Patron menu"
