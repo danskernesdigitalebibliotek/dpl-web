@@ -200,6 +200,8 @@ class DplReactAppsController extends ControllerBase {
       'material-url' => self::materialUrl(),
       'search-url' => self::searchResultUrl(),
       // Text.
+      'availability-available-text' => $this->t('Available', [], ['context' => 'Work Page']),
+      'availability-unavailable-text' => $this->t('Unavailable', [], ['context' => 'Work Page']),
       'already-reserved-text' => $this->t('Already reserved', [], ['context' => 'Work Page']),
       'approve-reservation-text' => $this->t('Approve reservation', [], ['context' => 'Work Page']),
       'audience-text' => $this->t('Audience', [], ['context' => 'Work Page']),
