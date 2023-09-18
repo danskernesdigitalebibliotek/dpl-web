@@ -115,7 +115,8 @@ class DplReactAppsController extends ControllerBase {
       'search-url' => self::searchResultUrl(),
       // Text.
       'add-more-filters-text' => $this->t('+ more filters', [], ['context' => 'Search Result']),
-      'available-text' => $this->t('Available', [], ['context' => 'Search Result']),
+      'availability-available-text' => $this->t('Available', [], ['context' => 'Search Result']),
+      'availability-unavailable-text' => $this->t('Unavailable', [], ['context' => 'Search Result']),
       'by-author-text' => $this->t('By', [], ['context' => 'Search Result']),
       'clear-all-text' => $this->t('Clear all', [], ['context' => 'Search Result']),
       'et-al-text' => $this->t('et. al.', [], ['context' => 'Search Result']),
@@ -143,7 +144,6 @@ class DplReactAppsController extends ControllerBase {
       'showing-results-for-text' => $this->t('Showing results for "@query"', [], ['context' => 'Search Result']),
       'showing-text' => $this->t('Showing', [], ['context' => 'Search Result']),
       'subject-number-text' => $this->t('Subject number', [], ['context' => 'Search Result']),
-      'unavailable-text' => $this->t('Unavailable', [], ['context' => 'Search Result']),
     // Add external API base urls.
     ] + self::externalApiBaseUrls();
 
@@ -205,7 +205,6 @@ class DplReactAppsController extends ControllerBase {
       'already-reserved-text' => $this->t('Already reserved', [], ['context' => 'Work Page']),
       'approve-reservation-text' => $this->t('Approve reservation', [], ['context' => 'Work Page']),
       'audience-text' => $this->t('Audience', [], ['context' => 'Work Page']),
-      'available-text' => $this->t('Available', [], ['context' => 'Work Page']),
       'cannot-see-review-text' => $this->t('The review is not accessible', [], ['context' => 'Work Page']),
       'cant-reserve-text' => $this->t("Can't be reserved", [], ['context' => 'Work Page']),
       'cant-view-review-text' => $this->t('Cannot view review', [], ['context' => 'Work Page']),
@@ -368,7 +367,6 @@ class DplReactAppsController extends ControllerBase {
       'try-agin-button-text' => $this->t('Try again', [], ['context' => 'Work Page']),
       'two-months-text' => $this->t('2 months', [], ['context' => 'Work Page']),
       'type-text' => $this->t('Type', [], ['context' => 'Work Page']),
-      'unavailable-text' => $this->t('Unavailable', [], ['context' => 'Work Page']),
       'we-have-shopped-text' => $this->t('In stock:', [], ['context' => 'Work Page']),
       'you-have-borrowed-text' => $this->t('You have borrowed', [], ['context' => 'Work Page']),
         // Add external API base urls.
