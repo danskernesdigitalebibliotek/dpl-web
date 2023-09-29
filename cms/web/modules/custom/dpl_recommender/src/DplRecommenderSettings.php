@@ -16,4 +16,11 @@ class DplRecommenderSettings extends DplReactConfigBase {
     return 'dpl_recommender.settings';
   }
 
+  /**
+   * {@inheritdoc}
+   */
+  public function getConfig(): array {
+    return $this->legacyConfig();
+  }
+
 }

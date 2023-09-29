@@ -16,4 +16,11 @@ class DplMenuSettings extends DplReactConfigBase {
     return 'dpl_patron_menu.settings';
   }
 
+  /**
+   * {@inheritdoc}
+   */
+  public function getConfig(): array {
+    return $this->legacyConfig();
+  }
+
 }

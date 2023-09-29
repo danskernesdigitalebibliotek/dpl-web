@@ -16,4 +16,11 @@ class DplPatronPageSettings extends DplReactConfigBase {
     return 'dpl_patron_page.settings';
   }
 
+  /**
+   * {@inheritdoc}
+   */
+  public function getConfig(): array {
+    return $this->legacyConfig();
+  }
+
 }

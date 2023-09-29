@@ -16,4 +16,11 @@ class DplDashboardSettings extends DplReactConfigBase {
     return 'dpl_dashboard.settings';
   }
 
+  /**
+   * {@inheritdoc}
+   */
+  public function getConfig(): array {
+    return $this->legacyConfig();
+  }
+
 }

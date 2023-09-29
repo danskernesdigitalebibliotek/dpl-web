@@ -38,10 +38,9 @@ class FbsApiFactory {
    * Assemble the API configuration.
    */
   protected function getConfiguration(): Configuration {
-    $config = $this->fbsSettings->getConfig();
-    $host = $config['baseUrl'];
+    $config = $this->fbsSettings->loadConfig();
     $configuration = (new Configuration())
-      ->setHost($host);
+      ->setHost($config->get('base_url'));
 
     $token = $this->tokenHandler->getToken();
     if ($token) {

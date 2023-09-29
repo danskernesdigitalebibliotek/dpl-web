@@ -24,5 +24,18 @@
       https://www.drupal.org/project/coder/issues/3253472#comment-14508517
     -->
     <exclude name="Drupal.Commenting.VariableComment.IncorrectVarType"/>
+    <exclude name="Drupal.Commenting.VariableComment.IncorrectVarType"/>
+    <!--
+      Disable deprecation related sniffs that are seem to Drupal Core development.
+    -->
+    <!--
+      Do not require specifying when deprecated function will be removed.
+      We do not enforce this whin the project.
+    -->
+    <exclude name="Drupal.Commenting.Deprecated.IncorrectTextLayout"/>
+    <!--
+      Do not require a @see tag with link to Drupal.org for deprecation.
+    -->
+    <exclude name="Drupal.Commenting.Deprecated.DeprecatedMissingSeeTag"/>
   </rule>
 </ruleset>

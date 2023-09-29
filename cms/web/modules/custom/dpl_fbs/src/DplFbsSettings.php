@@ -16,4 +16,11 @@ class DplFbsSettings extends DplReactConfigBase {
     return 'dpl_fbs.settings';
   }
 
+  /**
+   * {@inheritdoc}
+   */
+  public function getConfig(): array {
+    return $this->legacyConfig();
+  }
+
 }
