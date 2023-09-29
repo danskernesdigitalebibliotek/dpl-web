@@ -211,7 +211,7 @@ class DplReactAppsController extends ControllerBase {
       'advanced-search-add-row-text' => $this->t('add row', [], ['context' => 'advanced search']),
       'advanced-search-input-placeholder-text' => $this->t('search term', [], ['context' => 'advanced search']),
       'advanced-search-title-text' => $this->t('advanced search', [], ['context' => 'advanced search']),
-      'advanced-search-preview-headline-text' => $this->t('advanced search', [], ['context' => 'advanced search']),
+      'advanced-search-preview-headline-text' => $this->t('CQL search string', [], ['context' => 'advanced search']),
       'advanced-search-preview-empty-text' => $this->t('-', [], ['context' => 'advanced search']),
       'advanced-search-reset-text' => $this->t('reset', [], ['context' => 'advanced search']),
       'advanced-search-copy-string-text' => $this->t('copy string', [], ['context' => 'advanced search']),
