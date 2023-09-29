@@ -113,6 +113,7 @@ class DplReactAppsController extends ControllerBase {
       'dpl-cms-base-url' => self::dplCmsBaseUrl(),
       'material-url' => self::materialUrl(),
       'search-url' => self::searchResultUrl(),
+      'advanced-search-url' => self::advancedSearchUrl(),
       // Text.
       'add-more-filters-text' => $this->t('+ more filters', [], ['context' => 'Search Result']),
       'availability-available-text' => $this->t('Available', [], ['context' => 'Search Result']),
@@ -150,6 +151,78 @@ class DplReactAppsController extends ControllerBase {
     $app = [
       '#theme' => 'dpl_react_app',
       "#name" => 'search-result',
+      '#data' => $data,
+    ];
+
+    $this->renderer->addCacheableDependency($app, $this->branchSettings);
+
+    return $app;
+  }
+
+    /**
+   * Render advanced search app.
+   *
+   * @return mixed[]
+   *   Render array.
+   */
+  public function advancedSearch(): array {
+    $data = [
+      // Config.
+      'blacklisted-availability-branches-config' => $this->buildBranchesListProp($this->branchSettings->getExcludedAvailabilityBranches()),
+      'blacklisted-search-branches-config' => $this->buildBranchesListProp($this->branchSettings->getExcludedSearchBranches()),
+      'branches-config' => $this->buildBranchesJsonProp($this->branchRepository->getBranches()),
+      // Urls.
+      'auth-url' => self::authUrl(),
+      'dpl-cms-base-url' => self::dplCmsBaseUrl(),
+      'material-url' => self::materialUrl(),
+      'search-url' => self::searchResultUrl(),
+      'advanced-search-url' => self::advancedSearchUrl(),
+      // Text.
+      'et-al-text' => $this->t('et al.', [], ['context' => 'advanced search']),
+      'by-author-text' => $this->t('by', [], ['context' => 'advanced search']),
+      'show-more-text' => $this->t('show more', [], ['context' => 'advanced search']),
+      'result-pager-status-text' => $this->t('showing @items-shown out of @hitcount results', [], ['context' => 'advanced search']),
+      'number-description-text' => $this->t('nr.', [], ['context' => 'advanced search']),
+      'in-series-text' => $this->t('in series', [], ['context' => 'advanced search']),
+      'showing-materials-text' => $this->t('showing materials', [], ['context' => 'advanced search']),
+      'no-search-result-text' => $this->t('your search has 0 results', [], ['context' => 'advanced search']),
+      'add-to-favorites-aria-label-text' => $this->t('add @title to favorites list', [], ['context' => 'advanced search']),
+      'remove-from-favorites-aria-label-text' => $this->t('remove @title from favorites list', [], ['context' => 'advanced search']),
+      'alert-error-close-text' => $this->t('close', [], ['context' => 'advanced search']),
+      'alert-error-message-text' => $this->t('an error occurred', [], ['context' => 'advanced search']),
+      'loading-text' => $this->t('loading', [], ['context' => 'advanced search']),
+      'advanced-search-link-to-this-search-text' => $this->t('link to this search', [], ['context' => 'advanced search']),
+      'advanced-search-all-indexes-text' => $this->t('all indexes', [], ['context' => 'advanced search']),
+      'advanced-search-creator-text' => $this->t('creator', [], ['context' => 'advanced search']),
+      'advanced-search-subject-text' => $this->t('subject', [], ['context' => 'advanced search']),
+      'advanced-search-genre-text' => $this->t('genre', [], ['context' => 'advanced search']),
+      'advanced-search-language-text' => $this->t('language', [], ['context' => 'advanced search']),
+      'advanced-search-date-text' => $this->t('date', [], ['context' => 'advanced search']),
+      'advanced-search-main-creator-text' => $this->t('main creator', [], ['context' => 'advanced search']),
+      'advanced-search-main-title-text' => $this->t('main title', [], ['context' => 'advanced search']),
+      'advanced-search-source-text' => $this->t('source', [], ['context' => 'advanced search']),
+      'advanced-search-date-first-edition-text' => $this->t('edition', [], ['context' => 'advanced search']),
+      'advanced-search-decimal-dk5-text' => $this->t('dk5', [], ['context' => 'advanced search']),
+      'advanced-search-type-text' => $this->t('type', [], ['context' => 'advanced search']),
+      'advanced-search-audience-text' => $this->t('audience', [], ['context' => 'advanced search']),
+      'advanced-search-publisher-text' => $this->t('publisher', [], ['context' => 'advanced search']),
+      'advanced-search-identifier-text' => $this->t('identifier', [], ['context' => 'advanced search']),
+      'advanced-search-ac-source-text' => $this->t('source', [], ['context' => 'advanced search']),
+      'advanced-search-add-row-text' => $this->t('add row', [], ['context' => 'advanced search']),
+      'advanced-search-input-placeholder-text' => $this->t('search term', [], ['context' => 'advanced search']),
+      'advanced-search-title-text' => $this->t('advanced search', [], ['context' => 'advanced search']),
+      'advanced-search-preview-headline-text' => $this->t('advanced search', [], ['context' => 'advanced search']),
+      'advanced-search-preview-empty-text' => $this->t('-', [], ['context' => 'advanced search']),
+      'advanced-search-reset-text' => $this->t('reset', [], ['context' => 'advanced search']),
+      'advanced-search-copy-string-text' => $this->t('copy string', [], ['context' => 'advanced search']),
+      'advanced-search-edit-cql-text' => $this->t('edit cql', [], ['context' => 'advanced search']),
+      'advanced-search-search-button-text' => $this->t('search', [], ['context' => 'advanced search']),
+    // Add external API base urls.
+    ] + self::externalApiBaseUrls();
+
+    $app = [
+      '#theme' => 'dpl_react_app',
+      "#name" => 'advanced-search',
       '#data' => $data,
     ];
 
@@ -199,6 +272,7 @@ class DplReactAppsController extends ControllerBase {
       'dpl-cms-base-url' => self::dplCmsBaseUrl(),
       'material-url' => self::materialUrl(),
       'search-url' => self::searchResultUrl(),
+      'advanced-search-url' => self::advancedSearchUrl(),
       // Text.
       'already-reserved-text' => $this->t('Already reserved', [], ['context' => 'Work Page']),
       'approve-reservation-text' => $this->t('Approve reservation', [], ['context' => 'Work Page']),
@@ -392,6 +466,15 @@ class DplReactAppsController extends ControllerBase {
   public static function searchResultUrl(): string {
     return self::ensureUrlIsString(
       Url::fromRoute('dpl_react_apps.search_result')->toString()
+    );
+  }
+
+    /**
+   * Builds a url for the local advanced search route.
+   */
+  public static function advancedSearchUrl(): string {
+    return self::ensureUrlIsString(
+      Url::fromRoute('dpl_react_apps.advanced_search')->toString()
     );
   }
 
