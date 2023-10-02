@@ -71,6 +71,7 @@ class FeesListBlock extends BlockBase implements ContainerFactoryPluginInterface
       'available-payment-types-url' => $feesConfig->get('available_payment_types_url'),
       'dpl-cms-base-url' => DplReactAppsController::dplCmsBaseUrl(),
       'search-url' => DplReactAppsController::searchResultUrl(),
+      'advanced-search-url' => DplReactAppsController::advancedSearchUrl(),
 
       // Texts.
       'already-paid-text' => $this->t("Please note that paid fees are not registered up until 72 hours after your payment after which your debt is updated and your user unblocked if it has been blocked.", [], ['context' => 'Fees list']),
