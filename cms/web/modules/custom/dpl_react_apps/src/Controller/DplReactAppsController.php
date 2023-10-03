@@ -217,6 +217,11 @@ class DplReactAppsController extends ControllerBase {
       'advanced-search-copy-string-text' => $this->t('copy string', [], ['context' => 'advanced search']),
       'advanced-search-edit-cql-text' => $this->t('edit cql', [], ['context' => 'advanced search']),
       'advanced-search-search-button-text' => $this->t('search', [], ['context' => 'advanced search']),
+      'loading-results-text' => $this->t('search', [], ['context' => 'Loading results...']),
+      'to-advanced-search-button-text' => $this->t('search', [], ['context' => 'Back to advanced search']),
+      'cql-search-title-text' => $this->t('search', [], ['context' => 'CQL search']),
+      'copied-to-clipboard-text' => $this->t('search', [], ['context' => 'Copied']),
+      'copied-link-to-this-search-text' => $this->t('search', [], ['context' => 'Link copied to clipboard']),
     // Add external API base urls.
     ] + self::externalApiBaseUrls();
 
