@@ -21,13 +21,13 @@ updates:
   open-pull-requests-limit: 3
   groups:
     drupal-core-minor-major-releases:
-      include-patterns:
+      patterns:
         - "drupal/core*"
       update-types:
         - "major"
         - "minor"
     drupal-core-patch-releases:
-      include-patterns:
+      patterns:
         - "drupal/core*"
       update-types:
         - "patch"
