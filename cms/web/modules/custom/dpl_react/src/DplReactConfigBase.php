@@ -53,7 +53,20 @@ abstract class DplReactConfigBase implements CacheableDependencyInterface, DplRe
    * @return mixed[]
    *   The configuration.
    */
-  public function getConfig() : array {
+  abstract public function getConfig(): array;
+
+  /**
+   * Return the Drupal configuration as an array with camelCase keys.
+   *
+   * Do not use this function for new settings. They should implement
+   * getConfig() instead!
+   *
+   * @return mixed[]
+   *   The formatted configuration.
+   *
+   * @deprecated
+   */
+  protected function legacyConfig(): array {
     if (!$config = $this->loadConfig()->get()) {
       return [];
     }

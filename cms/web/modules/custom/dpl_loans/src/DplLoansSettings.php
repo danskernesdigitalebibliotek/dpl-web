@@ -16,4 +16,11 @@ class DplLoansSettings extends DplReactConfigBase {
     return 'dpl_loan_list.settings';
   }
 
+  /**
+   * {@inheritdoc}
+   */
+  public function getConfig(): array {
+    return $this->legacyConfig();
+  }
+
 }

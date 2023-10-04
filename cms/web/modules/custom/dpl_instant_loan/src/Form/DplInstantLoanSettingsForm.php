@@ -7,6 +7,7 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
 use Drupal\Core\Form\ConfigFormBase;
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\dpl_react\DplReactConfigInterface;
+use function Safe\preg_split;
 
 /**
  * Instant Loan settings form.
@@ -90,7 +91,7 @@ class DplInstantLoanSettingsForm extends ConfigFormBase {
       // Set the number of visible rows for the textarea.
       '#rows' => 5,
       '#description' => $this->t('Text used to identify materials which are available for instant loans.<br/> You can write multiple strings - each on a spearate line.<br/> To find a match one of the strings must be present in the material group of such materials.', [], ['context' => 'dpl_instant_loan']),
-      '#default_value' => implode("\n", $config->get('match_strings')),
+      '#default_value' => implode("\n", $config->get('match_strings') ?? []),
       '#states' => $config_field_states,
     ];
 
@@ -115,7 +116,7 @@ class DplInstantLoanSettingsForm extends ConfigFormBase {
   public function submitForm(array &$form, FormStateInterface $form_state): void {
     $this->config($this->configService->getConfigKey())
       ->set('enabled', $form_state->getValue('enabled'))
-      ->set('match_strings', explode("\n", $form_state->getValue('match_strings')) ?? [])
+      ->set('match_strings', preg_split("/\s*[\r\n]+\s*/", $form_state->getValue('match_strings')) ?? [])
       ->set('threshold', $form_state->getValue('threshold'))
       ->save();
 

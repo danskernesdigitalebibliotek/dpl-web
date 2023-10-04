@@ -16,4 +16,11 @@ class DplReservationsSettings extends DplReactConfigBase {
     return 'dpl_reservation_list.settings';
   }
 
+  /**
+   * {@inheritdoc}
+   */
+  public function getConfig(): array {
+    return $this->legacyConfig();
+  }
+
 }

@@ -16,4 +16,11 @@ class DplFavoritesListSettings extends DplReactConfigBase {
     return 'dpl_favorites_list.settings';
   }
 
+  /**
+   * {@inheritdoc}
+   */
+  public function getConfig(): array {
+    return $this->legacyConfig();
+  }
+
 }

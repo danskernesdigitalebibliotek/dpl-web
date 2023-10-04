@@ -16,4 +16,11 @@ class DplFeesSettings extends DplReactConfigBase {
     return 'dpl_fees.settings';
   }
 
+  /**
+   * {@inheritdoc}
+   */
+  public function getConfig(): array {
+    return $this->legacyConfig();
+  }
+
 }

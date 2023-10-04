@@ -16,4 +16,11 @@ class DplPublizonSettings extends DplReactConfigBase {
     return 'dpl_publizon.settings';
   }
 
+  /**
+   * {@inheritdoc}
+   */
+  public function getConfig(): array {
+    return $this->legacyConfig();
+  }
+
 }
