@@ -159,7 +159,7 @@ class DplReactAppsController extends ControllerBase {
     return $app;
   }
 
-    /**
+  /**
    * Render advanced search app.
    *
    * @return mixed[]
@@ -474,7 +474,7 @@ class DplReactAppsController extends ControllerBase {
     );
   }
 
-    /**
+  /**
    * Builds a url for the local advanced search route.
    */
   public static function advancedSearchUrl(): string {
