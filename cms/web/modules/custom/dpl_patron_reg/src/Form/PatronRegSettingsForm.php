@@ -5,6 +5,7 @@ namespace Drupal\dpl_patron_reg\Form;
 use Drupal\Core\Config\ConfigFactoryInterface;
 use Drupal\Core\Form\ConfigFormBase;
 use Drupal\Core\Form\FormStateInterface;
+use Drupal\dpl_patron_reg\DplPatronRegSettings;
 use Drupal\dpl_react\DplReactConfigInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
@@ -63,7 +64,7 @@ class PatronRegSettingsForm extends ConfigFormBase {
     $form['age_limit'] = [
       '#type' => 'number',
       '#title' => $this->t('Minimum age to allow self registration'),
-      '#default_value' => $config->get('age_limit') ?? '18',
+      '#default_value' => $config->get('age_limit') ?? DplPatronRegSettings::AGE_LIMIT,
       '#min' => 1,
       '#step' => 1,
     ];
@@ -72,14 +73,14 @@ class PatronRegSettingsForm extends ConfigFormBase {
       '#type' => 'url',
       '#title' => $this->t('Redirect on create'),
       '#description' => $this->t('Redirect to this on user successful created'),
-      '#default_value' => $config->get('redirect_on_user_created_url') ?? '',
+      '#default_value' => $config->get('redirect_on_user_created_url') ?? DplPatronRegSettings::REDIRECT_ON_USER_CREATED_URL,
     ];
 
     $form['information'] = [
       '#type' => 'text_format',
       '#title' => $this->t('Information page'),
-      '#default_value' => $config->get('information')['value'] ?? '',
-      '#format' => $config->get('information')['format'] ?? 'plain_text',
+      '#default_value' => $config->get('information')['value'] ?? DplPatronRegSettings::INFORMATION_VALUE,
+      '#format' => $config->get('information')['format'] ?? DplPatronRegSettings::INFORMATION_FORMAT,
     ];
 
     return parent::buildForm($form, $form_state);

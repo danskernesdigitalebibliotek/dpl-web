@@ -5,6 +5,7 @@ namespace Drupal\dpl_patron_page\Form;
 use Drupal\Core\Config\ConfigFactoryInterface;
 use Drupal\Core\Form\ConfigFormBase;
 use Drupal\Core\Form\FormStateInterface;
+use Drupal\dpl_patron_page\DplPatronPageSettings;
 use Drupal\dpl_react\DplReactConfigInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
@@ -82,7 +83,7 @@ class PatronPageSettingsForm extends ConfigFormBase {
     $form['settings']['pincode_length_min'] = [
       '#type' => 'number',
       '#title' => $this->t('Pincode length (min)'),
-      '#default_value' => $config->get('pincode_length_min') ?? 4,
+      '#default_value' => $config->get('pincode_length_min') ?? DplPatronPageSettings::PINCODE_LENGTH_MIN,
       '#min' => 4,
       '#step' => 1,
     ];
@@ -90,7 +91,7 @@ class PatronPageSettingsForm extends ConfigFormBase {
     $form['settings']['pincode_length_max'] = [
       '#type' => 'number',
       '#title' => $this->t('Pincode length max'),
-      '#default_value' => $config->get('pincode_length_max') ?? 4,
+      '#default_value' => $config->get('pincode_length_max') ?? DplPatronPageSettings::PINCODE_LENGTH_MAX,
       '#min' => 4,
       '#step' => 1,
     ];

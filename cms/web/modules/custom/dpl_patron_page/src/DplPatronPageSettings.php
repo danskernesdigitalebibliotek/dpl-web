@@ -8,6 +8,8 @@ use Drupal\dpl_react\DplReactConfigBase;
  * Class that handles reservations settings.
  */
 class DplPatronPageSettings extends DplReactConfigBase {
+  const PINCODE_LENGTH_MAX = 4;
+  const PINCODE_LENGTH_MIN = 4;
 
   /**
    * Gets the configuration key for reservation settings.

@@ -32,7 +32,6 @@ dpl_patron_reg.create:
   path: "/user/registration/create"
   defaults:
     _controller: '\Drupal\dpl_patron_reg\Controller\DplPatronRegController::userRegistrationReactAppLoad'
-    _title: "Patron create"
   requirements:
     _permission: "access content"
   options:
