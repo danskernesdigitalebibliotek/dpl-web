@@ -3,8 +3,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2023-10-06 12:15+0000\n"
-"PO-Revision-Date: 2023-10-06 12:15+0000\n"
+"POT-Creation-Date: 2023-10-07 15:21+0000\n"
+"PO-Revision-Date: 2023-10-07 15:21+0000\n"
 "Last-Translator: NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
 "MIME-Version: 1.0\n"
@@ -2057,14 +2057,6 @@ msgid "Subject number"
 msgstr "Emnetal"
 
 msgctxt "Work Page"
-msgid "Available"
-msgstr "Hjemme"
-
-msgctxt "Work Page"
-msgid "Unavailable"
-msgstr "Udlånt"
-
-msgctxt "Work Page"
 msgid "Already reserved"
 msgstr "Allerede reserveret"
 
@@ -2075,6 +2067,18 @@ msgstr "Godkend reservering"
 msgctxt "Work Page"
 msgid "Audience"
 msgstr "Målgruppe"
+
+msgctxt "Work Page"
+msgid "Available"
+msgstr "Hjemme"
+
+msgctxt "Work Page"
+msgid "Unavailable"
+msgstr "Udlånt"
+
+msgctxt "Work Page"
+msgid "Blocked"
+msgstr ""
 
 msgctxt "Work Page"
 msgid "The review is not accessible"
