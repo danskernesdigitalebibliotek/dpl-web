@@ -8,7 +8,6 @@ use Drupal\Core\Plugin\ContainerFactoryPluginInterface;
 use Drupal\dpl_library_agency\BranchSettings;
 use Drupal\dpl_library_agency\Branch\BranchRepositoryInterface;
 use Drupal\dpl_library_agency\ReservationSettings;
-use Drupal\dpl_login\UserTokensProvider;
 use Drupal\dpl_patron_page\DplPatronPageSettings;
 use Drupal\dpl_patron_reg\DplPatronRegSettings;
 use Drupal\dpl_react\DplReactConfigInterface;
@@ -34,8 +33,6 @@ class PatronRegistrationBlock extends BlockBase implements ContainerFactoryPlugi
    *   The plugin ID for the plugin instance.
    * @param array $plugin_definition
    *   The plugin implementation definition.
-   * @param \Drupal\dpl_login\UserTokensProvider $user_token_provider
-   *   The user token provider from single sing on.
    * @param \Drupal\Core\Config\ConfigFactoryInterface $configFactory
    *   Drupal config factory to get FBS and Publizon settings.
    * @param \Drupal\dpl_library_agency\BranchSettings $branchSettings
@@ -53,7 +50,6 @@ class PatronRegistrationBlock extends BlockBase implements ContainerFactoryPlugi
     array $configuration,
     string $plugin_id,
     array $plugin_definition,
-    private UserTokensProvider $user_token_provider,
     private ConfigFactoryInterface $configFactory,
     private BranchSettings $branchSettings,
     private BranchRepositoryInterface $branchRepository,
@@ -73,7 +69,6 @@ class PatronRegistrationBlock extends BlockBase implements ContainerFactoryPlugi
       $configuration,
       $plugin_id,
       $plugin_definition,
-      $container->get('dpl_login.user_tokens'),
       $container->get('config.factory'),
       $container->get('dpl_library_agency.branch_settings'),
       $container->get('dpl_library_agency.branch.repository'),
@@ -105,7 +100,6 @@ class PatronRegistrationBlock extends BlockBase implements ContainerFactoryPlugi
    */
   public function build(): array {
     $config = $this->patronRegSettings->loadConfig();
-    $userToken = $this->user_token_provider->getAccessToken()?->token;
     $patron_page_settings = $this->patronPageSettings->loadConfig();
 
     // Get user info endpoint from OpenIdConnect configuration.
@@ -120,7 +114,6 @@ class PatronRegistrationBlock extends BlockBase implements ContainerFactoryPlugi
       'pincode-length-max-config' => $patron_page_settings->get('pincode_length_max') ?? DplPatronPageSettings::PINCODE_LENGTH_MAX,
       'pincode-length-min-config' => $patron_page_settings->get('pincode_length_min') ?? DplPatronPageSettings::PINCODE_LENGTH_MIN,
       'redirect-on-user-created-url' => $config->get('redirect_on_user_created_url') ?? DplPatronRegSettings::REDIRECT_ON_USER_CREATED_URL,
-      'user-token' => $userToken,
       'userinfo-url' => $userInfoEndpoint,
       'text-notifications-enabled-config' => (int) $this->reservationSettings->smsNotificationsIsEnabled(),
 
