@@ -238,6 +238,7 @@ class DplReactAppsController extends ControllerBase {
       'advanced-search-filter-online-text' => $this->t('online', [], ['context' => 'advanced search']),
       'advanced-search-filter-fiction-text' => $this->t('fiction', [], ['context' => 'advanced search']),
       'advanced-search-filter-non-fiction-text' => $this->t('Non-fiction', [], ['context' => 'advanced search']),
+      'advanced-search-filter-all-text' => $this->t('All', [], ['context' => 'advanced search']),
     // Add external API base urls.
     ] + self::externalApiBaseUrls();
 
