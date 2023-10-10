@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "a320b7a6a08227659441990b00997b50",
+    "content-hash": "76dadd5ff90d02c228e00f639054201c",
     "packages": [
         {
             "name": "amazeeio/drupal_integrations",
@@ -1086,7 +1086,7 @@
         },
         {
             "name": "danskernesdigitalebibliotek/dpl-react",
-            "version": "0.3.0-rc36",
+            "version": "0.3.0-rc37",
             "dist": {
                 "type": "zip",
                 "url": "https://github.com/reload/dpl-react/releases/download/release-DDFLSBP-121-brugeroprettelse-formular-vises-ikke-i-forbindelse-med-oprettelse/dist.zip"
