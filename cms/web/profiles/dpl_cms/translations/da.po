@@ -1615,12 +1615,12 @@ msgstr "Digitale reserveringer"
 #: 
 msgctxt "Reservation list"
 msgid "Ready for pickup"
-msgstr "Klar til afhentning"
+msgstr "Klar til lån"
 
 #: 
 msgctxt "Reservation list"
 msgid "At the moment you have 0 reservations ready for pickup"
-msgstr "Du har 0 reserveringer klar til afhentning"
+msgstr "Du har 0 reserveringer klar til lån"
 
 #: 
 msgctxt "Reservation list"
@@ -1895,7 +1895,7 @@ msgstr "Viser @itemsShown ud af @hitcount resultater"
 #: 
 msgctxt "Reservation list (Aria)"
 msgid "This material is ready for pickup"
-msgstr "Dette materiale er klar til afhentning"
+msgstr "Dette materiale er klar til lån"
 
 #: 
 msgctxt "Reservation list (Aria)"
@@ -3050,7 +3050,7 @@ msgstr "Udløber snart"
 #: 
 msgctxt "Patron menu"
 msgid "reservations ready for pickup"
-msgstr "Reserveringer klar til afhentning"
+msgstr "Klar til lån"
 
 #: 
 msgctxt "Patron menu"
@@ -3228,7 +3228,7 @@ msgstr "Udløber snart"
 #: 
 msgctxt "Dashboard"
 msgid "Ready for pickup"
-msgstr "Klar til afhentning"
+msgstr "Klar til lån"
 
 #: 
 msgctxt "Dashboard (aria)"
@@ -3599,7 +3599,7 @@ msgstr "Afleveringsdato"
 #: 
 msgctxt "Patron menu"
 msgid "Reservations ready for pickup"
-msgstr "Reserveringer klar til afhentning"
+msgstr "Reserveringer klar til lån"
 
 #: 
 msgctxt "Patron menu"
@@ -3624,7 +3624,7 @@ msgstr "Luk pop-up"
 #: 
 msgctxt "Patron menu"
 msgid "Ready for pickup"
-msgstr "Klar til afhentning"
+msgstr "Klar til lån"
 
 #: 
 msgctxt "Patron menu"
