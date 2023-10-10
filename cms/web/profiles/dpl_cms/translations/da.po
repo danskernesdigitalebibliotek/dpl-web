@@ -1087,7 +1087,7 @@ msgstr "i"
 #: 
 msgctxt "Search Header"
 msgid "Start typing in order to search"
-msgstr "Test af oversættelser 2.10. Lotte"
+msgstr "Søg efter titel, forfatter eller emne"
 
 #: 
 msgctxt "Search Header"
