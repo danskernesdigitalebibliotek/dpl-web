@@ -2,6 +2,7 @@ parameters:
   level: max
   paths:
     - web/modules/custom
+    - web/profiles/dpl_cms
     - web/themes/custom
   ignoreErrors:
     - '#Unsafe usage of new static\(\).#'
@@ -15,5 +16,8 @@ parameters:
     # Ignore block inject create configuration parameter.
     - '#Drupal\\.*\\Plugin\\Block\\.*Block::__construct\(\) .* no value type specified in iterable type array\.#'
     - '#Drupal\\.*\\Plugin\\Block\\.*Block::create\(\) .* no value type specified in iterable type array\.#'
+  scanFiles:
+    # Needed to make locale_translation_batch_fetch_finished() discoverable.
+    - web/core/modules/locale/locale.batch.inc
 
 
