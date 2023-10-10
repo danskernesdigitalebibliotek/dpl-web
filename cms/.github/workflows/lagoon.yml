@@ -21,6 +21,9 @@ jobs:
     name: Check environment
     runs-on: ubuntu-latest
     if: ${{ github.event.action == 'opened' || github.event.action == 'reopened' || github.event.action == 'synchronize' }}
+    permissions:
+      # Give the default GITHUB_TOKEN permission to create and update deployments
+      deployments: write
     steps:
       - name: Generate environment data
         id: environment
@@ -67,6 +70,9 @@ jobs:
     name: Close environment
     runs-on: ubuntu-latest
     if: ${{ github.event.action == 'closed' }}
+    permissions:
+      # Give the default GITHUB_TOKEN permission to close deployments.
+      deployments: write
     steps:
       - name: Generate environment data
         id: environment
