@@ -5,8 +5,8 @@ namespace Drupal\dpl_fbs;
 use DanskernesDigitaleBibliotek\FBS\Api\ExternalV1AgencyidApi;
 use DanskernesDigitaleBibliotek\FBS\Configuration;
 use Drupal\Core\Config\ConfigManagerInterface;
+use Drupal\dpl_fbs\Form\FbsSettingsForm;
 use Drupal\dpl_library_token\LibraryTokenHandler;
-use Drupal\dpl_react\DplReactConfigInterface;
 use GuzzleHttp\ClientInterface;
 
 /**
@@ -23,14 +23,11 @@ class FbsApiFactory {
    *   The Guzzle client to use to connect to FBS.
    * @param \Drupal\dpl_library_token\LibraryTokenHandler $tokenHandler
    *   The token handler to retrieve the library token used for authentication.
-   * @param \Drupal\dpl_react\DplReactConfigInterface $fbsSettings
-   *   FBS settings.
    */
   public function __construct(
     protected ConfigManagerInterface $configManager,
     protected ClientInterface $client,
-    protected LibraryTokenHandler $tokenHandler,
-    protected DplReactConfigInterface $fbsSettings
+    protected LibraryTokenHandler $tokenHandler
   ) {
   }
 
@@ -38,7 +35,7 @@ class FbsApiFactory {
    * Assemble the API configuration.
    */
   protected function getConfiguration(): Configuration {
-    $config = $this->fbsSettings->loadConfig();
+    $config = $this->configManager->getConfigFactory()->get(FbsSettingsForm::CONFIG_KEY);
     $configuration = (new Configuration())
       ->setHost($config->get('base_url'));
 

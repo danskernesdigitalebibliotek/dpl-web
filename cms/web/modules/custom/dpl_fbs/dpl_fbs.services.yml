@@ -5,12 +5,7 @@ services:
       - "@config.manager"
       - "@http_client"
       - "@dpl_library_token.handler"
-      - "@dpl_fbs.settings"
 
   dpl_fbs.agency_api:
     class: DanskernesDigitaleBibliotek\FBS\Api\ExternalV1AgencyidApi
     factory: ["@dpl_fbs.api_factory", "getAgencyApi"]
-
-  dpl_fbs.settings:
-    class: Drupal\dpl_fbs\DplFbsSettings
-    arguments: ["@config.manager"]
