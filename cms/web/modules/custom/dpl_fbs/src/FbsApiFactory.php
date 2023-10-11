@@ -1,6 +1,6 @@
 <?php
 
-namespace Drupal\dpl_library_agency;
+namespace Drupal\dpl_fbs;
 
 use DanskernesDigitaleBibliotek\FBS\Api\ExternalV1AgencyidApi;
 use DanskernesDigitaleBibliotek\FBS\Configuration;

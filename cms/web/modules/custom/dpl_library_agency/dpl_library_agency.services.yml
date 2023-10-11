@@ -29,19 +29,7 @@ services:
 
   dpl_library_agency.branch.repository.fbs:
     class: Drupal\dpl_library_agency\Branch\FbsBranchRepository
-    arguments: ["@dpl_library_agency.fbs_agency_api"]
-
-  dpl_library_agency.fbs_api_factory:
-    class: Drupal\dpl_library_agency\FbsApiFactory
-    arguments:
-      - "@config.manager"
-      - "@http_client"
-      - "@dpl_library_token.handler"
-      - "@dpl_fbs.settings"
-
-  dpl_library_agency.fbs_agency_api:
-    class: DanskernesDigitaleBibliotek\FBS\Api\ExternalV1AgencyidApi
-    factory: ["@dpl_library_agency.fbs_api_factory", "getAgencyApi"]
+    arguments: ["@dpl_fbs.agency_api"]
 
   dpl_library_agency.logger:
     parent: logger.channel_base
