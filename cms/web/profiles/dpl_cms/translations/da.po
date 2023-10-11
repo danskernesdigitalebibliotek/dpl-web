@@ -3,8 +3,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2023-10-10 14:50+0000\n"
-"PO-Revision-Date: 2023-10-10 14:50+0000\n"
+"POT-Creation-Date: 2023-10-11 11:25+0000\n"
+"PO-Revision-Date: 2023-10-11 11:25+0000\n"
 "Last-Translator: NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
 "MIME-Version: 1.0\n"
@@ -1937,6 +1937,76 @@ msgid "An error occurred"
 msgstr ""
 "Der opstod en uventet fejl, prøv igen senere eller kontakt "
 "biblioteket."
+
+msgctxt "Renew loan"
+msgid "Renew"
+msgstr ""
+
+msgctxt "Renew loan"
+msgid "Cannot be renewed"
+msgstr ""
+
+msgctxt "Renew loan (group modal)"
+msgid "Ok"
+msgstr ""
+
+msgctxt "Renew loan (group modal)"
+msgid "Something went wrong renewing your loans. Please try again."
+msgstr ""
+
+msgctxt "Renew loan (group modal)"
+msgid "Renewing your loans failed"
+msgstr ""
+
+msgctxt "Renew loan (group modal)"
+msgid "For some reason, no one of your loans could be renewed."
+msgstr ""
+
+msgctxt "Renew loan (group modal)"
+msgid "No loans could be renewed"
+msgstr ""
+
+msgctxt "Renew loan (group modal)"
+msgid ""
+"{\"type\":\"plural\",\"text\":[\"1 loan has been renewed.\",\"@count "
+"loans have been renewed.\"]}"
+msgstr ""
+
+msgctxt "Renew loan (group modal)"
+msgid "You have renewed your loans"
+msgstr ""
+
+msgctxt "Renew loan (material)"
+msgid "Ok"
+msgstr ""
+
+msgctxt "Renew loan (material)"
+msgid "omething went wrong renewing your loan. Please try again."
+msgstr ""
+
+msgctxt "Renew loan (material)"
+msgid "Renewal of your loan failed"
+msgstr ""
+
+msgctxt "Renew loan (material)"
+msgid "For some reason, your loan could not be renewed."
+msgstr ""
+
+msgctxt "Renew loan (material)"
+msgid "The loan could not be renewed"
+msgstr ""
+
+msgctxt "Renew loan (material)"
+msgid "1 loan was renewed."
+msgstr ""
+
+msgctxt "Renew loan (material)"
+msgid "You have renewed your loan"
+msgstr ""
+
+msgctxt "Renew loan"
+msgid "Processing..."
+msgstr ""
 
 msgctxt "Search Result"
 msgid "+ more filters"
