@@ -6,3 +6,4 @@ package: "DPL"
 core_version_requirement: ^9 || ^8
 dependencies:
   - dpl_fbs:dpl_fbs
+  - dpl_library_token:dpl_library_token

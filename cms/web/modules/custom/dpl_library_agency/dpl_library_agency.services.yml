@@ -29,7 +29,9 @@ services:
 
   dpl_library_agency.branch.repository.fbs:
     class: Drupal\dpl_library_agency\Branch\FbsBranchRepository
-    arguments: ["@dpl_fbs.agency_api"]
+    arguments:
+      - "@dpl_fbs.api_factory"
+      - "@dpl_library_token.handler"
 
   dpl_library_agency.logger:
     parent: logger.channel_base
