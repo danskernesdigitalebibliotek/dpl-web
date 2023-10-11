@@ -2,6 +2,7 @@
 
 namespace Drupal\dpl_fbs;
 
+use DanskernesDigitaleBibliotek\FBS\Api\ExternalAgencyidPatronsApi;
 use DanskernesDigitaleBibliotek\FBS\Api\ExternalV1AgencyidApi;
 use DanskernesDigitaleBibliotek\FBS\Configuration;
 use Drupal\Core\Config\ConfigManagerInterface;
@@ -45,6 +46,16 @@ class FbsApiFactory {
    */
   public function getAgencyApi(string $token): ExternalV1AgencyidApi {
     return new ExternalV1AgencyidApi(
+      $this->client,
+      $this->getConfiguration($token)
+    );
+  }
+
+  /**
+   * Generate a patron API instance.
+   */
+  public function getPatronApi(string $token): ExternalAgencyidPatronsApi {
+    return new ExternalAgencyidPatronsApi(
       $this->client,
       $this->getConfiguration($token)
     );
