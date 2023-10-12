@@ -32,7 +32,7 @@ jobs:
     - name: Scan translations
       run: LANGUAGE=da task translations:scan
     - name: Commit translations
-      uses: stefanzweifel/git-auto-commit-action@v4
+      uses: stefanzweifel/git-auto-commit-action@v5
       with:
         file_pattern: './web/profiles/dpl_cms/translations/*.po'
         commit_message: New translations were found
