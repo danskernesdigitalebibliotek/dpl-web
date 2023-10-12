@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "acfebfb27aeba695242178e7281686b5",
+    "content-hash": "e9eb52c2b850a10a0c5e648fa9ee1230",
     "packages": [
         {
             "name": "amazeeio/drupal_integrations",
@@ -1086,10 +1086,10 @@
         },
         {
             "name": "danskernesdigitalebibliotek/dpl-react",
-            "version": "0.3.0-rc37",
+            "version": "0.3.0-rc38",
             "dist": {
                 "type": "zip",
-                "url": "https://github.com/danskernesdigitalebibliotek/dpl-react/releases/download/release-develop/dist.zip"
+                "url": "https://github.com/reload/dpl-react/releases/download/release-DDFLSBP-192-samlesag-ensretning-af-skift-af-interesseperiode-og-afhentningssted-pa-reserveringer/dist.zip"
             },
             "require": {
                 "composer/installers": "^1.2.0"
