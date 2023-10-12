@@ -186,6 +186,7 @@ class ReservationListBlock extends BlockBase implements ContainerFactoryPluginIn
       'six-months-text' => $this->t('6 months', [], ['context' => 'Reservation list']),
       'three-months-text' => $this->t('3 months', [], ['context' => 'Reservation list']),
       'two-months-text' => $this->t('2 months', [], ['context' => 'Reservation list']),
+      'shift-text' => $this->t('Shift', [], ['context' => 'Reservation list']),
     ] + DplReactAppsController::externalApiBaseUrls() + DplReactAppsController::getBlockedSettings();
 
     return [
