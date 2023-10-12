@@ -11,6 +11,7 @@ use DanskernesDigitaleBibliotek\FBS\Model\BlockStatus;
 use Drupal\Core\Session\AccountInterface;
 use Drupal\Core\Site\Settings;
 use Drupal\Core\Url;
+use Drupal\dpl_fbs\Patron\BlockedReason;
 use Drupal\dpl_login\AccessToken;
 use Drupal\dpl_login\DplLoginInterface;
 use Drupal\dpl_login\Exception\AccessTokenCreationException;
@@ -69,12 +70,31 @@ function dpl_login_openid_connect_pre_authorize(AccountInterface|FALSE $account,
   $patron = $api->getPatronInformationByPatronIdV2();
 
   $patron_block_status = $patron->getPatron()?->getBlockStatus() ?? [];
-  $block_login = array_map(function (BlockStatus $block_status) {
-    return $block_status->getBlockedReason();
+  $patron_blocked_reasons = array_map(function (BlockStatus $block_status) {
+    try {
+      return BlockedReason::from($block_status->getBlockedReason());
+    }
+    catch (UnexpectedValueException $e) {
+      \Drupal::logger('dpl_login')->warning('Unable to map blocked reason @reason: @message', [
+        '@reason' => $block_status->getBlockedReason(),
+        '@message' => $e->getMessage(),
+      ]);
+      return BlockedReason::UNKNOWN();
+    }
   }, $patron_block_status);
 
-  // Return FALSE to block login.
-  return !(count($block_login) > 0);
+  // Only a subset of the blocked reasons should block login.
+  $deny_login_reasons = [
+    BlockedReason::DECEASED(),
+    BlockedReason::ACCOUNT_STOLEN(),
+    BlockedReason::BLOCKED_FROM_SELFSERVICE(),
+  ];
+  $patron_deny_reasons = array_intersect($patron_blocked_reasons, $deny_login_reasons);
+
+  // Return FALSE to block login if the patron block reasons match one or
+  // more of the deny reasons. The OpenID Connect module will provide
+  // feedback for the user.
+  return !(count($patron_deny_reasons) > 0);
 }
 
 /**
