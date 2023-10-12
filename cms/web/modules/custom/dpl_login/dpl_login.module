@@ -7,11 +7,13 @@
  * Handles authentication against Adgangsplatformen.
  */
 
-use Drupal\Core\Site\Settings;
-use Drupal\dpl_login\AccessToken;
+use DanskernesDigitaleBibliotek\FBS\Model\BlockStatus;
 use Drupal\Core\Session\AccountInterface;
+use Drupal\Core\Site\Settings;
 use Drupal\Core\Url;
+use Drupal\dpl_login\AccessToken;
 use Drupal\dpl_login\DplLoginInterface;
+use Drupal\dpl_login\Exception\AccessTokenCreationException;
 use Drupal\user\UserInterface;
 use function Safe\sprintf as sprintf;
 
@@ -40,6 +42,39 @@ function dpl_login_openid_connect_userinfo_alter(array &$userinfo, array $contex
   $userinfo['name'] = $name;
   // openid_connect module needs the sub for creating the auth map.
   $userinfo['sub'] = $id_hash;
+}
+
+/**
+ * Implements hook_openid_connect_pre_authorize().
+ *
+ * @param \Drupal\Core\Session\AccountInterface|false $account
+ *   User account.
+ * @param mixed[] $context
+ *   Various openid_connect context. Tokens etc.
+ */
+function dpl_login_openid_connect_pre_authorize(AccountInterface|FALSE $account, array $context): bool {
+  try {
+    $token = AccessToken::createFromOpenidConnectContext($context);
+  }
+  catch (AccessTokenCreationException $e) {
+    \Drupal::logger('dpl_login')->error('Unable to create access token: @message', [
+      '@message' => $e->getMessage(),
+    ]);
+    return FALSE;
+  }
+
+  /** @var \Drupal\dpl_fbs\FbsApiFactory $api_factory */
+  $api_factory = \Drupal::service('dpl_fbs.api_factory');
+  $api = $api_factory->getPatronApi($token->token);
+  $patron = $api->getPatronInformationByPatronIdV2();
+
+  $patron_block_status = $patron->getPatron()?->getBlockStatus() ?? [];
+  $block_login = array_map(function (BlockStatus $block_status) {
+    return $block_status->getBlockedReason();
+  }, $patron_block_status);
+
+  // Return FALSE to block login.
+  return !(count($block_login) > 0);
 }
 
 /**
