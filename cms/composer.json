@@ -17,7 +17,7 @@
             "type": "package",
             "package": {
                 "name": "danskernesdigitalebibliotek/dpl-react",
-                "version": "0.3.0-rc38",
+                "version": "0.3.0-rc39",
                 "type": "drupal-library",
                 "dist": {
                     "url": "https://github.com/reload/dpl-react/releases/download/release-DDFLSBP-192-samlesag-ensretning-af-skift-af-interesseperiode-og-afhentningssted-pa-reserveringer/dist.zip",
@@ -54,8 +54,8 @@
         "amazeeio/drupal_integrations": "0.3.5",
         "composer/installers": "1.11.0",
         "cweagans/composer-patches": "1.7.0",
-        "danskernesdigitalebibliotek/dpl-design-system": "^1.7@RC",
-        "danskernesdigitalebibliotek/dpl-react": "^0.3.0@RC",
+        "danskernesdigitalebibliotek/dpl-design-system": "*",
+        "danskernesdigitalebibliotek/dpl-react": "*",
         "danskernesdigitalebibliotek/fbs-client": "*",
         "dealerdirect/phpcodesniffer-composer-installer": "^0.7.1",
         "deoliveiralucas/array-keys-case-transform": "^1.1",
