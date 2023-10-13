@@ -40,7 +40,7 @@ jobs:
           env: ${{ steps.environment.outputs.id }}
           ref: ${{ github.head_ref }}
           logs: ${{ steps.environment.outputs.logs }}
-          log_args: true
+          debug: ${{ runner.debug && 'true' || 'false' }}
       - name: Wait for environment to become available
         uses: nev7n/wait_for_response@v1
         with:
@@ -64,7 +64,7 @@ jobs:
           deployment_id: ${{ steps.deployment.outputs.deployment_id }}
           env_url: ${{ steps.environment.outputs.url }}
           logs: ${{ steps.environment.outputs.logs }}
-          log_args: true
+          debug: ${{ runner.debug && 'true' || 'false' }}
 
   CloseEnvironment:
     name: Close environment
@@ -84,7 +84,7 @@ jobs:
           step: deactivate-env
           token: ${{ secrets.GITHUB_TOKEN }}
           env: ${{ steps.environment.outputs.id }}
-          log_args: true
+          debug: ${{ runner.debug && 'true' || 'false' }}
 
   # We only permit the integration with Lagoon to run if the user is
   # authorized. This saves on resources and ensures we only spin up sites for
