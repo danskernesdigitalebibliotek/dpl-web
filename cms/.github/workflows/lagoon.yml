@@ -32,7 +32,7 @@ jobs:
           echo ::set-output name=url::'https://varnish.pr-${{github.event.number}}.${{ env.LAGOON_PROJECT }}.${{ env.LAGOON_HOST }}/'
           echo ::set-output name=logs::'https://ui.lagoon.${{ env.LAGOON_HOST }}/projects/${{ env.LAGOON_PROJECT }}/${{ env.LAGOON_PROJECT }}-pr-${{github.event.number}}/deployments'
       - name: Start deployment
-        uses: bobheadxi/deployments@v0.6.1
+        uses: bobheadxi/deployments@v1.4.0
         id: deployment
         with:
           step: start
@@ -40,7 +40,7 @@ jobs:
           env: ${{ steps.environment.outputs.id }}
           ref: ${{ github.head_ref }}
           logs: ${{ steps.environment.outputs.logs }}
-          log_args: true
+          debug: ${{ runner.debug && 'true' || 'false' }}
       - name: Wait for environment to become available
         uses: nev7n/wait_for_response@v1
         with:
@@ -56,15 +56,16 @@ jobs:
           interval: 10000
       - name: Finish deployment
         if: always()
-        uses: bobheadxi/deployments@v0.6.1
+        uses: bobheadxi/deployments@v1.4.0
         with:
           step: finish
           token: ${{ secrets.GITHUB_TOKEN }}
           status: ${{ job.status }}
           deployment_id: ${{ steps.deployment.outputs.deployment_id }}
+          env: ${{ steps.deployment.outputs.env }}
           env_url: ${{ steps.environment.outputs.url }}
           logs: ${{ steps.environment.outputs.logs }}
-          log_args: true
+          debug: ${{ runner.debug && 'true' || 'false' }}
 
   CloseEnvironment:
     name: Close environment
@@ -79,12 +80,12 @@ jobs:
         run: |
           echo ::set-output name=id::pr-${{github.event.number}}
       - name: Close environment
-        uses: bobheadxi/deployments@v0.6.1
+        uses: bobheadxi/deployments@v1.4.0
         with:
           step: deactivate-env
           token: ${{ secrets.GITHUB_TOKEN }}
           env: ${{ steps.environment.outputs.id }}
-          log_args: true
+          debug: ${{ runner.debug && 'true' || 'false' }}
 
   # We only permit the integration with Lagoon to run if the user is
   # authorized. This saves on resources and ensures we only spin up sites for
