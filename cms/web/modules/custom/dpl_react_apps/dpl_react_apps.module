@@ -62,6 +62,16 @@ function dpl_react_apps_preprocess_dpl_react_app(array &$variables): void {
     'data-alert-error-close-text' => t('Close', [], ['context' => 'React apps (Global error handling)']),
     'data-alert-error-message-text' => t('An error occurred', [], ['context' => 'React apps (Global error handling)']),
   ];
+
+  // Add urls from other modules.
+  $urls = [];
+  \Drupal::moduleHandler()->invokeAll('dpl_react_apps_urls', [&$urls]);
+  foreach ($urls as $key => $url) {
+    $variables['attributes'] += [
+      'data-' . $key . '-url' => $url,
+    ];
+  }
+
 }
 
 /**
