@@ -62,6 +62,7 @@ jobs:
           token: ${{ secrets.GITHUB_TOKEN }}
           status: ${{ job.status }}
           deployment_id: ${{ steps.deployment.outputs.deployment_id }}
+          env: ${{ steps.deployment.outputs.env }}
           env_url: ${{ steps.environment.outputs.url }}
           logs: ${{ steps.environment.outputs.logs }}
           debug: ${{ runner.debug && 'true' || 'false' }}
