@@ -47,7 +47,16 @@ function dpl_react_apps_preprocess_page(array &$variables): void {
       ] + DplReactAppsController::externalApiBaseUrls(),
     ],
   ];
+}
 
+/**
+ * Implements hook_dpl_react_apps_data().
+ */
+function dpl_react_apps_dpl_react_apps_data(array &$data): void {
+  $data['texts'] += [
+    'alert-error-close' => t('Close', [], ['context' => 'React apps (Global error handling)']),
+    'alert-error-message' => t('An error occurred', [], ['context' => 'React apps (Global error handling)']),
+  ];
 }
 
 /**
@@ -57,21 +66,23 @@ function dpl_react_apps_preprocess_page(array &$variables): void {
  *   The variables for the theme hook.
  */
 function dpl_react_apps_preprocess_dpl_react_app(array &$variables): void {
-  // Since we need these texts in all the apps we add them here.
-  $variables['attributes'] += [
-    'data-alert-error-close-text' => t('Close', [], ['context' => 'React apps (Global error handling)']),
-    'data-alert-error-message-text' => t('An error occurred', [], ['context' => 'React apps (Global error handling)']),
+  // Add data from other modules.
+  $data = [
+    'urls' => [],
+    'texts' => [],
+    'configs' => [],
   ];
-
-  // Add urls from other modules.
-  $urls = [];
-  \Drupal::moduleHandler()->invokeAll('dpl_react_apps_urls', [&$urls]);
-  foreach ($urls as $key => $url) {
-    $variables['attributes'] += [
-      'data-' . $key . '-url' => $url,
-    ];
+  \Drupal::moduleHandler()->invokeAll('dpl_react_apps_data', [&$data]);
+  foreach ($data as $scope => $values) {
+    if (empty($values)) {
+      continue;
+    }
+    foreach ($values as $key => $value) {
+      $variables['attributes'] += [
+        implode('-', ['data', $key, rtrim($scope, 's')]) => $value,
+      ];
+    }
   }
-
 }
 
 /**

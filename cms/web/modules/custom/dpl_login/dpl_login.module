@@ -96,8 +96,8 @@ function _dpl_login_user_has_been_processed(array $openid_connect_context): bool
 }
 
 /**
- * Implements hook_dpl_react_apps_urls().
+ * Implements hook_dpl_react_apps_data().
  */
-function dpl_login_dpl_react_apps_urls(&$urls) {
-  $urls += ["log-out-url" => Url::fromRoute('dpl_login.logout', [], ['absolute' => TRUE])->toString()];
+function dpl_login_dpl_react_apps_data(array &$data): void {
+  $data['urls'] += ["logout" => Url::fromRoute('dpl_login.logout', [], ['absolute' => TRUE])->toString()];
 }
