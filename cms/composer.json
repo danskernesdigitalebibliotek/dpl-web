@@ -17,7 +17,7 @@
             "type": "package",
             "package": {
                 "name": "danskernesdigitalebibliotek/dpl-react",
-                "version": "0.3.0-rc40",
+                "version": "0.3.0-rc41",
                 "type": "drupal-library",
                 "dist": {
                     "url": "https://github.com/reload/dpl-react/releases/download/release-DDFLSBP-192-samlesag-ensretning-af-skift-af-interesseperiode-og-afhentningssted-pa-reserveringer/dist.zip",
