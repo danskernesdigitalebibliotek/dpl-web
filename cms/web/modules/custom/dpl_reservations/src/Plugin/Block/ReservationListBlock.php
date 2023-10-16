@@ -188,6 +188,9 @@ class ReservationListBlock extends BlockBase implements ContainerFactoryPluginIn
       'modal-reservation-form-pickup-header-title-text' => $this->t('Choose pickup library', [], ['context' => 'Reservation list']),
       'modal-reservation-form-pickup-header-description-text' => $this->t('Decide at which library you want to pickup the material.', [], ['context' => 'Reservation list']),
       'save-button-text' => $this->t('Save', [], ['context' => 'Reservation list']),
+      'reservation-success-title-text' => $this->t('Your reservation has been changed', [], ['context' => 'Reservation list']),
+      'reservation-success-sub-title-text' => $this->t('Click the button below to close this window', [], ['context' => 'Reservation list']),
+      'reservation-status-button-text' => $this->t('Close', [], ['context' => 'Reservation list']),
     ] + DplReactAppsController::externalApiBaseUrls() + DplReactAppsController::getBlockedSettings();
 
     return [
