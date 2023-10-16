@@ -191,6 +191,13 @@ class ReservationListBlock extends BlockBase implements ContainerFactoryPluginIn
       'reservation-success-title-text' => $this->t('Your reservation has been changed', [], ['context' => 'Reservation list']),
       'reservation-success-sub-title-text' => $this->t('Click the button below to close this window', [], ['context' => 'Reservation list']),
       'reservation-status-button-text' => $this->t('Close', [], ['context' => 'Reservation list']),
+      'modal-reservation-form-no-interest-after-header-title-text' => $this->t('Change interest deadline', [], ['context' => 'Reservation list']),
+      'modal-reservation-form-no-interest-after-header-description-text' => $this->t('Set date for when your interest for the material will expire.', [], ['context' => 'Reservation list']),
+      'choose-one-text' => $this->t('Choose one', [], ['context' => 'Reservation list']),
+      'change-interest-period-text' => $this->t('Change interest period', [], ['context' => 'Reservation list']),
+      'change-pickup-location-text' => $this->t('Change pickup location', [], ['context' => 'Reservation list']),
+      'modal-reservation-form-no-interest-after-label-text' => $this->t("Change the amount of time after which you're no longer interested in this material.", [], ['context' => 'Reservation list']),
+      'modal-reservation-form-pickup-label-text' => $this->t("Change pickup location for your reservation.", [], ['context' => 'Reservation list']),
     ] + DplReactAppsController::externalApiBaseUrls() + DplReactAppsController::getBlockedSettings();
 
     return [
@@ -199,5 +206,5 @@ class ReservationListBlock extends BlockBase implements ContainerFactoryPluginIn
       '#data' => $data,
     ];
   }
-
 }
+
