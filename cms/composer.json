@@ -78,7 +78,7 @@
         "drupal/redis": "^1.5",
         "drupal/restui": "^1.21",
         "drupal/varnish_purge": "^2.1",
-        "drush/drush": "10.4.3",
+        "drush/drush": "11.6.0",
         "phpdocumentor/reflection-docblock": "^5.3",
         "symfony/property-access": "^4.4",
         "symfony/property-info": "^4.4",
