@@ -1625,7 +1625,7 @@ msgstr "Du har 0 reserveringer klar til lån"
 #: 
 msgctxt "Reservation list"
 msgid "At the moment you have 0 physical reservations"
-msgstr "Du har 0 fysiske reserveringer"
+msgstr "Du har ingen reserveringer på fysiske materialer"
 
 #: 
 msgctxt "Reservation list"
@@ -1635,7 +1635,7 @@ msgstr "Du har 0 reserveringer"
 #: 
 msgctxt "Reservation list"
 msgid "At the moment you have 0 reservations on digital items"
-msgstr "Du har 0 reserveringer på digitale materialer"
+msgstr "Du har ingen reserveringer på digitale materialer"
 
 #: 
 msgctxt "Reservation list"
@@ -2584,7 +2584,7 @@ msgstr "Bemærk at betalte gebyrer først registreres op til 72 timer efter beta
 #: 
 msgctxt "Fees list"
 msgid "You have 0 unpaid fees or replacement costs"
-msgstr "Du har 0 ubetalte gebyrer eller erstatninger"
+msgstr "Du har ingen ubetalte gebyrer eller erstatninger"
 
 #: 
 msgctxt "Fees list"
