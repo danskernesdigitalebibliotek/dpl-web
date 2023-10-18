@@ -174,7 +174,7 @@ class LoanListBlock extends BlockBase implements ContainerFactoryPluginInterface
       'accept-modal-cancel-button-text' => $this->t("Cancel renewal", [], ['context' => 'Loan list']),
       'accept-modal-aria-description-text' => $this->t("accept modal aria description text", [], ['context' => 'Loan list (Aria)']),
       'accept-modal-aria-label-text' => $this->t("accept modal aria label text", [], ['context' => 'Loan list (Aria)']),
-    ] + DplReactAppsController::externalApiBaseUrls() + DplReactAppsController::getBlockedSettings();
+    ] + dpl_react_apps_texts_renewal() + DplReactAppsController::externalApiBaseUrls() + DplReactAppsController::getBlockedSettings();
 
     return [
       '#theme' => 'dpl_react_app',

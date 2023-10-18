@@ -9,6 +9,11 @@ use Drupal\dpl_react\DplReactConfigBase;
  */
 class DplPatronRegSettings extends DplReactConfigBase {
 
+  const AGE_LIMIT = '18';
+  const REDIRECT_ON_USER_CREATED_URL = '';
+  const INFORMATION_VALUE = '';
+  const INFORMATION_FORMAT = 'plain_text';
+
   /**
    * Gets the configuration key for the instant patron registration settings.
    */

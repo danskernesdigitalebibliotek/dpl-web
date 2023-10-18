@@ -10,6 +10,7 @@
 use Drupal\Core\Site\Settings;
 use Drupal\dpl_login\AccessToken;
 use Drupal\Core\Session\AccountInterface;
+use Drupal\Core\Url;
 use Drupal\dpl_login\DplLoginInterface;
 use Drupal\user\UserInterface;
 use function Safe\sprintf as sprintf;
@@ -92,4 +93,11 @@ function _dpl_login_user_has_been_processed(array $openid_connect_context): bool
   // Or if we are sure that the user is an already created user
   // then we do not attach any information.
   return !$openid_connect_context['is_new'] ?? FALSE;
+}
+
+/**
+ * Implements hook_dpl_react_apps_data().
+ */
+function dpl_login_dpl_react_apps_data(array &$data): void {
+  $data['urls'] += ["logout" => Url::fromRoute('dpl_login.logout', [], ['absolute' => TRUE])->toString()];
 }

@@ -1,7 +1,11 @@
 <?php
+
 /**
  * @file
  * Install, update and uninstall functions for the dpl_cms install profile.
+ *
+ * Disable coding standards due to the currently empty content of this file.
+ * @phpcs:disable DrupalPractice.Commenting.CommentEmptyLine.SpacingAfter
  */
 
 // Do not implement dpl_cms_install(). We run site installs with existing

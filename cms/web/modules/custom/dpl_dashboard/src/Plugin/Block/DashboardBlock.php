@@ -183,7 +183,7 @@ class DashboardBlock extends BlockBase implements ContainerFactoryPluginInterfac
       'accept-modal-cancel-button-text' => $this->t("Cancel renewal", [], ['context' => 'Dashboard']),
       'accept-modal-aria-description-text' => $this->t("accept modal aria description text", [], ['context' => 'Dashboard (Aria)']),
       'accept-modal-aria-label-text' => $this->t("accept modal aria label text", [], ['context' => 'Dashboard (Aria)']),
-    ] + DplReactAppsController::externalApiBaseUrls();
+    ] + dpl_react_apps_texts_renewal() + DplReactAppsController::externalApiBaseUrls();
 
     return [
       '#theme' => 'dpl_react_app',

@@ -106,7 +106,6 @@ class ReservationListBlock extends BlockBase implements ContainerFactoryPluginIn
       'reservation-details-borrow-before-text' => $this->t('Borrow before @date', [], ['context' => 'Reservation list']),
       'reservation-details-button-remove-text' => $this->t('Remove your reservation', [], ['context' => 'Reservation list']),
       'reservation-details-cancel-text' => $this->t('Cancel', [], ['context' => 'Reservation list']),
-      'reservation-details-change-text' => $this->t('Apply changes', [], ['context' => 'Reservation list']),
       'reservation-details-date-of-reservation-title-text' => $this->t('Date of reservation', [], ['context' => 'Reservation list']),
       'reservation-details-digital-material-expires-title-text' => $this->t('Borrow before', [], ['context' => 'Reservation list']),
       'reservation-details-digital-reservation-go-to-ereolen-text' => $this->t('Go to eReolen', [], ['context' => 'Reservation list']),
@@ -153,7 +152,6 @@ class ReservationListBlock extends BlockBase implements ContainerFactoryPluginIn
           $this->t('Cancel reservations', [], ['context' => 'Reservation list']),
         ],
       ],
-      'list-details-nothing-selected-label-text' => $this->t('Pick', [], ['context' => 'Reservation list']),
       'material-details-close-modal-aria-label-text' => $this->t("Close material details modal", [], ['context' => 'Reservation list (Aria)']),
       'one-month-text' => $this->t('1 month', [], ['context' => 'Reservation list']),
       'one-year-text' => $this->t('1 year', [], ['context' => 'Reservation list']),
@@ -186,6 +184,20 @@ class ReservationListBlock extends BlockBase implements ContainerFactoryPluginIn
       'six-months-text' => $this->t('6 months', [], ['context' => 'Reservation list']),
       'three-months-text' => $this->t('3 months', [], ['context' => 'Reservation list']),
       'two-months-text' => $this->t('2 months', [], ['context' => 'Reservation list']),
+      'shift-text' => $this->t('Shift', [], ['context' => 'Reservation list']),
+      'modal-reservation-form-pickup-header-title-text' => $this->t('Choose pickup library', [], ['context' => 'Reservation list']),
+      'modal-reservation-form-pickup-header-description-text' => $this->t('Decide at which library you want to pickup the material.', [], ['context' => 'Reservation list']),
+      'save-button-text' => $this->t('Save', [], ['context' => 'Reservation list']),
+      'reservation-success-title-text' => $this->t('Your reservation has been changed', [], ['context' => 'Reservation list']),
+      'reservation-success-sub-title-text' => $this->t('Click the button below to close this window', [], ['context' => 'Reservation list']),
+      'reservation-status-button-text' => $this->t('Close', [], ['context' => 'Reservation list']),
+      'modal-reservation-form-no-interest-after-header-title-text' => $this->t('Change interest deadline', [], ['context' => 'Reservation list']),
+      'modal-reservation-form-no-interest-after-header-description-text' => $this->t('Set date for when your interest for the material will expire.', [], ['context' => 'Reservation list']),
+      'choose-one-text' => $this->t('Choose one', [], ['context' => 'Reservation list']),
+      'change-interest-period-text' => $this->t('Change interest period', [], ['context' => 'Reservation list']),
+      'change-pickup-location-text' => $this->t('Change pickup location', [], ['context' => 'Reservation list']),
+      'modal-reservation-form-no-interest-after-label-text' => $this->t("Change the amount of time after which you're no longer interested in this material.", [], ['context' => 'Reservation list']),
+      'modal-reservation-form-pickup-label-text' => $this->t("Change pickup location for your reservation.", [], ['context' => 'Reservation list']),
     ] + DplReactAppsController::externalApiBaseUrls() + DplReactAppsController::getBlockedSettings();
 
     return [
@@ -194,5 +206,5 @@ class ReservationListBlock extends BlockBase implements ContainerFactoryPluginIn
       '#data' => $data,
     ];
   }
-
 }
+

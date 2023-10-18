@@ -50,7 +50,16 @@ function dpl_react_apps_preprocess_page(array &$variables): void {
       ] + DplReactAppsController::externalApiBaseUrls(),
     ],
   ];
+}
 
+/**
+ * Implements hook_dpl_react_apps_data().
+ */
+function dpl_react_apps_dpl_react_apps_data(array &$data): void {
+  $data['texts'] += [
+    'alert-error-close' => t('Close', [], ['context' => 'React apps (Global error handling)']),
+    'alert-error-message' => t('An error occurred', [], ['context' => 'React apps (Global error handling)']),
+  ];
 }
 
 /**
@@ -60,9 +69,51 @@ function dpl_react_apps_preprocess_page(array &$variables): void {
  *   The variables for the theme hook.
  */
 function dpl_react_apps_preprocess_dpl_react_app(array &$variables): void {
-  // Since we need these texts in all the apps we add them here.
-  $variables['attributes'] += [
-    'data-alert-error-close-text' => t('Close', [], ['context' => 'React apps (Global error handling)']),
-    'data-alert-error-message-text' => t('An error occurred', [], ['context' => 'React apps (Global error handling)']),
+  // Add data from other modules.
+  $data = [
+    'urls' => [],
+    'texts' => [],
+    'configs' => [],
+  ];
+  \Drupal::moduleHandler()->invokeAll('dpl_react_apps_data', [&$data]);
+  foreach ($data as $scope => $values) {
+    if (empty($values)) {
+      continue;
+    }
+    foreach ($values as $key => $value) {
+      $variables['attributes'] += [
+        implode('-', ['data', $key, rtrim($scope, 's')]) => $value,
+      ];
+    }
+  }
+}
+
+/**
+ * Renew texts for multiple apps.
+ *
+ * @return mixed[]
+ *   Texts props.
+ */
+function dpl_react_apps_texts_renewal(): array {
+  // These texts are shared between multiple apps.
+  // Instead of defing them in each app we define them here.
+  return [
+    'renew-button-text' => t('Renew', [], ['context' => 'Renew loan']),
+    'renew-cannot-be-renewed-text' => t('Cannot be renewed', [], ['context' => 'Renew loan']),
+    'renew-group-modal-loans-button-text' => t('Ok', [], ['context' => 'Renew loan (group modal)']),
+    'renew-group-modal-loans-error-status-text' => t('Something went wrong renewing your loans. Please try again.', [], ['context' => 'Renew loan (group modal)']),
+    'renew-group-modal-loans-error-title-text' => t('Renewing your loans failed', [], ['context' => 'Renew loan (group modal)']),
+    'renew-group-modal-loans-no-renewals-possible-error-status-text' => t('For some reason, no one of your loans could be renewed.', [], ['context' => 'Renew loan (group modal)']),
+    'renew-group-modal-loans-no-renewals-possible-error-title-text' => t('No loans could be renewed', [], ['context' => 'Renew loan (group modal)']),
+    'renew-group-modal-loans-success-status-text' => t('{"type":"plural","text":["1 loan has been renewed.","@count loans have been renewed."]}', [], ['context' => 'Renew loan (group modal)']),
+    'renew-group-modal-loans-success-title-text' => t('You have renewed your loans', [], ['context' => 'Renew loan (group modal)']),
+    'renew-material-loan-button-text' => t('Ok', [], ['context' => 'Renew loan (material)']),
+    'renew-material-loan-error-status-text' => t('omething went wrong renewing your loan. Please try again.', [], ['context' => 'Renew loan (material)']),
+    'renew-material-loan-error-title-text' => t('Renewal of your loan failed', [], ['context' => 'Renew loan (material)']),
+    'renew-material-loan-no-renewals-possible-error-status-text' => t('For some reason, your loan could not be renewed.', [], ['context' => 'Renew loan (material)']),
+    'renew-material-loan-no-renewals-possible-error-title-text' => t('The loan could not be renewed', [], ['context' => 'Renew loan (material)']),
+    'renew-material-loan-success-status-text' => t('1 loan was renewed.', [], ['context' => 'Renew loan (material)']),
+    'renew-material-loan-success-title-text' => t('You have renewed your loan', [], ['context' => 'Renew loan (material)']),
+    'renew-processing-text' => t('Processing...', [], ['context' => 'Renew loan']),
   ];
 }

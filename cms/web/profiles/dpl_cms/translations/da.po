@@ -3,8 +3,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2023-10-07 15:21+0000\n"
-"PO-Revision-Date: 2023-10-07 15:21+0000\n"
+"POT-Creation-Date: 2023-10-18 07:44+0000\n"
+"PO-Revision-Date: 2023-10-18 07:44+0000\n"
 "Last-Translator: NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
 "MIME-Version: 1.0\n"
@@ -182,12 +182,12 @@ msgid "Cancel"
 msgstr "Fortryd"
 
 msgctxt "Create patron"
-msgid "create patron change pickup body text"
-msgstr "Her kan du vælge afhentningssted"
+msgid "Select pickup location in the select"
+msgstr ""
 
 msgctxt "Create patron"
-msgid "create patron change pickup header text"
-msgstr "Skift afhentningsbibliotek"
+msgid "Select pickup location"
+msgstr ""
 
 msgctxt "Create patron"
 msgid "Confirm"
@@ -214,12 +214,12 @@ msgid "E-mail"
 msgstr "E-mail"
 
 msgctxt "Create patron"
-msgid "contact info body text"
-msgstr "Kontaktinformation brødtekst"
+msgid "This section is for contact information"
+msgstr ""
 
 msgctxt "Create patron"
-msgid "contact info header text"
-msgstr "Kontaktoplysninger"
+msgid "Contact information"
+msgstr ""
 
 msgctxt "Create patron"
 msgid "Name"
@@ -253,9 +253,7 @@ msgctxt "Create patron"
 msgid ""
 "The pincode should be minimum @pincodeLengthMin and maximum "
 "@pincodeLengthMax characters long"
-msgstr ""
-"Pinkoden skal være minimum @pincodeLengthMin og maksimum "
-"@pincodeLengthMax karakterer lang"
+msgstr "Pinkoden skal indeholde @pincodeLengthMin cifre"
 
 msgctxt "Create patron"
 msgid "The pincodes are not the same"
@@ -422,7 +420,7 @@ msgstr "Udløber snart"
 
 msgctxt "Dashboard"
 msgid "Ready for pickup"
-msgstr "Klar til afhentning"
+msgstr "Klar til lån"
 
 msgctxt "Dashboard"
 msgid "Ready"
@@ -649,10 +647,6 @@ msgid "Cancel"
 msgstr "Fortryd"
 
 msgctxt "Reservation list"
-msgid "Apply changes"
-msgstr "Skift"
-
-msgctxt "Reservation list"
 msgid "Date of reservation"
 msgstr "Reserveringsdato"
 
@@ -690,7 +684,7 @@ msgstr "Afhentningssted"
 
 msgctxt "Reservation list"
 msgid "Ready for pickup"
-msgstr "Klar til afhentning"
+msgstr "Klar til lån"
 
 msgctxt "Reservation list"
 msgid "Save"
@@ -754,7 +748,7 @@ msgstr "Fysiske reserveringer"
 
 msgctxt "Reservation list"
 msgid "At the moment you have 0 reservations ready for pickup"
-msgstr "Du har 0 reserveringer klar til afhentning"
+msgstr "Du har 0 reserveringer klar til lån"
 
 msgctxt "Reservation list"
 msgid "Ready"
@@ -798,10 +792,6 @@ msgstr "Du kan ikke fortryde denne handling"
 msgctxt "Reservation list"
 msgid "Cancel reservations"
 msgstr "Slet reserveringer"
-
-msgctxt "Reservation list"
-msgid "Pick"
-msgstr "Vælg"
 
 msgctxt "Reservation list (Aria)"
 msgid "Close material details modal"
@@ -855,7 +845,7 @@ msgstr "Sæt fysiske reserveringer på pause"
 
 msgctxt "Reservation list (Aria)"
 msgid "This material is ready for pickup"
-msgstr "Dette materiale er klar til afhentning"
+msgstr "Dette materiale er klar til lån"
 
 msgctxt "Reservation list (Aria)"
 msgid "You are the only person queued for this material"
@@ -892,6 +882,60 @@ msgstr "3 måneder"
 msgctxt "Reservation list"
 msgid "2 months"
 msgstr "2 måneder"
+
+msgctxt "Reservation list"
+msgid "Shift"
+msgstr ""
+
+msgctxt "Reservation list"
+msgid "Choose pickup library"
+msgstr ""
+
+msgctxt "Reservation list"
+msgid "Decide at which library you want to pickup the material."
+msgstr ""
+
+msgctxt "Reservation list"
+msgid "Your reservation has been changed"
+msgstr ""
+
+msgctxt "Reservation list"
+msgid "Click the button below to close this window"
+msgstr ""
+
+msgctxt "Reservation list"
+msgid "Close"
+msgstr ""
+
+msgctxt "Reservation list"
+msgid "Change interest deadline"
+msgstr ""
+
+msgctxt "Reservation list"
+msgid "Set date for when your interest for the material will expire."
+msgstr ""
+
+msgctxt "Reservation list"
+msgid "Choose one"
+msgstr ""
+
+msgctxt "Reservation list"
+msgid "Change interest period"
+msgstr ""
+
+msgctxt "Reservation list"
+msgid "Change pickup location"
+msgstr ""
+
+msgctxt "Reservation list"
+msgid ""
+"Change the amount of time after which you're no longer interested in "
+"this material."
+msgstr ""
+
+msgctxt "Reservation list"
+msgid "Change pickup location for your reservation."
+msgstr ""
 
 msgid "Basic settings"
 msgstr "Grundlæggende indstillinger"
@@ -1488,7 +1532,7 @@ msgstr "Nummer @count i køen"
 
 msgctxt "Patron menu"
 msgid "Ready for pickup"
-msgstr "Klar til afhentning"
+msgstr "Klar til lån"
 
 msgctxt "Patron menu"
 msgid "Expires soon"
@@ -1659,7 +1703,7 @@ msgstr "Afleveringsdato"
 
 msgctxt "Patron menu"
 msgid "Reservations ready for pickup"
-msgstr "Reserveringer klar til afhentning"
+msgstr "Reserveringer klar til lån"
 
 msgctxt "Patron menu"
 msgid "Pick up before @date"
@@ -1727,7 +1771,7 @@ msgstr "Udløber snart"
 
 msgctxt "Patron menu"
 msgid "reservations ready for pickup"
-msgstr "Reserveringer klar til afhentning"
+msgstr "Klar til lån"
 
 msgctxt "Patron menu"
 msgid "Close user menu"
@@ -1898,7 +1942,7 @@ msgstr "i"
 
 msgctxt "Search Header"
 msgid "Start typing in order to search"
-msgstr "Test af oversættelser 2.10. Lotte"
+msgstr "Søg efter titel, forfatter eller emne"
 
 msgctxt "Search Header"
 msgid "Loading"
@@ -1934,7 +1978,81 @@ msgstr "Luk"
 
 msgctxt "React apps (Global error handling)"
 msgid "An error occurred"
-msgstr "Der opstod en fejl"
+msgstr ""
+"Der opstod en uventet fejl, prøv igen senere eller kontakt "
+"biblioteket."
+
+msgctxt "Renew loan"
+msgid "Renew"
+msgstr "Forny"
+
+msgctxt "Renew loan"
+msgid "Cannot be renewed"
+msgstr "Kan ikke fornys"
+
+msgctxt "Renew loan (group modal)"
+msgid "Ok"
+msgstr "OK"
+
+msgctxt "Renew loan (group modal)"
+msgid "Something went wrong renewing your loans. Please try again."
+msgstr "Noget gik galt med fornyelsen. Prøv venligst igen."
+
+msgctxt "Renew loan (group modal)"
+msgid "Renewing your loans failed"
+msgstr "Dine lån kunne ikke fornys"
+
+msgctxt "Renew loan (group modal)"
+msgid "For some reason, no one of your loans could be renewed."
+msgstr "Dit lån kunne ikke fornyes. Kontakt evt. biblioteket."
+
+msgctxt "Renew loan (group modal)"
+msgid "No loans could be renewed"
+msgstr "Ingen af dine lån kunne fornys"
+
+msgctxt "Renew loan (group modal)"
+msgid ""
+"{\"type\":\"plural\",\"text\":[\"1 loan has been renewed.\",\"@count "
+"loans have been renewed.\"]}"
+msgstr ""
+"{\"type\":\"plural\",\"text\":[\"1 lån blev fornyet.\",\"@count lån "
+"blev fornyet.\"]}"
+
+msgctxt "Renew loan (group modal)"
+msgid "You have renewed your loans"
+msgstr "Du har fornyet dine lån."
+
+msgctxt "Renew loan (material)"
+msgid "Ok"
+msgstr "OK"
+
+msgctxt "Renew loan (material)"
+msgid "omething went wrong renewing your loan. Please try again."
+msgstr "Noget gik galt med fornyelsen. Prøv venligst igen."
+
+msgctxt "Renew loan (material)"
+msgid "Renewal of your loan failed"
+msgstr "Fornyelsen af dit lån gik ikke igennem"
+
+msgctxt "Renew loan (material)"
+msgid "For some reason, your loan could not be renewed."
+msgstr "Dit lån kunne ikke fornyes. Kontakt evt. biblioteket."
+
+msgctxt "Renew loan (material)"
+msgid "The loan could not be renewed"
+msgstr "Lånet kunne ikke fornys."
+
+msgctxt "Renew loan (material)"
+msgid "1 loan was renewed."
+msgstr "1 lån blev fornyet."
+
+msgctxt "Renew loan (material)"
+msgid "You have renewed your loan"
+msgstr "Du har fornyet dit lån."
+
+msgctxt "Renew loan"
+msgid "Processing..."
+msgstr "Indlæser...Fornyelsen af dit lån gik iggen igennem"
 
 msgctxt "Search Result"
 msgid "+ more filters"
@@ -2078,7 +2196,7 @@ msgstr "Udlånt"
 
 msgctxt "Work Page"
 msgid "Blocked"
-msgstr ""
+msgstr "Din låner er blokeret"
 
 msgctxt "Work Page"
 msgid "The review is not accessible"
@@ -2881,7 +2999,7 @@ msgstr ""
 
 msgctxt "Patron page"
 msgid "CONTACT INFORMATION"
-msgstr "Kontaktinformation"
+msgstr "Kontaktoplysninger"
 
 msgctxt "Patron page"
 msgid "Receive text messages about your loans, reservations, and so forth"
@@ -2967,9 +3085,7 @@ msgctxt "Patron page"
 msgid ""
 "The pincode should be minimum @pincodeLengthMin and maximum "
 "@pincodeLengthMax characters long"
-msgstr ""
-"Pinkoden skal være minimum @pincodeLengthMin og maksimum "
-"@pincodeLengthMax karakterer lang "
+msgstr "Pinkoden skal indeholde @pincodeLengthMin cifre"
 
 msgctxt "Patron page"
 msgid "The pincodes are not the same"
@@ -3160,9 +3276,6 @@ msgstr "Information om brugeroprettelse"
 
 msgid "Patron nem-login authentication"
 msgstr "Bruger autentificering med Nem-login"
-
-msgid "Patron create"
-msgstr "Opret bruger"
 
 msgid "Dashboard settings"
 msgstr "Indstillinger for Dit overblik (Dashboard)"
