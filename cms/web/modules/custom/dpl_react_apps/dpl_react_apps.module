@@ -9,6 +9,7 @@
  * and various other tasks eg. providing rides and controllers for rendering.
  */
 
+use Drupal\Core\Url;
 use Drupal\dpl_react_apps\Controller\DplReactAppsController;
 
 /**
@@ -56,6 +57,15 @@ function dpl_react_apps_dpl_react_apps_data(array &$data): void {
   $data['texts'] += [
     'alert-error-close' => t('Close', [], ['context' => 'React apps (Global error handling)']),
     'alert-error-message' => t('An error occurred', [], ['context' => 'React apps (Global error handling)']),
+  ];
+
+  $data['urls'] += [
+    'search' => DplReactAppsController::ensureUrlIsString(
+      Url::fromRoute('dpl_react_apps.search_result')->toString()
+    ),
+    'dpl-cms-base' => rtrim(self::ensureUrlIsString(
+      Url::fromRoute('<front>', [], ['absolute' => TRUE])->toString()
+    ), "/"),
   ];
 }
 

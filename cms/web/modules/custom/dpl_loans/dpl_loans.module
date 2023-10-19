@@ -6,3 +6,17 @@
  *
  * Renders the loan list.
  */
+
+use Drupal\Core\Url;
+use Drupal\dpl_react_apps\Controller\DplReactAppsController;
+
+/**
+ * Implements hook_dpl_react_apps_data().
+ */
+function dpl_loans_dpl_react_apps_data(array &$data): void {
+  $data['urls'] += [
+    'physical-loans' => DplReactAppsController::ensureUrlIsString(
+      Url::fromRoute('dpl_loans.list', [], ['absolute' => TRUE])->toString()
+    ),
+  ];
+}

@@ -19,6 +19,16 @@ use function Safe\usort as usort;
  * General Settings form for a library agency.
  */
 class GeneralSettingsForm extends ConfigFormBase {
+  // @todo These constants should be defined in a general settings class like we do it in eg dpl_dashboard.
+  const THRESHOLD_CONFIG = '';
+  const RESERVATION_DETAIL_ALLOW_REMOVE_READY_RESERVATIONS_CONFIG = FALSE;
+  const INTEREST_PERIODS_CONFIG = '';
+  const RESERVATION_SMS_NOTIFICATIONS_DISABLED = FALSE;
+  const PAUSE_RESERVATION_INFO_URL = '<front>';
+  const REDIRECT_ON_BLOCKED_URL = '<front>';
+  const BLOCKED_PATRON_E_LINK_URL = '<front>';
+  const EREOLEN_MY_PAGE_URL = '<front>';
+  const PAUSE_RESERVATION_START_DATE_CONFIG = '';
 
   /**
    * GeneralSettingsForm constructor.
@@ -133,20 +143,20 @@ class GeneralSettingsForm extends ConfigFormBase {
     $form['reservations']['reservation_sms_notifications_disabled'] = [
       '#type' => 'checkbox',
       '#title' => $this->t('Disable SMS notifications for reservations', [], ['context' => 'Library Agency Configuration']),
-      '#default_value' => $config->get('reservation_sms_notifications_disabled'),
+      '#default_value' => $config->get('reservation_sms_notifications_disabled') ?? self::RESERVATION_SMS_NOTIFICATIONS_DISABLED,
       '#description' => $this->t('If checked, SMS notifications for patrons will be disabled.', [], ['context' => 'Library Agency Configuration']),
     ];
 
     $form['reservations']['interest_periods_config'] = [
       '#type' => 'textarea',
       '#title' => $this->t('Interest periods for reservation', [], ['context' => 'Library Agency Configuration']),
-      '#default_value' => $config->get('interest_periods_config'),
+      '#default_value' => $config->get('interest_periods_config') ?? self::INTEREST_PERIODS_CONFIG,
     ];
 
     $form['reservations']['reservation_detail_allow_remove_ready_reservations_config'] = [
       '#type' => 'checkbox',
       '#title' => $this->t('Allow removing ready reservations', [], ['context' => 'Library Agency Configuration']),
-      '#default_value' => $config->get('reservation_detail_allow_remove_ready_reservations_config'),
+      '#default_value' => $config->get('reservation_detail_allow_remove_ready_reservations_config') ?? self::RESERVATION_DETAIL_ALLOW_REMOVE_READY_RESERVATIONS_CONFIG,
     ];
 
     $form['reservations']['ereolen_my_page_url'] = [
@@ -160,14 +170,14 @@ class GeneralSettingsForm extends ConfigFormBase {
       '#type' => 'url',
       '#title' => $this->t('Pause reservation link', [], ['context' => 'Library Agency Configuration']),
       '#description' => $this->t('The link with infomation about reservations', [], ['context' => 'Library Agency Configuration']),
-      '#default_value' => $config->get('pause_reservation_info_url') ?? '',
+      '#default_value' => $config->get('pause_reservation_info_url') ?? self::PAUSE_RESERVATION_INFO_URL,
     ];
 
     $form['reservations']['pause_reservation_start_date_config'] = [
       '#type' => 'date',
       '#title' => $this->t('Start date', [], ['context' => 'Library Agency Configuration']),
       '#description' => $this->t('Pause reservation start date', [], ['context' => 'Library Agency Configuration']),
-      '#default_value' => $config->get('pause_reservation_start_date_config'),
+      '#default_value' => $config->get('pause_reservation_start_date_config') ?? self::PAUSE_RESERVATION_START_DATE_CONFIG,
     ];
 
     $form['settings']['blocked_user'] = [
@@ -181,14 +191,14 @@ class GeneralSettingsForm extends ConfigFormBase {
       '#type' => 'url',
       '#title' => $this->t('Redirect blocked user link'),
       '#description' => $this->t('The link to redirect the blocked user to'),
-      '#default_value' => $config->get('redirect_on_blocked_url') ?? '',
+      '#default_value' => $config->get('redirect_on_blocked_url') ?? self::REDIRECT_ON_BLOCKED_URL,
     ];
 
     $form['settings']['blocked_user']['blocked_patron_e_link_url'] = [
       '#type' => 'url',
       '#title' => $this->t('Blocked user link for modal'),
       '#description' => $this->t('If a user has blocked status e, this link appears in the modal'),
-      '#default_value' => $config->get('blocked_patron_e_link_url') ?? '',
+      '#default_value' => $config->get('blocked_patron_e_link_url') ?? self::BLOCKED_PATRON_E_LINK_URL,
     ];
 
     $form['thresholds'] = [
@@ -201,7 +211,7 @@ class GeneralSettingsForm extends ConfigFormBase {
     $form['thresholds']['threshold_config'] = [
       '#type' => 'textfield',
       '#title' => $this->t('Set thresholds', [], ['context' => 'Library Agency Configuration']),
-      '#default_value' => $config->get('threshold_config'),
+      '#default_value' => $config->get('threshold_config') ?? self::THRESHOLD_CONFIG,
     ];
 
     $form['branches'] = [

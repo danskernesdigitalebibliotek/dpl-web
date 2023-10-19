@@ -74,7 +74,6 @@ class FavoritesListMaterialComponentBlock extends BlockBase implements Container
   public function build() {
     $data = [
       // Urls.
-      'dpl-cms-base-url' => DplReactAppsController::dplCmsBaseUrl(),
       'favorites-list-material-component-go-to-list-url' => Url::fromRoute('dpl_favorites_list.list', [], ['absolute' => TRUE])->toString(),
 
       // Texts.

@@ -5,6 +5,9 @@ namespace Drupal\dpl_dashboard\Plugin\Block;
 use Drupal\Core\Block\BlockBase;
 use Drupal\Core\Config\ConfigFactoryInterface;
 use Drupal\Core\Plugin\ContainerFactoryPluginInterface;
+use Drupal\Core\Url;
+use Drupal\dpl_dashboard\DplDashboardSettings;
+use Drupal\dpl_library_agency\Form\GeneralSettingsForm;
 use Drupal\dpl_react\DplReactConfigInterface;
 use Drupal\dpl_react_apps\Controller\DplReactAppsController;
 use Symfony\Component\DependencyInjection\ContainerInterface;
@@ -79,22 +82,18 @@ class DashboardBlock extends BlockBase implements ContainerFactoryPluginInterfac
 
     $data = [
       // Config.
-      'page-size-desktop' => $dashboardSettings->get('page_size_desktop'),
-      'page-size-mobile' => $dashboardSettings->get('page_size_mobile'),
-      'threshold-config' => $this->configFactory->get('dpl_library_agency.general_settings')->get('threshold_config'),
+      'page-size-desktop' => $dashboardSettings->get('page_size_desktop') ?? DplDashboardSettings::PAGE_SIZE_DESKTOP,
+      'page-size-mobile' => $dashboardSettings->get('page_size_mobile') ?? DplDashboardSettings::PAGE_SIZE_MOBILE,
+      'threshold-config' => $this->configFactory->get('dpl_library_agency.general_settings')->get('threshold_config') ?? GeneralSettingsForm::THRESHOLD_CONFIG,
       'interest-periods-config' => DplReactAppsController::getInterestPeriods(),
-      'reservation-detail-allow-remove-ready-reservations-config' => $generalSettings->get('reservation_detail_allow_remove_ready_reservations_config'),
+      'reservation-detail-allow-remove-ready-reservations-config' => $generalSettings->get('reservation_detail_allow_remove_ready_reservations_config') ?? GeneralSettingsForm::RESERVATION_DETAIL_ALLOW_REMOVE_READY_RESERVATIONS_CONFIG,
       'blacklisted-pickup-branches-config' => DplReactAppsController::buildBranchesListProp($this->branchSettings->getExcludedReservationBranches()),
       'branches-config' => DplReactAppsController::buildBranchesJsonProp($this->branchRepository->getBranches()),
 
       // Urls.
-      'dpl-cms-base-url' => DplReactAppsController::dplCmsBaseUrl(),
-      'fees-page-url' => '/user/me/fees',
+      // Cannot find that route. Does it exist?
       'intermediate-url' => '/user/me/intermediates',
-      'reservations-url' => '/user/me/reservations',
-      'physical-loans-url' => '/user/me/loans',
-      'search-url' => DplReactAppsController::searchResultUrl(),
-      'ereolen-my-page-url' => $generalSettings->get('ereolen_my_page_url'),
+      'ereolen-my-page-url' => $generalSettings->get('ereolen_my_page_url') ?? GeneralSettingsForm::EREOLEN_MY_PAGE_URL,
 
       // Texts.
       'reservation-details-others-in-queue-text' => $this->t('Others are queueing for this material', [], ['context' => 'Dashboard']),

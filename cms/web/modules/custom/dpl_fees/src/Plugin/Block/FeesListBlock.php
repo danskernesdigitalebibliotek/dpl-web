@@ -69,7 +69,6 @@ class FeesListBlock extends BlockBase implements ContainerFactoryPluginInterface
       // Urls.
       // @todo images to be done in future tender.
       'available-payment-types-url' => $feesConfig->get('available_payment_types_url'),
-      'dpl-cms-base-url' => DplReactAppsController::dplCmsBaseUrl(),
       'search-url' => DplReactAppsController::searchResultUrl(),
 
       // Texts.

@@ -75,7 +75,6 @@ class RecommenderBlock extends BlockBase implements ContainerFactoryPluginInterf
 
     $data = [
       // Urls.
-      'dpl-cms-base-url' => DplReactAppsController::dplCmsBaseUrl(),
       'material-url' => DplReactAppsController::materialUrl(),
 
       // Texts.

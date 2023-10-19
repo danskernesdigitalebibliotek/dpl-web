@@ -10,6 +10,7 @@ use Drupal\dpl_instant_loan\DplInstantLoanSettings;
 use Drupal\dpl_library_agency\Branch\Branch;
 use Drupal\dpl_library_agency\Branch\BranchRepositoryInterface;
 use Drupal\dpl_library_agency\BranchSettings;
+use Drupal\dpl_library_agency\Form\GeneralSettingsForm;
 use Drupal\dpl_library_agency\ReservationSettings;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use function Safe\json_encode as json_encode;
@@ -110,7 +111,6 @@ class DplReactAppsController extends ControllerBase {
       'branches-config' => $this->buildBranchesJsonProp($this->branchRepository->getBranches()),
       // Urls.
       'auth-url' => self::authUrl(),
-      'dpl-cms-base-url' => self::dplCmsBaseUrl(),
       'material-url' => self::materialUrl(),
       'search-url' => self::searchResultUrl(),
       // Text.
@@ -168,7 +168,7 @@ class DplReactAppsController extends ControllerBase {
     // @todo the general setting should be converted into an settings object and
     // injected into the places it is needed and then remove thies static
     // functions.
-    return \Drupal::configFactory()->get('dpl_library_agency.general_settings')->get('interest_periods_config');
+    return \Drupal::configFactory()->get('dpl_library_agency.general_settings')->get('interest_periods_config') ?? GeneralSettingsForm::INTEREST_PERIODS_CONFIG;
   }
 
   /**
@@ -196,7 +196,6 @@ class DplReactAppsController extends ControllerBase {
       "interest-periods-config" => $this->getInterestPeriods(),
       // Urls.
       'auth-url' => self::authUrl(),
-      'dpl-cms-base-url' => self::dplCmsBaseUrl(),
       'material-url' => self::materialUrl(),
       'search-url' => self::searchResultUrl(),
       // Text.
@@ -418,18 +417,6 @@ class DplReactAppsController extends ControllerBase {
     return self::ensureUrlIsString(
       Url::fromRoute('dpl_login.login')->toString()
     );
-  }
-
-  /**
-   * Get the base url of the API exposed by this site.
-   */
-  public static function dplCmsBaseUrl(): string {
-    $url = self::ensureUrlIsString(
-      Url::fromRoute('<front>', [], ['absolute' => TRUE])->toString()
-    );
-    // The url must not have a trailing slash. The generated client will append
-    // it. Double slashes can lead to all kinds of oddities.
-    return rtrim($url, "/");
   }
 
   /**

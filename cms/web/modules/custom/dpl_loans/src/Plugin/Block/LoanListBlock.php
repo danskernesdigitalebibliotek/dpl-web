@@ -101,7 +101,6 @@ class LoanListBlock extends BlockBase implements ContainerFactoryPluginInterface
       // Urls.
       'fees-page-url' => '/user/me/fees',
       'ereolen-my-page-url' => $generalSettings->get('ereolen_my_page_url'),
-      'dpl-cms-base-url' => DplReactAppsController::dplCmsBaseUrl(),
       'material-overdue-url' => $loanListSettings->get('material_overdue_url'),
 
       // Texts.
