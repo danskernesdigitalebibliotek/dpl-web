@@ -4009,65 +4009,65 @@ msgstr "Kontaktinformation"
 #: 
 msgctxt "Reservation list"
 msgid "Shift"
-msgstr ""
+msgstr "Skift"
 
 #: 
 msgctxt "Reservation list"
 msgid "Choose pickup library"
-msgstr ""
+msgstr "Vælg afhentningsbibliotek"
 
 #: 
 msgctxt "Reservation list"
 msgid "Decide at which library you want to pickup the material."
-msgstr ""
+msgstr "Vælg hvor du vil hente dine materialer."
 
 #: 
 msgctxt "Reservation list"
 msgid "Your reservation has been changed"
-msgstr ""
+msgstr "Din reservering blev ændret"
 
 #: 
 msgctxt "Reservation list"
 msgid "Click the button below to close this window"
-msgstr ""
+msgstr "Klik på knappen for at lukke dette vindue"
 
 #: 
 msgctxt "Reservation list"
 msgid "Close"
-msgstr ""
+msgstr "Luk"
 
 #: 
 msgctxt "Reservation list"
 msgid "Change interest deadline"
-msgstr ""
+msgstr "Skift interesseperiode"
 
 #: 
 msgctxt "Reservation list"
 msgid "Set date for when your interest for the material will expire."
-msgstr ""
+msgstr "Vælg dato for hvornår din interesseperiode udløber"
 
 #: 
 msgctxt "Reservation list"
 msgid "Choose one"
-msgstr ""
+msgstr "Vælg en"
 
 #: 
 msgctxt "Reservation list"
 msgid "Change interest period"
-msgstr ""
+msgstr "Skift interesseperiode"
 
 #: 
 msgctxt "Reservation list"
 msgid "Change pickup location"
-msgstr ""
+msgstr "Skift afhentningssted"
 
 #: 
 msgctxt "Reservation list"
 msgid "Change the amount of time after which you're no longer interested in this material."
-msgstr ""
+msgstr "Vælg dato for hvornår din interesseperiode udløber"
 
 #: 
 msgctxt "Reservation list"
 msgid "Change pickup location for your reservation."
-msgstr ""
+msgstr "Skift afhentningssted"
 
