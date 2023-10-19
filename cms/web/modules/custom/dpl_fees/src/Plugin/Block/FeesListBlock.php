@@ -4,6 +4,7 @@ namespace Drupal\dpl_fees\Plugin\Block;
 
 use Drupal\Core\Block\BlockBase;
 use Drupal\Core\Plugin\ContainerFactoryPluginInterface;
+use Drupal\dpl_fees\DplFeesSettings;
 use Drupal\dpl_react\DplReactConfigInterface;
 use Drupal\dpl_react_apps\Controller\DplReactAppsController;
 use Symfony\Component\DependencyInjection\ContainerInterface;
@@ -63,8 +64,8 @@ class FeesListBlock extends BlockBase implements ContainerFactoryPluginInterface
 
     $data = [
       // Config.
-      "page-size-desktop" => $feesConfig->get('page_size_desktop'),
-      "page-size-mobile" => $feesConfig->get('page_size_mobile'),
+      "page-size-desktop" => $feesConfig->get('page_size_desktop') ?? DplFeesSettings::PAGE_SIZE_DESKTOP,
+      "page-size-mobile" => $feesConfig->get('page_size_mobile') ?? DplFeesSettings::PAGE_SIZE_MOBILE,
 
       // Urls.
       // @todo images to be done in future tender.
