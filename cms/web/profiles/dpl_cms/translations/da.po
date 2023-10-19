@@ -3784,7 +3784,7 @@ msgstr "Afleveringsdato @date"
 #: 
 msgctxt "Loan list"
 msgid "Your fee is raised"
-msgstr "Dit gebyr er forhøjet"
+msgstr "Dit gebyr bliver forhøjet"
 
 #: 
 msgctxt "Loan list"
