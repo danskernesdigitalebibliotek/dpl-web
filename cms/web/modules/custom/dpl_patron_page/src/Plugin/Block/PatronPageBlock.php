@@ -152,6 +152,9 @@ class PatronPageBlock extends BlockBase implements ContainerFactoryPluginInterfa
       'pause-reservation-modal-save-button-label-text' => $this->t('Save', [], ['context' => 'Patron page']),
       'pickup-branches-dropdown-label-text' => $this->t('Choose pickup branch', [], ['context' => 'Patron page']),
       'pickup-branches-dropdown-nothing-selected-text' => $this->t('Nothing selected', [], ['context' => 'Patron page']),
+      'patron-page-phone-input-message-text' => $this->t('The phone number must be 6 to 15 characters in length and should be comprised solely of numbers or begin with a +', [], ['context' => 'Patron page']),
+      'patron-page-handle-response-information-text' => $this->t('Your changes are saved.', [], ['context' => 'Patron page']),
+      'patron-page-loading-text' => $this->t('Loading...', [], ['context' => 'Patron page']),
     ] + DplReactAppsController::externalApiBaseUrls();
 
     return [
@@ -160,5 +163,4 @@ class PatronPageBlock extends BlockBase implements ContainerFactoryPluginInterfa
       '#data' => $data,
     ];
   }
-
 }
