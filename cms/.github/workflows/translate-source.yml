@@ -19,7 +19,7 @@ jobs:
       # added or changed files to the repository.
       contents: write
     steps:
-    - uses: actions/checkout@master
+    - uses: actions/checkout@v4
       with:
         fetch-depth: 0
         token: ${{ secrets.AUTOCOMMIT_GITHUB_TOKEN }}
@@ -56,7 +56,7 @@ jobs:
       # Pages.
       contents: write
     steps:
-    - uses: actions/checkout@master
+    - uses: actions/checkout@v4
       with:
         fetch-depth: 0
     - name: Publish translations to GitHub Pages
