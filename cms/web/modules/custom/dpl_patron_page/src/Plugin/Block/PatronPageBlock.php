@@ -5,6 +5,8 @@ namespace Drupal\dpl_patron_page\Plugin\Block;
 use Drupal\Core\Block\BlockBase;
 use Drupal\Core\Config\ConfigFactoryInterface;
 use Drupal\Core\Plugin\ContainerFactoryPluginInterface;
+use Drupal\dpl_library_agency\Form\GeneralSettingsForm;
+use Drupal\dpl_patron_page\DplPatronPageSettings;
 use Drupal\dpl_react\DplReactConfigInterface;
 use Drupal\dpl_react_apps\Controller\DplReactAppsController;
 use Symfony\Component\DependencyInjection\ContainerInterface;
@@ -84,10 +86,7 @@ class PatronPageBlock extends BlockBase implements ContainerFactoryPluginInterfa
     $patron_page_settings = $this->patronPageSettings->loadConfig();
 
     $general_config = $this->configFactory->get('dpl_library_agency.general_settings');
-    $dateConfig = $general_config->get('pause_reservation_start_date_config');
-    if (is_null($dateConfig)) {
-      $dateConfig = "";
-    }
+    $dateConfig = $general_config->get('pause_reservation_start_date_config') ?? GeneralSettingsForm::PAUSE_RESERVATION_START_DATE_CONFIG;
 
     $data = [
       // Configuration.
@@ -95,14 +94,14 @@ class PatronPageBlock extends BlockBase implements ContainerFactoryPluginInterfa
       'blacklisted-pickup-branches-config' => DplReactAppsController::buildBranchesListProp($this->branchSettings->getExcludedReservationBranches()),
       'branches-config' => DplReactAppsController::buildBranchesJsonProp($this->branchRepository->getBranches()),
       'pause-reservation-start-date-config' => $dateConfig,
-      'pincode-length-max-config' => $patron_page_settings->get('pincode_length_max'),
-      'pincode-length-min-config' => $patron_page_settings->get('pincode_length_min'),
+      'pincode-length-max-config' => $patron_page_settings->get('pincode_length_max') ?? DplPatronPageSettings::PINCODE_LENGTH_MAX,
+      'pincode-length-min-config' => $patron_page_settings->get('pincode_length_min') ?? DplPatronPageSettings::PINCODE_LENGTH_MIN,
       'text-notifications-enabled-config' => (int) $this->reservationSettings->smsNotificationsIsEnabled(),
 
       // Urls.
-      'always-available-ereolen-url' => $patron_page_settings->get('always_available_ereolen'),
-      'delete-patron-url' => $patron_page_settings->get('delete_patron_url'),
-      'pause-reservation-info-url' => $general_config->get('pause_reservation_info_url'),
+      'always-available-ereolen-url' => $patron_page_settings->get('always_available_ereolen') ?? DplPatronPageSettings::ALWAYS_AVAILABLE_EREOLEN,
+      'delete-patron-url' => $patron_page_settings->get('delete_patron_url') ?? DplPatronPageSettings::DELETE_PATRON_URL,
+      'pause-reservation-info-url' => $general_config->get('pause_reservation_info_url') ?? GeneralSettingsForm::PAUSE_RESERVATION_INFO_URL,
 
       // Text strings.
       'date-inputs-end-date-label-text' => $this->t('To', [], ['context' => 'Patron page']),

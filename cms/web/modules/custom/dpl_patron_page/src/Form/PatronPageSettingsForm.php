@@ -77,7 +77,7 @@ class PatronPageSettingsForm extends ConfigFormBase {
     $form['settings']['always_available_ereolen'] = [
       '#type' => 'url',
       '#title' => $this->t('Ereolen always available'),
-      '#default_value' => $config->get('always_available_ereolen') ?? '',
+      '#default_value' => $config->get('always_available_ereolen') ?? DplPatronPageSettings::ALWAYS_AVAILABLE_EREOLEN,
     ];
 
     $form['settings']['pincode_length_min'] = [

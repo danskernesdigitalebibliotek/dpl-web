@@ -11,6 +11,8 @@ use Drupal\Core\Config\ConfigManagerInterface;
  */
 class ReservationSettings implements CacheableDependencyInterface {
 
+  const RESERVATION_SMS_NOTIFICATIONS_DISABLED = FALSE;
+
   /**
    * Constructs a new ReservationSettings object.
    */
@@ -33,7 +35,7 @@ class ReservationSettings implements CacheableDependencyInterface {
    */
   public function smsNotificationsIsEnabled(): bool {
     $config = $this->getConfig();
-    return ($config->get('reservation_sms_notifications_disabled')) ? FALSE : TRUE;
+    return $config->get('reservation_sms_notifications_disabled') ?? self::RESERVATION_SMS_NOTIFICATIONS_DISABLED;
   }
 
   /**
