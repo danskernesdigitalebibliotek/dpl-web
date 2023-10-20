@@ -20,7 +20,7 @@ use function Safe\usort as usort;
  */
 class GeneralSettingsForm extends ConfigFormBase {
   // @todo These constants should be defined in a general settings class like we do it in eg dpl_dashboard.
-  const THRESHOLD_CONFIG = '';
+  const THRESHOLD_CONFIG = "{ 'colorThresholds': { 'danger': '0', 'warning': '6' } }";
   const RESERVATION_DETAIL_ALLOW_REMOVE_READY_RESERVATIONS_CONFIG = FALSE;
   const INTEREST_PERIODS_CONFIG = '';
   const RESERVATION_SMS_NOTIFICATIONS_DISABLED = FALSE;

@@ -5,6 +5,7 @@ namespace Drupal\dpl_loans\Form;
 use Drupal\Core\Config\ConfigFactoryInterface;
 use Drupal\Core\Form\ConfigFormBase;
 use Drupal\Core\Form\FormStateInterface;
+use Drupal\dpl_loans\DplLoansSettings;
 use Drupal\dpl_react\DplReactConfigInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
@@ -70,13 +71,13 @@ class LoanListSettingsForm extends ConfigFormBase {
       '#type' => 'url',
       '#title' => $this->t('Material overdue url', [], ['context' => 'Loan list (settings)']),
       '#description' => $this->t('The link to the material overdue page', [], ['context' => 'Loan list (settings)']),
-      '#default_value' => $config->get('material_overdue_url') ?? '',
+      '#default_value' => $config->get('material_overdue_url') ?? DplLoansSettings::MATERIAL_OVERDUE_URL,
     ];
 
     $form['settings']['page_size_mobile'] = [
       '#type' => 'number',
       '#title' => $this->t('Page size mobile', [], ['context' => 'Loan list (settings)']),
-      '#default_value' => $config->get('page_size_mobile') ?? 25,
+      '#default_value' => $config->get('page_size_mobile') ?? DplLoansSettings::PAGE_SIZE_MOBILE,
       '#min' => 0,
       '#step' => 1,
     ];
@@ -84,7 +85,7 @@ class LoanListSettingsForm extends ConfigFormBase {
     $form['settings']['page_size_desktop'] = [
       '#type' => 'number',
       '#title' => $this->t('Page size desktop', [], ['context' => 'Loan list (settings)']),
-      '#default_value' => $config->get('page_size_desktop') ?? 25,
+      '#default_value' => $config->get('page_size_desktop') ?? DplLoansSettings::PAGE_SIZE_DESKTOP,
       '#min' => 0,
       '#step' => 1,
     ];
