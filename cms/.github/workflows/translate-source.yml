@@ -37,7 +37,7 @@ jobs:
         file_pattern: './web/profiles/dpl_cms/translations/*.po'
         commit_message: New translations were found
     - name: Make Poeditor look for changes
-      uses: distributhor/workflow-webhook@v2
+      uses: distributhor/workflow-webhook@v3
       env:
         webhook_url: ${{ secrets.POEDITOR_WEBHOOK_URL }}
         # POEditor webhooks to not use secrets but the action requires a value.
