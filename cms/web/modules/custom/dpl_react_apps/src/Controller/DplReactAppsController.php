@@ -410,20 +410,6 @@ class DplReactAppsController extends ControllerBase {
   }
 
   /**
-   * Make sure that generated url is a string.
-   *
-   * @param string|\Drupal\Core\GeneratedUrl $url
-   *   Drupal generated Url object.
-   */
-  public static function ensureUrlIsString(string|GeneratedUrl $url): string {
-    if ($url instanceof GeneratedUrl) {
-      $url = $url->getGeneratedUrl();
-    }
-
-    return $url;
-  }
-
-  /**
    * Get the strings and config for blocked user.
    *
    * @return mixed[]

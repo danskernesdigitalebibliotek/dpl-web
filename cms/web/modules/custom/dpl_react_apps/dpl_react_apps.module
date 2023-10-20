@@ -9,6 +9,7 @@
  * and various other tasks eg. providing rides and controllers for rendering.
  */
 
+use Drupal\Core\GeneratedUrl;
 use Drupal\Core\Url;
 use Drupal\dpl_react_apps\Controller\DplReactAppsController;
 
@@ -58,17 +59,17 @@ function dpl_react_apps_dpl_react_apps_data(array &$data): void {
   ];
 
   $data['urls'] += [
-    'dpl-cms-base' => rtrim(self::ensureUrlIsString(
+    'dpl-cms-base' => rtrim(dpl_react_apps_ensure_url_is_string(
       Url::fromRoute('<front>', [], ['absolute' => TRUE])->toString()
     ), "/"),
-    'search' => DplReactAppsController::ensureUrlIsString(
+    'search' => dpl_react_apps_ensure_url_is_string(
       Url::fromRoute('dpl_react_apps.search_result')->toString()
     ),
     // React applications support variable replacement where variables are
     // prefixed with :. Specify the variable :workid as a parameter to let the
     // route build the url. Unfortunatly : will be encoded as %3A so we have to
     // decode the url again to make replacement work.
-    'material' => urldecode(self::ensureUrlIsString(
+    'material' => urldecode(dpl_react_apps_ensure_url_is_string(
       Url::fromRoute('dpl_react_apps.work')
         ->setRouteParameter('wid', ':workid')
         ->toString()
@@ -130,4 +131,18 @@ function dpl_react_apps_texts_renewal(): array {
     'renew-material-loan-success-title-text' => t('You have renewed your loan', [], ['context' => 'Renew loan (material)']),
     'renew-processing-text' => t('Processing...', [], ['context' => 'Renew loan']),
   ];
+}
+
+/**
+ * Make sure that generated url is a string.
+ *
+ * @param string|\Drupal\Core\GeneratedUrl $url
+ *   Drupal generated Url object.
+ */
+function dpl_react_apps_ensure_url_is_string(string|GeneratedUrl $url): string {
+  if ($url instanceof GeneratedUrl) {
+    $url = $url->getGeneratedUrl();
+  }
+
+  return $url;
 }
