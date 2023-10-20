@@ -104,7 +104,7 @@ class PatronRegistrationBlock extends BlockBase implements ContainerFactoryPlugi
 
     // Get user info endpoint from OpenIdConnect configuration.
     $configuration = $this->configFactory->get('openid_connect.settings.adgangsplatformen');
-    $userInfoEndpoint = $configuration->get('settings')['userinfo_endpoint'];
+    $userInfoEndpoint = $configuration->get('settings')['userinfo_endpoint'] ?? '/';
 
     $data = [
       // Configuration.
