@@ -109,8 +109,7 @@ class DplReactAppsController extends ControllerBase {
       'blacklisted-availability-branches-config' => $this->buildBranchesListProp($this->branchSettings->getExcludedAvailabilityBranches()),
       'blacklisted-search-branches-config' => $this->buildBranchesListProp($this->branchSettings->getExcludedSearchBranches()),
       'branches-config' => $this->buildBranchesJsonProp($this->branchRepository->getBranches()),
-      // Urls.
-      'auth-url' => self::authUrl(),
+
       // Text.
       'add-more-filters-text' => $this->t('+ more filters', [], ['context' => 'Search Result']),
       'availability-available-text' => $this->t('Available', [], ['context' => 'Search Result']),
@@ -192,8 +191,7 @@ class DplReactAppsController extends ControllerBase {
       'sms-notifications-for-reservations-enabled-config' => (int) $this->reservationSettings->smsNotificationsIsEnabled(),
       'instant-loan-config' => $this->instantLoanSettings->getConfig(),
       "interest-periods-config" => $this->getInterestPeriods(),
-      // Urls.
-      'auth-url' => self::authUrl(),
+
       // Text.
       'already-reserved-text' => $this->t('Already reserved', [], ['context' => 'Work Page']),
       'approve-reservation-text' => $this->t('Approve reservation', [], ['context' => 'Work Page']),
@@ -379,15 +377,6 @@ class DplReactAppsController extends ControllerBase {
     $this->renderer->addCacheableDependency($app, $this->instantLoanSettings);
 
     return $app;
-  }
-
-  /**
-   * Builds an url for the react apps to use for authorization.
-   */
-  public static function authUrl(): string {
-    return self::ensureUrlIsString(
-      Url::fromRoute('dpl_login.login')->toString()
-    );
   }
 
   /**

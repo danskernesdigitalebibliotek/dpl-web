@@ -12,6 +12,7 @@ use Drupal\dpl_login\AccessToken;
 use Drupal\Core\Session\AccountInterface;
 use Drupal\Core\Url;
 use Drupal\dpl_login\DplLoginInterface;
+use Drupal\dpl_react_apps\Controller\DplReactAppsController;
 use Drupal\user\UserInterface;
 use function Safe\sprintf as sprintf;
 
@@ -99,7 +100,14 @@ function _dpl_login_user_has_been_processed(array $openid_connect_context): bool
  * Implements hook_dpl_react_apps_data().
  */
 function dpl_login_dpl_react_apps_data(array &$data): void {
-  $data['urls'] += ["logout" => Url::fromRoute('dpl_login.logout', [], ['absolute' => TRUE])->toString()];
+  $data['urls'] += [
+    "logout" => DplReactAppsController::ensureUrlIsString(
+      Url::fromRoute('dpl_login.logout', [], ['absolute' => TRUE])->toString()
+    ),
+    'auth' => DplReactAppsController::ensureUrlIsString(
+      Url::fromRoute('dpl_login.login')->toString()
+    ),
+  ];
 }
 
 /**
