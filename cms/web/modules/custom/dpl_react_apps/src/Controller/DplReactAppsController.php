@@ -111,8 +111,6 @@ class DplReactAppsController extends ControllerBase {
       'branches-config' => $this->buildBranchesJsonProp($this->branchRepository->getBranches()),
       // Urls.
       'auth-url' => self::authUrl(),
-      'material-url' => self::materialUrl(),
-      'search-url' => self::searchResultUrl(),
       // Text.
       'add-more-filters-text' => $this->t('+ more filters', [], ['context' => 'Search Result']),
       'availability-available-text' => $this->t('Available', [], ['context' => 'Search Result']),
@@ -196,8 +194,6 @@ class DplReactAppsController extends ControllerBase {
       "interest-periods-config" => $this->getInterestPeriods(),
       // Urls.
       'auth-url' => self::authUrl(),
-      'material-url' => self::materialUrl(),
-      'search-url' => self::searchResultUrl(),
       // Text.
       'already-reserved-text' => $this->t('Already reserved', [], ['context' => 'Work Page']),
       'approve-reservation-text' => $this->t('Approve reservation', [], ['context' => 'Work Page']),
@@ -383,31 +379,6 @@ class DplReactAppsController extends ControllerBase {
     $this->renderer->addCacheableDependency($app, $this->instantLoanSettings);
 
     return $app;
-  }
-
-  /**
-   * Builds an url for the local search result route.
-   */
-  public static function searchResultUrl(): string {
-    return self::ensureUrlIsString(
-      Url::fromRoute('dpl_react_apps.search_result')->toString()
-    );
-  }
-
-  /**
-   * Builds an url for the material/work route.
-   */
-  public static function materialUrl(): string {
-    // React applications support variable replacement where variables are
-    // prefixed with :. Specify the variable :workid as a parameter to let the
-    // route build the url. Unfortunatly : will be encoded as %3A so we have to
-    // decode the url again to make replacement work.
-    $url = self::ensureUrlIsString(
-      Url::fromRoute('dpl_react_apps.work')
-        ->setRouteParameter('wid', ':workid')
-        ->toString()
-    );
-    return urldecode($url);
   }
 
   /**

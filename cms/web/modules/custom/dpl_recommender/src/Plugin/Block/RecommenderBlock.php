@@ -74,9 +74,6 @@ class RecommenderBlock extends BlockBase implements ContainerFactoryPluginInterf
     $recommenderSettings = $this->recommenderSettings->loadConfig();
 
     $data = [
-      // Urls.
-      'material-url' => DplReactAppsController::materialUrl(),
-
       // Texts.
       'material-and-author-text' => $this->t('and', [], ['context' => 'Recommender']),
       'add-to-favorites-aria-label-text' => $this->t("Add @title to favorites list", [], ['context' => 'Recommender (Aria)']),
