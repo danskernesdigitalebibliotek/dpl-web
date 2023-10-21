@@ -99,9 +99,9 @@ class PatronPageBlock extends BlockBase implements ContainerFactoryPluginInterfa
       'text-notifications-enabled-config' => (int) $this->reservationSettings->smsNotificationsIsEnabled(),
 
       // Urls.
-      'always-available-ereolen-url' => $patron_page_settings->get('always_available_ereolen') ?? DplPatronPageSettings::ALWAYS_AVAILABLE_EREOLEN,
-      'delete-patron-url' => $patron_page_settings->get('delete_patron_url') ?? DplPatronPageSettings::DELETE_PATRON_URL,
-      'pause-reservation-info-url' => $general_config->get('pause_reservation_info_url') ?? GeneralSettingsForm::PAUSE_RESERVATION_INFO_URL,
+      'always-available-ereolen-url' => dpl_react_apps_format_app_url($patron_page_settings->get('always_available_ereolen'), DplPatronPageSettings::ALWAYS_AVAILABLE_EREOLEN),
+      'delete-patron-url' => dpl_react_apps_format_app_url($patron_page_settings->get('delete_patron_url'), DplPatronPageSettings::DELETE_PATRON_URL),
+      'pause-reservation-info-url' => dpl_react_apps_format_app_url($patron_page_settings->get('pause_reservation_info_url'), GeneralSettingsForm::PAUSE_RESERVATION_INFO_URL),
 
       // Text strings.
       'date-inputs-end-date-label-text' => $this->t('To', [], ['context' => 'Patron page']),

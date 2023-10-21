@@ -93,7 +93,7 @@ class DashboardBlock extends BlockBase implements ContainerFactoryPluginInterfac
       // Urls.
       // Cannot find that route. Does it exist?
       'intermediate-url' => '/user/me/intermediates',
-      'ereolen-my-page-url' => $generalSettings->get('ereolen_my_page_url') ?? GeneralSettingsForm::EREOLEN_MY_PAGE_URL,
+      'ereolen-my-page-url' => dpl_react_apps_format_app_url($generalSettings->get('ereolen_my_page_url'), GeneralSettingsForm::EREOLEN_MY_PAGE_URL),
 
       // Texts.
       'reservation-details-others-in-queue-text' => $this->t('Others are queueing for this material', [], ['context' => 'Dashboard']),

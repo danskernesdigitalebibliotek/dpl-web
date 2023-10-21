@@ -3,9 +3,7 @@
 namespace Drupal\dpl_react_apps\Controller;
 
 use Drupal\Core\Controller\ControllerBase;
-use Drupal\Core\GeneratedUrl;
 use Drupal\Core\Render\RendererInterface;
-use Drupal\Core\Url;
 use Drupal\dpl_instant_loan\DplInstantLoanSettings;
 use Drupal\dpl_library_agency\Branch\Branch;
 use Drupal\dpl_library_agency\Branch\BranchRepositoryInterface;
@@ -418,8 +416,8 @@ class DplReactAppsController extends ControllerBase {
   public static function getBlockedSettings(): array {
     $blockedSettings = \Drupal::configFactory()->get('dpl_library_agency.general_settings');
     $blockedData = [
-      'redirect-on-blocked-url' => $blockedSettings->get('redirect_on_blocked_url') ?? '',
-      'blocked-patron-e-link-url' => $blockedSettings->get('blocked_patron_e_link_url') ?? '',
+      'redirect-on-blocked-url' => dpl_react_apps_format_app_url($blockedSettings->get('redirect_on_blocked_url'), GeneralSettingsForm::REDIRECT_ON_BLOCKED_URL),
+      'blocked-patron-e-link-url' => dpl_react_apps_format_app_url($blockedSettings->get('blocked_patron_e_link_url'), GeneralSettingsForm::BLOCKED_PATRON_E_LINK_URL),
       'blocked-patron-d-title-text' => t('Blocked patron title text (d)', [], ['context' => 'Blocked user']),
       'blocked-patron-d-body-text' => t('Blocked patron body text (d)', [], ['context' => 'Blocked user']),
       'blocked-patron-s-title-text' => t('Blocked patron title text (s)', [], ['context' => 'Blocked user']),

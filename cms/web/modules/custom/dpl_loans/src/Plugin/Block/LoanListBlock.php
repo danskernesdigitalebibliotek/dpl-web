@@ -101,8 +101,8 @@ class LoanListBlock extends BlockBase implements ContainerFactoryPluginInterface
       "threshold-config" => $this->getThresholdConfig(),
 
       // Urls.
-      'ereolen-my-page-url' => $generalSettings->get('ereolen_my_page_url') ?? GeneralSettingsForm::EREOLEN_MY_PAGE_URL,
-      'material-overdue-url' => $loanListSettings->get('material_overdue_url') ?? DplLoansSettings::MATERIAL_OVERDUE_URL,
+      'ereolen-my-page-url' => dpl_react_apps_format_app_url($generalSettings->get('ereolen_my_page_url'), GeneralSettingsForm::EREOLEN_MY_PAGE_URL),
+      'material-overdue-url' => dpl_react_apps_format_app_url($loanListSettings->get('material_overdue_url'), DplLoansSettings::MATERIAL_OVERDUE_URL),
 
       // Texts.
       'material-and-author-text' => $this->t('and', [], ['context' => 'Loan list']),

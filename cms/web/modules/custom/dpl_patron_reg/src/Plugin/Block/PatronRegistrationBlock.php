@@ -113,7 +113,7 @@ class PatronRegistrationBlock extends BlockBase implements ContainerFactoryPlugi
       'min-age-config' => $config->get('age_limit') ?? DplPatronRegSettings::AGE_LIMIT,
       'pincode-length-max-config' => $patron_page_settings->get('pincode_length_max') ?? DplPatronPageSettings::PINCODE_LENGTH_MAX,
       'pincode-length-min-config' => $patron_page_settings->get('pincode_length_min') ?? DplPatronPageSettings::PINCODE_LENGTH_MIN,
-      'redirect-on-user-created-url' => $config->get('redirect_on_user_created_url') ?? DplPatronRegSettings::REDIRECT_ON_USER_CREATED_URL,
+      'redirect-on-user-created-url' => dpl_react_apps_format_app_url($config->get('redirect_on_user_created_url'), DplPatronRegSettings::REDIRECT_ON_USER_CREATED_URL),
       'userinfo-url' => $userInfoEndpoint,
       'text-notifications-enabled-config' => (int) $this->reservationSettings->smsNotificationsIsEnabled(),
 

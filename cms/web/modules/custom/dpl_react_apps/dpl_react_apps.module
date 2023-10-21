@@ -59,9 +59,7 @@ function dpl_react_apps_dpl_react_apps_data(array &$data): void {
   ];
 
   $data['urls'] += [
-    'dpl-cms-base' => rtrim(dpl_react_apps_ensure_url_is_string(
-      Url::fromRoute('<front>', [], ['absolute' => TRUE])->toString()
-    ), "/"),
+    'dpl-cms-base' => dpl_react_apps_get_dpl_cms_base_url(),
     'search' => dpl_react_apps_ensure_url_is_string(
       Url::fromRoute('dpl_react_apps.search_result')->toString()
     ),
@@ -145,4 +143,33 @@ function dpl_react_apps_ensure_url_is_string(string|GeneratedUrl $url): string {
   }
 
   return $url;
+}
+
+/**
+ * Get the base url of the dpl cms.
+ *
+ * @return string
+ *   The base url of the dpl cms.
+ */
+function dpl_react_apps_get_dpl_cms_base_url(): string {
+  return rtrim(dpl_react_apps_ensure_url_is_string(
+    Url::fromRoute('<front>', [], ['absolute' => TRUE])->toString()
+  ), "/");
+}
+
+/**
+ * Format urls used by the apps.
+ *
+ * @param string $url
+ *   Url to format.
+ *
+ * @return string
+ *   Formatted url.
+ */
+function dpl_react_apps_format_app_url(string $url, string $fallbackUrl = ''): string {
+  if (!empty($url)) {
+    return $url;
+  }
+
+  return $fallbackUrl ?: dpl_react_apps_get_dpl_cms_base_url();
 }
