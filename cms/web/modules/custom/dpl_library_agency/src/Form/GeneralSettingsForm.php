@@ -23,7 +23,7 @@ class GeneralSettingsForm extends ConfigFormBase {
   const THRESHOLD_CONFIG = "{ 'colorThresholds': { 'danger': '0', 'warning': '6' } }";
   const RESERVATION_DETAIL_ALLOW_REMOVE_READY_RESERVATIONS_CONFIG = FALSE;
   const INTEREST_PERIODS_CONFIG = '';
-  const RESERVATION_SMS_NOTIFICATIONS_DISABLED = FALSE;
+  const RESERVATION_SMS_NOTIFICATIONS_ENABLED = TRUE;
   const PAUSE_RESERVATION_INFO_URL = '';
   const REDIRECT_ON_BLOCKED_URL = '';
   const BLOCKED_PATRON_E_LINK_URL = '';
@@ -140,11 +140,11 @@ class GeneralSettingsForm extends ConfigFormBase {
       '#collapsed' => FALSE,
     ];
 
-    $form['reservations']['reservation_sms_notifications_disabled'] = [
+    $form['reservations']['reservation_sms_notifications_enabled'] = [
       '#type' => 'checkbox',
-      '#title' => $this->t('Disable SMS notifications for reservations', [], ['context' => 'Library Agency Configuration']),
-      '#default_value' => $config->get('reservation_sms_notifications_disabled') ?? self::RESERVATION_SMS_NOTIFICATIONS_DISABLED,
-      '#description' => $this->t('If checked, SMS notifications for patrons will be disabled.', [], ['context' => 'Library Agency Configuration']),
+      '#title' => $this->t('Enable SMS notifications for reservations', [], ['context' => 'Library Agency Configuration']),
+      '#default_value' => $config->get('reservation_sms_notifications_enabled') ?? self::RESERVATION_SMS_NOTIFICATIONS_ENABLED,
+      '#description' => $this->t('If checked, SMS notifications for patrons are enabled.', [], ['context' => 'Library Agency Configuration']),
     ];
 
     $form['reservations']['interest_periods_config'] = [
@@ -266,7 +266,7 @@ class GeneralSettingsForm extends ConfigFormBase {
       ->set('threshold_config', $form_state->getValue('threshold_config'))
       ->set('reservation_detail_allow_remove_ready_reservations_config', $form_state->getValue('reservation_detail_allow_remove_ready_reservations_config'))
       ->set('interest_periods_config', $form_state->getValue('interest_periods_config'))
-      ->set('reservation_sms_notifications_disabled', $form_state->getValue('reservation_sms_notifications_disabled'))
+      ->set('reservation_sms_notifications_enabled', $form_state->getValue('reservation_sms_notifications_enabled'))
       ->set('pause_reservation_info_url', $form_state->getValue('pause_reservation_info_url'))
       ->set('redirect_on_blocked_url', $form_state->getValue('redirect_on_blocked_url'))
       ->set('blocked_patron_e_link_url', $form_state->getValue('blocked_patron_e_link_url'))
