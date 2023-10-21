@@ -24,10 +24,10 @@ class GeneralSettingsForm extends ConfigFormBase {
   const RESERVATION_DETAIL_ALLOW_REMOVE_READY_RESERVATIONS_CONFIG = FALSE;
   const INTEREST_PERIODS_CONFIG = '';
   const RESERVATION_SMS_NOTIFICATIONS_DISABLED = FALSE;
-  const PAUSE_RESERVATION_INFO_URL = '<front>';
-  const REDIRECT_ON_BLOCKED_URL = '<front>';
-  const BLOCKED_PATRON_E_LINK_URL = '<front>';
-  const EREOLEN_MY_PAGE_URL = '<front>';
+  const PAUSE_RESERVATION_INFO_URL = '';
+  const REDIRECT_ON_BLOCKED_URL = '';
+  const BLOCKED_PATRON_E_LINK_URL = '';
+  const EREOLEN_MY_PAGE_URL = '';
   const PAUSE_RESERVATION_START_DATE_CONFIG = '';
 
   /**
