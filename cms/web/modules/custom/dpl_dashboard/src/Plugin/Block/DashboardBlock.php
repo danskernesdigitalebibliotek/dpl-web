@@ -86,7 +86,7 @@ class DashboardBlock extends BlockBase implements ContainerFactoryPluginInterfac
       'page-size-mobile' => $dashboardSettings->get('page_size_mobile') ?? DplDashboardSettings::PAGE_SIZE_MOBILE,
       'threshold-config' => $this->configFactory->get('dpl_library_agency.general_settings')->get('threshold_config') ?? GeneralSettingsForm::THRESHOLD_CONFIG,
       'interest-periods-config' => DplReactAppsController::getInterestPeriods(),
-      'reservation-detail-allow-remove-ready-reservations-config' => $generalSettings->get('reservation_detail_allow_remove_ready_reservations_config') ?? GeneralSettingsForm::RESERVATION_DETAIL_ALLOW_REMOVE_READY_RESERVATIONS_CONFIG,
+      'reservation-detail-allow-remove-ready-reservations-config' => $generalSettings->get('reservation_detail_allow_remove_ready_reservations') ?? GeneralSettingsForm::RESERVATION_DETAIL_ALLOW_REMOVE_READY_RESERVATIONS,
       'blacklisted-pickup-branches-config' => DplReactAppsController::buildBranchesListProp($this->branchSettings->getExcludedReservationBranches()),
       'branches-config' => DplReactAppsController::buildBranchesJsonProp($this->branchRepository->getBranches()),
 

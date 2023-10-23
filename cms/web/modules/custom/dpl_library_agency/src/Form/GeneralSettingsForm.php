@@ -21,7 +21,7 @@ use function Safe\usort as usort;
 class GeneralSettingsForm extends ConfigFormBase {
   // @todo These constants should be defined in a general settings class like we do it in eg dpl_dashboard.
   const THRESHOLD_CONFIG = "{ 'colorThresholds': { 'danger': '0', 'warning': '6' } }";
-  const RESERVATION_DETAIL_ALLOW_REMOVE_READY_RESERVATIONS_CONFIG = FALSE;
+  const RESERVATION_DETAIL_ALLOW_REMOVE_READY_RESERVATIONS = FALSE;
   const INTEREST_PERIODS_CONFIG = '';
   const RESERVATION_SMS_NOTIFICATIONS_ENABLED = TRUE;
   const PAUSE_RESERVATION_INFO_URL = '';
@@ -153,10 +153,10 @@ class GeneralSettingsForm extends ConfigFormBase {
       '#default_value' => $config->get('interest_periods_config') ?? self::INTEREST_PERIODS_CONFIG,
     ];
 
-    $form['reservations']['reservation_detail_allow_remove_ready_reservations_config'] = [
+    $form['reservations']['reservation_detail_allow_remove_ready_reservations'] = [
       '#type' => 'checkbox',
       '#title' => $this->t('Allow removing ready reservations', [], ['context' => 'Library Agency Configuration']),
-      '#default_value' => $config->get('reservation_detail_allow_remove_ready_reservations_config') ?? self::RESERVATION_DETAIL_ALLOW_REMOVE_READY_RESERVATIONS_CONFIG,
+      '#default_value' => $config->get('reservation_detail_allow_remove_ready_reservations') ?? self::RESERVATION_DETAIL_ALLOW_REMOVE_READY_RESERVATIONS,
     ];
 
     $form['reservations']['ereolen_my_page_url'] = [
@@ -264,7 +264,7 @@ class GeneralSettingsForm extends ConfigFormBase {
   public function submitForm(array &$form, FormStateInterface $form_state): void {
     $this->config('dpl_library_agency.general_settings')
       ->set('threshold_config', $form_state->getValue('threshold_config'))
-      ->set('reservation_detail_allow_remove_ready_reservations_config', $form_state->getValue('reservation_detail_allow_remove_ready_reservations_config'))
+      ->set('reservation_detail_allow_remove_ready_reservations', $form_state->getValue('reservation_detail_allow_remove_ready_reservations'))
       ->set('interest_periods_config', $form_state->getValue('interest_periods_config'))
       ->set('reservation_sms_notifications_enabled', $form_state->getValue('reservation_sms_notifications_enabled'))
       ->set('pause_reservation_info_url', $form_state->getValue('pause_reservation_info_url'))
