@@ -160,13 +160,15 @@ function dpl_react_apps_get_dpl_cms_base_url(): string {
 /**
  * Format urls used by the apps.
  *
- * @param string $url
+ * @param string|null $url
  *   Url to format.
+ * @param string $fallbackUrl
+ *   If the url param is not present.
  *
  * @return string
  *   Formatted url.
  */
-function dpl_react_apps_format_app_url(string $url, string $fallbackUrl = ''): string {
+function dpl_react_apps_format_app_url(string|NULL $url, string $fallbackUrl = ''): string {
   if (!empty($url)) {
     return $url;
   }

@@ -5,7 +5,6 @@ namespace Drupal\dpl_dashboard\Plugin\Block;
 use Drupal\Core\Block\BlockBase;
 use Drupal\Core\Config\ConfigFactoryInterface;
 use Drupal\Core\Plugin\ContainerFactoryPluginInterface;
-use Drupal\Core\Url;
 use Drupal\dpl_dashboard\DplDashboardSettings;
 use Drupal\dpl_library_agency\Form\GeneralSettingsForm;
 use Drupal\dpl_react\DplReactConfigInterface;
