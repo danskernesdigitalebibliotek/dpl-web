@@ -90,7 +90,7 @@ function dpl_cms_locale_translation_batch_fetch_finished(bool $success, array $r
     _locale_refresh_translations($languages);
     \Drupal::logger('dpl_cms')->notice("New translations were imported and translation cache was cleared.");
   }
-  // TODO: remove this logging when we are sure that
+  // @todo remove this logging when we are sure that
   // the translation cache functionality works.
   else {
     \Drupal::logger('dpl_cms')->notice("No new translations were imported.");
