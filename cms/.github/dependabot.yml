@@ -27,7 +27,7 @@ updates:
           - "minor"
           - "patch"
         exclude-patterns:
-          - "drupal/core*"
+          - "drupal/*"
       drupal-core-minor-major-releases:
         patterns:
           - "drupal/core*"
