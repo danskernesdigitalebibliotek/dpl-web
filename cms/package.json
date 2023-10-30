@@ -4,7 +4,7 @@
   "license": "AGPL-3.0",
   "devDependencies": {
     "@apidevtools/swagger-cli": "^4.0.4",
-    "@lhci/cli": "^0.12.0",
+    "@lhci/cli": "^0.9",
     "@types/node": "^18.11.11",
     "@typescript-eslint/eslint-plugin": "^5.62.0",
     "@typescript-eslint/parser": "^5.38.0",
