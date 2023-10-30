@@ -126,13 +126,6 @@ class GeneralSettingsForm extends ConfigFormBase {
       $disabled = TRUE;
     }
 
-    $form['fee_page'] = [
-      '#type' => 'fieldset',
-      '#title' => $this->t('Fee page', [], ['context' => 'Library Agency Configuration']),
-      '#collapsible' => FALSE,
-      '#collapsed' => FALSE,
-    ];
-
     $form['reservations'] = [
       '#type' => 'fieldset',
       '#title' => $this->t('Reservations', [], ['context' => 'Library Agency Configuration']),
