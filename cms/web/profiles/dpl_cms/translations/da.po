@@ -45,7 +45,7 @@ msgstr "Luk pop-up"
 #: 
 msgctxt "Loan list (Aria)"
 msgid "This modal groups loans after due date and makes it possible to renew said loans"
-msgstr "Denne modal grupperer lån efter afleveringsdato og gør det muligt at forny disse lån"
+msgstr "Denne modal grupperer lån efter afleveringsfrist og gør det muligt at forny disse lån"
 
 #: 
 msgctxt "Loan list"
@@ -55,12 +55,12 @@ msgstr "Vælg mulige"
 #: 
 msgctxt "Loan list"
 msgid "Due date @date"
-msgstr "Afleveringsdato @date"
+msgstr "Afleveringsfrist @date"
 
 #: 
 msgctxt "Loan list"
 msgid "The due date of return is exceeded, therefore you will be charged a fee, when the item is returned"
-msgstr "Afleveringsdatoen er overskredet, du vil derfor blive pålagt et gebyr ved aflevering"
+msgstr "Afleveringsfristen er overskredet, du vil derfor blive pålagt et gebyr ved aflevering"
 
 #: 
 msgctxt "Loan list"
@@ -75,12 +75,12 @@ msgstr "Kan afleveres på alle kommunens biblioteker"
 #: 
 msgctxt "Loan list (Aria)"
 msgid "This button shows all loans in the list"
-msgstr "Oplist lån efter afleveringsdato"
+msgstr "Oplist lån efter afleveringsfrist"
 
 #: 
 msgctxt "Loan list (Aria)"
 msgid "This button filters the list, so only one the materials that have the same due date is shown"
-msgstr "Gruppér materialer med samme afleveringsdato"
+msgstr "Gruppér materialer med samme afleveringsfrist"
 
 #: 
 msgctxt "Loan list"
@@ -205,7 +205,7 @@ msgstr "Udløber"
 #: 
 msgctxt "Loan list"
 msgid "Due date"
-msgstr "Afleveringsdato"
+msgstr "Afleveringsfrist"
 
 #: 
 msgctxt "Loan list"
@@ -2049,7 +2049,7 @@ msgstr "Forny (@count)"
 #: 
 msgctxt "Dashboard"
 msgid "Due date @date"
-msgstr "Afleveringsdato @date"
+msgstr "Afleveringsfrist @date"
 
 #: 
 msgctxt "Dashboard"
@@ -2059,7 +2059,7 @@ msgstr "Læs mere om gebyrer"
 #: 
 msgctxt "Dashboard"
 msgid "The due date of return is exceeded, therefore you will be charged a fee, when the item is returned"
-msgstr "Afleveringsdatoen er overskredet, du vil derfor blive pålagt et gebyr ved aflevering"
+msgstr "Afleveringsfristen er overskredet, du vil derfor blive pålagt et gebyr ved aflevering"
 
 #: 
 msgctxt "Dashboard"
@@ -3389,7 +3389,7 @@ msgstr "Digitale"
 #: 
 msgctxt "Dashboard"
 msgid "This modal groups loans after due date and makes it possible to renew said loans"
-msgstr "Denne pop-up grupperer lån efter afleveringsdato og gør det muligt at forny disse lån"
+msgstr "Denne pop-up grupperer lån efter afleveringsfrist og gør det muligt at forny disse lån"
 
 #: 
 msgctxt "Dashboard"
@@ -3470,7 +3470,7 @@ msgstr "Viser @itemsShown ud af @hitcount lån"
 #: 
 msgctxt "Patron menu"
 msgid "Due date @date"
-msgstr "Afleveringsdato @date"
+msgstr "Afleveringsfrist @date"
 
 #: 
 msgctxt "Patron menu"
@@ -3510,7 +3510,7 @@ msgstr "Materialet er reserveret af en anden"
 #: 
 msgctxt "Patron menu"
 msgid "The due date of return is exceeded, therefore you will be charged a fee, when the item is returned"
-msgstr "Afleveringsdatoen er overskredet, du vil derfor blive pålagt et gebyr ved aflevering"
+msgstr "Afleveringsfristen er overskredet, du vil derfor blive pålagt et gebyr ved aflevering"
 
 #: 
 msgctxt "Patron menu"
@@ -3560,7 +3560,7 @@ msgstr "Udlånsdato"
 #: 
 msgctxt "Patron menu"
 msgid "Due date"
-msgstr "Afleveringsdato"
+msgstr "Afleveringsfrist"
 
 #: 
 msgctxt "Patron menu"
@@ -3779,7 +3779,7 @@ msgstr "Udløbsdato @date"
 #: 
 msgctxt "Loan list"
 msgid "Due date physical @date"
-msgstr "Afleveringsdato @date"
+msgstr "Afleveringsfrist @date"
 
 #: 
 msgctxt "Loan list"
