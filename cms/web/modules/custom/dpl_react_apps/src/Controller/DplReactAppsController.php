@@ -4,6 +4,7 @@ namespace Drupal\dpl_react_apps\Controller;
 
 use Drupal\Core\Controller\ControllerBase;
 use Drupal\Core\Render\RendererInterface;
+use Drupal\dpl_fbs\Form\FbsSettingsForm;
 use Drupal\dpl_instant_loan\DplInstantLoanSettings;
 use Drupal\dpl_library_agency\Branch\Branch;
 use Drupal\dpl_library_agency\Branch\BranchRepositoryInterface;
@@ -385,9 +386,7 @@ class DplReactAppsController extends ControllerBase {
    */
   public static function externalApiBaseUrls(): array {
     $react_apps_settings = \Drupal::configFactory()->get('dpl_react_apps.settings');
-
-    /** @var \Drupal\dpl_fbs\DplFbsSettings $fbs_settings*/
-    $fbs_settings = \Drupal::service('dpl_fbs.settings');
+    $fbs_settings = \Drupal::config(FbsSettingsForm::CONFIG_KEY);
 
     /** @var \Drupal\dpl_publizon\DplPublizonSettings $publizon_settings*/
     $publizon_settings = \Drupal::service('dpl_publizon.settings');
@@ -396,7 +395,7 @@ class DplReactAppsController extends ControllerBase {
     $services = $react_apps_settings->get('services') ?? [];
 
     // Get base urls from other modules.
-    $services['fbs'] = ['base_url' => $fbs_settings->loadConfig()->get('base_url')];
+    $services['fbs'] = ['base_url' => $fbs_settings->get('base_url')];
     $services['publizon'] = ['base_url' => $publizon_settings->loadConfig()->get('base_url')];
 
     $urls = [];

@@ -51,6 +51,8 @@
     'patron_menu': patron.menu
   } only %}
 
+  {{ drupal_block('system_messages_block') }}
+
   <main id="main-content" role="main">
     {{ page.content }}
   </main>

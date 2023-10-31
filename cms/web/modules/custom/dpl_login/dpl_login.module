@@ -7,11 +7,15 @@
  * Handles authentication against Adgangsplatformen.
  */
 
-use Drupal\Core\Site\Settings;
-use Drupal\dpl_login\AccessToken;
+use DanskernesDigitaleBibliotek\FBS\ApiException;
+use DanskernesDigitaleBibliotek\FBS\Model\BlockStatus;
 use Drupal\Core\Session\AccountInterface;
+use Drupal\Core\Site\Settings;
 use Drupal\Core\Url;
+use Drupal\dpl_fbs\Patron\BlockedReason;
+use Drupal\dpl_login\AccessToken;
 use Drupal\dpl_login\DplLoginInterface;
+use Drupal\dpl_login\Exception\AccessTokenCreationException;
 use Drupal\user\UserInterface;
 use function Safe\sprintf as sprintf;
 
@@ -40,6 +44,68 @@ function dpl_login_openid_connect_userinfo_alter(array &$userinfo, array $contex
   $userinfo['name'] = $name;
   // openid_connect module needs the sub for creating the auth map.
   $userinfo['sub'] = $id_hash;
+}
+
+/**
+ * Implements hook_openid_connect_pre_authorize().
+ *
+ * @param \Drupal\Core\Session\AccountInterface|false $account
+ *   User account.
+ * @param mixed[] $context
+ *   Various openid_connect context. Tokens etc.
+ */
+function dpl_login_openid_connect_pre_authorize(AccountInterface|FALSE $account, array $context): bool {
+  $logger = \Drupal::logger('dpl_login');
+
+  try {
+    $token = AccessToken::createFromOpenidConnectContext($context);
+  }
+  catch (AccessTokenCreationException $e) {
+    $logger->error('Authorization blocked. Unable to create access token: @message', [
+      '@message' => $e->getMessage(),
+    ]);
+    return FALSE;
+  }
+
+  /** @var \Drupal\dpl_fbs\FbsApiFactory $api_factory */
+  $api_factory = \Drupal::service('dpl_fbs.api_factory');
+  $api = $api_factory->getPatronApi($token->token);
+
+  try {
+    $patron = $api->getPatronInformationByPatronIdV2();
+    $patron_block_status = $patron->getPatron()?->getBlockStatus() ?? [];
+    $patron_blocked_reasons = array_map(function (BlockStatus $block_status) use ($logger) {
+      try {
+        return BlockedReason::from($block_status->getBlockedReason());
+      }
+      catch (UnexpectedValueException $e) {
+        $logger->warning('Unable to map blocked reason @reason: @message', [
+          '@reason' => $block_status->getBlockedReason(),
+          '@message' => $e->getMessage(),
+        ]);
+        return BlockedReason::UNKNOWN();
+      }
+    }, $patron_block_status);
+
+    // Only a subset of the blocked reasons should block login.
+    $deny_login_reasons = [
+      BlockedReason::DECEASED(),
+      BlockedReason::ACCOUNT_STOLEN(),
+      BlockedReason::BLOCKED_FROM_SELFSERVICE(),
+    ];
+    $patron_deny_reasons = array_intersect($patron_blocked_reasons, $deny_login_reasons);
+
+    // Return FALSE to block login if the patron block reasons match one or
+    // more of the deny reasons. The OpenID Connect module will provide
+    // feedback.
+    return !(count($patron_deny_reasons) > 0);
+  }
+  catch (ApiException $e) {
+    $logger->error('Authorization blocked. Unable to get patron information: @message', [
+      '@message' => $e->getMessage(),
+    ]);
+    return FALSE;
+  }
 }
 
 /**

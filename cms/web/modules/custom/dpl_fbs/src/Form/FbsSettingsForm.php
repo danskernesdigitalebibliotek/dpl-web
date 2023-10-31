@@ -2,48 +2,21 @@
 
 namespace Drupal\dpl_fbs\Form;
 
-use Drupal\Core\Config\ConfigFactoryInterface;
 use Drupal\Core\Form\ConfigFormBase;
 use Drupal\Core\Form\FormStateInterface;
-use Drupal\dpl_react\DplReactConfigInterface;
-use Symfony\Component\DependencyInjection\ContainerInterface;
 
 /**
  * FBS setting form.
  */
 class FbsSettingsForm extends ConfigFormBase {
-
-  /**
-   * Default constructor.
-   *
-   * @param \Drupal\Core\Config\ConfigFactoryInterface $config_factory
-   *   Config factory.
-   * @param \Drupal\dpl_react\DplReactConfigInterface $configService
-   *   FBS configuration object.
-   */
-  public function __construct(
-    ConfigFactoryInterface $config_factory,
-    protected DplReactConfigInterface $configService,
-  ) {
-    parent::__construct($config_factory);
-  }
-
-  /**
-   * {@inheritdoc}
-   */
-  public static function create(ContainerInterface $container): self {
-    return new static(
-      $container->get('config.factory'),
-      \Drupal::service('dpl_fbs.settings')
-    );
-  }
+  const CONFIG_KEY = 'dpl_fbs.settings';
 
   /**
    * {@inheritdoc}
    */
   protected function getEditableConfigNames(): array {
     return [
-      $this->configService->getConfigKey(),
+      self::CONFIG_KEY,
     ];
   }
 
@@ -58,7 +31,7 @@ class FbsSettingsForm extends ConfigFormBase {
    * {@inheritdoc}
    */
   public function buildForm(array $form, FormStateInterface $form_state): array {
-    $config = $this->configService->loadConfig();
+    $config = $this->config(self::CONFIG_KEY);
 
     $form['settings'] = [
       '#type' => 'fieldset',
@@ -81,7 +54,7 @@ class FbsSettingsForm extends ConfigFormBase {
   public function submitForm(array &$form, FormStateInterface $form_state): void {
     parent::submitForm($form, $form_state);
 
-    $this->config($this->configService->getConfigKey())
+    $this->config(self::CONFIG_KEY)
       ->set('base_url', $form_state->getValue('base_url'))
       ->save();
   }
