@@ -3,7 +3,6 @@
 namespace Drupal\dpl_patron_reg\Plugin\Block;
 
 use Drupal\Core\Block\BlockBase;
-use Drupal\Core\Config\ConfigFactoryInterface;
 use Drupal\Core\Plugin\ContainerFactoryPluginInterface;
 use Drupal\dpl_library_agency\BranchSettings;
 use Drupal\dpl_library_agency\Branch\BranchRepositoryInterface;
@@ -33,8 +32,6 @@ class PatronRegistrationBlock extends BlockBase implements ContainerFactoryPlugi
    *   The plugin ID for the plugin instance.
    * @param array $plugin_definition
    *   The plugin implementation definition.
-   * @param \Drupal\Core\Config\ConfigFactoryInterface $configFactory
-   *   Drupal config factory to get FBS and Publizon settings.
    * @param \Drupal\dpl_library_agency\BranchSettings $branchSettings
    *   The branch-settings for branch config.
    * @param \Drupal\dpl_library_agency\Branch\BranchRepositoryInterface $branchRepository
@@ -50,7 +47,6 @@ class PatronRegistrationBlock extends BlockBase implements ContainerFactoryPlugi
     array $configuration,
     string $plugin_id,
     array $plugin_definition,
-    private ConfigFactoryInterface $configFactory,
     private BranchSettings $branchSettings,
     private BranchRepositoryInterface $branchRepository,
     protected ReservationSettings $reservationSettings,
@@ -69,7 +65,6 @@ class PatronRegistrationBlock extends BlockBase implements ContainerFactoryPlugi
       $configuration,
       $plugin_id,
       $plugin_definition,
-      $container->get('config.factory'),
       $container->get('dpl_library_agency.branch_settings'),
       $container->get('dpl_library_agency.branch.repository'),
       $container->get('dpl_library_agency.reservation_settings'),
@@ -102,10 +97,6 @@ class PatronRegistrationBlock extends BlockBase implements ContainerFactoryPlugi
     $config = $this->patronRegSettings->loadConfig();
     $patron_page_settings = $this->patronPageSettings->loadConfig();
 
-    // Get user info endpoint from OpenIdConnect configuration.
-    $configuration = $this->configFactory->get('openid_connect.settings.adgangsplatformen');
-    $userInfoEndpoint = $configuration->get('settings')['userinfo_endpoint'] ?? '/';
-
     $data = [
       // Configuration.
       'blacklisted-pickup-branches-config' => $this->buildBranchesListProp($this->branchSettings->getExcludedReservationBranches()),
@@ -114,7 +105,6 @@ class PatronRegistrationBlock extends BlockBase implements ContainerFactoryPlugi
       'pincode-length-max-config' => $patron_page_settings->get('pincode_length_max') ?? DplPatronPageSettings::PINCODE_LENGTH_MAX,
       'pincode-length-min-config' => $patron_page_settings->get('pincode_length_min') ?? DplPatronPageSettings::PINCODE_LENGTH_MIN,
       'redirect-on-user-created-url' => dpl_react_apps_format_app_url($config->get('redirect_on_user_created_url'), DplPatronRegSettings::REDIRECT_ON_USER_CREATED_URL),
-      'userinfo-url' => $userInfoEndpoint,
       'text-notifications-enabled-config' => (int) $this->reservationSettings->smsNotificationsIsEnabled(),
 
       // Texts.

@@ -99,13 +99,10 @@ function _dpl_login_user_has_been_processed(array $openid_connect_context): bool
  * Implements hook_dpl_react_apps_data().
  */
 function dpl_login_dpl_react_apps_data(array &$data): void {
+  $openid_config = \Drupal::config('openid_connect.settings.adgangsplatformen');
+
   $data['urls'] += [
-    "logout" => dpl_react_apps_ensure_url_is_string(
-      Url::fromRoute('dpl_login.logout', [], ['absolute' => TRUE])->toString()
-    ),
-    'auth' => dpl_react_apps_ensure_url_is_string(
-      Url::fromRoute('dpl_login.login')->toString()
-    ),
+    'userinfo' => $openid_config->get('settings')['userinfo_endpoint'] ?? '/',
   ];
 }
 

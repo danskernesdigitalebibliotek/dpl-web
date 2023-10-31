@@ -72,6 +72,12 @@ function dpl_react_apps_dpl_react_apps_data(array &$data): void {
         ->setRouteParameter('wid', ':workid')
         ->toString()
     )),
+    'logout' => dpl_react_apps_ensure_url_is_string(
+      Url::fromRoute('dpl_login.logout', [], ['absolute' => TRUE])->toString()
+    ),
+    'auth' => dpl_react_apps_ensure_url_is_string(
+      Url::fromRoute('dpl_login.login')->toString()
+    ),
   ];
 }
 
