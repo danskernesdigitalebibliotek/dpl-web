@@ -179,5 +179,7 @@ function dpl_react_apps_format_app_url(string|NULL $url, string $fallbackUrl = '
     return $url;
   }
 
+  // Use the fallback url that is provided and if that is not present use the
+  // dpl cms base url which is the absolute url to front page of the site.
   return $fallbackUrl ?: dpl_react_apps_get_dpl_cms_base_url();
 }
