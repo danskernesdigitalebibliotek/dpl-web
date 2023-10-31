@@ -969,15 +969,7 @@
             "version": "0.3.0-rc43",
             "dist": {
                 "type": "zip",
-<<<<<<< HEAD
-                "url": "https://github.com/danskernesdigitalebibliotek/dpl-react/releases/download/release-develop/dist.zip"
-=======
-<<<<<<< HEAD
-                "url": "https://github.com/reload/dpl-react/releases/download/release-DDFLSBP-246-vi-skal-sorge-for-at-vi-har-defaults-pa-al-configuration-af-dpl-react-apps/dist.zip"
-=======
                 "url": "https://github.com/reload/dpl-react/releases/download/release-DDFLSBP-84-brugerprofil-systemfeedback-mangler-pa-gem/dist.zip"
->>>>>>> 30847bb4 (Switch composer to target dpl-react feature branch)
->>>>>>> 4d7a6856 (Switch composer to target dpl-react feature branch)
             },
             "require": {
                 "composer/installers": "^1.2.0"
@@ -3668,9 +3660,7 @@
                 }
             },
             "notification-url": "https://packages.drupal.org/8/downloads",
-            "license": [
-                "GPL-2.0-or-later"
-            ],
+            "license": ["GPL-2.0-or-later"],
             "authors": [
                 {
                     "name": "Chi",
@@ -3679,10 +3669,7 @@
             ],
             "description": "A Twig extension with some useful functions and filters for Drupal development.",
             "homepage": "https://www.drupal.org/project/twig_tweak",
-            "keywords": [
-                "Drupal",
-                "Twig"
-            ],
+            "keywords": ["Drupal", "Twig"],
             "support": {
                 "source": "https://git.drupalcode.org/project/twig_tweak",
                 "issues": "https://www.drupal.org/project/issues/twig_tweak"
@@ -4803,14 +4790,10 @@
                 "psr-4": {
                     "MyCLabs\\Enum\\": "src/"
                 },
-                "classmap": [
-                    "stubs/Stringable.php"
-                ]
+                "classmap": ["stubs/Stringable.php"]
             },
             "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
+            "license": ["MIT"],
             "authors": [
                 {
                     "name": "PHP Enum contributors",
@@ -4819,9 +4802,7 @@
             ],
             "description": "PHP Enum implementation",
             "homepage": "http://github.com/myclabs/php-enum",
-            "keywords": [
-                "enum"
-            ],
+            "keywords": ["enum"],
             "support": {
                 "issues": "https://github.com/myclabs/php-enum/issues",
                 "source": "https://github.com/myclabs/php-enum/tree/1.8.4"
