@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "a62539e998ab5300ea452c069e89a2b6",
+    "content-hash": "0ebf1824681d973aafd024655fc4f33e",
     "packages": [
         {
             "name": "amazeeio/drupal_integrations",
@@ -1012,10 +1012,10 @@
         },
         {
             "name": "danskernesdigitalebibliotek/dpl-react",
-            "version": "0.3.0-rc45",
+            "version": "0.3.0-rc46",
             "dist": {
                 "type": "zip",
-                "url": "https://github.com/reload/dpl-react/releases/download/release-DDFLSBP-246-vi-skal-sorge-for-at-vi-har-defaults-pa-al-configuration-af-dpl-react-apps/dist.zip"
+                "url": "https://github.com/danskernesdigitalebibliotek/dpl-react/releases/download/release-develop/dist.zip"
             },
             "require": {
                 "composer/installers": "^1.2.0"

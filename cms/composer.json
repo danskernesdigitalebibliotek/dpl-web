@@ -17,10 +17,10 @@
             "type": "package",
             "package": {
                 "name": "danskernesdigitalebibliotek/dpl-react",
-                "version": "0.3.0-rc45",
+                "version": "0.3.0-rc46",
                 "type": "drupal-library",
                 "dist": {
-                    "url": "https://github.com/reload/dpl-react/releases/download/release-DDFLSBP-246-vi-skal-sorge-for-at-vi-har-defaults-pa-al-configuration-af-dpl-react-apps/dist.zip",
+                    "url": "https://github.com/danskernesdigitalebibliotek/dpl-react/releases/download/release-develop/dist.zip",
                     "type": "zip"
                 },
                 "require": {
