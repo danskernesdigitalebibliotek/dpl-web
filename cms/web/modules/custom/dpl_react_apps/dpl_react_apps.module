@@ -83,6 +83,9 @@ function dpl_react_apps_dpl_react_apps_data(array &$data): void {
     'auth' => dpl_react_apps_ensure_url_is_string(
       Url::fromRoute('dpl_login.login')->toString()
     ),
+    'dashboard' => dpl_react_apps_ensure_url_is_string(
+      Url::fromRoute('dpl_dashboard.list')->toString()
+    ),
   ];
 }
 
