@@ -67,13 +67,6 @@ class LoanListSettingsForm extends ConfigFormBase {
       '#tree' => FALSE,
     ];
 
-    $form['settings']['material_overdue_url'] = [
-      '#type' => 'url',
-      '#title' => $this->t('Material overdue url', [], ['context' => 'Loan list (settings)']),
-      '#description' => $this->t('The link to the material overdue page', [], ['context' => 'Loan list (settings)']),
-      '#default_value' => $config->get('material_overdue_url') ?? DplLoansSettings::MATERIAL_OVERDUE_URL,
-    ];
-
     $form['settings']['page_size_mobile'] = [
       '#type' => 'number',
       '#title' => $this->t('Page size mobile', [], ['context' => 'Loan list (settings)']),
