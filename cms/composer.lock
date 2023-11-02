@@ -1003,10 +1003,10 @@
         },
         {
             "name": "danskernesdigitalebibliotek/dpl-design-system",
-            "version": "v1.7.0-rc25",
+            "version": "v1.7.0-rc24",
             "dist": {
                 "type": "zip",
-                "url": "https://github.com/danskernesdigitalebibliotek/dpl-design-system/releases/download/release-develop/dist.zip"
+                "url": "https://github.com/reload/dpl-design-system/releases/download/release-feature%2Fadvanced-search/dist.zip"
             },
             "type": "drupal-library"
         },
