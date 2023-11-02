@@ -93,7 +93,6 @@ class LoanListSettingsForm extends ConfigFormBase {
     parent::submitForm($form, $form_state);
 
     $this->config($this->configService->getConfigKey())
-      ->set('material_overdue_url', $form_state->getValue('material_overdue_url'))
       ->set('page_size_desktop', $form_state->getValue('page_size_desktop'))
       ->set('page_size_mobile', $form_state->getValue('page_size_mobile'))
       ->save();
