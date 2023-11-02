@@ -51,9 +51,9 @@
         }
     ],
     "require": {
-        "amazeeio/drupal_integrations": "0.3.5",
+        "amazeeio/drupal_integrations": "0.3.7",
         "composer/installers": "1.12.0",
-        "cweagans/composer-patches": "1.7.0",
+        "cweagans/composer-patches": "1.7.3",
         "danskernesdigitalebibliotek/dpl-design-system": "^1.7@RC",
         "danskernesdigitalebibliotek/dpl-react": "^0.3.0@RC",
         "danskernesdigitalebibliotek/fbs-client": "*",
@@ -94,7 +94,7 @@
         "php-mock/php-mock": "^2.3",
         "phpspec/prophecy-phpunit": "^2",
         "phpstan/extension-installer": "^1.1",
-        "phpunit/phpunit": "^9.5",
+        "phpunit/phpunit": "9.5.10",
         "thecodingmachine/phpstan-safe-rule": "^1.0"
     },
     "conflict": {
