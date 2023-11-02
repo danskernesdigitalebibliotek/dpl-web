@@ -483,61 +483,6 @@ class DplReactAppsController extends ControllerBase {
   }
 
   /**
-   * Builds an url for the local search result route.
-   */
-  public static function searchResultUrl(): string {
-    return self::ensureUrlIsString(
-      Url::fromRoute('dpl_react_apps.search_result')->toString()
-    );
-  }
-
-  /**
-   * Builds a url for the local advanced search route.
-   */
-  public static function advancedSearchUrl(): string {
-    return self::ensureUrlIsString(
-      Url::fromRoute('dpl_react_apps.advanced_search')->toString()
-    );
-  }
-
-  /**
-   * Builds an url for the material/work route.
-   */
-  public static function materialUrl(): string {
-    // React applications support variable replacement where variables are
-    // prefixed with :. Specify the variable :workid as a parameter to let the
-    // route build the url. Unfortunatly : will be encoded as %3A so we have to
-    // decode the url again to make replacement work.
-    $url = self::ensureUrlIsString(
-      Url::fromRoute('dpl_react_apps.work')
-        ->setRouteParameter('wid', ':workid')
-        ->toString()
-    );
-    return urldecode($url);
-  }
-
-  /**
-   * Builds an url for the react apps to use for authorization.
-   */
-  public static function authUrl(): string {
-    return self::ensureUrlIsString(
-      Url::fromRoute('dpl_login.login')->toString()
-    );
-  }
-
-  /**
-   * Get the base url of the API exposed by this site.
-   */
-  public static function dplCmsBaseUrl(): string {
-    $url = self::ensureUrlIsString(
-      Url::fromRoute('<front>', [], ['absolute' => TRUE])->toString()
-    );
-    // The url must not have a trailing slash. The generated client will append
-    // it. Double slashes can lead to all kinds of oddities.
-    return rtrim($url, "/");
-  }
-
-  /**
    * Get the base url of the API's exposed by this site.
    *
    * @return mixed[]
