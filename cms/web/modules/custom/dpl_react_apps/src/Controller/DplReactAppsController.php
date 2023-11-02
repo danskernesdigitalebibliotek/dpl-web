@@ -108,12 +108,7 @@ class DplReactAppsController extends ControllerBase {
       'blacklisted-availability-branches-config' => $this->buildBranchesListProp($this->branchSettings->getExcludedAvailabilityBranches()),
       'blacklisted-search-branches-config' => $this->buildBranchesListProp($this->branchSettings->getExcludedSearchBranches()),
       'branches-config' => $this->buildBranchesJsonProp($this->branchRepository->getBranches()),
-      // Urls.
-      'auth-url' => self::authUrl(),
-      'dpl-cms-base-url' => self::dplCmsBaseUrl(),
-      'material-url' => self::materialUrl(),
-      'search-url' => self::searchResultUrl(),
-      'advanced-search-url' => self::advancedSearchUrl(),
+
       // Text.
       'add-more-filters-text' => $this->t('+ more filters', [], ['context' => 'Search Result']),
       'availability-available-text' => $this->t('Available', [], ['context' => 'Search Result']),
@@ -171,12 +166,7 @@ class DplReactAppsController extends ControllerBase {
       'blacklisted-availability-branches-config' => $this->buildBranchesListProp($this->branchSettings->getExcludedAvailabilityBranches()),
       'blacklisted-search-branches-config' => $this->buildBranchesListProp($this->branchSettings->getExcludedSearchBranches()),
       'branches-config' => $this->buildBranchesJsonProp($this->branchRepository->getBranches()),
-      // Urls.
-      'auth-url' => self::authUrl(),
-      'dpl-cms-base-url' => self::dplCmsBaseUrl(),
-      'material-url' => self::materialUrl(),
-      'search-url' => self::searchResultUrl(),
-      'advanced-search-url' => self::advancedSearchUrl(),
+
       // Text.
       'add-to-favorites-aria-label-text' => $this->t('add @title to favorites list', [], ['context' => 'advanced search']),
       'advanced-search-ac-source-text' => $this->t('source', [], ['context' => 'advanced search']),
@@ -289,12 +279,7 @@ class DplReactAppsController extends ControllerBase {
       'sms-notifications-for-reservations-enabled-config' => (int) $this->reservationSettings->smsNotificationsIsEnabled() ?? ReservationSettings::RESERVATION_SMS_NOTIFICATIONS_ENABLED,
       'instant-loan-config' => $this->instantLoanSettings->getConfig(),
       "interest-periods-config" => $this->getInterestPeriods(),
-      // Urls.
-      'auth-url' => self::authUrl(),
-      'dpl-cms-base-url' => self::dplCmsBaseUrl(),
-      'material-url' => self::materialUrl(),
-      'search-url' => self::searchResultUrl(),
-      'advanced-search-url' => self::advancedSearchUrl(),
+
       // Text.
       'already-reserved-text' => $this->t('Already reserved', [], ['context' => 'Work Page']),
       'approve-reservation-text' => $this->t('Approve reservation', [], ['context' => 'Work Page']),
