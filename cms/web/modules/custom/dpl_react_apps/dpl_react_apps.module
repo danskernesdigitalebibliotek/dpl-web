@@ -9,6 +9,8 @@
  * and various other tasks eg. providing rides and controllers for rendering.
  */
 
+use Drupal\Core\GeneratedUrl;
+use Drupal\Core\Url;
 use Drupal\dpl_react_apps\Controller\DplReactAppsController;
 
 /**
@@ -59,6 +61,28 @@ function dpl_react_apps_dpl_react_apps_data(array &$data): void {
   $data['texts'] += [
     'alert-error-close' => t('Close', [], ['context' => 'React apps (Global error handling)']),
     'alert-error-message' => t('An error occurred', [], ['context' => 'React apps (Global error handling)']),
+  ];
+
+  $data['urls'] += [
+    'dpl-cms-base' => dpl_react_apps_get_dpl_cms_base_url(),
+    'search' => dpl_react_apps_ensure_url_is_string(
+      Url::fromRoute('dpl_react_apps.search_result')->toString()
+    ),
+    // React applications support variable replacement where variables are
+    // prefixed with :. Specify the variable :workid as a parameter to let the
+    // route build the url. Unfortunatly : will be encoded as %3A so we have to
+    // decode the url again to make replacement work.
+    'material' => urldecode(dpl_react_apps_ensure_url_is_string(
+      Url::fromRoute('dpl_react_apps.work')
+        ->setRouteParameter('wid', ':workid')
+        ->toString()
+    )),
+    'logout' => dpl_react_apps_ensure_url_is_string(
+      Url::fromRoute('dpl_login.logout', [], ['absolute' => TRUE])->toString()
+    ),
+    'auth' => dpl_react_apps_ensure_url_is_string(
+      Url::fromRoute('dpl_login.login')->toString()
+    ),
   ];
 }
 
@@ -116,4 +140,51 @@ function dpl_react_apps_texts_renewal(): array {
     'renew-material-loan-success-title-text' => t('You have renewed your loan', [], ['context' => 'Renew loan (material)']),
     'renew-processing-text' => t('Processing...', [], ['context' => 'Renew loan']),
   ];
+}
+
+/**
+ * Make sure that generated url is a string.
+ *
+ * @param string|\Drupal\Core\GeneratedUrl $url
+ *   Drupal generated Url object.
+ */
+function dpl_react_apps_ensure_url_is_string(string|GeneratedUrl $url): string {
+  if ($url instanceof GeneratedUrl) {
+    $url = $url->getGeneratedUrl();
+  }
+
+  return $url;
+}
+
+/**
+ * Get the base url of the dpl cms.
+ *
+ * @return string
+ *   The base url of the dpl cms.
+ */
+function dpl_react_apps_get_dpl_cms_base_url(): string {
+  return rtrim(dpl_react_apps_ensure_url_is_string(
+    Url::fromRoute('<front>', [], ['absolute' => TRUE])->toString()
+  ), "/");
+}
+
+/**
+ * Format urls used by the apps.
+ *
+ * @param string|null $url
+ *   Url to format.
+ * @param string $fallbackUrl
+ *   If the url param is not present.
+ *
+ * @return string
+ *   Formatted url.
+ */
+function dpl_react_apps_format_app_url(string|NULL $url, string $fallbackUrl = ''): string {
+  if (!empty($url)) {
+    return $url;
+  }
+
+  // Use the fallback url that is provided and if that is not present use the
+  // dpl cms base url which is the absolute url to front page of the site.
+  return $fallbackUrl ?: dpl_react_apps_get_dpl_cms_base_url();
 }

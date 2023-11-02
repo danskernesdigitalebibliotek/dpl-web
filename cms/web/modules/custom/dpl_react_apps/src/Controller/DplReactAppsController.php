@@ -3,13 +3,13 @@
 namespace Drupal\dpl_react_apps\Controller;
 
 use Drupal\Core\Controller\ControllerBase;
-use Drupal\Core\GeneratedUrl;
 use Drupal\Core\Render\RendererInterface;
-use Drupal\Core\Url;
+use Drupal\dpl_fbs\Form\FbsSettingsForm;
 use Drupal\dpl_instant_loan\DplInstantLoanSettings;
 use Drupal\dpl_library_agency\Branch\Branch;
 use Drupal\dpl_library_agency\Branch\BranchRepositoryInterface;
 use Drupal\dpl_library_agency\BranchSettings;
+use Drupal\dpl_library_agency\Form\GeneralSettingsForm;
 use Drupal\dpl_library_agency\ReservationSettings;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use function Safe\json_encode as json_encode;
@@ -263,7 +263,7 @@ class DplReactAppsController extends ControllerBase {
     // @todo the general setting should be converted into an settings object and
     // injected into the places it is needed and then remove thies static
     // functions.
-    return \Drupal::configFactory()->get('dpl_library_agency.general_settings')->get('interest_periods_config');
+    return \Drupal::configFactory()->get('dpl_library_agency.general_settings')->get('interest_periods_config') ?? GeneralSettingsForm::INTEREST_PERIODS_CONFIG;
   }
 
   /**
@@ -286,7 +286,7 @@ class DplReactAppsController extends ControllerBase {
       // @todo Remove when instant loans branches are used.
       'blacklisted-instant-loan-branches-config' => "",
       'branches-config' => $this->buildBranchesJsonProp($this->branchRepository->getBranches()),
-      'sms-notifications-for-reservations-enabled-config' => (int) $this->reservationSettings->smsNotificationsIsEnabled(),
+      'sms-notifications-for-reservations-enabled-config' => (int) $this->reservationSettings->smsNotificationsIsEnabled() ?? ReservationSettings::RESERVATION_SMS_NOTIFICATIONS_ENABLED,
       'instant-loan-config' => $this->instantLoanSettings->getConfig(),
       "interest-periods-config" => $this->getInterestPeriods(),
       // Urls.
@@ -545,9 +545,7 @@ class DplReactAppsController extends ControllerBase {
    */
   public static function externalApiBaseUrls(): array {
     $react_apps_settings = \Drupal::configFactory()->get('dpl_react_apps.settings');
-
-    /** @var \Drupal\dpl_fbs\DplFbsSettings $fbs_settings*/
-    $fbs_settings = \Drupal::service('dpl_fbs.settings');
+    $fbs_settings = \Drupal::config(FbsSettingsForm::CONFIG_KEY);
 
     /** @var \Drupal\dpl_publizon\DplPublizonSettings $publizon_settings*/
     $publizon_settings = \Drupal::service('dpl_publizon.settings');
@@ -556,7 +554,7 @@ class DplReactAppsController extends ControllerBase {
     $services = $react_apps_settings->get('services') ?? [];
 
     // Get base urls from other modules.
-    $services['fbs'] = ['base_url' => $fbs_settings->loadConfig()->get('base_url')];
+    $services['fbs'] = ['base_url' => $fbs_settings->get('base_url')];
     $services['publizon'] = ['base_url' => $publizon_settings->loadConfig()->get('base_url')];
 
     $urls = [];
@@ -568,20 +566,6 @@ class DplReactAppsController extends ControllerBase {
   }
 
   /**
-   * Make sure that generated url is a string.
-   *
-   * @param string|\Drupal\Core\GeneratedUrl $url
-   *   Drupal generated Url object.
-   */
-  public static function ensureUrlIsString(string|GeneratedUrl $url): string {
-    if ($url instanceof GeneratedUrl) {
-      $url = $url->getGeneratedUrl();
-    }
-
-    return $url;
-  }
-
-  /**
    * Get the strings and config for blocked user.
    *
    * @return mixed[]
@@ -590,8 +574,8 @@ class DplReactAppsController extends ControllerBase {
   public static function getBlockedSettings(): array {
     $blockedSettings = \Drupal::configFactory()->get('dpl_library_agency.general_settings');
     $blockedData = [
-      'redirect-on-blocked-url' => $blockedSettings->get('redirect_on_blocked_url') ?? '',
-      'blocked-patron-e-link-url' => $blockedSettings->get('blocked_patron_e_link_url') ?? '',
+      'redirect-on-blocked-url' => dpl_react_apps_format_app_url($blockedSettings->get('redirect_on_blocked_url'), GeneralSettingsForm::REDIRECT_ON_BLOCKED_URL),
+      'blocked-patron-e-link-url' => dpl_react_apps_format_app_url($blockedSettings->get('blocked_patron_e_link_url'), GeneralSettingsForm::BLOCKED_PATRON_E_LINK_URL),
       'blocked-patron-d-title-text' => t('Blocked patron title text (d)', [], ['context' => 'Blocked user']),
       'blocked-patron-d-body-text' => t('Blocked patron body text (d)', [], ['context' => 'Blocked user']),
       'blocked-patron-s-title-text' => t('Blocked patron title text (s)', [], ['context' => 'Blocked user']),

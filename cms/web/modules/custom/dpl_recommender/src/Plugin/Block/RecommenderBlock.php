@@ -6,6 +6,7 @@ use Drupal\Core\Block\BlockBase;
 use Drupal\Core\Plugin\ContainerFactoryPluginInterface;
 use Drupal\dpl_react\DplReactConfigInterface;
 use Drupal\dpl_react_apps\Controller\DplReactAppsController;
+use Drupal\dpl_recommender\DplRecommenderSettings;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
 /**
@@ -74,14 +75,10 @@ class RecommenderBlock extends BlockBase implements ContainerFactoryPluginInterf
     $recommenderSettings = $this->recommenderSettings->loadConfig();
 
     $data = [
-      // Urls.
-      'dpl-cms-base-url' => DplReactAppsController::dplCmsBaseUrl(),
-      'material-url' => DplReactAppsController::materialUrl(),
-
       // Texts.
       'material-and-author-text' => $this->t('and', [], ['context' => 'Recommender']),
       'add-to-favorites-aria-label-text' => $this->t("Add @title to favorites list", [], ['context' => 'Recommender (Aria)']),
-      'empty-recommender-search-config' => $recommenderSettings->get('search_text'),
+      'empty-recommender-search-config' => $recommenderSettings->get('search_text') ?? DplRecommenderSettings::SEARCH_TEXT,
       'et-al-text' => $this->t("et al.", [], ['context' => 'Recommender']),
       'material-by-author-text' => $this->t("By", [], ['context' => 'Recommender']),
       'recommender-title-inspiration-text' => $this->t("For your inspiration", [], ['context' => 'Recommender']),

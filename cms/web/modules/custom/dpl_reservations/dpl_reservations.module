@@ -6,3 +6,16 @@
  *
  * Shows the reservation list.
  */
+
+use Drupal\Core\Url;
+
+/**
+ * Implements hook_dpl_react_apps_data().
+ */
+function dpl_reservations_dpl_react_apps_data(array &$data): void {
+  $data['urls'] += [
+    'reservations' => dpl_react_apps_ensure_url_is_string(
+      Url::fromRoute('dpl_reservations.list', [], ['absolute' => TRUE])->toString()
+    ),
+  ];
+}

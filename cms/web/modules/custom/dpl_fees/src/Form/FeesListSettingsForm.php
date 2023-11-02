@@ -5,6 +5,7 @@ namespace Drupal\dpl_fees\Form;
 use Drupal\Core\Config\ConfigFactoryInterface;
 use Drupal\Core\Form\ConfigFormBase;
 use Drupal\Core\Form\FormStateInterface;
+use Drupal\dpl_fees\DplFeesSettings;
 use Drupal\dpl_react\DplReactConfigInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
@@ -70,32 +71,32 @@ class FeesListSettingsForm extends ConfigFormBase {
       '#type' => 'url',
       '#title' => $this->t('Fees and Replacement costs URL'),
       '#description' => $this->t('File or URL containing the fees and replacement costs'),
-      '#default_value' => $config->get('fees_and_replacement_costs_url') ?? '',
+      '#default_value' => $config->get('fees_and_replacement_costs_url') ?? DplFeesSettings::FEES_AND_REPLACEMENT_COSTS_URL,
     ];
 
     $form['settings']['available_payment_types_url'] = [
       '#type' => 'url',
       '#title' => $this->t('Available payment types url'),
-      '#default_value' => $config->get('available_payment_types_url') ?? '',
+      '#default_value' => $config->get('available_payment_types_url') ?? DplFeesSettings::AVAILABLE_PAYMENT_TYPES_URL,
     ];
 
     $form['settings']['terms_of_trade_text'] = [
       '#type' => 'textfield',
       '#title' => $this->t('Terms of trade text'),
       '#description' => $this->t('Terms of trade text'),
-      '#default_value' => $config->get('terms_of_trade_text') ?? '',
+      '#default_value' => $config->get('terms_of_trade_text') ?? DplFeesSettings::TERMS_OF_TRADE_TEXT,
     ];
 
     $form['settings']['terms_of_trade_url'] = [
       '#type' => 'url',
       '#title' => $this->t('Terms of trade redirect url'),
-      '#default_value' => $config->get('terms_of_trade_url') ?? '',
+      '#default_value' => $config->get('terms_of_trade_url') ?? DplFeesSettings::TERMS_OF_TRADE_URL,
     ];
 
     $form['settings']['page_size_mobile'] = [
       '#type' => 'number',
       '#title' => $this->t('Page size mobile', [], ['context' => 'Dashboard (settings)']),
-      '#default_value' => $config->get('page_size_mobile') ?? 25,
+      '#default_value' => $config->get('page_size_mobile') ?? DplFeesSettings::PAGE_SIZE_MOBILE,
       '#min' => 0,
       '#step' => 1,
     ];
@@ -103,7 +104,7 @@ class FeesListSettingsForm extends ConfigFormBase {
     $form['settings']['page_size_desktop'] = [
       '#type' => 'number',
       '#title' => $this->t('Page size desktop', [], ['context' => 'Dashboard (settings)']),
-      '#default_value' => $config->get('page_size_desktop') ?? 25,
+      '#default_value' => $config->get('page_size_desktop') ?? DplFeesSettings::PAGE_SIZE_DESKTOP,
       '#min' => 0,
       '#step' => 1,
     ];
@@ -119,7 +120,7 @@ class FeesListSettingsForm extends ConfigFormBase {
     $form['settings']['payment_overview_url'] = [
       '#type' => 'url',
       '#title' => $this->t('Payment overview url'),
-      '#default_value' => $config->get('payment_overview_url') ?? '',
+      '#default_value' => $config->get('payment_overview_url') ?? DplFeesSettings::PAYMENT_OVERVIEW_URL,
     ];
 
     $form['settings']['fee_list_body_text'] = [

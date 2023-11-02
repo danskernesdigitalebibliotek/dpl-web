@@ -7,9 +7,12 @@ use Drupal\Core\Config\ConfigFactoryInterface;
 use Drupal\Core\Plugin\ContainerFactoryPluginInterface;
 use Drupal\dpl_react\DplReactConfigInterface;
 use Drupal\dpl_react_apps\Controller\DplReactAppsController;
+use Drupal\dpl_reservations\DplReservationsSettings;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Drupal\dpl_library_agency\Branch\BranchRepositoryInterface;
 use Drupal\dpl_library_agency\BranchSettings;
+use Drupal\dpl_library_agency\Form\GeneralSettingsForm;
+use function Safe\json_encode as json_encode;
 
 /**
  * Provides user reservations list.
@@ -76,6 +79,7 @@ class ReservationListBlock extends BlockBase implements ContainerFactoryPluginIn
   public function build(): array {
     $config = $this->reservationListSettings->loadConfig();
     $generalSettings = $this->configFactory->get('dpl_library_agency.general_settings');
+    $allow_remove_ready_reservations = $generalSettings->get('reservation_detail_allow_remove_ready_reservations') ?? GeneralSettingsForm::RESERVATION_DETAIL_ALLOW_REMOVE_READY_RESERVATIONS;
 
     $data = [
       // Branches.
@@ -85,16 +89,18 @@ class ReservationListBlock extends BlockBase implements ContainerFactoryPluginIn
       'branches-config' => DplReactAppsController::buildBranchesJsonProp($this->branchRepository->getBranches()),
 
       // Url.
-      'ereolen-my-page-url' => $config->get('ereolen_my_page_url'),
-      'pause-reservation-info-url' => $generalSettings->get('pause_reservation_info_url'),
+      'ereolen-my-page-url' => dpl_react_apps_format_app_url($config->get('ereolen_my_page_url'), GeneralSettingsForm::EREOLEN_MY_PAGE_URL),
+      'pause-reservation-info-url' => dpl_react_apps_format_app_url($generalSettings->get('pause_reservation_info_url'), GeneralSettingsForm::PAUSE_RESERVATION_INFO_URL),
 
       // Config.
       'interest-periods-config' => DplReactAppsController::getInterestPeriods(),
-      'page-size-desktop' => $config->get('page_size_desktop'),
-      'page-size-mobile' => $config->get('page_size_mobile'),
-      'pause-reservation-start-date-config' => $generalSettings->get('pause_reservation_start_date_config') ?? '',
-      'reservation-detail-allow-remove-ready-reservations-config' => $generalSettings->get('reservation_detail_allow_remove_ready_reservations_config'),
-      'threshold-config' => $generalSettings->get('threshold_config'),
+      'page-size-desktop' => $config->get('page_size_desktop') ?? DplReservationsSettings::PAGE_SIZE_DESKTOP,
+      'page-size-mobile' => $config->get('page_size_mobile') ?? DplReservationsSettings::PAGE_SIZE_MOBILE,
+      'pause-reservation-start-date-config' => $generalSettings->get('pause_reservation_start_date_config') ?? GeneralSettingsForm::PAUSE_RESERVATION_START_DATE_CONFIG,
+      'reservation-details-config' => json_encode([
+        'allowRemoveReadyReservations' => $allow_remove_ready_reservations,
+      ]),
+      'threshold-config' => $generalSettings->get('threshold_config') ?? GeneralSettingsForm::THRESHOLD_CONFIG,
 
       // Texts.
       'material-and-author-text' => $this->t('and', [], ['context' => 'Reservation list']),
@@ -206,5 +212,5 @@ class ReservationListBlock extends BlockBase implements ContainerFactoryPluginIn
       '#data' => $data,
     ];
   }
-}
 
+}

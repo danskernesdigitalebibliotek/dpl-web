@@ -4,6 +4,7 @@ namespace Drupal\dpl_favorites_list\Plugin\Block;
 
 use Drupal\Core\Block\BlockBase;
 use Drupal\Core\Plugin\ContainerFactoryPluginInterface;
+use Drupal\dpl_favorites_list\DplFavoritesListSettings;
 use Drupal\dpl_react\DplReactConfigInterface;
 use Drupal\dpl_react_apps\Controller\DplReactAppsController;
 use Symfony\Component\DependencyInjection\ContainerInterface;
@@ -79,8 +80,8 @@ class FavoritesListBlock extends BlockBase implements ContainerFactoryPluginInte
       'branches-config' => DplReactAppsController::buildBranchesJsonProp($this->branchRepository->getBranches()),
 
       // Page size.
-      "page-size-desktop" => $favoritesListSettings->get('page_size_desktop'),
-      "page-size-mobile" => $favoritesListSettings->get('page_size_mobile'),
+      "page-size-desktop" => $favoritesListSettings->get('page_size_desktop') ?? DplFavoritesListSettings::PAGE_SIZE_DESKTOP,
+      "page-size-mobile" => $favoritesListSettings->get('page_size_mobile') ?? DplFavoritesListSettings::PAGE_SIZE_MOBILE,
 
       // Texts.
       "by-author-text" => $this->t("By", [], ['context' => 'Favorites list']),

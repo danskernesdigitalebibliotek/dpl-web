@@ -4,4 +4,7 @@ package: DPL
 type: module
 core_version_requirement: ^9
 dependencies:
-  - dpl_login:dpl_login
+  - dpl_library_agency:dpl_library_agency
+  - dpl_patron_page:dpl_patron_page
+  - dpl_react:dpl_react
+  - dpl_react_apps:dpl_react_apps

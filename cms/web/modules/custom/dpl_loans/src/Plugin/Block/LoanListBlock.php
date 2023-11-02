@@ -5,6 +5,8 @@ namespace Drupal\dpl_loans\Plugin\Block;
 use Drupal\Core\Block\BlockBase;
 use Drupal\Core\Config\ConfigFactoryInterface;
 use Drupal\Core\Plugin\ContainerFactoryPluginInterface;
+use Drupal\dpl_library_agency\Form\GeneralSettingsForm;
+use Drupal\dpl_loans\DplLoansSettings;
 use Drupal\dpl_react\DplReactConfigInterface;
 use Drupal\dpl_react_apps\Controller\DplReactAppsController;
 use Symfony\Component\DependencyInjection\ContainerInterface;
@@ -77,7 +79,7 @@ class LoanListBlock extends BlockBase implements ContainerFactoryPluginInterface
    */
   public function getThresholdConfig(): string {
     $generalSettings = $this->configFactory->get('dpl_library_agency.general_settings');
-    return $generalSettings->get('threshold_config') ?? "{ 'colorThresholds': { 'danger': '0', 'warning': '6' } }";
+    return $generalSettings->get('threshold_config') ?? GeneralSettingsForm::THRESHOLD_CONFIG;
   }
 
   /**
@@ -92,17 +94,15 @@ class LoanListBlock extends BlockBase implements ContainerFactoryPluginInterface
 
     $data = [
       // Page size.
-      "page-size-desktop" => $loanListSettings->get('page_size_desktop'),
-      "page-size-mobile" => $loanListSettings->get('page_size_mobile'),
+      "page-size-desktop" => $loanListSettings->get('page_size_desktop') ?? DplLoansSettings::PAGE_SIZE_DESKTOP,
+      "page-size-mobile" => $loanListSettings->get('page_size_mobile') ?? DplLoansSettings::PAGE_SIZE_MOBILE,
 
       // Config.
       "threshold-config" => $this->getThresholdConfig(),
 
       // Urls.
-      'fees-page-url' => '/user/me/fees',
-      'ereolen-my-page-url' => $generalSettings->get('ereolen_my_page_url'),
-      'dpl-cms-base-url' => DplReactAppsController::dplCmsBaseUrl(),
-      'material-overdue-url' => $loanListSettings->get('material_overdue_url'),
+      'ereolen-my-page-url' => dpl_react_apps_format_app_url($generalSettings->get('ereolen_my_page_url'), GeneralSettingsForm::EREOLEN_MY_PAGE_URL),
+      'material-overdue-url' => dpl_react_apps_format_app_url($loanListSettings->get('material_overdue_url'), DplLoansSettings::MATERIAL_OVERDUE_URL),
 
       // Texts.
       'material-and-author-text' => $this->t('and', [], ['context' => 'Loan list']),

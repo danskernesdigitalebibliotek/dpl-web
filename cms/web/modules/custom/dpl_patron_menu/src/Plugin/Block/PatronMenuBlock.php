@@ -128,7 +128,7 @@ class PatronMenuBlock extends BlockBase implements ContainerFactoryPluginInterfa
       'branches-config' => DplReactAppsController::buildBranchesJsonProp($this->branchRepository->getBranches()),
       "threshold-config" => $this->configFactory->get('dpl_library_agency.general_settings')->get('threshold_config'),
       "menu-navigation-data-config" => json_encode($menu, JSON_THROW_ON_ERROR),
-      'reservation-detail-allow-remove-ready-reservations-config' => $generalSettings->get('reservation_detail_allow_remove_ready_reservations_config'),
+      'reservation-detail-allow-remove-ready-reservations-config' => $generalSettings->get('reservation_detail_allow_remove_ready_reservations'),
       'interest-periods-config' => DplReactAppsController::getInterestPeriods(),
 
       // Urls.

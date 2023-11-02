@@ -9,6 +9,8 @@ use Drupal\dpl_react\DplReactConfigBase;
  */
 class DplRecommenderSettings extends DplReactConfigBase {
 
+  const SEARCH_TEXT = 'search_text';
+
   /**
    * Gets the configuration key for recommender settings.
    */

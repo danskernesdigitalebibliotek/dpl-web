@@ -5,6 +5,7 @@ namespace Drupal\dpl_favorites_list\Form;
 use Drupal\Core\Config\ConfigFactoryInterface;
 use Drupal\Core\Form\ConfigFormBase;
 use Drupal\Core\Form\FormStateInterface;
+use Drupal\dpl_favorites_list\DplFavoritesListSettings;
 use Drupal\dpl_react\DplReactConfigInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
@@ -69,7 +70,7 @@ class FavoritesListSettingsForm extends ConfigFormBase {
     $form['settings']['page_size_mobile'] = [
       '#type' => 'number',
       '#title' => $this->t('Page size mobile'),
-      '#default_value' => $config->get('page_size_mobile') ?? 25,
+      '#default_value' => $config->get('page_size_mobile') ?? DplFavoritesListSettings::PAGE_SIZE_MOBILE,
       '#min' => 1,
       '#step' => 1,
     ];
@@ -77,7 +78,7 @@ class FavoritesListSettingsForm extends ConfigFormBase {
     $form['settings']['page_size_desktop'] = [
       '#type' => 'number',
       '#title' => $this->t('Page size desktop'),
-      '#default_value' => $config->get('page_size_desktop') ?? 25,
+      '#default_value' => $config->get('page_size_desktop') ?? DplFavoritesListSettings::PAGE_SIZE_DESKTOP,
       '#min' => 1,
       '#step' => 1,
     ];

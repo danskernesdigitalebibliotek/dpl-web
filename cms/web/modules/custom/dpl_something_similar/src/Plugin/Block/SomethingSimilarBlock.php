@@ -76,9 +76,7 @@ class SomethingSimilarBlock extends BlockBase implements ContainerFactoryPluginI
   public function build() {
     $data = [
       // Urls.
-      'dpl-cms-base-url' => DplReactAppsController::dplCmsBaseUrl(),
       'faust' => self::faustFromUrl(),
-      'material-url' => DplReactAppsController::materialUrl(),
 
       // Texts.
       'material-and-author-text' => $this->t('and', [], ['context' => 'Something similar']),

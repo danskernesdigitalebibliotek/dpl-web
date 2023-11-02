@@ -18,14 +18,18 @@ module.exports = {
         skipAudits: ["is-on-https"],
         throttling: {
           // Lighthouse will throttle CPU by 4x by default to mimick the
-          // performance of a midrange smartphone instead of a desktop
-          // workstation. Experience shows that Docker containers and GitHub
-          // Actions runners have significantly fewer resources than a desktop and
-          // thus should be throttled less. This value is based on a benchmark
-          // index of 1000. The actual benchmark in a run can be seen under
-          // CPU/Memory Power in the generated report.
-          // https://lighthouse-cpu-throttling-calculator.vercel.app/
-          cpuSlowdownMultiplier: 2.9,
+          // performance of a mid-range smartphone instead of a desktop
+          // workstation. That does not hold for us:
+          // 1. Experience shows that Docker containers and GitHub Actions
+          //    runners have significantly fewer resources and classifies
+          //    as a low-end desktop
+          // 2. Lighthouse targets a Moto G4 from 2016 as the mid-range device.
+          //    We expect this to be underpowered compared to our target user
+          //    range. Instead we target their definition of a high-end
+          //    smartphone - a Samsung S10 from 2019.
+          // Low-end desktop testing as high-end mobile yields a 1x multiplier:
+          // https://github.com/GoogleChrome/lighthouse/blob/main/docs/throttling.md#cpu-throttling
+          cpuSlowdownMultiplier: 1,
         },
       },
     },

@@ -1,7 +1,5 @@
 name: DPL FBS
 description: Handle FBS configuration
 package: DPL
-dependencies:
-  - dpl_react:dpl_react
 type: module
 core_version_requirement: ^9

@@ -9,6 +9,8 @@ parameters:
     # Drupal Form API makes extensive use for arrays which we cannot provide
     # more detailed typing of.
     - '#.*\:\:(buildForm|getEditableConfigNames|submitForm|validateForm)\(\) .* no value type specified in iterable type array\.#'
+    # Drupal preprocess functions uses variables array which we cannot provide more detailed typing of.
+    - '#Function .*_preprocess_.*\(\) has parameter \$variables with no value type specified in iterable type array\.#'
     # Drupal has many different iterable interfaces we do not want to provide
     # iterable typing for.
     - '#no value type specified in iterable type Drupal\\.*Interface#'

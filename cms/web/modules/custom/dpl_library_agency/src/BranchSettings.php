@@ -10,6 +10,9 @@ use Drupal\Core\Config\ConfigManagerInterface;
  * Object for managing branch related settings.
  */
 class BranchSettings implements CacheableDependencyInterface {
+  public const EXCLUDED_RESERVATION_BRANCHES = [];
+  public const EXCLUDED_SEARCH_BRANCHES = [];
+  public const EXCLUDED_AVAILABILITY_BRANCHES = [];
 
   /**
    * The name of the configuration entry containing the settings.
@@ -63,7 +66,7 @@ class BranchSettings implements CacheableDependencyInterface {
    *   The ids of the excluded branches.
    */
   public function getExcludedReservationBranches() : array {
-    return $this->getBranchConfig()->get(self::RESERVATION_KEY) ?? [];
+    return $this->getBranchConfig()->get(self::RESERVATION_KEY) ?? self::EXCLUDED_RESERVATION_BRANCHES;
   }
 
   /**
@@ -83,7 +86,7 @@ class BranchSettings implements CacheableDependencyInterface {
    *   The ids of the excluded branches.
    */
   public function getExcludedSearchBranches(): array {
-    return $this->getBranchConfig()->get(self::SEARCH_KEY) ?? [];
+    return $this->getBranchConfig()->get(self::SEARCH_KEY) ?? self::EXCLUDED_SEARCH_BRANCHES;
   }
 
   /**
@@ -103,7 +106,7 @@ class BranchSettings implements CacheableDependencyInterface {
    *   The ids of the excluded branches.
    */
   public function getExcludedAvailabilityBranches(): array {
-    return $this->getBranchConfig()->get(self::AVAILABILITY_KEY) ?? [];
+    return $this->getBranchConfig()->get(self::AVAILABILITY_KEY) ?? self::EXCLUDED_AVAILABILITY_BRANCHES;
   }
 
   /**

@@ -6,3 +6,16 @@
  *
  * Renders the fees list.
  */
+
+use Drupal\Core\Url;
+
+/**
+ * Implements hook_dpl_react_apps_data().
+ */
+function dpl_fees_dpl_react_apps_data(array &$data): void {
+  $data['urls'] += [
+    'fee-page' => dpl_react_apps_ensure_url_is_string(
+      Url::fromRoute('dpl_fees.list', [], ['absolute' => TRUE])->toString()
+    ),
+  ];
+}

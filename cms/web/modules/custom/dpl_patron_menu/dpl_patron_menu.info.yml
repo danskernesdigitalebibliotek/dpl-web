@@ -10,6 +10,7 @@ dependencies:
   - dpl_loans:dpl_loans
   - dpl_patron_reg:dpl_patron_reg
   - dpl_reservations:dpl_reservations
+  - dpl_react_apps:dpl_react_apps
 
 type: module
 core_version_requirement: ^9

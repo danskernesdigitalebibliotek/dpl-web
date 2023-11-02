@@ -19,7 +19,7 @@ jobs:
       # added or changed files to the repository.
       contents: write
     steps:
-    - uses: actions/checkout@master
+    - uses: actions/checkout@v4
       with:
         fetch-depth: 0
         token: ${{ secrets.AUTOCOMMIT_GITHUB_TOKEN }}
@@ -37,7 +37,7 @@ jobs:
         file_pattern: './web/profiles/dpl_cms/translations/*.po'
         commit_message: New translations were found
     - name: Make Poeditor look for changes
-      uses: distributhor/workflow-webhook@v2
+      uses: distributhor/workflow-webhook@v3
       env:
         webhook_url: ${{ secrets.POEDITOR_WEBHOOK_URL }}
         # POEditor webhooks to not use secrets but the action requires a value.
@@ -51,10 +51,12 @@ jobs:
     runs-on: ubuntu-latest
     if: ${{ contains(github.event.head_commit.message, 'POEditor.com') }}
     permissions:
-      # Give the default GITHUB_TOKEN permission to update GitHub Pages.
-      pages: write
+      # Give the default GITHUB_TOKEN write permission to commit and push the
+      # added or changed files to the repository which also contain GitHub
+      # Pages.
+      contents: write
     steps:
-    - uses: actions/checkout@master
+    - uses: actions/checkout@v4
       with:
         fetch-depth: 0
     - name: Publish translations to GitHub Pages
