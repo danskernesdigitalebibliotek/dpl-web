@@ -25,9 +25,6 @@ function dpl_react_apps_preprocess_page(array &$variables): void {
       '#theme' => 'dpl_react_app',
       '#name' => 'search-header',
       '#data' => [
-        'search-url' => DplReactAppsController::searchResultUrl(),
-        'material-url' => DplReactAppsController::materialUrl(),
-        'advanced-search-url' => DplReactAppsController::advancedSearchUrl(),
         // Text.
         'autosuggest-animated-series-category-text' => t('Animated series', [], ['context' => 'Search Header']),
         'autosuggest-audio-book-category-text' => t('Audio books', [], ['context' => 'Search Header']),
