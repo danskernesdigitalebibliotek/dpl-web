@@ -3,8 +3,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2023-11-02 12:42+0100\n"
-"PO-Revision-Date: 2023-11-02 12:42+0100\n"
+"POT-Creation-Date: 2023-11-03 12:56+0100\n"
+"PO-Revision-Date: 2023-11-03 12:56+0100\n"
 "Last-Translator: NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
 "MIME-Version: 1.0\n"
@@ -619,6 +619,10 @@ msgid "et al."
 msgstr "et al."
 
 msgctxt "Search Header"
+msgid "Advanced search"
+msgstr ""
+
+msgctxt "Search Header"
 msgid "in"
 msgstr "i"
 
@@ -629,6 +633,10 @@ msgstr "Søg på titel, forfatter eller emne"
 msgctxt "Search Header"
 msgid "Loading"
 msgstr "Henter"
+
+msgctxt "Search Header"
+msgid "Dropdown with additional search functions"
+msgstr ""
 
 msgctxt "Search Header"
 msgid "Search button"
@@ -855,6 +863,246 @@ msgstr "Viser"
 msgctxt "Search Result"
 msgid "Subject number"
 msgstr "Emnetal"
+
+msgctxt "advanced search"
+msgid "add @title to favorites list"
+msgstr ""
+
+msgctxt "advanced search"
+msgid "source"
+msgstr ""
+
+msgctxt "advanced search"
+msgid "add row"
+msgstr ""
+
+msgctxt "advanced search"
+msgid "all indexes"
+msgstr ""
+
+msgctxt "advanced search"
+msgid "audience"
+msgstr ""
+
+msgctxt "advanced search"
+msgid "copy string"
+msgstr ""
+
+msgctxt "advanced search"
+msgid "creator"
+msgstr ""
+
+msgctxt "advanced search"
+msgid "edition"
+msgstr ""
+
+msgctxt "advanced search"
+msgid "date"
+msgstr ""
+
+msgctxt "advanced search"
+msgid "dk5"
+msgstr ""
+
+msgctxt "advanced search"
+msgid "edit cql"
+msgstr ""
+
+msgctxt "advanced search"
+msgid "accessibility"
+msgstr ""
+
+msgctxt "advanced search"
+msgid "All"
+msgstr ""
+
+msgctxt "advanced search"
+msgid "article"
+msgstr ""
+
+msgctxt "advanced search"
+msgid "audio book"
+msgstr ""
+
+msgctxt "advanced search"
+msgid "book"
+msgstr ""
+
+msgctxt "advanced search"
+msgid "ebook"
+msgstr ""
+
+msgctxt "advanced search"
+msgid "fiction"
+msgstr ""
+
+msgctxt "advanced search"
+msgid "literature form"
+msgstr ""
+
+msgctxt "advanced search"
+msgid "material type"
+msgstr ""
+
+msgctxt "advanced search"
+msgid "movie"
+msgstr ""
+
+msgctxt "advanced search"
+msgid "music"
+msgstr ""
+
+msgctxt "advanced search"
+msgid "Non-fiction"
+msgstr ""
+
+msgctxt "advanced search"
+msgid "online"
+msgstr ""
+
+msgctxt "advanced search"
+msgid "physical"
+msgstr ""
+
+msgctxt "advanced search"
+msgid "genre"
+msgstr ""
+
+msgctxt "advanced search"
+msgid "identifier"
+msgstr ""
+
+msgctxt "advanced search"
+msgid "search term"
+msgstr ""
+
+msgctxt "advanced search"
+msgid "language"
+msgstr ""
+
+msgctxt "advanced search"
+msgid "link to this search"
+msgstr ""
+
+msgctxt "advanced search"
+msgid "main creator"
+msgstr ""
+
+msgctxt "advanced search"
+msgid "main title"
+msgstr ""
+
+msgctxt "advanced search"
+msgid "-"
+msgstr ""
+
+msgctxt "advanced search"
+msgid "CQL search string"
+msgstr ""
+
+msgctxt "advanced search"
+msgid "publisher"
+msgstr ""
+
+msgctxt "advanced search"
+msgid "reset"
+msgstr ""
+
+msgctxt "advanced search"
+msgid "search"
+msgstr ""
+
+msgctxt "advanced search"
+msgid "subject"
+msgstr ""
+
+msgctxt "advanced search"
+msgid "advanced search"
+msgstr ""
+
+msgctxt "advanced search"
+msgid "type"
+msgstr ""
+
+msgctxt "advanced search"
+msgid "close"
+msgstr ""
+
+msgctxt "advanced search"
+msgid "an error occurred"
+msgstr ""
+
+msgctxt "advanced search"
+msgid "by"
+msgstr ""
+
+msgctxt "advanced search"
+msgid "and"
+msgstr ""
+
+msgctxt "advanced search"
+msgid "not"
+msgstr ""
+
+msgctxt "advanced search"
+msgid "or"
+msgstr ""
+
+msgctxt "advanced search"
+msgid "Link copied to clipboard"
+msgstr ""
+
+msgctxt "advanced search"
+msgid "Copied"
+msgstr ""
+
+msgctxt "advanced search"
+msgid "CQL search"
+msgstr ""
+
+msgctxt "advanced search"
+msgid "et al."
+msgstr ""
+
+msgctxt "advanced search"
+msgid "in series"
+msgstr ""
+
+msgctxt "advanced search"
+msgid "Loading results..."
+msgstr ""
+
+msgctxt "advanced search"
+msgid "loading"
+msgstr ""
+
+msgctxt "advanced search"
+msgid "your search has 0 results"
+msgstr ""
+
+msgctxt "advanced search"
+msgid "nr."
+msgstr ""
+
+msgctxt "advanced search"
+msgid "remove @title from favorites list"
+msgstr ""
+
+msgctxt "advanced search"
+msgid "showing @items-shown out of @hitcount results"
+msgstr ""
+
+msgctxt "advanced search"
+msgid "show more"
+msgstr ""
+
+msgctxt "advanced search"
+msgid "showing materials"
+msgstr ""
+
+msgctxt "advanced search"
+msgid "Back to advanced search"
+msgstr ""
 
 msgctxt "Work Page"
 msgid "Already reserved"
