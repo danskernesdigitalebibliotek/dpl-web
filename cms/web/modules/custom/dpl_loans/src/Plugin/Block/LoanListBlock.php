@@ -5,6 +5,7 @@ namespace Drupal\dpl_loans\Plugin\Block;
 use Drupal\Core\Block\BlockBase;
 use Drupal\Core\Config\ConfigFactoryInterface;
 use Drupal\Core\Plugin\ContainerFactoryPluginInterface;
+use Drupal\Core\Url;
 use Drupal\dpl_library_agency\Form\GeneralSettingsForm;
 use Drupal\dpl_loans\DplLoansSettings;
 use Drupal\dpl_react\DplReactConfigInterface;
@@ -102,6 +103,7 @@ class LoanListBlock extends BlockBase implements ContainerFactoryPluginInterface
 
       // Urls.
       'ereolen-my-page-url' => dpl_react_apps_format_app_url($generalSettings->get('ereolen_my_page_url'), GeneralSettingsForm::EREOLEN_MY_PAGE_URL),
+      'material-overdue-url' => Url::fromRoute('dpl_loans.list', [], ['absolute' => TRUE])->toString(),
 
       // Texts.
       'material-and-author-text' => $this->t('and', [], ['context' => 'Loan list']),
