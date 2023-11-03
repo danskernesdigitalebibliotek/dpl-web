@@ -4,6 +4,7 @@
 import { wiremock } from "./lib/general";
 import createCommonMappings from "./mappings/common/createCommonMappings";
 import createMappingsForReservation from "./mappings/reservation/createMappingsForReservation";
+import createMappingsForAdvancedSearch from "./mappings/search/createMappingsForAdvancedSearch";
 import createMappingsForSearch from "./mappings/search/createMappingsForSearch";
 import createMappingsForWorkPage from "./mappings/work/createMappingsForWorkPage";
 
@@ -14,6 +15,7 @@ const create = async () => {
 
   // Create page specific mappings.
   createMappingsForSearch();
+  createMappingsForAdvancedSearch();
   createMappingsForWorkPage();
   createMappingsForReservation();
 };
