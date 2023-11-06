@@ -130,6 +130,7 @@ class ReservationListBlock extends BlockBase implements ContainerFactoryPluginIn
       'reservation-list-available-in-text' => $this->t('Available in @count days', [], ['context' => 'Reservation list']),
       'reservation-list-day-text' => $this->t('day', [], ['context' => 'Reservation list']),
       'reservation-list-days-text' => $this->t('days', [], ['context' => 'Reservation list']),
+      'reservation-list-digital-pickup-text' => $this->t('Online access', [], ['context' => 'Reservation list']),
       'reservation-list-digital-reservations-empty-text' => $this->t('At the moment you have 0 reservations on digital items', [], ['context' => 'Reservation list']),
       'reservation-list-digital-reservations-header-text' => $this->t('Digital reservations', [], ['context' => 'Reservation list']),
       'reservation-list-first-in-queue-text' => $this->t('You are at the front of the queue', [], ['context' => 'Reservation list']),
