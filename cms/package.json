@@ -11,7 +11,7 @@
     "chrome-launcher": "^0.15.1",
     "cypress": "^10.8.0",
     "cypress-plugin-api": "^2.11.1",
-    "eslint": "^8.52.0",
+    "eslint": "^8.53.0",
     "eslint-config-prettier": "^8.5.0",
     "eslint-plugin-cypress": "^2.12.1",
     "eslint-plugin-drupal-contrib": "^1.2.0",
