@@ -3,8 +3,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2023-11-05 18:37+0100\n"
-"PO-Revision-Date: 2023-11-05 18:37+0100\n"
+"POT-Creation-Date: 2023-11-09 09:50+0100\n"
+"PO-Revision-Date: 2023-11-09 09:50+0100\n"
 "Last-Translator: NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
 "MIME-Version: 1.0\n"
@@ -154,12 +154,40 @@ msgid "Page size desktop"
 msgstr "Antal listeelemeter på side (desktop)"
 
 msgctxt "Dashboard"
-msgid "Others are queueing for this material"
-msgstr "Andre lånere venter på materialet"
+msgid "Yes, renew"
+msgstr "Ja, forny"
 
 msgctxt "Dashboard"
-msgid "Your profile"
-msgstr "Dit overblik"
+msgid "Are you sure you want to renew?"
+msgstr "Er du sikker på at du vil forny?"
+
+msgctxt "Dashboard (Aria)"
+msgid "accept modal aria description text"
+msgstr "accepter pop-up beskrivelsestekst"
+
+msgctxt "Dashboard (Aria)"
+msgid "accept modal aria label text"
+msgstr "accepter pop-up beskrivelsestekst"
+
+msgctxt "Dashboard"
+msgid "If you renew your fee will be raised"
+msgstr "Hvis du fornyer bliver dit gebyr forhøjet"
+
+msgctxt "Dashboard"
+msgid "Cancel renewal"
+msgstr "Forny ikke"
+
+msgctxt "Dashboard"
+msgid "Your fee is raised"
+msgstr "Dit gebyr er fohøjet"
+
+msgctxt "Dashboard"
+msgid "Select all"
+msgstr "Vælg alle"
+
+msgctxt "Dashboard"
+msgid "Number @count in line"
+msgstr "Nummer @count i køen"
 
 msgctxt "Dashboard (Aria)"
 msgid ""
@@ -173,56 +201,48 @@ msgid "Close delete reservation modal"
 msgstr "Luk pop-up"
 
 msgctxt "Dashboard"
+msgid "Cancel reservation"
+msgstr "Slet reservering"
+
+msgctxt "Dashboard"
+msgid "Do you want to cancel your reservation?"
+msgstr "Vil du slette dine reserveringer?"
+
+msgctxt "Dashboard"
+msgid "Cancel reservations"
+msgstr "Slet reserveringer"
+
+msgctxt "Dashboard"
 msgid "You cannot regret this action"
 msgstr "Du kan ikke fortryde denne handling"
+
+msgctxt "Dashboard"
+msgid "Digital reservations"
+msgstr "Digitale reserveringer"
+
+msgctxt "Dashboard"
+msgid "Digital"
+msgstr "Digitale"
+
+msgctxt "Dashboard"
+msgid "et al."
+msgstr "et al."
 
 msgctxt "Dashboard"
 msgid "Fees"
 msgstr "Gebyrer & erstatninger"
 
-msgctxt "Dashboard"
-msgid "@count queued"
-msgstr "@count i kø"
-
-msgctxt "Dashboard"
-msgid "Number @count in line"
-msgstr "Nummer @count i køen"
-
-msgctxt "Dashboard"
-msgid "You owe in total"
-msgstr "Du skylder i alt"
-
-msgctxt "Dashboard"
-msgid "Pay"
-msgstr "Betal"
-
-msgctxt "Dashboard"
-msgid "@total,-"
-msgstr "@total kr."
-
-msgctxt "Dashboard"
-msgid "Loans"
-msgstr "Lån"
-
 msgctxt "Dashboard (Aria)"
 msgid "This modal makes it possible to renew materials"
 msgstr "Denne pop-up gør det muligt at forny materialer"
 
-msgctxt "Patron menu (Aria)"
-msgid "Close modal with grouped loans"
-msgstr "Luk pop-up"
-
-msgctxt "Dashboard (Aria)"
-msgid "This modal makes it possible to delete reservations"
-msgstr "Denne pop-up gør det muligt at slette reserveringer"
-
-msgctxt "Dashboard (Aria)"
-msgid "Close modal with grouped reservations"
-msgstr "Luk pop-up"
+msgctxt "Dashboard"
+msgid "Renewable (@count)"
+msgstr "Forny (@count)"
 
 msgctxt "Dashboard"
-msgid "Digital"
-msgstr "Digitale"
+msgid "Choose all"
+msgstr "Vælg alle"
 
 msgctxt "Dashboard"
 msgid ""
@@ -233,72 +253,62 @@ msgstr ""
 "at forny disse lån"
 
 msgctxt "Dashboard"
+msgid "Due date @date"
+msgstr "Afleveringsfrist @date"
+
+msgctxt "Dashboard"
 msgid "Close renew loans modal"
 msgstr "Luk pop-up"
+
+msgctxt "Dashboard"
+msgid ""
+"The due date of return is exceeded, therefore you will be charged a "
+"fee, when the item is returned"
+msgstr "Afleveringsfristen er overskredet, du får et gebyr, når du afleverer"
+
+msgctxt "Dashboard"
+msgid "Select @label for renewal"
+msgstr "Vælg @label til sletning"
+
+msgctxt "Patron menu (Aria)"
+msgid "Close modal with grouped loans"
+msgstr "Luk pop-up"
+
+msgctxt "Dashboard (Aria)"
+msgid "Close modal with grouped reservations"
+msgstr "Luk pop-up"
+
+msgctxt "Dashboard (Aria)"
+msgid "This modal makes it possible to delete reservations"
+msgstr "Denne pop-up gør det muligt at slette reserveringer"
 
 msgctxt "Dashboard"
 msgid "Intermediates"
 msgstr "Mellemværender"
 
 msgctxt "Dashboard"
-msgid "Returned too late"
-msgstr "Afleveringsfrist overskredet"
-
-msgctxt "Dashboard"
-msgid "Select @label for renewal"
-msgstr "Vælg @label til sletning"
-
-msgctxt "Dashboard"
-msgid "To be returned soon"
-msgstr "Skal snart afleveres"
+msgid "Pick"
+msgstr "Vælg"
 
 msgctxt "Dashboard"
 msgid "Longer return time"
 msgstr "Over 6 dage til aflevering"
 
 msgctxt "Dashboard"
-msgid "Reservations"
-msgstr "Reserveringer"
+msgid "Returned too late"
+msgstr "Afleveringsfrist overskredet"
 
 msgctxt "Dashboard"
-msgid "Queued reservations"
-msgstr "Reserveringer i kø"
+msgid "To be returned soon"
+msgstr "Skal snart afleveres"
 
 msgctxt "Dashboard"
-msgid "Remove reservations (@amount)"
-msgstr "Slet reserveringer (@amount)"
+msgid "and"
+msgstr "og"
 
 msgctxt "Dashboard"
-msgid "et al."
-msgstr "et al."
-
-msgctxt "Dashboard"
-msgid "Ready for you"
-msgstr "Klar til dig"
-
-msgctxt "Dashboard"
-msgid "Still in queue"
-msgstr "Stadig i kø"
-
-msgctxt "Dashboard"
-msgid "At the moment, you have 0 physical loans"
-msgstr "Du har ingen fysiske lån i øjeblikket"
-
-msgctxt "Dashboard"
-msgid "At the moment, you have 0 reservations"
-msgstr "Du har 0 reserveringer"
-
-msgctxt "Dashboard"
-msgid "Expires soon"
-msgstr "Under 6 dage"
-
-msgctxt "Dashboard"
-msgid "Ready for pickup"
-msgstr "Klar til lån"
-
-msgctxt "Dashboard"
-msgid "Ready"
-msgstr "Klar"
+msgid "By"
+msgstr "Af"
 
 msgctxt "Dashboard (Aria)"
 msgid "Close material details modal"
@@ -307,6 +317,14 @@ msgstr "Luk pop-up"
 msgctxt "Dashboard"
 msgid "Read more about fees"
 msgstr "Læs mere om gebyrer og erstatninger"
+
+msgctxt "Dashboard"
+msgid "Loan date"
+msgstr "Udlånsdato"
+
+msgctxt "Dashboard"
+msgid "Material Item Number"
+msgstr "Materialenummer"
 
 msgctxt "Dashboard (Aria)"
 msgid ""
@@ -321,22 +339,32 @@ msgid "Expired"
 msgstr "Udløbet"
 
 msgctxt "Dashboard"
-msgid "Material Item Number"
-msgstr "Materialenummer"
-
-msgctxt "Dashboard"
-msgid "Loan date"
-msgstr "Udlånsdato"
-
-msgctxt "Dashboard"
 msgid "Afleveres"
 msgstr "Afleveringsfrist"
 
 msgctxt "Dashboard"
-msgid ""
-"The due date of return is exceeded, therefore you will be charged a "
-"fee, when the item is returned"
-msgstr "Afleveringsfristen er overskredet, du får et gebyr, når du afleverer"
+msgid "At the moment, you have 0 physical loans"
+msgstr "Du har ingen fysiske lån i øjeblikket"
+
+msgctxt "Dashboard"
+msgid "At the moment, you have 0 reservations"
+msgstr "Du har 0 reserveringer"
+
+msgctxt "Dashboard"
+msgid "Pay"
+msgstr "Betal"
+
+msgctxt "Dashboard"
+msgid "Loans"
+msgstr "Lån"
+
+msgctxt "Dashboard"
+msgid "Physical reservations"
+msgstr "Reserverede fysiske materialer"
+
+msgctxt "Dashboard"
+msgid "Pick up before @date"
+msgstr "Hent senest @date"
 
 msgctxt "Dashboard"
 msgid "Audiobook"
@@ -351,124 +379,96 @@ msgid "Podcast"
 msgstr "Podcast"
 
 msgctxt "Dashboard"
-msgid "Due date @date"
-msgstr "Afleveringsfrist @date"
+msgid "Queued reservations"
+msgstr "Reserveringer i kø"
 
 msgctxt "Dashboard"
-msgid "Choose all"
-msgstr "Vælg alle"
+msgid "Ready"
+msgstr "Klar"
 
 msgctxt "Dashboard"
-msgid "Renewable (@count)"
-msgstr "Forny (@count)"
+msgid "Ready for pickup"
+msgstr "Klar til lån"
 
 msgctxt "Dashboard"
-msgid "Remove your reservation"
-msgstr "Slet reservering"
-
-msgctxt "Dashboard"
-msgid "Date of reservation"
-msgstr "Reserveringsdato"
-
-msgctxt "Dashboard"
-msgid "Pick"
-msgstr "Vælg"
-
-msgctxt "Dashboard"
-msgid "Not interested after"
-msgstr "Ikke interesseret efter"
-
-msgctxt "Dashboard"
-msgid "Apply changes"
-msgstr "Skift"
-
-msgctxt "Dashboard"
-msgid "Pickup branch"
-msgstr "Afhentningssted"
-
-msgctxt "Dashboard"
-msgid "Status"
-msgstr "Status"
+msgid "Remove reservations (@amount)"
+msgstr "Slet reserveringer (@amount)"
 
 msgctxt "Dashboard"
 msgid "Borrow before @date"
 msgstr "Lån før @date"
 
 msgctxt "Dashboard"
-msgid "Showing @itemsShown out of @hitcount elements"
-msgstr "Viser @itemsShown ud af @hitcount elementer"
+msgid "Remove your reservation"
+msgstr "Slet reservering"
+
+msgctxt "Dashboard"
+msgid "Apply changes"
+msgstr "Skift"
+
+msgctxt "Dashboard"
+msgid "Date of reservation"
+msgstr "Reserveringsdato"
 
 msgctxt "Dashboard"
 msgid "Go to eReolen"
 msgstr "Gå til eReolen"
 
 msgctxt "Dashboard"
+msgid "Not interested after"
+msgstr "Ikke interesseret efter"
+
+msgctxt "Dashboard"
+msgid "@count queued"
+msgstr "@count i kø"
+
+msgctxt "Dashboard"
+msgid "Others are queueing for this material"
+msgstr "Andre lånere venter på materialet"
+
+msgctxt "Dashboard"
+msgid "Pickup branch"
+msgstr "Afhentningssted"
+
+msgctxt "Dashboard"
 msgid "Pickup deadline"
 msgstr "Afhent senest"
 
 msgctxt "Dashboard"
-msgid "Pick up before @date"
-msgstr "Hent senest @date"
+msgid "Status"
+msgstr "Status"
 
 msgctxt "Dashboard"
-msgid "Physical reservations"
-msgstr "Reserverede fysiske materialer"
+msgid "Ready for you"
+msgstr "Klar til dig"
 
 msgctxt "Dashboard"
-msgid "Digital reservations"
-msgstr "Digitale reserveringer"
+msgid "Still in queue"
+msgstr "Stadig i kø"
 
 msgctxt "Dashboard"
-msgid "and"
-msgstr "og"
+msgid "Reservations"
+msgstr "Reserveringer"
 
 msgctxt "Dashboard"
-msgid "By"
-msgstr "Af"
+msgid "Showing @itemsShown out of @hitcount elements"
+msgstr "Viser @itemsShown ud af @hitcount elementer"
 
 msgctxt "Dashboard"
-msgid "Select all"
-msgstr "Vælg alle"
+msgid "Expires soon"
+msgstr "Under 6 dage"
 
 msgctxt "Dashboard"
-msgid "Do you want to cancel your reservation?"
-msgstr "Vil du slette dine reserveringer?"
+msgid "@total,-"
+msgstr "@total kr."
 
 msgctxt "Dashboard"
-msgid "Cancel reservation"
-msgstr "Slet reservering"
+msgid "You owe in total"
+msgstr "Du skylder i alt"
 
 msgctxt "Dashboard"
-msgid "Cancel reservations"
-msgstr "Slet reserveringer"
-
-msgctxt "Dashboard"
-msgid "Your fee is raised"
-msgstr "Dit gebyr er fohøjet"
-
-msgctxt "Dashboard"
-msgid "If you renew your fee will be raised"
-msgstr "Hvis du fornyer bliver dit gebyr forhøjet"
-
-msgctxt "Dashboard"
-msgid "Are you sure you want to renew?"
-msgstr "Er du sikker på at du vil forny?"
-
-msgctxt "Dashboard"
-msgid "Yes, renew"
-msgstr "Ja, forny"
-
-msgctxt "Dashboard"
-msgid "Cancel renewal"
-msgstr "Forny ikke"
-
-msgctxt "Dashboard (Aria)"
-msgid "accept modal aria description text"
-msgstr "accepter pop-up beskrivelsestekst"
-
-msgctxt "Dashboard (Aria)"
-msgid "accept modal aria label text"
-msgstr "accepter pop-up beskrivelsestekst"
+msgid "Your profile"
+msgstr "Dit overblik"
 
 msgctxt "Url Proxy"
 msgid "configured"
@@ -2316,36 +2316,8 @@ msgid "My account"
 msgstr "Dit overblik"
 
 msgctxt "Patron menu"
-msgid "Others are queueing for this material"
-msgstr "Andre lånere venter på materialet"
-
-msgctxt "Patron menu"
-msgid "@count queued"
-msgstr "@count i køen"
-
-msgctxt "Patron menu"
 msgid "Number @count in line"
 msgstr "Nummer @count i køen"
-
-msgctxt "Patron menu"
-msgid "Ready for pickup"
-msgstr "Klar til lån"
-
-msgctxt "Patron menu"
-msgid "Expires soon"
-msgstr "Under 6 dage"
-
-msgctxt "Patron menu"
-msgid "Returned too late"
-msgstr "Afleveringsfrist overskredet"
-
-msgctxt "Patron menu"
-msgid "To be returned soon"
-msgstr "Skal snart afleveres"
-
-msgctxt "Patron menu"
-msgid "Ready for you"
-msgstr "Klar til dig"
 
 msgctxt "Patron menu (Aria)"
 msgid ""
@@ -2367,59 +2339,27 @@ msgid "Do you want to cancel your reservation?"
 msgstr "Vil du slette dine reserveringer?"
 
 msgctxt "Patron menu"
-msgid "You cannot regret this action"
-msgstr "Du kan ikke fortryde denne handling"
-
-msgctxt "Patron menu"
 msgid "Cancel reservations"
 msgstr "Slet reserveringer"
 
 msgctxt "Patron menu"
-msgid "Physical reservations"
-msgstr "Reserverede fysiske materialer"
+msgid "You cannot regret this action"
+msgstr "Du kan ikke fortryde denne handling"
 
 msgctxt "Patron menu"
 msgid "Digital reservations"
 msgstr "Digitale reserveringer"
 
 msgctxt "Patron menu"
-msgid "and"
-msgstr "og"
-
-msgctxt "Patron menu"
-msgid "By"
-msgstr "Af"
-
-msgctxt "Patron menu"
-msgid "show more"
-msgstr "Vis flere"
-
-msgctxt "Patron menu"
-msgid "Select @label"
-msgstr "Vælg @label"
+msgid "Renewable (@count)"
+msgstr "Forny (@count)"
 
 msgctxt "Patron menu"
 msgid "Choose all renewable"
 msgstr "Vælg alle"
 
 msgctxt "Patron menu"
-msgid "Can be returned to all branches of (library) libraries"
-msgstr "Kan afleveres på alle kommunens biblioteker"
-
-msgctxt "Patron menu"
-msgid "Showing @itemsShown out of @hitcount loans"
-msgstr "Viser @itemsShown ud af @hitcount lån"
-
-msgctxt "Patron menu"
 msgid "Due date @date"
-msgstr "Afleveringsfrist @date"
-
-msgctxt "Patron menu"
-msgid "Go to material details"
-msgstr "Vis detaljer for materialet"
-
-msgctxt "Patron menu"
-msgid "To be returned @date"
 msgstr "Afleveringsfrist @date"
 
 msgctxt "Patron menu"
@@ -2427,8 +2367,22 @@ msgid "Read more about fees"
 msgstr "Læs mere om gebyrer og erstatninger"
 
 msgctxt "Patron menu"
-msgid "Renewable (@count)"
-msgstr "Forny (@count)"
+msgid "To be returned @date"
+msgstr "Afleveringsfrist @date"
+
+msgctxt "Patron menu"
+msgid ""
+"The due date of return is exceeded, therefore you will be charged a "
+"fee, when the item is returned"
+msgstr "Afleveringsfristen er overskredet, du får et gebyr, når du afleverer"
+
+msgctxt "Patron menu"
+msgid "Go to material details"
+msgstr "Vis detaljer for materialet"
+
+msgctxt "Patron menu"
+msgid "Select @label"
+msgstr "Vælg @label"
 
 msgctxt "Patron menu (Aria)"
 msgid "This modal makes it possible to renew materials"
@@ -2443,22 +2397,44 @@ msgstr ""
 "betinget af et andet biblioteks accept"
 
 msgctxt "Patron menu"
-msgid "The item is reserved by another patron"
-msgstr "Materialet er reserveret af en anden"
-
-msgctxt "Patron menu"
-msgid ""
-"The due date of return is exceeded, therefore you will be charged a "
-"fee, when the item is returned"
-msgstr "Afleveringsfristen er overskredet, du får et gebyr, når du afleverer"
-
-msgctxt "Patron menu"
 msgid "The item cannot be renewed further"
 msgstr "Materialet kan ikke fornyes flere gange"
 
 msgctxt "Patron menu"
-msgid "Renew your loans"
-msgstr "Forny"
+msgid "The item is reserved by another patron"
+msgstr "Materialet er reserveret af en anden"
+
+msgctxt "Patron menu"
+msgid "Close modal with grouped reservations"
+msgstr "Luk pop-up"
+
+msgctxt "Patron menu"
+msgid "This modal makes it possible to delete reservations"
+msgstr "Denne pop-up gør det muligt at slette reserveringer"
+
+msgctxt "Patron menu"
+msgid "Can be returned to all branches of (library) libraries"
+msgstr "Kan afleveres på alle kommunens biblioteker"
+
+msgctxt "Patron menu"
+msgid "Returned too late"
+msgstr "Afleveringsfrist overskredet"
+
+msgctxt "Patron menu"
+msgid "To be returned soon"
+msgstr "Skal snart afleveres"
+
+msgctxt "Patron menu"
+msgid "and"
+msgstr "og"
+
+msgctxt "Patron menu"
+msgid "By"
+msgstr "Af"
+
+msgctxt "Patron menu (Aria)"
+msgid "Close material details modal"
+msgstr "Luk pop-up"
 
 msgctxt "Patron menu"
 msgid "Expires"
@@ -2467,6 +2443,14 @@ msgstr "Udløber"
 msgctxt "Patron menu"
 msgid "Go to eReolen"
 msgstr "Gå til eReolen"
+
+msgctxt "Patron menu"
+msgid "Loan date"
+msgstr "Udlånsdato"
+
+msgctxt "Patron menu"
+msgid "Material Item Number"
+msgstr "Materialenummer"
 
 msgctxt "Patron menu (Aria)"
 msgid ""
@@ -2480,81 +2464,33 @@ msgctxt "Patron menu"
 msgid "Expired"
 msgstr "Udløbet"
 
-msgctxt "Patron menu (Aria)"
-msgid "Close material details modal"
-msgstr "Luk pop-up"
-
-msgctxt "Patron menu"
-msgid "Material Item Number"
-msgstr "Materialenummer"
-
-msgctxt "Patron menu"
-msgid "Loan date"
-msgstr "Udlånsdato"
-
 msgctxt "Patron menu"
 msgid "Due date"
 msgstr "Afleveringsfrist"
 
 msgctxt "Patron menu"
-msgid "Reservations ready for pickup"
-msgstr "Reserveringer klar til lån"
+msgid "Renew your loans"
+msgstr "Forny"
 
 msgctxt "Patron menu"
-msgid "Pick up before @date"
-msgstr "Hent senest @date"
+msgid "Close user menu"
+msgstr "Luk brugermenu"
 
 msgctxt "Patron menu"
-msgid "Remove reservations"
-msgstr "Slet reserveringer"
+msgid "The user modal"
+msgstr "Brugermodalen"
 
 msgctxt "Patron menu"
-msgid "Ready"
-msgstr "Klar"
+msgid "Log out"
+msgstr "Log ud"
 
 msgctxt "Patron menu"
-msgid "This modal makes it possible to delete reservations"
-msgstr "Denne pop-up gør det muligt at slette reserveringer"
+msgid "Log in"
+msgstr "Log ind"
 
 msgctxt "Patron menu"
-msgid "Close modal with grouped reservations"
-msgstr "Luk pop-up"
-
-msgctxt "Patron menu"
-msgid "Pickup deadline"
-msgstr "Afhent senest"
-
-msgctxt "Patron menu"
-msgid "Borrow before @date"
-msgstr "Lån før @date"
-
-msgctxt "Patron menu"
-msgid "Status"
-msgstr "Status"
-
-msgctxt "Patron menu"
-msgid "Remove your reservation"
-msgstr "Slet reservering"
-
-msgctxt "Patron menu"
-msgid "Pickup branch"
-msgstr "Afhentningssted"
-
-msgctxt "Patron menu"
-msgid "Apply changes"
-msgstr "Skift"
-
-msgctxt "Patron menu"
-msgid "Not interested after"
-msgstr "Ikke interesseret efter"
-
-msgctxt "Patron menu"
-msgid "Date of reservation"
-msgstr "Reserveringsdato"
-
-msgctxt "Patron menu"
-msgid "My Account"
-msgstr "Brugerprofil"
+msgid "The user modal, log in or create a user"
+msgstr "Brugermodal til at logge ind eller oprette bruger"
 
 msgctxt "Patron menu"
 msgid "loans expired"
@@ -2568,25 +2504,13 @@ msgctxt "Patron menu"
 msgid "reservations ready for pickup"
 msgstr "Klar til lån"
 
-msgctxt "Patron menu"
-msgid "Close user menu"
-msgstr "Luk brugermenu"
+msgctxt "Patron menu (aria)"
+msgid "Notifications menu"
+msgstr "Notifikations menu"
 
-msgctxt "Patron menu"
-msgid "The user modal"
-msgstr "Brugermodalen"
-
-msgctxt "Patron menu"
-msgid "The user modal, log in or create a user"
-msgstr "Brugermodal til at logge ind eller oprette bruger"
-
-msgctxt "Patron menu"
-msgid "Log out"
-msgstr "Log ud"
-
-msgctxt "Patron menu"
-msgid "Log in"
-msgstr "Log ind"
+msgctxt "Patron menu (aria)"
+msgid "Profile links"
+msgstr "Links til dit låneoverblik"
 
 msgctxt "Patron menu"
 msgid "Sign up"
@@ -2596,13 +2520,89 @@ msgctxt "Patron menu (aria)"
 msgid "Open user menu"
 msgstr "Åbn brugermenu"
 
-msgctxt "Patron menu (aria)"
-msgid "Notifications menu"
-msgstr "Notifikations menu"
+msgctxt "Patron menu"
+msgid "My Account"
+msgstr "Brugerprofil"
 
-msgctxt "Patron menu (aria)"
-msgid "Profile links"
-msgstr "Links til dit låneoverblik"
+msgctxt "Patron menu"
+msgid "Physical reservations"
+msgstr "Reserverede fysiske materialer"
+
+msgctxt "Patron menu"
+msgid "Pick up before @date"
+msgstr "Hent senest @date"
+
+msgctxt "Patron menu"
+msgid "Ready"
+msgstr "Klar"
+
+msgctxt "Patron menu"
+msgid "Ready for pickup"
+msgstr "Klar til lån"
+
+msgctxt "Patron menu"
+msgid "Remove reservations"
+msgstr "Slet reserveringer"
+
+msgctxt "Patron menu"
+msgid "Borrow before @date"
+msgstr "Lån før @date"
+
+msgctxt "Patron menu"
+msgid "Remove your reservation"
+msgstr "Slet reservering"
+
+msgctxt "Patron menu"
+msgid "Apply changes"
+msgstr "Skift"
+
+msgctxt "Patron menu"
+msgid "Date of reservation"
+msgstr "Reserveringsdato"
+
+msgctxt "Patron menu"
+msgid "Not interested after"
+msgstr "Ikke interesseret efter"
+
+msgctxt "Patron menu"
+msgid "@count queued"
+msgstr "@count i køen"
+
+msgctxt "Patron menu"
+msgid "Others are queueing for this material"
+msgstr "Andre lånere venter på materialet"
+
+msgctxt "Patron menu"
+msgid "Pickup branch"
+msgstr "Afhentningssted"
+
+msgctxt "Patron menu"
+msgid "Pickup deadline"
+msgstr "Afhent senest"
+
+msgctxt "Patron menu"
+msgid "Status"
+msgstr "Status"
+
+msgctxt "Patron menu"
+msgid "Reservations ready for pickup"
+msgstr "Reserveringer klar til lån"
+
+msgctxt "Patron menu"
+msgid "Ready for you"
+msgstr "Klar til dig"
+
+msgctxt "Patron menu"
+msgid "Showing @itemsShown out of @hitcount loans"
+msgstr "Viser @itemsShown ud af @hitcount lån"
+
+msgctxt "Patron menu"
+msgid "show more"
+msgstr "Vis flere"
+
+msgctxt "Patron menu"
+msgid "Expires soon"
+msgstr "Under 6 dage"
 
 msgctxt "Something similar"
 msgid "and"
