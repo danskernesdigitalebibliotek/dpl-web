@@ -9,7 +9,6 @@ use Drupal\dpl_react\DplReactConfigBase;
  */
 class DplLoansSettings extends DplReactConfigBase {
 
-  const MATERIAL_OVERDUE_URL = '';
   const PAGE_SIZE_DESKTOP = 25;
   const PAGE_SIZE_MOBILE = 25;
 
