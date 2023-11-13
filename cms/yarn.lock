@@ -1754,6 +1754,11 @@ escape-string-regexp@^4.0.0:
   resolved "https://registry.yarnpkg.com/escape-string-regexp/-/escape-string-regexp-4.0.0.tgz#14ba83a5d373e3d311e5afca29cf5bfad965bf34"
   integrity sha512-TtpcNJ3XAzx3Gq8sWRzJaVajRs0uVxA2YAkdb1jm2YkPz4G6egUFAyA3n5vtEIZefPk5Wa4UXbKuS5fKkJWdgA==
 
+eslint-compat-utils@^0.1.0:
+  version "0.1.2"
+  resolved "https://registry.yarnpkg.com/eslint-compat-utils/-/eslint-compat-utils-0.1.2.tgz#f45e3b5ced4c746c127cf724fb074cd4e730d653"
+  integrity sha512-Jia4JDldWnFNIru1Ehx1H5s9/yxiRHY/TimCuUc0jNexew3cF1gI6CYZil1ociakfWO3rRqFjl1mskBblB3RYg==
+
 eslint-config-airbnb-base@^15.0.0:
   version "15.0.0"
   resolved "https://registry.yarnpkg.com/eslint-config-airbnb-base/-/eslint-config-airbnb-base-15.0.0.tgz#6b09add90ac79c2f8d723a2580e07f3925afd236"
@@ -1805,10 +1810,10 @@ eslint-plugin-cypress@^2.12.1:
   dependencies:
     globals "^11.12.0"
 
-eslint-plugin-drupal-contrib@^1.2.0:
-  version "1.2.0"
-  resolved "https://registry.yarnpkg.com/eslint-plugin-drupal-contrib/-/eslint-plugin-drupal-contrib-1.2.0.tgz#c66c3cedc7b5b5564c1e531e33ff2ce484fb0353"
-  integrity sha512-s6pdut4/Gabl+2xmGAsi9i+S0pTqOCgKISkfPU3t4bjPoQASencPYIpR1upHRO7pr1od7RAntED04Bcmp0mp4g==
+eslint-plugin-drupal-contrib@^1.2.1:
+  version "1.2.1"
+  resolved "https://registry.yarnpkg.com/eslint-plugin-drupal-contrib/-/eslint-plugin-drupal-contrib-1.2.1.tgz#1de3bf0ff9a47850155d470377b12fa4a7fd69a5"
+  integrity sha512-W1n4nfuWy1aZ1GKJVukiUUxTHxAFlcY7ZM23UaUAmgmfqA968msRZDWzh/ipMnDv8E8S2HCPZ7jgMGaJ+RdEeQ==
   dependencies:
     eslint-config-airbnb "^19.0.4"
     eslint-config-prettier "^8.3.0"
@@ -1818,7 +1823,7 @@ eslint-plugin-drupal-contrib@^1.2.0:
     eslint-plugin-prettier "^4.0.0"
     eslint-plugin-react "^7.26.0"
     eslint-plugin-react-hooks "^4.2.0"
-    eslint-plugin-yml "^0.15.0"
+    eslint-plugin-yml "^1.0.0"
 
 eslint-plugin-import@^2.24.2:
   version "2.26.0"
@@ -1895,15 +1900,16 @@ eslint-plugin-react@^7.26.0:
     semver "^6.3.0"
     string.prototype.matchall "^4.0.7"
 
-eslint-plugin-yml@^0.15.0:
-  version "0.15.0"
-  resolved "https://registry.yarnpkg.com/eslint-plugin-yml/-/eslint-plugin-yml-0.15.0.tgz#99b9ed22a8d9d51e189e822c2f78eeb4eda080ce"
-  integrity sha512-fRx7wNmRvK2FjwCmnsTm71FcHlmH7eMyXpa/GgfwAfb/7RDH0XeOaM8Z8KupYxoizYu8eBLGcPv1DzRZzvhnww==
+eslint-plugin-yml@^1.0.0:
+  version "1.10.0"
+  resolved "https://registry.yarnpkg.com/eslint-plugin-yml/-/eslint-plugin-yml-1.10.0.tgz#0c750253825ff352fb11b824d80864d8a2df3408"
+  integrity sha512-53SUwuNDna97lVk38hL/5++WXDuugPM9SUQ1T645R0EHMRCdBIIxGye/oOX2qO3FQ7aImxaUZJU/ju+NMUBrLQ==
   dependencies:
     debug "^4.3.2"
+    eslint-compat-utils "^0.1.0"
     lodash "^4.17.21"
     natural-compare "^1.4.0"
-    yaml-eslint-parser "^0.5.0"
+    yaml-eslint-parser "^1.2.1"
 
 eslint-scope@^5.1.1:
   version "5.1.1"
@@ -5338,16 +5344,21 @@ yallist@^4.0.0:
   resolved "https://registry.yarnpkg.com/yallist/-/yallist-4.0.0.tgz#9bb92790d9c0effec63be73519e11a35019a3a72"
   integrity sha512-3wdGidZyq5PB084XLES5TpOSRA3wjXAlIWMhum2kRcv/41Sn2emQ0dycQW4uZXLejwKvg6EsvbdlVL+FYEct7A==
 
-yaml-eslint-parser@^0.5.0:
-  version "0.5.0"
-  resolved "https://registry.yarnpkg.com/yaml-eslint-parser/-/yaml-eslint-parser-0.5.0.tgz#01d4e4d992a820769ea85ef5fd526dfc20ebc6f5"
-  integrity sha512-nJeyLA3YHAzhBTZbRAbu3W6xrSCucyxExmA+ZDtEdUFpGllxAZpto2Zxo2IG0r0eiuEiBM4e+wiAdxTziTq94g==
+yaml-eslint-parser@^1.2.1:
+  version "1.2.2"
+  resolved "https://registry.yarnpkg.com/yaml-eslint-parser/-/yaml-eslint-parser-1.2.2.tgz#1a9673ebe254328cfc2fa99f297f6d8c9364ccd8"
+  integrity sha512-pEwzfsKbTrB8G3xc/sN7aw1v6A6c/pKxLAkjclnAyo5g5qOh6eL9WGu0o3cSDQZKrTNk4KL4lQSwZW+nBkANEg==
   dependencies:
     eslint-visitor-keys "^3.0.0"
     lodash "^4.17.21"
-    yaml "^1.10.2"
+    yaml "^2.0.0"
 
-yaml@^1.10.2, yaml@~1.10.2:
+yaml@^2.0.0:
+  version "2.3.4"
+  resolved "https://registry.yarnpkg.com/yaml/-/yaml-2.3.4.tgz#53fc1d514be80aabf386dc6001eb29bf3b7523b2"
+  integrity sha512-8aAvwVUSHpfEqTQ4w/KMlf3HcRdt50E5ODIQJBw1fQ5RL34xabzxtUlzTXVqc4rkZsPbvrXKWnABCD7kWSmocA==
+
+yaml@~1.10.2:
   version "1.10.2"
   resolved "https://registry.yarnpkg.com/yaml/-/yaml-1.10.2.tgz#2301c5ffbf12b467de8da2333a459e29e7920e4b"
   integrity sha512-r3vXyErRCYJ7wg28yvBY5VSoAF8ZvlcW9/BwUzEtUsjvX/DKs24dIkuwjtuprwJJHsbyUbLApepYTR1BN4uHrg==
