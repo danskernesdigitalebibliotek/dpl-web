@@ -95,27 +95,37 @@ class PatronMenuBlock extends BlockBase implements ContainerFactoryPluginInterfa
     $menu = [
       [
         "name" => $this->t("Loans", ["context" => 'Patron menu']),
-        "link" => Url::fromRoute('dpl_loans.list', [], ['absolute' => TRUE])->toString(),
+        "link" => dpl_react_apps_ensure_url_is_string(
+          Url::fromRoute('dpl_loans.list', [], ['absolute' => TRUE])->toString()
+        ),
         "dataId" => "1",
       ],
       [
         "name" => $this->t("Reservations", ["context" => 'Patron menu']),
-        "link" => Url::fromRoute('dpl_reservations.list', [], ['absolute' => TRUE])->toString(),
+        "link" => dpl_react_apps_ensure_url_is_string(
+          Url::fromRoute('dpl_reservations.list', [], ['absolute' => TRUE])->toString()
+        ),
         "dataId" => "2",
       ],
       [
         "name" => $this->t("My list", ["context" => 'Patron menu']),
-        "link" => Url::fromRoute('dpl_favorites_list.list', [], ['absolute' => TRUE])->toString(),
+        "link" => dpl_react_apps_ensure_url_is_string(
+          Url::fromRoute('dpl_favorites_list.list', [], ['absolute' => TRUE])->toString()
+        ),
         "dataId" => "20",
       ],
       [
         "name" => $this->t("Fees & Replacement costs", ["context" => 'Patron menu']),
-        "link" => Url::fromRoute('dpl_fees.list', [], ['absolute' => TRUE])->toString(),
+        "link" => dpl_react_apps_ensure_url_is_string(
+          Url::fromRoute('dpl_fees.list', [], ['absolute' => TRUE])->toString()
+        ),
         "dataId" => "4",
       ],
       [
         "name" => $this->t("My account", ["context" => 'Patron menu']),
-        "link" => Url::fromRoute('dpl_dashboard.list', [], ['absolute' => TRUE])->toString(),
+        "link" => dpl_react_apps_ensure_url_is_string(
+          Url::fromRoute('dpl_dashboard.list', [], ['absolute' => TRUE])->toString()
+        ),
         "dataId" => "40",
       ],
     ];
@@ -135,7 +145,13 @@ class PatronMenuBlock extends BlockBase implements ContainerFactoryPluginInterfa
       'fees-page-url' => '/user/me/fees',
       // We want the user to be redirected to the dashboard
       // after login via the patron menu.
-      "menu-login-url" => Url::fromRoute('dpl_login.login', ['current-path' => Url::fromRoute('dpl_dashboard.list')->toString()], ['absolute' => TRUE])->toString(),
+      "menu-login-url" => dpl_react_apps_ensure_url_is_string(
+        Url::fromRoute(
+          'dpl_login.login',
+          ['current-path' => dpl_react_apps_ensure_url_is_string(Url::fromRoute('dpl_dashboard.list')->toString())],
+          ['absolute' => TRUE]
+        )->toString()
+      ),
       "menu-sign-up-url" => Url::fromRoute('dpl_patron_reg.information', [], ['absolute' => TRUE])->toString(),
       'ereolen-my-page-url' => $generalSettings->get('ereolen_my_page_url'),
       'menu-view-your-profile-text-url' => Url::fromRoute('dpl_patron_page.profile', [], ['absolute' => TRUE])->toString(),
