@@ -133,7 +133,9 @@ class PatronMenuBlock extends BlockBase implements ContainerFactoryPluginInterfa
 
       // Urls.
       'fees-page-url' => '/user/me/fees',
-      "menu-login-url" => Url::fromRoute('dpl_login.login', [], ['absolute' => TRUE])->toString(),
+      // We want the user to be redirected to the dashboard
+      // after login via the patron menu.
+      "menu-login-url" => Url::fromRoute('dpl_login.login', ['current-path' => Url::fromRoute('dpl_dashboard.list')->toString()], ['absolute' => TRUE])->toString(),
       "menu-sign-up-url" => Url::fromRoute('dpl_patron_reg.information', [], ['absolute' => TRUE])->toString(),
       'ereolen-my-page-url' => $generalSettings->get('ereolen_my_page_url'),
       'menu-view-your-profile-text-url' => Url::fromRoute('dpl_patron_page.profile', [], ['absolute' => TRUE])->toString(),
