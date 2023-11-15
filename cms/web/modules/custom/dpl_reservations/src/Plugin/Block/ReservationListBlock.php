@@ -100,7 +100,7 @@ class ReservationListBlock extends BlockBase implements ContainerFactoryPluginIn
       'reservation-details-config' => json_encode([
         'allowRemoveReadyReservations' => $allow_remove_ready_reservations,
       ]),
-      'threshold-config' => $generalSettings->get('threshold_config') ?? GeneralSettingsForm::THRESHOLD_CONFIG,
+      'expiration-warning-days-before' => $generalSettings->get('expiration_warning_days_before_config') ?? GeneralSettingsForm::EXPIRATION_WARNING_DAYS_BEFORE_CONFIG,
 
       // Texts.
       'material-and-author-text' => $this->t('and', [], ['context' => 'Reservation list']),

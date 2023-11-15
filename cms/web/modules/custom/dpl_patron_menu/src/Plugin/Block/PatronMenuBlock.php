@@ -6,6 +6,7 @@ use Drupal\Core\Block\BlockBase;
 use Drupal\Core\Config\ConfigFactoryInterface;
 use Drupal\Core\Plugin\ContainerFactoryPluginInterface;
 use Drupal\Core\Url;
+use Drupal\dpl_library_agency\Form\GeneralSettingsForm;
 use Drupal\dpl_react_apps\Controller\DplReactAppsController;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Drupal\dpl_library_agency\Branch\BranchRepositoryInterface;
@@ -126,7 +127,7 @@ class PatronMenuBlock extends BlockBase implements ContainerFactoryPluginInterfa
       'page-size-mobile' => $menuSettings->get('page_size_mobile'),
       'blacklisted-pickup-branches-config' => DplReactAppsController::buildBranchesListProp($this->branchSettings->getExcludedReservationBranches()),
       'branches-config' => DplReactAppsController::buildBranchesJsonProp($this->branchRepository->getBranches()),
-      "threshold-config" => $this->configFactory->get('dpl_library_agency.general_settings')->get('threshold_config'),
+      "expiration-warning-days-before-config" => $generalSettings->get('expiration_warning_days_before_config') ?? GeneralSettingsForm::EXPIRATION_WARNING_DAYS_BEFORE_CONFIG,
       "menu-navigation-data-config" => json_encode($menu, JSON_THROW_ON_ERROR),
       'reservation-detail-allow-remove-ready-reservations-config' => $generalSettings->get('reservation_detail_allow_remove_ready_reservations'),
       'interest-periods-config' => DplReactAppsController::getInterestPeriods(),

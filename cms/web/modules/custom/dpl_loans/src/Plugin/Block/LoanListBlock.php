@@ -72,17 +72,6 @@ class LoanListBlock extends BlockBase implements ContainerFactoryPluginInterface
   }
 
   /**
-   * Gets threshold config.
-   *
-   * @return string
-   *   Returns the threshold config.
-   */
-  public function getThresholdConfig(): string {
-    $generalSettings = $this->configFactory->get('dpl_library_agency.general_settings');
-    return $generalSettings->get('threshold_config') ?? GeneralSettingsForm::THRESHOLD_CONFIG;
-  }
-
-  /**
    * {@inheritDoc}
    *
    * @return mixed[]
@@ -98,7 +87,7 @@ class LoanListBlock extends BlockBase implements ContainerFactoryPluginInterface
       "page-size-mobile" => $loanListSettings->get('page_size_mobile') ?? DplLoansSettings::PAGE_SIZE_MOBILE,
 
       // Config.
-      "threshold-config" => $this->getThresholdConfig(),
+      "expiration-warning-days-before" => $generalSettings->get('expiration_warning_days_before_config') ?? GeneralSettingsForm::EXPIRATION_WARNING_DAYS_BEFORE_CONFIG,
 
       // Urls.
       'ereolen-my-page-url' => dpl_react_apps_format_app_url($generalSettings->get('ereolen_my_page_url'), GeneralSettingsForm::EREOLEN_MY_PAGE_URL),

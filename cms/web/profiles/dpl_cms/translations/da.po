@@ -1822,14 +1822,16 @@ msgstr ""
 "vises dette link i beskeden til brugeren"
 
 msgctxt "Library Agency Configuration"
-msgid "Thresholds"
-msgstr "Varsler"
+msgid "Expiration warning"
+msgstr "Udløbsadvarsel"
 
 msgctxt "Library Agency Configuration"
-msgid "Set thresholds"
-msgstr ""
-"Angivelse af hvor mange dage før udløb bruger skal modtage et varsel "
-""
+msgid "Set expiration warning"
+msgstr "Påmindelse om snarligt udløb"
+
+msgctxt "Library Agency Configuration"
+msgid "Insert the number of days before the expiration of the material, when the reminder \"Expires soon\" should appear."
+msgstr "Indsæt antallet af dage, før udløb af materialet, hvor påmindelsen \"Udløber snart\" skal dukke op."
 
 msgctxt "Library Agency Configuration"
 msgid "Excluded branches"
