@@ -28,6 +28,7 @@ class GeneralSettingsForm extends ConfigFormBase {
   const REDIRECT_ON_BLOCKED_URL = '';
   const BLOCKED_PATRON_E_LINK_URL = '';
   const EREOLEN_MY_PAGE_URL = '';
+  const EREOLEN_HOMEPAGE_URL = '';
   const PAUSE_RESERVATION_START_DATE_CONFIG = '';
 
   /**
@@ -156,7 +157,14 @@ class GeneralSettingsForm extends ConfigFormBase {
       '#type' => 'url',
       '#title' => $this->t('Ereolen link', [], ['context' => 'Library Agency Configuration']),
       '#description' => $this->t('My page in ereolen', [], ['context' => 'Library Agency Configuration']),
-      '#default_value' => $config->get('ereolen_my_page_url'),
+      '#default_value' => $config->get('ereolen_my_page_url') ?? self::EREOLEN_MY_PAGE_URL,
+    ];
+
+    $form['reservations']['ereolen_homepage_url'] = [
+      '#type' => 'url',
+      '#title' => $this->t('Ereolen home link', [], ['context' => 'Library Agency Configuration']),
+      '#description' => $this->t('Home page in ereolen', [], ['context' => 'Library Agency Configuration']),
+      '#default_value' => $config->get('ereolen_homepage_url') ?? self::EREOLEN_HOMEPAGE_URL,
     ];
 
     $form['reservations']['pause_reservation_info_url'] = [
@@ -265,6 +273,7 @@ class GeneralSettingsForm extends ConfigFormBase {
       ->set('redirect_on_blocked_url', $form_state->getValue('redirect_on_blocked_url'))
       ->set('blocked_patron_e_link_url', $form_state->getValue('blocked_patron_e_link_url'))
       ->set('ereolen_my_page_url', $form_state->getValue('ereolen_my_page_url'))
+      ->set('ereolen_homepage_url', $form_state->getValue('ereolen_homepage_url'))
       ->set('pause_reservation_start_date_config', $form_state->getValue('pause_reservation_start_date_config'))
       ->save();
 

@@ -12,6 +12,7 @@
 use Drupal\Core\GeneratedUrl;
 use Drupal\Core\Url;
 use Drupal\dpl_react_apps\Controller\DplReactAppsController;
+use Drupal\dpl_library_agency\Form\GeneralSettingsForm;
 use function Safe\json_encode;
 
 /**
@@ -57,6 +58,7 @@ function dpl_react_apps_preprocess_page(array &$variables): void {
  */
 function dpl_react_apps_dpl_react_apps_data(array &$data): void {
   $adgangsplatformen_config = \Drupal::service('dpl_login.adgangsplatformen.config');
+  $generalSettings = \Drupal::config('dpl_library_agency.general_settings');
 
   // @todo We should use the adgabngsplatform config everywhere we handle data that it can provide,
   // eg. login/logout urls.
@@ -97,6 +99,11 @@ function dpl_react_apps_dpl_react_apps_data(array &$data): void {
     'dashboard' => dpl_react_apps_ensure_url_is_string(
       Url::fromRoute('dpl_dashboard.list')->toString()
     ),
+    'ereolen-homepage' => dpl_react_apps_format_app_url(
+      $generalSettings->get('ereolen_homepage_url'),
+      GeneralSettingsForm::EREOLEN_HOMEPAGE_URL
+    ),
+
   ];
 }
 
