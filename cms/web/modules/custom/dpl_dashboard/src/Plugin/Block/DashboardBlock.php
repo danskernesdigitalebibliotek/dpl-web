@@ -12,7 +12,6 @@ use Drupal\dpl_react_apps\Controller\DplReactAppsController;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Drupal\dpl_library_agency\Branch\BranchRepositoryInterface;
 use Drupal\dpl_library_agency\BranchSettings;
-use function Safe\json_encode as json_encode;
 
 /**
  * Provides user intermediate list.
@@ -79,7 +78,6 @@ class DashboardBlock extends BlockBase implements ContainerFactoryPluginInterfac
   public function build(): array {
     $dashboardSettings = $this->dashboardSettings->loadConfig();
     $generalSettings = $this->configFactory->get('dpl_library_agency.general_settings');
-    $allow_remove_ready_reservations = $generalSettings->get('reservation_detail_allow_remove_ready_reservations') ?? GeneralSettingsForm::RESERVATION_DETAIL_ALLOW_REMOVE_READY_RESERVATIONS;
 
     $data = [
       // Config.
@@ -90,9 +88,6 @@ class DashboardBlock extends BlockBase implements ContainerFactoryPluginInterfac
       'reservation-detail-allow-remove-ready-reservations-config' => $generalSettings->get('reservation_detail_allow_remove_ready_reservations') ?? GeneralSettingsForm::RESERVATION_DETAIL_ALLOW_REMOVE_READY_RESERVATIONS,
       'blacklisted-pickup-branches-config' => DplReactAppsController::buildBranchesListProp($this->branchSettings->getExcludedReservationBranches()),
       'branches-config' => DplReactAppsController::buildBranchesJsonProp($this->branchRepository->getBranches()),
-      'reservation-details-config' => json_encode([
-        'allowRemoveReadyReservations' => $allow_remove_ready_reservations,
-      ]),
 
       // Urls.
       // Cannot find that route. Does it exist?
