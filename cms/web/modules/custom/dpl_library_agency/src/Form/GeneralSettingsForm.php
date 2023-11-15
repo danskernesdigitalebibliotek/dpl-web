@@ -20,7 +20,7 @@ use function Safe\usort as usort;
  */
 class GeneralSettingsForm extends ConfigFormBase {
   // @todo These constants should be defined in a general settings class like we do it in eg dpl_dashboard.
-  const THRESHOLD_CONFIG = "{ 'colorThresholds': { 'danger': '0', 'warning': '6' } }";
+  const EXPIRATION_WARNING_DAYS_BEFORE_CONFIG = 6;
   const RESERVATION_DETAIL_ALLOW_REMOVE_READY_RESERVATIONS = FALSE;
   const INTEREST_PERIODS_CONFIG = '';
   const RESERVATION_SMS_NOTIFICATIONS_ENABLED = TRUE;
@@ -194,17 +194,18 @@ class GeneralSettingsForm extends ConfigFormBase {
       '#default_value' => $config->get('blocked_patron_e_link_url') ?? self::BLOCKED_PATRON_E_LINK_URL,
     ];
 
-    $form['thresholds'] = [
+    $form['expiration_warning'] = [
       '#type' => 'fieldset',
-      '#title' => $this->t('Thresholds', [], ['context' => 'Library Agency Configuration']),
+      '#title' => $this->t('Expiration warning', [], ['context' => 'Library Agency Configuration']),
       '#collapsible' => FALSE,
       '#collapsed' => FALSE,
     ];
 
-    $form['thresholds']['threshold_config'] = [
-      '#type' => 'textfield',
-      '#title' => $this->t('Set thresholds', [], ['context' => 'Library Agency Configuration']),
-      '#default_value' => $config->get('threshold_config') ?? self::THRESHOLD_CONFIG,
+    $form['expiration_warning']['expiration_warning_days_before_config'] = [
+      '#type' => 'number',
+      '#title' => $this->t('Set expiration warning', [], ['context' => 'Library Agency Configuration']),
+      '#default_value' => $config->get('expiration_warning_days_before_config') ?? self::EXPIRATION_WARNING_DAYS_BEFORE_CONFIG,
+      '#description' => $this->t('Insert the number of days before the expiration of the material, when the reminder "Expires soon" should appear.', [], ['context' => 'Library Agency Configuration']),
     ];
 
     $form['branches'] = [
@@ -256,7 +257,7 @@ class GeneralSettingsForm extends ConfigFormBase {
    */
   public function submitForm(array &$form, FormStateInterface $form_state): void {
     $this->config('dpl_library_agency.general_settings')
-      ->set('threshold_config', $form_state->getValue('threshold_config'))
+      ->set('expiration_warning_days_before_config', $form_state->getValue('expiration_warning_days_before_config'))
       ->set('reservation_detail_allow_remove_ready_reservations', $form_state->getValue('reservation_detail_allow_remove_ready_reservations'))
       ->set('interest_periods_config', $form_state->getValue('interest_periods_config'))
       ->set('reservation_sms_notifications_enabled', $form_state->getValue('reservation_sms_notifications_enabled'))
