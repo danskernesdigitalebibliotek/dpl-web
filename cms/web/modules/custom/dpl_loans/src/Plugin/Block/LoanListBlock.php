@@ -5,7 +5,7 @@ namespace Drupal\dpl_loans\Plugin\Block;
 use Drupal\Core\Block\BlockBase;
 use Drupal\Core\Config\ConfigFactoryInterface;
 use Drupal\Core\Plugin\ContainerFactoryPluginInterface;
-use Drupal\dpl_library_agency\Form\GeneralSettingsForm;
+use Drupal\dpl_library_agency\GeneralSettings;
 use Drupal\dpl_loans\DplLoansSettings;
 use Drupal\dpl_react\DplReactConfigInterface;
 use Drupal\dpl_react_apps\Controller\DplReactAppsController;
@@ -87,10 +87,10 @@ class LoanListBlock extends BlockBase implements ContainerFactoryPluginInterface
       "page-size-mobile" => $loanListSettings->get('page_size_mobile') ?? DplLoansSettings::PAGE_SIZE_MOBILE,
 
       // Config.
-      "expiration-warning-days-before-config" => $generalSettings->get('expiration_warning_days_before_config') ?? GeneralSettingsForm::EXPIRATION_WARNING_DAYS_BEFORE_CONFIG,
+      "expiration-warning-days-before-config" => $generalSettings->get('expiration_warning_days_before_config') ?? GeneralSettings::EXPIRATION_WARNING_DAYS_BEFORE_CONFIG,
 
       // Urls.
-      'ereolen-my-page-url' => dpl_react_apps_format_app_url($generalSettings->get('ereolen_my_page_url'), GeneralSettingsForm::EREOLEN_MY_PAGE_URL),
+      'ereolen-my-page-url' => dpl_react_apps_format_app_url($generalSettings->get('ereolen_my_page_url'), GeneralSettings::EREOLEN_MY_PAGE_URL),
       'material-overdue-url' => dpl_react_apps_format_app_url($loanListSettings->get('material_overdue_url'), DplLoansSettings::MATERIAL_OVERDUE_URL),
 
       // Texts.

@@ -1774,7 +1774,19 @@ msgstr "Hvis valgt, kan brugerne vælge at få tilsendt notifikationer på sms"
 
 msgctxt "Library Agency Configuration"
 msgid "Interest periods for reservation"
-msgstr "Interesseperiode for reserveringer"
+msgstr "Interesseperioder for reserveringer"
+
+msgctxt "Library Agency Configuration"
+msgid "Set the interest periods. The format should be [days]-[label]. New periods will first be available in \"Default interest period for reservation\" when the form has been saved."
+msgstr "Indtast interesseperioder for reservationer. Formatet skal være [days]-[label]. Nye perioder vil først være tilgængelige i \"Standard interesseperiode for reservationer\" når formularen er blevet gemt."
+
+msgctxt "Library Agency Configuration"
+msgid "Default interest period for reservation"
+msgstr "Standard interesseperiode for reservationer"
+
+msgctxt "Library Agency Configuration"
+msgid "Choose the default interest period for reservations."
+msgstr "Vælg standard interesseperiode for reservationer."
 
 msgctxt "Library Agency Configuration"
 msgid "Allow removing ready reservations"
@@ -1873,6 +1885,15 @@ msgid ""
 "Selected branches will not be available as pickup locations for "
 "reservations."
 msgstr "Valgte filialer vil ikke kunne vælges som afhentningssted."
+
+msgctxt "Library Agency Configuration"
+msgid "The interest period @error, does not match the format [days]-[label]."
+msgstr "Interesseperioden @error, matcher ikke formatet [days]-[label]."
+
+msgctxt "Library Agency Configuration"
+msgid "The default interest period should be set to a value in \"Interest periods for reservation\" field."
+msgstr "Standard interesseperioden skal sættes til en værdi der findes i \"Interesseperioder for reservation\" feltet."
+
 
 msgid "React DDB Library"
 msgstr "React DPL Library"

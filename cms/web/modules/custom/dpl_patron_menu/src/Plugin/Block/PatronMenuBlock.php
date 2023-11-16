@@ -6,12 +6,13 @@ use Drupal\Core\Block\BlockBase;
 use Drupal\Core\Config\ConfigFactoryInterface;
 use Drupal\Core\Plugin\ContainerFactoryPluginInterface;
 use Drupal\Core\Url;
-use Drupal\dpl_library_agency\Form\GeneralSettingsForm;
+use Drupal\dpl_library_agency\GeneralSettings;
 use Drupal\dpl_react_apps\Controller\DplReactAppsController;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Drupal\dpl_library_agency\Branch\BranchRepositoryInterface;
 use Drupal\dpl_library_agency\BranchSettings;
 use Drupal\dpl_react\DplReactConfigInterface;
+use function Safe\json_encode as json_encode;
 
 /**
  * Provides patron menu.
@@ -47,7 +48,16 @@ class PatronMenuBlock extends BlockBase implements ContainerFactoryPluginInterfa
    * @param \Drupal\dpl_react\DplReactConfigInterface $menuSettings
    *   Dashboard settings.
    */
-  public function __construct(array $configuration, $plugin_id, $plugin_definition, ConfigFactoryInterface $configFactory, private BranchSettings $branchSettings, private BranchRepositoryInterface $branchRepository, private DplReactConfigInterface $menuSettings) {
+  public function __construct(
+      array $configuration,
+      $plugin_id,
+      $plugin_definition,
+      ConfigFactoryInterface $configFactory,
+      private BranchSettings $branchSettings,
+      private BranchRepositoryInterface $branchRepository,
+      private DplReactConfigInterface $menuSettings,
+      private GeneralSettings $generalSettings
+  ) {
     parent::__construct($configuration, $plugin_id, $plugin_definition);
     $this->configuration = $configuration;
     $this->configFactory = $configFactory;
@@ -76,7 +86,8 @@ class PatronMenuBlock extends BlockBase implements ContainerFactoryPluginInterfa
       $container->get('config.factory'),
       $container->get('dpl_library_agency.branch_settings'),
       $container->get('dpl_library_agency.branch.repository'),
-      \Drupal::service('dpl_patron_menu.settings')
+      \Drupal::service('dpl_patron_menu.settings'),
+      $container->get('dpl_library_agency.general_settings'),
     );
   }
 
@@ -86,7 +97,7 @@ class PatronMenuBlock extends BlockBase implements ContainerFactoryPluginInterfa
    * @return mixed[]
    *   The app render array.
    *
-   * @throws \JsonException
+   * @throws \Safe\Exceptions\JsonException
    */
   public function build(): array {
     $menuSettings = $this->menuSettings->loadConfig();
@@ -127,10 +138,10 @@ class PatronMenuBlock extends BlockBase implements ContainerFactoryPluginInterfa
       'page-size-mobile' => $menuSettings->get('page_size_mobile'),
       'blacklisted-pickup-branches-config' => DplReactAppsController::buildBranchesListProp($this->branchSettings->getExcludedReservationBranches()),
       'branches-config' => DplReactAppsController::buildBranchesJsonProp($this->branchRepository->getBranches()),
-      "expiration-warning-days-before-config" => $generalSettings->get('expiration_warning_days_before_config') ?? GeneralSettingsForm::EXPIRATION_WARNING_DAYS_BEFORE_CONFIG,
+      "expiration-warning-days-before-config" => $generalSettings->get('expiration_warning_days_before_config') ?? GeneralSettings::EXPIRATION_WARNING_DAYS_BEFORE_CONFIG,
       "menu-navigation-data-config" => json_encode($menu, JSON_THROW_ON_ERROR),
       'reservation-detail-allow-remove-ready-reservations-config' => $generalSettings->get('reservation_detail_allow_remove_ready_reservations'),
-      'interest-periods-config' => DplReactAppsController::getInterestPeriods(),
+      'interest-periods-config' => json_encode($this->generalSettings->getInterestPeriodsConfig()),
 
       // Urls.
       'fees-page-url' => '/user/me/fees',
