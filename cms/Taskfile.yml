@@ -94,6 +94,11 @@ tasks:
       # causes the process to fail. Wait and retry if that is the case
       - docker compose {{ .DOCKER_COMPOSE_FILES }} down --volumes --remove-orphans || (sleep 3 && docker-compose down)
 
+  dev:pull:
+    summary: Pull latest docker images.
+    cmds:
+      - docker compose {{ .DOCKER_COMPOSE_FILES }} pull
+
   dev:reset:
     desc: Create local development setup in a clean state
     cmds:
@@ -109,6 +114,8 @@ tasks:
       - task dev:cli -- composer reinstall danskernesdigitalebibliotek/dpl-design-system danskernesdigitalebibliotek/dpl-react --no-cache
       # Build dev scripts
       - task dev:cli -- $(cd dev-scripts/dpl-react; composer install)
+      # Pull the images (necessary for the first reset)
+      - task dev:pull
       # Start local environment.
       - task dev:start
       # Install site.
@@ -292,9 +299,9 @@ tasks:
       - task: source:push
 
   lagoon:drush:uli:
-    desc: Get an Drupal one-time login link for a Lagoon environment through Drush
+    desc: Get an Drupal one-time user login link for a Lagoon environment through Drush
     cmds:
-      - task lagoon:cli -- drush uli
+      - task lagoon:cli -- drush user-login
 
   lagoon:cli:
     desc: Performs a command in a Lagoon environment and display the output. Expects parameter(s).
