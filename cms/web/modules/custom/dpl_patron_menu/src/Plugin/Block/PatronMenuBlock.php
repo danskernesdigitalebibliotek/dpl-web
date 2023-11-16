@@ -235,6 +235,7 @@ class PatronMenuBlock extends BlockBase implements ContainerFactoryPluginInterfa
       'reservation-details-ready-for-loan-text' => $this->t('Ready for pickup', [], ['context' => 'Patron menu']),
       'reservation-details-remove-digital-reservation-text' => $this->t('Remove your reservation', [], ['context' => 'Patron menu']),
       'reservation-details-status-title-text' => $this->t('Status', [], ['context' => 'Patron menu']),
+      'reservation-list-digital-pickup-text' => $this->t('Online access', [], ['context' => 'Patron menu']),
       'reservations-ready-for-pickup-text' => $this->t('Reservations ready for pickup', [], ['context' => 'Patron menu']),
       'reservations-ready-text' => $this->t('Ready for you', [], ['context' => 'Patron menu']),
       'result-pager-status-text' => $this->t('Showing @itemsShown out of @hitcount loans', [], ['context' => 'Patron menu']),
