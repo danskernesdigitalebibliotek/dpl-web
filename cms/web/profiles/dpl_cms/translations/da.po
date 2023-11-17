@@ -3749,12 +3749,12 @@ msgstr "Afleveringsfrist @date"
 #: 
 msgctxt "Loan list"
 msgid "Your fee is raised"
-msgstr "Dit gebyr bliver forhøjet"
+msgstr "Dit gebyr kan blive forhøjet"
 
 #: 
 msgctxt "Loan list"
 msgid "If you renew your fee will be raised"
-msgstr "Hvis du fornyer risikerer du at dit gebyr bliver forhøjet, fordi dine lån opsplittes i flere afleveringsdatoer."
+msgstr "Hvis du kun fornyer nogle af dine lån, risikerer du at dit gebyr bliver forhøjet, fordi dine lån opsplittes i flere afleveringsdatoer."
 
 #: 
 msgctxt "Loan list"
@@ -3784,12 +3784,12 @@ msgstr "accepter pop-up label tekst"
 #: 
 msgctxt "Dashboard"
 msgid "Your fee is raised"
-msgstr "Dit gebyr bliver forhøjet"
+msgstr "Dit gebyr kan blive forhøjet"
 
 #: 
 msgctxt "Dashboard"
 msgid "If you renew your fee will be raised"
-msgstr "Hvis du fornyer risikerer du at dit gebyr bliver forhøjet, fordi dine lån opsplittes i flere afleveringsdatoer."
+msgstr "Hvis du kun fornyer nogle af dine lån, risikerer du at dit gebyr bliver forhøjet, fordi dine lån opsplittes i flere afleveringsdatoer."
 
 #: 
 msgctxt "Dashboard"
