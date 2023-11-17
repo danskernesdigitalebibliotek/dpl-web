@@ -3754,7 +3754,7 @@ msgstr "Dit gebyr bliver forhøjet"
 #: 
 msgctxt "Loan list"
 msgid "If you renew your fee will be raised"
-msgstr "Hvis du fornyer bliver dit gebyr forhøjet"
+msgstr "Hvis du fornyer risikerer du at dit gebyr bliver forhøjet, fordi dine lån opsplittes i flere afleveringsdatoer."
 
 #: 
 msgctxt "Loan list"
@@ -3789,7 +3789,7 @@ msgstr "Dit gebyr bliver forhøjet"
 #: 
 msgctxt "Dashboard"
 msgid "If you renew your fee will be raised"
-msgstr "Hvis du fornyer bliver dit gebyr forhøjet"
+msgstr "Hvis du fornyer risikerer du at dit gebyr bliver forhøjet, fordi dine lån opsplittes i flere afleveringsdatoer."
 
 #: 
 msgctxt "Dashboard"
