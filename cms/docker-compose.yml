@@ -117,7 +117,7 @@ services:
 
   mariadb: # Main site database.
     # https://docs.lagoon.sh/lagoon/docker-images/mariadb/mariadb-drupal
-    image: uselagoon/mariadb-drupal:latest
+    image: uselagoon/mariadb-10.6-drupal:latest
     labels:
       lagoon.type: mariadb
     # Do a periodic healthcheck. This is mainly used to block the php service
