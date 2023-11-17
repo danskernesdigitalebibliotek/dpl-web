@@ -9,7 +9,7 @@ use Drupal\dpl_instant_loan\DplInstantLoanSettings;
 use Drupal\dpl_library_agency\Branch\Branch;
 use Drupal\dpl_library_agency\Branch\BranchRepositoryInterface;
 use Drupal\dpl_library_agency\BranchSettings;
-use Drupal\dpl_library_agency\Form\GeneralSettingsForm;
+use Drupal\dpl_library_agency\GeneralSettings;
 use Drupal\dpl_library_agency\ReservationSettings;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use function Safe\json_encode as json_encode;
@@ -29,6 +29,7 @@ class DplReactAppsController extends ControllerBase {
     protected BranchSettings $branchSettings,
     protected BranchRepositoryInterface $branchRepository,
     protected DplInstantLoanSettings $instantLoanSettings,
+    protected GeneralSettings $generalSettings
   ) {}
 
   /**
@@ -46,6 +47,7 @@ class DplReactAppsController extends ControllerBase {
       $container->get('dpl_library_agency.branch_settings'),
       $container->get('dpl_library_agency.branch.repository'),
       $container->get('dpl_instant_loan.settings'),
+      $container->get('dpl_library_agency.general_settings'),
     );
   }
 
@@ -244,19 +246,6 @@ class DplReactAppsController extends ControllerBase {
   }
 
   /**
-   * Get a string with interest periods.
-   *
-   * @return string
-   *   A string with interest periods
-   */
-  public static function getInterestPeriods(): string {
-    // @todo the general setting should be converted into an settings object and
-    // injected into the places it is needed and then remove thies static
-    // functions.
-    return \Drupal::configFactory()->get('dpl_library_agency.general_settings')->get('interest_periods_config') ?? GeneralSettingsForm::INTEREST_PERIODS_CONFIG;
-  }
-
-  /**
    * Render work page.
    *
    * @param string $wid
@@ -264,6 +253,8 @@ class DplReactAppsController extends ControllerBase {
    *
    * @return mixed[]
    *   Render array.
+   *
+   * @throws \Safe\Exceptions\JsonException
    */
   public function work(string $wid): array {
     $data = [
@@ -278,7 +269,7 @@ class DplReactAppsController extends ControllerBase {
       'branches-config' => $this->buildBranchesJsonProp($this->branchRepository->getBranches()),
       'sms-notifications-for-reservations-enabled-config' => (int) $this->reservationSettings->smsNotificationsIsEnabled() ?? ReservationSettings::RESERVATION_SMS_NOTIFICATIONS_ENABLED,
       'instant-loan-config' => $this->instantLoanSettings->getConfig(),
-      "interest-periods-config" => $this->getInterestPeriods(),
+      'interest-periods-config' => json_encode($this->generalSettings->getInterestPeriodsConfig()),
 
       // Text.
       'already-reserved-text' => $this->t('Already reserved', [], ['context' => 'Work Page']),
@@ -504,8 +495,8 @@ class DplReactAppsController extends ControllerBase {
   public static function getBlockedSettings(): array {
     $blockedSettings = \Drupal::configFactory()->get('dpl_library_agency.general_settings');
     $blockedData = [
-      'redirect-on-blocked-url' => dpl_react_apps_format_app_url($blockedSettings->get('redirect_on_blocked_url'), GeneralSettingsForm::REDIRECT_ON_BLOCKED_URL),
-      'blocked-patron-e-link-url' => dpl_react_apps_format_app_url($blockedSettings->get('blocked_patron_e_link_url'), GeneralSettingsForm::BLOCKED_PATRON_E_LINK_URL),
+      'redirect-on-blocked-url' => dpl_react_apps_format_app_url($blockedSettings->get('redirect_on_blocked_url'), GeneralSettings::REDIRECT_ON_BLOCKED_URL),
+      'blocked-patron-e-link-url' => dpl_react_apps_format_app_url($blockedSettings->get('blocked_patron_e_link_url'), GeneralSettings::BLOCKED_PATRON_E_LINK_URL),
       'blocked-patron-d-title-text' => t('Blocked patron title text (d)', [], ['context' => 'Blocked user']),
       'blocked-patron-d-body-text' => t('Blocked patron body text (d)', [], ['context' => 'Blocked user']),
       'blocked-patron-s-title-text' => t('Blocked patron title text (s)', [], ['context' => 'Blocked user']),

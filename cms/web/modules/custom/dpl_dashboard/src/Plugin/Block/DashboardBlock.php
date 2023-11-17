@@ -6,7 +6,7 @@ use Drupal\Core\Block\BlockBase;
 use Drupal\Core\Config\ConfigFactoryInterface;
 use Drupal\Core\Plugin\ContainerFactoryPluginInterface;
 use Drupal\dpl_dashboard\DplDashboardSettings;
-use Drupal\dpl_library_agency\Form\GeneralSettingsForm;
+use Drupal\dpl_library_agency\GeneralSettings;
 use Drupal\dpl_react\DplReactConfigInterface;
 use Drupal\dpl_react_apps\Controller\DplReactAppsController;
 use Symfony\Component\DependencyInjection\ContainerInterface;
@@ -49,7 +49,8 @@ class DashboardBlock extends BlockBase implements ContainerFactoryPluginInterfac
     private ConfigFactoryInterface $configFactory,
     private BranchSettings $branchSettings,
     private BranchRepositoryInterface $branchRepository,
-    private DplReactConfigInterface $dashboardSettings
+    private DplReactConfigInterface $dashboardSettings,
+    private GeneralSettings $generalSettings
   ) {
     parent::__construct($configuration, $plugin_id, $plugin_definition);
     $this->configuration = $configuration;
@@ -66,7 +67,8 @@ class DashboardBlock extends BlockBase implements ContainerFactoryPluginInterfac
       $container->get('config.factory'),
       $container->get('dpl_library_agency.branch_settings'),
       $container->get('dpl_library_agency.branch.repository'),
-      \Drupal::service('dpl_dashboard.settings')
+      \Drupal::service('dpl_dashboard.settings'),
+      $container->get('dpl_library_agency.general_settings'),
     );
   }
 
@@ -75,19 +77,21 @@ class DashboardBlock extends BlockBase implements ContainerFactoryPluginInterfac
    *
    * @return mixed[]
    *   The app render array.
+   *
+   * @throws \Safe\Exceptions\JsonException
    */
   public function build(): array {
     $dashboardSettings = $this->dashboardSettings->loadConfig();
     $generalSettings = $this->configFactory->get('dpl_library_agency.general_settings');
-    $allow_remove_ready_reservations = $generalSettings->get('reservation_detail_allow_remove_ready_reservations') ?? GeneralSettingsForm::RESERVATION_DETAIL_ALLOW_REMOVE_READY_RESERVATIONS;
+    $allow_remove_ready_reservations = $generalSettings->get('reservation_detail_allow_remove_ready_reservations') ?? GeneralSettings::RESERVATION_DETAIL_ALLOW_REMOVE_READY_RESERVATIONS;
 
     $data = [
       // Config.
       'page-size-desktop' => $dashboardSettings->get('page_size_desktop') ?? DplDashboardSettings::PAGE_SIZE_DESKTOP,
       'page-size-mobile' => $dashboardSettings->get('page_size_mobile') ?? DplDashboardSettings::PAGE_SIZE_MOBILE,
-      'expiration-warning-days-before-config' => $generalSettings->get('expiration_warning_days_before_config') ?? GeneralSettingsForm::EXPIRATION_WARNING_DAYS_BEFORE_CONFIG,
-      'interest-periods-config' => DplReactAppsController::getInterestPeriods(),
-      'reservation-detail-allow-remove-ready-reservations-config' => $generalSettings->get('reservation_detail_allow_remove_ready_reservations') ?? GeneralSettingsForm::RESERVATION_DETAIL_ALLOW_REMOVE_READY_RESERVATIONS,
+      'expiration-warning-days-before-config' => $generalSettings->get('expiration_warning_days_before_config') ?? GeneralSettings::EXPIRATION_WARNING_DAYS_BEFORE_CONFIG,
+      'interest-periods-config' => json_encode($this->generalSettings->getInterestPeriodsConfig()),
+      'reservation-detail-allow-remove-ready-reservations-config' => $generalSettings->get('reservation_detail_allow_remove_ready_reservations') ?? GeneralSettings::RESERVATION_DETAIL_ALLOW_REMOVE_READY_RESERVATIONS,
       'blacklisted-pickup-branches-config' => DplReactAppsController::buildBranchesListProp($this->branchSettings->getExcludedReservationBranches()),
       'branches-config' => DplReactAppsController::buildBranchesJsonProp($this->branchRepository->getBranches()),
       'reservation-details-config' => json_encode([
@@ -97,7 +101,7 @@ class DashboardBlock extends BlockBase implements ContainerFactoryPluginInterfac
       // Urls.
       // Cannot find that route. Does it exist?
       'intermediate-url' => '/user/me/intermediates',
-      'ereolen-my-page-url' => dpl_react_apps_format_app_url($generalSettings->get('ereolen_my_page_url'), GeneralSettingsForm::EREOLEN_MY_PAGE_URL),
+      'ereolen-my-page-url' => dpl_react_apps_format_app_url($generalSettings->get('ereolen_my_page_url'), GeneralSettings::EREOLEN_MY_PAGE_URL),
 
       // Texts.
       'accept-modal-accept-button-text' => $this->t("Yes, renew", [], ['context' => 'Dashboard']),
