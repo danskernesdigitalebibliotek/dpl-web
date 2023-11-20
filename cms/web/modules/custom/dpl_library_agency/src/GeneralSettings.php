@@ -63,7 +63,7 @@ class GeneralSettings extends DplReactConfigBase {
   /**
    * Gets interest periods as an array.
    *
-   * @return array
+   * @return mixed[]
    *   The interest period array.
    */
   public function getInterestPeriodsAsArray(): array {
