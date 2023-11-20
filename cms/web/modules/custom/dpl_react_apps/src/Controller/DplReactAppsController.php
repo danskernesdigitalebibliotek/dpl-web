@@ -227,7 +227,7 @@ class DplReactAppsController extends ControllerBase {
       'no-search-result-text' => $this->t('your search has 0 results', [], ['context' => 'advanced search']),
       'number-description-text' => $this->t('nr.', [], ['context' => 'advanced search']),
       'remove-from-favorites-aria-label-text' => $this->t('remove @title from favorites list', [], ['context' => 'advanced search']),
-      'result-pager-status-text' => $this->t('showing @items-shown out of @hitcount results', [], ['context' => 'advanced search']),
+      'result-pager-status-text' => $this->t('Showing @itemsShown out of @hitcount elements', [], ['context' => 'advanced search']),
       'show-more-text' => $this->t('show more', [], ['context' => 'advanced search']),
       'showing-materials-text' => $this->t('showing materials', [], ['context' => 'advanced search']),
       'to-advanced-search-button-text' => $this->t('Back to advanced search', [], ['context' => 'advanced search']),

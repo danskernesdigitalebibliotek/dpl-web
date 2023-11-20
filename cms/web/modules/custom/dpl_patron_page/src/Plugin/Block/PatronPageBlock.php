@@ -163,4 +163,5 @@ class PatronPageBlock extends BlockBase implements ContainerFactoryPluginInterfa
       '#data' => $data,
     ];
   }
+
 }

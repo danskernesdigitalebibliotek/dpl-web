@@ -83,7 +83,6 @@ class ReservationListBlock extends BlockBase implements ContainerFactoryPluginIn
   public function build(): array {
     $config = $this->reservationListSettings->loadConfig();
     $generalSettings = $this->configFactory->get('dpl_library_agency.general_settings');
-    $allow_remove_ready_reservations = $generalSettings->get('reservation_detail_allow_remove_ready_reservations') ?? GeneralSettings::RESERVATION_DETAIL_ALLOW_REMOVE_READY_RESERVATIONS;
 
     $data = [
       // Branches.
@@ -101,9 +100,6 @@ class ReservationListBlock extends BlockBase implements ContainerFactoryPluginIn
       'page-size-desktop' => $config->get('page_size_desktop') ?? DplReservationsSettings::PAGE_SIZE_DESKTOP,
       'page-size-mobile' => $config->get('page_size_mobile') ?? DplReservationsSettings::PAGE_SIZE_MOBILE,
       'pause-reservation-start-date-config' => $generalSettings->get('pause_reservation_start_date_config') ?? GeneralSettings::PAUSE_RESERVATION_START_DATE_CONFIG,
-      'reservation-details-config' => json_encode([
-        'allowRemoveReadyReservations' => $allow_remove_ready_reservations,
-      ]),
       'expiration-warning-days-before-config' => $generalSettings->get('expiration_warning_days_before_config') ?? GeneralSettings::EXPIRATION_WARNING_DAYS_BEFORE_CONFIG,
 
       // Texts.
@@ -134,6 +130,7 @@ class ReservationListBlock extends BlockBase implements ContainerFactoryPluginIn
       'reservation-list-available-in-text' => $this->t('Available in @count days', [], ['context' => 'Reservation list']),
       'reservation-list-day-text' => $this->t('day', [], ['context' => 'Reservation list']),
       'reservation-list-days-text' => $this->t('days', [], ['context' => 'Reservation list']),
+      'reservation-list-digital-pickup-text' => $this->t('Online access', [], ['context' => 'Reservation list']),
       'reservation-list-digital-reservations-empty-text' => $this->t('At the moment you have 0 reservations on digital items', [], ['context' => 'Reservation list']),
       'reservation-list-digital-reservations-header-text' => $this->t('Digital reservations', [], ['context' => 'Reservation list']),
       'reservation-list-first-in-queue-text' => $this->t('You are at the front of the queue', [], ['context' => 'Reservation list']),
