@@ -1913,11 +1913,11 @@ msgstr "Blokeret bruger"
 
 #: 
 msgid "Redirect blocked user link"
-msgstr "Link til side som blokeret bruger sendes videre til"
+msgstr "Link til omstilling af en blokeret bruger"
 
 #: 
 msgid "The link to redirect the blocked user to"
-msgstr "Linket som blokeret bruger sendes videre til"
+msgstr "Angiv linket til den side som en blokeret bruger skal sendes videre til"
 
 #: 
 msgid "Blocked user link for modal"
@@ -2745,7 +2745,7 @@ msgstr "Indstillinger for viderestilling af bruger til adgangsplatformen (prompt
 #: 
 msgctxt "Dpl patron redirect"
 msgid "Set the paths that requires the patron to be logged in and if the user is not logged in an redirect to Adgangsplatformen will automatically be enforced."
-msgstr "Angiv de stier som kræver at brugeren er logget ind, og hvis brugeren ikke er logget ind sendes denne automatisk videre til Adgangsplatformen."
+msgstr "Angiv de stier som kræver at brugeren er logget ind. Hvis brugeren ikke er logget ind, sendes denne automatisk videre til Adgangsplatformen (promptes for login)."
 
 #: 
 msgid "Pages"
@@ -2771,11 +2771,11 @@ msgstr "DPL Patron redirect / DPL bruger redirect"
 
 #: 
 msgid "Redirect patron to login if required."
-msgstr "Send bruger til login hvis påkrævet"
+msgstr "Send bruger videre til login hvis det er påkrævet"
 
 #: 
 msgid "Patron redirect settings"
-msgstr "Indstillinger for viderestilling af bruger"
+msgstr "Indstillinger for viderestilling af bruger til adgangsplatformen"
 
 #: 
 msgid "Log in with @client_title"
@@ -2787,7 +2787,7 @@ msgstr "Minimumsalder for tilladelse til selvoprettelse"
 
 #: 
 msgid "Redirect on create"
-msgstr "Send til denne side ved oprettelse"
+msgstr "Send brugeresn til denne side ved succesfuld oprettelse"
 
 #: 
 msgid "Redirect to this on user successful created"
