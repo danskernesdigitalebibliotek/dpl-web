@@ -34,7 +34,7 @@ services:
     # We use wiremock-gui as it exposes a UI for inspecting the state of
     # WireMock. This can make debugging easier. It can seamlessly be replaced
     # with the official wiremock/wiremock image.
-    image: wiremock/wiremock:2.32.0-alpine
+    image: wiremock/wiremock:2.32.0
     # The following options are used:
     # --enable-browser-proxying: Allows Wiremock to intercept all traffic from
     # services  with HTTP(s)_PROXY pointing at it.
