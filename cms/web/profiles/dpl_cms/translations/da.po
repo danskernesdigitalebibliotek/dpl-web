@@ -1816,22 +1816,19 @@ msgctxt "Library Agency Configuration"
 msgid "Pause reservation start date"
 msgstr "Startdato for at kunne sætte reserveringer på pause"
 
+msgctxt "Library Agency Configuration"
 msgid "Blocked user"
 msgstr "Blokeret bruger"
 
-msgid "Redirect blocked user link"
-msgstr "Link til side som blokeret bruger sendes videre til"
-
-msgid "The link to redirect the blocked user to"
-msgstr "Linket som blokeret bruger sendes videre til"
-
+msgctxt "Library Agency Configuration"
 msgid "Blocked user link for modal"
 msgstr "Blokeret bruger link til modal"
 
-msgid "If a user has blocked status e, this link appears in the modal"
+msgctxt "Library Agency Configuration"
+msgid "If a user is blocked because of fees a modal appears. This field makes it possible to place a link in the modal to e.g. payment options or help page."
 msgstr ""
-"Hvis en bruger er blokeret pga. status e (overskredet gebyrgrænse) "
-"vises dette link i beskeden til brugeren"
+"Hvis en bruger er blokeret på grund af gebyrer, vises en modal. "
+"Dette felt gør det muligt at placere et link i modalen til f.eks. betalingsmuligheder eller hjælpeside."
 
 msgctxt "Library Agency Configuration"
 msgid "Expiration warning"
