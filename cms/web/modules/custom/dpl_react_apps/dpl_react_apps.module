@@ -13,7 +13,6 @@ use Drupal\Core\GeneratedUrl;
 use Drupal\Core\Url;
 use Drupal\dpl_library_agency\Form\GeneralSettingsForm;
 use Drupal\dpl_react_apps\Controller\DplReactAppsController;
-use Drupal\dpl_library_agency\Form\GeneralSettingsForm;
 use function Safe\json_encode;
 
 /**
