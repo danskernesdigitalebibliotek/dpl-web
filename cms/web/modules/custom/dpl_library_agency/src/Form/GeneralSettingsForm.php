@@ -27,8 +27,10 @@ class GeneralSettingsForm extends ConfigFormBase {
   const PAUSE_RESERVATION_INFO_URL = '';
   const REDIRECT_ON_BLOCKED_URL = '';
   const BLOCKED_PATRON_E_LINK_URL = '';
-  const EREOLEN_MY_PAGE_URL = '';
-  const EREOLEN_HOMEPAGE_URL = '';
+  // We define these urs so that the admins don't have to - ereol url is
+  // not expected to be changing often.
+  const EREOLEN_MY_PAGE_URL = 'https://ereolen.dk/user/me';
+  const EREOLEN_HOMEPAGE_URL = 'https://ereolen.dk';
   const PAUSE_RESERVATION_START_DATE_CONFIG = '';
 
   /**
