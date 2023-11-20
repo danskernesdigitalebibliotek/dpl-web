@@ -12,7 +12,6 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
 use Drupal\dpl_library_agency\Branch\BranchRepositoryInterface;
 use Drupal\dpl_library_agency\BranchSettings;
 use Drupal\dpl_library_agency\Form\GeneralSettingsForm;
-use function Safe\json_encode as json_encode;
 
 /**
  * Provides user reservations list.
@@ -79,7 +78,6 @@ class ReservationListBlock extends BlockBase implements ContainerFactoryPluginIn
   public function build(): array {
     $config = $this->reservationListSettings->loadConfig();
     $generalSettings = $this->configFactory->get('dpl_library_agency.general_settings');
-    $allow_remove_ready_reservations = $generalSettings->get('reservation_detail_allow_remove_ready_reservations') ?? GeneralSettingsForm::RESERVATION_DETAIL_ALLOW_REMOVE_READY_RESERVATIONS;
 
     $data = [
       // Branches.
@@ -97,9 +95,6 @@ class ReservationListBlock extends BlockBase implements ContainerFactoryPluginIn
       'page-size-desktop' => $config->get('page_size_desktop') ?? DplReservationsSettings::PAGE_SIZE_DESKTOP,
       'page-size-mobile' => $config->get('page_size_mobile') ?? DplReservationsSettings::PAGE_SIZE_MOBILE,
       'pause-reservation-start-date-config' => $generalSettings->get('pause_reservation_start_date_config') ?? GeneralSettingsForm::PAUSE_RESERVATION_START_DATE_CONFIG,
-      'reservation-details-config' => json_encode([
-        'allowRemoveReadyReservations' => $allow_remove_ready_reservations,
-      ]),
       'expiration-warning-days-before-config' => $generalSettings->get('expiration_warning_days_before_config') ?? GeneralSettingsForm::EXPIRATION_WARNING_DAYS_BEFORE_CONFIG,
 
       // Texts.
