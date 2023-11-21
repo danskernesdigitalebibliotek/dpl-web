@@ -1,25 +1,4 @@
 reservation_sms_notifications_disabled: 0
 expiration_warning_days_before_config: 6
-interest_periods_config: '[
-    {
-        "value": "30",
-        "label": "1 month"
-    },
-    {
-        "value": "60",
-        "label": "2 months"
-    },
-    {
-        "value": "90",
-        "label": "3 months"
-    },
-    {
-        "value": "180",
-        "label": "6 months"
-    },
-    {
-        "value": "360",
-        "label": "1 year"
-    }
-]'
+interest_periods_config: '[ { "value": "30", "label": "1 month" }, { "value": "60", "label": "2 months" }, { "value": "90", "label": "3 months" }, { "value": "180", "label": "6 months" }, { "value": "360", "label": "1 year" } ]'
 ereolen_my_page_url: 'https://ereolen.dk/user/me'

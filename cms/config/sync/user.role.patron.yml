@@ -7,15 +7,6 @@ label: Patron
 weight: 6
 is_admin: null
 permissions:
-  - 'access content overview'
-  - 'create campaign content'
-  - 'delete any campaign content'
-  - 'delete campaign revisions'
-  - 'delete own campaign content'
-  - 'edit any campaign content'
-  - 'edit own campaign content'
   - 'restful get proxy-url'
   - 'restful post campaign:match'
-  - 'revert campaign revisions'
-  - 'view campaign revisions'
   - 'view own unpublished content'
