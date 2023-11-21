@@ -11,10 +11,10 @@ class GeneralSettings extends DplReactConfigBase {
 
   const EXPIRATION_WARNING_DAYS_BEFORE_CONFIG = 6;
   const RESERVATION_DETAIL_ALLOW_REMOVE_READY_RESERVATIONS = FALSE;
-  const INTEREST_PERIODS_CONFIG = '180-6 months';
+  const INTEREST_PERIODS_CONFIG = '180-6 måneder';
   const DEFAULT_INTEREST_PERIOD_CONFIG = [
     "value" => "180",
-    "label" => "6 months",
+    "label" => "6 måneder",
   ];
   const RESERVATION_SMS_NOTIFICATIONS_ENABLED = TRUE;
   const PAUSE_RESERVATION_INFO_URL = '';
@@ -44,20 +44,20 @@ class GeneralSettings extends DplReactConfigBase {
    *   Array containing the collected interestPeriodConfiguration.
    */
   public function getInterestPeriodsConfig(): array {
-    $interestPeriods = self::getInterestPeriodsAsArray() ?? self::INTEREST_PERIODS_CONFIG;
-    $defaultInterestPeriod = self::getDefaultInterestPeriodAsArray($interestPeriods) ?? self::DEFAULT_INTEREST_PERIOD_CONFIG;
+    $interest_periods = self::getInterestPeriods() ?? self::INTEREST_PERIODS_CONFIG;
+    $default_interest_period = self::getDefaultInterestPeriod($interest_periods) ?? self::DEFAULT_INTEREST_PERIOD_CONFIG;
 
-    $interestPeriodsConfig['interestPeriods'] = [];
-    foreach ($interestPeriods as $key => $value) {
-      $interestPeriodsConfig['interestPeriods'][] = [
+    $interest_periods_config['interestPeriods'] = [];
+    foreach ($interest_periods as $key => $value) {
+      $interest_periods_config['interestPeriods'][] = [
         'value' => $key,
         'label' => $value,
       ];
     }
 
-    $interestPeriodsConfig['defaultInterestPeriod'] = $defaultInterestPeriod;
+    $interest_periods_config['defaultInterestPeriod'] = $default_interest_period;
 
-    return $interestPeriodsConfig;
+    return $interest_periods_config;
   }
 
   /**
@@ -66,33 +66,31 @@ class GeneralSettings extends DplReactConfigBase {
    * @return mixed[]
    *   The interest period array.
    */
-  public function getInterestPeriodsAsArray(): array {
-    $interestPeriods = $this->loadConfig()->get('interest_periods_config');
-
-    $interestPeriodsArray = [];
-    $optionsArray = explode(PHP_EOL, $interestPeriods);
-    foreach ($optionsArray as $option) {
+  public function getInterestPeriods(): array {
+    $interest_periods = [];
+    $options = explode(PHP_EOL, $this->loadConfig()->get('interest_periods_config'));
+    foreach ($options as $option) {
       list($days, $label) = explode('-', $option);
-      $interestPeriodsArray[trim($days)] = trim($label);
+      $interest_periods[trim($days)] = trim($label);
     }
-    return $interestPeriodsArray;
+    return $interest_periods;
   }
 
   /**
    * Gets the default interest period as an array.
    *
-   * @param array[] $interestPeriods
+   * @param array[] $interest_periods
    *   The interestPeriods as an array.
    *
    * @return array[]
    *   The default interest period array.
    */
-  protected function getDefaultInterestPeriodAsArray(array $interestPeriods): array {
-    $defaultInterestPeriodValue = $this->loadConfig()->get('default_interest_period_config');
+  protected function getDefaultInterestPeriod(array $interest_periods): array {
+    $default_interest_period_value = $this->loadConfig()->get('default_interest_period_config');
 
     return [
-      'value' => $defaultInterestPeriodValue,
-      'label' => $interestPeriods[$defaultInterestPeriodValue],
+      'value' => $default_interest_period_value,
+      'label' => $interest_periods[$default_interest_period_value],
     ];
   }
 

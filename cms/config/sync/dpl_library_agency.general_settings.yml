@@ -1,10 +1,10 @@
 reservation_sms_notifications_disabled: 0
 expiration_warning_days_before_config: 6
-interest_periods_config: '180-6 months'
+interest_periods_config: '180-6 måneder'
 default_interest_period_config: '[
     {
         "value": "180",
-        "label": "6 months"
+        "label": "6 måneder"
     }
 ]'
 ereolen_my_page_url: 'https://ereolen.dk/user/me'
