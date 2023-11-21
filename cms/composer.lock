@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "7dcbc1272692a976d1e234191d33af0d",
+    "content-hash": "3baac17456276d1e84dc5bf5985a3b3e",
     "packages": [
         {
             "name": "amazeeio/drupal_integrations",
@@ -3992,20 +3992,20 @@
         },
         {
             "name": "drupal/varnish_purge",
-            "version": "2.1.0",
+            "version": "2.2.0",
             "source": {
                 "type": "git",
                 "url": "https://git.drupalcode.org/project/varnish_purge.git",
-                "reference": "8.x-2.1"
+                "reference": "8.x-2.2"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://ftp.drupal.org/files/projects/varnish_purge-8.x-2.1.zip",
-                "reference": "8.x-2.1",
-                "shasum": "695eb7d81816e013e81d36207cfac162dd3cbe9f"
+                "url": "https://ftp.drupal.org/files/projects/varnish_purge-8.x-2.2.zip",
+                "reference": "8.x-2.2",
+                "shasum": "9fbddb71417113d58345d2fbe9d0a1aa9c5d5c36"
             },
             "require": {
-                "drupal/core": "^8 || ^9"
+                "drupal/core": "^8 || ^9 || ^10"
             },
             "require-dev": {
                 "drupal/purge": "*",
@@ -4015,8 +4015,8 @@
             "type": "drupal-module",
             "extra": {
                 "drupal": {
-                    "version": "8.x-2.1",
-                    "datestamp": "1615977068",
+                    "version": "8.x-2.2",
+                    "datestamp": "1681218333",
                     "security-coverage": {
                         "status": "covered",
                         "message": "Covered by Drupal's security advisory policy"
