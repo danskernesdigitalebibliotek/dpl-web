@@ -88,7 +88,6 @@ class RedirectPatronSubscriber implements EventSubscriberInterface {
         $url = Url::fromRoute('dpl_login.login')->toString(TRUE);
         $response = new TrustedRedirectResponse($url->getGeneratedUrl(), 307);
         $event->setResponse($response);
-        $event->stopPropagation();
       }
     }
   }
