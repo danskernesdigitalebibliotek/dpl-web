@@ -2199,7 +2199,7 @@ msgstr "Søgetekst"
 #: 
 msgctxt "Recommender (settings)"
 msgid "Search text for recommender when no loan/no reservation"
-msgstr "Søgetekst for anbefalinger hvis bruger har 0 lån/reserveringer"
+msgstr "Søgetekst for anbefalinger hvis bruger har 0 lån/reserveringer (ikke CQL)"
 
 #: 
 msgid "Recommender settings"
