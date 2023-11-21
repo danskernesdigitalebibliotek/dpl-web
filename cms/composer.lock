@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "7b8be8966ab62f6ecb6e8c85efc302cf",
+    "content-hash": "7dcbc1272692a976d1e234191d33af0d",
     "packages": [
         {
             "name": "amazeeio/drupal_integrations",
@@ -3168,29 +3168,29 @@
         },
         {
             "name": "drupal/openapi",
-            "version": "2.0.0",
+            "version": "2.1.0",
             "source": {
                 "type": "git",
                 "url": "https://git.drupalcode.org/project/openapi.git",
-                "reference": "8.x-2.0"
+                "reference": "8.x-2.1"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://ftp.drupal.org/files/projects/openapi-8.x-2.0.zip",
-                "reference": "8.x-2.0",
-                "shasum": "4562a072dde9d1b5f3249b292d49ee0c489ace7a"
+                "url": "https://ftp.drupal.org/files/projects/openapi-8.x-2.1.zip",
+                "reference": "8.x-2.1",
+                "shasum": "c0ce4095f555dad31c442f2354453ee4f6e9fadc"
             },
             "require": {
-                "drupal/core": "^8.7.0 || ^9"
+                "drupal/core": "^8 || ^9 || ^10"
             },
-            "require-dev": {
-                "vijaycs85/drupal-quality-checker": "^1.2"
+            "conflict": {
+                "drupal/core": "<8.7"
             },
             "type": "drupal-module",
             "extra": {
                 "drupal": {
-                    "version": "8.x-2.0",
-                    "datestamp": "1632637188",
+                    "version": "8.x-2.1",
+                    "datestamp": "1669682974",
                     "security-coverage": {
                         "status": "covered",
                         "message": "Covered by Drupal's security advisory policy"
@@ -3233,9 +3233,6 @@
             ],
             "description": "Creates OpenAPI specification for Drupal resources.",
             "homepage": "https://www.drupal.org/project/openapi",
-            "keywords": [
-                "Drupal"
-            ],
             "support": {
                 "source": "http://cgit.drupalcode.org/openapi",
                 "issues": "http://drupal.org/project/issues/openapi"

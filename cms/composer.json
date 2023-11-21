@@ -69,7 +69,7 @@
         "drupal/inline_all_css": "^1.0.1",
         "drupal/jsonlog": "^3.0",
         "drupal/libraries": "^4.0",
-        "drupal/openapi": "^2.0",
+        "drupal/openapi": "^2.1",
         "drupal/openapi_rest": "^2.0@RC",
         "drupal/openid_connect": "^1.1",
         "drupal/paragraphs": "^1.14",
