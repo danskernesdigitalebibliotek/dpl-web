@@ -1,0 +1,32 @@
+uuid: 8fb10668-67cc-4af6-9708-56b3c58fbf9a
+langcode: en
+status: true
+dependencies:
+  config:
+    - node.type.article
+id: node.article.default
+targetEntityType: node
+bundle: article
+mode: default
+content:
+  status:
+    type: boolean_checkbox
+    settings:
+      display_label: true
+    weight: 1
+    region: content
+    third_party_settings: {  }
+  title:
+    type: string_textfield
+    weight: 0
+    region: content
+    settings:
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+hidden:
+  created: true
+  langcode: true
+  promote: true
+  sticky: true
+  uid: true
