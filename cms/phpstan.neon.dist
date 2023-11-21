@@ -23,4 +23,5 @@ parameters:
     # Needed to make locale_translation_batch_fetch_finished() discoverable.
     - web/core/modules/locale/locale.batch.inc
 
-
+includes:
+	- phpstan-baseline.neon

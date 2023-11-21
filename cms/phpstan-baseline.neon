@@ -1,0 +1,52 @@
+parameters:
+	ignoreErrors:
+		-
+			message: "#^Call to deprecated method legacyConfig\\(\\) of class Drupal\\\\dpl_react\\\\DplReactConfigBase\\.$#"
+			count: 1
+			path: web/modules/custom/dpl_dashboard/src/DplDashboardSettings.php
+
+		-
+			message: "#^Call to deprecated method legacyConfig\\(\\) of class Drupal\\\\dpl_react\\\\DplReactConfigBase\\.$#"
+			count: 1
+			path: web/modules/custom/dpl_favorites_list/src/DplFavoritesListSettings.php
+
+		-
+			message: "#^Call to deprecated method legacyConfig\\(\\) of class Drupal\\\\dpl_react\\\\DplReactConfigBase\\.$#"
+			count: 1
+			path: web/modules/custom/dpl_fees/src/DplFeesSettings.php
+
+		-
+			message: "#^Call to deprecated method legacyConfig\\(\\) of class Drupal\\\\dpl_react\\\\DplReactConfigBase\\.$#"
+			count: 1
+			path: web/modules/custom/dpl_loans/src/DplLoansSettings.php
+
+		-
+			message: "#^Call to deprecated method legacyConfig\\(\\) of class Drupal\\\\dpl_react\\\\DplReactConfigBase\\.$#"
+			count: 1
+			path: web/modules/custom/dpl_patron_menu/src/DplMenuSettings.php
+
+		-
+			message: "#^Call to deprecated method legacyConfig\\(\\) of class Drupal\\\\dpl_react\\\\DplReactConfigBase\\.$#"
+			count: 1
+			path: web/modules/custom/dpl_patron_page/src/DplPatronPageSettings.php
+
+		-
+			message: "#^Call to deprecated method legacyConfig\\(\\) of class Drupal\\\\dpl_react\\\\DplReactConfigBase\\.$#"
+			count: 1
+			path: web/modules/custom/dpl_patron_reg/src/DplPatronRegSettings.php
+
+		-
+			message: "#^Call to deprecated method legacyConfig\\(\\) of class Drupal\\\\dpl_react\\\\DplReactConfigBase\\.$#"
+			count: 1
+			path: web/modules/custom/dpl_publizon/src/DplPublizonSettings.php
+
+		-
+			message: "#^Call to deprecated method legacyConfig\\(\\) of class Drupal\\\\dpl_react\\\\DplReactConfigBase\\.$#"
+			count: 1
+			path: web/modules/custom/dpl_recommender/src/DplRecommenderSettings.php
+
+		-
+			message: "#^Call to deprecated method legacyConfig\\(\\) of class Drupal\\\\dpl_react\\\\DplReactConfigBase\\.$#"
+			count: 1
+			path: web/modules/custom/dpl_reservations/src/DplReservationsSettings.php
+
