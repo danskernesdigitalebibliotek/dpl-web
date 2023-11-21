@@ -1235,7 +1235,7 @@ msgstr "For integering af dpl_react apps på hjemmesiden."
 
 #: 
 msgid "Library Agency"
-msgstr "Biblioteksindstillinger"
+msgstr "Lokale biblioteksindstillinger"
 
 #: 
 msgid "General Settings"
