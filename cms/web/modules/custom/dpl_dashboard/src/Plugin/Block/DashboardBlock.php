@@ -41,6 +41,8 @@ class DashboardBlock extends BlockBase implements ContainerFactoryPluginInterfac
    *   Branch repository.
    * @param \Drupal\dpl_react\DplReactConfigInterface $dashboardSettings
    *   Dashboard settings.
+   * @param \Drupal\dpl_library_agency\GeneralSettings $generalSettings
+   *   General settings.
    */
   public function __construct(
     array $configuration,
@@ -94,9 +96,6 @@ class DashboardBlock extends BlockBase implements ContainerFactoryPluginInterfac
       'reservation-detail-allow-remove-ready-reservations-config' => $generalSettings->get('reservation_detail_allow_remove_ready_reservations') ?? GeneralSettings::RESERVATION_DETAIL_ALLOW_REMOVE_READY_RESERVATIONS,
       'blacklisted-pickup-branches-config' => DplReactAppsController::buildBranchesListProp($this->branchSettings->getExcludedReservationBranches()),
       'branches-config' => DplReactAppsController::buildBranchesJsonProp($this->branchRepository->getBranches()),
-      'reservation-details-config' => json_encode([
-        'allowRemoveReadyReservations' => $allow_remove_ready_reservations,
-      ]),
 
       // Urls.
       // Cannot find that route. Does it exist?

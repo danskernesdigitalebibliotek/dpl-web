@@ -106,6 +106,13 @@ class PatronMenuBlock extends BlockBase implements ContainerFactoryPluginInterfa
     // generated menu. A place for further improvements.
     $menu = [
       [
+        "name" => $this->t("My account", ["context" => 'Patron menu']),
+        "link" => dpl_react_apps_ensure_url_is_string(
+          Url::fromRoute('dpl_dashboard.list', [], ['absolute' => TRUE])->toString()
+        ),
+        "dataId" => "40",
+      ],
+      [
         "name" => $this->t("Loans", ["context" => 'Patron menu']),
         "link" => dpl_react_apps_ensure_url_is_string(
           Url::fromRoute('dpl_loans.list', [], ['absolute' => TRUE])->toString()
@@ -132,13 +139,6 @@ class PatronMenuBlock extends BlockBase implements ContainerFactoryPluginInterfa
           Url::fromRoute('dpl_fees.list', [], ['absolute' => TRUE])->toString()
         ),
         "dataId" => "4",
-      ],
-      [
-        "name" => $this->t("My account", ["context" => 'Patron menu']),
-        "link" => dpl_react_apps_ensure_url_is_string(
-          Url::fromRoute('dpl_dashboard.list', [], ['absolute' => TRUE])->toString()
-        ),
-        "dataId" => "40",
       ],
     ];
 

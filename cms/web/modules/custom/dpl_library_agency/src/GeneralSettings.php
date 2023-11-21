@@ -18,7 +18,6 @@ class GeneralSettings extends DplReactConfigBase {
   ];
   const RESERVATION_SMS_NOTIFICATIONS_ENABLED = TRUE;
   const PAUSE_RESERVATION_INFO_URL = '';
-  const REDIRECT_ON_BLOCKED_URL = '';
   const BLOCKED_PATRON_E_LINK_URL = '';
   const EREOLEN_MY_PAGE_URL = '';
   const PAUSE_RESERVATION_START_DATE_CONFIG = '';
