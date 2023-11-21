@@ -66,7 +66,7 @@
         "drupal/default_content": "^2.0@alpha",
         "drupal/devel": "~5.0.2",
         "drupal/handy_cache_tags": "^1.4",
-        "drupal/inline_all_css": "^1.0@RC",
+        "drupal/inline_all_css": "^1.0.1",
         "drupal/jsonlog": "^3.0",
         "drupal/libraries": "^4.0",
         "drupal/openapi": "^2.0",

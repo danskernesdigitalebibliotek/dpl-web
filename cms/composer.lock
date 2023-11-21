@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "bf135d64417155e2e170299fe6769627",
+    "content-hash": "7b8be8966ab62f6ecb6e8c85efc302cf",
     "packages": [
         {
             "name": "amazeeio/drupal_integrations",
@@ -2996,32 +2996,36 @@
         },
         {
             "name": "drupal/inline_all_css",
-            "version": "1.0.0-rc3",
+            "version": "1.0.1",
             "source": {
                 "type": "git",
                 "url": "https://git.drupalcode.org/project/inline_all_css.git",
-                "reference": "1.0.0-rc3"
+                "reference": "1.0.1"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://ftp.drupal.org/files/projects/inline_all_css-1.0.0-rc3.zip",
-                "reference": "1.0.0-rc3",
-                "shasum": "1b2014699d49609d4ea366701ad7abc42e4650ae"
+                "url": "https://ftp.drupal.org/files/projects/inline_all_css-1.0.1.zip",
+                "reference": "1.0.1",
+                "shasum": "bd25c06d4f94f296ea60de5136636f045f0aa7dd"
             },
             "require": {
-                "drupal/core": "^9"
+                "drupal/core": "^9 || ^10"
+            },
+            "require-dev": {
+                "drupal/csp": "^1.0"
             },
             "suggest": {
+                "drupal/csp": "The Content-Security-Policy header allows your Drupal site to inform browsers of trusted sources for JavaScript, CSS, and other external resources. This adds a security layer to detect and mitigate the risk of Cross Site Scripting (XSS), data injection, and other vulnerabilities.",
                 "drupal/guzzle_cache": "Provides a Drupal cache backend for Kevinrob/guzzle-cache-middleware."
             },
             "type": "drupal-module",
             "extra": {
                 "drupal": {
-                    "version": "1.0.0-rc3",
-                    "datestamp": "1645900154",
+                    "version": "1.0.1",
+                    "datestamp": "1697836858",
                     "security-coverage": {
-                        "status": "not-covered",
-                        "message": "RC releases are not covered by Drupal security advisories."
+                        "status": "covered",
+                        "message": "Covered by Drupal's security advisory policy"
                     }
                 }
             },
@@ -14013,7 +14017,6 @@
         "danskernesdigitalebibliotek/dpl-react": 5,
         "drupal/customerror": 10,
         "drupal/default_content": 15,
-        "drupal/inline_all_css": 5,
         "drupal/openapi_rest": 5,
         "drupal/potion": 20
     },
