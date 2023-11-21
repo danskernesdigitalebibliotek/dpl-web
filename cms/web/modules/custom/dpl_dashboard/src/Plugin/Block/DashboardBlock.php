@@ -93,7 +93,7 @@ class DashboardBlock extends BlockBase implements ContainerFactoryPluginInterfac
       // Cannot find that route. Does it exist?
       'intermediate-url' => '/user/me/intermediates',
       'ereolen-my-page-url' => dpl_react_apps_format_app_url($generalSettings->get('ereolen_my_page_url'), GeneralSettingsForm::EREOLEN_MY_PAGE_URL),
-    ] + dpl_react_apps_texts_renewal() + DplReactAppsController::externalApiBaseUrls();
+    ] + DplReactAppsController::externalApiBaseUrls();
 
     return [
       '#theme' => 'dpl_react_app',

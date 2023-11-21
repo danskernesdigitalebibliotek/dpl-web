@@ -93,7 +93,7 @@ class LoanListBlock extends BlockBase implements ContainerFactoryPluginInterface
       // Urls.
       'ereolen-my-page-url' => dpl_react_apps_format_app_url($generalSettings->get('ereolen_my_page_url'), GeneralSettingsForm::EREOLEN_MY_PAGE_URL),
       'material-overdue-url' => Url::fromRoute('dpl_loans.list', [], ['absolute' => TRUE])->toString(),
-    ] + dpl_react_apps_texts_renewal() + DplReactAppsController::externalApiBaseUrls() + DplReactAppsController::getBlockedSettings();
+    ] + DplReactAppsController::externalApiBaseUrls() + DplReactAppsController::getBlockedSettings();
 
     return [
       '#theme' => 'dpl_react_app',
