@@ -4,24 +4,7 @@ display:
   default:
     display_title: Standard
     display_options:
-      exposed_form:
-        options:
-          submit_button: Filter
-          reset_button_label: Gendan
-          exposed_sorts_label: 'Sortér efter'
-          sort_asc_label: Stigende
-          sort_desc_label: Faldende
-      pager:
-        options:
-          tags:
-            previous: '‹ Forrige'
-            next: 'Næste ›'
-            first: '« Første'
-            last: 'Sidste »'
-          expose:
-            items_per_page_label: 'Antal elementer'
-            items_per_page_options_all_label: '- Alle -'
-            offset_label: Forskydning
+      title: Personer
       fields:
         user_bulk_form:
           label: Masseopdatering
@@ -30,8 +13,8 @@ display:
         status:
           label: Status
           settings:
-            format_custom_true: Aktiv
             format_custom_false: Blokeret
+            format_custom_true: Aktiv
         roles_target_id:
           label: Roller
         created:
@@ -42,6 +25,27 @@ display:
           label: Handlinger
         mail:
           separator: ', '
+      pager:
+        options:
+          tags:
+            next: 'Næste ›'
+            previous: '‹ Forrige'
+            first: '« Første'
+            last: 'Sidste »'
+          expose:
+            items_per_page_label: 'Antal elementer'
+            items_per_page_options_all_label: '- Alle -'
+            offset_label: Forskydning
+      exposed_form:
+        options:
+          submit_button: Filter
+          reset_button_label: Gendan
+          exposed_sorts_label: 'Sortér efter'
+          sort_asc_label: Stigende
+          sort_desc_label: Faldende
+      empty:
+        area_text_custom:
+          content: 'Ingen personer til rådighed.'
       filters:
         combine:
           expose:
@@ -60,10 +64,6 @@ display:
         permission:
           expose:
             label: Tilladelse
-      title: Personer
-      empty:
-        area_text_custom:
-          content: 'Ingen personer til rådighed.'
       use_more_text: mere
   page_1:
     display_title: Side

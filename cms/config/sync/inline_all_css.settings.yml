@@ -1,6 +1,6 @@
+_core:
+  default_config_hash: I9yTY0I39Ydez8O6Mk7lr0TqDF2mtY5QCoszEOyq8X8
 enabled: true
 enabled_themes:
   - novel
 minify: true
-_core:
-  default_config_hash: I9yTY0I39Ydez8O6Mk7lr0TqDF2mtY5QCoszEOyq8X8

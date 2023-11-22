@@ -1,7 +1,17 @@
 uuid: 7408de3c-bbe4-43db-86fa-a78fc72fa05a
 langcode: en
 status: true
-dependencies: {  }
+dependencies:
+  config:
+    - node.type.article
+    - node.type.campaign
+  module:
+    - dpl_instant_loan
+    - dpl_library_agency
+    - dpl_url_proxy
+    - node
+    - system
+    - toolbar
 id: local_administrator
 label: 'Local Administrator'
 weight: 3

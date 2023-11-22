@@ -1,3 +1,5 @@
+_core:
+  default_config_hash: R4IF-ClDHXxblLcG0L7MgsLvfBIMAvi_skumNFQwkDc
 module:
   block: 0
   breakpoint: 0
@@ -72,5 +74,3 @@ theme:
   stable9: 0
   novel: 0
 profile: dpl_cms
-_core:
-  default_config_hash: R4IF-ClDHXxblLcG0L7MgsLvfBIMAvi_skumNFQwkDc

@@ -1,3 +1,5 @@
+_core:
+  default_config_hash: UVH1aJ4b44UM-VdPVN7hNNuuVqfReJxwfVeDQH1Hvsk
 ignored_config_entities:
   - '*'
   - '~block.block.claro.*'
@@ -103,5 +105,3 @@ ignored_config_entities:
   - ~dpl_reservation_list.settings
   - ~dpl_patron_redirect.settings
   - ~dpl_patron_reg.settings
-_core:
-  default_config_hash: UVH1aJ4b44UM-VdPVN7hNNuuVqfReJxwfVeDQH1Hvsk

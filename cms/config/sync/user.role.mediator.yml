@@ -1,7 +1,14 @@
 uuid: 9cb4763e-19ed-475b-8582-2cddd9002d25
 langcode: en
 status: true
-dependencies: {  }
+dependencies:
+  config:
+    - node.type.article
+    - node.type.campaign
+  module:
+    - node
+    - system
+    - toolbar
 id: mediator
 label: Mediator
 weight: 5
