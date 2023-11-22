@@ -60,8 +60,9 @@
         "dealerdirect/phpcodesniffer-composer-installer": "^0.7.1",
         "deoliveiralucas/array-keys-case-transform": "^1.1",
         "drupal/config_ignore": "^2.4",
-        "drupal/core-project-message": "^9.2.7",
-        "drupal/core-recommended": "^9.2.7",
+        "drupal/core-composer-scaffold": "~9.3.0",
+        "drupal/core-project-message": "~9.3.0",
+        "drupal/core-recommended": "~9.3.0",
         "drupal/customerror": "^1.0@beta",
         "drupal/default_content": "^2.0@alpha",
         "drupal/devel": "~5.0.2",
@@ -157,7 +158,6 @@
                 "3252291: Support force exclude for keys": "https://www.drupal.org/files/issues/2021-12-02/config_ignore-force-exclude-keys-3252291-3.patch"
             },
             "drupal/core": {
-                "2936067: CSS aggregation fails on many variations of @import": "https://git.drupalcode.org/project/drupal/-/commit/5aa154d.patch",
                 "Configure core to not check permissions before accepting an updated module": "patches/disable-core-upload-permission-check.diff"
             },
             "drupal/jsonlog": {
