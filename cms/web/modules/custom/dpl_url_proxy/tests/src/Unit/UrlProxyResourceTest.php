@@ -111,7 +111,7 @@ class UrlProxyResourceTest extends UnitTestCase {
    * @param mixed[] $conf
    *   The proxy url configuration to use.
    *
-   * @dataProvider testThatEndpointChangesUrlProvider
+   * @dataProvider thatEndpointChangesUrlProvider
    */
   public function testThatEndpointChangesUrl(array $input, array $expected_output, array $conf): void {
     $config = $this->prophesize(ImmutableConfig::class);
@@ -143,7 +143,7 @@ class UrlProxyResourceTest extends UnitTestCase {
    * @return mixed[]
    *   The test data.
    */
-  public function testThatEndpointChangesUrlProvider(): array {
+  public function thatEndpointChangesUrlProvider(): array {
     $conf = [
       'prefix' => 'http://bib101.bibbaser.dk/login?url=',
       'hostnames' => [
