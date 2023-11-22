@@ -42,6 +42,8 @@ function dpl_react_apps_preprocess_page(array &$variables): void {
  *   Texts props.
  */
 function _dpl_react_apps_texts(): array {
+  $feesConfig = \Drupal::configFactory()->get('dpl_fees.settings');
+  $recommenderSettings = \Drupal::configFactory()->get('dpl_recommender.settings');
   // These texts are given to all the apps.
   // Instead of defining them for each app separately we define them here in
   // case they are reused in multiple apps and we overlook it.
@@ -318,7 +320,6 @@ function _dpl_react_apps_texts(): array {
 
     // Search.
     'add-more-filters-text' => t('+ more filters', [], ['context' => 'Search Result']),
-    'by-author-text' => t('By', [], ['context' => 'Search Result']),
     'clear-all-text' => t('Clear all', [], ['context' => 'Search Result']),
     'facet-access-types-text' => t('Access types', [], ['context' => 'Search Result']),
     'facet-browser-modal-close-modal-aria-label-text' => t('Close facet browser modal', [], ['context' => 'Search Result']),
