@@ -2,6 +2,5 @@ name: Configuration Import
 type: module
 description: Import configuration from YAML files.
 package: DPL
-core: 8.x
-core_version_requirement: ^8 || ^9
+core_version_requirement: ^9 || ^10
 configure: dpl_config_upload.upload_form

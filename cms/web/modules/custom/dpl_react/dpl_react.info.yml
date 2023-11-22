@@ -3,4 +3,4 @@ description: General handling of importing and using the DDB react components as
 package: DDB
 
 type: module
-core_version_requirement: ^9
+core_version_requirement: ^9 || ^10

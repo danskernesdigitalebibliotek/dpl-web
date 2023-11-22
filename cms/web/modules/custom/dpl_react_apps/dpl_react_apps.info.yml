@@ -10,4 +10,4 @@ dependencies:
   - dpl_dashboard:dpl_dashboard
 
 type: module
-core_version_requirement: ^9
+core_version_requirement: ^9 || ^10
