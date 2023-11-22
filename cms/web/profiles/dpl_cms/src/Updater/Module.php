@@ -2,8 +2,8 @@
 
 namespace Drupal\dpl_cms\Updater;
 
-use Drupal\Core\Updater\UpdaterInterface;
 use Drupal\Core\Updater\Module as UpdaterModule;
+use Drupal\Core\Updater\UpdaterInterface;
 
 /**
  * Extending the core updater module class.

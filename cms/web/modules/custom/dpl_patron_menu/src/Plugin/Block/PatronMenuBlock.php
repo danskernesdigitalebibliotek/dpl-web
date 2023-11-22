@@ -6,12 +6,12 @@ use Drupal\Core\Block\BlockBase;
 use Drupal\Core\Config\ConfigFactoryInterface;
 use Drupal\Core\Plugin\ContainerFactoryPluginInterface;
 use Drupal\Core\Url;
-use Drupal\dpl_library_agency\Form\GeneralSettingsForm;
-use Drupal\dpl_react_apps\Controller\DplReactAppsController;
-use Symfony\Component\DependencyInjection\ContainerInterface;
 use Drupal\dpl_library_agency\Branch\BranchRepositoryInterface;
 use Drupal\dpl_library_agency\BranchSettings;
+use Drupal\dpl_library_agency\Form\GeneralSettingsForm;
 use Drupal\dpl_react\DplReactConfigInterface;
+use Drupal\dpl_react_apps\Controller\DplReactAppsController;
+use Symfony\Component\DependencyInjection\ContainerInterface;
 
 /**
  * Provides patron menu.

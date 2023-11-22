@@ -2,8 +2,6 @@
 
 namespace Drupal\Tests\dpl_library_token\Unit;
 
-use Prophecy\Argument;
-use Drupal\Tests\UnitTestCase;
 use Drupal\Core\Config\ConfigFactoryInterface;
 use Drupal\Core\Config\ConfigManagerInterface;
 use Drupal\Core\Config\ImmutableConfig;
@@ -13,6 +11,8 @@ use Drupal\Core\Logger\LoggerChannelInterface;
 use Drupal\Core\StringTranslation\TranslationManager;
 use Drupal\dpl_url_proxy\DplUrlProxyInterface;
 use Drupal\dpl_url_proxy\Plugin\rest\resource\UrlProxyResource;
+use Drupal\Tests\UnitTestCase;
+use Prophecy\Argument;
 use Symfony\Component\DependencyInjection\ParameterBag\ParameterBag;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\Exception\HttpException;

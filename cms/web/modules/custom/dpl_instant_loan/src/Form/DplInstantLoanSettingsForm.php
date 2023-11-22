@@ -3,10 +3,10 @@
 namespace Drupal\dpl_instant_loan\Form;
 
 use Drupal\Core\Config\ConfigFactoryInterface;
-use Symfony\Component\DependencyInjection\ContainerInterface;
 use Drupal\Core\Form\ConfigFormBase;
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\dpl_react\DplReactConfigInterface;
+use Symfony\Component\DependencyInjection\ContainerInterface;
 use function Safe\preg_split;
 
 /**
