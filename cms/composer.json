@@ -76,7 +76,7 @@
         "drupal/paragraphs": "^1.16",
         "drupal/potion": "dev-2.x#e48d6ee336d960b9d2efb5d88e68402db6d229a6",
         "drupal/purge": "^3.2",
-        "drupal/redis": "^1.5",
+        "drupal/redis": "^1.7",
         "drupal/restui": "^1.21",
         "drupal/twig_tweak": "^3.1",
         "drupal/upgrade_status": "^3.18",
@@ -163,9 +163,6 @@
             },
             "drupal/jsonlog": {
                 "3251587: Change logging from stdout to stderr": "https://www.drupal.org/files/issues/2021-11-29/jsonlog-change-stdout-to-stderr-3251587-3.patch"
-            },
-            "drupal/redis": {
-                "3207574: Patch against redis being include too late": "https://www.drupal.org/files/issues/2021-04-07/redis-report_warnings-3207574-2.patch"
             },
             "drupal/openapi": {
                 "3313521: OpenAPI security field does not validate": "https://git.drupalcode.org/project/openapi/-/merge_requests/6.patch"
