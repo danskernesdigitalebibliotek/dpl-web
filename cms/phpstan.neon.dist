@@ -1,5 +1,5 @@
 parameters:
-  level: max
+  level: 8
   paths:
     - web/modules/custom
     - web/profiles/dpl_cms
