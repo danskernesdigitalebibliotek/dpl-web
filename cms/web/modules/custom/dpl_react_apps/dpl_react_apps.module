@@ -270,7 +270,6 @@ function _dpl_react_apps_texts(): array {
     'recommender-title-reservations-text' => t("Because you have reserved @title you may also like", [], ['context' => 'Recommender']),
 
     // Reservation list.
-    'change-interest-period-text' => t('Change interest period', [], ['context' => 'Reservation list']),
     'modal-reservation-form-no-interest-after-label-text' => t("Change the amount of time after which you're no longer interested in this material.", [], ['context' => 'Reservation list']),
     'modal-reservation-form-pickup-label-text' => t("Change pickup location for your reservation.", [], ['context' => 'Reservation list']),
     'reservation-details-cancel-text' => t('Cancel', [], ['context' => 'Reservation list']),
@@ -355,7 +354,6 @@ function _dpl_react_apps_texts(): array {
     'cant-view-text' => t("Can't be viewed", [], ['context' => 'Work Page']),
     'change-email-text' => t('Change email', [], ['context' => 'Work Page']),
     'change-sms-number-text' => t('Change SMS number', [], ['context' => 'Work Page']),
-    'change-interest-period-text' => t('Change interest period', [], ['context' => 'Work Page']),
     'close-modal-aria-label-interest-period-text' => t('Close interest period modal', [], ['context' => 'Work Page']),
     'close-modal-aria-label-pickup-tex' => t('Close pickup location modal', [], ['context' => 'Work Page']),
     'close-text' => t('Close', [], ['context' => 'Work Page']),
@@ -524,6 +522,7 @@ function _dpl_react_apps_texts(): array {
     'availability-available-text' => t('Available', [], ['context' => 'Global']),
     'availability-unavailable-text' => t('Unavailable', [], ['context' => 'Global']),
     'by-author-text' => t('by', [], ['context' => 'Global']),
+    'change-interest-period-text' => t('Change interest period', [], ['context' => 'Global']),
     'change-pickup-location-text' => t('Change pickup location', [], ['context' => 'Global']),
     'choose-one-text' => t('Choose one', [], ['context' => 'Global']),
     'dashboard-number-in-line-text' => t('Number @count in line', [], ['context' => 'Global']),
