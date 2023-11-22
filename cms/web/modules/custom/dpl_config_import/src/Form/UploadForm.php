@@ -105,8 +105,8 @@ class UploadForm extends FormBase {
     }
 
     $configuration = $yaml_data['configuration'] ?? [];
-    array_map(function ($value, string $key) {
-      $config = $this->config->getEditable($key);
+    array_map(function ($value, int|string $key) {
+      $config = $this->config->getEditable((string) $key);
       $new_config = NestedArray::mergeDeepArray([$config->getRawData(), $value], TRUE);
       $config->setData($new_config);
       $config->save();

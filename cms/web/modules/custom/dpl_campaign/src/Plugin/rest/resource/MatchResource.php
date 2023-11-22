@@ -211,9 +211,9 @@ class MatchResource extends ResourceBase {
 
       // Store the facet name so we can check for duplicates.
       $known_facets[] = $facet->name;
-      return array_map(function (Value $value, int $index) use ($facet) {
+      return array_map(function (Value $value, int|string $index) use ($facet) {
         // With values being sorted the index will correspond to the rank.
-        return new Rule($facet->name, $value->term, $index + 1);
+        return new Rule($facet->name, $value->term, intval($index) + 1);
       }, $sorted_values, array_keys($sorted_values));
     }, $facets));
   }
