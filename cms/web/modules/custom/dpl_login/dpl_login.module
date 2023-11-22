@@ -129,11 +129,6 @@ function dpl_login_openid_connect_post_authorize(AccountInterface $account, arra
  *   The user account being saved.
  * @param mixed[] $context
  *   Various openid_connect context. Tokens etc.
- *
- *   We are ignoring the function declaration
- *   because PhpStan gives us an iterable error on UserInterface
- *   which we cannot handle for the moment.
- *   @phpstan-ignore-next-line
  */
 function dpl_login_openid_connect_userinfo_save(UserInterface $account, array $context): void {
   // If the user is new we attach a role to the user.

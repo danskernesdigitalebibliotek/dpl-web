@@ -124,11 +124,6 @@ class DplLoginController extends ControllerBase {
       return $this->redirect('<front>');
     }
 
-    // Create url for logout service that it should redirect back to.
-    // Since toString(TRUE) is called
-    // we know that the return value of toString() is GeneratedUrl
-    // and consequently we are able to call getGeneratedUrl in the end.
-    /* @phpstan-ignore-next-line */
     $redirect_uri = Url::fromRoute('<front>', [], ["absolute" => TRUE])
       ->toString(TRUE)
       ->getGeneratedUrl();
