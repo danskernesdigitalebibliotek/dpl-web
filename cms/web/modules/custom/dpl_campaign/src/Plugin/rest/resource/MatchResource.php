@@ -276,12 +276,12 @@ class MatchResource extends ResourceBase {
   protected function findCampaign(array $rules, string $rules_logic): ?NodeInterface {
     $storage = $this->entityTypeManager->getStorage('node');
     $query = $storage->getQuery();
-    $query->accessCheck(FALSE)
+    $entity_ids = $query->accessCheck(FALSE)
       ->condition('type', 'campaign')
       ->condition('status', 1)
-      ->condition('field_campaign_rules_logic', $rules_logic);
+      ->condition('field_campaign_rules_logic', $rules_logic)
+      ->execute();
 
-    $entity_ids = $query->execute();
     if (!is_array($entity_ids)) {
       return NULL;
     }
