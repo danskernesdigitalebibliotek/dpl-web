@@ -98,7 +98,7 @@ class RedirectPatronSubscriber implements EventSubscriberInterface {
    * @return mixed[]
    *   The event function to call for this subscriber.
    */
-  public static function getSubscribedEvents() {
+  public static function getSubscribedEvents(): array {
     $events[KernelEvents::REQUEST][] = ['checkAuthStatus'];
     return $events;
   }
