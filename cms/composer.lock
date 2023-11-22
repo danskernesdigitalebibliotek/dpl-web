@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "f4a7eb36f914e6714650b70464346b19",
+    "content-hash": "fba0a61d8580b17c9fd0a81edd4b5401",
     "packages": [
         {
             "name": "amazeeio/drupal_integrations",
@@ -1004,10 +1004,10 @@
         },
         {
             "name": "danskernesdigitalebibliotek/dpl-design-system",
-            "version": "v1.7.0-rc25",
+            "version": "v1.7.0-rc26",
             "dist": {
                 "type": "zip",
-                "url": "https://github.com/danskernesdigitalebibliotek/dpl-design-system/releases/download/release-develop/dist.zip"
+                "url": "https://github.com/reload/dpl-design-system/releases/download/release-add-article/dist.zip"
             },
             "type": "drupal-library"
         },
@@ -13683,9 +13683,8 @@
     "aliases": [],
     "minimum-stability": "dev",
     "stability-flags": {
-        "danskernesdigitalebibliotek/dpl-design-system": 5,
-        "danskernesdigitalebibliotek/dpl-react": 5,
         "drupal/customerror": 10,
+        "drupal/default_content": 15,
         "drupal/inline_all_css": 5,
         "drupal/libraries": 10,
         "drupal/openapi_rest": 5,
@@ -13695,5 +13694,5 @@
     "prefer-lowest": false,
     "platform": [],
     "platform-dev": [],
-    "plugin-api-version": "2.6.0"
+    "plugin-api-version": "2.3.0"
 }

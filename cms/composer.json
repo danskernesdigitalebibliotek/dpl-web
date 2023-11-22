@@ -33,9 +33,9 @@
             "package": {
                 "name": "danskernesdigitalebibliotek/dpl-design-system",
                 "type": "drupal-library",
-                "version": "v1.7.0-rc25",
+                "version": "v1.7.0-rc26",
                 "dist": {
-                    "url": "https://github.com/danskernesdigitalebibliotek/dpl-design-system/releases/download/release-develop/dist.zip",
+                    "url": "https://github.com/reload/dpl-design-system/releases/download/release-add-article/dist.zip",
                     "type": "zip"
                 }
             }
