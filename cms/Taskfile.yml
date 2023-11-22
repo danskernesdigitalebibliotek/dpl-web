@@ -69,13 +69,25 @@ tasks:
       - sh: "[ ! -z {{.CR_PAT}} ]"
         msg: "Env variable CR_PAT is not set or empty."
 
+  dev:build:
+    summary: Build docker containers
+    # Ensure that we only rebuild if there are changes to Dockerfiles
+    sources:
+      - "{{ .LAGOON_DIR }}/*.dockerfile"
+    cmds:
+      - docker compose build
+
   dev:cli:
     summary: Performs command inside container. Expects parameter(s).
+    # This could have a dependency on dev:build but does not to avoid excessive
+    # log output. dev:cli gets called a lot.
     cmds:
       - docker compose {{ .DOCKER_COMPOSE_FILES }} run --rm cli sh -c "{{.CLI_ARGS}}"
 
   dev:start:
     summary: Run docker compose
+    deps:
+      - dev:build
     cmds:
       - docker compose {{ .DOCKER_COMPOSE_FILES }} up -d {{if eq .CI "true"}}--quiet-pull{{end}}
     vars:
@@ -96,9 +108,12 @@ tasks:
 
   dev:reset:
     desc: Create local development setup in a clean state
-    cmds:
+    deps:
+      # Build new containers if necessary.
+      - dev:build
       # Stop potential running environment.
-      - task dev:down
+      - dev:down
+    cmds:
       # Create a .env file with recommended defaults.
       - cp -n .env.example .env || true
       # Build site.
