@@ -273,8 +273,7 @@ class GeneralSettingsForm extends ConfigFormBase {
           $this->t('The interest period @error, does not match the format [days]-[label].', ['@error' => $period], ['context' => 'Library Agency Configuration']));
       }
       else {
-        list($days, $label) = explode('-', $period);
-        $interest_periods[trim($days)] = trim($label);
+        $interest_periods += GeneralSettings::splitInterestPeriodString($period);
       }
     }
 

@@ -70,8 +70,7 @@ class GeneralSettings extends DplReactConfigBase {
     $interest_periods = [];
     $options = explode(PHP_EOL, $this->loadConfig()->get('interest_periods_config'));
     foreach ($options as $option) {
-      list($days, $label) = explode('-', $option);
-      $interest_periods[trim($days)] = trim($label);
+      $interest_periods += self::splitInterestPeriodString($option);
     }
     return $interest_periods;
   }
@@ -92,6 +91,22 @@ class GeneralSettings extends DplReactConfigBase {
       'value' => $default_interest_period_value,
       'label' => $interest_periods[$default_interest_period_value],
     ];
+  }
+
+  /**
+   * Splits interest periods strings into array.
+   *
+   * @param string $period
+   *   The interest period string to be split.
+   *
+   * @return mixed[]
+   *   The interest period after being split into array.
+   */
+  public static function splitInterestPeriodString(string $period): array {
+    list($days, $label) = explode('-', $period);
+    $interest_periods[trim($days)] = trim($label);
+
+    return $interest_periods;
   }
 
 }
