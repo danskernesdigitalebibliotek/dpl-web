@@ -41,6 +41,7 @@ module:
   language: 0
   link: 0
   locale: 0
+  mysql: 0
   node: 0
   openapi: 0
   openapi_rest: 0

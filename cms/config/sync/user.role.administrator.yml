@@ -18,6 +18,7 @@ dependencies:
     - openid_connect
     - system
     - toolbar
+    - update
 id: administrator
 label: Administrator
 weight: 2
@@ -54,4 +55,5 @@ permissions:
   - 'translate interface'
   - 'view own unpublished content'
   - 'view the administration theme'
+  - 'view update notifications'
   - 'view user email addresses'
