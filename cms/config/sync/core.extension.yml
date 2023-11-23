@@ -34,6 +34,7 @@ module:
   field: 0
   file: 0
   filter: 0
+  gin_toolbar: 0
   handy_cache_tags: 0
   image: 0
   inline_all_css: 0
@@ -74,4 +75,5 @@ theme:
   claro: 0
   stable9: 0
   novel: 0
+  gin: 0
 profile: dpl_cms

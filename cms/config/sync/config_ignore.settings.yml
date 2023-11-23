@@ -4,6 +4,13 @@ ignored_config_entities:
   - '*'
   - '~block.block.claro.*'
   - '~block.block.novel.*'
+  - ~block.block.gin_breadcrumbs
+  - ~block.block.gin_content
+  - ~block.block.gin_local_actions
+  - ~block.block.gin_messages
+  - ~block.block.gin_page_title
+  - ~block.block.gin_primary_local_tasks
+  - ~block.block.gin_secondary_local_tasks
   - ~config_ignore.settings
   - '~core.date_format.*'
   - '~core.base_field_override.node.campaign.*'
@@ -31,6 +38,7 @@ ignored_config_entities:
   - ~file.settings
   - ~filter.format.plain_text
   - ~filter.settings
+  - ~gin.settings
   - ~inline_all_css.settings
   - ~image.settings
   - ~image.style.campaign_image
