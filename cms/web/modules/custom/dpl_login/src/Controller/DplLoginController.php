@@ -137,7 +137,7 @@ class DplLoginController extends ControllerBase {
       ],
     ]);
 
-    return TrustedRedirectResponse::create($url->toUriString());
+    return new TrustedRedirectResponse($url->toUriString());
   }
 
   /**
