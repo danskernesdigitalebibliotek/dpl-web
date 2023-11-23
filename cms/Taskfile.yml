@@ -209,7 +209,7 @@ tasks:
     cmds:
       - cmd: |
           docker run --rm -v ${PWD}:/local -v ${PWD}/openapi-generator.config.fbs.yaml:/openapi-generator.config.fbs.yaml \
-          openapitools/openapi-generator-cli:v5.2.1 generate \
+          openapitools/openapi-generator-cli:v7.1.0 generate \
           -i https://raw.githubusercontent.com/danskernesdigitalebibliotek/dpl-react/main/src/core/fbs/fbs-adapter.yaml \
           -g php -o /local/packages/fbs-client -c /openapi-generator.config.fbs.yaml
 
