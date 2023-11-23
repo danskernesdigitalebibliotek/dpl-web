@@ -40,7 +40,7 @@ class LibraryToken {
       $token_data = json_decode($response_body, TRUE);
     }
     catch (JsonException $e) {
-      throw new LibraryTokenResponseException('Could not decode library token response', $e->getCode(), $e);
+      throw new LibraryTokenResponseException('Syntax error', $e->getCode(), $e);
     }
     if (empty($token_data['access_token'])) {
       throw new LibraryTokenResponseException('Access token is missing');
