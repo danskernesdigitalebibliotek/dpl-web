@@ -666,8 +666,8 @@ function _dpl_react_apps_texts(): array {
     'subject-number-text' => t('Subject number', [], ['context' => 'Global']),
     'three-months-text' => t('3 months', [], ['context' => 'Global']),
     'two-months-text' => t('2 months', [], ['context' => 'Global']),
-   ];
- };
+  ];
+};
 
 /**
  * Implements hook_dpl_react_apps_data().
