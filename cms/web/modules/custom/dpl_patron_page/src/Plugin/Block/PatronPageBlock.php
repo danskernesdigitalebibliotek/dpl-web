@@ -155,6 +155,7 @@ class PatronPageBlock extends BlockBase implements ContainerFactoryPluginInterfa
       'patron-page-phone-input-message-text' => $this->t('The phone number must be 6 to 15 characters in length and should be comprised solely of numbers or begin with a +', [], ['context' => 'Patron page']),
       'patron-page-handle-response-information-text' => $this->t('Your changes are saved.', [], ['context' => 'Patron page']),
       'patron-page-loading-text' => $this->t('Loading...', [], ['context' => 'Patron page']),
+      'reservation-list-digital-pickup-text' => $this->t('Online access', [], ['context' => 'Patron page']),
     ] + DplReactAppsController::externalApiBaseUrls();
 
     return [

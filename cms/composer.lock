@@ -13684,7 +13684,6 @@
     "minimum-stability": "dev",
     "stability-flags": {
         "drupal/customerror": 10,
-        "drupal/default_content": 15,
         "drupal/inline_all_css": 5,
         "drupal/libraries": 10,
         "drupal/openapi_rest": 5,
