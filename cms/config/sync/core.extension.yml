@@ -37,7 +37,6 @@ module:
   gin_toolbar: 0
   handy_cache_tags: 0
   image: 0
-  inline_all_css: 0
   jsonlog: 0
   language: 0
   link: 0
