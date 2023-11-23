@@ -59,23 +59,6 @@
             }
         },
         {
-            "type": "package",
-            "package": {
-                "name": "drupal/potion",
-                "version": "2.x-dev",
-                "source": {
-                    "type": "git",
-                    "url": "https://git.drupalcode.org/project/potion.git",
-                    "reference": "e48d6ee336d960b9d2efb5d88e68402db6d229a6"
-                },
-                "requires": {
-                    "drupal/core": "^8 || ^9 || ^10",
-                    "symfony/finder": "^3.4 || ^4.4",
-                    "symfony/process": "^3.4 || ^4.4"
-                }
-            }
-        },
-        {
             "type": "path",
             "url": "packages/fbs-client",
             "options": {
