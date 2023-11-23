@@ -95,35 +95,35 @@ class PatronMenuBlock extends BlockBase implements ContainerFactoryPluginInterfa
     // generated menu. A place for further improvements.
     $menu = [
       [
-        "name" => $this->t("Loans", ["context" => 'Patron menu']),
+        "name" => $this->t("Loans", [], ["context" => 'Patron menu']),
         "link" => dpl_react_apps_ensure_url_is_string(
           Url::fromRoute('dpl_loans.list', [], ['absolute' => TRUE])->toString()
         ),
         "dataId" => "1",
       ],
       [
-        "name" => $this->t("Reservations", ["context" => 'Patron menu']),
+        "name" => $this->t("Reservations", [], ["context" => 'Patron menu']),
         "link" => dpl_react_apps_ensure_url_is_string(
           Url::fromRoute('dpl_reservations.list', [], ['absolute' => TRUE])->toString()
         ),
         "dataId" => "2",
       ],
       [
-        "name" => $this->t("My list", ["context" => 'Patron menu']),
+        "name" => $this->t("My list", [], ["context" => 'Patron menu']),
         "link" => dpl_react_apps_ensure_url_is_string(
           Url::fromRoute('dpl_favorites_list.list', [], ['absolute' => TRUE])->toString()
         ),
         "dataId" => "20",
       ],
       [
-        "name" => $this->t("Fees & Replacement costs", ["context" => 'Patron menu']),
+        "name" => $this->t("Fees & Replacement costs", [], ["context" => 'Patron menu']),
         "link" => dpl_react_apps_ensure_url_is_string(
           Url::fromRoute('dpl_fees.list', [], ['absolute' => TRUE])->toString()
         ),
         "dataId" => "4",
       ],
       [
-        "name" => $this->t("My account", ["context" => 'Patron menu']),
+        "name" => $this->t("My account", [], ["context" => 'Patron menu']),
         "link" => dpl_react_apps_ensure_url_is_string(
           Url::fromRoute('dpl_dashboard.list', [], ['absolute' => TRUE])->toString()
         ),
