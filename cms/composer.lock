@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "ed6e9aec3ebcc7bb563063c242c1eceb",
+    "content-hash": "02d982e69dff2dcefaf3485f40ac99a1",
     "packages": [
         {
             "name": "amazeeio/drupal_integrations",
@@ -3354,64 +3354,7 @@
                 "url": "https://git.drupalcode.org/project/potion.git",
                 "reference": "e48d6ee336d960b9d2efb5d88e68402db6d229a6"
             },
-            "require": {
-                "drupal/core": "^8 || ^9",
-                "symfony/finder": "^3.4 || ^4.4",
-                "symfony/process": "^3.4 || ^4.4"
-            },
-            "require-dev": {
-                "drupal/coder": "^8.3.1"
-            },
-            "type": "drupal-module",
-            "extra": {
-                "branch-alias": {
-                    "dev-2.x": "2.x-dev"
-                },
-                "drupal": {
-                    "version": "8.x-2.0-beta1+14-dev",
-                    "datestamp": "1616160587",
-                    "security-coverage": {
-                        "status": "not-covered",
-                        "message": "Dev releases are not covered by Drupal security advisories."
-                    }
-                }
-            },
-            "notification-url": "https://packages.drupal.org/8/downloads",
-            "license": [
-                "GPL-2.0-or-later"
-            ],
-            "authors": [
-                {
-                    "name": "Antistatique",
-                    "homepage": "https://www.antistatique.net",
-                    "email": "info@antistatique.net",
-                    "role": "Sponsor"
-                },
-                {
-                    "name": "Toni Fisler",
-                    "homepage": "https://www.drupal.org/u/tonifisler",
-                    "email": "mail@toni.io",
-                    "role": "Author & Maintainer"
-                },
-                {
-                    "name": "Gilles Doge",
-                    "homepage": "https://www.drupal.org/u/gido",
-                    "email": "gilles@antistatique.net",
-                    "role": "Author & Maintainer"
-                },
-                {
-                    "name": "Kevin Wenger",
-                    "email": "contact@kevin-wenger.ch",
-                    "homepage": "https://www.drupal.org/u/wengerk",
-                    "role": "Author & Maintainer"
-                }
-            ],
-            "description": "Provides a normalized way to collect internationalization strings to export, merge & create .po files from versatile sources such as Twig, PHP or YML files.",
-            "homepage": "https://www.drupal.org/project/potion",
-            "support": {
-                "source": "https://git.drupalcode.org/project/potion",
-                "issues": "https://www.drupal.org/project/issues/potion"
-            }
+            "type": "drupal-module"
         },
         {
             "name": "drupal/purge",
