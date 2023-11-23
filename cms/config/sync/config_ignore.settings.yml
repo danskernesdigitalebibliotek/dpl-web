@@ -29,7 +29,6 @@ ignored_config_entities:
   - ~file.settings
   - ~filter.format.plain_text
   - ~filter.settings
-  - ~inline_all_css.settings
   - ~image.settings
   - ~image.style.campaign_image
   - ~image.style.large

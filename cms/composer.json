@@ -33,9 +33,9 @@
             "package": {
                 "name": "danskernesdigitalebibliotek/dpl-design-system",
                 "type": "drupal-library",
-                "version": "v1.7.0-rc25",
+                "version": "v1.7.0-rc27",
                 "dist": {
-                    "url": "https://github.com/danskernesdigitalebibliotek/dpl-design-system/releases/download/release-develop/dist.zip",
+                    "url": "https://github.com/danskernesdigitalebibliotek/dpl-design-system/releases/download/release-release%2F2023-49-0/dist.zip",
                     "type": "zip"
                 }
             }
@@ -66,7 +66,6 @@
         "drupal/default_content": "^2.0@alpha",
         "drupal/devel": "^4.1",
         "drupal/handy_cache_tags": "^1.4",
-        "drupal/inline_all_css": "^1.0@RC",
         "drupal/jsonlog": "^3.0",
         "drupal/libraries": "^3.0@beta",
         "drupal/openapi": "^2.0",
@@ -124,15 +123,33 @@
     "extra": {
         "composer-exit-on-patch-failure": true,
         "installer-paths": {
-            "web/themes/custom/novel/assets/{$name}": ["danskernesdigitalebibliotek/dpl-design-system"],
-            "web/core": ["type:drupal-core"],
-            "web/libraries/{$name}": ["type:drupal-library"],
-            "web/modules/contrib/{$name}": ["type:drupal-module"],
-            "web/profiles/contrib/{$name}": ["type:drupal-profile"],
-            "web/themes/contrib/{$name}": ["type:drupal-theme"],
-            "drush/Commands/contrib/{$name}": ["type:drupal-drush"],
-            "web/modules/custom/{$name}": ["type:drupal-custom-module"],
-            "web/themes/custom/{$name}": ["type:drupal-custom-theme"]
+            "web/themes/custom/novel/assets/{$name}": [
+                "danskernesdigitalebibliotek/dpl-design-system"
+            ],
+            "web/core": [
+                "type:drupal-core"
+            ],
+            "web/libraries/{$name}": [
+                "type:drupal-library"
+            ],
+            "web/modules/contrib/{$name}": [
+                "type:drupal-module"
+            ],
+            "web/profiles/contrib/{$name}": [
+                "type:drupal-profile"
+            ],
+            "web/themes/contrib/{$name}": [
+                "type:drupal-theme"
+            ],
+            "drush/Commands/contrib/{$name}": [
+                "type:drupal-drush"
+            ],
+            "web/modules/custom/{$name}": [
+                "type:drupal-custom-module"
+            ],
+            "web/themes/custom/{$name}": [
+                "type:drupal-custom-theme"
+            ]
         },
         "drupal-scaffold": {
             "allowed-packages": [
