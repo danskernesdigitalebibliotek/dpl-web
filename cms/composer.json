@@ -23,7 +23,8 @@
                 "require": {
                     "drupal/core": "^8 || ^9 || ^10",
                     "symfony/finder": "^3.4 || ^4.4 || ^5 || ^6",
-                    "symfony/process": "^3.4 || ^4.4 || ^5 || ^6"
+                    "symfony/process": "^3.4 || ^4.4 || ^5 || ^6",
+                    "symfony/translation": "^3.4 || ^4.4 || ^5 || ^6"
                 }
             }
         },
