@@ -20,7 +20,7 @@
                     "url": "https://git.drupalcode.org/project/potion.git",
                     "reference": "e48d6ee336d960b9d2efb5d88e68402db6d229a6"
                 },
-                "requires": {
+                "require": {
                     "drupal/core": "^8 || ^9 || ^10",
                     "symfony/finder": "^3.4 || ^4.4 || ^5 || ^6",
                     "symfony/process": "^3.4 || ^4.4 || ^5 || ^6"
