@@ -107,8 +107,6 @@ tasks:
       # packages may change without composer package version changes so ensure
       # we have the latest version.
       - task dev:cli -- composer reinstall danskernesdigitalebibliotek/dpl-design-system danskernesdigitalebibliotek/dpl-react --no-cache
-      # (Re)run Drupal scaffolding.
-      - task dev:cli -- composer drupal:scaffold
       # Build dev scripts
       - task dev:cli -- $(cd dev-scripts/dpl-react; composer install)
       # Start local environment.
