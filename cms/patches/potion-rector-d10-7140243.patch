@@ -1,18 +1,23 @@
-From b4840a5fa942bab16b26217118ca036674e26034 Mon Sep 17 00:00:00 2001
+From 71402431790fc5304c21612f57beebef05cfe06f Mon Sep 17 00:00:00 2001
 From: =?UTF-8?q?Kasper=20Garn=C3=A6s?= <kasperg@users.noreply.github.com>
-Date: Wed, 22 Nov 2023 22:29:14 +0100
+Date: Thu, 23 Nov 2023 21:13:43 +0100
 Subject: [PATCH] Updated for Drupal 10 compatability
 
 This is the result of running Rector on an unpatched version of the
 module:
 vendor/bin/rector process web/modules/contrib/potion/
 
-Then the info file is updated to mark the module as D10 compatible.
+Then the following changes have been made:
+
+- Info file is updated to mark the module as D10 compatible
+- src/Twig/NodeVisitor/TranslationNodeVisitor.php have been updated:
+  strings wrapped in arrays used as arguments to getNode() have been
+  converted to strings to match the function argument type.
 ---
  potion.info.yml                               |  2 +-
  src/Extractor/TwigExtractor.php               | 10 ++--
  .../Extension/TransExtractorExtension.php     |  3 +-
- .../NodeVisitor/TranslationNodeVisitor.php    | 50 +++++++++++--------
+ .../NodeVisitor/TranslationNodeVisitor.php    | 46 +++++++++++--------
  .../Extractor/AnnotationExtractorTest.php     |  2 +-
  .../src/Kernel/Extractor/PhpExtractorTest.php |  2 +-
  .../Kernel/Extractor/TwigExtractorTest.php    |  6 +--
@@ -20,7 +25,7 @@ Then the info file is updated to mark the module as D10 compatible.
  .../src/Kernel/TranslationsExtractorTest.php  |  2 +-
  tests/src/Kernel/TranslationsFillTest.php     |  2 +-
  tests/src/Kernel/TranslationsImportTest.php   |  2 +-
- 11 files changed, 48 insertions(+), 35 deletions(-)
+ 11 files changed, 46 insertions(+), 33 deletions(-)
 
 diff --git a/potion.info.yml b/potion.info.yml
 index 4315290..752866b 100644
@@ -100,7 +105,7 @@ index 0ba3e67..5f954ed 100644
     * The NodeVisitor to extracts translation messages from twig.
     *
 diff --git a/src/Twig/NodeVisitor/TranslationNodeVisitor.php b/src/Twig/NodeVisitor/TranslationNodeVisitor.php
-index adb19ae..21de37c 100644
+index adb19ae..f8e3798 100644
 --- a/src/Twig/NodeVisitor/TranslationNodeVisitor.php
 +++ b/src/Twig/NodeVisitor/TranslationNodeVisitor.php
 @@ -2,6 +2,16 @@
@@ -120,7 +125,7 @@ index adb19ae..21de37c 100644
  use Drupal\Core\Template\TwigNodeTrans;
  use Twig\NodeVisitor\AbstractNodeVisitor;
  use Drupal\potion\MessageCatalogue;
-@@ -72,19 +82,19 @@ class TranslationNodeVisitor extends AbstractNodeVisitor {
+@@ -72,16 +82,16 @@ class TranslationNodeVisitor extends AbstractNodeVisitor {
    /**
     * {@inheritdoc}
     */
@@ -133,18 +138,13 @@ index adb19ae..21de37c 100644
      // If we are on a `|trans` or `|t`.
      if (
 -      $node instanceof \Twig_Node_Expression_Filter &&
--      in_array($node->getNode('filter')->getAttribute('value'), ['trans', 't']) &&
--      $node->getNode('node') instanceof \Twig_Node_Expression_Constant
 +      $node instanceof FilterExpression &&
-+      in_array($node->getNode(['filter'])->getAttribute('value'), ['trans', 't']) &&
-+      $node->getNode(['node']) instanceof ConstantExpression
+       in_array($node->getNode('filter')->getAttribute('value'), ['trans', 't']) &&
+-      $node->getNode('node') instanceof \Twig_Node_Expression_Constant
++      $node->getNode('node') instanceof ConstantExpression
      ) {
        // Save the extracted translations in the messages collection.
--      $this->catalogue->add($node->getNode('node')->getAttribute('value'));
-+      $this->catalogue->add($node->getNode(['node'])->getAttribute('value'));
-
-       return $node;
-     }
+       $this->catalogue->add($node->getNode('node')->getAttribute('value'));
 @@ -98,7 +108,7 @@ class TranslationNodeVisitor extends AbstractNodeVisitor {
      // Eg. `%trans%`, plural, multilines, ...
      // Get context on non-filter case (`%trans%`, plural, multilines, ...).

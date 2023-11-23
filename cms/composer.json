@@ -196,7 +196,7 @@
             "drupal/potion": {
                 "3201365: Allow setting a default write mode when running potion:generate": "https://www.drupal.org/files/issues/2021-03-03/potion-allow_setting_a_default_write_mode-3201365-2.patch",
                 "3348283: Fix wrongly placed parameters in implode functions": "https://www.drupal.org/files/issues/2023-03-15/fix_wrongly_placed_parameters_in_implode_functions-3348283-3.patch",
-                "Update for Drupal 10 compatibility": "patches/potion-rector-d10.patch"
+                "Update for Drupal 10 compatibility": "patches/potion-rector-d10-7140243.patch"
             }
         }
     }
