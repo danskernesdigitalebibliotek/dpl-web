@@ -3,12 +3,21 @@ langcode: en
 status: true
 dependencies:
   config:
+    - field.field.node.article.field_subtitle
     - node.type.article
 id: node.article.default
 targetEntityType: node
 bundle: article
 mode: default
 content:
+  field_subtitle:
+    weight: 26
+    settings:
+      rows: 5
+      placeholder: ''
+    third_party_settings: {  }
+    type: string_textarea
+    region: content
   status:
     type: boolean_checkbox
     weight: 1

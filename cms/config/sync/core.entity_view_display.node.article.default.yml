@@ -3,6 +3,7 @@ langcode: en
 status: true
 dependencies:
   config:
+    - field.field.node.article.field_subtitle
     - node.type.article
   module:
     - user
@@ -11,6 +12,13 @@ targetEntityType: node
 bundle: article
 mode: default
 content:
+  field_subtitle:
+    weight: 101
+    label: above
+    settings: {  }
+    third_party_settings: {  }
+    type: basic_string
+    region: content
   links:
     settings: {  }
     third_party_settings: {  }
