@@ -33,6 +33,7 @@ if (InstallerKernel::installationAttempted()) {
 $settings['config_exclude_modules'] = [
   'devel',
   'field_ui',
+  'views_ui',
   'restui',
   'upgrade_status',
 ];

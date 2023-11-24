@@ -138,8 +138,15 @@ tasks:
       - task dev:cache:clear:all
       # Ensure site is reachable and warm any caches
       - task dev:cli -- curl --silent --show-error --fail --output /dev/null http://varnish:8080/
+      # Enable dev modules.
+      - task dev:enable-dev-tools
       # Show a one-time login to the local site.
       - task dev:cli -- drush user-login
+
+  dev:enable-dev-tools:
+    desc: Enable dev modules and settings, which are not to be used in Prod. They are config-ignored
+    cmds:
+      - task dev:cli -- drush install -y field_ui views_ui
 
   dev:phpunit:
     desc: Run PHPUnit tests with code coverage
