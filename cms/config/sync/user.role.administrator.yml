@@ -1,7 +1,24 @@
 uuid: 27bd621e-0df6-4f6e-a65a-1d63e419b143
 langcode: en
 status: true
-dependencies: {  }
+dependencies:
+  config:
+    - node.type.article
+    - node.type.campaign
+  module:
+    - block
+    - dpl_instant_loan
+    - dpl_library_agency
+    - dpl_mapp
+    - dpl_url_proxy
+    - entity_reference_revisions
+    - language
+    - locale
+    - node
+    - openid_connect
+    - system
+    - toolbar
+    - update
 id: administrator
 label: Administrator
 weight: 2
@@ -38,4 +55,5 @@ permissions:
   - 'translate interface'
   - 'view own unpublished content'
   - 'view the administration theme'
+  - 'view update notifications'
   - 'view user email addresses'

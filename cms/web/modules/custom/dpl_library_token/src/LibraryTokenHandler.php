@@ -2,13 +2,13 @@
 
 namespace Drupal\dpl_library_token;
 
+use Drupal\Core\KeyValueStore\KeyValueExpirableFactoryInterface;
+use Drupal\Core\Logger\LoggerChannelFactoryInterface;
 use Drupal\dpl_login\Adgangsplatformen\Config;
-use Psr\Log\LogLevel;
 use GuzzleHttp\ClientInterface;
 use GuzzleHttp\Exception\RequestException;
-use Drupal\Core\Logger\LoggerChannelFactoryInterface;
-use Drupal\Core\KeyValueStore\KeyValueExpirableFactoryInterface;
-use function Safe\sprintf as sprintf;
+use Psr\Log\LogLevel;
+use function Safe\sprintf;
 
 /**
  * Library Token Handler Service.

@@ -9,15 +9,15 @@ use Drupal\Core\Link;
 use Drupal\Core\Render\RendererInterface;
 use Drupal\Core\Routing\TrustedRedirectResponse;
 use Drupal\Core\Url;
+use Drupal\dpl_library_agency\Branch\BranchRepositoryInterface;
+use Drupal\dpl_library_agency\BranchSettings;
+use Drupal\dpl_login\UserTokensProvider;
 use Drupal\dpl_react\DplReactConfigInterface;
 use Drupal\openid_connect\OpenIDConnectClaims;
 use Drupal\openid_connect\OpenIDConnectSession;
 use Drupal\openid_connect\Plugin\OpenIDConnectClientManager;
 use Symfony\Component\DependencyInjection\ContainerInterface;
-use Drupal\dpl_login\UserTokensProvider;
 use Symfony\Component\HttpFoundation\Request;
-use Drupal\dpl_library_agency\Branch\BranchRepositoryInterface;
-use Drupal\dpl_library_agency\BranchSettings;
 use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
 
 /**

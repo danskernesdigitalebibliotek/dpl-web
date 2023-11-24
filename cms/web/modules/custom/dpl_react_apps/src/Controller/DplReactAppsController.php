@@ -276,7 +276,7 @@ class DplReactAppsController extends ControllerBase {
       // @todo Remove when instant loans branches are used.
       'blacklisted-instant-loan-branches-config' => "",
       'branches-config' => $this->buildBranchesJsonProp($this->branchRepository->getBranches()),
-      'sms-notifications-for-reservations-enabled-config' => (int) $this->reservationSettings->smsNotificationsIsEnabled() ?? ReservationSettings::RESERVATION_SMS_NOTIFICATIONS_ENABLED,
+      'sms-notifications-for-reservations-enabled-config' => (int) $this->reservationSettings->smsNotificationsIsEnabled(),
       'instant-loan-config' => $this->instantLoanSettings->getConfig(),
       "interest-periods-config" => $this->getInterestPeriods(),
 

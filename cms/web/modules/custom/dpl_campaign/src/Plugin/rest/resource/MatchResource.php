@@ -211,9 +211,9 @@ class MatchResource extends ResourceBase {
 
       // Store the facet name so we can check for duplicates.
       $known_facets[] = $facet->name;
-      return array_map(function (Value $value, int $index) use ($facet) {
+      return array_map(function (Value $value, int|string $index) use ($facet) {
         // With values being sorted the index will correspond to the rank.
-        return new Rule($facet->name, $value->term, $index + 1);
+        return new Rule($facet->name, $value->term, intval($index) + 1);
       }, $sorted_values, array_keys($sorted_values));
     }, $facets));
   }
@@ -276,12 +276,12 @@ class MatchResource extends ResourceBase {
   protected function findCampaign(array $rules, string $rules_logic): ?NodeInterface {
     $storage = $this->entityTypeManager->getStorage('node');
     $query = $storage->getQuery();
-    $query->accessCheck(FALSE)
+    $entity_ids = $query->accessCheck(FALSE)
       ->condition('type', 'campaign')
       ->condition('status', 1)
-      ->condition('field_campaign_rules_logic', $rules_logic);
+      ->condition('field_campaign_rules_logic', $rules_logic)
+      ->execute();
 
-    $entity_ids = $query->execute();
     if (!is_array($entity_ids)) {
       return NULL;
     }

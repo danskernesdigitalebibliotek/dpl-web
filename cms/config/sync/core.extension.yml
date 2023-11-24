@@ -1,3 +1,5 @@
+_core:
+  default_config_hash: R4IF-ClDHXxblLcG0L7MgsLvfBIMAvi_skumNFQwkDc
 module:
   block: 0
   breakpoint: 0
@@ -32,12 +34,14 @@ module:
   field: 0
   file: 0
   filter: 0
+  gin_toolbar: 0
   handy_cache_tags: 0
   image: 0
   jsonlog: 0
   language: 0
   link: 0
   locale: 0
+  mysql: 0
   node: 0
   openapi: 0
   openapi_rest: 0
@@ -70,6 +74,5 @@ theme:
   claro: 0
   stable9: 0
   novel: 0
+  gin: 0
 profile: dpl_cms
-_core:
-  default_config_hash: R4IF-ClDHXxblLcG0L7MgsLvfBIMAvi_skumNFQwkDc
