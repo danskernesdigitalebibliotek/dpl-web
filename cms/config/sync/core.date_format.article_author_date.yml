@@ -1,0 +1,8 @@
+uuid: cbff7fb1-23be-469b-a2c1-ae834ec4c55e
+langcode: en
+status: true
+dependencies: {  }
+id: article_author_date
+label: 'Article author date'
+locked: false
+pattern: 'd. F y'

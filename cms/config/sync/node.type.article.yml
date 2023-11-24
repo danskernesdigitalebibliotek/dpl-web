@@ -8,4 +8,4 @@ description: 'Use articles for news-worthy content, that does not get updated re
 help: ''
 new_revision: false
 preview_mode: 0
-display_submitted: false
+display_submitted: true

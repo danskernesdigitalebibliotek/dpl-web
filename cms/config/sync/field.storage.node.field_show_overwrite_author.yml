@@ -1,0 +1,18 @@
+uuid: 487f2d7e-78fd-4211-902a-0ddd2a09c5c4
+langcode: en
+status: true
+dependencies:
+  module:
+    - node
+id: node.field_show_overwrite_author
+field_name: field_show_overwrite_author
+entity_type: node
+type: boolean
+settings: {  }
+module: core
+locked: false
+cardinality: 1
+translatable: true
+indexes: {  }
+persist_with_no_fields: false
+custom_storage: false

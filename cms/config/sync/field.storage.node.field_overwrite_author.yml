@@ -1,0 +1,21 @@
+uuid: 732d9c2a-ef46-4882-b55b-1d5a7a6fad00
+langcode: en
+status: true
+dependencies:
+  module:
+    - node
+id: node.field_overwrite_author
+field_name: field_overwrite_author
+entity_type: node
+type: string
+settings:
+  max_length: 255
+  is_ascii: false
+  case_sensitive: false
+module: core
+locked: false
+cardinality: 1
+translatable: true
+indexes: {  }
+persist_with_no_fields: false
+custom_storage: false

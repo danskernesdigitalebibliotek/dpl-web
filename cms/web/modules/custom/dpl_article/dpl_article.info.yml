@@ -1,0 +1,5 @@
+name: "dpl_article"
+type: module
+description: "Functionality related to creating article content."
+package: "DPL"
+core_version_requirement: ^9 || ^10
