@@ -91,10 +91,12 @@
         "drupal/handy_cache_tags": "^1.4",
         "drupal/jsonlog": "^4.0",
         "drupal/libraries": "^4.0",
+        "drupal/linkit": "^6.0",
         "drupal/openapi": "^2.1",
         "drupal/openapi_rest": "^2.0@RC",
         "drupal/openid_connect": "^1.4",
         "drupal/paragraphs": "^1.16",
+        "drupal/paragraphs_ee": "^10.0",
         "drupal/potion": "dev-2.x#e48d6ee336d960b9d2efb5d88e68402db6d229a6",
         "drupal/purge": "^3.2",
         "drupal/redis": "^1.7",
@@ -199,7 +201,8 @@
                 "3252291: Support force exclude for keys": "https://www.drupal.org/files/issues/2021-12-02/config_ignore-force-exclude-keys-3252291-3.patch"
             },
             "drupal/core": {
-                "Configure core to not check permissions before accepting an updated module": "patches/disable-core-upload-permission-check.diff"
+                "Configure core to not check permissions before accepting an updated module": "patches/disable-core-upload-permission-check.diff",
+                "3073554: Add a token for publication status": "https://www.drupal.org/files/issues/2019-08-09/3073554_10.patch"
             },
             "drupal/jsonlog": {
                 "3251587: Change logging from stdout to stderr": "https://www.drupal.org/files/issues/2021-11-29/jsonlog-change-stdout-to-stderr-3251587-3.patch"
@@ -210,6 +213,9 @@
             "drupal/openapi_rest": {
                 "3171530 + 3116760: Add support for parameter and response descriptions": "patches/openapi-parameter-response-descriptions-14-3.patch",
                 "3343816: Specification includes disabled resources": "https://git.drupalcode.org/project/openapi_rest/-/merge_requests/4.patch"
+            },
+            "drupal/paragraphs_ee": {
+                "3106254: Sorting paragraph list alphabetically in modal": "https://www.drupal.org/files/issues/2023-03-30/paragraphs_ee_sort.patch"
             },
             "drupal/potion": {
                 "3201365: Allow setting a default write mode when running potion:generate": "https://www.drupal.org/files/issues/2021-03-03/potion-allow_setting_a_default_write_mode-3201365-2.patch",
