@@ -51,6 +51,7 @@ module:
   link: 0
   linkit: 0
   locale: 0
+  metatag: 0
   mysql: 0
   node: 0
   openapi: 0
@@ -72,6 +73,7 @@ module:
   serialization: 0
   system: 0
   text: 0
+  token: 0
   toolbar: 0
   twig_tweak: 0
   update: 0
