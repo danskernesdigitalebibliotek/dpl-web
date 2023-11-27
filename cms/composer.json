@@ -94,6 +94,7 @@
         "drupal/jsonlog": "^4.0",
         "drupal/libraries": "^4.0",
         "drupal/linkit": "^6.0",
+        "drupal/metatag": "^2.0",
         "drupal/openapi": "^2.1",
         "drupal/openapi_rest": "^2.0@RC",
         "drupal/openid_connect": "^1.4",
