@@ -89,8 +89,6 @@ function dpl_react_apps_texts(): array {
     'advanced-search-subject' => t('subject', [], ['context' => 'advanced search']),
     'advanced-search-title' => t('advanced search', [], ['context' => 'advanced search']),
     'advanced-search-type' => t('type', [], ['context' => 'advanced search']),
-    'alert-error-close' => t('close', [], ['context' => 'advanced search']),
-    'alert-error-message' => t('an error occurred', [], ['context' => 'advanced search']),
     'clause-and' => t('and', [], ['context' => 'advanced search']),
     'clause-not' => t('not', [], ['context' => 'advanced search']),
     'clause-or' => t('or', [], ['context' => 'advanced search']),
