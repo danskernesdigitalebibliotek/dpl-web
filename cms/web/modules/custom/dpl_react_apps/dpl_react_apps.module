@@ -219,8 +219,9 @@ function dpl_react_apps_texts(): array {
     'menu-notifications-menu-aria-label' => t('Notifications menu', [], ['context' => 'Patron menu (aria)']),
     'menu-profile-links-aria-label' => t('Profile links', [], ['context' => 'Patron menu (aria)']),
     'menu-sign-up' => t('Sign up', [], ['context' => 'Patron menu']),
+    'menu-user-profile-url' => t('My Account', [], ['context' => 'Patron menu']),
     'menu-user-icon-aria-label' => t('Open user menu', [], ['context' => 'Patron menu (aria)']),
-    'menu-view-your-profile' => t('My Account', [], ['context' => 'Patron menu']),
+    'menu-view-your-profile' => t('Dashboard', [], ['context' => 'Patron menu']),
     'reservations-ready-for-pickup' => t('Reservations ready for pickup', [], ['context' => 'Patron menu']),
 
     // Patron page.
