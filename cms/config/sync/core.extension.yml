@@ -40,6 +40,7 @@ module:
   entity_reference_revisions: 0
   enum_field: 0
   field: 0
+  field_group: 0
   file: 0
   filter: 0
   gin_toolbar: 0
