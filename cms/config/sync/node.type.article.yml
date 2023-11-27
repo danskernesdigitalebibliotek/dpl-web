@@ -1,0 +1,11 @@
+uuid: 75ad5a84-0836-49cf-be2e-e4d2cdd3916a
+langcode: en
+status: true
+dependencies: {  }
+name: Article
+type: article
+description: 'Use articles for news-worthy content, that does not get updated regularly.'
+help: ''
+new_revision: false
+preview_mode: 0
+display_submitted: false

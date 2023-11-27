@@ -1,0 +1,21 @@
+uuid: 0041e8a8-9715-479b-af8e-b262790ffeb6
+langcode: en
+status: true
+dependencies:
+  config:
+    - core.entity_view_mode.node.full
+    - node.type.article
+  module:
+    - user
+id: node.article.full
+targetEntityType: node
+bundle: article
+mode: full
+content:
+  links:
+    weight: 100
+    settings: {  }
+    third_party_settings: {  }
+    region: content
+hidden:
+  langcode: true

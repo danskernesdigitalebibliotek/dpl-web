@@ -718,6 +718,10 @@ function dpl_react_apps_dpl_react_apps_data(array &$data): void {
     'dashboard' => dpl_react_apps_ensure_url_is_string(
       Url::fromRoute('dpl_dashboard.list')->toString()
     ),
+    'ereolen-homepage' => dpl_react_apps_format_app_url(
+      GeneralSettingsForm::EREOLEN_HOMEPAGE_URL
+    ),
+
   ];
 }
 

@@ -95,7 +95,7 @@ class PatronMenuBlock extends BlockBase implements ContainerFactoryPluginInterfa
     // generated menu. A place for further improvements.
     $menu = [
       [
-        "name" => $this->t("My account", ["context" => 'Patron menu']),
+        "name" => $this->t("Dashboard", ["context" => 'Patron menu']),
         "link" => dpl_react_apps_ensure_url_is_string(
           Url::fromRoute('dpl_dashboard.list', [], ['absolute' => TRUE])->toString()
         ),
@@ -156,6 +156,7 @@ class PatronMenuBlock extends BlockBase implements ContainerFactoryPluginInterfa
       "menu-sign-up-url" => Url::fromRoute('dpl_patron_reg.information', [], ['absolute' => TRUE])->toString(),
       'ereolen-my-page-url' => $generalSettings->get('ereolen_my_page_url'),
       'menu-view-your-profile-text-url' => Url::fromRoute('dpl_patron_page.profile', [], ['absolute' => TRUE])->toString(),
+      'user-profile-url' => Url::fromRoute('dpl_patron_page.profile', [], ['absolute' => TRUE])->toString(),
     ] + DplReactAppsController::externalApiBaseUrls();
 
     return [
