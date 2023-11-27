@@ -25,10 +25,13 @@ ignored_config_entities:
   - '~core.entity_view_display.node.campaign.*'
   - '~core.entity_view_display.node.event.*'
   - '~core.entity_view_display.paragraph.campaign_rule.*'
+  - '~core.entity_view_mode.block.*'
   - '~core.entity_view_mode.display.*'
+  - '~core.entity_view_mode.file.*'
   - '~core.entity_view_mode.node.*'
   - '~core.entity_view_mode.paragraph.*'
-  - ~core.date_format.date_full_month
+  - '~core.entity_view_mode.path_alias.*'
+  - '~core.entity_view_mode.user.*'
   - ~core.menu.static_menu_link_overrides
   - ~dblog.settings
   - '~dpl_library_agency.general_settings:reservation_sms_notifications_disabled'
@@ -72,6 +75,8 @@ ignored_config_entities:
   - ~language.content_settings.node.article
   - ~language.types
   - ~locale.settings
+  - '~metatag.metatag_defaults.*'
+  - '~metatag.settings.*'
   - ~node.settings
   - ~node.type.campaign
   - ~node.type.article
