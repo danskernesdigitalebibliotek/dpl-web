@@ -689,7 +689,7 @@ function dpl_react_apps_dpl_react_apps_data(array &$data): void {
     ]),
   ];
 
-  $data['texts'] +=  dpl_react_apps_texts();
+  $data['texts'] += dpl_react_apps_texts();
 
   $data['urls'] += [
     'dpl-cms-base' => dpl_react_apps_get_dpl_cms_base_url(),
