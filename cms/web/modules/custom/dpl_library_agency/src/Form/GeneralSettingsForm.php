@@ -177,13 +177,6 @@ class GeneralSettingsForm extends ConfigFormBase {
       '#default_value' => $config->get('pause_reservation_info_url') ?? GeneralSettings::PAUSE_RESERVATION_INFO_URL,
     ];
 
-    $form['reservations']['pause_reservation_start_date_config'] = [
-      '#type' => 'date',
-      '#title' => $this->t('Start date', [], ['context' => 'Library Agency Configuration']),
-      '#description' => $this->t('Pause reservation start date', [], ['context' => 'Library Agency Configuration']),
-      '#default_value' => $config->get('pause_reservation_start_date_config') ?? GeneralSettings::PAUSE_RESERVATION_START_DATE_CONFIG,
-    ];
-
     $form['settings']['blocked_user'] = [
       '#type' => 'fieldset',
       '#title' => $this->t('Blocked user'),
@@ -305,7 +298,6 @@ class GeneralSettingsForm extends ConfigFormBase {
       ->set('blocked_patron_e_link_url', $form_state->getValue('blocked_patron_e_link_url'))
       ->set('ereolen_my_page_url', $form_state->getValue('ereolen_my_page_url'))
       ->set('ereolen_homepage_url', $form_state->getValue('ereolen_homepage_url'))
-      ->set('pause_reservation_start_date_config', $form_state->getValue('pause_reservation_start_date_config'))
       ->save();
 
     $this->branchSettings->setExcludedAvailabilityBranches(array_filter($form_state->getValue('availability')));

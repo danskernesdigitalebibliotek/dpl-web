@@ -99,7 +99,6 @@ class ReservationListBlock extends BlockBase implements ContainerFactoryPluginIn
       'interest-periods-config' => json_encode($this->generalSettings->getInterestPeriodsConfig()),
       'page-size-desktop' => $config->get('page_size_desktop') ?? DplReservationsSettings::PAGE_SIZE_DESKTOP,
       'page-size-mobile' => $config->get('page_size_mobile') ?? DplReservationsSettings::PAGE_SIZE_MOBILE,
-      'pause-reservation-start-date-config' => $generalSettings->get('pause_reservation_start_date_config') ?? GeneralSettings::PAUSE_RESERVATION_START_DATE_CONFIG,
       'expiration-warning-days-before-config' => $generalSettings->get('expiration_warning_days_before_config') ?? GeneralSettings::EXPIRATION_WARNING_DAYS_BEFORE_CONFIG,
 
       // Texts.
