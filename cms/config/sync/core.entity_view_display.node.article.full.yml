@@ -4,6 +4,7 @@ status: true
 dependencies:
   config:
     - core.entity_view_mode.node.full
+    - field.field.node.article.field_subtitle
     - node.type.article
   module:
     - user
@@ -12,10 +13,17 @@ targetEntityType: node
 bundle: article
 mode: full
 content:
-  links:
-    settings: {  }
-    third_party_settings: {  }
-    weight: 100
+  field_subtitle:
+    type: basic_string
+    weight: 0
     region: content
+    label: hidden
+    settings: {}
+    third_party_settings: {}
+  links:
+    weight: 1
+    region: content
+    settings: {}
+    third_party_settings: {}
 hidden:
   langcode: true
