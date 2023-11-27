@@ -10,10 +10,29 @@ dependencies:
     - field.field.node.article.field_subtitle
     - node.type.article
   module:
+    - field_group
     - link
     - paragraphs
     - paragraphs_ee
     - paragraphs_features
+third_party_settings:
+  field_group:
+    group_article_meta_tags:
+      children:
+        - field_canonical_url
+      label: 'Meta tags'
+      region: content
+      parent_name: ''
+      weight: 7
+      format_type: details_sidebar
+      format_settings:
+        classes: ''
+        show_empty_fields: false
+        id: ''
+        open: false
+        description: ''
+        required_fields: true
+        weight: 0
 id: node.article.default
 targetEntityType: node
 bundle: article
