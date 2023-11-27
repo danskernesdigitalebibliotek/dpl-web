@@ -13,11 +13,11 @@ bundle: article
 mode: default
 content:
   field_subtitle:
-    weight: 101
+    type: basic_string
     label: above
     settings: {  }
     third_party_settings: {  }
-    type: basic_string
+    weight: 101
     region: content
   links:
     settings: {  }
@@ -25,4 +25,5 @@ content:
     weight: 100
     region: content
 hidden:
+  field_paragraphs: true
   langcode: true

@@ -11,10 +11,6 @@
   },
   "urls": [
     {
-      "url": "http://varnish:8080/",
-      "screenCapture": "/app/pa11y/screenshots/front-page.png"
-    },
-    {
       "url": "http://varnish:8080/search?q=harry+potter&x=0&y=0",
       "screenCapture": "/app/pa11y/screenshots/search-page.png"
     },

@@ -3,12 +3,14 @@ langcode: en
 status: true
 dependencies:
   config:
+    - filter.format.basic
     - node.type.article
     - node.type.campaign
   module:
     - dpl_instant_loan
     - dpl_library_agency
     - dpl_url_proxy
+    - filter
     - node
     - system
     - toolbar
@@ -32,5 +34,6 @@ permissions:
   - 'edit any campaign content'
   - 'edit own article content'
   - 'edit own campaign content'
+  - 'use text format basic'
   - 'view own unpublished content'
   - 'view the administration theme'
