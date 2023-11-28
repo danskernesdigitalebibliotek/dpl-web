@@ -6,24 +6,17 @@ dependencies:
     - field.field.node.event.field_event_state
     - node.type.event
   module:
-    - options
     - user
 id: node.event.default
 targetEntityType: node
 bundle: event
 mode: default
 content:
-  field_event_state:
-    type: list_default
-    label: above
-    settings: {  }
-    third_party_settings: {  }
-    weight: 101
-    region: content
   links:
     settings: {  }
     third_party_settings: {  }
     weight: 100
     region: content
 hidden:
+  field_event_state: true
   langcode: true
