@@ -8,7 +8,7 @@
 			{{ 'By @username'|t({'@username':  author_name}) }}
 
 			<time class="article-header__date">
-				{{ node.created.value|format_date('article_author_date') }}
+				{{ node.created.value|format_date('date_full_month') }}
 			</time>
 		</p>
 
