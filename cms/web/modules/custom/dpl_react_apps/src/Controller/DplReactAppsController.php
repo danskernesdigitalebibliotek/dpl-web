@@ -495,7 +495,7 @@ class DplReactAppsController extends ControllerBase {
   public static function getBlockedSettings(): array {
     $blockedSettings = \Drupal::configFactory()->get('dpl_library_agency.general_settings');
     $blockedData = [
-      'blocked-patron-e-link-url' => dpl_react_apps_format_app_url($blockedSettings->get('blocked_patron_e_link_url'), GeneralSettings::BLOCKED_PATRON_E_LINK_URL),
+      'blocked-patron-e-link-url' => $blockedSettings->get('blocked_patron_e_link_url'),
       'blocked-patron-d-title-text' => t('Blocked patron title text (d)', [], ['context' => 'Blocked user']),
       'blocked-patron-d-body-text' => t('Blocked patron body text (d)', [], ['context' => 'Blocked user']),
       'blocked-patron-s-title-text' => t('Blocked patron title text (s)', [], ['context' => 'Blocked user']),
