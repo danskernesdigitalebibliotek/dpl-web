@@ -19,11 +19,11 @@ function dpl_article_preprocess_node(array &$variables): void {
     return;
   }
 
-  // Override author name if the 'show overwrite author' field is set.
-  $has_override = $node->get('field_show_overwrite_author')
+  // Override author name if the 'show override author' field is set.
+  $has_override = $node->get('field_show_override_author')
     ->getString() === '1';
   if ($has_override) {
-    $variables['author_name'] = $node->get('field_overwrite_author')
+    $variables['author_name'] = $node->get('field_override_author')
       ->getString();
   }
 }
@@ -48,10 +48,10 @@ function dpl_article_form_alter(array &$form, FormStateInterface $form_state, st
     return;
   }
 
-  // Toggle visibility of 'overwrite author' field based on a checkbox.
-  if (isset($form['field_show_overwrite_author'])) {
-    $form['field_overwrite_author']['#states'] = [
-      'visible' => [':input[name="field_show_overwrite_author[value]"]' => ['checked' => TRUE]],
+  // Toggle visibility of 'override author' field based on a checkbox.
+  if (isset($form['field_show_override_author'])) {
+    $form['field_override_author']['#states'] = [
+      'visible' => [':input[name="field_show_override_author[value]"]' => ['checked' => TRUE]],
     ];
   }
 }

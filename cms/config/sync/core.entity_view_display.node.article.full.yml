@@ -4,8 +4,8 @@ status: true
 dependencies:
   config:
     - core.entity_view_mode.node.full
-    - field.field.node.article.field_overwrite_author
-    - field.field.node.article.field_show_overwrite_author
+    - field.field.node.article.field_override_author
+    - field.field.node.article.field_show_override_author
     - field.field.node.article.field_subtitle
     - node.type.article
   module:
@@ -17,17 +17,17 @@ mode: full
 content:
   field_subtitle:
     type: basic_string
+    label: hidden
+    settings: {  }
+    third_party_settings: {  }
     weight: 0
     region: content
-    label: hidden
-    settings: {}
-    third_party_settings: {}
   links:
+    settings: {  }
+    third_party_settings: {  }
     weight: 1
     region: content
-    settings: {}
-    third_party_settings: {}
 hidden:
-  field_overwrite_author: true
-  field_show_overwrite_author: true
+  field_override_author: true
+  field_show_override_author: true
   langcode: true

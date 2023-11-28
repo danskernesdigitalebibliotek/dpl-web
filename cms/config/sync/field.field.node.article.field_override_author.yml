@@ -1,15 +1,15 @@
-uuid: 3555e7e9-502b-494c-8e39-7fd4155bf506
+uuid: db8e3dcc-93d1-4c4e-af0c-24dd345b1b1a
 langcode: en
 status: true
 dependencies:
   config:
-    - field.storage.node.field_overwrite_author
+    - field.storage.node.field_override_author
     - node.type.article
-id: node.article.field_overwrite_author
-field_name: field_overwrite_author
+id: node.article.field_override_author
+field_name: field_override_author
 entity_type: node
 bundle: article
-label: 'Overwrite author'
+label: 'Override author'
 description: ''
 required: false
 translatable: false

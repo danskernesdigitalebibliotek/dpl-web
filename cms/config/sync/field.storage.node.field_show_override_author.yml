@@ -1,11 +1,11 @@
-uuid: 487f2d7e-78fd-4211-902a-0ddd2a09c5c4
+uuid: 65f21349-be77-45a4-ae4a-a69f9e29ce69
 langcode: en
 status: true
 dependencies:
   module:
     - node
-id: node.field_show_overwrite_author
-field_name: field_show_overwrite_author
+id: node.field_show_override_author
+field_name: field_show_override_author
 entity_type: node
 type: boolean
 settings: {  }

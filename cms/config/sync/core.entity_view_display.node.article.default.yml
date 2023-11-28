@@ -3,8 +3,8 @@ langcode: en
 status: true
 dependencies:
   config:
-    - field.field.node.article.field_overwrite_author
-    - field.field.node.article.field_show_overwrite_author
+    - field.field.node.article.field_override_author
+    - field.field.node.article.field_show_override_author
     - field.field.node.article.field_subtitle
     - node.type.article
   module:
@@ -14,29 +14,34 @@ targetEntityType: node
 bundle: article
 mode: default
 content:
-  field_overwrite_author:
-    weight: 104
+  field_override_author:
+    type: string
     label: above
     settings:
       link_to_entity: false
-    third_party_settings: {}
-    type: string
+    third_party_settings: {  }
+    weight: 106
     region: content
-  field_show_overwrite_author:
-    weight: 105
+  field_show_override_author:
+    type: boolean
     label: above
     settings:
       format: default
-      format_custom_false: ""
-      format_custom_true: ""
-    third_party_settings: {}
-    type: boolean
+      format_custom_false: ''
+      format_custom_true: ''
+    third_party_settings: {  }
+    weight: 107
     region: content
   field_subtitle:
-    weight: 101
     label: above
-    settings: {}
-    third_party_settings: {}
+    settings: {  }
+    third_party_settings: {  }
+    weight: 101
+    region: content
+  links:
+    settings: {  }
+    third_party_settings: {  }
+    weight: 100
     region: content
 hidden:
   langcode: true
