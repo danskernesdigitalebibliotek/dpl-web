@@ -3,3 +3,6 @@ type: module
 description: "Custom handling related to events."
 package: DPL
 core_version_requirement: ^10
+
+dependencies:
+  - drupal:enum_field

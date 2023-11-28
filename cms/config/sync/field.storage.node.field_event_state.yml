@@ -1,0 +1,20 @@
+uuid: 8b556ba8-e9cc-403c-9590-94b810a96428
+langcode: en
+status: true
+dependencies:
+  module:
+    - enum_field
+    - node
+id: node.field_event_state
+field_name: field_event_state
+entity_type: node
+type: enum_string
+settings:
+  enum_class: \Drupal\dpl_event\EventState
+module: enum_field
+locked: false
+cardinality: 1
+translatable: true
+indexes: {  }
+persist_with_no_fields: false
+custom_storage: false

@@ -4,6 +4,7 @@ status: true
 dependencies:
   config:
     - core.entity_view_mode.node.teaser
+    - field.field.node.event.field_event_state
     - node.type.event
   module:
     - user
@@ -18,4 +19,5 @@ content:
     weight: 100
     region: content
 hidden:
+  field_event_state: true
   langcode: true

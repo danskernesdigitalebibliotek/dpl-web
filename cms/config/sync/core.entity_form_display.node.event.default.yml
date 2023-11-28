@@ -3,12 +3,19 @@ langcode: en
 status: true
 dependencies:
   config:
+    - field.field.node.event.field_event_state
     - node.type.event
 id: node.event.default
 targetEntityType: node
 bundle: event
 mode: default
 content:
+  field_event_state:
+    type: options_select
+    weight: 26
+    region: content
+    settings: {  }
+    third_party_settings: {  }
   status:
     type: boolean_checkbox
     weight: 1
