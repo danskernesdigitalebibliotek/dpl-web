@@ -3,6 +3,7 @@ langcode: en
 status: true
 dependencies:
   config:
+    - filter.format.basic
     - node.type.article
     - node.type.campaign
   module:
@@ -12,6 +13,7 @@ dependencies:
     - dpl_mapp
     - dpl_url_proxy
     - entity_reference_revisions
+    - filter
     - language
     - locale
     - node
@@ -53,6 +55,7 @@ permissions:
   - 'edit own article content'
   - 'edit own campaign content'
   - 'translate interface'
+  - 'use text format basic'
   - 'view own unpublished content'
   - 'view the administration theme'
   - 'view update notifications'

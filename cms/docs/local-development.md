@@ -1,5 +1,34 @@
 # Local development
 
+## Docker setup
+
+### Requirements
+
+In order to run local development you need:
+
+* [`go-task`](https://taskfile.dev)
+* Docker
+* Preferably support for `VIRTUAL_HOST` environment variables for Docker
+  containers. Examples: [Dory (OSX)](https://github.com/FreedomBen/dory) or
+  [`nginx-proxy`](https://github.com/nginx-proxy/nginx-proxy).
+
+### MacOS and Docker
+
+If you are using MacOS, you can use the standard
+"[Docker for Mac](https://docs.docker.com/desktop/install/mac-install/)"
+app, however there has been developers that have experienced it acting slow.
+
+Alternatively, you can use [Orbstack](https://orbstack.dev/), which is a
+direct replacement for Docker for Mac, but is optimized to run much faster.
+
+### Docker for Mac
+
+If you do end up using Docker for Mac, it is
+recommended to use [VirtioFS](https://virtio-fs.gitlab.io) on the mounted
+volumes  in docker-compose, to speed up the containers.
+
+![OSX preference pane providing access to VirtioFS](docs/images/virtiofs.png)
+
 ## Copy database from Lagoon environment to local setup
 
 Prerequisites:

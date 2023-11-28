@@ -1,8 +1,10 @@
 _core:
   default_config_hash: R4IF-ClDHXxblLcG0L7MgsLvfBIMAvi_skumNFQwkDc
 module:
+  admin_toolbar: 0
   block: 0
   breakpoint: 0
+  ckeditor5: 0
   config_filter: 0
   config_ignore: 0
   customerror: 0
@@ -31,6 +33,7 @@ module:
   dpl_something_similar: 0
   dpl_url_proxy: 0
   dynamic_page_cache: 0
+  editor: 0
   entity_reference_revisions: 0
   field: 0
   file: 0
@@ -41,6 +44,7 @@ module:
   jsonlog: 0
   language: 0
   link: 0
+  linkit: 0
   locale: 0
   mysql: 0
   node: 0
@@ -48,6 +52,7 @@ module:
   openapi_rest: 0
   openid_connect: 0
   options: 0
+  paragraphs_features: 0
   path_alias: 0
   purge: 0
   purge_drush: 0
@@ -70,6 +75,7 @@ module:
   varnish_purger: 0
   views: 10
   paragraphs: 11
+  paragraphs_ee: 15
   dpl_cms: 1000
 theme:
   claro: 0
