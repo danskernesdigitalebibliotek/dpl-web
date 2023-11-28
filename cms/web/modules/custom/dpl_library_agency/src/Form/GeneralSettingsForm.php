@@ -145,7 +145,7 @@ class GeneralSettingsForm extends ConfigFormBase {
     $form['reservations']['default_interest_period_config'] = [
       '#type' => 'select',
       '#title' => $this->t('Default interest period for reservation', [], ['context' => 'Library Agency Configuration']),
-      '#options' => $this->generalSettings->getInterestPeriodsAsArray(),
+      '#options' => $this->generalSettings->getInterestPeriods(),
       '#default_value' => $config->get('default_interest_period_config') ?? GeneralSettings::DEFAULT_INTEREST_PERIOD_CONFIG,
       '#description' => $this->t('Set the default interest period for reservations.', [], ['context' => 'Library Agency Configuration']),
     ];
@@ -160,14 +160,14 @@ class GeneralSettingsForm extends ConfigFormBase {
       '#type' => 'url',
       '#title' => $this->t('Ereolen link', [], ['context' => 'Library Agency Configuration']),
       '#description' => $this->t('My page in ereolen', [], ['context' => 'Library Agency Configuration']),
-      '#default_value' => $config->get('ereolen_my_page_url') ?? self::EREOLEN_MY_PAGE_URL,
+      '#default_value' => $config->get('ereolen_my_page_url') ?? GeneralSettings::EREOLEN_MY_PAGE_URL,
     ];
 
     $form['reservations']['ereolen_homepage_url'] = [
       '#type' => 'url',
       '#title' => $this->t('Ereolen home link', [], ['context' => 'Library Agency Configuration']),
       '#description' => $this->t('Home page in ereolen', [], ['context' => 'Library Agency Configuration']),
-      '#default_value' => $config->get('ereolen_homepage_url') ?? self::EREOLEN_HOMEPAGE_URL,
+      '#default_value' => $config->get('ereolen_homepage_url') ?? GeneralSettings::EREOLEN_HOMEPAGE_URL,
     ];
 
     $form['reservations']['pause_reservation_info_url'] = [
@@ -264,22 +264,20 @@ class GeneralSettingsForm extends ConfigFormBase {
    * @throws \Safe\Exceptions\PcreException
    */
   public function validateForm(array &$form, FormStateInterface $form_state): void {
-    $interestPeriods = $form_state->getValue('interest_periods_config');
-    $defaultInterestPeriod = $form_state->getValue('default_interest_period_config');
+    $default_interest_period = $form_state->getValue('default_interest_period_config');
+    $interest_periods = explode(PHP_EOL, $form_state->getValue('interest_periods_config'));
 
-    $interestPeriodsArray = explode(PHP_EOL, $interestPeriods);
-    foreach ($interestPeriodsArray as $period) {
-      if (!preg_match('/^[\d]+-[\w ]+$/m', trim($period))) {
+    foreach ($interest_periods as $period) {
+      if (!preg_match('/^\d+-[\wÆØÅæøå ]+$/m', trim($period))) {
         $form_state->setErrorByName('interest_periods_config',
           $this->t('The interest period @error, does not match the format [days]-[label].', ['@error' => $period], ['context' => 'Library Agency Configuration']));
       }
       else {
-        list($days, $label) = explode('-', $period);
-        $interestPeriodsArray[trim($days)] = trim($label);
+        $interest_periods += GeneralSettings::splitInterestPeriodString($period);
       }
     }
 
-    if (!array_key_exists($defaultInterestPeriod, $interestPeriodsArray)) {
+    if (!array_key_exists($default_interest_period, $interest_periods)) {
       $form_state->setErrorByName('default_interest_period_config',
         $this->t('The default interest period should be set to a value in "Interest periods for reservation" field.', [], ['context' => 'Library Agency Configuration']));
     }
