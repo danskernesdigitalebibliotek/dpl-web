@@ -166,6 +166,28 @@ Cypress.Commands.add(
       },
     });
 
+    cy.createMapping({
+      request: {
+        method: "GET",
+        urlPath: "/external/agencyid/patrons/patronid/v2",
+        headers: {
+          Authorization: {
+            equalTo: `Bearer ${accessToken}`,
+          },
+        },
+      },
+      response: {
+        jsonBody: {
+          authenticateStatus: "VALID",
+          patron: {
+            // This is not a complete patron object but with regards to login we only need to ensure an empty blocked
+            // status so we leave out all other information.
+            blockStatus: [],
+          },
+        },
+      },
+    });
+
     cy.visit("/user/login");
     cy.contains("Log in with Adgangsplatformen").click();
   }
