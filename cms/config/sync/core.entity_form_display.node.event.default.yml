@@ -1,0 +1,32 @@
+uuid: 3529ca93-bd2b-4fa1-a4be-693913a2fb26
+langcode: en
+status: true
+dependencies:
+  config:
+    - node.type.event
+id: node.event.default
+targetEntityType: node
+bundle: event
+mode: default
+content:
+  status:
+    type: boolean_checkbox
+    weight: 1
+    region: content
+    settings:
+      display_label: true
+    third_party_settings: {  }
+  title:
+    type: string_textfield
+    weight: 0
+    region: content
+    settings:
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+hidden:
+  created: true
+  langcode: true
+  promote: true
+  sticky: true
+  uid: true

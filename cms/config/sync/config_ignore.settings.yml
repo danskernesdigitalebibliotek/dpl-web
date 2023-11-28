@@ -14,10 +14,13 @@ ignored_config_entities:
   - ~config_ignore.settings
   - '~core.date_format.*'
   - '~core.base_field_override.node.campaign.*'
+  - '~core.base_field_override.node.event.*'
   - '~core.entity_form_display.node.campaign.*'
+  - '~core.entity_form_display.node.event.*'
   - '~core.entity_form_display.paragraph.campaign_rule.*'
   - '~core.entity_form_mode.user_register.*'
   - '~core.entity_view_display.node.campaign.*'
+  - '~core.entity_view_display.node.event.*'
   - '~core.entity_view_display.paragraph.campaign_rule.*'
   - '~core.entity_view_mode.display.*'
   - '~core.entity_view_mode.node.*'
@@ -48,6 +51,7 @@ ignored_config_entities:
   - '~jsonlog.settings:jsonlog_truncate'
   - '~jsonlog.settings:jsonlog_stderr'
   - '~jsonlog.settings:jsonlog_newline_prepend'
+  - '~language.content_settings.node.event.*'
   - ~language.entity.da
   - ~language.entity.en
   - ~language.entity.und
@@ -58,6 +62,7 @@ ignored_config_entities:
   - ~locale.settings
   - ~node.settings
   - ~node.type.campaign
+  - ~node.type.event
   - ~paragraphs.paragraphs_type.campaign_rule
   - ~paragraphs.settings
   - ~purge_queuer_coretags
