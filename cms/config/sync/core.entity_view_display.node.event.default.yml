@@ -3,6 +3,7 @@ langcode: en
 status: true
 dependencies:
   config:
+    - field.field.node.event.field_event_date
     - field.field.node.event.field_event_state
     - node.type.event
   module:
@@ -15,8 +16,9 @@ content:
   links:
     settings: {  }
     third_party_settings: {  }
-    weight: 100
+    weight: 0
     region: content
 hidden:
+  field_event_date: true
   field_event_state: true
   langcode: true

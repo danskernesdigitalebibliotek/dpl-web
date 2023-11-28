@@ -3,13 +3,22 @@ langcode: en
 status: true
 dependencies:
   config:
+    - field.field.node.event.field_event_date
     - field.field.node.event.field_event_state
     - node.type.event
+  module:
+    - datetime_range
 id: node.event.default
 targetEntityType: node
 bundle: event
 mode: default
 content:
+  field_event_date:
+    type: daterange_default
+    weight: 27
+    region: content
+    settings: {  }
+    third_party_settings: {  }
   field_event_state:
     type: options_select
     weight: 26
