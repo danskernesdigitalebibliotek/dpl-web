@@ -31,7 +31,7 @@ function dpl_article_preprocess_node(array &$variables): void {
 /**
  * Implements hook_form_alter().
  *
- * Modifies node forms to control the visibility of certain fields, specifically for articles.
+ * Modifies node forms to control the visibility of articles fields.
  *
  * @param array<mixed> $form
  *   An associative array containing the structure of the form.
