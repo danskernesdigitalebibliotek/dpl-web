@@ -57,6 +57,7 @@ services:
   cli:
     environment:
       CI: true
+      LAGOON_ENVIRONMENT_TYPE: ci
 
   php:
     depends_on:
@@ -65,3 +66,4 @@ services:
       http_proxy: http://wiremock:80
       https_proxy: https://wiremock:443
       CI: true
+      LAGOON_ENVIRONMENT_TYPE: ci
