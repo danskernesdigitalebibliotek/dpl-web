@@ -1,5 +1,5 @@
 {% if link_path -%}
-  <a{{ attributes.addClass('link-tag', 'text-body-small-regular') }}>{{ name }}{{ extra }}</a>
+	<a{{attributes.addClass('article-header__author')}}>{{ name }}{{ extra }}</a>
 {%- else -%}
-  <span{{ attributes }}>{{ name }}{{ extra }}</span>
+	<span{{attributes}}>{{ name }}{{ extra }}</span>
 {%- endif -%}
