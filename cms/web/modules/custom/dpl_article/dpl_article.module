@@ -6,7 +6,7 @@
  */
 
 use Drupal\Core\Form\FormStateInterface;
-use Drupal\node\Entity\Node;
+use Drupal\node\NodeInterface;
 
 /**
  * Implements hook_preprocess_HOOK().
@@ -15,7 +15,7 @@ function dpl_article_preprocess_node(array &$variables): void {
   $node = $variables['node'] ?? NULL;
 
   // Process only if the node is a valid Node entity.
-  if (!($node instanceof Node)) {
+  if (!($node instanceof NodeInterface)) {
     return;
   }
 
@@ -31,7 +31,7 @@ function dpl_article_preprocess_node(array &$variables): void {
 /**
  * Implements hook_form_alter().
  *
- * Modifies node forms to control the visibility of certain fields.
+ * Modifies node forms to control the visibility of certain fields, specifically for articles.
  *
  * @param array<mixed> $form
  *   An associative array containing the structure of the form.
@@ -41,15 +41,17 @@ function dpl_article_preprocess_node(array &$variables): void {
  *   The unique identifier of the form.
  */
 function dpl_article_form_alter(array &$form, FormStateInterface $form_state, string $form_id): void {
-  // Target only node creation or edit forms.
-  // They follow this format: node_CT_edit_form / node_CT_form.
-  if (!str_starts_with($form_id, 'node_') ||
+  // Target only article node creation or edit forms.
+  // They follow this format: node_article_edit_form / node_article_form.
+  if (!str_starts_with($form_id, 'node_article_') ||
     !(str_ends_with($form_id, '_edit_form') || str_ends_with($form_id, '_form'))) {
     return;
   }
 
   // Toggle visibility of 'overwrite author' field based on a checkbox.
-  $form['field_overwrite_author']['#states'] = [
-    'visible' => [':input[name="field_show_overwrite_author[value]"]' => ['checked' => TRUE]],
-  ];
+  if (isset($form['field_show_overwrite_author'])) {
+    $form['field_overwrite_author']['#states'] = [
+      'visible' => [':input[name="field_show_overwrite_author[value]"]' => ['checked' => TRUE]],
+    ];
+  }
 }
