@@ -85,7 +85,6 @@ class DashboardBlock extends BlockBase implements ContainerFactoryPluginInterfac
   public function build(): array {
     $dashboardSettings = $this->dashboardSettings->loadConfig();
     $generalSettings = $this->configFactory->get('dpl_library_agency.general_settings');
-    $allow_remove_ready_reservations = $generalSettings->get('reservation_detail_allow_remove_ready_reservations') ?? GeneralSettings::RESERVATION_DETAIL_ALLOW_REMOVE_READY_RESERVATIONS;
 
     $data = [
       // Config.
