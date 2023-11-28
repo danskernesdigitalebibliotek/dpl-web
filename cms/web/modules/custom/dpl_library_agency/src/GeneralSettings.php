@@ -20,6 +20,7 @@ class GeneralSettings extends DplReactConfigBase {
   const PAUSE_RESERVATION_INFO_URL = '';
   const BLOCKED_PATRON_E_LINK_URL = '';
   const EREOLEN_MY_PAGE_URL = '';
+  const EREOLEN_HOMEPAGE_URL = '';
   const PAUSE_RESERVATION_START_DATE_CONFIG = '';
 
   /**
