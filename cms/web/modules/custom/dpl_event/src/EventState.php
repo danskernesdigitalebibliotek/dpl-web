@@ -34,12 +34,15 @@ enum EventState: string {
    *   Human-readable representation.
    */
   public function label(): string {
+    $translation = \Drupal::translation();
+    $options = ['context' => 'dpl_event'];
+
     return match($this) {
-      EventState::TicketSaleNotOpen => 'Ticket sale not open',
-      EventState::Active => 'Active',
-      EventState::SoldOut => 'Sold out',
-      EventState::Cancelled => 'Canceled',
-      EventState::Occurred => 'Occurred'
+      EventState::TicketSaleNotOpen => $translation->translate('Ticket sale not open', [], $options)->render(),
+      EventState::Active => $translation->translate('Active', [], $options)->render(),
+      EventState::SoldOut => $translation->translate('Sold out', [], $options)->render(),
+      EventState::Cancelled => $translation->translate('Canceled', [], $options)->render(),
+      EventState::Occurred => $translation->translate('Occurred', [], $options)->render(),
     };
   }
 
