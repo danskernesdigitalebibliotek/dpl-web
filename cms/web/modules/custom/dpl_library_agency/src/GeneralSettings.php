@@ -25,7 +25,6 @@ class GeneralSettings extends DplReactConfigBase {
   const EREOLEN_MY_PAGE_URL = 'https://ereolen.dk/user/me';
   const EREOLEN_HOMEPAGE_URL = 'https://ereolen.dk';
 
-
   /**
    * Gets the configuration key for general settings.
    */
