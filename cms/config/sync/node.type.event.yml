@@ -1,0 +1,11 @@
+uuid: 208eaa7b-e99d-48c7-88d2-75e57421179e
+langcode: en
+status: true
+dependencies: {  }
+name: Event
+type: event
+description: 'Add time-specific activities or events'
+help: ''
+new_revision: false
+preview_mode: 1
+display_submitted: false

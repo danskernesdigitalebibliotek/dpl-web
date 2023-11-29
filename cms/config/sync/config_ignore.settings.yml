@@ -12,20 +12,23 @@ ignored_config_entities:
   - ~block.block.gin_primary_local_tasks
   - ~block.block.gin_secondary_local_tasks
   - ~config_ignore.settings
-  - '~core.date_format.*'
-  - ~core.date_format.date_full_month
-  - '~core.base_field_override.node.campaign.*'
   - '~core.base_field_override.node.article.*'
-  - '~core.entity_form_display.node.campaign.*'
+  - '~core.base_field_override.node.campaign.*'
+  - '~core.base_field_override.node.event.*'
+  - '~core.date_format.*'
   - '~core.entity_form_display.node.article.*'
+  - '~core.entity_form_display.node.campaign.*'
+  - '~core.entity_form_display.node.event.*'
   - '~core.entity_form_display.paragraph.campaign_rule.*'
   - '~core.entity_form_mode.user_register.*'
-  - '~core.entity_view_display.node.campaign.*'
   - '~core.entity_view_display.node.article.*'
+  - '~core.entity_view_display.node.campaign.*'
+  - '~core.entity_view_display.node.event.*'
   - '~core.entity_view_display.paragraph.campaign_rule.*'
   - '~core.entity_view_mode.display.*'
   - '~core.entity_view_mode.node.*'
   - '~core.entity_view_mode.paragraph.*'
+  - ~core.date_format.date_full_month
   - ~core.menu.static_menu_link_overrides
   - ~dblog.settings
   - '~dpl_library_agency.general_settings:reservation_sms_notifications_disabled'
@@ -58,6 +61,7 @@ ignored_config_entities:
   - '~jsonlog.settings:jsonlog_truncate'
   - '~jsonlog.settings:jsonlog_stderr'
   - '~jsonlog.settings:jsonlog_newline_prepend'
+  - '~language.content_settings.node.event.*'
   - ~language.entity.da
   - ~language.entity.en
   - ~language.entity.und
@@ -70,6 +74,7 @@ ignored_config_entities:
   - ~node.settings
   - ~node.type.campaign
   - ~node.type.article
+  - ~node.type.event
   - ~paragraphs.paragraphs_type.campaign_rule
   - ~paragraphs.settings
   - ~purge_queuer_coretags

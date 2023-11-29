@@ -1,0 +1,20 @@
+uuid: a119ff04-62db-4617-8e54-253b48f7a61b
+langcode: en
+status: true
+dependencies:
+  config:
+    - node.type.event
+  module:
+    - user
+id: node.event.default
+targetEntityType: node
+bundle: event
+mode: default
+content:
+  links:
+    settings: {  }
+    third_party_settings: {  }
+    weight: 100
+    region: content
+hidden:
+  langcode: true
