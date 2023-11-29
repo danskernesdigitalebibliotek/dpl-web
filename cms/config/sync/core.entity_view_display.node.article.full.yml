@@ -22,20 +22,20 @@ content:
     label: hidden
     settings:
       view_mode: default
-      link: ""
-    third_party_settings: {}
+      link: ''
+    third_party_settings: {  }
     weight: 0
     region: content
   field_subtitle:
     type: basic_string
     label: hidden
-    settings: {}
-    third_party_settings: {}
+    settings: {  }
+    third_party_settings: {  }
     weight: 0
     region: content
   links:
-    settings: {}
-    third_party_settings: {}
+    settings: {  }
+    third_party_settings: {  }
     weight: 1
     region: content
 hidden:

@@ -4,8 +4,8 @@ status: true
 dependencies:
   config:
     - field.field.node.article.field_override_author
-    - field.field.node.article.field_show_override_author
     - field.field.node.article.field_paragraphs
+    - field.field.node.article.field_show_override_author
     - field.field.node.article.field_subtitle
     - node.type.article
   module:
@@ -19,19 +19,12 @@ mode: default
 content:
   field_override_author:
     type: string_textfield
-    weight: 26
+    weight: 5
     region: content
     settings:
       size: 60
-      placeholder: ""
-    third_party_settings: {}
-  field_show_override_author:
-    type: boolean_checkbox
-    weight: 27
-    region: content
-    settings:
-      display_label: true
-    third_party_settings: {}
+      placeholder: ''
+    third_party_settings: {  }
   field_paragraphs:
     type: paragraphs
     weight: 2
@@ -47,7 +40,7 @@ content:
       form_display_mode: default
       default_paragraph_type: _none
       features:
-        add_above: "0"
+        add_above: '0'
         collapse_edit_all: collapse_edit_all
         duplicate: duplicate
     third_party_settings:
@@ -60,29 +53,36 @@ content:
         add_in_between_link_count: 0
         delete_confirmation: true
         show_drag_and_drop: true
+  field_show_override_author:
+    type: boolean_checkbox
+    weight: 4
+    region: content
+    settings:
+      display_label: true
+    third_party_settings: {  }
   field_subtitle:
     type: string_textarea
     weight: 1
     region: content
     settings:
       rows: 3
-      placeholder: ""
-    third_party_settings: {}
+      placeholder: ''
+    third_party_settings: {  }
   status:
     type: boolean_checkbox
     weight: 3
     region: content
     settings:
       display_label: true
-    third_party_settings: {}
+    third_party_settings: {  }
   title:
     type: string_textfield
     weight: 0
     region: content
     settings:
       size: 60
-      placeholder: ""
-    third_party_settings: {}
+      placeholder: ''
+    third_party_settings: {  }
 hidden:
   created: true
   langcode: true

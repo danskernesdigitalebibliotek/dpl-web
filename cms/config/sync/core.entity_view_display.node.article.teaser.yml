@@ -16,13 +16,13 @@ bundle: article
 mode: teaser
 content:
   links:
-    settings: {}
-    third_party_settings: {}
+    settings: {  }
+    third_party_settings: {  }
     weight: 100
     region: content
 hidden:
   field_override_author: true
-  field_show_override_author: true
   field_paragraphs: true
+  field_show_override_author: true
   field_subtitle: true
   langcode: true
