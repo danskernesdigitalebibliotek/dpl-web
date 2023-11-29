@@ -52,7 +52,7 @@
       {{ patron_menu }}
 			<div class="header__menu-bookmarked header__button">
 				<a href="{{ url('dpl_favorites_list.list') }}">
-					<img src="/themes/custom/novel/assets/dpl-design-system/icons/basic/icon-heart.svg" alt="List of bookmarks"/>
+					<img src="/themes/custom/novel/assets/dpl-design-system/icons/basic/icon-heart.svg" alt={{ 'List of bookmarks'|t({}, {'context' : 'Header'}) }}/>
 				</a>
 			</div>
 		</nav>
