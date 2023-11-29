@@ -4,6 +4,8 @@ status: true
 dependencies:
   config:
     - core.entity_view_mode.node.full
+    - field.field.node.article.field_override_author
+    - field.field.node.article.field_show_override_author
     - field.field.node.article.field_subtitle
     - field.field.node.article.field_paragraphs
     - node.type.article
@@ -37,5 +39,7 @@ content:
     weight: 1
     region: content
 hidden:
+  field_override_author: true
+  field_show_override_author: true
   langcode: true
   links: true

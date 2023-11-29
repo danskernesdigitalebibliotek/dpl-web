@@ -1,11 +1,17 @@
 <article class="article">
 	<header class="article-header">
-		<h1 class="text-header-h1 article-header__title">
-			{{ label }}
-		</h1>
+		<h1 class="article-header__title">{{ label }}</h1>
 
-		{{content}}
+		{{ content.field_subtitle }}
+
+		<p class="article-header__info">
+			{{ 'By @username'|t({'@username':  author_name}) }}
+
+			<time class="article-header__date">
+				{{ node.created.value|format_date('date_full_month') }}
+			</time>
+		</p>
 	</header>
 
-  {{ content }}
+	{{ content|without('field_subtitle') }}
 </article>

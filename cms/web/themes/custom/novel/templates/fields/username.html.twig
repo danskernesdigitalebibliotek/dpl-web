@@ -1,0 +1,5 @@
+{% if link_path -%}
+	<a{{attributes.addClass('article-header__author')}}>{{ name }}{{ extra }}</a>
+{%- else -%}
+	<span{{attributes}}>{{ name }}{{ extra }}</span>
+{%- endif -%}
