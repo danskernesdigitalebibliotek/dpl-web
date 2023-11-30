@@ -75,19 +75,19 @@ function dpl_react_apps_dpl_react_apps_data(array &$data): void {
   $data['texts'] += [
     'alert-error-close' => t('Close', [], ['context' => 'React apps (Global error handling)']),
     'alert-error-message' => t('An error occurred', [], ['context' => 'React apps (Global error handling)']),
-    'delete-reservation-modal-button-text' => t('Cancel', [], ['context' => 'Delete reservation modal']),
-    'delete-reservation-modal-delete-button-text' => t('Delete', [], ['context' => 'Delete reservation modal']),
-    'delete-reservation-modal-delete-processing-text' => t('Processing...', [], ['context' => 'Delete reservation modal']),
-    'delete-reservation-modal-errors-status-text' => t('Something went wrong deleting your reservation. Please try again.', [], ['context' => 'Delete reservation modal']),
-    'delete-reservation-modal-errors-title-text' => t('Deleting your reservation failed', [], ['context' => 'Delete reservation modal']),
-    'delete-reservation-modal-success-status-text' => json_encode([
+    'delete-reservation-modal-button' => t('Cancel', [], ['context' => 'Delete reservation modal']),
+    'delete-reservation-modal-delete-button' => t('Delete', [], ['context' => 'Delete reservation modal']),
+    'delete-reservation-modal-delete-processing' => t('Processing...', [], ['context' => 'Delete reservation modal']),
+    'delete-reservation-modal-errors-status' => t('Something went wrong deleting your reservation. Please try again.', [], ['context' => 'Delete reservation modal']),
+    'delete-reservation-modal-errors-title' => t('Deleting your reservation failed', [], ['context' => 'Delete reservation modal']),
+    'delete-reservation-modal-success-status' => json_encode([
       'type' => 'plural',
       'text' => [
         t('One reservation was deleted', [], ['context' => 'Delete reservation modal']),
         t('@count reservations were deleted', [], ['context' => 'Delete reservation modal']),
       ],
     ]),
-    'delete-reservation-modal-success-title-text' => t('You have deleted your reservation', [], ['context' => 'Delete reservation modal']),
+    'delete-reservation-modal-success-title' => t('You have deleted your reservation', [], ['context' => 'Delete reservation modal']),
   ];
 
   $data['urls'] += [
