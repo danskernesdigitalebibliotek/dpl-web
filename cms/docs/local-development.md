@@ -29,7 +29,9 @@ volumes  in docker-compose, to speed up the containers.
 
 ![OSX preference pane providing access to VirtioFS](docs/images/virtiofs.png)
 
-## Copy database from Lagoon environment to local setup
+## Howtos
+
+### Copy database from Lagoon environment to local setup
 
 Prerequisites:
 
@@ -48,7 +50,7 @@ database, not any files from the site.
 3. Start a local environment using `task dev:reset`
 4. Import the database by running `task dev:restore:database`
 
-## Copy files from Lagoon environment to local setup
+### Copy files from Lagoon environment to local setup
 
 Prerequisites:
 
