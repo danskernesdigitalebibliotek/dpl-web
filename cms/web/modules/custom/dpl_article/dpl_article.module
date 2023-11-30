@@ -14,17 +14,19 @@ use Drupal\node\NodeInterface;
 function dpl_article_preprocess_node(array &$variables): void {
   $node = $variables['node'] ?? NULL;
 
-  // Process only if the node is a valid Node entity.
-  if (!($node instanceof NodeInterface)) {
+  // Process only if the node is a valid Node entity and is of the type article.
+  if (!($node instanceof NodeInterface) || $node->bundle() !== 'article') {
     return;
   }
 
-  // Override author name if the 'show override author' field is set.
-  $has_override = $node->get('field_show_override_author')
-    ->getString() === '1';
-  if ($has_override) {
-    $variables['author_name'] = $node->get('field_override_author')
-      ->getString();
+  // Check if the 'show override author' field exists and is set.
+  if ($node->hasField('field_show_override_author')) {
+    $has_override = $node->get('field_show_override_author')
+      ->getString() === '1';
+    if ($has_override && $node->hasField('field_override_author')) {
+      $variables['author_name'] = $node->get('field_override_author')
+        ->getString();
+    }
   }
 }
 
@@ -42,9 +44,7 @@ function dpl_article_preprocess_node(array &$variables): void {
  */
 function dpl_article_form_alter(array &$form, FormStateInterface $form_state, string $form_id): void {
   // Target only article node creation or edit forms.
-  // They follow this format: node_article_edit_form / node_article_form.
-  if (!str_starts_with($form_id, 'node_article_') ||
-    !(str_ends_with($form_id, '_edit_form') || str_ends_with($form_id, '_form'))) {
+  if (!str_starts_with($form_id, 'node_article_')) {
     return;
   }
 
