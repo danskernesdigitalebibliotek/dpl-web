@@ -157,6 +157,12 @@ tasks:
     cmds:
       - task dev:cli -- drush install -y field_ui views_ui
 
+  dev:enable-xdebug:
+    cmds:
+      - XDEBUG_ENABLE=true task dev:start
+      - read -p "Press enter to disable Xdebug"
+      - task dev:start
+
   dev:phpunit:
     desc: Run PHPUnit tests with code coverage
     cmds:

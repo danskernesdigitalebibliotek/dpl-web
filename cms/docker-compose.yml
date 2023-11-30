@@ -109,8 +109,7 @@ services:
     <<: [*default-volumes, *default-user]
     environment:
       << : *default-environment # loads the defined environment variables from the top
-      # Uncomment to enable xdebug for web requests and then restart via `docker-compose up -d`
-      #XDEBUG_ENABLE: "true"
+      XDEBUG_ENABLE: ${XDEBUG_ENABLE:-false}
     labels:
       lagoon.type: nginx-php-persistent
       lagoon.name: nginx # we want this service be part of the nginx pod in Lagoon
