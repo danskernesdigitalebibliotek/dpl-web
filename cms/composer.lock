@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "2c4f64130d06cfc592361366edad5c1b",
+    "content-hash": "ca5f7282f4ebf1fa97091a846e16dc26",
     "packages": [
         {
             "name": "amazeeio/drupal_integrations",
@@ -2892,6 +2892,50 @@
             }
         },
         {
+            "name": "drupal/enum_field",
+            "version": "1.0.1",
+            "source": {
+                "type": "git",
+                "url": "https://git.drupalcode.org/project/enum_field.git",
+                "reference": "1.0.1"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://ftp.drupal.org/files/projects/enum_field-1.0.1.zip",
+                "reference": "1.0.1",
+                "shasum": "8a43a9cbe1419f7434c085f86d8b26191fe57660"
+            },
+            "require": {
+                "drupal/core": "^9.3 || ^10"
+            },
+            "type": "drupal-module",
+            "extra": {
+                "drupal": {
+                    "version": "1.0.1",
+                    "datestamp": "1691138049",
+                    "security-coverage": {
+                        "status": "not-covered",
+                        "message": "Project has not opted into security advisory coverage!"
+                    }
+                }
+            },
+            "notification-url": "https://packages.drupal.org/8/downloads",
+            "license": [
+                "GPL-2.0-or-later"
+            ],
+            "authors": [
+                {
+                    "name": "DieterHolvoet",
+                    "homepage": "https://www.drupal.org/user/3567222"
+                }
+            ],
+            "description": "Create list fields based on PHP enums",
+            "homepage": "https://www.drupal.org/project/enum_field",
+            "support": {
+                "source": "https://git.drupalcode.org/project/enum_field"
+            }
+        },
+        {
             "name": "drupal/gin",
             "version": "3.0.0-rc7",
             "source": {
@@ -3054,6 +3098,86 @@
             "homepage": "https://www.drupal.org/project/handy_cache_tags",
             "support": {
                 "source": "https://git.drupalcode.org/project/handy_cache_tags"
+            }
+        },
+        {
+            "name": "drupal/job_scheduler",
+            "version": "4.0.1",
+            "source": {
+                "type": "git",
+                "url": "https://git.drupalcode.org/project/job_scheduler.git",
+                "reference": "4.0.1"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://ftp.drupal.org/files/projects/job_scheduler-4.0.1.zip",
+                "reference": "4.0.1",
+                "shasum": "f262bf0689ddd909d98012628a8d4c09b332cb33"
+            },
+            "require": {
+                "drupal/core": "^8.7.7 || ^9 || ^10"
+            },
+            "type": "drupal-module",
+            "extra": {
+                "drupal": {
+                    "version": "4.0.1",
+                    "datestamp": "1677234863",
+                    "security-coverage": {
+                        "status": "not-covered",
+                        "message": "Project has not opted into security advisory coverage!"
+                    }
+                }
+            },
+            "notification-url": "https://packages.drupal.org/8/downloads",
+            "license": [
+                "GPL-2.0+"
+            ],
+            "authors": [
+                {
+                    "name": "alex_b",
+                    "homepage": "https://www.drupal.org/user/53995"
+                },
+                {
+                    "name": "febbraro",
+                    "homepage": "https://www.drupal.org/user/43670"
+                },
+                {
+                    "name": "gabesullice",
+                    "homepage": "https://www.drupal.org/user/2287430"
+                },
+                {
+                    "name": "intrafusion",
+                    "homepage": "https://www.drupal.org/user/424800"
+                },
+                {
+                    "name": "jmiccolis",
+                    "homepage": "https://www.drupal.org/user/31731"
+                },
+                {
+                    "name": "joachim",
+                    "homepage": "https://www.drupal.org/user/107701"
+                },
+                {
+                    "name": "makara",
+                    "homepage": "https://www.drupal.org/user/132402"
+                },
+                {
+                    "name": "RenatoG",
+                    "homepage": "https://www.drupal.org/user/3326031"
+                },
+                {
+                    "name": "twistor",
+                    "homepage": "https://www.drupal.org/user/473738"
+                },
+                {
+                    "name": "webflo",
+                    "homepage": "https://www.drupal.org/user/254778"
+                }
+            ],
+            "description": "Scheduler API.",
+            "homepage": "http://drupal.org/project/job_scheduler",
+            "support": {
+                "source": "https://git.drupalcode.org/project/job_scheduler"
             }
         },
         {
