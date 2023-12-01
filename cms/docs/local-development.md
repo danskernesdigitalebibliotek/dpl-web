@@ -29,7 +29,27 @@ volumes  in docker-compose, to speed up the containers.
 
 ![OSX preference pane providing access to VirtioFS](docs/images/virtiofs.png)
 
-## Copy database from Lagoon environment to local setup
+## Howtos
+
+### Enable XDebug
+
+Prerequisites:
+
+* An IDE with support for XDebug e.g. JetBrains PhpStorm
+* Optionally: [A browser extension to activate XDebug](https://xdebug.org/docs/step_debug#browser-extensions)
+
+For performance reasons XDebug is disabled by default. It can be enabled
+temporarily through a task:
+
+1. Run `task dev:enable-xdebug`
+2. Validate that XDebug is enabled by inspecting <http://dpl-cms.docker/admin/reports/status/php>.
+   It should contain extended information about XDebug
+3. Debug the application by setting breakpoints, listen for incoming
+   connections in your IDE and [activate XDebug from you client/browser](https://xdebug.org/docs/step_debug#web-application)
+4. When you are finished, hit `enter` in the terminal where you enabled XDebug.
+   This will disable XDebug
+
+### Copy database from Lagoon environment to local setup
 
 Prerequisites:
 
@@ -48,7 +68,7 @@ database, not any files from the site.
 3. Start a local environment using `task dev:reset`
 4. Import the database by running `task dev:restore:database`
 
-## Copy files from Lagoon environment to local setup
+### Copy files from Lagoon environment to local setup
 
 Prerequisites:
 
