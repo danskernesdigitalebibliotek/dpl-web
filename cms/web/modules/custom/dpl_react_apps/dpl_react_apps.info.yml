@@ -8,6 +8,7 @@ dependencies:
   - dpl_library_agency:dpl_library_agency
   - dpl_instant_loan:dpl_instant_loan
   - dpl_dashboard:dpl_dashboard
+  - dpl_fees:dpl_fees
 
 type: module
 core_version_requirement: ^9
