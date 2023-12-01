@@ -1,0 +1,95 @@
+<?php
+
+/**
+ * @file
+ * DPL Base.
+ */
+
+use Drupal\Core\Url;
+use function Safe\parse_url;
+use function Safe\preg_match;
+
+/**
+ * Implements hook_preprocess_HOOK() for paragraph templates.
+ */
+function dpl_paragraphs_preprocess_paragraph(array &$variables): void {
+  // Add the base icon path to the variables array for use in paragraphs.
+  $baseIconPath = $variables['directory'] . '/assets/dpl-design-system/icons';
+  $variables['baseIconPath'] = $baseIconPath;
+}
+
+/**
+ * Implements hook_preprocess_paragraph__TYPE() for paragraph--links.html.twig.
+ *
+ * Prepares variables for paragraph--links.html.twig template.
+ */
+function dpl_paragraphs_preprocess_paragraph__links(array &$variables): void {
+  // Retrieve the URL generator service from Drupal.
+  $url_generator = \Drupal::service('url_generator');
+
+  // Generate base paths for predefined routes (search and advanced search).
+  // These are used to compare with the link URLs.
+  $search_base_path = $url_generator->generateFromRoute('dpl_react_apps.search_result', [], ['absolute' => FALSE]);
+  $advanced_search_base_path = $url_generator->generateFromRoute('dpl_react_apps.advanced_search', [], ['absolute' => FALSE]);
+
+  // Define the file extensions for downloadable files.
+  $downloadable_file_extensions = 'pdf|docx|txt';
+
+  // Retrieve the current paragraph entity.
+  $paragraph = $variables['paragraph'];
+
+  // Check if the paragraph has the 'field_link' field and it contains items.
+  if ($paragraph->hasField('field_link') && !$paragraph->get('field_link')->isEmpty()) {
+    // Retrieve all link items from the field.
+    $items = $paragraph->get('field_link')->getValue();
+    $variables['links'] = [];
+
+    foreach ($items as $item) {
+      // Create a URL object from the URI.
+      $url = Url::fromUri($item['uri']);
+
+      // Normalize the URL to extract only the path, excluding query parameters.
+      $normalized_url = rtrim(parse_url($url->toString(), PHP_URL_PATH), '/');
+
+      // Default link type is 'internal'.
+      $link_type = 'internal';
+
+      if ($url->isExternal()) {
+        // Check if the URL points to a downloadable file.
+        if (preg_match('/\.(' . $downloadable_file_extensions . ')(\?.*)?$/', $normalized_url)) {
+          $link_type = 'download';
+        }
+        else {
+          // If it's not a file, classify it as an external link.
+          $link_type = 'external';
+        }
+      }
+      elseif ($normalized_url === $search_base_path || $normalized_url === $advanced_search_base_path) {
+        // Check if the URL matches the search or advanced search paths.
+        $link_type = 'search';
+      }
+
+      // Additional class for the link icon, specific to internal links.
+      $linkIconClass = ($link_type === 'internal') ? 'rotate-180' : '';
+
+      // Set the attributes based on the determined link type.
+      $attributes = [
+        'internal' => ['target' => '_self', 'icon' => 'ArrowBack', 'folder' => 'collection'],
+        'external' => ['target' => '_blank', 'icon' => 'icon-external-link', 'folder' => 'basic'],
+        'download' => ['target' => '_blank', 'icon' => 'Ebook', 'folder' => 'collection'],
+        'search' => ['target' => '_self', 'icon' => 'SearchBooks', 'folder' => 'collection'],
+      ][$link_type];
+
+      // Prepare the final link data to be passed to the template.
+      $variables['links'][] = [
+        'href' => $url->toString(),
+        'linkText' => $item['title'],
+        'linkType' => $link_type,
+        'target' => $attributes['target'],
+        'icon' => $attributes['icon'],
+        'folder' => $attributes['folder'],
+        'linkIconClass' => $linkIconClass,
+      ];
+    }
+  }
+}
