@@ -2,7 +2,7 @@
   <header class="event-header">
     <section class="event-header__content">
         <!-- Tag -->
-        <!-- dates -->
+       {{content.field_event_date}}
         <h1 class="event-header__title">{{ label }}</h1>
       <!-- button -->
     </section>
@@ -10,5 +10,5 @@
       <!-- image -->
     </section>
   </header>
-  {{ content }}
+  {{ content|without('field_event_date') }}
 </article>
