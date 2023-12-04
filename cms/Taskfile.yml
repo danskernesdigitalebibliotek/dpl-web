@@ -253,6 +253,7 @@ tasks:
       # All tests that delete mappings and make their own run afterwards.
       - docker compose {{ .DOCKER_COMPOSE_FILES_CI }} run --rm -e CYPRESS_DRUPAL_USERNAME=$CYPRESS_DRUPAL_USERNAME -e CYPRESS_DRUPAL_PASSWORD=$CYPRESS_DRUPAL_PASSWORD cypress --spec "cypress/e2e/*.ts"
     env:
+      DOCKER_COMPOSE_FILES: "{{ .DOCKER_COMPOSE_FILES_CI }}"
       CYPRESS_DRUPAL_USERNAME: admin
       CYPRESS_DRUPAL_PASSWORD: admin
 
@@ -264,6 +265,7 @@ tasks:
       - task dev:cli -- drush user:password $CYPRESS_DRUPAL_USERNAME $CYPRESS_DRUPAL_PASSWORD
       - http_proxy={{ .WIREMOCK_HOST_LOCAL }} https_proxy={{ .WIREMOCK_HOST_LOCAL_HTTPS }} npx cypress open
     env:
+      DOCKER_COMPOSE_FILES: "{{ .DOCKER_COMPOSE_FILES_CI }}"
       CYPRESS_BASE_URL: http://localhost:{{ .CYPRESS_BASE_PORT }}
       CYPRESS_WIREMOCK_URL: '{{ .WIREMOCK_HOST_LOCAL }}'
       CYPRESS_DRUPAL_USERNAME: admin
