@@ -157,6 +157,24 @@ class PatronMenuBlock extends BlockBase implements ContainerFactoryPluginInterfa
       'ereolen-my-page-url' => $generalSettings->get('ereolen_my_page_url'),
       'menu-view-your-profile-text-url' => Url::fromRoute('dpl_patron_page.profile', [], ['absolute' => TRUE])->toString(),
       'user-profile-url' => Url::fromRoute('dpl_patron_page.profile', [], ['absolute' => TRUE])->toString(),
+
+      // Texts.
+      'menu-authenticated-close-button-text' => $this->t('Close user menu', [], ['context' => 'Patron menu']),
+      'menu-authenticated-modal-description-text' => $this->t('The user modal', [], ['context' => 'Patron menu']),
+      'menu-log-out-text' => $this->t('Log out', [], ['context' => 'Patron menu']),
+      'menu-login-text' => $this->t('Log in', [], ['context' => 'Patron menu']),
+      'menu-not-authenticated-close-button-text' => $this->t('Close user menu', [], ['context' => 'Patron menu']),
+      'menu-not-authenticated-modal-description-text' => $this->t('The user modal, log in or create a user', [], ['context' => 'Patron menu']),
+      'menu-notification-loans-expired-text' => $this->t('loans expired', [], ['context' => 'Patron menu']),
+      'menu-notification-loans-expiring-soon-text' => $this->t('loans expiring soon', [], ['context' => 'Patron menu']),
+      'menu-notification-ready-for-pickup-text' => $this->t('reservations ready for pickup', [], ['context' => 'Patron menu']),
+      'menu-notifications-menu-aria-label-text' => $this->t('Notifications menu', [], ['context' => 'Patron menu (aria)']),
+      'menu-profile-links-aria-label-text' => $this->t('Profile links', [], ['context' => 'Patron menu (aria)']),
+      'menu-sign-up-text' => $this->t('Sign up', [], ['context' => 'Patron menu']),
+      'menu-user-profile-url-text' => $this->t('My Account', [], ['context' => 'Patron menu']),
+      'menu-user-icon-aria-label-text' => $this->t('Open user menu', [], ['context' => 'Patron menu (aria)']),
+      'menu-view-your-profile-text' => $this->t('Dashboard', [], ['context' => 'Patron menu']),
+      'reservations-ready-for-pickup-text' => $this->t('Reservations ready for pickup', [], ['context' => 'Patron menu']),
     ] + DplReactAppsController::externalApiBaseUrls();
 
     return [

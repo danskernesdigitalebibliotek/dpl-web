@@ -106,6 +106,16 @@ class PatronRegistrationBlock extends BlockBase implements ContainerFactoryPlugi
       'pincode-length-min-config' => $patron_page_settings->get('pincode_length_min') ?? DplPatronPageSettings::PINCODE_LENGTH_MIN,
       'redirect-on-user-created-url' => dpl_react_apps_format_app_url($config->get('redirect_on_user_created_url'), DplPatronRegSettings::REDIRECT_ON_USER_CREATED_URL),
       'text-notifications-enabled-config' => (int) $this->reservationSettings->smsNotificationsIsEnabled(),
+
+      // Texts.
+      'create-patron-cancel-button-text' => $this->t("Cancel", [], ['context' => 'Create patron']),
+      'create-patron-change-pickup-body-text' => $this->t("Select pickup location in the select", [], ['context' => 'Create patron']),
+      'create-patron-change-pickup-header-text' => $this->t("Select pickup location", [], ['context' => 'Create patron']),
+      'create-patron-confirm-button-text' => $this->t("Confirm", [], ['context' => 'Create patron']),
+      'create-patron-header-text' => $this->t("Register as patron", [], ['context' => 'Create patron']),
+      'create-patron-invalid-ssn-body-text' => $this->t("This SSN is invalid", [], ['context' => 'Create patron']),
+      'create-patron-invalid-ssn-header-text' => $this->t("Invalid SSN", [], ['context' => 'Create patron']),
+      'patron-contact-name-label-text' => $this->t("Name", [], ['context' => 'Create patron']),
     ] + DplReactAppsController::externalApiBaseUrls();
 
     return [

@@ -93,6 +93,25 @@ class DashboardBlock extends BlockBase implements ContainerFactoryPluginInterfac
       // Cannot find that route. Does it exist?
       'intermediate-url' => '/user/me/intermediates',
       'ereolen-my-page-url' => dpl_react_apps_format_app_url($generalSettings->get('ereolen_my_page_url'), GeneralSettingsForm::EREOLEN_MY_PAGE_URL),
+
+      // Texts.
+      'choose-all-text' => $this->t('Select all', [], ['context' => 'Dashboard']),
+      'digital-text' => $this->t('Digital', [], ['context' => 'Dashboard']),
+      'fees-text' => $this->t('Fees', [], ['context' => 'Dashboard']),
+      'group-modal-aria-description-text' => $this->t('This modal makes it possible to renew materials', [], ['context' => 'Dashboard (Aria)']),
+      'intermediate-text' => $this->t('Intermediates', [], ['context' => 'Dashboard']),
+      'list-details-nothing-selected-label-text' => $this->t('Pick', [], ['context' => 'Dashboard']),
+      'loans-not-overdue-text' => $this->t('Longer return time', [], ['context' => 'Dashboard']),
+      'no-physical-loans-text' => $this->t('At the moment, you have 0 physical loans', [], ['context' => 'Dashboard']),
+      'no-reservations-text' => $this->t('At the moment, you have 0 reservations', [], ['context' => 'Dashboard']),
+      'pay-owed-text' => $this->t('Pay', [], ['context' => 'Dashboard']),
+      'physical-loans-text' => $this->t('Loans', [], ['context' => 'Dashboard']),
+      'queued-reservations-text' => $this->t('Queued reservations', [], ['context' => 'Dashboard']),
+      'reservations-still-in-queue-for-text' => $this->t('Still in queue', [], ['context' => 'Dashboard']),
+      'reservations-text' => $this->t('Reservations', [], ['context' => 'Dashboard']),
+      'total-amount-fee-text' => $this->t('@total,-', [], ['context' => 'Dashboard']),
+      'total-owed-text' => $this->t('You owe in total', [], ['context' => 'Dashboard']),
+      'your-profile-text' => $this->t('Your profile', [], ['context' => 'Dashboard']),
     ] + DplReactAppsController::externalApiBaseUrls();
 
     return [

@@ -74,7 +74,12 @@ class RecommenderBlock extends BlockBase implements ContainerFactoryPluginInterf
   public function build() {
     $recommenderSettings = $this->recommenderSettings->loadConfig();
 
-    $data = [] + DplReactAppsController::externalApiBaseUrls();
+    $data = [
+      'empty-recommender-search-config' => $recommenderSettings->get('search_text') ?? DplRecommenderSettings::SEARCH_TEXT,
+      'recommender-title-inspiration-text' => $this->t("For your inspiration", [], ['context' => 'Recommender']),
+      'recommender-title-loans-text' => $this->t("Because you have borrowed @title you may also like", [], ['context' => 'Recommender']),
+      'recommender-title-reservations-text' => $this->t("Because you have reserved @title you may also like", [], ['context' => 'Recommender']),
+    ] + DplReactAppsController::externalApiBaseUrls();
 
     return [
       '#theme' => 'dpl_react_app',
