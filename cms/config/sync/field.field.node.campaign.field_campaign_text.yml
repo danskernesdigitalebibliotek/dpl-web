@@ -1,0 +1,19 @@
+uuid: fb3b3ff5-0592-4de6-b5ce-48ab332f220d
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_campaign_text
+    - node.type.campaign
+id: node.campaign.field_campaign_text
+field_name: field_campaign_text
+entity_type: node
+bundle: campaign
+label: Text
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: string_long

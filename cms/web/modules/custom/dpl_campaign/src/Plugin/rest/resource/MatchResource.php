@@ -234,8 +234,8 @@ class MatchResource extends ResourceBase {
       $output['title'] = $campaign->get('title')->getValue()[0]['value'];
     }
 
-    if (!$campaign->get('body')->isEmpty()) {
-      $output['text'] = $campaign->get('body')->getValue()[0]['value'];
+    if (!$campaign->get('field_campaign_text')->isEmpty()) {
+      $output['text'] = $campaign->get('field_campaign_text')->getValue()[0]['value'];
     }
 
     if (!$campaign->get('field_campaign_image')->isEmpty()) {
