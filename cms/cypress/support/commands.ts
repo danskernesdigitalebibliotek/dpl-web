@@ -82,7 +82,7 @@ Cypress.Commands.add("drupalLogin", () => {
     .type(Cypress.env("DRUPAL_USERNAME"))
     .parent()
     .get('[name="pass"]')
-    .type(Cypress.env("DRUPAL_USERNAME"));
+    .type(Cypress.env("DRUPAL_PASSWORD"));
   cy.get('[value="Log in"]').click();
 });
 
