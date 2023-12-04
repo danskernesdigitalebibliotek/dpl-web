@@ -11,6 +11,7 @@
 
 use Drupal\Core\GeneratedUrl;
 use Drupal\Core\Url;
+use Drupal\dpl_fees\DplFeesSettings;
 use Drupal\dpl_library_agency\Form\GeneralSettingsForm;
 use Drupal\dpl_react_apps\Controller\DplReactAppsController;
 use function Safe\json_encode;
@@ -60,8 +61,9 @@ function dpl_react_apps_dpl_react_apps_data(array &$data): void {
   $adgangsplatformen_config = \Drupal::service('dpl_login.adgangsplatformen.config');
   $general_settings = \Drupal::configFactory()->get('dpl_library_agency.general_settings');
   $allow_remove_ready_reservations = $general_settings->get('reservation_detail_allow_remove_ready_reservations') ?? GeneralSettingsForm::RESERVATION_DETAIL_ALLOW_REMOVE_READY_RESERVATIONS;
+  $feesSettings = \Drupal::configFactory()->get('dpl_fees.settings');
 
-  // @todo We should use the adgabngsplatform config everywhere we handle data that it can provide,
+  // @todo We should use the adgangsplatform config everywhere we handle data that it can provide,
   // eg. login/logout urls.
   $data['configs'] += [
     'agency' => json_encode([
@@ -75,6 +77,19 @@ function dpl_react_apps_dpl_react_apps_data(array &$data): void {
   $data['texts'] += [
     'alert-error-close' => t('Close', [], ['context' => 'React apps (Global error handling)']),
     'alert-error-message' => t('An error occurred', [], ['context' => 'React apps (Global error handling)']),
+    'delete-reservation-modal-button' => t('Cancel', [], ['context' => 'Delete reservation modal']),
+    'delete-reservation-modal-delete-button' => t('Delete', [], ['context' => 'Delete reservation modal']),
+    'delete-reservation-modal-delete-processing' => t('Processing...', [], ['context' => 'Delete reservation modal']),
+    'delete-reservation-modal-errors-status' => t('Something went wrong deleting your reservation. Please try again.', [], ['context' => 'Delete reservation modal']),
+    'delete-reservation-modal-errors-title' => t('Deleting your reservation failed', [], ['context' => 'Delete reservation modal']),
+    'delete-reservation-modal-success-status' => json_encode([
+      'type' => 'plural',
+      'text' => [
+        t('One reservation was deleted', [], ['context' => 'Delete reservation modal']),
+        t('@count reservations were deleted', [], ['context' => 'Delete reservation modal']),
+      ],
+    ]),
+    'delete-reservation-modal-success-title' => t('You have deleted your reservation', [], ['context' => 'Delete reservation modal']),
   ];
 
   $data['urls'] += [
@@ -103,6 +118,11 @@ function dpl_react_apps_dpl_react_apps_data(array &$data): void {
     'dashboard' => dpl_react_apps_ensure_url_is_string(
       Url::fromRoute('dpl_dashboard.list')->toString()
     ),
+    'ereolen-homepage' => dpl_react_apps_format_app_url(
+      GeneralSettingsForm::EREOLEN_HOMEPAGE_URL
+    ),
+    'view-fees-and-compensation-rates' => dpl_react_apps_format_app_url(
+      $feesSettings->get('fees_and_replacement_costs_url'), DplFeesSettings::FEES_AND_REPLACEMENT_COSTS_URL),
   ];
 }
 

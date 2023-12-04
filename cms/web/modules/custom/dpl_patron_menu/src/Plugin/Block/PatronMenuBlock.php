@@ -95,6 +95,13 @@ class PatronMenuBlock extends BlockBase implements ContainerFactoryPluginInterfa
     // generated menu. A place for further improvements.
     $menu = [
       [
+        "name" => $this->t("Dashboard", [], ["context" => 'Patron menu']),
+        "link" => dpl_react_apps_ensure_url_is_string(
+          Url::fromRoute('dpl_dashboard.list', [], ['absolute' => TRUE])->toString()
+        ),
+        "dataId" => "40",
+      ],
+      [
         "name" => $this->t("Loans", [], ["context" => 'Patron menu']),
         "link" => dpl_react_apps_ensure_url_is_string(
           Url::fromRoute('dpl_loans.list', [], ['absolute' => TRUE])->toString()
@@ -155,7 +162,7 @@ class PatronMenuBlock extends BlockBase implements ContainerFactoryPluginInterfa
       ),
       "menu-sign-up-url" => Url::fromRoute('dpl_patron_reg.information', [], ['absolute' => TRUE])->toString(),
       'ereolen-my-page-url' => $generalSettings->get('ereolen_my_page_url'),
-      'menu-view-your-profile-text-url' => Url::fromRoute('dpl_patron_page.profile', [], ['absolute' => TRUE])->toString(),
+      'user-profile-url' => Url::fromRoute('dpl_patron_page.profile', [], ['absolute' => TRUE])->toString(),
 
       // Texts.
       'dashboard-number-in-line-text' => $this->t('Number @count in line', [], ['context' => 'Patron menu']),
@@ -216,7 +223,7 @@ class PatronMenuBlock extends BlockBase implements ContainerFactoryPluginInterfa
       'menu-profile-links-aria-label-text' => $this->t('Profile links', [], ['context' => 'Patron menu (aria)']),
       'menu-sign-up-text' => $this->t('Sign up', [], ['context' => 'Patron menu']),
       'menu-user-icon-aria-label-text' => $this->t('Open user menu', [], ['context' => 'Patron menu (aria)']),
-      'menu-view-your-profile-text' => $this->t('My Account', [], ['context' => 'Patron menu']),
+      'menu-user-profile-url-text' => $this->t('My Account', [], ['context' => 'Patron menu']),
       'physical-reservations-header-text' => $this->t('Physical reservations', [], ['context' => 'Patron menu']),
       'pick-up-latest-text' => $this->t('Pick up before @date', [], ['context' => 'Patron menu']),
       'ready-for-loan-counter-label-text' => $this->t('Ready', [], ['context' => 'Patron menu']),

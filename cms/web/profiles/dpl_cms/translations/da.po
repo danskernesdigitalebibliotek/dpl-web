@@ -3,8 +3,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2023-11-21 14:11+0100\n"
-"PO-Revision-Date: 2023-11-21 14:11+0100\n"
+"POT-Creation-Date: 2023-12-01 14:41+0100\n"
+"PO-Revision-Date: 2023-12-01 14:41+0100\n"
 "Last-Translator: NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
 "MIME-Version: 1.0\n"
@@ -435,6 +435,9 @@ msgstr ""
 "Gyldig token er ikke tilgængelig. <a href=\":url\">Run cron</a> for "
 "at hente en ny token."
 
+msgid "Dashboard"
+msgstr ""
+
 msgid "Loans"
 msgstr "Lån"
 
@@ -446,9 +449,6 @@ msgstr "Huskeliste"
 
 msgid "Fees & Replacement costs"
 msgstr "Gebyrer & Erstatninger"
-
-msgid "My account"
-msgstr "Dit overblik"
 
 msgctxt "Patron menu"
 msgid "Number @count in line"
@@ -1914,6 +1914,38 @@ msgstr ""
 "Der opstod en uventet fejl, prøv igen senere eller kontakt "
 "biblioteket."
 
+msgctxt "Delete reservation modal"
+msgid "Cancel"
+msgstr ""
+
+msgctxt "Delete reservation modal"
+msgid "Delete"
+msgstr ""
+
+msgctxt "Delete reservation modal"
+msgid "Processing..."
+msgstr ""
+
+msgctxt "Delete reservation modal"
+msgid "Something went wrong deleting your reservation. Please try again."
+msgstr ""
+
+msgctxt "Delete reservation modal"
+msgid "Deleting your reservation failed"
+msgstr ""
+
+msgctxt "Delete reservation modal"
+msgid "One reservation was deleted"
+msgstr ""
+
+msgctxt "Delete reservation modal"
+msgid "@count reservations were deleted"
+msgstr ""
+
+msgctxt "Delete reservation modal"
+msgid "You have deleted your reservation"
+msgstr ""
+
 msgctxt "Renew loan"
 msgid "Renew"
 msgstr "Forny"
@@ -2718,6 +2750,14 @@ msgstr "eReolen link"
 msgctxt "Library Agency Configuration"
 msgid "My page in ereolen"
 msgstr "Min side på eReolen"
+
+msgctxt "Library Agency Configuration"
+msgid "Ereolen home link"
+msgstr ""
+
+msgctxt "Library Agency Configuration"
+msgid "Home page in ereolen"
+msgstr ""
 
 msgctxt "Library Agency Configuration"
 msgid "Pause reservation link"
@@ -3740,6 +3780,9 @@ msgstr "Mapp Intelligence"
 
 msgid "Integration with Mapp Intelligence to track site usage."
 msgstr "Integration med Mapp Intelligence for at tracke brugen af hjemmesiden"
+
+msgid "List of bookmarks"
+msgstr ""
 
 msgid "Skip to main content"
 msgstr "Gå til hovedindhold"
