@@ -449,7 +449,7 @@ const createCampaignMainProperties = (name: string, logic: "AND" | "OR") => {
   cy.get("#edit-field-campaign-link-0-uri").type(
     `https://example.com/${campaignUri}`
   );
-  cy.get("#edit-body-0-value").type(name);
+  cy.get("#edit-field-campaign-text-0-value").type(name);
   cy.get("#edit-field-campaign-rules-logic").select(logic);
 };
 const createCampaignRule = (
