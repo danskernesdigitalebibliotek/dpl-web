@@ -420,7 +420,7 @@ const createRankingOrCampaign = () => {
 const createCampaign = (callback: () => void) => {
   cy.visit("/node/add/campaign");
   callback();
-  cy.get("#edit-submit").click();
+  cy.get('input[value="Save"]').click();
 };
 
 const deleteCampaign = (title: string) => {
