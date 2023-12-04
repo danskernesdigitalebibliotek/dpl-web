@@ -21,6 +21,7 @@ content:
     weight: 100
     region: content
 hidden:
+  field_canonical_url: true
   field_override_author: true
   field_paragraphs: true
   field_show_override_author: true

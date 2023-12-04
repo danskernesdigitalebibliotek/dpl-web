@@ -45,5 +45,6 @@ content:
     weight: 100
     region: content
 hidden:
+  field_canonical_url: true
   field_paragraphs: true
   langcode: true
