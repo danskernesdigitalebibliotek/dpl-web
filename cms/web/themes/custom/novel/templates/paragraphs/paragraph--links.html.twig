@@ -1,5 +1,5 @@
 {% for link in links %}
-  <a href="{{ link.href }}" target="{{ link.target }}" rel="{{ link.target == '_blank' ? 'noopener noreferrer' : '' }}"
+  <a href="{{ link.href }}" target="{{ link.target }}"
      class="link-with-icon arrow__hover--right-large">
     <div class="link-with-icon__icon {{ link.linkIconClass }}">
       <img class="invert" src="/{{ baseIconPath }}/{{ link.iconFolder }}/{{ link.iconFile }}.svg" alt="" />
