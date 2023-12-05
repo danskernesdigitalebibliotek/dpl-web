@@ -30,6 +30,7 @@ x-environment:
     # Environment variables which mimic what will be set in a Lagoon cluster locally
     LAGOON_PROJECT: 'dplcms'
     LAGOON_ENVIRONMENT: 'local'
+    LAGOON_ENVIRONMENT_TYPE: ${LAGOON_ENVIRONMENT_TYPE:-local}
     WEBROOT: web
     # Uncomment if you like to have the system behave like in production
     #LAGOON_ENVIRONMENT_TYPE: production
@@ -60,7 +61,7 @@ services:
     build:
       context: .
       dockerfile: lagoon/cli.dockerfile
-    image: &cli-image uselagoon/php-8.0-cli-drupal:latest # this image will be reused as `CLI_IMAGE` in subsequent Docker builds
+    image: &cli-image uselagoon/php-8.1-cli-drupal:latest # this image will be reused as `CLI_IMAGE` in subsequent Docker builds
     << : *default-volumes # loads the defined volumes from the top
     user: root
     environment:
@@ -108,8 +109,7 @@ services:
     <<: [*default-volumes, *default-user]
     environment:
       << : *default-environment # loads the defined environment variables from the top
-      # Uncomment to enable xdebug for web requests and then restart via `docker-compose up -d`
-      #XDEBUG_ENABLE: "true"
+      XDEBUG_ENABLE: ${XDEBUG_ENABLE:-false}
     labels:
       lagoon.type: nginx-php-persistent
       lagoon.name: nginx # we want this service be part of the nginx pod in Lagoon

@@ -4,6 +4,9 @@ status: false
 dependencies:
   config:
     - core.entity_view_mode.node.teaser
+    - field.field.node.article.field_override_author
+    - field.field.node.article.field_show_override_author
+    - field.field.node.article.field_subtitle
     - node.type.article
   module:
     - user
@@ -13,9 +16,14 @@ bundle: article
 mode: teaser
 content:
   links:
-    weight: 100
     settings: {  }
     third_party_settings: {  }
+    weight: 100
     region: content
 hidden:
+  field_canonical_url: true
+  field_override_author: true
+  field_paragraphs: true
+  field_show_override_author: true
+  field_subtitle: true
   langcode: true

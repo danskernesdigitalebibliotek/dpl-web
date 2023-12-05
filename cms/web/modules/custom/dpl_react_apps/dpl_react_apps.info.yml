@@ -11,4 +11,4 @@ dependencies:
   - dpl_fees:dpl_fees
 
 type: module
-core_version_requirement: ^9
+core_version_requirement: ^9 || ^10

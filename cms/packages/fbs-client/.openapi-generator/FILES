@@ -1,3 +1,4 @@
+.php-cs-fixer.dist.php
 README.md
 composer.json
 lib/Api/ExternalAgencyidPatronsApi.php

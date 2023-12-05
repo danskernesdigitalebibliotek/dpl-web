@@ -141,9 +141,12 @@ function dpl_react_apps_preprocess_dpl_react_app(array &$variables): void {
   ];
   \Drupal::moduleHandler()->invokeAll('dpl_react_apps_data', [&$data]);
   foreach ($data as $scope => $values) {
-    if (empty($values)) {
+    if (!is_array($values)) {
       continue;
     }
+    // PHPStan thinks values will always be empty - probably because it does
+    // not know what is going on in invokeAll(). Ignore this.
+    // @phpstan-ignore-next-line empty.expr
     foreach ($values as $key => $value) {
       $variables['attributes'] += [
         implode('-', ['data', $key, rtrim($scope, 's')]) => $value,
