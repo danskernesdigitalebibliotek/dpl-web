@@ -74,10 +74,10 @@ function dpl_paragraphs_preprocess_paragraph__links(array &$variables): void {
 
       // Set the attributes based on the determined link type.
       $attributes = [
-        'internal' => ['target' => '_self', 'icon' => 'ArrowBack', 'folder' => 'collection'],
-        'external' => ['target' => '_blank', 'icon' => 'icon-external-link', 'folder' => 'basic'],
-        'download' => ['target' => '_blank', 'icon' => 'Ebook', 'folder' => 'collection'],
-        'search' => ['target' => '_self', 'icon' => 'SearchBooks', 'folder' => 'collection'],
+        'internal' => ['target' => '_self', 'iconFile' => 'ArrowBack', 'iconFolder' => 'collection'],
+        'external' => ['target' => '_blank', 'iconFile' => 'icon-external-link', 'iconFolder' => 'basic'],
+        'download' => ['target' => '_blank', 'iconFile' => 'Ebook', 'iconFolder' => 'collection'],
+        'search' => ['target' => '_self', 'iconFile' => 'SearchBooks', 'iconFolder' => 'collection'],
       ][$link_type];
 
       // Prepare the final link data to be passed to the template.
@@ -86,8 +86,8 @@ function dpl_paragraphs_preprocess_paragraph__links(array &$variables): void {
         'linkText' => $item['title'],
         'linkType' => $link_type,
         'target' => $attributes['target'],
-        'icon' => $attributes['icon'],
-        'folder' => $attributes['folder'],
+        'iconFile' => $attributes['iconFile'],
+        'iconFolder' => $attributes['iconFolder'],
         'linkIconClass' => $linkIconClass,
       ];
     }
