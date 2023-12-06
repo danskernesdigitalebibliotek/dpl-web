@@ -52,8 +52,9 @@ function dpl_paragraphs_preprocess_paragraph__links(array &$variables): void {
 
       $url = Url::fromUri($item['uri']);
 
-      // Normalize the URL to extract only the path, excluding query parameters.
-      $normalized_path = rtrim(parse_url($url->toString(), PHP_URL_PATH), '/');
+      // Get the normalized path. If null, default to an empty string.
+      $parsed_url = parse_url($url->toString(), PHP_URL_PATH);
+      $normalized_path = is_null($parsed_url) ? '' : rtrim($parsed_url, '/');
 
       $link_type = 'internal';
 
