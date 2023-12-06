@@ -79,11 +79,6 @@ class SomethingSimilarBlock extends BlockBase implements ContainerFactoryPluginI
       'faust' => self::faustFromUrl(),
 
       // Texts.
-      'material-and-author-text' => $this->t('and', [], ['context' => 'Something similar']),
-      'add-to-favorites-aria-label-text' => $this->t("Add @title to favorites list", [], ['context' => 'Something similar (Aria)']),
-      'et-al-text' => $this->t("et al.", [], ['context' => 'Something similar']),
-      'material-by-author-text' => $this->t("By", [], ['context' => 'Something similar']),
-      'remove-from-favorites-aria-label-text' => $this->t("Remove @title from favorites list", [], ['context' => 'Something similar (Aria)']),
       'something-similar-by-the-same-author-text' => $this->t("By the same author", [], ['context' => 'Something similar']),
       'something-similar-something-similar-author-text' => $this->t("Something similar", [], ['context' => 'Something similar']),
       'something-similar-title-text' => $this->t("Other materials", [], ['context' => 'Something similar']),
