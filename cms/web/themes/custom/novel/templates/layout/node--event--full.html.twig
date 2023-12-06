@@ -4,7 +4,7 @@
       <!-- Tag -->
       {{content.field_event_date}}
       <h1 class="event-header__title">{{ label }}</h1>
-      <!-- button -->
+      {{ content.field_event_link }}
     </section>
     <section class="event-header__visual">
       <!-- image -->
@@ -23,5 +23,5 @@
       <!-- list-description__item -->
     </dl>
   </section>
-  {{ content|without('field_event_date', 'field_event_description') }}
+  {{ content|without('field_event_date', 'field_event_description', 'field_event_link') }}
 </article>
