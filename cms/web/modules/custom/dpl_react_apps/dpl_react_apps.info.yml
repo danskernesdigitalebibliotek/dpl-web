@@ -9,6 +9,7 @@ dependencies:
   - dpl_instant_loan:dpl_instant_loan
   - dpl_dashboard:dpl_dashboard
   - dpl_fees:dpl_fees
+  - dpl_recommender:dpl_recommender
 
 type: module
 core_version_requirement: ^9
