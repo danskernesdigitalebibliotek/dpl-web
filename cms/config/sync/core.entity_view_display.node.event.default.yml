@@ -4,15 +4,24 @@ status: true
 dependencies:
   config:
     - field.field.node.event.field_event_date
+    - field.field.node.event.field_event_description
     - field.field.node.event.field_event_state
     - node.type.event
   module:
+    - text
     - user
 id: node.event.default
 targetEntityType: node
 bundle: event
 mode: default
 content:
+  field_event_description:
+    type: text_default
+    label: above
+    settings: {  }
+    third_party_settings: {  }
+    weight: 1
+    region: content
   links:
     settings: {  }
     third_party_settings: {  }

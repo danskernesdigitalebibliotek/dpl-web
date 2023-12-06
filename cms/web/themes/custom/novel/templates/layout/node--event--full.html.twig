@@ -1,14 +1,27 @@
-<article{{ attributes.addClass('event-page') }}>
+<article {{ attributes.addClass('event-page') }}>
   <header class="event-header">
     <section class="event-header__content">
-        <!-- Tag -->
-       {{content.field_event_date}}
-        <h1 class="event-header__title">{{ label }}</h1>
+      <!-- Tag -->
+      {{content.field_event_date}}
+      <h1 class="event-header__title">{{ label }}</h1>
       <!-- button -->
     </section>
     <section class="event-header__visual">
       <!-- image -->
     </section>
   </header>
-  {{ content|without('field_event_date') }}
+
+  <section class="event-description">
+    <h2 class="event-description__title">{{ "Description" | trans }}</h2>
+    <div className="event-description__content">
+      <p class="event-description__description">{{content.field_event_description}}</p>
+      <div class="event-description__links">
+        <!-- horizontal-term-line -->
+      </div>
+    </div>
+    <dl class="list-description event-description__info list-description--event">
+      <!-- list-description__item -->
+    </dl>
+  </section>
+  {{ content|without('field_event_date', 'field_event_description') }}
 </article>

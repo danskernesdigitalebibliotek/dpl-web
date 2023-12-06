@@ -5,10 +5,12 @@ dependencies:
   config:
     - core.entity_view_mode.node.full
     - field.field.node.event.field_event_date
+    - field.field.node.event.field_event_description
     - field.field.node.event.field_event_state
     - node.type.event
   module:
     - datetime_range
+    - text
     - user
 id: node.event.full
 targetEntityType: node
@@ -23,6 +25,13 @@ content:
       separator: '-'
     third_party_settings: {  }
     weight: 0
+    region: content
+  field_event_description:
+    type: text_default
+    label: hidden
+    settings: {  }
+    third_party_settings: {  }
+    weight: 1
     region: content
 hidden:
   field_event_state: true

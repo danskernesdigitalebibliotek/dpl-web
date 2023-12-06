@@ -5,6 +5,7 @@ dependencies:
   config:
     - core.entity_view_mode.node.teaser
     - field.field.node.event.field_event_date
+    - field.field.node.event.field_event_description
     - field.field.node.event.field_event_state
     - node.type.event
   module:
@@ -21,5 +22,6 @@ content:
     region: content
 hidden:
   field_event_date: true
+  field_event_description: true
   field_event_state: true
   langcode: true
