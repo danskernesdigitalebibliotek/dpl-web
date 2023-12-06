@@ -23,11 +23,20 @@ function dpl_paragraphs_preprocess_paragraph__links(array &$variables): void {
 
   $url_generator = \Drupal::service('url_generator');
 
-  // Define the file extensions for downloadable files.
-  $downloadable_file_extensions = 'pdf|docx|txt';
+  // To infer if a link is downloadable with we have a basic approach, with
+  // various limitations. It's important to know, that internal files in
+  // project, will be uploaded through the media library using a seperate
+  // paragraph. As such the check here is primarily for external links to
+  // downloadable files. The approach here checks the URL's file extension to
+  // determine if it's a downloadable file. The fallback of an external file
+  // not being recognized as downloadable, is to treat it as an external link.
+  // Limitations include:
+  // 1. URLs endings does not guarantee the content is downloadable.
+  // 2. Some downloadable content may not have a typical file extension.
+  // 3. Does not consider server responses that dictates downloadability.
+  $downloadable_file_extensions = 'pdf|docx|txt|png|jpg|jpeg|gif|csv|xls|xlsx|ppt|pptx';
 
   // Generate base paths for predefined routes (search and advanced search).
-  // Used to compare with the link URLs.
   $search_base_path = $url_generator->generateFromRoute('dpl_react_apps.search_result', [], ['absolute' => FALSE]);
   $advanced_search_base_path = $url_generator->generateFromRoute('dpl_react_apps.advanced_search', [], ['absolute' => FALSE]);
 
@@ -46,27 +55,22 @@ function dpl_paragraphs_preprocess_paragraph__links(array &$variables): void {
       // Normalize the URL to extract only the path, excluding query parameters.
       $normalized_path = rtrim(parse_url($url->toString(), PHP_URL_PATH), '/');
 
-      // Default link type is 'internal'.
       $link_type = 'internal';
 
       if ($url->isExternal()) {
-        // Check if the URL points to a downloadable file.
-        if (preg_match('/\.(' . $downloadable_file_extensions . ')(\?.*)?$/', $normalized_path)) {
+        if (preg_match('/\.(' . $downloadable_file_extensions . ')(\?.*)?$/i', $normalized_path)) {
           $link_type = 'download';
         }
         else {
-          // If it's not a file, classify it as an external link.
           $link_type = 'external';
         }
       }
       elseif ($normalized_path === $search_base_path || $normalized_path === $advanced_search_base_path) {
-        // Check if the URL matches the search or advanced search paths.
         $link_type = 'search';
       }
 
       $linkIconClass = ($link_type === 'internal') ? 'rotate-180' : '';
 
-      // Set the attributes based on the determined link type.
       $attributes = [
         'internal' => ['target' => '_self', 'iconFile' => 'ArrowBack', 'iconFolder' => 'collection'],
         'external' => ['target' => '_blank', 'iconFile' => 'icon-external-link', 'iconFolder' => 'basic'],
