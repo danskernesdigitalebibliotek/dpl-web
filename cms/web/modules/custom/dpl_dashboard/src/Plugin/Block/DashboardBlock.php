@@ -96,6 +96,8 @@ class DashboardBlock extends BlockBase implements ContainerFactoryPluginInterfac
 
       // Texts.
       'choose-all-text' => $this->t('Select all', [], ['context' => 'Dashboard']),
+      'dashboard-see-more-fees-text' => $this->t('See more', [], ['context' => 'Dashboard']),
+      'dashboard-see-more-fees-aria-label-text' => $this->t('See your fees and how to pay', [], ['context' => 'Dashboard']),
       'digital-text' => $this->t('Digital', [], ['context' => 'Dashboard']),
       'fees-text' => $this->t('Fees', [], ['context' => 'Dashboard']),
       'group-modal-aria-description-text' => $this->t('This modal makes it possible to renew materials', [], ['context' => 'Dashboard (Aria)']),
@@ -108,8 +110,6 @@ class DashboardBlock extends BlockBase implements ContainerFactoryPluginInterfac
       'queued-reservations-text' => $this->t('Queued reservations', [], ['context' => 'Dashboard']),
       'reservations-still-in-queue-for-text' => $this->t('Still in queue', [], ['context' => 'Dashboard']),
       'reservations-text' => $this->t('Reservations', [], ['context' => 'Dashboard']),
-      'see-more-text' => $this->t('See more', [], ['context' => 'Dashboard']),
-      'see-more-aria-label-text' => $this->t('See your fees and how to pay', [], ['context' => 'Dashboard']),
       'total-amount-fee-text' => $this->t('@total,-', [], ['context' => 'Dashboard']),
       'total-owed-text' => $this->t('You owe in total', [], ['context' => 'Dashboard']),
       'your-profile-text' => $this->t('Your profile', [], ['context' => 'Dashboard']),
