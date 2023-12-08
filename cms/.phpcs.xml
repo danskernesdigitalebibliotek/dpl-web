@@ -19,10 +19,6 @@
     <exclude name="Drupal.Commenting.HookComment.HookParamDoc"/>
     <exclude name="Drupal.Commenting.HookComment.HookReturnDoc"/>
     <exclude name="Drupal.Commenting.HookComment.HookCommentFormat"/>
-    <!-- 
-      Exclude the requirement for @file comments in custom modules 
-      -->
-    <exclude-pattern>web/modules/custom/*</exclude-pattern>
     <exclude name="Drupal.Commenting.FileComment.Missing"/>
     <!--
       Disable variable checking rules which both overlap and conflict with
