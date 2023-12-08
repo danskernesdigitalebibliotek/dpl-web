@@ -41,11 +41,13 @@ ignored_config_entities:
   - ~field.field.node.article.field_override_author
   - ~field.field.node.article.field_show_override_author
   - ~field.field.node.article.field_subtitle
+  - ~field.field.node.event.field_event_description
   - ~field.settings
   - ~field.storage.node.body
   - ~field.storage.node.field_campaign_image
   - ~field.storage.node.field_campaign_rules
   - ~field.storage.node.field_campaign_text
+  - ~field.storage.node.field_event_description
   - ~field.storage.node.field_override_author
   - ~field.storage.node.field_show_override_author
   - ~field.storage.node.field_subtitle
