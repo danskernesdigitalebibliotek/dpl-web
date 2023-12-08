@@ -13,7 +13,7 @@ mode: default
 content:
   field_ticket_category_name:
     type: string
-    label: above
+    label: hidden
     settings:
       link_to_entity: false
     third_party_settings: {  }
@@ -21,7 +21,7 @@ content:
     region: content
   field_ticket_category_price:
     type: number_decimal
-    label: above
+    label: hidden
     settings:
       thousand_separator: ''
       decimal_separator: .
