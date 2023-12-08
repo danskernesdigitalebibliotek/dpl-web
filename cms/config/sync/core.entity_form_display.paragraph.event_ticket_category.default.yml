@@ -1,0 +1,31 @@
+uuid: 909f0a78-7a52-499c-ae02-454a6fdfc5fc
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.field.paragraph.event_ticket_category.field_ticket_category_name
+    - field.field.paragraph.event_ticket_category.field_ticket_category_price
+    - paragraphs.paragraphs_type.event_ticket_category
+id: paragraph.event_ticket_category.default
+targetEntityType: paragraph
+bundle: event_ticket_category
+mode: default
+content:
+  field_ticket_category_name:
+    type: string_textfield
+    weight: 0
+    region: content
+    settings:
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+  field_ticket_category_price:
+    type: number
+    weight: 1
+    region: content
+    settings:
+      placeholder: ''
+    third_party_settings: {  }
+hidden:
+  created: true
+  status: true

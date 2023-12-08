@@ -10,6 +10,7 @@ dependencies:
     - field.field.node.event.field_event_link
     - field.field.node.event.field_event_place
     - field.field.node.event.field_event_state
+    - field.field.node.event.field_ticket_categories
     - node.type.event
   module:
     - address
@@ -67,5 +68,6 @@ content:
     region: content
 hidden:
   field_event_state: true
+  field_ticket_categories: true
   langcode: true
   links: true
