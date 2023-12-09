@@ -1,14 +1,3 @@
-{% for item in items %}
-  {% set price = item.content['#markup'] %}
-
-  {# Events with 0 cost should be marked as free #}
-  {% if price matches '/^0.0+$/' %}
-    {{ "Free" | trans }}
-  {# Strip fractions from prices which do not use them #}
-  {# Add the kr. suffix for now. For multicurrency support this should be replaced by a configurable value. #}
-  {% elseif price matches '/^\\d+.0+$/' %}
-    {{ "@price kr." | t({'@price': price[:-3] }) }}
-  {% else %}
-    {{ "@price kr." | t({'@price': price}) }}
-  {% endif %}
+{% for price in prices %}
+  {{ price }}
 {% endfor %}

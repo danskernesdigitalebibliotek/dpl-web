@@ -172,3 +172,19 @@ function dpl_event_preprocess_field(array &$variables): void {
     $variables['items'][0]['content']['#title'] = $event_state->label();
   }
 }
+
+/**
+ * Implements hook_preprocess_field__field_ticket_category_price().
+ *
+ * Adds an array of formatted prices.
+ */
+function dpl_event_preprocess_field__field_ticket_category_price(array &$variables) : void {
+  /** @var \Drupal\dpl_event\PriceFormatter $price_formatter */
+  $price_formatter = \Drupal::service('dpl_event.price_formatter');
+  /** @var \Drupal\Core\Field\FieldItemListInterface $items */
+  $items = $variables['element']['#items'];
+  $prices = array_map(function (array $price) use ($price_formatter): string {
+    return $price_formatter->formatPrice($price["value"]);
+  }, $items->getValue());
+  $variables['prices'] = $prices;
+}
