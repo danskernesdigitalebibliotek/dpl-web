@@ -71,6 +71,7 @@
     ],
     "require": {
         "amazeeio/drupal_integrations": "0.3.7",
+        "brick/math": "^0.12.1",
         "composer/installers": "1.12.0",
         "cweagans/composer-patches": "1.7.3",
         "danskernesdigitalebibliotek/dpl-design-system": "2023.51.0",
