@@ -1,0 +1,7 @@
+{# Spaceless is important to get the right distance between elements in
+   paragraph--event-ticket-category.html.twig. #}
+{% apply spaceless %}
+{% for item in items %}
+  {{ item.content }}
+{% endfor %}
+{% endapply %}

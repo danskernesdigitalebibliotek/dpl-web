@@ -1,10 +1,8 @@
 {% if items|length == 1 %}
   {# Events with a single ticket category should only show the price. #}
-  {{ items.0.content['#paragraph'].field_ticket_category_price|view }}
+  <span>{{ items.0.content['#paragraph'].field_ticket_category_price|view }}</span>
 {% else %}
-  <dl>
   {% for item in items %}
     {{ item.content }}
   {% endfor %}
-  </dl>
 {% endif %}
