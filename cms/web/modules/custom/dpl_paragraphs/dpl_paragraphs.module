@@ -1,6 +1,12 @@
 <?php
 
+/**
+ * @file
+ * DPL Paragraphs tweaks.
+ */
+
 use Drupal\Core\Url;
+use Drupal\paragraphs\Entity\Paragraph;
 use function Safe\parse_url;
 use function Safe\preg_match;
 
@@ -90,4 +96,25 @@ function dpl_paragraphs_preprocess_paragraph__links(array &$variables): void {
       ];
     }
   }
+}
+
+/**
+ * Implements theme_preprocess_paragraph__NAME().
+ *
+ * On the 'medias' paragraph, a possible second image should have a different
+ * image-style. We do this, by setting a different view mode on the paragraph.
+ */
+function dpl_paragraphs_preprocess_paragraph__medias(array &$variables): void {
+  $paragraph = $variables['paragraph'] ?? NULL;
+  $view_mode = $variables['view_mode'] ?? NULL;
+
+  if ($view_mode === 'preview' ||
+      !($paragraph instanceof Paragraph) ||
+      (empty($variables['content']['field_medias'][1])) ||
+      (!$paragraph->hasField('field_medias'))) {
+    return;
+  }
+
+  $alternative_images = $paragraph->get('field_medias')->view('alternative');
+  $variables['content']['field_medias'][1] = $alternative_images[1] ?? NULL;
 }

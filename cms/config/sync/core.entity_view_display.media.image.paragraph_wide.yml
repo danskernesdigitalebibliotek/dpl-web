@@ -1,18 +1,19 @@
-uuid: 01903a9b-ac15-4b99-84a9-1ba7bb2318c8
+uuid: 53dcc5cd-2199-4ff1-8edd-1c9e060f4727
 langcode: en
 status: true
 dependencies:
   config:
+    - core.entity_view_mode.media.paragraph_wide
     - field.field.media.image.field_byline
     - field.field.media.image.field_media_image
     - image.style.paragraph_wide
     - media.type.image
   module:
     - image
-id: media.image.default
+id: media.image.paragraph_wide
 targetEntityType: media
 bundle: image
-mode: default
+mode: paragraph_wide
 content:
   field_byline:
     type: string

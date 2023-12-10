@@ -8,9 +8,6 @@ display:
       fields:
         media_bulk_form:
           action_title: Handling
-        thumbnail__target_id:
-          label: Thumbnail
-          separator: ', '
         name:
           separator: ', '
         bundle:
