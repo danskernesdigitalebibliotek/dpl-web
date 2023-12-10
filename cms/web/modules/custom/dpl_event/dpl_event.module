@@ -5,6 +5,7 @@
  * Module file for DPL Event.
  */
 
+use Drupal\Core\Form\FormStateInterface;
 use Drupal\dpl_event\EventState;
 use Drupal\job_scheduler\Entity\JobSchedule;
 use Drupal\node\NodeInterface;
@@ -116,6 +117,15 @@ function dpl_event_set_occurred_callback(JobSchedule $job): void {
     $event->set("field_event_state", EventState::Occurred);
     $event->save();
   }
+}
+
+/**
+ * Implements hook_form_node_event_form_alter().
+ */
+function dpl_event_form_node_event_form_alter(array &$form, FormStateInterface $form_state, string $form_id): void {
+  // Use the generic "Access" value as the default for the first ticket
+  // category when creating events.
+  $form["field_ticket_categories"]["widget"][0]["subform"]["field_ticket_category_name"]["widget"][0]["value"]["#default_value"] = t('Access', [], ['context' => 'dpl_event']);
 }
 
 /**
