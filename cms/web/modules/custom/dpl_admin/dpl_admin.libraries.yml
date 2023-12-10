@@ -1,0 +1,4 @@
+base:
+  css:
+    theme:
+      assets/dpl_admin.css: {}

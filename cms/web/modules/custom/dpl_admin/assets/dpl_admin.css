@@ -1,0 +1,29 @@
+/* Displaying the byline on the media-library preview. */
+.media-library-item__preview {
+  position: relative;
+}
+
+.media-library-item__preview-wrapper .field--name-field-byline {
+  position: absolute;
+  bottom: 0;
+  padding: 5px;
+  z-index: 2;
+  font-weight: bold;
+  font-size: 13px;
+  color: white;
+  background-color: rgba(0, 0, 0, 0.5);
+}
+
+/* Make UI modals larger on smaller screens. (Overriding inline styling.) */
+.ui-dialog,
+.ui-dialog[style] {
+  top: 25px !important;
+  bottom: 25px !important;
+  width: 90% !important;
+}
+
+.ui-dialog-content,
+.ui-dialog-content[style] {
+  height: calc(100% - 140px) !important;
+  max-height: 100% !important;
+}

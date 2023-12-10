@@ -9,6 +9,7 @@ module:
   customerror: 0
   datetime: 0
   datetime_range: 0
+  dpl_admin: 0
   dpl_article: 0
   dpl_campaign: 0
   dpl_dashboard: 0
