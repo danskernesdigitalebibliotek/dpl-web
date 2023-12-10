@@ -69,6 +69,13 @@ tasks:
       - sh: "[ ! -z {{.CR_PAT}} ]"
         msg: "Env variable CR_PAT is not set or empty."
 
+  dev:format:
+    summary: Lint custom code, and fix when possible
+    cmds:
+      - task dev:cli -- php vendor/bin/phpcbf
+      - task dev:cli -- php vendor/bin/phpcs
+      - task dev:cli -- php vendor/bin/phpstan
+
   dev:build:
     summary: Build docker containers
     # Ensure that we only rebuild if there are changes to Dockerfiles
@@ -158,6 +165,7 @@ tasks:
       - task dev:cli -- drush install -y field_ui views_ui
 
   dev:enable-xdebug:
+    desc: 'Enable xdebug within the container.'
     cmds:
       - XDEBUG_ENABLE=true task dev:start
       - read -p "Press enter to disable Xdebug"
