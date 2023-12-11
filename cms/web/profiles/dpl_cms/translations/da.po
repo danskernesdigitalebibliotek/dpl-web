@@ -3,424 +3,14 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2023-12-05 13:41+0100\n"
-"PO-Revision-Date: 2023-12-05 13:41+0100\n"
+"POT-Creation-Date: 2023-12-11 09:44+0100\n"
+"PO-Revision-Date: 2023-12-11 09:44+0100\n"
 "Last-Translator: NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
-
-msgctxt "Favorites list material component (aria)"
-msgid "Add @title to favorites list"
-msgstr "Tilføj @title til huskelisten"
-
-msgctxt "Favorites list material component"
-msgid "Go to My list"
-msgstr "Gå til Huskeliste"
-
-msgctxt "Favorites list material component"
-msgid "Your list"
-msgstr "Huskeliste"
-
-msgctxt "Favorites list material component"
-msgid "and"
-msgstr "og"
-
-msgctxt "Favorites list material component"
-msgid "et al."
-msgstr "et al."
-
-msgctxt "Favorites list material component"
-msgid "By"
-msgstr "Af"
-
-msgctxt "Favorites list material component (aria)"
-msgid "Remove @title from favorites list"
-msgstr "Fjern @title fra huskelisten"
-
-msgid "React DDB Library"
-msgstr "React DPL Library"
-
-msgid "Library is present"
-msgstr "Library er "
-
-msgid "DDB React library is missing (@dir)"
-msgstr "DPL React library mangler (@dir) "
-
-msgctxt "Reservation list"
-msgid "Borrow before @date"
-msgstr "Lån før @date"
-
-msgctxt "Reservation list"
-msgid "and"
-msgstr "og"
-
-msgctxt "Reservation list"
-msgid "et al."
-msgstr "et al."
-
-msgctxt "Reservation list"
-msgid "By"
-msgstr "Af"
-
-msgctxt "Reservation list"
-msgid "Audiobook"
-msgstr "Lydbog"
-
-msgctxt "Reservation list"
-msgid "Podcast"
-msgstr "Podcast"
-
-msgctxt "Reservation list"
-msgid "E-book"
-msgstr "E-bog"
-
-msgctxt "Reservation list"
-msgid "Remove your reservation"
-msgstr "Slet reserveringer"
-
-msgctxt "Reservation list"
-msgid "Cancel"
-msgstr "Fortryd"
-
-msgctxt "Reservation list"
-msgid "Date of reservation"
-msgstr "Reserveringsdato"
-
-msgctxt "Reservation list"
-msgid "Borrow before"
-msgstr "Lån før"
-
-msgctxt "Reservation list"
-msgid "Go to eReolen"
-msgstr "Gå til eReolen"
-
-msgctxt "Reservation list"
-msgid "Your reservation expires @date!"
-msgstr "Din reservering udløber @date"
-
-msgctxt "Reservation list"
-msgid "Pickup deadline"
-msgstr "Afhent senest"
-
-msgctxt "Reservation list"
-msgid "Not interested after"
-msgstr "Ikke interesseret efter"
-
-msgctxt "Reservation list"
-msgid "@count queued"
-msgstr "@count i køen"
-
-msgctxt "Reservation list"
-msgid "Others are queueing for this material"
-msgstr "Andre lånere venter på materialet"
-
-msgctxt "Reservation list"
-msgid "Pickup branch"
-msgstr "Afhentningssted"
-
-msgctxt "Reservation list"
-msgid "Ready for pickup"
-msgstr "Klar til lån"
-
-msgctxt "Reservation list"
-msgid "Save"
-msgstr "Gem"
-
-msgctxt "Reservation list"
-msgid "Status"
-msgstr "Status"
-
-msgctxt "Reservation list"
-msgid "At the moment you have 0 reservations"
-msgstr "Du har 0 reserveringer"
-
-msgctxt "Reservation list"
-msgid "Available in @count days"
-msgstr "Tilgængelig om @count dage"
-
-msgctxt "Reservation list"
-msgid "day"
-msgstr "dag"
-
-msgctxt "Reservation list"
-msgid "days"
-msgstr "dage"
-
-msgctxt "Reservation list"
-msgid "Online access"
-msgstr "Skal hentes online"
-
-msgctxt "Reservation list"
-msgid "At the moment you have 0 reservations on digital items"
-msgstr "Du har ingen reserveringer på digitale materialer"
-
-msgctxt "Reservation list"
-msgid "Digital reservations"
-msgstr "Digitale reserveringer"
-
-msgctxt "Reservation list"
-msgid "You are at the front of the queue"
-msgstr "Du er forrest i køen"
-
-msgctxt "Reservation list"
-msgid "Your reservations"
-msgstr "Dine reserveringer"
-
-msgctxt "Reservation list"
-msgid "queued"
-msgstr "i kø"
-
-msgctxt "Reservation list"
-msgid "There are @count people in the queue before you"
-msgstr "Der er @count i køen før dig"
-
-msgctxt "Reservation list"
-msgid "Pause reservations on physical items"
-msgstr "Sæt reserveringer af fysiske materialer på pause"
-
-msgctxt "Reservation list"
-msgid "At the moment you have 0 physical reservations"
-msgstr "Du har ingen reserveringer på fysiske materialer"
-
-msgctxt "Reservation list"
-msgid "Physical reservations"
-msgstr "Reserverede fysiske materialer"
-
-msgctxt "Reservation list"
-msgid "At the moment you have 0 reservations ready for pickup"
-msgstr "Du har 0 reserveringer klar til lån"
-
-msgctxt "Reservation list"
-msgid "Ready"
-msgstr "Klar"
-
-msgctxt "Reservation list"
-msgid "Pick up before @date"
-msgstr "Hent senest @date"
-
-msgctxt "Reservation list"
-msgid "End date"
-msgstr "Slutdato"
-
-msgctxt "Reservation list"
-msgid "Start date"
-msgstr "Begyndelsesdato"
-
-msgctxt "Reservation list (Aria)"
-msgid ""
-"This button opens a modal that covers the entire page and contains the "
-"possibility to delete a selected reservation, or multiple selected "
-"reservations"
-msgstr "Slet én eller flere valgte reserveringer"
-
-msgctxt "Reservation list"
-msgid "Close delete reservation modal"
-msgstr "Luk pop-up"
-
-msgctxt "Reservation list"
-msgid "Cancel reservation"
-msgstr "Slet reservering"
-
-msgctxt "Reservation list"
-msgid "Do you want to cancel your reservation?"
-msgstr "Vil du slette dine reserveringer?"
-
-msgctxt "Reservation list"
-msgid "You cannot regret this action"
-msgstr "Du kan ikke fortryde denne handling"
-
-msgctxt "Reservation list"
-msgid "Cancel reservations"
-msgstr "Slet reserveringer"
-
-msgctxt "Reservation list (Aria)"
-msgid "Close material details modal"
-msgstr "Luk pop-up"
-
-msgctxt "Reservation list"
-msgid "1 month"
-msgstr "1 måned"
-
-msgctxt "Reservation list"
-msgid "1 year"
-msgstr "1 år"
-
-msgctxt "Reservation list (Aria)"
-msgid "This modal makes it possible to pause your physical reservations"
-msgstr ""
-"Denne pop-up gør det muligt at sætte reserveringer af fysiske "
-"materialer på pause"
-
-msgctxt "Reservation list"
-msgid "Pause reservation below inputs text"
-msgstr "Bemærk at der kan være en forsinkelse på hvornår pausen begynder."
-
-msgctxt "Reservation list"
-msgid ""
-"Pause your reservations early, since reservations that are already "
-"being processed, will not be paused."
-msgstr ""
-"Sæt reserveringer på pause i god tid, da reserveringer i proces ikke "
-"kan sættes på pause."
-
-msgctxt "Reservation list"
-msgid "Close pause reservations modal"
-msgstr "Luk pop-up"
-
-msgctxt "Reservation list"
-msgid "Read more about pausing reservations and what that means here"
-msgstr "Læs mere om at sætte reserveringer på pause"
-
-msgctxt "Reservation list (Aria)"
-msgid "Reservations have been paused in the following time span:"
-msgstr "Reserveringer er sat på pause i det følgende tidsrum:"
-
-msgctxt "Reservation list (Aria)"
-msgid ""
-"This button opens a modal that covers the entire page and contains the "
-"possibility to pause physical reservations"
-msgstr "Sæt reserveringer af fysiske materialer på pause"
-
-msgctxt "Reservation list (Aria)"
-msgid "This material is ready for pickup"
-msgstr "Dette materiale er klar til lån"
-
-msgctxt "Reservation list (Aria)"
-msgid "You are the only person queued for this material"
-msgstr "Du er den eneste i kø til dette materiale"
-
-msgctxt "Reservation list (Aria)"
-msgid "This material has @count people in queue before you"
-msgstr "Der står @count brugere i kø før dig til dette materiale"
-
-msgctxt "Reservation list (Aria)"
-msgid "This material is ready in 1 day"
-msgstr "Materiale er klar om 1 dag"
-
-msgctxt "Reservation list (Aria)"
-msgid "This material is ready in @count days"
-msgstr "Materialet er klar til dig om @count dage"
-
-msgctxt "Reservation list"
-msgid "Showing @itemsShown out of @hitcount results"
-msgstr "Viser @itemsShown ud af @hitcount reserveringer"
-
-msgctxt "Reservation list"
-msgid "show more"
-msgstr "Vis flere"
-
-msgctxt "Reservation list"
-msgid "6 months"
-msgstr "6 måneder"
-
-msgctxt "Reservation list"
-msgid "3 months"
-msgstr "3 måneder"
-
-msgctxt "Reservation list"
-msgid "2 months"
-msgstr "2 måneder"
-
-msgctxt "Reservation list"
-msgid "Shift"
-msgstr "Skift"
-
-msgctxt "Reservation list"
-msgid "Choose pickup library"
-msgstr "Vælg afhentningsbibliotek"
-
-msgctxt "Reservation list"
-msgid "Decide at which library you want to pickup the material."
-msgstr "Vælg hvor du vil hente dine materialer."
-
-msgctxt "Reservation list"
-msgid "Your reservation has been changed"
-msgstr "Din reservering blev ændret"
-
-msgctxt "Reservation list"
-msgid "Click the button below to close this window"
-msgstr "Klik på knappen for at lukke dette vindue"
-
-msgctxt "Reservation list"
-msgid "Close"
-msgstr "Luk"
-
-msgctxt "Reservation list"
-msgid "Change interest deadline"
-msgstr "Skift interesseperiode"
-
-msgctxt "Reservation list"
-msgid "Set date for when your interest for the material will expire."
-msgstr "Vælg dato for hvornår din interesseperiode udløber"
-
-msgctxt "Reservation list"
-msgid "Choose one"
-msgstr "Vælg en"
-
-msgctxt "Reservation list"
-msgid "Change interest period"
-msgstr "Skift interesseperiode"
-
-msgctxt "Reservation list"
-msgid "Change pickup location"
-msgstr "Skift afhentningssted"
-
-msgctxt "Reservation list"
-msgid ""
-"Change the amount of time after which you're no longer interested in "
-"this material."
-msgstr "Vælg dato for hvornår din interesseperiode udløber"
-
-msgctxt "Reservation list"
-msgid "Change pickup location for your reservation."
-msgstr "Skift afhentningssted"
-
-msgctxt "Reservation list (settings)"
-msgid "Basic settings"
-msgstr "Grundlæggende indstillinger"
-
-msgctxt "Reservation list (settings)"
-msgid "Page size mobile"
-msgstr "Antal listeelemeter på side (mobil)"
-
-msgctxt "Reservation list (settings)"
-msgid "Page size desktop"
-msgstr "Antal listeelemeter på side (desktop)"
-
-msgctxt "Something similar"
-msgid "and"
-msgstr "og"
-
-msgctxt "Something similar (Aria)"
-msgid "Add @title to favorites list"
-msgstr "Fjern @title fra huskelisten"
-
-msgctxt "Something similar"
-msgid "et al."
-msgstr "et al."
-
-msgctxt "Something similar"
-msgid "By"
-msgstr "Af"
-
-msgctxt "Something similar (Aria)"
-msgid "Remove @title from favorites list"
-msgstr "Fjern @title fra huskelisten"
-
-msgctxt "Something similar"
-msgid "By the same author"
-msgstr "Af samme forfatter"
-
-msgctxt "Something similar"
-msgid "Something similar"
-msgstr "Noget der ligner"
-
-msgctxt "Something similar"
-msgid "Other materials"
-msgstr "Andre materialer"
 
 msgid "Library token"
 msgstr "Biblioteks token"
@@ -435,20 +25,179 @@ msgstr ""
 "Gyldig token er ikke tilgængelig. <a href=\":url\">Run cron</a> for "
 "at hente en ny token."
 
-msgid "Ticket sale not open"
-msgstr ""
+msgid "Configuration file"
+msgstr "Konfigurationsfil"
 
-msgid "Active"
-msgstr "Aktiv"
+msgctxt "DPL Config Import"
+msgid "Select a configuration file in YAML format to upload."
+msgstr "Vælg en konfigurationsfil i YAML til upload."
 
-msgid "Sold out"
-msgstr ""
+msgid "Upload"
+msgstr "Upload"
 
-msgid "Canceled"
-msgstr ""
+msgctxt "DPL Config Import"
+msgid "Unable to handle the uploaded file"
+msgstr "Ude af stand til at indlæse den uploadede fil"
 
-msgid "Occurred"
+msgctxt "DPL Config Import"
+msgid "Unable to parse YAML file: %reason"
+msgstr "Ude af stand til at parse YAML fil: %reason"
+
+msgctxt "DPL Config Import"
+msgid "Installed modules: %modules_list"
+msgstr "Installerede moduler: %modules_list"
+
+msgctxt "DPL Config Import"
+msgid "Failed to install modules: @reason"
+msgstr "Kunne ikke installere modul: @reason"
+
+msgctxt "DPL Config Import"
+msgid "Uninstalled modules: %modules_list"
+msgstr "Ikke-installerede moduler: %modules_list"
+
+msgctxt "DPL Config Import"
+msgid "Failed to uninstall modules: @reason"
+msgstr "Kunne ikke installere modul: @reason"
+
+msgid "Basic settings"
+msgstr "Grundlæggende indstillinger"
+
+msgid "Page size mobile"
+msgstr "Antal listeelemeter på side (mobil)"
+
+msgid "Page size desktop"
+msgstr "Antal listeelemeter på side (desktop)"
+
+msgctxt "Favorites list"
+msgid "By"
+msgstr "Af"
+
+msgctxt "Favorites list"
+msgid "et al"
+msgstr "et al."
+
+msgctxt "Favorites list"
+msgid "Your favorites list is empty"
+msgstr "Din huskeliste er tom"
+
+msgctxt "Favorites list"
+msgid "Favorites"
+msgstr "Huskeliste"
+
+msgctxt "Favorites list"
+msgid "@count materials"
+msgstr "@count materialer"
+
+msgctxt "Favorites list"
+msgid "in series"
+msgstr "i serien"
+
+msgctxt "Favorites list"
+msgid "Number description"
+msgstr "Nummer"
+
+msgctxt "Favorites list (aria)"
+msgid "Remove @title from favorites list"
+msgstr "Fjern @title fra huskelisten"
+
+msgctxt "Favorites list (aria)"
+msgid "Add @title to favorites list"
+msgstr "Tilføj @title til huskelisten"
+
+msgctxt "Favorites list"
+msgid "Showing @itemsShown out of @hitcount results"
+msgstr "Viser @itemsShown ud af @hitcount resultater"
+
+msgctxt "Favorites list"
+msgid "show more"
+msgstr "Vis flere"
+
+msgctxt "Favorites list"
+msgid "Choose all renewable"
+msgstr "Vælg mulige"
+
+msgctxt "Url Proxy"
+msgid "configured"
+msgstr "konfigureret"
+
+msgctxt "Url Proxy"
+msgid "This configuration form is for administering proxy url generation."
 msgstr ""
+"Denne formular er til administration af proxy URL'er for at give "
+"adgang til e-ressourcer."
+
+msgctxt "Url Proxy"
+msgid "Proxy server URL prefix"
+msgstr "Præfiks til proxy-serverens URL"
+
+msgctxt "Url Proxy"
+msgid ""
+"The prefix to use for proxy server URLs. This is the part of the "
+"URL\n"
+"        that comes before the hostname"
+msgstr ""
+"Præfikset er den del af URL'en, som kommer før værtsnavnet "
+"(hostname)"
+
+msgctxt "Url Proxy"
+msgid "Hostnames"
+msgstr "Hostnames / Værtsnavne"
+
+msgctxt "Url Proxy"
+msgid "Host configuration"
+msgstr "Opsætning af værtsnavne"
+
+msgctxt "Url Proxy"
+msgid "Hostname"
+msgstr "Hostname / Værtsnavn"
+
+msgctxt "Url Proxy"
+msgid "Replacement %configured"
+msgstr "Erstatning %configured"
+
+msgctxt "Url Proxy"
+msgid "Regular expression"
+msgstr "Regular expression / Regulært udtryk"
+
+msgctxt "Url Proxy"
+msgid ""
+"Use regular expression to substitut parts of the url, e.g. "
+"\"<em>%regex</em>\"."
+msgstr ""
+"Brug et regulært udtryk som erstatning for dele af URL'en, fx. "
+"\"<em>%regex</em>\"."
+
+msgctxt "Url Proxy"
+msgid "Replacement"
+msgstr "Replacement / Erstatning"
+
+msgctxt "Url Proxy"
+msgid "The replacement value for the regular expression."
+msgstr "Erstatning for det regulære udtryk."
+
+msgctxt "Url Proxy"
+msgid "Do not use proxy prefix for this hostname"
+msgstr "Brug ikke præfiks for dette værtnavn/ hostname"
+
+msgctxt "Url Proxy"
+msgid "Remove this"
+msgstr "Fjern denne"
+
+msgctxt "Url Proxy"
+msgid "Add one more"
+msgstr "Tilføj en mere"
+
+msgctxt "Url Proxy"
+msgid "Submit"
+msgstr "Gem"
+
+msgctxt "Menu (settings)"
+msgid "Page size mobile"
+msgstr "Antal listeelemeter på side (mobil)"
+
+msgctxt "Menu (settings)"
+msgid "Page size desktop"
+msgstr "Antal listeelemeter på side (desktop)"
 
 msgid "Dashboard"
 msgstr "Mit overblik"
@@ -765,70 +514,1506 @@ msgctxt "Patron menu"
 msgid "Expires soon"
 msgstr "Under 6 dage"
 
-msgctxt "Menu (settings)"
-msgid "Page size mobile"
-msgstr "Antal listeelemeter på side (mobil)"
+msgctxt "Recommender (settings)"
+msgid "Search text"
+msgstr "Søgetekst"
 
-msgctxt "Menu (settings)"
-msgid "Page size desktop"
-msgstr "Antal listeelemeter på side (desktop)"
+msgctxt "Recommender (settings)"
+msgid "Search text for recommender when no loan/no reservation"
+msgstr ""
+"Søgetekst for anbefalinger hvis bruger har 0 lån/reserveringer (ikke "
+"CQL)"
 
-msgctxt "Favorites list"
-msgid "By"
-msgstr "Af"
+msgctxt "Recommender"
+msgid "and"
+msgstr "og"
 
-msgctxt "Favorites list"
-msgid "et al"
-msgstr "et al."
-
-msgctxt "Favorites list"
-msgid "Your favorites list is empty"
-msgstr "Din huskeliste er tom"
-
-msgctxt "Favorites list"
-msgid "Favorites"
-msgstr "Huskeliste"
-
-msgctxt "Favorites list"
-msgid "@count materials"
-msgstr "@count materialer"
-
-msgctxt "Favorites list"
-msgid "in series"
-msgstr "i serien"
-
-msgctxt "Favorites list"
-msgid "Number description"
-msgstr "Nummer"
-
-msgctxt "Favorites list (aria)"
-msgid "Remove @title from favorites list"
-msgstr "Fjern @title fra huskelisten"
-
-msgctxt "Favorites list (aria)"
+msgctxt "Recommender (Aria)"
 msgid "Add @title to favorites list"
 msgstr "Tilføj @title til huskelisten"
 
-msgctxt "Favorites list"
-msgid "Showing @itemsShown out of @hitcount results"
-msgstr "Viser @itemsShown ud af @hitcount resultater"
+msgctxt "Recommender"
+msgid "et al."
+msgstr "et al."
 
-msgctxt "Favorites list"
-msgid "show more"
-msgstr "Vis flere"
+msgctxt "Recommender"
+msgid "By"
+msgstr "Af"
 
-msgctxt "Favorites list"
-msgid "Choose all renewable"
-msgstr "Vælg mulige"
+msgctxt "Recommender"
+msgid "For your inspiration"
+msgstr "Inspiration til dig"
 
+msgctxt "Recommender"
+msgid "Because you have borrowed @title you may also like"
+msgstr "Fordi du har lånt @title kan du måske også lide"
+
+msgctxt "Recommender"
+msgid "Because you have reserved @title you may also like"
+msgstr "Fordi du har lånt @title kan du måske også lide"
+
+msgctxt "Recommender (Aria)"
+msgid "Remove @title from favorites list"
+msgstr "Fjern @title fra huskelisten"
+
+msgctxt "Something similar"
+msgid "and"
+msgstr "og"
+
+msgctxt "Something similar (Aria)"
+msgid "Add @title to favorites list"
+msgstr "Fjern @title fra huskelisten"
+
+msgctxt "Something similar"
+msgid "et al."
+msgstr "et al."
+
+msgctxt "Something similar"
+msgid "By"
+msgstr "Af"
+
+msgctxt "Something similar (Aria)"
+msgid "Remove @title from favorites list"
+msgstr "Fjern @title fra huskelisten"
+
+msgctxt "Something similar"
+msgid "By the same author"
+msgstr "Af samme forfatter"
+
+msgctxt "Something similar"
+msgid "Something similar"
+msgstr "Noget der ligner"
+
+msgctxt "Something similar"
+msgid "Other materials"
+msgstr "Andre materialer"
+
+msgctxt "Dashboard (settings)"
 msgid "Basic settings"
 msgstr "Grundlæggende indstillinger"
 
+msgctxt "Dashboard (settings)"
 msgid "Page size mobile"
 msgstr "Antal listeelemeter på side (mobil)"
 
+msgctxt "Dashboard (settings)"
 msgid "Page size desktop"
 msgstr "Antal listeelemeter på side (desktop)"
+
+msgctxt "Dashboard"
+msgid "Yes, renew"
+msgstr "Ja, forny"
+
+msgctxt "Dashboard"
+msgid "Are you sure you want to renew?"
+msgstr "Er du sikker på at du vil forny?"
+
+msgctxt "Dashboard (Aria)"
+msgid "accept modal aria description text"
+msgstr "accepter pop-up beskrivelsestekst"
+
+msgctxt "Dashboard (Aria)"
+msgid "accept modal aria label text"
+msgstr "accepter pop-up beskrivelsestekst"
+
+msgctxt "Dashboard"
+msgid "If you renew your fee will be raised"
+msgstr ""
+"Hvis du kun fornyer nogle af dine lån, risikerer du at dit gebyr "
+"bliver forhøjet, fordi dine lån opsplittes i flere "
+"afleveringsdatoer."
+
+msgctxt "Dashboard"
+msgid "Cancel renewal"
+msgstr "Forny ikke"
+
+msgctxt "Dashboard"
+msgid "Your fee is raised"
+msgstr "Dit gebyr kan blive forhøjet"
+
+msgctxt "Dashboard"
+msgid "Select all"
+msgstr "Vælg alle"
+
+msgctxt "Dashboard"
+msgid "Number @count in line"
+msgstr "Nummer @count i køen"
+
+msgctxt "Dashboard (Aria)"
+msgid ""
+"This button opens a modal that covers the entire page and contains the "
+"possibility to delete a selected reservation, or multiple selected "
+"reservations"
+msgstr "Slet én eller flere valgte reserveringer"
+
+msgctxt "Dashboard"
+msgid "Close delete reservation modal"
+msgstr "Luk pop-up"
+
+msgctxt "Dashboard"
+msgid "Cancel reservation"
+msgstr "Slet reservering"
+
+msgctxt "Dashboard"
+msgid "Do you want to cancel your reservation?"
+msgstr "Vil du slette dine reserveringer?"
+
+msgctxt "Dashboard"
+msgid "Cancel reservations"
+msgstr "Slet reserveringer"
+
+msgctxt "Dashboard"
+msgid "You cannot regret this action"
+msgstr "Du kan ikke fortryde denne handling"
+
+msgctxt "Dashboard"
+msgid "Digital reservations"
+msgstr "Digitale reserveringer"
+
+msgctxt "Dashboard"
+msgid "Digital"
+msgstr "Digitale"
+
+msgctxt "Dashboard"
+msgid "et al."
+msgstr "et al."
+
+msgctxt "Dashboard"
+msgid "Fees"
+msgstr "Gebyrer & erstatninger"
+
+msgctxt "Dashboard (Aria)"
+msgid "This modal makes it possible to renew materials"
+msgstr "Denne pop-up gør det muligt at forny materialer"
+
+msgctxt "Dashboard"
+msgid "Renewable (@count)"
+msgstr "Forny (@count)"
+
+msgctxt "Dashboard"
+msgid "Choose all"
+msgstr "Vælg alle"
+
+msgctxt "Dashboard"
+msgid ""
+"This modal groups loans after due date and makes it possible to renew "
+"said loans"
+msgstr ""
+"Denne pop-up grupperer lån efter afleveringsfrist og gør det muligt "
+"at forny disse lån"
+
+msgctxt "Dashboard"
+msgid "Due date @date"
+msgstr "Afleveringsfrist @date"
+
+msgctxt "Dashboard"
+msgid "Close renew loans modal"
+msgstr "Luk pop-up"
+
+msgctxt "Dashboard"
+msgid ""
+"The due date of return is exceeded, therefore you will be charged a "
+"fee, when the item is returned"
+msgstr "Afleveringsfristen er overskredet, du får et gebyr, når du afleverer"
+
+msgctxt "Dashboard"
+msgid "Select @label for renewal"
+msgstr "Vælg @label til sletning"
+
+msgctxt "Dashboard (Aria)"
+msgid "Close modal with grouped reservations"
+msgstr "Luk pop-up"
+
+msgctxt "Dashboard (Aria)"
+msgid "This modal makes it possible to delete reservations"
+msgstr "Denne pop-up gør det muligt at slette reserveringer"
+
+msgctxt "Dashboard"
+msgid "Intermediates"
+msgstr "Mellemværender"
+
+msgctxt "Dashboard"
+msgid "Pick"
+msgstr "Vælg"
+
+msgctxt "Dashboard"
+msgid "Longer return time"
+msgstr "Over 6 dage til aflevering"
+
+msgctxt "Dashboard"
+msgid "Returned too late"
+msgstr "Afleveringsfrist overskredet"
+
+msgctxt "Dashboard"
+msgid "To be returned soon"
+msgstr "Skal snart afleveres"
+
+msgctxt "Dashboard"
+msgid "and"
+msgstr "og"
+
+msgctxt "Dashboard"
+msgid "By"
+msgstr "Af"
+
+msgctxt "Dashboard (Aria)"
+msgid "Close material details modal"
+msgstr "Luk pop-up"
+
+msgctxt "Dashboard"
+msgid "Read more about fees"
+msgstr "Læs mere om gebyrer og erstatninger"
+
+msgctxt "Dashboard"
+msgid "Loan date"
+msgstr "Udlånsdato"
+
+msgctxt "Dashboard"
+msgid "Material Item Number"
+msgstr "Materialenummer"
+
+msgctxt "Dashboard (Aria)"
+msgid ""
+"This modal shows material details, and makes it possible to renew a "
+"material, of that material is renewable"
+msgstr ""
+"Denne pop-up viser detaljer for materialet og gør det muligt at forny "
+"materialet såfremt det er muligt"
+
+msgctxt "Dashboard"
+msgid "Expired"
+msgstr "Udløbet"
+
+msgctxt "Dashboard"
+msgid "Afleveres"
+msgstr "Afleveringsfrist"
+
+msgctxt "Dashboard"
+msgid "At the moment, you have 0 physical loans"
+msgstr "Du har ingen fysiske lån i øjeblikket"
+
+msgctxt "Dashboard"
+msgid "At the moment, you have 0 reservations"
+msgstr "Du har 0 reserveringer"
+
+msgctxt "Dashboard"
+msgid "Pay"
+msgstr "Betal"
+
+msgctxt "Dashboard"
+msgid "Loans"
+msgstr "Lån"
+
+msgctxt "Dashboard"
+msgid "Physical reservations"
+msgstr "Reserverede fysiske materialer"
+
+msgctxt "Dashboard"
+msgid "Pick up before @date"
+msgstr "Hent senest @date"
+
+msgctxt "Dashboard"
+msgid "Audiobook"
+msgstr "Lydbog"
+
+msgctxt "Dashboard"
+msgid "E-book"
+msgstr "E-bog"
+
+msgctxt "Dashboard"
+msgid "Podcast"
+msgstr "Podcast"
+
+msgctxt "Dashboard"
+msgid "Queued reservations"
+msgstr "Reserveringer i kø"
+
+msgctxt "Dashboard"
+msgid "Ready"
+msgstr "Klar"
+
+msgctxt "Dashboard"
+msgid "Ready for pickup"
+msgstr "Klar til lån"
+
+msgctxt "Dashboard"
+msgid "Remove reservations (@amount)"
+msgstr "Slet reserveringer (@amount)"
+
+msgctxt "Dashboard"
+msgid "Borrow before @date"
+msgstr "Lån før @date"
+
+msgctxt "Dashboard"
+msgid "Remove your reservation"
+msgstr "Slet reservering"
+
+msgctxt "Dashboard"
+msgid "Apply changes"
+msgstr "Skift"
+
+msgctxt "Dashboard"
+msgid "Date of reservation"
+msgstr "Reserveringsdato"
+
+msgctxt "Dashboard"
+msgid "Go to eReolen"
+msgstr "Gå til eReolen"
+
+msgctxt "Dashboard"
+msgid "Not interested after"
+msgstr "Ikke interesseret efter"
+
+msgctxt "Dashboard"
+msgid "@count queued"
+msgstr "@count i kø"
+
+msgctxt "Dashboard"
+msgid "Others are queueing for this material"
+msgstr "Andre lånere venter på materialet"
+
+msgctxt "Dashboard"
+msgid "Pickup branch"
+msgstr "Afhentningssted"
+
+msgctxt "Dashboard"
+msgid "Pickup deadline"
+msgstr "Afhent senest"
+
+msgctxt "Dashboard"
+msgid "Status"
+msgstr "Status"
+
+msgctxt "Dashboard"
+msgid "Ready for you"
+msgstr "Klar til dig"
+
+msgctxt "Dashboard"
+msgid "Still in queue"
+msgstr "Stadig i kø"
+
+msgctxt "Dashboard"
+msgid "Reservations"
+msgstr "Reserveringer"
+
+msgctxt "Dashboard"
+msgid "Showing @itemsShown out of @hitcount elements"
+msgstr "Viser @itemsShown ud af @hitcount elementer"
+
+msgctxt "Dashboard"
+msgid "Expires soon"
+msgstr "Under 6 dage"
+
+msgctxt "Dashboard"
+msgid "@total,-"
+msgstr "@total kr."
+
+msgctxt "Dashboard"
+msgid "You owe in total"
+msgstr "Du skylder i alt"
+
+msgctxt "Dashboard"
+msgid "Your profile"
+msgstr "Dit overblik"
+
+msgctxt "Library Agency Configuration"
+msgid "Reservations"
+msgstr "Reserveringer"
+
+msgctxt "Library Agency Configuration"
+msgid "Enable SMS notifications for reservations"
+msgstr "Slå mulighed for tilvalg af sms notifikationer for reserveringer til"
+
+msgctxt "Library Agency Configuration"
+msgid "If checked, SMS notifications for patrons are enabled."
+msgstr "Hvis valgt, kan brugerne vælge at få tilsendt notifikationer på sms"
+
+msgctxt "Library Agency Configuration"
+msgid "Interest periods for reservation"
+msgstr "Interesseperiode for reserveringer"
+
+msgctxt "Library Agency Configuration"
+msgid "Allow removing ready reservations"
+msgstr "Tillad sletning af opfyldte reserveringer"
+
+msgctxt "Library Agency Configuration"
+msgid "Ereolen link"
+msgstr "eReolen link"
+
+msgctxt "Library Agency Configuration"
+msgid "My page in ereolen"
+msgstr "Min side på eReolen"
+
+msgctxt "Library Agency Configuration"
+msgid "Ereolen home link"
+msgstr ""
+
+msgctxt "Library Agency Configuration"
+msgid "Home page in ereolen"
+msgstr ""
+
+msgctxt "Library Agency Configuration"
+msgid "Pause reservation link"
+msgstr "Link til side om reserveringspause"
+
+msgctxt "Library Agency Configuration"
+msgid "The link with infomation about reservations"
+msgstr "Her kan brugeren læse om at sætte sine reserveringer på pause"
+
+msgctxt "Library Agency Configuration"
+msgid "Start date"
+msgstr "Startdato"
+
+msgctxt "Library Agency Configuration"
+msgid "Pause reservation start date"
+msgstr "Startdato for at kunne sætte reserveringer på pause"
+
+msgid "Blocked user"
+msgstr "Blokeret bruger"
+
+msgid "Redirect blocked user link"
+msgstr "Link til omstilling af en blokeret bruger"
+
+msgid "The link to redirect the blocked user to"
+msgstr ""
+"Angiv linket til den side som en blokeret bruger skal sendes videre "
+"til"
+
+msgid "Blocked user link for modal"
+msgstr "Blokeret bruger link til modal"
+
+msgid "If a user has blocked status e, this link appears in the modal"
+msgstr ""
+"Hvis en bruger er blokeret pga. status e (overskredet gebyrgrænse) "
+"vises dette link i beskeden til brugeren"
+
+msgctxt "Library Agency Configuration"
+msgid "Expiration warning"
+msgstr "Advarsel om at udløbsdato nærmer sig"
+
+msgctxt "Library Agency Configuration"
+msgid "Set expiration warning"
+msgstr "Indstil advarsel vedr. udløbsdato"
+
+msgctxt "Library Agency Configuration"
+msgid ""
+"Insert the number of days before the expiration of the material, when "
+"the reminder \"Expires soon\" should appear."
+msgstr ""
+"Indsæt antal dage før udløbsdatoen for et lån, hvor label med "
+"teksten \"Udløber snart\" skal vises på lånet."
+
+msgctxt "Library Agency Configuration"
+msgid "Excluded branches"
+msgstr "Blacklistede filialer"
+
+msgctxt "Library Agency Configuration"
+msgid ""
+"Select which branches should be excluded in different parts of the "
+"system."
+msgstr ""
+"Vælg, hvilke filialer der ikke skal vises hvor, forskellige steder i "
+"systemet."
+
+msgctxt "Library Agency Configuration"
+msgid "Search results"
+msgstr "Søge resultater"
+
+msgctxt "Library Agency Configuration"
+msgid ""
+"Holdings belonging to the selected branches will not be shown in "
+"search results."
+msgstr ""
+"Beholdning på de valgte filialer vil ikke blive vist i "
+"søgeresultatet."
+
+msgid "Availability"
+msgstr "Tilgængelighed"
+
+msgctxt "Library Agency Configuration"
+msgid ""
+"Holdings belonging to the selected branches will not considered when "
+"showing work availability."
+msgstr ""
+"Beholdning på de valgte filialer vil ikke blive vist som "
+"tilgængelige."
+
+msgctxt "Library Agency Configuration"
+msgid ""
+"Selected branches will not be available as pickup locations for "
+"reservations."
+msgstr "Valgte filialer vil ikke kunne vælges som afhentningssted."
+
+msgctxt "Dpl Publizon"
+msgid "Basic settings"
+msgstr "Grundlæggende indstillinger"
+
+msgctxt "Dpl Publizon"
+msgid "Publizon service url"
+msgstr "Publizon service URL"
+
+msgctxt "Dpl Fbs"
+msgid "Basic settings"
+msgstr "Grundlæggende indstillinger"
+
+msgctxt "Dpl Fbs"
+msgid "FBS service url"
+msgstr "FBS service URL"
+
+msgctxt "Favorites list material component (aria)"
+msgid "Add @title to favorites list"
+msgstr "Tilføj @title til huskelisten"
+
+msgctxt "Favorites list material component"
+msgid "Go to My list"
+msgstr "Gå til Huskeliste"
+
+msgctxt "Favorites list material component"
+msgid "Your list"
+msgstr "Huskeliste"
+
+msgctxt "Favorites list material component"
+msgid "and"
+msgstr "og"
+
+msgctxt "Favorites list material component"
+msgid "et al."
+msgstr "et al."
+
+msgctxt "Favorites list material component"
+msgid "By"
+msgstr "Af"
+
+msgctxt "Favorites list material component (aria)"
+msgid "Remove @title from favorites list"
+msgstr "Fjern @title fra huskelisten"
+
+msgctxt "dpl_instant_loan"
+msgid "Enabled"
+msgstr "Tilvælg"
+
+msgctxt "dpl_instant_loan"
+msgid "Should materials available for instant loans be promoted to patrons?"
+msgstr ""
+"Skal materialer som er tilgængelige som strakslån vises til "
+"brugerne?"
+
+msgctxt "dpl_instant_loan"
+msgid "Match Strings"
+msgstr "Non-res materialegrupper"
+
+msgctxt "dpl_instant_loan"
+msgid ""
+"Text used to identify materials which are available for instant "
+"loans.<br/> You can write multiple strings - each on a spearate "
+"line.<br/> To find a match one of the strings must be present in the "
+"material group of such materials."
+msgstr ""
+"Angiv navnene på alle de materiale-grupper der er til udlån, men "
+"ikke er reserverbare; der kan skrives flere materialegrupper – hver "
+"skal skrives på en separat linje."
+
+msgctxt "dpl_instant_loan"
+msgid "Threshold"
+msgstr "Varsel"
+
+msgctxt "dpl_instant_loan"
+msgid ""
+"The minimum number of materials which must be available for instant "
+"loan at a library branch to notify patrons of the option when making "
+"reservations."
+msgstr ""
+"Det mindste antal materialer, der skal være tilgængelige som "
+"strakslån på en filial, før brugerne bliver gjort opmærksomme på "
+"muligheden i reserveringsflowet."
+
+msgctxt "Reservation list (settings)"
+msgid "Basic settings"
+msgstr "Grundlæggende indstillinger"
+
+msgctxt "Reservation list (settings)"
+msgid "Page size mobile"
+msgstr "Antal listeelemeter på side (mobil)"
+
+msgctxt "Reservation list (settings)"
+msgid "Page size desktop"
+msgstr "Antal listeelemeter på side (desktop)"
+
+msgctxt "Reservation list"
+msgid "and"
+msgstr "og"
+
+msgctxt "Reservation list"
+msgid "et al."
+msgstr "et al."
+
+msgctxt "Reservation list"
+msgid "By"
+msgstr "Af"
+
+msgctxt "Reservation list"
+msgid "Audiobook"
+msgstr "Lydbog"
+
+msgctxt "Reservation list"
+msgid "Podcast"
+msgstr "Podcast"
+
+msgctxt "Reservation list"
+msgid "E-book"
+msgstr "E-bog"
+
+msgctxt "Reservation list"
+msgid "Borrow before @date"
+msgstr "Lån før @date"
+
+msgctxt "Reservation list"
+msgid "Remove your reservation"
+msgstr "Slet reserveringer"
+
+msgctxt "Reservation list"
+msgid "Cancel"
+msgstr "Fortryd"
+
+msgctxt "Reservation list"
+msgid "Date of reservation"
+msgstr "Reserveringsdato"
+
+msgctxt "Reservation list"
+msgid "Borrow before"
+msgstr "Lån før"
+
+msgctxt "Reservation list"
+msgid "Go to eReolen"
+msgstr "Gå til eReolen"
+
+msgctxt "Reservation list"
+msgid "Your reservation expires @date!"
+msgstr "Din reservering udløber @date"
+
+msgctxt "Reservation list"
+msgid "Pickup deadline"
+msgstr "Afhent senest"
+
+msgctxt "Reservation list"
+msgid "Not interested after"
+msgstr "Ikke interesseret efter"
+
+msgctxt "Reservation list"
+msgid "@count queued"
+msgstr "@count i køen"
+
+msgctxt "Reservation list"
+msgid "Others are queueing for this material"
+msgstr "Andre lånere venter på materialet"
+
+msgctxt "Reservation list"
+msgid "Pickup branch"
+msgstr "Afhentningssted"
+
+msgctxt "Reservation list"
+msgid "Ready for pickup"
+msgstr "Klar til lån"
+
+msgctxt "Reservation list"
+msgid "Save"
+msgstr "Gem"
+
+msgctxt "Reservation list"
+msgid "Status"
+msgstr "Status"
+
+msgctxt "Reservation list"
+msgid "At the moment you have 0 reservations"
+msgstr "Du har 0 reserveringer"
+
+msgctxt "Reservation list"
+msgid "Available in @count days"
+msgstr "Tilgængelig om @count dage"
+
+msgctxt "Reservation list"
+msgid "day"
+msgstr "dag"
+
+msgctxt "Reservation list"
+msgid "days"
+msgstr "dage"
+
+msgctxt "Reservation list"
+msgid "Online access"
+msgstr "Skal hentes online"
+
+msgctxt "Reservation list"
+msgid "At the moment you have 0 reservations on digital items"
+msgstr "Du har ingen reserveringer på digitale materialer"
+
+msgctxt "Reservation list"
+msgid "Digital reservations"
+msgstr "Digitale reserveringer"
+
+msgctxt "Reservation list"
+msgid "You are at the front of the queue"
+msgstr "Du er forrest i køen"
+
+msgctxt "Reservation list"
+msgid "Your reservations"
+msgstr "Dine reserveringer"
+
+msgctxt "Reservation list"
+msgid "queued"
+msgstr "i kø"
+
+msgctxt "Reservation list"
+msgid "There are @count people in the queue before you"
+msgstr "Der er @count i køen før dig"
+
+msgctxt "Reservation list"
+msgid "Pause reservations on physical items"
+msgstr "Sæt reserveringer af fysiske materialer på pause"
+
+msgctxt "Reservation list"
+msgid "At the moment you have 0 physical reservations"
+msgstr "Du har ingen reserveringer på fysiske materialer"
+
+msgctxt "Reservation list"
+msgid "Physical reservations"
+msgstr "Reserverede fysiske materialer"
+
+msgctxt "Reservation list"
+msgid "At the moment you have 0 reservations ready for pickup"
+msgstr "Du har 0 reserveringer klar til lån"
+
+msgctxt "Reservation list"
+msgid "Ready"
+msgstr "Klar"
+
+msgctxt "Reservation list"
+msgid "Pick up before @date"
+msgstr "Hent senest @date"
+
+msgctxt "Reservation list"
+msgid "End date"
+msgstr "Slutdato"
+
+msgctxt "Reservation list"
+msgid "Start date"
+msgstr "Begyndelsesdato"
+
+msgctxt "Reservation list (Aria)"
+msgid ""
+"This button opens a modal that covers the entire page and contains the "
+"possibility to delete a selected reservation, or multiple selected "
+"reservations"
+msgstr "Slet én eller flere valgte reserveringer"
+
+msgctxt "Reservation list"
+msgid "Close delete reservation modal"
+msgstr "Luk pop-up"
+
+msgctxt "Reservation list"
+msgid "Cancel reservation"
+msgstr "Slet reservering"
+
+msgctxt "Reservation list"
+msgid "Do you want to cancel your reservation?"
+msgstr "Vil du slette dine reserveringer?"
+
+msgctxt "Reservation list"
+msgid "You cannot regret this action"
+msgstr "Du kan ikke fortryde denne handling"
+
+msgctxt "Reservation list"
+msgid "Cancel reservations"
+msgstr "Slet reserveringer"
+
+msgctxt "Reservation list (Aria)"
+msgid "Close material details modal"
+msgstr "Luk pop-up"
+
+msgctxt "Reservation list"
+msgid "1 month"
+msgstr "1 måned"
+
+msgctxt "Reservation list"
+msgid "1 year"
+msgstr "1 år"
+
+msgctxt "Reservation list (Aria)"
+msgid "This modal makes it possible to pause your physical reservations"
+msgstr ""
+"Denne pop-up gør det muligt at sætte reserveringer af fysiske "
+"materialer på pause"
+
+msgctxt "Reservation list"
+msgid "Pause reservation below inputs text"
+msgstr "Bemærk at der kan være en forsinkelse på hvornår pausen begynder."
+
+msgctxt "Reservation list"
+msgid ""
+"Pause your reservations early, since reservations that are already "
+"being processed, will not be paused."
+msgstr ""
+"Sæt reserveringer på pause i god tid, da reserveringer i proces ikke "
+"kan sættes på pause."
+
+msgctxt "Reservation list"
+msgid "Close pause reservations modal"
+msgstr "Luk pop-up"
+
+msgctxt "Reservation list"
+msgid "Read more about pausing reservations and what that means here"
+msgstr "Læs mere om at sætte reserveringer på pause"
+
+msgctxt "Reservation list (Aria)"
+msgid "Reservations have been paused in the following time span:"
+msgstr "Reserveringer er sat på pause i det følgende tidsrum:"
+
+msgctxt "Reservation list (Aria)"
+msgid ""
+"This button opens a modal that covers the entire page and contains the "
+"possibility to pause physical reservations"
+msgstr "Sæt reserveringer af fysiske materialer på pause"
+
+msgctxt "Reservation list (Aria)"
+msgid "This material is ready for pickup"
+msgstr "Dette materiale er klar til lån"
+
+msgctxt "Reservation list (Aria)"
+msgid "You are the only person queued for this material"
+msgstr "Du er den eneste i kø til dette materiale"
+
+msgctxt "Reservation list (Aria)"
+msgid "This material has @count people in queue before you"
+msgstr "Der står @count brugere i kø før dig til dette materiale"
+
+msgctxt "Reservation list (Aria)"
+msgid "This material is ready in 1 day"
+msgstr "Materiale er klar om 1 dag"
+
+msgctxt "Reservation list (Aria)"
+msgid "This material is ready in @count days"
+msgstr "Materialet er klar til dig om @count dage"
+
+msgctxt "Reservation list"
+msgid "Showing @itemsShown out of @hitcount results"
+msgstr "Viser @itemsShown ud af @hitcount reserveringer"
+
+msgctxt "Reservation list"
+msgid "show more"
+msgstr "Vis flere"
+
+msgctxt "Reservation list"
+msgid "6 months"
+msgstr "6 måneder"
+
+msgctxt "Reservation list"
+msgid "3 months"
+msgstr "3 måneder"
+
+msgctxt "Reservation list"
+msgid "2 months"
+msgstr "2 måneder"
+
+msgctxt "Reservation list"
+msgid "Shift"
+msgstr "Skift"
+
+msgctxt "Reservation list"
+msgid "Choose pickup library"
+msgstr "Vælg afhentningsbibliotek"
+
+msgctxt "Reservation list"
+msgid "Decide at which library you want to pickup the material."
+msgstr "Vælg hvor du vil hente dine materialer."
+
+msgctxt "Reservation list"
+msgid "Your reservation has been changed"
+msgstr "Din reservering blev ændret"
+
+msgctxt "Reservation list"
+msgid "Click the button below to close this window"
+msgstr "Klik på knappen for at lukke dette vindue"
+
+msgctxt "Reservation list"
+msgid "Close"
+msgstr "Luk"
+
+msgctxt "Reservation list"
+msgid "Change interest deadline"
+msgstr "Skift interesseperiode"
+
+msgctxt "Reservation list"
+msgid "Set date for when your interest for the material will expire."
+msgstr "Vælg dato for hvornår din interesseperiode udløber"
+
+msgctxt "Reservation list"
+msgid "Choose one"
+msgstr "Vælg en"
+
+msgctxt "Reservation list"
+msgid "Change interest period"
+msgstr "Skift interesseperiode"
+
+msgctxt "Reservation list"
+msgid "Change pickup location"
+msgstr "Skift afhentningssted"
+
+msgctxt "Reservation list"
+msgid ""
+"Change the amount of time after which you're no longer interested in "
+"this material."
+msgstr "Vælg dato for hvornår din interesseperiode udløber"
+
+msgctxt "Reservation list"
+msgid "Change pickup location for your reservation."
+msgstr "Skift afhentningssted"
+
+msgid "Delete patron link"
+msgstr "Slet bruger (link)"
+
+msgid "Link to a page where it is possible to delete patron"
+msgstr ""
+"\n"
+"Link til oplysningsside om hvordan man kan få slettet sin bruger"
+
+msgid "Ereolen always available"
+msgstr "E-bøger du altid kan låne"
+
+msgid "Pincode length (min)"
+msgstr "Pinkode længde (min)"
+
+msgid "Pincode length max"
+msgstr "Pinkode længe (max)"
+
+msgctxt "Patron page"
+msgid "To"
+msgstr "Til"
+
+msgctxt "Patron page"
+msgid "From"
+msgstr "Fra"
+
+msgctxt "Patron page"
+msgid "Receive emails about your loans, reservations, and so forth"
+msgstr "Modtag e-mails om dine lån, reserveringer osv."
+
+msgctxt "Patron page"
+msgid "E-mail"
+msgstr "E-mail"
+
+msgctxt "Patron page"
+msgid "patron page contact info body text"
+msgstr ""
+"Husk at opdatere dine oplysninger, hvis du skifter mobilnummer eller "
+"e-mail."
+
+msgctxt "Patron page"
+msgid "CONTACT INFORMATION"
+msgstr "Kontaktoplysninger"
+
+msgctxt "Patron page"
+msgid "Receive text messages about your loans, reservations, and so forth"
+msgstr "Modtag sms om dine lån, reserveringer, osv."
+
+msgctxt "Patron page"
+msgid "Phone number"
+msgstr "Mobilnummer"
+
+msgctxt "Patron page"
+msgid "Address"
+msgstr "Adresse"
+
+msgctxt "Patron page"
+msgid "BASIC DETAILS"
+msgstr "Stamoplysninger"
+
+msgctxt "Patron page"
+msgid "Name"
+msgstr "Navn"
+
+msgctxt "Patron page"
+msgid "patron page change pickup body text"
+msgstr "Vælg hvor du vil afhente dine reserveringer"
+
+msgctxt "Patron page"
+msgid "RESERVATIONS"
+msgstr "Reserveringer"
+
+msgctxt "Patron page"
+msgid "Change current pin by entering a new pin and saving"
+msgstr "Skift nuværende kode ved at indtaste en ny kode og gem."
+
+msgctxt "Patron page"
+msgid "PINCODE"
+msgstr "Pinkode"
+
+msgctxt "Patron page"
+msgid "Confirm new pin"
+msgstr "Bekræft ny pinkode"
+
+msgctxt "Patron page"
+msgid "Delete your profile"
+msgstr "Sådan sletter du din brugerprofil"
+
+msgctxt "Patron page"
+msgid "Do you wish to delete your library profile?"
+msgstr "Ønsker du ikke længere at have en profil på biblioteket?"
+
+msgctxt "Patron page"
+msgid "Patron profile page"
+msgstr "Brugerprofil"
+
+msgctxt "Patron page (aria)"
+msgid ""
+"This checkbox opens a section where you can put your current "
+"reservations on a pause, when the time period picked has ended, the "
+"reservations will be resumed"
+msgstr ""
+"Denne tjekboks åbner en sektion hvor du kan sætte dine reserveringer "
+"på pause, når den valgte periode slutter vil reserveringerne blive "
+"genaktiveret"
+
+msgctxt "Patron page"
+msgid "Pause your reservations"
+msgstr "Sæt dine reserveringer på pause"
+
+msgctxt "Patron page"
+msgid "patron page pause reservations body text"
+msgstr ""
+"Du kan sætte dine reserveringer på pause mens du f.eks. er på "
+"ferie. Gælder kun fysiske materialer."
+
+msgctxt "Patron page"
+msgid "Pause physical reservations"
+msgstr "Sæt reserveringer af fysiske materialer på pause"
+
+msgctxt "Patron page"
+msgid "New pin"
+msgstr "Ny pinkode"
+
+msgctxt "Patron page"
+msgid ""
+"The pincode should be minimum @pincodeLengthMin and maximum "
+"@pincodeLengthMax characters long"
+msgstr "Pinkoden skal indeholde @pincodeLengthMin cifre"
+
+msgctxt "Patron page"
+msgid "The pincodes are not the same"
+msgstr "Pinkoderne er ikke ens"
+
+msgctxt "Patron page"
+msgid "Save"
+msgstr "Gem"
+
+msgctxt "Patron page"
+msgid ""
+"There is a number of materials without limitation to amounts of loans "
+"per month."
+msgstr "Der findes titler uden begrænsning på antal lån pr. måned."
+
+msgctxt "Patron page"
+msgid "DIGITAL LOANS (EREOLEN)"
+msgstr "DIGITALE LÅN (eREOLEN)"
+
+msgctxt "Patron page"
+msgid "Click here, to see titles always eligible to be loaned"
+msgstr "Se titler du altid kan låne"
+
+msgctxt "Patron page"
+msgid "Loans per month"
+msgstr "Lån pr. måned"
+
+msgctxt "Patron page"
+msgid "Audiobooks"
+msgstr "Lydbøger"
+
+msgctxt "Patron page"
+msgid "E-books"
+msgstr "E-bøger"
+
+msgctxt "Patron page (aria)"
+msgid "You used @this audiobooks out of you quota of @that audiobooks"
+msgstr "Du har brugt @this audiobooks ud af din kvote på @that lydbøger"
+
+msgctxt "Patron page (aria)"
+msgid "You used @this ebooks out of you quota of @that ebooks"
+msgstr "Du har brugt @this ud af din kvote på @that e-bøger"
+
+msgctxt "Patron page"
+msgid "@this out of @that"
+msgstr "@this ud af @that"
+
+msgctxt "Patron page"
+msgid "You can reserve @countEbooks ebooks and @countAudiobooks audiobooks"
+msgstr "Du kan reservere @countEbooks e-bøger og @countAudiobooks lydbøger"
+
+msgctxt "Patron page"
+msgid "patron page text fee text"
+msgstr "Bemærk at dit telefonselskab kan opkræve gebyr for sms"
+
+msgctxt "Patron page"
+msgid "Your pincode was saved"
+msgstr "Din pinkode blev gemt"
+
+msgctxt "Patron page (aria)"
+msgid "This modal makes it possible to pause your physical reservations"
+msgstr ""
+"Denne pop-up gør det muligt at sætte reserveringer af fysiske "
+"materialer på pause"
+
+msgctxt "Patron page"
+msgid "Pause reservation below inputs text"
+msgstr ""
+"Du kan sætte dine reserveringer på pause mens du f.eks. er på "
+"ferie. Gælder kun fysiske materialer."
+
+msgctxt "Patron page"
+msgid ""
+"Pause your reservations early, since reservations that are already "
+"being processed, will not be paused."
+msgstr ""
+"Sæt reserveringer på pause i god tid, da reserveringer der allerede "
+"bliver behandlet ikke bliver sat på pause."
+
+msgctxt "Patron page"
+msgid "Close pause reservations modal"
+msgstr "Luk pop-up"
+
+msgctxt "Patron page"
+msgid "Pause reservations on physical items"
+msgstr "Sæt reserveringer af fysiske materialer på pause"
+
+msgctxt "Patron page"
+msgid "Read more"
+msgstr "Læs mere"
+
+msgctxt "Patron page"
+msgid "Choose pickup branch"
+msgstr "Afhent reserveringer på"
+
+msgctxt "Patron page"
+msgid "Nothing selected"
+msgstr "Intet valgt"
+
+msgctxt "Patron page"
+msgid ""
+"The phone number must be 6 to 15 characters in length and should be "
+"comprised solely of numbers or begin with a +"
+msgstr "Nummeret skal være mellem 6 og 15 cifre"
+
+msgctxt "Patron page"
+msgid "Your changes are saved."
+msgstr "Dine ændringer blev gemt"
+
+msgctxt "Patron page"
+msgid "Loading..."
+msgstr "Henter..."
+
+msgctxt "Patron page"
+msgid "Online access"
+msgstr "Hentes online"
+
+msgctxt "Dpl Mapp"
+msgid "Domain"
+msgstr "Domæne"
+
+msgctxt "Dpl Mapp"
+msgid ""
+"Specify the Tag Integration domain if the JavaScript-file should be "
+"loaded from the Mapp server."
+msgstr ""
+"Angiv Tag Integration domænet, hvis JavaScript-filen skal loades fra "
+"Mapp serveren."
+
+msgctxt "Dpl Mapp"
+msgid "Id"
+msgstr "ID"
+
+msgctxt "Dpl Mapp"
+msgid ""
+"Enter your Tag Integration customer ID if the JavaScript-file should "
+"be loaded from the Mapp server."
+msgstr ""
+"Angiv dit Tag Integration kundeID, hvis JavaScript-filen skal loades "
+"fra Mapp serveren."
+
+msgctxt "Loan list (settings)"
+msgid "Basic settings"
+msgstr "Grundlæggende indstillinger"
+
+msgctxt "Loan list (settings)"
+msgid "Page size mobile"
+msgstr "Antal listeelemeter på side (mobil)"
+
+msgctxt "Loan list (settings)"
+msgid "Page size desktop"
+msgstr "Antal listeelemeter på side (desktop)"
+
+msgctxt "Loan list"
+msgid "and"
+msgstr "og"
+
+msgctxt "Loan list (Aria)"
+msgid "This modal makes it possible to renew materials"
+msgstr "Denne pop-up gør det muligt at forny materialer"
+
+msgctxt "Loan list"
+msgid "Renewable (@count)"
+msgstr "Forny (@count)"
+
+msgctxt "Loan list"
+msgid "Choose all renewable"
+msgstr "Vælg mulige"
+
+msgctxt "Loan list (Aria)"
+msgid "Close modal with grouped loans"
+msgstr "Luk pop-up"
+
+msgctxt "Loan list (Aria)"
+msgid ""
+"This modal groups loans after due date and makes it possible to renew "
+"said loans"
+msgstr ""
+"Denne modal grupperer lån efter afleveringsfrist og gør det muligt "
+"at forny disse lån"
+
+msgctxt "Loan list"
+msgid "Due date @date"
+msgstr "Afleveringsfrist @date"
+
+msgctxt "Loan list"
+msgid "Read more about fees"
+msgstr "Læs mere om gebyrer og erstatninger"
+
+msgctxt "Loan list (Aria)"
+msgid "Close renew loans modal"
+msgstr "Luk pop-up"
+
+msgctxt "Loan list"
+msgid ""
+"The due date of return is exceeded, therefore you will be charged a "
+"fee, when the item is returned"
+msgstr ""
+"Afleveringsfristen er overskredet, du får et et gebyr, når du "
+"afleverer"
+
+msgctxt "Loan list"
+msgid "Go to material details"
+msgstr "Vis detaljer for materialet"
+
+msgctxt "Loan list"
+msgid "Renew several"
+msgstr "Forny flere"
+
+msgctxt "Loan list"
+msgid "Select @label for renewal"
+msgstr "Vælg @label til fornyelse"
+
+msgctxt "Loan list"
+msgid ""
+"The item has been lent to you by another library and renewal is "
+"therefore conditional of the acceptance by that library"
+msgstr ""
+"Materialet er udlånt fra en anden kommune og fornyelsen er derfor "
+"betinget af et andet biblioteks accept"
+
+msgctxt "Loan list"
+msgid "The item cannot be renewed further"
+msgstr "Materialet kan ikke fornyes flere gange"
+
+msgctxt "Loan list"
+msgid "The item is reserved by another patron"
+msgstr "Materialet er reserveret af en anden"
+
+msgctxt "Loan list"
+msgid "Can be returned to all branches of the municipalities libraries"
+msgstr "Kan afleveres på alle kommunens biblioteker"
+
+msgctxt "Loan list"
+msgid "+ 1 other material"
+msgstr "+ 1 andet materiale"
+
+msgctxt "Loan list"
+msgid "+ @count other materials"
+msgstr "+ @count flere materialer"
+
+msgctxt "Loan list (Aria)"
+msgid "This button shows all loans in the list"
+msgstr "Oplist lån efter afleveringsfrist"
+
+msgctxt "Loan list (Aria)"
+msgid ""
+"This button filters the list, so only one the materials that have the "
+"same due date is shown"
+msgstr "Gruppér materialer med samme afleveringsfrist"
+
+msgctxt "Loan list"
+msgid "You have no digital loans at the moment"
+msgstr "Du har ingen digitale lån i øjeblikket"
+
+msgctxt "Loan list"
+msgid "Digital loans"
+msgstr "Digitale lån"
+
+msgctxt "Loan list"
+msgid "You have 0 loans at the moment"
+msgstr "Du har ingen lån i øjeblikket"
+
+msgctxt "Loan list (Aria)"
+msgid ""
+"This button opens a modal that covers the entire page and contains "
+"loans with the same due date as the loan currently in focus"
+msgstr ""
+"Åbner en pop-up som indeholder lån med samme afleveringsfrist som "
+"lånet der er i fokus"
+
+msgctxt "Loan list"
+msgid "day"
+msgstr "dag"
+
+msgctxt "Loan list"
+msgid "days"
+msgstr "dage"
+
+msgctxt "Loan list"
+msgid "You will be charged a fee, when the item is returned"
+msgstr "Læs om gebyrer ved overskredne materialer"
+
+msgctxt "Loan list"
+msgid "You have no physical loans at the moment"
+msgstr "Du har ingen fysiske lån i øjeblikket"
+
+msgctxt "Loan list"
+msgid "Physical loans"
+msgstr "Fysiske lån"
+
+msgctxt "Loan list"
+msgid ""
+"This button opens a modal that covers the entire page and contains "
+"loans with different due dates, if some of the loans in the modal are "
+"renewable you can renew them"
+msgstr ""
+"Åbner en pop-up som giver mulighed for at forny flere lån på én "
+"gang"
+
+msgctxt "Loan list"
+msgid "Expired"
+msgstr "Overskredet"
+
+msgctxt "Loan list"
+msgid "Expiring soon"
+msgstr "Under 6 dage"
+
+msgctxt "Loan list"
+msgid "Your loans"
+msgstr "Lån"
+
+msgctxt "Loan list"
+msgid "Due date digital @date"
+msgstr "Udløbsdato @date"
+
+msgctxt "Loan list"
+msgid "Due date physical @date"
+msgstr "Afleveringsfrist @date"
+
+msgctxt "Loan list"
+msgid "et al."
+msgstr "et al."
+
+msgctxt "Loan list"
+msgid "By"
+msgstr "Af"
+
+msgctxt "Loan list (Aria)"
+msgid "Close material details modal"
+msgstr "Luk pop-up"
+
+msgctxt "Loan list"
+msgid "Expires"
+msgstr "Udløber"
+
+msgctxt "Loan list"
+msgid "Go to eReolen"
+msgstr "Gå til eReolen"
+
+msgctxt "Loan list"
+msgid "Loan date"
+msgstr "Udlånsdato"
+
+msgctxt "Loan list"
+msgid "Material Item Number"
+msgstr "Materialenummer"
+
+msgctxt "Loan list (Aria)"
+msgid ""
+"This modal shows material details, and makes it possible to renew a "
+"material, of that material is renewable"
+msgstr ""
+"Denne pop-up viser detaljer for materialet og gør det muligt at forny "
+"materialet såfremt det er muligt"
+
+msgctxt "Loan list"
+msgid "Due date"
+msgstr "Afleveringsfrist"
+
+msgctxt "Loan list"
+msgid "Renew your loans"
+msgstr "Forny"
+
+msgctxt "Loan list"
+msgid "Audiobook"
+msgstr "Lydbog"
+
+msgctxt "Loan list"
+msgid "E-book"
+msgstr "E-bog"
+
+msgctxt "Loan list"
+msgid "Podcast"
+msgstr "Podcast"
+
+msgctxt "Loan list"
+msgid "Showing @itemsShown out of @hitcount loans"
+msgstr "Viser @itemsShown ud af @hitcount lån"
+
+msgctxt "Loan list"
+msgid "show more"
+msgstr "Vis flere"
+
+msgctxt "Loan list (Aria)"
+msgid "Go to @label material details"
+msgstr "Gå til detaljevisning af @label"
+
+msgctxt "Loan list"
+msgid "Your fee is raised"
+msgstr "Dit gebyr kan blive forhøjet"
+
+msgctxt "Loan list"
+msgid "If you renew your fee will be raised"
+msgstr ""
+"Hvis du kun fornyer nogle af dine lån, risikerer du at dit gebyr "
+"bliver forhøjet, fordi dine lån opsplittes i flere "
+"afleveringsdatoer."
+
+msgctxt "Loan list"
+msgid "Are you sure you want to renew?"
+msgstr "Er du sikker på at du vil forny?"
+
+msgctxt "Loan list"
+msgid "Yes, renew"
+msgstr "Ja, forny"
+
+msgctxt "Loan list"
+msgid "Cancel renewal"
+msgstr "Forny ikke"
+
+msgctxt "Loan list (Aria)"
+msgid "accept modal aria description text"
+msgstr "accepter pop-up beskrivelsestekst"
+
+msgctxt "Loan list (Aria)"
+msgid "accept modal aria label text"
+msgstr "accepter pop-up label tekst"
 
 msgctxt "Search Result"
 msgid "+ more filters"
@@ -2036,122 +3221,40 @@ msgctxt "Renew loan"
 msgid "Processing..."
 msgstr "Indlæser...Fornyelsen af dit lån gik iggen igennem"
 
-msgctxt "Dpl patron redirect"
-msgid "Redirect settings"
-msgstr ""
-"Indstillinger for viderestilling af bruger til adgangsplatformen "
-"(prompt for login)"
+msgid "Fees and Replacement costs URL"
+msgstr "Link til oplysningsside om takster"
 
-msgctxt "Dpl patron redirect"
+msgid "File or URL containing the fees and replacement costs"
+msgstr "Link til oplysningsside om takster"
+
+msgid "Available payment types url"
+msgstr "Betalingsmuligheder"
+
+msgid "Terms of trade text"
+msgstr "Betalingsbetingelser tekst"
+
+msgid "Terms of trade redirect url"
+msgstr "URL til side om betalingsbetingelser"
+
+msgid "Payment options image"
+msgstr "Ikoner for betalingsmuligheder"
+
+msgid "Image containing the available payment options (300x35)"
+msgstr "Billede som indeholder betalingsmuligheder (300 x 35px)"
+
+msgid "Payment overview url"
+msgstr "URL til Mit betalingsoverblik"
+
+msgid "Intro text"
+msgstr "Beskrivelse"
+
+msgid "Display an intro-text below the headline"
+msgstr "Vis denne beskrivelse under overskriften"
+
 msgid ""
-"Set the paths that requires the patron to be logged in and if the user "
-"is not logged in an redirect to Adgangsplatformen will automatically "
-"be enforced."
-msgstr ""
-"Angiv de stier som kræver at brugeren er logget ind. Hvis brugeren "
-"ikke er logget ind, sendes denne automatisk videre til "
-"Adgangsplatformen (promptes for login)."
-
-msgid "Pages"
-msgstr "Sider"
-
-msgid ""
-"Specify pages by using their paths. Enter one path per line. The '*' "
-"character is a wildcard. An example path is %user-wildcard for every "
-"user page. %front is the front page."
-msgstr ""
-"Angiv sider med en sti. Angiv en sti pr. kodelinie. Tegnet * er et "
-"wildcard. Et eksempel på en sti er %user-wildcard for hver "
-"brugerside. %front er forsiden."
-
-msgctxt "dpl_instant_loan"
-msgid "Enabled"
-msgstr "Tilvælg"
-
-msgctxt "dpl_instant_loan"
-msgid "Should materials available for instant loans be promoted to patrons?"
-msgstr ""
-"Skal materialer som er tilgængelige som strakslån vises til "
-"brugerne?"
-
-msgctxt "dpl_instant_loan"
-msgid "Match Strings"
-msgstr "Non-res materialegrupper"
-
-msgctxt "dpl_instant_loan"
-msgid ""
-"Text used to identify materials which are available for instant "
-"loans.<br/> You can write multiple strings - each on a spearate "
-"line.<br/> To find a match one of the strings must be present in the "
-"material group of such materials."
-msgstr ""
-"Angiv navnene på alle de materiale-grupper der er til udlån, men "
-"ikke er reserverbare; der kan skrives flere materialegrupper – hver "
-"skal skrives på en separat linje."
-
-msgctxt "dpl_instant_loan"
-msgid "Threshold"
-msgstr "Varsel"
-
-msgctxt "dpl_instant_loan"
-msgid ""
-"The minimum number of materials which must be available for instant "
-"loan at a library branch to notify patrons of the option when making "
-"reservations."
-msgstr ""
-"Det mindste antal materialer, der skal være tilgængelige som "
-"strakslån på en filial, før brugerne bliver gjort opmærksomme på "
-"muligheden i reserveringsflowet."
-
-msgctxt "Dpl Publizon"
-msgid "Basic settings"
-msgstr "Grundlæggende indstillinger"
-
-msgctxt "Dpl Publizon"
-msgid "Publizon service url"
-msgstr "Publizon service URL"
-
-msgctxt "Recommender"
-msgid "and"
-msgstr "og"
-
-msgctxt "Recommender (Aria)"
-msgid "Add @title to favorites list"
-msgstr "Tilføj @title til huskelisten"
-
-msgctxt "Recommender"
-msgid "et al."
-msgstr "et al."
-
-msgctxt "Recommender"
-msgid "By"
-msgstr "Af"
-
-msgctxt "Recommender"
-msgid "For your inspiration"
-msgstr "Inspiration til dig"
-
-msgctxt "Recommender"
-msgid "Because you have borrowed @title you may also like"
-msgstr "Fordi du har lånt @title kan du måske også lide"
-
-msgctxt "Recommender"
-msgid "Because you have reserved @title you may also like"
-msgstr "Fordi du har lånt @title kan du måske også lide"
-
-msgctxt "Recommender (Aria)"
-msgid "Remove @title from favorites list"
-msgstr "Fjern @title fra huskelisten"
-
-msgctxt "Recommender (settings)"
-msgid "Search text"
-msgstr "Søgetekst"
-
-msgctxt "Recommender (settings)"
-msgid "Search text for recommender when no loan/no reservation"
-msgstr ""
-"Søgetekst for anbefalinger hvis bruger har 0 lån/reserveringer (ikke "
-"CQL)"
+"Fees and replacement costs are handled through the new system \"Mit "
+"betalingsoverblik."
+msgstr "Gebyrer og erstatninger betales via \"Mit Betalingsoverblik\"."
 
 msgctxt "Fees list"
 msgid ""
@@ -2277,58 +3380,42 @@ msgctxt "Fees list"
 msgid "see our fees and replacement costs"
 msgstr "Se takster"
 
-msgid "Fees and Replacement costs URL"
-msgstr "Link til oplysningsside om takster"
+msgctxt "Dpl patron redirect"
+msgid "Redirect settings"
+msgstr ""
+"Indstillinger for viderestilling af bruger til adgangsplatformen "
+"(prompt for login)"
 
-msgid "File or URL containing the fees and replacement costs"
-msgstr "Link til oplysningsside om takster"
+msgctxt "Dpl patron redirect"
+msgid ""
+"Set the paths that requires the patron to be logged in and if the user "
+"is not logged in an redirect to Adgangsplatformen will automatically "
+"be enforced."
+msgstr ""
+"Angiv de stier som kræver at brugeren er logget ind. Hvis brugeren "
+"ikke er logget ind, sendes denne automatisk videre til "
+"Adgangsplatformen (promptes for login)."
 
-msgid "Available payment types url"
-msgstr "Betalingsmuligheder"
-
-msgid "Terms of trade text"
-msgstr "Betalingsbetingelser tekst"
-
-msgid "Terms of trade redirect url"
-msgstr "URL til side om betalingsbetingelser"
-
-msgctxt "Dashboard (settings)"
-msgid "Page size mobile"
-msgstr "Antal listeelemeter på side (mobil)"
-
-msgctxt "Dashboard (settings)"
-msgid "Page size desktop"
-msgstr "Antal listeelemeter på side (desktop)"
-
-msgid "Payment options image"
-msgstr "Ikoner for betalingsmuligheder"
-
-msgid "Image containing the available payment options (300x35)"
-msgstr "Billede som indeholder betalingsmuligheder (300 x 35px)"
-
-msgid "Payment overview url"
-msgstr "URL til Mit betalingsoverblik"
-
-msgid "Intro text"
-msgstr "Beskrivelse"
-
-msgid "Display an intro-text below the headline"
-msgstr "Vis denne beskrivelse under overskriften"
+msgid "Pages"
+msgstr "Sider"
 
 msgid ""
-"Fees and replacement costs are handled through the new system \"Mit "
-"betalingsoverblik."
-msgstr "Gebyrer og erstatninger betales via \"Mit Betalingsoverblik\"."
+"Specify pages by using their paths. Enter one path per line. The '*' "
+"character is a wildcard. An example path is %user-wildcard for every "
+"user page. %front is the front page."
+msgstr ""
+"Angiv sider med en sti. Angiv en sti pr. kodelinie. Tegnet * er et "
+"wildcard. Et eksempel på en sti er %user-wildcard for hver "
+"brugerside. %front er forsiden."
 
-msgctxt "dpl_login"
-msgid "Logged in"
-msgstr "Logget ind"
+msgid "React DDB Library"
+msgstr "React DPL Library"
 
-msgid "Adgangsplatformen"
-msgstr "Adgangsplatformen"
+msgid "Library is present"
+msgstr "Library er "
 
-msgid "Integration configured"
-msgstr "Integration konfigureret"
+msgid "DDB React library is missing (@dir)"
+msgstr "DPL React library mangler (@dir) "
 
 msgctxt "Dpl Login"
 msgid "Authorization endpoint"
@@ -2349,6 +3436,28 @@ msgstr "Logout endpoint"
 msgctxt "Dpl Login"
 msgid "Agency ID"
 msgstr "Agency ID"
+
+msgctxt "dpl_login"
+msgid "Logged in"
+msgstr "Logget ind"
+
+msgid "Adgangsplatformen"
+msgstr "Adgangsplatformen"
+
+msgid "Integration configured"
+msgstr "Integration konfigureret"
+
+msgid "Minimum age to allow self registration"
+msgstr "Minimumsalder for tilladelse til selvoprettelse"
+
+msgid "Redirect on create"
+msgstr "Send brugeren til denne side ved succesfuld oprettelse"
+
+msgid "Redirect to this on user successful created"
+msgstr "Send bruger til denne side ved succesfuld oprettelse"
+
+msgid "Information page"
+msgstr "Informationsside"
 
 msgctxt "Create patron"
 msgid "Cancel"
@@ -2443,1129 +3552,20 @@ msgstr "Intet valgt"
 msgid "Log in with @client_title"
 msgstr "Log ind med @client_title"
 
-msgid "Minimum age to allow self registration"
-msgstr "Minimumsalder for tilladelse til selvoprettelse"
-
-msgid "Redirect on create"
-msgstr "Send brugeren til denne side ved succesfuld oprettelse"
-
-msgid "Redirect to this on user successful created"
-msgstr "Send bruger til denne side ved succesfuld oprettelse"
-
-msgid "Information page"
-msgstr "Informationsside"
-
-msgctxt "Dpl Fbs"
-msgid "Basic settings"
-msgstr "Grundlæggende indstillinger"
-
-msgctxt "Dpl Fbs"
-msgid "FBS service url"
-msgstr "FBS service URL"
-
-msgctxt "Loan list"
-msgid "and"
-msgstr "og"
-
-msgctxt "Loan list (Aria)"
-msgid "This modal makes it possible to renew materials"
-msgstr "Denne pop-up gør det muligt at forny materialer"
-
-msgctxt "Loan list"
-msgid "Renewable (@count)"
-msgstr "Forny (@count)"
-
-msgctxt "Loan list"
-msgid "Choose all renewable"
-msgstr "Vælg mulige"
-
-msgctxt "Loan list (Aria)"
-msgid "Close modal with grouped loans"
-msgstr "Luk pop-up"
-
-msgctxt "Loan list (Aria)"
-msgid ""
-"This modal groups loans after due date and makes it possible to renew "
-"said loans"
-msgstr ""
-"Denne modal grupperer lån efter afleveringsfrist og gør det muligt "
-"at forny disse lån"
-
-msgctxt "Loan list"
-msgid "Due date @date"
-msgstr "Afleveringsfrist @date"
-
-msgctxt "Loan list"
-msgid "Read more about fees"
-msgstr "Læs mere om gebyrer og erstatninger"
-
-msgctxt "Loan list (Aria)"
-msgid "Close renew loans modal"
-msgstr "Luk pop-up"
-
-msgctxt "Loan list"
-msgid ""
-"The due date of return is exceeded, therefore you will be charged a "
-"fee, when the item is returned"
-msgstr ""
-"Afleveringsfristen er overskredet, du får et et gebyr, når du "
-"afleverer"
-
-msgctxt "Loan list"
-msgid "Go to material details"
-msgstr "Vis detaljer for materialet"
-
-msgctxt "Loan list"
-msgid "Renew several"
-msgstr "Forny flere"
-
-msgctxt "Loan list"
-msgid "Select @label for renewal"
-msgstr "Vælg @label til fornyelse"
-
-msgctxt "Loan list"
-msgid ""
-"The item has been lent to you by another library and renewal is "
-"therefore conditional of the acceptance by that library"
-msgstr ""
-"Materialet er udlånt fra en anden kommune og fornyelsen er derfor "
-"betinget af et andet biblioteks accept"
-
-msgctxt "Loan list"
-msgid "The item cannot be renewed further"
-msgstr "Materialet kan ikke fornyes flere gange"
-
-msgctxt "Loan list"
-msgid "The item is reserved by another patron"
-msgstr "Materialet er reserveret af en anden"
-
-msgctxt "Loan list"
-msgid "Can be returned to all branches of the municipalities libraries"
-msgstr "Kan afleveres på alle kommunens biblioteker"
-
-msgctxt "Loan list"
-msgid "+ 1 other material"
-msgstr "+ 1 andet materiale"
-
-msgctxt "Loan list"
-msgid "+ @count other materials"
-msgstr "+ @count flere materialer"
-
-msgctxt "Loan list (Aria)"
-msgid "This button shows all loans in the list"
-msgstr "Oplist lån efter afleveringsfrist"
-
-msgctxt "Loan list (Aria)"
-msgid ""
-"This button filters the list, so only one the materials that have the "
-"same due date is shown"
-msgstr "Gruppér materialer med samme afleveringsfrist"
-
-msgctxt "Loan list"
-msgid "You have no digital loans at the moment"
-msgstr "Du har ingen digitale lån i øjeblikket"
-
-msgctxt "Loan list"
-msgid "Digital loans"
-msgstr "Digitale lån"
-
-msgctxt "Loan list"
-msgid "You have 0 loans at the moment"
-msgstr "Du har ingen lån i øjeblikket"
-
-msgctxt "Loan list (Aria)"
-msgid ""
-"This button opens a modal that covers the entire page and contains "
-"loans with the same due date as the loan currently in focus"
-msgstr ""
-"Åbner en pop-up som indeholder lån med samme afleveringsfrist som "
-"lånet der er i fokus"
-
-msgctxt "Loan list"
-msgid "day"
-msgstr "dag"
-
-msgctxt "Loan list"
-msgid "days"
-msgstr "dage"
-
-msgctxt "Loan list"
-msgid "You will be charged a fee, when the item is returned"
-msgstr "Læs om gebyrer ved overskredne materialer"
-
-msgctxt "Loan list"
-msgid "You have no physical loans at the moment"
-msgstr "Du har ingen fysiske lån i øjeblikket"
-
-msgctxt "Loan list"
-msgid "Physical loans"
-msgstr "Fysiske lån"
-
-msgctxt "Loan list"
-msgid ""
-"This button opens a modal that covers the entire page and contains "
-"loans with different due dates, if some of the loans in the modal are "
-"renewable you can renew them"
-msgstr ""
-"Åbner en pop-up som giver mulighed for at forny flere lån på én "
-"gang"
-
-msgctxt "Loan list"
-msgid "Expired"
-msgstr "Overskredet"
-
-msgctxt "Loan list"
-msgid "Expiring soon"
-msgstr "Under 6 dage"
-
-msgctxt "Loan list"
-msgid "Your loans"
-msgstr "Lån"
-
-msgctxt "Loan list"
-msgid "Due date digital @date"
-msgstr "Udløbsdato @date"
-
-msgctxt "Loan list"
-msgid "Due date physical @date"
-msgstr "Afleveringsfrist @date"
-
-msgctxt "Loan list"
-msgid "et al."
-msgstr "et al."
-
-msgctxt "Loan list"
-msgid "By"
-msgstr "Af"
-
-msgctxt "Loan list (Aria)"
-msgid "Close material details modal"
-msgstr "Luk pop-up"
-
-msgctxt "Loan list"
-msgid "Expires"
-msgstr "Udløber"
-
-msgctxt "Loan list"
-msgid "Go to eReolen"
-msgstr "Gå til eReolen"
-
-msgctxt "Loan list"
-msgid "Loan date"
-msgstr "Udlånsdato"
-
-msgctxt "Loan list"
-msgid "Material Item Number"
-msgstr "Materialenummer"
-
-msgctxt "Loan list (Aria)"
-msgid ""
-"This modal shows material details, and makes it possible to renew a "
-"material, of that material is renewable"
-msgstr ""
-"Denne pop-up viser detaljer for materialet og gør det muligt at forny "
-"materialet såfremt det er muligt"
-
-msgctxt "Loan list"
-msgid "Due date"
-msgstr "Afleveringsfrist"
-
-msgctxt "Loan list"
-msgid "Renew your loans"
-msgstr "Forny"
-
-msgctxt "Loan list"
-msgid "Audiobook"
-msgstr "Lydbog"
-
-msgctxt "Loan list"
-msgid "E-book"
-msgstr "E-bog"
-
-msgctxt "Loan list"
-msgid "Podcast"
-msgstr "Podcast"
-
-msgctxt "Loan list"
-msgid "Showing @itemsShown out of @hitcount loans"
-msgstr "Viser @itemsShown ud af @hitcount lån"
-
-msgctxt "Loan list"
-msgid "show more"
-msgstr "Vis flere"
-
-msgctxt "Loan list (Aria)"
-msgid "Go to @label material details"
-msgstr "Gå til detaljevisning af @label"
-
-msgctxt "Loan list"
-msgid "Your fee is raised"
-msgstr "Dit gebyr kan blive forhøjet"
-
-msgctxt "Loan list"
-msgid "If you renew your fee will be raised"
-msgstr ""
-"Hvis du kun fornyer nogle af dine lån, risikerer du at dit gebyr "
-"bliver forhøjet, fordi dine lån opsplittes i flere "
-"afleveringsdatoer."
-
-msgctxt "Loan list"
-msgid "Are you sure you want to renew?"
-msgstr "Er du sikker på at du vil forny?"
-
-msgctxt "Loan list"
-msgid "Yes, renew"
-msgstr "Ja, forny"
-
-msgctxt "Loan list"
-msgid "Cancel renewal"
-msgstr "Forny ikke"
-
-msgctxt "Loan list (Aria)"
-msgid "accept modal aria description text"
-msgstr "accepter pop-up beskrivelsestekst"
-
-msgctxt "Loan list (Aria)"
-msgid "accept modal aria label text"
-msgstr "accepter pop-up label tekst"
-
-msgctxt "Loan list (settings)"
-msgid "Basic settings"
-msgstr "Grundlæggende indstillinger"
-
-msgctxt "Loan list (settings)"
-msgid "Page size mobile"
-msgstr "Antal listeelemeter på side (mobil)"
-
-msgctxt "Loan list (settings)"
-msgid "Page size desktop"
-msgstr "Antal listeelemeter på side (desktop)"
-
-msgctxt "Library Agency Configuration"
-msgid "Reservations"
-msgstr "Reserveringer"
-
-msgctxt "Library Agency Configuration"
-msgid "Enable SMS notifications for reservations"
-msgstr "Slå mulighed for tilvalg af sms notifikationer for reserveringer til"
-
-msgctxt "Library Agency Configuration"
-msgid "If checked, SMS notifications for patrons are enabled."
-msgstr "Hvis valgt, kan brugerne vælge at få tilsendt notifikationer på sms"
-
-msgctxt "Library Agency Configuration"
-msgid "Interest periods for reservation"
-msgstr "Interesseperiode for reserveringer"
-
-msgctxt "Library Agency Configuration"
-msgid "Allow removing ready reservations"
-msgstr "Tillad sletning af opfyldte reserveringer"
-
-msgctxt "Library Agency Configuration"
-msgid "Ereolen link"
-msgstr "eReolen link"
-
-msgctxt "Library Agency Configuration"
-msgid "My page in ereolen"
-msgstr "Min side på eReolen"
-
-msgctxt "Library Agency Configuration"
-msgid "Ereolen home link"
+msgid "Ticket sale not open"
 msgstr ""
 
-msgctxt "Library Agency Configuration"
-msgid "Home page in ereolen"
+msgid "Active"
+msgstr "Aktiv"
+
+msgid "Sold out"
 msgstr ""
 
-msgctxt "Library Agency Configuration"
-msgid "Pause reservation link"
-msgstr "Link til side om reserveringspause"
-
-msgctxt "Library Agency Configuration"
-msgid "The link with infomation about reservations"
-msgstr "Her kan brugeren læse om at sætte sine reserveringer på pause"
-
-msgctxt "Library Agency Configuration"
-msgid "Start date"
-msgstr "Startdato"
-
-msgctxt "Library Agency Configuration"
-msgid "Pause reservation start date"
-msgstr "Startdato for at kunne sætte reserveringer på pause"
-
-msgid "Blocked user"
-msgstr "Blokeret bruger"
-
-msgid "Redirect blocked user link"
-msgstr "Link til omstilling af en blokeret bruger"
-
-msgid "The link to redirect the blocked user to"
+msgid "Canceled"
 msgstr ""
-"Angiv linket til den side som en blokeret bruger skal sendes videre "
-"til"
 
-msgid "Blocked user link for modal"
-msgstr "Blokeret bruger link til modal"
-
-msgid "If a user has blocked status e, this link appears in the modal"
+msgid "Occurred"
 msgstr ""
-"Hvis en bruger er blokeret pga. status e (overskredet gebyrgrænse) "
-"vises dette link i beskeden til brugeren"
-
-msgctxt "Library Agency Configuration"
-msgid "Expiration warning"
-msgstr "Advarsel om at udløbsdato nærmer sig"
-
-msgctxt "Library Agency Configuration"
-msgid "Set expiration warning"
-msgstr "Indstil advarsel vedr. udløbsdato"
-
-msgctxt "Library Agency Configuration"
-msgid ""
-"Insert the number of days before the expiration of the material, when "
-"the reminder \"Expires soon\" should appear."
-msgstr ""
-"Indsæt antal dage før udløbsdatoen for et lån, hvor label med "
-"teksten \"Udløber snart\" skal vises på lånet."
-
-msgctxt "Library Agency Configuration"
-msgid "Excluded branches"
-msgstr "Blacklistede filialer"
-
-msgctxt "Library Agency Configuration"
-msgid ""
-"Select which branches should be excluded in different parts of the "
-"system."
-msgstr ""
-"Vælg, hvilke filialer der ikke skal vises hvor, forskellige steder i "
-"systemet."
-
-msgctxt "Library Agency Configuration"
-msgid "Search results"
-msgstr "Søge resultater"
-
-msgctxt "Library Agency Configuration"
-msgid ""
-"Holdings belonging to the selected branches will not be shown in "
-"search results."
-msgstr ""
-"Beholdning på de valgte filialer vil ikke blive vist i "
-"søgeresultatet."
-
-msgid "Availability"
-msgstr "Tilgængelighed"
-
-msgctxt "Library Agency Configuration"
-msgid ""
-"Holdings belonging to the selected branches will not considered when "
-"showing work availability."
-msgstr ""
-"Beholdning på de valgte filialer vil ikke blive vist som "
-"tilgængelige."
-
-msgctxt "Library Agency Configuration"
-msgid ""
-"Selected branches will not be available as pickup locations for "
-"reservations."
-msgstr "Valgte filialer vil ikke kunne vælges som afhentningssted."
-
-msgid "Configuration file"
-msgstr "Konfigurationsfil"
-
-msgctxt "DPL Config Import"
-msgid "Select a configuration file in YAML format to upload."
-msgstr "Vælg en konfigurationsfil i YAML til upload."
-
-msgid "Upload"
-msgstr "Upload"
-
-msgctxt "DPL Config Import"
-msgid "Unable to handle the uploaded file"
-msgstr "Ude af stand til at indlæse den uploadede fil"
-
-msgctxt "DPL Config Import"
-msgid "Unable to parse YAML file: %reason"
-msgstr "Ude af stand til at parse YAML fil: %reason"
-
-msgctxt "DPL Config Import"
-msgid "Installed modules: %modules_list"
-msgstr "Installerede moduler: %modules_list"
-
-msgctxt "DPL Config Import"
-msgid "Failed to install modules: @reason"
-msgstr "Kunne ikke installere modul: @reason"
-
-msgctxt "DPL Config Import"
-msgid "Uninstalled modules: %modules_list"
-msgstr "Ikke-installerede moduler: %modules_list"
-
-msgctxt "DPL Config Import"
-msgid "Failed to uninstall modules: @reason"
-msgstr "Kunne ikke installere modul: @reason"
-
-msgctxt "Url Proxy"
-msgid "configured"
-msgstr "konfigureret"
-
-msgctxt "Url Proxy"
-msgid "This configuration form is for administering proxy url generation."
-msgstr ""
-"Denne formular er til administration af proxy URL'er for at give "
-"adgang til e-ressourcer."
-
-msgctxt "Url Proxy"
-msgid "Proxy server URL prefix"
-msgstr "Præfiks til proxy-serverens URL"
-
-msgctxt "Url Proxy"
-msgid ""
-"The prefix to use for proxy server URLs. This is the part of the "
-"URL\n"
-"        that comes before the hostname"
-msgstr ""
-"Præfikset er den del af URL'en, som kommer før værtsnavnet "
-"(hostname)"
-
-msgctxt "Url Proxy"
-msgid "Hostnames"
-msgstr "Hostnames / Værtsnavne"
-
-msgctxt "Url Proxy"
-msgid "Host configuration"
-msgstr "Opsætning af værtsnavne"
-
-msgctxt "Url Proxy"
-msgid "Hostname"
-msgstr "Hostname / Værtsnavn"
-
-msgctxt "Url Proxy"
-msgid "Replacement %configured"
-msgstr "Erstatning %configured"
-
-msgctxt "Url Proxy"
-msgid "Regular expression"
-msgstr "Regular expression / Regulært udtryk"
-
-msgctxt "Url Proxy"
-msgid ""
-"Use regular expression to substitut parts of the url, e.g. "
-"\"<em>%regex</em>\"."
-msgstr ""
-"Brug et regulært udtryk som erstatning for dele af URL'en, fx. "
-"\"<em>%regex</em>\"."
-
-msgctxt "Url Proxy"
-msgid "Replacement"
-msgstr "Replacement / Erstatning"
-
-msgctxt "Url Proxy"
-msgid "The replacement value for the regular expression."
-msgstr "Erstatning for det regulære udtryk."
-
-msgctxt "Url Proxy"
-msgid "Do not use proxy prefix for this hostname"
-msgstr "Brug ikke præfiks for dette værtnavn/ hostname"
-
-msgctxt "Url Proxy"
-msgid "Remove this"
-msgstr "Fjern denne"
-
-msgctxt "Url Proxy"
-msgid "Add one more"
-msgstr "Tilføj en mere"
-
-msgctxt "Url Proxy"
-msgid "Submit"
-msgstr "Gem"
-
-msgctxt "Dashboard"
-msgid "Yes, renew"
-msgstr "Ja, forny"
-
-msgctxt "Dashboard"
-msgid "Are you sure you want to renew?"
-msgstr "Er du sikker på at du vil forny?"
-
-msgctxt "Dashboard (Aria)"
-msgid "accept modal aria description text"
-msgstr "accepter pop-up beskrivelsestekst"
-
-msgctxt "Dashboard (Aria)"
-msgid "accept modal aria label text"
-msgstr "accepter pop-up beskrivelsestekst"
-
-msgctxt "Dashboard"
-msgid "If you renew your fee will be raised"
-msgstr ""
-"Hvis du kun fornyer nogle af dine lån, risikerer du at dit gebyr "
-"bliver forhøjet, fordi dine lån opsplittes i flere "
-"afleveringsdatoer."
-
-msgctxt "Dashboard"
-msgid "Cancel renewal"
-msgstr "Forny ikke"
-
-msgctxt "Dashboard"
-msgid "Your fee is raised"
-msgstr "Dit gebyr kan blive forhøjet"
-
-msgctxt "Dashboard"
-msgid "Select all"
-msgstr "Vælg alle"
-
-msgctxt "Dashboard"
-msgid "Number @count in line"
-msgstr "Nummer @count i køen"
-
-msgctxt "Dashboard (Aria)"
-msgid ""
-"This button opens a modal that covers the entire page and contains the "
-"possibility to delete a selected reservation, or multiple selected "
-"reservations"
-msgstr "Slet én eller flere valgte reserveringer"
-
-msgctxt "Dashboard"
-msgid "Close delete reservation modal"
-msgstr "Luk pop-up"
-
-msgctxt "Dashboard"
-msgid "Cancel reservation"
-msgstr "Slet reservering"
-
-msgctxt "Dashboard"
-msgid "Do you want to cancel your reservation?"
-msgstr "Vil du slette dine reserveringer?"
-
-msgctxt "Dashboard"
-msgid "Cancel reservations"
-msgstr "Slet reserveringer"
-
-msgctxt "Dashboard"
-msgid "You cannot regret this action"
-msgstr "Du kan ikke fortryde denne handling"
-
-msgctxt "Dashboard"
-msgid "Digital reservations"
-msgstr "Digitale reserveringer"
-
-msgctxt "Dashboard"
-msgid "Digital"
-msgstr "Digitale"
-
-msgctxt "Dashboard"
-msgid "et al."
-msgstr "et al."
-
-msgctxt "Dashboard"
-msgid "Fees"
-msgstr "Gebyrer & erstatninger"
-
-msgctxt "Dashboard (Aria)"
-msgid "This modal makes it possible to renew materials"
-msgstr "Denne pop-up gør det muligt at forny materialer"
-
-msgctxt "Dashboard"
-msgid "Renewable (@count)"
-msgstr "Forny (@count)"
-
-msgctxt "Dashboard"
-msgid "Choose all"
-msgstr "Vælg alle"
-
-msgctxt "Dashboard"
-msgid ""
-"This modal groups loans after due date and makes it possible to renew "
-"said loans"
-msgstr ""
-"Denne pop-up grupperer lån efter afleveringsfrist og gør det muligt "
-"at forny disse lån"
-
-msgctxt "Dashboard"
-msgid "Due date @date"
-msgstr "Afleveringsfrist @date"
-
-msgctxt "Dashboard"
-msgid "Close renew loans modal"
-msgstr "Luk pop-up"
-
-msgctxt "Dashboard"
-msgid ""
-"The due date of return is exceeded, therefore you will be charged a "
-"fee, when the item is returned"
-msgstr "Afleveringsfristen er overskredet, du får et gebyr, når du afleverer"
-
-msgctxt "Dashboard"
-msgid "Select @label for renewal"
-msgstr "Vælg @label til sletning"
-
-msgctxt "Dashboard (Aria)"
-msgid "Close modal with grouped reservations"
-msgstr "Luk pop-up"
-
-msgctxt "Dashboard (Aria)"
-msgid "This modal makes it possible to delete reservations"
-msgstr "Denne pop-up gør det muligt at slette reserveringer"
-
-msgctxt "Dashboard"
-msgid "Intermediates"
-msgstr "Mellemværender"
-
-msgctxt "Dashboard"
-msgid "Pick"
-msgstr "Vælg"
-
-msgctxt "Dashboard"
-msgid "Longer return time"
-msgstr "Over 6 dage til aflevering"
-
-msgctxt "Dashboard"
-msgid "Returned too late"
-msgstr "Afleveringsfrist overskredet"
-
-msgctxt "Dashboard"
-msgid "To be returned soon"
-msgstr "Skal snart afleveres"
-
-msgctxt "Dashboard"
-msgid "and"
-msgstr "og"
-
-msgctxt "Dashboard"
-msgid "By"
-msgstr "Af"
-
-msgctxt "Dashboard (Aria)"
-msgid "Close material details modal"
-msgstr "Luk pop-up"
-
-msgctxt "Dashboard"
-msgid "Read more about fees"
-msgstr "Læs mere om gebyrer og erstatninger"
-
-msgctxt "Dashboard"
-msgid "Loan date"
-msgstr "Udlånsdato"
-
-msgctxt "Dashboard"
-msgid "Material Item Number"
-msgstr "Materialenummer"
-
-msgctxt "Dashboard (Aria)"
-msgid ""
-"This modal shows material details, and makes it possible to renew a "
-"material, of that material is renewable"
-msgstr ""
-"Denne pop-up viser detaljer for materialet og gør det muligt at forny "
-"materialet såfremt det er muligt"
-
-msgctxt "Dashboard"
-msgid "Expired"
-msgstr "Udløbet"
-
-msgctxt "Dashboard"
-msgid "Afleveres"
-msgstr "Afleveringsfrist"
-
-msgctxt "Dashboard"
-msgid "At the moment, you have 0 physical loans"
-msgstr "Du har ingen fysiske lån i øjeblikket"
-
-msgctxt "Dashboard"
-msgid "At the moment, you have 0 reservations"
-msgstr "Du har 0 reserveringer"
-
-msgctxt "Dashboard"
-msgid "Pay"
-msgstr "Betal"
-
-msgctxt "Dashboard"
-msgid "Loans"
-msgstr "Lån"
-
-msgctxt "Dashboard"
-msgid "Physical reservations"
-msgstr "Reserverede fysiske materialer"
-
-msgctxt "Dashboard"
-msgid "Pick up before @date"
-msgstr "Hent senest @date"
-
-msgctxt "Dashboard"
-msgid "Audiobook"
-msgstr "Lydbog"
-
-msgctxt "Dashboard"
-msgid "E-book"
-msgstr "E-bog"
-
-msgctxt "Dashboard"
-msgid "Podcast"
-msgstr "Podcast"
-
-msgctxt "Dashboard"
-msgid "Queued reservations"
-msgstr "Reserveringer i kø"
-
-msgctxt "Dashboard"
-msgid "Ready"
-msgstr "Klar"
-
-msgctxt "Dashboard"
-msgid "Ready for pickup"
-msgstr "Klar til lån"
-
-msgctxt "Dashboard"
-msgid "Remove reservations (@amount)"
-msgstr "Slet reserveringer (@amount)"
-
-msgctxt "Dashboard"
-msgid "Borrow before @date"
-msgstr "Lån før @date"
-
-msgctxt "Dashboard"
-msgid "Remove your reservation"
-msgstr "Slet reservering"
-
-msgctxt "Dashboard"
-msgid "Apply changes"
-msgstr "Skift"
-
-msgctxt "Dashboard"
-msgid "Date of reservation"
-msgstr "Reserveringsdato"
-
-msgctxt "Dashboard"
-msgid "Go to eReolen"
-msgstr "Gå til eReolen"
-
-msgctxt "Dashboard"
-msgid "Not interested after"
-msgstr "Ikke interesseret efter"
-
-msgctxt "Dashboard"
-msgid "@count queued"
-msgstr "@count i kø"
-
-msgctxt "Dashboard"
-msgid "Others are queueing for this material"
-msgstr "Andre lånere venter på materialet"
-
-msgctxt "Dashboard"
-msgid "Pickup branch"
-msgstr "Afhentningssted"
-
-msgctxt "Dashboard"
-msgid "Pickup deadline"
-msgstr "Afhent senest"
-
-msgctxt "Dashboard"
-msgid "Status"
-msgstr "Status"
-
-msgctxt "Dashboard"
-msgid "Ready for you"
-msgstr "Klar til dig"
-
-msgctxt "Dashboard"
-msgid "Still in queue"
-msgstr "Stadig i kø"
-
-msgctxt "Dashboard"
-msgid "Reservations"
-msgstr "Reserveringer"
-
-msgctxt "Dashboard"
-msgid "Showing @itemsShown out of @hitcount elements"
-msgstr "Viser @itemsShown ud af @hitcount elementer"
-
-msgctxt "Dashboard"
-msgid "Expires soon"
-msgstr "Under 6 dage"
-
-msgctxt "Dashboard"
-msgid "@total,-"
-msgstr "@total kr."
-
-msgctxt "Dashboard"
-msgid "You owe in total"
-msgstr "Du skylder i alt"
-
-msgctxt "Dashboard"
-msgid "Your profile"
-msgstr "Dit overblik"
-
-msgctxt "Dashboard (settings)"
-msgid "Basic settings"
-msgstr "Grundlæggende indstillinger"
-
-msgctxt "Patron page"
-msgid "To"
-msgstr "Til"
-
-msgctxt "Patron page"
-msgid "From"
-msgstr "Fra"
-
-msgctxt "Patron page"
-msgid "Receive emails about your loans, reservations, and so forth"
-msgstr "Modtag e-mails om dine lån, reserveringer osv."
-
-msgctxt "Patron page"
-msgid "E-mail"
-msgstr "E-mail"
-
-msgctxt "Patron page"
-msgid "patron page contact info body text"
-msgstr ""
-"Husk at opdatere dine oplysninger, hvis du skifter mobilnummer eller "
-"e-mail."
-
-msgctxt "Patron page"
-msgid "CONTACT INFORMATION"
-msgstr "Kontaktoplysninger"
-
-msgctxt "Patron page"
-msgid "Receive text messages about your loans, reservations, and so forth"
-msgstr "Modtag sms om dine lån, reserveringer, osv."
-
-msgctxt "Patron page"
-msgid "Phone number"
-msgstr "Mobilnummer"
-
-msgctxt "Patron page"
-msgid "Address"
-msgstr "Adresse"
-
-msgctxt "Patron page"
-msgid "BASIC DETAILS"
-msgstr "Stamoplysninger"
-
-msgctxt "Patron page"
-msgid "Name"
-msgstr "Navn"
-
-msgctxt "Patron page"
-msgid "patron page change pickup body text"
-msgstr "Vælg hvor du vil afhente dine reserveringer"
-
-msgctxt "Patron page"
-msgid "RESERVATIONS"
-msgstr "Reserveringer"
-
-msgctxt "Patron page"
-msgid "Change current pin by entering a new pin and saving"
-msgstr "Skift nuværende kode ved at indtaste en ny kode og gem."
-
-msgctxt "Patron page"
-msgid "PINCODE"
-msgstr "Pinkode"
-
-msgctxt "Patron page"
-msgid "Confirm new pin"
-msgstr "Bekræft ny pinkode"
-
-msgctxt "Patron page"
-msgid "Delete your profile"
-msgstr "Sådan sletter du din brugerprofil"
-
-msgctxt "Patron page"
-msgid "Do you wish to delete your library profile?"
-msgstr "Ønsker du ikke længere at have en profil på biblioteket?"
-
-msgctxt "Patron page"
-msgid "Patron profile page"
-msgstr "Brugerprofil"
-
-msgctxt "Patron page (aria)"
-msgid ""
-"This checkbox opens a section where you can put your current "
-"reservations on a pause, when the time period picked has ended, the "
-"reservations will be resumed"
-msgstr ""
-"Denne tjekboks åbner en sektion hvor du kan sætte dine reserveringer "
-"på pause, når den valgte periode slutter vil reserveringerne blive "
-"genaktiveret"
-
-msgctxt "Patron page"
-msgid "Pause your reservations"
-msgstr "Sæt dine reserveringer på pause"
-
-msgctxt "Patron page"
-msgid "patron page pause reservations body text"
-msgstr ""
-"Du kan sætte dine reserveringer på pause mens du f.eks. er på "
-"ferie. Gælder kun fysiske materialer."
-
-msgctxt "Patron page"
-msgid "Pause physical reservations"
-msgstr "Sæt reserveringer af fysiske materialer på pause"
-
-msgctxt "Patron page"
-msgid "New pin"
-msgstr "Ny pinkode"
-
-msgctxt "Patron page"
-msgid ""
-"The pincode should be minimum @pincodeLengthMin and maximum "
-"@pincodeLengthMax characters long"
-msgstr "Pinkoden skal indeholde @pincodeLengthMin cifre"
-
-msgctxt "Patron page"
-msgid "The pincodes are not the same"
-msgstr "Pinkoderne er ikke ens"
-
-msgctxt "Patron page"
-msgid "Save"
-msgstr "Gem"
-
-msgctxt "Patron page"
-msgid ""
-"There is a number of materials without limitation to amounts of loans "
-"per month."
-msgstr "Der findes titler uden begrænsning på antal lån pr. måned."
-
-msgctxt "Patron page"
-msgid "DIGITAL LOANS (EREOLEN)"
-msgstr "DIGITALE LÅN (eREOLEN)"
-
-msgctxt "Patron page"
-msgid "Click here, to see titles always eligible to be loaned"
-msgstr "Se titler du altid kan låne"
-
-msgctxt "Patron page"
-msgid "Loans per month"
-msgstr "Lån pr. måned"
-
-msgctxt "Patron page"
-msgid "Audiobooks"
-msgstr "Lydbøger"
-
-msgctxt "Patron page"
-msgid "E-books"
-msgstr "E-bøger"
-
-msgctxt "Patron page (aria)"
-msgid "You used @this audiobooks out of you quota of @that audiobooks"
-msgstr "Du har brugt @this audiobooks ud af din kvote på @that lydbøger"
-
-msgctxt "Patron page (aria)"
-msgid "You used @this ebooks out of you quota of @that ebooks"
-msgstr "Du har brugt @this ud af din kvote på @that e-bøger"
-
-msgctxt "Patron page"
-msgid "@this out of @that"
-msgstr "@this ud af @that"
-
-msgctxt "Patron page"
-msgid "You can reserve @countEbooks ebooks and @countAudiobooks audiobooks"
-msgstr "Du kan reservere @countEbooks e-bøger og @countAudiobooks lydbøger"
-
-msgctxt "Patron page"
-msgid "patron page text fee text"
-msgstr "Bemærk at dit telefonselskab kan opkræve gebyr for sms"
-
-msgctxt "Patron page"
-msgid "Your pincode was saved"
-msgstr "Din pinkode blev gemt"
-
-msgctxt "Patron page (aria)"
-msgid "This modal makes it possible to pause your physical reservations"
-msgstr ""
-"Denne pop-up gør det muligt at sætte reserveringer af fysiske "
-"materialer på pause"
-
-msgctxt "Patron page"
-msgid "Pause reservation below inputs text"
-msgstr ""
-"Du kan sætte dine reserveringer på pause mens du f.eks. er på "
-"ferie. Gælder kun fysiske materialer."
-
-msgctxt "Patron page"
-msgid ""
-"Pause your reservations early, since reservations that are already "
-"being processed, will not be paused."
-msgstr ""
-"Sæt reserveringer på pause i god tid, da reserveringer der allerede "
-"bliver behandlet ikke bliver sat på pause."
-
-msgctxt "Patron page"
-msgid "Close pause reservations modal"
-msgstr "Luk pop-up"
-
-msgctxt "Patron page"
-msgid "Pause reservations on physical items"
-msgstr "Sæt reserveringer af fysiske materialer på pause"
-
-msgctxt "Patron page"
-msgid "Read more"
-msgstr "Læs mere"
-
-msgctxt "Patron page"
-msgid "Choose pickup branch"
-msgstr "Afhent reserveringer på"
-
-msgctxt "Patron page"
-msgid "Nothing selected"
-msgstr "Intet valgt"
-
-msgctxt "Patron page"
-msgid ""
-"The phone number must be 6 to 15 characters in length and should be "
-"comprised solely of numbers or begin with a +"
-msgstr "Nummeret skal være mellem 6 og 15 cifre"
-
-msgctxt "Patron page"
-msgid "Your changes are saved."
-msgstr "Dine ændringer blev gemt"
-
-msgctxt "Patron page"
-msgid "Loading..."
-msgstr "Henter..."
-
-msgctxt "Patron page"
-msgid "Online access"
-msgstr "Hentes online"
-
-msgid "Delete patron link"
-msgstr "Slet bruger (link)"
-
-msgid "Link to a page where it is possible to delete patron"
-msgstr ""
-"\n"
-"Link til oplysningsside om hvordan man kan få slettet sin bruger"
-
-msgid "Ereolen always available"
-msgstr "E-bøger du altid kan låne"
-
-msgid "Pincode length (min)"
-msgstr "Pinkode længde (min)"
-
-msgid "Pincode length max"
-msgstr "Pinkode længe (max)"
-
-msgctxt "Dpl Mapp"
-msgid "Domain"
-msgstr "Domæne"
-
-msgctxt "Dpl Mapp"
-msgid ""
-"Specify the Tag Integration domain if the JavaScript-file should be "
-"loaded from the Mapp server."
-msgstr ""
-"Angiv Tag Integration domænet, hvis JavaScript-filen skal loades fra "
-"Mapp serveren."
-
-msgctxt "Dpl Mapp"
-msgid "Id"
-msgstr "ID"
-
-msgctxt "Dpl Mapp"
-msgid ""
-"Enter your Tag Integration customer ID if the JavaScript-file should "
-"be loaded from the Mapp server."
-msgstr ""
-"Angiv dit Tag Integration kundeID, hvis JavaScript-filen skal loades "
-"fra Mapp serveren."
 
 msgid "Get campaign matching search result facets"
 msgstr "Hent kampagne som matcher facetter fra søgeresultatet"
@@ -3573,17 +3573,200 @@ msgstr "Hent kampagne som matcher facetter fra søgeresultatet"
 msgid "Generate proxy url"
 msgstr "Generate proxy URL / Generer proxy URL"
 
+msgid "DPL Library Token"
+msgstr "DPL biblioteks token"
+
+msgid "Handles fetching and storage of a library token"
+msgstr "Håndterer hentning og lagring af en biblioteks token"
+
+msgid "dpl_campaign"
+msgstr "dpl_campaign"
+
+msgid ""
+"A module that deliveres possibility for campaign CRUD and integration "
+"with Dpl React Apps"
+msgstr ""
+"Et modul, som giver mulighed for kampagne CRUD og integration med DPL "
+"React Apps"
+
+msgid "Upload configuration"
+msgstr "Upload indstillinger / Upload configuration"
+
+msgid "Configuration Import"
+msgstr "Import af indstillinger / Configuration Import"
+
+msgid "Import configuration from YAML files."
+msgstr "Indstillinger for import af YAML filer."
+
+msgid "DPL favorites"
+msgstr "DPL Huskeliste"
+
+msgid "Handle the favorites list"
+msgstr "Håndter indstillinger for huskeliste"
+
+msgid "Favorites list settings"
+msgstr "Huskeliste indstillinger"
+
+msgid "Configure proxy urls"
+msgstr "Opsæt proxy URL'er"
+
+msgid "DPL Url Proxy"
+msgstr "DPL (Danish Public Library)  URL proxy"
+
+msgid "Module for generating specially formatted external urls"
+msgstr "Modul til at generere specielt formatterede eksterne URL'er"
+
+msgid "Menu settings"
+msgstr "Menu"
+
+msgid "DPL menu"
+msgstr "DPL menu"
+
+msgid "Handle the patron user menu"
+msgstr "Håndter indstillinger for brugermenuen"
+
+msgid "DPL recommender"
+msgstr "DPL recommender"
+
+msgid "recommender component"
+msgstr "Komponent til anbefalinger (recommender)"
+
+msgid "Recommender settings"
+msgstr "Indstillinger for anbefalinger"
+
+msgid "DPL something similar"
+msgstr "DPL noget der ligner"
+
+msgid "Something similar component"
+msgstr "Komponenten \"Noget der ligner\""
+
+msgid "DPL dashboard"
+msgstr "DPL dashboard"
+
+msgid "Handle the user profile dashboard page"
+msgstr "Håndter indstillinger for brugerens dashboard (Dit overblik)"
+
+msgid "Dashboard settings"
+msgstr "Indstillinger for Dit overblik (Dashboard)"
+
+msgid "Library Agency"
+msgstr "Biblioteksindstillinger"
+
+msgid "General Settings"
+msgstr "Generelle indstillinger"
+
+msgid "DPL Library Agency"
+msgstr "DPL Library Agency"
+
+msgid "Module for handling library agency configuration and functionality"
+msgstr "Modul til at håndtere indstillinger for biblioteket og funktionalitet"
+
+msgid "DPL Publizon"
+msgstr "DPL Publizon"
+
+msgid "Handle publizon configuration"
+msgstr "Håndter indstillinger for Publizon"
+
+msgid "Publizon settings"
+msgstr "Publizon indstillinger"
+
+msgid "DPL FBS"
+msgstr "DPL FBS"
+
+msgid "Handle FBS configuration"
+msgstr "Håndter indstillinger for FBS"
+
+msgid "FBS settings"
+msgstr "FBS indstillinger"
+
 msgid "DPL favorites list material component"
 msgstr "DPL huskeliste materialekomponent"
 
 msgid "Handle the favorites list material component pages"
 msgstr "Håndter indstillinger for huskeliste komponent"
 
+msgid "Instant Loan"
+msgstr "Strakslån"
+
+msgid "Supports promoting materials available for instant loans to patrons."
+msgstr ""
+"Understøtter visning af materialer som kan lånes med det samme "
+"(strakslån)"
+
+msgid "Instant loan settings"
+msgstr "Indstillinger for strakslån"
+
 msgid "Example content for DPL CMS"
 msgstr "Eksempelindhold for DPL CMS"
 
 msgid "Provides example content for demo sites."
 msgstr "Indeholder eksempelindhold til demosider."
+
+msgid "Article"
+msgstr "Artikel"
+
+msgid "Functionality related to creating article content."
+msgstr ""
+
+msgid "Reservations settings"
+msgstr "Reserveringsindstillinger"
+
+msgid "DPL Reservations"
+msgstr "DPL Reserveringer"
+
+msgid "Handle the user profile reservations pages"
+msgstr "Håndter indstillinger for brugerprofilens reserveringsoversigt"
+
+msgid "DPL patron page"
+msgstr "DPL brugerprofil"
+
+msgid "Handle the patron page"
+msgstr "Håndter indstillinger for brugeroprettelse"
+
+msgid "Patron page settings"
+msgstr "Indstillinger for brugerprofil"
+
+msgid "Mapp Intelligence settings"
+msgstr "Mapp Intelligence indstillinger"
+
+msgid "Mapp Intelligence"
+msgstr "Mapp Intelligence"
+
+msgid "Integration with Mapp Intelligence to track site usage."
+msgstr "Integration med Mapp Intelligence for at tracke brugen af hjemmesiden"
+
+msgid "DPL loans"
+msgstr "DPL lån"
+
+msgid "Handle the user profile loan pages"
+msgstr "Håndter indstillinger for brugerprofilens låneoversigt"
+
+msgid "Loans settings"
+msgstr "Låneindstillinger"
+
+msgid "DPL React Apps"
+msgstr "DPL React apps"
+
+msgid "For integration of dpl_react apps on the site."
+msgstr "For integering af dpl_react apps på hjemmesiden."
+
+msgid "Fees settings"
+msgstr "Gebyrindstillinger"
+
+msgid "DPL Fees"
+msgstr "DPL gebyrer"
+
+msgid "Handle the user profile fees page"
+msgstr "Håndter indstillinger for brugerprofilens gebyrside"
+
+msgid "DPL Patron redirect"
+msgstr "DPL Patron redirect / DPL bruger redirect"
+
+msgid "Redirect patron to login if required."
+msgstr "Send bruger videre til login hvis det er påkrævet"
+
+msgid "Patron redirect settings"
+msgstr "Indstillinger for viderestilling af bruger til adgangsplatformen"
 
 msgid "DDB React"
 msgstr "DPL React"
@@ -3598,125 +3781,17 @@ msgstr ""
 msgid "DPL React User Token"
 msgstr "DPL React bruger token"
 
-msgid "Reservations settings"
-msgstr "Reserveringsindstillinger"
+msgid "DPL Login"
+msgstr "DPL Login"
 
-msgid "DPL Reservations"
-msgstr "DPL Reserveringer"
-
-msgid "Handle the user profile reservations pages"
-msgstr "Håndter indstillinger for brugerprofilens reserveringsoversigt"
-
-msgid "DPL something similar"
-msgstr "DPL noget der ligner"
-
-msgid "Something similar component"
-msgstr "Komponenten \"Noget der ligner\""
-
-msgid "DPL Library Token"
-msgstr "DPL biblioteks token"
-
-msgid "Handles fetching and storage of a library token"
-msgstr "Håndterer hentning og lagring af en biblioteks token"
-
-msgid "Event"
-msgstr ""
-
-msgid "Custom handling related to events."
-msgstr ""
-
-msgid "dpl_campaign"
-msgstr "dpl_campaign"
-
-msgid ""
-"A module that deliveres possibility for campaign CRUD and integration "
-"with Dpl React Apps"
-msgstr ""
-"Et modul, som giver mulighed for kampagne CRUD og integration med DPL "
-"React Apps"
-
-msgid "DPL menu"
-msgstr "DPL menu"
-
-msgid "Handle the patron user menu"
-msgstr "Håndter indstillinger for brugermenuen"
-
-msgid "Menu settings"
-msgstr "Menu"
-
-msgid "DPL favorites"
-msgstr "DPL Huskeliste"
-
-msgid "Handle the favorites list"
-msgstr "Håndter indstillinger for huskeliste"
-
-msgid "Favorites list settings"
-msgstr "Huskeliste indstillinger"
-
-msgid "DPL React Apps"
-msgstr "DPL React apps"
-
-msgid "For integration of dpl_react apps on the site."
-msgstr "For integering af dpl_react apps på hjemmesiden."
-
-msgid "DPL Patron redirect"
-msgstr "DPL Patron redirect / DPL bruger redirect"
-
-msgid "Redirect patron to login if required."
-msgstr "Send bruger videre til login hvis det er påkrævet"
-
-msgid "Patron redirect settings"
-msgstr "Indstillinger for viderestilling af bruger til adgangsplatformen"
-
-msgid "Instant Loan"
-msgstr "Strakslån"
-
-msgid "Supports promoting materials available for instant loans to patrons."
-msgstr ""
-"Understøtter visning af materialer som kan lånes med det samme "
-"(strakslån)"
-
-msgid "Instant loan settings"
-msgstr "Indstillinger for strakslån"
-
-msgid "DPL Publizon"
-msgstr "DPL Publizon"
-
-msgid "Handle publizon configuration"
-msgstr "Håndter indstillinger for Publizon"
-
-msgid "Publizon settings"
-msgstr "Publizon indstillinger"
-
-msgid "DPL recommender"
-msgstr "DPL recommender"
-
-msgid "recommender component"
-msgstr "Komponent til anbefalinger (recommender)"
-
-msgid "Recommender settings"
-msgstr "Indstillinger for anbefalinger"
-
-msgid "DPL Fees"
-msgstr "DPL gebyrer"
-
-msgid "Handle the user profile fees page"
-msgstr "Håndter indstillinger for brugerprofilens gebyrside"
-
-msgid "Fees settings"
-msgstr "Gebyrindstillinger"
+msgid "Handles authentication/login via Adgangsplatformen"
+msgstr "Håndterer autentificering/login via Adgangsplatformen"
 
 msgid "Dpl Login Logout Route"
 msgstr "DPL Login Logout Route"
 
 msgid "Login via Adgangsplatformen"
 msgstr "Login via Adgangsplatformen"
-
-msgid "DPL Login"
-msgstr "DPL Login"
-
-msgid "Handles authentication/login via Adgangsplatformen"
-msgstr "Håndterer autentificering/login via Adgangsplatformen"
 
 msgid "Patron registration"
 msgstr "Brugeroprettelse"
@@ -3730,95 +3805,20 @@ msgstr "Information om brugeroprettelse"
 msgid "Patron nem-login authentication"
 msgstr "Bruger autentificering med Nem-login"
 
-msgid "FBS settings"
-msgstr "FBS indstillinger"
-
-msgid "DPL FBS"
-msgstr "DPL FBS"
-
-msgid "Handle FBS configuration"
-msgstr "Håndter indstillinger for FBS"
-
-msgid "Article"
-msgstr "Artikel"
-
-msgid "Functionality related to creating article content."
+msgid "Event"
 msgstr ""
 
-msgid "DPL loans"
-msgstr "DPL lån"
-
-msgid "Handle the user profile loan pages"
-msgstr "Håndter indstillinger for brugerprofilens låneoversigt"
-
-msgid "Loans settings"
-msgstr "Låneindstillinger"
-
-msgid "Library Agency"
-msgstr "Biblioteksindstillinger"
-
-msgid "General Settings"
-msgstr "Generelle indstillinger"
-
-msgid "DPL Library Agency"
-msgstr "DPL Library Agency"
-
-msgid "Module for handling library agency configuration and functionality"
-msgstr "Modul til at håndtere indstillinger for biblioteket og funktionalitet"
-
-msgid "Configuration Import"
-msgstr "Import af indstillinger / Configuration Import"
-
-msgid "Import configuration from YAML files."
-msgstr "Indstillinger for import af YAML filer."
-
-msgid "Upload configuration"
-msgstr "Upload indstillinger / Upload configuration"
-
-msgid "Configure proxy urls"
-msgstr "Opsæt proxy URL'er"
-
-msgid "DPL Url Proxy"
-msgstr "DPL (Danish Public Library)  URL proxy"
-
-msgid "Module for generating specially formatted external urls"
-msgstr "Modul til at generere specielt formatterede eksterne URL'er"
-
-msgid "DPL dashboard"
-msgstr "DPL dashboard"
-
-msgid "Handle the user profile dashboard page"
-msgstr "Håndter indstillinger for brugerens dashboard (Dit overblik)"
-
-msgid "Dashboard settings"
-msgstr "Indstillinger for Dit overblik (Dashboard)"
-
-msgid "Patron page settings"
-msgstr "Indstillinger for brugerprofil"
-
-msgid "DPL patron page"
-msgstr "DPL brugerprofil"
-
-msgid "Handle the patron page"
-msgstr "Håndter indstillinger for brugeroprettelse"
-
-msgid "Mapp Intelligence settings"
-msgstr "Mapp Intelligence indstillinger"
-
-msgid "Mapp Intelligence"
-msgstr "Mapp Intelligence"
-
-msgid "Integration with Mapp Intelligence to track site usage."
-msgstr "Integration med Mapp Intelligence for at tracke brugen af hjemmesiden"
+msgid "Custom handling related to events."
+msgstr ""
 
 msgid "List of bookmarks"
 msgstr ""
 
-msgid "By @username"
-msgstr ""
-
 msgid "Skip to main content"
 msgstr "Gå til hovedindhold"
+
+msgid "By @username"
+msgstr ""
 
 msgid "Novel"
 msgstr "Roman"
