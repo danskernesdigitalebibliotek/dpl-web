@@ -11,7 +11,7 @@
 
 
 	{% if event_is_active %}
-		<a {{ item.attributes.setAttribute('href', url).addClass(classes) }} target="_blank">
+		<a {{ item.attributes.setAttribute('href', url).addClass(classes).setAttribute('target', '_blank') }}>
 			{{ title }}
 		</a>
 	{% else %}
