@@ -78,6 +78,7 @@
         "danskernesdigitalebibliotek/fbs-client": "*",
         "dealerdirect/phpcodesniffer-composer-installer": "^0.7.1",
         "deoliveiralucas/array-keys-case-transform": "^1.1",
+        "drupal/address": "^1.0",
         "drupal/admin_toolbar": "^3.4",
         "drupal/config_ignore": "^2.4",
         "drupal/core-composer-scaffold": "~10.0.11",

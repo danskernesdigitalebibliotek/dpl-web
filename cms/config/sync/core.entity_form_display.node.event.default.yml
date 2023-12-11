@@ -3,12 +3,14 @@ langcode: en
 status: true
 dependencies:
   config:
+    - field.field.node.event.field_event_address
     - field.field.node.event.field_event_date
     - field.field.node.event.field_event_description
     - field.field.node.event.field_event_link
     - field.field.node.event.field_event_state
     - node.type.event
   module:
+    - address
     - datetime_range
     - link
     - text
@@ -17,6 +19,12 @@ targetEntityType: node
 bundle: event
 mode: default
 content:
+  field_event_address:
+    type: address_default
+    weight: 31
+    region: content
+    settings: {  }
+    third_party_settings: {  }
   field_event_date:
     type: daterange_default
     weight: 27
