@@ -20,6 +20,16 @@
       </div>
     </div>
     <dl class="list-description event-description__info list-description--event">
+      {% if content.field_event_place.0 %}
+      <div class="list-description__item">
+        <dt class="list-description__key">
+          {{ "Place" | trans }}
+        </dt>
+        <dd class="list-description__value">
+          {{ content.field_event_place }}
+        </dd>
+      </div>
+      {% endif %}
       <div class="list-description__item">
         <dt class="list-description__key">
           {{ "Adresse" | trans }}
@@ -30,5 +40,7 @@
       </div>
     </dl>
   </section>
-  {{ content|without('field_event_date', 'field_event_description', 'field_event_link', 'field_event_address') }}
+  {{ content|without('field_event_date', 'field_event_description', 'field_event_link', 'field_event_address',
+  'field_event_place') }}
 </article>
+
