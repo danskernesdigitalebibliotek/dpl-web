@@ -4,36 +4,28 @@ status: true
 dependencies:
   config:
     - core.entity_view_mode.node.teaser
-    - field.field.node.campaign.body
     - field.field.node.campaign.field_campaign_image
     - field.field.node.campaign.field_campaign_link
     - field.field.node.campaign.field_campaign_rules
     - field.field.node.campaign.field_campaign_rules_logic
+    - field.field.node.campaign.field_campaign_text
     - node.type.campaign
   module:
-    - text
     - user
 id: node.campaign.teaser
 targetEntityType: node
 bundle: campaign
 mode: teaser
 content:
-  body:
-    label: hidden
-    type: text_summary_or_trimmed
-    weight: 101
-    settings:
-      trim_length: 600
-    third_party_settings: {  }
-    region: content
   links:
-    weight: 100
     settings: {  }
     third_party_settings: {  }
+    weight: 100
     region: content
 hidden:
   field_campaign_image: true
   field_campaign_link: true
   field_campaign_rules: true
   field_campaign_rules_logic: true
+  field_campaign_text: true
   langcode: true

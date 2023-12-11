@@ -176,9 +176,7 @@ class ProxyUrlConfigurationForm extends ConfigFormBase {
       $form['hostnames'][$index]['disable_prefix'] = [
         '#type' => 'checkbox',
         '#title' => $this->t('Do not use proxy prefix for this hostname', [], ['context' => 'Url Proxy']),
-        '#default_value' => isset($saved_values['hostnames'][$index]['disable_prefix'])
-        ? $saved_values['hostnames'][$index]['disable_prefix']
-        : FALSE,
+        '#default_value' => $saved_values['hostnames'][$index]['disable_prefix'] ?? FALSE,
       ];
 
       $form['hostnames'][$index]['remove_this'] = [

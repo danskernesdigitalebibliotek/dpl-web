@@ -4,8 +4,8 @@ namespace Drupal\dpl_patron_reg\Plugin\Block;
 
 use Drupal\Core\Block\BlockBase;
 use Drupal\Core\Plugin\ContainerFactoryPluginInterface;
-use Drupal\dpl_library_agency\BranchSettings;
 use Drupal\dpl_library_agency\Branch\BranchRepositoryInterface;
+use Drupal\dpl_library_agency\BranchSettings;
 use Drupal\dpl_library_agency\ReservationSettings;
 use Drupal\dpl_patron_page\DplPatronPageSettings;
 use Drupal\dpl_patron_reg\DplPatronRegSettings;

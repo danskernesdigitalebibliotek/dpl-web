@@ -5,11 +5,11 @@ namespace Drupal\dpl_favorites_list\Plugin\Block;
 use Drupal\Core\Block\BlockBase;
 use Drupal\Core\Plugin\ContainerFactoryPluginInterface;
 use Drupal\dpl_favorites_list\DplFavoritesListSettings;
+use Drupal\dpl_library_agency\Branch\BranchRepositoryInterface;
+use Drupal\dpl_library_agency\BranchSettings;
 use Drupal\dpl_react\DplReactConfigInterface;
 use Drupal\dpl_react_apps\Controller\DplReactAppsController;
 use Symfony\Component\DependencyInjection\ContainerInterface;
-use Drupal\dpl_library_agency\Branch\BranchRepositoryInterface;
-use Drupal\dpl_library_agency\BranchSettings;
 
 /**
  * Provides user favorites list.

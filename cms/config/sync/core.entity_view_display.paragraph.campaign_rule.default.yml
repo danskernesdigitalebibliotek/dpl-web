@@ -15,27 +15,27 @@ bundle: campaign_rule
 mode: default
 content:
   field_campaign_rule_facet:
-    weight: 3
+    type: list_default
     label: above
     settings: {  }
     third_party_settings: {  }
-    type: list_default
+    weight: 3
     region: content
   field_campaign_rule_ranking_max:
-    weight: 6
+    type: number_integer
     label: above
     settings:
       thousand_separator: ''
       prefix_suffix: true
     third_party_settings: {  }
-    type: number_integer
+    weight: 6
     region: content
   field_campaign_rule_term:
-    weight: 5
+    type: string
     label: above
     settings:
       link_to_entity: false
     third_party_settings: {  }
-    type: string
+    weight: 5
     region: content
 hidden: {  }
