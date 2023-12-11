@@ -7,6 +7,7 @@ dependencies:
     - field.field.node.event.field_event_date
     - field.field.node.event.field_event_description
     - field.field.node.event.field_event_link
+    - field.field.node.event.field_event_place
     - field.field.node.event.field_event_state
     - node.type.event
   module:
@@ -44,6 +45,14 @@ content:
       target: ''
     third_party_settings: {  }
     weight: 3
+    region: content
+  field_event_place:
+    type: string
+    label: above
+    settings:
+      link_to_entity: false
+    third_party_settings: {  }
+    weight: 5
     region: content
   links:
     settings: {  }
