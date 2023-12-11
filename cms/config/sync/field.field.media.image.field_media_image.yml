@@ -12,7 +12,7 @@ field_name: field_media_image
 entity_type: media
 bundle: image
 label: Image
-description: ''
+description: "You can set a focal point, by clicking on the preview on the image, moving the white target.<br>\r\nBy setting a focal point, you tell the system which part of the image to keep in focus when it gets cropped.<br>\r\nUse the \"preview\" function, to see how your image will be cropped across image styles."
 required: true
 translatable: true
 default_value: {  }
@@ -22,7 +22,7 @@ settings:
   handler_settings: {  }
   file_directory: '[date:custom:Y]-[date:custom:m]'
   file_extensions: 'png gif jpg jpeg'
-  max_filesize: ''
+  max_filesize: 25mb
   max_resolution: ''
   min_resolution: ''
   alt_field: true
@@ -30,7 +30,7 @@ settings:
   title_field: false
   title_field_required: false
   default_image:
-    uuid: null
+    uuid: ''
     alt: ''
     title: ''
     width: null
