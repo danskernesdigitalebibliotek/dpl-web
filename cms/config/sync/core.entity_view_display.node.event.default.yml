@@ -5,9 +5,11 @@ dependencies:
   config:
     - field.field.node.event.field_event_date
     - field.field.node.event.field_event_description
+    - field.field.node.event.field_event_link
     - field.field.node.event.field_event_state
     - node.type.event
   module:
+    - link
     - text
     - user
 id: node.event.default
@@ -21,6 +23,18 @@ content:
     settings: {  }
     third_party_settings: {  }
     weight: 1
+    region: content
+  field_event_link:
+    type: link
+    label: above
+    settings:
+      trim_length: 80
+      url_only: false
+      url_plain: false
+      rel: ''
+      target: ''
+    third_party_settings: {  }
+    weight: 3
     region: content
   links:
     settings: {  }

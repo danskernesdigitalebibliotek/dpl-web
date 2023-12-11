@@ -117,3 +117,58 @@ function dpl_event_set_occurred_callback(JobSchedule $job): void {
     $event->save();
   }
 }
+
+/**
+ * Implements hook_preprocess_HOOK() for field templates.
+ *
+ * Preprocesses the 'field_event_link' for Drupal entities to alter its display
+ * based on the event's state. It updates the button title and sets an
+ * 'event_is_active' flag depending on the event state.
+ */
+function dpl_event_preprocess_field(array &$variables): void {
+  // Get the field name from the variables array. Default to NULL if not set.
+  $field_name = $variables['field_name'] ?? NULL;
+
+  // Return early if 'field_event_link' is present without a title.
+  if ($field_name !== 'field_event_link' ||
+    empty($variables['items'][0]['content']['#title'])) {
+    return;
+  }
+
+  // Return if the element lacks a NodeInterface or an entity object.
+  $node = $variables['element']['#object'] ?? NULL;
+  if (!($node instanceof NodeInterface)) {
+    return;
+  }
+
+  // Get the event states from the 'field_event_state' field.
+  /** @var \Drupal\enum_field\Plugin\Field\FieldType\EnumItemList $event_state_field */
+  $event_state_field = $node->get('field_event_state');
+  $event_states = $event_state_field->enums();
+  // Select the first event state or NULL if not available.
+  $event_state = $event_states[0] ?? NULL;
+
+  // Check if the event state is valid. If not, return early.
+  if (!($event_state instanceof EventState)) {
+    return;
+  }
+
+  // Set 'event_is_active' flag if event state is neither of the following.
+  $variables['event_is_active'] = !in_array($event_state, [
+    EventState::Occurred,
+    EventState::Cancelled,
+    EventState::SoldOut,
+    EventState::TicketSaleNotOpen,
+  ]);
+
+  // After determining the 'event_is_active' flag, check if the event is active.
+  if ($variables['event_is_active']) {
+    // If active, set a translatable string as the title.
+    $variables['items'][0]['content']['#title'] = t('Buy tickets');
+    return;
+  }
+  else {
+    // Update the title of the button to the label of the current event state.
+    $variables['items'][0]['content']['#title'] = $event_state->label();
+  }
+}
