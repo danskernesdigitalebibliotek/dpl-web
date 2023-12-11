@@ -204,7 +204,7 @@ function dpl_react_apps_texts(): array {
     'renew-group-modal-loans-success-status' => t('{"type":"plural","text":["1 loan has been renewed.","@count loans have been renewed."]}', [], ['context' => 'Global']),
     'renew-group-modal-loans-success-title' => t('You have renewed your loans', [], ['context' => 'Global']),
     'renew-material-loan-button' => t('Ok', [], ['context' => 'Global']),
-    'renew-material-loan-error-status' => t('omething went wrong renewing your loan. Please try again.', [], ['context' => 'Global']),
+    'renew-material-loan-error-status' => t('Something went wrong renewing your loan. Please try again.', [], ['context' => 'Global']),
     'renew-material-loan-error-title' => t('Renewal of your loan failed', [], ['context' => 'Global']),
     'renew-material-loan-no-renewals-possible-error-status' => t('For some reason, your loan could not be renewed.', [], ['context' => 'Global']),
     'renew-material-loan-no-renewals-possible-error-title' => t('The loan could not be renewed', [], ['context' => 'Global']),
