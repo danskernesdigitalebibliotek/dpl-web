@@ -167,7 +167,8 @@ function dpl_event_preprocess_field(array &$variables): void {
     $variables['items'][0]['content']['#title'] = t('Buy tickets');
     return;
   }
-
-  // Update the title of the button to the label of the current event state.
-  $variables['items'][0]['content']['#title'] = $event_state->label();
+  else {
+    // Update the title of the button to the label of the current event state.
+    $variables['items'][0]['content']['#title'] = $event_state->label();
+  }
 }
