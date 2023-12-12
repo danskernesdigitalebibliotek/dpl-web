@@ -5,13 +5,14 @@ namespace Drupal\dpl_reservations\Plugin\Block;
 use Drupal\Core\Block\BlockBase;
 use Drupal\Core\Config\ConfigFactoryInterface;
 use Drupal\Core\Plugin\ContainerFactoryPluginInterface;
+use Drupal\dpl_library_agency\GeneralSettings;
 use Drupal\dpl_library_agency\Branch\BranchRepositoryInterface;
 use Drupal\dpl_library_agency\BranchSettings;
-use Drupal\dpl_library_agency\Form\GeneralSettingsForm;
 use Drupal\dpl_react\DplReactConfigInterface;
 use Drupal\dpl_react_apps\Controller\DplReactAppsController;
 use Drupal\dpl_reservations\DplReservationsSettings;
 use Symfony\Component\DependencyInjection\ContainerInterface;
+use function Safe\json_encode as json_encode;
 
 /**
  * Provides user reservations list.
@@ -48,7 +49,8 @@ class ReservationListBlock extends BlockBase implements ContainerFactoryPluginIn
       private ConfigFactoryInterface $configFactory,
       protected BranchSettings $branchSettings,
       protected BranchRepositoryInterface $branchRepository,
-      protected DplReactConfigInterface $reservationListSettings
+      protected DplReactConfigInterface $reservationListSettings,
+      protected GeneralSettings $generalSettings
   ) {
     parent::__construct($configuration, $plugin_id, $plugin_definition);
     $this->configuration = $configuration;
@@ -66,6 +68,7 @@ class ReservationListBlock extends BlockBase implements ContainerFactoryPluginIn
       $container->get('dpl_library_agency.branch_settings'),
       $container->get('dpl_library_agency.branch.repository'),
       \Drupal::service('dpl_reservations.settings'),
+      $container->get('dpl_library_agency.general_settings'),
     );
   }
 
@@ -74,6 +77,8 @@ class ReservationListBlock extends BlockBase implements ContainerFactoryPluginIn
    *
    * @return mixed[]
    *   The app render array.
+   *
+   * @throws \Safe\Exceptions\JsonException
    */
   public function build(): array {
     $config = $this->reservationListSettings->loadConfig();
@@ -87,15 +92,15 @@ class ReservationListBlock extends BlockBase implements ContainerFactoryPluginIn
       'branches-config' => DplReactAppsController::buildBranchesJsonProp($this->branchRepository->getBranches()),
 
       // Url.
-      'ereolen-my-page-url' => dpl_react_apps_format_app_url($config->get('ereolen_my_page_url'), GeneralSettingsForm::EREOLEN_MY_PAGE_URL),
-      'pause-reservation-info-url' => dpl_react_apps_format_app_url($generalSettings->get('pause_reservation_info_url'), GeneralSettingsForm::PAUSE_RESERVATION_INFO_URL),
+      'ereolen-my-page-url' => dpl_react_apps_format_app_url($config->get('ereolen_my_page_url'), GeneralSettings::EREOLEN_MY_PAGE_URL),
+      'pause-reservation-info-url' => dpl_react_apps_format_app_url($generalSettings->get('pause_reservation_info_url'), GeneralSettings::PAUSE_RESERVATION_INFO_URL),
 
       // Config.
-      'interest-periods-config' => DplReactAppsController::getInterestPeriods(),
+      'interest-periods-config' => json_encode($this->generalSettings->getInterestPeriodsConfig()),
       'page-size-desktop' => $config->get('page_size_desktop') ?? DplReservationsSettings::PAGE_SIZE_DESKTOP,
       'page-size-mobile' => $config->get('page_size_mobile') ?? DplReservationsSettings::PAGE_SIZE_MOBILE,
-      'pause-reservation-start-date-config' => $generalSettings->get('pause_reservation_start_date_config') ?? GeneralSettingsForm::PAUSE_RESERVATION_START_DATE_CONFIG,
-      'expiration-warning-days-before-config' => $generalSettings->get('expiration_warning_days_before_config') ?? GeneralSettingsForm::EXPIRATION_WARNING_DAYS_BEFORE_CONFIG,
+      'pause-reservation-start-date-config' => $generalSettings->get('pause_reservation_start_date_config') ?? GeneralSettings::PAUSE_RESERVATION_START_DATE_CONFIG,
+      'expiration-warning-days-before-config' => $generalSettings->get('expiration_warning_days_before_config') ?? GeneralSettings::EXPIRATION_WARNING_DAYS_BEFORE_CONFIG,
 
       // Texts.
       'modal-reservation-form-no-interest-after-label-text' => $this->t("Change the amount of time after which you're no longer interested in this material.", [], ['context' => 'Reservation list']),

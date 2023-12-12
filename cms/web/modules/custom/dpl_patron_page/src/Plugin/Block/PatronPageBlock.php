@@ -5,9 +5,9 @@ namespace Drupal\dpl_patron_page\Plugin\Block;
 use Drupal\Core\Block\BlockBase;
 use Drupal\Core\Config\ConfigFactoryInterface;
 use Drupal\Core\Plugin\ContainerFactoryPluginInterface;
+use Drupal\dpl_library_agency\GeneralSettings;
 use Drupal\dpl_library_agency\Branch\BranchRepositoryInterface;
 use Drupal\dpl_library_agency\BranchSettings;
-use Drupal\dpl_library_agency\Form\GeneralSettingsForm;
 use Drupal\dpl_library_agency\ReservationSettings;
 use Drupal\dpl_patron_page\DplPatronPageSettings;
 use Drupal\dpl_react\DplReactConfigInterface;
@@ -86,7 +86,7 @@ class PatronPageBlock extends BlockBase implements ContainerFactoryPluginInterfa
     $patron_page_settings = $this->patronPageSettings->loadConfig();
 
     $general_config = $this->configFactory->get('dpl_library_agency.general_settings');
-    $dateConfig = $general_config->get('pause_reservation_start_date_config') ?? GeneralSettingsForm::PAUSE_RESERVATION_START_DATE_CONFIG;
+    $dateConfig = $general_config->get('pause_reservation_start_date_config') ?? GeneralSettings::PAUSE_RESERVATION_START_DATE_CONFIG;
 
     $data = [
       // Configuration.
@@ -101,7 +101,7 @@ class PatronPageBlock extends BlockBase implements ContainerFactoryPluginInterfa
       // Urls.
       'always-available-ereolen-url' => dpl_react_apps_format_app_url($patron_page_settings->get('always_available_ereolen'), DplPatronPageSettings::ALWAYS_AVAILABLE_EREOLEN),
       'delete-patron-url' => dpl_react_apps_format_app_url($patron_page_settings->get('delete_patron_url'), DplPatronPageSettings::DELETE_PATRON_URL),
-      'pause-reservation-info-url' => dpl_react_apps_format_app_url($patron_page_settings->get('pause_reservation_info_url'), GeneralSettingsForm::PAUSE_RESERVATION_INFO_URL),
+      'pause-reservation-info-url' => dpl_react_apps_format_app_url($patron_page_settings->get('pause_reservation_info_url'), GeneralSettings::PAUSE_RESERVATION_INFO_URL),
 
       // Texts.
       'pause-reservation-modal-cancel-button-label-text' => $this->t('Cancel pause', [], ['context' => 'Patron page']),
