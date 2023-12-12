@@ -2,27 +2,27 @@
 
 namespace Drupal\Tests\dpl_login\Unit;
 
+use Drupal\Core\Config\ConfigFactoryInterface;
+use Drupal\Core\Config\ImmutableConfig;
+use Drupal\Core\DependencyInjection\ContainerBuilder;
+use Drupal\Core\GeneratedUrl;
+use Drupal\Core\Logger\LoggerChannelFactoryInterface;
+use Drupal\Core\Routing\TrustedRedirectResponse;
+use Drupal\Core\Routing\UrlGenerator;
+use Drupal\Core\Utility\UnroutedUrlAssemblerInterface;
+use Drupal\dpl_login\AccessToken;
 use Drupal\dpl_login\Adgangsplatformen\Config;
+use Drupal\dpl_login\Controller\DplLoginController;
+use Drupal\dpl_login\Exception\MissingConfigurationException;
+use Drupal\dpl_login\UserTokensProvider;
+use Drupal\openid_connect\OpenIDConnectClaims;
+use Drupal\openid_connect\Plugin\OpenIDConnectClientBase;
+use Drupal\Tests\UnitTestCase;
 use phpmock\Mock;
 use phpmock\MockBuilder;
 use Prophecy\Argument;
 use Psr\Log\LoggerInterface;
-use Drupal\Core\GeneratedUrl;
-use Drupal\Tests\UnitTestCase;
-use Drupal\dpl_login\AccessToken;
-use Drupal\Core\Routing\UrlGenerator;
-use Drupal\Core\Config\ImmutableConfig;
-use Drupal\dpl_login\UserTokensProvider;
-use Drupal\Core\Config\ConfigFactoryInterface;
-use Drupal\Core\Routing\TrustedRedirectResponse;
-use Drupal\dpl_login\Controller\DplLoginController;
-use Drupal\Core\DependencyInjection\ContainerBuilder;
-use Drupal\Core\Logger\LoggerChannelFactoryInterface;
-use Drupal\Core\Utility\UnroutedUrlAssemblerInterface;
 use Symfony\Component\HttpFoundation\RedirectResponse;
-use Drupal\dpl_login\Exception\MissingConfigurationException;
-use Drupal\openid_connect\OpenIDConnectClaims;
-use Drupal\openid_connect\Plugin\OpenIDConnectClientBase;
 use Symfony\Component\HttpFoundation\Response;
 
 /**

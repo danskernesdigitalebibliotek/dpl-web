@@ -2,7 +2,7 @@
 on: pull_request
 name: CI Tests
 env:
-  PHP_VERSION: 8.0
+  PHP_VERSION: 8.1
   COMPOSER_VERSION: v2
 
 jobs:

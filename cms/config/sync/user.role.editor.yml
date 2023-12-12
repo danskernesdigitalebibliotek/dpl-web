@@ -1,7 +1,17 @@
 uuid: 76b815c4-fb25-4d2b-b1a5-729919ef45ad
 langcode: en
 status: true
-dependencies: {  }
+dependencies:
+  config:
+    - filter.format.basic
+    - node.type.article
+    - node.type.campaign
+    - node.type.event
+  module:
+    - filter
+    - node
+    - system
+    - toolbar
 id: editor
 label: Editor
 weight: 4
@@ -11,13 +21,22 @@ permissions:
   - 'access toolbar'
   - 'create article content'
   - 'create campaign content'
+  - 'create event content'
   - 'delete any article content'
   - 'delete any campaign content'
+  - 'delete any event content'
+  - 'delete event revisions'
   - 'delete own article content'
   - 'delete own campaign content'
+  - 'delete own event content'
   - 'edit any article content'
   - 'edit any campaign content'
+  - 'edit any event content'
   - 'edit own article content'
   - 'edit own campaign content'
+  - 'edit own event content'
+  - 'revert event revisions'
+  - 'use text format basic'
+  - 'view event revisions'
   - 'view own unpublished content'
   - 'view the administration theme'

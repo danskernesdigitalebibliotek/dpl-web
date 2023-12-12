@@ -1,0 +1,34 @@
+uuid: 0d82ea7f-016f-438d-84e6-82c428916ef3
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_paragraphs
+    - node.type.article
+    - paragraphs.paragraphs_type.campaign_rule
+  module:
+    - entity_reference_revisions
+id: node.article.field_paragraphs
+field_name: field_paragraphs
+entity_type: node
+bundle: article
+label: Paragraphs
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings:
+  handler: 'default:paragraph'
+  handler_settings:
+    target_bundles:
+      campaign_rule: campaign_rule
+    negate: 1
+    target_bundles_drag_drop:
+      campaign_rule:
+        weight: 2
+        enabled: true
+      text_body:
+        weight: 4
+        enabled: false
+field_type: entity_reference_revisions

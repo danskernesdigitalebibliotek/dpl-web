@@ -69,13 +69,25 @@ tasks:
       - sh: "[ ! -z {{.CR_PAT}} ]"
         msg: "Env variable CR_PAT is not set or empty."
 
+  dev:build:
+    summary: Build docker containers
+    # Ensure that we only rebuild if there are changes to Dockerfiles
+    sources:
+      - "{{ .LAGOON_DIR }}/*.dockerfile"
+    cmds:
+      - docker compose build
+
   dev:cli:
     summary: Performs command inside container. Expects parameter(s).
+    # This could have a dependency on dev:build but does not to avoid excessive
+    # log output. dev:cli gets called a lot.
     cmds:
       - docker compose {{ .DOCKER_COMPOSE_FILES }} run --rm cli sh -c "{{.CLI_ARGS}}"
 
   dev:start:
     summary: Run docker compose
+    deps:
+      - dev:build
     cmds:
       - docker compose {{ .DOCKER_COMPOSE_FILES }} up -d {{if eq .CI "true"}}--quiet-pull{{end}}
     vars:
@@ -94,11 +106,19 @@ tasks:
       # causes the process to fail. Wait and retry if that is the case
       - docker compose {{ .DOCKER_COMPOSE_FILES }} down --volumes --remove-orphans || (sleep 3 && docker-compose down)
 
+  dev:pull:
+    summary: Pull latest docker images.
+    cmds:
+      - docker compose {{ .DOCKER_COMPOSE_FILES }} pull
+
   dev:reset:
     desc: Create local development setup in a clean state
-    cmds:
+    deps:
+      # Build new containers if necessary.
+      - dev:build
       # Stop potential running environment.
-      - task dev:down
+      - dev:down
+    cmds:
       # Create a .env file with recommended defaults.
       - cp -n .env.example .env || true
       # Build site.
@@ -107,8 +127,12 @@ tasks:
       # packages may change without composer package version changes so ensure
       # we have the latest version.
       - task dev:cli -- composer reinstall danskernesdigitalebibliotek/dpl-design-system danskernesdigitalebibliotek/dpl-react --no-cache
+      # (Re)run Drupal scaffolding.
+      - task dev:cli -- composer drupal:scaffold
       # Build dev scripts
       - task dev:cli -- $(cd dev-scripts/dpl-react; composer install)
+      # Pull the images (necessary for the first reset)
+      - task dev:pull
       # Start local environment.
       - task dev:start
       # Install site.
@@ -123,8 +147,21 @@ tasks:
       - task dev:cache:clear:all
       # Ensure site is reachable and warm any caches
       - task dev:cli -- curl --silent --show-error --fail --output /dev/null http://varnish:8080/
+      # Enable dev modules.
+      - task dev:enable-dev-tools
       # Show a one-time login to the local site.
       - task dev:cli -- drush user-login
+
+  dev:enable-dev-tools:
+    desc: Enable dev modules and settings, which are not to be used in Prod. They are config-ignored
+    cmds:
+      - task dev:cli -- drush install -y field_ui views_ui
+
+  dev:enable-xdebug:
+    cmds:
+      - XDEBUG_ENABLE=true task dev:start
+      - read -p "Press enter to disable Xdebug"
+      - task dev:start
 
   dev:phpunit:
     desc: Run PHPUnit tests with code coverage
@@ -194,7 +231,7 @@ tasks:
     cmds:
       - cmd: |
           docker run --rm -v ${PWD}:/local -v ${PWD}/openapi-generator.config.fbs.yaml:/openapi-generator.config.fbs.yaml \
-          openapitools/openapi-generator-cli:v5.2.1 generate \
+          openapitools/openapi-generator-cli:v7.1.0 generate \
           -i https://raw.githubusercontent.com/danskernesdigitalebibliotek/dpl-react/main/src/core/fbs/fbs-adapter.yaml \
           -g php -o /local/packages/fbs-client -c /openapi-generator.config.fbs.yaml
 
@@ -216,6 +253,7 @@ tasks:
       # All tests that delete mappings and make their own run afterwards.
       - docker compose {{ .DOCKER_COMPOSE_FILES_CI }} run --rm -e CYPRESS_DRUPAL_USERNAME=$CYPRESS_DRUPAL_USERNAME -e CYPRESS_DRUPAL_PASSWORD=$CYPRESS_DRUPAL_PASSWORD cypress --spec "cypress/e2e/*.ts"
     env:
+      DOCKER_COMPOSE_FILES: "{{ .DOCKER_COMPOSE_FILES_CI }}"
       CYPRESS_DRUPAL_USERNAME: admin
       CYPRESS_DRUPAL_PASSWORD: admin
 
@@ -227,6 +265,7 @@ tasks:
       - task dev:cli -- drush user:password $CYPRESS_DRUPAL_USERNAME $CYPRESS_DRUPAL_PASSWORD
       - http_proxy={{ .WIREMOCK_HOST_LOCAL }} https_proxy={{ .WIREMOCK_HOST_LOCAL_HTTPS }} npx cypress open
     env:
+      DOCKER_COMPOSE_FILES: "{{ .DOCKER_COMPOSE_FILES_CI }}"
       CYPRESS_BASE_URL: http://localhost:{{ .CYPRESS_BASE_PORT }}
       CYPRESS_WIREMOCK_URL: '{{ .WIREMOCK_HOST_LOCAL }}'
       CYPRESS_DRUPAL_USERNAME: admin
@@ -292,9 +331,9 @@ tasks:
       - task: source:push
 
   lagoon:drush:uli:
-    desc: Get an Drupal one-time login link for a Lagoon environment through Drush
+    desc: Get an Drupal one-time user login link for a Lagoon environment through Drush
     cmds:
-      - task lagoon:cli -- drush uli
+      - task lagoon:cli -- drush user-login
 
   lagoon:cli:
     desc: Performs a command in a Lagoon environment and display the output. Expects parameter(s).

@@ -36,18 +36,18 @@ class GeneralSettings extends DplReactConfigBase {
    * {@inheritdoc}
    */
   public function getConfig(): array {
-    return $this->legacyConfig();
+    return $this->loadConfig()->get();
   }
 
   /**
    * Get the interestPeriodConfiguration.
    *
-   * @return array[]
+   * @return mixed[]
    *   Array containing the collected interestPeriodConfiguration.
    */
   public function getInterestPeriodsConfig(): array {
-    $interest_periods = self::getInterestPeriods() ?? self::INTEREST_PERIODS_CONFIG;
-    $default_interest_period = self::getDefaultInterestPeriod($interest_periods) ?? self::DEFAULT_INTEREST_PERIOD_CONFIG;
+    $interest_periods = self::getInterestPeriods();
+    $default_interest_period = self::getDefaultInterestPeriod($interest_periods);
 
     $interest_periods_config['interestPeriods'] = [];
     foreach ($interest_periods as $key => $value) {
@@ -80,10 +80,10 @@ class GeneralSettings extends DplReactConfigBase {
   /**
    * Gets the default interest period as an array.
    *
-   * @param array[] $interest_periods
+   * @param mixed[] $interest_periods
    *   The interestPeriods as an array.
    *
-   * @return array[]
+   * @return mixed[]
    *   The default interest period array.
    */
   protected function getDefaultInterestPeriod(array $interest_periods): array {
@@ -105,7 +105,7 @@ class GeneralSettings extends DplReactConfigBase {
    *   The interest period after being split into array.
    */
   public static function splitInterestPeriodString(string $period): array {
-    list($days, $label) = explode('-', $period);
+    [$days, $label] = explode('-', $period);
     $interest_periods[trim($days)] = trim($label);
 
     return $interest_periods;
