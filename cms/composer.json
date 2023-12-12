@@ -10,6 +10,25 @@
     ],
     "repositories": [
         {
+            "type": "package",
+            "package": {
+                "name": "drupal/potion",
+                "type": "drupal-module",
+                "version": "dev-2.x",
+                "source": {
+                    "type": "git",
+                    "url": "https://git.drupalcode.org/project/potion.git",
+                    "reference": "e48d6ee336d960b9d2efb5d88e68402db6d229a6"
+                },
+                "require": {
+                    "drupal/core": "^8 || ^9 || ^10",
+                    "symfony/finder": "^3.4 || ^4.4 || ^5 || ^6",
+                    "symfony/process": "^3.4 || ^4.4 || ^5 || ^6",
+                    "symfony/translation": "^3.4 || ^4.4 || ^5 || ^6"
+                }
+            }
+        },
+        {
             "type": "composer",
             "url": "https://packages.drupal.org/8"
         },
@@ -17,10 +36,10 @@
             "type": "package",
             "package": {
                 "name": "danskernesdigitalebibliotek/dpl-react",
-                "version": "2023-48-1",
+                "version": "2023.50.0",
                 "type": "drupal-library",
                 "dist": {
-                    "url": "https://github.com/danskernesdigitalebibliotek/dpl-react/releases/download/release-demo_2023-48-0/dist.zip",
+                    "url": "https://github.com/danskernesdigitalebibliotek/dpl-react/releases/download/branch-release%2F2023-50-0/dist-release-2023-50-0.zip",
                     "type": "zip"
                 },
                 "require": {
@@ -33,9 +52,9 @@
             "package": {
                 "name": "danskernesdigitalebibliotek/dpl-design-system",
                 "type": "drupal-library",
-                "version": "2023-48-1",
+                "version": "2023.50.0",
                 "dist": {
-                    "url": "https://github.com/danskernesdigitalebibliotek/dpl-design-system/releases/download/release-demo_2023-48-0/dist.zip",
+                    "url": "https://github.com/danskernesdigitalebibliotek/dpl-design-system/releases/download/branch-release%2F2023-50-0/dist-release-2023-50-0.zip",
                     "type": "zip"
                 }
             }
@@ -54,48 +73,60 @@
         "amazeeio/drupal_integrations": "0.3.7",
         "composer/installers": "1.12.0",
         "cweagans/composer-patches": "1.7.3",
-        "danskernesdigitalebibliotek/dpl-design-system": "2023-48-1",
-        "danskernesdigitalebibliotek/dpl-react": "2023-48-1",
+        "danskernesdigitalebibliotek/dpl-design-system": "^2023.50",
+        "danskernesdigitalebibliotek/dpl-react": "^2023.50",
         "danskernesdigitalebibliotek/fbs-client": "*",
         "dealerdirect/phpcodesniffer-composer-installer": "^0.7.1",
         "deoliveiralucas/array-keys-case-transform": "^1.1",
-        "drupal/config_ignore": "^2.3",
-        "drupal/core-project-message": "^9.2.7",
-        "drupal/core-recommended": "^9.2.7",
+        "drupal/admin_toolbar": "^3.4",
+        "drupal/config_ignore": "^2.4",
+        "drupal/core-composer-scaffold": "~10.0.11",
+        "drupal/core-project-message": "~10.0.11",
+        "drupal/core-recommended": "~10.0.11",
         "drupal/customerror": "^1.0@beta",
         "drupal/default_content": "^2.0@alpha",
-        "drupal/devel": "^4.1",
+        "drupal/devel": "~5.0.2",
+        "drupal/enum_field": "^1.0",
+        "drupal/field_group": "^3.4",
+        "drupal/gin": "^3.0@RC",
+        "drupal/gin_toolbar": "^1.0@RC",
         "drupal/handy_cache_tags": "^1.4",
-        "drupal/inline_all_css": "^1.0@RC",
-        "drupal/jsonlog": "^3.0",
-        "drupal/libraries": "^3.0@beta",
-        "drupal/openapi": "^2.0",
+        "drupal/job_scheduler": "^4.0",
+        "drupal/jsonlog": "^4.0",
+        "drupal/libraries": "^4.0",
+        "drupal/linkit": "^6.0",
+        "drupal/metatag": "^2.0",
+        "drupal/openapi": "^2.1",
         "drupal/openapi_rest": "^2.0@RC",
-        "drupal/openid_connect": "^1.1",
-        "drupal/paragraphs": "^1.14",
+        "drupal/openid_connect": "^1.4",
+        "drupal/paragraphs": "^1.16",
+        "drupal/paragraphs_ee": "^10.0",
         "drupal/potion": "dev-2.x#e48d6ee336d960b9d2efb5d88e68402db6d229a6",
         "drupal/purge": "^3.2",
-        "drupal/redis": "^1.5",
+        "drupal/redis": "^1.7",
         "drupal/restui": "^1.21",
-        "drupal/twig_tweak": "^3.1",
-        "drupal/varnish_purge": "^2.1",
-        "drush/drush": "11.6.0",
+        "drupal/twig_tweak": "^3.2.1",
+        "drupal/upgrade_status": "^4.0",
+        "drupal/varnish_purge": "^2.2",
+        "drush/drush": "^12",
         "myclabs/php-enum": "^1.8",
         "phpdocumentor/reflection-docblock": "^5.3",
-        "symfony/property-access": "^4.4",
-        "symfony/property-info": "^5.4",
+        "symfony/property-access": "^6.2",
+        "symfony/property-info": "^6.2",
         "thecodingmachine/safe": "^1.3",
         "zaporylie/composer-drupal-optimizations": "1.2.0"
     },
     "require-dev": {
-        "drupal/core-dev": "^9.2.7",
-        "jangregor/phpstan-prophecy": "^0.8.1",
-        "mglaman/phpstan-drupal": "^0.12.15",
+        "drupal/core-dev": "~10.0.11",
+        "jangregor/phpstan-prophecy": "^1",
+        "mglaman/phpstan-drupal": "^1.2",
+        "palantirnet/drupal-rector": "^0.18.1",
         "php-mock/php-mock": "^2.3",
         "phpspec/prophecy-phpunit": "^2",
-        "phpstan/extension-installer": "^1.1",
+        "phpstan/extension-installer": "^1.3",
         "phpunit/phpunit": "9.5.10",
-        "thecodingmachine/phpstan-safe-rule": "^1.0"
+        "thecodingmachine/phpstan-safe-rule": "^1.0",
+        "timeweb/phpstan-enum": "^3.1"
     },
     "conflict": {
         "drupal/drupal": "*"
@@ -124,15 +155,33 @@
     "extra": {
         "composer-exit-on-patch-failure": true,
         "installer-paths": {
-            "web/themes/custom/novel/assets/{$name}": ["danskernesdigitalebibliotek/dpl-design-system"],
-            "web/core": ["type:drupal-core"],
-            "web/libraries/{$name}": ["type:drupal-library"],
-            "web/modules/contrib/{$name}": ["type:drupal-module"],
-            "web/profiles/contrib/{$name}": ["type:drupal-profile"],
-            "web/themes/contrib/{$name}": ["type:drupal-theme"],
-            "drush/Commands/contrib/{$name}": ["type:drupal-drush"],
-            "web/modules/custom/{$name}": ["type:drupal-custom-module"],
-            "web/themes/custom/{$name}": ["type:drupal-custom-theme"]
+            "web/themes/custom/novel/assets/{$name}": [
+                "danskernesdigitalebibliotek/dpl-design-system"
+            ],
+            "web/core": [
+                "type:drupal-core"
+            ],
+            "web/libraries/{$name}": [
+                "type:drupal-library"
+            ],
+            "web/modules/contrib/{$name}": [
+                "type:drupal-module"
+            ],
+            "web/profiles/contrib/{$name}": [
+                "type:drupal-profile"
+            ],
+            "web/themes/contrib/{$name}": [
+                "type:drupal-theme"
+            ],
+            "drush/Commands/contrib/{$name}": [
+                "type:drupal-drush"
+            ],
+            "web/modules/custom/{$name}": [
+                "type:drupal-custom-module"
+            ],
+            "web/themes/custom/{$name}": [
+                "type:drupal-custom-theme"
+            ]
         },
         "drupal-scaffold": {
             "allowed-packages": [
@@ -141,6 +190,8 @@
             "file-mapping": {
                 "[web-root]/sites/default/all.settings.php": "assets/all.settings.php",
                 "[web-root]/sites/default/development.settings.php": "assets/development.settings.php",
+                "[web-root]/sites/default/local.services.yml": "assets/local.services.yml",
+                "[web-root]/sites/default/local.settings.php": "assets/local.settings.php",
                 "[web-root]/.eslintrc.json": false,
                 "[project-root]/.gitattributes": {
                     "append": "assets/.gitattributes"
@@ -156,14 +207,11 @@
                 "3252291: Support force exclude for keys": "https://www.drupal.org/files/issues/2021-12-02/config_ignore-force-exclude-keys-3252291-3.patch"
             },
             "drupal/core": {
-                "2936067: CSS aggregation fails on many variations of @import": "https://git.drupalcode.org/project/drupal/-/commit/5aa154d.patch",
-                "Configure core to not check permissions before accepting an updated module": "patches/disable-core-upload-permission-check.diff"
+                "Configure core to not check permissions before accepting an updated module": "patches/disable-core-upload-permission-check.diff",
+                "3073554: Add a token for publication status": "https://www.drupal.org/files/issues/2019-08-09/3073554_10.patch"
             },
             "drupal/jsonlog": {
                 "3251587: Change logging from stdout to stderr": "https://www.drupal.org/files/issues/2021-11-29/jsonlog-change-stdout-to-stderr-3251587-3.patch"
-            },
-            "drupal/redis": {
-                "3207574: Patch against redis being include too late": "https://www.drupal.org/files/issues/2021-04-07/redis-report_warnings-3207574-2.patch"
             },
             "drupal/openapi": {
                 "3313521: OpenAPI security field does not validate": "https://git.drupalcode.org/project/openapi/-/merge_requests/6.patch"
@@ -172,9 +220,13 @@
                 "3171530 + 3116760: Add support for parameter and response descriptions": "patches/openapi-parameter-response-descriptions-14-3.patch",
                 "3343816: Specification includes disabled resources": "https://git.drupalcode.org/project/openapi_rest/-/merge_requests/4.patch"
             },
+            "drupal/paragraphs_ee": {
+                "3106254: Sorting paragraph list alphabetically in modal": "https://www.drupal.org/files/issues/2023-03-30/paragraphs_ee_sort.patch"
+            },
             "drupal/potion": {
                 "3201365: Allow setting a default write mode when running potion:generate": "https://www.drupal.org/files/issues/2021-03-03/potion-allow_setting_a_default_write_mode-3201365-2.patch",
-                "3348283: Fix wrongly placed parameters in implode functions": "https://www.drupal.org/files/issues/2023-03-15/fix_wrongly_placed_parameters_in_implode_functions-3348283-3.patch"
+                "3348283: Fix wrongly placed parameters in implode functions": "https://www.drupal.org/files/issues/2023-03-15/fix_wrongly_placed_parameters_in_implode_functions-3348283-3.patch",
+                "Update for Drupal 10 compatibility": "patches/potion-rector-d10-7140243.patch"
             }
         }
     }

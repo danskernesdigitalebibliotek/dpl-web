@@ -4,18 +4,43 @@ status: true
 dependencies:
   config:
     - core.entity_view_mode.node.full
+    - field.field.node.article.field_override_author
+    - field.field.node.article.field_show_override_author
+    - field.field.node.article.field_subtitle
+    - field.field.node.article.field_paragraphs
     - node.type.article
   module:
+    - entity_reference_revisions
     - user
 id: node.article.full
 targetEntityType: node
 bundle: article
 mode: full
 content:
-  links:
-    weight: 100
+  field_paragraphs:
+    type: entity_reference_revisions_entity_view
+    label: hidden
+    settings:
+      view_mode: default
+      link: ''
+    third_party_settings: {  }
+    weight: 0
+    region: content
+  field_subtitle:
+    type: basic_string
+    label: hidden
     settings: {  }
     third_party_settings: {  }
+    weight: 0
+    region: content
+  links:
+    settings: {  }
+    third_party_settings: {  }
+    weight: 1
     region: content
 hidden:
+  field_canonical_url: true
+  field_override_author: true
+  field_show_override_author: true
   langcode: true
+  links: true

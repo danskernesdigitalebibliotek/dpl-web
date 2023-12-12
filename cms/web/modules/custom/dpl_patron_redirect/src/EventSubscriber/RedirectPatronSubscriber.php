@@ -11,9 +11,9 @@ use Drupal\Core\Routing\TrustedRedirectResponse;
 use Drupal\Core\Session\AccountProxyInterface;
 use Drupal\Core\Url;
 use Drupal\path_alias\AliasManagerInterface;
+use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\HttpKernel\Event\RequestEvent;
 use Symfony\Component\HttpKernel\KernelEvents;
-use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 
 /**
  * Event subscriber subscribing to KernelEvents::REQUEST.
@@ -88,7 +88,6 @@ class RedirectPatronSubscriber implements EventSubscriberInterface {
         $url = Url::fromRoute('dpl_login.login')->toString(TRUE);
         $response = new TrustedRedirectResponse($url->getGeneratedUrl(), 307);
         $event->setResponse($response);
-        $event->stopPropagation();
       }
     }
   }
@@ -99,7 +98,7 @@ class RedirectPatronSubscriber implements EventSubscriberInterface {
    * @return mixed[]
    *   The event function to call for this subscriber.
    */
-  public static function getSubscribedEvents() {
+  public static function getSubscribedEvents(): array {
     $events[KernelEvents::REQUEST][] = ['checkAuthStatus'];
     return $events;
   }

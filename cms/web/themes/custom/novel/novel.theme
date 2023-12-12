@@ -53,7 +53,7 @@ function novel_preprocess_dpl_react_app__search_header(array &$variables): void 
   ));
 
   $variables += [
-    'search_icon' => $search_svg ?? NULL,
+    'search_icon' => $search_svg,
     'search_action' => $variables['data']['search-url'] ?? "",
     'input_placeholder_text' => $variables['data']['input-placeholder-text'] ?? "",
   ];

@@ -35,7 +35,8 @@ web/sites/simpletest
 .history
 .vscode
 
-# Task environment file
+# Task workspace and environment file
+.task/
 .task.env
 
 # drush contrib commands

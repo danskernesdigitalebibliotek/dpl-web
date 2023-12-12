@@ -206,7 +206,6 @@ base:
       /libraries/dpl-react/components.css: {}
 
 handler:
-  version: 1.0
   js:
     js/handler.js: {}
   dependencies:

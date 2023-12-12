@@ -3,8 +3,8 @@
 namespace Drupal\dpl_login\Plugin\OpenIDConnectClient;
 
 use Drupal\Core\Form\FormStateInterface;
-use Drupal\openid_connect\Plugin\OpenIDConnectClientBase;
 use Drupal\Core\GeneratedUrl;
+use Drupal\openid_connect\Plugin\OpenIDConnectClientBase;
 
 /**
  * Adgangsplatformen openid_connect plugin.
