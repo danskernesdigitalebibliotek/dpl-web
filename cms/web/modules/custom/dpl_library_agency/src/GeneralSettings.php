@@ -47,8 +47,8 @@ class GeneralSettings extends DplReactConfigBase {
    *   Array containing the collected interestPeriodConfiguration.
    */
   public function getInterestPeriodsConfig(): array {
-    $interest_periods = (self::getInterestPeriods() ?? self::INTEREST_PERIODS_CONFIG);
-    $default_interest_period = (self::getDefaultInterestPeriod($interest_periods) ?? self::DEFAULT_INTEREST_PERIOD_CONFIG);
+    $interest_periods = self::getInterestPeriods();
+    $default_interest_period = self::getDefaultInterestPeriod($interest_periods);
 
     $interest_periods_config['interestPeriods'] = [];
     foreach ($interest_periods as $key => $value) {
