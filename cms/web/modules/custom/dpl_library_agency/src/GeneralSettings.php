@@ -43,7 +43,7 @@ class GeneralSettings extends DplReactConfigBase {
   /**
    * Get the interestPeriodConfiguration.
    *
-   * @return array[]
+   * @return mixed[]
    *   Array containing the collected interestPeriodConfiguration.
    */
   public function getInterestPeriodsConfig(): array {
@@ -81,10 +81,10 @@ class GeneralSettings extends DplReactConfigBase {
   /**
    * Gets the default interest period as an array.
    *
-   * @param array[] $interest_periods
+   * @param mixed[] $interest_periods
    *   The interestPeriods as an array.
    *
-   * @return array[]
+   * @return mixed[]
    *   The default interest period array.
    */
   protected function getDefaultInterestPeriod(array $interest_periods): array {
