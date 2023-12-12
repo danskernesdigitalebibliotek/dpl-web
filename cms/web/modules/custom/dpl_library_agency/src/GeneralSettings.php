@@ -37,7 +37,7 @@ class GeneralSettings extends DplReactConfigBase {
    * {@inheritdoc}
    */
   public function getConfig(): array {
-    return $this->legacyConfig();
+    return $this->loadConfig()->get();
   }
 
   /**
