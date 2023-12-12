@@ -6,6 +6,7 @@ dependencies:
     - field.field.node.event.field_event_address
     - field.field.node.event.field_event_date
     - field.field.node.event.field_event_description
+    - field.field.node.event.field_event_image
     - field.field.node.event.field_event_link
     - field.field.node.event.field_event_place
     - field.field.node.event.field_event_state
@@ -16,6 +17,7 @@ dependencies:
     - datetime_range
     - link
     - paragraphs
+    - media_library
     - text
 id: node.event.default
 targetEntityType: node
@@ -41,6 +43,13 @@ content:
     settings:
       rows: 5
       placeholder: ''
+    third_party_settings: {  }
+  field_event_image:
+    type: media_library_widget
+    weight: 33
+    region: content
+    settings:
+      media_types: {  }
     third_party_settings: {  }
   field_event_link:
     type: link_default
