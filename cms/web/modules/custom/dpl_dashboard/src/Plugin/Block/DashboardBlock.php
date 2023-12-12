@@ -96,6 +96,8 @@ class DashboardBlock extends BlockBase implements ContainerFactoryPluginInterfac
 
       // Texts.
       'choose-all-text' => $this->t('Select all', [], ['context' => 'Dashboard']),
+      'dashboard-see-more-fees-text' => $this->t('See more', [], ['context' => 'Dashboard']),
+      'dashboard-see-more-fees-aria-label-text' => $this->t('See your fees and how to pay', [], ['context' => 'Dashboard']),
       'digital-text' => $this->t('Digital', [], ['context' => 'Dashboard']),
       'fees-text' => $this->t('Fees', [], ['context' => 'Dashboard']),
       'group-modal-aria-description-text' => $this->t('This modal makes it possible to renew materials', [], ['context' => 'Dashboard (Aria)']),
@@ -104,7 +106,6 @@ class DashboardBlock extends BlockBase implements ContainerFactoryPluginInterfac
       'loans-not-overdue-text' => $this->t('Longer return time', [], ['context' => 'Dashboard']),
       'no-physical-loans-text' => $this->t('At the moment, you have 0 physical loans', [], ['context' => 'Dashboard']),
       'no-reservations-text' => $this->t('At the moment, you have 0 reservations', [], ['context' => 'Dashboard']),
-      'pay-owed-text' => $this->t('Pay', [], ['context' => 'Dashboard']),
       'physical-loans-text' => $this->t('Loans', [], ['context' => 'Dashboard']),
       'queued-reservations-text' => $this->t('Queued reservations', [], ['context' => 'Dashboard']),
       'reservations-still-in-queue-for-text' => $this->t('Still in queue', [], ['context' => 'Dashboard']),
