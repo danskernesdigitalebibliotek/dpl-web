@@ -106,7 +106,7 @@ class GeneralSettings extends DplReactConfigBase {
    *   The interest period after being split into array.
    */
   public static function splitInterestPeriodString(string $period): array {
-    list($days, $label) = explode('-', $period);
+    [$days, $label] = explode('-', $period);
     $interest_periods[trim($days)] = trim($label);
 
     return $interest_periods;
