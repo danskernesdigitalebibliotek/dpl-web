@@ -396,18 +396,15 @@ class DplReactAppsController extends ControllerBase {
       'reserve-text' => $this->t('Reserve', [], ['context' => 'Work Page']),
       'reviews-text' => $this->t('Reviews', [], ['context' => 'Work Page']),
       'scope-text' => $this->t('Scope', [], ['context' => 'Work Page']),
+      'screen-reader-modal-description-interest-period-text' => $this->t('Change interest period modal', [], ['context' => 'Work Page']),
+      'screen-reader-modal-description-pickup-text' => $this->t('Change pickup location modal', [], ['context' => 'Work Page']),
       'see-online-text' => $this->t('See online', [], ['context' => 'Work Page']),
-      'shift-text' => $this->t('Shift', [], ['context' => 'Work Page']),
-      'six-months-text' => $this->t('6 months', [], ['context' => 'Work Page']),
-      'subject-number-text' => $this->t('Subject number', [], ['context' => 'Work Page']),
       'this-month-text' => $this->t('This month', [], ['context' => 'Work Page']),
-      'three-months-text' => $this->t('3 months', [], ['context' => 'Work Page']),
       'try-agin-button-text' => $this->t('Try again', [], ['context' => 'Work Page']),
-      'two-months-text' => $this->t('2 months', [], ['context' => 'Work Page']),
       'type-text' => $this->t('Type', [], ['context' => 'Work Page']),
       'we-have-shopped-text' => $this->t('In stock:', [], ['context' => 'Work Page']),
       'you-have-borrowed-text' => $this->t('You have borrowed', [], ['context' => 'Work Page']),
-        // Add external API base urls.
+      // Add external API base urls.
     ] + self::externalApiBaseUrls();
 
     $app = [
