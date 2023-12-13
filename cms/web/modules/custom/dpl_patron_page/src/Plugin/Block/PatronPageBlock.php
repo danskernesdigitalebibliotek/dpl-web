@@ -86,14 +86,12 @@ class PatronPageBlock extends BlockBase implements ContainerFactoryPluginInterfa
     $patron_page_settings = $this->patronPageSettings->loadConfig();
 
     $general_config = $this->configFactory->get('dpl_library_agency.general_settings');
-    $dateConfig = $general_config->get('pause_reservation_start_date_config') ?? GeneralSettings::PAUSE_RESERVATION_START_DATE_CONFIG;
 
     $data = [
       // Configuration.
       // @todo write service for getting branches.
       'blacklisted-pickup-branches-config' => DplReactAppsController::buildBranchesListProp($this->branchSettings->getExcludedReservationBranches()),
       'branches-config' => DplReactAppsController::buildBranchesJsonProp($this->branchRepository->getBranches()),
-      'pause-reservation-start-date-config' => $dateConfig,
       'pincode-length-max-config' => $patron_page_settings->get('pincode_length_max') ?? DplPatronPageSettings::PINCODE_LENGTH_MAX,
       'pincode-length-min-config' => $patron_page_settings->get('pincode_length_min') ?? DplPatronPageSettings::PINCODE_LENGTH_MIN,
       'text-notifications-enabled-config' => (int) $this->reservationSettings->smsNotificationsIsEnabled(),
