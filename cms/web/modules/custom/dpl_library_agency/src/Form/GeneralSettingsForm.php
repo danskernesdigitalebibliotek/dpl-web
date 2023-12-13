@@ -179,22 +179,15 @@ class GeneralSettingsForm extends ConfigFormBase {
 
     $form['settings']['blocked_user'] = [
       '#type' => 'fieldset',
-      '#title' => $this->t('Blocked user'),
+      '#title' => $this->t('Blocked user', [], ['context' => 'Library Agency Configuration']),
       '#collapsible' => FALSE,
       '#collapsed' => FALSE,
     ];
 
-    $form['settings']['blocked_user']['redirect_on_blocked_url'] = [
-      '#type' => 'url',
-      '#title' => $this->t('Redirect blocked user link'),
-      '#description' => $this->t('The link to redirect the blocked user to'),
-      '#default_value' => $config->get('redirect_on_blocked_url') ?? GeneralSettings::REDIRECT_ON_BLOCKED_URL,
-    ];
-
     $form['settings']['blocked_user']['blocked_patron_e_link_url'] = [
       '#type' => 'url',
-      '#title' => $this->t('Blocked user link for modal'),
-      '#description' => $this->t('If a user has blocked status e, this link appears in the modal'),
+      '#title' => $this->t('Blocked user link for modal', [], ['context' => 'Library Agency Configuration']),
+      '#description' => $this->t('If a user is blocked because of fees a modal appears. This field makes it possible to place a link in the modal to e.g. payment options or help page.', [], ['context' => 'Library Agency Configuration']),
       '#default_value' => $config->get('blocked_patron_e_link_url') ?? GeneralSettings::BLOCKED_PATRON_E_LINK_URL,
     ];
 
@@ -295,7 +288,6 @@ class GeneralSettingsForm extends ConfigFormBase {
       ->set('default_interest_period_config', $form_state->getValue('default_interest_period_config'))
       ->set('reservation_sms_notifications_enabled', $form_state->getValue('reservation_sms_notifications_enabled'))
       ->set('pause_reservation_info_url', $form_state->getValue('pause_reservation_info_url'))
-      ->set('redirect_on_blocked_url', $form_state->getValue('redirect_on_blocked_url'))
       ->set('blocked_patron_e_link_url', $form_state->getValue('blocked_patron_e_link_url'))
       ->set('ereolen_my_page_url', $form_state->getValue('ereolen_my_page_url'))
       ->set('ereolen_homepage_url', $form_state->getValue('ereolen_homepage_url'))

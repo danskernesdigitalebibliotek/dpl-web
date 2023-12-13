@@ -41,6 +41,8 @@ class ReservationListBlock extends BlockBase implements ContainerFactoryPluginIn
    *   The branch-settings for getting branches.
    * @param \Drupal\dpl_react\DplReactConfigInterface $reservationListSettings
    *   Reservation list settings.
+   * @param \Drupal\dpl_library_agency\GeneralSettings $generalSettings
+   *   General settings.
    */
   public function __construct(
       array $configuration,

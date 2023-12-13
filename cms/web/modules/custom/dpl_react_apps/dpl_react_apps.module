@@ -295,6 +295,9 @@ function dpl_react_apps_dpl_react_apps_data(array &$data): void {
     'ereolen-homepage' => dpl_react_apps_format_app_url(
       GeneralSettings::EREOLEN_HOMEPAGE_URL
     ),
+    'blocked-patron-e-link' => dpl_react_apps_format_app_url(
+      $general_settings->get('blocked_patron_e_link_url'), GeneralSettings::BLOCKED_PATRON_E_LINK_URL),
+
     'view-fees-and-compensation-rates' => dpl_react_apps_format_app_url(
       $feesSettings->get('fees_and_replacement_costs_url'), DplFeesSettings::FEES_AND_REPLACEMENT_COSTS_URL),
   ];
