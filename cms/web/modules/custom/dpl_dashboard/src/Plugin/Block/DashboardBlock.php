@@ -9,6 +9,7 @@ use Drupal\dpl_dashboard\DplDashboardSettings;
 use Drupal\dpl_library_agency\Branch\BranchRepositoryInterface;
 use Drupal\dpl_library_agency\BranchSettings;
 use Drupal\dpl_library_agency\GeneralSettings;
+use Drupal\dpl_list_size\DplListSizeSettings;
 use Drupal\dpl_react\DplReactConfigInterface;
 use Drupal\dpl_react_apps\Controller\DplReactAppsController;
 use Symfony\Component\DependencyInjection\ContainerInterface;
@@ -50,7 +51,8 @@ class DashboardBlock extends BlockBase implements ContainerFactoryPluginInterfac
     private BranchSettings $branchSettings,
     private BranchRepositoryInterface $branchRepository,
     private DplReactConfigInterface $dashboardSettings,
-    private GeneralSettings $generalSettings
+    private GeneralSettings $generalSettings,
+    private DplListSizeSettings $listSizeSettings,
   ) {
     parent::__construct($configuration, $plugin_id, $plugin_definition);
     $this->configuration = $configuration;
@@ -81,13 +83,13 @@ class DashboardBlock extends BlockBase implements ContainerFactoryPluginInterfac
    * @throws \Safe\Exceptions\JsonException
    */
   public function build(): array {
-    $dashboardSettings = $this->dashboardSettings->loadConfig();
+    $listSizeSettings = $this->configFactory->get('dpl_list_size.list_size_settings');
     $generalSettings = $this->configFactory->get('dpl_library_agency.general_settings');
 
     $data = [
       // Config.
-      'page-size-desktop' => $dashboardSettings->get('page_size_desktop') ?? DplDashboardSettings::PAGE_SIZE_DESKTOP,
-      'page-size-mobile' => $dashboardSettings->get('page_size_mobile') ?? DplDashboardSettings::PAGE_SIZE_MOBILE,
+      'page-size-desktop' => $listSizeSettings->get('dashboard_list_size_desktop') ?? DplListSizeSettings::DASHBOARD_LIST_SIZE_DESKTOP,
+      'page-size-mobile' => $listSizeSettings->get('dashboard_list_size_mobile') ?? DplListSizeSettings::DASHBOARD_LIST_SIZE_MOBILE,
       'expiration-warning-days-before-config' => $generalSettings->get('expiration_warning_days_before_config') ?? GeneralSettings::EXPIRATION_WARNING_DAYS_BEFORE_CONFIG,
       'interest-periods-config' => json_encode($this->generalSettings->getInterestPeriodsConfig()),
       'reservation-detail-allow-remove-ready-reservations-config' => $generalSettings->get('reservation_detail_allow_remove_ready_reservations') ?? GeneralSettings::RESERVATION_DETAIL_ALLOW_REMOVE_READY_RESERVATIONS,

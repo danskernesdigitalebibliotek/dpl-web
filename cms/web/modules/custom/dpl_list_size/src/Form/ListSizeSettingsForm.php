@@ -102,7 +102,7 @@ class ListSizeSettingsForm extends ConfigFormBase {
     $form['reservation_list_size_settings']['reservation_list_size_mobile'] = [
       '#type' => 'number',
       '#title' => $this->t('Reservation list size on mobile', [], ['context' => 'List size (settings)']),
-      '#default_value' => $config->get('reservation_list_size_mobile') ?? DplListSizeSettings::DASHBOARD_LIST_SIZE_MOBILE,
+      '#default_value' => $config->get('reservation_list_size_mobile') ?? DplListSizeSettings::RESERVATION_LIST_SIZE_MOBILE,
       '#min' => 1,
       '#step' => 1,
     ];

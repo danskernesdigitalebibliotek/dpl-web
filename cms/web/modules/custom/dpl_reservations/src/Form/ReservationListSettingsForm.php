@@ -22,8 +22,8 @@ class ReservationListSettingsForm extends ConfigFormBase {
    *   Reservation list configuration object.
    */
   public function __construct(
-      ConfigFactoryInterface $config_factory,
-      protected DplReactConfigInterface $configService,
+    ConfigFactoryInterface $config_factory,
+    protected DplReactConfigInterface $configService,
   ) {
     parent::__construct($config_factory);
   }
