@@ -2,7 +2,7 @@
   <header class="event-header">
     <section class="event-header__content">
       <!-- Tag -->
-      {{content.field_event_date}}
+      {{ content.field_event_date }}
       <h1 class="event-header__title">{{ label }}</h1>
       {{ content.field_event_link }}
     </section>
@@ -12,9 +12,9 @@
   </header>
 
   <section class="event-description">
-    <h2 class="event-description__title">{{ "Description" | trans }}</h2>
+    <h2 class="event-description__title">{{ "Description"|trans }}</h2>
     <div className="event-description__content">
-      <div class="event-description__description">{{content.field_event_description}}</div>
+      <div class="event-description__description">{{ content.field_event_description }}</div>
       <div class="event-description__links">
         <!-- horizontal-term-line -->
       </div>
@@ -22,16 +22,16 @@
     <dl class="list-description event-description__info list-description--event">
       {% if content.field_ticket_categories.0 %}
         <div class="list-description__item">
-          <dt class="list-description__key">{{ "Price" | trans }}</dt>
+          <dt class="list-description__key">{{ "Price"|trans }}</dt>
           <dd class="list-description__value">
-            {{content.field_ticket_categories}}
+            {{ content.field_ticket_categories }}
           </dd>
         </div>
       {% endif %}
       {% if content.field_event_place.0 %}
       <div class="list-description__item">
         <dt class="list-description__key">
-          {{ "Place" | trans }}:
+          {{ "Place"|trans }}:
         </dt>
         <dd class="list-description__value">
           {{ content.field_event_place }}
@@ -40,7 +40,7 @@
       {% endif %}
       <div class="list-description__item">
         <dt class="list-description__key">
-          {{ "Adresse" | trans }}:
+          {{ "Adresse"|trans }}:
         </dt>
         <dd class="list-description__value">
           {{ content.field_event_address }}
@@ -51,4 +51,3 @@
   {{ content|without('field_event_date', 'field_event_description', 'field_event_link', 'field_event_address',
   'field_event_place', 'field_ticket_categories') }}
 </article>
-
