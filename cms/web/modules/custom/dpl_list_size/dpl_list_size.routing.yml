@@ -1,0 +1,9 @@
+dpl_list_size.settings:
+  path: "/admin/config/dpl-library-agency/list-size-settings"
+  defaults:
+    _title: "List size settings"
+    _form: '\Drupal\dpl_list_size\Form\ListSizeSettingsForm'
+  requirements:
+    _permission: "administer site configuration"
+  options:
+    _admin_route: TRUE

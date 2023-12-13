@@ -1,0 +1,5 @@
+name: 'DPL List Size'
+type: module
+description: 'Module for handling various list size configuration across the site.'
+package: DPL
+core_version_requirement: ^10

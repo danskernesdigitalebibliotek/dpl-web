@@ -1,0 +1,4 @@
+services:
+  dpl_list_size.settings:
+    class: Drupal\dpl_list_size\DplListSizeSettings
+    arguments: ["@config.manager"]
