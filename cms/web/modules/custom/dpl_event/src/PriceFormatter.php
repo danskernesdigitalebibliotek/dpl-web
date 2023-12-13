@@ -24,12 +24,12 @@ class PriceFormatter {
    * Format a single price.
    */
   public function formatPrice(string $price_string): string {
-    $context = ['context' => 'dpl_event'];
+    $translation_options = ['context' => 'dpl_event'];
 
     $price = BigDecimal::of($price_string);
     return match(TRUE) {
       // Events with 0 cost should show "Free" instead of a numeric price.
-      $price->isEqualTo(0) => $this->translation->translate("Free", [], $context),
+      $price->isEqualTo(0) => $this->translation->translate("Free", [], $translation_options),
       // Add the kr. suffix for now.
       // For multi-currency support this should be replaced by a configurable
       // suffix and appropriate separators.
