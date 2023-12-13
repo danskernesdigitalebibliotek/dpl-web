@@ -74,6 +74,7 @@ tasks:
     cmds:
       - task dev:cli -- php vendor/bin/phpcbf
       - task dev:cli -- php vendor/bin/phpcs
+      - task dev:cli -- php vendor/bin/twig-cs-fixer lint --fix web/themes/custom/novel/templates
       - task dev:cli -- php vendor/bin/phpstan
 
   dev:build:
