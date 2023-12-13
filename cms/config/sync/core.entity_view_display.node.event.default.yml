@@ -36,7 +36,6 @@ content:
     third_party_settings: {  }
     weight: 1
     region: content
-<<<<<<< HEAD
   field_event_link:
     type: link
     label: above
@@ -56,7 +55,7 @@ content:
       link_to_entity: false
     third_party_settings: {  }
     weight: 5
-=======
+    region: content
   field_ticket_categories:
     type: entity_reference_revisions_entity_view
     label: above
@@ -65,7 +64,6 @@ content:
       link: ''
     third_party_settings: {  }
     weight: 2
->>>>>>> f7b548f1 (Add paragraph for handling event categories and prices)
     region: content
   links:
     settings: {  }
