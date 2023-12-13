@@ -1,7 +1,20 @@
 uuid: 7408de3c-bbe4-43db-86fa-a78fc72fa05a
 langcode: en
 status: true
-dependencies: {  }
+dependencies:
+  config:
+    - filter.format.basic
+    - node.type.article
+    - node.type.campaign
+    - node.type.event
+  module:
+    - dpl_instant_loan
+    - dpl_library_agency
+    - dpl_url_proxy
+    - filter
+    - node
+    - system
+    - toolbar
 id: local_administrator
 label: 'Local Administrator'
 weight: 3
@@ -14,13 +27,22 @@ permissions:
   - 'administer url proxy configuration'
   - 'create article content'
   - 'create campaign content'
+  - 'create event content'
   - 'delete any article content'
   - 'delete any campaign content'
+  - 'delete any event content'
+  - 'delete event revisions'
   - 'delete own article content'
   - 'delete own campaign content'
+  - 'delete own event content'
   - 'edit any article content'
   - 'edit any campaign content'
+  - 'edit any event content'
   - 'edit own article content'
   - 'edit own campaign content'
+  - 'edit own event content'
+  - 'revert event revisions'
+  - 'use text format basic'
+  - 'view event revisions'
   - 'view own unpublished content'
   - 'view the administration theme'

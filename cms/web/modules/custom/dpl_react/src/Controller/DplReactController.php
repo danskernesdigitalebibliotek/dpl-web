@@ -3,11 +3,11 @@
 namespace Drupal\dpl_react\Controller;
 
 use Drupal\Core\Controller\ControllerBase;
-use Symfony\Component\HttpFoundation\Response;
 use Drupal\dpl_library_token\LibraryTokenHandler;
 use Drupal\dpl_login\UserTokensProvider;
 use Symfony\Component\DependencyInjection\ContainerInterface;
-use function Safe\sprintf as sprintf;
+use Symfony\Component\HttpFoundation\Response;
+use function Safe\sprintf;
 
 /**
  * DDB React Controller.

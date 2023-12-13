@@ -2,13 +2,13 @@
 
 namespace Drupal\dpl_login\Controller;
 
-use Drupal\Core\Url;
-use Drupal\dpl_login\Adgangsplatformen\Config;
-use Drupal\dpl_login\UserTokensProvider;
 use Drupal\Core\Controller\ControllerBase;
 use Drupal\Core\Routing\TrustedRedirectResponse;
 use Drupal\Core\StringTranslation\StringTranslationTrait;
+use Drupal\Core\Url;
+use Drupal\dpl_login\Adgangsplatformen\Config;
 use Drupal\dpl_login\Exception\MissingConfigurationException;
+use Drupal\dpl_login\UserTokensProvider;
 use Drupal\openid_connect\OpenIDConnectClaims;
 use Drupal\openid_connect\Plugin\OpenIDConnectClientInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
@@ -124,11 +124,6 @@ class DplLoginController extends ControllerBase {
       return $this->redirect('<front>');
     }
 
-    // Create url for logout service that it should redirect back to.
-    // Since toString(TRUE) is called
-    // we know that the return value of toString() is GeneratedUrl
-    // and consequently we are able to call getGeneratedUrl in the end.
-    /* @phpstan-ignore-next-line */
     $redirect_uri = Url::fromRoute('<front>', [], ["absolute" => TRUE])
       ->toString(TRUE)
       ->getGeneratedUrl();
@@ -142,7 +137,7 @@ class DplLoginController extends ControllerBase {
       ],
     ]);
 
-    return TrustedRedirectResponse::create($url->toUriString());
+    return new TrustedRedirectResponse($url->toUriString());
   }
 
   /**

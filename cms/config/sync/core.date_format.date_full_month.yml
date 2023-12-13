@@ -1,0 +1,8 @@
+uuid: 978c615f-037a-422a-bdd7-f919ac256d3b
+langcode: da
+status: true
+dependencies: {  }
+id: date_full_month
+label: 'Date full month'
+locked: false
+pattern: 'd. F Y'

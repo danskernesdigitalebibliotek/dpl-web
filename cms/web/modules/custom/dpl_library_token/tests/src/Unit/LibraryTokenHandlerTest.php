@@ -158,7 +158,7 @@ class LibraryTokenHandlerTest extends UnitTestCase {
   /**
    * Dataprovider with settings and expected exception messages.
    *
-   * @return array[]
+   * @return mixed[]
    */
   public function provideExceptionMessages(): array {
     return [

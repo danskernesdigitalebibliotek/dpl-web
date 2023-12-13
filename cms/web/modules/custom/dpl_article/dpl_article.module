@@ -1,0 +1,57 @@
+<?php
+
+/**
+ * @file
+ * DPL article module.
+ */
+
+use Drupal\Core\Form\FormStateInterface;
+use Drupal\node\NodeInterface;
+
+/**
+ * Implements hook_preprocess_HOOK().
+ */
+function dpl_article_preprocess_node(array &$variables): void {
+  $node = $variables['node'] ?? NULL;
+
+  // Process only if the node is a valid Node entity and is of the type article.
+  if (!($node instanceof NodeInterface) || $node->bundle() !== 'article') {
+    return;
+  }
+
+  // Check if the 'show override author' field exists and is set.
+  if ($node->hasField('field_show_override_author')) {
+    $has_override = $node->get('field_show_override_author')
+      ->getString() === '1';
+    if ($has_override && $node->hasField('field_override_author')) {
+      $variables['author_name'] = $node->get('field_override_author')
+        ->getString();
+    }
+  }
+}
+
+/**
+ * Implements hook_form_alter().
+ *
+ * Modifies node forms to control the visibility of articles fields.
+ *
+ * @param array<mixed> $form
+ *   An associative array containing the structure of the form.
+ * @param \Drupal\Core\Form\FormStateInterface $form_state
+ *   The current state of the form.
+ * @param string $form_id
+ *   The unique identifier of the form.
+ */
+function dpl_article_form_alter(array &$form, FormStateInterface $form_state, string $form_id): void {
+  // Target only article node creation or edit forms.
+  if (!str_starts_with($form_id, 'node_article_')) {
+    return;
+  }
+
+  // Toggle visibility of 'override author' field based on a checkbox.
+  if (isset($form['field_show_override_author'])) {
+    $form['field_override_author']['#states'] = [
+      'visible' => [':input[name="field_show_override_author[value]"]' => ['checked' => TRUE]],
+    ];
+  }
+}

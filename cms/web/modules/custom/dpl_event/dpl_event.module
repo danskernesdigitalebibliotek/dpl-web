@@ -1,0 +1,119 @@
+<?php
+
+/**
+ * @file
+ * Module file for DPL Event.
+ */
+
+use Drupal\dpl_event\EventState;
+use Drupal\job_scheduler\Entity\JobSchedule;
+use Drupal\node\NodeInterface;
+use Safe\DateTimeImmutable as DateTimeImmutable;
+
+/**
+ * Implements hook_cron_job_scheduler_info().
+ *
+ * @return non-empty-array<string, array{'worker callback': string}>
+ *   Job scheduler information.
+ */
+function dpl_event_cron_job_scheduler_info(): array {
+  return [
+    "dpl_event_set_occurred" => [
+      "worker callback" => 'dpl_event_set_occurred_callback',
+    ],
+  ];
+}
+
+/**
+ * Implements hook_node_insert().
+ */
+function dpl_event_node_insert(NodeInterface $node): void {
+  if (dpl_event_node_is_event($node) && dpl_event_event_is_active($node)) {
+    dpl_event_schedule_set_occurred($node);
+  }
+}
+
+/**
+ * Implements hook_node_update().
+ */
+function dpl_event_node_update(NodeInterface $node): void {
+  if (dpl_event_node_is_event($node) && dpl_event_event_is_active($node)) {
+    dpl_event_schedule_set_occurred($node);
+  }
+}
+
+/**
+ * Determine whether a node is of the event type managed by this module.
+ */
+function dpl_event_node_is_event(NodeInterface $node): bool {
+  return $node->getType() === "event";
+}
+
+/**
+ * Determine if an event is considered active.
+ *
+ * An event is considered active if it has not occurred or been cancelled.
+ */
+function dpl_event_event_is_active(NodeInterface $event): bool {
+  /** @var \Drupal\enum_field\Plugin\Field\FieldType\EnumItemList $event_state */
+  $event_state = $event->get("field_event_state");
+  return !(in_array(EventState::Cancelled, $event_state->enums())
+    || in_array(EventState::Occurred, $event_state->enums()));
+}
+
+/**
+ * Schedule setting an event to occurred in the future.
+ */
+function dpl_event_schedule_set_occurred(NodeInterface $event): void {
+  $now_timestamp = \Drupal::time()->getCurrentTime();
+
+  $event_date = $event->get('field_event_date')->get(0);
+  if (!$event_date) {
+    return;
+  }
+  $event_date_values = $event_date->getValue();
+  if (!$event_date_values || empty($event_date_values["end_value"])) {
+    return;
+  }
+  $event_end_date = new DateTimeImmutable($event_date_values["end_value"]);
+  $event_end_timestamp = $event_end_date->getTimestamp();
+
+  $job = [
+    'name' => 'dpl_event_set_occurred',
+    'type' => 'event',
+    'id' => $event->id(),
+    // The period is the number of seconds to wait between job executions. A
+    // negative period means that the job will be executed as soon as
+    // possible. By setting periodic false the job is only executed once.
+    'period' => $event_end_timestamp - $now_timestamp,
+    'periodic' => FALSE,
+  ];
+
+  /** @var \Drupal\job_scheduler\JobSchedulerInterface $scheduler */
+  $scheduler = \Drupal::service('job_scheduler.manager');
+  // Remove any preexisting job with the same name, type and id.
+  $scheduler->remove($job);
+  // Schedule the new update.
+  $scheduler->set($job);
+
+  \Drupal::logger('dpl_event')->debug(
+    'Scheduled "occurred" update for event %event_id at %end_time',
+    ['%event_id' => $event->id(), '%end_time' => $event_end_date->format('c')]
+  );
+}
+
+/**
+ * Callback to be executed for scheduled jobs.
+ */
+function dpl_event_set_occurred_callback(JobSchedule $job): void {
+  $event = \Drupal::entityTypeManager()->getStorage('node')->load($job->getId());
+  if (!$event) {
+    return;
+  }
+
+  // Set state to occurred for events we consider active.
+  if (dpl_event_event_is_active($event)) {
+    $event->set("field_event_state", EventState::Occurred);
+    $event->save();
+  }
+}

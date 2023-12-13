@@ -2,21 +2,9 @@ label: Indhold
 description: 'Find og håndtér indhold.'
 display:
   default:
+    display_title: Standard
     display_options:
-      exposed_form:
-        options:
-          submit_button: Filter
-          reset_button_label: Gendan
-          exposed_sorts_label: 'Sortér efter'
-          sort_asc_label: Stigende
-          sort_desc_label: Faldende
-      pager:
-        options:
-          tags:
-            previous: '‹ Forrige'
-            next: 'Næste ›'
-            first: '« Første'
-            last: 'Sidste »'
+      title: Indhold
       fields:
         title:
           label: Titel
@@ -28,12 +16,29 @@ display:
         status:
           label: Status
           settings:
-            format_custom_true: Udgivet
             format_custom_false: 'Ikke udgivet'
+            format_custom_true: Udgivet
         changed:
           label: Opdateret
         operations:
           label: Handlinger
+      pager:
+        options:
+          tags:
+            next: 'Næste ›'
+            previous: '‹ Forrige'
+            first: '« Første'
+            last: 'Sidste »'
+      exposed_form:
+        options:
+          submit_button: Filter
+          reset_button_label: Gendan
+          exposed_sorts_label: 'Sortér efter'
+          sort_asc_label: Stigende
+          sort_desc_label: Faldende
+      empty:
+        area_text_custom:
+          content: 'Der er intet indhold at vise.'
       filters:
         title:
           expose:
@@ -54,16 +59,11 @@ display:
         langcode:
           expose:
             label: Sprog
-      title: Indhold
-      empty:
-        area_text_custom:
-          content: 'Der er intet indhold at vise.'
-    display_title: Standard
   page_1:
+    display_title: Side
     display_options:
       menu:
         title: Indhold
       tab_options:
         title: Indhold
         description: 'Find og håndtér indhold'
-    display_title: Side
