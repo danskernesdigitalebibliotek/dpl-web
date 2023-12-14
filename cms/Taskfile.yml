@@ -72,7 +72,11 @@ tasks:
   dev:format:
     summary: Lint custom code, and fix when possible
     cmds:
-      - task dev:cli -- php vendor/bin/phpcbf
+      - cmd: task dev:cli -- php vendor/bin/phpcbf
+        # PHP Code Beautifier will fail even if it has fixed all errors.
+        # Continue regardless assumming that PHP Codesniffer will fail on
+        # any remaining errors.
+        ignore_error: true
       - task dev:cli -- php vendor/bin/phpcs
       - task dev:cli -- php vendor/bin/twig-cs-fixer lint --fix web/themes/custom/novel/templates
       - task dev:cli -- php vendor/bin/phpstan
