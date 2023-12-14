@@ -44,8 +44,8 @@ default:
       address_line1: 'Kampmanns Plads 2'
   field_event_date:
     -
-      value: '2024-01-01T18:30:00'
-      end_value: '2024-01-31T20:00:00'
+      value: '2031-12-06T18:30:00'
+      end_value: '2032-01-12T20:00:00'
   field_event_description:
     -
       value: '<p>Foreningen for Integreret Moderne Dans arbejder med at udvide normalitetsbegrebet i scenekunsten. For hvad er normalt? Rosenreglen og Mødrenes hus. I 2022 udgav hun også den stærkt politiske digtsamling Jeg vil have en statsminister.</p>'
