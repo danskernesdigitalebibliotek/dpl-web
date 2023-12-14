@@ -46,6 +46,25 @@ jobs:
       with:
         reviewdog_token: ${{ secrets.GITHUB_TOKEN }}
 
+  TwigCsFixer:
+    name: Check Twig code style
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Setup PHP, with composer and extensions
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: ${{ env.PHP_VERSION }}
+          tools: composer:${{ env.COMPOSER_VERSION }}
+          coverage: none
+          extensions: gd
+      - name: Install Dependencies
+        run: |
+          composer install --no-interaction --no-progress
+      - name: Run Twig CS Fixer
+        run: |
+          vendor/bin/twig-cs-fixer lint --report=github
+
   Phpstan:
     name: Analyse code using PHPStan
     runs-on: ubuntu-latest
