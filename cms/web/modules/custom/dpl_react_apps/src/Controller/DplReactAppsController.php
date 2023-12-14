@@ -259,7 +259,7 @@ class DplReactAppsController extends ControllerBase {
       'change-email-text' => $this->t('Change email', [], ['context' => 'Work Page']),
       'change-sms-number-text' => $this->t('Change SMS number', [], ['context' => 'Work Page']),
       'close-modal-aria-label-interest-period-text' => $this->t('Close interest period modal', [], ['context' => 'Work Page']),
-      'close-modal-aria-label-pickup-tex-text' => $this->t('Close pickup location modal', [], ['context' => 'Work Page']),
+      'close-modal-aria-label-pickup-text' => $this->t('Close pickup location modal', [], ['context' => 'Work Page']),
       'close-text' => $this->t('Close', [], ['context' => 'Work Page']),
       'contributors-text' => $this->t('Contributors', [], ['context' => 'Work Page']),
       'copies-there-is-text' => $this->t('copies there is', [], ['context' => 'Work Page']),
