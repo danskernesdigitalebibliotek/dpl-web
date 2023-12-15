@@ -52,6 +52,9 @@ display:
         name:
           separator: ', '
         edit_media:
+          alter:
+            text: 'Redigér {{ name }}'
+            alt: 'Redigér {{ name }}'
           text: Redigér
         delete_media:
           alter:

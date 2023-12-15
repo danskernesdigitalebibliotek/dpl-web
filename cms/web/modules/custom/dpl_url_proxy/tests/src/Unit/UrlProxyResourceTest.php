@@ -26,6 +26,8 @@ class UrlProxyResourceTest extends UnitTestCase {
    * {@inheritdoc}
    */
   protected function setUp(): void {
+    parent::setUp();
+
     $config = $this->prophesize(ImmutableConfig::class);
     $config->get('values')->willReturn([
       'prefix' => '',

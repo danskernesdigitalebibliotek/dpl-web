@@ -27,3 +27,10 @@
   height: calc(100% - 140px) !important;
   max-height: 100% !important;
 }
+
+/* Display name and price fields inline for ticket categories. */
+.ticket-category-inline-fields {
+  display: grid;
+  grid-template-columns: minmax(0, max-content) minmax(5rem, 10rem);
+  gap: var(--gin-spacing-m);
+}

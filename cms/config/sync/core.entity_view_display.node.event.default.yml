@@ -9,9 +9,11 @@ dependencies:
     - field.field.node.event.field_event_link
     - field.field.node.event.field_event_place
     - field.field.node.event.field_event_state
+    - field.field.node.event.field_ticket_categories
     - node.type.event
   module:
     - address
+    - entity_reference_revisions
     - link
     - text
     - user
@@ -53,6 +55,15 @@ content:
       link_to_entity: false
     third_party_settings: {  }
     weight: 5
+    region: content
+  field_ticket_categories:
+    type: entity_reference_revisions_entity_view
+    label: above
+    settings:
+      view_mode: default
+      link: ''
+    third_party_settings: {  }
+    weight: 2
     region: content
   links:
     settings: {  }
