@@ -5,10 +5,10 @@ dependencies:
   config:
     - field.field.media.image.field_byline
     - field.field.media.image.field_media_image
-    - image.style.thumbnail
+    - image.style.focal_point_preview
     - media.type.image
   module:
-    - image
+    - focal_point
 id: media.image.default
 targetEntityType: media
 bundle: image
@@ -23,12 +23,14 @@ content:
       placeholder: ''
     third_party_settings: {  }
   field_media_image:
-    type: image_image
+    type: image_focal_point
     weight: 1
     region: content
     settings:
       progress_indicator: throbber
-      preview_image_style: thumbnail
+      preview_image_style: focal_point_preview
+      preview_link: true
+      offsets: '50,50'
     third_party_settings: {  }
   name:
     type: string_textfield

@@ -26,6 +26,14 @@
 .ui-dialog-content[style] {
   height: calc(100% - 140px) !important;
   max-height: 100% !important;
+  padding-top: 20px;
+  padding-bottom: 20px;
+  box-sizing: border-box;
+}
+
+/* Tweak the focal point preview. */
+.focal-point-derivative-preview-label {
+  font-size: 1em;
 }
 
 /* Display name and price fields inline for ticket categories. */

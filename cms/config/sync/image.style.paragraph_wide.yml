@@ -1,0 +1,17 @@
+uuid: 37b0bebe-2aa3-4da3-9faf-3a1f1a025883
+langcode: en
+status: true
+dependencies:
+  module:
+    - focal_point
+name: paragraph_wide
+label: 'Paragraph, Wide (896x670px)'
+effects:
+  28b07894-b322-4b00-89c5-49c8fdb2afe7:
+    uuid: 28b07894-b322-4b00-89c5-49c8fdb2afe7
+    id: focal_point_scale_and_crop
+    weight: 2
+    data:
+      width: 896
+      height: 670
+      crop_type: focal_point
