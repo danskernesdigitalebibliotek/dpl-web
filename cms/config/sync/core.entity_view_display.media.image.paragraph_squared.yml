@@ -1,18 +1,19 @@
-uuid: 01903a9b-ac15-4b99-84a9-1ba7bb2318c8
+uuid: 08e68b80-e5d2-443a-b5dd-613ff4deee1f
 langcode: en
 status: true
 dependencies:
   config:
+    - core.entity_view_mode.media.paragraph_squared
     - field.field.media.image.field_byline
     - field.field.media.image.field_media_image
-    - image.style.paragraph_wide
+    - image.style.paragraph_squared
     - media.type.image
   module:
     - image
-id: media.image.default
+id: media.image.paragraph_squared
 targetEntityType: media
 bundle: image
-mode: default
+mode: paragraph_squared
 content:
   field_byline:
     type: string
@@ -27,7 +28,7 @@ content:
     label: hidden
     settings:
       image_link: ''
-      image_style: paragraph_wide
+      image_style: paragraph_squared
       image_loading:
         attribute: lazy
     third_party_settings: {  }

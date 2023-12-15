@@ -1,7 +1,5 @@
+name: "DPL Paragraphs"
 type: module
-name: Paragraphs
-description: Functionality for paragraphs
-package: DPL
+description: "Tweaks to various DPL paragraphs"
+package: "DPL"
 core_version_requirement: ^10
-dependencies:
-  - paragraphs:paragraphs
