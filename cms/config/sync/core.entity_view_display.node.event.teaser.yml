@@ -7,6 +7,7 @@ dependencies:
     - field.field.node.event.field_event_address
     - field.field.node.event.field_event_date
     - field.field.node.event.field_event_description
+    - field.field.node.event.field_event_image
     - field.field.node.event.field_event_link
     - field.field.node.event.field_event_place
     - field.field.node.event.field_event_state
@@ -28,6 +29,7 @@ hidden:
   field_event_address: true
   field_event_date: true
   field_event_description: true
+  field_event_image: true
   field_event_link: true
   field_event_place: true
   field_event_state: true

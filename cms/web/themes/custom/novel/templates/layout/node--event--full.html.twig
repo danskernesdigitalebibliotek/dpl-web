@@ -1,15 +1,15 @@
 <article {{ attributes.addClass('event-page') }}>
   <header class="event-header">
-    <section class="event-header__content">
-      <!-- Tag -->
-      {{ content.field_event_date }}
-      <h1 class="event-header__title">{{ label }}</h1>
-      {{ content.field_event_link }}
-    </section>
-    <section class="event-header__visual">
-      <!-- image -->
-    </section>
-  </header>
+        <section class="event-header__content">
+            <!-- Tag -->
+            {{ content.field_event_date }}
+            <h1 class="event-header__title">{{ label }}</h1>
+            {{ content.field_event_link }}
+        </section>
+        <section class="event-header__visual ">
+      {{ content.field_event_image }}
+        </section>
+    </header>
 
   <section class="event-description">
     <h2 class="event-description__title">{{ "Description"|trans }}</h2>
@@ -49,5 +49,5 @@
     </dl>
   </section>
   {{ content|without('field_event_date', 'field_event_description', 'field_event_link', 'field_event_address',
-  'field_event_place', 'field_ticket_categories') }}
+  'field_event_place', 'field_ticket_categories', 'field_event_image') }}
 </article>
