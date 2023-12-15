@@ -1,27 +1,27 @@
 {% for item in items %}
-	{% set start_date = item.content.start_date["#markup"]|date("U") %}
-	{% set end_date = item.content.end_date["#markup"]|date("U") %}
+    {% set start_date = item.content.start_date["#markup"]|date("U") %}
+    {% set end_date = item.content.end_date["#markup"]|date("U") %}
 
-	{% set start_day = start_date|date("j.") %}
-	{% set start_month = start_date|date("M") %}
-	{% set start_year = start_date|date("Y") %}
-	{% set end_day = end_date|date("j.") %}
-	{% set end_month = end_date|date("M") %}
-	{% set end_year = end_date|date("Y") %}
+    {% set start_day = start_date|date("j.") %}
+    {% set start_month = start_date|date("M") %}
+    {% set start_year = start_date|date("Y") %}
+    {% set end_day = end_date|date("j.") %}
+    {% set end_month = end_date|date("M") %}
+    {% set end_year = end_date|date("Y") %}
 
-	<time{{item.attributes.addClass(["event-header__date"])}}>
-		{% if start_day == end_day and start_month == end_month and start_year == end_year %}
-			{# Same day #}
-			{{ start_day ~ ' ' ~ start_month ~ ' ' ~ start_year }}
-		{% elseif start_month == end_month and start_year == end_year %}
-			{# Same month #}
-			{{ start_day ~ ' - ' ~ end_day ~ ' ' ~ start_month ~ ' ' ~ start_year }}
-		{% elseif start_year == end_year %}
-			{# Different months, same year #}
-			{{ start_day ~ ' ' ~ start_month ~ ' - ' ~ end_day ~ ' ' ~ end_month ~ ' ' ~ start_year }}
-		{% else %}
-			{# Different years #}
-			{{ start_date|date("j. M Y") ~ ' - ' ~ end_date|date("j. M Y") }}
-		{% endif %}
-	</time>
+    <time{{ item.attributes.addClass(["event-header__date"]) }}>
+        {% if start_day == end_day and start_month == end_month and start_year == end_year %}
+            {# Same day #}
+            {{ start_day ~ ' ' ~ start_month ~ ' ' ~ start_year }}
+        {% elseif start_month == end_month and start_year == end_year %}
+            {# Same month #}
+            {{ start_day ~ ' - ' ~ end_day ~ ' ' ~ start_month ~ ' ' ~ start_year }}
+        {% elseif start_year == end_year %}
+            {# Different months, same year #}
+            {{ start_day ~ ' ' ~ start_month ~ ' - ' ~ end_day ~ ' ' ~ end_month ~ ' ' ~ start_year }}
+        {% else %}
+            {# Different years #}
+            {{ start_date|date("j. M Y") ~ ' - ' ~ end_date|date("j. M Y") }}
+        {% endif %}
+    </time>
 {% endfor %}
