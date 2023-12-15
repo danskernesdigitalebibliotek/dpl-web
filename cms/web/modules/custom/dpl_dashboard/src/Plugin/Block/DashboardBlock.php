@@ -71,6 +71,7 @@ class DashboardBlock extends BlockBase implements ContainerFactoryPluginInterfac
       $container->get('dpl_library_agency.branch.repository'),
       \Drupal::service('dpl_dashboard.settings'),
       $container->get('dpl_library_agency.general_settings'),
+      $container->get('dpl_list_size.settings'),
     );
   }
 
@@ -83,7 +84,7 @@ class DashboardBlock extends BlockBase implements ContainerFactoryPluginInterfac
    * @throws \Safe\Exceptions\JsonException
    */
   public function build(): array {
-    $listSizeSettings = $this->configFactory->get('dpl_list_size.list_size_settings');
+    $listSizeSettings = $this->configFactory->get('dpl_list_size.settings');
     $generalSettings = $this->configFactory->get('dpl_library_agency.general_settings');
 
     $data = [

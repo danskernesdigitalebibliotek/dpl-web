@@ -43,9 +43,7 @@ class ListSizeSettingsForm extends ConfigFormBase {
    * {@inheritdoc}
    */
   protected function getEditableConfigNames(): array{
-    return [
-      $this->configService->getConfigKey(),
-    ];
+    return ['dpl_list_size.settings'];
   }
 
   /**
@@ -61,28 +59,28 @@ class ListSizeSettingsForm extends ConfigFormBase {
   public function buildForm(array $form, FormStateInterface $form_state): array {
     $config = $this->configService->loadConfig();
 
-    $form['dashboard_list_size_settings'] = [
-      '#type' => 'fieldset',
-      '#title' => $this->t('Dashboard list size settings', [], ['context' => 'List size (settings)']),
-      '#description' => $this->t('The number of items to display in the dashboard list.', [], ['context' => 'List size (settings)']),
-      '#tree' => FALSE,
-    ];
-
-    $form['dashboard_list_size_settings']['dashboard_list_size_desktop'] = [
-      '#type' => 'number',
-      '#title' => $this->t('Dashboard list size on desktop', [], ['context' => 'List size (settings)']),
-      '#default_value' => $config->get('dashboard_list_size_desktop') ?? DplListSizeSettings::DASHBOARD_LIST_SIZE_DESKTOP,
-      '#min' => 1,
-      '#step' => 1,
-    ];
-
-    $form['dashboard_list_size_settings']['dashboard_list_size_mobile'] = [
-      '#type' => 'number',
-      '#title' => $this->t('Dashboard list size on mobile', [], ['context' => 'List size (settings)']),
-      '#default_value' => $config->get('dashboard_list_size_mobile') ?? DplListSizeSettings::DASHBOARD_LIST_SIZE_MOBILE,
-      '#min' => 1,
-      '#step' => 1,
-    ];
+//    $form['dashboard_list_size_settings'] = [
+//      '#type' => 'fieldset',
+//      '#title' => $this->t('Dashboard list size settings', [], ['context' => 'List size (settings)']),
+//      '#description' => $this->t('The number of items to display in the dashboard list.', [], ['context' => 'List size (settings)']),
+//      '#tree' => FALSE,
+//    ];
+//
+//    $form['dashboard_list_size_settings']['dashboard_list_size_desktop'] = [
+//      '#type' => 'number',
+//      '#title' => $this->t('Dashboard list size on desktop', [], ['context' => 'List size (settings)']),
+//      '#default_value' => $config->get('dashboard_list_size_desktop') ?? DplListSizeSettings::DASHBOARD_LIST_SIZE_DESKTOP,
+//      '#min' => 1,
+//      '#step' => 1,
+//    ];
+//
+//    $form['dashboard_list_size_settings']['dashboard_list_size_mobile'] = [
+//      '#type' => 'number',
+//      '#title' => $this->t('Dashboard list size on mobile', [], ['context' => 'List size (settings)']),
+//      '#default_value' => $config->get('dashboard_list_size_mobile') ?? DplListSizeSettings::DASHBOARD_LIST_SIZE_MOBILE,
+//      '#min' => 1,
+//      '#step' => 1,
+//    ];
 
     $form['reservation_list_size_settings'] = [
       '#type' => 'fieldset',
@@ -185,8 +183,6 @@ class ListSizeSettingsForm extends ConfigFormBase {
   public function submitForm(array &$form, FormStateInterface $form_state): void {
     parent::submitForm($form, $form_state);
     $this->config($this->configService->getConfigKey())
-      ->set('dashboard_list_size_desktop', $form_state->getValue('dashboard_list_size_desktop'))
-      ->set('dashboard_list_size_mobile', $form_state->getValue('dashboard_list_size_mobile'))
       ->set('reservation_list_size_desktop', $form_state->getValue('reservation_list_size_desktop'))
       ->set('reservation_list_size_mobile', $form_state->getValue('reservation_list_size_mobile'))
       ->set('loan_list_size_desktop', $form_state->getValue('loan_list_size_desktop'))

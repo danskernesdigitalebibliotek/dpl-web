@@ -7,3 +7,4 @@ dpl_list_size.settings:
     _permission: "administer site configuration"
   options:
     _admin_route: TRUE
+

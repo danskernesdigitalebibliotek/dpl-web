@@ -83,6 +83,8 @@ class ReservationListBlock extends BlockBase implements ContainerFactoryPluginIn
   public function build(): array {
     $config = $this->reservationListSettings->loadConfig();
     $generalSettings = $this->configFactory->get('dpl_library_agency.general_settings');
+    $listSizeSettings = $this->configFactory->get('dpl_list_size.settings');
+
 
     $data = [
       // Branches.

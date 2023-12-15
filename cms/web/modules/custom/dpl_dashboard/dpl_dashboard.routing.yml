@@ -14,3 +14,13 @@ dpl_dashboard.settings:
     _permission: "administer site configuration"
   options:
     _admin_route: TRUE
+
+dpl_list_size.settings:
+  path: "/admin/config/dpl-library-agency/list-size-settings"
+  defaults:
+    _title: "List size settings"
+    _form: '\Drupal\dpl_dashboard\Form\DashboardListSizeSettingsForm'
+  requirements:
+    _permission: "administer site configuration"
+  options:
+    _admin_route: TRUE
