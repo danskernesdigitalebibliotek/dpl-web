@@ -27,18 +27,25 @@ class PriceFormatter {
     $translation_options = ['context' => 'dpl_event'];
 
     $price = BigDecimal::of($price_string);
-    return match(TRUE) {
+    if ($price->isEqualTo(0)) {
       // Events with 0 cost should show "Free" instead of a numeric price.
-      $price->isEqualTo(0) => $this->translation->translate("Free", [], $translation_options),
+      $price_string = $this->translation->translate("Free", [], $translation_options);
+    }
+    else {
       // Add the kr. suffix for now.
       // For multi-currency support this should be replaced by a configurable
       // suffix and appropriate separators.
-      // Strip fractions from prices which do not use them.
-      !$price->hasNonZeroFractionalPart() => $this->translation->translate("@price kr.", ['@price' => $price->getIntegralPart()]),
-      // Prices with fractions must be output with exactly two digits in the
-      // fraction to match standard formatting of prices.
-      default => $this->translation->translate("@price kr.", ['@price' => number_format($price->toFloat(), 2, ',', '.')])
-    };
+      if (!$price->hasNonZeroFractionalPart()) {
+        // Strip fractions from prices which do not use them.
+        $price_string = $this->translation->translate("@price kr.", ['@price' => $price->getIntegralPart()]);
+      }
+      else {
+        // Prices with fractions must be output with exactly two digits in the
+        // fraction to match standard formatting of prices.
+        $price_string = $this->translation->translate("@price kr.", ['@price' => number_format($price->toFloat(), 2, ',', '.')]);
+      }
+    }
+    return $price_string;
   }
 
 }
