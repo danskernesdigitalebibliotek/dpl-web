@@ -24,6 +24,16 @@
       </div>
     </div>
     <dl class="list-description event-description__info list-description--event">
+      {% if content.field_event_date.0 %}
+                <div class="list-description__item">
+                    <dt class="list-description__key">{{ "Time"|trans }}</dt>
+                    <dd class="list-description__value">
+                        {{ content.field_event_date.0.start_date["#markup"]|date("H:i") }}
+                        -
+                        {{ content.field_event_date.0.end_date["#markup"]|date("H:i") }}
+                    </dd>
+                </div>
+            {% endif %}
       {% if content.field_ticket_categories.0 %}
         <div class="list-description__item">
           <dt class="list-description__key">{{ "Price"|trans }}</dt>
