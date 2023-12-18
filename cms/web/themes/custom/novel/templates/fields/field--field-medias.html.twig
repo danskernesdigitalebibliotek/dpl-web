@@ -1,4 +1,8 @@
-<div {{ attributes.addClass('medias') }}>
+{% set classes = [
+  'medias',
+  (items|length > 1) ? 'medias--multiple' : 'medias--single'
+] %}
+<div {{ attributes.addClass(classes) }}>
   {% for item in items %}
     {% set item_classes = [
       'medias__item',

@@ -26,8 +26,6 @@ display:
           label: Ændringsdato
         count:
           label: 'Brugt i'
-          alter:
-            path: 'admin/content/files/usage/{{ fid }}'
       pager:
         options:
           tags:
