@@ -39,7 +39,7 @@
                 "version": "2023.50.0",
                 "type": "drupal-library",
                 "dist": {
-                    "url": "https://github.com/danskernesdigitalebibliotek/dpl-react/releases/download/branch-release%2F2023-50-0/dist-release-2023-50-0.zip",
+                    "url": "https://github.com/danskernesdigitalebibliotek/dpl-react/releases/download/2023.50.0/dist-2023-50-0-abe20fe9f7748c7616984a2b6ee0f2f74c4ba5bf.zip",
                     "type": "zip"
                 },
                 "require": {
@@ -54,7 +54,7 @@
                 "type": "drupal-library",
                 "version": "2023.50.0",
                 "dist": {
-                    "url": "https://github.com/danskernesdigitalebibliotek/dpl-design-system/releases/download/branch-release%2F2023-50-0/dist-release-2023-50-0.zip",
+                    "url": "https://github.com/danskernesdigitalebibliotek/dpl-design-system/releases/download/2023.50.0/dist-2023-50-0-3043d75b30853ee701571dd051a712b9843e7bdc.zip",
                     "type": "zip"
                 }
             }
