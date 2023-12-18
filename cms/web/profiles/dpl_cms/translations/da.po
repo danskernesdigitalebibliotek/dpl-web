@@ -3,8 +3,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2023-12-11 09:44+0100\n"
-"PO-Revision-Date: 2023-12-11 09:44+0100\n"
+"POT-Creation-Date: 2023-12-13 22:37+0100\n"
+"PO-Revision-Date: 2023-12-13 22:37+0100\n"
 "Last-Translator: NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
 "MIME-Version: 1.0\n"
@@ -12,81 +12,140 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
 
-msgid "Library token"
-msgstr "Biblioteks token"
+msgctxt "dpl_instant_loan"
+msgid "Enabled"
+msgstr "Tilvælg"
 
-msgid "Token available"
-msgstr "Token tilgængelig"
+msgctxt "dpl_instant_loan"
+msgid "Should materials available for instant loans be promoted to patrons?"
+msgstr ""
+"Skal materialer som er tilgængelige som strakslån vises til "
+"brugerne?"
+
+msgctxt "dpl_instant_loan"
+msgid "Match Strings"
+msgstr "Non-res materialegrupper"
+
+msgctxt "dpl_instant_loan"
+msgid ""
+"Text used to identify materials which are available for instant "
+"loans.<br/> You can write multiple strings - each on a spearate "
+"line.<br/> To find a match one of the strings must be present in the "
+"material group of such materials."
+msgstr ""
+"Angiv navnene på alle de materiale-grupper der er til udlån, men "
+"ikke er reserverbare; der kan skrives flere materialegrupper – hver "
+"skal skrives på en separat linje."
+
+msgctxt "dpl_instant_loan"
+msgid "Threshold"
+msgstr "Varsel"
+
+msgctxt "dpl_instant_loan"
+msgid ""
+"The minimum number of materials which must be available for instant "
+"loan at a library branch to notify patrons of the option when making "
+"reservations."
+msgstr ""
+"Det mindste antal materialer, der skal være tilgængelige som "
+"strakslån på en filial, før brugerne bliver gjort opmærksomme på "
+"muligheden i reserveringsflowet."
+
+msgctxt "Dpl patron redirect"
+msgid "Redirect settings"
+msgstr ""
+"Indstillinger for viderestilling af bruger til adgangsplatformen "
+"(prompt for login)"
+
+msgctxt "Dpl patron redirect"
+msgid ""
+"Set the paths that requires the patron to be logged in and if the user "
+"is not logged in an redirect to Adgangsplatformen will automatically "
+"be enforced."
+msgstr ""
+"Angiv de stier som kræver at brugeren er logget ind. Hvis brugeren "
+"ikke er logget ind, sendes denne automatisk videre til "
+"Adgangsplatformen (promptes for login)."
+
+msgid "Pages"
+msgstr "Sider"
 
 msgid ""
-"No valid token available. <a href=\":url\">Run cron</a> to retrieve a "
-"new token."
+"Specify pages by using their paths. Enter one path per line. The '*' "
+"character is a wildcard. An example path is %user-wildcard for every "
+"user page. %front is the front page."
 msgstr ""
-"Gyldig token er ikke tilgængelig. <a href=\":url\">Run cron</a> for "
-"at hente en ny token."
+"Angiv sider med en sti. Angiv en sti pr. kodelinie. Tegnet * er et "
+"wildcard. Et eksempel på en sti er %user-wildcard for hver "
+"brugerside. %front er forsiden."
 
-msgid "Configuration file"
-msgstr "Konfigurationsfil"
+msgctxt "Library Agency Configuration"
+msgid "Reservations"
+msgstr "Reserveringer"
 
-msgctxt "DPL Config Import"
-msgid "Select a configuration file in YAML format to upload."
-msgstr "Vælg en konfigurationsfil i YAML til upload."
+msgctxt "Library Agency Configuration"
+msgid "Enable SMS notifications for reservations"
+msgstr "Slå mulighed for tilvalg af sms notifikationer for reserveringer til"
 
-msgid "Upload"
-msgstr "Upload"
+msgctxt "Library Agency Configuration"
+msgid "If checked, SMS notifications for patrons are enabled."
+msgstr "Hvis valgt, kan brugerne vælge at få tilsendt notifikationer på sms"
 
-msgctxt "DPL Config Import"
-msgid "Unable to handle the uploaded file"
-msgstr "Ude af stand til at indlæse den uploadede fil"
+msgctxt "Library Agency Configuration"
+msgid "Interest periods for reservation"
+msgstr "Interesseperiode for reserveringer"
 
-msgctxt "DPL Config Import"
-msgid "Unable to parse YAML file: %reason"
-msgstr "Ude af stand til at parse YAML fil: %reason"
+msgctxt "Library Agency Configuration"
+msgid "Allow removing ready reservations"
+msgstr "Tillad sletning af opfyldte reserveringer"
 
-msgctxt "DPL Config Import"
-msgid "Installed modules: %modules_list"
-msgstr "Installerede moduler: %modules_list"
+msgctxt "Library Agency Configuration"
+msgid "Ereolen link"
+msgstr "eReolen link"
 
-msgctxt "DPL Config Import"
-msgid "Failed to install modules: @reason"
-msgstr "Kunne ikke installere modul: @reason"
+msgctxt "Library Agency Configuration"
+msgid "My page in ereolen"
+msgstr "Min side på eReolen"
 
-msgctxt "DPL Config Import"
-msgid "Uninstalled modules: %modules_list"
-msgstr "Ikke-installerede moduler: %modules_list"
+msgctxt "Library Agency Configuration"
+msgid "Ereolen home link"
+msgstr "Link til eReolen"
 
-msgctxt "DPL Config Import"
-msgid "Failed to uninstall modules: @reason"
-msgstr "Kunne ikke installere modul: @reason"
+msgctxt "Library Agency Configuration"
+msgid "Home page in ereolen"
+msgstr "eReolen startside"
 
-msgid "Basic settings"
-msgstr "Grundlæggende indstillinger"
+msgctxt "Library Agency Configuration"
+msgid "Pause reservation link"
+msgstr "Link til side om reserveringspause"
 
-msgid "Page size mobile"
-msgstr "Antal listeelemeter på side (mobil)"
+msgctxt "Library Agency Configuration"
+msgid "The link with infomation about reservations"
+msgstr "Her kan brugeren læse om at sætte sine reserveringer på pause"
 
-msgid "Page size desktop"
-msgstr "Antal listeelemeter på side (desktop)"
+msgctxt "Library Agency Configuration"
+msgid "Start date"
+msgstr "Startdato"
 
 msgctxt "Favorites list"
 msgid "Your favorites list is empty"
 msgstr "Din huskeliste er tom"
 
-msgctxt "Favorites list"
-msgid "Favorites"
-msgstr "Huskeliste"
+msgid "The link to redirect the blocked user to"
+msgstr ""
+"Angiv linket til den side som en blokeret bruger skal sendes videre "
+"til"
 
-msgctxt "Favorites list"
-msgid "@count materials"
-msgstr "@count materialer"
+msgid "Blocked user link for modal"
+msgstr "Blokeret bruger link til modal"
 
 msgctxt "Global"
 msgid "in series"
 msgstr "i serien"
 
-msgctxt "Favorites list"
-msgid "Number description"
-msgstr "Nummer"
+msgctxt "Library Agency Configuration"
+msgid "Expiration warning"
+msgstr "Advarsel om at udløbsdato nærmer sig"
 
 msgctxt "Global"
 msgid "Remove @title from favorites list"
@@ -104,84 +163,21 @@ msgctxt "Global"
 msgid "show more"
 msgstr "Vis flere"
 
-msgctxt "Favorites list"
-msgid "Choose all renewable"
-msgstr "Vælg mulige"
+msgctxt "Favorites list material component"
+msgid "and"
+msgstr "og"
 
-msgctxt "Url Proxy"
-msgid "configured"
-msgstr "konfigureret"
+msgctxt "Favorites list material component"
+msgid "et al."
+msgstr "et al."
 
-msgctxt "Url Proxy"
-msgid "This configuration form is for administering proxy url generation."
-msgstr ""
-"Denne formular er til administration af proxy URL'er for at give "
-"adgang til e-ressourcer."
+msgctxt "Favorites list material component"
+msgid "By"
+msgstr "Af"
 
-msgctxt "Url Proxy"
-msgid "Proxy server URL prefix"
-msgstr "Præfiks til proxy-serverens URL"
-
-msgctxt "Url Proxy"
-msgid ""
-"The prefix to use for proxy server URLs. This is the part of the "
-"URL\n"
-"        that comes before the hostname"
-msgstr ""
-"Præfikset er den del af URL'en, som kommer før værtsnavnet "
-"(hostname)"
-
-msgctxt "Url Proxy"
-msgid "Hostnames"
-msgstr "Hostnames / Værtsnavne"
-
-msgctxt "Url Proxy"
-msgid "Host configuration"
-msgstr "Opsætning af værtsnavne"
-
-msgctxt "Url Proxy"
-msgid "Hostname"
-msgstr "Hostname / Værtsnavn"
-
-msgctxt "Url Proxy"
-msgid "Replacement %configured"
-msgstr "Erstatning %configured"
-
-msgctxt "Url Proxy"
-msgid "Regular expression"
-msgstr "Regular expression / Regulært udtryk"
-
-msgctxt "Url Proxy"
-msgid ""
-"Use regular expression to substitut parts of the url, e.g. "
-"\"<em>%regex</em>\"."
-msgstr ""
-"Brug et regulært udtryk som erstatning for dele af URL'en, fx. "
-"\"<em>%regex</em>\"."
-
-msgctxt "Url Proxy"
-msgid "Replacement"
-msgstr "Replacement / Erstatning"
-
-msgctxt "Url Proxy"
-msgid "The replacement value for the regular expression."
-msgstr "Erstatning for det regulære udtryk."
-
-msgctxt "Url Proxy"
-msgid "Do not use proxy prefix for this hostname"
-msgstr "Brug ikke præfiks for dette værtnavn/ hostname"
-
-msgctxt "Url Proxy"
-msgid "Remove this"
-msgstr "Fjern denne"
-
-msgctxt "Url Proxy"
-msgid "Add one more"
-msgstr "Tilføj en mere"
-
-msgctxt "Url Proxy"
-msgid "Submit"
-msgstr "Gem"
+msgctxt "Favorites list material component (aria)"
+msgid "Remove @title from favorites list"
+msgstr "Fjern @title fra huskelisten"
 
 msgctxt "Menu (settings)"
 msgid "Page size mobile"
@@ -2619,72 +2615,269 @@ msgctxt "Fees list"
 msgid "see our fees and replacement costs"
 msgstr "Se takster"
 
-msgctxt "Dpl patron redirect"
-msgid "Redirect settings"
-msgstr ""
-"Indstillinger for viderestilling af bruger til adgangsplatformen "
-"(prompt for login)"
+msgctxt "Dpl Fbs"
+msgid "Basic settings"
+msgstr "Grundlæggende indstillinger"
 
-msgctxt "Dpl patron redirect"
+msgctxt "Dpl Fbs"
+msgid "FBS service url"
+msgstr "FBS service URL"
+
+msgctxt "Dpl Publizon"
+msgid "Basic settings"
+msgstr "Grundlæggende indstillinger"
+
+msgctxt "Dpl Publizon"
+msgid "Publizon service url"
+msgstr "Publizon service URL"
+
+msgid "Delete patron link"
+msgstr "Slet bruger (link)"
+
+msgid "Link to a page where it is possible to delete patron"
+msgstr ""
+"\n"
+"Link til oplysningsside om hvordan man kan få slettet sin bruger"
+
+msgid "Ereolen always available"
+msgstr "E-bøger du altid kan låne"
+
+msgid "Pincode length (min)"
+msgstr "Pinkode længde (min)"
+
+msgid "Pincode length max"
+msgstr "Pinkode længe (max)"
+
+msgctxt "Patron page"
+msgid "To"
+msgstr "Til"
+
+msgctxt "Patron page"
+msgid "From"
+msgstr "Fra"
+
+msgctxt "Patron page"
+msgid "Receive emails about your loans, reservations, and so forth"
+msgstr "Modtag e-mails om dine lån, reserveringer osv."
+
+msgctxt "Patron page"
+msgid "E-mail"
+msgstr "E-mail"
+
+msgctxt "Patron page"
+msgid "patron page contact info body text"
+msgstr ""
+"Husk at opdatere dine oplysninger, hvis du skifter mobilnummer eller "
+"e-mail."
+
+msgctxt "Patron page"
+msgid "CONTACT INFORMATION"
+msgstr "Kontaktoplysninger"
+
+msgctxt "Patron page"
+msgid "Receive text messages about your loans, reservations, and so forth"
+msgstr "Modtag sms om dine lån, reserveringer, osv."
+
+msgctxt "Patron page"
+msgid "Phone number"
+msgstr "Mobilnummer"
+
+msgctxt "Patron page"
+msgid "Address"
+msgstr "Adresse"
+
+msgctxt "Patron page"
+msgid "BASIC DETAILS"
+msgstr "Stamoplysninger"
+
+msgctxt "Patron page"
+msgid "Name"
+msgstr "Navn"
+
+msgctxt "Patron page"
+msgid "patron page change pickup body text"
+msgstr "Vælg hvor du vil afhente dine reserveringer"
+
+msgctxt "Patron page"
+msgid "RESERVATIONS"
+msgstr "Reserveringer"
+
+msgctxt "Patron page"
+msgid "Change current pin by entering a new pin and saving"
+msgstr "Skift nuværende kode ved at indtaste en ny kode og gem."
+
+msgctxt "Patron page"
+msgid "PINCODE"
+msgstr "Pinkode"
+
+msgctxt "Patron page"
+msgid "Confirm new pin"
+msgstr "Bekræft ny pinkode"
+
+msgctxt "Patron page"
+msgid "Delete your profile"
+msgstr "Sådan sletter du din brugerprofil"
+
+msgctxt "Patron page"
+msgid "Do you wish to delete your library profile?"
+msgstr "Ønsker du ikke længere at have en profil på biblioteket?"
+
+msgctxt "Patron page"
+msgid "Patron profile page"
+msgstr "Brugerprofil"
+
+msgctxt "Patron page (aria)"
 msgid ""
-"Set the paths that requires the patron to be logged in and if the user "
-"is not logged in an redirect to Adgangsplatformen will automatically "
-"be enforced."
+"This checkbox opens a section where you can put your current "
+"reservations on a pause, when the time period picked has ended, the "
+"reservations will be resumed"
 msgstr ""
-"Angiv de stier som kræver at brugeren er logget ind. Hvis brugeren "
-"ikke er logget ind, sendes denne automatisk videre til "
-"Adgangsplatformen (promptes for login)."
+"Denne tjekboks åbner en sektion hvor du kan sætte dine reserveringer "
+"på pause, når den valgte periode slutter vil reserveringerne blive "
+"genaktiveret"
 
-msgid "Pages"
-msgstr "Sider"
+msgctxt "Patron page"
+msgid "Pause your reservations"
+msgstr "Sæt dine reserveringer på pause"
 
+msgctxt "Patron page"
+msgid "patron page pause reservations body text"
+msgstr ""
+"Du kan sætte dine reserveringer på pause mens du f.eks. er på "
+"ferie. Gælder kun fysiske materialer."
+
+msgctxt "Patron page"
+msgid "Pause physical reservations"
+msgstr "Sæt reserveringer af fysiske materialer på pause"
+
+msgctxt "Patron page"
+msgid "New pin"
+msgstr "Ny pinkode"
+
+msgctxt "Patron page"
 msgid ""
-"Specify pages by using their paths. Enter one path per line. The '*' "
-"character is a wildcard. An example path is %user-wildcard for every "
-"user page. %front is the front page."
+"The pincode should be minimum @pincodeLengthMin and maximum "
+"@pincodeLengthMax characters long"
+msgstr "Pinkoden skal indeholde @pincodeLengthMin cifre"
+
+msgctxt "Patron page"
+msgid "The pincodes are not the same"
+msgstr "Pinkoderne er ikke ens"
+
+msgctxt "Patron page"
+msgid "Save"
+msgstr "Gem"
+
+msgctxt "Patron page"
+msgid ""
+"There is a number of materials without limitation to amounts of loans "
+"per month."
+msgstr "Der findes titler uden begrænsning på antal lån pr. måned."
+
+msgctxt "Patron page"
+msgid "DIGITAL LOANS (EREOLEN)"
+msgstr "DIGITALE LÅN (eREOLEN)"
+
+msgctxt "Patron page"
+msgid "Click here, to see titles always eligible to be loaned"
+msgstr "Se titler du altid kan låne"
+
+msgctxt "Patron page"
+msgid "Loans per month"
+msgstr "Lån pr. måned"
+
+msgctxt "Patron page"
+msgid "Audiobooks"
+msgstr "Lydbøger"
+
+msgctxt "Patron page"
+msgid "E-books"
+msgstr "E-bøger"
+
+msgctxt "Patron page (aria)"
+msgid "You used @this audiobooks out of you quota of @that audiobooks"
+msgstr "Du har brugt @this audiobooks ud af din kvote på @that lydbøger"
+
+msgctxt "Patron page (aria)"
+msgid "You used @this ebooks out of you quota of @that ebooks"
+msgstr "Du har brugt @this ud af din kvote på @that e-bøger"
+
+msgctxt "Patron page"
+msgid "@this out of @that"
+msgstr "@this ud af @that"
+
+msgctxt "Patron page"
+msgid "You can reserve @countEbooks ebooks and @countAudiobooks audiobooks"
+msgstr "Du kan reservere @countEbooks e-bøger og @countAudiobooks lydbøger"
+
+msgctxt "Patron page"
+msgid "patron page text fee text"
+msgstr "Bemærk at dit telefonselskab kan opkræve gebyr for sms"
+
+msgctxt "Patron page"
+msgid "Your pincode was saved"
+msgstr "Din pinkode blev gemt"
+
+msgctxt "Patron page (aria)"
+msgid "This modal makes it possible to pause your physical reservations"
 msgstr ""
-"Angiv sider med en sti. Angiv en sti pr. kodelinie. Tegnet * er et "
-"wildcard. Et eksempel på en sti er %user-wildcard for hver "
-"brugerside. %front er forsiden."
+"Denne pop-up gør det muligt at sætte reserveringer af fysiske "
+"materialer på pause"
 
-msgid "React DDB Library"
-msgstr "React DPL Library"
+msgctxt "Patron page"
+msgid "Pause reservation below inputs text"
+msgstr ""
+"Du kan sætte dine reserveringer på pause mens du f.eks. er på "
+"ferie. Gælder kun fysiske materialer."
 
-msgid "Library is present"
-msgstr "Library er "
+msgctxt "Patron page"
+msgid ""
+"Pause your reservations early, since reservations that are already "
+"being processed, will not be paused."
+msgstr ""
+"Sæt reserveringer på pause i god tid, da reserveringer der allerede "
+"bliver behandlet ikke bliver sat på pause."
 
-msgid "DDB React library is missing (@dir)"
-msgstr "DPL React library mangler (@dir) "
+msgctxt "Patron page"
+msgid "Close pause reservations modal"
+msgstr "Luk pop-up"
 
-msgctxt "Dpl Login"
-msgid "Authorization endpoint"
-msgstr "Autorisations endpoint"
+msgctxt "Patron page"
+msgid "Pause reservations on physical items"
+msgstr "Sæt reserveringer af fysiske materialer på pause"
 
-msgctxt "Dpl Login"
-msgid "Token endpoint"
-msgstr "Token endpoint"
+msgctxt "Patron page"
+msgid "Read more"
+msgstr "Læs mere"
 
-msgctxt "Dpl Login"
-msgid "UserInfo endpoint"
-msgstr "UserInfo endpoint"
+msgctxt "Patron page"
+msgid "Choose pickup branch"
+msgstr "Afhent reserveringer på"
 
-msgctxt "Dpl Login"
-msgid "Logout endpoint"
-msgstr "Logout endpoint"
+msgctxt "Patron page"
+msgid "Nothing selected"
+msgstr "Intet valgt"
 
-msgctxt "Dpl Login"
-msgid "Agency ID"
-msgstr "Agency ID"
+msgctxt "Patron page"
+msgid ""
+"The phone number must be 6 to 15 characters in length and should be "
+"comprised solely of numbers or begin with a +"
+msgstr "Nummeret skal være mellem 6 og 15 cifre"
 
-msgctxt "dpl_login"
-msgid "Logged in"
-msgstr "Logget ind"
+msgctxt "Patron page"
+msgid "Your changes are saved."
+msgstr "Dine ændringer blev gemt"
 
-msgid "Adgangsplatformen"
-msgstr "Adgangsplatformen"
+msgctxt "Patron page"
+msgid "Loading..."
+msgstr "Henter..."
 
-msgid "Integration configured"
-msgstr "Integration konfigureret"
+msgctxt "Patron page"
+msgid "Online access"
+msgstr "Hentes online"
+
+msgid "Log in with @client_title"
+msgstr "Log ind med @client_title"
 
 msgid "Minimum age to allow self registration"
 msgstr "Minimumsalder for tilladelse til selvoprettelse"
@@ -2751,120 +2944,11 @@ msgstr ""
 msgid "Get campaign matching search result facets"
 msgstr "Hent kampagne som matcher facetter fra søgeresultatet"
 
-msgid "Generate proxy url"
-msgstr "Generate proxy URL / Generer proxy URL"
+msgid "Article"
+msgstr "Artikel"
 
-msgid "DPL Library Token"
-msgstr "DPL biblioteks token"
-
-msgid "Handles fetching and storage of a library token"
-msgstr "Håndterer hentning og lagring af en biblioteks token"
-
-msgid "dpl_campaign"
-msgstr "dpl_campaign"
-
-msgid ""
-"A module that deliveres possibility for campaign CRUD and integration "
-"with Dpl React Apps"
-msgstr ""
-"Et modul, som giver mulighed for kampagne CRUD og integration med DPL "
-"React Apps"
-
-msgid "Upload configuration"
-msgstr "Upload indstillinger / Upload configuration"
-
-msgid "Configuration Import"
-msgstr "Import af indstillinger / Configuration Import"
-
-msgid "Import configuration from YAML files."
-msgstr "Indstillinger for import af YAML filer."
-
-msgid "DPL favorites"
-msgstr "DPL Huskeliste"
-
-msgid "Handle the favorites list"
-msgstr "Håndter indstillinger for huskeliste"
-
-msgid "Favorites list settings"
-msgstr "Huskeliste indstillinger"
-
-msgid "Configure proxy urls"
-msgstr "Opsæt proxy URL'er"
-
-msgid "DPL Url Proxy"
-msgstr "DPL (Danish Public Library)  URL proxy"
-
-msgid "Module for generating specially formatted external urls"
-msgstr "Modul til at generere specielt formatterede eksterne URL'er"
-
-msgid "Menu settings"
-msgstr "Menu"
-
-msgid "DPL menu"
-msgstr "DPL menu"
-
-msgid "Handle the patron user menu"
-msgstr "Håndter indstillinger for brugermenuen"
-
-msgid "DPL recommender"
-msgstr "DPL recommender"
-
-msgid "recommender component"
-msgstr "Komponent til anbefalinger (recommender)"
-
-msgid "Recommender settings"
-msgstr "Indstillinger for anbefalinger"
-
-msgid "DPL something similar"
-msgstr "DPL noget der ligner"
-
-msgid "Something similar component"
-msgstr "Komponenten \"Noget der ligner\""
-
-msgid "DPL dashboard"
-msgstr "DPL dashboard"
-
-msgid "Handle the user profile dashboard page"
-msgstr "Håndter indstillinger for brugerens dashboard (Dit overblik)"
-
-msgid "Dashboard settings"
-msgstr "Indstillinger for Dit overblik (Dashboard)"
-
-msgid "Library Agency"
-msgstr "Biblioteksindstillinger"
-
-msgid "General Settings"
-msgstr "Generelle indstillinger"
-
-msgid "DPL Library Agency"
-msgstr "DPL Library Agency"
-
-msgid "Module for handling library agency configuration and functionality"
-msgstr "Modul til at håndtere indstillinger for biblioteket og funktionalitet"
-
-msgid "DPL Publizon"
-msgstr "DPL Publizon"
-
-msgid "Handle publizon configuration"
-msgstr "Håndter indstillinger for Publizon"
-
-msgid "Publizon settings"
-msgstr "Publizon indstillinger"
-
-msgid "DPL FBS"
-msgstr "DPL FBS"
-
-msgid "Handle FBS configuration"
-msgstr "Håndter indstillinger for FBS"
-
-msgid "FBS settings"
-msgstr "FBS indstillinger"
-
-msgid "DPL favorites list material component"
-msgstr "DPL huskeliste materialekomponent"
-
-msgid "Handle the favorites list material component pages"
-msgstr "Håndter indstillinger for huskeliste komponent"
+msgid "Functionality related to creating article content."
+msgstr "Funktion relateret til oprettelse af artikelindhold."
 
 msgid "Instant Loan"
 msgstr "Strakslån"
@@ -2877,35 +2961,47 @@ msgstr ""
 msgid "Instant loan settings"
 msgstr "Indstillinger for strakslån"
 
-msgid "Example content for DPL CMS"
-msgstr "Eksempelindhold for DPL CMS"
+msgid "Patron redirect settings"
+msgstr "Indstillinger for viderestilling af bruger til adgangsplatformen"
 
-msgid "Provides example content for demo sites."
-msgstr "Indeholder eksempelindhold til demosider."
+msgid "DPL Patron redirect"
+msgstr "DPL Patron redirect / DPL bruger redirect"
 
-msgid "Article"
-msgstr "Artikel"
+msgid "Redirect patron to login if required."
+msgstr "Send bruger videre til login hvis det er påkrævet"
 
-msgid "Functionality related to creating article content."
-msgstr ""
+msgid "DPL Library Agency"
+msgstr "DPL Library Agency"
 
-msgid "Reservations settings"
-msgstr "Reserveringsindstillinger"
+msgid "Module for handling library agency configuration and functionality"
+msgstr "Modul til at håndtere indstillinger for biblioteket og funktionalitet"
 
-msgid "DPL Reservations"
-msgstr "DPL Reserveringer"
+msgid "Library Agency"
+msgstr "Biblioteksindstillinger"
 
-msgid "Handle the user profile reservations pages"
-msgstr "Håndter indstillinger for brugerprofilens reserveringsoversigt"
+msgid "General Settings"
+msgstr "Generelle indstillinger"
 
-msgid "DPL patron page"
-msgstr "DPL brugerprofil"
+msgid "DPL favorites list material component"
+msgstr "DPL huskeliste materialekomponent"
 
-msgid "Handle the patron page"
-msgstr "Håndter indstillinger for brugeroprettelse"
+msgid "Handle the favorites list material component pages"
+msgstr "Håndter indstillinger for huskeliste komponent"
 
-msgid "Patron page settings"
-msgstr "Indstillinger for brugerprofil"
+msgid "Menu settings"
+msgstr "Menu"
+
+msgid "DPL menu"
+msgstr "DPL menu"
+
+msgid "Handle the patron user menu"
+msgstr "Håndter indstillinger for brugermenuen"
+
+msgid "DPL React Apps"
+msgstr "DPL React apps"
+
+msgid "For integration of dpl_react apps on the site."
+msgstr "For integering af dpl_react apps på hjemmesiden."
 
 msgid "Mapp Intelligence settings"
 msgstr "Mapp Intelligence indstillinger"
@@ -2916,38 +3012,68 @@ msgstr "Mapp Intelligence"
 msgid "Integration with Mapp Intelligence to track site usage."
 msgstr "Integration med Mapp Intelligence for at tracke brugen af hjemmesiden"
 
+msgid "DPL recommender"
+msgstr "DPL recommender"
+
+msgid "recommender component"
+msgstr "Komponent til anbefalinger (recommender)"
+
+msgid "Recommender settings"
+msgstr "Indstillinger for anbefalinger"
+
+msgid "Loans settings"
+msgstr "Låneindstillinger"
+
 msgid "DPL loans"
 msgstr "DPL lån"
 
 msgid "Handle the user profile loan pages"
 msgstr "Håndter indstillinger for brugerprofilens låneoversigt"
 
-msgid "Loans settings"
-msgstr "Låneindstillinger"
+msgid "Configure proxy urls"
+msgstr "Opsæt proxy URL'er"
 
-msgid "DPL React Apps"
-msgstr "DPL React apps"
+msgid "DPL Url Proxy"
+msgstr "DPL (Danish Public Library)  URL proxy"
 
-msgid "For integration of dpl_react apps on the site."
-msgstr "For integering af dpl_react apps på hjemmesiden."
+msgid "Module for generating specially formatted external urls"
+msgstr "Modul til at generere specielt formatterede eksterne URL'er"
 
-msgid "Fees settings"
-msgstr "Gebyrindstillinger"
+msgid "DPL Login"
+msgstr "DPL Login"
 
-msgid "DPL Fees"
-msgstr "DPL gebyrer"
+msgid "Handles authentication/login via Adgangsplatformen"
+msgstr "Håndterer autentificering/login via Adgangsplatformen"
 
-msgid "Handle the user profile fees page"
-msgstr "Håndter indstillinger for brugerprofilens gebyrside"
+msgid "Dpl Login Logout Route"
+msgstr "DPL Login Logout Route"
 
-msgid "DPL Patron redirect"
-msgstr "DPL Patron redirect / DPL bruger redirect"
+msgid "Login via Adgangsplatformen"
+msgstr "Login via Adgangsplatformen"
 
-msgid "Redirect patron to login if required."
-msgstr "Send bruger videre til login hvis det er påkrævet"
+msgid "Configuration Import"
+msgstr "Import af indstillinger / Configuration Import"
 
-msgid "Patron redirect settings"
-msgstr "Indstillinger for viderestilling af bruger til adgangsplatformen"
+msgid "Import configuration from YAML files."
+msgstr "Indstillinger for import af YAML filer."
+
+msgid "Upload configuration"
+msgstr "Upload indstillinger / Upload configuration"
+
+msgid "DPL Library Token"
+msgstr "DPL biblioteks token"
+
+msgid "Handles fetching and storage of a library token"
+msgstr "Håndterer hentning og lagring af en biblioteks token"
+
+msgid "Dashboard settings"
+msgstr "Indstillinger for Dit overblik (Dashboard)"
+
+msgid "DPL dashboard"
+msgstr "DPL dashboard"
+
+msgid "Handle the user profile dashboard page"
+msgstr "Håndter indstillinger for brugerens dashboard (Dit overblik)"
 
 msgid "DDB React"
 msgstr "DPL React"
@@ -2962,23 +3088,90 @@ msgstr ""
 msgid "DPL React User Token"
 msgstr "DPL React bruger token"
 
-msgid "DPL Login"
-msgstr "DPL Login"
+msgid "Example content for DPL CMS"
+msgstr "Eksempelindhold for DPL CMS"
 
-msgid "Handles authentication/login via Adgangsplatformen"
-msgstr "Håndterer autentificering/login via Adgangsplatformen"
+msgid "Provides example content for demo sites."
+msgstr "Indeholder eksempelindhold til demosider."
 
-msgid "Dpl Login Logout Route"
-msgstr "DPL Login Logout Route"
+msgid "Favorites list settings"
+msgstr "Huskeliste indstillinger"
 
-msgid "Login via Adgangsplatformen"
-msgstr "Login via Adgangsplatformen"
+msgid "DPL favorites"
+msgstr "DPL Huskeliste"
+
+msgid "Handle the favorites list"
+msgstr "Håndter indstillinger for huskeliste"
+
+msgid "Event"
+msgstr "Arrangement"
+
+msgid "Custom handling related to events."
+msgstr "Indstillinger for arrangementer"
+
+msgid "DPL something similar"
+msgstr "DPL noget der ligner"
+
+msgid "Something similar component"
+msgstr "Komponenten \"Noget der ligner\""
+
+msgid "Reservations settings"
+msgstr "Reserveringsindstillinger"
+
+msgid "DPL Reservations"
+msgstr "DPL Reserveringer"
+
+msgid "Handle the user profile reservations pages"
+msgstr "Håndter indstillinger for brugerprofilens reserveringsoversigt"
+
+msgid "DPL Fees"
+msgstr "DPL gebyrer"
+
+msgid "Handle the user profile fees page"
+msgstr "Håndter indstillinger for brugerprofilens gebyrside"
+
+msgid "Fees settings"
+msgstr "Gebyrindstillinger"
+
+msgid "FBS settings"
+msgstr "FBS indstillinger"
+
+msgid "DPL FBS"
+msgstr "DPL FBS"
+
+msgid "Handle FBS configuration"
+msgstr "Håndter indstillinger for FBS"
+
+msgid "DPL Publizon"
+msgstr "DPL Publizon"
+
+msgid "Handle publizon configuration"
+msgstr "Håndter indstillinger for Publizon"
+
+msgid "Publizon settings"
+msgstr "Publizon indstillinger"
+
+msgid "Patron page settings"
+msgstr "Indstillinger for brugerprofil"
+
+msgid "DPL patron page"
+msgstr "DPL brugerprofil"
+
+msgid "Handle the patron page"
+msgstr "Håndter indstillinger for brugeroprettelse"
+
+msgid "dpl_campaign"
+msgstr "dpl_campaign"
+
+msgid ""
+"A module that deliveres possibility for campaign CRUD and integration "
+"with Dpl React Apps"
+msgstr ""
+"Et modul, som giver mulighed for kampagne CRUD og integration med DPL "
+"React Apps"
 
 msgid "Patron registration"
 msgstr "Brugeroprettelse"
-
-msgid "Enable registration of new patrons"
-msgstr "Tilvælg registrering af nye brugere"
 
 msgid "Patron registration information"
 msgstr "Information om brugeroprettelse"
@@ -2986,20 +3179,17 @@ msgstr "Information om brugeroprettelse"
 msgid "Patron nem-login authentication"
 msgstr "Bruger autentificering med Nem-login"
 
-msgid "Event"
-msgstr ""
+msgid "Enable registration of new patrons"
+msgstr "Tilvælg registrering af nye brugere"
 
-msgid "Custom handling related to events."
-msgstr ""
+msgid "By @username"
+msgstr "Af @username"
 
 msgid "List of bookmarks"
-msgstr ""
+msgstr "Bogmærkeliste"
 
 msgid "Skip to main content"
 msgstr "Gå til hovedindhold"
-
-msgid "By @username"
-msgstr ""
 
 msgid "Novel"
 msgstr "Roman"
