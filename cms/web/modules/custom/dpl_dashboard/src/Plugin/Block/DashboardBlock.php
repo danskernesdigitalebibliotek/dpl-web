@@ -42,6 +42,8 @@ class DashboardBlock extends BlockBase implements ContainerFactoryPluginInterfac
    *   Branch repository.
    * @param \Drupal\dpl_react\DplReactConfigInterface $dashboardSettings
    *   Dashboard settings.
+   * @param \Drupal\dpl_library_agency\GeneralSettings $generalSettings
+   *   General settings.
    */
   public function __construct(
     array $configuration,

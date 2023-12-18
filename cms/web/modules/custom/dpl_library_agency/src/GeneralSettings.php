@@ -18,7 +18,6 @@ class GeneralSettings extends DplReactConfigBase {
   ];
   const RESERVATION_SMS_NOTIFICATIONS_ENABLED = TRUE;
   const PAUSE_RESERVATION_INFO_URL = '';
-  const REDIRECT_ON_BLOCKED_URL = '';
   const BLOCKED_PATRON_E_LINK_URL = '';
   // We define these urls so that the admins don't have to - e-reolen urls is
   // not expected to be changing often.
