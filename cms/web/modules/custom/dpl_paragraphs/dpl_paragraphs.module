@@ -76,7 +76,7 @@ function dpl_paragraphs_preprocess_paragraph__links(array &$variables): void {
         $link_type = 'search';
       }
 
-      $linkIconClass = ($link_type === 'internal') ? 'rotate-180' : '';
+      $linkIconClass = ($link_type === 'internal') ? 'link-with-icon__icon--rotate-180' : '';
 
       $attributes = [
         'internal' => ['target' => '_self', 'iconFile' => 'ArrowBack', 'iconFolder' => 'collection'],
