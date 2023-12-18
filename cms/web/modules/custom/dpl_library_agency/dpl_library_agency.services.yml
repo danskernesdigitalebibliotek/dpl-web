@@ -7,6 +7,10 @@ services:
     class: Drupal\dpl_library_agency\BranchSettings
     arguments: ["@config.manager"]
 
+  dpl_library_agency.general_settings:
+    class: Drupal\dpl_library_agency\GeneralSettings
+    arguments: ["@config.manager"]
+
   dpl_library_agency.branch.repository:
     class: Drupal\dpl_library_agency\Branch\FallbackBranchRepository
     arguments:

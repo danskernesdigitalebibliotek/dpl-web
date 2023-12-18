@@ -54,13 +54,8 @@ class FavoritesListMaterialComponentBlock extends BlockBase implements Container
       'favorites-list-material-component-go-to-list-url' => Url::fromRoute('dpl_favorites_list.list', [], ['absolute' => TRUE])->toString(),
 
       // Texts.
-      'add-to-favorites-aria-label-text' => $this->t("Add @title to favorites list", [], ['context' => 'Favorites list material component (aria)']),
       'favorites-list-material-component-go-to-list-text' => $this->t("Go to My list", [], ['context' => 'Favorites list material component']),
       'favorites-list-material-component-title-text' => $this->t("Your list", [], ['context' => 'Favorites list material component']),
-      'material-and-author-text' => $this->t('and', [], ['context' => 'Favorites list material component']),
-      'et-al-text' => $this->t("et al.", [], ['context' => 'Favorites list material component']),
-      'material-by-author-text' => $this->t("By", [], ['context' => 'Favorites list material component']),
-      'remove-from-favorites-aria-label-text' => $this->t("Remove @title from favorites list", [], ['context' => 'Favorites list material component (aria)']),
     ] + DplReactAppsController::externalApiBaseUrls();
 
     return [

@@ -70,6 +70,9 @@ class FeesListBlock extends BlockBase implements ContainerFactoryPluginInterface
       // Urls.
       // @todo images to be done in future tender.
       'available-payment-types-url' => dpl_react_apps_format_app_url($feesConfig->get('available_payment_types_url'), DplFeesSettings::AVAILABLE_PAYMENT_TYPES_URL),
+      'payment-overview-url' => dpl_react_apps_format_app_url($feesConfig->get('payment_overview_url'), DplFeesSettings::PAYMENT_OVERVIEW_URL),
+      'terms-of-trade-url' => dpl_react_apps_format_app_url($feesConfig->get('terms_of_trade_url'), DplFeesSettings::TERMS_OF_TRADE_URL),
+      'view-fees-and-compensation-rates-url' => dpl_react_apps_format_app_url($feesConfig->get('fees_and_replacement_costs_url'), DplFeesSettings::FEES_AND_REPLACEMENT_COSTS_URL),
 
       // Texts.
       'already-paid-text' => $this->t("Please note that paid fees are not registered up until 72 hours after your payment after which your debt is updated and your user unblocked if it has been blocked.", [], ['context' => 'Fees list']),
@@ -88,23 +91,18 @@ class FeesListBlock extends BlockBase implements ContainerFactoryPluginInterface
       'fee-payment-modal-notice-text' => $this->t("Paid fees can take up to 24 hours to registrer.", [], ['context' => 'Fees list']),
       'i-accept-text' => $this->t("I accept the", [], ['context' => 'Fees list']),
       'item-fee-amount-text' => $this->t("Fee @fee,-", [], ['context' => 'Fees list']),
-      'et-al-text' => $this->t("et al.", [], ['context' => 'Fees list']),
-      'material-by-author-text' => $this->t("By", [], ['context' => 'Fees list']),
       'other-materials-text' => $this->t("Other materials", [], ['context' => 'Fees list']),
       'pay-text' => $this->t("Pay", [], ['context' => 'Fees list']),
-      'payment-overview-url' => dpl_react_apps_format_app_url($feesConfig->get('payment_overview_url'), DplFeesSettings::PAYMENT_OVERVIEW_URL),
       'plus-x-other-materials-text' => $this->t("+ @amount other materials", [], ['context' => 'Fees list']),
       'post-payment-type-change-date-text' => $this->t("AFTER 27/10 2020", [], ['context' => 'Fees list']),
       'pre-payment-type-change-date-text' => $this->t("BEFORE 27/10 2020", [], ['context' => 'Fees list']),
       'terms-of-trade-text' => $feesConfig->get('terms_of_trade_text') ?? DplFeesSettings::TERMS_OF_TRADE_TEXT,
-      'terms-of-trade-url' => dpl_react_apps_format_app_url($feesConfig->get('terms_of_trade_url'), DplFeesSettings::TERMS_OF_TRADE_URL),
       'total-fee-amount-text' => $this->t("Fee", [], ['context' => 'Fees list']),
       'total-text' => $this->t("Total", [], ['context' => 'Fees list']),
       'turned-in-text' => $this->t("Turned in @date", [], ['context' => 'Fees list']),
-      'unpaid-fees-text' => $this->t("Unsettled debt", [], ['context' => 'Fees list']),
-      'material-and-author-text' => $this->t('and', [], ['context' => 'Fees list']),
+      'unpaid-fees-first-headline-text' => $this->t("Unsettled debt 1", [], ['context' => 'Fees list']),
+      'unpaid-fees-second-headline-text' => $this->t("Unsettled debt 2", [], ['context' => 'Fees list']),
       'view-fees-and-compensation-rates-text' => $this->t("see our fees and replacement costs", [], ['context' => 'Fees list']),
-      'view-fees-and-compensation-rates-url' => dpl_react_apps_format_app_url($feesConfig->get('fees_and_replacement_costs_url'), DplFeesSettings::FEES_AND_REPLACEMENT_COSTS_URL),
     ] + DplReactAppsController::externalApiBaseUrls();
 
     return [

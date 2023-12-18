@@ -10,28 +10,17 @@ use Drupal\dpl_library_agency\Branch\Branch;
 use Drupal\dpl_library_agency\Branch\BranchRepositoryInterface;
 use Drupal\dpl_library_agency\Branch\IdBranchRepository;
 use Drupal\dpl_library_agency\BranchSettings;
+use Drupal\dpl_library_agency\GeneralSettings;
 use Drupal\dpl_library_agency\ReservationSettings;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use function Safe\array_combine as array_combine;
+use function Safe\preg_match as preg_match;
 use function Safe\usort as usort;
 
 /**
  * General Settings form for a library agency.
  */
 class GeneralSettingsForm extends ConfigFormBase {
-  // @todo These constants should be defined in a general settings class like we do it in eg dpl_dashboard.
-  const EXPIRATION_WARNING_DAYS_BEFORE_CONFIG = 6;
-  const RESERVATION_DETAIL_ALLOW_REMOVE_READY_RESERVATIONS = FALSE;
-  const INTEREST_PERIODS_CONFIG = '';
-  const RESERVATION_SMS_NOTIFICATIONS_ENABLED = TRUE;
-  const PAUSE_RESERVATION_INFO_URL = '';
-  const REDIRECT_ON_BLOCKED_URL = '';
-  const BLOCKED_PATRON_E_LINK_URL = '';
-  // We define these urs so that the admins don't have to - ereol url is
-  // not expected to be changing often.
-  const EREOLEN_MY_PAGE_URL = 'https://ereolen.dk/user/me';
-  const EREOLEN_HOMEPAGE_URL = 'https://ereolen.dk';
-  const PAUSE_RESERVATION_START_DATE_CONFIG = '';
 
   /**
    * GeneralSettingsForm constructor.
@@ -40,7 +29,8 @@ class GeneralSettingsForm extends ConfigFormBase {
     ConfigFactoryInterface $configFactory,
     protected BranchRepositoryInterface $branchRepository,
     protected ReservationSettings $reservationSettings,
-    protected BranchSettings $branchSettings
+    protected BranchSettings $branchSettings,
+    protected GeneralSettings $generalSettings
   ) {
     parent::__construct($configFactory);
   }
@@ -58,7 +48,8 @@ class GeneralSettingsForm extends ConfigFormBase {
       $container->get('config.factory'),
       $container->get('dpl_library_agency.branch.repository.cache'),
       $container->get('dpl_library_agency.reservation_settings'),
-      $container->get('dpl_library_agency.branch_settings')
+      $container->get('dpl_library_agency.branch_settings'),
+      $container->get('dpl_library_agency.general_settings')
     );
   }
 
@@ -139,69 +130,65 @@ class GeneralSettingsForm extends ConfigFormBase {
     $form['reservations']['reservation_sms_notifications_enabled'] = [
       '#type' => 'checkbox',
       '#title' => $this->t('Enable SMS notifications for reservations', [], ['context' => 'Library Agency Configuration']),
-      '#default_value' => $config->get('reservation_sms_notifications_enabled') ?? self::RESERVATION_SMS_NOTIFICATIONS_ENABLED,
+      '#default_value' => $config->get('reservation_sms_notifications_enabled') ?? GeneralSettings::RESERVATION_SMS_NOTIFICATIONS_ENABLED,
       '#description' => $this->t('If checked, SMS notifications for patrons are enabled.', [], ['context' => 'Library Agency Configuration']),
     ];
 
     $form['reservations']['interest_periods_config'] = [
       '#type' => 'textarea',
+      '#required' => TRUE,
       '#title' => $this->t('Interest periods for reservation', [], ['context' => 'Library Agency Configuration']),
-      '#default_value' => $config->get('interest_periods_config') ?? self::INTEREST_PERIODS_CONFIG,
+      '#default_value' => $config->get('interest_periods_config') ?? GeneralSettings::INTEREST_PERIODS_CONFIG,
+      '#description' => $this->t('Set the interest periods. The format should be [days]-[label]. New periods will first be available in "Default interest period for reservation" when the form has been saved.', [], ['context' => 'Library Agency Configuration']),
+    ];
+
+    $form['reservations']['default_interest_period_config'] = [
+      '#type' => 'select',
+      '#title' => $this->t('Default interest period for reservation', [], ['context' => 'Library Agency Configuration']),
+      '#options' => $this->generalSettings->getInterestPeriods(),
+      '#default_value' => $config->get('default_interest_period_config') ?? GeneralSettings::DEFAULT_INTEREST_PERIOD_CONFIG,
+      '#description' => $this->t('Set the default interest period for reservations.', [], ['context' => 'Library Agency Configuration']),
     ];
 
     $form['reservations']['reservation_detail_allow_remove_ready_reservations'] = [
       '#type' => 'checkbox',
       '#title' => $this->t('Allow removing ready reservations', [], ['context' => 'Library Agency Configuration']),
-      '#default_value' => $config->get('reservation_detail_allow_remove_ready_reservations') ?? self::RESERVATION_DETAIL_ALLOW_REMOVE_READY_RESERVATIONS,
+      '#default_value' => $config->get('reservation_detail_allow_remove_ready_reservations') ?? GeneralSettings::RESERVATION_DETAIL_ALLOW_REMOVE_READY_RESERVATIONS,
     ];
 
     $form['reservations']['ereolen_my_page_url'] = [
       '#type' => 'url',
       '#title' => $this->t('Ereolen link', [], ['context' => 'Library Agency Configuration']),
       '#description' => $this->t('My page in ereolen', [], ['context' => 'Library Agency Configuration']),
-      '#default_value' => $config->get('ereolen_my_page_url') ?? self::EREOLEN_MY_PAGE_URL,
+      '#default_value' => $config->get('ereolen_my_page_url') ?? GeneralSettings::EREOLEN_MY_PAGE_URL,
     ];
 
     $form['reservations']['ereolen_homepage_url'] = [
       '#type' => 'url',
       '#title' => $this->t('Ereolen home link', [], ['context' => 'Library Agency Configuration']),
       '#description' => $this->t('Home page in ereolen', [], ['context' => 'Library Agency Configuration']),
-      '#default_value' => $config->get('ereolen_homepage_url') ?? self::EREOLEN_HOMEPAGE_URL,
+      '#default_value' => $config->get('ereolen_homepage_url') ?? GeneralSettings::EREOLEN_HOMEPAGE_URL,
     ];
 
     $form['reservations']['pause_reservation_info_url'] = [
       '#type' => 'url',
       '#title' => $this->t('Pause reservation link', [], ['context' => 'Library Agency Configuration']),
       '#description' => $this->t('The link with infomation about reservations', [], ['context' => 'Library Agency Configuration']),
-      '#default_value' => $config->get('pause_reservation_info_url') ?? self::PAUSE_RESERVATION_INFO_URL,
-    ];
-
-    $form['reservations']['pause_reservation_start_date_config'] = [
-      '#type' => 'date',
-      '#title' => $this->t('Start date', [], ['context' => 'Library Agency Configuration']),
-      '#description' => $this->t('Pause reservation start date', [], ['context' => 'Library Agency Configuration']),
-      '#default_value' => $config->get('pause_reservation_start_date_config') ?? self::PAUSE_RESERVATION_START_DATE_CONFIG,
+      '#default_value' => $config->get('pause_reservation_info_url') ?? GeneralSettings::PAUSE_RESERVATION_INFO_URL,
     ];
 
     $form['settings']['blocked_user'] = [
       '#type' => 'fieldset',
-      '#title' => $this->t('Blocked user'),
+      '#title' => $this->t('Blocked user', [], ['context' => 'Library Agency Configuration']),
       '#collapsible' => FALSE,
       '#collapsed' => FALSE,
     ];
 
-    $form['settings']['blocked_user']['redirect_on_blocked_url'] = [
-      '#type' => 'url',
-      '#title' => $this->t('Redirect blocked user link'),
-      '#description' => $this->t('The link to redirect the blocked user to'),
-      '#default_value' => $config->get('redirect_on_blocked_url') ?? self::REDIRECT_ON_BLOCKED_URL,
-    ];
-
     $form['settings']['blocked_user']['blocked_patron_e_link_url'] = [
       '#type' => 'url',
-      '#title' => $this->t('Blocked user link for modal'),
-      '#description' => $this->t('If a user has blocked status e, this link appears in the modal'),
-      '#default_value' => $config->get('blocked_patron_e_link_url') ?? self::BLOCKED_PATRON_E_LINK_URL,
+      '#title' => $this->t('Blocked user link for modal', [], ['context' => 'Library Agency Configuration']),
+      '#description' => $this->t('If a user is blocked because of fees a modal appears. This field makes it possible to place a link in the modal to e.g. payment options or help page.', [], ['context' => 'Library Agency Configuration']),
+      '#default_value' => $config->get('blocked_patron_e_link_url') ?? GeneralSettings::BLOCKED_PATRON_E_LINK_URL,
     ];
 
     $form['expiration_warning'] = [
@@ -214,7 +201,8 @@ class GeneralSettingsForm extends ConfigFormBase {
     $form['expiration_warning']['expiration_warning_days_before_config'] = [
       '#type' => 'number',
       '#title' => $this->t('Set expiration warning', [], ['context' => 'Library Agency Configuration']),
-      '#default_value' => $config->get('expiration_warning_days_before_config') ?? self::EXPIRATION_WARNING_DAYS_BEFORE_CONFIG,
+      '#min' => 1,
+      '#default_value' => $config->get('expiration_warning_days_before_config') ?? GeneralSettings::EXPIRATION_WARNING_DAYS_BEFORE_CONFIG,
       '#description' => $this->t('Insert the number of days before the expiration of the material, when the reminder "Expires soon" should appear.', [], ['context' => 'Library Agency Configuration']),
     ];
 
@@ -257,9 +245,36 @@ class GeneralSettingsForm extends ConfigFormBase {
   }
 
   /**
+   * Validates interest_periods_config and default_interest_period_config.
+   *
+   * The interest_periods_config is validated for the format [days]-[label].
+   *
+   * The validation for default_interest_period_config is checking
+   * that the selected default value is present in interest_periods_config.
+   *
    * {@inheritdoc}
+   *
+   * @throws \Safe\Exceptions\PcreException
    */
   public function validateForm(array &$form, FormStateInterface $form_state): void {
+    $default_interest_period = $form_state->getValue('default_interest_period_config');
+    $interest_periods = explode(PHP_EOL, $form_state->getValue('interest_periods_config'));
+
+    foreach ($interest_periods as $period) {
+      if (!preg_match('/^\d+-[\wÆØÅæøå ]+$/m', trim($period))) {
+        $form_state->setErrorByName('interest_periods_config',
+          $this->t('The interest period @error, does not match the format [days]-[label].', ['@error' => $period], ['context' => 'Library Agency Configuration']));
+
+        continue;
+      }
+
+      $interest_periods += GeneralSettings::splitInterestPeriodString($period);
+    }
+
+    if (!array_key_exists($default_interest_period, $interest_periods)) {
+      $form_state->setErrorByName('default_interest_period_config',
+        $this->t('The default interest period should be set to a value in "Interest periods for reservation" field.', [], ['context' => 'Library Agency Configuration']));
+    }
   }
 
   /**
@@ -270,13 +285,12 @@ class GeneralSettingsForm extends ConfigFormBase {
       ->set('expiration_warning_days_before_config', $form_state->getValue('expiration_warning_days_before_config'))
       ->set('reservation_detail_allow_remove_ready_reservations', $form_state->getValue('reservation_detail_allow_remove_ready_reservations'))
       ->set('interest_periods_config', $form_state->getValue('interest_periods_config'))
+      ->set('default_interest_period_config', $form_state->getValue('default_interest_period_config'))
       ->set('reservation_sms_notifications_enabled', $form_state->getValue('reservation_sms_notifications_enabled'))
       ->set('pause_reservation_info_url', $form_state->getValue('pause_reservation_info_url'))
-      ->set('redirect_on_blocked_url', $form_state->getValue('redirect_on_blocked_url'))
       ->set('blocked_patron_e_link_url', $form_state->getValue('blocked_patron_e_link_url'))
       ->set('ereolen_my_page_url', $form_state->getValue('ereolen_my_page_url'))
       ->set('ereolen_homepage_url', $form_state->getValue('ereolen_homepage_url'))
-      ->set('pause_reservation_start_date_config', $form_state->getValue('pause_reservation_start_date_config'))
       ->save();
 
     $this->branchSettings->setExcludedAvailabilityBranches(array_filter($form_state->getValue('availability')));

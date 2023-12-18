@@ -11,8 +11,8 @@
 
 use Drupal\Core\GeneratedUrl;
 use Drupal\Core\Url;
+use Drupal\dpl_library_agency\GeneralSettings;
 use Drupal\dpl_fees\DplFeesSettings;
-use Drupal\dpl_library_agency\Form\GeneralSettingsForm;
 use Drupal\dpl_react_apps\Controller\DplReactAppsController;
 use function Safe\json_encode;
 
@@ -28,26 +28,6 @@ function dpl_react_apps_preprocess_page(array &$variables): void {
       '#theme' => 'dpl_react_app',
       '#name' => 'search-header',
       '#data' => [
-        // Text.
-        'autosuggest-animated-series-category-text' => t('Animated series', [], ['context' => 'Search Header']),
-        'autosuggest-audio-book-category-text' => t('Audio books', [], ['context' => 'Search Header']),
-        'autosuggest-book-category-text' => t('Books', [], ['context' => 'Search Header']),
-        'autosuggest-ebook-category-text' => t('E-books', [], ['context' => 'Search Header']),
-        'autosuggest-film-category-text' => t('Movies', [], ['context' => 'Search Header']),
-        'autosuggest-game-category-text' => t('Games', [], ['context' => 'Search Header']),
-        'autosuggest-music-category-text' => t('Music', [], ['context' => 'Search Header']),
-        'et-al-text' => t('et al.', [], ['context' => 'Search Header']),
-        'header-dropdown-item-advanced-search-text' => t('Advanced search', [], ['context' => 'Search Header']),
-        'in-text' => t('in', [], ['context' => 'Search Header']),
-        'input-placeholder-text' => t('Start typing in order to search', [], ['context' => 'Search Header']),
-        'loading-text' => t('Loading', [], ['context' => 'Search Header']),
-        'search-header-dropdown-text' => t('Dropdown with additional search functions', [], ['context' => 'Search Header']),
-        'search-header-icon-alt-text' => t('Search button', [], ['context' => 'Search Header']),
-        'search-header-input-label' => t('Search header input', [], ['context' => 'Search Header']),
-        'search-no-valid-characters-error-text' => t('Input must contain at least one non-whitespace character.', [], ['context' => 'Search Header']),
-        'string-suggestion-author-text' => t('Author', [], ['context' => 'Search Header']),
-        'string-suggestion-topic-text' => t('Topic', [], ['context' => 'Search Header']),
-        'string-suggestion-work-text' => t('Work', [], ['context' => 'Search Header']),
       // Add external API base urls.
       ] + DplReactAppsController::externalApiBaseUrls(),
     ],
@@ -55,12 +35,222 @@ function dpl_react_apps_preprocess_page(array &$variables): void {
 }
 
 /**
+ * Texts for all apps.
+ *
+ * @return mixed[]
+ *   Texts props.
+ */
+function dpl_react_apps_texts(): array {
+  // These texts are given to all the apps.
+  // Instead of defining them for each app separately we define them here in
+  // case they are reused in multiple apps and we overlook it.
+  return [
+    // Blocked patron.
+    'blocked-patron-close-modal-aria-label' => t('Close blocked patron modal', [], ['context' => 'Global (Aria)']),
+    'blocked-patron-d-body' => t('Blocked patron body text (d)', [], ['context' => 'Global']),
+    'blocked-patron-d-title' => t('Blocked patron title text (d)', [], ['context' => 'Global']),
+    'blocked-patron-e-body' => t('You are therefore not able to borrow or reserve materials from the library', [], ['context' => 'Global']),
+    'blocked-patron-e-link' => t('Pay your fees here', [], ['context' => 'Global']),
+    'blocked-patron-e-title' => t('You have exceeded your fee limit', [], ['context' => 'Global']),
+    'blocked-patron-f-body' => t('Blocked patron body text (f)', [], ['context' => 'Global']),
+    'blocked-patron-f-title' => t('Blocked patron title text (f)', [], ['context' => 'Global']),
+    'blocked-patron-modal-aria-description' => t('This modal alerts you, that your patron has been blocked', [], ['context' => 'Global (Aria)']),
+    'blocked-patron-o-body' => t('Blocked patron body text (o)', [], ['context' => 'Global']),
+    'blocked-patron-o-title' => t('Blocked reason modal title (o)', [], ['context' => 'Global']),
+    'blocked-patron-s-body' => t('Blocked patron body text (s)', [], ['context' => 'Global']),
+    'blocked-patron-s-title' => t('Blocked patron title text (s)', [], ['context' => 'Global']),
+    'blocked-patron-u-body' => t('You therefore cannot reserve, borrow or renew loans. Please contact the library for further information (u)', [], ['context' => 'Global']),
+    'blocked-patron-u-title' => t('Your user is blocked (u)', [], ['context' => 'Global']),
+    'blocked-patron-w-body' => t('You therefore cannot reserve, borrow or renew loans. Please contact the library for further information (w)', [], ['context' => 'Global']),
+    'blocked-patron-w-title' => t('Your user is blocked (w)', [], ['context' => 'Global']),
+
+    // Shared across multiple apps.
+    'accept-modal-accept-button' => t("Yes, renew", [], ['context' => 'Global']),
+    'accept-modal-are-you-sure' => t("Are you sure you want to renew?", [], ['context' => 'Global']),
+    'accept-modal-aria-description' => t("accept modal aria description text", [], ['context' => 'Global']),
+    'accept-modal-aria-label' => t("accept modal aria label text", [], ['context' => 'Global']),
+    'accept-modal-body' => t("If you renew your fee will be raised", [], ['context' => 'Global']),
+    'accept-modal-cancel-button' => t("Cancel renewal", [], ['context' => 'Global']),
+    'accept-modal-header' => t("Your fee is raised", [], ['context' => 'Global']),
+    'add-to-favorites-aria-label' => t('add @title to favorites list', [], ['context' => 'Global']),
+    'alert-error-close' => t('Close', [], ['context' => 'React apps (Global error handling)']),
+    'alert-error-message' => t('An error occurred', [], ['context' => 'React apps (Global error handling)']),
+    'autosuggest-animated-series-category' => t('Animated series', [], ['context' => 'Global']),
+    'autosuggest-audio-book-category' => t('Audio books', [], ['context' => 'Global']),
+    'autosuggest-book-category' => t('Books', [], ['context' => 'Global']),
+    'autosuggest-ebook-category' => t('E-books', [], ['context' => 'Global']),
+    'autosuggest-film-category' => t('Movies', [], ['context' => 'Global']),
+    'autosuggest-game-category' => t('Games', [], ['context' => 'Global']),
+    'autosuggest-music-category' => t('Music', [], ['context' => 'Global']),
+    'availability-available' => t('Available', [], ['context' => 'Global']),
+    'availability-unavailable' => t('Unavailable', [], ['context' => 'Global']),
+    'by-author' => t('by', [], ['context' => 'Global']),
+    'change-interest-period' => t('Change interest period', [], ['context' => 'Global']),
+    'change-pickup-location' => t('Change pickup location', [], ['context' => 'Global']),
+    'choose-one' => t('Choose one', [], ['context' => 'Global']),
+    'dashboard-number-in-line' => t('Number @count in line', [], ['context' => 'Global']),
+    'date-inputs-end-date-label' => t('To', [], ['context' => 'Global']),
+    'date-inputs-start-date-label' => t('From', [], ['context' => 'Global']),
+    'delete-reservation-modal-aria-description' => t('This button opens a modal that covers the entire page and contains the possibility to delete a selected reservation, or multiple selected reservations', [], ['context' => 'Global']),
+    'delete-reservation-modal-button' => t('Cancel', [], ['context' => 'Global']),
+    'delete-reservation-modal-close-modal' => t('Close delete reservation modal', [], ['context' => 'Global']),
+    'delete-reservation-modal-delete-button' => t('Cancel reservation', [], ['context' => 'Global']),
+    'delete-reservation-modal-delete-processing' => t('Processing...', [], ['context' => 'Global']),
+    'delete-reservation-modal-delete-question' => t('Do you want to cancel your reservation?', [], ['context' => 'Global']),
+    'delete-reservation-modal-errors-status' => t('Something went wrong deleting your reservation. Please try again.', [], ['context' => 'Global']),
+    'delete-reservation-modal-errors-title' => t('Deleting your reservation failed', [], ['context' => 'Global']),
+    'delete-reservation-modal-success-status' => json_encode([
+      'type' => 'plural',
+      'text' => [
+        t('One reservation was deleted', [], ['context' => 'Global']),
+        t('@count reservations were deleted', [], ['context' => 'Global']),
+      ],
+    ]),
+    'delete-reservation-modal-success-title' => t('You have deleted your reservation', [], ['context' => 'Global']),
+    'delete-reservation-modal-header' => json_encode([
+      'type' => 'plural',
+      'text' => [
+        t('Cancel reservation', [], ['context' => 'Global']),
+        t('Cancel reservations', [], ['context' => 'Global']),
+      ],
+    ]),
+    'delete-reservation-modal-not-regrettable' => t('You cannot regret this action', [], ['context' => 'Global']),
+    'digital-reservations-header' => t('Digital reservations', [], ['context' => 'Global']),
+    'et-al' => t('et al.', [], ['context' => 'Global']),
+    'group-modal-button' => t('Renewable (@count)', [], ['context' => 'Global']),
+    'group-modal-checkbox' => t('Choose all', [], ['context' => 'Global']),
+    'group-modal-due-date-aria-description' => t('This modal groups loans after due date and makes it possible to renew said loans', [], ['context' => 'Global']),
+    'group-modal-due-date-header' => t('Due date @date', [], ['context' => 'Global']),
+    'group-modal-due-date-link-to-page-with-fees' => t("Read more about fees", [], ['context' => 'Global']),
+    'group-modal-due-date-material' => t("Due date @date", [], ['context' => 'Global']),
+    'group-modal-due-date-renew-loan-close-modal-aria-label' => t('Close renew loans modal', [], ['context' => 'Global']),
+    'group-modal-due-date-warning-loan-overdue' => t('The due date of return is exceeded, therefore you will be charged a fee, when the item is returned', [], ['context' => 'Global']),
+    'group-modal-go-to-material' => t("Go to material details", [], ['context' => 'Global']),
+    'group-modal-hidden-label-checkbox-on-material' => t('Select @label for renewal', [], ['context' => 'Global']),
+    'group-modal-loans-aria-description' => t("This modal makes it possible to renew materials", [], ['context' => 'Global']),
+    'group-modal-loans-close-modal-aria-label' => t("Close modal with grouped loans", [], ['context' => 'Global']),
+    'group-modal-renew-loan-denied-inter-library-loan' => t("The item has been lent to you by another library and renewal is therefore conditional of the acceptance by that library", [], ['context' => 'Global']),
+    'group-modal-renew-loan-denied-max-renewals-reached' => t("The item cannot be renewed further", [], ['context' => 'Global']),
+    'group-modal-renew-loan-denied-reserved' => t("The item is reserved by another patron", [], ['context' => 'Global']),
+    'group-modal-return-library' => t("Can be returned to all branches of the municipalities libraries", [], ['context' => 'Global']),
+    'group-modal-reservations-close-modal-aria-label' => t('Close modal with grouped reservations', [], ['context' => 'Global']),
+    'group-modal-reservations-loans-aria-description' => t('This modal makes it possible to delete reservations', [], ['context' => 'Global']),
+    'header-dropdown-item-advanced-search' => t('Advanced search', [], ['context' => 'Global']),
+    'in-series' => t('in series', [], ['context' => 'Global']),
+    'in' => t('in', [], ['context' => 'Global']),
+    'input-placeholder' => t('Start typing in order to search', [], ['context' => 'Global']),
+    'loading' => t('loading', [], ['context' => 'Global']),
+    'loans-overdue' => t('Returned too late', [], ['context' => 'Global']),
+    'loans-soon-overdue' => t('To be returned soon', [], ['context' => 'Global']),
+    'material-and-author' => t('and', [], ['context' => 'Global']),
+    'material-by-author' => t("By", [], ['context' => 'Global']),
+    'material-details-close-modal-aria-label' => t('Close material details modal', [], ['context' => 'Global']),
+    'material-details-digital-due-date-label' => t("Expires", [], ['context' => 'Global']),
+    'material-details-go-to-ereolen' => t("Go to eReolen", [], ['context' => 'Global']),
+    'material-details-link-to-page-with-fees' => t('Read more about fees', [], ['context' => 'Global']),
+    'material-details-loan-date-label' => t('Loan date', [], ['context' => 'Global']),
+    'material-details-material-number-label' => t('Material Item Number', [], ['context' => 'Global']),
+    'material-details-modal-aria-description' => t('This modal shows material details, and makes it possible to renew a material, of that material is renewable', [], ['context' => 'Global']),
+    'material-details-overdue' => t('Expired', [], ['context' => 'Global']),
+    'material-details-physical-due-date-label' => t('Afleveres', [], ['context' => 'Global']),
+    'material-details-renew-loan-button' => t("Renew your loans", [], ['context' => 'Global']),
+    'material-details-warning-loan-overdue' => t('The due date of return is exceeded, therefore you will be charged a fee, when the item is returned', [], ['context' => 'Global']),
+    'modal-reservation-form-no-interest-after-header-description' => t('Set date for when your interest for the material will expire.', [], ['context' => 'Global']),
+    'modal-reservation-form-no-interest-after-header-title' => t('Change interest deadline', [], ['context' => 'Global']),
+    'modal-reservation-form-pickup-header-title' => t('Choose pickup library', [], ['context' => 'Global']),
+    'modal-reservation-form-pickup-header-description' => t('Decide at which library you want to pickup the material.', [], ['context' => 'Global']),
+    'no-search-result' => t('Your search has 0 results', [], ['context' => 'Global']),
+    'number-description' => t('nr.', [], ['context' => 'Global']),
+    'one-month' => t('1 month', [], ['context' => 'Global']),
+    'one-year' => t('1 year', [], ['context' => 'Global']),
+    'out-of' => t('out of', [], ['context' => 'Global']),
+    'patron-contact-email-checkbox' => t('Receive emails about your loans, reservations, and so forth', [], ['context' => 'Global']),
+    'patron-contact-email-label' => t('E-mail', [], ['context' => 'Global']),
+    'patron-contact-info-body' => t('patron page contact info body text', [], ['context' => 'Global']),
+    'patron-contact-info-header' => t('CONTACT INFORMATION', [], ['context' => 'Global']),
+    'patron-contact-phone-checkbox' => t('Receive text messages about your loans, reservations, and so forth', [], ['context' => 'Global']),
+    'patron-contact-phone-label' => t('Phone number', [], ['context' => 'Global']),
+    'patron-page-change-pincode-body' => t('Change current pin by entering a new pin and saving', [], ['context' => 'Global']),
+    'patron-page-change-pincode-header' => t('PINCODE', [], ['context' => 'Global']),
+    'patron-page-confirm-pincode-label' => t('Confirm new pin', [], ['context' => 'Global']),
+    'pause-reservation-modal-aria-description' => t('This modal makes it possible to pause your physical reservations', [], ['context' => 'Global']),
+    'pause-reservation-modal-below-inputs' => t('Pause reservation below inputs text', [], ['context' => 'Global']),
+    'pause-reservation-modal-body' => t('Pause your reservations early, since reservations that are already being processed, will not be paused.', [], ['context' => 'Global']),
+    'pause-reservation-modal-close-modal' => t('Close pause reservations modal', [], ['context' => 'Global']),
+    'pause-reservation-modal-header' => t('Pause reservations on physical items', [], ['context' => 'Global']),
+    'pause-reservation-modal-link' => t('Read more', [], ['context' => 'Global']),
+    'pause-reservation-modal-save-button-label' => t('Save', [], ['context' => 'Global']),
+    'physical-reservations-header' => t('Physical reservations', [], ['context' => 'Global']),
+    'pick-up-latest' => t('Pick up before @date', [], ['context' => 'Global']),
+    'pickup-branches-dropdown-label' => t('Choose pickup branch', [], ['context' => 'Global']),
+    'pickup-branches-dropdown-nothing-selected' => t('Nothing selected', [], ['context' => 'Global']),
+    'patron-page-pincode-label' => t('New pin', [], ['context' => 'Global']),
+    'patron-page-pincode-too-short-validation' => t('The pincode should be minimum @pincodeLengthMin and maximum @pincodeLengthMax characters long', [], ['context' => 'Global']),
+    'patron-page-pincodes-not-the-same' => t('The pincodes are not the same', [], ['context' => 'Global']),
+    'publizon-audio-book' => t('Audiobook', [], ['context' => 'Global']),
+    'publizon-ebook' => t('E-book', [], ['context' => 'Global']),
+    'publizon-podcast' => t('Podcast', [], ['context' => 'Global']),
+    'ready-for-loan-counter-label' => t('Ready', [], ['context' => 'Global']),
+    'ready-for-loan' => t('Ready for pickup', [], ['context' => 'Global']),
+    'remove-all-reservations' => t('Remove reservations (@amount)', [], ['context' => 'Global']),
+    'remove-from-favorites-aria-label' => t('remove @title from favorites list', [], ['context' => 'Global']),
+    'renew-button' => t('Renew', [], ['context' => 'Renew loan']),
+    'renew-cannot-be-renewed' => t('Cannot be renewed', [], ['context' => 'Renew loan']),
+    'renew-group-modal-loans-button' => t('Ok', [], ['context' => 'Global']),
+    'renew-group-modal-loans-error-status' => t('Something went wrong renewing your loans. Please try again.', [], ['context' => 'Global']),
+    'renew-group-modal-loans-error-title' => t('Renewing your loans failed', [], ['context' => 'Global']),
+    'renew-group-modal-loans-no-renewals-possible-error-status' => t('For some reason, no one of your loans could be renewed.', [], ['context' => 'Global']),
+    'renew-group-modal-loans-no-renewals-possible-error-title' => t('No loans could be renewed', [], ['context' => 'Global']),
+    'renew-group-modal-loans-success-status' => t('{"type":"plural","text":["1 loan has been renewed.","@count loans have been renewed."]}', [], ['context' => 'Global']),
+    'renew-group-modal-loans-success-title' => t('You have renewed your loans', [], ['context' => 'Global']),
+    'renew-material-loan-button' => t('Ok', [], ['context' => 'Global']),
+    'renew-material-loan-error-status' => t('Something went wrong renewing your loan. Please try again.', [], ['context' => 'Global']),
+    'renew-material-loan-error-title' => t('Renewal of your loan failed', [], ['context' => 'Global']),
+    'renew-material-loan-no-renewals-possible-error-status' => t('For some reason, your loan could not be renewed.', [], ['context' => 'Global']),
+    'renew-material-loan-no-renewals-possible-error-title' => t('The loan could not be renewed', [], ['context' => 'Global']),
+    'renew-material-loan-success-status' => t('1 loan was renewed.', [], ['context' => 'Global']),
+    'renew-material-loan-success-title' => t('You have renewed your loan', [], ['context' => 'Global']),
+    'renew-processing' => t('Processing...', [], ['context' => 'Renew loan']),
+    'reservation-details-borrow-before' => t('Borrow before @date', [], ['context' => 'Global']),
+    'reservation-details-button-remove' => t('Remove your reservation', [], ['context' => 'Global']),
+    'reservation-details-change' => t('Apply changes', [], ['context' => 'Global']),
+    'reservation-details-date-of-reservation-title' => t('Date of reservation', [], ['context' => 'Global']),
+    'reservation-details-digital-reservation-go-to-ereolen' => t('Go to eReolen', [], ['context' => 'Global']),
+    'reservation-details-no-interest-after-title' => t('Not interested after', [], ['context' => 'Global']),
+    'reservation-details-number-in-queue-label' => t('@count queued', [], ['context' => 'Global']),
+    'reservation-details-others-in-queue' => t('Others are queueing for this material', [], ['context' => 'Global']),
+    'reservation-details-pick-up-at-title' => t('Pickup branch', [], ['context' => 'Global']),
+    'reservation-details-pickup-deadline-title' => t('Pickup deadline', [], ['context' => 'Global']),
+    'reservation-details-ready-for-loan' => t('Ready for pickup', [], ['context' => 'Global']),
+    'reservation-details-remove-digital-reservation' => t('Remove your reservation', [], ['context' => 'Global']),
+    'reservation-details-status-title' => t('Status', [], ['context' => 'Global']),
+    'reservations-ready' => t('Ready for you', [], ['context' => 'Global']),
+    'result-pager-status' => t('Showing @itemsShown out of @hitcount items', [], ['context' => 'Global']),
+    'search-header-dropdown' => t('Dropdown with additional search functions', [], ['context' => 'Global']),
+    'save-button' => t('Save', [], ['context' => 'Global']),
+    'search-header-icon-alt' => t('Search button', [], ['context' => 'Global']),
+    'search-header-input-label' => t('Search header input', [], ['context' => 'Global']),
+    'search-no-valid-characters-error' => t('Input must contain at least one non-whitespace character.', [], ['context' => 'Global']),
+    'shift' => t('Shift', [], ['context' => 'Global']),
+    'show-more' => t('show more', [], ['context' => 'Global']),
+    'six-months' => t('6 months', [], ['context' => 'Global']),
+    'status-badge-warning' => t('Expires soon', [], ['context' => 'Global']),
+    'string-suggestion-author' => t('Author', [], ['context' => 'Global']),
+    'string-suggestion-topic' => t('Topic', [], ['context' => 'Global']),
+    'string-suggestion-work' => t('Work', [], ['context' => 'Global']),
+    'subject-number' => t('Subject number', [], ['context' => 'Global']),
+    'three-months' => t('3 months', [], ['context' => 'Global']),
+    'two-months' => t('2 months', [], ['context' => 'Global']),
+  ];
+};
+
+/**
  * Implements hook_dpl_react_apps_data().
  */
 function dpl_react_apps_dpl_react_apps_data(array &$data): void {
   $adgangsplatformen_config = \Drupal::service('dpl_login.adgangsplatformen.config');
   $general_settings = \Drupal::configFactory()->get('dpl_library_agency.general_settings');
-  $allow_remove_ready_reservations = $general_settings->get('reservation_detail_allow_remove_ready_reservations') ?? GeneralSettingsForm::RESERVATION_DETAIL_ALLOW_REMOVE_READY_RESERVATIONS;
+  $allow_remove_ready_reservations = $general_settings->get('reservation_detail_allow_remove_ready_reservations') ?? GeneralSettings::RESERVATION_DETAIL_ALLOW_REMOVE_READY_RESERVATIONS;
   $feesSettings = \Drupal::configFactory()->get('dpl_fees.settings');
 
   // @todo We should use the adgangsplatform config everywhere we handle data that it can provide,
@@ -74,23 +264,7 @@ function dpl_react_apps_dpl_react_apps_data(array &$data): void {
     ]),
   ];
 
-  $data['texts'] += [
-    'alert-error-close' => t('Close', [], ['context' => 'React apps (Global error handling)']),
-    'alert-error-message' => t('An error occurred', [], ['context' => 'React apps (Global error handling)']),
-    'delete-reservation-modal-button' => t('Cancel', [], ['context' => 'Delete reservation modal']),
-    'delete-reservation-modal-delete-button' => t('Delete', [], ['context' => 'Delete reservation modal']),
-    'delete-reservation-modal-delete-processing' => t('Processing...', [], ['context' => 'Delete reservation modal']),
-    'delete-reservation-modal-errors-status' => t('Something went wrong deleting your reservation. Please try again.', [], ['context' => 'Delete reservation modal']),
-    'delete-reservation-modal-errors-title' => t('Deleting your reservation failed', [], ['context' => 'Delete reservation modal']),
-    'delete-reservation-modal-success-status' => json_encode([
-      'type' => 'plural',
-      'text' => [
-        t('One reservation was deleted', [], ['context' => 'Delete reservation modal']),
-        t('@count reservations were deleted', [], ['context' => 'Delete reservation modal']),
-      ],
-    ]),
-    'delete-reservation-modal-success-title' => t('You have deleted your reservation', [], ['context' => 'Delete reservation modal']),
-  ];
+  $data['texts'] += dpl_react_apps_texts();
 
   $data['urls'] += [
     'dpl-cms-base' => dpl_react_apps_get_dpl_cms_base_url(),
@@ -119,8 +293,11 @@ function dpl_react_apps_dpl_react_apps_data(array &$data): void {
       Url::fromRoute('dpl_dashboard.list')->toString()
     ),
     'ereolen-homepage' => dpl_react_apps_format_app_url(
-      GeneralSettingsForm::EREOLEN_HOMEPAGE_URL
+      GeneralSettings::EREOLEN_HOMEPAGE_URL
     ),
+    'blocked-patron-e-link' => dpl_react_apps_format_app_url(
+      $general_settings->get('blocked_patron_e_link_url'), GeneralSettings::BLOCKED_PATRON_E_LINK_URL),
+
     'view-fees-and-compensation-rates' => dpl_react_apps_format_app_url(
       $feesSettings->get('fees_and_replacement_costs_url'), DplFeesSettings::FEES_AND_REPLACEMENT_COSTS_URL),
   ];
@@ -153,36 +330,6 @@ function dpl_react_apps_preprocess_dpl_react_app(array &$variables): void {
       ];
     }
   }
-}
-
-/**
- * Renew texts for multiple apps.
- *
- * @return mixed[]
- *   Texts props.
- */
-function dpl_react_apps_texts_renewal(): array {
-  // These texts are shared between multiple apps.
-  // Instead of defing them in each app we define them here.
-  return [
-    'renew-button-text' => t('Renew', [], ['context' => 'Renew loan']),
-    'renew-cannot-be-renewed-text' => t('Cannot be renewed', [], ['context' => 'Renew loan']),
-    'renew-group-modal-loans-button-text' => t('Ok', [], ['context' => 'Renew loan (group modal)']),
-    'renew-group-modal-loans-error-status-text' => t('Something went wrong renewing your loans. Please try again.', [], ['context' => 'Renew loan (group modal)']),
-    'renew-group-modal-loans-error-title-text' => t('Renewing your loans failed', [], ['context' => 'Renew loan (group modal)']),
-    'renew-group-modal-loans-no-renewals-possible-error-status-text' => t('For some reason, no one of your loans could be renewed.', [], ['context' => 'Renew loan (group modal)']),
-    'renew-group-modal-loans-no-renewals-possible-error-title-text' => t('No loans could be renewed', [], ['context' => 'Renew loan (group modal)']),
-    'renew-group-modal-loans-success-status-text' => t('{"type":"plural","text":["1 loan has been renewed.","@count loans have been renewed."]}', [], ['context' => 'Renew loan (group modal)']),
-    'renew-group-modal-loans-success-title-text' => t('You have renewed your loans', [], ['context' => 'Renew loan (group modal)']),
-    'renew-material-loan-button-text' => t('Ok', [], ['context' => 'Renew loan (material)']),
-    'renew-material-loan-error-status-text' => t('omething went wrong renewing your loan. Please try again.', [], ['context' => 'Renew loan (material)']),
-    'renew-material-loan-error-title-text' => t('Renewal of your loan failed', [], ['context' => 'Renew loan (material)']),
-    'renew-material-loan-no-renewals-possible-error-status-text' => t('For some reason, your loan could not be renewed.', [], ['context' => 'Renew loan (material)']),
-    'renew-material-loan-no-renewals-possible-error-title-text' => t('The loan could not be renewed', [], ['context' => 'Renew loan (material)']),
-    'renew-material-loan-success-status-text' => t('1 loan was renewed.', [], ['context' => 'Renew loan (material)']),
-    'renew-material-loan-success-title-text' => t('You have renewed your loan', [], ['context' => 'Renew loan (material)']),
-    'renew-processing-text' => t('Processing...', [], ['context' => 'Renew loan']),
-  ];
 }
 
 /**
