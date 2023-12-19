@@ -139,4 +139,40 @@ class GeneralSettings extends DplReactConfigBase {
     return $fbi_profiles[$fbi_profile->value];
   }
 
+  /**
+   * Get reservation relevant settings.
+   *
+   * @return mixed[]
+   *   Array containing the urls.
+   */
+  public function getReservationDetails(): array {
+    $allow_remove_ready_reservations = $this->loadConfig()->get('reservation_detail_allow_remove_ready_reservations')
+      ?? self::RESERVATION_DETAIL_ALLOW_REMOVE_READY_RESERVATIONS;
+    return [
+      'allowRemoveReadyReservations' => $allow_remove_ready_reservations,
+    ];
+  }
+
+  /**
+   * Get urls for blocked patrons.
+   *
+   * @param string|null $name
+   *   The name of the url to get.
+   *
+   * @return string|mixed[]|null
+   *   String if one url is asked for or null if not found.
+   *   If no name is provided then all available urls.
+   */
+  public function getBlockedPatronUrls($name = NULL): string|array|null {
+    $urls = [
+      'blocked-patron-e-link' => $this->loadConfig()->get('blocked_patron_e_link_url') ?? self::BLOCKED_PATRON_E_LINK_URL,
+    ];
+
+    if ($name) {
+      return $urls[$name] ?? NULL;
+    }
+
+    return $urls;
+  }
+
 }
