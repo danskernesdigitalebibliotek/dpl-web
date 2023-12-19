@@ -31,4 +31,16 @@ class DplFeesSettings extends DplReactConfigBase {
     return $this->legacyConfig();
   }
 
+  /**
+   * Get the getViewFeesAndCompensationRates url.
+   *
+   * @return string
+   *   The url.
+   */
+  public function getViewFeesAndCompensationRatesUrl(): string {
+    return $this->loadConfig()
+      ->get('fees_and_replacement_costs_url')
+      ?? self::FEES_AND_REPLACEMENT_COSTS_URL;
+  }
+
 }
