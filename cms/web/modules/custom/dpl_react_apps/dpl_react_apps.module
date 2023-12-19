@@ -12,7 +12,6 @@
 use Drupal\Core\GeneratedUrl;
 use Drupal\Core\Url;
 use Drupal\dpl_library_agency\GeneralSettings;
-use Drupal\dpl_fees\DplFeesSettings;
 use Drupal\dpl_react_apps\Controller\DplReactAppsController;
 use function Safe\json_encode;
 
@@ -249,9 +248,8 @@ function dpl_react_apps_texts(): array {
  */
 function dpl_react_apps_dpl_react_apps_data(array &$data): void {
   $adgangsplatformen_config = \Drupal::service('dpl_login.adgangsplatformen.config');
-  $general_settings = \Drupal::configFactory()->get('dpl_library_agency.general_settings');
-  $allow_remove_ready_reservations = $general_settings->get('reservation_detail_allow_remove_ready_reservations') ?? GeneralSettings::RESERVATION_DETAIL_ALLOW_REMOVE_READY_RESERVATIONS;
-  $feesSettings = \Drupal::configFactory()->get('dpl_fees.settings');
+  $general_settings = \Drupal::service('dpl_library_agency.general_settings');
+  $fees_settings = \Drupal::service('dpl_fees.settings');
 
   // @todo We should use the adgangsplatform config everywhere we handle data that it can provide,
   // eg. login/logout urls.
@@ -259,9 +257,8 @@ function dpl_react_apps_dpl_react_apps_data(array &$data): void {
     'agency' => json_encode([
       'id' => $adgangsplatformen_config->getAgencyId(),
     ]),
-    'reservation-details' => json_encode([
-      'allowRemoveReadyReservations' => $allow_remove_ready_reservations,
-    ]),
+    'reservation-details' => json_encode($general_settings->getReservationDetails()),
+    'fbi-profiles' => json_encode($general_settings->getFbiProfiles()),
   ];
 
   $data['texts'] += dpl_react_apps_texts();
@@ -296,11 +293,13 @@ function dpl_react_apps_dpl_react_apps_data(array &$data): void {
       GeneralSettings::EREOLEN_HOMEPAGE_URL
     ),
     'blocked-patron-e-link' => dpl_react_apps_format_app_url(
-      $general_settings->get('blocked_patron_e_link_url'), GeneralSettings::BLOCKED_PATRON_E_LINK_URL),
-
+      $general_settings->getBlockedPatronUrls('blocked-patron-e-link')
+    ),
     'view-fees-and-compensation-rates' => dpl_react_apps_format_app_url(
-      $feesSettings->get('fees_and_replacement_costs_url'), DplFeesSettings::FEES_AND_REPLACEMENT_COSTS_URL),
+      $fees_settings->getViewFeesAndCompensationRatesUrl()
+    ),
   ];
+
 }
 
 /**
