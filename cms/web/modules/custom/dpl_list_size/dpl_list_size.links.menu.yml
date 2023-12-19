@@ -1,5 +1,0 @@
-dpl_list_size.settings_form:
-  title: "List size settings"
-  route_name: dpl_list_size.settings
-  description: "Change list size settings"
-  parent: dpl_library_agency.settings

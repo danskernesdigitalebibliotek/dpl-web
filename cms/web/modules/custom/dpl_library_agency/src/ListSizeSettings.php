@@ -9,10 +9,6 @@ use Drupal\dpl_react\DplReactConfigBase;
  */
 class ListSizeSettings extends DplReactConfigBase
 {
-  const DASHBOARD_LIST_SIZE_DESKTOP = 25;
-  const DASHBOARD_LIST_SIZE_MOBILE = 25;
-  const RESERVATION_LIST_SIZE_DESKTOP = 25;
-  const RESERVATION_LIST_SIZE_MOBILE = 25;
   const LOAN_LIST_SIZE_DESKTOP = 25;
   const LOAN_LIST_SIZE_MOBILE = 25;
   const MENU_LIST_SIZE_DESKTOP = 25;

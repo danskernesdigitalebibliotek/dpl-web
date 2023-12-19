@@ -8,7 +8,6 @@ dpl_reservations.list:
 dpl_reservations.settings:
   path: "/admin/config/dpl-library-agency/reservation-list-settings"
   defaults:
-    _form: '\Drupal\dpl_reservations\Form\ReservationListSettingsForm'
     _title: "Reservations settings"
   requirements:
     _permission: "administer site configuration"

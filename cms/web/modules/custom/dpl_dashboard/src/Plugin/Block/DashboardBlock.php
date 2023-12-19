@@ -9,8 +9,7 @@ use Drupal\dpl_dashboard\DplDashboardSettings;
 use Drupal\dpl_library_agency\Branch\BranchRepositoryInterface;
 use Drupal\dpl_library_agency\BranchSettings;
 use Drupal\dpl_library_agency\GeneralSettings;
-use Drupal\dpl_list_size\DplListSizeSettings;
-use Drupal\dpl_react\DplReactConfigInterface;
+use Drupal\dpl_library_agency\ListSizeSettings;
 use Drupal\dpl_react_apps\Controller\DplReactAppsController;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use function Safe\json_encode as json_encode;
@@ -40,8 +39,6 @@ class DashboardBlock extends BlockBase implements ContainerFactoryPluginInterfac
    *   Branch settings.
    * @param \Drupal\dpl_library_agency\Branch\BranchRepositoryInterface $branchRepository
    *   Branch repository.
-   * @param \Drupal\dpl_react\DplReactConfigInterface $dashboardSettings
-   *   Dashboard settings.
    * @param \Drupal\dpl_library_agency\GeneralSettings $generalSettings
    *   General settings.
    */
@@ -52,9 +49,7 @@ class DashboardBlock extends BlockBase implements ContainerFactoryPluginInterfac
     private ConfigFactoryInterface $configFactory,
     private BranchSettings $branchSettings,
     private BranchRepositoryInterface $branchRepository,
-    private DplReactConfigInterface $dashboardSettings,
     private GeneralSettings $generalSettings,
-    private DplListSizeSettings $listSizeSettings,
   ) {
     parent::__construct($configuration, $plugin_id, $plugin_definition);
     $this->configuration = $configuration;
@@ -71,9 +66,7 @@ class DashboardBlock extends BlockBase implements ContainerFactoryPluginInterfac
       $container->get('config.factory'),
       $container->get('dpl_library_agency.branch_settings'),
       $container->get('dpl_library_agency.branch.repository'),
-      \Drupal::service('dpl_dashboard.settings'),
       $container->get('dpl_library_agency.general_settings'),
-      $container->get('dpl_list_size.settings'),
     );
   }
 
@@ -86,13 +79,13 @@ class DashboardBlock extends BlockBase implements ContainerFactoryPluginInterfac
    * @throws \Safe\Exceptions\JsonException
    */
   public function build(): array {
-    $listSizeSettings = $this->configFactory->get('dpl_list_size.settings');
+    $listSizeSettings = $this->configFactory->get('dpl_library_agency.list_size_settings');
     $generalSettings = $this->configFactory->get('dpl_library_agency.general_settings');
 
     $data = [
       // Config.
-      'page-size-desktop' => $listSizeSettings->get('dashboard_list_size_desktop') ?? DplListSizeSettings::DASHBOARD_LIST_SIZE_DESKTOP,
-      'page-size-mobile' => $listSizeSettings->get('dashboard_list_size_mobile') ?? DplListSizeSettings::DASHBOARD_LIST_SIZE_MOBILE,
+      'page-size-desktop' => $listSizeSettings->get('dashboard_list_size_desktop') ?? DplDashboardSettings::DASHBOARD_LIST_SIZE_DESKTOP,
+      'page-size-mobile' => $listSizeSettings->get('dashboard_list_size_mobile') ?? DplDashboardSettings::DASHBOARD_LIST_SIZE_MOBILE,
       'expiration-warning-days-before-config' => $generalSettings->get('expiration_warning_days_before_config') ?? GeneralSettings::EXPIRATION_WARNING_DAYS_BEFORE_CONFIG,
       'interest-periods-config' => json_encode($this->generalSettings->getInterestPeriodsConfig()),
       'reservation-detail-allow-remove-ready-reservations-config' => $generalSettings->get('reservation_detail_allow_remove_ready_reservations') ?? GeneralSettings::RESERVATION_DETAIL_ALLOW_REMOVE_READY_RESERVATIONS,
