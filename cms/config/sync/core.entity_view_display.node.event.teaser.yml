@@ -4,8 +4,14 @@ status: true
 dependencies:
   config:
     - core.entity_view_mode.node.teaser
+    - field.field.node.event.field_event_address
     - field.field.node.event.field_event_date
+    - field.field.node.event.field_event_description
+    - field.field.node.event.field_event_image
+    - field.field.node.event.field_event_link
+    - field.field.node.event.field_event_place
     - field.field.node.event.field_event_state
+    - field.field.node.event.field_ticket_categories
     - node.type.event
   module:
     - user
@@ -20,6 +26,12 @@ content:
     weight: 100
     region: content
 hidden:
+  field_event_address: true
   field_event_date: true
+  field_event_description: true
+  field_event_image: true
+  field_event_link: true
+  field_event_place: true
   field_event_state: true
+  field_ticket_categories: true
   langcode: true

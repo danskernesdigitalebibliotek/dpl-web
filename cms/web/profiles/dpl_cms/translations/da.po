@@ -3049,3 +3049,6 @@ msgstr "Roman"
 msgid "Custom theme for the Danish Public Libraries"
 msgstr "Standardtema for Folkebibliotekernes CMS"
 
+msgid "Place"
+msgstr "Sted"
+

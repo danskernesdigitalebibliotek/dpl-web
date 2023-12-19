@@ -1,0 +1,92 @@
+uuid: 28652de7-8cc2-44ba-b572-392734827ea0
+langcode: en
+status: true
+dependencies:
+  config:
+    - core.entity_view_mode.node.full
+    - field.field.node.event.field_event_address
+    - field.field.node.event.field_event_date
+    - field.field.node.event.field_event_description
+    - field.field.node.event.field_event_image
+    - field.field.node.event.field_event_link
+    - field.field.node.event.field_event_place
+    - field.field.node.event.field_event_state
+    - field.field.node.event.field_ticket_categories
+    - node.type.event
+  module:
+    - address
+    - datetime_range
+    - entity_reference_revisions
+    - link
+    - text
+    - user
+id: node.event.full
+targetEntityType: node
+bundle: event
+mode: full
+content:
+  field_event_address:
+    type: address_default
+    label: hidden
+    settings: {  }
+    third_party_settings: {  }
+    weight: 3
+    region: content
+  field_event_date:
+    type: daterange_plain
+    label: hidden
+    settings:
+      timezone_override: ''
+      separator: '-'
+    third_party_settings: {  }
+    weight: 0
+    region: content
+  field_event_description:
+    type: text_default
+    label: hidden
+    settings: {  }
+    third_party_settings: {  }
+    weight: 1
+    region: content
+  field_event_image:
+    type: entity_reference_entity_view
+    label: hidden
+    settings:
+      view_mode: hero_wide
+      link: false
+    third_party_settings: {  }
+    weight: 5
+    region: content
+  field_event_link:
+    type: link
+    label: hidden
+    settings:
+      trim_length: 80
+      url_only: false
+      url_plain: false
+      rel: ''
+      target: ''
+    third_party_settings: {  }
+    weight: 2
+    region: content
+  field_event_place:
+    type: string
+    label: hidden
+    settings:
+      link_to_entity: false
+    third_party_settings: {  }
+    weight: 4
+    region: content
+  field_ticket_categories:
+    type: entity_reference_revisions_entity_view
+    label: hidden
+    settings:
+      view_mode: default
+      link: ''
+    third_party_settings: {  }
+    weight: 2
+    region: content
+hidden:
+  field_event_state: true
+  langcode: true
+  links: true
