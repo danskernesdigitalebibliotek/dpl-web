@@ -3,8 +3,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2023-12-19 07:39+0100\n"
-"PO-Revision-Date: 2023-12-19 07:39+0100\n"
+"POT-Creation-Date: 2023-12-19 09:48+0100\n"
+"PO-Revision-Date: 2023-12-19 09:48+0100\n"
 "Last-Translator: NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
 "MIME-Version: 1.0\n"
@@ -2236,6 +2236,13 @@ msgctxt "Favorites list"
 msgid "@count materials"
 msgstr "@count materialer"
 
+msgctxt "dpl_event"
+msgid "Access"
+msgstr ""
+
+msgid "Buy tickets"
+msgstr ""
+
 msgid "Ticket sale not open"
 msgstr "Ikke åbent for billetsalg"
 
@@ -2250,6 +2257,12 @@ msgstr "Aflyst"
 
 msgid "Occurred"
 msgstr "Afholdt"
+
+msgid "Free"
+msgstr ""
+
+msgid "@price kr."
+msgstr ""
 
 msgctxt "Something similar"
 msgid "By the same author"
@@ -2813,6 +2826,12 @@ msgstr ""
 msgid "Instant loan settings"
 msgstr "Indstillinger for strakslån"
 
+msgid "DPL Paragraphs"
+msgstr ""
+
+msgid "Tweaks to various DPL paragraphs"
+msgstr ""
+
 msgid "Patron redirect settings"
 msgstr "Indstillinger for viderestilling af bruger til adgangsplatformen"
 
@@ -2890,6 +2909,12 @@ msgstr "DPL (Danish Public Library)  URL proxy"
 
 msgid "Module for generating specially formatted external urls"
 msgstr "Modul til at generere specielt formatterede eksterne URL'er"
+
+msgid "Admin"
+msgstr ""
+
+msgid "Functionality related to the admin/editor experience"
+msgstr ""
 
 msgid "DPL Login"
 msgstr "DPL Login"
@@ -3034,6 +3059,21 @@ msgstr "Bruger autentificering med Nem-login"
 msgid "Enable registration of new patrons"
 msgstr "Tilvælg registrering af nye brugere"
 
+msgid "Description"
+msgstr "Beskrivelse"
+
+msgid "Time"
+msgstr "Tid"
+
+msgid "Price"
+msgstr ""
+
+msgid "Place"
+msgstr ""
+
+msgid "Adresse"
+msgstr ""
+
 msgid "By @username"
 msgstr "Af @username"
 
@@ -3048,7 +3088,4 @@ msgstr "Roman"
 
 msgid "Custom theme for the Danish Public Libraries"
 msgstr "Standardtema for Folkebibliotekernes CMS"
-
-msgid "Place"
-msgstr "Sted"
 
