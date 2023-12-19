@@ -62,6 +62,9 @@
       </div>
     </dl>
   </section>
+  <section class="event-paragraphs">
+    {{ content.field_event_paragraphs }}
+  </section>
   {{ content|without('field_event_date', 'field_event_description', 'field_event_link', 'field_event_address',
-  'field_event_place', 'field_ticket_categories', 'field_event_image') }}
+  'field_event_place', 'field_ticket_categories', 'field_event_image', 'field_event_paragraphs') }}
 </article>
