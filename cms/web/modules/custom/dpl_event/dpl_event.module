@@ -125,11 +125,12 @@ function dpl_event_set_occurred_callback(JobSchedule $job): void {
 function dpl_event_form_node_event_form_alter(array &$form, FormStateInterface $form_state, string $form_id): void {
   // Use the generic "Access" value as the default for the first ticket
   // category when creating events.
-  $ticket_category_name_value = $form["field_ticket_categories"]["widget"][0]["subform"]["field_ticket_category_name"]["widget"][0]["value"] ?? [];
-  if (!array_key_exists("#default_value", $ticket_category_name_value)) {
+  if (isset($form["field_ticket_categories"]["widget"][0]["subform"]["field_ticket_category_name"]["widget"][0]["value"])) {
+    $form["field_ticket_categories"]["widget"][0]["subform"]["field_ticket_category_name"]["widget"][0]["value"]["#default_value"] = t('Access', [], ['context' => 'dpl_event']);
+  }
+  else {
     throw new DomainException("Unable to locate name field for first ticket category. Cannot set default value.");
   }
-  $ticket_category_name_value["#default_value"] = t('Access', [], ['context' => 'dpl_event']);
 }
 
 /**
