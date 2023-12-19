@@ -85,6 +85,7 @@ class FeesListBlock extends BlockBase implements ContainerFactoryPluginInterface
       'fee-list-body-text' => $feesConfig->get('fee_list_body_text') ?? DplFeesSettings::FEE_LIST_BODY_TEXT,
       'fee-list-days-text' => $this->t("Days", [], ['context' => 'Fees list']),
       'fee-list-headline-text' => $this->t("Fees & replacement costs", [], ['context' => 'Fees list']),
+      'fee-lits-material-number-text' => $this->t("#", [], ['context' => 'Fees list']),
       'fee-payment-modal-body-text' => $this->t("You will be redirected to Mit Betalingsoverblik.", [], ['context' => 'Fees list']),
       'fee-payment-modal-cancel-text' => $this->t("Cancel", [], ['context' => 'Fees list']),
       'fee-payment-modal-goto-text' => $this->t("Go to Mit Betalingsoverblik", [], ['context' => 'Fees list']),
