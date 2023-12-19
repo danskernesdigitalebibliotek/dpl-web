@@ -81,6 +81,7 @@ class FeesListBlock extends BlockBase implements ContainerFactoryPluginInterface
       'fee-details-modal-close-modal-aria-label-text' => $this->t("Close fee details modal", [], ['context' => 'Fees list (Aria)']),
       'fee-details-modal-description-text' => $this->t("Modal containing information about this element or group of elements fees", [], ['context' => 'Fees list']),
       'fee-details-modal-screen-reader-text' => $this->t("A modal containing details about a fee", [], ['context' => 'Fees list']),
+      'fee-list-already-paid-info-text' => $this->t("Already paid? It can take up to 72 hours register the transaction.", [], ['context' => 'Fees list']),
       'fee-list-body-text' => $feesConfig->get('fee_list_body_text') ?? DplFeesSettings::FEE_LIST_BODY_TEXT,
       'fee-list-days-text' => $this->t("Days", [], ['context' => 'Fees list']),
       'fee-list-headline-text' => $this->t("Fees & replacement costs", [], ['context' => 'Fees list']),
