@@ -115,21 +115,7 @@ class PatronRegistrationBlock extends BlockBase implements ContainerFactoryPlugi
       'create-patron-header-text' => $this->t("Register as patron", [], ['context' => 'Create patron']),
       'create-patron-invalid-ssn-body-text' => $this->t("This SSN is invalid", [], ['context' => 'Create patron']),
       'create-patron-invalid-ssn-header-text' => $this->t("Invalid SSN", [], ['context' => 'Create patron']),
-      'patron-contact-email-checkbox-text' => $this->t("Receive emails about your loans, reservations, and so forth", [], ['context' => 'Create patron']),
-      'patron-contact-email-label-text' => $this->t("E-mail", [], ['context' => 'Create patron']),
-      'patron-contact-info-body-text' => $this->t("This section is for contact information", [], ['context' => 'Create patron']),
-      'patron-contact-info-header-text' => $this->t("Contact information", [], ['context' => 'Create patron']),
       'patron-contact-name-label-text' => $this->t("Name", [], ['context' => 'Create patron']),
-      'patron-contact-phone-checkbox-text' => $this->t("Receive text messages about your loans, reservations, and so forth", [], ['context' => 'Create patron']),
-      'patron-contact-phone-label-text' => $this->t("Phone number", [], ['context' => 'Create patron']),
-      'patron-page-change-pincode-body-text' => $this->t("Change current pin by entering a new pin and saving", [], ['context' => 'Create patron']),
-      'patron-page-change-pincode-header-text' => $this->t("Pincode", [], ['context' => 'Create patron']),
-      'patron-page-confirm-pincode-label-text' => $this->t("Confirm new pin", [], ['context' => 'Create patron']),
-      'patron-page-pincode-label-text' => $this->t("New pin", [], ['context' => 'Create patron']),
-      'patron-page-pincode-too-short-validation-text' => $this->t("The pincode should be minimum @pincodeLengthMin and maximum @pincodeLengthMax characters long", [], ['context' => 'Create patron']),
-      'patron-page-pincodes-not-the-same-text' => $this->t("The pincodes are not the same", [], ['context' => 'Create patron']),
-      'pickup-branches-dropdown-label-text' => $this->t("Choose pickup branch", [], ['context' => 'Create patron']),
-      'pickup-branches-dropdown-nothing-selected-text' => $this->t("Nothing selected", [], ['context' => 'Create patron']),
     ] + DplReactAppsController::externalApiBaseUrls();
 
     return [

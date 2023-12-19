@@ -121,7 +121,7 @@ jobs:
       - name: Run Lighthouse test
         run: task ci:lighthouse
       - name: Archive logs
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: lighthouse-results
           path: .lighthouseci
@@ -145,7 +145,7 @@ jobs:
         run: task ci:pa11y
       - name: Archive screenshots
         if: ${{ always() }}
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: pa11y-screenshots
           path: pa11y/screenshots
@@ -169,13 +169,13 @@ jobs:
         run: task ci:cypress
       - name: Archive videoes
         if: always()
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: cypress-videos
           path: cypress/videos
       - name: Archive screenshots
         if: always()
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: cypress-screenshots
           path: cypress/screenshots
