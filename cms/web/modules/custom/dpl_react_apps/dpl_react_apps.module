@@ -247,8 +247,11 @@ function dpl_react_apps_texts(): array {
  * Implements hook_dpl_react_apps_data().
  */
 function dpl_react_apps_dpl_react_apps_data(array &$data): void {
+  /** @var \Drupal\dpl_login\Adgangsplatformen\Config $adgangsplatformen_config */
   $adgangsplatformen_config = \Drupal::service('dpl_login.adgangsplatformen.config');
+  /** @var \Drupal\dpl_library_agency\GeneralSettings $general_settings */
   $general_settings = \Drupal::service('dpl_library_agency.general_settings');
+  /** @var \Drupal\dpl_fees\DplFeesSettings $fees_settings */
   $fees_settings = \Drupal::service('dpl_fees.settings');
 
   // @todo We should use the adgangsplatform config everywhere we handle data that it can provide,
@@ -292,7 +295,7 @@ function dpl_react_apps_dpl_react_apps_data(array &$data): void {
       GeneralSettings::EREOLEN_HOMEPAGE_URL
     ),
     'blocked-patron-e-link' => dpl_react_apps_format_app_url(
-      $general_settings->getBlockedPatronUrls('blocked-patron-e-link')
+      $general_settings->getBlockedPatronElinkUrl()
     ),
     'view-fees-and-compensation-rates' => dpl_react_apps_format_app_url(
       $fees_settings->getViewFeesAndCompensationRatesUrl()

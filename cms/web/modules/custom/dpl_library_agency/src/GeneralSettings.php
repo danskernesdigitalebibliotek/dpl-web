@@ -163,7 +163,7 @@ class GeneralSettings extends DplReactConfigBase {
    *   String if one url is asked for or null if not found.
    *   If no name is provided then all available urls.
    */
-  public function getBlockedPatronUrls($name = NULL): string|array|null {
+  protected function getBlockedPatronUrls($name = NULL): string|array|null {
     $urls = [
       'blocked-patron-e-link' => $this->loadConfig()->get('blocked_patron_e_link_url') ?? self::BLOCKED_PATRON_E_LINK_URL,
     ];
@@ -173,6 +173,17 @@ class GeneralSettings extends DplReactConfigBase {
     }
 
     return $urls;
+  }
+
+  /**
+   * Get url for the blocked patron of type E.
+   *
+   * @return string
+   *   The url.
+   */
+  public function getBlockedPatronElinkUrl(): string {
+    $url = $this->getBlockedPatronUrls('blocked-patron-e-link');
+    return is_string($url) ? $url : '';
   }
 
 }
