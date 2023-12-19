@@ -98,7 +98,7 @@ class FeesListBlock extends BlockBase implements ContainerFactoryPluginInterface
       'pre-payment-type-change-date-text' => $this->t("BEFORE 27/10 2020", [], ['context' => 'Fees list']),
       'terms-of-trade-text' => $feesConfig->get('terms_of_trade_text') ?? DplFeesSettings::TERMS_OF_TRADE_TEXT,
       'total-fee-amount-text' => $this->t("Fee", [], ['context' => 'Fees list']),
-      'total-text' => $this->t("Total", [], ['context' => 'Fees list']),
+      'total-text' => $this->t("Total: @total", [], ['context' => 'Fees list']),
       'turned-in-text' => $this->t("Turned in @date", [], ['context' => 'Fees list']),
       'unpaid-fees-first-headline-text' => $this->t("Unsettled debt 1", [], ['context' => 'Fees list']),
       'unpaid-fees-second-headline-text' => $this->t("Unsettled debt 2", [], ['context' => 'Fees list']),
