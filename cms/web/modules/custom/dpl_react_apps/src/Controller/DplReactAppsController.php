@@ -427,6 +427,8 @@ class DplReactAppsController extends ControllerBase {
    *   An array of base urls.
    */
   public static function externalApiBaseUrls(): array {
+    /** @var \Drupal\dpl_library_agency\GeneralSettings $general_settings */
+    $general_settings = \Drupal::service('dpl_library_agency.general_settings');
     $react_apps_settings = \Drupal::configFactory()->get('dpl_react_apps.settings');
     $fbs_settings = \Drupal::config(FbsSettingsForm::CONFIG_KEY);
 
@@ -435,6 +437,18 @@ class DplReactAppsController extends ControllerBase {
 
     // Get base urls from this module.
     $services = $react_apps_settings->get('services') ?? [];
+
+    // The base url of the FBI service is a special case
+    // because a part (the profile) of the base url can differ.
+    // Lets' handle that:
+    if (!empty($services) && !empty($services['fbi']['base_url'])) {
+      foreach ($general_settings->getFbiProfiles() as $type => $profile) {
+        $base_url = preg_replace('/\[profile\]/', $profile, $services['fbi']['base_url']);
+        $services[sprintf('fbi-%s', $type)] = ['base_url' => $base_url];
+      }
+    }
+    // And provide a default base url for the FBI service too.
+    $services['fbi']['base_url'] = preg_replace('/\[profile\]/', GeneralSettings::FBI_PROFILE, $services['fbi']['base_url']);
 
     // Get base urls from other modules.
     $services['fbs'] = ['base_url' => $fbs_settings->get('base_url')];

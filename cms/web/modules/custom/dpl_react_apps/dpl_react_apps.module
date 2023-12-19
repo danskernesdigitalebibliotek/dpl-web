@@ -258,7 +258,6 @@ function dpl_react_apps_dpl_react_apps_data(array &$data): void {
       'id' => $adgangsplatformen_config->getAgencyId(),
     ]),
     'reservation-details' => json_encode($general_settings->getReservationDetails()),
-    'fbi-profiles' => json_encode($general_settings->getFbiProfiles()),
   ];
 
   $data['texts'] += dpl_react_apps_texts();
