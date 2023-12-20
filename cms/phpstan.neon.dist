@@ -19,6 +19,7 @@ parameters:
     - '#Drupal\\.*\\Plugin\\Block\\.*Block::__construct\(\) .* no value type specified in iterable type array\.#'
     - '#Drupal\\.*\\Plugin\\Block\\.*Block::create\(\) .* no value type specified in iterable type array\.#'
     - '#Function [a-z_]+_dpl_react_apps_data\(\) has parameter \$data with no value type specified in iterable type array\.#'
+    - '#Function [a-z_]+_dpl_react_apps_data\(\) has parameter \$variables with no value type specified in iterable type array\.#'
   scanFiles:
     # Needed to make locale_translation_batch_fetch_finished() discoverable.
     - web/core/modules/locale/locale.batch.inc
