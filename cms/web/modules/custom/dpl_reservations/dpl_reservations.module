@@ -27,6 +27,11 @@ function dpl_reservations_dpl_react_apps_data(array &$data): void {
 
 /**
  * Implements hook_form_alter().
+ *
+ * @param array<mixed> $form
+ *   An associative array containing the structure of the form.
+ * @param FormStateInterface $form_state
+ *   The current state of the form.
  */
 function dpl_reservations_form_dpl_library_agency_list_size_settings_form_alter (array &$form, FormStateInterface $form_state): void
 {
@@ -62,10 +67,10 @@ function dpl_reservations_form_dpl_library_agency_list_size_settings_form_alter 
 /**
  * Custom submit callback.
  *
- * @param array $form
+ * @param array<mixed> $form
+ *   An associative array containing the structure of the form.
  * @param FormStateInterface $form_state
- *
- * @return void
+ *   The current state of the form.
  */
 function dpl_reservations_handler_submit(array &$form, FormStateInterface $form_state): void {
   \Drupal::service('config.factory')
