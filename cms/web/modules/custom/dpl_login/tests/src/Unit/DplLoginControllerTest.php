@@ -34,6 +34,8 @@ class DplLoginControllerTest extends UnitTestCase {
    * {@inheritdoc}
    */
   protected function setUp(): void {
+    parent::setUp();
+
     $builder = new MockBuilder();
     $builder->setNamespace('Drupal\dpl_login\Controller')
       ->setName("user_logout")

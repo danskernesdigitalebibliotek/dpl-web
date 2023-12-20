@@ -8,7 +8,7 @@ dependencies:
     - field.field.node.campaign.field_campaign_rules
     - field.field.node.campaign.field_campaign_rules_logic
     - field.field.node.campaign.field_campaign_text
-    - image.style.thumbnail
+    - image.style.media_library
     - node.type.campaign
   module:
     - image
@@ -31,7 +31,7 @@ content:
     region: content
     settings:
       progress_indicator: throbber
-      preview_image_style: thumbnail
+      preview_image_style: media_library
     third_party_settings: {  }
   field_campaign_link:
     type: link_default

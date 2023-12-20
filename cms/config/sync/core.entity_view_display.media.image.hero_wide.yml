@@ -1,0 +1,34 @@
+uuid: 197c46b2-8d49-44dc-9cb0-bc5c472d5780
+langcode: en
+status: true
+dependencies:
+  config:
+    - core.entity_view_mode.media.hero_wide
+    - field.field.media.image.field_media_image
+    - image.style.hero_wide
+    - media.type.image
+  module:
+    - image
+id: media.image.hero_wide
+targetEntityType: media
+bundle: image
+mode: hero_wide
+content:
+  field_media_image:
+    type: image
+    label: hidden
+    settings:
+      image_link: ''
+      image_style: hero_wide
+      image_loading:
+        attribute: lazy
+    third_party_settings: {  }
+    weight: 0
+    region: content
+hidden:
+  created: true
+  field_byline: true
+  langcode: true
+  name: true
+  thumbnail: true
+  uid: true

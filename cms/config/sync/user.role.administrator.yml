@@ -4,6 +4,7 @@ status: true
 dependencies:
   config:
     - filter.format.basic
+    - media.type.image
     - node.type.article
     - node.type.campaign
     - node.type.event
@@ -17,6 +18,7 @@ dependencies:
     - filter
     - language
     - locale
+    - media
     - node
     - openid_connect
     - system
@@ -47,20 +49,25 @@ permissions:
   - 'create article content'
   - 'create campaign content'
   - 'create event content'
+  - 'create image media'
   - 'delete any article content'
   - 'delete any campaign content'
   - 'delete any event content'
+  - 'delete any image media'
   - 'delete event revisions'
   - 'delete orphan revisions'
   - 'delete own article content'
   - 'delete own campaign content'
   - 'delete own event content'
+  - 'delete own image media'
   - 'edit any article content'
   - 'edit any campaign content'
   - 'edit any event content'
+  - 'edit any image media'
   - 'edit own article content'
   - 'edit own campaign content'
   - 'edit own event content'
+  - 'edit own image media'
   - 'revert event revisions'
   - 'translate interface'
   - 'use text format basic'

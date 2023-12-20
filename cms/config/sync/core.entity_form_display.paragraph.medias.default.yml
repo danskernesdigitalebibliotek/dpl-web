@@ -1,0 +1,27 @@
+uuid: 3148a2ac-92ce-4951-937b-5f1303983a8f
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.field.paragraph.medias.field_medias
+    - paragraphs.paragraphs_type.medias
+  module:
+    - media_library
+    - media_library_edit
+id: paragraph.medias.default
+targetEntityType: paragraph
+bundle: medias
+mode: default
+content:
+  field_medias:
+    type: media_library_widget
+    weight: 0
+    region: content
+    settings:
+      media_types: {  }
+    third_party_settings:
+      media_library_edit:
+        show_edit: '1'
+hidden:
+  created: true
+  status: true

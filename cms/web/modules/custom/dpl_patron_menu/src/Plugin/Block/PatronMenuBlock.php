@@ -6,13 +6,13 @@ use Drupal\Core\Block\BlockBase;
 use Drupal\Core\Config\ConfigFactoryInterface;
 use Drupal\Core\Plugin\ContainerFactoryPluginInterface;
 use Drupal\Core\Url;
-use Drupal\dpl_library_agency\GeneralSettings;
-use Drupal\dpl_react_apps\Controller\DplReactAppsController;
-use Symfony\Component\DependencyInjection\ContainerInterface;
 use Drupal\dpl_library_agency\Branch\BranchRepositoryInterface;
 use Drupal\dpl_library_agency\BranchSettings;
+use Drupal\dpl_library_agency\GeneralSettings;
 use Drupal\dpl_react\DplReactConfigInterface;
-use function Safe\json_encode as json_encode;
+use Drupal\dpl_react_apps\Controller\DplReactAppsController;
+use Symfony\Component\DependencyInjection\ContainerInterface;
+use function Safe\json_encode;
 
 /**
  * Provides patron menu.
@@ -47,6 +47,8 @@ class PatronMenuBlock extends BlockBase implements ContainerFactoryPluginInterfa
    *   The branch settings for getting branches.
    * @param \Drupal\dpl_react\DplReactConfigInterface $menuSettings
    *   Dashboard settings.
+   * @param \Drupal\dpl_library_agency\GeneralSettings $generalSettings
+   *   General settings.
    */
   public function __construct(
       array $configuration,
