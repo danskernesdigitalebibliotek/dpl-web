@@ -9,6 +9,7 @@ use Drupal\dpl_instant_loan\DplInstantLoanSettings;
 use Drupal\dpl_library_agency\Branch\Branch;
 use Drupal\dpl_library_agency\Branch\BranchRepositoryInterface;
 use Drupal\dpl_library_agency\BranchSettings;
+use Drupal\dpl_library_agency\FbiProfileType;
 use Drupal\dpl_library_agency\GeneralSettings;
 use Drupal\dpl_library_agency\ReservationSettings;
 use Symfony\Component\DependencyInjection\ContainerInterface;
@@ -443,13 +444,18 @@ class DplReactAppsController extends ControllerBase {
     // because a part (the profile) of the base url can differ.
     // Lets' handle that:
     if (!empty($services) && !empty($services['fbi']['base_url'])) {
+      $placeholder_url = $services['fbi']['base_url'];
       foreach ($general_settings->getFbiProfiles() as $type => $profile) {
-        $base_url = preg_replace('/\[profile\]/', $profile, $services['fbi']['base_url']);
-        $services[sprintf('fbi-%s', $type)] = ['base_url' => $base_url];
+        $service_key = sprintf('fbi-%s', $type);
+        // The default FBI service has its own key with no suffix.
+        if ($type === FbiProfileType::DEFAULT->value) {
+          $service_key = 'fbi';
+        }
+        // Create a service url with the profile embedded.
+        $base_url = preg_replace('/\[profile\]/', $profile, $placeholder_url);
+        $services[$service_key] = ['base_url' => $base_url];
       }
     }
-    // And provide a default base url for the FBI service too.
-    $services['fbi']['base_url'] = preg_replace('/\[profile\]/', GeneralSettings::FBI_PROFILE, $services['fbi']['base_url']);
 
     // Get base urls from other modules.
     $services['fbs'] = ['base_url' => $fbs_settings->get('base_url')];

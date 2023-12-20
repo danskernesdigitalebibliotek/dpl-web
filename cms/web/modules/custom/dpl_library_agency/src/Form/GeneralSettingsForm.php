@@ -251,9 +251,19 @@ class GeneralSettingsForm extends ConfigFormBase {
     ];
 
     $fbi_profile_pattern = '[a-zA-Z_-]+';
+
+    $form['fbi_profiles']['fbi_profile_default'] = [
+      '#type' => 'textfield',
+      '#title' => $this->t('Default profile', [], ['context' => 'Library Agency Configuration']),
+      '#default_value' => $this->generalSettings->getFbiProfile(FbiProfileType::DEFAULT),
+      '#description' => $this->t('The default profile to use when using the FBI API.', [], ['context' => 'Library Agency Configuration']),
+      '#pattern' => $fbi_profile_pattern,
+      '#required' => TRUE,
+    ];
+
     $form['fbi_profiles']['fbi_profile_search'] = [
       '#type' => 'textfield',
-      '#title' => $this->t('Search', [], ['context' => 'Library Agency Configuration']),
+      '#title' => $this->t('Search profile', [], ['context' => 'Library Agency Configuration']),
       '#default_value' => $this->generalSettings->getFbiProfile(FbiProfileType::SEARCH),
       '#description' => $this->t('The profile to use when searching for materials.', [], ['context' => 'Library Agency Configuration']),
       '#pattern' => $fbi_profile_pattern,
@@ -262,7 +272,7 @@ class GeneralSettingsForm extends ConfigFormBase {
 
     $form['fbi_profiles']['fbi_profile_material'] = [
       '#type' => 'textfield',
-      '#title' => $this->t('Material', [], ['context' => 'Library Agency Configuration']),
+      '#title' => $this->t('Material profile', [], ['context' => 'Library Agency Configuration']),
       '#default_value' => $this->generalSettings->getFbiProfile(FbiProfileType::MATERIAL),
       '#description' => $this->t('The profile to use when requesting data about a material.', [], ['context' => 'Library Agency Configuration']),
       '#pattern' => $fbi_profile_pattern,
@@ -320,6 +330,7 @@ class GeneralSettingsForm extends ConfigFormBase {
       ->set('ereolen_my_page_url', $form_state->getValue('ereolen_my_page_url'))
       ->set('ereolen_homepage_url', $form_state->getValue('ereolen_homepage_url'))
       ->set('fbi_profiles', [
+        'default' => $form_state->getValue('fbi_profile_default'),
         'search' => $form_state->getValue('fbi_profile_search'),
         'material' => $form_state->getValue('fbi_profile_material'),
       ])
