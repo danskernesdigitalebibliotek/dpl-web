@@ -39,7 +39,7 @@ class ReservationListBlock extends BlockBase implements ContainerFactoryPluginIn
    * @param \Drupal\dpl_library_agency\GeneralSettings $generalSettings
    *   General settings.
    * @param \Drupal\dpl_library_agency\ListSizeSettings $listSizeSettings
-   *    List size settings.
+   *   List size settings.
    */
   public function __construct(
       array $configuration,

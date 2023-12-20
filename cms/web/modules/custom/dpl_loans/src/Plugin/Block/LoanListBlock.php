@@ -31,9 +31,9 @@ class LoanListBlock extends BlockBase implements ContainerFactoryPluginInterface
    * @param mixed $plugin_definition
    *   The plugin implementation definition.
    * @param \Drupal\dpl_library_agency\GeneralSettings $generalSettings
-   *    General settings.
+   *   General settings.
    * @param \Drupal\dpl_library_agency\ListSizeSettings $listSizeSettings
-   *      List size settings.
+   *   List size settings.
    */
   public function __construct(
     array $configuration,
