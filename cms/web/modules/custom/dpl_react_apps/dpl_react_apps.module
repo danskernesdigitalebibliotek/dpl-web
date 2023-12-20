@@ -159,6 +159,7 @@ function dpl_react_apps_texts(): array {
     'modal-reservation-form-no-interest-after-header-title' => t('Change interest deadline', [], ['context' => 'Global']),
     'modal-reservation-form-pickup-header-title' => t('Choose pickup library', [], ['context' => 'Global']),
     'modal-reservation-form-pickup-header-description' => t('Decide at which library you want to pickup the material.', [], ['context' => 'Global']),
+    'multiselect-all-option' => t('All', [], ['context' => 'Global']),
     'no-search-result' => t('Your search has 0 results', [], ['context' => 'Global']),
     'number-description' => t('nr.', [], ['context' => 'Global']),
     'one-month' => t('1 month', [], ['context' => 'Global']),
