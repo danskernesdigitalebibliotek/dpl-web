@@ -9,6 +9,7 @@
  * and various other tasks eg. providing rides and controllers for rendering.
  */
 
+use Drupal\Core\Cache\CacheableMetadata;
 use Drupal\Core\GeneratedUrl;
 use Drupal\Core\Url;
 use Drupal\dpl_library_agency\GeneralSettings;
@@ -246,13 +247,19 @@ function dpl_react_apps_texts(): array {
 /**
  * Implements hook_dpl_react_apps_data().
  */
-function dpl_react_apps_dpl_react_apps_data(array &$data): void {
+function dpl_react_apps_dpl_react_apps_data(array &$data, array &$variables): void {
   /** @var \Drupal\dpl_login\Adgangsplatformen\Config $adgangsplatformen_config */
   $adgangsplatformen_config = \Drupal::service('dpl_login.adgangsplatformen.config');
   /** @var \Drupal\dpl_library_agency\GeneralSettings $general_settings */
   $general_settings = \Drupal::service('dpl_library_agency.general_settings');
   /** @var \Drupal\dpl_fees\DplFeesSettings $fees_settings */
   $fees_settings = \Drupal::service('dpl_fees.settings');
+  // Make sure that changed settings are invalidating the cache.
+  $cache_metadata = CacheableMetadata::createFromRenderArray($variables);
+  $cache_metadata->addCacheableDependency($adgangsplatformen_config);
+  $cache_metadata->addCacheableDependency($general_settings);
+  $cache_metadata->addCacheableDependency($fees_settings);
+  $cache_metadata->applyTo($variables);
 
   // @todo We should use the adgangsplatform config everywhere we handle data that it can provide,
   // eg. login/logout urls.
@@ -317,7 +324,7 @@ function dpl_react_apps_preprocess_dpl_react_app(array &$variables): void {
     'texts' => [],
     'configs' => [],
   ];
-  \Drupal::moduleHandler()->invokeAll('dpl_react_apps_data', [&$data]);
+  \Drupal::moduleHandler()->invokeAll('dpl_react_apps_data', [&$data, &$variables]);
   foreach ($data as $scope => $values) {
     if (!is_array($values)) {
       continue;
