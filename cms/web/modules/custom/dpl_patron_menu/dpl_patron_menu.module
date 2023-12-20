@@ -7,6 +7,8 @@
  * Renders the patron menu.
  */
 
+use Drupal\Core\Form\FormStateInterface;
+use Drupal\dpl_patron_menu\DplMenuSettings;
 use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
 
 /**
@@ -30,4 +32,49 @@ function dpl_patron_menu_preprocess_page(array &$variables): void {
   $variables['patron'] = [
     'menu' => $plugin_block->build(),
   ];
+}
+
+/**
+ * Implements hook_form_alter().
+ */
+function dpl_patron_menu_form_dpl_library_agency_list_size_settings_form_alter (array &$form, FormStateInterface $form_state): void
+{
+  $config = \Drupal::service('config.factory')
+    ->getEditable('dpl_library_agency.list_size_settings');
+
+  $form['menu_list_size_settings'] = [
+    '#type' => 'fieldset',
+    '#title' => t('Menu list size settings', [], ['context' => 'List size (settings)']),
+    '#description' => t('The number of items to display in the menu list.', [], ['context' => 'List size (settings)']),
+    '#tree' => FALSE,
+  ];
+
+  $form['menu_list_size_settings']['menu_list_size_desktop'] = [
+    '#type' => 'number',
+    '#title' => t('Menu list size on desktop', [], ['context' => 'List size (settings)']),
+    '#default_value' => $config->get('menu_list_size_desktop') ?? DplMenuSettings::MENU_LIST_SIZE_DESKTOP,
+    '#min' => 1,
+    '#step' => 1,
+  ];
+
+  $form['menu_list_size_settings']['menu_list_size_mobile'] = [
+    '#type' => 'number',
+    '#title' => t('Menu list size on mobile', [], ['context' => 'List size (settings)']),
+    '#default_value' => $config->get('menu_list_size_mobile') ?? DplMenuSettings::MENU_LIST_SIZE_MOBILE,
+    '#min' => 1,
+    '#step' => 1,
+  ];
+
+  $form['#submit'][] = 'dpl_patron_menu_handler_submit';
+}
+
+/**
+ * Custom submit callback.
+ */
+function dpl_patron_menu_handler_submit(array &$form, FormStateInterface $form_state): void {
+  \Drupal::service('config.factory')
+    ->getEditable('dpl_library_agency.list_size_settings')
+    ->set('menu_list_size_desktop', $form_state->getValue('menu_list_size_desktop'))
+    ->set('menu_list_size_mobile', $form_state->getValue('menu_list_size_mobile'))
+    ->save();
 }

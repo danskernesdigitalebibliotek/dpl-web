@@ -8,9 +8,8 @@ use Drupal\dpl_react\DplReactConfigBase;
  * Class that handles loans settings.
  */
 class DplLoansSettings extends DplReactConfigBase {
-
-  const PAGE_SIZE_DESKTOP = 25;
-  const PAGE_SIZE_MOBILE = 25;
+  const LOAN_LIST_SIZE_DESKTOP = 25;
+  const LOAN_LIST_SIZE_MOBILE = 25;
 
   /**
    * Gets the configuration key for loans settings.

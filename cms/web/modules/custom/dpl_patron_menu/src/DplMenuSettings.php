@@ -9,6 +9,9 @@ use Drupal\dpl_react\DplReactConfigBase;
  */
 class DplMenuSettings extends DplReactConfigBase {
 
+  const MENU_LIST_SIZE_DESKTOP = 25;
+  const MENU_LIST_SIZE_MOBILE = 25;
+
   /**
    * Gets the configuration key for menu settings.
    */

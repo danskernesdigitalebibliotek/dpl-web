@@ -7,8 +7,8 @@
  * Shows the reservation list.
  */
 
-use Drupal\Core\Url;
 use Drupal\Core\Form\FormStateInterface;
+use Drupal\Core\Url;
 use Drupal\dpl_reservations\DplReservationsSettings;
 
 /**
@@ -32,8 +32,6 @@ function dpl_reservations_form_dpl_library_agency_list_size_settings_form_alter 
 {
   $config = \Drupal::service('config.factory')
     ->getEditable('dpl_library_agency.list_size_settings');
-
-  var_dump($config->get('reservation_list_size_desktop'));
 
   $form['reservation_list_size_settings'] = [
     '#type' => 'fieldset',
@@ -63,6 +61,11 @@ function dpl_reservations_form_dpl_library_agency_list_size_settings_form_alter 
 
 /**
  * Custom submit callback.
+ *
+ * @param array $form
+ * @param FormStateInterface $form_state
+ *
+ * @return void
  */
 function dpl_reservations_handler_submit(array &$form, FormStateInterface $form_state): void {
   \Drupal::service('config.factory')

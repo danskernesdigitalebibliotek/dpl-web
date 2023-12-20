@@ -7,28 +7,20 @@ use Drupal\dpl_react\DplReactConfigBase;
 /**
  * Class that handles list size settings.
  */
-class ListSizeSettings extends DplReactConfigBase
-{
-  const LOAN_LIST_SIZE_DESKTOP = 25;
-  const LOAN_LIST_SIZE_MOBILE = 25;
-  const MENU_LIST_SIZE_DESKTOP = 25;
-  const MENU_LIST_SIZE_MOBILE = 25;
-  const FAVORITES_LIST_SIZE_DESKTOP = 25;
-  const FAVORITES_SIZE_MOBILE = 25;
+class ListSizeSettings extends DplReactConfigBase {
 
   /**
    * {@inheritdoc}
    */
-  public function getConfig(): array
-  {
+  public function getConfig(): array {
     return $this->loadConfig()->get();
   }
 
   /**
    * Gets the configuration key for list size settings.
    */
-  public function getConfigKey(): string
-  {
+  public function getConfigKey(): string {
     return 'dpl_library_agency.list_size_settings';
   }
+
 }

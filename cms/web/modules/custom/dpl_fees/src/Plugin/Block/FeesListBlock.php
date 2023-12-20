@@ -5,6 +5,7 @@ namespace Drupal\dpl_fees\Plugin\Block;
 use Drupal\Core\Block\BlockBase;
 use Drupal\Core\Plugin\ContainerFactoryPluginInterface;
 use Drupal\dpl_fees\DplFeesSettings;
+use Drupal\dpl_library_agency\ListSizeSettings;
 use Drupal\dpl_react\DplReactConfigInterface;
 use Drupal\dpl_react_apps\Controller\DplReactAppsController;
 use Symfony\Component\DependencyInjection\ContainerInterface;
@@ -30,12 +31,15 @@ class FeesListBlock extends BlockBase implements ContainerFactoryPluginInterface
    *   The plugin implementation definition.
    * @param \Drupal\dpl_react\DplReactConfigInterface $feesSettings
    *   Fees settings.
+   * @param \Drupal\dpl_library_agency\ListSizeSettings $listSizeSettings
+   *   List size settings.
    */
   public function __construct(
     array $configuration,
     $plugin_id,
     $plugin_definition,
-    private DplReactConfigInterface $feesSettings
+    private DplReactConfigInterface $feesSettings,
+    private ListSizeSettings $listSizeSettings,
   ) {
     parent::__construct($configuration, $plugin_id, $plugin_definition);
     $this->configuration = $configuration;
@@ -49,7 +53,8 @@ class FeesListBlock extends BlockBase implements ContainerFactoryPluginInterface
       $configuration,
       $plugin_id,
       $plugin_definition,
-      \Drupal::service('dpl_fees.settings')
+      \Drupal::service('dpl_fees.settings'),
+      $container->get('dpl_library_agency.list_size_settings'),
     );
   }
 
@@ -61,11 +66,12 @@ class FeesListBlock extends BlockBase implements ContainerFactoryPluginInterface
    */
   public function build() {
     $feesConfig = $this->feesSettings->loadConfig();
+    $listSizeSettings = $this->listSizeSettings->loadConfig();
 
     $data = [
       // Config.
-      "page-size-desktop" => $feesConfig->get('page_size_desktop') ?? DplFeesSettings::PAGE_SIZE_DESKTOP,
-      "page-size-mobile" => $feesConfig->get('page_size_mobile') ?? DplFeesSettings::PAGE_SIZE_MOBILE,
+      "page-size-desktop" => $listSizeSettings->get('fees_list_size_desktop') ?? DplFeesSettings::FEES_LIST_SIZE_DESKTOP,
+      "page-size-mobile" => $listSizeSettings->get('fees_list_size_mobile') ?? DplFeesSettings::FEES_LIST_SIZE_MOBILE,
 
       // Urls.
       // @todo images to be done in future tender.

@@ -13,9 +13,9 @@ class DplFeesSettings extends DplReactConfigBase {
   const TERMS_OF_TRADE_URL = '';
   const PAYMENT_OVERVIEW_URL = '';
   const FEE_LIST_BODY_TEXT = '';
-  const PAGE_SIZE_DESKTOP = 25;
-  const PAGE_SIZE_MOBILE = 25;
   const AVAILABLE_PAYMENT_TYPES_URL = '';
+  const FEES_LIST_SIZE_DESKTOP = 25;
+  const FEES_LIST_SIZE_MOBILE = 25;
 
   /**
    * Gets the configuration key for the instant loan settings.

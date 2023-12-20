@@ -33,23 +33,23 @@ class DashboardBlock extends BlockBase implements ContainerFactoryPluginInterfac
    *   The plugin ID for the plugin instance.
    * @param mixed $plugin_definition
    *   The plugin implementation definition.
-   * @param \Drupal\Core\Config\ConfigFactoryInterface $configFactory
-   *   Drupal config factory to get FBS and Publizon settings.
    * @param \Drupal\dpl_library_agency\BranchSettings $branchSettings
    *   Branch settings.
    * @param \Drupal\dpl_library_agency\Branch\BranchRepositoryInterface $branchRepository
    *   Branch repository.
    * @param \Drupal\dpl_library_agency\GeneralSettings $generalSettings
    *   General settings.
+   * @param \Drupal\dpl_library_agency\ListSizeSettings $listSizeSettings
+   *   List size settings.
    */
   public function __construct(
     array $configuration,
     $plugin_id,
     $plugin_definition,
-    private ConfigFactoryInterface $configFactory,
     private BranchSettings $branchSettings,
     private BranchRepositoryInterface $branchRepository,
     private GeneralSettings $generalSettings,
+    private ListSizeSettings $listSizeSettings,
   ) {
     parent::__construct($configuration, $plugin_id, $plugin_definition);
     $this->configuration = $configuration;
@@ -63,10 +63,10 @@ class DashboardBlock extends BlockBase implements ContainerFactoryPluginInterfac
       $configuration,
       $plugin_id,
       $plugin_definition,
-      $container->get('config.factory'),
       $container->get('dpl_library_agency.branch_settings'),
       $container->get('dpl_library_agency.branch.repository'),
       $container->get('dpl_library_agency.general_settings'),
+      $container->get('dpl_library_agency.list_size_settings'),
     );
   }
 
@@ -79,8 +79,8 @@ class DashboardBlock extends BlockBase implements ContainerFactoryPluginInterfac
    * @throws \Safe\Exceptions\JsonException
    */
   public function build(): array {
-    $listSizeSettings = $this->configFactory->get('dpl_library_agency.list_size_settings');
-    $generalSettings = $this->configFactory->get('dpl_library_agency.general_settings');
+    $generalSettings = $this->generalSettings->loadConfig();
+    $listSizeSettings = $this->listSizeSettings->loadConfig();
 
     $data = [
       // Config.

@@ -3,12 +3,11 @@
 namespace Drupal\dpl_reservations\Plugin\Block;
 
 use Drupal\Core\Block\BlockBase;
-use Drupal\Core\Config\ConfigFactoryInterface;
 use Drupal\Core\Plugin\ContainerFactoryPluginInterface;
 use Drupal\dpl_library_agency\GeneralSettings;
+use Drupal\dpl_library_agency\ListSizeSettings;
 use Drupal\dpl_library_agency\Branch\BranchRepositoryInterface;
 use Drupal\dpl_library_agency\BranchSettings;
-use Drupal\dpl_react\DplReactConfigInterface;
 use Drupal\dpl_react_apps\Controller\DplReactAppsController;
 use Drupal\dpl_reservations\DplReservationsSettings;
 use Symfony\Component\DependencyInjection\ContainerInterface;
@@ -33,26 +32,23 @@ class ReservationListBlock extends BlockBase implements ContainerFactoryPluginIn
    *   The plugin ID for the plugin instance.
    * @param array $plugin_definition
    *   The plugin implementation definition.
-   * @param \Drupal\Core\Config\ConfigFactoryInterface $configFactory
-   *   Drupal config factory to get FBS and Publizon settings.
    * @param \Drupal\dpl_library_agency\BranchSettings $branchSettings
    *   The branch-settings for branch config.
    * @param \Drupal\dpl_library_agency\Branch\BranchRepositoryInterface $branchRepository
    *   The branch-settings for getting branches.
-   * @param \Drupal\dpl_react\DplReactConfigInterface $reservationListSettings
-   *   Reservation list settings.
    * @param \Drupal\dpl_library_agency\GeneralSettings $generalSettings
    *   General settings.
+   * @param \Drupal\dpl_library_agency\ListSizeSettings $listSizeSettings
+   *    List size settings.
    */
   public function __construct(
       array $configuration,
       string $plugin_id,
       array $plugin_definition,
-      private ConfigFactoryInterface $configFactory,
-      protected BranchSettings $branchSettings,
-      protected BranchRepositoryInterface $branchRepository,
-      protected DplReactConfigInterface $reservationListSettings,
-      protected GeneralSettings $generalSettings
+      private BranchSettings $branchSettings,
+      private BranchRepositoryInterface $branchRepository,
+      private GeneralSettings $generalSettings,
+      private ListSizeSettings $listSizeSettings,
   ) {
     parent::__construct($configuration, $plugin_id, $plugin_definition);
     $this->configuration = $configuration;
@@ -66,11 +62,10 @@ class ReservationListBlock extends BlockBase implements ContainerFactoryPluginIn
       $configuration,
       $plugin_id,
       $plugin_definition,
-      $container->get('config.factory'),
       $container->get('dpl_library_agency.branch_settings'),
       $container->get('dpl_library_agency.branch.repository'),
-      \Drupal::service('dpl_reservations.settings'),
       $container->get('dpl_library_agency.general_settings'),
+      $container->get('dpl_library_agency.list_size_settings'),
     );
   }
 
@@ -83,10 +78,8 @@ class ReservationListBlock extends BlockBase implements ContainerFactoryPluginIn
    * @throws \Safe\Exceptions\JsonException
    */
   public function build(): array {
-    $config = $this->reservationListSettings->loadConfig();
-    $generalSettings = $this->configFactory->get('dpl_library_agency.general_settings');
-    $listSizeSettings = $this->configFactory->get('dpl_list_size.settings');
-
+    $general_settings = $this->generalSettings->loadConfig();
+    $list_size_settings = $this->listSizeSettings->loadConfig();
 
     $data = [
       // Branches.
@@ -96,14 +89,14 @@ class ReservationListBlock extends BlockBase implements ContainerFactoryPluginIn
       'branches-config' => DplReactAppsController::buildBranchesJsonProp($this->branchRepository->getBranches()),
 
       // Url.
-      'ereolen-my-page-url' => dpl_react_apps_format_app_url($config->get('ereolen_my_page_url'), GeneralSettings::EREOLEN_MY_PAGE_URL),
-      'pause-reservation-info-url' => dpl_react_apps_format_app_url($generalSettings->get('pause_reservation_info_url'), GeneralSettings::PAUSE_RESERVATION_INFO_URL),
+      'ereolen-my-page-url' => dpl_react_apps_format_app_url($general_settings->get('ereolen_my_page_url'), GeneralSettings::EREOLEN_MY_PAGE_URL),
+      'pause-reservation-info-url' => dpl_react_apps_format_app_url($general_settings->get('pause_reservation_info_url'), GeneralSettings::PAUSE_RESERVATION_INFO_URL),
 
       // Config.
       'interest-periods-config' => json_encode($this->generalSettings->getInterestPeriodsConfig()),
-      'page-size-desktop' => $config->get('page_size_desktop') ?? DplReservationsSettings::PAGE_SIZE_DESKTOP,
-      'page-size-mobile' => $config->get('page_size_mobile') ?? DplReservationsSettings::PAGE_SIZE_MOBILE,
-      'expiration-warning-days-before-config' => $generalSettings->get('expiration_warning_days_before_config') ?? GeneralSettings::EXPIRATION_WARNING_DAYS_BEFORE_CONFIG,
+      'page-size-desktop' => $list_size_settings->get('reservation_list_size_desktop') ?? DplReservationsSettings::RESERVATION_LIST_SIZE_DESKTOP,
+      'page-size-mobile' => $list_size_settings->get('reservation_list_size_mobile') ?? DplReservationsSettings::RESERVATION_LIST_SIZE_MOBILE,
+      'expiration-warning-days-before-config' => $general_settings->get('expiration_warning_days_before_config') ?? GeneralSettings::EXPIRATION_WARNING_DAYS_BEFORE_CONFIG,
 
       // Texts.
       'modal-reservation-form-no-interest-after-label-text' => $this->t("Change the amount of time after which you're no longer interested in this material.", [], ['context' => 'Reservation list']),
