@@ -8,6 +8,7 @@ dependencies:
     - field.field.node.event.field_event_description
     - field.field.node.event.field_event_image
     - field.field.node.event.field_event_link
+    - field.field.node.event.field_event_paragraphs
     - field.field.node.event.field_event_place
     - field.field.node.event.field_event_state
     - field.field.node.event.field_ticket_categories
@@ -57,6 +58,15 @@ content:
       target: ''
     third_party_settings: {  }
     weight: 3
+    region: content
+  field_event_paragraphs:
+    type: entity_reference_revisions_entity_view
+    label: above
+    settings:
+      view_mode: default
+      link: ''
+    third_party_settings: {  }
+    weight: 7
     region: content
   field_event_place:
     type: string
