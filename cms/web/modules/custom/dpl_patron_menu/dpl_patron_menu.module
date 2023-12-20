@@ -39,10 +39,10 @@ function dpl_patron_menu_preprocess_page(array &$variables): void {
  *
  * @param array<mixed> $form
  *   An associative array containing the structure of the form.
- * @param FormStateInterface $form_state
+ * @param \Drupal\Core\Form\FormStateInterface $form_state
  *   The current state of the form.
  */
-function dpl_patron_menu_form_dpl_library_agency_list_size_settings_form_alter (array &$form, FormStateInterface $form_state): void {
+function dpl_patron_menu_form_dpl_library_agency_list_size_settings_form_alter(array &$form, FormStateInterface $form_state): void {
   $config = \Drupal::service('config.factory')
     ->getEditable('dpl_library_agency.list_size_settings');
 
@@ -77,7 +77,7 @@ function dpl_patron_menu_form_dpl_library_agency_list_size_settings_form_alter (
  *
  * @param array<mixed> $form
  *   An associative array containing the structure of the form.
- * @param FormStateInterface $form_state
+ * @param \Drupal\Core\Form\FormStateInterface $form_state
  *   The current state of the form.
  */
 function dpl_patron_menu_handler_submit(array &$form, FormStateInterface $form_state): void {

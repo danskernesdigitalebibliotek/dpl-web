@@ -27,10 +27,10 @@ function dpl_loans_dpl_react_apps_data(array &$data): void {
  *
  * @param array<mixed> $form
  *   An associative array containing the structure of the form.
- * @param FormStateInterface $form_state
+ * @param \Drupal\Core\Form\FormStateInterface $form_state
  *   The current state of the form.
  */
-function dpl_loans_form_dpl_library_agency_list_size_settings_form_alter (array &$form, FormStateInterface $form_state): void {
+function dpl_loans_form_dpl_library_agency_list_size_settings_form_alter(array &$form, FormStateInterface $form_state): void {
   $config = \Drupal::service('config.factory')
     ->getEditable('dpl_library_agency.list_size_settings');
 
@@ -65,7 +65,7 @@ function dpl_loans_form_dpl_library_agency_list_size_settings_form_alter (array 
  *
  * @param array<mixed> $form
  *   An associative array containing the structure of the form.
- * @param FormStateInterface $form_state
+ * @param \Drupal\Core\Form\FormStateInterface $form_state
  *   The current state of the form.
  */
 function dpl_loans_handler_submit(array &$form, FormStateInterface $form_state): void {
