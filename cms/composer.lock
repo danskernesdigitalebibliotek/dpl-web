@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "bac8529517a64d250eab16093aac3035",
+    "content-hash": "2ca511391715667590a7f0e7026bd5f7",
     "packages": [
         {
             "name": "amazeeio/drupal_integrations",
@@ -987,7 +987,7 @@
             "version": "2024.1.0",
             "dist": {
                 "type": "zip",
-                "url": "https://github.com/danskernesdigitalebibliotek/dpl-react/releases/download/branch-release%2F2024-1-0/dist-release-2024-1-0.zip"
+                "url": "https://github.com/danskernesdigitalebibliotek/dpl-react/releases/download/branch-DDFLSBP-318-tilfoje-konfiguration-af-soge-vs-visningsprofil/dist-ddflsbp-318-tilfoje-konfiguration-af-soge-vs-visningsprofil.zip"
             },
             "require": {
                 "composer/installers": "^1.2.0"
