@@ -4,6 +4,8 @@ _meta:
   uuid: 56bfda4c-2a5f-4fda-bb98-ffb5106f0a34
   bundle: event
   default_langcode: da
+  depends:
+    618e176a-a45a-4c36-a197-664230aa0a34: media
 default:
   revision_uid:
     -
@@ -50,6 +52,9 @@ default:
     -
       value: '<p>Foreningen for Integreret Moderne Dans arbejder med at udvide normalitetsbegrebet i scenekunsten. For hvad er normalt? Rosenreglen og Mødrenes hus. I 2022 udgav hun også den stærkt politiske digtsamling Jeg vil have en statsminister.</p>'
       format: basic
+  field_event_image:
+    -
+      entity: 618e176a-a45a-4c36-a197-664230aa0a34
   field_event_link:
     -
       uri: 'https://billetto.dk/'
