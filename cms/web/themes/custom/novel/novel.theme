@@ -6,8 +6,8 @@
  */
 
 use Drupal\Core\StringTranslation\TranslatableMarkup;
-
 use function Safe\file_get_contents;
+use function Safe\sort;
 use function Safe\sprintf;
 
 /**
@@ -85,4 +85,72 @@ function novel_preprocess_dpl_react_app__search_result(array &$variables): void 
   // Make sure that the app is re-rendered when the query string changes.
   // That enables us to vary the "searching" title line.
   $variables['#cache']['contexts'][] = "url.query_args:q";
+}
+
+/**
+ * Implements hook_preprocess_HOOK() for node templates.
+ *
+ * Preprocesses variables for node templates.
+ *
+ * Includes generating ticket pricing display in 'event_list_teaser' view mode.
+ *
+ * @param mixed[] $variables
+ *   The variables array for the node template.
+ *
+ * @throws \Safe\Exceptions\ArrayException
+ */
+function novel_preprocess_node(array &$variables):void {
+  if ($variables['node']->hasField('field_ticket_categories')) {
+    $ticket_categories = $variables['node']->get('field_ticket_categories')->referencedEntities();
+    $prices = [];
+
+    // Collect prices from ticket categories.
+    foreach ($ticket_categories as $category) {
+      if ($category->hasField('field_ticket_category_price') && !$category->get('field_ticket_category_price')->isEmpty()) {
+        $price = $category->get('field_ticket_category_price')->value;
+        $prices[] = (floatval($price) == intval($price)) ? intval($price) : floatval($price);
+      }
+    }
+
+    $variables['ticket_price_display'] = novel_get_ticket_price_display($prices);
+  }
+}
+
+/**
+ * Helper function to format the price display string.
+ *
+ * @param float[] $prices
+ *   Array of price values from ticket categories.
+ *
+ * @return string
+ *   Formatted price display string.
+ *
+ * @throws \Safe\Exceptions\ArrayException
+ */
+function novel_get_ticket_price_display(array $prices): string {
+  sort($prices);
+  $price_display = '';
+
+  if (empty($prices) || (count($prices) === 1 && $prices[0] == 0)) {
+    $price_display = 'Gratis';
+  }
+  else {
+    $has_free_price = in_array(0, $prices);
+    $filtered_prices = array_filter($prices, fn($price) => $price > 0);
+
+    if ($has_free_price && !empty($filtered_prices)) {
+      $highest_price = max($filtered_prices);
+      $price_display = 'Gratis - ' . $highest_price . ' KR';
+    }
+    elseif ($has_free_price) {
+      $price_display = 'Gratis';
+    }
+    else {
+      $lowest_price = min($filtered_prices);
+      $highest_price = max($filtered_prices);
+      $price_display = $lowest_price . ($lowest_price != $highest_price ? ' - ' . $highest_price : '') . ' KR';
+    }
+  }
+
+  return $price_display;
 }

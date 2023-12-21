@@ -1,0 +1,31 @@
+<a href="{{ content.event_link }}" class="event-list-item arrow__hover--right-small">
+  <div class="event-list-item__image-container">
+    {% if content.field_event_image['#items'] is not empty %}
+      {% set image_uri = content.field_event_image['#items'].entity.field_media_image.entity.fileuri %}
+      {% set image_url = file_url(image_uri) %}
+        <img src="{{ image_url }}" alt="{{ content.label }}" class="event-list-item__image" />
+    {% endif %}
+  </div>
+  <div class="event-list-item__content">
+    <div aria-pressed="false" class="tag tag--fill cursor-pointer tag--small event-list-item__tag">foredrag</div>
+    <p class="event-list-item__date">{{ content.field_event_date|render|striptags }}</p>
+    <h3 class="event-list-item__title">{{ label }}</h3>
+    <p class="event-list-item__description">{{ content.field_event_description|render|striptags|trim }}</p>
+    <div class="event-list-item__location-wrapper">
+      {% for item in content.field_event_place['#items'] %}
+          <p class="event-list-item__location">{{ item.value }}</p>
+      {% endfor %}
+    </div>
+    <div class="event-list-item__schedule">
+        <time class="event-list-item__time">
+          {{ content.field_event_date['#items'].0.start_date|date("H:i") }}
+          -
+          {{ content.field_event_date['#items'].0.end_date|date("H:i") }}
+        </time>
+      {% if ticket_price_display is defined %}
+        <p class="event-list-item__pricing">{{ ticket_price_display }}</p>
+        {% endif %}
+    </div>
+  </div>
+  {{ source(directory ~ '/assets/dpl-design-system/icons/arrow-ui/icon-arrow-ui-small-right.svg') }}
+</a>
