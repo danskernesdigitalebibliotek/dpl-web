@@ -29,6 +29,7 @@ class DplLoansSettings extends DplReactConfigBase {
    * Get the desktop list size.
    *
    * @return string
+   *  The desktop list size or the fallback value.
    */
   public function getListSizeDesktop(): string {
     return $this->loadConfig()->get('loan_list_size_desktop') ?? self::LOAN_LIST_SIZE_DESKTOP;
@@ -38,6 +39,7 @@ class DplLoansSettings extends DplReactConfigBase {
    * Get the mobile list size.
    *
    * @return string
+   *  The mobile list size or the fallback value.
    */
   public function getListSizeMobile(): string {
     return $this->loadConfig()->get('loan_list_size_mobile') ?? self::LOAN_LIST_SIZE_MOBILE;

@@ -30,6 +30,7 @@ class DplDashboardSettings extends DplReactConfigBase {
    * Get the desktop list size.
    *
    * @return string
+   *  The desktop list size or the fallback value.
    */
   public function getListSizeDesktop(): string {
     return $this->loadConfig()->get('dashboard_list_size_desktop') ?? self::DASHBOARD_LIST_SIZE_DESKTOP;
@@ -39,6 +40,7 @@ class DplDashboardSettings extends DplReactConfigBase {
    * Get the mobile list size.
    *
    * @return string
+   *  The mobile list size or the fallback value.
    */
   public function getListSizeMobile(): string {
     return $this->loadConfig()->get('dashboard_list_size_mobile') ?? self::DASHBOARD_LIST_SIZE_MOBILE;

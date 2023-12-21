@@ -5,7 +5,6 @@ namespace Drupal\dpl_reservations\Plugin\Block;
 use Drupal\Core\Block\BlockBase;
 use Drupal\Core\Plugin\ContainerFactoryPluginInterface;
 use Drupal\dpl_library_agency\GeneralSettings;
-use Drupal\dpl_library_agency\ListSizeSettings;
 use Drupal\dpl_library_agency\Branch\BranchRepositoryInterface;
 use Drupal\dpl_library_agency\BranchSettings;
 use Drupal\dpl_react_apps\Controller\DplReactAppsController;

@@ -3,11 +3,9 @@
 namespace Drupal\dpl_patron_menu\Plugin\Block;
 
 use Drupal\Core\Block\BlockBase;
-use Drupal\Core\Config\ConfigFactoryInterface;
 use Drupal\Core\Plugin\ContainerFactoryPluginInterface;
 use Drupal\Core\Url;
 use Drupal\dpl_library_agency\GeneralSettings;
-use Drupal\dpl_library_agency\ListSizeSettings;
 use Drupal\dpl_patron_menu\DplMenuSettings;
 use Drupal\dpl_react_apps\Controller\DplReactAppsController;
 use Symfony\Component\DependencyInjection\ContainerInterface;

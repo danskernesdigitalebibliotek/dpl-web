@@ -6,7 +6,6 @@ use Drupal\Core\Block\BlockBase;
 use Drupal\Core\Plugin\ContainerFactoryPluginInterface;
 use Drupal\dpl_library_agency\GeneralSettings;
 use Drupal\Core\Url;
-use Drupal\dpl_library_agency\ListSizeSettings;
 use Drupal\dpl_loans\DplLoansSettings;
 use Drupal\dpl_react_apps\Controller\DplReactAppsController;
 use Symfony\Component\DependencyInjection\ContainerInterface;

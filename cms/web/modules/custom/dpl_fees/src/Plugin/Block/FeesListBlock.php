@@ -5,7 +5,6 @@ namespace Drupal\dpl_fees\Plugin\Block;
 use Drupal\Core\Block\BlockBase;
 use Drupal\Core\Plugin\ContainerFactoryPluginInterface;
 use Drupal\dpl_fees\DplFeesSettings;
-use Drupal\dpl_library_agency\ListSizeSettings;
 use Drupal\dpl_react\DplReactConfigInterface;
 use Drupal\dpl_react_apps\Controller\DplReactAppsController;
 use Symfony\Component\DependencyInjection\ContainerInterface;
