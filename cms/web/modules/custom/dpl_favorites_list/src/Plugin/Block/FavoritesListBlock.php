@@ -7,7 +7,6 @@ use Drupal\Core\Plugin\ContainerFactoryPluginInterface;
 use Drupal\dpl_favorites_list\DplFavoritesListSettings;
 use Drupal\dpl_library_agency\Branch\BranchRepositoryInterface;
 use Drupal\dpl_library_agency\BranchSettings;
-use Drupal\dpl_library_agency\ListSizeSettings;
 use Drupal\dpl_react_apps\Controller\DplReactAppsController;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
@@ -30,20 +29,20 @@ class FavoritesListBlock extends BlockBase implements ContainerFactoryPluginInte
    *   The plugin ID for the plugin instance.
    * @param mixed $plugin_definition
    *   The plugin implementation definition.
+   * @param \Drupal\dpl_favorites_list\DplFavoritesListSettings $favoritesSettings
+   *   Favorites list settings.
    * @param \Drupal\dpl_library_agency\BranchSettings $branchSettings
    *   The branch settings for branch config.
    * @param \Drupal\dpl_library_agency\Branch\BranchRepositoryInterface $branchRepository
    *   The branch settings for getting branches.
-   * @param \Drupal\dpl_library_agency\ListSizeSettings $listSizeSettings
-   *   List size settings.
    */
   public function __construct(
     array $configuration,
     $plugin_id,
     $plugin_definition,
+    private DplFavoritesListSettings $favoritesSettings,
     private BranchSettings $branchSettings,
     private BranchRepositoryInterface $branchRepository,
-    private ListSizeSettings $listSizeSettings,
   ) {
     parent::__construct($configuration, $plugin_id, $plugin_definition);
     $this->configuration = $configuration;
@@ -57,9 +56,9 @@ class FavoritesListBlock extends BlockBase implements ContainerFactoryPluginInte
       $configuration,
       $plugin_id,
       $plugin_definition,
+      $container->get('dpl_favorites_list.settings'),
       $container->get('dpl_library_agency.branch_settings'),
       $container->get('dpl_library_agency.branch.repository'),
-      $container->get('dpl_library_agency.list_size_settings'),
     );
   }
 
@@ -72,16 +71,14 @@ class FavoritesListBlock extends BlockBase implements ContainerFactoryPluginInte
    * @throws \Safe\Exceptions\JsonException
    */
   public function build() {
-    $listSizeSettings = $this->listSizeSettings->loadConfig();
-
     $data = [
       // Branches.
       'blacklisted-availability-branches-config' => DplReactAppsController::buildBranchesListProp($this->branchSettings->getExcludedAvailabilityBranches()),
       'branches-config' => DplReactAppsController::buildBranchesJsonProp($this->branchRepository->getBranches()),
 
       // Page size.
-      "page-size-desktop" => $listSizeSettings->get('loan_list_size_desktop') ?? DplFavoritesListSettings::FAVORITES_LIST_SIZE_DESKTOP,
-      "page-size-mobile" => $listSizeSettings->get('loan_list_size_desktop') ?? DplFavoritesListSettings::FAVORITES_LIST_SIZE_MOBILE,
+      "page-size-desktop" => $this->favoritesSettings->getListSizeDesktop(),
+      "page-size-mobile" => $this->favoritesSettings->getListSizeMobile(),
 
       // Texts.
       "favorites-list-empty-text" => $this->t("Your favorites list is empty", [], ['context' => 'Favorites list']),

@@ -29,17 +29,17 @@ class FeesListBlock extends BlockBase implements ContainerFactoryPluginInterface
    *   The plugin ID for the plugin instance.
    * @param mixed $plugin_definition
    *   The plugin implementation definition.
-   * @param \Drupal\dpl_react\DplReactConfigInterface $feesSettings
+   * @param \Drupal\dpl_fees\DplFeesSettings $feesSettings
    *   Fees settings.
-   * @param \Drupal\dpl_library_agency\ListSizeSettings $listSizeSettings
-   *   List size settings.
+   * @param \Drupal\dpl_react\DplReactConfigInterface $feesConfig
+   *   Fees config.
    */
   public function __construct(
     array $configuration,
     $plugin_id,
     $plugin_definition,
-    private DplReactConfigInterface $feesSettings,
-    private ListSizeSettings $listSizeSettings,
+    private DplFeesSettings $feesSettings,
+    private DplReactConfigInterface $feesConfig,
   ) {
     parent::__construct($configuration, $plugin_id, $plugin_definition);
     $this->configuration = $configuration;
@@ -53,8 +53,8 @@ class FeesListBlock extends BlockBase implements ContainerFactoryPluginInterface
       $configuration,
       $plugin_id,
       $plugin_definition,
+      $container->get('dpl_fees.settings'),
       \Drupal::service('dpl_fees.settings'),
-      $container->get('dpl_library_agency.list_size_settings'),
     );
   }
 
@@ -65,13 +65,12 @@ class FeesListBlock extends BlockBase implements ContainerFactoryPluginInterface
    *   The app render array.
    */
   public function build() {
-    $feesConfig = $this->feesSettings->loadConfig();
-    $listSizeSettings = $this->listSizeSettings->loadConfig();
+    $feesConfig = $this->feesConfig->loadConfig();
 
     $data = [
       // Config.
-      "page-size-desktop" => $listSizeSettings->get('fees_list_size_desktop') ?? DplFeesSettings::FEES_LIST_SIZE_DESKTOP,
-      "page-size-mobile" => $listSizeSettings->get('fees_list_size_mobile') ?? DplFeesSettings::FEES_LIST_SIZE_MOBILE,
+      "page-size-desktop" => $this->feesSettings->getListSizeDesktop(),
+      "page-size-mobile" => $this->feesSettings->getListSizeMobile(),
 
       // Urls.
       // @todo images to be done in future tender.

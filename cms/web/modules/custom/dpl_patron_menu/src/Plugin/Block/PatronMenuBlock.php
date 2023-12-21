@@ -34,23 +34,23 @@ class PatronMenuBlock extends BlockBase implements ContainerFactoryPluginInterfa
    *   The plugin ID for the plugin instance.
    * @param mixed $plugin_definition
    *   The plugin implementation definition.
+   * @param \Drupal\dpl_patron_menu\DplMenuSettings $patronMenuSettings
+   *   Patron menu settings.
    * @param \Drupal\dpl_library_agency\BranchSettings $branchSettings
    *   The branch settings for branch config.
    * @param \Drupal\dpl_library_agency\Branch\BranchRepositoryInterface $branchRepository
    *   The branch settings for getting branches.
    * @param \Drupal\dpl_library_agency\GeneralSettings $generalSettings
    *   General settings.
-   * @param \Drupal\dpl_library_agency\ListSizeSettings $listSizeSettings
-   *   List size settings.
    */
   public function __construct(
       array $configuration,
       $plugin_id,
       $plugin_definition,
+      private DplMenuSettings $patronMenuSettings,
       private BranchSettings $branchSettings,
       private BranchRepositoryInterface $branchRepository,
       private GeneralSettings $generalSettings,
-      private ListSizeSettings $listSizeSettings,
   ) {
     parent::__construct($configuration, $plugin_id, $plugin_definition);
     $this->configuration = $configuration;
@@ -76,10 +76,10 @@ class PatronMenuBlock extends BlockBase implements ContainerFactoryPluginInterfa
       $configuration,
       $plugin_id,
       $plugin_definition,
+      $container->get('dpl_patron_menu.settings'),
       $container->get('dpl_library_agency.branch_settings'),
       $container->get('dpl_library_agency.branch.repository'),
       $container->get('dpl_library_agency.general_settings'),
-      $container->get('dpl_library_agency.list_size_settings'),
     );
   }
 
@@ -93,7 +93,6 @@ class PatronMenuBlock extends BlockBase implements ContainerFactoryPluginInterfa
    */
   public function build(): array {
     $generalSettings = $this->generalSettings->loadConfig();
-    $listSizeSettings = $this->listSizeSettings->loadConfig();
 
     // Alternative to this menu array here this could be loaded from a drupal
     // generated menu. A place for further improvements.
@@ -144,8 +143,8 @@ class PatronMenuBlock extends BlockBase implements ContainerFactoryPluginInterfa
 
     $data = [
       // Config.
-      'page-size-desktop' => $listSizeSettings->get('menu_list_size_desktop') ?? DplMenuSettings::MENU_LIST_SIZE_DESKTOP,
-      'page-size-mobile' => $listSizeSettings->get('menu_list_size_mobile') ?? DplMenuSettings::MENU_LIST_SIZE_MOBILE,
+      'page-size-desktop' => $this->patronMenuSettings->getListSizeDesktop(),
+      'page-size-mobile' => $this->patronMenuSettings->getListSizeMobile(),
       'blacklisted-pickup-branches-config' => DplReactAppsController::buildBranchesListProp($this->branchSettings->getExcludedReservationBranches()),
       'branches-config' => DplReactAppsController::buildBranchesJsonProp($this->branchRepository->getBranches()),
       "expiration-warning-days-before-config" => $generalSettings->get('expiration_warning_days_before_config') ?? GeneralSettings::EXPIRATION_WARNING_DAYS_BEFORE_CONFIG,

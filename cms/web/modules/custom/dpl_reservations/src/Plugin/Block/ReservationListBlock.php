@@ -32,23 +32,23 @@ class ReservationListBlock extends BlockBase implements ContainerFactoryPluginIn
    *   The plugin ID for the plugin instance.
    * @param array $plugin_definition
    *   The plugin implementation definition.
+   * @param \Drupal\dpl_reservations\DplReservationsSettings $reservationsSettings
+   *   The branch-settings for branch config.
    * @param \Drupal\dpl_library_agency\BranchSettings $branchSettings
    *   The branch-settings for branch config.
    * @param \Drupal\dpl_library_agency\Branch\BranchRepositoryInterface $branchRepository
    *   The branch-settings for getting branches.
    * @param \Drupal\dpl_library_agency\GeneralSettings $generalSettings
    *   General settings.
-   * @param \Drupal\dpl_library_agency\ListSizeSettings $listSizeSettings
-   *   List size settings.
    */
   public function __construct(
       array $configuration,
       string $plugin_id,
       array $plugin_definition,
+      private DplReservationsSettings $reservationsSettings,
       private BranchSettings $branchSettings,
       private BranchRepositoryInterface $branchRepository,
       private GeneralSettings $generalSettings,
-      private ListSizeSettings $listSizeSettings,
   ) {
     parent::__construct($configuration, $plugin_id, $plugin_definition);
     $this->configuration = $configuration;
@@ -62,10 +62,10 @@ class ReservationListBlock extends BlockBase implements ContainerFactoryPluginIn
       $configuration,
       $plugin_id,
       $plugin_definition,
+      $container->get('dpl_reservations.settings'),
       $container->get('dpl_library_agency.branch_settings'),
       $container->get('dpl_library_agency.branch.repository'),
       $container->get('dpl_library_agency.general_settings'),
-      $container->get('dpl_library_agency.list_size_settings'),
     );
   }
 
@@ -79,7 +79,6 @@ class ReservationListBlock extends BlockBase implements ContainerFactoryPluginIn
    */
   public function build(): array {
     $general_settings = $this->generalSettings->loadConfig();
-    $list_size_settings = $this->listSizeSettings->loadConfig();
 
     $data = [
       // Branches.
@@ -94,8 +93,8 @@ class ReservationListBlock extends BlockBase implements ContainerFactoryPluginIn
 
       // Config.
       'interest-periods-config' => json_encode($this->generalSettings->getInterestPeriodsConfig()),
-      'page-size-desktop' => $list_size_settings->get('reservation_list_size_desktop') ?? DplReservationsSettings::RESERVATION_LIST_SIZE_DESKTOP,
-      'page-size-mobile' => $list_size_settings->get('reservation_list_size_mobile') ?? DplReservationsSettings::RESERVATION_LIST_SIZE_MOBILE,
+      'page-size-desktop' => $this->reservationsSettings->getListSizeDesktop(),
+      'page-size-mobile' => $this->reservationsSettings->getListSizeMobile(),
       'expiration-warning-days-before-config' => $general_settings->get('expiration_warning_days_before_config') ?? GeneralSettings::EXPIRATION_WARNING_DAYS_BEFORE_CONFIG,
 
       // Texts.

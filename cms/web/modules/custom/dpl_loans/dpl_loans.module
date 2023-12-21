@@ -9,7 +9,6 @@
 
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\Url;
-use Drupal\dpl_loans\DplLoansSettings;
 
 /**
  * Implements hook_dpl_react_apps_data().
@@ -31,8 +30,8 @@ function dpl_loans_dpl_react_apps_data(array &$data): void {
  *   The current state of the form.
  */
 function dpl_loans_form_dpl_library_agency_list_size_settings_form_alter(array &$form, FormStateInterface $form_state): void {
-  $config = \Drupal::service('config.factory')
-    ->getEditable('dpl_library_agency.list_size_settings');
+  /** @var \Drupal\dpl_loans\DplLoansSettings $loans_settings */
+  $loans_settings = \Drupal::service('dpl_loans.settings');
 
   $form['loan_list_size_settings'] = [
     '#type' => 'fieldset',
@@ -44,17 +43,19 @@ function dpl_loans_form_dpl_library_agency_list_size_settings_form_alter(array &
   $form['loan_list_size_settings']['loan_list_size_desktop'] = [
     '#type' => 'number',
     '#title' => t('Loan list size on desktop', [], ['context' => 'List size (settings)']),
-    '#default_value' => $config->get('loan_list_size_desktop') ?? DplLoansSettings::LOAN_LIST_SIZE_DESKTOP,
+    '#default_value' => $loans_settings->getListSizeDesktop(),
     '#min' => 1,
     '#step' => 1,
+    '#required' => TRUE,
   ];
 
   $form['loan_list_size_settings']['loan_list_size_mobile'] = [
     '#type' => 'number',
     '#title' => t('Loan list size on mobile', [], ['context' => 'List size (settings)']),
-    '#default_value' => $config->get('loan_list_size_mobile') ?? DplLoansSettings::LOAN_LIST_SIZE_MOBILE,
+    '#default_value' => $loans_settings->getListSizeMobile(),
     '#min' => 1,
     '#step' => 1,
+    '#required' => TRUE,
   ];
 
   $form['#submit'][] = 'dpl_loans_handler_submit';
@@ -69,8 +70,11 @@ function dpl_loans_form_dpl_library_agency_list_size_settings_form_alter(array &
  *   The current state of the form.
  */
 function dpl_loans_handler_submit(array &$form, FormStateInterface $form_state): void {
+  /** @var \Drupal\dpl_loans\DplLoansSettings $loans_settings */
+  $loans_settings = \Drupal::service('dpl_loans.settings');
+
   \Drupal::service('config.factory')
-    ->getEditable('dpl_library_agency.list_size_settings')
+    ->getEditable($loans_settings->getConfigKey())
     ->set('loan_list_size_desktop', $form_state->getValue('loan_list_size_desktop'))
     ->set('loan_list_size_mobile', $form_state->getValue('loan_list_size_mobile'))
     ->save();

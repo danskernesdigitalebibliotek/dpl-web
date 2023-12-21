@@ -8,8 +8,8 @@ use Drupal\dpl_react\DplReactConfigBase;
  * Class that handles reservations settings.
  */
 class DplReservationsSettings extends DplReactConfigBase {
-  const RESERVATION_LIST_SIZE_DESKTOP = 25;
-  const RESERVATION_LIST_SIZE_MOBILE = 25;
+  const RESERVATIONS_LIST_SIZE_DESKTOP = 25;
+  const RESERVATIONS_LIST_SIZE_MOBILE = 25;
 
   /**
    * Gets the configuration key for reservation settings.
@@ -23,6 +23,24 @@ class DplReservationsSettings extends DplReactConfigBase {
    */
   public function getConfig(): array {
     return $this->legacyConfig();
+  }
+
+  /**
+   * Get the desktop list size.
+   *
+   * @return string
+   */
+  public function getListSizeDesktop(): string {
+    return $this->loadConfig()->get('reservations_list_size_desktop') ?? self::RESERVATIONS_LIST_SIZE_DESKTOP;
+  }
+
+  /**
+   * Get the mobile list size.
+   *
+   * @return string
+   */
+  public function getListSizeMobile(): string {
+    return $this->loadConfig()->get('reservations_list_size_mobile') ?? self::RESERVATIONS_LIST_SIZE_MOBILE;
   }
 
 }

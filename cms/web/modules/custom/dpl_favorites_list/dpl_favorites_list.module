@@ -17,8 +17,8 @@ use Drupal\dpl_favorites_list\DplFavoritesListSettings;
  *   The current state of the form.
  */
 function dpl_favorites_list_form_dpl_library_agency_list_size_settings_form_alter(array &$form, FormStateInterface $form_state): void {
-  $config = \Drupal::service('config.factory')
-    ->getEditable('dpl_library_agency.list_size_settings');
+  /** @var \Drupal\dpl_favorites_list\DplFavoritesListSettings $favorites_settings */
+  $favorites_settings = \Drupal::service('dpl_favorites_list.settings');
 
   $form['favorites_list_size_settings'] = [
     '#type' => 'fieldset',
@@ -30,17 +30,19 @@ function dpl_favorites_list_form_dpl_library_agency_list_size_settings_form_alte
   $form['favorites_list_size_settings']['favorites_list_size_desktop'] = [
     '#type' => 'number',
     '#title' => t('Favorites list size on desktop', [], ['context' => 'List size (settings)']),
-    '#default_value' => $config->get('favorites_list_size_desktop') ?? DplFavoritesListSettings::FAVORITES_LIST_SIZE_DESKTOP,
+    '#default_value' => $favorites_settings->getListSizeDesktop(),
     '#min' => 1,
     '#step' => 1,
+    '#required' => TRUE,
   ];
 
   $form['favorites_list_size_settings']['favorites_list_size_mobile'] = [
     '#type' => 'number',
     '#title' => t('Favorites list size on mobile', [], ['context' => 'List size (settings)']),
-    '#default_value' => $config->get('favorites_list_size_mobile') ?? DplFavoritesListSettings::FAVORITES_LIST_SIZE_MOBILE,
+    '#default_value' => $favorites_settings->getListSizeMobile(),
     '#min' => 1,
     '#step' => 1,
+    '#required' => TRUE,
   ];
 
   $form['#submit'][] = 'dpl_favorites_list_handler_submit';
@@ -55,8 +57,11 @@ function dpl_favorites_list_form_dpl_library_agency_list_size_settings_form_alte
  *   The current state of the form.
  */
 function dpl_favorites_list_handler_submit(array &$form, FormStateInterface $form_state): void {
+  /** @var \Drupal\dpl_favorites_list\DplFavoritesListSettings $favorites_settings */
+  $favorites_settings = \Drupal::service('dpl_favorites_list.settings');
+
   \Drupal::service('config.factory')
-    ->getEditable('dpl_library_agency.list_size_settings')
+    ->getEditable($favorites_settings->getConfigKey())
     ->set('favorites_list_size_desktop', $form_state->getValue('favorites_list_size_desktop'))
     ->set('favorites_list_size_mobile', $form_state->getValue('favorites_list_size_mobile'))
     ->save();

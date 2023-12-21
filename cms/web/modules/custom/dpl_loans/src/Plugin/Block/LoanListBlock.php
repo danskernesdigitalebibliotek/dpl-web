@@ -30,17 +30,17 @@ class LoanListBlock extends BlockBase implements ContainerFactoryPluginInterface
    *   The plugin ID for the plugin instance.
    * @param mixed $plugin_definition
    *   The plugin implementation definition.
+   * @param \Drupal\dpl_loans\DplLoansSettings $loansSettings
+   *   Loans settings.
    * @param \Drupal\dpl_library_agency\GeneralSettings $generalSettings
    *   General settings.
-   * @param \Drupal\dpl_library_agency\ListSizeSettings $listSizeSettings
-   *   List size settings.
    */
   public function __construct(
     array $configuration,
     $plugin_id,
     $plugin_definition,
+    private DplLoansSettings $loansSettings,
     private GeneralSettings $generalSettings,
-    private ListSizeSettings $listSizeSettings,
   ) {
     parent::__construct($configuration, $plugin_id, $plugin_definition);
     $this->configuration = $configuration;
@@ -54,8 +54,8 @@ class LoanListBlock extends BlockBase implements ContainerFactoryPluginInterface
       $configuration,
       $plugin_id,
       $plugin_definition,
+      $container->get('dpl_loans.settings'),
       $container->get('dpl_library_agency.general_settings'),
-      $container->get('dpl_library_agency.list_size_settings'),
     );
   }
 
@@ -67,12 +67,11 @@ class LoanListBlock extends BlockBase implements ContainerFactoryPluginInterface
    */
   public function build() {
     $generalSettings = $this->generalSettings->loadConfig();
-    $listSizeSettings = $this->listSizeSettings->loadConfig();
 
     $data = [
       // Page size.
-      "page-size-desktop" => $listSizeSettings->get('loan_list_size_desktop') ?? DplLoansSettings::LOAN_LIST_SIZE_DESKTOP,
-      "page-size-mobile" => $listSizeSettings->get('loan_list_size_mobile') ?? DplLoansSettings::LOAN_LIST_SIZE_MOBILE,
+      "page-size-desktop" => $this->loansSettings->getListSizeDesktop(),
+      "page-size-mobile" => $this->loansSettings->getListSizeMobile(),
 
       // Config.
       "expiration-warning-days-before-config" => $generalSettings->get('expiration_warning_days_before_config') ?? GeneralSettings::EXPIRATION_WARNING_DAYS_BEFORE_CONFIG,

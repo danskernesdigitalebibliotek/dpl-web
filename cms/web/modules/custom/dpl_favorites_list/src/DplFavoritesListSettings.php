@@ -26,4 +26,22 @@ class DplFavoritesListSettings extends DplReactConfigBase {
     return $this->legacyConfig();
   }
 
+  /**
+   * Get the desktop list size.
+   *
+   * @return string
+   */
+  public function getListSizeDesktop(): string {
+    return $this->loadConfig()->get('favorites_list_size_desktop') ?? self::FAVORITES_LIST_SIZE_DESKTOP;
+  }
+
+  /**
+   * Get the mobile list size.
+   *
+   * @return string
+   */
+  public function getListSizeMobile(): string {
+    return $this->loadConfig()->get('favorites_list_size_mobile') ?? self::FAVORITES_LIST_SIZE_MOBILE;
+  }
+
 }

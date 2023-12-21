@@ -31,4 +31,22 @@ class DplFeesSettings extends DplReactConfigBase {
     return $this->legacyConfig();
   }
 
+  /**
+   * Get the desktop list size.
+   *
+   * @return string
+   */
+  public function getListSizeDesktop(): string {
+    return $this->loadConfig()->get('fees_list_size_desktop') ?? self::FEES_LIST_SIZE_DESKTOP;
+  }
+
+  /**
+   * Get the mobile list size.
+   *
+   * @return string
+   */
+  public function getListSizeMobile(): string {
+    return $this->loadConfig()->get('fees_list_size_mobile') ?? self::FEES_LIST_SIZE_MOBILE;
+  }
+
 }

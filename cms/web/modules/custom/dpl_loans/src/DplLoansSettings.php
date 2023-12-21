@@ -15,7 +15,7 @@ class DplLoansSettings extends DplReactConfigBase {
    * Gets the configuration key for loans settings.
    */
   public function getConfigKey(): string {
-    return 'dpl_loan_list.settings';
+    return 'dpl_loans.settings';
   }
 
   /**
@@ -23,6 +23,24 @@ class DplLoansSettings extends DplReactConfigBase {
    */
   public function getConfig(): array {
     return $this->legacyConfig();
+  }
+
+  /**
+   * Get the desktop list size.
+   *
+   * @return string
+   */
+  public function getListSizeDesktop(): string {
+    return $this->loadConfig()->get('loan_list_size_desktop') ?? self::LOAN_LIST_SIZE_DESKTOP;
+  }
+
+  /**
+   * Get the mobile list size.
+   *
+   * @return string
+   */
+  public function getListSizeMobile(): string {
+    return $this->loadConfig()->get('loan_list_size_mobile') ?? self::LOAN_LIST_SIZE_MOBILE;
   }
 
 }

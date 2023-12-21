@@ -34,30 +34,32 @@ function dpl_reservations_dpl_react_apps_data(array &$data): void {
  *   The current state of the form.
  */
 function dpl_reservations_form_dpl_library_agency_list_size_settings_form_alter(array &$form, FormStateInterface $form_state): void {
-  $config = \Drupal::service('config.factory')
-    ->getEditable('dpl_library_agency.list_size_settings');
+  /** @var \Drupal\dpl_reservations\DplReservationsSettings $reservations_settings */
+  $reservations_settings = \Drupal::service('dpl_reservations.settings');
 
-  $form['reservation_list_size_settings'] = [
+  $form['reservations_list_size_settings'] = [
     '#type' => 'fieldset',
-    '#title' => t('Reservation list size settings', [], ['context' => 'List size (settings)']),
+    '#title' => t('Reservations list size settings', [], ['context' => 'List size (settings)']),
     '#description' => t('The number of items to display in the reservation list.', [], ['context' => 'List size (settings)']),
     '#tree' => FALSE,
   ];
 
-  $form['reservation_list_size_settings']['reservation_list_size_desktop'] = [
+  $form['reservations_list_size_settings']['reservations_list_size_desktop'] = [
     '#type' => 'number',
-    '#title' => t('Reservation list size on desktop', [], ['context' => 'List size (settings)']),
-    '#default_value' => $config->get('reservation_list_size_desktop') ?? DplReservationsSettings::RESERVATION_LIST_SIZE_DESKTOP,
+    '#title' => t('Reservations list size on desktop', [], ['context' => 'List size (settings)']),
+    '#default_value' => $reservations_settings->getListSizeDesktop(),
     '#min' => 1,
     '#step' => 1,
+    '#required' => TRUE,
   ];
 
-  $form['reservation_list_size_settings']['reservation_list_size_mobile'] = [
+  $form['reservations_list_size_settings']['reservations_list_size_mobile'] = [
     '#type' => 'number',
-    '#title' => t('Reservation list size on mobile', [], ['context' => 'List size (settings)']),
-    '#default_value' => $config->get('reservation_list_size_mobile') ?? DplReservationsSettings::RESERVATION_LIST_SIZE_MOBILE,
+    '#title' => t('Reservations list size on mobile', [], ['context' => 'List size (settings)']),
+    '#default_value' => $reservations_settings->getListSizeMobile(),
     '#min' => 1,
     '#step' => 1,
+    '#required' => TRUE,
   ];
 
   $form['#submit'][] = 'dpl_reservations_handler_submit';
@@ -72,9 +74,12 @@ function dpl_reservations_form_dpl_library_agency_list_size_settings_form_alter(
  *   The current state of the form.
  */
 function dpl_reservations_handler_submit(array &$form, FormStateInterface $form_state): void {
+  /** @var \Drupal\dpl_reservations\DplReservationsSettings $reservations_settings */
+  $reservations_settings = \Drupal::service('dpl_reservations.settings');
+
   \Drupal::service('config.factory')
-    ->getEditable('dpl_library_agency.list_size_settings')
-    ->set('reservation_list_size_desktop', $form_state->getValue('reservation_list_size_desktop'))
-    ->set('reservation_list_size_mobile', $form_state->getValue('reservation_list_size_mobile'))
+    ->getEditable($reservations_settings->getConfigKey())
+    ->set('reservations_list_size_desktop', $form_state->getValue('reservations_list_size_desktop'))
+    ->set('reservations_list_size_mobile', $form_state->getValue('reservations_list_size_mobile'))
     ->save();
 }
