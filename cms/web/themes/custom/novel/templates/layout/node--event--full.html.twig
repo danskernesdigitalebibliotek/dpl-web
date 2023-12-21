@@ -2,7 +2,9 @@
   <header class="event-header">
         <section class="event-header__content">
             <!-- Tag -->
+          <time class="event-header__date">
             {{ content.field_event_date }}
+          </time>
             <h1 class="event-header__title">{{ label }}</h1>
             {{ content.field_event_link }}
         </section>
@@ -28,9 +30,9 @@
                 <div class="list-description__item">
                     <dt class="list-description__key">{{ "Time"|trans }}</dt>
                     <dd class="list-description__value">
-                        {{ content.field_event_date.0.start_date["#markup"]|date("H:i") }}
-                        -
-                        {{ content.field_event_date.0.end_date["#markup"]|date("H:i") }}
+                        {{ content.field_event_date['#items'].0.start_date|date("H:i") }}
+                          -
+                        {{ content.field_event_date['#items'].0.end_date|date("H:i") }}
                     </dd>
                 </div>
             {% endif %}
