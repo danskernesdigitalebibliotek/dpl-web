@@ -4,6 +4,10 @@ _meta:
   uuid: 2cd0fe5e-4159-4452-86aa-e1a1ac8db4a1
   bundle: article
   default_langcode: da
+  depends:
+    aba3cea8-cee5-42c1-a152-e30c2ab135e2: media
+    d97a25fd-a6ae-48b9-9a1a-7aec5372688e: media
+    eef50571-39dc-461a-96ff-b6b7180ade61: media
 default:
   revision_uid:
     -
@@ -99,6 +103,30 @@ default:
         _meta:
           version: '1.0'
           entity_type: paragraph
+          uuid: d6be2b76-dcee-478b-be88-a2fda29a1976
+          bundle: medias
+          default_langcode: da
+        default:
+          status:
+            -
+              value: true
+          created:
+            -
+              value: 1703140300
+          behavior_settings:
+            -
+              value: {  }
+          revision_translation_affected:
+            -
+              value: true
+          field_medias:
+            -
+              entity: aba3cea8-cee5-42c1-a152-e30c2ab135e2
+    -
+      entity:
+        _meta:
+          version: '1.0'
+          entity_type: paragraph
           uuid: 618a997a-501c-4c57-aeda-70b2cba29414
           bundle: text_body
           default_langcode: da
@@ -119,6 +147,32 @@ default:
             -
               value: '<h2>Stor interesse for deltagelse</h2><p>Tre ugers afstemning er nu slut, og interessen for at deltage var stor. Opløbet blev tæt, men til sidst stod det klart, at Jesper Steins selvbiografiske roman ”Rampen” nu kan kåres som vinderen af Læsernes bogpris 2021.</p><h2>Om romanen</h2><p>Jesper Stein har med ”Rampen” (Politikens Forlag, 2020) skrevet hudløst ærligt om sin families opløsning. Han ser tilbage på sine forældres opslidende og uværdige skilsmisse og forsøger at forstå dem og sig selv, mens han ser sine egne dæmoner i form af et periodisk og massivt alkoholmisbrug i øjnene.</p><p>”Min bog er fortællingen om svigt og kærlighed i en kernefamilie, der går i opløsning, og jeg håber, man læser den sådan og forstår, at der i fortællingen ligger en stor forsoning med den smerte, som man uundgåeligt bliver påført, når man er børn af forældre, der ikke er perfekte, men blot mennesker, som reagerer som mennesker, når deres liv kæntrer.”</p><p><a href="/">Læs vores anmeldelse af "Rampen"</a>.</p>'
               format: basic
+    -
+      entity:
+        _meta:
+          version: '1.0'
+          entity_type: paragraph
+          uuid: c456747c-5540-483d-b742-cf67b43ca3b7
+          bundle: medias
+          default_langcode: da
+        default:
+          status:
+            -
+              value: true
+          created:
+            -
+              value: 1703140387
+          behavior_settings:
+            -
+              value: {  }
+          revision_translation_affected:
+            -
+              value: true
+          field_medias:
+            -
+              entity: d97a25fd-a6ae-48b9-9a1a-7aec5372688e
+            -
+              entity: eef50571-39dc-461a-96ff-b6b7180ade61
     -
       entity:
         _meta:
