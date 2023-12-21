@@ -1,0 +1,7 @@
+dpl_identity.color:
+  path: "/admin/config/dpl_identity"
+  defaults:
+    _form: '\Drupal\dpl_identity\Form\IdentityConfigForm'
+    _title: "Identity Color"
+  requirements:
+    _permission: "administer site configuration"

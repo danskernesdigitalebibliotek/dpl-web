@@ -1,0 +1,6 @@
+dpl_identity.color:
+  title: "Identity color"
+  description: "Add identity color"
+  parent: "system.admin_config_services"
+  route_name: dpl_identity.color
+  weight: 0
