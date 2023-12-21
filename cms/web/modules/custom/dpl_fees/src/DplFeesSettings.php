@@ -35,7 +35,7 @@ class DplFeesSettings extends DplReactConfigBase {
    * Get the desktop list size.
    *
    * @return string
-   *  The desktop list size or the fallback value.
+   *   The desktop list size or the fallback value.
    */
   public function getListSizeDesktop(): string {
     return $this->loadConfig()->get('fees_list_size_desktop') ?? self::FEES_LIST_SIZE_DESKTOP;
@@ -45,7 +45,7 @@ class DplFeesSettings extends DplReactConfigBase {
    * Get the mobile list size.
    *
    * @return string
-   *  The mobile list size or the fallback value.
+   *   The mobile list size or the fallback value.
    */
   public function getListSizeMobile(): string {
     return $this->loadConfig()->get('fees_list_size_mobile') ?? self::FEES_LIST_SIZE_MOBILE;
