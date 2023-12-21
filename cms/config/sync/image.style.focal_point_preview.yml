@@ -1,0 +1,15 @@
+uuid: a1f1b6a1-dc88-49c7-9b10-46c27bd6d606
+langcode: en
+status: true
+dependencies: {  }
+name: focal_point_preview
+label: 'Focal Point Preview'
+effects:
+  56a54da3-ea68-4942-9897-389c5fbdc08d:
+    uuid: 56a54da3-ea68-4942-9897-389c5fbdc08d
+    id: image_scale
+    weight: 1
+    data:
+      width: 300
+      height: null
+      upscale: true

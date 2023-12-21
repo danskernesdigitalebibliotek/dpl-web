@@ -1,0 +1,16 @@
+{% set classes = [
+  'medias',
+  (items|length > 1) ? 'medias--multiple' : 'medias--single'
+] %}
+<div {{ attributes.addClass(classes) }}>
+  {% for item in items %}
+    {% set item_classes = [
+      'medias__item',
+      loop.first ? 'medias__item--first' : '',
+      loop.last ? 'medias__item--last' : '',
+    ] %}
+    <div {{ item.attributes.addClass(item_classes) }}>
+      {{ item.content }}
+    </div>
+  {% endfor %}
+</div>

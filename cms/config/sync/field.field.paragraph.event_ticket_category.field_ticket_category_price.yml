@@ -1,0 +1,23 @@
+uuid: 5bf5715f-f899-4364-83e9-087733d804e0
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.paragraph.field_ticket_category_price
+    - paragraphs.paragraphs_type.event_ticket_category
+id: paragraph.event_ticket_category.field_ticket_category_price
+field_name: field_ticket_category_price
+entity_type: paragraph
+bundle: event_ticket_category
+label: Price
+description: ''
+required: true
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings:
+  min: 0.0
+  max: null
+  prefix: ''
+  suffix: ''
+field_type: decimal

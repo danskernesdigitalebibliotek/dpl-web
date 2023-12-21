@@ -1,0 +1,7 @@
+<figcaption {{ attributes.addClass('image-credited__info') }}>
+  {% for item in items %}
+    <span {{ item.attributes }}>
+      {{ item.content }}
+    </span>
+  {% endfor %}
+</figcaption>

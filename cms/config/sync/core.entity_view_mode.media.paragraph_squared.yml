@@ -1,0 +1,10 @@
+uuid: 58bf0853-ded7-49eb-8a3f-67379e905d6c
+langcode: en
+status: true
+dependencies:
+  module:
+    - media
+id: media.paragraph_squared
+label: 'Paragraph, squared'
+targetEntityType: media
+cache: true

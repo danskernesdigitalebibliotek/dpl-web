@@ -1,0 +1,59 @@
+uuid: 371f71ab-c760-4d2b-9d63-1259d2b67c83
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_event_address
+    - node.type.event
+  module:
+    - address
+id: node.event.field_event_address
+field_name: field_event_address
+entity_type: node
+bundle: event
+label: 'Event address'
+description: ''
+required: false
+translatable: false
+default_value:
+  -
+    langcode: en
+    country_code: DK
+    administrative_area: null
+    locality: ''
+    dependent_locality: null
+    postal_code: ''
+    sorting_code: null
+    address_line1: ''
+    address_line2: null
+    organization: null
+    given_name: null
+    additional_name: null
+    family_name: null
+default_value_callback: ''
+settings:
+  available_countries:
+    DK: DK
+    FO: FO
+    DE: DE
+    GL: GL
+  langcode_override: ''
+  field_overrides:
+    givenName:
+      override: hidden
+    additionalName:
+      override: hidden
+    familyName:
+      override: hidden
+    organization:
+      override: hidden
+    addressLine2:
+      override: hidden
+    sortingCode:
+      override: hidden
+    dependentLocality:
+      override: hidden
+    administrativeArea:
+      override: hidden
+  fields: {  }
+field_type: address

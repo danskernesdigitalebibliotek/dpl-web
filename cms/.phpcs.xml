@@ -19,6 +19,7 @@
     <exclude name="Drupal.Commenting.HookComment.HookParamDoc"/>
     <exclude name="Drupal.Commenting.HookComment.HookReturnDoc"/>
     <exclude name="Drupal.Commenting.HookComment.HookCommentFormat"/>
+    <exclude name="Drupal.Commenting.FileComment.Missing"/>
     <!--
       Disable variable checking rules which both overlap and conflict with
       PHPStan as suggested by Drupal Coder developers:
