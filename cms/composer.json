@@ -218,6 +218,9 @@
                 "Configure core to not check permissions before accepting an updated module": "patches/disable-core-upload-permission-check.diff",
                 "3073554: Add a token for publication status": "https://www.drupal.org/files/issues/2019-08-09/3073554_10.patch"
             },
+            "drupal/default_content": {
+                "3200212: Overwrite files on import": "https://git.drupalcode.org/project/default_content/-/merge_requests/8.patch"
+            },
             "drupal/focal_point": {
                 "3162210: Preview link accidentally closes the media library": "https://www.drupal.org/files/issues/2020-10-11/preview_link_accidentally_closes_the_media_library-3162210-19.patch"
             },
