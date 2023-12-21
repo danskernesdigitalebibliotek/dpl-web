@@ -7,9 +7,9 @@ dependencies:
   - default_content:default_content
 default_content:
   node:
-    # Article from Figma
+    # Article 1: From Figma
     # https://www.figma.com/file/Zx9GrkFA3l4ISvyZD2q0Qi/Designsystem?type=design&node-id=7477-39048&mode=dev
     - 2cd0fe5e-4159-4452-86aa-e1a1ac8db4a1
-    # Event from Figma
+    # Event 1: From Figma
     # https://www.figma.com/file/Zx9GrkFA3l4ISvyZD2q0Qi/Designsystem?type=design&node-id=7477-39713&mode=dev
     - 56bfda4c-2a5f-4fda-bb98-ffb5106f0a34
