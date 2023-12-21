@@ -110,6 +110,7 @@
         "drupal/purge": "^3.2",
         "drupal/redis": "^1.7",
         "drupal/restui": "^1.21",
+        "drupal/search_api": "^1.31",
         "drupal/twig_tweak": "^3.2.1",
         "drupal/upgrade_status": "^4.0",
         "drupal/varnish_purge": "^2.2",
