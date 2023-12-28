@@ -116,6 +116,7 @@
         "drush/drush": "^12",
         "myclabs/php-enum": "^1.8",
         "phpdocumentor/reflection-docblock": "^5.3",
+        "spatie/color": "^1.5",
         "symfony/property-access": "^6.2",
         "symfony/property-info": "^6.2",
         "thecodingmachine/safe": "^1.3",

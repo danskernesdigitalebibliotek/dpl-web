@@ -5,7 +5,7 @@
  * Primary module hooks for dpl identity module.
  */
 
-use function Safe\substr;
+use Spatie\Color\Hex;
 
 /**
  * Implements hook_preprocess_html().
@@ -23,13 +23,14 @@ function dpl_identity_preprocess_html(array &$variables): void {
     return;
   }
 
-  [$h, $s, $l] = dpl_identity_hex_to_hsl($identityColor);
+  // Use Spatie's Hex class to convert the color.
+  $hslColor = Hex::fromString($identityColor)->toHsl();
 
   $custom_css = "
     :root {
-      --identity-color-h: {$h} !important;
-      --identity-color-s: {$s}% !important;
-      --identity-color-l: {$l}% !important;
+      --identity-color-h: {$hslColor->hue()} !important;
+      --identity-color-s: {$hslColor->saturation()}% !important;
+      --identity-color-l: {$hslColor->lightness()}% !important;
     }
   ";
 
@@ -41,61 +42,4 @@ function dpl_identity_preprocess_html(array &$variables): void {
     ],
     'dpl_identity_custom_identity_color',
   ];
-}
-
-/**
- * Converts a HEX color to its HSL components.
- *
- * @param string $hexColor
- *   The color in hex format.
- *
- * @return array<float>
- *   Returns an array containing the HSL components.
- */
-function dpl_identity_hex_to_hsl(string $hexColor): array {
-  $hexColor = str_replace('#', '', $hexColor);
-
-  $r = hexdec(substr($hexColor, 0, 2));
-  $g = hexdec(substr($hexColor, 2, 2));
-  $b = hexdec(substr($hexColor, 4, 2));
-
-  $r = $r / 255;
-  $g = $g / 255;
-  $b = $b / 255;
-
-  $max = max($r, $g, $b);
-  $min = min($r, $g, $b);
-
-  $l = ($max + $min) / 2;
-  $d = $max - $min;
-
-  // Initialize $h and $s to avoid undefined variable warnings.
-  $h = $s = 0;
-
-  if ($d != 0) {
-    $s = $d / (1 - abs(2 * $l - 1));
-
-    switch ($max) {
-      case $r:
-        $h = 60 * fmod((($g - $b) / $d), 6);
-        if ($b > $g) {
-          $h += 360;
-        }
-        break;
-
-      case $g:
-        $h = 60 * (($b - $r) / $d + 2);
-        break;
-
-      case $b:
-        $h = 60 * (($r - $g) / $d + 4);
-        break;
-    }
-  }
-
-  $h = round($h, 2);
-  $s = round($s * 100, 2);
-  $l = round($l * 100, 2);
-
-  return [$h, $s, $l];
 }
