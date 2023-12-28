@@ -17,7 +17,11 @@ use function Safe\substr;
  */
 function dpl_identity_preprocess_html(array &$variables): void {
   $config = Drupal::config('dpl_identity.settings');
-  $identityColor = $config->get('identity_color') ?? '#365342';
+  $identityColor = $config->get('identity_color');
+
+  if (empty($identityColor)) {
+    return;
+  }
 
   [$h, $s, $l] = dpl_identity_hex_to_hsl($identityColor);
 
