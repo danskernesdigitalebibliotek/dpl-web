@@ -2,40 +2,21 @@
 
 namespace Drupal\dpl_identity\Form;
 
-use Drupal\Core\Config\ConfigFactoryInterface;
-use Drupal\Core\Form\FormBase;
+use Drupal\Core\Form\ConfigFormBase;
 use Drupal\Core\Form\FormStateInterface;
-use Symfony\Component\DependencyInjection\ContainerInterface;
 
 /**
  * Defines a form for setting identity configuration.
  */
-class IdentityConfigForm extends FormBase {
-
-  /**
-   * The config factory service.
-   *
-   * @var \Drupal\Core\Config\ConfigFactoryInterface
-   */
-  protected $configFactory;
-
-  /**
-   * Constructs a new IdentityConfigForm object.
-   *
-   * @param \Drupal\Core\Config\ConfigFactoryInterface $config_factory
-   *   The config factory service.
-   */
-  public function __construct(ConfigFactoryInterface $config_factory) {
-    $this->configFactory = $config_factory;
-  }
+class IdentityConfigForm extends ConfigFormBase {
 
   /**
    * {@inheritdoc}
    */
-  public static function create(ContainerInterface $container): IdentityConfigForm {
-    return new static(
-      $container->get('config.factory')
-    );
+  protected function getEditableConfigNames() {
+    return [
+      'dpl_identity.settings',
+    ];
   }
 
   /**
@@ -46,49 +27,36 @@ class IdentityConfigForm extends FormBase {
   }
 
   /**
-   * Form submission handler.
-   *
-   * @param array $form
-   *   An associative array containing the structure of the form.
-   * @param \Drupal\Core\Form\FormStateInterface $form_state
-   *   The current state of the form.
-   */
-  public function submitForm(array &$form, FormStateInterface $form_state): void {
-    $values = $form_state->getValues();
-    $this->configFactory->getEditable('dpl_identity.settings')
-      ->set('identity_color', $values['identity_color'])
-      ->save();
-  }
-
-  /**
    * Builds the form.
    *
-   * @param array $form
-   *   An associative array containing the structure of the form.
-   * @param \Drupal\Core\Form\FormStateInterface $form_state
-   *   The current state of the form.
-   *
-   * @return array
-   *   The form structure.
+   * {@inheritdoc}
    */
   public function buildForm(array $form, FormStateInterface $form_state) {
     // Load existing configuration for the form.
-    $config = $this->configFactory->get('dpl_identity.settings');
+    $config = $this->config('dpl_identity.settings');
 
     $form['identity_color'] = [
       '#type' => 'color',
-      '#title' => $this->t('Identity Color'),
-      '#default_value' => $config->get('identity_color') ?? '#365342',
-      '#description' => $this->t('Choose library identity color.'),
+      '#title' => $this->t('Identity Color', [], ['context' => 'Identity settings']),
+      '#default_value' => $config->get('identity_color'),
+      '#description' => $this->t('Choose library identity color.', [], ['context' => 'Identity settings']),
     ];
 
-    $form['actions']['submit'] = [
-      '#type' => 'submit',
-      '#value' => $this->t('Save Configuration'),
-      '#button_type' => 'primary',
-    ];
+    return parent::buildForm($form, $form_state);
+  }
 
-    return $form;
+  /**
+   * Form submission handler.
+   *
+   * {@inheritdoc}
+   */
+  public function submitForm(array &$form, FormStateInterface $form_state): void {
+    // Save the configuration.
+    $this->config('dpl_identity.settings')
+      ->set('identity_color', $form_state->getValue('identity_color'))
+      ->save();
+
+    parent::submitForm($form, $form_state);
   }
 
 }
