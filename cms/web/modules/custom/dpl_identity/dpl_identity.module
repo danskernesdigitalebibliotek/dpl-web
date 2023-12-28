@@ -1,0 +1,45 @@
+<?php
+
+/**
+ * @file
+ * Primary module hooks for dpl identity module.
+ */
+
+use Spatie\Color\Hex;
+
+/**
+ * Implements hook_preprocess_html().
+ *
+ * Adds custom inline CSS based on the identity color setting.
+ *
+ * @param array $variables
+ *   An associative array of variables passed to the theme layer.
+ */
+function dpl_identity_preprocess_html(array &$variables): void {
+  $config = Drupal::config('dpl_identity.settings');
+  $identityColor = $config->get('identity_color');
+
+  if (empty($identityColor)) {
+    return;
+  }
+
+  // Use Spatie's Hex class to convert the color.
+  $hslColor = Hex::fromString($identityColor)->toHsl();
+
+  $custom_css = "
+    :root {
+      --identity-color-h: {$hslColor->hue()} !important;
+      --identity-color-s: {$hslColor->saturation()}% !important;
+      --identity-color-l: {$hslColor->lightness()}% !important;
+    }
+  ";
+
+  $variables['#attached']['html_head'][] = [
+    [
+      '#type' => 'inline_template',
+      '#template' => '<style type="text/css">{{ style|safe_join("") }}</style>',
+      '#context' => ['style' => [$custom_css]],
+    ],
+    'dpl_identity_custom_identity_color',
+  ];
+}

@@ -1,0 +1,7 @@
+dpl_identity.settings:
+  path: "/admin/config/dpl_identity/settings"
+  defaults:
+    _form: '\Drupal\dpl_identity\Form\IdentityConfigForm'
+    _title: "Identity Settings"
+  requirements:
+    _permission: "administer site configuration"

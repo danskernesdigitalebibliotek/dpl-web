@@ -1,0 +1,6 @@
+dpl_identity.settings:
+  title: "Identity Settings"
+  description: "Configure identity settings"
+  parent: "system.admin_config_services"
+  route_name: dpl_identity.settings
+  weight: 0
