@@ -38,6 +38,7 @@ $settings['config_exclude_modules'] = [
   'views_ui',
   'restui',
   'upgrade_status',
+  'uuid_url',
 ];
 
 // Defines where the sync folder of your configuration lives. In this case it's
