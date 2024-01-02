@@ -1,0 +1,10 @@
+uuid: f0f194dc-6fad-4ff1-98f1-61b8b7b54f2e
+langcode: en
+status: true
+dependencies: {  }
+id: files
+label: Files
+icon_uuid: null
+icon_default: null
+description: ''
+behavior_plugins: {  }
