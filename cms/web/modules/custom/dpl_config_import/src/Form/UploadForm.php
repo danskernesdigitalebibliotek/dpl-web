@@ -93,7 +93,7 @@ class UploadForm extends FormBase {
     }
 
     try {
-      $yaml_data = $this->yamlParser->parseFile($file->getFileUri());
+      $yaml_data = $this->yamlParser->parseFile((string) $file->getFileUri());
     }
     catch (ParseException $e) {
       $this->messenger->addError($this->t(
