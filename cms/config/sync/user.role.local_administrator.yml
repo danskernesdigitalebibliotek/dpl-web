@@ -12,6 +12,7 @@ dependencies:
     - dpl_instant_loan
     - dpl_library_agency
     - dpl_url_proxy
+    - file
     - filter
     - media
     - node
@@ -39,6 +40,7 @@ permissions:
   - 'delete own article content'
   - 'delete own campaign content'
   - 'delete own event content'
+  - 'delete own files'
   - 'delete own image media'
   - 'edit any article content'
   - 'edit any campaign content'
