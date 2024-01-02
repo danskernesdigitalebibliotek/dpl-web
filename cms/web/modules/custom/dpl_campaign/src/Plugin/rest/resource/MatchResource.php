@@ -245,10 +245,13 @@ class MatchResource extends ResourceBase {
       $image_file = $this->entityTypeManager->getStorage('file')->load($image_item->get('target_id')->getValue());
       /** @var \Drupal\image\Entity\ImageStyle $image_style */
       $image_style = $this->entityTypeManager->getStorage('image_style')->load('campaign_image');
-      $output['image'] = [
-        'url' => $image_style->buildUrl($image_file->getFileUri()),
-        'alt' => $image_item->get('alt')->getValue(),
-      ];
+      $image_file_uri = $image_file->getFileUri();
+      if ($image_file_uri) {
+        $output['image'] = [
+          'url' => $image_style->buildUrl($image_file_uri),
+          'alt' => $image_item->get('alt')->getValue(),
+        ];
+      }
     }
 
     /** @var \Drupal\link\LinkItemInterface|null $link */
