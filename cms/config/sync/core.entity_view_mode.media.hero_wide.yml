@@ -1,0 +1,10 @@
+uuid: 29fb4d73-2ba1-4a03-a74f-9406047ae2a9
+langcode: en
+status: true
+dependencies:
+  module:
+    - media
+id: media.hero_wide
+label: 'Hero wide (4/3)'
+targetEntityType: media
+cache: true

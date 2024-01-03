@@ -1,0 +1,21 @@
+<?php
+
+/**
+ * @file
+ * Functionality for admin / editor UX.
+ */
+
+/**
+ * Implements template_preprocess_html().
+ *
+ * Sets a class to tell our admin.scss that we're on an admin page, and also
+ * loading our custom admin CSS.
+ */
+function dpl_admin_preprocess_html(array &$variables): void {
+  if (!\Drupal::service('router.admin_context')->isAdminRoute()) {
+    return;
+  }
+
+  $variables['attributes']['class'][] = 'is-admin-page';
+  $variables['#attached']['library'][] = 'dpl_admin/base';
+}
