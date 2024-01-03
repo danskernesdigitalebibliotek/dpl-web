@@ -33,6 +33,9 @@ settings:
       event_ticket_category:
         weight: 7
         enabled: true
+      files:
+        weight: 9
+        enabled: false
       links:
         weight: 8
         enabled: false

@@ -21,6 +21,8 @@ default_content:
     # Media used in event 1
     - 618e176a-a45a-4c36-a197-664230aa0a34
     - 65432ee1-43f1-4130-9565-5683467d4b5a
+    # Document used in article 1 and event 1
+    - dc33677f-8894-4717-b34b-d985f6ad875f
   file:
     # Files used in article 1
     - b0fea511-57df-4b49-b127-1c445beacfe7
@@ -29,3 +31,5 @@ default_content:
     # Files used in event 1
     - 3d1cb5f0-b6a4-4235-b4b3-705d5185e90e
     - 6d5e9b4c-389d-4735-a8a3-82883f64aeb0
+    # File used in
+    - 3403d0ba-cbdc-425d-93f4-6cdabb5378b1
