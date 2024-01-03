@@ -8,6 +8,7 @@ _meta:
     aba3cea8-cee5-42c1-a152-e30c2ab135e2: media
     d97a25fd-a6ae-48b9-9a1a-7aec5372688e: media
     eef50571-39dc-461a-96ff-b6b7180ade61: media
+    dc33677f-8894-4717-b34b-d985f6ad875f: media
 default:
   revision_uid:
     -
@@ -258,6 +259,30 @@ default:
                 data-entity-type: ''
                 data-entity-uuid: ''
                 data-entity-substitution: ''
+    -
+      entity:
+        _meta:
+          version: '1.0'
+          entity_type: paragraph
+          uuid: 759d82c8-0bdb-412d-a0b7-e3e504f8e25a
+          bundle: files
+          default_langcode: da
+        default:
+          status:
+            -
+              value: true
+          created:
+            -
+              value: 1704276125
+          behavior_settings:
+            -
+              value: {  }
+          revision_translation_affected:
+            -
+              value: true
+          field_files:
+            -
+              entity: dc33677f-8894-4717-b34b-d985f6ad875f
     -
       entity:
         _meta:
