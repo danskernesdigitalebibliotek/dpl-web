@@ -91,6 +91,7 @@ class FeesListBlock extends BlockBase implements ContainerFactoryPluginInterface
       'fee-payment-modal-notice-text' => $this->t("Paid fees can take up to 24 hours to registrer.", [], ['context' => 'Fees list']),
       'i-accept-text' => $this->t("I accept the", [], ['context' => 'Fees list']),
       'item-fee-amount-text' => $this->t("Fee @fee,-", [], ['context' => 'Fees list']),
+      'material-number-text' => $this->t("# @materialNumber", [], ['context' => 'Fees list']),
       'other-materials-text' => $this->t("Other materials", [], ['context' => 'Fees list']),
       'pay-text' => $this->t("Pay", [], ['context' => 'Fees list']),
       'plus-x-other-materials-text' => $this->t("+ @amount other materials", [], ['context' => 'Fees list']),
