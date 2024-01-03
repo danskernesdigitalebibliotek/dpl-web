@@ -5,8 +5,8 @@
  * Novel Theme.
  */
 
+use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\StringTranslation\TranslatableMarkup;
-
 use function Safe\file_get_contents;
 use function Safe\sprintf;
 
@@ -36,6 +36,12 @@ function novel_theme(
   return [
     'search_result_item' => [
       'variables' => [],
+    ],
+    'novel_logo' => [
+      'variables' => [
+        'image' => NULL,
+        'title' => NULL,
+      ],
     ],
   ];
 }
@@ -74,7 +80,7 @@ function novel_preprocess_dpl_react_app__search_result(array &$variables): void 
   $showing_results_for_text = (
     // We have already translated the string in the react app.
     // phpcs:ignore Drupal.Semantics.FunctionT.NotLiteralString
-    new TranslatableMarkup($loading_text, ['@query' => $q])
+  new TranslatableMarkup($loading_text, ['@query' => $q])
   )->__toString();
 
   $variables += [
@@ -98,4 +104,58 @@ function novel_preprocess_dpl_react_app__search_result(array &$variables): void 
 function novel_preprocess(array &$variables): void {
   $directory = $variables['directory'] ?? 'web/themes/custom/novel';
   $variables['baseIconPath'] = $directory . '/assets/dpl-design-system/icons';
+}
+
+/**
+ * Implements hook_preprocess_page().
+ *
+ * Simplify setting of logo titles and URLs using the theme settings and
+ * defaults.
+ *
+ * @param mixed[] $variables
+ *   The variables for the theme hook.
+ */
+function novel_preprocess_page(array &$variables): void {
+  $variables['logo'] = [
+    '#theme' => 'novel_logo',
+    '#title' => theme_get_setting('logo_title') ?? 'Logo Text',
+  ];
+
+  // Directly assign logo URL if it's set.
+  if ($logo_path = theme_get_setting('logo.path')) {
+    $variables['logo']['#image'] = [
+      '#theme' => 'image_style',
+      '#style_name' => 'logo',
+      '#uri' => $logo_path,
+    ];
+  }
+}
+
+/**
+ * Implements hook_form_system_theme_settings_alter().
+ *
+ * Ensure form settings for logo are initialized and provide a UI for logo
+ * title.
+ *
+ * @param array<string, mixed> $form
+ *   An associative array containing the structure of the form.
+ * @param \Drupal\Core\Form\FormStateInterface $form_state
+ *   The current state of the form.
+ */
+function novel_form_system_theme_settings_alter(array &$form, FormStateInterface $form_state): void {
+  // Initialize $form['logo']['settings'] as array if not already set.
+  $form['logo']['settings'] = $form['logo']['settings'] ?? [];
+
+  // Define the text field for logo title setting.
+  $form['logo']['settings']['logo_title'] = [
+    '#type' => 'textfield',
+    '#title' => t('Title'),
+    '#default_value' => theme_get_setting('logo_title') ?? 'Logo Text',
+    '#description' => t("Text displayed when the screen is too small for the logo image."),
+  ];
+  // Change the description of the logo upload field.
+  $form['logo']['settings']['logo_upload']['#description'] = t('Upload logo in 224x96px in PNG or SVG');
+  // Remove the Path field from the logo and favicon upload fields.
+  unset($form['logo']['settings']['logo_path']);
+  unset($form['favicon']['settings']['favicon_path']);
 }
