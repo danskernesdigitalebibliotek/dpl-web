@@ -96,6 +96,6 @@ function novel_preprocess_dpl_react_app__search_result(array &$variables): void 
  *   The variables for the theme hook.
  */
 function novel_preprocess(array &$variables): void {
-  $baseIconPath = $variables['directory'] . '/assets/dpl-design-system/icons';
-  $variables['baseIconPath'] = $baseIconPath;
+  $directory = $variables['directory'] ?? 'web/themes/custom/novel';
+  $variables['baseIconPath'] = $directory . '/assets/dpl-design-system/icons';
 }
