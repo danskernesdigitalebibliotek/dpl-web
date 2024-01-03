@@ -1,0 +1,12 @@
+{#
+  Minimal default field template.
+  We intentionally use a minimal field template by default. Our markup is
+  dictated by the design system and Drupal default markup will usually not
+  be a fit.
+  Stripping all default markup can make it easier to use the field content
+  directly by default. If something more specific is needed one can always
+  override the field teplate.
+#}
+{% for item in items %}
+  {{ item.content }}
+{% endfor %}
