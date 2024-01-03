@@ -1,9 +1,7 @@
 <header class="header">
     <div class="header__logo-desktop">
         <a class="header__logo-desktop-link" href="/">
-            <div>
-                <img class="logo" src="/themes/custom/novel/images/Testlogo224x96.png" alt="Logo image of libary"/>
-            </div>
+                {{ logo }}
         </a>
     </div>
     <div class="header__menu">
@@ -17,7 +15,7 @@
                     <div class="header__menu-navigation-logo">
                         <div class="logo-fallback">
                             <p class="logo-fallback__text-name">Lyngby-Taarbæk</p>
-                            <p class="logo-fallback__text-libraries">Bibliotekerne</p>
+                            <p class="logo-fallback__text-libraries">{{ "Bibliotekerne"|t }}</p>
                         </div>
                     </div>
                 </div>
