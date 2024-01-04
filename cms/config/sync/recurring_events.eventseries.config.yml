@@ -3,8 +3,8 @@ _core:
 interval: 30
 min_time: '08:00am'
 max_time: '11:45pm'
-date_format: 'F jS, Y h:iA'
-time_format: 'h:i A'
+date_format: 'd/m/y - H:i'
+time_format: 'H:i'
 days: 'monday,tuesday,wednesday,thursday,friday,saturday,sunday'
 limit: 10
 excludes: 1
