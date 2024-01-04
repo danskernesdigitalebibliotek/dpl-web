@@ -3,8 +3,19 @@ langcode: en
 status: true
 dependencies:
   config:
+    - field.field.eventseries.default.field_event_address
+    - field.field.eventseries.default.field_event_description
+    - field.field.eventseries.default.field_event_image
+    - field.field.eventseries.default.field_event_link
+    - field.field.eventseries.default.field_event_paragraphs
+    - field.field.eventseries.default.field_event_place
+    - field.field.eventseries.default.field_event_state
+    - field.field.eventseries.default.field_ticket_categories
     - recurring_events.eventseries_type.default
   module:
+    - address
+    - entity_reference_revisions
+    - link
     - options
     - recurring_events
     - text
@@ -16,37 +27,105 @@ bundle: default
 mode: default
 content:
   body:
+    type: text_default
     label: above
-    weight: 1
-    region: content
     settings: {  }
     third_party_settings: {  }
-    type: text_default
+    weight: 1
+    region: content
   event_instances:
     type: recurring_events_eventinstance_date
-    weight: 3
-    region: content
     label: above
     settings:
       link: '1'
       date_format: 'F jS, Y h:iA'
       separator: ' - '
     third_party_settings: {  }
-  recur_type:
-    label: above
-    weight: 2
+    weight: 3
     region: content
+  field_event_address:
+    type: address_default
+    label: above
     settings: {  }
     third_party_settings: {  }
-    type: list_default
-  title:
-    label: above
-    weight: 0
+    weight: 4
     region: content
+  field_event_description:
+    type: text_default
+    label: above
+    settings: {  }
+    third_party_settings: {  }
+    weight: 5
+    region: content
+  field_event_image:
+    type: entity_reference_entity_view
+    label: above
+    settings:
+      view_mode: default
+      link: false
+    third_party_settings: {  }
+    weight: 6
+    region: content
+  field_event_link:
+    type: link
+    label: above
+    settings:
+      trim_length: 80
+      url_only: false
+      url_plain: false
+      rel: ''
+      target: ''
+    third_party_settings: {  }
+    weight: 7
+    region: content
+  field_event_paragraphs:
+    type: entity_reference_revisions_entity_view
+    label: above
+    settings:
+      view_mode: default
+      link: ''
+    third_party_settings: {  }
+    weight: 10
+    region: content
+  field_event_place:
+    type: string
+    label: above
     settings:
       link_to_entity: false
     third_party_settings: {  }
+    weight: 8
+    region: content
+  field_event_state:
+    type: list_default
+    label: above
+    settings: {  }
+    third_party_settings: {  }
+    weight: 12
+    region: content
+  field_ticket_categories:
+    type: entity_reference_revisions_entity_view
+    label: above
+    settings:
+      view_mode: default
+      link: ''
+    third_party_settings: {  }
+    weight: 11
+    region: content
+  recur_type:
+    type: list_default
+    label: above
+    settings: {  }
+    third_party_settings: {  }
+    weight: 2
+    region: content
+  title:
     type: string
+    label: above
+    settings:
+      link_to_entity: false
+    third_party_settings: {  }
+    weight: 0
+    region: content
 hidden:
   consecutive_recurring_date: true
   custom_date: true

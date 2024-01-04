@@ -1,61 +1,40 @@
-uuid: 77abc330-9037-4fbe-8a3e-d5ac2c1042fd
+uuid: 1671f9da-6b59-4f3d-9afd-ce1395224dcf
 langcode: en
 status: true
 dependencies:
   config:
-    - field.field.eventseries.default.field_event_address
-    - field.field.eventseries.default.field_event_description
-    - field.field.eventseries.default.field_event_image
-    - field.field.eventseries.default.field_event_link
-    - field.field.eventseries.default.field_event_paragraphs
-    - field.field.eventseries.default.field_event_place
-    - field.field.eventseries.default.field_event_state
-    - field.field.eventseries.default.field_ticket_categories
-    - recurring_events.eventseries_type.default
+    - field.field.eventinstance.default.field_event_address
+    - field.field.eventinstance.default.field_event_description
+    - field.field.eventinstance.default.field_event_image
+    - field.field.eventinstance.default.field_event_link
+    - field.field.eventinstance.default.field_event_paragraphs
+    - field.field.eventinstance.default.field_event_place
+    - field.field.eventinstance.default.field_event_state
+    - field.field.eventinstance.default.field_ticket_categories
+    - recurring_events.eventinstance_type.default
   module:
     - address
     - datetime_range
     - link
     - media_library
     - paragraphs
-    - recurring_events
     - text
-_core:
-  default_config_hash: 7_dwlx5EAFGRacPwzHjO_cePFPbST8IjxnowMV4sk0A
-id: eventseries.default.default
-targetEntityType: eventseries
+id: eventinstance.default.default
+targetEntityType: eventinstance
 bundle: default
 mode: default
 content:
   body:
     type: text_textarea
-    weight: 1
+    weight: -4
     region: content
     settings:
       rows: 5
       placeholder: ''
     third_party_settings: {  }
-  consecutive_recurring_date:
-    type: consecutive_recurring_date
-    weight: 3
-    region: content
-    settings: {  }
-    third_party_settings: {  }
-  custom_date:
+  date:
     type: daterange_default
-    weight: 8
-    region: content
-    settings: {  }
-    third_party_settings: {  }
-  daily_recurring_date:
-    type: daily_recurring_date
-    weight: 4
-    region: content
-    settings: {  }
-    third_party_settings: {  }
-  excluded_dates:
-    type: daterange_default
-    weight: 9
+    weight: -4
     region: content
     settings: {  }
     third_party_settings: {  }
@@ -90,7 +69,7 @@ content:
     third_party_settings: {  }
   field_event_paragraphs:
     type: paragraphs
-    weight: 32
+    weight: 30
     region: content
     settings:
       title: Paragraph
@@ -108,7 +87,7 @@ content:
     third_party_settings: {  }
   field_event_place:
     type: string_textfield
-    weight: 30
+    weight: 31
     region: content
     settings:
       size: 60
@@ -116,7 +95,7 @@ content:
     third_party_settings: {  }
   field_event_state:
     type: options_select
-    weight: 34
+    weight: 32
     region: content
     settings: {  }
     third_party_settings: {  }
@@ -138,59 +117,11 @@ content:
         collapse_edit_all: collapse_edit_all
         duplicate: duplicate
     third_party_settings: {  }
-  included_dates:
-    type: daterange_default
-    weight: 10
-    region: content
-    settings: {  }
-    third_party_settings: {  }
-  monthly_recurring_date:
-    type: monthly_recurring_date
-    weight: 6
-    region: content
-    settings: {  }
-    third_party_settings: {  }
-  recur_type:
-    type: options_buttons
-    weight: 2
-    region: content
-    settings: {  }
-    third_party_settings: {  }
   status:
     type: boolean_checkbox
-    weight: 13
-    region: content
-    settings:
-      display_label: true
-    third_party_settings: {  }
-  title:
-    type: string_textfield
-    weight: 0
-    region: content
-    settings:
-      size: 60
-      placeholder: ''
-    third_party_settings: {  }
-  uid:
-    type: entity_reference_autocomplete
     weight: 12
     region: content
     settings:
-      match_operator: CONTAINS
-      match_limit: 10
-      size: 60
-      placeholder: ''
-    third_party_settings: {  }
-  weekly_recurring_date:
-    type: weekly_recurring_date
-    weight: 5
-    region: content
-    settings: {  }
-    third_party_settings: {  }
-  yearly_recurring_date:
-    type: yearly_recurring_date
-    weight: 7
-    region: content
-    settings: {  }
+      display_label: true
     third_party_settings: {  }
 hidden: {  }

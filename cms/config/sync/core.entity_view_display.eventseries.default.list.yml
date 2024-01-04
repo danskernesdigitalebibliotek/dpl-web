@@ -4,6 +4,14 @@ status: true
 dependencies:
   config:
     - core.entity_view_mode.eventseries.list
+    - field.field.eventseries.default.field_event_address
+    - field.field.eventseries.default.field_event_description
+    - field.field.eventseries.default.field_event_image
+    - field.field.eventseries.default.field_event_link
+    - field.field.eventseries.default.field_event_paragraphs
+    - field.field.eventseries.default.field_event_place
+    - field.field.eventseries.default.field_event_state
+    - field.field.eventseries.default.field_ticket_categories
     - recurring_events.eventseries_type.default
   module:
     - text
@@ -15,27 +23,35 @@ bundle: default
 mode: list
 content:
   body:
+    type: text_trimmed
     label: hidden
-    weight: 1
-    region: content
     settings:
       trim_length: 200
     third_party_settings: {  }
-    type: text_trimmed
-  title:
-    label: hidden
-    weight: 0
+    weight: 1
     region: content
+  title:
+    type: string
+    label: hidden
     settings:
       link_to_entity: true
     third_party_settings: {  }
-    type: string
+    weight: 0
+    region: content
 hidden:
   consecutive_recurring_date: true
   custom_date: true
   daily_recurring_date: true
   event_instances: true
   event_registration: true
+  field_event_address: true
+  field_event_description: true
+  field_event_image: true
+  field_event_link: true
+  field_event_paragraphs: true
+  field_event_place: true
+  field_event_state: true
+  field_ticket_categories: true
   monthly_recurring_date: true
   recur_type: true
   weekly_recurring_date: true
