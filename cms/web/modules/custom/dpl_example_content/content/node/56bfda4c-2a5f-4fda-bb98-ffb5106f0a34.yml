@@ -191,9 +191,16 @@ default:
             -
               value: '<h2>Barokken er en kulturperiode der i Danmark gør sig gældende fra omkring 1650 – 1720</h2><p>Barokken er udtryk for en storslået og prangende stilretning inden for billedkunst, musik, arkitektur og litteratur, hvor man dyrkede det teatralske, storladne og sanselige udtryk. I dansk litteraturhistorie er det Anders Arrebo (1587-1637), som indleder barokken med sin oversættelse af Davis salmer i 1623 og Kingo bliver den kanoniserede repræsentant for perioden.<br><br>Barokkens vigtigste prosaværk i Danmark er Leonora Christina Ulfeldts (1621-1698) biografi ”Jammers minde”. ”Jammers minde” beskriver de 22 år, Leonora Christine sad fængslet i Blåtårn, anklaget for højforræderi af kong Frederik den 3.<br><br>Under perioden blev kunsten nærmest propaganda, som bl.a. i form af hyldestdigte understregede, at kongens plads var lige efter Guds. Salmer hyldede Gud som den, der giver verden mening. Samlerne er fyldt med billedsprog og modsætninger, som skal vise splittelsen mellem vores overfladiske liv og Gud, som lover, at der er en mening med tilværelsen.</p>'
               format: basic
+  field_event_partners:
+    -
+      value: 'Aarhus Musikskole'
+    -
+      value: 'Den Vestdanske Filmpulje sammen med Åby Biblioteks venner'
   field_event_place:
     -
       value: Hovedbibliotek
+    -
+      value: 'Greve bibliotek'
   field_event_state:
     -
       value: Active
