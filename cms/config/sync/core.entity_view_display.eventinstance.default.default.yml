@@ -42,6 +42,13 @@ content:
     third_party_settings: {  }
     weight: 2
     region: content
+  event_address:
+    type: address_default
+    label: above
+    settings: {  }
+    third_party_settings: {  }
+    weight: 2
+    region: content
   event_description:
     type: text_default
     label: above
