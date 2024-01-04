@@ -149,18 +149,18 @@ function novel_form_system_theme_settings_alter(array &$form, FormStateInterface
 
   $form['logo']['settings']['logo_title'] = [
     '#type' => 'textfield',
-    '#title' => t('Title', [], ['context' => 'Logo settings']),
+    '#title' => t('Title', [], ['context' => 'Novel settings']),
     '#default_value' => theme_get_setting('logo_title') ?? 'Logo title (bold)',
-    '#description' => t("Enter the text that will be shown as the logo on smaller screens.", [], ['context' => 'Logo settings']),
+    '#description' => t("Enter the text that will be shown as the logo on smaller screens.", [], ['context' => 'Novel settings']),
   ];
   $form['logo']['settings']['logo_place'] = [
     '#type' => 'textfield',
-    '#title' => t('Place', [], ['context' => 'Logo settings']),
+    '#title' => t('Place', [], ['context' => 'Novel settings']),
     '#default_value' => theme_get_setting('logo_place') ?? 'Logo place',
-    '#description' => t("Text displayed under the logo title.", [], ['context' => 'Logo settings']),
+    '#description' => t("Text displayed under the logo title.", [], ['context' => 'Novel settings']),
   ];
 
-  $form['logo']['settings']['logo_upload']['#description'] = t('Upload logo in 224x96px in PNG or SVG');
+  $form['logo']['settings']['logo_upload']['#description'] = t('Upload logo in 224x96px in PNG or SVG', [], ['context' => 'Novel settings']);
   // We want to hide the logo and favicon path to simplify the UI.
   unset($form['logo']['settings']['logo_path']);
   unset($form['favicon']['settings']['favicon_path']);
