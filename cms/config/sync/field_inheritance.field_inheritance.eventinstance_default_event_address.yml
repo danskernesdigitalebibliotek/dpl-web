@@ -1,9 +1,9 @@
-uuid: bca6c20c-8f15-4a7f-bb1f-6450b0ca9e1a
+uuid: 75795bd9-0a9b-46e9-8195-c071def1ec14
 langcode: en
 status: true
 dependencies: {  }
-id: eventinstance_default_event_addres
-label: 'Event addres'
+id: eventinstance_default_event_address
+label: 'Event address'
 type: fallback
 sourceEntityType: eventseries
 sourceEntityBundle: default
