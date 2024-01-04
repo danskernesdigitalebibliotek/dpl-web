@@ -15,6 +15,7 @@ dependencies:
     - dpl_mapp
     - dpl_url_proxy
     - entity_reference_revisions
+    - file
     - filter
     - language
     - locale
@@ -59,6 +60,7 @@ permissions:
   - 'delete own article content'
   - 'delete own campaign content'
   - 'delete own event content'
+  - 'delete own files'
   - 'delete own image media'
   - 'edit any article content'
   - 'edit any campaign content'

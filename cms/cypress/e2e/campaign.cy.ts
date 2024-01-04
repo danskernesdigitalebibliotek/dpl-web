@@ -435,7 +435,10 @@ const deleteCampaign = (title: string) => {
         .parent("ul.dropbutton")
         .find("li.delete a")
         .click();
-      cy.get("#edit-submit").should("exist").click();
+      cy.get(".ui-dialog .form-submit")
+        .filter(":visible")
+        .should("exist")
+        .click();
     });
 };
 

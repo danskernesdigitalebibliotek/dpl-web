@@ -4,7 +4,9 @@ status: false
 dependencies:
   config:
     - core.entity_view_mode.node.teaser
+    - field.field.node.article.field_canonical_url
     - field.field.node.article.field_override_author
+    - field.field.node.article.field_paragraphs
     - field.field.node.article.field_show_override_author
     - field.field.node.article.field_subtitle
     - node.type.article
