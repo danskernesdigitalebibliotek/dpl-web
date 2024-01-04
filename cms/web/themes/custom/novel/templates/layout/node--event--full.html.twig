@@ -48,25 +48,17 @@
             {{ "Place"|trans }}:
           </dt>
           <dd class="list-description__value">
-            <ul>
-              {% for place in content.field_event_place['#items'] %}
-                <li>{{ place.value }}</li>
-              {% endfor %}
-            </ul>
+            {{ content.field_event_place }}
           </dd>
         </div>
       {% endif %}
-      {% if elements.field_event_partners.0 %}
+      {% if content.field_event_partners.0 %}
         <div class="list-description__item">
           <dt class="list-description__key">
             {{ "Partners"|trans }}:
           </dt>
           <dd class="list-description__value">
-            <ul>
-              {% for partner in elements.field_event_partners['#items'] %}
-                <li>{{ partner.value }}</li>
-              {% endfor %}
-            </ul>
+            {{ content.field_event_partners }}
           </dd>
         </div>
       {% endif %}
