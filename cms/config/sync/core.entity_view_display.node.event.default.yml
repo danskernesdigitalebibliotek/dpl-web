@@ -9,6 +9,7 @@ dependencies:
     - field.field.node.event.field_event_image
     - field.field.node.event.field_event_link
     - field.field.node.event.field_event_paragraphs
+    - field.field.node.event.field_event_partners
     - field.field.node.event.field_event_place
     - field.field.node.event.field_event_state
     - field.field.node.event.field_ticket_categories
@@ -67,6 +68,14 @@ content:
       link: ''
     third_party_settings: {  }
     weight: 7
+    region: content
+  field_event_partners:
+    type: string
+    label: above
+    settings:
+      link_to_entity: false
+    third_party_settings: {  }
+    weight: 8
     region: content
   field_event_place:
     type: string

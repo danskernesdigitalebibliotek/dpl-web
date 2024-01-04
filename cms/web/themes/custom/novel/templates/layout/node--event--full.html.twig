@@ -1,19 +1,19 @@
 <article {{ attributes.addClass('event-page') }}>
   <header class="event-header">
-        <section class="event-header__content">
-            <!-- Tag -->
-            {{ content.field_event_date }}
-            <h1 class="event-header__title">{{ label }}</h1>
-            {{ content.field_event_link }}
-        </section>
-        <section class="event-header__visual ">
+    <section class="event-header__content">
+      <!-- Tag -->
+      {{ content.field_event_date }}
+      <h1 class="event-header__title">{{ label }}</h1>
+      {{ content.field_event_link }}
+    </section>
+    <section class="event-header__visual ">
       {% if content.field_event_image.0 %}
         {{ content.field_event_image }}
-        {% else %}
+      {% else %}
         <div class="image-credited__no-image"></div>
       {% endif %}
-        </section>
-    </header>
+    </section>
+  </header>
 
   <section class="event-description">
     <h2 class="event-description__title">{{ "Description"|trans }}</h2>
@@ -25,15 +25,15 @@
     </div>
     <dl class="list-description event-description__info list-description--event">
       {% if content.field_event_date.0 %}
-                <div class="list-description__item">
-                    <dt class="list-description__key">{{ "Time"|trans }}</dt>
-                    <dd class="list-description__value">
-                        {{ content.field_event_date.0.start_date["#markup"]|date("H:i") }}
-                        -
-                        {{ content.field_event_date.0.end_date["#markup"]|date("H:i") }}
-                    </dd>
-                </div>
-            {% endif %}
+        <div class="list-description__item">
+          <dt class="list-description__key">{{ "Time"|trans }}</dt>
+          <dd class="list-description__value">
+            {{ content.field_event_date.0.start_date["#markup"]|date("H:i") }}
+            -
+            {{ content.field_event_date.0.end_date["#markup"]|date("H:i") }}
+          </dd>
+        </div>
+      {% endif %}
       {% if content.field_ticket_categories.0 %}
         <div class="list-description__item">
           <dt class="list-description__key">{{ "Price"|trans }}</dt>
@@ -43,14 +43,32 @@
         </div>
       {% endif %}
       {% if content.field_event_place.0 %}
-      <div class="list-description__item">
-        <dt class="list-description__key">
-          {{ "Place"|trans }}:
-        </dt>
-        <dd class="list-description__value">
-          {{ content.field_event_place }}
-        </dd>
-      </div>
+        <div class="list-description__item">
+          <dt class="list-description__key">
+            {{ "Place"|trans }}:
+          </dt>
+          <dd class="list-description__value">
+            <ul>
+              {% for place in content.field_event_place['#items'] %}
+                <li>{{ place.value }}</li>
+              {% endfor %}
+            </ul>
+          </dd>
+        </div>
+      {% endif %}
+      {% if elements.field_event_partners.0 %}
+        <div class="list-description__item">
+          <dt class="list-description__key">
+            {{ "Partners"|trans }}:
+          </dt>
+          <dd class="list-description__value">
+            <ul>
+              {% for partner in elements.field_event_partners['#items'] %}
+                <li>{{ partner.value }}</li>
+              {% endfor %}
+            </ul>
+          </dd>
+        </div>
       {% endif %}
       <div class="list-description__item">
         <dt class="list-description__key">
