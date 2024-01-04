@@ -1,5 +1,0 @@
-name: "dpl identity"
-type: module
-description: "Add identity settings"
-package: DPL
-core_version_requirement: ^10
