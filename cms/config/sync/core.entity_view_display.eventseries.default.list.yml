@@ -1,0 +1,42 @@
+uuid: b4fd16fb-5420-4eb2-8752-4b54312d2693
+langcode: en
+status: true
+dependencies:
+  config:
+    - core.entity_view_mode.eventseries.list
+    - recurring_events.eventseries_type.default
+  module:
+    - text
+_core:
+  default_config_hash: SH4PVwBZQc690I-apt_nNKlkhxnZyFlf68d-7mxruF8
+id: eventseries.default.list
+targetEntityType: eventseries
+bundle: default
+mode: list
+content:
+  body:
+    label: hidden
+    weight: 1
+    region: content
+    settings:
+      trim_length: 200
+    third_party_settings: {  }
+    type: text_trimmed
+  title:
+    label: hidden
+    weight: 0
+    region: content
+    settings:
+      link_to_entity: true
+    third_party_settings: {  }
+    type: string
+hidden:
+  consecutive_recurring_date: true
+  custom_date: true
+  daily_recurring_date: true
+  event_instances: true
+  event_registration: true
+  monthly_recurring_date: true
+  recur_type: true
+  weekly_recurring_date: true
+  yearly_recurring_date: true
