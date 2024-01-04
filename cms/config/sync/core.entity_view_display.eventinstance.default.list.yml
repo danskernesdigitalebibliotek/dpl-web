@@ -4,9 +4,18 @@ status: true
 dependencies:
   config:
     - core.entity_view_mode.eventinstance.list
+    - field.field.eventinstance.default.field_event_address
+    - field.field.eventinstance.default.field_event_description
+    - field.field.eventinstance.default.field_event_image
+    - field.field.eventinstance.default.field_event_link
+    - field.field.eventinstance.default.field_event_paragraphs
+    - field.field.eventinstance.default.field_event_place
+    - field.field.eventinstance.default.field_event_state
+    - field.field.eventinstance.default.field_ticket_categories
     - recurring_events.eventinstance_type.default
   module:
     - datetime_range
+    - text
 _core:
   default_config_hash: ynM97GAGTtZBjg1uuiiRFaP8WTq766yoANHsZJ41__4
 id: eventinstance.default.list
@@ -15,30 +24,38 @@ bundle: default
 mode: list
 content:
   date:
-    label: hidden
     type: daterange_default
-    weight: 1
+    label: hidden
     settings:
       timezone_override: ''
       format_type: short
       separator: '-'
-    region: content
     third_party_settings: {  }
+    weight: 1
+    region: content
   description:
     type: text_trimmed
-    weight: 2
-    region: content
     label: visually_hidden
     settings:
       trim_length: 200
     third_party_settings: {  }
+    weight: 2
+    region: content
   title:
     type: string
-    weight: 0
-    region: content
     label: hidden
     settings:
       link_to_entity: true
     third_party_settings: {  }
+    weight: 0
+    region: content
 hidden:
   body: true
+  field_event_address: true
+  field_event_description: true
+  field_event_image: true
+  field_event_link: true
+  field_event_paragraphs: true
+  field_event_place: true
+  field_event_state: true
+  field_ticket_categories: true
