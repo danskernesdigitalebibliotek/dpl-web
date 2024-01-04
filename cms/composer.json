@@ -225,6 +225,9 @@
             "drupal/default_content": {
                 "3200212: Overwrite files on import": "https://git.drupalcode.org/project/default_content/-/merge_requests/8.patch"
             },
+            "drupal/field_inheritance": {
+                "3330386: field_inheritance_form_alter should enforce module permissions": "https://git.drupalcode.org/project/field_inheritance/-/commit/bc3d26cdce8c09d5b6275fc126e35bc7e239c7d1.patch"
+            },
             "drupal/focal_point": {
                 "3162210: Preview link accidentally closes the media library": "https://www.drupal.org/files/issues/2020-10-11/preview_link_accidentally_closes_the_media_library-3162210-19.patch"
             },
