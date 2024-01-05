@@ -57,7 +57,7 @@ class PriceFormatter {
   public function formatPriceRange(array $prices): string {
     sort($prices);
 
-    // Check if all prices are zero (free) or the array is empty.
+    // Check if the array is empty or all prices are zero (free).
     if (empty($prices) || max($prices) == 0) {
       return $this->translation->translate("Free");
     }
@@ -66,16 +66,23 @@ class PriceFormatter {
     // Remove free prices (0 values) for further processing.
     $filtered_prices = array_filter($prices, fn($price) => $price > 0);
 
-    // Format the price range.
-    $price_range = array_map(fn($price) => $this->formatRawPrice((string) $price), $filtered_prices);
-    $formatted_price_range = implode(' - ', $price_range);
+    // Determine the highest price in the range.
+    $highest_price = max($filtered_prices);
 
-    // Prepend "Free" if there are free prices and other prices.
-    if ($has_free_price && !empty($filtered_prices)) {
-      $formatted_price_range = $this->translation->translate("Free") . ' - ' . $formatted_price_range;
+    // Format the highest price.
+    $formatted_highest_price = $this->formatRawPrice((string) $highest_price);
+
+    // Construct the price range string.
+    if ($has_free_price) {
+      // Only display "Free" and the highest price.
+      return $this->translation->translate("Free") . ' - ' . $formatted_highest_price . ' kr.';
     }
-
-    return $formatted_price_range . ' kr.';
+    else {
+      // If no free price, display the range from the lowest to highest price.
+      $lowest_price = min($filtered_prices);
+      $formatted_lowest_price = $this->formatRawPrice((string) $lowest_price);
+      return $formatted_lowest_price . ($lowest_price != $highest_price ? ' - ' . $formatted_highest_price : '') . ' kr.';
+    }
   }
 
   /**
@@ -90,7 +97,7 @@ class PriceFormatter {
    * @return string
    *   Formatted price number without currency suffix.
    */
-  protected function formatRawPrice(string $price_string): string {
+  public function formatRawPrice(string $price_string): string {
     $price = BigDecimal::of($price_string);
 
     if ($price->hasNonZeroFractionalPart()) {
