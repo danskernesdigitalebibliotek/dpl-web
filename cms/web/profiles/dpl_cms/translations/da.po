@@ -2588,7 +2588,7 @@ msgstr "Skal hentes online"
 
 #: 
 msgid "Dashboard"
-msgstr "Mit overblik"
+msgstr "Dit overblik"
 
 #: 
 msgctxt "Library Agency Configuration"
@@ -2691,7 +2691,7 @@ msgstr "Default interesseperiode skal indstilles i feltet \"Default interesseper
 #: 
 msgctxt "Patron menu"
 msgid "Dashboard"
-msgstr "Mit overblik"
+msgstr "Dit overblik"
 
 #: 
 msgctxt "Work Page"
