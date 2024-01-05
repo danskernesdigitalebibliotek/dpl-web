@@ -9,6 +9,7 @@ _meta:
     d97a25fd-a6ae-48b9-9a1a-7aec5372688e: media
     eef50571-39dc-461a-96ff-b6b7180ade61: media
     dc33677f-8894-4717-b34b-d985f6ad875f: media
+    f0204f0b-1f63-4c76-bb67-e3f7489ee392: media
 default:
   revision_uid:
     -
@@ -308,6 +309,30 @@ default:
             -
               value: "<ol><li>Jesper Stein har med 'Rampen', udgivet på Politikens Forlag, skrevet hudløst ærligt om sin families opløsning. I romanen ser han tilbage på sine forældres opslidende og uværdige skilsmisse. Mens han forsøger at forstå dem og sig selv, ser han samtidig sine egne dæmoner, i form af et periodisk og massivt alkoholmisbrug, i øjnene.</li><li>Jesper Stein har med 'Rampen', udgivet på Politikens Forlag, skrevet hudløst ærligt om sin families opløsning. I romanen ser han tilbage på sine forældres opslidende og uværdige skilsmisse. Mens han forsøger at forstå dem og sig selv, ser han samtidig sine egne dæmoner, i form af et periodisk og massivt alkoholmisbrug, i øjnene.</li><li>Jesper Stein har med 'Rampen', udgivet på Politikens Forlag, skrevet hudløst ærligt om sin families opløsning. I romanen ser han tilbage på sine forældres opslidende og uværdige skilsmisse. Mens han forsøger at forstå dem og sig selv, ser han samtidig sine egne dæmoner, i form af et periodisk og massivt alkoholmisbrug, i øjnene.</li></ol><p><a href=\"/\">Følg prisoverrækkelsen live fra kl. 15:30</a></p><p><a href=\"/\">Følg prisoverrækkelsen live fra text text text text text text text kl. 15:30</a></p><p><a href=\"/\">Følg prisoverrækkelsen live fra kl. 15:30</a></p><ul><li>Jesper Stein har med 'Rampen', udgivet på Politikens Forlag, skrevet hudløst ærligt om sin families opløsning. I romanen ser han tilbage på sine forældres opslidende og uværdige skilsmisse. Mens han forsøger at forstå dem og sig selv, ser han samtidig sine egne dæmoner, i form af et periodisk og massivt alkoholmisbrug, i øjnene</li><li>Jesper Stein har med 'Rampen', udgivet på Politikens Forlag, skrevet hudløst ærligt om sin families opløsning. I romanen ser han tilbage på sine forældres opslidende og uværdige skilsmisse. Mens han forsøger at forstå dem og sig selv, ser han samtidig sine egne dæmoner, i form af et periodisk og massivt alkoholmisbrug, i øjnene</li><li>Jesper Stein har med 'Rampen', udgivet på Politikens Forlag, skrevet hudløst ærligt om sin families opløsning. I romanen ser han tilbage på sine forældres opslidende og uværdige skilsmisse. Mens han forsøger at forstå dem og sig selv, ser han samtidig sine egne dæmoner, i form af et periodisk og massivt alkoholmisbrug, i øjnene</li></ul>"
               format: basic
+    -
+      entity:
+        _meta:
+          version: '1.0'
+          entity_type: paragraph
+          uuid: 5b2e6dd2-e87a-439b-9fd7-c3dd2af54e64
+          bundle: video
+          default_langcode: da
+        default:
+          status:
+            -
+              value: true
+          created:
+            -
+              value: 1704456492
+          behavior_settings:
+            -
+              value: {  }
+          revision_translation_affected:
+            -
+              value: true
+          field_embed_video:
+            -
+              entity: f0204f0b-1f63-4c76-bb67-e3f7489ee392
   field_show_override_author:
     -
       value: true
