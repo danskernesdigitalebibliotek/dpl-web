@@ -1,4 +1,4 @@
-{% set has_image = (image is not empty) %}
+{% set has_image = (image is not empty) and logo_img_enable %}
 
 <figure class="logo">
 	{% if has_image %}
