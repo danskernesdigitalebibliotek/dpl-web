@@ -25,28 +25,21 @@ class PriceFormatter {
    * Format a single price.
    */
   public function formatPrice(string $price_string): string {
-    $translation_options = ['context' => 'dpl_event'];
-
     $price = BigDecimal::of($price_string);
+
     if ($price->isEqualTo(0)) {
       // Events with 0 cost should show "Free" instead of a numeric price.
-      $price_string = $this->translation->translate("Free", [], $translation_options);
+      return $this->translation->translate("Free");
     }
     else {
-      // Add the kr. suffix for now.
+      // Format the numeric part of the price using formatRawPrice.
+      $formatted_price = $this->formatRawPrice($price_string);
+
+      // Add the 'kr.' suffix for now.
       // For multi-currency support this should be replaced by a configurable
       // suffix and appropriate separators.
-      if (!$price->hasNonZeroFractionalPart()) {
-        // Strip fractions from prices which do not use them.
-        $price_string = $this->translation->translate("@price kr.", ['@price' => $price->getIntegralPart()]);
-      }
-      else {
-        // Prices with fractions must be output with exactly two digits in the
-        // fraction to match standard formatting of prices.
-        $price_string = $this->translation->translate("@price kr.", ['@price' => number_format($price->toFloat(), 2, ',', '.')]);
-      }
+      return $formatted_price . ' kr.';
     }
-    return $price_string;
   }
 
   /**
