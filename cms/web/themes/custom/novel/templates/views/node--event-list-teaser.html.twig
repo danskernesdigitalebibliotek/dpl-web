@@ -7,7 +7,7 @@
     {% endif %}
   </div>
   <div class="event-list-item__content">
-    <div aria-pressed="false" class="tag tag--fill cursor-pointer tag--small event-list-item__tag">foredrag</div>
+    <div class="tag tag--fill cursor-pointer tag--small event-list-item__tag">foredrag</div>
     <time class="event-list-item__date" datetime="{{ content.field_event_date['#items'].0.value|date('Y-m-d') }}">
       {{ content.field_event_date|render|striptags }}
     </time>
