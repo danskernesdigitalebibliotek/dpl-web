@@ -1,9 +1,9 @@
-uuid: ada8a99f-6c6b-40e3-886a-519af92e33e6
+uuid: db792138-6849-4d88-981d-639fe7fdd885
 langcode: en
 status: true
 dependencies:
   config:
-    - core.entity_view_mode.node.event_list_teaser
+    - core.entity_view_mode.node.list_teaser
     - field.field.node.event.field_event_address
     - field.field.node.event.field_event_date
     - field.field.node.event.field_event_description
@@ -20,10 +20,10 @@ dependencies:
     - link
     - text
     - user
-id: node.event.event_list_teaser
+id: node.event.list_teaser
 targetEntityType: node
 bundle: event
-mode: event_list_teaser
+mode: list_teaser
 content:
   field_event_address:
     type: address_default

@@ -183,7 +183,7 @@ display:
         options:
           view_modes:
             'entity:node':
-              event: event_list_teaser
+              event: list_teaser
       query:
         type: search_api_query
         options:
