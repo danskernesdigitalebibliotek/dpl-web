@@ -203,3 +203,33 @@ function dpl_event_preprocess_field__field_ticket_category_price(array &$variabl
   }, $items->getValue());
   $variables['prices'] = $prices;
 }
+
+/**
+ * Implements hook_preprocess_HOOK() for node templates.
+ *
+ * Preprocesses variables for node templates.
+ *
+ * Includes generating ticket pricing display in 'event_list_teaser' view mode.
+ *
+ * @param mixed[] $variables
+ *   The variables array for the node template.
+ *
+ * @throws \Safe\Exceptions\ArrayException
+ */
+function dpl_event_preprocess_node(array &$variables): void {
+  if ($variables['node']->hasField('field_ticket_categories')) {
+    $ticket_categories = $variables['node']->get('field_ticket_categories')->referencedEntities();
+    $prices = [];
+
+    // Collect prices from ticket categories.
+    foreach ($ticket_categories as $category) {
+      if ($category->hasField('field_ticket_category_price') && !$category->get('field_ticket_category_price')->isEmpty()) {
+        $prices[] = $category->get('field_ticket_category_price')->value;
+      }
+    }
+
+    // Get the PriceFormatter service.
+    $price_formatter = \Drupal::service('dpl_event.price_formatter');
+    $variables['ticket_price_display'] = $price_formatter->formatPriceRange($prices);
+  }
+}
