@@ -1,12 +1,11 @@
 {% set has_image = (image is not empty) %}
 
 <figure class="logo">
-  {% if has_image %}
-    {{ image }}
-  {% else %}
-    <figcaption class="logo-fallback">
-      <p class="logo-fallback__text-name">{{ title }}</p>
-      <p class="logo-fallback__text-libraries">{{ place }}</p>
-    </figcaption>
-  {% endif %}
+	{% if has_image %}
+		{{ image }}
+	{% endif %}
+	<figcaption class="logo-fallback {{ has_image ? 'logo-fallback--has-image' : '' }}">
+		<p class=" logo-fallback__text-name">{{ title }}</p>
+		<p class="logo-fallback__text-libraries">{{ place }}</p>
+	</figcaption>
 </figure>
