@@ -4,6 +4,6 @@ status: true
 dependencies: {  }
 _core:
   default_config_hash: '-FwhwjC3pA-4RAaXliUK9MHNnIZsm8fgNSswUnfXSXQ'
-label: Default
 id: default
+label: Default
 description: 'A default event instance type.'
