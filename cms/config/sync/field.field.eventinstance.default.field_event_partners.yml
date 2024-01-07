@@ -1,0 +1,19 @@
+uuid: ada223cc-0907-4124-8470-684974e54b0d
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.eventinstance.field_event_partners
+    - recurring_events.eventinstance_type.default
+id: eventinstance.default.field_event_partners
+field_name: field_event_partners
+entity_type: eventinstance
+bundle: default
+label: Partners
+description: 'A list of partners for the event'
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: string

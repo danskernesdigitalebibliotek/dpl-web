@@ -9,12 +9,17 @@ dependencies:
     - field.field.eventinstance.default.field_event_image
     - field.field.eventinstance.default.field_event_link
     - field.field.eventinstance.default.field_event_paragraphs
+    - field.field.eventinstance.default.field_event_partners
     - field.field.eventinstance.default.field_event_place
     - field.field.eventinstance.default.field_event_state
     - field.field.eventinstance.default.field_ticket_categories
     - recurring_events.eventinstance_type.default
   module:
+    - address
     - datetime_range
+    - entity_reference_revisions
+    - link
+    - options
     - text
 _core:
   default_config_hash: ynM97GAGTtZBjg1uuiiRFaP8WTq766yoANHsZJ41__4
@@ -41,6 +46,73 @@ content:
     third_party_settings: {  }
     weight: 2
     region: content
+  event_address:
+    type: address_default
+    label: visible
+    settings: {  }
+    third_party_settings: {  }
+    weight: 51
+    region: content
+  event_description:
+    type: text_default
+    label: visible
+    settings: {  }
+    third_party_settings: {  }
+    weight: 52
+    region: content
+  event_image:
+    type: entity_reference_label
+    label: visible
+    settings:
+      link: true
+    third_party_settings: {  }
+    weight: 53
+    region: content
+  event_link:
+    type: link
+    label: visible
+    settings:
+      trim_length: 80
+      url_only: false
+      url_plain: false
+      rel: ''
+      target: ''
+    third_party_settings: {  }
+    weight: 54
+    region: content
+  event_paragraphs:
+    type: entity_reference_revisions_entity_view
+    label: visible
+    settings:
+      view_mode: default
+      link: ''
+    third_party_settings: {  }
+    weight: 55
+    region: content
+  event_place:
+    type: string
+    label: visible
+    settings:
+      link_to_entity: false
+    third_party_settings: {  }
+    weight: 56
+    region: content
+  event_state:
+    type: list_default
+    label: visible
+    settings: {  }
+    third_party_settings: {  }
+    weight: 57
+    region: content
+  event_ticket_categories:
+    type: entity_reference_revisions_entity_view
+    label: visible
+    settings:
+      view_mode: default
+      link: ''
+    third_party_settings: {  }
+    weight: 58
+    region: content
   title:
     type: string
     label: hidden
@@ -56,6 +128,7 @@ hidden:
   field_event_image: true
   field_event_link: true
   field_event_paragraphs: true
+  field_event_partners: true
   field_event_place: true
   field_event_state: true
   field_ticket_categories: true
