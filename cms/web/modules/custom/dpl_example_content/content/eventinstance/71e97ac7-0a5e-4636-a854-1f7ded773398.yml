@@ -1,0 +1,264 @@
+_meta:
+  version: '1.0'
+  entity_type: eventinstance
+  uuid: 71e97ac7-0a5e-4636-a854-1f7ded773398
+  bundle: default
+  default_langcode: en
+  depends:
+    c8177097-1438-493e-8177-e8ef968cc133: eventseries
+    618e176a-a45a-4c36-a197-664230aa0a34: media
+    dc33677f-8894-4717-b34b-d985f6ad875f: media
+    65432ee1-43f1-4130-9565-5683467d4b5a: media
+default:
+  revision_uid:
+    -
+      target_id: 1
+  status:
+    -
+      value: true
+  uid:
+    -
+      target_id: 1
+  date:
+    -
+      value: '2031-12-06T18:30:00'
+      end_value: '2032-01-12T20:00:00'
+  eventseries_id:
+    -
+      entity: c8177097-1438-493e-8177-e8ef968cc133
+  created:
+    -
+      value: 1704607459
+  revision_translation_affected:
+    -
+      value: true
+  metatag:
+    -
+      tag: meta
+      attributes:
+        name: title
+        content: '| DPL CMS'
+    -
+      tag: link
+      attributes:
+        rel: canonical
+        href: 'http://dapple-cms.docker/user/login'
+  event_address:
+    -
+      langcode: en
+      country_code: DK
+      locality: Aarhus
+      postal_code: '8000'
+      address_line1: 'Kampmanns Plads 2'
+  event_description:
+    -
+      value: '<p>Foreningen for Integreret Moderne Dans arbejder med at udvide normalitetsbegrebet i scenekunsten. For hvad er normalt? Rosenreglen og Mødrenes hus. I 2022 udgav hun også den stærkt politiske digtsamling Jeg vil have en statsminister.</p>'
+      format: basic
+  event_image:
+    -
+      entity: 618e176a-a45a-4c36-a197-664230aa0a34
+  event_link:
+    -
+      uri: 'https://billetto.dk/'
+      title: ''
+      options: {  }
+  event_paragraphs:
+    -
+      entity:
+        _meta:
+          version: '1.0'
+          entity_type: paragraph
+          uuid: 8c45af24-0412-49b6-8d46-baf4117606ea
+          bundle: text_body
+          default_langcode: en
+        default:
+          status:
+            -
+              value: true
+          created:
+            -
+              value: 1704607118
+          behavior_settings:
+            -
+              value: {  }
+          revision_translation_affected:
+            -
+              value: true
+          field_body:
+            -
+              value: '<h2>Om udstillingen</h2><p>Deltagende kunstnere: Ei Arakawa, Mohamed Bourouissa, Cao Fei, Simon Denny, Lara Favaretto, GCC, Guan Xiao, Shadi Habib Allah, Roger Hiorns, Oliver Laric, Liz Magic Laser, Katja Novitskova, Laura Owens, Yuri Pattison, Sondra Perry, Josephine Pryde, Nick Relph, Cameron Rowland, Hito Steyerl, Martine Syms, Nora Turato.<br><br>Post-Capital: Art and the Economics of the Digital Age er kurateret af Michelle Cotton og produceret af Mudam Luxembourg – Musée d’Art Moderne Grand-Duc Jean i tæt samarbejde med Kunsthal Charlottenborg.</p><p><a href="https://www.danskdanseteater.dk/">Planlæg dit besøg</a>.</p>'
+              format: basic
+    -
+      entity:
+        _meta:
+          version: '1.0'
+          entity_type: paragraph
+          uuid: cff285c5-8332-43e0-89cd-d9dfb2addcaa
+          bundle: links
+          default_langcode: en
+        default:
+          status:
+            -
+              value: true
+          created:
+            -
+              value: 1704607139
+          behavior_settings:
+            -
+              value: {  }
+          revision_translation_affected:
+            -
+              value: true
+          field_link:
+            -
+              uri: 'https://www.danskdanseteater.dk/'
+              title: 'Se alle de nominerede til Modern Dans 2022 på moderndans.dk'
+              options:
+                href: 'https://www.danskdanseteater.dk/'
+                data-entity-type: ''
+                data-entity-uuid: ''
+                data-entity-substitution: ''
+    -
+      entity:
+        _meta:
+          version: '1.0'
+          entity_type: paragraph
+          uuid: 2afaa805-058c-471e-aacb-1a8ce2ae6fb8
+          bundle: files
+          default_langcode: en
+        default:
+          status:
+            -
+              value: true
+          created:
+            -
+              value: 1704607178
+          behavior_settings:
+            -
+              value: {  }
+          revision_translation_affected:
+            -
+              value: true
+          field_files:
+            -
+              entity: dc33677f-8894-4717-b34b-d985f6ad875f
+    -
+      entity:
+        _meta:
+          version: '1.0'
+          entity_type: paragraph
+          uuid: 2984685a-eeb9-4adb-901b-1aed453e034c
+          bundle: medias
+          default_langcode: en
+        default:
+          status:
+            -
+              value: true
+          created:
+            -
+              value: 1704607213
+          behavior_settings:
+            -
+              value: {  }
+          revision_translation_affected:
+            -
+              value: true
+          field_medias:
+            -
+              entity: 65432ee1-43f1-4130-9565-5683467d4b5a
+    -
+      entity:
+        _meta:
+          version: '1.0'
+          entity_type: paragraph
+          uuid: 34dbdb93-9d66-4658-b7c9-d1f74e6bf93b
+          bundle: text_body
+          default_langcode: en
+        default:
+          status:
+            -
+              value: true
+          created:
+            -
+              value: 1704607234
+          behavior_settings:
+            -
+              value: {  }
+          revision_translation_affected:
+            -
+              value: true
+          field_body:
+            -
+              value: '<h2>Barokken er en kulturperiode der i Danmark gør sig gældende fra omkring 1650 – 1720</h2><p>Barokken er udtryk for en storslået og prangende stilretning inden for billedkunst, musik, arkitektur og litteratur, hvor man dyrkede det teatralske, storladne og sanselige udtryk. I dansk litteraturhistorie er det Anders Arrebo (1587-1637), som indleder barokken med sin oversættelse af Davis salmer i 1623 og Kingo bliver den kanoniserede repræsentant for perioden.<br><br>Barokkens vigtigste prosaværk i Danmark er Leonora Christina Ulfeldts (1621-1698) biografi ”Jammers minde”. ”Jammers minde” beskriver de 22 år, Leonora Christine sad fængslet i Blåtårn, anklaget for højforræderi af kong Frederik den 3.<br><br>Under perioden blev kunsten nærmest propaganda, som bl.a. i form af hyldestdigte understregede, at kongens plads var lige efter Guds. Salmer hyldede Gud som den, der giver verden mening. Samlerne er fyldt med billedsprog og modsætninger, som skal vise splittelsen mellem vores overfladiske liv og Gud, som lover, at der er en mening med tilværelsen.</p>'
+              format: basic
+  event_partners:
+    -
+      value: 'Aarhus Musikskole'
+    -
+      value: 'Den Vestdanske Filmpulje sammen med Åby Biblioteks venner'
+  event_place:
+    -
+      value: Hovedbibliotek
+    -
+      value: 'Greve bibliotek'
+  event_state:
+    -
+      value: Active
+  event_ticket_categories:
+    -
+      entity:
+        _meta:
+          version: '1.0'
+          entity_type: paragraph
+          uuid: d33f71b3-c0c0-4930-86dc-902279073e88
+          bundle: event_ticket_category
+          default_langcode: en
+        default:
+          status:
+            -
+              value: true
+          created:
+            -
+              value: 1704607084
+          behavior_settings:
+            -
+              value: {  }
+          revision_translation_affected:
+            -
+              value: true
+          field_ticket_category_name:
+            -
+              value: Voksne
+          field_ticket_category_price:
+            -
+              value: '65.00'
+    -
+      entity:
+        _meta:
+          version: '1.0'
+          entity_type: paragraph
+          uuid: 81c68ed2-7bad-470e-9c22-649bea691fcd
+          bundle: event_ticket_category
+          default_langcode: en
+        default:
+          status:
+            -
+              value: true
+          created:
+            -
+              value: 1704607441
+          behavior_settings:
+            -
+              value: {  }
+          revision_translation_affected:
+            -
+              value: true
+          field_ticket_category_name:
+            -
+              value: Børn
+          field_ticket_category_price:
+            -
+              value: '0.00'
+  title:
+    -
+      value: 'Fernisering Moderne Dans'
