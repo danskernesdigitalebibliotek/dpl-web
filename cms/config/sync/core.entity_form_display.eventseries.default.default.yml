@@ -53,21 +53,15 @@ content:
     region: content
     settings: {  }
     third_party_settings: {  }
-  excluded_dates:
-    type: daterange_default
-    weight: 9
-    region: content
-    settings: {  }
-    third_party_settings: {  }
   field_event_address:
     type: address_default
-    weight: 26
+    weight: 10
     region: content
     settings: {  }
     third_party_settings: {  }
   field_event_description:
     type: text_textarea
-    weight: 27
+    weight: 11
     region: content
     settings:
       rows: 5
@@ -75,14 +69,14 @@ content:
     third_party_settings: {  }
   field_event_image:
     type: media_library_widget
-    weight: 28
+    weight: 12
     region: content
     settings:
       media_types: {  }
     third_party_settings: {  }
   field_event_link:
     type: link_default
-    weight: 29
+    weight: 13
     region: content
     settings:
       placeholder_url: ''
@@ -90,7 +84,7 @@ content:
     third_party_settings: {  }
   field_event_paragraphs:
     type: paragraphs
-    weight: 32
+    weight: 15
     region: content
     settings:
       title: Paragraph
@@ -118,7 +112,7 @@ content:
           dialog_style: tiles
   field_event_place:
     type: string_textfield
-    weight: 30
+    weight: 14
     region: content
     settings:
       size: 60
@@ -126,13 +120,13 @@ content:
     third_party_settings: {  }
   field_event_state:
     type: options_select
-    weight: 34
+    weight: 17
     region: content
     settings: {  }
     third_party_settings: {  }
   field_ticket_categories:
     type: paragraphs
-    weight: 33
+    weight: 16
     region: content
     settings:
       title: Paragraph
@@ -148,12 +142,6 @@ content:
         collapse_edit_all: collapse_edit_all
         duplicate: duplicate
     third_party_settings: {  }
-  included_dates:
-    type: daterange_default
-    weight: 10
-    region: content
-    settings: {  }
-    third_party_settings: {  }
   monthly_recurring_date:
     type: monthly_recurring_date
     weight: 6
@@ -168,7 +156,7 @@ content:
     third_party_settings: {  }
   status:
     type: boolean_checkbox
-    weight: 13
+    weight: 9
     region: content
     settings:
       display_label: true
@@ -203,4 +191,6 @@ content:
     region: content
     settings: {  }
     third_party_settings: {  }
-hidden: {  }
+hidden:
+  excluded_dates: true
+  included_dates: true
