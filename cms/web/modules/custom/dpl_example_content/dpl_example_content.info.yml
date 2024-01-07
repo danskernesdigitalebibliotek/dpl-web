@@ -17,9 +17,9 @@ default_content:
     # Event 1: From Figma
     # https://www.figma.com/file/Zx9GrkFA3l4ISvyZD2q0Qi/Designsystem?type=design&node-id=7477-39713&mode=dev
     - c8177097-1438-493e-8177-e8ef968cc133
-  eventinstance:
-    # Instance of event 1
-    - 71e97ac7-0a5e-4636-a854-1f7ded773398
+  #eventinstance:
+  # Do not export instances of event instances. This will result in
+  # duplicate UUIDs for entity reference fields with fallback values.
   media:
     # Media used in article 1
     - aba3cea8-cee5-42c1-a152-e30c2ab135e2
