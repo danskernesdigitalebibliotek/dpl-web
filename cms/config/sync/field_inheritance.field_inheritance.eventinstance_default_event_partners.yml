@@ -1,0 +1,14 @@
+uuid: 390a41a9-638e-4268-8729-7b03477c55e4
+langcode: en
+status: true
+dependencies: {  }
+id: eventinstance_default_event_partners
+label: 'Event partners'
+type: fallback
+sourceEntityType: eventseries
+sourceEntityBundle: default
+sourceField: field_event_partners
+destinationEntityType: eventinstance
+destinationEntityBundle: default
+destinationField: field_event_partners
+plugin: default_inheritance
