@@ -9,8 +9,8 @@ module.exports = {
         // "http://varnish:8080/work/work-of:870970-basis:25245784?type=bog"
         // Article page from DPL Example Content
         // "http://varnish:8080/by_uuid/node/2cd0fe5e-4159-4452-86aa-e1a1ac8db4a1",
-        // Event page from DPL Example Contentx
-        // "http://varnish:8080/by_uuid/node/56bfda4c-2a5f-4fda-bb98-ffb5106f0a34",
+        // Event instance page from DPL Example Content
+        // "http://varnish:8080/by_uuid/eventinstance/71e97ac7-0a5e-4636-a854-1f7ded773398",
       ],
       // Use 3 runs to test both cold and warm caches.
       numberOfRuns: 3,
