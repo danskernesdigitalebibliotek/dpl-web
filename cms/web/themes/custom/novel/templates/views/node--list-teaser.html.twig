@@ -12,7 +12,9 @@
       {{ content.field_event_date|render|striptags }}
     </time>
     <h3 class="event-list-item__title">{{ label }}</h3>
-    <p class="event-list-item__description">{{ content.field_event_description|render|striptags|trim }}</p>
+    <div class="event-list-item__description">
+      {{ content.field_event_description }}
+    </div>
     <div class="event-list-item__location-wrapper">
       {% for item in content.field_event_place['#items'] %}
           <p class="event-list-item__location">{{ item.value }}</p>
