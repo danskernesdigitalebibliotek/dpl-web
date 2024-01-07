@@ -1,9 +1,14 @@
+{# Check if the event image field has items and set variables for the media entity and image file #}
+{% if content.field_event_image['#items'] is not empty %}
+  {% set media_entity = content.field_event_image['#items'].0.entity %}
+    {% set image_field = media_entity.field_media_image %}
+    {% set image_file = image_field.entity %}
+{% endif %}
+
 <a href="{{ content.event_link }}" class="event-list-item arrow__hover--right-small">
   <div class="event-list-item__image-container">
-    {% if content.field_event_image['#items'] is not empty %}
-      {% set image_uri = content.field_event_image['#items'].entity.field_media_image.entity.fileuri %}
-      {% set image_url = file_url(image_uri) %}
-        <img src="{{ image_url }}" alt="{{ content.label }}" class="event-list-item__image" />
+    {% if image_file %}
+      <img src="{{ file_url(image_file.fileuri) }}" alt="{{ image_field.alt }}" class="event-list-item__image" />
     {% endif %}
   </div>
   <div class="event-list-item__content">
