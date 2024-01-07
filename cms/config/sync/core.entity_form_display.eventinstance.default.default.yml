@@ -24,29 +24,21 @@ targetEntityType: eventinstance
 bundle: default
 mode: default
 content:
-  body:
-    type: text_textarea
-    weight: -4
-    region: content
-    settings:
-      rows: 5
-      placeholder: ''
-    third_party_settings: {  }
   date:
     type: daterange_default
-    weight: -4
+    weight: 0
     region: content
     settings: {  }
     third_party_settings: {  }
   field_event_address:
     type: address_default
-    weight: 26
+    weight: 2
     region: content
     settings: {  }
     third_party_settings: {  }
   field_event_description:
     type: text_textarea
-    weight: 27
+    weight: 3
     region: content
     settings:
       rows: 5
@@ -54,14 +46,14 @@ content:
     third_party_settings: {  }
   field_event_image:
     type: media_library_widget
-    weight: 28
+    weight: 4
     region: content
     settings:
       media_types: {  }
     third_party_settings: {  }
   field_event_link:
     type: link_default
-    weight: 29
+    weight: 5
     region: content
     settings:
       placeholder_url: ''
@@ -69,7 +61,7 @@ content:
     third_party_settings: {  }
   field_event_paragraphs:
     type: paragraphs
-    weight: 30
+    weight: 6
     region: content
     settings:
       title: Paragraph
@@ -97,7 +89,7 @@ content:
           dialog_style: tiles
   field_event_place:
     type: string_textfield
-    weight: 31
+    weight: 7
     region: content
     settings:
       size: 60
@@ -105,13 +97,13 @@ content:
     third_party_settings: {  }
   field_event_state:
     type: options_select
-    weight: 32
+    weight: 8
     region: content
     settings: {  }
     third_party_settings: {  }
   field_ticket_categories:
     type: paragraphs
-    weight: 33
+    weight: 9
     region: content
     settings:
       title: Paragraph
@@ -129,9 +121,10 @@ content:
     third_party_settings: {  }
   status:
     type: boolean_checkbox
-    weight: 12
+    weight: 1
     region: content
     settings:
       display_label: true
     third_party_settings: {  }
-hidden: {  }
+hidden:
+  body: true
