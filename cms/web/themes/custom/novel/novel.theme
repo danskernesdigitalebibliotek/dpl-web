@@ -5,7 +5,10 @@
  * Novel Theme.
  */
 
+use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\StringTranslation\TranslatableMarkup;
+use Spatie\Color\Hex;
+use Spatie\Color\Hsl;
 use function Safe\file_get_contents;
 use function Safe\sprintf;
 
@@ -35,6 +38,13 @@ function novel_theme(
   return [
     'search_result_item' => [
       'variables' => [],
+    ],
+    'novel_logo' => [
+      'variables' => [
+        'image' => NULL,
+        'title' => NULL,
+        'place' => NULL,
+      ],
     ],
   ];
 }
@@ -73,7 +83,7 @@ function novel_preprocess_dpl_react_app__search_result(array &$variables): void 
   $showing_results_for_text = (
     // We have already translated the string in the react app.
     // phpcs:ignore Drupal.Semantics.FunctionT.NotLiteralString
-    new TranslatableMarkup($loading_text, ['@query' => $q])
+  new TranslatableMarkup($loading_text, ['@query' => $q])
   )->__toString();
 
   $variables += [
@@ -84,4 +94,127 @@ function novel_preprocess_dpl_react_app__search_result(array &$variables): void 
   // Make sure that the app is re-rendered when the query string changes.
   // That enables us to vary the "searching" title line.
   $variables['#cache']['contexts'][] = "url.query_args:q";
+}
+
+/**
+ * Implements hook_preprocess_HOOK()
+ *
+ * Add the base icon path to the variables array.
+ *
+ * @param mixed[] $variables
+ *   The variables for the theme hook.
+ */
+function novel_preprocess(array &$variables): void {
+  $directory = $variables['directory'] ?? 'web/themes/custom/novel';
+  $variables['baseIconPath'] = $directory . '/assets/dpl-design-system/icons';
+}
+
+/**
+ * Implements hook_preprocess_page().
+ *
+ * Simplify setting of logo titles and URLs using the theme settings and
+ * defaults.
+ *
+ * @param mixed[] $variables
+ *   The variables for the theme hook.
+ */
+function novel_preprocess_page(array &$variables): void {
+  $variables['logo'] = [
+    '#theme' => 'novel_logo',
+    '#title' => theme_get_setting('logo_title') ?? 'Logo title (bold)',
+    '#place' => theme_get_setting('logo_place') ?? 'Logo place',
+  ];
+
+  // Directly assign logo URL if it's set.
+  if ($logo_path = theme_get_setting('logo.path')) {
+    $variables['logo']['#image'] = [
+      '#theme' => 'image_style',
+      '#style_name' => 'logo',
+      '#uri' => $logo_path,
+    ];
+  }
+}
+
+/**
+ * Implements hook_form_system_theme_settings_alter().
+ *
+ * Ensure form settings for logo are initialized and provide a UI for logo
+ * title.
+ *
+ * @param array<string, mixed> $form
+ *   An associative array containing the structure of the form.
+ * @param \Drupal\Core\Form\FormStateInterface $form_state
+ *   The current state of the form.
+ */
+function novel_form_system_theme_settings_alter(array &$form, FormStateInterface $form_state): void {
+  $form['logo']['settings'] = $form['logo']['settings'] ?? [];
+
+  $form['logo']['settings']['logo_title'] = [
+    '#type' => 'textfield',
+    '#title' => t('Title', [], ['context' => 'Novel settings']),
+    '#default_value' => theme_get_setting('logo_title') ?? 'Logo title (bold)',
+    '#description' => t("Enter the text that will be shown as the logo on smaller screens.", [], ['context' => 'Novel settings']),
+  ];
+  $form['logo']['settings']['logo_place'] = [
+    '#type' => 'textfield',
+    '#title' => t('Place', [], ['context' => 'Novel settings']),
+    '#default_value' => theme_get_setting('logo_place') ?? 'Logo place',
+    '#description' => t("Text displayed under the logo title.", [], ['context' => 'Novel settings']),
+  ];
+
+  $form['logo']['settings']['logo_upload']['#description'] = t('Upload logo in 224x96px in PNG or SVG', [], ['context' => 'Novel settings']);
+  // We want to hide the logo and favicon path to simplify the UI.
+  unset($form['logo']['settings']['logo_path']);
+  unset($form['favicon']['settings']['favicon_path']);
+
+  $form['identity']['settings'] = [
+    '#type' => 'fieldset',
+    '#title' => t('Novel settings', [], ['context' => 'Novel settings']),
+  ];
+  $form['identity']['settings']['identity_color'] = [
+    '#type' => 'color',
+    '#title' => t('Identity Color', [], ['context' => 'Novel settings']),
+    '#default_value' => theme_get_setting('identity_color'),
+    '#description' => t('Choose library identity color.', [], ['context' => 'Novel settings']),
+  ];
+}
+
+/**
+ * Preprocesses variables for HTML templates.
+ */
+function novel_preprocess_html(array &$variables): void {
+  $identityColor = theme_get_setting('identity_color');
+
+  if ($identityColor) {
+    $hslColor = Hex::fromString($identityColor)->toHsl();
+    novel_attach_identity_color_styles($variables, $hslColor);
+  }
+}
+
+/**
+ * Attaches identity color styles to the page.
+ *
+ * @param array<mixed> $variables
+ *   An associative array containing the following possible keys:
+ *   - '#attached': An array of attachments for rendering.
+ * @param \Spatie\Color\Hsl $hslColor
+ *   The HSL color object.
+ */
+function novel_attach_identity_color_styles(array &$variables, Hsl $hslColor): void {
+  $custom_css = "
+    :root {
+      --identity-color-h: {$hslColor->hue()} !important;
+      --identity-color-s: {$hslColor->saturation()}% !important;
+      --identity-color-l: {$hslColor->lightness()}% !important;
+    }
+  ";
+
+  $variables['#attached']['html_head'][] = [
+    [
+      '#type' => 'inline_template',
+      '#template' => '<style type="text/css">{{ style|safe_join("") }}</style>',
+      '#context' => ['style' => [$custom_css]],
+    ],
+    'novel_custom_identity_color',
+  ];
 }

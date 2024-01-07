@@ -1,7 +1,7 @@
 _meta:
   version: '1.0'
   entity_type: file
-  uuid: 5c35e0de-d8f1-4289-b3fd-014ea2361ed7
+  uuid: 3403d0ba-cbdc-425d-93f4-6cdabb5378b1
   default_langcode: en
 default:
   uid:
@@ -9,19 +9,19 @@ default:
       target_id: 1
   filename:
     -
-      value: example-file.txt
+      value: sample.pdf
   uri:
     -
-      value: 'public://2021-11/example-file.txt'
+      value: 'public://2024-01/sample.pdf'
   filemime:
     -
-      value: text/plain
+      value: application/pdf
   filesize:
     -
-      value: 80
+      value: 3028
   status:
     -
       value: true
   created:
     -
-      value: 1636563026
+      value: 1704274926

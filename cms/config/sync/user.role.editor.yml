@@ -9,6 +9,7 @@ dependencies:
     - node.type.campaign
     - node.type.event
   module:
+    - file
     - filter
     - media
     - node
@@ -32,6 +33,7 @@ permissions:
   - 'delete own article content'
   - 'delete own campaign content'
   - 'delete own event content'
+  - 'delete own files'
   - 'delete own image media'
   - 'edit any article content'
   - 'edit any campaign content'
