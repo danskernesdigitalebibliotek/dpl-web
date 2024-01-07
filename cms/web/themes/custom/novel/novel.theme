@@ -44,6 +44,7 @@ function novel_theme(
         'image' => NULL,
         'title' => NULL,
         'place' => NULL,
+        'logo_img_enable' => NULL,
       ],
     ],
   ];
@@ -123,6 +124,7 @@ function novel_preprocess_page(array &$variables): void {
     '#theme' => 'novel_logo',
     '#title' => theme_get_setting('logo_title') ?? 'Logo title (bold)',
     '#place' => theme_get_setting('logo_place') ?? 'Logo place',
+    '#logo_img_enable' => theme_get_setting('logo_img_enable', 'novel') ?? 1,
   ];
 
   // Directly assign logo URL if it's set.
@@ -149,6 +151,8 @@ function novel_preprocess_page(array &$variables): void {
 function novel_form_system_theme_settings_alter(array &$form, FormStateInterface $form_state): void {
   $form['logo']['settings'] = $form['logo']['settings'] ?? [];
 
+  $form['logo']['settings']['logo_upload']['#description'] = t('Upload logo in 224x96px in PNG or SVG', [], ['context' => 'Novel settings']);
+
   $form['logo']['settings']['logo_title'] = [
     '#type' => 'textfield',
     '#title' => t('Title', [], ['context' => 'Novel settings']),
@@ -161,8 +165,13 @@ function novel_form_system_theme_settings_alter(array &$form, FormStateInterface
     '#default_value' => theme_get_setting('logo_place') ?? 'Logo place',
     '#description' => t("Text displayed under the logo title.", [], ['context' => 'Novel settings']),
   ];
+  $form['logo']['settings']['logo_img_enable'] = [
+    '#type' => 'checkbox',
+    '#title' => t('Enable image logo', [], ['context' => 'Novel settings']),
+    '#default_value' => theme_get_setting('logo_img_enable', 'novel') ?? 1,
+    '#description' => t("Use image logo when its possible.", [], ['context' => 'Novel settings']),
+  ];
 
-  $form['logo']['settings']['logo_upload']['#description'] = t('Upload logo in 224x96px in PNG or SVG', [], ['context' => 'Novel settings']);
   // We want to hide the logo and favicon path to simplify the UI.
   unset($form['logo']['settings']['logo_path']);
   unset($form['favicon']['settings']['favicon_path']);
