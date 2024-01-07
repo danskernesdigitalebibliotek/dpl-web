@@ -23,8 +23,8 @@
       "screenCapture": "/app/pa11y/screenshots/article-page.png"
     },
     {
-      "url": "http://varnish:8080/by_uuid/eventinstance/71e97ac7-0a5e-4636-a854-1f7ded773398",
-      "screenCapture": "/app/pa11y/screenshots/event-instance-page.png"
+      "url": "http://varnish:8080/by_uuid/eventseries/c8177097-1438-493e-8177-e8ef968cc133",
+      "screenCapture": "/app/pa11y/screenshots/event-page.png"
     }
   ]
 }
