@@ -7,8 +7,8 @@ date_format: 'd/m/y - H:i'
 time_format: 'H:i'
 days: 'monday,tuesday,wednesday,thursday,friday,saturday,sunday'
 limit: 10
-excludes: 0
-includes: 0
+excludes: 1
+includes: 1
 enabled_fields: 'consecutive_recurring_date,daily_recurring_date,weekly_recurring_date,monthly_recurring_date,yearly_recurring_date,custom'
 threshold_warning: 1
 threshold_count: 200
