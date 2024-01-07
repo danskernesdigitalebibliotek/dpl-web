@@ -32,7 +32,7 @@ content:
     third_party_settings: {  }
   field_event_address:
     type: address_default
-    weight: 2
+    weight: 6
     region: content
     settings: {  }
     third_party_settings: {  }
@@ -46,7 +46,7 @@ content:
     third_party_settings: {  }
   field_event_image:
     type: media_library_widget
-    weight: 4
+    weight: 8
     region: content
     settings:
       media_types: {  }
@@ -61,7 +61,7 @@ content:
     third_party_settings: {  }
   field_event_paragraphs:
     type: paragraphs
-    weight: 6
+    weight: 9
     region: content
     settings:
       title: Paragraph
@@ -97,13 +97,13 @@ content:
     third_party_settings: {  }
   field_event_state:
     type: options_select
-    weight: 8
+    weight: 2
     region: content
     settings: {  }
     third_party_settings: {  }
   field_ticket_categories:
     type: paragraphs
-    weight: 9
+    weight: 4
     region: content
     settings:
       title: Paragraph
