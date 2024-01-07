@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "57c1e92773b52f31781528b0ff2cae8e",
+    "content-hash": "c4838337e919e1db765e31f911019f2f",
     "packages": [
         {
             "name": "amazeeio/drupal_integrations",
@@ -2985,6 +2985,54 @@
             }
         },
         {
+            "name": "drupal/field_inheritance",
+            "version": "2.0.0-rc6",
+            "source": {
+                "type": "git",
+                "url": "https://git.drupalcode.org/project/field_inheritance.git",
+                "reference": "2.0.0-rc6"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://ftp.drupal.org/files/projects/field_inheritance-2.0.0-rc6.zip",
+                "reference": "2.0.0-rc6",
+                "shasum": "e8d3ed482a91de2dda3d8332e10baeb00aeae0b7"
+            },
+            "require": {
+                "drupal/core": "^8.8 || ^9 || ^10"
+            },
+            "type": "drupal-module",
+            "extra": {
+                "drupal": {
+                    "version": "2.0.0-rc6",
+                    "datestamp": "1657744599",
+                    "security-coverage": {
+                        "status": "not-covered",
+                        "message": "Project has not opted into security advisory coverage!"
+                    }
+                }
+            },
+            "notification-url": "https://packages.drupal.org/8/downloads",
+            "license": [
+                "GPL-2.0-or-later"
+            ],
+            "authors": [
+                {
+                    "name": "owenbush",
+                    "homepage": "https://www.drupal.org/user/2765259"
+                }
+            ],
+            "description": "Provides the ability to inherit data from one entity to another",
+            "homepage": "https://www.drupal.org/project/field_inheritance",
+            "keywords": [
+                "Drupal"
+            ],
+            "support": {
+                "source": "http://cgit.drupalcode.org/field_inheritance",
+                "issues": "https://www.drupal.org/project/issues/field_inheritance"
+            }
+        },
+        {
             "name": "drupal/focal_point",
             "version": "2.0.2",
             "source": {
@@ -4249,6 +4297,76 @@
             "homepage": "https://www.drupal.org/project/purge",
             "support": {
                 "source": "https://git.drupalcode.org/project/purge"
+            }
+        },
+        {
+            "name": "drupal/recurring_events",
+            "version": "2.0.0-rc16",
+            "source": {
+                "type": "git",
+                "url": "https://git.drupalcode.org/project/recurring_events.git",
+                "reference": "2.0.0-rc16"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://ftp.drupal.org/files/projects/recurring_events-2.0.0-rc16.zip",
+                "reference": "2.0.0-rc16",
+                "shasum": "9e8f28e53e26aadbccd3b7f233c98fcb5aff853f"
+            },
+            "require": {
+                "drupal/core": "^9.3 || ^10",
+                "drupal/field_inheritance": "^2"
+            },
+            "require-dev": {
+                "drupal/group": "*",
+                "drupal/recurring_events_registration": "*",
+                "drupal/token": "^1.11"
+            },
+            "type": "drupal-module",
+            "extra": {
+                "drupal": {
+                    "version": "2.0.0-rc16",
+                    "datestamp": "1701464510",
+                    "security-coverage": {
+                        "status": "not-covered",
+                        "message": "RC releases are not covered by Drupal security advisories."
+                    }
+                }
+            },
+            "notification-url": "https://packages.drupal.org/8/downloads",
+            "license": [
+                "GPL-2.0-or-later"
+            ],
+            "authors": [
+                {
+                    "name": "achraf.noomane",
+                    "homepage": "https://www.drupal.org/user/563984"
+                },
+                {
+                    "name": "jds1",
+                    "homepage": "https://www.drupal.org/user/3422223"
+                },
+                {
+                    "name": "lhridley",
+                    "homepage": "https://www.drupal.org/user/1223730"
+                },
+                {
+                    "name": "owenbush",
+                    "homepage": "https://www.drupal.org/user/2765259"
+                },
+                {
+                    "name": "podarok",
+                    "homepage": "https://www.drupal.org/user/116002"
+                }
+            ],
+            "description": "Recurring Events and Registration Management Module",
+            "homepage": "https://www.drupal.org/project/recurring_events",
+            "keywords": [
+                "Drupal"
+            ],
+            "support": {
+                "source": "http://cgit.drupalcode.org/recurring_events",
+                "issues": "https://www.drupal.org/project/issues/recurring_events"
             }
         },
         {
@@ -15079,7 +15197,8 @@
         "drupal/gin": 5,
         "drupal/gin_toolbar": 5,
         "drupal/openapi_rest": 5,
-        "drupal/potion": 20
+        "drupal/potion": 20,
+        "drupal/recurring_events": 5
     },
     "prefer-stable": true,
     "prefer-lowest": false,

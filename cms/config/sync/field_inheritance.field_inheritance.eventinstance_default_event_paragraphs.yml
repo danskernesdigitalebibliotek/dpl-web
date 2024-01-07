@@ -1,0 +1,14 @@
+uuid: 3198f42d-5d81-4ffe-a131-93a4f2305f66
+langcode: en
+status: true
+dependencies: {  }
+id: eventinstance_default_event_paragraphs
+label: 'Event paragraphs'
+type: fallback
+sourceEntityType: eventseries
+sourceEntityBundle: default
+sourceField: field_event_paragraphs
+destinationEntityType: eventinstance
+destinationEntityBundle: default
+destinationField: field_event_paragraphs
+plugin: entity_reference_inheritance

@@ -1,0 +1,19 @@
+uuid: 2339bf9c-9e1b-4253-9e76-b5165ff4d3f4
+langcode: en
+status: true
+dependencies:
+  module:
+    - address
+    - recurring_events
+id: eventseries.field_event_address
+field_name: field_event_address
+entity_type: eventseries
+type: address
+settings: {  }
+module: address
+locked: false
+cardinality: 1
+translatable: true
+indexes: {  }
+persist_with_no_fields: false
+custom_storage: false

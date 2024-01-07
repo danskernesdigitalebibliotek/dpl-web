@@ -1,0 +1,5 @@
+{# Temporarily output event series specific values #}
+{{ content.recur_type }}
+{{ content.event_instances }}
+{# Reuse event node template #}
+{{ include('node--event--full.html.twig', {label: content.title}) }}
