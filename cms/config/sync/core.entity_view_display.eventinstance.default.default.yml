@@ -27,11 +27,10 @@ bundle: default
 mode: default
 content:
   date:
-    type: daterange_default
+    type: daterange_plain
     label: hidden
     settings:
       timezone_override: ''
-      format_type: long
       separator: '-'
     third_party_settings: {  }
     weight: 1
