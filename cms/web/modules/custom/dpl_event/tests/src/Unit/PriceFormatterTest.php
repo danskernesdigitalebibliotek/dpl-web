@@ -117,15 +117,14 @@ class PriceFormatterTest extends UnitTestCase {
   }
 
   /**
-   * @phpcs:ignoreFile
    * Test price range formatting.
    *
-   *
-   * @dataProvider priceRangeProvider
    * @param int[] $prices
    *   Array of integers representing prices.
    * @param string $expected
    *   Expected formatted string.
+   *
+   * @dataProvider priceRangeProvider
    */
   public function testPriceRangeFormatting(
     array $prices,
@@ -137,4 +136,5 @@ class PriceFormatterTest extends UnitTestCase {
       $priceFormatter->formatPriceRange($prices)
     );
   }
+
 }
