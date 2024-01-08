@@ -38,8 +38,6 @@ class PatronMenuBlock extends BlockBase implements ContainerFactoryPluginInterfa
    *   The branch settings for branch config.
    * @param \Drupal\dpl_library_agency\Branch\BranchRepositoryInterface $branchRepository
    *   The branch settings for getting branches.
-   * @param \Drupal\dpl_react\DplReactConfigInterface $menuSettings
-   *   Dashboard settings.
    * @param \Drupal\dpl_library_agency\GeneralSettings $generalSettings
    *   General settings.
    */
