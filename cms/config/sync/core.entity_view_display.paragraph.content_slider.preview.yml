@@ -1,0 +1,32 @@
+uuid: d956e12e-1d01-4330-ad74-d5316984263d
+langcode: en
+status: true
+dependencies:
+  config:
+    - core.entity_view_mode.paragraph.preview
+    - field.field.paragraph.content_slider.field_contents
+    - field.field.paragraph.content_slider.field_title
+    - paragraphs.paragraphs_type.content_slider
+id: paragraph.content_slider.preview
+targetEntityType: paragraph
+bundle: content_slider
+mode: preview
+content:
+  field_contents:
+    type: entity_reference_label
+    label: above
+    settings:
+      link: false
+    third_party_settings: {  }
+    weight: 1
+    region: content
+  field_title:
+    type: string
+    label: above
+    settings:
+      link_to_entity: false
+    third_party_settings: {  }
+    weight: 0
+    region: content
+hidden:
+  search_api_excerpt: true
