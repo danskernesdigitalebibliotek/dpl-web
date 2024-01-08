@@ -109,6 +109,7 @@
         "drupal/paragraphs_ee": "^10.0",
         "drupal/potion": "dev-2.x#e48d6ee336d960b9d2efb5d88e68402db6d229a6",
         "drupal/purge": "^3.2",
+        "drupal/recurring_events": "^2.0@RC",
         "drupal/redis": "^1.7",
         "drupal/restui": "^1.21",
         "drupal/search_api": "^1.31",
@@ -219,10 +220,16 @@
             },
             "drupal/core": {
                 "Configure core to not check permissions before accepting an updated module": "patches/disable-core-upload-permission-check.diff",
-                "3073554: Add a token for publication status": "https://www.drupal.org/files/issues/2019-08-09/3073554_10.patch"
+                "3073554: Add a token for publication status": "https://www.drupal.org/files/issues/2019-08-09/3073554_10.patch",
+                "2981047: Allow adding computed bundle fields in Views": "https://git.drupalcode.org/project/drupal/-/merge_requests/4224.patch",
+                "2280639: Add the FieldStorageDefinition class to define field storage definitions in hook_entity_field_storage_info()": "https://www.drupal.org/files/issues/2023-09-05/2280639-d10-reroll-156.patch",
+                "3402656: Toolbar causes a Javascript error if the subtrees content changes between page loads": "https://git.drupalcode.org/issue/drupal-3402656/-/commit/61ac007a84014f54a07825f8f92bb6bc0dfbd170.patch"
             },
             "drupal/default_content": {
                 "3200212: Overwrite files on import": "https://git.drupalcode.org/project/default_content/-/merge_requests/8.patch"
+            },
+            "drupal/field_inheritance": {
+                "3330386: field_inheritance_form_alter should enforce module permissions": "https://git.drupalcode.org/project/field_inheritance/-/commit/bc3d26cdce8c09d5b6275fc126e35bc7e239c7d1.patch"
             },
             "drupal/focal_point": {
                 "3162210: Preview link accidentally closes the media library": "https://www.drupal.org/files/issues/2020-10-11/preview_link_accidentally_closes_the_media_library-3162210-19.patch"

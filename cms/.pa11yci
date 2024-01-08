@@ -23,7 +23,7 @@
       "screenCapture": "/app/pa11y/screenshots/article-page.png"
     },
     {
-      "url": "http://varnish:8080/by_uuid/node/56bfda4c-2a5f-4fda-bb98-ffb5106f0a34",
+      "url": "http://varnish:8080/by_uuid/eventseries/c8177097-1438-493e-8177-e8ef968cc133",
       "screenCapture": "/app/pa11y/screenshots/event-page.png"
     }
   ]

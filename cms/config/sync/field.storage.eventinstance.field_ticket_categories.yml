@@ -1,0 +1,21 @@
+uuid: 090ff36c-1a87-4d64-9293-aa83953f3504
+langcode: en
+status: true
+dependencies:
+  module:
+    - entity_reference_revisions
+    - paragraphs
+    - recurring_events
+id: eventinstance.field_ticket_categories
+field_name: field_ticket_categories
+entity_type: eventinstance
+type: entity_reference_revisions
+settings:
+  target_type: paragraph
+module: entity_reference_revisions
+locked: false
+cardinality: -1
+translatable: true
+indexes: {  }
+persist_with_no_fields: false
+custom_storage: false

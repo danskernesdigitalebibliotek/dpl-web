@@ -1,0 +1,43 @@
+uuid: 2c6b8b52-a797-462a-be4a-737ffec868f9
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.eventinstance.field_ticket_categories
+    - paragraphs.paragraphs_type.event_ticket_category
+    - recurring_events.eventinstance_type.default
+  module:
+    - entity_reference_revisions
+id: eventinstance.default.field_ticket_categories
+field_name: field_ticket_categories
+entity_type: eventinstance
+bundle: default
+label: 'Ticket categories'
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings:
+  handler: 'default:paragraph'
+  handler_settings:
+    target_bundles:
+      event_ticket_category: event_ticket_category
+    negate: 0
+    target_bundles_drag_drop:
+      campaign_rule:
+        weight: 6
+        enabled: false
+      event_ticket_category:
+        weight: 7
+        enabled: true
+      links:
+        weight: 8
+        enabled: false
+      medias:
+        weight: 9
+        enabled: false
+      text_body:
+        weight: 10
+        enabled: false
+field_type: entity_reference_revisions

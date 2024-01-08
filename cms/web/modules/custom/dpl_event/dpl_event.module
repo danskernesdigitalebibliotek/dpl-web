@@ -5,6 +5,7 @@
  * Module file for DPL Event.
  */
 
+use Drupal\Core\Entity\FieldableEntityInterface;
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\dpl_event\EventState;
 use Drupal\job_scheduler\Entity\JobSchedule;
@@ -144,23 +145,32 @@ function dpl_event_preprocess_field(array &$variables): void {
   // Get the field name from the variables array. Default to NULL if not set.
   $field_name = $variables['field_name'] ?? NULL;
 
-  // Return early if 'field_event_link' is present without a title.
-  if ($field_name !== 'field_event_link' ||
+  if (!in_array($field_name, ['field_event_link', 'event_link']) ||
     empty($variables['items'][0]['content']['#title'])) {
     return;
   }
 
-  // Return if the element lacks a NodeInterface or an entity object.
-  $node = $variables['element']['#object'] ?? NULL;
-  if (!($node instanceof NodeInterface)) {
+  $entity = $variables['element']['#object'] ?? NULL;
+  if (!($entity instanceof FieldableEntityInterface)) {
     return;
   }
 
-  // Get the event states from the 'field_event_state' field.
-  /** @var \Drupal\enum_field\Plugin\Field\FieldType\EnumItemList $event_state_field */
-  $event_state_field = $node->get('field_event_state');
-  $event_states = $event_state_field->enums();
-  // Select the first event state or NULL if not available.
+  // Try to retrieve the event state field for the entity.
+  // Prefer field_event_state which is the direct value on series or instances
+  // over event_state which is fallback value for instances from series.
+  if ($entity->hasField('field_event_state') && !$entity->get('field_event_state')->isEmpty()) {
+    $event_state_field = $entity->get('field_event_state');
+  }
+  elseif ($entity->hasField('event_state') && !$entity->get('event_state')->isEmpty()) {
+    $event_state_field = $entity->get('event_state');
+  }
+  else {
+    throw new LogicException('Unable to retrieve state field for event');
+  }
+
+  $event_states = array_map(function (array $sfield_value) {
+    return EventState::from($sfield_value['value']);
+  }, $event_state_field->getValue());
   $event_state = $event_states[0] ?? NULL;
 
   // Check if the event state is valid. If not, return early.
