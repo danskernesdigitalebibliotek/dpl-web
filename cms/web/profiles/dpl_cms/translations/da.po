@@ -3,8 +3,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2024-01-08 10:51+0100\n"
-"PO-Revision-Date: 2024-01-08 10:51+0100\n"
+"POT-Creation-Date: 2024-01-08 11:34+0100\n"
+"PO-Revision-Date: 2024-01-08 11:34+0100\n"
 "Last-Translator: NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
 "MIME-Version: 1.0\n"
@@ -344,12 +344,20 @@ msgid "Modal for facet browser"
 msgstr "Pop-up med facetbrowser"
 
 msgctxt "Search Result"
+msgid "Can always be loaned"
+msgstr ""
+
+msgctxt "Search Result"
 msgid "Children or adults"
 msgstr "Børn eller voksen"
 
 msgctxt "Search Result"
 msgid "Creators"
 msgstr "Ophav"
+
+msgctxt "Search Result"
+msgid "Dk5"
+msgstr ""
 
 msgctxt "Search Result"
 msgid "Fiction or non-fiction"
@@ -372,12 +380,24 @@ msgid "Material types"
 msgstr "Materialetyper"
 
 msgctxt "Search Result"
+msgid "Material types general"
+msgstr ""
+
+msgctxt "Search Result"
+msgid "Material types specific"
+msgstr ""
+
+msgctxt "Search Result"
 msgid "Subjects"
 msgstr "Emner"
 
 msgctxt "Search Result"
 msgid "Work types"
 msgstr "Formater"
+
+msgctxt "Search Result"
+msgid "Year"
+msgstr ""
 
 msgctxt "Search Result"
 msgid "Filter list"
@@ -632,14 +652,6 @@ msgid "Change SMS number"
 msgstr "Skift mobilnummer"
 
 msgctxt "Work Page"
-msgid "Close interest period modal"
-msgstr "Luk pop-up til valg af interesseperiode"
-
-msgctxt "Work Page"
-msgid "Close pickup location modal"
-msgstr "Luk pop-up til valg af afhentningssted"
-
-msgctxt "Work Page"
 msgid "Close"
 msgstr "Luk"
 
@@ -724,6 +736,10 @@ msgid "Editions"
 msgstr "Udgaver"
 
 msgctxt "Work Page"
+msgid "Expand more"
+msgstr ""
+
+msgctxt "Work Page"
 msgid "Fiction/nonfiction"
 msgstr "Fiktion/non-fiktion"
 
@@ -734,10 +750,6 @@ msgstr "Filmatisering"
 msgctxt "Work Page"
 msgid "Find on bookshelf"
 msgstr "Find på hylden"
-
-msgctxt "Work Page"
-msgid "Find on shelf expand button explanation"
-msgstr "Forklarende tekst til \"Find på hylden\" knap"
 
 msgctxt "Work Page"
 msgid "Close reservation modal"
@@ -1094,14 +1106,6 @@ msgid "Reviews"
 msgstr "Anmeldelser"
 
 msgctxt "Work Page"
-msgid "Change interest period modal"
-msgstr "Pop-up til at skifte interessperiode"
-
-msgctxt "Work Page"
-msgid "Change pickup location modal"
-msgstr "Pop-up til at skifte afhendningssted"
-
-msgctxt "Work Page"
 msgid "See online"
 msgstr "Se online"
 
@@ -1308,6 +1312,22 @@ msgid "Choose one"
 msgstr "Vælg"
 
 msgctxt "Global"
+msgid "Close change email modal"
+msgstr ""
+
+msgctxt "Global"
+msgid "Close interest period modal"
+msgstr ""
+
+msgctxt "Global"
+msgid "Close pickup location modal"
+msgstr ""
+
+msgctxt "Global"
+msgid "Close modal aria-label sms"
+msgstr ""
+
+msgctxt "Global"
 msgid "Number @count in line"
 msgstr "Nummer @count i køen"
 
@@ -1385,6 +1405,14 @@ msgid "et al."
 msgstr "et al."
 
 msgctxt "Global"
+msgid "Find on shelf expand button explanation"
+msgstr ""
+
+msgctxt "Global"
+msgid "Find @work on shelf in the @branch branch"
+msgstr ""
+
+msgctxt "Global"
 msgid "Renewable (@count)"
 msgstr "Forny (@count)"
 
@@ -1457,6 +1485,10 @@ msgid "Can be returned to all branches of the municipalities libraries"
 msgstr "Kan afleveres på alle kommunens biblioteker"
 
 msgctxt "Global"
+msgid "Go to @label material details"
+msgstr ""
+
+msgctxt "Global"
 msgid "Close modal with grouped reservations"
 msgstr "Luk pop-up med grupperede reserveringer"
 
@@ -1483,6 +1515,18 @@ msgstr "Søg efter bøger, film, musik og mere"
 msgctxt "Global"
 msgid "loading"
 msgstr "henter"
+
+msgctxt "Loan list"
+msgid "+ 1 other material"
+msgstr "+ 1 andet materiale"
+
+msgctxt "Loan list"
+msgid "+ @count other materials"
+msgstr "+ @count flere materialer"
+
+msgctxt "Global"
+msgid "Longer return time"
+msgstr ""
 
 msgctxt "Global"
 msgid "Returned too late"
@@ -1549,6 +1593,12 @@ msgid "Change interest deadline"
 msgstr "Skift udløbsdato for interesseperiode"
 
 msgctxt "Global"
+msgid ""
+"Change the amount of time after which you're no longer interested in "
+"this material."
+msgstr ""
+
+msgctxt "Global"
 msgid "Choose pickup library"
 msgstr "Vælg afhentningsbibliotek"
 
@@ -1557,8 +1607,12 @@ msgid "Decide at which library you want to pickup the material."
 msgstr "Vælg hvor du vil afhente dine reserveringer"
 
 msgctxt "Global"
-msgid "All"
-msgstr "Alle"
+msgid "Change pickup location for your reservation."
+msgstr ""
+
+msgctxt "Global"
+msgid "Multiselect - all option"
+msgstr ""
 
 msgctxt "Global"
 msgid "Your search has 0 results"
@@ -1638,6 +1692,10 @@ msgid ""
 msgstr ""
 "Sæt dine reserveringer på pause i god tid, da reserveringer som "
 "allerede er i proces ikke kan sættes på hold "
+
+msgctxt "Global"
+msgid "Cancel pause"
+msgstr ""
 
 msgctxt "Global"
 msgid "Close pause reservations modal"
@@ -1798,6 +1856,18 @@ msgid "Date of reservation"
 msgstr "Reserveringsdato"
 
 msgctxt "Global"
+msgid "Borrow before"
+msgstr ""
+
+msgctxt "Global"
+msgid "Your reservation expires @date!"
+msgstr ""
+
+msgctxt "Global"
+msgid "Pickup deadline"
+msgstr "Afhentningsfrist"
+
+msgctxt "Global"
 msgid "Not interested after"
 msgstr "Ikke interesseret efter"
 
@@ -1814,12 +1884,102 @@ msgid "Pickup branch"
 msgstr "Afhentningssted"
 
 msgctxt "Global"
-msgid "Pickup deadline"
-msgstr "Afhentningsfrist"
-
-msgctxt "Global"
 msgid "Status"
 msgstr "Status"
+
+msgctxt "Global"
+msgid "At the moment you have 0 reservations"
+msgstr ""
+
+msgctxt "Global"
+msgid "day"
+msgstr ""
+
+msgctxt "Global"
+msgid "Online access"
+msgstr ""
+
+msgctxt "Global"
+msgid "At the moment you have 0 reservations on digital items"
+msgstr ""
+
+msgctxt "Global"
+msgid "You are at the front of the queue"
+msgstr ""
+
+msgctxt "Global"
+msgid "Your reservations"
+msgstr ""
+
+msgctxt "Global"
+msgid "Reservations have been paused in the following time span:"
+msgstr ""
+
+msgctxt "Global"
+msgid ""
+"This button opens a modal that covers the entire page and contains the "
+"possibility to pause physical reservations"
+msgstr ""
+
+msgctxt "Global"
+msgid "Settings"
+msgstr ""
+
+msgctxt "Global"
+msgid "Your reservations are paused"
+msgstr ""
+
+msgctxt "Global"
+msgid "At the moment you have 0 physical reservations"
+msgstr ""
+
+msgctxt "Global"
+msgid "At the moment you have 0 reservations ready for pickup"
+msgstr ""
+
+msgctxt "Global"
+msgid "This material is ready for pickup"
+msgstr ""
+
+msgctxt "Global"
+msgid "You are the only person queued for this material"
+msgstr ""
+
+msgctxt "Global"
+msgid "This material has @count people in queue before you"
+msgstr ""
+
+msgctxt "Global"
+msgid "This material is ready in 1 day"
+msgstr ""
+
+msgctxt "Global"
+msgid "This material is ready in @count days"
+msgstr ""
+
+msgctxt "Global"
+msgid "Close"
+msgstr ""
+
+msgctxt "Global"
+msgid "Available in @count days"
+msgstr ""
+
+msgctxt "Global"
+msgid "days"
+msgstr ""
+
+msgctxt "Global"
+msgid "queued"
+msgstr ""
+
+msgctxt "Global"
+msgid "There are @count people in the queue before you"
+msgstr ""
+
+msgctxt "Global"
+msgid "Still in queue"
+msgstr ""
 
 msgctxt "Global"
 msgid "Ready for you"
@@ -1830,8 +1990,32 @@ msgid "Showing @itemsShown out of @hitcount items"
 msgstr "Viser @itemsShown ud af @hitcount elementer"
 
 msgctxt "Global"
+msgid "Click the button below to close this window"
+msgstr ""
+
+msgctxt "Global"
+msgid "Your reservation has been changed"
+msgstr ""
+
+msgctxt "Global"
 msgid "Dropdown with additional search functions"
 msgstr "Dropdown med yderligere søgefunktioner"
+
+msgctxt "Global"
+msgid "Screen reader modal description for email"
+msgstr ""
+
+msgctxt "Global"
+msgid "Screen reader modal description for interest period"
+msgstr ""
+
+msgctxt "Global"
+msgid "Screen reader modal description for pickup"
+msgstr ""
+
+msgctxt "Global"
+msgid "Screen reader modal description for sms"
+msgstr ""
 
 msgctxt "Global"
 msgid "Search button"
@@ -1943,21 +2127,9 @@ msgctxt "Loan list (settings)"
 msgid "Page size desktop"
 msgstr "Antal listeelemeter på side (desktop)"
 
-msgctxt "Loan list (Aria)"
-msgid "Go to @label material details"
-msgstr "Gå til detaljevisning af @label"
-
 msgctxt "Loan list"
 msgid "Renew several"
 msgstr "Forny flere"
-
-msgctxt "Loan list"
-msgid "+ 1 other material"
-msgstr "+ 1 andet materiale"
-
-msgctxt "Loan list"
-msgid "+ @count other materials"
-msgstr "+ @count flere materialer"
 
 msgctxt "Loan list (Aria)"
 msgid "This button shows all loans in the list"
@@ -2235,10 +2407,6 @@ msgid "Pick"
 msgstr "Vælg"
 
 msgctxt "Dashboard"
-msgid "Longer return time"
-msgstr "Over 6 dage til aflevering"
-
-msgctxt "Dashboard"
 msgid "At the moment, you have 0 physical loans"
 msgstr "Du har ingen fysiske lån i øjeblikket"
 
@@ -2253,10 +2421,6 @@ msgstr "Lån"
 msgctxt "Dashboard"
 msgid "Queued reservations"
 msgstr "Reserveringer i kø"
-
-msgctxt "Dashboard"
-msgid "Still in queue"
-msgstr "Stadig i kø"
 
 msgctxt "Dashboard"
 msgid "Reservations"
@@ -2359,158 +2523,6 @@ msgstr "Antal listeelemeter på side (mobil)"
 msgctxt "Reservation list (settings)"
 msgid "Page size desktop"
 msgstr "Antal listeelemeter på side (desktop)"
-
-msgctxt "Reservation list"
-msgid ""
-"Change the amount of time after which you're no longer interested in "
-"this material."
-msgstr "Vælg dato for hvornår din interesseperiode udløber"
-
-msgctxt "Reservation list"
-msgid "Change pickup location for your reservation."
-msgstr "Skift afhentningssted"
-
-msgctxt "Reservation list"
-msgid "Cancel"
-msgstr "Fortryd"
-
-msgctxt "Reservation list"
-msgid "Borrow before"
-msgstr "Lån før"
-
-msgctxt "Reservation list"
-msgid "Your reservation expires @date!"
-msgstr "Din reservering udløber @date"
-
-msgctxt "Reservation list"
-msgid "Pickup deadline"
-msgstr "Afhent senest"
-
-msgctxt "Reservation list"
-msgid "Save"
-msgstr "Gem"
-
-msgctxt "Reservation list"
-msgid "At the moment you have 0 reservations"
-msgstr "Du har 0 reserveringer"
-
-msgctxt "Reservation list"
-msgid "Available in @count days"
-msgstr "Tilgængelig om @count dage"
-
-msgctxt "Reservation list"
-msgid "day"
-msgstr "dag"
-
-msgctxt "Reservation list"
-msgid "days"
-msgstr "dage"
-
-msgctxt "Reservation list"
-msgid "Online access"
-msgstr "Skal hentes online"
-
-msgctxt "Reservation list"
-msgid "At the moment you have 0 reservations on digital items"
-msgstr "Du har ingen reserveringer på digitale materialer"
-
-msgctxt "Reservation list"
-msgid "Digital reservations"
-msgstr "Digitale reserveringer"
-
-msgctxt "Reservation list"
-msgid "You are at the front of the queue"
-msgstr "Du er forrest i køen"
-
-msgctxt "Reservation list"
-msgid "Your reservations"
-msgstr "Dine reserveringer"
-
-msgctxt "Reservation list"
-msgid "queued"
-msgstr "i kø"
-
-msgctxt "Reservation list"
-msgid "There are @count people in the queue before you"
-msgstr "Der er @count i køen før dig"
-
-msgctxt "Reservation list (Aria)"
-msgid "Reservations have been paused in the following time span:"
-msgstr "Reserveringer er sat på pause i det følgende tidsrum:"
-
-msgctxt "Reservation list (Aria)"
-msgid ""
-"This button opens a modal that covers the entire page and contains the "
-"possibility to pause physical reservations"
-msgstr "Sæt reserveringer af fysiske materialer på pause"
-
-msgctxt "Reservation list"
-msgid "Pause reservations on physical items"
-msgstr "Sæt reserveringer af fysiske materialer på pause"
-
-msgctxt "Reservation list"
-msgid "Your reservations are paused"
-msgstr "Dine reserveringer er sat på pause"
-
-msgctxt "Reservation list"
-msgid "At the moment you have 0 physical reservations"
-msgstr "Du har ingen reserveringer på fysiske materialer"
-
-msgctxt "Reservation list"
-msgid "Physical reservations"
-msgstr "Reserverede fysiske materialer"
-
-msgctxt "Reservation list"
-msgid "At the moment you have 0 reservations ready for pickup"
-msgstr "Du har 0 reserveringer klar til lån"
-
-msgctxt "Reservation list"
-msgid "Ready for pickup"
-msgstr "Klar til lån"
-
-msgctxt "Reservation list"
-msgid "Ready"
-msgstr "Klar"
-
-msgctxt "Reservation list (Aria)"
-msgid "This material is ready for pickup"
-msgstr "Dette materiale er klar til lån"
-
-msgctxt "Reservation list"
-msgid "Settings"
-msgstr "Indstillinger"
-
-msgctxt "Reservation list (Aria)"
-msgid "You are the only person queued for this material"
-msgstr "Du er den eneste i kø til dette materiale"
-
-msgctxt "Reservation list (Aria)"
-msgid "This material has @count people in queue before you"
-msgstr "Der står @count brugere i kø før dig til dette materiale"
-
-msgctxt "Reservation list (Aria)"
-msgid "This material is ready in 1 day"
-msgstr "Materiale er klar om 1 dag"
-
-msgctxt "Reservation list (Aria)"
-msgid "This material is ready in @count days"
-msgstr "Materialet er klar til dig om @count dage"
-
-msgctxt "Reservation list"
-msgid "Pick up before @date"
-msgstr "Hent senest @date"
-
-msgctxt "Reservation list"
-msgid "Close"
-msgstr "Luk"
-
-msgctxt "Reservation list"
-msgid "Click the button below to close this window"
-msgstr "Klik på knappen for at lukke dette vindue"
-
-msgctxt "Reservation list"
-msgid "Your reservation has been changed"
-msgstr "Din reservering blev ændret"
 
 msgid "Fees and Replacement costs URL"
 msgstr "Link til oplysningsside om takster"
@@ -2630,6 +2642,10 @@ msgid "Fee @fee,-"
 msgstr "Gebyr @fee kr."
 
 msgctxt "Fees list"
+msgid "# @materialNumber"
+msgstr ""
+
+msgctxt "Fees list"
 msgid "Other materials"
 msgstr "Andre materialer"
 
@@ -2705,10 +2721,6 @@ msgstr "Pinkode længde (min)"
 
 msgid "Pincode length max"
 msgstr "Pinkode længe (max)"
-
-msgctxt "Patron page"
-msgid "Cancel pause"
-msgstr "Slet pause"
 
 msgctxt "Patron page"
 msgid "Address"
