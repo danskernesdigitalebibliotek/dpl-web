@@ -5,12 +5,12 @@ namespace Drupal\dpl_patron_menu\Plugin\Block;
 use Drupal\Core\Block\BlockBase;
 use Drupal\Core\Plugin\ContainerFactoryPluginInterface;
 use Drupal\Core\Url;
+use Drupal\dpl_library_agency\Branch\BranchRepositoryInterface;
+use Drupal\dpl_library_agency\BranchSettings;
 use Drupal\dpl_library_agency\GeneralSettings;
 use Drupal\dpl_patron_menu\DplMenuSettings;
 use Drupal\dpl_react_apps\Controller\DplReactAppsController;
 use Symfony\Component\DependencyInjection\ContainerInterface;
-use Drupal\dpl_library_agency\Branch\BranchRepositoryInterface;
-use Drupal\dpl_library_agency\BranchSettings;
 use function Safe\json_encode as json_encode;
 
 /**

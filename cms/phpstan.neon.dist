@@ -17,8 +17,6 @@ parameters:
     - '#Function .*_page_attachments\(\) has parameter \$page with no value type specified in iterable type array\.#'
     # Drupal hook_requirements() implementation returns array which we cannot provide more detailed typing of.
     - '#Function .*_requirements\(\) return type has no value type specified in iterable type array\.#'
-    # Drupal hook_form_FORM_ID_alter() functions uses form array which we cannot provide more detailed typing of.
-    - '#Function .*_form_.*_alter\(\) has parameter \$form with no value type specified in iterable type array\.#'
     # Ignore block inject create configuration parameter.
     - '#Drupal\\.*\\Plugin\\Block\\.*Block::__construct\(\) .* no value type specified in iterable type array\.#'
     - '#Drupal\\.*\\Plugin\\Block\\.*Block::create\(\) .* no value type specified in iterable type array\.#'
