@@ -5,12 +5,11 @@
 ]
 %}
 <div{{ attributes.addClass(classes) }}>
-  {{ title_prefix }}
-  {{ title }}
-  {{ title_suffix }}
-
-  <h1 class="event-list-page__heading">{{ 'Events'|t }}</h1>
-
+  {% if view.getTitle() %}
+    {{ title_prefix }}
+    <h1 class="event-list-page__heading">{{ view.getTitle() }}</h1>
+    {{ title_suffix }}
+  {% endif %}
   {% if header %}
     <header>
       {{ header }}
