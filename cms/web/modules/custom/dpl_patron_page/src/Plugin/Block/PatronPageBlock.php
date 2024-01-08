@@ -3,11 +3,10 @@
 namespace Drupal\dpl_patron_page\Plugin\Block;
 
 use Drupal\Core\Block\BlockBase;
-use Drupal\Core\Config\ConfigFactoryInterface;
 use Drupal\Core\Plugin\ContainerFactoryPluginInterface;
-use Drupal\dpl_library_agency\GeneralSettings;
 use Drupal\dpl_library_agency\Branch\BranchRepositoryInterface;
 use Drupal\dpl_library_agency\BranchSettings;
+use Drupal\dpl_library_agency\GeneralSettings;
 use Drupal\dpl_library_agency\ReservationSettings;
 use Drupal\dpl_patron_page\DplPatronPageSettings;
 use Drupal\dpl_react\DplReactConfigInterface;
@@ -33,8 +32,6 @@ class PatronPageBlock extends BlockBase implements ContainerFactoryPluginInterfa
    *   The plugin ID for the plugin instance.
    * @param mixed $plugin_definition
    *   The plugin implementation definition.
-   * @param \Drupal\Core\Config\ConfigFactoryInterface $configFactory
-   *   Drupal config factory to get FBS and Publizon settings.
    * @param \Drupal\dpl_library_agency\ReservationSettings $reservationSettings
    *   Reservation settings.
    * @param \Drupal\dpl_library_agency\BranchSettings $branchSettings
@@ -48,7 +45,6 @@ class PatronPageBlock extends BlockBase implements ContainerFactoryPluginInterfa
     array $configuration,
     $plugin_id,
     $plugin_definition,
-    private ConfigFactoryInterface $configFactory,
     protected ReservationSettings $reservationSettings,
     private BranchSettings $branchSettings,
     private BranchRepositoryInterface $branchRepository,
@@ -66,11 +62,10 @@ class PatronPageBlock extends BlockBase implements ContainerFactoryPluginInterfa
       $configuration,
       $plugin_id,
       $plugin_definition,
-      $container->get('config.factory'),
       $container->get('dpl_library_agency.reservation_settings'),
       $container->get('dpl_library_agency.branch_settings'),
       $container->get('dpl_library_agency.branch.repository'),
-      \Drupal::service('dpl_patron_page.settings'),
+      $container->get('dpl_patron_page.settings'),
     );
   }
 
@@ -84,8 +79,6 @@ class PatronPageBlock extends BlockBase implements ContainerFactoryPluginInterfa
    */
   public function build() {
     $patron_page_settings = $this->patronPageSettings->loadConfig();
-
-    $general_config = $this->configFactory->get('dpl_library_agency.general_settings');
 
     $data = [
       // Configuration.
@@ -102,7 +95,6 @@ class PatronPageBlock extends BlockBase implements ContainerFactoryPluginInterfa
       'pause-reservation-info-url' => dpl_react_apps_format_app_url($patron_page_settings->get('pause_reservation_info_url'), GeneralSettings::PAUSE_RESERVATION_INFO_URL),
 
       // Texts.
-      'pause-reservation-modal-cancel-button-label-text' => $this->t('Cancel pause', [], ['context' => 'Patron page']),
       'patron-page-basic-details-address-label-text' => $this->t('Address', [], ['context' => 'Patron page']),
       'patron-page-basic-details-header-text' => $this->t('BASIC DETAILS', [], ['context' => 'Patron page']),
       'patron-page-basic-details-name-label-text' => $this->t('Name', [], ['context' => 'Patron page']),

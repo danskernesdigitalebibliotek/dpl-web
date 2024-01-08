@@ -36,10 +36,10 @@
             "type": "package",
             "package": {
                 "name": "danskernesdigitalebibliotek/dpl-react",
-                "version": "2024.1.0",
+                "version": "2024.1.1",
                 "type": "drupal-library",
                 "dist": {
-                    "url": "https://github.com/danskernesdigitalebibliotek/dpl-react/releases/download/branch-release%2F2024-1-0/dist-release-2024-1-0.zip",
+                    "url": "https://github.com/danskernesdigitalebibliotek/dpl-react/releases/download/2024.1.0/dist-2024-1-0-2781c91a4734260244efe90d031c1db02984f81d.zip",
                     "type": "zip"
                 },
                 "require": {
@@ -54,7 +54,7 @@
                 "type": "drupal-library",
                 "version": "2024.1.0",
                 "dist": {
-                    "url": "https://github.com/danskernesdigitalebibliotek/dpl-design-system/releases/download/branch-release%2F2024-1-0/dist-release-2024-1-0.zip",
+                    "url": "https://github.com/danskernesdigitalebibliotek/dpl-design-system/releases/download/2024.1.0/dist-2024-1-0-7adbfa5f0ec9c36c92e2b0b813049daed9022698.zip",
                     "type": "zip"
                 }
             }
@@ -71,6 +71,7 @@
     ],
     "require": {
         "amazeeio/drupal_integrations": "0.3.7",
+        "brick/math": "^0.12.1",
         "composer/installers": "1.12.0",
         "cweagans/composer-patches": "1.7.3",
         "danskernesdigitalebibliotek/dpl-design-system": "^2024.1",
@@ -78,6 +79,7 @@
         "danskernesdigitalebibliotek/fbs-client": "*",
         "dealerdirect/phpcodesniffer-composer-installer": "^0.7.1",
         "deoliveiralucas/array-keys-case-transform": "^1.1",
+        "drupal/address": "^1.0",
         "drupal/admin_toolbar": "^3.4",
         "drupal/config_ignore": "^2.4",
         "drupal/core-composer-scaffold": "~10.0.11",
@@ -88,6 +90,7 @@
         "drupal/devel": "~5.0.2",
         "drupal/enum_field": "^1.0",
         "drupal/field_group": "^3.4",
+        "drupal/focal_point": "^2.0",
         "drupal/gin": "^3.0@RC",
         "drupal/gin_toolbar": "^1.0@RC",
         "drupal/handy_cache_tags": "^1.4",
@@ -95,7 +98,9 @@
         "drupal/jsonlog": "^4.0",
         "drupal/libraries": "^4.0",
         "drupal/linkit": "^6.0",
+        "drupal/media_library_edit": "^3.0",
         "drupal/metatag": "^2.0",
+        "drupal/multiple_fields_remove_button": "^2.2",
         "drupal/openapi": "^2.1",
         "drupal/openapi_rest": "^2.0@RC",
         "drupal/openid_connect": "^1.4",
@@ -124,9 +129,11 @@
         "php-mock/php-mock": "^2.3",
         "phpspec/prophecy-phpunit": "^2",
         "phpstan/extension-installer": "^1.3",
+        "phpstan/phpstan-phpunit": "^1.3",
         "phpunit/phpunit": "9.5.10",
         "thecodingmachine/phpstan-safe-rule": "^1.0",
-        "timeweb/phpstan-enum": "^3.1"
+        "timeweb/phpstan-enum": "^3.1",
+        "vincentlanglet/twig-cs-fixer": "^2.0"
     },
     "conflict": {
         "drupal/drupal": "*"
@@ -209,6 +216,9 @@
             "drupal/core": {
                 "Configure core to not check permissions before accepting an updated module": "patches/disable-core-upload-permission-check.diff",
                 "3073554: Add a token for publication status": "https://www.drupal.org/files/issues/2019-08-09/3073554_10.patch"
+            },
+            "drupal/focal_point": {
+                "3162210: Preview link accidentally closes the media library": "https://www.drupal.org/files/issues/2020-10-11/preview_link_accidentally_closes_the_media_library-3162210-19.patch"
             },
             "drupal/jsonlog": {
                 "3251587: Change logging from stdout to stderr": "https://www.drupal.org/files/issues/2021-11-29/jsonlog-change-stdout-to-stderr-3251587-3.patch"

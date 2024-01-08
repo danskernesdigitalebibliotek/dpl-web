@@ -1,5 +1,6 @@
 parameters:
   level: 8
+  checkGenericClassInNonGenericObjectType: false
   paths:
     - web/modules/custom
     - web/profiles/dpl_cms
@@ -9,6 +10,7 @@ parameters:
     # Drupal Form API makes extensive use for arrays which we cannot provide
     # more detailed typing of.
     - '#.*\:\:(buildForm|getEditableConfigNames|submitForm|validateForm)\(\) .* no value type specified in iterable type array\.#'
+    - '#_form_alter\(\) has parameter \$form with no value type specified in iterable type array\.#'
     # Drupal preprocess functions uses variables array which we cannot provide more detailed typing of.
     - '#Function .*_preprocess_.*\(\) has parameter \$variables with no value type specified in iterable type array\.#'
     # Drupal hook_page_attachments functions uses page array which we cannot provide more detailed typing of.
@@ -21,6 +23,8 @@ parameters:
     - '#Drupal\\.*\\Plugin\\Block\\.*Block::__construct\(\) .* no value type specified in iterable type array\.#'
     - '#Drupal\\.*\\Plugin\\Block\\.*Block::create\(\) .* no value type specified in iterable type array\.#'
     - '#Function [a-z_]+_dpl_react_apps_data\(\) has parameter \$data with no value type specified in iterable type array\.#'
+    # Ignore iterable types for FieldItemListInterface.
+    - '#no value type specified in iterable type Drupal\\Core\\Field\\FieldItemListInterface#'
   scanFiles:
     # Needed to make locale_translation_batch_fetch_finished() discoverable.
     - web/core/modules/locale/locale.batch.inc

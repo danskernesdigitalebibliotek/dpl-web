@@ -34,6 +34,8 @@ class ConfigTest extends UnitTestCase {
    * {@inheritdoc}
    */
   public function setUp(): void {
+    parent::setUp();
+
     $this->config = $config = $this->prophesize(ImmutableConfig::class);
     $this->config->get('settings')->willReturn([
       'agency_id' => '775100',
