@@ -36,10 +36,10 @@
             "type": "package",
             "package": {
                 "name": "danskernesdigitalebibliotek/dpl-react",
-                "version": "2024.2.0-rc1",
+                "version": "2024.4.0-rc1",
                 "type": "drupal-library",
                 "dist": {
-                    "url": "https://github.com/danskernesdigitalebibliotek/dpl-react/releases/download/branch-release%2F2024-2-0/dist-release-2024-2-0.zip",
+                    "url": "https://github.com/danskernesdigitalebibliotek/dpl-react/releases/download/branch-release%2F2024-4-0/dist-release-2024-4-0.zip",
                     "type": "zip"
                 },
                 "require": {
@@ -52,9 +52,9 @@
             "package": {
                 "name": "danskernesdigitalebibliotek/dpl-design-system",
                 "type": "drupal-library",
-                "version": "2024.2.0-rc1",
+                "version": "2024.4.0-rc1",
                 "dist": {
-                    "url": "https://github.com/danskernesdigitalebibliotek/dpl-design-system/releases/download/branch-release%2F2024-2-0/dist-release-2024-2-0.zip",
+                    "url": "https://github.com/danskernesdigitalebibliotek/dpl-design-system/releases/download/branch-release%2F2024-4-0/dist-release-2024-4-0.zip",
                     "type": "zip"
                 }
             }
@@ -74,8 +74,8 @@
         "brick/math": "^0.12.1",
         "composer/installers": "1.12.0",
         "cweagans/composer-patches": "1.7.3",
-        "danskernesdigitalebibliotek/dpl-design-system": "2024.2.0-rc1",
-        "danskernesdigitalebibliotek/dpl-react": "2024.2.0-rc1",
+        "danskernesdigitalebibliotek/dpl-design-system": "2024.4.0-rc1",
+        "danskernesdigitalebibliotek/dpl-react": "2024.4.0-rc1",
         "danskernesdigitalebibliotek/fbs-client": "*",
         "dealerdirect/phpcodesniffer-composer-installer": "^0.7.1",
         "deoliveiralucas/array-keys-case-transform": "^1.1",
@@ -250,7 +250,9 @@
             "drupal/potion": {
                 "3201365: Allow setting a default write mode when running potion:generate": "https://www.drupal.org/files/issues/2021-03-03/potion-allow_setting_a_default_write_mode-3201365-2.patch",
                 "3348283: Fix wrongly placed parameters in implode functions": "https://www.drupal.org/files/issues/2023-03-15/fix_wrongly_placed_parameters_in_implode_functions-3348283-3.patch",
-                "Update for Drupal 10 compatibility": "patches/potion-rector-d10-7140243.patch"
+                "Update with Rector": "patches/potion-rector.patch",
+                "Mark as Drupal 10 compatible": "patches/potion-d10-info.patch",
+                "Use Drupal StaticReflectionParser with Drupal 10.1": "patches/potion-d10-1-staticreflection.patch"
             }
         }
     }

@@ -1,20 +1,12 @@
-From 71402431790fc5304c21612f57beebef05cfe06f Mon Sep 17 00:00:00 2001
+From 0558c81c358c296b1990e07559578270a13c0297 Mon Sep 17 00:00:00 2001
 From: =?UTF-8?q?Kasper=20Garn=C3=A6s?= <kasperg@users.noreply.github.com>
-Date: Thu, 23 Nov 2023 21:13:43 +0100
-Subject: [PATCH] Updated for Drupal 10 compatability
+Date: Tue, 9 Jan 2024 11:50:52 +0100
+Subject: [PATCH] Update with Rector
 
 This is the result of running Rector on an unpatched version of the
 module:
 vendor/bin/rector process web/modules/contrib/potion/
-
-Then the following changes have been made:
-
-- Info file is updated to mark the module as D10 compatible
-- src/Twig/NodeVisitor/TranslationNodeVisitor.php have been updated:
-  strings wrapped in arrays used as arguments to getNode() have been
-  converted to strings to match the function argument type.
 ---
- potion.info.yml                               |  2 +-
  src/Extractor/TwigExtractor.php               | 10 ++--
  .../Extension/TransExtractorExtension.php     |  3 +-
  .../NodeVisitor/TranslationNodeVisitor.php    | 46 +++++++++++--------
@@ -25,21 +17,8 @@ Then the following changes have been made:
  .../src/Kernel/TranslationsExtractorTest.php  |  2 +-
  tests/src/Kernel/TranslationsFillTest.php     |  2 +-
  tests/src/Kernel/TranslationsImportTest.php   |  2 +-
- 11 files changed, 46 insertions(+), 33 deletions(-)
+ 10 files changed, 45 insertions(+), 32 deletions(-)
 
-diff --git a/potion.info.yml b/potion.info.yml
-index 4315290..752866b 100644
---- a/potion.info.yml
-+++ b/potion.info.yml
-@@ -2,7 +2,7 @@ name: Potion
- description: 'Provides a normalized way to collect internationalization strings to export, merge & create .po files from versatile sources such as Twig, PHP or YML files.'
- package: Multilingual
- type: module
--core_version_requirement: ^8 || ^9
-+core_version_requirement: ^9 || ^10
- dependencies:
-   - drupal:locale
-   - drupal:language
 diff --git a/src/Extractor/TwigExtractor.php b/src/Extractor/TwigExtractor.php
 index e8cffcc..fcb27f5 100644
 --- a/src/Extractor/TwigExtractor.php

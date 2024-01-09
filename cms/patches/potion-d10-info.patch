@@ -1,0 +1,24 @@
+From 936f18f9ae6e242847746379325c992cb1eda33d Mon Sep 17 00:00:00 2001
+From: =?UTF-8?q?Kasper=20Garn=C3=A6s?= <kasperg@users.noreply.github.com>
+Date: Tue, 9 Jan 2024 11:53:58 +0100
+Subject: [PATCH] Mark module as compatible with Drupal 10 in info file
+
+---
+ potion.info.yml | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/potion.info.yml b/potion.info.yml
+index 4315290..752866b 100644
+--- a/potion.info.yml
++++ b/potion.info.yml
+@@ -2,7 +2,7 @@ name: Potion
+ description: 'Provides a normalized way to collect internationalization strings to export, merge & create .po files from versatile sources such as Twig, PHP or YML files.'
+ package: Multilingual
+ type: module
+-core_version_requirement: ^8 || ^9
++core_version_requirement: ^9 || ^10
+ dependencies:
+   - drupal:locale
+   - drupal:language
+--
+2.39.3 (Apple Git-145)+GitX
