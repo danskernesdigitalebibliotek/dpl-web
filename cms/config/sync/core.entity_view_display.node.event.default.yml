@@ -16,6 +16,7 @@ dependencies:
     - node.type.event
   module:
     - address
+    - datetime_range
     - entity_reference_revisions
     - link
     - text
@@ -31,6 +32,16 @@ content:
     settings: {  }
     third_party_settings: {  }
     weight: 4
+    region: content
+  field_event_date:
+    type: daterange_default
+    label: above
+    settings:
+      timezone_override: ''
+      format_type: medium
+      separator: '-'
+    third_party_settings: {  }
+    weight: 7
     region: content
   field_event_description:
     type: text_default
@@ -100,6 +111,6 @@ content:
     weight: 0
     region: content
 hidden:
-  field_event_date: true
   field_event_state: true
   langcode: true
+  search_api_excerpt: true

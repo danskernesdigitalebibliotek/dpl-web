@@ -9,6 +9,7 @@ module:
   config_filter: 0
   crop: 0
   customerror: 0
+  date_range_formatter: 0
   datetime: 0
   datetime_range: 0
   dpl_admin: 0
@@ -83,6 +84,8 @@ module:
   rest: 0
   schemata: 0
   schemata_json_schema: 0
+  search_api: 0
+  search_api_db: 0
   serialization: 0
   system: 0
   text: 0
