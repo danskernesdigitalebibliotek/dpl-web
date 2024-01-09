@@ -1,0 +1,9 @@
+uuid: 885a307b-f2d7-43a5-9062-aa1d649c77a5
+langcode: en
+status: true
+dependencies: {  }
+_core:
+  default_config_hash: '-FwhwjC3pA-4RAaXliUK9MHNnIZsm8fgNSswUnfXSXQ'
+id: default
+label: Default
+description: 'A default event instance type.'

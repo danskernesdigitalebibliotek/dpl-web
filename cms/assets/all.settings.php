@@ -31,11 +31,14 @@ if (InstallerKernel::installationAttempted()) {
 
 // Exclude development modules from configuration export.
 $settings['config_exclude_modules'] = [
+  'dpl_example_content',
+  'default_content',
   'devel',
   'field_ui',
   'views_ui',
   'restui',
   'upgrade_status',
+  'uuid_url',
 ];
 
 // Defines where the sync folder of your configuration lives. In this case it's

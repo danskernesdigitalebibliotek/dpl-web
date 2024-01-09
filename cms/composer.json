@@ -36,10 +36,10 @@
             "type": "package",
             "package": {
                 "name": "danskernesdigitalebibliotek/dpl-react",
-                "version": "2024.1.1",
+                "version": "2024.2.0",
                 "type": "drupal-library",
                 "dist": {
-                    "url": "https://github.com/danskernesdigitalebibliotek/dpl-react/releases/download/2024.1.0/dist-2024-1-0-2781c91a4734260244efe90d031c1db02984f81d.zip",
+                    "url": "https://github.com/danskernesdigitalebibliotek/dpl-react/releases/download/2024.2.0/dist-2024-2-0-1939b7e770fa12e6d31cf5e632218468392b6e1c.zip",
                     "type": "zip"
                 },
                 "require": {
@@ -52,9 +52,9 @@
             "package": {
                 "name": "danskernesdigitalebibliotek/dpl-design-system",
                 "type": "drupal-library",
-                "version": "2024.1.0",
+                "version": "2024.2.0",
                 "dist": {
-                    "url": "https://github.com/danskernesdigitalebibliotek/dpl-design-system/releases/download/2024.1.0/dist-2024-1-0-7adbfa5f0ec9c36c92e2b0b813049daed9022698.zip",
+                    "url": "https://github.com/danskernesdigitalebibliotek/dpl-design-system/releases/download/2024.2.0/dist-2024-2-0-5f768839509efac19487828c1bf4d080c146bf47.zip",
                     "type": "zip"
                 }
             }
@@ -74,20 +74,20 @@
         "brick/math": "^0.12.1",
         "composer/installers": "1.12.0",
         "cweagans/composer-patches": "1.7.3",
-        "danskernesdigitalebibliotek/dpl-design-system": "^2024.1",
-        "danskernesdigitalebibliotek/dpl-react": "^2024.1",
+        "danskernesdigitalebibliotek/dpl-design-system": "2024.2.0",
+        "danskernesdigitalebibliotek/dpl-react": "2024.2.0",
         "danskernesdigitalebibliotek/fbs-client": "*",
         "dealerdirect/phpcodesniffer-composer-installer": "^0.7.1",
         "deoliveiralucas/array-keys-case-transform": "^1.1",
         "drupal/address": "^1.0",
         "drupal/admin_toolbar": "^3.4",
         "drupal/config_ignore": "^2.4",
-        "drupal/core-composer-scaffold": "~10.0.11",
-        "drupal/core-project-message": "~10.0.11",
-        "drupal/core-recommended": "~10.0.11",
+        "drupal/core-composer-scaffold": "~10.1.7",
+        "drupal/core-project-message": "~10.1.7",
+        "drupal/core-recommended": "~10.1.7",
         "drupal/customerror": "^1.0@beta",
         "drupal/default_content": "^2.0@alpha",
-        "drupal/devel": "~5.0.2",
+        "drupal/devel": "^5.1",
         "drupal/enum_field": "^1.0",
         "drupal/field_group": "^3.4",
         "drupal/focal_point": "^2.0",
@@ -97,7 +97,7 @@
         "drupal/job_scheduler": "^4.0",
         "drupal/jsonlog": "^4.0",
         "drupal/libraries": "^4.0",
-        "drupal/linkit": "^6.0",
+        "drupal/linkit": "^6.1.2",
         "drupal/media_library_edit": "^3.0",
         "drupal/metatag": "^2.0",
         "drupal/multiple_fields_remove_button": "^2.2",
@@ -108,21 +108,24 @@
         "drupal/paragraphs_ee": "^10.0",
         "drupal/potion": "dev-2.x#e48d6ee336d960b9d2efb5d88e68402db6d229a6",
         "drupal/purge": "^3.2",
+        "drupal/recurring_events": "^2.0@RC",
         "drupal/redis": "^1.7",
         "drupal/restui": "^1.21",
         "drupal/twig_tweak": "^3.2.1",
         "drupal/upgrade_status": "^4.0",
+        "drupal/uuid_url": "^1.3",
         "drupal/varnish_purge": "^2.2",
         "drush/drush": "^12",
         "myclabs/php-enum": "^1.8",
         "phpdocumentor/reflection-docblock": "^5.3",
+        "spatie/color": "^1.5",
         "symfony/property-access": "^6.2",
         "symfony/property-info": "^6.2",
         "thecodingmachine/safe": "^1.3",
         "zaporylie/composer-drupal-optimizations": "1.2.0"
     },
     "require-dev": {
-        "drupal/core-dev": "~10.0.11",
+        "drupal/core-dev": "~10.1.7",
         "jangregor/phpstan-prophecy": "^1",
         "mglaman/phpstan-drupal": "^1.2",
         "palantirnet/drupal-rector": "^0.18.1",
@@ -215,7 +218,16 @@
             },
             "drupal/core": {
                 "Configure core to not check permissions before accepting an updated module": "patches/disable-core-upload-permission-check.diff",
-                "3073554: Add a token for publication status": "https://www.drupal.org/files/issues/2019-08-09/3073554_10.patch"
+                "3073554: Add a token for publication status": "https://www.drupal.org/files/issues/2019-08-09/3073554_10.patch",
+                "2981047: Allow adding computed bundle fields in Views": "https://git.drupalcode.org/project/drupal/-/merge_requests/4224.patch",
+                "2280639: Add the FieldStorageDefinition class to define field storage definitions in hook_entity_field_storage_info()": "https://www.drupal.org/files/issues/2023-09-05/2280639-d10-reroll-156.patch",
+                "3402656: Toolbar causes a Javascript error if the subtrees content changes between page loads": "https://git.drupalcode.org/issue/drupal-3402656/-/commit/61ac007a84014f54a07825f8f92bb6bc0dfbd170.patch"
+            },
+            "drupal/default_content": {
+                "3200212: Overwrite files on import": "https://git.drupalcode.org/project/default_content/-/merge_requests/8.patch"
+            },
+            "drupal/field_inheritance": {
+                "3330386: field_inheritance_form_alter should enforce module permissions": "https://git.drupalcode.org/project/field_inheritance/-/commit/bc3d26cdce8c09d5b6275fc126e35bc7e239c7d1.patch"
             },
             "drupal/focal_point": {
                 "3162210: Preview link accidentally closes the media library": "https://www.drupal.org/files/issues/2020-10-11/preview_link_accidentally_closes_the_media_library-3162210-19.patch"
@@ -236,7 +248,9 @@
             "drupal/potion": {
                 "3201365: Allow setting a default write mode when running potion:generate": "https://www.drupal.org/files/issues/2021-03-03/potion-allow_setting_a_default_write_mode-3201365-2.patch",
                 "3348283: Fix wrongly placed parameters in implode functions": "https://www.drupal.org/files/issues/2023-03-15/fix_wrongly_placed_parameters_in_implode_functions-3348283-3.patch",
-                "Update for Drupal 10 compatibility": "patches/potion-rector-d10-7140243.patch"
+                "Update with Rector": "patches/potion-rector.patch",
+                "Mark as Drupal 10 compatible": "patches/potion-d10-info.patch",
+                "Use Drupal StaticReflectionParser with Drupal 10.1": "patches/potion-d10-1-staticreflection.patch"
             }
         }
     }

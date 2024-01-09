@@ -4,10 +4,11 @@ status: true
 dependencies:
   config:
     - core.entity_view_mode.node.full
+    - field.field.node.article.field_canonical_url
     - field.field.node.article.field_override_author
+    - field.field.node.article.field_paragraphs
     - field.field.node.article.field_show_override_author
     - field.field.node.article.field_subtitle
-    - field.field.node.article.field_paragraphs
     - node.type.article
   module:
     - entity_reference_revisions

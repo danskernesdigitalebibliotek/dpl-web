@@ -1,0 +1,20 @@
+uuid: f885403b-72cd-4604-9f90-d726afb9f6b5
+langcode: en
+status: true
+dependencies:
+  module:
+    - media
+    - recurring_events
+id: eventseries.field_event_image
+field_name: field_event_image
+entity_type: eventseries
+type: entity_reference
+settings:
+  target_type: media
+module: core
+locked: false
+cardinality: 1
+translatable: true
+indexes: {  }
+persist_with_no_fields: false
+custom_storage: false
