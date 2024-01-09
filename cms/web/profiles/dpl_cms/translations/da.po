@@ -3,8 +3,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2024-01-08 11:52+0100\n"
-"PO-Revision-Date: 2024-01-08 11:52+0100\n"
+"POT-Creation-Date: 2024-01-09 12:10+0100\n"
+"PO-Revision-Date: 2024-01-09 12:10+0100\n"
 "Last-Translator: NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
 "MIME-Version: 1.0\n"
@@ -3160,6 +3160,9 @@ msgstr "Pris"
 
 msgid "Place"
 msgstr "Sted"
+
+msgid "Partners"
+msgstr ""
 
 msgid "Adresse"
 msgstr "Adresse"
