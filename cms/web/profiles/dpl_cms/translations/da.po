@@ -3,8 +3,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2024-01-09 13:48+0100\n"
-"PO-Revision-Date: 2024-01-09 13:48+0100\n"
+"POT-Creation-Date: 2024-01-09 19:14+0100\n"
+"PO-Revision-Date: 2024-01-09 19:14+0100\n"
 "Last-Translator: NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
 "MIME-Version: 1.0\n"
@@ -2493,9 +2493,6 @@ msgstr "Afholdt"
 msgid "Free"
 msgstr "Gratis"
 
-msgid "@price kr."
-msgstr "@price kr."
-
 msgctxt "Something similar"
 msgid "By the same author"
 msgstr "Af samme forfatter"
@@ -3175,6 +3172,9 @@ msgstr "Bogmærkeliste"
 
 msgid "Skip to main content"
 msgstr "Gå til hovedindhold"
+
+msgid "Events"
+msgstr "Begivenheder"
 
 msgid "Novel"
 msgstr "Roman"
