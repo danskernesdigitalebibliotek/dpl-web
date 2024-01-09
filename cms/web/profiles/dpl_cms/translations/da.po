@@ -3366,6 +3366,9 @@ msgstr "Pris"
 msgid "Place"
 msgstr "Sted"
 
+msgid "Partners"
+msgstr ""
+
 msgid "Adresse"
 msgstr "Adresse"
 
