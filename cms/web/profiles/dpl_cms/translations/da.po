@@ -3,8 +3,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2024-01-09 08:31+0100\n"
-"PO-Revision-Date: 2024-01-09 08:31+0100\n"
+"POT-Creation-Date: 2024-01-10 12:37+0100\n"
+"PO-Revision-Date: 2024-01-10 12:37+0100\n"
 "Last-Translator: NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
 "MIME-Version: 1.0\n"
@@ -251,7 +251,7 @@ msgstr "Dit overblik"
 
 msgctxt "Patron menu"
 msgid "Loans"
-msgstr ""
+msgstr "Lån"
 
 msgctxt "Patron menu"
 msgid "Reservations"
@@ -263,7 +263,7 @@ msgstr ""
 
 msgctxt "Patron menu"
 msgid "Fees & Replacement costs"
-msgstr ""
+msgstr "Hej Lotte"
 
 msgctxt "Patron menu"
 msgid "My account"
@@ -2532,21 +2532,6 @@ msgstr "Link til oplysningsside om takster"
 msgid "File or URL containing the fees and replacement costs"
 msgstr "Link til oplysningsside om takster"
 
-msgid "Available payment types url"
-msgstr "Betalingsmuligheder"
-
-msgid "Terms of trade text"
-msgstr "Betalingsbetingelser tekst"
-
-msgid "Terms of trade redirect url"
-msgstr "URL til side om betalingsbetingelser"
-
-msgid "Payment options image"
-msgstr "Ikoner for betalingsmuligheder"
-
-msgid "Image containing the available payment options (300x35)"
-msgstr "Billede som indeholder betalingsmuligheder (300 x 35px)"
-
 msgid "Payment overview url"
 msgstr "URL til Mit betalingsoverblik"
 
@@ -2918,6 +2903,12 @@ msgstr ""
 msgid "Instant loan settings"
 msgstr "Indstillinger for strakslån"
 
+msgid "Instant Loan Settings"
+msgstr ""
+
+msgid "Configure promotion of materials available for instant loans."
+msgstr ""
+
 msgid "DPL Paragraphs"
 msgstr "DPL Paragraphs"
 
@@ -2933,6 +2924,9 @@ msgstr "DPL Patron redirect / DPL bruger redirect"
 msgid "Redirect patron to login if required."
 msgstr "Send bruger videre til login hvis det er påkrævet"
 
+msgid "Set auth redirect paths for patrons"
+msgstr ""
+
 msgid "DPL Library Agency"
 msgstr "DPL Library Agency"
 
@@ -2944,6 +2938,15 @@ msgstr "Biblioteksindstillinger"
 
 msgid "General Settings"
 msgstr "Generelle indstillinger"
+
+msgid "Administer various settings for a library agency."
+msgstr ""
+
+msgid "Favorites list material component"
+msgstr ""
+
+msgid "Show favorites list material component"
+msgstr ""
 
 msgid "DPL favorites list material component"
 msgstr "DPL huskeliste materialekomponent"
@@ -2966,14 +2969,23 @@ msgstr "DPL React apps"
 msgid "For integration of dpl_react apps on the site."
 msgstr "For integering af dpl_react apps på hjemmesiden."
 
-msgid "Mapp Intelligence settings"
-msgstr "Mapp Intelligence indstillinger"
-
 msgid "Mapp Intelligence"
 msgstr "Mapp Intelligence"
 
+msgid "Configure Mapp Intelligence for tracking website interactions."
+msgstr ""
+
+msgid "Mapp Intelligence settings"
+msgstr "Mapp Intelligence indstillinger"
+
 msgid "Integration with Mapp Intelligence to track site usage."
 msgstr "Integration med Mapp Intelligence for at tracke brugen af hjemmesiden"
+
+msgid "Recommender settings"
+msgstr "Indstillinger for anbefalinger"
+
+msgid "Change recommender settings"
+msgstr ""
 
 msgid "DPL recommender"
 msgstr "DPL recommender"
@@ -2981,11 +2993,20 @@ msgstr "DPL recommender"
 msgid "recommender component"
 msgstr "Komponent til anbefalinger (recommender)"
 
-msgid "Recommender settings"
-msgstr "Indstillinger for anbefalinger"
-
 msgid "Loans settings"
 msgstr "Låneindstillinger"
+
+msgid "Loans"
+msgstr ""
+
+msgid "List user loans"
+msgstr ""
+
+msgid "Loan list settings"
+msgstr ""
+
+msgid "Change loan list settings"
+msgstr ""
 
 msgid "DPL loans"
 msgstr "DPL lån"
@@ -3001,6 +3022,12 @@ msgstr "DPL (Danish Public Library)  URL proxy"
 
 msgid "Module for generating specially formatted external urls"
 msgstr "Modul til at generere specielt formatterede eksterne URL'er"
+
+msgid "Url proxy settings"
+msgstr ""
+
+msgid "Configure the host names and replacement patterns for proxy urls."
+msgstr ""
 
 msgid "Admin"
 msgstr "Administrator"
@@ -3029,14 +3056,26 @@ msgstr "Indstillinger for import af YAML filer."
 msgid "Upload configuration"
 msgstr "Upload indstillinger / Upload configuration"
 
+msgid "Upload and import configuration from a YAML file"
+msgstr ""
+
 msgid "DPL Library Token"
 msgstr "DPL biblioteks token"
 
 msgid "Handles fetching and storage of a library token"
 msgstr "Håndterer hentning og lagring af en biblioteks token"
 
+msgid "Dashboard"
+msgstr ""
+
+msgid "User dashboard"
+msgstr ""
+
 msgid "Dashboard settings"
 msgstr "Indstillinger for Dit overblik (Dashboard)"
+
+msgid "Change Dashboard settings"
+msgstr ""
 
 msgid "DPL dashboard"
 msgstr "DPL dashboard"
@@ -3072,6 +3111,15 @@ msgstr "DPL Huskeliste"
 msgid "Handle the favorites list"
 msgstr "Håndter indstillinger for huskeliste"
 
+msgid "Favorites"
+msgstr ""
+
+msgid "List user favorites"
+msgstr ""
+
+msgid "Change favorites list settings"
+msgstr ""
+
 msgid "Event"
 msgstr "Arrangement"
 
@@ -3086,6 +3134,18 @@ msgstr "Komponenten \"Noget der ligner\""
 
 msgid "Reservations settings"
 msgstr "Reserveringsindstillinger"
+
+msgid "Reservations"
+msgstr ""
+
+msgid "List user reservations"
+msgstr ""
+
+msgid "Reservation list settings"
+msgstr ""
+
+msgid "Change reservation list settings"
+msgstr ""
 
 msgid "DPL Reservations"
 msgstr "DPL Reserveringer"
@@ -3102,8 +3162,23 @@ msgstr "Håndter indstillinger for brugerprofilens gebyrside"
 msgid "Fees settings"
 msgstr "Gebyrindstillinger"
 
+msgid "Fees"
+msgstr ""
+
+msgid "List user fees"
+msgstr ""
+
+msgid "Fees List settings"
+msgstr ""
+
+msgid "Change Fees List Settings"
+msgstr ""
+
 msgid "FBS settings"
 msgstr "FBS indstillinger"
+
+msgid "Change basic FBS settings"
+msgstr ""
 
 msgid "DPL FBS"
 msgstr "DPL FBS"
@@ -3120,8 +3195,20 @@ msgstr "Håndter indstillinger for Publizon"
 msgid "Publizon settings"
 msgstr "Publizon indstillinger"
 
+msgid "Change basic publizon settings"
+msgstr ""
+
 msgid "Patron page settings"
 msgstr "Indstillinger for brugerprofil"
+
+msgid "Patron page"
+msgstr ""
+
+msgid "Patron page displays patron information"
+msgstr ""
+
+msgid "Change patron page settings"
+msgstr ""
 
 msgid "DPL patron page"
 msgstr "DPL brugerprofil"
@@ -3141,6 +3228,9 @@ msgstr ""
 
 msgid "Patron registration"
 msgstr "Brugeroprettelse"
+
+msgid "Change patron registration settings"
+msgstr ""
 
 msgid "Patron registration information"
 msgstr "Information om brugeroprettelse"

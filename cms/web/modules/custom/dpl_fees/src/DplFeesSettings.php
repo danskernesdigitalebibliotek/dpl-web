@@ -9,11 +9,8 @@ use Drupal\dpl_react\DplReactConfigBase;
  */
 class DplFeesSettings extends DplReactConfigBase {
   const FEES_AND_REPLACEMENT_COSTS_URL = '';
-  const TERMS_OF_TRADE_TEXT = '';
-  const TERMS_OF_TRADE_URL = '';
   const PAYMENT_OVERVIEW_URL = '';
   const FEE_LIST_BODY_TEXT = '';
-  const AVAILABLE_PAYMENT_TYPES_URL = '';
   const FEES_LIST_SIZE_DESKTOP = 25;
   const FEES_LIST_SIZE_MOBILE = 25;
 

@@ -74,33 +74,6 @@ class FeesListSettingsForm extends ConfigFormBase {
       '#default_value' => $config->get('fees_and_replacement_costs_url') ?? DplFeesSettings::FEES_AND_REPLACEMENT_COSTS_URL,
     ];
 
-    $form['settings']['available_payment_types_url'] = [
-      '#type' => 'url',
-      '#title' => $this->t('Available payment types url'),
-      '#default_value' => $config->get('available_payment_types_url') ?? DplFeesSettings::AVAILABLE_PAYMENT_TYPES_URL,
-    ];
-
-    $form['settings']['terms_of_trade_text'] = [
-      '#type' => 'textfield',
-      '#title' => $this->t('Terms of trade text'),
-      '#description' => $this->t('Terms of trade text'),
-      '#default_value' => $config->get('terms_of_trade_text') ?? DplFeesSettings::TERMS_OF_TRADE_TEXT,
-    ];
-
-    $form['settings']['terms_of_trade_url'] = [
-      '#type' => 'url',
-      '#title' => $this->t('Terms of trade redirect url'),
-      '#default_value' => $config->get('terms_of_trade_url') ?? DplFeesSettings::TERMS_OF_TRADE_URL,
-    ];
-
-    // @todo images to be done in future render.
-    $form['settings']['image'] = [
-      '#type' => 'textfield',
-      '#title' => $this->t('Payment options image'),
-      '#description' => $this->t('Image containing the available payment options (300x35)'),
-      '#default_value' => $config->get('image') ?? '',
-    ];
-
     $form['settings']['payment_overview_url'] = [
       '#type' => 'url',
       '#title' => $this->t('Payment overview url'),
@@ -125,11 +98,8 @@ class FeesListSettingsForm extends ConfigFormBase {
 
     $this->config($this->configService->getConfigKey())
       ->set('fees_and_replacement_costs_url', $form_state->getValue('fees_and_replacement_costs_url'))
-      ->set('terms_of_trade_text', $form_state->getValue('terms_of_trade_text'))
-      ->set('terms_of_trade_url', $form_state->getValue('terms_of_trade_url'))
       ->set('payment_overview_url', $form_state->getValue('payment_overview_url'))
       ->set('fee_list_body_text', $form_state->getValue('fee_list_body_text'))
-      ->set('available_payment_types_url', $form_state->getValue('available_payment_types_url'))
       ->save();
   }
 
