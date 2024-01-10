@@ -6631,7 +6631,7 @@ msgstr ""
 #:
 msgctxt "Patron menu"
 msgid "Loans"
-msgstr ""
+msgstr "Lån"
 
 #:
 msgctxt "Patron menu"
