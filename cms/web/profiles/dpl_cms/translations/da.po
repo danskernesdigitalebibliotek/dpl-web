@@ -3,8 +3,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2024-01-09 08:31+0100\n"
-"PO-Revision-Date: 2024-01-09 08:31+0100\n"
+"POT-Creation-Date: 2024-01-10 10:59+0100\n"
+"PO-Revision-Date: 2024-01-10 10:59+0100\n"
 "Last-Translator: NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
 "MIME-Version: 1.0\n"
@@ -2531,21 +2531,6 @@ msgstr "Link til oplysningsside om takster"
 
 msgid "File or URL containing the fees and replacement costs"
 msgstr "Link til oplysningsside om takster"
-
-msgid "Available payment types url"
-msgstr "Betalingsmuligheder"
-
-msgid "Terms of trade text"
-msgstr "Betalingsbetingelser tekst"
-
-msgid "Terms of trade redirect url"
-msgstr "URL til side om betalingsbetingelser"
-
-msgid "Payment options image"
-msgstr "Ikoner for betalingsmuligheder"
-
-msgid "Image containing the available payment options (300x35)"
-msgstr "Billede som indeholder betalingsmuligheder (300 x 35px)"
 
 msgid "Payment overview url"
 msgstr "URL til Mit betalingsoverblik"
