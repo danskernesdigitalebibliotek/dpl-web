@@ -303,15 +303,15 @@ msgstr "Dit overblik"
 
 msgctxt "Patron menu"
 msgid "Loans"
-msgstr "Lån"
+msgstr ""
 
 msgctxt "Patron menu"
 msgid "Reservations"
-msgstr "Reserveringer"
+msgstr ""
 
 msgctxt "Patron menu"
 msgid "My list"
-msgstr "Huskeliste"
+msgstr ""
 
 msgctxt "Patron menu"
 msgid "Fees & Replacement costs"
