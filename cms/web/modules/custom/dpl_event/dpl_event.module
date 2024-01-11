@@ -5,11 +5,12 @@
  * Module file for DPL Event.
  */
 
+use Drupal\Core\Entity\EntityInterface;
 use Drupal\Core\Entity\FieldableEntityInterface;
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\dpl_event\EventState;
 use Drupal\job_scheduler\Entity\JobSchedule;
-use Drupal\node\NodeInterface;
+use Drupal\recurring_events\Entity\EventInstance;
 use Safe\DateTimeImmutable as DateTimeImmutable;
 
 /**
@@ -29,26 +30,19 @@ function dpl_event_cron_job_scheduler_info(): array {
 /**
  * Implements hook_node_insert().
  */
-function dpl_event_node_insert(NodeInterface $node): void {
-  if (dpl_event_node_is_event($node) && dpl_event_event_is_active($node)) {
-    dpl_event_schedule_set_occurred($node);
+function dpl_event_eventinstance_insert(EntityInterface $entity): void {
+  if ($entity instanceof EventInstance && dpl_event_eventinstance_is_active($entity)) {
+    dpl_event_schedule_set_occurred($entity);
   }
 }
 
 /**
  * Implements hook_node_update().
  */
-function dpl_event_node_update(NodeInterface $node): void {
-  if (dpl_event_node_is_event($node) && dpl_event_event_is_active($node)) {
-    dpl_event_schedule_set_occurred($node);
+function dpl_event_eventinstance_update(EntityInterface $entity): void {
+  if ($entity instanceof EventInstance && dpl_event_eventinstance_is_active($entity)) {
+    dpl_event_schedule_set_occurred($entity);
   }
-}
-
-/**
- * Determine whether a node is of the event type managed by this module.
- */
-function dpl_event_node_is_event(NodeInterface $node): bool {
-  return $node->getType() === "event";
 }
 
 /**
@@ -56,20 +50,22 @@ function dpl_event_node_is_event(NodeInterface $node): bool {
  *
  * An event is considered active if it has not occurred or been cancelled.
  */
-function dpl_event_event_is_active(NodeInterface $event): bool {
-  /** @var \Drupal\enum_field\Plugin\Field\FieldType\EnumItemList $event_state */
-  $event_state = $event->get("field_event_state");
-  return !(in_array(EventState::Cancelled, $event_state->enums())
-    || in_array(EventState::Occurred, $event_state->enums()));
+function dpl_event_eventinstance_is_active(EventInstance $event): bool {
+  $event_states = array_map(function (array $sfield_value) : EventState {
+    return EventState::from($sfield_value['value']);
+  }, $event->get("event_state")->getValue());
+
+  return !(in_array(EventState::Cancelled, $event_states)
+    || in_array(EventState::Occurred, $event_states));
 }
 
 /**
  * Schedule setting an event to occurred in the future.
  */
-function dpl_event_schedule_set_occurred(NodeInterface $event): void {
+function dpl_event_schedule_set_occurred(EventInstance $event): void {
   $now_timestamp = \Drupal::time()->getCurrentTime();
 
-  $event_date = $event->get('field_event_date')->get(0);
+  $event_date = $event->get('date')->get(0);
   if (!$event_date) {
     return;
   }
@@ -108,13 +104,13 @@ function dpl_event_schedule_set_occurred(NodeInterface $event): void {
  * Callback to be executed for scheduled jobs.
  */
 function dpl_event_set_occurred_callback(JobSchedule $job): void {
-  $event = \Drupal::entityTypeManager()->getStorage('node')->load($job->getId());
-  if (!$event) {
+  $event = \Drupal::entityTypeManager()->getStorage('eventinstance')->load($job->getId());
+  if (!$event || !$event instanceof EventInstance) {
     return;
   }
 
   // Set state to occurred for events we consider active.
-  if (dpl_event_event_is_active($event)) {
+  if (dpl_event_eventinstance_is_active($event)) {
     $event->set("field_event_state", EventState::Occurred);
     $event->save();
   }
