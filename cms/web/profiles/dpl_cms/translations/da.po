@@ -6377,12 +6377,12 @@ msgstr "I alt: @total"
 #:
 msgctxt "Search Result"
 msgid "Can always be loaned"
-msgstr ""
+msgstr "Kan altid lånes"
 
 #:
 msgctxt "Search Result"
 msgid "Dk5"
-msgstr ""
+msgstr "Emnetal"
 
 #:
 msgctxt "Search Result"
@@ -6397,7 +6397,7 @@ msgstr ""
 #:
 msgctxt "Search Result"
 msgid "Year"
-msgstr ""
+msgstr "År"
 
 #:
 msgctxt "Work Page"
@@ -6442,7 +6442,7 @@ msgstr ""
 #:
 msgctxt "Global"
 msgid "Longer return time"
-msgstr ""
+msgstr "Længere afleveringstid"
 
 #:
 msgctxt "Global"
@@ -6452,7 +6452,7 @@ msgstr ""
 #:
 msgctxt "Global"
 msgid "Change pickup location for your reservation."
-msgstr ""
+msgstr "Skift afhentningssted for din reservering"
 
 #:
 msgctxt "Global"
@@ -6462,22 +6462,22 @@ msgstr ""
 #:
 msgctxt "Global"
 msgid "Cancel pause"
-msgstr ""
+msgstr "Fjern pause"
 
 #:
 msgctxt "Global"
 msgid "Borrow before"
-msgstr ""
+msgstr "Lån før"
 
 #:
 msgctxt "Global"
 msgid "Your reservation expires @date!"
-msgstr ""
+msgstr "Din reservering udløber @date!"
 
 #:
 msgctxt "Global"
 msgid "At the moment you have 0 reservations"
-msgstr ""
+msgstr "Du har i øjeblikket 0 reserveringer"
 
 #:
 msgctxt "Global"
@@ -6492,7 +6492,7 @@ msgstr ""
 #:
 msgctxt "Global"
 msgid "At the moment you have 0 reservations on digital items"
-msgstr ""
+msgstr "Du har i øjeblikket 0 reserveringer på digitale materialer"
 
 #:
 msgctxt "Global"
@@ -6502,12 +6502,12 @@ msgstr ""
 #:
 msgctxt "Global"
 msgid "Your reservations"
-msgstr ""
+msgstr "Dine reserveringer"
 
 #:
 msgctxt "Global"
 msgid "Reservations have been paused in the following time span:"
-msgstr ""
+msgstr "Reserveringer er sat på pause:"
 
 #:
 msgctxt "Global"
@@ -6522,17 +6522,17 @@ msgstr ""
 #:
 msgctxt "Global"
 msgid "Your reservations are paused"
-msgstr ""
+msgstr "Dine reserveringer er sat på pause"
 
 #:
 msgctxt "Global"
 msgid "At the moment you have 0 physical reservations"
-msgstr ""
+msgstr "Du har i øjeblikket 0 reserveringer på fysiske materialer"
 
 #:
 msgctxt "Global"
 msgid "At the moment you have 0 reservations ready for pickup"
-msgstr ""
+msgstr "Du har i øjeblikket 0 reserveringer klar til afhentning"
 
 #:
 msgctxt "Global"
@@ -6552,52 +6552,52 @@ msgstr ""
 #:
 msgctxt "Global"
 msgid "This material is ready in 1 day"
-msgstr ""
+msgstr "Materialet er klar til lån om en dag"
 
 #:
 msgctxt "Global"
 msgid "This material is ready in @count days"
-msgstr ""
+msgstr "Materialet er klar om @count dage"
 
 #:
 msgctxt "Global"
 msgid "Close"
-msgstr ""
+msgstr "Luk"
 
 #:
 msgctxt "Global"
 msgid "Available in @count days"
-msgstr ""
+msgstr "Klar til lån om @count dage"
 
 #:
 msgctxt "Global"
 msgid "days"
-msgstr ""
+msgstr "dage"
 
 #:
 msgctxt "Global"
 msgid "queued"
-msgstr ""
+msgstr "I kø"
 
 #:
 msgctxt "Global"
 msgid "There are @count people in the queue before you"
-msgstr ""
+msgstr "Der er @count i kø før dig"
 
 #:
 msgctxt "Global"
 msgid "Still in queue"
-msgstr ""
+msgstr "Stadig i kø"
 
 #:
 msgctxt "Global"
 msgid "Click the button below to close this window"
-msgstr ""
+msgstr "Klik på knappen for at lukke vinduet"
 
 #:
 msgctxt "Global"
 msgid "Your reservation has been changed"
-msgstr ""
+msgstr "Din reservering er blevet ændret"
 
 #:
 msgctxt "Global"
@@ -6622,7 +6622,7 @@ msgstr ""
 #:
 msgctxt "Fees list"
 msgid "# @materialNumber"
-msgstr ""
+msgstr "Materialenummer @materialNumber"
 
 #:
 msgid "Partners"
@@ -6636,12 +6636,12 @@ msgstr "Lån"
 #:
 msgctxt "Patron menu"
 msgid "Reservations"
-msgstr ""
+msgstr "Reserveringer"
 
 #:
 msgctxt "Patron menu"
 msgid "My list"
-msgstr ""
+msgstr "Huskeliste"
 
 #:
 msgctxt "Patron menu"
