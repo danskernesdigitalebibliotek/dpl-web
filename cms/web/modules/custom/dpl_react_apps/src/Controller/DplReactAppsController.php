@@ -390,7 +390,6 @@ class DplReactAppsController extends ControllerBase {
       'read-article-text' => $this->t('Read article', [], ['context' => 'Work Page']),
       'receive-email-when-material-ready-text' => $this->t('Receive mail when the material is ready', [], ['context' => 'Work Page']),
       'receive-sms-when-material-ready-text' => $this->t('Receive SMS when the material is ready', [], ['context' => 'Work Page']),
-      'reservable-from-another-library-text' => $this->t('Reservable on another library', [], ['context' => 'Work Page']),
       'reservation-errors-description-text' => $this->t('Year', [], ['context' => 'Work Page']),
       'reservation-errors-title-text' => $this->t('Reservation error', [], ['context' => 'Work Page']),
       'reservation-modal-close-modal-aria-label-text' => $this->t('Close reservation modal', [], ['context' => 'Work Page']),
@@ -409,6 +408,16 @@ class DplReactAppsController extends ControllerBase {
       'type-text' => $this->t('Type', [], ['context' => 'Work Page']),
       'we-have-shopped-text' => $this->t('In stock:', [], ['context' => 'Work Page']),
       'you-have-borrowed-text' => $this->t('You have borrowed', [], ['context' => 'Work Page']),
+      'reservable-from-another-library-text' => $this->t('Ordered from another library', [], ['context' => 'Work Page']),
+      'open-order-response-title-text' => $this->t('Order from another library:', [], ['context' => 'Work Page']),
+      'open-order-unknown-user-text' => $this->t('User not found', [], ['context' => 'Work Page']),
+      'open-order-unknown-pickupagency-text' => $this->t('Specified pickup agency not found', [], ['context' => 'Work Page']),
+      'open-order-unknown-error-text' => $this->t('An unknown error occurred', [], ['context' => 'Work Page']),
+      'open-order-service-unavailable-text' => $this->t('Service is currently unavailable', [], ['context' => 'Work Page']),
+      'open-order-owned-wrong-mediumtype-text' => $this->t('Item available but medium type not accepted', [], ['context' => 'Work Page']),
+      'open-order-owned-own-catalogue-text' => $this->t('Item available, order through the librarys catalogue', [], ['context' => 'Work Page']),
+      'open-order-status-owned-accepted-text' => $this->t('Your order is accepted', [], ['context' => 'Work Page']),
+      'open-order-not-owned-ill-loc-text' => $this->t('Your material has been ordered from another library', [], ['context' => 'Work Page']),
       // Add external API base urls.
     ] + self::externalApiBaseUrls();
 
