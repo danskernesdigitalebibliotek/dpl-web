@@ -222,9 +222,12 @@ function dpl_event_preprocess_field__field_ticket_category_price(array &$variabl
  *
  * @throws \Safe\Exceptions\ArrayException
  */
-function dpl_event_preprocess_node(array &$variables): void {
-  if ($variables['node']->hasField('field_ticket_categories')) {
-    $ticket_categories = $variables['node']->get('field_ticket_categories')->referencedEntities();
+function dpl_event_preprocess_eventinstance(array &$variables): void {
+
+  $eventInstance = $variables['eventinstance'];
+
+  if ($eventInstance->hasField('field_ticket_categories')) {
+    $ticket_categories = $eventInstance->get('field_ticket_categories')->referencedEntities();
     $prices = [];
 
     // Collect prices from ticket categories.
