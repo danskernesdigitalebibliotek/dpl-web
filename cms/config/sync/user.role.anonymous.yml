@@ -6,6 +6,7 @@ dependencies:
     - rest.resource.campaign.match
     - rest.resource.proxy-url
   module:
+    - media
     - openapi
     - rest
     - system
@@ -20,3 +21,4 @@ permissions:
   - 'access openapi api docs'
   - 'restful get proxy-url'
   - 'restful post campaign:match'
+  - 'view media'

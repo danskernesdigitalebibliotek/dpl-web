@@ -1,0 +1,8 @@
+{#
+  An image can have a byline, which uses a <figcaption>.
+  Therefore, it is important that we wrap it in a <figure>.
+#}
+<figure {{ attributes.addClass('image-credited') }}>
+  {{ title_suffix.contextual_links }}
+  {{ content }}
+</figure>

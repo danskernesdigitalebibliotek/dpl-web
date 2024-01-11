@@ -1,0 +1,10 @@
+uuid: 86cd4481-72fd-4318-b029-903c8a37929d
+langcode: en
+status: true
+dependencies:
+  module:
+    - media
+id: media.paragraph_wide
+label: 'Paragraph, wide'
+targetEntityType: media
+cache: true

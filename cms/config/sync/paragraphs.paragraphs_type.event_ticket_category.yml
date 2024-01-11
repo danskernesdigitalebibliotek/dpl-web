@@ -1,0 +1,10 @@
+uuid: a982e6eb-1e47-4e47-9454-13ce7cd63d40
+langcode: en
+status: true
+dependencies: {  }
+id: event_ticket_category
+label: 'Ticket category'
+icon_uuid: null
+icon_default: null
+description: 'A combination of ticket category name and price for an event. '
+behavior_plugins: {  }

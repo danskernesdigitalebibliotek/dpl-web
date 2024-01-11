@@ -1,0 +1,56 @@
+uuid: 909f0a78-7a52-499c-ae02-454a6fdfc5fc
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.field.paragraph.event_ticket_category.field_ticket_category_name
+    - field.field.paragraph.event_ticket_category.field_ticket_category_price
+    - paragraphs.paragraphs_type.event_ticket_category
+  module:
+    - field_group
+third_party_settings:
+  field_group:
+    group_inline_fields:
+      children:
+        - field_ticket_category_name
+        - field_ticket_category_price
+      label: 'Inline fields'
+      region: content
+      parent_name: ''
+      weight: 0
+      format_type: html_element
+      format_settings:
+        classes: ticket-category-inline-fields
+        show_empty_fields: false
+        id: ''
+        element: div
+        show_label: false
+        label_element: h3
+        label_element_classes: ''
+        attributes: ''
+        effect: none
+        speed: fast
+        required_fields: true
+id: paragraph.event_ticket_category.default
+targetEntityType: paragraph
+bundle: event_ticket_category
+mode: default
+content:
+  field_ticket_category_name:
+    type: string_textfield
+    weight: 1
+    region: content
+    settings:
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+  field_ticket_category_price:
+    type: number
+    weight: 2
+    region: content
+    settings:
+      placeholder: ''
+    third_party_settings: {  }
+hidden:
+  created: true
+  status: true

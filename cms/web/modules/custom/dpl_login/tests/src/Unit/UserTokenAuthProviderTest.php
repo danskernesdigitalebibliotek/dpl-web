@@ -43,6 +43,8 @@ class UserTokenAuthProviderTest extends UnitTestCase {
    * {@inheritdoc}
    */
   protected function setUp(): void {
+    parent::setUp();
+
     $this->openIdClient = $this->prophesize(OpenIDConnectClientInterface::class);
     $this->moduleInvoker = $this->prophesize(ModuleHandlerInterface::class);
     $this->authMap = $this->prophesize(OpenIDConnectAuthmap::class);

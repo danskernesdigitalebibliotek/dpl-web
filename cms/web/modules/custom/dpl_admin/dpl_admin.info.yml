@@ -1,0 +1,5 @@
+name: "Admin"
+type: module
+description: "Functionality related to the admin/editor experience"
+package: "DPL"
+core_version_requirement: ^10
