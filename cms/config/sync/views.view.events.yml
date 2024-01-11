@@ -130,7 +130,20 @@ display:
         type: none
         options: {  }
       empty: {  }
-      sorts: {  }
+      sorts:
+        date:
+          id: date
+          table: search_api_index_events
+          field: date
+          relationship: none
+          group_type: group
+          admin_label: ''
+          plugin_id: search_api
+          order: ASC
+          expose:
+            label: ''
+            field_identifier: ''
+          exposed: false
       arguments: {  }
       filters:
         end_value:
@@ -184,8 +197,8 @@ display:
         type: search_api
         options:
           view_modes:
-            'entity:node':
-              event: list_teaser
+            'entity:eventinstance':
+              default: list_teaser
       query:
         type: search_api_query
         options:
