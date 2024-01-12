@@ -63,28 +63,37 @@ class FeesListSettingsForm extends ConfigFormBase {
 
     $form['settings'] = [
       '#type' => 'fieldset',
-      '#title' => $this->t('Basic settings'),
+      '#title' => $this->t('Basic settings', [], ['context' => 'Fees list settings form']),
       '#tree' => FALSE,
     ];
 
     $form['settings']['fees_and_replacement_costs_url'] = [
-      '#type' => 'url',
-      '#title' => $this->t('Fees and Replacement costs URL'),
-      '#description' => $this->t('File or URL containing the fees and replacement costs'),
+      '#type' => 'linkit',
+      '#title' => $this->t('Fees and Replacement costs URL', [], ['context' => 'Fees list settings form']),
+      '#description' => $this->t('File or URL containing the fees and replacement costs. You can search for an internal url. Or you can add an external url (starting with "http://" or "https://").', [], ['context' => 'Fees list settings form']),
+      '#autocomplete_route_name' => 'linkit.autocomplete',
+      '#autocomplete_route_parameters' => [
+        'linkit_profile_id' => 'default',
+      ],
       '#default_value' => $config->get('fees_and_replacement_costs_url') ?? DplFeesSettings::FEES_AND_REPLACEMENT_COSTS_URL,
     ];
 
     $form['settings']['payment_overview_url'] = [
-      '#type' => 'url',
-      '#title' => $this->t('Payment overview url'),
+      '#type' => 'linkit',
+      '#title' => $this->t('Payment overview url', [], ['context' => 'Fees list settings form']),
+      '#description' => $this->t('You can search for an internal url. Or you can add an external url (starting with http:// or https://).', [], ['context' => 'Fees list settings form']),
+      '#autocomplete_route_name' => 'linkit.autocomplete',
+      '#autocomplete_route_parameters' => [
+        'linkit_profile_id' => 'default',
+      ],
       '#default_value' => $config->get('payment_overview_url') ?? DplFeesSettings::PAYMENT_OVERVIEW_URL,
     ];
 
     $form['settings']['fee_list_body_text'] = [
       '#type' => 'textarea',
-      '#title' => $this->t('Intro text'),
-      '#description' => $this->t('Display an intro-text below the headline'),
-      '#default_value' => $config->get('fee_list_body_text') ?? $this->t('Fees and replacement costs are handled through the new system "Mit betalingsoverblik.'),
+      '#title' => $this->t('Intro text', [], ['context' => 'Fees list settings form']),
+      '#description' => $this->t('Display an intro-text below the headline', [], ['context' => 'Fees list settings form']),
+      '#default_value' => $config->get('fee_list_body_text') ?? $this->t('Fees and replacement costs are handled through the new system "Mit betalingsoverblik.', [], ['context' => 'Fees list settings form']),
     ];
 
     return parent::buildForm($form, $form_state);
