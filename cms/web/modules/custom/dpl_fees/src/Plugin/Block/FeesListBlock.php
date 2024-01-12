@@ -28,14 +28,17 @@ class FeesListBlock extends BlockBase implements ContainerFactoryPluginInterface
    *   The plugin ID for the plugin instance.
    * @param mixed $plugin_definition
    *   The plugin implementation definition.
-   * @param \Drupal\dpl_react\DplReactConfigInterface $feesSettings
+   * @param \Drupal\dpl_fees\DplFeesSettings $feesSettings
    *   Fees settings.
+   * @param \Drupal\dpl_react\DplReactConfigInterface $feesConfig
+   *   Fees config.
    */
   public function __construct(
     array $configuration,
     $plugin_id,
     $plugin_definition,
-    private DplReactConfigInterface $feesSettings
+    private DplFeesSettings $feesSettings,
+    private DplReactConfigInterface $feesConfig,
   ) {
     parent::__construct($configuration, $plugin_id, $plugin_definition);
     $this->configuration = $configuration;
@@ -49,7 +52,8 @@ class FeesListBlock extends BlockBase implements ContainerFactoryPluginInterface
       $configuration,
       $plugin_id,
       $plugin_definition,
-      \Drupal::service('dpl_fees.settings')
+      $container->get('dpl_fees.settings'),
+      \Drupal::service('dpl_fees.settings'),
     );
   }
 
@@ -60,12 +64,12 @@ class FeesListBlock extends BlockBase implements ContainerFactoryPluginInterface
    *   The app render array.
    */
   public function build() {
-    $feesConfig = $this->feesSettings->loadConfig();
+    $feesConfig = $this->feesConfig->loadConfig();
 
     $data = [
       // Config.
-      "page-size-desktop" => $feesConfig->get('page_size_desktop') ?? DplFeesSettings::PAGE_SIZE_DESKTOP,
-      "page-size-mobile" => $feesConfig->get('page_size_mobile') ?? DplFeesSettings::PAGE_SIZE_MOBILE,
+      "page-size-desktop" => $this->feesSettings->getListSizeDesktop(),
+      "page-size-mobile" => $this->feesSettings->getListSizeMobile(),
 
       // Urls.
       'payment-overview-url' => dpl_react_apps_format_app_url($feesConfig->get('payment_overview_url'), DplFeesSettings::PAYMENT_OVERVIEW_URL),

@@ -11,8 +11,8 @@ class DplFeesSettings extends DplReactConfigBase {
   const FEES_AND_REPLACEMENT_COSTS_URL = '';
   const PAYMENT_OVERVIEW_URL = '';
   const FEE_LIST_BODY_TEXT = '';
-  const PAGE_SIZE_DESKTOP = 25;
-  const PAGE_SIZE_MOBILE = 25;
+  const FEES_LIST_SIZE_DESKTOP = 25;
+  const FEES_LIST_SIZE_MOBILE = 25;
 
   /**
    * Gets the configuration key for the instant loan settings.
@@ -29,15 +29,23 @@ class DplFeesSettings extends DplReactConfigBase {
   }
 
   /**
-   * Get the getViewFeesAndCompensationRates url.
+   * Get the desktop list size.
    *
    * @return string
-   *   The url.
+   *   The desktop list size or the fallback value.
    */
-  public function getViewFeesAndCompensationRatesUrl(): string {
-    return $this->loadConfig()
-      ->get('fees_and_replacement_costs_url')
-      ?? self::FEES_AND_REPLACEMENT_COSTS_URL;
+  public function getListSizeDesktop(): string {
+    return $this->loadConfig()->get('fees_list_size_desktop') ?? self::FEES_LIST_SIZE_DESKTOP;
+  }
+
+  /**
+   * Get the mobile list size.
+   *
+   * @return string
+   *   The mobile list size or the fallback value.
+   */
+  public function getListSizeMobile(): string {
+    return $this->loadConfig()->get('fees_list_size_mobile') ?? self::FEES_LIST_SIZE_MOBILE;
   }
 
 }

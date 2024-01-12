@@ -74,23 +74,6 @@ class FeesListSettingsForm extends ConfigFormBase {
       '#default_value' => $config->get('fees_and_replacement_costs_url') ?? DplFeesSettings::FEES_AND_REPLACEMENT_COSTS_URL,
     ];
 
-    $form['settings']['page_size_mobile'] = [
-      '#type' => 'number',
-      '#title' => $this->t('Page size mobile', [], ['context' => 'Dashboard (settings)']),
-      '#default_value' => $config->get('page_size_mobile') ?? DplFeesSettings::PAGE_SIZE_MOBILE,
-      '#min' => 0,
-      '#step' => 1,
-    ];
-
-    $form['settings']['page_size_desktop'] = [
-      '#type' => 'number',
-      '#title' => $this->t('Page size desktop', [], ['context' => 'Dashboard (settings)']),
-      '#default_value' => $config->get('page_size_desktop') ?? DplFeesSettings::PAGE_SIZE_DESKTOP,
-      '#min' => 0,
-      '#step' => 1,
-    ];
-
-    // @todo images to be done in future render.
     $form['settings']['payment_overview_url'] = [
       '#type' => 'url',
       '#title' => $this->t('Payment overview url'),
@@ -117,8 +100,6 @@ class FeesListSettingsForm extends ConfigFormBase {
       ->set('fees_and_replacement_costs_url', $form_state->getValue('fees_and_replacement_costs_url'))
       ->set('payment_overview_url', $form_state->getValue('payment_overview_url'))
       ->set('fee_list_body_text', $form_state->getValue('fee_list_body_text'))
-      ->set('page_size_desktop', $form_state->getValue('page_size_desktop'))
-      ->set('page_size_mobile', $form_state->getValue('page_size_mobile'))
       ->save();
   }
 

@@ -3,16 +3,15 @@
 namespace Drupal\dpl_patron_menu\Plugin\Block;
 
 use Drupal\Core\Block\BlockBase;
-use Drupal\Core\Config\ConfigFactoryInterface;
 use Drupal\Core\Plugin\ContainerFactoryPluginInterface;
 use Drupal\Core\Url;
 use Drupal\dpl_library_agency\Branch\BranchRepositoryInterface;
 use Drupal\dpl_library_agency\BranchSettings;
 use Drupal\dpl_library_agency\GeneralSettings;
-use Drupal\dpl_react\DplReactConfigInterface;
+use Drupal\dpl_patron_menu\DplMenuSettings;
 use Drupal\dpl_react_apps\Controller\DplReactAppsController;
 use Symfony\Component\DependencyInjection\ContainerInterface;
-use function Safe\json_encode;
+use function Safe\json_encode as json_encode;
 
 /**
  * Provides patron menu.
@@ -23,12 +22,6 @@ use function Safe\json_encode;
  * )
  */
 class PatronMenuBlock extends BlockBase implements ContainerFactoryPluginInterface {
-  /**
-   * Drupal config factory.
-   *
-   * @var \Drupal\Core\Config\ConfigFactoryInterface
-   */
-  private ConfigFactoryInterface $configFactory;
 
   /**
    * PatronMenuBlock constructor.
@@ -39,14 +32,12 @@ class PatronMenuBlock extends BlockBase implements ContainerFactoryPluginInterfa
    *   The plugin ID for the plugin instance.
    * @param mixed $plugin_definition
    *   The plugin implementation definition.
-   * @param \Drupal\Core\Config\ConfigFactoryInterface $configFactory
-   *   Drupal config factory to get FBS and Publizon settings.
+   * @param \Drupal\dpl_patron_menu\DplMenuSettings $patronMenuSettings
+   *   Patron menu settings.
    * @param \Drupal\dpl_library_agency\BranchSettings $branchSettings
    *   The branch settings for branch config.
    * @param \Drupal\dpl_library_agency\Branch\BranchRepositoryInterface $branchRepository
    *   The branch settings for getting branches.
-   * @param \Drupal\dpl_react\DplReactConfigInterface $menuSettings
-   *   Dashboard settings.
    * @param \Drupal\dpl_library_agency\GeneralSettings $generalSettings
    *   General settings.
    */
@@ -54,15 +45,13 @@ class PatronMenuBlock extends BlockBase implements ContainerFactoryPluginInterfa
       array $configuration,
       $plugin_id,
       $plugin_definition,
-      ConfigFactoryInterface $configFactory,
+      private DplMenuSettings $patronMenuSettings,
       private BranchSettings $branchSettings,
       private BranchRepositoryInterface $branchRepository,
-      private DplReactConfigInterface $menuSettings,
-      private GeneralSettings $generalSettings
+      private GeneralSettings $generalSettings,
   ) {
     parent::__construct($configuration, $plugin_id, $plugin_definition);
     $this->configuration = $configuration;
-    $this->configFactory = $configFactory;
   }
 
   /**
@@ -85,10 +74,9 @@ class PatronMenuBlock extends BlockBase implements ContainerFactoryPluginInterfa
       $configuration,
       $plugin_id,
       $plugin_definition,
-      $container->get('config.factory'),
+      $container->get('dpl_patron_menu.settings'),
       $container->get('dpl_library_agency.branch_settings'),
       $container->get('dpl_library_agency.branch.repository'),
-      \Drupal::service('dpl_patron_menu.settings'),
       $container->get('dpl_library_agency.general_settings'),
     );
   }
@@ -102,8 +90,8 @@ class PatronMenuBlock extends BlockBase implements ContainerFactoryPluginInterfa
    * @throws \Safe\Exceptions\JsonException
    */
   public function build(): array {
-    $menuSettings = $this->menuSettings->loadConfig();
-    $generalSettings = $this->configFactory->get('dpl_library_agency.general_settings');
+    $generalSettings = $this->generalSettings->loadConfig();
+
     // Alternative to this menu array here this could be loaded from a drupal
     // generated menu. A place for further improvements.
     $menu = [
@@ -153,8 +141,8 @@ class PatronMenuBlock extends BlockBase implements ContainerFactoryPluginInterfa
 
     $data = [
       // Config.
-      'page-size-desktop' => $menuSettings->get('page_size_desktop'),
-      'page-size-mobile' => $menuSettings->get('page_size_mobile'),
+      'page-size-desktop' => $this->patronMenuSettings->getListSizeDesktop(),
+      'page-size-mobile' => $this->patronMenuSettings->getListSizeMobile(),
       'blacklisted-pickup-branches-config' => DplReactAppsController::buildBranchesListProp($this->branchSettings->getExcludedReservationBranches()),
       'branches-config' => DplReactAppsController::buildBranchesJsonProp($this->branchRepository->getBranches()),
       "expiration-warning-days-before-config" => $generalSettings->get('expiration_warning_days_before_config') ?? GeneralSettings::EXPIRATION_WARNING_DAYS_BEFORE_CONFIG,

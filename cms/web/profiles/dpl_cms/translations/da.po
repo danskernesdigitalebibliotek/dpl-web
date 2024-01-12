@@ -3,8 +3,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2024-01-10 12:37+0100\n"
-"PO-Revision-Date: 2024-01-10 12:37+0100\n"
+"POT-Creation-Date: 2024-01-12 12:30+0100\n"
+"PO-Revision-Date: 2024-01-12 12:30+0100\n"
 "Last-Translator: NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
 "MIME-Version: 1.0\n"
@@ -237,13 +237,21 @@ msgctxt "Favorites list material component"
 msgid "Your list"
 msgstr "Huskeliste"
 
-msgctxt "Menu (settings)"
-msgid "Page size mobile"
-msgstr "Antal listeelemeter på side (mobil)"
+msgctxt "List size (settings)"
+msgid "Patron menu list size settings"
+msgstr ""
 
-msgctxt "Menu (settings)"
-msgid "Page size desktop"
-msgstr "Antal listeelemeter på side (desktop)"
+msgctxt "List size (settings)"
+msgid "The number of items to display in the patron menu list."
+msgstr ""
+
+msgctxt "List size (settings)"
+msgid "Patron menu list size on desktop"
+msgstr ""
+
+msgctxt "List size (settings)"
+msgid "Patron menu list size on mobile"
+msgstr ""
 
 msgctxt "Patron menu"
 msgid "Dashboard"
@@ -255,11 +263,11 @@ msgstr "Lån"
 
 msgctxt "Patron menu"
 msgid "Reservations"
-msgstr ""
+msgstr "Reserveringer"
 
 msgctxt "Patron menu"
 msgid "My list"
-msgstr ""
+msgstr "Huskeliste"
 
 msgctxt "Patron menu"
 msgid "Fees & Replacement costs"
@@ -347,7 +355,7 @@ msgstr "Pop-up med facetbrowser"
 
 msgctxt "Search Result"
 msgid "Can always be loaned"
-msgstr ""
+msgstr "Kan altid lånes"
 
 msgctxt "Search Result"
 msgid "Children or adults"
@@ -359,7 +367,7 @@ msgstr "Ophav"
 
 msgctxt "Search Result"
 msgid "Dk5"
-msgstr ""
+msgstr "Emnetal"
 
 msgctxt "Search Result"
 msgid "Fiction or non-fiction"
@@ -399,7 +407,7 @@ msgstr "Formater"
 
 msgctxt "Search Result"
 msgid "Year"
-msgstr ""
+msgstr "År"
 
 msgctxt "Search Result"
 msgid "Filter list"
@@ -1528,7 +1536,7 @@ msgstr "+ @count flere materialer"
 
 msgctxt "Global"
 msgid "Longer return time"
-msgstr ""
+msgstr "Længere afleveringstid"
 
 msgctxt "Global"
 msgid "Returned too late"
@@ -1610,7 +1618,7 @@ msgstr "Vælg hvor du vil afhente dine reserveringer"
 
 msgctxt "Global"
 msgid "Change pickup location for your reservation."
-msgstr ""
+msgstr "Skift afhentningssted for din reservering"
 
 msgctxt "Global"
 msgid "Multiselect - all option"
@@ -1697,7 +1705,7 @@ msgstr ""
 
 msgctxt "Global"
 msgid "Cancel pause"
-msgstr ""
+msgstr "Fjern pause"
 
 msgctxt "Global"
 msgid "Close pause reservations modal"
@@ -1859,11 +1867,11 @@ msgstr "Reserveringsdato"
 
 msgctxt "Global"
 msgid "Borrow before"
-msgstr ""
+msgstr "Lån før"
 
 msgctxt "Global"
 msgid "Your reservation expires @date!"
-msgstr ""
+msgstr "Din reservering udløber @date!"
 
 msgctxt "Global"
 msgid "Pickup deadline"
@@ -1891,7 +1899,7 @@ msgstr "Status"
 
 msgctxt "Global"
 msgid "At the moment you have 0 reservations"
-msgstr ""
+msgstr "Du har i øjeblikket 0 reserveringer"
 
 msgctxt "Global"
 msgid "day"
@@ -1903,7 +1911,7 @@ msgstr ""
 
 msgctxt "Global"
 msgid "At the moment you have 0 reservations on digital items"
-msgstr ""
+msgstr "Du har i øjeblikket 0 reserveringer på digitale materialer"
 
 msgctxt "Global"
 msgid "You are at the front of the queue"
@@ -1911,11 +1919,11 @@ msgstr ""
 
 msgctxt "Global"
 msgid "Your reservations"
-msgstr ""
+msgstr "Dine reserveringer"
 
 msgctxt "Global"
 msgid "Reservations have been paused in the following time span:"
-msgstr ""
+msgstr "Reserveringer er sat på pause:"
 
 msgctxt "Global"
 msgid ""
@@ -1929,15 +1937,15 @@ msgstr ""
 
 msgctxt "Global"
 msgid "Your reservations are paused"
-msgstr ""
+msgstr "Dine reserveringer er sat på pause"
 
 msgctxt "Global"
 msgid "At the moment you have 0 physical reservations"
-msgstr ""
+msgstr "Du har i øjeblikket 0 reserveringer på fysiske materialer"
 
 msgctxt "Global"
 msgid "At the moment you have 0 reservations ready for pickup"
-msgstr ""
+msgstr "Du har i øjeblikket 0 reserveringer klar til afhentning"
 
 msgctxt "Global"
 msgid "This material is ready for pickup"
@@ -1953,35 +1961,35 @@ msgstr ""
 
 msgctxt "Global"
 msgid "This material is ready in 1 day"
-msgstr ""
+msgstr "Materialet er klar til lån om en dag"
 
 msgctxt "Global"
 msgid "This material is ready in @count days"
-msgstr ""
+msgstr "Materialet er klar om @count dage"
 
 msgctxt "Global"
 msgid "Close"
-msgstr ""
+msgstr "Luk"
 
 msgctxt "Global"
 msgid "Available in @count days"
-msgstr ""
+msgstr "Klar til lån om @count dage"
 
 msgctxt "Global"
 msgid "days"
-msgstr ""
+msgstr "dage"
 
 msgctxt "Global"
 msgid "queued"
-msgstr ""
+msgstr "I kø"
 
 msgctxt "Global"
 msgid "There are @count people in the queue before you"
-msgstr ""
+msgstr "Der er @count i kø før dig"
 
 msgctxt "Global"
 msgid "Still in queue"
-msgstr ""
+msgstr "Stadig i kø"
 
 msgctxt "Global"
 msgid "Ready for you"
@@ -1993,11 +2001,11 @@ msgstr "Viser @itemsShown ud af @hitcount elementer"
 
 msgctxt "Global"
 msgid "Click the button below to close this window"
-msgstr ""
+msgstr "Klik på knappen for at lukke vinduet"
 
 msgctxt "Global"
 msgid "Your reservation has been changed"
-msgstr ""
+msgstr "Din reservering er blevet ændret"
 
 msgctxt "Global"
 msgid "Dropdown with additional search functions"
@@ -2117,17 +2125,21 @@ msgctxt "Recommender"
 msgid "Because you have reserved @title you may also like"
 msgstr "Fordi du har lånt @title kan du måske også lide"
 
-msgctxt "Loan list (settings)"
-msgid "Basic settings"
-msgstr "Grundlæggende indstillinger"
+msgctxt "List size (settings)"
+msgid "Loan list size settings"
+msgstr ""
 
-msgctxt "Loan list (settings)"
-msgid "Page size mobile"
-msgstr "Antal listeelemeter på side (mobil)"
+msgctxt "List size (settings)"
+msgid "The number of items to display in the loan list."
+msgstr ""
 
-msgctxt "Loan list (settings)"
-msgid "Page size desktop"
-msgstr "Antal listeelemeter på side (desktop)"
+msgctxt "List size (settings)"
+msgid "Loan list size on desktop"
+msgstr ""
+
+msgctxt "List size (settings)"
+msgid "Loan list size on mobile"
+msgstr ""
 
 msgctxt "Loan list"
 msgid "Renew several"
@@ -2364,17 +2376,21 @@ msgstr ""
 "Gyldig token er ikke tilgængelig. <a href=\":url\">Run cron</a> for "
 "at hente en ny token."
 
-msgctxt "Dashboard (settings)"
-msgid "Basic settings"
-msgstr "Grundlæggende indstillinger"
+msgctxt "List size (settings)"
+msgid "Dashboard list size settings"
+msgstr ""
 
-msgctxt "Dashboard (settings)"
-msgid "Page size mobile"
-msgstr "Antal listeelemeter på side (mobil)"
+msgctxt "List size (settings)"
+msgid "The number of items to display in the dashboard list."
+msgstr ""
 
-msgctxt "Dashboard (settings)"
-msgid "Page size desktop"
-msgstr "Antal listeelemeter på side (desktop)"
+msgctxt "List size (settings)"
+msgid "Dashboard list size on desktop"
+msgstr ""
+
+msgctxt "List size (settings)"
+msgid "Dashboard list size on mobile"
+msgstr ""
 
 msgctxt "Dashboard"
 msgid "Select all"
@@ -2449,15 +2465,6 @@ msgstr "Library er "
 msgid "DDB React library is missing (@dir)"
 msgstr "DPL React library mangler (@dir) "
 
-msgid "Basic settings"
-msgstr "Grundlæggende indstillinger"
-
-msgid "Page size mobile"
-msgstr "Antal listeelemeter på side (mobil)"
-
-msgid "Page size desktop"
-msgstr "Antal listeelemeter på side (desktop)"
-
 msgctxt "Favorites list"
 msgid "Your favorites list is empty"
 msgstr "Din huskeliste er tom"
@@ -2469,6 +2476,22 @@ msgstr "Huskeliste"
 msgctxt "Favorites list"
 msgid "@count materials"
 msgstr "@count materialer"
+
+msgctxt "List size (settings)"
+msgid "Favorites list size settings"
+msgstr ""
+
+msgctxt "List size (settings)"
+msgid "The number of items to display in the favorites list."
+msgstr ""
+
+msgctxt "List size (settings)"
+msgid "Favorites list size on desktop"
+msgstr ""
+
+msgctxt "List size (settings)"
+msgid "Favorites list size on mobile"
+msgstr ""
 
 msgctxt "dpl_event"
 msgid "Access"
@@ -2514,17 +2537,40 @@ msgctxt "Reservation list"
 msgid "Borrow before @date"
 msgstr "Lån før @date"
 
-msgctxt "Reservation list (settings)"
+msgctxt "List size (settings)"
+msgid "Reservations list size settings"
+msgstr ""
+
+msgctxt "List size (settings)"
+msgid "The number of items to display in the reservation list."
+msgstr ""
+
+msgctxt "List size (settings)"
+msgid "Reservations list size on desktop"
+msgstr ""
+
+msgctxt "List size (settings)"
+msgid "Reservations list size on mobile"
+msgstr ""
+
+msgctxt "List size (settings)"
+msgid "Fees list size settings"
+msgstr ""
+
+msgctxt "List size (settings)"
+msgid "The number of items to display in the fees list."
+msgstr ""
+
+msgctxt "List size (settings)"
+msgid "Fees list size on desktop"
+msgstr ""
+
+msgctxt "List size (settings)"
+msgid "Fees list size on mobile"
+msgstr ""
+
 msgid "Basic settings"
 msgstr "Grundlæggende indstillinger"
-
-msgctxt "Reservation list (settings)"
-msgid "Page size mobile"
-msgstr "Antal listeelemeter på side (mobil)"
-
-msgctxt "Reservation list (settings)"
-msgid "Page size desktop"
-msgstr "Antal listeelemeter på side (desktop)"
 
 msgid "Fees and Replacement costs URL"
 msgstr "Link til oplysningsside om takster"
@@ -2630,7 +2676,7 @@ msgstr "Gebyr @fee kr."
 
 msgctxt "Fees list"
 msgid "# @materialNumber"
-msgstr ""
+msgstr "Materialenummer @materialNumber"
 
 msgctxt "Fees list"
 msgid "Other materials"
@@ -2904,7 +2950,7 @@ msgid "Instant loan settings"
 msgstr "Indstillinger for strakslån"
 
 msgid "Instant Loan Settings"
-msgstr ""
+msgstr "Indstillinger for strakslån"
 
 msgid "Configure promotion of materials available for instant loans."
 msgstr ""
@@ -2939,7 +2985,13 @@ msgstr "Biblioteksindstillinger"
 msgid "General Settings"
 msgstr "Generelle indstillinger"
 
+msgid "List Size Settings"
+msgstr ""
+
 msgid "Administer various settings for a library agency."
+msgstr ""
+
+msgid "Administer list size settings for a library agency."
 msgstr ""
 
 msgid "Favorites list material component"
@@ -2953,9 +3005,6 @@ msgstr "DPL huskeliste materialekomponent"
 
 msgid "Handle the favorites list material component pages"
 msgstr "Håndter indstillinger for huskeliste komponent"
-
-msgid "Menu settings"
-msgstr "Menu"
 
 msgid "DPL menu"
 msgstr "DPL menu"
@@ -2993,19 +3042,10 @@ msgstr "DPL recommender"
 msgid "recommender component"
 msgstr "Komponent til anbefalinger (recommender)"
 
-msgid "Loans settings"
-msgstr "Låneindstillinger"
-
 msgid "Loans"
 msgstr ""
 
 msgid "List user loans"
-msgstr ""
-
-msgid "Loan list settings"
-msgstr ""
-
-msgid "Change loan list settings"
 msgstr ""
 
 msgid "DPL loans"
@@ -3071,12 +3111,6 @@ msgstr ""
 msgid "User dashboard"
 msgstr ""
 
-msgid "Dashboard settings"
-msgstr "Indstillinger for Dit overblik (Dashboard)"
-
-msgid "Change Dashboard settings"
-msgstr ""
-
 msgid "DPL dashboard"
 msgstr "DPL dashboard"
 
@@ -3102,9 +3136,6 @@ msgstr "Eksempelindhold for DPL CMS"
 msgid "Provides example content for demo sites."
 msgstr "Indeholder eksempelindhold til demosider."
 
-msgid "Favorites list settings"
-msgstr "Huskeliste indstillinger"
-
 msgid "DPL favorites"
 msgstr "DPL Huskeliste"
 
@@ -3115,9 +3146,6 @@ msgid "Favorites"
 msgstr ""
 
 msgid "List user favorites"
-msgstr ""
-
-msgid "Change favorites list settings"
 msgstr ""
 
 msgid "Event"
@@ -3132,19 +3160,10 @@ msgstr "DPL noget der ligner"
 msgid "Something similar component"
 msgstr "Komponenten \"Noget der ligner\""
 
-msgid "Reservations settings"
-msgstr "Reserveringsindstillinger"
-
 msgid "Reservations"
 msgstr ""
 
 msgid "List user reservations"
-msgstr ""
-
-msgid "Reservation list settings"
-msgstr ""
-
-msgid "Change reservation list settings"
 msgstr ""
 
 msgid "DPL Reservations"

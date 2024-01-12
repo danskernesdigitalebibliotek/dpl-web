@@ -4,13 +4,3 @@ dpl_favorites_list.list:
     _controller: '\Drupal\dpl_favorites_list\Controller\DplFavoritesListController::list'
   requirements:
     _permission: "access content"
-
-dpl_favorites_list.settings:
-  path: "/admin/config/dpl-library-agency/favorites-list-settings"
-  defaults:
-    _form: '\Drupal\dpl_favorites_list\Form\FavoritesListSettingsForm'
-    _title: "Favorites list settings"
-  requirements:
-    _permission: "administer site configuration"
-  options:
-    _admin_route: TRUE
