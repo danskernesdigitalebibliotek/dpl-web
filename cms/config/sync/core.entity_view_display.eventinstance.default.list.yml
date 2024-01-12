@@ -89,6 +89,14 @@ content:
     third_party_settings: {  }
     weight: 55
     region: content
+  event_partners:
+    type: string
+    label: visible
+    settings:
+      link_to_entity: false
+    third_party_settings: {  }
+    weight: 56
+    region: content
   event_place:
     type: string
     label: visible
@@ -132,3 +140,4 @@ hidden:
   field_event_place: true
   field_event_state: true
   field_ticket_categories: true
+  search_api_excerpt: true

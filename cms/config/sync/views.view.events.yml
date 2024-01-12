@@ -6,6 +6,7 @@ dependencies:
     - search_api.index.events
   module:
     - search_api
+    - user
 id: events
 label: Events
 module: views
@@ -122,8 +123,9 @@ display:
           sort_asc_label: Asc
           sort_desc_label: Desc
       access:
-        type: none
-        options: {  }
+        type: perm
+        options:
+          perm: 'access content'
       cache:
         type: none
         options: {  }
@@ -201,11 +203,12 @@ display:
         - 'languages:language_interface'
         - url.query_args
         - 'user.node_grants:view'
+        - user.permissions
       tags:
         - 'config:search_api.index.events'
         - 'search_api_list:events'
-  page_1:
-    id: page_1
+  all:
+    id: all
     display_title: Page
     display_plugin: page
     position: 1
@@ -218,6 +221,43 @@ display:
         - 'languages:language_interface'
         - url.query_args
         - 'user.node_grants:view'
+        - user.permissions
+      tags:
+        - 'config:search_api.index.events'
+        - 'search_api_list:events'
+  related:
+    id: related
+    display_title: 'Related events'
+    display_plugin: block
+    position: 1
+    display_options:
+      title: ''
+      pager:
+        type: none
+        options:
+          offset: 0
+      style:
+        type: default
+        options: {  }
+      row:
+        type: search_api
+        options:
+          view_modes:
+            'entity:node':
+              event: card
+      defaults:
+        title: false
+        pager: false
+        style: false
+        row: false
+      display_description: ''
+      display_extenders: {  }
+    cache_metadata:
+      max-age: -1
+      contexts:
+        - 'languages:language_interface'
+        - 'user.node_grants:view'
+        - user.permissions
       tags:
         - 'config:search_api.index.events'
         - 'search_api_list:events'

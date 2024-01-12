@@ -1,0 +1,32 @@
+{% set has_image = (content.field_teaser_image.0) %}
+
+{%
+  set classes = [
+    'card',
+    'card--' ~ variant|default('x-large'),
+    has_image ? 'card--has-image' : 'card--has-no-image'
+  ]
+%}
+
+  <article {{ attributes.addClass(classes) }}>
+    <a href="{{ url }}">
+
+    <figure class="card__media">
+      {% if has_image %}
+        {{ content.field_teaser_image }}
+      {% else %}
+        <div class="card__placeholder-text">
+          {{ content.field_teaser_text }}
+        </div>
+      {% endif %}
+    </figure>
+    <div class="card__tags">
+      <span class="card__tag card__tag--type">{{ node.type.entity.label() }}</span>
+      <span class="card__tag">{{ content.field_event_date.0 }}</span>
+    </div>
+    <h1 class="card__title">
+      {{ label }}
+    </h1>
+    </a>
+
+  </article>

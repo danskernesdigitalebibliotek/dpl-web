@@ -1,9 +1,9 @@
-uuid: 6fcfb0d8-5742-42ba-9195-85fe80b603b8
+uuid: 25f22ac2-883d-4686-afbd-b935ac039266
 langcode: en
-status: false
+status: true
 dependencies:
   config:
-    - core.entity_view_mode.node.teaser
+    - core.entity_view_mode.node.card
     - field.field.node.article.field_canonical_url
     - field.field.node.article.field_override_author
     - field.field.node.article.field_paragraphs
@@ -14,23 +14,40 @@ dependencies:
     - node.type.article
   module:
     - user
-id: node.article.teaser
+id: node.article.card
 targetEntityType: node
 bundle: article
-mode: teaser
+mode: card
 content:
-  links:
+  field_subtitle:
+    type: basic_string
+    label: hidden
     settings: {  }
     third_party_settings: {  }
-    weight: 100
+    weight: 0
+    region: content
+  field_teaser_image:
+    type: entity_reference_entity_view
+    label: hidden
+    settings:
+      view_mode: hero_wide
+      link: false
+    third_party_settings: {  }
+    weight: 2
+    region: content
+  field_teaser_text:
+    type: string
+    label: hidden
+    settings:
+      link_to_entity: false
+    third_party_settings: {  }
+    weight: 1
     region: content
 hidden:
   field_canonical_url: true
   field_override_author: true
   field_paragraphs: true
   field_show_override_author: true
-  field_subtitle: true
-  field_teaser_image: true
-  field_teaser_text: true
   langcode: true
+  links: true
   search_api_excerpt: true

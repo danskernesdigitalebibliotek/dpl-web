@@ -13,6 +13,8 @@ dependencies:
     - field.field.node.event.field_event_partners
     - field.field.node.event.field_event_place
     - field.field.node.event.field_event_state
+    - field.field.node.event.field_teaser_image
+    - field.field.node.event.field_teaser_text
     - field.field.node.event.field_ticket_categories
     - node.type.event
   module:
@@ -112,6 +114,8 @@ content:
     region: content
 hidden:
   field_event_state: true
+  field_teaser_image: true
+  field_teaser_text: true
   langcode: true
   links: true
   search_api_excerpt: true

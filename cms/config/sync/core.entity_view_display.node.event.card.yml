@@ -1,16 +1,14 @@
-uuid: 1b2c8b81-7895-43bd-a832-0d2b613aa541
+uuid: 641ce431-935f-41d6-bdd5-912b8606f009
 langcode: en
 status: true
 dependencies:
   config:
-    - core.entity_view_mode.node.teaser
+    - core.entity_view_mode.node.card
     - field.field.node.event.field_event_address
     - field.field.node.event.field_event_date
     - field.field.node.event.field_event_description
     - field.field.node.event.field_event_image
     - field.field.node.event.field_event_link
-    - field.field.node.event.field_event_paragraphs
-    - field.field.node.event.field_event_partners
     - field.field.node.event.field_event_place
     - field.field.node.event.field_event_state
     - field.field.node.event.field_teaser_image
@@ -18,20 +16,42 @@ dependencies:
     - field.field.node.event.field_ticket_categories
     - node.type.event
   module:
+    - datetime_range
     - user
-id: node.event.teaser
+id: node.event.card
 targetEntityType: node
 bundle: event
-mode: teaser
+mode: card
 content:
-  links:
-    settings: {  }
+  field_event_date:
+    type: daterange_default
+    label: hidden
+    settings:
+      timezone_override: ''
+      format_type: date_full_month
+      separator: '-'
     third_party_settings: {  }
-    weight: 100
+    weight: 0
+    region: content
+  field_teaser_image:
+    type: entity_reference_entity_view
+    label: hidden
+    settings:
+      view_mode: hero_wide
+      link: false
+    third_party_settings: {  }
+    weight: 2
+    region: content
+  field_teaser_text:
+    type: string
+    label: hidden
+    settings:
+      link_to_entity: false
+    third_party_settings: {  }
+    weight: 1
     region: content
 hidden:
   field_event_address: true
-  field_event_date: true
   field_event_description: true
   field_event_image: true
   field_event_link: true
@@ -39,8 +59,7 @@ hidden:
   field_event_partners: true
   field_event_place: true
   field_event_state: true
-  field_teaser_image: true
-  field_teaser_text: true
   field_ticket_categories: true
   langcode: true
+  links: true
   search_api_excerpt: true

@@ -12,15 +12,38 @@ dependencies:
     - field.field.node.event.field_event_partners
     - field.field.node.event.field_event_place
     - field.field.node.event.field_event_state
+    - field.field.node.event.field_teaser_image
+    - field.field.node.event.field_teaser_text
     - field.field.node.event.field_ticket_categories
     - node.type.event
   module:
     - address
     - datetime_range
+    - field_group
     - link
     - media_library
+    - media_library_edit
     - paragraphs
     - text
+third_party_settings:
+  field_group:
+    group_teaser_card:
+      children:
+        - field_teaser_text
+        - field_teaser_image
+      label: 'Teaser card'
+      region: content
+      parent_name: ''
+      weight: 12
+      format_type: details_sidebar
+      format_settings:
+        classes: ''
+        show_empty_fields: true
+        id: ''
+        open: true
+        description: ''
+        required_fields: true
+        weight: 0
 id: node.event.default
 targetEntityType: node
 bundle: event
@@ -48,7 +71,7 @@ content:
     third_party_settings: {  }
   field_event_image:
     type: media_library_widget
-    weight: 10
+    weight: 9
     region: content
     settings:
       media_types: {  }
@@ -110,6 +133,23 @@ content:
     weight: 2
     region: content
     settings: {  }
+    third_party_settings: {  }
+  field_teaser_image:
+    type: media_library_widget
+    weight: 11
+    region: content
+    settings:
+      media_types: {  }
+    third_party_settings:
+      media_library_edit:
+        show_edit: '1'
+  field_teaser_text:
+    type: string_textfield
+    weight: 10
+    region: content
+    settings:
+      size: 60
+      placeholder: ''
     third_party_settings: {  }
   field_ticket_categories:
     type: paragraphs

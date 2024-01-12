@@ -132,3 +132,4 @@ hidden:
   field_event_place: true
   field_event_state: true
   field_ticket_categories: true
+  search_api_excerpt: true
