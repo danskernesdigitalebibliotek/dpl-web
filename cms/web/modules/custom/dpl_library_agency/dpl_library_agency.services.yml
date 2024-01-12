@@ -11,6 +11,10 @@ services:
     class: Drupal\dpl_library_agency\GeneralSettings
     arguments: ["@config.manager"]
 
+  dpl_library_agency.list_size_settings:
+    class: Drupal\dpl_library_agency\ListSizeSettings
+    arguments: ["@config.manager"]
+
   dpl_library_agency.branch.repository:
     class: Drupal\dpl_library_agency\Branch\FallbackBranchRepository
     arguments:

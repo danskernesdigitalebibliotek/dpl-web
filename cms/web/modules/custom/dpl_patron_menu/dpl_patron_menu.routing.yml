@@ -1,9 +1,0 @@
-dpl_patron_menu.settings:
-  path: "/admin/config/dpl-library-agency/menu-settings"
-  defaults:
-    _form: '\Drupal\dpl_patron_menu\Form\MenuSettingsForm'
-    _title: "Menu settings"
-  requirements:
-    _permission: "administer site configuration"
-  options:
-    _admin_route: TRUE

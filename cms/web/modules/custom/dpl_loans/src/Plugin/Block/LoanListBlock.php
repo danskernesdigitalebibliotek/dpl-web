@@ -3,12 +3,10 @@
 namespace Drupal\dpl_loans\Plugin\Block;
 
 use Drupal\Core\Block\BlockBase;
-use Drupal\Core\Config\ConfigFactoryInterface;
 use Drupal\Core\Plugin\ContainerFactoryPluginInterface;
 use Drupal\Core\Url;
 use Drupal\dpl_library_agency\GeneralSettings;
 use Drupal\dpl_loans\DplLoansSettings;
-use Drupal\dpl_react\DplReactConfigInterface;
 use Drupal\dpl_react_apps\Controller\DplReactAppsController;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
@@ -31,17 +29,17 @@ class LoanListBlock extends BlockBase implements ContainerFactoryPluginInterface
    *   The plugin ID for the plugin instance.
    * @param mixed $plugin_definition
    *   The plugin implementation definition.
-   * @param \Drupal\Core\Config\ConfigFactoryInterface $configFactory
-   *   Drupal config factory to get FBS and Publizon settings.
-   * @param \Drupal\dpl_react\DplReactConfigInterface $loanSettings
+   * @param \Drupal\dpl_loans\DplLoansSettings $loansSettings
    *   Loans settings.
+   * @param \Drupal\dpl_library_agency\GeneralSettings $generalSettings
+   *   General settings.
    */
   public function __construct(
     array $configuration,
     $plugin_id,
     $plugin_definition,
-    private ConfigFactoryInterface $configFactory,
-    private DplReactConfigInterface $loanSettings
+    private DplLoansSettings $loansSettings,
+    private GeneralSettings $generalSettings,
   ) {
     parent::__construct($configuration, $plugin_id, $plugin_definition);
     $this->configuration = $configuration;
@@ -49,26 +47,14 @@ class LoanListBlock extends BlockBase implements ContainerFactoryPluginInterface
 
   /**
    * {@inheritDoc}
-   *
-   * @param \Symfony\Component\DependencyInjection\ContainerInterface $container
-   *   The service container.
-   * @param mixed[] $configuration
-   *   A configuration array containing information about the plugin instance.
-   * @param string $plugin_id
-   *   The plugin ID for the plugin instance.
-   * @param int $plugin_definition
-   *   The plugin implementation definition.
-   *
-   * @return \Drupal\dpl_loans\Plugin\Block\LoanListBlock|static
-   *   Loan list block.
    */
   public static function create(ContainerInterface $container, array $configuration, $plugin_id, $plugin_definition) {
     return new static(
       $configuration,
       $plugin_id,
       $plugin_definition,
-      $container->get('config.factory'),
-      \Drupal::service('dpl_loans.settings')
+      $container->get('dpl_loans.settings'),
+      $container->get('dpl_library_agency.general_settings'),
     );
   }
 
@@ -79,13 +65,12 @@ class LoanListBlock extends BlockBase implements ContainerFactoryPluginInterface
    *   The app render array.
    */
   public function build() {
-    $loanListSettings = $this->loanSettings->loadConfig();
-    $generalSettings = $this->configFactory->get('dpl_library_agency.general_settings');
+    $generalSettings = $this->generalSettings->loadConfig();
 
     $data = [
       // Page size.
-      "page-size-desktop" => $loanListSettings->get('page_size_desktop') ?? DplLoansSettings::PAGE_SIZE_DESKTOP,
-      "page-size-mobile" => $loanListSettings->get('page_size_mobile') ?? DplLoansSettings::PAGE_SIZE_MOBILE,
+      "page-size-desktop" => $this->loansSettings->getListSizeDesktop(),
+      "page-size-mobile" => $this->loansSettings->getListSizeMobile(),
 
       // Config.
       "expiration-warning-days-before-config" => $generalSettings->get('expiration_warning_days_before_config') ?? GeneralSettings::EXPIRATION_WARNING_DAYS_BEFORE_CONFIG,

@@ -4,13 +4,3 @@ dpl_reservations.list:
     _controller: '\Drupal\dpl_reservations\Controller\DplReservationsController::list'
   requirements:
     _permission: "access content"
-
-dpl_reservations.settings:
-  path: "/admin/config/dpl-library-agency/reservation-list-settings"
-  defaults:
-    _form: '\Drupal\dpl_reservations\Form\ReservationListSettingsForm'
-    _title: "Reservations settings"
-  requirements:
-    _permission: "administer site configuration"
-  options:
-    _admin_route: TRUE
