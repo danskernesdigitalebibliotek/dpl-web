@@ -70,7 +70,10 @@ class FeesListSettingsForm extends ConfigFormBase {
     $form['settings']['fees_and_replacement_costs_url'] = [
       '#type' => 'linkit',
       '#title' => $this->t('Fees and Replacement costs URL', [], ['context' => 'Fees list settings form']),
-      '#description' => $this->t('File or URL containing the fees and replacement costs. You can search for an internal url. Or you can add an external url (starting with "http://" or "https://").', [], ['context' => 'Fees list settings form']),
+      '#description' => $this->t('File or URL containing the fees and replacement costs. <br>
+                                         You can add a relative url (e.g. /takster). <br>
+                                         You can search for an internal url. <br>
+                                         You can add an external url (starting with "http://" or "https://").', [], ['context' => 'Fees list settings form']),
       '#autocomplete_route_name' => 'linkit.autocomplete',
       '#autocomplete_route_parameters' => [
         'linkit_profile_id' => 'default',
@@ -81,7 +84,10 @@ class FeesListSettingsForm extends ConfigFormBase {
     $form['settings']['payment_overview_url'] = [
       '#type' => 'linkit',
       '#title' => $this->t('Payment overview url', [], ['context' => 'Fees list settings form']),
-      '#description' => $this->t('You can search for an internal url. Or you can add an external url (starting with http:// or https://).', [], ['context' => 'Fees list settings form']),
+      '#description' => $this->t('URL containing the payment overview. <br>
+                                         You can add a relative url (e.g. /takster). <br>
+                                         You can search for an internal url. <br>
+                                         You can add an external url (starting with "http://" or "https://")', [], ['context' => 'Fees list settings form']),
       '#autocomplete_route_name' => 'linkit.autocomplete',
       '#autocomplete_route_parameters' => [
         'linkit_profile_id' => 'default',
