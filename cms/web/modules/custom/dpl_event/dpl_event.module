@@ -243,3 +243,20 @@ function dpl_event_preprocess_node(array &$variables): void {
     $variables['ticket_price_display'] = $price_formatter->formatPriceRange($prices);
   }
 }
+
+/**
+ * Implements hook_gin_content_form_routes().
+ *
+ * @return string[] An array of event-related routes which should be managed as
+ *   content forms by the Gin theme.
+ */
+function dpl_event_gin_content_form_routes() : array {
+  return [
+    'entity.eventseries.add_form',
+    'entity.eventseries.edit_form',
+    // There is no direct add form for instances. They are always created in
+    // relation to series.
+    'entity.eventseries.add_instance_form',
+    'entity.eventinstance.edit_form',
+  ];
+}
