@@ -24,7 +24,8 @@ class FeesListSettingsForm extends ConfigFormBase {
    */
   public function __construct(
     ConfigFactoryInterface $config_factory,
-    protected DplReactConfigInterface $configService
+    protected DplReactConfigInterface $configService,
+    protected DplFeesSettings $feesSettings
   ) {
     $this->setConfigFactory($config_factory);
   }
@@ -35,6 +36,7 @@ class FeesListSettingsForm extends ConfigFormBase {
   public static function create(ContainerInterface $container): self {
     return new static(
       $container->get('config.factory'),
+      \Drupal::service('dpl_fees.settings'),
       \Drupal::service('dpl_fees.settings')
     );
   }
@@ -78,7 +80,7 @@ class FeesListSettingsForm extends ConfigFormBase {
       '#autocomplete_route_parameters' => [
         'linkit_profile_id' => 'default',
       ],
-      '#default_value' => $config->get('fees_and_replacement_costs_url') ?? DplFeesSettings::FEES_AND_REPLACEMENT_COSTS_URL,
+      '#default_value' => $this->feesSettings->getFeesAndReplacementCostsUrl(),
     ];
 
     $form['settings']['payment_overview_url'] = [
@@ -92,7 +94,7 @@ class FeesListSettingsForm extends ConfigFormBase {
       '#autocomplete_route_parameters' => [
         'linkit_profile_id' => 'default',
       ],
-      '#default_value' => $config->get('payment_overview_url') ?? DplFeesSettings::PAYMENT_OVERVIEW_URL,
+      '#default_value' => $this->feesSettings->getPaymentOverviewUrl(),
     ];
 
     $form['settings']['fee_list_body_text'] = [
