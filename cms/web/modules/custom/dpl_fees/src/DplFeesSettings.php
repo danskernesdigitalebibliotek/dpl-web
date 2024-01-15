@@ -67,4 +67,5 @@ class DplFeesSettings extends DplReactConfigBase {
   public function getPaymentOverviewUrl(): string {
     return $this->loadConfig()->get('payment_overview_url') ?? self::PAYMENT_OVERVIEW_URL;
   }
+
 }
