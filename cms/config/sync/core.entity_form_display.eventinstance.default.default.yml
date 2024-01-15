@@ -11,15 +11,36 @@ dependencies:
     - field.field.eventinstance.default.field_event_partners
     - field.field.eventinstance.default.field_event_place
     - field.field.eventinstance.default.field_event_state
+    - field.field.eventinstance.default.field_teaser_image
+    - field.field.eventinstance.default.field_teaser_text
     - field.field.eventinstance.default.field_ticket_categories
     - recurring_events.eventinstance_type.default
   module:
     - address
     - datetime_range
+    - field_group
     - link
     - media_library
     - paragraphs
-    - text
+third_party_settings:
+  field_group:
+    group_teaser_card:
+      children:
+        - field_teaser_text
+        - field_teaser_image
+      label: 'Teaser card'
+      region: content
+      parent_name: ''
+      weight: 11
+      format_type: details_sidebar
+      format_settings:
+        classes: ''
+        show_empty_fields: true
+        id: ''
+        open: true
+        description: ''
+        required_fields: true
+        weight: 0
 id: eventinstance.default.default
 targetEntityType: eventinstance
 bundle: default
@@ -36,14 +57,6 @@ content:
     weight: 6
     region: content
     settings: {  }
-    third_party_settings: {  }
-  field_event_description:
-    type: text_textarea
-    weight: 3
-    region: content
-    settings:
-      rows: 5
-      placeholder: ''
     third_party_settings: {  }
   field_event_image:
     type: media_library_widget
@@ -110,6 +123,21 @@ content:
     region: content
     settings: {  }
     third_party_settings: {  }
+  field_teaser_image:
+    type: media_library_widget
+    weight: 13
+    region: content
+    settings:
+      media_types: {  }
+    third_party_settings: {  }
+  field_teaser_text:
+    type: string_textfield
+    weight: 12
+    region: content
+    settings:
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
   field_ticket_categories:
     type: paragraphs
     weight: 4
@@ -137,3 +165,4 @@ content:
     third_party_settings: {  }
 hidden:
   body: true
+  field_event_description: true
