@@ -3,22 +3,24 @@ langcode: en
 status: true
 dependencies:
   config:
-    - field.field.paragraph.content_slider.field_contents
+    - field.field.paragraph.content_slider.field_content_references
     - field.field.paragraph.content_slider.field_title
     - paragraphs.paragraphs_type.content_slider
+  module:
+    - dynamic_entity_reference
 id: paragraph.content_slider.default
 targetEntityType: paragraph
 bundle: content_slider
 mode: default
 content:
-  field_contents:
-    type: entity_reference_autocomplete
-    weight: 1
+  field_content_references:
+    type: dynamic_entity_reference_default
+    weight: 2
     region: content
     settings:
       match_operator: CONTAINS
       match_limit: 10
-      size: 60
+      size: 40
       placeholder: ''
     third_party_settings: {  }
   field_title:
