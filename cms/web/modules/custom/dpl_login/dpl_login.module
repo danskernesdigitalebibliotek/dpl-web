@@ -25,24 +25,31 @@ use function Safe\sprintf as sprintf;
  *   User info from external service.
  * @param mixed[] $context
  *   Various openid_connect context. Tokens etc.
+ * @throws Exception
  */
 function dpl_login_openid_connect_userinfo_alter(array &$userinfo, array $context): void {
 
-  // If we cannot resolve uinque id we cannot continue.
-  if (!$id = $userinfo['attributes']['uniqueId'] ?? FALSE) {
-    $userinfo = [];
-    return;
+  // If we cannot resolve cpr we cannot continue.
+  if (!$cpr = $userinfo['attributes']['cpr'] ?? FALSE) {
+    if(!$uniqueId = $userinfo['attributes']['uniqueId'] ?? FALSE) {
+      throw new \Exception('Unable to identify user. Both CPR and uniqueId are missing.');
+    }
   }
+
+  $id = $cpr ?: $uniqueId;
 
   $id_hash = crypt($id, Settings::getHashSalt());
 
   $name = uniqid();
   // Drupal needs an email. We set a unique one to apply to that rule.
   $userinfo['email'] = sprintf('%s@dpl-cms.invalid', $name);
-  // Drupal needs a user name. We use the unique id to apply to that rule.
+  // Drupal needs a username. We use the unique id to apply to that rule.
   $userinfo['name'] = $name;
   // openid_connect module needs the sub for creating the auth map.
   $userinfo['sub'] = $id_hash;
+
+  \Drupal::logger('dpl_login')->warning('<pre><code>' . print_r($userinfo, TRUE) . '</code></pre>');
+
 }
 
 /**
@@ -52,6 +59,7 @@ function dpl_login_openid_connect_userinfo_alter(array &$userinfo, array $contex
  *   User account.
  * @param mixed[] $context
  *   Various openid_connect context. Tokens etc.
+ * @throws ApiException
  */
 function dpl_login_openid_connect_pre_authorize(AccountInterface|FALSE $account, array $context): bool {
   $logger = \Drupal::logger('dpl_login');
@@ -69,6 +77,12 @@ function dpl_login_openid_connect_pre_authorize(AccountInterface|FALSE $account,
   /** @var \Drupal\dpl_fbs\FbsApiFactory $api_factory */
   $api_factory = \Drupal::service('dpl_fbs.api_factory');
   $api = $api_factory->getPatronApi($token->token);
+
+  \Drupal::logger('dpl_login')->warning('<pre><code>' . print_r($token, TRUE) . '</code></pre>');
+
+  //$patron = $api->getPatronInformationByPatronIdV2();
+
+  //\Drupal::logger('dpl_login')->warning('<pre><code>' . print_r($patron, TRUE) . '</code></pre>');
 
   try {
     $patron = $api->getPatronInformationByPatronIdV2();
