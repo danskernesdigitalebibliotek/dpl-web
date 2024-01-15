@@ -24,7 +24,7 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
 class PatronRegistrationBlock extends BlockBase implements ContainerFactoryPluginInterface {
 
   /**
-   * ReservationListBlock constructor.
+   * PatronRegistrationBlock constructor.
    *
    * @param array $configuration
    *   A configuration array containing information about the plugin instance.
