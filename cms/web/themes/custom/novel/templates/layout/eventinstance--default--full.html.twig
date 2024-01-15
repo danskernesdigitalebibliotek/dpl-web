@@ -1,19 +1,34 @@
-{#
-  Reuse event node template.
-  To support this we have to reconstruct the structure of event nodes from
-  event instances with field inheritance.
-#}
-{%
-  set nodelike_content = {
-    "field_event_address": content.event_address,
-    "field_event_date": content.date,
-    "field_event_description": content.event_description,
-    "field_event_image": content.event_image,
-    "field_event_link": content.event_link,
-    "field_event_paragraphs": content.event_paragraphs,
-    "field_event_partners": content.event_partners,
-    "field_event_place": content.event_place,
-    "field_ticket_categories": content.event_ticket_categories
+{% set dates = eventinstance.get('date').getValue() %}
+
+{% set description_items = [
+  {
+    label: "Time"|trans,
+    value: dates.0 ? dates.0.value|date('H:i') ~ ' - ' ~ dates.0.end_value|date('H:i') : null
+  },
+  {
+    label: "Price"|trans,
+    value: content.ticket_categories.0 ? content.ticket_categories : null
+  },
+  {
+    label: "Place"|trans,
+    value: content.event_place.0 ? content.event_place : null
+  },
+  {
+    label: "Partners"|trans,
+    value: content.event_partners.0 ? content.event_partners : null
+  },
+  {
+    label: "Address"|trans,
+    value: content.event_address.0 ? content.event_address : null
   }
-%}
-{{ include('node--event--full.html.twig', {label: content.title, content: content|merge(nodelike_content)}) }}
+] %}
+
+{% include '@novel/layout/full-event.html.twig' with {
+  'label': content.title,
+  'image': content.event_image,
+  'event_link': content.event_link,
+  'paragraphs': content.event_paragraphs,
+  'date': content.date,
+  'description': content.event_description,
+  'description_items': description_items
+} only %}

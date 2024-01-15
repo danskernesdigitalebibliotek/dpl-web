@@ -1,0 +1,5 @@
+{% for item in items %}
+    <time{{ item.attributes.addClass(["event-header__date"]) }}>
+      {{ item.content }}
+    </time>
+{% endfor %}
