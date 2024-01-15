@@ -181,6 +181,24 @@ tasks:
     cmds:
       - docker compose run -e XDEBUG_ENABLE=true -e XDEBUG_MODE=coverage,debug cli vendor/bin/phpunit --coverage-text
 
+  dev:create-users:
+    desc: Create test users, with test roles
+    cmds:
+      - task dev:cli -- drush user:create editor --password="test"
+      - task dev:cli -- drush user:role:add 'editor' editor
+
+      - task dev:cli -- drush user:create administrator --password="test"
+      - task dev:cli -- drush user:role:add 'administrator' administrator
+
+      - task dev:cli -- drush user:create mediator --password="test"
+      - task dev:cli -- drush user:role:add 'mediator' mediator
+
+      - task dev:cli -- drush user:create local_administrator --password="test"
+      - task dev:cli -- drush user:role:add 'local_administrator' local_administrator
+
+      - task dev:cli -- drush user:create patron --password="test"
+      - task dev:cli -- drush user:role:add 'patron' patron
+
   dev:restore:database:
     desc: 'Restore database from db dump file. Only one sql should be present the "{{ .DIR_RESTORE_DATABASE }}" directory.'
     cmds:
