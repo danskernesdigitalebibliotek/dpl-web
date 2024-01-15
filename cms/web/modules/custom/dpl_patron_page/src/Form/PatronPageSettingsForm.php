@@ -63,26 +63,33 @@ class PatronPageSettingsForm extends ConfigFormBase {
 
     $form['settings'] = [
       '#type' => 'fieldset',
-      '#title' => $this->t('Basic settings'),
+      '#title' => $this->t('Basic settings', [], ['context' => 'Patron page settings form']),
       '#tree' => FALSE,
     ];
 
     $form['settings']['delete_patron_url'] = [
-      '#type' => 'url',
-      '#title' => $this->t('Delete patron link'),
-      '#description' => $this->t('Link to a page where it is possible to delete patron'),
+      '#type' => 'linkit',
+      '#title' => $this->t('Delete patron link', [], ['context' => 'Patron page settings form']),
+      '#description' => $this->t('Link to a page where it is possible to delete patron. <br>
+                                         You can add a relative url (e.g. /takster). <br>
+                                         You can search for an internal url. <br>
+                                         You can add an external url (starting with "http://" or "https://").', [], ['context' => 'Patron page settings form']),
+      '#autocomplete_route_name' => 'linkit.autocomplete',
+      '#autocomplete_route_parameters' => [
+        'linkit_profile_id' => 'default',
+      ],
       '#default_value' => $config->get('delete_patron_url') ?? '',
     ];
 
     $form['settings']['always_available_ereolen'] = [
       '#type' => 'url',
-      '#title' => $this->t('Ereolen always available'),
+      '#title' => $this->t('Ereolen always available', [], ['context' => 'Patron page settings form']),
       '#default_value' => $config->get('always_available_ereolen') ?? DplPatronPageSettings::ALWAYS_AVAILABLE_EREOLEN,
     ];
 
     $form['settings']['pincode_length_min'] = [
       '#type' => 'number',
-      '#title' => $this->t('Pincode length (min)'),
+      '#title' => $this->t('Pincode length (min)', [], ['context' => 'Patron page settings form']),
       '#default_value' => $config->get('pincode_length_min') ?? DplPatronPageSettings::PINCODE_LENGTH_MIN,
       '#min' => 4,
       '#step' => 1,
@@ -90,7 +97,7 @@ class PatronPageSettingsForm extends ConfigFormBase {
 
     $form['settings']['pincode_length_max'] = [
       '#type' => 'number',
-      '#title' => $this->t('Pincode length max'),
+      '#title' => $this->t('Pincode length max', [], ['context' => 'Patron page settings form']),
       '#default_value' => $config->get('pincode_length_max') ?? DplPatronPageSettings::PINCODE_LENGTH_MAX,
       '#min' => 4,
       '#step' => 1,
