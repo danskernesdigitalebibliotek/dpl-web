@@ -3725,3 +3725,19 @@ msgstr "Scroll baglæns"
 
 msgid "Upcoming events"
 msgstr "Kommende arrangementer"
+
+msgctxt "DPL admin UX"
+msgid "You are currently editing a single event, in an event series. @suffix"
+msgstr "Du er ved at redigere et enkeltstående arrangement, der er en del af en serie. @suffix"
+
+msgctxt "DPL admin UX"
+msgid "<a href=\"@url\">Edit the series here</a>"
+msgstr "<a href=\"@url\">Redigér serien her</a>"
+
+msgctxt "DPL admin UX"
+msgid "Any changes you make here will only override this single event."
+msgstr "Ændringer du laver her, vil kun overskrive dette enkelte arrangement."
+
+msgctxt "DPL admin UX"
+msgid "If you leave fields empty, the data from the parent series will be used."
+msgstr "Hvis du lader felter stå tomme, vil felt-data fra arrangement serien blive brugt istedet."
