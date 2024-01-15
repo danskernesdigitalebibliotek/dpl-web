@@ -1,0 +1,25 @@
+uuid: ffe2edaa-033c-4df9-b2d8-7740217d8ade
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.field.paragraph.content_slider.field_contents
+    - field.field.paragraph.content_slider.field_title
+    - paragraphs.paragraphs_type.content_slider
+id: paragraph.content_slider.default
+targetEntityType: paragraph
+bundle: content_slider
+mode: default
+content:
+  field_contents:
+    type: entity_reference_entity_view
+    label: hidden
+    settings:
+      view_mode: card
+      link: false
+    third_party_settings: {  }
+    weight: 0
+    region: content
+hidden:
+  field_title: true
+  search_api_excerpt: true
