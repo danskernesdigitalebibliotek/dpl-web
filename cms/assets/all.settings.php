@@ -48,7 +48,7 @@ $settings['config_sync_directory'] = '../config/sync';
 // Set service base urls for the react apps.
 $config['dpl_react_apps.settings']['services'] = [
   'cover' => ['base_url' => 'https://cover.dandigbib.org'],
-  'fbi' => ['base_url' => 'https://fbi-api.dbc.dk/next/graphql'],
+  'fbi' => ['base_url' => 'https://fbi-api.dbc.dk/[profile]/graphql'],
   'material-list' => ['base_url' => 'https://prod.materiallist.dandigbib.org'],
 ];
 
