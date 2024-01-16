@@ -7,7 +7,7 @@ export default (baseUri?: string, options?: Options) => {
     wiremock(baseUri, options).mappings.createMapping({
       request: {
         method: "POST",
-        urlPath: "/next/graphql",
+        urlPattern: "/next.*/graphql",
         bodyPatterns: [
           {
             matchesJsonPath: matchGraphqlQuery("getMaterial"),
@@ -25,7 +25,7 @@ export default (baseUri?: string, options?: Options) => {
     wiremock(baseUri, options).mappings.createMapping({
       request: {
         method: "POST",
-        urlPath: "/next/graphql",
+        urlPattern: "/next.*/graphql",
         bodyPatterns: [
           {
             matchesJsonPath: matchGraphqlQuery("getInfomedia"),
