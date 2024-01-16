@@ -327,7 +327,7 @@ msgstr "Type"
 #: 
 msgctxt "Work Page"
 msgid "Details of the material"
-msgstr "Detaljer for materialet"
+msgstr "Detaljer om materialet"
 
 #: 
 msgctxt "Work Page"
