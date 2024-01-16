@@ -1111,7 +1111,7 @@
             "version": "2024.3.1",
             "dist": {
                 "type": "zip",
-                "url": "https://github.com/danskernesdigitalebibliotek/dpl-react/releases/download/branch-release%2F2024-3-0/dist-release-2024-3-0.zip"
+                "url": "https://github.com/danskernesdigitalebibliotek/dpl-react/releases/download/branch-DDFLSBP-318-tilfoje-konfiguration-af-soge-vs-visningsprofil/dist-ddflsbp-318-tilfoje-konfiguration-af-soge-vs-visningsprofil.zip"
             },
             "require": {
                 "composer/installers": "^1.2.0"
