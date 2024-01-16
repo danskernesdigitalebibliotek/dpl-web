@@ -3,8 +3,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2024-01-16 12:43+0100\n"
-"PO-Revision-Date: 2024-01-16 12:43+0100\n"
+"POT-Creation-Date: 2024-01-16 16:19+0100\n"
+"PO-Revision-Date: 2024-01-16 16:19+0100\n"
 "Last-Translator: NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
 "MIME-Version: 1.0\n"
@@ -315,11 +315,11 @@ msgstr "Huskeliste"
 
 msgctxt "Patron menu"
 msgid "Fees & Replacement costs"
-msgstr "Hej Lotte"
+msgstr "Gebyrer & erstatninger"
 
 msgctxt "Patron menu"
 msgid "My account"
-msgstr ""
+msgstr "Brugerprofil"
 
 msgctxt "Patron menu"
 msgid "Close user menu"
@@ -435,11 +435,11 @@ msgstr "Materialetyper"
 
 msgctxt "Search Result"
 msgid "Material types general"
-msgstr ""
+msgstr "Generelle materialetyper"
 
 msgctxt "Search Result"
 msgid "Material types specific"
-msgstr ""
+msgstr "Specifikke materialetyper"
 
 msgctxt "Search Result"
 msgid "Subjects"
@@ -779,7 +779,7 @@ msgstr "Type"
 
 msgctxt "Work Page"
 msgid "Details of the material"
-msgstr "Detaljer for materialet"
+msgstr "Detaljer om materialet"
 
 msgctxt "Work Page"
 msgid "Details"
@@ -791,7 +791,7 @@ msgstr "Udgaver"
 
 msgctxt "Work Page"
 msgid "Expand more"
-msgstr ""
+msgstr "Udvid"
 
 msgctxt "Work Page"
 msgid "Fiction/nonfiction"
@@ -1367,15 +1367,15 @@ msgstr "Vælg"
 
 msgctxt "Global"
 msgid "Close change email modal"
-msgstr ""
+msgstr "Luk pop-up til at skifte email"
 
 msgctxt "Global"
 msgid "Close interest period modal"
-msgstr ""
+msgstr "Luk pop-up til at skifte interesseperiode"
 
 msgctxt "Global"
 msgid "Close pickup location modal"
-msgstr ""
+msgstr "Luk pop-up til at skifte afhentningssted"
 
 msgctxt "Global"
 msgid "Close modal aria-label sms"
@@ -1465,6 +1465,8 @@ msgstr ""
 msgctxt "Global"
 msgid "Find @work on shelf in the @branch branch"
 msgstr ""
+"\n"
+"Find @work på hylden i @branch"
 
 msgctxt "Global"
 msgid "Renewable (@count)"
@@ -1540,7 +1542,7 @@ msgstr "Kan afleveres på alle kommunens biblioteker"
 
 msgctxt "Global"
 msgid "Go to @label material details"
-msgstr ""
+msgstr "Gå til detaljer for @label"
 
 msgctxt "Global"
 msgid "Close modal with grouped reservations"
@@ -1650,7 +1652,7 @@ msgctxt "Global"
 msgid ""
 "Change the amount of time after which you're no longer interested in "
 "this material."
-msgstr ""
+msgstr "Skift interesseperiode"
 
 msgctxt "Global"
 msgid "Choose pickup library"
@@ -1666,7 +1668,7 @@ msgstr "Skift afhentningssted for din reservering"
 
 msgctxt "Global"
 msgid "Multiselect - all option"
-msgstr ""
+msgstr "Vælg alle"
 
 msgctxt "Global"
 msgid "Your search has 0 results"
@@ -1947,11 +1949,11 @@ msgstr "Du har i øjeblikket 0 reserveringer"
 
 msgctxt "Global"
 msgid "day"
-msgstr ""
+msgstr "dag"
 
 msgctxt "Global"
 msgid "Online access"
-msgstr ""
+msgstr "Online"
 
 msgctxt "Global"
 msgid "At the moment you have 0 reservations on digital items"
@@ -1959,7 +1961,7 @@ msgstr "Du har i øjeblikket 0 reserveringer på digitale materialer"
 
 msgctxt "Global"
 msgid "You are at the front of the queue"
-msgstr ""
+msgstr "Du er forrest i køen"
 
 msgctxt "Global"
 msgid "Your reservations"
@@ -1973,11 +1975,11 @@ msgctxt "Global"
 msgid ""
 "This button opens a modal that covers the entire page and contains the "
 "possibility to pause physical reservations"
-msgstr ""
+msgstr "Denne knap åbner en pop-up hvor du kan sætte reserveringer på pause"
 
 msgctxt "Global"
 msgid "Settings"
-msgstr ""
+msgstr "Indstillinger"
 
 msgctxt "Global"
 msgid "Your reservations are paused"
@@ -1993,15 +1995,15 @@ msgstr "Du har i øjeblikket 0 reserveringer klar til afhentning"
 
 msgctxt "Global"
 msgid "This material is ready for pickup"
-msgstr ""
+msgstr "Materialet er klar til lån"
 
 msgctxt "Global"
 msgid "You are the only person queued for this material"
-msgstr ""
+msgstr "Du er den eneste i kø til dette materiale"
 
 msgctxt "Global"
 msgid "This material has @count people in queue before you"
-msgstr ""
+msgstr "Der står @count i kø foran dig"
 
 msgctxt "Global"
 msgid "This material is ready in 1 day"
@@ -2680,7 +2682,7 @@ msgstr "Du har ingen ubetalte gebyrer eller erstatninger"
 
 msgctxt "Fees list"
 msgid "Fees charged @date"
-msgstr "Gebyrer & erstatninger oprettet @date"
+msgstr "Oprettet @date"
 
 msgctxt "Fees list (Aria)"
 msgid "Close fee details modal"
@@ -2779,12 +2781,12 @@ msgid "Turned in @date"
 msgstr "Afleveret @date"
 
 msgctxt "Fees list"
-msgid "Unsettled debt 1"
-msgstr "Ubetalte gebyrer"
+msgid "Unsettled debt - paid on site"
+msgstr ""
 
 msgctxt "Fees list"
-msgid "Unsettled debt 2"
-msgstr "Ubetalte gebyrer"
+msgid "Unsettled debt - paid externally"
+msgstr ""
 
 msgctxt "Fees list"
 msgid "see our fees and replacement costs"
@@ -3049,7 +3051,7 @@ msgid "Instant Loan Settings"
 msgstr "Indstillinger for strakslån"
 
 msgid "Configure promotion of materials available for instant loans."
-msgstr ""
+msgstr "Indstillinger for strakslån"
 
 msgid "DPL Paragraphs"
 msgstr "DPL Paragraphs"
@@ -3085,16 +3087,16 @@ msgid "List Size Settings"
 msgstr ""
 
 msgid "Administer various settings for a library agency."
-msgstr ""
+msgstr "Biblioteksindstillinger"
 
 msgid "Administer list size settings for a library agency."
 msgstr ""
 
 msgid "Favorites list material component"
-msgstr ""
+msgstr "Huskelistekomponent"
 
 msgid "Show favorites list material component"
-msgstr ""
+msgstr "Vis huskeliste komponent"
 
 msgid "DPL favorites list material component"
 msgstr "DPL huskeliste materialekomponent"
@@ -3118,7 +3120,7 @@ msgid "Mapp Intelligence"
 msgstr "Mapp Intelligence"
 
 msgid "Configure Mapp Intelligence for tracking website interactions."
-msgstr ""
+msgstr "Indstillinger for Mapp"
 
 msgid "Mapp Intelligence settings"
 msgstr "Mapp Intelligence indstillinger"
@@ -3130,7 +3132,7 @@ msgid "Recommender settings"
 msgstr "Indstillinger for anbefalinger"
 
 msgid "Change recommender settings"
-msgstr ""
+msgstr "Skift indstillinger for recommender"
 
 msgid "DPL recommender"
 msgstr "DPL recommender"
@@ -3139,10 +3141,10 @@ msgid "recommender component"
 msgstr "Komponent til anbefalinger (recommender)"
 
 msgid "Loans"
-msgstr ""
+msgstr "Lån"
 
 msgid "List user loans"
-msgstr ""
+msgstr "Brugerens låneliste"
 
 msgid "DPL loans"
 msgstr "DPL lån"
@@ -3160,10 +3162,10 @@ msgid "Module for generating specially formatted external urls"
 msgstr "Modul til at generere specielt formatterede eksterne URL'er"
 
 msgid "Url proxy settings"
-msgstr ""
+msgstr "Proxyindstillinger"
 
 msgid "Configure the host names and replacement patterns for proxy urls."
-msgstr ""
+msgstr "Indstillinger for proxy URL'er"
 
 msgid "Admin"
 msgstr "Administrator"
@@ -3193,7 +3195,7 @@ msgid "Upload configuration"
 msgstr "Upload indstillinger / Upload configuration"
 
 msgid "Upload and import configuration from a YAML file"
-msgstr ""
+msgstr "Upload og importer config. fra en YAML fil"
 
 msgid "DPL Library Token"
 msgstr "DPL biblioteks token"
@@ -3202,10 +3204,10 @@ msgid "Handles fetching and storage of a library token"
 msgstr "Håndterer hentning og lagring af en biblioteks token"
 
 msgid "Dashboard"
-msgstr ""
+msgstr "Dit overblik"
 
 msgid "User dashboard"
-msgstr ""
+msgstr "Brugerens dashboard (Dit overblik)"
 
 msgid "DPL dashboard"
 msgstr "DPL dashboard"
@@ -3239,10 +3241,10 @@ msgid "Handle the favorites list"
 msgstr "Håndter indstillinger for huskeliste"
 
 msgid "Favorites"
-msgstr ""
+msgstr "Huskeliste"
 
 msgid "List user favorites"
-msgstr ""
+msgstr "Brugerens huskeliste"
 
 msgid "Event"
 msgstr "Arrangement"
@@ -3257,10 +3259,10 @@ msgid "Something similar component"
 msgstr "Komponenten \"Noget der ligner\""
 
 msgid "Reservations"
-msgstr ""
+msgstr "Reserveringer"
 
 msgid "List user reservations"
-msgstr ""
+msgstr "Brugerens liste over reserveringer"
 
 msgid "DPL Reservations"
 msgstr "DPL Reserveringer"
@@ -3278,22 +3280,22 @@ msgid "Fees settings"
 msgstr "Gebyrindstillinger"
 
 msgid "Fees"
-msgstr ""
+msgstr "Gebyrer"
 
 msgid "List user fees"
-msgstr ""
+msgstr "Brugerens liste over gebyrer og erstatninger"
 
 msgid "Fees List settings"
-msgstr ""
+msgstr "Indstillinger for gebyrside"
 
 msgid "Change Fees List Settings"
-msgstr ""
+msgstr "Skift indstillinger for gebyrside"
 
 msgid "FBS settings"
 msgstr "FBS indstillinger"
 
 msgid "Change basic FBS settings"
-msgstr ""
+msgstr "Skift FBS indstillinger"
 
 msgid "DPL FBS"
 msgstr "DPL FBS"
@@ -3311,19 +3313,19 @@ msgid "Publizon settings"
 msgstr "Publizon indstillinger"
 
 msgid "Change basic publizon settings"
-msgstr ""
+msgstr "Skift Publizon indstillinger"
 
 msgid "Patron page settings"
 msgstr "Indstillinger for brugerprofil"
 
 msgid "Patron page"
-msgstr ""
+msgstr "Brugerprofil"
 
 msgid "Patron page displays patron information"
-msgstr ""
+msgstr "Brugerprofilen viser brugerinformation"
 
 msgid "Change patron page settings"
-msgstr ""
+msgstr "Indstillinger for brugerprofil"
 
 msgid "DPL patron page"
 msgstr "DPL brugerprofil"
@@ -3345,7 +3347,7 @@ msgid "Patron registration"
 msgstr "Brugeroprettelse"
 
 msgid "Change patron registration settings"
-msgstr ""
+msgstr "Indstillinger for brugeroprettelse"
 
 msgid "Patron registration information"
 msgstr "Information om brugeroprettelse"
