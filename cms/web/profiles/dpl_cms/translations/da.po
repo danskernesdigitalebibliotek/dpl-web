@@ -1564,7 +1564,7 @@ msgstr "Du har ingen ubetalte gebyrer eller erstatninger"
 #: 
 msgctxt "Fees list"
 msgid "Fees charged @date"
-msgstr "Gebyrer & erstatninger oprettet @date"
+msgstr "Oprettet @date"
 
 #: 
 msgctxt "Fees list (Aria)"
@@ -3451,12 +3451,12 @@ msgstr "Emnetal"
 #: 
 msgctxt "Search Result"
 msgid "Material types general"
-msgstr ""
+msgstr "Generelle materialetyper"
 
 #: 
 msgctxt "Search Result"
 msgid "Material types specific"
-msgstr ""
+msgstr "Specifikke materialetyper"
 
 #: 
 msgctxt "Search Result"
@@ -3466,22 +3466,22 @@ msgstr "År"
 #: 
 msgctxt "Work Page"
 msgid "Expand more"
-msgstr ""
+msgstr "Udvid"
 
 #: 
 msgctxt "Global"
 msgid "Close change email modal"
-msgstr ""
+msgstr "Luk pop-up til at skifte email"
 
 #: 
 msgctxt "Global"
 msgid "Close interest period modal"
-msgstr ""
+msgstr "Luk pop-up til at skifte interesseperiode"
 
 #: 
 msgctxt "Global"
 msgid "Close pickup location modal"
-msgstr ""
+msgstr "Luk pop-up til at skifte afhentningssted"
 
 #: 
 msgctxt "Global"
@@ -3496,12 +3496,13 @@ msgstr ""
 #: 
 msgctxt "Global"
 msgid "Find @work on shelf in the @branch branch"
-msgstr ""
+msgstr "\n"
+"Find @work på hylden i @branch"
 
 #: 
 msgctxt "Global"
 msgid "Go to @label material details"
-msgstr ""
+msgstr "Gå til detaljer for @label"
 
 #: 
 msgctxt "Global"
@@ -3511,7 +3512,7 @@ msgstr "Længere afleveringstid"
 #: 
 msgctxt "Global"
 msgid "Change the amount of time after which you're no longer interested in this material."
-msgstr ""
+msgstr "Skift interesseperiode"
 
 #: 
 msgctxt "Global"
@@ -3521,7 +3522,7 @@ msgstr "Skift afhentningssted for din reservering"
 #: 
 msgctxt "Global"
 msgid "Multiselect - all option"
-msgstr ""
+msgstr "Vælg alle"
 
 #: 
 msgctxt "Global"
@@ -3546,12 +3547,12 @@ msgstr "Du har i øjeblikket 0 reserveringer"
 #: 
 msgctxt "Global"
 msgid "day"
-msgstr ""
+msgstr "dag"
 
 #: 
 msgctxt "Global"
 msgid "Online access"
-msgstr ""
+msgstr "Online"
 
 #: 
 msgctxt "Global"
@@ -3561,7 +3562,7 @@ msgstr "Du har i øjeblikket 0 reserveringer på digitale materialer"
 #: 
 msgctxt "Global"
 msgid "You are at the front of the queue"
-msgstr ""
+msgstr "Du er forrest i køen"
 
 #: 
 msgctxt "Global"
@@ -3576,12 +3577,12 @@ msgstr "Reserveringer er sat på pause:"
 #: 
 msgctxt "Global"
 msgid "This button opens a modal that covers the entire page and contains the possibility to pause physical reservations"
-msgstr ""
+msgstr "Denne knap åbner en pop-up hvor du kan sætte reserveringer på pause"
 
 #: 
 msgctxt "Global"
 msgid "Settings"
-msgstr ""
+msgstr "Indstillinger"
 
 #: 
 msgctxt "Global"
@@ -3601,17 +3602,17 @@ msgstr "Du har i øjeblikket 0 reserveringer klar til afhentning"
 #: 
 msgctxt "Global"
 msgid "This material is ready for pickup"
-msgstr ""
+msgstr "Materialet er klar til lån"
 
 #: 
 msgctxt "Global"
 msgid "You are the only person queued for this material"
-msgstr ""
+msgstr "Du er den eneste i kø til dette materiale"
 
 #: 
 msgctxt "Global"
 msgid "This material has @count people in queue before you"
-msgstr ""
+msgstr "Der står @count i kø foran dig"
 
 #: 
 msgctxt "Global"
@@ -3690,7 +3691,7 @@ msgstr "Materialenummer @materialNumber"
 
 #: 
 msgid "Partners"
-msgstr ""
+msgstr "Samarbejdspartnere"
 
 #: 
 msgctxt "Patron menu"
@@ -3710,12 +3711,12 @@ msgstr "Huskeliste"
 #: 
 msgctxt "Patron menu"
 msgid "Fees & Replacement costs"
-msgstr "Hej Lotte"
+msgstr "Gebyrer & erstatninger"
 
 #: 
 msgctxt "Patron menu"
 msgid "My account"
-msgstr ""
+msgstr "Brugerprofil"
 
 #: 
 msgid "Instant Loan Settings"
@@ -3723,7 +3724,7 @@ msgstr "Indstillinger for strakslån"
 
 #: 
 msgid "Configure promotion of materials available for instant loans."
-msgstr ""
+msgstr "Indstillinger for strakslån"
 
 #: 
 msgid "Set auth redirect paths for patrons"
@@ -3731,129 +3732,129 @@ msgstr ""
 
 #: 
 msgid "Administer various settings for a library agency."
-msgstr ""
+msgstr "Biblioteksindstillinger"
 
 #: 
 msgid "Favorites list material component"
-msgstr ""
+msgstr "Huskelistekomponent"
 
 #: 
 msgid "Show favorites list material component"
-msgstr ""
+msgstr "Vis huskeliste komponent"
 
 #: 
 msgid "Configure Mapp Intelligence for tracking website interactions."
-msgstr ""
+msgstr "Indstillinger for Mapp"
 
 #: 
 msgid "Change recommender settings"
-msgstr ""
+msgstr "Skift indstillinger for recommender"
 
 #: 
 msgid "Loans"
-msgstr ""
+msgstr "Lån"
 
 #: 
 msgid "List user loans"
-msgstr ""
+msgstr "Brugerens låneliste"
 
 #: 
 msgid "Loan list settings"
-msgstr ""
+msgstr "Indstillinger for låneoversigt"
 
 #: 
 msgid "Change loan list settings"
-msgstr ""
+msgstr "Skift indstillinger for lånoversigt"
 
 #: 
 msgid "Url proxy settings"
-msgstr ""
+msgstr "Proxyindstillinger"
 
 #: 
 msgid "Configure the host names and replacement patterns for proxy urls."
-msgstr ""
+msgstr "Indstillinger for proxy URL'er"
 
 #: 
 msgid "Upload and import configuration from a YAML file"
-msgstr ""
+msgstr "Upload og importer config. fra en YAML fil"
 
 #: 
 msgid "Dashboard"
-msgstr ""
+msgstr "Dit overblik"
 
 #: 
 msgid "User dashboard"
-msgstr ""
+msgstr "Brugerens dashboard (Dit overblik)"
 
 #: 
 msgid "Change Dashboard settings"
-msgstr ""
+msgstr "Skift indstillinger for Dit overblik (Dashboard)"
 
 #: 
 msgid "Favorites"
-msgstr ""
+msgstr "Huskeliste"
 
 #: 
 msgid "List user favorites"
-msgstr ""
+msgstr "Brugerens huskeliste"
 
 #: 
 msgid "Change favorites list settings"
-msgstr ""
+msgstr "Skift indstillinger for huskeliste"
 
 #: 
 msgid "Reservations"
-msgstr ""
+msgstr "Reserveringer"
 
 #: 
 msgid "List user reservations"
-msgstr ""
+msgstr "Brugerens liste over reserveringer"
 
 #: 
 msgid "Reservation list settings"
-msgstr ""
+msgstr "Indstillinger for reserveringsliste"
 
 #: 
 msgid "Change reservation list settings"
-msgstr ""
+msgstr "Skift indstillinger for reserveringsliste"
 
 #: 
 msgid "Fees"
-msgstr ""
+msgstr "Gebyrer"
 
 #: 
 msgid "List user fees"
-msgstr ""
+msgstr "Brugerens liste over gebyrer og erstatninger"
 
 #: 
 msgid "Fees List settings"
-msgstr ""
+msgstr "Indstillinger for gebyrside"
 
 #: 
 msgid "Change Fees List Settings"
-msgstr ""
+msgstr "Skift indstillinger for gebyrside"
 
 #: 
 msgid "Change basic FBS settings"
-msgstr ""
+msgstr "Skift FBS indstillinger"
 
 #: 
 msgid "Change basic publizon settings"
-msgstr ""
+msgstr "Skift Publizon indstillinger"
 
 #: 
 msgid "Patron page"
-msgstr ""
+msgstr "Brugerprofil"
 
 #: 
 msgid "Patron page displays patron information"
-msgstr ""
+msgstr "Brugerprofilen viser brugerinformation"
 
 #: 
 msgid "Change patron page settings"
-msgstr ""
+msgstr "Indstillinger for brugerprofil"
 
 #: 
 msgid "Change patron registration settings"
-msgstr ""
+msgstr "Indstillinger for brugeroprettelse"
 
