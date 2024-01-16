@@ -1,28 +1,3 @@
-{# Initialize variables for image, alt, ticket link, and eventinstance URL #}
-{% set image_file_url = null %}
-{% set image_alt = null %}
-{% set start_date = null %}
-{% set end_date = null %}
-{% set eventinstance_url = path('entity.eventinstance.canonical', {'eventinstance': content.title['#object'].id()}) %}
-
-{# Extract image file URL and alt text #}
-{% if content.event_image['#items'] is not empty %}
-  {% set media_entity = content.event_image['#items'][0].entity %}
-  {% set image_field = media_entity.field_media_image ?? null %}
-  {% if image_field.entity %}
-    {% set image_file_url = file_url(image_field.entity.fileuri) %}
-    {% set image_alt = image_field.alt %}
-  {% endif %}
-{% endif %}
-
-{# Extract start and end dates #}
-{% if content.date['#items'] is not empty %}
-  {% set date_item = content.date['#items'][0] %}
-  {% set start_date = date_item.value|date("H:i") %}
-  {% set end_date = date_item.end_value|date("H:i") %}
-  {% set datetime_attribute = date_item.value|date('c') %}
-{% endif %}
-
 <a href="{{ eventinstance_url }}" class="event-list-item arrow__hover--right-small">
   <div class="event-list-item__image-container">
     {% if image_file_url and image_alt %}
