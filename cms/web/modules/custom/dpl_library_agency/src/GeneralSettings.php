@@ -23,7 +23,6 @@ class GeneralSettings extends DplReactConfigBase {
   // not expected to be changing often.
   const EREOLEN_MY_PAGE_URL = 'https://ereolen.dk/user/me';
   const EREOLEN_HOMEPAGE_URL = 'https://ereolen.dk';
-  const EREOLEN_HELP_URL = 'https://ereolen.dk/hjaelp';
   const FBI_PROFILE = 'next';
 
   /**
