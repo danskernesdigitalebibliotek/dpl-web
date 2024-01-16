@@ -1,8 +1,9 @@
-uuid: 677a0125-029c-4bfa-bd8f-c314ba48efb3
+uuid: f343f97a-2077-454d-b96c-cac20214b60b
 langcode: en
 status: true
 dependencies:
   config:
+    - core.entity_view_mode.eventinstance.list_teaser
     - field.field.eventinstance.default.field_event_address
     - field.field.eventinstance.default.field_event_description
     - field.field.eventinstance.default.field_event_image
@@ -21,10 +22,10 @@ dependencies:
     - text
 _core:
   default_config_hash: lFFUFIZPBUZQjrIYYvP6U1hzVLGjKMl0DYK93zPM_80
-id: eventinstance.default.default
+id: eventinstance.default.list_teaser
 targetEntityType: eventinstance
 bundle: default
-mode: default
+mode: list_teaser
 content:
   date:
     type: date_range_without_time
@@ -33,10 +34,10 @@ content:
       timezone_override: ''
       date_format: 'Y-m-d\TH:i:s'
       separator: '-'
-      one_day: 'd F Y'
-      one_month: 'd - {d} F Y'
-      several_months: 'd F - {d} {F} Y'
-      several_years: 'd F Y - {d} {F} {Y}'
+      one_day: 'd. M Y'
+      one_month: 'd. - {d}. M Y'
+      several_months: 'd. M - {d}. {M} Y'
+      several_years: 'd. M Y - {d}. {M} {Y}'
     third_party_settings: {  }
     weight: 1
     region: content

@@ -3,30 +3,36 @@ langcode: en
 status: true
 dependencies:
   config:
-    - field.storage.node.field_event_date
     - search_api.server.db_search
   module:
+    - recurring_events
     - search_api
-    - node
 id: events
 name: Events
 description: ''
 read_only: false
 field_settings:
-  end_value:
-    label: 'Date » End date value'
-    datasource_id: 'entity:node'
-    property_path: 'field_event_date:end_value'
+  date:
+    label: 'Event Date'
+    datasource_id: 'entity:eventinstance'
+    property_path: date
     type: date
     dependencies:
-      config:
-        - field.storage.node.field_event_date
+      module:
+        - recurring_events
+  end_value:
+    label: 'Event Date » End date value'
+    datasource_id: 'entity:eventinstance'
+    property_path: 'date:end_value'
+    type: date
+    dependencies:
+      module:
+        - recurring_events
 datasource_settings:
-  'entity:node':
+  'entity:eventinstance':
     bundles:
-      default: false
-      selected:
-        - event
+      default: true
+      selected: {  }
     languages:
       default: true
       selected: {  }

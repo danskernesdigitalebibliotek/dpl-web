@@ -18,7 +18,7 @@ dependencies:
     - node.type.event
   module:
     - address
-    - datetime_range
+    - date_range_formatter
     - entity_reference_revisions
     - link
     - text
@@ -36,12 +36,16 @@ content:
     weight: 4
     region: content
   field_event_date:
-    type: daterange_default
+    type: date_range_without_time
     label: above
     settings:
       timezone_override: ''
-      format_type: medium
+      date_format: 'Y-m-d\TH:i:s'
       separator: '-'
+      one_day: 'd. M Y'
+      one_month: 'd. - {d}. M Y'
+      several_months: 'd. M - {d}. {M} Y'
+      several_years: 'd. M Y - {d}. {M} {Y}'
     third_party_settings: {  }
     weight: 7
     region: content
