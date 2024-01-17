@@ -15,3 +15,13 @@ dpl_library_agency.general_settings:
     _permission: "administer library agency configuration"
   options:
     _admin_route: TRUE
+
+dpl_library_agency.list_size_settings:
+  path: "/admin/config/dpl-library-agency/list-size-settings"
+  defaults:
+    _form: '\Drupal\dpl_library_agency\Form\ListSizeSettingsForm'
+    _title: "List Size Settings"
+  requirements:
+    _permission: "administer library agency configuration"
+  options:
+    _admin_route: TRUE

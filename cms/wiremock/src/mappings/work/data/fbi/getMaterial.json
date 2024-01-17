@@ -3,12 +3,8 @@
     "work": {
       "workId": "work-of:870970-basis:25245784",
       "titles": {
-        "full": [
-          "Harry Potter og Fønixordenen"
-        ],
-        "original": [
-          "Harry Potter and the Order of the Phoenix"
-        ]
+        "full": ["Harry Potter og Fønixordenen"],
+        "original": ["Harry Potter and the Order of the Phoenix"]
       },
       "abstract": [
         "Stor, flot og gennemillustreret udgave af bind 5 i \"Harry Potter\"-serien. Harry går stadig på kostskolen Hogwarts, men det bliver ikke et let år.  Bogen er meget velegnet til oplæsning for børn fra 8 år - og kan selvlæses fra 12 år"
@@ -25,9 +21,7 @@
           "isPopular": true,
           "numberInSeries": {
             "display": "5",
-            "number": [
-              5
-            ]
+            "number": [5]
           },
           "readThisFirst": null,
           "readThisWhenever": null
@@ -37,113 +31,65 @@
         {
           "workId": "work-of:870970-basis:22629344",
           "titles": {
-            "main": [
-              "Harry Potter og de vises sten"
-            ],
-            "full": [
-              "Harry Potter og de vises sten"
-            ],
-            "original": [
-              "Harry Potter and the philosopher's stone"
-            ]
+            "main": ["Harry Potter og de vises sten"],
+            "full": ["Harry Potter og de vises sten"],
+            "original": ["Harry Potter and the philosopher's stone"]
           }
         },
         {
           "workId": "work-of:870970-basis:22677780",
           "titles": {
-            "main": [
-              "Harry Potter og Hemmelighedernes Kammer"
-            ],
-            "full": [
-              "Harry Potter og Hemmelighedernes Kammer"
-            ],
-            "original": [
-              "Harry Potter and the Chamber of Secrets"
-            ]
+            "main": ["Harry Potter og Hemmelighedernes Kammer"],
+            "full": ["Harry Potter og Hemmelighedernes Kammer"],
+            "original": ["Harry Potter and the Chamber of Secrets"]
           }
         },
         {
           "workId": "work-of:870970-basis:22995154",
           "titles": {
-            "main": [
-              "Harry Potter og fangen fra Azkaban"
-            ],
-            "full": [
-              "Harry Potter og fangen fra Azkaban"
-            ],
-            "original": [
-              "Harry Potter and the prisoner of Azkaban"
-            ]
+            "main": ["Harry Potter og fangen fra Azkaban"],
+            "full": ["Harry Potter og fangen fra Azkaban"],
+            "original": ["Harry Potter and the prisoner of Azkaban"]
           }
         },
         {
           "workId": "work-of:870970-basis:23540703",
           "titles": {
-            "main": [
-              "Harry Potter og Flammernes Pokal"
-            ],
-            "full": [
-              "Harry Potter og Flammernes Pokal"
-            ],
-            "original": [
-              "Harry Potter and the goblet of fire"
-            ]
+            "main": ["Harry Potter og Flammernes Pokal"],
+            "full": ["Harry Potter og Flammernes Pokal"],
+            "original": ["Harry Potter and the goblet of fire"]
           }
         },
         {
           "workId": "work-of:870970-basis:25245784",
           "titles": {
-            "main": [
-              "Harry Potter og Fønixordenen"
-            ],
-            "full": [
-              "Harry Potter og Fønixordenen"
-            ],
-            "original": [
-              "Harry Potter and the Order of the Phoenix"
-            ]
+            "main": ["Harry Potter og Fønixordenen"],
+            "full": ["Harry Potter og Fønixordenen"],
+            "original": ["Harry Potter and the Order of the Phoenix"]
           }
         },
         {
           "workId": "work-of:870970-basis:25807995",
           "titles": {
-            "main": [
-              "Harry Potter og halvblodsprinsen"
-            ],
-            "full": [
-              "Harry Potter og halvblodsprinsen"
-            ],
-            "original": [
-              "Harry Potter and the half-blood prince"
-            ]
+            "main": ["Harry Potter og halvblodsprinsen"],
+            "full": ["Harry Potter og halvblodsprinsen"],
+            "original": ["Harry Potter and the half-blood prince"]
           }
         },
         {
           "workId": "work-of:870970-basis:27267912",
           "titles": {
-            "main": [
-              "Harry Potter og dødsregalierne"
-            ],
-            "full": [
-              "Harry Potter og dødsregalierne"
-            ],
-            "original": [
-              "Harry Potter and the deathly hallows"
-            ]
+            "main": ["Harry Potter og dødsregalierne"],
+            "full": ["Harry Potter og dødsregalierne"],
+            "original": ["Harry Potter and the deathly hallows"]
           }
         },
         {
           "workId": "work-of:870970-basis:52646251",
           "titles": {
-            "main": [
-              "Harry Potter og det forbandede barn"
-            ],
-            "full": [
-              "Harry Potter og det forbandede barn : del et & to"
-            ],
-            "original": [
-              "Harry Potter and the cursed child"
-            ]
+            "main": ["Harry Potter og det forbandede barn"],
+            "full": ["Harry Potter og det forbandede barn : del et & to"],
+            "original": ["Harry Potter and the cursed child"]
           }
         }
       ],
@@ -160,21 +106,11 @@
         "all": [
           {
             "pid": "870970-basis:134693959",
-            "genreAndForm": [
-              "roman",
-              "fantasy",
-              "romaner"
-            ],
-            "source": [
-              "Bibliotekskatalog"
-            ],
+            "genreAndForm": ["roman", "fantasy", "romaner"],
+            "source": ["Bibliotekskatalog"],
             "titles": {
-              "main": [
-                "Harry Potter og Fønixordenen (Ill. Jim Kay)"
-              ],
-              "original": [
-                "Harry Potter and the Order of the Phoenix"
-              ]
+              "main": ["Harry Potter og Fønixordenen (Ill. Jim Kay)"],
+              "original": ["Harry Potter and the Order of the Phoenix"]
             },
             "fictionNonfiction": {
               "display": "skønlitteratur",
@@ -182,7 +118,7 @@
             },
             "materialTypes": [
               {
-                "specific": "bog"
+                "materialTypeSpecific": { "display": "bog" }
               }
             ],
             "creators": [
@@ -191,9 +127,7 @@
                 "__typename": "Person"
               }
             ],
-            "publisher": [
-              "Gyldendal"
-            ],
+            "publisher": ["Gyldendal"],
             "languages": {
               "main": [
                 {
@@ -257,20 +191,11 @@
           },
           {
             "pid": "870970-basis:24880605",
-            "genreAndForm": [
-              "roman",
-              "fantasy"
-            ],
-            "source": [
-              "Bibliotekskatalog"
-            ],
+            "genreAndForm": ["roman", "fantasy"],
+            "source": ["Bibliotekskatalog"],
             "titles": {
-              "main": [
-                "Harry Potter og Fønixordenen"
-              ],
-              "original": [
-                "Harry Potter and the Order of the Phoenix"
-              ]
+              "main": ["Harry Potter og Fønixordenen"],
+              "original": ["Harry Potter and the Order of the Phoenix"]
             },
             "fictionNonfiction": {
               "display": "skønlitteratur",
@@ -278,7 +203,7 @@
             },
             "materialTypes": [
               {
-                "specific": "bog"
+                "materialTypeSpecific": { "display": "bog" }
               }
             ],
             "creators": [
@@ -287,9 +212,7 @@
                 "__typename": "Person"
               }
             ],
-            "publisher": [
-              "Gyldendal"
-            ],
+            "publisher": ["Gyldendal"],
             "languages": {
               "main": [
                 {
@@ -343,19 +266,11 @@
           },
           {
             "pid": "870970-basis:24973670",
-            "genreAndForm": [
-              "roman"
-            ],
-            "source": [
-              "Bibliotekskatalog"
-            ],
+            "genreAndForm": ["roman"],
+            "source": ["Bibliotekskatalog"],
             "titles": {
-              "main": [
-                "Harry Potter og Fønixordenen"
-              ],
-              "original": [
-                "Harry Potter and the Order of the Phoenix"
-              ]
+              "main": ["Harry Potter og Fønixordenen"],
+              "original": ["Harry Potter and the Order of the Phoenix"]
             },
             "fictionNonfiction": {
               "display": "skønlitteratur",
@@ -363,7 +278,7 @@
             },
             "materialTypes": [
               {
-                "specific": "lydbog (bånd)"
+                "materialTypeSpecific": { "display": "lydbog (bånd)" }
               }
             ],
             "creators": [
@@ -372,9 +287,7 @@
                 "__typename": "Person"
               }
             ],
-            "publisher": [
-              "Danmarks Blindebibliotek"
-            ],
+            "publisher": ["Danmarks Blindebibliotek"],
             "languages": {
               "main": [
                 {
@@ -435,20 +348,11 @@
           },
           {
             "pid": "870970-basis:25040007",
-            "genreAndForm": [
-              "roman",
-              "eventyrlige fortællinger"
-            ],
-            "source": [
-              "Bibliotekskatalog"
-            ],
+            "genreAndForm": ["roman", "eventyrlige fortællinger"],
+            "source": ["Bibliotekskatalog"],
             "titles": {
-              "main": [
-                "Harry Potter og Fønixordenen"
-              ],
-              "original": [
-                "Harry Potter and the Order of the Phoenix"
-              ]
+              "main": ["Harry Potter og Fønixordenen"],
+              "original": ["Harry Potter and the Order of the Phoenix"]
             },
             "fictionNonfiction": {
               "display": "skønlitteratur",
@@ -456,7 +360,7 @@
             },
             "materialTypes": [
               {
-                "specific": "diskette"
+                "materialTypeSpecific": { "display": "diskette" }
               }
             ],
             "creators": [
@@ -465,9 +369,7 @@
                 "__typename": "Person"
               }
             ],
-            "publisher": [
-              "Danmarks Blindebibliotek"
-            ],
+            "publisher": ["Danmarks Blindebibliotek"],
             "languages": {
               "main": [
                 {
@@ -524,19 +426,11 @@
           },
           {
             "pid": "870970-basis:25082427",
-            "genreAndForm": [
-              "roman"
-            ],
-            "source": [
-              "Bibliotekskatalog"
-            ],
+            "genreAndForm": ["roman"],
+            "source": ["Bibliotekskatalog"],
             "titles": {
-              "main": [
-                "Harry Potter og Fønixordenen"
-              ],
-              "original": [
-                "Harry Potter and the Order of the Phoenix"
-              ]
+              "main": ["Harry Potter og Fønixordenen"],
+              "original": ["Harry Potter and the Order of the Phoenix"]
             },
             "fictionNonfiction": {
               "display": "skønlitteratur",
@@ -544,7 +438,7 @@
             },
             "materialTypes": [
               {
-                "specific": "bog"
+                "materialTypeSpecific": { "display": "bog" }
               }
             ],
             "creators": [
@@ -553,9 +447,7 @@
                 "__typename": "Person"
               }
             ],
-            "publisher": [
-              "Gyldendals Bogklubber"
-            ],
+            "publisher": ["Gyldendals Bogklubber"],
             "languages": {
               "main": [
                 {
@@ -604,19 +496,11 @@
           },
           {
             "pid": "870970-basis:25096517",
-            "genreAndForm": [
-              "roman"
-            ],
-            "source": [
-              "Bibliotekskatalog"
-            ],
+            "genreAndForm": ["roman"],
+            "source": ["Bibliotekskatalog"],
             "titles": {
-              "main": [
-                "Harry Potter og Fønixordenen"
-              ],
-              "original": [
-                "Harry Potter and the Order of the Phoenix"
-              ]
+              "main": ["Harry Potter og Fønixordenen"],
+              "original": ["Harry Potter and the Order of the Phoenix"]
             },
             "fictionNonfiction": {
               "display": "skønlitteratur",
@@ -624,7 +508,7 @@
             },
             "materialTypes": [
               {
-                "specific": "punktskrift"
+                "materialTypeSpecific": { "display": "punktskrift" }
               }
             ],
             "creators": [
@@ -633,9 +517,7 @@
                 "__typename": "Person"
               }
             ],
-            "publisher": [
-              "Danmarks Blindebibliotek"
-            ],
+            "publisher": ["Danmarks Blindebibliotek"],
             "languages": {
               "main": [
                 {
@@ -689,20 +571,11 @@
           },
           {
             "pid": "870970-basis:25245784",
-            "genreAndForm": [
-              "roman",
-              "fantasy"
-            ],
-            "source": [
-              "Bibliotekskatalog"
-            ],
+            "genreAndForm": ["roman", "fantasy"],
+            "source": ["Bibliotekskatalog"],
             "titles": {
-              "main": [
-                "Harry Potter og Fønixordenen"
-              ],
-              "original": [
-                "Harry Potter and the Order of the Phoenix"
-              ]
+              "main": ["Harry Potter og Fønixordenen"],
+              "original": ["Harry Potter and the Order of the Phoenix"]
             },
             "fictionNonfiction": {
               "display": "skønlitteratur",
@@ -710,7 +583,7 @@
             },
             "materialTypes": [
               {
-                "specific": "bog"
+                "materialTypeSpecific": { "display": "bog" }
               }
             ],
             "creators": [
@@ -719,9 +592,7 @@
                 "__typename": "Person"
               }
             ],
-            "publisher": [
-              "Gyldendal"
-            ],
+            "publisher": ["Gyldendal"],
             "languages": {
               "main": [
                 {
@@ -778,19 +649,11 @@
           },
           {
             "pid": "870970-basis:26167663",
-            "genreAndForm": [
-              "roman"
-            ],
-            "source": [
-              "Bibliotekskatalog"
-            ],
+            "genreAndForm": ["roman"],
+            "source": ["Bibliotekskatalog"],
             "titles": {
-              "main": [
-                "Harry Potter og Fønixordenen"
-              ],
-              "original": [
-                "Harry Potter and the Order of the Phoenix"
-              ]
+              "main": ["Harry Potter og Fønixordenen"],
+              "original": ["Harry Potter and the Order of the Phoenix"]
             },
             "fictionNonfiction": {
               "display": "skønlitteratur",
@@ -798,7 +661,7 @@
             },
             "materialTypes": [
               {
-                "specific": "lydbog (cd)"
+                "materialTypeSpecific": { "display": "lydbog (cd)" }
               }
             ],
             "creators": [
@@ -807,9 +670,7 @@
                 "__typename": "Person"
               }
             ],
-            "publisher": [
-              "Gyldendal Lyd"
-            ],
+            "publisher": ["Gyldendal Lyd"],
             "languages": {
               "main": [
                 {
@@ -864,19 +725,11 @@
           },
           {
             "pid": "870970-basis:26470498",
-            "genreAndForm": [
-              "roman"
-            ],
-            "source": [
-              "Bibliotekskatalog"
-            ],
+            "genreAndForm": ["roman"],
+            "source": ["Bibliotekskatalog"],
             "titles": {
-              "main": [
-                "Harry Potter og Fønixordenen"
-              ],
-              "original": [
-                "Harry Potter and the Order of the Phoenix"
-              ]
+              "main": ["Harry Potter og Fønixordenen"],
+              "original": ["Harry Potter and the Order of the Phoenix"]
             },
             "fictionNonfiction": {
               "display": "skønlitteratur",
@@ -884,7 +737,7 @@
             },
             "materialTypes": [
               {
-                "specific": "bog"
+                "materialTypeSpecific": { "display": "bog" }
               }
             ],
             "creators": [
@@ -893,9 +746,7 @@
                 "__typename": "Person"
               }
             ],
-            "publisher": [
-              "Gyldendals Bogklubber"
-            ],
+            "publisher": ["Gyldendals Bogklubber"],
             "languages": {
               "main": [
                 {
@@ -947,19 +798,11 @@
           },
           {
             "pid": "870970-basis:27639534",
-            "genreAndForm": [
-              "roman"
-            ],
-            "source": [
-              "Bibliotekskatalog"
-            ],
+            "genreAndForm": ["roman"],
+            "source": ["Bibliotekskatalog"],
             "titles": {
-              "main": [
-                "Harry Potter og Fønixordenen (mp3)"
-              ],
-              "original": [
-                "Harry Potter and the Order of the Phoenix"
-              ]
+              "main": ["Harry Potter og Fønixordenen (mp3)"],
+              "original": ["Harry Potter and the Order of the Phoenix"]
             },
             "fictionNonfiction": {
               "display": "skønlitteratur",
@@ -967,7 +810,7 @@
             },
             "materialTypes": [
               {
-                "specific": "lydbog (cd-mp3)"
+                "materialTypeSpecific": { "display": "lydbog (cd-mp3)" }
               }
             ],
             "creators": [
@@ -976,9 +819,7 @@
                 "__typename": "Person"
               }
             ],
-            "publisher": [
-              "Gyldendal Lyd"
-            ],
+            "publisher": ["Gyldendal Lyd"],
             "languages": {
               "main": [
                 {
@@ -1033,20 +874,11 @@
           },
           {
             "pid": "870970-basis:29368872",
-            "genreAndForm": [
-              "roman",
-              "fantasy"
-            ],
-            "source": [
-              "Bibliotekskatalog"
-            ],
+            "genreAndForm": ["roman", "fantasy"],
+            "source": ["Bibliotekskatalog"],
             "titles": {
-              "main": [
-                "Harry Potter og Fønixordenen"
-              ],
-              "original": [
-                "Harry Potter and the Order of the Phoenix"
-              ]
+              "main": ["Harry Potter og Fønixordenen"],
+              "original": ["Harry Potter and the Order of the Phoenix"]
             },
             "fictionNonfiction": {
               "display": "skønlitteratur",
@@ -1054,7 +886,7 @@
             },
             "materialTypes": [
               {
-                "specific": "bog"
+                "materialTypeSpecific": { "display": "bog" }
               }
             ],
             "creators": [
@@ -1063,9 +895,7 @@
                 "__typename": "Person"
               }
             ],
-            "publisher": [
-              "Gyldendal"
-            ],
+            "publisher": ["Gyldendal"],
             "languages": {
               "main": [
                 {
@@ -1120,20 +950,11 @@
           },
           {
             "pid": "870970-basis:51980204",
-            "genreAndForm": [
-              "roman",
-              "fantasy"
-            ],
-            "source": [
-              "Bibliotekskatalog"
-            ],
+            "genreAndForm": ["roman", "fantasy"],
+            "source": ["Bibliotekskatalog"],
             "titles": {
-              "main": [
-                "Harry Potter og Fønixordenen"
-              ],
-              "original": [
-                "Harry Potter and the Order of the Phoenix"
-              ]
+              "main": ["Harry Potter og Fønixordenen"],
+              "original": ["Harry Potter and the Order of the Phoenix"]
             },
             "fictionNonfiction": {
               "display": "skønlitteratur",
@@ -1141,7 +962,7 @@
             },
             "materialTypes": [
               {
-                "specific": "bog"
+                "materialTypeSpecific": { "display": "bog" }
               }
             ],
             "creators": [
@@ -1150,9 +971,7 @@
                 "__typename": "Person"
               }
             ],
-            "publisher": [
-              "Gyldendal"
-            ],
+            "publisher": ["Gyldendal"],
             "languages": {
               "main": [
                 {
@@ -1207,20 +1026,11 @@
           },
           {
             "pid": "870970-basis:54871996",
-            "genreAndForm": [
-              "roman",
-              "fantasy"
-            ],
-            "source": [
-              "Bibliotekskatalog"
-            ],
+            "genreAndForm": ["roman", "fantasy"],
+            "source": ["Bibliotekskatalog"],
             "titles": {
-              "main": [
-                "Harry Potter og Fønixordenen"
-              ],
-              "original": [
-                "Harry Potter and the Order of the Phoenix"
-              ]
+              "main": ["Harry Potter og Fønixordenen"],
+              "original": ["Harry Potter and the Order of the Phoenix"]
             },
             "fictionNonfiction": {
               "display": "skønlitteratur",
@@ -1228,7 +1038,7 @@
             },
             "materialTypes": [
               {
-                "specific": "bog"
+                "materialTypeSpecific": { "display": "bog" }
               }
             ],
             "creators": [
@@ -1237,9 +1047,7 @@
                 "__typename": "Person"
               }
             ],
-            "publisher": [
-              "Gyldendal"
-            ],
+            "publisher": ["Gyldendal"],
             "languages": {
               "main": [
                 {
@@ -1295,21 +1103,11 @@
         ],
         "latest": {
           "pid": "870970-basis:134693959",
-          "genreAndForm": [
-            "roman",
-            "fantasy",
-            "romaner"
-          ],
-          "source": [
-            "Bibliotekskatalog"
-          ],
+          "genreAndForm": ["roman", "fantasy", "romaner"],
+          "source": ["Bibliotekskatalog"],
           "titles": {
-            "main": [
-              "Harry Potter og Fønixordenen (Ill. Jim Kay)"
-            ],
-            "original": [
-              "Harry Potter and the Order of the Phoenix"
-            ]
+            "main": ["Harry Potter og Fønixordenen (Ill. Jim Kay)"],
+            "original": ["Harry Potter and the Order of the Phoenix"]
           },
           "fictionNonfiction": {
             "display": "skønlitteratur",
@@ -1317,7 +1115,7 @@
           },
           "materialTypes": [
             {
-              "specific": "bog"
+              "materialTypeSpecific": { "display": "bog" }
             }
           ],
           "creators": [
@@ -1326,9 +1124,7 @@
               "__typename": "Person"
             }
           ],
-          "publisher": [
-            "Gyldendal"
-          ],
+          "publisher": ["Gyldendal"],
           "languages": {
             "main": [
               {
@@ -1392,21 +1188,11 @@
         },
         "bestRepresentation": {
           "pid": "870970-basis:134693959",
-          "genreAndForm": [
-            "roman",
-            "fantasy",
-            "romaner"
-          ],
-          "source": [
-            "Bibliotekskatalog"
-          ],
+          "genreAndForm": ["roman", "fantasy", "romaner"],
+          "source": ["Bibliotekskatalog"],
           "titles": {
-            "main": [
-              "Harry Potter og Fønixordenen (Ill. Jim Kay)"
-            ],
-            "original": [
-              "Harry Potter and the Order of the Phoenix"
-            ]
+            "main": ["Harry Potter og Fønixordenen (Ill. Jim Kay)"],
+            "original": ["Harry Potter and the Order of the Phoenix"]
           },
           "fictionNonfiction": {
             "display": "skønlitteratur",
@@ -1414,7 +1200,7 @@
           },
           "materialTypes": [
             {
-              "specific": "bog"
+              "materialTypeSpecific": { "display": "bog" }
             }
           ],
           "creators": [
@@ -1423,9 +1209,7 @@
               "__typename": "Person"
             }
           ],
-          "publisher": [
-            "Gyldendal"
-          ],
+          "publisher": ["Gyldendal"],
           "languages": {
             "main": [
               {
@@ -1490,22 +1274,22 @@
       },
       "materialTypes": [
         {
-          "specific": "bog"
+          "materialTypeSpecific": { "display": "bog" }
         },
         {
-          "specific": "lydbog (cd)"
+          "materialTypeSpecific": { "display": "lydbog (cd)" }
         },
         {
-          "specific": "punktskrift"
+          "materialTypeSpecific": { "display": "punktskrift" }
         },
         {
-          "specific": "diskette"
+          "materialTypeSpecific": { "display": "diskette" }
         },
         {
-          "specific": "lydbog (bånd)"
+          "materialTypeSpecific": { "display": "lydbog (bånd)" }
         },
         {
-          "specific": "lydbog (cd-mp3)"
+          "materialTypeSpecific": { "display": "lydbog (cd-mp3)" }
         }
       ],
       "mainLanguages": [
@@ -1671,117 +1455,81 @@
           {
             "ownerWork": {
               "workId": "work-of:870970-basis:28995938",
-              "workTypes": [
-                "MOVIE"
-              ],
+              "workTypes": ["MOVIE"],
               "titles": {
-                "main": [
-                  "Harry Potter and the Order of the Phoenix"
-                ]
+                "main": ["Harry Potter and the Order of the Phoenix"]
               }
             }
           },
           {
             "ownerWork": {
               "workId": "work-of:870970-basis:28995938",
-              "workTypes": [
-                "MOVIE"
-              ],
+              "workTypes": ["MOVIE"],
               "titles": {
-                "main": [
-                  "Harry Potter and the Order of the Phoenix"
-                ]
+                "main": ["Harry Potter and the Order of the Phoenix"]
               }
             }
           },
           {
             "ownerWork": {
               "workId": "work-of:870970-basis:28995938",
-              "workTypes": [
-                "MOVIE"
-              ],
+              "workTypes": ["MOVIE"],
               "titles": {
-                "main": [
-                  "Harry Potter and the Order of the Phoenix"
-                ]
+                "main": ["Harry Potter and the Order of the Phoenix"]
               }
             }
           },
           {
             "ownerWork": {
               "workId": "work-of:870970-basis:28995938",
-              "workTypes": [
-                "MOVIE"
-              ],
+              "workTypes": ["MOVIE"],
               "titles": {
-                "main": [
-                  "Harry Potter and the Order of the Phoenix"
-                ]
+                "main": ["Harry Potter and the Order of the Phoenix"]
               }
             }
           },
           {
             "ownerWork": {
               "workId": "work-of:870970-basis:28995938",
-              "workTypes": [
-                "MOVIE"
-              ],
+              "workTypes": ["MOVIE"],
               "titles": {
-                "main": [
-                  "Harry Potter and the Order of the Phoenix"
-                ]
+                "main": ["Harry Potter and the Order of the Phoenix"]
               }
             }
           },
           {
             "ownerWork": {
               "workId": "work-of:870970-basis:28995938",
-              "workTypes": [
-                "MOVIE"
-              ],
+              "workTypes": ["MOVIE"],
               "titles": {
-                "main": [
-                  "Harry Potter and the Order of the Phoenix"
-                ]
+                "main": ["Harry Potter and the Order of the Phoenix"]
               }
             }
           },
           {
             "ownerWork": {
               "workId": "work-of:870970-basis:28995938",
-              "workTypes": [
-                "MOVIE"
-              ],
+              "workTypes": ["MOVIE"],
               "titles": {
-                "main": [
-                  "Harry Potter and the Order of the Phoenix"
-                ]
+                "main": ["Harry Potter and the Order of the Phoenix"]
               }
             }
           },
           {
             "ownerWork": {
               "workId": "work-of:870970-basis:28995938",
-              "workTypes": [
-                "MOVIE"
-              ],
+              "workTypes": ["MOVIE"],
               "titles": {
-                "main": [
-                  "Harry Potter and the Order of the Phoenix"
-                ]
+                "main": ["Harry Potter and the Order of the Phoenix"]
               }
             }
           },
           {
             "ownerWork": {
               "workId": "work-of:870970-basis:28995938",
-              "workTypes": [
-                "MOVIE"
-              ],
+              "workTypes": ["MOVIE"],
               "titles": {
-                "main": [
-                  "Harry Potter and the Order of the Phoenix"
-                ]
+                "main": ["Harry Potter and the Order of the Phoenix"]
               }
             }
           }
