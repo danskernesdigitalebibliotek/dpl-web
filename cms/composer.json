@@ -36,10 +36,10 @@
             "type": "package",
             "package": {
                 "name": "danskernesdigitalebibliotek/dpl-react",
-                "version": "2024.3.0",
+                "version": "2024.3.1",
                 "type": "drupal-library",
                 "dist": {
-                    "url": "https://github.com/danskernesdigitalebibliotek/dpl-react/releases/download/2024.3.0/dist-2024-3-0-d675caf884f69feb2781e1ccf2688351f0c53eaa.zip",
+                    "url": "https://github.com/danskernesdigitalebibliotek/dpl-react/releases/download/2024.3.1/dist-2024-3-1-313e9fafe4a7cd33ef7b866afc3ec4ba68f088c3.zip",
                     "type": "zip"
                 },
                 "require": {
