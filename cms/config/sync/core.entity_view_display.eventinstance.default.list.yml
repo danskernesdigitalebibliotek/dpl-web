@@ -122,6 +122,14 @@ content:
     third_party_settings: {  }
     weight: 59
     region: content
+  event_teaser_text:
+    type: string
+    label: visible
+    settings:
+      link_to_entity: false
+    third_party_settings: {  }
+    weight: 60
+    region: content
   event_ticket_categories:
     type: entity_reference_revisions_entity_view
     label: visible
