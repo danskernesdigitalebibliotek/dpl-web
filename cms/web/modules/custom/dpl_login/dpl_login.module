@@ -80,10 +80,6 @@ function dpl_login_openid_connect_pre_authorize(AccountInterface|FALSE $account,
 
   \Drupal::logger('dpl_login')->warning('<pre><code>' . print_r($token, TRUE) . '</code></pre>');
 
-  //$patron = $api->getPatronInformationByPatronIdV2();
-
-  //\Drupal::logger('dpl_login')->warning('<pre><code>' . print_r($patron, TRUE) . '</code></pre>');
-
   try {
     $patron = $api->getPatronInformationByPatronIdV2();
     $patron_block_status = $patron->getPatron()?->getBlockStatus() ?? [];

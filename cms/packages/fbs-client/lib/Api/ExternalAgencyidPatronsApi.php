@@ -786,11 +786,16 @@ class ExternalAgencyidPatronsApi
     {
         $request = $this->getPatronInformationByPatronIdV2Request($contentType);
 
+        \Drupal::logger('external3')->warning('<pre><code>' . print_r($request, TRUE) . '</code></pre>');
+
         try {
             $options = $this->createHttpClientOption();
             try {
                 $response = $this->client->send($request, $options);
+                \Drupal::logger('external5')->warning('<pre><code>' . print_r($response, TRUE) . '</code></pre>');
             } catch (RequestException $e) {
+              \Drupal::logger('external5')->warning('<pre><code>' . print_r($e, TRUE) . '</code></pre>');
+
                 throw new ApiException(
                     "[{$e->getCode()}] {$e->getMessage()}",
                     (int) $e->getCode(),
@@ -993,6 +998,8 @@ class ExternalAgencyidPatronsApi
             $contentType,
             $multipart
         );
+
+        \Drupal::logger('external3')->warning('<pre><code>' . print_r($this->config->getAccessToken(), TRUE) . '</code></pre>');
 
         // for model (json/xml)
         if (count($formParams) > 0) {
