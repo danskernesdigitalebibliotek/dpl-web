@@ -134,19 +134,16 @@ function _dpl_admin_form_alter_eventinstance(array &$form, FormStateInterface $f
   if ($event_instance instanceof EventInstance) {
     $event_series = $event_instance->getEventSeries();
 
-    /** @var \Drupal\recurring_events\EventInterface $event_series */
-    if (method_exists($event_series, 'id')) {
-      $event_series_edit_url = Url::fromRoute(
-        'entity.eventseries.edit_form',
-        ['eventseries' => $event_series->id()]
-      )->toString();
+    $event_series_edit_url = Url::fromRoute(
+      'entity.eventseries.edit_form',
+      ['eventseries' => $event_series->id()]
+    )->toString();
 
-      $message_suffix =
-        t('<a href="@url">Edit the series here</a>',
-          ['@url' => $event_series_edit_url],
-          ['context' => 'DPL admin UX']
-        );
-    }
+    $message_suffix =
+      t('<a href="@url">Edit the series here</a>',
+        ['@url' => $event_series_edit_url],
+        ['context' => 'DPL admin UX']
+      );
   }
 
   \Drupal::messenger()->addWarning(t(
