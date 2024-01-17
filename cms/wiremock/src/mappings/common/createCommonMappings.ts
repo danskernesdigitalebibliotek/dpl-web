@@ -74,27 +74,26 @@ export default (baseUri?: string, options?: Options) => {
         urlPattern: "/external/v1/agencyid/branches",
       },
       response: {
-        jsonBody: json.default
-      }
+        jsonBody: json.default,
+      },
     });
   });
 
-    // Mapings for autosuggest
-    import("../search/data/fbi/autosugggest.json").then((json) => {
-      wiremock(baseUri, options).mappings.createMapping({
-        request: {
-          method: "POST",
-          url: "/next/graphql",
-          bodyPatterns: [
-            {
-              matchesJsonPath: matchGraphqlQuery("suggestionsFromQueryString"),
-            },
-          ],
-        },
-        response: {
-          jsonBody: json.default
-        }
-      });
+  // Mapings for autosuggest
+  import("../search/data/fbi/autosugggest.json").then((json) => {
+    wiremock(baseUri, options).mappings.createMapping({
+      request: {
+        method: "POST",
+        urlPattern: "/next.*/graphql",
+        bodyPatterns: [
+          {
+            matchesJsonPath: matchGraphqlQuery("suggestionsFromQueryString"),
+          },
+        ],
+      },
+      response: {
+        jsonBody: json.default,
+      },
     });
-
+  });
 };

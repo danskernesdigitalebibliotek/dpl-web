@@ -130,13 +130,6 @@ class PatronMenuBlock extends BlockBase implements ContainerFactoryPluginInterfa
         ),
         'dataId' => '4',
       ],
-      [
-        'name' => $this->t('My account', [], ['context' => 'Patron menu']),
-        'link' => dpl_react_apps_ensure_url_is_string(
-          Url::fromRoute('dpl_dashboard.list', [], ['absolute' => TRUE])->toString()
-        ),
-        'dataId' => '40',
-      ],
     ];
 
     $data = [
