@@ -1,0 +1,27 @@
+_meta:
+  version: '1.0'
+  entity_type: file
+  uuid: 3d1cb5f0-b6a4-4235-b4b3-705d5185e90e
+  default_langcode: en
+default:
+  uid:
+    -
+      target_id: 1
+  filename:
+    -
+      value: ahmad-odeh-KHipnBn7sdY-unsplash.jpg
+  uri:
+    -
+      value: 'public://2023-12/ahmad-odeh-KHipnBn7sdY-unsplash.jpg'
+  filemime:
+    -
+      value: image/jpeg
+  filesize:
+    -
+      value: 150240
+  status:
+    -
+      value: true
+  created:
+    -
+      value: 1703141622

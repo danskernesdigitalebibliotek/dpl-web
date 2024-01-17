@@ -1,0 +1,27 @@
+_meta:
+  version: '1.0'
+  entity_type: file
+  uuid: f19a4a4c-80b0-4290-a098-4f2f5fc137a2
+  default_langcode: en
+default:
+  uid:
+    -
+      target_id: 1
+  filename:
+    -
+      value: becca-tapert-GnY_mW1Q6Xc-unsplash.jpg
+  uri:
+    -
+      value: 'public://2023-12/becca-tapert-GnY_mW1Q6Xc-unsplash.jpg'
+  filemime:
+    -
+      value: image/jpeg
+  filesize:
+    -
+      value: 590220
+  status:
+    -
+      value: true
+  created:
+    -
+      value: 1703140433

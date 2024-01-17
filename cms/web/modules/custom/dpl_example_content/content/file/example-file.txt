@@ -1,1 +1,0 @@
-This is an example file which can be loaded through the Default Content module.

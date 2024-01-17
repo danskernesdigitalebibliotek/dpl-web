@@ -1,0 +1,13 @@
+{% if items|length > 1 %}
+  <ul>
+    {% for item in items %}
+      <li>{{ item.content }}</li>
+    {% endfor %}
+  </ul>
+{% else %}
+  <span>
+    {% for item in items %}
+      {{ item.content }}
+    {% endfor %}
+  </span>
+{% endif %}

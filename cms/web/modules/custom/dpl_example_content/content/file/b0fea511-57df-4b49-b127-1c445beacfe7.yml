@@ -1,0 +1,27 @@
+_meta:
+  version: '1.0'
+  entity_type: file
+  uuid: b0fea511-57df-4b49-b127-1c445beacfe7
+  default_langcode: en
+default:
+  uid:
+    -
+      target_id: 1
+  filename:
+    -
+      value: jilbert-ebrahimi-HAwA1N2gjo8-unsplash.jpg
+  uri:
+    -
+      value: 'public://2023-12/jilbert-ebrahimi-HAwA1N2gjo8-unsplash.jpg'
+  filemime:
+    -
+      value: image/jpeg
+  filesize:
+    -
+      value: 338779
+  status:
+    -
+      value: true
+  created:
+    -
+      value: 1703140309

@@ -9,9 +9,11 @@ dependencies:
     - node.type.campaign
     - node.type.event
   module:
+    - file
     - filter
     - media
     - node
+    - recurring_events
     - system
     - toolbar
 id: editor
@@ -20,7 +22,12 @@ weight: 4
 is_admin: null
 permissions:
   - 'access content overview'
+  - 'access eventinstance overview'
+  - 'access eventseries overview'
   - 'access toolbar'
+  - 'add eventseries entity'
+  - 'clone eventinstance entity'
+  - 'clone eventseries entity'
   - 'create article content'
   - 'create campaign content'
   - 'create event content'
@@ -29,20 +36,35 @@ permissions:
   - 'delete any campaign content'
   - 'delete any event content'
   - 'delete event revisions'
+  - 'delete eventinstance entity'
+  - 'delete eventseries entity'
   - 'delete own article content'
   - 'delete own campaign content'
   - 'delete own event content'
+  - 'delete own eventinstance entity'
+  - 'delete own eventseries entity'
+  - 'delete own files'
   - 'delete own image media'
   - 'edit any article content'
   - 'edit any campaign content'
   - 'edit any event content'
   - 'edit any image media'
+  - 'edit eventinstance entity'
+  - 'edit eventseries entity'
   - 'edit own article content'
   - 'edit own campaign content'
   - 'edit own event content'
+  - 'edit own eventinstance entity'
+  - 'edit own eventseries entity'
   - 'edit own image media'
+  - 'revert all eventinstance revisions'
+  - 'revert all eventseries revisions'
   - 'revert event revisions'
   - 'use text format basic'
+  - 'view all eventinstance revisions'
+  - 'view all eventseries revisions'
   - 'view event revisions'
   - 'view own unpublished content'
   - 'view the administration theme'
+  - 'view unpublished eventinstance entity'
+  - 'view unpublished eventseries entity'
