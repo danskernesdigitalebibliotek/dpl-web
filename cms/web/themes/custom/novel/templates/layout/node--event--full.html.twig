@@ -1,78 +1,34 @@
-<article {{ attributes.addClass('event-page') }}>
-  <header class="event-header">
-    <section class="event-header__content">
-      <!-- Tag -->
-      {{ content.field_event_date }}
-      <h1 class="event-header__title">{{ label }}</h1>
-      {{ content.field_event_link }}
-    </section>
-    <section class="event-header__visual ">
-      {% if content.field_event_image.0 %}
-        {{ content.field_event_image }}
-      {% else %}
-        <div class="image-credited__no-image"></div>
-      {% endif %}
-    </section>
-  </header>
+{% set dates = node.get('field_event_date').getValue() %}
 
-  <section class="event-description">
-    <h2 class="event-description__title">{{ "Description"|trans }}</h2>
-    <div class="event-description__content">
-      <div class="event-description__description">{{ content.field_event_description }}</div>
-      <div class="event-description__links">
-        <!-- horizontal-term-line -->
-      </div>
-    </div>
-    <dl class="list-description event-description__info list-description--event">
-      {% if content.field_event_date.0 %}
-        <div class="list-description__item">
-          <dt class="list-description__key">{{ "Time"|trans }}</dt>
-          <dd class="list-description__value">
-            {{ content.field_event_date.0.start_date["#markup"]|date("H:i") }}
-            -
-            {{ content.field_event_date.0.end_date["#markup"]|date("H:i") }}
-          </dd>
-        </div>
-      {% endif %}
-      {% if content.field_ticket_categories.0 %}
-        <div class="list-description__item">
-          <dt class="list-description__key">{{ "Price"|trans }}</dt>
-          <dd class="list-description__value list-description__value--column">
-            {{ content.field_ticket_categories }}
-          </dd>
-        </div>
-      {% endif %}
-      {% if content.field_event_place.0 %}
-        <div class="list-description__item">
-          <dt class="list-description__key">
-            {{ "Place"|trans }}:
-          </dt>
-          <dd class="list-description__value">
-            {{ content.field_event_place }}
-          </dd>
-        </div>
-      {% endif %}
-      {% if content.field_event_partners.0 %}
-        <div class="list-description__item">
-          <dt class="list-description__key">
-            {{ "Partners"|trans }}:
-          </dt>
-          <dd class="list-description__value">
-            {{ content.field_event_partners }}
-          </dd>
-        </div>
-      {% endif %}
-      <div class="list-description__item">
-        <dt class="list-description__key">
-          {{ "Adresse"|trans }}:
-        </dt>
-        <dd class="list-description__value">
-          {{ content.field_event_address }}
-        </dd>
-      </div>
-    </dl>
-  </section>
-  <section class="paragraphs">
-  {{ content.field_event_paragraphs }}
-  </section>
-</article>
+{% set description_items = [
+  {
+    label: "Time"|trans,
+    value: dates.0 ? dates.0.value|date('H:i') ~ ' - ' ~ dates.0.end_value|date('H:i') : null
+  },
+  {
+    label: "Price"|trans,
+    value: content.field_ticket_categories.0 ? content.field_ticket_categories : null
+  },
+  {
+    label: "Place"|trans,
+    value: content.field_event_place.0 ? content.field_event_place : null
+  },
+  {
+    label: "Partners"|trans,
+    value: content.field_event_partners.0 ? content.field_event_partners : null
+  },
+  {
+    label: "Address"|trans,
+    value: content.field_event_address.0 ? content.field_event_address : null
+  }
+] %}
+
+{% include '@novel/layout/full-event.html.twig' with {
+  'label': label,
+  'image': content.field_event_image,
+  'event_link': content.field_event_link,
+  'paragraphs': content.field_event_paragraphs,
+  'date': content.field_event_date,
+  'description': content.field_event_description,
+  'description_items': description_items
+} only %}

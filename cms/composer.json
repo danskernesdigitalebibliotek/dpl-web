@@ -253,6 +253,9 @@
                 "Update with Rector": "patches/potion-rector.patch",
                 "Mark as Drupal 10 compatible": "patches/potion-d10-info.patch",
                 "Use Drupal StaticReflectionParser with Drupal 10.1": "patches/potion-d10-1-staticreflection.patch"
+            },
+            "drupal/recurring_events": {
+                "3415222: Wrong namespace for return values": "https://git.drupalcode.org/project/recurring_events/-/merge_requests/83.patch"
             }
         }
     }
