@@ -5,13 +5,17 @@
  * Module file for DPL Event.
  */
 
+use Drupal\Core\Datetime\DrupalDateTime;
 use Drupal\Core\Entity\EntityInterface;
 use Drupal\Core\Entity\FieldableEntityInterface;
 use Drupal\Core\Form\FormStateInterface;
+use Drupal\Core\Url;
 use Drupal\dpl_event\EventState;
+use Drupal\file\Entity\File;
 use Drupal\job_scheduler\Entity\JobSchedule;
+use Drupal\media\Entity\Media;
 use Drupal\recurring_events\Entity\EventInstance;
-use Safe\DateTimeImmutable as DateTimeImmutable;
+use Safe\DateTimeImmutable;
 
 /**
  * Implements hook_cron_job_scheduler_info().
@@ -222,9 +226,12 @@ function dpl_event_preprocess_field__field_ticket_category_price(array &$variabl
  *
  * @throws \Safe\Exceptions\ArrayException
  */
-function dpl_event_preprocess_node(array &$variables): void {
-  if ($variables['node']->hasField('field_ticket_categories')) {
-    $ticket_categories = $variables['node']->get('field_ticket_categories')->referencedEntities();
+function dpl_event_preprocess_eventinstance(array &$variables): void {
+
+  $eventInstance = $variables['eventinstance'];
+
+  if ($eventInstance->hasField('field_ticket_categories')) {
+    $ticket_categories = $eventInstance->get('field_ticket_categories')->referencedEntities();
     $prices = [];
 
     // Collect prices from ticket categories.
@@ -255,4 +262,55 @@ function dpl_event_gin_content_form_routes() : array {
     'entity.eventseries.add_instance_form',
     'entity.eventinstance.edit_form',
   ];
+}
+
+/**
+ * Implements hook_preprocess_eventinstance__list_teaser().
+ *
+ * Preprocesses variables for the 'list_teaser' view mode of eventinstance.
+ * - Generating the URL for the full view of the event instance.
+ * - Extracting image URL and alt text from the 'event_image' field.
+ * - Processing start and end dates from the 'date' field and formatting them
+ *   in the site's timezone.
+ */
+function dpl_event_preprocess_eventinstance__list_teaser(array &$variables): void {
+  $eventInstance = $variables['eventinstance'];
+
+  // Extract the event url.
+  $variables['eventinstance_url'] = Url::fromRoute('entity.eventinstance.canonical', ['eventinstance' => $eventInstance->id()])->toString();
+
+  // Extract image file URL and alt text.
+  if ($eventInstance->hasField('event_image') && !$eventInstance->get('event_image')->isEmpty()) {
+    $media_entity = $eventInstance->get('event_image')->entity;
+    if ($media_entity instanceof Media && $media_entity->bundle() == 'image' && !$media_entity->field_media_image->isEmpty()) {
+      $file = $media_entity->field_media_image->entity;
+      if ($file instanceof File) {
+        $variables['image_file_url'] = $file->createFileUrl(FALSE);
+        $variables['image_alt'] = $media_entity->field_media_image->alt ?? '';
+      }
+    }
+  }
+
+  // Extract start_date, end_date and datetime attributes.
+  if (!$eventInstance->get('date')->isEmpty()) {
+    // Get the site's default timezone.
+    $site_timezone = date_default_timezone_get();
+    $date_field = $eventInstance->get('date')->first();
+
+    if ($date_field) {
+      $start_date = $date_field->start_date;
+      $end_date = $date_field->end_date;
+
+      // Format the dates in the site's timezone.
+      if ($start_date instanceof DrupalDateTime) {
+        $start_date->setTimezone(new \DateTimeZone($site_timezone));
+        $variables['start_date'] = $start_date->format('H:i');
+        $variables['datetime_attribute'] = $start_date->format(DATE_ATOM);
+      }
+      if ($end_date instanceof DrupalDateTime) {
+        $end_date->setTimezone(new \DateTimeZone($site_timezone));
+        $variables['end_date'] = $end_date->format('H:i');
+      }
+    }
+  }
 }
