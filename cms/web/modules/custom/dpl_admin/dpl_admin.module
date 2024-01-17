@@ -64,8 +64,7 @@ function dpl_admin_preprocess_views_view_field(array &$variables): void {
 
   if (!$field instanceof EntityField ||
     !$output instanceof Markup ||
-    $field->getField() !== '.eventseries_id' ||
-    !method_exists($output, '__toString')) {
+    $field->getField() !== '.eventseries_id') {
     return;
   }
 
