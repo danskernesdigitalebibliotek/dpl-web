@@ -1,7 +1,9 @@
 {% set classes = [
-  'video-embed'
+  'paragraph'
 ] %}
 
-<div{{ attributes.addClass(classes) }}>
-    {{ content }}
-</div>
+<section{{ attributes.addClass(classes) }}>
+    <div class="video-embed">
+        {{ content }}
+    </div>
+</section>
