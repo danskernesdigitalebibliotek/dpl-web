@@ -69,7 +69,7 @@ class ReoccurringDateFormatter {
 
       // DD/MM/YY | H:i - H:i.
       default:
-        $upcoming_ids = $upcoming_event_dates['upcoming_ids'] ?? [];
+        $upcoming_ids = $upcoming_event_dates['upcoming_ids'];
 
         $date_string = $start_date->format('j F');
 
@@ -93,7 +93,7 @@ class ReoccurringDateFormatter {
    * @param \Drupal\recurring_events\Entity\EventSeries $event_series
    *   The event series object.
    *
-   * @return null|array<mixed>
+   * @return null|array{'start': \Drupal\Core\Datetime\DrupalDateTime, 'end': \Drupal\Core\Datetime\DrupalDateTime, 'upcoming_ids': array<int, string>}
    *   An array containing the following keys:
    *   - start: The start date of the upcoming event as a DrupalDateTime object.
    *   - end: The end date of the upcoming event as a DrupalDateTime object.
