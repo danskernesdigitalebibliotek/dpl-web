@@ -15,6 +15,7 @@ use Drupal\file\Entity\File;
 use Drupal\job_scheduler\Entity\JobSchedule;
 use Drupal\media\Entity\Media;
 use Drupal\recurring_events\Entity\EventInstance;
+use Drupal\recurring_events\Entity\EventSeries;
 use Safe\DateTimeImmutable;
 
 /**
@@ -212,6 +213,21 @@ function dpl_event_preprocess_field__field_ticket_category_price(array &$variabl
     return $price_formatter->formatPrice($price["value"]);
   }, $items->getValue());
   $variables['prices'] = $prices;
+}
+
+/**
+ * Implement hook_preprocess() for event series.
+ */
+function dpl_event_preprocess_eventseries(array &$variables): void {
+  $event_series = $variables['eventseries'] ?? NULL;
+
+  if (!($event_series instanceof EventSeries)) {
+    return;
+  }
+
+  $variables['formatted_date'] =
+    \Drupal::service('dpl_event.reoccurring_date_formatter')
+      ->getSeriesDateString($event_series);
 }
 
 /**

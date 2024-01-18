@@ -2,9 +2,13 @@
   <header class="event-header">
     <section class="event-header__content">
       <!-- Tag -->
-      <div class="event-header__date">
-      {{ date }}
-      </div>
+
+      {% if date %}
+        <time class="event-header__date">
+          {{ date }}
+        </time>
+      {% endif %}
+
       <h1 class="event-header__title">{{ label }}</h1>
       {{ event_link }}
     </section>
