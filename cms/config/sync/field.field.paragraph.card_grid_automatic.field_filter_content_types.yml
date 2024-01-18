@@ -1,0 +1,26 @@
+uuid: 070e2d4f-36f1-43e2-b129-56afe6699df1
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.paragraph.field_filter_content_types
+    - node.type.article
+    - paragraphs.paragraphs_type.card_grid_automatic
+id: paragraph.card_grid_automatic.field_filter_content_types
+field_name: field_filter_content_types
+entity_type: paragraph
+bundle: card_grid_automatic
+label: 'Filter: Content types'
+description: ''
+required: false
+translatable: false
+default_value:
+  -
+    target_uuid: 75ad5a84-0836-49cf-be2e-e4d2cdd3916a
+default_value_callback: ''
+settings:
+  handler: 'default:node_type'
+  handler_settings:
+    target_bundles: null
+    auto_create: false
+field_type: entity_reference

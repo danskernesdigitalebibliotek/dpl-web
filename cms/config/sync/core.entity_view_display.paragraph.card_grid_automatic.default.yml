@@ -1,0 +1,17 @@
+uuid: ed5598e5-ef61-49bc-a7cc-31031cdb5662
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.field.paragraph.card_grid_automatic.field_filter_content_types
+    - field.field.paragraph.card_grid_automatic.field_title
+    - paragraphs.paragraphs_type.card_grid_automatic
+id: paragraph.card_grid_automatic.default
+targetEntityType: paragraph
+bundle: card_grid_automatic
+mode: default
+content: {  }
+hidden:
+  field_filter_content_types: true
+  field_title: true
+  search_api_excerpt: true
