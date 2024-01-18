@@ -72,7 +72,7 @@ class FeesListBlock extends BlockBase implements ContainerFactoryPluginInterface
       "page-size-mobile" => $this->feesSettings->getListSizeMobile(),
 
       // Urls.
-      'payment-overview-url' => dpl_react_apps_format_app_url($feesConfig->get('payment_overview_url'),DplFeesSettings::PAYMENT_OVERVIEW_URL),
+      'payment-overview-url' => dpl_react_apps_format_app_url($feesConfig->get('payment_overview_url'), DplFeesSettings::PAYMENT_OVERVIEW_URL),
       'view-fees-and-compensation-rates-url' => dpl_react_apps_format_app_url($feesConfig->get('fees_and_replacement_costs_url'), DplFeesSettings::FEES_AND_REPLACEMENT_COSTS_URL),
 
       // Texts.
