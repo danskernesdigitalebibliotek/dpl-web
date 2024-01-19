@@ -19,6 +19,9 @@ display:
           label: Roller
         created:
           label: 'Medlem i'
+          settings:
+            future_format: '@interval'
+            past_format: '@interval'
         access:
           label: 'Seneste tilgang'
           settings:
