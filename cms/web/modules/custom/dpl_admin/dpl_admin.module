@@ -41,6 +41,22 @@ function dpl_admin_local_tasks_alter(array &$local_tasks): void {
 }
 
 /**
+ * Implements hook_menu_local_actions_alter().
+ *
+ * Remove all tasks appearing on /events.
+ *
+ * @param array<mixed> $local_actions
+ *   See the $form in hook_local_actions_alter().
+ */
+function dpl_admin_menu_local_actions_alter(&$local_actions) : void {
+  array_walk($local_actions, function (array &$action) {
+    $action['appears_on'] = array_filter($action['appears_on'], function (string $route) {
+      return $route !== 'entity.eventinstance.collection';
+    });
+  });
+}
+
+/**
  * Implements template_preprocess_views_view_field().
  *
  * Preprocesses the output of a field in the "event_admin" view.
