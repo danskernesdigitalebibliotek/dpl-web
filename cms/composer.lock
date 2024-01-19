@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "c73dcf69315148852dd966cab6a96793",
+    "content-hash": "28e0f8e9791d9923695cb30afbedd9f8",
     "packages": [
         {
             "name": "amazeeio/drupal_integrations",
@@ -15380,7 +15380,8 @@
         "drupal/gin_toolbar": 5,
         "drupal/openapi_rest": 5,
         "drupal/potion": 20,
-        "drupal/recurring_events": 5
+        "drupal/recurring_events": 5,
+        "drupal/twigsuggest": 5
     },
     "prefer-stable": true,
     "prefer-lowest": false,
