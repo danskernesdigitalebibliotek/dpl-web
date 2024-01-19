@@ -119,22 +119,6 @@ content:
     third_party_settings: {  }
     weight: 7
     region: content
-  event_teaser_image:
-    type: entity_reference_label
-    label: visible
-    settings:
-      link: true
-    third_party_settings: {  }
-    weight: 59
-    region: content
-  event_teaser_text:
-    type: string
-    label: visible
-    settings:
-      link_to_entity: false
-    third_party_settings: {  }
-    weight: 60
-    region: content
   event_ticket_categories:
     type: entity_reference_revisions_entity_view
     label: hidden
@@ -156,6 +140,8 @@ hidden:
   body: true
   description: true
   event_state: true
+  event_teaser_image: true
+  event_teaser_text: true
   field_categories: true
   field_event_address: true
   field_event_description: true
