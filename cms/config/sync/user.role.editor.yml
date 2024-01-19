@@ -7,6 +7,7 @@ dependencies:
     - media.type.image
     - node.type.article
     - node.type.campaign
+    - taxonomy.vocabulary.categories
   module:
     - file
     - filter
@@ -14,6 +15,7 @@ dependencies:
     - node
     - recurring_events
     - system
+    - taxonomy
     - toolbar
 id: editor
 label: Editor
@@ -30,6 +32,7 @@ permissions:
   - 'create article content'
   - 'create campaign content'
   - 'create image media'
+  - 'create terms in categories'
   - 'delete any article content'
   - 'delete any campaign content'
   - 'delete eventinstance entity'
@@ -40,6 +43,7 @@ permissions:
   - 'delete own eventseries entity'
   - 'delete own files'
   - 'delete own image media'
+  - 'delete terms in categories'
   - 'edit any article content'
   - 'edit any campaign content'
   - 'edit any image media'
@@ -50,6 +54,7 @@ permissions:
   - 'edit own eventinstance entity'
   - 'edit own eventseries entity'
   - 'edit own image media'
+  - 'edit terms in categories'
   - 'revert all eventinstance revisions'
   - 'revert all eventseries revisions'
   - 'use text format basic'
