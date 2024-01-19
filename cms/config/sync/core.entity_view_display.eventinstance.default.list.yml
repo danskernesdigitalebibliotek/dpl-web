@@ -4,6 +4,7 @@ status: true
 dependencies:
   config:
     - core.entity_view_mode.eventinstance.list
+    - field.field.eventinstance.default.field_categories
     - field.field.eventinstance.default.field_event_address
     - field.field.eventinstance.default.field_event_description
     - field.field.eventinstance.default.field_event_image
@@ -149,6 +150,7 @@ content:
     region: content
 hidden:
   body: true
+  field_categories: true
   field_event_address: true
   field_event_description: true
   field_event_image: true
