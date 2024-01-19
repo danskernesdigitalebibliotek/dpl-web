@@ -1,9 +1,8 @@
-{% set dates = eventinstance.get('date').getValue() %}
-
+{% set date = eventinstance.get('date').get(0) %}
 {% set description_items = [
   {
     label: "Time"|trans,
-    value: dates.0 ? dates.0.value|date('H:i') ~ ' - ' ~ dates.0.end_value|date('H:i') : null
+    value: date ? date.get('start_date').getValue().getTimestamp()|format_date('custom', 'H:i') ~ ' - ' ~ date.get('end_date').getValue().getTimestamp()|format_date('custom', 'H:i') : null
   },
   {
     label: "Price"|trans,
