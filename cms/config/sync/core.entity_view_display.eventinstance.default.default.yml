@@ -57,6 +57,14 @@ content:
     third_party_settings: {  }
     weight: 2
     region: content
+  event_categories:
+    type: entity_reference_label
+    label: hidden
+    settings:
+      link: false
+    third_party_settings: {  }
+    weight: 12
+    region: content
   event_description:
     type: text_default
     label: hidden
@@ -136,14 +144,6 @@ content:
     third_party_settings: {  }
     weight: 8
     region: content
-  field_categories:
-    type: entity_reference_label
-    label: hidden
-    settings:
-      link: false
-    third_party_settings: {  }
-    weight: 12
-    region: content
   title:
     type: string
     label: hidden
@@ -156,6 +156,7 @@ hidden:
   body: true
   description: true
   event_state: true
+  field_categories: true
   field_event_address: true
   field_event_description: true
   field_event_image: true
