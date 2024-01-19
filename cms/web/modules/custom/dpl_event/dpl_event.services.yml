@@ -4,4 +4,5 @@ services:
     arguments: ["@string_translation"]
   dpl_event.reoccurring_date_formatter:
     class: Drupal\dpl_event\ReoccurringDateFormatter
-    arguments: ["@string_translation", "@entity_type.manager"]
+    arguments:
+      ["@string_translation", "@entity_type.manager", "@date.formatter"]

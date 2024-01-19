@@ -2,6 +2,7 @@
 
 namespace Drupal\dpl_event;
 
+use Drupal\Core\Datetime\DateFormatterInterface;
 use Drupal\Core\Datetime\DrupalDateTime;
 use Drupal\Core\Entity\EntityTypeManagerInterface;
 use Drupal\Core\StringTranslation\TranslationInterface;
@@ -20,6 +21,7 @@ class ReoccurringDateFormatter {
   public function __construct(
     protected TranslationInterface $translation,
     protected EntityTypeManagerInterface $entityTypeManager,
+    protected DateFormatterInterface $dateFormatter,
   ) {}
 
   /**
@@ -71,7 +73,7 @@ class ReoccurringDateFormatter {
       default:
         $upcoming_ids = $upcoming_event_dates['upcoming_ids'];
 
-        $date_string = $start_date->format('j F');
+        $date_string = $this->formatDate($start_date, 'j F');
 
         if (count($upcoming_ids) > 1) {
           $prefix = $this->translation->translate('Next');
@@ -81,7 +83,7 @@ class ReoccurringDateFormatter {
         break;
     }
 
-    $time_string = "{$start_date->format('H:i')} - {$end_date->format('H:i')}";
+    $time_string = "{$this->formatDate($start_date, 'H:i')} - {$this->formatDate($end_date, 'H:i')}";
 
     return "$date_string $time_string";
 
@@ -137,6 +139,13 @@ class ReoccurringDateFormatter {
       'end' => new DrupalDateTime($end_date),
       'upcoming_ids' => $upcoming_ids,
     ];
+  }
+
+  /**
+   * Format a datetime to a string respecting the local timezone.
+   */
+  private function formatDate(DrupalDateTime $datetime, string $format) : string {
+    return $this->dateFormatter->format($datetime->getTimestamp(), 'custom', $format);
   }
 
 }

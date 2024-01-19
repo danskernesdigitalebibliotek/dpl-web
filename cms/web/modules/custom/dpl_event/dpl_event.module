@@ -291,6 +291,8 @@ function dpl_event_gin_content_form_routes() : array {
  */
 function dpl_event_preprocess_eventinstance__list_teaser(array &$variables): void {
   $eventInstance = $variables['eventinstance'];
+  /** @var \Drupal\Core\Datetime\DateFormatterInterface $date_formatter */
+  $date_formatter = \Drupal::service('date.formatter');
 
   // Extract the event url.
   $variables['eventinstance_url'] = Url::fromRoute('entity.eventinstance.canonical', ['eventinstance' => $eventInstance->id()])->toString();
@@ -309,24 +311,17 @@ function dpl_event_preprocess_eventinstance__list_teaser(array &$variables): voi
 
   // Extract start_date, end_date and datetime attributes.
   if (!$eventInstance->get('date')->isEmpty()) {
-    // Get the site's default timezone.
-    $site_timezone = date_default_timezone_get();
     $date_field = $eventInstance->get('date')->first();
 
-    if ($date_field) {
-      $start_date = $date_field->start_date;
-      $end_date = $date_field->end_date;
+    $start_date = $date_field->start_date;
+    $end_date = $date_field->end_date;
 
-      // Format the dates in the site's timezone.
-      if ($start_date instanceof DrupalDateTime) {
-        $start_date->setTimezone(new \DateTimeZone($site_timezone));
-        $variables['start_date'] = $start_date->format('H:i');
-        $variables['datetime_attribute'] = $start_date->format(DATE_ATOM);
-      }
-      if ($end_date instanceof DrupalDateTime) {
-        $end_date->setTimezone(new \DateTimeZone($site_timezone));
-        $variables['end_date'] = $end_date->format('H:i');
-      }
+    if ($start_date instanceof DrupalDateTime) {
+      $variables['start_date'] = $date_formatter->format($start_date->getTimestamp(), 'custom', 'H:i');
+      $variables['datetime_attribute'] = $date_formatter->format($start_date->getTimestamp(), DATE_ATOM);
+    }
+    if ($end_date instanceof DrupalDateTime) {
+      $variables['end_date'] = $date_formatter->format($end_date->getTimestamp(), 'custom', 'H:i');
     }
   }
 }
