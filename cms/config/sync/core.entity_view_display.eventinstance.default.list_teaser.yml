@@ -58,6 +58,14 @@ content:
     third_party_settings: {  }
     weight: 2
     region: content
+  event_categories:
+    type: entity_reference_label
+    label: visually_hidden
+    settings:
+      link: false
+    third_party_settings: {  }
+    weight: 10
+    region: content
   event_description:
     type: text_default
     label: hidden
