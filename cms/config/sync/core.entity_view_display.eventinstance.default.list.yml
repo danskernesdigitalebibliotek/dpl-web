@@ -56,6 +56,14 @@ content:
     third_party_settings: {  }
     weight: 51
     region: content
+  event_categories:
+    type: entity_reference_label
+    label: visible
+    settings:
+      link: true
+    third_party_settings: {  }
+    weight: 52
+    region: content
   event_description:
     type: text_default
     label: visible
