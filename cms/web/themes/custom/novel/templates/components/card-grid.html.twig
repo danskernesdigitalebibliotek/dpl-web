@@ -1,0 +1,27 @@
+{%
+  set classes = [
+  'card-grid',
+  'card-grid--count-' ~ items|length
+]
+%}
+
+<section {{ attributes.addClass(classes) }}>
+  <div class="card-grid__header">
+    {% if title %}
+      <h2 class="card-grid__title">{{ title }}</h2>
+    {% endif %}
+
+    {% if link %}
+      <div class="card-grid__link">{{ link }}</div>
+    {% endif %}
+  </div>
+  <div class="card-grid__items-wrapper">
+    <div class="card-grid__items">
+      {% for item in items %}
+        <div class="card-grid__item">
+          {{- item.content|default(item) -}}
+        </div>
+      {% endfor %}
+    </div>
+  </div>
+</section>
