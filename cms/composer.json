@@ -229,6 +229,9 @@
             "drupal/default_content": {
                 "3200212: Overwrite files on import": "https://git.drupalcode.org/project/default_content/-/merge_requests/8.patch"
             },
+            "drupal/dynamic_entity_reference": {
+                "3405253: Update the FieldType category for clarity": "https://git.drupalcode.org/project/dynamic_entity_reference/-/commit/3f048d296f671906d15b0cdfbbadbea38f5f3c8b.patch"
+            },
             "drupal/field_inheritance": {
                 "3330386: field_inheritance_form_alter should enforce module permissions": "https://git.drupalcode.org/project/field_inheritance/-/commit/bc3d26cdce8c09d5b6275fc126e35bc7e239c7d1.patch"
             },
