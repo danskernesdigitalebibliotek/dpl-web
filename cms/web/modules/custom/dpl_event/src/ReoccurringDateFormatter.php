@@ -125,18 +125,17 @@ class ReoccurringDateFormatter {
       return NULL;
     }
 
-    $event_instance_dates = $event_instance->get('date')->getValue();
-
-    $start_date = $event_instance_dates[0]['value'] ?? NULL;
-    $end_date = $event_instance_dates[0]['end_value'] ?? NULL;
-    if (!$start_date || !$end_date) {
+    if ($event_instance->get('date')->isEmpty()) {
       return NULL;
     }
 
+    /** @var \Drupal\datetime_range\Plugin\Field\FieldType\DateRangeItem $event_instance_date */
+    $event_instance_date = $event_instance->get('date')->first();
+
     // Return the dates, and the related IDs.
     return [
-      'start' => new DrupalDateTime($start_date),
-      'end' => new DrupalDateTime($end_date),
+      'start' => $event_instance_date->get('start_date')->getValue(),
+      'end' => $event_instance_date->get('end_date')->getValue(),
       'upcoming_ids' => $upcoming_ids,
     ];
   }
