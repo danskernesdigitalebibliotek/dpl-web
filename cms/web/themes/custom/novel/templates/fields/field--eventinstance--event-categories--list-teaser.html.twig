@@ -1,3 +1,4 @@
-{% include 'field--field-categories.html.twig' with {
-  item_attributes: create_attribute().addClass('event-list-item__tag')
-} %}
+{% for item in items %}
+  {% set item = item|merge({'attributes': item.attributes.addClass('event-list-item__tag')}) %}
+{% endfor %}
+{% include 'field--field-categories.html.twig' %}
