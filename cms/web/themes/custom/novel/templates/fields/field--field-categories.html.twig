@@ -2,7 +2,7 @@
 {% set show_more_text = '...'|t %}
 {% set show_less_text = 'Show less'|t %}
 
-{% set item_attributes = item_attributes ?? create_attribute() %}
+{% set item_attributes = item_attributes|default(create_attribute()) %}
 {% set item_classes = [
     'tag',
     'tag--fill',
