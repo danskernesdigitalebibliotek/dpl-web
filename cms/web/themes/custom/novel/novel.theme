@@ -227,3 +227,18 @@ function novel_attach_identity_color_styles(array &$variables, Hsl $hslColor): v
     'novel_custom_identity_color',
   ];
 }
+
+/**
+ * Implements hook_theme_suggestions_field_alter().
+ */
+function novel_theme_suggestions_field_alter(array &$suggestions, array $variables) : void {
+  $element = $variables['element'];
+
+  // Add theme suggestions per view mode...
+  $suggestions[] = 'field__' . $element['#entity_type'] . '__' .
+    $element['#field_name'] . '__' . $element['#view_mode'];
+  // ... per bundle and view mode.
+  $suggestions[] = 'field__' . $element['#entity_type'] . '__' .
+    $element['#field_name'] . '__' . $element['#bundle'] . '__' .
+    $element['#view_mode'];
+}

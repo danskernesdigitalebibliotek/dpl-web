@@ -103,7 +103,6 @@ module:
   views: 10
   paragraphs: 11
   paragraphs_ee: 15
-  twigsuggest: 100
   dpl_cms: 1000
 theme:
   claro: 0
