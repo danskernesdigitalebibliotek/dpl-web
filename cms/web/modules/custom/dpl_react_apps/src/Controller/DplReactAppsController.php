@@ -9,11 +9,13 @@ use Drupal\dpl_instant_loan\DplInstantLoanSettings;
 use Drupal\dpl_library_agency\Branch\Branch;
 use Drupal\dpl_library_agency\Branch\BranchRepositoryInterface;
 use Drupal\dpl_library_agency\BranchSettings;
+use Drupal\dpl_library_agency\FbiProfileType;
 use Drupal\dpl_library_agency\GeneralSettings;
 use Drupal\dpl_library_agency\ReservationSettings;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use function Safe\json_encode as json_encode;
-use function Safe\sprintf;
+use function Safe\preg_replace as preg_replace;
+use function Safe\sprintf as sprintf;
 
 /**
  * Controller for rendering full page DPL React apps.
@@ -356,6 +358,15 @@ class DplReactAppsController extends ControllerBase {
       'online-limit-month-audiobook-info-text' => $this->t('You have borrowed @count out of @limit possible audio-books this month', [], ['context' => 'Work Page']),
       'online-limit-month-ebook-info-text' => $this->t('You have borrowed @count out of @limit possible e-books this month', [], ['context' => 'Work Page']),
       'online-limit-month-info-text' => $this->t('You have borrowed @count out of @limit possible e-books this month', [], ['context' => 'Work Page']),
+      'open-order-not-owned-ill-loc-text' => $this->t('Your material has been ordered from another library', [], ['context' => 'Work Page']),
+      'open-order-owned-own-catalogue-text' => $this->t('Item available, order through the librarys catalogue', [], ['context' => 'Work Page']),
+      'open-order-owned-wrong-mediumtype-text' => $this->t('Item available but medium type not accepted', [], ['context' => 'Work Page']),
+      'open-order-response-title-text' => $this->t('Order from another library:', [], ['context' => 'Work Page']),
+      'open-order-service-unavailable-text' => $this->t('Service is currently unavailable', [], ['context' => 'Work Page']),
+      'open-order-status-owned-accepted-text' => $this->t('Your order is accepted', [], ['context' => 'Work Page']),
+      'open-order-unknown-error-text' => $this->t('An unknown error occurred', [], ['context' => 'Work Page']),
+      'open-order-unknown-pickupagency-text' => $this->t('Specified pickup agency not found', [], ['context' => 'Work Page']),
+      'open-order-unknown-user-text' => $this->t('User not found', [], ['context' => 'Work Page']),
       'order-digital-copy-button-loading-text' => $this->t('Order digital copy button loading text', [], ['context' => 'Work Page']),
       'order-digital-copy-button-text' => $this->t('Order digital copy', [], ['context' => 'Work Page']),
       'order-digital-copy-description-text' => $this->t('Order digital copy description text', [], ['context' => 'Work Page']),
@@ -363,13 +374,13 @@ class DplReactAppsController extends ControllerBase {
       'order-digital-copy-error-button-text' => $this->t('Close', [], ['context' => 'Work Page']),
       'order-digital-copy-error-description-text' => $this->t('An error occurred while ordering the digital copy. Please try again later.', [], ['context' => 'Work Page']),
       'order-digital-copy-error-title-text' => $this->t('Error ordering digital copy', [], ['context' => 'Work Page']),
-      'order-digital-copy-feedback-button-text' => $this->t('Close', [], ['context' => 'Work Page']),
       'order-digital-copy-feedback-borchk-user-no-longer-exist-on-agency-text' => $this->t('Borchk user no longer exists on agency', [], ['context' => 'Work Page']),
       'order-digital-copy-feedback-borchk-user-not-verified-text' => $this->t('Borchk user not verified', [], ['context' => 'Work Page']),
+      'order-digital-copy-feedback-button-text' => $this->t('Close', [], ['context' => 'Work Page']),
       'order-digital-copy-feedback-error-municipalityagencyid-not-found-text' => $this->t('Error municipality agency ID not found', [], ['context' => 'Work Page']),
-      'order-digital-copy-feedback-unknown-user-text' => $this->t('Unknown user', [], ['context' => 'Work Page']),
       'order-digital-copy-feedback-ok-text' => $this->t('The digital copy has been ordered. You will receive an email when the digital copy is ready.', [], ['context' => 'Work Page']),
       'order-digital-copy-feedback-title-text' => $this->t('Digital copy receipt', [], ['context' => 'Work Page']),
+      'order-digital-copy-feedback-unknown-user-text' => $this->t('Unknown user', [], ['context' => 'Work Page']),
       'order-digital-copy-modal-close-modal-aria-label-text' => $this->t('Close Order digital copy modal', [], ['context' => 'Work Page']),
       'order-digital-copy-modal-screen-reader-modal-description-text' => $this->t('Modal for Order digital copy', [], ['context' => 'Work Page']),
       'order-digital-copy-success-button-text' => $this->t('Close', [], ['context' => 'Work Page']),
@@ -390,7 +401,7 @@ class DplReactAppsController extends ControllerBase {
       'read-article-text' => $this->t('Read article', [], ['context' => 'Work Page']),
       'receive-email-when-material-ready-text' => $this->t('Receive mail when the material is ready', [], ['context' => 'Work Page']),
       'receive-sms-when-material-ready-text' => $this->t('Receive SMS when the material is ready', [], ['context' => 'Work Page']),
-      'reservable-from-another-library-text' => $this->t('Reservable on another library', [], ['context' => 'Work Page']),
+      'reservable-from-another-library-text' => $this->t('Ordered from another library', [], ['context' => 'Work Page']),
       'reservation-errors-description-text' => $this->t('Year', [], ['context' => 'Work Page']),
       'reservation-errors-title-text' => $this->t('Reservation error', [], ['context' => 'Work Page']),
       'reservation-modal-close-modal-aria-label-text' => $this->t('Close reservation modal', [], ['context' => 'Work Page']),
@@ -432,6 +443,8 @@ class DplReactAppsController extends ControllerBase {
    *   An array of base urls.
    */
   public static function externalApiBaseUrls(): array {
+    /** @var \Drupal\dpl_library_agency\GeneralSettings $general_settings */
+    $general_settings = \Drupal::service('dpl_library_agency.general_settings');
     $react_apps_settings = \Drupal::configFactory()->get('dpl_react_apps.settings');
     $fbs_settings = \Drupal::config(FbsSettingsForm::CONFIG_KEY);
 
@@ -440,6 +453,23 @@ class DplReactAppsController extends ControllerBase {
 
     // Get base urls from this module.
     $services = $react_apps_settings->get('services') ?? [];
+
+    // The base url of the FBI service is a special case
+    // because a part (the profile) of the base url can differ.
+    // Lets' handle that:
+    if (!empty($services) && !empty($services['fbi']['base_url'])) {
+      $placeholder_url = $services['fbi']['base_url'];
+      foreach ($general_settings->getFbiProfiles() as $type => $profile) {
+        $service_key = sprintf('fbi-%s', $type);
+        // The default FBI service has its own key with no suffix.
+        if ($type === FbiProfileType::DEFAULT->value) {
+          $service_key = 'fbi';
+        }
+        // Create a service url with the profile embedded.
+        $base_url = preg_replace('/\[profile\]/', $profile, $placeholder_url);
+        $services[$service_key] = ['base_url' => $base_url];
+      }
+    }
 
     // Get base urls from other modules.
     $services['fbs'] = ['base_url' => $fbs_settings->get('base_url')];
