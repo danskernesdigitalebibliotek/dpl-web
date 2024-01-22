@@ -64,16 +64,11 @@ class FeesListBlock extends BlockBase implements ContainerFactoryPluginInterface
    *   The app render array.
    */
   public function build() {
-    $feesConfig = $this->feesConfig->loadConfig();
-
     $data = [
       // Config.
-      "page-size-desktop" => $this->feesSettings->getListSizeDesktop(),
-      "page-size-mobile" => $this->feesSettings->getListSizeMobile(),
-
+      "fee-list-config" => $this->feesSettings->getFeeListConfig(),
       // Urls.
-      'payment-overview-url' => dpl_react_apps_format_app_url($feesConfig->get('payment_overview_url'), DplFeesSettings::PAYMENT_OVERVIEW_URL),
-      'view-fees-and-compensation-rates-url' => dpl_react_apps_format_app_url($feesConfig->get('fees_and_replacement_costs_url'), DplFeesSettings::FEES_AND_REPLACEMENT_COSTS_URL),
+      'view-fees-and-compensation-rates-url' => $this->feesSettings->getFeesAndReplacementCostsUrl(),
 
       // Texts.
       'already-paid-text' => $this->t("Please note that paid fees are not registered up until 72 hours after your payment after which your debt is updated and your user unblocked if it has been blocked.", [], ['context' => 'Fees list']),
@@ -83,7 +78,7 @@ class FeesListBlock extends BlockBase implements ContainerFactoryPluginInterface
       'fee-details-modal-description-text' => $this->t("Modal containing information about this element or group of elements fees", [], ['context' => 'Fees list']),
       'fee-details-modal-screen-reader-text' => $this->t("A modal containing details about a fee", [], ['context' => 'Fees list']),
       'fee-list-already-paid-info-text' => $this->t("Already paid? It can take up to 72 hours register the transaction.", [], ['context' => 'Fees list']),
-      'fee-list-body-text' => $feesConfig->get('fee_list_body_text') ?? DplFeesSettings::FEE_LIST_BODY_TEXT,
+      'fee-list-body-text' => $this->feesSettings->getFeeListBodyText(),
       'fee-list-days-text' => $this->t("Days", [], ['context' => 'Fees list']),
       'fee-list-headline-text' => $this->t("Fees & replacement costs", [], ['context' => 'Fees list']),
       'fee-list-material-number-text' => $this->t("# @materialNumber", [], ['context' => 'Fees list']),
@@ -107,6 +102,11 @@ class FeesListBlock extends BlockBase implements ContainerFactoryPluginInterface
       'unpaid-fees-not-payable-by-client-headline-text' => $this->t("Unsettled debt - paid externally", [], ['context' => 'Fees list']),
       'view-fees-and-compensation-rates-text' => $this->t("see our fees and replacement costs", [], ['context' => 'Fees list']),
     ] + DplReactAppsController::externalApiBaseUrls();
+
+    // Only include fee url if the url has been defined.
+    if (!empty($this->feesSettings->getPaymentSiteUrl())) {
+      $data['fee-list-payment-site-url'] = $this->feesSettings->getPaymentSiteUrl();
+    }
 
     return [
       '#theme' => 'dpl_react_app',

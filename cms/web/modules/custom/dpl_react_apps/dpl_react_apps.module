@@ -371,9 +371,8 @@ function dpl_react_apps_dpl_react_apps_data(array &$data, array &$variables): vo
     'ereolen-homepage' => dpl_react_apps_format_app_url(
       GeneralSettings::EREOLEN_HOMEPAGE_URL
     ),
-    'view-fees-and-compensation-rates' => dpl_react_apps_format_app_url(
-      $fees_settings->getViewFeesAndCompensationRatesUrl()
-    ),
+    'view-fees-and-compensation-rates' =>
+    $fees_settings->getViewFeesAndCompensationRatesUrl(),
   ];
 
   if (!empty($general_settings->getBlockedPatronElinkUrl())) {

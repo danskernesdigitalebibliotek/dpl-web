@@ -2,6 +2,7 @@
 
 namespace Drupal\dpl_fees;
 
+use Drupal\Core\StringTranslation\StringTranslationTrait;
 use Drupal\dpl_react\DplReactConfigBase;
 
 /**
@@ -9,10 +10,13 @@ use Drupal\dpl_react\DplReactConfigBase;
  */
 class DplFeesSettings extends DplReactConfigBase {
   const FEES_AND_REPLACEMENT_COSTS_URL = '';
-  const PAYMENT_OVERVIEW_URL = '';
   const FEE_LIST_BODY_TEXT = '';
+  const PAYMENT_SITE_URL = '';
+  const PAYMENT_SITE_BUTTON_LABEL = '';
   const FEES_LIST_SIZE_DESKTOP = 25;
   const FEES_LIST_SIZE_MOBILE = 25;
+
+  use StringTranslationTrait;
 
   /**
    * Gets the configuration key for the instant loan settings.
@@ -35,9 +39,20 @@ class DplFeesSettings extends DplReactConfigBase {
    *   The url.
    */
   public function getViewFeesAndCompensationRatesUrl(): string {
-    return $this->loadConfig()
-      ->get('fees_and_replacement_costs_url')
-      ?? self::FEES_AND_REPLACEMENT_COSTS_URL;
+    return dpl_react_apps_format_app_url(
+      $this->loadConfig()->get('fees_and_replacement_costs_url'),
+      self::FEES_AND_REPLACEMENT_COSTS_URL
+    );
+  }
+
+  /**
+   * Get FeeListBodyText.
+   *
+   * @return string
+   *   The body text.
+   */
+  public function getFeeListBodyText(): string {
+    return $this->loadConfig()->get('fee_list_body_text') ?? self::FEE_LIST_BODY_TEXT;
   }
 
   /**
@@ -46,7 +61,7 @@ class DplFeesSettings extends DplReactConfigBase {
    * @return string
    *   The desktop list size or the fallback value.
    */
-  public function getListSizeDesktop(): string {
+  protected function getListSizeDesktop(): string {
     return $this->loadConfig()->get('fees_list_size_desktop') ?? self::FEES_LIST_SIZE_DESKTOP;
   }
 
@@ -56,7 +71,7 @@ class DplFeesSettings extends DplReactConfigBase {
    * @return string
    *   The mobile list size or the fallback value.
    */
-  public function getListSizeMobile(): string {
+  protected function getListSizeMobile(): string {
     return $this->loadConfig()->get('fees_list_size_mobile') ?? self::FEES_LIST_SIZE_MOBILE;
   }
 
@@ -67,17 +82,44 @@ class DplFeesSettings extends DplReactConfigBase {
    *   The fees and replacement cost url or the fallback value.
    */
   public function getFeesAndReplacementCostsUrl(): string {
-    return $this->loadConfig()->get('fees_and_replacement_costs_url') ?? self::FEES_AND_REPLACEMENT_COSTS_URL;
+    return dpl_react_apps_format_app_url($this->loadConfig()->get('fees_and_replacement_costs_url'), self::FEES_AND_REPLACEMENT_COSTS_URL);
   }
 
   /**
    * Get the payment overview url.
    *
    * @return string
-   *   The payment overview url or the fallback value.
+   *   The payment overview url or empty, because it is allowed to be empty.
    */
-  public function getPaymentOverviewUrl(): string {
-    return $this->loadConfig()->get('payment_overview_url') ?? self::PAYMENT_OVERVIEW_URL;
+  public function getPaymentSiteUrl(): string {
+    // We deliberately do NOT use url formatting here
+    // because we want it to be able to be empty.
+    return $this->loadConfig()->get('payment_site_url') ?? self::PAYMENT_SITE_URL;
+  }
+
+  /**
+   * Get the payment site button label.
+   *
+   * @return string
+   *   The payment site button label or the fallback value.
+   */
+  protected function getFeeListPaymentSiteButtonLabel(): string {
+    $label = $this->loadConfig()->get('payment_site_button_label');
+    return !empty($label) ? $label : $this->t('Go to payment page', [], ['context' => 'Fees list settings form']);
+  }
+
+  /**
+   * Get the mobile list size.
+   *
+   * @return mixed[]
+   *   The mobile list size or the fallback value.
+   */
+  public function getFeeListConfig(): mixed {
+    return [
+      "pageSizeDesktop" => $this->getListSizeDesktop(),
+      "pageSizeMobile" => $this->getListSizeMobile(),
+      "paymentSiteButtonLabel" => $this->getFeeListPaymentSiteButtonLabel(),
+    ];
   }
 
 }
