@@ -5,7 +5,6 @@ namespace Drupal\dpl_fees\Plugin\Block;
 use Drupal\Core\Block\BlockBase;
 use Drupal\Core\Plugin\ContainerFactoryPluginInterface;
 use Drupal\dpl_fees\DplFeesSettings;
-use Drupal\dpl_react\DplReactConfigInterface;
 use Drupal\dpl_react_apps\Controller\DplReactAppsController;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
@@ -30,15 +29,12 @@ class FeesListBlock extends BlockBase implements ContainerFactoryPluginInterface
    *   The plugin implementation definition.
    * @param \Drupal\dpl_fees\DplFeesSettings $feesSettings
    *   Fees settings.
-   * @param \Drupal\dpl_react\DplReactConfigInterface $feesConfig
-   *   Fees config.
    */
   public function __construct(
     array $configuration,
     $plugin_id,
     $plugin_definition,
     private DplFeesSettings $feesSettings,
-    private DplReactConfigInterface $feesConfig,
   ) {
     parent::__construct($configuration, $plugin_id, $plugin_definition);
     $this->configuration = $configuration;
@@ -52,8 +48,7 @@ class FeesListBlock extends BlockBase implements ContainerFactoryPluginInterface
       $configuration,
       $plugin_id,
       $plugin_definition,
-      $container->get('dpl_fees.settings'),
-      \Drupal::service('dpl_fees.settings'),
+      $container->get('dpl_fees.settings')
     );
   }
 
