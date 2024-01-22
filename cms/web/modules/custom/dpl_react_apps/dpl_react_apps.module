@@ -371,14 +371,16 @@ function dpl_react_apps_dpl_react_apps_data(array &$data, array &$variables): vo
     'ereolen-homepage' => dpl_react_apps_format_app_url(
       GeneralSettings::EREOLEN_HOMEPAGE_URL
     ),
-    'blocked-patron-e-link' => dpl_react_apps_format_app_url(
-      $general_settings->getBlockedPatronElinkUrl()
-    ),
     'view-fees-and-compensation-rates' => dpl_react_apps_format_app_url(
       $fees_settings->getViewFeesAndCompensationRatesUrl()
     ),
   ];
 
+  if (!empty($general_settings->getBlockedPatronElinkUrl())) {
+    $data['urls'] += [
+      'blocked-patron-e-link' => $general_settings->getBlockedPatronElinkUrl(),
+    ];
+  }
 }
 
 /**

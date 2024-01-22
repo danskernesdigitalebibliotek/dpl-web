@@ -70,4 +70,3 @@ class ListSizeSettingsForm extends ConfigFormBase {
   }
 
 }
-

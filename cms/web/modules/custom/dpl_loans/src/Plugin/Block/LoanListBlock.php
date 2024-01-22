@@ -99,7 +99,7 @@ class LoanListBlock extends BlockBase implements ContainerFactoryPluginInterface
       'loan-list-title-text' => $this->t("Your loans", [], ['context' => 'Loan list']),
       'loan-list-to-be-delivered-digital-material-text' => $this->t("Due date digital @date", [], ['context' => 'Loan list']),
       'loan-list-to-be-delivered-text' => $this->t("Due date physical @date", [], ['context' => 'Loan list']),
-    ] + DplReactAppsController::externalApiBaseUrls() + DplReactAppsController::getBlockedSettings();
+    ] + DplReactAppsController::externalApiBaseUrls();
 
     return [
       '#theme' => 'dpl_react_app',
