@@ -22,6 +22,7 @@ module:
   dpl_favorites_list_material_component: 0
   dpl_fbs: 0
   dpl_fees: 0
+  dpl_filter_paragraphs: 0
   dpl_instant_loan: 0
   dpl_library_agency: 0
   dpl_library_token: 0
