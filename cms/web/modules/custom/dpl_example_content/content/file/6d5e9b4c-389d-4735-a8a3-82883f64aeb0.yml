@@ -1,0 +1,27 @@
+_meta:
+  version: '1.0'
+  entity_type: file
+  uuid: 6d5e9b4c-389d-4735-a8a3-82883f64aeb0
+  default_langcode: en
+default:
+  uid:
+    -
+      target_id: 1
+  filename:
+    -
+      value: ahmad-odeh-JhqhGfX_Wd8-unsplash.jpg
+  uri:
+    -
+      value: 'public://2023-12/ahmad-odeh-JhqhGfX_Wd8-unsplash.jpg'
+  filemime:
+    -
+      value: image/jpeg
+  filesize:
+    -
+      value: 131283
+  status:
+    -
+      value: true
+  created:
+    -
+      value: 1703143347

@@ -10,6 +10,7 @@ use Drupal\dpl_library_agency\Branch\Branch;
 use Drupal\dpl_library_agency\Branch\BranchRepositoryInterface;
 use Drupal\dpl_library_agency\Branch\IdBranchRepository;
 use Drupal\dpl_library_agency\BranchSettings;
+use Drupal\dpl_library_agency\FbiProfileType;
 use Drupal\dpl_library_agency\GeneralSettings;
 use Drupal\dpl_library_agency\ReservationSettings;
 use Symfony\Component\DependencyInjection\ContainerInterface;
@@ -158,7 +159,7 @@ class GeneralSettingsForm extends ConfigFormBase {
 
     $form['reservations']['ereolen_my_page_url'] = [
       '#type' => 'url',
-      '#title' => $this->t('Ereolen link', [], ['context' => 'Library Agency Configuration']),
+      '#title' => $this->t('Ereolen my page link', [], ['context' => 'Library Agency Configuration']),
       '#description' => $this->t('My page in ereolen', [], ['context' => 'Library Agency Configuration']),
       '#default_value' => $config->get('ereolen_my_page_url') ?? GeneralSettings::EREOLEN_MY_PAGE_URL,
     ];
@@ -171,9 +172,16 @@ class GeneralSettingsForm extends ConfigFormBase {
     ];
 
     $form['reservations']['pause_reservation_info_url'] = [
-      '#type' => 'url',
+      '#type' => 'linkit',
       '#title' => $this->t('Pause reservation link', [], ['context' => 'Library Agency Configuration']),
-      '#description' => $this->t('The link with infomation about reservations', [], ['context' => 'Library Agency Configuration']),
+      '#description' => $this->t('The link with information about reservations. <br>
+                                         You can add a relative url (e.g. /takster). <br>
+                                         You can search for an internal url. <br>
+                                         You can add an external url (starting with "http://" or "https://").', [], ['context' => 'Library Agency Configuration']),
+      '#autocomplete_route_name' => 'linkit.autocomplete',
+      '#autocomplete_route_parameters' => [
+        'linkit_profile_id' => 'default',
+      ],
       '#default_value' => $config->get('pause_reservation_info_url') ?? GeneralSettings::PAUSE_RESERVATION_INFO_URL,
     ];
 
@@ -185,9 +193,17 @@ class GeneralSettingsForm extends ConfigFormBase {
     ];
 
     $form['settings']['blocked_user']['blocked_patron_e_link_url'] = [
-      '#type' => 'url',
+      '#type' => 'linkit',
       '#title' => $this->t('Blocked user link for modal', [], ['context' => 'Library Agency Configuration']),
-      '#description' => $this->t('If a user is blocked because of fees a modal appears. This field makes it possible to place a link in the modal to e.g. payment options or help page.', [], ['context' => 'Library Agency Configuration']),
+      '#description' => $this->t('If a user is blocked because of fees a modal appears. This field makes it possible to place a link in the modal to e.g. payment options or help page. <br>
+                                         If left empty, the link will not be shown. <br>
+                                         You can add a relative url (e.g. /takster). <br>
+                                         You can search for an internal url. <br>
+                                         You can add an external url (starting with "http://" or "https://").', [], ['context' => 'Library Agency Configuration']),
+      '#autocomplete_route_name' => 'linkit.autocomplete',
+      '#autocomplete_route_parameters' => [
+        'linkit_profile_id' => 'default',
+      ],
       '#default_value' => $config->get('blocked_patron_e_link_url') ?? GeneralSettings::BLOCKED_PATRON_E_LINK_URL,
     ];
 
@@ -241,6 +257,43 @@ class GeneralSettingsForm extends ConfigFormBase {
       "#disabled" => $disabled,
     ];
 
+    $form['fbi_profiles'] = [
+      '#type' => 'fieldset',
+      '#title' => $this->t('FBI profiles', [], ['context' => 'Library Agency Configuration']),
+      '#collapsible' => FALSE,
+      '#collapsed' => FALSE,
+      '#description' => $this->t('Administer which profile should be used in various contexts.', [], ['context' => 'Library Agency Configuration']),
+    ];
+
+    $fbi_profile_pattern = '[a-zA-Z_-]+';
+
+    $form['fbi_profiles']['fbi_profile_default'] = [
+      '#type' => 'textfield',
+      '#title' => $this->t('Default profile', [], ['context' => 'Library Agency Configuration']),
+      '#default_value' => $this->generalSettings->getFbiProfile(FbiProfileType::DEFAULT),
+      '#description' => $this->t('The default profile to use when using the FBI API.', [], ['context' => 'Library Agency Configuration']),
+      '#pattern' => $fbi_profile_pattern,
+      '#required' => TRUE,
+    ];
+
+    $form['fbi_profiles']['fbi_profile_search'] = [
+      '#type' => 'textfield',
+      '#title' => $this->t('Search profile', [], ['context' => 'Library Agency Configuration']),
+      '#default_value' => $this->generalSettings->getFbiProfile(FbiProfileType::SEARCH),
+      '#description' => $this->t('The profile to use when searching for materials.', [], ['context' => 'Library Agency Configuration']),
+      '#pattern' => $fbi_profile_pattern,
+      '#required' => TRUE,
+    ];
+
+    $form['fbi_profiles']['fbi_profile_material'] = [
+      '#type' => 'textfield',
+      '#title' => $this->t('Material profile', [], ['context' => 'Library Agency Configuration']),
+      '#default_value' => $this->generalSettings->getFbiProfile(FbiProfileType::MATERIAL),
+      '#description' => $this->t('The profile to use when requesting data about a material.', [], ['context' => 'Library Agency Configuration']),
+      '#pattern' => $fbi_profile_pattern,
+      '#required' => TRUE,
+    ];
+
     return parent::buildForm($form, $form_state);
   }
 
@@ -291,6 +344,11 @@ class GeneralSettingsForm extends ConfigFormBase {
       ->set('blocked_patron_e_link_url', $form_state->getValue('blocked_patron_e_link_url'))
       ->set('ereolen_my_page_url', $form_state->getValue('ereolen_my_page_url'))
       ->set('ereolen_homepage_url', $form_state->getValue('ereolen_homepage_url'))
+      ->set('fbi_profiles', [
+        'default' => $form_state->getValue('fbi_profile_default'),
+        'search' => $form_state->getValue('fbi_profile_search'),
+        'material' => $form_state->getValue('fbi_profile_material'),
+      ])
       ->save();
 
     $this->branchSettings->setExcludedAvailabilityBranches(array_filter($form_state->getValue('availability')));

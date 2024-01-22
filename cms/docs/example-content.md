@@ -16,6 +16,7 @@ Usage of the module in this project is derived from [the official documentation]
 2. Determine the UUIDs for the entities which should be exported as default
    content. The easiest way to do this is to enable the Devel module, view
    the entity and go to the Devel tab.
+   ![How to find UUID for event using Devl module](images/devel-uuid.png)
 3. Add the UUID (s) (and if necessary entity types) to the
    `dpl_example_content.info.yml` file
 4. Export the entities by running `drush default-content:export-module dpl_example_content`

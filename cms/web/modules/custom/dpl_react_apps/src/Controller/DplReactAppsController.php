@@ -9,11 +9,13 @@ use Drupal\dpl_instant_loan\DplInstantLoanSettings;
 use Drupal\dpl_library_agency\Branch\Branch;
 use Drupal\dpl_library_agency\Branch\BranchRepositoryInterface;
 use Drupal\dpl_library_agency\BranchSettings;
+use Drupal\dpl_library_agency\FbiProfileType;
 use Drupal\dpl_library_agency\GeneralSettings;
 use Drupal\dpl_library_agency\ReservationSettings;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use function Safe\json_encode as json_encode;
-use function Safe\sprintf;
+use function Safe\preg_replace as preg_replace;
+use function Safe\sprintf as sprintf;
 
 /**
  * Controller for rendering full page DPL React apps.
@@ -432,6 +434,8 @@ class DplReactAppsController extends ControllerBase {
    *   An array of base urls.
    */
   public static function externalApiBaseUrls(): array {
+    /** @var \Drupal\dpl_library_agency\GeneralSettings $general_settings */
+    $general_settings = \Drupal::service('dpl_library_agency.general_settings');
     $react_apps_settings = \Drupal::configFactory()->get('dpl_react_apps.settings');
     $fbs_settings = \Drupal::config(FbsSettingsForm::CONFIG_KEY);
 
@@ -440,6 +444,23 @@ class DplReactAppsController extends ControllerBase {
 
     // Get base urls from this module.
     $services = $react_apps_settings->get('services') ?? [];
+
+    // The base url of the FBI service is a special case
+    // because a part (the profile) of the base url can differ.
+    // Lets' handle that:
+    if (!empty($services) && !empty($services['fbi']['base_url'])) {
+      $placeholder_url = $services['fbi']['base_url'];
+      foreach ($general_settings->getFbiProfiles() as $type => $profile) {
+        $service_key = sprintf('fbi-%s', $type);
+        // The default FBI service has its own key with no suffix.
+        if ($type === FbiProfileType::DEFAULT->value) {
+          $service_key = 'fbi';
+        }
+        // Create a service url with the profile embedded.
+        $base_url = preg_replace('/\[profile\]/', $profile, $placeholder_url);
+        $services[$service_key] = ['base_url' => $base_url];
+      }
+    }
 
     // Get base urls from other modules.
     $services['fbs'] = ['base_url' => $fbs_settings->get('base_url')];
@@ -452,20 +473,4 @@ class DplReactAppsController extends ControllerBase {
 
     return $urls;
   }
-
-  /**
-   * Get the strings and config for blocked user.
-   *
-   * @return mixed[]
-   *   An array of strings and config.
-   */
-  public static function getBlockedSettings(): array {
-    $blockedSettings = \Drupal::configFactory()->get('dpl_library_agency.general_settings');
-    $blockedData = [
-      'blocked-patron-e-link-url' => dpl_react_apps_format_app_url($blockedSettings->get('blocked_patron_e_link_url'), GeneralSettings::BLOCKED_PATRON_E_LINK_URL),
-    ];
-
-    return $blockedData;
-  }
-
 }

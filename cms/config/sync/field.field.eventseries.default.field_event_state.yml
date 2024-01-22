@@ -1,0 +1,23 @@
+uuid: b6fe64e1-55ed-49f7-bb73-3e1baa09f04e
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.eventseries.field_event_state
+    - recurring_events.eventseries_type.default
+  module:
+    - enum_field
+id: eventseries.default.field_event_state
+field_name: field_event_state
+entity_type: eventseries
+bundle: default
+label: State
+description: ''
+required: true
+translatable: false
+default_value:
+  -
+    value: Active
+default_value_callback: ''
+settings: {  }
+field_type: enum_string

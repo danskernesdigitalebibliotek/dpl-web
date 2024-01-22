@@ -8,6 +8,7 @@ dependencies:
   module:
     - media
     - openapi
+    - recurring_events
     - rest
     - system
 _core:
@@ -21,4 +22,6 @@ permissions:
   - 'access openapi api docs'
   - 'restful get proxy-url'
   - 'restful post campaign:match'
+  - 'view eventinstance entity'
+  - 'view eventseries entity'
   - 'view media'

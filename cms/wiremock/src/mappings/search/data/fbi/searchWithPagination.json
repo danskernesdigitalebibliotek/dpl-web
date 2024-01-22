@@ -33,7 +33,7 @@
                 },
                 "materialTypes": [
                   {
-                    "specific": "bog"
+                    "materialTypeSpecific": { "display": "bog" }
                   }
                 ],
                 "creators": [],
@@ -118,7 +118,7 @@
               },
               "materialTypes": [
                 {
-                  "specific": "bog"
+                  "materialTypeSpecific": { "display": "bog" }
                 }
               ],
               "creators": [],
@@ -202,7 +202,7 @@
               },
               "materialTypes": [
                 {
-                  "specific": "bog"
+                  "materialTypeSpecific": { "display": "bog" }
                 }
               ],
               "creators": [],
@@ -392,7 +392,7 @@
                 },
                 "materialTypes": [
                   {
-                    "specific": "bog"
+                    "materialTypeSpecific": { "display": "bog" }
                   }
                 ],
                 "creators": [
@@ -477,7 +477,7 @@
                 },
                 "materialTypes": [
                   {
-                    "specific": "bog"
+                    "materialTypeSpecific": { "display": "bog" }
                   }
                 ],
                 "creators": [
@@ -552,7 +552,7 @@
                 },
                 "materialTypes": [
                   {
-                    "specific": "lydbog (bånd)"
+                    "materialTypeSpecific": { "display": "lydbog (bånd)" }
                   }
                 ],
                 "creators": [
@@ -634,7 +634,7 @@
                 },
                 "materialTypes": [
                   {
-                    "specific": "diskette"
+                    "materialTypeSpecific": { "display": "diskette" }
                   }
                 ],
                 "creators": [
@@ -712,7 +712,7 @@
                 },
                 "materialTypes": [
                   {
-                    "specific": "bog"
+                    "materialTypeSpecific": { "display": "bog" }
                   }
                 ],
                 "creators": [
@@ -782,7 +782,7 @@
                 },
                 "materialTypes": [
                   {
-                    "specific": "punktskrift"
+                    "materialTypeSpecific": { "display": "punktskrift" }
                   }
                 ],
                 "creators": [
@@ -857,7 +857,7 @@
                 },
                 "materialTypes": [
                   {
-                    "specific": "bog"
+                    "materialTypeSpecific": { "display": "bog" }
                   }
                 ],
                 "creators": [
@@ -935,7 +935,7 @@
                 },
                 "materialTypes": [
                   {
-                    "specific": "lydbog (cd)"
+                    "materialTypeSpecific": { "display": "lydbog (cd)" }
                   }
                 ],
                 "creators": [
@@ -1011,7 +1011,7 @@
                 },
                 "materialTypes": [
                   {
-                    "specific": "bog"
+                    "materialTypeSpecific": { "display": "bog" }
                   }
                 ],
                 "creators": [
@@ -1084,7 +1084,7 @@
                 },
                 "materialTypes": [
                   {
-                    "specific": "lydbog (cd-mp3)"
+                    "materialTypeSpecific": { "display": "lydbog (cd-mp3)" }
                   }
                 ],
                 "creators": [
@@ -1160,7 +1160,7 @@
                 },
                 "materialTypes": [
                   {
-                    "specific": "bog"
+                    "materialTypeSpecific": { "display": "bog" }
                   }
                 ],
                 "creators": [
@@ -1236,7 +1236,7 @@
                 },
                 "materialTypes": [
                   {
-                    "specific": "bog"
+                    "materialTypeSpecific": { "display": "bog" }
                   }
                 ],
                 "creators": [
@@ -1312,7 +1312,7 @@
                 },
                 "materialTypes": [
                   {
-                    "specific": "bog"
+                    "materialTypeSpecific": { "display": "bog" }
                   }
                 ],
                 "creators": [
@@ -1389,7 +1389,7 @@
               },
               "materialTypes": [
                 {
-                  "specific": "bog"
+                  "materialTypeSpecific": { "display": "bog" }
                 }
               ],
               "creators": [
@@ -1474,7 +1474,7 @@
               },
               "materialTypes": [
                 {
-                  "specific": "bog"
+                  "materialTypeSpecific": { "display": "bog" }
                 }
               ],
               "creators": [
@@ -1666,7 +1666,7 @@
                 },
                 "materialTypes": [
                   {
-                    "specific": "bog"
+                    "materialTypeSpecific": { "display": "bog" }
                   }
                 ],
                 "creators": [
@@ -1738,7 +1738,7 @@
                 },
                 "materialTypes": [
                   {
-                    "specific": "bog"
+                    "materialTypeSpecific": { "display": "bog" }
                   }
                 ],
                 "creators": [
@@ -1808,7 +1808,7 @@
                 },
                 "materialTypes": [
                   {
-                    "specific": "lydbog (bånd)"
+                    "materialTypeSpecific": { "display": "lydbog (bånd)" }
                   }
                 ],
                 "creators": [
@@ -1880,7 +1880,7 @@
                 },
                 "materialTypes": [
                   {
-                    "specific": "bog"
+                    "materialTypeSpecific": { "display": "bog" }
                   }
                 ],
                 "creators": [
@@ -1958,7 +1958,7 @@
                 },
                 "materialTypes": [
                   {
-                    "specific": "punktskrift"
+                    "materialTypeSpecific": { "display": "punktskrift" }
                   }
                 ],
                 "creators": [
@@ -2033,7 +2033,7 @@
                 },
                 "materialTypes": [
                   {
-                    "specific": "lydbog (bånd)"
+                    "materialTypeSpecific": { "display": "lydbog (bånd)" }
                   }
                 ],
                 "creators": [
@@ -2115,7 +2115,7 @@
                 },
                 "materialTypes": [
                   {
-                    "specific": "lydbog (cd)"
+                    "materialTypeSpecific": { "display": "lydbog (cd)" }
                   }
                 ],
                 "creators": [
@@ -2187,7 +2187,7 @@
                 },
                 "materialTypes": [
                   {
-                    "specific": "diskette"
+                    "materialTypeSpecific": { "display": "diskette" }
                   }
                 ],
                 "creators": [
@@ -2265,7 +2265,7 @@
                 },
                 "materialTypes": [
                   {
-                    "specific": "diskette"
+                    "materialTypeSpecific": { "display": "diskette" }
                   }
                 ],
                 "creators": [
@@ -2348,7 +2348,7 @@
                 },
                 "materialTypes": [
                   {
-                    "specific": "lydbog (cd)"
+                    "materialTypeSpecific": { "display": "lydbog (cd)" }
                   }
                 ],
                 "creators": [
@@ -2426,7 +2426,7 @@
                 },
                 "materialTypes": [
                   {
-                    "specific": "lydbog (cd)"
+                    "materialTypeSpecific": { "display": "lydbog (cd)" }
                   }
                 ],
                 "creators": [
@@ -2505,7 +2505,7 @@
                 },
                 "materialTypes": [
                   {
-                    "specific": "bog"
+                    "materialTypeSpecific": { "display": "bog" }
                   }
                 ],
                 "creators": [
@@ -2577,7 +2577,7 @@
                 },
                 "materialTypes": [
                   {
-                    "specific": "bog"
+                    "materialTypeSpecific": { "display": "bog" }
                   }
                 ],
                 "creators": [
@@ -2652,7 +2652,7 @@
                 },
                 "materialTypes": [
                   {
-                    "specific": "lydbog (cd-mp3)"
+                    "materialTypeSpecific": { "display": "lydbog (cd-mp3)" }
                   }
                 ],
                 "creators": [
@@ -2728,7 +2728,7 @@
                 },
                 "materialTypes": [
                   {
-                    "specific": "bog"
+                    "materialTypeSpecific": { "display": "bog" }
                   }
                 ],
                 "creators": [
@@ -2804,7 +2804,7 @@
                 },
                 "materialTypes": [
                   {
-                    "specific": "bog"
+                    "materialTypeSpecific": { "display": "bog" }
                   }
                 ],
                 "creators": [
@@ -2886,7 +2886,7 @@
                 },
                 "materialTypes": [
                   {
-                    "specific": "bog"
+                    "materialTypeSpecific": { "display": "bog" }
                   }
                 ],
                 "creators": [
@@ -2965,7 +2965,7 @@
                 },
                 "materialTypes": [
                   {
-                    "specific": "bog"
+                    "materialTypeSpecific": { "display": "bog" }
                   }
                 ],
                 "creators": [
@@ -3041,7 +3041,7 @@
                 },
                 "materialTypes": [
                   {
-                    "specific": "bog"
+                    "materialTypeSpecific": { "display": "bog" }
                   }
                 ],
                 "creators": [
@@ -3120,7 +3120,7 @@
                 },
                 "materialTypes": [
                   {
-                    "specific": "bog"
+                    "materialTypeSpecific": { "display": "bog" }
                   }
                 ],
                 "creators": [
@@ -3197,7 +3197,7 @@
               },
               "materialTypes": [
                 {
-                  "specific": "bog"
+                  "materialTypeSpecific": { "display": "bog" }
                 }
               ],
               "creators": [
@@ -3279,7 +3279,7 @@
               },
               "materialTypes": [
                 {
-                  "specific": "bog"
+                  "materialTypeSpecific": { "display": "bog" }
                 }
               ],
               "creators": [
@@ -3462,7 +3462,7 @@
                 },
                 "materialTypes": [
                   {
-                    "specific": "lydbog (cd)"
+                    "materialTypeSpecific": { "display": "lydbog (cd)" }
                   }
                 ],
                 "creators": [
@@ -3538,7 +3538,7 @@
                 },
                 "materialTypes": [
                   {
-                    "specific": "bog"
+                    "materialTypeSpecific": { "display": "bog" }
                   }
                 ],
                 "creators": [
@@ -3613,7 +3613,7 @@
                 },
                 "materialTypes": [
                   {
-                    "specific": "ebog"
+                    "materialTypeSpecific": { "display": "ebog" }
                   }
                 ],
                 "creators": [
@@ -3685,7 +3685,7 @@
                 },
                 "materialTypes": [
                   {
-                    "specific": "punktskrift"
+                    "materialTypeSpecific": { "display": "punktskrift" }
                   }
                 ],
                 "creators": [
@@ -3760,7 +3760,7 @@
                 },
                 "materialTypes": [
                   {
-                    "specific": "lydbog (bånd)"
+                    "materialTypeSpecific": { "display": "lydbog (bånd)" }
                   }
                 ],
                 "creators": [
@@ -3842,7 +3842,7 @@
                 },
                 "materialTypes": [
                   {
-                    "specific": "bog"
+                    "materialTypeSpecific": { "display": "bog" }
                   }
                 ],
                 "creators": [
@@ -3912,7 +3912,7 @@
                 },
                 "materialTypes": [
                   {
-                    "specific": "bog"
+                    "materialTypeSpecific": { "display": "bog" }
                   }
                 ],
                 "creators": [
@@ -3990,7 +3990,7 @@
                 },
                 "materialTypes": [
                   {
-                    "specific": "lydbog (cd-mp3)"
+                    "materialTypeSpecific": { "display": "lydbog (cd-mp3)" }
                   }
                 ],
                 "creators": [
@@ -4066,7 +4066,7 @@
                 },
                 "materialTypes": [
                   {
-                    "specific": "bog"
+                    "materialTypeSpecific": { "display": "bog" }
                   }
                 ],
                 "creators": [
@@ -4142,7 +4142,7 @@
                 },
                 "materialTypes": [
                   {
-                    "specific": "bog"
+                    "materialTypeSpecific": { "display": "bog" }
                   }
                 ],
                 "creators": [
@@ -4218,7 +4218,7 @@
                 },
                 "materialTypes": [
                   {
-                    "specific": "bog"
+                    "materialTypeSpecific": { "display": "bog" }
                   }
                 ],
                 "creators": [
@@ -4295,7 +4295,7 @@
               },
               "materialTypes": [
                 {
-                  "specific": "bog"
+                  "materialTypeSpecific": { "display": "bog" }
                 }
               ],
               "creators": [
@@ -4371,7 +4371,7 @@
               },
               "materialTypes": [
                 {
-                  "specific": "bog"
+                  "materialTypeSpecific": { "display": "bog" }
                 }
               ],
               "creators": [
@@ -4554,7 +4554,7 @@
                 },
                 "materialTypes": [
                   {
-                    "specific": "bog"
+                    "materialTypeSpecific": { "display": "bog" }
                   }
                 ],
                 "creators": [
@@ -4626,7 +4626,7 @@
                 },
                 "materialTypes": [
                   {
-                    "specific": "bog"
+                    "materialTypeSpecific": { "display": "bog" }
                   }
                 ],
                 "creators": [
@@ -4706,7 +4706,7 @@
                 },
                 "materialTypes": [
                   {
-                    "specific": "lydbog (cd)"
+                    "materialTypeSpecific": { "display": "lydbog (cd)" }
                   }
                 ],
                 "creators": [
@@ -4782,7 +4782,7 @@
                 },
                 "materialTypes": [
                   {
-                    "specific": "bog"
+                    "materialTypeSpecific": { "display": "bog" }
                   }
                 ],
                 "creators": [
@@ -4852,7 +4852,7 @@
                 },
                 "materialTypes": [
                   {
-                    "specific": "punktskrift"
+                    "materialTypeSpecific": { "display": "punktskrift" }
                   }
                 ],
                 "creators": [
@@ -4927,7 +4927,7 @@
                 },
                 "materialTypes": [
                   {
-                    "specific": "diskette"
+                    "materialTypeSpecific": { "display": "diskette" }
                   }
                 ],
                 "creators": [
@@ -5005,7 +5005,7 @@
                 },
                 "materialTypes": [
                   {
-                    "specific": "lydbog (bånd)"
+                    "materialTypeSpecific": { "display": "lydbog (bånd)" }
                   }
                 ],
                 "creators": [
@@ -5087,7 +5087,7 @@
                 },
                 "materialTypes": [
                   {
-                    "specific": "bog"
+                    "materialTypeSpecific": { "display": "bog" }
                   }
                 ],
                 "creators": [
@@ -5161,7 +5161,7 @@
                 },
                 "materialTypes": [
                   {
-                    "specific": "lydbog (cd)"
+                    "materialTypeSpecific": { "display": "lydbog (cd)" }
                   }
                 ],
                 "creators": [
@@ -5237,7 +5237,7 @@
                 },
                 "materialTypes": [
                   {
-                    "specific": "bog"
+                    "materialTypeSpecific": { "display": "bog" }
                   }
                 ],
                 "creators": [
@@ -5312,7 +5312,7 @@
                 },
                 "materialTypes": [
                   {
-                    "specific": "lydbog (cd-mp3)"
+                    "materialTypeSpecific": { "display": "lydbog (cd-mp3)" }
                   }
                 ],
                 "creators": [
@@ -5388,7 +5388,7 @@
                 },
                 "materialTypes": [
                   {
-                    "specific": "bog"
+                    "materialTypeSpecific": { "display": "bog" }
                   }
                 ],
                 "creators": [
@@ -5464,7 +5464,7 @@
                 },
                 "materialTypes": [
                   {
-                    "specific": "bog"
+                    "materialTypeSpecific": { "display": "bog" }
                   }
                 ],
                 "creators": [
@@ -5542,7 +5542,7 @@
                 },
                 "materialTypes": [
                   {
-                    "specific": "bog"
+                    "materialTypeSpecific": { "display": "bog" }
                   }
                 ],
                 "creators": [
@@ -5621,7 +5621,7 @@
                 },
                 "materialTypes": [
                   {
-                    "specific": "bog"
+                    "materialTypeSpecific": { "display": "bog" }
                   }
                 ],
                 "creators": [
@@ -5699,7 +5699,7 @@
                 },
                 "materialTypes": [
                   {
-                    "specific": "bog"
+                    "materialTypeSpecific": { "display": "bog" }
                   }
                 ],
                 "creators": [
@@ -5781,7 +5781,7 @@
               },
               "materialTypes": [
                 {
-                  "specific": "bog"
+                  "materialTypeSpecific": { "display": "bog" }
                 }
               ],
               "creators": [
@@ -5862,7 +5862,7 @@
               },
               "materialTypes": [
                 {
-                  "specific": "bog"
+                  "materialTypeSpecific": { "display": "bog" }
                 }
               ],
               "creators": [

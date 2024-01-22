@@ -29,6 +29,18 @@ class DplFeesSettings extends DplReactConfigBase {
   }
 
   /**
+   * Get the getViewFeesAndCompensationRates url.
+   *
+   * @return string
+   *   The url.
+   */
+  public function getViewFeesAndCompensationRatesUrl(): string {
+    return $this->loadConfig()
+      ->get('fees_and_replacement_costs_url')
+      ?? self::FEES_AND_REPLACEMENT_COSTS_URL;
+  }
+
+  /**
    * Get the desktop list size.
    *
    * @return string
@@ -46,6 +58,26 @@ class DplFeesSettings extends DplReactConfigBase {
    */
   public function getListSizeMobile(): string {
     return $this->loadConfig()->get('fees_list_size_mobile') ?? self::FEES_LIST_SIZE_MOBILE;
+  }
+
+  /**
+   * Get the fees and replacement cost url.
+   *
+   * @return string
+   *   The fees and replacement cost url or the fallback value.
+   */
+  public function getFeesAndReplacementCostsUrl(): string {
+    return $this->loadConfig()->get('fees_and_replacement_costs_url') ?? self::FEES_AND_REPLACEMENT_COSTS_URL;
+  }
+
+  /**
+   * Get the payment overview url.
+   *
+   * @return string
+   *   The payment overview url or the fallback value.
+   */
+  public function getPaymentOverviewUrl(): string {
+    return $this->loadConfig()->get('payment_overview_url') ?? self::PAYMENT_OVERVIEW_URL;
   }
 
 }

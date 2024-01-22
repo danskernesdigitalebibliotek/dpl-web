@@ -153,8 +153,13 @@ tasks:
       # errors even after a site install.
       - task dev:cache:clear:drupal
       # Import translations.
-      - task dev:cli -- drush locale-check
-      - task dev:cli -- drush locale-update
+      - |
+        if [ -n "${SKIP_LANGUAGE_IMPORT}" ]; then
+          echo "Skipping language import due to SKIP_LANGUAGE_IMPORT environment variable"
+        else
+          task dev:cli -- drush locale-check
+          task dev:cli -- drush locale-update
+        fi
       # Clear all caches to ensure we have a pristine setup.
       - task dev:cache:clear:all
       # Ensure site is reachable and warm any caches
@@ -167,7 +172,7 @@ tasks:
   dev:enable-dev-tools:
     desc: Enable dev modules and settings, which are not to be used in Prod. They are config-ignored
     cmds:
-      - task dev:cli -- drush install -y field_ui views_ui
+      - task dev:cli -- drush install -y devel dpl_example_content field_ui uuid_url views_ui
 
   dev:enable-xdebug:
     desc: 'Enable xdebug within the container.'
@@ -254,6 +259,7 @@ tasks:
       - task dev:reset
     env:
       DOCKER_COMPOSE_FILES: "{{ .DOCKER_COMPOSE_FILES_CI }}"
+      SKIP_LANGUAGE_IMPORT: "true"
 
   ci:cypress:
     desc: Run Cypress functional tests

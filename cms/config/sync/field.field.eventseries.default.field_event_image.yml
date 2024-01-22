@@ -1,0 +1,29 @@
+uuid: 2fa7ea37-8232-4673-a5bf-53a497b0ecaa
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.eventseries.field_event_image
+    - media.type.image
+    - recurring_events.eventseries_type.default
+id: eventseries.default.field_event_image
+field_name: field_event_image
+entity_type: eventseries
+bundle: default
+label: Image
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings:
+  handler: 'default:media'
+  handler_settings:
+    target_bundles:
+      image: image
+    sort:
+      field: _none
+      direction: ASC
+    auto_create: false
+    auto_create_bundle: ''
+field_type: entity_reference

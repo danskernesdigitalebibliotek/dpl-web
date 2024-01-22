@@ -1,0 +1,14 @@
+uuid: 8675284a-c8d1-4d57-9f5f-cf5126aa36ca
+langcode: en
+status: true
+dependencies: {  }
+id: eventinstance_default_event_link
+label: 'Event link'
+type: fallback
+sourceEntityType: eventseries
+sourceEntityBundle: default
+sourceField: field_event_link
+destinationEntityType: eventinstance
+destinationEntityBundle: default
+destinationField: field_event_link
+plugin: default_inheritance

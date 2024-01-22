@@ -1,0 +1,14 @@
+uuid: 15f72f10-bfc9-442d-9cf1-9f69a01c1e43
+langcode: en
+status: true
+dependencies: {  }
+id: eventinstance_default_event_image
+label: 'Event image'
+type: fallback
+sourceEntityType: eventseries
+sourceEntityBundle: default
+sourceField: field_event_image
+destinationEntityType: eventinstance
+destinationEntityBundle: default
+destinationField: field_event_image
+plugin: entity_reference_inheritance

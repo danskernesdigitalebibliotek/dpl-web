@@ -1,0 +1,19 @@
+uuid: c82b6875-27b1-4dc5-aded-ac5b6cfaf84d
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.eventseries.field_event_place
+    - recurring_events.eventseries_type.default
+id: eventseries.default.field_event_place
+field_name: field_event_place
+entity_type: eventseries
+bundle: default
+label: Place
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: string

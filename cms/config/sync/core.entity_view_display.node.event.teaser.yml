@@ -9,6 +9,8 @@ dependencies:
     - field.field.node.event.field_event_description
     - field.field.node.event.field_event_image
     - field.field.node.event.field_event_link
+    - field.field.node.event.field_event_paragraphs
+    - field.field.node.event.field_event_partners
     - field.field.node.event.field_event_place
     - field.field.node.event.field_event_state
     - field.field.node.event.field_ticket_categories
@@ -31,6 +33,8 @@ hidden:
   field_event_description: true
   field_event_image: true
   field_event_link: true
+  field_event_paragraphs: true
+  field_event_partners: true
   field_event_place: true
   field_event_state: true
   field_ticket_categories: true

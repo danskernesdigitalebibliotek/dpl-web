@@ -31,11 +31,14 @@ if (InstallerKernel::installationAttempted()) {
 
 // Exclude development modules from configuration export.
 $settings['config_exclude_modules'] = [
+  'dpl_example_content',
+  'default_content',
   'devel',
   'field_ui',
   'views_ui',
   'restui',
   'upgrade_status',
+  'uuid_url',
 ];
 
 // Defines where the sync folder of your configuration lives. In this case it's
@@ -48,7 +51,7 @@ $settings['config_sync_directory'] = '../config/sync';
 // Set service base urls for the react apps.
 $config['dpl_react_apps.settings']['services'] = [
   'cover' => ['base_url' => 'https://cover.dandigbib.org'],
-  'fbi' => ['base_url' => 'https://fbi-api.dbc.dk/next/graphql'],
+  'fbi' => ['base_url' => 'https://fbi-api.dbc.dk/[profile]/graphql'],
   'material-list' => ['base_url' => 'https://prod.materiallist.dandigbib.org'],
 ];
 
@@ -81,7 +84,7 @@ if (getenv('CI')) {
   // We need http domains for testing in CI context.
   $config['dpl_react_apps.settings']['services'] = [
     'cover' => ['base_url' => 'http://cover.dandigbib.org'],
-    'fbi' => ['base_url' => 'http://fbi-api.dbc.dk/next/graphql'],
+    'fbi' => ['base_url' => 'http://fbi-api.dbc.dk/[profile]/graphql'],
     'material-list' => ['base_url' => 'http://prod.materiallist.dandigbib.org'],
   ];
 

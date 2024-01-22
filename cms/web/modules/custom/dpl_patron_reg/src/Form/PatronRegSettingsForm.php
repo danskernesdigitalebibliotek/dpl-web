@@ -63,22 +63,29 @@ class PatronRegSettingsForm extends ConfigFormBase {
 
     $form['age_limit'] = [
       '#type' => 'number',
-      '#title' => $this->t('Minimum age to allow self registration'),
+      '#title' => $this->t('Minimum age to allow self registration', [], ['context' => 'Patron registration settings form']),
       '#default_value' => $config->get('age_limit') ?? DplPatronRegSettings::AGE_LIMIT,
       '#min' => 1,
       '#step' => 1,
     ];
 
     $form['redirect_on_user_created_url'] = [
-      '#type' => 'url',
-      '#title' => $this->t('Redirect on create'),
-      '#description' => $this->t('Redirect to this on user successful created'),
+      '#type' => 'linkit',
+      '#title' => $this->t('Redirect on create', [], ['context' => 'Patron registration settings form']),
+      '#description' => $this->t('Redirect to page when user is successful created. <br>
+                                         You can add a relative url (e.g. /takster). <br>
+                                         You can search for an internal url. <br>
+                                         You can add an external url (starting with "http://" or "https://").', [], ['context' => 'Patron registration settings form']),
+      '#autocomplete_route_name' => 'linkit.autocomplete',
+      '#autocomplete_route_parameters' => [
+        'linkit_profile_id' => 'default',
+      ],
       '#default_value' => $config->get('redirect_on_user_created_url') ?? DplPatronRegSettings::REDIRECT_ON_USER_CREATED_URL,
     ];
 
     $form['information'] = [
       '#type' => 'text_format',
-      '#title' => $this->t('Information page'),
+      '#title' => $this->t('Information page', [], ['context' => 'Patron registration settings form']),
       '#default_value' => $config->get('information')['value'] ?? DplPatronRegSettings::INFORMATION_VALUE,
       '#format' => $config->get('information')['format'] ?? DplPatronRegSettings::INFORMATION_FORMAT,
     ];

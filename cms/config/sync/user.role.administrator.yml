@@ -15,12 +15,14 @@ dependencies:
     - dpl_mapp
     - dpl_url_proxy
     - entity_reference_revisions
+    - file
     - filter
     - language
     - locale
     - media
     - node
     - openid_connect
+    - recurring_events
     - system
     - toolbar
     - update
@@ -31,10 +33,13 @@ is_admin: null
 permissions:
   - 'access administration pages'
   - 'access content overview'
+  - 'access eventinstance overview'
+  - 'access eventseries overview'
   - 'access site in maintenance mode'
   - 'access site reports'
   - 'access toolbar'
   - 'access user profiles'
+  - 'add eventseries entity'
   - 'administer blocks'
   - 'administer dpl_mapp configuration'
   - 'administer instant loan configuration'
@@ -46,6 +51,8 @@ permissions:
   - 'administer site configuration'
   - 'administer url proxy configuration'
   - 'administer users'
+  - 'clone eventinstance entity'
+  - 'clone eventseries entity'
   - 'create article content'
   - 'create campaign content'
   - 'create event content'
@@ -55,24 +62,39 @@ permissions:
   - 'delete any event content'
   - 'delete any image media'
   - 'delete event revisions'
+  - 'delete eventinstance entity'
+  - 'delete eventseries entity'
   - 'delete orphan revisions'
   - 'delete own article content'
   - 'delete own campaign content'
   - 'delete own event content'
+  - 'delete own eventinstance entity'
+  - 'delete own eventseries entity'
+  - 'delete own files'
   - 'delete own image media'
   - 'edit any article content'
   - 'edit any campaign content'
   - 'edit any event content'
   - 'edit any image media'
+  - 'edit eventinstance entity'
+  - 'edit eventseries entity'
   - 'edit own article content'
   - 'edit own campaign content'
   - 'edit own event content'
+  - 'edit own eventinstance entity'
+  - 'edit own eventseries entity'
   - 'edit own image media'
+  - 'revert all eventinstance revisions'
+  - 'revert all eventseries revisions'
   - 'revert event revisions'
   - 'translate interface'
   - 'use text format basic'
+  - 'view all eventinstance revisions'
+  - 'view all eventseries revisions'
   - 'view event revisions'
   - 'view own unpublished content'
   - 'view the administration theme'
+  - 'view unpublished eventinstance entity'
+  - 'view unpublished eventseries entity'
   - 'view update notifications'
   - 'view user email addresses'
