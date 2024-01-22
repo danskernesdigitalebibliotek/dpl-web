@@ -1,0 +1,8 @@
+# Add Event Series button.
+dpl_admin.add_event:
+  route_name: entity.eventseries.add_page
+  title: "Add Event"
+  appears_on:
+    - events.admin.content
+    - view.event_admin.overview
+    - system.admin_content

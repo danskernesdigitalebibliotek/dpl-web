@@ -55,6 +55,24 @@ tasks:
           drush locale-check
           drush locale-update
         service: cli
+    - run:
+        name: Create test users
+        command: |
+          drush user:create editor --password="$PR_DRUPAL_PWD"
+          drush user:role:add 'editor' editor
+
+          drush user:create administrator --password="$PR_DRUPAL_PWD"
+          drush user:role:add 'administrator' administrator
+
+          drush user:create mediator --password="$PR_DRUPAL_PWD"
+          drush user:role:add 'mediator' mediator
+
+          drush user:create local_administrator --password="$PR_DRUPAL_PWD"
+          drush user:role:add 'local_administrator' local_administrator
+
+          drush user:create patron --password="$PR_DRUPAL_PWD"
+          drush user:role:add 'patron' patron
+        service: cli
 
 environments:
   main:

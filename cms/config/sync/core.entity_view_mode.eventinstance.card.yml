@@ -1,0 +1,10 @@
+uuid: abaa77f2-97ca-4431-80be-05854eeb05ec
+langcode: en
+status: true
+dependencies:
+  module:
+    - recurring_events
+id: eventinstance.card
+label: Card
+targetEntityType: eventinstance
+cache: true
