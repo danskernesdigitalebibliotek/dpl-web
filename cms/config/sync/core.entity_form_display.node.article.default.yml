@@ -77,7 +77,7 @@ content:
     third_party_settings: {  }
   field_override_author:
     type: string_textfield
-    weight: 7
+    weight: 3
     region: content
     settings:
       size: 60
@@ -113,7 +113,7 @@ content:
         show_drag_and_drop: true
   field_show_override_author:
     type: boolean_checkbox
-    weight: 6
+    weight: 2
     region: content
     settings:
       display_label: true
