@@ -10,7 +10,6 @@ use Drupal\dpl_react\DplReactConfigBase;
  */
 class DplFeesSettings extends DplReactConfigBase {
   const FEES_AND_REPLACEMENT_COSTS_URL = '';
-  const FEE_LIST_BODY_TEXT = '';
   const PAYMENT_SITE_URL = '';
   const PAYMENT_SITE_BUTTON_LABEL = '';
   const FEES_LIST_SIZE_DESKTOP = 25;
@@ -52,7 +51,8 @@ class DplFeesSettings extends DplReactConfigBase {
    *   The body text.
    */
   public function getFeeListBodyText(): string {
-    return $this->loadConfig()->get('fee_list_body_text') ?? self::FEE_LIST_BODY_TEXT;
+    $text = $this->loadConfig()->get('fee_list_body_text');
+    return !empty($text) ? $text : $this->t('Fees and replacement costs are handled through the new system "Mit betalingsoverblik"', [], ['context' => 'Fees list settings form']);
   }
 
   /**

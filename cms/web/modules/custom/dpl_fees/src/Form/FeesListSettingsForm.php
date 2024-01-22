@@ -88,8 +88,9 @@ class FeesListSettingsForm extends ConfigFormBase {
     $form['settings']['fee_list_body_text'] = [
       '#type' => 'textarea',
       '#title' => $this->t('Intro text', [], ['context' => 'Fees list settings form']),
-      '#description' => $this->t('Display an intro-text below the headline', [], ['context' => 'Fees list settings form']),
-      '#default_value' => $config->get('fee_list_body_text') ?? $this->t('Fees and replacement costs are handled through the new system "Mit betalingsoverblik.', [], ['context' => 'Fees list settings form']),
+      '#description' => $this->t('Display an intro-text below the headline <br>
+      If nothing is written here the text: "@text" will be used.', ['@text' => $this->t('Fees and replacement costs are handled through the new system "Mit betalingsoverblik"', [], ['context' => 'Fees list settings form'])], ['context' => 'Fees list settings form']),
+      '#default_value' => $config->get('fee_list_body_text'),
     ];
 
     // Payment site button.
