@@ -12,6 +12,8 @@ dependencies:
     - field.field.eventinstance.default.field_event_partners
     - field.field.eventinstance.default.field_event_place
     - field.field.eventinstance.default.field_event_state
+    - field.field.eventinstance.default.field_teaser_image
+    - field.field.eventinstance.default.field_teaser_text
     - field.field.eventinstance.default.field_ticket_categories
     - recurring_events.eventinstance_type.default
   module:
@@ -89,6 +91,14 @@ content:
     third_party_settings: {  }
     weight: 55
     region: content
+  event_partners:
+    type: string
+    label: visible
+    settings:
+      link_to_entity: false
+    third_party_settings: {  }
+    weight: 56
+    region: content
   event_place:
     type: string
     label: visible
@@ -103,6 +113,22 @@ content:
     settings: {  }
     third_party_settings: {  }
     weight: 57
+    region: content
+  event_teaser_image:
+    type: entity_reference_label
+    label: visible
+    settings:
+      link: true
+    third_party_settings: {  }
+    weight: 59
+    region: content
+  event_teaser_text:
+    type: string
+    label: visible
+    settings:
+      link_to_entity: false
+    third_party_settings: {  }
+    weight: 60
     region: content
   event_ticket_categories:
     type: entity_reference_revisions_entity_view
@@ -131,4 +157,7 @@ hidden:
   field_event_partners: true
   field_event_place: true
   field_event_state: true
+  field_teaser_image: true
+  field_teaser_text: true
   field_ticket_categories: true
+  search_api_excerpt: true

@@ -1,0 +1,14 @@
+uuid: fcd323f3-cd1d-4c33-bf4e-e20f2059cd1e
+langcode: en
+status: true
+dependencies: {  }
+id: eventinstance_default_event_teaser_image
+label: 'Event teaser image'
+type: fallback
+sourceEntityType: eventseries
+sourceEntityBundle: default
+sourceField: field_teaser_image
+destinationEntityType: eventinstance
+destinationEntityBundle: default
+destinationField: field_teaser_image
+plugin: entity_reference_inheritance

@@ -11,6 +11,8 @@ dependencies:
     - field.field.eventseries.default.field_event_partners
     - field.field.eventseries.default.field_event_place
     - field.field.eventseries.default.field_event_state
+    - field.field.eventseries.default.field_teaser_image
+    - field.field.eventseries.default.field_teaser_text
     - field.field.eventseries.default.field_ticket_categories
     - recurring_events.eventseries_type.default
   module:
@@ -18,7 +20,6 @@ dependencies:
     - entity_reference_revisions
     - link
     - options
-    - recurring_events
     - text
 _core:
   default_config_hash: U53j_RaqaehEh393bzj6vrqXorzo8lkcjhQNCNTPjmQ
@@ -28,32 +29,31 @@ bundle: default
 mode: default
 content:
   event_instances:
-    type: recurring_events_eventinstance_date
-    label: above
+    type: entity_reference_entity_view
+    label: hidden
     settings:
-      link: '1'
-      date_format: 'F jS, Y h:iA'
-      separator: ' - '
+      view_mode: card
+      link: false
     third_party_settings: {  }
     weight: 2
     region: content
   field_event_address:
     type: address_default
-    label: above
+    label: hidden
     settings: {  }
     third_party_settings: {  }
     weight: 3
     region: content
   field_event_description:
     type: text_default
-    label: above
+    label: hidden
     settings: {  }
     third_party_settings: {  }
     weight: 4
     region: content
   field_event_image:
     type: entity_reference_entity_view
-    label: above
+    label: hidden
     settings:
       view_mode: default
       link: false
@@ -62,7 +62,7 @@ content:
     region: content
   field_event_link:
     type: link
-    label: above
+    label: hidden
     settings:
       trim_length: 80
       url_only: false
@@ -74,7 +74,7 @@ content:
     region: content
   field_event_paragraphs:
     type: entity_reference_revisions_entity_view
-    label: above
+    label: hidden
     settings:
       view_mode: default
       link: ''
@@ -83,7 +83,7 @@ content:
     region: content
   field_event_partners:
     type: string
-    label: above
+    label: hidden
     settings:
       link_to_entity: false
     third_party_settings: {  }
@@ -91,15 +91,32 @@ content:
     region: content
   field_event_place:
     type: string
-    label: above
+    label: hidden
     settings:
       link_to_entity: false
     third_party_settings: {  }
     weight: 7
     region: content
+  field_teaser_image:
+    type: entity_reference_entity_view
+    label: hidden
+    settings:
+      view_mode: hero_wide
+      link: false
+    third_party_settings: {  }
+    weight: 12
+    region: content
+  field_teaser_text:
+    type: string
+    label: hidden
+    settings:
+      link_to_entity: false
+    third_party_settings: {  }
+    weight: 11
+    region: content
   field_ticket_categories:
     type: entity_reference_revisions_entity_view
-    label: above
+    label: hidden
     settings:
       view_mode: default
       link: ''
@@ -108,14 +125,14 @@ content:
     region: content
   recur_type:
     type: list_default
-    label: above
+    label: hidden
     settings: {  }
     third_party_settings: {  }
     weight: 1
     region: content
   title:
     type: string
-    label: above
+    label: hidden
     settings:
       link_to_entity: false
     third_party_settings: {  }
@@ -129,5 +146,6 @@ hidden:
   event_registration: true
   field_event_state: true
   monthly_recurring_date: true
+  search_api_excerpt: true
   weekly_recurring_date: true
   yearly_recurring_date: true

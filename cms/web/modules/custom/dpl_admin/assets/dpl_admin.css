@@ -42,3 +42,48 @@
   grid-template-columns: minmax(0, max-content) minmax(5rem, 10rem);
   gap: var(--gin-spacing-m);
 }
+
+/* A unique series indicator for the event admin content view. */
+/* @see dpl_admin_preprocess_views_view_field */
+.dpl-admin__unique-indicator {
+  display: block;
+  margin: auto;
+  width: 40px;
+  height: 40px;
+  line-height: 40px;
+  text-align: center;
+  color: white;
+  font-weight: bold;
+}
+
+/* Making the ID columns more narrow, for readability. */
+.view-event-admin .views-field-eventseries-id,
+.view-event-admin .views-field-id {
+  width: 40px;
+}
+
+/* A simple flex container, when forms are being daft. */
+.dpl-admin__flex-container {
+  display: flex;
+  gap: 20px;
+  flex-wrap: wrap;
+}
+
+.dpl-admin__flex-container .form-boolean-group {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+/* Place checkboxes horizontally when possible, for readabilty. */
+.is-admin-page [data-drupal-selector$="-recurring-date-wrapper"] .form-checkboxes {
+  display: flex;
+  gap: 15px;
+  max-width: 100%;
+  flex-wrap: wrap;
+}
+
+/* Hide the built-in message, as we're creating an alternative ourselves. */
+.gin--edit-form .event-notification-message {
+  display: none;
+}

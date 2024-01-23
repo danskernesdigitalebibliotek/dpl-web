@@ -22,7 +22,7 @@ class FeesListSettingsForm extends ConfigFormBase {
    * @param \Drupal\dpl_react\DplReactConfigInterface $configService
    *   The instant loan config service.
    * @param \Drupal\dpl_fees\DplFeesSettings $feesSettings
-   *   The instant loan config service.
+   *   The DPL fee settings.
    */
   public function __construct(
     ConfigFactoryInterface $config_factory,

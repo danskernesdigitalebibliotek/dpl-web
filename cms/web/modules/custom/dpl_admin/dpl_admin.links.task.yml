@@ -1,0 +1,5 @@
+dpl_admin.events:
+  title: "Events"
+  route_name: view.event_admin.overview
+  base_route: system.admin_content
+  weight: 10
