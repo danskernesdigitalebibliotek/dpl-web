@@ -3872,7 +3872,7 @@ msgstr "Fx: Gebyrer kan betales via \"Mit Betalingsoverblik\". Hvis du har gebyr
 #: 
 msgctxt "Fees list"
 msgid "Unsettled debt - paid on site"
-msgstr "Betales på biblioteket"
+msgstr "Kontakt biblioteket for at betale"
 
 #: 
 msgctxt "Fees list"
