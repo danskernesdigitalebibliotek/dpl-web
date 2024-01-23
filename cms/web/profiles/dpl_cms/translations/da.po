@@ -3838,7 +3838,7 @@ msgstr "Her kan du indsætte et link til en hjælpeside hvor brugeren kan læse 
 #: 
 msgctxt "Fees list settings form"
 msgid "Payment overview url"
-msgstr ""
+msgstr "Link til betalingssite"
 
 #: 
 msgctxt "Fees list settings form"
@@ -3857,17 +3857,17 @@ msgstr "Her kan du indsætte et link til en betalingsside, fx. Mit betalingsover
 #: 
 msgctxt "Fees list settings form"
 msgid "Intro text"
-msgstr ""
+msgstr "Indledende tekst"
 
 #: 
 msgctxt "Fees list settings form"
 msgid "Display an intro-text below the headline"
-msgstr ""
+msgstr "Viser en indledende tekst under overskriften på gebyrsiden, hvor du kan fortælle brugeren om betalingsmuligheder."
 
 #: 
 msgctxt "Fees list settings form"
 msgid "Fees and replacement costs are handled through the new system \"Mit betalingsoverblik."
-msgstr ""
+msgstr "Fx: Gebyrer kan betales via \"Mit Betalingsoverblik\". Hvis du har gebyrer som ikke kan betales der, skal du henvende dig på biblioteket."
 
 #: 
 msgctxt "Fees list"
@@ -3882,12 +3882,12 @@ msgstr "Betales på Mit betalingsoverblik"
 #: 
 msgctxt "Patron page settings form"
 msgid "Basic settings"
-msgstr ""
+msgstr "Grundlæggende indstillinger"
 
 #: 
 msgctxt "Patron page settings form"
 msgid "Delete patron link"
-msgstr ""
+msgstr "Url til side om hvordan man bliver slettet som bruger af biblioteket."
 
 #: 
 msgctxt "Patron page settings form"
@@ -3906,27 +3906,27 @@ msgstr "Her kan du indsætte et link til en hjælpeside om hvordan man bliver sl
 #: 
 msgctxt "Patron page settings form"
 msgid "Ereolen always available"
-msgstr ""
+msgstr "eReolens titler som altid er tilgængelige"
 
 #: 
 msgctxt "Patron page settings form"
 msgid "Pincode length (min)"
-msgstr ""
+msgstr "Pinkodelængde (minimumslængde)"
 
 #: 
 msgctxt "Patron page settings form"
 msgid "Pincode length max"
-msgstr ""
+msgstr "Pinkodelængde (maksimumslængde)"
 
 #: 
 msgctxt "Patron registration settings form"
 msgid "Minimum age to allow self registration"
-msgstr ""
+msgstr "Minimumsalder for selvoprettelse som låner"
 
 #: 
 msgctxt "Patron registration settings form"
 msgid "Redirect on create"
-msgstr ""
+msgstr "Side som låner omdirigeres til ved oprettelse"
 
 #: 
 msgctxt "Patron registration settings form"
