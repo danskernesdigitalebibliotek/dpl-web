@@ -3988,54 +3988,54 @@ msgstr ""
 #: 
 msgctxt "Work Page"
 msgid "An unknown error occurred"
-msgstr ""
+msgstr "En ukendt fejl opstod"
 
 #: 
 msgctxt "Work Page"
 msgid "Specified pickup agency not found"
-msgstr ""
+msgstr "Valgt afhentningssted ikke fundet"
 
 #: 
 msgctxt "Work Page"
 msgid "User not found"
-msgstr ""
+msgstr "Bruger ikke fundet"
 
 #: 
 msgctxt "Work Page"
 msgid "Ordered from another library"
-msgstr ""
+msgstr "Bestilt fra et andet bibliotek"
 
 #: 
 msgctxt "DPL admin UX"
 msgid "<a href=\"@url\">Edit the series here</a>"
-msgstr ""
+msgstr "<a href=\"@url\">Redigér hele serien her</a>"
 
 #: 
 msgctxt "DPL admin UX"
 msgid "You are currently editing a single event, in an event series. @suffix"
-msgstr ""
+msgstr "Du redigerer en enkelt begivenhed i en arrangementsserie. @suffix"
 
 #: 
 msgctxt "DPL admin UX"
 msgid "Any changes you make here will only override this single event."
-msgstr ""
+msgstr "Ændringer du foretager her, vil kun overskrive denne enkelte begivenhed"
 
 #: 
 msgctxt "DPL admin UX"
 msgid "If you leave fields empty, the data from the parent series will be used."
-msgstr ""
+msgstr "Hvis du lader felterne stå tomme, vil data blive udfyldt fra hovedarrangementet"
 
 #: 
 msgid "Expired"
-msgstr ""
+msgstr "Udløbet"
 
 #: 
 msgid "Every day"
-msgstr ""
+msgstr "Hver dag"
 
 #: 
 msgid "Every @days"
-msgstr ""
+msgstr "Hver @days"
 
 #: 
 msgid "Next"
@@ -4043,7 +4043,7 @@ msgstr "Næste"
 
 #: 
 msgid "Add Event"
-msgstr ""
+msgstr "Tilføj arrangement"
 
 #: 
 msgid "Events"
@@ -4055,17 +4055,17 @@ msgstr "Adresse"
 
 #: 
 msgid "Scroll forwards"
-msgstr ""
+msgstr "Scroll fremad"
 
 #: 
 msgid "Scroll backwards"
-msgstr ""
+msgstr "Scroll tilbage"
 
 #: 
 msgid "Events in this series"
-msgstr ""
+msgstr "Arrangementer i denne serie"
 
 #: 
 msgid "Upcoming events"
-msgstr ""
+msgstr "Kommende arrangementer"
 
