@@ -11,11 +11,13 @@ dependencies:
     - field.field.eventinstance.default.field_event_partners
     - field.field.eventinstance.default.field_event_place
     - field.field.eventinstance.default.field_event_state
+    - field.field.eventinstance.default.field_teaser_image
+    - field.field.eventinstance.default.field_teaser_text
     - field.field.eventinstance.default.field_ticket_categories
     - recurring_events.eventinstance_type.default
   module:
     - address
-    - datetime_range
+    - date_range_formatter
     - entity_reference_revisions
     - link
     - text
@@ -27,11 +29,16 @@ bundle: default
 mode: default
 content:
   date:
-    type: daterange_plain
+    type: date_range_without_time
     label: hidden
     settings:
       timezone_override: ''
+      date_format: 'Y-m-d\TH:i:s'
       separator: '-'
+      one_day: 'd F Y'
+      one_month: 'd - {d} F Y'
+      several_months: 'd F - {d} {F} Y'
+      several_years: 'd F Y - {d} {F} {Y}'
     third_party_settings: {  }
     weight: 1
     region: content
@@ -102,6 +109,23 @@ content:
     third_party_settings: {  }
     weight: 7
     region: content
+  event_teaser_image:
+    type: entity_reference_entity_view
+    label: hidden
+    settings:
+      view_mode: hero_wide
+      link: false
+    third_party_settings: {  }
+    weight: 10
+    region: content
+  event_teaser_text:
+    type: string
+    label: hidden
+    settings:
+      link_to_entity: false
+    third_party_settings: {  }
+    weight: 11
+    region: content
   event_ticket_categories:
     type: entity_reference_revisions_entity_view
     label: hidden
@@ -131,4 +155,7 @@ hidden:
   field_event_partners: true
   field_event_place: true
   field_event_state: true
+  field_teaser_image: true
+  field_teaser_text: true
   field_ticket_categories: true
+  search_api_excerpt: true

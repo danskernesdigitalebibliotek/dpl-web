@@ -29,3 +29,4 @@ hidden:
   field_campaign_rules_logic: true
   field_campaign_text: true
   langcode: true
+  search_api_excerpt: true

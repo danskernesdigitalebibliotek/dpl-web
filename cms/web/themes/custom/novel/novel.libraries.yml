@@ -9,3 +9,23 @@ base:
     assets/dpl-design-system/js/initaccordion.js: {}
   dependencies:
     - core/drupal
+
+slider:
+  js:
+    assets/dpl-design-system/js/init-slider.js: {}
+  dependencies:
+    - novel/swiper
+
+swiper:
+  remote: "https://github.com/nolimits4web/swiper.git"
+  license:
+    name: MIT
+    url: https://github.com/nolimits4web/swiper/blob/master/LICENSE
+    gpl-compatible: true
+  js:
+    "https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js":
+      { type: external }
+  css:
+    theme:
+      "https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css":
+        { type: external }

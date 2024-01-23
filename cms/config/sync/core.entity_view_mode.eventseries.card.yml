@@ -1,0 +1,10 @@
+uuid: 1af054c4-0e7a-4bd5-b6aa-229eb347d803
+langcode: en
+status: true
+dependencies:
+  module:
+    - recurring_events
+id: eventseries.card
+label: Card
+targetEntityType: eventseries
+cache: true

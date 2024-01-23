@@ -1,0 +1,53 @@
+uuid: 6476ceb4-e4f9-4dbc-b13a-755c12251ab2
+langcode: en
+status: true
+dependencies:
+  config:
+    - search_api.server.db_search
+  module:
+    - recurring_events
+    - search_api
+id: events
+name: Events
+description: ''
+read_only: false
+field_settings:
+  date:
+    label: 'Event Date'
+    datasource_id: 'entity:eventinstance'
+    property_path: date
+    type: date
+    dependencies:
+      module:
+        - recurring_events
+  end_value:
+    label: 'Event Date » End date value'
+    datasource_id: 'entity:eventinstance'
+    property_path: 'date:end_value'
+    type: date
+    dependencies:
+      module:
+        - recurring_events
+datasource_settings:
+  'entity:eventinstance':
+    bundles:
+      default: true
+      selected: {  }
+    languages:
+      default: true
+      selected: {  }
+processor_settings:
+  add_url: {  }
+  aggregated_field: {  }
+  custom_value: {  }
+  entity_type: {  }
+  language_with_fallback: {  }
+  rendered_item: {  }
+tracker_settings:
+  default:
+    indexing_order: fifo
+options:
+  cron_limit: 50
+  index_directly: true
+  track_changes_in_references: true
+server: db_search

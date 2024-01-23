@@ -1,0 +1,12 @@
+{% set parent_entity = element['#object'] %}
+
+{% if parent_entity and parent_entity.hasField('field_title') %}
+  {% set title = parent_entity.get('field_title').getString() %}
+{% endif %}
+
+{% include '@novel/components/card-grid.html.twig'
+  with {
+  'attributes': attributes,
+  'title': title,
+  'items': items,
+} only %}

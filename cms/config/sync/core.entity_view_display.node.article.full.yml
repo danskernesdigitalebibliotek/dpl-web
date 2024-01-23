@@ -9,6 +9,8 @@ dependencies:
     - field.field.node.article.field_paragraphs
     - field.field.node.article.field_show_override_author
     - field.field.node.article.field_subtitle
+    - field.field.node.article.field_teaser_image
+    - field.field.node.article.field_teaser_text
     - node.type.article
   module:
     - entity_reference_revisions
@@ -43,5 +45,8 @@ hidden:
   field_canonical_url: true
   field_override_author: true
   field_show_override_author: true
+  field_teaser_image: true
+  field_teaser_text: true
   langcode: true
   links: true
+  search_api_excerpt: true

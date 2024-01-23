@@ -1,0 +1,10 @@
+uuid: 74c10c36-f412-4922-90b2-6033b986ab87
+langcode: en
+status: true
+dependencies:
+  module:
+    - recurring_events
+id: eventinstance.list_teaser
+label: 'List teaser'
+targetEntityType: eventinstance
+cache: true
