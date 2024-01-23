@@ -1,0 +1,19 @@
+uuid: 5c46235b-3414-48d6-906b-b9bbb454d923
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.eventseries.field_teaser_text
+    - recurring_events.eventseries_type.default
+id: eventseries.default.field_teaser_text
+field_name: field_teaser_text
+entity_type: eventseries
+bundle: default
+label: 'Teaser text'
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: string

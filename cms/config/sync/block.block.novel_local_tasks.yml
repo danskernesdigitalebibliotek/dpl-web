@@ -9,7 +9,7 @@ _core:
 id: novel_local_tasks
 theme: novel
 region: content
-weight: -20
+weight: -2
 provider: null
 plugin: local_tasks_block
 settings:

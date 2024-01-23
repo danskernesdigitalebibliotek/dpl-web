@@ -1,0 +1,19 @@
+uuid: 7d2452c7-41a1-4638-81c5-e01dcae71349
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.eventinstance.field_teaser_text
+    - recurring_events.eventinstance_type.default
+id: eventinstance.default.field_teaser_text
+field_name: field_teaser_text
+entity_type: eventinstance
+bundle: default
+label: 'Teaser text'
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: string

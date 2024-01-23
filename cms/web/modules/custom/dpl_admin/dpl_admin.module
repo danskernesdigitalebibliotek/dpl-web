@@ -5,6 +5,13 @@
  * Functionality for admin / editor UX.
  */
 
+use Drupal\Core\Form\FormStateInterface;
+use Drupal\Core\Render\Markup;
+use Drupal\Core\Url;
+use Drupal\recurring_events\Entity\EventInstance;
+use Drupal\views\Plugin\views\field\EntityField;
+use Drupal\views\ViewExecutable;
+
 /**
  * Implements template_preprocess_html().
  *
@@ -18,4 +25,172 @@ function dpl_admin_preprocess_html(array &$variables): void {
 
   $variables['attributes']['class'][] = 'is-admin-page';
   $variables['#attached']['library'][] = 'dpl_admin/base';
+}
+
+/**
+ * Implements hook_local_tasks_alter().
+ *
+ * Remove and alter unused local tasks, displayed on /admin/content.
+ *
+ * @param array<mixed> $local_tasks
+ *   See the $form in hook_local_tasks_alter().
+ */
+function dpl_admin_local_tasks_alter(array &$local_tasks): void {
+  unset($local_tasks['entity.eventseries.collection']);
+  unset($local_tasks['entity.eventinstance.collection']);
+}
+
+/**
+ * Implements hook_menu_local_actions_alter().
+ *
+ * Remove all tasks appearing on /events.
+ *
+ * @param array<mixed> $local_actions
+ *   See the $form in hook_local_actions_alter().
+ */
+function dpl_admin_menu_local_actions_alter(&$local_actions) : void {
+  array_walk($local_actions, function (array &$action) {
+    $action['appears_on'] = array_filter($action['appears_on'], function (string $route) {
+      return $route !== 'entity.eventinstance.collection';
+    });
+  });
+}
+
+/**
+ * Implements template_preprocess_views_view_field().
+ *
+ * Preprocesses the output of a field in the "event_admin" view.
+ * Altering the output to generate a unique indicator with a link to the
+ * eventseries edit form.
+ *
+ * {@inheritDoc}
+ */
+function dpl_admin_preprocess_views_view_field(array &$variables): void {
+  if (!isset($variables['view'], $variables['field'], $variables['output'])) {
+    return;
+  }
+
+  $view = $variables['view'];
+  $field = $variables['field'];
+  $output = $variables['output'];
+
+  if (!$view instanceof ViewExecutable || $view->id() !== 'event_admin') {
+    return;
+  }
+
+  if (!$field instanceof EntityField ||
+    !$output instanceof Markup ||
+    $field->getField() !== '.eventseries_id') {
+    return;
+  }
+
+  // Take the ID, and create a unique HSL color value, that we use for
+  // background image further down.
+  $id = $output->__toString();
+  $unique_hsl_value = ((intval($id) * 100) % 360);
+  $url = Url::fromRoute('entity.eventseries.edit_form', ['eventseries' => $id]);
+
+  $sanitized_id = htmlspecialchars($id, ENT_QUOTES, 'UTF-8');
+  $markup = '<a class="dpl-admin__unique-indicator" style="background-color: hsl(' . $unique_hsl_value . ', 70%, 50%);" href="' . $url->toString() . '">' . $sanitized_id . '</a>';
+
+  $variables['output'] = Markup::create($markup);
+}
+
+/**
+ * Implements hook_form_alter() for altering the event series form.
+ *
+ * Wraps certain form elements within a flex container to apply styling.
+ *
+ * @param array<mixed> $form
+ *   See the $form in dpl_admin_form_alter().
+ */
+function _dpl_admin_form_alter_eventseries(array &$form, FormStateInterface $form_state, string $form_id): void {
+  $keys = ['weekly_recurring_date', 'monthly_recurring_date', 'yearly_recurring_date', 'daily_recurring_date'];
+
+  foreach ($keys as $key) {
+    $form_element_date_start = $form[$key]['widget'][0]['value'] ?? NULL;
+    $form_element_date_end = $form[$key]['widget'][0]['end_value'] ?? NULL;
+
+    // Wrapping the "between these dates" fields with a flex wrapper.
+    if (!empty($form_element_date_start) && !empty($form_element_date_end)) {
+      $form_element_date_start['#prefix'] = '<div class="dpl-admin__flex-container">';
+      $form_element_date_end['#suffix'] = '</div>';
+
+      $form[$key]['widget'][0]['value'] = $form_element_date_start;
+      $form[$key]['widget'][0]['end_value'] = $form_element_date_end;
+    }
+
+    $form_element_time_start = $form[$key]['widget'][0]['time'] ?? NULL;
+    $form_element_time_end = $form[$key]['widget'][0]['duration'] ?? NULL;
+
+    // Wrapping the "start date" fields with a flex wrapper.
+    if (!empty($form_element_time_start) && !empty($form_element_time_end)) {
+      $form_element_time_start['#prefix'] = '<div class="dpl-admin__flex-container">';
+      $form_element_time_end['#suffix'] = '</div>';
+
+      $form[$key]['widget'][0]['time'] = $form_element_time_start;
+      $form[$key]['widget'][0]['duration'] = $form_element_time_end;
+    }
+  }
+}
+
+/**
+ * Implements hook_form_FORM_ID_alter() for the event instance form.
+ *
+ * Adds warning messages to the form that the user is editing a single event
+ * in an event series, and provides a link to edit the series.
+ *
+ * @param array<mixed> $form
+ *   See the $form in dpl_admin_form_alter().
+ */
+function _dpl_admin_form_alter_eventinstance(array &$form, FormStateInterface $form_state, string $form_id): void {
+  $event_instance = \Drupal::routeMatch()->getParameter('eventinstance');
+  $message_suffix = '';
+
+  if ($event_instance instanceof EventInstance) {
+    $event_series = $event_instance->getEventSeries();
+
+    $event_series_edit_url = Url::fromRoute(
+      'entity.eventseries.edit_form',
+      ['eventseries' => $event_series->id()]
+    )->toString();
+
+    $message_suffix =
+      t('<a href="@url">Edit the series here</a>',
+        ['@url' => $event_series_edit_url],
+        ['context' => 'DPL admin UX']
+      );
+  }
+
+  \Drupal::messenger()->addWarning(t(
+    'You are currently editing a single event, in an event series. @suffix',
+    ['@suffix' => $message_suffix],
+    ['context' => 'DPL admin UX']
+  ));
+  \Drupal::messenger()->addWarning(t(
+    'Any changes you make here will only override this single event.',
+    [], ['context' => 'DPL admin UX']
+  ));
+  \Drupal::messenger()->addWarning(t('If you leave fields empty, the data from the parent series will be used.',
+    [], ['context' => 'DPL admin UX']
+  ));
+}
+
+/**
+ * Implements hook_form_alter().
+ *
+ * Alter the edit/add forms for eventseries/event instances.
+ *
+ * @param array<mixed> $form
+ *   See the $form in hook_form_alter().
+ */
+function dpl_admin_form_alter(array &$form, FormStateInterface $form_state, string $form_id): void {
+  if (in_array($form_id, ['eventseries_default_add_form', 'eventseries_default_edit_form'])) {
+    _dpl_admin_form_alter_eventseries($form, $form_state, $form_id);
+  }
+
+  if (in_array($form_id, ['eventinstance_default_add_form', 'eventinstance_default_edit_form'])) {
+    _dpl_admin_form_alter_eventinstance($form, $form_state, $form_id);
+
+  }
 }

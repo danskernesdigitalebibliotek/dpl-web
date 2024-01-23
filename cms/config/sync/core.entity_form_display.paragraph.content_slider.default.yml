@@ -1,0 +1,36 @@
+uuid: cb8cef86-9171-43d3-9772-4ed06e41e958
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.field.paragraph.content_slider.field_content_references
+    - field.field.paragraph.content_slider.field_title
+    - paragraphs.paragraphs_type.content_slider
+  module:
+    - dynamic_entity_reference
+id: paragraph.content_slider.default
+targetEntityType: paragraph
+bundle: content_slider
+mode: default
+content:
+  field_content_references:
+    type: dynamic_entity_reference_default
+    weight: 2
+    region: content
+    settings:
+      match_operator: CONTAINS
+      match_limit: 10
+      size: 40
+      placeholder: ''
+    third_party_settings: {  }
+  field_title:
+    type: string_textfield
+    weight: 0
+    region: content
+    settings:
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+hidden:
+  created: true
+  status: true

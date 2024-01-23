@@ -1,0 +1,58 @@
+uuid: ffe2edaa-033c-4df9-b2d8-7740217d8ade
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.field.paragraph.content_slider.field_content_references
+    - field.field.paragraph.content_slider.field_title
+    - paragraphs.paragraphs_type.content_slider
+  module:
+    - dynamic_entity_reference
+id: paragraph.content_slider.default
+targetEntityType: paragraph
+bundle: content_slider
+mode: default
+content:
+  field_content_references:
+    type: dynamic_entity_reference_entity_view
+    label: hidden
+    settings:
+      node:
+        view_mode: card
+      eventinstance:
+        view_mode: card
+      eventseries:
+        view_mode: card
+      crop:
+        view_mode: default
+        link: false
+      menu_link_content:
+        view_mode: default
+        link: false
+      file:
+        view_mode: default
+        link: false
+      job_schedule:
+        view_mode: default
+        link: false
+      media:
+        view_mode: default
+        link: false
+      paragraph:
+        view_mode: default
+        link: false
+      search_api_task:
+        view_mode: default
+        link: false
+      path_alias:
+        view_mode: default
+        link: false
+      user:
+        view_mode: default
+        link: false
+    third_party_settings: {  }
+    weight: 1
+    region: content
+hidden:
+  field_title: true
+  search_api_excerpt: true
