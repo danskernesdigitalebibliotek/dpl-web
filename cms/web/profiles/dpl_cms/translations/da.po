@@ -727,12 +727,12 @@ msgstr "Vælg, hvilke filialer der ikke skal vises hvor, forskellige steder i sy
 #: 
 msgctxt "Library Agency Configuration"
 msgid "Search results"
-msgstr "Søge resultater"
+msgstr "Søgning"
 
 #: 
 msgctxt "Library Agency Configuration"
 msgid "Holdings belonging to the selected branches will not be shown in search results."
-msgstr "Beholdning på de valgte filialer vil ikke blive vist i søgeresultatet."
+msgstr "Materialer der kun er i beholdning på de valgte filialer vil ikke kunne fremsøges."
 
 #: 
 msgid "Availability"
@@ -741,7 +741,7 @@ msgstr "Tilgængelighed"
 #: 
 msgctxt "Library Agency Configuration"
 msgid "Holdings belonging to the selected branches will not considered when showing work availability."
-msgstr "Beholdning på de valgte filialer vil ikke blive vist som tilgængelige."
+msgstr "Materialer i beholdning på de valgte filialer kan ikke reserveres, og vises ikke ved klik på ”Find på hylden”."
 
 #: 
 msgctxt "Library Agency Configuration"
@@ -1032,7 +1032,7 @@ msgstr "Gem"
 #: 
 msgctxt "Library Agency Configuration"
 msgid "Reservations"
-msgstr "Reserveringer"
+msgstr "Afhentningssted"
 
 #: 
 msgctxt "DPL Config Import"
