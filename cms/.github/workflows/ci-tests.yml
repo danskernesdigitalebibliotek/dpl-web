@@ -35,16 +35,15 @@ jobs:
       uses: shivammathur/setup-php@v2
       with:
         php-version: ${{ env.PHP_VERSION }}
-        tools: composer:${{ env.COMPOSER_VERSION }}
+        tools: composer:${{ env.COMPOSER_VERSION }}, cs2pr
         coverage: none
         extensions: gd
     - name: Install Dependencies
       run: |
         composer install --no-interaction --no-progress
-    - name: Run phpcs
-      uses: reload/action-phpcs@main
-      with:
-        reviewdog_token: ${{ secrets.GITHUB_TOKEN }}
+    - name: Run Twig CS Fixer
+      run: |
+        vendor/bin/phpcs -q --report=checkstyle | cs2pr
 
   TwigCsFixer:
     name: Check Twig code style
