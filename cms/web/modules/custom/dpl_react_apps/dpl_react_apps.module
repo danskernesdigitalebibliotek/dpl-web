@@ -191,6 +191,7 @@ function dpl_react_apps_texts(): array {
     'patron-page-change-pincode-body' => t('Change current pin by entering a new pin and saving', [], ['context' => 'Global']),
     'patron-page-change-pincode-header' => t('PINCODE', [], ['context' => 'Global']),
     'patron-page-confirm-pincode-label' => t('Confirm new pin', [], ['context' => 'Global']),
+    'patron-page-phone-input-message' => t('The phone number must be 6 to 15 characters in length and should be comprised solely of numbers or begin with a +', [], ['context' => 'Global']),
     'pause-reservation-modal-aria-description' => t('This modal makes it possible to pause your physical reservations', [], ['context' => 'Global']),
     'pause-reservation-modal-below-inputs' => t('Pause reservation below inputs text', [], ['context' => 'Global']),
     'pause-reservation-modal-body' => t('Pause your reservations early, since reservations that are already being processed, will not be paused.', [], ['context' => 'Global']),
