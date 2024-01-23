@@ -3664,12 +3664,12 @@ msgstr "Indstil hvilke profiler der skal anvendes i hvilken kontekst."
 #: 
 msgctxt "Library Agency Configuration"
 msgid "Default profile"
-msgstr "Standardprofil"
+msgstr "Default profil"
 
 #: 
 msgctxt "Library Agency Configuration"
 msgid "The default profile to use when using the FBI API."
-msgstr "Standardprofil der bruges til at kalde FBI Api'et"
+msgstr "Profil, der benyttes, hvor visningsprofil og søgeprofil ikke benyttes."
 
 #: 
 msgctxt "Library Agency Configuration"
@@ -3684,7 +3684,7 @@ msgstr "Profil som anvendes til søgning efter materialer"
 #: 
 msgctxt "Library Agency Configuration"
 msgid "Material profile"
-msgstr "Materialeprofil"
+msgstr "Visningsprofil"
 
 #: 
 msgctxt "Library Agency Configuration"
