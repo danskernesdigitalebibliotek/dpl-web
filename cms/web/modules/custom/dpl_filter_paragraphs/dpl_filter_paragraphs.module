@@ -1,0 +1,115 @@
+<?php
+
+/**
+ * @file
+ * DPL filtered Paragraphs.
+ */
+
+use Drupal\Component\Utility\NestedArray;
+use Drupal\paragraphs\Entity\Paragraph;
+use Drupal\views\ViewExecutable;
+use Drupal\views\Views;
+
+/**
+ * Implements theme_preprocess_paragraph__NAME().
+ *
+ * @see _dpl_filter_paragraphs_prepare_filter_view()
+ */
+function dpl_filter_paragraphs_preprocess_paragraph__card_grid_automatic(array &$variables): void {
+  $variables = _dpl_filter_paragraphs_prepare_filter_view($variables, 'card_grid');
+}
+
+/**
+ * Getting the content list views, and setting relevant paragraph filters.
+ *
+ * We use the filters to set as contextual filters on the view.
+ *
+ * @param array<mixed> $variables
+ *   See the $variables in theme_preprocess_paragraph__NAME().
+ *
+ * @return array<mixed>
+ *   See the $variables in theme_preprocess_paragraph__NAME().
+ */
+function _dpl_filter_paragraphs_prepare_filter_view(array $variables, string $item_view_mode): array {
+  // In the preview (AKA backend view), we don't want to load in the whole view.
+  if ($variables['view_mode'] === 'preview') {
+    return $variables;
+  }
+
+  // Drupal will cache the whole paragraph, as it does not know that it is
+  // embedding a view. We'll add a simple cache tag to the paragraph, so it
+  // be invalidated if any nodes have been updated - e.g. the same kind of
+  // cache tag that the view has.
+  $variables['#cache']['tags'][] = 'node_list';
+
+  $paragraph = $variables['paragraph'] ?? NULL;
+
+  if (!($paragraph instanceof Paragraph)) {
+    return $variables;
+  }
+
+  $view = Views::getView('content_paragraphs');
+  if (!$view instanceof ViewExecutable) {
+    return $variables;
+  }
+
+  $view->setDisplay($item_view_mode);
+
+  // The order of this list must be identical to the order of the contextual
+  // filters in the view!
+  $filters = [
+    'field_filter_content_types',
+  ];
+
+  $arguments = [];
+
+  // Looping through our paragraph field filters, and setting any values
+  // as contextual values for the view.
+  foreach ($filters as $filter_name) {
+    // If the paragraph has no matching field, we'll just set the value to
+    // all. THIS IS IMPORTANT, as otherwise there will be a mismatch between
+    // the contextual filters and the keys.
+    if (!$paragraph->hasField($filter_name)) {
+      $arguments[] = 'all';
+
+      continue;
+    }
+
+    $field = $paragraph->get($filter_name);
+    $filter_value = $field->getString();
+    $filter_value = !empty($filter_value) ? $filter_value : 'all';
+
+    // getString() gets values as comma seperated.
+    // We want it to be seperated with + instead, to show view that it's
+    // OR instead of AND.
+    $filter_value = str_replace(', ', '+', $filter_value);
+
+    $arguments[] = $filter_value;
+  }
+
+  // Argument = Contextual filters.
+  $view->setArguments($arguments);
+
+  // Making a unique cache key, based on the chosen arguments.
+  // We need a unique cache key, as the view is getting embedded, and Drupal
+  // does not understand that different contextual filters should result in
+  // different caching.
+  $cache_key = "filter_paragraphs_{$item_view_mode}:" . md5(serialize($arguments));
+
+  $view->element['#cache'] = NestedArray::mergeDeep($view->element['#cache'], [
+    'keys' => [$cache_key],
+  ]);
+
+  $view->execute();
+
+  if ($paragraph->hasField('field_title')) {
+    // Replacing the view title with our custom paragraph field_title.
+    $paragraph_title = $paragraph->get('field_title')->getString();
+
+    $view->setTitle($paragraph_title);
+  }
+
+  $variables['content']['view'] = $view->buildRenderable($item_view_mode);
+
+  return $variables;
+}

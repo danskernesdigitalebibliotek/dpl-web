@@ -1,0 +1,5 @@
+name: "DPL Filtered Paragraphs"
+type: module
+description: "Filtered paragraphs, embedding views."
+package: "DPL"
+core_version_requirement: ^10
