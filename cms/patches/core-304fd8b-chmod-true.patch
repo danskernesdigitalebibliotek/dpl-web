@@ -1,0 +1,70 @@
+From 304fd8bc8d40627ab1df4ac14a199eaa41a04d97 Mon Sep 17 00:00:00 2001
+From: =?UTF-8?q?Kasper=20Garn=C3=A6s?= <kasperg@users.noreply.github.com>
+Date: Tue, 23 Jan 2024 11:23:42 +0100
+Subject: [PATCH] Always return TRUE for chmod
+
+---
+ lib/Drupal/Core/File/FileSystem.php | 12 ++++++------
+ 1 file changed, 6 insertions(+), 6 deletions(-)
+
+diff --git a/lib/Drupal/Core/File/FileSystem.php b/lib/Drupal/Core/File/FileSystem.php
+index c82d61fbe3..481c573041 100644
+--- a/lib/Drupal/Core/File/FileSystem.php
++++ b/lib/Drupal/Core/File/FileSystem.php
+@@ -107,7 +107,7 @@ class FileSystem implements FileSystemInterface {
+     }
+ 
+     $this->logger->error('The file permissions could not be set on %uri.', ['%uri' => $uri]);
+-    return FALSE;
++    return TRUE;
+   }
+ 
+   /**
+@@ -115,7 +115,7 @@ class FileSystem implements FileSystemInterface {
+    */
+   public function unlink($uri, $context = NULL) {
+     if (!$this->streamWrapperManager->isValidUri($uri) && (substr(PHP_OS, 0, 3) == 'WIN')) {
+-      chmod($uri, 0600);
++      $this->chmod($uri, 0600);
+     }
+     if ($context) {
+       return unlink($uri, $context);
+@@ -221,7 +221,7 @@ class FileSystem implements FileSystemInterface {
+             return FALSE;
+           }
+           // Not necessary to use self::chmod() as there is no scheme.
+-          if (!chmod($recursive_path, $mode)) {
++          if (!$this->chmod($recursive_path, $mode)) {
+             return FALSE;
+           }
+         }
+@@ -236,7 +236,7 @@ class FileSystem implements FileSystemInterface {
+       return FALSE;
+     }
+     // Not necessary to use self::chmod() as there is no scheme.
+-    return chmod($uri, $mode);
++    return $this->chmod($uri, $mode);
+   }
+ 
+   /**
+@@ -258,7 +258,7 @@ class FileSystem implements FileSystemInterface {
+    */
+   public function rmdir($uri, $context = NULL) {
+     if (!$this->streamWrapperManager->isValidUri($uri) && (substr(PHP_OS, 0, 3) == 'WIN')) {
+-      chmod($uri, 0700);
++      $this->chmod($uri, 0700);
+     }
+     if ($context) {
+       return rmdir($uri, $context);
+@@ -384,7 +384,7 @@ class FileSystem implements FileSystemInterface {
+     // Ensure compatibility with Windows.
+     // @see \Drupal\Core\File\FileSystemInterface::unlink().
+     if (!$this->streamWrapperManager->isValidUri($source) && (substr(PHP_OS, 0, 3) == 'WIN')) {
+-      chmod($source, 0600);
++      $this->chmod($source, 0600);
+     }
+     // Attempt to resolve the URIs. This is necessary in certain
+     // configurations (see above) and can also permit fast moves across local
+-- 
+2.37.5
+
