@@ -76,8 +76,9 @@ function dpl_login_openid_connect_pre_authorize(AccountInterface|FALSE $account,
   $api_factory = \Drupal::service('dpl_fbs.api_factory');
   $api = $api_factory->getPatronApi($token->token);
 
-  \Drupal::logger('user_info_1')->warning('<pre><code>' . print_r($context['userinfo'], TRUE) . '</code></pre>');
-
+  // Check if the user is associated with any agencies.
+  // If that is the case, the user is new, and we skip
+  // checking for blocked status.
   if (!empty($context['userinfo']['attributes']['agencies'])) {
     try {
       $patron = $api->getPatronInformationByPatronIdV2();
