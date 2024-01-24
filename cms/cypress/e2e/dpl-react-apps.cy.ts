@@ -40,7 +40,12 @@ describe("DPL React Apps", () => {
     cy.drupalCron();
 
     // Logging in will retrieve a user token using OAuth authorization grants.
-    cy.adgangsplatformenLogin({ authorizationCode, accessToken, userCPR, userGuid });
+    cy.adgangsplatformenLogin({
+      authorizationCode,
+      accessToken,
+      userCPR,
+      userGuid,
+    });
 
     cy.request("/dpl-react/user-tokens")
       .its("body")
@@ -48,10 +53,7 @@ describe("DPL React Apps", () => {
         "contain",
         `window.dplReact.setToken("library", "${libraryAccessToken}")`
       )
-      .should(
-        "contain",
-        `window.dplReact.setToken("user", "${accessToken}")`
-      );
+      .should("contain", `window.dplReact.setToken("user", "${accessToken}")`);
   });
 
   beforeEach(() => {

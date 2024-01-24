@@ -46,7 +46,12 @@ describe("User journey", () => {
     const accessToken = "447131b0a03fe0421204c54e5c21a60d70030fd1";
     const userGuid = "19a4ae39-be07-4db9-a8b7-8bbb29f03da6";
     const userCPR = 9999999999;
-    cy.adgangsplatformenLogin({ authorizationCode, accessToken, userCPR, userGuid });
+    cy.adgangsplatformenLogin({
+      authorizationCode,
+      accessToken,
+      userCPR,
+      userGuid,
+    });
     cy.visit("/work/work-of:870970-basis:54181744");
     cy.getBySel("material-header-author-text").scrollIntoView();
     cy.getBySel("material-header-buttons-physical").click();

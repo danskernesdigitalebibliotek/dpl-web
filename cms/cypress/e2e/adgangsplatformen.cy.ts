@@ -5,7 +5,12 @@ describe("Adgangsplatformen", () => {
     const userGuid = "19a4ae39-be07-4db9-a8b7-8bbb29f03da6";
     const userCPR = 9999999999;
 
-    cy.adgangsplatformenLogin({ authorizationCode, accessToken, userCPR, userGuid });
+    cy.adgangsplatformenLogin({
+      authorizationCode,
+      accessToken,
+      userCPR,
+      userGuid,
+    });
     cy.visit("/user");
     cy.url().should("match", /user\/\d+/);
   });
@@ -16,7 +21,11 @@ describe("Adgangsplatformen", () => {
     const accessToken = "447131b0a03fe0421204c54e5c21a60-new-user";
     const userCPR = 9999999999;
 
-    cy.adgangsplatformenLogin({ authorizationCode, accessToken, userCPR });
+    cy.adgangsplatformenLogin({
+      authorizationCode,
+      accessToken,
+      userCPR,
+    });
     cy.visit("/user");
     cy.url().should("match", /user\/\d+/);
   });
@@ -27,7 +36,11 @@ describe("Adgangsplatformen", () => {
     const accessToken = "447131b0a03fe0421204c54e5c21a60-new-user";
     const userGuid = "19a4ae39-be07-4db9-a8b7-8bbb29f03da6";
 
-    cy.adgangsplatformenLogin({ authorizationCode, accessToken, userGuid });
+    cy.adgangsplatformenLogin({
+      authorizationCode,
+      accessToken,
+      userGuid,
+    });
     cy.visit("/user");
     cy.url().should("match", /user\/\d+/);
   });
@@ -37,8 +50,14 @@ describe("Adgangsplatformen", () => {
     const authorizationCode = "7c5e3213aea6ef42ec97dfeaa6f5b1d454d856dc";
     const accessToken = "447131b0a03fe0421204c54e5c21a60-new-user";
 
-    cy.adgangsplatformenLogin({ authorizationCode, accessToken });
-    cy.contains("body", "The website encountered an unexpected error. Please try again later.");
+    cy.adgangsplatformenLogin({
+      authorizationCode,
+      accessToken,
+    });
+    cy.contains(
+      "body",
+      "The website encountered an unexpected error. Please try again later."
+    );
   });
 
   beforeEach(() => {
