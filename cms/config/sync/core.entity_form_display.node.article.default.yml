@@ -4,6 +4,7 @@ status: true
 dependencies:
   config:
     - field.field.node.article.field_canonical_url
+    - field.field.node.article.field_categories
     - field.field.node.article.field_override_author
     - field.field.node.article.field_paragraphs
     - field.field.node.article.field_show_override_author
@@ -66,6 +67,12 @@ content:
     settings:
       placeholder_url: ''
       placeholder_title: ''
+    third_party_settings: {  }
+  field_categories:
+    type: options_select
+    weight: 26
+    region: content
+    settings: {  }
     third_party_settings: {  }
   field_override_author:
     type: string_textfield

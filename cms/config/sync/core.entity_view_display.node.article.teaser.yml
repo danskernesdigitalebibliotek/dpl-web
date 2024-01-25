@@ -5,6 +5,7 @@ dependencies:
   config:
     - core.entity_view_mode.node.teaser
     - field.field.node.article.field_canonical_url
+    - field.field.node.article.field_categories
     - field.field.node.article.field_override_author
     - field.field.node.article.field_paragraphs
     - field.field.node.article.field_show_override_author
@@ -26,6 +27,7 @@ content:
     region: content
 hidden:
   field_canonical_url: true
+  field_categories: true
   field_override_author: true
   field_paragraphs: true
   field_show_override_author: true
