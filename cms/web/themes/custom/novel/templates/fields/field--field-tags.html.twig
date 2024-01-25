@@ -1,0 +1,10 @@
+<div class="text-small-caption horizontal-term-line">
+  <h2 class="text-label-bold">
+    {{ "Tags"|trans({}, {"context": "Tags"}) }}
+  </h2>
+  {% for item in items %}
+    <span>
+      {{ item.content }}
+    </span>
+  {% endfor %}
+</div>

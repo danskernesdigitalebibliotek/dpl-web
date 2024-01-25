@@ -37,7 +37,7 @@ content:
       view_mode: default
       link: ''
     third_party_settings: {  }
-    weight: 2
+    weight: 3
     region: content
   field_subtitle:
     type: basic_string
@@ -46,16 +46,23 @@ content:
     third_party_settings: {  }
     weight: 0
     region: content
+  field_tags:
+    type: entity_reference_label
+    label: hidden
+    settings:
+      link: false
+    third_party_settings: {  }
+    weight: 2
+    region: content
   links:
     settings: {  }
     third_party_settings: {  }
-    weight: 3
+    weight: 4
     region: content
 hidden:
   field_canonical_url: true
   field_override_author: true
   field_show_override_author: true
-  field_tags: true
   field_teaser_image: true
   field_teaser_text: true
   langcode: true
