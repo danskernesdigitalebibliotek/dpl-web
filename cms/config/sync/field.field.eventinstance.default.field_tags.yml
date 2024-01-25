@@ -1,0 +1,29 @@
+uuid: 2e81bf76-23e4-4fe2-8877-4eac3f1bad3b
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.eventinstance.field_tags
+    - recurring_events.eventinstance_type.default
+    - taxonomy.vocabulary.categories
+id: eventinstance.default.field_tags
+field_name: field_tags
+entity_type: eventinstance
+bundle: default
+label: Tags
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings:
+  handler: 'default:taxonomy_term'
+  handler_settings:
+    target_bundles:
+      categories: categories
+    sort:
+      field: name
+      direction: asc
+    auto_create: true
+    auto_create_bundle: ''
+field_type: entity_reference
