@@ -9,6 +9,7 @@ dependencies:
     - field.field.node.article.field_paragraphs
     - field.field.node.article.field_show_override_author
     - field.field.node.article.field_subtitle
+    - field.field.node.article.field_tags
     - field.field.node.article.field_teaser_image
     - field.field.node.article.field_teaser_text
     - node.type.article
@@ -51,6 +52,14 @@ content:
     settings: {  }
     third_party_settings: {  }
     weight: 101
+    region: content
+  field_tags:
+    type: entity_reference_label
+    label: above
+    settings:
+      link: true
+    third_party_settings: {  }
+    weight: 111
     region: content
   field_teaser_image:
     type: entity_reference_label
