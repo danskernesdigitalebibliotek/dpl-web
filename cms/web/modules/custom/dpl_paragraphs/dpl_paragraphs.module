@@ -6,6 +6,7 @@
  */
 
 use Drupal\Core\Url;
+use Drupal\dpl_react_apps\Controller\DplReactAppsController;
 use Drupal\paragraphs\Entity\Paragraph;
 use function Safe\parse_url;
 use function Safe\preg_match;
@@ -107,4 +108,57 @@ function dpl_paragraphs_preprocess_paragraph__medias(array &$variables): void {
 
   $alternative_images = $paragraph->get('field_medias')->view('alternative');
   $variables['content']['field_medias'][1] = $alternative_images[1] ?? NULL;
+}
+
+/**
+ * Implements hook_preprocess_paragraph__TYPE().
+ *
+ * Prepares variables for paragraph--recommendation.html.twig template.
+ *
+ * If the paragraph has a title or description, we use the recommended-material
+ * React app. Otherwise, we use the recommendation React app.
+ */
+function dpl_paragraphs_preprocess_paragraph__recommendation(array &$variables): void {
+  /** @var \Drupal\paragraphs\ParagraphInterface $paragraph */
+  $paragraph = $variables['paragraph'];
+
+  if (!$paragraph->hasField('field_work_id') || $paragraph->get('field_work_id')->isEmpty()) {
+    return;
+  }
+  $work_id = $paragraph->get('field_work_id')->value;
+  $paragraph_title = $paragraph->get('field_recommendation_title')->value;
+  $paragraph_description = $paragraph->get('field_recommendation_description')->value;
+  $paragraph_image_position_right = $paragraph->get('field_image_position_right')->value;
+
+  // Determine which React app to use.
+  if (!empty($paragraph_title) || !empty($paragraph_description)) {
+
+    // The URL is only needed for the recommended-material app.
+    $base_url = \Drupal::request()->getSchemeAndHttpHost();
+    $material_path = urldecode(dpl_react_apps_ensure_url_is_string(
+      Url::fromRoute('dpl_react_apps.work')
+        ->setRouteParameter('wid', $work_id)
+        ->toString()));
+    $material_url = $base_url . $material_path;
+
+    $variables['react_app'] = [
+      '#theme' => 'dpl_react_app',
+      '#name' => 'recommended-material',
+      '#data' => [
+        'wid' => $work_id,
+      ] + DplReactAppsController::externalApiBaseUrls(),
+      '#material_url' => $material_url,
+      '#positon_image_right' => $paragraph_image_position_right,
+    ];
+  }
+  else {
+    $variables['react_app'] = [
+      '#theme' => 'dpl_react_app',
+      '#name' => 'recommendation',
+      '#data' => [
+        'wid' => $work_id,
+        'position-image-right' => $paragraph_image_position_right,
+      ] + DplReactAppsController::externalApiBaseUrls(),
+    ];
+  }
 }
