@@ -286,7 +286,7 @@ tasks:
       Usage:
       - Update to a released version: RELEASE=2024.4.0 VERSION=2024.4.0 task dev:composer:update-design-system
       - Update to a branch release: BRANCH=taxonomy_categories task dev:composer:update-design-system
-    deps: ['deps:gh']
+    deps: ['deps:jq', 'deps:gh']
     cmds:
       - task: dev:composer:update-package
         vars:
@@ -311,7 +311,7 @@ tasks:
       Usage:
         - Update to a released version: RELEASE=2024.4.0 VERSION=2024.4.0 task dev:composer:update-react
         - Update to a branch release: BRANCH=taxonomy_categories task dev:composer:update-react
-    deps: ['deps:gh']
+    deps: ['deps:jq', 'deps:gh']
     cmds:
       - task: dev:composer:update-package
         vars:
