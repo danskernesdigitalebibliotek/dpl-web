@@ -39,7 +39,7 @@
                 "version": "2024.5.0",
                 "type": "drupal-library",
                 "dist": {
-                    "url": "https://github.com/danskernesdigitalebibliotek/dpl-react/releases/download/2024.5.0/dist-2024-5-0-78d8f3aa13df3978fbf234e421fb3c79a97efa97.zip",
+                    "url": "https://github.com/danskernesdigitalebibliotek/dpl-react/releases/download/branch-release%2F2024-5-0/dist-release-2024-5-0.zip",
                     "type": "zip"
                 },
                 "require": {
@@ -54,7 +54,7 @@
                 "type": "drupal-library",
                 "version": "2024.5.0",
                 "dist": {
-                    "url": "https://github.com/danskernesdigitalebibliotek/dpl-design-system/releases/download/2024.5.0/dist-2024-5-0-174d424951b2cc03e92bd2522b707f59226e8f12.zip",
+                    "url": "https://github.com/danskernesdigitalebibliotek/dpl-design-system/releases/download/branch-release%2F2024-5-0/dist-release-2024-5-0.zip",
                     "type": "zip"
                 }
             }
@@ -74,8 +74,8 @@
         "brick/math": "^0.12.1",
         "composer/installers": "1.12.0",
         "cweagans/composer-patches": "1.7.3",
-        "danskernesdigitalebibliotek/dpl-design-system": "*",
-        "danskernesdigitalebibliotek/dpl-react": "*",
+        "danskernesdigitalebibliotek/dpl-design-system": "^2024.5",
+        "danskernesdigitalebibliotek/dpl-react": "^2024.5",
         "danskernesdigitalebibliotek/fbs-client": "*",
         "dealerdirect/phpcodesniffer-composer-installer": "^0.7.1",
         "deoliveiralucas/array-keys-case-transform": "^1.1",
