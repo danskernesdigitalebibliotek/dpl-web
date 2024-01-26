@@ -274,6 +274,67 @@ tasks:
           -i https://raw.githubusercontent.com/danskernesdigitalebibliotek/dpl-react/main/src/core/fbs/fbs-adapter.yaml \
           -g php -o /local/packages/fbs-client -c /openapi-generator.config.fbs.yaml
 
+  dev:composer:update-design-system:
+    desc: Update the DPL design system package to a specific version or branch release.
+    summary: |
+      Environment variables:
+      - Required (one of):
+        BRANCH: The git branch to download the corresponding build for.
+        RELEASE: The release to download the corresponding build for
+      - Optional:
+        VERSION: The version to use for the package. Defaults to 0.0.0-dev
+      Usage:
+      - Update to a released version: RELEASE=2024.4.0 VERSION=2024.4.0 task dev:composer:update-design-system
+      - Update to a branch release: BRANCH=taxonomy_categories task dev:composer:update-design-system
+    deps: ['deps:gh']
+    cmds:
+      - task: dev:composer:update-package
+        vars:
+          NAME: "danskernesdigitalebibliotek/dpl-design-system"
+          VERSION:
+            sh: "echo ${VERSION:-0.0.0-dev}"
+          DOWNLOAD_URL:
+            sh:  gh release view ${RELEASE:-branch-$BRANCH} --repo danskernesdigitalebibliotek/dpl-design-system --json assets | jq -r '.assets[].url'
+    preconditions:
+      - sh: '[[ -z $BRANCH || -z $RELEASE ]]'
+        msg: Please provide a BRANCH or RELEASE environment variable with the name of the design system branch/release to use
+
+  dev:composer:update-react:
+    desc: Update the DPL React package to a specific version or branch release.
+    summary: |
+      Environment variables:
+        - Required (one of):
+          BRANCH: The git branch to download the corresponding build for.
+          RELEASE: The release to download the corresponding build for
+        - Optional:
+          VERSION: The version to use for the package. Defaults to 0.0.0-dev
+      Usage:
+        - Update to a released version: RELEASE=2024.4.0 VERSION=2024.4.0 task dev:composer:update-react
+        - Update to a branch release: BRANCH=taxonomy_categories task dev:composer:update-react
+    deps: ['deps:gh']
+    cmds:
+      - task: dev:composer:update-package
+        vars:
+          NAME: "danskernesdigitalebibliotek/dpl-react"
+          VERSION:
+            sh: "echo ${VERSION:-0.0.0-dev}"
+          DOWNLOAD_URL:
+            sh:  gh release view ${RELEASE:-branch-$BRANCH} --repo danskernesdigitalebibliotek/dpl-react --json assets | jq -r '.assets[].url'
+    preconditions:
+      - sh: '[[ -z $BRANCH || -z $RELEASE ]]'
+        msg: Please provide a BRANCH or RELEASE environment variable with the name of the React components branch/release to use
+
+  dev:composer:update-package:
+    deps: ['deps:jq', 'deps:gh']
+    internal: true
+    cmds:
+      - cmd: jq --indent {{ .JQ_INDENT }} -r '(.repositories[] | select(.package.name == "{{ .NAME }}").package.dist.url) = "{{ .DOWNLOAD_URL }}"' composer.json > composer.temp.json && mv composer.temp.json composer.json
+      - cmd: jq --indent {{ .JQ_INDENT }} -r '(.repositories[] | select(.package.name =="{{ .NAME }}").package.version) = ("{{ .VERSION }}")' composer.json > composer.temp.json && mv composer.temp.json composer.json
+      - cmd: task dev:cli -- composer require {{ .NAME }}:{{ .VERSION }}
+    vars:
+      # This is what matches our composer.json file.
+      JQ_INDENT: 4
+
   ci:reset:
     desc: Create CI setup in a clean state
     cmds:
@@ -413,6 +474,13 @@ tasks:
     preconditions:
       - sh: jq --version
         msg: jq is not installed. Please check https://stedolan.github.io/jq/.
+
+  deps:gh:
+    internal: true
+    preconditions:
+      - sh: gh --version && gh auth status
+        msg: GitHub CLI is not installed or not authenticated. Please check https://cli.github.com/.
+
   translations:scan:
     desc: Scan and generate translations
     cmds:
