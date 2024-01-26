@@ -29,3 +29,7 @@ swiper:
     theme:
       "https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css":
         { type: external }
+
+show-more:
+  js:
+    assets/dpl-design-system/js/show-more.js: {}

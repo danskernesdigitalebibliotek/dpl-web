@@ -274,6 +274,11 @@ tasks:
           -i https://raw.githubusercontent.com/danskernesdigitalebibliotek/dpl-react/main/src/core/fbs/fbs-adapter.yaml \
           -g php -o /local/packages/fbs-client -c /openapi-generator.config.fbs.yaml
 
+  dev:example-content:update:
+    desc: Update the example content module with data from the current site
+    cmds:
+      - cmd: task dev:cli -- drush default-content:export-module dpl_example_content
+
   ci:reset:
     desc: Create CI setup in a clean state
     cmds:

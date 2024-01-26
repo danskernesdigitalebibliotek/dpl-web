@@ -4,6 +4,7 @@ status: true
 dependencies:
   config:
     - core.entity_view_mode.eventseries.card
+    - field.field.eventseries.default.field_categories
     - field.field.eventseries.default.field_event_address
     - field.field.eventseries.default.field_event_description
     - field.field.eventseries.default.field_event_image
@@ -12,6 +13,7 @@ dependencies:
     - field.field.eventseries.default.field_event_partners
     - field.field.eventseries.default.field_event_place
     - field.field.eventseries.default.field_event_state
+    - field.field.eventseries.default.field_tags
     - field.field.eventseries.default.field_teaser_image
     - field.field.eventseries.default.field_teaser_text
     - field.field.eventseries.default.field_ticket_categories
@@ -64,6 +66,7 @@ hidden:
   daily_recurring_date: true
   event_instances: true
   event_registration: true
+  field_categories: true
   field_event_address: true
   field_event_description: true
   field_event_image: true
@@ -72,6 +75,7 @@ hidden:
   field_event_partners: true
   field_event_place: true
   field_event_state: true
+  field_tags: true
   field_ticket_categories: true
   monthly_recurring_date: true
   search_api_excerpt: true

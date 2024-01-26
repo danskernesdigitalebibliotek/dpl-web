@@ -3,6 +3,7 @@ langcode: en
 status: true
 dependencies:
   config:
+    - field.field.eventseries.default.field_categories
     - field.field.eventseries.default.field_event_address
     - field.field.eventseries.default.field_event_description
     - field.field.eventseries.default.field_event_image
@@ -11,6 +12,7 @@ dependencies:
     - field.field.eventseries.default.field_event_partners
     - field.field.eventseries.default.field_event_place
     - field.field.eventseries.default.field_event_state
+    - field.field.eventseries.default.field_tags
     - field.field.eventseries.default.field_teaser_image
     - field.field.eventseries.default.field_teaser_text
     - field.field.eventseries.default.field_ticket_categories
@@ -33,7 +35,7 @@ third_party_settings:
       label: 'Teaser card'
       region: content
       parent_name: ''
-      weight: 19
+      weight: 20
       format_type: details_sidebar
       format_settings:
         classes: ''
@@ -58,25 +60,31 @@ content:
     third_party_settings: {  }
   custom_date:
     type: daterange_default
-    weight: 4
+    weight: 9
     region: content
     settings: {  }
     third_party_settings: {  }
   daily_recurring_date:
     type: daily_recurring_date
-    weight: 4
+    weight: 5
+    region: content
+    settings: {  }
+    third_party_settings: {  }
+  field_categories:
+    type: options_select
+    weight: 10
     region: content
     settings: {  }
     third_party_settings: {  }
   field_event_address:
     type: address_default
-    weight: 14
+    weight: 15
     region: content
     settings: {  }
     third_party_settings: {  }
   field_event_description:
     type: text_textarea
-    weight: 11
+    weight: 12
     region: content
     settings:
       rows: 5
@@ -84,14 +92,14 @@ content:
     third_party_settings: {  }
   field_event_image:
     type: media_library_widget
-    weight: 17
+    weight: 18
     region: content
     settings:
       media_types: {  }
     third_party_settings: {  }
   field_event_link:
     type: link_default
-    weight: 13
+    weight: 14
     region: content
     settings:
       placeholder_url: ''
@@ -99,7 +107,7 @@ content:
     third_party_settings: {  }
   field_event_paragraphs:
     type: paragraphs
-    weight: 18
+    weight: 19
     region: content
     settings:
       title: Paragraph
@@ -127,7 +135,7 @@ content:
           dialog_style: tiles
   field_event_partners:
     type: string_textfield
-    weight: 16
+    weight: 17
     region: content
     settings:
       size: 60
@@ -135,7 +143,7 @@ content:
     third_party_settings: {  }
   field_event_place:
     type: string_textfield
-    weight: 15
+    weight: 16
     region: content
     settings:
       size: 60
@@ -143,9 +151,19 @@ content:
     third_party_settings: {  }
   field_event_state:
     type: options_select
-    weight: 2
+    weight: 3
     region: content
     settings: {  }
+    third_party_settings: {  }
+  field_tags:
+    type: entity_reference_autocomplete_tags
+    weight: 11
+    region: content
+    settings:
+      match_operator: CONTAINS
+      match_limit: 10
+      size: 60
+      placeholder: ''
     third_party_settings: {  }
   field_teaser_image:
     type: media_library_widget
@@ -164,7 +182,7 @@ content:
     third_party_settings: {  }
   field_ticket_categories:
     type: paragraphs
-    weight: 12
+    weight: 13
     region: content
     settings:
       title: Paragraph
@@ -182,7 +200,7 @@ content:
     third_party_settings: {  }
   monthly_recurring_date:
     type: monthly_recurring_date
-    weight: 4
+    weight: 7
     region: content
     settings: {  }
     third_party_settings: {  }
@@ -194,7 +212,7 @@ content:
     third_party_settings: {  }
   status:
     type: boolean_checkbox
-    weight: 1
+    weight: 0
     region: content
     settings:
       display_label: true
@@ -219,13 +237,13 @@ content:
     third_party_settings: {  }
   weekly_recurring_date:
     type: weekly_recurring_date
-    weight: 4
+    weight: 6
     region: content
     settings: {  }
     third_party_settings: {  }
   yearly_recurring_date:
     type: yearly_recurring_date
-    weight: 4
+    weight: 8
     region: content
     settings: {  }
     third_party_settings: {  }
