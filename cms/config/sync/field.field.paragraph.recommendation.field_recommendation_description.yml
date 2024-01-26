@@ -1,0 +1,19 @@
+uuid: b6a2211f-8f93-4dee-94b7-35c8ce1c7523
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.paragraph.field_recommendation_description
+    - paragraphs.paragraphs_type.recommendation
+id: paragraph.recommendation.field_recommendation_description
+field_name: field_recommendation_description
+entity_type: paragraph
+bundle: recommendation
+label: Description
+description: "This is the description for a recommendation. \r\n\r\nIf you add a description, the title of the the material will not be automatically generated. "
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: string_long

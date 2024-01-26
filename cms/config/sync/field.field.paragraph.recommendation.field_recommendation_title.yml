@@ -1,0 +1,24 @@
+uuid: d92a0446-3214-47d6-81e9-bceadc66f6b7
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.paragraph.field_recommendation_title
+    - filter.format.basic
+    - paragraphs.paragraphs_type.recommendation
+  module:
+    - text
+id: paragraph.recommendation.field_recommendation_title
+field_name: field_recommendation_title
+entity_type: paragraph
+bundle: recommendation
+label: Title
+description: "The title of the recommended material.\r\n\r\nIf you add a title, the description for the material will not be automatically generated. "
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings:
+  allowed_formats:
+    - basic
+field_type: text
