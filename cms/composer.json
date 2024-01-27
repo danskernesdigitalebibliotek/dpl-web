@@ -39,7 +39,7 @@
                 "version": "2024.5.0",
                 "type": "drupal-library",
                 "dist": {
-                    "url": "https://github.com/danskernesdigitalebibliotek/dpl-react/releases/download/branch-decimals-with-comma/dist-decimals-with-comma.zip",
+                    "url": "https://github.com/danskernesdigitalebibliotek/dpl-react/releases/download/branch-release%2F2024-5-0/dist-release-2024-5-0.zip",
                     "type": "zip"
                 },
                 "require": {
