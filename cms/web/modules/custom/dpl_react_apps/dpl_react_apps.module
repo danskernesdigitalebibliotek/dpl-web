@@ -195,6 +195,7 @@ function dpl_react_apps_texts(): array {
     'pause-reservation-modal-cancel-button-label' => t('Cancel pause', [], ['context' => 'Global']),
     'pause-reservation-modal-close-modal' => t('Close pause reservations modal', [], ['context' => 'Global']),
     'pause-reservation-modal-date-range-label' => t('Pause period', [], ['context' => 'Global']),
+    'pause-reservation-modal-date-range-placeholder-text' => t('Choose pause period', [], ['context' => 'Global']),
     'pause-reservation-modal-header' => t('Pause reservations on physical items', [], ['context' => 'Global']),
     'pause-reservation-modal-link' => t('Read more', [], ['context' => 'Global']),
     'pause-reservation-modal-save-button-label' => t('Save', [], ['context' => 'Global']),
