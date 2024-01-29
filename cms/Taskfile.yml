@@ -172,6 +172,17 @@ tasks:
       # Show a one-time login to the local site.
       - task dev:cli -- drush user-login
 
+  dev:openid:configure:
+    desc: Set openid connect settings based on .env variables. And run cron.
+    cmds:
+      - task dev:cli -- ./dev-scripts/cli-set-openid-settings.sh
+      - task dev:run-cron
+
+  dev:run-cron:
+    desc: Run cron in the container
+    cmds:
+      - task dev:cli -- drush cron
+
   dev:enable-dev-tools:
     desc: Enable dev modules and settings, which are not to be used in Prod. They are config-ignored
     cmds:
