@@ -104,10 +104,12 @@ function dpl_login_openid_connect_pre_authorize(AccountInterface|FALSE $account,
   // Check if the user is previously associated with an agency (library).
   // If not, we assume the user is new and skip the patron blocked check.
   if (!_dpl_login_is_agency_id_in_list($context)) {
+    $logger->info("User creation - New User (User was not associated to current library).");
     return TRUE;
   }
 
   try {
+    $logger->info("User creation - Existing User (User already associated with library agency).");
     $patron = $api->getPatronInformationByPatronIdV2();
     $patron_block_status = $patron->getPatron()?->getBlockStatus() ?? [];
     $patron_blocked_reasons = array_map(function (BlockStatus $block_status) use ($logger) {
