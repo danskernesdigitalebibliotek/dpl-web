@@ -8,6 +8,7 @@
 use Drupal\Core\Url;
 use Drupal\dpl_react_apps\Controller\DplReactAppsController;
 use Drupal\paragraphs\Entity\Paragraph;
+use Drupal\paragraphs\ParagraphInterface;
 use function Safe\parse_url;
 use function Safe\preg_match;
 
@@ -122,43 +123,47 @@ function dpl_paragraphs_preprocess_paragraph__recommendation(array &$variables):
   /** @var \Drupal\paragraphs\ParagraphInterface $paragraph */
   $paragraph = $variables['paragraph'];
 
-  if (!$paragraph->hasField('field_work_id') || $paragraph->get('field_work_id')->isEmpty()) {
+  if (!($paragraph instanceof ParagraphInterface) || !$paragraph->hasField('field_work_id') || $paragraph->get('field_work_id')->isEmpty()) {
     return;
   }
-  $work_id = $paragraph->get('field_work_id')->value;
-  $paragraph_title = $paragraph->get('field_recommendation_title')->value;
-  $paragraph_description = $paragraph->get('field_recommendation_description')->value;
-  $paragraph_image_position_right = $paragraph->get('field_image_position_right')->value;
 
-  // Determine which React app to use.
-  if (!empty($paragraph_title) || !empty($paragraph_description)) {
+  $work_id = $paragraph->get('field_work_id')->getString();
 
-    // The URL is only needed for the recommended-material app.
-    $base_url = \Drupal::request()->getSchemeAndHttpHost();
-    $material_path = urldecode(dpl_react_apps_ensure_url_is_string(
-      Url::fromRoute('dpl_react_apps.work')
-        ->setRouteParameter('wid', $work_id)
-        ->toString()));
-    $material_url = $base_url . $material_path;
+  // Check for the existence of additional fields.
+  if ($paragraph->hasField('field_recommendation_title') &&
+    $paragraph->hasField('field_recommendation_description') &&
+    $paragraph->hasField('field_image_position_right')) {
 
-    $variables['react_app'] = [
-      '#theme' => 'dpl_react_app',
-      '#name' => 'recommended-material',
-      '#data' => [
-        'wid' => $work_id,
-      ] + DplReactAppsController::externalApiBaseUrls(),
-      '#material_url' => $material_url,
-      '#positon_image_right' => $paragraph_image_position_right,
-    ];
-  }
-  else {
-    $variables['react_app'] = [
-      '#theme' => 'dpl_react_app',
-      '#name' => 'recommendation',
-      '#data' => [
-        'wid' => $work_id,
-        'position-image-right' => $paragraph_image_position_right,
-      ] + DplReactAppsController::externalApiBaseUrls(),
-    ];
+    $paragraph_title = $paragraph->get('field_recommendation_title')->getString();
+    $paragraph_description = $paragraph->get('field_recommendation_description')->getString();
+    $paragraph_image_position_right = $paragraph->get('field_image_position_right')->getString();
+
+    if (!empty($paragraph_title) || !empty($paragraph_description)) {
+      // The URL is only needed for the recommended-material app.
+      $material_url_object = Url::fromRoute('dpl_react_apps.work', ['wid' => $work_id], ['absolute' => TRUE]);
+      $material_url = $material_url_object->toString();
+
+      $variables['react_app'] = [
+        '#theme' => 'dpl_react_app',
+        '#name' => 'recommended-material',
+        '#data' => [
+          'wid' => $work_id,
+        ] + DplReactAppsController::externalApiBaseUrls(),
+        '#material_url' => $material_url,
+        '#position_image_right' => $paragraph_image_position_right,
+      ];
+    }
+    else {
+      // Align React's prop type: String '1' for true, boolean false otherwise.
+      $paragraph_image_position_right = $paragraph_image_position_right === '1' ? '1' : FALSE;
+      $variables['react_app'] = [
+        '#theme' => 'dpl_react_app',
+        '#name' => 'recommendation',
+        '#data' => [
+          'wid' => $work_id,
+          'position-image-right' => $paragraph_image_position_right,
+        ] + DplReactAppsController::externalApiBaseUrls(),
+      ];
+    }
   }
 }
