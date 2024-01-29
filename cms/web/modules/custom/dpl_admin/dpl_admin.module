@@ -194,3 +194,30 @@ function dpl_admin_form_alter(array &$form, FormStateInterface $form_state, stri
 
   }
 }
+
+/**
+ * Implements hook_element_info_alter().
+ *
+ * Override the datetime element, to remove seconds input.
+ *
+ * @param array<mixed> $types
+ *   See the $types in hook_element_info_alter().
+ */
+function dpl_admin_element_info_alter(array &$types): void {
+  $types['datetime']['#process'][] = 'dpl_admin_datetime_set_format';
+}
+
+/**
+ * Element process callback for datetime fields.
+ *
+ * @param array<mixed> $element
+ *   The form element that we are overriding.
+ *
+ * @return array<mixed>
+ *   Updated version of $element.
+ */
+function dpl_admin_datetime_set_format(array $element): array {
+  // Remove seconds in browsers that support HTML5 type=date.
+  $element['time']['#attributes']['step'] = 60;
+  return $element;
+}
