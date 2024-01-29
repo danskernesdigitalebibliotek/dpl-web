@@ -52,10 +52,7 @@ function dpl_login_openid_connect_userinfo_alter(array &$userinfo, array $contex
 }
 
 /**
- * Check if the user is already associated with the current agency (library).
- * First we check if user as any agencies associated. If not we assume the user is new.
- * If not, we check if the current agency is in the list of agencies associated with the user.
- * If that is the case,
+ * Check if the agency id is already associated with the user.
  *
  * @param mixed[] $context
  *   Various openid_connect context.
@@ -104,7 +101,8 @@ function dpl_login_openid_connect_pre_authorize(AccountInterface|FALSE $account,
   $api_factory = \Drupal::service('dpl_fbs.api_factory');
   $api = $api_factory->getPatronApi($token->token);
 
-  // Check if the user is previously associated with an agency (library). If not, we assume the user is new.
+  // Check if the user is previously associated with an agency (library).
+  // If not, we assume the user is new and skip the patron blocked check.
   if (!_dpl_login_is_agency_id_in_list($context)) {
     return TRUE;
   }
