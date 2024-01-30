@@ -120,15 +120,13 @@ function dpl_paragraphs_preprocess_paragraph__medias(array &$variables): void {
  * React app. Otherwise, we use the recommendation React app.
  */
 function dpl_paragraphs_preprocess_paragraph__recommendation(array &$variables): void {
-  /** @var \Drupal\paragraphs\ParagraphInterface $paragraph */
-  $paragraph = $variables['paragraph'];
 
+  $paragraph = $variables['paragraph'] ?? NULL;
   if (!($paragraph instanceof ParagraphInterface) || !$paragraph->hasField('field_work_id') || $paragraph->get('field_work_id')->isEmpty()) {
     return;
   }
 
   $work_id = $paragraph->get('field_work_id')->getString();
-
   // Check for the existence of additional fields.
   if ($paragraph->hasField('field_recommendation_title') &&
     $paragraph->hasField('field_recommendation_description') &&
