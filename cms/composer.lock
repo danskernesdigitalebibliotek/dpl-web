@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "e20028e94fded3d74a257153a6b847fe",
+    "content-hash": "6f55f842311d898eadaff16baf7c3111",
     "packages": [
         {
             "name": "amazeeio/drupal_integrations",
@@ -1099,19 +1099,19 @@
         },
         {
             "name": "danskernesdigitalebibliotek/dpl-design-system",
-            "version": "2024.5.0",
+            "version": "2024.7.0",
             "dist": {
                 "type": "zip",
-                "url": "https://github.com/danskernesdigitalebibliotek/dpl-design-system/releases/download/2024.5.0/dist-2024-5-0-d17ec00d0db46973e99a8643a92b11e4eeb183d0.zip"
+                "url": "https://github.com/danskernesdigitalebibliotek/dpl-design-system/releases/download/branch-release%2F2024-7-0/dist-release-2024-7-0.zip"
             },
             "type": "drupal-library"
         },
         {
             "name": "danskernesdigitalebibliotek/dpl-react",
-            "version": "2024.5.0",
+            "version": "2024.7.0",
             "dist": {
                 "type": "zip",
-                "url": "https://github.com/danskernesdigitalebibliotek/dpl-react/releases/download/2024.5.0/dist-2024-5-0-7fb49c7351e6f7f07c9b6c4421d6c834fbbb952b.zip"
+                "url": "https://github.com/danskernesdigitalebibliotek/dpl-react/releases/download/branch-release%2F2024-7-0/dist-release-2024-7-0.zip"
             },
             "require": {
                 "composer/installers": "^1.2.0"
