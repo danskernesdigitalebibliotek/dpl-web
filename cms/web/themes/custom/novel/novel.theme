@@ -7,6 +7,7 @@
 
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\StringTranslation\TranslatableMarkup;
+use Drupal\paragraphs\ParagraphInterface;
 use Spatie\Color\Hex;
 use Spatie\Color\Hsl;
 use function Safe\file_get_contents;
@@ -241,4 +242,32 @@ function novel_theme_suggestions_field_alter(array &$suggestions, array $variabl
   $suggestions[] = 'field__' . $element['#entity_type'] . '__' .
     $element['#field_name'] . '__' . $element['#bundle'] . '__' .
     $element['#view_mode'];
+}
+
+/**
+ * Implements hook_theme_suggestions_paragraph_alter().
+ *
+ * Adds a template suggestion for recommendation paragraphs that contain
+ * a title or description written by an editor. This enhances caching efficiency
+ * by using separate templates for the variations of the paragraph.
+ *
+ * @param string[] &$suggestions
+ *   An array of theme suggestion strings.
+ * @param array<mixed> $variables
+ *   An array of variables of mixed types, passed to the theme layer.
+ */
+function novel_theme_suggestions_paragraph_alter(array &$suggestions, array $variables): void {
+
+  $paragraph = $variables['elements']['#paragraph'] ?? NULL;
+  if (!($paragraph instanceof ParagraphInterface)) {
+    return;
+  }
+
+  if ($paragraph->getType() == 'recommendation') {
+    // Check for title or description.
+    if (!empty($paragraph->get('field_recommendation_title')->getString()) ||
+      !empty($paragraph->get('field_recommendation_description')->getString())) {
+      $suggestions[] = 'paragraph__recommendation__recommended_material';
+    }
+  }
 }
