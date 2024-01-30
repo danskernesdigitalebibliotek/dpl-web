@@ -483,19 +483,4 @@ class DplReactAppsController extends ControllerBase {
     return $urls;
   }
 
-  /**
-   * Get the strings and config for blocked user.
-   *
-   * @return mixed[]
-   *   An array of strings and config.
-   */
-  public static function getBlockedSettings(): array {
-    $blockedSettings = \Drupal::configFactory()->get('dpl_library_agency.general_settings');
-    $blockedData = [
-      'blocked-patron-e-link-url' => dpl_react_apps_format_app_url($blockedSettings->get('blocked_patron_e_link_url'), GeneralSettings::BLOCKED_PATRON_E_LINK_URL),
-    ];
-
-    return $blockedData;
-  }
-
 }

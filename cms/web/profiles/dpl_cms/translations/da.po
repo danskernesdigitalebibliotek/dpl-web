@@ -1,5 +1,3 @@
-# Danish translation of DPL CMS
-#
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
@@ -8,7 +6,7 @@ msgstr ""
 "Last-Translator: NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
 "MIME-Version: 1.0\n"
-"Content-Type: text/plain; charset=utf-8\n"
+"Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
 
@@ -1813,125 +1811,256 @@ msgctxt "Patron page"
 msgid "Address"
 msgstr "Adresse"
 
-msgctxt "Patron page"
-msgid "BASIC DETAILS"
-msgstr "Stamoplysninger"
+#:
+msgctxt "Dpl Login"
+msgid "Logout endpoint"
+msgstr "Logout endpoint"
 
-msgctxt "Patron page"
-msgid "Name"
-msgstr "Navn"
+#:
+msgctxt "Dpl Login"
+msgid "Agency ID"
+msgstr "Agency ID"
 
-msgctxt "Patron page"
-msgid "patron page change pickup body text"
-msgstr "Vælg hvor du vil afhente dine reserveringer"
+#:
+msgctxt "Reservation list"
+msgid "Borrow before @date"
+msgstr "Lån før @date"
 
-msgctxt "Patron page"
-msgid "RESERVATIONS"
+#:
+msgctxt "Search Result"
+msgid "Showing results for \"@query\""
+msgstr "Viser resultater for \"@query\""
+
+#:
+msgctxt "Favorites list"
+msgid "@count materials"
+msgstr "@count materialer"
+
+#:
+msgctxt "Favorites list"
+msgid "Favorites"
+msgstr "Huskeliste"
+
+#:
+msgctxt "Favorites list"
+msgid "Your favorites list is empty"
+msgstr "Din huskeliste er tom"
+
+#:
+msgid "DPL favorites"
+msgstr "DPL Huskeliste"
+
+#:
+msgid "Handle the favorites list"
+msgstr "Håndter indstillinger for huskeliste"
+
+#:
+msgctxt "Dashboard"
+msgid "Select all"
+msgstr "Vælg alle"
+
+#:
+msgctxt "Dashboard"
+msgid "At the moment, you have 0 physical loans"
+msgstr "Du har ingen fysiske lån i øjeblikket"
+
+#:
+msgctxt "Dashboard"
+msgid "At the moment, you have 0 reservations"
+msgstr "Du har 0 reserveringer"
+
+#:
+msgctxt "Dashboard"
+msgid "Reservations"
 msgstr "Reserveringer"
 
-msgctxt "Patron page"
-msgid "Delete your profile"
-msgstr "Sådan sletter du din brugerprofil"
+#:
+msgctxt "Dashboard"
+msgid "You owe in total"
+msgstr "Du skylder i alt"
 
-msgctxt "Patron page"
-msgid "Do you wish to delete your library profile?"
-msgstr "Ønsker du ikke længere at have en profil på biblioteket?"
+#:
+msgctxt "Dashboard"
+msgid "Your profile"
+msgstr "Dit overblik"
 
-msgctxt "Patron page"
-msgid "Patron profile page"
-msgstr "Brugerprofil"
+#:
+msgid "DPL dashboard"
+msgstr "DPL dashboard"
 
-msgctxt "Patron page (aria)"
-msgid ""
-"This checkbox opens a section where you can put your current "
-"reservations on a pause, when the time period picked has ended, the "
-"reservations will be resumed"
-msgstr ""
-"Denne tjekboks åbner en sektion hvor du kan sætte dine reserveringer "
-"på pause, når den valgte periode slutter vil reserveringerne blive "
-"genaktiveret"
+#:
+msgid "Handle the user profile dashboard page"
+msgstr "Håndter indstillinger for brugerens dashboard (Dit overblik)"
 
-msgctxt "Patron page"
-msgid "Pause your reservations"
-msgstr "Sæt dine reserveringer på pause"
+#:
+msgctxt "Something similar"
+msgid "By the same author"
+msgstr "Af samme forfatter"
 
-msgctxt "Patron page"
-msgid "patron page pause reservations body text"
-msgstr ""
-"Du kan sætte dine reserveringer på pause mens du f.eks. er på "
-"ferie. Gælder kun fysiske materialer."
+#:
+msgctxt "Something similar"
+msgid "Something similar"
+msgstr "Noget der ligner"
 
-msgctxt "Patron page"
-msgid "Pause physical reservations"
-msgstr "Sæt reserveringer af fysiske materialer på pause"
+#:
+msgctxt "Something similar"
+msgid "Other materials"
+msgstr "Andre materialer"
 
+#:
+msgid "DPL something similar"
+msgstr "DPL noget der ligner"
+
+#:
+msgid "Something similar component"
+msgstr "Komponenten \"Noget der ligner\""
+
+#:
+msgctxt "Recommender"
+msgid "For your inspiration"
+msgstr "Inspiration til dig"
+
+#:
+msgctxt "Recommender"
+msgid "Because you have borrowed @title you may also like"
+msgstr "Fordi du har lånt @title kan du måske også lide"
+
+#:
+msgctxt "Recommender"
+msgid "Because you have reserved @title you may also like"
+msgstr "Fordi du har lånt @title kan du måske også lide"
+
+#:
+msgctxt "Recommender (settings)"
+msgid "Search text"
+msgstr "Søgetekst"
+
+#:
+msgctxt "Recommender (settings)"
+msgid "Search text for recommender when no loan/no reservation"
+msgstr "Søgetekst for anbefalinger hvis bruger har 0 lån/reserveringer (ikke CQL)"
+
+#:
+msgid "Recommender settings"
+msgstr "Indstillinger for anbefalinger"
+
+#:
+msgid "DPL recommender"
+msgstr "DPL recommender"
+
+#:
+msgid "recommender component"
+msgstr "Komponent til anbefalinger (recommender)"
+
+#:
 msgctxt "Patron page"
 msgid "Save"
 msgstr "Gem"
 
+#:
 msgctxt "Patron page"
-msgid ""
-"There is a number of materials without limitation to amounts of loans "
-"per month."
-msgstr "Der findes titler uden begrænsning på antal lån pr. måned."
+msgid "Patron profile page"
+msgstr "Brugerprofil"
 
+#:
 msgctxt "Patron page"
-msgid "DIGITAL LOANS (EREOLEN)"
-msgstr "DIGITALE LÅN (eREOLEN)"
+msgid "BASIC DETAILS"
+msgstr "Stamoplysninger"
 
+#:
 msgctxt "Patron page"
-msgid "Click here, to see titles always eligible to be loaned"
-msgstr "Se titler du altid kan låne"
+msgid "Name"
+msgstr "Navn"
 
-msgctxt "Patron page"
-msgid "Loans per month"
-msgstr "Lån pr. måned"
-
-msgctxt "Patron page"
-msgid "Audiobooks"
-msgstr "Lydbøger"
-
-msgctxt "Patron page"
-msgid "E-books"
-msgstr "E-bøger"
-
-msgctxt "Patron page (aria)"
-msgid "You used @this audiobooks out of you quota of @that audiobooks"
-msgstr "Du har brugt @this audiobooks ud af din kvote på @that lydbøger"
-
-msgctxt "Patron page (aria)"
-msgid "You used @this ebooks out of you quota of @that ebooks"
-msgstr "Du har brugt @this ud af din kvote på @that e-bøger"
-
-msgctxt "Patron page"
-msgid "@this out of @that"
-msgstr "@this ud af @that"
-
-msgctxt "Patron page"
-msgid "You can reserve @countEbooks ebooks and @countAudiobooks audiobooks"
-msgstr "Du kan reservere @countEbooks e-bøger og @countAudiobooks lydbøger"
-
+#:
 msgctxt "Patron page"
 msgid "patron page text fee text"
 msgstr "Bemærk at dit telefonselskab kan opkræve gebyr for sms"
 
+#:
+msgctxt "Patron page"
+msgid "Address"
+msgstr "Adresse"
+
+#:
+msgctxt "Patron page"
+msgid "DIGITAL LOANS (EREOLEN)"
+msgstr "DIGITALE LÅN (eREOLEN)"
+
+#:
+msgctxt "Patron page"
+msgid "There is a number of materials without limitation to amounts of loans per month."
+msgstr "Der findes titler uden begrænsning på antal lån pr. måned."
+
+#:
+msgctxt "Patron page"
+msgid "Click here, to see titles always eligible to be loaned"
+msgstr "Se titler du altid kan låne"
+
+#:
+msgctxt "Patron page"
+msgid "Loans per month"
+msgstr "Lån pr. måned"
+
+#:
+msgctxt "Patron page"
+msgid "E-books"
+msgstr "E-bøger"
+
+#:
+msgctxt "Patron page"
+msgid "Audiobooks"
+msgstr "Lydbøger"
+
+#:
+msgctxt "Patron page"
+msgid "RESERVATIONS"
+msgstr "Reserveringer"
+
+#:
+msgctxt "Patron page"
+msgid "patron page change pickup body text"
+msgstr "Vælg hvor du vil afhente dine reserveringer"
+
+#:
+msgctxt "Patron page"
+msgid "Pause physical reservations"
+msgstr "Sæt reserveringer af fysiske materialer på pause"
+
+#:
+msgctxt "Patron page"
+msgid "patron page pause reservations body text"
+msgstr "Du kan sætte dine reserveringer på pause mens du f.eks. er på ferie. Gælder kun fysiske materialer."
+
+#:
+msgctxt "Patron page"
+msgid "Pause your reservations"
+msgstr "Sæt dine reserveringer på pause"
+
+#:
+msgctxt "Patron page (aria)"
+msgid "This checkbox opens a section where you can put your current reservations on a pause, when the time period picked has ended, the reservations will be resumed"
+msgstr "Denne tjekboks åbner en sektion hvor du kan sætte dine reserveringer på pause, når den valgte periode slutter vil reserveringerne blive genaktiveret"
+
+#:
 msgctxt "Patron page"
 msgid "Your pincode was saved"
 msgstr "Din pinkode blev gemt"
 
+#:
 msgctxt "Patron page"
-msgid ""
-"The phone number must be 6 to 15 characters in length and should be "
-"comprised solely of numbers or begin with a +"
-msgstr "Nummeret skal være mellem 6 og 15 cifre"
+msgid "Do you wish to delete your library profile?"
+msgstr "Ønsker du ikke længere at have en profil på biblioteket?"
 
+#:
 msgctxt "Patron page"
-msgid "Your changes are saved."
-msgstr "Dine ændringer blev gemt"
+msgid "Delete your profile"
+msgstr "Sådan sletter du din brugerprofil"
 
+#:
 msgctxt "Patron page"
-msgid "Loading..."
-msgstr "Henter..."
+msgid "You can reserve @countEbooks ebooks and @countAudiobooks audiobooks"
+msgstr "Du kan reservere @countEbooks e-bøger og @countAudiobooks lydbøger"
 
 msgctxt "Patron page settings form"
 msgid "Basic settings"
@@ -2394,30 +2523,27 @@ msgctxt "Create patron"
 msgid "Cancel"
 msgstr "Fortryd"
 
-msgctxt "Create patron"
-msgid "Select pickup location in the select"
-msgstr "Vælg afhentningssted"
-
-msgctxt "Create patron"
-msgid "Select pickup location"
-msgstr "Vælg afhentningssted"
-
+#:
 msgctxt "Create patron"
 msgid "Confirm"
 msgstr "Bekræft"
 
+#:
 msgctxt "Create patron"
 msgid "Register as patron"
 msgstr "Opret bruger"
 
+#:
 msgctxt "Create patron"
 msgid "This SSN is invalid"
 msgstr "Denne SSN er ugyldig"
 
+#:
 msgctxt "Create patron"
 msgid "Invalid SSN"
 msgstr "Ugyldig SSN"
 
+#:
 msgctxt "Create patron"
 msgid "Name"
 msgstr "Navn"
@@ -3507,8 +3633,9 @@ msgstr "Kommende arrangementer"
 msgid "Skip to main content"
 msgstr "Gå til hovedindhold"
 
-msgid "By @username"
-msgstr "Af @username"
+#:
+msgid "Patron registration information"
+msgstr "Information om brugeroprettelse"
 
 msgid "List of bookmarks"
 msgstr "Bogmærkeliste"
@@ -3516,17 +3643,23 @@ msgstr "Bogmærkeliste"
 msgid "Time"
 msgstr "Tid"
 
-msgid "Price"
-msgstr "Pris"
+#:
+msgctxt "Patron menu"
+msgid "My Account"
+msgstr "Brugerprofil"
 
-msgid "Place"
-msgstr "Sted"
+#:
+msgctxt "Patron menu"
+msgid "loans expired"
+msgstr "Overskredne lån"
 
 msgid "Partners"
 msgstr "I samarbejde med"
 
-msgid "Address"
-msgstr "Adresse"
+#:
+msgctxt "Patron menu"
+msgid "reservations ready for pickup"
+msgstr "Klar til lån"
 
 msgid "Description"
 msgstr "Beskrivelse"
