@@ -1,12 +1,14 @@
+# Danish translation of DPL CMS
+#
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2024-01-29 09:12+0100\n"
-"PO-Revision-Date: 2024-01-29 09:12+0100\n"
+"POT-Creation-Date: 2024-01-30 11:47+0100\n"
+"PO-Revision-Date: 2024-01-30 11:47+0100\n"
 "Last-Translator: NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
 "MIME-Version: 1.0\n"
-"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
 
@@ -215,14 +217,6 @@ msgstr ""
 msgctxt "Global"
 msgid "Number @count in line"
 msgstr "Nummer @count i køen"
-
-msgctxt "Global"
-msgid "To"
-msgstr "Til"
-
-msgctxt "Global"
-msgid "From"
-msgstr "Fra"
 
 msgctxt "Global"
 msgid ""
@@ -587,6 +581,14 @@ msgstr "Fjern pause"
 msgctxt "Global"
 msgid "Close pause reservations modal"
 msgstr "Luk pop-up til at sætte reserveringer på pause"
+
+msgctxt "Global"
+msgid "Pause period"
+msgstr ""
+
+msgctxt "Global"
+msgid "Choose pause period"
+msgstr ""
 
 msgctxt "Global"
 msgid "Pause reservations on physical items"
@@ -1811,256 +1813,125 @@ msgctxt "Patron page"
 msgid "Address"
 msgstr "Adresse"
 
-#:
-msgctxt "Dpl Login"
-msgid "Logout endpoint"
-msgstr "Logout endpoint"
-
-#:
-msgctxt "Dpl Login"
-msgid "Agency ID"
-msgstr "Agency ID"
-
-#:
-msgctxt "Reservation list"
-msgid "Borrow before @date"
-msgstr "Lån før @date"
-
-#:
-msgctxt "Search Result"
-msgid "Showing results for \"@query\""
-msgstr "Viser resultater for \"@query\""
-
-#:
-msgctxt "Favorites list"
-msgid "@count materials"
-msgstr "@count materialer"
-
-#:
-msgctxt "Favorites list"
-msgid "Favorites"
-msgstr "Huskeliste"
-
-#:
-msgctxt "Favorites list"
-msgid "Your favorites list is empty"
-msgstr "Din huskeliste er tom"
-
-#:
-msgid "DPL favorites"
-msgstr "DPL Huskeliste"
-
-#:
-msgid "Handle the favorites list"
-msgstr "Håndter indstillinger for huskeliste"
-
-#:
-msgctxt "Dashboard"
-msgid "Select all"
-msgstr "Vælg alle"
-
-#:
-msgctxt "Dashboard"
-msgid "At the moment, you have 0 physical loans"
-msgstr "Du har ingen fysiske lån i øjeblikket"
-
-#:
-msgctxt "Dashboard"
-msgid "At the moment, you have 0 reservations"
-msgstr "Du har 0 reserveringer"
-
-#:
-msgctxt "Dashboard"
-msgid "Reservations"
-msgstr "Reserveringer"
-
-#:
-msgctxt "Dashboard"
-msgid "You owe in total"
-msgstr "Du skylder i alt"
-
-#:
-msgctxt "Dashboard"
-msgid "Your profile"
-msgstr "Dit overblik"
-
-#:
-msgid "DPL dashboard"
-msgstr "DPL dashboard"
-
-#:
-msgid "Handle the user profile dashboard page"
-msgstr "Håndter indstillinger for brugerens dashboard (Dit overblik)"
-
-#:
-msgctxt "Something similar"
-msgid "By the same author"
-msgstr "Af samme forfatter"
-
-#:
-msgctxt "Something similar"
-msgid "Something similar"
-msgstr "Noget der ligner"
-
-#:
-msgctxt "Something similar"
-msgid "Other materials"
-msgstr "Andre materialer"
-
-#:
-msgid "DPL something similar"
-msgstr "DPL noget der ligner"
-
-#:
-msgid "Something similar component"
-msgstr "Komponenten \"Noget der ligner\""
-
-#:
-msgctxt "Recommender"
-msgid "For your inspiration"
-msgstr "Inspiration til dig"
-
-#:
-msgctxt "Recommender"
-msgid "Because you have borrowed @title you may also like"
-msgstr "Fordi du har lånt @title kan du måske også lide"
-
-#:
-msgctxt "Recommender"
-msgid "Because you have reserved @title you may also like"
-msgstr "Fordi du har lånt @title kan du måske også lide"
-
-#:
-msgctxt "Recommender (settings)"
-msgid "Search text"
-msgstr "Søgetekst"
-
-#:
-msgctxt "Recommender (settings)"
-msgid "Search text for recommender when no loan/no reservation"
-msgstr "Søgetekst for anbefalinger hvis bruger har 0 lån/reserveringer (ikke CQL)"
-
-#:
-msgid "Recommender settings"
-msgstr "Indstillinger for anbefalinger"
-
-#:
-msgid "DPL recommender"
-msgstr "DPL recommender"
-
-#:
-msgid "recommender component"
-msgstr "Komponent til anbefalinger (recommender)"
-
-#:
-msgctxt "Patron page"
-msgid "Save"
-msgstr "Gem"
-
-#:
-msgctxt "Patron page"
-msgid "Patron profile page"
-msgstr "Brugerprofil"
-
-#:
 msgctxt "Patron page"
 msgid "BASIC DETAILS"
 msgstr "Stamoplysninger"
 
-#:
 msgctxt "Patron page"
 msgid "Name"
 msgstr "Navn"
 
-#:
-msgctxt "Patron page"
-msgid "patron page text fee text"
-msgstr "Bemærk at dit telefonselskab kan opkræve gebyr for sms"
-
-#:
-msgctxt "Patron page"
-msgid "Address"
-msgstr "Adresse"
-
-#:
-msgctxt "Patron page"
-msgid "DIGITAL LOANS (EREOLEN)"
-msgstr "DIGITALE LÅN (eREOLEN)"
-
-#:
-msgctxt "Patron page"
-msgid "There is a number of materials without limitation to amounts of loans per month."
-msgstr "Der findes titler uden begrænsning på antal lån pr. måned."
-
-#:
-msgctxt "Patron page"
-msgid "Click here, to see titles always eligible to be loaned"
-msgstr "Se titler du altid kan låne"
-
-#:
-msgctxt "Patron page"
-msgid "Loans per month"
-msgstr "Lån pr. måned"
-
-#:
-msgctxt "Patron page"
-msgid "E-books"
-msgstr "E-bøger"
-
-#:
-msgctxt "Patron page"
-msgid "Audiobooks"
-msgstr "Lydbøger"
-
-#:
-msgctxt "Patron page"
-msgid "RESERVATIONS"
-msgstr "Reserveringer"
-
-#:
 msgctxt "Patron page"
 msgid "patron page change pickup body text"
 msgstr "Vælg hvor du vil afhente dine reserveringer"
 
-#:
 msgctxt "Patron page"
-msgid "Pause physical reservations"
-msgstr "Sæt reserveringer af fysiske materialer på pause"
+msgid "RESERVATIONS"
+msgstr "Reserveringer"
 
-#:
-msgctxt "Patron page"
-msgid "patron page pause reservations body text"
-msgstr "Du kan sætte dine reserveringer på pause mens du f.eks. er på ferie. Gælder kun fysiske materialer."
-
-#:
-msgctxt "Patron page"
-msgid "Pause your reservations"
-msgstr "Sæt dine reserveringer på pause"
-
-#:
-msgctxt "Patron page (aria)"
-msgid "This checkbox opens a section where you can put your current reservations on a pause, when the time period picked has ended, the reservations will be resumed"
-msgstr "Denne tjekboks åbner en sektion hvor du kan sætte dine reserveringer på pause, når den valgte periode slutter vil reserveringerne blive genaktiveret"
-
-#:
-msgctxt "Patron page"
-msgid "Your pincode was saved"
-msgstr "Din pinkode blev gemt"
-
-#:
-msgctxt "Patron page"
-msgid "Do you wish to delete your library profile?"
-msgstr "Ønsker du ikke længere at have en profil på biblioteket?"
-
-#:
 msgctxt "Patron page"
 msgid "Delete your profile"
 msgstr "Sådan sletter du din brugerprofil"
 
-#:
+msgctxt "Patron page"
+msgid "Do you wish to delete your library profile?"
+msgstr "Ønsker du ikke længere at have en profil på biblioteket?"
+
+msgctxt "Patron page"
+msgid "Patron profile page"
+msgstr "Brugerprofil"
+
+msgctxt "Patron page (aria)"
+msgid ""
+"This checkbox opens a section where you can put your current "
+"reservations on a pause, when the time period picked has ended, the "
+"reservations will be resumed"
+msgstr ""
+"Denne tjekboks åbner en sektion hvor du kan sætte dine reserveringer "
+"på pause, når den valgte periode slutter vil reserveringerne blive "
+"genaktiveret"
+
+msgctxt "Patron page"
+msgid "Pause your reservations"
+msgstr "Sæt dine reserveringer på pause"
+
+msgctxt "Patron page"
+msgid "patron page pause reservations body text"
+msgstr ""
+"Du kan sætte dine reserveringer på pause mens du f.eks. er på "
+"ferie. Gælder kun fysiske materialer."
+
+msgctxt "Patron page"
+msgid "Pause physical reservations"
+msgstr "Sæt reserveringer af fysiske materialer på pause"
+
+msgctxt "Patron page"
+msgid "Save"
+msgstr "Gem"
+
+msgctxt "Patron page"
+msgid ""
+"There is a number of materials without limitation to amounts of loans "
+"per month."
+msgstr "Der findes titler uden begrænsning på antal lån pr. måned."
+
+msgctxt "Patron page"
+msgid "DIGITAL LOANS (EREOLEN)"
+msgstr "DIGITALE LÅN (eREOLEN)"
+
+msgctxt "Patron page"
+msgid "Click here, to see titles always eligible to be loaned"
+msgstr "Se titler du altid kan låne"
+
+msgctxt "Patron page"
+msgid "Loans per month"
+msgstr "Lån pr. måned"
+
+msgctxt "Patron page"
+msgid "Audiobooks"
+msgstr "Lydbøger"
+
+msgctxt "Patron page"
+msgid "E-books"
+msgstr "E-bøger"
+
+msgctxt "Patron page (aria)"
+msgid "You used @this audiobooks out of you quota of @that audiobooks"
+msgstr "Du har brugt @this audiobooks ud af din kvote på @that lydbøger"
+
+msgctxt "Patron page (aria)"
+msgid "You used @this ebooks out of you quota of @that ebooks"
+msgstr "Du har brugt @this ud af din kvote på @that e-bøger"
+
+msgctxt "Patron page"
+msgid "@this out of @that"
+msgstr "@this ud af @that"
+
 msgctxt "Patron page"
 msgid "You can reserve @countEbooks ebooks and @countAudiobooks audiobooks"
 msgstr "Du kan reservere @countEbooks e-bøger og @countAudiobooks lydbøger"
+
+msgctxt "Patron page"
+msgid "patron page text fee text"
+msgstr "Bemærk at dit telefonselskab kan opkræve gebyr for sms"
+
+msgctxt "Patron page"
+msgid "Your pincode was saved"
+msgstr "Din pinkode blev gemt"
+
+msgctxt "Patron page"
+msgid ""
+"The phone number must be 6 to 15 characters in length and should be "
+"comprised solely of numbers or begin with a +"
+msgstr "Nummeret skal være mellem 6 og 15 cifre"
+
+msgctxt "Patron page"
+msgid "Your changes are saved."
+msgstr "Dine ændringer blev gemt"
+
+msgctxt "Patron page"
+msgid "Loading..."
+msgstr "Henter..."
 
 msgctxt "Patron page settings form"
 msgid "Basic settings"
@@ -2163,6 +2034,12 @@ msgstr ""
 "registreres i vores systemer"
 
 msgctxt "Fees list"
+msgid ""
+"Already paid? It can take up to 72 hours register the transaction. "
+"(not payable by user)"
+msgstr ""
+
+msgctxt "Fees list"
 msgid "Days"
 msgstr "Dage"
 
@@ -2249,6 +2126,16 @@ msgid "see our fees and replacement costs"
 msgstr "Se takster og læs om betalingsmuligheder"
 
 msgctxt "Fees list settings form"
+msgid ""
+"Fees and replacement costs are handled through the new system \"Mit "
+"betalingsoverblik\""
+msgstr ""
+
+msgctxt "Fees list settings form"
+msgid "Go to payment page"
+msgstr ""
+
+msgctxt "Fees list settings form"
 msgid "Basic settings"
 msgstr "Basisindstillinger"
 
@@ -2281,49 +2168,43 @@ msgstr ""
 "http:// eller https://)."
 
 msgctxt "Fees list settings form"
-msgid "Payment overview url"
-msgstr "Link til betalingssite"
-
-msgctxt "Fees list settings form"
-msgid ""
-"URL containing the payment overview. <br>\n"
-"                           "
-"              You can add a relative url (e.g. /takster). <br>\n"
-"      "
-"                                   You can search for an internal url. "
-"<br>\n"
-"                                         You can add an "
-"external url (starting with \"http://\" or \"https://\")"
-msgstr ""
-"Her kan du indsætte et link til en betalingsside, fx. Mit "
-"betalingsoverblik. <br>\n"
-"\n"
-"Du kan tilføje en relativ sti (fx "
-"/betaling). <br>\n"
-"\n"
-"Du kan søge efter en intern url. <br>\n"
-"\n"
-"Du "
-"kan tilføje en ekstern url (begynd med http:// eller https://)."
-
-msgctxt "Fees list settings form"
 msgid "Intro text"
 msgstr "Indledende tekst"
 
 msgctxt "Fees list settings form"
-msgid "Display an intro-text below the headline"
+msgid ""
+"Display an intro-text below the headline <br>\n"
+"      If nothing is "
+"written here the text: \"@text\" will be used."
 msgstr ""
-"Viser en indledende tekst under overskriften på gebyrsiden, hvor du "
-"kan fortælle brugeren om betalingsmuligheder."
+
+msgctxt "Fees list settings form"
+msgid "Payment site button configuration"
+msgstr ""
+
+msgctxt "Fees list settings form"
+msgid "Payment site url"
+msgstr ""
 
 msgctxt "Fees list settings form"
 msgid ""
-"Fees and replacement costs are handled through the new system \"Mit "
-"betalingsoverblik."
+"URL containing a link to a payment page. <br>\n"
+"                       "
+"                  <strong>NB!: The button will only display if this "
+"field has been filled.</strong>"
 msgstr ""
-"Fx: Gebyrer kan betales via \"Mit Betalingsoverblik\". Hvis du har "
-"gebyrer som ikke kan betales der, skal du henvende dig på "
-"biblioteket."
+
+msgctxt "Fees list settings form"
+msgid "Payment site button label"
+msgstr ""
+
+msgctxt "Fees list settings form"
+msgid ""
+"Define the text of the button that links to the payment page. <br>\n"
+"  "
+"                                If nothing is written here the text: "
+"\"@text\" will be used."
+msgstr ""
 
 msgctxt "List size (settings)"
 msgid "Dashboard list size settings"
@@ -2523,27 +2404,30 @@ msgctxt "Create patron"
 msgid "Cancel"
 msgstr "Fortryd"
 
-#:
+msgctxt "Create patron"
+msgid "Select pickup location in the select"
+msgstr "Vælg afhentningssted"
+
+msgctxt "Create patron"
+msgid "Select pickup location"
+msgstr "Vælg afhentningssted"
+
 msgctxt "Create patron"
 msgid "Confirm"
 msgstr "Bekræft"
 
-#:
 msgctxt "Create patron"
 msgid "Register as patron"
 msgstr "Opret bruger"
 
-#:
 msgctxt "Create patron"
 msgid "This SSN is invalid"
 msgstr "Denne SSN er ugyldig"
 
-#:
 msgctxt "Create patron"
 msgid "Invalid SSN"
 msgstr "Ugyldig SSN"
 
-#:
 msgctxt "Create patron"
 msgid "Name"
 msgstr "Navn"
@@ -2679,27 +2563,16 @@ msgid ""
 "If a user is blocked because of fees a modal appears. This field makes "
 "it possible to place a link in the modal to e.g. payment options or "
 "help page. <br>\n"
-"                                         You can add "
-"a relative url (e.g. /takster). <br>\n"
-"                                "
-"         You can search for an internal url. <br>\n"
-"                   "
-"                      You can add an external url (starting with "
-"\"http://\" or \"https://\")."
-msgstr ""
-"Hvis en låner er blokeret pga. overskredet gebyrgrænse vises en "
-"modal med information til brugeren. I denne modal er det muligt at "
-"indsætte et link til en side, hvor brugeren kan læse om takster, "
-"gebyrer og betalingsmuligheder. <br>\n"
-"\n"
-"Du kan tilføje en relativ "
-"sti (fx /takster). <br>\n"
-"\n"
-"Du kan søge efter en intern url. "
+"                                         If left "
+"empty, the link will not be shown. <br>\n"
+"                             "
+"            You can add a relative url (e.g. /takster). <br>\n"
+"        "
+"                                 You can search for an internal url. "
 "<br>\n"
-"\n"
-"Du kan tilføje en ekstern url (begynd med http:// eller "
-"https://)."
+"                                         You can add an "
+"external url (starting with \"http://\" or \"https://\")."
+msgstr ""
 
 msgctxt "Library Agency Configuration"
 msgid "Expiration warning"
@@ -3633,9 +3506,8 @@ msgstr "Kommende arrangementer"
 msgid "Skip to main content"
 msgstr "Gå til hovedindhold"
 
-#:
-msgid "Patron registration information"
-msgstr "Information om brugeroprettelse"
+msgid "By @username"
+msgstr "Af @username"
 
 msgid "List of bookmarks"
 msgstr "Bogmærkeliste"
@@ -3643,23 +3515,17 @@ msgstr "Bogmærkeliste"
 msgid "Time"
 msgstr "Tid"
 
-#:
-msgctxt "Patron menu"
-msgid "My Account"
-msgstr "Brugerprofil"
+msgid "Price"
+msgstr "Pris"
 
-#:
-msgctxt "Patron menu"
-msgid "loans expired"
-msgstr "Overskredne lån"
+msgid "Place"
+msgstr "Sted"
 
 msgid "Partners"
 msgstr "I samarbejde med"
 
-#:
-msgctxt "Patron menu"
-msgid "reservations ready for pickup"
-msgstr "Klar til lån"
+msgid "Address"
+msgstr "Adresse"
 
 msgid "Description"
 msgstr "Beskrivelse"
