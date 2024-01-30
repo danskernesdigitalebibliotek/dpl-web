@@ -211,9 +211,8 @@ function dpl_login_openid_connect_admin_settings_submit(array &$form, FormStateI
   if ($form_state->getValue('agency_id') != $agency_id) {
     /** @var Drupal\dpl_library_token\LibraryTokenHandler $handler */
     $handler = Drupal::service('dpl_library_token.handler');
-    $result = $handler->retrieveAndStoreToken(TRUE);
 
-    if ($result === FALSE) {
+    if (!$handler->retrieveAndStoreToken(TRUE)) {
       $messenger->addMessage(t('Unable to retrieve token from Adgangsplatformen. Please check if the provided Agency ID is correct.', [], ['context' => 'openId connect settings']), 'error');
     }
   }
