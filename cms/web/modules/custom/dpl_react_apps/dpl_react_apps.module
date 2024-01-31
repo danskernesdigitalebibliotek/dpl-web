@@ -282,6 +282,7 @@ function dpl_react_apps_texts(): array {
       ],
     ]),
     'reservation-status-button' => t('Close', [], ['context' => 'Global']),
+    'reservation-list-you-are-in-queue' => t('You are in the reservation queue', [], ['context' => 'Global']),
     'reservation-list-available-in' => t('Available in @count days', [], ['context' => 'Global']),
     'reservation-list-days' => t('days', [], ['context' => 'Global']),
     'reservation-list-in-queue' => t('queued', [], ['context' => 'Global']),
