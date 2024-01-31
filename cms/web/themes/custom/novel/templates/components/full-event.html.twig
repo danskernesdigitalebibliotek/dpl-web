@@ -1,18 +1,16 @@
 <article {{ attributes.addClass('event-page') }}>
   <header class="event-header">
-    <section class="event-header__content">
-      <div class="event-header__tags">
+    <section class="hero-content">
         {{ categories }}
-      </div>
       {% if date %}
-        <time class="event-header__date">
+        <time class="event-header-date">
           {{ date }}
         </time>
       {% endif %}
-      <h1 class="event-header__title">{{ label }}</h1>
+      <h1 class="event-header-title">{{ label }}</h1>
       {{ event_link }}
     </section>
-    <section class="event-header__visual ">
+    <section class="hero-visual">
       {% if image.0 %}
         {{ image }}
       {% else %}
