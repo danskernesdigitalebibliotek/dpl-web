@@ -41,7 +41,7 @@ class Adgangsplatformen extends OpenIDConnectClientBase {
    *   Drupal form state.
    *
    * @return mixed[]
-   *   Drupla form array.
+   *   Drupal form array.
    */
   public function buildConfigurationForm(array $form, FormStateInterface $form_state) {
     $form = parent::buildConfigurationForm($form, $form_state);
