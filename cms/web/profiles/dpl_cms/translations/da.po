@@ -2860,7 +2860,7 @@ msgstr "Sæt dine reserveringer på pause (kun fysiske materialer)"
 #: 
 msgctxt "Global"
 msgid "Read more"
-msgstr "Læs mere"
+msgstr "Læs mere om pausefunktionen"
 
 #: 
 msgctxt "Global"
