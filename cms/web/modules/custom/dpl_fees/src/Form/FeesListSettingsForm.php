@@ -6,6 +6,7 @@ use Drupal\Core\Config\ConfigFactoryInterface;
 use Drupal\Core\Form\ConfigFormBase;
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\dpl_fees\DplFeesSettings;
+use Drupal\dpl_library_agency\GeneralSettings;
 use Drupal\dpl_react\DplReactConfigInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
@@ -120,6 +121,28 @@ class FeesListSettingsForm extends ConfigFormBase {
       '#default_value' => $config->get('payment_site_button_label'),
     ];
 
+    $form['settings']['blocked_user'] = [
+      '#type' => 'fieldset',
+      '#title' => $this->t('Blocked user', [], ['context' => 'Library Agency Configuration']),
+      '#collapsible' => FALSE,
+      '#collapsed' => FALSE,
+    ];
+
+    $form['settings']['blocked_user']['blocked_patron_e_link_url'] = [
+      '#type' => 'linkit',
+      '#title' => $this->t('Blocked user link for modal', [], ['context' => 'Library Agency Configuration']),
+      '#description' => $this->t('If a user is blocked because of fees a modal appears. This field makes it possible to place a link in the modal to e.g. payment options or help page. <br>
+                                         If left empty, the link will not be shown. <br>
+                                         You can add a relative url (e.g. /takster). <br>
+                                         You can search for an internal url. <br>
+                                         You can add an external url (starting with "http://" or "https://").', [], ['context' => 'Library Agency Configuration']),
+      '#autocomplete_route_name' => 'linkit.autocomplete',
+      '#autocomplete_route_parameters' => [
+        'linkit_profile_id' => 'default',
+      ],
+      '#default_value' => $config->get('blocked_patron_e_link_url') ?? GeneralSettings::BLOCKED_PATRON_E_LINK_URL,
+    ];
+    
     return parent::buildForm($form, $form_state);
   }
 
@@ -134,6 +157,7 @@ class FeesListSettingsForm extends ConfigFormBase {
       ->set('payment_site_url', $form_state->getValue('payment_site_url'))
       ->set('payment_site_button_label', $form_state->getValue('payment_site_button_label'))
       ->set('fee_list_body_text', $form_state->getValue('fee_list_body_text'))
+      ->set('blocked_patron_e_link_url', $form_state->getValue('blocked_patron_e_link_url'))
       ->save();
   }
 
