@@ -1,15 +1,15 @@
-uuid: 6a4d8ba5-ed93-4d96-8224-e66591283de6
+uuid: caae7e31-e008-4951-84ee-63b9ad604948
 langcode: en
 status: true
 dependencies:
   config:
-    - field.storage.paragraph.field_hero_type
+    - field.storage.paragraph.field_hero_content_type
     - paragraphs.paragraphs_type.hero
-id: paragraph.hero.field_hero_type
-field_name: field_hero_type
+id: paragraph.hero.field_hero_content_type
+field_name: field_hero_content_type
 entity_type: paragraph
 bundle: hero
-label: 'Hero type'
+label: 'Hero content type'
 description: ''
 required: false
 translatable: false
