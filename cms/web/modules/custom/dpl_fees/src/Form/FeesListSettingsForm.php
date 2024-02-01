@@ -142,7 +142,7 @@ class FeesListSettingsForm extends ConfigFormBase {
       ],
       '#default_value' => $config->get('blocked_patron_e_link_url') ?? GeneralSettings::BLOCKED_PATRON_E_LINK_URL,
     ];
-    
+
     return parent::buildForm($form, $form_state);
   }
 
