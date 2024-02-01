@@ -1,0 +1,86 @@
+_meta:
+  version: '1.0'
+  entity_type: node
+  uuid: fd774222-4b22-4803-ae45-2d4e80d84fac
+  bundle: page
+  default_langcode: da
+  depends:
+    92033694-15ac-4d9e-b275-ddfd18e48d9f: taxonomy_term
+    65432ee1-43f1-4130-9565-5683467d4b5a: media
+default:
+  revision_uid:
+    -
+      target_id: 1
+  status:
+    -
+      value: true
+  uid:
+    -
+      target_id: 1
+  title:
+    -
+      value: Frontpage
+  created:
+    -
+      value: 1706712421
+  promote:
+    -
+      value: false
+  sticky:
+    -
+      value: false
+  revision_translation_affected:
+    -
+      value: true
+  metatag:
+    -
+      tag: meta
+      attributes:
+        name: title
+        content: 'Frontpage | DPL CMS'
+  field_paragraphs:
+    -
+      entity:
+        _meta:
+          version: '1.0'
+          entity_type: paragraph
+          uuid: 9017f62f-16ed-4b28-b341-de4a8486113e
+          bundle: hero
+          default_langcode: da
+        default:
+          status:
+            -
+              value: true
+          created:
+            -
+              value: 1706712441
+          behavior_settings:
+            -
+              value: {  }
+          revision_translation_affected:
+            -
+              value: true
+          field_hero_categories:
+            -
+              entity: 92033694-15ac-4d9e-b275-ddfd18e48d9f
+          field_hero_content_type:
+            -
+              value: Arrangement
+          field_hero_date:
+            -
+              value: '2023-12-23'
+          field_hero_description:
+            -
+              value: "<p>Boghandlernes store bogpris - De Gyldne går denne gang til Stine Pilgaard for hendes roman 'Meter i sekundet'. Stort tillykke til Stine Pilgaard.</p>"
+              format: basic
+          field_hero_image:
+            -
+              entity: 65432ee1-43f1-4130-9565-5683467d4b5a
+          field_hero_link:
+            -
+              uri: 'https://www.google.com/'
+              title: ''
+              options: {  }
+          field_hero_title:
+            -
+              value: 'Stine Pilgaard vinder De Gyldne Laurbær'
