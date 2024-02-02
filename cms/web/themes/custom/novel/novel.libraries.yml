@@ -10,6 +10,10 @@ base:
   dependencies:
     - core/drupal
 
+nav-grid:
+  js:
+    assets/dpl-design-system/js/init-nav-grid.js: {}
+
 slider:
   js:
     assets/dpl-design-system/js/init-slider.js: {}
