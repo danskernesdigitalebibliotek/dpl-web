@@ -63,7 +63,7 @@ function dpl_login_openid_connect_userinfo_alter(array &$userinfo, array $contex
  *
  * @throws \Drupal\dpl_login\Exception\MissingConfigurationException
  */
-function _dpl_login_is_agency_id_in_list(array $context) : bool {
+function _dpl_login_is_user_associated_with_agency(array $context) : bool {
   /** @var \Drupal\dpl_login\Adgangsplatformen\Config $adgangsplatformen_config */
   $adgangsplatformen_config = \Drupal::service('dpl_login.adgangsplatformen.config');
   $agency_id = $adgangsplatformen_config->getAgencyId();
@@ -72,7 +72,15 @@ function _dpl_login_is_agency_id_in_list(array $context) : bool {
     return FALSE;
   }
 
-  return in_array($agency_id, array_column($context['userinfo']['attributes']['agencies'], 'agencyId'));
+  // Checks if the Agency ID is already associated with the user.
+  // This is done by checking if the user has an Agency ID that matches
+  // the current Agency ID and has the userIdType set as LOCAL.
+  $agency_list = $context['userinfo']['attributes']['agencies'];
+  $result = array_filter($agency_list, function ($agency) use ($agency_id) {
+    return $agency['agencyId'] === $agency_id && $agency['userIdType'] === 'LOCAL';
+  });
+
+  return !empty($result);
 }
 
 /**
@@ -104,7 +112,7 @@ function dpl_login_openid_connect_pre_authorize(AccountInterface|FALSE $account,
 
   // Check if the user is previously associated with an agency (library).
   // If not, we assume the user is new and skip the patron blocked check.
-  if (!_dpl_login_is_agency_id_in_list($context)) {
+  if (!_dpl_login_is_user_associated_with_agency($context)) {
     $logger->info("User creation - New User (User was not associated to current library).");
     return TRUE;
   }
