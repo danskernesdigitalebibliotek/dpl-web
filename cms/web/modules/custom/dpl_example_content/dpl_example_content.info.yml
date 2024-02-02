@@ -7,42 +7,33 @@ dependencies:
   - default_content:default_content
 default_content:
   node:
-    # Article 1: From Figma
+    # Articles
     # https://www.figma.com/file/Zx9GrkFA3l4ISvyZD2q0Qi/Designsystem?type=design&node-id=7477-39048&mode=dev
     - 2cd0fe5e-4159-4452-86aa-e1a1ac8db4a1
-    # frontpage
+    # Pages
     - fd774222-4b22-4803-ae45-2d4e80d84fac
   eventseries:
-    # Event 1: From Figma
     # https://www.figma.com/file/Zx9GrkFA3l4ISvyZD2q0Qi/Designsystem?type=design&node-id=7477-39713&mode=dev
     - c8177097-1438-493e-8177-e8ef968cc133
   #eventinstance:
   # Do not export instances of event instances. This will result in
   # duplicate UUIDs for entity reference fields with fallback values.
   media:
-    # Media used in article 1
     - aba3cea8-cee5-42c1-a152-e30c2ab135e2
     - d97a25fd-a6ae-48b9-9a1a-7aec5372688e
     - eef50571-39dc-461a-96ff-b6b7180ade61
-    # Media used in eventseries 1
     - 618e176a-a45a-4c36-a197-664230aa0a34
     - 65432ee1-43f1-4130-9565-5683467d4b5a
-    # Document used in article 1 and eventseries 1
     - dc33677f-8894-4717-b34b-d985f6ad875f
-    # embed video in article 1
     - f0204f0b-1f63-4c76-bb67-e3f7489ee392
   file:
-    # Files used in article 1
     - b0fea511-57df-4b49-b127-1c445beacfe7
     - f19a4a4c-80b0-4290-a098-4f2f5fc137a2
     - 4b4fee24-a6ed-497a-b1c4-964c7ed00cfd
-    # Files used in eventseries 1
     - 3d1cb5f0-b6a4-4235-b4b3-705d5185e90e
     - 6d5e9b4c-389d-4735-a8a3-82883f64aeb0
-    # PDF used in article 1 and eventseries 1
     - 3403d0ba-cbdc-425d-93f4-6cdabb5378b1
   taxonomy_term:
-    # Category used by eventseries 1
     - f457c4c2-dc28-45cd-9b6e-fda4248d9d45
     - 92033694-15ac-4d9e-b275-ddfd18e48d9f
     - 1006441f-bb39-43b5-8c08-1a79344abf8b
