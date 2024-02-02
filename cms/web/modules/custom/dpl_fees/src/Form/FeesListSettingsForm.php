@@ -122,19 +122,19 @@ class FeesListSettingsForm extends ConfigFormBase {
 
     $form['settings']['blocked_user'] = [
       '#type' => 'fieldset',
-      '#title' => $this->t('Blocked user', [], ['context' => 'Library Agency Configuration']),
+      '#title' => $this->t('Blocked user', [], ['context' => 'Fees list settings form']),
       '#collapsible' => FALSE,
       '#collapsed' => FALSE,
     ];
 
     $form['settings']['blocked_user']['blocked_patron_e_link_url'] = [
       '#type' => 'linkit',
-      '#title' => $this->t('Blocked user link for modal', [], ['context' => 'Library Agency Configuration']),
+      '#title' => $this->t('Blocked user link for modal', [], ['context' => 'Fees list settings form']),
       '#description' => $this->t('If a user is blocked because of fees a modal appears. This field makes it possible to place a link in the modal to e.g. payment options or help page. <br>
                                          If left empty, the link will not be shown. <br>
                                          You can add a relative url (e.g. /takster). <br>
                                          You can search for an internal url. <br>
-                                         You can add an external url (starting with "http://" or "https://").', [], ['context' => 'Library Agency Configuration']),
+                                         You can add an external url (starting with "http://" or "https://").', [], ['context' => 'Fees list settings form']),
       '#autocomplete_route_name' => 'linkit.autocomplete',
       '#autocomplete_route_parameters' => [
         'linkit_profile_id' => 'default',
