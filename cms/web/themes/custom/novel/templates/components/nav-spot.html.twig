@@ -1,0 +1,26 @@
+{%
+  set classes = [
+  'nav-spot',
+  'arrow__hover--right-large'
+]
+%}
+
+<article {{ attributes.addClass(classes).setAttribute('data-variant', variant) }}>
+  <a href="{{ url }}" class="nav-spot__content">
+    {% if media %}
+      <figure class="nav-spot__media">
+        {{ media }}
+      </figure>
+    {% endif %}
+
+    <div class="nav-spot__text">
+      <h1 class="nav-spot__title">{{ title }}</h1>
+
+      {% if subtitle %}
+        <p class="nav-spot__subtitle">{{ subtitle }}</p>
+      {% endif %}
+
+      {{ source(baseIconPath ~ '/arrow-ui/icon-arrow-ui-large-right.svg') }}
+    </div>
+  </a>
+</article>

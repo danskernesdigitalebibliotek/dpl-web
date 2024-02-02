@@ -1,0 +1,10 @@
+uuid: 44fdbe08-e50b-44cf-808b-c51c6cd00965
+langcode: en
+status: true
+dependencies:
+  module:
+    - recurring_events
+id: eventseries.nav_spot
+label: 'Nav spot'
+targetEntityType: eventseries
+cache: true

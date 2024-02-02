@@ -1,0 +1,9 @@
+{% include '@novel/components/nav-spot.html.twig'
+  with {
+  attributes: attributes,
+  title: label,
+  subtitle: content.field_teaser_text.0|default(content.field_subtitle.0),
+  media: content.field_teaser_image,
+  url: url,
+  baseIconPath: baseIconPath
+} only %}

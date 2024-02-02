@@ -1,0 +1,9 @@
+{% include '@novel/components/nav-spot.html.twig'
+  with {
+  attributes: attributes,
+  media: content.field_teaser_image,
+  subtitle: content.field_teaser_text,
+  title: content.title,
+  url: url('entity.eventinstance.canonical', {'eventinstance': eventinstance.id()}),
+  baseIconPath: baseIconPath
+} only %}
