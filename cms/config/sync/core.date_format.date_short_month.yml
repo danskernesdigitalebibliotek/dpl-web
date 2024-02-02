@@ -1,0 +1,8 @@
+uuid: 6bc32b42-2cdf-40d8-8ce7-01ddd1f2e183
+langcode: da
+status: true
+dependencies: {  }
+id: date_short_month
+label: 'Date short month'
+locked: false
+pattern: 'd. M Y'
