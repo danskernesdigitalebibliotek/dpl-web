@@ -1,0 +1,96 @@
+_meta:
+  version: '1.0'
+  entity_type: node
+  uuid: 9cfd15df-32b4-4af9-b2da-56b039b5bf6b
+  bundle: article
+  default_langcode: da
+default:
+  revision_uid:
+    -
+      target_id: 1
+  status:
+    -
+      value: true
+  uid:
+    -
+      target_id: 1
+  title:
+    -
+      value: '3 gode til godnat 3-6 år'
+  created:
+    -
+      value: 1706877153
+  promote:
+    -
+      value: false
+  sticky:
+    -
+      value: false
+  revision_translation_affected:
+    -
+      value: true
+  metatag:
+    -
+      tag: meta
+      attributes:
+        name: title
+        content: '3 gode til godnat 3-6 år | DPL CMS'
+  field_paragraphs:
+    -
+      entity:
+        _meta:
+          version: '1.0'
+          entity_type: paragraph
+          uuid: 2daf7604-e4e1-439e-928e-01aa5f809c75
+          bundle: text_body
+          default_langcode: da
+        default:
+          status:
+            -
+              value: true
+          created:
+            -
+              value: 1706877153
+          behavior_settings:
+            -
+              value: {  }
+          revision_translation_affected:
+            -
+              value: true
+          field_body:
+            -
+              value: '<h2>En overset perle:</h2><h3>Hvis du bankede på min dør af Patrizia Cavalli</h3><p>Hendes fanbase tæller Olga Ravn, Elsa Morante og Giorgio Agamben. Lillian Munk-Rösing er ifølge sin anmeldelse nyforelsket i hende. Hvem spørger du? Den for de fleste danskere hidtil ukendte italienske poesi-stjerne Patrizia Cavalli, der nyligt er udkommet på dansk i udvalg fra Forlaget Kronstork.</p><p>Patrizia Cavalli (1947-2022) skriver friskt og sensuelt om sin italienske hverdag med alt hvad det indebærer af pizza, katte, solbriller, stævnemøder, altopslugende begær og sporadisk dødsdrift. ”Mine digt vil helt sikkert ikke ændre verden” lyder det i et af digtene. Nej de vil de nok ikke. På sin vis er det hverdags-agtige digte, men Cavallis hverdag er bare 10.000 gange mere smægtende end din og min. Og som i alle gode digte er der selvfølgelig visdom at hente. Især af den pragmatiske slags som: ”Det er om dagen man skal drikke sig fuld // når kroppen stadig vil overraskes // af lys og bevægelse, // mens den stadig har energi nok // til at opfinde en katastrofe.” Vil man have en god november har Cavalli et særligt tip til netop denne måned. Man skal blot have følgende materialer klar: ”en formålsløs cykeltur // og ubeskæftigede læber at kysse.” Når november så er overstået og du sidder til et eller andet håbløst julearrangement kan du hente optimisme i dette lille digt: ”Åh, at spise mandariner som aldrig smager af død!”.</p><p>For flere poetiske lifehacks og lidt italiensk sanselighed til din hverdag: Læs Patrizia Cavalli!</p><p>/Rasben</p>'
+              format: basic
+    -
+      entity:
+        _meta:
+          version: '1.0'
+          entity_type: paragraph
+          uuid: 92e41347-deb0-4df3-a005-2d2a230ef279
+          bundle: recommendation
+          default_langcode: da
+        default:
+          status:
+            -
+              value: true
+          created:
+            -
+              value: 1706877483
+          behavior_settings:
+            -
+              value: {  }
+          revision_translation_affected:
+            -
+              value: true
+          field_image_position_right:
+            -
+              value: false
+          field_work_id:
+            -
+              value: 'work-of:870970-basis:136336282'
+  field_show_override_author:
+    -
+      value: false
+  field_subtitle:
+    -
+      value: 'De læseglade bibliotekaren Rasben anbefaler fremragende læsestof til dine mørke aftner.'

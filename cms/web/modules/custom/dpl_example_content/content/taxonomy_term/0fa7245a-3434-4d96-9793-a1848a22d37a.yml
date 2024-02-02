@@ -1,7 +1,7 @@
 _meta:
   version: '1.0'
   entity_type: taxonomy_term
-  uuid: f457c4c2-dc28-45cd-9b6e-fda4248d9d45
+  uuid: 0fa7245a-3434-4d96-9793-a1848a22d37a
   bundle: categories
   default_langcode: da
 default:
@@ -10,10 +10,10 @@ default:
       value: true
   name:
     -
-      value: 'Design & Teknologi'
+      value: 'Vi anbefaler'
   weight:
     -
-      value: 0
+      value: 2
   parent:
     -
       target_id: 0
@@ -25,9 +25,9 @@ default:
       tag: meta
       attributes:
         name: title
-        content: 'Design & Teknologi | DPL CMS'
+        content: 'Vi anbefaler | DPL CMS'
     -
       tag: link
       attributes:
         rel: canonical
-        href: 'http://dapple-cms.docker/taxonomy/term/10'
+        href: 'http://dapple-cms.docker/taxonomy/term/1'
