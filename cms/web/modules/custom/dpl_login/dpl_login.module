@@ -203,12 +203,11 @@ function dpl_login_openid_connect_admin_settings_validate(array &$form, FormStat
 
   /** @var \Drupal\dpl_login\Adgangsplatformen\Config $adgangsplatformen_config */
   $adgangsplatformen_config = \Drupal::service('dpl_login.adgangsplatformen.config');
-  $agency_id = $adgangsplatformen_config->getAgencyId();
-  $values = $form_state->getValues();
+  $stored_agency_id = $adgangsplatformen_config->getAgencyId();
 
   // If agency_id is different from the already stored, we want to
   // force a new token to be created that belongs to the new agency.
-  if ($values['clients']['adgangsplatformen']['settings']['agency_id'] != $agency_id) {
+  if ($form_state->getValue('clients')['adgangsplatformen']['settings']['agency_id'] != $stored_agency_id) {
     /** @var Drupal\dpl_library_token\LibraryTokenHandler $handler */
     $handler = Drupal::service('dpl_library_token.handler');
 

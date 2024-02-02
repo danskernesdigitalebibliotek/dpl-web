@@ -68,7 +68,8 @@ class Adgangsplatformen extends OpenIDConnectClientBase {
     ];
     $form['agency_id'] = [
       '#title' => $this->t('Agency ID', [], ['context' => 'Dpl Login']),
-      '#type' => 'textfield',
+      '#type' => 'number',
+      '#min' => 0,
       '#default_value' => $this->configuration['agency_id'],
     ];
 
