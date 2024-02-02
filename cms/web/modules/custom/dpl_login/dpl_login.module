@@ -10,6 +10,7 @@
 use DanskernesDigitaleBibliotek\FBS\ApiException;
 use DanskernesDigitaleBibliotek\FBS\Model\BlockStatus;
 use Drupal\Core\Cache\CacheableMetadata;
+use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\Session\AccountInterface;
 use Drupal\Core\Site\Settings;
 use Drupal\dpl_fbs\Patron\BlockedReason;
@@ -215,5 +216,41 @@ function dpl_login_dpl_react_apps_data(array &$data, array &$variables): void {
 function dpl_login_preprocess_html(array &$variables): void {
   if (\Drupal::currentUser()->isAuthenticated()) {
     $variables['head_title'][] = t('Logged in', [], ['context' => 'dpl_login']);
+  }
+}
+
+/**
+ * Implements hook_form_FORM_ID_alter().
+ */
+function dpl_login_form_openid_connect_admin_settings_alter(array &$form, FormStateInterface $form_state): void {
+  $form['#validate'][] = 'dpl_login_openid_connect_admin_settings_validate';
+}
+
+/**
+ * Custom validate handler for openid_connect_admin_settings form.
+ *
+ * @param array<mixed> $form
+ *   An associative array containing the structure of the form.
+ * @param \Drupal\Core\Form\FormStateInterface $form_state
+ *   The current state of the form.
+ *
+ * @throws \Drupal\dpl_login\Exception\MissingConfigurationException
+ */
+function dpl_login_openid_connect_admin_settings_validate(array &$form, FormStateInterface $form_state): void {
+  $messenger = \Drupal::messenger();
+
+  /** @var \Drupal\dpl_login\Adgangsplatformen\Config $adgangsplatformen_config */
+  $adgangsplatformen_config = \Drupal::service('dpl_login.adgangsplatformen.config');
+  $stored_agency_id = $adgangsplatformen_config->getAgencyId();
+
+  // If agency_id is different from the already stored, we want to
+  // force a new token to be created that belongs to the new agency.
+  if ($form_state->getValue('clients')['adgangsplatformen']['settings']['agency_id'] != $stored_agency_id) {
+    /** @var Drupal\dpl_library_token\LibraryTokenHandler $handler */
+    $handler = Drupal::service('dpl_library_token.handler');
+
+    if (!$handler->retrieveAndStoreToken(TRUE)) {
+      $messenger->addMessage(t('Unable to retrieve token from Adgangsplatformen. Please check if the provided Agency ID is correct.', [], ['context' => 'OpenId Connect Settings']), 'error');
+    }
   }
 }

@@ -72,15 +72,20 @@ class LibraryTokenHandler {
   /**
    * Retrieve token from external service and save it.
    */
-  public function retrieveAndStoreToken(): void {
-    // If no token stored.
-    if (!$this->getToken()) {
-      // Then try to fetch one.
-      if ($token = $this->fectchToken()) {
-        // And store it.
-        $this->setToken($token);
-      }
+  public function retrieveAndStoreToken(bool $force = FALSE): null|bool {
+    // If force is False and if token is already stored.
+    if (!$force && $this->getToken()) {
+      return NULL;
     }
+
+    // Try to fetch token, if not possible return false.
+    if (!$token = $this->fetchToken()) {
+      return FALSE;
+    }
+
+    // Set token.
+    $this->setToken($token);
+    return TRUE;
   }
 
   /**
@@ -93,7 +98,7 @@ class LibraryTokenHandler {
     // Set token and expire time to half the given one.
     // In that way we are sure that the token is always valid.
     $this->tokenCollection
-      ->setWithExpireIfNotExists(
+      ->setWithExpire(
         self::LIBRARY_TOKEN_KEY,
         $token->token,
         (int) round($token->expire / 2)
@@ -116,7 +121,7 @@ class LibraryTokenHandler {
    * @return \Drupal\dpl_library_token\LibraryToken|null
    *   If token was fetched it is returned. Otherwise NULL.
    */
-  public function fectchToken(): ?LibraryToken {
+  public function fetchToken(): ?LibraryToken {
     $token = NULL;
 
     try {
