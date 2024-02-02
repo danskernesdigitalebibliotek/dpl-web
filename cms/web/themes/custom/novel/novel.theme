@@ -130,11 +130,24 @@ function novel_preprocess_page(array &$variables): void {
 
   // Directly assign logo URL if it's set.
   if ($logo_path = theme_get_setting('logo.path')) {
-    $variables['logo']['#image'] = [
-      '#theme' => 'image_style',
-      '#style_name' => 'logo',
-      '#uri' => $logo_path,
-    ];
+
+    // SVG images does not support image-styles, and will fail if you attempt
+    // to render it with the 'logo' image style.
+    if (str_ends_with($logo_path, '.svg')) {
+      $logo_render_array = [
+        '#theme' => 'image',
+        '#uri' => $logo_path,
+      ];
+    }
+    else {
+      $logo_render_array = [
+        '#theme' => 'image_style',
+        '#style_name' => 'logo',
+        '#uri' => $logo_path,
+      ];
+    }
+
+    $variables['logo']['#image'] = $logo_render_array;
   }
 }
 
@@ -152,7 +165,7 @@ function novel_preprocess_page(array &$variables): void {
 function novel_form_system_theme_settings_alter(array &$form, FormStateInterface $form_state): void {
   $form['logo']['settings'] = $form['logo']['settings'] ?? [];
 
-  $form['logo']['settings']['logo_upload']['#description'] = t('Upload logo in 224x96px in PNG or SVG', [], ['context' => 'Novel settings']);
+  $form['logo']['settings']['logo_upload']['#description'] = t('Upload the logo in PNG or SVG. You will get the best results with 11:5 format (e.g. width: 220px height: 100px), but any size will work.', [], ['context' => 'Novel settings']);
 
   $form['logo']['settings']['logo_title'] = [
     '#type' => 'textfield',
