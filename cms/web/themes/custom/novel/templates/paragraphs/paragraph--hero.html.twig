@@ -1,11 +1,11 @@
 <section class="hero">
     <a href="{{ content.field_hero_link.0["#url"] }}" class="hero-content arrow arrow__hover--right-large">
         {{ content.field_hero_categories }}
-        <div class="hero__date">
+        <div class="hero__details">
             {% if content.field_hero_content_type.0 %}
-                <span class="hero__date__text">{{ content.field_hero_content_type }}</span>|
+                <span class="hero__details__text">{{ content.field_hero_content_type }}</span>|
             {% endif %}
-            <time class="hero__date__date">{{ content.field_hero_date }}</time>
+            <time class="hero__details__date">{{ content.field_hero_date }}</time>
         </div>
         <h1 class="hero-title">{{ content.field_hero_title }}</h1>
         <div class="hero-description">
