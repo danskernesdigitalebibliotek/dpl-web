@@ -98,7 +98,7 @@ class GeneralSettingsForm extends ConfigFormBase {
 
     try {
       $branches = $this->branchRepository->getBranches();
-      // Sort branches by ID/ISIL number. This order should mimick the expected
+      // Sort branches by ID/ISIL number. This order should mimic the expected
       // order of the branches used elsewhere by library staff.
       usort($branches, function (Branch $a, Branch $b) {
         return strcmp($a->id, $b->id);

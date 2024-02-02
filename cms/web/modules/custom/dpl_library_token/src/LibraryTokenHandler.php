@@ -83,7 +83,7 @@ class LibraryTokenHandler {
       return FALSE;
     }
 
-    // Otherwise set token.
+    // Set token.
     $this->setToken($token);
     return TRUE;
   }
@@ -98,7 +98,7 @@ class LibraryTokenHandler {
     // Set token and expire time to half the given one.
     // In that way we are sure that the token is always valid.
     $this->tokenCollection
-      ->setWithExpireIfNotExists(
+      ->setWithExpire(
         self::LIBRARY_TOKEN_KEY,
         $token->token,
         (int) round($token->expire / 2)
