@@ -1,13 +1,13 @@
 _meta:
   version: '1.0'
   entity_type: eventseries
-  uuid: 2ce9d9b0-7f10-4a17-9a5e-383d36c1ed93
+  uuid: fb8b4d62-de14-4620-9ca1-be60cab74a65
   bundle: default
   default_langcode: en
   depends:
-    32c2adb0-ed9d-4a6f-9a9a-804329de6961: eventinstance
-    0fa7245a-3434-4d96-9793-a1848a22d37a: taxonomy_term
-    a0176f8c-bb7e-4f5a-bf23-b48cd8bab05f: media
+    87ca2793-e4fc-4c3b-be17-ed786d4510c5: eventinstance
+    807e6053-86ed-4dce-b6a9-a48b566b5910: taxonomy_term
+    d6d67fd2-775c-46e7-a1bf-6af46290a5c8: media
 default:
   revision_uid:
     -
@@ -20,7 +20,7 @@ default:
       target_id: 1
   title:
     -
-      value: 'Juleballet - Nøddeknækkeren'
+      value: 'Genbrugsstof fremfor plastik'
   recur_type:
     -
       value: custom
@@ -79,11 +79,11 @@ default:
       months: ''
   custom_date:
     -
-      value: '2030-02-23T09:00:00'
-      end_value: '2030-02-23T14:00:00'
+      value: '2030-03-16T08:30:00'
+      end_value: '2030-03-16T09:30:00'
   created:
     -
-      value: 1706868456
+      value: 1706869918
   revision_translation_affected:
     -
       value: true
@@ -100,10 +100,10 @@ default:
         href: 'http://dapple-cms.docker/user/login'
   event_instances:
     -
-      entity: 32c2adb0-ed9d-4a6f-9a9a-804329de6961
+      entity: 87ca2793-e4fc-4c3b-be17-ed786d4510c5
   field_categories:
     -
-      entity: 0fa7245a-3434-4d96-9793-a1848a22d37a
+      entity: 807e6053-86ed-4dce-b6a9-a48b566b5910
   field_event_address:
     -
       langcode: en
@@ -113,10 +113,10 @@ default:
       address_line1: 'Kampmanns Plads 2'
   field_event_image:
     -
-      entity: a0176f8c-bb7e-4f5a-bf23-b48cd8bab05f
+      entity: d6d67fd2-775c-46e7-a1bf-6af46290a5c8
   field_event_place:
     -
-      value: 'Hovedbibliotek '
+      value: Hovedbibliotek
   field_event_state:
     -
       value: Active
@@ -126,7 +126,7 @@ default:
         _meta:
           version: '1.0'
           entity_type: paragraph
-          uuid: e8f08fd9-e09b-4e37-ba63-055cc7f30f29
+          uuid: d52f7fa6-b50c-43aa-9eb3-74d3fb9b8c5a
           bundle: event_ticket_category
           default_langcode: en
         default:
@@ -135,7 +135,7 @@ default:
               value: true
           created:
             -
-              value: 1706868456
+              value: 1706869918
           behavior_settings:
             -
               value: {  }
@@ -147,4 +147,4 @@ default:
               value: Standard
           field_ticket_category_price:
             -
-              value: '100.00'
+              value: '0.00'

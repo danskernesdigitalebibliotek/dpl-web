@@ -16,6 +16,7 @@ default_content:
     # https://www.figma.com/file/Zx9GrkFA3l4ISvyZD2q0Qi/Designsystem?type=design&node-id=7477-39713&mode=dev
     - c8177097-1438-493e-8177-e8ef968cc133
     - 2ce9d9b0-7f10-4a17-9a5e-383d36c1ed93
+    - fb8b4d62-de14-4620-9ca1-be60cab74a65
   #eventinstance:
   # Do not export instances of event instances. This will result in
   # duplicate UUIDs for entity reference fields with fallback values.
@@ -28,6 +29,7 @@ default_content:
     - dc33677f-8894-4717-b34b-d985f6ad875f
     - f0204f0b-1f63-4c76-bb67-e3f7489ee392
     - a0176f8c-bb7e-4f5a-bf23-b48cd8bab05f
+    - d6d67fd2-775c-46e7-a1bf-6af46290a5c8
   file:
     - b0fea511-57df-4b49-b127-1c445beacfe7
     - f19a4a4c-80b0-4290-a098-4f2f5fc137a2
@@ -36,6 +38,7 @@ default_content:
     - 6d5e9b4c-389d-4735-a8a3-82883f64aeb0
     - 3403d0ba-cbdc-425d-93f4-6cdabb5378b1
     - 24244298-ff4d-4662-bc7f-5b9aa529f89e
+    - ed301960-e40f-42b5-9229-4ac20fd07a7e
   taxonomy_term:
     - f457c4c2-dc28-45cd-9b6e-fda4248d9d45
     - 92033694-15ac-4d9e-b275-ddfd18e48d9f
@@ -46,3 +49,4 @@ default_content:
     - ec76c707-898d-4dfd-8cd2-e258aef1d6dd
     - 0502836d-0f7b-4b21-9371-c40ae9e01495
     - 0fa7245a-3434-4d96-9793-a1848a22d37a
+    - 807e6053-86ed-4dce-b6a9-a48b566b5910

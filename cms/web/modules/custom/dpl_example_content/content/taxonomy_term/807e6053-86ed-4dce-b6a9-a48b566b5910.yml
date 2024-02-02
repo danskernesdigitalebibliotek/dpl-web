@@ -1,7 +1,7 @@
 _meta:
   version: '1.0'
   entity_type: taxonomy_term
-  uuid: 0fa7245a-3434-4d96-9793-a1848a22d37a
+  uuid: 807e6053-86ed-4dce-b6a9-a48b566b5910
   bundle: categories
   default_langcode: da
 default:
@@ -10,10 +10,10 @@ default:
       value: true
   name:
     -
-      value: 'Vi anbefaler'
+      value: Litteratur
   weight:
     -
-      value: 2
+      value: 0
   parent:
     -
       target_id: 0
@@ -25,9 +25,9 @@ default:
       tag: meta
       attributes:
         name: title
-        content: 'Vi anbefaler | DPL CMS'
+        content: 'Litteratur | DPL CMS'
     -
       tag: link
       attributes:
         rel: canonical
-        href: 'http://dapple-cms.docker/taxonomy/term/1'
+        href: 'http://dapple-cms.docker/taxonomy/term/10'
