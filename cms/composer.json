@@ -224,7 +224,8 @@
                 "3073554: Add a token for publication status": "https://www.drupal.org/files/issues/2019-08-09/3073554_10.patch",
                 "2981047: Allow adding computed bundle fields in Views": "https://git.drupalcode.org/project/drupal/-/merge_requests/4224.patch",
                 "2280639: Add the FieldStorageDefinition class to define field storage definitions in hook_entity_field_storage_info()": "https://www.drupal.org/files/issues/2023-09-05/2280639-d10-reroll-156.patch",
-                "3402656: Toolbar causes a Javascript error if the subtrees content changes between page loads": "https://git.drupalcode.org/issue/drupal-3402656/-/commit/61ac007a84014f54a07825f8f92bb6bc0dfbd170.patch"
+                "3402656: Toolbar causes a Javascript error if the subtrees content changes between page loads": "https://git.drupalcode.org/issue/drupal-3402656/-/commit/61ac007a84014f54a07825f8f92bb6bc0dfbd170.patch",
+                "2259567: Support SVG files for theme logo setting": "https://www.drupal.org/files/issues/2023-05-08/2259567-168.patch"
             },
             "drupal/default_content": {
                 "3200212: Overwrite files on import": "https://git.drupalcode.org/project/default_content/-/merge_requests/8.patch"
