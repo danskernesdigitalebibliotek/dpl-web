@@ -10,6 +10,7 @@ default_content:
     # Articles
     # https://www.figma.com/file/Zx9GrkFA3l4ISvyZD2q0Qi/Designsystem?type=design&node-id=7477-39048&mode=dev
     - 2cd0fe5e-4159-4452-86aa-e1a1ac8db4a1
+    - 982e0d87-f6b8-4b84-8de8-c8c8bcfef557
     # Pages
     - fd774222-4b22-4803-ae45-2d4e80d84fac
   eventseries:
@@ -30,6 +31,8 @@ default_content:
     - f0204f0b-1f63-4c76-bb67-e3f7489ee392
     - a0176f8c-bb7e-4f5a-bf23-b48cd8bab05f
     - d6d67fd2-775c-46e7-a1bf-6af46290a5c8
+    - 7b9d1894-7f9a-4f96-a7dc-efa3af5fc902
+    - a6a77786-07db-48d8-98ff-3bda54f231bf
   file:
     - b0fea511-57df-4b49-b127-1c445beacfe7
     - f19a4a4c-80b0-4290-a098-4f2f5fc137a2
@@ -39,6 +42,8 @@ default_content:
     - 3403d0ba-cbdc-425d-93f4-6cdabb5378b1
     - 24244298-ff4d-4662-bc7f-5b9aa529f89e
     - ed301960-e40f-42b5-9229-4ac20fd07a7e
+    - 7fb4d332-81ef-4dc0-af9a-dfcd29ecf367
+    - 50b4d50b-9c75-4698-b803-a125b46daaac
   taxonomy_term:
     - f457c4c2-dc28-45cd-9b6e-fda4248d9d45
     - 92033694-15ac-4d9e-b275-ddfd18e48d9f
