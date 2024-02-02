@@ -185,28 +185,6 @@ class GeneralSettingsForm extends ConfigFormBase {
       '#default_value' => $config->get('pause_reservation_info_url') ?? GeneralSettings::PAUSE_RESERVATION_INFO_URL,
     ];
 
-    $form['settings']['blocked_user'] = [
-      '#type' => 'fieldset',
-      '#title' => $this->t('Blocked user', [], ['context' => 'Library Agency Configuration']),
-      '#collapsible' => FALSE,
-      '#collapsed' => FALSE,
-    ];
-
-    $form['settings']['blocked_user']['blocked_patron_e_link_url'] = [
-      '#type' => 'linkit',
-      '#title' => $this->t('Blocked user link for modal', [], ['context' => 'Library Agency Configuration']),
-      '#description' => $this->t('If a user is blocked because of fees a modal appears. This field makes it possible to place a link in the modal to e.g. payment options or help page. <br>
-                                         If left empty, the link will not be shown. <br>
-                                         You can add a relative url (e.g. /takster). <br>
-                                         You can search for an internal url. <br>
-                                         You can add an external url (starting with "http://" or "https://").', [], ['context' => 'Library Agency Configuration']),
-      '#autocomplete_route_name' => 'linkit.autocomplete',
-      '#autocomplete_route_parameters' => [
-        'linkit_profile_id' => 'default',
-      ],
-      '#default_value' => $config->get('blocked_patron_e_link_url') ?? GeneralSettings::BLOCKED_PATRON_E_LINK_URL,
-    ];
-
     $form['expiration_warning'] = [
       '#type' => 'fieldset',
       '#title' => $this->t('Expiration warning', [], ['context' => 'Library Agency Configuration']),
@@ -341,7 +319,6 @@ class GeneralSettingsForm extends ConfigFormBase {
       ->set('default_interest_period_config', $form_state->getValue('default_interest_period_config'))
       ->set('reservation_sms_notifications_enabled', $form_state->getValue('reservation_sms_notifications_enabled'))
       ->set('pause_reservation_info_url', $form_state->getValue('pause_reservation_info_url'))
-      ->set('blocked_patron_e_link_url', $form_state->getValue('blocked_patron_e_link_url'))
       ->set('ereolen_my_page_url', $form_state->getValue('ereolen_my_page_url'))
       ->set('ereolen_homepage_url', $form_state->getValue('ereolen_homepage_url'))
       ->set('fbi_profiles', [
