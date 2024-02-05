@@ -4,6 +4,7 @@ status: true
 dependencies:
   config:
     - filter.format.basic
+    - filter.format.limited
     - media.type.image
     - node.type.article
     - node.type.campaign
@@ -58,6 +59,7 @@ permissions:
   - 'revert all eventinstance revisions'
   - 'revert all eventseries revisions'
   - 'use text format basic'
+  - 'use text format limited'
   - 'view all eventinstance revisions'
   - 'view all eventseries revisions'
   - 'view own unpublished content'
