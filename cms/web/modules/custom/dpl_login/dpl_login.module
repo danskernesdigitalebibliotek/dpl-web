@@ -34,7 +34,7 @@ use function Safe\sprintf as sprintf;
  */
 function dpl_login_openid_connect_userinfo_alter(array &$userinfo, array $context): void {
 
-  // If we cannot resolve cpr we cannot continue.
+  // If we cannot resolve both cpr and uniqueId we cannot continue.
   if (!$cpr = $userinfo['attributes']['cpr'] ?? FALSE) {
     if (!$uniqueId = $userinfo['attributes']['uniqueId'] ?? FALSE) {
       throw new \Exception('Unable to identify user. Both CPR and uniqueId are missing.');
@@ -204,6 +204,8 @@ function _dpl_login_get_user_login_logger(): LoggerInterface {
   /** @var \Drupal\Core\GeneratedUrl $url */
   $url = Url::fromRoute('dpl_patron_reg.create')->toString(TRUE);
 
+  // If the openid_connect_destination redirect url is the patron
+  // registration url we consider the auth flow to be the registration flow.
   if (($_SESSION['openid_connect_destination'] ?? "") === $url->getGeneratedUrl()) {
     $logger_key = $logger_key . ".patron_registration";
   }
