@@ -13,11 +13,13 @@ use Drupal\Core\Cache\CacheableMetadata;
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\Session\AccountInterface;
 use Drupal\Core\Site\Settings;
+use Drupal\Core\Url;
 use Drupal\dpl_fbs\Patron\BlockedReason;
 use Drupal\dpl_login\AccessToken;
 use Drupal\dpl_login\DplLoginInterface;
 use Drupal\dpl_login\Exception\AccessTokenCreationException;
 use Drupal\user\UserInterface;
+use Psr\Log\LoggerInterface;
 use function Safe\sprintf as sprintf;
 
 /**
@@ -53,37 +55,6 @@ function dpl_login_openid_connect_userinfo_alter(array &$userinfo, array $contex
 }
 
 /**
- * Check if the agency id is already associated with the user.
- *
- * @param mixed[] $context
- *   Various openid_connect context.
- *
- * @return bool
- *   Yes or no?
- *
- * @throws \Drupal\dpl_login\Exception\MissingConfigurationException
- */
-function _dpl_login_is_user_associated_with_agency(array $context) : bool {
-  /** @var \Drupal\dpl_login\Adgangsplatformen\Config $adgangsplatformen_config */
-  $adgangsplatformen_config = \Drupal::service('dpl_login.adgangsplatformen.config');
-  $agency_id = $adgangsplatformen_config->getAgencyId();
-
-  if (empty($context['userinfo']['attributes']['agencies'])) {
-    return FALSE;
-  }
-
-  // Checks if the Agency ID is already associated with the user.
-  // This is done by checking if the user has an Agency ID that matches
-  // the current Agency ID and has the userIdType set as LOCAL.
-  $agency_list = $context['userinfo']['attributes']['agencies'];
-  $result = array_filter($agency_list, function ($agency) use ($agency_id) {
-    return $agency['agencyId'] === $agency_id && $agency['userIdType'] === 'LOCAL';
-  });
-
-  return !empty($result);
-}
-
-/**
  * Implements hook_openid_connect_pre_authorize().
  *
  * @param \Drupal\Core\Session\AccountInterface|false $account
@@ -94,7 +65,7 @@ function _dpl_login_is_user_associated_with_agency(array $context) : bool {
  * @throws \Drupal\dpl_login\Exception\MissingConfigurationException
  */
 function dpl_login_openid_connect_pre_authorize(AccountInterface|FALSE $account, array $context): bool {
-  $logger = \Drupal::logger('dpl_login');
+  $logger = _dpl_login_get_user_login_logger();
 
   try {
     $token = AccessToken::createFromOpenidConnectContext($context);
@@ -113,12 +84,13 @@ function dpl_login_openid_connect_pre_authorize(AccountInterface|FALSE $account,
   // Check if the user is previously associated with an agency (library).
   // If not, we assume the user is new and skip the patron blocked check.
   if (!_dpl_login_is_user_associated_with_agency($context)) {
-    $logger->info("User creation - New User (User was not associated to current library).");
+    $logger->info('Pre authorize hook - User was not associated with current library.');
     return TRUE;
   }
 
+  $logger->info('Pre authorize hook - User already associated with library agency.');
+
   try {
-    $logger->info("User creation - Existing User (User already associated with library agency).");
     $patron = $api->getPatronInformationByPatronIdV2();
     $patron_block_status = $patron->getPatron()?->getBlockStatus() ?? [];
     $patron_blocked_reasons = array_map(function (BlockStatus $block_status) use ($logger) {
@@ -164,10 +136,13 @@ function dpl_login_openid_connect_pre_authorize(AccountInterface|FALSE $account,
  *   Various openid_connect context. Tokens etc.
  */
 function dpl_login_openid_connect_post_authorize(AccountInterface $account, array $context): void {
+  $logger = _dpl_login_get_user_login_logger();
   $access_token = AccessToken::createFromOpenidConnectContext($context);
+
   /** @var Drupal\dpl_login\UserTokensProvider $token_provider */
   $token_provider = \Drupal::service('dpl_login.user_tokens');
   $token_provider->setAccessToken($access_token);
+  $logger->info('Post authorize hook - User token was set.');
 }
 
 /**
@@ -184,6 +159,56 @@ function dpl_login_openid_connect_userinfo_save(UserInterface $account, array $c
     $account->addRole(DplLoginInterface::ROLE_PATRON);
     $account->save();
   }
+}
+
+/**
+ * Check if the agency id is already associated with the user.
+ *
+ * @param mixed[] $context
+ *   Various openid_connect context.
+ *
+ * @return bool
+ *   Yes or no?
+ *
+ * @throws \Drupal\dpl_login\Exception\MissingConfigurationException
+ */
+function _dpl_login_is_user_associated_with_agency(array $context) : bool {
+  /** @var \Drupal\dpl_login\Adgangsplatformen\Config $adgangsplatformen_config */
+  $adgangsplatformen_config = \Drupal::service('dpl_login.adgangsplatformen.config');
+  $agency_id = $adgangsplatformen_config->getAgencyId();
+
+  if (empty($context['userinfo']['attributes']['agencies'])) {
+    return FALSE;
+  }
+
+  // Checks if the Agency ID is already associated with the user.
+  // This is done by checking if the user has an Agency ID that matches
+  // the current Agency ID and has the userIdType set as LOCAL.
+  $agency_list = $context['userinfo']['attributes']['agencies'];
+  $result = array_filter($agency_list, function ($agency) use ($agency_id) {
+    return $agency['agencyId'] === $agency_id && $agency['userIdType'] === 'LOCAL';
+  });
+
+  return !empty($result);
+}
+
+/**
+ * Helper method that returns Drupal logger object.
+ *
+ * @return \Psr\Log\LoggerInterface
+ *   Logger object.
+ */
+function _dpl_login_get_user_login_logger(): LoggerInterface {
+  $logger_key = "dpl_login";
+
+  /** @var \Drupal\Core\GeneratedUrl $url */
+  $url = Url::fromRoute('dpl_patron_reg.create')->toString(TRUE);
+
+  if (($_SESSION['openid_connect_destination'] ?? "") === $url->getGeneratedUrl()) {
+    $logger_key = $logger_key . ".patron_registration";
+  }
+
+  return \Drupal::logger($logger_key);
 }
 
 /**
