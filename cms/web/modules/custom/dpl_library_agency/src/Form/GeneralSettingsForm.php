@@ -196,6 +196,7 @@ class GeneralSettingsForm extends ConfigFormBase {
       '#type' => 'linkit',
       '#title' => $this->t('Blocked user link for modal', [], ['context' => 'Library Agency Configuration']),
       '#description' => $this->t('If a user is blocked because of fees a modal appears. This field makes it possible to place a link in the modal to e.g. payment options or help page. <br>
+                                         If left empty, the link will not be shown. <br>
                                          You can add a relative url (e.g. /takster). <br>
                                          You can search for an internal url. <br>
                                          You can add an external url (starting with "http://" or "https://").', [], ['context' => 'Library Agency Configuration']),

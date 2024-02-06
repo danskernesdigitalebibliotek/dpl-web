@@ -95,7 +95,7 @@ class ReservationListBlock extends BlockBase implements ContainerFactoryPluginIn
       'page-size-desktop' => $this->reservationsSettings->getListSizeDesktop(),
       'page-size-mobile' => $this->reservationsSettings->getListSizeMobile(),
       'expiration-warning-days-before-config' => $general_settings->get('expiration_warning_days_before_config') ?? GeneralSettings::EXPIRATION_WARNING_DAYS_BEFORE_CONFIG,
-    ] + DplReactAppsController::externalApiBaseUrls() + DplReactAppsController::getBlockedSettings();
+    ] + DplReactAppsController::externalApiBaseUrls();
 
     return [
       '#theme' => 'dpl_react_app',

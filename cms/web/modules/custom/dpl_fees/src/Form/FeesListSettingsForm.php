@@ -85,25 +85,39 @@ class FeesListSettingsForm extends ConfigFormBase {
       '#default_value' => $this->feesSettings->getFeesAndReplacementCostsUrl(),
     ];
 
-    $form['settings']['payment_overview_url'] = [
+    $form['settings']['fee_list_body_text'] = [
+      '#type' => 'textarea',
+      '#title' => $this->t('Intro text', [], ['context' => 'Fees list settings form']),
+      '#description' => $this->t('Display an intro-text below the headline <br>
+      If nothing is written here the text: "@text" will be used.', ['@text' => $this->t('Fees and replacement costs are handled through the new system "Mit betalingsoverblik"', [], ['context' => 'Fees list settings form'])], ['context' => 'Fees list settings form']),
+      '#default_value' => $config->get('fee_list_body_text'),
+    ];
+
+    // Payment site button.
+    $form['settings']['payment_site_button'] = [
+      '#type' => 'fieldset',
+      '#title' => $this->t('Payment site button configuration', [], ['context' => 'Fees list settings form']),
+      '#tree' => FALSE,
+    ];
+
+    $form['settings']['payment_site_button']['payment_site_url'] = [
       '#type' => 'linkit',
-      '#title' => $this->t('Payment overview url', [], ['context' => 'Fees list settings form']),
-      '#description' => $this->t('URL containing the payment overview. <br>
-                                         You can add a relative url (e.g. /takster). <br>
-                                         You can search for an internal url. <br>
-                                         You can add an external url (starting with "http://" or "https://")', [], ['context' => 'Fees list settings form']),
+      '#title' => $this->t('Payment site url', [], ['context' => 'Fees list settings form']),
+      '#description' => $this->t('URL containing a link to a payment page. <br>
+                                         <strong>NB!: The button will only display if this field has been filled.</strong>', [], ['context' => 'Fees list settings form']),
       '#autocomplete_route_name' => 'linkit.autocomplete',
       '#autocomplete_route_parameters' => [
         'linkit_profile_id' => 'default',
       ],
-      '#default_value' => $this->feesSettings->getPaymentOverviewUrl(),
+      '#default_value' => $config->get('payment_site_url'),
     ];
 
-    $form['settings']['fee_list_body_text'] = [
-      '#type' => 'textarea',
-      '#title' => $this->t('Intro text', [], ['context' => 'Fees list settings form']),
-      '#description' => $this->t('Display an intro-text below the headline', [], ['context' => 'Fees list settings form']),
-      '#default_value' => $config->get('fee_list_body_text') ?? $this->t('Fees and replacement costs are handled through the new system "Mit betalingsoverblik.', [], ['context' => 'Fees list settings form']),
+    $form['settings']['payment_site_button']['payment_site_button_label'] = [
+      '#type' => 'textfield',
+      '#title' => $this->t('Payment site button label', [], ['context' => 'Fees list settings form']),
+      '#description' => $this->t('Define the text of the button that links to the payment page. <br>
+                                  If nothing is written here the text: "@text" will be used.', ['@text' => $this->t('Go to payment page', [], ['context' => 'Fees list settings form'])], ['context' => 'Fees list settings form']),
+      '#default_value' => $config->get('payment_site_button_label'),
     ];
 
     return parent::buildForm($form, $form_state);
@@ -117,7 +131,8 @@ class FeesListSettingsForm extends ConfigFormBase {
 
     $this->config($this->configService->getConfigKey())
       ->set('fees_and_replacement_costs_url', $form_state->getValue('fees_and_replacement_costs_url'))
-      ->set('payment_overview_url', $form_state->getValue('payment_overview_url'))
+      ->set('payment_site_url', $form_state->getValue('payment_site_url'))
+      ->set('payment_site_button_label', $form_state->getValue('payment_site_button_label'))
       ->set('fee_list_body_text', $form_state->getValue('fee_list_body_text'))
       ->save();
   }
