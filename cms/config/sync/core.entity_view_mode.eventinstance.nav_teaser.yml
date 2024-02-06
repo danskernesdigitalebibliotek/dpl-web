@@ -1,0 +1,10 @@
+uuid: edab8ca2-9738-4c80-9ceb-da68e49b63e5
+langcode: en
+status: true
+dependencies:
+  module:
+    - recurring_events
+id: eventinstance.nav_teaser
+label: 'Navigation teaser'
+targetEntityType: eventinstance
+cache: true

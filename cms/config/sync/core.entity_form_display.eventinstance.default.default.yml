@@ -3,6 +3,7 @@ langcode: en
 status: true
 dependencies:
   config:
+    - field.field.eventinstance.default.field_categories
     - field.field.eventinstance.default.field_event_address
     - field.field.eventinstance.default.field_event_description
     - field.field.eventinstance.default.field_event_image
@@ -11,6 +12,7 @@ dependencies:
     - field.field.eventinstance.default.field_event_partners
     - field.field.eventinstance.default.field_event_place
     - field.field.eventinstance.default.field_event_state
+    - field.field.eventinstance.default.field_tags
     - field.field.eventinstance.default.field_teaser_image
     - field.field.eventinstance.default.field_teaser_text
     - field.field.eventinstance.default.field_ticket_categories
@@ -31,7 +33,7 @@ third_party_settings:
       label: 'Teaser card'
       region: content
       parent_name: ''
-      weight: 11
+      weight: 12
       format_type: details_sidebar
       format_settings:
         classes: ''
@@ -52,22 +54,28 @@ content:
     region: content
     settings: {  }
     third_party_settings: {  }
+  field_categories:
+    type: options_select
+    weight: 3
+    region: content
+    settings: {  }
+    third_party_settings: {  }
   field_event_address:
     type: address_default
-    weight: 6
+    weight: 7
     region: content
     settings: {  }
     third_party_settings: {  }
   field_event_image:
     type: media_library_widget
-    weight: 9
+    weight: 10
     region: content
     settings:
       media_types: {  }
     third_party_settings: {  }
   field_event_link:
     type: link_default
-    weight: 5
+    weight: 6
     region: content
     settings:
       placeholder_url: ''
@@ -75,7 +83,7 @@ content:
     third_party_settings: {  }
   field_event_paragraphs:
     type: paragraphs
-    weight: 10
+    weight: 11
     region: content
     settings:
       title: Paragraph
@@ -103,7 +111,7 @@ content:
           dialog_style: tiles
   field_event_partners:
     type: string_textfield
-    weight: 8
+    weight: 9
     region: content
     settings:
       size: 60
@@ -111,7 +119,7 @@ content:
     third_party_settings: {  }
   field_event_place:
     type: string_textfield
-    weight: 7
+    weight: 8
     region: content
     settings:
       size: 60
@@ -122,6 +130,16 @@ content:
     weight: 2
     region: content
     settings: {  }
+    third_party_settings: {  }
+  field_tags:
+    type: entity_reference_autocomplete_tags
+    weight: 4
+    region: content
+    settings:
+      match_operator: CONTAINS
+      match_limit: 10
+      size: 60
+      placeholder: ''
     third_party_settings: {  }
   field_teaser_image:
     type: media_library_widget
@@ -140,7 +158,7 @@ content:
     third_party_settings: {  }
   field_ticket_categories:
     type: paragraphs
-    weight: 4
+    weight: 5
     region: content
     settings:
       title: Paragraph

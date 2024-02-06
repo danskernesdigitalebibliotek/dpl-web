@@ -10,6 +10,10 @@ base:
   dependencies:
     - core/drupal
 
+nav-grid:
+  js:
+    assets/dpl-design-system/js/init-nav-grid.js: {}
+
 slider:
   js:
     assets/dpl-design-system/js/init-slider.js: {}
@@ -29,3 +33,7 @@ swiper:
     theme:
       "https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css":
         { type: external }
+
+show-more:
+  js:
+    assets/dpl-design-system/js/show-more.js: {}

@@ -1,0 +1,67 @@
+uuid: de4cf82e-6982-4598-b7e5-33d10859d89b
+langcode: en
+status: true
+dependencies:
+  config:
+    - core.entity_view_mode.eventseries.nav_teaser
+    - field.field.eventseries.default.field_categories
+    - field.field.eventseries.default.field_event_address
+    - field.field.eventseries.default.field_event_description
+    - field.field.eventseries.default.field_event_image
+    - field.field.eventseries.default.field_event_link
+    - field.field.eventseries.default.field_event_paragraphs
+    - field.field.eventseries.default.field_event_partners
+    - field.field.eventseries.default.field_event_place
+    - field.field.eventseries.default.field_event_state
+    - field.field.eventseries.default.field_tags
+    - field.field.eventseries.default.field_teaser_image
+    - field.field.eventseries.default.field_teaser_text
+    - field.field.eventseries.default.field_ticket_categories
+    - recurring_events.eventseries_type.default
+_core:
+  default_config_hash: U53j_RaqaehEh393bzj6vrqXorzo8lkcjhQNCNTPjmQ
+id: eventseries.default.nav_teaser
+targetEntityType: eventseries
+bundle: default
+mode: nav_teaser
+content:
+  field_teaser_text:
+    type: string
+    label: hidden
+    settings:
+      link_to_entity: false
+    third_party_settings: {  }
+    weight: 0
+    region: content
+  title:
+    type: string
+    label: hidden
+    settings:
+      link_to_entity: false
+    third_party_settings: {  }
+    weight: 0
+    region: content
+hidden:
+  body: true
+  consecutive_recurring_date: true
+  custom_date: true
+  daily_recurring_date: true
+  event_instances: true
+  event_registration: true
+  field_categories: true
+  field_event_address: true
+  field_event_description: true
+  field_event_image: true
+  field_event_link: true
+  field_event_paragraphs: true
+  field_event_partners: true
+  field_event_place: true
+  field_event_state: true
+  field_tags: true
+  field_teaser_image: true
+  field_ticket_categories: true
+  monthly_recurring_date: true
+  recur_type: true
+  search_api_excerpt: true
+  weekly_recurring_date: true
+  yearly_recurring_date: true

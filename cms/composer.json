@@ -36,10 +36,10 @@
             "type": "package",
             "package": {
                 "name": "danskernesdigitalebibliotek/dpl-react",
-                "version": "2024.5.0",
+                "version": "2024.6.0",
                 "type": "drupal-library",
                 "dist": {
-                    "url": "https://github.com/danskernesdigitalebibliotek/dpl-react/releases/download/2024.5.0/dist-2024-5-0-7fb49c7351e6f7f07c9b6c4421d6c834fbbb952b.zip",
+                    "url": "https://github.com/danskernesdigitalebibliotek/dpl-react/releases/download/2024.6.0/dist-2024-6-0-09be350ce7473330cc1096c51dd8aabd23ee73f6.zip",
                     "type": "zip"
                 },
                 "require": {
@@ -52,9 +52,9 @@
             "package": {
                 "name": "danskernesdigitalebibliotek/dpl-design-system",
                 "type": "drupal-library",
-                "version": "2024.5.0",
+                "version": "2024.6.0",
                 "dist": {
-                    "url": "https://github.com/danskernesdigitalebibliotek/dpl-design-system/releases/download/2024.5.0/dist-2024-5-0-d17ec00d0db46973e99a8643a92b11e4eeb183d0.zip",
+                    "url": "https://github.com/danskernesdigitalebibliotek/dpl-design-system/releases/download/2024.6.0/dist-2024-6-0-31e5576c610a9ffde29213207d730d8c2bf64d2f.zip",
                     "type": "zip"
                 }
             }
@@ -74,8 +74,8 @@
         "brick/math": "^0.12.1",
         "composer/installers": "1.12.0",
         "cweagans/composer-patches": "1.7.3",
-        "danskernesdigitalebibliotek/dpl-design-system": "^2024.5",
-        "danskernesdigitalebibliotek/dpl-react": "^2024.5",
+        "danskernesdigitalebibliotek/dpl-design-system": "2024.6.0",
+        "danskernesdigitalebibliotek/dpl-react": "2024.6.0",
         "danskernesdigitalebibliotek/fbs-client": "*",
         "dealerdirect/phpcodesniffer-composer-installer": "^0.7.1",
         "deoliveiralucas/array-keys-case-transform": "^1.1",
@@ -224,7 +224,8 @@
                 "3073554: Add a token for publication status": "https://www.drupal.org/files/issues/2019-08-09/3073554_10.patch",
                 "2981047: Allow adding computed bundle fields in Views": "https://git.drupalcode.org/project/drupal/-/merge_requests/4224.patch",
                 "2280639: Add the FieldStorageDefinition class to define field storage definitions in hook_entity_field_storage_info()": "https://www.drupal.org/files/issues/2023-09-05/2280639-d10-reroll-156.patch",
-                "3402656: Toolbar causes a Javascript error if the subtrees content changes between page loads": "https://git.drupalcode.org/issue/drupal-3402656/-/commit/61ac007a84014f54a07825f8f92bb6bc0dfbd170.patch"
+                "3402656: Toolbar causes a Javascript error if the subtrees content changes between page loads": "https://git.drupalcode.org/issue/drupal-3402656/-/commit/61ac007a84014f54a07825f8f92bb6bc0dfbd170.patch",
+                "2259567: Support SVG files for theme logo setting": "https://www.drupal.org/files/issues/2023-05-08/2259567-168.patch"
             },
             "drupal/default_content": {
                 "3200212: Overwrite files on import": "https://git.drupalcode.org/project/default_content/-/merge_requests/8.patch"

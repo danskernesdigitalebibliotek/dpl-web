@@ -4,9 +4,15 @@ status: true
 dependencies:
   config:
     - filter.format.basic
+    - filter.format.limited
+    - media.type.document
     - media.type.image
+    - media.type.video
     - node.type.article
     - node.type.campaign
+    - node.type.page
+    - taxonomy.vocabulary.categories
+    - taxonomy.vocabulary.tags
   module:
     - block
     - dpl_instant_loan
@@ -23,6 +29,7 @@ dependencies:
     - openid_connect
     - recurring_events
     - system
+    - taxonomy
     - toolbar
     - update
 id: administrator
@@ -34,8 +41,10 @@ permissions:
   - 'access content overview'
   - 'access eventinstance overview'
   - 'access eventseries overview'
+  - 'access media overview'
   - 'access site in maintenance mode'
   - 'access site reports'
+  - 'access taxonomy overview'
   - 'access toolbar'
   - 'access user profiles'
   - 'add eventseries entity'
@@ -55,11 +64,18 @@ permissions:
   - 'create article content'
   - 'create campaign content'
   - 'create image media'
+  - 'create media'
+  - 'create page content'
+  - 'create terms in categories'
+  - 'create terms in tags'
   - 'delete any article content'
   - 'delete any campaign content'
   - 'delete any image media'
+  - 'delete any media'
+  - 'delete any page content'
   - 'delete eventinstance entity'
   - 'delete eventseries entity'
+  - 'delete media'
   - 'delete orphan revisions'
   - 'delete own article content'
   - 'delete own campaign content'
@@ -67,20 +83,33 @@ permissions:
   - 'delete own eventseries entity'
   - 'delete own files'
   - 'delete own image media'
+  - 'delete own video media'
+  - 'delete terms in categories'
+  - 'delete terms in tags'
   - 'edit any article content'
   - 'edit any campaign content'
+  - 'edit any document media'
   - 'edit any image media'
+  - 'edit any page content'
+  - 'edit any video media'
   - 'edit eventinstance entity'
   - 'edit eventseries entity'
   - 'edit own article content'
   - 'edit own campaign content'
+  - 'edit own document media'
   - 'edit own eventinstance entity'
   - 'edit own eventseries entity'
   - 'edit own image media'
+  - 'edit own video media'
+  - 'edit terms in categories'
+  - 'edit terms in tags'
   - 'revert all eventinstance revisions'
   - 'revert all eventseries revisions'
   - 'translate interface'
+  - 'update any media'
+  - 'update media'
   - 'use text format basic'
+  - 'use text format limited'
   - 'view all eventinstance revisions'
   - 'view all eventseries revisions'
   - 'view own unpublished content'

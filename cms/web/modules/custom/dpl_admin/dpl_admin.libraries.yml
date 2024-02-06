@@ -2,3 +2,5 @@ base:
   css:
     theme:
       assets/dpl_admin.css: {}
+  js:
+    assets/dpl_admin.js: {}

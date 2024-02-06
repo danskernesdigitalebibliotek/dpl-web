@@ -12,6 +12,7 @@ module:
   date_range_formatter: 0
   datetime: 0
   datetime_range: 0
+  dblog: 0
   devel_generate: 0
   dpl_admin: 0
   dpl_article: 0
@@ -22,6 +23,7 @@ module:
   dpl_favorites_list_material_component: 0
   dpl_fbs: 0
   dpl_fees: 0
+  dpl_filter_paragraphs: 0
   dpl_instant_loan: 0
   dpl_library_agency: 0
   dpl_library_token: 0
@@ -90,6 +92,7 @@ module:
   search_api_db: 0
   serialization: 0
   system: 0
+  taxonomy: 0
   text: 0
   token: 0
   toolbar: 0

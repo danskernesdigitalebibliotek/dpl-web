@@ -7,6 +7,7 @@
 
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\StringTranslation\TranslatableMarkup;
+use Drupal\paragraphs\ParagraphInterface;
 use Spatie\Color\Hex;
 use Spatie\Color\Hsl;
 use function Safe\file_get_contents;
@@ -129,11 +130,24 @@ function novel_preprocess_page(array &$variables): void {
 
   // Directly assign logo URL if it's set.
   if ($logo_path = theme_get_setting('logo.path')) {
-    $variables['logo']['#image'] = [
-      '#theme' => 'image_style',
-      '#style_name' => 'logo',
-      '#uri' => $logo_path,
-    ];
+
+    // SVG images does not support image-styles, and will fail if you attempt
+    // to render it with the 'logo' image style.
+    if (str_ends_with($logo_path, '.svg')) {
+      $logo_render_array = [
+        '#theme' => 'image',
+        '#uri' => $logo_path,
+      ];
+    }
+    else {
+      $logo_render_array = [
+        '#theme' => 'image_style',
+        '#style_name' => 'logo',
+        '#uri' => $logo_path,
+      ];
+    }
+
+    $variables['logo']['#image'] = $logo_render_array;
   }
 }
 
@@ -151,7 +165,7 @@ function novel_preprocess_page(array &$variables): void {
 function novel_form_system_theme_settings_alter(array &$form, FormStateInterface $form_state): void {
   $form['logo']['settings'] = $form['logo']['settings'] ?? [];
 
-  $form['logo']['settings']['logo_upload']['#description'] = t('Upload logo in 224x96px in PNG or SVG', [], ['context' => 'Novel settings']);
+  $form['logo']['settings']['logo_upload']['#description'] = t('Upload the logo in PNG or SVG. You will get the best results with 11:5 format (e.g. width: 220px height: 100px), but any size will work.', [], ['context' => 'Novel settings']);
 
   $form['logo']['settings']['logo_title'] = [
     '#type' => 'textfield',
@@ -226,4 +240,47 @@ function novel_attach_identity_color_styles(array &$variables, Hsl $hslColor): v
     ],
     'novel_custom_identity_color',
   ];
+}
+
+/**
+ * Implements hook_theme_suggestions_field_alter().
+ */
+function novel_theme_suggestions_field_alter(array &$suggestions, array $variables) : void {
+  $element = $variables['element'];
+
+  // Add theme suggestions per view mode...
+  $suggestions[] = 'field__' . $element['#entity_type'] . '__' .
+    $element['#field_name'] . '__' . $element['#view_mode'];
+  // ... per bundle and view mode.
+  $suggestions[] = 'field__' . $element['#entity_type'] . '__' .
+    $element['#field_name'] . '__' . $element['#bundle'] . '__' .
+    $element['#view_mode'];
+}
+
+/**
+ * Implements hook_theme_suggestions_paragraph_alter().
+ *
+ * Adds a template suggestion for recommendation paragraphs that contain
+ * a title or description written by an editor. This enhances caching efficiency
+ * by using separate templates for the variations of the paragraph.
+ *
+ * @param string[] &$suggestions
+ *   An array of theme suggestion strings.
+ * @param array<mixed> $variables
+ *   An array of variables of mixed types, passed to the theme layer.
+ */
+function novel_theme_suggestions_paragraph_alter(array &$suggestions, array $variables): void {
+
+  $paragraph = $variables['elements']['#paragraph'] ?? NULL;
+  if (!($paragraph instanceof ParagraphInterface)) {
+    return;
+  }
+
+  if ($paragraph->getType() == 'recommendation') {
+    // Check for title or description.
+    if (!empty($paragraph->get('field_recommendation_title')->getString()) ||
+      !empty($paragraph->get('field_recommendation_description')->getString())) {
+      $suggestions[] = 'paragraph__recommendation__recommended_material';
+    }
+  }
 }

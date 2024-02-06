@@ -179,6 +179,30 @@ favorites-list:
     - dpl_react/base
     - dpl_react/handler
 
+recommended-material:
+  remote: https://github.com/danskernesdigitalebibliotek/dpl-react
+  license:
+    name: GNU AFFERO
+    url: https://github.com/danskernesdigitalebibliotek/dpl-react/blob/master/LICENSE
+    gpl-compatible: true
+  js:
+    /libraries/dpl-react/RecommendedMaterial.js: {}
+  dependencies:
+    - dpl_react/base
+    - dpl_react/handler
+
+recommendation:
+  remote: https://github.com/danskernesdigitalebibliotek/dpl-react
+  license:
+    name: GNU AFFERO
+    url: https://github.com/danskernesdigitalebibliotek/dpl-react/blob/master/LICENSE
+    gpl-compatible: true
+  js:
+    /libraries/dpl-react/recommendation.js: {}
+  dependencies:
+    - dpl_react/base
+    - dpl_react/handler
+
 menu:
   remote: https://github.com/danskernesdigitalebibliotek/dpl-react
   license:

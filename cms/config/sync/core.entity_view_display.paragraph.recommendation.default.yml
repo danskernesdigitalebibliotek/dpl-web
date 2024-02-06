@@ -1,0 +1,51 @@
+uuid: 7208c062-2f2e-45b4-a2d2-62fa6628212e
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.field.paragraph.recommendation.field_image_position_right
+    - field.field.paragraph.recommendation.field_recommendation_description
+    - field.field.paragraph.recommendation.field_recommendation_title
+    - field.field.paragraph.recommendation.field_work_id
+    - paragraphs.paragraphs_type.recommendation
+  module:
+    - text
+id: paragraph.recommendation.default
+targetEntityType: paragraph
+bundle: recommendation
+mode: default
+content:
+  field_image_position_right:
+    type: boolean
+    label: above
+    settings:
+      format: default
+      format_custom_false: ''
+      format_custom_true: ''
+    third_party_settings: {  }
+    weight: 5
+    region: content
+  field_recommendation_description:
+    type: basic_string
+    label: above
+    settings: {  }
+    third_party_settings: {  }
+    weight: 4
+    region: content
+  field_recommendation_title:
+    type: text_default
+    label: above
+    settings: {  }
+    third_party_settings: {  }
+    weight: 1
+    region: content
+  field_work_id:
+    type: string
+    label: above
+    settings:
+      link_to_entity: false
+    third_party_settings: {  }
+    weight: 0
+    region: content
+hidden:
+  search_api_excerpt: true

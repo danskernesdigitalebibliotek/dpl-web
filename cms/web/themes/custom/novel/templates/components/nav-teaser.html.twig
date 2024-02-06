@@ -1,0 +1,11 @@
+<article {{ attributes.addClass('nav-teaser') }}>
+  <a href="{{ url }}">
+    <h1 class="nav-teaser__title">{{ title }}</h1>
+
+    {% if subtitle %}
+      <p class="nav-teaser__subtitle">{{ subtitle }}</p>
+    {% endif %}
+
+    {{ source(baseIconPath ~ '/arrow-ui/icon-arrow-ui-nav.svg') }}
+  </a>
+</article>

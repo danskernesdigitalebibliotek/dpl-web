@@ -186,7 +186,7 @@ tasks:
   dev:enable-dev-tools:
     desc: Enable dev modules and settings, which are not to be used in Prod. They are config-ignored
     cmds:
-      - task dev:cli -- drush install -y devel dpl_example_content field_ui uuid_url views_ui
+      - task dev:cli -- drush install -y devel dpl_example_content field_ui uuid_url views_ui dblog
 
   dev:enable-xdebug:
     desc: 'Enable xdebug within the container.'
@@ -345,6 +345,11 @@ tasks:
     vars:
       # This is what matches our composer.json file.
       JQ_INDENT: 4
+
+  dev:example-content:update:
+    desc: Update the example content module with data from the current site
+    cmds:
+      - cmd: task dev:cli -- drush default-content:export-module dpl_example_content
 
   ci:reset:
     desc: Create CI setup in a clean state

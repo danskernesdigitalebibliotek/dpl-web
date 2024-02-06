@@ -1,0 +1,4 @@
+{% for item in items %}
+  {% set item = item|merge({'attributes': item.attributes.addClass('tag--large')}) %}
+{% endfor %}
+{% include 'field--field-categories.html.twig' %}

@@ -1,0 +1,27 @@
+_meta:
+  version: '1.0'
+  entity_type: file
+  uuid: ed301960-e40f-42b5-9229-4ac20fd07a7e
+  default_langcode: en
+default:
+  uid:
+    -
+      target_id: 1
+  filename:
+    -
+      value: markus-spiske-i5tesTFPBjw-unsplash.jpg
+  uri:
+    -
+      value: 'public://2024-02/markus-spiske-i5tesTFPBjw-unsplash.jpg'
+  filemime:
+    -
+      value: image/jpeg
+  filesize:
+    -
+      value: 62219
+  status:
+    -
+      value: true
+  created:
+    -
+      value: 1706869818

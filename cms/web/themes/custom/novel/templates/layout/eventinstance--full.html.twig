@@ -6,7 +6,7 @@
   },
   {
     label: "Price"|trans,
-    value: content.ticket_categories.0 ? content.ticket_categories : null
+    value: content.event_ticket_categories.0 ? content.event_ticket_categories : null
   },
   {
     label: "Place"|trans,
@@ -29,5 +29,7 @@
   'paragraphs': content.event_paragraphs,
   'date': content.date,
   'description': content.event_description,
-  'description_items': description_items
+  'description_items': description_items,
+  'categories': content.event_categories,
+  'tags': content.event_tags,
 } only %}

@@ -6,9 +6,23 @@
  */
 
 use Drupal\Core\Url;
+use Drupal\dpl_react_apps\Controller\DplReactAppsController;
 use Drupal\paragraphs\Entity\Paragraph;
+use Drupal\paragraphs\ParagraphInterface;
 use function Safe\parse_url;
 use function Safe\preg_match;
+
+/**
+ * Implements hook_preprocess_paragraph().
+ *
+ * Adds the absolute base URL to all paragraph entities. This is used to
+ * construct absolute paths for assets like icons in the paragraph templates.
+ */
+function dpl_paragraphs_preprocess_paragraph(array &$variables): void {
+  if (isset($variables['paragraph'])) {
+    $variables['absoluteBaseUrl'] = \Drupal::request()->getSchemeAndHttpHost();
+  }
+}
 
 /**
  * Implements hook_preprocess_paragraph__TYPE() for paragraph--links.html.twig.
@@ -107,4 +121,59 @@ function dpl_paragraphs_preprocess_paragraph__medias(array &$variables): void {
 
   $alternative_images = $paragraph->get('field_medias')->view('alternative');
   $variables['content']['field_medias'][1] = $alternative_images[1] ?? NULL;
+}
+
+/**
+ * Implements hook_preprocess_paragraph__TYPE().
+ *
+ * Prepares variables for paragraph--recommendation.html.twig template.
+ *
+ * If the paragraph has a title or description, we use the recommended-material
+ * React app. Otherwise, we use the recommendation React app.
+ */
+function dpl_paragraphs_preprocess_paragraph__recommendation(array &$variables): void {
+
+  $paragraph = $variables['paragraph'] ?? NULL;
+  if (!($paragraph instanceof ParagraphInterface) || !$paragraph->hasField('field_work_id') || $paragraph->get('field_work_id')->isEmpty()) {
+    return;
+  }
+
+  $work_id = $paragraph->get('field_work_id')->getString();
+  // Check for the existence of additional fields.
+  if ($paragraph->hasField('field_recommendation_title') &&
+    $paragraph->hasField('field_recommendation_description') &&
+    $paragraph->hasField('field_image_position_right')) {
+
+    $paragraph_title = $paragraph->get('field_recommendation_title')->getString();
+    $paragraph_description = $paragraph->get('field_recommendation_description')->getString();
+    $paragraph_image_position_right = $paragraph->get('field_image_position_right')->getString();
+
+    if (!empty($paragraph_title) || !empty($paragraph_description)) {
+      // The URL is only needed for the recommended-material app.
+      $material_url_object = Url::fromRoute('dpl_react_apps.work', ['wid' => $work_id], ['absolute' => TRUE]);
+      $material_url = $material_url_object->toString();
+
+      $variables['react_app'] = [
+        '#theme' => 'dpl_react_app',
+        '#name' => 'recommended-material',
+        '#data' => [
+          'wid' => $work_id,
+        ] + DplReactAppsController::externalApiBaseUrls(),
+        '#material_url' => $material_url,
+        '#position_image_right' => $paragraph_image_position_right,
+      ];
+    }
+    else {
+      // Align React's prop type: String '1' for true, boolean false otherwise.
+      $paragraph_image_position_right = $paragraph_image_position_right === '1' ? '1' : FALSE;
+      $variables['react_app'] = [
+        '#theme' => 'dpl_react_app',
+        '#name' => 'recommendation',
+        '#data' => [
+          'wid' => $work_id,
+          'position-image-right' => $paragraph_image_position_right,
+        ] + DplReactAppsController::externalApiBaseUrls(),
+      ];
+    }
+  }
 }
