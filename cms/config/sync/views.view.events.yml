@@ -4,7 +4,9 @@ status: true
 dependencies:
   config:
     - search_api.index.events
+    - taxonomy.vocabulary.categories
   module:
+    - better_exposed_filters
     - search_api
     - user
 id: events
@@ -113,7 +115,7 @@ display:
             offset: false
             offset_label: Offset
       exposed_form:
-        type: basic
+        type: bef
         options:
           submit_button: Apply
           reset_button: false
@@ -122,6 +124,32 @@ display:
           expose_sort_order: true
           sort_asc_label: Asc
           sort_desc_label: Desc
+          text_input_required: 'Select any filter and click on Apply to see results'
+          text_input_required_format: basic
+          bef:
+            general:
+              autosubmit: true
+              autosubmit_exclude_textfield: false
+              autosubmit_textfield_delay: 500
+              autosubmit_hide: true
+              input_required: false
+              allow_secondary: false
+              secondary_label: 'Advanced options'
+              secondary_open: false
+              reset_button_always_show: false
+            filter:
+              event_categories:
+                plugin_id: default
+                advanced:
+                  sort_options: false
+                  rewrite:
+                    filter_rewrite_values: ''
+                  collapsible: false
+                  is_secondary: false
+                options_show_only_used: true
+                options_show_only_used_filtered: false
+                options_hide_when_empty: true
+                options_show_items_count: 0
       access:
         type: perm
         options:
@@ -207,6 +235,7 @@ display:
           preserve_facet_query_args: false
           query_tags: {  }
       relationships: {  }
+      use_ajax: true
       header: {  }
       footer: {  }
       display_extenders: {  }
@@ -215,7 +244,6 @@ display:
       contexts:
         - 'languages:language_interface'
         - url.query_args
-        - 'user.node_grants:view'
         - user.permissions
       tags:
         - 'config:search_api.index.events'
@@ -226,14 +254,119 @@ display:
     display_plugin: page
     position: 1
     display_options:
+      filters:
+        end_value:
+          id: end_value
+          table: search_api_index_events
+          field: end_value
+          relationship: none
+          group_type: group
+          admin_label: ''
+          plugin_id: search_api_date
+          operator: '>='
+          value:
+            min: ''
+            max: ''
+            value: today
+            type: offset
+          group: 1
+          exposed: false
+          expose:
+            operator_id: ''
+            label: ''
+            description: ''
+            use_operator: false
+            operator: ''
+            operator_limit_selection: false
+            operator_list: {  }
+            identifier: ''
+            required: false
+            remember: false
+            multiple: false
+            remember_roles:
+              authenticated: authenticated
+            min_placeholder: ''
+            max_placeholder: ''
+            placeholder: ''
+          is_grouped: false
+          group_info:
+            label: ''
+            description: ''
+            identifier: ''
+            optional: true
+            widget: select
+            multiple: false
+            remember: false
+            default_group: All
+            default_group_multiple: {  }
+            group_items: {  }
+        event_categories:
+          id: event_categories
+          table: search_api_index_events
+          field: event_categories
+          relationship: none
+          group_type: group
+          admin_label: ''
+          plugin_id: search_api_term
+          operator: or
+          value: {  }
+          group: 1
+          exposed: true
+          expose:
+            operator_id: event_categories_op
+            label: 'Event category'
+            description: ''
+            use_operator: false
+            operator: event_categories_op
+            operator_limit_selection: false
+            operator_list: {  }
+            identifier: category
+            required: false
+            remember: false
+            multiple: false
+            remember_roles:
+              authenticated: authenticated
+              anonymous: '0'
+              administrator: '0'
+              local_administrator: '0'
+              editor: '0'
+              mediator: '0'
+              patron: '0'
+            reduce: false
+          is_grouped: false
+          group_info:
+            label: ''
+            description: ''
+            identifier: ''
+            optional: true
+            widget: select
+            multiple: false
+            remember: false
+            default_group: All
+            default_group_multiple: {  }
+            group_items: {  }
+          reduce_duplicates: false
+          vid: categories
+          type: select
+          hierarchy: false
+          limit: true
+          error_message: true
+      filter_groups:
+        operator: AND
+        groups:
+          1: AND
+      defaults:
+        filters: false
+        filter_groups: false
       display_extenders: {  }
       path: events
     cache_metadata:
       max-age: -1
       contexts:
         - 'languages:language_interface'
+        - url
         - url.query_args
-        - 'user.node_grants:view'
+        - user
         - user.permissions
       tags:
         - 'config:search_api.index.events'
@@ -269,7 +402,6 @@ display:
       max-age: -1
       contexts:
         - 'languages:language_interface'
-        - 'user.node_grants:view'
         - user.permissions
       tags:
         - 'config:search_api.index.events'

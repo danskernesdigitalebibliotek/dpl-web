@@ -5,6 +5,7 @@ dependencies:
   config:
     - search_api.server.db_search
   module:
+    - ''
     - recurring_events
     - search_api
 id: events
@@ -28,6 +29,14 @@ field_settings:
     dependencies:
       module:
         - recurring_events
+  event_categories:
+    label: 'Event categories'
+    datasource_id: 'entity:eventinstance'
+    property_path: event_categories
+    type: integer
+    dependencies:
+      module:
+        - null
 datasource_settings:
   'entity:eventinstance':
     bundles:
