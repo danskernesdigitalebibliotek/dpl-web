@@ -1,0 +1,29 @@
+dpl_admin.add_content:
+  title: "Add content"
+  parent: system.admin_content
+  route_name: node.add_page
+  weight: 5
+
+dpl_admin.add_content_article:
+  title: "Add article"
+  parent: dpl_admin.add_content
+  route_name: node.add
+  route_parameters:
+    node_type: "article"
+  weight: 1
+
+dpl_admin.add_content_campaign:
+  title: "Add campaign"
+  parent: dpl_admin.add_content
+  route_name: node.add
+  route_parameters:
+    node_type: "campaign"
+  weight: 2
+
+dpl_admin.add_content_page:
+  title: "Add page"
+  parent: dpl_admin.add_content
+  route_name: node.add
+  route_parameters:
+    node_type: "page"
+  weight: 3
