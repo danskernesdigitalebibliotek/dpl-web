@@ -3,8 +3,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2024-02-06 13:56+0100\n"
-"PO-Revision-Date: 2024-02-06 13:56+0100\n"
+"POT-Creation-Date: 2024-02-06 17:45+0100\n"
+"PO-Revision-Date: 2024-02-06 17:45+0100\n"
 "Last-Translator: NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
 "MIME-Version: 1.0\n"
@@ -3143,10 +3143,6 @@ msgctxt "Create patron"
 msgid "Name"
 msgstr "Navn"
 
-msgctxt "dpl_event"
-msgid "Access"
-msgstr "Adgang"
-
 msgid "Buy tickets"
 msgstr "Køb billet"
 
@@ -3471,6 +3467,12 @@ msgstr "DPL Paragraphs"
 msgid "Tweaks to various DPL paragraphs"
 msgstr "Ændringer til forskellige DPL paragraphs"
 
+msgid "DPL Filtered Paragraphs"
+msgstr ""
+
+msgid "Filtered paragraphs, embedding views."
+msgstr ""
+
 msgid "Loans"
 msgstr "Lån"
 
@@ -3525,6 +3527,15 @@ msgstr "Funktion relateret til oprettelse af artikelindhold."
 msgid "Events in this series"
 msgstr "Arrangementer i denne serie"
 
+msgid "..."
+msgstr ""
+
+msgid "Show less"
+msgstr ""
+
+msgid "Tags"
+msgstr "Tags"
+
 msgid "Upcoming events"
 msgstr "Kommende arrangementer"
 
@@ -3558,8 +3569,8 @@ msgstr "Scroll fremad"
 msgid "Scroll backwards"
 msgstr "Scroll tilbage"
 
-msgid "Description"
-msgstr "Beskrivelse"
+msgid "Show all"
+msgstr ""
 
 msgid "Novel"
 msgstr "Roman"
