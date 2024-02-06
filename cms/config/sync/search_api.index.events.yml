@@ -5,7 +5,6 @@ dependencies:
   config:
     - search_api.server.db_search
   module:
-    - ''
     - recurring_events
     - search_api
 id: events
