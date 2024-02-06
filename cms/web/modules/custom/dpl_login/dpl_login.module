@@ -13,11 +13,13 @@ use Drupal\Core\Cache\CacheableMetadata;
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\Session\AccountInterface;
 use Drupal\Core\Site\Settings;
+use Drupal\Core\Url;
 use Drupal\dpl_fbs\Patron\BlockedReason;
 use Drupal\dpl_login\AccessToken;
 use Drupal\dpl_login\DplLoginInterface;
 use Drupal\dpl_login\Exception\AccessTokenCreationException;
 use Drupal\user\UserInterface;
+use Psr\Log\LoggerInterface;
 use function Safe\sprintf as sprintf;
 
 /**
@@ -27,21 +29,26 @@ use function Safe\sprintf as sprintf;
  *   User info from external service.
  * @param mixed[] $context
  *   Various openid_connect context. Tokens etc.
+ *
+ * @throws Exception
  */
 function dpl_login_openid_connect_userinfo_alter(array &$userinfo, array $context): void {
 
-  // If we cannot resolve uinque id we cannot continue.
-  if (!$id = $userinfo['attributes']['uniqueId'] ?? FALSE) {
-    $userinfo = [];
-    return;
+  // If we cannot resolve both cpr and uniqueId we cannot continue.
+  if (!$cpr = $userinfo['attributes']['cpr'] ?? FALSE) {
+    if (!$uniqueId = $userinfo['attributes']['uniqueId'] ?? FALSE) {
+      throw new \Exception('Unable to identify user. Both CPR and uniqueId are missing.');
+    }
   }
+
+  $id = $cpr ?: $uniqueId;
 
   $id_hash = crypt($id, Settings::getHashSalt());
 
   $name = uniqid();
   // Drupal needs an email. We set a unique one to apply to that rule.
   $userinfo['email'] = sprintf('%s@dpl-cms.invalid', $name);
-  // Drupal needs a user name. We use the unique id to apply to that rule.
+  // Drupal needs a username. We use the unique id to apply to that rule.
   $userinfo['name'] = $name;
   // openid_connect module needs the sub for creating the auth map.
   $userinfo['sub'] = $id_hash;
@@ -54,9 +61,11 @@ function dpl_login_openid_connect_userinfo_alter(array &$userinfo, array $contex
  *   User account.
  * @param mixed[] $context
  *   Various openid_connect context. Tokens etc.
+ *
+ * @throws \Drupal\dpl_login\Exception\MissingConfigurationException
  */
 function dpl_login_openid_connect_pre_authorize(AccountInterface|FALSE $account, array $context): bool {
-  $logger = \Drupal::logger('dpl_login');
+  $logger = _dpl_login_get_user_login_logger();
 
   try {
     $token = AccessToken::createFromOpenidConnectContext($context);
@@ -71,6 +80,15 @@ function dpl_login_openid_connect_pre_authorize(AccountInterface|FALSE $account,
   /** @var \Drupal\dpl_fbs\FbsApiFactory $api_factory */
   $api_factory = \Drupal::service('dpl_fbs.api_factory');
   $api = $api_factory->getPatronApi($token->token);
+
+  // Check if the user is previously associated with an agency (library).
+  // If not, we assume the user is new and skip the patron blocked check.
+  if (!_dpl_login_is_user_associated_with_agency($context)) {
+    $logger->info('Pre authorize hook - User was not associated with current library.');
+    return TRUE;
+  }
+
+  $logger->info('Pre authorize hook - User already associated with library agency.');
 
   try {
     $patron = $api->getPatronInformationByPatronIdV2();
@@ -118,10 +136,13 @@ function dpl_login_openid_connect_pre_authorize(AccountInterface|FALSE $account,
  *   Various openid_connect context. Tokens etc.
  */
 function dpl_login_openid_connect_post_authorize(AccountInterface $account, array $context): void {
+  $logger = _dpl_login_get_user_login_logger();
   $access_token = AccessToken::createFromOpenidConnectContext($context);
+
   /** @var Drupal\dpl_login\UserTokensProvider $token_provider */
   $token_provider = \Drupal::service('dpl_login.user_tokens');
   $token_provider->setAccessToken($access_token);
+  $logger->info('Post authorize hook - User token was set.');
 }
 
 /**
@@ -138,6 +159,58 @@ function dpl_login_openid_connect_userinfo_save(UserInterface $account, array $c
     $account->addRole(DplLoginInterface::ROLE_PATRON);
     $account->save();
   }
+}
+
+/**
+ * Check if the agency id is already associated with the user.
+ *
+ * @param mixed[] $context
+ *   Various openid_connect context.
+ *
+ * @return bool
+ *   Yes or no?
+ *
+ * @throws \Drupal\dpl_login\Exception\MissingConfigurationException
+ */
+function _dpl_login_is_user_associated_with_agency(array $context) : bool {
+  /** @var \Drupal\dpl_login\Adgangsplatformen\Config $adgangsplatformen_config */
+  $adgangsplatformen_config = \Drupal::service('dpl_login.adgangsplatformen.config');
+  $agency_id = $adgangsplatformen_config->getAgencyId();
+
+  if (empty($context['userinfo']['attributes']['agencies'])) {
+    return FALSE;
+  }
+
+  // Checks if the Agency ID is already associated with the user.
+  // This is done by checking if the user has an Agency ID that matches
+  // the current Agency ID and has the userIdType set as LOCAL.
+  $agency_list = $context['userinfo']['attributes']['agencies'];
+  $result = array_filter($agency_list, function ($agency) use ($agency_id) {
+    return $agency['agencyId'] === $agency_id && $agency['userIdType'] === 'LOCAL';
+  });
+
+  return !empty($result);
+}
+
+/**
+ * Helper method that returns Drupal logger object.
+ *
+ * @return \Psr\Log\LoggerInterface
+ *   Logger object.
+ */
+function _dpl_login_get_user_login_logger(): LoggerInterface {
+  $logger_key = "dpl_login";
+
+  /** @var \Drupal\Core\GeneratedUrl $url */
+  $url = Url::fromRoute('dpl_patron_reg.create')->toString(TRUE);
+
+  // If the openid_connect_destination redirect url is the patron
+  // registration url we consider the auth flow to be the registration flow.
+  if (($_SESSION['openid_connect_destination'] ?? "") === $url->getGeneratedUrl()) {
+    $logger_key = $logger_key . ".patron_registration";
+  }
+
+  return \Drupal::logger($logger_key);
 }
 
 /**

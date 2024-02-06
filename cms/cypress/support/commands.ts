@@ -105,7 +105,17 @@ Cypress.Commands.add("drupalCron", () => {
 
 Cypress.Commands.add(
   "adgangsplatformenLogin",
-  (authorizationCode: string, accessToken: string, userGuid: string) => {
+  ({
+    authorizationCode,
+    accessToken,
+    userCPR,
+    userGuid,
+  }: {
+    authorizationCode: string;
+    accessToken: string;
+    userCPR?: number;
+    userGuid?: string;
+  }) => {
     cy.createMapping({
       request: {
         method: "GET",
@@ -160,7 +170,8 @@ Cypress.Commands.add(
       response: {
         jsonBody: {
           attributes: {
-            uniqueId: userGuid,
+            cpr: userCPR,
+            ...(userGuid ? { uniqueId: userGuid } : {}),
           },
         },
       },
@@ -213,11 +224,12 @@ declare global {
       drupalLogin(): Chainable<null>;
       drupalLogout(): Chainable<null>;
       drupalCron(): Chainable<null>;
-      adgangsplatformenLogin(
-        authorizationCode: string,
-        accessToken: string,
-        userGuid: string
-      ): Chainable<null>;
+      adgangsplatformenLogin(params: {
+        authorizationCode: string;
+        accessToken: string;
+        userCPR?: number;
+        userGuid?: string;
+      }): Chainable<null>;
       getBySel(
         selector: string,
         checkVisible?: boolean,

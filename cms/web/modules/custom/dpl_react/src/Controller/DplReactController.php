@@ -71,8 +71,8 @@ class DplReactController extends ControllerBase {
       $content_lines[] = sprintf('window.dplReact.setToken("library", "%s")', $token_agency);
     }
 
-    if ($acces_token = $this->userTokensProvider->getAccessToken()) {
-      if ($token_user = $acces_token->token ?? FALSE) {
+    if ($access_token = $this->userTokensProvider->getAccessToken()) {
+      if ($token_user = $access_token->token ?? FALSE) {
         $content_lines[] = sprintf('window.dplReact.setToken("user", "%s")', $token_user);
       }
     }
