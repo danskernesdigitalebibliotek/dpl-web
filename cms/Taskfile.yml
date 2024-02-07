@@ -341,6 +341,7 @@ tasks:
     cmds:
       - cmd: jq --indent {{ .JQ_INDENT }} -r '(.repositories[] | select(.package.name == "{{ .NAME }}").package.dist.url) = "{{ .DOWNLOAD_URL }}"' composer.json > composer.temp.json && mv composer.temp.json composer.json
       - cmd: jq --indent {{ .JQ_INDENT }} -r '(.repositories[] | select(.package.name =="{{ .NAME }}").package.version) = ("{{ .VERSION }}")' composer.json > composer.temp.json && mv composer.temp.json composer.json
+      - cmd: sleep 1
       - cmd: task dev:cli -- composer require {{ .NAME }}:{{ .VERSION }}
     vars:
       # This is what matches our composer.json file.
