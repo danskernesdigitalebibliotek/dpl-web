@@ -30,7 +30,9 @@ jobs:
       uses: arduino/setup-task@v1
       if: ${{ steps.detect_tag.outputs.IS_RELEASE_TAG == 'true' }}
     - name: Build and publish source
-      run: task source:deploy
+      run: |
+        echo "Publishing tag: $RELEASE_TAG"
+        RELEASE_IMAGE_TAG=$RELEASE_TAG task source:deploy
       if: ${{ steps.detect_tag.outputs.IS_RELEASE_TAG == 'true' }}
       env:
         CR_PAT: ${{ secrets.GITHUB_TOKEN }}
