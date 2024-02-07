@@ -127,6 +127,7 @@ function dpl_react_apps_texts(): array {
     'group-modal-due-date-header' => t('Due date @date', [], ['context' => 'Global']),
     'group-modal-due-date-link-to-page-with-fees' => t("Read more about fees", [], ['context' => 'Global']),
     'group-modal-due-date-material' => t("Due date @date", [], ['context' => 'Global']),
+    'group-modal-due-date-digital-material' => t("Expires @date", [], ['context' => 'Global']),
     'group-modal-due-date-renew-loan-close-modal-aria-label' => t('Close renew loans modal', [], ['context' => 'Global']),
     'group-modal-due-date-warning-loan-overdue' => t('The due date of return is exceeded, therefore you will be charged a fee, when the item is returned', [], ['context' => 'Global']),
     'group-modal-go-to-material' => t("Go to material details", [], ['context' => 'Global']),
