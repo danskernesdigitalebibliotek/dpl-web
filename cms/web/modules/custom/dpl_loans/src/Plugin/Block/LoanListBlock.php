@@ -94,6 +94,7 @@ class LoanListBlock extends BlockBase implements ContainerFactoryPluginInterface
       'loan-list-physical-loans-title-text' => $this->t("Physical loans", [], ['context' => 'Loan list']),
       'loan-list-renew-multiple-button-explanation-text' => $this->t("This button opens a modal that covers the entire page and contains loans with different due dates, if some of the loans in the modal are renewable you can renew them", [], ['context' => 'Loan list']),
       'loan-list-renew-multiple-button-text' => $this->t("Renew several", [], ['context' => 'Loan list']),
+      'loan-list-no-items-can-be-renewed-text' => $this->t("No materials can be renewed", [], ['context' => 'Loan list']),
       'loan-list-status-badge-danger-text' => $this->t("Expired", [], ['context' => 'Loan list']),
       'loan-list-status-badge-warning-text' => $this->t("Expiring soon", [], ['context' => 'Loan list']),
       'loan-list-title-text' => $this->t("Your loans", [], ['context' => 'Loan list']),
