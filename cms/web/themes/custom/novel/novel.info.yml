@@ -22,3 +22,6 @@ regions:
   header: "Header"
   content: "Content"
   footer: "Footer"
+
+ckeditor5-stylesheets:
+  - assets/dpl-design-system/css/wysiwyg.css
