@@ -16,7 +16,10 @@
     </header>
   {% endif %}
 
-  {{ exposed }}
+  <div class="event-list-page__filters">
+    {{ exposed }}
+  </div>
+
   {{ attachment_before }}
 
   {% if rows -%}
