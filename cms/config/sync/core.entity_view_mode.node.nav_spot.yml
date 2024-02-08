@@ -1,0 +1,10 @@
+uuid: 784fc5ab-a809-479c-b2f2-78fe7215435f
+langcode: en
+status: true
+dependencies:
+  module:
+    - node
+id: node.nav_spot
+label: 'Nav spot'
+targetEntityType: node
+cache: true

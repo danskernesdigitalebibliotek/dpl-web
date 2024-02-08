@@ -1,10 +1,10 @@
 {% include '@novel/components/card.html.twig'
   with {
   attributes: attributes,
-  image: content.event_teaser_image,
+  image: content.field_teaser_image,
   variant: 'x-large',
-  has_image: (content.event_teaser_image.0),
-  teaser_text: content.event_teaser_text,
+  has_image: (content.field_teaser_image.0),
+  teaser_text: content.field_teaser_text,
   type_tag: 'Event'|trans,
   date_tag: content.date,
   title: content.title,
