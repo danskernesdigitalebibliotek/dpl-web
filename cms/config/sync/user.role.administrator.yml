@@ -57,6 +57,7 @@ permissions:
   - 'administer modules'
   - 'administer openid connect clients'
   - 'administer site configuration'
+  - 'administer themes'
   - 'administer url proxy configuration'
   - 'administer users'
   - 'clone eventinstance entity'
