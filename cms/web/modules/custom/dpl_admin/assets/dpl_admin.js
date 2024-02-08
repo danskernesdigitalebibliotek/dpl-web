@@ -14,8 +14,31 @@ Drupal.behaviors.dpl_admin = {
     });
   },
 
+  // A helper function, adding X minutes to a time string ("14:15" => "14:30").
+  addMinutesToTime(timestring, minutesToAdd) {
+    // Parse the input time string
+    const [hours, minutes] = timestring.split(":").map(Number);
+
+    // Convert hours and minutes to minutes and add 15 minutes
+    const totalMinutes = hours * 60 + minutes + minutesToAdd;
+
+    // Calculate the new hours and minutes, taking care to wrap correctly
+    // Use modulo 24 for hours to wrap at 24 hours
+    const newHours = Math.floor(totalMinutes / 60) % 24;
+
+    // Use modulo 60 for minutes to wrap at 60 minutes
+    const newMinutes = totalMinutes % 60;
+
+    // Format the new time as HH:MM, padding with zeroes if necessary
+    const formattedHours = newHours.toString().padStart(2, "0");
+    const formattedMinutes = newMinutes.toString().padStart(2, "0");
+
+    return `${formattedHours}:${formattedMinutes}`;
+  },
+
   // Set the start date as a default date for end date input fields.
   dateRangeInit(input, context) {
+    const that = this;
     const name = input.getAttribute("name");
 
     if (!name) {
@@ -31,8 +54,14 @@ Drupal.behaviors.dpl_admin = {
       // event listener: waiting a second, and then looking up for the end
       // value input.
       setTimeout(() => {
+        let inputValue = input.value;
+
+        if (name.includes("[time]")) {
+          inputValue = that.addMinutesToTime(inputValue, 60);
+        }
+
         const endValueInput = context.querySelector(`[name="${endValueName}"]`);
-        endValueInput.value = endValueInput.value || input.value;
+        endValueInput.value = endValueInput.value || inputValue;
       }, 1000);
     });
   },
