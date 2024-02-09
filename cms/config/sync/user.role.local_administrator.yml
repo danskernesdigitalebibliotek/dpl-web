@@ -22,6 +22,7 @@ dependencies:
     - media
     - node
     - recurring_events
+    - simple_menu_permissions
     - system
     - taxonomy
     - toolbar
@@ -37,6 +38,7 @@ permissions:
   - 'access taxonomy overview'
   - 'access toolbar'
   - 'add eventseries entity'
+  - 'add new links to main menu'
   - 'administer instant loan configuration'
   - 'administer library agency configuration'
   - 'administer url proxy configuration'
@@ -56,6 +58,7 @@ permissions:
   - 'delete any page content'
   - 'delete eventinstance entity'
   - 'delete eventseries entity'
+  - 'delete links in main menu'
   - 'delete media'
   - 'delete own article content'
   - 'delete own campaign content'
@@ -74,6 +77,8 @@ permissions:
   - 'edit any video media'
   - 'edit eventinstance entity'
   - 'edit eventseries entity'
+  - 'edit links in main menu'
+  - 'edit main menu'
   - 'edit own article content'
   - 'edit own campaign content'
   - 'edit own document media'
@@ -91,6 +96,7 @@ permissions:
   - 'use text format limited'
   - 'view all eventinstance revisions'
   - 'view all eventseries revisions'
+  - 'view main menu in menu list'
   - 'view own unpublished content'
   - 'view the administration theme'
   - 'view unpublished eventinstance entity'
