@@ -1,7 +1,23 @@
 uuid: 75ad5a84-0836-49cf-be2e-e4d2cdd3916a
 langcode: en
 status: true
-dependencies: {  }
+dependencies:
+  module:
+    - scheduler
+third_party_settings:
+  scheduler:
+    expand_fieldset: when_required
+    fields_display_mode: vertical_tab
+    publish_enable: true
+    publish_past_date: error
+    publish_past_date_created: false
+    publish_required: false
+    publish_revision: false
+    publish_touch: true
+    show_message_after_update: true
+    unpublish_enable: true
+    unpublish_required: false
+    unpublish_revision: false
 name: Article
 type: article
 description: 'Use articles for news-worthy content, that does not get updated regularly.'
