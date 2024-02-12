@@ -89,7 +89,7 @@
 }
 
 /* Hide some fields on the edit menu UI. */
-/* Also hiding the ability to place menu item in levels. */
+/* Also hiding the ability to place main menu items in levels. */
 .menu-link-content-form .field--name-description,
 .menu-link-content-form .field--name-expanded,
 .menu-link-content-form .form-item--menu-parent,

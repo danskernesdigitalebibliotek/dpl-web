@@ -8,6 +8,7 @@
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\Render\Markup;
 use Drupal\Core\Url;
+use Drupal\menu_link_content\Entity\MenuLinkContent;
 use Drupal\recurring_events\Entity\EventInstance;
 use Drupal\views\Plugin\views\field\EntityField;
 use Drupal\views\ViewExecutable;
@@ -227,4 +228,24 @@ function dpl_admin_datetime_set_format(array $element): array {
   // Remove seconds in browsers that support HTML5 type=date.
   $element['time']['#attributes']['step'] = 60;
   return $element;
+}
+
+/**
+ * Implements hook_ENTITY_TYPE_presave().
+ *
+ * The editor can place links in the main menu in several levels, but we only
+ * display the first level in the frontend.
+ * If the editor still places a multi-level link, we'll give them a warning.
+ */
+function dpl_admin_menu_link_content_presave(MenuLinkContent $entity): void {
+  if ('main' !== $entity->getMenuName()) {
+    return;
+  }
+
+  if (!$entity->get('parent')->isEmpty()) {
+    \Drupal::messenger()->addWarning(t(
+      'You have added a menu link with a parent. Please notice that this menu link will not be displayed, as we do not support multi-levels in the main menu.',
+      [], ['context' => 'DPL admin UX']
+    ));
+  }
 }
