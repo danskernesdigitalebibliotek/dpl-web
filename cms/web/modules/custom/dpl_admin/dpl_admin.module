@@ -19,6 +19,8 @@ use Drupal\views\ViewExecutable;
  * loading our custom admin CSS.
  */
 function dpl_admin_preprocess_html(array &$variables): void {
+  $variables['#attached']['library'][] = 'dpl_admin/frontend';
+
   if (!\Drupal::service('router.admin_context')->isAdminRoute()) {
     return;
   }

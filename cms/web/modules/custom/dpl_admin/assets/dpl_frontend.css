@@ -1,0 +1,6 @@
+/* Re-arranging the "preview" toolbar, that is shown when editors preview nodes. */
+.node-preview-form-select .form-item-view-mode {
+  display: flex !important;
+  align-items: center !important;
+  all: inherit !important;
+}
