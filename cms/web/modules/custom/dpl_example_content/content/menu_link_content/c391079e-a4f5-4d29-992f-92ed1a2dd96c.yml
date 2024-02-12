@@ -44,4 +44,4 @@ default:
       tag: link
       attributes:
         rel: canonical
-        href: 'http://dpl-cms.docker/user/login'
+        href: '/user/login'

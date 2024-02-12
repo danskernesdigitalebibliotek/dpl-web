@@ -1,7 +1,7 @@
 _meta:
   version: '1.0'
   entity_type: menu_link_content
-  uuid: ff6db3ce-49e0-4107-b283-3403e22c5e6d
+  uuid: c10227b4-50ed-4ab8-9d6a-a14889f7fb01
   bundle: menu_link_content
   default_langcode: en
 default:
@@ -10,13 +10,13 @@ default:
       value: true
   title:
     -
-      value: 'Det sker'
+      value: Litteratur
   menu_name:
     -
       value: main
   link:
     -
-      uri: 'internal:/events'
+      uri: 'internal:/'
       title: ''
       options: {  }
   external:
@@ -27,7 +27,7 @@ default:
       value: true
   weight:
     -
-      value: -1
+      value: 3
   expanded:
     -
       value: false
