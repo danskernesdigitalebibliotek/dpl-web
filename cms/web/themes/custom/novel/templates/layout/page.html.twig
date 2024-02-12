@@ -43,6 +43,7 @@
  */
 #}
 
+
 <div>
   {% include '@novel/layout/header.html.twig'
     with {
@@ -60,7 +61,7 @@
 
   {% include '@novel/layout/footer.html.twig'
     with {
-    'footer': page.footer,
+    'footer': footer_items,
     'logo': logo,
   } only %}
 </div>
