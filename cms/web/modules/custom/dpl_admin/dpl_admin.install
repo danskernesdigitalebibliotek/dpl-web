@@ -2,7 +2,7 @@
 
 /**
  * @file
- * Dpl Login Install.
+ * DPL Admin install file.
  */
 
 use function Safe\file_get_contents;
