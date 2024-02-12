@@ -71,6 +71,7 @@ module:
   media_library: 0
   media_library_edit: 0
   menu_link_content: 0
+  menu_ui: 0
   metatag: 0
   multiple_fields_remove_button: 0
   mysql: 0
@@ -96,6 +97,7 @@ module:
   search_api: 0
   search_api_db: 0
   serialization: 0
+  simple_menu_permissions: 0
   system: 0
   taxonomy: 0
   text: 0

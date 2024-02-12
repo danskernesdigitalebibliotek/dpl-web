@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "b7dd464536a22839f3d099207390f3c4",
+    "content-hash": "1204c554459281e364fd3dbbb00e8d55",
     "packages": [
         {
             "name": "amazeeio/drupal_integrations",
@@ -5129,6 +5129,50 @@
             "support": {
                 "source": "http://cgit.drupalcode.org/selective_better_exposed_filters",
                 "issues": "https://www.drupal.org/project/issues/selective_better_exposed_filters"
+            }
+        },
+        {
+            "name": "drupal/simple_menu_permissions",
+            "version": "2.0.0",
+            "source": {
+                "type": "git",
+                "url": "https://git.drupalcode.org/project/simple_menu_permissions.git",
+                "reference": "2.0.0"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://ftp.drupal.org/files/projects/simple_menu_permissions-2.0.0.zip",
+                "reference": "2.0.0",
+                "shasum": "75796f4cd15a4661c146904796c738de8b4c5918"
+            },
+            "require": {
+                "drupal/core": "^8 || ^9 || ^10"
+            },
+            "type": "drupal-module",
+            "extra": {
+                "drupal": {
+                    "version": "2.0.0",
+                    "datestamp": "1675522195",
+                    "security-coverage": {
+                        "status": "covered",
+                        "message": "Covered by Drupal's security advisory policy"
+                    }
+                }
+            },
+            "notification-url": "https://packages.drupal.org/8/downloads",
+            "license": [
+                "GPL-2.0-or-later"
+            ],
+            "authors": [
+                {
+                    "name": "Ewout Goosmann",
+                    "homepage": "https://www.drupal.org/user/3138239"
+                }
+            ],
+            "description": "Defines permissions for each menu. Such as the edit and delete permission. Also defines a permission to create new menus.",
+            "homepage": "https://www.drupal.org/project/simple_menu_permissions",
+            "support": {
+                "source": "https://git.drupalcode.org/project/simple_menu_permissions"
             }
         },
         {

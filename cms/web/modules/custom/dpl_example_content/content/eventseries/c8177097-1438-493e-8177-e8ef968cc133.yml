@@ -105,7 +105,7 @@ default:
       tag: link
       attributes:
         rel: canonical
-        href: 'http://dapple-cms.docker/user/login'
+        href: '/user/login'
   event_instances:
     -
       entity: cb0b18d2-eb87-4dcd-ae98-efd0e657473a

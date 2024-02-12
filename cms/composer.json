@@ -115,6 +115,7 @@
         "drupal/restui": "^1.21",
         "drupal/search_api": "^1.31",
         "drupal/selective_better_exposed_filters": "^3.0",
+        "drupal/simple_menu_permissions": "^2.0",
         "drupal/twig_tweak": "^3.2.1",
         "drupal/upgrade_status": "^4.0",
         "drupal/uuid_url": "^1.3",

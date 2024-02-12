@@ -28,6 +28,7 @@ dependencies:
     - node
     - openid_connect
     - recurring_events
+    - simple_menu_permissions
     - system
     - taxonomy
     - toolbar
@@ -48,6 +49,7 @@ permissions:
   - 'access toolbar'
   - 'access user profiles'
   - 'add eventseries entity'
+  - 'add new links to main menu'
   - 'administer blocks'
   - 'administer dpl_mapp configuration'
   - 'administer instant loan configuration'
@@ -76,6 +78,7 @@ permissions:
   - 'delete any page content'
   - 'delete eventinstance entity'
   - 'delete eventseries entity'
+  - 'delete links in main menu'
   - 'delete media'
   - 'delete orphan revisions'
   - 'delete own article content'
@@ -95,6 +98,8 @@ permissions:
   - 'edit any video media'
   - 'edit eventinstance entity'
   - 'edit eventseries entity'
+  - 'edit links in main menu'
+  - 'edit main menu'
   - 'edit own article content'
   - 'edit own campaign content'
   - 'edit own document media'
@@ -113,6 +118,7 @@ permissions:
   - 'use text format limited'
   - 'view all eventinstance revisions'
   - 'view all eventseries revisions'
+  - 'view main menu in menu list'
   - 'view own unpublished content'
   - 'view the administration theme'
   - 'view unpublished eventinstance entity'

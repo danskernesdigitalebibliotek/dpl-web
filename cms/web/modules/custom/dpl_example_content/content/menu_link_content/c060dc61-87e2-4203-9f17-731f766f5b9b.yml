@@ -1,0 +1,47 @@
+_meta:
+  version: '1.0'
+  entity_type: menu_link_content
+  uuid: c060dc61-87e2-4203-9f17-731f766f5b9b
+  bundle: menu_link_content
+  default_langcode: en
+default:
+  enabled:
+    -
+      value: true
+  title:
+    -
+      value: 'Børn & forældre'
+  menu_name:
+    -
+      value: main
+  link:
+    -
+      uri: 'internal:/'
+      title: ''
+      options: {  }
+  external:
+    -
+      value: false
+  rediscover:
+    -
+      value: true
+  weight:
+    -
+      value: 4
+  expanded:
+    -
+      value: false
+  revision_translation_affected:
+    -
+      value: true
+  metatag:
+    -
+      tag: meta
+      attributes:
+        name: title
+        content: '| DPL CMS'
+    -
+      tag: link
+      attributes:
+        rel: canonical
+        href: '/user/login'
