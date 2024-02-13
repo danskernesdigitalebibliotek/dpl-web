@@ -103,6 +103,7 @@
         "drupal/media_library_edit": "^3.0",
         "drupal/metatag": "^2.0",
         "drupal/multiple_fields_remove_button": "^2.2",
+        "drupal/multivalue_form_element": "^1.0@beta",
         "drupal/openapi": "^2.1",
         "drupal/openapi_rest": "^2.0@RC",
         "drupal/openid_connect": "^1.4",
@@ -221,6 +222,9 @@
         "patches": {
             "drupal/config_ignore": {
                 "3252291: Support force exclude for keys": "https://www.drupal.org/files/issues/2021-12-02/config_ignore-force-exclude-keys-3252291-3.patch"
+            },
+            "drupal/multivalue_form_element": {
+                "3199172: multivalue_form_element-3199172": "https://www.drupal.org/files/issues/2023-12-05/nested_elements-3199172-14.patch"
             },
             "drupal/core": {
                 "Configure core to not check permissions before accepting an updated module": "patches/disable-core-upload-permission-check.diff",
