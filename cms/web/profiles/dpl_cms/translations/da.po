@@ -2459,7 +2459,7 @@ msgstr "Musik"
 #: 
 msgctxt "Global"
 msgid "Available"
-msgstr "Hjemme"
+msgstr "Tilgængelig"
 
 #: 
 msgctxt "Global"
