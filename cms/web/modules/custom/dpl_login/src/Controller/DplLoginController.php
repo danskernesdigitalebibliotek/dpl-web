@@ -22,8 +22,6 @@ use Symfony\Component\HttpFoundation\Response;
 class DplLoginController extends ControllerBase {
   use StringTranslationTrait;
 
-  const LOGGER_KEY = 'dpl_login';
-
   /**
    * The User token provider.
    *

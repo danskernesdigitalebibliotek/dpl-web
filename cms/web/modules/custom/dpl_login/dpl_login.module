@@ -13,7 +13,6 @@ use Drupal\Core\Cache\CacheableMetadata;
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\Session\AccountInterface;
 use Drupal\Core\Site\Settings;
-use Drupal\Core\Url;
 use Drupal\dpl_fbs\Patron\BlockedReason;
 use Drupal\dpl_login\AccessToken;
 use Drupal\dpl_login\DplLoginInterface;
@@ -65,7 +64,7 @@ function dpl_login_openid_connect_userinfo_alter(array &$userinfo, array $contex
  * @throws \Drupal\dpl_login\Exception\MissingConfigurationException
  */
 function dpl_login_openid_connect_pre_authorize(AccountInterface|FALSE $account, array $context): bool {
-  $logger = _dpl_login_get_user_login_logger();
+  $logger = _dpl_login_get_authorization_logger($context);
 
   try {
     $token = AccessToken::createFromOpenidConnectContext($context);
@@ -136,7 +135,7 @@ function dpl_login_openid_connect_pre_authorize(AccountInterface|FALSE $account,
  *   Various openid_connect context. Tokens etc.
  */
 function dpl_login_openid_connect_post_authorize(AccountInterface $account, array $context): void {
-  $logger = _dpl_login_get_user_login_logger();
+  $logger = _dpl_login_get_authorization_logger($context);
   $access_token = AccessToken::createFromOpenidConnectContext($context);
 
   /** @var Drupal\dpl_login\UserTokensProvider $token_provider */
@@ -195,19 +194,19 @@ function _dpl_login_is_user_associated_with_agency(array $context) : bool {
 /**
  * Helper method that returns Drupal logger object.
  *
+ * @param mixed[] $context
+ *   Various openid_connect context.
+ *
  * @return \Psr\Log\LoggerInterface
  *   Logger object.
  */
-function _dpl_login_get_user_login_logger(): LoggerInterface {
-  $logger_key = "dpl_login";
+function _dpl_login_get_authorization_logger(array $context): LoggerInterface {
+  $logger_key = DplLoginInterface::LOGGER_KEY;
 
-  /** @var \Drupal\Core\GeneratedUrl $url */
-  $url = Url::fromRoute('dpl_patron_reg.create')->toString(TRUE);
-
-  // If the openid_connect_destination redirect url is the patron
-  // registration url we consider the auth flow to be the registration flow.
-  if (($_SESSION['openid_connect_destination'] ?? "") === $url->getGeneratedUrl()) {
-    $logger_key = $logger_key . ".patron_registration";
+  // If the user is not associated with an agency we assume that the user is
+  // registering as a patron. We do not have other ways to do it at this point.
+  if (!_dpl_login_is_user_associated_with_agency($context)) {
+    return \Drupal::logger(sprintf("%s.patron_registration", $logger_key));
   }
 
   return \Drupal::logger($logger_key);
