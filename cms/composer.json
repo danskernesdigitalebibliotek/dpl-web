@@ -113,6 +113,7 @@
         "drupal/recurring_events": "^2.0@RC",
         "drupal/redis": "^1.7",
         "drupal/restui": "^1.21",
+        "drupal/scheduler": "^2.0",
         "drupal/search_api": "^1.31",
         "drupal/selective_better_exposed_filters": "^3.0",
         "drupal/simple_menu_permissions": "^2.0",
@@ -262,6 +263,10 @@
                 "Mark as Drupal 10 compatible": "patches/potion-d10-info.patch",
                 "Use Drupal StaticReflectionParser with Drupal 10.1": "patches/potion-d10-1-staticreflection.patch",
                 "3413314: Include .links.menu.yml files in YamlExtractor.php": "https://www.drupal.org/files/issues/2024-01-08/potion-add_links_menu_yml_title_and_description_to_yaml_extractor-3413314-3.patch"
+            },
+            "drupal/purge": {
+                "3391383: Uninstalling module triggers ServiceNotFoundException exception": "https://git.drupalcode.org/project/purge/-/commit/88546a6e6c043f10832be43e02ae4ae65cf5ceb2.patch",
+                "Combat NoCorrespondingEntityClassException": "patches/purge-5340bcf-combat-nocorresponding-entity-exception.patch"
             },
             "drupal/recurring_events": {
                 "3415222: Wrong namespace for return values": "https://git.drupalcode.org/project/recurring_events/-/merge_requests/83.patch"

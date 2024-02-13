@@ -1,0 +1,38 @@
+From 5340bcf0086ead8c76c32984831fe995f9966174 Mon Sep 17 00:00:00 2001
+From: =?UTF-8?q?Kasper=20Garn=C3=A6s?= <kasperg@users.noreply.github.com>
+Date: Tue, 13 Feb 2024 08:20:53 +0100
+Subject: [PATCH] Combat NoCorrespondingEntityClassException
+
+---
+ src/Plugin/Purge/Purger/PurgersService.php | 8 ++++++++
+ 1 file changed, 8 insertions(+)
+
+diff --git a/src/Plugin/Purge/Purger/PurgersService.php b/src/Plugin/Purge/Purger/PurgersService.php
+index dcaf1d8..32ae910 100644
+--- a/src/Plugin/Purge/Purger/PurgersService.php
++++ b/src/Plugin/Purge/Purger/PurgersService.php
+@@ -4,6 +4,7 @@ namespace Drupal\purge\Plugin\Purge\Purger;
+ 
+ use Drupal\Component\Plugin\PluginManagerInterface;
+ use Drupal\Core\Config\ConfigFactoryInterface;
++use Drupal\Core\Entity\Exception\NoCorrespondingEntityClassException;
+ use Drupal\Core\Lock\LockBackendInterface;
+ use Drupal\purge\Logger\LoggerServiceInterface;
+ use Drupal\purge\Plugin\Purge\DiagnosticCheck\DiagnosticsServiceInterface;
+@@ -410,6 +411,13 @@ class PurgersService extends ServiceBase implements PurgersServiceInterface {
+         $this->logger->error("Error loading purger @id (@plugin_id): @error",
+           ['@id' => $id, '@plugin_id' => $plugin_id, '@error' => $e]);
+       }
++      // We have seen problems loading Varnish Purger configuration entities
++      // during some site installs on CI. We believe this may be temporary so
++      // try to combat these by logging the problem and continuing.
++      catch (NoCorrespondingEntityClassException $e) {
++        $this->logger->error("Error loading purger @id (@plugin_id): @error",
++          ['@id' => $id, '@plugin_id' => $plugin_id, '@error' => $e]);
++      }
+     }
+ 
+     // Pass the purger instance onto depending objects.
+-- 
+2.37.5
+

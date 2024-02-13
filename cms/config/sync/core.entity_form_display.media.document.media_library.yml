@@ -23,5 +23,7 @@ hidden:
   created: true
   field_media_file: true
   langcode: true
+  publish_on: true
   status: true
   uid: true
+  unpublish_on: true
