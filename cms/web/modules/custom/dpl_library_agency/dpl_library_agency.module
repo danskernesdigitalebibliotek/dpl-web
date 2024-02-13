@@ -12,31 +12,32 @@ use function Safe\preg_match;
 
 /**
  * Implements hook_form_BASE_FORM_ID_alter().
+ *
  * @throws \Safe\Exceptions\PcreException
  */
 function dpl_library_agency_form_node_confirm_form_alter(array &$form, FormStateInterface $form_state): void {
 
   if ($form_state->getFormObject() instanceof EntityFormInterface) {
 
-    // Get the node id and type
+    // Get the node id and type.
     /** @var \Drupal\node\NodeInterface $node */
     $node = $form_state->getFormObject()->getEntity();
     $node_id = $node->id();
     $node_type = $node->getType();
 
-      // Create array containing node ids
+    // Create array containing node ids.
     /** @var \Drupal\dpl_library_agency\GeneralSettings $general_settings */
     $general_settings = \Drupal::service('dpl_library_agency.general_settings');
     $nodes = [];
 
-    // Pattern to match node url e.g. /node/1
+    // Pattern to match node url e.g. /node/1.
     $pattern = '/^\/node\/\d+$/';
 
     if (preg_match($pattern, $general_settings->getPauseReservationInfoUrl())) {
       $nodes[] = basename($general_settings->getPauseReservationInfoUrl());
     }
 
-    // Get the configuration path
+    // Get the configuration path.
     $configPath = Url::fromRoute('dpl_library_agency.general_settings', [], ['absolute' => TRUE])->toString();
 
     foreach ($nodes as $node) {
@@ -44,7 +45,7 @@ function dpl_library_agency_form_node_confirm_form_alter(array &$form, FormState
         $form['description'] = [
           '#markup' => t('This @type is being used in this <a href=":url">configuration</a>. You need to remove this reference before you can delete this @type.', [
             '@type' => $node_type,
-            ':url' => $configPath
+            ':url' => $configPath,
           ]),
         ];
 
