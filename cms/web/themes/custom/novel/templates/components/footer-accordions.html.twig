@@ -1,0 +1,19 @@
+{{ attach_library('novel/footer-accordions') }}
+
+<ul class="footer-accordions" data-footer-accordions="true">
+    {% for item in footer %}
+        {% set startsOpen = loop.index == 1 %}
+        <li class="footer-accordion">
+            <h3 class="footer-accordion__header footer__title">
+                <button class="footer-accordion__header-button" aria-expanded="{{ startsOpen ? 'true' : 'false' }}" data-footer-accordion-trigger>
+                    {{ item.name }}
+                    <img class="footer-accordion__header-button__arrow" src="/themes/custom/novel/assets/dpl-design-system/icons/basic/icon-triangle.svg" alt="">
+                </button>
+            </h3>
+
+            <div class="footer__content {{ startsOpen ? '' : 'footer__content--hidden' }}">
+                {{ item.content.value|raw }}
+            </div>
+        </li>
+    {% endfor %}
+</ul>
