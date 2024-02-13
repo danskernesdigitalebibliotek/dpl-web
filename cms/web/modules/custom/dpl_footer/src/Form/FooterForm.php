@@ -4,8 +4,8 @@ namespace Drupal\dpl_footer\Form;
 
 use Drupal\Core\Form\FormBase;
 use Drupal\Core\Form\FormStateInterface;
-use Symfony\Component\DependencyInjection\ContainerInterface;
 use Drupal\multivalue_form_element\Element\MultiValue;
+use Symfony\Component\DependencyInjection\ContainerInterface;
 
 /**
  * Class FooterForm.
@@ -39,7 +39,7 @@ class FooterForm extends FormBase {
   /**
    * {@inheritdoc}
    */
-  public static function create(ContainerInterface $container) {
+  public static function create(ContainerInterface $container): static {
     /** @var static $form */
     $form = parent::create($container);
 
@@ -50,14 +50,14 @@ class FooterForm extends FormBase {
   }
 
   /**
-   * @inheritDoc
+   * {@inheritDoc}
    */
   public function getFormId() {
     return 'dpl_footer_form';
   }
 
   /**
-   * @inheritDoc
+   * {@inheritDoc}
    */
   public function buildForm(array $form, FormStateInterface $form_state) {
     $default_values = $this->state->get($this->stateKey);
@@ -91,8 +91,7 @@ class FooterForm extends FormBase {
   /**
    * {@inheritdoc}
    */
-
-  public function submitForm(array &$form, FormStateInterface $form_state) {
+  public function submitForm(array &$form, FormStateInterface $form_state): void {
     $values = $form_state->getValues();
 
     // Filter out footer items where 'content' value is an empty string.
@@ -105,4 +104,5 @@ class FooterForm extends FormBase {
     $this->state->set($this->stateKey, $values);
     $this->cacheTagsInvalidator->invalidateTags(['dpl_footer']);
   }
+
 }
