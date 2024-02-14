@@ -8,7 +8,7 @@ use Drupal\Core\TempStore\PrivateTempStoreFactory;
 /**
  * Handles user token storage.
  */
-class UserTokensProvider {
+class UserTokensProvider implements UserTokensProviderInterface {
 
   /**
    * User session storage.
@@ -45,6 +45,16 @@ class UserTokensProvider {
    */
   public function getAccessToken(): ?AccessToken {
     return $this->tempStore->get('access_token');
+  }
+
+  /**
+   * Delete access token.
+   *
+   * @return bool
+   *   Was the token successfully deleted?
+   */
+  public function deleteAccessToken(): bool {
+    return $this->tempStore->delete('access_token');
   }
 
 }
