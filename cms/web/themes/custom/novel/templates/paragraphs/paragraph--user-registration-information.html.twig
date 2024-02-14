@@ -1,0 +1,19 @@
+
+{% set anchor_id = paragraph.field_anchor.value|default('')|escape %}
+
+<div{{ anchor_id ? ' id=' ~ anchor_id : '' }} class="user-registration-info">
+  <h2 class="user-registration-info__title">{{ content.field_title }}</h2>
+
+  <div class="user-registration-info__body">
+    {{ content.field_body }}
+  </div>
+
+  {% if paragraph.fields.field_registration_link %}
+    {% set url = paragraph.fields.field_registration_link.value[0]['uri'] %}
+    {% set title = paragraph.fields.field_registration_link.value[0]['title'] %}
+    {% set target = paragraph.field_link_target.value %}
+
+    {# Render the link #}
+    <a class="user-registration-info__link btn-primary btn-filled btn-large" href="{{ url }}" target="{{ target }}">{{ title }}</a>
+  {% endif %}
+</div>
