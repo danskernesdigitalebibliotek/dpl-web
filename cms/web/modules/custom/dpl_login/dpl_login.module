@@ -17,6 +17,7 @@ use Drupal\dpl_fbs\Patron\BlockedReason;
 use Drupal\dpl_login\AccessToken;
 use Drupal\dpl_login\DplLoginInterface;
 use Drupal\dpl_login\Exception\AccessTokenCreationException;
+use Drupal\dpl_login\UserTokensProviderInterface;
 use Drupal\user\UserInterface;
 use Psr\Log\LoggerInterface;
 use function Safe\sprintf as sprintf;
@@ -137,11 +138,16 @@ function dpl_login_openid_connect_pre_authorize(AccountInterface|FALSE $account,
 function dpl_login_openid_connect_post_authorize(AccountInterface $account, array $context): void {
   $logger = _dpl_login_get_authorization_logger($context);
   $access_token = AccessToken::createFromOpenidConnectContext($context);
+  $token_provider = _dpl_login_get_access_token_provider($context);
 
-  /** @var Drupal\dpl_login\UserTokensProvider $token_provider */
-  $token_provider = \Drupal::service('dpl_login.user_tokens');
-  $token_provider->setAccessToken($access_token);
-  $logger->info('Post authorize hook - User token was set.');
+  if (_dpl_login_delete_previous_user_tokens()) {
+    $logger->info('Post authorize hook - Previous user tokens were deleted.');
+    $token_provider->setAccessToken($access_token);
+    $logger->info('Post authorize hook - User token was set.');
+  }
+  else {
+    $logger->error('Post authorize hook - Unable to delete previous user tokens.');
+  }
 }
 
 /**
@@ -192,7 +198,7 @@ function _dpl_login_is_user_associated_with_agency(array $context) : bool {
 }
 
 /**
- * Helper method that returns Drupal logger object.
+ * Helper function that returns Drupal logger object.
  *
  * @param mixed[] $context
  *   Various openid_connect context.
@@ -210,6 +216,43 @@ function _dpl_login_get_authorization_logger(array $context): LoggerInterface {
   }
 
   return \Drupal::logger($logger_key);
+}
+
+/**
+ * Helper function that returns the correct token provider.
+ *
+ * @param mixed[] $context
+ *   Various openid_connect context.
+ *
+ * @return \Drupal\dpl_login\UserTokensProviderInterface
+ *   Token provider.
+ */
+function _dpl_login_get_access_token_provider(array $context): UserTokensProviderInterface {
+  if (!_dpl_login_is_user_associated_with_agency($context)) {
+    return \Drupal::service('dpl_login.unregistered_user_tokens');
+  }
+
+  return \Drupal::service('dpl_login.user_tokens');
+}
+
+/**
+ * Delete all previous user tokens.
+ *
+ * @return bool
+ *   Did it succeed?
+ */
+function _dpl_login_delete_previous_user_tokens(): bool {
+  $user_access_token_services = [
+    'dpl_login.user_tokens',
+    'dpl_login.unregistered_user_tokens',
+  ];
+  $statuses = [];
+  foreach ($user_access_token_services as $service) {
+    $user_tokens_provider = \Drupal::service($service);
+    $statuses[] = $user_tokens_provider->deleteAccessToken();
+  }
+
+  return (bool) array_filter($statuses);
 }
 
 /**

@@ -4,6 +4,7 @@ namespace Drupal\dpl_login\Controller;
 
 use Drupal\Core\Controller\ControllerBase;
 use Drupal\Core\Routing\TrustedRedirectResponse;
+use Drupal\Core\Session\AccountProxyInterface;
 use Drupal\Core\StringTranslation\StringTranslationTrait;
 use Drupal\Core\Url;
 use Drupal\dpl_login\Adgangsplatformen\Config;
@@ -52,6 +53,12 @@ class DplLoginController extends ControllerBase {
    * @var \Drupal\openid_connect\OpenIDConnectClaims
    */
   protected $claims;
+  /**
+   * The current user.
+   *
+   * @var \Drupal\Core\Session\AccountProxyInterface
+   */
+  protected $currentUser;
 
   /**
    * DdplReactController constructor.
@@ -64,17 +71,21 @@ class DplLoginController extends ControllerBase {
    *   Adgangsplatformen Client.
    * @param \Drupal\openid_connect\OpenIDConnectClaims $claims
    *   The OpenID Connect claims.
+   * @param \Drupal\Core\Session\AccountProxyInterface $current_user
+   *   The current user.
    */
   public function __construct(
     UserTokensProvider $userTokensProvider,
     Config $config,
     OpenIDConnectClientInterface $client,
     OpenIDConnectClaims $claims,
+    AccountProxyInterface $current_user
   ) {
     $this->userTokensProvider = $userTokensProvider;
     $this->config = $config;
     $this->client = $client;
     $this->claims = $claims;
+    $this->currentUser = $current_user;
   }
 
   /**
@@ -91,6 +102,7 @@ class DplLoginController extends ControllerBase {
       $container->get('dpl_login.adgangsplatformen.config'),
       $container->get('dpl_login.adgangsplatformen.client'),
       $container->get('openid_connect.claims'),
+      $container->get('current_user')
     );
   }
 
@@ -152,6 +164,27 @@ class DplLoginController extends ControllerBase {
    */
   public function login(Request $request): Response {
     $_SESSION['openid_connect_op'] = 'login';
+    if ($current_path = $request->query->get('current-path')) {
+      $_SESSION['openid_connect_destination'] = $current_path;
+    }
+
+    $scopes = $this->claims->getScopes($this->client);
+    return $this->client->authorize($scopes);
+  }
+
+  /**
+   * Swap tokens.
+   *
+   * @param \Symfony\Component\HttpFoundation\Request $request
+   *   Symfony request object.
+   *
+   * @return \Symfony\Component\HttpFoundation\Response
+   *   A redirect to the authorization endpoint.
+   */
+  public function postRegister(Request $request): Response {
+    $_SESSION['openid_connect_op'] = 'connect';
+    $_SESSION['openid_connect_connect_uid'] = $this->currentUser->id();
+
     if ($current_path = $request->query->get('current-path')) {
       $_SESSION['openid_connect_destination'] = $current_path;
     }
