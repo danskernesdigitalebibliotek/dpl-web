@@ -16,7 +16,7 @@ default:
       target_id: 1
   title:
     -
-      value: '3 gode til godnat 3-6 år (anbefalingkomponent)'
+      value: '3 gode til godnat 3-6 år'
   created:
     -
       value: 1706877153
@@ -34,7 +34,7 @@ default:
       tag: meta
       attributes:
         name: title
-        content: '3 gode til godnat 3-6 år (anbefalingkomponent) | DPL CMS'
+        content: '3 gode til godnat 3-6 år | DPL CMS'
   field_paragraphs:
     -
       entity:
@@ -223,3 +223,6 @@ default:
   field_subtitle:
     -
       value: 'Dit børnebibliotek anbefaler tre skønne bøger til hygge ved sengetid. En til dem der er lidt bange, en med hjælp til dem der ikke vil sove og en skøn og hyggelig historie om en prik og en streg til fortælle og tegne på ryggen'
+  field_teaser_text:
+    -
+      value: Godnat

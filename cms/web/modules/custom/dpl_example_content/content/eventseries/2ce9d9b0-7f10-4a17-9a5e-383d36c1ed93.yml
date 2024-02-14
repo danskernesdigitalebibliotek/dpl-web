@@ -5,7 +5,7 @@ _meta:
   bundle: default
   default_langcode: en
   depends:
-    313d8426-f78d-4a45-b82e-831acff93f02: eventinstance
+    66ff869d-88fe-4220-80e1-1ec8261caf76: eventinstance
     0fa7245a-3434-4d96-9793-a1848a22d37a: taxonomy_term
     a0176f8c-bb7e-4f5a-bf23-b48cd8bab05f: media
 default:
@@ -100,7 +100,7 @@ default:
         href: '/user/login'
   event_instances:
     -
-      entity: 313d8426-f78d-4a45-b82e-831acff93f02
+      entity: 66ff869d-88fe-4220-80e1-1ec8261caf76
   field_categories:
     -
       entity: 0fa7245a-3434-4d96-9793-a1848a22d37a
@@ -127,6 +127,9 @@ default:
   field_event_state:
     -
       value: Active
+  field_teaser_image:
+    -
+      entity: a0176f8c-bb7e-4f5a-bf23-b48cd8bab05f
   field_ticket_categories:
     -
       entity:

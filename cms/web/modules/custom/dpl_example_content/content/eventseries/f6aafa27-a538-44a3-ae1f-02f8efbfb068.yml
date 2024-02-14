@@ -5,18 +5,18 @@ _meta:
   bundle: default
   default_langcode: en
   depends:
-    a6b43174-5225-43d3-b022-7bf02ea181a6: eventinstance
-    65aeee05-e358-4459-98e5-09b1debda89d: eventinstance
-    2eb1765d-40a9-4c8c-b760-b1723429c503: eventinstance
-    55a0e2c7-8ba4-4808-b5bd-b0ea55fc8398: eventinstance
-    27f6c6f5-9bdc-41cb-a13d-b32639d2b218: eventinstance
-    aa4f0c79-fd95-4567-b929-53b9b327f2e5: eventinstance
-    ff648178-f928-4440-bf96-2b46f5c7ea1f: eventinstance
-    f0d39726-d56f-4086-9ee5-0892e7681d8c: eventinstance
-    80a88273-606a-4eeb-bf51-4d8b54f14de1: eventinstance
-    b58c534f-4f56-43f4-ba10-cb83dca81dd6: eventinstance
-    0f183834-3b7b-4fc2-b0b7-58e00f436418: eventinstance
-    718ded06-513d-43bf-8d3c-3cb4615eae69: eventinstance
+    93887b31-0c4b-495f-9131-ef8b87aee1c9: eventinstance
+    695728ab-b1ff-4131-afed-ac1f01cfdb88: eventinstance
+    92e444d2-9333-4a04-ac8a-ec851e1aa3d8: eventinstance
+    ff338d06-676a-4755-a54b-c9cf93568d25: eventinstance
+    a94a3e0d-032a-4e3c-a0fa-415b4adb0d39: eventinstance
+    5c70dd69-6b91-47c3-92d5-7b48478595f8: eventinstance
+    5cfedbfc-9daa-4f23-8c9a-86fce0ecd7d9: eventinstance
+    0d92b355-81e6-4260-bb68-84046111b1ad: eventinstance
+    d7ee955b-3eb1-4680-a2ea-479308054948: eventinstance
+    ae781b38-f2e1-418e-949d-59c32663d4b8: eventinstance
+    2195956f-7aaf-46fa-83e1-554d8ec5be5c: eventinstance
+    6dabaa46-4d6d-488a-9f4d-06f7cd09789a: eventinstance
     0fa7245a-3434-4d96-9793-a1848a22d37a: taxonomy_term
     ca329ad9-5a1c-4f55-b8a9-a60843b66466: media
     e4ce7616-976d-43fc-aed2-a01c42b67db9: media
@@ -58,8 +58,8 @@ default:
       duration_or_end_time: duration
   weekly_recurring_date:
     -
-      value: '2024-01-01T08:50:45'
-      end_value: '2030-01-01T08:50:45'
+      value: '2024-01-01T13:49:30'
+      end_value: '2030-01-01T13:49:30'
       time: '08:00 am'
       duration: 900
       end_time: '08:00 am'
@@ -67,8 +67,8 @@ default:
       days: monday
   monthly_recurring_date:
     -
-      value: '2024-01-01T08:50:45'
-      end_value: '2025-01-01T08:50:45'
+      value: '2024-01-01T13:49:30'
+      end_value: '2025-01-01T13:49:30'
       time: '10:00 am'
       duration: 18000
       end_time: '08:00 am'
@@ -114,29 +114,29 @@ default:
         href: '/user/login'
   event_instances:
     -
-      entity: a6b43174-5225-43d3-b022-7bf02ea181a6
+      entity: 93887b31-0c4b-495f-9131-ef8b87aee1c9
     -
-      entity: 65aeee05-e358-4459-98e5-09b1debda89d
+      entity: 695728ab-b1ff-4131-afed-ac1f01cfdb88
     -
-      entity: 2eb1765d-40a9-4c8c-b760-b1723429c503
+      entity: 92e444d2-9333-4a04-ac8a-ec851e1aa3d8
     -
-      entity: 55a0e2c7-8ba4-4808-b5bd-b0ea55fc8398
+      entity: ff338d06-676a-4755-a54b-c9cf93568d25
     -
-      entity: 27f6c6f5-9bdc-41cb-a13d-b32639d2b218
+      entity: a94a3e0d-032a-4e3c-a0fa-415b4adb0d39
     -
-      entity: aa4f0c79-fd95-4567-b929-53b9b327f2e5
+      entity: 5c70dd69-6b91-47c3-92d5-7b48478595f8
     -
-      entity: ff648178-f928-4440-bf96-2b46f5c7ea1f
+      entity: 5cfedbfc-9daa-4f23-8c9a-86fce0ecd7d9
     -
-      entity: f0d39726-d56f-4086-9ee5-0892e7681d8c
+      entity: 0d92b355-81e6-4260-bb68-84046111b1ad
     -
-      entity: 80a88273-606a-4eeb-bf51-4d8b54f14de1
+      entity: d7ee955b-3eb1-4680-a2ea-479308054948
     -
-      entity: b58c534f-4f56-43f4-ba10-cb83dca81dd6
+      entity: ae781b38-f2e1-418e-949d-59c32663d4b8
     -
-      entity: 0f183834-3b7b-4fc2-b0b7-58e00f436418
+      entity: 2195956f-7aaf-46fa-83e1-554d8ec5be5c
     -
-      entity: 718ded06-513d-43bf-8d3c-3cb4615eae69
+      entity: 6dabaa46-4d6d-488a-9f4d-06f7cd09789a
   field_categories:
     -
       entity: 0fa7245a-3434-4d96-9793-a1848a22d37a
@@ -219,6 +219,9 @@ default:
   field_event_state:
     -
       value: Active
+  field_teaser_image:
+    -
+      entity: e4ce7616-976d-43fc-aed2-a01c42b67db9
   field_ticket_categories:
     -
       entity:
