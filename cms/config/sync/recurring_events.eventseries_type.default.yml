@@ -13,7 +13,7 @@ third_party_settings:
     publish_past_date_created: 0
     publish_required: 0
     publish_revision: 0
-    publish_touch: 1
+    publish_touch: 0
     show_message_after_update: 1
     unpublish_enable: 1
     unpublish_required: 0
