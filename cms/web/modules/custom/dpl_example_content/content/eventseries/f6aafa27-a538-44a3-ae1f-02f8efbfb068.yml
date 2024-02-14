@@ -1,0 +1,253 @@
+_meta:
+  version: '1.0'
+  entity_type: eventseries
+  uuid: f6aafa27-a538-44a3-ae1f-02f8efbfb068
+  bundle: default
+  default_langcode: en
+  depends:
+    e636c37e-aaec-405f-81ad-679e347d0121: eventinstance
+    f33b8168-d27f-4fd7-89a0-076b803a26ce: eventinstance
+    47d21a77-dd47-43ca-a2bc-79accc9ebde5: eventinstance
+    93a19e39-ab08-4ac6-8474-89263ec026f6: eventinstance
+    bd0b4aca-e50a-4b75-9d11-656e0809369e: eventinstance
+    5a97631a-fed1-43bf-bad3-d4c44ab72a70: eventinstance
+    f5c46b75-a4a5-4602-a306-32f5b830f60c: eventinstance
+    6036fc64-a634-4fd8-9de5-099727d81f45: eventinstance
+    82265b40-9187-451e-868e-1f0ffce3c879: eventinstance
+    65e3ea95-052f-48e5-8168-c33467a17e35: eventinstance
+    c05f82d3-d1c1-4b34-8421-4b0dfdd2c27d: eventinstance
+    56f8e52e-4aaf-4049-aa7b-b7a904a95882: eventinstance
+    0fa7245a-3434-4d96-9793-a1848a22d37a: taxonomy_term
+    ca329ad9-5a1c-4f55-b8a9-a60843b66466: media
+    e4ce7616-976d-43fc-aed2-a01c42b67db9: media
+    e8283d3c-968a-4e74-ae02-9f02b76bb839: media
+    f0204f0b-1f63-4c76-bb67-e3f7489ee392: media
+    ff39bf84-b64e-48ba-b64f-2d1d13ded058: taxonomy_term
+default:
+  revision_uid:
+    -
+      target_id: 1
+  status:
+    -
+      value: true
+  uid:
+    -
+      target_id: 1
+  title:
+    -
+      value: 'Fars legestue'
+  recur_type:
+    -
+      value: monthly_recurring_date
+  consecutive_recurring_date:
+    -
+      value: ''
+      end_value: ''
+      time: '08:00 am'
+      end_time: '11:30 pm'
+      duration: 5
+      duration_units: minute
+      buffer: 0
+      buffer_units: minute
+  daily_recurring_date:
+    -
+      value: ''
+      end_value: ''
+      time: '08:00 am'
+      duration: 900
+      end_time: '08:00 am'
+      duration_or_end_time: duration
+  weekly_recurring_date:
+    -
+      value: '2024-01-01T08:50:45'
+      end_value: '2030-01-01T08:50:45'
+      time: '08:00 am'
+      duration: 900
+      end_time: '08:00 am'
+      duration_or_end_time: duration
+      days: monday
+  monthly_recurring_date:
+    -
+      value: '2024-01-01T08:50:45'
+      end_value: '2025-01-01T08:50:45'
+      time: '10:00 am'
+      duration: 18000
+      end_time: '08:00 am'
+      duration_or_end_time: duration
+      days: friday
+      type: weekday
+      day_occurrence: first
+      day_of_month: ''
+  yearly_recurring_date:
+    -
+      value: ''
+      end_value: ''
+      time: '08:00 am'
+      duration: 900
+      end_time: '08:00 am'
+      duration_or_end_time: duration
+      days: ''
+      type: ''
+      day_occurrence: ''
+      day_of_month: ''
+      year_interval: 1
+      months: ''
+  custom_date:
+    -
+      value: '2030-03-16T08:30:00'
+      end_value: '2030-03-16T08:30:00'
+  created:
+    -
+      value: 1707223812
+  revision_translation_affected:
+    -
+      value: true
+  metatag:
+    -
+      tag: meta
+      attributes:
+        name: title
+        content: '| DPL CMS'
+    -
+      tag: link
+      attributes:
+        rel: canonical
+        href: '/user/login'
+  event_instances:
+    -
+      entity: e636c37e-aaec-405f-81ad-679e347d0121
+    -
+      entity: f33b8168-d27f-4fd7-89a0-076b803a26ce
+    -
+      entity: 47d21a77-dd47-43ca-a2bc-79accc9ebde5
+    -
+      entity: 93a19e39-ab08-4ac6-8474-89263ec026f6
+    -
+      entity: bd0b4aca-e50a-4b75-9d11-656e0809369e
+    -
+      entity: 5a97631a-fed1-43bf-bad3-d4c44ab72a70
+    -
+      entity: f5c46b75-a4a5-4602-a306-32f5b830f60c
+    -
+      entity: 6036fc64-a634-4fd8-9de5-099727d81f45
+    -
+      entity: 82265b40-9187-451e-868e-1f0ffce3c879
+    -
+      entity: 65e3ea95-052f-48e5-8168-c33467a17e35
+    -
+      entity: c05f82d3-d1c1-4b34-8421-4b0dfdd2c27d
+    -
+      entity: 56f8e52e-4aaf-4049-aa7b-b7a904a95882
+  field_categories:
+    -
+      entity: 0fa7245a-3434-4d96-9793-a1848a22d37a
+  field_event_address:
+    -
+      langcode: en
+      country_code: DK
+      locality: Aarhus
+      postal_code: '8000'
+      address_line1: 'Kampmanns Plads 2'
+  field_event_description:
+    -
+      value: '<p>Legestue for fædre og deres børn mellem 0 og 3 år.</p><p>Sving forbi Stadsbiblioteket til uforpligtende leg og hygge med junior (skærtorsdag og Kristi himmelfartsdag undtaget) finder babylegetøjet frem og inviterer til Fars legestue. Her kan du møde andre fædre og deres børn, ligesom I kan finde inspiration til leg og læsning.</p>'
+      format: limited
+  field_event_image:
+    -
+      entity: ca329ad9-5a1c-4f55-b8a9-a60843b66466
+  field_event_link:
+    -
+      uri: 'https://www.google.com/'
+      title: ''
+      options: {  }
+  field_event_paragraphs:
+    -
+      entity:
+        _meta:
+          version: '1.0'
+          entity_type: paragraph
+          uuid: 72656387-757b-47e7-80fb-b9db2ca77273
+          bundle: medias
+          default_langcode: en
+        default:
+          status:
+            -
+              value: true
+          created:
+            -
+              value: 1707900533
+          behavior_settings:
+            -
+              value: {  }
+          revision_translation_affected:
+            -
+              value: true
+          field_medias:
+            -
+              entity: e4ce7616-976d-43fc-aed2-a01c42b67db9
+            -
+              entity: e8283d3c-968a-4e74-ae02-9f02b76bb839
+    -
+      entity:
+        _meta:
+          version: '1.0'
+          entity_type: paragraph
+          uuid: 9877e98c-a92e-41d3-837e-9eb229bff086
+          bundle: video
+          default_langcode: en
+        default:
+          status:
+            -
+              value: true
+          created:
+            -
+              value: 1707899473
+          behavior_settings:
+            -
+              value: {  }
+          revision_translation_affected:
+            -
+              value: true
+          field_embed_video:
+            -
+              entity: f0204f0b-1f63-4c76-bb67-e3f7489ee392
+  field_event_partners:
+    -
+      value: Legestuen
+  field_event_place:
+    -
+      value: Hovedbiblioteket
+  field_event_state:
+    -
+      value: Active
+  field_tags:
+    -
+      entity: ff39bf84-b64e-48ba-b64f-2d1d13ded058
+  field_ticket_categories:
+    -
+      entity:
+        _meta:
+          version: '1.0'
+          entity_type: paragraph
+          uuid: 86495c62-d977-45c9-aa0c-7762e718282b
+          bundle: event_ticket_category
+          default_langcode: en
+        default:
+          status:
+            -
+              value: true
+          created:
+            -
+              value: 1707223812
+          behavior_settings:
+            -
+              value: {  }
+          revision_translation_affected:
+            -
+              value: true
+          field_ticket_category_name:
+            -
+              value: standard
+          field_ticket_category_price:
+            -
+              value: '0.00'

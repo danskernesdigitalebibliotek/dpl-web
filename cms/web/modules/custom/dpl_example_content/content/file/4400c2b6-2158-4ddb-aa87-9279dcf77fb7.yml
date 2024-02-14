@@ -1,0 +1,27 @@
+_meta:
+  version: '1.0'
+  entity_type: file
+  uuid: 4400c2b6-2158-4ddb-aa87-9279dcf77fb7
+  default_langcode: en
+default:
+  uid:
+    -
+      target_id: 1
+  filename:
+    -
+      value: la-rel-easter-KuCGlBXjH_o-unsplash.jpg
+  uri:
+    -
+      value: 'public://2024-02/la-rel-easter-KuCGlBXjH_o-unsplash.jpg'
+  filemime:
+    -
+      value: image/jpeg
+  filesize:
+    -
+      value: 43190
+  status:
+    -
+      value: true
+  created:
+    -
+      value: 1707223818
