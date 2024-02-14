@@ -25,13 +25,11 @@ jobs:
       run: |
         echo ::set-output name=RELEASE_TAG::$(echo ${GITHUB_REF#refs/tags/} | cut -d '_' -f 2)
       if: ${{ steps.detect_tag.outputs.IS_RELEASE_TAG == 'true' }}
-    - name: Update .version file      
+    # Write version to .version file.
+    - name: Create .version file      
       run: |
-        GITHUB_REF="${GITHUB_REF#refs/}"
-        if [[ $GITHUB_REF =~ ^(tags|heads)/(.*) ]]; then
-          EXTRACTED_VERSION="${BASH_REMATCH[2]}"
-          echo "{\"version\": \"$EXTRACTED_VERSION\"}" > .version
-        fi
+        echo "{\"version\": \"${{ steps.get_version.outputs.RELEASE_TAG }}\"}" > .version
+      if: ${{ steps.detect_tag.outputs.IS_RELEASE_TAG == 'true' }}
     # Install go-task since we need it for building the source package.
     - name: Install go-task
       uses: arduino/setup-task@v1
