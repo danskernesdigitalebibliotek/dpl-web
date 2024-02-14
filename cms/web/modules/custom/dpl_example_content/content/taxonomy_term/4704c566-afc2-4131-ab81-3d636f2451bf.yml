@@ -1,7 +1,7 @@
 _meta:
   version: '1.0'
   entity_type: taxonomy_term
-  uuid: 725e0059-9c5d-4c4e-8e3d-6d8cf2042fa4
+  uuid: 4704c566-afc2-4131-ab81-3d636f2451bf
   bundle: tags
   default_langcode: da
 default:
@@ -10,7 +10,7 @@ default:
       value: true
   name:
     -
-      value: scenekunst
+      value: Genbrug
   weight:
     -
       value: 0
@@ -25,9 +25,9 @@ default:
       tag: meta
       attributes:
         name: title
-        content: 'scenekunst | DPL CMS'
+        content: 'Genbrug | DPL CMS'
     -
       tag: link
       attributes:
         rel: canonical
-        href: '/taxonomy/term/7'
+        href: '/taxonomy/term/2'

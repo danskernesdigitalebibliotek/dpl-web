@@ -5,7 +5,7 @@ _meta:
   bundle: default
   default_langcode: en
   depends:
-    5ac67bd3-c0f6-413e-86ee-a1e56ef1b67d: eventinstance
+    3690328f-b6cd-4d9e-9261-ab232e9d2f11: eventinstance
     0fa7245a-3434-4d96-9793-a1848a22d37a: taxonomy_term
     a0176f8c-bb7e-4f5a-bf23-b48cd8bab05f: media
 default:
@@ -100,7 +100,7 @@ default:
         href: '/user/login'
   event_instances:
     -
-      entity: 5ac67bd3-c0f6-413e-86ee-a1e56ef1b67d
+      entity: 3690328f-b6cd-4d9e-9261-ab232e9d2f11
   field_categories:
     -
       entity: 0fa7245a-3434-4d96-9793-a1848a22d37a
@@ -111,9 +111,16 @@ default:
       locality: Aarhus
       postal_code: '8000'
       address_line1: 'Kampmanns Plads 2'
+  field_event_description:
+    -
+      value: "<p>Tag med til en fortryllende oplevelse med 'Juleballet - Nøddeknækkeren', en tidløs balletklassiker der fortryller publikum af alle aldre. Nyd Tjajkovskijs betagende musik og enestående dans, som bringer julemagien til live. En ideel begivenhed for familier, par og balletentusiaster, der søger en unik kulturel oplevelse. Sikre dig din billet til denne uforglemmelige forestilling!</p>"
+      format: limited
   field_event_image:
     -
       entity: a0176f8c-bb7e-4f5a-bf23-b48cd8bab05f
+  field_event_partners:
+    -
+      value: 'Julemandens Værksted'
   field_event_place:
     -
       value: 'Hovedbibliotek '

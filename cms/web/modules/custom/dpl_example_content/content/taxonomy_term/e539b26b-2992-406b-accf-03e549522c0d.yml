@@ -1,8 +1,8 @@
 _meta:
   version: '1.0'
   entity_type: taxonomy_term
-  uuid: 725e0059-9c5d-4c4e-8e3d-6d8cf2042fa4
-  bundle: tags
+  uuid: e539b26b-2992-406b-accf-03e549522c0d
+  bundle: categories
   default_langcode: da
 default:
   status:
@@ -10,7 +10,7 @@ default:
       value: true
   name:
     -
-      value: scenekunst
+      value: Klima
   weight:
     -
       value: 0
@@ -25,9 +25,9 @@ default:
       tag: meta
       attributes:
         name: title
-        content: 'scenekunst | DPL CMS'
+        content: 'Klima | DPL CMS'
     -
       tag: link
       attributes:
         rel: canonical
-        href: '/taxonomy/term/7'
+        href: '/taxonomy/term/12'
