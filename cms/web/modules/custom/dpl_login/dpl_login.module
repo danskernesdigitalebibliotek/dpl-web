@@ -13,6 +13,7 @@ use Drupal\Core\Cache\CacheableMetadata;
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\Session\AccountInterface;
 use Drupal\Core\Site\Settings;
+use Drupal\Core\Utility\Error;
 use Drupal\dpl_fbs\Patron\BlockedReason;
 use Drupal\dpl_login\AccessToken;
 use Drupal\dpl_login\DplLoginInterface;
@@ -20,6 +21,8 @@ use Drupal\dpl_login\Exception\AccessTokenCreationException;
 use Drupal\dpl_login\UserTokensProviderInterface;
 use Drupal\user\UserInterface;
 use Psr\Log\LoggerInterface;
+use Psr\Log\LogLevel;
+
 use function Safe\sprintf as sprintf;
 
 /**
@@ -77,10 +80,6 @@ function dpl_login_openid_connect_pre_authorize(AccountInterface|FALSE $account,
     return FALSE;
   }
 
-  /** @var \Drupal\dpl_fbs\FbsApiFactory $api_factory */
-  $api_factory = \Drupal::service('dpl_fbs.api_factory');
-  $api = $api_factory->getPatronApi($token->token);
-
   // Check if the user is previously associated with an agency (library).
   // If not, we assume the user is new and skip the patron blocked check.
   if (!_dpl_login_is_user_associated_with_agency($context)) {
@@ -91,7 +90,7 @@ function dpl_login_openid_connect_pre_authorize(AccountInterface|FALSE $account,
   $logger->info('Pre authorize hook - User already associated with library agency.');
 
   try {
-    $patron = $api->getPatronInformationByPatronIdV2();
+    $patron = _dpl_login_get_patron($token);
     $patron_block_status = $patron->getPatron()?->getBlockStatus() ?? [];
     $patron_blocked_reasons = array_map(function (BlockStatus $block_status) use ($logger) {
       try {
@@ -128,6 +127,24 @@ function dpl_login_openid_connect_pre_authorize(AccountInterface|FALSE $account,
 }
 
 /**
+ * Get patron information from FBS.
+ *
+ * @param \Drupal\dpl_login\AccessToken $token
+ *   Access token.
+ *
+ * @throws \InvalidArgumentException
+ *
+ * @return \DanskernesDigitaleBibliotek\FBS\Model\AuthenticatedPatronV6
+ *   Patron information.
+ */
+function _dpl_login_get_patron($token) {
+  /** @var \Drupal\dpl_fbs\FbsApiFactory $api_factory */
+  $api_factory = \Drupal::service('dpl_fbs.api_factory');
+  $api = $api_factory->getPatronApi($token->token);
+  return $api->getPatronInformationByPatronIdV2();
+}
+
+/**
  * Implements hook_openid_connect_post_authorize().
  *
  * @param \Drupal\Core\Session\AccountInterface $account
@@ -138,7 +155,7 @@ function dpl_login_openid_connect_pre_authorize(AccountInterface|FALSE $account,
 function dpl_login_openid_connect_post_authorize(AccountInterface $account, array $context): void {
   $logger = _dpl_login_get_authorization_logger($context);
   $access_token = AccessToken::createFromOpenidConnectContext($context);
-  $token_provider = _dpl_login_get_access_token_provider($context);
+  $token_provider = _dpl_login_get_access_token_provider($access_token);
 
   if (_dpl_login_delete_previous_user_tokens()) {
     $logger->info('Post authorize hook - Previous user tokens were deleted.');
@@ -198,6 +215,28 @@ function _dpl_login_is_user_associated_with_agency(array $context) : bool {
 }
 
 /**
+ * Is the user registered in FBS?
+ *
+ * @param \Drupal\dpl_login\AccessToken $token
+ *   Adgangsplatformen token.
+ */
+function _dpl_login_user_is_registered(AccessToken $token): bool {
+  $messenger = \Drupal::messenger();
+
+  try {
+    $patron = _dpl_login_get_patron($token);
+  }
+  catch (InvalidArgumentException $e) {
+    $logger = \Drupal::logger('dpl_login');
+    Error::logException($logger, $e, 'Error fetching patron info from FBS', [], LogLevel::CRITICAL);
+    $messenger->addError(t('Something went wrong logging in. Please try again.', [], ['context' => 'dpl_login']));
+    return FALSE;
+  }
+
+  return $patron->getAuthenticateStatus() === 'VALID';
+}
+
+/**
  * Helper function that returns Drupal logger object.
  *
  * @param mixed[] $context
@@ -221,14 +260,14 @@ function _dpl_login_get_authorization_logger(array $context): LoggerInterface {
 /**
  * Helper function that returns the correct token provider.
  *
- * @param mixed[] $context
- *   Various openid_connect context.
+ * @param \Drupal\dpl_login\AccessToken $token
+ *   Adgangsplatformen token.
  *
  * @return \Drupal\dpl_login\UserTokensProviderInterface
  *   Token provider.
  */
-function _dpl_login_get_access_token_provider(array $context): UserTokensProviderInterface {
-  if (!_dpl_login_is_user_associated_with_agency($context)) {
+function _dpl_login_get_access_token_provider(AccessToken $token): UserTokensProviderInterface {
+  if (!_dpl_login_user_is_registered($token)) {
     return \Drupal::service('dpl_login.unregistered_user_tokens');
   }
 
@@ -248,6 +287,7 @@ function _dpl_login_delete_previous_user_tokens(): bool {
   ];
   $statuses = [];
   foreach ($user_access_token_services as $service) {
+    /** @var \Drupal\dpl_login\UserTokensProviderInterface $user_tokens_provider */
     $user_tokens_provider = \Drupal::service($service);
     $statuses[] = $user_tokens_provider->deleteAccessToken();
   }
@@ -327,7 +367,7 @@ function dpl_login_openid_connect_admin_settings_validate(array &$form, FormStat
     $handler = Drupal::service('dpl_library_token.handler');
 
     if (!$handler->retrieveAndStoreToken(TRUE)) {
-      $messenger->addMessage(t('Unable to retrieve token from Adgangsplatformen. Please check if the provided Agency ID is correct.', [], ['context' => 'OpenId Connect Settings']), 'error');
+      $messenger->addMessage(t('Unable to retrieve token from Adgangsplatformen. Please check if the provided Agency ID is correct.', [], ['context' => 'OpenId Connect Settings']), LogLevel::ERROR);
     }
   }
 }
