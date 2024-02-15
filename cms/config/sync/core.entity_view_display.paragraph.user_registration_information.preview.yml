@@ -6,7 +6,9 @@ dependencies:
     - core.entity_view_mode.paragraph.preview
     - field.field.paragraph.user_registration_information.field_anchor
     - field.field.paragraph.user_registration_information.field_body
+    - field.field.paragraph.user_registration_information.field_display_in_navigation
     - field.field.paragraph.user_registration_information.field_link_target
+    - field.field.paragraph.user_registration_information.field_navigation_title
     - field.field.paragraph.user_registration_information.field_registration_link
     - field.field.paragraph.user_registration_information.field_title
     - paragraphs.paragraphs_type.user_registration_information
@@ -27,7 +29,9 @@ content:
     region: content
 hidden:
   field_anchor: true
+  field_display_in_navigation: true
   field_link_target: true
+  field_navigation_title: true
   field_registration_link: true
   field_title: true
   search_api_excerpt: true

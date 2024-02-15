@@ -5,7 +5,9 @@ dependencies:
   config:
     - field.field.paragraph.user_registration_information.field_anchor
     - field.field.paragraph.user_registration_information.field_body
+    - field.field.paragraph.user_registration_information.field_display_in_navigation
     - field.field.paragraph.user_registration_information.field_link_target
+    - field.field.paragraph.user_registration_information.field_navigation_title
     - field.field.paragraph.user_registration_information.field_registration_link
     - field.field.paragraph.user_registration_information.field_title
     - paragraphs.paragraphs_type.user_registration_information
@@ -33,12 +35,30 @@ content:
     third_party_settings: {  }
     weight: 2
     region: content
+  field_display_in_navigation:
+    type: boolean
+    label: above
+    settings:
+      format: default
+      format_custom_false: ''
+      format_custom_true: ''
+    third_party_settings: {  }
+    weight: 5
+    region: content
   field_link_target:
     type: list_default
     label: above
     settings: {  }
     third_party_settings: {  }
     weight: 4
+    region: content
+  field_navigation_title:
+    type: string
+    label: above
+    settings:
+      link_to_entity: false
+    third_party_settings: {  }
+    weight: 6
     region: content
   field_registration_link:
     type: link
