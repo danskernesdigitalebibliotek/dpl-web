@@ -8,7 +8,7 @@
     {{ content.field_body }}
   </div>
 
-  {% if paragraph.fields.field_registration_link %}
+  {% if paragraph.fields.field_registration_link.value %}
     {% set url = paragraph.fields.field_registration_link.value[0]['uri'] %}
     {% set title = paragraph.fields.field_registration_link.value[0]['title'] %}
     {% set target = paragraph.field_link_target.value %}
