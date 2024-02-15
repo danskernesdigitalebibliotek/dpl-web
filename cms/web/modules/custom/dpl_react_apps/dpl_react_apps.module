@@ -219,7 +219,13 @@ function dpl_react_apps_texts(): array {
     'publizon-podcast' => t('Podcast', [], ['context' => 'Global']),
     'ready-for-loan-counter-label' => t('Ready', [], ['context' => 'Global']),
     'ready-for-loan' => t('Ready for pickup', [], ['context' => 'Global']),
-    'remove-all-reservations' => t('Remove reservations (@amount)', [], ['context' => 'Global']),
+    'remove-all-reservations' => json_encode([
+      'type' => 'plural',
+      'text' => [
+        t('Remove reservation (@amount)', [], ['context' => 'Global']),
+        t('Remove reservations (@amount)', [], ['context' => 'Global']),
+      ],
+    ]),
     'remove-from-favorites-aria-label' => t('remove @title from favorites list', [], ['context' => 'Global']),
     'renew-button' => t('Renew', [], ['context' => 'Renew loan']),
     'renew-cannot-be-renewed' => t('Cannot be renewed', [], ['context' => 'Renew loan']),
