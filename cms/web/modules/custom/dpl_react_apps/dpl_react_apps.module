@@ -108,7 +108,13 @@ function dpl_react_apps_texts(): array {
         t('@count reservations were deleted', [], ['context' => 'Global']),
       ],
     ]),
-    'delete-reservation-modal-success-title' => t('You have deleted your reservation', [], ['context' => 'Global']),
+    'delete-reservation-modal-success-title' => json_encode([
+      'type' => 'plural',
+      'text' => [
+        t('Reservation deleted', [], ['context' => 'Global']),
+        t('Reservations deleted', [], ['context' => 'Global']),
+      ],
+    ]),
     'delete-reservation-modal-header' => json_encode([
       'type' => 'plural',
       'text' => [
