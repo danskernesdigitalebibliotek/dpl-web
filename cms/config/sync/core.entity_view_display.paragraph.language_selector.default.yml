@@ -1,0 +1,38 @@
+uuid: de5cc9bb-52f6-492e-b0e2-e9be7140fe3b
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.field.paragraph.language_selector.field_language_icon
+    - field.field.paragraph.language_selector.field_link_language
+    - paragraphs.paragraphs_type.language_selector
+  module:
+    - image
+    - link
+id: paragraph.language_selector.default
+targetEntityType: paragraph
+bundle: language_selector
+mode: default
+content:
+  field_language_icon:
+    type: image_url
+    label: hidden
+    settings:
+      image_style: ''
+    third_party_settings: {  }
+    weight: 3
+    region: content
+  field_link_language:
+    type: link
+    label: hidden
+    settings:
+      trim_length: 80
+      url_only: false
+      url_plain: false
+      rel: ''
+      target: ''
+    third_party_settings: {  }
+    weight: 0
+    region: content
+hidden:
+  search_api_excerpt: true
