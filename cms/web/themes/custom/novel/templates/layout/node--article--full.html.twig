@@ -4,13 +4,8 @@
 
         {{ content.field_subtitle }}
 
-        <p class="article-header__info">
-            {{ 'By @username'|t({'@username': author_name}) }}
+        {% include '@novel/components/article-header-info.twig' with {'author_name': author_name, 'node': node} %}
 
-            <time class="article-header__date">
-                {{ node.created.value|format_date('date_full_month') }}
-            </time>
-        </p>
     </header>
 
     {{ content.field_paragraphs }}
