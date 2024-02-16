@@ -17,6 +17,7 @@ dependencies:
     - dpl_instant_loan
     - dpl_library_agency
     - dpl_url_proxy
+    - entity_clone
     - file
     - filter
     - media
@@ -27,6 +28,7 @@ dependencies:
     - system
     - taxonomy
     - toolbar
+    - view_unpublished
 id: local_administrator
 label: 'Local Administrator'
 weight: 3
@@ -45,6 +47,8 @@ permissions:
   - 'administer url proxy configuration'
   - 'clone eventinstance entity'
   - 'clone eventseries entity'
+  - 'clone eventseries_type entity'
+  - 'clone node entity'
   - 'create article content'
   - 'create campaign content'
   - 'create image media'
@@ -99,6 +103,10 @@ permissions:
   - 'use text format limited'
   - 'view all eventinstance revisions'
   - 'view all eventseries revisions'
+  - 'view any unpublished article content'
+  - 'view any unpublished campaign content'
+  - 'view any unpublished content'
+  - 'view any unpublished page content'
   - 'view main menu in menu list'
   - 'view own unpublished content'
   - 'view scheduled content'

@@ -1,0 +1,55 @@
+form_settings:
+  taxonomy_term:
+    default_value: true
+    disable: true
+    hidden: true
+  file:
+    default_value: true
+    disable: true
+    hidden: true
+  node:
+    default_value: true
+    disable: true
+    hidden: true
+  user:
+    default_value: false
+    disable: false
+    hidden: false
+  menu_link_content:
+    default_value: true
+    disable: true
+    hidden: true
+  crop:
+    default_value: true
+    disable: true
+    hidden: true
+  job_schedule:
+    default_value: true
+    disable: true
+    hidden: true
+  media:
+    default_value: true
+    disable: true
+    hidden: true
+  path_alias:
+    default_value: true
+    disable: true
+    hidden: true
+  eventseries:
+    default_value: true
+    disable: true
+    hidden: true
+  eventinstance:
+    default_value: true
+    disable: true
+    hidden: true
+  paragraph:
+    default_value: true
+    disable: true
+    hidden: true
+  search_api_task:
+    default_value: false
+    disable: false
+    hidden: false
+no_suffix: false
+take_ownership: true

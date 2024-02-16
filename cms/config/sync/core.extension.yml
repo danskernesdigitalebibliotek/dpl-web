@@ -47,6 +47,8 @@ module:
   dynamic_entity_reference: 0
   dynamic_page_cache: 0
   editor: 0
+  entity_clone: 0
+  entity_clone_template: 0
   entity_reference_revisions: 0
   enum_field: 0
   field: 0
@@ -111,6 +113,7 @@ module:
   user: 0
   varnish_purge_tags: 0
   varnish_purger: 0
+  view_unpublished: 0
   selective_better_exposed_filters: 1
   views: 10
   paragraphs: 11

@@ -23,6 +23,7 @@ dependencies:
     - system
     - taxonomy
     - toolbar
+    - view_unpublished
 id: editor
 label: Editor
 weight: 4
@@ -87,6 +88,10 @@ permissions:
   - 'use text format limited'
   - 'view all eventinstance revisions'
   - 'view all eventseries revisions'
+  - 'view any unpublished article content'
+  - 'view any unpublished campaign content'
+  - 'view any unpublished content'
+  - 'view any unpublished page content'
   - 'view own unpublished content'
   - 'view scheduled content'
   - 'view scheduled eventseries'
