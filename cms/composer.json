@@ -276,7 +276,7 @@
                 "Combat NoCorrespondingEntityClassException": "patches/purge-5340bcf-combat-nocorresponding-entity-exception.patch"
             },
             "drupal/recurring_events": {
-                "3415222: Wrong namespace for return values": "https://git.drupalcode.org/project/recurring_events/-/merge_requests/83.patch"
+                "3178696: Make compatible with Scheduler": "https://git.drupalcode.org/project/recurring_events/-/merge_requests/86.patch"
             }
         }
     }

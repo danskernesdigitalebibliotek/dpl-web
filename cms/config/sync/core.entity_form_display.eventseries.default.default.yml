@@ -27,6 +27,7 @@ dependencies:
     - paragraphs_ee
     - paragraphs_features
     - recurring_events
+    - scheduler
     - text
 third_party_settings:
   field_group:
@@ -251,9 +252,20 @@ content:
     region: content
     settings: {  }
     third_party_settings: {  }
+  publish_on:
+    type: datetime_timestamp_no_default
+    weight: 52
+    region: content
+    settings: {  }
+    third_party_settings: {  }
   recur_type:
     type: options_select
     weight: 2
+    region: content
+    settings: {  }
+    third_party_settings: {  }
+  scheduler_settings:
+    weight: 50
     region: content
     settings: {  }
     third_party_settings: {  }
@@ -281,6 +293,12 @@ content:
       match_limit: 10
       size: 60
       placeholder: ''
+    third_party_settings: {  }
+  unpublish_on:
+    type: datetime_timestamp_no_default
+    weight: 54
+    region: content
+    settings: {  }
     third_party_settings: {  }
   weekly_recurring_date:
     type: weekly_recurring_date

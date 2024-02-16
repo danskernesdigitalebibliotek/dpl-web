@@ -18,6 +18,7 @@ dependencies:
     - media
     - node
     - recurring_events
+    - scheduler
     - system
     - taxonomy
     - toolbar
@@ -73,6 +74,8 @@ permissions:
   - 'edit terms in tags'
   - 'revert all eventinstance revisions'
   - 'revert all eventseries revisions'
+  - 'schedule publishing of eventseries'
+  - 'schedule publishing of nodes'
   - 'update any media'
   - 'update media'
   - 'use text format basic'
@@ -80,6 +83,8 @@ permissions:
   - 'view all eventinstance revisions'
   - 'view all eventseries revisions'
   - 'view own unpublished content'
+  - 'view scheduled content'
+  - 'view scheduled eventseries'
   - 'view the administration theme'
   - 'view unpublished eventinstance entity'
   - 'view unpublished eventseries entity'
