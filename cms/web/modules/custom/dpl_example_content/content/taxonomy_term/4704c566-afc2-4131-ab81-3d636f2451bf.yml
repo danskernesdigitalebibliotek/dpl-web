@@ -1,7 +1,7 @@
 _meta:
   version: '1.0'
   entity_type: taxonomy_term
-  uuid: 190beb00-d5af-4c9a-be8d-65a646b37bbb
+  uuid: 4704c566-afc2-4131-ab81-3d636f2451bf
   bundle: tags
   default_langcode: da
 default:
@@ -10,7 +10,7 @@ default:
       value: true
   name:
     -
-      value: modern
+      value: Genbrug
   weight:
     -
       value: 0
@@ -25,9 +25,9 @@ default:
       tag: meta
       attributes:
         name: title
-        content: 'modern | DPL CMS'
+        content: 'Genbrug | DPL CMS'
     -
       tag: link
       attributes:
         rel: canonical
-        href: '/taxonomy/term/5'
+        href: '/taxonomy/term/10'
