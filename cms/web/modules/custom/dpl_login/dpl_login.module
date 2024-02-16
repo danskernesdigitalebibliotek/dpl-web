@@ -68,7 +68,7 @@ function dpl_login_openid_connect_userinfo_alter(array &$userinfo, array $contex
  * @throws \Drupal\dpl_login\Exception\MissingConfigurationException
  */
 function dpl_login_openid_connect_pre_authorize(AccountInterface|FALSE $account, array $context): bool {
-  $logger = _dpl_login_get_authorization_logger($context);
+  $logger = _dpl_login_get_authorization_logger();
 
   try {
     $token = AccessToken::createFromOpenidConnectContext($context);
@@ -153,9 +153,9 @@ function _dpl_login_get_patron($token) {
  *   Various openid_connect context. Tokens etc.
  */
 function dpl_login_openid_connect_post_authorize(AccountInterface $account, array $context): void {
-  $logger = _dpl_login_get_authorization_logger($context);
   $access_token = AccessToken::createFromOpenidConnectContext($context);
   $token_provider = _dpl_login_get_access_token_provider($access_token);
+  $logger = _dpl_login_get_authorization_logger($access_token);
 
   if (_dpl_login_delete_previous_user_tokens()) {
     $logger->info('Post authorize hook - Previous user tokens were deleted.');
@@ -239,18 +239,18 @@ function _dpl_login_user_is_registered(AccessToken $token): bool {
 /**
  * Helper function that returns Drupal logger object.
  *
- * @param mixed[] $context
- *   Various openid_connect context.
+ * @param \Drupal\dpl_login\AccessToken|null $token
+ *   Adgangsplatformen token.
  *
  * @return \Psr\Log\LoggerInterface
  *   Logger object.
  */
-function _dpl_login_get_authorization_logger(array $context): LoggerInterface {
+function _dpl_login_get_authorization_logger(?AccessToken $token = NULL): LoggerInterface {
   $logger_key = DplLoginInterface::LOGGER_KEY;
 
-  // If the user is not associated with an agency we assume that the user is
-  // registering as a patron. We do not have other ways to do it at this point.
-  if (!_dpl_login_is_user_associated_with_agency($context)) {
+  // If the user is not registered we use a key that tells us
+  // that we are in a registering flow.
+  if ($token && !_dpl_login_user_is_registered($token)) {
     return \Drupal::logger(sprintf("%s.patron_registration", $logger_key));
   }
 

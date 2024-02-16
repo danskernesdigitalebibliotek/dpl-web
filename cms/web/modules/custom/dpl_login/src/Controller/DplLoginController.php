@@ -3,6 +3,7 @@
 namespace Drupal\dpl_login\Controller;
 
 use Drupal\Core\Controller\ControllerBase;
+use Drupal\Core\Logger\LoggerChannelFactoryInterface;
 use Drupal\Core\Routing\TrustedRedirectResponse;
 use Drupal\Core\Session\AccountProxyInterface;
 use Drupal\Core\StringTranslation\StringTranslationTrait;
@@ -10,6 +11,7 @@ use Drupal\Core\Url;
 use Drupal\dpl_login\Adgangsplatformen\Config;
 use Drupal\dpl_login\Exception\MissingConfigurationException;
 use Drupal\dpl_login\UserTokensProvider;
+use Drupal\dpl_login\UserTokensProviderInterface;
 use Drupal\openid_connect\OpenIDConnectClaims;
 use Drupal\openid_connect\Plugin\OpenIDConnectClientInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
@@ -26,9 +28,15 @@ class DplLoginController extends ControllerBase {
   /**
    * The User token provider.
    *
-   * @var \Drupal\dpl_login\UserTokensProvider
+   * @var \Drupal\dpl_login\UserTokensProviderInterface
    */
   protected userTokensProvider $userTokensProvider;
+  /**
+   * The Unregistered User token provider.
+   *
+   * @var \Drupal\dpl_login\UserTokensProviderInterface
+   */
+  protected userTokensProvider $unregisteredUserTokensProvider;
   /**
    * The Messenger service.
    *
@@ -59,12 +67,20 @@ class DplLoginController extends ControllerBase {
    * @var \Drupal\Core\Session\AccountProxyInterface
    */
   protected $currentUser;
+  /**
+   * The logger factory.
+   *
+   * @var \Drupal\Core\Logger\LoggerChannelFactoryInterface
+   */
+  protected $loggerFactory;
 
   /**
    * DdplReactController constructor.
    *
-   * @param \Drupal\dpl_login\UserTokensProvider $userTokensProvider
+   * @param \Drupal\dpl_login\UserTokensProviderInterface $userTokensProvider
    *   The User token provider.
+   * @param \Drupal\dpl_login\UserTokensProviderInterface $unregisteredUserTokensProvider
+   *   The Unregistered User token provider.
    * @param \Drupal\dpl_login\Adgangsplatformen\Config $config
    *   Adgangsplatformen Config.
    * @param \Drupal\openid_connect\Plugin\OpenIDConnectClientInterface $client
@@ -73,19 +89,25 @@ class DplLoginController extends ControllerBase {
    *   The OpenID Connect claims.
    * @param \Drupal\Core\Session\AccountProxyInterface $current_user
    *   The current user.
+   * @param \Drupal\Core\Logger\LoggerChannelFactoryInterface $logger_factory
+   *   The logger factory.
    */
   public function __construct(
-    UserTokensProvider $userTokensProvider,
+    UserTokensProviderInterface $userTokensProvider,
+    UserTokensProviderInterface $unregisteredUserTokensProvider,
     Config $config,
     OpenIDConnectClientInterface $client,
     OpenIDConnectClaims $claims,
-    AccountProxyInterface $current_user
+    AccountProxyInterface $current_user,
+    LoggerChannelFactoryInterface $logger_factory
   ) {
     $this->userTokensProvider = $userTokensProvider;
+    $this->unregisteredUserTokensProvider = $unregisteredUserTokensProvider;
     $this->config = $config;
     $this->client = $client;
     $this->claims = $claims;
     $this->currentUser = $current_user;
+    $this->loggerFactory = $logger_factory;
   }
 
   /**
@@ -99,10 +121,12 @@ class DplLoginController extends ControllerBase {
   public static function create(ContainerInterface $container) {
     return new static(
       $container->get('dpl_login.user_tokens'),
+      $container->get('dpl_login.unregistered_user_tokens'),
       $container->get('dpl_login.adgangsplatformen.config'),
       $container->get('dpl_login.adgangsplatformen.client'),
       $container->get('openid_connect.claims'),
-      $container->get('current_user')
+      $container->get('current_user'),
+      $container->get('logger.factory')
     );
   }
 
@@ -182,15 +206,23 @@ class DplLoginController extends ControllerBase {
    *   A redirect to the authorization endpoint.
    */
   public function postRegister(Request $request): Response {
-    $_SESSION['openid_connect_op'] = 'connect';
-    $_SESSION['openid_connect_connect_uid'] = $this->currentUser->id();
+    $access_token = $this->unregisteredUserTokensProvider->getAccessToken();
+    $logger = $this->loggerFactory->get('dpl_login');
 
-    if ($current_path = $request->query->get('current-path')) {
-      $_SESSION['openid_connect_destination'] = $current_path;
+    if (_dpl_login_delete_previous_user_tokens()) {
+      $logger->info('Post register - Previous user tokens were deleted.');
+      $this->userTokensProvider->setAccessToken($access_token);
+      $logger->info('Post register - User token was set.');
+    }
+    else {
+      $logger->error('Post register - Unable to delete previous user tokens.');
     }
 
-    $scopes = $this->claims->getScopes($this->client);
-    return $this->client->authorize($scopes);
+    if ($current_path = $request->query->get('current-path')) {
+      return new TrustedRedirectResponse($current_path);
+    }
+
+    return new Response();
   }
 
 }
