@@ -14,6 +14,7 @@ dependencies:
     - taxonomy.vocabulary.categories
     - taxonomy.vocabulary.tags
   module:
+    - dpl_admin
     - dpl_instant_loan
     - dpl_library_agency
     - dpl_url_proxy
@@ -74,6 +75,7 @@ permissions:
   - 'delete own video media'
   - 'delete terms in categories'
   - 'delete terms in tags'
+  - 'dpl admin access pages'
   - 'edit any article content'
   - 'edit any campaign content'
   - 'edit any document media'
@@ -103,10 +105,7 @@ permissions:
   - 'use text format limited'
   - 'view all eventinstance revisions'
   - 'view all eventseries revisions'
-  - 'view any unpublished article content'
-  - 'view any unpublished campaign content'
   - 'view any unpublished content'
-  - 'view any unpublished page content'
   - 'view main menu in menu list'
   - 'view own unpublished content'
   - 'view scheduled content'

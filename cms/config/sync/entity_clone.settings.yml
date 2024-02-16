@@ -28,9 +28,9 @@ form_settings:
     disable: true
     hidden: true
   media:
-    default_value: true
     disable: true
     hidden: true
+    default_value: false
   path_alias:
     default_value: true
     disable: true

@@ -13,6 +13,7 @@ dependencies:
     - node.type.page
     - taxonomy.vocabulary.tags
   module:
+    - dpl_admin
     - file
     - filter
     - media
@@ -57,6 +58,7 @@ permissions:
   - 'delete own files'
   - 'delete own image media'
   - 'delete own video media'
+  - 'dpl admin access pages'
   - 'edit any article content'
   - 'edit any campaign content'
   - 'edit any document media'
@@ -83,10 +85,7 @@ permissions:
   - 'use text format limited'
   - 'view all eventinstance revisions'
   - 'view all eventseries revisions'
-  - 'view any unpublished article content'
-  - 'view any unpublished campaign content'
   - 'view any unpublished content'
-  - 'view any unpublished page content'
   - 'view own unpublished content'
   - 'view scheduled content'
   - 'view scheduled eventseries'

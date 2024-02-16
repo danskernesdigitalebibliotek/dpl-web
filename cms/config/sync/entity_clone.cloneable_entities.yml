@@ -14,7 +14,6 @@ cloneable_entities:
   - language_content_settings
   - linkit_profile
   - media_type
-  - media
   - menu_link_content
   - metatag_defaults
   - node_type
