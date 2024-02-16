@@ -1,3 +1,7 @@
+/* @file
+ * This file is loaded into admin pages.
+ */
+
 /* Displaying the byline on the media-library preview. */
 .media-library-item__preview {
   position: relative;
