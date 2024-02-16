@@ -1,0 +1,19 @@
+uuid: 197770b3-1721-4cd9-beba-307c6af0d0b3
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.eventinstance.field_event_title
+    - recurring_events.eventinstance_type.default
+id: eventinstance.default.field_event_title
+field_name: field_event_title
+entity_type: eventinstance
+bundle: default
+label: Title
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: string
