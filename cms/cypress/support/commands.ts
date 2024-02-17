@@ -103,6 +103,109 @@ Cypress.Commands.add("drupalCron", () => {
   cy.drupalLogout();
 });
 
+type AlreadyRegisteredUser = boolean;
+
+const adgangsplatformenLoginOauthMappings = ({
+  alreadyRegisteredUser,
+  authorizationCode,
+  accessToken,
+  userCPR,
+  userGuid,
+}: {
+  alreadyRegisteredUser: AlreadyRegisteredUser;
+  authorizationCode: string;
+  accessToken: string;
+  userCPR?: number;
+  userGuid?: string;
+}) => {
+  cy.createMapping({
+    request: {
+      method: "GET",
+      urlPath: "/oauth/authorize",
+      queryParameters: {
+        response_type: {
+          equalTo: "code",
+        },
+      },
+    },
+    response: {
+      status: 302,
+      headers: {
+        location: `{{request.query.[redirect_uri]}}?code=${authorizationCode}&state={{request.query.[state]}}`,
+      },
+      transformers: ["response-template"],
+    },
+  });
+
+  cy.createMapping({
+    request: {
+      method: "POST",
+      urlPath: "/oauth/token/",
+      bodyPatterns: [
+        {
+          contains: "grant_type=authorization_code",
+        },
+        {
+          contains: `code=${authorizationCode}`,
+        },
+      ],
+    },
+    response: {
+      jsonBody: {
+        access_token: accessToken,
+        token_type: "Bearer",
+        expires_in: 2591999,
+      },
+    },
+  });
+
+  cy.createMapping({
+    request: {
+      method: "GET",
+      urlPath: "/userinfo/",
+      headers: {
+        Authorization: {
+          equalTo: `Bearer ${accessToken}`,
+        },
+      },
+    },
+    response: {
+      jsonBody: {
+        attributes: {
+          cpr: userCPR,
+          ...(userGuid ? { uniqueId: userGuid } : {}),
+        },
+      },
+    },
+  });
+
+  const patronBody = (alreadyRegisteredUser: AlreadyRegisteredUser) => {
+    return {
+      authenticateStatus: alreadyRegisteredUser ? "VALID" : "INVALID",
+      patron: {
+        // This is not a complete patron object but with regards to login/register we only need to ensure an empty blocked
+        // status so we leave out all other information.
+        blockStatus: [],
+      },
+    };
+  };
+
+  cy.createMapping({
+    request: {
+      method: "GET",
+      urlPath: "/external/agencyid/patrons/patronid/v2",
+      headers: {
+        Authorization: {
+          equalTo: `Bearer ${accessToken}`,
+        },
+      },
+    },
+    response: {
+      jsonBody: patronBody(alreadyRegisteredUser),
+    },
+  });
+};
+
 Cypress.Commands.add(
   "adgangsplatformenLogin",
   ({
@@ -116,91 +219,78 @@ Cypress.Commands.add(
     userCPR?: number;
     userGuid?: string;
   }) => {
-    cy.createMapping({
-      request: {
-        method: "GET",
-        urlPath: "/oauth/authorize",
-        queryParameters: {
-          response_type: {
-            equalTo: "code",
-          },
-        },
-      },
-      response: {
-        status: 302,
-        headers: {
-          location: `{{request.query.[redirect_uri]}}?code=${authorizationCode}&state={{request.query.[state]}}`,
-        },
-        transformers: ["response-template"],
-      },
-    });
-
-    cy.createMapping({
-      request: {
-        method: "POST",
-        urlPath: "/oauth/token/",
-        bodyPatterns: [
-          {
-            contains: "grant_type=authorization_code",
-          },
-          {
-            contains: `code=${authorizationCode}`,
-          },
-        ],
-      },
-      response: {
-        jsonBody: {
-          access_token: accessToken,
-          token_type: "Bearer",
-          expires_in: 2591999,
-        },
-      },
-    });
-
-    cy.createMapping({
-      request: {
-        method: "GET",
-        urlPath: "/userinfo/",
-        headers: {
-          Authorization: {
-            equalTo: `Bearer ${accessToken}`,
-          },
-        },
-      },
-      response: {
-        jsonBody: {
-          attributes: {
-            cpr: userCPR,
-            ...(userGuid ? { uniqueId: userGuid } : {}),
-          },
-        },
-      },
-    });
-
-    cy.createMapping({
-      request: {
-        method: "GET",
-        urlPath: "/external/agencyid/patrons/patronid/v2",
-        headers: {
-          Authorization: {
-            equalTo: `Bearer ${accessToken}`,
-          },
-        },
-      },
-      response: {
-        jsonBody: {
-          authenticateStatus: "VALID",
-          patron: {
-            // This is not a complete patron object but with regards to login we only need to ensure an empty blocked
-            // status so we leave out all other information.
-            blockStatus: [],
-          },
-        },
-      },
+    adgangsplatformenLoginOauthMappings({
+      alreadyRegisteredUser: true,
+      authorizationCode,
+      accessToken,
+      userCPR,
+      userGuid,
     });
 
     cy.visit("/user/login");
     cy.contains("Log in with Adgangsplatformen").click();
+  }
+);
+Cypress.Commands.add(
+  "setupAdgangsplatformenRegisterMappinngs",
+  ({
+    authorizationCode,
+    accessToken,
+    userCPR,
+    userGuid,
+  }: {
+    authorizationCode: string;
+    accessToken: string;
+    userCPR?: number;
+    userGuid?: string;
+  }) => {
+    adgangsplatformenLoginOauthMappings({
+      alreadyRegisteredUser: false,
+      authorizationCode,
+      accessToken,
+      userCPR,
+      userGuid,
+    });
+    cy.createMapping({
+      request: {
+        method: "POST",
+        urlPattern: ".*/external/agencyid/patrons/v4",
+      },
+      response: {
+        jsonBody: {
+          authenticated: true,
+          patron: {},
+        },
+      },
+    });
+    cy.createMapping({
+      request: {
+        method: "GET",
+        // TODO: Create more exact urlPatterns
+        urlPattern: ".*/fees.*",
+      },
+      response: {
+        jsonBody: {},
+      },
+    });
+    cy.createMapping({
+      request: {
+        method: "GET",
+        urlPattern: ".*/reservations.*",
+      },
+      response: {
+        jsonBody: {},
+      },
+    });
+    cy.createMapping({
+      request: {
+        method: "GET",
+        urlPattern: ".*/loans.*",
+      },
+      response: {
+        jsonBody: {},
+      },
+    });
   }
 );
 
@@ -225,6 +315,12 @@ declare global {
       drupalLogout(): Chainable<null>;
       drupalCron(): Chainable<null>;
       adgangsplatformenLogin(params: {
+        authorizationCode: string;
+        accessToken: string;
+        userCPR?: number;
+        userGuid?: string;
+      }): Chainable<null>;
+      setupAdgangsplatformenRegisterMappinngs(params: {
         authorizationCode: string;
         accessToken: string;
         userCPR?: number;
