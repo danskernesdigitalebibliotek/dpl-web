@@ -122,7 +122,7 @@ class PatronRegistrationBlock extends BlockBase implements ContainerFactoryPlugi
 
       // Urls.
       'redirect-on-user-created-url' => Url::fromRoute(
-        'login.post_register',
+        'dpl_patron_reg.post_register',
         [],
         ['query' => ['current-path' => $redirect_on_user_created_url]]
       )->toString(),

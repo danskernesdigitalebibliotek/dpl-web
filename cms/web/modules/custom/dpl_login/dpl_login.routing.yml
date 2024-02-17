@@ -17,13 +17,3 @@ dpl_login.login:
     _permission: "access content"
   options:
     no_cache: TRUE
-
-login.post_register:
-  path: "/post-register"
-  defaults:
-    _controller: '\Drupal\dpl_login\Controller\DplLoginController::postRegister'
-    _title: "Connect user witch access token"
-  requirements:
-    _permission: "access content"
-  options:
-    no_cache: TRUE

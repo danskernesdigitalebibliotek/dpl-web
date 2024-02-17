@@ -11,12 +11,13 @@ use Drupal\Core\Routing\TrustedRedirectResponse;
 use Drupal\Core\Url;
 use Drupal\dpl_library_agency\Branch\BranchRepositoryInterface;
 use Drupal\dpl_library_agency\BranchSettings;
-use Drupal\dpl_login\UserTokensProvider;
+use Drupal\dpl_login\UserTokensProviderInterface;
 use Drupal\dpl_react\DplReactConfigInterface;
 use Drupal\openid_connect\OpenIDConnectClaims;
 use Drupal\openid_connect\OpenIDConnectSession;
 use Drupal\openid_connect\Plugin\OpenIDConnectClientManager;
 use Symfony\Component\DependencyInjection\ContainerInterface;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
 
@@ -29,7 +30,8 @@ class DplPatronRegController extends ControllerBase {
    * {@inheritdoc}
    */
   public function __construct(
-    protected UserTokensProvider $user_token_provider,
+    protected UserTokensProviderInterface $userTokensProvider,
+    protected UserTokensProviderInterface $unregisteredUserTokensProvider,
     protected OpenIDConnectSession $session,
     protected OpenIDConnectClientManager $pluginManager,
     protected OpenIDConnectClaims $claims,
@@ -47,6 +49,7 @@ class DplPatronRegController extends ControllerBase {
   public static function create(ContainerInterface $container): DplPatronRegController|static {
     return new static(
       $container->get('dpl_login.user_tokens'),
+      $container->get('dpl_login.unregistered_user_tokens'),
       $container->get('openid_connect.session'),
       $container->get('plugin.manager.openid_connect_client'),
       $container->get('openid_connect.claims'),
@@ -54,7 +57,7 @@ class DplPatronRegController extends ControllerBase {
       $container->get('dpl_library_agency.branch.repository'),
       $container->get('plugin.manager.block'),
       $container->get('renderer'),
-      \Drupal::service('dpl_patron_reg.settings')
+      $container->get('dpl_patron_reg.settings')
     );
   }
 
@@ -174,6 +177,42 @@ class DplPatronRegController extends ControllerBase {
     $this->renderer->addCacheableDependency($render, $this->patronRegSettings);
 
     return $render;
+  }
+
+  /**
+   * Make sure that user is detected as registered after registration.
+   *
+   * @param \Symfony\Component\HttpFoundation\Request $request
+   *   Symfony request object.
+   *
+   * @return \Symfony\Component\HttpFoundation\RedirectResponse
+   *   A redirect to the authorization endpoint.
+   */
+  public function postRegister(Request $request): RedirectResponse {
+    $access_token = $this->unregisteredUserTokensProvider->getAccessToken();
+    $logger = $this->getLogger('dpl_patron_reg');
+
+    // Swap unregistered user token with registered user token.
+    if ($access_token && _dpl_login_delete_previous_user_tokens()) {
+      $logger->info('Post register - Previous user tokens were deleted.');
+      $this->userTokensProvider->setAccessToken($access_token);
+      $logger->info('Post register - User token was set.');
+    }
+    else {
+      $logger->error('Post register - Unable to delete previous user tokens.');
+    }
+
+    // Default redirect path to dashboard.
+    $redirect_path = dpl_react_apps_ensure_url_is_string(
+      Url::fromRoute('dpl_dashboard.list')->toString()
+    );
+
+    // Otherwise if specified, redirect to the current path.
+    if ($current_path = $request->query->get('current-path')) {
+      $redirect_path = $current_path;
+    }
+
+    return new RedirectResponse((string) $redirect_path);
   }
 
 }
