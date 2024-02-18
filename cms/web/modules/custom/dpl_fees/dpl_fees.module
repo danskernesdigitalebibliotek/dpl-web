@@ -9,6 +9,7 @@
 
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\Url;
+use function Safe\preg_match;
 
 /**
  * Implements hook_dpl_react_apps_data().
@@ -19,6 +20,53 @@ function dpl_fees_dpl_react_apps_data(array &$data): void {
       Url::fromRoute('dpl_fees.list', [], ['absolute' => TRUE])->toString()
     ),
   ];
+}
+
+/**
+ * Implements hook_dpl_react_apps_protected_nodes().
+ */
+function dpl_fees_dpl_react_apps_get_protected_nodes(): array {
+  $form = \Drupal::formBuilder()->getForm('Drupal\dpl_fees\Form\FeesListSettingsForm');
+  return dpl_fees_find_elements_of_type_linkit($form);
+}
+
+/**
+ * Find elements of type linkit.
+ *
+ * @param array<mixed> $form
+ *   An associative array containing the structure of the form.
+ * @param array<mixed> $elements
+ *   An associative array containing the structure of the form.
+ *
+ * @return array<mixed>
+ *   An array containing linkit form element information.
+ *
+ * @throws \Safe\Exceptions\PcreException
+ */
+function dpl_fees_find_elements_of_type_linkit(array $form, array &$elements = []): array {
+  // Get the configuration path.
+  $config_path = Url::fromRoute('dpl_fees.settings', [], ['absolute' => TRUE])->toString();
+  // Pattern to match node url e.g. /node/1.
+  $pattern = '/^\/node\/\d+$/';
+
+  foreach ($form as $key => $value) {
+
+    if (is_array($value)) {
+      if (isset($value['#type']) && $value['#type'] === 'linkit' && preg_match($pattern, $value['#default_value'])) {
+        \Drupal::logger('dpl_react_apps')->warning('<pre><code>' . print_r($value['#type'], TRUE) . '</code></pre>');
+        $elements[$key] = [
+          'node_id' => basename($value['#default_value']),
+          'config_title' => $value['#title'],
+          'config_path' => $config_path,
+        ];
+      }
+      else {
+        dpl_fees_find_elements_of_type_linkit($value, $elements);
+      }
+    }
+  }
+
+  return $elements;
 }
 
 /**
