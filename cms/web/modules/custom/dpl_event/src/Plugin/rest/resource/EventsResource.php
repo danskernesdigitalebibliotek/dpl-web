@@ -41,6 +41,16 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
  *               "format" = "uri",
  *               "description" = "An absolute url end users should use to view the event at the website.",
  *             },
+ *             "created_at" = {
+ *               "type" = "string",
+ *               "format" = "date-time",
+ *               "description" = "When the event was created. In ISO 8601 format.",
+ *             },
+ *             "updated_at" = {
+ *               "type" = "string",
+ *               "format" = "date-time",
+ *               "description" = "When the event was last updated. In ISO 8601 format.",
+ *             },
  *             "image" = {
  *               "type" = "object",
  *               "description" = "The main image for the event.",
@@ -202,6 +212,8 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
  *           "required" = {
  *             "uuid",
  *             "title",
+ *             "created_at",
+ *             "updated_at",
  *             "url",
  *             "state",
  *             "date_time",
