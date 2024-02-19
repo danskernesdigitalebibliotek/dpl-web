@@ -2,7 +2,7 @@
   <a href="{{ link.href }}" target="{{ link.target }}"
      class="link-with-icon arrow__hover--right-small">
     <div class="link-with-icon__icon {{ link.linkIconClass }}">
-      <img class="invert" src="/{{ baseIconPath }}/{{ link.iconFolder }}/{{ link.iconFile }}.svg" alt="" />
+      <img class="invert" src="{{ baseIconPath }}/{{ link.iconFolder }}/{{ link.iconFile }}.svg" alt="" />
     </div>
     {{ link.linkText }}
     {{ source(baseIconPath ~ '/arrow-ui/icon-arrow-ui-small-right.svg') }}
