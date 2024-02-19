@@ -2,8 +2,9 @@
   with {
   attributes: attributes,
   media: content.field_teaser_image,
-  subtitle: content.field_teaser_text,
   title: content.title,
+  has_media: (content.field_teaser_image.0),
+  teaser_text: content.field_teaser_text,
   url: url('entity.eventinstance.canonical', {'eventinstance': eventinstance.id()}),
   baseIconPath: baseIconPath
 } only %}

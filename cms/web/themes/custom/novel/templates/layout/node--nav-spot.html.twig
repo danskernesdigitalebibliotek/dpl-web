@@ -2,7 +2,9 @@
   with {
   attributes: attributes,
   title: label,
-  subtitle: content.field_teaser_text.0|default(content.field_subtitle.0),
+  has_media: (content.field_teaser_image.0),
+  teaser_text: content.field_teaser_text,
+  subtitle: content.field_subtitle.0,
   media: content.field_teaser_image,
   url: url,
   baseIconPath: baseIconPath
