@@ -1,0 +1,14 @@
+uuid: 8fceecf0-cbd2-4e20-8a8c-38d4ffa315a3
+langcode: en
+status: true
+dependencies:
+  config:
+    - user.role.external_system
+  module:
+    - user
+id: user_add_role_action.external_system
+label: 'Add the External system role to the selected user(s)'
+type: user
+plugin: user_add_role_action
+configuration:
+  rid: external_system
