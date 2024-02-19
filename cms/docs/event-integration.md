@@ -33,6 +33,7 @@ sequenceDiagram
   ExternalSystem ->> ExternalSystem: Identify existing events by UUID and update them locally
   ExternalSystem ->> ExternalSystem: Identify local events with UUID which are<br/>not represented in the list and delete them locally
   deactivate ExternalSystem
+  Note over DplCms,ExternalSystem: Time passes
   EventParticipant -->> DplCms: View event
   EventParticipant -->> DplCms: Purchase ticket
   DplCms -->> EventParticipant: Refer to external url
