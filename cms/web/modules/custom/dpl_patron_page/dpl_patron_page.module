@@ -8,50 +8,15 @@
  */
 
 use Drupal\Core\Url;
-use function Safe\preg_match;
 
 /**
- * Implements hook_dpl_react_apps_protected_nodes().
+ * Implements hook_dpl_protected_nodes_get_protected_nodes().
  */
-function dpl_patron_page_dpl_react_apps_get_protected_nodes(): array {
+function dpl_patron_page_dpl_protected_nodes_get_protected_nodes(): array {
+  // Get the configuration form.
   $form = \Drupal::formBuilder()->getForm('Drupal\dpl_patron_page\Form\PatronPageSettingsForm');
-  return dpl_patron_page_find_elements_of_type_linkit($form);
-}
-
-/**
- * Find elements of type linkit.
- *
- * @param array<mixed> $form
- *   An associative array containing the structure of the form.
- * @param array<mixed> $elements
- *   An associative array containing the structure of the form.
- *
- * @return array<mixed>
- *   An array containing linkit form element information.
- *
- * @throws \Safe\Exceptions\PcreException
- */
-function dpl_patron_page_find_elements_of_type_linkit(array $form, array &$elements = []): array {
   // Get the configuration path.
   $config_path = Url::fromRoute('dpl_patron_page.settings', [], ['absolute' => TRUE])->toString();
-  // Pattern to match node url e.g. /node/1.
-  $pattern = '/^\/node\/\d+$/';
 
-  foreach ($form as $key => $value) {
-
-    if (is_array($value)) {
-      if (isset($value['#type']) && $value['#type'] === 'linkit' && preg_match($pattern, $value['#default_value'])) {
-        $elements[$key] = [
-          'node_id' => basename($value['#default_value']),
-          'config_title' => $value['#title'],
-          'config_path' => $config_path,
-        ];
-      }
-      else {
-        dpl_patron_page_find_elements_of_type_linkit($value, $elements);
-      }
-    }
-  }
-
-  return $elements;
+  return dpl_protected_nodes_find_linkit_elements($form, $config_path);
 }

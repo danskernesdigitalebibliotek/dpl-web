@@ -10,8 +10,6 @@
  */
 
 use Drupal\Core\Cache\CacheableMetadata;
-use Drupal\Core\Entity\EntityFormInterface;
-use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\GeneratedUrl;
 use Drupal\Core\Url;
 use Drupal\dpl_library_agency\GeneralSettings;
@@ -461,43 +459,4 @@ function dpl_react_apps_format_app_url(string|NULL $url, string $fallbackUrl = '
   // Use the fallback url that is provided and if that is not present use the
   // dpl cms base url which is the absolute url to front page of the site.
   return $fallbackUrl ?: dpl_react_apps_get_dpl_cms_base_url();
-}
-
-/**
- * Implements hook_form_BASE_FORM_ID_alter().
- *
- * @throws \Safe\Exceptions\PcreException
- */
-function dpl_react_apps_form_node_confirm_form_alter(array &$form, FormStateInterface $form_state): void {
-
-  if ($form_state->getFormObject() instanceof EntityFormInterface) {
-
-    // Get the node id and type.
-    /** @var \Drupal\node\NodeInterface $node */
-    $node = $form_state->getFormObject()->getEntity();
-    $node_id = $node->id();
-    $node_type = $node->getType();
-
-    $protected_nodes = \Drupal::moduleHandler()->invokeAll('dpl_react_apps_get_protected_nodes');
-
-    foreach ($protected_nodes as $key => $value) {
-      if ($value['node_id'] === $node_id) {
-
-        $form['actions']['submit']['#disabled'] = TRUE;
-
-        $form['description'] = [
-          '#markup' => t('This @type is being used in configuration. Before you can delete it, you need to remove it from the following configuration fields:', [
-            '@type' => $node_type,
-          ]),
-        ];
-
-        $form[$key] = [
-          '#markup' => t('<br><a href=":url">@title</a>', [
-            '@title' => $value['config_title'],
-            ':url' => $value['config_path'],
-          ]),
-        ];
-      }
-    }
-  }
 }
