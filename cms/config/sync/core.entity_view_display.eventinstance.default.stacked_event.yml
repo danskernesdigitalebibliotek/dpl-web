@@ -36,10 +36,10 @@ content:
       timezone_override: ''
       date_format: 'Y-m-d\TH:i:s'
       separator: '-'
-      one_day: 'd F Y'
-      one_month: 'd - {d} F Y'
-      several_months: 'd F - {d} {F} Y'
-      several_years: 'd F Y - {d} {F} {Y}'
+      one_day: 'd. M Y'
+      one_month: 'd. - {d}. M Y'
+      several_months: 'd. M - {d}. {M} Y'
+      several_years: 'd. M Y - {d}. {M} {Y}'
     third_party_settings: {  }
     weight: 0
     region: content
