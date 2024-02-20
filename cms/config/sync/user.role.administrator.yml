@@ -15,10 +15,12 @@ dependencies:
     - taxonomy.vocabulary.tags
   module:
     - block
+    - dpl_admin
     - dpl_instant_loan
     - dpl_library_agency
     - dpl_mapp
     - dpl_url_proxy
+    - entity_clone
     - entity_reference_revisions
     - file
     - filter
@@ -34,6 +36,7 @@ dependencies:
     - taxonomy
     - toolbar
     - update
+    - view_unpublished
 id: administrator
 label: Administrator
 weight: 2
@@ -65,6 +68,8 @@ permissions:
   - 'administer users'
   - 'clone eventinstance entity'
   - 'clone eventseries entity'
+  - 'clone eventseries_type entity'
+  - 'clone node entity'
   - 'create article content'
   - 'create campaign content'
   - 'create image media'
@@ -91,6 +96,7 @@ permissions:
   - 'delete own video media'
   - 'delete terms in categories'
   - 'delete terms in tags'
+  - 'dpl admin access pages'
   - 'edit any article content'
   - 'edit any campaign content'
   - 'edit any document media'
@@ -121,6 +127,7 @@ permissions:
   - 'use text format limited'
   - 'view all eventinstance revisions'
   - 'view all eventseries revisions'
+  - 'view any unpublished content'
   - 'view main menu in menu list'
   - 'view own unpublished content'
   - 'view scheduled content'
