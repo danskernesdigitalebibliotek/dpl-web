@@ -293,7 +293,7 @@ function novel_theme_suggestions_select_alter(array &$suggestions, array $variab
  * @param array &$variables
  *   An array of variables to pass to the theme layer.
  */
-function novel_preprocess_views_view_unformatted(&$variables) {
+function novel_preprocess_views_view_unformatted(&$variables): void {
   $rows = &$variables['rows'];
 
   foreach ($rows as $index => &$row) {
