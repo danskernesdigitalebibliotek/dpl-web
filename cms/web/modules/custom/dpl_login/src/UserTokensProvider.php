@@ -24,34 +24,25 @@ class UserTokensProvider implements UserTokensProviderInterface {
    *   User session store factory.
    */
   public function __construct(PrivateTempStoreFactory $temp_store_factory) {
-    $this->tempStore = $temp_store_factory->get(__CLASS__);
+    $this->tempStore = $temp_store_factory->get(static::class);
   }
 
   /**
-   * Set access token.
-   *
-   * @param \Drupal\dpl_login\AccessToken $accessToken
-   *   Good old access token.
+   * {@inheritdoc}
    */
   public function setAccessToken(AccessToken $accessToken): void {
     $this->tempStore->set('access_token', $accessToken);
   }
 
   /**
-   * Get access token.
-   *
-   * @return \Drupal\dpl_login\AccessToken|null
-   *   Accesstoken or NULL if no one has been stored.
+   * {@inheritdoc}
    */
   public function getAccessToken(): ?AccessToken {
     return $this->tempStore->get('access_token');
   }
 
   /**
-   * Delete access token.
-   *
-   * @return bool
-   *   Was the token successfully deleted?
+   * {@inheritdoc}
    */
   public function deleteAccessToken(): bool {
     return $this->tempStore->delete('access_token');

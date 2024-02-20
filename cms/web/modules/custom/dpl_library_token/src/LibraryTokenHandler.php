@@ -107,9 +107,6 @@ class LibraryTokenHandler {
 
   /**
    * Get stored library token.
-   *
-   * @return string|null
-   *   The token if found or else NULL.
    */
   public function getToken(): ?string {
     return $this->tokenCollection->get(self::LIBRARY_TOKEN_KEY);
