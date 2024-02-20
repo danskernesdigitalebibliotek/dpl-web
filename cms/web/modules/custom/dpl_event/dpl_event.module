@@ -294,19 +294,19 @@ function dpl_event_preprocess_eventinstance__list_teaser(array &$variables): voi
     }
   }
 
-  // Extract start_date, end_date and datetime attributes.
+  // Extract start_time, end_time and datetime attributes.
   if (!$eventInstance->get('date')->isEmpty()) {
     $date_field = $eventInstance->get('date')->first();
 
-    $start_date = $date_field->start_date;
-    $end_date = $date_field->end_date;
+    $start_time = $date_field->start_date;
+    $end_time = $date_field->end_date;
 
-    if ($start_date instanceof DrupalDateTime) {
-      $variables['start_date'] = $date_formatter->format($start_date->getTimestamp(), 'custom', 'H:i');
-      $variables['datetime_attribute'] = $date_formatter->format($start_date->getTimestamp(), DATE_ATOM);
+    if ($start_time instanceof DrupalDateTime) {
+      $variables['start_time'] = $date_formatter->format($start_time->getTimestamp(), 'custom', 'H:i');
+      $variables['datetime_attribute'] = $date_formatter->format($start_time->getTimestamp(), DATE_ATOM);
     }
-    if ($end_date instanceof DrupalDateTime) {
-      $variables['end_date'] = $date_formatter->format($end_date->getTimestamp(), 'custom', 'H:i');
+    if ($end_time instanceof DrupalDateTime) {
+      $variables['end_time'] = $date_formatter->format($end_time->getTimestamp(), 'custom', 'H:i');
     }
   }
 }
