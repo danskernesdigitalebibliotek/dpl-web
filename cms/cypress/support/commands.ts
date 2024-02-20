@@ -103,16 +103,14 @@ Cypress.Commands.add("drupalCron", () => {
   cy.drupalLogout();
 });
 
-type AlreadyRegisteredUser = boolean;
-
 const adgangsplatformenLoginOauthMappings = ({
-  alreadyRegisteredUser,
+  userIsAlreadyRegistered,
   authorizationCode,
   accessToken,
   userCPR,
   userGuid,
 }: {
-  alreadyRegisteredUser: AlreadyRegisteredUser;
+  userIsAlreadyRegistered: boolean;
   authorizationCode: string;
   accessToken: string;
   userCPR?: number;
@@ -179,9 +177,9 @@ const adgangsplatformenLoginOauthMappings = ({
     },
   });
 
-  const patronBody = (alreadyRegisteredUser: AlreadyRegisteredUser) => {
+  const patronBody = (userIsAlreadyRegistered: boolean) => {
     return {
-      authenticateStatus: alreadyRegisteredUser ? "VALID" : "INVALID",
+      authenticateStatus: userIsAlreadyRegistered ? "VALID" : "INVALID",
       patron: {
         // This is not a complete patron object but with regards to login/register we only need to ensure an empty blocked
         // status so we leave out all other information.
@@ -201,7 +199,7 @@ const adgangsplatformenLoginOauthMappings = ({
       },
     },
     response: {
-      jsonBody: patronBody(alreadyRegisteredUser),
+      jsonBody: patronBody(userIsAlreadyRegistered),
     },
   });
 };
@@ -220,7 +218,7 @@ Cypress.Commands.add(
     userGuid?: string;
   }) => {
     adgangsplatformenLoginOauthMappings({
-      alreadyRegisteredUser: true,
+      userIsAlreadyRegistered: true,
       authorizationCode,
       accessToken,
       userCPR,
@@ -245,7 +243,7 @@ Cypress.Commands.add(
     userGuid?: string;
   }) => {
     adgangsplatformenLoginOauthMappings({
-      alreadyRegisteredUser: false,
+      userIsAlreadyRegistered: false,
       authorizationCode,
       accessToken,
       userCPR,
