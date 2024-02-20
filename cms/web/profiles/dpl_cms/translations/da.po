@@ -232,7 +232,7 @@ msgstr "Luk"
 #: 
 msgctxt "Work Page"
 msgid "Contributors"
-msgstr "Bidragsydere"
+msgstr "Bidragydere"
 
 #: 
 msgctxt "Work Page"
