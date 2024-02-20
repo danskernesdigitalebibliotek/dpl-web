@@ -279,7 +279,19 @@ function novel_theme_suggestions_select_alter(array &$suggestions, array $variab
 }
 
 /**
+ * Preprocesses rows in a Drupal view to handle the display of event instances.
  *
+ * This function iterates over each row in the view, checking for the presence
+ * of an EventInstance object.
+ * When an EventInstance is found, it checks if it belongs to the same
+ * event series as the previous row.
+ * If so, it marks the current row as 'stacked' and adjusts its view
+ * mode accordingly.
+ * This is useful for grouping events from the same series in the view,
+ * enhancing visual continuity and clarity.
+ *
+ * @param array &$variables
+ *   An array of variables to pass to the theme layer.
  */
 function novel_preprocess_views_view_unformatted(&$variables) {
   $rows = &$variables['rows'];
@@ -292,7 +304,8 @@ function novel_preprocess_views_view_unformatted(&$variables) {
       if ($eventInstance instanceof EventInstance) {
         $eventSeriesId = $eventInstance->getEventSeries()->id();
 
-        // Check if not the first row and if event_series_id matches the previous row.
+        // Check if not the first row and if event_series_id matches
+        // the previous row.
         $isStacked = $index > 0 && $eventSeriesId == $rows[$index - 1]['content']['#eventinstance']->getEventSeries()->id();
 
         $row['isStacked'] = $isStacked;
