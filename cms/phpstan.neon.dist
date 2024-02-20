@@ -25,6 +25,8 @@ parameters:
     # Allow no doc block details in HOOK_dpl_react_apps_data() functions
     - '#Function .*_dpl_react_apps_data\(\) has parameter \$variables with no value type specified in iterable type array\.#'
     - '#Function .*_dpl_react_apps_data\(\) has parameter \$data with no value type specified in iterable type array\.#'
+    # Allow no doc block details in hook_dpl_protected_nodes_get_protected_nodes() functions
+    - '#Function .*_dpl_protected_nodes_get_protected_nodes\(\) return type has no value type specified in iterable type array\.#'
   scanFiles:
     # Needed to make locale_translation_batch_fetch_finished() discoverable.
     - web/core/modules/locale/locale.batch.inc

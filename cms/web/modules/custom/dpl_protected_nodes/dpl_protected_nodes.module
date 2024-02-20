@@ -40,7 +40,7 @@ function dpl_protected_nodes_form_node_delete_multiple_confirm_form_alter(array 
 }
 
 /**
- * Checks if the node_id is protected.
+ * Checks if node is protected and alters the delete confirm form accordingly.
  *
  * @param mixed[] $nodes
  *   The node id to check.
