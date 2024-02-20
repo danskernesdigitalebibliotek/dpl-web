@@ -4,3 +4,8 @@ base:
       assets/dpl_admin.css: {}
   js:
     assets/dpl_admin.js: {}
+
+frontend:
+  css:
+    theme:
+      assets/dpl_frontend.css: {}

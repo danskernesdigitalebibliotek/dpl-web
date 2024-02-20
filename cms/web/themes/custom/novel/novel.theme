@@ -7,7 +7,6 @@
 
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\StringTranslation\TranslatableMarkup;
-use Drupal\paragraphs\ParagraphInterface;
 use Spatie\Color\Hex;
 use Spatie\Color\Hsl;
 use function Safe\file_get_contents;
@@ -108,7 +107,7 @@ function novel_preprocess_dpl_react_app__search_result(array &$variables): void 
  */
 function novel_preprocess(array &$variables): void {
   $directory = $variables['directory'] ?? 'web/themes/custom/novel';
-  $variables['baseIconPath'] = $directory . '/assets/dpl-design-system/icons';
+  $variables['baseIconPath'] = "/{$directory}/assets/dpl-design-system/icons";
 }
 
 /**
@@ -258,29 +257,22 @@ function novel_theme_suggestions_field_alter(array &$suggestions, array $variabl
 }
 
 /**
- * Implements hook_theme_suggestions_paragraph_alter().
+ * Implements hook_theme_suggestions_select_alter().
  *
- * Adds a template suggestion for recommendation paragraphs that contain
- * a title or description written by an editor. This enhances caching efficiency
- * by using separate templates for the variations of the paragraph.
+ * Allow us to differencate from single and multi-selects.
  *
  * @param string[] &$suggestions
  *   An array of theme suggestion strings.
  * @param array<mixed> $variables
  *   An array of variables of mixed types, passed to the theme layer.
  */
-function novel_theme_suggestions_paragraph_alter(array &$suggestions, array $variables): void {
+function novel_theme_suggestions_select_alter(array &$suggestions, array $variables): void {
+  $has_multiple = !empty($variables['element']['#multiple']);
 
-  $paragraph = $variables['elements']['#paragraph'] ?? NULL;
-  if (!($paragraph instanceof ParagraphInterface)) {
-    return;
+  if ($has_multiple) {
+    $suggestions[] = 'select__multiple';
   }
-
-  if ($paragraph->getType() == 'recommendation') {
-    // Check for title or description.
-    if (!empty($paragraph->get('field_recommendation_title')->getString()) ||
-      !empty($paragraph->get('field_recommendation_description')->getString())) {
-      $suggestions[] = 'paragraph__recommendation__recommended_material';
-    }
+  else {
+    $suggestions[] = 'select__single';
   }
 }

@@ -4106,3 +4106,5 @@ msgstr "Tags"
 msgid "Show all"
 msgstr ""
 
+msgid "Manually entered paths should start with one of the following characters: / ? #"
+msgstr "Når du tilføjer eksterne links, skal de starte med https:// - hvis du vil lave et manuelt internt link skal det starte med /, ? eller #"

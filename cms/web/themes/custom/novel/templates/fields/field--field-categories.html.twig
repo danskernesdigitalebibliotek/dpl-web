@@ -1,31 +1,10 @@
-{{ attach_library('novel/show-more') }}
-{% set show_more_text = '...'|t %}
-{% set show_less_text = 'Show less'|t %}
-
 {% set item_classes = [
     'tag',
     'tag--fill',
   ] %}
 
-{% if items|length > 1 %}
-    <div data-show-more-list class="tag-categories">
-        <ul>
-            {% for item in items %}
-                <li{{ item.attributes.setAttribute("data-show-more-item", true).addClass(item_classes) }}>
-                    {{ item.content|raw }}
-                </li>
-            {% endfor %}
-            <button class="tag tag--fill tag--small cursor-pointer" aria-expanded="false" data-show-more-button data-show-more-text="{{ show_more_text }}" data-show-less-text="{{ show_less_text }}">
-                {{ show_more_text }}
-            </button>
-        </ul>
-    </div>
-{% else %}
-    {% for item in items %}
-        <div class="tag-categories">
-            <span{{ item.attributes.addClass(item_classes) }}>
-                {{ item.content|raw }}
-            </span>
-        </div>
-    {% endfor %}
-{% endif %}
+{% for item in items %}
+    <span{{ item.attributes.addClass(item_classes) }}>
+        {{ item.content|raw }}
+    </span>
+{% endfor %}

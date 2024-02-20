@@ -30,7 +30,7 @@ default:
       tag: link
       attributes:
         rel: canonical
-        href: 'http://dapple-cms.docker/user/login'
+        href: '/user/login'
   field_media_oembed_video:
     -
       value: 'https://www.youtube.com/watch?v=CmzKQ3PSrow'

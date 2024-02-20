@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "afa976d2179a929be389673d5d55a35d",
+    "content-hash": "806fb58f407945dadc9b3a27dbb9ee46",
     "packages": [
         {
             "name": "amazeeio/drupal_integrations",
@@ -1099,19 +1099,19 @@
         },
         {
             "name": "danskernesdigitalebibliotek/dpl-design-system",
-            "version": "2024.6.0",
+            "version": "2024.8.0",
             "dist": {
                 "type": "zip",
-                "url": "https://github.com/danskernesdigitalebibliotek/dpl-design-system/releases/download/2024.6.0/dist-2024-6-0-31e5576c610a9ffde29213207d730d8c2bf64d2f.zip"
+                "url": "https://github.com/danskernesdigitalebibliotek/dpl-design-system/releases/download/2024.8.0/dist-2024-8-0-9bdda9cca32b3b68341db4385613d5679b230b4f.zip"
             },
             "type": "drupal-library"
         },
         {
             "name": "danskernesdigitalebibliotek/dpl-react",
-            "version": "2024.6.0",
+            "version": "2024.8.0",
             "dist": {
                 "type": "zip",
-                "url": "https://github.com/danskernesdigitalebibliotek/dpl-react/releases/download/2024.6.0/dist-2024-6-0-09be350ce7473330cc1096c51dd8aabd23ee73f6.zip"
+                "url": "https://github.com/danskernesdigitalebibliotek/dpl-react/releases/download/2024.8.0/dist-2024-8-0-480926140b3abf9dd8b3fd78157866d22e4bef49.zip"
             },
             "require": {
                 "composer/installers": "^1.2.0"
@@ -2092,6 +2092,79 @@
             }
         },
         {
+            "name": "drupal/better_exposed_filters",
+            "version": "6.0.3",
+            "source": {
+                "type": "git",
+                "url": "https://git.drupalcode.org/project/better_exposed_filters.git",
+                "reference": "6.0.3"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://ftp.drupal.org/files/projects/better_exposed_filters-6.0.3.zip",
+                "reference": "6.0.3",
+                "shasum": "b5c20207d7679542bb81955771956c18083e6e0b"
+            },
+            "require": {
+                "drupal/core": "^9 || ^10",
+                "drupal/jquery_ui": "^1.6",
+                "drupal/jquery_ui_datepicker": "^2.0",
+                "drupal/jquery_ui_slider": "^2.0.0",
+                "drupal/jquery_ui_touch_punch": "^1.0"
+            },
+            "type": "drupal-module",
+            "extra": {
+                "drupal": {
+                    "version": "6.0.3",
+                    "datestamp": "1671541877",
+                    "security-coverage": {
+                        "status": "covered",
+                        "message": "Covered by Drupal's security advisory policy"
+                    }
+                }
+            },
+            "notification-url": "https://packages.drupal.org/8/downloads",
+            "license": [
+                "GPL-2.0-or-later"
+            ],
+            "authors": [
+                {
+                    "name": "Mike Keran",
+                    "homepage": "https://www.drupal.org/u/mikeker"
+                },
+                {
+                    "name": "Martin Keereman",
+                    "homepage": "https://www.drupal.org/u/etroid"
+                },
+                {
+                    "name": "Neslee Canil Pinto",
+                    "homepage": "https://www.drupal.org/u/neslee-canil-pinto"
+                },
+                {
+                    "name": "mikeker",
+                    "homepage": "https://www.drupal.org/user/192273"
+                },
+                {
+                    "name": "Neslee Canil Pinto",
+                    "homepage": "https://www.drupal.org/user/3580850"
+                },
+                {
+                    "name": "podarok",
+                    "homepage": "https://www.drupal.org/user/116002"
+                },
+                {
+                    "name": "rlhawk",
+                    "homepage": "https://www.drupal.org/user/352283"
+                }
+            ],
+            "description": "Replaces the Views default single- or multi-select boxes with more advanced options.",
+            "homepage": "https://www.drupal.org/project/better_exposed_filters",
+            "support": {
+                "source": "https://git.drupalcode.org/project/better_exposed_filters",
+                "issues": "https://www.drupal.org/project/issues/better_exposed_filters"
+            }
+        },
+        {
             "name": "drupal/config_filter",
             "version": "2.6.0",
             "source": {
@@ -2669,17 +2742,17 @@
         },
         {
             "name": "drupal/date_range_formatter",
-            "version": "4.0.1",
+            "version": "4.0.2",
             "source": {
                 "type": "git",
                 "url": "https://git.drupalcode.org/project/date_range_formatter.git",
-                "reference": "4.0.1"
+                "reference": "4.0.2"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://ftp.drupal.org/files/projects/date_range_formatter-4.0.1.zip",
-                "reference": "4.0.1",
-                "shasum": "d218f325c9a1e144ede86d34b87002330a4e8709"
+                "url": "https://ftp.drupal.org/files/projects/date_range_formatter-4.0.2.zip",
+                "reference": "4.0.2",
+                "shasum": "0d953912148e384aed6a6cee64115faf170319c0"
             },
             "require": {
                 "drupal/core": "^8 || ^9 || ^10"
@@ -2687,8 +2760,8 @@
             "type": "drupal-module",
             "extra": {
                 "drupal": {
-                    "version": "4.0.1",
-                    "datestamp": "1661752209",
+                    "version": "4.0.2",
+                    "datestamp": "1703156621",
                     "security-coverage": {
                         "status": "covered",
                         "message": "Covered by Drupal's security advisory policy"
@@ -3541,6 +3614,71 @@
             }
         },
         {
+            "name": "drupal/jquery_ui_datepicker",
+            "version": "2.0.0",
+            "source": {
+                "type": "git",
+                "url": "https://git.drupalcode.org/project/jquery_ui_datepicker.git",
+                "reference": "2.0.0"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://ftp.drupal.org/files/projects/jquery_ui_datepicker-2.0.0.zip",
+                "reference": "2.0.0",
+                "shasum": "ce40cf8ab400866bffda1ac3f7e4a5ac20bb3ae5"
+            },
+            "require": {
+                "drupal/core": "^9.2 || ^10",
+                "drupal/jquery_ui": "^1.6"
+            },
+            "type": "drupal-module",
+            "extra": {
+                "drupal": {
+                    "version": "2.0.0",
+                    "datestamp": "1670871494",
+                    "security-coverage": {
+                        "status": "covered",
+                        "message": "Covered by Drupal's security advisory policy"
+                    }
+                }
+            },
+            "notification-url": "https://packages.drupal.org/8/downloads",
+            "license": [
+                "GPL-2.0-or-later"
+            ],
+            "authors": [
+                {
+                    "name": "bnjmnm",
+                    "homepage": "https://www.drupal.org/user/2369194"
+                },
+                {
+                    "name": "jrockowitz",
+                    "homepage": "https://www.drupal.org/user/371407"
+                },
+                {
+                    "name": "lauriii",
+                    "homepage": "https://www.drupal.org/user/1078742"
+                },
+                {
+                    "name": "nod_",
+                    "homepage": "https://www.drupal.org/user/598310"
+                },
+                {
+                    "name": "phenaproxima",
+                    "homepage": "https://www.drupal.org/user/205645"
+                },
+                {
+                    "name": "zrpnr",
+                    "homepage": "https://www.drupal.org/user/1448368"
+                }
+            ],
+            "description": "Provides jQuery UI Datepicker library.",
+            "homepage": "https://www.drupal.org/project/jquery_ui_datepicker",
+            "support": {
+                "source": "https://git.drupalcode.org/project/jquery_ui_datepicker"
+            }
+        },
+        {
             "name": "drupal/jquery_ui_draggable",
             "version": "2.0.0",
             "source": {
@@ -3591,6 +3729,115 @@
             "homepage": "https://www.drupal.org/project/jquery_ui_draggable",
             "support": {
                 "source": "https://git.drupalcode.org/project/jquery_ui_draggable"
+            }
+        },
+        {
+            "name": "drupal/jquery_ui_slider",
+            "version": "2.0.0",
+            "source": {
+                "type": "git",
+                "url": "https://git.drupalcode.org/project/jquery_ui_slider.git",
+                "reference": "2.0.0"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://ftp.drupal.org/files/projects/jquery_ui_slider-2.0.0.zip",
+                "reference": "2.0.0",
+                "shasum": "86b7d71e91013cffafb8021dbf8047745ebc5fd6"
+            },
+            "require": {
+                "drupal/core": "^9.2 || ^10",
+                "drupal/jquery_ui": "^1.6"
+            },
+            "type": "drupal-module",
+            "extra": {
+                "drupal": {
+                    "version": "2.0.0",
+                    "datestamp": "1670871571",
+                    "security-coverage": {
+                        "status": "covered",
+                        "message": "Covered by Drupal's security advisory policy"
+                    }
+                }
+            },
+            "notification-url": "https://packages.drupal.org/8/downloads",
+            "license": [
+                "GPL-2.0-or-later"
+            ],
+            "authors": [
+                {
+                    "name": "bnjmnm",
+                    "homepage": "https://www.drupal.org/user/2369194"
+                },
+                {
+                    "name": "lauriii",
+                    "homepage": "https://www.drupal.org/user/1078742"
+                },
+                {
+                    "name": "zrpnr",
+                    "homepage": "https://www.drupal.org/user/1448368"
+                }
+            ],
+            "description": "Provides jQuery UI Slider library.",
+            "homepage": "https://www.drupal.org/project/jquery_ui_slider",
+            "support": {
+                "source": "https://git.drupalcode.org/project/jquery_ui_slider"
+            }
+        },
+        {
+            "name": "drupal/jquery_ui_touch_punch",
+            "version": "1.1.0",
+            "source": {
+                "type": "git",
+                "url": "https://git.drupalcode.org/project/jquery_ui_touch_punch.git",
+                "reference": "1.1.0"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://ftp.drupal.org/files/projects/jquery_ui_touch_punch-1.1.0.zip",
+                "reference": "1.1.0",
+                "shasum": "4b7e50a98246dfa6ef48e5b12c70277873902824"
+            },
+            "require": {
+                "drupal/core": "^8 || ^9 || ^10",
+                "drupal/jquery_ui": "^1.0",
+                "politsin/jquery-ui-touch-punch": "^1.0"
+            },
+            "type": "drupal-module",
+            "extra": {
+                "drupal": {
+                    "version": "1.1.0",
+                    "datestamp": "1662744607",
+                    "security-coverage": {
+                        "status": "covered",
+                        "message": "Covered by Drupal's security advisory policy"
+                    }
+                }
+            },
+            "notification-url": "https://packages.drupal.org/8/downloads",
+            "license": [
+                "GPL-2.0-or-later"
+            ],
+            "authors": [
+                {
+                    "name": "Naveen Valecha",
+                    "homepage": "https://drupal.org/u/naveenvalecha",
+                    "role": "Maintainer"
+                },
+                {
+                    "name": "naveenvalecha",
+                    "homepage": "https://www.drupal.org/user/2665733"
+                }
+            ],
+            "description": "Provides jQuery UI Touch Punch library.",
+            "homepage": "https://www.drupal.org/project/jquery_ui_touch_punch",
+            "keywords": [
+                "Drupal",
+                "jquery_ui_touch_punch"
+            ],
+            "support": {
+                "source": "https://www.drupal.org/project/jquery_ui_touch_punch",
+                "issues": "https://www.drupal.org/project/issues/jquery_ui_touch_punch"
             }
         },
         {
@@ -3933,6 +4180,60 @@
             "homepage": "https://www.drupal.org/project/multiple_fields_remove_button",
             "support": {
                 "source": "https://git.drupalcode.org/project/multiple_fields_remove_button"
+            }
+        },
+        {
+            "name": "drupal/multivalue_form_element",
+            "version": "1.0.0-beta6",
+            "source": {
+                "type": "git",
+                "url": "https://git.drupalcode.org/project/multivalue_form_element.git",
+                "reference": "1.0.0-beta6"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://ftp.drupal.org/files/projects/multivalue_form_element-1.0.0-beta6.zip",
+                "reference": "1.0.0-beta6",
+                "shasum": "653214124be45f11bb76c76871355a30651dd6fe"
+            },
+            "require": {
+                "drupal/core": "^9.3 || ^10",
+                "php": ">=7.4"
+            },
+            "type": "drupal-module",
+            "extra": {
+                "drupal": {
+                    "version": "1.0.0-beta6",
+                    "datestamp": "1678886197",
+                    "security-coverage": {
+                        "status": "not-covered",
+                        "message": "Project has not opted into security advisory coverage!"
+                    }
+                }
+            },
+            "notification-url": "https://packages.drupal.org/8/downloads",
+            "license": [
+                "EUPL-1.2"
+            ],
+            "authors": [
+                {
+                    "name": "hernani",
+                    "homepage": "https://www.drupal.org/user/448086"
+                },
+                {
+                    "name": "ieguskiza",
+                    "homepage": "https://www.drupal.org/user/2652665"
+                },
+                {
+                    "name": "sardara",
+                    "homepage": "https://www.drupal.org/user/2353864"
+                }
+            ],
+            "description": "Provides a form element that wraps existing form elements, making them multi-value.",
+            "homepage": "https://www.drupal.org/project/multivalue_form_element",
+            "support": {
+                "source": "https://git.drupalcode.org/project/multivalue_form_element",
+                "issues": "https://www.drupal.org/project/issues/multivalue_form_element"
             }
         },
         {
@@ -4411,17 +4712,17 @@
         },
         {
             "name": "drupal/recurring_events",
-            "version": "2.0.0-rc16",
+            "version": "2.0.0",
             "source": {
                 "type": "git",
                 "url": "https://git.drupalcode.org/project/recurring_events.git",
-                "reference": "2.0.0-rc16"
+                "reference": "2.0.0"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://ftp.drupal.org/files/projects/recurring_events-2.0.0-rc16.zip",
-                "reference": "2.0.0-rc16",
-                "shasum": "9e8f28e53e26aadbccd3b7f233c98fcb5aff853f"
+                "url": "https://ftp.drupal.org/files/projects/recurring_events-2.0.0.zip",
+                "reference": "2.0.0",
+                "shasum": "7bc7a42b18c02d88aaaa12b35ac6434140f9f432"
             },
             "require": {
                 "drupal/core": "^9.3 || ^10",
@@ -4435,11 +4736,11 @@
             "type": "drupal-module",
             "extra": {
                 "drupal": {
-                    "version": "2.0.0-rc16",
-                    "datestamp": "1701464510",
+                    "version": "2.0.0",
+                    "datestamp": "1706902867",
                     "security-coverage": {
-                        "status": "not-covered",
-                        "message": "RC releases are not covered by Drupal security advisories."
+                        "status": "covered",
+                        "message": "Covered by Drupal's security advisory policy"
                     }
                 }
             },
@@ -4448,18 +4749,6 @@
                 "GPL-2.0-or-later"
             ],
             "authors": [
-                {
-                    "name": "achraf.noomane",
-                    "homepage": "https://www.drupal.org/user/563984"
-                },
-                {
-                    "name": "jds1",
-                    "homepage": "https://www.drupal.org/user/3422223"
-                },
-                {
-                    "name": "lhridley",
-                    "homepage": "https://www.drupal.org/user/1223730"
-                },
                 {
                     "name": "owenbush",
                     "homepage": "https://www.drupal.org/user/2765259"
@@ -4599,6 +4888,78 @@
             "homepage": "https://www.drupal.org/project/restui",
             "support": {
                 "source": "https://git.drupalcode.org/project/restui"
+            }
+        },
+        {
+            "name": "drupal/scheduler",
+            "version": "2.0.1",
+            "source": {
+                "type": "git",
+                "url": "https://git.drupalcode.org/project/scheduler.git",
+                "reference": "2.0.1"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://ftp.drupal.org/files/projects/scheduler-2.0.1.zip",
+                "reference": "2.0.1",
+                "shasum": "d0666b4278b3e54f5c85c28298a35f492e0b715a"
+            },
+            "require": {
+                "drupal/core": "^8 || ^9 || ^10"
+            },
+            "require-dev": {
+                "drupal/commerce": "^2.0",
+                "drupal/devel_generate": ">=4",
+                "drupal/rules": "^3",
+                "drush/drush": ">=9"
+            },
+            "type": "drupal-module",
+            "extra": {
+                "drupal": {
+                    "version": "2.0.1",
+                    "datestamp": "1689337325",
+                    "security-coverage": {
+                        "status": "covered",
+                        "message": "Covered by Drupal's security advisory policy"
+                    }
+                },
+                "drush": {
+                    "services": {
+                        "drush.services.yml": "^9 || ^10"
+                    }
+                }
+            },
+            "notification-url": "https://packages.drupal.org/8/downloads",
+            "license": [
+                "GPL-2.0-or-later"
+            ],
+            "authors": [
+                {
+                    "name": "Eric Schaefer (Eric Schaefer)",
+                    "homepage": "https://www.drupal.org/u/eric-schaefer",
+                    "role": "Maintainer"
+                },
+                {
+                    "name": "Jonathan Smith (jonathan1055)",
+                    "homepage": "https://www.drupal.org/u/jonathan1055",
+                    "role": "Maintainer"
+                },
+                {
+                    "name": "Pieter Frenssen (pfrenssen)",
+                    "homepage": "https://www.drupal.org/u/pfrenssen",
+                    "role": "Maintainer"
+                },
+                {
+                    "name": "Rick Manelius (rickmanelius)",
+                    "homepage": "https://www.drupal.org/u/rickmanelius",
+                    "role": "Maintainer"
+                }
+            ],
+            "description": "Automatically publish and unpublish content at specified dates and times.",
+            "homepage": "https://drupal.org/project/scheduler",
+            "support": {
+                "source": "https://git.drupalcode.org/project/scheduler",
+                "issues": "https://www.drupal.org/project/issues/scheduler"
             }
         },
         {
@@ -4833,6 +5194,99 @@
                 "source": "https://git.drupalcode.org/project/search_api",
                 "issues": "https://www.drupal.org/project/issues/search_api",
                 "irc": "irc://irc.freenode.org/drupal-search-api"
+            }
+        },
+        {
+            "name": "drupal/selective_better_exposed_filters",
+            "version": "3.0.2",
+            "source": {
+                "type": "git",
+                "url": "https://git.drupalcode.org/project/selective_better_exposed_filters.git",
+                "reference": "3.0.2"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://ftp.drupal.org/files/projects/selective_better_exposed_filters-3.0.2.zip",
+                "reference": "3.0.2",
+                "shasum": "5d2b2236052410c13820c7730959c0530a3bb496"
+            },
+            "require": {
+                "drupal/better_exposed_filters": "^4.0 || ^5.0 || ^6.0",
+                "drupal/core": "^8 || ^9 || ^10"
+            },
+            "type": "drupal-module",
+            "extra": {
+                "drupal": {
+                    "version": "3.0.2",
+                    "datestamp": "1705262876",
+                    "security-coverage": {
+                        "status": "covered",
+                        "message": "Covered by Drupal's security advisory policy"
+                    }
+                }
+            },
+            "notification-url": "https://packages.drupal.org/8/downloads",
+            "license": [
+                "GPL-2.0+"
+            ],
+            "authors": [
+                {
+                    "name": "stomusic",
+                    "homepage": "https://www.drupal.org/user/3405436"
+                }
+            ],
+            "description": "Provide extra option for better exposed filters to show only used terms in filter.",
+            "homepage": "https://www.drupal.org/project/selective_better_exposed_filters",
+            "keywords": [
+                "Drupal"
+            ],
+            "support": {
+                "source": "http://cgit.drupalcode.org/selective_better_exposed_filters",
+                "issues": "https://www.drupal.org/project/issues/selective_better_exposed_filters"
+            }
+        },
+        {
+            "name": "drupal/simple_menu_permissions",
+            "version": "2.0.0",
+            "source": {
+                "type": "git",
+                "url": "https://git.drupalcode.org/project/simple_menu_permissions.git",
+                "reference": "2.0.0"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://ftp.drupal.org/files/projects/simple_menu_permissions-2.0.0.zip",
+                "reference": "2.0.0",
+                "shasum": "75796f4cd15a4661c146904796c738de8b4c5918"
+            },
+            "require": {
+                "drupal/core": "^8 || ^9 || ^10"
+            },
+            "type": "drupal-module",
+            "extra": {
+                "drupal": {
+                    "version": "2.0.0",
+                    "datestamp": "1675522195",
+                    "security-coverage": {
+                        "status": "covered",
+                        "message": "Covered by Drupal's security advisory policy"
+                    }
+                }
+            },
+            "notification-url": "https://packages.drupal.org/8/downloads",
+            "license": [
+                "GPL-2.0-or-later"
+            ],
+            "authors": [
+                {
+                    "name": "Ewout Goosmann",
+                    "homepage": "https://www.drupal.org/user/3138239"
+                }
+            ],
+            "description": "Defines permissions for each menu. Such as the edit and delete permission. Also defines a permission to create new menus.",
+            "homepage": "https://www.drupal.org/project/simple_menu_permissions",
+            "support": {
+                "source": "https://git.drupalcode.org/project/simple_menu_permissions"
             }
         },
         {
@@ -7262,6 +7716,44 @@
                 "source": "https://github.com/phpstan/phpstan-deprecation-rules/tree/1.1.4"
             },
             "time": "2023-08-05T09:02:04+00:00"
+        },
+        {
+            "name": "politsin/jquery-ui-touch-punch",
+            "version": "1.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/politsin/jquery-ui-touch-punch.git",
+                "reference": "2fe375e05821e267f0f3c0e063197f5c406896dd"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/politsin/jquery-ui-touch-punch/zipball/2fe375e05821e267f0f3c0e063197f5c406896dd",
+                "reference": "2fe375e05821e267f0f3c0e063197f5c406896dd",
+                "shasum": ""
+            },
+            "type": "drupal-library",
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Dave Furfero",
+                    "email": "furf@furf.com"
+                }
+            ],
+            "description": "Extension to jQuery UI for mobile touch event support.",
+            "homepage": "http://touchpunch.furf.com/",
+            "keywords": [
+                "gestures",
+                "mobile",
+                "touch"
+            ],
+            "support": {
+                "issues": "https://github.com/politsin/jquery-ui-touch-punch/issues",
+                "source": "https://github.com/politsin/jquery-ui-touch-punch/tree/1.0"
+            },
+            "time": "2020-12-15T10:26:18+00:00"
         },
         {
             "name": "psr/cache",
@@ -15378,6 +15870,7 @@
         "drupal/default_content": 15,
         "drupal/gin": 5,
         "drupal/gin_toolbar": 5,
+        "drupal/multivalue_form_element": 10,
         "drupal/openapi_rest": 5,
         "drupal/potion": 20,
         "drupal/recurring_events": 5

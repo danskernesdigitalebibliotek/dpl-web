@@ -5,7 +5,7 @@ _meta:
   bundle: default
   default_langcode: en
   depends:
-    cb0b18d2-eb87-4dcd-ae98-efd0e657473a: eventinstance
+    35cc4d57-5254-4bfd-aa7a-4590eba63ea3: eventinstance
     f457c4c2-dc28-45cd-9b6e-fda4248d9d45: taxonomy_term
     618e176a-a45a-4c36-a197-664230aa0a34: media
     dc33677f-8894-4717-b34b-d985f6ad875f: media
@@ -105,10 +105,10 @@ default:
       tag: link
       attributes:
         rel: canonical
-        href: 'http://dapple-cms.docker/user/login'
+        href: '/user/login'
   event_instances:
     -
-      entity: cb0b18d2-eb87-4dcd-ae98-efd0e657473a
+      entity: 35cc4d57-5254-4bfd-aa7a-4590eba63ea3
   field_categories:
     -
       entity: f457c4c2-dc28-45cd-9b6e-fda4248d9d45
@@ -286,6 +286,9 @@ default:
       entity: ec76c707-898d-4dfd-8cd2-e258aef1d6dd
     -
       entity: 0502836d-0f7b-4b21-9371-c40ae9e01495
+  field_teaser_image:
+    -
+      entity: 618e176a-a45a-4c36-a197-664230aa0a34
   field_ticket_categories:
     -
       entity:

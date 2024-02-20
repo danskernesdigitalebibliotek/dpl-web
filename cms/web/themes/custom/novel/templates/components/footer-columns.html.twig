@@ -1,0 +1,10 @@
+<ul class="footer-columns">
+    {% for item in footer %}
+        <li class="footer-column">
+            <h3 class="footer__title">{{ item.name }}</h3>
+            <div class="footer__content">
+                {{ item.content.value|raw }}
+            </div>
+        </li>
+    {% endfor %}
+</ul>
