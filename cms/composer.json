@@ -81,6 +81,7 @@
         "deoliveiralucas/array-keys-case-transform": "^1.1",
         "drupal/address": "^1.0",
         "drupal/admin_toolbar": "^3.4",
+        "drupal/administerusersbyrole": "^3.4",
         "drupal/config_ignore": "^2.4",
         "drupal/core-composer-scaffold": "~10.1.7",
         "drupal/core-project-message": "~10.1.7",

@@ -14,6 +14,7 @@ dependencies:
     - taxonomy.vocabulary.categories
     - taxonomy.vocabulary.tags
   module:
+    - administerusersbyrole
     - dpl_admin
     - dpl_footer
     - dpl_instant_loan
@@ -49,6 +50,7 @@ permissions:
   - 'access taxonomy overview'
   - 'access toolbar'
   - 'access user profiles'
+  - 'access users overview'
   - 'add eventseries entity'
   - 'add new links to admin menu'
   - 'add new links to main menu'
@@ -61,6 +63,7 @@ permissions:
   - 'administer site configuration'
   - 'administer url proxy configuration'
   - 'bypass node access'
+  - 'cancel users by role'
   - 'change own username'
   - 'clone eventinstance entity'
   - 'clone eventseries entity'
@@ -74,6 +77,7 @@ permissions:
   - 'create page content'
   - 'create terms in categories'
   - 'create terms in tags'
+  - 'create users'
   - 'create video media'
   - 'delete all revisions'
   - 'delete any article content'
@@ -124,6 +128,7 @@ permissions:
   - 'edit own video media'
   - 'edit terms in categories'
   - 'edit terms in tags'
+  - 'edit users by role'
   - 'link to any page'
   - 'revert all eventinstance revisions'
   - 'revert all eventseries revisions'
@@ -131,6 +136,7 @@ permissions:
   - 'revert article revisions'
   - 'revert campaign revisions'
   - 'revert page revisions'
+  - 'role-assign users by role'
   - 'schedule publishing of eventseries'
   - 'schedule publishing of nodes'
   - 'select account cancellation method'
@@ -160,3 +166,4 @@ permissions:
   - 'view unpublished eventseries entity'
   - 'view unpublished paragraphs'
   - 'view user email addresses'
+  - 'view users by role'
