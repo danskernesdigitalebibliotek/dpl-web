@@ -16,7 +16,7 @@ class UnregisteredUserTokensProvider extends UserTokensProvider implements UserT
    *   User session store factory.
    */
   public function __construct(PrivateTempStoreFactory $temp_store_factory) {
-    $this->tempStore = $temp_store_factory->get(__CLASS__);
+    $this->tempStore = $temp_store_factory->get(static::class);
   }
 
 }
