@@ -221,15 +221,12 @@ function _dpl_login_is_user_associated_with_agency(array $context) : bool {
  *   Adgangsplatformen token.
  */
 function _dpl_login_user_is_registered(AccessToken $token): bool {
-  $messenger = \Drupal::messenger();
-
   try {
     $patron = _dpl_login_get_patron($token);
   }
   catch (InvalidArgumentException $e) {
     $logger = \Drupal::logger('dpl_login');
     Error::logException($logger, $e, 'Error fetching patron info from FBS', [], LogLevel::CRITICAL);
-    $messenger->addError(t('Something went wrong logging in. Please try again.', [], ['context' => 'dpl_login']));
     return FALSE;
   }
 
