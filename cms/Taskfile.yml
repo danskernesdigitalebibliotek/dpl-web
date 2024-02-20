@@ -218,6 +218,11 @@ tasks:
       - task dev:cli -- drush user:create patron --password="test"
       - task dev:cli -- drush user:role:add 'patron' patron
 
+  dev:import-profile-translations:
+    desc: Import our custom profile translations. This is done automatically on deploy.
+    cmds:
+      - task dev:cli -- drush locale-import da profiles/dpl_cms/translations/da.po
+
   dev:restore:database:
     desc: 'Restore database from db dump file. Only one sql should be present the "{{ .DIR_RESTORE_DATABASE }}" directory.'
     cmds:
