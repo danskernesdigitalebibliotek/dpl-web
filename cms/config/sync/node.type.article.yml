@@ -23,9 +23,8 @@ third_party_settings:
   entity_clone_template:
     entity_clone_template_active: 1
   menu_ui:
-    available_menus:
-      - main
-    parent: 'main:'
+    available_menus: {  }
+    parent: ''
 name: Article
 type: article
 description: 'Use articles for news-worthy content, that does not get updated regularly.'
