@@ -312,6 +312,39 @@ function dpl_event_preprocess_eventinstance__list_teaser(array &$variables): voi
 }
 
 /**
+ * Implements hook_preprocess_eventinstance__stacked_event().
+ *
+ * Preprocesses variables for the 'list_teaser' view mode of eventinstance.
+ * - Generating the URL for the full view of the event instance.
+ * - Processing start and end dates from the 'date' field and formatting them
+ *   in the site's timezone.
+ */
+function dpl_event_preprocess_eventinstance__stacked_event(array &$variables): void {
+  $eventInstance = $variables['eventinstance'];
+  /** @var \Drupal\Core\Datetime\DateFormatterInterface $date_formatter */
+  $date_formatter = \Drupal::service('date.formatter');
+
+  // Extract the event url.
+  $variables['eventinstance_url'] = Url::fromRoute('entity.eventinstance.canonical', ['eventinstance' => $eventInstance->id()])->toString();
+
+  // Extract start_time, end_time and datetime attributes.
+  if (!$eventInstance->get('date')->isEmpty()) {
+    $date_field = $eventInstance->get('date')->first();
+
+    $start_time = $date_field->start_date;
+    $end_time = $date_field->end_date;
+
+    if ($start_time instanceof DrupalDateTime) {
+      $variables['start_time'] = $date_formatter->format($start_time->getTimestamp(), 'custom', 'H:i');
+      $variables['datetime_attribute'] = $date_formatter->format($start_time->getTimestamp(), DATE_ATOM);
+    }
+    if ($end_time instanceof DrupalDateTime) {
+      $variables['end_time'] = $date_formatter->format($end_time->getTimestamp(), 'custom', 'H:i');
+    }
+  }
+}
+
+/**
  * Implements hook_form_FORM_ID_alter().
  *
  * Altering the form for EDITING (not creating) an event series.

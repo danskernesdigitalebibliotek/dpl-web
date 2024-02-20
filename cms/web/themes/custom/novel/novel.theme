@@ -7,6 +7,7 @@
 
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\StringTranslation\TranslatableMarkup;
+use Drupal\recurring_events\Entity\EventInstance;
 use Spatie\Color\Hex;
 use Spatie\Color\Hsl;
 use function Safe\file_get_contents;
@@ -274,5 +275,32 @@ function novel_theme_suggestions_select_alter(array &$suggestions, array $variab
   }
   else {
     $suggestions[] = 'select__single';
+  }
+}
+
+/**
+ *
+ */
+function novel_preprocess_views_view_unformatted(&$variables) {
+  $rows = &$variables['rows'];
+
+  foreach ($rows as $index => &$row) {
+    if (isset($row['content']['#eventinstance'])) {
+      /** @var \Drupal\recurring_events\Entity\EventInstance $eventInstance */
+      $eventInstance = $row['content']['#eventinstance'];
+
+      if ($eventInstance instanceof EventInstance) {
+        $eventSeriesId = $eventInstance->getEventSeries()->id();
+
+        // Check if not the first row and if event_series_id matches the previous row.
+        $isStacked = $index > 0 && $eventSeriesId == $rows[$index - 1]['content']['#eventinstance']->getEventSeries()->id();
+
+        $row['isStacked'] = $isStacked;
+
+        if ($isStacked) {
+          $row['content']['#view_mode'] = 'stacked_event';
+        }
+      }
+    }
   }
 }
