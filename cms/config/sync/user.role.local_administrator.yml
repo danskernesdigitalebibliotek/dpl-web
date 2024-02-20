@@ -33,6 +33,7 @@ dependencies:
     - simple_menu_permissions
     - system
     - taxonomy
+    - theme_permission
     - toolbar
     - view_unpublished
 id: local_administrator
@@ -61,6 +62,8 @@ permissions:
   - 'administer orphaned events entities'
   - 'administer paragraphs categories'
   - 'administer site configuration'
+  - 'administer themes'
+  - 'administer themes novel'
   - 'administer url proxy configuration'
   - 'bypass node access'
   - 'cancel users by role'
@@ -128,6 +131,7 @@ permissions:
   - 'edit own video media'
   - 'edit terms in categories'
   - 'edit terms in tags'
+  - 'edit themes novel'
   - 'edit users by role'
   - 'link to any page'
   - 'revert all eventinstance revisions'
