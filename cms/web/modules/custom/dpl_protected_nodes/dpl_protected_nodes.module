@@ -1,0 +1,112 @@
+<?php
+
+/**
+ * @file
+ * Primary module hooks for DPL Protected Nodes module.
+ */
+
+use Drupal\Core\Entity\EntityFormInterface;
+use Drupal\Core\Form\FormStateInterface;
+use function Safe\preg_match;
+
+/**
+ * Implements hook_form_FORM_ID_alter().
+ *
+ * @throws \Safe\Exceptions\PcreException
+ */
+function dpl_protected_nodes_form_node_confirm_form_alter(array &$form, FormStateInterface $form_state): void {
+  if ($form_state->getFormObject() instanceof EntityFormInterface) {
+    /** @var \Drupal\node\NodeInterface $node */
+    $node = $form_state->getFormObject()->getEntity();
+    $node = [$node->id() => $node->getTitle()];
+
+    $form = dpl_protected_nodes_is_nodes_protected($node, $form);
+  }
+}
+
+/**
+ * Implements hook_form_FORM_ID_alter().
+ */
+function dpl_protected_nodes_form_node_delete_multiple_confirm_form_alter(array &$form, FormStateInterface $form_state): void {
+  $items = $form['entities']['#items'];
+  $nodes = [];
+
+  foreach ($items as $key => $value) {
+    $key = explode(':', $key, 2);
+    $nodes[$key[0]] = $value;
+  }
+
+  $form = dpl_protected_nodes_is_nodes_protected($nodes, $form);
+}
+
+/**
+ * Checks if the node_id is protected.
+ *
+ * @param mixed[] $nodes
+ *   The node id to check.
+ * @param mixed[] $form
+ *   The form array to alter.
+ *
+ * @return mixed[]
+ *   The altered form array.
+ */
+function dpl_protected_nodes_is_nodes_protected(array $nodes, array $form): array {
+  $protected_nodes = \Drupal::moduleHandler()->invokeAll('dpl_protected_nodes_get_protected_nodes');
+
+  foreach ($protected_nodes as $key => $value) {
+    if (array_key_exists($value['node_id'], $nodes)) {
+
+      $form['actions']['submit']['#disabled'] = TRUE;
+
+      $form['protected_node'][$value['node_id']]['description'] = [
+        '#markup' => t('<br><br>"@title" is being used in configuration. Before you can delete it, you need to remove it from the following configuration fields:', [
+          '@title' => $nodes[$value['node_id']],
+        ]),
+      ];
+
+      $form['protected_node'][$value['node_id']]['configuration'][$key] = [
+        '#markup' => t('<br><a href=":url">@title</a>', [
+          '@title' => $value['config_title'],
+          ':url' => $value['config_path'],
+        ]),
+      ];
+    }
+  }
+
+  return $form;
+}
+
+/**
+ * Find elements of type linkit.
+ *
+ * @param array<mixed> $form
+ *   An associative array containing the structure of the form.
+ * @param array<mixed> $elements
+ *   An associative array containing the structure of the form.
+ *
+ * @return array<mixed>
+ *   An array containing linkit form element information.
+ *
+ * @throws \Safe\Exceptions\PcreException
+ */
+function dpl_protected_nodes_find_linkit_elements(array $form, string $config_path, array &$elements = []): array {
+  // Pattern to match node url e.g. /node/1.
+  $pattern = '/^\/node\/\d+$/';
+
+  foreach ($form as $key => $value) {
+    if (is_array($value)) {
+      if (isset($value['#type']) && $value['#type'] === 'linkit' && preg_match($pattern, $value['#default_value'])) {
+        $elements[$key] = [
+          'node_id' => basename($value['#default_value']),
+          'config_title' => $value['#title'],
+          'config_path' => $config_path,
+        ];
+      }
+      else {
+        dpl_protected_nodes_find_linkit_elements($value, $config_path, $elements);
+      }
+    }
+  }
+
+  return $elements;
+}
