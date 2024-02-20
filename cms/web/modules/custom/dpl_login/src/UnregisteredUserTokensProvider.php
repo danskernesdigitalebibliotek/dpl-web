@@ -2,20 +2,12 @@
 
 namespace Drupal\dpl_login;
 
-use Drupal\Core\TempStore\PrivateTempStore;
 use Drupal\Core\TempStore\PrivateTempStoreFactory;
 
 /**
  * Handles unregistered user token storage.
  */
 class UnregisteredUserTokensProvider extends UserTokensProvider implements UserTokensProviderInterface {
-
-  /**
-   * User session storage.
-   *
-   * @var \Drupal\Core\TempStore\PrivateTempStore
-   */
-  protected PrivateTempStore $tempStore;
 
   /**
    * Constructor of UnregisteredUserTokensProvider.
