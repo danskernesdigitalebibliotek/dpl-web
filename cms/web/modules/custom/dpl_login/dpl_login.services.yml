@@ -10,6 +10,9 @@ services:
   dpl_login.user_tokens:
     class: Drupal\dpl_login\UserTokensProvider
     arguments: ["@tempstore.private"]
+  dpl_login.unregistered_user_tokens:
+    class: Drupal\dpl_login\UnregisteredUserTokensProvider
+    arguments: ["@tempstore.private"]
   dpl_login.authentication.user_token:
     class: Drupal\dpl_login\UserTokenAuthProvider
     arguments:
