@@ -1032,7 +1032,7 @@ msgstr "Gem"
 #: 
 msgctxt "Library Agency Configuration"
 msgid "Reservations"
-msgstr "SMS notifikationer"
+msgstr "Afhentningsfilialer"
 
 #: 
 msgctxt "DPL Config Import"
