@@ -6,6 +6,7 @@ use Drupal\Core\Controller\ControllerBase;
 use Drupal\Core\Routing\TrustedRedirectResponse;
 use Drupal\Core\StringTranslation\StringTranslationTrait;
 use Drupal\Core\Url;
+use Drupal\dpl_login\AccessToken;
 use Drupal\dpl_login\Adgangsplatformen\Config;
 use Drupal\dpl_login\Exception\MissingConfigurationException;
 use Drupal\dpl_login\UserTokensProviderInterface;
@@ -23,65 +24,15 @@ class DplLoginController extends ControllerBase {
   use StringTranslationTrait;
 
   /**
-   * The User token provider.
-   *
-   * @var \Drupal\dpl_login\UserTokensProviderInterface
-   */
-  protected UserTokensProviderInterface $userTokensProvider;
-  /**
-   * The Unregistered User token provider.
-   *
-   * @var \Drupal\dpl_login\UserTokensProviderInterface
-   */
-  protected UserTokensProviderInterface $unregisteredUserTokensProvider;
-  /**
-   * The Messenger service.
-   *
-   * @var \Drupal\Core\Messenger\MessengerInterface
-   */
-  protected $messenger;
-  /**
-   * Configuration.
-   *
-   * @var \Drupal\dpl_login\Adgangsplatformen\Config
-   */
-  protected $config;
-  /**
-   * Openid Connect Client.
-   *
-   * @var \Drupal\openid_connect\Plugin\OpenIDConnectClientInterface
-   */
-  protected $client;
-  /**
-   * The OpenID Connect claims.
-   *
-   * @var \Drupal\openid_connect\OpenIDConnectClaims
-   */
-  protected $claims;
-
-  /**
-   * DdplReactController constructor.
-   *
-   * @param \Drupal\dpl_login\UserTokensProviderInterface $userTokensProvider
-   *   The User token provider.
-   * @param \Drupal\dpl_login\Adgangsplatformen\Config $config
-   *   Adgangsplatformen Config.
-   * @param \Drupal\openid_connect\Plugin\OpenIDConnectClientInterface $client
-   *   Adgangsplatformen Client.
-   * @param \Drupal\openid_connect\OpenIDConnectClaims $claims
-   *   The OpenID Connect claims.
+   * {@inheritdoc}
    */
   public function __construct(
-    UserTokensProviderInterface $userTokensProvider,
-    Config $config,
-    OpenIDConnectClientInterface $client,
-    OpenIDConnectClaims $claims
-  ) {
-    $this->userTokensProvider = $userTokensProvider;
-    $this->config = $config;
-    $this->client = $client;
-    $this->claims = $claims;
-  }
+    protected UserTokensProviderInterface $userTokensProvider,
+    protected UserTokensProviderInterface $unregisteredUserTokensProvider,
+    protected Config $config,
+    protected OpenIDConnectClientInterface $client,
+    protected OpenIDConnectClaims $claims
+  ) {}
 
   /**
    * {@inheritdoc}
@@ -94,6 +45,7 @@ class DplLoginController extends ControllerBase {
   public static function create(ContainerInterface $container) {
     return new static(
       $container->get('dpl_login.user_tokens'),
+      $container->get('dpl_login.unregistered_user_tokens'),
       $container->get('dpl_login.adgangsplatformen.config'),
       $container->get('dpl_login.adgangsplatformen.client'),
       $container->get('openid_connect.claims')
@@ -114,7 +66,7 @@ class DplLoginController extends ControllerBase {
       throw new MissingConfigurationException('Adgangsplatformen plugin config variable logout_endpoint is missing');
     }
 
-    $access_token = $this->userTokensProvider->getAccessToken();
+    $access_token = $this->getAccessToken();
 
     // Log out user in Drupal.
     // We do this regardless whether it is possible to logout remotely or not.
@@ -164,6 +116,22 @@ class DplLoginController extends ControllerBase {
 
     $scopes = $this->claims->getScopes($this->client);
     return $this->client->authorize($scopes);
+  }
+
+  /**
+   * Get access token. If user is not registered, get unregistered user token.
+   *
+   * @todo Should be moved to separate service that can be used througut the application.
+   */
+  protected function getAccessToken(): ?AccessToken {
+    if ($access_token = $this->unregisteredUserTokensProvider->getAccessToken()) {
+      return $access_token;
+    }
+    if ($access_token = $this->userTokensProvider->getAccessToken()) {
+      return $access_token;
+    }
+
+    return NULL;
   }
 
 }
