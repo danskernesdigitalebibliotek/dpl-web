@@ -8,7 +8,7 @@ use Drupal\Core\StringTranslation\StringTranslationTrait;
 use Drupal\Core\Url;
 use Drupal\dpl_login\Adgangsplatformen\Config;
 use Drupal\dpl_login\Exception\MissingConfigurationException;
-use Drupal\dpl_login\UserTokensProvider;
+use Drupal\dpl_login\UserTokensProviderInterface;
 use Drupal\openid_connect\OpenIDConnectClaims;
 use Drupal\openid_connect\Plugin\OpenIDConnectClientInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
@@ -22,14 +22,18 @@ use Symfony\Component\HttpFoundation\Response;
 class DplLoginController extends ControllerBase {
   use StringTranslationTrait;
 
-  const LOGGER_KEY = 'dpl_login';
-
   /**
    * The User token provider.
    *
-   * @var \Drupal\dpl_login\UserTokensProvider
+   * @var \Drupal\dpl_login\UserTokensProviderInterface
    */
-  protected userTokensProvider $userTokensProvider;
+  protected UserTokensProviderInterface $userTokensProvider;
+  /**
+   * The Unregistered User token provider.
+   *
+   * @var \Drupal\dpl_login\UserTokensProviderInterface
+   */
+  protected UserTokensProviderInterface $unregisteredUserTokensProvider;
   /**
    * The Messenger service.
    *
@@ -58,7 +62,7 @@ class DplLoginController extends ControllerBase {
   /**
    * DdplReactController constructor.
    *
-   * @param \Drupal\dpl_login\UserTokensProvider $userTokensProvider
+   * @param \Drupal\dpl_login\UserTokensProviderInterface $userTokensProvider
    *   The User token provider.
    * @param \Drupal\dpl_login\Adgangsplatformen\Config $config
    *   Adgangsplatformen Config.
@@ -68,10 +72,10 @@ class DplLoginController extends ControllerBase {
    *   The OpenID Connect claims.
    */
   public function __construct(
-    UserTokensProvider $userTokensProvider,
+    UserTokensProviderInterface $userTokensProvider,
     Config $config,
     OpenIDConnectClientInterface $client,
-    OpenIDConnectClaims $claims,
+    OpenIDConnectClaims $claims
   ) {
     $this->userTokensProvider = $userTokensProvider;
     $this->config = $config;
@@ -92,7 +96,7 @@ class DplLoginController extends ControllerBase {
       $container->get('dpl_login.user_tokens'),
       $container->get('dpl_login.adgangsplatformen.config'),
       $container->get('dpl_login.adgangsplatformen.client'),
-      $container->get('openid_connect.claims'),
+      $container->get('openid_connect.claims')
     );
   }
 
