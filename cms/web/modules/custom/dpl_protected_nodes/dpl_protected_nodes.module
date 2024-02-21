@@ -95,7 +95,7 @@ function dpl_protected_nodes_find_linkit_elements(array $form, string $config_pa
 
   foreach ($form as $key => $value) {
     if (is_array($value)) {
-      if (isset($value['#type']) && $value['#type'] === 'linkit' && preg_match($pattern, $value['#default_value'])) {
+      if (isset($value['#type']) && isset($value['#default_value']) && $value['#type'] === 'linkit' && preg_match($pattern, $value['#default_value'])) {
         $elements[$key] = [
           'node_id' => basename($value['#default_value']),
           'config_title' => $value['#title'],
