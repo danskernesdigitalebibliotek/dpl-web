@@ -177,3 +177,55 @@ function dpl_paragraphs_preprocess_paragraph__recommendation(array &$variables):
     }
   }
 }
+
+/**
+ * Prepares the React app data for the Material Grid paragraph.
+ *
+ * Data from the paragraph fields used to configure the Material Grid,
+ * includes the grid's title, a CQL search string for material filtering,
+ * and how many materials should be displayed.
+ *
+ * @param array &$variables
+ *   Variables for the paragraph template, including the 'paragraph' entity.
+ *
+ * @see \Drupal\paragraphs\Entity\Paragraph
+ * @see dpl_react_apps/src/Controller/DplReactAppsController.php
+ */
+function dpl_paragraphs_preprocess_paragraph__material_grid_automatic(array &$variables): void {
+
+  $paragraph = $variables['paragraph'] ?? NULL;
+
+  if (!($paragraph instanceof ParagraphInterface)) {
+    return;
+  }
+
+  if (!$paragraph->hasField('field_amount_of_materials') || !$paragraph->hasField('field_material_grid_title') || !$paragraph->hasField('field_cql_search') || !$paragraph->hasField('field_material_grid_button_text')) {
+    return;
+  }
+
+  // Extract field values.
+  $material_grid_title = $paragraph->get('field_material_grid_title')->getString();
+  $cql = $paragraph->get('field_cql_search')->getString();
+  $selected_amount_of_materials_for_display = (int) $paragraph->get('field_amount_of_materials')->getString();
+  $button_text = $paragraph->get('field_material_grid_button_text')->getString();
+
+  // Build configurations for blacklisted search branches and all branches.
+  $branchSettings = \Drupal::service('dpl_library_agency.branch_settings');
+  $branchRepository = \Drupal::service('dpl_library_agency.branch.repository');
+  $blacklistedSearchBranchesConfig = DplReactAppsController::buildBranchesListProp($branchSettings->getExcludedSearchBranches());
+  $branchesConfig = DplReactAppsController::buildBranchesJsonProp($branchRepository->getBranches());
+
+  // Prepare the React app variables.
+  $variables['react_app_material_grid_automatic'] = [
+    '#theme' => 'dpl_react_app',
+    '#name' => 'material-grid-automatic',
+    '#data' => [
+      'title' => $material_grid_title,
+      'cql' => $cql,
+      'selected-amount-of-materials-for-display' => $selected_amount_of_materials_for_display,
+      'button-text' => $button_text,
+      'blacklisted-search-branches-config' => $blacklistedSearchBranchesConfig,
+      'branches-config' => $branchesConfig,
+    ] + DplReactAppsController::externalApiBaseUrls(),
+  ];
+}
