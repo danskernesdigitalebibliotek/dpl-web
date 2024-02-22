@@ -1,0 +1,7 @@
+field.value.dpl_fbi_cql_search:
+  type: mapping
+  label: Default value
+  mapping:
+    value:
+      type: label
+      label: Value
