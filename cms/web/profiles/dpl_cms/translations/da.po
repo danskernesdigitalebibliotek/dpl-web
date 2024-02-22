@@ -452,7 +452,7 @@ msgstr "Af"
 #: 
 msgctxt "Work Page"
 msgid "Skip the queue - The material is available in another edition - @title @authorAndYear - reservations: @reservations"
-msgstr "Spring køen over - bogen er hjemme i en anden udgave @authorAndYear - reserveringer: @reservations"
+msgstr "Spring køen over - bogen er hjemme i en anden udgave @editionAndYear - reserveringer: @reservations"
 
 #: 
 msgctxt "Work Page"
