@@ -220,6 +220,12 @@ function dpl_event_preprocess_eventseries(array &$variables): void {
  * Implements hook_preprocess_HOOK() for node templates.
  *
  * Preprocesses variables for node templates.
+ * Preprocesses variables for the 'list_teaser' / 'stacked_event' view mode
+ * of eventinstance.
+ * - Generating the URL for the full view of the event instance.
+ * - Extracting image URL and alt text from the 'event_image' field.
+ * - Processing start and end dates from the 'date' field and formatting them
+ *   in the site's timezone.
  *
  * Includes generating ticket pricing display in 'event_list_teaser' view mode.
  *
@@ -229,7 +235,6 @@ function dpl_event_preprocess_eventseries(array &$variables): void {
  * @throws \Safe\Exceptions\ArrayException
  */
 function dpl_event_preprocess_eventinstance(array &$variables): void {
-
   $eventInstance = $variables['eventinstance'];
 
   if ($eventInstance->hasField('event_ticket_categories')) {
@@ -246,37 +251,6 @@ function dpl_event_preprocess_eventinstance(array &$variables): void {
     $price_formatter = \Drupal::service('dpl_event.price_formatter');
     $variables['ticket_price_display'] = $price_formatter->formatPriceRange($prices);
   }
-}
-
-/**
- * Implements hook_gin_content_form_routes().
- *
- * @return string[] An array of event-related routes which should be managed as
- *   content forms by the Gin theme.
- */
-function dpl_event_gin_content_form_routes() : array {
-  return [
-    'entity.eventseries.add_form',
-    'entity.eventseries.edit_form',
-    // There is no direct add form for instances. They are always created in
-    // relation to series.
-    'entity.eventseries.add_instance_form',
-    'entity.eventinstance.edit_form',
-  ];
-}
-
-/**
- * Implements hook_preprocess_eventinstance__list_teaser().
- *
- * Preprocesses variables for the 'list_teaser' view mode of eventinstance.
- * - Generating the URL for the full view of the event instance.
- * - Extracting image URL and alt text from the 'event_image' field.
- * - Processing start and end dates from the 'date' field and formatting them
- *   in the site's timezone.
- */
-function dpl_event_preprocess_eventinstance__list_teaser(array &$variables): void {
-  $eventInstance = $variables['eventinstance'];
-  /** @var \Drupal\Core\Datetime\DateFormatterInterface $date_formatter */
   $date_formatter = \Drupal::service('date.formatter');
 
   // Extract the event url.
@@ -312,36 +286,20 @@ function dpl_event_preprocess_eventinstance__list_teaser(array &$variables): voi
 }
 
 /**
- * Implements hook_preprocess_eventinstance__stacked_event().
+ * Implements hook_gin_content_form_routes().
  *
- * Preprocesses variables for the 'list_teaser' view mode of eventinstance.
- * - Generating the URL for the full view of the event instance.
- * - Processing start and end dates from the 'date' field and formatting them
- *   in the site's timezone.
+ * @return string[] An array of event-related routes which should be managed as
+ *   content forms by the Gin theme.
  */
-function dpl_event_preprocess_eventinstance__stacked_event(array &$variables): void {
-  $eventInstance = $variables['eventinstance'];
-  /** @var \Drupal\Core\Datetime\DateFormatterInterface $date_formatter */
-  $date_formatter = \Drupal::service('date.formatter');
-
-  // Extract the event url.
-  $variables['eventinstance_url'] = Url::fromRoute('entity.eventinstance.canonical', ['eventinstance' => $eventInstance->id()])->toString();
-
-  // Extract start_time, end_time and datetime attributes.
-  if (!$eventInstance->get('date')->isEmpty()) {
-    $date_field = $eventInstance->get('date')->first();
-
-    $start_time = $date_field->start_date;
-    $end_time = $date_field->end_date;
-
-    if ($start_time instanceof DrupalDateTime) {
-      $variables['start_time'] = $date_formatter->format($start_time->getTimestamp(), 'custom', 'H:i');
-      $variables['datetime_attribute'] = $date_formatter->format($start_time->getTimestamp(), DATE_ATOM);
-    }
-    if ($end_time instanceof DrupalDateTime) {
-      $variables['end_time'] = $date_formatter->format($end_time->getTimestamp(), 'custom', 'H:i');
-    }
-  }
+function dpl_event_gin_content_form_routes() : array {
+  return [
+    'entity.eventseries.add_form',
+    'entity.eventseries.edit_form',
+    // There is no direct add form for instances. They are always created in
+    // relation to series.
+    'entity.eventseries.add_instance_form',
+    'entity.eventinstance.edit_form',
+  ];
 }
 
 /**
