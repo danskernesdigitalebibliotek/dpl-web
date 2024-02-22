@@ -1,0 +1,45 @@
+uuid: fa6c2e1c-a0d2-4496-816b-4e4a9d473152
+langcode: en
+status: true
+dependencies:
+  module:
+    - options
+    - paragraphs
+id: paragraph.field_amount_of_materials
+field_name: field_amount_of_materials
+entity_type: paragraph
+type: list_integer
+settings:
+  allowed_values:
+    -
+      value: 4
+      label: '4'
+    -
+      value: 8
+      label: '8'
+    -
+      value: 12
+      label: '12'
+    -
+      value: 16
+      label: '16'
+    -
+      value: 20
+      label: '20'
+    -
+      value: 24
+      label: '24'
+    -
+      value: 28
+      label: '28'
+    -
+      value: 32
+      label: '32'
+  allowed_values_function: ''
+module: options
+locked: false
+cardinality: 1
+translatable: true
+indexes: {  }
+persist_with_no_fields: false
+custom_storage: false
