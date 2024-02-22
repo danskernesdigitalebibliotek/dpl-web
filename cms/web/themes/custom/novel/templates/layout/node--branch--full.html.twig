@@ -1,0 +1,28 @@
+<article>
+  {% set description_items = [
+    {
+      label: "Address"|trans,
+      value: content.field_address.0 ? content.field_address : null
+    },
+    {
+      label: "Email"|trans,
+      value: content.field_email.0 ? content.field_email : null
+    },
+    {
+      label: "Phone"|trans,
+      value: content.field_phone.0 ? content.field_phone : null
+    },
+
+  ] %}
+
+  {% include '@novel/components/hero.html.twig'
+    with {
+    attributes: create_attribute(),
+    title: label,
+    media: content.field_main_media.0,
+    description_items: description_items,
+    baseIconPath: baseIconPath
+  } only %}
+
+    {{ content.field_paragraphs }}
+</article>
