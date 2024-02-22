@@ -233,6 +233,9 @@
             "drupal/multivalue_form_element": {
                 "3199172: multivalue_form_element-3199172": "https://www.drupal.org/files/issues/2023-12-05/nested_elements-3199172-14.patch"
             },
+            "drupal/views_infinite_scroll": {
+                "Add item count and url page parameter": "patches/add-item-count-views_infinite_scroll.patch"
+            },
             "drupal/core": {
                 "Configure core to not check permissions before accepting an updated module": "patches/disable-core-upload-permission-check.diff",
                 "3073554: Add a token for publication status": "https://www.drupal.org/files/issues/2019-08-09/3073554_10.patch",
