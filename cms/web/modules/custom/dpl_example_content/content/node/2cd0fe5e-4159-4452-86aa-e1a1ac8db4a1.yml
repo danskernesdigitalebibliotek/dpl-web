@@ -5,11 +5,18 @@ _meta:
   bundle: article
   default_langcode: da
   depends:
+    92033694-15ac-4d9e-b275-ddfd18e48d9f: taxonomy_term
     aba3cea8-cee5-42c1-a152-e30c2ab135e2: media
     d97a25fd-a6ae-48b9-9a1a-7aec5372688e: media
     eef50571-39dc-461a-96ff-b6b7180ade61: media
     dc33677f-8894-4717-b34b-d985f6ad875f: media
     f0204f0b-1f63-4c76-bb67-e3f7489ee392: media
+    1006441f-bb39-43b5-8c08-1a79344abf8b: taxonomy_term
+    53133c2e-1023-43a9-baf2-64a5081eea0f: taxonomy_term
+    190beb00-d5af-4c9a-be8d-65a646b37bbb: taxonomy_term
+    725e0059-9c5d-4c4e-8e3d-6d8cf2042fa4: taxonomy_term
+    ec76c707-898d-4dfd-8cd2-e258aef1d6dd: taxonomy_term
+    0502836d-0f7b-4b21-9371-c40ae9e01495: taxonomy_term
 default:
   revision_uid:
     -
@@ -41,6 +48,9 @@ default:
       attributes:
         name: title
         content: 'Jesper Stein vinder Læsernes Bogpris for Rampen | DPL CMS'
+  field_categories:
+    -
+      entity: 92033694-15ac-4d9e-b275-ddfd18e48d9f
   field_override_author:
     -
       value: 'Lene Kuhlmann Frandsen '
@@ -339,3 +349,19 @@ default:
   field_subtitle:
     -
       value: 'Jesper Stein har begået en hudløst ærlig og tankevækkende skildring af en skilsmisseramt familie. En selvbiografisk roman, som har ramt læserne  i hjertet.'
+  field_tags:
+    -
+      entity: 1006441f-bb39-43b5-8c08-1a79344abf8b
+    -
+      entity: 53133c2e-1023-43a9-baf2-64a5081eea0f
+    -
+      entity: 190beb00-d5af-4c9a-be8d-65a646b37bbb
+    -
+      entity: 725e0059-9c5d-4c4e-8e3d-6d8cf2042fa4
+    -
+      entity: ec76c707-898d-4dfd-8cd2-e258aef1d6dd
+    -
+      entity: 0502836d-0f7b-4b21-9371-c40ae9e01495
+  field_teaser_image:
+    -
+      entity: aba3cea8-cee5-42c1-a152-e30c2ab135e2

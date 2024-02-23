@@ -1,0 +1,33 @@
+_meta:
+  version: '1.0'
+  entity_type: taxonomy_term
+  uuid: 0fa7245a-3434-4d96-9793-a1848a22d37a
+  bundle: categories
+  default_langcode: da
+default:
+  status:
+    -
+      value: true
+  name:
+    -
+      value: 'Vi anbefaler'
+  weight:
+    -
+      value: 2
+  parent:
+    -
+      target_id: 0
+  revision_translation_affected:
+    -
+      value: true
+  metatag:
+    -
+      tag: meta
+      attributes:
+        name: title
+        content: 'Vi anbefaler | DPL CMS'
+    -
+      tag: link
+      attributes:
+        rel: canonical
+        href: '/taxonomy/term/11'

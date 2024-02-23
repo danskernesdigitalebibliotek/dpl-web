@@ -5,10 +5,12 @@ dependencies:
   config:
     - core.entity_view_mode.node.full
     - field.field.node.article.field_canonical_url
+    - field.field.node.article.field_categories
     - field.field.node.article.field_override_author
     - field.field.node.article.field_paragraphs
     - field.field.node.article.field_show_override_author
     - field.field.node.article.field_subtitle
+    - field.field.node.article.field_tags
     - field.field.node.article.field_teaser_image
     - field.field.node.article.field_teaser_text
     - node.type.article
@@ -20,6 +22,14 @@ targetEntityType: node
 bundle: article
 mode: full
 content:
+  field_categories:
+    type: entity_reference_label
+    label: hidden
+    settings:
+      link: false
+    third_party_settings: {  }
+    weight: 1
+    region: content
   field_paragraphs:
     type: entity_reference_revisions_entity_view
     label: hidden
@@ -27,7 +37,7 @@ content:
       view_mode: default
       link: ''
     third_party_settings: {  }
-    weight: 0
+    weight: 3
     region: content
   field_subtitle:
     type: basic_string
@@ -36,10 +46,18 @@ content:
     third_party_settings: {  }
     weight: 0
     region: content
+  field_tags:
+    type: entity_reference_label
+    label: hidden
+    settings:
+      link: false
+    third_party_settings: {  }
+    weight: 2
+    region: content
   links:
     settings: {  }
     third_party_settings: {  }
-    weight: 1
+    weight: 4
     region: content
 hidden:
   field_canonical_url: true
@@ -48,5 +66,4 @@ hidden:
   field_teaser_image: true
   field_teaser_text: true
   langcode: true
-  links: true
   search_api_excerpt: true

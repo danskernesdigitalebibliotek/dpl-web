@@ -4,6 +4,7 @@ status: true
 dependencies:
   config:
     - field.storage.eventseries.field_event_description
+    - filter.format.limited
     - recurring_events.eventseries_type.default
   module:
     - text
@@ -18,5 +19,6 @@ translatable: false
 default_value: {  }
 default_value_callback: ''
 settings:
-  allowed_formats: {  }
+  allowed_formats:
+    - limited
 field_type: text_long

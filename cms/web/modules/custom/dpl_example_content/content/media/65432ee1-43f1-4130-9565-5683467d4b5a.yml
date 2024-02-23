@@ -32,7 +32,7 @@ default:
       tag: link
       attributes:
         rel: canonical
-        href: 'http://dapple-cms.docker/user/login'
+        href: '/user/login'
   field_byline:
     -
       value: 'Af Admad Odeh / Unsplash'

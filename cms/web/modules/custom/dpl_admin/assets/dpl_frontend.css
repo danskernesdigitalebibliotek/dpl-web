@@ -1,0 +1,17 @@
+/* @file
+ * This file is loaded into the frontend (As opposed to dpl_admin, that is
+ * only added on admin pages).
+ * NOTICE - these styles are added for **all** users - not just admins.
+ */
+
+/* Make sure that dialogs are placed above the DPL frontend. */
+:root {
+  --jui-dialog-z-index: 9999 !important;
+}
+
+/* Re-arranging the "preview" toolbar, that is shown when editors preview nodes. */
+.node-preview-form-select .form-item-view-mode {
+  display: flex !important;
+  align-items: center !important;
+  all: inherit !important;
+}

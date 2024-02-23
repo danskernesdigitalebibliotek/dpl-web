@@ -5,10 +5,17 @@ _meta:
   bundle: default
   default_langcode: en
   depends:
-    a3a4aa80-7380-4a87-aa02-a0ba240410ba: eventinstance
+    35cc4d57-5254-4bfd-aa7a-4590eba63ea3: eventinstance
+    f457c4c2-dc28-45cd-9b6e-fda4248d9d45: taxonomy_term
     618e176a-a45a-4c36-a197-664230aa0a34: media
     dc33677f-8894-4717-b34b-d985f6ad875f: media
     65432ee1-43f1-4130-9565-5683467d4b5a: media
+    1006441f-bb39-43b5-8c08-1a79344abf8b: taxonomy_term
+    53133c2e-1023-43a9-baf2-64a5081eea0f: taxonomy_term
+    190beb00-d5af-4c9a-be8d-65a646b37bbb: taxonomy_term
+    725e0059-9c5d-4c4e-8e3d-6d8cf2042fa4: taxonomy_term
+    ec76c707-898d-4dfd-8cd2-e258aef1d6dd: taxonomy_term
+    0502836d-0f7b-4b21-9371-c40ae9e01495: taxonomy_term
 default:
   revision_uid:
     -
@@ -98,10 +105,13 @@ default:
       tag: link
       attributes:
         rel: canonical
-        href: 'http://dapple-cms.docker/user/login'
+        href: '/user/login'
   event_instances:
     -
-      entity: a3a4aa80-7380-4a87-aa02-a0ba240410ba
+      entity: 35cc4d57-5254-4bfd-aa7a-4590eba63ea3
+  field_categories:
+    -
+      entity: f457c4c2-dc28-45cd-9b6e-fda4248d9d45
   field_event_address:
     -
       langcode: en
@@ -112,7 +122,7 @@ default:
   field_event_description:
     -
       value: '<p>Foreningen for Integreret Moderne Dans arbejder med at udvide normalitetsbegrebet i scenekunsten. For hvad er normalt? Rosenreglen og Mødrenes hus. I 2022 udgav hun også den stærkt politiske digtsamling Jeg vil have en statsminister.</p>'
-      format: basic
+      format: limited
   field_event_image:
     -
       entity: 618e176a-a45a-4c36-a197-664230aa0a34
@@ -263,6 +273,22 @@ default:
   field_event_state:
     -
       value: Active
+  field_tags:
+    -
+      entity: 1006441f-bb39-43b5-8c08-1a79344abf8b
+    -
+      entity: 53133c2e-1023-43a9-baf2-64a5081eea0f
+    -
+      entity: 190beb00-d5af-4c9a-be8d-65a646b37bbb
+    -
+      entity: 725e0059-9c5d-4c4e-8e3d-6d8cf2042fa4
+    -
+      entity: ec76c707-898d-4dfd-8cd2-e258aef1d6dd
+    -
+      entity: 0502836d-0f7b-4b21-9371-c40ae9e01495
+  field_teaser_image:
+    -
+      entity: 618e176a-a45a-4c36-a197-664230aa0a34
   field_ticket_categories:
     -
       entity:

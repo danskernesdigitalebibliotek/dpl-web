@@ -1,0 +1,27 @@
+_meta:
+  version: '1.0'
+  entity_type: file
+  uuid: 231326de-6d73-42c6-8ec3-5d2bbae9cb91
+  default_langcode: en
+default:
+  uid:
+    -
+      target_id: 1
+  filename:
+    -
+      value: paige-cody-FHFfHWWzbCc-unsplash.jpg
+  uri:
+    -
+      value: 'public://2024-02/paige-cody-FHFfHWWzbCc-unsplash_0.jpg'
+  filemime:
+    -
+      value: image/jpeg
+  filesize:
+    -
+      value: 44128
+  status:
+    -
+      value: true
+  created:
+    -
+      value: 1707900542

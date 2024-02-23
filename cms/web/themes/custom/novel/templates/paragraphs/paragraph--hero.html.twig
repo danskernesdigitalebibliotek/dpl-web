@@ -1,0 +1,22 @@
+<section class="hero">
+    <a href="{{ content.field_hero_link.0["#url"] }}" class="hero-content arrow arrow__hover--right-large">
+        {{ content.field_hero_categories }}
+        <div class="hero__details">
+            {% if content.field_hero_content_type.0 %}
+                <span class="hero__details__text">{{ content.field_hero_content_type }}</span>|
+            {% endif %}
+            <time class="hero__details__date">{{ content.field_hero_date }}</time>
+        </div>
+        <h1 class="hero-title">{{ content.field_hero_title }}</h1>
+        <div class="hero-description">
+            {{ content.field_hero_description }}
+        </div>
+        <div>
+            {{ source(baseIconPath ~ '/arrow-ui/icon-arrow-ui-large-right.svg') }}
+        </div>
+    </a>
+
+    <div class="hero-visual">
+        {{ content.field_hero_image }}
+    </div>
+</section>

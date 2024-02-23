@@ -5,12 +5,12 @@ dependencies: {  }
 _core:
   default_config_hash: xP8VaY91nmnEknUt9pfeZr8IEUne06c2mr3Svb-VZhQ
 id: eventinstance_default_title
-label: Title
-type: inherit
+label: 'Event title'
+type: fallback
 sourceEntityType: eventseries
 sourceEntityBundle: default
 sourceField: title
 destinationEntityType: eventinstance
 destinationEntityBundle: default
-destinationField: null
+destinationField: field_event_title
 plugin: default_inheritance

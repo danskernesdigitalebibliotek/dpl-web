@@ -7,35 +7,67 @@ dependencies:
   - default_content:default_content
 default_content:
   node:
-    # Article 1: From Figma
+    # Articles
     # https://www.figma.com/file/Zx9GrkFA3l4ISvyZD2q0Qi/Designsystem?type=design&node-id=7477-39048&mode=dev
     - 2cd0fe5e-4159-4452-86aa-e1a1ac8db4a1
+    - 982e0d87-f6b8-4b84-8de8-c8c8bcfef557
+    - 9cfd15df-32b4-4af9-b2da-56b039b5bf6b
+    # Pages
+    - fd774222-4b22-4803-ae45-2d4e80d84fac
   eventseries:
-    # Event 1: From Figma
     # https://www.figma.com/file/Zx9GrkFA3l4ISvyZD2q0Qi/Designsystem?type=design&node-id=7477-39713&mode=dev
     - c8177097-1438-493e-8177-e8ef968cc133
+    - 2ce9d9b0-7f10-4a17-9a5e-383d36c1ed93
+    - fb8b4d62-de14-4620-9ca1-be60cab74a65
+    - f6aafa27-a538-44a3-ae1f-02f8efbfb068
   #eventinstance:
   # Do not export instances of event instances. This will result in
   # duplicate UUIDs for entity reference fields with fallback values.
   media:
-    # Media used in article 1
     - aba3cea8-cee5-42c1-a152-e30c2ab135e2
     - d97a25fd-a6ae-48b9-9a1a-7aec5372688e
     - eef50571-39dc-461a-96ff-b6b7180ade61
-    # Media used in eventseries 1
     - 618e176a-a45a-4c36-a197-664230aa0a34
     - 65432ee1-43f1-4130-9565-5683467d4b5a
-    # Document used in article 1 and eventseries 1
     - dc33677f-8894-4717-b34b-d985f6ad875f
-    # embed video in article 1
     - f0204f0b-1f63-4c76-bb67-e3f7489ee392
+    - a0176f8c-bb7e-4f5a-bf23-b48cd8bab05f
+    - d6d67fd2-775c-46e7-a1bf-6af46290a5c8
+    - 7b9d1894-7f9a-4f96-a7dc-efa3af5fc902
+    - a6a77786-07db-48d8-98ff-3bda54f231bf
+    - ca329ad9-5a1c-4f55-b8a9-a60843b66466
+    - e4ce7616-976d-43fc-aed2-a01c42b67db9
+    - e8283d3c-968a-4e74-ae02-9f02b76bb839
   file:
-    # Files used in article 1
     - b0fea511-57df-4b49-b127-1c445beacfe7
     - f19a4a4c-80b0-4290-a098-4f2f5fc137a2
     - 4b4fee24-a6ed-497a-b1c4-964c7ed00cfd
-    # Files used in eventseries 1
     - 3d1cb5f0-b6a4-4235-b4b3-705d5185e90e
     - 6d5e9b4c-389d-4735-a8a3-82883f64aeb0
-    # PDF used in article 1 and eventseries 1
     - 3403d0ba-cbdc-425d-93f4-6cdabb5378b1
+    - 24244298-ff4d-4662-bc7f-5b9aa529f89e
+    - ed301960-e40f-42b5-9229-4ac20fd07a7e
+    - 7fb4d332-81ef-4dc0-af9a-dfcd29ecf367
+    - 50b4d50b-9c75-4698-b803-a125b46daaac
+    - 4400c2b6-2158-4ddb-aa87-9279dcf77fb7
+    - 231326de-6d73-42c6-8ec3-5d2bbae9cb91
+    - e00e1460-169e-468d-9835-d664f06d0969
+  taxonomy_term:
+    - f457c4c2-dc28-45cd-9b6e-fda4248d9d45
+    - 92033694-15ac-4d9e-b275-ddfd18e48d9f
+    - 1006441f-bb39-43b5-8c08-1a79344abf8b
+    - 53133c2e-1023-43a9-baf2-64a5081eea0f
+    - 190beb00-d5af-4c9a-be8d-65a646b37bbb
+    - 725e0059-9c5d-4c4e-8e3d-6d8cf2042fa4
+    - ec76c707-898d-4dfd-8cd2-e258aef1d6dd
+    - 0502836d-0f7b-4b21-9371-c40ae9e01495
+    - 0fa7245a-3434-4d96-9793-a1848a22d37a
+    - 807e6053-86ed-4dce-b6a9-a48b566b5910
+    - 4704c566-afc2-4131-ab81-3d636f2451bf
+    - e539b26b-2992-406b-accf-03e549522c0d
+  menu_link_content:
+    - ff6db3ce-49e0-4107-b283-3403e22c5e6d
+    - c391079e-a4f5-4d29-992f-92ed1a2dd96c
+    - a25ebb74-e87f-4b2c-8156-b622dc23844e
+    - c060dc61-87e2-4203-9f17-731f766f5b9b
+    - c10227b4-50ed-4ab8-9d6a-a14889f7fb01

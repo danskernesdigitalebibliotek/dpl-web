@@ -1,0 +1,7 @@
+dpl_footer.footer_form:
+  path: "/admin/structure/footer"
+  defaults:
+    _form: 'Drupal\dpl_footer\Form\FooterForm'
+    _title: "Footer Settings"
+  requirements:
+    _permission: "administer dpl_footer settings"

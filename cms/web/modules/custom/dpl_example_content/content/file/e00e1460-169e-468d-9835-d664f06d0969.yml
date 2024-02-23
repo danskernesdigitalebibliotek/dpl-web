@@ -1,0 +1,27 @@
+_meta:
+  version: '1.0'
+  entity_type: file
+  uuid: e00e1460-169e-468d-9835-d664f06d0969
+  default_langcode: en
+default:
+  uid:
+    -
+      target_id: 1
+  filename:
+    -
+      value: robert-collins-tvc5imO5pXk-unsplash.jpg
+  uri:
+    -
+      value: 'public://2024-02/robert-collins-tvc5imO5pXk-unsplash_0.jpg'
+  filemime:
+    -
+      value: image/jpeg
+  filesize:
+    -
+      value: 96972
+  status:
+    -
+      value: true
+  created:
+    -
+      value: 1707900559

@@ -1,0 +1,42 @@
+_meta:
+  version: '1.0'
+  entity_type: media
+  uuid: a0176f8c-bb7e-4f5a-bf23-b48cd8bab05f
+  bundle: image
+  default_langcode: da
+  depends:
+    24244298-ff4d-4662-bc7f-5b9aa529f89e: file
+default:
+  status:
+    -
+      value: true
+  uid:
+    -
+      target_id: 1
+  name:
+    -
+      value: ed-robertson-eeSdJfLfx1A-unsplash.jpg
+  created:
+    -
+      value: 1706868717
+  revision_translation_affected:
+    -
+      value: true
+  metatag:
+    -
+      tag: meta
+      attributes:
+        name: title
+        content: '| DPL CMS'
+    -
+      tag: link
+      attributes:
+        rel: canonical
+        href: '/user/login'
+  field_media_image:
+    -
+      entity: 24244298-ff4d-4662-bc7f-5b9aa529f89e
+      alt: Books
+      title: ''
+      width: 640
+      height: 427

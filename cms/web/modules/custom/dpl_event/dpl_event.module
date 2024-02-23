@@ -122,20 +122,6 @@ function dpl_event_set_occurred_callback(JobSchedule $job): void {
 }
 
 /**
- * Implements hook_form_node_event_form_alter().
- */
-function dpl_event_form_node_event_form_alter(array &$form, FormStateInterface $form_state, string $form_id): void {
-  // Use the generic "Access" value as the default for the first ticket
-  // category when creating events.
-  if (isset($form["field_ticket_categories"]["widget"][0]["subform"]["field_ticket_category_name"]["widget"][0]["value"])) {
-    $form["field_ticket_categories"]["widget"][0]["subform"]["field_ticket_category_name"]["widget"][0]["value"]["#default_value"] = t('Access', [], ['context' => 'dpl_event']);
-  }
-  else {
-    throw new DomainException("Unable to locate name field for first ticket category. Cannot set default value.");
-  }
-}
-
-/**
  * Implements hook_preprocess_HOOK() for field templates.
  *
  * Preprocesses the 'field_event_link' for Drupal entities to alter its display
@@ -246,10 +232,9 @@ function dpl_event_preprocess_eventinstance(array &$variables): void {
 
   $eventInstance = $variables['eventinstance'];
 
-  if ($eventInstance->hasField('field_ticket_categories')) {
-    $ticket_categories = $eventInstance->get('field_ticket_categories')->referencedEntities();
+  if ($eventInstance->hasField('event_ticket_categories')) {
+    $ticket_categories = $eventInstance->get('event_ticket_categories')->referencedEntities();
     $prices = [];
-
     // Collect prices from ticket categories.
     foreach ($ticket_categories as $category) {
       if ($category->hasField('field_ticket_category_price') && !$category->get('field_ticket_category_price')->isEmpty()) {
@@ -323,5 +308,35 @@ function dpl_event_preprocess_eventinstance__list_teaser(array &$variables): voi
     if ($end_date instanceof DrupalDateTime) {
       $variables['end_date'] = $date_formatter->format($end_date->getTimestamp(), 'custom', 'H:i');
     }
+  }
+}
+
+/**
+ * Implements hook_form_FORM_ID_alter().
+ *
+ * Altering the form for EDITING (not creating) an event series.
+ */
+function dpl_event_form_eventseries_default_edit_form_alter(array &$form, FormStateInterface $form_state): void {
+  // When saving a series, and changing the dates, the recurring_events module
+  // will make a "custom" submit button, showing a 'are you sure' button.
+  // However, this does not include a 'cancel' button. This is because cancel
+  // basically just means navigating away, but, this is confusing for editors.
+  // We'll add our own "button", that is really just a link the same edit page.
+  if (!empty($form['diff']['confirm'])) {
+    $form['diff']['cancel'] = [
+      '#type' => 'link',
+      '#title' => t('Cancel all changes', [], ['context' => 'DPL admin UX']),
+      '#url' => Url::fromRoute('<current>'),
+      '#attributes' => [
+        'class' => [
+          'action-link', 'action-link--danger', 'action-link--icon-trash',
+        ],
+      ],
+    ];
+
+    // The save/delete buttons on the page does nothing, when a diff confirm
+    // is relevant. We'll hide them, just to make it less confusing for the
+    // editors.
+    unset($form['actions']);
   }
 }

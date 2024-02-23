@@ -4,6 +4,7 @@ status: true
 dependencies:
   config:
     - core.entity_view_mode.eventinstance.card
+    - field.field.eventinstance.default.field_categories
     - field.field.eventinstance.default.field_event_address
     - field.field.eventinstance.default.field_event_description
     - field.field.eventinstance.default.field_event_image
@@ -12,6 +13,8 @@ dependencies:
     - field.field.eventinstance.default.field_event_partners
     - field.field.eventinstance.default.field_event_place
     - field.field.eventinstance.default.field_event_state
+    - field.field.eventinstance.default.field_event_title
+    - field.field.eventinstance.default.field_tags
     - field.field.eventinstance.default.field_teaser_image
     - field.field.eventinstance.default.field_teaser_text
     - field.field.eventinstance.default.field_ticket_categories
@@ -45,6 +48,22 @@ content:
     settings: {  }
     third_party_settings: {  }
     weight: 2
+    region: content
+  event_categories:
+    type: entity_reference_label
+    label: visible
+    settings:
+      link: true
+    third_party_settings: {  }
+    weight: 52
+    region: content
+  event_tags:
+    type: entity_reference_label
+    label: visible
+    settings:
+      link: true
+    third_party_settings: {  }
+    weight: 60
     region: content
   event_teaser_image:
     type: entity_reference_entity_view
@@ -83,6 +102,7 @@ hidden:
   event_place: true
   event_state: true
   event_ticket_categories: true
+  field_categories: true
   field_event_address: true
   field_event_description: true
   field_event_image: true
@@ -91,6 +111,8 @@ hidden:
   field_event_partners: true
   field_event_place: true
   field_event_state: true
+  field_event_title: true
+  field_tags: true
   field_teaser_image: true
   field_teaser_text: true
   field_ticket_categories: true

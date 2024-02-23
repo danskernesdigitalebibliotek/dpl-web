@@ -1,0 +1,33 @@
+_meta:
+  version: '1.0'
+  entity_type: taxonomy_term
+  uuid: ec76c707-898d-4dfd-8cd2-e258aef1d6dd
+  bundle: tags
+  default_langcode: da
+default:
+  status:
+    -
+      value: true
+  name:
+    -
+      value: digt
+  weight:
+    -
+      value: 0
+  parent:
+    -
+      target_id: 0
+  revision_translation_affected:
+    -
+      value: true
+  metatag:
+    -
+      tag: meta
+      attributes:
+        name: title
+        content: 'digt | DPL CMS'
+    -
+      tag: link
+      attributes:
+        rel: canonical
+        href: '/taxonomy/term/7'

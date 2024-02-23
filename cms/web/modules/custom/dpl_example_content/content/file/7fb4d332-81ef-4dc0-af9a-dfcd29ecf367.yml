@@ -1,0 +1,27 @@
+_meta:
+  version: '1.0'
+  entity_type: file
+  uuid: 7fb4d332-81ef-4dc0-af9a-dfcd29ecf367
+  default_langcode: en
+default:
+  uid:
+    -
+      target_id: 1
+  filename:
+    -
+      value: janko-ferlic-sfL_QOnmy00-unsplash.jpg
+  uri:
+    -
+      value: 'public://2024-01/janko-ferlic-sfL_QOnmy00-unsplash_0.jpg'
+  filemime:
+    -
+      value: image/jpeg
+  filesize:
+    -
+      value: 74588
+  status:
+    -
+      value: true
+  created:
+    -
+      value: 1705564087

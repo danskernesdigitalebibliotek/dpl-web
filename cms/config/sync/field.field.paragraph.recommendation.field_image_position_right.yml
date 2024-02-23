@@ -1,0 +1,23 @@
+uuid: c56c9187-5824-4202-8c62-4177f9a1ba65
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.paragraph.field_image_position_right
+    - paragraphs.paragraphs_type.recommendation
+id: paragraph.recommendation.field_image_position_right
+field_name: field_image_position_right
+entity_type: paragraph
+bundle: recommendation
+label: 'Image position right'
+description: "This determines whether the image should be positioned to the left or right. \r\nIf left untoggled (default behaviour) the image is positioned to the left, if toggled on, the image will be positioned to the right. "
+required: false
+translatable: false
+default_value:
+  -
+    value: 0
+default_value_callback: ''
+settings:
+  on_label: 'On'
+  off_label: 'Off'
+field_type: boolean

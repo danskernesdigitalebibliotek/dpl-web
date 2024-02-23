@@ -1,0 +1,44 @@
+uuid: 6ac236dd-4702-4568-958e-68cc373de6a5
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.field.paragraph.nav_grid_manual.field_content_references
+    - field.field.paragraph.nav_grid_manual.field_show_subtitles
+    - field.field.paragraph.nav_grid_manual.field_title
+    - paragraphs.paragraphs_type.nav_grid_manual
+  module:
+    - dynamic_entity_reference
+id: paragraph.nav_grid_manual.default
+targetEntityType: paragraph
+bundle: nav_grid_manual
+mode: default
+content:
+  field_content_references:
+    type: dynamic_entity_reference_default
+    weight: 2
+    region: content
+    settings:
+      match_operator: CONTAINS
+      match_limit: 10
+      size: 40
+      placeholder: ''
+    third_party_settings: {  }
+  field_show_subtitles:
+    type: boolean_checkbox
+    weight: 1
+    region: content
+    settings:
+      display_label: true
+    third_party_settings: {  }
+  field_title:
+    type: string_textfield
+    weight: 0
+    region: content
+    settings:
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+hidden:
+  created: true
+  status: true
