@@ -151,6 +151,7 @@ function dpl_react_apps_texts(): array {
     'in-series' => t('in series', [], ['context' => 'Global']),
     'in' => t('in', [], ['context' => 'Global']),
     'input-placeholder' => t('Start typing in order to search', [], ['context' => 'Global']),
+    'is-loading-heart' => t('Loading', [], ['context' => 'Global']),
     'loading' => t('loading', [], ['context' => 'Global']),
     'loan-list-additional-materials' => json_encode([
       'type' => 'plural',
