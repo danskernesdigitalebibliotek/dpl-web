@@ -219,8 +219,7 @@ function dpl_admin_form_alter(array &$form, FormStateInterface $form_state, stri
  *
  * @see hook_field_widget_single_element_form_alter()
  */
-function dpl_admin_field_widget_single_element_form_alter(array &$element, FormStateInterface $form_state, array $context): void
-{
+function dpl_admin_field_widget_single_element_form_alter(array &$element, FormStateInterface $form_state, array $context): void {
 
   /** @var \Drupal\Core\Field\FieldItemListInterface $items */
   $items = $context['items'];
