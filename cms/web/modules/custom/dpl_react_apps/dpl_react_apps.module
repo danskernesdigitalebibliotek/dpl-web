@@ -108,7 +108,13 @@ function dpl_react_apps_texts(): array {
         t('@count reservations were deleted', [], ['context' => 'Global']),
       ],
     ]),
-    'delete-reservation-modal-success-title' => t('You have deleted your reservation', [], ['context' => 'Global']),
+    'delete-reservation-modal-success-title' => json_encode([
+      'type' => 'plural',
+      'text' => [
+        t('Reservation deleted', [], ['context' => 'Global']),
+        t('Reservations deleted', [], ['context' => 'Global']),
+      ],
+    ]),
     'delete-reservation-modal-header' => json_encode([
       'type' => 'plural',
       'text' => [
@@ -127,6 +133,7 @@ function dpl_react_apps_texts(): array {
     'group-modal-due-date-header' => t('Due date @date', [], ['context' => 'Global']),
     'group-modal-due-date-link-to-page-with-fees' => t("Read more about fees", [], ['context' => 'Global']),
     'group-modal-due-date-material' => t("Due date @date", [], ['context' => 'Global']),
+    'group-modal-due-date-digital-material' => t("Expires @date", [], ['context' => 'Global']),
     'group-modal-due-date-renew-loan-close-modal-aria-label' => t('Close renew loans modal', [], ['context' => 'Global']),
     'group-modal-due-date-warning-loan-overdue' => t('The due date of return is exceeded, therefore you will be charged a fee, when the item is returned', [], ['context' => 'Global']),
     'group-modal-go-to-material' => t("Go to material details", [], ['context' => 'Global']),
@@ -144,6 +151,7 @@ function dpl_react_apps_texts(): array {
     'in-series' => t('in series', [], ['context' => 'Global']),
     'in' => t('in', [], ['context' => 'Global']),
     'input-placeholder' => t('Start typing in order to search', [], ['context' => 'Global']),
+    'is-loading-heart' => t('Loading', [], ['context' => 'Global']),
     'loading' => t('loading', [], ['context' => 'Global']),
     'loan-list-additional-materials' => json_encode([
       'type' => 'plural',
@@ -189,6 +197,7 @@ function dpl_react_apps_texts(): array {
     'patron-page-change-pincode-body' => t('Change current pin by entering a new pin and saving', [], ['context' => 'Global']),
     'patron-page-change-pincode-header' => t('PINCODE', [], ['context' => 'Global']),
     'patron-page-confirm-pincode-label' => t('Confirm new pin', [], ['context' => 'Global']),
+    'patron-page-phone-input-message' => t('The phone number must be 6 to 15 characters in length and should be comprised solely of numbers or begin with a +', [], ['context' => 'Global']),
     'pause-reservation-modal-aria-description' => t('This modal makes it possible to pause your physical reservations', [], ['context' => 'Global']),
     'pause-reservation-modal-below-inputs' => t('Pause reservation below inputs text', [], ['context' => 'Global']),
     'pause-reservation-modal-body' => t('Pause your reservations early, since reservations that are already being processed, will not be paused.', [], ['context' => 'Global']),
@@ -211,7 +220,13 @@ function dpl_react_apps_texts(): array {
     'publizon-podcast' => t('Podcast', [], ['context' => 'Global']),
     'ready-for-loan-counter-label' => t('Ready', [], ['context' => 'Global']),
     'ready-for-loan' => t('Ready for pickup', [], ['context' => 'Global']),
-    'remove-all-reservations' => t('Remove reservations (@amount)', [], ['context' => 'Global']),
+    'remove-all-reservations' => json_encode([
+      'type' => 'plural',
+      'text' => [
+        t('Remove reservation (@amount)', [], ['context' => 'Global']),
+        t('Remove reservations (@amount)', [], ['context' => 'Global']),
+      ],
+    ]),
     'remove-from-favorites-aria-label' => t('remove @title from favorites list', [], ['context' => 'Global']),
     'renew-button' => t('Renew', [], ['context' => 'Renew loan']),
     'renew-cannot-be-renewed' => t('Cannot be renewed', [], ['context' => 'Renew loan']),
@@ -282,6 +297,7 @@ function dpl_react_apps_texts(): array {
       ],
     ]),
     'reservation-status-button' => t('Close', [], ['context' => 'Global']),
+    'reservation-list-you-are-in-queue' => t('You are in the reservation queue', [], ['context' => 'Global']),
     'reservation-list-available-in' => t('Available in @count days', [], ['context' => 'Global']),
     'reservation-list-days' => t('days', [], ['context' => 'Global']),
     'reservation-list-in-queue' => t('queued', [], ['context' => 'Global']),
@@ -375,9 +391,9 @@ function dpl_react_apps_dpl_react_apps_data(array &$data, array &$variables): vo
     $fees_settings->getViewFeesAndCompensationRatesUrl(),
   ];
 
-  if (!empty($general_settings->getBlockedPatronElinkUrl())) {
+  if (!empty($fees_settings->getBlockedPatronElinkUrl())) {
     $data['urls'] += [
-      'blocked-patron-e-link' => $general_settings->getBlockedPatronElinkUrl(),
+      'blocked-patron-e-link' => $fees_settings->getBlockedPatronElinkUrl(),
     ];
   }
 }

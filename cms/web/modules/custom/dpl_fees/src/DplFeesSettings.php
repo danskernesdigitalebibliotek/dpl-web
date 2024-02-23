@@ -14,6 +14,7 @@ class DplFeesSettings extends DplReactConfigBase {
   const PAYMENT_SITE_BUTTON_LABEL = '';
   const FEES_LIST_SIZE_DESKTOP = 25;
   const FEES_LIST_SIZE_MOBILE = 25;
+  const BLOCKED_PATRON_E_LINK_URL = '';
 
   use StringTranslationTrait;
 
@@ -120,6 +121,39 @@ class DplFeesSettings extends DplReactConfigBase {
       "pageSizeMobile" => $this->getListSizeMobile(),
       "paymentSiteButtonLabel" => $this->getFeeListPaymentSiteButtonLabel(),
     ];
+  }
+
+  /**
+   * Get urls for blocked patrons.
+   *
+   * @param string|null $name
+   *   The name of the url to get.
+   *
+   * @return string|mixed[]|null
+   *   String if one url is asked for or null if not found.
+   *   If no name is provided then all available urls.
+   */
+  protected function getBlockedPatronUrls($name = NULL): string|array|null {
+    $urls = [
+      'blocked-patron-e-link' => $this->loadConfig()->get('blocked_patron_e_link_url') ?? self::BLOCKED_PATRON_E_LINK_URL,
+    ];
+
+    if ($name) {
+      return $urls[$name] ?? NULL;
+    }
+
+    return $urls;
+  }
+
+  /**
+   * Get url for the blocked patron of type E.
+   *
+   * @return string
+   *   The url.
+   */
+  public function getBlockedPatronElinkUrl(): string {
+    $url = $this->getBlockedPatronUrls('blocked-patron-e-link');
+    return is_string($url) ? $url : '';
   }
 
 }
