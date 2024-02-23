@@ -3,6 +3,7 @@ langcode: en
 status: true
 dependencies:
   config:
+    - field.field.eventinstance.default.field_categories
     - field.field.eventinstance.default.field_event_address
     - field.field.eventinstance.default.field_event_description
     - field.field.eventinstance.default.field_event_image
@@ -11,6 +12,8 @@ dependencies:
     - field.field.eventinstance.default.field_event_partners
     - field.field.eventinstance.default.field_event_place
     - field.field.eventinstance.default.field_event_state
+    - field.field.eventinstance.default.field_event_title
+    - field.field.eventinstance.default.field_tags
     - field.field.eventinstance.default.field_teaser_image
     - field.field.eventinstance.default.field_teaser_text
     - field.field.eventinstance.default.field_ticket_categories
@@ -22,6 +25,9 @@ dependencies:
     - link
     - media_library
     - paragraphs
+    - paragraphs_ee
+    - paragraphs_features
+    - text
 third_party_settings:
   field_group:
     group_teaser_card:
@@ -31,7 +37,7 @@ third_party_settings:
       label: 'Teaser card'
       region: content
       parent_name: ''
-      weight: 11
+      weight: 14
       format_type: details_sidebar
       format_settings:
         classes: ''
@@ -52,22 +58,36 @@ content:
     region: content
     settings: {  }
     third_party_settings: {  }
-  field_event_address:
-    type: address_default
-    weight: 6
+  field_categories:
+    type: options_select
+    weight: 4
     region: content
     settings: {  }
     third_party_settings: {  }
+  field_event_address:
+    type: address_default
+    weight: 9
+    region: content
+    settings: {  }
+    third_party_settings: {  }
+  field_event_description:
+    type: text_textarea
+    weight: 6
+    region: content
+    settings:
+      rows: 5
+      placeholder: ''
+    third_party_settings: {  }
   field_event_image:
     type: media_library_widget
-    weight: 9
+    weight: 12
     region: content
     settings:
       media_types: {  }
     third_party_settings: {  }
   field_event_link:
     type: link_default
-    weight: 5
+    weight: 8
     region: content
     settings:
       placeholder_url: ''
@@ -75,7 +95,7 @@ content:
     third_party_settings: {  }
   field_event_paragraphs:
     type: paragraphs
-    weight: 10
+    weight: 13
     region: content
     settings:
       title: Paragraph
@@ -86,9 +106,9 @@ content:
       closed_mode_threshold: 0
       add_mode: modal
       form_display_mode: default
-      default_paragraph_type: _none
+      default_paragraph_type: text_body
       features:
-        add_above: '0'
+        add_above: add_above
         collapse_edit_all: collapse_edit_all
         duplicate: duplicate
     third_party_settings:
@@ -103,7 +123,7 @@ content:
           dialog_style: tiles
   field_event_partners:
     type: string_textfield
-    weight: 8
+    weight: 11
     region: content
     settings:
       size: 60
@@ -111,7 +131,7 @@ content:
     third_party_settings: {  }
   field_event_place:
     type: string_textfield
-    weight: 7
+    weight: 10
     region: content
     settings:
       size: 60
@@ -122,6 +142,24 @@ content:
     weight: 2
     region: content
     settings: {  }
+    third_party_settings: {  }
+  field_event_title:
+    type: string_textfield
+    weight: 3
+    region: content
+    settings:
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+  field_tags:
+    type: entity_reference_autocomplete_tags
+    weight: 5
+    region: content
+    settings:
+      match_operator: CONTAINS
+      match_limit: 10
+      size: 60
+      placeholder: ''
     third_party_settings: {  }
   field_teaser_image:
     type: media_library_widget
@@ -140,7 +178,7 @@ content:
     third_party_settings: {  }
   field_ticket_categories:
     type: paragraphs
-    weight: 4
+    weight: 7
     region: content
     settings:
       title: Paragraph
@@ -151,11 +189,21 @@ content:
       closed_mode_threshold: 0
       add_mode: dropdown
       form_display_mode: default
-      default_paragraph_type: ''
+      default_paragraph_type: _none
       features:
+        add_above: add_above
         collapse_edit_all: collapse_edit_all
         duplicate: duplicate
-    third_party_settings: {  }
+    third_party_settings:
+      paragraphs_features:
+        add_in_between: false
+        add_in_between_link_count: 3
+        delete_confirmation: false
+        show_drag_and_drop: true
+      paragraphs_ee:
+        paragraphs_ee:
+          dialog_off_canvas: false
+          dialog_style: tiles
   status:
     type: boolean_checkbox
     weight: 1
@@ -165,4 +213,3 @@ content:
     third_party_settings: {  }
 hidden:
   body: true
-  field_event_description: true

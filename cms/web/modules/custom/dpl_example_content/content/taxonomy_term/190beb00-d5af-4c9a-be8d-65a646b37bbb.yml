@@ -1,0 +1,33 @@
+_meta:
+  version: '1.0'
+  entity_type: taxonomy_term
+  uuid: 190beb00-d5af-4c9a-be8d-65a646b37bbb
+  bundle: tags
+  default_langcode: da
+default:
+  status:
+    -
+      value: true
+  name:
+    -
+      value: modern
+  weight:
+    -
+      value: 0
+  parent:
+    -
+      target_id: 0
+  revision_translation_affected:
+    -
+      value: true
+  metatag:
+    -
+      tag: meta
+      attributes:
+        name: title
+        content: 'modern | DPL CMS'
+    -
+      tag: link
+      attributes:
+        rel: canonical
+        href: '/taxonomy/term/5'

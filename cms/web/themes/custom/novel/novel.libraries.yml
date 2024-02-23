@@ -4,11 +4,15 @@ base:
       assets/dpl-design-system/css/base.css: {}
       css/novel.css: {}
   js:
-    assets/dpl-design-system/js/header-toggle.js: {}
     assets/dpl-design-system/js/header-sticky.js: {}
-    assets/dpl-design-system/js/initaccordion.js: {}
+    assets/dpl-design-system/js/header-state.js: {}
+    assets/dpl-design-system/js/header-sidebar-nav-js.js: {}
   dependencies:
     - core/drupal
+
+nav-grid:
+  js:
+    assets/dpl-design-system/js/init-nav-grid.js: {}
 
 slider:
   js:
@@ -29,3 +33,6 @@ swiper:
     theme:
       "https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css":
         { type: external }
+footer-accordions:
+  js:
+    assets/dpl-design-system/js/footer-accordions.js: {}

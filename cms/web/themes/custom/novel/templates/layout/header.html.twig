@@ -5,10 +5,14 @@
         </a>
     </div>
     <div class="header__menu">
-        <nav class="header__menu-first">
+        <nav class="header__menu-first" aria-label="Primary site navigation">
             <div>
                 <div class="header__menu-navigation-mobile">
-                    <div class="pagefold-parent--small header__menu-navigation-button header__button" id="header__menu--open">
+                    <div class="pagefold-parent--small header__menu-navigation-button header__button" id="header-sidebar-nav__toggle"
+                    aria-controls="sidebarNav"
+                    aria-expanded="false"
+                    role="button"
+                    tabIndex="0">
                         <div class="pagefold-triangle--small"></div>
                         <img width="20" height="14" src="/themes/custom/novel/assets/dpl-design-system/icons/basic/icon-menu.svg" alt="List of bookmarks"/>
                     </div>
@@ -16,33 +20,8 @@
                        {{ logo }}
                     </div>
                 </div>
-                <ul class="header__menu-navigation">
-                    <li class="header__menu-navigation-item">
-                        <a href="/" class="header__menu-navigation-link text-body-medium-regular hide-linkstyle">
-                            Det sker
-                        </a>
-                    </li>
-                    <li class="header__menu-navigation-item">
-                        <a href="/" class="header__menu-navigation-link text-body-medium-regular hide-linkstyle">
-                            Biblioteker &amp; åbningstider
-                        </a>
-                    </li>
-                    <li class="header__menu-navigation-item">
-                        <a href="/" class="header__menu-navigation-link text-body-medium-regular hide-linkstyle">
-                            Digitale tilbud
-                        </a>
-                    </li>
-                    <li class="header__menu-navigation-item">
-                        <a href="/" class="header__menu-navigation-link text-body-medium-regular hide-linkstyle">
-                            Litteratur
-                        </a>
-                    </li>
-                    <li class="header__menu-navigation-item">
-                        <a href="/" class="header__menu-navigation-link text-body-medium-regular hide-linkstyle">
-                            Børn &amp; forældre
-                        </a>
-                    </li>
-                </ul>
+
+                {{ drupal_menu('main') }}
             </div>
       {{ patron_menu }}
             <div class="header__menu-bookmarked header__button">
@@ -59,41 +38,25 @@
         </div>
         <div class="header__clock-items">
             <img loading="lazy" width="58" height="58" src="/themes/custom/novel/assets/dpl-design-system/icons/basic/icon-watch-static.svg" class="mb-8" alt="clock icon"/>
-            <span class="text-small-caption">Onsdag</span>
-            <span class="text-small-caption">7 februar</span>
+            <span class="text-small-caption">Åbningstider</span>
         </div>
     </div>
 </header>
-<div id="header__overlay">
-    <div class="header__overlay-main">
-        <img loading="lazy" width="12" height="12" id="header__menu--close" src="/themes/custom/novel/assets/dpl-design-system/icons/basic/icon-cross-medium.svg"/>
-        <ul class="header__overlay-menu">
-            <li class="header__overlay-menu-item">
-                <a href="/" class="header__overlay-menu-link text-body-large hide-linkstyle">
-                    Det sker
-                </a>
-            </li>
-            <li class="header__overlay-menu-item">
-                <a href="/" class="header__overlay-menu-link text-body-large hide-linkstyle">
-                    Biblioteker &amp; åbningstider
-                </a>
-            </li>
-            <li class="header__overlay-menu-item">
-                <a href="/" class="header__overlay-menu-link text-body-large hide-linkstyle">
-                    Digitale tilbud
-                </a>
-            </li>
-            <li class="header__overlay-menu-item">
-                <a href="/" class="header__overlay-menu-link text-body-large hide-linkstyle">
-                    Litteratur
-                </a>
-            </li>
-            <li class="header__overlay-menu-item">
-                <a href="/" class="header__overlay-menu-link text-body-large hide-linkstyle">
-                    Børn &amp; forældre
-                </a>
-            </li>
-        </ul>
+<div class="header-sidebar-nav" data-open="closed">
+    <div class="header-sidebar-nav__background-wrapper">
+      <div class="header-sidebar-nav__menu-wrapper">
+        <div
+          class="header-sidebar-nav__close-menu-button"
+          id="js-header-sidebar-nav__close-menu-button"
+          tabIndex="0"
+          role="button"
+          aria-label="Close menu"
+        >
+           {{ source(directory ~ '/themes/custom/novel/assets/dpl-design-system/icons/collection/CloseLarge.svg') }}
+        </div>
+        <nav aria-label="Sidebar site navigation">
+           {{ drupal_menu('main') }}
+        </nav>
+      </div>
     </div>
-    <div class="header__overlay-backdrop"></div>
-</div>
+  </div>

@@ -3,6 +3,7 @@ langcode: en
 status: true
 dependencies:
   config:
+    - field.field.eventinstance.default.field_categories
     - field.field.eventinstance.default.field_event_address
     - field.field.eventinstance.default.field_event_description
     - field.field.eventinstance.default.field_event_image
@@ -11,6 +12,8 @@ dependencies:
     - field.field.eventinstance.default.field_event_partners
     - field.field.eventinstance.default.field_event_place
     - field.field.eventinstance.default.field_event_state
+    - field.field.eventinstance.default.field_event_title
+    - field.field.eventinstance.default.field_tags
     - field.field.eventinstance.default.field_teaser_image
     - field.field.eventinstance.default.field_teaser_text
     - field.field.eventinstance.default.field_ticket_categories
@@ -55,6 +58,14 @@ content:
     settings: {  }
     third_party_settings: {  }
     weight: 2
+    region: content
+  event_categories:
+    type: entity_reference_label
+    label: hidden
+    settings:
+      link: false
+    third_party_settings: {  }
+    weight: 12
     region: content
   event_description:
     type: text_default
@@ -109,6 +120,14 @@ content:
     third_party_settings: {  }
     weight: 7
     region: content
+  event_tags:
+    type: entity_reference_label
+    label: hidden
+    settings:
+      link: false
+    third_party_settings: {  }
+    weight: 13
+    region: content
   event_teaser_image:
     type: entity_reference_entity_view
     label: hidden
@@ -147,6 +166,7 @@ hidden:
   body: true
   description: true
   event_state: true
+  field_categories: true
   field_event_address: true
   field_event_description: true
   field_event_image: true
@@ -155,6 +175,8 @@ hidden:
   field_event_partners: true
   field_event_place: true
   field_event_state: true
+  field_event_title: true
+  field_tags: true
   field_teaser_image: true
   field_teaser_text: true
   field_ticket_categories: true

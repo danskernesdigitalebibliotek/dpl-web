@@ -2,4 +2,4 @@ dpl_url_proxy.admin_settings:
   title: "Url proxy settings"
   description: "Configure the host names and replacement patterns for proxy urls."
   route_name: dpl_url_proxy.configure
-  parent: "system.admin_config_services"
+  parent: dpl_library_agency.settings

@@ -13,6 +13,8 @@ parameters:
     - '#_alter\(\) has parameter \$form with no value type specified in iterable type array\.#'
     # Drupal preprocess functions uses variables array which we cannot provide more detailed typing of.
     - '#Function .*_preprocess_.*\(\) has parameter \$variables with no value type specified in iterable type array\.#'
+    # Drupal theme suggestions uses arrays which we cannot provide more detailed typing of.
+    - '#Function .*_theme_suggestions_.*\(\) has parameter .* with no value type specified in iterable type array\.#'
     # Drupal hook_page_attachments functions uses page array which we cannot provide more detailed typing of.
     - '#Function .*_page_attachments\(\) has parameter \$page with no value type specified in iterable type array\.#'
     # Drupal hook_requirements() implementation returns array which we cannot provide more detailed typing of.

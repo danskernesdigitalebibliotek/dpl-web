@@ -1,0 +1,20 @@
+uuid: da47383d-eb2e-4943-8cf8-7f7919fa7def
+langcode: en
+status: true
+dependencies:
+  module:
+    - recurring_events
+    - taxonomy
+id: eventinstance.field_categories
+field_name: field_categories
+entity_type: eventinstance
+type: entity_reference
+settings:
+  target_type: taxonomy_term
+module: core
+locked: false
+cardinality: 1
+translatable: true
+indexes: {  }
+persist_with_no_fields: false
+custom_storage: false

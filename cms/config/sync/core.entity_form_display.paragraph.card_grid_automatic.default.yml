@@ -1,0 +1,30 @@
+uuid: 23a6b999-5184-4d4e-beb1-29752b66ce08
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.field.paragraph.card_grid_automatic.field_filter_content_types
+    - field.field.paragraph.card_grid_automatic.field_title
+    - paragraphs.paragraphs_type.card_grid_automatic
+id: paragraph.card_grid_automatic.default
+targetEntityType: paragraph
+bundle: card_grid_automatic
+mode: default
+content:
+  field_filter_content_types:
+    type: options_buttons
+    weight: 1
+    region: content
+    settings: {  }
+    third_party_settings: {  }
+  field_title:
+    type: string_textfield
+    weight: 0
+    region: content
+    settings:
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+hidden:
+  created: true
+  status: true

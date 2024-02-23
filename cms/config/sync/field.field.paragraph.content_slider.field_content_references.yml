@@ -66,4 +66,7 @@ settings:
   user:
     handler: 'default:user'
     handler_settings: {  }
+  taxonomy_term:
+    handler: 'default:taxonomy_term'
+    handler_settings: {  }
 field_type: dynamic_entity_reference

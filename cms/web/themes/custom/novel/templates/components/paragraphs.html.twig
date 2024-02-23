@@ -1,0 +1,7 @@
+<section {{ attributes.addClass('paragraphs') }}>
+  {% for item in items %}
+    <div class="paragraphs__item paragraphs__item--{{ item.content['#paragraph'].bundle() }}">
+      {{ item.content }}
+    </div>
+  {% endfor %}
+</section>

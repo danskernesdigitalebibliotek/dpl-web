@@ -1,0 +1,60 @@
+uuid: 94a9639e-8caa-4677-93e7-e3b51b495d8c
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.field.paragraph.nav_spots_manual.field_nav_spots_content
+    - paragraphs.paragraphs_type.nav_spots_manual
+  module:
+    - dynamic_entity_reference
+id: paragraph.nav_spots_manual.default
+targetEntityType: paragraph
+bundle: nav_spots_manual
+mode: default
+content:
+  field_nav_spots_content:
+    type: dynamic_entity_reference_entity_view
+    label: hidden
+    settings:
+      node:
+        view_mode: nav_spot
+      eventseries:
+        view_mode: nav_spot
+      crop:
+        view_mode: default
+        link: false
+      menu_link_content:
+        view_mode: default
+        link: false
+      eventinstance:
+        view_mode: default
+        link: false
+      file:
+        view_mode: default
+        link: false
+      job_schedule:
+        view_mode: default
+        link: false
+      media:
+        view_mode: default
+        link: false
+      paragraph:
+        view_mode: default
+        link: false
+      search_api_task:
+        view_mode: default
+        link: false
+      taxonomy_term:
+        view_mode: default
+        link: false
+      path_alias:
+        view_mode: default
+        link: false
+      user:
+        view_mode: default
+        link: false
+    third_party_settings: {  }
+    weight: 0
+    region: content
+hidden:
+  search_api_excerpt: true

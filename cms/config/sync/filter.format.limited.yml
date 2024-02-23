@@ -1,0 +1,17 @@
+uuid: 1b54df0f-7a46-4915-962d-a3de1170944e
+langcode: en
+status: true
+dependencies: {  }
+name: Limited
+format: limited
+weight: 0
+filters:
+  filter_html:
+    id: filter_html
+    provider: filter
+    status: true
+    weight: -10
+    settings:
+      allowed_html: '<br> <p> <strong> <em> <a href data-entity-type data-entity-uuid data-entity-substitution>'
+      filter_html_help: true
+      filter_html_nofollow: false

@@ -1,0 +1,20 @@
+uuid: ada606b2-ee0b-411e-b9b4-0c9216d0a19a
+langcode: en
+status: true
+dependencies:
+  module:
+    - node
+    - paragraphs
+id: paragraph.field_filter_content_types
+field_name: field_filter_content_types
+entity_type: paragraph
+type: entity_reference
+settings:
+  target_type: node_type
+module: core
+locked: false
+cardinality: -1
+translatable: true
+indexes: {  }
+persist_with_no_fields: false
+custom_storage: false

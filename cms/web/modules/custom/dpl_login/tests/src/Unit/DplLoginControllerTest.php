@@ -14,6 +14,7 @@ use Drupal\dpl_login\AccessToken;
 use Drupal\dpl_login\Adgangsplatformen\Config;
 use Drupal\dpl_login\Controller\DplLoginController;
 use Drupal\dpl_login\Exception\MissingConfigurationException;
+use Drupal\dpl_login\UnregisteredUserTokensProvider;
 use Drupal\dpl_login\UserTokensProvider;
 use Drupal\openid_connect\OpenIDConnectClaims;
 use Drupal\openid_connect\Plugin\OpenIDConnectClientBase;
@@ -57,6 +58,9 @@ class DplLoginControllerTest extends UnitTestCase {
     $user_token_provider = $this->prophesize(UserTokensProvider::class);
     $user_token_provider->getAccessToken()->willReturn($fake_access_token);
 
+    $unregistered_user_token_provider = $this->prophesize(UnregisteredUserTokensProvider::class);
+    $unregistered_user_token_provider->getAccessToken()->willReturn($fake_access_token);
+
     $config_factory = $this->prophesize(ConfigFactoryInterface::class);
     $config = $this->prophesize(ImmutableConfig::class);
     $config_factory = $this->prophesize(ConfigFactoryInterface::class);
@@ -78,6 +82,7 @@ class DplLoginControllerTest extends UnitTestCase {
     $container = new ContainerBuilder();
     $container->set('logger.factory', $logger_factory->reveal());
     $container->set('dpl_login.user_tokens', $user_token_provider->reveal());
+    $container->set('dpl_login.unregistered_user_tokens', $unregistered_user_token_provider->reveal());
     $container->set('config.factory', $config_factory->reveal());
     $container->set('unrouted_url_assembler', $unrouted_url_assembler->reveal());
     $container->set('url_generator', $url_generator->reveal());
@@ -136,12 +141,15 @@ class DplLoginControllerTest extends UnitTestCase {
     $config_factory->get(Config::CONFIG_KEY)->willReturn($config->reveal());
     $user_token_provider = $this->prophesize(UserTokensProvider::class);
     $user_token_provider->getAccessToken()->willReturn(NULL);
+    $unregistered_user_token_provider = $this->prophesize(UnregisteredUserTokensProvider::class);
+    $unregistered_user_token_provider->getAccessToken()->willReturn(NULL);
     $url_generator = $this->prophesize(UrlGenerator::class);
     $url_generator->generateFromRoute('<front>', Argument::cetera())->willReturn('https://local.site');
 
     $container = \Drupal::getContainer();
     $container->set('dpl_login.adgangsplatformen.config', new Config($config_factory->reveal()));
     $container->set('dpl_login.user_tokens', $user_token_provider->reveal());
+    $container->set('dpl_login.unregistered_user_tokens', $unregistered_user_token_provider->reveal());
     $container->set('url_generator', $url_generator->reveal());
     \Drupal::setContainer($container);
 

@@ -1,0 +1,42 @@
+_meta:
+  version: '1.0'
+  entity_type: media
+  uuid: e8283d3c-968a-4e74-ae02-9f02b76bb839
+  bundle: image
+  default_langcode: da
+  depends:
+    e00e1460-169e-468d-9835-d664f06d0969: file
+default:
+  status:
+    -
+      value: true
+  uid:
+    -
+      target_id: 1
+  name:
+    -
+      value: robert-collins-tvc5imO5pXk-unsplash.jpg
+  created:
+    -
+      value: 1707900559
+  revision_translation_affected:
+    -
+      value: true
+  metatag:
+    -
+      tag: meta
+      attributes:
+        name: title
+        content: '| DPL CMS'
+    -
+      tag: link
+      attributes:
+        rel: canonical
+        href: '/user/login'
+  field_media_image:
+    -
+      entity: e00e1460-169e-468d-9835-d664f06d0969
+      alt: 'childrens playing'
+      title: ''
+      width: 640
+      height: 443

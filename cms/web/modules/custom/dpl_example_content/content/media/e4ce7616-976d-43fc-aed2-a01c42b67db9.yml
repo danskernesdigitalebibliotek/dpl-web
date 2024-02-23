@@ -1,0 +1,42 @@
+_meta:
+  version: '1.0'
+  entity_type: media
+  uuid: e4ce7616-976d-43fc-aed2-a01c42b67db9
+  bundle: image
+  default_langcode: da
+  depends:
+    231326de-6d73-42c6-8ec3-5d2bbae9cb91: file
+default:
+  status:
+    -
+      value: true
+  uid:
+    -
+      target_id: 1
+  name:
+    -
+      value: paige-cody-FHFfHWWzbCc-unsplash.jpg
+  created:
+    -
+      value: 1707900542
+  revision_translation_affected:
+    -
+      value: true
+  metatag:
+    -
+      tag: meta
+      attributes:
+        name: title
+        content: '| DPL CMS'
+    -
+      tag: link
+      attributes:
+        rel: canonical
+        href: '/user/login'
+  field_media_image:
+    -
+      entity: 231326de-6d73-42c6-8ec3-5d2bbae9cb91
+      alt: 'Child playing'
+      title: ''
+      width: 640
+      height: 427

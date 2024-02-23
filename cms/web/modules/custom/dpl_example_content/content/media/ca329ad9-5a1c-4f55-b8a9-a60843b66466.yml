@@ -1,0 +1,42 @@
+_meta:
+  version: '1.0'
+  entity_type: media
+  uuid: ca329ad9-5a1c-4f55-b8a9-a60843b66466
+  bundle: image
+  default_langcode: da
+  depends:
+    4400c2b6-2158-4ddb-aa87-9279dcf77fb7: file
+default:
+  status:
+    -
+      value: true
+  uid:
+    -
+      target_id: 1
+  name:
+    -
+      value: la-rel-easter-KuCGlBXjH_o-unsplash.jpg
+  created:
+    -
+      value: 1707223818
+  revision_translation_affected:
+    -
+      value: true
+  metatag:
+    -
+      tag: meta
+      attributes:
+        name: title
+        content: '| DPL CMS'
+    -
+      tag: link
+      attributes:
+        rel: canonical
+        href: '/user/login'
+  field_media_image:
+    -
+      entity: 4400c2b6-2158-4ddb-aa87-9279dcf77fb7
+      alt: Playroom
+      title: ''
+      width: 640
+      height: 427

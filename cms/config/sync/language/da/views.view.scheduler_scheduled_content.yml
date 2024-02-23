@@ -1,0 +1,79 @@
+display:
+  default:
+    display_options:
+      exposed_form:
+        options:
+          submit_button: Filter
+          reset_button_label: Gendan
+          exposed_sorts_label: 'Sortér efter'
+          sort_asc_label: Stigende
+          sort_desc_label: Faldende
+      pager:
+        options:
+          tags:
+            previous: '‹ forrige'
+            next: 'næste ›'
+            first: '« første'
+            last: 'sidste »'
+      fields:
+        node_bulk_form:
+          action_title: Handling
+        title:
+          label: Titel
+          separator: ', '
+        type:
+          label: Indholdstype
+          separator: ', '
+        name:
+          label: Forfatter
+          separator: ', '
+        status:
+          label: Status
+          settings:
+            format_custom_true: Udgivet
+            format_custom_false: 'Ikke udgivet'
+          separator: ', '
+        publish_on:
+          label: 'Udgiv den'
+          separator: ', '
+        unpublish_on:
+          label: 'Afpublicér den'
+          separator: ', '
+        operations:
+          label: Handlinger
+      filters:
+        title:
+          expose:
+            label: Titel
+        type:
+          expose:
+            label: Indholdstype
+        status:
+          expose:
+            label: Status
+          group_info:
+            label: Publiceringsstatus
+            group_items:
+              1:
+                title: Udgivet
+              2:
+                title: 'Ikke udgivet'
+        langcode:
+          expose:
+            label: Sprog
+    display_title: Master
+  overview:
+    display_options:
+      tab_options:
+        title: Indhold
+  user_page:
+    display_options:
+      menu:
+        title: Planlagt
+      tab_options:
+        title: Indhold
+      arguments:
+        uid:
+          exception:
+            title: Alle
+    display_title: Bruger

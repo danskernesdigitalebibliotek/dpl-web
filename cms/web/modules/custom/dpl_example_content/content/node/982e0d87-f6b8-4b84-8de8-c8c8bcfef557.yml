@@ -1,0 +1,207 @@
+_meta:
+  version: '1.0'
+  entity_type: node
+  uuid: 982e0d87-f6b8-4b84-8de8-c8c8bcfef557
+  bundle: article
+  default_langcode: da
+  depends:
+    eef50571-39dc-461a-96ff-b6b7180ade61: media
+    d97a25fd-a6ae-48b9-9a1a-7aec5372688e: media
+    7b9d1894-7f9a-4f96-a7dc-efa3af5fc902: media
+    a6a77786-07db-48d8-98ff-3bda54f231bf: media
+    aba3cea8-cee5-42c1-a152-e30c2ab135e2: media
+default:
+  revision_uid:
+    -
+      target_id: 1
+  status:
+    -
+      value: true
+  uid:
+    -
+      target_id: 1
+  title:
+    -
+      value: 'Bibliotekarerne anbefaler læsning til den mørke tid'
+  created:
+    -
+      value: 1705495980
+  promote:
+    -
+      value: false
+  sticky:
+    -
+      value: false
+  revision_translation_affected:
+    -
+      value: true
+  metatag:
+    -
+      tag: meta
+      attributes:
+        name: title
+        content: 'Bibliotekarerne anbefaler læsning til den mørke tid | DPL CMS'
+  field_override_author:
+    -
+      value: 'Det Digitale Folkebibliotek'
+  field_paragraphs:
+    -
+      entity:
+        _meta:
+          version: '1.0'
+          entity_type: paragraph
+          uuid: 7004a7cc-fdc8-442b-951c-fd394030cbda
+          bundle: medias
+          default_langcode: da
+        default:
+          status:
+            -
+              value: true
+          created:
+            -
+              value: 1705496823
+          behavior_settings:
+            -
+              value: {  }
+          revision_translation_affected:
+            -
+              value: true
+          field_medias:
+            -
+              entity: eef50571-39dc-461a-96ff-b6b7180ade61
+            -
+              entity: d97a25fd-a6ae-48b9-9a1a-7aec5372688e
+    -
+      entity:
+        _meta:
+          version: '1.0'
+          entity_type: paragraph
+          uuid: 6555217b-0bbc-4347-bb3e-32f856afe163
+          bundle: text_body
+          default_langcode: da
+        default:
+          status:
+            -
+              value: true
+          created:
+            -
+              value: 1705495980
+          behavior_settings:
+            -
+              value: {  }
+          revision_translation_affected:
+            -
+              value: true
+          field_body:
+            -
+              value: '<h2>En overset perle:</h2><h3>Hvis du bankede på min dør af Patrizia Cavalli</h3><p>Hendes fanbase tæller Olga Ravn, Elsa Morante og Giorgio Agamben. Lillian Munk-Rösing er ifølge sin anmeldelse nyforelsket i hende. Hvem spørger du? Den for de fleste danskere hidtil ukendte italienske poesi-stjerne Patrizia Cavalli, der nyligt er udkommet på dansk i udvalg fra Forlaget Kronstork.</p><p>Patrizia Cavalli (1947-2022) skriver friskt og sensuelt om sin italienske hverdag med alt hvad det indebærer af pizza, katte, solbriller, stævnemøder, altopslugende begær og sporadisk dødsdrift. ”Mine digt vil helt sikkert ikke ændre verden” lyder det i et af digtene. Nej de vil de nok ikke. På sin vis er det hverdags-agtige digte, men Cavallis hverdag er bare 10.000 gange mere smægtende end din og min. Og som i alle gode digte er der selvfølgelig visdom at hente. Især af den pragmatiske slags som: ”Det er om dagen man skal drikke sig fuld // når kroppen stadig vil overraskes // af lys og bevægelse, // mens den stadig har energi nok // til at opfinde en katastrofe.” Vil man have en god november har Cavalli et særligt tip til netop denne måned. Man skal blot have følgende materialer klar: ”en formålsløs cykeltur // og ubeskæftigede læber at kysse.” Når november så er overstået og du sidder til et eller andet håbløst julearrangement kan du hente optimisme i dette lille digt: ”Åh, at spise mandariner som aldrig smager af død!”.</p><p>For flere poetiske lifehacks og lidt italiensk sanselighed til din hverdag: Læs Patrizia Cavalli!</p><p>/Benjamin</p>'
+              format: basic
+    -
+      entity:
+        _meta:
+          version: '1.0'
+          entity_type: paragraph
+          uuid: 817a100f-107f-42be-8684-346b50cb237b
+          bundle: medias
+          default_langcode: da
+        default:
+          status:
+            -
+              value: true
+          created:
+            -
+              value: 1705564074
+          behavior_settings:
+            -
+              value: {  }
+          revision_translation_affected:
+            -
+              value: true
+          field_medias:
+            -
+              entity: 7b9d1894-7f9a-4f96-a7dc-efa3af5fc902
+            -
+              entity: a6a77786-07db-48d8-98ff-3bda54f231bf
+    -
+      entity:
+        _meta:
+          version: '1.0'
+          entity_type: paragraph
+          uuid: b0ea9863-8455-4b3f-b126-d48d15dc74bd
+          bundle: text_body
+          default_langcode: da
+        default:
+          status:
+            -
+              value: true
+          created:
+            -
+              value: 1705496012
+          behavior_settings:
+            -
+              value: {  }
+          revision_translation_affected:
+            -
+              value: true
+          field_body:
+            -
+              value: '<h2>En forunderlig læseoplevelse:</h2><h3>Detaljerne af Ia Genberg</h3><p>Det er en forunderlig bog Ia Genberg har skrevet. En bog uden en egentlig intrige, men der sker bestemt en masse i løbet af bogens 156 sider.<br><br>Fortælleren er ramt af en febersygdom. Denne tilstand optræder som bogens ramme – sygdommen inspirerer den navnløse fortæller til at mindes 4 forskellige personer som alle har haft afgørende betydning for hende. Men som hun ikke mere har forbindelse til.<br>Johanna er den første – en kærlighedshistorie som spinder sig rundt om deres fælles interesse for litteratur. Johanna motiverer fortælleren til at forfølge drømmen om at skrive. Rodehovedet Niki er den næste. Hun drømmer også om at skrive, men producerer næppe en brugbar stavelse under deres relation. I stedet konsumeres uanede mængder te og hjemmelavet vin til deres konversationer. Niki afbryder relationer fra det ene øjeblik til det andet – og således også her.<br>Musikeren Alejandro er næste portræt – en sydlandsk orkan som kortvarigt er del af et lokalt band og sætter uudslettelige spor i fortællerens liv og erindring.</p><p>Sidste portræt viser sig at været et meget intenst portræt af fortællerens mor Birgitte. Birgitte udsættes for et overgreb i de tidlige teenageår og udvikler en tilbagetrukken personlighed domineret af permanent uro.</p><p>Det forunderlige er at fortælleren og disse 4 personer står lyslevende for læseren. Og måske især betydningen af deres indbyrdes relationer.<br>Sprogligt fremtræder siderne tætskrevne og den sparsomme direkte dialog er i reglen integreret i fortællingen. Men sproget er enkelt, klart og letlæst. En studie i identitetsdannelse og en lovprisning af hvor afgørende venskaber og fællesskaber er.</p><p>Jeg overdriver ikke når jeg siger at bogen er en helt særlig læseoplevelse.</p><p>/Kasper</p>'
+              format: basic
+    -
+      entity:
+        _meta:
+          version: '1.0'
+          entity_type: paragraph
+          uuid: fc3a6f2e-3cc6-4873-a55c-7b437a3fc9bc
+          bundle: medias
+          default_langcode: da
+        default:
+          status:
+            -
+              value: true
+          created:
+            -
+              value: 1705496927
+          behavior_settings:
+            -
+              value: {  }
+          revision_translation_affected:
+            -
+              value: true
+          field_medias:
+            -
+              entity: aba3cea8-cee5-42c1-a152-e30c2ab135e2
+    -
+      entity:
+        _meta:
+          version: '1.0'
+          entity_type: paragraph
+          uuid: 7376d5a2-a58e-407b-b06b-6bed39287a53
+          bundle: text_body
+          default_langcode: da
+        default:
+          status:
+            -
+              value: true
+          created:
+            -
+              value: 1705496052
+          behavior_settings:
+            -
+              value: {  }
+          revision_translation_affected:
+            -
+              value: true
+          field_body:
+            -
+              value: '<h2>Fascinerende læsning:</h2><h3>Membraner af Chi Ta Wei</h3><p>Chi Ta Wei´s lille fremtidsroman Membraner fra 1996 er på én gang en dystopi, en klimathriller og ikke mindst en queer roman, og den er fascinerende læsning.</p><p>Vi befinder os i en verden, hvor menneskeheden pga. den ødelagte tilværelse på landjorden har dannet et samfund i dybhavet.</p><p>Hovedpersonen Momo er 30 år og kosmetolog. Da menneskets største organ huden er truet, har hun opfundet en særlig membranhud, der gør hendes klinik meget efterspurgt. Denne ekstra hud ligger som et lag mellem omverdenen og den person, der bærer den og fungerer som en skanner, der gør Momo i stand til at sanse andre menneskers oplevelser og seksualitet. På denne måde mindskes behovet for direkte social kontakt med andre, da man til dels får dækket det behov gennem M-huden.</p><p>Momo blev som ganske lille angrebet af en virus, der medførte, at alle organer måtte erstattes af en donor på nær hjernen. Til at underholde Momo på hospitalet, får hun vennen Andy, der er en overnuttet androide, der meget ligner og tænker som Momo selv. Efter operationen forsvinder Andy og efterlader et stort savn hos Momo.</p><p>Et andet stort savn for Momo er fraværet af hendes mor. Et fravær der måske ikke er reelt, da følelsen af savn kan være inkorporeret i Momos hjerne, eftersom Momo i virkeligheden er et eksperiment for morens firma.</p><p>Bogen stiller en række spørgsmål – hvor lidt skal der være tilbage af et menneske, før man kan tale om at være sig selv, og hvornår bliver man en anden? Hvem er dreng og hvem er pige, og giver det mening at tale om to køn? Hvem er ægte og hvem er kunstigt skabt, og hvor langt vil vi gå i forhold til kunstig befrugtning og genetisk påvirkning? Er køn og seksualitet noget vi vælger? Er vores følelser ægte?</p><p>Bogen er smukt indbundet og den første udgivelse fra Taiwan, der er oversat til dansk her i 2023. Selvom fortællingen er kompleks, er sproget let og flydende. Jeg ser frem til at opleve Chi Ta-Wei på årets BogForum.</p><p>/Lasse</p>'
+              format: basic
+  field_show_override_author:
+    -
+      value: true
+  field_subtitle:
+    -
+      value: 'De læseglade bibliotekarer Benjamin, Lasse og Kasper anbefaler fremragende læsestof til dine mørke aftner.'
+  field_teaser_image:
+    -
+      entity: eef50571-39dc-461a-96ff-b6b7180ade61

@@ -1,0 +1,160 @@
+_meta:
+  version: '1.0'
+  entity_type: eventseries
+  uuid: 2ce9d9b0-7f10-4a17-9a5e-383d36c1ed93
+  bundle: default
+  default_langcode: en
+  depends:
+    482892d1-7295-4cf3-92e1-dce9222fd1fc: eventinstance
+    0fa7245a-3434-4d96-9793-a1848a22d37a: taxonomy_term
+    a0176f8c-bb7e-4f5a-bf23-b48cd8bab05f: media
+default:
+  revision_uid:
+    -
+      target_id: 1
+  status:
+    -
+      value: true
+  uid:
+    -
+      target_id: 1
+  title:
+    -
+      value: 'Juleballet - Nøddeknækkeren'
+  recur_type:
+    -
+      value: custom
+  consecutive_recurring_date:
+    -
+      value: ''
+      end_value: ''
+      time: '08:00 am'
+      end_time: '11:30 pm'
+      duration: 5
+      duration_units: minute
+      buffer: 0
+      buffer_units: minute
+  daily_recurring_date:
+    -
+      value: ''
+      end_value: ''
+      time: '08:00 am'
+      duration: 900
+      end_time: '08:00 am'
+      duration_or_end_time: duration
+  weekly_recurring_date:
+    -
+      value: ''
+      end_value: ''
+      time: '08:00 am'
+      duration: 900
+      end_time: '08:00 am'
+      duration_or_end_time: duration
+      days: ''
+  monthly_recurring_date:
+    -
+      value: ''
+      end_value: ''
+      time: '08:00 am'
+      duration: 900
+      end_time: '08:00 am'
+      duration_or_end_time: duration
+      days: ''
+      type: ''
+      day_occurrence: ''
+      day_of_month: ''
+  yearly_recurring_date:
+    -
+      value: ''
+      end_value: ''
+      time: '08:00 am'
+      duration: 900
+      end_time: '08:00 am'
+      duration_or_end_time: duration
+      days: ''
+      type: ''
+      day_occurrence: ''
+      day_of_month: ''
+      year_interval: 1
+      months: ''
+  custom_date:
+    -
+      value: '2030-02-23T09:00:00'
+      end_value: '2030-02-23T14:00:00'
+  created:
+    -
+      value: 1706868456
+  revision_translation_affected:
+    -
+      value: true
+  metatag:
+    -
+      tag: meta
+      attributes:
+        name: title
+        content: '| DPL CMS'
+    -
+      tag: link
+      attributes:
+        rel: canonical
+        href: '/user/login'
+  event_instances:
+    -
+      entity: 482892d1-7295-4cf3-92e1-dce9222fd1fc
+  field_categories:
+    -
+      entity: 0fa7245a-3434-4d96-9793-a1848a22d37a
+  field_event_address:
+    -
+      langcode: en
+      country_code: DK
+      locality: Aarhus
+      postal_code: '8000'
+      address_line1: 'Kampmanns Plads 2'
+  field_event_description:
+    -
+      value: "<p>Tag med til en fortryllende oplevelse med 'Juleballet - Nøddeknækkeren', en tidløs balletklassiker der fortryller publikum af alle aldre. Nyd Tjajkovskijs betagende musik og enestående dans, som bringer julemagien til live. En ideel begivenhed for familier, par og balletentusiaster, der søger en unik kulturel oplevelse. Sikre dig din billet til denne uforglemmelige forestilling!</p>"
+      format: limited
+  field_event_image:
+    -
+      entity: a0176f8c-bb7e-4f5a-bf23-b48cd8bab05f
+  field_event_partners:
+    -
+      value: 'Julemandens Værksted'
+  field_event_place:
+    -
+      value: 'Hovedbibliotek '
+  field_event_state:
+    -
+      value: Active
+  field_teaser_image:
+    -
+      entity: a0176f8c-bb7e-4f5a-bf23-b48cd8bab05f
+  field_ticket_categories:
+    -
+      entity:
+        _meta:
+          version: '1.0'
+          entity_type: paragraph
+          uuid: e8f08fd9-e09b-4e37-ba63-055cc7f30f29
+          bundle: event_ticket_category
+          default_langcode: en
+        default:
+          status:
+            -
+              value: true
+          created:
+            -
+              value: 1706868456
+          behavior_settings:
+            -
+              value: {  }
+          revision_translation_affected:
+            -
+              value: true
+          field_ticket_category_name:
+            -
+              value: Standard
+          field_ticket_category_price:
+            -
+              value: '100.00'

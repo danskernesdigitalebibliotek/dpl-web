@@ -1,0 +1,27 @@
+_meta:
+  version: '1.0'
+  entity_type: file
+  uuid: 50b4d50b-9c75-4698-b803-a125b46daaac
+  default_langcode: en
+default:
+  uid:
+    -
+      target_id: 1
+  filename:
+    -
+      value: inaki-del-olmo-NIJuEQw0RKg-unsplash.jpg
+  uri:
+    -
+      value: 'public://2024-01/inaki-del-olmo-NIJuEQw0RKg-unsplash_0.jpg'
+  filemime:
+    -
+      value: image/jpeg
+  filesize:
+    -
+      value: 109223
+  status:
+    -
+      value: true
+  created:
+    -
+      value: 1705564087

@@ -1,0 +1,10 @@
+{% set item_classes = [
+    'tag',
+    'tag--fill',
+  ] %}
+
+{% for item in items %}
+    <span{{ item.attributes.addClass(item_classes) }}>
+        {{ item.content|raw }}
+    </span>
+{% endfor %}

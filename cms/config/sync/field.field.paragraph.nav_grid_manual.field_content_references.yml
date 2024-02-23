@@ -1,0 +1,68 @@
+uuid: 4e05544e-bace-4771-aebc-b153ce7eb2e9
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.paragraph.field_content_references
+    - paragraphs.paragraphs_type.nav_grid_manual
+  module:
+    - dynamic_entity_reference
+id: paragraph.nav_grid_manual.field_content_references
+field_name: field_content_references
+entity_type: paragraph
+bundle: nav_grid_manual
+label: Contents
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings:
+  node:
+    handler: views
+    handler_settings:
+      view:
+        view_name: entity_reference_content
+        display_name: entity_reference_1
+        arguments: {  }
+  eventseries:
+    handler: views
+    handler_settings:
+      view:
+        view_name: entity_reference_event_series
+        display_name: entity_reference_1
+        arguments: {  }
+  crop:
+    handler: 'default:crop'
+    handler_settings: {  }
+  menu_link_content:
+    handler: 'default:menu_link_content'
+    handler_settings: {  }
+  eventinstance:
+    handler: 'default:eventinstance'
+    handler_settings: {  }
+  file:
+    handler: 'default:file'
+    handler_settings: {  }
+  job_schedule:
+    handler: 'default:job_schedule'
+    handler_settings: {  }
+  media:
+    handler: 'default:media'
+    handler_settings: {  }
+  paragraph:
+    handler: 'default:paragraph'
+    handler_settings: {  }
+  search_api_task:
+    handler: 'default:search_api_task'
+    handler_settings: {  }
+  taxonomy_term:
+    handler: 'default:taxonomy_term'
+    handler_settings: {  }
+  path_alias:
+    handler: 'default:path_alias'
+    handler_settings: {  }
+  user:
+    handler: 'default:user'
+    handler_settings: {  }
+field_type: dynamic_entity_reference

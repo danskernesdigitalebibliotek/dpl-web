@@ -2,4 +2,4 @@ dpl_patron_redirect.settings_form:
   title: "Patron redirect settings"
   route_name: dpl_patron_redirect.settings
   description: "Set auth redirect paths for patrons"
-  parent: user.admin_index
+  parent: dpl_library_agency.settings
