@@ -1,7 +1,23 @@
 uuid: 99d5eac0-4a8a-4689-8278-7a9f33a71111
 langcode: en
 status: true
-dependencies: {  }
+dependencies:
+  module:
+    - scheduler
+third_party_settings:
+  scheduler:
+    expand_fieldset: when_required
+    fields_display_mode: vertical_tab
+    publish_enable: 1
+    publish_past_date: error
+    publish_past_date_created: 0
+    publish_required: 0
+    publish_revision: 0
+    publish_touch: 0
+    show_message_after_update: 1
+    unpublish_enable: 1
+    unpublish_required: 0
+    unpublish_revision: 0
 _core:
   default_config_hash: WhOawYzY2jtIq8ND2DpY_hhidNwqx1DcS221RHT2Exk
 id: default

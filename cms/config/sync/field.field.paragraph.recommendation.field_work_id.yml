@@ -1,0 +1,19 @@
+uuid: cdb78619-571e-490b-8b85-0e6555e6cc72
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.paragraph.field_work_id
+    - paragraphs.paragraphs_type.recommendation
+id: paragraph.recommendation.field_work_id
+field_name: field_work_id
+entity_type: paragraph
+bundle: recommendation
+label: 'Work ID'
+description: "This is the work ID used to retrieve the material information. Example: work-of:870970-basis:136336282\r\n\r\nCurrently this is retrieved by performing a search for a material manually, and copying this value from the URL. \r\n\r\n"
+required: true
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: string

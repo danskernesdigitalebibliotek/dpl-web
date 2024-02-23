@@ -1,0 +1,20 @@
+uuid: e397dced-3476-4df6-8af5-5047cec9314b
+langcode: en
+status: true
+dependencies:
+  module:
+    - paragraphs
+    - text
+id: paragraph.field_recommendation_title
+field_name: field_recommendation_title
+entity_type: paragraph
+type: text
+settings:
+  max_length: 255
+module: text
+locked: false
+cardinality: 1
+translatable: true
+indexes: {  }
+persist_with_no_fields: false
+custom_storage: false

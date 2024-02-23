@@ -41,11 +41,15 @@ jobs:
           ref: ${{ github.head_ref }}
           logs: ${{ steps.environment.outputs.logs }}
           debug: ${{ runner.debug && 'true' || 'false' }}
+      - name: Generate wait-on config
+        # Retrieval of Let's Encrypt certificate sometimes fail in Lagoon.
+        # In this case a self-signed certificate will be used. Allow this.
+        run: |
+          echo "{\"strictSSL\": false}" > $RUNNER_TEMP/wait-on.config.json
       - name: Wait for environment to become available
-        uses: nev7n/wait_for_response@v1
+        uses: iFaxity/wait-on-action@v1.1.0
         with:
-          url: ${{ steps.environment.outputs.url }}
-          responseCode: 200
+          resource: ${{ steps.environment.outputs.url }}
           # Time in ms. Wait for 15 mins for deployment to complete. We have
           # seen deployments taking up to 12 mins.
           timeout: 600000
@@ -54,6 +58,7 @@ jobs:
           # is not complete. Reduce polling interval to the risk of this
           # happening.
           interval: 10000
+          config: ${{ runner.temp }}/wait-on.config.json
       - name: Finish deployment
         if: always()
         uses: bobheadxi/deployments@v1.4.0

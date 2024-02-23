@@ -1,0 +1,29 @@
+uuid: c7498d8d-5644-48bf-9755-bc2de247b30a
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.paragraph.field_hero_categories
+    - paragraphs.paragraphs_type.hero
+    - taxonomy.vocabulary.categories
+id: paragraph.hero.field_hero_categories
+field_name: field_hero_categories
+entity_type: paragraph
+bundle: hero
+label: 'Hero categories'
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings:
+  handler: 'default:taxonomy_term'
+  handler_settings:
+    target_bundles:
+      categories: categories
+    sort:
+      field: name
+      direction: asc
+    auto_create: false
+    auto_create_bundle: ''
+field_type: entity_reference

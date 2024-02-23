@@ -1,0 +1,27 @@
+_meta:
+  version: '1.0'
+  entity_type: file
+  uuid: 24244298-ff4d-4662-bc7f-5b9aa529f89e
+  default_langcode: en
+default:
+  uid:
+    -
+      target_id: 1
+  filename:
+    -
+      value: ed-robertson-eeSdJfLfx1A-unsplash.jpg
+  uri:
+    -
+      value: 'public://2024-02/ed-robertson-eeSdJfLfx1A-unsplash.jpg'
+  filemime:
+    -
+      value: image/jpeg
+  filesize:
+    -
+      value: 90482
+  status:
+    -
+      value: true
+  created:
+    -
+      value: 1706868717

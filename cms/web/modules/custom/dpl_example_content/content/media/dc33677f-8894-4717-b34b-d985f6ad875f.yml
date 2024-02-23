@@ -32,7 +32,7 @@ default:
       tag: link
       attributes:
         rel: canonical
-        href: 'http://dapple-cms.docker/user/login'
+        href: '/user/login'
   field_media_file:
     -
       entity: 3403d0ba-cbdc-425d-93f4-6cdabb5378b1

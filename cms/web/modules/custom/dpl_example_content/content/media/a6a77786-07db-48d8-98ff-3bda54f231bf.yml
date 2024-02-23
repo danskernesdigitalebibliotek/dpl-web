@@ -1,0 +1,42 @@
+_meta:
+  version: '1.0'
+  entity_type: media
+  uuid: a6a77786-07db-48d8-98ff-3bda54f231bf
+  bundle: image
+  default_langcode: da
+  depends:
+    7fb4d332-81ef-4dc0-af9a-dfcd29ecf367: file
+default:
+  status:
+    -
+      value: true
+  uid:
+    -
+      target_id: 1
+  name:
+    -
+      value: janko-ferlic-sfL_QOnmy00-unsplash.jpg
+  created:
+    -
+      value: 1705564087
+  revision_translation_affected:
+    -
+      value: true
+  metatag:
+    -
+      tag: meta
+      attributes:
+        name: title
+        content: '| DPL CMS'
+    -
+      tag: link
+      attributes:
+        rel: canonical
+        href: '/user/login'
+  field_media_image:
+    -
+      entity: 7fb4d332-81ef-4dc0-af9a-dfcd29ecf367
+      alt: Library
+      title: ''
+      width: 640
+      height: 592

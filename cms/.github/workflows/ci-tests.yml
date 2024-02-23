@@ -112,7 +112,7 @@ jobs:
           # certain vars.
           fetch-depth: 0
       - name: Install go-task
-        uses: arduino/setup-task@v1
+        uses: arduino/setup-task@v2
         with:
           repo-token: ${{ secrets.GITHUB_TOKEN }}
       - name: Setup site
@@ -135,7 +135,7 @@ jobs:
           # certain vars.
           fetch-depth: 0
       - name: Install go-task
-        uses: arduino/setup-task@v1
+        uses: arduino/setup-task@v2
         with:
           repo-token: ${{ secrets.GITHUB_TOKEN }}
       - name: Setup site
@@ -159,7 +159,7 @@ jobs:
           # certain vars.
           fetch-depth: 0
       - name: Install go-task
-        uses: arduino/setup-task@v1
+        uses: arduino/setup-task@v2
         with:
           repo-token: ${{ secrets.GITHUB_TOKEN }}
       - name: Setup site
@@ -245,7 +245,7 @@ jobs:
           # certain vars.
           fetch-depth: 0
       - name: Install go-task
-        uses: arduino/setup-task@v1
+        uses: arduino/setup-task@v2
         with:
           repo-token: ${{ secrets.GITHUB_TOKEN }}
       - name: Setup site
@@ -267,7 +267,7 @@ jobs:
           # certain vars.
           fetch-depth: 0
       - name: Install go-task
-        uses: arduino/setup-task@v1
+        uses: arduino/setup-task@v2
         with:
           repo-token: ${{ secrets.GITHUB_TOKEN }}
       - name: Setup site

@@ -5,10 +5,12 @@ dependencies:
   config:
     - core.entity_view_mode.node.teaser
     - field.field.node.article.field_canonical_url
+    - field.field.node.article.field_categories
     - field.field.node.article.field_override_author
     - field.field.node.article.field_paragraphs
     - field.field.node.article.field_show_override_author
     - field.field.node.article.field_subtitle
+    - field.field.node.article.field_tags
     - field.field.node.article.field_teaser_image
     - field.field.node.article.field_teaser_text
     - node.type.article
@@ -26,10 +28,12 @@ content:
     region: content
 hidden:
   field_canonical_url: true
+  field_categories: true
   field_override_author: true
   field_paragraphs: true
   field_show_override_author: true
   field_subtitle: true
+  field_tags: true
   field_teaser_image: true
   field_teaser_text: true
   langcode: true

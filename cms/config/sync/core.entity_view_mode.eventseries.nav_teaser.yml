@@ -1,0 +1,10 @@
+uuid: c268965d-1941-4128-963f-472f60096711
+langcode: en
+status: true
+dependencies:
+  module:
+    - recurring_events
+id: eventseries.nav_teaser
+label: 'Navigation teaser'
+targetEntityType: eventseries
+cache: true

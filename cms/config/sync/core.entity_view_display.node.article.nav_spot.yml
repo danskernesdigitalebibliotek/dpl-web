@@ -1,0 +1,57 @@
+uuid: 3b739cc8-566e-449f-b586-50eab53f3583
+langcode: en
+status: true
+dependencies:
+  config:
+    - core.entity_view_mode.node.nav_spot
+    - field.field.node.article.field_canonical_url
+    - field.field.node.article.field_categories
+    - field.field.node.article.field_override_author
+    - field.field.node.article.field_paragraphs
+    - field.field.node.article.field_show_override_author
+    - field.field.node.article.field_subtitle
+    - field.field.node.article.field_tags
+    - field.field.node.article.field_teaser_image
+    - field.field.node.article.field_teaser_text
+    - node.type.article
+  module:
+    - user
+id: node.article.nav_spot
+targetEntityType: node
+bundle: article
+mode: nav_spot
+content:
+  field_subtitle:
+    type: basic_string
+    label: hidden
+    settings: {  }
+    third_party_settings: {  }
+    weight: 0
+    region: content
+  field_teaser_image:
+    type: entity_reference_entity_view
+    label: hidden
+    settings:
+      view_mode: hero_wide
+      link: false
+    third_party_settings: {  }
+    weight: 2
+    region: content
+  field_teaser_text:
+    type: string
+    label: hidden
+    settings:
+      link_to_entity: false
+    third_party_settings: {  }
+    weight: 1
+    region: content
+hidden:
+  field_canonical_url: true
+  field_categories: true
+  field_override_author: true
+  field_paragraphs: true
+  field_show_override_author: true
+  field_tags: true
+  langcode: true
+  links: true
+  search_api_excerpt: true

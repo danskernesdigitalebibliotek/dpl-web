@@ -1,0 +1,7 @@
+<ul class="header__menu-navigation">
+  {% for item in items %}
+    <li class="header__menu-navigation-item">
+      {{ link(item.title, item.url, item.attributes.addClass('header__menu-navigation-link', 'hide-linkstyle')) }}
+    </li>
+  {% endfor %}
+</ul>

@@ -1,0 +1,45 @@
+uuid: edb43157-230d-4718-9b66-2cea11d8f726
+langcode: en
+status: true
+dependencies:
+  config:
+    - core.entity_view_mode.paragraph.preview
+    - field.field.paragraph.nav_grid_manual.field_content_references
+    - field.field.paragraph.nav_grid_manual.field_show_subtitles
+    - field.field.paragraph.nav_grid_manual.field_title
+    - paragraphs.paragraphs_type.nav_grid_manual
+  module:
+    - dynamic_entity_reference
+id: paragraph.nav_grid_manual.preview
+targetEntityType: paragraph
+bundle: nav_grid_manual
+mode: preview
+content:
+  field_content_references:
+    type: dynamic_entity_reference_label
+    label: above
+    settings:
+      link: true
+    third_party_settings: {  }
+    weight: 2
+    region: content
+  field_show_subtitles:
+    type: boolean
+    label: above
+    settings:
+      format: unicode-yes-no
+      format_custom_false: ''
+      format_custom_true: ''
+    third_party_settings: {  }
+    weight: 1
+    region: content
+  field_title:
+    type: string
+    label: above
+    settings:
+      link_to_entity: false
+    third_party_settings: {  }
+    weight: 0
+    region: content
+hidden:
+  search_api_excerpt: true

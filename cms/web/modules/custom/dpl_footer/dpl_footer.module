@@ -1,0 +1,29 @@
+<?php
+
+/**
+ * @file
+ * Dpl Footer.
+ */
+
+/**
+ * Implements hook_preprocess_page().
+ */
+function dpl_footer_preprocess_page(array &$variables): void {
+  // We could put this in the novel.theme file, but that would
+  // result in a dependency between this module.
+  if ('novel' != \Drupal::service('theme.manager')->getActiveTheme()->getName()) {
+    return;
+  }
+
+  // Setting a cache tag so we can clear caches when the footer is updated.
+  $variables['#cache']['tags'][] = 'dpl_footer';
+
+  // Preparing the footer variables.
+  $footer_values = \Drupal::state()->get('dpl_footer_values');
+
+  // Directly assigning footer variables without checking for
+  // a specific language.
+  if (!empty($footer_values)) {
+    $variables['footer_items'] = $footer_values['footer_items'];
+  }
+}

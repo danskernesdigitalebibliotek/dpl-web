@@ -1,0 +1,228 @@
+_meta:
+  version: '1.0'
+  entity_type: node
+  uuid: 9cfd15df-32b4-4af9-b2da-56b039b5bf6b
+  bundle: article
+  default_langcode: da
+default:
+  revision_uid:
+    -
+      target_id: 1
+  status:
+    -
+      value: true
+  uid:
+    -
+      target_id: 1
+  title:
+    -
+      value: '3 gode til godnat 3-6 år'
+  created:
+    -
+      value: 1706877153
+  promote:
+    -
+      value: false
+  sticky:
+    -
+      value: false
+  revision_translation_affected:
+    -
+      value: true
+  metatag:
+    -
+      tag: meta
+      attributes:
+        name: title
+        content: '3 gode til godnat 3-6 år | DPL CMS'
+  field_paragraphs:
+    -
+      entity:
+        _meta:
+          version: '1.0'
+          entity_type: paragraph
+          uuid: 2daf7604-e4e1-439e-928e-01aa5f809c75
+          bundle: text_body
+          default_langcode: da
+        default:
+          status:
+            -
+              value: true
+          created:
+            -
+              value: 1706877153
+          behavior_settings:
+            -
+              value: {  }
+          revision_translation_affected:
+            -
+              value: true
+          field_body:
+            -
+              value: '<p>Godnathistorien kan være et helle i en travl hverdag. Der hvor børn og voksne kommer tæt på hinanden, får vendt dagen og får ro på inden det er tid til at sige godnat. Vi har fundet tre gode bud på godnat læsning som også egner sig specielt godt til tre forskellige situationer:</p>'
+              format: basic
+    -
+      entity:
+        _meta:
+          version: '1.0'
+          entity_type: paragraph
+          uuid: c9f98422-1401-414e-9477-2c87f6ab0d33
+          bundle: text_body
+          default_langcode: da
+        default:
+          status:
+            -
+              value: true
+          created:
+            -
+              value: 1707913728
+          behavior_settings:
+            -
+              value: {  }
+          revision_translation_affected:
+            -
+              value: true
+          field_body:
+            -
+              value: '<h2>En til dem der ikke vil sove…</h2><p>”Godnat sagde katten” af Glem Ringtved og Rasmus Bregnhøi.<br>Det er det samme hver aften. Lucas vil ikke sove. Far læser to godnathistorier, men det er slet ikke nok. Far skal finde på sin helt egen historie, og dén historie griber om sig.</p>'
+              format: basic
+    -
+      entity:
+        _meta:
+          version: '1.0'
+          entity_type: paragraph
+          uuid: 92e41347-deb0-4df3-a005-2d2a230ef279
+          bundle: recommendation
+          default_langcode: da
+        default:
+          status:
+            -
+              value: true
+          created:
+            -
+              value: 1706877483
+          behavior_settings:
+            -
+              value: {  }
+          revision_translation_affected:
+            -
+              value: true
+          field_image_position_right:
+            -
+              value: false
+          field_work_id:
+            -
+              value: 'work-of:870970-basis:51869168'
+    -
+      entity:
+        _meta:
+          version: '1.0'
+          entity_type: paragraph
+          uuid: c43d5dd8-c147-42a0-84fa-772e1ad87238
+          bundle: text_body
+          default_langcode: da
+        default:
+          status:
+            -
+              value: true
+          created:
+            -
+              value: 1707913741
+          behavior_settings:
+            -
+              value: {  }
+          revision_translation_affected:
+            -
+              value: true
+          field_body:
+            -
+              value: '<h2>En til dem der er lidt bange…</h2><p>”Da Carl næsten sov i telt” af Ida Jessen og Hanne Bartholin.<br>Den lille Elefantunge Carl skal sove i telt med sin bedste veninde, Fanny. Da mørket falder på, og det er på tide at lægge sig til at sove, vil Carl allerhelst ind i huset til mor og far.</p>'
+              format: basic
+    -
+      entity:
+        _meta:
+          version: '1.0'
+          entity_type: paragraph
+          uuid: 5eb036e0-cf4d-4904-ae53-1816bf460f86
+          bundle: recommendation
+          default_langcode: da
+        default:
+          status:
+            -
+              value: true
+          created:
+            -
+              value: 1707913764
+          behavior_settings:
+            -
+              value: {  }
+          revision_translation_affected:
+            -
+              value: true
+          field_image_position_right:
+            -
+              value: true
+          field_work_id:
+            -
+              value: 'work-of:870970-basis:51143574'
+    -
+      entity:
+        _meta:
+          version: '1.0'
+          entity_type: paragraph
+          uuid: f7f2316d-5921-485c-a0bb-8f7604855bef
+          bundle: text_body
+          default_langcode: da
+        default:
+          status:
+            -
+              value: true
+          created:
+            -
+              value: 1707913798
+          behavior_settings:
+            -
+              value: {  }
+          revision_translation_affected:
+            -
+              value: true
+          field_body:
+            -
+              value: '<h2>En med hjælp til dem, der ikke kan sove…</h2><p>”En prik og en streg – godnateventyr til at tegne på ryggen” af Mette Hegnhøj.<br>Prik og Streg triller til bageren, bugter sig som slanger og opfinder deres eget alfabet i denne bog helt uden billeder. En bog, der skal læses højt mens Prik og Stregs spilopper tegnes på ryggen.</p>'
+              format: basic
+    -
+      entity:
+        _meta:
+          version: '1.0'
+          entity_type: paragraph
+          uuid: 27f7a907-8b31-4852-8f9c-a446e1a942be
+          bundle: recommendation
+          default_langcode: da
+        default:
+          status:
+            -
+              value: true
+          created:
+            -
+              value: 1707913803
+          behavior_settings:
+            -
+              value: {  }
+          revision_translation_affected:
+            -
+              value: true
+          field_image_position_right:
+            -
+              value: false
+          field_work_id:
+            -
+              value: 'work-of:870970-basis:53642101'
+  field_show_override_author:
+    -
+      value: false
+  field_subtitle:
+    -
+      value: 'Dit børnebibliotek anbefaler tre skønne bøger til hygge ved sengetid. En til dem der er lidt bange, en med hjælp til dem der ikke vil sove og en skøn og hyggelig historie om en prik og en streg til fortælle og tegne på ryggen'
+  field_teaser_text:
+    -
+      value: Godnat

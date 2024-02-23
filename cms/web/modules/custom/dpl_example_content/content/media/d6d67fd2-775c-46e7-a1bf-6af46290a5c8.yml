@@ -1,0 +1,42 @@
+_meta:
+  version: '1.0'
+  entity_type: media
+  uuid: d6d67fd2-775c-46e7-a1bf-6af46290a5c8
+  bundle: image
+  default_langcode: da
+  depends:
+    ed301960-e40f-42b5-9229-4ac20fd07a7e: file
+default:
+  status:
+    -
+      value: true
+  uid:
+    -
+      target_id: 1
+  name:
+    -
+      value: markus-spiske-i5tesTFPBjw-unsplash.jpg
+  created:
+    -
+      value: 1706869818
+  revision_translation_affected:
+    -
+      value: true
+  metatag:
+    -
+      tag: meta
+      attributes:
+        name: title
+        content: '| DPL CMS'
+    -
+      tag: link
+      attributes:
+        rel: canonical
+        href: '/user/login'
+  field_media_image:
+    -
+      entity: ed301960-e40f-42b5-9229-4ac20fd07a7e
+      alt: Recycling
+      title: ''
+      width: 640
+      height: 960

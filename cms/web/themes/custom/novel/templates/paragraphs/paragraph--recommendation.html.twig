@@ -1,0 +1,14 @@
+{% if content.field_recommendation_title.0 or content.field_recommendation_description.0 %}
+  <div class="recommendation {{ react_app['#position_image_right'] ? 'recommendation--reversed"' : '' }}" >
+    {{ react_app }}
+    <a href="{{ react_app['#material_url'] }}" class="recommendation__texts arrow__hover--right-small">
+      <h3 class="recommendation__title">{{ content.field_recommendation_title }}</h3>
+      <p class="recommendation__description">
+        {{ content.field_recommendation_description }}
+      </p>
+      {{ source(baseIconPath ~ '/arrow-ui/icon-arrow-ui-small-right.svg') }}
+    </a>
+  </div>
+{% else %}
+  {{ react_app }}
+{% endif %}

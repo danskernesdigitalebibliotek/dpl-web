@@ -1,0 +1,11 @@
+<details {{ attributes.addClass('disclosure', 'disclosure--paragraph-width', 'text-body-large') }}>
+<summary class="disclosure__headline text-body-large">
+    <h3 class="text-body-large disclosure__text">
+      {{ content.field_accordion_title }}
+    </h3>
+      <img class="disclosure__expand" src="{{ absoluteBaseUrl ~ '/' ~ baseIconPath ~ '/collection/ExpandMore.svg' }}" alt="Icon Description" />
+  </summary>
+  <div class="disclosure__content-padding">
+    {{ content.field_accordion_description }}
+  </div>
+</details>

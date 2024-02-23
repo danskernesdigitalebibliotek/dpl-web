@@ -61,5 +61,7 @@ hidden:
   created: true
   langcode: true
   promote: true
+  publish_on: true
   sticky: true
   uid: true
+  unpublish_on: true

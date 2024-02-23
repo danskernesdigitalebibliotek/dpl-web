@@ -2,13 +2,14 @@ dpl_library_agency.settings:
   title: "Library Agency"
   route_name: dpl_library_agency.settings
   parent: system.admin_config
-  weight: 0
+  weight: -1000
 
 dpl_library_agency.general_settings_form:
   title: "General Settings"
   description: "Administer various settings for a library agency."
   route_name: dpl_library_agency.general_settings
   parent: dpl_library_agency.settings
+  weight: -999
 
 dpl_library_agency.list_size_settings_form:
   title: "List Size Settings"

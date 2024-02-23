@@ -1,0 +1,373 @@
+_meta:
+  version: '1.0'
+  entity_type: node
+  uuid: fd774222-4b22-4803-ae45-2d4e80d84fac
+  bundle: page
+  default_langcode: da
+  depends:
+    92033694-15ac-4d9e-b275-ddfd18e48d9f: taxonomy_term
+    65432ee1-43f1-4130-9565-5683467d4b5a: media
+    fb8b4d62-de14-4620-9ca1-be60cab74a65: eventseries
+    f6aafa27-a538-44a3-ae1f-02f8efbfb068: eventseries
+    982e0d87-f6b8-4b84-8de8-c8c8bcfef557: node
+    c8177097-1438-493e-8177-e8ef968cc133: eventseries
+    2cd0fe5e-4159-4452-86aa-e1a1ac8db4a1: node
+    2ce9d9b0-7f10-4a17-9a5e-383d36c1ed93: eventseries
+    9cfd15df-32b4-4af9-b2da-56b039b5bf6b: node
+default:
+  revision_uid:
+    -
+      target_id: 1
+  status:
+    -
+      value: true
+  uid:
+    -
+      target_id: 1
+  title:
+    -
+      value: Frontpage
+  created:
+    -
+      value: 1706712421
+  promote:
+    -
+      value: false
+  sticky:
+    -
+      value: false
+  revision_translation_affected:
+    -
+      value: true
+  metatag:
+    -
+      tag: meta
+      attributes:
+        name: title
+        content: 'Frontpage | DPL CMS'
+  field_paragraphs:
+    -
+      entity:
+        _meta:
+          version: '1.0'
+          entity_type: paragraph
+          uuid: 9017f62f-16ed-4b28-b341-de4a8486113e
+          bundle: hero
+          default_langcode: da
+        default:
+          status:
+            -
+              value: true
+          created:
+            -
+              value: 1706712441
+          behavior_settings:
+            -
+              value: {  }
+          revision_translation_affected:
+            -
+              value: true
+          field_hero_categories:
+            -
+              entity: 92033694-15ac-4d9e-b275-ddfd18e48d9f
+          field_hero_content_type:
+            -
+              value: Arrangement
+          field_hero_date:
+            -
+              value: '2023-12-23'
+          field_hero_description:
+            -
+              value: "<p>Boghandlernes store bogpris - De Gyldne går denne gang til Stine Pilgaard for hendes roman 'Meter i sekundet'. Stort tillykke til Stine Pilgaard.</p>"
+              format: basic
+          field_hero_image:
+            -
+              entity: 65432ee1-43f1-4130-9565-5683467d4b5a
+          field_hero_link:
+            -
+              uri: 'https://www.google.com/'
+              title: ''
+              options: {  }
+          field_hero_title:
+            -
+              value: 'Stine Pilgaard vinder De Gyldne Laurbær'
+    -
+      entity:
+        _meta:
+          version: '1.0'
+          entity_type: paragraph
+          uuid: c0b7887f-aef4-40ad-b063-5720b23c12a6
+          bundle: text_body
+          default_langcode: da
+        default:
+          status:
+            -
+              value: true
+          created:
+            -
+              value: 1707918929
+          behavior_settings:
+            -
+              value: {  }
+          revision_translation_affected:
+            -
+              value: true
+          field_body:
+            -
+              value: '<h2>Om Os</h2><p><br>Biblioteket er dit lokale center for viden, kultur og samfund. Vi tilbyder en bred vifte af bøger, e-bøger, lydbøger, tidsskrifter og mere. Kom og oplev vores studieområder, computerfaciliteter, og et varieret program af begivenheder og workshops</p>'
+              format: basic
+    -
+      entity:
+        _meta:
+          version: '1.0'
+          entity_type: paragraph
+          uuid: 96a78109-a958-4b4a-bbae-74a9460e5a01
+          bundle: text_body
+          default_langcode: da
+        default:
+          status:
+            -
+              value: true
+          created:
+            -
+              value: 1707919015
+          behavior_settings:
+            -
+              value: {  }
+          revision_translation_affected:
+            -
+              value: true
+          field_body:
+            -
+              value: '<p><strong>Nyheder og Begivenheder</strong></p>'
+              format: basic
+    -
+      entity:
+        _meta:
+          version: '1.0'
+          entity_type: paragraph
+          uuid: 4185713d-9bdd-4d18-bc7b-42529412a251
+          bundle: nav_spots_manual
+          default_langcode: da
+        default:
+          status:
+            -
+              value: true
+          created:
+            -
+              value: 1707918344
+          behavior_settings:
+            -
+              value: {  }
+          revision_translation_affected:
+            -
+              value: true
+          field_nav_spots_content:
+            -
+              entity: fb8b4d62-de14-4620-9ca1-be60cab74a65
+            -
+              entity: f6aafa27-a538-44a3-ae1f-02f8efbfb068
+    -
+      entity:
+        _meta:
+          version: '1.0'
+          entity_type: paragraph
+          uuid: 157d8c1c-466f-44b9-817d-82d2ba23c1d9
+          bundle: text_body
+          default_langcode: da
+        default:
+          status:
+            -
+              value: true
+          created:
+            -
+              value: 1707919045
+          behavior_settings:
+            -
+              value: {  }
+          revision_translation_affected:
+            -
+              value: true
+          field_body:
+            -
+              value: '<p><strong>FAQ</strong></p>'
+              format: basic
+    -
+      entity:
+        _meta:
+          version: '1.0'
+          entity_type: paragraph
+          uuid: c099a761-02bd-43f0-9d08-15f8a8ce5080
+          bundle: accordion
+          default_langcode: da
+        default:
+          status:
+            -
+              value: true
+          created:
+            -
+              value: 1707918612
+          behavior_settings:
+            -
+              value: {  }
+          revision_translation_affected:
+            -
+              value: true
+          field_accordion_description:
+            -
+              value: '<p>For at blive medlem af biblioteket skal du besøge biblioteket personligt eller oprette dig online via vores hjemmeside. Du skal medbringe gyldig identifikation og eventuelt bevis på din adresse.</p>'
+              format: basic
+          field_accordion_title:
+            -
+              value: 'Hvordan bliver jeg medlem af biblioteket?'
+              format: plain_text
+    -
+      entity:
+        _meta:
+          version: '1.0'
+          entity_type: paragraph
+          uuid: 23f2c70a-9aec-4a7a-a43b-09b790f78943
+          bundle: accordion
+          default_langcode: da
+        default:
+          status:
+            -
+              value: true
+          created:
+            -
+              value: 1707918730
+          behavior_settings:
+            -
+              value: {  }
+          revision_translation_affected:
+            -
+              value: true
+          field_accordion_description:
+            -
+              value: '<p>Ja, du kan forny dine lånte materialer online ved at logge ind på din brugerkonto på vores hjemmeside. Der er dog visse begrænsninger for, hvor mange gange et materiale kan fornyes.</p>'
+              format: basic
+          field_accordion_title:
+            -
+              value: 'Kan jeg forny mine lånte materialer online?'
+              format: plain_text
+    -
+      entity:
+        _meta:
+          version: '1.0'
+          entity_type: paragraph
+          uuid: 065ff4a8-a8ab-466b-b84f-3bb2f2eedb29
+          bundle: accordion
+          default_langcode: da
+        default:
+          status:
+            -
+              value: true
+          created:
+            -
+              value: 1707918749
+          behavior_settings:
+            -
+              value: {  }
+          revision_translation_affected:
+            -
+              value: true
+          field_accordion_description:
+            -
+              value: '<p>Du kan reservere bøger og andre materialer via vores online katalog. Når materialet er tilgængeligt, vil du modtage en notifikation.</p>'
+              format: basic
+          field_accordion_title:
+            -
+              value: 'Hvordan reserverer jeg en bog eller andet materiale?'
+              format: plain_text
+    -
+      entity:
+        _meta:
+          version: '1.0'
+          entity_type: paragraph
+          uuid: 34a421e7-2724-44a2-8f60-e6925363e475
+          bundle: accordion
+          default_langcode: da
+        default:
+          status:
+            -
+              value: true
+          created:
+            -
+              value: 1707918829
+          behavior_settings:
+            -
+              value: {  }
+          revision_translation_affected:
+            -
+              value: true
+          field_accordion_description:
+            -
+              value: '<p>Bøder for for sen aflevering varierer afhængigt af materialetypen. Du kan finde en detaljeret liste over bøder på vores hjemmeside.</p>'
+              format: basic
+          field_accordion_title:
+            -
+              value: 'Hvad er bøderne for for sen aflevering?'
+              format: plain_text
+    -
+      entity:
+        _meta:
+          version: '1.0'
+          entity_type: paragraph
+          uuid: 1d63cada-c08e-44db-bac6-1193dcf3b2b5
+          bundle: card_grid_automatic
+          default_langcode: da
+        default:
+          status:
+            -
+              value: true
+          created:
+            -
+              value: 1707919338
+          behavior_settings:
+            -
+              value: {  }
+          revision_translation_affected:
+            -
+              value: true
+          field_filter_content_types:
+            -
+              target_id: article
+          field_title:
+            -
+              value: 'Nye artikler'
+    -
+      entity:
+        _meta:
+          version: '1.0'
+          entity_type: paragraph
+          uuid: 773cfec1-0fc5-4004-813b-c7a66f9af3fa
+          bundle: content_slider
+          default_langcode: da
+        default:
+          status:
+            -
+              value: true
+          created:
+            -
+              value: 1707919607
+          behavior_settings:
+            -
+              value: {  }
+          revision_translation_affected:
+            -
+              value: true
+          field_content_references:
+            -
+              entity: f6aafa27-a538-44a3-ae1f-02f8efbfb068
+            -
+              entity: fb8b4d62-de14-4620-9ca1-be60cab74a65
+            -
+              entity: 982e0d87-f6b8-4b84-8de8-c8c8bcfef557
+            -
+              entity: c8177097-1438-493e-8177-e8ef968cc133
+            -
+              entity: 2cd0fe5e-4159-4452-86aa-e1a1ac8db4a1
+            -
+              entity: 2ce9d9b0-7f10-4a17-9a5e-383d36c1ed93
+            -
+              entity: 9cfd15df-32b4-4af9-b2da-56b039b5bf6b

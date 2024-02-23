@@ -1,0 +1,6 @@
+{% include '@novel/components/card-grid.html.twig'
+  with {
+  'attributes': attributes,
+  'title': view.getTitle(),
+  'items': rows,
+} only %}
