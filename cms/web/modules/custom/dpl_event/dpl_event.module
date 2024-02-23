@@ -219,9 +219,8 @@ function dpl_event_preprocess_eventseries(array &$variables): void {
 /**
  * Implements hook_preprocess_HOOK() for node templates.
  *
- * Preprocesses variables for node templates.
- * Preprocesses variables for the 'list_teaser' / 'stacked_event' view mode
- * of eventinstance.
+ * Preprocesses variables for the eventinstance.
+ * - Generating ticket pricing display.
  * - Generating the URL for the full view of the event instance.
  * - Extracting image URL and alt text from the 'event_image' field.
  * - Processing start and end dates from the 'date' field and formatting them
@@ -253,7 +252,6 @@ function dpl_event_preprocess_eventinstance(array &$variables): void {
   }
   $date_formatter = \Drupal::service('date.formatter');
 
-  // Extract the event url.
   $variables['eventinstance_url'] = Url::fromRoute('entity.eventinstance.canonical', ['eventinstance' => $eventInstance->id()])->toString();
 
   // Extract image file URL and alt text.
