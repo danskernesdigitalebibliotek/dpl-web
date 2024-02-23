@@ -90,7 +90,6 @@ permissions:
   - 'edit own page content'
   - 'edit own video media'
   - 'edit terms in tags'
-  - 'link to any page'
   - 'schedule publishing of eventseries'
   - 'schedule publishing of nodes'
   - 'update any media'

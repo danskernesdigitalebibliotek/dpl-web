@@ -133,7 +133,6 @@ permissions:
   - 'edit terms in tags'
   - 'edit themes novel'
   - 'edit users by role'
-  - 'link to any page'
   - 'revert all eventinstance revisions'
   - 'revert all eventseries revisions'
   - 'revert all revisions'
