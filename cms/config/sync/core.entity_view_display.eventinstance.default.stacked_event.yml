@@ -62,6 +62,14 @@ content:
     third_party_settings: {  }
     weight: 1
     region: content
+  title:
+    type: string
+    label: above
+    settings:
+      link_to_entity: false
+    third_party_settings: {  }
+    weight: 2
+    region: content
 hidden:
   body: true
   description: true
@@ -92,4 +100,3 @@ hidden:
   field_teaser_text: true
   field_ticket_categories: true
   search_api_excerpt: true
-  title: true
