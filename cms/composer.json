@@ -107,6 +107,7 @@
         "drupal/multivalue_form_element": "^1.0@beta",
         "drupal/openapi": "^2.1",
         "drupal/openapi_rest": "^2.0@RC",
+        "drupal/openapi_ui_swagger": "^1.0",
         "drupal/openid_connect": "^1.4",
         "drupal/paragraphs": "^1.16",
         "drupal/paragraphs_ee": "^10.0",
@@ -125,6 +126,7 @@
         "drupal/varnish_purge": "^2.2",
         "drupal/view_unpublished": "^1.1",
         "drush/drush": "^12",
+        "mnsami/composer-custom-directory-installer": "^2.0",
         "myclabs/php-enum": "^1.8",
         "phpdocumentor/reflection-docblock": "^5.3",
         "spatie/color": "^1.5",
@@ -162,7 +164,8 @@
             "drupal/core-project-message": true,
             "phpstan/extension-installer": true,
             "zaporylie/composer-drupal-optimizations": true,
-            "drupal/console-extend-plugin": true
+            "drupal/console-extend-plugin": true,
+            "mnsami/composer-custom-directory-installer": true
         }
     },
     "scripts": {
@@ -181,6 +184,7 @@
                 "type:drupal-core"
             ],
             "web/libraries/{$name}": [
+                "swagger-api/swagger-ui",
                 "type:drupal-library"
             ],
             "web/modules/contrib/{$name}": [
