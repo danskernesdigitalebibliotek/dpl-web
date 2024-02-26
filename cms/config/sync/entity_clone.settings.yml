@@ -51,5 +51,32 @@ form_settings:
     default_value: false
     disable: false
     hidden: false
+form_settings_after_clone:
+  taxonomy_term:
+    redirect_to: edit-form
+  file:
+    redirect_to: edit-form
+  node:
+    redirect_to: edit-form
+  user:
+    redirect_to: edit-form
+  menu_link_content:
+    redirect_to: edit-form
+  crop:
+    redirect_to: edit-form
+  job_schedule:
+    redirect_to: edit-form
+  media:
+    redirect_to: edit-form
+  path_alias:
+    redirect_to: edit-form
+  eventseries:
+    redirect_to: edit-form
+  eventinstance:
+    redirect_to: edit-form
+  search_api_task:
+    redirect_to: edit-form
+  paragraph:
+    redirect_to: edit-form
 no_suffix: false
 take_ownership: true
