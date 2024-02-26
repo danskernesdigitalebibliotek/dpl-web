@@ -117,6 +117,7 @@ module:
   varnish_purge_tags: 0
   varnish_purger: 0
   view_unpublished: 0
+  views_infinite_scroll: 0
   selective_better_exposed_filters: 1
   views: 10
   paragraphs: 11
