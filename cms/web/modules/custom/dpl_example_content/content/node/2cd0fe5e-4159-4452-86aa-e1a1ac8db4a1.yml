@@ -5,6 +5,7 @@ _meta:
   bundle: article
   default_langcode: da
   depends:
+    e00e1460-169e-468d-9835-d664f06d0969: file
     92033694-15ac-4d9e-b275-ddfd18e48d9f: taxonomy_term
     aba3cea8-cee5-42c1-a152-e30c2ab135e2: media
     d97a25fd-a6ae-48b9-9a1a-7aec5372688e: media
@@ -45,6 +46,13 @@ default:
   entity_clone_template_active:
     -
       value: false
+  entity_clone_template_image:
+    -
+      entity: e00e1460-169e-468d-9835-d664f06d0969
+      alt: ''
+      title: ''
+      width: 640
+      height: 443
   metatag:
     -
       tag: meta
