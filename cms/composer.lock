@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "329930a0d97436cfac7deeee37d33c1d",
+    "content-hash": "82528db8a5aeaa836faa0d0edb60ccde",
     "packages": [
         {
             "name": "amazeeio/drupal_integrations",
@@ -2089,6 +2089,58 @@
             "support": {
                 "source": "https://git.drupalcode.org/project/admin_toolbar",
                 "issues": "https://www.drupal.org/project/issues/admin_toolbar"
+            }
+        },
+        {
+            "name": "drupal/administerusersbyrole",
+            "version": "3.4.0",
+            "source": {
+                "type": "git",
+                "url": "https://git.drupalcode.org/project/administerusersbyrole.git",
+                "reference": "8.x-3.4"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://ftp.drupal.org/files/projects/administerusersbyrole-8.x-3.4.zip",
+                "reference": "8.x-3.4",
+                "shasum": "17cd7107c8fdd0c65049ee2b8dceefa0432024fa"
+            },
+            "require": {
+                "drupal/core": "^8 || ^9 || ^10"
+            },
+            "type": "drupal-module",
+            "extra": {
+                "drupal": {
+                    "version": "8.x-3.4",
+                    "datestamp": "1682265550",
+                    "security-coverage": {
+                        "status": "covered",
+                        "message": "Covered by Drupal's security advisory policy"
+                    }
+                }
+            },
+            "notification-url": "https://packages.drupal.org/8/downloads",
+            "license": [
+                "GPL-2.0-or-later"
+            ],
+            "authors": [
+                {
+                    "name": "AdamPS",
+                    "homepage": "https://www.drupal.org/user/2650563"
+                },
+                {
+                    "name": "mrfelton",
+                    "homepage": "https://www.drupal.org/user/305669"
+                },
+                {
+                    "name": "smokris",
+                    "homepage": "https://www.drupal.org/user/161913"
+                }
+            ],
+            "description": "Allows site builders to set up fine-grained permissions for allowing \"sub-admin\" users to edit and delete other users.",
+            "homepage": "https://www.drupal.org/project/administerusersbyrole",
+            "support": {
+                "source": "https://git.drupalcode.org/project/administerusersbyrole"
             }
         },
         {
@@ -5553,6 +5605,54 @@
             }
         },
         {
+            "name": "drupal/theme_permission",
+            "version": "2.0.0",
+            "source": {
+                "type": "git",
+                "url": "https://git.drupalcode.org/project/theme_permission.git",
+                "reference": "2.0.0"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://ftp.drupal.org/files/projects/theme_permission-2.0.0.zip",
+                "reference": "2.0.0",
+                "shasum": "faa2b8be4394829ee4d288e7735ea522d9cbc491"
+            },
+            "require": {
+                "drupal/core": "^8 || ^9 || ^10"
+            },
+            "type": "drupal-module",
+            "extra": {
+                "drupal": {
+                    "version": "2.0.0",
+                    "datestamp": "1699303745",
+                    "security-coverage": {
+                        "status": "covered",
+                        "message": "Covered by Drupal's security advisory policy"
+                    }
+                }
+            },
+            "notification-url": "https://packages.drupal.org/8/downloads",
+            "license": [
+                "GPL-2.0+"
+            ],
+            "authors": [
+                {
+                    "name": "liber_t",
+                    "homepage": "https://www.drupal.org/user/3377176"
+                }
+            ],
+            "description": "This module extend  theme permission.",
+            "homepage": "https://www.drupal.org/project/theme_permission",
+            "keywords": [
+                "Drupal"
+            ],
+            "support": {
+                "source": "http://cgit.drupalcode.org/theme_permission",
+                "issues": "https://www.drupal.org/project/issues/theme_permission"
+            }
+        },
+        {
             "name": "drupal/token",
             "version": "1.13.0",
             "source": {
@@ -6207,16 +6307,16 @@
         },
         {
             "name": "giggsey/libphonenumber-for-php",
-            "version": "8.13.30",
+            "version": "8.13.31",
             "source": {
                 "type": "git",
                 "url": "https://github.com/giggsey/libphonenumber-for-php.git",
-                "reference": "e09260a4a470b3737877c0f04f964e8a4938ebbd"
+                "reference": "a4934bddda4672d12f21728e08bd575913bdc310"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/giggsey/libphonenumber-for-php/zipball/e09260a4a470b3737877c0f04f964e8a4938ebbd",
-                "reference": "e09260a4a470b3737877c0f04f964e8a4938ebbd",
+                "url": "https://api.github.com/repos/giggsey/libphonenumber-for-php/zipball/a4934bddda4672d12f21728e08bd575913bdc310",
+                "reference": "a4934bddda4672d12f21728e08bd575913bdc310",
                 "shasum": ""
             },
             "require": {
@@ -6275,7 +6375,7 @@
                 "issues": "https://github.com/giggsey/libphonenumber-for-php/issues",
                 "source": "https://github.com/giggsey/libphonenumber-for-php"
             },
-            "time": "2024-02-09T12:16:23+00:00"
+            "time": "2024-02-26T08:31:45+00:00"
         },
         {
             "name": "giggsey/locale",
