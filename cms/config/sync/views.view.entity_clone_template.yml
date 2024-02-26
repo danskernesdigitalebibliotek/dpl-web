@@ -356,7 +356,7 @@ display:
       access:
         type: perm
         options:
-          perm: 'administer entity_clone_template'
+          perm: 'dpl admin access pages'
       cache:
         type: tag
         options: {  }
