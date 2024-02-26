@@ -7,16 +7,9 @@
  * Display patron page (user information page).
  */
 
-use Drupal\Core\Url;
-
 /**
  * Implements hook_dpl_protected_nodes_get_protected_nodes().
  */
 function dpl_patron_page_dpl_protected_nodes_get_protected_nodes(): array {
-  // Get the configuration form.
-  $form = \Drupal::formBuilder()->getForm('Drupal\dpl_patron_page\Form\PatronPageSettingsForm');
-  // Get the configuration path.
-  $config_path = Url::fromRoute('dpl_patron_page.settings', [], ['absolute' => TRUE])->toString();
-
-  return dpl_protected_nodes_find_linkit_elements($form, $config_path);
+  return dpl_protected_nodes_get_context('Drupal\dpl_patron_page\Form\PatronPageSettingsForm', 'dpl_patron_page.settings');
 }

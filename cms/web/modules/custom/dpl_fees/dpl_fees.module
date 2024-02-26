@@ -25,12 +25,7 @@ function dpl_fees_dpl_react_apps_data(array &$data): void {
  * Implements hook_dpl_protected_nodes_get_protected_nodes().
  */
 function dpl_fees_dpl_protected_nodes_get_protected_nodes(): array {
-  // Get the configuration form.
-  $form = \Drupal::formBuilder()->getForm('Drupal\dpl_fees\Form\FeesListSettingsForm');
-  // Get the configuration path.
-  $config_path = Url::fromRoute('dpl_fees.settings', [], ['absolute' => TRUE])->toString();
-
-  return dpl_protected_nodes_find_linkit_elements($form, $config_path);
+  return dpl_protected_nodes_get_context('Drupal\dpl_fees\Form\FeesListSettingsForm', 'dpl_fees.settings');
 }
 
 /**

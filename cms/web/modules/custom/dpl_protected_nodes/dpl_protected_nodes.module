@@ -7,6 +7,7 @@
 
 use Drupal\Core\Entity\EntityFormInterface;
 use Drupal\Core\Form\FormStateInterface;
+use Drupal\Core\Url;
 use function Safe\preg_match;
 
 /**
@@ -74,6 +75,21 @@ function dpl_protected_nodes_is_nodes_protected(array $nodes, array $form): arra
   }
 
   return $form;
+}
+
+/**
+ * Get the form and configuration path used for getting protected nodes.
+ *
+ * @return mixed[]
+ *   An array containing linkit form element information.
+ */
+function dpl_protected_nodes_get_context(string $form_class_path, string $config_route): array {
+  // Get the configuration form.
+  $form = \Drupal::formBuilder()->getForm($form_class_path);
+  // Get the configuration path.
+  $config_path = Url::fromRoute($config_route, [], ['absolute' => TRUE])->toString();
+
+  return dpl_protected_nodes_find_linkit_elements($form, $config_path);
 }
 
 /**

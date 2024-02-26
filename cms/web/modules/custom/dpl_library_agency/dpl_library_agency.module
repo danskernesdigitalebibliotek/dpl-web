@@ -5,16 +5,9 @@
  * Contains dpl_library_agency.module.
  */
 
-use Drupal\Core\Url;
-
 /**
  * Implements hook_dpl_protected_nodes_get_protected_nodes().
  */
 function dpl_library_agency_dpl_protected_nodes_get_protected_nodes(): array {
-  // Get the configuration form.
-  $form = \Drupal::formBuilder()->getForm('Drupal\dpl_library_agency\Form\GeneralSettingsForm');
-  // Get the configuration path.
-  $config_path = Url::fromRoute('dpl_library_agency.general_settings', [], ['absolute' => TRUE])->toString();
-
-  return dpl_protected_nodes_find_linkit_elements($form, $config_path);
+  return dpl_protected_nodes_get_context('Drupal\dpl_library_agency\Form\GeneralSettingsForm', 'dpl_library_agency.general_settings');
 }
