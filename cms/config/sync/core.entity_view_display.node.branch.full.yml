@@ -1,28 +1,23 @@
-uuid: 0f10c42a-fcb4-4905-accd-caed50014fce
+uuid: 4666b713-813c-4bc7-9f1f-ac23a8052b65
 langcode: en
-status: true
+status: false
 dependencies:
   config:
     - core.entity_view_mode.node.full
-    - field.field.node.page.field_branch
-    - field.field.node.page.field_paragraphs
-    - node.type.page
+    - field.field.node.branch.field_address
+    - field.field.node.branch.field_email
+    - field.field.node.branch.field_main_media
+    - field.field.node.branch.field_paragraphs
+    - field.field.node.branch.field_phone
+    - node.type.branch
   module:
     - entity_reference_revisions
     - user
-id: node.page.full
+id: node.branch.full
 targetEntityType: node
-bundle: page
+bundle: branch
 mode: full
 content:
-  field_branch:
-    type: entity_reference_label
-    label: hidden
-    settings:
-      link: true
-    third_party_settings: {  }
-    weight: 0
-    region: content
   field_paragraphs:
     type: entity_reference_revisions_entity_view
     label: hidden
@@ -38,5 +33,9 @@ content:
     weight: 100
     region: content
 hidden:
+  field_address: true
+  field_email: true
+  field_main_media: true
+  field_phone: true
   langcode: true
   search_api_excerpt: true
