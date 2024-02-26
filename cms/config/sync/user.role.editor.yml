@@ -116,7 +116,6 @@ permissions:
   - 'edit own video media'
   - 'edit terms in categories'
   - 'edit terms in tags'
-  - 'link to any page'
   - 'revert all eventinstance revisions'
   - 'revert all eventseries revisions'
   - 'revert all revisions'

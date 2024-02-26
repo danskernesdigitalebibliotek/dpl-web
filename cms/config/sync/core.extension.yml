@@ -10,6 +10,7 @@ module:
   breakpoint: 0
   ckeditor5: 0
   config_filter: 0
+  config_ignore: 0
   crop: 0
   customerror: 0
   date_range_formatter: 0

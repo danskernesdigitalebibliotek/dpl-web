@@ -1,0 +1,22 @@
+_core:
+  default_config_hash: UVH1aJ4b44UM-VdPVN7hNNuuVqfReJxwfVeDQH1Hvsk
+ignored_config_entities:
+  - dpl_dashboard.settings
+  - dpl_favorites_list.settings
+  - dpl_fbs.settings
+  - dpl_fees.settings
+  - dpl_instant_loan.settings
+  - dpl_library_agency.general_settings
+  - dpl_library_agency.general_settings.branches
+  - dpl_loans.settings
+  - dpl_patron_menu.settings
+  - dpl_patron_page.settings
+  - dpl_patron_redirect.settings
+  - dpl_patron_reg.settings
+  - dpl_publizon.settings
+  - dpl_recommender.settings
+  - dpl_reservation_list.settings
+  - dpl_url_proxy.settings
+  - novel.settings
+  - openid_connect.settings.adgangsplatformen
+  - system.site
