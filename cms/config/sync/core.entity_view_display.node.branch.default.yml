@@ -1,0 +1,71 @@
+uuid: 64efdec8-ced5-4650-965f-26411e9e697e
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.field.node.branch.field_address
+    - field.field.node.branch.field_email
+    - field.field.node.branch.field_main_media
+    - field.field.node.branch.field_paragraphs
+    - field.field.node.branch.field_phone
+    - node.type.branch
+  module:
+    - address
+    - entity_reference_revisions
+    - telephone_formatter
+    - user
+id: node.branch.default
+targetEntityType: node
+bundle: branch
+mode: default
+content:
+  field_address:
+    type: address_default
+    label: hidden
+    settings: {  }
+    third_party_settings: {  }
+    weight: 2
+    region: content
+  field_email:
+    type: email_mailto
+    label: hidden
+    settings: {  }
+    third_party_settings: {  }
+    weight: 3
+    region: content
+  field_main_media:
+    type: entity_reference_entity_view
+    label: hidden
+    settings:
+      view_mode: hero_wide
+      link: false
+    third_party_settings: {  }
+    weight: 1
+    region: content
+  field_paragraphs:
+    type: entity_reference_revisions_entity_view
+    label: hidden
+    settings:
+      view_mode: default
+      link: ''
+    third_party_settings: {  }
+    weight: 5
+    region: content
+  field_phone:
+    type: telephone_formatter
+    label: hidden
+    settings:
+      format: 2
+      link: true
+      default_country: DK
+    third_party_settings: {  }
+    weight: 4
+    region: content
+  links:
+    settings: {  }
+    third_party_settings: {  }
+    weight: 0
+    region: content
+hidden:
+  langcode: true
+  search_api_excerpt: true

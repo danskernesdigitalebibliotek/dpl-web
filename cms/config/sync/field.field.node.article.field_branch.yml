@@ -1,0 +1,29 @@
+uuid: 31a0ce17-a29c-42bd-9dd0-ff4ab2bff23c
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_branch
+    - node.type.article
+    - node.type.branch
+id: node.article.field_branch
+field_name: field_branch
+entity_type: node
+bundle: article
+label: Branch
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings:
+  handler: 'default:node'
+  handler_settings:
+    target_bundles:
+      branch: branch
+    sort:
+      field: title
+      direction: ASC
+    auto_create: false
+    auto_create_bundle: ''
+field_type: entity_reference

@@ -1,0 +1,32 @@
+uuid: bcd7bcc3-3699-46cf-bed2-641c83eeb844
+langcode: en
+status: false
+dependencies:
+  config:
+    - core.entity_view_mode.node.teaser
+    - field.field.node.branch.field_address
+    - field.field.node.branch.field_email
+    - field.field.node.branch.field_main_media
+    - field.field.node.branch.field_paragraphs
+    - field.field.node.branch.field_phone
+    - node.type.branch
+  module:
+    - user
+id: node.branch.teaser
+targetEntityType: node
+bundle: branch
+mode: teaser
+content:
+  links:
+    settings: {  }
+    third_party_settings: {  }
+    weight: 100
+    region: content
+hidden:
+  field_address: true
+  field_email: true
+  field_main_media: true
+  field_paragraphs: true
+  field_phone: true
+  langcode: true
+  search_api_excerpt: true

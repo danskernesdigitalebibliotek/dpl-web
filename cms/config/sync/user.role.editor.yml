@@ -9,6 +9,7 @@ dependencies:
     - media.type.image
     - media.type.video
     - node.type.article
+    - node.type.branch
     - node.type.campaign
     - node.type.page
     - taxonomy.vocabulary.categories
@@ -55,6 +56,7 @@ permissions:
   - 'clone eventseries_type entity'
   - 'clone node entity'
   - 'create article content'
+  - 'create branch content'
   - 'create campaign content'
   - 'create document media'
   - 'create image media'
@@ -65,6 +67,7 @@ permissions:
   - 'create video media'
   - 'delete all revisions'
   - 'delete any article content'
+  - 'delete any branch content'
   - 'delete any campaign content'
   - 'delete any document media'
   - 'delete any image media'
@@ -73,11 +76,13 @@ permissions:
   - 'delete any video media'
   - 'delete article revisions'
   - 'delete campaign revisions'
+  - 'delete branch revisions'
   - 'delete eventinstance entity'
   - 'delete eventseries entity'
   - 'delete links in main menu'
   - 'delete media'
   - 'delete own article content'
+  - 'delete own branch content'
   - 'delete own campaign content'
   - 'delete own document media'
   - 'delete own eventinstance entity'
@@ -91,6 +96,7 @@ permissions:
   - 'delete terms in tags'
   - 'dpl admin access pages'
   - 'edit any article content'
+  - 'edit any branch content'
   - 'edit any campaign content'
   - 'edit any document media'
   - 'edit any image media'
@@ -100,6 +106,7 @@ permissions:
   - 'edit eventseries entity'
   - 'edit links in main menu'
   - 'edit own article content'
+  - 'edit own branch content'
   - 'edit own campaign content'
   - 'edit own document media'
   - 'edit own eventinstance entity'
