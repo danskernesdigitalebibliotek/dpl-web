@@ -123,11 +123,20 @@ content:
     region: content
   event_tags:
     type: entity_reference_label
-    label: visible
+    label: above
     settings:
       link: true
     third_party_settings: {  }
-    weight: 60
+    weight: 11
+    region: content
+  event_teaser_image:
+    type: entity_reference_entity_view
+    label: hidden
+    settings:
+      view_mode: hero_wide
+      link: false
+    third_party_settings: {  }
+    weight: 14
     region: content
   event_ticket_categories:
     type: entity_reference_revisions_entity_view
@@ -137,6 +146,24 @@ content:
       link: ''
     third_party_settings: {  }
     weight: 8
+    region: content
+  field_event_image:
+    type: entity_reference_entity_view
+    label: hidden
+    settings:
+      view_mode: hero_wide
+      link: false
+    third_party_settings: {  }
+    weight: 13
+    region: content
+  field_teaser_image:
+    type: entity_reference_entity_view
+    label: hidden
+    settings:
+      view_mode: hero_wide
+      link: false
+    third_party_settings: {  }
+    weight: 12
     region: content
   title:
     type: string
@@ -150,12 +177,10 @@ hidden:
   body: true
   description: true
   event_state: true
-  event_teaser_image: true
   event_teaser_text: true
   field_categories: true
   field_event_address: true
   field_event_description: true
-  field_event_image: true
   field_event_link: true
   field_event_paragraphs: true
   field_event_partners: true
@@ -163,7 +188,6 @@ hidden:
   field_event_state: true
   field_event_title: true
   field_tags: true
-  field_teaser_image: true
   field_teaser_text: true
   field_ticket_categories: true
   search_api_excerpt: true
