@@ -4,6 +4,7 @@ module:
   address: 0
   admin_toolbar: 0
   administerusersbyrole: 0
+  basic_auth: 0
   better_exposed_filters: 0
   block: 0
   breakpoint: 0
@@ -83,6 +84,8 @@ module:
   node: 0
   openapi: 0
   openapi_rest: 0
+  openapi_ui: 0
+  openapi_ui_swagger: 0
   openid_connect: 0
   options: 0
   paragraphs_features: 0
@@ -116,6 +119,7 @@ module:
   varnish_purge_tags: 0
   varnish_purger: 0
   view_unpublished: 0
+  views_infinite_scroll: 0
   selective_better_exposed_filters: 1
   views: 10
   paragraphs: 11

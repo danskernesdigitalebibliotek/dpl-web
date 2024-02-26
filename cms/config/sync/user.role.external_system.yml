@@ -1,0 +1,18 @@
+uuid: 688b92ba-c879-47cf-a846-8d5e527077e7
+langcode: en
+status: true
+dependencies:
+  config:
+    - rest.resource.event
+  module:
+    - recurring_events
+    - rest
+    - system
+id: external_system
+label: 'External system'
+weight: 7
+is_admin: null
+permissions:
+  - 'edit eventinstance entity'
+  - 'restful patch event'
+  - 'view the administration theme'

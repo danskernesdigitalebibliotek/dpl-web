@@ -9,6 +9,7 @@ dependencies:
     - better_exposed_filters
     - search_api
     - user
+    - views_infinite_scroll
 id: events
 label: Events
 module: views
@@ -97,7 +98,7 @@ display:
             multi_type: separator
             multi_separator: ', '
       pager:
-        type: mini
+        type: infinite_scroll
         options:
           offset: 0
           items_per_page: 10
@@ -114,6 +115,10 @@ display:
             items_per_page_options_all_label: '- All -'
             offset: false
             offset_label: Offset
+          views_infinite_scroll:
+            button_text: 'Showing @current_items out of @total results'
+            automatically_load_content: false
+            initially_load_all_pages: true
       exposed_form:
         type: bef
         options:
