@@ -1,0 +1,7 @@
+<ul class="content-list">
+  {% for row in rows %}
+    <li class="content-list__item {{ row.isStacked ? ' content-list__item--stacked' }}">
+      {{ row.content }}
+    </li>
+  {% endfor %}
+</ul>
