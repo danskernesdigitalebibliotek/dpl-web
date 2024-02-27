@@ -1,8 +1,9 @@
-uuid: 85e3108e-d91f-4e32-840f-424fd94ccf37
+uuid: 4cf2305d-44b0-4ad0-9b4b-673df1ad2804
 langcode: en
 status: true
 dependencies:
   config:
+    - core.entity_view_mode.node.nav_spot
     - field.field.node.page.field_branch
     - field.field.node.page.field_display_titles
     - field.field.node.page.field_hero_title
@@ -11,28 +12,27 @@ dependencies:
     - node.type.page
   module:
     - user
-id: node.page.default
+id: node.page.nav_spot
 targetEntityType: node
 bundle: page
-mode: default
+mode: nav_spot
 content:
-  field_branch:
-    type: entity_reference_label
-    label: above
-    settings:
-      link: true
-    third_party_settings: {  }
-    weight: 1
-    region: content
-  links:
+  field_subtitle:
+    type: basic_string
+    label: hidden
     settings: {  }
     third_party_settings: {  }
     weight: 0
     region: content
+  links:
+    settings: {  }
+    third_party_settings: {  }
+    weight: 100
+    region: content
 hidden:
+  field_branch: true
   field_display_titles: true
   field_hero_title: true
   field_paragraphs: true
-  field_subtitle: true
   langcode: true
   search_api_excerpt: true
