@@ -19,6 +19,7 @@ display:
         message:
           label: Meddelelse
           alter:
+            path: 'admin/reports/dblog/event/{{ wid }}'
             alt: '{{ message }}'
         name:
           label: Bruger

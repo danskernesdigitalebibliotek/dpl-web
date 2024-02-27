@@ -18,7 +18,6 @@ class GeneralSettings extends DplReactConfigBase {
   ];
   const RESERVATION_SMS_NOTIFICATIONS_ENABLED = TRUE;
   const PAUSE_RESERVATION_INFO_URL = '';
-  const BLOCKED_PATRON_E_LINK_URL = '';
   // We define these urls so that the admins don't have to - e-reolen urls is
   // not expected to be changing often.
   const EREOLEN_MY_PAGE_URL = 'https://ereolen.dk/user/me';
@@ -151,39 +150,6 @@ class GeneralSettings extends DplReactConfigBase {
     return [
       'allowRemoveReadyReservations' => $allow_remove_ready_reservations,
     ];
-  }
-
-  /**
-   * Get urls for blocked patrons.
-   *
-   * @param string|null $name
-   *   The name of the url to get.
-   *
-   * @return string|mixed[]|null
-   *   String if one url is asked for or null if not found.
-   *   If no name is provided then all available urls.
-   */
-  protected function getBlockedPatronUrls($name = NULL): string|array|null {
-    $urls = [
-      'blocked-patron-e-link' => $this->loadConfig()->get('blocked_patron_e_link_url') ?? self::BLOCKED_PATRON_E_LINK_URL,
-    ];
-
-    if ($name) {
-      return $urls[$name] ?? NULL;
-    }
-
-    return $urls;
-  }
-
-  /**
-   * Get url for the blocked patron of type E.
-   *
-   * @return string
-   *   The url.
-   */
-  public function getBlockedPatronElinkUrl(): string {
-    $url = $this->getBlockedPatronUrls('blocked-patron-e-link');
-    return is_string($url) ? $url : '';
   }
 
 }

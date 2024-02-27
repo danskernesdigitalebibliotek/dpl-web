@@ -120,7 +120,6 @@ class PatronPageBlock extends BlockBase implements ContainerFactoryPluginInterfa
       'patron-page-status-section-reservations-text' => $this->t('You can reserve @countEbooks ebooks and @countAudiobooks audiobooks', [], ['context' => 'Patron page']),
       'patron-page-fee-text' => $this->t('patron page text fee text', [], ['context' => 'Patron page']),
       'patron-pin-saved-success-text' => $this->t('Your pincode was saved', [], ['context' => 'Patron page']),
-      'patron-page-phone-input-message-text' => $this->t('The phone number must be 6 to 15 characters in length and should be comprised solely of numbers or begin with a +', [], ['context' => 'Patron page']),
       'patron-page-handle-response-information-text' => $this->t('Your changes are saved.', [], ['context' => 'Patron page']),
       'patron-page-loading-text' => $this->t('Loading...', [], ['context' => 'Patron page']),
     ] + DplReactAppsController::externalApiBaseUrls();

@@ -195,7 +195,7 @@ jobs:
       - name: Install dependencies
         run: yarn install --frozen-lockfile
       - name: Install problem matcher
-        uses: xt0rted/markdownlint-problem-matcher@v2
+        uses: xt0rted/markdownlint-problem-matcher@v3
       - name: Lint Markdown
         run: npx markdownlint-cli2
 

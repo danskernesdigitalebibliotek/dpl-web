@@ -1,0 +1,15 @@
+<div class="dpl-react-app-container--page">
+  <div {{ attributes }}>
+  <section class="loan-list-page ssc">
+    <div class="ssc-head-line w-60 mx-32 my-48"></div>
+    <div class="ssc-head-line w-10 mx-32 mt-64 mb-35"></div>
+    {% for i in 1..number_of_fake_loan_items_list_physical %}
+      {% include '@novel/components/skeleton-screens/loan-list-skeleton-item.html.twig' %}
+    {% endfor %}
+    <div class="ssc-head-line w-10 mx-32 mt-80"></div>
+    {% for i in 1..number_of_fake_loan_items_list_digital %}
+      {% include '@novel/components/skeleton-screens/loan-list-skeleton-item.html.twig' %}
+    {% endfor %}
+  </section>
+  </div>
+</div>

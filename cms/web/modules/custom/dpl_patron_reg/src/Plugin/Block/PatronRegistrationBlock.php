@@ -4,6 +4,7 @@ namespace Drupal\dpl_patron_reg\Plugin\Block;
 
 use Drupal\Core\Block\BlockBase;
 use Drupal\Core\Plugin\ContainerFactoryPluginInterface;
+use Drupal\Core\Url;
 use Drupal\dpl_library_agency\Branch\BranchRepositoryInterface;
 use Drupal\dpl_library_agency\BranchSettings;
 use Drupal\dpl_library_agency\ReservationSettings;
@@ -96,6 +97,9 @@ class PatronRegistrationBlock extends BlockBase implements ContainerFactoryPlugi
   public function build(): array {
     $config = $this->patronRegSettings->loadConfig();
     $patron_page_settings = $this->patronPageSettings->loadConfig();
+    $redirect_on_user_created_url = $config->get('redirect_on_user_created_url') ?? dpl_react_apps_ensure_url_is_string(
+      Url::fromRoute('dpl_dashboard.list')->toString()
+    );
 
     $data = [
       // Configuration.
@@ -104,7 +108,6 @@ class PatronRegistrationBlock extends BlockBase implements ContainerFactoryPlugi
       'min-age-config' => $config->get('age_limit') ?? DplPatronRegSettings::AGE_LIMIT,
       'pincode-length-max-config' => $patron_page_settings->get('pincode_length_max') ?? DplPatronPageSettings::PINCODE_LENGTH_MAX,
       'pincode-length-min-config' => $patron_page_settings->get('pincode_length_min') ?? DplPatronPageSettings::PINCODE_LENGTH_MIN,
-      'redirect-on-user-created-url' => dpl_react_apps_format_app_url($config->get('redirect_on_user_created_url'), DplPatronRegSettings::REDIRECT_ON_USER_CREATED_URL),
       'text-notifications-enabled-config' => (int) $this->reservationSettings->smsNotificationsIsEnabled(),
 
       // Texts.
@@ -116,6 +119,13 @@ class PatronRegistrationBlock extends BlockBase implements ContainerFactoryPlugi
       'create-patron-invalid-ssn-body-text' => $this->t("This SSN is invalid", [], ['context' => 'Create patron']),
       'create-patron-invalid-ssn-header-text' => $this->t("Invalid SSN", [], ['context' => 'Create patron']),
       'patron-contact-name-label-text' => $this->t("Name", [], ['context' => 'Create patron']),
+
+      // Urls.
+      'redirect-on-user-created-url' => Url::fromRoute(
+        'dpl_patron_reg.post_register',
+        [],
+        ['query' => ['current-path' => $redirect_on_user_created_url]]
+      )->toString(),
     ] + DplReactAppsController::externalApiBaseUrls();
 
     return [

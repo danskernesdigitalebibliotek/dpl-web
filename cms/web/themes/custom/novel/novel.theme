@@ -99,6 +99,19 @@ function novel_preprocess_dpl_react_app__search_result(array &$variables): void 
 }
 
 /**
+ * Implements hook_preprocess_HOOK().
+ *
+ * @param mixed[] $variables
+ *   The variables for the theme hook.
+ */
+function novel_preprocess_dpl_react_app__loan_list(array &$variables): void {
+  $variables += [
+    'number_of_fake_loan_items_list_physical' => 2,
+    'number_of_fake_loan_items_list_digital' => 2,
+  ];
+}
+
+/**
  * Implements hook_preprocess_HOOK()
  *
  * Add the base icon path to the variables array.

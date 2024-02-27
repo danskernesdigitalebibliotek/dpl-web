@@ -41,7 +41,7 @@ class Adgangsplatformen extends OpenIDConnectClientBase {
    *   Drupal form state.
    *
    * @return mixed[]
-   *   Drupla form array.
+   *   Drupal form array.
    */
   public function buildConfigurationForm(array $form, FormStateInterface $form_state) {
     $form = parent::buildConfigurationForm($form, $form_state);
@@ -68,7 +68,8 @@ class Adgangsplatformen extends OpenIDConnectClientBase {
     ];
     $form['agency_id'] = [
       '#title' => $this->t('Agency ID', [], ['context' => 'Dpl Login']),
-      '#type' => 'textfield',
+      '#type' => 'number',
+      '#min' => 0,
       '#default_value' => $this->configuration['agency_id'],
     ];
 

@@ -20,7 +20,6 @@ use Drupal\dpl_library_token\LibraryTokenHandler;
 use Drupal\Core\Logger\LoggerChannelFactoryInterface;
 use Drupal\Core\KeyValueStore\KeyValueStoreExpirableInterface;
 use Drupal\Core\KeyValueStore\KeyValueExpirableFactoryInterface;
-use Drupal\dpl_library_token\Exception\MissingConfigurationException;
 use function Safe\json_encode as json_encode;
 
 /**
@@ -31,7 +30,7 @@ class LibraryTokenHandlerTest extends UnitTestCase {
   /**
    * Test behaviour when no token has been stored yet.
    */
-  public function testIfNoTokenHasBeenStoredaNewOneIsFetched(): void {
+  public function testIfNoTokenHasBeenStoredANewOneIsFetched(): void {
     $collection = $this->prophesize(KeyValueStoreExpirableInterface::class);
     // Simulate that we don't have any token in data store.
     $collection
@@ -39,7 +38,7 @@ class LibraryTokenHandlerTest extends UnitTestCase {
       ->willReturn(NULL)
       ->shouldBeCalledTimes(1);
     // After a request to external service we expect the new token to be set.
-    $collection->setWithExpireIfNotExists(
+    $collection->setWithExpire(
         LibraryTokenHandler::LIBRARY_TOKEN_KEY,
         Argument::cetera()
       )
