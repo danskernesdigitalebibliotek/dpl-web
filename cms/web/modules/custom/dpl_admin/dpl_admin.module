@@ -187,6 +187,26 @@ function _dpl_admin_form_alter_eventinstance(array &$form, FormStateInterface $f
 }
 
 /**
+ * Implements hook_form_FORM_ID_alter() for the page node CT edit/add form.
+ *
+ * Hides hero fields, if display_titles is not toggled on.
+ *
+ * @param array<mixed> $form
+ *   See the $form in dpl_admin_form_alter().
+ */
+function _dpl_admin_form_alter_node_page(array &$form, FormStateInterface $form_state, string $form_id): void {
+
+  // Hide title fields, if the editor choose to disable it.
+  if (!empty($form['field_display_titles'])) {
+    $inactive_state = [':input[name="field_display_titles[value]"]' => ['checked' => FALSE]];
+
+    $form['field_hero_title']['#states']['invisible'] = $inactive_state;
+    $form['field_subtitle']['#states']['invisible'] = $inactive_state;
+  }
+
+}
+
+/**
  * Implements hook_form_alter().
  *
  * Alter the edit/add forms for eventseries/event instances.
@@ -201,7 +221,10 @@ function dpl_admin_form_alter(array &$form, FormStateInterface $form_state, stri
 
   if (in_array($form_id, ['eventinstance_default_add_form', 'eventinstance_default_edit_form'])) {
     _dpl_admin_form_alter_eventinstance($form, $form_state, $form_id);
+  }
 
+  if (in_array($form_id, ['node_page_form', 'node_page_edit_form'])) {
+    _dpl_admin_form_alter_node_page($form, $form_state, $form_id);
   }
 }
 
