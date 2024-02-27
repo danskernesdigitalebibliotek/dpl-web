@@ -64,35 +64,36 @@ function dpl_admin_menu_local_actions_alter(&$local_actions) : void {
 
 /**
  * Implements template_preprocess_views_view_field().
- *
- * Preprocesses the output of a field in the "event_admin" view.
- * Altering the output to generate a unique indicator with a link to the
- * eventseries.
- *
- * {@inheritDoc}
  */
 function dpl_admin_preprocess_views_view_field(array &$variables): void {
-  if (!isset($variables['view'], $variables['field'], $variables['output'])) {
+  if (
+    !isset($variables['view'], $variables['field']) ||
+    !$variables['view'] instanceof ViewExecutable ||
+    !$variables['field'] instanceof EntityField
+  ) {
     return;
   }
 
-  $view = $variables['view'];
-  $field = $variables['field'];
-  $output = $variables['output'];
-
-  if (!$view instanceof ViewExecutable || $view->id() !== 'event_admin') {
-    return;
+  if ($variables['view']->id() == 'event_admin' &&
+    str_ends_with($variables['field']->getField(), '.eventseries_id')) {
+    _dpl_admin_preprocess_views_view_field_event_admin_eventseries_id($variables);
   }
+}
 
-  if (!$field instanceof EntityField ||
-    !$output instanceof Markup ||
-    !str_ends_with($field->getField(), '.eventseries_id')) {
+/**
+ * Preprocesses the output of the id field in the "event_admin" view.
+ *
+ *  Altering the output to generate a unique indicator with a link to the
+ *  eventseries.
+ */
+function _dpl_admin_preprocess_views_view_field_event_admin_eventseries_id(array &$variables): void {
+  if (!isset($variables['output']) || !$variables['output'] instanceof Markup) {
     return;
   }
 
   // Take the ID, and create a unique HSL color value, that we use for
   // background image further down.
-  $id = $output->__toString();
+  $id = $variables['output']->__toString();
   $unique_hsl_value = ((intval($id) * 100) % 360);
   $url = Url::fromRoute('entity.eventseries.canonical', ['eventseries' => $id]);
 
