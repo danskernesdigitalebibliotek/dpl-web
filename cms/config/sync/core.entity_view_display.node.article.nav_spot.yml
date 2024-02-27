@@ -4,6 +4,7 @@ status: true
 dependencies:
   config:
     - core.entity_view_mode.node.nav_spot
+    - field.field.node.article.field_branch
     - field.field.node.article.field_canonical_url
     - field.field.node.article.field_categories
     - field.field.node.article.field_override_author
@@ -46,6 +47,7 @@ content:
     weight: 1
     region: content
 hidden:
+  field_branch: true
   field_canonical_url: true
   field_categories: true
   field_override_author: true

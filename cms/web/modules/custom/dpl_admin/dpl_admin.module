@@ -47,17 +47,19 @@ function dpl_admin_local_tasks_alter(array &$local_tasks): void {
 /**
  * Implements hook_menu_local_actions_alter().
  *
- * Remove all tasks appearing on /events.
- *
  * @param array<mixed> $local_actions
  *   See the $form in hook_local_actions_alter().
  */
 function dpl_admin_menu_local_actions_alter(&$local_actions) : void {
+  // Remove all tasks appearing on /events.
   array_walk($local_actions, function (array &$action) {
     $action['appears_on'] = array_filter($action['appears_on'], function (string $route) {
       return $route !== 'entity.eventinstance.collection';
     });
   });
+
+  // Remove the 'add content' button, as we have our own custom one shown+.
+  unset($local_actions['node.add_page']);
 }
 
 /**

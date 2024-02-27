@@ -1,0 +1,10 @@
+uuid: 56294afa-19bc-4e52-8076-b9fb2fbea43f
+langcode: en
+status: true
+dependencies:
+  module:
+    - recurring_events
+id: eventinstance.stacked_event
+label: 'Stacked event'
+targetEntityType: eventinstance
+cache: true

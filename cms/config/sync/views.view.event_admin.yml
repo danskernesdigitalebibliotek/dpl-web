@@ -1089,7 +1089,7 @@ display:
         type: normal
         title: Events
         description: ''
-        weight: 10
+        weight: 3
         expanded: false
         menu_name: admin
         parent: system.admin_content

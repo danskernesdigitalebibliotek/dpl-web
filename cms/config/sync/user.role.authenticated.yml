@@ -2,10 +2,14 @@ uuid: b19ce8e9-4029-4f88-85a9-5e81b6d3453c
 langcode: en
 status: true
 dependencies:
+  config:
+    - rest.resource.campaign.match
+    - rest.resource.proxy-url
   module:
-    - file
     - media
+    - openapi
     - recurring_events
+    - rest
     - system
 _core:
   default_config_hash: dJ0L2DNSj5q6XVZAGsuVDpJTh5UeYkIPwKrUOOpr8YI
@@ -15,7 +19,9 @@ weight: 1
 is_admin: false
 permissions:
   - 'access content'
-  - 'delete own files'
+  - 'access openapi api docs'
+  - 'restful get proxy-url'
+  - 'restful post campaign:match'
   - 'view eventinstance entity'
   - 'view eventseries entity'
   - 'view media'

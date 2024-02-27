@@ -4,6 +4,7 @@ status: true
 dependencies:
   config:
     - core.entity_view_mode.node.full
+    - field.field.node.page.field_branch
     - field.field.node.page.field_paragraphs
     - node.type.page
   module:
@@ -14,6 +15,14 @@ targetEntityType: node
 bundle: page
 mode: full
 content:
+  field_branch:
+    type: entity_reference_label
+    label: hidden
+    settings:
+      link: true
+    third_party_settings: {  }
+    weight: 0
+    region: content
   field_paragraphs:
     type: entity_reference_revisions_entity_view
     label: hidden
