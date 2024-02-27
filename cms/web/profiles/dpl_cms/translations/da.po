@@ -3,8 +3,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2024-02-27 09:01+0100\n"
-"PO-Revision-Date: 2024-02-27 09:01+0100\n"
+"POT-Creation-Date: 2024-02-27 11:23+0100\n"
+"PO-Revision-Date: 2024-02-27 11:23+0100\n"
 "Last-Translator: NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
 "MIME-Version: 1.0\n"
@@ -565,6 +565,24 @@ msgstr ""
 "Det mindste antal materialer, der skal være tilgængelige som "
 "strakslån på en filial, før brugerne bliver gjort opmærksomme på "
 "muligheden i reserveringsflowet."
+
+msgctxt "DPL admin UX"
+msgid "Event series"
+msgstr ""
+
+msgctxt "DPL admin UX"
+msgid ""
+"Use event series to create event instances - you can use series, both "
+"to create reoccurring events, and single events."
+msgstr ""
+
+msgctxt "DPL admin UX"
+msgid "Create content from scratch"
+msgstr ""
+
+msgctxt "DPL admin UX"
+msgid "Create content from templates"
+msgstr ""
 
 msgctxt "DPL admin UX"
 msgid "<a href=\"@url\">Edit the series here</a>"
@@ -3231,6 +3249,12 @@ msgstr "Andre materialer"
 msgid "Get campaign matching search result facets"
 msgstr "Hent kampagne som matcher facetter fra søgeresultatet"
 
+msgid "Update single events"
+msgstr ""
+
+msgid "Retrieve all events"
+msgstr ""
+
 msgid "Generate proxy url"
 msgstr "Generate proxy URL / Generer proxy URL"
 
@@ -3348,17 +3372,11 @@ msgstr "Begivenheder"
 msgid "Add content"
 msgstr "Tilføj indhold"
 
-msgid "Add article"
+msgid "Add new content"
 msgstr ""
 
-msgid "Add campaign"
+msgid "Add Content"
 msgstr ""
-
-msgid "Add page"
-msgstr ""
-
-msgid "Add Event"
-msgstr "Tilføj arrangement"
 
 msgid "Admin"
 msgstr "Administrator"
@@ -3615,6 +3633,12 @@ msgstr "Af @username"
 msgid "Upcoming events"
 msgstr "Kommende arrangementer"
 
+msgid "Load more items"
+msgstr ""
+
+msgid "Show more"
+msgstr ""
+
 msgid "Events in this series"
 msgstr "Arrangementer i denne serie"
 
@@ -3641,6 +3665,12 @@ msgstr "I samarbejde med"
 
 msgid "Address"
 msgstr "Adresse"
+
+msgid "Email"
+msgstr "E-mail"
+
+msgid "Phone"
+msgstr ""
 
 msgid "Novel"
 msgstr "Roman"
