@@ -3,6 +3,7 @@ langcode: en
 status: true
 dependencies:
   module:
+    - content_lock
     - node
     - user
 _core:
@@ -581,6 +582,15 @@ display:
           admin_label: Author
           plugin_id: standard
           required: true
+        uid_1:
+          id: uid_1
+          table: content_lock
+          field: uid
+          relationship: none
+          group_type: group
+          admin_label: 'Lock owner'
+          plugin_id: standard
+          required: false
       show_admin_links: false
       display_extenders: {  }
     cache_metadata:

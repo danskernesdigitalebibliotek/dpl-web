@@ -12,6 +12,7 @@ use Drupal\field\Entity\FieldConfig;
 use Drupal\menu_link_content\Entity\MenuLinkContent;
 use Drupal\recurring_events\Entity\EventInstance;
 use Drupal\views\Plugin\views\field\EntityField;
+use Drupal\views\ResultRow;
 use Drupal\views\ViewExecutable;
 
 /**
@@ -78,6 +79,11 @@ function dpl_admin_preprocess_views_view_field(array &$variables): void {
     str_ends_with($variables['field']->getField(), '.eventseries_id')) {
     _dpl_admin_preprocess_views_view_field_event_admin_eventseries_id($variables);
   }
+
+  if ($variables['view']->id() == 'content' &&
+    $variables['field']->getField() == '.name') {
+    _dpl_admin_preprocess_views_view_field_content_name($variables);
+  }
 }
 
 /**
@@ -101,6 +107,36 @@ function _dpl_admin_preprocess_views_view_field_event_admin_eventseries_id(array
   $markup = '<a class="dpl-admin__unique-indicator" style="background-color: hsl(' . $unique_hsl_value . ', 70%, 50%);" href="' . $url->toString() . '">' . $sanitized_id . '</a>';
 
   $variables['output'] = Markup::create($markup);
+}
+
+/**
+ * Preprocess the author field in the "content" admin view.
+ *
+ * Add information if the content is locked by another user.
+ */
+function _dpl_admin_preprocess_views_view_field_content_name(array &$variables) : void {
+  if (
+    !isset($variables['output'], $variables['row']) ||
+    !$variables['row'] instanceof ResultRow ||
+    !$variables['output'] instanceof Markup
+  ) {
+    return;
+  }
+
+  /** @var \Drupal\user\UserInterface|null $content_lock_owner */
+  $content_lock_owner = $variables['row']->_relationship_entities['uid_1'] ?? NULL;
+
+  if (!$content_lock_owner) {
+    return;
+  }
+
+  $variables['output'] = Markup::create("
+    {$variables['output']}
+    <br/>
+    <small>" .
+    t('(Locked by @username)', ['@username' => $content_lock_owner->toLink()->toString()], ["context" => "DPL admin UX"]) .
+    "</small>"
+  );
 }
 
 /**
