@@ -5,7 +5,6 @@ dependencies:
   config:
     - field.field.paragraph.material_grid_automatic.field_amount_of_materials
     - field.field.paragraph.material_grid_automatic.field_cql_search
-    - field.field.paragraph.material_grid_automatic.field_material_grid_button_text
     - field.field.paragraph.material_grid_automatic.field_material_grid_title
     - paragraphs.paragraphs_type.material_grid_automatic
 id: paragraph.material_grid_automatic.default
@@ -17,32 +16,24 @@ content:
     type: options_select
     weight: 1
     region: content
-    settings: {}
-    third_party_settings: {}
+    settings: {  }
+    third_party_settings: {  }
   field_cql_search:
     type: string_textfield
     weight: 2
     region: content
     settings:
       size: 60
-      placeholder: ""
-    third_party_settings: {}
-  field_material_grid_button_text:
-    type: string_textfield
-    weight: 3
-    region: content
-    settings:
-      size: 60
-      placeholder: ""
-    third_party_settings: {}
+      placeholder: ''
+    third_party_settings: {  }
   field_material_grid_title:
     type: string_textfield
     weight: 0
     region: content
     settings:
       size: 60
-      placeholder: ""
-    third_party_settings: {}
+      placeholder: ''
+    third_party_settings: {  }
 hidden:
   created: true
   status: true
