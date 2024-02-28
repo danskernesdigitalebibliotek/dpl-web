@@ -38,7 +38,9 @@
         </div>
         <div class="header__clock-items">
             <img loading="lazy" width="58" height="58" src="/themes/custom/novel/assets/dpl-design-system/icons/basic/icon-watch-static.svg" class="mb-8" alt="clock icon"/>
-            <span class="text-small-caption">Åbningstider</span>
+            {% if opening_hours_url  %}
+              <a href="{{ opening_hours_url }}" class="link-tag text-small-caption">{{ "Open hours"|t }}</a>
+            {% endif %}
         </div>
     </div>
 </header>
