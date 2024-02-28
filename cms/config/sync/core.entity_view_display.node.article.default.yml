@@ -3,6 +3,7 @@ langcode: en
 status: true
 dependencies:
   config:
+    - field.field.node.article.field_branch
     - field.field.node.article.field_canonical_url
     - field.field.node.article.field_categories
     - field.field.node.article.field_override_author
@@ -20,6 +21,14 @@ targetEntityType: node
 bundle: article
 mode: default
 content:
+  field_branch:
+    type: entity_reference_label
+    label: above
+    settings:
+      link: true
+    third_party_settings: {  }
+    weight: 112
+    region: content
   field_categories:
     type: entity_reference_label
     label: above

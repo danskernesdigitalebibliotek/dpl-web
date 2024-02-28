@@ -1,0 +1,17 @@
+uuid: a863471b-9f86-42c3-8522-c6a0542a8f05
+langcode: en
+status: true
+dependencies: {  }
+_core:
+  default_config_hash: HeDg9DWq9dFiAIrfY-Jm76ViN94uD6BvHj_cq2l_E_w
+name: entity_clone_template_preview
+label: 'Entity Clone Template Preview'
+effects:
+  f0c62903-1874-4e49-bc93-7648e435c0e6:
+    uuid: f0c62903-1874-4e49-bc93-7648e435c0e6
+    id: image_scale_and_crop
+    weight: 2
+    data:
+      width: 300
+      height: 400
+      anchor: center-center

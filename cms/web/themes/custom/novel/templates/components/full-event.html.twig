@@ -1,22 +1,14 @@
 <article {{ attributes.addClass('event-page') }}>
   <header class="event-header">
-    <section class="hero-content">
-        {{ categories }}
-      {% if date %}
-        <time class="event-header__date">
-          {{ date }}
-        </time>
-      {% endif %}
-      <h1 class="event-header__title">{{ label }}</h1>
-      {{ event_link }}
-    </section>
-    <section class="hero-visual">
-      {% if image.0 %}
-        {{ image }}
-      {% else %}
-        <div class="image-credited__no-image"></div>
-      {% endif %}
-    </section>
+    {% include "@novel/components/hero.html.twig" with {
+      attributes: create_attribute(),
+      title: label,
+      categories: categories,
+      date: date,
+      media: image.0,
+      baseIconPath: baseIconPath,
+      cta: cta
+    } only %}
   </header>
 
   <section class="event-description">
@@ -24,20 +16,16 @@
       <div class="event-description__description">{{ description }}</div>
       <div class="event-description__links">
         {% if tags.0 %}
-            {{ tags }}
+          {{ tags }}
         {% endif %}
       </div>
     </div>
-    <dl class="list-description event-description__info list-description--event">
-      {% for description_item in description_items %}
-        {% if description_item.value %}
-          <div class="list-description__item">
-            <dt class="list-description__key">{{ description_item.label }}</dt>
-            <dd class="list-description__value">{{ description_item.value }}</dd>
-          </div>
-        {% endif %}
-      {% endfor %}
-    </dl>
+
+    {% include "@novel/components/list-description.html.twig" with {
+      attributes: create_attribute(),
+      type: 'event',
+      items: description_items,
+    } only %}
   </section>
 
   {{ paragraphs }}
