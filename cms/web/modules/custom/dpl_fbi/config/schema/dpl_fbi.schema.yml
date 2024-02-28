@@ -5,3 +5,11 @@ field.value.dpl_fbi_cql_search:
     value:
       type: label
       label: Value
+
+field.value.dpl_fbi_work_id:
+  type: mapping
+  label: Default value
+  mapping:
+    value:
+      type: label
+      label: Value
