@@ -7,8 +7,8 @@
 
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\StringTranslation\TranslatableMarkup;
-use Drupal\recurring_events\Entity\EventInstance;
 use Drupal\dpl_library_agency\GeneralSettings;
+use Drupal\recurring_events\Entity\EventInstance;
 use Spatie\Color\Hex;
 use Spatie\Color\Hsl;
 use function Safe\file_get_contents;
@@ -319,7 +319,7 @@ function novel_preprocess_views_view_unformatted(&$variables): void {
         // Check if not the first row and if event_series_id matches
         // the previous row.
         $isStacked = $index > 0 && $eventSeriesId == $rows[$index - 1]['content']['#eventinstance']->getEventSeries()
-            ->id();
+          ->id();
 
         $row['isStacked'] = $isStacked;
 
