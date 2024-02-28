@@ -4,7 +4,11 @@ status: true
 dependencies:
   config:
     - core.entity_view_mode.node.full
+    - field.field.node.page.field_branch
+    - field.field.node.page.field_display_titles
+    - field.field.node.page.field_hero_title
     - field.field.node.page.field_paragraphs
+    - field.field.node.page.field_subtitle
     - node.type.page
   module:
     - entity_reference_revisions
@@ -14,6 +18,21 @@ targetEntityType: node
 bundle: page
 mode: full
 content:
+  field_branch:
+    type: entity_reference_label
+    label: hidden
+    settings:
+      link: true
+    third_party_settings: {  }
+    weight: 1
+    region: content
+  field_hero_title:
+    type: basic_string
+    label: hidden
+    settings: {  }
+    third_party_settings: {  }
+    weight: 0
+    region: content
   field_paragraphs:
     type: entity_reference_revisions_entity_view
     label: hidden
@@ -23,11 +42,19 @@ content:
     third_party_settings: {  }
     weight: 3
     region: content
+  field_subtitle:
+    type: basic_string
+    label: hidden
+    settings: {  }
+    third_party_settings: {  }
+    weight: 2
+    region: content
   links:
     settings: {  }
     third_party_settings: {  }
-    weight: 100
+    weight: 4
     region: content
 hidden:
+  field_display_titles: true
   langcode: true
   search_api_excerpt: true

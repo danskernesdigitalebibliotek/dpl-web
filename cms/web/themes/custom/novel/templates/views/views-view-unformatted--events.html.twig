@@ -1,6 +1,6 @@
 <ul class="event-list">
   {% for row in rows %}
-    <li class="event-list__item">
+    <li class="event-list__item{{ row.isStacked ? ' event-list__item--stacked' }}">
       {{ row.content }}
     </li>
   {% endfor %}

@@ -127,3 +127,28 @@
 .menu-edit-form[action="/admin/structure/menu/manage/main"] > .form-item {
   display: none;
 }
+
+/* Tweaking our custom 'add content' dashboard page. */
+.dpl-add-content {
+  .views-element-container {
+    width: 100%;
+    margin: auto;
+  }
+
+  .views-table {
+    margin: 0;
+  }
+
+  .view-content {
+    padding: 0;
+    width: 95%;
+    margin: 0 auto;
+  }
+
+  .gin-table-scroll-wrapper {
+    overflow: hidden;
+    padding-top: 0;
+    padding-bottom: 0;
+    margin: 0;
+  }
+}
