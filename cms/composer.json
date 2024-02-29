@@ -100,6 +100,7 @@
         "drupal/handy_cache_tags": "^1.4",
         "drupal/job_scheduler": "^4.0",
         "drupal/jsonlog": "^4.0",
+        "drupal/language_neutral_aliases": "^3.1",
         "drupal/libraries": "^4.0",
         "drupal/linkit": "^6.1.2",
         "drupal/media_library_edit": "^3.0",
