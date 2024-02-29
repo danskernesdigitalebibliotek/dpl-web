@@ -25,14 +25,14 @@
       </div>
     {% endif %}
     {% if places %}
-      <div class="content-list-item__location-wrapper">
+      <div class="content-list-item__content-bottom-container">
         {% for place in places %}
           <p class="content-list-item__location">{{ place.value }}</p>
         {% endfor %}
       </div>
     {% endif %}
     {% if start_date or end_date or ticket_price %}
-      <div class="content-list-item__schedule">
+      <div class="content-list-item__content-right-container">
         {% if start_date or end_date %}
           <time class="content-list-item__time" datetime="{{ datetime_attribute }}">
             {{ start_date }} - {{ end_date }}
