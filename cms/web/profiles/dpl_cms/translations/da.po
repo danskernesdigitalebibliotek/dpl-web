@@ -3,8 +3,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2024-02-29 15:56+0100\n"
-"PO-Revision-Date: 2024-02-29 15:56+0100\n"
+"POT-Creation-Date: 2024-02-29 16:33+0100\n"
+"PO-Revision-Date: 2024-02-29 16:33+0100\n"
 "Last-Translator: NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
 "MIME-Version: 1.0\n"
@@ -179,6 +179,22 @@ msgid "Minimum age to allow self registration"
 msgstr "Minimumsalder for selvoprettelse som låner"
 
 msgctxt "Patron registration settings form"
+msgid "Patron registration page url"
+msgstr ""
+
+msgctxt "Patron registration settings form"
+msgid ""
+"The url for the patron registration page. <br>\n"
+"                      "
+"                   You can add a relative url (e.g. /takster). <br>\n"
+" "
+"                                        You can search for an internal "
+"url. <br>\n"
+"                                         You can add an "
+"external url (starting with \"http://\" or \"https://\")."
+msgstr ""
+
+msgctxt "Patron registration settings form"
 msgid "Redirect on create"
 msgstr "Side som låner omdirigeres til ved oprettelse"
 
@@ -194,13 +210,6 @@ msgid ""
 "     You can add an external url (starting with \"http://\" or "
 "\"https://\")."
 msgstr ""
-
-msgctxt "Patron registration settings form"
-msgid "Information page"
-msgstr ""
-
-msgid "Log in with @client_title"
-msgstr "Log ind med @client_title"
 
 msgctxt "Create patron"
 msgid "Cancel"
@@ -3277,6 +3286,12 @@ msgstr ""
 msgid "Work ID"
 msgstr ""
 
+msgid "DPL static content"
+msgstr ""
+
+msgid "Provides static content for new library sites."
+msgstr ""
+
 msgid "Patron page"
 msgstr "Brugerprofil"
 
@@ -3303,9 +3318,6 @@ msgstr "Tilvælg registrering af nye brugere"
 
 msgid "Change patron registration settings"
 msgstr "Indstillinger for brugeroprettelse"
-
-msgid "Patron registration information"
-msgstr "Information om brugeroprettelse"
 
 msgid "Patron nem-login authentication"
 msgstr "Bruger autentificering med Nem-login"
@@ -3702,3 +3714,4 @@ msgstr "Roman"
 
 msgid "Custom theme for the Danish Public Libraries"
 msgstr "Standardtema for Folkebibliotekernes CMS"
+
