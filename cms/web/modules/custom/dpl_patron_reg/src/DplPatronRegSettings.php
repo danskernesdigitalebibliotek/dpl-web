@@ -24,7 +24,7 @@ class DplPatronRegSettings extends DplReactConfigBase {
    * {@inheritdoc}
    */
   public function getConfig(): array {
-    return $this->loadConfig()->get();
+    return $this->legacyConfig();
   }
 
   /**
