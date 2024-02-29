@@ -50,7 +50,6 @@ default:
   path:
     -
       alias: /privatlivspolitik
-      langcode: und
   field_display_titles:
     -
       value: true

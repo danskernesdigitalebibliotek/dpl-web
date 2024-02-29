@@ -50,7 +50,6 @@ default:
   path:
     -
       alias: /pausefunktion
-      langcode: und
   field_display_titles:
     -
       value: true
