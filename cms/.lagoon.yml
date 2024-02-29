@@ -73,6 +73,12 @@ tasks:
           drush user:create patron --password="$PR_DRUPAL_PWD"
           drush user:role:add 'patron' patron
         service: cli
+    - run:
+        name: Generate static content
+        command: |
+          drush pm:enable dpl_static_content -y
+          drush pm:disable dpl_static_content -y
+        service: cli
 
 environments:
   main:
