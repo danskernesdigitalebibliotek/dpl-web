@@ -11,9 +11,7 @@ use Drupal\Core\Entity\FieldableEntityInterface;
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\Url;
 use Drupal\dpl_event\EventState;
-use Drupal\file\Entity\File;
 use Drupal\job_scheduler\Entity\JobSchedule;
-use Drupal\media\Entity\Media;
 use Drupal\recurring_events\Entity\EventInstance;
 use Drupal\recurring_events\Entity\EventSeries;
 use Safe\DateTimeImmutable;
@@ -253,18 +251,6 @@ function dpl_event_preprocess_eventinstance(array &$variables): void {
   $date_formatter = \Drupal::service('date.formatter');
 
   $variables['eventinstance_url'] = Url::fromRoute('entity.eventinstance.canonical', ['eventinstance' => $eventInstance->id()])->toString();
-
-  // Extract image file URL and alt text.
-  if ($eventInstance->hasField('event_image') && !$eventInstance->get('event_image')->isEmpty()) {
-    $media_entity = $eventInstance->get('event_image')->entity;
-    if ($media_entity instanceof Media && $media_entity->bundle() == 'image' && !$media_entity->field_media_image->isEmpty()) {
-      $file = $media_entity->field_media_image->entity;
-      if ($file instanceof File) {
-        $variables['image_file_url'] = $file->createFileUrl(FALSE);
-        $variables['image_alt'] = $media_entity->field_media_image->alt ?? '';
-      }
-    }
-  }
 
   // Extract start_time, end_time and datetime attributes.
   if (!$eventInstance->get('date')->isEmpty()) {
