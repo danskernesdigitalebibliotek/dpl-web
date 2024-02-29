@@ -1,0 +1,34 @@
+uuid: 4c53e1e6-c743-4edd-8d0a-24341371c9f7
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.field.paragraph.material_grid_automatic.field_amount_of_materials
+    - field.field.paragraph.material_grid_automatic.field_cql_search
+    - field.field.paragraph.material_grid_automatic.field_material_grid_title
+    - paragraphs.paragraphs_type.material_grid_automatic
+  module:
+    - options
+id: paragraph.material_grid_automatic.default
+targetEntityType: paragraph
+bundle: material_grid_automatic
+mode: default
+content:
+  field_amount_of_materials:
+    type: list_default
+    label: above
+    settings: {  }
+    third_party_settings: {  }
+    weight: 1
+    region: content
+  field_material_grid_title:
+    type: string
+    label: above
+    settings:
+      link_to_entity: false
+    third_party_settings: {  }
+    weight: 0
+    region: content
+hidden:
+  field_cql_search: true
+  search_api_excerpt: true
