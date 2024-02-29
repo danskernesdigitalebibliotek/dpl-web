@@ -367,6 +367,7 @@ tasks:
       DOCKER_COMPOSE_FILES: "{{ .DOCKER_COMPOSE_FILES_CI }}"
       SKIP_LANGUAGE_IMPORT: "true"
 
+  # TODO: Would be nice to check if it has been run previously and skip it if that is the case.
   ci:static-content:generate:
     desc: Generate static content for the CI environment
     cmds:

@@ -59,7 +59,7 @@ describe("Adgangsplatformen", () => {
       "The website encountered an unexpected error. Please try again later."
     );
   });
-  // The test should be re-added when the new user registration is implemented.
+  // TODO: The test should be re-added when the new user registration is implemented.
   it.skip("can register a new user and expose the right tokens for the react apps", () => {
     cy.setupAdgangsplatformenRegisterMappinngs({
       authorizationCode: "7c5e3213aea6ef42ec97dfeaa6f5b1d454d856dc",
@@ -99,7 +99,7 @@ describe("Adgangsplatformen", () => {
   // So when pressing the user icon after authentication the modal only contains
   // the logout button.
 
-  // The test should be re-added when the new user registration is implemented.
+  // TODO: The test should be re-added when the new user registration is implemented.
   it.skip("only shows a logout button in the user menu for an uregistered user", () => {
     cy.setupAdgangsplatformenRegisterMappinngs({
       authorizationCode: "7c5e3213aea6ef42ec97dfeaa6f5b1d454d856dc",
