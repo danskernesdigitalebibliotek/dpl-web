@@ -25,6 +25,12 @@ content:
       preview_link: true
       offsets: '50,50'
     third_party_settings: {  }
+  path:
+    type: path
+    weight: 30
+    region: content
+    settings: {  }
+    third_party_settings: {  }
 hidden:
   created: true
   field_byline: true

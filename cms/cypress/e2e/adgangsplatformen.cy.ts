@@ -59,8 +59,8 @@ describe("Adgangsplatformen", () => {
       "The website encountered an unexpected error. Please try again later."
     );
   });
-
-  it("can register a new user and expose the right tokens for the react apps", () => {
+  // TODO: The test should be re-added when the new user registration is implemented.
+  it.skip("can register a new user and expose the right tokens for the react apps", () => {
     cy.setupAdgangsplatformenRegisterMappinngs({
       authorizationCode: "7c5e3213aea6ef42ec97dfeaa6f5b1d454d856dc",
       accessToken: "447131b0a03fe0421204c54e5c21a60-new-user",
@@ -98,7 +98,9 @@ describe("Adgangsplatformen", () => {
   // the user should not be able to anything else than registering or logging out.
   // So when pressing the user icon after authentication the modal only contains
   // the logout button.
-  it("only shows a logut button in the user menu for an uregistered user", () => {
+
+  // TODO: The test should be re-added when the new user registration is implemented.
+  it.skip("only shows a logout button in the user menu for an uregistered user", () => {
     cy.setupAdgangsplatformenRegisterMappinngs({
       authorizationCode: "7c5e3213aea6ef42ec97dfeaa6f5b1d454d856dc",
       accessToken: "447131b0a03fe0421204c54e5c21a60-new-user",

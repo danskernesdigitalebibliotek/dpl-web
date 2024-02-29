@@ -162,6 +162,8 @@ tasks:
           task dev:cli -- drush locale-check
           task dev:cli -- drush locale-update
         fi
+      # Generate static content
+      - task ci:static-content:generate
       # Clear all caches to ensure we have a pristine setup.
       - task dev:cache:clear:all
       # Ensure site is reachable and warm any caches
@@ -364,6 +366,13 @@ tasks:
     env:
       DOCKER_COMPOSE_FILES: "{{ .DOCKER_COMPOSE_FILES_CI }}"
       SKIP_LANGUAGE_IMPORT: "true"
+
+  # TODO: Would be nice to check if it has been run previously and skip it if that is the case.
+  ci:static-content:generate:
+    desc: Generate static content for the CI environment
+    cmds:
+      - task dev:cli -- drush pm-install -y dpl_static_content
+      - task dev:cli -- drush pm-uninstall -y dpl_static_content
 
   ci:cypress:
     desc: Run Cypress functional tests

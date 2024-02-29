@@ -1,0 +1,19 @@
+uuid: 6a6989e3-a2ef-4c03-988e-f3071ef65f1e
+langcode: en
+status: true
+dependencies:
+  module:
+    - dpl_fbi
+    - paragraphs
+id: paragraph.field_cql_search
+field_name: field_cql_search
+entity_type: paragraph
+type: dpl_fbi_cql_search
+settings: {  }
+module: dpl_fbi
+locked: false
+cardinality: 1
+translatable: true
+indexes: {  }
+persist_with_no_fields: false
+custom_storage: false
