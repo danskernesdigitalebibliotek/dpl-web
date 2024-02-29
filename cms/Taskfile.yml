@@ -370,8 +370,8 @@ tasks:
   ci:static-content:generate:
     desc: Generate static content for the CI environment
     cmds:
-      - task dev:cli -- drush pm-enable -y dpl_static_content
-      - task dev:cli -- drush pm-disable -y dpl_static_content
+      - task dev:cli -- drush pm-install -y dpl_static_content
+      - task dev:cli -- drush pm-uninstall -y dpl_static_content
 
   ci:cypress:
     desc: Run Cypress functional tests
