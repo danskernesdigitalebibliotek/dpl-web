@@ -163,14 +163,14 @@ tasks:
           task dev:cli -- drush locale-update
         fi
       # Clear all caches to ensure we have a pristine setup.
-      - task dev:cache:clear:all
+      # - task dev:cache:clear:all
       # Ensure site is reachable and warm any caches
-      - task dev:cli -- curl --silent --show-error --fail --output /dev/null http://varnish:8080/
-      # Enable dev modules.
-      - task dev:enable-dev-tools
-      - task dev:create-users
+      # - task dev:cli -- curl --silent --show-error --fail --output /dev/null http://varnish:8080/
+      # # Enable dev modules.
+      # - task dev:enable-dev-tools
+      # - task dev:create-users
       # Show a one-time login to the local site.
-      - task dev:cli -- drush user-login
+      # - task dev:cli -- drush user-login
 
   dev:openid:configure:
     desc: Set openid connect settings based on .env variables. And run cron.
@@ -503,22 +503,66 @@ tasks:
       - sh: gh --version && gh auth status
         msg: GitHub CLI is not installed or not authenticated. Please check https://cli.github.com/.
 
+  translations:chown:
+    desc: Chown the PO file in the container with the user of the host
+    cmds:
+      - |
+        export ME=$(id -u);
+        task dev:cli -- chown $ME:$ME web/$PATH_TO_FILE
+    env:
+      PATH_TO_FILE: "{{ .PATH_TO_FILE }}"
+
   translations:scan:
     desc: Scan and generate translations
     cmds:
-     # Make sure that the potion module is active
+      # Make sure that the potion module is active
       - task dev:cli -- drush en -y potion
-     # Generate translations for custom modules
+      # Generate translations for custom modules
       - task dev:cli -- drush potion:generate $LANGUAGE modules/custom/ {{ .PO_DIR }} --recursive --default-write-mode=override
-    # Generate translations for custom themes
+      # Generate translations for custom themes
       - task dev:cli -- drush potion:generate $LANGUAGE themes/custom/ {{ .PO_DIR }} --recursive --default-write-mode=merge
-    # Fill translations from db
-      - task dev:cli -- drush potion:fill $LANGUAGE {{ .PO_DIR }}/$LANGUAGE.po
-    # We need to chown the PO file in the container with the user of the host
-    # in order to be able to commit the file afterwards.
-      - |
-        export ME=$(id -u);
-        task dev:cli -- chown $ME:$ME web/{{ .PO_DIR }}/$LANGUAGE.po
-    # Default language if nothing else is set:
+      # Fill translations from db
+      - task dev:cli -- drush potion:fill $LANGUAGE $PATH_TO_FILE
+      - task translations:chown
     env:
       LANGUAGE: "{{ .LANGUAGE }}"
+      PATH_TO_FILE: "{{ .PO_DIR }}/{{ .LANGUAGE }}.po"
+
+  translations:conf:export:
+    desc: Exports current configuration into po file
+    cmds:
+      # Generate translations from configuration strings
+      - task dev:cli -- drush dpl_po:export-config-po $LANGUAGE $PATH_TO_FILE
+      - task translations:chown
+    env:
+      LANGUAGE: "{{ .LANGUAGE }}"
+      PATH_TO_FILE: "{{ .PO_DIR }}/{{ .LANGUAGE }}.config.po"
+
+  translations:conf:merge:
+    desc: Merge configuration translations into the combined translation file
+    cmds:
+      - msgcat -o web/$PATH_TO_FILE $FILE_A $FILE_B
+      - task translations:chown
+    env:
+      LANGUAGE: "{{ .LANGUAGE }}"
+      PATH_TO_FILE: "{{ .PO_DIR }}/{{ .LANGUAGE }}.combined.po"
+
+  translations:separate:translations:
+    desc: Save translations from combined file into separate file
+    cmds:
+      - task dev:cli -- drush dpl_po:extract-ui $LANGUAGE $SOURCE $PATH_TO_FILE
+      - task translations:chown
+    env:
+      LANGUAGE: "{{ .LANGUAGE }}"
+      SOURCE: "{{ .PO_DIR }}/{{ .LANGUAGE }}.combined.po"
+      PATH_TO_FILE: "{{ .PO_DIR }}/{{ .LANGUAGE }}.po"
+
+  translations:separate:config:
+    desc: Save configuration translations from combined file into separate file
+    cmds:
+      - task dev:cli -- drush dpl_po:extract-config $LANGUAGE $SOURCE $PATH_TO_FILE
+      - task translations:chown
+    env:
+      LANGUAGE: "{{ .LANGUAGE }}"
+      SOURCE: "{{ .PO_DIR }}/{{ .LANGUAGE }}.combined.po"
+      PATH_TO_FILE: "{{ .PO_DIR }}/{{ .LANGUAGE }}.config.po"
