@@ -36,10 +36,10 @@
             "type": "package",
             "package": {
                 "name": "danskernesdigitalebibliotek/dpl-react",
-                "version": "2024.9.0",
+                "version": "2024.9.1",
                 "type": "drupal-library",
                 "dist": {
-                    "url": "https://github.com/danskernesdigitalebibliotek/dpl-react/releases/download/2024.9.0/dist-2024-9-0-fc249ef62c1b8f909661b5b6aee0a67a8daaccb9.zip",
+                    "url": "https://github.com/danskernesdigitalebibliotek/dpl-react/releases/download/2024.9.1/dist-2024-9-1-095deec269b64fdee32c969d458da518c012584e.zip",
                     "type": "zip"
                 },
                 "require": {
@@ -52,9 +52,9 @@
             "package": {
                 "name": "danskernesdigitalebibliotek/dpl-design-system",
                 "type": "drupal-library",
-                "version": "2024.9.0",
+                "version": "2024.9.1",
                 "dist": {
-                    "url": "https://github.com/danskernesdigitalebibliotek/dpl-design-system/releases/download/2024.9.0/dist-2024-9-0-6e5f558e015c59f3f54bc632b9031d0c24f29a6c.zip",
+                    "url": "https://github.com/danskernesdigitalebibliotek/dpl-design-system/releases/download/2024.9.1/dist-2024-9-1-3a20c5ce000acae4531184c4f5838167dbcfe11d.zip",
                     "type": "zip"
                 }
             }
@@ -74,8 +74,8 @@
         "brick/math": "^0.12.1",
         "composer/installers": "1.12.0",
         "cweagans/composer-patches": "1.7.3",
-        "danskernesdigitalebibliotek/dpl-design-system": "2024.9.0",
-        "danskernesdigitalebibliotek/dpl-react": "2024.9.0",
+        "danskernesdigitalebibliotek/dpl-design-system": "^2024.9",
+        "danskernesdigitalebibliotek/dpl-react": "^2024.9",
         "danskernesdigitalebibliotek/fbs-client": "*",
         "dealerdirect/phpcodesniffer-composer-installer": "^0.7.1",
         "deoliveiralucas/array-keys-case-transform": "^1.1",
@@ -100,6 +100,7 @@
         "drupal/handy_cache_tags": "^1.4",
         "drupal/job_scheduler": "^4.0",
         "drupal/jsonlog": "^4.0",
+        "drupal/language_neutral_aliases": "^3.1",
         "drupal/libraries": "^4.0",
         "drupal/linkit": "^6.1.2",
         "drupal/media_library_edit": "^3.0",

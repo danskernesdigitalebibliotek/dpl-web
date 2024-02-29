@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "b7e9ed9aae91346147f2b587676f716a",
+    "content-hash": "17ba4a8e7a67a9003c6e1d8d025dcdd4",
     "packages": [
         {
             "name": "amazeeio/drupal_integrations",
@@ -1099,19 +1099,19 @@
         },
         {
             "name": "danskernesdigitalebibliotek/dpl-design-system",
-            "version": "2024.9.0",
+            "version": "2024.9.1",
             "dist": {
                 "type": "zip",
-                "url": "https://github.com/danskernesdigitalebibliotek/dpl-design-system/releases/download/2024.9.0/dist-2024-9-0-6e5f558e015c59f3f54bc632b9031d0c24f29a6c.zip"
+                "url": "https://github.com/danskernesdigitalebibliotek/dpl-design-system/releases/download/2024.9.1/dist-2024-9-1-3a20c5ce000acae4531184c4f5838167dbcfe11d.zip"
             },
             "type": "drupal-library"
         },
         {
             "name": "danskernesdigitalebibliotek/dpl-react",
-            "version": "2024.9.0",
+            "version": "2024.9.1",
             "dist": {
                 "type": "zip",
-                "url": "https://github.com/danskernesdigitalebibliotek/dpl-react/releases/download/2024.9.0/dist-2024-9-0-fc249ef62c1b8f909661b5b6aee0a67a8daaccb9.zip"
+                "url": "https://github.com/danskernesdigitalebibliotek/dpl-react/releases/download/2024.9.1/dist-2024-9-1-095deec269b64fdee32c969d458da518c012584e.zip"
             },
             "require": {
                 "composer/installers": "^1.2.0"
@@ -4063,6 +4063,50 @@
             "support": {
                 "source": "https://git.drupalcode.org/project/jsonlog",
                 "issues": "https://www.drupal.org/project/issues/jsonlog"
+            }
+        },
+        {
+            "name": "drupal/language_neutral_aliases",
+            "version": "3.1.1",
+            "source": {
+                "type": "git",
+                "url": "https://git.drupalcode.org/project/language_neutral_aliases.git",
+                "reference": "3.1.1"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://ftp.drupal.org/files/projects/language_neutral_aliases-3.1.1.zip",
+                "reference": "3.1.1",
+                "shasum": "41af20fd8b468d43fcfcebf6e7087f213ba09141"
+            },
+            "require": {
+                "drupal/core": "^8.8 || ^9 || ^10"
+            },
+            "type": "drupal-module",
+            "extra": {
+                "drupal": {
+                    "version": "3.1.1",
+                    "datestamp": "1700598474",
+                    "security-coverage": {
+                        "status": "covered",
+                        "message": "Covered by Drupal's security advisory policy"
+                    }
+                }
+            },
+            "notification-url": "https://packages.drupal.org/8/downloads",
+            "license": [
+                "GPL-2.0-or-later"
+            ],
+            "authors": [
+                {
+                    "name": "Xen",
+                    "homepage": "https://www.drupal.org/user/91385"
+                }
+            ],
+            "description": "Use the same URL aliases regardless of language.",
+            "homepage": "https://www.drupal.org/project/language_neutral_aliases",
+            "support": {
+                "source": "https://git.drupalcode.org/project/language_neutral_aliases"
             }
         },
         {

@@ -1,0 +1,17 @@
+{# Iterates over each item in 'field_paragraphs', constructing a list of links if 'field_display_in_navigation' is true. #}
+{% if content.field_user_registration_items is not empty %}
+  <div class="row-buttons">
+    {% for item in content.field_user_registration_items %}
+      {{ item.entity.field_title.value|raw }}
+      {% if item.entity.field_display_in_navigation is defined and item.entity.field_display_in_navigation.value != 0 %}
+        {{ item.entity.field_title[0].value|raw }}
+        {# Set 'anchor_id' variable. Use 'field_anchor' value if not empty; otherwise, generate an anchor using the entity ID #}
+        {% set anchor_id = item.entity.field_anchor.value|default('anchor-' ~ item.entity.id.value)|escape %}
+        {% set title = item.entity.field_navigation_title.value|default(item.entity.field_title.value)|escape %}
+        <a class="row-button text-tags row-button__text capitalize-all" href="#{{ anchor_id }}">{{ title }}</a>
+      {% endif %}
+    {% endfor %}
+  </div>
+  {{ content.field_user_registration_items }}
+
+{% endif %}

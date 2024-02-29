@@ -1,0 +1,23 @@
+uuid: 56ab019a-63c2-4c33-ad5b-2a88a5236b01
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.paragraph.field_link_target
+    - paragraphs.paragraphs_type.user_registration_item
+  module:
+    - options
+id: paragraph.user_registration_item.field_link_target
+field_name: field_link_target
+entity_type: paragraph
+bundle: user_registration_item
+label: 'Link target'
+description: 'Specify how a linked document should be opened when clicked by a user.'
+required: true
+translatable: false
+default_value:
+  -
+    value: _self
+default_value_callback: ''
+settings: {  }
+field_type: list_string

@@ -27,6 +27,9 @@ parameters:
     # Allow no doc block details in HOOK_dpl_react_apps_data() functions
     - '#Function .*_dpl_react_apps_data\(\) has parameter \$variables with no value type specified in iterable type array\.#'
     - '#Function .*_dpl_react_apps_data\(\) has parameter \$data with no value type specified in iterable type array\.#'
+    # Drupal hook_theme_registry_alter() has parameter $theme_registry which we cannot provide more detailed typing of.
+    - '#Function .*_theme_registry_alter\(\) has parameter \$theme_registry with no value type specified in iterable type array\.#'
+
   scanFiles:
     # Needed to make locale_translation_batch_fetch_finished() discoverable.
     - web/core/modules/locale/locale.batch.inc
