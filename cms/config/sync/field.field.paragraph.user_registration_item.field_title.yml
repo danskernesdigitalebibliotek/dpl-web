@@ -1,0 +1,19 @@
+uuid: b9b0778a-91dc-4e05-b4db-c9d16e4e2e27
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.paragraph.field_title
+    - paragraphs.paragraphs_type.user_registration_item
+id: paragraph.user_registration_item.field_title
+field_name: field_title
+entity_type: paragraph
+bundle: user_registration_item
+label: Title
+description: ''
+required: true
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: string

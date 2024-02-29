@@ -1,0 +1,19 @@
+uuid: f0e9c448-032b-4295-a647-c2514e439f6e
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.paragraph.field_navigation_title
+    - paragraphs.paragraphs_type.user_registration_item
+id: paragraph.user_registration_item.field_navigation_title
+field_name: field_navigation_title
+entity_type: paragraph
+bundle: user_registration_item
+label: 'Navigation button title'
+description: 'If the navigation button title is left blank, it will automatically default to the paragraph title.'
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: string
