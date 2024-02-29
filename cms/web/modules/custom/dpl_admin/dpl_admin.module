@@ -8,6 +8,7 @@
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\Render\Markup;
 use Drupal\Core\Url;
+use Drupal\field\Entity\FieldConfig;
 use Drupal\menu_link_content\Entity\MenuLinkContent;
 use Drupal\recurring_events\Entity\EventInstance;
 use Drupal\views\Plugin\views\field\EntityField;
@@ -46,17 +47,19 @@ function dpl_admin_local_tasks_alter(array &$local_tasks): void {
 /**
  * Implements hook_menu_local_actions_alter().
  *
- * Remove all tasks appearing on /events.
- *
  * @param array<mixed> $local_actions
  *   See the $form in hook_local_actions_alter().
  */
 function dpl_admin_menu_local_actions_alter(&$local_actions) : void {
+  // Remove all tasks appearing on /events.
   array_walk($local_actions, function (array &$action) {
     $action['appears_on'] = array_filter($action['appears_on'], function (string $route) {
       return $route !== 'entity.eventinstance.collection';
     });
   });
+
+  // Remove the 'add content' button, as we have our own custom one shown+.
+  unset($local_actions['node.add_page']);
 }
 
 /**
@@ -185,6 +188,26 @@ function _dpl_admin_form_alter_eventinstance(array &$form, FormStateInterface $f
 }
 
 /**
+ * Implements hook_form_FORM_ID_alter() for the page node CT edit/add form.
+ *
+ * Hides hero fields, if display_titles is not toggled on.
+ *
+ * @param array<mixed> $form
+ *   See the $form in dpl_admin_form_alter().
+ */
+function _dpl_admin_form_alter_node_page(array &$form, FormStateInterface $form_state, string $form_id): void {
+
+  // Hide title fields, if the editor choose to disable it.
+  if (!empty($form['field_display_titles'])) {
+    $inactive_state = [':input[name="field_display_titles[value]"]' => ['checked' => FALSE]];
+
+    $form['field_hero_title']['#states']['invisible'] = $inactive_state;
+    $form['field_subtitle']['#states']['invisible'] = $inactive_state;
+  }
+
+}
+
+/**
  * Implements hook_form_alter().
  *
  * Alter the edit/add forms for eventseries/event instances.
@@ -199,7 +222,51 @@ function dpl_admin_form_alter(array &$form, FormStateInterface $form_state, stri
 
   if (in_array($form_id, ['eventinstance_default_add_form', 'eventinstance_default_edit_form'])) {
     _dpl_admin_form_alter_eventinstance($form, $form_state, $form_id);
+  }
 
+  if (in_array($form_id, ['node_page_form', 'node_page_edit_form'])) {
+    _dpl_admin_form_alter_node_page($form, $form_state, $form_id);
+  }
+}
+
+/**
+ * Implements hook_field_widget_single_element_form_alter().
+ *
+ * Adjusts the visibility of field_navigation_title based on
+ * the state of field_display_in_navigation.
+ *
+ * @param array<mixed> &$element
+ *   The form element to be altered.
+ * @param \Drupal\Core\Form\FormStateInterface $form_state
+ *   The current state of the form.
+ * @param array<mixed> $context
+ *   An associative array containing contextual information about the field.
+ *
+ * @see hook_field_widget_single_element_form_alter()
+ */
+function dpl_admin_field_widget_single_element_form_alter(array &$element, FormStateInterface $form_state, array $context): void {
+
+  /** @var \Drupal\Core\Field\FieldItemListInterface $items */
+  $items = $context['items'];
+
+  // Retrieve the field definition from the context.
+  $field_definition = $items->getFieldDefinition();
+
+  // Check if the field definition is an instance of FieldConfig and matches
+  // the specific field ID.
+  if ($field_definition instanceof FieldConfig &&
+    $field_definition->id() === 'paragraph.user_registration_information.field_navigation_title') {
+
+    // Extract the delta value for the field content.
+    $field_content_delta = $element['value']['#field_parents'][1];
+
+    // Define states for the field element.
+    $element['value']['#states'] = [
+      // Conditionally hide the field based on the state of another field.
+      'invisible' => [
+        ':input[name="field_content[' . $field_content_delta . '][subform][field_display_in_navigation][value]"]' => ['checked' => FALSE],
+      ],
+    ];
   }
 }
 

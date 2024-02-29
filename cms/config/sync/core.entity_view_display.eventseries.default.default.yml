@@ -30,15 +30,6 @@ targetEntityType: eventseries
 bundle: default
 mode: default
 content:
-  event_instances:
-    type: entity_reference_entity_view
-    label: hidden
-    settings:
-      view_mode: card
-      link: false
-    third_party_settings: {  }
-    weight: 2
-    region: content
   field_categories:
     type: entity_reference_label
     label: hidden
@@ -161,6 +152,7 @@ hidden:
   consecutive_recurring_date: true
   custom_date: true
   daily_recurring_date: true
+  event_instances: true
   event_registration: true
   field_event_state: true
   monthly_recurring_date: true

@@ -13,15 +13,19 @@ dependencies:
     - node.type.page
     - taxonomy.vocabulary.tags
   module:
+    - dpl_admin
+    - entity_clone
     - file
     - filter
     - media
     - node
+    - paragraphs
     - recurring_events
     - scheduler
     - system
     - taxonomy
     - toolbar
+    - view_unpublished
 id: mediator
 label: Mediator
 weight: 5
@@ -30,32 +34,45 @@ permissions:
   - 'access content overview'
   - 'access eventinstance overview'
   - 'access eventseries overview'
+  - 'access files overview'
   - 'access media overview'
+  - 'access site in maintenance mode'
   - 'access taxonomy overview'
   - 'access toolbar'
   - 'add eventseries entity'
+  - 'change own username'
   - 'clone eventinstance entity'
   - 'clone eventseries entity'
+  - 'clone eventseries_type entity'
+  - 'clone node entity'
   - 'create article content'
   - 'create campaign content'
+  - 'create document media'
   - 'create image media'
   - 'create media'
   - 'create page content'
   - 'create terms in tags'
+  - 'create video media'
   - 'delete any article content'
   - 'delete any campaign content'
+  - 'delete any document media'
+  - 'delete any image media'
   - 'delete any media'
   - 'delete any page content'
+  - 'delete any video media'
   - 'delete eventinstance entity'
   - 'delete eventseries entity'
   - 'delete media'
   - 'delete own article content'
   - 'delete own campaign content'
+  - 'delete own document media'
   - 'delete own eventinstance entity'
   - 'delete own eventseries entity'
   - 'delete own files'
   - 'delete own image media'
+  - 'delete own page content'
   - 'delete own video media'
+  - 'dpl admin access pages'
   - 'edit any article content'
   - 'edit any campaign content'
   - 'edit any document media'
@@ -70,21 +87,21 @@ permissions:
   - 'edit own eventinstance entity'
   - 'edit own eventseries entity'
   - 'edit own image media'
+  - 'edit own page content'
   - 'edit own video media'
   - 'edit terms in tags'
-  - 'revert all eventinstance revisions'
-  - 'revert all eventseries revisions'
   - 'schedule publishing of eventseries'
   - 'schedule publishing of nodes'
   - 'update any media'
   - 'update media'
   - 'use text format basic'
   - 'use text format limited'
-  - 'view all eventinstance revisions'
-  - 'view all eventseries revisions'
+  - 'view any unpublished content'
   - 'view own unpublished content'
+  - 'view own unpublished media'
   - 'view scheduled content'
   - 'view scheduled eventseries'
   - 'view the administration theme'
   - 'view unpublished eventinstance entity'
   - 'view unpublished eventseries entity'
+  - 'view unpublished paragraphs'

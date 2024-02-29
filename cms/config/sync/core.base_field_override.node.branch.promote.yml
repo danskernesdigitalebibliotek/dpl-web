@@ -1,0 +1,22 @@
+uuid: f860ab10-fc0f-4920-9bda-43ccfecd9801
+langcode: en
+status: true
+dependencies:
+  config:
+    - node.type.branch
+id: node.branch.promote
+field_name: promote
+entity_type: node
+bundle: branch
+label: 'Promoted to front page'
+description: ''
+required: false
+translatable: true
+default_value:
+  -
+    value: 0
+default_value_callback: ''
+settings:
+  on_label: 'On'
+  off_label: 'Off'
+field_type: boolean

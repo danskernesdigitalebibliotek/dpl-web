@@ -4,7 +4,7 @@ definitions:
   events__admin__content:
     menu_name: admin
     parent: system.admin_content
-    weight: 0
+    weight: 1
     expanded: false
     enabled: false
   entity__eventseries__add_page:
@@ -25,3 +25,15 @@ definitions:
     weight: 3
     expanded: false
     enabled: false
+  dpl_admin__add_content:
+    menu_name: admin
+    parent: system.admin_content
+    weight: 2
+    expanded: false
+    enabled: true
+  dpl_footer__footer_form:
+    menu_name: admin
+    parent: system.admin_content
+    weight: 5
+    expanded: false
+    enabled: true

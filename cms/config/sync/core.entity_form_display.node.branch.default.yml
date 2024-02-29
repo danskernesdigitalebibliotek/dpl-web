@@ -1,0 +1,123 @@
+uuid: ef74e9e7-5c0a-406f-b854-98333daeb263
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.field.node.branch.field_address
+    - field.field.node.branch.field_email
+    - field.field.node.branch.field_main_media
+    - field.field.node.branch.field_paragraphs
+    - field.field.node.branch.field_phone
+    - node.type.branch
+  module:
+    - address
+    - field_group
+    - media_library
+    - paragraphs
+    - paragraphs_ee
+    - paragraphs_features
+    - telephone
+third_party_settings:
+  field_group:
+    group_contact_details:
+      children:
+        - field_address
+        - field_email
+        - field_phone
+      label: 'Contact details'
+      region: content
+      parent_name: ''
+      weight: 1
+      format_type: details_sidebar
+      format_settings:
+        classes: ''
+        show_empty_fields: false
+        id: ''
+        open: true
+        description: ''
+        required_fields: true
+        weight: 0
+id: node.branch.default
+targetEntityType: node
+bundle: branch
+mode: default
+content:
+  field_address:
+    type: address_default
+    weight: 10
+    region: content
+    settings: {  }
+    third_party_settings: {  }
+  field_email:
+    type: email_default
+    weight: 11
+    region: content
+    settings:
+      placeholder: ''
+      size: 60
+    third_party_settings: {  }
+  field_main_media:
+    type: media_library_widget
+    weight: 2
+    region: content
+    settings:
+      media_types: {  }
+    third_party_settings: {  }
+  field_paragraphs:
+    type: paragraphs
+    weight: 3
+    region: content
+    settings:
+      title: Paragraph
+      title_plural: Paragraphs
+      edit_mode: closed
+      closed_mode: preview
+      autocollapse: none
+      closed_mode_threshold: 0
+      add_mode: modal
+      form_display_mode: default
+      default_paragraph_type: _none
+      features:
+        add_above: '0'
+        collapse_edit_all: collapse_edit_all
+        duplicate: duplicate
+    third_party_settings:
+      paragraphs_features:
+        add_in_between: true
+        add_in_between_link_count: 0
+        delete_confirmation: true
+        show_drag_and_drop: true
+      paragraphs_ee:
+        paragraphs_ee:
+          dialog_off_canvas: false
+          dialog_style: tiles
+  field_phone:
+    type: telephone_default
+    weight: 12
+    region: content
+    settings:
+      placeholder: ''
+    third_party_settings: {  }
+  status:
+    type: boolean_checkbox
+    weight: 4
+    region: content
+    settings:
+      display_label: true
+    third_party_settings: {  }
+  title:
+    type: string_textfield
+    weight: 0
+    region: content
+    settings:
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+hidden:
+  created: true
+  langcode: true
+  promote: true
+  publish_on: true
+  sticky: true
+  uid: true
+  unpublish_on: true

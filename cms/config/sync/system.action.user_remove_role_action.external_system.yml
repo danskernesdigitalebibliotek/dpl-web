@@ -1,0 +1,14 @@
+uuid: 21d92408-1f1d-48a4-a5a9-47c2cb1c0142
+langcode: en
+status: true
+dependencies:
+  config:
+    - user.role.external_system
+  module:
+    - user
+id: user_remove_role_action.external_system
+label: 'Remove the External system role from the selected user(s)'
+type: user
+plugin: user_remove_role_action
+configuration:
+  rid: external_system
