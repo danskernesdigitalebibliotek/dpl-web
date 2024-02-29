@@ -1,0 +1,31 @@
+uuid: a8957dc7-5c75-4f49-a77f-c2646491c9ad
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.field.paragraph.material_grid_manual.field_material_grid_title
+    - field.field.paragraph.material_grid_manual.field_work_id
+    - paragraphs.paragraphs_type.material_grid_manual
+id: paragraph.material_grid_manual.default
+targetEntityType: paragraph
+bundle: material_grid_manual
+mode: default
+content:
+  field_material_grid_title:
+    type: string
+    label: above
+    settings:
+      link_to_entity: false
+    third_party_settings: {  }
+    weight: 0
+    region: content
+  field_work_id:
+    type: string
+    label: above
+    settings:
+      link_to_entity: false
+    third_party_settings: {  }
+    weight: 4
+    region: content
+hidden:
+  search_api_excerpt: true

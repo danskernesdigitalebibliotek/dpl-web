@@ -3,8 +3,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2024-02-27 15:45+0100\n"
-"PO-Revision-Date: 2024-02-27 15:45+0100\n"
+"POT-Creation-Date: 2024-02-29 15:22+0100\n"
+"PO-Revision-Date: 2024-02-29 15:22+0100\n"
 "Last-Translator: NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
 "MIME-Version: 1.0\n"
@@ -1496,7 +1496,7 @@ msgstr "Forfattere"
 
 msgctxt "Work Page"
 msgid "Edition"
-msgstr "Udgave"
+msgstr "Nummer"
 
 msgctxt "Work Page"
 msgid "Edition year"
@@ -2229,11 +2229,11 @@ msgstr "@count reserveringer blev slettet"
 
 msgctxt "Global"
 msgid "Reservation deleted"
-msgstr ""
+msgstr "Din reservering er slettet"
 
 msgctxt "Global"
 msgid "Reservations deleted"
-msgstr ""
+msgstr "Dine reserveringer er slettet"
 
 msgctxt "Global"
 msgid "Cancel reservations"

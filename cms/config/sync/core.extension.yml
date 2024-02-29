@@ -25,6 +25,7 @@ module:
   dpl_event: 0
   dpl_favorites_list: 0
   dpl_favorites_list_material_component: 0
+  dpl_fbi: 0
   dpl_fbs: 0
   dpl_fees: 0
   dpl_filter_paragraphs: 0
