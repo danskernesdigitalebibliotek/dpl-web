@@ -75,10 +75,7 @@ tasks:
         service: cli
     - run:
         name: Generate static content
-        # TODO: Would be nice to check if it has been run previously and skip it if that is the case.
-        command: |
-          drush pm-install -y dpl_static_content
-          drush pm-uninstall -y dpl_static_content
+        command: drush dpl_cms:create-static-content
         service: cli
 
 environments:
