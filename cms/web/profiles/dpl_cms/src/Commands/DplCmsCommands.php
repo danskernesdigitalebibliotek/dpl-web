@@ -28,7 +28,7 @@ class DplCmsCommands extends DrushCommands {
    * @usage drush dpl_cms:create-static-content
    *   Creates static content on site if has not been created already.
    */
-  public function createStaticContent() {
+  public function createStaticContent(): void {
     $config = $this->configFactory->getEditable('dpl_cms.settings');
     $conf_key = 'static_pages_created';
     $static_content_module = 'dpl_static_content';
@@ -51,17 +51,6 @@ class DplCmsCommands extends DrushCommands {
     }
 
     $config->set($conf_key, TRUE)->save();
-
-    try {
-      $this->moduleInstaller->uninstall([$static_content_module]);
-    }
-    catch (\Exception $e) {
-      $this->io()->error($this->t('Could not uninstall the module @module: @error', [
-        '@module' => $static_content_module,
-        '@error' => $e->getMessage(),
-      ]));
-      return;
-    }
 
     $this->io()->success($this->t('Static pages were sucessfully created. 🎉'));
   }

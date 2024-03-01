@@ -2,7 +2,7 @@ services:
   dpl_cms.commands:
     class: \Drupal\dpl_cms\Commands\DplCmsCommands
     arguments:
-      - '@config.factory'
-      - '@module_installer'
+      - "@config.factory"
+      - "@module_installer"
     tags:
       - { name: drush.command }
