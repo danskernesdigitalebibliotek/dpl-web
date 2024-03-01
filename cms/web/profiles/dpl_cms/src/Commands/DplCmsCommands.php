@@ -51,6 +51,18 @@ class DplCmsCommands extends DrushCommands {
     }
 
     $config->set($conf_key, TRUE)->save();
+
+    try {
+      $this->moduleInstaller->uninstall([$static_content_module]);
+    }
+    catch (\Exception $e) {
+      $this->io()->error($this->t('Could not uninstall the module @module: @error', [
+        '@module' => $static_content_module,
+        '@error' => $e->getMessage(),
+      ]));
+      return;
+    }
+
     $this->io()->success($this->t('Static pages were sucessfully created. 🎉'));
   }
 
