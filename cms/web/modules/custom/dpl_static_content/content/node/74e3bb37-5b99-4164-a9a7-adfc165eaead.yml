@@ -3,7 +3,7 @@ _meta:
   entity_type: node
   uuid: 74e3bb37-5b99-4164-a9a7-adfc165eaead
   bundle: page
-  default_langcode: en
+  default_langcode: da
   depends:
     e00e1460-169e-468d-9835-d664f06d0969: file
 default:
@@ -64,7 +64,7 @@ default:
           entity_type: paragraph
           uuid: dcd7f418-b95b-4abe-83fb-3e3092d869bc
           bundle: text_body
-          default_langcode: en
+          default_langcode: da
         default:
           status:
             -
