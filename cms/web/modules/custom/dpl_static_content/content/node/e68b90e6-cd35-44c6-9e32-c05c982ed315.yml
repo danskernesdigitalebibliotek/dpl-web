@@ -3,7 +3,7 @@ _meta:
   entity_type: node
   uuid: e68b90e6-cd35-44c6-9e32-c05c982ed315
   bundle: page
-  default_langcode: en
+  default_langcode: da
   depends:
     e00e1460-169e-468d-9835-d664f06d0969: file
     4052479c-0f12-4a17-8466-dedd4409355a: node
@@ -67,7 +67,7 @@ default:
           entity_type: paragraph
           uuid: faa94b3f-ae3f-4898-aa01-f944b7f11364
           bundle: text_body
-          default_langcode: en
+          default_langcode: da
         default:
           status:
             -
@@ -89,7 +89,7 @@ default:
           entity_type: paragraph
           uuid: fe70e854-3c88-41cf-bcec-952d4711c4ea
           bundle: links
-          default_langcode: en
+          default_langcode: da
         default:
           status:
             -
@@ -132,7 +132,7 @@ default:
           entity_type: paragraph
           uuid: 0d3c067e-538d-4543-9cff-b5d975b38386
           bundle: user_registration_section
-          default_langcode: en
+          default_langcode: da
         default:
           status:
             -
@@ -151,7 +151,7 @@ default:
                   entity_type: paragraph
                   uuid: 1355276f-bd70-40c6-a329-f628c9f8ea8b
                   bundle: user_registration_item
-                  default_langcode: en
+                  default_langcode: da
                 default:
                   status:
                     -
@@ -190,7 +190,7 @@ default:
                   entity_type: paragraph
                   uuid: cdb360a6-a79a-4688-8d3b-2a2e2f6fdac8
                   bundle: user_registration_item
-                  default_langcode: en
+                  default_langcode: da
                 default:
                   status:
                     -
