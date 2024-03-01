@@ -162,8 +162,6 @@ tasks:
           task dev:cli -- drush locale-check
           task dev:cli -- drush locale-update
         fi
-      # Generate static content
-      - task dev:cli -- drush dpl_cms:create-static-content
       # Clear all caches to ensure we have a pristine setup.
       - task dev:cache:clear:all
       # Ensure site is reachable and warm any caches
