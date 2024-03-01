@@ -5,7 +5,6 @@ namespace Drupal\dpl_patron_reg\Controller;
 use Drupal\Component\Utility\UrlHelper;
 use Drupal\Core\Block\BlockManagerInterface;
 use Drupal\Core\Controller\ControllerBase;
-use Drupal\Core\Link;
 use Drupal\Core\Render\RendererInterface;
 use Drupal\Core\Routing\TrustedRedirectResponse;
 use Drupal\Core\Url;
@@ -59,49 +58,6 @@ class DplPatronRegController extends ControllerBase {
       $container->get('renderer'),
       $container->get('dpl_patron_reg.settings')
     );
-  }
-
-  /**
-   * Build and return information page as page.
-   *
-   * @return mixed
-   *   The page as a render array or a redirect if user is logged in.
-   */
-  public function informationPage(): mixed {
-    // If user is logged in try redirect to the users profile page.
-    if (!$this->currentUser()->isAnonymous()) {
-      /** @var \Drupal\Core\GeneratedUrl $url */
-      $url = Url::fromRoute('dpl_patron_page.profile')->toString(TRUE);
-      return new TrustedRedirectResponse($url->getGeneratedUrl());
-    }
-
-    $config = $this->patronRegSettings->loadConfig();
-    $logins = [];
-
-    // Loop over all open id connect definitions and build login links for
-    // each one.
-    $definitions = $this->pluginManager->getDefinitions();
-    foreach ($definitions as $client_id => $client) {
-      if (!$this->config('openid_connect.settings.' . $client_id)
-        ->get('enabled')) {
-        continue;
-      }
-
-      $url = Url::fromRoute('dpl_patron_reg.auth', ['client_name' => $client_id], ['absolute' => TRUE]);
-      $link = Link::fromTextAndUrl($this->t('Log in with @client_title', [
-        '@client_title' => $client['label'],
-      ]), $url);
-      $logins[$client_id] = $link->toRenderable();
-    }
-
-    return [
-      'info' => [
-        '#type' => 'processed_text',
-        '#text' => $config->get('information')['value'] ?? 'Please fill out the information page in the administration',
-        '#format' => $config->get('information')['format'] ?? 'plain_text',
-      ],
-      'logins' => $logins,
-    ];
   }
 
   /**

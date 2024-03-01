@@ -354,6 +354,10 @@ function dpl_react_apps_dpl_react_apps_data(array &$data, array &$variables): vo
       'id' => $adgangsplatformen_config->getAgencyId(),
     ]),
     'reservation-details' => json_encode($general_settings->getReservationDetails()),
+    'error-messages' => json_encode([
+      'containerId' => 'dpl-react-apps-error-messages',
+      'shouldOnlyShowOneError' => TRUE,
+    ]),
   ];
 
   $data['texts'] += dpl_react_apps_texts();
@@ -472,4 +476,12 @@ function dpl_react_apps_format_app_url(string|NULL $url, string $fallbackUrl = '
   // Use the fallback url that is provided and if that is not present use the
   // dpl cms base url which is the absolute url to front page of the site.
   return $fallbackUrl ?: dpl_react_apps_get_dpl_cms_base_url();
+}
+
+/**
+ * Implements hook_theme_registry_alter().
+ */
+function dpl_react_apps_theme_registry_alter(array &$theme_registry): void {
+  // Override the system messages block template.
+  $theme_registry['block__system_messages_block']['path'] = \Drupal::service('extension.list.module')->getPath('dpl_react_apps') . '/templates';
 }

@@ -1,0 +1,84 @@
+_meta:
+  version: '1.0'
+  entity_type: node
+  uuid: e0850f71-b87a-4510-a612-6319e18a61b4
+  bundle: page
+  default_langcode: da
+  depends:
+    e00e1460-169e-468d-9835-d664f06d0969: file
+default:
+  revision_uid:
+    -
+      target_id: 1
+  status:
+    -
+      value: true
+  uid:
+    -
+      target_id: 1
+  title:
+    -
+      value: Privatlivspolitik
+  created:
+    -
+      value: 1709029959
+  promote:
+    -
+      value: false
+  sticky:
+    -
+      value: false
+  revision_translation_affected:
+    -
+      value: true
+  entity_clone_template_active:
+    -
+      value: false
+  entity_clone_template_image:
+    -
+      entity: e00e1460-169e-468d-9835-d664f06d0969
+      alt: ''
+      title: ''
+      width: 640
+      height: 443
+  metatag:
+    -
+      tag: meta
+      attributes:
+        name: title
+        content: 'Privatlivspolitik | DPL CMS'
+  path:
+    -
+      alias: /privatlivspolitik
+  field_display_titles:
+    -
+      value: true
+  field_hero_title:
+    -
+      value: Privatlivspolitik
+  field_paragraphs:
+    -
+      entity:
+        _meta:
+          version: '1.0'
+          entity_type: paragraph
+          uuid: be157b60-8b6b-4626-9137-c5a1d4b74fa1
+          bundle: text_body
+          default_langcode: da
+        default:
+          status:
+            -
+              value: true
+          created:
+            -
+              value: 1709030064
+          behavior_settings:
+            -
+              value: {  }
+          field_body:
+            -
+              value: '<p>I forbindelse med din oprettelse som bruger hos&nbsp;<strong>[Dannevang Kommunes Biblioteker]</strong> samt din fremadrettede brug af&nbsp;<strong>[Dannevangs Bibliotekers]</strong>&nbsp;selvbetjeningsløsninger, herunder selvbetjeningsautomater, hjemmeside, åbne biblioteker (dvs. benytte biblioteket udenfor betjent åbningstid) og bibliotekets APP ”Biblioteket”, skal vi jf. Databeskyttelsesforordningen informere dig om en række detaljer i vores håndtering af dine oplysninger og oplyse dig om dine rettigheder i den forbindelse.</p><p><strong>[Dannevang Kommunes Biblioteker]</strong> er dataansvarlig for de personoplysninger om dig, som vi benytter i biblioteket. Formålet med behandlingen af personoplysninger er at tilbyde en række services iht. rammerne for Lov om biblioteksvirksomhed (Biblioteksloven).</p><p>Retsgrundlaget for vores behandling af personoplysninger er databeskyttelsesforordningens artikel 6, stk. 1, litra c) om behandling, der er nødvendig for at overholde en retlig forpligtelse, som påhviler den dataansvarlige og artikel 6, stk. 1, litra e) om behandling, der er nødvendig af hensyn til udførelse af en opgave i samfundets interesse.</p><p>Vi behandler personoplysninger om dig i kategorien:</p><ul><li>Personlig identifikation: cpr-nummer og lånerkortnummer</li><li>Adresseoplysninger: navn, navn på eventuel værge, adresse, postnummer, by, land, telefonnummer, e-mailadresse.</li><li>Administration af lån: tilhørsfilial, ferieperiode, interesseperiode, afhentningsfilial, lånte, reserverede og afleverede materialer, dine lister, herunder huskeliste, mellemværender med biblioteket og betaling af mellemværender, e-mails, sms’er og push-beskeder sendt til dig samt eventuel blokering af lån.</li></ul><p>Det gør vi for at kunne administrere dine lån og give dig adgang til bibliotekets eRessourcer, sende dig information om aflevering og reserveringer, samt give dig adgang til at benytte biblioteket uden for betjent åbningstid.</p><p>Oplysningerne bliver også anvendt i <strong>[Dannevang Kommunes]</strong>&nbsp;videnskabelige og statistiske undersøgelser. Enhver offentliggørelse af resultat fra sådanne undersøgelser vil være fuldt anonymiseret.</p><p>Når du benytter&nbsp;<strong>[Dannevang Kommunes Bibliotekers]</strong>&nbsp;hjemmeside,&nbsp;<strong>[XXX.dk]</strong>, indsamler vi endvidere oplysninger om din IP-adresse, samt hvilke sider og funktioner på hjemmesiden,&nbsp;<strong>[XXX.dk]</strong>, du har klikket på. Disse oplysninger anonymiseres og benyttes af biblioteket til statistiske undersøgelser.</p><p>Vi har fået navne og adresseoplysninger fra CPR-registret ud fra dit CPR-nummer. Har du navne- og adressebeskyttelse i CPR-registret, bliver dette respekteret i bibliotekets systemer.</p><p>Det er frivilligt om du vil oprette dig som bruger hos&nbsp;<strong>[Dannevang Kommunes Biblioteker]</strong>&nbsp;og benytte dig af bibliotekets tilbud, herunder benytte biblioteket udenfor betjent åbningstid, benytte bibliotekets hjemmeside <strong>[XXX.dk]</strong>, samt låne materialer og benytte bibliotekets eRessourcer. Hvis du opretter dig som bruger på <strong>[Dannevang Kommunes Biblioteker]</strong>&nbsp;er det frivilligt, om du vil oplyse&nbsp;om dit telefonnummer og din email. Hvis du ikke ønsker at oplyse hverken din email eller dit telefonnummer vil biblioteket ikke være i stand til at kontakte dig i forbindelse med påmindelser om aflevering, afhentning af reserverede materialer, og slettede reserveringer. Eventuelle regninger vil dog blive sendt til din digitale postkasse.</p><p>Vi videregiver personoplysninger til andre offentlige myndigheder, herunder til andre biblioteker, når vi er berettigede eller forpligtede til det. Vi overdrager fx oplysninger til SKAT i forbindelse med inddrivelse af gebyrer og erstatning. Vi overlader endvidere personoplysninger til databehandlere, der på vores vegne behandler oplysningerne.</p><p>Oplysningerne i elektronisk form er fysisk opbevaret sikkert hos vores leverandører.</p><p>Oplysningerne bliver også behandlet hos vores leverandører.</p><p>De oplysninger vi har om dig, slettes automatisk, hvis du ikke har mellemværende eller været aktiv i tre år. Visse personoplysninger bliver automatisk slettet efter 30 dage. Det gælder oplysninger om afleverede materialer, betalte gebyrer, indholdet af beskeder sendt til dig og dine besøg på bibliotekerne uden for betjent åbningstid. Oplysninger om betalt erstatning bliver slettet efter ét år.</p><p>Hvis du ønsker at blive slettet som bruger på biblioteket før der er gået tre år, skal du henvende dig personligt på biblioteket.</p><p>Oplysninger om betaling af mellemværender, herunder mellemværender sendt til Gældsstyrelsen, vil i henhold til ”Budget- og regnskabssystem for kommuner”, Social- og Indenrigsministeriet, blive opbevaret i tre år fra udløbet af det regnskabsår, som regnskabsmaterialet vedrører, jf. lov om forældelse af fordringer og arkivlovgivningens regler om bevaring og kassation.&nbsp; De tre år regnes fra det tidspunkt, hvor kravet er indfriet eller på anden måde nedbragt til en saldo på kr. 0,00.<br>&nbsp;</p><h3>Oplysninger om “Lånehistorik og inspiration”</h3><p>Som udgangspunkt sletter bibliotekerne altid automatisk dine lånedata efter 30 dage. Dine lånedata kan bruges til at give dig anbefalinger af materialer. Anbefalingerne udformes automatisk på baggrund af de materialer, du har lånt, lagt på huskeliste, reserveret og/eller kigget på tidligere.</p><p>Dine personoplysninger er beskyttet med en stærk kryptering, og det er ikke muligt for andre at få oplyst hvem anbefalingerne er dannet på baggrund af.</p><p>Der kan også dannes anbefalinger til dig på baggrund af materialer du har lånt, uden at anvende andre brugeres data.<br>&nbsp;</p><h3>Dine rettigheder</h3><p>Du har efter databeskyttelsesforordningen en række rettigheder i forhold til vores behandling af oplysninger om dig. Hvis du vil gøre brug af dine rettigheder, skal du kontakte os.<br>&nbsp;</p><h3>Indsigtsret</h3><p>Du har ret til at få indsigt i de oplysninger, som vi behandler om dig, samt en række yderligere oplysninger.<br>&nbsp;</p><h3>Ret til berigtigelse (rettelse)</h3><p>Du har ret til at få urigtige oplysninger om dig selv rettet. Du har også ret til at få dine oplysninger suppleret med yderligere oplysninger, hvis dette vil gøre dine personoplysninger mere fuldstændige og/eller ajourførte.</p><h3><br>Ret til sletning</h3><p>I visse tilfælde har du ret til at få slettet oplysninger om dig, inden tidspunktet for vores almindelige generelle sletning indtræffer.<br>&nbsp;</p><h3>Ret til begrænsning af behandling</h3><p>Du har i visse tilfælde ret til at få behandlingen af dine oplysninger begrænset. Hvis du har ret til at få begrænset behandlingen, må vi fremover kun behandle oplysningerne – bortset fra opbevaring – med dit samtykke, eller med henblik på at retskrav kan fastlægges, gøres gældende eller forsvares, eller for at beskytte en person eller vigtige samfundsinteresser.<br>&nbsp;</p><h3>Ret til indsigelse</h3><p>Du har i visse tilfælde ret til at gøre indsigelse mod vores ellers lovlige behandling af dine personoplysninger.<br>Du kan læse mere om dine rettigheder i Datatilsynets vejledning om de registreredes rettigheder, som du finder på&nbsp;<a href="http://www.datatilsynet.dk/">www.datatilsynet.dk</a>.<br><br>Den dataansvarlige er&nbsp;<strong>[Danevang Kommunes Biblioteker</strong><br><strong>Danevangs Plads 1, 1111 Danevang Ø]</strong>, som kan kontaktes på telefon&nbsp;<strong>[1111 1111]</strong>&nbsp;eller<strong>&nbsp;[XXX@dannevang.dk]&nbsp;</strong>Har du spørgsmål i forbindelse med&nbsp;[Dannevang Kommunes]​​​​​​​&nbsp;behandlinger af dine oplysninger, så kan du også kontakte&nbsp;<strong>[Dannevang Kommunes]</strong>&nbsp;databeskyttelsesrådgiver på mail&nbsp;<strong>[XXXX@Dannevang.dk.]</strong></p><p>Du skal slutteligt vide at det er muligt at klage til Datatilsynet over behandlingen af personoplysningerne.</p>'
+              format: basic
+  field_subtitle:
+    -
+      value: 'Oplysningstekst om behandling af personoplysninger.'

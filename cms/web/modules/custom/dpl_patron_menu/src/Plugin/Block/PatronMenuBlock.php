@@ -9,6 +9,7 @@ use Drupal\dpl_library_agency\Branch\BranchRepositoryInterface;
 use Drupal\dpl_library_agency\BranchSettings;
 use Drupal\dpl_library_agency\GeneralSettings;
 use Drupal\dpl_patron_menu\DplMenuSettings;
+use Drupal\dpl_patron_reg\DplPatronRegSettings;
 use Drupal\dpl_react_apps\Controller\DplReactAppsController;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use function Safe\json_encode as json_encode;
@@ -40,6 +41,8 @@ class PatronMenuBlock extends BlockBase implements ContainerFactoryPluginInterfa
    *   The branch settings for getting branches.
    * @param \Drupal\dpl_library_agency\GeneralSettings $generalSettings
    *   General settings.
+   * @param \Drupal\dpl_patron_reg\DplPatronRegSettings $patronRegSettings
+   *   Patron registration settings.
    */
   public function __construct(
       array $configuration,
@@ -49,6 +52,7 @@ class PatronMenuBlock extends BlockBase implements ContainerFactoryPluginInterfa
       private BranchSettings $branchSettings,
       private BranchRepositoryInterface $branchRepository,
       private GeneralSettings $generalSettings,
+      private DplPatronRegSettings $patronRegSettings,
   ) {
     parent::__construct($configuration, $plugin_id, $plugin_definition);
     $this->configuration = $configuration;
@@ -78,6 +82,7 @@ class PatronMenuBlock extends BlockBase implements ContainerFactoryPluginInterfa
       $container->get('dpl_library_agency.branch_settings'),
       $container->get('dpl_library_agency.branch.repository'),
       $container->get('dpl_library_agency.general_settings'),
+      $container->get('dpl_patron_reg.settings'),
     );
   }
 
@@ -90,6 +95,7 @@ class PatronMenuBlock extends BlockBase implements ContainerFactoryPluginInterfa
    * @throws \Safe\Exceptions\JsonException
    */
   public function build(): array {
+    $patronRegSettings = $this->patronRegSettings;
     $generalSettings = $this->generalSettings->loadConfig();
 
     // Alternative to this menu array here this could be loaded from a drupal
@@ -154,7 +160,7 @@ class PatronMenuBlock extends BlockBase implements ContainerFactoryPluginInterfa
           ['absolute' => TRUE]
         )->toString()
       ),
-      "menu-sign-up-url" => Url::fromRoute('dpl_patron_reg.information', [], ['absolute' => TRUE])->toString(),
+      "menu-sign-up-url" => $patronRegSettings->getPatronRegistrationPageUrl(),
       'ereolen-my-page-url' => $generalSettings->get('ereolen_my_page_url'),
       'menu-view-your-profile-text-url' => Url::fromRoute('dpl_patron_page.profile', [], ['absolute' => TRUE])->toString(),
       'user-profile-url' => Url::fromRoute('dpl_patron_page.profile', [], ['absolute' => TRUE])->toString(),

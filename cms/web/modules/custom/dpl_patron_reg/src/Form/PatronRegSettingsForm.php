@@ -69,6 +69,20 @@ class PatronRegSettingsForm extends ConfigFormBase {
       '#step' => 1,
     ];
 
+    $form['patron_registration_page_url'] = [
+      '#type' => 'linkit',
+      '#title' => $this->t('Patron registration page url', [], ['context' => 'Patron registration settings form']),
+      '#description' => $this->t('The url for the patron registration page. <br>
+                                         You can add a relative url (e.g. /takster). <br>
+                                         You can search for an internal url. <br>
+                                         You can add an external url (starting with "http://" or "https://").', [], ['context' => 'Patron registration settings form']),
+      '#autocomplete_route_name' => 'linkit.autocomplete',
+      '#autocomplete_route_parameters' => [
+        'linkit_profile_id' => 'default',
+      ],
+      '#default_value' => $config->get('patron_registration_page_url') ?? DplPatronRegSettings::PATRON_REGISTRATION_PAGE_URL,
+    ];
+
     $form['redirect_on_user_created_url'] = [
       '#type' => 'linkit',
       '#title' => $this->t('Redirect on create', [], ['context' => 'Patron registration settings form']),
@@ -83,13 +97,6 @@ class PatronRegSettingsForm extends ConfigFormBase {
       '#default_value' => $config->get('redirect_on_user_created_url') ?? DplPatronRegSettings::REDIRECT_ON_USER_CREATED_URL,
     ];
 
-    $form['information'] = [
-      '#type' => 'text_format',
-      '#title' => $this->t('Information page', [], ['context' => 'Patron registration settings form']),
-      '#default_value' => $config->get('information')['value'] ?? DplPatronRegSettings::INFORMATION_VALUE,
-      '#format' => $config->get('information')['format'] ?? DplPatronRegSettings::INFORMATION_FORMAT,
-    ];
-
     return parent::buildForm($form, $form_state);
   }
 
@@ -100,8 +107,8 @@ class PatronRegSettingsForm extends ConfigFormBase {
     parent::submitForm($form, $form_state);
     $this->config($this->configService->getConfigKey())
       ->set('age_limit', $form_state->getValue('age_limit'))
+      ->set('patron_registration_page_url', $form_state->getValue('patron_registration_page_url'))
       ->set('redirect_on_user_created_url', $form_state->getValue('redirect_on_user_created_url'))
-      ->set('information', $form_state->getValue('information'))
       ->save();
   }
 
