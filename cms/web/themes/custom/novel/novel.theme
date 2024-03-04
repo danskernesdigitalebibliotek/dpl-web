@@ -314,7 +314,8 @@ function novel_preprocess_views_view_unformatted(&$variables): void {
 
         // Check if not the first row and if event_series_id matches
         // the previous row.
-        $isStacked = $index > 0 && $eventSeriesId == $rows[$index - 1]['content']['#eventinstance']->getEventSeries()->id();
+        $isStacked = $index > 0 && $eventSeriesId == $rows[$index - 1]['content']['#eventinstance']->getEventSeries()
+          ->id();
 
         $row['isStacked'] = $isStacked;
 

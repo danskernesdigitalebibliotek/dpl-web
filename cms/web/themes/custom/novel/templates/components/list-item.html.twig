@@ -24,11 +24,9 @@
         {{ description }}
       </div>
     {% endif %}
-    {% if places %}
+    {% if bottom %}
       <div class="content-list-item__content-bottom-container">
-        {% for place in places %}
-          <p class="content-list-item__location">{{ place.value }}</p>
-        {% endfor %}
+        {{ bottom }}
       </div>
     {% endif %}
     {% if start_date or end_date or ticket_price %}
@@ -45,5 +43,4 @@
     {% endif %}
   </div>
   {{ source(baseIconPath ~ '/arrow-ui/icon-arrow-ui-small-right.svg') }}
-
 </a>
