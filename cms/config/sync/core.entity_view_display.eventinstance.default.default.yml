@@ -4,6 +4,7 @@ status: true
 dependencies:
   config:
     - field.field.eventinstance.default.field_categories
+    - field.field.eventinstance.default.field_description
     - field.field.eventinstance.default.field_event_address
     - field.field.eventinstance.default.field_event_description
     - field.field.eventinstance.default.field_event_image
@@ -153,6 +154,13 @@ content:
       link: ''
     third_party_settings: {  }
     weight: 8
+    region: content
+  field_description:
+    type: basic_string
+    label: hidden
+    settings: {  }
+    third_party_settings: {  }
+    weight: 14
     region: content
   title:
     type: string
