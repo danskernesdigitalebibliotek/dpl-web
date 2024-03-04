@@ -11,7 +11,10 @@ use Drupal\Core\File\FileSystemInterface;
 use Drupal\Core\StringTranslation\StringTranslationTrait;
 use Drupal\dpl_po\Services\CtpConfigManager;
 use Drush\Commands\DrushCommands;
+
+use function Safe\filemtime;
 use function Safe\preg_match;
+use function Safe\rename;
 
 /**
  * A Drush commandfile.
@@ -35,7 +38,7 @@ class DplPoCommands extends DrushCommands {
   /**
    * Set the destination.
    */
-  protected function setDestination(string $path) {
+  protected function setDestination(string $path): void {
     $this->destination = $path;
   }
 
@@ -49,7 +52,7 @@ class DplPoCommands extends DrushCommands {
   /**
    * Set the source.
    */
-  protected function setSource(string $path) {
+  protected function setSource(string $path): void {
     $this->source = $path;
   }
 
@@ -63,7 +66,7 @@ class DplPoCommands extends DrushCommands {
   /**
    * Set the language code.
    */
-  protected function setLanguageCode(string $langcode) {
+  protected function setLanguageCode(string $langcode): void {
     $this->languageCode = $langcode;
   }
 
@@ -98,7 +101,7 @@ class DplPoCommands extends DrushCommands {
    * @usage drush dpl_po:extract-config da da.po
    *   Extracts strings with config context and writes a fie with it.
    */
-  public function createPoFileConfigOnly($langcode, $source, $destination) {
+  public function createPoFileConfigOnly($langcode, $source, $destination): void {
     $this->setLanguageCode($langcode);
     $this->setSource($source);
     $this->setDestination($destination);
@@ -128,7 +131,7 @@ class DplPoCommands extends DrushCommands {
    * @usage drush dpl_po:extract-ui da da.po
    *   Extracts strings with config context and writes a fie with it.
    */
-  public function createPoFileUiOnly($langcode, $source, $destination) {
+  public function createPoFileUiOnly($langcode, $source, $destination): void {
     $this->setLanguageCode($langcode);
     $this->setSource($source);
     $this->setDestination($destination);
@@ -156,7 +159,7 @@ class DplPoCommands extends DrushCommands {
    * @usage drush dpl_po:import-config-po da da.config.po
    *   Imports the configuration po file into the system.
    */
-  public function importConfigPoFile(string $langcode, string $source) {
+  public function importConfigPoFile(string $langcode, string $source): void {
     $this->setLanguageCode($langcode);
     $this->setSource($source);
     $this->validateSource();
@@ -189,7 +192,12 @@ class DplPoCommands extends DrushCommands {
       'langcode' => $langcode,
     ];
 
+    // We have already validated the source file
+    // by calling self:.validateSource().
+    // phpcs:ignore
+    // @phpstan-ignore-next-line
     $file = $this->createFile($this->getSource());
+    /** @var object{"uri": string} $file */
     $file = locale_translate_file_attach_properties($file, $options);
     $batch = locale_translate_batch_build([$file->uri => $file], $options);
 
@@ -217,14 +225,27 @@ class DplPoCommands extends DrushCommands {
    */
   public function importRemoteConfigPoFile(string $langcode, string $url): void {
     $this->setLanguageCode($langcode);
-    $this->setDestination($this->fileSystem->realpath('public://config.po'));
+    if (!$temp_po_file = $this->fileSystem->realpath('public://config.po')) {
+      $this->io()->error($this->t('Could not create temporary file.'));
+      return;
+    }
+    $this->setDestination($temp_po_file);
     $this->validateDestination();
 
-    if (!$uri = system_retrieve_file($url, $this->fileSystem->tempnam('temporary://', 'po_config_'), FALSE, FileSystemInterface::EXISTS_REPLACE)) {
-      $this->io()->error($this->t('Config translations could not be imported from: @url', ['@url' => $url]));
+    $tmp_file = $this->fileSystem->tempnam('temporary://', 'po_config_');
+    if (!is_string($tmp_file)) {
+      $this->io()->error($this->t('Could not create temporary file.'));
+      return;
     }
 
-    $file = new \SplFileInfo($this->fileSystem->realpath($uri));
+    $uri = system_retrieve_file($url, $tmp_file, FALSE, FileSystemInterface::EXISTS_REPLACE);
+    $filepath = $this->fileSystem->realpath($uri);
+    if (!is_string($filepath)) {
+      $this->io()->error($this->t('Config translations could not be imported from: @url', ['@url' => $url]));
+      return;
+    }
+
+    $file = new \SplFileInfo($filepath);
     if (!$destination = $this->moveFile($file)) {
       $this->io()->error($this->t('Could not create config PO file.'));
       return;
@@ -233,7 +254,11 @@ class DplPoCommands extends DrushCommands {
     $this->setSource($destination);
     $this->importConfigPoFileBatch();
     $this->io()->success($this->t('Config translations were imported from: @url', ['@url' => $url]));
-    $this->fileSystem->delete($this->getDestination());
+
+    // Delete the temporary file.
+    if ($destination = $this->getDestination()) {
+      $this->fileSystem->delete($destination);
+    }
   }
 
   /**
@@ -248,7 +273,7 @@ class DplPoCommands extends DrushCommands {
    * @usage drush dpl_po:export-config-po da da.config.po
    *   Imports the configuration po file into the system.
    */
-  public function exportConfigPoFile(string $langcode, string $destination) {
+  public function exportConfigPoFile(string $langcode, string $destination): void {
     $this->setLanguageCode($langcode);
     $this->setDestination($destination);
     $this->validateDestination();
@@ -258,7 +283,11 @@ class DplPoCommands extends DrushCommands {
       ->exportConfigTranslations($names, [$langcode]);
 
     if (!empty($items)) {
-      $uri = $this->fileSystem->tempnam('temporary://', 'po_');
+      if (!$uri = $this->fileSystem->tempnam('temporary://', 'po_')) {
+        $this->io()->error($this->t('Could not create temp PO file.'));
+        return;
+      }
+
       $header = new PoHeader($langcode);
       $header->setProjectName($this->configFactory->get('system.site')->get('name'));
       $header->setLanguageName($langcode);
@@ -272,9 +301,13 @@ class DplPoCommands extends DrushCommands {
         $writer->writeItem($item);
       }
       $writer->close();
-      $file = new \SplFileInfo($this->fileSystem->realpath($uri));
 
-      if (!$destination = $this->moveFile($file)) {
+      if (!is_string($uri) || !$file = $this->fileSystem->realpath($uri)) {
+        $this->io()->error($this->t('Could not locate temp PO file.'));
+        return;
+      }
+
+      if (!$destination = $this->moveFile(new \SplFileInfo($file))) {
         $this->io()->error($this->t('Could not create PO file.'));
         return;
       }
@@ -291,7 +324,7 @@ class DplPoCommands extends DrushCommands {
   protected function validateSource(): void {
     $source = $this->getSource();
 
-    if (!is_file($source)) {
+    if (!$source || !is_file($source)) {
       throw new \Exception('Invalid source file: ' . $source);
     }
 
@@ -306,7 +339,10 @@ class DplPoCommands extends DrushCommands {
    * @throws \Exception
    */
   protected function validateDestination(): void {
-    $destination = $this->getDestination();
+    if (!$destination = $this->getDestination()) {
+      throw new \Exception('Destination was not defined.');
+    }
+
     // Check for writable destination.
     $destination_dir = $this->fileSystem->dirname($destination);
     if (!is_writable($destination_dir)) {
@@ -317,7 +353,7 @@ class DplPoCommands extends DrushCommands {
   /**
    * Create a file object.
    */
-  protected function createFile($path): \stdClass {
+  protected function createFile(string $path): \stdClass {
     $file = new \stdClass();
     $file->filename = $this->fileSystem->basename($path);
     $file->uri = $path;
@@ -330,10 +366,10 @@ class DplPoCommands extends DrushCommands {
   /**
    * Move a file to the destination.
    */
-  protected function moveFile($file): string {
-    $destination = $this->getDestination();
-
-    rename($file->getRealPath(), $destination);
+  protected function moveFile(\SplFileInfo $file): ?string {
+    if ($destination = $this->getDestination()) {
+      rename($file->getRealPath(), $destination);
+    }
 
     return $destination;
   }
@@ -341,11 +377,13 @@ class DplPoCommands extends DrushCommands {
   /**
    * Extract translations into a file.
    */
-  protected function extractTranslationsIntoFile($pattern, $mode = 'include'): \SplFileInfo {
+  protected function extractTranslationsIntoFile(string $pattern, string $mode = 'include'): \SplFileInfo {
     $source = $this->getSource();
+    if (!$source = $this->getSource()) {
+      throw new \Exception('Source is not defined.');
+    }
 
     $file = $this->createFile($source);
-
     $reader = new PoStreamReader();
     $reader->setLangcode($file->langcode);
     $reader->setURI($file->uri);
@@ -358,9 +396,6 @@ class DplPoCommands extends DrushCommands {
     }
 
     $header = $reader->getHeader();
-    if (!$header) {
-      throw new \Exception('Missing or malformed header.');
-    }
 
     $uri = $this->fileSystem->tempnam('temporary://', 'po_');
     $writer = new PoStreamWriter();
@@ -372,6 +407,7 @@ class DplPoCommands extends DrushCommands {
       if ($mode === 'include' && preg_match($pattern, $item->getContext())) {
         $writer->writeItem($item);
       }
+
       if ($mode === 'exclude' && !preg_match($pattern, $item->getContext())) {
         $writer->writeItem($item);
       }

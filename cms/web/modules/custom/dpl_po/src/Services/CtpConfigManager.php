@@ -7,7 +7,7 @@ use Drupal\config_translation_po\Services\CtpConfigManager as OrgCtpConfigManage
 use Drupal\Core\StringTranslation\TranslatableMarkup;
 
 /**
- * Class CtpConfigManager.
+ * Extended CtpConfigManager in order to handle untranslated strings properly.
  *
  * @package Drupal\config_translation_po\Services
  */
@@ -33,12 +33,12 @@ class CtpConfigManager extends OrgCtpConfigManager {
         if (locale_is_translatable($langcode)) {
           $value = $this->translateString($name, $langcode, $item->getUntranslatedString(), $item->getOption('context'));
         }
-        if (empty($value) || is_null($value)) {
+        if (empty($value)) {
           // If there is no translation, set value to NULL
           // so we can handle it properly in the next step.
           $value = NULL;
         }
-        if (!empty($value) || is_null($value)) {
+        if (!empty($value) || !is_null($value)) {
           $translated[$key] = $value;
         }
       }
