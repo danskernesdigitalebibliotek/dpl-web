@@ -108,9 +108,12 @@ class DplPoCommands extends DrushCommands {
     $this->validateSource();
     $this->validateDestination();
 
-    $file = $this->extractTranslationsIntoFile('/^([a-z]+\.)+/');
-    if (!$destination = $this->moveFile($file)) {
-      $this->io()->error($this->t('Could not create PO file.'));
+    try {
+      $file = $this->extractTranslationsIntoFile('/^([a-z]+\.)+/');
+      $destination = $this->moveFile($file);
+    }
+    catch (\Exception $exception) {
+      $this->io()->error($this->t('Could not create PO file: @destination (createPoFileConfigOnly)', ['@destination' => $destination]));
       return;
     }
 
@@ -138,9 +141,12 @@ class DplPoCommands extends DrushCommands {
     $this->validateSource();
     $this->validateDestination();
 
-    $file = $this->extractTranslationsIntoFile('/^([a-z]+\.)+/', 'exclude');
-    if (!$destination = $this->moveFile($file)) {
-      $this->io()->error($this->t('Could not create PO file.'));
+    try {
+      $file = $this->extractTranslationsIntoFile('/^([a-z]+\.)+/', 'exclude');
+      $destination = $this->moveFile($file);
+    }
+    catch (\Exception $exception) {
+      $this->io()->error($this->t('Could not create PO file: @destination (createPoFileUiOnly)', ['@destination' => $destination]));
       return;
     }
 
@@ -245,18 +251,20 @@ class DplPoCommands extends DrushCommands {
       return;
     }
 
-    $file = new \SplFileInfo($filepath);
-    if (!$destination = $this->moveFile($file)) {
-      $this->io()->error($this->t('Could not create config PO file.'));
+    try {
+      $file = new \SplFileInfo($filepath);
+      $destination = $this->moveFile($file);
+    }
+    catch (\Exception $exception) {
+      $this->io()->error($this->t('Could not create PO file: @file (importRemoteConfigPoFile)', ['@file' => $filepath]));
       return;
     }
 
-    $this->setSource($destination);
-    $this->importConfigPoFileBatch();
-    $this->io()->success($this->t('Config translations were imported from: @url', ['@url' => $url]));
+    if ($destination) {
+      $this->setSource($destination);
+      $this->importConfigPoFileBatch();
+      $this->io()->success($this->t('Config translations were imported from: @url', ['@url' => $url]));
 
-    // Delete the temporary file.
-    if ($destination = $this->getDestination()) {
       $this->fileSystem->delete($destination);
     }
   }
@@ -307,8 +315,11 @@ class DplPoCommands extends DrushCommands {
         return;
       }
 
-      if (!$destination = $this->moveFile(new \SplFileInfo($file))) {
-        $this->io()->error($this->t('Could not create PO file.'));
+      try {
+        $destination = $this->moveFile(new \SplFileInfo($file));
+      }
+      catch (\Exception $exception) {
+        $this->io()->error($this->t('Could not create PO file: @file (exportConfigPoFile)', ['@file' => $uri]));
         return;
       }
 
