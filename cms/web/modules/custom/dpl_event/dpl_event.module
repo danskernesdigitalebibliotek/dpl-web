@@ -174,7 +174,26 @@ function dpl_event_preprocess_field(array &$variables): void {
   // After determining the 'event_is_active' flag, check if the event is active.
   if ($variables['event_is_active']) {
     // If active, set a translatable string as the title.
-    $variables['items'][0]['content']['#title'] = t('Buy tickets');
+    $price_formatter = \Drupal::service('dpl_event.price_formatter');
+    $hasFreeTickets = FALSE;
+
+    if ($entity->hasField('event_ticket_categories')) {
+      $ticket_categories_fields = $entity->get('event_ticket_categories')
+        ->referencedEntities();
+
+      if ($ticket_categories_fields) {
+        foreach ($ticket_categories_fields as $ticket_category) {
+          $ticket_category_price_fields = $ticket_category->get('field_ticket_category_price')
+            ->getValue();
+          foreach ($ticket_category_price_fields as $ticket_price) {
+            if ($price_formatter->formatRawPrice($ticket_price['value']) == 0) {
+              $hasFreeTickets = TRUE;
+            }
+          }
+        }
+      }
+    }
+    $variables['items'][0]['content']['#title'] = $hasFreeTickets ? t('Get tickets') : t('Buy tickets');
     return;
   }
   else {
