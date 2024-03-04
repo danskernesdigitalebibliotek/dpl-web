@@ -112,7 +112,7 @@
         "drupal/openapi_ui_swagger": "^1.0",
         "drupal/openid_connect": "^1.4",
         "drupal/paragraphs": "^1.16",
-        "drupal/paragraphs_ee": "^10.0",
+        "drupal/paragraphs_ee": "^10",
         "drupal/potion": "dev-2.x#e48d6ee336d960b9d2efb5d88e68402db6d229a6",
         "drupal/purge": "^3.2",
         "drupal/recurring_events": "^2.0@RC",
@@ -279,7 +279,8 @@
                 "3343816: Specification includes disabled resources": "https://git.drupalcode.org/project/openapi_rest/-/merge_requests/4.patch"
             },
             "drupal/paragraphs_ee": {
-                "3106254: Sorting paragraph list alphabetically in modal": "https://www.drupal.org/files/issues/2023-03-30/paragraphs_ee_sort.patch"
+                "3106254: Sorting paragraph list alphabetically in modal": "https://www.drupal.org/files/issues/2023-03-30/paragraphs_ee_sort.patch",
+                "3246408: Arrow buttons instead of drag n drop": "https://git.drupalcode.org/project/paragraphs_ee/-/merge_requests/21.patch"
             },
             "drupal/potion": {
                 "3201365: Allow setting a default write mode when running potion:generate": "https://www.drupal.org/files/issues/2021-03-03/potion-allow_setting_a_default_write_mode-3201365-2.patch",
