@@ -123,9 +123,6 @@ function novel_preprocess_dpl_react_app__loan_list(array &$variables): void {
 function novel_preprocess(array &$variables): void {
   $directory = $variables['directory'] ?? 'web/themes/custom/novel';
   $variables['baseIconPath'] = "/{$directory}/assets/dpl-design-system/icons";
-
-  $config = \Drupal::config('dpl_library_agency.general_settings');
-  $variables['opening_hours_url'] = $config->get('opening_hours_url') ?? GeneralSettings::OPENING_HOURS_URL;
 }
 
 /**
