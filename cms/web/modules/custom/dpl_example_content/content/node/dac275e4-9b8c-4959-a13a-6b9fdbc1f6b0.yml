@@ -32,9 +32,6 @@ default:
   revision_translation_affected:
     -
       value: true
-  entity_clone_template_active:
-    -
-      value: false
   entity_clone_template_image:
     -
       entity: e00e1460-169e-468d-9835-d664f06d0969
@@ -82,10 +79,10 @@ default:
           behavior_settings:
             -
               value: {  }
-          revision_translation_affected:
-            -
-              value: true
           field_body:
             -
               value: '<p>Noget info om hovedbiblioteket.</p>'
               format: basic
+  field_promoted_on_lists:
+    -
+      value: true
