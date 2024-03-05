@@ -84,6 +84,7 @@ function dpl_protected_nodes_is_nodes_protected(array $nodes, array $form): arra
  *   An array containing linkit form element information.
  */
 function dpl_protected_nodes_get_context(string $form_class_path, string $config_route): array {
+
   // Get the configuration form.
   $form = \Drupal::formBuilder()->getForm($form_class_path);
   // Get the configuration path.
@@ -106,6 +107,8 @@ function dpl_protected_nodes_get_context(string $form_class_path, string $config
  * @throws \Safe\Exceptions\PcreException
  */
 function dpl_protected_nodes_find_linkit_elements(array $form, string $config_path, array &$elements = []): array {
+  $path_alias_manager = \Drupal::service('path_alias.manager');
+
   foreach ($form as $key => $value) {
     // If the value is not an array, continue to the next iteration.
     if (!is_array($value)) {
@@ -115,11 +118,14 @@ function dpl_protected_nodes_find_linkit_elements(array $form, string $config_pa
     // Set field_value and field_type if they exist, else set to empty string.
     $field_value = $value['#default_value'] ?? '';
     $field_type = $value['#type'] ?? '';
+
     // Check if the field is of type linkit and
-    // the value is matching a node url e.g. "/node/1".
-    if ($field_type === 'linkit' && preg_match('/^\/node\/\d+$/', $field_value)) {
+    // the value is matching a node url e.g. "/node/1" or "/pausefunktion".
+    if ($field_type === 'linkit' && preg_match('/^\//', $field_value)) {
+      $internal_path = $path_alias_manager->getPathByAlias($field_value);
+
       $elements[$key] = [
-        'node_id' => basename($field_value),
+        'node_id' => basename($internal_path),
         'config_title' => $value['#title'],
         'config_path' => $config_path,
       ];
