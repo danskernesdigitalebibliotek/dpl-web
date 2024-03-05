@@ -5,7 +5,7 @@ _meta:
   bundle: default
   default_langcode: en
   depends:
-    acbba437-f1d9-492c-9082-59fca80b888b: eventinstance
+    ca2f698d-2bb6-4f06-b19d-289c3ea51613: eventinstance
     f457c4c2-dc28-45cd-9b6e-fda4248d9d45: taxonomy_term
     618e176a-a45a-4c36-a197-664230aa0a34: media
     dc33677f-8894-4717-b34b-d985f6ad875f: media
@@ -108,7 +108,7 @@ default:
         href: '/user/login'
   event_instances:
     -
-      entity: acbba437-f1d9-492c-9082-59fca80b888b
+      entity: ca2f698d-2bb6-4f06-b19d-289c3ea51613
   field_categories:
     -
       entity: f457c4c2-dc28-45cd-9b6e-fda4248d9d45
@@ -295,33 +295,6 @@ default:
         _meta:
           version: '1.0'
           entity_type: paragraph
-          uuid: d33f71b3-c0c0-4930-86dc-902279073e88
-          bundle: event_ticket_category
-          default_langcode: en
-        default:
-          status:
-            -
-              value: true
-          created:
-            -
-              value: 1704607084
-          behavior_settings:
-            -
-              value: {  }
-          revision_translation_affected:
-            -
-              value: true
-          field_ticket_category_name:
-            -
-              value: Voksne
-          field_ticket_category_price:
-            -
-              value: '65.00'
-    -
-      entity:
-        _meta:
-          version: '1.0'
-          entity_type: paragraph
           uuid: 81c68ed2-7bad-470e-9c22-649bea691fcd
           bundle: event_ticket_category
           default_langcode: en
@@ -344,3 +317,30 @@ default:
           field_ticket_category_price:
             -
               value: '0.00'
+    -
+      entity:
+        _meta:
+          version: '1.0'
+          entity_type: paragraph
+          uuid: d33f71b3-c0c0-4930-86dc-902279073e88
+          bundle: event_ticket_category
+          default_langcode: en
+        default:
+          status:
+            -
+              value: true
+          created:
+            -
+              value: 1704607084
+          behavior_settings:
+            -
+              value: {  }
+          revision_translation_affected:
+            -
+              value: true
+          field_ticket_category_name:
+            -
+              value: Voksne
+          field_ticket_category_price:
+            -
+              value: '65.00'
