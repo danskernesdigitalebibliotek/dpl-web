@@ -20,6 +20,7 @@ dependencies:
     - dpl_footer
     - dpl_instant_loan
     - dpl_library_agency
+    - dpl_mapp
     - dpl_url_proxy
     - entity_clone
     - file
@@ -27,6 +28,7 @@ dependencies:
     - locale
     - media
     - node
+    - openid_connect
     - paragraphs
     - paragraphs_ee
     - recurring_events
@@ -57,9 +59,11 @@ permissions:
   - 'add new links to admin menu'
   - 'add new links to main menu'
   - 'administer dpl_footer settings'
+  - 'administer dpl_mapp configuration'
   - 'administer instant loan configuration'
   - 'administer library agency configuration'
   - 'administer nodes'
+  - 'administer openid connect clients'
   - 'administer orphaned events entities'
   - 'administer paragraphs categories'
   - 'administer site configuration'
