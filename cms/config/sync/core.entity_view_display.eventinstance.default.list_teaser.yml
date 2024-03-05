@@ -36,9 +36,9 @@ mode: list_teaser
 content:
   branch:
     type: entity_reference_label
-    label: visible
+    label: hidden
     settings:
-      link: true
+      link: false
     third_party_settings: {  }
     weight: 50
     region: content
