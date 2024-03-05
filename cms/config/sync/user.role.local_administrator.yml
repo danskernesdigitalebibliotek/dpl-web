@@ -59,6 +59,7 @@ permissions:
   - 'administer dpl_footer settings'
   - 'administer instant loan configuration'
   - 'administer library agency configuration'
+  - 'administer menu'
   - 'administer nodes'
   - 'administer orphaned events entities'
   - 'administer paragraphs categories'
