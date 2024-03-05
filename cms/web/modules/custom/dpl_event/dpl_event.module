@@ -21,7 +21,7 @@ use Safe\DateTimeImmutable;
  *
  * @return non-empty-array<string, array{'worker callback': string}>
  *   Job scheduler information.
- */
+*/
 function dpl_event_cron_job_scheduler_info(): array {
   return [
     "dpl_event_set_occurred" => [
@@ -54,7 +54,7 @@ function dpl_event_eventinstance_update(EntityInterface $entity): void {
  * An event is considered active if it has not occurred or been cancelled.
  */
 function dpl_event_eventinstance_is_active(EventInstance $event): bool {
-  $event_states = array_map(function (array $sfield_value) : EventState {
+  $event_states = array_map(function(array $sfield_value): EventState {
     return EventState::from($sfield_value['value']);
   }, $event->get("event_state")->getValue());
 
@@ -173,33 +173,40 @@ function dpl_event_preprocess_field(array &$variables): void {
 
   // After determining the 'event_is_active' flag, check if the event is active.
   if ($variables['event_is_active']) {
-    // If active, set a translatable string as the title.
-    $price_formatter = \Drupal::service('dpl_event.price_formatter');
     $hasFreeTickets = FALSE;
+    $fieldsToCheck = ['event_ticket_categories', 'field_ticket_categories'];
 
-    if ($entity->hasField('event_ticket_categories')) {
-      $ticket_categories_fields = $entity->get('event_ticket_categories')
-        ->referencedEntities();
-
-      if ($ticket_categories_fields) {
-        foreach ($ticket_categories_fields as $ticket_category) {
-          $ticket_category_price_fields = $ticket_category->get('field_ticket_category_price')
-            ->getValue();
-          foreach ($ticket_category_price_fields as $ticket_price) {
-            if ($price_formatter->formatRawPrice($ticket_price['value']) == 0) {
-              $hasFreeTickets = TRUE;
-            }
-          }
+    // Use categoriesFieldsToCheck because the categories field name is different for event series and instances
+    foreach ($fieldsToCheck as $field) {
+      if ($entity->hasField($field)) {
+        $hasFreeTickets = hasFreeTickets($entity->get($field)
+          ->referencedEntities());
+        if ($hasFreeTickets) {
+          break;
         }
       }
     }
+
     $variables['items'][0]['content']['#title'] = $hasFreeTickets ? t('Get tickets') : t('Buy tickets');
-    return;
   }
   else {
     // Update the title of the button to the label of the current event state.
     $variables['items'][0]['content']['#title'] = $event_state->label();
   }
+}
+
+function hasFreeTickets($ticketCategories) {
+  $price_formatter = \Drupal::service('dpl_event.price_formatter');
+  foreach ($ticketCategories as $ticket_category) {
+    $ticket_category_price_fields = $ticket_category->get('field_ticket_category_price')
+      ->getValue();
+    foreach ($ticket_category_price_fields as $ticket_price) {
+      if ($price_formatter->formatRawPrice($ticket_price['value']) == 0) {
+        return TRUE;
+      }
+    }
+  }
+  return FALSE;
 }
 
 /**
