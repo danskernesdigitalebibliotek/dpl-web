@@ -112,7 +112,7 @@ function novel_preprocess_dpl_react_app__loan_list(array &$variables): void {
 }
 
 /**
- * Implements hook_preprocess_HOOK()
+ * Implements hook_preprocess_HOOK().
  *
  * Add the base icon path to the variables array.
  *
@@ -161,6 +161,25 @@ function novel_preprocess_page(array &$variables): void {
     }
 
     $variables['logo']['#image'] = $logo_render_array;
+  }
+}
+
+/**
+ * Implements hook_preprocess_paragraph__bundle().
+ */
+function novel_preprocess_paragraph__user_registration_section(&$variables): void {
+  $user_registration_section = $variables['paragraph'];
+  $user_registration_items = $user_registration_section->get('field_user_registration_items')->referencedEntities();
+  $variables['anchor_links'] = [];
+
+  // Creates anchor links for items that should be displayed in the navigation.
+  foreach ($user_registration_items as $item) {
+    if ($item->get('field_display_in_navigation')->value == 1) {
+      $variables['anchor_links'][] = [
+        'title' => $item->get('field_title')->value,
+        'anchor_id' => $item->get('field_anchor')->value ?? 'anchor-' . $item->id(),
+      ];
+    }
   }
 }
 
