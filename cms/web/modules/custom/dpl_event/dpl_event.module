@@ -173,22 +173,11 @@ function dpl_event_preprocess_field(array &$variables): void {
 
   // After determining the 'event_is_active' flag, check if the event is active.
   if ($variables['event_is_active']) {
-    $has_free_tickets = FALSE;
-    $categories_fields_to_check = ['event_ticket_categories', 'field_ticket_categories'];
-
-    // Use categories_fields_to_check because the categories field name is
-    // different for event series and instances.
-    foreach ($categories_fields_to_check as $field) {
-      if ($entity->hasField($field)) {
-        $has_free_tickets = dpl_event_has_free_tickets($entity->get($field)
-          ->referencedEntities());
-        if ($has_free_tickets) {
-          break;
-        }
-      }
-    }
+    // If active, set a translatable string as the title.
+    $has_free_tickets = dpl_event_has_free_tickets($entity);
 
     $variables['items'][0]['content']['#title'] = $has_free_tickets ? t('Get tickets') : t('Buy tickets');
+    return;
   }
   else {
     // Update the title of the button to the label of the current event state.
@@ -199,20 +188,29 @@ function dpl_event_preprocess_field(array &$variables): void {
 /**
  * Check if the event has free tickets.
  *
- * @param array<\Drupal\paragraphs\Entity\Paragraph> $ticket_categories
- *   An array of ticket categories.
+ * @param \Drupal\Core\Entity\FieldableEntityInterface $entity
+ *   The event entity.
  *
  * @return bool
  *   True if the event has free tickets, false otherwise.
  */
-function dpl_event_has_free_tickets(array $ticket_categories): bool {
+function dpl_event_has_free_tickets(FieldableEntityInterface $entity): bool {
   $price_formatter = \Drupal::service('dpl_event.price_formatter');
-  foreach ($ticket_categories as $ticket_category) {
-    $ticket_category_price_fields = $ticket_category->get('field_ticket_category_price')
-      ->getValue();
-    foreach ($ticket_category_price_fields as $ticket_price) {
-      if ($price_formatter->formatRawPrice($ticket_price['value']) == 0) {
-        return TRUE;
+  $categories_fields_to_check = ['event_ticket_categories', 'field_ticket_categories'];
+
+  // Use categories_fields_to_check because the categories field name is
+  // different for event series and instances.
+  foreach ($categories_fields_to_check as $field) {
+    if ($entity->hasField($field)) {
+      $ticket_categories = $entity->get($field)->referencedEntities();
+      foreach ($ticket_categories as $ticket_category) {
+        $ticket_category_price_fields = $ticket_category->get('field_ticket_category_price')
+          ->getValue();
+        foreach ($ticket_category_price_fields as $ticket_price) {
+          if ($price_formatter->formatRawPrice($ticket_price['value']) == 0) {
+            return TRUE;
+          }
+        }
       }
     }
   }
