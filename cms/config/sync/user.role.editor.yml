@@ -106,6 +106,7 @@ permissions:
   - 'edit eventinstance entity'
   - 'edit eventseries entity'
   - 'edit links in main menu'
+  - 'edit main menu'
   - 'edit own article content'
   - 'edit own branch content'
   - 'edit own campaign content'
