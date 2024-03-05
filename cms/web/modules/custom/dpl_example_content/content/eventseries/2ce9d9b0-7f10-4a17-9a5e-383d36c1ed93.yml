@@ -5,7 +5,8 @@ _meta:
   bundle: default
   default_langcode: en
   depends:
-    21850bf7-ffc9-483c-bcd5-489d420552f9: eventinstance
+    744dba3f-0fbc-4f58-81ca-7d99a862f4f7: eventinstance
+    852d781f-82c9-40ac-bc8d-d0cefe07706d: node
     0fa7245a-3434-4d96-9793-a1848a22d37a: taxonomy_term
     a0176f8c-bb7e-4f5a-bf23-b48cd8bab05f: media
 default:
@@ -100,10 +101,16 @@ default:
         href: '/user/login'
   event_instances:
     -
-      entity: 21850bf7-ffc9-483c-bcd5-489d420552f9
+      entity: 744dba3f-0fbc-4f58-81ca-7d99a862f4f7
+  field_branch:
+    -
+      entity: 852d781f-82c9-40ac-bc8d-d0cefe07706d
   field_categories:
     -
       entity: 0fa7245a-3434-4d96-9793-a1848a22d37a
+  field_description:
+    -
+      value: "Tag med til en fortryllende oplevelse med 'Juleballet - Nøddeknækkeren', en tidløs balletklassiker der fortryller publikum af alle aldre. Nyd Tjajkovskijs betagende musik og enestående dans, som bringer julemagien til live. En ideel begivenhed for familier, par og balletentusiaster, der søger en unik kulturel oplevelse. Sikre dig din billet til denne uforglemmelige forestilling!"
   field_event_address:
     -
       langcode: en
@@ -111,15 +118,12 @@ default:
       locality: Aarhus
       postal_code: '8000'
       address_line1: 'Kampmanns Plads 2'
-  field_description:
-    -
-      value: "Tag med til en fortryllende oplevelse med 'Juleballet - Nøddeknækkeren', en tidløs balletklassiker der fortryller publikum af alle aldre. Nyd Tjajkovskijs betagende musik og enestående dans, som bringer julemagien til live. En ideel begivenhed for familier, par og balletentusiaster, der søger en unik kulturel oplevelse. Sikre dig din billet til denne uforglemmelige forestilling!"
   field_event_image:
     -
       entity: a0176f8c-bb7e-4f5a-bf23-b48cd8bab05f
   field_event_link:
     -
-      uri: 'https://billetto.dk/ '
+      uri: 'https://billetto.dk/'
       title: ''
       options: {  }
   field_event_partners:
@@ -127,7 +131,7 @@ default:
       value: 'Julemandens Værksted'
   field_event_place:
     -
-      value: 'Hovedbibliotek '
+      value: 'Scenen i gården'
   field_event_state:
     -
       value: Active

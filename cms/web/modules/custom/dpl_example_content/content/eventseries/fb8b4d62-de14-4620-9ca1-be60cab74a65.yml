@@ -5,7 +5,8 @@ _meta:
   bundle: default
   default_langcode: en
   depends:
-    90fd4a18-52ff-4738-b939-dcce341a68a8: eventinstance
+    26e821fb-8d1f-4f0f-a779-707f4067ac41: eventinstance
+    480a6997-4ca2-4cc6-a8f2-61254401d044: node
     e539b26b-2992-406b-accf-03e549522c0d: taxonomy_term
     d6d67fd2-775c-46e7-a1bf-6af46290a5c8: media
     4704c566-afc2-4131-ab81-3d636f2451bf: taxonomy_term
@@ -101,10 +102,16 @@ default:
         href: '/user/login'
   event_instances:
     -
-      entity: 90fd4a18-52ff-4738-b939-dcce341a68a8
+      entity: 26e821fb-8d1f-4f0f-a779-707f4067ac41
+  field_branch:
+    -
+      entity: 480a6997-4ca2-4cc6-a8f2-61254401d044
   field_categories:
     -
       entity: e539b26b-2992-406b-accf-03e549522c0d
+  field_description:
+    -
+      value: "Vær med til at gøre en forskel for miljøet ved at deltage i arrangementet 'Genbrugsstof fremfor plastik'. Denne begivenhed sætter fokus på bæredygtighed og vigtigheden af at vælge genbrugsmaterialer over plastik. Det er en fantastisk mulighed for at lære om miljøvenlige alternativer, deltage i inspirerende workshops og møde ligesindede, der deler en passion for bæredygtighed. Bliv inspireret til at gøre små ændringer i din hverdag, som kan have en stor indvirkning på vores planet"
   field_event_address:
     -
       langcode: en
@@ -112,20 +119,14 @@ default:
       locality: Aarhus
       postal_code: '8000'
       address_line1: 'Kampmanns Plads 2'
-  field_description:
-    -
-      value: "Vær med til at gøre en forskel for miljøet ved at deltage i arrangementet 'Genbrugsstof fremfor plastik'. Denne begivenhed sætter fokus på bæredygtighed og vigtigheden af at vælge genbrugsmaterialer over plastik. Det er en fantastisk mulighed for at lære om miljøvenlige alternativer, deltage i inspirerende workshops og møde ligesindede, der deler en passion for bæredygtighed. Bliv inspireret til at gøre små ændringer i din hverdag, som kan have en stor indvirkning på vores planet"
   field_event_image:
     -
       entity: d6d67fd2-775c-46e7-a1bf-6af46290a5c8
   field_event_link:
     -
-      uri: 'https://billetto.dk/ '
+      uri: 'https://billetto.dk/'
       title: ''
       options: {  }
-  field_event_place:
-    -
-      value: Hovedbibliotek
   field_event_state:
     -
       value: Active

@@ -5,7 +5,7 @@ _meta:
   bundle: default
   default_langcode: en
   depends:
-    ca2f698d-2bb6-4f06-b19d-289c3ea51613: eventinstance
+    b6497d67-dae3-4891-900c-f93c18781720: eventinstance
     f457c4c2-dc28-45cd-9b6e-fda4248d9d45: taxonomy_term
     618e176a-a45a-4c36-a197-664230aa0a34: media
     dc33677f-8894-4717-b34b-d985f6ad875f: media
@@ -108,10 +108,13 @@ default:
         href: '/user/login'
   event_instances:
     -
-      entity: ca2f698d-2bb6-4f06-b19d-289c3ea51613
+      entity: b6497d67-dae3-4891-900c-f93c18781720
   field_categories:
     -
       entity: f457c4c2-dc28-45cd-9b6e-fda4248d9d45
+  field_description:
+    -
+      value: 'Foreningen for Integreret Moderne Dans arbejder med at udvide normalitetsbegrebet i scenekunsten. For hvad er normalt? Rosenreglen og Mødrenes hus. I 2022 udgav hun også den stærkt politiske digtsamling Jeg vil have en statsminister.'
   field_event_address:
     -
       langcode: en
@@ -119,9 +122,6 @@ default:
       locality: Aarhus
       postal_code: '8000'
       address_line1: 'Kampmanns Plads 2'
-  field_description:
-    -
-      value: 'Foreningen for Integreret Moderne Dans arbejder med at udvide normalitetsbegrebet i scenekunsten. For hvad er normalt? Rosenreglen og Mødrenes hus. I 2022 udgav hun også den stærkt politiske digtsamling Jeg vil have en statsminister.'
   field_event_image:
     -
       entity: 618e176a-a45a-4c36-a197-664230aa0a34
@@ -264,11 +264,6 @@ default:
       value: 'Aarhus Musikskole'
     -
       value: 'Den Vestdanske Filmpulje sammen med Åby Biblioteks venner'
-  field_event_place:
-    -
-      value: Hovedbibliotek
-    -
-      value: 'Greve bibliotek'
   field_event_state:
     -
       value: Active
