@@ -4,7 +4,11 @@ status: true
 dependencies:
   config:
     - core.entity_view_mode.node.teaser
+    - field.field.node.page.field_branch
+    - field.field.node.page.field_display_titles
+    - field.field.node.page.field_hero_title
     - field.field.node.page.field_paragraphs
+    - field.field.node.page.field_subtitle
     - node.type.page
   module:
     - user
@@ -19,6 +23,10 @@ content:
     weight: 100
     region: content
 hidden:
+  field_branch: true
+  field_display_titles: true
+  field_hero_title: true
   field_paragraphs: true
+  field_subtitle: true
   langcode: true
   search_api_excerpt: true

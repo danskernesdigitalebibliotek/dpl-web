@@ -6,15 +6,11 @@ dependencies:
     - rest.resource.campaign.match
     - rest.resource.proxy-url
   module:
-    - file
-    - node
     - rest
 id: patron
 label: Patron
 weight: 6
 is_admin: null
 permissions:
-  - 'delete own files'
   - 'restful get proxy-url'
   - 'restful post campaign:match'
-  - 'view own unpublished content'

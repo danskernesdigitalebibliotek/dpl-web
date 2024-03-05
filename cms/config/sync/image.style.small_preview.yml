@@ -1,0 +1,17 @@
+uuid: 3bfa05ef-405f-41b2-abb0-b4d50b7d2906
+langcode: en
+status: true
+dependencies:
+  module:
+    - focal_point
+name: small_preview
+label: 'Small preview'
+effects:
+  80aff786-ef0c-4e9a-ab5b-70986d661071:
+    uuid: 80aff786-ef0c-4e9a-ab5b-70986d661071
+    id: focal_point_scale_and_crop
+    weight: 1
+    data:
+      width: 100
+      height: 100
+      crop_type: focal_point

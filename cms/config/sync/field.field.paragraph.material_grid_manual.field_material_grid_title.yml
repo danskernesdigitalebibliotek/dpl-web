@@ -1,0 +1,19 @@
+uuid: fa9de833-7a28-4874-a7a3-f3e8da844644
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.paragraph.field_material_grid_title
+    - paragraphs.paragraphs_type.material_grid_manual
+id: paragraph.material_grid_manual.field_material_grid_title
+field_name: field_material_grid_title
+entity_type: paragraph
+bundle: material_grid_manual
+label: 'Title of the material grid'
+description: 'The title for the material grid. Leave this blank if you do not want a title. '
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: string

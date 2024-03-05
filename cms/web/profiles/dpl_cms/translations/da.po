@@ -3,8 +3,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2024-02-23 12:37+0100\n"
-"PO-Revision-Date: 2024-02-23 12:37+0100\n"
+"POT-Creation-Date: 2024-03-05 08:27+0100\n"
+"PO-Revision-Date: 2024-03-05 08:27+0100\n"
 "Last-Translator: NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
 "MIME-Version: 1.0\n"
@@ -179,6 +179,22 @@ msgid "Minimum age to allow self registration"
 msgstr "Minimumsalder for selvoprettelse som låner"
 
 msgctxt "Patron registration settings form"
+msgid "Patron registration page url"
+msgstr ""
+
+msgctxt "Patron registration settings form"
+msgid ""
+"The url for the patron registration page. <br>\n"
+"                      "
+"                   You can add a relative url (e.g. /takster). <br>\n"
+" "
+"                                        You can search for an internal "
+"url. <br>\n"
+"                                         You can add an "
+"external url (starting with \"http://\" or \"https://\")."
+msgstr ""
+
+msgctxt "Patron registration settings form"
 msgid "Redirect on create"
 msgstr "Side som låner omdirigeres til ved oprettelse"
 
@@ -194,13 +210,6 @@ msgid ""
 "     You can add an external url (starting with \"http://\" or "
 "\"https://\")."
 msgstr ""
-
-msgctxt "Patron registration settings form"
-msgid "Information page"
-msgstr ""
-
-msgid "Log in with @client_title"
-msgstr "Log ind med @client_title"
 
 msgctxt "Create patron"
 msgid "Cancel"
@@ -567,6 +576,24 @@ msgstr ""
 "muligheden i reserveringsflowet."
 
 msgctxt "DPL admin UX"
+msgid "Event series"
+msgstr ""
+
+msgctxt "DPL admin UX"
+msgid ""
+"Use event series to create event instances - you can use series, both "
+"to create reoccurring events, and single events."
+msgstr ""
+
+msgctxt "DPL admin UX"
+msgid "Create content from scratch"
+msgstr ""
+
+msgctxt "DPL admin UX"
+msgid "Create content from templates"
+msgstr ""
+
+msgctxt "DPL admin UX"
 msgid "<a href=\"@url\">Edit the series here</a>"
 msgstr "<a href=\"@url\">Redigér hele serien her</a>"
 
@@ -831,6 +858,10 @@ msgstr "Logout endpoint"
 msgctxt "Dpl Login"
 msgid "Agency ID"
 msgstr "Agency ID"
+
+msgctxt "Material Grid"
+msgid "Show all"
+msgstr ""
 
 msgid "Footer item"
 msgstr ""
@@ -1478,7 +1509,7 @@ msgstr "Forfattere"
 
 msgctxt "Work Page"
 msgid "Edition"
-msgstr "Udgave"
+msgstr "Nummer"
 
 msgctxt "Work Page"
 msgid "Edition year"
@@ -2211,11 +2242,11 @@ msgstr "@count reserveringer blev slettet"
 
 msgctxt "Global"
 msgid "Reservation deleted"
-msgstr ""
+msgstr "Din reservering er slettet"
 
 msgctxt "Global"
 msgid "Reservations deleted"
-msgstr ""
+msgstr "Dine reserveringer er slettet"
 
 msgctxt "Global"
 msgid "Cancel reservations"
@@ -3010,6 +3041,12 @@ msgctxt "List size (settings)"
 msgid "Dashboard list size on mobile"
 msgstr "Antal elementer der vises i en liste på mobil"
 
+msgid "CQL search string"
+msgstr ""
+
+msgid "Text value"
+msgstr "Tekstværdi"
+
 msgctxt "Recommender (settings)"
 msgid "Search text"
 msgstr "Søgetekst"
@@ -3231,8 +3268,29 @@ msgstr "Andre materialer"
 msgid "Get campaign matching search result facets"
 msgstr "Hent kampagne som matcher facetter fra søgeresultatet"
 
+msgid "Update single events"
+msgstr ""
+
+msgid "Retrieve all events"
+msgstr ""
+
 msgid "Generate proxy url"
 msgstr "Generate proxy URL / Generer proxy URL"
+
+msgid "CQL Search"
+msgstr ""
+
+msgid "FBI"
+msgstr ""
+
+msgid "Work ID"
+msgstr ""
+
+msgid "DPL static content"
+msgstr ""
+
+msgid "Provides static content for new library sites."
+msgstr ""
 
 msgid "Patron page"
 msgstr "Brugerprofil"
@@ -3260,9 +3318,6 @@ msgstr "Tilvælg registrering af nye brugere"
 
 msgid "Change patron registration settings"
 msgstr "Indstillinger for brugeroprettelse"
-
-msgid "Patron registration information"
-msgstr "Information om brugeroprettelse"
 
 msgid "Patron nem-login authentication"
 msgstr "Bruger autentificering med Nem-login"
@@ -3348,17 +3403,11 @@ msgstr "Begivenheder"
 msgid "Add content"
 msgstr "Tilføj indhold"
 
-msgid "Add article"
+msgid "Add new content"
 msgstr ""
 
-msgid "Add campaign"
+msgid "Add Content"
 msgstr ""
-
-msgid "Add page"
-msgstr ""
-
-msgid "Add Event"
-msgstr "Tilføj arrangement"
 
 msgid "Admin"
 msgstr "Administrator"
@@ -3559,6 +3608,12 @@ msgstr "DPL dashboard"
 msgid "Handle the user profile dashboard page"
 msgstr "Håndter indstillinger for brugerens dashboard (Dit overblik)"
 
+msgid "FBI integration"
+msgstr ""
+
+msgid "Integration with with FBI API, https://fbi-api.dbc.dk/."
+msgstr ""
+
 msgid "Recommender settings"
 msgstr "Indstillinger for anbefalinger"
 
@@ -3615,6 +3670,12 @@ msgstr "Af @username"
 msgid "Upcoming events"
 msgstr "Kommende arrangementer"
 
+msgid "Load more items"
+msgstr ""
+
+msgid "Show more"
+msgstr ""
+
 msgid "Events in this series"
 msgstr "Arrangementer i denne serie"
 
@@ -3641,6 +3702,12 @@ msgstr "I samarbejde med"
 
 msgid "Address"
 msgstr "Adresse"
+
+msgid "Email"
+msgstr "E-mail"
+
+msgid "Phone"
+msgstr ""
 
 msgid "Novel"
 msgstr "Roman"

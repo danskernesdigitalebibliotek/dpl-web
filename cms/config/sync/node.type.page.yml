@@ -3,6 +3,8 @@ langcode: en
 status: true
 dependencies:
   module:
+    - entity_clone_template
+    - menu_ui
     - scheduler
 third_party_settings:
   scheduler:
@@ -18,6 +20,11 @@ third_party_settings:
     unpublish_enable: true
     unpublish_required: false
     unpublish_revision: false
+  entity_clone_template:
+    entity_clone_template_active: 1
+  menu_ui:
+    available_menus: {  }
+    parent: ''
 name: Page
 type: page
 description: ''

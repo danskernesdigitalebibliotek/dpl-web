@@ -1,0 +1,53 @@
+uuid: 79d12fba-0a56-4f76-87f2-e3a800902375
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_address
+    - node.type.branch
+  module:
+    - address
+id: node.branch.field_address
+field_name: field_address
+entity_type: node
+bundle: branch
+label: Address
+description: ''
+required: false
+translatable: false
+default_value:
+  -
+    langcode: en
+    country_code: DK
+    administrative_area: null
+    locality: ''
+    dependent_locality: null
+    postal_code: ''
+    sorting_code: null
+    address_line1: ''
+    address_line2: ''
+    organization: ''
+    given_name: ''
+    additional_name: null
+    family_name: ''
+default_value_callback: ''
+settings:
+  available_countries: {  }
+  langcode_override: ''
+  field_overrides:
+    givenName:
+      override: hidden
+    additionalName:
+      override: hidden
+    familyName:
+      override: hidden
+    organization:
+      override: hidden
+    sortingCode:
+      override: hidden
+    dependentLocality:
+      override: hidden
+    administrativeArea:
+      override: hidden
+  fields: {  }
+field_type: address

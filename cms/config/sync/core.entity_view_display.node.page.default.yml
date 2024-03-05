@@ -3,7 +3,11 @@ langcode: en
 status: true
 dependencies:
   config:
+    - field.field.node.page.field_branch
+    - field.field.node.page.field_display_titles
+    - field.field.node.page.field_hero_title
     - field.field.node.page.field_paragraphs
+    - field.field.node.page.field_subtitle
     - node.type.page
   module:
     - user
@@ -12,12 +16,23 @@ targetEntityType: node
 bundle: page
 mode: default
 content:
+  field_branch:
+    type: entity_reference_label
+    label: above
+    settings:
+      link: true
+    third_party_settings: {  }
+    weight: 1
+    region: content
   links:
     settings: {  }
     third_party_settings: {  }
-    weight: 100
+    weight: 0
     region: content
 hidden:
+  field_display_titles: true
+  field_hero_title: true
   field_paragraphs: true
+  field_subtitle: true
   langcode: true
   search_api_excerpt: true
