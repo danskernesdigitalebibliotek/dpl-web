@@ -38,7 +38,7 @@ third_party_settings:
       label: 'Teaser card'
       region: content
       parent_name: ''
-      weight: 12
+      weight: 13
       format_type: details_sidebar
       format_settings:
         classes: ''
@@ -55,7 +55,7 @@ third_party_settings:
       label: Tagging
       region: content
       parent_name: ''
-      weight: 13
+      weight: 14
       format_type: details_sidebar
       format_settings:
         classes: ''
@@ -72,13 +72,13 @@ mode: default
 content:
   date:
     type: daterange_default
-    weight: 2
+    weight: 3
     region: content
     settings: {  }
     third_party_settings: {  }
   field_branch:
     type: options_select
-    weight: -1
+    weight: 0
     region: content
     settings: {  }
     third_party_settings: {  }
@@ -90,7 +90,7 @@ content:
     third_party_settings: {  }
   field_description:
     type: string_textarea
-    weight: 1
+    weight: 2
     region: content
     settings:
       rows: 3
@@ -104,14 +104,14 @@ content:
     third_party_settings: {  }
   field_event_image:
     type: media_library_widget
-    weight: 4
+    weight: 5
     region: content
     settings:
       media_types: {  }
     third_party_settings: {  }
   field_event_link:
     type: link_default
-    weight: 6
+    weight: 8
     region: content
     settings:
       placeholder_url: ''
@@ -119,7 +119,7 @@ content:
     third_party_settings: {  }
   field_event_paragraphs:
     type: paragraphs
-    weight: 5
+    weight: 6
     region: content
     settings:
       title: Paragraph
@@ -147,7 +147,7 @@ content:
           dialog_style: tiles
   field_event_partners:
     type: string_textfield
-    weight: 10
+    weight: 11
     region: content
     settings:
       size: 60
@@ -155,7 +155,7 @@ content:
     third_party_settings: {  }
   field_event_place:
     type: string_textfield
-    weight: 9
+    weight: 10
     region: content
     settings:
       size: 60
@@ -163,13 +163,13 @@ content:
     third_party_settings: {  }
   field_event_state:
     type: options_select
-    weight: 3
+    weight: 4
     region: content
     settings: {  }
     third_party_settings: {  }
   field_event_title:
     type: string_textfield
-    weight: 0
+    weight: 1
     region: content
     settings:
       size: 60
@@ -202,7 +202,7 @@ content:
     third_party_settings: {  }
   field_ticket_categories:
     type: paragraphs
-    weight: 8
+    weight: 9
     region: content
     settings:
       title: Paragraph
@@ -230,7 +230,7 @@ content:
           dialog_style: tiles
   status:
     type: boolean_checkbox
-    weight: 11
+    weight: 12
     region: content
     settings:
       display_label: true
