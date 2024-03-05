@@ -192,7 +192,7 @@ default:
       entity: ca329ad9-5a1c-4f55-b8a9-a60843b66466
   field_event_link:
     -
-      uri: 'https://www.google.com/'
+      uri: 'https://billetto.dk/ '
       title: ''
       options: {  }
   field_event_paragraphs:
