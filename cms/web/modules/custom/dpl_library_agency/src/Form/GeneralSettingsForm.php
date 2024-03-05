@@ -185,6 +185,20 @@ class GeneralSettingsForm extends ConfigFormBase {
       '#default_value' => $config->get('pause_reservation_info_url') ?? GeneralSettings::PAUSE_RESERVATION_INFO_URL,
     ];
 
+    $form['opening_hours_url'] = [
+      '#type' => 'linkit',
+      '#title' => $this->t('Opening hours link', [], ['context' => 'Library Agency Configuration']),
+      '#description' => $this->t('The link with information about opening hours. <br>
+                                         You can add a relative url (e.g. /takster). <br>
+                                         You can search for an internal url. <br>
+                                         You can add an external url (starting with "http://" or "https://").', [], ['context' => 'Library Agency Configuration']),
+      '#autocomplete_route_name' => 'linkit.autocomplete',
+      '#autocomplete_route_parameters' => [
+        'linkit_profile_id' => 'default',
+      ],
+      '#default_value' => $config->get('opening_hours_url') ?? GeneralSettings::OPENING_HOURS_URL,
+    ];
+
     $form['expiration_warning'] = [
       '#type' => 'fieldset',
       '#title' => $this->t('Expiration warning', [], ['context' => 'Library Agency Configuration']),
@@ -321,6 +335,7 @@ class GeneralSettingsForm extends ConfigFormBase {
       ->set('pause_reservation_info_url', $form_state->getValue('pause_reservation_info_url'))
       ->set('ereolen_my_page_url', $form_state->getValue('ereolen_my_page_url'))
       ->set('ereolen_homepage_url', $form_state->getValue('ereolen_homepage_url'))
+      ->set('opening_hours_url', $form_state->getValue('opening_hours_url'))
       ->set('fbi_profiles', [
         'default' => $form_state->getValue('fbi_profile_default'),
         'search' => $form_state->getValue('fbi_profile_search'),
