@@ -62,6 +62,7 @@ permissions:
   - 'administer dpl_mapp configuration'
   - 'administer instant loan configuration'
   - 'administer library agency configuration'
+  - 'administer menu'
   - 'administer nodes'
   - 'administer openid connect clients'
   - 'administer orphaned events entities'

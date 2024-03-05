@@ -47,6 +47,7 @@ permissions:
   - 'add eventseries entity'
   - 'add new links to main menu'
   - 'administer dpl_footer settings'
+  - 'administer menu'
   - 'administer nodes'
   - 'administer paragraphs categories'
   - 'bypass node access'
