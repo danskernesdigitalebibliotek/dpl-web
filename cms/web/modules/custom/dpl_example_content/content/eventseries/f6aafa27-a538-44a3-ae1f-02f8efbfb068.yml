@@ -183,10 +183,9 @@ default:
       locality: Aarhus
       postal_code: '8000'
       address_line1: 'Kampmanns Plads 2'
-  field_event_description:
+  field_description:
     -
-      value: '<p>Legestue for fædre og deres børn mellem 0 og 3 år.</p><p>Sving forbi Stadsbiblioteket til uforpligtende leg og hygge med junior (skærtorsdag og Kristi himmelfartsdag undtaget) finder babylegetøjet frem og inviterer til Fars legestue. Her kan du møde andre fædre og deres børn, ligesom I kan finde inspiration til leg og læsning.</p>'
-      format: limited
+      value: 'Legestue for fædre og deres børn mellem 0 og 3 år. Sving forbi Stadsbiblioteket til uforpligtende leg og hygge med junior (skærtorsdag og Kristi himmelfartsdag undtaget) finder babylegetøjet frem og inviterer til Fars legestue. Her kan du møde andre fædre og deres børn, ligesom I kan finde inspiration til leg og læsning.'
   field_event_image:
     -
       entity: ca329ad9-5a1c-4f55-b8a9-a60843b66466

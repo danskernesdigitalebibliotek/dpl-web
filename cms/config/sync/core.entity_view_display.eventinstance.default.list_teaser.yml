@@ -5,6 +5,7 @@ dependencies:
   config:
     - core.entity_view_mode.eventinstance.list_teaser
     - field.field.eventinstance.default.field_categories
+    - field.field.eventinstance.default.field_description
     - field.field.eventinstance.default.field_event_address
     - field.field.eventinstance.default.field_event_description
     - field.field.eventinstance.default.field_event_image
@@ -66,14 +67,14 @@ content:
     settings:
       link: false
     third_party_settings: {  }
-    weight: 10
+    weight: 11
     region: content
   event_description:
     type: text_default
     label: hidden
     settings: {  }
     third_party_settings: {  }
-    weight: 3
+    weight: 4
     region: content
   event_image:
     type: entity_reference_entity_view
@@ -82,7 +83,7 @@ content:
       view_mode: hero_wide
       link: false
     third_party_settings: {  }
-    weight: 4
+    weight: 5
     region: content
   event_link:
     type: link
@@ -94,7 +95,7 @@ content:
       rel: ''
       target: ''
     third_party_settings: {  }
-    weight: 5
+    weight: 6
     region: content
   event_paragraphs:
     type: entity_reference_revisions_entity_view
@@ -103,7 +104,7 @@ content:
       view_mode: default
       link: ''
     third_party_settings: {  }
-    weight: 6
+    weight: 7
     region: content
   event_partners:
     type: string
@@ -111,7 +112,7 @@ content:
     settings:
       link_to_entity: false
     third_party_settings: {  }
-    weight: 9
+    weight: 10
     region: content
   event_place:
     type: string
@@ -119,7 +120,7 @@ content:
     settings:
       link_to_entity: false
     third_party_settings: {  }
-    weight: 7
+    weight: 8
     region: content
   event_tags:
     type: entity_reference_label
@@ -145,7 +146,14 @@ content:
       view_mode: default
       link: ''
     third_party_settings: {  }
-    weight: 8
+    weight: 9
+    region: content
+  field_description:
+    type: basic_string
+    label: hidden
+    settings: {  }
+    third_party_settings: {  }
+    weight: 3
     region: content
   field_event_image:
     type: entity_reference_entity_view

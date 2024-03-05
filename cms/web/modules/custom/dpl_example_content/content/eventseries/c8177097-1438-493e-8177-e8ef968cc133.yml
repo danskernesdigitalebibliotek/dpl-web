@@ -119,10 +119,9 @@ default:
       locality: Aarhus
       postal_code: '8000'
       address_line1: 'Kampmanns Plads 2'
-  field_event_description:
+  field_description:
     -
-      value: '<p>Foreningen for Integreret Moderne Dans arbejder med at udvide normalitetsbegrebet i scenekunsten. For hvad er normalt? Rosenreglen og Mødrenes hus. I 2022 udgav hun også den stærkt politiske digtsamling Jeg vil have en statsminister.</p>'
-      format: limited
+      value: 'Foreningen for Integreret Moderne Dans arbejder med at udvide normalitetsbegrebet i scenekunsten. For hvad er normalt? Rosenreglen og Mødrenes hus. I 2022 udgav hun også den stærkt politiske digtsamling Jeg vil have en statsminister.'
   field_event_image:
     -
       entity: 618e176a-a45a-4c36-a197-664230aa0a34

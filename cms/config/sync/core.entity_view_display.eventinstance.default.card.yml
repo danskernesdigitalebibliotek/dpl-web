@@ -5,6 +5,7 @@ dependencies:
   config:
     - core.entity_view_mode.eventinstance.card
     - field.field.eventinstance.default.field_categories
+    - field.field.eventinstance.default.field_description
     - field.field.eventinstance.default.field_event_address
     - field.field.eventinstance.default.field_event_description
     - field.field.eventinstance.default.field_event_image
@@ -103,6 +104,7 @@ hidden:
   event_state: true
   event_ticket_categories: true
   field_categories: true
+  field_description: true
   field_event_address: true
   field_event_description: true
   field_event_image: true
