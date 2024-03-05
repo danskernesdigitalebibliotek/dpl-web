@@ -3,6 +3,7 @@ langcode: en
 status: true
 dependencies:
   config:
+    - field.field.eventseries.default.field_branch
     - field.field.eventseries.default.field_categories
     - field.field.eventseries.default.field_description
     - field.field.eventseries.default.field_event_address
@@ -105,6 +106,12 @@ content:
   daily_recurring_date:
     type: daily_recurring_date
     weight: 4
+    region: content
+    settings: {  }
+    third_party_settings: {  }
+  field_branch:
+    type: options_select
+    weight: -1
     region: content
     settings: {  }
     third_party_settings: {  }

@@ -4,6 +4,7 @@ status: true
 dependencies:
   config:
     - core.entity_view_mode.eventinstance.list
+    - field.field.eventinstance.default.field_branch
     - field.field.eventinstance.default.field_categories
     - field.field.eventinstance.default.field_description
     - field.field.eventinstance.default.field_event_address
@@ -33,6 +34,14 @@ targetEntityType: eventinstance
 bundle: default
 mode: list
 content:
+  branch:
+    type: entity_reference_label
+    label: visible
+    settings:
+      link: true
+    third_party_settings: {  }
+    weight: 50
+    region: content
   date:
     type: daterange_default
     label: hidden
@@ -168,6 +177,7 @@ content:
 hidden:
   body: true
   event_state: true
+  field_branch: true
   field_categories: true
   field_event_address: true
   field_event_description: true

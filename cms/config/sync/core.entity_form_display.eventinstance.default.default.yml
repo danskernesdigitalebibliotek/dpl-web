@@ -3,6 +3,7 @@ langcode: en
 status: true
 dependencies:
   config:
+    - field.field.eventinstance.default.field_branch
     - field.field.eventinstance.default.field_categories
     - field.field.eventinstance.default.field_description
     - field.field.eventinstance.default.field_event_address
@@ -72,6 +73,12 @@ content:
   date:
     type: daterange_default
     weight: 2
+    region: content
+    settings: {  }
+    third_party_settings: {  }
+  field_branch:
+    type: options_select
+    weight: -1
     region: content
     settings: {  }
     third_party_settings: {  }
