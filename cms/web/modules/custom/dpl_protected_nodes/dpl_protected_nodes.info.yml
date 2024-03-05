@@ -1,0 +1,5 @@
+name: "DPL Protected Nodes"
+type: module
+description: "This modules handles protected nodes by checking if a node is being used as a reference in configuration."
+package: DPL
+core_version_requirement: ^10

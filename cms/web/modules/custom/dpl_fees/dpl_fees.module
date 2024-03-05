@@ -9,6 +9,7 @@
 
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\Url;
+use Drupal\dpl_fees\Form\FeesListSettingsForm;
 
 /**
  * Implements hook_dpl_react_apps_data().
@@ -19,6 +20,13 @@ function dpl_fees_dpl_react_apps_data(array &$data): void {
       Url::fromRoute('dpl_fees.list', [], ['absolute' => TRUE])->toString()
     ),
   ];
+}
+
+/**
+ * Implements hook_dpl_protected_nodes_get_protected_nodes().
+ */
+function dpl_fees_dpl_protected_nodes_get_protected_nodes(): array {
+  return dpl_protected_nodes_get_context(FeesListSettingsForm::class, 'dpl_fees.settings');
 }
 
 /**
