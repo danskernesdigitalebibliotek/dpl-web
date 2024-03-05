@@ -5,7 +5,7 @@ _meta:
   bundle: default
   default_langcode: en
   depends:
-    ae94c417-7d1f-46ca-8b13-01442e91c1cf: eventinstance
+    21850bf7-ffc9-483c-bcd5-489d420552f9: eventinstance
     0fa7245a-3434-4d96-9793-a1848a22d37a: taxonomy_term
     a0176f8c-bb7e-4f5a-bf23-b48cd8bab05f: media
 default:
@@ -100,7 +100,7 @@ default:
         href: '/user/login'
   event_instances:
     -
-      entity: ae94c417-7d1f-46ca-8b13-01442e91c1cf
+      entity: 21850bf7-ffc9-483c-bcd5-489d420552f9
   field_categories:
     -
       entity: 0fa7245a-3434-4d96-9793-a1848a22d37a
@@ -117,6 +117,11 @@ default:
   field_event_image:
     -
       entity: a0176f8c-bb7e-4f5a-bf23-b48cd8bab05f
+  field_event_link:
+    -
+      uri: 'https://billetto.dk/ '
+      title: ''
+      options: {  }
   field_event_partners:
     -
       value: 'Julemandens Værksted'
