@@ -289,7 +289,7 @@ function dpl_paragraphs_preprocess_paragraph__material_grid_manual(array &$varia
  *
  * Prepares variables for paragraph--user-registration-section.html.twig.
  */
-function dpl_paragraphs_preprocess_paragraph__user_registration_section(&$variables): void {
+function dpl_paragraphs_preprocess_paragraph__user_registration_section(array &$variables): void {
 
   $user_registration_section = $variables['paragraph'] ?? NULL;
 
@@ -340,10 +340,9 @@ function dpl_paragraphs_field_widget_single_element_paragraphs_form_alter(array 
     $field_definition->id() === 'paragraph.user_registration_section.field_user_registration_items') {
     $field_name = $field_definition->getName();
 
-    /** @var \Drupal\paragraphs\Plugin\Field\FieldWidget\ParagraphsWidget $widget_state */
     $widget_state = WidgetBase::getWidgetState($element['#field_parents'], $field_name, $form_state);
 
-    /** @var \Drupal\paragraphs\Entity\Paragraph $paragraph */
+    /** @var \Drupal\paragraphs\Entity\Paragraph $paragraph_instance */
     $paragraph_instance = $widget_state['paragraphs'][$element['#delta']]['entity'];
     $paragraph_type = $paragraph_instance->bundle();
 
