@@ -8,11 +8,8 @@
 {% if url %}
 	<a href={{url}} {{ attributes.addClass(classes) }}>
 		<div class="hero__content arrow arrow__hover--right-large">
-			{% include "@novel/components/hero-inner.html.twig" %}
+			{% include "@novel/components/hero-inner.html.twig" with {'arrow': true} %}
 
-			<div>
-				{{ source(baseIconPath ~ '/arrow-ui/icon-arrow-ui-large-right.svg') }}
-			</div>
 		</div>
 
 
