@@ -130,7 +130,7 @@ content:
     third_party_settings: {  }
   field_event_address:
     type: address_default
-    weight: 11
+    weight: 10
     region: content
     settings: {  }
     third_party_settings: {  }
@@ -143,7 +143,7 @@ content:
     third_party_settings: {  }
   field_event_link:
     type: link_default
-    weight: 12
+    weight: 11
     region: content
     settings:
       placeholder_url: ''
@@ -151,7 +151,7 @@ content:
     third_party_settings: {  }
   field_event_paragraphs:
     type: paragraphs
-    weight: 10
+    weight: 19
     region: content
     settings:
       title: Paragraph
@@ -179,7 +179,7 @@ content:
           dialog_style: tiles
   field_event_partners:
     type: string_textfield
-    weight: 15
+    weight: 14
     region: content
     settings:
       size: 60
@@ -187,7 +187,7 @@ content:
     third_party_settings: {  }
   field_event_place:
     type: string_textfield
-    weight: 14
+    weight: 13
     region: content
     settings:
       size: 60
@@ -226,7 +226,7 @@ content:
     third_party_settings: {  }
   field_ticket_categories:
     type: paragraphs
-    weight: 13
+    weight: 12
     region: content
     settings:
       title: Paragraph
@@ -260,7 +260,7 @@ content:
     third_party_settings: {  }
   publish_on:
     type: datetime_timestamp_no_default
-    weight: 17
+    weight: 16
     region: content
     settings: {  }
     third_party_settings: {  }
@@ -271,13 +271,13 @@ content:
     settings: {  }
     third_party_settings: {  }
   scheduler_settings:
-    weight: 19
+    weight: 18
     region: content
     settings: {  }
     third_party_settings: {  }
   status:
     type: boolean_checkbox
-    weight: 16
+    weight: 15
     region: content
     settings:
       display_label: true
@@ -302,7 +302,7 @@ content:
     third_party_settings: {  }
   unpublish_on:
     type: datetime_timestamp_no_default
-    weight: 18
+    weight: 17
     region: content
     settings: {  }
     third_party_settings: {  }
