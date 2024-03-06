@@ -38,7 +38,7 @@ third_party_settings:
       label: 'Teaser card'
       region: content
       parent_name: ''
-      weight: 12
+      weight: 14
       format_type: details_sidebar
       format_settings:
         classes: ''
@@ -53,6 +53,23 @@ third_party_settings:
         - field_categories
         - field_tags
       label: Tagging
+      region: content
+      parent_name: ''
+      weight: 15
+      format_type: details_sidebar
+      format_settings:
+        classes: ''
+        show_empty_fields: false
+        id: ''
+        open: true
+        description: ''
+        required_fields: true
+        weight: 0
+    group_event_details:
+      children:
+        - field_event_image
+        - field_event_state
+      label: 'Event details'
       region: content
       parent_name: ''
       weight: 13
@@ -72,13 +89,13 @@ mode: default
 content:
   date:
     type: daterange_default
-    weight: 2
+    weight: 3
     region: content
     settings: {  }
     third_party_settings: {  }
   field_branch:
     type: options_select
-    weight: -1
+    weight: 0
     region: content
     settings: {  }
     third_party_settings: {  }
@@ -90,7 +107,7 @@ content:
     third_party_settings: {  }
   field_description:
     type: string_textarea
-    weight: 1
+    weight: 2
     region: content
     settings:
       rows: 3
@@ -98,20 +115,20 @@ content:
     third_party_settings: {  }
   field_event_address:
     type: address_default
-    weight: 7
+    weight: 6
     region: content
     settings: {  }
     third_party_settings: {  }
   field_event_image:
     type: media_library_widget
-    weight: 4
+    weight: 5
     region: content
     settings:
       media_types: {  }
     third_party_settings: {  }
   field_event_link:
     type: link_default
-    weight: 6
+    weight: 7
     region: content
     settings:
       placeholder_url: ''
@@ -119,7 +136,7 @@ content:
     third_party_settings: {  }
   field_event_paragraphs:
     type: paragraphs
-    weight: 5
+    weight: 12
     region: content
     settings:
       title: Paragraph
@@ -163,13 +180,13 @@ content:
     third_party_settings: {  }
   field_event_state:
     type: options_select
-    weight: 3
+    weight: 6
     region: content
     settings: {  }
     third_party_settings: {  }
   field_event_title:
     type: string_textfield
-    weight: 0
+    weight: 1
     region: content
     settings:
       size: 60
