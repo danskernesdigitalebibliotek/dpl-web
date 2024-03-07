@@ -69,7 +69,9 @@ class OccurredSchedule {
     if (!$event_date_values || empty($event_date_values["end_value"])) {
       return;
     }
-    $event_end_date = new DateTimeImmutable($event_date_values["end_value"]);
+    // Drupal stores dates in UTC by default but if no timezone is specified
+    // then the default timezone will be assumed.
+    $event_end_date = new DateTimeImmutable($event_date_values["end_value"], new \DateTimeZone('UTC'));
     $event_end_timestamp = $event_end_date->getTimestamp();
 
     $job = [
