@@ -51,6 +51,7 @@ module:
   dpl_something_similar: 0
   dpl_static_content: 0
   dpl_url_proxy: 0
+  drupal_typed: 0
   dynamic_entity_reference: 0
   dynamic_page_cache: 0
   editor: 0
