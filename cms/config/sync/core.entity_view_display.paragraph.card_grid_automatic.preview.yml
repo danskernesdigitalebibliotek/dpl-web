@@ -4,7 +4,7 @@ status: true
 dependencies:
   config:
     - core.entity_view_mode.paragraph.preview
-    - field.field.paragraph.card_grid_automatic.field_filter_content_types
+    - field.field.paragraph.card_grid_automatic.field_filter_tags
     - field.field.paragraph.card_grid_automatic.field_title
     - paragraphs.paragraphs_type.card_grid_automatic
 id: paragraph.card_grid_automatic.preview
@@ -12,11 +12,11 @@ targetEntityType: paragraph
 bundle: card_grid_automatic
 mode: preview
 content:
-  field_filter_content_types:
+  field_filter_tags:
     type: entity_reference_label
     label: above
     settings:
-      link: false
+      link: true
     third_party_settings: {  }
     weight: 1
     region: content
