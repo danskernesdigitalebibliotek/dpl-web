@@ -5,30 +5,31 @@ _meta:
   bundle: default
   default_langcode: en
   depends:
-    c1c6f377-312b-4f09-8911-16de737db5f7: eventinstance
-    1093c204-f554-4adb-ba2a-80c794f38dd4: eventinstance
-    ccdb8a61-b574-471f-bb0d-6e46d7d67710: eventinstance
-    53b7ae2c-42d2-4de3-8d1a-04136b4f09ff: eventinstance
-    4dd8c058-db31-436a-9508-256b4c88e5a2: eventinstance
-    20db0805-e510-472b-817b-ae1bab599882: eventinstance
-    831c4842-1a86-47ef-93d5-7826fc217b6c: eventinstance
-    2a4bf2d4-b6c5-4dff-afa7-6eb6a86b4ea0: eventinstance
-    b0fdb63e-a8d7-4b6c-aa9f-0407e739824c: eventinstance
-    e1c983cf-e327-4c70-a06a-89c8a08ba695: eventinstance
-    2c9585ca-91bf-4fa1-985b-1ca30c0c5edb: eventinstance
-    774bf576-63ce-4aa6-a4f4-b6bcd3f59cdd: eventinstance
-    a59215d2-2a93-43d1-9f04-6383764a7890: eventinstance
-    9720931e-f51e-47b4-9377-9f2df0e238ff: eventinstance
-    62f7beac-7e3b-4585-9396-769e84ce2a89: eventinstance
-    51b04f0c-2d2d-4c0b-9ea0-a4c9d6dcdac9: eventinstance
-    8ab8ca7d-a867-4e47-9a12-0e141abcbe73: eventinstance
-    12abd559-e440-426a-9a09-e55e555861bc: eventinstance
-    8d731bf2-5f7e-46a5-99ac-268ced14b642: eventinstance
-    892ab7a8-82f7-4e56-b1e7-3060b5414dea: eventinstance
-    c83dac91-c10e-409c-842a-6d2a304332b3: eventinstance
-    88e31682-088d-4b40-913f-8867404d1891: eventinstance
-    4c61c32b-ca66-4502-a4b1-f4a8f166c448: eventinstance
-    ca08b0eb-1c45-4ecd-939c-16b59c5876d0: eventinstance
+    89dad8dd-a7fe-4023-8be5-da496b4dd8ed: eventinstance
+    d8825215-dbc5-4c8b-be49-a0adb788de45: eventinstance
+    0feba5f2-263a-4938-8c39-bed21e023e18: eventinstance
+    330c26c6-1876-4b99-8edc-cfbb8d00fcce: eventinstance
+    67e4b1d8-7fe8-4ccf-b4b1-35808d6a1e11: eventinstance
+    44a72f3a-1561-4385-9f86-b41d6847bad7: eventinstance
+    46d95c69-498f-464c-8f9e-bf9fb8ddc564: eventinstance
+    55431d8a-9b35-490f-a356-429fbfdc20d0: eventinstance
+    b34842c9-588a-4569-ba83-583396e9aeed: eventinstance
+    057f5601-f6e9-4a40-b595-89a62ca9866a: eventinstance
+    555a26d8-a7f2-43d9-9426-fa213dec893d: eventinstance
+    2bbf82bf-4014-4638-8563-e2a262ae7e1a: eventinstance
+    10e36baf-a585-4ac9-abe0-fddac0f918ea: eventinstance
+    eaaed298-b1a0-4166-b4c3-9fbb92c4d01f: eventinstance
+    6bf8a2e1-422e-43f6-8459-00fc78ad27b5: eventinstance
+    5493e504-12b4-4978-8845-0ddf42f2fa61: eventinstance
+    e59956d2-de0b-4f71-b659-8cda5e7f26bc: eventinstance
+    68102d04-a17d-4e4c-b1ab-2e89e7c7f785: eventinstance
+    6bd8d98c-8d13-48bd-a20c-ff438372521d: eventinstance
+    f15c97c4-382e-44d7-bfe8-9bd19a0ee8ce: eventinstance
+    36fd56ee-4733-4abf-831a-4c039f53e481: eventinstance
+    f9af93a4-c220-4d09-9c96-c5171fe4bc72: eventinstance
+    425ce4b9-8555-4f36-8c34-1988e50ac2ec: eventinstance
+    d35e8700-8720-44ca-bc8f-2233b98b1af2: eventinstance
+    dac275e4-9b8c-4959-a13a-6b9fdbc1f6b0: node
     0fa7245a-3434-4d96-9793-a1848a22d37a: taxonomy_term
     ca329ad9-5a1c-4f55-b8a9-a60843b66466: media
     e4ce7616-976d-43fc-aed2-a01c42b67db9: media
@@ -70,8 +71,8 @@ default:
       duration_or_end_time: duration
   weekly_recurring_date:
     -
-      value: '2024-01-01T14:46:12'
-      end_value: '2030-01-01T14:46:12'
+      value: '2024-01-01T09:24:38'
+      end_value: '2030-01-01T09:24:38'
       time: '08:00 am'
       duration: 900
       end_time: '08:00 am'
@@ -79,8 +80,8 @@ default:
       days: monday
   monthly_recurring_date:
     -
-      value: '2034-01-01T14:46:12'
-      end_value: '2036-01-01T14:46:12'
+      value: '2034-01-01T09:24:38'
+      end_value: '2036-01-01T09:24:38'
       time: '10:00 am'
       duration: 18000
       end_time: '08:00 am'
@@ -126,56 +127,62 @@ default:
         href: '/user/login'
   event_instances:
     -
-      entity: c1c6f377-312b-4f09-8911-16de737db5f7
+      entity: 89dad8dd-a7fe-4023-8be5-da496b4dd8ed
     -
-      entity: 1093c204-f554-4adb-ba2a-80c794f38dd4
+      entity: d8825215-dbc5-4c8b-be49-a0adb788de45
     -
-      entity: ccdb8a61-b574-471f-bb0d-6e46d7d67710
+      entity: 0feba5f2-263a-4938-8c39-bed21e023e18
     -
-      entity: 53b7ae2c-42d2-4de3-8d1a-04136b4f09ff
+      entity: 330c26c6-1876-4b99-8edc-cfbb8d00fcce
     -
-      entity: 4dd8c058-db31-436a-9508-256b4c88e5a2
+      entity: 67e4b1d8-7fe8-4ccf-b4b1-35808d6a1e11
     -
-      entity: 20db0805-e510-472b-817b-ae1bab599882
+      entity: 44a72f3a-1561-4385-9f86-b41d6847bad7
     -
-      entity: 831c4842-1a86-47ef-93d5-7826fc217b6c
+      entity: 46d95c69-498f-464c-8f9e-bf9fb8ddc564
     -
-      entity: 2a4bf2d4-b6c5-4dff-afa7-6eb6a86b4ea0
+      entity: 55431d8a-9b35-490f-a356-429fbfdc20d0
     -
-      entity: b0fdb63e-a8d7-4b6c-aa9f-0407e739824c
+      entity: b34842c9-588a-4569-ba83-583396e9aeed
     -
-      entity: e1c983cf-e327-4c70-a06a-89c8a08ba695
+      entity: 057f5601-f6e9-4a40-b595-89a62ca9866a
     -
-      entity: 2c9585ca-91bf-4fa1-985b-1ca30c0c5edb
+      entity: 555a26d8-a7f2-43d9-9426-fa213dec893d
     -
-      entity: 774bf576-63ce-4aa6-a4f4-b6bcd3f59cdd
+      entity: 2bbf82bf-4014-4638-8563-e2a262ae7e1a
     -
-      entity: a59215d2-2a93-43d1-9f04-6383764a7890
+      entity: 10e36baf-a585-4ac9-abe0-fddac0f918ea
     -
-      entity: 9720931e-f51e-47b4-9377-9f2df0e238ff
+      entity: eaaed298-b1a0-4166-b4c3-9fbb92c4d01f
     -
-      entity: 62f7beac-7e3b-4585-9396-769e84ce2a89
+      entity: 6bf8a2e1-422e-43f6-8459-00fc78ad27b5
     -
-      entity: 51b04f0c-2d2d-4c0b-9ea0-a4c9d6dcdac9
+      entity: 5493e504-12b4-4978-8845-0ddf42f2fa61
     -
-      entity: 8ab8ca7d-a867-4e47-9a12-0e141abcbe73
+      entity: e59956d2-de0b-4f71-b659-8cda5e7f26bc
     -
-      entity: 12abd559-e440-426a-9a09-e55e555861bc
+      entity: 68102d04-a17d-4e4c-b1ab-2e89e7c7f785
     -
-      entity: 8d731bf2-5f7e-46a5-99ac-268ced14b642
+      entity: 6bd8d98c-8d13-48bd-a20c-ff438372521d
     -
-      entity: 892ab7a8-82f7-4e56-b1e7-3060b5414dea
+      entity: f15c97c4-382e-44d7-bfe8-9bd19a0ee8ce
     -
-      entity: c83dac91-c10e-409c-842a-6d2a304332b3
+      entity: 36fd56ee-4733-4abf-831a-4c039f53e481
     -
-      entity: 88e31682-088d-4b40-913f-8867404d1891
+      entity: f9af93a4-c220-4d09-9c96-c5171fe4bc72
     -
-      entity: 4c61c32b-ca66-4502-a4b1-f4a8f166c448
+      entity: 425ce4b9-8555-4f36-8c34-1988e50ac2ec
     -
-      entity: ca08b0eb-1c45-4ecd-939c-16b59c5876d0
+      entity: d35e8700-8720-44ca-bc8f-2233b98b1af2
+  field_branch:
+    -
+      entity: dac275e4-9b8c-4959-a13a-6b9fdbc1f6b0
   field_categories:
     -
       entity: 0fa7245a-3434-4d96-9793-a1848a22d37a
+  field_description:
+    -
+      value: 'Legestue for fædre og deres børn mellem 0 og 3 år. Sving forbi Stadsbiblioteket til uforpligtende leg og hygge med junior (skærtorsdag og Kristi himmelfartsdag undtaget) finder babylegetøjet frem og inviterer til Fars legestue. Her kan du møde andre fædre og deres børn, ligesom I kan finde inspiration til leg og læsning.'
   field_event_address:
     -
       langcode: en
@@ -183,15 +190,12 @@ default:
       locality: Aarhus
       postal_code: '8000'
       address_line1: 'Kampmanns Plads 2'
-  field_description:
-    -
-      value: 'Legestue for fædre og deres børn mellem 0 og 3 år. Sving forbi Stadsbiblioteket til uforpligtende leg og hygge med junior (skærtorsdag og Kristi himmelfartsdag undtaget) finder babylegetøjet frem og inviterer til Fars legestue. Her kan du møde andre fædre og deres børn, ligesom I kan finde inspiration til leg og læsning.'
   field_event_image:
     -
       entity: ca329ad9-5a1c-4f55-b8a9-a60843b66466
   field_event_link:
     -
-      uri: 'https://billetto.dk/ '
+      uri: 'https://billetto.dk/'
       title: ''
       options: {  }
   field_event_paragraphs:
