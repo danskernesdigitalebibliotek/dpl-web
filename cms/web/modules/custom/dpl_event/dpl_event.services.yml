@@ -1,4 +1,11 @@
 services:
+  dpl_event.logger:
+    parent: logger.channel_base
+    arguments: ["dpl_event"]
+  dpl_event.event_instance_storage:
+    class: \Drupal\recurring_events\EventInstanceStorage
+    factory: ["@entity_type.manager", "getStorage"]
+    arguments: ["eventinstance"]
   dpl_event.price_formatter:
     class: Drupal\dpl_event\PriceFormatter
     arguments: ["@string_translation"]
@@ -6,3 +13,10 @@ services:
     class: Drupal\dpl_event\ReoccurringDateFormatter
     arguments:
       ["@string_translation", "@entity_type.manager", "@date.formatter"]
+  dpl_event.occurred_schedule:
+    class: Drupal\dpl_event\Workflows\OccurredSchedule
+    arguments:
+      - "@dpl_event.logger"
+      - "@datetime.time"
+      - "@job_scheduler.manager"
+      - "@dpl_event.event_instance_storage"
