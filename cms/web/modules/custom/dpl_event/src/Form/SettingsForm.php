@@ -8,6 +8,7 @@ use Drupal\Core\Config\ConfigFactoryInterface;
 use Drupal\Core\Datetime\DateFormatterInterface;
 use Drupal\Core\Form\ConfigFormBase;
 use Drupal\Core\Form\FormStateInterface;
+use Drupal\dpl_event\Workflows\UnpublishSchedule;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use function Safe\array_combine as array_combine;
 
@@ -23,7 +24,8 @@ final class SettingsForm extends ConfigFormBase {
    */
   public function __construct(
       ConfigFactoryInterface $config_factory,
-      private DateFormatterInterface $dateFormatter
+      private DateFormatterInterface $dateFormatter,
+      private UnpublishSchedule $unpublishSchedule
   ) {
     parent::__construct($config_factory);
   }
@@ -34,7 +36,8 @@ final class SettingsForm extends ConfigFormBase {
   public static function create(ContainerInterface $container): static {
     return new static(
           $container->get('config.factory'),
-          $container->get('date.formatter')
+          $container->get('date.formatter'),
+          $container->get('dpl_event.unpublish_schedule')
       );
   }
 
@@ -105,6 +108,8 @@ final class SettingsForm extends ConfigFormBase {
       ->set('unpublish_schedule', $form_state->getValue('unpublish_schedule'))
       ->save();
     parent::submitForm($form, $form_state);
+
+    $this->unpublishSchedule->rescheduleAll();
   }
 
 }
