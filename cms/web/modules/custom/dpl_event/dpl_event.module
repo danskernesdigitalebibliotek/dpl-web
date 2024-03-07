@@ -12,6 +12,7 @@ use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\Url;
 use Drupal\dpl_event\EventState;
 use Drupal\dpl_event\Workflows\OccurredSchedule;
+use Drupal\dpl_event\Workflows\UnpublishSchedule;
 use Drupal\drupal_typed\DrupalTyped;
 use Drupal\recurring_events\Entity\EventInstance;
 use Drupal\recurring_events\Entity\EventSeries;
@@ -24,7 +25,11 @@ use Drupal\recurring_events\Entity\EventSeries;
  */
 function dpl_event_cron_job_scheduler_info(): array {
   $occurred_schedule = DrupalTyped::service(OccurredSchedule::class, 'dpl_event.occurred_schedule');
-  return $occurred_schedule->getSchedule();
+  $unpublish_schedule = DrupalTyped::service(UnpublishSchedule::class, 'dpl_event.unpublish_schedule');
+  return array_merge(
+    $occurred_schedule->getSchedule(),
+    $unpublish_schedule->getSchedule()
+  );
 }
 
 /**
@@ -32,9 +37,13 @@ function dpl_event_cron_job_scheduler_info(): array {
  */
 function dpl_event_eventinstance_insert(EntityInterface $entity): void {
   $occurred_schedule = DrupalTyped::service(OccurredSchedule::class, 'dpl_event.occurred_schedule');
-  if ($entity instanceof EventInstance && $occurred_schedule->isActive($entity)) {
-    $occurred_schedule->scheduleOccurred($entity);
+  $unpublish_schedule = DrupalTyped::service(UnpublishSchedule::class, 'dpl_event.unpublish_schedule');
+  if (!$entity instanceof EventInstance) {
+    return;
   }
+
+  $occurred_schedule->isActive($entity) && $occurred_schedule->scheduleOccurred($entity);
+  $unpublish_schedule->scheduleUnpublication($entity);
 }
 
 /**
@@ -42,9 +51,13 @@ function dpl_event_eventinstance_insert(EntityInterface $entity): void {
  */
 function dpl_event_eventinstance_update(EntityInterface $entity): void {
   $occurred_schedule = DrupalTyped::service(OccurredSchedule::class, 'dpl_event.occurred_schedule');
-  if ($entity instanceof EventInstance && $occurred_schedule->isActive($entity)) {
-    $occurred_schedule->scheduleOccurred($entity);
+  $unpublish_schedule = DrupalTyped::service(UnpublishSchedule::class, 'dpl_event.unpublish_schedule');
+  if (!$entity instanceof EventInstance) {
+    return;
   }
+
+  $occurred_schedule->isActive($entity) && $occurred_schedule->scheduleOccurred($entity);
+  $unpublish_schedule->scheduleUnpublication($entity);
 }
 
 /**

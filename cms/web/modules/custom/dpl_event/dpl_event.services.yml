@@ -20,3 +20,11 @@ services:
       - "@datetime.time"
       - "@job_scheduler.manager"
       - "@dpl_event.event_instance_storage"
+  dpl_event.unpublish_schedule:
+    class: Drupal\dpl_event\Workflows\UnpublishSchedule
+    arguments:
+      - "@dpl_event.logger"
+      - "@datetime.time"
+      - "@job_scheduler.manager"
+      - "@dpl_event.event_instance_storage"
+      - "@config.factory"
