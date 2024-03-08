@@ -1,0 +1,25 @@
+uuid: c1f8847f-fab3-48b2-b374-8dbd1ad50c8d
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.field.paragraph.user_registration_section.field_user_registration_items
+    - paragraphs.paragraphs_type.user_registration_section
+  module:
+    - entity_reference_revisions
+id: paragraph.user_registration_section.default
+targetEntityType: paragraph
+bundle: user_registration_section
+mode: default
+content:
+  field_user_registration_items:
+    type: entity_reference_revisions_entity_view
+    label: above
+    settings:
+      view_mode: default
+      link: ''
+    third_party_settings: {  }
+    weight: 0
+    region: content
+hidden:
+  search_api_excerpt: true

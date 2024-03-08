@@ -1,20 +1,18 @@
-uuid: 824f1ba1-66bc-4e2a-8164-4f97a548fc6c
+uuid: 1bc5f4e8-5692-4c02-885f-68bc984ecf76
 langcode: en
 status: true
 dependencies:
   module:
+    - dpl_fbi
     - paragraphs
 id: paragraph.field_work_id
 field_name: field_work_id
 entity_type: paragraph
-type: string
-settings:
-  max_length: 255
-  case_sensitive: false
-  is_ascii: false
-module: core
+type: dpl_fbi_work_id
+settings: {  }
+module: dpl_fbi
 locked: false
-cardinality: 1
+cardinality: -1
 translatable: true
 indexes: {  }
 persist_with_no_fields: false
