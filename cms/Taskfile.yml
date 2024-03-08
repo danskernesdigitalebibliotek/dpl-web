@@ -508,6 +508,7 @@ tasks:
         msg: GitHub CLI is not installed or not authenticated. Please check https://cli.github.com/.
 
   file:chown:
+    internal: true
     desc: Chown the PO file in the container with the user of the host
     cmds:
       - |
