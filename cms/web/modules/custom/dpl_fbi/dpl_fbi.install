@@ -1,0 +1,78 @@
+<?php
+
+use Drupal\Core\Database\Database;
+use Drupal\Core\Field\FieldStorageDefinitionInterface;
+use function Safe\sprintf as sprintf;
+
+/**
+ * Adds 'material_type' column to 'dpl_fbi_work_id' field storage.
+ *
+ * This update function alters the schema for custom field storage
+ * to include a new column for material type. It handles both the
+ * base table and the revision table for the field.
+ *
+ * The function is taken from drupal stackexchange:
+ * https://drupal.stackexchange.com/questions/255495/add-column-to-custom-field-schema
+ *
+ * @throws \Exception
+ *   Throws exception if the field type cannot be found or if the expected
+ *   field storage is not an instance of FieldStorageDefinitionInterface.
+ */
+function dpl_fbi_update_10201() :void {
+
+  $field_type = 'dpl_fbi_work_id';
+  $new_fields = ['material_type'];
+
+  if (!$field_storage_configs = \Drupal::entityTypeManager()
+    ->getStorage('field_storage_config')
+    ->loadByProperties(['type' => $field_type])
+  ) {
+    throw new \Exception('Unable to find field type ' . $field_type);
+  }
+
+  // Get schema handler to alter table with.
+  $schema_handler = Database::getConnection()->schema();
+
+  // Loop through all configs.
+  foreach ($field_storage_configs as $field_storage) {
+
+    // Just to play safe.
+    if (!($field_storage instanceof FieldStorageDefinitionInterface)) {
+      throw new \Exception('Unexpected entity type loaded: ' . get_class($field_storage));
+    }
+
+    // Get the most updated schema from field stroage.
+    $schema = $field_storage->getSchema();
+    $table_name = str_replace('.', '__', (string) $field_storage->id());
+    $revision_table_name = str_replace('.', '_revision__', (string) $field_storage->id());
+
+    // Loop through the fields to alter the schema of table.
+    foreach ($new_fields as $new_field) {
+      $column_name = "{$field_storage->getName()}_{$new_field}";
+      if (!$schema_handler->fieldExists($table_name, $column_name)) {
+        $schema_handler->addField(
+          $table_name,
+          $column_name,
+          $schema['columns'][$new_field]
+        );
+      }
+      else {
+        // Show some warning message or error.
+        throw new \Exception(sprintf('Field %s already exists in table %s',
+          $column_name, $table_name));
+      }
+      if (!$schema_handler->fieldExists($revision_table_name, $column_name)) {
+        $schema_handler->addField(
+          $revision_table_name,
+          $column_name,
+          $schema['columns'][$new_field]
+        );
+      }
+      else {
+        // Show some warning message or error.
+        throw new \Exception(sprintf('Field %s already exists in table %s',
+          $column_name, $revision_table_name));
+      }
+    }
+  }
+}
