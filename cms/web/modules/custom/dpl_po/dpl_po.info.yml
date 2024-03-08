@@ -1,6 +1,6 @@
 name: Dpl PO
 description: PO file handling. Export/import, splitting etc.
-package: DDB
+package: DPL
 
 dependencies:
   - config_translation_po:config_translation_po
