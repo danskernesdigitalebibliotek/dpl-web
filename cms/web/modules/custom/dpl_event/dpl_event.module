@@ -56,8 +56,15 @@ function dpl_event_eventinstance_update(EntityInterface $entity): void {
   if (!$entity instanceof EventInstance) {
     return;
   }
+  $updatedEvent = new EventWrapper($entity);
+  if (isset($entity->original) && $entity->original instanceof EventInstance) {
+    // If there are no changes to the date then skip updating schedules.
+    if ($updatedEvent->hasSameDate($entity->original)) {
+      return;
+    }
+  }
 
-  (new EventWrapper($entity))->isActive() && $occurred_schedule->scheduleOccurred($entity);
+  $updatedEvent->isActive() && $occurred_schedule->scheduleOccurred($entity);
   $unpublish_schedule->scheduleUnpublication($entity);
 }
 
