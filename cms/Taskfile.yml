@@ -506,15 +506,3 @@ tasks:
     preconditions:
       - sh: gh --version && gh auth status
         msg: GitHub CLI is not installed or not authenticated. Please check https://cli.github.com/.
-
-  file:chown:
-    internal: true
-    desc: Chown the PO file in the container with the user of the host
-    cmds:
-      - |
-        export ME=$(id -u);
-        task dev:cli -- chown $ME:$ME web/$PATH_TO_FILE
-    requires:
-      vars: [PATH_TO_FILE]
-    env:
-      PATH_TO_FILE: "{{ .PATH_TO_FILE }}"

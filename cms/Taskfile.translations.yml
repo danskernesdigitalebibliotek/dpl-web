@@ -15,7 +15,9 @@ tasks:
       - task dev:cli -- drush potion:generate $LANGUAGE themes/custom/ {{ .PO_DIR }} --recursive --default-write-mode=merge
       # Fill translations from db
       - task dev:cli -- drush potion:fill $LANGUAGE $PATH_TO_FILE
-      - task file:chown
+      - task: chown
+        vars:
+          PATH_TO_FILE: "{{ .PATH_TO_FILE }}"
     requires:
       vars: [LANGUAGE, PO_DIR, PATH_TO_FILE]
     env:
@@ -26,7 +28,9 @@ tasks:
     cmds:
       # Generate translations from configuration strings
       - task dev:cli -- drush dpl_po:export-config-po $LANGUAGE $PATH_TO_FILE
-      - task file:chown
+      - task: chown
+        vars:
+          PATH_TO_FILE: "{{ .PATH_TO_FILE }}"
     requires:
       vars: [LANGUAGE, PO_DIR, PATH_TO_FILE]
     env:
@@ -36,7 +40,9 @@ tasks:
     desc: Merge configuration translations into the combined translation file
     cmds:
       - msgcat -o web/$PATH_TO_FILE $FILE_A $FILE_B
-      - task file:chown
+      - task: chown
+        vars:
+          PATH_TO_FILE: "{{ .PATH_TO_FILE }}"
     requires:
       vars: [LANGUAGE, PO_DIR, FILE_A, FILE_B]
     env:
@@ -46,7 +52,9 @@ tasks:
     desc: Save translations from combined file into separate file
     cmds:
       - task dev:cli -- drush dpl_po:extract-ui $LANGUAGE $SOURCE $PATH_TO_FILE
-      - task file:chown
+      - task: chown
+        vars:
+          PATH_TO_FILE: "{{ .PATH_TO_FILE }}"
     requires:
       vars: [LANGUAGE, SOURCE, PO_DIR, PATH_TO_FILE]
     env:
@@ -57,9 +65,23 @@ tasks:
     desc: Save configuration translations from combined file into separate file
     cmds:
       - task dev:cli -- drush dpl_po:extract-config $LANGUAGE $SOURCE $PATH_TO_FILE
-      - task file:chown
+      - task: chown
+        vars:
+          PATH_TO_FILE: "{{ .PATH_TO_FILE }}"
     requires:
       vars: [LANGUAGE, SOURCE, PO_DIR, PATH_TO_FILE]
     env:
       SOURCE: "{{ .PO_DIR }}/{{ .LANGUAGE }}.combined.po"
       PATH_TO_FILE: "{{ .PO_DIR }}/{{ .LANGUAGE }}.config.po"
+
+  chown:
+    internal: true
+    desc: Chown the PO file in the container with the user of the host
+    cmds:
+      - |
+        export ME=$(id -u);
+        task dev:cli -- chown $ME:$ME web/$PATH_TO_FILE
+    requires:
+      vars: [PATH_TO_FILE]
+    env:
+      PATH_TO_FILE: "{{ .PATH_TO_FILE }}"
