@@ -25,7 +25,8 @@ settings:
       view:
         view_name: entity_reference_content
         display_name: entity_reference_1
-        arguments: {  }
+        arguments:
+          - article
   eventseries:
     handler: 'default:eventseries'
     handler_settings:
@@ -60,13 +61,13 @@ settings:
   search_api_task:
     handler: 'default:search_api_task'
     handler_settings: {  }
+  taxonomy_term:
+    handler: 'default:taxonomy_term'
+    handler_settings: {  }
   path_alias:
     handler: 'default:path_alias'
     handler_settings: {  }
   user:
     handler: 'default:user'
-    handler_settings: {  }
-  taxonomy_term:
-    handler: 'default:taxonomy_term'
     handler_settings: {  }
 field_type: dynamic_entity_reference

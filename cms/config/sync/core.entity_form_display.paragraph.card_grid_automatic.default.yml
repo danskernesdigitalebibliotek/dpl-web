@@ -3,7 +3,7 @@ langcode: en
 status: true
 dependencies:
   config:
-    - field.field.paragraph.card_grid_automatic.field_filter_content_types
+    - field.field.paragraph.card_grid_automatic.field_filter_tags
     - field.field.paragraph.card_grid_automatic.field_title
     - paragraphs.paragraphs_type.card_grid_automatic
 id: paragraph.card_grid_automatic.default
@@ -11,11 +11,15 @@ targetEntityType: paragraph
 bundle: card_grid_automatic
 mode: default
 content:
-  field_filter_content_types:
-    type: options_buttons
-    weight: 1
+  field_filter_tags:
+    type: entity_reference_autocomplete
+    weight: 2
     region: content
-    settings: {  }
+    settings:
+      match_operator: CONTAINS
+      match_limit: 10
+      size: 60
+      placeholder: ''
     third_party_settings: {  }
   field_title:
     type: string_textfield
