@@ -39,7 +39,7 @@
                 "version": "2024.9.2",
                 "type": "drupal-library",
                 "dist": {
-                    "url": "https://github.com/danskernesdigitalebibliotek/dpl-react/releases/download/2024.9.2/dist-2024-9-2-7563f6616b138f58571f2751d14311782703e41a.zip",
+                    "url": "https://github.com/danskernesdigitalebibliotek/dpl-react/releases/download/branch-sprint%2Flsbp-12/dist-sprint-lsbp-12.zip",
                     "type": "zip"
                 },
                 "require": {
@@ -54,7 +54,7 @@
                 "type": "drupal-library",
                 "version": "2024.9.2",
                 "dist": {
-                    "url": "https://github.com/danskernesdigitalebibliotek/dpl-design-system/releases/download/2024.9.2/dist-2024-9-2-0ed07ad3efdf9ebdaf8871dc1ffea434cb8fb22d.zip",
+                    "url": "https://github.com/danskernesdigitalebibliotek/dpl-design-system/releases/download/branch-sprint%2Flsbp-12/dist-sprint-lsbp-12.zip",
                     "type": "zip"
                 }
             }

@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "c5cbb333efe18557955c968c39d3099b",
+    "content-hash": "316d626ab8e6ea6b1c3c9306d62557a6",
     "packages": [
         {
             "name": "amazeeio/drupal_integrations",
@@ -1102,7 +1102,7 @@
             "version": "2024.9.2",
             "dist": {
                 "type": "zip",
-                "url": "https://github.com/danskernesdigitalebibliotek/dpl-design-system/releases/download/2024.9.2/dist-2024-9-2-0ed07ad3efdf9ebdaf8871dc1ffea434cb8fb22d.zip"
+                "url": "https://github.com/danskernesdigitalebibliotek/dpl-design-system/releases/download/branch-sprint%2Flsbp-12/dist-sprint-lsbp-12.zip"
             },
             "type": "drupal-library"
         },
@@ -1111,7 +1111,7 @@
             "version": "2024.9.2",
             "dist": {
                 "type": "zip",
-                "url": "https://github.com/danskernesdigitalebibliotek/dpl-react/releases/download/2024.9.2/dist-2024-9-2-7563f6616b138f58571f2751d14311782703e41a.zip"
+                "url": "https://github.com/danskernesdigitalebibliotek/dpl-react/releases/download/branch-sprint%2Flsbp-12/dist-sprint-lsbp-12.zip"
             },
             "require": {
                 "composer/installers": "^1.2.0"
