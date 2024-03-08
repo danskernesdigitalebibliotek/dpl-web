@@ -91,7 +91,7 @@ environments:
         command: drush locale-check && drush locale-update
         service: cli
       - name: import danish config translations
-        schedule: "M/2 * * * *"
+        schedule: "M/30 * * * *"
         command: drush dpl_po:import-remote-config-po da https://reload.github.io/dpl-cms/translations/da.config.po
         service: cli
   pr-581:
@@ -102,10 +102,10 @@ environments:
         service: cli
       - name: import translations
         # Quite frequent translation import because of businezz.
-        schedule: "M/2 * * * *"
+        schedule: "M/30 * * * *"
         command: drush locale-check && drush locale-update
         service: cli
       - name: import danish config translations
-        schedule: "M/2 * * * *"
+        schedule: "M/30 * * * *"
         command: drush dpl_po:import-remote-config-po da https://reload.github.io/dpl-cms/translations/da.config.po
         service: cli
