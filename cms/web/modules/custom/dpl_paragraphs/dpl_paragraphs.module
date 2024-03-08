@@ -134,11 +134,10 @@ function dpl_paragraphs_preprocess_paragraph__medias(array &$variables): void {
 function dpl_paragraphs_preprocess_paragraph__recommendation(array &$variables): void {
 
   $paragraph = $variables['paragraph'] ?? NULL;
-  if (!($paragraph instanceof ParagraphInterface) || !$paragraph->hasField('field_work_id') || $paragraph->get('field_work_id')->isEmpty()) {
+  if (!($paragraph instanceof ParagraphInterface) || !$paragraph->hasField('field_work_id_recommendation') || $paragraph->get('field_work_id_recommendation')->isEmpty()) {
     return;
   }
 
-  $work_id = $paragraph->get('field_work_id')->getString();
   // Check for the existence of additional fields.
   if ($paragraph->hasField('field_recommendation_title') &&
     $paragraph->hasField('field_recommendation_description') &&
@@ -148,9 +147,23 @@ function dpl_paragraphs_preprocess_paragraph__recommendation(array &$variables):
     $paragraph_description = $paragraph->get('field_recommendation_description')->getString();
     $paragraph_image_position_right = $paragraph->get('field_image_position_right')->getString();
 
+    $work_id_field = $paragraph->get('field_work_id_recommendation');
+    $work_id = $work_id_field->value;
+    $material_type = $work_id_field->material_type ?? NULL;
+
     if (!empty($paragraph_title) || !empty($paragraph_description)) {
-      // The URL is only needed for the recommended-material app.
-      $material_url_object = Url::fromRoute('dpl_react_apps.work', ['wid' => $work_id], ['absolute' => TRUE]);
+      // The URL only needs to be constructed if the paragraph has a title
+      // or description, otherwise the URL is constructed in the React app.
+      $route_parameters = ['wid' => $work_id];
+      $query_parameters = [];
+
+      if (!empty($material_type)) {
+        $query_parameters['type'] = $material_type;
+      }
+
+      $material_url_object = Url::fromRoute('dpl_react_apps.work', $route_parameters,
+        ['absolute' => TRUE, 'query' => $query_parameters]);
+
       $material_url = $material_url_object->toString();
 
       $variables['react_app'] = [
@@ -158,6 +171,7 @@ function dpl_paragraphs_preprocess_paragraph__recommendation(array &$variables):
         '#name' => 'recommended-material',
         '#data' => [
           'wid' => $work_id,
+          'material-type' => $material_type,
         ] + DplReactAppsController::externalApiBaseUrls(),
         '#material_url' => $material_url,
         '#position_image_right' => $paragraph_image_position_right,
@@ -171,6 +185,7 @@ function dpl_paragraphs_preprocess_paragraph__recommendation(array &$variables):
         '#name' => 'recommendation',
         '#data' => [
           'wid' => $work_id,
+          'material-type' => $material_type,
           'position-image-right' => $paragraph_image_position_right,
         ] + DplReactAppsController::externalApiBaseUrls(),
       ];
