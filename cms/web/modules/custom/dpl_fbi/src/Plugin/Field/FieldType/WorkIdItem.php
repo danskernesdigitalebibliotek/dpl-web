@@ -47,6 +47,10 @@ final class WorkIdItem extends FieldItemBase {
       ->setLabel(t('Text value'))
       ->setRequired(TRUE);
 
+    $properties['material_type'] = DataDefinition::create('string')
+      ->setLabel(t('The material type'))
+      ->setRequired(TRUE);
+
     return $properties;
   }
 
@@ -82,6 +86,12 @@ final class WorkIdItem extends FieldItemBase {
         'description' => 'Work id.',
         'length' => 255,
       ],
+      'material_type' => [
+        'type' => 'varchar',
+        'length' => 255,
+        'not null' => TRUE,
+        'description' => 'The material type (e.g., bog, e-bog).',
+      ],
     ];
 
     $schema = [
@@ -101,6 +111,7 @@ final class WorkIdItem extends FieldItemBase {
   public static function generateSampleValue(FieldDefinitionInterface $field_definition): array {
 
     $values['value'] = 'work-of:870970-basis:25660722';
+    $values['material_type'] = 'bog';
     return $values;
   }
 
