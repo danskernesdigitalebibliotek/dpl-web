@@ -33,9 +33,11 @@ jobs:
           repo-token: ${{ secrets.GITHUB_TOKEN }}
       - name: Setup site
         run: task ci:reset
-      - name: Scan danish translations
-        run: LANGUAGE=da task translations:scan
-      - name: Export Configuration strings
+      - name: Scan user interface translations
+        run: task translations:scan
+        env:
+          LANGUAGE: da
+      - name: Export translatable configuration strings
         run: task translations:conf:export
         env:
           LANGUAGE: da
