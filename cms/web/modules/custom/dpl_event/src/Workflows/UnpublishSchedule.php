@@ -18,6 +18,8 @@ use Drupal\recurring_events\EventInstanceStorageInterface;
  * Schedule for automatically marking events.
  */
 final class UnpublishSchedule {
+  const JOB_SCHEDULE_NAME = 'dpl_event_unpublish';
+  const JOB_SCHEDULE_TYPE = 'eventinstance';
 
   /**
    * Constructor.
@@ -38,7 +40,7 @@ final class UnpublishSchedule {
    */
   public function getSchedule(): array {
     return [
-      'dpl_event_unpublish' => [
+      self::JOB_SCHEDULE_NAME => [
         'worker callback' => [$this, 'callback'],
       ],
     ];
@@ -80,8 +82,8 @@ final class UnpublishSchedule {
     $unpublication_timestamp = $unpublication_date->getTimestamp();
 
     $job = [
-      'name' => 'dpl_event_unpublish',
-      'type' => 'eventinstance',
+      'name' => self::JOB_SCHEDULE_NAME,
+      'type' => self::JOB_SCHEDULE_TYPE,
       'id' => $event->id(),
       // The period is the number of seconds to wait between job executions. A
       // negative period means that the job will be executed as soon as
@@ -111,7 +113,7 @@ final class UnpublishSchedule {
    * scheduled in the past.
    */
   public function rescheduleAll(): void {
-    $this->jobScheduler->removeAll('dpl_event_unpublish', 'eventinstance');
+    $this->jobScheduler->removeAll(self::JOB_SCHEDULE_NAME, self::JOB_SCHEDULE_TYPE);
 
     $publishedEventInstanceIds = ($this->eventInstanceStorage->getQuery())
       ->accessCheck(FALSE)

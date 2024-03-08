@@ -15,6 +15,8 @@ use Psr\Log\LoggerInterface;
  * Schedule for marking events that are no longer active as occurred.
  */
 class OccurredSchedule {
+  const JOB_SCHEDULE_NAME = 'dpl_event_set_occurred';
+  const JOB_SCHEDULE_TYPE = 'event';
 
   /**
    * Constructor.
@@ -34,7 +36,7 @@ class OccurredSchedule {
    */
   public function getSchedule(): array {
     return [
-      "dpl_event_set_occurred" => [
+      self::JOB_SCHEDULE_NAME => [
         "worker callback" => [$this, 'callback'],
       ],
     ];
@@ -62,8 +64,8 @@ class OccurredSchedule {
     $eventEndDate = (new EventWrapper($event))->getEndDate();
 
     $job = [
-      'name' => 'dpl_event_set_occurred',
-      'type' => 'event',
+      'name' => self::JOB_SCHEDULE_NAME,
+      'type' => self::JOB_SCHEDULE_TYPE,
       'id' => $event->id(),
       // The period is the number of seconds to wait between job executions. A
       // negative period means that the job will be executed as soon as
