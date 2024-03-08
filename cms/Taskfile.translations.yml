@@ -39,7 +39,7 @@ tasks:
   conf:merge:
     desc: Merge configuration translations into the combined translation file
     cmds:
-      - msgcat -o web/$PATH_TO_FILE $FILE_A $FILE_B
+      - task dev:cli -- msgcat -o web/$PATH_TO_FILE $FILE_A $FILE_B
       - task: chown
         vars:
           PATH_TO_FILE: "{{ .PATH_TO_FILE }}"

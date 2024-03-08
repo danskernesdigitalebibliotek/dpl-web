@@ -23,10 +23,6 @@ jobs:
         with:
           fetch-depth: 0
           token: ${{ secrets.AUTOCOMMIT_GITHUB_TOKEN }}
-      - uses: awalsh128/cache-apt-pkgs-action@v1
-        with:
-          packages: gettext
-          version: 1.0
       - name: Install go-task
         uses: arduino/setup-task@v2
         with:
