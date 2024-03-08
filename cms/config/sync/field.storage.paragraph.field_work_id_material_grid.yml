@@ -1,0 +1,19 @@
+uuid: 27559081-1bad-4c1a-b373-792cb34097af
+langcode: en
+status: true
+dependencies:
+  module:
+    - dpl_fbi
+    - paragraphs
+id: paragraph.field_work_id_material_grid
+field_name: field_work_id_material_grid
+entity_type: paragraph
+type: dpl_fbi_work_id
+settings: {  }
+module: dpl_fbi
+locked: false
+cardinality: -1
+translatable: true
+indexes: {  }
+persist_with_no_fields: false
+custom_storage: false

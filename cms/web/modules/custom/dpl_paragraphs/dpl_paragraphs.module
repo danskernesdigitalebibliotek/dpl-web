@@ -260,22 +260,26 @@ function dpl_paragraphs_preprocess_paragraph__material_grid_manual(array &$varia
 
   $paragraph = $variables['paragraph'] ?? NULL;
 
-  if (!($paragraph instanceof ParagraphInterface)  || !$paragraph->hasField('field_material_grid_title') || !$paragraph->hasField('field_work_id')) {
+  if (!($paragraph instanceof ParagraphInterface)  || !$paragraph->hasField('field_material_grid_title') || !$paragraph->hasField('field_work_id_material_grid')) {
     return;
   }
 
   // Extract field values.
   $material_grid_title = $paragraph->get('field_material_grid_title')->getString();
-  $workIds = [];
+  $materials = [];
 
-  // Check if the paragraph has the field and it contains at least one item.
-  if (!$paragraph->get('field_work_id')->isEmpty()) {
+  if (!$paragraph->get('field_work_id_material_grid')->isEmpty()) {
+    foreach ($paragraph->get('field_work_id_material_grid')->getValue() as $item) {
 
-    foreach ($paragraph->get('field_work_id') as $item) {
-      $workIds[] = $item->getString();
+      $wid = $item['value'];
+      $materialType = $item['material_type'];
+
+      $materials[] = [
+        'wid' => $wid,
+        'materialType' => $materialType,
+      ];
     }
   }
-
   // Build configurations for blacklisted search branches and all branches.
   $branchSettings = \Drupal::service('dpl_library_agency.branch_settings');
   $branchRepository = \Drupal::service('dpl_library_agency.branch.repository');
@@ -287,7 +291,7 @@ function dpl_paragraphs_preprocess_paragraph__material_grid_manual(array &$varia
     '#theme' => 'dpl_react_app',
     '#name' => 'material-grid-manual',
     '#data' => [
-      'material-ids' => $workIds,
+      'materials' => $materials,
       'title' => $material_grid_title,
       'button-text' => t('Show all', [], ['context' => 'Material Grid']),
       'blacklisted-search-branches-config' => $blacklistedSearchBranchesConfig,

@@ -1,0 +1,21 @@
+uuid: 142f5566-78d3-41e0-a80c-4faf208649ab
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.paragraph.field_work_id_material_grid
+    - paragraphs.paragraphs_type.material_grid_manual
+  module:
+    - dpl_fbi
+id: paragraph.material_grid_manual.field_work_id_material_grid
+field_name: field_work_id_material_grid
+entity_type: paragraph
+bundle: material_grid_manual
+label: 'Work Id Material grid'
+description: "The grid will only display materials in internvals of 4. \r\n\r\nExample work ID: work-of:870970-basis:136336282.\r\n\r\nIf you need to link to a specific type, select it from the dropdown and the system will display that, if it is available."
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: dpl_fbi_work_id
