@@ -39,8 +39,8 @@ default:
       entity: e00e1460-169e-468d-9835-d664f06d0969
       alt: ''
       title: ''
-      width: 0
-      height: 0
+      width: 640
+      height: 443
   metatag:
     -
       tag: meta
@@ -51,7 +51,7 @@ default:
     -
       langcode: da
       country_code: DK
-      locality: 'Brønshøj-Husum'
+      locality: Brønshøj-Husum
       postal_code: '2700'
       address_line1: 'Krabbesholmvej 3'
       address_line2: ''
