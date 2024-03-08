@@ -3,6 +3,10 @@
 # You can read about the Task files here: https://taskfile.dev.
 version: "3"
 
+vars:
+  # Directory with translation sources.
+  PO_DIR: "profiles/dpl_cms/translations"
+
 tasks:
   scan:
     desc: Scan and generate translations

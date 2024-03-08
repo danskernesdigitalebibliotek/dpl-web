@@ -39,8 +39,6 @@ vars:
   DIR_RESTORE_DATABASE: "restore/database"
   # Directory with lagoon backup files.
   DIR_RESTORE_FILES: "restore/files"
-  # Directory with translation sources.
-  PO_DIR: "profiles/dpl_cms/translations"
 
   # Default language
   LANGUAGE: "da"

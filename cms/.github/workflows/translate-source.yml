@@ -42,7 +42,6 @@ jobs:
         env:
           FILE_A: web/profiles/dpl_cms/translations/da.po
           FILE_B: web/profiles/dpl_cms/translations/da.config.po
-          FILE_RESULT: web/profiles/dpl_cms/translations/da.combined.po
           LANGUAGE: da
       - name: Commit all combined translations
         uses: stefanzweifel/git-auto-commit-action@v5
