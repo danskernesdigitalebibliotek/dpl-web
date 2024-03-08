@@ -510,6 +510,8 @@ tasks:
       - |
         export ME=$(id -u);
         task dev:cli -- chown $ME:$ME web/$PATH_TO_FILE
+    requires:
+      vars: [PATH_TO_FILE]
     env:
       PATH_TO_FILE: "{{ .PATH_TO_FILE }}"
 
@@ -525,8 +527,9 @@ tasks:
       # Fill translations from db
       - task dev:cli -- drush potion:fill $LANGUAGE $PATH_TO_FILE
       - task translations:chown
+    requires:
+      vars: [LANGUAGE, PO_DIR, PATH_TO_FILE]
     env:
-      LANGUAGE: "{{ .LANGUAGE }}"
       PATH_TO_FILE: "{{ .PO_DIR }}/{{ .LANGUAGE }}.po"
 
   translations:conf:export:
@@ -535,8 +538,9 @@ tasks:
       # Generate translations from configuration strings
       - task dev:cli -- drush dpl_po:export-config-po $LANGUAGE $PATH_TO_FILE
       - task translations:chown
+    requires:
+      vars: [LANGUAGE, PO_DIR, PATH_TO_FILE]
     env:
-      LANGUAGE: "{{ .LANGUAGE }}"
       PATH_TO_FILE: "{{ .PO_DIR }}/{{ .LANGUAGE }}.config.po"
 
   translations:conf:merge:
@@ -544,8 +548,9 @@ tasks:
     cmds:
       - msgcat -o web/$PATH_TO_FILE $FILE_A $FILE_B
       - task translations:chown
+    requires:
+      vars: [LANGUAGE, PO_DIR, PATH_TO_FILE, FILE_A, FILE_B]
     env:
-      LANGUAGE: "{{ .LANGUAGE }}"
       PATH_TO_FILE: "{{ .PO_DIR }}/{{ .LANGUAGE }}.combined.po"
 
   translations:separate:translations:
@@ -553,8 +558,9 @@ tasks:
     cmds:
       - task dev:cli -- drush dpl_po:extract-ui $LANGUAGE $SOURCE $PATH_TO_FILE
       - task translations:chown
+    requires:
+      vars: [LANGUAGE, SOURCE, PO_DIR, PATH_TO_FILE]
     env:
-      LANGUAGE: "{{ .LANGUAGE }}"
       SOURCE: "{{ .PO_DIR }}/{{ .LANGUAGE }}.combined.po"
       PATH_TO_FILE: "{{ .PO_DIR }}/{{ .LANGUAGE }}.po"
 
@@ -563,7 +569,8 @@ tasks:
     cmds:
       - task dev:cli -- drush dpl_po:extract-config $LANGUAGE $SOURCE $PATH_TO_FILE
       - task translations:chown
+    requires:
+      vars: [LANGUAGE, SOURCE, PO_DIR, PATH_TO_FILE]
     env:
-      LANGUAGE: "{{ .LANGUAGE }}"
       SOURCE: "{{ .PO_DIR }}/{{ .LANGUAGE }}.combined.po"
       PATH_TO_FILE: "{{ .PO_DIR }}/{{ .LANGUAGE }}.config.po"
