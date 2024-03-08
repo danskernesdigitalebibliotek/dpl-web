@@ -279,7 +279,7 @@ class DplPoCommands extends DrushCommands {
    *
    * @command dpl_po:export-config-po
    * @usage drush dpl_po:export-config-po da da.config.po
-   *   Imports the configuration po file into the system.
+   *   Exports the configuration po file into the system.
    */
   public function exportConfigPoFile(string $langcode, string $destination): void {
     $this->setLanguageCode($langcode);
