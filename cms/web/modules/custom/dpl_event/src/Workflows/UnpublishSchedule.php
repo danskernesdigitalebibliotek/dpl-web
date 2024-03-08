@@ -7,12 +7,12 @@ namespace Drupal\dpl_event\Workflows;
 use Drupal\Component\Datetime\TimeInterface;
 use Drupal\Core\Config\ConfigFactoryInterface;
 use Drupal\Core\Logger\LoggerChannelInterface;
+use Drupal\dpl_event\EventWrapper;
 use Drupal\dpl_event\Form\SettingsForm;
 use Drupal\job_scheduler\Entity\JobSchedule;
 use Drupal\job_scheduler\JobSchedulerInterface;
 use Drupal\recurring_events\Entity\EventInstance;
 use Drupal\recurring_events\EventInstanceStorageInterface;
-use Safe\DateTimeImmutable;
 
 /**
  * Schedule for automatically marking events.
@@ -75,18 +75,8 @@ final class UnpublishSchedule {
     $schedule = (int) $config->get('unpublish_schedule');
     $now_timestamp = $this->time->getCurrentTime();
 
-    $event_date = $event->get('date')->get(0);
-    if (!$event_date) {
-      return;
-    }
-    $event_date_values = $event_date->getValue();
-    if (!$event_date_values || empty($event_date_values["end_value"])) {
-      return;
-    }
-    // Drupal stores dates in UTC by default but if no timezone is specified
-    // then the default timezone will be assumed.
-    $event_end_date = new DateTimeImmutable($event_date_values["end_value"], new \DateTimeZone('UTC'));
-    $unpublication_date = $event_end_date->modify("+{$schedule} seconds");
+    $event_end_date = (new EventWrapper($event))->getEndDate();
+    $unpublication_date = (\DateTimeImmutable::createFromInterface($event_end_date))->modify("+{$schedule} seconds");
     $unpublication_timestamp = $unpublication_date->getTimestamp();
 
     $job = [

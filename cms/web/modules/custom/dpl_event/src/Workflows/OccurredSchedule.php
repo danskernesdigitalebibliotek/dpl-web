@@ -4,12 +4,12 @@ namespace Drupal\dpl_event\Workflows;
 
 use Drupal\Component\Datetime\TimeInterface;
 use Drupal\dpl_event\EventState;
+use Drupal\dpl_event\EventWrapper;
 use Drupal\job_scheduler\Entity\JobSchedule;
 use Drupal\job_scheduler\JobSchedulerInterface;
 use Drupal\recurring_events\Entity\EventInstance;
 use Drupal\recurring_events\EventInstanceStorageInterface;
 use Psr\Log\LoggerInterface;
-use Safe\DateTimeImmutable;
 
 /**
  * Schedule for marking events that are no longer active as occurred.
@@ -48,8 +48,7 @@ class OccurredSchedule {
     if (!$event || !$event instanceof EventInstance) {
       return;
     }
-
-    if ($this->isActive($event)) {
+    if ((new EventWrapper($event))->isActive()) {
       $event->set("field_event_state", EventState::Occurred);
       $event->save();
     }
@@ -59,20 +58,8 @@ class OccurredSchedule {
    * Schedule setting an event to occurred in the future.
    */
   public function scheduleOccurred(EventInstance $event): void {
-    $now_timestamp = $this->time->getCurrentTime();
-
-    $event_date = $event->get('date')->get(0);
-    if (!$event_date) {
-      return;
-    }
-    $event_date_values = $event_date->getValue();
-    if (!$event_date_values || empty($event_date_values["end_value"])) {
-      return;
-    }
-    // Drupal stores dates in UTC by default but if no timezone is specified
-    // then the default timezone will be assumed.
-    $event_end_date = new DateTimeImmutable($event_date_values["end_value"], new \DateTimeZone('UTC'));
-    $event_end_timestamp = $event_end_date->getTimestamp();
+    $nowTimestamp = $this->time->getCurrentTime();
+    $eventEndDate = (new EventWrapper($event))->getEndDate();
 
     $job = [
       'name' => 'dpl_event_set_occurred',
@@ -81,7 +68,7 @@ class OccurredSchedule {
       // The period is the number of seconds to wait between job executions. A
       // negative period means that the job will be executed as soon as
       // possible. By setting periodic false the job is only executed once.
-      'period' => $event_end_timestamp - $now_timestamp,
+      'period' => $eventEndDate->getTimestamp() - $nowTimestamp,
       'periodic' => FALSE,
     ];
 
@@ -92,22 +79,8 @@ class OccurredSchedule {
 
     $this->logger->debug(
       'Scheduled "occurred" update for event %event_id at %end_time',
-      ['%event_id' => $event->id(), '%end_time' => $event_end_date->format('c')]
+      ['%event_id' => $event->id(), '%end_time' => $eventEndDate->format('c')]
     );
-  }
-
-  /**
-   * Determine if an event is considered active.
-   *
-   * An event is considered active if it has not occurred or been cancelled.
-   */
-  public function isActive(EventInstance $event): bool {
-    $event_states = array_map(function (array $sfield_value): EventState {
-      return EventState::from($sfield_value['value']);
-    }, $event->get("event_state")->getValue());
-
-    return !(in_array(EventState::Cancelled, $event_states)
-      || in_array(EventState::Occurred, $event_states));
   }
 
 }
