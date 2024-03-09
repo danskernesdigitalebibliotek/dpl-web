@@ -2,9 +2,7 @@
 
 namespace Drupal\dpl_po\Services;
 
-use Drupal\Component\Gettext\PoItem;
 use Drupal\config_translation_po\Services\CtpConfigManager as OrgCtpConfigManager;
-use Drupal\Core\StringTranslation\TranslatableMarkup;
 
 /**
  * Extended CtpConfigManager in order to handle untranslated strings properly.
@@ -67,21 +65,7 @@ class CtpConfigManager extends OrgCtpConfigManager {
     if (is_null($data)) {
       $data = '';
     }
-
-    if ($source instanceof TranslatableMarkup) {
-      $source = $source->getUntranslatedString();
-    }
-    $excludes = $this->getExludes();
-    if (empty($source) || in_array($source, $excludes)) {
-      return;
-    }
-    $context = implode(':', $comment);
-    $po_item = new PoItem();
-    $po_item->setLangcode($this->langcode);
-    $po_item->setContext($context);
-    $po_item->setSource($source);
-    $po_item->setTranslation($this->langcode !== 'system' ? $data : '');
-    $this->translatableElements[$context] = $po_item;
+    parent::preparePoItem($source, $data, $comment);
   }
 
 }
