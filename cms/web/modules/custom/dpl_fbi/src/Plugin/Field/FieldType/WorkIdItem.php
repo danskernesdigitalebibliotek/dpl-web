@@ -49,7 +49,7 @@ final class WorkIdItem extends FieldItemBase {
 
     $properties['material_type'] = DataDefinition::create('string')
       ->setLabel(t('The material type'))
-      ->setRequired(TRUE);
+      ->setRequired(FALSE);
 
     return $properties;
   }
@@ -89,7 +89,7 @@ final class WorkIdItem extends FieldItemBase {
       'material_type' => [
         'type' => 'varchar',
         'length' => 255,
-        'not null' => TRUE,
+        'not null' => FALSE,
         'description' => 'The material type (e.g., bog, e-bog).',
       ],
     ];
