@@ -134,7 +134,7 @@ function dpl_paragraphs_preprocess_paragraph__medias(array &$variables): void {
 function dpl_paragraphs_preprocess_paragraph__recommendation(array &$variables): void {
 
   $paragraph = $variables['paragraph'] ?? NULL;
-  if (!($paragraph instanceof ParagraphInterface) || !$paragraph->hasField('field_work_id_recommendation') || $paragraph->get('field_work_id_recommendation')->isEmpty()) {
+  if (!($paragraph instanceof ParagraphInterface) || !$paragraph->hasField('field_recommendation_work_id') || $paragraph->get('field_recommendation_work_id')->isEmpty()) {
     return;
   }
 
@@ -147,7 +147,7 @@ function dpl_paragraphs_preprocess_paragraph__recommendation(array &$variables):
     $paragraph_description = $paragraph->get('field_recommendation_description')->getString();
     $paragraph_image_position_right = $paragraph->get('field_image_position_right')->getString();
 
-    $work_id_field = $paragraph->get('field_work_id_recommendation');
+    $work_id_field = $paragraph->get('field_recommendation_work_id');
     $work_id = $work_id_field->value;
     $material_type = $work_id_field->material_type ?? NULL;
 
@@ -260,7 +260,7 @@ function dpl_paragraphs_preprocess_paragraph__material_grid_manual(array &$varia
 
   $paragraph = $variables['paragraph'] ?? NULL;
 
-  if (!($paragraph instanceof ParagraphInterface)  || !$paragraph->hasField('field_material_grid_title') || !$paragraph->hasField('field_work_id_material_grid')) {
+  if (!($paragraph instanceof ParagraphInterface)  || !$paragraph->hasField('field_material_grid_title') || !$paragraph->hasField('field_material_grid_work_ids')) {
     return;
   }
 
@@ -268,8 +268,8 @@ function dpl_paragraphs_preprocess_paragraph__material_grid_manual(array &$varia
   $material_grid_title = $paragraph->get('field_material_grid_title')->getString();
   $materials = [];
 
-  if (!$paragraph->get('field_work_id_material_grid')->isEmpty()) {
-    foreach ($paragraph->get('field_work_id_material_grid')->getValue() as $item) {
+  if (!$paragraph->get('field_material_grid_work_ids')->isEmpty()) {
+    foreach ($paragraph->get('field_material_grid_work_ids')->getValue() as $item) {
 
       $wid = $item['value'];
       $materialType = $item['material_type'];

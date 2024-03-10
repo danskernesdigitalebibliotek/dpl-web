@@ -1,12 +1,12 @@
-uuid: 7b4cfc69-480f-47e1-a972-a5edad82e9f9
+uuid: 6753d5db-7fe9-4d33-9cf1-dbd0bba6cd18
 langcode: en
 status: true
 dependencies:
   module:
     - dpl_fbi
     - paragraphs
-id: paragraph.field_work_id_recommendation
-field_name: field_work_id_recommendation
+id: paragraph.field_recommendation_work_id
+field_name: field_recommendation_work_id
 entity_type: paragraph
 type: dpl_fbi_work_id
 settings: {  }

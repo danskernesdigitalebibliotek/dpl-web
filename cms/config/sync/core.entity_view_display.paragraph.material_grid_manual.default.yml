@@ -4,7 +4,8 @@ status: true
 dependencies:
   config:
     - field.field.paragraph.material_grid_manual.field_material_grid_title
-    - field.field.paragraph.material_grid_manual.field_work_id_material_grid
+    - field.field.paragraph.material_grid_manual.field_material_grid_work_ids
+    - field.field.paragraph.material_grid_manual.field_work_id
     - paragraphs.paragraphs_type.material_grid_manual
 id: paragraph.material_grid_manual.default
 targetEntityType: paragraph
@@ -19,13 +20,14 @@ content:
     third_party_settings: {  }
     weight: 0
     region: content
-  field_work_id_material_grid:
+  field_material_grid_work_ids:
     type: string
     label: above
     settings:
       link_to_entity: false
     third_party_settings: {  }
-    weight: 1
+    weight: 2
     region: content
 hidden:
+  field_work_id: true
   search_api_excerpt: true

@@ -6,10 +6,10 @@ dependencies:
     - field.field.paragraph.recommendation.field_image_position_right
     - field.field.paragraph.recommendation.field_recommendation_description
     - field.field.paragraph.recommendation.field_recommendation_title
-    - field.field.paragraph.recommendation.field_work_id_recommendation
+    - field.field.paragraph.recommendation.field_recommendation_work_id
+    - field.field.paragraph.recommendation.field_work_id
     - paragraphs.paragraphs_type.recommendation
   module:
-    - dpl_fbi
     - text
 id: paragraph.recommendation.default
 targetEntityType: paragraph
@@ -39,12 +39,15 @@ content:
       size: 60
       placeholder: ''
     third_party_settings: {  }
-  field_work_id_recommendation:
-    type: dpl_fbi_work_id_with_type
-    weight: 3
+  field_recommendation_work_id:
+    type: string_textfield
+    weight: 4
     region: content
-    settings: {  }
+    settings:
+      size: 60
+      placeholder: ''
     third_party_settings: {  }
 hidden:
   created: true
+  field_work_id: true
   status: true
