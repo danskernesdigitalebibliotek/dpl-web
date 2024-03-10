@@ -6,6 +6,7 @@ dependencies:
     - field.field.paragraph.recommendation.field_image_position_right
     - field.field.paragraph.recommendation.field_recommendation_description
     - field.field.paragraph.recommendation.field_recommendation_title
+    - field.field.paragraph.recommendation.field_recommendation_work_id
     - field.field.paragraph.recommendation.field_work_id
     - paragraphs.paragraphs_type.recommendation
   module:
@@ -39,13 +40,14 @@ content:
     third_party_settings: {  }
     weight: 1
     region: content
-  field_work_id:
+  field_recommendation_work_id:
     type: string
     label: above
     settings:
       link_to_entity: false
     third_party_settings: {  }
-    weight: 4
+    weight: 7
     region: content
 hidden:
+  field_work_id: true
   search_api_excerpt: true

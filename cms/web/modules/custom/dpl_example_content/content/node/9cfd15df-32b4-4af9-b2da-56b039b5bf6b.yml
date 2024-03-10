@@ -122,7 +122,7 @@ default:
           field_image_position_right:
             -
               value: false
-          field_work_id:
+          field_recommendation_work_id:
             -
               value: 'work-of:870970-basis:51869168'
     -
@@ -174,7 +174,7 @@ default:
           field_image_position_right:
             -
               value: true
-          field_work_id:
+          field_recommendation_work_id:
             -
               value: 'work-of:870970-basis:51143574'
     -
@@ -226,7 +226,7 @@ default:
           field_image_position_right:
             -
               value: false
-          field_work_id:
+          field_recommendation_work_id:
             -
               value: 'work-of:870970-basis:53642101'
   field_show_override_author:
