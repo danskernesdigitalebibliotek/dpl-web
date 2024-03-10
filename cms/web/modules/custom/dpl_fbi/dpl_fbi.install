@@ -10,19 +10,14 @@ use function Safe\sprintf as sprintf;
  * This update function alters the schema for custom field storage
  * to include a new column for material type. It handles both the
  * base table and the revision table for the field.
- *
- * The function is taken from drupal stackexchange:
- * https://drupal.stackexchange.com/questions/255495/add-column-to-custom-field-schema
- *
- * @throws \Exception
- *   Throws exception if the field type cannot be found or if the expected
- *   field storage is not an instance of FieldStorageDefinitionInterface.
  */
-function dpl_fbi_update_10201() :void {
+function dpl_fbi_update_10000() :void {
 
   $field_type = 'dpl_fbi_work_id';
   $new_fields = ['material_type'];
 
+  // This part of the function is taken from drupal stackexchange:
+  // https://drupal.stackexchange.com/questions/255495/add-column-to-custom-field-schema
   if (!$field_storage_configs = \Drupal::entityTypeManager()
     ->getStorage('field_storage_config')
     ->loadByProperties(['type' => $field_type])
