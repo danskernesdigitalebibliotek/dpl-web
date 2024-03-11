@@ -1,3 +1,5 @@
+/* eslint-disable yml/no-empty-document */
+
 # This route is commented out for the time being due to this task: https://reload.atlassian.net/browse/DDFLSBP-419
 
 # dpl_recommender.settings_form:
