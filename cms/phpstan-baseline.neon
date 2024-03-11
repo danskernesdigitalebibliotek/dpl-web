@@ -6,11 +6,6 @@ parameters:
 			path: web/modules/custom/dpl_dashboard/src/DplDashboardSettings.php
 
 		-
-			message: "#^Method Drupal\\\\dpl_event\\\\Plugin\\\\Field\\\\FieldFormatter\\\\BranchAddressFormatter\\:\\:viewElements\\(\\) return type has no value type specified in iterable type array\\.$#"
-			count: 1
-			path: web/modules/custom/dpl_event/src/Plugin/Field/FieldFormatter/BranchAddressFormatter.php
-
-		-
 			message: "#^Call to deprecated method legacyConfig\\(\\) of class Drupal\\\\dpl_react\\\\DplReactConfigBase\\.$#"
 			count: 1
 			path: web/modules/custom/dpl_favorites_list/src/DplFavoritesListSettings.php
