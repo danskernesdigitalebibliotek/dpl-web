@@ -6,5 +6,6 @@ services:
       - "@dpl_po.config_manager"
       - "@file_system"
       - "@module_handler"
+      - "@http_client"
     tags:
       - { name: drush.command }
