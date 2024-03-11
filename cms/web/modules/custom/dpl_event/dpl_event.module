@@ -11,112 +11,61 @@ use Drupal\Core\Entity\FieldableEntityInterface;
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\Url;
 use Drupal\dpl_event\EventState;
-use Drupal\job_scheduler\Entity\JobSchedule;
+use Drupal\dpl_event\EventWrapper;
+use Drupal\dpl_event\Workflows\OccurredSchedule;
+use Drupal\dpl_event\Workflows\UnpublishSchedule;
+use Drupal\drupal_typed\DrupalTyped;
 use Drupal\recurring_events\Entity\EventInstance;
 use Drupal\recurring_events\Entity\EventSeries;
-use Safe\DateTimeImmutable;
 
 /**
  * Implements hook_cron_job_scheduler_info().
  *
- * @return non-empty-array<string, array{'worker callback': string}>
+ * @return non-empty-array<string, array{'worker callback': callable}>
  *   Job scheduler information.
  */
 function dpl_event_cron_job_scheduler_info(): array {
-  return [
-    "dpl_event_set_occurred" => [
-      "worker callback" => 'dpl_event_set_occurred_callback',
-    ],
-  ];
+  $occurred_schedule = DrupalTyped::service(OccurredSchedule::class, 'dpl_event.occurred_schedule');
+  $unpublish_schedule = DrupalTyped::service(UnpublishSchedule::class, 'dpl_event.unpublish_schedule');
+  return array_merge(
+    $occurred_schedule->getSchedule(),
+    $unpublish_schedule->getSchedule()
+  );
 }
 
 /**
  * Implements hook_node_insert().
  */
 function dpl_event_eventinstance_insert(EntityInterface $entity): void {
-  if ($entity instanceof EventInstance && dpl_event_eventinstance_is_active($entity)) {
-    dpl_event_schedule_set_occurred($entity);
+  $occurred_schedule = DrupalTyped::service(OccurredSchedule::class, 'dpl_event.occurred_schedule');
+  $unpublish_schedule = DrupalTyped::service(UnpublishSchedule::class, 'dpl_event.unpublish_schedule');
+  if (!$entity instanceof EventInstance) {
+    return;
   }
+
+  (new EventWrapper($entity))->isActive() && $occurred_schedule->scheduleOccurred($entity);
+  $unpublish_schedule->scheduleUnpublication($entity);
 }
 
 /**
  * Implements hook_node_update().
  */
 function dpl_event_eventinstance_update(EntityInterface $entity): void {
-  if ($entity instanceof EventInstance && dpl_event_eventinstance_is_active($entity)) {
-    dpl_event_schedule_set_occurred($entity);
-  }
-}
-
-/**
- * Determine if an event is considered active.
- *
- * An event is considered active if it has not occurred or been cancelled.
- */
-function dpl_event_eventinstance_is_active(EventInstance $event): bool {
-  $event_states = array_map(function (array $sfield_value): EventState {
-    return EventState::from($sfield_value['value']);
-  }, $event->get("event_state")->getValue());
-
-  return !(in_array(EventState::Cancelled, $event_states)
-    || in_array(EventState::Occurred, $event_states));
-}
-
-/**
- * Schedule setting an event to occurred in the future.
- */
-function dpl_event_schedule_set_occurred(EventInstance $event): void {
-  $now_timestamp = \Drupal::time()->getCurrentTime();
-
-  $event_date = $event->get('date')->get(0);
-  if (!$event_date) {
+  $occurred_schedule = DrupalTyped::service(OccurredSchedule::class, 'dpl_event.occurred_schedule');
+  $unpublish_schedule = DrupalTyped::service(UnpublishSchedule::class, 'dpl_event.unpublish_schedule');
+  if (!$entity instanceof EventInstance) {
     return;
   }
-  $event_date_values = $event_date->getValue();
-  if (!$event_date_values || empty($event_date_values["end_value"])) {
-    return;
-  }
-  $event_end_date = new DateTimeImmutable($event_date_values["end_value"]);
-  $event_end_timestamp = $event_end_date->getTimestamp();
-
-  $job = [
-    'name' => 'dpl_event_set_occurred',
-    'type' => 'event',
-    'id' => $event->id(),
-    // The period is the number of seconds to wait between job executions. A
-    // negative period means that the job will be executed as soon as
-    // possible. By setting periodic false the job is only executed once.
-    'period' => $event_end_timestamp - $now_timestamp,
-    'periodic' => FALSE,
-  ];
-
-  /** @var \Drupal\job_scheduler\JobSchedulerInterface $scheduler */
-  $scheduler = \Drupal::service('job_scheduler.manager');
-  // Remove any preexisting job with the same name, type and id.
-  $scheduler->remove($job);
-  // Schedule the new update.
-  $scheduler->set($job);
-
-  \Drupal::logger('dpl_event')->debug(
-    'Scheduled "occurred" update for event %event_id at %end_time',
-    ['%event_id' => $event->id(), '%end_time' => $event_end_date->format('c')]
-  );
-}
-
-/**
- * Callback to be executed for scheduled jobs.
- */
-function dpl_event_set_occurred_callback(JobSchedule $job): void {
-  $event = \Drupal::entityTypeManager()->getStorage('eventinstance')->load($job->getId());
-  if (!$event || !$event instanceof EventInstance) {
-    return;
+  $updated_event = new EventWrapper($entity);
+  if (isset($entity->original) && $entity->original instanceof EventInstance) {
+    // If there are no changes to the date then skip updating schedules.
+    if ($updated_event->hasSameDate($entity->original)) {
+      return;
+    }
   }
 
-  // Set state to occurred for events we consider active.
-  if (dpl_event_eventinstance_is_active($event)) {
-    $event->set("field_event_state", EventState::Occurred);
-    $event->save();
-  }
+  $updated_event->isActive() && $occurred_schedule->scheduleOccurred($entity);
+  $unpublish_schedule->scheduleUnpublication($entity);
 }
 
 /**

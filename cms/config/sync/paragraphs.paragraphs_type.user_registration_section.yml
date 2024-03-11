@@ -1,0 +1,10 @@
+uuid: 87b63531-f90e-4c9e-b9fe-2130104df615
+langcode: en
+status: true
+dependencies: {  }
+id: user_registration_section
+label: 'User registration section'
+icon_uuid: null
+icon_default: null
+description: 'The "User registration section" paragraph type is used to display "User registration item" paragraphs.'
+behavior_plugins: {  }

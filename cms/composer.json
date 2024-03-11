@@ -101,6 +101,7 @@
         "drupal/handy_cache_tags": "^1.4",
         "drupal/job_scheduler": "^4.0",
         "drupal/jsonlog": "^4.0",
+        "drupal/language_neutral_aliases": "^3.1",
         "drupal/libraries": "^4.0",
         "drupal/linkit": "^6.1.2",
         "drupal/media_library_edit": "^3.0",
@@ -262,11 +263,18 @@
             "drupal/entity_clone": {
                 "2708731: Allow redirect to edit form after cloning": "https://www.drupal.org/files/issues/2022-11-15/improve-workflow-of-cloned-entity-2708731-39.patch"
             },
+            "drupal/entity_clone_template": {
+                "3424597: Fix error when creating entity of type without templates": "https://git.drupalcode.org/project/entity_clone_template/-/merge_requests/3.patch"
+            },
             "drupal/field_inheritance": {
                 "3330386: field_inheritance_form_alter should enforce module permissions": "https://git.drupalcode.org/project/field_inheritance/-/commit/bc3d26cdce8c09d5b6275fc126e35bc7e239c7d1.patch"
             },
             "drupal/focal_point": {
                 "3162210: Preview link accidentally closes the media library": "https://www.drupal.org/files/issues/2020-10-11/preview_link_accidentally_closes_the_media_library-3162210-19.patch"
+            },
+            "drupal/job_scheduler": {
+                "3426366: Callables as worker callbacks": "https://git.drupalcode.org/project/job_scheduler/-/merge_requests/7.patch",
+                "3426378: Views support": "https://git.drupalcode.org/project/job_scheduler/-/merge_requests/8.patch"
             },
             "drupal/jsonlog": {
                 "3251587: Change logging from stdout to stderr": "https://www.drupal.org/files/issues/2021-11-29/jsonlog-change-stdout-to-stderr-3251587-3.patch"

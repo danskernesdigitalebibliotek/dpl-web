@@ -1,0 +1,85 @@
+uuid: a7da456a-6b6c-482c-80e1-68b16fff02a0
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.paragraph.field_user_registration_items
+    - paragraphs.paragraphs_type.user_registration_item
+    - paragraphs.paragraphs_type.user_registration_section
+  module:
+    - entity_reference_revisions
+id: paragraph.user_registration_section.field_user_registration_items
+field_name: field_user_registration_items
+entity_type: paragraph
+bundle: user_registration_section
+label: 'User registration items'
+description: 'Add a new "User registration item" to the list.'
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings:
+  handler: 'default:paragraph'
+  handler_settings:
+    target_bundles:
+      user_registration_item: user_registration_item
+    negate: 0
+    target_bundles_drag_drop:
+      accordion:
+        weight: 20
+        enabled: false
+      campaign_rule:
+        weight: 21
+        enabled: false
+      card_grid_automatic:
+        weight: 22
+        enabled: false
+      card_grid_manual:
+        weight: 23
+        enabled: false
+      content_slider:
+        weight: 24
+        enabled: false
+      event_ticket_category:
+        weight: 25
+        enabled: false
+      files:
+        weight: 26
+        enabled: false
+      hero:
+        weight: 27
+        enabled: false
+      language_selector:
+        weight: 28
+        enabled: false
+      links:
+        weight: 29
+        enabled: false
+      medias:
+        weight: 30
+        enabled: false
+      nav_grid_manual:
+        weight: 31
+        enabled: false
+      nav_spots_manual:
+        weight: 32
+        enabled: false
+      recommendation:
+        weight: 33
+        enabled: false
+      text_body:
+        weight: 34
+        enabled: false
+      user_registration_information:
+        weight: 35
+        enabled: false
+      user_registration_item:
+        weight: 37
+        enabled: true
+      user_registration_section:
+        weight: 19
+        enabled: false
+      video:
+        weight: 36
+        enabled: false
+field_type: entity_reference_revisions

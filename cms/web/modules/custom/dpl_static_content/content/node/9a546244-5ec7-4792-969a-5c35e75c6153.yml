@@ -1,0 +1,81 @@
+_meta:
+  version: '1.0'
+  entity_type: node
+  uuid: 9a546244-5ec7-4792-969a-5c35e75c6153
+  bundle: page
+  default_langcode: da
+  depends:
+    e00e1460-169e-468d-9835-d664f06d0969: file
+default:
+  revision_uid:
+    -
+      target_id: 1
+  status:
+    -
+      value: true
+  uid:
+    -
+      target_id: 1
+  title:
+    -
+      value: Pausefunktion
+  created:
+    -
+      value: 1709028423
+  promote:
+    -
+      value: false
+  sticky:
+    -
+      value: false
+  revision_translation_affected:
+    -
+      value: true
+  entity_clone_template_active:
+    -
+      value: false
+  entity_clone_template_image:
+    -
+      entity: e00e1460-169e-468d-9835-d664f06d0969
+      alt: ''
+      title: ''
+      width: 640
+      height: 443
+  metatag:
+    -
+      tag: meta
+      attributes:
+        name: title
+        content: 'Pausefunktion | DPL CMS'
+  path:
+    -
+      alias: /pausefunktion
+  field_display_titles:
+    -
+      value: true
+  field_hero_title:
+    -
+      value: Pausefunktion
+  field_paragraphs:
+    -
+      entity:
+        _meta:
+          version: '1.0'
+          entity_type: paragraph
+          uuid: d5d3520a-a17d-46a5-b94b-a7bb87beacfc
+          bundle: text_body
+          default_langcode: da
+        default:
+          status:
+            -
+              value: true
+          created:
+            -
+              value: 1709028677
+          behavior_settings:
+            -
+              value: {  }
+          field_body:
+            -
+              value: '<p>Skal du på ferie, kan du stadig holde din plads i reserveringskøen.</p><p>Hvis du ikke har mulighed for at komme og hente dine reserveringer i en periode, kan du angive en pauseperiode. Det betyder, at dine reserveringer bliver sat på pause.</p><p>Fordelen for dig er, at du undgår at komme bag i køen, hvis du ikke kan nå at hente dine reserveringer. I stedet bliver du sprunget over i køen, indtil din pauseperiode udløber.</p><p>Reserveringspausen gælder kun de reserveringer, vi ikke allerede har gjort klar til dig, og kun fysiske materialer.</p><p><strong>OBS: Denne service gælder for alle reserveringer på bibliotekets egne materialer, men ikke for de materialer, der skaffes hjem fra andre biblioteker.</strong></p><p>Sådan sætter du dine reserveringer på pause:</p><ol><li>Log ind på hjemmesiden</li><li>Tryk på brugerikonet så brugermenuen åbner</li><li>Tryk på <em>Reserveringer</em></li><li>Under <em>Sæt dine reserveringer på pause</em> kan du vælge en fraværsperiode. Vær opmærksom på at begge dage er omfanget af perioden</li><li>Tryk Gem for at gemme dine valg.</li></ol>'
+              format: basic

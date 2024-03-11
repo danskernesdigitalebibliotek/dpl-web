@@ -11,7 +11,6 @@ use Drupal\dpl_react\DplReactConfigBase;
 class DplFeesSettings extends DplReactConfigBase {
   const FEES_AND_REPLACEMENT_COSTS_URL = '';
   const PAYMENT_SITE_URL = '';
-  const PAYMENT_SITE_BUTTON_LABEL = '';
   const FEES_LIST_SIZE_DESKTOP = 25;
   const FEES_LIST_SIZE_MOBILE = 25;
   const BLOCKED_PATRON_E_LINK_URL = '';

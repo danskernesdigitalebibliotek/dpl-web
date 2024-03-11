@@ -1,0 +1,19 @@
+uuid: 6753d5db-7fe9-4d33-9cf1-dbd0bba6cd18
+langcode: en
+status: true
+dependencies:
+  module:
+    - dpl_fbi
+    - paragraphs
+id: paragraph.field_recommendation_work_id
+field_name: field_recommendation_work_id
+entity_type: paragraph
+type: dpl_fbi_work_id
+settings: {  }
+module: dpl_fbi
+locked: false
+cardinality: 1
+translatable: true
+indexes: {  }
+persist_with_no_fields: false
+custom_storage: false

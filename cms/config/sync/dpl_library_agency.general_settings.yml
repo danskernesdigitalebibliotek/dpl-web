@@ -3,3 +3,4 @@ expiration_warning_days_before_config: 6
 interest_periods_config: '180-6 måneder'
 default_interest_period_config: '180'
 ereolen_my_page_url: 'https://ereolen.dk/user/me'
+pause_reservation_info_url: /pausefunktion

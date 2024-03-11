@@ -39,11 +39,19 @@ default:
       entity: e00e1460-169e-468d-9835-d664f06d0969
       alt: ''
       title: ''
-      width: 0
-      height: 0
+      width: 640
+      height: 443
   metatag:
     -
       tag: meta
       attributes:
         name: title
         content: 'Det virtuelle bibliotek | DPL CMS'
+  field_address:
+    -
+      langcode: en
+      country_code: DK
+      locality: ''
+      postal_code: ''
+      address_line1: ''
+      address_line2: ''

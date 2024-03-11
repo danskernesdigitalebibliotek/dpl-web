@@ -1,0 +1,16 @@
+name: DPL static content
+type: module
+description: Provides static content for new library sites.
+package: DPL
+core_version_requirement: ^9 || ^10
+dependencies:
+  - default_content:default_content
+default_content:
+  node:
+    # Pages
+    - 74e3bb37-5b99-4164-a9a7-adfc165eaead
+    - e68b90e6-cd35-44c6-9e32-c05c982ed315
+    - 4052479c-0f12-4a17-8466-dedd4409355a
+    - e0850f71-b87a-4510-a612-6319e18a61b4
+    - f57e40b2-c113-49fa-a39b-dee7c3ed5ea4
+    - 9a546244-5ec7-4792-969a-5c35e75c6153

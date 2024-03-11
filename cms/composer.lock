@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "065144c46df37bd0526a2d07b8ceb5be",
+    "content-hash": "440aa9608771f5cb0c9b82f84a7306e1",
     "packages": [
         {
             "name": "amazeeio/drupal_integrations",
@@ -4131,6 +4131,50 @@
             "support": {
                 "source": "https://git.drupalcode.org/project/jsonlog",
                 "issues": "https://www.drupal.org/project/issues/jsonlog"
+            }
+        },
+        {
+            "name": "drupal/language_neutral_aliases",
+            "version": "3.1.1",
+            "source": {
+                "type": "git",
+                "url": "https://git.drupalcode.org/project/language_neutral_aliases.git",
+                "reference": "3.1.1"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://ftp.drupal.org/files/projects/language_neutral_aliases-3.1.1.zip",
+                "reference": "3.1.1",
+                "shasum": "41af20fd8b468d43fcfcebf6e7087f213ba09141"
+            },
+            "require": {
+                "drupal/core": "^8.8 || ^9 || ^10"
+            },
+            "type": "drupal-module",
+            "extra": {
+                "drupal": {
+                    "version": "3.1.1",
+                    "datestamp": "1700598474",
+                    "security-coverage": {
+                        "status": "covered",
+                        "message": "Covered by Drupal's security advisory policy"
+                    }
+                }
+            },
+            "notification-url": "https://packages.drupal.org/8/downloads",
+            "license": [
+                "GPL-2.0-or-later"
+            ],
+            "authors": [
+                {
+                    "name": "Xen",
+                    "homepage": "https://www.drupal.org/user/91385"
+                }
+            ],
+            "description": "Use the same URL aliases regardless of language.",
+            "homepage": "https://www.drupal.org/project/language_neutral_aliases",
+            "support": {
+                "source": "https://git.drupalcode.org/project/language_neutral_aliases"
             }
         },
         {
