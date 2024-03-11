@@ -8,7 +8,7 @@ form_settings:
     disable: true
     hidden: true
   node:
-    default_value: true
+    default_value: false
     disable: true
     hidden: true
   user:
