@@ -34,7 +34,7 @@ class CtpConfigManager extends OrgCtpConfigManager {
       if (is_array($item)) {
         // Only add this key if there was a translated value underneath.
         $value = $this->processTranslatableData($name, $active[$key], $item, $langcode);
-        if (!empty($value) || is_null($value)) {
+        if (!empty($value)) {
           $translated[$key] = $value;
         }
       }
@@ -42,14 +42,9 @@ class CtpConfigManager extends OrgCtpConfigManager {
         if (locale_is_translatable($langcode)) {
           $value = $this->translateString($name, $langcode, $item->getUntranslatedString(), $item->getOption('context'));
         }
-        if (empty($value)) {
-          // If there is no translation, set value to NULL
-          // so we can handle it properly in the next step.
-          $value = NULL;
-        }
-        if (!empty($value) || !is_null($value)) {
-          $translated[$key] = $value;
-        }
+        // If there is no translation, set value to NULL
+        // so we can handle it properly in the next step.
+        $translated[$key] = !empty($value) ? $value : NULL;
       }
     }
     return $translated;
