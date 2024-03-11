@@ -7,6 +7,8 @@ dependencies:
     - field.field.paragraph.material_grid_manual.field_material_grid_work_ids
     - field.field.paragraph.material_grid_manual.field_work_id
     - paragraphs.paragraphs_type.material_grid_manual
+  module:
+    - dpl_fbi
 id: paragraph.material_grid_manual.default
 targetEntityType: paragraph
 bundle: material_grid_manual
@@ -21,12 +23,10 @@ content:
       placeholder: ''
     third_party_settings: {  }
   field_material_grid_work_ids:
-    type: string_textfield
+    type: dpl_fbi_work_id_with_type
     weight: 2
     region: content
-    settings:
-      size: 60
-      placeholder: ''
+    settings: {  }
     third_party_settings: {  }
 hidden:
   created: true

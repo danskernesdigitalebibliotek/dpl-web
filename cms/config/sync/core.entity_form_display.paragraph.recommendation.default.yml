@@ -10,6 +10,7 @@ dependencies:
     - field.field.paragraph.recommendation.field_work_id
     - paragraphs.paragraphs_type.recommendation
   module:
+    - dpl_fbi
     - text
 id: paragraph.recommendation.default
 targetEntityType: paragraph
@@ -40,12 +41,10 @@ content:
       placeholder: ''
     third_party_settings: {  }
   field_recommendation_work_id:
-    type: string_textfield
+    type: dpl_fbi_work_id_with_type
     weight: 4
     region: content
-    settings:
-      size: 60
-      placeholder: ''
+    settings: {  }
     third_party_settings: {  }
 hidden:
   created: true
