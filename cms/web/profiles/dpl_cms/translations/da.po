@@ -1927,7 +1927,7 @@ msgstr "Tilføj række"
 #: 
 msgctxt "advanced search"
 msgid "all indexes"
-msgstr "Fritekst-søgning"
+msgstr "Søgning i"
 
 #: 
 msgctxt "advanced search"
