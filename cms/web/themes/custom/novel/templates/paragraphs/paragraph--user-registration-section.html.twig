@@ -1,8 +1,9 @@
 {# Iterates over each item in 'field_paragraphs', constructing a list of links if 'field_display_in_navigation' is true. #}
 {% if anchor_links is not empty %}
-  <div class="row-buttons">
+  <div class="paragraphs__item--user_registration_section__button_row">
+    <p>{{ "Make a profile for"|t }}:</p>
     {% for item in anchor_links %}
-        <a class="row-button text-tags row-button__text capitalize-all" href="#{{ item.anchor_id }}">{{ item.title }}</a>
+        <a class="paragraphs__item--user_registration_section__button" href="#{{ item.anchor_id }}">{{ item.title }}</a>
     {% endfor %}
   </div>
 {% endif %}

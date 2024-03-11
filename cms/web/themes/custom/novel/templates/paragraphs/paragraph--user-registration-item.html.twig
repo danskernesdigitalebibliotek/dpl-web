@@ -1,12 +1,9 @@
 {# Set 'anchor_id' variable. Use 'field_anchor' value if not empty; otherwise, generate an anchor using the entity ID #}
 {% set anchor_id = paragraph.field_anchor.value|default('anchor-' ~ paragraph.id.value)|escape %}
 
-<div id="{{ anchor_id }}" class="user-registration-info">
-  <h2 class="user-registration-info__title">{{ content.field_title }}</h2>
-
-  <div class="user-registration-info__body">
-    {{ content.field_body }}
-  </div>
+<div id="{{ anchor_id }}" class="rich-text paragraphs__item--user_registration_section__body">
+  <h2 class="paragraphs__item--user_registration_section__title">{{ content.field_title }}</h2>
+  {{ content.field_body }}
 
   {% if content.field_registration_link.0 is not empty %}
     {% set link_field = content.field_registration_link.0 %}
@@ -15,6 +12,6 @@
     {% set target = content.field_link_target.value|default('_self')|escape('html_attr') %}
 
     {# Render the link #}
-    <a class="user-registration-info__link btn-primary btn-filled btn-large" href="{{ url }}" target="{{ target }}">{{ title }}</a>
+    <a class="paragraphs__item--user_registration_section__link btn-primary btn-filled btn-large arrow__hover--right-small" href="{{ url }}" target="{{ target }}">{{ title }}</a>
   {% endif %}
 </div>
