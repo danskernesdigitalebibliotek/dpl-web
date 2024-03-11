@@ -1747,7 +1747,7 @@ msgstr "Første tilgængelige udgave"
 #: 
 msgctxt "Work Page"
 msgid "Avoid the queue and pick up the material now"
-msgstr "Undgå ventetid og hente materialet nu"
+msgstr "Undgå ventetid og hent materialet nu"
 
 #: 
 msgctxt "Work Page"
@@ -3329,7 +3329,7 @@ msgstr "Du har i øjeblikket 0 reserveringer på fysiske materialer"
 #: 
 msgctxt "Global"
 msgid "At the moment you have 0 reservations ready for pickup"
-msgstr "Du har i øjeblikket 0 reserveringer klar til afhentning"
+msgstr "Du har ingen reserveringer klar til afhentning"
 
 #: 
 msgctxt "Global"
@@ -3839,7 +3839,7 @@ msgstr "Indstil hvor mange elementer der skal vises på en liste inden for hver 
 #: 
 msgctxt "Work Page"
 msgid "Your material has been ordered from another library"
-msgstr ""
+msgstr "Bestilt fra et andet bibliotek"
 
 #: 
 msgctxt "Work Page"
