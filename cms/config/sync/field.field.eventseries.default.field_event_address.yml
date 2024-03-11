@@ -12,24 +12,10 @@ field_name: field_event_address
 entity_type: eventseries
 bundle: default
 label: Address
-description: 'Notice - this value will be overwritten if the event is connected to a branch that has its own address.'
+description: 'Use this value to specific a different address than the event branch.'
 required: false
 translatable: false
-default_value:
-  -
-    langcode: en
-    country_code: DK
-    administrative_area: null
-    locality: ''
-    dependent_locality: null
-    postal_code: ''
-    sorting_code: null
-    address_line1: ''
-    address_line2: null
-    organization: null
-    given_name: null
-    additional_name: null
-    family_name: null
+default_value: {  }
 default_value_callback: ''
 settings:
   available_countries:
