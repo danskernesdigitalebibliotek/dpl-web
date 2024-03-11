@@ -1927,7 +1927,7 @@ msgstr "Tilføj række"
 #: 
 msgctxt "advanced search"
 msgid "all indexes"
-msgstr "Alle indekser"
+msgstr "Søg i"
 
 #: 
 msgctxt "advanced search"
@@ -2002,7 +2002,7 @@ msgstr "Skønlitteratur"
 #: 
 msgctxt "advanced search"
 msgid "literature form"
-msgstr "Litterær form"
+msgstr "Skøn/faglitteratur"
 
 #: 
 msgctxt "advanced search"
