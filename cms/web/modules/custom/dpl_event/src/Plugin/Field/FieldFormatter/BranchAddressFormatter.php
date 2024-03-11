@@ -28,7 +28,7 @@ class BranchAddressFormatter extends AddressDefaultFormatter {
    */
   public function settingsSummary() {
     $summary = [];
-    $summary[] = $this->t('Use the address from associated branch as fallback.', [], ['context' => 'DPL admin UX']);
+    $summary[] = $this->t('Use the address from associated branch as fallback.', [], ['context' => 'DPL Event']);
     return $summary;
   }
 
