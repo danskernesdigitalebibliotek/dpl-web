@@ -2047,7 +2047,7 @@ msgstr "ID"
 #: 
 msgctxt "advanced search"
 msgid "search term"
-msgstr "Søgeterm"
+msgstr "Søg på titel, forfatter mv."
 
 #: 
 msgctxt "advanced search"
