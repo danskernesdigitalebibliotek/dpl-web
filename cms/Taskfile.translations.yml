@@ -46,7 +46,7 @@ tasks:
       - task dev:cli -- msgcat -o web/$PATH_TO_FILE $FILE_A $FILE_B
       - task: chown
         vars:
-          PATH_TO_FILE: "{{ .PATH_TO_FILE }}"
+          PATH_TO_FILE: "{{ .PO_DIR }}/{{ .LANGUAGE }}.combined.po"
     requires:
       vars: [LANGUAGE, PO_DIR, FILE_A, FILE_B]
     env:
@@ -55,12 +55,12 @@ tasks:
   separate:
     desc: Save translations from combined file into separate file
     cmds:
-      - task dev:cli -- drush dpl_po:extract-ui $LANGUAGE $SOURCE $PATH_TO_FILE
+      - task dev:cli -- drush dpl_po:extract-ui {{ .LANGUAGE }} $SOURCE $PATH_TO_FILE
       - task: chown
         vars:
-          PATH_TO_FILE: "{{ .PATH_TO_FILE }}"
+          PATH_TO_FILE: "{{ .PO_DIR }}/{{ .LANGUAGE }}.po"
     requires:
-      vars: [LANGUAGE, SOURCE, PO_DIR, PATH_TO_FILE]
+      vars: [LANGUAGE, PO_DIR]
     env:
       SOURCE: "{{ .PO_DIR }}/{{ .LANGUAGE }}.combined.po"
       PATH_TO_FILE: "{{ .PO_DIR }}/{{ .LANGUAGE }}.po"
@@ -68,12 +68,12 @@ tasks:
   separate:config:
     desc: Save configuration translations from combined file into separate file
     cmds:
-      - task dev:cli -- drush dpl_po:extract-config $LANGUAGE $SOURCE $PATH_TO_FILE
+      - task dev:cli -- drush dpl_po:extract-config {{ .LANGUAGE }} $SOURCE $PATH_TO_FILE
       - task: chown
         vars:
-          PATH_TO_FILE: "{{ .PATH_TO_FILE }}"
+          PATH_TO_FILE: "{{ .PO_DIR }}/{{ .LANGUAGE }}.config.po"
     requires:
-      vars: [LANGUAGE, SOURCE, PO_DIR, PATH_TO_FILE]
+      vars: [LANGUAGE, PO_DIR]
     env:
       SOURCE: "{{ .PO_DIR }}/{{ .LANGUAGE }}.combined.po"
       PATH_TO_FILE: "{{ .PO_DIR }}/{{ .LANGUAGE }}.config.po"
@@ -84,8 +84,6 @@ tasks:
     cmds:
       - |
         export ME=$(id -u);
-        task dev:cli -- chown $ME:$ME web/$PATH_TO_FILE
+        task dev:cli -- chown $ME:$ME web/{{ .PATH_TO_FILE }}
     requires:
       vars: [PATH_TO_FILE]
-    env:
-      PATH_TO_FILE: "{{ .PATH_TO_FILE }}"
