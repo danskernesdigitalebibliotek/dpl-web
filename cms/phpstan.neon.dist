@@ -43,8 +43,6 @@ parameters:
     -
       message: "#Call to function .* with .* will always evaluate to false.#"
       path: web/modules/custom/dpl_po/src/Services/CtpConfigManager.php
-    - message: "#.*does not accept array.*#"
-      path: web/modules/custom/dpl_po/src/Services/CtpConfigManager.php
 
   scanFiles:
     # Needed to make locale_translation_batch_fetch_finished() discoverable.
