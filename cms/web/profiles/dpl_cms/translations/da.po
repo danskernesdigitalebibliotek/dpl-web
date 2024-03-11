@@ -10,7 +10,7 @@ msgstr ""
 #: 
 msgctxt "Loan list (Aria)"
 msgid "This button shows all loans in the list"
-msgstr "Oplist lån efter afleveringsfrist"
+msgstr "Sortér lån efter afleveringsfrist"
 
 #: 
 msgctxt "Loan list (Aria)"
