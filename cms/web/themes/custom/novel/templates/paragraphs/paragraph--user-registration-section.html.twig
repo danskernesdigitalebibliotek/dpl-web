@@ -3,7 +3,7 @@
   <div class="paragraphs__item--user_registration_section__button_row">
     <p>{{ "Make a profile for"|t }}:</p>
     {% for item in anchor_links %}
-        <a class="paragraphs__item--user_registration_section__button" href="#{{ item.anchor_id }}">{{ item.title }}</a>
+        <a class="link-tag paragraphs__item--user_registration_section__button" href="#{{ item.anchor_id }}">{{ item.title }}</a>
     {% endfor %}
   </div>
 {% endif %}
