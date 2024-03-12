@@ -13,6 +13,7 @@ dependencies:
     - node.type.page
     - taxonomy.vocabulary.tags
   module:
+    - content_lock
     - dpl_admin
     - entity_clone
     - file
@@ -40,6 +41,7 @@ permissions:
   - 'access taxonomy overview'
   - 'access toolbar'
   - 'add eventseries entity'
+  - 'break content lock'
   - 'change own username'
   - 'clone eventinstance entity'
   - 'clone eventseries entity'

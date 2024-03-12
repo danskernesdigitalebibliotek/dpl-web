@@ -3,7 +3,9 @@ langcode: en
 status: true
 dependencies:
   config:
+    - field.field.eventseries.default.field_branch
     - field.field.eventseries.default.field_categories
+    - field.field.eventseries.default.field_description
     - field.field.eventseries.default.field_event_address
     - field.field.eventseries.default.field_event_description
     - field.field.eventseries.default.field_event_image
@@ -30,6 +32,14 @@ targetEntityType: eventseries
 bundle: default
 mode: default
 content:
+  field_branch:
+    type: entity_reference_label
+    label: above
+    settings:
+      link: true
+    third_party_settings: {  }
+    weight: 15
+    region: content
   field_categories:
     type: entity_reference_label
     label: hidden
@@ -37,6 +47,13 @@ content:
       link: false
     third_party_settings: {  }
     weight: 13
+    region: content
+  field_description:
+    type: basic_string
+    label: hidden
+    settings: {  }
+    third_party_settings: {  }
+    weight: 15
     region: content
   field_event_address:
     type: address_default

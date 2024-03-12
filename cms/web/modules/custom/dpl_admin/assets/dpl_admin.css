@@ -152,3 +152,9 @@
     margin: 0;
   }
 }
+
+.field-group-details-sidebar {
+  .form-item {
+    max-width: 100%;
+  }
+}

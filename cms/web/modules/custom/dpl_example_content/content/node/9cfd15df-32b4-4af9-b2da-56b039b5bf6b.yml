@@ -4,6 +4,8 @@ _meta:
   uuid: 9cfd15df-32b4-4af9-b2da-56b039b5bf6b
   bundle: article
   default_langcode: da
+  depends:
+    e00e1460-169e-468d-9835-d664f06d0969: file
 default:
   revision_uid:
     -
@@ -32,6 +34,13 @@ default:
   entity_clone_template_active:
     -
       value: false
+  entity_clone_template_image:
+    -
+      entity: e00e1460-169e-468d-9835-d664f06d0969
+      alt: ''
+      title: ''
+      width: 640
+      height: 443
   metatag:
     -
       tag: meta
@@ -113,7 +122,7 @@ default:
           field_image_position_right:
             -
               value: false
-          field_work_id:
+          field_recommendation_work_id:
             -
               value: 'work-of:870970-basis:51869168'
     -
@@ -165,7 +174,7 @@ default:
           field_image_position_right:
             -
               value: true
-          field_work_id:
+          field_recommendation_work_id:
             -
               value: 'work-of:870970-basis:51143574'
     -
@@ -217,7 +226,7 @@ default:
           field_image_position_right:
             -
               value: false
-          field_work_id:
+          field_recommendation_work_id:
             -
               value: 'work-of:870970-basis:53642101'
   field_show_override_author:

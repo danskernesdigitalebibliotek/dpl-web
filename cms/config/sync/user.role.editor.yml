@@ -15,6 +15,7 @@ dependencies:
     - taxonomy.vocabulary.categories
     - taxonomy.vocabulary.tags
   module:
+    - content_lock
     - dpl_admin
     - dpl_footer
     - entity_clone
@@ -50,6 +51,7 @@ permissions:
   - 'administer menu'
   - 'administer nodes'
   - 'administer paragraphs categories'
+  - 'break content lock'
   - 'bypass node access'
   - 'change own username'
   - 'clone eventinstance entity'
