@@ -5,7 +5,6 @@
 {%
   set classes = [
     'nav-grid',
-    'nav-grid--count-' ~ items|length,
     show_subtitles ? 'nav-grid--expanded' : 'nav-grid--simple',
     has_many ? 'nav-grid--has-many' : '',
     has_many ? 'nav-grid--folded' : '',
@@ -18,17 +17,16 @@
     <h2 class="nav-grid__title">{{ title }}</h2>
   {% endif %}
 </div>
-<div class="nav-grid__items">
+<ul class="nav-grid__items">
   {% for item in items %}
-    <div class="nav-grid__item">
+    <li class="nav-grid__item">
       {{- item.content|default(item) -}}
-    </div>
+    </li>
   {% endfor %}
-</div>
+</ul>
   {% if has_many %}
     <button class="nav-grid__controller btn-primary btn-outline btn-medium">
       {{ 'Show all'|trans }}
     </button>
   {% endif %}
-
 </div>
