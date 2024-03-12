@@ -3,7 +3,9 @@ langcode: en
 status: true
 dependencies:
   config:
+    - field.field.eventseries.default.field_branch
     - field.field.eventseries.default.field_categories
+    - field.field.eventseries.default.field_description
     - field.field.eventseries.default.field_event_address
     - field.field.eventseries.default.field_event_description
     - field.field.eventseries.default.field_event_image
@@ -28,7 +30,6 @@ dependencies:
     - paragraphs_features
     - recurring_events
     - scheduler
-    - text
 third_party_settings:
   field_group:
     group_teaser_card:
@@ -38,7 +39,7 @@ third_party_settings:
       label: 'Teaser card'
       region: content
       parent_name: ''
-      weight: 16
+      weight: 21
       format_type: details_sidebar
       format_settings:
         classes: ''
@@ -55,7 +56,7 @@ third_party_settings:
       label: Tagging
       region: content
       parent_name: ''
-      weight: 17
+      weight: 22
       format_type: details_sidebar
       format_settings:
         classes: ''
@@ -69,11 +70,10 @@ third_party_settings:
       children:
         - field_event_image
         - field_event_state
-        - field_event_link
       label: 'Event details'
       region: content
       parent_name: ''
-      weight: 15
+      weight: 20
       format_type: details_sidebar
       format_settings:
         classes: ''
@@ -92,19 +92,25 @@ mode: default
 content:
   consecutive_recurring_date:
     type: consecutive_recurring_date
-    weight: 3
+    weight: 4
     region: content
     settings: {  }
     third_party_settings: {  }
   custom_date:
     type: daterange_default
-    weight: 8
+    weight: 9
     region: content
     settings: {  }
     third_party_settings: {  }
   daily_recurring_date:
     type: daily_recurring_date
-    weight: 4
+    weight: 5
+    region: content
+    settings: {  }
+    third_party_settings: {  }
+  field_branch:
+    type: options_select
+    weight: 0
     region: content
     settings: {  }
     third_party_settings: {  }
@@ -114,19 +120,19 @@ content:
     region: content
     settings: {  }
     third_party_settings: {  }
-  field_event_address:
-    type: address_default
-    weight: 12
-    region: content
-    settings: {  }
-    third_party_settings: {  }
-  field_event_description:
-    type: text_textarea
-    weight: 9
+  field_description:
+    type: string_textarea
+    weight: 2
     region: content
     settings:
-      rows: 5
+      rows: 3
       placeholder: ''
+    third_party_settings: {  }
+  field_event_address:
+    type: address_default
+    weight: 10
+    region: content
+    settings: {  }
     third_party_settings: {  }
   field_event_image:
     type: media_library_widget
@@ -145,7 +151,7 @@ content:
     third_party_settings: {  }
   field_event_paragraphs:
     type: paragraphs
-    weight: 10
+    weight: 19
     region: content
     settings:
       title: Paragraph
@@ -220,7 +226,7 @@ content:
     third_party_settings: {  }
   field_ticket_categories:
     type: paragraphs
-    weight: 11
+    weight: 12
     region: content
     settings:
       title: Paragraph
@@ -248,30 +254,30 @@ content:
           dialog_style: tiles
   monthly_recurring_date:
     type: monthly_recurring_date
-    weight: 6
+    weight: 7
     region: content
     settings: {  }
     third_party_settings: {  }
   publish_on:
     type: datetime_timestamp_no_default
-    weight: 52
+    weight: 16
     region: content
     settings: {  }
     third_party_settings: {  }
   recur_type:
     type: options_select
-    weight: 2
+    weight: 3
     region: content
     settings: {  }
     third_party_settings: {  }
   scheduler_settings:
-    weight: 50
+    weight: 18
     region: content
     settings: {  }
     third_party_settings: {  }
   status:
     type: boolean_checkbox
-    weight: 0
+    weight: 15
     region: content
     settings:
       display_label: true
@@ -296,23 +302,24 @@ content:
     third_party_settings: {  }
   unpublish_on:
     type: datetime_timestamp_no_default
-    weight: 54
+    weight: 17
     region: content
     settings: {  }
     third_party_settings: {  }
   weekly_recurring_date:
     type: weekly_recurring_date
-    weight: 5
+    weight: 6
     region: content
     settings: {  }
     third_party_settings: {  }
   yearly_recurring_date:
     type: yearly_recurring_date
-    weight: 7
+    weight: 8
     region: content
     settings: {  }
     third_party_settings: {  }
 hidden:
   body: true
   excluded_dates: true
+  field_event_description: true
   included_dates: true

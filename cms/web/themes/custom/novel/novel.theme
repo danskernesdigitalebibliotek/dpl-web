@@ -258,7 +258,7 @@ function novel_attach_identity_color_styles(array &$variables, Hsl $hslColor): v
 /**
  * Implements hook_theme_suggestions_field_alter().
  */
-function novel_theme_suggestions_field_alter(array &$suggestions, array $variables) : void {
+function novel_theme_suggestions_field_alter(array &$suggestions, array $variables): void {
   $element = $variables['element'];
 
   // Add theme suggestions per view mode...
@@ -314,7 +314,8 @@ function novel_preprocess_views_view_unformatted(&$variables): void {
 
         // Check if not the first row and if event_series_id matches
         // the previous row.
-        $isStacked = $index > 0 && $eventSeriesId == $rows[$index - 1]['content']['#eventinstance']->getEventSeries()->id();
+        $isStacked = $index > 0 && $eventSeriesId == $rows[$index - 1]['content']['#eventinstance']->getEventSeries()
+          ->id();
 
         $row['isStacked'] = $isStacked;
 

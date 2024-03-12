@@ -14,6 +14,9 @@ default_content:
     - 9cfd15df-32b4-4af9-b2da-56b039b5bf6b
     # Pages
     - fd774222-4b22-4803-ae45-2d4e80d84fac
+    - dac275e4-9b8c-4959-a13a-6b9fdbc1f6b0
+    - 852d781f-82c9-40ac-bc8d-d0cefe07706d
+    - 480a6997-4ca2-4cc6-a8f2-61254401d044
   eventseries:
     # https://www.figma.com/file/Zx9GrkFA3l4ISvyZD2q0Qi/Designsystem?type=design&node-id=7477-39713&mode=dev
     - c8177097-1438-493e-8177-e8ef968cc133

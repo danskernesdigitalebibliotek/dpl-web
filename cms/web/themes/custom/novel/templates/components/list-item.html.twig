@@ -1,0 +1,46 @@
+{%
+  set classes = [
+  'content-list-item',
+  'arrow__hover--right-small',
+]
+%}
+
+<a {{ attributes.addClass(classes).setAttribute('href', url) }}>
+  <div class="content-list-item__image-container">
+    {{ image }}
+  </div>
+  <div class="content-list-item__content">
+    {{ categories }}
+    {% if date %}
+      <div class="content-list-item__date">
+        {{ date }}
+      </div>
+    {% endif %}
+
+    <h2 class="content-list-item__title">{{ title }}</h2>
+
+    {% if description %}
+      <div class="content-list-item__description">
+        <p> {{ description }} </p>
+      </div>
+    {% endif %}
+    {% if bottom.0 %}
+      <div class="content-list-item__content-bottom-container">
+        {{ bottom }}
+      </div>
+    {% endif %}
+    {% if start_date or end_date or ticket_price %}
+      <div class="content-list-item__content-right-container">
+        {% if start_date or end_date %}
+          <time class="content-list-item__time" datetime="{{ datetime_attribute }}">
+            {{ start_date }} - {{ end_date }}
+          </time>
+        {% endif %}
+        {% if ticket_price %}
+          <p class="content-list-item__pricing">{{ ticket_price }}</p>
+        {% endif %}
+      </div>
+    {% endif %}
+  </div>
+  {{ source(baseIconPath ~ '/arrow-ui/icon-arrow-ui-small-right.svg') }}
+</a>

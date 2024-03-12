@@ -3,6 +3,7 @@ langcode: en
 status: true
 dependencies:
   config:
+    - field.field.node.article.field_branch
     - field.field.node.article.field_canonical_url
     - field.field.node.article.field_categories
     - field.field.node.article.field_override_author
@@ -30,7 +31,7 @@ third_party_settings:
       label: 'Meta tags'
       region: content
       parent_name: ''
-      weight: -1
+      weight: 10
       format_type: details_sidebar
       format_settings:
         classes: ''
@@ -47,11 +48,28 @@ third_party_settings:
       label: 'Teaser card'
       region: content
       parent_name: ''
-      weight: 0
+      weight: 11
       format_type: details_sidebar
       format_settings:
         classes: ''
         show_empty_fields: true
+        id: ''
+        open: true
+        description: ''
+        required_fields: true
+        weight: 0
+    group_tagging:
+      children:
+        - field_categories
+        - field_tags
+      label: Tagging
+      region: content
+      parent_name: ''
+      weight: 12
+      format_type: details_sidebar
+      format_settings:
+        classes: ''
+        show_empty_fields: false
         id: ''
         open: true
         description: ''
@@ -62,6 +80,12 @@ targetEntityType: node
 bundle: article
 mode: default
 content:
+  field_branch:
+    type: options_select
+    weight: 0
+    region: content
+    settings: {  }
+    third_party_settings: {  }
   field_canonical_url:
     type: link_default
     weight: 6
@@ -72,13 +96,13 @@ content:
     third_party_settings: {  }
   field_categories:
     type: options_select
-    weight: 4
+    weight: 7
     region: content
     settings: {  }
     third_party_settings: {  }
   field_override_author:
     type: string_textfield
-    weight: 3
+    weight: 4
     region: content
     settings:
       size: 60
@@ -86,7 +110,7 @@ content:
     third_party_settings: {  }
   field_paragraphs:
     type: paragraphs
-    weight: 6
+    weight: 5
     region: content
     settings:
       title: Paragraph
@@ -114,14 +138,14 @@ content:
         show_drag_and_drop: true
   field_show_override_author:
     type: boolean_checkbox
-    weight: 2
+    weight: 3
     region: content
     settings:
       display_label: true
     third_party_settings: {  }
   field_subtitle:
     type: string_textarea
-    weight: 1
+    weight: 2
     region: content
     settings:
       rows: 3
@@ -129,7 +153,7 @@ content:
     third_party_settings: {  }
   field_tags:
     type: entity_reference_autocomplete_tags
-    weight: 5
+    weight: 8
     region: content
     settings:
       match_operator: CONTAINS
@@ -162,25 +186,25 @@ content:
     third_party_settings: {  }
   publish_on:
     type: datetime_timestamp_no_default
-    weight: 52
+    weight: 8
     region: content
     settings: {  }
     third_party_settings: {  }
   scheduler_settings:
-    weight: 50
+    weight: 7
     region: content
     settings: {  }
     third_party_settings: {  }
   status:
     type: boolean_checkbox
-    weight: 7
+    weight: 6
     region: content
     settings:
       display_label: true
     third_party_settings: {  }
   title:
     type: string_textfield
-    weight: 0
+    weight: 1
     region: content
     settings:
       size: 60
@@ -188,13 +212,12 @@ content:
     third_party_settings: {  }
   unpublish_on:
     type: datetime_timestamp_no_default
-    weight: 54
+    weight: 9
     region: content
     settings: {  }
     third_party_settings: {  }
 hidden:
   created: true
-  field_branch: true
   langcode: true
   promote: true
   sticky: true

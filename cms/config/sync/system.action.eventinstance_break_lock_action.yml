@@ -1,0 +1,11 @@
+uuid: db9c6572-bcf7-4f53-adc2-a2fc1dd96e93
+langcode: en
+status: true
+dependencies:
+  module:
+    - content_lock
+id: eventinstance_break_lock_action
+label: 'Break lock eventinstance'
+type: eventinstance
+plugin: 'entity:break_lock:eventinstance'
+configuration: {  }

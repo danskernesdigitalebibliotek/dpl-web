@@ -4,7 +4,9 @@ status: true
 dependencies:
   config:
     - core.entity_view_mode.eventinstance.stacked_event
+    - field.field.eventinstance.default.field_branch
     - field.field.eventinstance.default.field_categories
+    - field.field.eventinstance.default.field_description
     - field.field.eventinstance.default.field_event_address
     - field.field.eventinstance.default.field_event_description
     - field.field.eventinstance.default.field_event_image
@@ -29,6 +31,14 @@ targetEntityType: eventinstance
 bundle: default
 mode: stacked_event
 content:
+  branch:
+    type: entity_reference_label
+    label: visible
+    settings:
+      link: true
+    third_party_settings: {  }
+    weight: 50
+    region: content
   date:
     type: date_range_without_time
     label: hidden
@@ -85,7 +95,9 @@ hidden:
   event_teaser_image: true
   event_teaser_text: true
   event_ticket_categories: true
+  field_branch: true
   field_categories: true
+  field_description: true
   field_event_address: true
   field_event_description: true
   field_event_image: true

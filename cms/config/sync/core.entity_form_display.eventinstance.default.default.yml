@@ -3,7 +3,9 @@ langcode: en
 status: true
 dependencies:
   config:
+    - field.field.eventinstance.default.field_branch
     - field.field.eventinstance.default.field_categories
+    - field.field.eventinstance.default.field_description
     - field.field.eventinstance.default.field_event_address
     - field.field.eventinstance.default.field_event_description
     - field.field.eventinstance.default.field_event_image
@@ -27,7 +29,6 @@ dependencies:
     - paragraphs
     - paragraphs_ee
     - paragraphs_features
-    - text
 third_party_settings:
   field_group:
     group_teaser_card:
@@ -47,6 +48,40 @@ third_party_settings:
         description: ''
         required_fields: true
         weight: 0
+    group_tagging:
+      children:
+        - field_categories
+        - field_tags
+      label: Tagging
+      region: content
+      parent_name: ''
+      weight: 15
+      format_type: details_sidebar
+      format_settings:
+        classes: ''
+        show_empty_fields: false
+        id: ''
+        open: true
+        description: ''
+        required_fields: true
+        weight: 0
+    group_event_details:
+      children:
+        - field_event_image
+        - field_event_state
+      label: 'Event details'
+      region: content
+      parent_name: ''
+      weight: 13
+      format_type: details_sidebar
+      format_settings:
+        classes: ''
+        show_empty_fields: false
+        id: ''
+        open: true
+        description: ''
+        required_fields: true
+        weight: 0
 id: eventinstance.default.default
 targetEntityType: eventinstance
 bundle: default
@@ -54,40 +89,46 @@ mode: default
 content:
   date:
     type: daterange_default
+    weight: 3
+    region: content
+    settings: {  }
+    third_party_settings: {  }
+  field_branch:
+    type: options_select
     weight: 0
     region: content
     settings: {  }
     third_party_settings: {  }
   field_categories:
     type: options_select
-    weight: 4
+    weight: 5
     region: content
     settings: {  }
+    third_party_settings: {  }
+  field_description:
+    type: string_textarea
+    weight: 2
+    region: content
+    settings:
+      rows: 3
+      placeholder: ''
     third_party_settings: {  }
   field_event_address:
     type: address_default
-    weight: 9
+    weight: 6
     region: content
     settings: {  }
     third_party_settings: {  }
-  field_event_description:
-    type: text_textarea
-    weight: 6
-    region: content
-    settings:
-      rows: 5
-      placeholder: ''
-    third_party_settings: {  }
   field_event_image:
     type: media_library_widget
-    weight: 12
+    weight: 5
     region: content
     settings:
       media_types: {  }
     third_party_settings: {  }
   field_event_link:
     type: link_default
-    weight: 8
+    weight: 7
     region: content
     settings:
       placeholder_url: ''
@@ -95,7 +136,7 @@ content:
     third_party_settings: {  }
   field_event_paragraphs:
     type: paragraphs
-    weight: 13
+    weight: 12
     region: content
     settings:
       title: Paragraph
@@ -123,7 +164,7 @@ content:
           dialog_style: tiles
   field_event_partners:
     type: string_textfield
-    weight: 11
+    weight: 10
     region: content
     settings:
       size: 60
@@ -131,7 +172,7 @@ content:
     third_party_settings: {  }
   field_event_place:
     type: string_textfield
-    weight: 10
+    weight: 9
     region: content
     settings:
       size: 60
@@ -139,13 +180,13 @@ content:
     third_party_settings: {  }
   field_event_state:
     type: options_select
-    weight: 2
+    weight: 6
     region: content
     settings: {  }
     third_party_settings: {  }
   field_event_title:
     type: string_textfield
-    weight: 3
+    weight: 1
     region: content
     settings:
       size: 60
@@ -153,7 +194,7 @@ content:
     third_party_settings: {  }
   field_tags:
     type: entity_reference_autocomplete_tags
-    weight: 5
+    weight: 6
     region: content
     settings:
       match_operator: CONTAINS
@@ -178,7 +219,7 @@ content:
     third_party_settings: {  }
   field_ticket_categories:
     type: paragraphs
-    weight: 7
+    weight: 8
     region: content
     settings:
       title: Paragraph
@@ -206,10 +247,11 @@ content:
           dialog_style: tiles
   status:
     type: boolean_checkbox
-    weight: 1
+    weight: 11
     region: content
     settings:
       display_label: true
     third_party_settings: {  }
 hidden:
   body: true
+  field_event_description: true

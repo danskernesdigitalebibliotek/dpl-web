@@ -116,6 +116,10 @@ class ReoccurringDateFormatter {
       ->sort('date.value', 'ASC')
       ->execute();
 
+    if (empty($upcoming_ids)) {
+      return NULL;
+    }
+
     // Load the first event instance - the remaining IDs are useful later on,
     // when we want to check if it is alone or not.
     $upcoming_event_id = reset($upcoming_ids);

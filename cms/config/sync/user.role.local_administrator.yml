@@ -16,10 +16,12 @@ dependencies:
     - taxonomy.vocabulary.tags
   module:
     - administerusersbyrole
+    - content_lock
     - dpl_admin
     - dpl_footer
     - dpl_instant_loan
     - dpl_library_agency
+    - dpl_mapp
     - dpl_url_proxy
     - entity_clone
     - file
@@ -27,6 +29,7 @@ dependencies:
     - locale
     - media
     - node
+    - openid_connect
     - paragraphs
     - paragraphs_ee
     - recurring_events
@@ -57,15 +60,19 @@ permissions:
   - 'add new links to admin menu'
   - 'add new links to main menu'
   - 'administer dpl_footer settings'
+  - 'administer dpl_mapp configuration'
   - 'administer instant loan configuration'
   - 'administer library agency configuration'
+  - 'administer menu'
   - 'administer nodes'
+  - 'administer openid connect clients'
   - 'administer orphaned events entities'
   - 'administer paragraphs categories'
   - 'administer site configuration'
   - 'administer themes'
   - 'administer themes novel'
   - 'administer url proxy configuration'
+  - 'break content lock'
   - 'bypass node access'
   - 'cancel users by role'
   - 'change own username'
@@ -116,6 +123,7 @@ permissions:
   - 'delete terms in categories'
   - 'delete terms in tags'
   - 'dpl admin access pages'
+  - 'edit admin menu'
   - 'edit any article content'
   - 'edit any branch content'
   - 'edit any campaign content'
@@ -127,6 +135,7 @@ permissions:
   - 'edit eventseries entity'
   - 'edit links in admin menu'
   - 'edit links in main menu'
+  - 'edit main menu'
   - 'edit own article content'
   - 'edit own branch content'
   - 'edit own campaign content'

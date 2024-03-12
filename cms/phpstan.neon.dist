@@ -31,6 +31,8 @@ parameters:
     - '#Function .*_dpl_protected_nodes_get_protected_nodes\(\) return type has no value type specified in iterable type array\.#'
     # Drupal hook_theme_registry_alter() has parameter $theme_registry which we cannot provide more detailed typing of.
     - '#Function .*_theme_registry_alter\(\) has parameter \$theme_registry with no value type specified in iterable type array\.#'
+    # Drupal field widget formElement() method has parameters and return type which we cannot provide more detailed typing of.
+    - '#Method Drupal\\.*\\Plugin\\Field\\FieldWidget\\.*::formElement\(\) .* no value type specified in iterable type array\.#'
 
   scanFiles:
     # Needed to make locale_translation_batch_fetch_finished() discoverable.

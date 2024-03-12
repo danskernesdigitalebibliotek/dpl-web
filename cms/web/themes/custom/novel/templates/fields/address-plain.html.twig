@@ -1,0 +1,19 @@
+{# Making sure plain address does not have other tags, other than div and br. #}
+
+{% set fields = [
+  given_name ~ " " ~ family_name,
+  organization,
+  address_line1,
+  address_line2,
+  dependent_locality.code,
+  locality.code ~ " " ~ postal_code ~ " " ~ administrative_area.code,
+  country.name
+] %}
+
+<div class="address" translate="no">
+  {% for field in fields %}
+    {% if field|trim is not empty %}
+      {{ field }} <br>
+    {% endif %}
+  {% endfor %}
+</div>

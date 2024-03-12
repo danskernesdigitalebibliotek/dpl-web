@@ -1,0 +1,19 @@
+{%
+  set classes = [
+  'content-list-item-stacked',
+  'arrow__hover--right-small',
+]
+%}
+
+<a {{ attributes.addClass(classes).setAttribute('href', url) }}>
+  <h2 class="hide-visually">{{ title }}</h2>
+
+  {% if date or start_time %}
+    <time class="content-list-item-stacked__content" datetime="{{ datetime_attribute }}">
+      <span class="content-list-item-stacked__date">{{ date }}</span>
+      <span class="content-list-item-stacked__time">{{ start_time }} - {{ end_time }}</span>
+    </time>
+  {% endif %}
+
+  {{ source(baseIconPath ~ '/arrow-ui/icon-arrow-ui-small-right.svg') }}
+</a>

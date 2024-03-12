@@ -1,0 +1,11 @@
+uuid: 95c135f0-6fba-417d-b333-794234a63616
+langcode: en
+status: true
+dependencies:
+  module:
+    - content_lock
+id: eventseries_break_lock_action
+label: 'Break lock eventseries'
+type: eventseries
+plugin: 'entity:break_lock:eventseries'
+configuration: {  }
