@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "b9e4be4efbd7361022143d59a4204645",
+    "content-hash": "13e26ab1e5e74543b9f19ebc1c34984f",
     "packages": [
         {
             "name": "amazeeio/drupal_integrations",
@@ -1099,19 +1099,19 @@
         },
         {
             "name": "danskernesdigitalebibliotek/dpl-design-system",
-            "version": "2024.11.0",
+            "version": "2024.13.0-rc1",
             "dist": {
                 "type": "zip",
-                "url": "https://github.com/danskernesdigitalebibliotek/dpl-design-system/releases/download/2024.11.0/dist-2024-11-0-20df4b7c9e623101a57ce78e373273b226234bf9.zip"
+                "url": "https://github.com/danskernesdigitalebibliotek/dpl-design-system/releases/download/branch-release/form-sprint-9/dist-release-form-sprint-9.zip"
             },
             "type": "drupal-library"
         },
         {
             "name": "danskernesdigitalebibliotek/dpl-react",
-            "version": "2024.11.0",
+            "version": "2024.13.0-rc1",
             "dist": {
                 "type": "zip",
-                "url": "https://github.com/danskernesdigitalebibliotek/dpl-react/releases/download/2024.11.0/dist-2024-11-0-4b06bb204e93e8a1b5ab315e0da0053fbe0d1da8.zip"
+                "url": "https://github.com/danskernesdigitalebibliotek/dpl-react/releases/download/branch-release/form-sprint-9/dist-release-form-sprint-9.zip"
             },
             "require": {
                 "composer/installers": "^1.2.0"
