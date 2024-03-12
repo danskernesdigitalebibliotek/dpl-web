@@ -36,10 +36,10 @@
             "type": "package",
             "package": {
                 "name": "danskernesdigitalebibliotek/dpl-react",
-                "version": "2024.11.0-rc1",
+                "version": "2024.11.0",
                 "type": "drupal-library",
                 "dist": {
-                    "url": "https://github.com/danskernesdigitalebibliotek/dpl-react/releases/download/branch-release/form-sprint-8/dist-release-form-sprint-8.zip",
+                    "url": "https://github.com/danskernesdigitalebibliotek/dpl-react/releases/download/2024.11.0/dist-2024-11-0-4b06bb204e93e8a1b5ab315e0da0053fbe0d1da8.zip",
                     "type": "zip"
                 },
                 "require": {
@@ -52,9 +52,9 @@
             "package": {
                 "name": "danskernesdigitalebibliotek/dpl-design-system",
                 "type": "drupal-library",
-                "version": "2024.11.0-rc1",
+                "version": "2024.11.0",
                 "dist": {
-                    "url": "https://github.com/danskernesdigitalebibliotek/dpl-design-system/releases/download/branch-release/form-sprint-8/dist-release-form-sprint-8.zip",
+                    "url": "https://github.com/danskernesdigitalebibliotek/dpl-design-system/releases/download/2024.11.0/dist-2024-11-0-20df4b7c9e623101a57ce78e373273b226234bf9.zip",
                     "type": "zip"
                 }
             }
@@ -74,8 +74,8 @@
         "brick/math": "^0.12.1",
         "composer/installers": "1.12.0",
         "cweagans/composer-patches": "1.7.3",
-        "danskernesdigitalebibliotek/dpl-design-system": "2024.11.0-rc1",
-        "danskernesdigitalebibliotek/dpl-react": "2024.11.0-rc1",
+        "danskernesdigitalebibliotek/dpl-design-system": "2024.11.0",
+        "danskernesdigitalebibliotek/dpl-react": "2024.11.0",
         "danskernesdigitalebibliotek/fbs-client": "*",
         "dealerdirect/phpcodesniffer-composer-installer": "^0.7.1",
         "deoliveiralucas/array-keys-case-transform": "^1.1",
