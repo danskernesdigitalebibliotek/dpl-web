@@ -125,6 +125,7 @@ function dpl_react_apps_texts(): array {
     'delete-reservation-modal-not-regrettable' => t('You cannot regret this action', [], ['context' => 'Global']),
     'digital-reservations-header' => t('Digital reservations', [], ['context' => 'Global']),
     'et-al' => t('et al.', [], ['context' => 'Global']),
+    'error-boundary-alert-body-button-aria' => t('Close error message', [], ['context' => 'React apps (Global error handling)']),
     'find-on-shelf-expand-button-explanation' => t('Find on shelf expand button explanation', [], ['context' => 'Global']),
     'find-on-shelf-table-description' => t('Find @work on shelf in the @branch branch', [], ['context' => 'Global']),
     'group-modal-button' => t('Renewable (@count)', [], ['context' => 'Global']),
