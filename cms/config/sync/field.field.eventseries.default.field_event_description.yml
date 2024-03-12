@@ -12,8 +12,8 @@ id: eventseries.default.field_event_description
 field_name: field_event_description
 entity_type: eventseries
 bundle: default
-label: Description
-description: ''
+label: 'Description (DEPRECATED - WILL BE DELETED.)'
+description: 'This field will be deleted in the future. Please use the other description field.'
 required: false
 translatable: false
 default_value: {  }

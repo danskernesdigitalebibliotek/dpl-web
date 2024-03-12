@@ -1,0 +1,6 @@
+dpl_event.settings:
+  title: Event settings
+  description: Configure handling of events.
+  parent: dpl_library_agency.settings
+  route_name: dpl_event.settings
+  weight: 10

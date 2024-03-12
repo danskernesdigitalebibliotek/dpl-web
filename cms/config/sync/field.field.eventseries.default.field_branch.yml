@@ -1,0 +1,29 @@
+uuid: ac1292e7-b4c6-4967-8a7e-621e8863297f
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.eventseries.field_branch
+    - node.type.branch
+    - recurring_events.eventseries_type.default
+id: eventseries.default.field_branch
+field_name: field_branch
+entity_type: eventseries
+bundle: default
+label: Branch
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings:
+  handler: 'default:node'
+  handler_settings:
+    target_bundles:
+      branch: branch
+    sort:
+      field: title
+      direction: ASC
+    auto_create: false
+    auto_create_bundle: ''
+field_type: entity_reference

@@ -101,7 +101,7 @@ display:
         type: infinite_scroll
         options:
           offset: 0
-          items_per_page: 10
+          items_per_page: 25
           total_pages: null
           id: 0
           tags:

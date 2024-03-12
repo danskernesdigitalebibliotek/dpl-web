@@ -1,2 +1,3 @@
-{# Reuse event field template #}
-{{ include('field--field-event-place.html.twig') }}
+{% for item in items %}
+    {{ item.content }}
+{% endfor %}

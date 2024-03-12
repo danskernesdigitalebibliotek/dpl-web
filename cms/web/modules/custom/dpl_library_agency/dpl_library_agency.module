@@ -1,6 +1,16 @@
 <?php
 
+use Drupal\dpl_library_agency\GeneralSettings;
+
 /**
  * @file
  * Contains dpl_library_agency.module.
  */
+
+/**
+ * Implements hook_preprocess_page().
+ */
+function dpl_library_agency_preprocess_page(array &$variables): void {
+  $config = \Drupal::config('dpl_library_agency.general_settings');
+  $variables['opening_hours_url'] = $config->get('opening_hours_url') ?? GeneralSettings::OPENING_HOURS_URL;
+}
