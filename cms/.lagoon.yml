@@ -77,27 +77,35 @@ tasks:
 environments:
   main:
     cronjobs:
-    - name: drush cron
-      schedule: "M/15 * * * *"
-      command: drush cron
-      service: cli
-    - name: import translations
-      # TODO Consider if translation checking frequency should be reduced.
-      # A high frequency is used to ensure quick turnaround time during
-      # development. Updating (or checking) translations could have side effects on
-      # caching etc. and once things have settled down a lower frequency may be
-      # more appropriate.
-      schedule: "M/30 * * * *"
-      command: drush locale-check && drush locale-update
-      service: cli
+      - name: drush cron
+        schedule: "M/15 * * * *"
+        command: drush cron
+        service: cli
+      - name: import translations
+        # TODO Consider if translation checking frequency should be reduced.
+        # A high frequency is used to ensure quick turnaround time during
+        # development. Updating (or checking) translations could have side effects on
+        # caching etc. and once things have settled down a lower frequency may be
+        # more appropriate.
+        schedule: "M/30 * * * *"
+        command: drush locale-check && drush locale-update
+        service: cli
+      - name: import danish config translations
+        schedule: "M/30 * * * *"
+        command: drush dpl_po:import-remote-config-po da https://reload.github.io/dpl-cms/translations/da.config.po
+        service: cli
   pr-581:
     cronjobs:
-    - name: drush cron
-      schedule: "M/15 * * * *"
-      command: drush cron
-      service: cli
-    - name: import translations
-      # Quite frequent translation import because of businezz.
-      schedule: "M/2 * * * *"
-      command: drush locale-check && drush locale-update
-      service: cli
+      - name: drush cron
+        schedule: "M/15 * * * *"
+        command: drush cron
+        service: cli
+      - name: import translations
+        # Quite frequent translation import because of businezz.
+        schedule: "M/30 * * * *"
+        command: drush locale-check && drush locale-update
+        service: cli
+      - name: import danish config translations
+        schedule: "M/30 * * * *"
+        command: drush dpl_po:import-remote-config-po da https://reload.github.io/dpl-cms/translations/da.config.po
+        service: cli

@@ -1,0 +1,11 @@
+services:
+  dpl_po.commands:
+    class: \Drupal\dpl_po\Commands\DplPoCommands
+    arguments:
+      - "@config.factory"
+      - "@dpl_po.config_manager"
+      - "@file_system"
+      - "@module_handler"
+      - "@http_client"
+    tags:
+      - { name: drush.command }
