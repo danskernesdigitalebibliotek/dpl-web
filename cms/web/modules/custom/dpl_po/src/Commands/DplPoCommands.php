@@ -163,40 +163,35 @@ class DplPoCommands extends DrushCommands {
     $this->moduleHandler->loadInclude('locale', 'bulk.inc');
     $this->moduleHandler->loadInclude('config_translation_po', 'bulk.inc');
 
-    try {
-      $this->validateSource($source);
+    $this->validateSource($source);
 
-      // @todo Get the full enderstanding of all the options here.
-      // Until now it has been tested that behaviour is as expected
-      // but it would be nice to know all implications of the settings.
-      $options = [
-        'customized' => 0,
-        'overwrite_options' => [
-          'not_customized' => 1,
-          'customized' => 1,
-        ],
-        'finish_feedback' => TRUE,
-        'use_remote' => TRUE,
-        'langcode' => $this->languageCode,
-      ];
+    // @todo Get the full enderstanding of all the options here.
+    // Until now it has been tested that behaviour is as expected
+    // but it would be nice to know all implications of the settings.
+    $options = [
+      'customized' => 0,
+      'overwrite_options' => [
+        'not_customized' => 1,
+        'customized' => 1,
+      ],
+      'finish_feedback' => TRUE,
+      'use_remote' => TRUE,
+      'langcode' => $this->languageCode,
+    ];
 
-      $file = $this->createFile($source);
-      /** @var object{"uri": string} $file */
-      $file = locale_translate_file_attach_properties($file, $options);
-      $batch = locale_translate_batch_build([$file->uri => $file], $options);
+    $file = $this->createFile($source);
+    /** @var object{"uri": string} $file */
+    $file = locale_translate_file_attach_properties($file, $options);
+    $batch = locale_translate_batch_build([$file->uri => $file], $options);
 
+    batch_set($batch);
+
+    // Create or update all configuration translations for this language.
+    if ($batch = config_translation_po_config_batch_update_components($options, [$this->languageCode])) {
       batch_set($batch);
-
-      // Create or update all configuration translations for this language.
-      if ($batch = config_translation_po_config_batch_update_components($options, [$this->languageCode])) {
-        batch_set($batch);
-      }
-
-      drush_backend_batch_process();
     }
-    catch (\Exception $exception) {
-      throw $exception;
-    }
+
+    drush_backend_batch_process();
 
   }
 
