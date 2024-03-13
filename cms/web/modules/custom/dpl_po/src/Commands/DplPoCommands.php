@@ -72,12 +72,21 @@ class DplPoCommands extends DrushCommands {
       $file = $this->extractTranslationsIntoFile(self::CONFIG_PO_FILE_CONTEXT_PATTERN, $source);
       $destination = $this->fileSystem->move($file, $destination, FileSystemInterface::EXISTS_REPLACE);
     }
-    catch (\Exception $exception) {
-      $this->io()->error($this->t('Could not create PO file: @destination', ['@destination' => $destination], ['context' => 'translation handling']));
+    catch (\Exception $e) {
+      $this->io()->error($this->t(
+        'Could not create PO file: @destination due to error "%error"',
+        ['%error' => $e->getMessage(), '@destination' => $destination],
+        ['context' => 'translation handling']
+      ));
       return;
     }
 
-    $this->io()->success($this->t('File created on: @destination', ['@destination' => $destination], ['context' => 'translation handling']));
+    $this->io()->success($this->t(
+      'File created on: @destination',
+      ['@destination' => $destination],
+      [
+        'context' => 'translation handling',
+      ]));
   }
 
   /**
@@ -103,12 +112,22 @@ class DplPoCommands extends DrushCommands {
       $file = $this->extractTranslationsIntoFile(self::CONFIG_PO_FILE_CONTEXT_PATTERN, $source, 'exclude');
       $destination = $this->fileSystem->move($file, $destination, FileSystemInterface::EXISTS_REPLACE);
     }
-    catch (\Exception $exception) {
-      $this->io()->error($this->t('Could not create PO file: @destination', ['@destination' => $destination], ['context' => 'translation handling']));
+    catch (\Exception $e) {
+      $this->io()->error($this->t(
+        'Could not create PO file: @destination due to error "%error"',
+        ['%error' => $e->getMessage(), '@destination' => $destination],
+        [
+          'context' => 'translation handling',
+        ]));
       return;
     }
 
-    $this->io()->success($this->t('File created on: @destination', ['@destination' => $destination], ['context' => 'translation handling']));
+    $this->io()->success($this->t(
+      'File created on: @destination',
+      ['@destination' => $destination],
+      [
+        'context' => 'translation handling',
+      ]));
   }
 
   /**
@@ -129,7 +148,12 @@ class DplPoCommands extends DrushCommands {
 
     $this->importConfigPoFileBatch($source);
 
-    $this->io()->success($this->t('Config translations were imported from: @source', ['@source' => $source], ['context' => 'translation handling']));
+    $this->io()->success($this->t(
+      'Config translations were imported from: @source',
+      ['@source' => $source],
+      [
+        'context' => 'translation handling',
+      ]));
   }
 
   /**
@@ -209,13 +233,21 @@ class DplPoCommands extends DrushCommands {
     $uri = $this->downloadTranslation($url, $tmp_file);
     $filepath = $uri ? $this->fileSystem->realpath($uri) : NULL;
     if (!is_string($filepath)) {
-      $this->io()->error($this->t('Config translations could not be imported from: @url', ['@url' => $url], ['context' => 'translation handling']));
+      $this->io()->error($this->t(
+        'Config translations could not be imported from: @url',
+        ['@url' => $url],
+        ['context' => 'translation handling']
+      ));
       return;
     }
 
     if ($destination = $this->fileSystem->move($filepath, $import_po_file, FileSystemInterface::EXISTS_REPLACE)) {
       $this->importConfigPoFileBatch($destination);
-      $this->io()->success($this->t('Config translations were imported from: @url', ['@url' => $url], ['context' => 'translation handling']));
+      $this->io()->success($this->t(
+        'Config translations were imported from: @url',
+        ['@url' => $url],
+        ['context' => 'translation handling']
+      ));
 
       $this->fileSystem->delete($destination);
     }
@@ -240,11 +272,20 @@ class DplPoCommands extends DrushCommands {
       $response = $this->httpClient->request('GET', $source);
       $result_path = $this->fileSystem->saveData($response->getBody(), $destination, FileSystemInterface::EXISTS_REPLACE);
     }
-    catch (TransferException $exception) {
-      $this->io()->error($this->t('Failed to fetch file due to error "%error"', ['%error' => $exception->getMessage()], ['context' => 'translation handling']));
+    catch (TransferException $e) {
+      $this->io()->error($this->t(
+        'Failed to fetch file due to error "%error"',
+        ['%error' => $e->getMessage()],
+        [
+          'context' => 'translation handling',
+        ]));
     }
     catch (FileException | InvalidStreamWrapperException $e) {
-      $this->io()->error($this->t('Failed to save file due to error "%error"', ['%error' => $e->getMessage()], ['context' => 'translation handling']));
+      $this->io()->error($this->t(
+        'Failed to save file due to error "%error"',
+        ['%error' => $e->getMessage()],
+        ['context' => 'translation handling']
+      ));
     }
 
     return $result_path;
@@ -292,11 +333,20 @@ class DplPoCommands extends DrushCommands {
       $writer->close();
 
       if (!is_string($tmp_filename) || !$this->fileSystem->realpath($tmp_filename)) {
-        $this->io()->error($this->t('Could not locate temp PO file.', [], ['context' => 'translation handling']));
+        $this->io()->error($this->t(
+          'Could not locate temp PO file.',
+          [],
+          [
+            'context' => 'translation handling',
+          ]));
         return;
       }
       if ($destination = $this->fileSystem->move($tmp_filename, $destination, FileSystemInterface::EXISTS_REPLACE)) {
-        $this->io()->success($this->t('File created on: @destination', ['@destination' => $destination], ['context' => 'translation handling']));
+        $this->io()->success($this->t(
+          'File created on: @destination',
+          ['@destination' => $destination],
+          ['context' => 'translation handling']
+        ));
       }
     }
 
