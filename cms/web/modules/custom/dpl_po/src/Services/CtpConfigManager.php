@@ -13,12 +13,9 @@ use Drupal\config_translation_po\Services\CtpConfigManager as OrgCtpConfigManage
  * Untranslated strings should be set to an empty string to make it possible
  * for external tools to know that this string has not been translated yet.
  *
- * We could also have solved this by creating a patch for the original class.
- * It is worthwhile to raise this issue with the original module maintainers
- * and keep an eye of the issue queue.
- *
- * Apparently this is where things went wrong:
- * https://git.drupalcode.org/project/config_translation_po/-/commit/f9f952730e548418586a6e543da82acaf5042a08
+ * We have raised an issue about this:
+ * https://www.drupal.org/project/config_translation_po/issues/3426797
+``
  */
 class CtpConfigManager extends OrgCtpConfigManager {
 
