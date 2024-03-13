@@ -11,7 +11,7 @@ use Drupal\config_translation_po\Services\CtpConfigManager as OrgCtpConfigManage
  * The original class sets untranslated strings to the original value,
  * which is not correct.
  * Untranslated strings should be set to an empty string to make it possible
- * for external tools to know that this string is translatable.
+ * for external tools to know that this string has not been translated yet.
  *
  * We could also have solved this by creating a patch for the original class.
  * It is worthwhile to raise this issue with the original module maintainers
