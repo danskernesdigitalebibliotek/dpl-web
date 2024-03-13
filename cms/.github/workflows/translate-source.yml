@@ -80,11 +80,6 @@ jobs:
         run: task translations:separate
       - name: Separate danish configuration translations into po file
         run: task translations:separate:config
-      - name: Commit danish translations
-        uses: stefanzweifel/git-auto-commit-action@v5
-        with:
-          file_pattern: "./web/profiles/dpl_cms/translations/da.po ./web/profiles/dpl_cms/translations/da.config.po"
-          commit_message: Translations were updated by remote service
       - name: Publish translations to GitHub Pages
         uses: peaceiris/actions-gh-pages@v3
         with:
