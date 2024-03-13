@@ -1,5 +1,6 @@
-# This is a go-task file for various developer tasks
-# e.g. building docker images and setting up local development.
+# This is a go-task file solely for translation handling.
+# It can be used independently but is meant to be used
+# in combination with the go-task file in the root of the project.
 # You can read about the Task files here: https://taskfile.dev.
 version: "3"
 
