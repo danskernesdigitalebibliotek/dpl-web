@@ -22,7 +22,7 @@
   "security": [
     {
       "basic_auth": []
-    },
+    }, 
     {
       "csrf_token": []
     }
@@ -41,7 +41,7 @@
             "required": true,
             "description": "Request format",
             "default": "json"
-          },
+          }, 
           {
             "name": "facets",
             "description": "A facet to match against",
@@ -129,10 +129,74 @@
             "description": "Internal server error"
           }
         },
-        "summary": "Get campaign matching search result facets",
+        "summary": "Hent kampagne som matcher facetter fra søgeresultatet",
         "operationId": "campaign:match:POST",
         "schemes": ["http"],
         "security": []
+      }
+    },
+    "/dpl_opening_hours": {
+      "get": {
+        "parameters": [
+          {
+            "name": "_format",
+            "in": "query",
+            "type": "string",
+            "enum": ["json"],
+            "required": true,
+            "description": "Request format",
+            "default": "json"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "List all opening hours.",
+            "schema": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "category": {
+                    "type": "object",
+                    "properties": {
+                      "title": {
+                        "type": "string"
+                      }
+                    },
+                    "required": ["title"]
+                  },
+                  "date": {
+                    "type": "string",
+                    "format": "date",
+                    "description": "When the event was created. In ISO 8601 format."
+                  },
+                  "start_time": {
+                    "type": "string",
+                    "example": "9:00",
+                    "description": "When the opening hours start. In format HH:MM"
+                  },
+                  "end_time": {
+                    "type": "string",
+                    "example": "17:00",
+                    "description": "When the opening hours end. In format HH:MM"
+                  }
+                },
+                "required": ["category", "date", "start_time", "end_time"]
+              }
+            }
+          },
+          "500": {
+            "description": "Internal server error"
+          }
+        },
+        "summary": "List all opening hours",
+        "operationId": "dpl_opening_hours_list:GET",
+        "schemes": ["http"],
+        "security": [
+          {
+            "cookie": []
+          }
+        ]
       }
     },
     "/dpl_event/{uuid}": {
@@ -146,7 +210,7 @@
             "required": true,
             "description": "Request format",
             "default": "json"
-          },
+          }, 
           {
             "name": "event",
             "description": "Data to update the event with.",
@@ -178,7 +242,7 @@
                 }
               }
             }
-          },
+          }, 
           {
             "name": "uuid",
             "type": "string",
@@ -420,7 +484,7 @@
             "required": true,
             "description": "Request format",
             "default": "json"
-          },
+          }, 
           {
             "name": "url",
             "description": "A url to an online resource which may be accessible through a proxy which requires rewriting of the url",
@@ -454,7 +518,7 @@
             "description": "Internal server error"
           }
         },
-        "summary": "Generate proxy url",
+        "summary": "Generate proxy URL / Generer proxy URL",
         "operationId": "proxy-url:GET",
         "schemes": ["http"],
         "security": []
