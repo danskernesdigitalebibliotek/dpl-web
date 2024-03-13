@@ -162,7 +162,7 @@ tasks:
         else
           task dev:cli -- drush locale-check
           task dev:cli -- drush locale-update
-          task dev:cli -- drush dpl_po:import-remote-config-po da https://reload.github.io/dpl-cms/translations/da.config.po
+          task dev:cli -- drush dpl_po:import-remote-config-po da https://danskernesdigitalebibliotek.github.io/dpl-cms/translations/da.config.po
         fi
       # Clear all caches to ensure we have a pristine setup.
       - task dev:cache:clear:all

@@ -92,7 +92,7 @@ environments:
         service: cli
       - name: import danish config translations
         schedule: "M/30 * * * *"
-        command: drush dpl_po:import-remote-config-po da https://reload.github.io/dpl-cms/translations/da.config.po
+        command: drush dpl_po:import-remote-config-po da https://danskernesdigitalebibliotek.github.io/dpl-cms/translations/da.config.po
         service: cli
   pr-581:
     cronjobs:
@@ -107,5 +107,5 @@ environments:
         service: cli
       - name: import danish config translations
         schedule: "M/30 * * * *"
-        command: drush dpl_po:import-remote-config-po da https://reload.github.io/dpl-cms/translations/da.config.po
+        command: drush dpl_po:import-remote-config-po da https://danskernesdigitalebibliotek.github.io/dpl-cms/translations/da.config.po
         service: cli
