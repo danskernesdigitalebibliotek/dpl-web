@@ -39,6 +39,7 @@ module:
   dpl_loans: 0
   dpl_login: 0
   dpl_mapp: 0
+  dpl_opening_hours: 0
   dpl_paragraphs: 0
   dpl_patron_menu: 0
   dpl_patron_page: 0
