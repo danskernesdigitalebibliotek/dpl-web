@@ -6,7 +6,7 @@ version: "3"
 dotenv: [".task.env"]
 
 includes:
-  translations: ./Taskfile.translations.yml
+  translations: ./task/Taskfile.translations.yml
 
 vars:
   # Docker image registry.
