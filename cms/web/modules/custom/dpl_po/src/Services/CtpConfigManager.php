@@ -15,7 +15,6 @@ use Drupal\config_translation_po\Services\CtpConfigManager as OrgCtpConfigManage
  *
  * We have raised an issue about this:
  * https://www.drupal.org/project/config_translation_po/issues/3426797
-``
  */
 class CtpConfigManager extends OrgCtpConfigManager {
 
