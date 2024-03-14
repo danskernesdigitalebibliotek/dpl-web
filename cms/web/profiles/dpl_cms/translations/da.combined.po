@@ -4339,7 +4339,8 @@ msgstr ""
 msgid "This is the work ID used to retrieve the material information. Example: work-of:870970-basis:136336282.\n"
 "      Currently this is retrieved by performing a search for a material manually, and copying this value from the URL.\n"
 "      If you need to link to a specific type, select it from the dropdown and the system will display that, if it is available."
-msgstr ""
+msgstr "Dette er det VærkID som anvendes til at hente informationer om værket. Eksempel: work-of:870970-basis:136336282.\n"
+"P.t. hentes dette ved manuelt at fremsøge et værk og kopiere værdien fra URL'en. Hvis du vil fremhæve en specifik materialetype, vælges typen i dropdown og systemet vil vise denne type, hvis den er tilgængelig."
 
 #: 
 msgid "Material Type"
@@ -5429,7 +5430,8 @@ msgstr ""
 msgctxt "field.field.node.article.field_show_override_author:description"
 msgid "By default, the author is set to the Drupal user that owns the content.<br>\n"
 "If you want to override this, with a manual text, you can check this."
-msgstr ""
+msgstr "Som default sættes forfatteren til at være den indloggede redaktør. <br>\n"
+"Hvis du vil overskrive navnet kan du gøre det manuelt ved at sætte checkmark her."
 
 #: 
 msgctxt "field.field.node.article.field_show_override_author:settings:on_label"
@@ -5444,7 +5446,7 @@ msgstr ""
 #: 
 msgctxt "field.field.node.article.field_subtitle:label"
 msgid "Subtitle"
-msgstr ""
+msgstr "Manchet"
 
 #: 
 msgctxt "field.field.node.article.field_tags:label"
@@ -5539,7 +5541,7 @@ msgstr ""
 #: 
 msgctxt "field.field.node.page.field_display_titles:description"
 msgid "By default, titles and subtitles are not displayed on pages. If you wish to have it displayed, you can enable this setting."
-msgstr ""
+msgstr "Som default vises titel og manchettekst ikke på indholdstypen sider.  Hvis du vil have dem vist, kan du slå det til her."
 
 #: 
 msgctxt "field.field.node.page.field_display_titles:settings:on_label"
@@ -5570,7 +5572,7 @@ msgstr ""
 #: 
 msgctxt "field.field.node.page.field_subtitle:label"
 msgid "Subtitle"
-msgstr ""
+msgstr "Manchet"
 
 #: 
 msgctxt "field.field.paragraph.accordion.field_accordion_description:label"
@@ -5615,12 +5617,12 @@ msgstr ""
 #: 
 msgctxt "field.field.paragraph.card_grid_manual.field_grid_content:label"
 msgid "Content"
-msgstr ""
+msgstr "Indhold"
 
 #: 
 msgctxt "field.field.paragraph.card_grid_manual.field_title:label"
 msgid "Title"
-msgstr ""
+msgstr "Overskrift"
 
 #: 
 msgctxt "field.field.paragraph.content_slider.field_content_references:label"
@@ -5726,27 +5728,27 @@ msgstr ""
 #: 
 msgctxt "field.field.paragraph.material_grid_automatic.field_material_grid_title:label"
 msgid "Title of the material grid"
-msgstr ""
+msgstr "Titel på materialekomponenten"
 
 #: 
 msgctxt "field.field.paragraph.material_grid_automatic.field_material_grid_title:description"
 msgid "The title for the material grid. Leave this blank if you do not want a title. "
-msgstr ""
+msgstr "Titel på materialekomponenten. Efterlad dette felt blankt, hvis du ikke vil give den en overskrift."
 
 #: 
 msgctxt "field.field.paragraph.material_grid_manual.field_material_grid_title:label"
 msgid "Title of the material grid"
-msgstr ""
+msgstr "Titel på materialekomponenten"
 
 #: 
 msgctxt "field.field.paragraph.material_grid_manual.field_material_grid_title:description"
 msgid "The title for the material grid. Leave this blank if you do not want a title. "
-msgstr ""
+msgstr "Titel på materialekomponenten. Efterlad dette felt blankt, hvis du ikke vil give den en overskrift."
 
 #: 
 msgctxt "field.field.paragraph.material_grid_manual.field_material_grid_work_ids:label"
 msgid "Work IDs"
-msgstr ""
+msgstr "VærkID'er"
 
 #: 
 msgctxt "field.field.paragraph.material_grid_manual.field_material_grid_work_ids:description"
@@ -5755,7 +5757,11 @@ msgid "The grid will only display materials in internvals of 4. \n"
 "Example work ID: work-of:870970-basis:136336282.\n"
 "\n"
 "If you need to link to a specific type, select it from the dropdown and the system will display that, if it is available."
-msgstr ""
+msgstr "Komponenten viser kun værker i intervaller af 4. \n"
+"\n"
+"Eksempel på et VærkID work-of:870970-basis:136336282\n"
+"\n"
+"Hvis du vil fremhæve en specifik materialetype, vælges typen i dropdown og systemet vil vise denne type, hvis den er tilgængelig."
 
 #: 
 msgctxt "field.field.paragraph.material_grid_manual.field_work_id:label"
@@ -5775,32 +5781,32 @@ msgstr ""
 #: 
 msgctxt "field.field.paragraph.nav_grid_manual.field_content_references:label"
 msgid "Contents"
-msgstr ""
+msgstr "Indhold"
 
 #: 
 msgctxt "field.field.paragraph.nav_grid_manual.field_show_subtitles:label"
 msgid "Show subtitles"
-msgstr ""
+msgstr "Vis manchettekster"
 
 #: 
 msgctxt "field.field.paragraph.nav_grid_manual.field_show_subtitles:settings:on_label"
 msgid "On"
-msgstr ""
+msgstr "Til"
 
 #: 
 msgctxt "field.field.paragraph.nav_grid_manual.field_show_subtitles:settings:off_label"
 msgid "Off"
-msgstr ""
+msgstr "Fra"
 
 #: 
 msgctxt "field.field.paragraph.nav_grid_manual.field_title:label"
 msgid "Title"
-msgstr ""
+msgstr "Overskrift"
 
 #: 
 msgctxt "field.field.paragraph.nav_spots_manual.field_nav_spots_content:label"
 msgid "Content"
-msgstr ""
+msgstr "Indhold"
 
 #: 
 msgctxt "field.field.paragraph.recommendation.field_image_position_right:label"
@@ -5857,7 +5863,8 @@ msgctxt "field.field.paragraph.recommendation.field_recommendation_work_id:descr
 msgid "This is the work ID used to retrieve the material information. Example: work-of:870970-basis:136336282.\n"
 "Currently this is retrieved by performing a search for a material manually, and copying this value from the URL.\n"
 "If you need to link to a specific type, select it from the dropdown and the system will display that, if it is available."
-msgstr ""
+msgstr "Dette er det VærkID som anvendes til at hente informationer om værket. Eksempel: work-of:870970-basis:136336282.\n"
+"P.t. hentes dette ved manuelt at fremsøge et værk og kopiere værdien fra URL'en. Hvis du vil fremhæve en specifik materialetype, vælges typen i dropdown og systemet vil vise denne type, hvis den er tilgængelig."
 
 #: 
 msgctxt "field.field.paragraph.recommendation.field_work_id:label"
@@ -6347,12 +6354,12 @@ msgstr ""
 #: 
 msgctxt "paragraphs.paragraphs_type.card_grid_automatic:label"
 msgid "Card grid - automatic"
-msgstr ""
+msgstr "Nyhedskomponent - automatisk"
 
 #: 
 msgctxt "paragraphs.paragraphs_type.card_grid_manual:label"
 msgid "Card grid - Manual"
-msgstr ""
+msgstr "Nyhedskomponent - manuel"
 
 #: 
 msgctxt "paragraphs.paragraphs_type.content_slider:label"
@@ -6412,22 +6419,22 @@ msgstr ""
 #: 
 msgctxt "paragraphs.paragraphs_type.material_grid_automatic:label"
 msgid "Material grid automatic"
-msgstr ""
+msgstr "Materialekomponent - automatisk"
 
 #: 
 msgctxt "paragraphs.paragraphs_type.material_grid_automatic:description"
 msgid "A grid representation of recommended materials, based on a CQL search string. "
-msgstr ""
+msgstr "En visning af fremhævede værker, baseret på en CQL søgestreng."
 
 #: 
 msgctxt "paragraphs.paragraphs_type.material_grid_manual:label"
 msgid "Material grid manual"
-msgstr ""
+msgstr "Materialekomponent - manuel"
 
 #: 
 msgctxt "paragraphs.paragraphs_type.material_grid_manual:description"
 msgid "A grid displaying a list of recommended materials selected manually."
-msgstr ""
+msgstr "En komponent som viser en liste af manuelt udvalgte værker."
 
 #: 
 msgctxt "paragraphs.paragraphs_type.medias:label"
@@ -6437,12 +6444,12 @@ msgstr ""
 #: 
 msgctxt "paragraphs.paragraphs_type.nav_grid_manual:label"
 msgid "Navigation grid - manual"
-msgstr ""
+msgstr "Navigationskomponent - manuel"
 
 #: 
 msgctxt "paragraphs.paragraphs_type.nav_spots_manual:label"
 msgid "Navigation spots - manual"
-msgstr ""
+msgstr "Navigationsspot - manuel"
 
 #: 
 msgctxt "paragraphs.paragraphs_type.recommendation:label"
