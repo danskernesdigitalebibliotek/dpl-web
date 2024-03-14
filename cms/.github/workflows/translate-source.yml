@@ -6,7 +6,6 @@ on:
       - develop
 
 jobs:
-
   SendToPoeditor:
     name: Send translatable strings to POEditor
     runs-on: ubuntu-latest
@@ -19,30 +18,39 @@ jobs:
       # Give the default GITHUB_TOKEN write permission to commit and push the
       # added or changed files to the repository.
       contents: write
+    env:
+      LANGUAGE: da
     steps:
-    - uses: actions/checkout@v4
-      with:
-        fetch-depth: 0
-        token: ${{ secrets.AUTOCOMMIT_GITHUB_TOKEN }}
-    - name: Install go-task
-      uses: arduino/setup-task@v2
-      with:
-        repo-token: ${{ secrets.GITHUB_TOKEN }}
-    - name: Setup site
-      run: task ci:reset
-    - name: Scan translations
-      run: LANGUAGE=da task translations:scan
-    - name: Commit translations
-      uses: stefanzweifel/git-auto-commit-action@v5
-      with:
-        file_pattern: './web/profiles/dpl_cms/translations/*.po'
-        commit_message: New translations were found
-    - name: Make Poeditor look for changes
-      uses: distributhor/workflow-webhook@v3
-      env:
-        webhook_url: ${{ secrets.POEDITOR_WEBHOOK_URL }}
-        # POEditor webhooks to not use secrets but the action requires a value.
-        webhook_secret: 'xxxx'
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          token: ${{ secrets.AUTOCOMMIT_GITHUB_TOKEN }}
+      - name: Install go-task
+        uses: arduino/setup-task@v2
+        with:
+          repo-token: ${{ secrets.GITHUB_TOKEN }}
+      - name: Setup site
+        run: task ci:reset
+      - name: Scan user interface translations
+        run: task translations:scan
+      - name: Export translatable configuration strings
+        run: task translations:conf:export
+      - name: Combine danish po files
+        run: task translations:conf:merge
+        env:
+          FILE_A: web/profiles/dpl_cms/translations/da.po
+          FILE_B: web/profiles/dpl_cms/translations/da.config.po
+      - name: Commit all combined translations
+        uses: stefanzweifel/git-auto-commit-action@v5
+        with:
+          file_pattern: "./web/profiles/dpl_cms/translations/*.combined.po"
+          commit_message: New translations were found
+      - name: Make Poeditor look for changes in translation strings
+        uses: distributhor/workflow-webhook@v3
+        env:
+          webhook_url: ${{ secrets.POEDITOR_WEBHOOK_URL }}
+          # POEditor webhooks to not use secrets but the action requires a value.
+          webhook_secret: "xxxx"
 
   # Publish translations to GitHub Pages to support consumption by Drupal.
   # The localization system requires translation files to be served with a
@@ -56,13 +64,25 @@ jobs:
       # added or changed files to the repository which also contain GitHub
       # Pages.
       contents: write
+    env:
+      LANGUAGE: da
     steps:
-    - uses: actions/checkout@v4
-      with:
-        fetch-depth: 0
-    - name: Publish translations to GitHub Pages
-      uses: peaceiris/actions-gh-pages@v3
-      with:
-        github_token: ${{ secrets.GITHUB_TOKEN }}
-        publish_dir: ./web/profiles/dpl_cms/translations
-        destination_dir: translations
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - name: Install go-task
+        uses: arduino/setup-task@v2
+        with:
+          repo-token: ${{ secrets.GITHUB_TOKEN }}
+      - name: Setup site
+        run: task ci:reset
+      - name: Separate danish translations into po file
+        run: task translations:separate
+      - name: Separate danish configuration translations into po file
+        run: task translations:separate:config
+      - name: Publish translations to GitHub Pages
+        uses: peaceiris/actions-gh-pages@v3
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./web/profiles/dpl_cms/translations
+          destination_dir: translations
