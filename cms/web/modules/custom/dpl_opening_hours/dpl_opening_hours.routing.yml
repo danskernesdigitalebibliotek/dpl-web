@@ -4,6 +4,7 @@ dpl_opening_hours.content:
     _controller: '\Drupal\dpl_opening_hours\Controller\OpeningHoursController::content'
     _title: "Opening Hours"
   requirements:
-    _permission: "access content"
+    _permission: "access admin tab"
+    _custom_access: '\Drupal\dpl_opening_hours\Controller\OpeningHoursController::adminTabAccess'
   options:
     _admin_route: TRUE
