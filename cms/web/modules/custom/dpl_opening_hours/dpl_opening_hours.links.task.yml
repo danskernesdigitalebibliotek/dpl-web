@@ -1,0 +1,5 @@
+dpl_opening_hours.task:
+  route_name: dpl_opening_hours.content
+  title: "Opening Hours"
+  base_route: entity.node.canonical
+  weight: 1000

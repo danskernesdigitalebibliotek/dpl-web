@@ -1,0 +1,9 @@
+dpl_opening_hours.content:
+  path: "/node/{node}/edit/opening-hours"
+  defaults:
+    _controller: '\Drupal\dpl_opening_hours\Controller\OpeningHoursController::content'
+    _title: "Opening Hours"
+  requirements:
+    _permission: "access content"
+  options:
+    _admin_route: TRUE
