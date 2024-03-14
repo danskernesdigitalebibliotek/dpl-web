@@ -18,8 +18,12 @@ To make the "translation traffic" work following components are being used:
     translatable strings and translations
 * [GitHub Actions](.github/workflows/translations.yml)
   * Scans codebase for new translatable strings and commits them to GitHub
+  * Exports translatable configuration strings into a separate `*.config.po` file
+  * Merges the two files: `*.po` and `*.config.po` into a `*.combined.po` file
   * Notifies POEditor that new translatable strings are available
-  * Publishes `.po` files to GitHub Pages
+  * When a project is exported from PoEditor:
+    * The `*.combined.po` is split into two files: `*.po` and `*.config.po`
+    * The `*.po` files are published to GitHub Pages
 * POEditor
   * Provides an interface for translators
   * Links translations with `.po` files on GitHub
@@ -28,6 +32,7 @@ To make the "translation traffic" work following components are being used:
   * Drupal installation which is [configured to use GitHub Pages as an interface
     translation server](web/profiles/dpl_cms/dpl_cms.info.yml) from which `.po`
     files can be consumed.
+  * In the development setup and in cronjobs defined in the environments there are two jobs in charge of importing the regular translations and the configuration translations.
 
 The following diagram show how these systems interact to support the flow of
 from introducing a new translateable string in the codebase to DPL CMS consuming
@@ -43,15 +48,21 @@ sequenceDiagram
   Developer ->> GitHubActions: Merge pull request into develop
   GitHubActions ->> GitHubActions: Scan codebase and write strings to .po file
   GitHubActions ->> GitHubActions: Fill .po file with existing translations
-  GitHubActions ->> GitHub: Commit .po file with updated strings
+  Note over GitHubActions,GitHubActions: if config translations<br/>are available<br/>they are used<br/>otherwise empty strings
+  GitHubActions ->> GitHubActions: Exports configuration translations into a .config.po file
+  GitHubActions ->> GitHubActions: The two .po files are merged together into a .combined.po file
+  GitHubActions ->> GitHub: Commit combined.po file with updated strings
   GitHubActions ->> Poeditor: Call webhook
-  Poeditor ->> GitHub: Fetch updated .po file
+  Poeditor ->> GitHub: Fetch updated combined.po file
   Poeditor ->> Poeditor: Synchronize translations with latest strings and translations
   Translator ->> Poeditor: Translate strings
   Translator ->> Poeditor: Export strings to GitHub
-  Poeditor ->> GitHub: Commit .po file with updated translations to develop
+  Poeditor ->> GitHub: Commit combined.po file with updated translations to develop
+  Github ->> Github: .combined.po is split into two files: .po and .config.po
+  Github ->> Github: All the po files are published to Github Pages
   DplCms ->> GitHub: Fetch .po file with latest translations
   DplCms ->> DplCms: Import updated translations
+  DplCms ->> GitHub: Import config.po file with latest configuration translations
 ```
 
 ## Howtos
@@ -75,3 +86,12 @@ sequenceDiagram
 
 1. Run `drush locale-check`
 2. Run `drush locale-update`
+
+### Import updated config translations
+
+Run  `drush dpl_po:import-remote-config-po [LANGUAGE_CODE] [CONFIGURATION_PO_FIL_EXTERNAL_URL]`
+
+Example:
+```bash
+drush dpl_po:import-remote-config-po da https://danskernesdigitalebibliotek.github.io/dpl-cms/translations/da.config.po
+```
