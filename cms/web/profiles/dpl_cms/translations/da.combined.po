@@ -4533,7 +4533,7 @@ msgstr ""
 #: 
 msgctxt "core.base_field_override.media.image.status:label"
 msgid "Published"
-msgstr ""
+msgstr "Publiceret"
 
 #: 
 msgctxt "core.base_field_override.media.image.status:settings:on_label"
@@ -6252,7 +6252,7 @@ msgstr ""
 #: 
 msgctxt "metatag.metatag_defaults.node:label"
 msgid "Content"
-msgstr ""
+msgstr "Indhold"
 
 #: 
 msgctxt "metatag.metatag_defaults.node:tags:canonical_url"
@@ -6572,7 +6572,7 @@ msgstr ""
 #: 
 msgctxt "system.action.node_delete_action:label"
 msgid "Delete content"
-msgstr ""
+msgstr "Slet indhold"
 
 #: 
 msgctxt "system.action.node_make_sticky_action:label"
@@ -6587,7 +6587,7 @@ msgstr ""
 #: 
 msgctxt "system.action.node_promote_action:label"
 msgid "Promote content to front page"
-msgstr ""
+msgstr "Forfrem til forsiden"
 
 #: 
 msgctxt "system.action.node_publish_action:label"
@@ -7259,7 +7259,7 @@ msgstr "Side"
 #: 
 msgctxt "views.view.content:label"
 msgid "Content"
-msgstr ""
+msgstr "Indhold"
 
 #: 
 msgctxt "views.view.content:description"
@@ -7274,7 +7274,7 @@ msgstr ""
 #: 
 msgctxt "views.view.content:display:default:display_options:title"
 msgid "Content"
-msgstr ""
+msgstr "Indhold"
 
 #: 
 msgctxt "views.view.content:display:default:display_options:fields:title:label"
@@ -7284,7 +7284,7 @@ msgstr ""
 #: 
 msgctxt "views.view.content:display:default:display_options:fields:type:label"
 msgid "Content type"
-msgstr ""
+msgstr "Indholdstype"
 
 #: 
 msgctxt "views.view.content:display:default:display_options:fields:name:label"
@@ -7299,12 +7299,12 @@ msgstr ""
 #: 
 msgctxt "views.view.content:display:default:display_options:fields:status:settings:format_custom_false"
 msgid "Unpublished"
-msgstr ""
+msgstr "Afpubliceret"
 
 #: 
 msgctxt "views.view.content:display:default:display_options:fields:status:settings:format_custom_true"
 msgid "Published"
-msgstr ""
+msgstr "Publiceret"
 
 #: 
 msgctxt "views.view.content:display:default:display_options:fields:changed:label"
@@ -7374,52 +7374,52 @@ msgstr ""
 #: 
 msgctxt "views.view.content:display:default:display_options:filters:type:expose:label"
 msgid "Content type"
-msgstr ""
+msgstr "Indholdstype"
 
 #: 
 msgctxt "views.view.content:display:default:display_options:filters:status:expose:label"
 msgid "Status"
-msgstr ""
+msgstr "Status"
 
 #: 
 msgctxt "views.view.content:display:default:display_options:filters:status:group_info:label"
 msgid "Published status"
-msgstr ""
+msgstr "Publikationsstatus"
 
 #: 
 msgctxt "views.view.content:display:default:display_options:filters:status:group_info:group_items:1:title"
 msgid "Published"
-msgstr ""
+msgstr "Publiceret"
 
 #: 
 msgctxt "views.view.content:display:default:display_options:filters:status:group_info:group_items:2:title"
 msgid "Unpublished"
-msgstr ""
+msgstr "Afpubliceret"
 
 #: 
 msgctxt "views.view.content:display:default:display_options:filters:langcode:expose:label"
 msgid "Language"
-msgstr ""
+msgstr "Sprog"
 
 #: 
 msgctxt "views.view.content:display:page_1:display_title"
 msgid "Page"
-msgstr ""
+msgstr "Side"
 
 #: 
 msgctxt "views.view.content:display:page_1:display_options:menu:title"
 msgid "Content"
-msgstr ""
+msgstr "Indhold"
 
 #: 
 msgctxt "views.view.content:display:page_1:display_options:tab_options:title"
 msgid "Content"
-msgstr ""
+msgstr "Indhold"
 
 #: 
 msgctxt "views.view.content:display:page_1:display_options:tab_options:description"
 msgid "Find and manage content"
-msgstr ""
+msgstr "Find og håndter indhold"
 
 #: 
 msgctxt "views.view.content_paragraphs:label"
@@ -7584,12 +7584,12 @@ msgstr ""
 #: 
 msgctxt "views.view.entity_reference_content:display:default:display_options:fields:status:settings:format_custom_false"
 msgid "Unpublished"
-msgstr ""
+msgstr "Afpubliceret"
 
 #: 
 msgctxt "views.view.entity_reference_content:display:default:display_options:fields:status:settings:format_custom_true"
 msgid "Published"
-msgstr ""
+msgstr "Publiceret"
 
 #: 
 msgctxt "views.view.entity_reference_content:display:default:display_options:fields:title:alter:text"
@@ -7662,12 +7662,12 @@ msgstr "Default"
 #: 
 msgctxt "views.view.entity_reference_event_instance:display:default:display_options:fields:status:settings:format_custom_false"
 msgid "Unpublished"
-msgstr ""
+msgstr "Afpubliceret"
 
 #: 
 msgctxt "views.view.entity_reference_event_instance:display:default:display_options:fields:status:settings:format_custom_true"
 msgid "Published"
-msgstr ""
+msgstr "Publiceret"
 
 #: 
 msgctxt "views.view.entity_reference_event_instance:display:default:display_options:fields:date__value:settings:one_day"
@@ -7755,12 +7755,12 @@ msgstr ""
 #: 
 msgctxt "views.view.entity_reference_event_series:display:default:display_options:fields:status:settings:format_custom_false"
 msgid "Unpublished"
-msgstr ""
+msgstr "Afpubliceret"
 
 #: 
 msgctxt "views.view.entity_reference_event_series:display:default:display_options:fields:status:settings:format_custom_true"
 msgid "Published"
-msgstr ""
+msgstr "Publiceret"
 
 #: 
 msgctxt "views.view.entity_reference_event_series:display:default:display_options:fields:title:alter:text"
@@ -8015,12 +8015,12 @@ msgstr ""
 #: 
 msgctxt "views.view.event_admin:display:default:display_options:fields:status:settings:format_custom_false"
 msgid " Unpublished"
-msgstr ""
+msgstr "␣Afpubliceret"
 
 #: 
 msgctxt "views.view.event_admin:display:default:display_options:fields:status:settings:format_custom_true"
 msgid "Published"
-msgstr ""
+msgstr "Publiceret"
 
 #: 
 msgctxt "views.view.event_admin:display:default:display_options:fields:edit_eventseries:label"
@@ -8135,17 +8135,17 @@ msgstr ""
 #: 
 msgctxt "views.view.event_admin:display:default:display_options:filters:status:group_info:label"
 msgid "Published status"
-msgstr ""
+msgstr "Publikationsstatus"
 
 #: 
 msgctxt "views.view.event_admin:display:default:display_options:filters:status:group_info:group_items:1:title"
 msgid "Published"
-msgstr ""
+msgstr "Publiceret"
 
 #: 
 msgctxt "views.view.event_admin:display:default:display_options:filters:status:group_info:group_items:2:title"
 msgid "Unpublished"
-msgstr ""
+msgstr "Afpubliceret"
 
 #: 
 msgctxt "views.view.event_admin:display:overview:display_title"
@@ -8495,22 +8495,22 @@ msgstr ""
 #: 
 msgctxt "views.view.locked_content:display:default:display_options:filters:status:expose:label"
 msgid "Published status"
-msgstr ""
+msgstr "Publikationsstatus"
 
 #: 
 msgctxt "views.view.locked_content:display:default:display_options:filters:status:group_info:label"
 msgid "Published status"
-msgstr ""
+msgstr "Publikationsstatus"
 
 #: 
 msgctxt "views.view.locked_content:display:default:display_options:filters:status:group_info:group_items:1:title"
 msgid "Published"
-msgstr ""
+msgstr "Publiceret"
 
 #: 
 msgctxt "views.view.locked_content:display:default:display_options:filters:status:group_info:group_items:2:title"
 msgid "Unpublished"
-msgstr ""
+msgstr "Afpubliceret"
 
 #: 
 msgctxt "views.view.locked_content:display:default:display_options:filters:type:expose:label"
@@ -8580,12 +8580,12 @@ msgstr ""
 #: 
 msgctxt "views.view.media:display:default:display_options:fields:status:settings:format_custom_false"
 msgid "Unpublished"
-msgstr ""
+msgstr "Afpubliceret"
 
 #: 
 msgctxt "views.view.media:display:default:display_options:fields:status:settings:format_custom_true"
 msgid "Published"
-msgstr ""
+msgstr "Publiceret"
 
 #: 
 msgctxt "views.view.media:display:default:display_options:fields:changed:label"
@@ -8680,17 +8680,17 @@ msgstr ""
 #: 
 msgctxt "views.view.media:display:default:display_options:filters:status:group_info:label"
 msgid "Published status"
-msgstr ""
+msgstr "Publikationsstatus"
 
 #: 
 msgctxt "views.view.media:display:default:display_options:filters:status:group_info:group_items:1:title"
 msgid "Published"
-msgstr ""
+msgstr "Publiceret"
 
 #: 
 msgctxt "views.view.media:display:default:display_options:filters:status:group_info:group_items:2:title"
 msgid "Unpublished"
-msgstr ""
+msgstr "Afpubliceret"
 
 #: 
 msgctxt "views.view.media:display:default:display_options:filters:langcode:expose:label"
@@ -9035,7 +9035,7 @@ msgstr ""
 #: 
 msgctxt "views.view.scheduler_scheduled_content:display:default:display_options:title"
 msgid "Scheduled Content"
-msgstr ""
+msgstr "Planlagt indhold"
 
 #: 
 msgctxt "views.view.scheduler_scheduled_content:display:default:display_options:fields:node_bulk_form:action_title"
@@ -9055,7 +9055,7 @@ msgstr ""
 #: 
 msgctxt "views.view.scheduler_scheduled_content:display:default:display_options:fields:name:label"
 msgid "Author"
-msgstr ""
+msgstr "Forfatter"
 
 #: 
 msgctxt "views.view.scheduler_scheduled_content:display:default:display_options:fields:status:label"
@@ -9065,12 +9065,12 @@ msgstr ""
 #: 
 msgctxt "views.view.scheduler_scheduled_content:display:default:display_options:fields:status:settings:format_custom_false"
 msgid "Unpublished"
-msgstr ""
+msgstr "Afpubliceret"
 
 #: 
 msgctxt "views.view.scheduler_scheduled_content:display:default:display_options:fields:status:settings:format_custom_true"
 msgid "Published"
-msgstr ""
+msgstr "Publiceret"
 
 #: 
 msgctxt "views.view.scheduler_scheduled_content:display:default:display_options:fields:publish_on:label"
@@ -9155,17 +9155,17 @@ msgstr ""
 #: 
 msgctxt "views.view.scheduler_scheduled_content:display:default:display_options:filters:status:group_info:label"
 msgid "Published status"
-msgstr ""
+msgstr "Publikationsstatus"
 
 #: 
 msgctxt "views.view.scheduler_scheduled_content:display:default:display_options:filters:status:group_info:group_items:1:title"
 msgid "Published"
-msgstr ""
+msgstr "Publiceret"
 
 #: 
 msgctxt "views.view.scheduler_scheduled_content:display:default:display_options:filters:status:group_info:group_items:2:title"
 msgid "Unpublished"
-msgstr ""
+msgstr "Afpubliceret"
 
 #: 
 msgctxt "views.view.scheduler_scheduled_content:display:default:display_options:filters:langcode:expose:label"
