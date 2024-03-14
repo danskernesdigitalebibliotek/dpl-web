@@ -1,0 +1,23 @@
+{#
+/**
+ * @file
+ * Custom error message template
+ *
+ * Used to display error messages.
+ *
+ * Available variables:
+ * - message: The error message to show.
+ */
+#}
+
+ <div class="error-message">
+  <div class="error-message__icon">
+    <img
+      src="/themes/custom/novel/assets/dpl-design-system/icons/basic/icon-warning.svg"
+      alt="{{ 'Error warning icon'|t({}, {'context': 'Global error handling'}) }}"
+    />
+  </div>
+  <div class="error-message__description">
+    {{ message }}
+  </div>
+</div>

@@ -8,4 +8,5 @@ dependencies:
   - dpl_patron_page:dpl_patron_page
   - dpl_react:dpl_react
   - dpl_react_apps:dpl_react_apps
+  - dpl_protected_nodes:dpl_protected_nodes
   - dpl_login:dpl_login
