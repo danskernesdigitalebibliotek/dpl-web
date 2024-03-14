@@ -12,6 +12,9 @@ class OpeningHoursController extends ControllerBase {
 
   /**
    * Display the opening hours app.
+   *
+   * @return mixed[]
+   *   The app render array.
    */
   public function content() {
     return [
