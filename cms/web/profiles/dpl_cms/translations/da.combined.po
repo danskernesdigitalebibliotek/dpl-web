@@ -6332,7 +6332,7 @@ msgstr ""
 #: 
 msgctxt "node.type.campaign:name"
 msgid "Campaign"
-msgstr "Kampagne (Mikkel tester)"
+msgstr "Kampagne (Mikkel tester 20.18)"
 
 #: 
 msgctxt "node.type.campaign:description"
