@@ -4993,7 +4993,7 @@ msgstr ""
 #: 
 msgctxt "core.entity_view_mode.eventinstance.nav_teaser:label"
 msgid "Navigation teaser"
-msgstr ""
+msgstr "Navigationsteaser"
 
 #: 
 msgctxt "core.entity_view_mode.eventinstance.stacked_event:label"
@@ -5018,7 +5018,7 @@ msgstr ""
 #: 
 msgctxt "core.entity_view_mode.eventseries.nav_teaser:label"
 msgid "Navigation teaser"
-msgstr ""
+msgstr "Navigationsteaser"
 
 #: 
 msgctxt "core.entity_view_mode.file.token:label"
@@ -5063,7 +5063,7 @@ msgstr ""
 #: 
 msgctxt "core.entity_view_mode.node.list_teaser:label"
 msgid "List teaser"
-msgstr ""
+msgstr "Listeteaser"
 
 #: 
 msgctxt "core.entity_view_mode.node.nav_spot:label"
@@ -5073,7 +5073,7 @@ msgstr ""
 #: 
 msgctxt "core.entity_view_mode.node.nav_teaser:label"
 msgid "Navigation teaser"
-msgstr ""
+msgstr "Navigationsteaser"
 
 #: 
 msgctxt "core.entity_view_mode.node.rss:label"
@@ -5093,7 +5093,7 @@ msgstr ""
 #: 
 msgctxt "core.entity_view_mode.node.teaser:label"
 msgid "Teaser"
-msgstr ""
+msgstr "Teaser"
 
 #: 
 msgctxt "core.entity_view_mode.node.token:label"
@@ -5337,7 +5337,7 @@ msgstr ""
 #: 
 msgctxt "field.field.eventseries.default.field_teaser_image:label"
 msgid "Teaser image"
-msgstr ""
+msgstr "Teaserbillede"
 
 #: 
 msgctxt "field.field.eventseries.default.field_teaser_image:description"
@@ -5347,12 +5347,16 @@ msgid "The teaser fields are used for the card of display.\n"
 "<img src=\"/themes/custom/novel/images/teaser-text-image.jpg\" />\n"
 "\n"
 "<hr/>"
-msgstr ""
+msgstr "Teaser-felterne bruges til det card, der repræsenterer indholdet i de forskellige formidlingskomponenter.  Hvis der ikke er valgt et billede, vil teaserteksten blive vist i stedet: \n"
+"\n"
+"<img src=\"/themes/custom/novel/images/teaser-text-image.jpg\" />\n"
+"\n"
+"<hr/>"
 
 #: 
 msgctxt "field.field.eventseries.default.field_teaser_text:label"
 msgid "Teaser text"
-msgstr ""
+msgstr "Teasertekst"
 
 #: 
 msgctxt "field.field.eventseries.default.field_ticket_categories:label"
@@ -5456,7 +5460,7 @@ msgstr ""
 #: 
 msgctxt "field.field.node.article.field_teaser_image:label"
 msgid "Teaser image"
-msgstr ""
+msgstr "Teaserbillede"
 
 #: 
 msgctxt "field.field.node.article.field_teaser_image:description"
@@ -5466,12 +5470,16 @@ msgid "The teaser fields are used for the card of display.\n"
 "<img src=\"/themes/custom/novel/images/teaser-text-image.jpg\" />\n"
 "\n"
 "<hr/>"
-msgstr ""
+msgstr "Teaser-felterne bruges til det card, der repræsenterer indholdet i de forskellige formidlingskomponenter.  Hvis der ikke er valgt et billede, vil teaserteksten blive vist i stedet: \n"
+"\n"
+"<img src=\"/themes/custom/novel/images/teaser-text-image.jpg\" />\n"
+"\n"
+"<hr/>"
 
 #: 
 msgctxt "field.field.node.article.field_teaser_text:label"
 msgid "Teaser text"
-msgstr ""
+msgstr "Teasertekst"
 
 #: 
 msgctxt "field.field.node.branch.field_address:label"
