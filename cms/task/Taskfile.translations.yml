@@ -1,0 +1,90 @@
+# This is a go-task file solely for translation handling.
+# It can be used independently but is meant to be used
+# in combination with the go-task file in the root of the project.
+# You can read about the Task files here: https://taskfile.dev.
+version: "3"
+
+vars:
+  # Directory with translation sources.
+  PO_DIR: "profiles/dpl_cms/translations"
+
+tasks:
+  scan:
+    desc: Scan and generate translations
+    cmds:
+      # Make sure that the potion module is active
+      - task dev:cli -- drush en -y potion
+      # Generate translations for custom modules
+      - task dev:cli -- drush potion:generate {{ .LANGUAGE }} modules/custom/ {{ .PO_DIR }} --recursive --default-write-mode=override
+      # Generate translations for custom themes
+      - task dev:cli -- drush potion:generate {{ .LANGUAGE }} themes/custom/ {{ .PO_DIR }} --recursive --default-write-mode=merge
+      # Fill translations from db
+      - task dev:cli -- drush potion:fill {{ .LANGUAGE }} $PATH_TO_FILE
+      - task: chown
+        vars:
+          PATH_TO_FILE: "{{ .PATH_TO_FILE }}"
+    requires:
+      vars: [LANGUAGE, PO_DIR]
+    env:
+      PATH_TO_FILE: "{{ .PO_DIR }}/{{ .LANGUAGE }}.po"
+
+  conf:export:
+    desc: Exports current configuration into po file
+    cmds:
+      # Generate translations from configuration strings
+      - task dev:cli -- drush dpl_po:export-config-po {{ .LANGUAGE }} $PATH_TO_FILE
+      - task: chown
+        vars:
+          PATH_TO_FILE: "{{ .PATH_TO_FILE }}"
+    requires:
+      vars: [LANGUAGE, PO_DIR]
+    env:
+      PATH_TO_FILE: "{{ .PO_DIR }}/{{ .LANGUAGE }}.config.po"
+
+  conf:merge:
+    desc: Merge configuration translations into the combined translation file
+    cmds:
+      - task dev:cli -- msgcat -o web/$PATH_TO_FILE $FILE_A $FILE_B
+      - task: chown
+        vars:
+          PATH_TO_FILE: "{{ .PO_DIR }}/{{ .LANGUAGE }}.combined.po"
+    requires:
+      vars: [LANGUAGE, PO_DIR, FILE_A, FILE_B]
+    env:
+      PATH_TO_FILE: "{{ .PO_DIR }}/{{ .LANGUAGE }}.combined.po"
+
+  separate:
+    desc: Save translations from combined file into separate file
+    cmds:
+      - task dev:cli -- drush dpl_po:extract-ui {{ .LANGUAGE }} $SOURCE $PATH_TO_FILE
+      - task: chown
+        vars:
+          PATH_TO_FILE: "{{ .PO_DIR }}/{{ .LANGUAGE }}.po"
+    requires:
+      vars: [LANGUAGE, PO_DIR]
+    env:
+      SOURCE: "{{ .PO_DIR }}/{{ .LANGUAGE }}.combined.po"
+      PATH_TO_FILE: "{{ .PO_DIR }}/{{ .LANGUAGE }}.po"
+
+  separate:config:
+    desc: Save configuration translations from combined file into separate file
+    cmds:
+      - task dev:cli -- drush dpl_po:extract-config {{ .LANGUAGE }} $SOURCE $PATH_TO_FILE
+      - task: chown
+        vars:
+          PATH_TO_FILE: "{{ .PO_DIR }}/{{ .LANGUAGE }}.config.po"
+    requires:
+      vars: [LANGUAGE, PO_DIR]
+    env:
+      SOURCE: "{{ .PO_DIR }}/{{ .LANGUAGE }}.combined.po"
+      PATH_TO_FILE: "{{ .PO_DIR }}/{{ .LANGUAGE }}.config.po"
+
+  chown:
+    internal: true
+    desc: Chown the PO file in the container with the user of the host
+    cmds:
+      - |
+        export ME=$(id -u);
+        task dev:cli -- chown $ME:$ME web/{{ .PATH_TO_FILE }}
+    requires:
+      vars: [PATH_TO_FILE]
