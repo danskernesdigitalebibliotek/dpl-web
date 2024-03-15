@@ -59,6 +59,10 @@ default:
       attributes:
         name: title
         content: 'Jesper Stein vinder Læsernes Bogpris for Rampen | DPL CMS'
+  path:
+    -
+      alias: ''
+      langcode: da
   field_categories:
     -
       entity: 92033694-15ac-4d9e-b275-ddfd18e48d9f

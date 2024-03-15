@@ -31,3 +31,7 @@ default:
       attributes:
         rel: canonical
         href: '/taxonomy/term/12'
+  path:
+    -
+      alias: ''
+      langcode: da
