@@ -16,7 +16,7 @@ And we added a range of custom drush commands to handle the varios configuration
 
 ## Consequences
 
-By sticking to the handling of PO files in configuration handling that we are already using in our genral translation handling, we can keep the current Github workflows with some alterations.
+By sticking to the handling of PO files in configuration handling that we are already using in our general translation handling, we can keep the current Github workflows with some alterations.
 
 ### Alterations to former translation workflow
 
