@@ -57,7 +57,7 @@ sequenceDiagram
   Poeditor ->> Poeditor: Synchronize translations with latest strings and translations
   Translator ->> Poeditor: Translate strings
   Translator ->> Poeditor: Export strings to GitHub
-  Poeditor ->> GitHub: Commit combined.po file with updated translations to develop
+  POEditor ->> GitHub: Commit combined.po file with updated translations to develop
   Github ->> Github: .combined.po is split into two files: .po and .config.po
   Github ->> Github: All the po files are published to Github Pages
   DplCms ->> GitHub: Fetch .po file with latest translations
