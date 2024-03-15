@@ -37,7 +37,7 @@ We could Keep the machine names of the config in english but writing the titles,
 But that would have following bad consequences:
 1. The administrators would have to find all the texts in various, not obvious, places in the admin area.
 2. It would differ from the general translation routine which is confusing
-3. We would not be able to hande multiple languages for the cofiguration translations
+3. We would not be able to handle multiple languages for the configuration translations
 
 ### Extending the Potion module
 Change the Potion module to be able to scan configuration translations as well.
