@@ -7,23 +7,14 @@ dependencies:
     - taxonomy.vocabulary.opening_hours_categories
   module:
     - color_field
-    - text
 id: taxonomy_term.opening_hours_categories.default
 targetEntityType: taxonomy_term
 bundle: opening_hours_categories
 mode: default
 content:
-  description:
-    type: text_textarea
-    weight: 1
-    region: content
-    settings:
-      rows: 5
-      placeholder: ''
-    third_party_settings: {  }
   field_opening_hours_color:
     type: color_field_widget_html5
-    weight: 2
+    weight: 1
     region: content
     settings: {  }
     third_party_settings: {  }
@@ -36,6 +27,7 @@ content:
       placeholder: ''
     third_party_settings: {  }
 hidden:
+  description: true
   langcode: true
   path: true
   publish_on: true
