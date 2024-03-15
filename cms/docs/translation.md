@@ -21,7 +21,7 @@ To make the "translation traffic" work following components are being used:
   * Exports translatable configuration strings into a separate `*.config.po` file
   * Merges the two files: `*.po` and `*.config.po` into a `*.combined.po` file
   * Notifies POEditor that new translatable strings are available
-  * When a project is exported from PoEditor:
+  * When a project is exported from POEditor:
     * The `*.combined.po` is split into two files: `*.po` and `*.config.po`
     * The `*.po` files are published to GitHub Pages
 * POEditor
