@@ -2,7 +2,7 @@
 
 ## Context
 
-The translation system desribed in [adr-009-translation-system](./adr-009-translation-system.md) handles solely the translations added through Drupals traditional translation handling.
+The translation system described in [adr-009-translation-system](./adr-009-translation-system.md) handles solely the translations added through Drupals traditional translation handling.
 
 But there was a wish for being able to translate configuration related strings as well: Titles, labels, descriptions etc. in the admin area.
 
