@@ -34,7 +34,7 @@ We tried it out and it worked so that was the solution we ended up with.
 ### A hack
 We could Keep the machine names of the config in english but writing the titles, labels, descriptions in danish.
 
-But that would have following bad consequences:
+But that would have the following bad consequences:
 1. The administrators would have to find all the texts in various, not obvious, places in the admin area.
 2. It would differ from the general translation routine which is confusing
 3. We would not be able to handle multiple languages for the configuration translations
