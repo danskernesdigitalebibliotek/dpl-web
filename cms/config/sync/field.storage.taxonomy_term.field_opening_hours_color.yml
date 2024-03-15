@@ -1,0 +1,20 @@
+uuid: c465e6f3-cdbb-47ed-85ac-8f8d2812cf67
+langcode: en
+status: true
+dependencies:
+  module:
+    - color_field
+    - taxonomy
+id: taxonomy_term.field_opening_hours_color
+field_name: field_opening_hours_color
+entity_type: taxonomy_term
+type: color_field_type
+settings:
+  format: '#HEXHEX'
+module: color_field
+locked: false
+cardinality: 1
+translatable: true
+indexes: {  }
+persist_with_no_fields: false
+custom_storage: false
