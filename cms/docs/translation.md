@@ -53,7 +53,7 @@ sequenceDiagram
   GitHubActions ->> GitHubActions: The two .po files are merged together into a .combined.po file
   GitHubActions ->> GitHub: Commit combined.po file with updated strings
   GitHubActions ->> POEditor: Call webhook
-  Poeditor ->> GitHub: Fetch updated combined.po file
+  POEditor ->> GitHub: Fetch updated combined.po file
   POEditor ->> POEditor: Synchronize translations with latest strings and translations
   Translator ->> Poeditor: Translate strings
   Translator ->> Poeditor: Export strings to GitHub
