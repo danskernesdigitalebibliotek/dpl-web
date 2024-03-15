@@ -32,7 +32,7 @@ We tried it out and it worked so that was the solution we ended up with.
 ## Alternatives considered
 
 ### A hack
-We could Keep the machine names of the config in english but writing the titles, lables, descriptions in danish.
+We could Keep the machine names of the config in english but writing the titles, labels, descriptions in danish.
 
 But that would have following bad consequences:
 1. The administrators would have to find all the texts in various, not obvious, places in the admin area.
