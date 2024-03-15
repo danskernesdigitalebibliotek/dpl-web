@@ -20,7 +20,7 @@ By sticking to the handling of PO files in configuration handling that we are al
 
 ### Alterations to former translation workflow
 
-With the config translation PO files added we tried to uncover if PoEditor was able to handle two PO files simultaniously in both import and export context.
+With the config translation PO files added we tried to uncover if PoEditor was able to handle two PO files simultaneously in both import and export context.
 It could not.
 
 But we still needed, in Drupal, to be able to import two different files: One for general translations and one for configuration translations.
