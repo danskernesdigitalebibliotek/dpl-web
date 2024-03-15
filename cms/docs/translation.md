@@ -55,8 +55,8 @@ sequenceDiagram
   GitHubActions ->> POEditor: Call webhook
   POEditor ->> GitHub: Fetch updated combined.po file
   POEditor ->> POEditor: Synchronize translations with latest strings and translations
-  Translator ->> Poeditor: Translate strings
-  Translator ->> Poeditor: Export strings to GitHub
+  Translator ->> POEditor: Translate strings
+  Translator ->> POEditor: Export strings to GitHub
   POEditor ->> GitHub: Commit combined.po file with updated translations to develop
   Github ->> Github: .combined.po is split into two files: .po and .config.po
   Github ->> Github: All the po files are published to Github Pages
