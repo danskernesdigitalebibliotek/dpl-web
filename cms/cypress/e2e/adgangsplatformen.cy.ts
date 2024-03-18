@@ -119,7 +119,7 @@ describe("Adgangsplatformen", () => {
     cy.get('[data-cy="pincode-input"]').type("1234");
     cy.get('[data-cy="pincode-confirm-input"]').type("1234");
     cy.get("#branches-dropdown").select("DK-775100");
-    cy.get('[data-cy="complete-user-registration"]').click();
+    cy.get('[data-cy="complete-user-registration-button"]').click();
     cy.request("/dpl-react/user-tokens").then((response) => {
       expect(response.body).contain(
         'window.dplReact = window.dplReact || {};\nwindow.dplReact.setToken("user", "447131b0a03fe0421204c54e5c21a60-new-user")'
@@ -152,7 +152,7 @@ describe("Adgangsplatformen", () => {
       );
     });
 
-    cy.get('[data-cy="cancel-user-registration"]').click();
+    cy.get('[data-cy="cancel-user-registration-button"]').click();
 
     cy.request("/dpl-react/user-tokens").then((response) => {
       expect(response.body).not.contain(
