@@ -5,26 +5,30 @@
 ]
 %}
 
-<section {{ attributes.addClass(classes) }}>
-  {% if url %}
-    <a href="{{ url }}" class="hero__content arrow arrow__hover--right-large">
-      {% include "@novel/components/hero-inner.html.twig" %}
+{% if url %}
+    <a href={{ url }} {{ attributes.addClass(classes) }}>
+        <div class="hero__content arrow arrow__hover--right-large">
+            {% include "@novel/components/hero-inner.html.twig" with {'arrow': true} %}
 
-      <div>
-        {{ source(baseIconPath ~ '/arrow-ui/icon-arrow-ui-large-right.svg') }}
-      </div>
+        </div>
+
+        <div class="hero__visual">
+            <div class="hero__visual-inner">
+                {{ media }}
+            </div>
+        </div>
     </a>
 
-  {% else %}
-    <div class="hero__content">
-      {% include "@novel/components/hero-inner.html.twig" %}
-    </div>
+{% else %}
+    <section {{ attributes.addClass(classes) }}>
+        <div class="hero__content">
+            {% include "@novel/components/hero-inner.html.twig" %}
+        </div>
 
-  {% endif %}
-
-  <div class="hero__visual">
-    <div class="hero__visual-inner">
-      {{ media }}
-    </div>
-  </div>
-</section>
+        <div class="hero__visual">
+            <div class="hero__visual-inner">
+                {{ media }}
+            </div>
+        </div>
+    </section>
+{% endif %}

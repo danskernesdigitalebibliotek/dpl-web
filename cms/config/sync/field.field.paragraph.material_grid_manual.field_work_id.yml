@@ -11,9 +11,9 @@ id: paragraph.material_grid_manual.field_work_id
 field_name: field_work_id
 entity_type: paragraph
 bundle: material_grid_manual
-label: 'Work ID'
-description: "<b>Important: </b>Ensure that you add materials in intervals of 4, as the display will only display in intervals of 4, when more than 4 items are selected. \r\n<br>\r\nExample: You add 7 materials, the grid will only display 4. \r\n<br>\r\nExample of work-id:   work-of:870970-basis:136336282."
-required: true
+label: 'Work ID (DEPRECATED)'
+description: 'This field will be deleted in the future. Please use another work id field.'
+required: false
 translatable: false
 default_value: {  }
 default_value_callback: ''

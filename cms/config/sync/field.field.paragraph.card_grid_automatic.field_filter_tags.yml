@@ -1,0 +1,29 @@
+uuid: f0739766-5853-4bd1-8c08-a9571a0ad148
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.paragraph.field_filter_tags
+    - paragraphs.paragraphs_type.card_grid_automatic
+    - taxonomy.vocabulary.tags
+id: paragraph.card_grid_automatic.field_filter_tags
+field_name: field_filter_tags
+entity_type: paragraph
+bundle: card_grid_automatic
+label: 'Filter tags'
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings:
+  handler: 'default:taxonomy_term'
+  handler_settings:
+    target_bundles:
+      tags: tags
+    sort:
+      field: name
+      direction: asc
+    auto_create: false
+    auto_create_bundle: categories
+field_type: entity_reference

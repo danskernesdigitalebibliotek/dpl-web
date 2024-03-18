@@ -1,0 +1,62 @@
+_core:
+  default_config_hash: 6Ka3T1c-CIjEUO1Q64NXKksLthkMhj53a6zy4RJBtkc
+verbose: 1
+types:
+  crop: {  }
+  file: {  }
+  job_schedule: {  }
+  media: {  }
+  menu_link_content: {  }
+  node:
+    '*': '*'
+  path_alias: {  }
+  eventseries:
+    '*': '*'
+  eventinstance:
+    '*': '*'
+  search_api_task: {  }
+  taxonomy_term: {  }
+  user: {  }
+  paragraph: {  }
+types_translation_lock: {  }
+types_js_lock: {  }
+form_op_lock:
+  crop:
+    mode: 0
+    values: {  }
+  file:
+    mode: 0
+    values: {  }
+  job_schedule:
+    mode: null
+    values: {  }
+  media:
+    mode: 0
+    values: {  }
+  menu_link_content:
+    mode: 0
+    values: {  }
+  node:
+    mode: 0
+    values: {  }
+  path_alias:
+    mode: null
+    values: {  }
+  eventseries:
+    mode: 0
+    values: {  }
+  eventinstance:
+    mode: 0
+    values: {  }
+  search_api_task:
+    mode: null
+    values: {  }
+  taxonomy_term:
+    mode: 0
+    values: {  }
+  user:
+    mode: 0
+    values: {  }
+  paragraph:
+    mode: 0
+    values: {  }

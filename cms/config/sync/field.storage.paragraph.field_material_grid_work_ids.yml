@@ -1,17 +1,16 @@
-uuid: ada606b2-ee0b-411e-b9b4-0c9216d0a19a
+uuid: b8553ff9-3f04-4299-8442-c96ae89f9cd4
 langcode: en
 status: true
 dependencies:
   module:
-    - node
+    - dpl_fbi
     - paragraphs
-id: paragraph.field_filter_content_types
-field_name: field_filter_content_types
+id: paragraph.field_material_grid_work_ids
+field_name: field_material_grid_work_ids
 entity_type: paragraph
-type: entity_reference
-settings:
-  target_type: node_type
-module: core
+type: dpl_fbi_work_id
+settings: {  }
+module: dpl_fbi
 locked: false
 cardinality: -1
 translatable: true

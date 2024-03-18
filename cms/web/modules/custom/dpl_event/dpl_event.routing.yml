@@ -1,0 +1,7 @@
+dpl_event.settings:
+  path: "/admin/config/dpl-event/settings"
+  defaults:
+    _title: "Event settings"
+    _form: 'Drupal\dpl_event\Form\SettingsForm'
+  requirements:
+    _permission: "administer library agency configuration"

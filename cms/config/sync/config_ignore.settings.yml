@@ -2,6 +2,7 @@ _core:
   default_config_hash: UVH1aJ4b44UM-VdPVN7hNNuuVqfReJxwfVeDQH1Hvsk
 ignored_config_entities:
   - dpl_dashboard.settings
+  - dpl_event.settings
   - dpl_favorites_list.settings
   - dpl_fbs.settings
   - dpl_fees.settings

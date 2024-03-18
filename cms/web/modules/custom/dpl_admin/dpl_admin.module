@@ -11,6 +11,7 @@ use Drupal\Core\Url;
 use Drupal\menu_link_content\Entity\MenuLinkContent;
 use Drupal\recurring_events\Entity\EventInstance;
 use Drupal\views\Plugin\views\field\EntityField;
+use Drupal\views\ResultRow;
 use Drupal\views\ViewExecutable;
 
 /**
@@ -63,35 +64,41 @@ function dpl_admin_menu_local_actions_alter(&$local_actions) : void {
 
 /**
  * Implements template_preprocess_views_view_field().
- *
- * Preprocesses the output of a field in the "event_admin" view.
- * Altering the output to generate a unique indicator with a link to the
- * eventseries.
- *
- * {@inheritDoc}
  */
 function dpl_admin_preprocess_views_view_field(array &$variables): void {
-  if (!isset($variables['view'], $variables['field'], $variables['output'])) {
+  if (
+    !isset($variables['view'], $variables['field']) ||
+    !$variables['view'] instanceof ViewExecutable ||
+    !$variables['field'] instanceof EntityField
+  ) {
     return;
   }
 
-  $view = $variables['view'];
-  $field = $variables['field'];
-  $output = $variables['output'];
-
-  if (!$view instanceof ViewExecutable || $view->id() !== 'event_admin') {
-    return;
+  if ($variables['view']->id() == 'event_admin' &&
+    str_ends_with($variables['field']->getField(), '.eventseries_id')) {
+    _dpl_admin_preprocess_views_view_field_event_admin_eventseries_id($variables);
   }
 
-  if (!$field instanceof EntityField ||
-    !$output instanceof Markup ||
-    !str_ends_with($field->getField(), '.eventseries_id')) {
+  if ($variables['view']->id() == 'content' &&
+    $variables['field']->getField() == '.name') {
+    _dpl_admin_preprocess_views_view_field_content_name($variables);
+  }
+}
+
+/**
+ * Preprocesses the output of the id field in the "event_admin" view.
+ *
+ *  Altering the output to generate a unique indicator with a link to the
+ *  eventseries.
+ */
+function _dpl_admin_preprocess_views_view_field_event_admin_eventseries_id(array &$variables): void {
+  if (!isset($variables['output']) || !$variables['output'] instanceof Markup) {
     return;
   }
 
   // Take the ID, and create a unique HSL color value, that we use for
   // background image further down.
-  $id = $output->__toString();
+  $id = $variables['output']->__toString();
   $unique_hsl_value = ((intval($id) * 100) % 360);
   $url = Url::fromRoute('entity.eventseries.canonical', ['eventseries' => $id]);
 
@@ -99,6 +106,36 @@ function dpl_admin_preprocess_views_view_field(array &$variables): void {
   $markup = '<a class="dpl-admin__unique-indicator" style="background-color: hsl(' . $unique_hsl_value . ', 70%, 50%);" href="' . $url->toString() . '">' . $sanitized_id . '</a>';
 
   $variables['output'] = Markup::create($markup);
+}
+
+/**
+ * Preprocess the author field in the "content" admin view.
+ *
+ * Add information if the content is locked by another user.
+ */
+function _dpl_admin_preprocess_views_view_field_content_name(array &$variables) : void {
+  if (
+    !isset($variables['output'], $variables['row']) ||
+    !$variables['row'] instanceof ResultRow ||
+    !$variables['output'] instanceof Markup
+  ) {
+    return;
+  }
+
+  /** @var \Drupal\user\UserInterface|null $content_lock_owner */
+  $content_lock_owner = $variables['row']->_relationship_entities['uid_1'] ?? NULL;
+
+  if (!$content_lock_owner) {
+    return;
+  }
+
+  $variables['output'] = Markup::create("
+    {$variables['output']}
+    <br/>
+    <small>" .
+    t('(Locked by @username)', ['@username' => $content_lock_owner->toLink()->toString()], ["context" => "DPL admin UX"]) .
+    "</small>"
+  );
 }
 
 /**

@@ -4,7 +4,9 @@ status: true
 dependencies:
   config:
     - core.entity_view_mode.eventinstance.list_teaser
+    - field.field.eventinstance.default.field_branch
     - field.field.eventinstance.default.field_categories
+    - field.field.eventinstance.default.field_description
     - field.field.eventinstance.default.field_event_address
     - field.field.eventinstance.default.field_event_description
     - field.field.eventinstance.default.field_event_image
@@ -32,6 +34,14 @@ targetEntityType: eventinstance
 bundle: default
 mode: list_teaser
 content:
+  branch:
+    type: entity_reference_label
+    label: hidden
+    settings:
+      link: false
+    third_party_settings: {  }
+    weight: 50
+    region: content
   date:
     type: date_range_without_time
     label: hidden
@@ -66,14 +76,14 @@ content:
     settings:
       link: false
     third_party_settings: {  }
-    weight: 10
+    weight: 11
     region: content
   event_description:
     type: text_default
     label: hidden
     settings: {  }
     third_party_settings: {  }
-    weight: 3
+    weight: 4
     region: content
   event_image:
     type: entity_reference_entity_view
@@ -82,7 +92,7 @@ content:
       view_mode: hero_wide
       link: false
     third_party_settings: {  }
-    weight: 4
+    weight: 5
     region: content
   event_link:
     type: link
@@ -94,7 +104,7 @@ content:
       rel: ''
       target: ''
     third_party_settings: {  }
-    weight: 5
+    weight: 6
     region: content
   event_paragraphs:
     type: entity_reference_revisions_entity_view
@@ -103,7 +113,7 @@ content:
       view_mode: default
       link: ''
     third_party_settings: {  }
-    weight: 6
+    weight: 7
     region: content
   event_partners:
     type: string
@@ -111,7 +121,7 @@ content:
     settings:
       link_to_entity: false
     third_party_settings: {  }
-    weight: 9
+    weight: 10
     region: content
   event_place:
     type: string
@@ -119,15 +129,24 @@ content:
     settings:
       link_to_entity: false
     third_party_settings: {  }
-    weight: 7
+    weight: 8
     region: content
   event_tags:
     type: entity_reference_label
-    label: visible
+    label: above
     settings:
       link: true
     third_party_settings: {  }
-    weight: 60
+    weight: 11
+    region: content
+  event_teaser_image:
+    type: entity_reference_entity_view
+    label: hidden
+    settings:
+      view_mode: hero_wide
+      link: false
+    third_party_settings: {  }
+    weight: 14
     region: content
   event_ticket_categories:
     type: entity_reference_revisions_entity_view
@@ -136,7 +155,32 @@ content:
       view_mode: default
       link: ''
     third_party_settings: {  }
-    weight: 8
+    weight: 9
+    region: content
+  field_description:
+    type: basic_string
+    label: hidden
+    settings: {  }
+    third_party_settings: {  }
+    weight: 3
+    region: content
+  field_event_image:
+    type: entity_reference_entity_view
+    label: hidden
+    settings:
+      view_mode: hero_wide
+      link: false
+    third_party_settings: {  }
+    weight: 13
+    region: content
+  field_teaser_image:
+    type: entity_reference_entity_view
+    label: hidden
+    settings:
+      view_mode: hero_wide
+      link: false
+    third_party_settings: {  }
+    weight: 12
     region: content
   title:
     type: string
@@ -150,12 +194,11 @@ hidden:
   body: true
   description: true
   event_state: true
-  event_teaser_image: true
   event_teaser_text: true
+  field_branch: true
   field_categories: true
   field_event_address: true
   field_event_description: true
-  field_event_image: true
   field_event_link: true
   field_event_paragraphs: true
   field_event_partners: true
@@ -163,7 +206,6 @@ hidden:
   field_event_state: true
   field_event_title: true
   field_tags: true
-  field_teaser_image: true
   field_teaser_text: true
   field_ticket_categories: true
   search_api_excerpt: true
