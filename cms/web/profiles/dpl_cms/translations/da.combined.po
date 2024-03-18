@@ -5403,32 +5403,32 @@ msgstr "Bibliotek"
 #: 
 msgctxt "field.field.node.article.field_canonical_url:label"
 msgid "Canonical url"
-msgstr ""
+msgstr "Canonical URL"
 
 #: 
 msgctxt "field.field.node.article.field_canonical_url:description"
 msgid "Please provide a canonical URL if this content has been duplicated from other websites. This helps signal to search engines that the preferred source of this content is the specified canonical URL, preventing potential duplicate content issues and ensuring proper attribution to the original source."
-msgstr ""
+msgstr "Oplys en canonical URL hvis indholdet i artiklen er kopieret fra en anden hjemmeside (fx kopieret fra et andet biblioteks hjemmeside). Dette hjælper med at signalere til søgemaskiner at kilden til indholdet er den specificerede side, og sikrer at den originale kilde krediteres."
 
 #: 
 msgctxt "field.field.node.article.field_categories:label"
 msgid "Categories"
-msgstr ""
+msgstr "Kategorier"
 
 #: 
 msgctxt "field.field.node.article.field_override_author:label"
 msgid "Override author"
-msgstr ""
+msgstr "Overskriv forfatter"
 
 #: 
 msgctxt "field.field.node.article.field_paragraphs:label"
 msgid "Paragraphs"
-msgstr ""
+msgstr "Paragraffer"
 
 #: 
 msgctxt "field.field.node.article.field_show_override_author:label"
 msgid "Override the author\t"
-msgstr ""
+msgstr "Overskriv forfatteren ␣"
 
 #: 
 msgctxt "field.field.node.article.field_show_override_author:description"
@@ -5440,12 +5440,12 @@ msgstr "Som default sættes forfatteren til at være den indloggede redaktør. <
 #: 
 msgctxt "field.field.node.article.field_show_override_author:settings:on_label"
 msgid "On"
-msgstr ""
+msgstr "Til"
 
 #: 
 msgctxt "field.field.node.article.field_show_override_author:settings:off_label"
 msgid "Off"
-msgstr ""
+msgstr "Fra"
 
 #: 
 msgctxt "field.field.node.article.field_subtitle:label"
@@ -5455,7 +5455,7 @@ msgstr "Manchet"
 #: 
 msgctxt "field.field.node.article.field_tags:label"
 msgid "Tags"
-msgstr ""
+msgstr "Tags"
 
 #: 
 msgctxt "field.field.node.article.field_teaser_image:label"
@@ -6312,12 +6312,12 @@ msgstr ""
 #: 
 msgctxt "node.type.article:name"
 msgid "Article"
-msgstr ""
+msgstr "Artikel"
 
 #: 
 msgctxt "node.type.article:description"
 msgid "Use articles for news-worthy content, that does not get updated regularly."
-msgstr ""
+msgstr "Brug artikler til nyhedspræget indhold med en begrænset levetid."
 
 #: 
 msgctxt "node.type.branch:name"
@@ -7129,27 +7129,27 @@ msgstr ""
 #: 
 msgctxt "views.view.articles:label"
 msgid "Articles"
-msgstr ""
+msgstr "Artikler"
 
 #: 
 msgctxt "views.view.articles:display:default:display_title"
 msgid "Default"
-msgstr ""
+msgstr "Default"
 
 #: 
 msgctxt "views.view.articles:display:default:display_options:title"
 msgid "Articles"
-msgstr ""
+msgstr "Artikler"
 
 #: 
 msgctxt "views.view.articles:display:default:display_options:pager:options:expose:items_per_page_label"
 msgid "Items per page"
-msgstr ""
+msgstr "Enheder pr. side"
 
 #: 
 msgctxt "views.view.articles:display:default:display_options:pager:options:expose:items_per_page_options_all_label"
 msgid "- All -"
-msgstr ""
+msgstr "- Alle - "
 
 #: 
 msgctxt "views.view.articles:display:default:display_options:pager:options:expose:offset_label"
@@ -7159,12 +7159,12 @@ msgstr ""
 #: 
 msgctxt "views.view.articles:display:default:display_options:pager:options:views_infinite_scroll:button_text"
 msgid "Showing @current_items out of @total results"
-msgstr ""
+msgstr "Viser @current_items ud af @total artikler"
 
 #: 
 msgctxt "views.view.articles:display:default:display_options:exposed_form:options:submit_button"
 msgid "Apply"
-msgstr ""
+msgstr "Bekræft"
 
 #: 
 msgctxt "views.view.articles:display:default:display_options:exposed_form:options:reset_button_label"
