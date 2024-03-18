@@ -94,6 +94,7 @@
         "drupal/dynamic_entity_reference": "^3.1",
         "drupal/entity_clone_template": "^2.0",
         "drupal/enum_field": "^1.0",
+        "drupal/facets": "^2.0",
         "drupal/field_group": "^3.4",
         "drupal/field_inheritance": "^2.0",
         "drupal/focal_point": "^2.0",
