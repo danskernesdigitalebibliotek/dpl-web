@@ -5098,7 +5098,7 @@ msgstr "Teaser"
 #: 
 msgctxt "core.entity_view_mode.node.token:label"
 msgid "Token"
-msgstr ""
+msgstr "Token"
 
 #: 
 msgctxt "core.entity_view_mode.paragraph.alternative:label"
@@ -5113,12 +5113,12 @@ msgstr "Gennemse"
 #: 
 msgctxt "core.entity_view_mode.paragraph.token:label"
 msgid "Token"
-msgstr ""
+msgstr "Token"
 
 #: 
 msgctxt "core.entity_view_mode.path_alias.token:label"
 msgid "Token"
-msgstr ""
+msgstr "Token"
 
 #: 
 msgctxt "core.entity_view_mode.taxonomy_term.full:label"
@@ -5138,7 +5138,7 @@ msgstr ""
 #: 
 msgctxt "core.entity_view_mode.user.token:label"
 msgid "Token"
-msgstr ""
+msgstr "Token"
 
 #: 
 msgctxt "crop.type.focal_point:label"
@@ -5556,12 +5556,12 @@ msgstr "Som default vises titel og manchettekst ikke på indholdstypen sider.  H
 #: 
 msgctxt "field.field.node.page.field_display_titles:settings:on_label"
 msgid "On"
-msgstr ""
+msgstr "Til"
 
 #: 
 msgctxt "field.field.node.page.field_display_titles:settings:off_label"
 msgid "Off"
-msgstr ""
+msgstr "Fra"
 
 #: 
 msgctxt "field.field.node.page.field_hero_title:label"
