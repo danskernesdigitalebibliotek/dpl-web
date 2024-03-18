@@ -1,1 +1,5 @@
 {% extends '@novel/views/views-view--content-list-page.html.twig' %}
+
+{% block facets %}
+  {{ drupal_block("facet_block:event_categories") }}
+{% endblock %}
