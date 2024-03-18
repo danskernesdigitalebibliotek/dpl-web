@@ -4019,11 +4019,11 @@ msgstr "Vis alle"
 #: 
 msgctxt "DPL admin UX"
 msgid "You have added a menu link with a parent. Please notice that this menu link will not be displayed, as we do not support multi-levels in the main menu."
-msgstr ""
+msgstr "Du har tilføjet et menupunkt i en sekundær menu. Vær opmærksom på at menupunktet ikke vil blive vist, da vi ikke understøtter flere niveauer i hovedmenuen."
 
 #: 
 msgid "Footer item"
-msgstr ""
+msgstr "Footermenu"
 
 #: 
 msgid "Name"
@@ -4035,7 +4035,7 @@ msgstr "indhold"
 
 #: 
 msgid "If there is no content the item will be removed."
-msgstr ""
+msgstr "Hvis der ikke er indhold i feltet vil blokken blive fjernet."
 
 #: 
 msgid "Submit"
@@ -4236,7 +4236,7 @@ msgstr "Vis alle"
 
 #: 
 msgid "CQL search string"
-msgstr ""
+msgstr "CQL Søgestreng"
 
 #: 
 msgid "Text value"
@@ -4321,7 +4321,7 @@ msgstr "Hvor længe skal der gå fra et arrangement er afholdt, til det skal afp
 
 #: 
 msgid "Get tickets"
-msgstr ""
+msgstr "Hent billetter"
 
 #: 
 msgid "Updated @count description fields on @entity_type"
@@ -4329,7 +4329,7 @@ msgstr ""
 
 #: 
 msgid "(Locked by @username)"
-msgstr ""
+msgstr "(Låst af @username)"
 
 #: 
 msgid "The material type"
@@ -4998,7 +4998,7 @@ msgstr "Navigationsteaser"
 #: 
 msgctxt "core.entity_view_mode.eventinstance.stacked_event:label"
 msgid "Stacked event"
-msgstr ""
+msgstr "Stakkede arrangementer"
 
 #: 
 msgctxt "core.entity_view_mode.eventseries.card:label"
@@ -5008,7 +5008,7 @@ msgstr "Card"
 #: 
 msgctxt "core.entity_view_mode.eventseries.list:label"
 msgid "List"
-msgstr ""
+msgstr "Liste"
 
 #: 
 msgctxt "core.entity_view_mode.eventseries.nav_spot:label"
@@ -5033,12 +5033,12 @@ msgstr ""
 #: 
 msgctxt "core.entity_view_mode.media.hero_wide:label"
 msgid "Hero wide (4/3)"
-msgstr ""
+msgstr "Hero (4/3)"
 
 #: 
 msgctxt "core.entity_view_mode.media.media_library:label"
 msgid "Media library"
-msgstr ""
+msgstr "Mediebibliotek"
 
 #: 
 msgctxt "core.entity_view_mode.media.paragraph_squared:label"
@@ -5068,7 +5068,7 @@ msgstr "Listeteaser"
 #: 
 msgctxt "core.entity_view_mode.node.nav_spot:label"
 msgid "Nav spot"
-msgstr ""
+msgstr "Navigationsspot"
 
 #: 
 msgctxt "core.entity_view_mode.node.nav_teaser:label"
@@ -5078,7 +5078,7 @@ msgstr "Navigationsteaser"
 #: 
 msgctxt "core.entity_view_mode.node.rss:label"
 msgid "RSS"
-msgstr ""
+msgstr "RSS"
 
 #: 
 msgctxt "core.entity_view_mode.node.search_index:label"
@@ -5208,7 +5208,7 @@ msgstr "I samarbejde med"
 #: 
 msgctxt "field.field.eventinstance.default.field_event_partners:description"
 msgid "A list of partners for the event"
-msgstr ""
+msgstr "En liste over samarbejdspartnere"
 
 #: 
 msgctxt "field.field.eventinstance.default.field_event_place:label"
@@ -5302,7 +5302,7 @@ msgstr "Billetlink"
 #: 
 msgctxt "field.field.eventseries.default.field_event_link:description"
 msgid "Please enter the URL where attendees can buy/get tickets for this event."
-msgstr ""
+msgstr "Skriv URL hvor billetter kan købes/hentes til arrangementet."
 
 #: 
 msgctxt "field.field.eventseries.default.field_event_paragraphs:label"
@@ -5312,12 +5312,12 @@ msgstr "Paragraffer"
 #: 
 msgctxt "field.field.eventseries.default.field_event_partners:label"
 msgid "Partners"
-msgstr ""
+msgstr "I samarbejde med"
 
 #: 
 msgctxt "field.field.eventseries.default.field_event_partners:description"
 msgid "A list of partners for the event"
-msgstr ""
+msgstr "En liste over samarbejdspartnere"
 
 #: 
 msgctxt "field.field.eventseries.default.field_event_place:label"
@@ -5327,12 +5327,12 @@ msgstr "Sted"
 #: 
 msgctxt "field.field.eventseries.default.field_event_state:label"
 msgid "State"
-msgstr ""
+msgstr "Status"
 
 #: 
 msgctxt "field.field.eventseries.default.field_tags:label"
 msgid "Tags"
-msgstr ""
+msgstr "Tags"
 
 #: 
 msgctxt "field.field.eventseries.default.field_teaser_image:label"
@@ -5361,39 +5361,41 @@ msgstr "Teasertekst"
 #: 
 msgctxt "field.field.eventseries.default.field_ticket_categories:label"
 msgid "Ticket categories"
-msgstr ""
+msgstr "Billetkategorier"
 
 #: 
 msgctxt "field.field.media.document.field_media_file:label"
 msgid "File"
-msgstr ""
+msgstr "Fil"
 
 #: 
 msgctxt "field.field.media.image.field_byline:label"
 msgid "Byline"
-msgstr ""
+msgstr "Billedtekst"
 
 #: 
 msgctxt "field.field.media.image.field_byline:description"
 msgid "Used for public credit and copyright information. Will usually be displayed along with the media."
-msgstr ""
+msgstr "Bruges til fotokreditering og info om copyright. Vises som regel ved siden af billedet."
 
 #: 
 msgctxt "field.field.media.image.field_media_image:label"
 msgid "Image"
-msgstr ""
+msgstr "Billede"
 
 #: 
 msgctxt "field.field.media.image.field_media_image:description"
 msgid "You can set a focal point, by clicking on the preview on the image, moving the white target.<br>\n"
 "By setting a focal point, you tell the system which part of the image to keep in focus when it gets cropped.<br>\n"
 "Use the \"preview\" function, to see how your image will be cropped across image styles."
-msgstr ""
+msgstr "Du kan sætte et fokuspunkt ved at klikke på preview på billedet og flytte det hvide punkt. <br>\n"
+"Ved at sætte et fokuspunkt kan du fortælle systemet, hvilken del af billedet der skal være i fokus når det beskæres. <br>\n"
+"Brug \"preview\" funktionen for at se hvordan dit billede vil blive beskåret  i forskellige visninger."
 
 #: 
 msgctxt "field.field.media.video.field_media_oembed_video:label"
 msgid "Remote video URL"
-msgstr ""
+msgstr "URL til video"
 
 #: 
 msgctxt "field.field.node.article.field_branch:label"
@@ -5489,7 +5491,7 @@ msgstr "Adresse"
 #: 
 msgctxt "field.field.node.branch.field_email:label"
 msgid "Email"
-msgstr ""
+msgstr "Email"
 
 #: 
 msgctxt "field.field.node.branch.field_main_media:label"
@@ -5499,17 +5501,17 @@ msgstr ""
 #: 
 msgctxt "field.field.node.branch.field_paragraphs:label"
 msgid "Paragraphs"
-msgstr ""
+msgstr "Paragraffer"
 
 #: 
 msgctxt "field.field.node.branch.field_phone:label"
 msgid "Phone"
-msgstr ""
+msgstr "Telefon"
 
 #: 
 msgctxt "field.field.node.campaign.field_campaign_image:label"
 msgid "Image"
-msgstr ""
+msgstr "Billede"
 
 #: 
 msgctxt "field.field.node.campaign.field_campaign_link:label"
@@ -5620,7 +5622,7 @@ msgstr ""
 #: 
 msgctxt "field.field.paragraph.card_grid_automatic.field_title:label"
 msgid "Title"
-msgstr ""
+msgstr "Titel"
 
 #: 
 msgctxt "field.field.paragraph.card_grid_manual.field_grid_content:label"
@@ -5635,27 +5637,27 @@ msgstr "Overskrift"
 #: 
 msgctxt "field.field.paragraph.content_slider.field_content_references:label"
 msgid "Contents"
-msgstr ""
+msgstr "Indhold"
 
 #: 
 msgctxt "field.field.paragraph.content_slider.field_title:label"
 msgid "Title"
-msgstr ""
+msgstr "Titel"
 
 #: 
 msgctxt "field.field.paragraph.event_ticket_category.field_ticket_category_name:label"
 msgid "Name"
-msgstr ""
+msgstr "Navn"
 
 #: 
 msgctxt "field.field.paragraph.event_ticket_category.field_ticket_category_price:label"
 msgid "Price"
-msgstr ""
+msgstr "Pris"
 
 #: 
 msgctxt "field.field.paragraph.files.field_files:label"
 msgid "Files"
-msgstr ""
+msgstr "Filer"
 
 #: 
 msgctxt "field.field.paragraph.hero.field_hero_categories:label"
@@ -5722,7 +5724,7 @@ msgstr ""
 #: 
 msgctxt "field.field.paragraph.material_grid_automatic.field_cql_search:label"
 msgid "CQL Search"
-msgstr ""
+msgstr "CQL Søgning"
 
 #: 
 msgctxt "field.field.paragraph.material_grid_automatic.field_cql_search:description"
@@ -5835,36 +5837,40 @@ msgstr ""
 #: 
 msgctxt "field.field.paragraph.recommendation.field_image_position_right:settings:off_label"
 msgid "Off"
-msgstr ""
+msgstr "Fra"
 
 #: 
 msgctxt "field.field.paragraph.recommendation.field_recommendation_description:label"
 msgid "Description"
-msgstr ""
+msgstr "Beskrivelse"
 
 #: 
 msgctxt "field.field.paragraph.recommendation.field_recommendation_description:description"
 msgid "This is the description for a recommendation. \n"
 "\n"
 "If you add a description, the title of the the material will not be automatically generated. "
-msgstr ""
+msgstr "Dette er beskrivelsesteksten for en anbefaling. \n"
+"\n"
+"Hvis du tilføjer en beskrivelse vil titlen på materialet ikke blive genereret automatisk."
 
 #: 
 msgctxt "field.field.paragraph.recommendation.field_recommendation_title:label"
 msgid "Title"
-msgstr ""
+msgstr "Titel"
 
 #: 
 msgctxt "field.field.paragraph.recommendation.field_recommendation_title:description"
 msgid "The title of the recommended material.\n"
 "\n"
 "If you add a title, the description for the material will not be automatically generated. "
-msgstr ""
+msgstr "Dette er titlen på et anbefalet materiale. \n"
+"\n"
+"Hvis du tilføjer en titel vil beskrivelsesteksten for materialet ikke blive genereret automatisk. "
 
 #: 
 msgctxt "field.field.paragraph.recommendation.field_recommendation_work_id:label"
 msgid "Work ID"
-msgstr ""
+msgstr "VærkID"
 
 #: 
 msgctxt "field.field.paragraph.recommendation.field_recommendation_work_id:description"
@@ -5887,17 +5893,17 @@ msgstr ""
 #: 
 msgctxt "field.field.paragraph.text_body.field_body:label"
 msgid "Body"
-msgstr ""
+msgstr "Brødtekst"
 
 #: 
 msgctxt "field.field.paragraph.user_registration_item.field_anchor:label"
 msgid "Anchor"
-msgstr ""
+msgstr "Anker"
 
 #: 
 msgctxt "field.field.paragraph.user_registration_item.field_body:label"
 msgid "Body"
-msgstr ""
+msgstr "Brødtekst"
 
 #: 
 msgctxt "field.field.paragraph.user_registration_item.field_display_in_navigation:label"
@@ -5912,12 +5918,12 @@ msgstr ""
 #: 
 msgctxt "field.field.paragraph.user_registration_item.field_display_in_navigation:settings:on_label"
 msgid "On"
-msgstr ""
+msgstr "Til"
 
 #: 
 msgctxt "field.field.paragraph.user_registration_item.field_display_in_navigation:settings:off_label"
 msgid "Off"
-msgstr ""
+msgstr "Fra"
 
 #: 
 msgctxt "field.field.paragraph.user_registration_item.field_link_target:label"
