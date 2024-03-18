@@ -13,6 +13,14 @@ name: Events
 description: ''
 read_only: false
 field_settings:
+  branch:
+    label: 'Event Branch'
+    datasource_id: 'entity:eventinstance'
+    property_path: branch
+    type: integer
+    dependencies:
+      module:
+        - field_inheritance
   date:
     label: 'Event Date'
     datasource_id: 'entity:eventinstance'
