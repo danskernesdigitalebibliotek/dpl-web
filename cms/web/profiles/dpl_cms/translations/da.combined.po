@@ -4180,12 +4180,12 @@ msgstr ""
 #: 
 msgctxt "DPL admin UX"
 msgid "Event series"
-msgstr "Arrangementsserier"
+msgstr "Arrangementer"
 
 #: 
 msgctxt "DPL admin UX"
 msgid "Use event series to create event instances - you can use series, both to create reoccurring events, and single events."
-msgstr "Brug arrangementsserier til at oprette arrangementer - du kan bruge serier både til at oprette gentagende arrangementer og enkeltstående arrangementer."
+msgstr "Brug denne paragraf til at oprette arrangementer - du kan både oprette gentagende arrangementer og enkeltstående arrangementer."
 
 #: 
 msgctxt "DPL admin UX"
