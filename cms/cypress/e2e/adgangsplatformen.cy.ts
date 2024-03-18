@@ -60,7 +60,39 @@ describe("Adgangsplatformen", () => {
     );
   });
 
-  it("can register a new user and expose the right tokens for the react apps", () => {
+  // When a user comes back from authentication with MitID, the user should
+  // not be able to do anything else other than registering or cancelling.
+  // Check that the header and footer sections is not vissible.
+  it("does not show header and footer section for unregistered user", () => {
+    cy.setupAdgangsplatformenRegisterMappinngs({
+      authorizationCode: "7c5e3213aea6ef42ec97dfeaa6f5b1d454d856dc",
+      accessToken: "447131b0a03fe0421204c54e5c21a60-new-user",
+      userCPR: 1412749999,
+    });
+
+    cy.clearCookies();
+    cy.visit("/");
+    // Open user menu.
+    cy.get(".header__menu-profile").click();
+    // Click create profile.
+    cy.get(".modal-login__btn-create-profile").click();
+    cy.get("main#main-content")
+      .get(".paragraphs__item--user_registration_section__link")
+      .first()
+      .click();
+
+    cy.request("/dpl-react/user-tokens").then((response) => {
+      expect(response.status).to.eq(200);
+      expect(response.body).contain(
+        'window.dplReact = window.dplReact || {};\nwindow.dplReact.setToken("unregistered-user", "447131b0a03fe0421204c54e5c21a60-new-user")'
+      );
+    });
+
+    cy.get(".header").should("not.exist");
+    cy.get(".footer").should("not.exist");
+  });
+
+  it.only("can register a new user and expose the right tokens for the react apps", () => {
     cy.setupAdgangsplatformenRegisterMappinngs({
       authorizationCode: "7c5e3213aea6ef42ec97dfeaa6f5b1d454d856dc",
       accessToken: "447131b0a03fe0421204c54e5c21a60-new-user",
@@ -71,7 +103,10 @@ describe("Adgangsplatformen", () => {
     cy.visit("/");
     cy.get(".header__menu-profile").click();
     cy.get(".modal-login__btn-create-profile").click();
-    cy.get("main#main-content").get('.paragraphs__item--user_registration_section__link').first().click();
+    cy.get("main#main-content")
+      .get(".paragraphs__item--user_registration_section__link")
+      .first()
+      .click();
     cy.request("/dpl-react/user-tokens").then((response) => {
       expect(response.status).to.eq(200);
       expect(response.body).contain(
@@ -89,6 +124,9 @@ describe("Adgangsplatformen", () => {
       expect(response.body).contain(
         'window.dplReact = window.dplReact || {};\nwindow.dplReact.setToken("user", "447131b0a03fe0421204c54e5c21a60-new-user")'
       );
+      expect(response.body).not.contain(
+        'window.dplReact = window.dplReact || {};\nwindow.dplReact.setToken("unregistered-user", "447131b0a03fe0421204c54e5c21a60-new-user")'
+      );
     });
   });
 
@@ -103,7 +141,10 @@ describe("Adgangsplatformen", () => {
     cy.visit("/");
     cy.get(".header__menu-profile").click();
     cy.get(".modal-login__btn-create-profile").click();
-    cy.get("main#main-content").get('.paragraphs__item--user_registration_section__link').first().click();
+    cy.get("main#main-content")
+      .get(".paragraphs__item--user_registration_section__link")
+      .first()
+      .click();
     cy.request("/dpl-react/user-tokens").then((response) => {
       expect(response.status).to.eq(200);
       expect(response.body).contain(
@@ -111,44 +152,16 @@ describe("Adgangsplatformen", () => {
       );
     });
 
-    cy.get('[data-cy="cancel-user-registration"]');
+    cy.get('[data-cy="cancel-user-registration"]').click;
 
     cy.request("/dpl-react/user-tokens").then((response) => {
-      expect(response.body).contain(
+      expect(response.body).not.contain(
         'window.dplReact = window.dplReact || {};\nwindow.dplReact.setToken("user", "447131b0a03fe0421204c54e5c21a60-new-user")'
       );
-    });
-  });
-
-  // When a user comes back from authentication with MitID
-  // the user should not be able to do anything else than registering or cancelling.
-  // Check that the header and footer sections is not vissible.
-  // Check that the user is able to finish registration.
-
-  it("does not show header and footer section for unregistered user", () => {
-    cy.setupAdgangsplatformenRegisterMappinngs({
-      authorizationCode: "7c5e3213aea6ef42ec97dfeaa6f5b1d454d856dc",
-      accessToken: "447131b0a03fe0421204c54e5c21a60-new-user",
-      userCPR: 1412749999,
-    });
-
-    cy.clearCookies();
-    cy.visit("/");
-    // Open user menu.
-    cy.get(".header__menu-profile").click();
-    // Click create profile.
-    cy.get(".modal-login__btn-create-profile").click();
-    cy.get("main#main-content").get('.paragraphs__item--user_registration_section__link').first().click();
-
-    cy.request("/dpl-react/user-tokens").then((response) => {
-      expect(response.status).to.eq(200);
-      expect(response.body).contain(
+      expect(response.body).not.contain(
         'window.dplReact = window.dplReact || {};\nwindow.dplReact.setToken("unregistered-user", "447131b0a03fe0421204c54e5c21a60-new-user")'
       );
     });
-
-    cy.get('.header').should('not.exist');
-    cy.get('.footer').should('not.exist');
   });
 
   beforeEach(() => {
