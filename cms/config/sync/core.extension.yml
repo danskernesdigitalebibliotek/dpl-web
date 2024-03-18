@@ -45,8 +45,8 @@ module:
   dpl_patron_page: 0
   dpl_patron_redirect: 0
   dpl_patron_reg: 0
-  dpl_protected_nodes: 0
   dpl_po: 0
+  dpl_protected_nodes: 0
   dpl_publizon: 0
   dpl_react: 0
   dpl_react_apps: 0
