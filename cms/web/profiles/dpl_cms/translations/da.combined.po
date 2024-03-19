@@ -4118,7 +4118,7 @@ msgstr "\".version\" filen indeholder ikke information om CMS-versionen."
 
 #: 
 msgid "Not found, this could be due to this environment being a PR environment."
-msgstr ""
+msgstr "Ikke fundet, dette kan skyldes at miljøet er et udviklermiljø."
 
 #: 
 msgid "CMS release version"
@@ -4161,7 +4161,7 @@ msgstr "Indlæser..."
 #: 
 msgctxt "Global"
 msgid "The phone number must be 6 to 15 characters in length and should be comprised solely of numbers or begin with a +"
-msgstr ""
+msgstr "Mobilnummeret skal være mellem 6 og 15 cifre "
 
 #: 
 msgctxt "Global"
@@ -4175,7 +4175,7 @@ msgstr "Du er i reserveringskø"
 
 #: 
 msgid "Make sure that user is detected as registered after registration"
-msgstr ""
+msgstr "Tjek at brugeren er oprettet efter registrering"
 
 #: 
 msgctxt "DPL admin UX"
@@ -4280,11 +4280,11 @@ msgstr "Side til brugeroprettelse. \n"
 
 #: 
 msgid "DPL static content"
-msgstr ""
+msgstr "DPL fast indhold"
 
 #: 
 msgid "Provides static content for new library sites."
-msgstr ""
+msgstr "Sørger for faste sider på nye bibliotekshjemmesider."
 
 #: 
 msgctxt "Library Agency Configuration"
@@ -4297,7 +4297,10 @@ msgid "The link with information about opening hours. <br>\n"
 "                                         You can add a relative url (e.g. /takster). <br>\n"
 "                                         You can search for an internal url. <br>\n"
 "                                         You can add an external url (starting with \"http://\" or \"https://\")."
-msgstr ""
+msgstr "Link til information om åbningstider. <br>\n"
+"                                         Du kan tilføje en relativ sti (f.x. /takster). <br>\n"
+"                                         Du kan søge efter en intern URL. <br>\n"
+"                                         Du kan tilføje en ekstern URL (begyndende med \"http://\" eller \"https://\")."
 
 #: 
 msgctxt "DPL event"
@@ -4325,7 +4328,7 @@ msgstr "Hent billetter"
 
 #: 
 msgid "Updated @count description fields on @entity_type"
-msgstr ""
+msgstr "Opdaterede @count beskrivelsesfelter på @entity_type"
 
 #: 
 msgid "(Locked by @username)"
@@ -4364,11 +4367,11 @@ msgstr "Indstillinger for arrangementer"
 
 #: 
 msgid "DrupalTyped"
-msgstr ""
+msgstr "DrupelTyped"
 
 #: 
 msgid "Better, faster, stronger types"
-msgstr ""
+msgstr "Bedre, hurtigere, stærkere typer"
 
 #: 
 msgid "Opening hours"
@@ -4377,12 +4380,12 @@ msgstr "Åbningstider"
 #: 
 msgctxt "translation handling"
 msgid "Could not create PO file: @destination due to error \"%error\""
-msgstr ""
+msgstr "Kunne ikke danne en PO fil: @destination pga fejlen \"%error\""
 
 #: 
 msgctxt "translation handling"
 msgid "File created on: @destination"
-msgstr ""
+msgstr "Fil dannet på : @destination"
 
 #: 
 msgctxt "translation handling"
@@ -4415,20 +4418,20 @@ msgstr ""
 
 #: 
 msgid "Could not create temp PO file."
-msgstr ""
+msgstr "Kunne ikke skabe en midlertidig PO-fil."
 
 #: 
 msgctxt "translation handling"
 msgid "Could not locate temp PO file."
-msgstr ""
+msgstr "Kunne ikke lokalisere midlertidig PO-fil."
 
 #: 
 msgid "DPL PO"
-msgstr ""
+msgstr "DPL PO"
 
 #: 
 msgid "PO file handling. Export/import, splitting etc."
-msgstr ""
+msgstr "PO filhåndtering. Export/Import, opdeling etc."
 
 #: 
 msgctxt "block.block.claro_breadcrumbs:settings:label"
@@ -4443,7 +4446,7 @@ msgstr ""
 #: 
 msgctxt "block.block.claro_local_actions:settings:label"
 msgid "Primary admin actions"
-msgstr ""
+msgstr "Primære administratorhandlinger"
 
 #: 
 msgctxt "block.block.claro_messages:settings:label"
@@ -4458,12 +4461,12 @@ msgstr "Sidetitel"
 #: 
 msgctxt "block.block.claro_primary_local_tasks:settings:label"
 msgid "Primary tabs"
-msgstr ""
+msgstr "Primære tabs"
 
 #: 
 msgctxt "block.block.claro_secondary_local_tasks:settings:label"
 msgid "Secondary tabs"
-msgstr ""
+msgstr "Sekundære tabs"
 
 #: 
 msgctxt "block.block.gin_breadcrumbs:settings:label"
@@ -4478,12 +4481,12 @@ msgstr ""
 #: 
 msgctxt "block.block.gin_local_actions:settings:label"
 msgid "Primary admin actions"
-msgstr ""
+msgstr "Primære administratorhandlinger"
 
 #: 
 msgctxt "block.block.gin_messages:settings:label"
 msgid "Status messages"
-msgstr ""
+msgstr "Statusbeskeder"
 
 #: 
 msgctxt "block.block.gin_page_title:settings:label"
@@ -4493,12 +4496,12 @@ msgstr "Sidetitel"
 #: 
 msgctxt "block.block.gin_primary_local_tasks:settings:label"
 msgid "Primary tabs"
-msgstr ""
+msgstr "Primære tabs"
 
 #: 
 msgctxt "block.block.gin_secondary_local_tasks:settings:label"
 msgid "Secondary tabs"
-msgstr ""
+msgstr "Sekundære tabs"
 
 #: 
 msgctxt "block.block.novel_admin:settings:label"
@@ -5083,7 +5086,7 @@ msgstr "RSS"
 #: 
 msgctxt "core.entity_view_mode.node.search_index:label"
 msgid "Search index"
-msgstr ""
+msgstr "Søgeindeks"
 
 #: 
 msgctxt "core.entity_view_mode.node.search_result:label"
@@ -5516,22 +5519,22 @@ msgstr "Billede"
 #: 
 msgctxt "field.field.node.campaign.field_campaign_link:label"
 msgid "Link"
-msgstr ""
+msgstr "Link"
 
 #: 
 msgctxt "field.field.node.campaign.field_campaign_rules:label"
 msgid "Triggers"
-msgstr ""
+msgstr "Triggers"
 
 #: 
 msgctxt "field.field.node.campaign.field_campaign_rules_logic:label"
 msgid "Trigger Logic"
-msgstr ""
+msgstr "Triggerlogik"
 
 #: 
 msgctxt "field.field.node.campaign.field_campaign_rules_logic:description"
 msgid "Choose if all triggers should match (AND) for a campaign to be displayed or just one of them (OR)."
-msgstr ""
+msgstr "Vælg om alle triggers skal matche (AND) for at en kampagne vises, eller kun én af dem (OR) "
 
 #: 
 msgctxt "field.field.node.campaign.field_campaign_text:label"
@@ -5588,12 +5591,12 @@ msgstr "Manchet"
 #: 
 msgctxt "field.field.paragraph.accordion.field_accordion_description:label"
 msgid "Accordion description"
-msgstr ""
+msgstr "Accordion beskrivelse"
 
 #: 
 msgctxt "field.field.paragraph.accordion.field_accordion_title:label"
 msgid "Accordion title"
-msgstr ""
+msgstr "Accordion titel"
 
 #: 
 msgctxt "field.field.paragraph.campaign_rule.field_campaign_rule_facet:label"
@@ -5693,34 +5696,36 @@ msgstr "Hero link"
 #: 
 msgctxt "field.field.paragraph.hero.field_hero_title:label"
 msgid "Hero title"
-msgstr ""
+msgstr "Hero titel"
 
 #: 
 msgctxt "field.field.paragraph.language_selector.field_language_icon:label"
 msgid "Language icon"
-msgstr ""
+msgstr "Sprogikon"
 
 #: 
 msgctxt "field.field.paragraph.language_selector.field_link_language:label"
 msgid "Link to a different language"
-msgstr ""
+msgstr "Link til et andet sprog"
 
 #: 
 msgctxt "field.field.paragraph.links.field_link:label"
 msgid "Link"
-msgstr ""
+msgstr "Link"
 
 #: 
 msgctxt "field.field.paragraph.material_grid_automatic.field_amount_of_materials:label"
 msgid "Amount of materials"
-msgstr ""
+msgstr "Antal materialer/værker"
 
 #: 
 msgctxt "field.field.paragraph.material_grid_automatic.field_amount_of_materials:description"
 msgid "Determines the amount of materials that will be shown, based on the CQL string. \n"
 "\n"
 "Obs: If for example a CQL string has 11 results, and an editor chooses 12. The list will display 8 instead of 11, since the grid should be able to increment by 4. "
-msgstr ""
+msgstr "Bestemmer antallet af værker som vises, baseret på CQL strengen.\n"
+"\n"
+"Bemærk: Hvis en CQL-søgning giver 11 resultater og du som redaktør har valgt at vise 12, vises kun de første 8, da komponenten kun kan vise et antal der er deleligt med 4."
 
 #: 
 msgctxt "field.field.paragraph.material_grid_automatic.field_cql_search:label"
@@ -5949,7 +5954,7 @@ msgstr ""
 #: 
 msgctxt "field.field.paragraph.user_registration_item.field_registration_link:label"
 msgid "Registration Link"
-msgstr ""
+msgstr "Registreringslink"
 
 #: 
 msgctxt "field.field.paragraph.user_registration_item.field_title:label"
@@ -5964,87 +5969,87 @@ msgstr "Brugerregistrering elementer"
 #: 
 msgctxt "field.field.paragraph.user_registration_section.field_user_registration_items:description"
 msgid "Add a new \"User registration item\" to the list."
-msgstr ""
+msgstr "Tilføj et nyt \"Brugerregistreringslink\" til listen."
 
 #: 
 msgctxt "field.field.paragraph.video.field_embed_video:label"
 msgid "Embed video"
-msgstr ""
+msgstr "Indlejr video"
 
 #: 
 msgctxt "field.storage.node.field_campaign_rules_logic:settings:allowed_values:0:label"
 msgid "AND"
-msgstr ""
+msgstr "AND"
 
 #: 
 msgctxt "field.storage.node.field_campaign_rules_logic:settings:allowed_values:1:label"
 msgid "OR"
-msgstr ""
+msgstr "OR"
 
 #: 
 msgctxt "field.storage.paragraph.field_amount_of_materials:settings:allowed_values:0:label"
 msgid "4"
-msgstr ""
+msgstr "4"
 
 #: 
 msgctxt "field.storage.paragraph.field_amount_of_materials:settings:allowed_values:1:label"
 msgid "8"
-msgstr ""
+msgstr "8"
 
 #: 
 msgctxt "field.storage.paragraph.field_amount_of_materials:settings:allowed_values:2:label"
 msgid "12"
-msgstr ""
+msgstr "12"
 
 #: 
 msgctxt "field.storage.paragraph.field_amount_of_materials:settings:allowed_values:3:label"
 msgid "16"
-msgstr ""
+msgstr "16"
 
 #: 
 msgctxt "field.storage.paragraph.field_amount_of_materials:settings:allowed_values:4:label"
 msgid "20"
-msgstr ""
+msgstr "20"
 
 #: 
 msgctxt "field.storage.paragraph.field_amount_of_materials:settings:allowed_values:5:label"
 msgid "24"
-msgstr ""
+msgstr "24"
 
 #: 
 msgctxt "field.storage.paragraph.field_amount_of_materials:settings:allowed_values:6:label"
 msgid "28"
-msgstr ""
+msgstr "28"
 
 #: 
 msgctxt "field.storage.paragraph.field_amount_of_materials:settings:allowed_values:7:label"
 msgid "32"
-msgstr ""
+msgstr "32"
 
 #: 
 msgctxt "field.storage.paragraph.field_campaign_rule_facet:settings:allowed_values:0:label"
 msgid "Access"
-msgstr ""
+msgstr "Adgang"
 
 #: 
 msgctxt "field.storage.paragraph.field_campaign_rule_facet:settings:allowed_values:1:label"
 msgid "Children or adult materials"
-msgstr ""
+msgstr "Børne- eller voksenmaterialer"
 
 #: 
 msgctxt "field.storage.paragraph.field_campaign_rule_facet:settings:allowed_values:2:label"
 msgid "Creators"
-msgstr ""
+msgstr "Ophav"
 
 #: 
 msgctxt "field.storage.paragraph.field_campaign_rule_facet:settings:allowed_values:3:label"
 msgid "Fiction or non-fiction"
-msgstr ""
+msgstr "Fiktion eller non-fiktion"
 
 #: 
 msgctxt "field.storage.paragraph.field_campaign_rule_facet:settings:allowed_values:4:label"
 msgid "Fictional character"
-msgstr ""
+msgstr "Fiktiv person"
 
 #: 
 msgctxt "field.storage.paragraph.field_campaign_rule_facet:settings:allowed_values:5:label"
