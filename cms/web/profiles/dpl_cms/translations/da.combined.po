@@ -5499,7 +5499,7 @@ msgstr "Email"
 #: 
 msgctxt "field.field.node.branch.field_main_media:label"
 msgid "Main media"
-msgstr ""
+msgstr "Hovedbillede"
 
 #: 
 msgctxt "field.field.node.branch.field_paragraphs:label"
@@ -6340,7 +6340,7 @@ msgstr "Bibliotek"
 #: 
 msgctxt "node.type.branch:description"
 msgid "Branches of a library - for example physical departments around the kommune. Used to mark relevant content."
-msgstr ""
+msgstr "Afdelinger af biblioteket - fx filialer og hovedbibliotek. Bruges til at skabe en flot landingpage med relevant indhold. "
 
 #: 
 msgctxt "node.type.campaign:name"
@@ -6350,7 +6350,7 @@ msgstr "Kampagne (Mikkel tester 20.18)"
 #: 
 msgctxt "node.type.campaign:description"
 msgid "Campaign to be shown among search results depending on matching facets and terms"
-msgstr ""
+msgstr "Kampagne som kan vises sammen med søgeresultatet, afhængig af matchende facetter og søgertermer"
 
 #: 
 msgctxt "node.type.page:name"
@@ -7239,7 +7239,7 @@ msgstr "Default"
 #: 
 msgctxt "views.view.branches:display:default:display_options:title"
 msgid "Branches"
-msgstr ""
+msgstr "Biblioteker"
 
 #: 
 msgctxt "views.view.branches:display:default:display_options:exposed_form:options:submit_button"
