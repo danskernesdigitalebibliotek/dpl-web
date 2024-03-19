@@ -90,7 +90,7 @@ function dpl_paragraphs_preprocess_paragraph__links(array &$variables): void {
       ][$link_type];
 
       $variables['links'][] = [
-        'href' => $url->toString(),
+        'href' => $url->toUriString(),
         'linkText' => $item['title'],
         'linkType' => $link_type,
         'target' => $attributes['target'],
