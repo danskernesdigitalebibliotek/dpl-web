@@ -4390,31 +4390,31 @@ msgstr "Fil dannet på : @destination"
 #: 
 msgctxt "translation handling"
 msgid "Config translations were imported from: @source"
-msgstr ""
+msgstr "Konfigurationsoversættelser blev importeret fra: @source"
 
 #: 
 msgid "Could not create temporary file."
-msgstr ""
+msgstr "Kunne ikke skabe en midlertidig fil"
 
 #: 
 msgctxt "translation handling"
 msgid "Config translations could not be imported from: @url"
-msgstr ""
+msgstr "Konfigurationsoversættelser kunne ikke importeres fra: @url"
 
 #: 
 msgctxt "translation handling"
 msgid "Config translations were imported from: @url"
-msgstr ""
+msgstr "Konfigurationsoversættelser blev importeret fra: @url"
 
 #: 
 msgctxt "translation handling"
 msgid "Failed to fetch file due to error \"%error\""
-msgstr ""
+msgstr "Kunne ikke hente fil pga fejl \"%error\""
 
 #: 
 msgctxt "translation handling"
 msgid "Failed to save file due to error \"%error\""
-msgstr ""
+msgstr "Kunne ikke gemme fil pga fejl \"%error\""
 
 #: 
 msgid "Could not create temp PO file."
@@ -4516,7 +4516,7 @@ msgstr ""
 #: 
 msgctxt "block.block.novel_local_actions:settings:label"
 msgid "Primary admin actions"
-msgstr ""
+msgstr "Primære administratorhandlinger"
 
 #: 
 msgctxt "block.block.novel_local_tasks:settings:label"
@@ -4821,7 +4821,7 @@ msgstr "Paragraphs"
 #: 
 msgctxt "core.entity_form_display.node.page.default:content:field_hero_title:settings:placeholder"
 msgid "If empty, the regular page title will be shown."
-msgstr "Hvis tom, vil sidetitlen blive vist"
+msgstr "Hvis tom, vil sidetitlen blive vist."
 
 #: 
 msgctxt "core.entity_form_display.node.page.default:content:field_paragraphs:settings:title"
@@ -5106,12 +5106,12 @@ msgstr "Token"
 #: 
 msgctxt "core.entity_view_mode.paragraph.alternative:label"
 msgid "Alternative"
-msgstr ""
+msgstr "Alternativ"
 
 #: 
 msgctxt "core.entity_view_mode.paragraph.preview:label"
 msgid "Preview"
-msgstr "Gennemse"
+msgstr "Forhåndsvisning"
 
 #: 
 msgctxt "core.entity_view_mode.paragraph.token:label"
@@ -5131,7 +5131,7 @@ msgstr "Taksonomi term side"
 #: 
 msgctxt "core.entity_view_mode.user.compact:label"
 msgid "Compact"
-msgstr ""
+msgstr "Kompakt"
 
 #: 
 msgctxt "core.entity_view_mode.user.full:label"
@@ -5186,7 +5186,7 @@ msgstr ""
 #: 
 msgctxt "field.field.eventinstance.default.field_event_image:label"
 msgid "Image"
-msgstr ""
+msgstr "Billede"
 
 #: 
 msgctxt "field.field.eventinstance.default.field_event_link:label"
@@ -5792,7 +5792,7 @@ msgstr ""
 #: 
 msgctxt "field.field.paragraph.medias.field_medias:label"
 msgid "Medias"
-msgstr ""
+msgstr "Medier"
 
 #: 
 msgctxt "field.field.paragraph.nav_grid_manual.field_content_references:label"
@@ -5827,13 +5827,14 @@ msgstr "Indhold"
 #: 
 msgctxt "field.field.paragraph.recommendation.field_image_position_right:label"
 msgid "Image position right"
-msgstr ""
+msgstr "Højrestil billede"
 
 #: 
 msgctxt "field.field.paragraph.recommendation.field_image_position_right:description"
 msgid "This determines whether the image should be positioned to the left or right. \n"
 "If left untoggled (default behaviour) the image is positioned to the left, if toggled on, the image will be positioned to the right. "
-msgstr ""
+msgstr "Denne knap bruges til at bestemme om forsidebilledet skal højre- eller venstrestilles. \n"
+"Default er billedet venstrestillet, hvis knappen slås til  højrestilles forsidebilledet."
 
 #: 
 msgctxt "field.field.paragraph.recommendation.field_image_position_right:settings:on_label"
@@ -5934,22 +5935,22 @@ msgstr "Fra"
 #: 
 msgctxt "field.field.paragraph.user_registration_item.field_link_target:label"
 msgid "Link target"
-msgstr ""
+msgstr "Linkmål"
 
 #: 
 msgctxt "field.field.paragraph.user_registration_item.field_link_target:description"
 msgid "Specify how a linked document should be opened when clicked by a user."
-msgstr ""
+msgstr "Angiv hvordan et linket dokument skal åbne når en bruger klikker på linket."
 
 #: 
 msgctxt "field.field.paragraph.user_registration_item.field_navigation_title:label"
 msgid "Navigation button title"
-msgstr ""
+msgstr "Titel på navigationsknap"
 
 #: 
 msgctxt "field.field.paragraph.user_registration_item.field_navigation_title:description"
 msgid "If the navigation button title is left blank, it will automatically default to the paragraph title."
-msgstr ""
+msgstr "Hvis titelfeltet på navigationsknappen ikke udfyldes, vil den automatisk få paragraf-titlen."
 
 #: 
 msgctxt "field.field.paragraph.user_registration_item.field_registration_link:label"
@@ -6054,22 +6055,22 @@ msgstr "Fiktiv person"
 #: 
 msgctxt "field.storage.paragraph.field_campaign_rule_facet:settings:allowed_values:5:label"
 msgid "Genre and form"
-msgstr ""
+msgstr "Genre og form"
 
 #: 
 msgctxt "field.storage.paragraph.field_campaign_rule_facet:settings:allowed_values:6:label"
 msgid "Main languages"
-msgstr ""
+msgstr "Hovedsprog"
 
 #: 
 msgctxt "field.storage.paragraph.field_campaign_rule_facet:settings:allowed_values:7:label"
 msgid "Material types"
-msgstr ""
+msgstr "Materialetyper"
 
 #: 
 msgctxt "field.storage.paragraph.field_campaign_rule_facet:settings:allowed_values:8:label"
 msgid "Subjects"
-msgstr ""
+msgstr "Emner"
 
 #: 
 msgctxt "field.storage.paragraph.field_campaign_rule_facet:settings:allowed_values:9:label"
@@ -6079,12 +6080,12 @@ msgstr "Arbejdstyper"
 #: 
 msgctxt "field.storage.paragraph.field_link_target:settings:allowed_values:0:label"
 msgid "Open the linked document in the same window or tab (default)"
-msgstr ""
+msgstr "Åbn det linkede dokument i samme vindue eller tab (default) "
 
 #: 
 msgctxt "field.storage.paragraph.field_link_target:settings:allowed_values:1:label"
 msgid "Open the linked document in a new window or tab"
-msgstr ""
+msgstr "Åbn det linkede dokument i et nyt vindue eller tab"
 
 #: 
 msgctxt "filter.format.basic:name"
@@ -6104,7 +6105,7 @@ msgstr ""
 #: 
 msgctxt "image.style.campaign_image:label"
 msgid "Campaign image (? x 150px)"
-msgstr ""
+msgstr "Kampagnebillede (? x 150px)"
 
 #: 
 msgctxt "image.style.entity_clone_template_preview:label"
@@ -6114,17 +6115,17 @@ msgstr ""
 #: 
 msgctxt "image.style.flag_icon:label"
 msgid "Flag icon"
-msgstr ""
+msgstr "Flagikon"
 
 #: 
 msgctxt "image.style.focal_point_preview:label"
 msgid "Focal Point Preview"
-msgstr ""
+msgstr "Forhåndsvisning af fokuspunkt"
 
 #: 
 msgctxt "image.style.hero_wide:label"
 msgid "Hero wide (4/3)"
-msgstr ""
+msgstr "Hero bredformat (4/3)"
 
 #: 
 msgctxt "image.style.linkit_result_thumbnail:label"
@@ -6134,22 +6135,22 @@ msgstr ""
 #: 
 msgctxt "image.style.logo:label"
 msgid "Logo"
-msgstr ""
+msgstr "Logo"
 
 #: 
 msgctxt "image.style.media_library:label"
 msgid "Media Library thumbnail (220 x 220px)"
-msgstr ""
+msgstr "Mediebibliotek thumbnail (220 x 220 px)"
 
 #: 
 msgctxt "image.style.paragraph_squared:label"
 msgid "Paragraph, Squared (1:1 / 496x496px)"
-msgstr ""
+msgstr "Paragraf, Kvadratisk (1:1 / 496x496px)"
 
 #: 
 msgctxt "image.style.paragraph_wide:label"
 msgid "Paragraph, Wide (896x670px)"
-msgstr ""
+msgstr "Paragraf, Bredformat (896x670px)"
 
 #: 
 msgctxt "image.style.small_preview:label"
@@ -6159,12 +6160,12 @@ msgstr "Lille forhåndsvisning"
 #: 
 msgctxt "language.entity.da:label"
 msgid "Danish"
-msgstr ""
+msgstr "Dansk"
 
 #: 
 msgctxt "language.entity.en:label"
 msgid "English"
-msgstr ""
+msgstr "Engelsk"
 
 #: 
 msgctxt "language.entity.und:label"
@@ -6189,7 +6190,7 @@ msgstr ""
 #: 
 msgctxt "media.type.image:label"
 msgid "Image"
-msgstr ""
+msgstr "Billede"
 
 #: 
 msgctxt "media.type.video:label"
@@ -6364,12 +6365,12 @@ msgstr "Accordion"
 #: 
 msgctxt "paragraphs.paragraphs_type.campaign_rule:label"
 msgid "Campaign Rule"
-msgstr ""
+msgstr "Kampagneregel"
 
 #: 
 msgctxt "paragraphs.paragraphs_type.campaign_rule:description"
 msgid "A rule for selecting a matching campaign"
-msgstr ""
+msgstr "En regel til at vælge en matchende kampagne"
 
 #: 
 msgctxt "paragraphs.paragraphs_type.card_grid_automatic:label"
@@ -6389,7 +6390,7 @@ msgstr "Slider"
 #: 
 msgctxt "paragraphs.paragraphs_type.event_ticket_category:label"
 msgid "Ticket category"
-msgstr ""
+msgstr "Billetkategori"
 
 #: 
 msgctxt "paragraphs.paragraphs_type.event_ticket_category:description"
@@ -6399,22 +6400,22 @@ msgstr ""
 #: 
 msgctxt "paragraphs.paragraphs_type.files:label"
 msgid "Files"
-msgstr ""
+msgstr "Filer"
 
 #: 
 msgctxt "paragraphs.paragraphs_type.files:description"
 msgid "Links with icons. Designed for jpg, jpeg, png, pdf, mp3, mov, mp4, mpeg files"
-msgstr ""
+msgstr "Link med ikoner. Designet til jpg, jpeg, png, pdf, mp3, mov, mp4, og mpeg filer"
 
 #: 
 msgctxt "paragraphs.paragraphs_type.hero:label"
 msgid "Hero"
-msgstr ""
+msgstr "Hero"
 
 #: 
 msgctxt "paragraphs.paragraphs_type.hero:description"
 msgid "A hero section with an image, informative text, category, and a \"call to action\" link."
-msgstr ""
+msgstr "En Hero til placering øverst på forsiden med et billede, informativ tekst, kategori og et link til fremhævet indhold."
 
 #: 
 msgctxt "paragraphs.paragraphs_type.language_selector:label"
@@ -8185,32 +8186,32 @@ msgstr ""
 #: 
 msgctxt "views.view.files:label"
 msgid "Files"
-msgstr ""
+msgstr "Filer"
 
 #: 
 msgctxt "views.view.files:description"
 msgid "Find and manage files."
-msgstr ""
+msgstr "Find og håndter filer"
 
 #: 
 msgctxt "views.view.files:display:default:display_title"
 msgid "Default"
-msgstr ""
+msgstr "Default"
 
 #: 
 msgctxt "views.view.files:display:default:display_options:title"
 msgid "Files"
-msgstr ""
+msgstr "Filer"
 
 #: 
 msgctxt "views.view.files:display:default:display_options:fields:fid:label"
 msgid "Fid"
-msgstr ""
+msgstr "Fid"
 
 #: 
 msgctxt "views.view.files:display:default:display_options:fields:filename:label"
 msgid "Name"
-msgstr ""
+msgstr "Navn"
 
 #: 
 msgctxt "views.view.files:display:default:display_options:fields:filemime:label"
@@ -8225,7 +8226,7 @@ msgstr "Størrelse"
 #: 
 msgctxt "views.view.files:display:default:display_options:fields:status:label"
 msgid "Status"
-msgstr ""
+msgstr "Status"
 
 #: 
 msgctxt "views.view.files:display:default:display_options:fields:status:settings:format_custom_false"
@@ -8235,27 +8236,27 @@ msgstr "Midlertidig"
 #: 
 msgctxt "views.view.files:display:default:display_options:fields:status:settings:format_custom_true"
 msgid "Permanent"
-msgstr ""
+msgstr "Permanent"
 
 #: 
 msgctxt "views.view.files:display:default:display_options:fields:created:label"
 msgid "Upload date"
-msgstr ""
+msgstr "Upload dato"
 
 #: 
 msgctxt "views.view.files:display:default:display_options:fields:changed:label"
 msgid "Changed date"
-msgstr ""
+msgstr "Ændringsdato"
 
 #: 
 msgctxt "views.view.files:display:default:display_options:fields:count:label"
 msgid "Used in"
-msgstr ""
+msgstr "Anvendt i"
 
 #: 
 msgctxt "views.view.files:display:default:display_options:fields:count:alter:path"
 msgid "admin/content/files/usage/{{ fid }}"
-msgstr ""
+msgstr "admin/content/files/usage/{{ fid }}"
 
 #: 
 msgctxt "views.view.files:display:default:display_options:fields:count:format_plural_string"
@@ -8305,17 +8306,17 @@ msgstr "Sorter efter"
 #: 
 msgctxt "views.view.files:display:default:display_options:exposed_form:options:sort_asc_label"
 msgid "Asc"
-msgstr ""
+msgstr "Stigende"
 
 #: 
 msgctxt "views.view.files:display:default:display_options:exposed_form:options:sort_desc_label"
 msgid "Desc"
-msgstr ""
+msgstr "Faldende"
 
 #: 
 msgctxt "views.view.files:display:default:display_options:empty:area_text_custom:content"
 msgid "No files available."
-msgstr ""
+msgstr "Ingen filer tilgængelige."
 
 #: 
 msgctxt "views.view.files:display:default:display_options:filters:filename:expose:label"
@@ -8330,7 +8331,7 @@ msgstr ""
 #: 
 msgctxt "views.view.files:display:default:display_options:filters:status:expose:label"
 msgid "Status"
-msgstr ""
+msgstr "Status"
 
 #: 
 msgctxt "views.view.files:display:page_1:display_title"
