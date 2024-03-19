@@ -15,22 +15,20 @@
   -->
 {%- endif %}
 
-<div>
-  <label class="input-label" id="facet_{{ facet.id }}_label">{{ facet.label }}</label>
-  <div class="dropdown">
-    {% if items or empty %}
-      {%- if items -%}
-        <{{ list_type }}{{ attributes.addClass("dropdown__select") }}>
-        {%- for item in items -%}
-          <li{{ item.attributes }}>{{ item.value }}</li>
-        {%- endfor -%}
-        </{{ list_type }}>
-      {%- else -%}
-        {{- empty -}}
-      {%- endif -%}
-    {%- endif %}
-    <div class="dropdown__arrows">
-      <img class="dropdown__arrow" src="{{ baseIconPath }}/collection/ExpandMore.svg" alt="">
-    </div>
+<label class="input-label" id="facet_{{ facet.id }}_label">{{ facet.label }}</label>
+<div class="dropdown">
+  {% if items or empty %}
+    {%- if items -%}
+      <{{ list_type }}{{ attributes.addClass("dropdown__select") }}>
+      {%- for item in items -%}
+        <li{{ item.attributes }}>{{ item.value }}</li>
+      {%- endfor -%}
+      </{{ list_type }}>
+    {%- else -%}
+      {{- empty -}}
+    {%- endif -%}
+  {%- endif %}
+  <div class="dropdown__arrows">
+    <img class="dropdown__arrow" src="{{ baseIconPath }}/collection/ExpandMore.svg" alt="">
   </div>
 </div>
