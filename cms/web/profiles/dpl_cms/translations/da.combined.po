@@ -4180,7 +4180,7 @@ msgstr ""
 #: 
 msgctxt "DPL admin UX"
 msgid "Event series"
-msgstr "Arrangementer"
+msgstr "Arrangement(er)"
 
 #: 
 msgctxt "DPL admin UX"
@@ -4333,7 +4333,7 @@ msgstr "(Låst af @username)"
 
 #: 
 msgid "The material type"
-msgstr ""
+msgstr "Materialetype"
 
 #: 
 msgid "This is the work ID used to retrieve the material information. Example: work-of:870970-basis:136336282.\n"
@@ -4344,7 +4344,7 @@ msgstr "Dette er det VærkID som anvendes til at hente informationer om værket.
 
 #: 
 msgid "Material Type"
-msgstr ""
+msgstr "Materialetype"
 
 #: 
 msgid "Select the material type."
@@ -4352,7 +4352,7 @@ msgstr "Vælg materialetype"
 
 #: 
 msgid "Work id with type"
-msgstr ""
+msgstr "VærkID med type"
 
 #: 
 msgid "Event settings"
@@ -4360,7 +4360,7 @@ msgstr "Arrangementsindstillinger"
 
 #: 
 msgid "Configure handling of events."
-msgstr ""
+msgstr "Indstillinger for arrangementer"
 
 #: 
 msgid "DrupalTyped"
@@ -4433,7 +4433,7 @@ msgstr ""
 #: 
 msgctxt "block.block.claro_breadcrumbs:settings:label"
 msgid "Breadcrumbs"
-msgstr ""
+msgstr "Brødkrummer"
 
 #: 
 msgctxt "block.block.claro_content:settings:label"
@@ -4468,7 +4468,7 @@ msgstr ""
 #: 
 msgctxt "block.block.gin_breadcrumbs:settings:label"
 msgid "Breadcrumbs"
-msgstr ""
+msgstr "Brødkrummer"
 
 #: 
 msgctxt "block.block.gin_content:settings:label"
@@ -4488,7 +4488,7 @@ msgstr ""
 #: 
 msgctxt "block.block.gin_page_title:settings:label"
 msgid "Page title"
-msgstr ""
+msgstr "Sidetitel"
 
 #: 
 msgctxt "block.block.gin_primary_local_tasks:settings:label"
@@ -4503,7 +4503,7 @@ msgstr ""
 #: 
 msgctxt "block.block.novel_admin:settings:label"
 msgid "Administration"
-msgstr ""
+msgstr "Administration"
 
 #: 
 msgctxt "block.block.novel_branding:settings:label"
@@ -4523,7 +4523,7 @@ msgstr ""
 #: 
 msgctxt "block.block.novel_messages:settings:label"
 msgid "Status messages"
-msgstr ""
+msgstr "Statusbeskeder"
 
 #: 
 msgctxt "block.block.novel_tools:settings:label"
@@ -4628,12 +4628,12 @@ msgstr "d. M Y"
 #: 
 msgctxt "core.date_format.fallback:label"
 msgid "Fallback date format"
-msgstr ""
+msgstr "Fallback datoformat"
 
 #: 
 msgctxt "core.date_format.html_date:label"
 msgid "HTML Date"
-msgstr ""
+msgstr "HTML Dato"
 
 #: 
 msgctxt "core.date_format.html_datetime:label"
@@ -4643,17 +4643,17 @@ msgstr ""
 #: 
 msgctxt "core.date_format.html_month:label"
 msgid "HTML Month"
-msgstr ""
+msgstr "HTML Måned"
 
 #: 
 msgctxt "core.date_format.html_time:label"
 msgid "HTML Time"
-msgstr ""
+msgstr "HTML Tidspunkt"
 
 #: 
 msgctxt "core.date_format.html_week:label"
 msgid "HTML Week"
-msgstr ""
+msgstr "HTML Uge"
 
 #: 
 msgctxt "core.date_format.html_year:label"
@@ -4968,7 +4968,7 @@ msgstr ""
 #: 
 msgctxt "core.entity_view_mode.block.token:label"
 msgid "Token"
-msgstr ""
+msgstr "Token"
 
 #: 
 msgctxt "core.entity_view_mode.eventinstance.card:label"
@@ -4988,7 +4988,7 @@ msgstr "Listeteaser"
 #: 
 msgctxt "core.entity_view_mode.eventinstance.nav_spot:label"
 msgid "Nav spot"
-msgstr ""
+msgstr "Navigationsspot"
 
 #: 
 msgctxt "core.entity_view_mode.eventinstance.nav_teaser:label"
@@ -5013,7 +5013,7 @@ msgstr "Liste"
 #: 
 msgctxt "core.entity_view_mode.eventseries.nav_spot:label"
 msgid "Nav spot"
-msgstr ""
+msgstr "Navigationsspot"
 
 #: 
 msgctxt "core.entity_view_mode.eventseries.nav_teaser:label"
@@ -5023,7 +5023,7 @@ msgstr "Navigationsteaser"
 #: 
 msgctxt "core.entity_view_mode.file.token:label"
 msgid "Token"
-msgstr ""
+msgstr "Tokel"
 
 #: 
 msgctxt "core.entity_view_mode.media.full:label"
@@ -5043,12 +5043,12 @@ msgstr "Mediebibliotek"
 #: 
 msgctxt "core.entity_view_mode.media.paragraph_squared:label"
 msgid "Paragraph, squared"
-msgstr ""
+msgstr "Paragraf, kvadratisk"
 
 #: 
 msgctxt "core.entity_view_mode.media.paragraph_wide:label"
 msgid "Paragraph, wide"
-msgstr ""
+msgstr "Paragraf, bredformat"
 
 #: 
 msgctxt "core.entity_view_mode.node.card:label"
@@ -5133,7 +5133,7 @@ msgstr ""
 #: 
 msgctxt "core.entity_view_mode.user.full:label"
 msgid "User account"
-msgstr ""
+msgstr "Brugerkonto"
 
 #: 
 msgctxt "core.entity_view_mode.user.token:label"
@@ -5148,7 +5148,7 @@ msgstr "Fokuspunkt"
 #: 
 msgctxt "crop.type.focal_point:description"
 msgid "Crop type used by Focal point module."
-msgstr ""
+msgstr "Beskæringstype anvendt af fokuspunkt modulet"
 
 #: 
 msgctxt "field.field.eventinstance.default.field_branch:label"
@@ -5158,7 +5158,7 @@ msgstr "Bibliotek"
 #: 
 msgctxt "field.field.eventinstance.default.field_categories:label"
 msgid "Categories"
-msgstr ""
+msgstr "Kategorier"
 
 #: 
 msgctxt "field.field.eventinstance.default.field_description:label"
@@ -5536,7 +5536,7 @@ msgstr ""
 #: 
 msgctxt "field.field.node.campaign.field_campaign_text:label"
 msgid "Text"
-msgstr ""
+msgstr "Tekst"
 
 #: 
 msgctxt "field.field.node.page.field_branch:label"
@@ -5546,7 +5546,7 @@ msgstr "Bibliotek"
 #: 
 msgctxt "field.field.node.page.field_display_titles:label"
 msgid "Display titles"
-msgstr ""
+msgstr "Vis titler"
 
 #: 
 msgctxt "field.field.node.page.field_display_titles:description"
@@ -5566,18 +5566,19 @@ msgstr "Fra"
 #: 
 msgctxt "field.field.node.page.field_hero_title:label"
 msgid "Hero title"
-msgstr ""
+msgstr "Hero titel"
 
 #: 
 msgctxt "field.field.node.page.field_hero_title:description"
 msgid "The title that is shown at the top of the page.<br>\n"
 "<strong>If this is empty, the standard page title will be used instead.</strong>"
-msgstr ""
+msgstr "Titel som vises i toppen af siden. <br>\n"
+"<strong>Hvis denne er tom, vil standard sidetitel blive anvendt.</strong>"
 
 #: 
 msgctxt "field.field.node.page.field_paragraphs:label"
 msgid "Paragraphs"
-msgstr ""
+msgstr "Paragraffer"
 
 #: 
 msgctxt "field.field.node.page.field_subtitle:label"
@@ -5597,7 +5598,7 @@ msgstr ""
 #: 
 msgctxt "field.field.paragraph.campaign_rule.field_campaign_rule_facet:label"
 msgid "Facet"
-msgstr ""
+msgstr "Facet"
 
 #: 
 msgctxt "field.field.paragraph.campaign_rule.field_campaign_rule_ranking_max:label"
@@ -5662,32 +5663,32 @@ msgstr "Filer"
 #: 
 msgctxt "field.field.paragraph.hero.field_hero_categories:label"
 msgid "Hero categories"
-msgstr ""
+msgstr "Hero kategori"
 
 #: 
 msgctxt "field.field.paragraph.hero.field_hero_content_type:label"
 msgid "Hero content type"
-msgstr ""
+msgstr "Hero indholdstype"
 
 #: 
 msgctxt "field.field.paragraph.hero.field_hero_date:label"
 msgid "Hero date"
-msgstr ""
+msgstr "Hero dato"
 
 #: 
 msgctxt "field.field.paragraph.hero.field_hero_description:label"
 msgid "Hero description"
-msgstr ""
+msgstr "Hero beskrivelse"
 
 #: 
 msgctxt "field.field.paragraph.hero.field_hero_image:label"
 msgid "Hero image"
-msgstr ""
+msgstr "Hero billede"
 
 #: 
 msgctxt "field.field.paragraph.hero.field_hero_link:label"
 msgid "Hero link"
-msgstr ""
+msgstr "Hero link"
 
 #: 
 msgctxt "field.field.paragraph.hero.field_hero_title:label"
@@ -5832,7 +5833,7 @@ msgstr ""
 #: 
 msgctxt "field.field.paragraph.recommendation.field_image_position_right:settings:on_label"
 msgid "On"
-msgstr ""
+msgstr "Til"
 
 #: 
 msgctxt "field.field.paragraph.recommendation.field_image_position_right:settings:off_label"
@@ -6353,7 +6354,7 @@ msgstr ""
 #: 
 msgctxt "paragraphs.paragraphs_type.accordion:label"
 msgid "Accordion"
-msgstr ""
+msgstr "Accordion"
 
 #: 
 msgctxt "paragraphs.paragraphs_type.campaign_rule:label"
@@ -6378,7 +6379,7 @@ msgstr "Nyhedskomponent - manuel"
 #: 
 msgctxt "paragraphs.paragraphs_type.content_slider:label"
 msgid "Content slider"
-msgstr ""
+msgstr "Slider"
 
 #: 
 msgctxt "paragraphs.paragraphs_type.event_ticket_category:label"
@@ -6468,7 +6469,7 @@ msgstr "Navigationsspot - manuel"
 #: 
 msgctxt "paragraphs.paragraphs_type.recommendation:label"
 msgid "Recommendation"
-msgstr ""
+msgstr "Anbefaling"
 
 #: 
 msgctxt "paragraphs.paragraphs_type.recommendation:description"
