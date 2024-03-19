@@ -1,7 +1,10 @@
 {% extends '@novel/views/views-view--content-list-page.html.twig' %}
 
 {% block facets %}
-  {{ drupal_block("facet_block:event_categories") }}
-
-  {{ drupal_block("facet_block:branch") }}
+  <div class="content-list-page__filter">
+    {{ drupal_block("facet_block:event_categories") }}
+  </div>
+  <div class="content-list-page__filter">
+    {{ drupal_block("facet_block:branch") }}
+  </div>
 {% endblock %}
