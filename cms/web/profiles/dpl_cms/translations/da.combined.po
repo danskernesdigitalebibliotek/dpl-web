@@ -1892,7 +1892,7 @@ msgstr "Indlæser...Fornyelsen af dit lån gik iggen igennem"
 #: 
 msgctxt "Create patron"
 msgid "Select pickup location in the select"
-msgstr "Vælg afhentningssted"
+msgstr "Vælg dit standard afhentningssted. Du kan vælge et andet afhentningssted når du foretager en reservering."
 
 #: 
 msgctxt "Create patron"
