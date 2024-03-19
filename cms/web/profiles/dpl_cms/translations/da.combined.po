@@ -6110,7 +6110,7 @@ msgstr "Kampagnebillede (? x 150px)"
 #: 
 msgctxt "image.style.entity_clone_template_preview:label"
 msgid "Entity Clone Template Preview"
-msgstr ""
+msgstr "Forhåndsvisning af skabelon"
 
 #: 
 msgctxt "image.style.flag_icon:label"
@@ -7204,7 +7204,7 @@ msgstr ""
 #: 
 msgctxt "views.view.articles:display:default:display_options:exposed_form:options:text_input_required"
 msgid "Select any filter and click on Apply to see results"
-msgstr ""
+msgstr "Vælg et filter og klik på \"Anvend\" for at se resultaterne"
 
 #: 
 msgctxt "views.view.articles:display:default:display_options:exposed_form:options:text_input_required_format"
@@ -7304,7 +7304,7 @@ msgstr "Indholdstype"
 #: 
 msgctxt "views.view.content:display:default:display_options:fields:name:label"
 msgid "Author"
-msgstr ""
+msgstr "Forfatter"
 
 #: 
 msgctxt "views.view.content:display:default:display_options:fields:status:label"
@@ -7454,7 +7454,7 @@ msgstr ""
 #: 
 msgctxt "views.view.content_paragraphs:display:default:display_options:exposed_form:options:submit_button"
 msgid "Apply"
-msgstr ""
+msgstr "Anvend"
 
 #: 
 msgctxt "views.view.content_paragraphs:display:default:display_options:exposed_form:options:reset_button_label"
@@ -7489,7 +7489,7 @@ msgstr ""
 #: 
 msgctxt "views.view.entity_clone_template:label"
 msgid "Entity Clone Template"
-msgstr ""
+msgstr "Gem som skabelon"
 
 #: 
 msgctxt "views.view.entity_clone_template:description"
@@ -7504,7 +7504,7 @@ msgstr ""
 #: 
 msgctxt "views.view.entity_clone_template:display:default:display_options:title"
 msgid "Entity Clone Template"
-msgstr ""
+msgstr "Gem son skabelon"
 
 #: 
 msgctxt "views.view.entity_clone_template:display:default:display_options:fields:nothing:alter:text"
@@ -7514,7 +7514,7 @@ msgstr ""
 #: 
 msgctxt "views.view.entity_clone_template:display:default:display_options:exposed_form:options:submit_button"
 msgid "Apply"
-msgstr ""
+msgstr "Anvend"
 
 #: 
 msgctxt "views.view.entity_clone_template:display:default:display_options:exposed_form:options:reset_button_label"
@@ -7643,7 +7643,7 @@ msgstr ""
 #: 
 msgctxt "views.view.entity_reference_content:display:default:display_options:exposed_form:options:submit_button"
 msgid "Apply"
-msgstr ""
+msgstr "Anvend"
 
 #: 
 msgctxt "views.view.entity_reference_content:display:default:display_options:exposed_form:options:reset_button_label"
@@ -7731,7 +7731,7 @@ msgstr ""
 #: 
 msgctxt "views.view.entity_reference_event_instance:display:default:display_options:pager:options:expose:items_per_page_options_all_label"
 msgid "- All -"
-msgstr " - Alle - "
+msgstr "- Alle -"
 
 #: 
 msgctxt "views.view.entity_reference_event_instance:display:default:display_options:pager:options:expose:offset_label"
@@ -7741,7 +7741,7 @@ msgstr ""
 #: 
 msgctxt "views.view.entity_reference_event_instance:display:default:display_options:exposed_form:options:submit_button"
 msgid "Apply"
-msgstr ""
+msgstr "Anvend"
 
 #: 
 msgctxt "views.view.entity_reference_event_instance:display:default:display_options:exposed_form:options:reset_button_label"
@@ -7814,7 +7814,7 @@ msgstr ""
 #: 
 msgctxt "views.view.entity_reference_event_series:display:default:display_options:exposed_form:options:submit_button"
 msgid "Apply"
-msgstr ""
+msgstr "Anvend"
 
 #: 
 msgctxt "views.view.entity_reference_event_series:display:default:display_options:exposed_form:options:reset_button_label"
@@ -7884,7 +7884,7 @@ msgstr ""
 #: 
 msgctxt "views.view.events:display:default:display_options:exposed_form:options:submit_button"
 msgid "Apply"
-msgstr ""
+msgstr "Anvend"
 
 #: 
 msgctxt "views.view.events:display:default:display_options:exposed_form:options:reset_button_label"
@@ -7909,7 +7909,7 @@ msgstr ""
 #: 
 msgctxt "views.view.events:display:default:display_options:exposed_form:options:text_input_required"
 msgid "Select any filter and click on Apply to see results"
-msgstr ""
+msgstr "Vælg et filter og klik på \"Anvend\" for at se resultaterne"
 
 #: 
 msgctxt "views.view.events:display:default:display_options:exposed_form:options:text_input_required_format"
@@ -8096,7 +8096,7 @@ msgstr ""
 #: 
 msgctxt "views.view.event_admin:display:default:display_options:exposed_form:options:submit_button"
 msgid "Apply"
-msgstr ""
+msgstr "Anvend"
 
 #: 
 msgctxt "views.view.event_admin:display:default:display_options:exposed_form:options:reset_button_label"
@@ -8321,7 +8321,7 @@ msgstr "Ingen filer tilgængelige."
 #: 
 msgctxt "views.view.files:display:default:display_options:filters:filename:expose:label"
 msgid "Filename"
-msgstr ""
+msgstr "Filnavn"
 
 #: 
 msgctxt "views.view.files:display:default:display_options:filters:filemime:expose:label"
@@ -8456,7 +8456,7 @@ msgstr ""
 #: 
 msgctxt "views.view.locked_content:display:default:display_options:fields:name:label"
 msgid "Lock owner"
-msgstr ""
+msgstr "Låsens ejer"
 
 #: 
 msgctxt "views.view.locked_content:display:default:display_options:fields:operations:label"
@@ -8491,7 +8491,7 @@ msgstr ""
 #: 
 msgctxt "views.view.locked_content:display:default:display_options:exposed_form:options:submit_button"
 msgid "Apply"
-msgstr ""
+msgstr "Anvend"
 
 #: 
 msgctxt "views.view.locked_content:display:default:display_options:exposed_form:options:reset_button_label"
@@ -8586,7 +8586,7 @@ msgstr ""
 #: 
 msgctxt "views.view.media:display:default:display_options:fields:name:label"
 msgid "Media name"
-msgstr ""
+msgstr "Medienavn"
 
 #: 
 msgctxt "views.view.media:display:default:display_options:fields:bundle:label"
@@ -8651,7 +8651,7 @@ msgstr ""
 #: 
 msgctxt "views.view.media:display:default:display_options:pager:options:expose:items_per_page_options_all_label"
 msgid "- All -"
-msgstr " - Alle - "
+msgstr "- Alle -"
 
 #: 
 msgctxt "views.view.media:display:default:display_options:pager:options:expose:offset_label"
@@ -8691,7 +8691,7 @@ msgstr ""
 #: 
 msgctxt "views.view.media:display:default:display_options:filters:name:expose:label"
 msgid "Media name"
-msgstr ""
+msgstr "Medienavn"
 
 #: 
 msgctxt "views.view.media:display:default:display_options:filters:bundle:expose:label"
@@ -8776,7 +8776,7 @@ msgstr ""
 #: 
 msgctxt "views.view.media_library:display:default:display_options:pager:options:expose:items_per_page_options_all_label"
 msgid "- All -"
-msgstr "- Alle - "
+msgstr "- Alle -"
 
 #: 
 msgctxt "views.view.media_library:display:default:display_options:pager:options:expose:offset_label"
@@ -8786,7 +8786,7 @@ msgstr ""
 #: 
 msgctxt "views.view.media_library:display:default:display_options:exposed_form:options:submit_button"
 msgid "Apply filters"
-msgstr ""
+msgstr "Anvend filtre"
 
 #: 
 msgctxt "views.view.media_library:display:default:display_options:exposed_form:options:reset_button_label"
@@ -8821,12 +8821,12 @@ msgstr "Nyeste først"
 #: 
 msgctxt "views.view.media_library:display:default:display_options:sorts:name:expose:label"
 msgid "Name (A-Z)"
-msgstr ""
+msgstr "Navn (A-Z)"
 
 #: 
 msgctxt "views.view.media_library:display:default:display_options:sorts:name_1:expose:label"
 msgid "Name (Z-A)"
-msgstr ""
+msgstr "Navn (Z-A)"
 
 #: 
 msgctxt "views.view.media_library:display:default:display_options:filters:combine:expose:label"
@@ -8871,12 +8871,12 @@ msgstr "Rediger"
 #: 
 msgctxt "views.view.media_library:display:page:display_options:fields:delete_media:alter:text"
 msgid "Delete {{ name }}"
-msgstr ""
+msgstr "Slet {{ name }}"
 
 #: 
 msgctxt "views.view.media_library:display:page:display_options:fields:delete_media:alter:alt"
 msgid "Delete {{ name }}"
-msgstr ""
+msgstr "Slet {{ name }}"
 
 #: 
 msgctxt "views.view.media_library:display:page:display_options:fields:delete_media:text"
@@ -8916,7 +8916,7 @@ msgstr ""
 #: 
 msgctxt "views.view.media_library:display:widget_table:display_options:fields:name:label"
 msgid "Name"
-msgstr ""
+msgstr "Navn"
 
 #: 
 msgctxt "views.view.media_library:display:widget_table:display_options:fields:uid:label"
@@ -8966,7 +8966,7 @@ msgstr ""
 #: 
 msgctxt "views.view.scheduled_jobs:display:default:display_options:fields:name:label"
 msgid "Name"
-msgstr ""
+msgstr "Navn"
 
 #: 
 msgctxt "views.view.scheduled_jobs:display:default:display_options:fields:type:label"
@@ -9001,7 +9001,7 @@ msgstr ""
 #: 
 msgctxt "views.view.scheduled_jobs:display:default:display_options:exposed_form:options:submit_button"
 msgid "Apply"
-msgstr ""
+msgstr "Anvend"
 
 #: 
 msgctxt "views.view.scheduled_jobs:display:default:display_options:exposed_form:options:reset_button_label"
@@ -9026,7 +9026,7 @@ msgstr ""
 #: 
 msgctxt "views.view.scheduled_jobs:display:default:display_options:filters:name:expose:label"
 msgid "Name"
-msgstr ""
+msgstr "Navn"
 
 #: 
 msgctxt "views.view.scheduled_jobs:display:default:display_options:filters:id:expose:label"
@@ -9306,7 +9306,7 @@ msgstr ""
 #: 
 msgctxt "views.view.taxonomy_term:display:default:display_options:exposed_form:options:submit_button"
 msgid "Apply"
-msgstr ""
+msgstr "Anvend"
 
 #: 
 msgctxt "views.view.taxonomy_term:display:default:display_options:exposed_form:options:reset_button_label"
@@ -9501,7 +9501,7 @@ msgstr ""
 #: 
 msgctxt "views.view.user_admin_people:display:default:display_options:filters:combine:expose:label"
 msgid "Name or email contains"
-msgstr ""
+msgstr "Navn eller email indeholder"
 
 #: 
 msgctxt "views.view.user_admin_people:display:default:display_options:filters:status:group_info:label"
@@ -9621,7 +9621,7 @@ msgstr ""
 #: 
 msgctxt "views.view.watchdog:display:default:display_options:fields:name:label"
 msgid "User"
-msgstr ""
+msgstr "Bruger"
 
 #: 
 msgctxt "views.view.watchdog:display:default:display_options:fields:link:label"
