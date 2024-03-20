@@ -9632,7 +9632,7 @@ msgstr ""
 #: 
 msgctxt "views.view.user_admin_people:display:page_1:display_options:tab_options:title"
 msgid "People"
-msgstr "Person"
+msgstr "Redaktionelle brugere"
 
 #: 
 msgctxt "views.view.user_admin_people:display:page_1:display_options:tab_options:description"
