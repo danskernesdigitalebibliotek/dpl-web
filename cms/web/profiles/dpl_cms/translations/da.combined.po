@@ -4002,11 +4002,11 @@ msgstr "Definer hvilken tekst der skal vises på knappen til betalingssiden. Hvi
 
 #: 
 msgid "DPL Filtered Paragraphs"
-msgstr "DPL-filtrerede afsnit"
+msgstr "DPL Filtrerede paragraffer"
 
 #: 
 msgid "Filtered paragraphs, embedding views."
-msgstr "Filtrerede afsnit, indlejring af visninger."
+msgstr "Filtrerede paragraffer, indlejring af visninger."
 
 #: 
 msgid "Tags"
@@ -4661,12 +4661,12 @@ msgstr "HTML Uge"
 #: 
 msgctxt "core.date_format.html_year:label"
 msgid "HTML Year"
-msgstr "HTML år"
+msgstr "HTML År"
 
 #: 
 msgctxt "core.date_format.html_yearless_date:label"
 msgid "HTML Yearless date"
-msgstr "HTML årstalsfri dato"
+msgstr "HTML Årstalsfri dato"
 
 #: 
 msgctxt "core.date_format.long:label"
@@ -5611,7 +5611,7 @@ msgstr ""
 #: 
 msgctxt "field.field.paragraph.campaign_rule.field_campaign_rule_ranking_max:description"
 msgid "The upper limit for a placement/ranking of a term inside a facet group"
-msgstr "Den øvre grænse for en placering/rangering af et udtryk i en facetgruppe"
+msgstr "Den øvre grænse for en placering/rankering af et udtryk i en facetgruppe"
 
 #: 
 msgctxt "field.field.paragraph.campaign_rule.field_campaign_rule_term:label"
@@ -5621,7 +5621,7 @@ msgstr "Term"
 #: 
 msgctxt "field.field.paragraph.card_grid_automatic.field_filter_tags:label"
 msgid "Filter tags"
-msgstr "Filter tag"
+msgstr "Filtrer tags"
 
 #: 
 msgctxt "field.field.paragraph.card_grid_automatic.field_title:label"
@@ -5919,7 +5919,7 @@ msgstr "Brødtekst"
 #: 
 msgctxt "field.field.paragraph.user_registration_item.field_display_in_navigation:label"
 msgid "Display in navigation"
-msgstr "Vis i navigering"
+msgstr "Vis i navigation"
 
 #: 
 msgctxt "field.field.paragraph.user_registration_item.field_display_in_navigation:description"
@@ -6079,7 +6079,7 @@ msgstr "Emner"
 #: 
 msgctxt "field.storage.paragraph.field_campaign_rule_facet:settings:allowed_values:9:label"
 msgid "Work types"
-msgstr "Arbejdstyper"
+msgstr "Værktyper"
 
 #: 
 msgctxt "field.storage.paragraph.field_link_target:settings:allowed_values:0:label"
@@ -6214,12 +6214,12 @@ msgstr ""
 #: 
 msgctxt "metatag.metatag_defaults.403:tags:canonical_url"
 msgid "[site:url]"
-msgstr "[side:url]"
+msgstr ""
 
 #: 
 msgctxt "metatag.metatag_defaults.403:tags:shortlink"
 msgid "[site:url]"
-msgstr "[side:url]"
+msgstr ""
 
 #: 
 msgctxt "metatag.metatag_defaults.404:label"
@@ -6229,12 +6229,12 @@ msgstr ""
 #: 
 msgctxt "metatag.metatag_defaults.404:tags:canonical_url"
 msgid "[site:url]"
-msgstr "[side:url]"
+msgstr ""
 
 #: 
 msgctxt "metatag.metatag_defaults.404:tags:shortlink"
 msgid "[site:url]"
-msgstr "[side:url]"
+msgstr ""
 
 #: 
 msgctxt "metatag.metatag_defaults.front:label"
@@ -6244,12 +6244,12 @@ msgstr ""
 #: 
 msgctxt "metatag.metatag_defaults.front:tags:canonical_url"
 msgid "[site:url]"
-msgstr "[side:url]"
+msgstr ""
 
 #: 
 msgctxt "metatag.metatag_defaults.front:tags:shortlink"
 msgid "[site:url]"
-msgstr "[side:url]"
+msgstr ""
 
 #: 
 msgctxt "metatag.metatag_defaults.global:label"
@@ -6259,12 +6259,12 @@ msgstr ""
 #: 
 msgctxt "metatag.metatag_defaults.global:tags:canonical_url"
 msgid "[current-page:url]"
-msgstr "[nuværende-side:url]"
+msgstr ""
 
 #: 
 msgctxt "metatag.metatag_defaults.global:tags:title"
 msgid "[current-page:title] | [site:name]"
-msgstr "[nuværende-side:titel] | [side:navn]"
+msgstr ""
 
 #: 
 msgctxt "metatag.metatag_defaults.node:label"
@@ -6279,12 +6279,12 @@ msgstr ""
 #: 
 msgctxt "metatag.metatag_defaults.node:tags:description"
 msgid "[node:summary]"
-msgstr "[node:opsummering]"
+msgstr ""
 
 #: 
 msgctxt "metatag.metatag_defaults.node:tags:title"
 msgid "[node:title] | [site:name]"
-msgstr "[node:titel] | [side:navn]"
+msgstr ""
 
 #: 
 msgctxt "metatag.metatag_defaults.taxonomy_term:label"
@@ -6294,17 +6294,17 @@ msgstr "Taksonomi term"
 #: 
 msgctxt "metatag.metatag_defaults.taxonomy_term:tags:canonical_url"
 msgid "[term:url]"
-msgstr "[term:url]"
+msgstr ""
 
 #: 
 msgctxt "metatag.metatag_defaults.taxonomy_term:tags:description"
 msgid "[term:description]"
-msgstr "[term:beskrivelse]"
+msgstr ""
 
 #: 
 msgctxt "metatag.metatag_defaults.taxonomy_term:tags:title"
 msgid "[term:name] | [site:name]"
-msgstr "[term:navn] | [site:navn]"
+msgstr ""
 
 #: 
 msgctxt "metatag.metatag_defaults.user:label"
@@ -6319,12 +6319,12 @@ msgstr ""
 #: 
 msgctxt "metatag.metatag_defaults.user:tags:description"
 msgid "[site:name]"
-msgstr "[side:navn]"
+msgstr ""
 
 #: 
 msgctxt "metatag.metatag_defaults.user:tags:title"
 msgid "[user:display-name] | [site:name]"
-msgstr "[bruger:brugernavn] | [site:navn]"
+msgstr ""
 
 #: 
 msgctxt "node.type.article:name"
@@ -6549,7 +6549,7 @@ msgstr "DB"
 #: 
 msgctxt "search_api.server.db_search:name"
 msgid "DB Search"
-msgstr "DB søgning"
+msgstr "DB Søgning"
 
 #: 
 msgctxt "system.action.eventinstance_break_lock_action:label"
@@ -6761,7 +6761,17 @@ msgid "[user:display-name],\n"
 "This link can only be used once to log in and will lead you to a page where you can set your password. It expires after one day and nothing will happen if it's not used.\n"
 "\n"
 "--  [site:name] team"
-msgstr ""
+msgstr "[user:display-name], \n"
+"\n"
+"Der er foretaget en anmodning om at nulstille din adgangskode for din konto hos [site:name]. \n"
+"\n"
+"Du kan nu logge ind ved at klikke på dette link eller kopiere og indsætte det i din browser: \n"
+"\n"
+"[user:one-time-login-url]\n"
+"\n"
+"Dette link kan kun bruges til at logge ind én gang og vil føre dig til en side, hvor du kan indstille din adgangskode. Det udløber efter én dag, og der sker intet, hvis det ikke bliver brugt. \n"
+"\n"
+"--  [site:name] team"
 
 #: 
 msgctxt "user.mail:register_admin_created:subject"
@@ -6784,7 +6794,20 @@ msgid "[user:display-name],\n"
 "password: Your password\n"
 "\n"
 "--  [site:name] team"
-msgstr ""
+msgstr "[user:display-name]\n"
+"\n"
+"En administrator hos [site:name] har lavet en konto til dig. Du kan nu logge ind ved at klikke på dette link eller kopiere og indsætte det i din browser: \n"
+"\n"
+"[user:one-time-login-url]\n"
+"\n"
+"Dette kan kun bruges til at logge ind én gang og vil føre dig til en side, hvor du kan indstille din adgangskode. \n"
+"\n"
+"Efter du har indstillet din adgangskode, kan du logge ind på [site:login-url] i fremtiden ved at bruge: \n"
+"\n"
+"brugernavn: [user:name]\n"
+"Adgangskode: Din adgangskode\n"
+"\n"
+"--  [site:name] team"
 
 #: 
 msgctxt "user.mail:register_no_approval_required:subject"
@@ -6807,7 +6830,20 @@ msgid "[user:display-name],\n"
 "password: Your password\n"
 "\n"
 "--  [site:name] team"
-msgstr ""
+msgstr "[user:display-name], \n"
+"\n"
+"Tak for at registrere dig hos [site:name]. Du kan nu logge ind ved at klikke på dette link eller kopiere og indsætte det i din browser: \n"
+"\n"
+"[user:one-time-login-url] \n"
+"\n"
+"Dette link kan kun bruges én gang til at logge ind og vil føre dig til en side, hvor du kan indstille din adgangskode. \n"
+"\n"
+"Efter du har indstillet din adgangskode, vil du være i stand til at logge ind på [site:login-url] i fremtiden ved at bruge: \n"
+"\n"
+"brugernavn: [user:name]\n"
+"Adgangskode: Din adgangskode\n"
+"\n"
+"--  [site:name] team"
 
 #: 
 msgctxt "user.mail:register_pending_approval:subject"
@@ -6821,7 +6857,11 @@ msgid "[user:display-name],\n"
 "Thank you for registering at [site:name]. Your application for an account is currently pending approval. Once it has been approved, you will receive another email containing information about how to log in, set your password, and other details.\n"
 "\n"
 "--  [site:name] team"
-msgstr ""
+msgstr "[user:display-name], \n"
+"\n"
+"Tak for at registrere dig hos [site:name]. Din ansøgning til en konto afventer i øjeblikket godkendelse. Når den er godkendt, vil du modtage en mail indeholdende information om, hvordan man logger ind, indstiller din adgangskode og andre detaljer. \n"
+"\n"
+"--  [site:name] team"
 
 #: 
 msgctxt "user.mail:register_pending_approval_admin:subject"
@@ -6833,9 +6873,9 @@ msgctxt "user.mail:register_pending_approval_admin:body"
 msgid "[user:display-name] has applied for an account.\n"
 "\n"
 "[user:edit-url]"
-msgstr "[bruger:brugernavn] har ansøgt om en konto\n"
+msgstr "[user:display-name] har ansøgt om en konto\n"
 "\n"
-"[bruger:rediger-url]"
+"[user:edit-url]"
 
 #: 
 msgctxt "user.mail:status_activated:subject"
@@ -6860,7 +6900,22 @@ msgid "[user:display-name],\n"
 "password: Your password\n"
 "\n"
 "--  [site:name] team"
-msgstr ""
+msgstr "[user:display-name],\n"
+"\n"
+"Din konto hos [site:name] er aktiveret. \n"
+"\n"
+"Du kan nu logge ind ved at klikke på dette link eller kopiere og indsætte det i din browser: \n"
+"\n"
+"[user:one-time-login-url] \n"
+"\n"
+"Dette kan kun bruges én gang til at logge ind og vil føre dig til en side, hvor du kan indstille din adgangskode. \n"
+"\n"
+"Når du har indstillet din adgangskode, vil du være i stand til at logge ind hos [site:login-url] i fremtiden ved at bruge: \n"
+"\n"
+"Brugernavn: [user:account-name]\n"
+"Adgangskode: Din adgangskode\n"
+"\n"
+"--  [site:name] team"
 
 #: 
 msgctxt "user.mail:status_blocked:subject"
@@ -6874,7 +6929,11 @@ msgid "[user:display-name],\n"
 "Your account on [site:name] has been blocked.\n"
 "\n"
 "--  [site:name] team"
-msgstr ""
+msgstr "[user:display-name], \n"
+"\n"
+"Din konto hos [site:name] er blokeret. \n"
+"\n"
+"--  [site:name] team"
 
 #: 
 msgctxt "user.mail:status_canceled:subject"
@@ -6888,7 +6947,11 @@ msgid "[user:display-name],\n"
 "Your account on [site:name] has been canceled.\n"
 "\n"
 "--  [site:name] team"
-msgstr ""
+msgstr "[user:display-name], \n"
+"\n"
+"Din konto hos [site:name] er slettet. \n"
+"\n"
+"--  [site:name] team"
 
 #: 
 msgctxt "user.role.administrator:label"
@@ -6923,7 +6986,7 @@ msgstr "Lokal administrator"
 #: 
 msgctxt "user.role.mediator:label"
 msgid "Mediator"
-msgstr "Mediator"
+msgstr "Formidler"
 
 #: 
 msgctxt "user.role.patron:label"
@@ -6938,27 +7001,27 @@ msgstr "Anonym"
 #: 
 msgctxt "views.view.administerusersbyrole_people:label"
 msgid "People (administerusersbyrole)"
-msgstr "Person (administrerbrugerefterrolle)"
+msgstr "Brugere (administerusersbyrole)"
 
 #: 
 msgctxt "views.view.administerusersbyrole_people:description"
 msgid "Find and manage people - for admin or sub-admin"
-msgstr "Find og administrer personer - til admin eller sub-admin"
+msgstr "Find og administrer brugere - til admin eller sub-admin"
 
 #: 
 msgctxt "views.view.administerusersbyrole_people:display:default:display_title"
 msgid "Master"
-msgstr ""
+msgstr "Master"
 
 #: 
 msgctxt "views.view.administerusersbyrole_people:display:default:display_options:title"
 msgid "People"
-msgstr "Person"
+msgstr "Redaktionelle brugere"
 
 #: 
 msgctxt "views.view.administerusersbyrole_people:display:default:display_options:fields:user_bulk_form:label"
 msgid "Bulk update"
-msgstr ""
+msgstr "Masseopdatering"
 
 #: 
 msgctxt "views.view.administerusersbyrole_people:display:default:display_options:fields:name:label"
@@ -6973,7 +7036,7 @@ msgstr "Status"
 #: 
 msgctxt "views.view.administerusersbyrole_people:display:default:display_options:fields:status:settings:format_custom_false"
 msgid "Blocked"
-msgstr ""
+msgstr "Blokeret"
 
 #: 
 msgctxt "views.view.administerusersbyrole_people:display:default:display_options:fields:status:settings:format_custom_true"
@@ -7008,12 +7071,12 @@ msgstr "Sidste adgang"
 #: 
 msgctxt "views.view.administerusersbyrole_people:display:default:display_options:fields:access:settings:future_format"
 msgid "@interval hence"
-msgstr ""
+msgstr "@interval fra nu af"
 
 #: 
 msgctxt "views.view.administerusersbyrole_people:display:default:display_options:fields:access:settings:past_format"
 msgid "@interval ago"
-msgstr ""
+msgstr "@interval side"
 
 #: 
 msgctxt "views.view.administerusersbyrole_people:display:default:display_options:fields:operations:label"
@@ -7059,7 +7122,7 @@ msgstr ""
 msgctxt "views.view.administerusersbyrole_people:display:default:display_options:exposed_form:options:submit_button"
 msgid "Filter"
 msgstr "\n"
-"Filter"
+"Filtrer"
 
 #: 
 msgctxt "views.view.administerusersbyrole_people:display:default:display_options:exposed_form:options:reset_button_label"
@@ -7074,17 +7137,17 @@ msgstr "Sorter efter"
 #: 
 msgctxt "views.view.administerusersbyrole_people:display:default:display_options:exposed_form:options:sort_asc_label"
 msgid "Asc"
-msgstr ""
+msgstr "Stigende"
 
 #: 
 msgctxt "views.view.administerusersbyrole_people:display:default:display_options:exposed_form:options:sort_desc_label"
 msgid "Desc"
-msgstr ""
+msgstr "Faldende"
 
 #: 
 msgctxt "views.view.administerusersbyrole_people:display:default:display_options:empty:area_text_custom:content"
 msgid "No people available."
-msgstr "Ingen personer tilgængelige."
+msgstr "Ingen redaktionelle brugere tilgængelige."
 
 #: 
 msgctxt "views.view.administerusersbyrole_people:display:default:display_options:filters:combine:expose:label"
@@ -7104,12 +7167,12 @@ msgstr "Aktiv"
 #: 
 msgctxt "views.view.administerusersbyrole_people:display:default:display_options:filters:status:group_info:group_items:2:title"
 msgid "Blocked"
-msgstr ""
+msgstr "Blokeret"
 
 #: 
 msgctxt "views.view.administerusersbyrole_people:display:default:display_options:filters:roles_target_id:expose:label"
 msgid "Role"
-msgstr "Roller"
+msgstr "Rolle"
 
 #: 
 msgctxt "views.view.administerusersbyrole_people:display:default:display_options:filters:permission:expose:label"
@@ -7134,7 +7197,7 @@ msgstr "Liste"
 #: 
 msgctxt "views.view.administerusersbyrole_people:display:page_1:display_options:menu:description"
 msgid "Find and manage people - for admin or sub-admin"
-msgstr "Find og administrer personer - til admin eller sub-admin"
+msgstr "Find og administrer brugere - til admin eller sub-admin"
 
 #: 
 msgctxt "views.view.administerusersbyrole_people:display:page_1:display_options:tab_options:title"
@@ -7490,7 +7553,7 @@ msgstr "Alle"
 #: 
 msgctxt "views.view.content_paragraphs:display:card_grid:display_title"
 msgid "Card grid"
-msgstr "Kort gitter"
+msgstr "Nyhedskomponent"
 
 #: 
 msgctxt "views.view.entity_clone_template:label"
@@ -8417,7 +8480,7 @@ msgstr "Alle"
 #: 
 msgctxt "views.view.files:display:page_2:display_options:arguments:fid:title"
 msgid "File usage information for {{ arguments.fid }}"
-msgstr "Filanvendelse information for {{ arguments.fid }}"
+msgstr "Filanvendelses information for {{ arguments.fid }}"
 
 #: 
 msgctxt "views.view.locked_content:label"
@@ -8897,7 +8960,7 @@ msgstr "Widget"
 #: 
 msgctxt "views.view.media_library:display:widget:display_options:arguments:bundle:exception:title"
 msgid "All"
-msgstr "-Alle"
+msgstr "Alle"
 
 #: 
 msgctxt "views.view.media_library:display:widget:display_options:header:display_link_grid:label"
@@ -9047,7 +9110,7 @@ msgstr "Side"
 #: 
 msgctxt "views.view.scheduled_jobs:display:page_1:display_options:menu:title"
 msgid "Scheduled jobs"
-msgstr "Planlagte jobs "
+msgstr "Planlagte jobs"
 
 #: 
 msgctxt "views.view.scheduler_scheduled_content:label"
@@ -9112,7 +9175,7 @@ msgstr ""
 #: 
 msgctxt "views.view.scheduler_scheduled_content:display:default:display_options:fields:unpublish_on:label"
 msgid "Unpublish on"
-msgstr "Afpublicer til"
+msgstr "Afpubliceringsdato"
 
 #: 
 msgctxt "views.view.scheduler_scheduled_content:display:default:display_options:fields:operations:label"
@@ -9357,12 +9420,12 @@ msgstr "Side"
 #: 
 msgctxt "views.view.user_admin_people:label"
 msgid "People"
-msgstr "Person"
+msgstr "Redaktionelle brugere"
 
 #: 
 msgctxt "views.view.user_admin_people:description"
 msgid "Find and manage people interacting with your site."
-msgstr ""
+msgstr "Find og administrer redaktionelle brugere"
 
 #: 
 msgctxt "views.view.user_admin_people:display:default:display_title"
@@ -9372,12 +9435,12 @@ msgstr "Standard"
 #: 
 msgctxt "views.view.user_admin_people:display:default:display_options:title"
 msgid "People"
-msgstr "Person"
+msgstr "Redaktionelle brugere"
 
 #: 
 msgctxt "views.view.user_admin_people:display:default:display_options:fields:user_bulk_form:label"
 msgid "Bulk update"
-msgstr ""
+msgstr "Masseopdatering"
 
 #: 
 msgctxt "views.view.user_admin_people:display:default:display_options:fields:name:label"
@@ -9392,7 +9455,7 @@ msgstr "Status"
 #: 
 msgctxt "views.view.user_admin_people:display:default:display_options:fields:status:settings:format_custom_false"
 msgid "Blocked"
-msgstr ""
+msgstr "Blokeret"
 
 #: 
 msgctxt "views.view.user_admin_people:display:default:display_options:fields:status:settings:format_custom_true"
@@ -9427,17 +9490,17 @@ msgstr "Sidste adgang"
 #: 
 msgctxt "views.view.user_admin_people:display:default:display_options:fields:access:settings:future_format"
 msgid "@interval hence"
-msgstr ""
+msgstr "@interval fra nu"
 
 #: 
 msgctxt "views.view.user_admin_people:display:default:display_options:fields:access:settings:past_format"
 msgid "@interval ago"
-msgstr ""
+msgstr "@interval siden"
 
 #: 
 msgctxt "views.view.user_admin_people:display:default:display_options:fields:operations:label"
 msgid "Operations"
-msgstr ""
+msgstr "Handlinger"
 
 #: 
 msgctxt "views.view.user_admin_people:display:default:display_options:pager:options:tags:next"
@@ -9462,7 +9525,7 @@ msgstr "Sidste »"
 #: 
 msgctxt "views.view.user_admin_people:display:default:display_options:pager:options:expose:items_per_page_label"
 msgid "Items per page"
-msgstr ""
+msgstr "Items per side"
 
 #: 
 msgctxt "views.view.user_admin_people:display:default:display_options:pager:options:expose:items_per_page_options_all_label"
@@ -9492,17 +9555,17 @@ msgstr "Sorter efter"
 #: 
 msgctxt "views.view.user_admin_people:display:default:display_options:exposed_form:options:sort_asc_label"
 msgid "Asc"
-msgstr ""
+msgstr "Stigende"
 
 #: 
 msgctxt "views.view.user_admin_people:display:default:display_options:exposed_form:options:sort_desc_label"
 msgid "Desc"
-msgstr ""
+msgstr "Faldende"
 
 #: 
 msgctxt "views.view.user_admin_people:display:default:display_options:empty:area_text_custom:content"
 msgid "No people available."
-msgstr "Ingen personer tilgængelige."
+msgstr "Ingen redaktionelle brugere tilgængelige."
 
 #: 
 msgctxt "views.view.user_admin_people:display:default:display_options:filters:combine:expose:label"
@@ -9522,7 +9585,7 @@ msgstr "Aktiv"
 #: 
 msgctxt "views.view.user_admin_people:display:default:display_options:filters:status:group_info:group_items:2:title"
 msgid "Blocked"
-msgstr ""
+msgstr "Blokeret"
 
 #: 
 msgctxt "views.view.user_admin_people:display:default:display_options:filters:roles_target_id:expose:label"
