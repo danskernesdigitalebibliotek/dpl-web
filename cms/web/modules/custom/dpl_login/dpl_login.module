@@ -115,18 +115,10 @@ function dpl_login_openid_connect_pre_authorize(AccountInterface|FALSE $account,
     ];
     $patron_deny_reasons = array_intersect($patron_blocked_reasons, $deny_login_reasons);
 
-    // Return FALSE to block login and set redirect destination to the
-    // front page, if the patron block reasons match one or more of the
-    // deny reasons. The OpenID Connect module will provide feedback.
-    if (count($patron_deny_reasons) > 0) {
-      $url = Url::fromRoute('<front>')->toString(TRUE);
-      $_SESSION['openid_connect_destination'] = $url->getGeneratedUrl();
-
-      return FALSE;
-    }
-    else {
-      return TRUE;
-    }
+    // Return FALSE to block login if the patron block reasons match one or
+    // more of the deny reasons. The OpenID Connect module will provide
+    // feedback.
+    return !(count($patron_deny_reasons) > 0);
   }
   catch (ApiException $e) {
     $logger->error('Authorization blocked. Unable to get patron information: @message', [
