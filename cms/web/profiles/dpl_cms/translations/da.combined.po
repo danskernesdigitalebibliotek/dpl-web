@@ -6049,7 +6049,7 @@ msgstr "Ophav"
 #: 
 msgctxt "field.storage.paragraph.field_campaign_rule_facet:settings:allowed_values:3:label"
 msgid "Fiction or non-fiction"
-msgstr "Fiktion eller non-fiktion"
+msgstr "Skøn-/faglitteratur"
 
 #: 
 msgctxt "field.storage.paragraph.field_campaign_rule_facet:settings:allowed_values:4:label"
@@ -6749,7 +6749,7 @@ msgstr "[user:display-name],\n"
 "\n"
 "[user:cancel-url]\n"
 "\n"
-"NOTE: Sletningen af din konto kan ikke ændres. \n"
+"BEMÆRK: Sletningen af din konto kan ikke ændres. \n"
 "\n"
 "Dette link udløber om én dag, og der sker intet, hvis det ikke bruges. \n"
 "\n"
