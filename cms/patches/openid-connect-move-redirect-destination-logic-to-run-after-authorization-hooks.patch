@@ -1,0 +1,17 @@
+diff --git a/src/Controller/OpenIDConnectRedirectController.php b/src/Controller/OpenIDConnectRedirectController.php
+index 6433659..6a691bd 100644
+--- a/src/Controller/OpenIDConnectRedirectController.php
++++ b/src/Controller/OpenIDConnectRedirectController.php
+@@ -229,6 +229,12 @@ class OpenIDConnectRedirectController extends ControllerBase implements AccessIn
+       }
+     }
+ 
++    // Get destination parameter from the session, and then clean up.
++    if (isset($_SESSION['openid_connect_destination'])) {
++      $destination = $_SESSION['openid_connect_destination'];
++      unset($_SESSION['openid_connect_destination']);
++    }
++
+     // It's possible to set 'options' in the redirect destination.
+     if (is_array($destination)) {
+       $query = !empty($destination[1]['query']) ? '?' . $destination[1]['query'] : '';
