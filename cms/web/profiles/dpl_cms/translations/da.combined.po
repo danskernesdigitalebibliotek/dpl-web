@@ -2241,12 +2241,12 @@ msgstr "Indstil interesseperioder. Formatet skal være [antal dage]-[label]. Nye
 #: 
 msgctxt "Library Agency Configuration"
 msgid "Default interest period for reservation"
-msgstr "Default interesseperiode for reserveringer"
+msgstr "Standard interesseperiode for reserveringer"
 
 #: 
 msgctxt "Library Agency Configuration"
 msgid "Set the default interest period for reservations."
-msgstr "Indstil default interesseperiode for reserveringer"
+msgstr "Indstil standard interesseperiode for reserveringer"
 
 #: 
 msgctxt "Library Agency Configuration"
@@ -2256,7 +2256,7 @@ msgstr "Interesseperioden @error matcher ikke formatet [dage]-[label]."
 #: 
 msgctxt "Library Agency Configuration"
 msgid "The default interest period should be set to a value in \"Interest periods for reservation\" field."
-msgstr "Default interesseperiode skal indstilles i feltet \"Default interesseperiode for reserveringer\"."
+msgstr "Standard interesseperiode skal indstilles i feltet \"Standard interesseperiode for reserveringer\"."
 
 #: 
 msgctxt "Patron menu"
@@ -3589,7 +3589,7 @@ msgstr "Indstil hvilke profiler der skal anvendes i hvilken kontekst."
 #: 
 msgctxt "Library Agency Configuration"
 msgid "Default profile"
-msgstr "Default profil"
+msgstr "Standardprofil"
 
 #: 
 msgctxt "Library Agency Configuration"
@@ -5439,7 +5439,7 @@ msgstr "Overskriv forfatteren ␣"
 msgctxt "field.field.node.article.field_show_override_author:description"
 msgid "By default, the author is set to the Drupal user that owns the content.<br>\n"
 "If you want to override this, with a manual text, you can check this."
-msgstr "Som default sættes forfatteren til at være den indloggede redaktør. <br>\n"
+msgstr "Som standard sættes forfatteren til at være den indloggede redaktør. <br>\n"
 "Hvis du vil overskrive navnet kan du gøre det manuelt ved at sætte checkmark her."
 
 #: 
@@ -5554,7 +5554,7 @@ msgstr "Vis titler"
 #: 
 msgctxt "field.field.node.page.field_display_titles:description"
 msgid "By default, titles and subtitles are not displayed on pages. If you wish to have it displayed, you can enable this setting."
-msgstr "Som default vises titel og manchettekst ikke på indholdstypen sider.  Hvis du vil have dem vist, kan du slå det til her."
+msgstr "Som standard vises titel og manchettekst ikke på indholdstypen sider.  Hvis du vil have dem vist, kan du slå det til her."
 
 #: 
 msgctxt "field.field.node.page.field_display_titles:settings:on_label"
@@ -5838,7 +5838,7 @@ msgctxt "field.field.paragraph.recommendation.field_image_position_right:descrip
 msgid "This determines whether the image should be positioned to the left or right. \n"
 "If left untoggled (default behaviour) the image is positioned to the left, if toggled on, the image will be positioned to the right. "
 msgstr "Denne knap bruges til at bestemme om forsidebilledet skal højre- eller venstrestilles. \n"
-"Default er billedet venstrestillet, hvis knappen slås til  højrestilles forsidebilledet."
+"Standard er at billedet er venstrestillet, men hvis knappen slås til  højrestilles billedet."
 
 #: 
 msgctxt "field.field.paragraph.recommendation.field_image_position_right:settings:on_label"
@@ -6084,7 +6084,7 @@ msgstr "Værktyper"
 #: 
 msgctxt "field.storage.paragraph.field_link_target:settings:allowed_values:0:label"
 msgid "Open the linked document in the same window or tab (default)"
-msgstr "Åbn det linkede dokument i samme vindue eller tab (default) "
+msgstr "Åbn det linkede dokument i samme vindue eller tab (standard) "
 
 #: 
 msgctxt "field.storage.paragraph.field_link_target:settings:allowed_values:1:label"
@@ -6204,7 +6204,7 @@ msgstr "Video"
 #: 
 msgctxt "metatag.metatag_defaults.403:label"
 msgid "403 access denied"
-msgstr ""
+msgstr "403 adgang nægtet"
 
 #: 
 msgctxt "metatag.metatag_defaults.403:tags:robots"
@@ -6224,7 +6224,7 @@ msgstr ""
 #: 
 msgctxt "metatag.metatag_defaults.404:label"
 msgid "404 page not found"
-msgstr ""
+msgstr "404 side ikke fundet"
 
 #: 
 msgctxt "metatag.metatag_defaults.404:tags:canonical_url"
@@ -6239,7 +6239,7 @@ msgstr ""
 #: 
 msgctxt "metatag.metatag_defaults.front:label"
 msgid "Front page"
-msgstr ""
+msgstr "Forside"
 
 #: 
 msgctxt "metatag.metatag_defaults.front:tags:canonical_url"
@@ -6254,7 +6254,7 @@ msgstr ""
 #: 
 msgctxt "metatag.metatag_defaults.global:label"
 msgid "Global"
-msgstr ""
+msgstr "Global"
 
 #: 
 msgctxt "metatag.metatag_defaults.global:tags:canonical_url"
@@ -6529,12 +6529,12 @@ msgstr "Indtast URL'en til den video, du vil inkludere."
 #: 
 msgctxt "recurring_events.eventinstance_type.default:label"
 msgid "Default"
-msgstr "Default"
+msgstr "Standard"
 
 #: 
 msgctxt "recurring_events.eventseries_type.default:label"
 msgid "Default"
-msgstr "Default"
+msgstr "Standard"
 
 #: 
 msgctxt "search_api.index.events:name"
@@ -7229,7 +7229,7 @@ msgstr "Artikler"
 #: 
 msgctxt "views.view.articles:display:default:display_title"
 msgid "Default"
-msgstr "Default"
+msgstr "Standard"
 
 #: 
 msgctxt "views.view.articles:display:default:display_options:title"
@@ -7274,12 +7274,12 @@ msgstr "Sorter efter"
 #: 
 msgctxt "views.view.articles:display:default:display_options:exposed_form:options:sort_asc_label"
 msgid "Asc"
-msgstr ""
+msgstr "Stigende"
 
 #: 
 msgctxt "views.view.articles:display:default:display_options:exposed_form:options:sort_desc_label"
 msgid "Desc"
-msgstr ""
+msgstr "Faldende"
 
 #: 
 msgctxt "views.view.articles:display:default:display_options:exposed_form:options:text_input_required"
@@ -7299,7 +7299,7 @@ msgstr "Avancererede indstillinger"
 #: 
 msgctxt "views.view.articles:display:default:display_options:filters:field_categories_target_id:expose:label"
 msgid "Article category"
-msgstr ""
+msgstr "Artikelkategori"
 
 #: 
 msgctxt "views.view.articles:display:page_1:display_title"
@@ -7314,7 +7314,7 @@ msgstr "Biblioteker"
 #: 
 msgctxt "views.view.branches:display:default:display_title"
 msgid "Default"
-msgstr "Default"
+msgstr "Standard"
 
 #: 
 msgctxt "views.view.branches:display:default:display_options:title"
@@ -7450,12 +7450,12 @@ msgstr "Sorter efter"
 #: 
 msgctxt "views.view.content:display:default:display_options:exposed_form:options:sort_asc_label"
 msgid "Asc"
-msgstr ""
+msgstr "Stigende"
 
 #: 
 msgctxt "views.view.content:display:default:display_options:exposed_form:options:sort_desc_label"
 msgid "Desc"
-msgstr ""
+msgstr "Faldende"
 
 #: 
 msgctxt "views.view.content:display:default:display_options:empty:area_text_custom:content"
@@ -7610,12 +7610,12 @@ msgstr "Sorter efter"
 #: 
 msgctxt "views.view.entity_clone_template:display:default:display_options:exposed_form:options:sort_asc_label"
 msgid "Asc"
-msgstr ""
+msgstr "Stigende"
 
 #: 
 msgctxt "views.view.entity_clone_template:display:default:display_options:exposed_form:options:sort_desc_label"
 msgid "Desc"
-msgstr ""
+msgstr "Faldende"
 
 #: 
 msgctxt "views.view.entity_clone_template:display:default:display_options:footer:area_text_custom:content"
@@ -7739,12 +7739,12 @@ msgstr "Sorter efter"
 #: 
 msgctxt "views.view.entity_reference_content:display:default:display_options:exposed_form:options:sort_asc_label"
 msgid "Asc"
-msgstr ""
+msgstr "Stigende"
 
 #: 
 msgctxt "views.view.entity_reference_content:display:default:display_options:exposed_form:options:sort_desc_label"
 msgid "Desc"
-msgstr ""
+msgstr "Faldende"
 
 #: 
 msgctxt "views.view.entity_reference_content:display:default:display_options:arguments:type:exception:title"
@@ -7764,7 +7764,7 @@ msgstr "Enhedsreference - arrangementsinstans"
 #: 
 msgctxt "views.view.entity_reference_event_instance:display:default:display_title"
 msgid "Default"
-msgstr "Default"
+msgstr "Standard"
 
 #: 
 msgctxt "views.view.entity_reference_event_instance:display:default:display_options:fields:status:settings:format_custom_false"
@@ -7960,7 +7960,7 @@ msgstr ""
 #: 
 msgctxt "views.view.events:display:default:display_options:pager:options:views_infinite_scroll:button_text"
 msgid "Showing @current_items out of @total results"
-msgstr "Viser @current_items ud af @total results"
+msgstr "Viser @current_items ud af @total resultater"
 
 #: 
 msgctxt "views.view.events:display:default:display_options:exposed_form:options:submit_button"
@@ -8277,7 +8277,7 @@ msgstr "Find og håndter filer"
 #: 
 msgctxt "views.view.files:display:default:display_title"
 msgid "Default"
-msgstr "Default"
+msgstr "Standard"
 
 #: 
 msgctxt "views.view.files:display:default:display_options:title"
@@ -8587,12 +8587,12 @@ msgstr "Sorter efter"
 #: 
 msgctxt "views.view.locked_content:display:default:display_options:exposed_form:options:sort_asc_label"
 msgid "Asc"
-msgstr ""
+msgstr "Stigende"
 
 #: 
 msgctxt "views.view.locked_content:display:default:display_options:exposed_form:options:sort_desc_label"
 msgid "Desc"
-msgstr ""
+msgstr "Faldende"
 
 #: 
 msgctxt "views.view.locked_content:display:default:display_options:empty:area_text_custom:content"
@@ -8657,12 +8657,12 @@ msgstr "Standard"
 #: 
 msgctxt "views.view.media:display:default:display_options:title"
 msgid "Media"
-msgstr ""
+msgstr "Medie"
 
 #: 
 msgctxt "views.view.media:display:default:display_options:fields:media_bulk_form:action_title"
 msgid "Action"
-msgstr ""
+msgstr "Handling"
 
 #: 
 msgctxt "views.view.media:display:default:display_options:fields:name:label"
@@ -8757,12 +8757,12 @@ msgstr "Sorter efter"
 #: 
 msgctxt "views.view.media:display:default:display_options:exposed_form:options:sort_asc_label"
 msgid "Asc"
-msgstr ""
+msgstr "Stigende"
 
 #: 
 msgctxt "views.view.media:display:default:display_options:exposed_form:options:sort_desc_label"
 msgid "Desc"
-msgstr ""
+msgstr "Faldende"
 
 #: 
 msgctxt "views.view.media:display:default:display_options:empty:area_text_custom:content"
@@ -8882,12 +8882,12 @@ msgstr "Sorter efter"
 #: 
 msgctxt "views.view.media_library:display:default:display_options:exposed_form:options:sort_asc_label"
 msgid "Asc"
-msgstr ""
+msgstr "Stigende"
 
 #: 
 msgctxt "views.view.media_library:display:default:display_options:exposed_form:options:sort_desc_label"
 msgid "Desc"
-msgstr ""
+msgstr "Faldende"
 
 #: 
 msgctxt "views.view.media_library:display:default:display_options:empty:area_text_custom:content"
@@ -9057,7 +9057,7 @@ msgstr "Type"
 #: 
 msgctxt "views.view.scheduled_jobs:display:default:display_options:fields:id:label"
 msgid "Job ID"
-msgstr ""
+msgstr "Job ID"
 
 #: 
 msgctxt "views.view.scheduled_jobs:display:default:display_options:fields:next:label"
@@ -9097,12 +9097,12 @@ msgstr "Sorter efter"
 #: 
 msgctxt "views.view.scheduled_jobs:display:default:display_options:exposed_form:options:sort_asc_label"
 msgid "Asc"
-msgstr ""
+msgstr "Stigende"
 
 #: 
 msgctxt "views.view.scheduled_jobs:display:default:display_options:exposed_form:options:sort_desc_label"
 msgid "Desc"
-msgstr ""
+msgstr "Faldende"
 
 #: 
 msgctxt "views.view.scheduled_jobs:display:default:display_options:filters:name:expose:label"
@@ -9112,7 +9112,7 @@ msgstr "Navn"
 #: 
 msgctxt "views.view.scheduled_jobs:display:default:display_options:filters:id:expose:label"
 msgid "Job ID"
-msgstr ""
+msgstr "Job ID"
 
 #: 
 msgctxt "views.view.scheduled_jobs:display:page_1:display_title"
@@ -9147,7 +9147,7 @@ msgstr "Planlagt indhold"
 #: 
 msgctxt "views.view.scheduler_scheduled_content:display:default:display_options:fields:node_bulk_form:action_title"
 msgid "Action"
-msgstr ""
+msgstr "Handling"
 
 #: 
 msgctxt "views.view.scheduler_scheduled_content:display:default:display_options:fields:title:label"
@@ -9182,7 +9182,7 @@ msgstr "Publiceret"
 #: 
 msgctxt "views.view.scheduler_scheduled_content:display:default:display_options:fields:publish_on:label"
 msgid "Publish on"
-msgstr ""
+msgstr "Publicer den"
 
 #: 
 msgctxt "views.view.scheduler_scheduled_content:display:default:display_options:fields:unpublish_on:label"
@@ -9232,12 +9232,12 @@ msgstr "Sorter efter"
 #: 
 msgctxt "views.view.scheduler_scheduled_content:display:default:display_options:exposed_form:options:sort_asc_label"
 msgid "Asc"
-msgstr ""
+msgstr "Stigende"
 
 #: 
 msgctxt "views.view.scheduler_scheduled_content:display:default:display_options:exposed_form:options:sort_desc_label"
 msgid "Desc"
-msgstr ""
+msgstr "Faldende"
 
 #: 
 msgctxt "views.view.scheduler_scheduled_content:display:default:display_options:empty:area_text_custom:content"
@@ -9402,12 +9402,12 @@ msgstr "Sorter efter"
 #: 
 msgctxt "views.view.taxonomy_term:display:default:display_options:exposed_form:options:sort_asc_label"
 msgid "Asc"
-msgstr ""
+msgstr "Stigende"
 
 #: 
 msgctxt "views.view.taxonomy_term:display:default:display_options:exposed_form:options:sort_desc_label"
 msgid "Desc"
-msgstr ""
+msgstr "Faldende"
 
 #: 
 msgctxt "views.view.taxonomy_term:display:default:display_options:arguments:tid:exception:title"
@@ -9657,7 +9657,7 @@ msgstr "Standard"
 #: 
 msgctxt "views.view.watchdog:display:default:display_options:title"
 msgid "Recent log messages"
-msgstr ""
+msgstr "Nylige logbeskeder"
 
 #: 
 msgctxt "views.view.watchdog:display:default:display_options:fields:nothing:admin_label"
@@ -9667,12 +9667,12 @@ msgstr "Ikon"
 #: 
 msgctxt "views.view.watchdog:display:default:display_options:fields:wid:label"
 msgid "WID"
-msgstr ""
+msgstr "WID"
 
 #: 
 msgctxt "views.view.watchdog:display:default:display_options:fields:severity:label"
 msgid "Severity"
-msgstr ""
+msgstr "Alvorlighedsgrad"
 
 #: 
 msgctxt "views.view.watchdog:display:default:display_options:fields:type:label"
@@ -9682,7 +9682,7 @@ msgstr "Type"
 #: 
 msgctxt "views.view.watchdog:display:default:display_options:fields:timestamp:label"
 msgid "Date"
-msgstr ""
+msgstr "Dato"
 
 #: 
 msgctxt "views.view.watchdog:display:default:display_options:fields:message:label"
@@ -9707,7 +9707,7 @@ msgstr "Bruger"
 #: 
 msgctxt "views.view.watchdog:display:default:display_options:fields:link:label"
 msgid "Operations"
-msgstr ""
+msgstr "Handlinger"
 
 #: 
 msgctxt "views.view.watchdog:display:default:display_options:pager:options:expose:items_per_page_label"
@@ -9742,12 +9742,12 @@ msgstr "Sorter efter"
 #: 
 msgctxt "views.view.watchdog:display:default:display_options:exposed_form:options:sort_asc_label"
 msgid "Asc"
-msgstr ""
+msgstr "Stigende"
 
 #: 
 msgctxt "views.view.watchdog:display:default:display_options:exposed_form:options:sort_desc_label"
 msgid "Desc"
-msgstr ""
+msgstr "Faldende"
 
 #: 
 msgctxt "views.view.watchdog:display:default:display_options:empty:area:admin_label"
@@ -9767,7 +9767,7 @@ msgstr "Type"
 #: 
 msgctxt "views.view.watchdog:display:default:display_options:filters:severity:expose:label"
 msgid "Severity"
-msgstr ""
+msgstr "Alvorlighedsgrad"
 
 #: 
 msgctxt "views.view.watchdog:display:page:display_title"
