@@ -7088,7 +7088,7 @@ msgstr "@interval fra nu af"
 #: 
 msgctxt "views.view.administerusersbyrole_people:display:default:display_options:fields:access:settings:past_format"
 msgid "@interval ago"
-msgstr "@interval side"
+msgstr "@interval siden"
 
 #: 
 msgctxt "views.view.administerusersbyrole_people:display:default:display_options:fields:operations:label"
