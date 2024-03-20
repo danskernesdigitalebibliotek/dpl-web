@@ -99,8 +99,8 @@ class DplLoginController extends ControllerBase {
   /**
    * Authorize user from embedded app.
    *
-   * Retrieve current path parameter, store it in session for later redirect
-   * and authorize user.
+   * Retrieve current path parameter, generate new URL and store
+   * it in session for later redirect and authorize user.
    *
    * @param \Symfony\Component\HttpFoundation\Request $request
    *   Symfony request object.
@@ -110,12 +110,40 @@ class DplLoginController extends ControllerBase {
    */
   public function login(Request $request): Response {
     $_SESSION['openid_connect_op'] = 'login';
+
+    $url = Url::fromRoute('dpl_login.login_handler');
+
     if ($current_path = $request->query->get('current-path')) {
-      $_SESSION['openid_connect_destination'] = $current_path;
+      $url->mergeOptions(['query' => ['current-path' => $current_path]]);
+
     }
+    $generated_url = $url->toString(TRUE);
+    $_SESSION['openid_connect_destination'] = $generated_url->getGeneratedUrl();
 
     $scopes = $this->claims->getScopes($this->client);
     return $this->client->authorize($scopes);
+  }
+
+  /**
+   * Check if a user token has been set and decide redirection.
+   *
+   * Check if a user token has been set and either allow redirecting
+   * to the original path or redirect to frontpage.
+   *
+   * @param \Symfony\Component\HttpFoundation\Request $request
+   *   Symfony request object.
+   *
+   * @return \Drupal\Core\Routing\TrustedRedirectResponse|\Symfony\Component\HttpFoundation\RedirectResponse
+   *   A redirect to the authorization endpoint.
+   */
+  public function loginHandler(Request $request): TrustedRedirectResponse|RedirectResponse {
+    if ($this->getAccessToken() && $current_path = (string) $request->query->get('current-path')) {
+      $url = Url::fromUri('internal:/' . ltrim($current_path, '/'))->toString(TRUE);
+      return new TrustedRedirectResponse($url->getGeneratedUrl());
+    }
+
+    $url = Url::fromRoute('<front>', [], ["absolute" => TRUE])->toString(TRUE);
+    return new TrustedRedirectResponse($url->getGeneratedUrl());
   }
 
   /**
