@@ -3920,7 +3920,7 @@ msgstr "Næste"
 
 #: 
 msgid "Events"
-msgstr "Begivenheder"
+msgstr "Arrangementer"
 
 #: 
 msgid "Address"
@@ -5176,7 +5176,7 @@ msgstr "Adresse"
 #: 
 msgctxt "field.field.eventinstance.default.field_event_description:label"
 msgid "Description (DEPRECATED - WILL BE DELETED.)"
-msgstr ""
+msgstr "Beskrivelse (DETTE FELT BLIVER SLETTET)"
 
 #: 
 msgctxt "field.field.eventinstance.default.field_event_description:description"
@@ -5196,7 +5196,7 @@ msgstr "Billetlink"
 #: 
 msgctxt "field.field.eventinstance.default.field_event_link:description"
 msgid "Please enter the URL where attendees can buy tickets for this event."
-msgstr ""
+msgstr "Angiv URL til billetsalg"
 
 #: 
 msgctxt "field.field.eventinstance.default.field_event_paragraphs:label"
@@ -5285,7 +5285,7 @@ msgstr "Adresse"
 #: 
 msgctxt "field.field.eventseries.default.field_event_description:label"
 msgid "Description (DEPRECATED - WILL BE DELETED.)"
-msgstr ""
+msgstr "Beskrivelse (DETTE FELT BLIVER SLETTET)"
 
 #: 
 msgctxt "field.field.eventseries.default.field_event_description:description"
@@ -6539,7 +6539,7 @@ msgstr "Default"
 #: 
 msgctxt "search_api.index.events:name"
 msgid "Events"
-msgstr ""
+msgstr "Arrangementer"
 
 #: 
 msgctxt "search_api.server.db:name"
@@ -6554,12 +6554,12 @@ msgstr "DB Søgning"
 #: 
 msgctxt "system.action.eventinstance_break_lock_action:label"
 msgid "Break lock eventinstance"
-msgstr ""
+msgstr "Bryd lås på arrangementsinstans"
 
 #: 
 msgctxt "system.action.eventseries_break_lock_action:label"
 msgid "Break lock eventseries"
-msgstr ""
+msgstr "Bryd lås på arrangementsserie"
 
 #: 
 msgctxt "system.action.media_delete_action:label"
@@ -7480,7 +7480,7 @@ msgstr "Status"
 #: 
 msgctxt "views.view.content:display:default:display_options:filters:status:group_info:label"
 msgid "Published status"
-msgstr "Publikationsstatus"
+msgstr "Publiceringsstatus"
 
 #: 
 msgctxt "views.view.content:display:default:display_options:filters:status:group_info:group_items:1:title"
@@ -7759,7 +7759,7 @@ msgstr ""
 #: 
 msgctxt "views.view.entity_reference_event_instance:label"
 msgid "Entity reference - event instance"
-msgstr ""
+msgstr "Enhedsreference - arrangementsinstans"
 
 #: 
 msgctxt "views.view.entity_reference_event_instance:display:default:display_title"
@@ -7837,22 +7837,22 @@ msgstr "Sorter efter"
 #: 
 msgctxt "views.view.entity_reference_event_instance:display:default:display_options:exposed_form:options:sort_asc_label"
 msgid "Asc"
-msgstr ""
+msgstr "Stigende"
 
 #: 
 msgctxt "views.view.entity_reference_event_instance:display:default:display_options:exposed_form:options:sort_desc_label"
 msgid "Desc"
-msgstr ""
+msgstr "Faldende"
 
 #: 
 msgctxt "views.view.entity_reference_event_instance:display:entity_reference_1:display_title"
 msgid "Entity Reference"
-msgstr ""
+msgstr "Enhedsreference"
 
 #: 
 msgctxt "views.view.entity_reference_event_series:label"
 msgid "Entity reference - event series"
-msgstr ""
+msgstr "Enhedsreference - arrangementsserie"
 
 #: 
 msgctxt "views.view.entity_reference_event_series:display:default:display_title"
@@ -7910,22 +7910,22 @@ msgstr "Sorter efter"
 #: 
 msgctxt "views.view.entity_reference_event_series:display:default:display_options:exposed_form:options:sort_asc_label"
 msgid "Asc"
-msgstr ""
+msgstr "Stigende"
 
 #: 
 msgctxt "views.view.entity_reference_event_series:display:default:display_options:exposed_form:options:sort_desc_label"
 msgid "Desc"
-msgstr ""
+msgstr "Faldende"
 
 #: 
 msgctxt "views.view.entity_reference_event_series:display:entity_reference_1:display_title"
 msgid "Entity Reference"
-msgstr ""
+msgstr "Enhedsreference"
 
 #: 
 msgctxt "views.view.events:label"
 msgid "Events"
-msgstr ""
+msgstr "Arrangementer"
 
 #: 
 msgctxt "views.view.events:description"
@@ -7940,7 +7940,7 @@ msgstr "Standard"
 #: 
 msgctxt "views.view.events:display:default:display_options:title"
 msgid "Events"
-msgstr ""
+msgstr "Arrangementer"
 
 #: 
 msgctxt "views.view.events:display:default:display_options:pager:options:expose:items_per_page_label"
@@ -7980,12 +7980,12 @@ msgstr "Sorter efter"
 #: 
 msgctxt "views.view.events:display:default:display_options:exposed_form:options:sort_asc_label"
 msgid "Asc"
-msgstr ""
+msgstr "Stigende"
 
 #: 
 msgctxt "views.view.events:display:default:display_options:exposed_form:options:sort_desc_label"
 msgid "Desc"
-msgstr ""
+msgstr "Faldende"
 
 #: 
 msgctxt "views.view.events:display:default:display_options:exposed_form:options:text_input_required"
@@ -7995,7 +7995,7 @@ msgstr "Vælg et filter og klik på \"Anvend\" for at se resultaterne"
 #: 
 msgctxt "views.view.events:display:default:display_options:exposed_form:options:text_input_required_format"
 msgid "basic"
-msgstr ""
+msgstr "basal"
 
 #: 
 msgctxt "views.view.events:display:default:display_options:exposed_form:options:bef:general:secondary_label"
@@ -8010,7 +8010,7 @@ msgstr "Side"
 #: 
 msgctxt "views.view.events:display:all:display_options:filters:event_categories:expose:label"
 msgid "Event category"
-msgstr ""
+msgstr "Arrangementskategori"
 
 #: 
 msgctxt "views.view.events:display:related:display_title"
@@ -8020,7 +8020,7 @@ msgstr "Relaterede begivenheder"
 #: 
 msgctxt "views.view.event_admin:label"
 msgid "Event - admin"
-msgstr ""
+msgstr "Arrangements administration"
 
 #: 
 msgctxt "views.view.event_admin:display:default:display_title"
@@ -8030,17 +8030,17 @@ msgstr "Standard"
 #: 
 msgctxt "views.view.event_admin:display:default:display_options:title"
 msgid "Event - admin"
-msgstr ""
+msgstr "Arrangements administration"
 
 #: 
 msgctxt "views.view.event_admin:display:default:display_options:fields:eventseries_id:label"
 msgid "Series"
-msgstr ""
+msgstr "Serie"
 
 #: 
 msgctxt "views.view.event_admin:display:default:display_options:fields:eventseries_id:alter:text"
 msgid "{{ eventseries_id }}"
-msgstr ""
+msgstr "{{ eventseries_id }}"
 
 #: 
 msgctxt "views.view.event_admin:display:default:display_options:fields:id:label"
@@ -8080,7 +8080,7 @@ msgstr ""
 #: 
 msgctxt "views.view.event_admin:display:default:display_options:fields:date__value:label"
 msgid "Event Date"
-msgstr ""
+msgstr "Arrangementsdato"
 
 #: 
 msgctxt "views.view.event_admin:display:default:display_options:fields:date__value:alter:text"
@@ -8112,12 +8112,12 @@ msgstr ""
 #: 
 msgctxt "views.view.event_admin:display:default:display_options:fields:event_state:label"
 msgid "Event state"
-msgstr ""
+msgstr "Arrangementsstatus"
 
 #: 
 msgctxt "views.view.event_admin:display:default:display_options:fields:status:label"
 msgid "Publication status"
-msgstr ""
+msgstr "Publiceringsdato"
 
 #: 
 msgctxt "views.view.event_admin:display:default:display_options:fields:status:settings:format_custom_false"
@@ -8132,12 +8132,12 @@ msgstr "Publiceret"
 #: 
 msgctxt "views.view.event_admin:display:default:display_options:fields:edit_eventseries:label"
 msgid "Series links"
-msgstr ""
+msgstr "Links til serier"
 
 #: 
 msgctxt "views.view.event_admin:display:default:display_options:fields:edit_eventseries:alter:text"
 msgid "<div class=\"button button--small\">{{ edit_eventseries }}</div>"
-msgstr ""
+msgstr "<div class=\"button button--small\">{{ edit_eventseries }}</div>"
 
 #: 
 msgctxt "views.view.event_admin:display:default:display_options:fields:edit_eventseries:text"
@@ -8192,32 +8192,32 @@ msgstr "Sorter efter"
 #: 
 msgctxt "views.view.event_admin:display:default:display_options:exposed_form:options:sort_asc_label"
 msgid "Asc"
-msgstr ""
+msgstr "Stigende"
 
 #: 
 msgctxt "views.view.event_admin:display:default:display_options:exposed_form:options:sort_desc_label"
 msgid "Desc"
-msgstr ""
+msgstr "Faldende"
 
 #: 
 msgctxt "views.view.event_admin:display:default:display_options:filters:combine:expose:label"
 msgid "Search"
-msgstr ""
+msgstr "Søg"
 
 #: 
 msgctxt "views.view.event_admin:display:default:display_options:filters:combine:expose:placeholder"
 msgid "Search by title, ID.."
-msgstr ""
+msgstr "Søg efter titel, ID.."
 
 #: 
 msgctxt "views.view.event_admin:display:default:display_options:filters:date__value:expose:label"
 msgid "Event Date"
-msgstr ""
+msgstr "Arrangementsdato"
 
 #: 
 msgctxt "views.view.event_admin:display:default:display_options:filters:date__value:group_info:label"
 msgid "Date filters"
-msgstr ""
+msgstr "Datofiltre"
 
 #: 
 msgctxt "views.view.event_admin:display:default:display_options:filters:date__value:group_info:group_items:1:title"
@@ -8227,22 +8227,22 @@ msgstr "Vis alle begivenheder"
 #: 
 msgctxt "views.view.event_admin:display:default:display_options:filters:date__value:group_info:group_items:2:title"
 msgid "Only upcoming events"
-msgstr ""
+msgstr "Kun kommende arrangementer"
 
 #: 
 msgctxt "views.view.event_admin:display:default:display_options:filters:date__value:group_info:group_items:3:title"
 msgid "Only expired events"
-msgstr ""
+msgstr "Kun afholdte arrangementer"
 
 #: 
 msgctxt "views.view.event_admin:display:default:display_options:filters:status:expose:label"
 msgid "Publication status"
-msgstr ""
+msgstr "Publiceringsstatus"
 
 #: 
 msgctxt "views.view.event_admin:display:default:display_options:filters:status:group_info:label"
 msgid "Published status"
-msgstr "Publikationsstatus"
+msgstr "Publiceringsstatus"
 
 #: 
 msgctxt "views.view.event_admin:display:default:display_options:filters:status:group_info:group_items:1:title"
@@ -8262,7 +8262,7 @@ msgstr "Side"
 #: 
 msgctxt "views.view.event_admin:display:overview:display_options:menu:title"
 msgid "Events"
-msgstr ""
+msgstr "Arrangementer"
 
 #: 
 msgctxt "views.view.files:label"
@@ -8602,12 +8602,12 @@ msgstr "Der er intet låst indhold i øjeblikket."
 #: 
 msgctxt "views.view.locked_content:display:default:display_options:filters:status:expose:label"
 msgid "Published status"
-msgstr "Publikationsstatus"
+msgstr "Publiceringsstatus"
 
 #: 
 msgctxt "views.view.locked_content:display:default:display_options:filters:status:group_info:label"
 msgid "Published status"
-msgstr "Publikationsstatus"
+msgstr "Publiceringsstatus"
 
 #: 
 msgctxt "views.view.locked_content:display:default:display_options:filters:status:group_info:group_items:1:title"
@@ -8787,7 +8787,7 @@ msgstr "Type"
 #: 
 msgctxt "views.view.media:display:default:display_options:filters:status:group_info:label"
 msgid "Published status"
-msgstr "Publikationsstatus"
+msgstr "Publiceringsstatus"
 
 #: 
 msgctxt "views.view.media:display:default:display_options:filters:status:group_info:group_items:1:title"
@@ -9262,7 +9262,7 @@ msgstr "Status"
 #: 
 msgctxt "views.view.scheduler_scheduled_content:display:default:display_options:filters:status:group_info:label"
 msgid "Published status"
-msgstr "Publikationsstatus"
+msgstr "Publiceringsstatus"
 
 #: 
 msgctxt "views.view.scheduler_scheduled_content:display:default:display_options:filters:status:group_info:group_items:1:title"
@@ -9692,7 +9692,7 @@ msgstr "Besked"
 #: 
 msgctxt "views.view.watchdog:display:default:display_options:fields:message:alter:path"
 msgid "admin/reports/dblog/event/{{ wid }}"
-msgstr ""
+msgstr "admin/reports/dblog/event/{{ wid }}"
 
 #: 
 msgctxt "views.view.watchdog:display:default:display_options:fields:message:alter:alt"
