@@ -3119,11 +3119,11 @@ msgstr "Gratis"
 
 #: 
 msgid "DPL Paragraphs"
-msgstr "DPL Paragraphs"
+msgstr "DPL Paragraffer"
 
 #: 
 msgid "Tweaks to various DPL paragraphs"
-msgstr "Ændringer til forskellige DPL paragraphs"
+msgstr "Ændringer til forskellige DPL paragraffer"
 
 #: 
 msgid "Admin"
@@ -4811,12 +4811,12 @@ msgstr "Paragraffer"
 #: 
 msgctxt "core.entity_form_display.node.campaign.default:content:field_campaign_rules:settings:title"
 msgid "Paragraph"
-msgstr "Paragraph"
+msgstr "Paragraf"
 
 #: 
 msgctxt "core.entity_form_display.node.campaign.default:content:field_campaign_rules:settings:title_plural"
 msgid "Paragraphs"
-msgstr "Paragraphs"
+msgstr "Paragraffer"
 
 #: 
 msgctxt "core.entity_form_display.node.page.default:content:field_hero_title:settings:placeholder"
@@ -5786,7 +5786,7 @@ msgstr "Komponenten viser kun værker i intervaller af 4. \n"
 #: 
 msgctxt "field.field.paragraph.material_grid_manual.field_work_id:label"
 msgid "Work ID (DEPRECATED)"
-msgstr ""
+msgstr "VærkID udgår"
 
 #: 
 msgctxt "field.field.paragraph.material_grid_manual.field_work_id:description"
@@ -5894,7 +5894,7 @@ msgstr "Dette er det VærkID som anvendes til at hente informationer om værket.
 #: 
 msgctxt "field.field.paragraph.recommendation.field_work_id:label"
 msgid "Work ID (DEPRECATED)"
-msgstr ""
+msgstr "VærkID (Udgår)"
 
 #: 
 msgctxt "field.field.paragraph.recommendation.field_work_id:description"
@@ -6399,7 +6399,7 @@ msgstr "Billetkategori"
 #: 
 msgctxt "paragraphs.paragraphs_type.event_ticket_category:description"
 msgid "A combination of ticket category name and price for an event. "
-msgstr ""
+msgstr "En kombination af navn på billetkategori og pris på et arrangement. "
 
 #: 
 msgctxt "paragraphs.paragraphs_type.files:label"
@@ -6494,27 +6494,27 @@ msgstr "Brødtekst"
 #: 
 msgctxt "paragraphs.paragraphs_type.text_body:description"
 msgid "A basic, formatted body of text."
-msgstr ""
+msgstr "En basal, formateret brødtekst"
 
 #: 
 msgctxt "paragraphs.paragraphs_type.user_registration_item:label"
 msgid "User registration item"
-msgstr "Brugerregistrering element"
+msgstr "Brugerregistreringselement"
 
 #: 
 msgctxt "paragraphs.paragraphs_type.user_registration_item:description"
 msgid "The \"User registration item\" paragraph type is used to display relevant information about the user registration process."
-msgstr ""
+msgstr "Paragraftypen \"Brugerregistrerings item\" anvendes til at vise relevant information om brugerregistreringsprocessen."
 
 #: 
 msgctxt "paragraphs.paragraphs_type.user_registration_section:label"
 msgid "User registration section"
-msgstr "Brugerregistrering sektion"
+msgstr "Brugerregistreringsafsnit"
 
 #: 
 msgctxt "paragraphs.paragraphs_type.user_registration_section:description"
 msgid "The \"User registration section\" paragraph type is used to display \"User registration item\" paragraphs."
-msgstr "Afsnitstypen \"Brugerregistreringsafsnit\" bruges til at vise afsnit om \"Brugerregistreringselementer\"."
+msgstr "Paragraftypen \"Brugerregistreringsafsnit\" bruges til at vise paragraffer af typen \"Brugerregistreringselementer\"."
 
 #: 
 msgctxt "paragraphs.paragraphs_type.video:label"
@@ -6741,7 +6741,19 @@ msgid "[user:display-name],\n"
 "This link expires in one day and nothing will happen if it is not used.\n"
 "\n"
 "--  [site:name] team"
-msgstr ""
+msgstr "[user:display-name],\n"
+"\n"
+"En anmodning om at slette din konto er foretaget hos [site:name]. \n"
+"\n"
+"Du kan nu slette din konto på [site:url-brief] ved at klikke på dette link eller kopiere og indsætte det i din browser: \n"
+"\n"
+"[user:cancel-url]\n"
+"\n"
+"NOTE: Sletningen af din konto kan ikke ændres. \n"
+"\n"
+"Dette link udløber om én dag, og der sker intet, hvis det ikke bruges. \n"
+"\n"
+"--  [site:name] team"
 
 #: 
 msgctxt "user.mail:password_reset:subject"
@@ -7508,7 +7520,7 @@ msgstr "Find og håndter indhold"
 #: 
 msgctxt "views.view.content_paragraphs:label"
 msgid "Content lists, embedded in Paragraphs"
-msgstr "Indholdslister, indlejret i afsnit"
+msgstr "Indholdslister, indlejret i paragraffer"
 
 #: 
 msgctxt "views.view.content_paragraphs:description"
@@ -7538,12 +7550,12 @@ msgstr "Sorter efter"
 #: 
 msgctxt "views.view.content_paragraphs:display:default:display_options:exposed_form:options:sort_asc_label"
 msgid "Asc"
-msgstr ""
+msgstr "Stigende"
 
 #: 
 msgctxt "views.view.content_paragraphs:display:default:display_options:exposed_form:options:sort_desc_label"
 msgid "Desc"
-msgstr ""
+msgstr "Faldende"
 
 #: 
 msgctxt "views.view.content_paragraphs:display:default:display_options:arguments:field_tags_target_id:exception:title"
