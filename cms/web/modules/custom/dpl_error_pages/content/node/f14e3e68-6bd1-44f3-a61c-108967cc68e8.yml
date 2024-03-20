@@ -1,5 +1,5 @@
 _meta:
-  version: '1.0'
+  version: "1.0"
   entity_type: node
   uuid: f14e3e68-6bd1-44f3-a61c-108967cc68e8
   bundle: page
@@ -8,75 +8,56 @@ _meta:
     e00e1460-169e-468d-9835-d664f06d0969: file
 default:
   revision_uid:
-    -
-      target_id: 1
+    - target_id: 1
   status:
-    -
-      value: true
+    - value: true
   uid:
-    -
-      target_id: 1
+    - target_id: 1
   title:
-    -
-      value: 'Siden blev ikke fundet'
+    - value: "Siden blev ikke fundet"
   created:
-    -
-      value: 1710763252
+    - value: 1710763252
   promote:
-    -
-      value: false
+    - value: false
   sticky:
-    -
-      value: false
+    - value: false
   revision_translation_affected:
-    -
-      value: true
+    - value: true
   entity_clone_template_active:
-    -
-      value: false
+    - value: false
   entity_clone_template_image:
-    -
-      entity: e00e1460-169e-468d-9835-d664f06d0969
-      alt: ''
-      title: ''
+    - entity: e00e1460-169e-468d-9835-d664f06d0969
+      alt: ""
+      title: ""
       width: 640
       height: 443
   metatag:
-    -
-      tag: meta
+    - tag: meta
       attributes:
         name: title
-        content: 'Siden blev ikke fundet | DPL CMS'
+        content: "Siden blev ikke fundet | DPL CMS"
   path:
-    -
-      alias: /error-page-404
+    - alias: /error-page-404
       langcode: und
   field_display_titles:
-    -
-      value: false
+    - value: false
   field_paragraphs:
-    -
-      entity:
+    - entity:
         _meta:
-          version: '1.0'
+          version: "1.0"
           entity_type: paragraph
           uuid: f55bc166-35c2-45d5-a44a-edcffd37c828
           bundle: text_body
           default_langcode: da
         default:
           status:
-            -
-              value: true
+            - value: true
           created:
-            -
-              value: 1710763252
+            - value: 1710763252
           behavior_settings:
-            -
-              value: {  }
+            - value: {}
           revision_translation_affected:
-            -
-              value: true
+            - value: true
           field_body:
-            -
-              value: '<h2>Vi kan desværre ikke finde den side, du søger</h2><p>Ups!</p><p>Det ser ud til, at siden, du leder efter, ikke eksisterer. Det kan være, den er blevet flyttet, eller et link er blevet fejlagtigt indtastet.</p><p>Men fortvivl ikke! Brug menuen ovenfor til at navigere tilbage til vores hjemmeside, eller prøv at bruge søgefunktionen til at finde det, du leder efter. Vi er her for at hjælpe dig med at finde vej.</p>'
+            - value: "<h2>Vi kan desværre ikke finde den side, du søger</h2><p>Ups!</p><p>Det ser ud til, at siden, du leder efter, ikke eksisterer. Det kan være, den er blevet flyttet, eller et link er blevet fejlagtigt indtastet.</p><p>Men fortvivl ikke! Brug menuen ovenfor til at navigere tilbage til vores hjemmeside, eller prøv at bruge søgefunktionen til at finde det, du leder efter. Vi er her for at hjælpe dig med at finde vej.</p>"
               format: basic
