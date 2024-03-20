@@ -99,15 +99,15 @@ msgstr "Lån"
 
 #: 
 msgid "React DDB Library"
-msgstr "React DPL Library"
+msgstr "React DPL Bibliotek"
 
 #: 
 msgid "Library is present"
-msgstr "Library er "
+msgstr "Bibliotek er"
 
 #: 
 msgid "DDB React library is missing (@dir)"
-msgstr "DPL React library mangler (@dir) "
+msgstr "DPL React bibliotek mangler (@dir) "
 
 #: 
 msgctxt "Search Result"
@@ -834,7 +834,7 @@ msgstr "Generelle indstillinger"
 
 #: 
 msgid "DPL Library Agency"
-msgstr "DPL Library Agency"
+msgstr "DPL Biblioteks Agency"
 
 #: 
 msgid "Module for handling library agency configuration and functionality"
@@ -906,7 +906,7 @@ msgstr "Indeholder eksempelindhold til demosider."
 
 #: 
 msgid "DPL Library Token"
-msgstr "DPL biblioteks token"
+msgstr "DPL Biblioteks token"
 
 #: 
 msgid "Handles fetching and storage of a library token"
@@ -1857,7 +1857,7 @@ msgstr "Forfattere"
 #: 
 msgctxt "Work Page"
 msgid "You don't live in the municipality where this library is located."
-msgstr "Du er ikke bosiddende i kommunen som dette bibliotek er tilknyttet"
+msgstr "Du er ikke bosiddende i kommunen som dette bibliotek er tilknyttet."
 
 #: 
 msgctxt "React apps (Global error handling)"
@@ -7118,7 +7118,7 @@ msgstr "Sidste »"
 #: 
 msgctxt "views.view.administerusersbyrole_people:display:default:display_options:pager:options:expose:items_per_page_label"
 msgid "Items per page"
-msgstr ""
+msgstr "Enheder pr. side"
 
 #: 
 msgctxt "views.view.administerusersbyrole_people:display:default:display_options:pager:options:expose:items_per_page_options_all_label"
@@ -7709,7 +7709,7 @@ msgstr ""
 #: 
 msgctxt "views.view.entity_reference_content:display:default:display_options:pager:options:expose:items_per_page_label"
 msgid "Items per page"
-msgstr ""
+msgstr "Enheder pr. side"
 
 #: 
 msgctxt "views.view.entity_reference_content:display:default:display_options:pager:options:expose:items_per_page_options_all_label"
@@ -7807,7 +7807,7 @@ msgstr ""
 #: 
 msgctxt "views.view.entity_reference_event_instance:display:default:display_options:pager:options:expose:items_per_page_label"
 msgid "Items per page"
-msgstr ""
+msgstr "Enheder pr. side"
 
 #: 
 msgctxt "views.view.entity_reference_event_instance:display:default:display_options:pager:options:expose:items_per_page_options_all_label"
@@ -7880,7 +7880,7 @@ msgstr ""
 #: 
 msgctxt "views.view.entity_reference_event_series:display:default:display_options:pager:options:expose:items_per_page_label"
 msgid "Items per page"
-msgstr ""
+msgstr "Enheder pr. side"
 
 #: 
 msgctxt "views.view.entity_reference_event_series:display:default:display_options:pager:options:expose:items_per_page_options_all_label"
@@ -7945,7 +7945,7 @@ msgstr ""
 #: 
 msgctxt "views.view.events:display:default:display_options:pager:options:expose:items_per_page_label"
 msgid "Items per page"
-msgstr ""
+msgstr "Enheder pr. side"
 
 #: 
 msgctxt "views.view.events:display:default:display_options:pager:options:expose:items_per_page_options_all_label"
@@ -8162,7 +8162,7 @@ msgstr "Sidste »"
 #: 
 msgctxt "views.view.event_admin:display:default:display_options:pager:options:expose:items_per_page_label"
 msgid "Items per page"
-msgstr ""
+msgstr "Enheder pr. side"
 
 #: 
 msgctxt "views.view.event_admin:display:default:display_options:pager:options:expose:items_per_page_options_all_label"
@@ -8357,7 +8357,7 @@ msgstr "‹ Forrige"
 #: 
 msgctxt "views.view.files:display:default:display_options:pager:options:expose:items_per_page_label"
 msgid "Items per page"
-msgstr ""
+msgstr "Enheder pr. side"
 
 #: 
 msgctxt "views.view.files:display:default:display_options:pager:options:expose:items_per_page_options_all_label"
@@ -8472,7 +8472,7 @@ msgstr "‹ Forrige"
 #: 
 msgctxt "views.view.files:display:page_2:display_options:pager:options:expose:items_per_page_label"
 msgid "Items per page"
-msgstr ""
+msgstr "Enheder pr. side"
 
 #: 
 msgctxt "views.view.files:display:page_2:display_options:pager:options:expose:items_per_page_options_all_label"
@@ -8557,7 +8557,7 @@ msgstr "Sidste »"
 #: 
 msgctxt "views.view.locked_content:display:default:display_options:pager:options:expose:items_per_page_label"
 msgid "Items per page"
-msgstr ""
+msgstr "Enheder pr. side"
 
 #: 
 msgctxt "views.view.locked_content:display:default:display_options:pager:options:expose:items_per_page_options_all_label"
@@ -8727,7 +8727,7 @@ msgstr "Sidste »"
 #: 
 msgctxt "views.view.media:display:default:display_options:pager:options:expose:items_per_page_label"
 msgid "Items per page"
-msgstr ""
+msgstr "Enheder pr. side"
 
 #: 
 msgctxt "views.view.media:display:default:display_options:pager:options:expose:items_per_page_options_all_label"
@@ -8832,12 +8832,12 @@ msgstr "Standard"
 #: 
 msgctxt "views.view.media_library:display:default:display_options:title"
 msgid "Media"
-msgstr ""
+msgstr "Medie"
 
 #: 
 msgctxt "views.view.media_library:display:default:display_options:fields:media_bulk_form:action_title"
 msgid "Action"
-msgstr ""
+msgstr "Handling"
 
 #: 
 msgctxt "views.view.media_library:display:default:display_options:pager:options:tags:first"
@@ -8852,7 +8852,7 @@ msgstr "Sidste »"
 #: 
 msgctxt "views.view.media_library:display:default:display_options:pager:options:expose:items_per_page_label"
 msgid "Items per page"
-msgstr ""
+msgstr "Enheder pr. side"
 
 #: 
 msgctxt "views.view.media_library:display:default:display_options:pager:options:expose:items_per_page_options_all_label"
@@ -9067,7 +9067,7 @@ msgstr "Næste hændelse"
 #: 
 msgctxt "views.view.scheduled_jobs:display:default:display_options:pager:options:expose:items_per_page_label"
 msgid "Items per page"
-msgstr ""
+msgstr "Enheder pr. side"
 
 #: 
 msgctxt "views.view.scheduled_jobs:display:default:display_options:pager:options:expose:items_per_page_options_all_label"
@@ -9372,7 +9372,7 @@ msgstr "Standard"
 #: 
 msgctxt "views.view.taxonomy_term:display:default:display_options:pager:options:expose:items_per_page_label"
 msgid "Items per page"
-msgstr ""
+msgstr "Enheder pr. side"
 
 #: 
 msgctxt "views.view.taxonomy_term:display:default:display_options:pager:options:expose:items_per_page_options_all_label"
@@ -9537,7 +9537,7 @@ msgstr "Sidste »"
 #: 
 msgctxt "views.view.user_admin_people:display:default:display_options:pager:options:expose:items_per_page_label"
 msgid "Items per page"
-msgstr "Items per side"
+msgstr "Enheder pr. side"
 
 #: 
 msgctxt "views.view.user_admin_people:display:default:display_options:pager:options:expose:items_per_page_options_all_label"
@@ -9712,7 +9712,7 @@ msgstr ""
 #: 
 msgctxt "views.view.watchdog:display:default:display_options:pager:options:expose:items_per_page_label"
 msgid "Items per page"
-msgstr ""
+msgstr "Enheder pr. side"
 
 #: 
 msgctxt "views.view.watchdog:display:default:display_options:pager:options:expose:items_per_page_options_all_label"
