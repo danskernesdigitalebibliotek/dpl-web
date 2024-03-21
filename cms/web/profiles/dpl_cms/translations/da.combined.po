@@ -3119,11 +3119,11 @@ msgstr "Gratis"
 
 #: 
 msgid "DPL Paragraphs"
-msgstr "DPL Paragraffer"
+msgstr "Paragraphs"
 
 #: 
 msgid "Tweaks to various DPL paragraphs"
-msgstr "Ændringer til forskellige DPL paragraffer"
+msgstr "Ændringer til forskellige Paragraphs"
 
 #: 
 msgid "Admin"
@@ -4003,11 +4003,11 @@ msgstr "Definer hvilken tekst der skal vises på knappen til betalingssiden. Hvi
 
 #: 
 msgid "DPL Filtered Paragraphs"
-msgstr "DPL Filtrerede paragraffer"
+msgstr "Filtrerede paragraphs"
 
 #: 
 msgid "Filtered paragraphs, embedding views."
-msgstr "Filtrerede paragraffer, indlejring af visninger."
+msgstr "Filtrerede paragraphs, indlejring af visninger."
 
 #: 
 msgid "Tags"
@@ -4186,7 +4186,7 @@ msgstr "Arrangement(er)"
 #: 
 msgctxt "DPL admin UX"
 msgid "Use event series to create event instances - you can use series, both to create reoccurring events, and single events."
-msgstr "Brug denne paragraf til at oprette arrangementer - du kan både oprette gentagende arrangementer og enkeltstående arrangementer."
+msgstr "Brug denne paragraph til at oprette arrangementer - du kan både oprette gentagende arrangementer og enkeltstående arrangementer."
 
 #: 
 msgctxt "DPL admin UX"
@@ -4717,22 +4717,22 @@ msgstr "Arrangementsdetaljer"
 #: 
 msgctxt "core.entity_form_display.eventinstance.default.default:content:field_event_paragraphs:settings:title"
 msgid "Paragraph"
-msgstr "Paragraf"
+msgstr "Paragraph"
 
 #: 
 msgctxt "core.entity_form_display.eventinstance.default.default:content:field_event_paragraphs:settings:title_plural"
 msgid "Paragraphs"
-msgstr "Paragraffer"
+msgstr "Paragraphs"
 
 #: 
 msgctxt "core.entity_form_display.eventinstance.default.default:content:field_ticket_categories:settings:title"
 msgid "Paragraph"
-msgstr "Paragraf"
+msgstr "Paragraph"
 
 #: 
 msgctxt "core.entity_form_display.eventinstance.default.default:content:field_ticket_categories:settings:title_plural"
 msgid "Paragraphs"
-msgstr "Paragraffer"
+msgstr "Paragraphs"
 
 #: 
 msgctxt "core.entity_form_display.eventseries.default.default:third_party_settings:field_group:group_teaser_card:label"
@@ -4752,22 +4752,22 @@ msgstr "Arrangementsdetaljer"
 #: 
 msgctxt "core.entity_form_display.eventseries.default.default:content:field_event_paragraphs:settings:title"
 msgid "Paragraph"
-msgstr "Paragraf"
+msgstr "Paragraph"
 
 #: 
 msgctxt "core.entity_form_display.eventseries.default.default:content:field_event_paragraphs:settings:title_plural"
 msgid "Paragraphs"
-msgstr "Paragraffer"
+msgstr "Paragraphs"
 
 #: 
 msgctxt "core.entity_form_display.eventseries.default.default:content:field_ticket_categories:settings:title"
 msgid "Paragraph"
-msgstr "Paragraf"
+msgstr "Paragraph"
 
 #: 
 msgctxt "core.entity_form_display.eventseries.default.default:content:field_ticket_categories:settings:title_plural"
 msgid "Paragraphs"
-msgstr "Paragraffer"
+msgstr "Paragraphs"
 
 #: 
 msgctxt "core.entity_form_display.node.article.default:third_party_settings:field_group:group_article_meta_tags:label"
@@ -4787,12 +4787,12 @@ msgstr "Tagging"
 #: 
 msgctxt "core.entity_form_display.node.article.default:content:field_paragraphs:settings:title"
 msgid "Paragraph"
-msgstr "Paragraf"
+msgstr "Paragraph"
 
 #: 
 msgctxt "core.entity_form_display.node.article.default:content:field_paragraphs:settings:title_plural"
 msgid "Paragraphs"
-msgstr "Paragraffer"
+msgstr "Paragraphs"
 
 #: 
 msgctxt "core.entity_form_display.node.branch.default:third_party_settings:field_group:group_contact_details:label"
@@ -4802,22 +4802,22 @@ msgstr "Kontaktinformation"
 #: 
 msgctxt "core.entity_form_display.node.branch.default:content:field_paragraphs:settings:title"
 msgid "Paragraph"
-msgstr "Paragraf"
+msgstr "Paragraph"
 
 #: 
 msgctxt "core.entity_form_display.node.branch.default:content:field_paragraphs:settings:title_plural"
 msgid "Paragraphs"
-msgstr "Paragraffer"
+msgstr "Paragraphs"
 
 #: 
 msgctxt "core.entity_form_display.node.campaign.default:content:field_campaign_rules:settings:title"
 msgid "Paragraph"
-msgstr "Paragraf"
+msgstr "Paragraph"
 
 #: 
 msgctxt "core.entity_form_display.node.campaign.default:content:field_campaign_rules:settings:title_plural"
 msgid "Paragraphs"
-msgstr "Paragraffer"
+msgstr "Paragraphs"
 
 #: 
 msgctxt "core.entity_form_display.node.page.default:content:field_hero_title:settings:placeholder"
@@ -4827,12 +4827,12 @@ msgstr "Hvis tom, vil sidetitlen blive vist."
 #: 
 msgctxt "core.entity_form_display.node.page.default:content:field_paragraphs:settings:title"
 msgid "Paragraph"
-msgstr "Paragraf"
+msgstr "Paragraph"
 
 #: 
 msgctxt "core.entity_form_display.node.page.default:content:field_paragraphs:settings:title_plural"
 msgid "Paragraphs"
-msgstr "Paragraffer"
+msgstr "Paragraphs"
 
 #: 
 msgctxt "core.entity_form_display.paragraph.card_grid_manual.default:content:field_grid_content:settings:placeholder"
@@ -4847,12 +4847,12 @@ msgstr ""
 #: 
 msgctxt "core.entity_form_display.paragraph.user_registration_section.default:content:field_user_registration_items:settings:title"
 msgid "Paragraph"
-msgstr "Paragraf"
+msgstr "Paragraph"
 
 #: 
 msgctxt "core.entity_form_display.paragraph.user_registration_section.default:content:field_user_registration_items:settings:title_plural"
 msgid "Paragraphs"
-msgstr "Paragraffer"
+msgstr "Paragraphs"
 
 #: 
 msgctxt "core.entity_form_mode.media.media_library:label"
@@ -5047,12 +5047,12 @@ msgstr "Mediebibliotek"
 #: 
 msgctxt "core.entity_view_mode.media.paragraph_squared:label"
 msgid "Paragraph, squared"
-msgstr "Paragraf, kvadratisk"
+msgstr "Paragraph, kvadratisk"
 
 #: 
 msgctxt "core.entity_view_mode.media.paragraph_wide:label"
 msgid "Paragraph, wide"
-msgstr "Paragraf, bredformat"
+msgstr "Paragraph, bredformat"
 
 #: 
 msgctxt "core.entity_view_mode.node.card:label"
@@ -5202,7 +5202,7 @@ msgstr "Angiv URL til billetsalg"
 #: 
 msgctxt "field.field.eventinstance.default.field_event_paragraphs:label"
 msgid "Paragraphs"
-msgstr "Paragraffer"
+msgstr "Paragraphs"
 
 #: 
 msgctxt "field.field.eventinstance.default.field_event_partners:label"
@@ -5311,7 +5311,7 @@ msgstr "Skriv URL hvor billetter kan købes/hentes til arrangementet."
 #: 
 msgctxt "field.field.eventseries.default.field_event_paragraphs:label"
 msgid "Paragraphs"
-msgstr "Paragraffer"
+msgstr "Paragraphs"
 
 #: 
 msgctxt "field.field.eventseries.default.field_event_partners:label"
@@ -5429,7 +5429,7 @@ msgstr "Overskriv forfatter"
 #: 
 msgctxt "field.field.node.article.field_paragraphs:label"
 msgid "Paragraphs"
-msgstr "Paragraffer"
+msgstr "Paragraphs"
 
 #: 
 msgctxt "field.field.node.article.field_show_override_author:label"
@@ -5505,7 +5505,7 @@ msgstr "Hovedbillede"
 #: 
 msgctxt "field.field.node.branch.field_paragraphs:label"
 msgid "Paragraphs"
-msgstr "Paragraffer"
+msgstr "Paragraphs"
 
 #: 
 msgctxt "field.field.node.branch.field_phone:label"
@@ -5582,7 +5582,7 @@ msgstr "Titel som vises i toppen af siden. <br>\n"
 #: 
 msgctxt "field.field.node.page.field_paragraphs:label"
 msgid "Paragraphs"
-msgstr "Paragraffer"
+msgstr "Paragraphs"
 
 #: 
 msgctxt "field.field.node.page.field_subtitle:label"
@@ -5955,7 +5955,7 @@ msgstr "Titel på navigationsknap"
 #: 
 msgctxt "field.field.paragraph.user_registration_item.field_navigation_title:description"
 msgid "If the navigation button title is left blank, it will automatically default to the paragraph title."
-msgstr "Hvis titelfeltet på navigationsknappen ikke udfyldes, vil den automatisk få paragraf-titlen."
+msgstr "Hvis titelfeltet på navigationsknappen ikke udfyldes, vil den automatisk få titlen på denne Paragraph."
 
 #: 
 msgctxt "field.field.paragraph.user_registration_item.field_registration_link:label"
@@ -6150,12 +6150,12 @@ msgstr "Mediebibliotek thumbnail (220 x 220 px)"
 #: 
 msgctxt "image.style.paragraph_squared:label"
 msgid "Paragraph, Squared (1:1 / 496x496px)"
-msgstr "Paragraf, Kvadratisk (1:1 / 496x496px)"
+msgstr "Paragraph, Kvadratisk (1:1 / 496x496px)"
 
 #: 
 msgctxt "image.style.paragraph_wide:label"
 msgid "Paragraph, Wide (896x670px)"
-msgstr "Paragraf, Bredformat (896x670px)"
+msgstr "Paragraph, Bredformat (896x670px)"
 
 #: 
 msgctxt "image.style.small_preview:label"
@@ -6505,7 +6505,7 @@ msgstr "Brugerregistreringselement"
 #: 
 msgctxt "paragraphs.paragraphs_type.user_registration_item:description"
 msgid "The \"User registration item\" paragraph type is used to display relevant information about the user registration process."
-msgstr "Paragraftypen \"Brugerregistrerings item\" anvendes til at vise relevant information om brugerregistreringsprocessen."
+msgstr "\"Brugerregistreringselement\" anvendes til at vise relevant information om brugerregistreringsprocessen."
 
 #: 
 msgctxt "paragraphs.paragraphs_type.user_registration_section:label"
@@ -6515,7 +6515,7 @@ msgstr "Brugerregistreringsafsnit"
 #: 
 msgctxt "paragraphs.paragraphs_type.user_registration_section:description"
 msgid "The \"User registration section\" paragraph type is used to display \"User registration item\" paragraphs."
-msgstr "Paragraftypen \"Brugerregistreringsafsnit\" bruges til at vise paragraffer af typen \"Brugerregistreringselementer\"."
+msgstr "\"Brugerregistreringsafsnit\" bruges til at vise \"Brugerregistreringselementer\"."
 
 #: 
 msgctxt "paragraphs.paragraphs_type.video:label"
@@ -7521,7 +7521,7 @@ msgstr "Find og håndter indhold"
 #: 
 msgctxt "views.view.content_paragraphs:label"
 msgid "Content lists, embedded in Paragraphs"
-msgstr "Indholdslister, indlejret i paragraffer"
+msgstr "Indholdslister, indlejret i paragraphs"
 
 #: 
 msgctxt "views.view.content_paragraphs:description"
