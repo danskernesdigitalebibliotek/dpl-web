@@ -7063,7 +7063,7 @@ msgstr "Roller"
 #: 
 msgctxt "views.view.administerusersbyrole_people:display:default:display_options:fields:created:label"
 msgid "Member for"
-msgstr "Medlem af"
+msgstr "Medlem siden"
 
 #: 
 msgctxt "views.view.administerusersbyrole_people:display:default:display_options:fields:created:settings:future_format"
@@ -9482,7 +9482,7 @@ msgstr "Roller"
 #: 
 msgctxt "views.view.user_admin_people:display:default:display_options:fields:created:label"
 msgid "Member for"
-msgstr "Medlem af"
+msgstr "Medlem siden"
 
 #: 
 msgctxt "views.view.user_admin_people:display:default:display_options:fields:created:settings:future_format"
