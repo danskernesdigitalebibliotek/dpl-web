@@ -43,7 +43,6 @@ dependencies:
     - taxonomy
     - theme_permission
     - toolbar
-    - update
     - view_unpublished
 id: administrator
 label: Administrator
@@ -196,6 +195,5 @@ permissions:
   - 'view unpublished eventinstance entity'
   - 'view unpublished eventseries entity'
   - 'view unpublished paragraphs'
-  - 'view update notifications'
   - 'view user email addresses'
   - 'view users by role'
