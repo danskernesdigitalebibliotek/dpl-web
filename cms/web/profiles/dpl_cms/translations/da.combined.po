@@ -6094,17 +6094,17 @@ msgstr "Åbn det linkede dokument i et nyt vindue eller tab"
 #: 
 msgctxt "filter.format.basic:name"
 msgid "Basic"
-msgstr ""
+msgstr "Standard"
 
 #: 
 msgctxt "filter.format.limited:name"
 msgid "Limited"
-msgstr ""
+msgstr "Begrænset"
 
 #: 
 msgctxt "filter.format.plain_text:name"
 msgid "Plain text"
-msgstr ""
+msgstr "Ren tekst"
 
 #: 
 msgctxt "image.style.campaign_image:label"
@@ -7435,7 +7435,7 @@ msgstr "Sidste »"
 msgctxt "views.view.content:display:default:display_options:exposed_form:options:submit_button"
 msgid "Filter"
 msgstr "\n"
-"Filter"
+"Filtrer"
 
 #: 
 msgctxt "views.view.content:display:default:display_options:exposed_form:options:reset_button_label"
@@ -8372,7 +8372,7 @@ msgstr ""
 #: 
 msgctxt "views.view.files:display:default:display_options:exposed_form:options:submit_button"
 msgid "Filter"
-msgstr "Filter"
+msgstr "Filtrer"
 
 #: 
 msgctxt "views.view.files:display:default:display_options:exposed_form:options:reset_button_label"
@@ -8417,7 +8417,7 @@ msgstr "Status"
 #: 
 msgctxt "views.view.files:display:page_1:display_title"
 msgid "Files overview"
-msgstr "Filter overblik"
+msgstr "Fileoversigt"
 
 #: 
 msgctxt "views.view.files:display:page_1:display_options:menu:title"
@@ -8742,7 +8742,7 @@ msgstr ""
 #: 
 msgctxt "views.view.media:display:default:display_options:exposed_form:options:submit_button"
 msgid "Filter"
-msgstr "Filter"
+msgstr "Filtrer"
 
 #: 
 msgctxt "views.view.media:display:default:display_options:exposed_form:options:reset_button_label"
@@ -9217,7 +9217,7 @@ msgstr "Sidste »"
 #: 
 msgctxt "views.view.scheduler_scheduled_content:display:default:display_options:exposed_form:options:submit_button"
 msgid "Filter"
-msgstr "Filter"
+msgstr "Filtrer"
 
 #: 
 msgctxt "views.view.scheduler_scheduled_content:display:default:display_options:exposed_form:options:reset_button_label"
@@ -9552,7 +9552,7 @@ msgstr ""
 #: 
 msgctxt "views.view.user_admin_people:display:default:display_options:exposed_form:options:submit_button"
 msgid "Filter"
-msgstr "Filter"
+msgstr "Filtrer"
 
 #: 
 msgctxt "views.view.user_admin_people:display:default:display_options:exposed_form:options:reset_button_label"
@@ -9727,7 +9727,7 @@ msgstr ""
 #: 
 msgctxt "views.view.watchdog:display:default:display_options:exposed_form:options:submit_button"
 msgid "Filter"
-msgstr "Filter"
+msgstr "Filtrer"
 
 #: 
 msgctxt "views.view.watchdog:display:default:display_options:exposed_form:options:reset_button_label"
