@@ -13,7 +13,7 @@ default:
       value: Telefontid
   weight:
     -
-      value: 0
+      value: 1
   parent:
     -
       target_id: 0
@@ -30,12 +30,12 @@ default:
       tag: link
       attributes:
         rel: canonical
-        href: '/taxonomy/term/14'
+        href: '/taxonomy/term/2'
   path:
     -
       alias: ''
       langcode: en
   field_opening_hours_color:
     -
-      color: '#EEFF00'
+      color: '#FBE983'
       opacity: 0.8

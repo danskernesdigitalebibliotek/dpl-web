@@ -30,12 +30,12 @@ default:
       tag: link
       attributes:
         rel: canonical
-        href: '/taxonomy/term/13'
+        href: '/taxonomy/term/1'
   path:
     -
       alias: ''
       langcode: en
   field_opening_hours_color:
     -
-      color: '#42B234'
+      color: '#F83A22'
       opacity: 0.8
