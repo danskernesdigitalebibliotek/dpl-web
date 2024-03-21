@@ -1,6 +1,6 @@
 _core:
   default_config_hash: 6Ka3T1c-CIjEUO1Q64NXKksLthkMhj53a6zy4RJBtkc
-verbose: 1
+verbose: 0
 types:
   crop: {  }
   file: {  }
@@ -40,7 +40,7 @@ form_op_lock:
     mode: 0
     values: {  }
   path_alias:
-    mode: null
+    mode: 0
     values: {  }
   eventseries:
     mode: 0
