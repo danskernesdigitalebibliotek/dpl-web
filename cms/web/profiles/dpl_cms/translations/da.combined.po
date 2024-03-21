@@ -5031,12 +5031,12 @@ msgstr "Tokel"
 #: 
 msgctxt "core.entity_view_mode.media.full:label"
 msgid "Full content"
-msgstr ""
+msgstr "Alt indhold"
 
 #: 
 msgctxt "core.entity_view_mode.media.hero_wide:label"
 msgid "Hero wide (4/3)"
-msgstr "Hero (4/3)"
+msgstr "Hero bredformat (4/3)"
 
 #: 
 msgctxt "core.entity_view_mode.media.media_library:label"
@@ -5796,7 +5796,7 @@ msgstr "Dette felt vil blive slettet i fremtiden. Brug venligst det andet VærkI
 #: 
 msgctxt "field.field.paragraph.medias.field_medias:label"
 msgid "Medias"
-msgstr "Medier"
+msgstr "Billeder"
 
 #: 
 msgctxt "field.field.paragraph.nav_grid_manual.field_content_references:label"
@@ -6464,7 +6464,7 @@ msgstr "En komponent som viser en liste af manuelt udvalgte værker."
 #: 
 msgctxt "paragraphs.paragraphs_type.medias:label"
 msgid "Media(s)"
-msgstr "Medie(r)"
+msgstr "Billede(r)"
 
 #: 
 msgctxt "paragraphs.paragraphs_type.nav_grid_manual:label"
@@ -6569,17 +6569,17 @@ msgstr "Slet medie"
 #: 
 msgctxt "system.action.media_publish_action:label"
 msgid "Publish media"
-msgstr ""
+msgstr "Udgiv "
 
 #: 
 msgctxt "system.action.media_save_action:label"
 msgid "Save media"
-msgstr "Gem medie"
+msgstr "Gem"
 
 #: 
 msgctxt "system.action.media_unpublish_action:label"
 msgid "Unpublish media"
-msgstr "Afpublicer mediet"
+msgstr "Afpublicer billede"
 
 #: 
 msgctxt "system.action.node_break_lock_action:label"
@@ -8642,7 +8642,7 @@ msgstr "Låst indhold"
 #: 
 msgctxt "views.view.media:label"
 msgid "Media"
-msgstr ""
+msgstr "Billede"
 
 #: 
 msgctxt "views.view.media:description"
@@ -8667,7 +8667,7 @@ msgstr "Handling"
 #: 
 msgctxt "views.view.media:display:default:display_options:fields:name:label"
 msgid "Media name"
-msgstr "Medienavn"
+msgstr "Billedenavn"
 
 #: 
 msgctxt "views.view.media:display:default:display_options:fields:bundle:label"
@@ -8767,12 +8767,12 @@ msgstr "Faldende"
 #: 
 msgctxt "views.view.media:display:default:display_options:empty:area_text_custom:content"
 msgid "No media available."
-msgstr "Intet medie tilgængelig."
+msgstr "Ingen medier tilgængelige."
 
 #: 
 msgctxt "views.view.media:display:default:display_options:filters:name:expose:label"
 msgid "Media name"
-msgstr "Medienavn"
+msgstr "Billedenavn"
 
 #: 
 msgctxt "views.view.media:display:default:display_options:filters:bundle:expose:label"
@@ -8807,12 +8807,12 @@ msgstr "Sprog"
 #: 
 msgctxt "views.view.media:display:media_page_list:display_title"
 msgid "Media"
-msgstr "Medier"
+msgstr "Medie"
 
 #: 
 msgctxt "views.view.media:display:media_page_list:display_options:menu:title"
 msgid "Media"
-msgstr "Medier"
+msgstr "Medie"
 
 #: 
 msgctxt "views.view.media_library:label"
@@ -8892,7 +8892,7 @@ msgstr "Faldende"
 #: 
 msgctxt "views.view.media_library:display:default:display_options:empty:area_text_custom:content"
 msgid "No media available."
-msgstr "Intet medie tilgængelig."
+msgstr "Ingen medier tilgængelige."
 
 #: 
 msgctxt "views.view.media_library:display:default:display_options:sorts:created:expose:label"
@@ -8932,7 +8932,7 @@ msgstr "Side"
 #: 
 msgctxt "views.view.media_library:display:page:display_options:fields:media_bulk_form:action_title"
 msgid "Action"
-msgstr ""
+msgstr "Handling"
 
 #: 
 msgctxt "views.view.media_library:display:page:display_options:fields:edit_media:alter:text"
@@ -8992,7 +8992,7 @@ msgstr "Widget (tabel)"
 #: 
 msgctxt "views.view.media_library:display:widget_table:display_options:fields:thumbnail__target_id:label"
 msgid "Thumbnail"
-msgstr ""
+msgstr "Thumbnail"
 
 #: 
 msgctxt "views.view.media_library:display:widget_table:display_options:fields:name:label"
