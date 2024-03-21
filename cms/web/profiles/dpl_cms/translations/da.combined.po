@@ -5166,7 +5166,7 @@ msgstr "Kategorier"
 #: 
 msgctxt "field.field.eventinstance.default.field_description:label"
 msgid "Description"
-msgstr "Beskrivelse"
+msgstr "Manchet"
 
 #: 
 msgctxt "field.field.eventinstance.default.field_event_address:label"
@@ -5275,7 +5275,7 @@ msgstr "Kategorier"
 #: 
 msgctxt "field.field.eventseries.default.field_description:label"
 msgid "Description"
-msgstr "Beskrivelse"
+msgstr "Manchet"
 
 #: 
 msgctxt "field.field.eventseries.default.field_event_address:label"
@@ -5791,7 +5791,7 @@ msgstr "VærkID udgår"
 #: 
 msgctxt "field.field.paragraph.material_grid_manual.field_work_id:description"
 msgid "This field will be deleted in the future. Please use another work id field."
-msgstr "Dette felt vil blive slettet i fremtiden. Brug venligst det andet arbejdsidfelt."
+msgstr "Dette felt vil blive slettet i fremtiden. Brug venligst det andet VærkID felt."
 
 #: 
 msgctxt "field.field.paragraph.medias.field_medias:label"
@@ -5899,7 +5899,7 @@ msgstr "VærkID (Udgår)"
 #: 
 msgctxt "field.field.paragraph.recommendation.field_work_id:description"
 msgid "This field will be deleted in the future. Please use another work id field."
-msgstr "Dette felt vil blive slettet i fremtiden. Brug venligst det andet arbejdsidfelt."
+msgstr "Dette felt vil blive slettet i fremtiden. Brug venligst det andet VærkID felt."
 
 #: 
 msgctxt "field.field.paragraph.text_body.field_body:label"
@@ -6279,7 +6279,7 @@ msgstr ""
 #: 
 msgctxt "metatag.metatag_defaults.node:tags:description"
 msgid "[node:summary]"
-msgstr ""
+msgstr "[node:summary]"
 
 #: 
 msgctxt "metatag.metatag_defaults.node:tags:title"
@@ -6299,7 +6299,7 @@ msgstr ""
 #: 
 msgctxt "metatag.metatag_defaults.taxonomy_term:tags:description"
 msgid "[term:description]"
-msgstr ""
+msgstr "[term:description]"
 
 #: 
 msgctxt "metatag.metatag_defaults.taxonomy_term:tags:title"
@@ -6319,7 +6319,7 @@ msgstr ""
 #: 
 msgctxt "metatag.metatag_defaults.user:tags:description"
 msgid "[site:name]"
-msgstr ""
+msgstr "[site:name]"
 
 #: 
 msgctxt "metatag.metatag_defaults.user:tags:title"
@@ -7930,7 +7930,7 @@ msgstr "Arrangementer"
 #: 
 msgctxt "views.view.events:description"
 msgid "This view displays a list of upcoming events from current day and onwards."
-msgstr "Denne visning viser en liste over kommende begivenheder fra den aktuelle dag og frem."
+msgstr "Denne visning viser en liste over kommende arrangementer fra den aktuelle dag og frem."
 
 #: 
 msgctxt "views.view.events:display:default:display_title"
@@ -8015,7 +8015,7 @@ msgstr "Arrangementskategori"
 #: 
 msgctxt "views.view.events:display:related:display_title"
 msgid "Related events"
-msgstr "Relaterede begivenheder"
+msgstr "Relaterede arrangementer"
 
 #: 
 msgctxt "views.view.event_admin:label"
@@ -8222,7 +8222,7 @@ msgstr "Datofiltre"
 #: 
 msgctxt "views.view.event_admin:display:default:display_options:filters:date__value:group_info:group_items:1:title"
 msgid "Show all events"
-msgstr "Vis alle begivenheder"
+msgstr "Vis alle arrangementer"
 
 #: 
 msgctxt "views.view.event_admin:display:default:display_options:filters:date__value:group_info:group_items:2:title"
@@ -9132,7 +9132,7 @@ msgstr "Planlagt indhold"
 #: 
 msgctxt "views.view.scheduler_scheduled_content:description"
 msgid "Find and manage scheduled content."
-msgstr ""
+msgstr "Find og håndter planlagt indhold."
 
 #: 
 msgctxt "views.view.scheduler_scheduled_content:display:default:display_title"
@@ -9312,7 +9312,7 @@ msgstr "Indhold"
 #: 
 msgctxt "views.view.scheduler_scheduled_content:display:overview:display_options:tab_options:description"
 msgid "Find and manage scheduled content"
-msgstr ""
+msgstr "Find og håndter planlagt indhold."
 
 #: 
 msgctxt "views.view.scheduler_scheduled_content:display:user_page:display_title"
@@ -9627,7 +9627,7 @@ msgstr "Liste"
 #: 
 msgctxt "views.view.user_admin_people:display:page_1:display_options:menu:description"
 msgid "Find and manage people interacting with your site."
-msgstr ""
+msgstr "Find og håndter brugere som interagerer med din hjemmeside."
 
 #: 
 msgctxt "views.view.user_admin_people:display:page_1:display_options:tab_options:title"
