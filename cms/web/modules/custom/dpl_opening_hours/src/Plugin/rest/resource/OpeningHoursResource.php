@@ -40,6 +40,11 @@ use Symfony\Component\Routing\Route;
  *                  "title" = {
  *                    "type" = "string",
  *                  },
+ *                  "color" = {
+ *                    "type" = "string",
+ *                    "description" = "A CSS compatible color code which can be used to represent the category",
+ *                    "example" = "#ff0099",
+ *                  }
  *                },
  *                "required" = {
  *                  "title",
