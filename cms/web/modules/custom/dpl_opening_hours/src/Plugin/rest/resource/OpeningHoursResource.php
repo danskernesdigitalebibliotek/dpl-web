@@ -24,7 +24,7 @@ use Symfony\Component\Routing\Route;
  *
  *   responses = {
  *      200 = {
- *        "description" = "List all opening hours.",
+ *        "description" = "List all opening hours instances.",
  *        "schema" = {
  *          "type" = "array",
  *          "items" = {
@@ -42,7 +42,7 @@ use Symfony\Component\Routing\Route;
  *                  },
  *                },
  *                "required" = {
- *                     "title",
+ *                  "title",
  *                },
  *              },
  *              "date" = {
