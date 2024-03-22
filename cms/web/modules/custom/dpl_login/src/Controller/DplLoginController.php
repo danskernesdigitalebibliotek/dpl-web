@@ -133,10 +133,10 @@ class DplLoginController extends ControllerBase {
    * @param \Symfony\Component\HttpFoundation\Request $request
    *   Symfony request object.
    *
-   * @return \Drupal\Core\Routing\TrustedRedirectResponse|\Symfony\Component\HttpFoundation\RedirectResponse
-   *   A redirect to the authorization endpoint.
+   * @return \Drupal\Core\Routing\TrustedRedirectResponse
+   *   A redirect to either the original redirect or to the frontpage.
    */
-  public function loginHandler(Request $request): TrustedRedirectResponse|RedirectResponse {
+  public function loginHandler(Request $request): TrustedRedirectResponse {
     if ($this->getAccessToken() && $current_path = (string) $request->query->get('current-path')) {
       $url = Url::fromUri('internal:/' . ltrim($current_path, '/'))->toString(TRUE);
       return new TrustedRedirectResponse($url->getGeneratedUrl());
