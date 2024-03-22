@@ -14,6 +14,8 @@ tasks:
     cmds:
       # Make sure that the potion module is active
       - task dev:cli -- drush en -y potion
+      # Generate translations for contrib modules
+      - task dev:cli -- drush potion:generate {{ .LANGUAGE }} modules/contrib/ {{ .PO_DIR }} --recursive --default-write-mode=override
       # Generate translations for custom modules
       - task dev:cli -- drush potion:generate {{ .LANGUAGE }} modules/custom/ {{ .PO_DIR }} --recursive --default-write-mode=override
       # Generate translations for custom themes
