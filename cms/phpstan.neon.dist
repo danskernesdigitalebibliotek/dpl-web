@@ -22,6 +22,8 @@ parameters:
     # Ignore Plugin configuration parameter.
     - '#Drupal\\.*\\Plugin\\.*::__construct\(\) .* no value type specified in iterable type array\.#'
     - '#Drupal\\.*\\Plugin\\.*::create\(\) .* no value type specified in iterable type array\.#'
+    # Ignore Plugin definitions parameter.
+    - '#Drupal\\.*\\Plugin\\.*::getPluginDefinition\(\) return type has no value type specified in iterable type array\.#'
     # Ignore iterable types for FieldItemListInterface.
     - '#no value type specified in iterable type Drupal\\Core\\Field\\FieldItemListInterface#'
     # Allow no doc block details in HOOK_dpl_react_apps_data() functions

@@ -1,16 +1,12 @@
-<?php declare(strict_types = 1);
+<?php
+
+declare(strict_types = 1);
 
 namespace Drupal\dpl_opening_hours\Plugin\rest\resource;
 
-use Drupal\Core\KeyValueStore\KeyValueFactoryInterface;
-use Drupal\Core\KeyValueStore\KeyValueStoreInterface;
-use Drupal\rest\ModifiedResourceResponse;
-use Drupal\rest\Plugin\ResourceBase;
+use Drupal\Component\Utility\NestedArray;
 use Drupal\rest\ResourceResponse;
-use Psr\Log\LoggerInterface;
-use Symfony\Component\DependencyInjection\ContainerInterface;
-use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
-use Symfony\Component\Routing\Route;
+use Symfony\Component\HttpFoundation\Response;
 
 /**
  * Retrieve opening hours.
@@ -21,80 +17,30 @@ use Symfony\Component\Routing\Route;
  *   uri_paths = {
  *     "canonical" = "/dpl_opening_hours",
  *   },
- *
- *   responses = {
- *      200 = {
- *        "description" = "List all opening hours instances.",
- *        "schema" = {
- *          "type" = "array",
- *          "items" = {
- *            "type" = "object",
- *            "properties" = {
- *              "id" = {
- *                "type" = "integer",
- *                "description" = "An serial unique id of the opening hours instance.",
- *              },
- *              "category" = {
- *                "type" = "object",
- *                "properties" = {
- *                  "title" = {
- *                    "type" = "string",
- *                  },
- *                  "color" = {
- *                    "type" = "string",
- *                    "description" = "A CSS compatible color code which can be used to represent the category",
- *                    "example" = "#ff0099",
- *                  }
- *                },
- *                "required" = {
- *                  "title",
- *                },
- *              },
- *              "date" = {
- *                "type" = "string",
- *                "format" = "date",
- *                "description" = "When the event was created. In ISO 8601 format.",
- *              },
- *              "start_time": {
- *                "type" = "string",
- *                "example" = "9:00",
- *                "description" = "When the opening hours start. In format HH:MM",
- *              },
- *              "end_time": {
- *                "type" = "string",
- *                "example" = "17:00",
- *                "description" = "When the opening hours end. In format HH:MM",
- *              },
- *            },
- *            "required" = {
- *              "id",
- *              "category",
- *              "date",
- *              "start_time",
- *              "end_time",
- *            },
- *          },
- *        },
- *      },
- *      500 = {
- *        "description" = "Internal server error",
- *      },
- *    }
  * )
- *
  */
-final class OpeningHoursResource extends ResourceBase {
+final class OpeningHoursResource extends OpeningHoursResourceBase {
 
   /**
-   * {@inheritdoc}
+   * {@inheritDoc}
    */
-  public static function create(ContainerInterface $container, array $configuration, $plugin_id, $plugin_definition): self {
-    return new self(
-      $configuration,
-      $plugin_id,
-      $plugin_definition,
-      $container->getParameter('serializer.formats'),
-      $container->get('logger.factory')->get('rest'),
+  public function getPluginDefinition(): array {
+    return NestedArray::mergeDeep(
+      parent::getPluginDefinition(),
+      [
+        'responses' => [
+          Response::HTTP_OK => [
+            'description' => Response::$statusTexts[Response::HTTP_OK],
+            'schema' => [
+              "type" => "array",
+              "items" => $this->openingHoursInstanceSchema(),
+            ],
+          ],
+          Response::HTTP_INTERNAL_SERVER_ERROR => [
+            'description' => Response::$statusTexts[Response::HTTP_INTERNAL_SERVER_ERROR],
+          ],
+        ],
+      ]
     );
   }
 
