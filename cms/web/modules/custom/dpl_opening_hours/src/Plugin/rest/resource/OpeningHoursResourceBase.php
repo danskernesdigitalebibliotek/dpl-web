@@ -28,10 +28,14 @@ abstract class OpeningHoursResourceBase extends ResourceBase {
    *
    * This allows for reuse across implementing classes.
    *
+   * @param bool $require_id
+   *   Whether the schema should specify the id as required. This is useful for
+   *   situations where the id is not known or provided through other means.
+   *
    * @return mixed[]
    *   OpenAPI schema for a single opening hours instance.
    */
-  public function openingHoursInstanceSchema(): array {
+  public function openingHoursInstanceSchema(bool $require_id = TRUE): array {
     return [
       "type" => "object",
       "properties" => [
@@ -71,13 +75,14 @@ abstract class OpeningHoursResourceBase extends ResourceBase {
           "description" => "When the opening hours end. In format HH:MM",
         ],
       ],
-      "required" => [
-        "id",
-        "category",
-        "date",
-        "start_time",
-        "end_time",
-      ],
+      "required" =>
+      ($require_id ? ["id"] : []) +
+        [
+          "category",
+          "date",
+          "start_time",
+          "end_time",
+        ],
     ];
   }
 
