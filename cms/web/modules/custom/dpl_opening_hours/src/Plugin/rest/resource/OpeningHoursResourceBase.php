@@ -62,7 +62,7 @@ abstract class OpeningHoursResourceBase extends ResourceBase {
         "date" => [
           "type" => "string",
           "format" => "date",
-          "description" => "When the event was created. In ISO 8601 format.",
+          "description" => "The date which the opening hours applies to. In ISO 8601 format.",
         ],
         "start_time" => [
           "type" => "string",
