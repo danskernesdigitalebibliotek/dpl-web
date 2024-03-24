@@ -30,8 +30,8 @@ final class OpeningHoursInstanceResource extends OpeningHoursResourceBase {
       parent::getPluginDefinition(),
       [
         'payload' => [
-          'name' => 'office_hours_instance',
-          'description' => 'The office hours instance to manage',
+          'name' => 'opening_hours_instance',
+          'description' => 'The opening hours instance to manage',
           'in' => 'body',
           'required' => FALSE,
           'schema' => $this->openingHoursInstanceSchema(require_id: FALSE),
