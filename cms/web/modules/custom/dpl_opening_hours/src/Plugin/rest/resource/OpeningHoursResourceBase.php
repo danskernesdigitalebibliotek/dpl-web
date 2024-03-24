@@ -74,6 +74,10 @@ abstract class OpeningHoursResourceBase extends ResourceBase {
           "example" => "17:00",
           "description" => "When the opening hours end. In format HH:MM",
         ],
+        "branch_id" => [
+          "type" => "integer",
+          "description" => "The id for the branch the instance belongs to",
+        ],
       ],
       "required" =>
       ($require_id ? ["id"] : []) +
@@ -82,6 +86,7 @@ abstract class OpeningHoursResourceBase extends ResourceBase {
           "date",
           "start_time",
           "end_time",
+          "branch_id",
         ],
     ];
   }
