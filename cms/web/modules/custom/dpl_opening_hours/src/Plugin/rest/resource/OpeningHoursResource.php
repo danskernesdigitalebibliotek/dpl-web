@@ -6,6 +6,7 @@ namespace Drupal\dpl_opening_hours\Plugin\rest\resource;
 
 use Drupal\Component\Utility\NestedArray;
 use Drupal\rest\ResourceResponse;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
 /**
@@ -27,6 +28,35 @@ final class OpeningHoursResource extends OpeningHoursResourceBase {
   public function getPluginDefinition(): array {
     return NestedArray::mergeDeep(
       parent::getPluginDefinition(),
+      [
+        'route_parameters' => [
+          Request::METHOD_GET => [
+            'branch_id' => [
+              'name' => 'branch_id',
+              'type' => 'integer',
+              'description' => 'The id of the branch for which to retrieve opening hours.',
+              'in' => 'query',
+              'required' => FALSE,
+            ],
+            'from_date' => [
+              'name' => 'from_date',
+              'type' => 'string',
+              'format' => 'date',
+              'description' => 'Retrieve opening hours which occur after and including the provided date. In ISO 8601 format.',
+              'in' => 'query',
+              'required' => FALSE,
+            ],
+            'to_date' => [
+              'name' => 'to_date',
+              'type' => 'string',
+              'format' => 'date',
+              'description' => 'Retrieve opening hours which occur before and including the provided date. In ISO 8601 format.',
+              'in' => 'query',
+              'required' => FALSE,
+            ],
+          ],
+        ],
+      ],
       [
         'responses' => [
           Response::HTTP_OK => [

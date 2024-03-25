@@ -674,6 +674,29 @@
             "required": true,
             "description": "Request format",
             "default": "json"
+          }, 
+          {
+            "name": "branch_id",
+            "type": "integer",
+            "description": "The id of the branch for which to retrieve opening hours.",
+            "in": "query",
+            "required": false
+          }, 
+          {
+            "name": "from_date",
+            "type": "string",
+            "format": "date",
+            "description": "Retrieve opening hours which occur after and including the provided date. In ISO 8601 format.",
+            "in": "query",
+            "required": false
+          }, 
+          {
+            "name": "to_date",
+            "type": "string",
+            "format": "date",
+            "description": "Retrieve opening hours which occur before and including the provided date. In ISO 8601 format.",
+            "in": "query",
+            "required": false
           }
         ],
         "responses": {
