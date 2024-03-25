@@ -32,7 +32,9 @@ To make the "translation traffic" work following components are being used:
   * Drupal installation which is [configured to use GitHub Pages as an interface
     translation server](web/profiles/dpl_cms/dpl_cms.info.yml) from which `.po`
     files can be consumed.
-  * In the development setup and in cronjobs defined in the environments there are two jobs in charge of importing the regular translations and the configuration translations.
+  * In the development setup and in cronjobs defined in the environments there
+  are two jobs in charge of importing the regular translations
+  and the configuration translations.
 
 The following diagram show how these systems interact to support the flow of
 from introducing a new translateable string in the codebase to DPL CMS consuming
@@ -48,8 +50,11 @@ sequenceDiagram
   Developer ->> GitHubActions: Merge pull request into develop
   GitHubActions ->> GitHubActions: Scan codebase and write strings to .po file
   GitHubActions ->> GitHubActions: Fill .po file with existing translations
+%% <!-- markdownlint-disable-next-line MD013 -->
   Note over GitHubActions,GitHubActions: If config translations<br/>are available<br/>they are used<br/>otherwise empty strings
+%% <!-- markdownlint-disable-next-line MD013 -->
   GitHubActions ->> GitHubActions: Exports configuration translations into a .config.po file
+%% <!-- markdownlint-disable-next-line MD013 -->
   GitHubActions ->> GitHubActions: The two .po files are merged together into a .combined.po file
   GitHubActions ->> GitHub: Commit combined.po file with updated strings
   GitHubActions ->> POEditor: Call webhook
@@ -92,6 +97,7 @@ sequenceDiagram
 Run  `drush dpl_po:import-remote-config-po [LANGUAGE_CODE] [CONFIGURATION_PO_FIL_EXTERNAL_URL]`
 
 Example:
+
 ```bash
 drush dpl_po:import-remote-config-po da https://danskernesdigitalebibliotek.github.io/dpl-cms/translations/da.config.po
 ```
