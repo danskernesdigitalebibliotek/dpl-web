@@ -24,3 +24,8 @@ services:
       - "@dpl_opening_hours.category_storage"
   dpl_opening_hours.serializer:
     class: \DanskernesDigitaleBibliotek\CMS\Api\Service\JmsSerializer
+
+  dpl_opening_hours.route_subscriber:
+    class: Drupal\dpl_opening_hours\EventSubscriber\ApiRouteSubscriber
+    tags:
+      - { name: event_subscriber }
