@@ -94,6 +94,11 @@ class OpeningHoursRepository {
       ->key('id')
       ->fields(array_keys($data), array_values($data))
       ->execute();
+
+    if ($instance->id === NULL) {
+      $instance->id = intval($this->connection->lastInsertId());
+    }
+
     return $numRowsAffected > 0;
   }
 
