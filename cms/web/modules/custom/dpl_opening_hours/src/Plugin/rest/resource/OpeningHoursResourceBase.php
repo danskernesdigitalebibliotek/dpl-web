@@ -2,13 +2,35 @@
 
 namespace Drupal\dpl_opening_hours\Plugin\rest\resource;
 
+use DanskernesDigitaleBibliotek\CMS\Api\Model\DplOpeningHoursGETRequest;
+use DanskernesDigitaleBibliotek\CMS\Api\Service\SerializerInterface;
+use Drupal\dpl_opening_hours\Mapping\OpeningHoursMapper;
+use Drupal\dpl_opening_hours\Model\OpeningHoursRepository;
 use Drupal\rest\Plugin\ResourceBase;
+use Psr\Log\LoggerInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
+use Symfony\Component\HttpFoundation\Request;
 
 /**
  * Base class for REST resources exposing opening hours.
  */
 abstract class OpeningHoursResourceBase extends ResourceBase {
+
+  /**
+   * Constructor.
+   */
+  public function __construct(
+    array $configuration,
+    $plugin_id,
+    $plugin_definition,
+    array $serializer_formats,
+    LoggerInterface $logger,
+    protected OpeningHoursRepository $repository,
+    protected OpeningHoursMapper $mapper,
+    protected SerializerInterface $serializer
+  ) {
+    parent::__construct($configuration, $plugin_id, $plugin_definition, $serializer_formats, $logger);
+  }
 
   /**
    * {@inheritdoc}
@@ -20,6 +42,9 @@ abstract class OpeningHoursResourceBase extends ResourceBase {
       $plugin_definition,
       $container->getParameter('serializer.formats'),
       $container->get('logger.factory')->get('rest'),
+      $container->get('dpl_opening_hours.repository'),
+      $container->get('dpl_opening_hours.mapper'),
+      $container->get('dpl_opening_hours.serializer'),
     );
   }
 
@@ -91,6 +116,32 @@ abstract class OpeningHoursResourceBase extends ResourceBase {
         ]
       ),
     ];
+  }
+
+  /**
+   * Generate the format to use by the serializer from the request.
+   */
+  protected function serializerFormat(Request $request): string {
+    $contentTypeFormat = $request->getContentTypeFormat();
+    if (!$contentTypeFormat) {
+      throw new \InvalidArgumentException("Unable to determine request content type format");
+    }
+    $mimeType = $request->getMimeType($contentTypeFormat);
+    if (!$mimeType) {
+      throw new \InvalidArgumentException("Unable to identify serializer format from content type form: $contentTypeFormat");
+    }
+    return $mimeType;
+  }
+
+  /**
+   * Deserialize a HTTP request to an OpenAPI request.
+   */
+  protected function deserialize(Request $request): DplOpeningHoursGETRequest {
+    $requestData = $this->serializer->deserialize($request->getContent(), DplOpeningHoursGETRequest::class, $this->serializerFormat($request));
+    if (!$requestData instanceof DplOpeningHoursGETRequest) {
+      throw new \InvalidArgumentException("Unable to deserialize request");
+    }
+    return $requestData;
   }
 
 }

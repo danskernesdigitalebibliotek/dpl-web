@@ -4,10 +4,13 @@ declare(strict_types = 1);
 
 namespace Drupal\dpl_opening_hours\Plugin\rest\resource;
 
+use DanskernesDigitaleBibliotek\CMS\Api\Model\DplOpeningHoursGET200Response;
 use Drupal\Component\Utility\NestedArray;
-use Drupal\rest\ResourceResponse;
+use Drupal\dpl_opening_hours\Model\OpeningHoursInstance;
+use Drupal\drupal_typed\RequestTyped;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
 
 /**
  * Retrieve opening hours.
@@ -66,6 +69,9 @@ final class OpeningHoursResource extends OpeningHoursResourceBase {
               "items" => $this->openingHoursInstanceSchema(),
             ],
           ],
+          Response::HTTP_BAD_REQUEST => [
+            'description' => Response::$statusTexts[Response::HTTP_BAD_REQUEST],
+          ],
           Response::HTTP_INTERNAL_SERVER_ERROR => [
             'description' => Response::$statusTexts[Response::HTTP_INTERNAL_SERVER_ERROR],
           ],
@@ -77,8 +83,25 @@ final class OpeningHoursResource extends OpeningHoursResourceBase {
   /**
    * Responds to GET requests.
    */
-  public function get(): ResourceResponse {
-    return new ResourceResponse([]);
+  public function get(Request $request): Response {
+    $typedRequest = new RequestTyped($request);
+
+    try {
+      $openingHoursInstances = $this->repository->loadMultiple(
+        $typedRequest->getInt('branch_id'),
+        $typedRequest->getDateTime('from_date'),
+        $typedRequest->getDateTime('to_date')
+      );
+
+      $responseData = array_map(function (OpeningHoursInstance $instance) : DplOpeningHoursGET200Response {
+        return $this->mapper->toResponse($instance);
+      }, $openingHoursInstances);
+
+      return new Response($this->serializer->serialize($responseData, $this->serializerFormat($request)));
+    }
+    catch (\TypeError $e) {
+      throw new BadRequestHttpException("Invalid input: {$e->getMessage()}",);
+    }
   }
 
 }

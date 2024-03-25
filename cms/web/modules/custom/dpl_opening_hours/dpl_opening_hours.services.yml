@@ -22,3 +22,5 @@ services:
     arguments:
       - "@dpl_opening_hours.branch_storage"
       - "@dpl_opening_hours.category_storage"
+  dpl_opening_hours.serializer:
+    class: \DanskernesDigitaleBibliotek\CMS\Api\Service\JmsSerializer
