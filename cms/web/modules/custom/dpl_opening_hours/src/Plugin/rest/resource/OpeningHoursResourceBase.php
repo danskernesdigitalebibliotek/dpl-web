@@ -57,6 +57,7 @@ abstract class OpeningHoursResourceBase extends ResourceBase {
           ],
           "required" => [
             "title",
+            "color",
           ],
         ],
         "date" => [
