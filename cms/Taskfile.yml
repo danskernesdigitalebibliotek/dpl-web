@@ -428,13 +428,13 @@ tasks:
     desc: Validate the Drupal OpenAPI specification
     cmds:
       - docker compose {{ .DOCKER_COMPOSE_FILES_CI }} run --rm node-chrome yarn install --frozen-lockfile
-      - docker compose {{ .DOCKER_COMPOSE_FILES_CI }} run --rm node-chrome npx swagger-cli validate http://varnish:8080/openapi/rest?_format=json
+      - docker compose {{ .DOCKER_COMPOSE_FILES_CI }} run --rm node-chrome npx swagger-cli validate http://varnish:8080/openapi/rest?_format=json&language=en
 
   ci:openapi:download:
     desc: Download the Drupal OpenAPI specification from the running local site to the local filesystem
     cmds:
       - docker compose {{ .DOCKER_COMPOSE_FILES_CI }} run --rm node-chrome yarn install --frozen-lockfile
-      - docker compose {{ .DOCKER_COMPOSE_FILES_CI }} run --rm node-chrome curl http://varnish:8080/openapi/rest?_format=json | npx jsome -r > openapi.json
+      - docker compose {{ .DOCKER_COMPOSE_FILES_CI }} run --rm node-chrome curl "http://varnish:8080/openapi/rest?_format=json&language=en" | npx jsome -r > openapi.json
 
   source:build:
     summary: Build core source image.
