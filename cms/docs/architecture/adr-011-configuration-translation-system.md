@@ -34,6 +34,12 @@ We tried it out and it worked so that was the solution we ended up with.
 
 ## Alternatives considered
 
+### Using the config_translate module
+We could activate only the config_translate module and add a danish translations in config/sync.
+But then:
+1. We would not be able to use POEditor
+2. We would need to translate the string on behalf of the administrators
+
 ### A hack
 We could keep the machine names of the config in English but write the titles, labels, descriptions in Danish.
 
