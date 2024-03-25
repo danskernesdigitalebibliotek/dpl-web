@@ -1,0 +1,25 @@
+uuid: d50021f5-af80-417c-912c-01cc41f037d0
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.taxonomy_term.field_opening_hours_color
+    - taxonomy.vocabulary.opening_hours_categories
+  module:
+    - color_field
+id: taxonomy_term.opening_hours_categories.field_opening_hours_color
+field_name: field_opening_hours_color
+entity_type: taxonomy_term
+bundle: opening_hours_categories
+label: 'Opening hours color'
+description: ''
+required: false
+translatable: false
+default_value:
+  -
+    color: '#4986e7'
+    opacity: 0.8
+default_value_callback: ''
+settings:
+  opacity: 1
+field_type: color_field_type

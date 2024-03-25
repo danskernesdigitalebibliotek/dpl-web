@@ -31,6 +31,10 @@ default:
       attributes:
         rel: canonical
         href: '/user/login'
+  path:
+    -
+      alias: ''
+      langcode: en
   field_media_oembed_video:
     -
       value: 'https://www.youtube.com/watch?v=CmzKQ3PSrow'

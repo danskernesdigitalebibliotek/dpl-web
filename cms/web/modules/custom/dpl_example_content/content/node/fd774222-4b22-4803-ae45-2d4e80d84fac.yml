@@ -56,6 +56,10 @@ default:
       attributes:
         name: title
         content: 'Frontpage | DPL CMS'
+  path:
+    -
+      alias: ''
+      langcode: da
   field_paragraphs:
     -
       entity:
@@ -340,9 +344,6 @@ default:
           revision_translation_affected:
             -
               value: true
-          field_filter_content_types:
-            -
-              target_id: article
           field_title:
             -
               value: 'Nye artikler'
