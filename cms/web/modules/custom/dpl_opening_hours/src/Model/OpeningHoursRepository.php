@@ -30,7 +30,10 @@ class OpeningHoursRepository {
    * Load a single opening hours instance.
    */
   public function load(int $id): ?OpeningHoursInstance {
-    $result = $this->connection->select(self::DATABASE_TABLE)->condition('id', $id)->execute();
+    $result = $this->connection->select(self::DATABASE_TABLE, self::DATABASE_TABLE)
+      ->fields(self::DATABASE_TABLE)
+      ->condition('id', $id)
+      ->execute();
     if (!$result) {
       return NULL;
     }
@@ -55,7 +58,8 @@ class OpeningHoursRepository {
    *   Opening hours instances which match the provided criteria.
    */
   public function loadMultiple(int $branchId = NULL, \DateTimeInterface $fromDate = NULL, \DateTimeInterface $toDate = NULL): array {
-    $query = $this->connection->select(self::DATABASE_TABLE);
+    $query = $this->connection->select(self::DATABASE_TABLE, self::DATABASE_TABLE)
+      ->fields(self::DATABASE_TABLE);
     if ($branchId) {
       $query->condition('branch_nid', $branchId);
     }
