@@ -247,7 +247,7 @@
                   "description": "The id for the branch the instance belongs to"
                 }
               },
-              "required": ["id", "date", "start_time", "end_time", "branch_id"]
+              "required": ["id", "category", "date", "start_time", "end_time", "branch_id"]
             }
           },
           "204": {
@@ -380,7 +380,7 @@
                   "description": "The id for the branch the instance belongs to"
                 }
               },
-              "required": ["id", "date", "start_time", "end_time", "branch_id"]
+              "required": ["id", "category", "date", "start_time", "end_time", "branch_id"]
             }
           },
           "204": {
@@ -513,7 +513,7 @@
                   "description": "The id for the branch the instance belongs to"
                 }
               },
-              "required": ["id", "date", "start_time", "end_time", "branch_id"]
+              "required": ["id", "category", "date", "start_time", "end_time", "branch_id"]
             }
           },
           "204": {
@@ -642,7 +642,7 @@
                   "description": "The id for the branch the instance belongs to"
                 }
               },
-              "required": ["id", "date", "start_time", "end_time", "branch_id"]
+              "required": ["id", "category", "date", "start_time", "end_time", "branch_id"]
             }
           },
           "204": {
@@ -745,7 +745,7 @@
                     "description": "The id for the branch the instance belongs to"
                   }
                 },
-                "required": ["id", "date", "start_time", "end_time", "branch_id"]
+                "required": ["id", "category", "date", "start_time", "end_time", "branch_id"]
               }
             }
           },

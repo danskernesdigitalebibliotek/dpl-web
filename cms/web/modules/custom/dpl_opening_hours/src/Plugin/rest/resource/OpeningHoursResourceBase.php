@@ -79,15 +79,16 @@ abstract class OpeningHoursResourceBase extends ResourceBase {
           "description" => "The id for the branch the instance belongs to",
         ],
       ],
-      "required" =>
-      ($require_id ? ["id"] : []) +
+      "required" => array_merge(
+        ($require_id ? ["id"] : []),
         [
           "category",
           "date",
           "start_time",
           "end_time",
           "branch_id",
-        ],
+        ]
+      ),
     ];
   }
 
