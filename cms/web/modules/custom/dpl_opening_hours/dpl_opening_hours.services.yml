@@ -1,0 +1,19 @@
+services:
+  dpl_opening_hours.logger:
+    parent: logger.channel_base
+    arguments: ["dpl_opening_hours"]
+  dpl_opening_hours.branch_storage:
+    class: \Drupal\Core\Entity\EntityStorageInterface
+    factory: ["@entity_type.manager", "getStorage"]
+    arguments: ["node"]
+  dpl_opening_hours.category_storage:
+    class: \Drupal\Core\Entity\EntityStorageInterface
+    factory: ["@entity_type.manager", "getStorage"]
+    arguments: ["taxonomy_term"]
+  dpl_opening_hours.repository:
+    class: Drupal\dpl_opening_hours\Model\OpeningHoursRepository
+    arguments:
+      - "@dpl_opening_hours.logger"
+      - "@database"
+      - "@dpl_opening_hours.branch_storage"
+      - "@dpl_opening_hours.category_storage"

@@ -19,6 +19,8 @@ parameters:
     - '#Function .*_page_attachments\(\) has parameter \$page with no value type specified in iterable type array\.#'
     # Drupal hook_requirements() implementation returns array which we cannot provide more detailed typing of.
     - '#Function .*_requirements\(\) return type has no value type specified in iterable type array\.#'
+    # Drupal hook_schema() implementation returns array which we cannot provide more detailed typing of.
+    - '#Function .*_schema\(\) return type has no value type specified in iterable type array\.#'
     # Ignore Plugin configuration parameter.
     - '#Drupal\\.*\\Plugin\\.*::__construct\(\) .* no value type specified in iterable type array\.#'
     - '#Drupal\\.*\\Plugin\\.*::create\(\) .* no value type specified in iterable type array\.#'
