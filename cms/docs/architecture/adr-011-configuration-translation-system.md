@@ -10,7 +10,7 @@ We needed to find a way to handle translation of that kind as well.
 
 ## Decision
 
-We went for a solution where we activated the Configuration Translation Drupal core module and added the Configuration Translation PO contrib module.
+We went for a solution where we activated the Configuration Translation Drupal core module and added the [Configuration Translation PO contrib module](https://www.drupal.org/project/config_translation_po).
 
 And we added a range of custom drush commands to handle the various configuration translation tasks.
 
