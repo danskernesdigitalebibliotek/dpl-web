@@ -91,6 +91,13 @@ class OpeningHoursRepository {
 
   /**
    * Insert or update a single opening hours instance.
+   *
+   * Decision on whether to insert or update depends on whether the instance
+   * has an id. If the instance does not, and it is inserted then it will
+   * be updated with the resulting id.
+   *
+   * @return bool
+   *   Whether the operation was successful or not.
    */
   public function upsert(OpeningHoursInstance $instance): bool {
     $data = $this->toFields($instance);
@@ -104,16 +111,24 @@ class OpeningHoursRepository {
       $instance->id = intval($this->connection->lastInsertId());
     }
 
+    // If a row was affected then the operation had an effect. That is a
+    // success.
     return $numRowsAffected > 0;
   }
 
   /**
    * Delete a single opening hours instance.
+   *
+   * @return bool
+   *   Whether the operation was successful or not.
    */
   public function delete(int $id): bool {
     $numRowsAffected = $this->connection->delete(self::DATABASE_TABLE)
       ->condition('id', $id)
       ->execute();
+
+    // If a row was affected then the operation had an effect. That is a
+    // success.
     return $numRowsAffected > 0;
   }
 
