@@ -808,7 +808,7 @@
             "description": "Internal server error"
           }
         },
-        "summary": "Update single events",
+        "summary": "Opdater enkeltstående arrangementer",
         "operationId": "event:PATCH",
         "schemes": ["http"],
         "security": [
@@ -1004,7 +1004,7 @@
             "description": "Internal server error"
           }
         },
-        "summary": "Retrieve all events",
+        "summary": "Hent alle arrangementer",
         "operationId": "events:GET",
         "schemes": ["http"],
         "security": [
