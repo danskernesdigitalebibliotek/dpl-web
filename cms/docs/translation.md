@@ -48,7 +48,7 @@ sequenceDiagram
   Developer ->> GitHubActions: Merge pull request into develop
   GitHubActions ->> GitHubActions: Scan codebase and write strings to .po file
   GitHubActions ->> GitHubActions: Fill .po file with existing translations
-  Note over GitHubActions,GitHubActions: if config translations<br/>are available<br/>they are used<br/>otherwise empty strings
+  Note over GitHubActions,GitHubActions: If config translations<br/>are available<br/>they are used<br/>otherwise empty strings
   GitHubActions ->> GitHubActions: Exports configuration translations into a .config.po file
   GitHubActions ->> GitHubActions: The two .po files are merged together into a .combined.po file
   GitHubActions ->> GitHub: Commit combined.po file with updated strings
