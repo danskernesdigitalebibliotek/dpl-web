@@ -54,16 +54,16 @@ class OpeningHoursRepository {
    * @return OpeningHoursInstance[]
    *   Opening hours instances which match the provided criteria.
    */
-  public function loadMultiple(int $branchId = NULL, \DateTimeInterface $beforeDate = NULL, \DateTimeInterface $afterDate = NULL): array {
+  public function loadMultiple(int $branchId = NULL, \DateTimeInterface $fromDate = NULL, \DateTimeInterface $toDate = NULL): array {
     $query = $this->connection->select(self::DATABASE_TABLE);
     if ($branchId) {
       $query->condition('branch_nid', $branchId);
     }
-    if ($beforeDate) {
-      $query->condition('date', $beforeDate->format('Y-m-d'), '<');
+    if ($fromDate) {
+      $query->condition('date', $fromDate->format('Y-m-d'), '>=');
     }
-    if ($afterDate) {
-      $query->condition('date', $afterDate->format('Y-m-d'), '>');
+    if ($toDate) {
+      $query->condition('date', $toDate->format('Y-m-d'), '<=');
     }
 
     $result = $query->execute();
