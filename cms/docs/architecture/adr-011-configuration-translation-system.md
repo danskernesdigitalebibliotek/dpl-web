@@ -18,6 +18,9 @@ And we added a range of custom drush commands to handle the various configuratio
 
 By sticking to the handling of PO files in configuration handling that we are already using in our general translation handling, we can keep the current Github workflows with some alterations.
 
+Unfortunately handling translations of configuration on local sites is still as difficult as before.
+Translation of configuration texts cannot be found in the standard UI strings translation list.
+
 ### Alterations to former translation workflow
 
 With the config translation PO files added we tried to uncover if POEditor was able to handle two PO files simultaneously in both import and export context.
