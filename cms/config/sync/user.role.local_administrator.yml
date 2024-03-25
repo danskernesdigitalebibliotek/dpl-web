@@ -12,6 +12,7 @@ dependencies:
     - node.type.branch
     - node.type.campaign
     - node.type.page
+    - rest.resource.dpl_opening_hours
     - taxonomy.vocabulary.categories
     - taxonomy.vocabulary.tags
   module:
@@ -33,6 +34,7 @@ dependencies:
     - paragraphs
     - paragraphs_ee
     - recurring_events
+    - rest
     - scheduler
     - simple_menu_permissions
     - system
@@ -149,6 +151,9 @@ permissions:
   - 'edit terms in tags'
   - 'edit themes novel'
   - 'edit users by role'
+  - 'restful delete dpl_opening_hours'
+  - 'restful patch dpl_opening_hours'
+  - 'restful post dpl_opening_hours'
   - 'revert all eventinstance revisions'
   - 'revert all eventseries revisions'
   - 'revert all revisions'
