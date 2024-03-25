@@ -67,6 +67,15 @@
                     "danskernesdigitalebibliotek/fbs-client": "dev-main"
                 }
             }
+        },
+        {
+            "type": "path",
+            "url": "packages/cms-api",
+            "options": {
+                "versions": {
+                    "danskernesdigitalebibliotek/cms-api": "dev-main"
+                }
+            }
         }
     ],
     "require": {
@@ -74,6 +83,7 @@
         "brick/math": "^0.12.1",
         "composer/installers": "1.12.0",
         "cweagans/composer-patches": "1.7.3",
+        "danskernesdigitalebibliotek/cms-api": "*",
         "danskernesdigitalebibliotek/dpl-design-system": "2024.13.0-rc1",
         "danskernesdigitalebibliotek/dpl-react": "2024.13.0-rc1",
         "danskernesdigitalebibliotek/fbs-client": "*",

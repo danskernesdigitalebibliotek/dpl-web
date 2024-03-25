@@ -291,6 +291,16 @@ tasks:
           -i https://raw.githubusercontent.com/danskernesdigitalebibliotek/dpl-react/main/src/core/fbs/fbs-adapter.yaml \
           -g php -o /local/packages/fbs-client -c /openapi-generator.config.fbs.yaml
 
+  dev:codegen:dpl-cms:
+    desc: Generate CMS API package from OpenAPI specification
+    cmds:
+      - cmd: |
+          docker run --rm \
+          -v ${PWD}:/local \
+          openapitools/openapi-generator-cli:v7.1.0 generate \
+          -i ./local/openapi.json \
+          -g php-symfony -o /local/packages/cms-api -c /local/openapi-generator.config.dpl-cms.yaml
+
   dev:composer:update-design-system:
     desc: Update the DPL design system package to a specific version or branch release.
     summary: |
