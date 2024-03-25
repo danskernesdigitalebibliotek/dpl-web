@@ -66,7 +66,7 @@ abstract class OpeningHoursResourceBase extends ResourceBase {
         ],
         "start_time" => [
           "type" => "string",
-          "example" => "9:00",
+          "example" => "09:00",
           "description" => "When the opening hours start. In format HH:MM",
         ],
         "end_time" => [
