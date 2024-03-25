@@ -3,9 +3,10 @@
 namespace Drupal\dpl_opening_hours\Model;
 
 use Drupal\Core\Database\Connection;
-use Drupal\Core\Entity\EntityStorageInterface;
 use Drupal\node\NodeInterface;
+use Drupal\node\NodeStorageInterface;
 use Drupal\taxonomy\TermInterface;
+use Drupal\taxonomy\TermStorageInterface;
 use Psr\Log\LoggerInterface;
 use Safe\DateTimeImmutable;
 
@@ -22,8 +23,8 @@ class OpeningHoursRepository {
   public function __construct(
     private LoggerInterface $logger,
     private Connection $connection,
-    private EntityStorageInterface $branchStorage,
-    private EntityStorageInterface $categoryTermStorage,
+    private NodeStorageInterface $branchStorage,
+    private TermStorageInterface $categoryTermStorage,
   ) {}
 
   /**
