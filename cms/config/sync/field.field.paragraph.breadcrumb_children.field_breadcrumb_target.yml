@@ -1,0 +1,29 @@
+uuid: 33040779-2765-4f84-ba42-5a9c39c32f66
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.paragraph.field_breadcrumb_target
+    - paragraphs.paragraphs_type.breadcrumb_children
+    - taxonomy.vocabulary.breadcrumb_structure
+id: paragraph.breadcrumb_children.field_breadcrumb_target
+field_name: field_breadcrumb_target
+entity_type: paragraph
+bundle: breadcrumb_children
+label: 'Breadcrumb target'
+description: "Choose a parent in the breadcrumb structure, from which the children will be displayed. <br>\r\nOnly one level of children will be shown."
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings:
+  handler: 'default:taxonomy_term'
+  handler_settings:
+    target_bundles:
+      breadcrumb_structure: breadcrumb_structure
+    sort:
+      field: name
+      direction: asc
+    auto_create: false
+    auto_create_bundle: ''
+field_type: entity_reference

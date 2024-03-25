@@ -1,0 +1,30 @@
+name: Example content for DPL Breadcrumb
+type: module
+description: "This module adds a lot of tightly-knit content, only related to the breadcrumb, and is not part of DPL example content module, for sake of maintainability."
+package: DPL
+core_version_requirement: ^9 || ^10
+dependencies:
+  - default_content:default_content
+  - dpl_breadcrumb:dpl_breadcrumb
+  - dpl_example_content:dpl_example_content
+default_content:
+  node:
+    - 9597c5f7-1db2-49c7-bbae-8ea39fdb7874
+    - 5871c7e0-0312-4666-a8e2-8027d970a010
+    - 536158d1-6bfb-4e0a-8366-37770b22ff2b
+    - 9356ccd7-ad1e-4a34-b7ca-37cd1cb0a832
+    - 4ead3326-3b15-447e-851e-a30a49f8a77a
+    - c3e4fa51-c4f9-4e60-abc6-829826949307
+    - b0db20b5-da9c-4ac2-8272-6ad133ca66c3
+    - 486b17a2-60e6-426d-a952-793fe24e391d
+    - 2cf63f02-2b2e-4015-a0f9-e887a63c99e1
+    - 37992672-ca84-46dd-8418-c8620ed6348a
+  media:
+    - 35166ac7-4b0e-4644-8a60-3f29f3c8ecbe
+  taxonomy_term:
+    - 2929bb32-bbf4-4b5d-975b-7c24a3ae949b
+    - 5d977ebc-8630-49f7-9d1d-8746e395f087
+    - a6ad2b81-5337-4f46-be41-f1e6d4a201df
+    - 316e6db1-8d4e-40f7-9d95-b12e1294735e
+  file:
+    - c57495b6-2b50-4558-b6ad-a50d24c5310c
