@@ -58,8 +58,8 @@ sequenceDiagram
   Translator ->> POEditor: Translate strings
   Translator ->> POEditor: Export strings to GitHub
   POEditor ->> GitHub: Commit combined.po file with updated translations to develop
-  Github ->> Github: .combined.po is split into two files: .po and .config.po
-  Github ->> Github: All the po files are published to Github Pages
+  GitHub ->> GitHub: .combined.po is split into two files: .po and .config.po
+  GitHub ->> GitHub: All the po files are published to Github Pages
   DplCms ->> GitHub: Fetch .po file with latest translations
   DplCms ->> DplCms: Import updated translations
   DplCms ->> GitHub: Import config.po file with latest configuration translations
