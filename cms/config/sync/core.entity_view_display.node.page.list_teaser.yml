@@ -1,9 +1,9 @@
-uuid: c764f0cd-a350-4a01-945b-b39f319710ed
+uuid: 4c1253c3-0c9a-49fa-8870-745e7d39ba70
 langcode: en
 status: true
 dependencies:
   config:
-    - core.entity_view_mode.node.nav_teaser
+    - core.entity_view_mode.node.list_teaser
     - field.field.node.page.field_branch
     - field.field.node.page.field_display_titles
     - field.field.node.page.field_hero_title
@@ -14,17 +14,27 @@ dependencies:
     - node.type.page
   module:
     - user
-id: node.page.nav_teaser
+id: node.page.list_teaser
 targetEntityType: node
 bundle: page
-mode: nav_teaser
+mode: list_teaser
 content:
-  field_subtitle:
-    type: basic_string
+  field_teaser_image:
+    type: entity_reference_entity_view
     label: hidden
-    settings: {  }
+    settings:
+      view_mode: hero_wide
+      link: false
     third_party_settings: {  }
-    weight: 0
+    weight: 5
+    region: content
+  field_teaser_text:
+    type: string
+    label: hidden
+    settings:
+      link_to_entity: false
+    third_party_settings: {  }
+    weight: 4
     region: content
   links:
     settings: {  }
@@ -36,7 +46,6 @@ hidden:
   field_display_titles: true
   field_hero_title: true
   field_paragraphs: true
-  field_teaser_image: true
-  field_teaser_text: true
+  field_subtitle: true
   langcode: true
   search_api_excerpt: true
