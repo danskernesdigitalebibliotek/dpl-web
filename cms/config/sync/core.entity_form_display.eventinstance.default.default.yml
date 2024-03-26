@@ -25,6 +25,7 @@ dependencies:
     - field_group
     - link
     - media_library
+    - media_library_edit
     - paragraphs
     - paragraphs_ee
     - paragraphs_features
@@ -124,7 +125,9 @@ content:
     region: content
     settings:
       media_types: {  }
-    third_party_settings: {  }
+    third_party_settings:
+      media_library_edit:
+        show_edit: '1'
   field_event_link:
     type: link_default
     weight: 7
@@ -207,7 +210,9 @@ content:
     region: content
     settings:
       media_types: {  }
-    third_party_settings: {  }
+    third_party_settings:
+      media_library_edit:
+        show_edit: '1'
   field_teaser_text:
     type: string_textfield
     weight: 12
