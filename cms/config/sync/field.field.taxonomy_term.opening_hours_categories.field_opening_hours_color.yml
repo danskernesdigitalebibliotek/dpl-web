@@ -17,9 +17,9 @@ required: false
 translatable: false
 default_value:
   -
-    color: '#4986e7'
-    opacity: 0.8
+    color: '#4986E7'
+    opacity: null
 default_value_callback: ''
 settings:
-  opacity: 1
+  opacity: 0
 field_type: color_field_type
