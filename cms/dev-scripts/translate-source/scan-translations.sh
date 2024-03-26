@@ -26,7 +26,7 @@ THIS_DIR=$(dirname "$0")
 # First import translations from custom modules.
 drush potion:generate $LANGUAGE modules/custom/ $PO_DIR --recursive --default-write-mode=override
 
-# Define an array of modules to exclude
+# Define an array of contrib modules to include
 include_modules=()
 while IFS= read -r line; do
     include_modules+=("$line")
