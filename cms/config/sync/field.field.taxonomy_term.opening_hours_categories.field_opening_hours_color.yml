@@ -11,8 +11,8 @@ id: taxonomy_term.opening_hours_categories.field_opening_hours_color
 field_name: field_opening_hours_color
 entity_type: taxonomy_term
 bundle: opening_hours_categories
-label: 'Opening hours color'
-description: ''
+label: Color
+description: 'A color used to represent opening hours instances in administrative interfaces.'
 required: false
 translatable: false
 default_value:
