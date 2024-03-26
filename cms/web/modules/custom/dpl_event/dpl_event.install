@@ -1,0 +1,40 @@
+<?php
+
+/**
+ * @file
+ * DPL Event install file. These hooks will be run *before* config import.
+ */
+
+use Drupal\field\Entity\FieldConfig;
+use Drupal\field\Entity\FieldStorageConfig;
+
+/**
+ * Delete the deprecated event description fields, prior to CIM.
+ *
+ * This field has been replaced by field_description.
+ * The data has already been migrated, in a prior deploy.
+ */
+function dpl_event_update_10002(): string {
+  $types = ['eventseries', 'eventinstance'];
+  $message = '';
+
+  foreach ($types as $type) {
+    $storage = FieldStorageConfig::loadByName($type, 'field_event_description');
+
+    if ($storage instanceof FieldStorageConfig) {
+      $storage->delete();
+
+      $message .= "All field_event_description storage of {$type} has been deleted.";
+    }
+
+    $config = FieldConfig::loadByName($type, 'default', 'field_event_description');
+
+    if ($config instanceof FieldConfig) {
+      $config->delete();
+
+      $message .= "All field_event_description config of {$type} has been deleted.";
+    }
+  }
+
+  return $message;
+}

@@ -33,6 +33,10 @@ default:
       attributes:
         rel: canonical
         href: '/user/login'
+  path:
+    -
+      alias: ''
+      langcode: da
   field_media_image:
     -
       entity: e00e1460-169e-468d-9835-d664f06d0969

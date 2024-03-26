@@ -7,7 +7,6 @@ dependencies:
     - field.field.eventseries.default.field_categories
     - field.field.eventseries.default.field_description
     - field.field.eventseries.default.field_event_address
-    - field.field.eventseries.default.field_event_description
     - field.field.eventseries.default.field_event_image
     - field.field.eventseries.default.field_event_link
     - field.field.eventseries.default.field_event_paragraphs
@@ -24,7 +23,6 @@ dependencies:
     - entity_reference_revisions
     - link
     - options
-    - text
 _core:
   default_config_hash: U53j_RaqaehEh393bzj6vrqXorzo8lkcjhQNCNTPjmQ
 id: eventseries.default.default
@@ -61,13 +59,6 @@ content:
     settings: {  }
     third_party_settings: {  }
     weight: 3
-    region: content
-  field_event_description:
-    type: text_default
-    label: hidden
-    settings: {  }
-    third_party_settings: {  }
-    weight: 4
     region: content
   field_event_image:
     type: entity_reference_entity_view

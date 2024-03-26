@@ -47,6 +47,10 @@ default:
       attributes:
         name: title
         content: '3 gode til godnat 3-6 år | DPL CMS'
+  path:
+    -
+      alias: ''
+      langcode: da
   field_paragraphs:
     -
       entity:
@@ -125,6 +129,7 @@ default:
           field_recommendation_work_id:
             -
               value: 'work-of:870970-basis:51869168'
+              material_type: ''
     -
       entity:
         _meta:
@@ -177,6 +182,7 @@ default:
           field_recommendation_work_id:
             -
               value: 'work-of:870970-basis:51143574'
+              material_type: ''
     -
       entity:
         _meta:
@@ -229,6 +235,7 @@ default:
           field_recommendation_work_id:
             -
               value: 'work-of:870970-basis:53642101'
+              material_type: ''
   field_show_override_author:
     -
       value: false

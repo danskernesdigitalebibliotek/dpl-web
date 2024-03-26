@@ -226,6 +226,7 @@ tasks:
   dev:restore:database:
     desc: 'Restore database from db dump file. Only one sql should be present the "{{ .DIR_RESTORE_DATABASE }}" directory.'
     cmds:
+      - task dev:cli -- drush sql:drop -y
       - docker-compose exec -T {{ .MYSQL_CONTAINER }} mysql < {{ .SQL_FILE }}
       - task dev:cache:clear:all
     preconditions:

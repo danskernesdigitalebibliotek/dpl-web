@@ -7,7 +7,6 @@ dependencies:
     - field.field.eventinstance.default.field_categories
     - field.field.eventinstance.default.field_description
     - field.field.eventinstance.default.field_event_address
-    - field.field.eventinstance.default.field_event_description
     - field.field.eventinstance.default.field_event_image
     - field.field.eventinstance.default.field_event_link
     - field.field.eventinstance.default.field_event_paragraphs
@@ -25,7 +24,6 @@ dependencies:
     - dpl_event
     - entity_reference_revisions
     - link
-    - text
 _core:
   default_config_hash: lFFUFIZPBUZQjrIYYvP6U1hzVLGjKMl0DYK93zPM_80
 id: eventinstance.default.default
@@ -193,7 +191,6 @@ hidden:
   event_state: true
   field_categories: true
   field_event_address: true
-  field_event_description: true
   field_event_image: true
   field_event_link: true
   field_event_paragraphs: true
