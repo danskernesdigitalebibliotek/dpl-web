@@ -37,9 +37,11 @@ class OpeningHoursMapper {
     if (!$categoryTitle) {
       throw new \InvalidArgumentException('No category title provided');
     }
-    $categoryTerms = $this->categoryStorage->loadByProperties(['name' => $categoryTitle]);
+    $categoryTerms = $this->categoryStorage->loadByProperties([
+      'name' => $categoryTitle,
+      'vid' => 'opening_hours_categories',
+    ]);
     $categoryTerm = reset($categoryTerms);
-    // @todo Limit when we have an actual category.
     if (!$categoryTerm) {
       throw new \InvalidArgumentException("Invalid category title '{$categoryTitle}'");
     }
