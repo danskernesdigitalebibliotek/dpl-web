@@ -20,5 +20,5 @@ third_party_settings:
     unpublish_revision: false
 name: 'Opening hours categories'
 vid: opening_hours_categories
-description: 'This is for adding types of opening hours, e.g. "open" or "Telephone time"'
+description: 'Types of opening hours, e.g. "Open" or "Telephone time"'
 weight: 0
