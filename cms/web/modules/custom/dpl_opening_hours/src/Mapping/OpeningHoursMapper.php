@@ -64,10 +64,13 @@ class OpeningHoursMapper {
    * Map a value object to an OpenAPI response.
    */
   public function toResponse(OpeningHoursInstance $instance) : DplOpeningHoursGET200Response {
+    $colorField = $instance->categoryTerm->get('field_opening_hours_color')->first();
+    if (!$colorField) {
+      throw new \LogicException('Unable to retrieve color');
+    }
     $category = (new DplOpeningHoursGETRequestCategory())
       ->setTitle((string) $instance->categoryTerm->label())
-      // @todo Update this when we have a category with fields.
-      ->setColor('blue');
+      ->setColor($colorField->getString());
 
     return (new DplOpeningHoursGET200Response())
       ->setId($instance->id)
