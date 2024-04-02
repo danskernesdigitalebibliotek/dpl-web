@@ -1,16 +1,16 @@
-uuid: f0739766-5853-4bd1-8c08-a9571a0ad148
+uuid: f3f796b6-e917-4ea6-9da5-bbd4b8898bde
 langcode: en
 status: true
 dependencies:
   config:
-    - field.storage.paragraph.field_filter_tags
+    - field.storage.paragraph.field_filter_categories
     - paragraphs.paragraphs_type.card_grid_automatic
-    - taxonomy.vocabulary.tags
-id: paragraph.card_grid_automatic.field_filter_tags
-field_name: field_filter_tags
+    - taxonomy.vocabulary.categories
+id: paragraph.card_grid_automatic.field_filter_categories
+field_name: field_filter_categories
 entity_type: paragraph
 bundle: card_grid_automatic
-label: 'Filter by tags'
+label: 'Filter by categories'
 description: ''
 required: false
 translatable: false
@@ -20,10 +20,10 @@ settings:
   handler: 'default:taxonomy_term'
   handler_settings:
     target_bundles:
-      tags: tags
+      categories: categories
     sort:
       field: name
       direction: asc
     auto_create: false
-    auto_create_bundle: categories
+    auto_create_bundle: ''
 field_type: entity_reference
