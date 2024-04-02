@@ -19,28 +19,22 @@ targetEntityType: node
 bundle: page
 mode: default
 content:
-  created:
-    type: datetime_timestamp
-    weight: 8
-    region: content
-    settings: {  }
-    third_party_settings: {  }
   field_branch:
     type: options_select
-    weight: 4
+    weight: 0
     region: content
     settings: {  }
     third_party_settings: {  }
   field_display_titles:
     type: boolean_checkbox
-    weight: 1
+    weight: 2
     region: content
     settings:
       display_label: true
     third_party_settings: {  }
   field_hero_title:
     type: string_textarea
-    weight: 2
+    weight: 3
     region: content
     settings:
       rows: 2
@@ -48,7 +42,7 @@ content:
     third_party_settings: {  }
   field_paragraphs:
     type: paragraphs
-    weight: 6
+    weight: 5
     region: content
     settings:
       title: Paragraph
@@ -76,73 +70,53 @@ content:
         show_drag_and_drop: true
   field_subtitle:
     type: string_textarea
-    weight: 3
+    weight: 4
     region: content
     settings:
       rows: 3
       placeholder: ''
     third_party_settings: {  }
-  langcode:
-    type: language_select
-    weight: 5
+  path:
+    type: path
+    weight: 30
     region: content
-    settings:
-      include_locked: true
-    third_party_settings: {  }
-  promote:
-    type: boolean_checkbox
-    weight: 9
-    region: content
-    settings:
-      display_label: true
+    settings: {  }
     third_party_settings: {  }
   publish_on:
     type: datetime_timestamp_no_default
-    weight: 12
+    weight: 8
     region: content
     settings: {  }
     third_party_settings: {  }
   scheduler_settings:
-    weight: 11
+    weight: 7
     region: content
     settings: {  }
     third_party_settings: {  }
   status:
     type: boolean_checkbox
-    weight: 14
-    region: content
-    settings:
-      display_label: true
-    third_party_settings: {  }
-  sticky:
-    type: boolean_checkbox
-    weight: 10
+    weight: 6
     region: content
     settings:
       display_label: true
     third_party_settings: {  }
   title:
     type: string_textfield
-    weight: 0
+    weight: 1
     region: content
     settings:
-      size: 60
-      placeholder: ''
-    third_party_settings: {  }
-  uid:
-    type: entity_reference_autocomplete
-    weight: 7
-    region: content
-    settings:
-      match_operator: CONTAINS
-      match_limit: 10
       size: 60
       placeholder: ''
     third_party_settings: {  }
   unpublish_on:
     type: datetime_timestamp_no_default
-    weight: 13
+    weight: 9
     region: content
     settings: {  }
     third_party_settings: {  }
-hidden: {  }
+hidden:
+  created: true
+  langcode: true
+  promote: true
+  sticky: true
+  uid: true

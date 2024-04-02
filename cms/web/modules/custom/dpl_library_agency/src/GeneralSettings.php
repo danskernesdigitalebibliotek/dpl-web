@@ -23,6 +23,7 @@ class GeneralSettings extends DplReactConfigBase {
   const EREOLEN_MY_PAGE_URL = 'https://ereolen.dk/user/me';
   const EREOLEN_HOMEPAGE_URL = 'https://ereolen.dk';
   const FBI_PROFILE = 'next';
+  const OPENING_HOURS_URL = '/branches';
 
   /**
    * Gets the configuration key for general settings.
@@ -119,8 +120,8 @@ class GeneralSettings extends DplReactConfigBase {
   public function getFbiProfiles(): array {
     return $this->loadConfig()->get('fbi_profiles') ?? [
       FbiProfileType::DEFAULT->value => self::FBI_PROFILE,
-      FbiProfileType::SEARCH->value => self::FBI_PROFILE,
-      FbiProfileType::MATERIAL->value => self::FBI_PROFILE,
+      FbiProfileType::LOCAL->value => self::FBI_PROFILE,
+      FbiProfileType::GLOBAL->value => self::FBI_PROFILE,
     ];
   }
 
@@ -150,6 +151,19 @@ class GeneralSettings extends DplReactConfigBase {
     return [
       'allowRemoveReadyReservations' => $allow_remove_ready_reservations,
     ];
+  }
+
+  /**
+   * Gets the default interest period as an array.
+   *
+   * @return string
+   *   The default interest period array.
+   */
+  public function getPauseReservationInfoUrl(): string {
+    return dpl_react_apps_format_app_url(
+      $this->loadConfig()->get('pause_reservation_info_url'),
+      self::PAUSE_RESERVATION_INFO_URL
+    );
   }
 
 }

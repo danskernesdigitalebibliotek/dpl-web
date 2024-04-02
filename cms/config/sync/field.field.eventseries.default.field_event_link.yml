@@ -11,8 +11,8 @@ id: eventseries.default.field_event_link
 field_name: field_event_link
 entity_type: eventseries
 bundle: default
-label: Link
-description: ''
+label: 'Ticket link'
+description: 'Please enter the URL where attendees can buy/get tickets for this event.'
 required: false
 translatable: false
 default_value: {  }

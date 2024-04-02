@@ -4,7 +4,9 @@ status: true
 dependencies:
   config:
     - core.entity_view_mode.eventinstance.list
+    - field.field.eventinstance.default.field_branch
     - field.field.eventinstance.default.field_categories
+    - field.field.eventinstance.default.field_description
     - field.field.eventinstance.default.field_event_address
     - field.field.eventinstance.default.field_event_description
     - field.field.eventinstance.default.field_event_image
@@ -24,7 +26,6 @@ dependencies:
     - datetime_range
     - entity_reference_revisions
     - link
-    - options
     - text
 _core:
   default_config_hash: ynM97GAGTtZBjg1uuiiRFaP8WTq766yoANHsZJ41__4
@@ -33,6 +34,14 @@ targetEntityType: eventinstance
 bundle: default
 mode: list
 content:
+  branch:
+    type: entity_reference_label
+    label: visible
+    settings:
+      link: true
+    third_party_settings: {  }
+    weight: 50
+    region: content
   date:
     type: daterange_default
     label: hidden
@@ -44,46 +53,45 @@ content:
     weight: 1
     region: content
   description:
-    type: text_trimmed
-    label: visually_hidden
-    settings:
-      trim_length: 200
+    type: text_default
+    label: hidden
+    settings: {  }
     third_party_settings: {  }
     weight: 2
     region: content
   event_address:
     type: address_default
-    label: visible
+    label: above
     settings: {  }
     third_party_settings: {  }
-    weight: 51
+    weight: 4
     region: content
   event_categories:
     type: entity_reference_label
-    label: visible
+    label: above
     settings:
       link: true
     third_party_settings: {  }
-    weight: 52
+    weight: 5
     region: content
   event_description:
     type: text_default
-    label: visible
+    label: above
     settings: {  }
     third_party_settings: {  }
-    weight: 52
+    weight: 6
     region: content
   event_image:
     type: entity_reference_label
-    label: visible
+    label: above
     settings:
       link: true
     third_party_settings: {  }
-    weight: 53
+    weight: 7
     region: content
   event_link:
     type: link
-    label: visible
+    label: above
     settings:
       trim_length: 80
       url_only: false
@@ -91,72 +99,72 @@ content:
       rel: ''
       target: ''
     third_party_settings: {  }
-    weight: 54
+    weight: 8
     region: content
   event_paragraphs:
     type: entity_reference_revisions_entity_view
-    label: visible
+    label: above
     settings:
       view_mode: default
       link: ''
     third_party_settings: {  }
-    weight: 55
+    weight: 9
     region: content
   event_partners:
     type: string
-    label: visible
+    label: above
     settings:
       link_to_entity: false
     third_party_settings: {  }
-    weight: 56
+    weight: 10
     region: content
   event_place:
     type: string
-    label: visible
+    label: above
     settings:
       link_to_entity: false
     third_party_settings: {  }
-    weight: 56
-    region: content
-  event_state:
-    type: list_default
-    label: visible
-    settings: {  }
-    third_party_settings: {  }
-    weight: 57
+    weight: 11
     region: content
   event_tags:
     type: entity_reference_label
-    label: visible
+    label: above
     settings:
       link: true
     third_party_settings: {  }
-    weight: 60
+    weight: 14
     region: content
   event_teaser_image:
     type: entity_reference_label
-    label: visible
+    label: above
     settings:
       link: true
     third_party_settings: {  }
-    weight: 59
+    weight: 13
     region: content
   event_teaser_text:
     type: string
-    label: visible
+    label: above
     settings:
       link_to_entity: false
     third_party_settings: {  }
-    weight: 60
+    weight: 15
     region: content
   event_ticket_categories:
     type: entity_reference_revisions_entity_view
-    label: visible
+    label: above
     settings:
       view_mode: default
       link: ''
     third_party_settings: {  }
-    weight: 58
+    weight: 12
+    region: content
+  field_description:
+    type: basic_string
+    label: hidden
+    settings: {  }
+    third_party_settings: {  }
+    weight: 3
     region: content
   title:
     type: string
@@ -168,6 +176,8 @@ content:
     region: content
 hidden:
   body: true
+  event_state: true
+  field_branch: true
   field_categories: true
   field_event_address: true
   field_event_description: true

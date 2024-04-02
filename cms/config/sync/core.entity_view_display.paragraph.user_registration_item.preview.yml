@@ -1,0 +1,44 @@
+uuid: 61d6414a-fe5e-4ae3-b480-2e4dff493534
+langcode: en
+status: true
+dependencies:
+  config:
+    - core.entity_view_mode.paragraph.preview
+    - field.field.paragraph.user_registration_item.field_anchor
+    - field.field.paragraph.user_registration_item.field_body
+    - field.field.paragraph.user_registration_item.field_display_in_navigation
+    - field.field.paragraph.user_registration_item.field_link_target
+    - field.field.paragraph.user_registration_item.field_navigation_title
+    - field.field.paragraph.user_registration_item.field_registration_link
+    - field.field.paragraph.user_registration_item.field_title
+    - paragraphs.paragraphs_type.user_registration_item
+  module:
+    - text
+id: paragraph.user_registration_item.preview
+targetEntityType: paragraph
+bundle: user_registration_item
+mode: preview
+content:
+  field_body:
+    type: text_trimmed
+    label: above
+    settings:
+      trim_length: 600
+    third_party_settings: {  }
+    weight: 0
+    region: content
+  field_title:
+    type: string
+    label: above
+    settings:
+      link_to_entity: false
+    third_party_settings: {  }
+    weight: 0
+    region: content
+hidden:
+  field_anchor: true
+  field_display_in_navigation: true
+  field_link_target: true
+  field_navigation_title: true
+  field_registration_link: true
+  search_api_excerpt: true

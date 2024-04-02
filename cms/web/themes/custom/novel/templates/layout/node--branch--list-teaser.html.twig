@@ -1,0 +1,9 @@
+{% include '@novel/components/list-item.html.twig'
+  with {
+  attributes: attributes,
+  url: url,
+  image: content.field_main_media.0,
+  baseIconPath: baseIconPath,
+  title: label,
+  description: content.field_address
+} only %}

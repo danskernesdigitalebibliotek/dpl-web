@@ -4,7 +4,9 @@ status: true
 dependencies:
   config:
     - core.entity_view_mode.eventinstance.nav_spot
+    - field.field.eventinstance.default.field_branch
     - field.field.eventinstance.default.field_categories
+    - field.field.eventinstance.default.field_description
     - field.field.eventinstance.default.field_event_address
     - field.field.eventinstance.default.field_event_description
     - field.field.eventinstance.default.field_event_image
@@ -26,6 +28,14 @@ targetEntityType: eventinstance
 bundle: default
 mode: nav_spot
 content:
+  branch:
+    type: entity_reference_label
+    label: visible
+    settings:
+      link: true
+    third_party_settings: {  }
+    weight: 50
+    region: content
   event_addres:
     type: address_default
     label: above
@@ -73,7 +83,9 @@ hidden:
   event_state: true
   event_tags: true
   event_ticket_categories: true
+  field_branch: true
   field_categories: true
+  field_description: true
   field_event_address: true
   field_event_description: true
   field_event_image: true

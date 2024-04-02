@@ -5,6 +5,7 @@ _meta:
   bundle: page
   default_langcode: da
   depends:
+    e00e1460-169e-468d-9835-d664f06d0969: file
     92033694-15ac-4d9e-b275-ddfd18e48d9f: taxonomy_term
     65432ee1-43f1-4130-9565-5683467d4b5a: media
     fb8b4d62-de14-4620-9ca1-be60cab74a65: eventseries
@@ -42,6 +43,13 @@ default:
   entity_clone_template_active:
     -
       value: false
+  entity_clone_template_image:
+    -
+      entity: e00e1460-169e-468d-9835-d664f06d0969
+      alt: ''
+      title: ''
+      width: 640
+      height: 443
   metatag:
     -
       tag: meta
@@ -67,6 +75,9 @@ default:
           behavior_settings:
             -
               value: {  }
+          revision_translation_affected:
+            -
+              value: true
           field_hero_categories:
             -
               entity: 92033694-15ac-4d9e-b275-ddfd18e48d9f
@@ -109,6 +120,9 @@ default:
           behavior_settings:
             -
               value: {  }
+          revision_translation_affected:
+            -
+              value: true
           field_body:
             -
               value: '<h2>Om Os</h2><p><br>Biblioteket er dit lokale center for viden, kultur og samfund. Vi tilbyder en bred vifte af bøger, e-bøger, lydbøger, tidsskrifter og mere. Kom og oplev vores studieområder, computerfaciliteter, og et varieret program af begivenheder og workshops</p>'
@@ -131,6 +145,9 @@ default:
           behavior_settings:
             -
               value: {  }
+          revision_translation_affected:
+            -
+              value: true
           field_body:
             -
               value: '<p><strong>Nyheder og Begivenheder</strong></p>'
@@ -153,6 +170,9 @@ default:
           behavior_settings:
             -
               value: {  }
+          revision_translation_affected:
+            -
+              value: true
           field_nav_spots_content:
             -
               entity: fb8b4d62-de14-4620-9ca1-be60cab74a65
@@ -176,6 +196,9 @@ default:
           behavior_settings:
             -
               value: {  }
+          revision_translation_affected:
+            -
+              value: true
           field_body:
             -
               value: '<p><strong>FAQ</strong></p>'
@@ -198,6 +221,9 @@ default:
           behavior_settings:
             -
               value: {  }
+          revision_translation_affected:
+            -
+              value: true
           field_accordion_description:
             -
               value: '<p>For at blive medlem af biblioteket skal du besøge biblioteket personligt eller oprette dig online via vores hjemmeside. Du skal medbringe gyldig identifikation og eventuelt bevis på din adresse.</p>'
@@ -224,6 +250,9 @@ default:
           behavior_settings:
             -
               value: {  }
+          revision_translation_affected:
+            -
+              value: true
           field_accordion_description:
             -
               value: '<p>Ja, du kan forny dine lånte materialer online ved at logge ind på din brugerkonto på vores hjemmeside. Der er dog visse begrænsninger for, hvor mange gange et materiale kan fornyes.</p>'
@@ -250,6 +279,9 @@ default:
           behavior_settings:
             -
               value: {  }
+          revision_translation_affected:
+            -
+              value: true
           field_accordion_description:
             -
               value: '<p>Du kan reservere bøger og andre materialer via vores online katalog. Når materialet er tilgængeligt, vil du modtage en notifikation.</p>'
@@ -276,6 +308,9 @@ default:
           behavior_settings:
             -
               value: {  }
+          revision_translation_affected:
+            -
+              value: true
           field_accordion_description:
             -
               value: '<p>Bøder for for sen aflevering varierer afhængigt af materialetypen. Du kan finde en detaljeret liste over bøder på vores hjemmeside.</p>'
@@ -302,6 +337,9 @@ default:
           behavior_settings:
             -
               value: {  }
+          revision_translation_affected:
+            -
+              value: true
           field_filter_content_types:
             -
               target_id: article
@@ -326,6 +364,9 @@ default:
           behavior_settings:
             -
               value: {  }
+          revision_translation_affected:
+            -
+              value: true
           field_content_references:
             -
               entity: f6aafa27-a538-44a3-ae1f-02f8efbfb068

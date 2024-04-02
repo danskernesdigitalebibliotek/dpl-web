@@ -1,0 +1,11 @@
+<?php
+
+/**
+ * Add field types for which remove button will be added.
+ *
+ * @param string[] $fieldTypes
+ *   A list with field types.
+ */
+function dpl_fbi_multiple_field_remove_button_field_types_alter(array &$fieldTypes): void {
+  $fieldTypes[] = "dpl_fbi_work_id";
+}

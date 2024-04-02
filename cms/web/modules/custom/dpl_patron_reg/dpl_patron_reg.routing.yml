@@ -8,16 +8,6 @@ dpl_patron_reg.settings:
   options:
     _admin_route: true
 
-dpl_patron_reg.information:
-  path: "/user/registration"
-  defaults:
-    _controller: '\Drupal\dpl_patron_reg\Controller\DplPatronRegController::informationPage'
-    _title: "Patron registration information"
-  requirements:
-    _permission: "access content"
-  options:
-    no_cache: true
-
 dpl_patron_reg.auth:
   path: "/user/registration/{client_name}/auth"
   defaults:

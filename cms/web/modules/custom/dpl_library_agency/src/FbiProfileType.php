@@ -9,9 +9,9 @@ enum FbiProfileType: string {
   // The default FBI profile.
   case DEFAULT = 'default';
 
-  // Profile name for FBI search profile.
-  case SEARCH = 'search';
+  // Profile name for FBI local profile.
+  case LOCAL = 'local';
 
-  // Profile name for FBI material profile.
-  case MATERIAL = 'material';
+  // Profile name for FBI global profile.
+  case GLOBAL = 'global';
 }

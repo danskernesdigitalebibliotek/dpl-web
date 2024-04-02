@@ -1,0 +1,14 @@
+uuid: ae3e09bf-ee76-4886-b8a6-bf5010b6a63c
+langcode: en
+status: true
+dependencies: {  }
+id: eventinstance_default_branch
+label: 'Event Branch'
+type: fallback
+sourceEntityType: eventseries
+sourceEntityBundle: default
+sourceField: field_branch
+destinationEntityType: eventinstance
+destinationEntityBundle: default
+destinationField: field_branch
+plugin: entity_reference_inheritance

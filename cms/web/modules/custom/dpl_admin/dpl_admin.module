@@ -8,10 +8,10 @@
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\Render\Markup;
 use Drupal\Core\Url;
-use Drupal\field\Entity\FieldConfig;
 use Drupal\menu_link_content\Entity\MenuLinkContent;
 use Drupal\recurring_events\Entity\EventInstance;
 use Drupal\views\Plugin\views\field\EntityField;
+use Drupal\views\ResultRow;
 use Drupal\views\ViewExecutable;
 
 /**
@@ -64,35 +64,41 @@ function dpl_admin_menu_local_actions_alter(&$local_actions) : void {
 
 /**
  * Implements template_preprocess_views_view_field().
- *
- * Preprocesses the output of a field in the "event_admin" view.
- * Altering the output to generate a unique indicator with a link to the
- * eventseries.
- *
- * {@inheritDoc}
  */
 function dpl_admin_preprocess_views_view_field(array &$variables): void {
-  if (!isset($variables['view'], $variables['field'], $variables['output'])) {
+  if (
+    !isset($variables['view'], $variables['field']) ||
+    !$variables['view'] instanceof ViewExecutable ||
+    !$variables['field'] instanceof EntityField
+  ) {
     return;
   }
 
-  $view = $variables['view'];
-  $field = $variables['field'];
-  $output = $variables['output'];
-
-  if (!$view instanceof ViewExecutable || $view->id() !== 'event_admin') {
-    return;
+  if ($variables['view']->id() == 'event_admin' &&
+    str_ends_with($variables['field']->getField(), '.eventseries_id')) {
+    _dpl_admin_preprocess_views_view_field_event_admin_eventseries_id($variables);
   }
 
-  if (!$field instanceof EntityField ||
-    !$output instanceof Markup ||
-    !str_ends_with($field->getField(), '.eventseries_id')) {
+  if ($variables['view']->id() == 'content' &&
+    $variables['field']->getField() == '.name') {
+    _dpl_admin_preprocess_views_view_field_content_name($variables);
+  }
+}
+
+/**
+ * Preprocesses the output of the id field in the "event_admin" view.
+ *
+ *  Altering the output to generate a unique indicator with a link to the
+ *  eventseries.
+ */
+function _dpl_admin_preprocess_views_view_field_event_admin_eventseries_id(array &$variables): void {
+  if (!isset($variables['output']) || !$variables['output'] instanceof Markup) {
     return;
   }
 
   // Take the ID, and create a unique HSL color value, that we use for
   // background image further down.
-  $id = $output->__toString();
+  $id = $variables['output']->__toString();
   $unique_hsl_value = ((intval($id) * 100) % 360);
   $url = Url::fromRoute('entity.eventseries.canonical', ['eventseries' => $id]);
 
@@ -100,6 +106,36 @@ function dpl_admin_preprocess_views_view_field(array &$variables): void {
   $markup = '<a class="dpl-admin__unique-indicator" style="background-color: hsl(' . $unique_hsl_value . ', 70%, 50%);" href="' . $url->toString() . '">' . $sanitized_id . '</a>';
 
   $variables['output'] = Markup::create($markup);
+}
+
+/**
+ * Preprocess the author field in the "content" admin view.
+ *
+ * Add information if the content is locked by another user.
+ */
+function _dpl_admin_preprocess_views_view_field_content_name(array &$variables) : void {
+  if (
+    !isset($variables['output'], $variables['row']) ||
+    !$variables['row'] instanceof ResultRow ||
+    !$variables['output'] instanceof Markup
+  ) {
+    return;
+  }
+
+  /** @var \Drupal\user\UserInterface|null $content_lock_owner */
+  $content_lock_owner = $variables['row']->_relationship_entities['uid_1'] ?? NULL;
+
+  if (!$content_lock_owner) {
+    return;
+  }
+
+  $variables['output'] = Markup::create("
+    {$variables['output']}
+    <br/>
+    <small>" .
+    t('(Locked by @username)', ['@username' => $content_lock_owner->toLink()->toString()], ["context" => "DPL admin UX"]) .
+    "</small>"
+  );
 }
 
 /**
@@ -226,47 +262,6 @@ function dpl_admin_form_alter(array &$form, FormStateInterface $form_state, stri
 
   if (in_array($form_id, ['node_page_form', 'node_page_edit_form'])) {
     _dpl_admin_form_alter_node_page($form, $form_state, $form_id);
-  }
-}
-
-/**
- * Implements hook_field_widget_single_element_form_alter().
- *
- * Adjusts the visibility of field_navigation_title based on
- * the state of field_display_in_navigation.
- *
- * @param array<mixed> &$element
- *   The form element to be altered.
- * @param \Drupal\Core\Form\FormStateInterface $form_state
- *   The current state of the form.
- * @param array<mixed> $context
- *   An associative array containing contextual information about the field.
- *
- * @see hook_field_widget_single_element_form_alter()
- */
-function dpl_admin_field_widget_single_element_form_alter(array &$element, FormStateInterface $form_state, array $context): void {
-
-  /** @var \Drupal\Core\Field\FieldItemListInterface $items */
-  $items = $context['items'];
-
-  // Retrieve the field definition from the context.
-  $field_definition = $items->getFieldDefinition();
-
-  // Check if the field definition is an instance of FieldConfig and matches
-  // the specific field ID.
-  if ($field_definition instanceof FieldConfig &&
-    $field_definition->id() === 'paragraph.user_registration_information.field_navigation_title') {
-
-    // Extract the delta value for the field content.
-    $field_content_delta = $element['value']['#field_parents'][1];
-
-    // Define states for the field element.
-    $element['value']['#states'] = [
-      // Conditionally hide the field based on the state of another field.
-      'invisible' => [
-        ':input[name="field_content[' . $field_content_delta . '][subform][field_display_in_navigation][value]"]' => ['checked' => FALSE],
-      ],
-    ];
   }
 }
 

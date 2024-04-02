@@ -4,7 +4,9 @@ status: true
 dependencies:
   config:
     - core.entity_view_mode.eventseries.list
+    - field.field.eventseries.default.field_branch
     - field.field.eventseries.default.field_categories
+    - field.field.eventseries.default.field_description
     - field.field.eventseries.default.field_event_address
     - field.field.eventseries.default.field_event_description
     - field.field.eventseries.default.field_event_image
@@ -18,8 +20,6 @@ dependencies:
     - field.field.eventseries.default.field_teaser_text
     - field.field.eventseries.default.field_ticket_categories
     - recurring_events.eventseries_type.default
-  module:
-    - text
 _core:
   default_config_hash: SH4PVwBZQc690I-apt_nNKlkhxnZyFlf68d-7mxruF8
 id: eventseries.default.list
@@ -27,14 +27,6 @@ targetEntityType: eventseries
 bundle: default
 mode: list
 content:
-  body:
-    type: text_trimmed
-    label: hidden
-    settings:
-      trim_length: 200
-    third_party_settings: {  }
-    weight: 1
-    region: content
   title:
     type: string
     label: hidden
@@ -44,12 +36,15 @@ content:
     weight: 0
     region: content
 hidden:
+  body: true
   consecutive_recurring_date: true
   custom_date: true
   daily_recurring_date: true
   event_instances: true
   event_registration: true
+  field_branch: true
   field_categories: true
+  field_description: true
   field_event_address: true
   field_event_description: true
   field_event_image: true

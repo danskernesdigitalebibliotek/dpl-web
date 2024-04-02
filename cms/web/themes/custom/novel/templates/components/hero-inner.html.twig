@@ -18,7 +18,13 @@
   {% if description %}
     <div class="hero__description">
       {{ description }}
-    </div>
+
+      {% if arrow %}
+        <div>
+          {{ source(baseIconPath ~ '/arrow-ui/icon-arrow-ui-large-right.svg') }}
+        </div>
+      {% endif %}
+  </div>
   {% endif %}
 
   {% if cta %}

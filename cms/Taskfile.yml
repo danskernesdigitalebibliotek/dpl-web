@@ -1,9 +1,12 @@
 # This is a go-task file for various developer tasks
 # e.g. building docker images and setting up local development.
 # You can read about the Task files here: https://taskfile.dev.
-version: '3'
+version: "3"
 
 dotenv: [".task.env"]
+
+includes:
+  translations: ./task/Taskfile.translations.yml
 
 vars:
   # Docker image registry.
@@ -17,27 +20,25 @@ vars:
   # The version number we want to tag the source build with.
   # It can be specified by adding RELEASE_TAG=XX when running command.
   # Otherwise it will default to the COMMIT_COUNT variable.
-  RELEASE_IMAGE_TAG: '{{.RELEASE_IMAGE_TAG | default .COMMIT_COUNT }}'
+  RELEASE_IMAGE_TAG: "{{.RELEASE_IMAGE_TAG | default .COMMIT_COUNT }}"
   # Constructing docker image name.
   DOCKER_IMAGE_PREFIX: "{{ .RELEASE_IMAGE_REGISTRY }}/{{ .DOCKER_IMAGE_NAMESPACE }}"
   # Constructing docker image name.
   RELEASE_IMAGE_NAME: '{{.RELEASE_IMAGE_NAME | default "dpl-cms-source"}}'
-  RELEASE_FULL_NAME: '{{.RELEASE_IMAGE_REGISTRY}}/{{.RELEASE_IMAGE_NAME}}:{{.RELEASE_IMAGE_TAG}}'
+  RELEASE_FULL_NAME: "{{.RELEASE_IMAGE_REGISTRY}}/{{.RELEASE_IMAGE_NAME}}:{{.RELEASE_IMAGE_TAG}}"
 
   # Where is the docker file(s) we use for our builds residing?
   LAGOON_DIR: "lagoon"
   # The name of the project on Lagoon.
   LAGOON_PROJECT: "dpl-cms"
 
-  DOCKER_COMPOSE_FILES_DEFAULT: '-f docker-compose.yml'
-  DOCKER_COMPOSE_FILES: '{{.DOCKER_COMPOSE_FILES | default .DOCKER_COMPOSE_FILES_DEFAULT }}'
-  DOCKER_COMPOSE_FILES_CI: '{{.DOCKER_COMPOSE_FILES}} -f docker-compose.ci.yml'
+  DOCKER_COMPOSE_FILES_DEFAULT: "-f docker-compose.yml"
+  DOCKER_COMPOSE_FILES: "{{.DOCKER_COMPOSE_FILES | default .DOCKER_COMPOSE_FILES_DEFAULT }}"
+  DOCKER_COMPOSE_FILES_CI: "{{.DOCKER_COMPOSE_FILES}} -f docker-compose.ci.yml"
   # Sql dump files directory
-  DIR_RESTORE_DATABASE: 'restore/database'
+  DIR_RESTORE_DATABASE: "restore/database"
   # Directory with lagoon backup files.
-  DIR_RESTORE_FILES: 'restore/files'
-  # Directory with translation sources.
-  PO_DIR: "profiles/dpl_cms/translations"
+  DIR_RESTORE_FILES: "restore/files"
 
   # Default language
   LANGUAGE: "da"
@@ -50,15 +51,15 @@ vars:
   # Cypress.
   CYPRESS_BASE_PORT:
     sh: docker compose port varnish 8080 2>/dev/null | cut -d ":" -f2
-  CYPRESS_HOST_LOCAL: 'http://localhost:{{ .CYPRESS_BASE_PORT }}'
+  CYPRESS_HOST_LOCAL: "http://localhost:{{ .CYPRESS_BASE_PORT }}"
   # Wiremock.
   WIREMOCK_HTTP_PORT:
     sh: docker compose port wiremock 80 2>/dev/null | cut -d ":" -f2
   WIREMOCK_HTTPS_PORT:
     sh: docker compose port wiremock 443 2>/dev/null | cut -d ":" -f2
   WIREMOCK_HOST_DOCKER: http://wiremock
-  WIREMOCK_HOST_LOCAL: 'http://localhost:{{ .WIREMOCK_HTTP_PORT }}'
-  WIREMOCK_HOST_LOCAL_HTTPS: 'https://localhost:{{ .WIREMOCK_HTTPS_PORT }}'
+  WIREMOCK_HOST_LOCAL: "http://localhost:{{ .WIREMOCK_HTTP_PORT }}"
+  WIREMOCK_HOST_LOCAL_HTTPS: "https://localhost:{{ .WIREMOCK_HTTPS_PORT }}"
 
 tasks:
   ghcr:login:
@@ -161,6 +162,7 @@ tasks:
         else
           task dev:cli -- drush locale-check
           task dev:cli -- drush locale-update
+          task dev:cli -- drush dpl_po:import-remote-config-po da https://danskernesdigitalebibliotek.github.io/dpl-cms/translations/da.config.po
         fi
       # Clear all caches to ensure we have a pristine setup.
       - task dev:cache:clear:all
@@ -189,7 +191,7 @@ tasks:
       - task dev:cli -- drush install -y devel dpl_example_content field_ui uuid_url views_ui dblog
 
   dev:enable-xdebug:
-    desc: 'Enable xdebug within the container.'
+    desc: "Enable xdebug within the container."
     cmds:
       - XDEBUG_ENABLE=true task dev:start
       - read -p "Press enter to disable Xdebug"
@@ -226,6 +228,7 @@ tasks:
   dev:restore:database:
     desc: 'Restore database from db dump file. Only one sql should be present the "{{ .DIR_RESTORE_DATABASE }}" directory.'
     cmds:
+      - task dev:cli -- drush sql:drop -y
       - docker-compose exec -T {{ .MYSQL_CONTAINER }} mysql < {{ .SQL_FILE }}
       - task dev:cache:clear:all
     preconditions:
@@ -239,11 +242,11 @@ tasks:
       SQL_FILE:
         sh: ls -t "{{ .DIR_RESTORE_DATABASE }}"/*.sql
       DIR_RESTORE_DATABASE_CONTENT:
-       sh: ls {{ .DIR_RESTORE_DATABASE }}
-      MYSQL_CONTAINER: 'mariadb'
+        sh: ls {{ .DIR_RESTORE_DATABASE }}
+      MYSQL_CONTAINER: "mariadb"
 
   dev:restore:files:
-    desc: 'Restore files by overwriting existing with the ones from the Lagoon backup package'
+    desc: "Restore files by overwriting existing with the ones from the Lagoon backup package"
     cmds:
       - docker-compose exec cli sh dev-scripts/cli-restore-lagoon-files.sh {{ .DIR_RESTORE_FILES }}
       - task dev:cache:clear:all
@@ -269,8 +272,8 @@ tasks:
     cmds:
       - cmd: task dev:cli -- dev-scripts/dpl-react/bin/console construct-assets-url {{ .BRANCH }}
     preconditions:
-    - sh: "[ ! -z {{.BRANCH}} ]"
-      msg: "Env variable BRANCH is not set or empty."
+      - sh: "[ ! -z {{.BRANCH}} ]"
+        msg: "Env variable BRANCH is not set or empty."
 
   dev:dpl-react:overwrite:
     desc: Downloads assets from Github and overwrites existing dpl-react library
@@ -302,7 +305,7 @@ tasks:
       Usage:
       - Update to a released version: RELEASE=2024.4.0 VERSION=2024.4.0 task dev:composer:update-design-system
       - Update to a branch release: BRANCH=taxonomy_categories task dev:composer:update-design-system
-    deps: ['deps:jq', 'deps:gh']
+    deps: ["deps:jq", "deps:gh"]
     cmds:
       - task: dev:composer:update-package
         vars:
@@ -310,9 +313,9 @@ tasks:
           VERSION:
             sh: "echo ${VERSION:-0.0.0-dev}"
           DOWNLOAD_URL:
-            sh:  gh release view ${RELEASE:-branch-$BRANCH} --repo danskernesdigitalebibliotek/dpl-design-system --json assets | jq -r '.assets[].url'
+            sh: gh release view ${RELEASE:-branch-$BRANCH} --repo danskernesdigitalebibliotek/dpl-design-system --json assets | jq -r '.assets[].url'
     preconditions:
-      - sh: '[[ -z $BRANCH || -z $RELEASE ]]'
+      - sh: "[[ -z $BRANCH || -z $RELEASE ]]"
         msg: Please provide a BRANCH or RELEASE environment variable with the name of the design system branch/release to use
 
   dev:composer:update-react:
@@ -327,7 +330,7 @@ tasks:
       Usage:
         - Update to a released version: RELEASE=2024.4.0 VERSION=2024.4.0 task dev:composer:update-react
         - Update to a branch release: BRANCH=taxonomy_categories task dev:composer:update-react
-    deps: ['deps:jq', 'deps:gh']
+    deps: ["deps:jq", "deps:gh"]
     cmds:
       - task: dev:composer:update-package
         vars:
@@ -335,13 +338,13 @@ tasks:
           VERSION:
             sh: "echo ${VERSION:-0.0.0-dev}"
           DOWNLOAD_URL:
-            sh:  gh release view ${RELEASE:-branch-$BRANCH} --repo danskernesdigitalebibliotek/dpl-react --json assets | jq -r '.assets[].url'
+            sh: gh release view ${RELEASE:-branch-$BRANCH} --repo danskernesdigitalebibliotek/dpl-react --json assets | jq -r '.assets[].url'
     preconditions:
-      - sh: '[[ -z $BRANCH || -z $RELEASE ]]'
+      - sh: "[[ -z $BRANCH || -z $RELEASE ]]"
         msg: Please provide a BRANCH or RELEASE environment variable with the name of the React components branch/release to use
 
   dev:composer:update-package:
-    deps: ['deps:jq', 'deps:gh']
+    deps: ["deps:jq", "deps:gh"]
     internal: true
     cmds:
       - cmd: jq --indent {{ .JQ_INDENT }} -r '(.repositories[] | select(.package.name == "{{ .NAME }}").package.dist.url) = "{{ .DOWNLOAD_URL }}"' composer.json > composer.temp.json && mv composer.temp.json composer.json
@@ -390,7 +393,7 @@ tasks:
     env:
       DOCKER_COMPOSE_FILES: "{{ .DOCKER_COMPOSE_FILES_CI }}"
       CYPRESS_BASE_URL: http://localhost:{{ .CYPRESS_BASE_PORT }}
-      CYPRESS_WIREMOCK_URL: '{{ .WIREMOCK_HOST_LOCAL }}'
+      CYPRESS_WIREMOCK_URL: "{{ .WIREMOCK_HOST_LOCAL }}"
       CYPRESS_DRUPAL_USERNAME: admin
       CYPRESS_DRUPAL_PASSWORD: admin
       # Enable this to help with debugging with network and proxy requests.
@@ -410,7 +413,7 @@ tasks:
       - echo '⚠️  Please make sure that Chrome is installed in your OS.'
       - yarn wiremock:browser
     env:
-      HTTP_PROXY: '{{ .WIREMOCK_HOST_LOCAL }}'
+      HTTP_PROXY: "{{ .WIREMOCK_HOST_LOCAL }}"
 
   ci:wiremock:create-mappings:
     cmds:
@@ -474,7 +477,7 @@ tasks:
         done
         echo -e "\n$(echo $TASK | jq -r .data[0].logs)";
     preconditions:
-      - sh: '[ -v PR ]'
+      - sh: "[ -v PR ]"
         msg: Please provide a PR environment variable with the pull request number for the environment
 
   lagoon:login:
@@ -502,23 +505,3 @@ tasks:
     preconditions:
       - sh: gh --version && gh auth status
         msg: GitHub CLI is not installed or not authenticated. Please check https://cli.github.com/.
-
-  translations:scan:
-    desc: Scan and generate translations
-    cmds:
-     # Make sure that the potion module is active
-      - task dev:cli -- drush en -y potion
-     # Generate translations for custom modules
-      - task dev:cli -- drush potion:generate $LANGUAGE modules/custom/ {{ .PO_DIR }} --recursive --default-write-mode=override
-    # Generate translations for custom themes
-      - task dev:cli -- drush potion:generate $LANGUAGE themes/custom/ {{ .PO_DIR }} --recursive --default-write-mode=merge
-    # Fill translations from db
-      - task dev:cli -- drush potion:fill $LANGUAGE {{ .PO_DIR }}/$LANGUAGE.po
-    # We need to chown the PO file in the container with the user of the host
-    # in order to be able to commit the file afterwards.
-      - |
-        export ME=$(id -u);
-        task dev:cli -- chown $ME:$ME web/{{ .PO_DIR }}/$LANGUAGE.po
-    # Default language if nothing else is set:
-    env:
-      LANGUAGE: "{{ .LANGUAGE }}"

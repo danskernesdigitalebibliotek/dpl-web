@@ -3,8 +3,10 @@
   {% set link_title = content.field_link_language[0]['#title'] %}
   {% set image_entity = paragraph.fields.field_language_icon.0 %}
 
-  <a class="language-selector link-with-icon " href="{{ link_url }}" title="{{ link_title }}">
-    {{ drupal_image(image_entity.target_id, 'flag_icon', {class: 'language-selector__icon'}) }}
-    {{ link_title }}
-  </a>
+  <div class="icon-text-link">
+    {{ drupal_image(image_entity.target_id, 'flag_icon', {class: ''}) }}
+    <a class="link-tag icon-text-link__text paragraphs-language_selector__link" href="{{ link_url }}" title="{{ link_title }}">
+      {{ link_title }}
+    </a>
+  </div>
 {% endif %}

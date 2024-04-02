@@ -1,0 +1,21 @@
+uuid: ac455d2b-3fdd-4f82-86ca-e8a13a62c0ea
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.paragraph.field_work_id
+    - paragraphs.paragraphs_type.material_grid_manual
+  module:
+    - dpl_fbi
+id: paragraph.material_grid_manual.field_work_id
+field_name: field_work_id
+entity_type: paragraph
+bundle: material_grid_manual
+label: 'Work ID (DEPRECATED)'
+description: 'This field will be deleted in the future. Please use another work id field.'
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: dpl_fbi_work_id

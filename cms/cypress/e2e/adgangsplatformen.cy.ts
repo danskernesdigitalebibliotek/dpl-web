@@ -60,45 +60,10 @@ describe("Adgangsplatformen", () => {
     );
   });
 
-  it("can register a new user and expose the right tokens for the react apps", () => {
-    cy.setupAdgangsplatformenRegisterMappinngs({
-      authorizationCode: "7c5e3213aea6ef42ec97dfeaa6f5b1d454d856dc",
-      accessToken: "447131b0a03fe0421204c54e5c21a60-new-user",
-      userCPR: 1412749999,
-    });
-
-    cy.clearCookies();
-    cy.visit("/");
-    cy.get(".header__menu-profile").click();
-    cy.get(".modal-login__btn-create-profile").click();
-    cy.get("main#main-content").find("a").click();
-
-    cy.request("/dpl-react/user-tokens").then((response) => {
-      expect(response.status).to.eq(200);
-      expect(response.body).contain(
-        'window.dplReact = window.dplReact || {};\nwindow.dplReact.setToken("unregistered-user", "447131b0a03fe0421204c54e5c21a60-new-user")'
-      );
-    });
-
-    cy.get('[data-cy="phone-input"]').type("12345678");
-    cy.get('[data-cy="email-address-input"]').type("john@doe.com");
-    cy.get('[data-cy="pincode-input"]').type("1234");
-    cy.get('[data-cy="pincode-confirm-input"]').type("1234");
-    cy.get("#branches-dropdown").select("DK-775100");
-    cy.get(".btn-primary").click();
-    cy.get('[data-cy="dashboard-header"]').contains("Your profile");
-    cy.request("/dpl-react/user-tokens").then((response) => {
-      expect(response.body).contain(
-        'window.dplReact = window.dplReact || {};\nwindow.dplReact.setToken("user", "447131b0a03fe0421204c54e5c21a60-new-user")'
-      );
-    });
-  });
-
-  // When a user comes back from authentication with MitID
-  // the user should not be able to anything else than registering or logging out.
-  // So when pressing the user icon after authentication the modal only contains
-  // the logout button.
-  it("only shows a logut button in the user menu for an uregistered user", () => {
+  // When a user comes back from authentication with MitID, the user should
+  // not be able to do anything else other than registering or cancelling.
+  // Check that the header and footer sections is not vissible.
+  it("does not show header and footer section for unregistered user", () => {
     cy.setupAdgangsplatformenRegisterMappinngs({
       authorizationCode: "7c5e3213aea6ef42ec97dfeaa6f5b1d454d856dc",
       accessToken: "447131b0a03fe0421204c54e5c21a60-new-user",
@@ -111,11 +76,92 @@ describe("Adgangsplatformen", () => {
     cy.get(".header__menu-profile").click();
     // Click create profile.
     cy.get(".modal-login__btn-create-profile").click();
-    cy.get("main#main-content").find("a").click();
+    cy.get("main#main-content")
+      .get(".paragraphs__item--user_registration_section__link")
+      .first()
+      .click();
 
+    cy.request("/dpl-react/user-tokens").then((response) => {
+      expect(response.status).to.eq(200);
+      expect(response.body).contain(
+        'window.dplReact = window.dplReact || {};\nwindow.dplReact.setToken("unregistered-user", "447131b0a03fe0421204c54e5c21a60-new-user")'
+      );
+    });
+
+    cy.get(".header").should("not.exist");
+    cy.get(".footer").should("not.exist");
+  });
+
+  it("can register a new user and expose the right tokens for the react apps", () => {
+    cy.setupAdgangsplatformenRegisterMappinngs({
+      authorizationCode: "7c5e3213aea6ef42ec97dfeaa6f5b1d454d856dc",
+      accessToken: "447131b0a03fe0421204c54e5c21a60-new-user",
+      userCPR: 1412749999,
+    });
+
+    cy.clearCookies();
+    cy.visit("/");
     cy.get(".header__menu-profile").click();
-    cy.get(".modal-login").find(".btn-primary").should("have.length", 1);
-    cy.get(".modal-login").find(".btn-primary").contains("Log out");
+    cy.get(".modal-login__btn-create-profile").click();
+    cy.get("main#main-content")
+      .get(".paragraphs__item--user_registration_section__link")
+      .first()
+      .click();
+    cy.request("/dpl-react/user-tokens").then((response) => {
+      expect(response.status).to.eq(200);
+      expect(response.body).contain(
+        'window.dplReact = window.dplReact || {};\nwindow.dplReact.setToken("unregistered-user", "447131b0a03fe0421204c54e5c21a60-new-user")'
+      );
+    });
+
+    cy.get('[data-cy="phone-input"]').type("12345678");
+    cy.get('[data-cy="email-address-input"]').type("john@doe.com");
+    cy.get('[data-cy="pincode-input"]').type("1234");
+    cy.get('[data-cy="pincode-confirm-input"]').type("1234");
+    cy.get("#branches-dropdown").select("DK-775100");
+    cy.get('[data-cy="complete-user-registration-button"]').click();
+    cy.request("/dpl-react/user-tokens").then((response) => {
+      expect(response.body).contain(
+        'window.dplReact = window.dplReact || {};\nwindow.dplReact.setToken("user", "447131b0a03fe0421204c54e5c21a60-new-user")'
+      );
+      expect(response.body).not.contain(
+        'window.dplReact = window.dplReact || {};\nwindow.dplReact.setToken("unregistered-user", "447131b0a03fe0421204c54e5c21a60-new-user")'
+      );
+    });
+  });
+
+  it("can cancel user registration from the user registration page", () => {
+    cy.setupAdgangsplatformenRegisterMappinngs({
+      authorizationCode: "7c5e3213aea6ef42ec97dfeaa6f5b1d454d856dc",
+      accessToken: "447131b0a03fe0421204c54e5c21a60-new-user",
+      userCPR: 1412749999,
+    });
+
+    cy.clearCookies();
+    cy.visit("/");
+    cy.get(".header__menu-profile").click();
+    cy.get(".modal-login__btn-create-profile").click();
+    cy.get("main#main-content")
+      .get(".paragraphs__item--user_registration_section__link")
+      .first()
+      .click();
+    cy.request("/dpl-react/user-tokens").then((response) => {
+      expect(response.status).to.eq(200);
+      expect(response.body).contain(
+        'window.dplReact = window.dplReact || {};\nwindow.dplReact.setToken("unregistered-user", "447131b0a03fe0421204c54e5c21a60-new-user")'
+      );
+    });
+
+    cy.get('[data-cy="cancel-user-registration-button"]').click();
+
+    cy.request("/dpl-react/user-tokens").then((response) => {
+      expect(response.body).not.contain(
+        'window.dplReact = window.dplReact || {};\nwindow.dplReact.setToken("user", "447131b0a03fe0421204c54e5c21a60-new-user")'
+      );
+      expect(response.body).not.contain(
+        'window.dplReact = window.dplReact || {};\nwindow.dplReact.setToken("unregistered-user", "447131b0a03fe0421204c54e5c21a60-new-user")'
+      );
+    });
   });
 
   beforeEach(() => {

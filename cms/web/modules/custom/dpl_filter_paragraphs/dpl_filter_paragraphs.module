@@ -58,7 +58,7 @@ function _dpl_filter_paragraphs_prepare_filter_view(array $variables, string $it
   // The order of this list must be identical to the order of the contextual
   // filters in the view!
   $filters = [
-    'field_filter_content_types',
+    'field_filter_tags',
   ];
 
   $arguments = [];

@@ -4,7 +4,9 @@ status: true
 dependencies:
   config:
     - core.entity_view_mode.eventseries.card
+    - field.field.eventseries.default.field_branch
     - field.field.eventseries.default.field_categories
+    - field.field.eventseries.default.field_description
     - field.field.eventseries.default.field_event_address
     - field.field.eventseries.default.field_event_description
     - field.field.eventseries.default.field_event_image
@@ -66,7 +68,9 @@ hidden:
   daily_recurring_date: true
   event_instances: true
   event_registration: true
+  field_branch: true
   field_categories: true
+  field_description: true
   field_event_address: true
   field_event_description: true
   field_event_image: true

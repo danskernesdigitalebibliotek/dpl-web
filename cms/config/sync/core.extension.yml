@@ -11,12 +11,16 @@ module:
   ckeditor5: 0
   config_filter: 0
   config_ignore: 0
+  config_translation: 0
+  config_translation_po: 0
+  content_lock: 0
   crop: 0
   customerror: 0
   date_range_formatter: 0
   datetime: 0
   datetime_range: 0
   dblog: 0
+  default_content: 0
   devel_generate: 0
   dpl_admin: 0
   dpl_article: 0
@@ -25,6 +29,7 @@ module:
   dpl_event: 0
   dpl_favorites_list: 0
   dpl_favorites_list_material_component: 0
+  dpl_fbi: 0
   dpl_fbs: 0
   dpl_fees: 0
   dpl_filter_paragraphs: 0
@@ -40,13 +45,17 @@ module:
   dpl_patron_page: 0
   dpl_patron_redirect: 0
   dpl_patron_reg: 0
+  dpl_po: 0
+  dpl_protected_nodes: 0
   dpl_publizon: 0
   dpl_react: 0
   dpl_react_apps: 0
   dpl_recommender: 0
   dpl_reservations: 0
   dpl_something_similar: 0
+  dpl_static_content: 0
   dpl_url_proxy: 0
+  drupal_typed: 0
   dynamic_entity_reference: 0
   dynamic_page_cache: 0
   editor: 0
@@ -70,6 +79,7 @@ module:
   jquery_ui_touch_punch: 0
   jsonlog: 0
   language: 0
+  language_neutral_aliases: 0
   link: 0
   linkit: 0
   locale: 0
@@ -90,6 +100,7 @@ module:
   openid_connect: 0
   options: 0
   paragraphs_features: 0
+  path: 0
   path_alias: 0
   phpass: 0
   purge: 0

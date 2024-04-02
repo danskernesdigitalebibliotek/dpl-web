@@ -1,0 +1,139 @@
+<?php
+
+/**
+ * @file
+ * Primary module hooks for DPL Protected Nodes module.
+ */
+
+use Drupal\Core\Entity\EntityFormInterface;
+use Drupal\Core\Form\FormStateInterface;
+use Drupal\Core\Url;
+use function Safe\preg_match;
+
+/**
+ * Implements hook_form_FORM_ID_alter().
+ *
+ * @throws \Safe\Exceptions\PcreException
+ */
+function dpl_protected_nodes_form_node_confirm_form_alter(array &$form, FormStateInterface $form_state): void {
+  if ($form_state->getFormObject() instanceof EntityFormInterface) {
+    /** @var \Drupal\node\NodeInterface $node */
+    $node = $form_state->getFormObject()->getEntity();
+    $node = [$node->id() => $node->getTitle()];
+
+    $form = dpl_protected_nodes_is_nodes_protected($node, $form);
+  }
+}
+
+/**
+ * Implements hook_form_FORM_ID_alter().
+ */
+function dpl_protected_nodes_form_node_delete_multiple_confirm_form_alter(array &$form, FormStateInterface $form_state): void {
+  $items = $form['entities']['#items'];
+  $nodes = [];
+
+  foreach ($items as $key => $value) {
+    $key = explode(':', $key, 2);
+    $nodes[$key[0]] = $value;
+  }
+
+  $form = dpl_protected_nodes_is_nodes_protected($nodes, $form);
+}
+
+/**
+ * Checks if node is protected and alters the delete confirm form accordingly.
+ *
+ * @param mixed[] $nodes
+ *   The node id to check.
+ * @param mixed[] $form
+ *   The form array to alter.
+ *
+ * @return mixed[]
+ *   The altered form array.
+ */
+function dpl_protected_nodes_is_nodes_protected(array $nodes, array $form): array {
+  $protected_nodes = \Drupal::moduleHandler()->invokeAll('dpl_protected_nodes_get_protected_nodes');
+
+  foreach ($protected_nodes as $key => $value) {
+    if (array_key_exists($value['node_id'], $nodes)) {
+
+      $form['actions']['submit']['#disabled'] = TRUE;
+
+      $form['protected_node'][$value['node_id']]['description'] = [
+        '#markup' => t('<br><br>"@title" is being used in configuration. Before you can delete it, you need to remove it from the following configuration fields:', [
+          '@title' => $nodes[$value['node_id']],
+        ]),
+      ];
+
+      $form['protected_node'][$value['node_id']]['configuration'][$key] = [
+        '#markup' => t('<br><a href=":url">@title</a>', [
+          '@title' => $value['config_title'],
+          ':url' => $value['config_path'],
+        ]),
+      ];
+    }
+  }
+
+  return $form;
+}
+
+/**
+ * Get the form and configuration path used for getting protected nodes.
+ *
+ * @return mixed[]
+ *   An array containing linkit form element information.
+ */
+function dpl_protected_nodes_get_context(string $form_class_path, string $config_route): array {
+
+  // Get the configuration form.
+  $form = \Drupal::formBuilder()->getForm($form_class_path);
+  // Get the configuration path.
+  $config_path = Url::fromRoute($config_route, [], ['absolute' => TRUE])->toString();
+
+  return dpl_protected_nodes_find_linkit_elements($form, $config_path);
+}
+
+/**
+ * Find elements of type linkit.
+ *
+ * @param mixed[] $form
+ *   An associative array containing the structure of the form to loop through.
+ * @param mixed[] $elements
+ *   An array containing linkit form element information.
+ *
+ * @return mixed[]
+ *   An array containing linkit form element information.
+ *
+ * @throws \Safe\Exceptions\PcreException
+ */
+function dpl_protected_nodes_find_linkit_elements(array $form, string $config_path, array &$elements = []): array {
+  $path_alias_manager = \Drupal::service('path_alias.manager');
+
+  foreach ($form as $key => $value) {
+    // If the value is not an array, continue to the next iteration.
+    if (!is_array($value)) {
+      continue;
+    }
+
+    // Set field_value and field_type if they exist, else set to empty string.
+    $field_value = $value['#default_value'] ?? '';
+    $field_type = $value['#type'] ?? '';
+
+    // Check if the field is of type linkit and
+    // the value is matching a node url e.g. "/node/1" or "/pausefunktion".
+    if ($field_type === 'linkit' && preg_match('/^\//', $field_value)) {
+      $internal_path = $path_alias_manager->getPathByAlias($field_value);
+
+      $elements[$key] = [
+        'node_id' => basename($internal_path),
+        'config_title' => $value['#title'],
+        'config_path' => $config_path,
+      ];
+    }
+    else {
+      dpl_protected_nodes_find_linkit_elements($value, $config_path, $elements);
+    }
+  }
+
+  return $elements;
+}

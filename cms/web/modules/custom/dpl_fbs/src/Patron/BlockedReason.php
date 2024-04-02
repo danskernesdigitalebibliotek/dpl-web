@@ -25,7 +25,7 @@ class BlockedReason extends Enum {
   private const SUSPENSION = 'U';
   private const ACCOUNT_STOLEN = 'O';
   /**
-   * The user has not be assigned a correct patron category.
+   * The user has not been assigned a correct patron category.
    *
    * This should be pretty rare.
    * In Danish this is also called "Selvoprettet på web"
