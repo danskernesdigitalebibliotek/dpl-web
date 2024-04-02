@@ -14,6 +14,9 @@
 
 .media-library-item__preview-wrapper .field--name-field-byline {
   position: absolute;
+  max-height: 125px;
+  left: 0;
+  right: 0;
   bottom: 0;
   padding: 5px;
   z-index: 2;
