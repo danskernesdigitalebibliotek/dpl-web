@@ -18,12 +18,5 @@ function dpl_footer_preprocess_page(array &$variables): void {
   // Setting a cache tag so we can clear caches when the footer is updated.
   $variables['#cache']['tags'][] = 'dpl_footer';
 
-  // Preparing the footer variables.
-  $footer_values = \Drupal::state()->get('dpl_footer_values');
-
-  // Directly assigning footer variables without checking for
-  // a specific language.
-  if (!empty($footer_values)) {
-    $variables['footer_items'] = $footer_values['footer_items'];
-  }
+  $variables['footer_settings'] = \Drupal::state()->get('dpl_footer_values');
 }
