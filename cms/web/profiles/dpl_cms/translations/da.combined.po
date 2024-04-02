@@ -11934,7 +11934,7 @@ msgstr ""
 
 #: 
 msgid "Display date range using formats: @one_day, @one_month, @several_months, @several_years"
-msgstr ""
+msgstr "Vis datoperiode med formaterne: @one_day, @one_month, @several_months, @several_years"
 
 #: 
 msgid "Date range"
@@ -18220,7 +18220,7 @@ msgstr ""
 
 #: 
 msgid "Enter the interval, in minutes, to be used to separate event start times. Default is 15 minutes. Set to 0 to allow users to enter any time."
-msgstr ""
+msgstr "Indsæt intervallet, i minutter, til at adskille starttidspunktet for separate   instanser. Standarden er sat til 15 minutter. Sæt til 0 for at tillade brugere at indsætte en hvilken som helst værdi."
 
 #: 
 msgid "Event Series Minimum Time"
@@ -18676,19 +18676,19 @@ msgstr "Fortløbende (fx træffetider)"
 
 #: 
 msgid "Daily Event"
-msgstr ""
+msgstr "Daglig"
 
 #: 
 msgid "Weekly Event"
-msgstr ""
+msgstr "Ugentlig"
 
 #: 
 msgid "Monthly Event"
-msgstr ""
+msgstr "Månedligt"
 
 #: 
 msgid "Yearly Event"
-msgstr ""
+msgstr "Årligt"
 
 #: 
 msgid "Custom Date(s) and Time(s)"
@@ -18776,7 +18776,7 @@ msgstr ""
 
 #: 
 msgid "End Time"
-msgstr ""
+msgstr "Sluttidspunkt"
 
 #: 
 msgid "The time the events end each day"
@@ -18836,11 +18836,11 @@ msgstr ""
 
 #: 
 msgid "Duration or End Time"
-msgstr ""
+msgstr "Varighed eller sluttidspunkt"
 
 #: 
 msgid "Select whether to specify a duration or end time."
-msgstr ""
+msgstr "Vælg at indstille enten varighed eller sluttidspunkt."
 
 #: 
 msgid "Year interval"
@@ -18848,7 +18848,7 @@ msgstr ""
 
 #: 
 msgid "Number of years between occurrences"
-msgstr ""
+msgstr "Antal år mellem hver instans"
 
 #: 
 msgid "Months"
@@ -18964,23 +18964,23 @@ msgstr "2 år"
 
 #: 
 msgid "3 years"
-msgstr ""
+msgstr "3 år"
 
 #: 
 msgid "4 years"
-msgstr ""
+msgstr "4 år"
 
 #: 
 msgid "5 years"
-msgstr ""
+msgstr "5 år"
 
 #: 
 msgid "6 years"
-msgstr ""
+msgstr "6 år"
 
 #: 
 msgid "7 years"
-msgstr ""
+msgstr "7 år"
 
 #: 
 msgid "8 years"
@@ -19032,7 +19032,7 @@ msgstr ""
 
 #: 
 msgid "Please select the number of years between occurrences"
-msgstr ""
+msgstr "Vælg antal år der skal gå mellem hver instans"
 
 #: 
 msgid "Please select at least one month from the list"
@@ -19048,11 +19048,11 @@ msgstr "Og (Lotte test)"
 
 #: 
 msgid "Event Start Time"
-msgstr ""
+msgstr "Starttidspunkt"
 
 #: 
 msgid "Event End Time"
-msgstr ""
+msgstr "Sluttidspunkt"
 
 #: 
 msgid "Event Duration"
@@ -19060,11 +19060,12 @@ msgstr "Varighed"
 
 #: 
 msgid "Set Duration"
-msgstr ""
+msgstr "Indstil varighed\n"
+""
 
 #: 
 msgid "Set End Time"
-msgstr ""
+msgstr "Indsæt sluttidspunkt"
 
 #: 
 msgid "Please configure the Daily Recurring Date settings"
@@ -19132,7 +19133,7 @@ msgstr ""
 
 #: 
 msgid "Please enter an end time"
-msgstr ""
+msgstr "Venligst indsæt et sluttidspunkt"
 
 #: 
 msgid "Please enter a duration greater than 0"
