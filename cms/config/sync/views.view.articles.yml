@@ -216,7 +216,7 @@ display:
           reduce_duplicates: false
           vid: categories
           type: select
-          hierarchy: false
+          hierarchy: true
           limit: true
           error_message: true
       style:
