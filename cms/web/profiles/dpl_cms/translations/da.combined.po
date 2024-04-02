@@ -3897,7 +3897,7 @@ msgstr "Du redigerer en enkelt begivenhed i en arrangementsserie. \n"
 #: 
 msgctxt "DPL admin UX"
 msgid "Any changes you make here will only override this single event."
-msgstr "Ændringer du foretager her, vil kun overskrive denne enkelte begivenhed"
+msgstr "Ændringer du foretager her, vil kun overskrive dette enkelte arrangement"
 
 #: 
 msgctxt "DPL admin UX"
@@ -3922,7 +3922,7 @@ msgstr "Næste"
 
 #: 
 msgid "Events"
-msgstr "Arrangementer"
+msgstr "Arrangementer (test Lotte)"
 
 #: 
 msgid "Address"
@@ -11222,7 +11222,7 @@ msgstr ""
 
 #: 
 msgid "This content is being edited by the user @name and is therefore locked to prevent other users changes. This lock is in place since @date."
-msgstr ""
+msgstr "Dette indhold bliver redigeret af @name og er derfor låst. Denne lås er aktiveret @date."
 
 #: 
 msgid "This content translation is now locked against simultaneous editing. This content translation will remain locked if you navigate away from this page without saving or unlocking it."
@@ -11286,7 +11286,7 @@ msgstr "Gem indstillinger"
 
 #: 
 msgid "This content is being edited by the user @name and is therefore locked to prevent other users changes."
-msgstr ""
+msgstr "Dette indhold bliver redigeret af @name og er derfor låst for at forhindre andre brugere i samtidig redigering."
 
 #: 
 msgid "This content is now locked against simultaneous editing."
@@ -11350,7 +11350,7 @@ msgstr ""
 
 #: 
 msgid "Prevents multiple users from trying to edit a content entity simultaneously to prevent edit conflicts."
-msgstr ""
+msgstr "Forhindrer flere brugere i at redigere samtidig i et stykke indhold hvilket kan skabe konflikt."
 
 #: 
 msgid "Break Lock"
@@ -18083,7 +18083,7 @@ msgstr ""
 
 #: 
 msgid "Add paragraphs category"
-msgstr ""
+msgstr "Tilføj paragraphs kategori"
 
 #: 
 msgid "Contains various improvements to the Paragraphs UI."
@@ -18392,7 +18392,7 @@ msgstr ""
 
 #: 
 msgid "Event instance of %label has been saved."
-msgstr ""
+msgstr "Instans af %label er gemt."
 
 #: 
 msgid "@language translation of the Event Instance %label has been saved."
@@ -18432,11 +18432,11 @@ msgstr "Er du sikker på, at du ønsker at slette @language-oversættelsen af @e
 
 #: 
 msgid "Are you sure you want to delete event instance for %name?"
-msgstr ""
+msgstr "Er du sikker på du vil slette denne instans af %name?"
 
 #: 
 msgid "Deleting this instance will remove only the instance on %date and not other events in this series. This action cannot be undone."
-msgstr ""
+msgstr "Ved at slette denne instans sletter du kun instansen %date og ikke andre arrangementer i denne serie. Dette kan ikke fortrydes."
 
 #: 
 msgid "@language translation of the @type %label has been deleted."
@@ -18444,7 +18444,7 @@ msgstr "@language-oversættelsen af @type %label slettet."
 
 #: 
 msgid "The %title event instance starting on %date has been deleted."
-msgstr ""
+msgstr "Instansen %title som fandt sted %date er blevet slettet."
 
 #: 
 msgid "Are you sure you want to delete the revision from %revision-date?"
@@ -18668,11 +18668,11 @@ msgstr ""
 
 #: 
 msgid "Recur Type"
-msgstr ""
+msgstr "Gentagelsesmønster"
 
 #: 
 msgid "Consecutive Event"
-msgstr ""
+msgstr "Fortløbende (fx træffetider)"
 
 #: 
 msgid "Daily Event"
@@ -18732,7 +18732,7 @@ msgstr "Intet navn"
 
 #: 
 msgid "Event Recurrence Scheduling"
-msgstr ""
+msgstr "Planlægning af arrangementssgentagelse"
 
 #: 
 msgid "Whether this event recurs based on weekdays, or days of the month"
@@ -18804,7 +18804,7 @@ msgstr ""
 
 #: 
 msgid "The time between consecutive events"
-msgstr ""
+msgstr "Tidsrummet mellem hver instans "
 
 #: 
 msgid "Buffer Units"
@@ -18812,7 +18812,7 @@ msgstr ""
 
 #: 
 msgid "The units used for the time between consecutive events"
-msgstr ""
+msgstr "Enheder til angivelse af tid mellem fortløbende arangementer"
 
 #: 
 msgid "Start Date"
@@ -18996,7 +18996,7 @@ msgstr "10 år"
 
 #: 
 msgid "Please configure the Yearly Recurring Date settings"
-msgstr ""
+msgstr "Indstil den årlige gentagelsesdato"
 
 #: 
 msgid "Please enter a start date"
@@ -19016,7 +19016,7 @@ msgstr ""
 
 #: 
 msgid "Please select an event recurrence schedule type from the list"
-msgstr ""
+msgstr "Vælg et gentagelsesmønster fra listen"
 
 #: 
 msgid "Please select a day occurrence from the list"
@@ -19068,19 +19068,19 @@ msgstr ""
 
 #: 
 msgid "Please configure the Daily Recurring Date settings"
-msgstr ""
+msgstr "Indstil det daglige gentagelsesmønster"
 
 #: 
 msgid "Event Recurrence Schedule"
-msgstr ""
+msgstr "Planlæg arrangementsgentagelse"
 
 #: 
 msgid "Recur on Day of Week"
-msgstr ""
+msgstr "Gentag på bestemte ugedage"
 
 #: 
 msgid "Recur on Day of Month"
-msgstr ""
+msgstr "Gentag på bestemte dage på måneden"
 
 #: 
 msgid "First"
@@ -19116,11 +19116,11 @@ msgstr ""
 
 #: 
 msgid "First Event Starts At"
-msgstr ""
+msgstr "Første instans starter"
 
 #: 
 msgid "Final Event Starts At"
-msgstr ""
+msgstr "Sidste instans starter"
 
 #: 
 msgid "Event Buffer"
@@ -19316,7 +19316,7 @@ msgstr "Ikke udgivet"
 
 #: 
 msgid "Add new instance to %name"
-msgstr ""
+msgstr "Tilføj ny instans til %name"
 
 #: 
 msgid "Create %name Event"
@@ -19404,7 +19404,7 @@ msgstr "@start_date til @end_date"
 
 #: 
 msgid "Custom/Single Event"
-msgstr ""
+msgstr "Enkeltstående arrangement"
 
 #: 
 msgid "Series Name"
@@ -20649,7 +20649,7 @@ msgstr "@label (@argument)"
 
 #: 
 msgid "Add Instance"
-msgstr ""
+msgstr "Tilføj instans"
 
 #: 
 msgid "Successfully updated @success instance statuses. Skipped @skipped instances due to status or workflow mismatch with series."
@@ -20881,11 +20881,11 @@ msgstr ""
 
 #: 
 msgid "Add existing events"
-msgstr ""
+msgstr "Tilføj eksisterende arrangementer"
 
 #: 
 msgid "Add new events"
-msgstr ""
+msgstr "Tilføj nye arrangementer"
 
 #: 
 msgid "Registrations"
@@ -20917,7 +20917,7 @@ msgstr ""
 
 #: 
 msgid "Add Registration"
-msgstr ""
+msgstr "Tilføj registrering"
 
 #: 
 msgid "Edit Registration"
@@ -21013,11 +21013,11 @@ msgstr "Vis begivenheder og registrationer"
 
 #: 
 msgid "Add Event"
-msgstr ""
+msgstr "Tilføj arrangement"
 
 #: 
 msgid "Add a new event."
-msgstr ""
+msgstr "Tilføj nyt arrangement"
 
 #: 
 msgid "Event series listing."
@@ -21045,7 +21045,7 @@ msgstr ""
 
 #: 
 msgid "Add Series Type"
-msgstr ""
+msgstr "Tilføj serietype"
 
 #: 
 msgid "Add An Event Series Type"
@@ -23213,7 +23213,7 @@ msgstr "Overskrift"
 
 #: 
 msgid "Add header"
-msgstr ""
+msgstr "Tilføj header"
 
 #: 
 msgid "Performance"
