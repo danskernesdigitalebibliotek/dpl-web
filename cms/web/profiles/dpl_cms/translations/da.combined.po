@@ -18800,7 +18800,7 @@ msgstr ""
 
 #: 
 msgid "Buffer"
-msgstr ""
+msgstr "Pause mellem enkelte instanser"
 
 #: 
 msgid "The time between consecutive events"
@@ -18808,7 +18808,7 @@ msgstr "Tidsrummet mellem hver instans "
 
 #: 
 msgid "Buffer Units"
-msgstr ""
+msgstr "Pause enheder"
 
 #: 
 msgid "The units used for the time between consecutive events"
@@ -19056,7 +19056,7 @@ msgstr ""
 
 #: 
 msgid "Event Duration"
-msgstr ""
+msgstr "Varighed"
 
 #: 
 msgid "Set Duration"
@@ -19124,7 +19124,7 @@ msgstr "Sidste instans starter"
 
 #: 
 msgid "Event Buffer"
-msgstr ""
+msgstr "Pause"
 
 #: 
 msgid "Please configure the Consecutive Recurring Date settings"
@@ -19144,11 +19144,11 @@ msgstr ""
 
 #: 
 msgid "Please enter a buffer greater than or equal to 0"
-msgstr ""
+msgstr "Indtast en værdi større eller lig med 0"
 
 #: 
 msgid "Please select a buffer units value from the list"
-msgstr ""
+msgstr "Vælg en tidsenhed fra listen"
 
 #: 
 msgid "Please configure the Weekly Recurring Date settings"
