@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "39624974e770ccc9d22894fc3cad895d",
+    "content-hash": "1cdc1f3776aeb89681e565d15cd90fb9",
     "packages": [
         {
             "name": "amazeeio/drupal_integrations",
@@ -1099,19 +1099,19 @@
         },
         {
             "name": "danskernesdigitalebibliotek/dpl-design-system",
-            "version": "2024.13.0-rc1",
+            "version": "2024.11.1",
             "dist": {
                 "type": "zip",
-                "url": "https://github.com/danskernesdigitalebibliotek/dpl-design-system/releases/download/branch-release/form-sprint-9/dist-release-form-sprint-9.zip"
+                "url": "https://github.com/danskernesdigitalebibliotek/dpl-design-system/releases/download/2024.11.1/dist-2024-11-1-95f2b8fdf30bd2ec6d5ac95021fa716bb868d6aa.zip"
             },
             "type": "drupal-library"
         },
         {
             "name": "danskernesdigitalebibliotek/dpl-react",
-            "version": "2024.13.0-rc1",
+            "version": "2024.11.1",
             "dist": {
                 "type": "zip",
-                "url": "https://github.com/danskernesdigitalebibliotek/dpl-react/releases/download/branch-release/form-sprint-9/dist-release-form-sprint-9.zip"
+                "url": "https://github.com/danskernesdigitalebibliotek/dpl-react/releases/download/2024.11.1/dist-2024-11-1-364b092c6f65970870bf96aa28321682937d022d.zip"
             },
             "require": {
                 "composer/installers": "^1.2.0"
@@ -2393,6 +2393,63 @@
                 "source": "https://git.drupalcode.org/project/config_ignore",
                 "issues": "https://drupal.org/project/config_ignore",
                 "irc": "irc://irc.freenode.org/drupal-contribute"
+            }
+        },
+        {
+            "name": "drupal/config_translation_po",
+            "version": "1.0.0",
+            "source": {
+                "type": "git",
+                "url": "https://git.drupalcode.org/project/config_translation_po.git",
+                "reference": "1.0.0"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://ftp.drupal.org/files/projects/config_translation_po-1.0.0.zip",
+                "reference": "1.0.0",
+                "shasum": "268b55019f7106d50e9a3b0ed5f0f845360aed4b"
+            },
+            "require": {
+                "drupal/core": "^9.3 || ^10"
+            },
+            "type": "drupal-module",
+            "extra": {
+                "drupal": {
+                    "version": "1.0.0",
+                    "datestamp": "1687993665",
+                    "security-coverage": {
+                        "status": "covered",
+                        "message": "Covered by Drupal's security advisory policy"
+                    }
+                }
+            },
+            "notification-url": "https://packages.drupal.org/8/downloads",
+            "license": [
+                "GPL-2.0-or-later"
+            ],
+            "authors": [
+                {
+                    "name": "dj1999",
+                    "homepage": "https://www.drupal.org/user/387119"
+                },
+                {
+                    "name": "heddn",
+                    "homepage": "https://www.drupal.org/user/1463982"
+                },
+                {
+                    "name": "pedrop",
+                    "homepage": "https://www.drupal.org/user/1043368"
+                },
+                {
+                    "name": "szato",
+                    "homepage": "https://www.drupal.org/user/389677"
+                }
+            ],
+            "description": "Configuration Translations to po file",
+            "homepage": "https://www.drupal.org/project/config_translation_po",
+            "support": {
+                "source": "http://cgit.drupalcode.org/config_translation_po",
+                "issues": "https://www.drupal.org/project/issues/config_translation_po"
             }
         },
         {

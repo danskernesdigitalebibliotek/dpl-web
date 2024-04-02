@@ -153,4 +153,17 @@ class GeneralSettings extends DplReactConfigBase {
     ];
   }
 
+  /**
+   * Gets the default interest period as an array.
+   *
+   * @return string
+   *   The default interest period array.
+   */
+  public function getPauseReservationInfoUrl(): string {
+    return dpl_react_apps_format_app_url(
+      $this->loadConfig()->get('pause_reservation_info_url'),
+      self::PAUSE_RESERVATION_INFO_URL
+    );
+  }
+
 }

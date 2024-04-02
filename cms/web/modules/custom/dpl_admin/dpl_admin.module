@@ -8,7 +8,6 @@
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\Render\Markup;
 use Drupal\Core\Url;
-use Drupal\field\Entity\FieldConfig;
 use Drupal\menu_link_content\Entity\MenuLinkContent;
 use Drupal\recurring_events\Entity\EventInstance;
 use Drupal\views\Plugin\views\field\EntityField;
@@ -263,47 +262,6 @@ function dpl_admin_form_alter(array &$form, FormStateInterface $form_state, stri
 
   if (in_array($form_id, ['node_page_form', 'node_page_edit_form'])) {
     _dpl_admin_form_alter_node_page($form, $form_state, $form_id);
-  }
-}
-
-/**
- * Implements hook_field_widget_single_element_form_alter().
- *
- * Adjusts the visibility of field_navigation_title based on
- * the state of field_display_in_navigation.
- *
- * @param array<mixed> &$element
- *   The form element to be altered.
- * @param \Drupal\Core\Form\FormStateInterface $form_state
- *   The current state of the form.
- * @param array<mixed> $context
- *   An associative array containing contextual information about the field.
- *
- * @see hook_field_widget_single_element_form_alter()
- */
-function dpl_admin_field_widget_single_element_form_alter(array &$element, FormStateInterface $form_state, array $context): void {
-
-  /** @var \Drupal\Core\Field\FieldItemListInterface $items */
-  $items = $context['items'];
-
-  // Retrieve the field definition from the context.
-  $field_definition = $items->getFieldDefinition();
-
-  // Check if the field definition is an instance of FieldConfig and matches
-  // the specific field ID.
-  if ($field_definition instanceof FieldConfig &&
-    $field_definition->id() === 'paragraph.user_registration_information.field_navigation_title') {
-
-    // Extract the delta value for the field content.
-    $field_content_delta = $element['value']['#field_parents'][1];
-
-    // Define states for the field element.
-    $element['value']['#states'] = [
-      // Conditionally hide the field based on the state of another field.
-      'invisible' => [
-        ':input[name="field_content[' . $field_content_delta . '][subform][field_display_in_navigation][value]"]' => ['checked' => FALSE],
-      ],
-    ];
   }
 }
 

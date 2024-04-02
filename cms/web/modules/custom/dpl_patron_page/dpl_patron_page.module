@@ -6,3 +6,12 @@
  *
  * Display patron page (user information page).
  */
+
+use Drupal\dpl_patron_page\Form\PatronPageSettingsForm;
+
+/**
+ * Implements hook_dpl_protected_nodes_get_protected_nodes().
+ */
+function dpl_patron_page_dpl_protected_nodes_get_protected_nodes(): array {
+  return dpl_protected_nodes_get_context(PatronPageSettingsForm::class, 'dpl_patron_page.settings');
+}
