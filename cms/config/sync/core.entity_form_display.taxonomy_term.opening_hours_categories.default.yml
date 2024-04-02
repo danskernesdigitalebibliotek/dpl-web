@@ -1,0 +1,36 @@
+uuid: 57ccbff2-eb5b-43ac-9cb2-f66a131b311f
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.field.taxonomy_term.opening_hours_categories.field_opening_hours_color
+    - taxonomy.vocabulary.opening_hours_categories
+  module:
+    - color_field
+id: taxonomy_term.opening_hours_categories.default
+targetEntityType: taxonomy_term
+bundle: opening_hours_categories
+mode: default
+content:
+  field_opening_hours_color:
+    type: color_field_widget_box
+    weight: 1
+    region: content
+    settings:
+      default_colors: '#ac725e,#d06b64,#f83a22,#fa573c,#ff7537,#ffad46,#42d692,#16a765,#7bd148,#b3dc6c,#fbe983,#92e1c0,#9fe1e7,#9fc6e7,#4986e7,#9a9cff,#b99aff,#c2c2c2,#cabdbf,#cca6ac,#f691b2,#cd74e6,#a47ae2'
+    third_party_settings: {  }
+  name:
+    type: string_textfield
+    weight: 0
+    region: content
+    settings:
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+hidden:
+  description: true
+  langcode: true
+  path: true
+  publish_on: true
+  status: true
+  unpublish_on: true

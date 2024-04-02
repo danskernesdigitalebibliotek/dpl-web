@@ -52,6 +52,10 @@ default:
       attributes:
         name: title
         content: 'Bibliotekarerne anbefaler læsning til den mørke tid | DPL CMS'
+  path:
+    -
+      alias: ''
+      langcode: da
   field_override_author:
     -
       value: 'Det Digitale Folkebibliotek'

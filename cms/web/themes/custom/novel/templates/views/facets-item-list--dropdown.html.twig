@@ -1,0 +1,34 @@
+{# Cache logic that we duplicate from the parent template
+   cms/web/modules/contrib/facets/templates/facets-item-list.html.twig #}
+{% if cache_hash %}
+  <!-- facets cacheable metadata
+    hash: {{ cache_hash }}
+  {% if cache_contexts %}
+    contexts: {{ cache_contexts }}
+  {%- endif %}
+  {% if cache_tags %}
+    tags: {{ cache_tags }}
+  {%- endif %}
+  {% if cache_max_age %}
+    max age: {{ cache_max_age }}
+  {%- endif %}
+  -->
+{%- endif %}
+
+<label class="input-label" id="facet_{{ facet.id }}_label">{{ facet.label }}</label>
+<div class="dropdown">
+  {% if items or empty %}
+    {%- if items -%}
+      <{{ list_type }}{{ attributes.addClass("dropdown__select") }}>
+      {%- for item in items -%}
+        <li{{ item.attributes }}>{{ item.value }}</li>
+      {%- endfor -%}
+      </{{ list_type }}>
+    {%- else -%}
+      {{- empty -}}
+    {%- endif -%}
+  {%- endif %}
+  <div class="dropdown__arrows">
+    <img class="dropdown__arrow" src="{{ baseIconPath }}/collection/ExpandMore.svg" alt="">
+  </div>
+</div>

@@ -7,7 +7,6 @@ dependencies:
     - field.field.eventseries.default.field_categories
     - field.field.eventseries.default.field_description
     - field.field.eventseries.default.field_event_address
-    - field.field.eventseries.default.field_event_description
     - field.field.eventseries.default.field_event_image
     - field.field.eventseries.default.field_event_link
     - field.field.eventseries.default.field_event_paragraphs
@@ -321,5 +320,4 @@ content:
 hidden:
   body: true
   excluded_dates: true
-  field_event_description: true
   included_dates: true

@@ -36,10 +36,10 @@
             "type": "package",
             "package": {
                 "name": "danskernesdigitalebibliotek/dpl-react",
-                "version": "2024.11.1",
+                "version": "2024.14.0",
                 "type": "drupal-library",
                 "dist": {
-                    "url": "https://github.com/danskernesdigitalebibliotek/dpl-react/releases/download/2024.11.1/dist-2024-11-1-364b092c6f65970870bf96aa28321682937d022d.zip",
+                    "url": "https://github.com/danskernesdigitalebibliotek/dpl-react/releases/download/2024.14.0/dist-2024-14-0-f90c7120950eda3808e123006f41fd6f76a1e687.zip",
                     "type": "zip"
                 },
                 "require": {
@@ -52,9 +52,9 @@
             "package": {
                 "name": "danskernesdigitalebibliotek/dpl-design-system",
                 "type": "drupal-library",
-                "version": "2024.11.1",
+                "version": "2024.14.0",
                 "dist": {
-                    "url": "https://github.com/danskernesdigitalebibliotek/dpl-design-system/releases/download/2024.11.1/dist-2024-11-1-95f2b8fdf30bd2ec6d5ac95021fa716bb868d6aa.zip",
+                    "url": "https://github.com/danskernesdigitalebibliotek/dpl-design-system/releases/download/2024.14.0/dist-2024-14-0-c34d09ae7fd2867f880dfcfd979fa295b4f9cf68.zip",
                     "type": "zip"
                 }
             }
@@ -74,14 +74,15 @@
         "brick/math": "^0.12.1",
         "composer/installers": "1.12.0",
         "cweagans/composer-patches": "1.7.3",
-        "danskernesdigitalebibliotek/dpl-design-system": "^2024.11",
-        "danskernesdigitalebibliotek/dpl-react": "^2024.11",
+        "danskernesdigitalebibliotek/dpl-design-system": "2024.14.0",
+        "danskernesdigitalebibliotek/dpl-react": "2024.14.0",
         "danskernesdigitalebibliotek/fbs-client": "*",
         "dealerdirect/phpcodesniffer-composer-installer": "^0.7.1",
         "deoliveiralucas/array-keys-case-transform": "^1.1",
         "drupal/address": "^1.0",
         "drupal/admin_toolbar": "^3.4",
         "drupal/administerusersbyrole": "^3.4",
+        "drupal/color_field": "^3.0",
         "drupal/config_ignore": "^2.4",
         "drupal/config_translation_po": "^1.0",
         "drupal/content_lock": "^2.3",
@@ -95,7 +96,9 @@
         "drupal/dynamic_entity_reference": "^3.1",
         "drupal/entity_clone_template": "^2.0",
         "drupal/enum_field": "^1.0",
+        "drupal/facets": "^2.0",
         "drupal/field_group": "^3.4",
+        "drupal/field_inheritance": "^2.0",
         "drupal/focal_point": "^2.0",
         "drupal/gin": "^3.0@RC",
         "drupal/gin_toolbar": "^1.0@RC",
@@ -267,9 +270,6 @@
             "drupal/entity_clone_template": {
                 "3424597: Fix error when creating entity of type without templates": "https://git.drupalcode.org/project/entity_clone_template/-/merge_requests/3.patch"
             },
-            "drupal/field_inheritance": {
-                "3330386: field_inheritance_form_alter should enforce module permissions": "https://git.drupalcode.org/project/field_inheritance/-/commit/bc3d26cdce8c09d5b6275fc126e35bc7e239c7d1.patch"
-            },
             "drupal/focal_point": {
                 "3162210: Preview link accidentally closes the media library": "https://www.drupal.org/files/issues/2020-10-11/preview_link_accidentally_closes_the_media_library-3162210-19.patch"
             },
@@ -308,6 +308,9 @@
             },
             "drupal/theme_permission": {
                 "3105637: Edit, install and uninstall permission": "https://www.drupal.org/files/issues/2024-02-01/theme-permission-edit-install-uninstall-3105637-7.patch"
+            },
+            "drupal/twig_tweak": {
+                "3428226: Clear menu cache when adding first item": "https://git.drupalcode.org/project/twig_tweak/-/merge_requests/47.patch"
             }
         }
     }

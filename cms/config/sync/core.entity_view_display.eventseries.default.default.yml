@@ -7,7 +7,6 @@ dependencies:
     - field.field.eventseries.default.field_categories
     - field.field.eventseries.default.field_description
     - field.field.eventseries.default.field_event_address
-    - field.field.eventseries.default.field_event_description
     - field.field.eventseries.default.field_event_image
     - field.field.eventseries.default.field_event_link
     - field.field.eventseries.default.field_event_paragraphs
@@ -20,11 +19,10 @@ dependencies:
     - field.field.eventseries.default.field_ticket_categories
     - recurring_events.eventseries_type.default
   module:
-    - address
+    - dpl_event
     - entity_reference_revisions
     - link
     - options
-    - text
 _core:
   default_config_hash: U53j_RaqaehEh393bzj6vrqXorzo8lkcjhQNCNTPjmQ
 id: eventseries.default.default
@@ -34,7 +32,7 @@ mode: default
 content:
   field_branch:
     type: entity_reference_label
-    label: above
+    label: hidden
     settings:
       link: true
     third_party_settings: {  }
@@ -56,18 +54,11 @@ content:
     weight: 15
     region: content
   field_event_address:
-    type: address_default
+    type: dpl_branch_address
     label: hidden
     settings: {  }
     third_party_settings: {  }
     weight: 3
-    region: content
-  field_event_description:
-    type: text_default
-    label: hidden
-    settings: {  }
-    third_party_settings: {  }
-    weight: 4
     region: content
   field_event_image:
     type: entity_reference_entity_view

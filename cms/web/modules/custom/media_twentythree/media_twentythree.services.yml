@@ -1,0 +1,9 @@
+services:
+  media_twentythree.oembed.provider_repository:
+    decorates: media.oembed.provider_repository
+    class: Drupal\media_twentythree\ProviderRepositoryDecorator
+    public: false
+    arguments: ["@media_twentythree.oembed.provider_repository.inner"]
+  media_twentythree.oembed.url_resolver:
+    class: Drupal\media_twentythree\DiscoveryUrlResolver
+    parent: media.oembed.url_resolver
