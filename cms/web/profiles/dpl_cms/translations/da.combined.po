@@ -3922,7 +3922,7 @@ msgstr "Næste"
 
 #: 
 msgid "Events"
-msgstr "Arrangementer (test Lotte)"
+msgstr "Arrangementer"
 
 #: 
 msgid "Address"
@@ -7945,7 +7945,7 @@ msgstr "Standard"
 #: 
 msgctxt "views.view.events:display:default:display_options:title"
 msgid "Events"
-msgstr "Arrangementer"
+msgstr "Arrangementer (test lotte)"
 
 #: 
 msgctxt "views.view.events:display:default:display_options:pager:options:expose:items_per_page_label"
@@ -19117,11 +19117,11 @@ msgstr ""
 
 #: 
 msgid "First Event Starts At"
-msgstr "Første instans starter"
+msgstr "Første instans begynder"
 
 #: 
 msgid "Final Event Starts At"
-msgstr "Sidste instans starter"
+msgstr "Sidste instans begynder"
 
 #: 
 msgid "Event Buffer"
