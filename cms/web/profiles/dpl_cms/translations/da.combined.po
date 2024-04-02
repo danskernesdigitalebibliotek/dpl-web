@@ -19044,7 +19044,7 @@ msgstr ""
 
 #: 
 msgid "And"
-msgstr "Og (Lotte test)"
+msgstr "Slutdato"
 
 #: 
 msgid "Event Start Time"
