@@ -1,34 +1,26 @@
-uuid: 197c46b2-8d49-44dc-9cb0-bc5c472d5780
+uuid: 117a1071-a750-4c7d-a8d4-179fb2cb7234
 langcode: en
 status: true
 dependencies:
   config:
-    - core.entity_view_mode.media.hero_wide
+    - core.entity_view_mode.media.card
     - field.field.media.image.field_byline
     - field.field.media.image.field_media_image
-    - image.style.hero_wide
+    - image.style.card_x_large
     - media.type.image
   module:
     - image
-id: media.image.hero_wide
+id: media.image.card
 targetEntityType: media
 bundle: image
-mode: hero_wide
+mode: card
 content:
-  field_byline:
-    type: string
-    label: hidden
-    settings:
-      link_to_entity: false
-    third_party_settings: {  }
-    weight: 1
-    region: content
   field_media_image:
     type: image
     label: hidden
     settings:
       image_link: ''
-      image_style: hero_wide
+      image_style: card_x_large
       image_loading:
         attribute: lazy
     third_party_settings: {  }
@@ -36,6 +28,7 @@ content:
     region: content
 hidden:
   created: true
+  field_byline: true
   langcode: true
   name: true
   search_api_excerpt: true
