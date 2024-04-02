@@ -9922,7 +9922,7 @@ msgstr ""
 #: 
 msgctxt "Address label"
 msgid "Island"
-msgstr ""
+msgstr "Ø"
 
 #: 
 msgctxt "Address label"
@@ -17522,7 +17522,7 @@ msgstr ""
 
 #: 
 msgid "Log in with @client_title"
-msgstr ""
+msgstr "Log ind med @client_title"
 
 #: 
 msgid "Enabled OpenID Connect clients"
@@ -19044,7 +19044,7 @@ msgstr ""
 
 #: 
 msgid "And"
-msgstr "Og"
+msgstr "Og (Lotte test)"
 
 #: 
 msgid "Event Start Time"
