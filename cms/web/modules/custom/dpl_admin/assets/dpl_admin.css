@@ -2,6 +2,11 @@
  * This file is loaded into admin pages.
  */
 
+/* Overriding wrong styling from reset.scss */
+.button:focus {
+  padding: calc(var(--gin-spacing-m) - 2px) calc(var(--gin-spacing-l) - 2px);
+}
+
 /* Displaying the byline on the media-library preview. */
 .media-library-item__preview {
   position: relative;
