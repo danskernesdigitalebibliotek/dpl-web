@@ -1,6 +1,6 @@
-Model/DplOpeningHoursGET200Response.php
-Model/DplOpeningHoursGETRequest.php
-Model/DplOpeningHoursGETRequestCategory.php
+Model/DplOpeningHoursCreatePOSTRequest.php
+Model/DplOpeningHoursListGET200ResponseInner.php
+Model/DplOpeningHoursListGET200ResponseInnerCategory.php
 README.md
 Service/JmsSerializer.php
 Service/SerializerInterface.php
