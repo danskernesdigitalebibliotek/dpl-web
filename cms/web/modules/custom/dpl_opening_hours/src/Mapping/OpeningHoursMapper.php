@@ -37,6 +37,8 @@ class OpeningHoursMapper {
     if (!$categoryTitle) {
       throw new \InvalidArgumentException('No category title provided');
     }
+    // This could in theory return multiple categories if they have the same
+    // name. The taxonomy_unique module ensures that this is not the case.
     $categoryTerms = $this->categoryStorage->loadByProperties([
       'name' => $categoryTitle,
       'vid' => 'opening_hours_categories',
