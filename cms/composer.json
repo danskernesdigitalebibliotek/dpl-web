@@ -136,6 +136,7 @@
         "drupal/search_api": "^1.31",
         "drupal/selective_better_exposed_filters": "^3.0",
         "drupal/simple_menu_permissions": "^2.0",
+        "drupal/taxonomy_unique": "^2.5",
         "drupal/telephone_formatter": "^1.2",
         "drupal/theme_permission": "^2.0",
         "drupal/twig_tweak": "^3.2.1",
