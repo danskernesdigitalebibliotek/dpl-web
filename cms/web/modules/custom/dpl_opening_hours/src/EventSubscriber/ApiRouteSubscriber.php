@@ -21,9 +21,9 @@ final class ApiRouteSubscriber extends RouteSubscriberBase {
    */
   protected function alterRoutes(RouteCollection $collection): void {
     $routes = [
-      'rest.dpl_opening_hours.DELETE',
-      'rest.dpl_opening_hours.PATCH',
-      'rest.dpl_opening_hours.POST',
+      'rest.dpl_opening_hours_delete.DELETE',
+      'rest.dpl_opening_hours_update.PATCH',
+      'rest.dpl_opening_hours_create.POST',
     ];
     $routes = array_filter(array_map(function (string $route) use ($collection): ?Route {
       return $collection->get($route);
