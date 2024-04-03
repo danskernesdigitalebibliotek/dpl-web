@@ -4,6 +4,7 @@ namespace Drupal\dpl_opening_hours\Controller;
 
 use Drupal\Core\Access\AccessResult;
 use Drupal\Core\Controller\ControllerBase;
+use Drupal\node\NodeInterface;
 
 /**
  * Defines OpeningHoursController class.
@@ -30,10 +31,12 @@ class OpeningHoursEditorController extends ControllerBase {
     $nodeStorage = $this->entityTypeManager()->getStorage('node');
     $nodeEntity = $nodeStorage->load($node);
 
-    if (!$nodeEntity) {
+    if ($nodeEntity instanceof NodeInterface && $nodeEntity->getType() === 'branch') {
+      return AccessResult::allowed();
+    }
+    else {
       return AccessResult::forbidden();
     }
-    return ($nodeEntity->getType() == 'branch') ? AccessResult::allowed() : AccessResult::forbidden();
   }
 
 }
