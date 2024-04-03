@@ -13,6 +13,10 @@
     value: content.event_place.0 ? content.event_place : null
   },
   {
+    label: "Branch"|trans,
+    value: content.branch.0 ? content.branch : null
+  },
+  {
     label: "Partners"|trans,
     value: content.event_partners.0 ? content.event_partners : null
   },
@@ -31,5 +35,6 @@
   'description': content.event_description,
   'description_items': description_items,
   'categories': content.event_categories,
+  'teaser_text': content.field_teaser_text,
   'tags': content.event_tags,
 } only %}

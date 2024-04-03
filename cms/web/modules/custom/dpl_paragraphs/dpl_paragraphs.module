@@ -5,8 +5,11 @@
  * DPL Paragraphs tweaks.
  */
 
+use Drupal\Core\Field\WidgetBase;
+use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\Url;
 use Drupal\dpl_react_apps\Controller\DplReactAppsController;
+use Drupal\field\Entity\FieldConfig;
 use Drupal\paragraphs\Entity\Paragraph;
 use Drupal\paragraphs\ParagraphInterface;
 use function Safe\parse_url;
@@ -298,4 +301,79 @@ function dpl_paragraphs_preprocess_paragraph__material_grid_manual(array &$varia
       'branches-config' => $branchesConfig,
     ] + DplReactAppsController::externalApiBaseUrls(),
   ];
+}
+
+/**
+ * Implements hook_preprocess_paragraph__TYPE().
+ *
+ * Prepares variables for paragraph--user-registration-section.html.twig.
+ */
+function dpl_paragraphs_preprocess_paragraph__user_registration_section(array &$variables): void {
+
+  $user_registration_section = $variables['paragraph'] ?? NULL;
+
+  if (!($user_registration_section instanceof ParagraphInterface || !$user_registration_section->hasField('field_material_grid_title'))) {
+    return;
+  }
+
+  $user_registration_items = $user_registration_section->get('field_user_registration_items')->referencedEntities();
+  $variables['anchor_links'] = [];
+
+  // Creates anchor links for items that should be displayed in the navigation.
+  foreach ($user_registration_items as $item) {
+    if ($item->get('field_display_in_navigation')->value == 1) {
+      $variables['anchor_links'][] = [
+        'title' => $item->get('field_navigation_title')->value ?? $item->get('field_title')->value,
+        'anchor_id' => $item->get('field_anchor')->value ?? 'anchor-' . $item->id(),
+      ];
+    }
+  }
+}
+
+/**
+ * Implements hook_field_widget_single_element_WIDGET_TYPE_form_alter().
+ *
+ * Adjusts the visibility of field_navigation_title based on
+ * the state of field_display_in_navigation.
+ *
+ * @param array<mixed> &$element
+ *   The form element to be altered.
+ * @param \Drupal\Core\Form\FormStateInterface $form_state
+ *   The current state of the form.
+ * @param array<mixed> $context
+ *   An associative array containing contextual information about the field.
+ *
+ * @see hook_field_widget_single_element_WIDGET_TYPE_form_alter()
+ */
+function dpl_paragraphs_field_widget_single_element_paragraphs_form_alter(array &$element, FormStateInterface $form_state, array $context): void {
+
+  /** @var \Drupal\Core\Field\FieldItemListInterface $items */
+  $items = $context['items'];
+
+  // Retrieve the field definition from the context.
+  $field_definition = $items->getFieldDefinition();
+
+  // Check if the field definition is an instance of FieldConfig
+  // and matches the specific field ID.
+  if ($field_definition instanceof FieldConfig &&
+    $field_definition->id() === 'paragraph.user_registration_section.field_user_registration_items') {
+    $field_name = $field_definition->getName();
+
+    $widget_state = WidgetBase::getWidgetState($element['#field_parents'], $field_name, $form_state);
+
+    /** @var \Drupal\paragraphs\Entity\Paragraph $paragraph_instance */
+    $paragraph_instance = $widget_state['paragraphs'][$element['#delta']]['entity'];
+    $paragraph_type = $paragraph_instance->bundle();
+
+    if ($paragraph_type == 'user_registration_item') {
+      $parents = $element['#field_parents'][0] . '[' . $element['#field_parents'][1] . '][' . $element['#field_parents'][2] . ']';
+
+      // Conditionally hide the field based on the state of another field.
+      $element['subform']['field_navigation_title']['#states'] = [
+        'invisible' => [
+          ':input[name="' . $parents . '[' . $field_name . '][' . $element['#delta'] . '][subform][field_display_in_navigation][value]"]' => ['checked' => FALSE],
+        ],
+      ];
+    }
+  }
 }

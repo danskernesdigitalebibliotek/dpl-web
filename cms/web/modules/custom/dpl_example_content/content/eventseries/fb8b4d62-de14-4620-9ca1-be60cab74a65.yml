@@ -123,9 +123,6 @@ default:
       uri: 'https://billetto.dk/'
       title: ''
       options: {  }
-  field_event_place:
-    -
-      value: Hovedbibliotek
   field_event_state:
     -
       value: Active

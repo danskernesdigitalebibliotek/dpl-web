@@ -11,7 +11,7 @@ field_name: field_branch
 entity_type: eventseries
 bundle: default
 label: Branch
-description: ''
+description: 'When connecting a branch, it will also overwrite the event address with the address from the branch.'
 required: false
 translatable: false
 default_value: {  }

@@ -1,0 +1,17 @@
+uuid: 7f182e30-fc9f-4b2f-ac77-d6fd513d1ed9
+langcode: en
+status: true
+dependencies:
+  module:
+    - focal_point
+name: card_x_large
+label: 'Card - X-Large - 1:1'
+effects:
+  93c45dc7-f296-41a0-91b4-e3b7d57a9d64:
+    uuid: 93c45dc7-f296-41a0-91b4-e3b7d57a9d64
+    id: focal_point_scale_and_crop
+    weight: 1
+    data:
+      width: 551
+      height: 551
+      crop_type: focal_point

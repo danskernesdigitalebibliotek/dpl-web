@@ -1,11 +1,20 @@
 <?php
 
-use Drupal\dpl_library_agency\GeneralSettings;
-
 /**
  * @file
  * Contains dpl_library_agency.module.
  */
+
+use Drupal\dpl_library_agency\Form\GeneralSettingsForm;
+use Drupal\dpl_library_agency\GeneralSettings;
+
+/**
+ * Implements hook_dpl_protected_nodes_get_protected_nodes().
+ */
+function dpl_library_agency_dpl_protected_nodes_get_protected_nodes(): array {
+  return dpl_protected_nodes_get_context(GeneralSettingsForm::class, 'dpl_library_agency.general_settings');
+
+}
 
 /**
  * Implements hook_preprocess_page().
