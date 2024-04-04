@@ -235,6 +235,10 @@ opening-hours-editor:
     gpl-compatible: true
   js:
     /libraries/dpl-react/OpeningHoursEditor.js: {}
+  css:
+    base:
+      /themes/custom/novel/assets/dpl-design-system/css/opening-hours-editor.css:
+        {}
   dependencies:
     - dpl_react/base
     - dpl_react/handler
