@@ -43,7 +43,7 @@
   Drupal.behaviors.dpl_mapp_page_load = {
     attach() {
       if (typeof drupalSettings.dpl_mapp.login !== "undefined") {
-        pushEvent("page", {
+        pushEvent("click", {
           id: 27,
           name: "Login",
           trackedData: drupalSettings.dpl_mapp.login,
