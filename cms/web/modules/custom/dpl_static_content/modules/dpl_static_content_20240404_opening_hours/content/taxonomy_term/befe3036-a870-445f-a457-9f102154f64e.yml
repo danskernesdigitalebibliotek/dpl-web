@@ -1,0 +1,32 @@
+_meta:
+  version: "1.0"
+  entity_type: taxonomy_term
+  uuid: befe3036-a870-445f-a457-9f102154f64e
+  bundle: opening_hours_categories
+  default_langcode: da
+default:
+  status:
+    - value: true
+  name:
+    - value: Selvbetjening
+  weight:
+    - value: 0
+  parent:
+    - target_id: 0
+  revision_translation_affected:
+    - value: true
+  metatag:
+    - tag: meta
+      attributes:
+        name: title
+        content: "Selvbetjening | DPL CMS"
+    - tag: link
+      attributes:
+        rel: canonical
+        href: "http://dapple-cms.docker/taxonomy/term/16"
+  path:
+    - alias: ""
+      langcode: da
+  field_opening_hours_color:
+    - color: "#FFAD46"
+      opacity: 0.0
