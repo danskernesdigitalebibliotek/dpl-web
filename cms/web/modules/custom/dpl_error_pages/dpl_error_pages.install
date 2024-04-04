@@ -1,0 +1,17 @@
+<?php
+
+/**
+ * Implements hook_install() for the dpl_error_pages module.
+ *
+ * Setting up custom pages for 404 (Not Found) and 403 (Forbidden) errors.
+ */
+function dpl_error_pages_install(): void {
+
+  $path404 = '/error-page-404';
+  $path403 = '/error-page-403';
+
+  \Drupal::configFactory()->getEditable('system.site')
+    ->set('page.404', $path404)
+    ->set('page.403', $path403)
+    ->save();
+}

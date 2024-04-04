@@ -1,0 +1,63 @@
+_meta:
+  version: "1.0"
+  entity_type: node
+  uuid: d6fe11c3-4776-4e40-9527-29d5066311aa
+  bundle: page
+  default_langcode: da
+  depends:
+    e00e1460-169e-468d-9835-d664f06d0969: file
+default:
+  revision_uid:
+    - target_id: 1
+  status:
+    - value: true
+  uid:
+    - target_id: 1
+  title:
+    - value: "Adgang nægtet"
+  created:
+    - value: 1710763872
+  promote:
+    - value: false
+  sticky:
+    - value: false
+  revision_translation_affected:
+    - value: true
+  entity_clone_template_active:
+    - value: false
+  entity_clone_template_image:
+    - entity: e00e1460-169e-468d-9835-d664f06d0969
+      alt: ""
+      title: ""
+      width: 640
+      height: 443
+  metatag:
+    - tag: meta
+      attributes:
+        name: title
+        content: "Adgang nægtet | DPL CMS"
+  path:
+    - alias: /error-page-403
+      langcode: und
+  field_display_titles:
+    - value: false
+  field_paragraphs:
+    - entity:
+        _meta:
+          version: "1.0"
+          entity_type: paragraph
+          uuid: dc7e8942-095d-448c-8b09-235a39f276c3
+          bundle: text_body
+          default_langcode: da
+        default:
+          status:
+            - value: true
+          created:
+            - value: 1710763872
+          behavior_settings:
+            - value: {}
+          revision_translation_affected:
+            - value: true
+          field_body:
+            - value: "<h2>Beklager, du har ikke adgang til denne side</h2><p>Vi beklager ulejligheden, men det ser ud til, at du ikke har de nødvendige tilladelser til at få adgang til denne del af vores hjemmeside.</p><p>Hvis du tror, dette er en fejl, eller hvis du har brug for adgang, vil vi meget gerne høre fra dig. Kontakt os venligst, eller vend tilbage til vores hovedside.</p>"
+              format: basic
