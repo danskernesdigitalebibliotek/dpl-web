@@ -7,6 +7,7 @@ use DanskernesDigitaleBibliotek\CMS\Api\Model\DplOpeningHoursGETRequest;
 use DanskernesDigitaleBibliotek\CMS\Api\Model\DplOpeningHoursGETRequestCategory;
 use Drupal\dpl_opening_hours\Model\OpeningHoursInstance;
 use Drupal\node\NodeStorageInterface;
+use Drupal\taxonomy\TermInterface;
 use Drupal\taxonomy\TermStorageInterface;
 use Safe\DateTime;
 use Safe\DateTimeImmutable;
@@ -37,12 +38,14 @@ class OpeningHoursMapper {
     if (!$categoryTitle) {
       throw new \InvalidArgumentException('No category title provided');
     }
+    // This could in theory return multiple categories if they have the same
+    // name. The taxonomy_unique module ensures that this is not the case.
     $categoryTerms = $this->categoryStorage->loadByProperties([
       'name' => $categoryTitle,
       'vid' => 'opening_hours_categories',
     ]);
     $categoryTerm = reset($categoryTerms);
-    if (!$categoryTerm) {
+    if (!($categoryTerm instanceof TermInterface)) {
       throw new \InvalidArgumentException("Invalid category title '{$categoryTitle}'");
     }
 

@@ -19,7 +19,7 @@ dependencies:
     - field.field.eventseries.default.field_ticket_categories
     - recurring_events.eventseries_type.default
   module:
-    - address
+    - dpl_event
     - entity_reference_revisions
     - link
     - options
@@ -32,7 +32,7 @@ mode: default
 content:
   field_branch:
     type: entity_reference_label
-    label: above
+    label: hidden
     settings:
       link: true
     third_party_settings: {  }
@@ -54,7 +54,7 @@ content:
     weight: 15
     region: content
   field_event_address:
-    type: address_default
+    type: dpl_branch_address
     label: hidden
     settings: {  }
     third_party_settings: {  }

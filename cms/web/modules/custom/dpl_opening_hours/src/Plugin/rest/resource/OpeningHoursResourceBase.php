@@ -124,7 +124,9 @@ abstract class OpeningHoursResourceBase extends ResourceBase {
   protected function serializerFormat(Request $request): string {
     $contentTypeFormat = $request->getContentTypeFormat();
     if (!$contentTypeFormat) {
-      throw new \InvalidArgumentException("Unable to determine request content type format");
+      // Default to JSON format. Some code generators will not provide a default
+      // value even though it is provided in the spec.
+      $contentTypeFormat = $request->get('_format', 'json');
     }
     $mimeType = $request->getMimeType($contentTypeFormat);
     if (!$mimeType) {

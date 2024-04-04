@@ -4,3 +4,12 @@
  * @file
  * Dpl_patron_reg drupal module file.
  */
+
+use Drupal\dpl_patron_reg\Form\PatronRegSettingsForm;
+
+/**
+ * Implements hook_dpl_protected_nodes_get_protected_nodes().
+ */
+function dpl_patron_reg_dpl_protected_nodes_get_protected_nodes(): array {
+  return dpl_protected_nodes_get_context(PatronRegSettingsForm::class, 'dpl_patron_reg.settings');
+}

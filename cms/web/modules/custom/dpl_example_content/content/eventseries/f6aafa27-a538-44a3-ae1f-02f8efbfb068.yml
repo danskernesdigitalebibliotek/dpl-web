@@ -254,7 +254,7 @@ default:
       value: Legestuen
   field_event_place:
     -
-      value: Hovedbiblioteket
+      value: Slyngelstuen
   field_event_state:
     -
       value: Active
