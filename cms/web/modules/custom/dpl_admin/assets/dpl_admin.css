@@ -7,6 +7,18 @@
   padding: calc(var(--gin-spacing-m) - 2px) calc(var(--gin-spacing-l) - 2px);
 }
 
+/* Display medias more compact in paragraph preview. */
+.paragraph--view-mode--preview .field--name-field-medias {
+  .field__items {
+    display: flex;
+    gap: 20px;
+  }
+
+  .field__item {
+    max-width: 220px;
+  }
+}
+
 /* Displaying the byline on the media-library preview. */
 .media-library-item__preview {
   position: relative;
@@ -14,6 +26,9 @@
 
 .media-library-item__preview-wrapper .field--name-field-byline {
   position: absolute;
+  max-height: 125px;
+  left: 0;
+  right: 0;
   bottom: 0;
   padding: 5px;
   z-index: 2;
@@ -21,6 +36,7 @@
   font-size: 13px;
   color: white;
   background-color: rgba(0, 0, 0, 0.5);
+  overflow: auto;
 }
 
 /* Make the inner dialog widget take more space of the screen. */
