@@ -268,7 +268,7 @@ class GeneralSettingsForm extends ConfigFormBase {
       '#required' => TRUE,
     ];
 
-    $form['fbi_profiles']['fbi_profile_search'] = [
+    $form['fbi_profiles']['fbi_profile_local'] = [
       '#type' => 'textfield',
       '#title' => $this->t('Search profile', [], ['context' => 'Library Agency Configuration']),
       '#default_value' => $this->generalSettings->getFbiProfile(FbiProfileType::LOCAL),
@@ -277,7 +277,7 @@ class GeneralSettingsForm extends ConfigFormBase {
       '#required' => TRUE,
     ];
 
-    $form['fbi_profiles']['fbi_profile_material'] = [
+    $form['fbi_profiles']['fbi_profile_global'] = [
       '#type' => 'textfield',
       '#title' => $this->t('Material profile', [], ['context' => 'Library Agency Configuration']),
       '#default_value' => $this->generalSettings->getFbiProfile(FbiProfileType::GLOBAL),
@@ -338,8 +338,8 @@ class GeneralSettingsForm extends ConfigFormBase {
       ->set('opening_hours_url', $form_state->getValue('opening_hours_url'))
       ->set('fbi_profiles', [
         'default' => $form_state->getValue('fbi_profile_default'),
-        'search' => $form_state->getValue('fbi_profile_search'),
-        'material' => $form_state->getValue('fbi_profile_material'),
+        'local' => $form_state->getValue('fbi_profile_local'),
+        'global' => $form_state->getValue('fbi_profile_global'),
       ])
       ->save();
 
