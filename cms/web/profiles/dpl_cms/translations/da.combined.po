@@ -4103,7 +4103,7 @@ msgstr "\n"
 #: 
 msgctxt "Fees list"
 msgid "Fee @fee DKK"
-msgstr "Gebyr @fee kr. "
+msgstr "Gebyr @fee"
 
 #: 
 msgctxt "Fees list"
