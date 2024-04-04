@@ -157,6 +157,14 @@ function dpl_login_openid_connect_post_authorize(AccountInterface $account, arra
   else {
     $logger->error('Post authorize hook - Unable to delete previous user tokens.');
   }
+
+  // Store login information is session to be used for MAPP tracking.
+  if (isset($context['userinfo']['attributes']['pincode'])) {
+    $_SESSION['logged_in_with'] = 'cpr+pinkode';
+  }
+  else {
+    $_SESSION['logged_in_with'] = 'adgangsplatformen';
+  }
 }
 
 /**

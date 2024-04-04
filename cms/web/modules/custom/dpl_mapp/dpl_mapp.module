@@ -30,4 +30,20 @@ function dpl_mapp_page_attachments(array &$page): void {
       'id' => $config->get('id'),
     ];
   }
+
+  if (\Drupal::currentUser()->isAuthenticated()) {
+    $page['#attached']['drupalSettings']['dpl_mapp'] = [
+      'login' => _dpl_mapp_get_login_method(),
+    ];
+  }
+}
+
+/**
+ * Function used for returning logged in method from session.
+ *
+ * @return string
+ *   The login method.
+ */
+function _dpl_mapp_get_login_method(): string {
+  return $_SESSION['logged_in_with'];
 }
