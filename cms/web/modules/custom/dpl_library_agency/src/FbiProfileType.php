@@ -13,6 +13,5 @@ enum FbiProfileType: string {
   case LOCAL = 'local';
 
   // Profile name for FBI global profile.
-  case GLOBAL = 'global
-  ';
+  case GLOBAL = 'global';
 }

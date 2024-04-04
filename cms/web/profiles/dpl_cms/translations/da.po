@@ -441,8 +441,8 @@ msgid "I accept the"
 msgstr "Jeg godkender dette"
 
 msgctxt "Fees list"
-msgid "Fee @fee DKK"
-msgstr "Gebyr @fee kr. "
+msgid "Fee @fee"
+msgstr "Gebyr @fee"
 
 msgctxt "Fees list"
 msgid "Other materials"
@@ -469,8 +469,8 @@ msgid "Fee"
 msgstr "Beløb"
 
 msgctxt "Fees list"
-msgid "Total @total DKK"
-msgstr "Total @total kr."
+msgid "Total @total"
+msgstr "Total @total"
 
 msgctxt "Fees list"
 msgid "Turned in @date"
