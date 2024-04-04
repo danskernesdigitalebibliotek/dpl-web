@@ -6,7 +6,6 @@
 
 (function dplMapp(once, wts, drupalSettings) {
   const pushEvent = function pushEvent(eventId, eventData) {
-    console.log("DPL Mapp: Pushing %s event %o", eventId, eventData);
     console.debug("DPL Mapp: Pushing %s event %o", eventId, eventData);
 
     // Ensure that the Mapp object is defined before pushing event.
@@ -42,8 +41,14 @@
 
   // New behavior to push a tracking event on page load.
   Drupal.behaviors.dpl_mapp_page_load = {
-    attach(context) {
-      pushEvent("page", {"id": 27, "name": "Login", "trackedData": drupalSettings.dpl_mapp.login})
+    attach() {
+      if (typeof drupalSettings.dpl_mapp.login !== "undefined") {
+        pushEvent("page", {
+          id: 27,
+          name: "Login",
+          trackedData: drupalSettings.dpl_mapp.login,
+        });
+      }
     },
   };
 })(once, wts, drupalSettings);
