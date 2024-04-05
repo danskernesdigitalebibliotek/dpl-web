@@ -368,7 +368,7 @@ display:
           exclude: false
           alter:
             alter_text: true
-            text: "<strong>{{ date__value }}</strong> | {{ date__value_1 }}<br><br /><small>{{ recur_type }}</small>"
+            text: "<strong>{{ date__value }}</strong> | {{ date__value_1 }}<br /><br /><small>{{ recur_type }}</small>"
             make_link: false
             path: ''
             absolute: false

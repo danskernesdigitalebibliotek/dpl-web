@@ -12,7 +12,7 @@ field_name: field_media_image
 entity_type: media
 bundle: image
 label: Image
-description: "You can set a focal point, by clicking on the preview on the image, moving the white target.<br><br />By setting a focal point, you tell the system which part of the image to keep in focus when it gets cropped.<br><br />Use the \"preview\" function, to see how your image will be cropped across image styles."
+description: "You can set a focal point, by clicking on the preview on the image, moving the white target.<br /><br />By setting a focal point, you tell the system which part of the image to keep in focus when it gets cropped.<br /><br />Use the \"preview\" function, to see how your image will be cropped across image styles."
 required: true
 translatable: true
 default_value: {  }
