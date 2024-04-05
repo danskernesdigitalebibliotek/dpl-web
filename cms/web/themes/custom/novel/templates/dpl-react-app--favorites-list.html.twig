@@ -1,0 +1,26 @@
+<div class="dpl-react-app-container--page">
+    <div {{ attributes }}>
+        <div class="card-list-page">
+            <h1 class="text-header-h2 mb-16 search-result-title">
+                {{ attributes['data-favorites-list-header-text']|raw }}
+            </h1>
+            <div class="ssc">
+                <div class="ssc-line w-10 my-32">&nbsp;</div>
+            </div>
+            <ul class="card-list-page__list my-32">
+                {% for i in 1..5 %}
+                <li>
+                    <article class="card-list-item ssc">
+                        <div class="ssc-square cover--size-small">&nbsp;</div>
+                        <div class="ssc-wrapper">
+                            <div class="ssc-head-line w-60 mb"></div>
+                            <div class="ssc-line w-60 mbs">&nbsp;</div>
+                            <div class="ssc-line w-60 mbs">&nbsp;</div>
+                        </div>
+                    </article>
+                </li>    
+                {% endfor %}
+            </ul>    
+        </div>
+    </div>
+</div>
