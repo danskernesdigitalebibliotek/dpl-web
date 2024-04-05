@@ -1,0 +1,26 @@
+uuid: f2eb9f6f-4c73-4993-9633-f85d4a1fe9e0
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.taxonomy_term.field_content
+    - taxonomy.vocabulary.breadcrumb_structure
+id: taxonomy_term.breadcrumb_structure.field_content
+field_name: field_content
+entity_type: taxonomy_term
+bundle: breadcrumb_structure
+label: Content
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings:
+  handler: views
+  handler_settings:
+    view:
+      view_name: entity_reference_content
+      display_name: entity_reference_1
+      arguments:
+        - page
+field_type: entity_reference

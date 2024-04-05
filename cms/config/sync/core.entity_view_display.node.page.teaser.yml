@@ -5,6 +5,7 @@ dependencies:
   config:
     - core.entity_view_mode.node.teaser
     - field.field.node.page.field_branch
+    - field.field.node.page.field_breadcrumb_parent
     - field.field.node.page.field_display_titles
     - field.field.node.page.field_hero_title
     - field.field.node.page.field_paragraphs
@@ -18,14 +19,10 @@ id: node.page.teaser
 targetEntityType: node
 bundle: page
 mode: teaser
-content:
-  links:
-    settings: {  }
-    third_party_settings: {  }
-    weight: 100
-    region: content
+content: {  }
 hidden:
   field_branch: true
+  field_breadcrumb_parent: true
   field_display_titles: true
   field_hero_title: true
   field_paragraphs: true
@@ -33,4 +30,5 @@ hidden:
   field_teaser_image: true
   field_teaser_text: true
   langcode: true
+  links: true
   search_api_excerpt: true

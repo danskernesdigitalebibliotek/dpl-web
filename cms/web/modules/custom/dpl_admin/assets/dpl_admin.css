@@ -141,12 +141,18 @@
 }
 
 /* Hide some fields on the edit menu UI. */
-/* Also hiding the ability to place main menu items in levels. */
 .menu-link-content-form .field--name-description,
-.menu-link-content-form .field--name-expanded,
-.menu-link-content-form .form-item--menu-parent,
-.menu-edit-form[action="/admin/structure/menu/manage/main"] > .form-item {
+.menu-link-content-form .field--name-expanded {
   display: none;
+}
+
+
+/* Hiding the ability to place main menu items in levels. */
+.menu-edit-form[action="/admin/structure/menu/manage/main"] {
+  .menu-link-content-form .form-item--menu-parent,
+  > .form-item {
+    display: none;
+  }
 }
 
 /* Tweaking our custom 'add content' dashboard page. */
