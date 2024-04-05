@@ -129,7 +129,7 @@ default:
               value: true
           field_body:
             -
-              value: '<h2>Om Os</h2><p><br>Biblioteket er dit lokale center for viden, kultur og samfund. Vi tilbyder en bred vifte af bøger, e-bøger, lydbøger, tidsskrifter og mere. Kom og oplev vores studieområder, computerfaciliteter, og et varieret program af begivenheder og workshops</p>'
+              value: '<h2>Om Os</h2><p><br />Biblioteket er dit lokale center for viden, kultur og samfund. Vi tilbyder en bred vifte af bøger, e-bøger, lydbøger, tidsskrifter og mere. Kom og oplev vores studieområder, computerfaciliteter, og et varieret program af begivenheder og workshops</p>'
               format: basic
     -
       entity:
