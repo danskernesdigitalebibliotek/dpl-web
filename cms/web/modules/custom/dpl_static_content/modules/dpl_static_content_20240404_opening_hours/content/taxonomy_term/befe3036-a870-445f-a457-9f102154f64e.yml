@@ -28,5 +28,5 @@ default:
     - alias: ""
       langcode: da
   field_opening_hours_color:
-    - color: "#FFAD46"
+    - color: "#4986E7"
       opacity: 0.0
