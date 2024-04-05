@@ -41,6 +41,10 @@ class OpeningHoursEditorController extends ControllerBase {
         'opening-hours-editor-categories-config' => $this->buildOpeningHoursCategoriesArray($openingHoursCategories),
         'opening-hours-branch-id-config' => $nodeEntity->id(),
         'opening-hours-remove-event-button-text' => $this->t('Remove event'),
+        'opening-hours-event-form-title-text' => $this->t('Title'),
+        'opening-hours-event-form-start-time-text' => $this->t('Start time'),
+        'opening-hours-event-form-end-time-text' => $this->t('End time'),
+        'opening-hours-event-form-submit-text' => $this->t('Save'),
       ],
     ];
   }
