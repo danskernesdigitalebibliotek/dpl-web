@@ -10,7 +10,7 @@ field_name: field_recommendation_description
 entity_type: paragraph
 bundle: recommendation
 label: Description
-description: "This is the description for a recommendation. \r\n\r\nIf you add a description, the title of the the material will not be automatically generated. "
+description: "This is the description for a recommendation. <br /><br />If you add a description, the title of the the material will not be automatically generated. "
 required: false
 translatable: false
 default_value: {  }

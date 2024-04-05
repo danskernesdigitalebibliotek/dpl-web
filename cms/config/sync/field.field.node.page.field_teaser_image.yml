@@ -11,7 +11,7 @@ field_name: field_teaser_image
 entity_type: node
 bundle: page
 label: 'Teaser image'
-description: "The teaser fields are used for the card of display.\r\nIf no image has been selected, the text will be shown instead:\r\n\r\n<img src=\"/themes/custom/novel/images/teaser-text-image.jpg\" />\r\n\r\n<hr/>"
+description: "The teaser fields are used for the card of display.<br />If no image has been selected, the text will be shown instead:<br /><br /><img src=\"/themes/custom/novel/images/teaser-text-image.jpg\" /><br /><br /><hr/>"
 required: false
 translatable: false
 default_value: {  }

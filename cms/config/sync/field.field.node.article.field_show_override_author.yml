@@ -10,7 +10,7 @@ field_name: field_show_override_author
 entity_type: node
 bundle: article
 label: "Override the author\t"
-description: "By default, the author is set to the Drupal user that owns the content.<br>\r\nIf you want to override this, with a manual text, you can check this."
+description: "By default, the author is set to the Drupal user that owns the content.<br><br />If you want to override this, with a manual text, you can check this."
 required: false
 translatable: false
 default_value:
