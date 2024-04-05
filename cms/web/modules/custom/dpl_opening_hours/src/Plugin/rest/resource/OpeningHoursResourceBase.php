@@ -3,6 +3,7 @@
 namespace Drupal\dpl_opening_hours\Plugin\rest\resource;
 
 use DanskernesDigitaleBibliotek\CMS\Api\Service\SerializerInterface;
+use DanskernesDigitaleBibliotek\CMS\Api\Service\TypeMismatchException;
 use Drupal\dpl_opening_hours\Mapping\OpeningHoursMapper;
 use Drupal\dpl_opening_hours\Model\OpeningHoursRepository;
 use Drupal\rest\Plugin\ResourceBase;
@@ -148,7 +149,11 @@ abstract class OpeningHoursResourceBase extends ResourceBase {
    *   The specified response.
    */
   protected function deserialize(string $className, Request $request): object {
-    $requestData = $this->serializer->deserialize($request->getContent(), $className, $this->serializerFormat($request));
+    try {
+      $requestData = $this->serializer->deserialize($request->getContent(), $className, $this->serializerFormat($request));
+    } catch (TypeMismatchException $e) {
+      throw new \InvalidArgumentException("Unable to deserialize request: {$e->getMessage()}");
+    }
     if (!is_object($requestData) || !($requestData instanceof $className)) {
       throw new \InvalidArgumentException("Unable to deserialize request");
     }
