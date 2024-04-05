@@ -4,7 +4,7 @@ declare(strict_types = 1);
 
 namespace Drupal\dpl_opening_hours\Plugin\rest\resource;
 
-use DanskernesDigitaleBibliotek\CMS\Api\Model\DplOpeningHoursGET200Response;
+use DanskernesDigitaleBibliotek\CMS\Api\Model\DplOpeningHoursListGET200ResponseInner;
 use Drupal\Component\Utility\NestedArray;
 use Drupal\dpl_opening_hours\Model\OpeningHoursInstance;
 use Drupal\drupal_typed\RequestTyped;
@@ -93,7 +93,7 @@ final class OpeningHoursResource extends OpeningHoursResourceBase {
         $typedRequest->getDateTime('to_date')
       );
 
-      $responseData = array_map(function (OpeningHoursInstance $instance) : DplOpeningHoursGET200Response {
+      $responseData = array_map(function (OpeningHoursInstance $instance) : DplOpeningHoursListGET200ResponseInner {
         return $this->mapper->toResponse($instance);
       }, $openingHoursInstances);
 
