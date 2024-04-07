@@ -37,11 +37,11 @@ class OpeningHoursEditorController extends ControllerBase {
       '#data' => [
         'opening-hours-editor-categories-config' => $this->buildOpeningHoursCategoriesArray($openingHoursCategories),
         'opening-hours-branch-id-config' => $node->id(),
-        'opening-hours-remove-event-button-text' => $this->t('Remove event'),
-        'opening-hours-event-form-title-text' => $this->t('Title'),
-        'opening-hours-event-form-start-time-text' => $this->t('Start time'),
-        'opening-hours-event-form-end-time-text' => $this->t('End time'),
-        'opening-hours-event-form-submit-text' => $this->t('Save'),
+        'opening-hours-remove-event-button-text' => $this->t('Remove event', [], ['context' => 'DPL Opening Hours']),
+        'opening-hours-event-form-title-text' => $this->t('Title', [], ['context' => 'DPL Opening Hours']),
+        'opening-hours-event-form-start-time-text' => $this->t('Start time', [], ['context' => 'DPL Opening Hours']),
+        'opening-hours-event-form-end-time-text' => $this->t('End time', [], ['context' => 'DPL Opening Hours']),
+        'opening-hours-event-form-submit-text' => $this->t('Save', [], ['context' => 'DPL Opening Hours']),
       ],
     ];
   }
