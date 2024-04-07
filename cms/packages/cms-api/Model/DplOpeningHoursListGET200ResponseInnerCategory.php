@@ -1,6 +1,6 @@
 <?php
 /**
- * DplOpeningHoursGETRequestCategory
+ * DplOpeningHoursListGET200ResponseInnerCategory
  *
  * PHP version 8.1.1
  *
@@ -35,13 +35,13 @@ use JMS\Serializer\Annotation\Accessor;
 use JMS\Serializer\Annotation\SerializedName;
 
 /**
- * Class representing the DplOpeningHoursGETRequestCategory model.
+ * Class representing the DplOpeningHoursListGET200ResponseInnerCategory model.
  *
  * @package DanskernesDigitaleBibliotek\CMS\Api\Model
  * @author  OpenAPI Generator team
  */
 
-class DplOpeningHoursGETRequestCategory 
+class DplOpeningHoursListGET200ResponseInnerCategory 
 {
         /**
      * @var string|null

@@ -1,6 +1,6 @@
 <?php
 /**
- * DplOpeningHoursGET200Response
+ * DplOpeningHoursCreatePOSTRequest
  *
  * PHP version 8.1.1
  *
@@ -35,34 +35,33 @@ use JMS\Serializer\Annotation\Accessor;
 use JMS\Serializer\Annotation\SerializedName;
 
 /**
- * Class representing the DplOpeningHoursGET200Response model.
+ * Class representing the DplOpeningHoursCreatePOSTRequest model.
  *
  * @package DanskernesDigitaleBibliotek\CMS\Api\Model
  * @author  OpenAPI Generator team
  */
 
-class DplOpeningHoursGET200Response 
+class DplOpeningHoursCreatePOSTRequest 
 {
         /**
      * An serial unique id of the opening hours instance.
      *
      * @var int|null
      * @SerializedName("id")
-     * @Assert\NotNull()
      * @Assert\Type("int")
      * @Type("int")
      */
     protected ?int $id = null;
 
     /**
-     * @var DplOpeningHoursGETRequestCategory|null
+     * @var DplOpeningHoursListGET200ResponseInnerCategory|null
      * @SerializedName("category")
      * @Assert\NotNull()
      * @Assert\Valid()
-     * @Assert\Type("DanskernesDigitaleBibliotek\CMS\Api\Model\DplOpeningHoursGETRequestCategory")
-     * @Type("DanskernesDigitaleBibliotek\CMS\Api\Model\DplOpeningHoursGETRequestCategory")
+     * @Assert\Type("DanskernesDigitaleBibliotek\CMS\Api\Model\DplOpeningHoursListGET200ResponseInnerCategory")
+     * @Type("DanskernesDigitaleBibliotek\CMS\Api\Model\DplOpeningHoursListGET200ResponseInnerCategory")
      */
-    protected ?DplOpeningHoursGETRequestCategory $category = null;
+    protected ?DplOpeningHoursListGET200ResponseInnerCategory $category = null;
 
     /**
      * The date which the opening hours applies to. In ISO 8601 format.
@@ -144,7 +143,7 @@ class DplOpeningHoursGET200Response
      *
      * @return $this
      */
-    public function setId(?int $id): self
+    public function setId(?int $id = null): self
     {
         $this->id = $id;
 
@@ -154,9 +153,9 @@ class DplOpeningHoursGET200Response
     /**
      * Gets category.
      *
-     * @return DplOpeningHoursGETRequestCategory|null
+     * @return DplOpeningHoursListGET200ResponseInnerCategory|null
      */
-    public function getCategory(): ?DplOpeningHoursGETRequestCategory
+    public function getCategory(): ?DplOpeningHoursListGET200ResponseInnerCategory
     {
         return $this->category;
     }
@@ -166,11 +165,11 @@ class DplOpeningHoursGET200Response
     /**
      * Sets category.
      *
-     * @param DplOpeningHoursGETRequestCategory|null $category
+     * @param DplOpeningHoursListGET200ResponseInnerCategory|null $category
      *
      * @return $this
      */
-    public function setCategory(?DplOpeningHoursGETRequestCategory $category): self
+    public function setCategory(?DplOpeningHoursListGET200ResponseInnerCategory $category): self
     {
         $this->category = $category;
 

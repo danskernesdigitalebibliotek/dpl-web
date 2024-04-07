@@ -4,6 +4,7 @@ declare(strict_types = 1);
 
 namespace Drupal\dpl_opening_hours\Plugin\rest\resource;
 
+use DanskernesDigitaleBibliotek\CMS\Api\Model\DplOpeningHoursCreatePOSTRequest;
 use Drupal\Component\Utility\NestedArray;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -58,7 +59,7 @@ final class OpeningHoursUpdateResource extends OpeningHoursResourceBase {
    */
   public function patch(int $id, Request $request): Response {
     try {
-      $requestData = $this->deserialize($request);
+      $requestData = $this->deserialize(DplOpeningHoursCreatePOSTRequest::class, $request);
       if ($id !== $requestData->getId()) {
         throw new \InvalidArgumentException("Instance ids provided in path '{$id}' and body '{$requestData->getId()}' do not match ");
       }

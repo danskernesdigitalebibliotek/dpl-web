@@ -2,9 +2,9 @@
 
 namespace Drupal\dpl_opening_hours\Mapping;
 
-use DanskernesDigitaleBibliotek\CMS\Api\Model\DplOpeningHoursGET200Response;
-use DanskernesDigitaleBibliotek\CMS\Api\Model\DplOpeningHoursGETRequest;
-use DanskernesDigitaleBibliotek\CMS\Api\Model\DplOpeningHoursGETRequestCategory;
+use DanskernesDigitaleBibliotek\CMS\Api\Model\DplOpeningHoursCreatePOSTRequest;
+use DanskernesDigitaleBibliotek\CMS\Api\Model\DplOpeningHoursListGET200ResponseInner;
+use DanskernesDigitaleBibliotek\CMS\Api\Model\DplOpeningHoursListGET200ResponseInnerCategory;
 use Drupal\dpl_opening_hours\Model\OpeningHoursInstance;
 use Drupal\node\NodeStorageInterface;
 use Drupal\taxonomy\TermInterface;
@@ -28,7 +28,7 @@ class OpeningHoursMapper {
   /**
    * Map an OpenAPI request to a value object.
    */
-  public function fromRequest(DplOpeningHoursGETRequest $request) : OpeningHoursInstance {
+  public function fromRequest(DplOpeningHoursCreatePOSTRequest $request) : OpeningHoursInstance {
     $branch = $this->branchStorage->load($request->getBranchId());
     if (!$branch || $branch->bundle() !== "branch") {
       throw new \InvalidArgumentException("Invalid branch id '{$request->getBranchId()}'");
@@ -66,16 +66,16 @@ class OpeningHoursMapper {
   /**
    * Map a value object to an OpenAPI response.
    */
-  public function toResponse(OpeningHoursInstance $instance) : DplOpeningHoursGET200Response {
+  public function toResponse(OpeningHoursInstance $instance) : DplOpeningHoursListGET200ResponseInner {
     $colorField = $instance->categoryTerm->get('field_opening_hours_color')->first();
     if (!$colorField) {
       throw new \LogicException('Unable to retrieve color');
     }
-    $category = (new DplOpeningHoursGETRequestCategory())
+    $category = (new DplOpeningHoursListGET200ResponseInnerCategory())
       ->setTitle((string) $instance->categoryTerm->label())
       ->setColor($colorField->getString());
 
-    return (new DplOpeningHoursGET200Response())
+    return (new DplOpeningHoursListGET200ResponseInner())
       ->setId($instance->id)
       ->setBranchId(intval($instance->branch->id()))
       ->setCategory($category)

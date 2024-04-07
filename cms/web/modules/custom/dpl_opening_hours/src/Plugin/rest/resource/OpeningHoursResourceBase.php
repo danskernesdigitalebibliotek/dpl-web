@@ -2,8 +2,8 @@
 
 namespace Drupal\dpl_opening_hours\Plugin\rest\resource;
 
-use DanskernesDigitaleBibliotek\CMS\Api\Model\DplOpeningHoursGETRequest;
 use DanskernesDigitaleBibliotek\CMS\Api\Service\SerializerInterface;
+use DanskernesDigitaleBibliotek\CMS\Api\Service\TypeMismatchException;
 use Drupal\dpl_opening_hours\Mapping\OpeningHoursMapper;
 use Drupal\dpl_opening_hours\Model\OpeningHoursRepository;
 use Drupal\rest\Plugin\ResourceBase;
@@ -136,11 +136,26 @@ abstract class OpeningHoursResourceBase extends ResourceBase {
   }
 
   /**
-   * Deserialize a HTTP request to an OpenAPI request.
+   * Deserialize an HTTP request to an OpenAPI request.
+   *
+   * @param class-string<T> $className
+   *   The required class name to deserialize to.
+   * @param \Symfony\Component\HttpFoundation\Request $request
+   *   The incoming HTTP request to deserialize.
+   *
+   * @template T of object
+   *
+   * @return T
+   *   The specified response.
    */
-  protected function deserialize(Request $request): DplOpeningHoursGETRequest {
-    $requestData = $this->serializer->deserialize($request->getContent(), DplOpeningHoursGETRequest::class, $this->serializerFormat($request));
-    if (!$requestData instanceof DplOpeningHoursGETRequest) {
+  protected function deserialize(string $className, Request $request): object {
+    try {
+      $requestData = $this->serializer->deserialize($request->getContent(), $className, $this->serializerFormat($request));
+    }
+    catch (TypeMismatchException $e) {
+      throw new \InvalidArgumentException("Unable to deserialize request: {$e->getMessage()}");
+    }
+    if (!is_object($requestData) || !($requestData instanceof $className)) {
       throw new \InvalidArgumentException("Unable to deserialize request");
     }
     return $requestData;

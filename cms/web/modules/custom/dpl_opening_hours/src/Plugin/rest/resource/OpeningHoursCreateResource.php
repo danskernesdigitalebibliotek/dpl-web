@@ -4,6 +4,7 @@ declare(strict_types = 1);
 
 namespace Drupal\dpl_opening_hours\Plugin\rest\resource;
 
+use DanskernesDigitaleBibliotek\CMS\Api\Model\DplOpeningHoursCreatePOSTRequest;
 use Drupal\Component\Utility\NestedArray;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -57,7 +58,7 @@ final class OpeningHoursCreateResource extends OpeningHoursResourceBase {
    */
   public function post(Request $request): Response {
     try {
-      $requestData = $this->deserialize($request);
+      $requestData = $this->deserialize(DplOpeningHoursCreatePOSTRequest::class, $request);
       $instance = $this->mapper->fromRequest($requestData);
       $this->repository->upsert($instance);
 

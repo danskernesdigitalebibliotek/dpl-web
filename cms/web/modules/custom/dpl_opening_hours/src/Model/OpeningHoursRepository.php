@@ -76,7 +76,7 @@ class OpeningHoursRepository {
       return [];
     }
 
-    $maybe_objects = array_map(function (array $data): ?OpeningHoursInstance {
+    $possible_objects = array_map(function (array $data): ?OpeningHoursInstance {
       try {
         return $this->toObject($data);
       }
@@ -86,7 +86,7 @@ class OpeningHoursRepository {
       }
     }, $result->fetchAll(\PDO::FETCH_ASSOC));
 
-    return array_filter($maybe_objects);
+    return array_filter($possible_objects);
   }
 
   /**

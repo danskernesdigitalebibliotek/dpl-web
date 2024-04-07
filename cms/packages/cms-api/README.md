@@ -102,11 +102,10 @@ All URIs are relative to *http://varnish:8080*
 Class | Method | HTTP request | Description
 ------------ | ------------- | ------------- | -------------
 *DefaultApiInterface* | [**campaignMatchPOST**](docs/Api/DefaultApiInterface.md#campaignmatchpost) | **POST** /dpl_campaign/match | Get campaign matching search result facets
-*DefaultApiInterface* | [**dplOpeningHoursDELETE**](docs/Api/DefaultApiInterface.md#dplopeninghoursdelete) | **DELETE** /dpl_opening_hours/{id} | Manage individual opening hours
-*DefaultApiInterface* | [**dplOpeningHoursGET**](docs/Api/DefaultApiInterface.md#dplopeninghoursget) | **GET** /dpl_opening_hours/{id} | Manage individual opening hours
+*DefaultApiInterface* | [**dplOpeningHoursCreatePOST**](docs/Api/DefaultApiInterface.md#dplopeninghourscreatepost) | **POST** /dpl_opening_hours | Create individual opening hours
+*DefaultApiInterface* | [**dplOpeningHoursDeleteDELETE**](docs/Api/DefaultApiInterface.md#dplopeninghoursdeletedelete) | **DELETE** /dpl_opening_hours/{id} | Delete individual opening hours
 *DefaultApiInterface* | [**dplOpeningHoursListGET**](docs/Api/DefaultApiInterface.md#dplopeninghourslistget) | **GET** /dpl_opening_hours | List all opening hours
-*DefaultApiInterface* | [**dplOpeningHoursPATCH**](docs/Api/DefaultApiInterface.md#dplopeninghourspatch) | **PATCH** /dpl_opening_hours/{id} | Manage individual opening hours
-*DefaultApiInterface* | [**dplOpeningHoursPOST**](docs/Api/DefaultApiInterface.md#dplopeninghourspost) | **POST** /dpl_opening_hours | Manage individual opening hours
+*DefaultApiInterface* | [**dplOpeningHoursUpdatePATCH**](docs/Api/DefaultApiInterface.md#dplopeninghoursupdatepatch) | **PATCH** /dpl_opening_hours/{id} | Update individual opening hours
 *DefaultApiInterface* | [**eventPATCH**](docs/Api/DefaultApiInterface.md#eventpatch) | **PATCH** /dpl_event/{uuid} | Update single events
 *DefaultApiInterface* | [**eventsGET**](docs/Api/DefaultApiInterface.md#eventsget) | **GET** /dpl_event | Retrieve all events
 *DefaultApiInterface* | [**proxyUrlGET**](docs/Api/DefaultApiInterface.md#proxyurlget) | **GET** /dpl-url-proxy | Generate proxy url
@@ -119,9 +118,9 @@ Class | Method | HTTP request | Description
  - [CampaignMatchPOST200ResponseDataImage](docs/Model/CampaignMatchPOST200ResponseDataImage.md)
  - [CampaignMatchPOSTRequestInner](docs/Model/CampaignMatchPOSTRequestInner.md)
  - [CampaignMatchPOSTRequestInnerValuesInner](docs/Model/CampaignMatchPOSTRequestInnerValuesInner.md)
- - [DplOpeningHoursGET200Response](docs/Model/DplOpeningHoursGET200Response.md)
- - [DplOpeningHoursGETRequest](docs/Model/DplOpeningHoursGETRequest.md)
- - [DplOpeningHoursGETRequestCategory](docs/Model/DplOpeningHoursGETRequestCategory.md)
+ - [DplOpeningHoursCreatePOSTRequest](docs/Model/DplOpeningHoursCreatePOSTRequest.md)
+ - [DplOpeningHoursListGET200ResponseInner](docs/Model/DplOpeningHoursListGET200ResponseInner.md)
+ - [DplOpeningHoursListGET200ResponseInnerCategory](docs/Model/DplOpeningHoursListGET200ResponseInnerCategory.md)
  - [EventPATCHRequest](docs/Model/EventPATCHRequest.md)
  - [EventPATCHRequestExternalData](docs/Model/EventPATCHRequestExternalData.md)
  - [EventsGET200ResponseInner](docs/Model/EventsGET200ResponseInner.md)
