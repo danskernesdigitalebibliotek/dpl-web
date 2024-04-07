@@ -66,7 +66,14 @@ class UserTokenAuthProvider implements AuthenticationProviderInterface {
     // end-user (subject) identifier. This is needed for us to load the
     // associated Drupal user from the OpenID Connect authmap.
     $context = [];
-    $this->moduleHandler->alter('openid_connect_userinfo', $user_info, $context);
+    try {
+      $this->moduleHandler->alter('openid_connect_userinfo', $user_info, $context);
+    } catch (\Exception $e) {
+      // Do nothing. If the token cannot resolve to a user then
+      // dpl_login_openid_connect_userinfo_alter() will throw an exception.
+      // However this is to be expected if this is a library token so in that
+      // case continue.
+    }
     if (!isset($user_info['sub'])) {
       return NULL;
     }
