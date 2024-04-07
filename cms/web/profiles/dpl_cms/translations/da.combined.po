@@ -3048,7 +3048,7 @@ msgstr "Søgeheader input"
 #: 
 msgctxt "Global"
 msgid "Input must contain at least one non-whitespace character."
-msgstr "Input skal indehold minimum ét tegn"
+msgstr "Input skal indeholde minimum ét tegn"
 
 #: 
 msgctxt "Global"
