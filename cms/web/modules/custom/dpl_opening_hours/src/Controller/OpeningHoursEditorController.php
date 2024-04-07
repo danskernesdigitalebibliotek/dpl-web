@@ -15,17 +15,14 @@ class OpeningHoursEditorController extends ControllerBase {
   /**
    * Display the opening hours app.
    *
-   * @param int $node
+   * @param \Drupal\node\NodeInterface $node
    *   The node ID.
    *
    * @return mixed[]
    *   The app render array.
    */
-  public function content(int $node): array {
-    $nodeStorage = $this->entityTypeManager()->getStorage('node');
-    $nodeEntity = $nodeStorage->load($node);
-
-    if (!$nodeEntity instanceof NodeInterface || $nodeEntity->getType() !== 'branch') {
+  public function content(NodeInterface $node): array {
+    if ($node->getType() !== 'branch') {
       return [];
     }
 
@@ -39,7 +36,7 @@ class OpeningHoursEditorController extends ControllerBase {
       '#name' => 'opening-hours-editor',
       '#data' => [
         'opening-hours-editor-categories-config' => $this->buildOpeningHoursCategoriesArray($openingHoursCategories),
-        'opening-hours-branch-id-config' => $nodeEntity->id(),
+        'opening-hours-branch-id-config' => $node->id(),
         'opening-hours-remove-event-button-text' => $this->t('Remove event'),
         'opening-hours-event-form-title-text' => $this->t('Title'),
         'opening-hours-event-form-start-time-text' => $this->t('Start time'),
