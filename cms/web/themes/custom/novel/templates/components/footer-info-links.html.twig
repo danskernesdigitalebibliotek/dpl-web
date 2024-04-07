@@ -1,11 +1,9 @@
 <ul class="footer-info__links">
-    <li>
-        <a href="/" class="footer-info__link">Behandling af persondata</a>
-    </li>
-    <li>
-        <a href="/" class="footer-info__link">Servicedeklaration</a>
-    </li>
-    <li>
-        <a href="/" class="footer-info__link">Tilgængelighed</a>
-    </li>
+  {% for link in settings.secondary_links %}
+    {% if link.name and link.content %}
+      <li>
+        <a href="{{ link.content }}" class="footer-info__link">{{ link.name }}</a>
+      </li>
+    {% endif %}
+  {% endfor %}
 </ul>

@@ -25,6 +25,7 @@ module:
   devel_generate: 0
   dpl_admin: 0
   dpl_article: 0
+  dpl_breadcrumb: 0
   dpl_campaign: 0
   dpl_dashboard: 0
   dpl_event: 0
@@ -140,6 +141,7 @@ module:
   varnish_purger: 0
   view_unpublished: 0
   views_infinite_scroll: 0
+  pathauto: 1
   selective_better_exposed_filters: 1
   views: 10
   paragraphs: 11

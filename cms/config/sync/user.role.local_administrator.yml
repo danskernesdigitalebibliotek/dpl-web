@@ -16,6 +16,7 @@ dependencies:
     - rest.resource.dpl_opening_hours_delete
     - rest.resource.dpl_opening_hours_update
     - taxonomy.vocabulary.categories
+    - taxonomy.vocabulary.breadcrumb_structure
     - taxonomy.vocabulary.tags
   module:
     - administerusersbyrole
@@ -92,6 +93,7 @@ permissions:
   - 'create image media'
   - 'create media'
   - 'create page content'
+  - 'create terms in breadcrumb_structure'
   - 'create terms in categories'
   - 'create terms in tags'
   - 'create users'
@@ -125,6 +127,7 @@ permissions:
   - 'delete own page content'
   - 'delete own video media'
   - 'delete page revisions'
+  - 'delete terms in breadcrumb_structure'
   - 'delete terms in categories'
   - 'delete terms in tags'
   - 'dpl admin access pages'
@@ -150,6 +153,7 @@ permissions:
   - 'edit own image media'
   - 'edit own page content'
   - 'edit own video media'
+  - 'edit terms in breadcrumb_structure'
   - 'edit terms in categories'
   - 'edit terms in tags'
   - 'edit themes novel'

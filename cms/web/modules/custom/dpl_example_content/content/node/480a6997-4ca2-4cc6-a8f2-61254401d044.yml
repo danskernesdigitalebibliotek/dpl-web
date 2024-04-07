@@ -31,9 +31,6 @@ default:
   revision_translation_affected:
     -
       value: true
-  entity_clone_template_active:
-    -
-      value: false
   entity_clone_template_image:
     -
       entity: e00e1460-169e-468d-9835-d664f06d0969
@@ -59,3 +56,6 @@ default:
       postal_code: ''
       address_line1: ''
       address_line2: ''
+  field_promoted_on_lists:
+    -
+      value: false

@@ -8,6 +8,7 @@ dependencies:
     - field.field.node.branch.field_main_media
     - field.field.node.branch.field_paragraphs
     - field.field.node.branch.field_phone
+    - field.field.node.branch.field_promoted_on_lists
     - node.type.branch
   module:
     - address
@@ -29,7 +30,7 @@ third_party_settings:
       label: 'Contact details'
       region: content
       parent_name: ''
-      weight: 1
+      weight: 2
       format_type: details_sidebar
       format_settings:
         classes: ''
@@ -60,7 +61,7 @@ content:
     third_party_settings: {  }
   field_main_media:
     type: media_library_widget
-    weight: 2
+    weight: 3
     region: content
     settings:
       media_types: {  }
@@ -69,7 +70,7 @@ content:
         show_edit: '1'
   field_paragraphs:
     type: paragraphs
-    weight: 3
+    weight: 4
     region: content
     settings:
       title: Paragraph
@@ -102,6 +103,13 @@ content:
     settings:
       placeholder: ''
     third_party_settings: {  }
+  field_promoted_on_lists:
+    type: boolean_checkbox
+    weight: 1
+    region: content
+    settings:
+      display_label: true
+    third_party_settings: {  }
   path:
     type: path
     weight: 30
@@ -110,7 +118,7 @@ content:
     third_party_settings: {  }
   status:
     type: boolean_checkbox
-    weight: 4
+    weight: 5
     region: content
     settings:
       display_label: true
