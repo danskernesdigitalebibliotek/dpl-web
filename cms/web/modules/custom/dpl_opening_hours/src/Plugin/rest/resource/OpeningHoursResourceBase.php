@@ -151,7 +151,8 @@ abstract class OpeningHoursResourceBase extends ResourceBase {
   protected function deserialize(string $className, Request $request): object {
     try {
       $requestData = $this->serializer->deserialize($request->getContent(), $className, $this->serializerFormat($request));
-    } catch (TypeMismatchException $e) {
+    }
+    catch (TypeMismatchException $e) {
       throw new \InvalidArgumentException("Unable to deserialize request: {$e->getMessage()}");
     }
     if (!is_object($requestData) || !($requestData instanceof $className)) {
