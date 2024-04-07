@@ -188,7 +188,7 @@ tasks:
   dev:enable-dev-tools:
     desc: Enable dev modules and settings, which are not to be used in Prod. They are config-ignored
     cmds:
-      - task dev:cli -- drush install -y devel dpl_example_content dpl_example_breadcrumb field_ui uuid_url views_ui dblog
+      - task dev:cli -- drush install -y devel dpl_example_content dpl_example_breadcrumb field_ui restui uuid_url views_ui dblog
 
   dev:enable-xdebug:
     desc: "Enable xdebug within the container."
@@ -288,10 +288,25 @@ tasks:
     desc: Generate FBS client package from OpenAPI specification
     cmds:
       - cmd: |
-          docker run --rm -v ${PWD}:/local -v ${PWD}/openapi-generator.config.fbs.yaml:/openapi-generator.config.fbs.yaml \
+          docker run --rm \
+          -v ${PWD}:/local \
           openapitools/openapi-generator-cli:v7.1.0 generate \
           -i https://raw.githubusercontent.com/danskernesdigitalebibliotek/dpl-react/main/src/core/fbs/fbs-adapter.yaml \
-          -g php -o /local/packages/fbs-client -c /openapi-generator.config.fbs.yaml
+          -g php -o /local/packages/fbs-client \
+          -c /local/.openapi-generator/fbs.config.yaml
+
+  dev:codegen:dpl-cms:
+    desc: Generate CMS API package from OpenAPI specification
+    cmds:
+      - cmd: |
+          cd Mpackages/cms-api && find . ! -name '.' ! -name '..' ! -name '.openapi-generator-ignore' -type df -exec rm -rf {} +
+      - cmd: |
+          docker run --rm \
+          -v ${PWD}:/local \
+          openapitools/openapi-generator-cli:v7.1.0 generate \
+          -i ./local/openapi.json \
+          -g php-symfony -o /local/packages/cms-api \
+          -c /local/.openapi-generator/dpl-cms.config.yaml
 
   dev:composer:update-design-system:
     desc: Update the DPL design system package to a specific version or branch release.
@@ -430,13 +445,13 @@ tasks:
     desc: Validate the Drupal OpenAPI specification
     cmds:
       - docker compose {{ .DOCKER_COMPOSE_FILES_CI }} run --rm node-chrome yarn install --frozen-lockfile
-      - docker compose {{ .DOCKER_COMPOSE_FILES_CI }} run --rm node-chrome npx swagger-cli validate http://varnish:8080/openapi/rest?_format=json
+      - docker compose {{ .DOCKER_COMPOSE_FILES_CI }} run --rm node-chrome npx swagger-cli validate http://varnish:8080/openapi/rest?_format=json&language=en
 
   ci:openapi:download:
     desc: Download the Drupal OpenAPI specification from the running local site to the local filesystem
     cmds:
       - docker compose {{ .DOCKER_COMPOSE_FILES_CI }} run --rm node-chrome yarn install --frozen-lockfile
-      - docker compose {{ .DOCKER_COMPOSE_FILES_CI }} run --rm node-chrome curl http://varnish:8080/openapi/rest?_format=json | npx jsome -r > openapi.json
+      - docker compose {{ .DOCKER_COMPOSE_FILES_CI }} run --rm node-chrome curl "http://varnish:8080/openapi/rest?_format=json&language=en" | npx jsome -r > openapi.json
 
   source:build:
     summary: Build core source image.

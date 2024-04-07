@@ -27,7 +27,7 @@ class DrupalTyped {
     $service = \Drupal::service($serviceName);
     if (!$service instanceof $className) {
       $actualClass = get_class($service);
-      throw new \LogicException("Service {$serviceName} of class {$actualClass} is not of class {$className}");
+      throw new \TypeError("Service {$serviceName} of class {$actualClass} is not of class {$className}");
     }
     return $service;
   }

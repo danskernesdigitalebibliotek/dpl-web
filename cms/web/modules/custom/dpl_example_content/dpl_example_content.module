@@ -1,0 +1,64 @@
+<?php
+
+use Drupal\Core\Entity\EntityRepositoryInterface;
+use Drupal\dpl_opening_hours\Model\OpeningHoursInstance;
+use Drupal\dpl_opening_hours\Model\OpeningHoursRepository;
+use Drupal\drupal_typed\DrupalTyped;
+use Drupal\node\NodeInterface;
+use Drupal\taxonomy\TermInterface;
+use Safe\DateTimeImmutable;
+
+/**
+ * Implementation of hook_modules_installed.
+ *
+ * @param string[] $modules
+ *   The names of the modules that were installed.
+ */
+function dpl_example_content_modules_installed(array $modules) : void {
+  if (!in_array('dpl_example_content', $modules)) {
+    return;
+  }
+
+  // Create a sample set of opening hours.
+  $logger = \Drupal::logger('dpl_example_content');
+  $repository = DrupalTyped::service(OpeningHoursRepository::class, 'dpl_opening_hours.repository');
+  $entity_repository = DrupalTyped::service(EntityRepositoryInterface::class, 'entity.repository');
+
+  // Hovedbiblioteket branch from DPL Example Content.
+  $branch = $entity_repository->loadEntityByUuid('node', 'dac275e4-9b8c-4959-a13a-6b9fdbc1f6b0');
+  if (!($branch instanceof NodeInterface)) {
+    $logger->error("Unable to load branch from UUID");
+    return;
+  }
+  // Åben category from DPL static content: Opening hours categories.
+  $category_open = $entity_repository->loadEntityByUuid('taxonomy_term', '9c2f0d96-88e1-497c-bf82-e18eb9d5769c');
+  if (!($category_open instanceof TermInterface)) {
+    $logger->error("Unable to load category from UUID");
+    return;
+  }
+
+  $now = new DateTimeImmutable();
+  // Create a period from monday last week until the next week has passed. This
+  // allows us to have opening hours to show and to navigate from and to.
+  $range = new DatePeriod($now->modify("monday last week"), new DateInterval("P1D"), 21);
+  $num_instances = 0;
+  foreach ($range->getIterator() as $date) {
+    // Skip opening hours on a couple of days to mark the library as closed.
+    if (rand(1, 10) === 1) {
+      continue;
+    }
+
+    /** @var \DateTimeImmutable $date */
+    $instance = new OpeningHoursInstance(
+      NULL,
+      $branch,
+      $category_open,
+      $date->setTime(rand(8, 10), 0),
+      $date->setTime(rand(15, 20), 0),
+    );
+    $repository->upsert($instance);
+    $num_instances++;
+  }
+
+  $logger->info("Created {$num_instances} opening hours instances");
+}

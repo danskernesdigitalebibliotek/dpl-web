@@ -22,7 +22,7 @@
   "security": [
     {
       "basic_auth": []
-    },
+    }, 
     {
       "csrf_token": []
     }
@@ -41,7 +41,7 @@
             "required": true,
             "description": "Request format",
             "default": "json"
-          },
+          }, 
           {
             "name": "facets",
             "description": "A facet to match against",
@@ -135,6 +135,403 @@
         "security": []
       }
     },
+    "/dpl_opening_hours": {
+      "post": {
+        "parameters": [
+          {
+            "name": "_format",
+            "in": "query",
+            "type": "string",
+            "enum": ["json"],
+            "required": true,
+            "description": "Request format",
+            "default": "json"
+          }, 
+          {
+            "name": "opening_hours_instance",
+            "description": "The opening hours instance to manage",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "type": "object",
+              "properties": {
+                "id": {
+                  "type": "integer",
+                  "description": "An serial unique id of the opening hours instance."
+                },
+                "category": {
+                  "type": "object",
+                  "properties": {
+                    "title": {
+                      "type": "string"
+                    },
+                    "color": {
+                      "type": "string",
+                      "description": "A CSS compatible color code which can be used to represent the category",
+                      "example": "#ff0099"
+                    }
+                  },
+                  "required": ["title", "color"]
+                },
+                "date": {
+                  "type": "string",
+                  "format": "date",
+                  "description": "The date which the opening hours applies to. In ISO 8601 format."
+                },
+                "start_time": {
+                  "type": "string",
+                  "example": "09:00",
+                  "description": "When the opening hours start. In format HH:MM"
+                },
+                "end_time": {
+                  "type": "string",
+                  "example": "17:00",
+                  "description": "When the opening hours end. In format HH:MM"
+                },
+                "branch_id": {
+                  "type": "integer",
+                  "description": "The id for the branch the instance belongs to"
+                }
+              },
+              "required": ["category", "date", "start_time", "end_time", "branch_id"]
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "id": {
+                  "type": "integer",
+                  "description": "An serial unique id of the opening hours instance."
+                },
+                "category": {
+                  "type": "object",
+                  "properties": {
+                    "title": {
+                      "type": "string"
+                    },
+                    "color": {
+                      "type": "string",
+                      "description": "A CSS compatible color code which can be used to represent the category",
+                      "example": "#ff0099"
+                    }
+                  },
+                  "required": ["title", "color"]
+                },
+                "date": {
+                  "type": "string",
+                  "format": "date",
+                  "description": "The date which the opening hours applies to. In ISO 8601 format."
+                },
+                "start_time": {
+                  "type": "string",
+                  "example": "09:00",
+                  "description": "When the opening hours start. In format HH:MM"
+                },
+                "end_time": {
+                  "type": "string",
+                  "example": "17:00",
+                  "description": "When the opening hours end. In format HH:MM"
+                },
+                "branch_id": {
+                  "type": "integer",
+                  "description": "The id for the branch the instance belongs to"
+                }
+              },
+              "required": ["id", "category", "date", "start_time", "end_time", "branch_id"]
+            }
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        },
+        "summary": "Create individual opening hours",
+        "operationId": "dpl_opening_hours_create:POST",
+        "schemes": ["http"],
+        "security": [
+          {
+            "cookie": []
+          }
+        ]
+      },
+      "get": {
+        "parameters": [
+          {
+            "name": "_format",
+            "in": "query",
+            "type": "string",
+            "enum": ["json"],
+            "required": true,
+            "description": "Request format",
+            "default": "json"
+          }, 
+          {
+            "name": "branch_id",
+            "type": "integer",
+            "description": "The id of the branch for which to retrieve opening hours.",
+            "in": "query",
+            "required": false
+          }, 
+          {
+            "name": "from_date",
+            "type": "string",
+            "format": "date",
+            "description": "Retrieve opening hours which occur after and including the provided date. In ISO 8601 format.",
+            "in": "query",
+            "required": false
+          }, 
+          {
+            "name": "to_date",
+            "type": "string",
+            "format": "date",
+            "description": "Retrieve opening hours which occur before and including the provided date. In ISO 8601 format.",
+            "in": "query",
+            "required": false
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "id": {
+                    "type": "integer",
+                    "description": "An serial unique id of the opening hours instance."
+                  },
+                  "category": {
+                    "type": "object",
+                    "properties": {
+                      "title": {
+                        "type": "string"
+                      },
+                      "color": {
+                        "type": "string",
+                        "description": "A CSS compatible color code which can be used to represent the category",
+                        "example": "#ff0099"
+                      }
+                    },
+                    "required": ["title", "color"]
+                  },
+                  "date": {
+                    "type": "string",
+                    "format": "date",
+                    "description": "The date which the opening hours applies to. In ISO 8601 format."
+                  },
+                  "start_time": {
+                    "type": "string",
+                    "example": "09:00",
+                    "description": "When the opening hours start. In format HH:MM"
+                  },
+                  "end_time": {
+                    "type": "string",
+                    "example": "17:00",
+                    "description": "When the opening hours end. In format HH:MM"
+                  },
+                  "branch_id": {
+                    "type": "integer",
+                    "description": "The id for the branch the instance belongs to"
+                  }
+                },
+                "required": ["id", "category", "date", "start_time", "end_time", "branch_id"]
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        },
+        "summary": "List all opening hours",
+        "operationId": "dpl_opening_hours_list:GET",
+        "schemes": ["http"],
+        "security": [
+          {
+            "cookie": []
+          }
+        ]
+      }
+    },
+    "/dpl_opening_hours/{id}": {
+      "delete": {
+        "parameters": [
+          {
+            "name": "_format",
+            "in": "query",
+            "type": "string",
+            "enum": ["json"],
+            "required": true,
+            "description": "Request format",
+            "default": "json"
+          }, 
+          {
+            "name": "id",
+            "type": "string",
+            "in": "path",
+            "required": true
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "No Content"
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        },
+        "summary": "Delete individual opening hours",
+        "operationId": "dpl_opening_hours_delete:DELETE",
+        "schemes": ["http"],
+        "security": [
+          {
+            "cookie": []
+          }
+        ]
+      },
+      "patch": {
+        "parameters": [
+          {
+            "name": "_format",
+            "in": "query",
+            "type": "string",
+            "enum": ["json"],
+            "required": true,
+            "description": "Request format",
+            "default": "json"
+          }, 
+          {
+            "name": "opening_hours_instance",
+            "description": "The opening hours instance to manage",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "type": "object",
+              "properties": {
+                "id": {
+                  "type": "integer",
+                  "description": "An serial unique id of the opening hours instance."
+                },
+                "category": {
+                  "type": "object",
+                  "properties": {
+                    "title": {
+                      "type": "string"
+                    },
+                    "color": {
+                      "type": "string",
+                      "description": "A CSS compatible color code which can be used to represent the category",
+                      "example": "#ff0099"
+                    }
+                  },
+                  "required": ["title", "color"]
+                },
+                "date": {
+                  "type": "string",
+                  "format": "date",
+                  "description": "The date which the opening hours applies to. In ISO 8601 format."
+                },
+                "start_time": {
+                  "type": "string",
+                  "example": "09:00",
+                  "description": "When the opening hours start. In format HH:MM"
+                },
+                "end_time": {
+                  "type": "string",
+                  "example": "17:00",
+                  "description": "When the opening hours end. In format HH:MM"
+                },
+                "branch_id": {
+                  "type": "integer",
+                  "description": "The id for the branch the instance belongs to"
+                }
+              },
+              "required": ["id", "category", "date", "start_time", "end_time", "branch_id"]
+            }
+          }, 
+          {
+            "name": "id",
+            "type": "string",
+            "in": "path",
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "id": {
+                  "type": "integer",
+                  "description": "An serial unique id of the opening hours instance."
+                },
+                "category": {
+                  "type": "object",
+                  "properties": {
+                    "title": {
+                      "type": "string"
+                    },
+                    "color": {
+                      "type": "string",
+                      "description": "A CSS compatible color code which can be used to represent the category",
+                      "example": "#ff0099"
+                    }
+                  },
+                  "required": ["title", "color"]
+                },
+                "date": {
+                  "type": "string",
+                  "format": "date",
+                  "description": "The date which the opening hours applies to. In ISO 8601 format."
+                },
+                "start_time": {
+                  "type": "string",
+                  "example": "09:00",
+                  "description": "When the opening hours start. In format HH:MM"
+                },
+                "end_time": {
+                  "type": "string",
+                  "example": "17:00",
+                  "description": "When the opening hours end. In format HH:MM"
+                },
+                "branch_id": {
+                  "type": "integer",
+                  "description": "The id for the branch the instance belongs to"
+                }
+              },
+              "required": ["id", "category", "date", "start_time", "end_time", "branch_id"]
+            }
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        },
+        "summary": "Update individual opening hours",
+        "operationId": "dpl_opening_hours_update:PATCH",
+        "schemes": ["http"],
+        "security": [
+          {
+            "cookie": []
+          }
+        ]
+      }
+    },
     "/dpl_event/{uuid}": {
       "patch": {
         "parameters": [
@@ -146,7 +543,7 @@
             "required": true,
             "description": "Request format",
             "default": "json"
-          },
+          }, 
           {
             "name": "event",
             "description": "Data to update the event with.",
@@ -178,7 +575,7 @@
                 }
               }
             }
-          },
+          }, 
           {
             "name": "uuid",
             "type": "string",
@@ -420,7 +817,7 @@
             "required": true,
             "description": "Request format",
             "default": "json"
-          },
+          }, 
           {
             "name": "url",
             "description": "A url to an online resource which may be accessible through a proxy which requires rewriting of the url",

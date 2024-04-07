@@ -12,6 +12,9 @@ dependencies:
     - node.type.branch
     - node.type.campaign
     - node.type.page
+    - rest.resource.dpl_opening_hours_create
+    - rest.resource.dpl_opening_hours_delete
+    - rest.resource.dpl_opening_hours_update
     - taxonomy.vocabulary.categories
     - taxonomy.vocabulary.breadcrumb_structure
     - taxonomy.vocabulary.tags
@@ -24,6 +27,7 @@ dependencies:
     - dpl_instant_loan
     - dpl_library_agency
     - dpl_mapp
+    - dpl_opening_hours
     - dpl_url_proxy
     - entity_clone
     - entity_reference_revisions
@@ -38,6 +42,7 @@ dependencies:
     - paragraphs
     - paragraphs_ee
     - recurring_events
+    - rest
     - scheduler
     - simple_menu_permissions
     - system
@@ -165,6 +170,10 @@ permissions:
   - 'edit themes novel'
   - 'edit users by role'
   - 'link to any page'
+  - 'manage opening hours for branches'
+  - 'restful delete dpl_opening_hours_delete'
+  - 'restful patch dpl_opening_hours_update'
+  - 'restful post dpl_opening_hours_create'
   - 'revert all eventinstance revisions'
   - 'revert all eventseries revisions'
   - 'revert all revisions'

@@ -42,6 +42,7 @@ module:
   dpl_loans: 0
   dpl_login: 0
   dpl_mapp: 0
+  dpl_opening_hours: 0
   dpl_paragraphs: 0
   dpl_patron_menu: 0
   dpl_patron_page: 0
@@ -56,6 +57,7 @@ module:
   dpl_reservations: 0
   dpl_something_similar: 0
   dpl_static_content: 0
+  dpl_static_content_20240404_opening_hours: 0
   dpl_url_proxy: 0
   drupal_typed: 0
   dynamic_entity_reference: 0
@@ -125,6 +127,7 @@ module:
   simple_menu_permissions: 0
   system: 0
   taxonomy: 0
+  taxonomy_unique: 0
   telephone: 0
   telephone_formatter: 0
   text: 0

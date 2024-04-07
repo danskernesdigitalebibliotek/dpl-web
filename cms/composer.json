@@ -67,6 +67,15 @@
                     "danskernesdigitalebibliotek/fbs-client": "dev-main"
                 }
             }
+        },
+        {
+            "type": "path",
+            "url": "packages/cms-api",
+            "options": {
+                "versions": {
+                    "danskernesdigitalebibliotek/cms-api": "dev-main"
+                }
+            }
         }
     ],
     "require": {
@@ -74,6 +83,7 @@
         "brick/math": "^0.12.1",
         "composer/installers": "1.12.0",
         "cweagans/composer-patches": "1.7.3",
+        "danskernesdigitalebibliotek/cms-api": "*",
         "danskernesdigitalebibliotek/dpl-design-system": "2024.15.0-rc1",
         "danskernesdigitalebibliotek/dpl-react": "2024.15.0-rc1",
         "danskernesdigitalebibliotek/fbs-client": "*",
@@ -128,6 +138,7 @@
         "drupal/search_api": "^1.31",
         "drupal/selective_better_exposed_filters": "^3.0",
         "drupal/simple_menu_permissions": "^2.0",
+        "drupal/taxonomy_unique": "^2.5",
         "drupal/telephone_formatter": "^1.2",
         "drupal/theme_permission": "^2.0",
         "drupal/twig_tweak": "^3.2.1",

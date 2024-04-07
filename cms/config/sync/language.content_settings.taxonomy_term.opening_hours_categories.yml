@@ -7,5 +7,5 @@ dependencies:
 id: taxonomy_term.opening_hours_categories
 target_entity_type_id: taxonomy_term
 target_bundle: opening_hours_categories
-default_langcode: site_default
+default_langcode: da
 language_alterable: false

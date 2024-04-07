@@ -81,8 +81,29 @@ default:
               value: {  }
           field_body:
             -
-              value: '<p>Noget info om hovedbiblioteket.</p>'
+              value: '<p>Velkommen til et hus fuld af viden og oplevelser</p><p>Københavns Hovedbibliotek er et åbent hus som du kan bruge fra morgen til aften. Biblioteket er et levende sted med arrangementer, klubber og udstillinger, for børn og voksne. Sammen bliver vi klogere og inspirerer hinanden.</p>'
               format: basic
+    -
+      entity:
+        _meta:
+          version: '1.0'
+          entity_type: paragraph
+          uuid: 3be3bad3-de89-45b8-8f1a-a1b9e4fc10fd
+          bundle: opening_hours
+          default_langcode: da
+        default:
+          status:
+            -
+              value: true
+          created:
+            -
+              value: 1712524298
+          behavior_settings:
+            -
+              value: {  }
+          revision_translation_affected:
+            -
+              value: true
   field_promoted_on_lists:
     -
       value: true
