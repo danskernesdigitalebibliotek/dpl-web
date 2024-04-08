@@ -16,6 +16,13 @@ use function Safe\preg_match as preg_match;
 class UserTokenAuthProvider implements AuthenticationProviderInterface {
 
   /**
+   * A map of known responses to authentication from token.
+   *
+   * @var array<string, ?AccountInterface>
+   */
+  private array $authMap = [];
+
+  /**
    * Constructor.
    */
   public function __construct(
@@ -60,9 +67,8 @@ class UserTokenAuthProvider implements AuthenticationProviderInterface {
     // Add static caching of user authentication. This method will be called
     // multiple times with the same request and retrieving user info and
     // loading the user may be expensive.
-    static $tokenMap = [];
-    if (array_key_exists($token, $tokenMap)) {
-      return $tokenMap[$token];
+    if (array_key_exists($token, $this->authMap)) {
+      return $this->authMap[$token];
     }
 
     $return = NULL;
@@ -89,7 +95,7 @@ class UserTokenAuthProvider implements AuthenticationProviderInterface {
       }
     }
 
-    $tokenMap[$token] = $return;
+    $this->authMap[$token] = $return;
     return $return;
   }
 
