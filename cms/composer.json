@@ -39,7 +39,7 @@
                 "version": "2024.14.1",
                 "type": "drupal-library",
                 "dist": {
-                    "url": "https://github.com/danskernesdigitalebibliotek/dpl-react/releases/download/2024.14.1/dist-2024-14-1-d7ef96b5383e75108bffd2d633764338f99892e4.zip",
+                    "url": "https://github.com/danskernesdigitalebibliotek/dpl-react/releases/download/branch-release%2Fbrahma-14/dist-release-brahma-14.zip",
                     "type": "zip"
                 },
                 "require": {
@@ -54,7 +54,7 @@
                 "type": "drupal-library",
                 "version": "2024.14.1",
                 "dist": {
-                    "url": "https://github.com/danskernesdigitalebibliotek/dpl-design-system/releases/download/2024.14.1/dist-2024-14-1-34c803afbfbc34806ed0fe3c1d864c65172c24f4.zip",
+                    "url": "https://github.com/danskernesdigitalebibliotek/dpl-design-system/releases/download/branch-release%2Fbrahma-14/dist-release-brahma-14.zip",
                     "type": "zip"
                 }
             }
