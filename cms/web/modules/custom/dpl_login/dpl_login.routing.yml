@@ -17,3 +17,13 @@ dpl_login.login:
     _permission: "access content"
   options:
     no_cache: TRUE
+
+dpl_login.login_handler:
+  path: "/login/handler"
+  defaults:
+    _controller: '\Drupal\dpl_login\Controller\DplLoginController::loginHandler'
+    _title: "Login via Adgangsplatformen"
+  requirements:
+    _permission: "access content"
+  options:
+    no_cache: TRUE

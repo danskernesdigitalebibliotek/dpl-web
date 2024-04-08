@@ -1,0 +1,12 @@
+name: DPL error pages
+type: module
+description: Provides content for error (404 & 403) pages.
+package: DPL
+core_version_requirement: ^9 || ^10
+dependencies:
+  - default_content:default_content
+default_content:
+  node:
+    # Pages
+    - f14e3e68-6bd1-44f3-a61c-108967cc68e8
+    - d6fe11c3-4776-4e40-9527-29d5066311aa
