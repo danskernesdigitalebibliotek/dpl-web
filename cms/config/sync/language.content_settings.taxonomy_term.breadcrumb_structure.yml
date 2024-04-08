@@ -1,0 +1,11 @@
+uuid: 790f2a3c-b07c-44ae-853d-0177ef988796
+langcode: en
+status: true
+dependencies:
+  config:
+    - taxonomy.vocabulary.breadcrumb_structure
+id: taxonomy_term.breadcrumb_structure
+target_entity_type_id: taxonomy_term
+target_bundle: breadcrumb_structure
+default_langcode: site_default
+language_alterable: false

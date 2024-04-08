@@ -9,13 +9,13 @@
 <article {{ attributes.addClass(classes).setAttribute('data-variant', variant) }}>
   <a href="{{ url }}" class="nav-spot__content">
     <figure class="nav-spot__media">
-      {% if has_media %}
-        {{ media }}
-      {% else %}
-        <div class="nav-spot__placeholder-text">
-          {{ teaser_text }}
-        </div>
-      {% endif %}
+      {% include '@novel/components/media-container.html.twig'
+        with {
+        attributes: create_attribute(),
+        media: media,
+        has_media: has_media,
+        placeholder_text: teaser_text,
+      } only %}
     </figure>
 
     <div class="nav-spot__text">

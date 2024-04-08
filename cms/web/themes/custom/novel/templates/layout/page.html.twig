@@ -55,13 +55,26 @@
 
   {{ drupal_block('system_messages_block') }}
 
+  {{ breadcrumb }}
+
   <main id="main-content" role="main">
     {{ page.content }}
+
+    {% if breadcrumb_children %}
+      {# @todo - this needs to be replaced by proper styling. #}
+      <div class="mt-64">
+        {% include '@novel/components/breadcrumb-children.html.twig'
+          with {
+          title: 'Breadcrumb children'|trans,
+          items: breadcrumb_children,
+        } only %}
+      </div>
+    {% endif %}
   </main>
 
   {% include '@novel/layout/footer.html.twig'
     with {
-    'footer': footer_items,
+    'settings': footer_settings,
     'logo': logo,
   } only %}
 </div>

@@ -10,3 +10,4 @@ ignores:
   - 'assets'
   - 'drush'
   - 'packages/fbs-client'
+  - 'packages/cms-api'

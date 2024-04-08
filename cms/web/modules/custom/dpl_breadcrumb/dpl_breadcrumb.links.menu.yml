@@ -1,0 +1,11 @@
+dpl_breadcrumb.breadcrumb_structure:
+  title: "Breadcrumb"
+  parent: system.admin
+  route_name: entity.taxonomy_vocabulary.overview_form
+  route_parameters: { taxonomy_vocabulary: "breadcrumb_structure" }
+  weight: -8
+dpl_breadcrumb.breadcrumb_structure_add:
+  title: "Add new"
+  parent: dpl_breadcrumb.breadcrumb_structure
+  route_name: entity.taxonomy_term.add_form
+  route_parameters: { taxonomy_vocabulary: "breadcrumb_structure" }

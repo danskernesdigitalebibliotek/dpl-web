@@ -5,6 +5,7 @@ dependencies:
   config:
     - core.entity_view_mode.node.full
     - field.field.node.page.field_branch
+    - field.field.node.page.field_breadcrumb_parent
     - field.field.node.page.field_display_titles
     - field.field.node.page.field_hero_title
     - field.field.node.page.field_paragraphs
@@ -57,6 +58,7 @@ content:
     weight: 4
     region: content
 hidden:
+  field_breadcrumb_parent: true
   field_display_titles: true
   field_teaser_image: true
   field_teaser_text: true

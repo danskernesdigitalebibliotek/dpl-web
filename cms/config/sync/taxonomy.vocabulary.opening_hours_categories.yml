@@ -1,5 +1,5 @@
 uuid: d3f84ae0-e7e3-4832-b10a-49450ad5bca1
-langcode: en
+langcode: da
 status: true
 dependencies:
   module:
@@ -20,5 +20,5 @@ third_party_settings:
     unpublish_revision: false
 name: 'Opening hours categories'
 vid: opening_hours_categories
-description: 'This is for adding types of opening hours, e.g. "open" or "Telephone time"'
+description: 'Types of opening hours, e.g. "Open" or "Telephone time"'
 weight: 0

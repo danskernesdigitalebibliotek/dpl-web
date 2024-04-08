@@ -1,2 +1,3 @@
-# Mark FBS client produced by OpenAPI Generator as generated.
+# Mark FBS client and CMS API produced by OpenAPI Generator as generated.
 packages/fbs-client/**/*.* linguist-generated=true
+packages/cms-api/**/*.* linguist-generated=true
