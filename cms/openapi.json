@@ -532,7 +532,7 @@
         ]
       }
     },
-    "/dpl_event/{uuid}": {
+    "/api/v1/events/{uuid}": {
       "patch": {
         "parameters": [
           {
@@ -610,7 +610,7 @@
         ]
       }
     },
-    "/dpl_event": {
+    "/api/v1/events": {
       "get": {
         "parameters": [
           {
