@@ -60,13 +60,13 @@ function dpl_protected_nodes_is_nodes_protected(array $nodes, array $form): arra
       $form['actions']['submit']['#disabled'] = TRUE;
 
       $form['protected_node'][$value['node_id']]['description'] = [
-        '#markup' => t('<br><br>"@title" is being used in configuration. Before you can delete it, you need to remove it from the following configuration fields:', [
+        '#markup' => t('<br /><br />"@title" is being used in configuration. Before you can delete it, you need to remove it from the following configuration fields:', [
           '@title' => $nodes[$value['node_id']],
         ]),
       ];
 
       $form['protected_node'][$value['node_id']]['configuration'][$key] = [
-        '#markup' => t('<br><a href=":url">@title</a>', [
+        '#markup' => t('<br /><a href=":url">@title</a>', [
           '@title' => $value['config_title'],
           ':url' => $value['config_path'],
         ]),
