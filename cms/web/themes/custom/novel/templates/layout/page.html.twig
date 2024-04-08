@@ -43,7 +43,8 @@
  */
 #}
 
-<div>
+{# Overflow hidden is necessary, to avoid the header breaking out on mobile. #}
+<div class="overflow-hidden">
   {% include '@novel/layout/header.html.twig'
     with {
     'header': page.header,
