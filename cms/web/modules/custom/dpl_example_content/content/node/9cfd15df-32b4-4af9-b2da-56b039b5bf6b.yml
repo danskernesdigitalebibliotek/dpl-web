@@ -100,7 +100,7 @@ default:
               value: true
           field_body:
             -
-              value: '<h2>En til dem der ikke vil sove…</h2><p>”Godnat sagde katten” af Glem Ringtved og Rasmus Bregnhøi.<br>Det er det samme hver aften. Lucas vil ikke sove. Far læser to godnathistorier, men det er slet ikke nok. Far skal finde på sin helt egen historie, og dén historie griber om sig.</p>'
+              value: '<h2>En til dem der ikke vil sove…</h2><p>”Godnat sagde katten” af Glem Ringtved og Rasmus Bregnhøi.<br />Det er det samme hver aften. Lucas vil ikke sove. Far læser to godnathistorier, men det er slet ikke nok. Far skal finde på sin helt egen historie, og dén historie griber om sig.</p>'
               format: basic
     -
       entity:
@@ -153,7 +153,7 @@ default:
               value: true
           field_body:
             -
-              value: '<h2>En til dem der er lidt bange…</h2><p>”Da Carl næsten sov i telt” af Ida Jessen og Hanne Bartholin.<br>Den lille Elefantunge Carl skal sove i telt med sin bedste veninde, Fanny. Da mørket falder på, og det er på tide at lægge sig til at sove, vil Carl allerhelst ind i huset til mor og far.</p>'
+              value: '<h2>En til dem der er lidt bange…</h2><p>”Da Carl næsten sov i telt” af Ida Jessen og Hanne Bartholin.<br />Den lille Elefantunge Carl skal sove i telt med sin bedste veninde, Fanny. Da mørket falder på, og det er på tide at lægge sig til at sove, vil Carl allerhelst ind i huset til mor og far.</p>'
               format: basic
     -
       entity:
@@ -206,7 +206,7 @@ default:
               value: true
           field_body:
             -
-              value: '<h2>En med hjælp til dem, der ikke kan sove…</h2><p>”En prik og en streg – godnateventyr til at tegne på ryggen” af Mette Hegnhøj.<br>Prik og Streg triller til bageren, bugter sig som slanger og opfinder deres eget alfabet i denne bog helt uden billeder. En bog, der skal læses højt mens Prik og Stregs spilopper tegnes på ryggen.</p>'
+              value: '<h2>En med hjælp til dem, der ikke kan sove…</h2><p>”En prik og en streg – godnateventyr til at tegne på ryggen” af Mette Hegnhøj.<br />Prik og Streg triller til bageren, bugter sig som slanger og opfinder deres eget alfabet i denne bog helt uden billeder. En bog, der skal læses højt mens Prik og Stregs spilopper tegnes på ryggen.</p>'
               format: basic
     -
       entity:

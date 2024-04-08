@@ -236,7 +236,7 @@ display:
           exclude: false
           alter:
             alter_text: true
-            text: "<div>\r\n<strong>{{ title }}</strong><br/>\r\n<small>{{ id }} - <strong>{{date__value}}</strong> {{\_date__value_1 }} - ({{ status }})</small>\r\n</div>"
+            text: "<div><br /><strong>{{ title }}</strong><br/><br /><small>{{ id }} - <strong>{{date__value}}</strong> {{\_date__value_1 }} - ({{ status }})</small><br /></div>"
             make_link: false
             path: ''
             absolute: false
