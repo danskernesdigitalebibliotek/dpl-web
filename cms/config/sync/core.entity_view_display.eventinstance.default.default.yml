@@ -7,7 +7,6 @@ dependencies:
     - field.field.eventinstance.default.field_categories
     - field.field.eventinstance.default.field_description
     - field.field.eventinstance.default.field_event_address
-    - field.field.eventinstance.default.field_event_description
     - field.field.eventinstance.default.field_event_image
     - field.field.eventinstance.default.field_event_link
     - field.field.eventinstance.default.field_event_paragraphs
@@ -21,11 +20,10 @@ dependencies:
     - field.field.eventinstance.default.field_ticket_categories
     - recurring_events.eventinstance_type.default
   module:
-    - address
     - date_range_formatter
+    - dpl_event
     - entity_reference_revisions
     - link
-    - text
 _core:
   default_config_hash: lFFUFIZPBUZQjrIYYvP6U1hzVLGjKMl0DYK93zPM_80
 id: eventinstance.default.default
@@ -35,7 +33,7 @@ mode: default
 content:
   branch:
     type: entity_reference_label
-    label: visible
+    label: hidden
     settings:
       link: true
     third_party_settings: {  }
@@ -63,7 +61,7 @@ content:
     weight: 2
     region: content
   event_address:
-    type: address_default
+    type: dpl_branch_address
     label: hidden
     settings: {  }
     third_party_settings: {  }
@@ -134,7 +132,7 @@ content:
     type: entity_reference_label
     label: hidden
     settings:
-      link: false
+      link: true
     third_party_settings: {  }
     weight: 13
     region: content
@@ -166,7 +164,7 @@ content:
     region: content
   field_branch:
     type: entity_reference_label
-    label: above
+    label: hidden
     settings:
       link: true
     third_party_settings: {  }
@@ -193,7 +191,6 @@ hidden:
   event_state: true
   field_categories: true
   field_event_address: true
-  field_event_description: true
   field_event_image: true
   field_event_link: true
   field_event_paragraphs: true

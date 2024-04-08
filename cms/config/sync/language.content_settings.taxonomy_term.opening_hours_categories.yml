@@ -1,0 +1,11 @@
+uuid: f1955f14-2e16-49f8-bd72-e2acb64b32e9
+langcode: en
+status: true
+dependencies:
+  config:
+    - taxonomy.vocabulary.opening_hours_categories
+id: taxonomy_term.opening_hours_categories
+target_entity_type_id: taxonomy_term
+target_bundle: opening_hours_categories
+default_langcode: site_default
+language_alterable: false

@@ -11,7 +11,7 @@ field_name: field_branch
 entity_type: eventinstance
 bundle: default
 label: Branch
-description: ''
+description: 'When connecting a branch, it will also use the address of this branch as the event address. If you want to use another address then provide an event address.'
 required: false
 translatable: false
 default_value: {  }

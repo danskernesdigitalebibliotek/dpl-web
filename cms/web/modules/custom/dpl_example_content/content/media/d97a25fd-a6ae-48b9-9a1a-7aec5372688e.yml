@@ -33,6 +33,10 @@ default:
       attributes:
         rel: canonical
         href: '/user/login'
+  path:
+    -
+      alias: ''
+      langcode: da
   field_byline:
     -
       value: 'Af Becca Tapert / Unsplash'

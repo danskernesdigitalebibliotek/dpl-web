@@ -48,6 +48,10 @@ default:
       attributes:
         name: title
         content: 'Hovedbiblioteket | DPL CMS'
+  path:
+    -
+      alias: ''
+      langcode: da
   field_address:
     -
       langcode: da

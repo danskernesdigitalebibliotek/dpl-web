@@ -29,6 +29,8 @@ parameters:
     - '#Function .*_dpl_react_apps_data\(\) has parameter \$data with no value type specified in iterable type array\.#'
     # Allow no doc block details in hook_dpl_protected_nodes_get_protected_nodes() functions
     - '#Function .*_dpl_protected_nodes_get_protected_nodes\(\) return type has no value type specified in iterable type array\.#'
+    # Field formatters return render arrays which we cannot provide more detailed typing of.
+    - '#Method Drupal\\.*\\Plugin\\Field\\FieldFormatter\\.*\:\:viewElements\(\) return type has no value type specified in iterable type array\.#'
     # Drupal hook_theme_registry_alter() has parameter $theme_registry which we cannot provide more detailed typing of.
     - '#Function .*_theme_registry_alter\(\) has parameter \$theme_registry with no value type specified in iterable type array\.#'
     # Phpstan is not right is this matter. The readItem method will return NULL when it has reached the last entry.
@@ -47,7 +49,6 @@ parameters:
       path: web/modules/custom/dpl_po/src/Services/CtpConfigManager.php
     # Drupal field widget formElement() method has parameters and return type which we cannot provide more detailed typing of.
     - '#Method Drupal\\.*\\Plugin\\Field\\FieldWidget\\.*::formElement\(\) .* no value type specified in iterable type array\.#'
-
   scanFiles:
     # Needed to make locale_translation_batch_fetch_finished() discoverable.
     - web/core/modules/locale/locale.batch.inc

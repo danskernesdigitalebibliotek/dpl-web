@@ -12,7 +12,7 @@ field_name: field_event_address
 entity_type: eventinstance
 bundle: default
 label: Address
-description: ''
+description: 'Use this value to specific a different address than the event branch.'
 required: false
 translatable: false
 default_value: {  }

@@ -47,6 +47,10 @@ default:
       attributes:
         name: title
         content: 'Brønshøj Bibliotek | DPL CMS'
+  path:
+    -
+      alias: ''
+      langcode: da
   field_address:
     -
       langcode: da
