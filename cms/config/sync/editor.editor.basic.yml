@@ -17,6 +17,7 @@ settings:
       - specialCharacters
       - bulletedList
       - numberedList
+      - blockQuote
       - insertTable
       - link
       - '|'
