@@ -1,0 +1,55 @@
+<?php
+
+/**
+ * @file
+ * Primary module hooks for TwentyThree module.
+ */
+
+use Drupal\Component\Utility\UrlHelper;
+use Drupal\media\OEmbed\Provider;
+use Drupal\media_twentythree\ProviderRepositoryDecorator;
+
+/**
+ * Implements hook_media_source_info_alter().
+ *
+ * @param mixed[] $sources
+ *   Information about media sources.
+ */
+function media_twentythree_media_source_info_alter(array &$sources): void {
+  if (empty($sources["oembed:video"])) {
+    \Drupal::logger('media_twentythree')->warning('Unable to locate oEmbed video media source');
+  }
+
+  // Add TwentyThree to the list of supported providers for the native video
+  // media type alongside YouTube and Vimeo.
+  $sources["oembed:video"]["providers"][] = ProviderRepositoryDecorator::TWENTY_THREE_PROVIDER_NAME;
+}
+
+/**
+ * Implements hook_resource_url_alter().
+ *
+ * @param array{path: string, query: string[], fragment: string} $parsed_url
+ *   The resource url.
+ */
+function media_twentythree_oembed_resource_url_alter(array &$parsed_url, Provider $provider): void {
+  if ($provider->getName() != ProviderRepositoryDecorator::TWENTY_THREE_PROVIDER_NAME) {
+    return;
+  }
+
+  // Rewrite the resource url to use the path found with autodiscovery.
+  // As Twentythree is a whitelabel SaaS product which can be exposed on custom
+  // domains we do not have a fixed resource url for this provider. Instead use
+  // the one the resource defines in autodiscovery.
+  /** @var \Drupal\media_twentythree\DiscoveryUrlResolver $url_resolver */
+  $url_resolver = Drupal::service('media_twentythree.oembed.url_resolver');
+  $resource_url = $url_resolver->discoverResourceUrl($parsed_url['query']['url']);
+  if (!is_string($resource_url)) {
+    // If no resource url is discovered then do nothing.
+    return;
+  }
+
+  /** @var array{path: string, query: string[], fragment: string} $resource_url */
+  $resource_url = UrlHelper::parse($resource_url);
+
+  $parsed_url["path"] = $resource_url["path"];
+}

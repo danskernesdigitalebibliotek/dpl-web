@@ -5,6 +5,7 @@ dependencies:
   config:
     - search_api.server.db_search
   module:
+    - field_inheritance
     - recurring_events
     - search_api
 id: events
@@ -12,6 +13,14 @@ name: Events
 description: ''
 read_only: false
 field_settings:
+  branch:
+    label: 'Event Branch'
+    datasource_id: 'entity:eventinstance'
+    property_path: branch
+    type: integer
+    dependencies:
+      module:
+        - field_inheritance
   date:
     label: 'Event Date'
     datasource_id: 'entity:eventinstance'
@@ -35,7 +44,7 @@ field_settings:
     type: integer
     dependencies:
       module:
-        - null
+        - field_inheritance
 datasource_settings:
   'entity:eventinstance':
     bundles:
