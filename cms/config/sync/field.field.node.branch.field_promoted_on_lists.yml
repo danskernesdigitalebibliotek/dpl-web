@@ -10,7 +10,7 @@ field_name: field_promoted_on_lists
 entity_type: node
 bundle: branch
 label: 'Display at the top of the list'
-description: "If you want this branch to be shown at the top on /branches, you can check this.<br>\r\nIf you set this option on multiple branches, the promoted list will also be alphabetized"
+description: 'If you want this branch to be shown at the top on /branches, you can check this.<br><br />If you set this option on multiple branches, the promoted list will also be alphabetized'
 required: false
 translatable: false
 default_value: {  }

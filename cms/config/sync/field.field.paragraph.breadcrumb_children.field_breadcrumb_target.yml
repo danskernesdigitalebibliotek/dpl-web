@@ -11,7 +11,7 @@ field_name: field_breadcrumb_target
 entity_type: paragraph
 bundle: breadcrumb_children
 label: 'Breadcrumb target'
-description: "Choose a parent in the breadcrumb structure, from which the children will be displayed. <br>\r\nOnly one level of children will be shown."
+description: 'Choose a parent in the breadcrumb structure, from which the children will be displayed. <br><br />Only one level of children will be shown.'
 required: false
 translatable: false
 default_value: {  }
