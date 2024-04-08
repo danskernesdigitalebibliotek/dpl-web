@@ -7,322 +7,322 @@ const campaigns = {
 } as const;
 
 describe("Campaign creation and endpoint", () => {
-//   it("Select the expected campaign based on OR rules", () => {
-//     cy.api("POST", "/dpl_campaign/match", [
-//       {
-//         name: "type",
-//         values: [
-//           {
-//             key: "Bog",
-//             term: "Bog",
-//             score: 1,
-//           },
-//           {
-//             key: "E-bog",
-//             term: "E-bog",
-//             score: 1,
-//           },
-//         ],
-//       },
-//       {
-//         name: "creators",
-//         values: [
-//           {
-//             key: "Stephen King",
-//             term: "Stephen King",
-//             score: 1,
-//           },
-//           {
-//             key: "Suzanne Bjerrehuus",
-//             term: "Suzanne Bjerrehuus",
-//             score: 1,
-//           },
-//         ],
-//       },
-//     ]).then((response) => {
-//       const campaign = getCampaignFromResponse(response);
+  it("Select the expected campaign based on OR rules", () => {
+    cy.api("POST", "/dpl_campaign/match", [
+      {
+        name: "type",
+        values: [
+          {
+            key: "Bog",
+            term: "Bog",
+            score: 1,
+          },
+          {
+            key: "E-bog",
+            term: "E-bog",
+            score: 1,
+          },
+        ],
+      },
+      {
+        name: "creators",
+        values: [
+          {
+            key: "Stephen King",
+            term: "Stephen King",
+            score: 1,
+          },
+          {
+            key: "Suzanne Bjerrehuus",
+            term: "Suzanne Bjerrehuus",
+            score: 1,
+          },
+        ],
+      },
+    ]).then((response) => {
+      const campaign = getCampaignFromResponse(response);
 
-//       expect(campaign.title).to.eq(
-//         "Promote authors: H. P. Lovecraft and Stephen King"
-//       );
-//       expect(campaign.text).to.eq(
-//         "Promote authors: H. P. Lovecraft and Stephen King"
-//       );
-//       expect(campaign.url).to.eq(
-//         "https://example.com/promote-authors-h-p-lovecraft-and-stephen-king"
-//       );
-//     });
-//   });
+      expect(campaign.title).to.eq(
+        "Promote authors: H. P. Lovecraft and Stephen King"
+      );
+      expect(campaign.text).to.eq(
+        "Promote authors: H. P. Lovecraft and Stephen King"
+      );
+      expect(campaign.url).to.eq(
+        "https://example.com/promote-authors-h-p-lovecraft-and-stephen-king"
+      );
+    });
+  });
 
-//   it("Select OR campaign when not all AND rules are met", () => {
-//     cy.api("POST", "/dpl_campaign/match", [
-//       {
-//         name: "creators",
-//         values: [
-//           {
-//             key: "Stephen King",
-//             term: "Stephen King",
-//             score: 1,
-//           },
-//         ],
-//       },
-//       {
-//         name: "mainLanguages",
-//         values: [
-//           {
-//             key: "Dansk",
-//             term: "Dansk",
-//             score: 1,
-//           },
-//         ],
-//       },
-//       {
-//         name: "materialTypes",
-//         values: [
-//           {
-//             key: "Bog",
-//             term: "Bog",
-//             score: 1,
-//           },
-//         ],
-//       },
-//     ]).then((response) => {
-//       const campaign = getCampaignFromResponse(response);
+  it("Select OR campaign when not all AND rules are met", () => {
+    cy.api("POST", "/dpl_campaign/match", [
+      {
+        name: "creators",
+        values: [
+          {
+            key: "Stephen King",
+            term: "Stephen King",
+            score: 1,
+          },
+        ],
+      },
+      {
+        name: "mainLanguages",
+        values: [
+          {
+            key: "Dansk",
+            term: "Dansk",
+            score: 1,
+          },
+        ],
+      },
+      {
+        name: "materialTypes",
+        values: [
+          {
+            key: "Bog",
+            term: "Bog",
+            score: 1,
+          },
+        ],
+      },
+    ]).then((response) => {
+      const campaign = getCampaignFromResponse(response);
 
-//       expect(Object.keys(campaign).length).to.eq(4);
-//       expect(campaign).to.have.property("id");
-//       expect(campaign.title).to.eq(
-//         "Promote authors: H. P. Lovecraft and Stephen King"
-//       );
-//       expect(campaign.text).to.eq(
-//         "Promote authors: H. P. Lovecraft and Stephen King"
-//       );
-//       expect(campaign.url).to.eq(
-//         "https://example.com/promote-authors-h-p-lovecraft-and-stephen-king"
-//       );
-//     });
-//   });
+      expect(Object.keys(campaign).length).to.eq(4);
+      expect(campaign).to.have.property("id");
+      expect(campaign.title).to.eq(
+        "Promote authors: H. P. Lovecraft and Stephen King"
+      );
+      expect(campaign.text).to.eq(
+        "Promote authors: H. P. Lovecraft and Stephen King"
+      );
+      expect(campaign.url).to.eq(
+        "https://example.com/promote-authors-h-p-lovecraft-and-stephen-king"
+      );
+    });
+  });
 
-//   it("Select AND campaign that are more specific than OR campaigns", () => {
-//     cy.api("POST", "/dpl_campaign/match", [
-//       {
-//         name: "creators",
-//         values: [
-//           {
-//             key: "J. K. Rowling",
-//             term: "J. K. Rowling",
-//             score: 1,
-//           },
-//           {
-//             key: "Stephen King",
-//             term: "Stephen King",
-//             score: 1,
-//           },
-//         ],
-//       },
-//       {
-//         name: "mainLanguages",
-//         values: [
-//           {
-//             key: "Dansk",
-//             term: "Dansk",
-//             score: 1,
-//           },
-//         ],
-//       },
-//       {
-//         name: "materialTypes",
-//         values: [
-//           {
-//             key: "Bog",
-//             term: "Bog",
-//             score: 1,
-//           },
-//         ],
-//       },
-//     ]).then((response) => {
-//       const campaign = getCampaignFromResponse(response);
+  it("Select AND campaign that are more specific than OR campaigns", () => {
+    cy.api("POST", "/dpl_campaign/match", [
+      {
+        name: "creators",
+        values: [
+          {
+            key: "J. K. Rowling",
+            term: "J. K. Rowling",
+            score: 1,
+          },
+          {
+            key: "Stephen King",
+            term: "Stephen King",
+            score: 1,
+          },
+        ],
+      },
+      {
+        name: "mainLanguages",
+        values: [
+          {
+            key: "Dansk",
+            term: "Dansk",
+            score: 1,
+          },
+        ],
+      },
+      {
+        name: "materialTypes",
+        values: [
+          {
+            key: "Bog",
+            term: "Bog",
+            score: 1,
+          },
+        ],
+      },
+    ]).then((response) => {
+      const campaign = getCampaignFromResponse(response);
 
-//       expect(Object.keys(campaign).length).to.eq(4);
-//       expect(campaign).to.have.property("id");
-//       expect(campaign.title).to.eq("Read books by J. K. Rowling");
-//       expect(campaign.text).to.eq("Read books by J. K. Rowling");
-//       expect(campaign.url).to.eq(
-//         "https://example.com/read-books-by-j-k-rowling"
-//       );
-//     });
-//   });
+      expect(Object.keys(campaign).length).to.eq(4);
+      expect(campaign).to.have.property("id");
+      expect(campaign.title).to.eq("Read books by J. K. Rowling");
+      expect(campaign.text).to.eq("Read books by J. K. Rowling");
+      expect(campaign.url).to.eq(
+        "https://example.com/read-books-by-j-k-rowling"
+      );
+    });
+  });
 
-//   it("Select campaigns by matching an 'AND campaign' with matching ranking", () => {
-//     cy.request("POST", "/dpl_campaign/match", [
-//       {
-//         name: "creators",
-//         values: [
-//           {
-//             key: "A",
-//             term: "A",
-//             score: 4,
-//           },
-//           {
-//             key: "B",
-//             term: "B",
-//             score: 3,
-//           },
-//           {
-//             key: "rankingTestAnd",
-//             term: "rankingTestAnd",
-//             // This score is supposed to give a ranking of 3
-//             // which is the max value of the rule and therefore a match:
-//             score: 2,
-//           },
-//           {
-//             key: "C",
-//             term: "C",
-//             score: 1,
-//           },
-//         ],
-//       },
-//       {
-//         name: "mainLanguages",
-//         values: [
-//           {
-//             key: "rankingTestAnd",
-//             term: "rankingTestAnd",
-//             score: 5,
-//           },
-//         ],
-//       },
-//       {
-//         name: "materialTypes",
-//         values: [
-//           {
-//             key: "rankingTestAnd",
-//             term: "rankingTestAnd",
-//             score: 5,
-//           },
-//         ],
-//       },
-//     ]).then((response) => {
-//       const campaign = getCampaignFromResponse(response);
+  it("Select campaigns by matching an 'AND campaign' with matching ranking", () => {
+    cy.request("POST", "/dpl_campaign/match", [
+      {
+        name: "creators",
+        values: [
+          {
+            key: "A",
+            term: "A",
+            score: 4,
+          },
+          {
+            key: "B",
+            term: "B",
+            score: 3,
+          },
+          {
+            key: "rankingTestAnd",
+            term: "rankingTestAnd",
+            // This score is supposed to give a ranking of 3
+            // which is the max value of the rule and therefore a match:
+            score: 2,
+          },
+          {
+            key: "C",
+            term: "C",
+            score: 1,
+          },
+        ],
+      },
+      {
+        name: "mainLanguages",
+        values: [
+          {
+            key: "rankingTestAnd",
+            term: "rankingTestAnd",
+            score: 5,
+          },
+        ],
+      },
+      {
+        name: "materialTypes",
+        values: [
+          {
+            key: "rankingTestAnd",
+            term: "rankingTestAnd",
+            score: 5,
+          },
+        ],
+      },
+    ]).then((response) => {
+      const campaign = getCampaignFromResponse(response);
 
-//       expect(Object.keys(campaign).length).to.eq(4);
-//       expect(campaign).to.have.property("id");
-//       expect(campaign.title).to.eq(
-//         "An AND campaign for testing ranking matching"
-//       );
-//       expect(campaign.text).to.eq(
-//         "An AND campaign for testing ranking matching"
-//       );
-//       expect(campaign.url).to.eq(
-//         "https://example.com/an-and-campaign-for-testing-ranking-matching"
-//       );
-//     });
-//   });
+      expect(Object.keys(campaign).length).to.eq(4);
+      expect(campaign).to.have.property("id");
+      expect(campaign.title).to.eq(
+        "An AND campaign for testing ranking matching"
+      );
+      expect(campaign.text).to.eq(
+        "An AND campaign for testing ranking matching"
+      );
+      expect(campaign.url).to.eq(
+        "https://example.com/an-and-campaign-for-testing-ranking-matching"
+      );
+    });
+  });
 
-//   it("Return NOT FOUND when ranking does not match ranking span in 'AND campaign'", () => {
-//     cy.api({
-//       url: "/dpl_campaign/match",
-//       method: "POST",
-//       failOnStatusCode: false,
-//       body: [
-//         {
-//           name: "creators",
-//           values: [
-//             {
-//               key: "A",
-//               term: "A",
-//               score: 6,
-//             },
-//             {
-//               key: "B",
-//               term: "B",
-//               score: 5,
-//             },
-//             {
-//               key: "C",
-//               term: "C",
-//               score: 4,
-//             },
-//             {
-//               key: "D",
-//               term: "D",
-//               score: 3,
-//             },
-//             {
-//               key: "E",
-//               term: "E",
-//               score: 2,
-//             },
-//             {
-//               key: "rankingTestAnd",
-//               term: "rankingTestAnd",
-//               // This is supposed to be outside of the ranking span.
-//               score: 1,
-//             },
-//           ],
-//         },
-//         {
-//           name: "mainLanguages",
-//           values: [
-//             {
-//               key: "rankingTestAnd",
-//               term: "rankingTestAnd",
-//               score: 5,
-//             },
-//           ],
-//         },
-//         {
-//           name: "materialTypes",
-//           values: [
-//             {
-//               key: "rankingTestAnd",
-//               term: "rankingTestAnd",
-//               score: 5,
-//             },
-//           ],
-//         },
-//       ],
-//     })
-//       .its("status")
-//       .should("equal", 404);
-//   });
+  it("Return NOT FOUND when ranking does not match ranking span in 'AND campaign'", () => {
+    cy.api({
+      url: "/dpl_campaign/match",
+      method: "POST",
+      failOnStatusCode: false,
+      body: [
+        {
+          name: "creators",
+          values: [
+            {
+              key: "A",
+              term: "A",
+              score: 6,
+            },
+            {
+              key: "B",
+              term: "B",
+              score: 5,
+            },
+            {
+              key: "C",
+              term: "C",
+              score: 4,
+            },
+            {
+              key: "D",
+              term: "D",
+              score: 3,
+            },
+            {
+              key: "E",
+              term: "E",
+              score: 2,
+            },
+            {
+              key: "rankingTestAnd",
+              term: "rankingTestAnd",
+              // This is supposed to be outside of the ranking span.
+              score: 1,
+            },
+          ],
+        },
+        {
+          name: "mainLanguages",
+          values: [
+            {
+              key: "rankingTestAnd",
+              term: "rankingTestAnd",
+              score: 5,
+            },
+          ],
+        },
+        {
+          name: "materialTypes",
+          values: [
+            {
+              key: "rankingTestAnd",
+              term: "rankingTestAnd",
+              score: 5,
+            },
+          ],
+        },
+      ],
+    })
+      .its("status")
+      .should("equal", 404);
+  });
 
-//   before(() => {
-//     // Login as admin.
-//     cy.clearCookies();
-//     cy.drupalLogin();
+  before(() => {
+    // Login as admin.
+    cy.clearCookies();
+    cy.drupalLogin();
 
-//     // Create campaigns.
-//     createAuthorCampaign();
-//     createCampaignBooksByJKRowling();
-//     createRankingAndCampaign();
-//     createRankingOrCampaign();
+    // Create campaigns.
+    createAuthorCampaign();
+    createCampaignBooksByJKRowling();
+    createRankingAndCampaign();
+    createRankingOrCampaign();
 
-//     // Logout (obviously).
-//     cy.drupalLogout();
-//   });
+    // Logout (obviously).
+    cy.drupalLogout();
+  });
 
-//   after(() => {
-//     // Login as admin.
-//     cy.clearCookies();
-//     cy.drupalLogin();
+  after(() => {
+    // Login as admin.
+    cy.clearCookies();
+    cy.drupalLogin();
 
-//     // Delete campaigns.
-//     deleteCampaign(campaigns.authorCampaign);
-//     deleteCampaign(campaigns.booksByJKRowling);
-//     deleteCampaign(campaigns.rankingAndCampaign);
-//     deleteCampaign(campaigns.rankingOrCampaign);
+    // Delete campaigns.
+    deleteCampaign(campaigns.authorCampaign);
+    deleteCampaign(campaigns.booksByJKRowling);
+    deleteCampaign(campaigns.rankingAndCampaign);
+    deleteCampaign(campaigns.rankingOrCampaign);
 
-//     // Logout (obviously).
-//     cy.drupalLogout();
-//   });
+    // Logout (obviously).
+    cy.drupalLogout();
+  });
 
-//   beforeEach(() => {
-//     Cypress.Cookies.debug(true);
-//   });
-//   afterEach(() => {
-//     Cypress.Cookies.debug(false);
-//   });
+  beforeEach(() => {
+    Cypress.Cookies.debug(true);
+  });
+  afterEach(() => {
+    Cypress.Cookies.debug(false);
+  });
 });
 
 const createAuthorCampaign = () => {
