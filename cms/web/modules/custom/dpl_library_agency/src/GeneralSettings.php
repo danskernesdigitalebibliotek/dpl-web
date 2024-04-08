@@ -120,8 +120,8 @@ class GeneralSettings extends DplReactConfigBase {
   public function getFbiProfiles(): array {
     return $this->loadConfig()->get('fbi_profiles') ?? [
       FbiProfileType::DEFAULT->value => self::FBI_PROFILE,
-      FbiProfileType::SEARCH->value => self::FBI_PROFILE,
-      FbiProfileType::MATERIAL->value => self::FBI_PROFILE,
+      FbiProfileType::LOCAL->value => self::FBI_PROFILE,
+      FbiProfileType::GLOBAL->value => self::FBI_PROFILE,
     ];
   }
 

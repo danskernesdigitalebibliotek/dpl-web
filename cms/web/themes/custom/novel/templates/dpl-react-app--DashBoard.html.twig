@@ -1,0 +1,40 @@
+<div class="dpl-react-app-container--page">
+  <div {{ attributes }}>
+
+    <div class="dashboard-page">
+      <h1 class="text-header-h1 my-32" data-cy="dashboard-header">{{ attributes['data-your-profile-text'] }}</h1>
+      <div class="status-userprofile">
+          <div class="status-userprofile__column my-32">
+              <div class="link-filters">
+                  <div class="link-filters__tag-wrapper mb-16">
+                      <h2 data-cy="dashboard-loans-header">
+                          <a href="" rel="noreferrer" class="link-tag link-filters__tag">{{ attributes['data-physical-loans-text'] }}</a>
+                          <span class="link-filters__counter">0</span>
+                      </h2>
+                  </div>
+              </div>
+              <div class="list-dashboard ssc mb-16">
+                  <div class="ssc-circle"></div>
+                  <div class="ssc-head-line w-40"></div>
+              </div>
+          </div>
+
+          <div class="status-userprofile__column my-32">
+              <div class="link-filters">
+                  <div class="link-filters__tag-wrapper mb-16">
+                      <h2 data-cy="dashboard-reservations-header">
+                          <a href="" rel="noreferrer" class="link-tag link-filters__tag">{{ attributes['data-reservations-text'] }}</a>
+                          <span class="link-filters__counter">0</span>
+                      </h2>
+                  </div>
+              </div>
+              <div class="list-dashboard ssc mb-16">
+                  <div class="ssc-circle"></div>
+                  <div class="ssc-head-line w-40"></div>
+              </div>
+          </div>
+      </div>
+    </div>
+
+  </div>
+</div>

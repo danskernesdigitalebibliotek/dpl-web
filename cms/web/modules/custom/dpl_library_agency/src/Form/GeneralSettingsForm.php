@@ -174,9 +174,9 @@ class GeneralSettingsForm extends ConfigFormBase {
     $form['reservations']['pause_reservation_info_url'] = [
       '#type' => 'linkit',
       '#title' => $this->t('Pause reservation link', [], ['context' => 'Library Agency Configuration']),
-      '#description' => $this->t('The link with information about reservations. <br>
-                                         You can add a relative url (e.g. /takster). <br>
-                                         You can search for an internal url. <br>
+      '#description' => $this->t('The link with information about reservations. <br />
+                                         You can add a relative url (e.g. /takster). <br />
+                                         You can search for an internal url. <br />
                                          You can add an external url (starting with "http://" or "https://").', [], ['context' => 'Library Agency Configuration']),
       '#autocomplete_route_name' => 'linkit.autocomplete',
       '#autocomplete_route_parameters' => [
@@ -188,9 +188,9 @@ class GeneralSettingsForm extends ConfigFormBase {
     $form['opening_hours_url'] = [
       '#type' => 'linkit',
       '#title' => $this->t('Opening hours link', [], ['context' => 'Library Agency Configuration']),
-      '#description' => $this->t('The link with information about opening hours. <br>
-                                         You can add a relative url (e.g. /takster). <br>
-                                         You can search for an internal url. <br>
+      '#description' => $this->t('The link with information about opening hours. <br />
+                                         You can add a relative url (e.g. /takster). <br />
+                                         You can search for an internal url. <br />
                                          You can add an external url (starting with "http://" or "https://").', [], ['context' => 'Library Agency Configuration']),
       '#autocomplete_route_name' => 'linkit.autocomplete',
       '#autocomplete_route_parameters' => [
@@ -268,19 +268,19 @@ class GeneralSettingsForm extends ConfigFormBase {
       '#required' => TRUE,
     ];
 
-    $form['fbi_profiles']['fbi_profile_search'] = [
+    $form['fbi_profiles']['fbi_profile_local'] = [
       '#type' => 'textfield',
       '#title' => $this->t('Search profile', [], ['context' => 'Library Agency Configuration']),
-      '#default_value' => $this->generalSettings->getFbiProfile(FbiProfileType::SEARCH),
+      '#default_value' => $this->generalSettings->getFbiProfile(FbiProfileType::LOCAL),
       '#description' => $this->t('The profile to use when searching for materials.', [], ['context' => 'Library Agency Configuration']),
       '#pattern' => $fbi_profile_pattern,
       '#required' => TRUE,
     ];
 
-    $form['fbi_profiles']['fbi_profile_material'] = [
+    $form['fbi_profiles']['fbi_profile_global'] = [
       '#type' => 'textfield',
       '#title' => $this->t('Material profile', [], ['context' => 'Library Agency Configuration']),
-      '#default_value' => $this->generalSettings->getFbiProfile(FbiProfileType::MATERIAL),
+      '#default_value' => $this->generalSettings->getFbiProfile(FbiProfileType::GLOBAL),
       '#description' => $this->t('The profile to use when requesting data about a material.', [], ['context' => 'Library Agency Configuration']),
       '#pattern' => $fbi_profile_pattern,
       '#required' => TRUE,
@@ -338,8 +338,8 @@ class GeneralSettingsForm extends ConfigFormBase {
       ->set('opening_hours_url', $form_state->getValue('opening_hours_url'))
       ->set('fbi_profiles', [
         'default' => $form_state->getValue('fbi_profile_default'),
-        'search' => $form_state->getValue('fbi_profile_search'),
-        'material' => $form_state->getValue('fbi_profile_material'),
+        'local' => $form_state->getValue('fbi_profile_local'),
+        'global' => $form_state->getValue('fbi_profile_global'),
       ])
       ->save();
 

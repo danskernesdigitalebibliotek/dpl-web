@@ -60,13 +60,13 @@ function dpl_protected_nodes_is_nodes_protected(array $nodes, array $form): arra
       $form['actions']['submit']['#disabled'] = TRUE;
 
       $form['protected_node'][$value['node_id']]['description'] = [
-        '#markup' => t('<br><br>"@title" is being used in configuration. Before you can delete it, you need to remove it from the following configuration fields:', [
+        '#markup' => t('<br /><br />"@title" is being used in configuration. Before you can delete it, you need to remove it from the following configuration fields:', [
           '@title' => $nodes[$value['node_id']],
         ]),
       ];
 
       $form['protected_node'][$value['node_id']]['configuration'][$key] = [
-        '#markup' => t('<br><a href=":url">@title</a>', [
+        '#markup' => t('<br /><a href=":url">@title</a>', [
           '@title' => $value['config_title'],
           ':url' => $value['config_path'],
         ]),
@@ -119,9 +119,9 @@ function dpl_protected_nodes_find_linkit_elements(array $form, string $config_pa
     $field_value = $value['#default_value'] ?? '';
     $field_type = $value['#type'] ?? '';
 
-    // Check if the field is of type linkit and
+    // Check if the field is of type linkit or textfield and
     // the value is matching a node url e.g. "/node/1" or "/pausefunktion".
-    if ($field_type === 'linkit' && preg_match('/^\//', $field_value)) {
+    if (($field_type === 'linkit' || $field_type === 'textfield') && preg_match('/^\//', $field_value)) {
       $internal_path = $path_alias_manager->getPathByAlias($field_value);
 
       $elements[$key] = [

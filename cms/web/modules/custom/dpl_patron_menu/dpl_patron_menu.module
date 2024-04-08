@@ -17,6 +17,14 @@ use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
  *   Theme variables.
  */
 function dpl_patron_menu_preprocess_page(array &$variables): void {
+
+  $is_admin_route = \Drupal::service('router.admin_context')->isAdminRoute(\Drupal::routeMatch()->getRouteObject());
+
+  // If the current route is an admin route, don't render the patron menu.
+  if ($is_admin_route) {
+    return;
+  }
+
   $blockManager = \Drupal::getContainer()->get('plugin.manager.block');
 
   /** @var \Drupal\dpl_patron_menu\Plugin\Block\PatronMenuBlock $plugin_block */

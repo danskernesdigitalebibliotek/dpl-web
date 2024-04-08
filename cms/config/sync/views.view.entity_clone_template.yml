@@ -481,7 +481,7 @@ display:
           admin_label: ''
           plugin_id: text_custom
           empty: true
-          content: "<div class=\"admin-item\">\r\n<p>\r\nYou can use existing content templates, to quickly re-use content structures that you have already created.\r\n</p>\r\n<p>\r\nTo create new templates that can be re-used, you need to create a new content from scratch, and choose to expose it as a template. Usually, this option is available in the sidebar in the edit form.\r\n</p>\r\n<p>\r\nOnce you've done this, the template will be shown here.\r\n</p>\r\n</div>"
+          content: '<div class="admin-item"><br /><p><br />You can use existing content templates, to quickly re-use content structures that you have already created.<br /></p><br /><p><br />To create new templates that can be re-used, you need to create a new content from scratch, and choose to expose it as a template. Usually, this option is available in the sidebar in the edit form.<br /></p><br /><p><br />Once you''ve done this, the template will be shown here.<br /></p><br /></div>'
           tokenize: false
       display_extenders: {  }
     cache_metadata:
