@@ -11,7 +11,7 @@ field_name: field_teaser_image
 entity_type: eventseries
 bundle: default
 label: 'Teaser image'
-description: "The teaser fields are used for the card of display.<br />If no image has been selected, the text will be shown instead:<br /><br /><img src=\"/themes/custom/novel/images/teaser-text-image.jpg\" /><br /><br /><hr/>"
+description: 'The teaser fields are used for the card of display.<br />If no image has been selected, the text will be shown instead:<br /><br /><img src="/themes/custom/novel/images/teaser-text-image.jpg" /><br /><br /><hr/>'
 required: false
 translatable: false
 default_value: {  }

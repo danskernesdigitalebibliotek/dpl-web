@@ -10,7 +10,7 @@ field_name: field_hero_title
 entity_type: node
 bundle: page
 label: 'Hero title'
-description: "The title that is shown at the top of the page.<br /><br /><strong>If this is empty, the standard page title will be used instead.</strong>"
+description: 'The title that is shown at the top of the page.<br /><br /><strong>If this is empty, the standard page title will be used instead.</strong>'
 required: false
 translatable: false
 default_value: {  }

@@ -232,7 +232,7 @@ display:
           exclude: false
           alter:
             alter_text: true
-            text: "<div><br /><strong>{{ title }}</strong><br/><br /><small>{{ nid }} - {{ type }} - ({{ status }})</small><br /></div>"
+            text: '<div><br /><strong>{{ title }}</strong><br/><br /><small>{{ nid }} - {{ type }} - ({{ status }})</small><br /></div>'
             make_link: false
             path: ''
             absolute: false

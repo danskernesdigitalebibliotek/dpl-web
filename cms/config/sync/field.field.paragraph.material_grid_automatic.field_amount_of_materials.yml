@@ -12,7 +12,7 @@ field_name: field_amount_of_materials
 entity_type: paragraph
 bundle: material_grid_automatic
 label: 'Amount of materials'
-description: "Determines the amount of materials that will be shown, based on the CQL string. <br /><br />Obs: If for example a CQL string has 11 results, and an editor chooses 12. The list will display 8 instead of 11, since the grid should be able to increment by 4. "
+description: 'Determines the amount of materials that will be shown, based on the CQL string. <br /><br />Obs: If for example a CQL string has 11 results, and an editor chooses 12. The list will display 8 instead of 11, since the grid should be able to increment by 4. '
 required: true
 translatable: false
 default_value:

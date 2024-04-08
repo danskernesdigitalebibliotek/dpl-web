@@ -10,7 +10,7 @@ field_name: field_image_position_right
 entity_type: paragraph
 bundle: recommendation
 label: 'Image position right'
-description: "This determines whether the image should be positioned to the left or right. <br />If left untoggled (default behaviour) the image is positioned to the left, if toggled on, the image will be positioned to the right. "
+description: 'This determines whether the image should be positioned to the left or right. <br />If left untoggled (default behaviour) the image is positioned to the left, if toggled on, the image will be positioned to the right. '
 required: false
 translatable: false
 default_value:

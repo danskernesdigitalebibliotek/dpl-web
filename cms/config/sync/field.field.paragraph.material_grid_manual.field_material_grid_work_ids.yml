@@ -12,7 +12,7 @@ field_name: field_material_grid_work_ids
 entity_type: paragraph
 bundle: material_grid_manual
 label: 'Work IDs'
-description: "The grid will only display materials in internvals of 4. <br /><br />Example work ID: work-of:870970-basis:136336282.<br /><br />If you need to link to a specific type, select it from the dropdown and the system will display that, if it is available."
+description: 'The grid will only display materials in internvals of 4. <br /><br />Example work ID: work-of:870970-basis:136336282.<br /><br />If you need to link to a specific type, select it from the dropdown and the system will display that, if it is available.'
 required: false
 translatable: false
 default_value: {  }
