@@ -174,9 +174,9 @@ class GeneralSettingsForm extends ConfigFormBase {
     $form['reservations']['pause_reservation_info_url'] = [
       '#type' => 'linkit',
       '#title' => $this->t('Pause reservation link', [], ['context' => 'Library Agency Configuration']),
-      '#description' => $this->t('The link with information about reservations. <br>
-                                         You can add a relative url (e.g. /takster). <br>
-                                         You can search for an internal url. <br>
+      '#description' => $this->t('The link with information about reservations. <br />
+                                         You can add a relative url (e.g. /takster). <br />
+                                         You can search for an internal url. <br />
                                          You can add an external url (starting with "http://" or "https://").', [], ['context' => 'Library Agency Configuration']),
       '#autocomplete_route_name' => 'linkit.autocomplete',
       '#autocomplete_route_parameters' => [
@@ -188,9 +188,9 @@ class GeneralSettingsForm extends ConfigFormBase {
     $form['opening_hours_url'] = [
       '#type' => 'linkit',
       '#title' => $this->t('Opening hours link', [], ['context' => 'Library Agency Configuration']),
-      '#description' => $this->t('The link with information about opening hours. <br>
-                                         You can add a relative url (e.g. /takster). <br>
-                                         You can search for an internal url. <br>
+      '#description' => $this->t('The link with information about opening hours. <br />
+                                         You can add a relative url (e.g. /takster). <br />
+                                         You can search for an internal url. <br />
                                          You can add an external url (starting with "http://" or "https://").', [], ['context' => 'Library Agency Configuration']),
       '#autocomplete_route_name' => 'linkit.autocomplete',
       '#autocomplete_route_parameters' => [

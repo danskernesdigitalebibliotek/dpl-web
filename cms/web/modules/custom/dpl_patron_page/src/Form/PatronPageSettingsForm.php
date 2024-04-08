@@ -70,10 +70,7 @@ class PatronPageSettingsForm extends ConfigFormBase {
     $form['settings']['delete_patron_url'] = [
       '#type' => 'linkit',
       '#title' => $this->t('Delete patron link', [], ['context' => 'Patron page settings form']),
-      '#description' => $this->t('Link to a page where it is possible to delete patron. <br>
-                                         You can add a relative url (e.g. /takster). <br>
-                                         You can search for an internal url. <br>
-                                         You can add an external url (starting with "http://" or "https://").', [], ['context' => 'Patron page settings form']),
+      '#description' => $this->t('Link to a page where it is possible to delete patron.<br />You can add a relative url (e.g. /takster). <br />You can search for an internal url. <br />You can add an external url (starting with "http://" or "https://").', [], ['context' => 'Patron page settings form']),
       '#autocomplete_route_name' => 'linkit.autocomplete',
       '#autocomplete_route_parameters' => [
         'linkit_profile_id' => 'default',

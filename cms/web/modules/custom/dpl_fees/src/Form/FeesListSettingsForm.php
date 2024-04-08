@@ -74,9 +74,9 @@ class FeesListSettingsForm extends ConfigFormBase {
     $form['settings']['fees_and_replacement_costs_url'] = [
       '#type' => 'linkit',
       '#title' => $this->t('Fees and Replacement costs URL', [], ['context' => 'Fees list settings form']),
-      '#description' => $this->t('File or URL containing the fees and replacement costs. <br>
-                                         You can add a relative url (e.g. /takster). <br>
-                                         You can search for an internal url. <br>
+      '#description' => $this->t('File or URL containing the fees and replacement costs. <br />
+                                         You can add a relative url (e.g. /takster). <br />
+                                         You can search for an internal url. <br />
                                          You can add an external url (starting with "http://" or "https://").', [], ['context' => 'Fees list settings form']),
       '#autocomplete_route_name' => 'linkit.autocomplete',
       '#autocomplete_route_parameters' => [
@@ -88,7 +88,7 @@ class FeesListSettingsForm extends ConfigFormBase {
     $form['settings']['fee_list_body_text'] = [
       '#type' => 'textarea',
       '#title' => $this->t('Intro text', [], ['context' => 'Fees list settings form']),
-      '#description' => $this->t('Display an intro-text below the headline <br>
+      '#description' => $this->t('Display an intro-text below the headline <br />
       If nothing is written here the text: "@text" will be used.', ['@text' => $this->t('Fees and replacement costs are handled through the new system "Mit betalingsoverblik"', [], ['context' => 'Fees list settings form'])], ['context' => 'Fees list settings form']),
       '#default_value' => $config->get('fee_list_body_text'),
     ];
@@ -103,7 +103,7 @@ class FeesListSettingsForm extends ConfigFormBase {
     $form['settings']['payment_site_button']['payment_site_url'] = [
       '#type' => 'linkit',
       '#title' => $this->t('Payment site url', [], ['context' => 'Fees list settings form']),
-      '#description' => $this->t('URL containing a link to a payment page. <br>
+      '#description' => $this->t('URL containing a link to a payment page. <br />
                                          <strong>NB!: The button will only display if this field has been filled.</strong>', [], ['context' => 'Fees list settings form']),
       '#autocomplete_route_name' => 'linkit.autocomplete',
       '#autocomplete_route_parameters' => [
@@ -115,7 +115,7 @@ class FeesListSettingsForm extends ConfigFormBase {
     $form['settings']['payment_site_button']['payment_site_button_label'] = [
       '#type' => 'textfield',
       '#title' => $this->t('Payment site button label', [], ['context' => 'Fees list settings form']),
-      '#description' => $this->t('Define the text of the button that links to the payment page. <br>
+      '#description' => $this->t('Define the text of the button that links to the payment page. <br />
                                   If nothing is written here the text: "@text" will be used.', ['@text' => $this->t('Go to payment page', [], ['context' => 'Fees list settings form'])], ['context' => 'Fees list settings form']),
       '#default_value' => $config->get('payment_site_button_label'),
     ];
@@ -130,10 +130,10 @@ class FeesListSettingsForm extends ConfigFormBase {
     $form['settings']['blocked_user']['blocked_patron_e_link_url'] = [
       '#type' => 'linkit',
       '#title' => $this->t('Blocked user link for modal', [], ['context' => 'Fees list settings form']),
-      '#description' => $this->t('If a user is blocked because of fees a modal appears. This field makes it possible to place a link in the modal to e.g. payment options or help page. <br>
-                                         If left empty, the link will not be shown. <br>
-                                         You can add a relative url (e.g. /takster). <br>
-                                         You can search for an internal url. <br>
+      '#description' => $this->t('If a user is blocked because of fees a modal appears. This field makes it possible to place a link in the modal to e.g. payment options or help page. <br />
+                                         If left empty, the link will not be shown. <br />
+                                         You can add a relative url (e.g. /takster). <br />
+                                         You can search for an internal url. <br />
                                          You can add an external url (starting with "http://" or "https://").', [], ['context' => 'Fees list settings form']),
       '#autocomplete_route_name' => 'linkit.autocomplete',
       '#autocomplete_route_parameters' => [

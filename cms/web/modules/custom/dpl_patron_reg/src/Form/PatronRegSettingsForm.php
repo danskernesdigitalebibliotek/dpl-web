@@ -72,9 +72,9 @@ class PatronRegSettingsForm extends ConfigFormBase {
     $form['patron_registration_page_url'] = [
       '#type' => 'linkit',
       '#title' => $this->t('Patron registration page url', [], ['context' => 'Patron registration settings form']),
-      '#description' => $this->t('The url for the patron registration page. <br>
-                                         You can add a relative url (e.g. /takster). <br>
-                                         You can search for an internal url. <br>
+      '#description' => $this->t('The url for the patron registration page. <br />
+                                         You can add a relative url (e.g. /takster). <br />
+                                         You can search for an internal url. <br />
                                          You can add an external url (starting with "http://" or "https://").', [], ['context' => 'Patron registration settings form']),
       '#autocomplete_route_name' => 'linkit.autocomplete',
       '#autocomplete_route_parameters' => [
@@ -86,9 +86,9 @@ class PatronRegSettingsForm extends ConfigFormBase {
     $form['redirect_on_user_created_url'] = [
       '#type' => 'linkit',
       '#title' => $this->t('Redirect on create', [], ['context' => 'Patron registration settings form']),
-      '#description' => $this->t('Redirect to page when user is successfully created. <br>
-                                         You can add a relative url (e.g. /takster). <br>
-                                         You can search for an internal url. <br>
+      '#description' => $this->t('Redirect to page when user is successfully created. <br />
+                                         You can add a relative url (e.g. /takster). <br />
+                                         You can search for an internal url. <br />
                                          You can add an external url (starting with "http://" or "https://").', [], ['context' => 'Patron registration settings form']),
       '#autocomplete_route_name' => 'linkit.autocomplete',
       '#autocomplete_route_parameters' => [
