@@ -45,5 +45,10 @@ function dpl_mapp_page_attachments(array &$page): void {
  *   The login method.
  */
 function _dpl_mapp_get_login_method(): string {
-  return $_SESSION['logged_in_with'];
+  if (isset($_SESSION['logged_in_with'])) {
+    return $_SESSION['logged_in_with'];
+  }
+  else {
+    return $_SESSION['logged_in_with'] = 'unknown';
+  }
 }
