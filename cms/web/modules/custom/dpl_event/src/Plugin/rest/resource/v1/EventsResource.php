@@ -139,16 +139,6 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
  *                     "type" = "string",
  *                     "description" = "The name of the ticket category.",
  *                   },
- *                   "count" = {
- *                     "type" = "object",
- *                     "description" = "Number of tickets for the event.",
- *                     "properties" = {
- *                       "total" = {
- *                         "type" = "number",
- *                         "description" = "Total number of tickets for the event.",
- *                       },
- *                     },
- *                   },
  *                   "price" = {
  *                     "type" = "object",
  *                     "description" = "The price of a ticket in the category",
@@ -173,6 +163,10 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
  *                   "price",
  *                 }
  *               },
+ *             },
+ *             "ticket_capacity" = {
+ *                "type" = "integer",
+ *                "description" = "Total number of tickets which can be sold for the event.",
  *             },
  *             "series" = {
  *               "type" = "object",
