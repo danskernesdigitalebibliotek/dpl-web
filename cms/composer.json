@@ -135,6 +135,7 @@
         "drupal/varnish_purge": "^2.2",
         "drupal/view_unpublished": "^1.1",
         "drupal/views_infinite_scroll": "^2.0",
+        "drupal/webform": "^6.2",
         "drush/drush": "^12",
         "mnsami/composer-custom-directory-installer": "^2.0",
         "myclabs/php-enum": "^1.8",
