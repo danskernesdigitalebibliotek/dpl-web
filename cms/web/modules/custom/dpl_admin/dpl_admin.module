@@ -8,8 +8,6 @@
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\Render\Markup;
 use Drupal\Core\Url;
-use Drupal\dpl_admin\Services\VersionHelper;
-use Drupal\drupal_typed\DrupalTyped;
 use Drupal\menu_link_content\Entity\MenuLinkContent;
 use Drupal\recurring_events\Entity\EventInstance;
 use Drupal\system\Form\SiteInformationForm;
@@ -320,31 +318,4 @@ function dpl_admin_menu_link_content_presave(MenuLinkContent $entity): void {
  */
 function dpl_admin_dpl_protected_nodes_get_protected_nodes(): array {
   return dpl_protected_nodes_get_context(SiteInformationForm::class, 'system.site_information_settings');
-}
-
-/**
- * Implements hook_toolbar_alter().
- *
- * Displaying the DPL CMS version in the secondary admin toolbar.
- *
- * @param array<mixed> $items
- *   See hook_toolbar_alter().
- */
-function dpl_admin_toolbar_alter(array &$items): void {
-  $service = DrupalTyped::service(VersionHelper::class, 'dpl_admin.version_helper');
-
-  $version = $service->getVersion();
-
-  if (empty($version)) {
-    return;
-  }
-
-  $items['cms_version'] = [
-    '#type' => 'toolbar_item',
-    'tab' => [
-      '#type' => 'link',
-      '#title' => t('CMS version: @version', ['@version' => $version], ['context' => 'DPL admin UX']),
-      '#url' => Url::fromRoute('system.status'),
-    ],
-  ];
 }
