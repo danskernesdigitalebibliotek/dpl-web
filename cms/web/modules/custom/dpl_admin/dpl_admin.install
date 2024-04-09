@@ -25,8 +25,8 @@ function dpl_admin_requirements(string $phase): array {
   $version = $service->getVersion();
 
   $requirements['dpl_admin_version'] = [
-    'title' => t('CMS release version'),
-    'value' => t('<code>@version</code>', ['@version' => $version]),
+    'title' => t('CMS release version', [], ['context' => 'DPL admin UX']),
+    'value' => t('<code>@version</code>', ['@version' => $version], ['context' => 'DPL admin UX']),
     'severity' => REQUIREMENT_INFO,
   ];
 

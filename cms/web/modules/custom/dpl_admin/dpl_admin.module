@@ -335,11 +335,15 @@ function dpl_admin_toolbar_alter(array &$items): void {
 
   $version = $service->getVersion();
 
+  if (empty($version)) {
+    return;
+  }
+
   $items['cms_version'] = [
     '#type' => 'toolbar_item',
     'tab' => [
       '#type' => 'link',
-      '#title' => t('CMS version: @version', ['@version' => $version]),
+      '#title' => t('CMS version: @version', ['@version' => $version], ['context' => 'DPL admin UX']),
       '#url' => Url::fromRoute('system.status'),
     ],
   ];
