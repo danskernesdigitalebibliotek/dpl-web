@@ -23152,7 +23152,7 @@ msgid "The link with information about reservations. <br />\n"
 "                                         You can add a relative url (e.g. /takster). <br />\n"
 "                                         You can search for an internal url. <br />\n"
 "                                         You can add an external url (starting with \"http://\" or \"https://\")."
-msgstr "The link with information about reservations. <br />You can add a relative url (e.g. /pausefunktion). <br />You can search for an internal url. <br />You can add an external url (starting with \"http://\" or \"https://\")."
+msgstr "Link til information omkring reservationer. <br />Du kan tilføje en relativ url (e.g. /takster). <br />Du kan søge efter en intern url <br />Du kan tilføje en ekstern url (startende med with \"http://\" or \"https://\")."
 
 #: 
 msgctxt "Library Agency Configuration"
@@ -23160,7 +23160,7 @@ msgid "The link with information about opening hours. <br />\n"
 "                                         You can add a relative url (e.g. /takster). <br />\n"
 "                                         You can search for an internal url. <br />\n"
 "                                         You can add an external url (starting with \"http://\" or \"https://\")."
-msgstr "The link with information about opening hours.<br />You can add a relative url (e.g. /branches). <br />You can search for an internal url. <br />You can add an external url (starting with \"http://\" or \"https://\")."
+msgstr "Link til information omkring åbningstider. <br />Du kan tilføje en relativ url (e.g. /takster). <br />Du kan søge efter en intern url <br />Du kan tilføje en ekstern url (startende med with \"http://\" or \"https://\")."
 
 #: 
 msgctxt "Patron registration settings form"
