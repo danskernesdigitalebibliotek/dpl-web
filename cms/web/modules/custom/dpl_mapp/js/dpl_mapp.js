@@ -4,7 +4,7 @@
  */
 /* global wts:false */
 
-(function dplMapp(once, wts) {
+(function dplMapp(once, wts, drupalSettings) {
   const pushEvent = function pushEvent(eventId, eventData) {
     console.debug("DPL Mapp: Pushing %s event %o", eventId, eventData);
 
@@ -38,4 +38,17 @@
       );
     },
   };
-})(once, wts);
+
+  // New behavior to push a tracking event on page load.
+  Drupal.behaviors.dpl_mapp_page_load = {
+    attach() {
+      if (typeof drupalSettings.dpl_mapp.login !== "undefined") {
+        pushEvent("click", {
+          id: 27,
+          name: "Login",
+          trackedData: drupalSettings.dpl_mapp.login,
+        });
+      }
+    },
+  };
+})(once, wts, drupalSettings);
