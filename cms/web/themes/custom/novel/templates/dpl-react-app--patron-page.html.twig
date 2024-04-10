@@ -1,0 +1,84 @@
+{% set checkboxIcon %}
+    <span class="checkbox__icon">
+        <svg width="20px" height="20px">
+            <polyline points="1.5 6 4.5 9 10.5 1" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></polyline>
+        </svg>
+    </span>
+{% endset %}
+
+<div class="dpl-react-app-container--page">
+    <div {{ attributes }}>
+        <form class="dpl-patron-page">
+        <h1 class="text-header-h1 my-32">{{ attributes['data-patron-page-header-text'] | raw }}</h1>
+        <h2 class="text-header-h4 mt-32 mb-16">{{ attributes['data-patron-page-basic-details-header-text'] | raw }}</h2>
+        <div class="dpl-patron-info ssc">
+            <div class="dpl-patron-info__label">
+            <div class="ssc-head-line w-10"></div>
+            </div>
+            <div class="dpl-patron-info__text">
+            <div class="ssc-head-line w-20 mts"></div>
+            </div>
+            <div class="dpl-patron-info__label">
+            <div class="ssc-head-line w-10"></div>
+            </div>
+            <div class="dpl-patron-info__text">
+            <div class="ssc-head-line w-40 mts"></div>
+            </div>
+        </div>
+        <section>
+            <h2 class="text-header-h4 mt-64 mb-16">{{ attributes['data-patron-contact-info-header-text'] | raw }}</h2>
+            <p class="text-body-small-regular mb-32">{{ attributes['data-patron-contact-info-body-text'] | raw }}</p>
+            <div class="dpl-input">
+            <label for="phone">{{ attributes['data-patron-contact-phone-label-text'] | raw }}</label>
+            <input
+                aria-invalid="false"
+                aria-describedby="description-phone"
+                aria-labelledby=""
+                id="phone"
+                type="text"
+            />
+            </div>
+            <div class="checkbox checkbox mt-8 mb-16">
+            <input
+                id="phone-checkbox"
+                class="checkbox__input"
+                type="checkbox"
+            />
+            <label class="checkbox__label" for="phone-checkbox">
+                {{ checkboxIcon | raw }}
+                <div>
+                <span class="checkbox__text text-small-caption color-secondary-gray">
+                    {{ attributes['data-patron-contact-phone-checkbox-text'] | raw }} 
+                </span>
+                </div>
+            </label>
+            </div>
+            <div class="dpl-input">
+            <label for="email">{{ attributes['data-patron-contact-email-label-text'] | raw }}</label>
+            <input
+                aria-invalid="false"
+                aria-describedby="description-email"
+                aria-labelledby=""
+                id="email"
+                type="text"
+            />
+            </div>
+            <div class="checkbox checkbox mt-8 mb-16">
+            <input
+                id="email-checkbox"
+                class="checkbox__input"
+                type="checkbox"
+            />
+            <label class="checkbox__label" for="email-checkbox">
+                {{ checkboxIcon | raw }}
+                <div>
+                <span class="checkbox__text text-small-caption color-secondary-gray">
+                    {{ attributes['data-patron-contact-email-checkbox-text'] | raw }}
+                </span>
+                </div>
+            </label>
+            </div>
+        </section>
+        </form>
+    </div>
+</div>
