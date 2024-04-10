@@ -1,28 +1,53 @@
-const mainLibraryOpeningHoursPage = "/node/9/edit/opening-hours";
 const selectionOption = "Telefontid";
 
-const openMonthView = () => {
-  cy.visit(mainLibraryOpeningHoursPage);
-  cy.get(".fc-dayGridMonth-button").click();
+const createBranchAndVisitOpeningHoursAdmin = () => {
+  cy.clearCookies();
+  cy.drupalLogin();
+  cy.visit("/node/add/branch");
+  cy.get("#edit-title-0-value").type("Test branch");
+  cy.get('button[title="Show all Paragraphs"]').click();
+  cy.get('button[value="Opening Hours"]').click({
+    multiple: true,
+    force: true,
+  });
+  cy.get("#edit-field-address-0-address-address-line1")
+    .type("Example Street", { force: true })
+    .should("have.value", "Example Street");
+  cy.get("#edit-field-address-0-address-postal-code")
+    .type("1234", { force: true })
+    .should("have.value", "1234");
+  cy.get("#edit-field-address-0-address-locality")
+    .type("Example City", { force: true })
+    .should("have.value", "Example City");
+  cy.get('input[value="Save"]').click();
+  cy.get('a[href^="/node/"][href$="/edit"]').click({ force: true });
+  cy.get('a[href*="/edit/opening-hours"]').click();
+  // Save the URL for the admin page and the page itself for later use
+  cy.url().then((url) => {
+    Cypress.env("adminUrl", url);
+    const pageUrl = url.replace("/edit/opening-hours", "");
+    Cypress.env("pageUrl", pageUrl);
+  });
 };
 
-// The datebase is seeded with opning hours but we are not interested in them for our tests
-// Therefore we delete all opening hours in the mont view if they exist before we start our tests
-const deleteAllOpeningHours = () => {
-  openMonthView();
-  // Attempt to get the elements, but do not fail the test if they do not exist
-  cy.get("body").then(($body) => {
-    if (
-      $body.find('[data-cy="opening-hours-editor-event-content"]').length > 0
-    ) {
-      cy.getBySel("opening-hours-editor-event-content").each(($el) => {
-        cy.wrap($el).click();
-        cy.getBySel("opening-hours-editor-form__remove").click();
-      });
-    } else {
-      cy.log("No opening hours elements found to delete.");
-    }
-  });
+const visitOpeningHoursPage = () => {
+  const pageUrl = Cypress.env("pageUrl");
+  if (pageUrl) {
+    cy.visit(pageUrl);
+  }
+};
+
+const visitOpeningHoursPageAdmin = () => {
+  const adminUrl = Cypress.env("adminUrl");
+  if (adminUrl) {
+    cy.clearCookies();
+    cy.drupalLogin();
+    cy.visit(adminUrl);
+  }
+};
+
+const openMonthView = () => {
+  cy.get(".fc-dayGridMonth-button").click();
 };
 
 const selectTodayFromMonthView = () => {
@@ -30,6 +55,8 @@ const selectTodayFromMonthView = () => {
 };
 
 const createOpeningHour = () => {
+  visitOpeningHoursPageAdmin();
+  openMonthView();
   selectTodayFromMonthView().click();
   cy.getBySel("opening-hours-editor-form").should("be.visible");
   cy.getBySel("opening-hours-editor-form-select").select(selectionOption);
@@ -64,14 +91,12 @@ const deleteOpeningHour = () => {
 };
 
 describe("Opening hours editor", () => {
-  beforeEach(() => {
-    cy.clearCookies();
-    cy.drupalLogin();
-
-    deleteAllOpeningHours();
+  before(() => {
+    createBranchAndVisitOpeningHoursAdmin();
   });
 
   it("Checks opening hours categories", () => {
+    visitOpeningHoursPageAdmin();
     openMonthView();
     selectTodayFromMonthView().click();
     cy.getBySel("opening-hours-editor-form-select")
@@ -86,11 +111,13 @@ describe("Opening hours editor", () => {
 
   it("Can create an opening hour", () => {
     createOpeningHour();
+    visitOpeningHoursPage();
   });
 
   it("Can update an opening hour", () => {
     createOpeningHour();
     updateOpeningHour();
+    visitOpeningHoursPage();
   });
 
   it("Can delete an opening hour", () => {
