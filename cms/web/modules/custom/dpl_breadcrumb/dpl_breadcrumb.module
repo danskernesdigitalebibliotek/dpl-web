@@ -23,7 +23,7 @@ function dpl_breadcrumb_form_taxonomy_term_breadcrumb_structure_form_alter(array
     '#type' => 'details',
     '#title' => t('View content that has set this breadcrumb as a parent', [], ['context' => 'DPL admin UX']),
     '#weight' => 10,
-    'items' => $service->getRenderedReferencingContent($breadcrumb_item, 'teaser'),
+    'items' => $service->getRenderedReferencingNodes($breadcrumb_item, 'teaser'),
   ];
 }
 
@@ -49,7 +49,7 @@ function dpl_breadcrumb_preprocess_paragraph__breadcrumb_children(array &$variab
 
   $service = DrupalTyped::service(BreadcrumbHelper::class, 'dpl_breadcrumb.breadcrumb_helper');
 
-  $variables['items'] = $service->getRenderedReferencingContent($breadcrumb_item);
+  $variables['items'] = $service->getRenderedReferencingNodes($breadcrumb_item);
 
   // Drupal will cache the whole paragraph, as it does not know that it is
   // embedding a dynamic list. We'll add a simple cache tag,
@@ -64,21 +64,29 @@ function dpl_breadcrumb_preprocess_paragraph__breadcrumb_children(array &$variab
  * We get it based on a node's field_breadcrumb_parent.
  */
 function dpl_breadcrumb_preprocess_page(array &$variables): void {
-  $node = $variables['node'] ?? NULL;
-  $service = DrupalTyped::service(BreadcrumbHelper::class, 'dpl_breadcrumb.breadcrumb_helper');
+  $entity = $variables['node'] ?? NULL;
 
-  if (empty($node)) {
+  if (empty($entity)) {
+    $event_series = \Drupal::routeMatch()->getParameter('eventseries');
+    $event_instance = \Drupal::routeMatch()->getParameter('eventinstance');
+
+    $entity = $event_series ?? $event_instance;
+  }
+
+  if (empty($entity)) {
     return;
   }
 
-  $variables['breadcrumb'] = $service->getBreadcrumb($node);
+  $service = DrupalTyped::service(BreadcrumbHelper::class, 'dpl_breadcrumb.breadcrumb_helper');
 
-  $breadcrumb_item = $service->getBreadcrumbItem($node);
+  $variables['breadcrumb'] = $service->getBreadcrumb($entity);
+
+  $breadcrumb_item = $service->getBreadcrumbItem($entity);
 
   // If this node is part of the structure tree, we might display an automatic
   // list of the related children.
   if ($breadcrumb_item instanceof TermInterface && $breadcrumb_item->get('field_show_children')->getString() == '1') {
-    $variables['breadcrumb_children'] = $service->getRenderedReferencingContent($breadcrumb_item);
+    $variables['breadcrumb_children'] = $service->getRenderedReferencingNodes($breadcrumb_item);
 
     // Drupal will cache the whole page, as it does not know that it is
     // embedding a dynamic list. We'll add a simple cache tag,

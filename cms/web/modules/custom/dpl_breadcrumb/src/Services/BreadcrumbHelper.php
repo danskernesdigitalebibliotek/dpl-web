@@ -5,10 +5,10 @@ namespace Drupal\dpl_breadcrumb\Services;
 use Drupal\Component\Render\MarkupInterface;
 use Drupal\Core\Breadcrumb\Breadcrumb;
 use Drupal\Core\Entity\EntityTypeManagerInterface;
+use Drupal\Core\Entity\FieldableEntityInterface;
 use Drupal\Core\Language\LanguageManagerInterface;
 use Drupal\Core\Link;
 use Drupal\Core\StringTranslation\TranslationInterface;
-use Drupal\node\Entity\Node;
 use Drupal\pathauto\AliasCleanerInterface;
 use Drupal\taxonomy\TermInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
@@ -102,8 +102,8 @@ class BreadcrumbHelper {
   /**
    * Getting the breadcrumb, as a url string (/page/page2/page4).
    */
-  public function getBreadcrumbUrlString(Node $node): ?string {
-    $breadcrumb = $this->getBreadcrumb($node);
+  public function getBreadcrumbUrlString(FieldableEntityInterface $entity): ?string {
+    $breadcrumb = $this->getBreadcrumb($entity);
 
     $links = $breadcrumb->getLinks();
 
@@ -141,7 +141,7 @@ class BreadcrumbHelper {
     // If the breadcrumb does not include the current page, we want to
     // add it manually, for the URL.
     if (!$this->includeCurrentPage) {
-      $breadcrumb_string .= "/{$node->label()}";
+      $breadcrumb_string .= "/{$entity->label()}";
     }
 
     return $breadcrumb_string;
@@ -150,19 +150,19 @@ class BreadcrumbHelper {
   /**
    * Build the breadcrumb array.
    */
-  public function getBreadcrumb(Node $node): Breadcrumb {
+  public function getBreadcrumb(FieldableEntityInterface $entity): Breadcrumb {
     $breadcrumb = new Breadcrumb();
     $field_name = $this->getStructureFieldName();
 
-    if ($node->hasField($field_name)) {
-      $this->getStructureBreadcrumb($node, $breadcrumb);
+    if ($entity->hasField($field_name)) {
+      $this->getStructureBreadcrumb($entity, $breadcrumb);
     }
 
-    if ($node->hasField('field_categories')) {
-      $this->getCategoryBreadcrumb($node, $breadcrumb);
+    if ($entity->hasField('field_categories')) {
+      $this->getCategoryBreadcrumb($entity, $breadcrumb);
     }
 
-    $this->getBaseBreadcrumb($node, $breadcrumb);
+    $this->getBaseBreadcrumb($entity, $breadcrumb);
 
     return $breadcrumb;
   }
@@ -170,26 +170,31 @@ class BreadcrumbHelper {
   /**
    * Build the base breadcrumb, based on possible branch references.
    */
-  private function getBaseBreadcrumb(Node $node, Breadcrumb $breadcrumb): Breadcrumb {
+  private function getBaseBreadcrumb(FieldableEntityInterface $entity, Breadcrumb $breadcrumb): Breadcrumb {
     $branch = NULL;
 
-    if ($node->hasField('field_branch')) {
-      $branches = $node->get('field_branch')->referencedEntities();
+    if ($entity->hasField('field_branch')) {
+      $branches = $entity->get('field_branch')->referencedEntities();
       $branch = reset($branches);
     }
 
-    if ($branch instanceof Node) {
-      $breadcrumb->addLink(Link::createFromRoute(
-        $branch->label() ?? '',
-        'entity.node.canonical',
-        ['node' => $branch->id()]
-      ));
+    if ($branch instanceof FieldableEntityInterface) {
+      $breadcrumb->addLink($branch->toLink($branch->label()));
     }
 
-    if ($node->bundle() === 'article') {
+    if ($entity->bundle() === 'article') {
       $breadcrumb->addLink(Link::createFromRoute(
         $this->translation->translate('Articles'),
         'view.articles.page_1'
+      ));
+    }
+
+    $entity_type_id = $entity->getEntityTypeId();
+
+    if (in_array($entity_type_id, ['eventseries', 'eventinstance'])) {
+      $breadcrumb->addLink(Link::createFromRoute(
+        $this->translation->translate('Events'),
+        'view.events.all'
       ));
     }
 
@@ -199,16 +204,12 @@ class BreadcrumbHelper {
   /**
    * Build a breadcrumb array, based on field_categories.
    */
-  public function getCategoryBreadcrumb(Node $node, Breadcrumb $breadcrumb): Breadcrumb {
+  public function getCategoryBreadcrumb(FieldableEntityInterface $entity, Breadcrumb $breadcrumb): Breadcrumb {
     if ($this->includeCurrentPage) {
-      $breadcrumb->addLink(Link::createFromRoute(
-        $node->label() ?? '',
-        'entity.node.canonical',
-        ['node' => $node->id()]
-      ));
+      $breadcrumb->addLink($entity->toLink($entity->label()));
     }
 
-    $categories = $node->get('field_categories')->referencedEntities();
+    $categories = $entity->get('field_categories')->referencedEntities();
 
     $category = reset($categories);
 
@@ -231,19 +232,19 @@ class BreadcrumbHelper {
   }
 
   /**
-   * Find a breadcrumb item by node, if it is added to the content structure.
+   * Find a breadcrumb item by entity, if it is added to the content structure.
    */
-  public function getBreadcrumbItem(Node $node): ?TermInterface {
+  public function getBreadcrumbItem(FieldableEntityInterface $entity): ?TermInterface {
     $storage = $this->entityTypeManager->getStorage('taxonomy_term');
 
-    $nid = $node->id();
+    $id = $entity->id();
 
-    if (!$nid) {
+    if (!$id) {
       return NULL;
     }
 
     $breadcrumb_items = $storage->loadByProperties([
-      'field_content' => $node->id(),
+      'field_content' => $id,
       'vid' => $this->getStructureVid(),
     ]);
 
@@ -257,16 +258,16 @@ class BreadcrumbHelper {
   }
 
   /**
-   * Find a breadcrumb item that is referenced by a node's breadcrumb field.
+   * Find a breadcrumb item that is referenced by a entity's breadcrumb field.
    */
-  public function getReferencedBreadcrumbItem(Node $node): ?TermInterface {
+  public function getReferencedBreadcrumbItem(FieldableEntityInterface $entity): ?TermInterface {
     $field_key = $this->getStructureFieldName();
 
-    if (!$node->hasField($field_key) || $node->get($field_key)->isEmpty()) {
+    if (!$entity->hasField($field_key) || $entity->get($field_key)->isEmpty()) {
       return NULL;
     }
 
-    $breadcrumb_items = $node->get($field_key)->referencedEntities();
+    $breadcrumb_items = $entity->get($field_key)->referencedEntities();
 
     return reset($breadcrumb_items);
   }
@@ -274,18 +275,14 @@ class BreadcrumbHelper {
   /**
    * Build a breadcrumb array, based on the custom content structure.
    */
-  public function getStructureBreadcrumb(Node $node, Breadcrumb $breadcrumb): Breadcrumb {
-    $breadcrumb_item = $this->getBreadcrumbItem($node);
+  public function getStructureBreadcrumb(FieldableEntityInterface $entity, Breadcrumb $breadcrumb): Breadcrumb {
+    $breadcrumb_item = $this->getBreadcrumbItem($entity);
 
     if (!($breadcrumb_item instanceof TermInterface)) {
-      $breadcrumb_item = $this->getReferencedBreadcrumbItem($node);
+      $breadcrumb_item = $this->getReferencedBreadcrumbItem($entity);
 
       if ($this->includeCurrentPage) {
-        $breadcrumb->addLink(Link::createFromRoute(
-          $node->label() ?? '',
-          'entity.node.canonical',
-          ['node' => $node->id()]
-        ));
+        $breadcrumb->addLink($entity->toLink($entity->label()));
       }
     }
 
@@ -296,11 +293,16 @@ class BreadcrumbHelper {
     $breadcrumb_items = $this->getStructureTree($breadcrumb_item);
 
     foreach ($breadcrumb_items as $item) {
-      $breadcrumb->addLink(Link::createFromRoute(
-        $item->getName(),
-        'entity.node.canonical',
-        ['node' => $item->get('field_content')->getString()]
-      ));
+      $contents = $item->get('field_content')->referencedEntities();
+
+      /** @var \Drupal\Core\Entity\FieldableEntityInterface $content */
+      $content = reset($contents);
+
+      if (!($content instanceof FieldableEntityInterface)) {
+        continue;
+      }
+
+      $breadcrumb->addLink($content->toLink($item->getName()));
     }
 
     return $breadcrumb;
@@ -348,12 +350,16 @@ class BreadcrumbHelper {
   }
 
   /**
-   * Get content that references this breadcrumb item, and render it.
+   * Get nodes that references this breadcrumb item, and render it.
+   *
+   * We currently only allow nodes to use the structure referencing, but
+   * in theory, we may include this in the future to events.
+   * If that is the case, the code obviously needs to be updated.
    *
    * @return array<mixed>
-   *   An array of rendered content entities.
+   *   An array of rendered node entities.
    */
-  public function getRenderedReferencingContent(TermInterface $breadcrumb_item, string $view_mode = 'nav_teaser'): array {
+  public function getRenderedReferencingNodes(TermInterface $breadcrumb_item, string $view_mode = 'nav_teaser'): array {
     $field_name = $this->getStructureFieldName();
 
     $node_storage = $this->entityTypeManager->getStorage('node');
