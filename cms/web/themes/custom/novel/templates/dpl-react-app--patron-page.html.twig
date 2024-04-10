@@ -9,8 +9,8 @@
 <div class="dpl-react-app-container--page">
     <div {{ attributes }}>
         <form class="dpl-patron-page">
-        <h1 class="text-header-h1 my-32">{{ attributes['data-patron-page-header-text'] | raw }}</h1>
-        <h2 class="text-header-h4 mt-32 mb-16">{{ attributes['data-patron-page-basic-details-header-text'] | raw }}</h2>
+        <h1 class="text-header-h1 my-32">{{ attributes['data-patron-page-header-text']|raw }}</h1>
+        <h2 class="text-header-h4 mt-32 mb-16">{{ attributes['data-patron-page-basic-details-header-text']|raw }}</h2>
         <div class="dpl-patron-info ssc">
             <div class="dpl-patron-info__label">
             <div class="ssc-head-line w-10"></div>
@@ -26,10 +26,10 @@
             </div>
         </div>
         <section>
-            <h2 class="text-header-h4 mt-64 mb-16">{{ attributes['data-patron-contact-info-header-text'] | raw }}</h2>
-            <p class="text-body-small-regular mb-32">{{ attributes['data-patron-contact-info-body-text'] | raw }}</p>
+            <h2 class="text-header-h4 mt-64 mb-16">{{ attributes['data-patron-contact-info-header-text']|raw }}</h2>
+            <p class="text-body-small-regular mb-32">{{ attributes['data-patron-contact-info-body-text']|raw }}</p>
             <div class="dpl-input">
-            <label for="phone">{{ attributes['data-patron-contact-phone-label-text'] | raw }}</label>
+            <label for="phone">{{ attributes['data-patron-contact-phone-label-text']|raw }}</label>
             <input
                 aria-invalid="false"
                 aria-describedby="description-phone"
@@ -45,16 +45,16 @@
                 type="checkbox"
             />
             <label class="checkbox__label" for="phone-checkbox">
-                {{ checkboxIcon | raw }}
+                {{ checkboxIcon|raw }}
                 <div>
                 <span class="checkbox__text text-small-caption color-secondary-gray">
-                    {{ attributes['data-patron-contact-phone-checkbox-text'] | raw }} 
+                    {{ attributes['data-patron-contact-phone-checkbox-text']|raw }}
                 </span>
                 </div>
             </label>
             </div>
             <div class="dpl-input">
-            <label for="email">{{ attributes['data-patron-contact-email-label-text'] | raw }}</label>
+            <label for="email">{{ attributes['data-patron-contact-email-label-text']|raw }}</label>
             <input
                 aria-invalid="false"
                 aria-describedby="description-email"
@@ -70,10 +70,10 @@
                 type="checkbox"
             />
             <label class="checkbox__label" for="email-checkbox">
-                {{ checkboxIcon | raw }}
+                {{ checkboxIcon|raw }}
                 <div>
                 <span class="checkbox__text text-small-caption color-secondary-gray">
-                    {{ attributes['data-patron-contact-email-checkbox-text'] | raw }}
+                    {{ attributes['data-patron-contact-email-checkbox-text']|raw }}
                 </span>
                 </div>
             </label>
