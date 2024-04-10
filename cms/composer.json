@@ -79,7 +79,7 @@
         }
     ],
     "require": {
-        "amazeeio/drupal_integrations": "0.3.7",
+        "amazeeio/drupal_integrations": "^0.4",
         "brick/math": "^0.12.1",
         "composer/installers": "1.12.0",
         "cweagans/composer-patches": "1.7.3",
