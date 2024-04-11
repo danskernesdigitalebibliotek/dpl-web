@@ -100,6 +100,42 @@ class BreadcrumbHelper {
   }
 
   /**
+   * Get relevant categories field, as it may differ due to FieldInheritance.
+   *
+   * Events have a field_categories, but in reality, we want to use the
+   * event_categories field instead, as that's where the inheritance is set up.
+   */
+  public function getCategoriesFieldId(FieldableEntityInterface $entity): ?string {
+    if ($entity->hasField('event_categories')) {
+      return 'event_categories';
+    }
+
+    if ($entity->hasField('field_categories')) {
+      return 'field_categories';
+    }
+
+    return NULL;
+  }
+
+  /**
+   * Get relevant branch field, as it may differ due to FieldInheritance.
+   *
+   * Events have a field_branch, but in reality, we want to use the
+   * 'branch' field instead, as that's where the inheritance is set up.
+   */
+  public function getBranchFieldId(FieldableEntityInterface $entity): ?string {
+    if ($entity->hasField('branch')) {
+      return 'branch';
+    }
+
+    if ($entity->hasField('field_branch')) {
+      return 'field_branch';
+    }
+
+    return NULL;
+  }
+
+  /**
    * Getting the breadcrumb, as a url string (/page/page2/page4).
    */
   public function getBreadcrumbUrlString(FieldableEntityInterface $entity): ?string {
@@ -158,8 +194,10 @@ class BreadcrumbHelper {
       $this->getStructureBreadcrumb($entity, $breadcrumb);
     }
 
-    if ($entity->hasField('field_categories')) {
-      $this->getCategoryBreadcrumb($entity, $breadcrumb);
+    $category_field_id = $this->getCategoriesFieldId($entity);
+
+    if (!empty($category_field_id)) {
+      $this->getCategoryBreadcrumb($entity, $category_field_id, $breadcrumb);
     }
 
     $this->getBaseBreadcrumb($entity, $breadcrumb);
@@ -173,8 +211,10 @@ class BreadcrumbHelper {
   private function getBaseBreadcrumb(FieldableEntityInterface $entity, Breadcrumb $breadcrumb): Breadcrumb {
     $branch = NULL;
 
-    if ($entity->hasField('field_branch')) {
-      $branches = $entity->get('field_branch')->referencedEntities();
+    $branch_field_id = $this->getBranchFieldId($entity);
+
+    if (!empty($branch_field_id)) {
+      $branches = $entity->get($branch_field_id)->referencedEntities();
       $branch = reset($branches);
     }
 
@@ -204,12 +244,12 @@ class BreadcrumbHelper {
   /**
    * Build a breadcrumb array, based on field_categories.
    */
-  public function getCategoryBreadcrumb(FieldableEntityInterface $entity, Breadcrumb $breadcrumb): Breadcrumb {
+  public function getCategoryBreadcrumb(FieldableEntityInterface $entity, string $category_field_id, Breadcrumb $breadcrumb): Breadcrumb {
     if ($this->includeCurrentPage) {
       $breadcrumb->addLink($entity->toLink($entity->label()));
     }
 
-    $categories = $entity->get('field_categories')->referencedEntities();
+    $categories = $entity->get($category_field_id)->referencedEntities();
 
     $category = reset($categories);
 
