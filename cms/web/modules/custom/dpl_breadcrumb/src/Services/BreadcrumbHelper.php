@@ -189,7 +189,7 @@ class BreadcrumbHelper {
     if ($node->bundle() === 'article') {
       $breadcrumb->addLink(Link::createFromRoute(
         $this->translation->translate('Articles'),
-        'view.articles.page_1'
+        'view.articles.all'
       ));
     }
 
