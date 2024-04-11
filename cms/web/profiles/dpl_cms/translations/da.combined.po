@@ -23524,7 +23524,7 @@ msgstr ""
 #: 
 msgctxt "DPL admin UX"
 msgid "View content that has set this breadcrumb as a parent"
-msgstr ""
+msgstr "Vis indhold, som har dette brødkrummeelement som en sideforælder."
 
 #: 
 msgctxt "DPL admin UX"
@@ -23577,11 +23577,11 @@ msgstr "Tilføj ny"
 
 #: 
 msgid "DPL Breadcrumb"
-msgstr ""
+msgstr "Brødkrummer"
 
 #: 
 msgid "Breadcrumbs and automatic URL aliases, based on content structure."
-msgstr ""
+msgstr "Brødkrummer og automatiske URL-aliasser, baseret på indholdsstruktur."
 
 #: 
 msgid "DPL static content: Opening hours categories"
@@ -23593,7 +23593,7 @@ msgstr "Tilføjer standard åbningstidskategorier"
 
 #: 
 msgid "Breadcrumb children"
-msgstr ""
+msgstr "Sidebørn"
 
 #: 
 msgctxt "core.entity_form_display.paragraph.card_grid_automatic.default:third_party_settings:field_group:group_filters:label"
@@ -23643,27 +23643,27 @@ msgstr ""
 #: 
 msgctxt "field.field.node.page.field_breadcrumb_parent:label"
 msgid "Breadcrumb parent"
-msgstr ""
+msgstr "Sideforælder"
 
 #: 
 msgctxt "field.field.node.page.field_breadcrumb_parent:description"
 msgid "TODO: A text about how the structure tree works.<br><br />\"If you want to make this page central, you need to save it first, and then <a href=\"/admin/structure/taxonomy/manage/breadcrumb_structure/add\" target=\"_blank\">add it as a reference in the content structure tree</a>"
-msgstr ""
+msgstr "To do: Her skal skrives en tekst om hvordan strukturtræet virker. Hvis du vil gøre denne side til en strukturerende side, skal du gemme siden først og  <a href=\"/admin/structure/taxonomy/manage/breadcrumb_structure/add\" target=\"_blank\">tilføje den som en reference i strukturtræet."
 
 #: 
 msgctxt "field.field.paragraph.breadcrumb_children.field_breadcrumb_target:label"
 msgid "Breadcrumb target"
-msgstr ""
+msgstr "Brødkrumme sti"
 
 #: 
 msgctxt "field.field.paragraph.breadcrumb_children.field_breadcrumb_target:description"
 msgid "Choose a parent in the breadcrumb structure, from which the children will be displayed. <br><br />Only one level of children will be shown."
-msgstr ""
+msgstr "Vælg en sideforælder i brødkrummestrukturen, hvis sidebørn skal vises. Kun ét niveau af sidebørn kan vises."
 
 #: 
 msgctxt "field.field.paragraph.breadcrumb_children.field_title:label"
 msgid "Title"
-msgstr ""
+msgstr "Titel"
 
 #: 
 msgctxt "field.field.paragraph.card_grid_automatic.field_filter_branches:label"
@@ -23683,27 +23683,27 @@ msgstr ""
 #: 
 msgctxt "field.field.taxonomy_term.breadcrumb_structure.field_content:label"
 msgid "Content"
-msgstr ""
+msgstr "Indhold der linkes til"
 
 #: 
 msgctxt "field.field.taxonomy_term.breadcrumb_structure.field_show_children:label"
 msgid "Show children on page"
-msgstr ""
+msgstr "Vis sidebørn"
 
 #: 
 msgctxt "field.field.taxonomy_term.breadcrumb_structure.field_show_children:description"
 msgid "Should a list of contents that reference this breadcrumb, be shown automatically on this page?"
-msgstr ""
+msgstr "Vis en automatisk liste med indhold, som refererer til dette brødkrumme element, på denne side."
 
 #: 
 msgctxt "field.field.taxonomy_term.breadcrumb_structure.field_show_children:settings:on_label"
 msgid "On"
-msgstr ""
+msgstr "Til"
 
 #: 
 msgctxt "field.field.taxonomy_term.breadcrumb_structure.field_show_children:settings:off_label"
 msgid "Off"
-msgstr ""
+msgstr "Fra"
 
 #: 
 msgctxt "field.field.taxonomy_term.opening_hours_categories.field_opening_hours_color:label"
@@ -23733,12 +23733,12 @@ msgstr ""
 #: 
 msgctxt "paragraphs.paragraphs_type.breadcrumb_children:label"
 msgid "Breadcrumb children"
-msgstr ""
+msgstr "Sidebørn"
 
 #: 
 msgctxt "paragraphs.paragraphs_type.breadcrumb_children:description"
 msgid "Automatically display all content that is referencing your chosen breadcrumb item."
-msgstr ""
+msgstr "Vis automatisk alt indhold, som refererer til dit valgte brødkrumme element."
 
 #: 
 msgctxt "paragraphs.paragraphs_type.opening_hours:label"
@@ -23758,7 +23758,7 @@ msgstr "Denne paragraph anvendes til at vise åbningstiderne for det bibliotek/f
 #: 
 msgctxt "pathauto.pattern.breadcrumb_pattern:label"
 msgid "Breadcrumb pattern"
-msgstr ""
+msgstr "Brødkrumme mønster"
 
 #: 
 msgctxt "system.action.pathauto_update_alias_node:label"
