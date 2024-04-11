@@ -134,29 +134,27 @@ class BreadcrumbHelper {
    * Getting the breadcrumb, as a url string (/page/page2/page4).
    */
   public function getBreadcrumbUrlString(FieldableEntityInterface $entity): ?string {
-    $breadcrumb = $this->getBreadcrumb($entity);
-
-    $links = $breadcrumb->getLinks();
-
-    if (empty($links)) {
-      return NULL;
-    }
-
-    $links = array_reverse($links);
     $url_string = '';
 
-    foreach ($links as $link) {
-      $text = $link->getText();
-      $text = ($text instanceof MarkupInterface) ? $text->__toString() : $text;
+    $breadcrumb = $this->getBreadcrumb($entity);
+    $links = $breadcrumb->getLinks();
 
-      if (is_string($text)) {
-        $url_string .= "/$text";
+    if (!empty($links)) {
+      $links = array_reverse($links);
+
+      foreach ($links as $link) {
+        $text = $link->getText();
+        $text = ($text instanceof MarkupInterface) ? $text->__toString() : $text;
+
+        if (is_string($text)) {
+          $url_string .= "/$text";
+        }
       }
     }
 
     // If the breadcrumb does not include the current page, we want to
     // add it manually, for the URL.
-    if (!$this->includeCurrentPage) {
+    if (empty($url_string) || !$this->includeCurrentPage) {
       $url_string = "$url_string/{$entity->label()}";
     }
 
