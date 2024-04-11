@@ -1705,7 +1705,7 @@ msgstr "Log ind"
 #: 
 msgctxt "Patron menu"
 msgid "Sign up"
-msgstr "Opret profil"
+msgstr "Opret bruger"
 
 #: 
 msgctxt "Patron menu (aria)"
