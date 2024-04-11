@@ -34,6 +34,14 @@ const createBranchAndVisitOpeningHoursAdmin = () => {
   });
 };
 
+const deleteBranch = () => {
+  const pageUrl = Cypress.env("pageUrl");
+  if (pageUrl) {
+    cy.visit(`${pageUrl}/delete`);
+    cy.get('input[value="Delete"]').click();
+  }
+};
+
 const visitOpeningHoursPage = () => {
   const pageUrl = Cypress.env("pageUrl");
   if (pageUrl) {
@@ -136,8 +144,12 @@ const deleteOpeningHour = () => {
 };
 
 describe("Opening hours editor", () => {
-  before(() => {
+  beforeEach(() => {
     createBranchAndVisitOpeningHoursAdmin();
+  });
+
+  afterEach(() => {
+    deleteBranch();
   });
 
   it("Checks opening hours categories", () => {
