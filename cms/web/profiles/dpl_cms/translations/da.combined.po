@@ -9045,7 +9045,7 @@ msgstr "Alle"
 #: 
 msgctxt "views.view.taxonomy_term:display:default:display_options:arguments:tid:title"
 msgid "{{ arguments.tid }}"
-msgstr ""
+msgstr "{{ arguments.tid }}"
 
 #: 
 msgctxt "views.view.taxonomy_term:display:feed_1:display_title"
@@ -23433,42 +23433,42 @@ msgstr ""
 #: 
 msgctxt "Opening Hours"
 msgid "Opening Hours"
-msgstr ""
+msgstr "Åbningstider"
 
 #: 
 msgctxt "Opening Hours"
 msgid "Show opening hours for week"
-msgstr ""
+msgstr "Vis ugens åbningstider"
 
 #: 
 msgctxt "Opening Hours"
 msgid "Week"
-msgstr ""
+msgstr "Uge"
 
 #: 
 msgctxt "DPL Opening Hours"
 msgid "Remove event"
-msgstr ""
+msgstr "Slet event"
 
 #: 
 msgctxt "DPL Opening Hours"
 msgid "Title"
-msgstr ""
+msgstr "Titel"
 
 #: 
 msgctxt "DPL Opening Hours"
 msgid "Start time"
-msgstr ""
+msgstr "Starter"
 
 #: 
 msgctxt "DPL Opening Hours"
 msgid "End time"
-msgstr ""
+msgstr "Slutter"
 
 #: 
 msgctxt "DPL Opening Hours"
 msgid "Save"
-msgstr ""
+msgstr "Gem"
 
 #: 
 msgctxt "DPL admin UX"
@@ -23537,19 +23537,19 @@ msgstr "Artikler"
 
 #: 
 msgid "Create individual opening hours"
-msgstr ""
+msgstr "Lav individuelle åbningstider"
 
 #: 
 msgid "List all opening hours"
-msgstr ""
+msgstr "Vis alle åbningstider"
 
 #: 
 msgid "Update individual opening hours"
-msgstr ""
+msgstr "Opdater enkelte åbningstider"
 
 #: 
 msgid "Delete individual opening hours"
-msgstr ""
+msgstr "Slet enkelte åbningstider"
 
 #: 
 msgid "Example content for DPL Breadcrumb"
@@ -23561,15 +23561,15 @@ msgstr ""
 
 #: 
 msgid "Opening Hours"
-msgstr ""
+msgstr "Åbningstider"
 
 #: 
 msgid "DPL Opening Hours"
-msgstr ""
+msgstr "Åbningstider"
 
 #: 
 msgid "Handling of opening hours for branches."
-msgstr ""
+msgstr "Håndterer åbningstider for biblioteker."
 
 #: 
 msgid "Add new"
@@ -23585,11 +23585,11 @@ msgstr ""
 
 #: 
 msgid "DPL static content: Opening hours categories"
-msgstr ""
+msgstr "Åbningstidskategorier (statisk indhold)"
 
 #: 
 msgid "Adds default opening hours categories"
-msgstr ""
+msgstr "Tilføjer standard åbningstidskategorier"
 
 #: 
 msgid "Breadcrumb children"
@@ -23713,7 +23713,7 @@ msgstr ""
 #: 
 msgctxt "field.field.taxonomy_term.opening_hours_categories.field_opening_hours_color:description"
 msgid "A color used to represent opening hours instances in administrative interfaces."
-msgstr ""
+msgstr "En farve, som anvendes til at repræsentere typer af åbningstider i det redaktørvisningen."
 
 #: 
 msgctxt "image.style.card_large:label"
@@ -23743,7 +23743,7 @@ msgstr ""
 #: 
 msgctxt "paragraphs.paragraphs_type.opening_hours:label"
 msgid "Opening Hours"
-msgstr ""
+msgstr "Åbningstider"
 
 #: 
 msgctxt "paragraphs.paragraphs_type.opening_hours:description"
@@ -23751,7 +23751,9 @@ msgid "This is a paragraph for displaying the opening hours for the branch it is
 "\n"
 "Opening hours are created under the settings of a branch. \n"
 ""
-msgstr ""
+msgstr "Denne paragraph anvendes til at vise åbningstiderne for det bibliotek/filial de er tilknyttet.\n"
+"\n"
+"Åbningstider oprettes på bibliotekssiden."
 
 #: 
 msgctxt "pathauto.pattern.breadcrumb_pattern:label"
