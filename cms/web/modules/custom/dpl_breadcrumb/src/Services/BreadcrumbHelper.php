@@ -146,7 +146,6 @@ class BreadcrumbHelper {
     $url_string = '';
 
     foreach ($links as $link) {
-
       $text = $link->getText();
       $text = ($text instanceof MarkupInterface) ? $text->__toString() : $text;
 
@@ -194,19 +193,6 @@ class BreadcrumbHelper {
    * Build the base breadcrumb, based on possible branch references.
    */
   private function getBaseBreadcrumb(FieldableEntityInterface $entity, Breadcrumb $breadcrumb): Breadcrumb {
-    $branch = NULL;
-
-    $branch_field_id = $this->getBranchFieldId($entity);
-
-    if (!empty($branch_field_id)) {
-      $branches = $entity->get($branch_field_id)->referencedEntities();
-      $branch = reset($branches);
-    }
-
-    if ($branch instanceof FieldableEntityInterface) {
-      $breadcrumb->addLink($branch->toLink($branch->label()));
-    }
-
     if ($entity->bundle() === 'article') {
       $breadcrumb->addLink(Link::createFromRoute(
         $this->translation->translate('Articles'),
@@ -221,6 +207,17 @@ class BreadcrumbHelper {
         $this->translation->translate('Events'),
         'view.events.all'
       ));
+    }
+
+    $branch_field_id = $this->getBranchFieldId($entity);
+
+    if (!empty($branch_field_id)) {
+      $branches = $entity->get($branch_field_id)->referencedEntities();
+      $branch = reset($branches);
+
+      if ($branch instanceof FieldableEntityInterface) {
+        $breadcrumb->addLink($branch->toLink($branch->label()));
+      }
     }
 
     return $breadcrumb;
