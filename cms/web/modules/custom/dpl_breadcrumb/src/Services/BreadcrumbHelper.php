@@ -54,11 +54,6 @@ class BreadcrumbHelper {
   protected string $structureFieldName = 'field_breadcrumb_parent';
 
   /**
-   * Max breadcrumb items to show in URL alias.
-   */
-  protected int $maxItemsUrl = 5;
-
-  /**
    * {@inheritdoc}
    */
   public function __construct(
@@ -148,39 +143,29 @@ class BreadcrumbHelper {
     }
 
     $links = array_reverse($links);
-    $breadcrumb_string = '';
-
-    $i = 1;
+    $url_string = '';
 
     foreach ($links as $link) {
-      if ($i > $this->maxItemsUrl) {
-        break;
-      }
 
       $text = $link->getText();
       $text = ($text instanceof MarkupInterface) ? $text->__toString() : $text;
 
       if (is_string($text)) {
-        $lang_code = $this->languageManager->getCurrentLanguage()->getId();
-
-        $text = $this->aliasCleaner->cleanString(
-          $text,
-          ['langcode' => $lang_code]
-        );
-
-        $breadcrumb_string .= "/$text";
+        $url_string .= "/$text";
       }
-
-      $i++;
     }
 
     // If the breadcrumb does not include the current page, we want to
     // add it manually, for the URL.
     if (!$this->includeCurrentPage) {
-      $breadcrumb_string .= "/{$entity->label()}";
+      $url_string = "$url_string/{$entity->label()}";
     }
 
-    return $breadcrumb_string;
+    $url_string = $this->aliasCleaner->cleanString(
+      $url_string
+    );
+
+    return $url_string;
   }
 
   /**
