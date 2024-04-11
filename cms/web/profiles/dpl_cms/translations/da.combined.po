@@ -6198,12 +6198,12 @@ msgstr "\"Brugerregistreringselement\" anvendes til at vise relevant information
 #: 
 msgctxt "paragraphs.paragraphs_type.user_registration_section:label"
 msgid "User registration section"
-msgstr "Brugerregistreringsafsnit"
+msgstr "Brugerregistreringsparagraph"
 
 #: 
 msgctxt "paragraphs.paragraphs_type.user_registration_section:description"
 msgid "The \"User registration section\" paragraph type is used to display \"User registration item\" paragraphs."
-msgstr "\"Brugerregistreringsafsnit\" bruges til at vise \"Brugerregistreringselementer\"."
+msgstr "\"Brugerregistreringsparagraph\" bruges til at vise \"Brugerregistreringselementer\"."
 
 #: 
 msgctxt "paragraphs.paragraphs_type.video:label"
@@ -7214,7 +7214,7 @@ msgstr "Indholdslister, indlejret i paragraphs"
 #: 
 msgctxt "views.view.content_paragraphs:description"
 msgid "Lists for displaying content, through embedded views in paragraphs. Also allows the editor to set filter options in the paragraphs, that will be sent along using contextual filters. See dpl_filter_paragraphs.module"
-msgstr "Lister til visning af indhold gennem indlejrede visninger i afsnit. Giver også redaktøren mulighed for at indstille filterindstillinger i afsnittene, som vil blive sendt med ved hjælp af kontekstuelle filtre. Se dpl_filter_paragraphs.module"
+msgstr "Lister til visning af indhold gennem indlejrede visninger i paragraphs. Giver også redaktøren mulighed for at indstille filterindstillinger i paragraphs, som vil blive sendt med ved hjælp af kontekstuelle filtre. Se dpl_filter_paragraphs.module"
 
 #: 
 msgctxt "views.view.content_paragraphs:display:default:display_title"
@@ -17601,7 +17601,7 @@ msgstr ""
 #: 
 msgctxt "Paragraphs Editor Enhancements"
 msgid "Add Paragraph"
-msgstr "Tilføj afsnit"
+msgstr "Tilføj paragraph"
 
 #: 
 msgctxt "Paragraphs Editor Enhancements"
