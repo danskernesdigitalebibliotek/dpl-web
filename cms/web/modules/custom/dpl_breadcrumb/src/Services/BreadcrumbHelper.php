@@ -10,7 +10,9 @@ use Drupal\Core\Language\LanguageManagerInterface;
 use Drupal\Core\Link;
 use Drupal\Core\StringTranslation\TranslationInterface;
 use Drupal\pathauto\AliasCleanerInterface;
+use Drupal\recurring_events\Entity\EventInstance;
 use Drupal\taxonomy\TermInterface;
+use Safe\DateTime;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
 /**
@@ -222,10 +224,48 @@ class BreadcrumbHelper {
   }
 
   /**
+   * Event instances have a series parent, that we want in the breadcrumb.
+   *
+   * Ideally, if there are siblings, we want a breadcrumb that looks something
+   * like: [base]=> [event series name] => [event instance date].
+   */
+  public function getEventInstanceBreadcrumbSuffix(EventInstance $instance, Breadcrumb $breadcrumb): Breadcrumb {
+    $series = $instance->getEventSeries();
+    $instance_count =
+      $this->entityTypeManager->getStorage('eventinstance')->getQuery()->condition('eventseries_id', $series->id())->accessCheck()->count()->execute();
+
+    // Technically an instance date may be a range over several days or months,
+    // but this quickly becomes very complicated, both to display for the user,
+    // but also to use for generating a clean URL alias.
+    // We will instead just use the start date, with a year suffix.
+    if ($instance_count > 1) {
+      $date_string = $instance->get('date')->getValue()[0]['value'] ?? NULL;
+
+      if (!empty($date_string)) {
+        $date = new DateTime($date_string);
+        $formatted_date = $date->format('Y-m-d');
+        $breadcrumb->addLink($instance->toLink($formatted_date));
+      }
+
+      $breadcrumb->addLink($series->toLink($series->label()));
+    }
+    // If there are no siblings, we'll jump past this, and just show the
+    // instance link.
+    else {
+      $breadcrumb->addLink($instance->toLink($instance->label()));
+    }
+
+    return $breadcrumb;
+  }
+
+  /**
    * Build a breadcrumb array, based on field_categories.
    */
   public function getCategoryBreadcrumb(FieldableEntityInterface $entity, string $category_field_id, Breadcrumb $breadcrumb): Breadcrumb {
-    if ($this->includeCurrentPage) {
+    if ($entity instanceof EventInstance) {
+      $breadcrumb = $this->getEventInstanceBreadcrumbSuffix($entity, $breadcrumb);
+    }
+    elseif ($this->includeCurrentPage) {
       $breadcrumb->addLink($entity->toLink($entity->label()));
     }
 
