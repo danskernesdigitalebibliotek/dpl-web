@@ -1,0 +1,14 @@
+uuid: fc04ac37-ca43-4dd5-9516-56993f1008b9
+langcode: en
+status: true
+dependencies:
+  module:
+    - node
+id: breadcrumb_pattern
+label: 'Breadcrumb pattern'
+type: 'canonical_entities:node'
+pattern: '[dpl_breadcrumb:breadcrumb-url-alias]'
+selection_criteria: {  }
+selection_logic: and
+weight: -5
+relationships: {  }

@@ -1,6 +1,6 @@
 <?php
 
-namespace Drupal\dpl_event\Plugin\rest\resource;
+namespace Drupal\dpl_event\Plugin\rest\resource\v1;
 
 use Drupal\rest\ModifiedResourceResponse;
 use Drupal\rest\Plugin\ResourceBase;
@@ -16,7 +16,7 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
  *   id = "event",
  *   label = @Translation("Update single events"),
  *   uri_paths = {
- *     "canonical" = "/dpl_event/{uuid}",
+ *     "canonical" = "/api/v1/events/{uuid}",
  *   },
  *
  *   route_parameters = {

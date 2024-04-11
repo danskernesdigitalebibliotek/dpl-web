@@ -1,0 +1,23 @@
+uuid: 5505f268-0f45-4419-a0ed-93943a9851af
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.taxonomy_term.field_show_children
+    - taxonomy.vocabulary.breadcrumb_structure
+id: taxonomy_term.breadcrumb_structure.field_show_children
+field_name: field_show_children
+entity_type: taxonomy_term
+bundle: breadcrumb_structure
+label: 'Show children on page'
+description: 'Should a list of contents that reference this breadcrumb, be shown automatically on this page?'
+required: false
+translatable: false
+default_value:
+  -
+    value: 1
+default_value_callback: ''
+settings:
+  on_label: 'On'
+  off_label: 'Off'
+field_type: boolean

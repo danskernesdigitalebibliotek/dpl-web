@@ -1,0 +1,15 @@
+<div class="p-8">
+  <nav role="navigation">
+    <h2 class="hide-visually">
+      {{ 'Breadcrumb'|t }}
+    </h2>
+
+    {% for link in links|reverse %}
+      {{ link }}
+
+      {% if not loop.last %}
+        >
+      {% endif %}
+    {% endfor %}
+  </nav>
+</div>

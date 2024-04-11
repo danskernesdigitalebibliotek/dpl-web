@@ -4,6 +4,8 @@ status: true
 dependencies:
   config:
     - core.entity_view_mode.paragraph.preview
+    - field.field.paragraph.card_grid_automatic.field_filter_branches
+    - field.field.paragraph.card_grid_automatic.field_filter_categories
     - field.field.paragraph.card_grid_automatic.field_filter_tags
     - field.field.paragraph.card_grid_automatic.field_title
     - paragraphs.paragraphs_type.card_grid_automatic
@@ -12,6 +14,22 @@ targetEntityType: paragraph
 bundle: card_grid_automatic
 mode: preview
 content:
+  field_filter_branches:
+    type: entity_reference_label
+    label: above
+    settings:
+      link: true
+    third_party_settings: {  }
+    weight: 3
+    region: content
+  field_filter_categories:
+    type: entity_reference_label
+    label: above
+    settings:
+      link: true
+    third_party_settings: {  }
+    weight: 2
+    region: content
   field_filter_tags:
     type: entity_reference_label
     label: above

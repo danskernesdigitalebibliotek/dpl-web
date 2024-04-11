@@ -1,0 +1,13 @@
+uuid: 20cff0b7-b0d1-406c-8d70-960e540aa306
+langcode: en
+status: true
+dependencies:
+  config:
+    - paragraphs.paragraphs_type.opening_hours
+id: paragraph.opening_hours.default
+targetEntityType: paragraph
+bundle: opening_hours
+mode: default
+content: {  }
+hidden:
+  search_api_excerpt: true

@@ -32,6 +32,7 @@ if (InstallerKernel::installationAttempted()) {
 // Exclude development modules from configuration export.
 $settings['config_exclude_modules'] = [
   'dpl_example_content',
+  'dpl_example_breadcrumb',
   'devel',
   'field_ui',
   'views_ui',
