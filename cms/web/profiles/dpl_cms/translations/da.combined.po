@@ -23448,7 +23448,7 @@ msgstr "Uge"
 #: 
 msgctxt "DPL Opening Hours"
 msgid "Remove event"
-msgstr "Slet event"
+msgstr "Slet åbningstid"
 
 #: 
 msgctxt "DPL Opening Hours"
