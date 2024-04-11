@@ -1,5 +1,6 @@
 <?php
 
+use Drupal\Core\Entity\FieldableEntityInterface;
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\dpl_breadcrumb\Services\BreadcrumbHelper;
 use Drupal\drupal_typed\DrupalTyped;
@@ -258,14 +259,26 @@ function dpl_breadcrumb_token_info(): array {
  */
 function dpl_breadcrumb_tokens(string $type, array $tokens, array $data): array {
   $token_original = $tokens['breadcrumb-url-alias'] ?? NULL;
-  $node = $data['node'] ?? NULL;
 
-  if ($type !== 'dpl_breadcrumb' || empty($token_original) || !($node instanceof Node)) {
+  if ($type !== 'dpl_breadcrumb' || empty($token_original)) {
+    return [];
+  }
+
+  $entity = $data['node'] ?? NULL;
+
+  if (empty($entity)) {
+    $event_series = $data['eventseries'] ?? NULL;
+    $event_instance = $data['eventinstance'] ?? NULL;
+
+    $entity = $event_series ?? $event_instance;
+  }
+
+  if (!($entity instanceof FieldableEntityInterface)) {
     return [];
   }
 
   $breadcrumb =
-    \Drupal::service('dpl_breadcrumb.breadcrumb_helper')->getBreadcrumbUrlString($node);
+    \Drupal::service('dpl_breadcrumb.breadcrumb_helper')->getBreadcrumbUrlString($entity);
 
   return [
     $token_original => $breadcrumb,
