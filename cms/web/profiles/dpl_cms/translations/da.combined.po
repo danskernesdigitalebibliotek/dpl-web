@@ -6173,7 +6173,7 @@ msgstr "Anbefaling"
 #: 
 msgctxt "paragraphs.paragraphs_type.recommendation:description"
 msgid "This paragraph is used to recommend a material. "
-msgstr "Dette afsnit bruges til at anbefale et materiale.␣"
+msgstr "Denne paragraph bruges til at anbefale et materiale.␣"
 
 #: 
 msgctxt "paragraphs.paragraphs_type.text_body:label"
@@ -9481,7 +9481,7 @@ msgstr "By"
 #: 
 msgctxt "Address label"
 msgid "Administrative area (e.g. State or Province)"
-msgstr ""
+msgstr "Kommune"
 
 #: 
 msgctxt "Address label"
@@ -9561,7 +9561,7 @@ msgstr ""
 #: 
 msgctxt "Address label"
 msgid "State"
-msgstr ""
+msgstr "Stat"
 
 #: 
 msgctxt "Address label"
