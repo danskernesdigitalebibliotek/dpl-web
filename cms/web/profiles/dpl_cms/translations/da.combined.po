@@ -4147,7 +4147,7 @@ msgstr "Sørger for faste sider på nye bibliotekshjemmesider."
 #: 
 msgctxt "Library Agency Configuration"
 msgid "Opening hours link"
-msgstr "Link til åbnbingtider"
+msgstr "Link til åbningstider"
 
 #: 
 msgctxt "DPL event"
@@ -23453,7 +23453,7 @@ msgstr "Slet åbningstid"
 #: 
 msgctxt "DPL Opening Hours"
 msgid "Title"
-msgstr "Titel"
+msgstr "Kategori"
 
 #: 
 msgctxt "DPL Opening Hours"
@@ -23778,7 +23778,7 @@ msgstr "Breadcrumb and URL structure"
 #: 
 msgctxt "taxonomy.vocabulary.opening_hours_categories:description"
 msgid "Types of opening hours, e.g. \"Open\" or \"Telephone time\""
-msgstr "Types of opening hours, e.g. \"Open\" or \"Telephone time\""
+msgstr "Kategorier af åbningstider, f.eks. \"Åbent\" eller \"Telefontid\""
 
 #: 
 msgctxt "views.view.content_paragraphs:display:default:display_options:arguments:field_categories_target_id:exception:title"
