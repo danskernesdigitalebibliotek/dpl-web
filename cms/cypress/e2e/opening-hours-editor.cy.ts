@@ -1,13 +1,7 @@
 const selectionOption = "Telefontid";
 
-const loginAndVisit = (url: string) => {
-  cy.clearCookies();
-  cy.drupalLogin();
-  cy.visit(url);
-};
-
 const createBranchAndVisitOpeningHoursAdmin = () => {
-  loginAndVisit("/node/add/branch");
+  cy.drupalLoginAndVisit("/node/add/branch");
   cy.get("#edit-title-0-value").type("Test branch");
   cy.get('button[title="Show all Paragraphs"]').click();
   cy.get('button[value="Opening Hours"]').click({
@@ -52,7 +46,7 @@ const visitOpeningHoursPage = () => {
 const visitOpeningHoursPageAdmin = () => {
   const adminUrl = Cypress.env("adminUrl");
   if (adminUrl) {
-    loginAndVisit(adminUrl);
+    cy.drupalLoginAndVisit(adminUrl);
   }
 };
 

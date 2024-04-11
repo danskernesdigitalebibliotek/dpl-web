@@ -103,6 +103,12 @@ Cypress.Commands.add("drupalCron", () => {
   cy.drupalLogout();
 });
 
+Cypress.Commands.add("drupalLoginAndVisit", (url: string) => {
+  cy.clearCookies();
+  cy.drupalLogin();
+  cy.visit(url);
+});
+
 const adgangsplatformenLoginOauthMappings = ({
   userIsAlreadyRegistered,
   authorizationCode,
@@ -312,6 +318,7 @@ declare global {
       drupalLogin(): Chainable<null>;
       drupalLogout(): Chainable<null>;
       drupalCron(): Chainable<null>;
+      drupalLoginAndVisit(url: string): Chainable<null>;
       adgangsplatformenLogin(params: {
         authorizationCode: string;
         accessToken: string;
