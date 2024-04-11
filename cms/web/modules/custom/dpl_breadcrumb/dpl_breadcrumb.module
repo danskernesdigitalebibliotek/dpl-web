@@ -79,19 +79,23 @@ function dpl_breadcrumb_preprocess_page(array &$variables): void {
 
   $service = DrupalTyped::service(BreadcrumbHelper::class, 'dpl_breadcrumb.breadcrumb_helper');
 
+  // Building the breadcrumb, displayed at the top of the page.
   $variables['breadcrumb'] = $service->getBreadcrumb($entity);
 
+  // If this entity is part of the structure tree, we might display an automatic
+  // list of the related children.
+  // This is seperate from the breadcrumb that is dispalyed on the page.
   $breadcrumb_item = $service->getBreadcrumbItem($entity);
 
-  // If this node is part of the structure tree, we might display an automatic
-  // list of the related children.
   if ($breadcrumb_item instanceof TermInterface && $breadcrumb_item->get('field_show_children')->getString() == '1') {
-    $variables['breadcrumb_children'] = $service->getRenderedReferencingNodes($breadcrumb_item);
+    $variables['related_children'] = $service->getRenderedReferencingNodes($breadcrumb_item);
 
     // Drupal will cache the whole page, as it does not know that it is
     // embedding a dynamic list. We'll add a simple cache tag,
     // so it be invalidated if any nodes have been updated - e.g. the same kind
     // of cache tag that a view has.
+    // You could expand this to be a more specific cache tag, but it will only
+    // affect this one page, so node_list should be sufficient.
     $variables['#cache']['tags'][] = 'node_list';
   }
 }
@@ -147,7 +151,9 @@ function dpl_breadcrumb_taxonomy_term_insert(TermInterface $term): void {
 /**
  * Helper function, run as hook when a breadcrumb item is saved.
  *
- * This will allow us to invalidate caches, and save referenced content.
+ * This will allow us to  save referenced content, thereby invalidating the
+ * caches, but also to update the entities to make sure they have the correct
+ * data in field_breadcrumb_parent.
  */
 function _dpl_breadcrumb_structure_item_save(TermInterface $term): void {
   $service = DrupalTyped::service(BreadcrumbHelper::class, 'dpl_breadcrumb.breadcrumb_helper');
@@ -168,7 +174,7 @@ function _dpl_breadcrumb_structure_item_save(TermInterface $term): void {
     /** @var array<\Drupal\Core\Entity\FieldableEntityInterface> $contents */
     $contents = $structure_term->get('field_content')->referencedEntities();
 
-    // This should always be a single item array but we might as well do a loop.
+    // This should always be a single item array, but we will still do a loop.
     foreach ($contents as $content) {
       $content->save();
     }

@@ -61,13 +61,13 @@
   <main id="main-content" role="main">
     {{ page.content }}
 
-    {% if breadcrumb_children %}
+    {% if related_children %}
       {# @todo - this needs to be replaced by proper styling. #}
       <div class="mt-64">
         {% include '@novel/components/breadcrumb-children.html.twig'
           with {
-          title: 'Breadcrumb children'|trans,
-          items: breadcrumb_children,
+          title: 'Related content'|trans,
+          items: related_children,
         } only %}
       </div>
     {% endif %}
