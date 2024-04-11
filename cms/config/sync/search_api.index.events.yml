@@ -45,6 +45,14 @@ field_settings:
     dependencies:
       module:
         - field_inheritance
+  status:
+    label: Published
+    datasource_id: 'entity:eventinstance'
+    property_path: status
+    type: boolean
+    dependencies:
+      module:
+        - recurring_events
 datasource_settings:
   'entity:eventinstance':
     bundles:
