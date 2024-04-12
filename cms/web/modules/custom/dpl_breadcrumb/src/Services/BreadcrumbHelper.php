@@ -120,7 +120,7 @@ class BreadcrumbHelper {
    * Events have a field_branch, but in reality, we want to use the
    * 'branch' field instead, as that's where the inheritance is set up.
    */
-  public function getBranchFieldId(FieldableEntityInterface $entity): ?string {
+  private function getBranchFieldId(FieldableEntityInterface $entity): ?string {
     if ($entity->hasField('branch')) {
       return 'branch';
     }
@@ -178,11 +178,7 @@ class BreadcrumbHelper {
       $this->getStructureBreadcrumb($entity, $breadcrumb);
     }
 
-    $category_field_id = $this->getCategoriesFieldId($entity);
-
-    if (!empty($category_field_id)) {
-      $this->getCategoryBreadcrumb($entity, $category_field_id, $breadcrumb);
-    }
+    $this->getCategoryBreadcrumb($entity, $breadcrumb);
 
     $this->getBaseBreadcrumb($entity, $breadcrumb);
 
@@ -261,7 +257,13 @@ class BreadcrumbHelper {
   /**
    * Build a breadcrumb array, based on field_categories.
    */
-  public function getCategoryBreadcrumb(FieldableEntityInterface $entity, string $category_field_id, Breadcrumb $breadcrumb): Breadcrumb {
+  public function getCategoryBreadcrumb(FieldableEntityInterface $entity, Breadcrumb $breadcrumb): Breadcrumb {
+    $category_field_id = $this->getCategoriesFieldId($entity);
+
+    if (empty($category_field_id)) {
+      return $breadcrumb;
+    }
+
     if ($entity instanceof EventInstance) {
       $breadcrumb = $this->getEventInstanceBreadcrumbSuffix($entity, $breadcrumb);
     }

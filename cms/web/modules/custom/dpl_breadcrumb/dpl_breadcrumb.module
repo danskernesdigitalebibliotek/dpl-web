@@ -65,7 +65,7 @@ function dpl_breadcrumb_preprocess_paragraph__breadcrumb_children(array &$variab
  * We get it based on a node's field_breadcrumb_parent.
  */
 function dpl_breadcrumb_preprocess_page(array &$variables): void {
-  $entity = $variables['node'] ?? NULL;
+  $entity = \Drupal::routeMatch()->getParameter('node');
 
   if (empty($entity)) {
     $event_series = \Drupal::routeMatch()->getParameter('eventseries');
