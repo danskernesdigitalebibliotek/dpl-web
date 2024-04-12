@@ -2,6 +2,15 @@
  * This file is loaded into admin pages.
  */
 
+/*
+ * We dont want the filter help link below CKEditor, as it just confuses more
+ * than it helps, and we already make sure to show the styles directly
+ * in the editor.
+ */
+.filter-help {
+  display: none;
+}
+
 /* Overriding wrong styling from reset.scss */
 .button:focus {
   padding: calc(var(--gin-spacing-m) - 2px) calc(var(--gin-spacing-l) - 2px);
