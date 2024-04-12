@@ -149,53 +149,7 @@ function dpl_breadcrumb_form_alter(array &$form, FormStateInterface $form_state,
 
     $field['#disabled'] = TRUE;
     $field['#default_value'] = [$breadcrumb_parent?->id()];
-    $field['#description'] = t('TODO - A text that describes that this node already exists in the content structure and cannot be edited.', [], ['context' => 'DPL admin UX']);
-  }
-}
-
-/**
- * Implements hook_ENTITY_TYPE_update().
- */
-function dpl_breadcrumb_taxonomy_term_update(TermInterface $term): void {
-  _dpl_breadcrumb_structure_item_save($term);
-}
-
-/**
- * Implements hook_ENTITY_TYPE_insert().
- */
-function dpl_breadcrumb_taxonomy_term_insert(TermInterface $term): void {
-  _dpl_breadcrumb_structure_item_save($term);
-}
-
-/**
- * Helper function, run as hook when a breadcrumb item is saved.
- *
- * This will allow us to  save referenced content, thereby invalidating the
- * caches, but also to update the entities to make sure they have the correct
- * data in field_breadcrumb_parent.
- */
-function _dpl_breadcrumb_structure_item_save(TermInterface $term): void {
-  if (!$term->hasField('field_content')) {
-    return;
-  }
-
-  /** @var array<\Drupal\Core\Entity\FieldableEntityInterface> $contents */
-  $contents = $term->get('field_content')->referencedEntities();
-
-  if (empty($contents)) {
-    return;
-  }
-
-  $contents += \Drupal::entityTypeManager()->getStorage('node')->loadByProperties([
-    'field_breadcrumb_parent' => $term->id(),
-  ]);
-
-  // We want to trigger a save on all nodes that are referenced.
-  // This will also trigger the logic in dpl_breadcrumb_node_presave(),
-  // updating the relevant info in the breadcrumb field on the node.
-  // We want to do this for all nodes that are referenced in the context tree.
-  foreach ($contents as $content) {
-    $content->save();
+    $field['#description'] = t('TODO - A text that describes that this node already exists in the content structure and cannot be edited.', [], ['context' => 'DPL Breadcrumbs']);
   }
 
 }
