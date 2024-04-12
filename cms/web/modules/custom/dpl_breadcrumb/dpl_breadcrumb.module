@@ -22,8 +22,8 @@ function dpl_breadcrumb_form_taxonomy_term_breadcrumb_structure_form_alter(array
 
   $form['breadcrumb_children'] = [
     '#type' => 'details',
-    '#title' => t('View content that has set this breadcrumb as a parent', [], ['context' => 'DPL admin UX']),
-    '#weight' => 10,
+    '#title' => t('Content that has set this breadcrumb as a parent', [], ['context' => 'DPL admin UX']),
+    '#weight' => 5,
     'items' => $service->getRenderedReferencingNodes($breadcrumb_item, 'teaser'),
   ];
 }
