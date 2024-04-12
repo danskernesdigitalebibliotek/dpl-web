@@ -1,4 +1,16 @@
-const selectionOption = "Telefontid";
+enum OpeningHourCategories {
+  Opening = "Åbent",
+  CitizenService = "Borgerservice",
+  WithService = "Med betjening",
+  SelfService = "Selvbetjening",
+  PhoneTime = "Telefontid",
+}
+
+type OpeningHourFormType = {
+  openingHourCategory: OpeningHourCategories;
+  start: `${number}:${number}`;
+  end: `${number}:${number}`;
+};
 
 const createBranchAndVisitOpeningHoursAdmin = () => {
   cy.drupalLoginAndVisit("/node/add/branch");
@@ -62,79 +74,155 @@ const selectTodayFromMonthViewAdmin = () => {
   cy.get(".fc-day-today").click();
 };
 
-const createOpeningHour = () => {
+const selectTimeOnThursdayFromWeekView = ({
+  start,
+}: Pick<OpeningHourFormType, "start">): void => {
+  // In FullCalendar, the date and time elements are siblings in the same overlaying div, which prevents selection by both date and time simultaneously.
+  // To work around this, we target a specific time slot. This example selects the 08:00 slot, which spans all days.
+  // Since Cypress clicks at the center of the target element by default, and our time slots extend across all weekdays, it will interact with the slot for Thursday.
+  cy.get(`td.fc-timegrid-slot-lane[data-time="${start}:00"]`).click();
+};
+
+const fillOpeningHourForm = ({
+  openingHourCategory,
+  start,
+  end,
+}: Partial<OpeningHourFormType>) => {
+  cy.getBySel("opening-hours-editor-form").should("be.visible");
+
+  if (openingHourCategory) {
+    cy.getBySel("opening-hours-editor-form-select").select(openingHourCategory);
+  }
+  if (start) {
+    cy.getBySel("opening-hours-editor-form-start-time").focus().type(start);
+  }
+  if (end) {
+    cy.getBySel("opening-hours-editor-form-end-time").focus().type(end);
+  }
+};
+
+const submitOpeningHourForm = () => {
+  cy.getBySel("opening-hours-editor-form-submit").click();
+};
+
+const checkOpeningHoursAdmin = ({
+  openingHourCategory,
+  start,
+  end,
+}: OpeningHourFormType) => {
+  return cy
+    .getBySel("opening-hours-editor-event-content")
+    .should("be.visible")
+    .and("contain", openingHourCategory)
+    .and("contain", `${start} - ${end}`);
+};
+
+const checkOpeningHoursPage = ({
+  openingHourCategory,
+  start,
+  end,
+}: OpeningHourFormType) => {
+  cy.getBySel("opening-hours-week-list")
+    .should("be.visible")
+    .and("contain", openingHourCategory)
+    .and("contain", `${start} - ${end}`);
+};
+
+const checkOpeningHoursNotPresentInPage = ({
+  openingHourCategory,
+  start,
+  end,
+}: OpeningHourFormType) => {
+  cy.getBySel("opening-hours-week-list")
+    .should("be.visible")
+    .should("not.contain", openingHourCategory)
+    .should("not.contain", `${start} - ${end}`)
+    .contains("The library is closed this day");
+};
+
+const createOpeningHour = ({
+  openingHourCategory,
+  start,
+  end,
+}: OpeningHourFormType) => {
   visitOpeningHoursPageAdmin();
   navigateToMonthViewAdmin();
   selectTodayFromMonthViewAdmin();
-  cy.getBySel("opening-hours-editor-form").should("be.visible");
-  cy.getBySel("opening-hours-editor-form-select").select(selectionOption);
-  cy.getBySel("opening-hours-editor-form-start-time").focus().type("10:00");
-  cy.getBySel("opening-hours-editor-form-end-time").focus().type("18:00");
-  cy.getBySel("opening-hours-editor-form-submit").click();
-  cy.getBySel("opening-hours-editor-event-content")
-    .should("be.visible")
-    .and("contain", selectionOption)
-    .and("contain", "10:00 - 18:00");
+  fillOpeningHourForm({ openingHourCategory, start, end });
+  submitOpeningHourForm();
+  checkOpeningHoursAdmin({ openingHourCategory, start, end });
   visitOpeningHoursPage();
-  cy.getBySel("opening-hours-week-list").contains(selectionOption);
-  cy.getBySel("opening-hours-week-list").contains("10:00 - 18:00");
+  checkOpeningHoursPage({ openingHourCategory, start, end });
 };
 
-const createOpeningHourInNextWeek = () => {
+const createOpeningHourInNextWeek = ({
+  openingHourCategory,
+  start,
+  end,
+}: OpeningHourFormType) => {
   visitOpeningHoursPageAdmin();
   navigateToNextWeekAdmin();
-  // FullCalendar has a layer over the calendar. Therefore, we need to click the last time-grid slot.
-  // The click will be centered and therefore choose the middle of the day (Thursday).
-  cy.get('td.fc-timegrid-slot[data-time="08:00:00"]').last().click();
-  cy.getBySel("opening-hours-editor-form").should("be.visible");
-  cy.getBySel("opening-hours-editor-form-select").select(selectionOption);
+  selectTimeOnThursdayFromWeekView({ start });
+  fillOpeningHourForm({ openingHourCategory, end });
   cy.getBySel("opening-hours-editor-form-start-time").should(
     "have.attr",
     "value",
-    "08:00"
+    start
   );
-  cy.getBySel("opening-hours-editor-form-end-time").focus().type("18:00");
-  cy.getBySel("opening-hours-editor-form-submit").click();
+  submitOpeningHourForm();
   visitOpeningHoursPage();
-  cy.getBySel("opening-hours-week-list").should("not.contain", selectionOption);
-  cy.getBySel("opening-hours-week-list").should("not.contain", "08:00 - 18:00");
+  checkOpeningHoursNotPresentInPage({
+    openingHourCategory,
+    start,
+    end,
+  });
   cy.getBySel("opening-hours-next-week-button").click();
-  cy.getBySel("opening-hours-week-list").contains(selectionOption);
-  cy.getBySel("opening-hours-week-list").contains("08:00 - 18:00");
+  checkOpeningHoursPage({ openingHourCategory, start, end });
 };
 
-const updateOpeningHour = () => {
+const updateOpeningHour = ({
+  openingHourCategory,
+  start,
+  end,
+}: OpeningHourFormType) => {
   // Assume that the event is already created and is visible
   visitOpeningHoursPageAdmin();
   navigateToMonthViewAdmin();
   cy.getBySel("opening-hours-editor-event-content")
-    .contains(selectionOption)
+    .contains(openingHourCategory)
     .click();
-  cy.getBySel("opening-hours-editor-form-end-time").clear().type("20:00");
-  cy.getBySel("opening-hours-editor-form-submit").click();
-  cy.getBySel("opening-hours-editor-event-content")
-    .should("be.visible")
-    .and("contain", selectionOption)
-    .and("contain", "10:00 - 20:00");
+  fillOpeningHourForm({ start, end });
+  submitOpeningHourForm();
+  checkOpeningHoursAdmin({ openingHourCategory, start, end });
   visitOpeningHoursPage();
-  cy.getBySel("opening-hours-week-list").contains(selectionOption);
-  cy.getBySel("opening-hours-week-list").contains("10:00 - 20:00");
+  checkOpeningHoursPage({ openingHourCategory, start, end });
 };
 
-const deleteOpeningHour = () => {
-  // Assume that the event is already created and is visible
+const deleteOpeningHour = ({
+  openingHourCategory,
+  start,
+  end,
+}: OpeningHourFormType) => {
+  createOpeningHour({
+    openingHourCategory,
+    start,
+    end,
+  });
   visitOpeningHoursPageAdmin();
   navigateToMonthViewAdmin();
-  cy.getBySel("opening-hours-editor-event-content")
-    .contains(selectionOption)
-    .click();
+  checkOpeningHoursAdmin({
+    openingHourCategory,
+    start,
+    end,
+  }).click();
+
   cy.getBySel("opening-hours-editor-form__remove").click();
   visitOpeningHoursPage();
-  cy.getBySel("opening-hours-week-list").should("not.contain", selectionOption);
-  cy.getBySel("opening-hours-week-list").should("not.contain", "10:00 - 18:00");
-  cy.getBySel("opening-hours-week-list").contains(
-    "The library is closed this day"
-  );
+  checkOpeningHoursNotPresentInPage({
+    openingHourCategory,
+    start,
+    end,
+  });
 };
 
 describe("Opening hours editor", () => {
@@ -153,28 +241,47 @@ describe("Opening hours editor", () => {
     cy.getBySel("opening-hours-editor-form-select")
       .find("option")
       .should("have.length", 5)
-      .and("contain", "Åbent")
-      .and("contain", "Borgerservice")
-      .and("contain", "Med betjening")
-      .and("contain", "Selvbetjening")
-      .and("contain", "Telefontid");
+      .and("contain", OpeningHourCategories.Opening)
+      .and("contain", OpeningHourCategories.CitizenService)
+      .and("contain", OpeningHourCategories.WithService)
+      .and("contain", OpeningHourCategories.SelfService)
+      .and("contain", OpeningHourCategories.PhoneTime);
   });
 
   it("Can create an opening hour", () => {
-    createOpeningHour();
+    createOpeningHour({
+      openingHourCategory: OpeningHourCategories.Opening,
+      start: "08:00",
+      end: "16:00",
+    });
   });
 
   it("Can update an opening hour", () => {
-    createOpeningHour();
-    updateOpeningHour();
+    createOpeningHour({
+      openingHourCategory: OpeningHourCategories.PhoneTime,
+      start: "10:00",
+      end: "11:00",
+    });
+    updateOpeningHour({
+      openingHourCategory: OpeningHourCategories.PhoneTime,
+      start: "10:00",
+      end: "15:00",
+    });
   });
 
   it("Can delete an opening hour", () => {
-    createOpeningHour();
-    deleteOpeningHour();
+    deleteOpeningHour({
+      openingHourCategory: OpeningHourCategories.WithService,
+      start: "10:00",
+      end: "11:00",
+    });
   });
 
   it("Can create opening hour in next week", () => {
-    createOpeningHourInNextWeek();
+    createOpeningHourInNextWeek({
+      openingHourCategory: OpeningHourCategories.CitizenService,
+      start: "10:00",
+      end: "11:00",
+    });
   });
 });
