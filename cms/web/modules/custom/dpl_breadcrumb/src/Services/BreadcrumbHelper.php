@@ -194,17 +194,17 @@ class BreadcrumbHelper {
         $this->translation->translate('Articles', [], ['context' => 'DPL Breadcrumbs']),
         'view.articles.all'
       ));
-      $breadcrumb->addCacheTags('locale');
+      $breadcrumb->addCacheTags(['locale']);
     }
 
     $entity_type_id = $entity->getEntityTypeId();
 
     if (in_array($entity_type_id, ['eventseries', 'eventinstance'])) {
       $breadcrumb->addLink(Link::createFromRoute(
-        $this->translation->translate('Events', [], ['context' => 'DPL Breadcrumbs'),
+        $this->translation->translate('Events', [], ['context' => 'DPL Breadcrumbs']),
         'view.events.all'
       ));
-      $breadcrumb->addCacheTags('locale');
+      $breadcrumb->addCacheTags(['locale']);
     }
 
     $branch_field_id = $this->getBranchFieldId($entity);
