@@ -374,6 +374,7 @@ class DplReactAppsController extends ControllerBase {
       'order-digital-copy-error-button-text' => $this->t('Close', [], ['context' => 'Work Page']),
       'order-digital-copy-error-description-text' => $this->t('An error occurred while ordering the digital copy. Please try again later.', [], ['context' => 'Work Page']),
       'order-digital-copy-error-title-text' => $this->t('Error ordering digital copy', [], ['context' => 'Work Page']),
+      'order-digital-copy-feedback-borchk-user-blocked-by-agency-text' => $this->t('Borchk user blocked by agency text', [], ['context' => 'Work Page']),
       'order-digital-copy-feedback-borchk-user-no-longer-exist-on-agency-text' => $this->t('Borchk user no longer exists on agency', [], ['context' => 'Work Page']),
       'order-digital-copy-feedback-borchk-user-not-verified-text' => $this->t('Borchk user not verified', [], ['context' => 'Work Page']),
       'order-digital-copy-feedback-button-text' => $this->t('Close', [], ['context' => 'Work Page']),
