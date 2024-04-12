@@ -157,29 +157,25 @@ function dpl_breadcrumb_taxonomy_term_insert(TermInterface $term): void {
  * data in field_breadcrumb_parent.
  */
 function _dpl_breadcrumb_structure_item_save(TermInterface $term): void {
-  $service = DrupalTyped::service(BreadcrumbHelper::class, 'dpl_breadcrumb.breadcrumb_helper');
-  $vid = $service->getStructureVid();
+  /** @var array<\Drupal\Core\Entity\FieldableEntityInterface> $contents */
+  $contents = $term->get('field_content')->referencedEntities();
 
-  if ($term->bundle() !== $vid) {
+  if (empty($contents)) {
     return;
   }
 
+  $contents += \Drupal::entityTypeManager()->getStorage('node')->loadByProperties([
+    'field_breadcrumb_parent' => $term->id(),
+  ]);
+
   // We want to trigger a save on all nodes that are referenced.
-  // This will trigger the logic happening in dpl_breadcrumb_node_presave(),
+  // This will also trigger the logic in dpl_breadcrumb_node_presave(),
   // updating the relevant info in the breadcrumb field on the node.
   // We want to do this for all nodes that are referenced in the context tree.
-  /** @var array<TermInterface> $structure_tree */
-  $structure_tree = \Drupal::entityTypeManager()->getStorage('taxonomy_term')->loadTree($vid, 0, NULL, TRUE);
-
-  foreach ($structure_tree as $structure_term) {
-    /** @var array<\Drupal\Core\Entity\FieldableEntityInterface> $contents */
-    $contents = $structure_term->get('field_content')->referencedEntities();
-
-    // This should always be a single item array, but we will still do a loop.
-    foreach ($contents as $content) {
-      $content->save();
-    }
+  foreach ($contents as $content) {
+    $content->save();
   }
+
 }
 
 /**
