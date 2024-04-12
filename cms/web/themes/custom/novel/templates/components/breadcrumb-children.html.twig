@@ -1,8 +1,8 @@
 {% include '@novel/components/nav-grid.html.twig'
   with {
+  attributes: create_attribute(),
   title: title,
   items: items,
   show_all: true,
-  show_subtitles: false,
-  attributes: create_attribute(),
+  show_subtitles: show_subtitles,
 } only %}

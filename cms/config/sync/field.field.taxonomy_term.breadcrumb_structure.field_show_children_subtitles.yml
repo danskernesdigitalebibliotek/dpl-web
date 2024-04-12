@@ -1,0 +1,21 @@
+uuid: 79edbae3-50bc-42be-bace-f9cb93bf488a
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.taxonomy_term.field_show_children_subtitles
+    - taxonomy.vocabulary.breadcrumb_structure
+id: taxonomy_term.breadcrumb_structure.field_show_children_subtitles
+field_name: field_show_children_subtitles
+entity_type: taxonomy_term
+bundle: breadcrumb_structure
+label: 'Show children subtitles'
+description: 'If this is checked, the children teasers will be expanded with possible subtitle descriptions.'
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings:
+  on_label: 'On'
+  off_label: 'Off'
+field_type: boolean

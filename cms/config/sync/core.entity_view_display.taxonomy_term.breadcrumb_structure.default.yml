@@ -3,8 +3,10 @@ langcode: en
 status: true
 dependencies:
   config:
+    - field.field.taxonomy_term.breadcrumb_structure.field_children_title
     - field.field.taxonomy_term.breadcrumb_structure.field_content
     - field.field.taxonomy_term.breadcrumb_structure.field_show_children
+    - field.field.taxonomy_term.breadcrumb_structure.field_show_children_subtitles
     - taxonomy.vocabulary.breadcrumb_structure
   module:
     - text
@@ -19,6 +21,14 @@ content:
     settings: {  }
     third_party_settings: {  }
     weight: 0
+    region: content
+  field_children_title:
+    type: string
+    label: above
+    settings:
+      link_to_entity: false
+    third_party_settings: {  }
+    weight: 3
     region: content
   field_content:
     type: entity_reference_label
@@ -37,6 +47,16 @@ content:
       format_custom_true: ''
     third_party_settings: {  }
     weight: 2
+    region: content
+  field_show_children_subtitles:
+    type: boolean
+    label: above
+    settings:
+      format: default
+      format_custom_false: ''
+      format_custom_true: ''
+    third_party_settings: {  }
+    weight: 4
     region: content
 hidden:
   langcode: true
