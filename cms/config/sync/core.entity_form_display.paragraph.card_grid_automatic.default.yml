@@ -3,23 +3,61 @@ langcode: en
 status: true
 dependencies:
   config:
+    - field.field.paragraph.card_grid_automatic.field_filter_branches
+    - field.field.paragraph.card_grid_automatic.field_filter_categories
     - field.field.paragraph.card_grid_automatic.field_filter_tags
     - field.field.paragraph.card_grid_automatic.field_title
     - paragraphs.paragraphs_type.card_grid_automatic
+  module:
+    - field_group
+third_party_settings:
+  field_group:
+    group_filters:
+      children:
+        - field_filter_tags
+        - field_filter_categories
+        - field_filter_branches
+      label: Filters
+      region: content
+      parent_name: ''
+      weight: 1
+      format_type: fieldset
+      format_settings:
+        classes: ''
+        show_empty_fields: true
+        id: ''
+        description: 'Choose the filters, that defines what content is shown.'
+        required_fields: true
 id: paragraph.card_grid_automatic.default
 targetEntityType: paragraph
 bundle: card_grid_automatic
 mode: default
 content:
-  field_filter_tags:
+  field_filter_branches:
+    type: options_buttons
+    weight: 8
+    region: content
+    settings: {  }
+    third_party_settings: {  }
+  field_filter_categories:
     type: entity_reference_autocomplete
-    weight: 2
+    weight: 7
     region: content
     settings:
       match_operator: CONTAINS
       match_limit: 10
       size: 60
-      placeholder: ''
+      placeholder: 'Search categories..'
+    third_party_settings: {  }
+  field_filter_tags:
+    type: entity_reference_autocomplete
+    weight: 6
+    region: content
+    settings:
+      match_operator: CONTAINS
+      match_limit: 10
+      size: 60
+      placeholder: 'Search tags..'
     third_party_settings: {  }
   field_title:
     type: string_textfield

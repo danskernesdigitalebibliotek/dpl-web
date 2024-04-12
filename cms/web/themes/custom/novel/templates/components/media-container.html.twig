@@ -1,0 +1,18 @@
+{%
+  set classes = [
+  'media-container',
+  has_media ? '' : 'media-container--placeholder'
+]
+%}
+
+<div {{ attributes.addClass(classes) }}>
+  {% if has_media %}
+    <div class="media-container__media">
+      {{ media }}
+    </div>
+  {% else %}
+    <div class="media-container__placeholder-text">
+      {{ placeholder_text }}
+    </div>
+  {% endif %}
+</div>

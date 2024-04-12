@@ -5,6 +5,7 @@ dependencies:
   config:
     - core.entity_view_mode.node.nav_teaser
     - field.field.node.page.field_branch
+    - field.field.node.page.field_breadcrumb_parent
     - field.field.node.page.field_display_titles
     - field.field.node.page.field_hero_title
     - field.field.node.page.field_paragraphs
@@ -33,6 +34,7 @@ content:
     region: content
 hidden:
   field_branch: true
+  field_breadcrumb_parent: true
   field_display_titles: true
   field_hero_title: true
   field_paragraphs: true

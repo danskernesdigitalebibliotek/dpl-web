@@ -1,0 +1,32 @@
+_meta:
+  version: "1.0"
+  entity_type: taxonomy_term
+  uuid: d3740bd9-1bd5-4376-8a7f-eb0b89e3b7e3
+  bundle: opening_hours_categories
+  default_langcode: da
+default:
+  status:
+    - value: true
+  name:
+    - value: "Med betjening"
+  weight:
+    - value: 0
+  parent:
+    - target_id: 0
+  revision_translation_affected:
+    - value: true
+  metatag:
+    - tag: meta
+      attributes:
+        name: title
+        content: "Med betjening | DPL CMS"
+    - tag: link
+      attributes:
+        rel: canonical
+        href: "http://dapple-cms.docker/taxonomy/term/17"
+  path:
+    - alias: ""
+      langcode: da
+  field_opening_hours_color:
+    - color: "#4986E7"
+      opacity: 0.0

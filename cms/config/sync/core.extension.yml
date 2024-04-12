@@ -24,6 +24,7 @@ module:
   devel_generate: 0
   dpl_admin: 0
   dpl_article: 0
+  dpl_breadcrumb: 0
   dpl_campaign: 0
   dpl_dashboard: 0
   dpl_error_pages: 0
@@ -41,6 +42,7 @@ module:
   dpl_loans: 0
   dpl_login: 0
   dpl_mapp: 0
+  dpl_opening_hours: 0
   dpl_paragraphs: 0
   dpl_patron_menu: 0
   dpl_patron_page: 0
@@ -55,6 +57,7 @@ module:
   dpl_reservations: 0
   dpl_something_similar: 0
   dpl_static_content: 0
+  dpl_static_content_20240404_opening_hours: 0
   dpl_url_proxy: 0
   drupal_typed: 0
   dynamic_entity_reference: 0
@@ -124,6 +127,7 @@ module:
   simple_menu_permissions: 0
   system: 0
   taxonomy: 0
+  taxonomy_unique: 0
   telephone: 0
   telephone_formatter: 0
   text: 0
@@ -139,6 +143,7 @@ module:
   views_infinite_scroll: 0
   webform: 0
   webform_ui: 0
+  pathauto: 1
   selective_better_exposed_filters: 1
   views: 10
   paragraphs: 11

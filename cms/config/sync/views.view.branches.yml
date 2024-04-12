@@ -95,6 +95,19 @@ display:
         options: {  }
       empty: {  }
       sorts:
+        field_promoted_on_lists_value:
+          id: field_promoted_on_lists_value
+          table: node__field_promoted_on_lists
+          field: field_promoted_on_lists_value
+          relationship: none
+          group_type: group
+          admin_label: ''
+          plugin_id: standard
+          order: DESC
+          expose:
+            label: ''
+            field_identifier: ''
+          exposed: false
         title:
           id: title
           table: node_field_data

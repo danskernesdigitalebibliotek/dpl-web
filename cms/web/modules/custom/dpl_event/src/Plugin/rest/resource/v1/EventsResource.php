@@ -1,6 +1,6 @@
 <?php
 
-namespace Drupal\dpl_event\Plugin\rest\resource;
+namespace Drupal\dpl_event\Plugin\rest\resource\v1;
 
 use Drupal\rest\Plugin\ResourceBase;
 use Drupal\rest\ResourceResponse;
@@ -16,7 +16,7 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
  *   id = "events",
  *   label = @Translation("Retrieve all events"),
  *   uri_paths = {
- *     "canonical" = "/dpl_event",
+ *     "canonical" = "/api/v1/events",
  *   },
  *
  *   responses = {
@@ -139,16 +139,6 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
  *                     "type" = "string",
  *                     "description" = "The name of the ticket category.",
  *                   },
- *                   "count" = {
- *                     "type" = "object",
- *                     "description" = "Number of tickets for the event.",
- *                     "properties" = {
- *                       "total" = {
- *                         "type" = "number",
- *                         "description" = "Total number of tickets for the event.",
- *                       },
- *                     },
- *                   },
  *                   "price" = {
  *                     "type" = "object",
  *                     "description" = "The price of a ticket in the category",
@@ -173,6 +163,10 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
  *                   "price",
  *                 }
  *               },
+ *             },
+ *             "ticket_capacity" = {
+ *                "type" = "integer",
+ *                "description" = "Total number of tickets which can be sold for the event.",
  *             },
  *             "series" = {
  *               "type" = "object",

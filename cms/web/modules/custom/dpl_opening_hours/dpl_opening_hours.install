@@ -1,0 +1,55 @@
+<?php
+
+/**
+ * Implements hook_schema().
+ */
+function dpl_opening_hours_schema() : array {
+  $schema['dpl_opening_hours_instance'] = [
+    'description' => 'Opening hours instances.',
+    'fields' => [
+      'id' => [
+        'description' => 'An serial unique id of the opening hours instance',
+        'type' => 'serial',
+        'unsigned' => TRUE,
+        'not null' => TRUE,
+      ],
+      'branch_nid' => [
+        'description' => 'The id for the branch node the instance belongs to',
+        'type' => 'int',
+        'unsigned' => TRUE,
+        'not null' => TRUE,
+      ],
+      'category_tid' => [
+        'description' => 'The id of the related category term id',
+        'type' => 'int',
+        'unsigned' => TRUE,
+        'not null' => TRUE,
+      ],
+      'date' => [
+        'description' => 'The date which the opening hours applies to. In ISO 8601 format.',
+        'type' => 'varchar',
+        // Drupal Schema API does not have a data type for dates. We expect to
+        // be using MySQL only so use a proper date here.
+        'mysql_type' => 'date',
+        'length' => 10,
+        'not null' => TRUE,
+      ],
+      'start_time' => [
+        'description' => 'When the opening hours start. In format HH:MM',
+        'type' => 'varchar',
+        'length' => 5,
+        'not null' => TRUE,
+      ],
+      'end_time' => [
+        'description' => 'When the opening hours end. In format HH:MM',
+        'type' => 'varchar',
+        'length' => 5,
+        'not null' => TRUE,
+      ],
+    ],
+    'primary key' => ['id'],
+    'index' => ['branch_id', 'date'],
+  ];
+
+  return $schema;
+}

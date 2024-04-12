@@ -12,7 +12,12 @@ dependencies:
     - node.type.branch
     - node.type.campaign
     - node.type.page
+    - rest.resource.dpl_opening_hours_create
+    - rest.resource.dpl_opening_hours_delete
+    - rest.resource.dpl_opening_hours_update
+    - taxonomy.vocabulary.breadcrumb_structure
     - taxonomy.vocabulary.categories
+    - taxonomy.vocabulary.opening_hours_categories
     - taxonomy.vocabulary.tags
   module:
     - administerusersbyrole
@@ -22,6 +27,7 @@ dependencies:
     - dpl_instant_loan
     - dpl_library_agency
     - dpl_mapp
+    - dpl_opening_hours
     - dpl_url_proxy
     - entity_clone
     - file
@@ -33,6 +39,7 @@ dependencies:
     - paragraphs
     - paragraphs_ee
     - recurring_events
+    - rest
     - scheduler
     - simple_menu_permissions
     - system
@@ -87,7 +94,9 @@ permissions:
   - 'create image media'
   - 'create media'
   - 'create page content'
+  - 'create terms in breadcrumb_structure'
   - 'create terms in categories'
+  - 'create terms in opening_hours_categories'
   - 'create terms in tags'
   - 'create users'
   - 'create video media'
@@ -120,6 +129,7 @@ permissions:
   - 'delete own page content'
   - 'delete own video media'
   - 'delete page revisions'
+  - 'delete terms in breadcrumb_structure'
   - 'delete terms in categories'
   - 'delete terms in tags'
   - 'dpl admin access pages'
@@ -145,10 +155,16 @@ permissions:
   - 'edit own image media'
   - 'edit own page content'
   - 'edit own video media'
+  - 'edit terms in breadcrumb_structure'
   - 'edit terms in categories'
+  - 'edit terms in opening_hours_categories'
   - 'edit terms in tags'
   - 'edit themes novel'
   - 'edit users by role'
+  - 'manage opening hours for branches'
+  - 'restful delete dpl_opening_hours_delete'
+  - 'restful patch dpl_opening_hours_update'
+  - 'restful post dpl_opening_hours_create'
   - 'revert all eventinstance revisions'
   - 'revert all eventseries revisions'
   - 'revert all revisions'
