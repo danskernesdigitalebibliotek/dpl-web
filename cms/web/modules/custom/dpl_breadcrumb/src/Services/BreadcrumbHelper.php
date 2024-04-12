@@ -191,7 +191,7 @@ class BreadcrumbHelper {
   private function getBaseBreadcrumb(FieldableEntityInterface $entity, Breadcrumb $breadcrumb): Breadcrumb {
     if ($entity->bundle() === 'article') {
       $breadcrumb->addLink(Link::createFromRoute(
-        $this->translation->translate('Articles'),
+        $this->translation->translate('Articles', [], ['context' => 'DPL Breadcrumbs']),
         'view.articles.all'
       ));
       $breadcrumb->addCacheTags('locale');
@@ -201,7 +201,7 @@ class BreadcrumbHelper {
 
     if (in_array($entity_type_id, ['eventseries', 'eventinstance'])) {
       $breadcrumb->addLink(Link::createFromRoute(
-        $this->translation->translate('Events'),
+        $this->translation->translate('Events', [], ['context' => 'DPL Breadcrumbs'),
         'view.events.all'
       ));
       $breadcrumb->addCacheTags('locale');
