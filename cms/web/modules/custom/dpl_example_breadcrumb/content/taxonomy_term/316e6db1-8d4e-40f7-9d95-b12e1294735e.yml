@@ -1,5 +1,5 @@
 _meta:
-  version: "1.0"
+  version: '1.0'
   entity_type: taxonomy_term
   uuid: 316e6db1-8d4e-40f7-9d95-b12e1294735e
   bundle: breadcrumb_structure
@@ -9,29 +9,39 @@ _meta:
     2cf63f02-2b2e-4015-a0f9-e887a63c99e1: node
 default:
   status:
-    - value: true
+    -
+      value: true
   name:
-    - value: Bestsellers
+    -
+      value: Bestsellers
   weight:
-    - value: 0
+    -
+      value: 0
   parent:
-    - entity: a6ad2b81-5337-4f46-be41-f1e6d4a201df
+    -
+      entity: a6ad2b81-5337-4f46-be41-f1e6d4a201df
   revision_translation_affected:
-    - value: true
+    -
+      value: true
   metatag:
-    - tag: meta
+    -
+      tag: meta
       attributes:
         name: title
-        content: "Bestsellers | DPL CMS"
-    - tag: link
+        content: 'Bestsellers | DPL CMS'
+    -
+      tag: link
       attributes:
         rel: canonical
-        href: "http://dpl-cms.docker/taxonomy/term/17"
+        href: 'http://dpl-cms.docker/taxonomy/term/20'
   path:
-    - alias: ""
+    -
+      alias: ''
       langcode: en
       pathauto: 1
   field_content:
-    - entity: 2cf63f02-2b2e-4015-a0f9-e887a63c99e1
+    -
+      entity: 2cf63f02-2b2e-4015-a0f9-e887a63c99e1
   field_show_children:
-    - value: true
+    -
+      value: true

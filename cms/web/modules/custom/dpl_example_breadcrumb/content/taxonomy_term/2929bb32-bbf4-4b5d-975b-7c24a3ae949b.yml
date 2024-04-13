@@ -1,5 +1,5 @@
 _meta:
-  version: "1.0"
+  version: '1.0'
   entity_type: taxonomy_term
   uuid: 2929bb32-bbf4-4b5d-975b-7c24a3ae949b
   bundle: breadcrumb_structure
@@ -9,29 +9,39 @@ _meta:
     b0db20b5-da9c-4ac2-8272-6ad133ca66c3: node
 default:
   status:
-    - value: true
+    -
+      value: true
   name:
-    - value: DIY-projekter
+    -
+      value: DIY-projekter
   weight:
-    - value: 1
+    -
+      value: 1
   parent:
-    - entity: a6ad2b81-5337-4f46-be41-f1e6d4a201df
+    -
+      entity: a6ad2b81-5337-4f46-be41-f1e6d4a201df
   revision_translation_affected:
-    - value: true
+    -
+      value: true
   metatag:
-    - tag: meta
+    -
+      tag: meta
       attributes:
         name: title
-        content: "DIY-projekter | DPL CMS"
-    - tag: link
+        content: 'DIY-projekter | DPL CMS'
+    -
+      tag: link
       attributes:
         rel: canonical
-        href: "http://dpl-cms.docker/taxonomy/term/18"
+        href: 'http://dpl-cms.docker/taxonomy/term/21'
   path:
-    - alias: ""
+    -
+      alias: ''
       langcode: en
       pathauto: 1
   field_content:
-    - entity: b0db20b5-da9c-4ac2-8272-6ad133ca66c3
+    -
+      entity: b0db20b5-da9c-4ac2-8272-6ad133ca66c3
   field_show_children:
-    - value: true
+    -
+      value: true

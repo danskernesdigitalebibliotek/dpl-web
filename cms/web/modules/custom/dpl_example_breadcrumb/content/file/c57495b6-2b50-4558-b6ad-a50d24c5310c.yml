@@ -1,20 +1,27 @@
 _meta:
-  version: "1.0"
+  version: '1.0'
   entity_type: file
   uuid: c57495b6-2b50-4558-b6ad-a50d24c5310c
   default_langcode: en
 default:
   uid:
-    - target_id: 1
+    -
+      target_id: 1
   filename:
-    - value: laeseklubber.jpg
+    -
+      value: laeseklubber.jpg
   uri:
-    - value: "public://2024-04/laeseklubber.jpg"
+    -
+      value: 'public://2024-04/laeseklubber.jpg'
   filemime:
-    - value: image/png
+    -
+      value: image/png
   filesize:
-    - value: 9485727
+    -
+      value: 343672
   status:
-    - value: true
+    -
+      value: true
   created:
-    - value: 1712261485
+    -
+      value: 1712261485

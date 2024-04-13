@@ -1,5 +1,5 @@
 _meta:
-  version: "1.0"
+  version: '1.0'
   entity_type: taxonomy_term
   uuid: 5d977ebc-8630-49f7-9d1d-8746e395f087
   bundle: breadcrumb_structure
@@ -8,29 +8,39 @@ _meta:
     9597c5f7-1db2-49c7-bbae-8ea39fdb7874: node
 default:
   status:
-    - value: true
+    -
+      value: true
   name:
-    - value: Læseklubber
+    -
+      value: Læseklubber123
   weight:
-    - value: 1
+    -
+      value: 1
   parent:
-    - target_id: 0
+    -
+      target_id: 0
   revision_translation_affected:
-    - value: true
+    -
+      value: true
   metatag:
-    - tag: meta
+    -
+      tag: meta
       attributes:
         name: title
-        content: "Læseklubber | DPL CMS"
-    - tag: link
+        content: 'Læseklubber123 | DPL CMS'
+    -
+      tag: link
       attributes:
         rel: canonical
-        href: "http://dpl-cms.docker/taxonomy/term/15"
+        href: 'http://dpl-cms.docker/taxonomy/term/18'
   path:
-    - alias: ""
+    -
+      alias: ''
       langcode: en
       pathauto: 1
   field_content:
-    - entity: 9597c5f7-1db2-49c7-bbae-8ea39fdb7874
+    -
+      entity: 9597c5f7-1db2-49c7-bbae-8ea39fdb7874
   field_show_children:
-    - value: true
+    -
+      value: true
