@@ -6,7 +6,6 @@ use Drupal\Core\Controller\ControllerBase;
 use Drupal\Core\Routing\TrustedRedirectResponse;
 use Drupal\Core\StringTranslation\StringTranslationTrait;
 use Drupal\Core\Url;
-use Drupal\dpl_login\AccessToken;
 use Drupal\dpl_login\Adgangsplatformen\Config;
 use Drupal\dpl_login\Exception\MissingConfigurationException;
 use Drupal\dpl_login\UserTokensProviderInterface;
@@ -88,7 +87,7 @@ class DplLoginController extends ControllerBase {
     $url = Url::fromUri($logout_endpoint, [
       'query' => [
         'singlelogout' => 'true',
-        'access_token' => $access_token->token,
+        'access_token' => $access_token['token']->token,
         'redirect_uri' => $redirect_uri,
       ],
     ]);
@@ -138,8 +137,15 @@ class DplLoginController extends ControllerBase {
    */
   public function loginHandler(Request $request): TrustedRedirectResponse {
     if ($this->getAccessToken() && $current_path = (string) $request->query->get('current-path')) {
-      $url = Url::fromUri('internal:/' . ltrim($current_path, '/'))->toString(TRUE);
-      return new TrustedRedirectResponse($url->getGeneratedUrl());
+      $token = $this->getAccessToken();
+      if ($token['type'] === 'user') {
+        $url = Url::fromUri('internal:/' . ltrim($current_path, '/'))->toString(TRUE);
+        return new TrustedRedirectResponse($url->getGeneratedUrl());
+      }
+      elseif ($token['type'] === 'unregistered-user') {
+        $url = Url::fromRoute('dpl_patron_reg.create')->toString(TRUE);
+        return new TrustedRedirectResponse($url->getGeneratedUrl());
+      }
     }
 
     $url = Url::fromRoute('<front>', [], ["absolute" => TRUE])->toString(TRUE);
@@ -149,14 +155,26 @@ class DplLoginController extends ControllerBase {
   /**
    * Get access token. If user is not registered, get unregistered user token.
    *
+   * @return mixed[]|null
+   *   Access token or NULL if not found.
+   *
    * @todo Should be moved to separate service that can be used througut the application.
    */
-  protected function getAccessToken(): ?AccessToken {
+  protected function getAccessToken(): ?array {
     if ($access_token = $this->unregisteredUserTokensProvider->getAccessToken()) {
-      return $access_token;
+
+      $tokenInfo = [
+        'token' => $access_token,
+        'type' => 'unregistered-user',
+      ];
+      return $tokenInfo;
     }
     if ($access_token = $this->userTokensProvider->getAccessToken()) {
-      return $access_token;
+      $tokenInfo = [
+        'token' => $access_token,
+        'type' => 'user',
+      ];
+      return $tokenInfo;
     }
 
     return NULL;
