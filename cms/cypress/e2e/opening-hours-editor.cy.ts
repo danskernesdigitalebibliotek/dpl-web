@@ -1,3 +1,6 @@
+const branchTitle = "Test branch";
+const formattedSearchString = branchTitle.toLowerCase().replace(/ /g, "+");
+
 enum OpeningHourCategories {
   Opening = "Åbent",
   CitizenService = "Borgerservice",
@@ -12,9 +15,9 @@ type OpeningHourFormType = {
   end: `${number}:${number}`;
 };
 
-const createBranchAndVisitOpeningHoursAdmin = () => {
+const createTestBranchAndVisitOpeningHoursAdmin = () => {
   cy.drupalLoginAndVisit("/node/add/branch");
-  cy.get("#edit-title-0-value").type("Test branch");
+  cy.get("#edit-title-0-value").type(branchTitle);
   cy.get('button[title="Show all Paragraphs"]').click();
   cy.get('button[value="Opening Hours"]').click({
     multiple: true,
@@ -39,13 +42,24 @@ const createBranchAndVisitOpeningHoursAdmin = () => {
     Cypress.env("pageUrl", pageUrl);
   });
 };
+const deleteAllTestBranchesIfExists = () => {
+  cy.drupalLogin();
+  cy.visit(
+    `/admin/content?title=${formattedSearchString}&type=All&status=All&langcode=All`
+  );
 
-const deleteBranch = () => {
-  const pageUrl = Cypress.env("pageUrl");
-  if (pageUrl) {
-    cy.visit(`${pageUrl}/delete`);
-    cy.get('input[value="Delete"]').click();
-  }
+  cy.get("tbody").then((tbody) => {
+    if (tbody.find("td.views-empty").length) {
+      cy.log("No branches to delete.");
+    } else {
+      cy.get('input[title="Select all rows in this table"]').check({
+        force: true,
+      });
+      cy.get("#edit-action").select("node_delete_action");
+      cy.contains("input", "Apply to selected items").click();
+      cy.contains("input", "Delete").click();
+    }
+  });
 };
 
 const visitOpeningHoursPage = () => {
@@ -227,11 +241,8 @@ const deleteOpeningHour = ({
 
 describe("Opening hours editor", () => {
   beforeEach(() => {
-    createBranchAndVisitOpeningHoursAdmin();
-  });
-
-  afterEach(() => {
-    deleteBranch();
+    deleteAllTestBranchesIfExists();
+    createTestBranchAndVisitOpeningHoursAdmin();
   });
 
   it("Checks opening hours categories", () => {
