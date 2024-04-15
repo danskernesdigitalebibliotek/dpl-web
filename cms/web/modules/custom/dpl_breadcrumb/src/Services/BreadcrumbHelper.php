@@ -257,7 +257,7 @@ class BreadcrumbHelper {
   /**
    * Build a breadcrumb array, based on field_categories.
    */
-  public function getCategoryBreadcrumb(FieldableEntityInterface $entity, Breadcrumb $breadcrumb): Breadcrumb {
+  private function getCategoryBreadcrumb(FieldableEntityInterface $entity, Breadcrumb $breadcrumb): Breadcrumb {
     $category_field_id = $this->getCategoriesFieldId($entity);
 
     if (empty($category_field_id)) {
