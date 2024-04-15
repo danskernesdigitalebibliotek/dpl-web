@@ -355,6 +355,10 @@ class BreadcrumbHelper {
     $breadcrumb_items = $this->getStructureTree($breadcrumb_item);
 
     foreach ($breadcrumb_items as $item) {
+      if (!$item->hasField('field_content')) {
+        continue;
+      }
+
       $contents = $item->get('field_content')->referencedEntities();
 
       /** @var \Drupal\Core\Entity\FieldableEntityInterface $content */

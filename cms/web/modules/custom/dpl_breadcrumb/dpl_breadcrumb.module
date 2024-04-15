@@ -157,6 +157,10 @@ function dpl_breadcrumb_taxonomy_term_insert(TermInterface $term): void {
  * data in field_breadcrumb_parent.
  */
 function _dpl_breadcrumb_structure_item_save(TermInterface $term): void {
+  if (!$term->hasField('field_content')) {
+    return;
+  }
+
   /** @var array<\Drupal\Core\Entity\FieldableEntityInterface> $contents */
   $contents = $term->get('field_content')->referencedEntities();
 

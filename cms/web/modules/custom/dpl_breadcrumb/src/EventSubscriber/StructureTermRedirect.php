@@ -57,6 +57,10 @@ class StructureTermRedirect implements EventSubscriberInterface {
     $structure_vid = $this->breadcrumbHelper->getStructureVid();
 
     if ($term instanceof Term && $term->bundle() === $structure_vid) {
+      if (!$term->hasField('field_content')) {
+        return;
+      }
+
       $contents = $term->get('field_content')->referencedEntities();
       /** @var \Drupal\Core\Entity\FieldableEntityInterface $content */
       $content = reset($contents);
