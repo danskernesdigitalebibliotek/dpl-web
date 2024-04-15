@@ -1,5 +1,5 @@
 _meta:
-  version: '1.0'
+  version: "1.0"
   entity_type: node
   uuid: 37992672-ca84-46dd-8418-c8620ed6348a
   bundle: page
@@ -12,93 +12,69 @@ _meta:
     2cf63f02-2b2e-4015-a0f9-e887a63c99e1: node
 default:
   revision_uid:
-    -
-      target_id: 1
+    - target_id: 1
   status:
-    -
-      value: true
+    - value: true
   uid:
-    -
-      target_id: 1
+    - target_id: 1
   title:
-    -
-      value: 'Læseklubber - efter genre'
+    - value: "Læseklubber - efter genre"
   created:
-    -
-      value: 1712261434
+    - value: 1712261434
   promote:
-    -
-      value: false
+    - value: false
   sticky:
-    -
-      value: false
+    - value: false
   revision_translation_affected:
-    -
-      value: true
+    - value: true
   entity_clone_template_active:
-    -
-      value: false
+    - value: false
   entity_clone_template_image:
-    -
-      entity: c57495b6-2b50-4558-b6ad-a50d24c5310c
-      alt: ''
-      title: ''
+    - entity: c57495b6-2b50-4558-b6ad-a50d24c5310c
+      alt: ""
+      title: ""
       width: 6250
       height: 2200
   metatag:
-    -
-      tag: meta
+    - tag: meta
       attributes:
         name: title
-        content: 'Læseklubber - efter genre | DPL CMS'
+        content: "Læseklubber - efter genre | DPL CMS"
   path:
-    -
-      alias: /laesefilialen/laeseklubber/genre
+    - alias: /laesefilialen/laeseklubber/genre
       langcode: und
       pathauto: 1
   field_branch:
-    -
-      entity: 486b17a2-60e6-426d-a952-793fe24e391d
+    - entity: 486b17a2-60e6-426d-a952-793fe24e391d
   field_breadcrumb_parent:
-    -
-      entity: 5d977ebc-8630-49f7-9d1d-8746e395f087
+    - entity: 5d977ebc-8630-49f7-9d1d-8746e395f087
   field_display_titles:
-    -
-      value: true
+    - value: true
   field_paragraphs:
-    -
-      entity:
+    - entity:
         _meta:
-          version: '1.0'
+          version: "1.0"
           entity_type: paragraph
           uuid: 4c4aa85c-a537-479e-81fa-7e67136e905e
           bundle: hero
           default_langcode: en
         default:
           status:
-            -
-              value: true
+            - value: true
           created:
-            -
-              value: 1712269082
+            - value: 1712269082
           behavior_settings:
-            -
-              value: {  }
+            - value: {}
           revision_translation_affected:
-            -
-              value: true
+            - value: true
           field_hero_description:
-            -
-              value: '<p>Vores absolut mest populære genre er "bestsellers". Find din næste læsegruppe allerede nu!</p>'
+            - value: '<p>Vores absolut mest populære genre er "bestsellers". Find din næste læsegruppe allerede nu!</p>'
               format: basic
           field_hero_image:
-            -
-              entity: 35166ac7-4b0e-4644-8a60-3f29f3c8ecbe
+            - entity: 35166ac7-4b0e-4644-8a60-3f29f3c8ecbe
           field_hero_link:
-            -
-              target_uuid: 2cf63f02-2b2e-4015-a0f9-e887a63c99e1
-              title: ''
-              options: {  }
+            - target_uuid: 2cf63f02-2b2e-4015-a0f9-e887a63c99e1
+              title: ""
+              options: {}
           field_hero_title:
-            -
-              value: 'Bestsellers er det bedste'
+            - value: "Bestsellers er det bedste"

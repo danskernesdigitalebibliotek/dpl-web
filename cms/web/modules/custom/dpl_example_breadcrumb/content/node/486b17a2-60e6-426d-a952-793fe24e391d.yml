@@ -1,5 +1,5 @@
 _meta:
-  version: '1.0'
+  version: "1.0"
   entity_type: node
   uuid: 486b17a2-60e6-426d-a952-793fe24e391d
   bundle: branch
@@ -8,58 +8,44 @@ _meta:
     c57495b6-2b50-4558-b6ad-a50d24c5310c: file
 default:
   revision_uid:
-    -
-      target_id: 1
+    - target_id: 1
   status:
-    -
-      value: true
+    - value: true
   uid:
-    -
-      target_id: 1
+    - target_id: 1
   title:
-    -
-      value: Læsefilialen
+    - value: Læsefilialen
   created:
-    -
-      value: 1712264759
+    - value: 1712264759
   promote:
-    -
-      value: false
+    - value: false
   sticky:
-    -
-      value: false
+    - value: false
   revision_translation_affected:
-    -
-      value: true
+    - value: true
   entity_clone_template_active:
-    -
-      value: true
+    - value: true
   entity_clone_template_image:
-    -
-      entity: c57495b6-2b50-4558-b6ad-a50d24c5310c
-      alt: ''
-      title: ''
+    - entity: c57495b6-2b50-4558-b6ad-a50d24c5310c
+      alt: ""
+      title: ""
       width: 6250
       height: 2200
   metatag:
-    -
-      tag: meta
+    - tag: meta
       attributes:
         name: title
-        content: 'Læsefilialen | DPL CMS'
+        content: "Læsefilialen | DPL CMS"
   path:
-    -
-      alias: /laesefilialen
+    - alias: /laesefilialen
       langcode: und
       pathauto: 1
   field_address:
-    -
-      langcode: da
+    - langcode: da
       country_code: DK
       locality: København
-      postal_code: '1172'
-      address_line1: 'Krystalgade 15'
-      address_line2: ''
+      postal_code: "1172"
+      address_line1: "Krystalgade 15"
+      address_line2: ""
   field_promoted_on_lists:
-    -
-      value: false
+    - value: false

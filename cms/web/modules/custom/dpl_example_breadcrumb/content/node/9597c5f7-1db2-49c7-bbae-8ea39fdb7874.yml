@@ -1,5 +1,5 @@
 _meta:
-  version: '1.0'
+  version: "1.0"
   entity_type: node
   uuid: 9597c5f7-1db2-49c7-bbae-8ea39fdb7874
   bundle: page
@@ -9,56 +9,41 @@ _meta:
     486b17a2-60e6-426d-a952-793fe24e391d: node
 default:
   revision_uid:
-    -
-      target_id: 1
+    - target_id: 1
   status:
-    -
-      value: true
+    - value: true
   uid:
-    -
-      target_id: 1
+    - target_id: 1
   title:
-    -
-      value: Læseklubber
+    - value: Læseklubber
   created:
-    -
-      value: 1712261389
+    - value: 1712261389
   promote:
-    -
-      value: false
+    - value: false
   sticky:
-    -
-      value: false
+    - value: false
   revision_translation_affected:
-    -
-      value: true
+    - value: true
   entity_clone_template_active:
-    -
-      value: false
+    - value: false
   entity_clone_template_image:
-    -
-      entity: c57495b6-2b50-4558-b6ad-a50d24c5310c
-      alt: ''
-      title: ''
+    - entity: c57495b6-2b50-4558-b6ad-a50d24c5310c
+      alt: ""
+      title: ""
       width: 6250
       height: 2200
   metatag:
-    -
-      tag: meta
+    - tag: meta
       attributes:
         name: title
-        content: 'Læseklubber | DPL CMS'
+        content: "Læseklubber | DPL CMS"
   path:
-    -
-      alias: /laesefilialen/laeseklubber
+    - alias: /laesefilialen/laeseklubber
       langcode: und
       pathauto: 1
   field_branch:
-    -
-      entity: 486b17a2-60e6-426d-a952-793fe24e391d
+    - entity: 486b17a2-60e6-426d-a952-793fe24e391d
   field_display_titles:
-    -
-      value: true
+    - value: true
   field_subtitle:
-    -
-      value: 'Her på biblioteket har vi en masse læsegrupper, og sikkert også en til dig.'
+    - value: "Her på biblioteket har vi en masse læsegrupper, og sikkert også en til dig."
