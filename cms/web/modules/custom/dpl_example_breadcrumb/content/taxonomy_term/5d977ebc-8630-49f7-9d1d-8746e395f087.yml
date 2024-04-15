@@ -10,7 +10,7 @@ default:
   status:
     - value: true
   name:
-    - value: Læseklubber
+    - value: Læseklubber123
   weight:
     - value: 1
   parent:
@@ -21,11 +21,11 @@ default:
     - tag: meta
       attributes:
         name: title
-        content: "Læseklubber | DPL CMS"
+        content: "Læseklubber123 | DPL CMS"
     - tag: link
       attributes:
         rel: canonical
-        href: "http://dpl-cms.docker/taxonomy/term/15"
+        href: "http://dpl-cms.docker/taxonomy/term/18"
   path:
     - alias: ""
       langcode: en

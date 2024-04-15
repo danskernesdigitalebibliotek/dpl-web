@@ -1,0 +1,14 @@
+uuid: 615d2d92-f58e-425e-8f0b-ec202dff20ad
+langcode: en
+status: true
+dependencies:
+  module:
+    - recurring_events
+id: breadcrumb_pattern_event_series
+label: 'Breadcrumb pattern (event series)'
+type: 'canonical_entities:eventseries'
+pattern: '[dpl_breadcrumb:breadcrumb-url-alias]'
+selection_criteria: {  }
+selection_logic: and
+weight: 0
+relationships: {  }

@@ -13,7 +13,7 @@ default:
   revision_uid:
     - target_id: 1
   status:
-    - value: false
+    - value: true
   uid:
     - target_id: 1
   title:

@@ -1,5 +1,6 @@
 <?php
 
+use Drupal\Core\Entity\FieldableEntityInterface;
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\dpl_breadcrumb\Services\BreadcrumbHelper;
 use Drupal\drupal_typed\DrupalTyped;
@@ -23,7 +24,7 @@ function dpl_breadcrumb_form_taxonomy_term_breadcrumb_structure_form_alter(array
     '#type' => 'details',
     '#title' => t('View content that has set this breadcrumb as a parent', [], ['context' => 'DPL admin UX']),
     '#weight' => 10,
-    'items' => $service->getRenderedReferencingContent($breadcrumb_item, 'teaser'),
+    'items' => $service->getRenderedReferencingNodes($breadcrumb_item, 'teaser'),
   ];
 }
 
@@ -49,7 +50,7 @@ function dpl_breadcrumb_preprocess_paragraph__breadcrumb_children(array &$variab
 
   $service = DrupalTyped::service(BreadcrumbHelper::class, 'dpl_breadcrumb.breadcrumb_helper');
 
-  $variables['items'] = $service->getRenderedReferencingContent($breadcrumb_item);
+  $variables['items'] = $service->getRenderedReferencingNodes($breadcrumb_item);
 
   // Drupal will cache the whole paragraph, as it does not know that it is
   // embedding a dynamic list. We'll add a simple cache tag,
@@ -64,26 +65,38 @@ function dpl_breadcrumb_preprocess_paragraph__breadcrumb_children(array &$variab
  * We get it based on a node's field_breadcrumb_parent.
  */
 function dpl_breadcrumb_preprocess_page(array &$variables): void {
-  $node = $variables['node'] ?? NULL;
-  $service = DrupalTyped::service(BreadcrumbHelper::class, 'dpl_breadcrumb.breadcrumb_helper');
+  $entity = \Drupal::routeMatch()->getParameter('node');
 
-  if (empty($node)) {
+  if (empty($entity)) {
+    $event_series = \Drupal::routeMatch()->getParameter('eventseries');
+    $event_instance = \Drupal::routeMatch()->getParameter('eventinstance');
+
+    $entity = $event_series ?? $event_instance;
+  }
+
+  if (empty($entity)) {
     return;
   }
 
-  $variables['breadcrumb'] = $service->getBreadcrumb($node);
+  $service = DrupalTyped::service(BreadcrumbHelper::class, 'dpl_breadcrumb.breadcrumb_helper');
 
-  $breadcrumb_item = $service->getBreadcrumbItem($node);
+  // Building the breadcrumb, displayed at the top of the page.
+  $variables['breadcrumb'] = $service->getBreadcrumb($entity);
 
-  // If this node is part of the structure tree, we might display an automatic
+  // If this entity is part of the structure tree, we might display an automatic
   // list of the related children.
+  // This is seperate from the breadcrumb that is dispalyed on the page.
+  $breadcrumb_item = $service->getBreadcrumbItem($entity);
+
   if ($breadcrumb_item instanceof TermInterface && $breadcrumb_item->get('field_show_children')->getString() == '1') {
-    $variables['breadcrumb_children'] = $service->getRenderedReferencingContent($breadcrumb_item);
+    $variables['related_children'] = $service->getRenderedReferencingNodes($breadcrumb_item);
 
     // Drupal will cache the whole page, as it does not know that it is
     // embedding a dynamic list. We'll add a simple cache tag,
     // so it be invalidated if any nodes have been updated - e.g. the same kind
     // of cache tag that a view has.
+    // You could expand this to be a more specific cache tag, but it will only
+    // affect this one page, so node_list should be sufficient.
     $variables['#cache']['tags'][] = 'node_list';
   }
 }
@@ -139,32 +152,34 @@ function dpl_breadcrumb_taxonomy_term_insert(TermInterface $term): void {
 /**
  * Helper function, run as hook when a breadcrumb item is saved.
  *
- * This will allow us to invalidate caches, and save referenced content.
+ * This will allow us to  save referenced content, thereby invalidating the
+ * caches, but also to update the entities to make sure they have the correct
+ * data in field_breadcrumb_parent.
  */
 function _dpl_breadcrumb_structure_item_save(TermInterface $term): void {
-  $service = DrupalTyped::service(BreadcrumbHelper::class, 'dpl_breadcrumb.breadcrumb_helper');
-  $vid = $service->getStructureVid();
-
-  if ($term->bundle() !== $vid) {
+  if (!$term->hasField('field_content')) {
     return;
   }
 
+  /** @var array<\Drupal\Core\Entity\FieldableEntityInterface> $contents */
+  $contents = $term->get('field_content')->referencedEntities();
+
+  if (empty($contents)) {
+    return;
+  }
+
+  $contents += \Drupal::entityTypeManager()->getStorage('node')->loadByProperties([
+    'field_breadcrumb_parent' => $term->id(),
+  ]);
+
   // We want to trigger a save on all nodes that are referenced.
-  // This will trigger the logic happening in dpl_breadcrumb_node_presave(),
+  // This will also trigger the logic in dpl_breadcrumb_node_presave(),
   // updating the relevant info in the breadcrumb field on the node.
   // We want to do this for all nodes that are referenced in the context tree.
-  /** @var array<TermInterface> $structure_tree */
-  $structure_tree = \Drupal::entityTypeManager()->getStorage('taxonomy_term')->loadTree($vid, 0, NULL, TRUE);
-
-  foreach ($structure_tree as $structure_term) {
-    /** @var array<\Drupal\Core\Entity\FieldableEntityInterface> $contents */
-    $contents = $structure_term->get('field_content')->referencedEntities();
-
-    // This should always be a single item array but we might as well do a loop.
-    foreach ($contents as $content) {
-      $content->save();
-    }
+  foreach ($contents as $content) {
+    $content->save();
   }
+
 }
 
 /**
@@ -244,14 +259,26 @@ function dpl_breadcrumb_token_info(): array {
  */
 function dpl_breadcrumb_tokens(string $type, array $tokens, array $data): array {
   $token_original = $tokens['breadcrumb-url-alias'] ?? NULL;
-  $node = $data['node'] ?? NULL;
 
-  if ($type !== 'dpl_breadcrumb' || empty($token_original) || !($node instanceof Node)) {
+  if ($type !== 'dpl_breadcrumb' || empty($token_original)) {
+    return [];
+  }
+
+  $entity = $data['node'] ?? NULL;
+
+  if (empty($entity)) {
+    $event_series = $data['eventseries'] ?? NULL;
+    $event_instance = $data['eventinstance'] ?? NULL;
+
+    $entity = $event_series ?? $event_instance;
+  }
+
+  if (!($entity instanceof FieldableEntityInterface)) {
     return [];
   }
 
   $breadcrumb =
-    \Drupal::service('dpl_breadcrumb.breadcrumb_helper')->getBreadcrumbUrlString($node);
+    \Drupal::service('dpl_breadcrumb.breadcrumb_helper')->getBreadcrumbUrlString($entity);
 
   return [
     $token_original => $breadcrumb,

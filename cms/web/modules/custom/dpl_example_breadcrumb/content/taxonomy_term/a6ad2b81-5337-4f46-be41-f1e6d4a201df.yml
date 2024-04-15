@@ -26,7 +26,7 @@ default:
     - tag: link
       attributes:
         rel: canonical
-        href: "http://dpl-cms.docker/taxonomy/term/16"
+        href: "http://dpl-cms.docker/taxonomy/term/19"
   path:
     - alias: ""
       langcode: en
