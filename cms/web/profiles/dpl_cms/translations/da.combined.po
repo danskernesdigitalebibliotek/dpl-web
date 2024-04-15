@@ -3164,7 +3164,7 @@ msgstr "Ukendt bruger"
 #: 
 msgctxt "Fees list"
 msgid "Already paid? It can take up to 72 hours register the transaction."
-msgstr "Har du allerede betalt? Der kan gå op til 72 timer før betalingen registreres i vores systemer"
+msgstr "Tekst 1 (Lotte): Har du allerede betalt? Der kan gå op til 72 timer før betalingen registreres i vores systemer"
 
 #: 
 msgctxt "Search Result"
@@ -3910,7 +3910,7 @@ msgstr "Vælg pauseperiode"
 #: 
 msgctxt "Fees list"
 msgid "Already paid? It can take up to 72 hours register the transaction. (not payable by user)"
-msgstr "Har du allerede betalt? Der kan gå op til 72 timer før din betaling bliver registreret."
+msgstr "Tekst 2 (Lotte): Har du allerede betalt? Der kan gå op til 72 timer før din betaling bliver registreret."
 
 #: 
 msgctxt "Fees list settings form"
