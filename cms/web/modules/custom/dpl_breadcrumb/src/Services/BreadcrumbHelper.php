@@ -379,6 +379,7 @@ class BreadcrumbHelper {
 
       $breadcrumb->addLink($content->toLink($item->getName()));
       $breadcrumb->addCacheableDependency($content);
+      $breadcrumb->addCacheableDependency($item);
     }
 
     return $breadcrumb;
