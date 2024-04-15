@@ -22,8 +22,8 @@ function dpl_breadcrumb_form_taxonomy_term_breadcrumb_structure_form_alter(array
 
   $form['breadcrumb_children'] = [
     '#type' => 'details',
-    '#title' => t('View content that has set this breadcrumb as a parent', [], ['context' => 'DPL admin UX']),
-    '#weight' => 10,
+    '#title' => t('Content that has set this breadcrumb as a parent', [], ['context' => 'DPL admin UX']),
+    '#weight' => 5,
     'items' => $service->getRenderedReferencingNodes($breadcrumb_item, 'teaser'),
   ];
 }
@@ -88,8 +88,26 @@ function dpl_breadcrumb_preprocess_page(array &$variables): void {
   // This is seperate from the breadcrumb that is dispalyed on the page.
   $breadcrumb_item = $service->getBreadcrumbItem($entity);
 
-  if ($breadcrumb_item instanceof TermInterface && $breadcrumb_item->get('field_show_children')->getString() == '1') {
-    $variables['related_children'] = $service->getRenderedReferencingNodes($breadcrumb_item);
+  if ($breadcrumb_item instanceof TermInterface &&
+      $breadcrumb_item->get('field_show_children')->getString() == '1') {
+    // Turning a checkbox field into a TRUE/FALSE.
+    $show_subtitles = $breadcrumb_item->hasField('field_show_children_subtitles') &&
+      $breadcrumb_item->get('field_show_children_subtitles')->getString() == '1';
+
+    $custom_title = $breadcrumb_item->hasField('field_children_title') ?
+      $breadcrumb_item->get('field_children_title')->getString() : NULL;
+
+    $default_title = t(
+      'Related content for "@title"',
+      ['@title' => $breadcrumb_item->getName()],
+      ['context' => 'DPL breadcrumb']
+    );
+
+    $variables['related_children'] = [
+      'items' => $service->getRenderedReferencingNodes($breadcrumb_item),
+      'title' => !empty($custom_title) ? $custom_title : $default_title,
+      'show_subtitles' => $show_subtitles,
+    ];
 
     // Drupal will cache the whole page, as it does not know that it is
     // embedding a dynamic list. We'll add a simple cache tag,
