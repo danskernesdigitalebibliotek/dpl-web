@@ -10,7 +10,7 @@ default:
   status:
     - value: true
   name:
-    - value: Læseklubber123
+    - value: Læseklubber
   weight:
     - value: 1
   parent:
@@ -21,7 +21,7 @@ default:
     - tag: meta
       attributes:
         name: title
-        content: "Læseklubber123 | DPL CMS"
+        content: "Læseklubber | DPL CMS"
     - tag: link
       attributes:
         rel: canonical

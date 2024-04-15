@@ -191,18 +191,20 @@ class BreadcrumbHelper {
   private function getBaseBreadcrumb(FieldableEntityInterface $entity, Breadcrumb $breadcrumb): Breadcrumb {
     if ($entity->bundle() === 'article') {
       $breadcrumb->addLink(Link::createFromRoute(
-        $this->translation->translate('Articles'),
+        $this->translation->translate('Articles', [], ['context' => 'DPL Breadcrumbs']),
         'view.articles.all'
       ));
+      $breadcrumb->addCacheTags(['locale']);
     }
 
     $entity_type_id = $entity->getEntityTypeId();
 
     if (in_array($entity_type_id, ['eventseries', 'eventinstance'])) {
       $breadcrumb->addLink(Link::createFromRoute(
-        $this->translation->translate('Events'),
+        $this->translation->translate('Events', [], ['context' => 'DPL Breadcrumbs']),
         'view.events.all'
       ));
+      $breadcrumb->addCacheTags(['locale']);
     }
 
     $branch_field_id = $this->getBranchFieldId($entity);
@@ -213,6 +215,7 @@ class BreadcrumbHelper {
 
       if ($branch instanceof FieldableEntityInterface) {
         $breadcrumb->addLink($branch->toLink($branch->label()));
+        $breadcrumb->addCacheableDependency($branch);
       }
     }
 
@@ -241,14 +244,17 @@ class BreadcrumbHelper {
         $date = new DateTime($date_string);
         $formatted_date = $date->format('Y-m-d');
         $breadcrumb->addLink($instance->toLink($formatted_date));
+        $breadcrumb->addCacheableDependency($instance);
       }
 
       $breadcrumb->addLink($series->toLink($series->label()));
+      $breadcrumb->addCacheableDependency($series);
     }
     // If there are no siblings, we'll jump past this, and just show the
     // instance link.
     else {
       $breadcrumb->addLink($instance->toLink($instance->label()));
+      $breadcrumb->addCacheableDependency($instance);
     }
 
     return $breadcrumb;
@@ -269,6 +275,7 @@ class BreadcrumbHelper {
     }
     elseif ($this->includeCurrentPage) {
       $breadcrumb->addLink($entity->toLink($entity->label()));
+      $breadcrumb->addCacheableDependency($entity);
     }
 
     $categories = $entity->get($category_field_id)->referencedEntities();
@@ -287,6 +294,7 @@ class BreadcrumbHelper {
           // We do not have a term page ready yet, so we will not add a link.
           '<nolink>'
         ));
+        $breadcrumb->addCacheableDependency($category);
       }
     }
 
@@ -345,6 +353,7 @@ class BreadcrumbHelper {
 
       if ($this->includeCurrentPage) {
         $breadcrumb->addLink($entity->toLink($entity->label()));
+        $breadcrumb->addCacheableDependency($entity);
       }
     }
 
@@ -369,6 +378,8 @@ class BreadcrumbHelper {
       }
 
       $breadcrumb->addLink($content->toLink($item->getName()));
+      $breadcrumb->addCacheableDependency($content);
+      $breadcrumb->addCacheableDependency($item);
     }
 
     return $breadcrumb;
