@@ -11366,7 +11366,7 @@ msgstr ""
 
 #: 
 msgid "This branch of Crop API is not compatible with the version of Media Entity installed."
-msgstr ""
+msgstr "Denne branch af Crop API er ikke kompatibel med den version af Media Entity som er installeret."
 
 #: 
 msgid "Crop"
@@ -23119,7 +23119,7 @@ msgstr ""
 #: 
 msgctxt "DPL Event"
 msgid "Use the address from associated branch as fallback."
-msgstr ""
+msgstr "Brug adressen fra det tilknyttede bibliotek som fallback."
 
 #: 
 msgctxt "Patron page settings form"
@@ -23203,7 +23203,7 @@ msgstr ""
 
 #: 
 msgid "DPL: Branch address fallback"
-msgstr ""
+msgstr "Adresse fallback på filial"
 
 #: 
 msgid "TwentyThree"
@@ -23215,7 +23215,7 @@ msgstr ""
 
 #: 
 msgid "Branch"
-msgstr ""
+msgstr "Bibliotek"
 
 #: 
 msgctxt "core.entity_form_display.node.page.default:third_party_settings:field_group:group_teaser_card:label"
@@ -23235,22 +23235,22 @@ msgstr ""
 #: 
 msgctxt "facets.facet.branch:name"
 msgid "Branch"
-msgstr ""
+msgstr "Bibliotek"
 
 #: 
 msgctxt "facets.facet.branch:missing_label"
 msgid "others"
-msgstr ""
+msgstr "andre"
 
 #: 
 msgctxt "facets.facet.branch:url_alias"
 msgid "branch"
-msgstr ""
+msgstr "filial"
 
 #: 
 msgctxt "facets.facet.branch:widget:config:default_option_label"
 msgid "- Any -"
-msgstr ""
+msgstr "- Alle -"
 
 #: 
 msgctxt "facets.facet.event_categories:name"
@@ -23270,7 +23270,7 @@ msgstr ""
 #: 
 msgctxt "facets.facet.event_categories:widget:config:default_option_label"
 msgid "- Any -"
-msgstr ""
+msgstr "- Alle -"
 
 #: 
 msgctxt "facets.facet_source.search_api__views_page__events__all:name"
@@ -23280,7 +23280,7 @@ msgstr ""
 #: 
 msgctxt "field.field.eventinstance.default.field_branch:description"
 msgid "When connecting a branch, it will also use the address of this branch as the event address. If you want to use another address then provide an event address."
-msgstr ""
+msgstr "Når du tilknytter en filial, vil denne filials adresse blive vist på arrangementet. Hvis du ønsker kan du overskrive adressen på arrangementet."
 
 #: 
 msgctxt "field.field.eventinstance.default.field_event_address:description"
@@ -23295,7 +23295,7 @@ msgstr ""
 #: 
 msgctxt "field.field.eventseries.default.field_branch:description"
 msgid "When connecting a branch, it will also overwrite the event address with the address from the branch."
-msgstr ""
+msgstr "Når du tilknytter en filial, vil adressen på arrangementet blive overskrevet med adressen på filialen."
 
 #: 
 msgctxt "field.field.eventseries.default.field_event_address:description"
@@ -23623,22 +23623,22 @@ msgstr ""
 #: 
 msgctxt "field.field.node.branch.field_promoted_on_lists:label"
 msgid "Display at the top of the list"
-msgstr ""
+msgstr "Vis øverst på filiallisten"
 
 #: 
 msgctxt "field.field.node.branch.field_promoted_on_lists:description"
 msgid "If you want this branch to be shown at the top on /branches, you can check this.<br><br />If you set this option on multiple branches, the promoted list will also be alphabetized"
-msgstr ""
+msgstr "Hvis du ønsker at denne filial skal vises i toppen af listen over filialer, kan du vælge det her. Hvis du sætter denne indstilling på flere filialer, vil de blive alfabetiseret."
 
 #: 
 msgctxt "field.field.node.branch.field_promoted_on_lists:settings:on_label"
 msgid "On"
-msgstr ""
+msgstr "Til"
 
 #: 
 msgctxt "field.field.node.branch.field_promoted_on_lists:settings:off_label"
 msgid "Off"
-msgstr ""
+msgstr "Fra"
 
 #: 
 msgctxt "field.field.node.page.field_breadcrumb_parent:label"
@@ -23668,7 +23668,7 @@ msgstr "Titel"
 #: 
 msgctxt "field.field.paragraph.card_grid_automatic.field_filter_branches:label"
 msgid "Filter by branches"
-msgstr ""
+msgstr "Filtrer på filial"
 
 #: 
 msgctxt "field.field.paragraph.card_grid_automatic.field_filter_categories:label"
@@ -23788,7 +23788,7 @@ msgstr ""
 #: 
 msgctxt "views.view.content_paragraphs:display:default:display_options:arguments:field_branch_target_id:exception:title"
 msgid "All"
-msgstr ""
+msgstr "Alle"
 
 #: 
 msgid "The \".version\" file does not have a valid JSON format."
