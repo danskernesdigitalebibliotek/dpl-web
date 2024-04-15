@@ -1,5 +1,4 @@
 const branchTitle = "Test branch";
-const formattedSearchString = branchTitle.toLowerCase().replace(/ /g, "+");
 
 enum OpeningHourCategories {
   Opening = "Åbent",
@@ -16,13 +15,15 @@ type OpeningHourFormType = {
 };
 
 const createTestBranchAndVisitOpeningHoursAdmin = () => {
-  cy.drupalLoginAndVisit("/node/add/branch");
+  cy.drupalLogin("/node/add/branch");
   cy.get("#edit-title-0-value").type(branchTitle);
   cy.get('button[title="Show all Paragraphs"]').click();
+  // Forcing and multiple was the only way i cud get this to work
   cy.get('button[value="Opening Hours"]').click({
     multiple: true,
     force: true,
   });
+  // Forcing is necessary because the feilds are hidden by an shown in at "popup"
   cy.get("#edit-field-address-0-address-address-line1")
     .type("Example Street", { force: true })
     .should("have.value", "Example Street");
@@ -43,9 +44,10 @@ const createTestBranchAndVisitOpeningHoursAdmin = () => {
   });
 };
 const deleteAllTestBranchesIfExists = () => {
+  const formattedSearchString = branchTitle.toLowerCase().replace(/ /g, "+");
   cy.drupalLogin();
   cy.visit(
-    `/admin/content?title=${formattedSearchString}&type=All&status=All&langcode=All`
+    `/admin/content?title=${formattedSearchString}&type=branch&status=All&langcode=All`
   );
 
   cy.get("tbody").then((tbody) => {
@@ -72,7 +74,7 @@ const visitOpeningHoursPage = () => {
 const visitOpeningHoursPageAdmin = () => {
   const adminUrl = Cypress.env("adminUrl");
   if (adminUrl) {
-    cy.drupalLoginAndVisit(adminUrl);
+    cy.drupalLogin(adminUrl);
   }
 };
 
@@ -92,7 +94,7 @@ const selectTimeOnThursdayFromWeekView = ({
   start,
 }: Pick<OpeningHourFormType, "start">): void => {
   // In FullCalendar, the date and time elements are siblings in the same overlaying div, which prevents selection by both date and time simultaneously.
-  // To work around this, we target a specific time slot. This example selects the 08:00 slot, which spans all days.
+  // To work around this, we target a specific time slot. This example selects the a time slot, which spans all days.
   // Since Cypress clicks at the center of the target element by default, and our time slots extend across all weekdays, it will interact with the slot for Thursday.
   cy.get(`td.fc-timegrid-slot-lane[data-time="${start}:00"]`).click();
 };
@@ -217,11 +219,6 @@ const deleteOpeningHour = ({
   start,
   end,
 }: OpeningHourFormType) => {
-  createOpeningHour({
-    openingHourCategory,
-    start,
-    end,
-  });
   visitOpeningHoursPageAdmin();
   navigateToMonthViewAdmin();
   checkOpeningHoursAdmin({
@@ -281,11 +278,13 @@ describe("Opening hours editor", () => {
   });
 
   it("Can delete an opening hour", () => {
-    deleteOpeningHour({
+    const openingHour: OpeningHourFormType = {
       openingHourCategory: OpeningHourCategories.WithService,
       start: "10:00",
       end: "11:00",
-    });
+    };
+    createOpeningHour(openingHour);
+    deleteOpeningHour(openingHour);
   });
 
   it("Can create opening hour in next week", () => {

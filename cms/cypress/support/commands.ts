@@ -76,7 +76,8 @@ Cypress.Commands.add("logRequests", () => {
   );
 });
 
-Cypress.Commands.add("drupalLogin", () => {
+Cypress.Commands.add("drupalLogin", (url?: string) => {
+  cy.clearCookies();
   cy.visit("/user/login");
   cy.get('[name="name"]')
     .type(Cypress.env("DRUPAL_USERNAME"))
@@ -84,6 +85,9 @@ Cypress.Commands.add("drupalLogin", () => {
     .get('[name="pass"]')
     .type(Cypress.env("DRUPAL_PASSWORD"));
   cy.get('[value="Log in"]').click();
+  if (url) {
+    cy.visit(url);
+  }
 });
 
 Cypress.Commands.add("drupalLogout", () => {
@@ -101,12 +105,6 @@ Cypress.Commands.add("drupalCron", () => {
   cy.get('[value="Run cron"]').click();
   cy.contains("Cron ran successfully.");
   cy.drupalLogout();
-});
-
-Cypress.Commands.add("drupalLoginAndVisit", (url: string) => {
-  cy.clearCookies();
-  cy.drupalLogin();
-  cy.visit(url);
 });
 
 const adgangsplatformenLoginOauthMappings = ({
@@ -315,10 +313,9 @@ declare global {
       logRequests(): Chainable<null>;
       getRequestCount(request: RequestPattern): Chainable<number>;
       resetRequests(): Chainable<null>;
-      drupalLogin(): Chainable<null>;
+      drupalLogin(url?: string): Chainable<null>;
       drupalLogout(): Chainable<null>;
       drupalCron(): Chainable<null>;
-      drupalLoginAndVisit(url: string): Chainable<null>;
       adgangsplatformenLogin(params: {
         authorizationCode: string;
         accessToken: string;
