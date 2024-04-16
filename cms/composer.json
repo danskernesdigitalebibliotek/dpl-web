@@ -79,7 +79,7 @@
         }
     ],
     "require": {
-        "amazeeio/drupal_integrations": "0.3.7",
+        "amazeeio/drupal_integrations": "^0.4",
         "brick/math": "^0.12.1",
         "composer/installers": "1.12.0",
         "cweagans/composer-patches": "1.7.3",
@@ -237,6 +237,7 @@
                 "[web-root]/sites/default/development.settings.php": "assets/development.settings.php",
                 "[web-root]/sites/default/local.services.yml": "assets/local.services.yml",
                 "[web-root]/sites/default/local.settings.php": "assets/local.settings.php",
+                "[project-root]/drush/sites/lagoon.site.yml": "assets/lagoon.site.yml",
                 "[web-root]/.eslintrc.json": false,
                 "[project-root]/.gitattributes": {
                     "append": "assets/.gitattributes"
