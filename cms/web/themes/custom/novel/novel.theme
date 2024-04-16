@@ -304,23 +304,26 @@ function novel_theme_suggestions_select_alter(array &$suggestions, array $variab
  */
 function novel_preprocess_views_view_unformatted(&$variables): void {
   $rows = &$variables['rows'];
+  $view = $variables['view'];
+  if ($view->id() === 'events') {
 
-  foreach ($rows as $index => &$row) {
-    if (isset($row['content']['#eventinstance'])) {
-      $eventInstance = $row['content']['#eventinstance'];
+    foreach ($rows as $index => &$row) {
+      if (isset($row['content']['#eventinstance'])) {
+        $eventInstance = $row['content']['#eventinstance'];
 
-      if ($eventInstance instanceof EventInstance) {
-        $eventSeriesId = $eventInstance->getEventSeries()->id();
+        if ($eventInstance instanceof EventInstance) {
+          $eventSeriesId = $eventInstance->getEventSeries()->id();
 
-        // Check if not the first row and if event_series_id matches
-        // the previous row.
-        $isStacked = $index > 0 && $eventSeriesId == $rows[$index - 1]['content']['#eventinstance']->getEventSeries()
-          ->id();
+          // Check if not the first row and if event_series_id matches
+          // the previous row.
+          $isStacked = $index > 0 && $eventSeriesId == $rows[$index - 1]['content']['#eventinstance']->getEventSeries()
+            ->id();
 
-        $row['isStacked'] = $isStacked;
+          $row['isStacked'] = $isStacked;
 
-        if ($isStacked) {
-          $row['content']['#view_mode'] = 'stacked_event';
+          if ($isStacked) {
+            $row['content']['#view_mode'] = 'stacked_event';
+          }
         }
       }
     }
