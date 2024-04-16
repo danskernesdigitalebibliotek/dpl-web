@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "106cc6e7c72a42dd9236398950a7283e",
+    "content-hash": "0577451567c03064dcf25675dde4f465",
     "packages": [
         {
             "name": "amazeeio/drupal_integrations",
@@ -1149,19 +1149,19 @@
         },
         {
             "name": "danskernesdigitalebibliotek/dpl-design-system",
-            "version": "2024.16.0",
+            "version": "2024.17.0-rc1",
             "dist": {
                 "type": "zip",
-                "url": "https://github.com/danskernesdigitalebibliotek/dpl-design-system/releases/download/2024.16.0/dist-2024-16-0-bc3c62df13c140271e26a5d5be9c9c23de13b1bf.zip"
+                "url": "https://github.com/danskernesdigitalebibliotek/dpl-design-system/releases/download/branch-release/hermod-sprint-12/dist-release-hermod-sprint-12.zip"
             },
             "type": "drupal-library"
         },
         {
             "name": "danskernesdigitalebibliotek/dpl-react",
-            "version": "2024.16.0",
+            "version": "2024.17.0-rc1",
             "dist": {
                 "type": "zip",
-                "url": "https://github.com/danskernesdigitalebibliotek/dpl-react/releases/download/2024.16.0/dist-2024-16-0-1a9f9df85eb133c1ff7583cbe60b0cdefa45d9bb.zip"
+                "url": "https://github.com/danskernesdigitalebibliotek/dpl-react/releases/download/branch-release/hermod-sprint-12/dist-release-hermod-sprint-12.zip"
             },
             "require": {
                 "composer/installers": "^1.2.0"
