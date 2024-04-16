@@ -10,36 +10,36 @@ dependencies:
     - search_api
 id: events
 name: Events
-description: ''
+description: ""
 read_only: false
 field_settings:
   branch:
-    label: 'Event Branch'
-    datasource_id: 'entity:eventinstance'
+    label: "Event Branch"
+    datasource_id: "entity:eventinstance"
     property_path: branch
     type: integer
     dependencies:
       module:
         - field_inheritance
   date:
-    label: 'Event Date'
-    datasource_id: 'entity:eventinstance'
+    label: "Event Date"
+    datasource_id: "entity:eventinstance"
     property_path: date
     type: date
     dependencies:
       module:
         - recurring_events
   end_value:
-    label: 'Event Date » End date value'
-    datasource_id: 'entity:eventinstance'
-    property_path: 'date:end_value'
+    label: "Event Date » End date value"
+    datasource_id: "entity:eventinstance"
+    property_path: "date:end_value"
     type: date
     dependencies:
       module:
         - recurring_events
   event_categories:
-    label: 'Event categories'
-    datasource_id: 'entity:eventinstance'
+    label: "Event categories"
+    datasource_id: "entity:eventinstance"
     property_path: event_categories
     type: integer
     dependencies:
@@ -47,27 +47,35 @@ field_settings:
         - field_inheritance
   status:
     label: Published
-    datasource_id: 'entity:eventinstance'
+    datasource_id: "entity:eventinstance"
     property_path: status
     type: boolean
     dependencies:
       module:
         - recurring_events
+  event_tags:
+    label: "Event tags"
+    datasource_id: "entity:eventinstance"
+    property_path: event_tags
+    type: integer
+    dependencies:
+      module:
+        - field_inheritance
 datasource_settings:
-  'entity:eventinstance':
+  "entity:eventinstance":
     bundles:
       default: true
-      selected: {  }
+      selected: {}
     languages:
       default: true
-      selected: {  }
+      selected: {}
 processor_settings:
-  add_url: {  }
-  aggregated_field: {  }
-  custom_value: {  }
-  entity_type: {  }
-  language_with_fallback: {  }
-  rendered_item: {  }
+  add_url: {}
+  aggregated_field: {}
+  custom_value: {}
+  entity_type: {}
+  language_with_fallback: {}
+  rendered_item: {}
 tracker_settings:
   default:
     indexing_order: fifo
