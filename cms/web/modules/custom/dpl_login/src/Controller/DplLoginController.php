@@ -6,6 +6,7 @@ use Drupal\Core\Controller\ControllerBase;
 use Drupal\Core\Routing\TrustedRedirectResponse;
 use Drupal\Core\StringTranslation\StringTranslationTrait;
 use Drupal\Core\Url;
+use Drupal\dpl_login\AccessToken;
 use Drupal\dpl_login\Adgangsplatformen\Config;
 use Drupal\dpl_login\Exception\MissingConfigurationException;
 use Drupal\dpl_login\UserTokensProviderInterface;
@@ -87,7 +88,7 @@ class DplLoginController extends ControllerBase {
     $url = Url::fromUri($logout_endpoint, [
       'query' => [
         'singlelogout' => 'true',
-        'access_token' => $access_token['token']->token,
+        'access_token' => $access_token->token,
         'redirect_uri' => $redirect_uri,
       ],
     ]);
@@ -136,14 +137,13 @@ class DplLoginController extends ControllerBase {
    *   A redirect to either the original redirect or to the frontpage.
    */
   public function loginHandler(Request $request): TrustedRedirectResponse {
-    if ($this->getAccessToken() && $current_path = (string) $request->query->get('current-path')) {
-      $token = $this->getAccessToken();
-      if ($token['type'] === 'user') {
-        $url = Url::fromUri('internal:/' . ltrim($current_path, '/'))->toString(TRUE);
+    if ($current_path = (string) $request->query->get('current-path')) {
+      if ($this->unregisteredUserTokensProvider->getAccessToken()) {
+        $url = Url::fromRoute('dpl_patron_reg.create')->toString(TRUE);
         return new TrustedRedirectResponse($url->getGeneratedUrl());
       }
-      elseif ($token['type'] === 'unregistered-user') {
-        $url = Url::fromRoute('dpl_patron_reg.create')->toString(TRUE);
+      if ($this->userTokensProvider->getAccessToken()) {
+        $url = Url::fromUri('internal:/' . ltrim($current_path, '/'))->toString(TRUE);
         return new TrustedRedirectResponse($url->getGeneratedUrl());
       }
     }
@@ -155,26 +155,14 @@ class DplLoginController extends ControllerBase {
   /**
    * Get access token. If user is not registered, get unregistered user token.
    *
-   * @return mixed[]|null
-   *   Access token or NULL if not found.
-   *
    * @todo Should be moved to separate service that can be used througut the application.
    */
-  protected function getAccessToken(): ?array {
+  protected function getAccessToken(): ?AccessToken {
     if ($access_token = $this->unregisteredUserTokensProvider->getAccessToken()) {
-
-      $tokenInfo = [
-        'token' => $access_token,
-        'type' => 'unregistered-user',
-      ];
-      return $tokenInfo;
+      return $access_token;
     }
     if ($access_token = $this->userTokensProvider->getAccessToken()) {
-      $tokenInfo = [
-        'token' => $access_token,
-        'type' => 'user',
-      ];
-      return $tokenInfo;
+      return $access_token;
     }
 
     return NULL;
