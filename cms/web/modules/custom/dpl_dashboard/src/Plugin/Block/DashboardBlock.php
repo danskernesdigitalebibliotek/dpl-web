@@ -108,7 +108,7 @@ class DashboardBlock extends BlockBase implements ContainerFactoryPluginInterfac
       'physical-loans-text' => $this->t('Loans', [], ['context' => 'Dashboard']),
       'queued-reservations-text' => $this->t('Queued reservations', [], ['context' => 'Dashboard']),
       'reservations-text' => $this->t('Reservations', [], ['context' => 'Dashboard']),
-      'total-amount-fee-text' => $this->t('@total,-', [], ['context' => 'Dashboard']),
+      'total-amount-fee-text' => $this->t('@total', [], ['context' => 'Dashboard']),
       'total-owed-text' => $this->t('You owe in total', [], ['context' => 'Dashboard']),
       'your-profile-text' => $this->t('Your profile', [], ['context' => 'Dashboard']),
     ] + DplReactAppsController::externalApiBaseUrls();
