@@ -23170,7 +23170,10 @@ msgid "If a user is blocked because of fees a modal appears. This field makes it
 "                                         You can add a relative url (e.g. /takster). <br />\n"
 "                                         You can search for an internal url. <br />\n"
 "                                         You can add an external url (starting with \"http://\" or \"https://\")."
-msgstr ""
+msgstr "Hvis en bruger er blokeret pga. gebyrer, vises en pop-up med information herom ved login. Her kan indsættes link til Mit Betalingsoverblik, hvis biblioteket er på ØIR.\n"
+"\n"
+"Hvis biblioteket ikke er på ØIR, kan oprettes en hjælpeside hvor man forklarer hvordan gebyrer betales. Indsæt link til denne side her. Linket kan være en relativ sti (f.x. /takster) eller du kan fremsøge en intern URL.\n"
+"Du kan også indsætte en ekstern URL (begynder med http:// eller https://)"
 
 #: 
 msgid "DPL: Branch address fallback"
