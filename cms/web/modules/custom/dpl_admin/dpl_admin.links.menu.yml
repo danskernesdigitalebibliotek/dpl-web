@@ -3,3 +3,8 @@ dpl_admin.add_content:
   parent: system.admin_content
   route_name: dpl_admin.add_content
   weight: 5
+dpl_admin.logout:
+  title: "Logout"
+  route_name: user.logout
+  parent: system.admin
+  weight: 9999

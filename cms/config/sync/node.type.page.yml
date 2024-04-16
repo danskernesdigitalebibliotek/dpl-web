@@ -27,7 +27,7 @@ third_party_settings:
     parent: ''
 name: Page
 type: page
-description: ''
+description: 'Pages can be used for various types of content, either temporary or permanent. A page can be simple, containing text about, for example, loan rules, or it can serve as a structural unit designed to display other pages in a section for communication or navigation.'
 help: ''
 new_revision: false
 preview_mode: 1

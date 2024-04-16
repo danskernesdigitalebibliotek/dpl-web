@@ -1,0 +1,10 @@
+uuid: 15b245bb-25f0-463a-882c-6823bd9473ac
+langcode: en
+status: true
+dependencies:
+  module:
+    - media
+id: media.list_teaser
+label: 'List teaser (4:3)'
+targetEntityType: media
+cache: true
