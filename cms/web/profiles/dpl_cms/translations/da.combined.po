@@ -1073,7 +1073,7 @@ msgstr "Kunne ikke installere modul: @reason"
 #: 
 msgctxt "Dpl Fbs"
 msgid "Basic settings"
-msgstr "Grundlæggende sideinformation"
+msgstr "Grundlæggende indstillinger"
 
 #: 
 msgctxt "Dpl Fbs"
