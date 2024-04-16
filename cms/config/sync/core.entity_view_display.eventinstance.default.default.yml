@@ -76,7 +76,7 @@ content:
     weight: 12
     region: content
   event_description:
-    type: text_default
+    type: basic_string
     label: hidden
     settings: {  }
     third_party_settings: {  }
