@@ -99,7 +99,6 @@
         "drupal/core-composer-scaffold": "~10.1.7",
         "drupal/core-project-message": "~10.1.7",
         "drupal/core-recommended": "~10.1.7",
-        "drupal/customerror": "^1.0@beta",
         "drupal/date_range_formatter": "^4.0",
         "drupal/default_content": "^2.0@alpha",
         "drupal/devel": "^5.1",
