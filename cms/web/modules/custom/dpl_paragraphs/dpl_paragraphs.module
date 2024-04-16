@@ -316,6 +316,8 @@ function dpl_paragraphs_preprocess_paragraph__user_registration_section(array &$
     return;
   }
 
+  $variables['#attached']['library'][] = 'dpl_paragraphs/dpl_paragraphs_behavior';
+
   $user_registration_items = $user_registration_section->get('field_user_registration_items')->referencedEntities();
   $variables['anchor_links'] = [];
 
