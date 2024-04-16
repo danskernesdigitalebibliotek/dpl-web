@@ -5318,7 +5318,7 @@ msgstr "Bibliotek"
 #: 
 msgctxt "field.field.node.page.field_display_titles:label"
 msgid "Display titles"
-msgstr "Vis titler"
+msgstr "Vis titel"
 
 #: 
 msgctxt "field.field.node.page.field_display_titles:description"
