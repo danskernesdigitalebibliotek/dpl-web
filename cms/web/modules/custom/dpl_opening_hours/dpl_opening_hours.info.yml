@@ -1,0 +1,9 @@
+name: "DPL Opening Hours"
+type: module
+description: "Handling of opening hours for branches."
+package: DPL
+core_version_requirement: ^10
+
+dependencies:
+  - drupal:rest
+  - drupal:drupal_typed

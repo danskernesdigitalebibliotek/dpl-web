@@ -59,18 +59,6 @@ class UserTokenAuthProviderTest extends UnitTestCase {
   }
 
   /**
-   * A request with a bearer token should be handled by the provider.
-   */
-  public function testRequestWithBearerTokenApplies(): void {
-    $provider = new UserTokenAuthProvider($this->openIdClient->reveal(), $this->moduleInvoker->reveal(), $this->authMap->reveal());
-
-    $request = new Request();
-    $request->headers->set('Authorization', 'Bearer abcd1234');
-
-    $this->assertTrue($provider->applies($request));
-  }
-
-  /**
    * A request with another type of authorization scheme should not be handled.
    */
   public function testRequestWithBasicAuthDoesNotApply(): void {
@@ -97,6 +85,8 @@ class UserTokenAuthProviderTest extends UnitTestCase {
 
     $request = new Request();
     $request->headers->set('Authorization', 'Bearer abcd1234');
+
+    $this->assertTrue($provider->applies($request));
 
     $authenticatedUser = $provider->authenticate($request);
     $this->assertEquals($user, $authenticatedUser);

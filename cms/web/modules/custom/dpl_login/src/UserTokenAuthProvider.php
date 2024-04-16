@@ -16,6 +16,13 @@ use function Safe\preg_match as preg_match;
 class UserTokenAuthProvider implements AuthenticationProviderInterface {
 
   /**
+   * A map of known responses to authentication from token.
+   *
+   * @var array<string, ?AccountInterface>
+   */
+  private array $authMap = [];
+
+  /**
    * Constructor.
    */
   public function __construct(
@@ -41,10 +48,11 @@ class UserTokenAuthProvider implements AuthenticationProviderInterface {
    * {@inheritdoc}
    */
   public function applies(Request $request) : bool {
-    // If the request has a bearer token this provider applies. In general we
-    // might have tokens for different systems and we might not know if a
-    // specific token actually works with this setup but at least we can try.
-    return (bool) $this->getToken($request);
+    // We only know if this provider applies if we can actually resolve the
+    // request to a user. Clients may pass either user or library tokens.
+    // We cannot tell from the data alone which is which so we have to try
+    // to authenticate to see if it will resolve to a user to know.
+    return (bool) $this->authenticate($request);
   }
 
   /**
@@ -56,23 +64,39 @@ class UserTokenAuthProvider implements AuthenticationProviderInterface {
       return NULL;
     }
 
-    $user_info = $this->client->retrieveUserInfo($token);
-    if (!$user_info) {
-      // No need to log here. Error logging is already handled by the client.
-      return NULL;
-    }
-    // Allow modules to alter the user info.
-    // This allows this module to add a "sub" entry denoting the unique
-    // end-user (subject) identifier. This is needed for us to load the
-    // associated Drupal user from the OpenID Connect authmap.
-    $context = [];
-    $this->moduleHandler->alter('openid_connect_userinfo', $user_info, $context);
-    if (!isset($user_info['sub'])) {
-      return NULL;
+    // Add static caching of user authentication. This method will be called
+    // multiple times with the same request and retrieving user info and
+    // loading the user may be expensive.
+    if (array_key_exists($token, $this->authMap)) {
+      return $this->authMap[$token];
     }
 
-    $user = $this->authmap->userLoadBySub($user_info['sub'], $this->client->getPluginId());
-    return ($user instanceof AccountInterface) ? $user : NULL;
+    $return = NULL;
+
+    $user_info = $this->client->retrieveUserInfo($token);
+    if ($user_info) {
+      // Allow modules to alter the user info.
+      // This allows this module to add a "sub" entry denoting the unique
+      // end-user (subject) identifier. This is needed for us to load the
+      // associated Drupal user from the OpenID Connect authmap.
+      $context = [];
+      try {
+        $this->moduleHandler->alter('openid_connect_userinfo', $user_info, $context);
+      }
+      catch (\Exception $e) {
+        // Do nothing. If the token cannot resolve to a user then
+        // dpl_login_openid_connect_userinfo_alter() will throw an exception.
+        // However this is to be expected if this is a library token so in that
+        // case continue.
+      }
+      if (isset($user_info['sub'])) {
+        $user = $this->authmap->userLoadBySub($user_info['sub'], $this->client->getPluginId());
+        $return = ($user instanceof AccountInterface) ? $user : NULL;
+      }
+    }
+
+    $this->authMap[$token] = $return;
+    return $return;
   }
 
 }

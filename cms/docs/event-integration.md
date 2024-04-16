@@ -55,3 +55,8 @@ other secure means.
 
 The external system must authenticate through [HTTP basic auth](https://swagger.io/docs/specification/2-0/authentication/basic-authentication/)
 using this information when updating events.
+
+## API versioning
+
+Please read [the related ADR](./architecture/adr-011-api-versioning.md) for how
+we handle API versioning.

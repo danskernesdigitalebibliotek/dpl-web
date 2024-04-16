@@ -36,7 +36,7 @@
             "type": "package",
             "package": {
                 "name": "danskernesdigitalebibliotek/dpl-react",
-                "version": "2024.14.1",
+                "version": "2024.15.0",
                 "type": "drupal-library",
                 "dist": {
                     "url": "https://github.com/danskernesdigitalebibliotek/dpl-react/releases/download/branch-release%2Fbrahma-14/dist-release-brahma-14.zip",
@@ -52,7 +52,7 @@
             "package": {
                 "name": "danskernesdigitalebibliotek/dpl-design-system",
                 "type": "drupal-library",
-                "version": "2024.14.1",
+                "version": "2024.15.0",
                 "dist": {
                     "url": "https://github.com/danskernesdigitalebibliotek/dpl-design-system/releases/download/branch-release%2Fbrahma-14/dist-release-brahma-14.zip",
                     "type": "zip"
@@ -67,15 +67,25 @@
                     "danskernesdigitalebibliotek/fbs-client": "dev-main"
                 }
             }
+        },
+        {
+            "type": "path",
+            "url": "packages/cms-api",
+            "options": {
+                "versions": {
+                    "danskernesdigitalebibliotek/cms-api": "dev-main"
+                }
+            }
         }
     ],
     "require": {
-        "amazeeio/drupal_integrations": "0.3.7",
+        "amazeeio/drupal_integrations": "^0.4",
         "brick/math": "^0.12.1",
         "composer/installers": "1.12.0",
         "cweagans/composer-patches": "1.7.3",
-        "danskernesdigitalebibliotek/dpl-design-system": "^2024.14",
-        "danskernesdigitalebibliotek/dpl-react": "^2024.14",
+        "danskernesdigitalebibliotek/cms-api": "*",
+        "danskernesdigitalebibliotek/dpl-design-system": "^2024.15",
+        "danskernesdigitalebibliotek/dpl-react": "^2024.15",
         "danskernesdigitalebibliotek/fbs-client": "*",
         "dealerdirect/phpcodesniffer-composer-installer": "^0.7.1",
         "deoliveiralucas/array-keys-case-transform": "^1.1",
@@ -117,6 +127,7 @@
         "drupal/openid_connect": "^1.4",
         "drupal/paragraphs": "^1.16",
         "drupal/paragraphs_ee": "^10",
+        "drupal/pathauto": "^1.12",
         "drupal/potion": "dev-2.x#e48d6ee336d960b9d2efb5d88e68402db6d229a6",
         "drupal/purge": "^3.2",
         "drupal/recurring_events": "^2.0@RC",
@@ -126,6 +137,7 @@
         "drupal/search_api": "^1.31",
         "drupal/selective_better_exposed_filters": "^3.0",
         "drupal/simple_menu_permissions": "^2.0",
+        "drupal/taxonomy_unique": "^2.5",
         "drupal/telephone_formatter": "^1.2",
         "drupal/theme_permission": "^2.0",
         "drupal/twig_tweak": "^3.2.1",
@@ -134,6 +146,7 @@
         "drupal/varnish_purge": "^2.2",
         "drupal/view_unpublished": "^1.1",
         "drupal/views_infinite_scroll": "^2.0",
+        "drupal/webform": "^6.2",
         "drush/drush": "^12",
         "mnsami/composer-custom-directory-installer": "^2.0",
         "myclabs/php-enum": "^1.8",
@@ -224,6 +237,7 @@
                 "[web-root]/sites/default/development.settings.php": "assets/development.settings.php",
                 "[web-root]/sites/default/local.services.yml": "assets/local.services.yml",
                 "[web-root]/sites/default/local.settings.php": "assets/local.settings.php",
+                "[project-root]/drush/sites/lagoon.site.yml": "assets/lagoon.site.yml",
                 "[web-root]/.eslintrc.json": false,
                 "[project-root]/.gitattributes": {
                     "append": "assets/.gitattributes"

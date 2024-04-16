@@ -1,0 +1,18 @@
+uuid: 4a443754-c820-43a9-9a6e-68540fd3b38b
+langcode: en
+status: true
+dependencies:
+  module:
+    - dpl_opening_hours
+    - serialization
+    - user
+id: dpl_opening_hours_update
+plugin_id: dpl_opening_hours_update
+granularity: resource
+configuration:
+  methods:
+    - PATCH
+  formats:
+    - json
+  authentication:
+    - cookie

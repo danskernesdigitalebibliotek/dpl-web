@@ -1,0 +1,4 @@
+manage opening hours for branches:
+  title: "Manage opening hours for branches."
+  description: "Create, update and delete opening hours instances for all branches."
+  restrict access: FALSE
