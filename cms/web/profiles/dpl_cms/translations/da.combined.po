@@ -23161,7 +23161,7 @@ msgstr ""
 msgctxt "Fees list settings form"
 msgid "Define the text of the button that links to the payment page. <br />\n"
 "                                  If nothing is written here the text: \"@text\" will be used."
-msgstr ""
+msgstr "Beskriv hvad der skal stå på knap til betalingsside. Hvis intet anføres, vil teksten: \"@text\" vises."
 
 #: 
 msgctxt "Fees list settings form"
