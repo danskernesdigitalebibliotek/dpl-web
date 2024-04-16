@@ -31,7 +31,7 @@ mode: card
 content:
   branch:
     type: entity_reference_label
-    label: visible
+    label: above
     settings:
       link: true
     third_party_settings: {  }
@@ -60,7 +60,7 @@ content:
     region: content
   event_categories:
     type: entity_reference_label
-    label: visible
+    label: above
     settings:
       link: true
     third_party_settings: {  }
@@ -68,7 +68,7 @@ content:
     region: content
   event_tags:
     type: entity_reference_label
-    label: visible
+    label: above
     settings:
       link: true
     third_party_settings: {  }
@@ -78,7 +78,7 @@ content:
     type: entity_reference_entity_view
     label: hidden
     settings:
-      view_mode: hero_wide
+      view_mode: card
       link: false
     third_party_settings: {  }
     weight: 2

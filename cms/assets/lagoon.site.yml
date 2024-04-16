@@ -1,0 +1,8 @@
+'*':
+  host: 20.238.147.183
+  paths:
+    files: /app/web/sites/default/files
+  user: ${env-name}
+  ssh:
+    options: '-o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no -o LogLevel=FATAL -p 22'
+    tty: false

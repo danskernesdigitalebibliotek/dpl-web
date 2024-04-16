@@ -59,6 +59,8 @@ function _dpl_filter_paragraphs_prepare_filter_view(array $variables, string $it
   // filters in the view!
   $filters = [
     'field_filter_tags',
+    'field_filter_categories',
+    'field_filter_branches',
   ];
 
   $arguments = [];

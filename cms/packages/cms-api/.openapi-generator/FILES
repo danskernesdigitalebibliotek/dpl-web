@@ -1,0 +1,12 @@
+Model/DplOpeningHoursCreatePOSTRequest.php
+Model/DplOpeningHoursListGET200ResponseInner.php
+Model/DplOpeningHoursListGET200ResponseInnerCategory.php
+README.md
+Service/JmsSerializer.php
+Service/SerializerInterface.php
+Service/StrictJsonDeserializationVisitor.php
+Service/StrictJsonDeserializationVisitorFactory.php
+Service/SymfonyValidator.php
+Service/TypeMismatchException.php
+Service/ValidatorInterface.php
+composer.json

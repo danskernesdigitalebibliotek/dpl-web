@@ -1,9 +1,9 @@
 {% include '@novel/components/card.html.twig'
   with {
   attributes: attributes,
-  image: content.field_teaser_image,
+  media: content.field_teaser_image,
   variant: 'x-large',
-  has_image: (content.field_teaser_image.0),
+  has_media: (content.field_teaser_image.0),
   teaser_text: content.field_teaser_text,
   type_tag: node.type.entity.label(),
   date_tag: node.getCreatedTime()|format_date('date_full_month'),
