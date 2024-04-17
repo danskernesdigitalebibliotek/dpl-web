@@ -21,6 +21,7 @@ dependencies:
     - paragraphs_features
     - path
     - scheduler
+    - select2_multicheck
 third_party_settings:
   field_group:
     group_teaser_card:
@@ -46,16 +47,18 @@ bundle: page
 mode: default
 content:
   field_branch:
-    type: options_select
+    type: select2_multicheck
     weight: 0
     region: content
-    settings: {  }
+    settings:
+      width: 100%
     third_party_settings: {  }
   field_breadcrumb_parent:
-    type: options_select
+    type: select2_multicheck
     weight: 1
     region: content
-    settings: {  }
+    settings:
+      width: 100%
     third_party_settings: {  }
   field_display_titles:
     type: boolean_checkbox

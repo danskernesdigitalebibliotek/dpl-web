@@ -22,7 +22,9 @@ dependencies:
     - paragraphs
     - paragraphs_ee
     - paragraphs_features
+    - path
     - scheduler
+    - select2_multicheck
 third_party_settings:
   field_group:
     group_article_meta_tags:
@@ -81,10 +83,11 @@ bundle: article
 mode: default
 content:
   field_branch:
-    type: options_select
+    type: select2_multicheck
     weight: 0
     region: content
-    settings: {  }
+    settings:
+      width: 100%
     third_party_settings: {  }
   field_canonical_url:
     type: link_default
@@ -95,10 +98,11 @@ content:
       placeholder_title: ''
     third_party_settings: {  }
   field_categories:
-    type: options_select
+    type: select2_multicheck
     weight: 7
     region: content
-    settings: {  }
+    settings:
+      width: 100%
     third_party_settings: {  }
   field_override_author:
     type: string_textfield
@@ -152,14 +156,11 @@ content:
       placeholder: ''
     third_party_settings: {  }
   field_tags:
-    type: entity_reference_autocomplete_tags
+    type: select2_multicheck
     weight: 8
     region: content
     settings:
-      match_operator: CONTAINS
-      match_limit: 10
-      size: 60
-      placeholder: ''
+      width: 100%
     third_party_settings: {  }
   field_teaser_image:
     type: media_library_widget
