@@ -6442,7 +6442,7 @@ msgstr "[user:display-name],\n"
 #: 
 msgctxt "user.mail:password_reset:subject"
 msgid "Replacement login information for [user:display-name] at [site:name]"
-msgstr ""
+msgstr "Information om erstatningslogin for [user:display-name] på [site:name]"
 
 #: 
 msgctxt "user.mail:password_reset:body"
@@ -6812,7 +6812,7 @@ msgstr "- Alle -"
 #: 
 msgctxt "views.view.administerusersbyrole_people:display:default:display_options:pager:options:expose:offset_label"
 msgid "Offset"
-msgstr ""
+msgstr "Offset"
 
 #: 
 msgctxt "views.view.administerusersbyrole_people:display:default:display_options:exposed_form:options:submit_button"
@@ -6933,7 +6933,7 @@ msgstr "- Alle - "
 #: 
 msgctxt "views.view.articles:display:default:display_options:pager:options:expose:offset_label"
 msgid "Offset"
-msgstr ""
+msgstr "Offset"
 
 #: 
 msgctxt "views.view.articles:display:default:display_options:pager:options:views_infinite_scroll:button_text"
@@ -7344,7 +7344,7 @@ msgstr "- Alle - "
 #: 
 msgctxt "views.view.entity_reference_content:display:default:display_options:pager:options:expose:offset_label"
 msgid "Offset"
-msgstr ""
+msgstr "Offset"
 
 #: 
 msgctxt "views.view.entity_reference_content:display:default:display_options:exposed_form:options:submit_button"
@@ -7434,7 +7434,7 @@ msgstr "- Alle -"
 #: 
 msgctxt "views.view.entity_reference_event_instance:display:default:display_options:pager:options:expose:offset_label"
 msgid "Offset"
-msgstr ""
+msgstr "Offset"
 
 #: 
 msgctxt "views.view.entity_reference_event_instance:display:default:display_options:exposed_form:options:submit_button"
@@ -7499,7 +7499,7 @@ msgstr "- Alle -"
 #: 
 msgctxt "views.view.entity_reference_event_series:display:default:display_options:pager:options:expose:offset_label"
 msgid "Offset"
-msgstr ""
+msgstr "Offset"
 
 #: 
 msgctxt "views.view.entity_reference_event_series:display:default:display_options:exposed_form:options:submit_button"
@@ -7564,7 +7564,7 @@ msgstr "- Alle -"
 #: 
 msgctxt "views.view.events:display:default:display_options:pager:options:expose:offset_label"
 msgid "Offset"
-msgstr ""
+msgstr "Offset"
 
 #: 
 msgctxt "views.view.events:display:default:display_options:pager:options:views_infinite_scroll:button_text"
@@ -7720,7 +7720,7 @@ msgstr "Publiceringsdato"
 #: 
 msgctxt "views.view.event_admin:display:default:display_options:fields:status:settings:format_custom_false"
 msgid " Unpublished"
-msgstr "␣Afpubliceret"
+msgstr "Afpubliceret"
 
 #: 
 msgctxt "views.view.event_admin:display:default:display_options:fields:status:settings:format_custom_true"
@@ -7770,7 +7770,7 @@ msgstr "- Alle -"
 #: 
 msgctxt "views.view.event_admin:display:default:display_options:pager:options:expose:offset_label"
 msgid "Offset"
-msgstr ""
+msgstr "Offset"
 
 #: 
 msgctxt "views.view.event_admin:display:default:display_options:exposed_form:options:submit_button"
@@ -7965,7 +7965,7 @@ msgstr "- Alle -"
 #: 
 msgctxt "views.view.files:display:default:display_options:pager:options:expose:offset_label"
 msgid "Offset"
-msgstr ""
+msgstr "Offset"
 
 #: 
 msgctxt "views.view.files:display:default:display_options:exposed_form:options:submit_button"
@@ -8080,7 +8080,7 @@ msgstr "- Alle -"
 #: 
 msgctxt "views.view.files:display:page_2:display_options:pager:options:expose:offset_label"
 msgid "Offset"
-msgstr ""
+msgstr "Offset"
 
 #: 
 msgctxt "views.view.files:display:page_2:display_options:arguments:fid:exception:title"
@@ -8165,7 +8165,7 @@ msgstr "- Alle -"
 #: 
 msgctxt "views.view.locked_content:display:default:display_options:pager:options:expose:offset_label"
 msgid "Offset"
-msgstr ""
+msgstr "Offset"
 
 #: 
 msgctxt "views.view.locked_content:display:default:display_options:exposed_form:options:submit_button"
@@ -8335,7 +8335,7 @@ msgstr "- Alle -"
 #: 
 msgctxt "views.view.media:display:default:display_options:pager:options:expose:offset_label"
 msgid "Offset"
-msgstr ""
+msgstr "Offset"
 
 #: 
 msgctxt "views.view.media:display:default:display_options:exposed_form:options:submit_button"
@@ -8460,7 +8460,7 @@ msgstr "- Alle -"
 #: 
 msgctxt "views.view.media_library:display:default:display_options:pager:options:expose:offset_label"
 msgid "Offset"
-msgstr ""
+msgstr "Offset"
 
 #: 
 msgctxt "views.view.media_library:display:default:display_options:exposed_form:options:submit_button"
@@ -8675,7 +8675,7 @@ msgstr "- Alle -"
 #: 
 msgctxt "views.view.scheduled_jobs:display:default:display_options:pager:options:expose:offset_label"
 msgid "Offset"
-msgstr ""
+msgstr "Offset"
 
 #: 
 msgctxt "views.view.scheduled_jobs:display:default:display_options:exposed_form:options:submit_button"
@@ -8980,7 +8980,7 @@ msgstr "- Alle -"
 #: 
 msgctxt "views.view.taxonomy_term:display:default:display_options:pager:options:expose:offset_label"
 msgid "Offset"
-msgstr ""
+msgstr "Offset"
 
 #: 
 msgctxt "views.view.taxonomy_term:display:default:display_options:exposed_form:options:submit_button"
@@ -9145,7 +9145,7 @@ msgstr "- Alle -"
 #: 
 msgctxt "views.view.user_admin_people:display:default:display_options:pager:options:expose:offset_label"
 msgid "Offset"
-msgstr ""
+msgstr "Offset"
 
 #: 
 msgctxt "views.view.user_admin_people:display:default:display_options:exposed_form:options:submit_button"
@@ -9321,7 +9321,7 @@ msgstr "- Alle -"
 #: 
 msgctxt "views.view.watchdog:display:default:display_options:pager:options:expose:offset_label"
 msgid "Offset"
-msgstr ""
+msgstr "Offset"
 
 #: 
 msgctxt "views.view.watchdog:display:default:display_options:exposed_form:options:submit_button"
@@ -9700,7 +9700,7 @@ msgstr ""
 
 #: 
 msgid "The two-letter country code"
-msgstr ""
+msgstr "Den tocifrede landekode"
 
 #: 
 msgid "The top-level administrative subdivision of the country"
@@ -10346,7 +10346,7 @@ msgstr ""
 
 #: 
 msgid "Sort options"
-msgstr ""
+msgstr "Sorteringsmuligheder"
 
 #: 
 msgid "Advanced sort options"
@@ -10662,7 +10662,7 @@ msgstr ""
 
 #: 
 msgid "Lock owner"
-msgstr ""
+msgstr "Låsens ejer"
 
 #: 
 msgid "The user locking the node."
@@ -10670,7 +10670,7 @@ msgstr ""
 
 #: 
 msgid "Lock Date/Time"
-msgstr ""
+msgstr "Lås Dato/Tid"
 
 #: 
 msgid "Timestamp of the lock"
@@ -10694,7 +10694,7 @@ msgstr ""
 
 #: 
 msgid "Is Locked"
-msgstr ""
+msgstr "Er låst"
 
 #: 
 msgid "Whether the node is currently locked"
@@ -10702,7 +10702,7 @@ msgstr "Om noden er låst i øjeblikket"
 
 #: 
 msgid "Break link"
-msgstr ""
+msgstr "Bryd link"
 
 #: 
 msgid "Link to break the content lock."
@@ -10730,7 +10730,7 @@ msgstr "Bryd lås for @label"
 
 #: 
 msgid "Confirm break lock"
-msgstr ""
+msgstr "Bekræft bryd lås"
 
 #: 
 msgid "Verbose"
@@ -10818,7 +10818,7 @@ msgstr "Dette indhold er nu låst for samtidig redigering. Indholdet vil forbliv
 
 #: 
 msgid "Click here to @link"
-msgstr ""
+msgstr "Klik her for @link"
 
 #: 
 msgid "This content translation is now locked by you against simultaneous editing. This content translation will remain locked if you navigate away from this page without saving or unlocking it."
@@ -10882,7 +10882,7 @@ msgstr ""
 
 #: 
 msgid "has been updated."
-msgstr ""
+msgstr "er blevet opdateret"
 
 #: 
 msgid "This content translation is being edited by the user"
@@ -10938,7 +10938,7 @@ msgstr "Forhindrer flere brugere i at redigere samtidig i et stykke indhold hvil
 
 #: 
 msgid "Break Lock"
-msgstr ""
+msgstr "Bryd lås"
 
 #: 
 msgid "Content lock settings"
@@ -10978,11 +10978,11 @@ msgstr ""
 
 #: 
 msgid "<a href=\":focal_point\">Focal point</a>"
-msgstr ""
+msgstr "<a href=\":focal_point\">Fokuspunkt</a>"
 
 #: 
 msgid "Technical details"
-msgstr ""
+msgstr "Tekniske detaljer"
 
 #: 
 msgid "Initial discussion can be found on <a href=\":manual\">manual crop issue queue</a>."
@@ -11002,7 +11002,7 @@ msgstr "Billedfelt"
 
 #: 
 msgid "- Skip field -"
-msgstr ""
+msgstr " - Spring felt over -"
 
 #: 
 msgid "Select field that stores image which needs to be cropped."
@@ -11052,7 +11052,7 @@ msgstr ""
 
 #: 
 msgid "Aspect Ratio"
-msgstr ""
+msgstr "Aspekt ratio"
 
 #: 
 msgid "Set an aspect ratio <b>eg: 16:9</b> or leave this empty for arbitrary aspect ratio"
@@ -11410,7 +11410,7 @@ msgstr "adgang nægtet"
 
 #: 
 msgid "requested page not found"
-msgstr ""
+msgstr "side ikke fundet"
 
 #: 
 msgid "Custom error is not configured for @error errors. Please ensure that the default @error page is set to be /customerror/@error on the @link."
@@ -11418,7 +11418,7 @@ msgstr ""
 
 #: 
 msgid "Site information settings page"
-msgstr ""
+msgstr "Indstillinger for siteinformation"
 
 #: 
 msgid "Code @code settings"
@@ -11454,11 +11454,11 @@ msgstr ""
 
 #: 
 msgid "Redirects"
-msgstr ""
+msgstr "Omdirigeringer"
 
 #: 
 msgid "Redirect list"
-msgstr ""
+msgstr "Liste over omdirigeringer"
 
 #: 
 msgid "These are custom redirect pairs, one per line. Each pair requires a path to match (which is a regular expression) and a destination separated by a space. The keyword <em>&lt;front></em> is allowed as a destination. If you are unfamilar with regular expressions, a simple search string will work, but will match any part of the URl. For example <em>index.html &lt;front></em> will match both <em>http://example.com/index.html &amp; http://example.com/archive/index.html</em>."
@@ -11663,7 +11663,7 @@ msgstr ""
 
 #: 
 msgid "Select items"
-msgstr ""
+msgstr "Vælg"
 
 #: 
 msgid "Select at least one entity type ID."
@@ -13181,7 +13181,7 @@ msgstr ""
 
 #: 
 msgid "Default focal point: @offsets"
-msgstr ""
+msgstr "Standard fokuspunkt: @offsets"
 
 #: 
 msgid "The @title field should be in the form \"leftoffset,topoffset\" where offsets are in percentages. Ex: 25,75."
@@ -20635,7 +20635,7 @@ msgstr "Tilføj serietype"
 
 #: 
 msgid "Add An Event Series Type"
-msgstr ""
+msgstr "Tilføj en arrangementsserie"
 
 #: 
 msgid "Event Instance Types"
@@ -20663,7 +20663,7 @@ msgstr "Giver mulighed for at skabe gentagende arrangementer"
 
 #: 
 msgid "Add event"
-msgstr ""
+msgstr "Tilføj arrangement"
 
 #: 
 msgid "Edit Event Instance"
@@ -23095,7 +23095,7 @@ msgstr "Brug adressen fra det tilknyttede bibliotek som fallback."
 #: 
 msgctxt "Patron page settings form"
 msgid "Link to a page where it is possible to delete patron.<br />You can add a relative url (e.g. /takster). <br />You can search for an internal url. <br />You can add an external url (starting with \"http://\" or \"https://\")."
-msgstr ""
+msgstr "Link til en side hvor det forklares hvordan man bliver slettet som bruger. Du kan tilføje en relativ sti (f.x. /personoplysninger). Du kan fremsøge en intern URL. Du kan tilføje en ekstern URL (begyndende med http:// eller https://)"
 
 #: 
 msgctxt "Library Agency Configuration"
@@ -23119,7 +23119,7 @@ msgid "The url for the patron registration page. <br />\n"
 "                                         You can add a relative url (e.g. /takster). <br />\n"
 "                                         You can search for an internal url. <br />\n"
 "                                         You can add an external url (starting with \"http://\" or \"https://\")."
-msgstr ""
+msgstr "Link til brugeroprettelsessiden. Du kan tilføje en relativ sti (f.x. /opret). Du kan fremsøge en intern URL. Du kan tilføje en ekstern URL (begyndende med http:// eller https://)"
 
 #: 
 msgctxt "Patron registration settings form"
@@ -23127,7 +23127,7 @@ msgid "Redirect to page when user is successfully created. <br />\n"
 "                                         You can add a relative url (e.g. /takster). <br />\n"
 "                                         You can search for an internal url. <br />\n"
 "                                         You can add an external url (starting with \"http://\" or \"https://\")."
-msgstr ""
+msgstr "Redirect til en side når en bruger har oprettet sig. Du kan tilføje en relativ sti (f.x. /velkommen). Du kan fremsøge en intern URL. Du kan tilføje en ekstern URL (begyndende med http:// eller https://)"
 
 #: 
 msgid "<br /><br />\"@title\" is being used in configuration. Before you can delete it, you need to remove it from the following configuration fields:"
@@ -23143,7 +23143,7 @@ msgid "File or URL containing the fees and replacement costs. <br />\n"
 "                                         You can add a relative url (e.g. /takster). <br />\n"
 "                                         You can search for an internal url. <br />\n"
 "                                         You can add an external url (starting with \"http://\" or \"https://\")."
-msgstr ""
+msgstr "Fil eller URL som indeholder oplysninger om gebyrer og erstatninger. Du kan tilføje en relativ sti (f.x. /takster). Du kan fremsøge en intern URL. Du kan tilføje en ekstern URL (begyndende med http:// eller https://)"
 
 #: 
 msgctxt "Fees list settings form"
@@ -23334,12 +23334,12 @@ msgstr ""
 #: 
 msgctxt "field.field.paragraph.recommendation.field_recommendation_description:description"
 msgid "This is the description for a recommendation. <br /><br />If you add a description, the title of the the material will not be automatically generated. "
-msgstr ""
+msgstr "Dette er beskrivelsen af det anbefalede materiale. Hvis du tilføjer en beskrivelsestekst, vil titlen på materialet ikke blive autoudfyldt."
 
 #: 
 msgctxt "field.field.paragraph.recommendation.field_recommendation_title:description"
 msgid "The title of the recommended material.<br /><br />If you add a title, the description for the material will not be automatically generated. "
-msgstr ""
+msgstr "Titlen på det anbefalede materiale. Hvis du tilføjer en titel, vil beskrivelsesteksten af materialet ikke blive autoudfyldt."
 
 #: 
 msgctxt "field.field.paragraph.recommendation.field_recommendation_work_id:description"
@@ -23709,12 +23709,12 @@ msgstr "Brødkrumme mønster"
 #: 
 msgctxt "system.action.pathauto_update_alias_node:label"
 msgid "Update URL alias"
-msgstr ""
+msgstr "Opdater URL alias"
 
 #: 
 msgctxt "system.action.pathauto_update_alias_user:label"
 msgid "Update URL alias"
-msgstr ""
+msgstr "Opdater URL alias"
 
 #: 
 msgctxt "taxonomy.vocabulary.breadcrumb_structure:name"
@@ -23818,7 +23818,7 @@ msgstr ""
 #: 
 msgctxt "facets.facet.content_branch:url_alias"
 msgid "branch"
-msgstr ""
+msgstr "filial"
 
 #: 
 msgctxt "facets.facet.content_branch:widget:config:default_option_label"
@@ -23838,7 +23838,7 @@ msgstr ""
 #: 
 msgctxt "facets.facet.content_categories:url_alias"
 msgid "categories"
-msgstr ""
+msgstr "kategorier"
 
 #: 
 msgctxt "facets.facet.content_categories:widget:config:default_option_label"
