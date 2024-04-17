@@ -23309,7 +23309,7 @@ msgstr "Teaserfelterne bruges til cards som blikfang for indholdet. Hvis der ikk
 #: 
 msgctxt "field.field.node.page.field_teaser_text:label"
 msgid "Teaser text"
-msgstr ""
+msgstr "Teasertekst"
 
 #: 
 msgctxt "field.field.paragraph.material_grid_automatic.field_amount_of_materials:description"
