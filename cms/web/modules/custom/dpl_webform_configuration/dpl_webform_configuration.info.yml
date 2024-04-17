@@ -1,5 +1,5 @@
-name: 'DPL Webform Configuration'
-description: 'Handles custom webform configuration'
+name: "DPL·Webform·Configuration"
+description: "Handles·custom·webform·configuration"
 package: DPL
 
 type: module

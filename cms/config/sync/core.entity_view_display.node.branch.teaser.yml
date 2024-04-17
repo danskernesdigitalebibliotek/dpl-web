@@ -9,6 +9,7 @@ dependencies:
     - field.field.node.branch.field_main_media
     - field.field.node.branch.field_paragraphs
     - field.field.node.branch.field_phone
+    - field.field.node.branch.field_promoted_on_lists
     - node.type.branch
   module:
     - user
@@ -28,5 +29,6 @@ hidden:
   field_main_media: true
   field_paragraphs: true
   field_phone: true
+  field_promoted_on_lists: true
   langcode: true
   search_api_excerpt: true

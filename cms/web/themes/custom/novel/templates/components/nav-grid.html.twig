@@ -1,13 +1,14 @@
 {{ attach_library('novel/nav-grid') }}
 
 {% set has_many = items|length > 6 %}
+{% set foldable = (not show_all) and has_many %}
 
 {%
   set classes = [
     'nav-grid',
     show_subtitles ? 'nav-grid--expanded' : 'nav-grid--simple',
     has_many ? 'nav-grid--has-many' : '',
-    has_many ? 'nav-grid--folded' : '',
+    foldable ? 'nav-grid--folded' : '',
   ]
 %}
 
@@ -24,7 +25,7 @@
             </li>
         {% endfor %}
     </ul>
-    {% if has_many %}
+    {% if foldable %}
         <button class="nav-grid__controller btn-primary btn-outline btn-medium">
             {{ 'Show all'|trans }}
         </button>

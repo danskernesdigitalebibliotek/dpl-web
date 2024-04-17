@@ -14,7 +14,6 @@ use Drupal\Core\Cache\CacheableMetadata;
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\Session\AccountInterface;
 use Drupal\Core\Site\Settings;
-use Drupal\Core\Utility\Error;
 use Drupal\dpl_fbs\Patron\BlockedReason;
 use Drupal\dpl_login\AccessToken;
 use Drupal\dpl_login\DplLoginInterface;
@@ -218,9 +217,14 @@ function _dpl_login_user_is_registered(AccessToken $token): bool {
   try {
     $patron = _dpl_login_get_patron($token);
   }
-  catch (InvalidArgumentException $e) {
+  // @todo We expect that an API Exception means that the user is not registered.
+  // However this is not a safe assumption, so we have flagged this as TODO for
+  // later inspection.
+  catch (ApiException $e) {
     $logger = \Drupal::logger('dpl_login');
-    Error::logException($logger, $e, 'Error fetching patron info from FBS', [], LogLevel::CRITICAL);
+    $logger->error('Authorization blocked. Unable to create access token: @message', [
+      '@message' => $e->getMessage(),
+    ]);
     return FALSE;
   }
 

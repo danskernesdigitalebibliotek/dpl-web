@@ -1,0 +1,25 @@
+uuid: be1a1ad2-2b38-4569-8c68-c472f64a6d2d
+langcode: en
+status: true
+dependencies:
+  module:
+    - focal_point
+name: card_large
+label: 'Card - Large - 551:312'
+effects:
+  9390d04b-e9f9-4ca0-9e7d-f6bea61ea7b7:
+    uuid: 9390d04b-e9f9-4ca0-9e7d-f6bea61ea7b7
+    id: focal_point_scale_and_crop
+    weight: -10
+    data:
+      width: 551
+      height: 551
+      crop_type: focal_point
+  6fb9e0dc-cb84-4e15-ba24-7387618e636d:
+    uuid: 6fb9e0dc-cb84-4e15-ba24-7387618e636d
+    id: image_scale_and_crop
+    weight: -9
+    data:
+      width: 551
+      height: 312
+      anchor: center-center

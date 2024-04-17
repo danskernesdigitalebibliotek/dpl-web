@@ -1,22 +1,11 @@
 <ul class="footer-info__icons">
-    <li>
-        <a href="/" class="footer-info__icon">
-            <img width="24" height="24" src="/themes/custom/novel/assets/dpl-design-system/icons/social/icon-social-facebook.svg" alt="Facebook link" loading="lazy"/>
+  {% for key in ['facebook', 'instagram', 'youtube', 'spotify'] %}
+    {% if settings[key] is not empty %}
+      <li>
+        <a href="{{ settings[key] }}" class="footer-info__icon" target="_blank">
+          <img width="24" height="24" src="/themes/custom/novel/assets/dpl-design-system/icons/social/icon-social-{{ key }}.svg" alt="{{ key }} link" loading="lazy"/>
         </a>
-    </li>
-    <li>
-        <a href="/" class="footer-info__icon">
-            <img width="24" height="24" src="/themes/custom/novel/assets/dpl-design-system/icons/social/icon-social-instagram.svg" alt="Instagram link" loading="lazy"/>
-        </a>
-    </li>
-    <li>
-        <a href="/" class="footer-info__icon">
-            <img width="24" height="24" src="/themes/custom/novel/assets/dpl-design-system/icons/social/icon-social-youtube.svg" alt="Youtube link" loading="lazy"/>
-        </a>
-    </li>
-    <li>
-        <a href="/" class="footer-info__icon">
-            <img width="24" height="24" src="/themes/custom/novel/assets/dpl-design-system/icons/social/icon-social-spotify.svg" alt="Spotify link" loading="lazy"/>
-        </a>
-    </li>
+      </li>
+    {% endif %}
+  {% endfor %}
 </ul>

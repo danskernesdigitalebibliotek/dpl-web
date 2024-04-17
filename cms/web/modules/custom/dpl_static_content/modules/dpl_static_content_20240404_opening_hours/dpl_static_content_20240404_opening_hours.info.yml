@@ -1,0 +1,17 @@
+name: "DPL static content: Opening hours categories"
+type: module
+description: Adds default opening hours categories
+package: DPL
+core_version_requirement: ^9 || ^10
+dependencies:
+  - default_content:default_content
+
+hidden: true
+
+default_content:
+  taxonomy_term:
+    - 9c2f0d96-88e1-497c-bf82-e18eb9d5769c
+    - 72249209-22bb-4142-9fc6-350a152f264a
+    - d3740bd9-1bd5-4376-8a7f-eb0b89e3b7e3
+    - befe3036-a870-445f-a457-9f102154f64e
+    - 568d85d3-41bc-4000-acae-47116d378289
