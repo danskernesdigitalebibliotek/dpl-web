@@ -7244,7 +7244,7 @@ msgstr "Master"
 #: 
 msgctxt "views.view.entity_clone_template:display:default:display_options:title"
 msgid "Entity Clone Template"
-msgstr "Gem son skabelon"
+msgstr "Gem som skabelon"
 
 #: 
 msgctxt "views.view.entity_clone_template:display:default:display_options:fields:nothing:alter:text"
@@ -12124,11 +12124,11 @@ msgstr ""
 
 #: 
 msgid "Entity Clone Template"
-msgstr ""
+msgstr "Gem som skabelon"
 
 #: 
 msgid "Allow this content type to define Entity Clone templates"
-msgstr ""
+msgstr "Tillad dette indhold at blive gemt som skabelon"
 
 #: 
 msgid "Entity Clone Content"
@@ -12136,7 +12136,7 @@ msgstr ""
 
 #: 
 msgid "Enable Entity Clone Template"
-msgstr ""
+msgstr "Tillad oprettelse af skabeloner"
 
 #: 
 msgid "Allow a content to be defined as a content template for this content type."
@@ -12144,7 +12144,7 @@ msgstr "Tillad indhold at blive defineret som indholdsskabelon for denne indhold
 
 #: 
 msgid "Entity Clone Template active"
-msgstr ""
+msgstr "Skabelon aktiv"
 
 #: 
 msgid "Stores whether the current Entity a template for cloning or not."
