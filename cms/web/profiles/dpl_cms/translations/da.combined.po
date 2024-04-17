@@ -23194,7 +23194,7 @@ msgstr "Bibliotek"
 #: 
 msgctxt "core.entity_form_display.node.page.default:third_party_settings:field_group:group_teaser_card:label"
 msgid "Teaser card"
-msgstr ""
+msgstr "Teaser card"
 
 #: 
 msgctxt "core.entity_form_display.taxonomy_term.opening_hours_categories.default:content:field_opening_hours_color:settings:default_colors"
@@ -23259,7 +23259,7 @@ msgstr "Brug dette felt til at angive en anden adresse end det tilknyttede bibli
 #: 
 msgctxt "field.field.eventinstance.default.field_teaser_image:description"
 msgid "The teaser fields are used for the card of display.<br />If no image has been selected, the text will be shown instead:<br /><br /><img src=\"/themes/custom/novel/images/teaser-text-image.jpg\" /><br /><br /><hr/>"
-msgstr "Teaserfelterne bruges til cards som blikfang for arrangementet. Hvis der ikke er valgt et teaserbillede, vil teksten vises i stedet."
+msgstr "Teaserfelterne bruges til cards som blikfang for indholdet. Hvis der ikke er valgt et teaserbillede, vil teksten vises i stedet."
 
 #: 
 msgctxt "field.field.eventseries.default.field_branch:description"
@@ -23274,7 +23274,7 @@ msgstr "Brug dette felt til at angive en anden adresse end det tilknyttede bibli
 #: 
 msgctxt "field.field.eventseries.default.field_teaser_image:description"
 msgid "The teaser fields are used for the card of display.<br />If no image has been selected, the text will be shown instead:<br /><br /><img src=\"/themes/custom/novel/images/teaser-text-image.jpg\" /><br /><br /><hr/>"
-msgstr ""
+msgstr "Teaserfelterne bruges til cards som blikfang for indholdet. Hvis der ikke er valgt et teaserbillede, vil teksten vises i stedet. "
 
 #: 
 msgctxt "field.field.media.image.field_media_image:description"
@@ -23289,7 +23289,7 @@ msgstr ""
 #: 
 msgctxt "field.field.node.article.field_teaser_image:description"
 msgid "The teaser fields are used for the card of display.<br />If no image has been selected, the text will be shown instead:<br /><br /><img src=\"/themes/custom/novel/images/teaser-text-image.jpg\" /><br /><br /><hr/>"
-msgstr ""
+msgstr "Teaserfelterne bruges til cards som blikfang for indholdet. Hvis der ikke er valgt et teaserbillede, vil teksten vises i stedet."
 
 #: 
 msgctxt "field.field.node.page.field_hero_title:description"
@@ -23304,7 +23304,7 @@ msgstr ""
 #: 
 msgctxt "field.field.node.page.field_teaser_image:description"
 msgid "The teaser fields are used for the card of display.<br />If no image has been selected, the text will be shown instead:<br /><br /><img src=\"/themes/custom/novel/images/teaser-text-image.jpg\" /><br /><br /><hr/>"
-msgstr ""
+msgstr "Teaserfelterne bruges til cards som blikfang for indholdet. Hvis der ikke er valgt et teaserbillede, vil teksten vises i stedet."
 
 #: 
 msgctxt "field.field.node.page.field_teaser_text:label"
