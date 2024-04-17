@@ -23354,7 +23354,7 @@ msgstr ""
 #: 
 msgctxt "taxonomy.vocabulary.opening_hours_categories:name"
 msgid "Opening hours categories"
-msgstr "Opening hours categories"
+msgstr "Åbningstidskategorier"
 
 #: 
 msgctxt "views.view.entity_reference_content:display:default:display_options:fields:title:alter:text"
