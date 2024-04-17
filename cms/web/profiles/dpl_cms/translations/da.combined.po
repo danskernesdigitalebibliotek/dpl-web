@@ -17777,7 +17777,7 @@ msgstr ""
 
 #: 
 msgid "Successfully deleted @count instance(s)."
-msgstr ""
+msgstr "Sletning af @count instanser blev gennemført."
 
 #: 
 msgid "No orphaned instances found."
@@ -18121,7 +18121,7 @@ msgstr "Ikke gemt endnu"
 
 #: 
 msgid "Successfully saved the %name event series"
-msgstr ""
+msgstr "Arrangementsserien %name blev gemt."
 
 #: 
 msgid "@language translation of the @type %label has been saved."
@@ -18974,7 +18974,7 @@ msgstr ""
 
 #: 
 msgid "A total of %count existing event instances were removed"
-msgstr ""
+msgstr "I alt blev %count arrangementsinstanser fjernet."
 
 #: 
 msgid "%count existing event instances were skipped."
@@ -18982,7 +18982,7 @@ msgstr ""
 
 #: 
 msgid "A total of %items event instances were created as part of this event series."
-msgstr ""
+msgstr "I alt %items instanser blev oprettet som del af denne serie."
 
 #: 
 msgid "@start_date to @end_date"
@@ -20239,7 +20239,7 @@ msgstr "Tilføj instans"
 
 #: 
 msgid "Successfully updated @success instance statuses. Skipped @skipped instances due to status or workflow mismatch with series."
-msgstr ""
+msgstr "Opdaterede @success instans statusser. Sprang @skipped instanser over pga. status eller ændringer ift. serien. "
 
 #: 
 msgid "Revision Date Changes"
