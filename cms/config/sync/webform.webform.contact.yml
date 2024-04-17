@@ -17,17 +17,20 @@ id: contact
 title: Contact
 description: '<p>Basic email contact webform.</p>'
 categories: {  }
-elements: |
+elements: |-
   name:
-    '#title': 'Your Name'
     '#type': textfield
+    '#title': 'Your Name'
     '#required': true
-    '#default_value': '[current-user:display-name]'
   email:
-    '#title': 'Your Email'
     '#type': email
+    '#title': 'Your Email'
     '#required': true
-    '#default_value': '[current-user:mail]'
+  category:
+    '#type': webform_term_select
+    '#title': Category
+    '#required': true
+    '#vocabulary': contact_webform_categories
   subject:
     '#title': Subject
     '#type': textfield
@@ -171,7 +174,7 @@ settings:
   entity_limit_user_interval: null
   purge: none
   purge_days: null
-  results_disabled: false
+  results_disabled: true
   results_disabled_ignore: false
   results_customize: false
   token_view: false
@@ -237,7 +240,7 @@ handlers:
     settings:
       states:
         - completed
-      to_mail: '[current-user:mail]'
+      to_mail: '[webform_submission:values:email:raw]'
       to_options: {  }
       bcc_mail: ''
       bcc_options: {  }

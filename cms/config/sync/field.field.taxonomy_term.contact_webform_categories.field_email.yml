@@ -1,0 +1,19 @@
+uuid: b8a68cdd-84f0-4053-ad58-c5ac7ddfdd37
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.taxonomy_term.field_email
+    - taxonomy.vocabulary.contact_webform_categories
+id: taxonomy_term.contact_webform_categories.field_email
+field_name: field_email
+entity_type: taxonomy_term
+bundle: contact_webform_categories
+label: Email
+description: 'Add which email to send form submissions of this category to.'
+required: true
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: email
