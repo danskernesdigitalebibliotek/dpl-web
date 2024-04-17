@@ -23456,7 +23456,7 @@ msgstr ""
 
 #: 
 msgid "Secondary links"
-msgstr ""
+msgstr "Servicemenu"
 
 #: 
 msgctxt "DPL admin UX"
@@ -23478,7 +23478,7 @@ msgstr ""
 #: 
 msgctxt "DPL admin UX"
 msgid "Social media URLs"
-msgstr ""
+msgstr "Links til sociale medier"
 
 #: 
 msgctxt "DPL admin UX"
