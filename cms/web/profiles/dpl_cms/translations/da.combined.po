@@ -6253,7 +6253,7 @@ msgstr "Slet medie"
 #: 
 msgctxt "system.action.media_publish_action:label"
 msgid "Publish media"
-msgstr "Udgiv "
+msgstr "Udgiv"
 
 #: 
 msgctxt "system.action.media_save_action:label"
@@ -8365,7 +8365,7 @@ msgstr "Faldende"
 #: 
 msgctxt "views.view.media:display:default:display_options:empty:area_text_custom:content"
 msgid "No media available."
-msgstr "Ingen medier tilgængelige."
+msgstr "Intet billede tilgængeligt."
 
 #: 
 msgctxt "views.view.media:display:default:display_options:filters:name:expose:label"
@@ -8490,7 +8490,7 @@ msgstr "Faldende"
 #: 
 msgctxt "views.view.media_library:display:default:display_options:empty:area_text_custom:content"
 msgid "No media available."
-msgstr "Ingen medier tilgængelige."
+msgstr "Intet billede tilgængeligt."
 
 #: 
 msgctxt "views.view.media_library:display:default:display_options:sorts:created:expose:label"
@@ -18093,7 +18093,7 @@ msgstr ""
 
 #: 
 msgid "Confirm Date Changes"
-msgstr ""
+msgstr "Bekræft ændring af dato/tidspunkt"
 
 #: 
 msgid "Recurrence configuration has been changed, as a result all instances will be removed and recreated. This action cannot be undone."
