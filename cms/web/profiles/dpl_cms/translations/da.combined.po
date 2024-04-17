@@ -11909,11 +11909,11 @@ msgstr ""
 
 #: 
 msgid "Save cloned @entity_type as published"
-msgstr ""
+msgstr "Publicer klonet indhold "
 
 #: 
 msgid "If the cloned entity should be save as a published entity."
-msgstr ""
+msgstr "Hvis det klonede indhold skal gemmes som publiceret."
 
 #: 
 msgid "Save cloned @language translation as a new entity"
@@ -11945,7 +11945,7 @@ msgstr "Annullér"
 
 #: 
 msgid "The entity <em>@entity (@entity_id)</em> of type <em>@type</em> was cloned."
-msgstr ""
+msgstr "Indholdet <em>@entity (@entity_id)</em> af typen <em>@type</em> blev klonet."
 
 #: 
 msgid "Cloneable entities"
@@ -12056,7 +12056,7 @@ msgstr ""
 
 #: 
 msgid "Clone all <em>@label</em> entities."
-msgstr ""
+msgstr "Klon alt <em>@label</em> indhold"
 
 #: 
 msgid "Allow user to take ownership of  <em>@label</em> cloned entities"
