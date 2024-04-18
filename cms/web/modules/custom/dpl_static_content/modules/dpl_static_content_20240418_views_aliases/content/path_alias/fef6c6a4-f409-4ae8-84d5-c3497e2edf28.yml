@@ -1,0 +1,12 @@
+_meta:
+  version: "1.0"
+  entity_type: path_alias
+  uuid: fef6c6a4-f409-4ae8-84d5-c3497e2edf28
+  default_langcode: und
+default:
+  path:
+    - value: /events
+  alias:
+    - value: /arrangementer
+  status:
+    - value: true
