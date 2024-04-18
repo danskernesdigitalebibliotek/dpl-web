@@ -1,13 +1,13 @@
 <address>
-	{# This should never contain more than 2 lines inside due to the truncation in the "content-list-item__description" class that this item is inside #}
-	{% if items.0.content.address_line1["#value"] %}
-		<p>{{ items.0.content.address_line1["#value"] }}</p>
-	{% endif %}
-	{% if items.0.content.postal_code["#value"] or items.0.content.locality["#value"] or items.0.content.country["#value"] %}
-		<p>
-			{{ items.0.content.postal_code["#value"] is not empty ? items.0.content.postal_code["#value"] ~ " " : "" }}
-			{{ items.0.content.locality["#value"] is not empty ? items.0.content.locality["#value"] ~ ", " : "" }}
-			{{ items.0.content.country["#value"] is not empty ? items.0.content.country["#value"] : "" }}
-		</p>
-	{% endif %}
+  {# This should never contain more than 2 lines inside due to the layout #}
+  {% if items.0.content.address_line1["#value"] %}
+    <p>{{ items.0.content.address_line1["#value"] }}</p>
+  {% endif %}
+  {% if items.0.content.postal_code["#value"] or items.0.content.locality["#value"] or items.0.content.country["#value"] %}
+    <p>
+      {{ items.0.content.postal_code["#value"] is not empty ? items.0.content.postal_code["#value"] ~ " " : "" }}
+      {{ items.0.content.locality["#value"] is not empty ? items.0.content.locality["#value"] ~ ", " : "" }}
+      {{ items.0.content.country["#value"] is not empty ? items.0.content.country["#value"] : "" }}
+    </p>
+  {% endif %}
 </address>
