@@ -36,10 +36,10 @@
             "type": "package",
             "package": {
                 "name": "danskernesdigitalebibliotek/dpl-react",
-                "version": "2024.16.0",
+                "version": "2024.16.1",
                 "type": "drupal-library",
                 "dist": {
-                    "url": "https://github.com/danskernesdigitalebibliotek/dpl-react/releases/download/2024.16.0/dist-2024-16-0-1a9f9df85eb133c1ff7583cbe60b0cdefa45d9bb.zip",
+                    "url": "https://github.com/danskernesdigitalebibliotek/dpl-react/releases/download/2024.16.1/dist-2024-16-1-92c7aacceeac2f63c18c252a7f21f584ab91ed46.zip",
                     "type": "zip"
                 },
                 "require": {
@@ -52,9 +52,9 @@
             "package": {
                 "name": "danskernesdigitalebibliotek/dpl-design-system",
                 "type": "drupal-library",
-                "version": "2024.16.0",
+                "version": "2024.16.1",
                 "dist": {
-                    "url": "https://github.com/danskernesdigitalebibliotek/dpl-design-system/releases/download/2024.16.0/dist-2024-16-0-bc3c62df13c140271e26a5d5be9c9c23de13b1bf.zip",
+                    "url": "https://github.com/danskernesdigitalebibliotek/dpl-design-system/releases/download/2024.16.1/dist-2024-16-1-0e21fc68680a131436acdeea479513ba6936c1b7.zip",
                     "type": "zip"
                 }
             }
@@ -84,8 +84,8 @@
         "composer/installers": "1.12.0",
         "cweagans/composer-patches": "1.7.3",
         "danskernesdigitalebibliotek/cms-api": "*",
-        "danskernesdigitalebibliotek/dpl-design-system": "2024.16.0",
-        "danskernesdigitalebibliotek/dpl-react": "2024.16.0",
+        "danskernesdigitalebibliotek/dpl-design-system": "^2024.16",
+        "danskernesdigitalebibliotek/dpl-react": "^2024.16",
         "danskernesdigitalebibliotek/fbs-client": "*",
         "dealerdirect/phpcodesniffer-composer-installer": "^0.7.1",
         "deoliveiralucas/array-keys-case-transform": "^1.1",
@@ -99,7 +99,6 @@
         "drupal/core-composer-scaffold": "~10.1.7",
         "drupal/core-project-message": "~10.1.7",
         "drupal/core-recommended": "~10.1.7",
-        "drupal/customerror": "^1.0@beta",
         "drupal/date_range_formatter": "^4.0",
         "drupal/default_content": "^2.0@alpha",
         "drupal/devel": "^5.1",
@@ -147,6 +146,7 @@
         "drupal/varnish_purge": "^2.2",
         "drupal/view_unpublished": "^1.1",
         "drupal/views_infinite_scroll": "^2.0",
+        "drupal/webform": "^6.2",
         "drush/drush": "^12",
         "mnsami/composer-custom-directory-installer": "^2.0",
         "myclabs/php-enum": "^1.8",
