@@ -22,6 +22,7 @@ dependencies:
     - node
     - paragraphs
     - recurring_events
+    - redirect
     - scheduler
     - system
     - taxonomy
@@ -41,6 +42,7 @@ permissions:
   - 'access taxonomy overview'
   - 'access toolbar'
   - 'add eventseries entity'
+  - 'administer redirects'
   - 'break content lock'
   - 'change own username'
   - 'clone eventinstance entity'

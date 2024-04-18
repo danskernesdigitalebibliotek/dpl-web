@@ -26,6 +26,7 @@ dependencies:
     - paragraphs
     - paragraphs_ee
     - recurring_events
+    - redirect
     - scheduler
     - simple_menu_permissions
     - system
@@ -51,6 +52,7 @@ permissions:
   - 'administer menu'
   - 'administer nodes'
   - 'administer paragraphs categories'
+  - 'administer redirects'
   - 'break content lock'
   - 'bypass node access'
   - 'change own username'

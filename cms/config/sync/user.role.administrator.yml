@@ -43,6 +43,7 @@ dependencies:
     - paragraphs
     - paragraphs_ee
     - recurring_events
+    - redirect
     - rest
     - scheduler
     - simple_menu_permissions
@@ -85,6 +86,7 @@ permissions:
   - 'administer openid connect clients'
   - 'administer orphaned events entities'
   - 'administer paragraphs categories'
+  - 'administer redirects'
   - 'administer site configuration'
   - 'administer themes'
   - 'administer themes novel'
