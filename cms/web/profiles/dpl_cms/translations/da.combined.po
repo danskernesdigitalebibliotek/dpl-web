@@ -3124,7 +3124,7 @@ msgstr "Sted"
 #: 
 msgctxt "Fees list"
 msgid "Already paid? It can take up to 72 hours register the transaction."
-msgstr "Tekst 1 (Lotte): Har du allerede betalt? Der kan gå op til 72 timer før betalingen registreres i vores systemer"
+msgstr "Henvendt dig venligst til biblioteket for at høre hvordan du betaler."
 
 #: 
 msgctxt "Search Result"
@@ -3671,7 +3671,7 @@ msgstr "Antal elementer der vises på gebyroversigten"
 #: 
 msgctxt "List size (settings)"
 msgid "Fees list size on desktop"
-msgstr "Antal elementer der vises i en liste på desktop "
+msgstr "Antal elementer der vises i en liste på desktop"
 
 #: 
 msgctxt "List size (settings)"
@@ -3686,7 +3686,7 @@ msgstr "Basisindstillinger"
 #: 
 msgctxt "Fees list settings form"
 msgid "Fees and Replacement costs URL"
-msgstr "URL "
+msgstr "URL"
 
 #: 
 msgctxt "Fees list settings form"
@@ -3870,7 +3870,7 @@ msgstr "Vælg pauseperiode"
 #: 
 msgctxt "Fees list"
 msgid "Already paid? It can take up to 72 hours register the transaction. (not payable by user)"
-msgstr "Tekst 2 (Lotte): Har du allerede betalt? Der kan gå op til 72 timer før din betaling bliver registreret."
+msgstr "Har du allerede betalt? Der kan gå op til 72 timer før din betaling bliver registreret."
 
 #: 
 msgctxt "Fees list settings form"
@@ -10762,7 +10762,7 @@ msgstr ""
 
 #: 
 msgid "This content translation is being edited by the user @name and is therefore locked to prevent other users changes. This lock is in place since @date."
-msgstr ""
+msgstr "Denne indholdsoversættelse bliver redigeret af brugeren @name og er derfor låst for at forhindre andre brugeres ændringer. Denne lås har været på plads siden @date."
 
 #: 
 msgid "This content is being edited by the user @name and is therefore locked to prevent other users changes. This lock is in place since @date."
@@ -10770,7 +10770,7 @@ msgstr "Dette indhold bliver redigeret af @name og er derfor låst. Denne lås e
 
 #: 
 msgid "This content translation is now locked against simultaneous editing. This content translation will remain locked if you navigate away from this page without saving or unlocking it."
-msgstr ""
+msgstr "Denne indholdsoversættelse er nu låst mod samtidig redigering. Denne indholdsoversættelse forbliver låst, hvis du navigerer væk fra denne side uden at gemme eller låse den op."
 
 #: 
 msgid "This content is now locked against simultaneous editing. This content will remain locked if you navigate away from this page without saving or unlocking it."
@@ -10782,7 +10782,7 @@ msgstr "Klik her for @link"
 
 #: 
 msgid "This content translation is now locked by you against simultaneous editing. This content translation will remain locked if you navigate away from this page without saving or unlocking it."
-msgstr ""
+msgstr "Denne indholdsoversættelse er nu låst af dig mod samtidig redigering. Denne indholdsoversættelse forbliver låst, hvis du navigerer væk fra denne side uden at gemme eller låse den op."
 
 #: 
 msgid "This content is now locked by you against simultaneous editing. This content will remain locked if you navigate away from this page without saving or unlocking it."
@@ -10846,7 +10846,7 @@ msgstr "er blevet opdateret"
 
 #: 
 msgid "This content translation is being edited by the user"
-msgstr ""
+msgstr "Denne indholdsoversættelse bliver redigeret af brugeren"
 
 #: 
 msgid "against simultaneous editing."
@@ -18029,7 +18029,7 @@ msgstr ""
 
 #: 
 msgid "This event series contains %count events taking place on the following dates:"
-msgstr ""
+msgstr "Denne begivenhedsserie indeholder %count begivenheder, der finder sted på følgende datoer:"
 
 #: 
 msgid "Event Instances"
@@ -18894,7 +18894,7 @@ msgstr "Tilføj @type"
 
 #: 
 msgid "This field has been disabled by the plugin to guarantee the functionality that's expected of it."
-msgstr ""
+msgstr "Dette felt er blevet deaktiveret af plugin for at garantere den funktionalitet, der forventes af det."
 
 #: 
 msgid "Group event series (@type)"
@@ -23025,7 +23025,7 @@ msgstr "Fil eller URL som indeholder oplysninger om gebyrer og erstatninger. Du 
 msgctxt "Fees list settings form"
 msgid "Display an intro-text below the headline <br />\n"
 "      If nothing is written here the text: \"@text\" will be used."
-msgstr ""
+msgstr "Skriv en introtekst under overskriften. Hvis du ikke skriver andet, vil den følgende tekst \"@text\" blive vist."
 
 #: 
 msgctxt "Fees list settings form"
@@ -23205,7 +23205,7 @@ msgstr ""
 #: 
 msgctxt "field.field.paragraph.recommendation.field_image_position_right:description"
 msgid "This determines whether the image should be positioned to the left or right. <br />If left untoggled (default behaviour) the image is positioned to the left, if toggled on, the image will be positioned to the right. "
-msgstr ""
+msgstr "Dette bestemmer om, et billede skal positioneres til venstre eller højre. <br />Hvis den ikke er slået til (standardadfærd), placeres billedet til venstre, hvis den er slået til, placeres billedet til højre.␣"
 
 #: 
 msgctxt "field.field.paragraph.recommendation.field_recommendation_description:description"
