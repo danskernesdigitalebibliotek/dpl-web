@@ -249,6 +249,12 @@ content:
         paragraphs_ee:
           dialog_off_canvas: false
           dialog_style: tiles
+  path:
+    type: path
+    weight: 30
+    region: content
+    settings: {  }
+    third_party_settings: {  }
   status:
     type: boolean_checkbox
     weight: 11
