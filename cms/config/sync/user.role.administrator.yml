@@ -42,6 +42,7 @@ dependencies:
     - openid_connect
     - paragraphs
     - paragraphs_ee
+    - path
     - recurring_events
     - redirect
     - rest
@@ -110,6 +111,7 @@ permissions:
   - 'create terms in categories'
   - 'create terms in opening_hours_categories'
   - 'create terms in tags'
+  - 'create url aliases'
   - 'create users'
   - 'create video media'
   - 'delete all revisions'

@@ -25,6 +25,7 @@ dependencies:
     - node
     - paragraphs
     - paragraphs_ee
+    - path
     - recurring_events
     - redirect
     - scheduler
@@ -69,6 +70,7 @@ permissions:
   - 'create page content'
   - 'create terms in categories'
   - 'create terms in tags'
+  - 'create url aliases'
   - 'create video media'
   - 'delete all revisions'
   - 'delete any article content'
