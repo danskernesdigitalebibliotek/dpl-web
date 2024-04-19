@@ -1,0 +1,25 @@
+uuid: 159effff-9b74-454b-99a7-10a2baa192bd
+langcode: en
+status: true
+dependencies:
+  config:
+    - core.entity_view_mode.paragraph.preview
+    - field.field.paragraph.manual_event_list.field_events
+    - field.field.paragraph.manual_event_list.field_title
+    - paragraphs.paragraphs_type.manual_event_list
+id: paragraph.manual_event_list.preview
+targetEntityType: paragraph
+bundle: manual_event_list
+mode: preview
+content:
+  field_title:
+    type: string
+    label: above
+    settings:
+      link_to_entity: false
+    third_party_settings: {  }
+    weight: 0
+    region: content
+hidden:
+  field_events: true
+  search_api_excerpt: true
