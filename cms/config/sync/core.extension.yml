@@ -25,6 +25,7 @@ module:
   dpl_admin: 0
   dpl_article: 0
   dpl_breadcrumb: 0
+  dpl_cache_settings: 0
   dpl_campaign: 0
   dpl_dashboard: 0
   dpl_error_pages: 0
