@@ -5,6 +5,7 @@
  * DPL Event install file. These hooks will be run *before* config import.
  */
 
+use Drupal\Core\Field\BaseFieldDefinition;
 use Drupal\field\Entity\FieldConfig;
 use Drupal\field\Entity\FieldStorageConfig;
 
@@ -37,4 +38,25 @@ function dpl_event_update_10002(): string {
   }
 
   return $message;
+}
+
+/**
+ * Add a mock title field to eventinstance, to fix entity reference fields.
+ *
+ * @see https://www.drupal.org/project/eck/issues/2956378
+ */
+function dpl_event_update_10003(): string {
+  $entity_type = 'eventinstance';
+
+  $field_storage_definition = BaseFieldDefinition::create('string')
+    ->setName('title')
+    ->setLabel(t('Mock-title field'))
+    ->setDescription(t('This is a mock title field, unused and read only. It is required, for eventinstances to work with entity reference autocomplete fields.'))
+    ->setReadOnly(TRUE)
+    ->setRevisionable(FALSE);
+
+  \Drupal::entityDefinitionUpdateManager()
+    ->installFieldStorageDefinition('title', $entity_type, $entity_type, $field_storage_definition);
+
+  return "Mock title field has been added to the $entity_type entity.";
 }
