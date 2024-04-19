@@ -10,6 +10,13 @@ use Drupal\field\Entity\FieldConfig;
 use Drupal\field\Entity\FieldStorageConfig;
 
 /**
+ * Implements hook_install().
+ */
+function dpl_event_install(): void {
+  _dpl_event_create_mock_title();
+}
+
+/**
  * Delete the deprecated event description fields, prior to CIM.
  *
  * This field has been replaced by field_description.
@@ -46,6 +53,15 @@ function dpl_event_update_10002(): string {
  * @see https://www.drupal.org/project/eck/issues/2956378
  */
 function dpl_event_update_10003(): string {
+  return _dpl_event_create_mock_title();
+}
+
+/**
+ * Add a mock title field to eventinstance, to fix entity reference fields.
+ *
+ * @see https://www.drupal.org/project/eck/issues/2956378
+ */
+function _dpl_event_create_mock_title(): string {
   $entity_type = 'eventinstance';
 
   $field_storage_definition = BaseFieldDefinition::create('string')
