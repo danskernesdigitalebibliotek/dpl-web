@@ -1,21 +1,21 @@
-uuid: 1e4784c6-e3ae-4abd-9644-53954a3bfe9a
+uuid: 811ccfe3-1a37-48dd-bd47-3ee62391da36
 langcode: en
 status: true
 dependencies:
   config:
-    - search_api.index.events
-    - views.view.events
+    - search_api.index.content
+    - views.view.articles
   module:
     - search_api
-id: event_categories
+id: content_categories
 name: Category
 weight: 0
 min_count: 1
 missing: false
 missing_label: others
-url_alias: event_categories
-facet_source_id: 'search_api:views_page__events__all'
-field_identifier: event_categories
+url_alias: categories
+facet_source_id: 'search_api:views_page__articles__all'
+field_identifier: field_categories
 query_operator: or
 hard_limit: 0
 exclude: false
@@ -58,16 +58,16 @@ processor_configs:
   hierarchy_processor:
     processor_id: hierarchy_processor
     weights:
-      build: -8
+      build: 100
     settings: {  }
   translate_entity:
     processor_id: translate_entity
     weights:
-      build: -10
+      build: 5
     settings: {  }
   url_processor_handler:
     processor_id: url_processor_handler
     weights:
       pre_query: 50
-      build: -9
+      build: 15
     settings: {  }
