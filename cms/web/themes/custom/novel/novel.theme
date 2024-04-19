@@ -326,3 +326,18 @@ function novel_preprocess_views_view_unformatted(&$variables): void {
     }
   }
 }
+
+/**
+ *
+ */
+function novel_preprocess_input__submit(&$variables) {
+  $org_class = $variables['attributes']['class'];
+  $variables['attributes']['class'] += array_merge($org_class, [
+    'btn-primary',
+    'btn-filled',
+    'btn-small',
+    'arrow__hover--right-small',
+    'mt-48',
+    'mb-22',
+  ]);
+}
