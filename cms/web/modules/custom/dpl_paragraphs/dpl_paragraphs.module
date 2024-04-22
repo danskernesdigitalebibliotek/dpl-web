@@ -377,3 +377,29 @@ function dpl_paragraphs_field_widget_single_element_paragraphs_form_alter(array 
     }
   }
 }
+
+/**
+ * Prepare 'manual_event_list' paragraphs to include rendered event entities.
+ *
+ * Adds rendered event entities to the paragraph's variables for use in
+ * templates, utilizing the 'list_teaser' view mode.
+ *
+ * @param array &$variables
+ *   Variables to be passed to the template.
+ */
+function dpl_paragraphs_preprocess_paragraph__manual_event_list(array &$variables): void {
+  $paragraph = $variables['paragraph'] ?? NULL;
+
+  if (!($paragraph instanceof ParagraphInterface) || !$paragraph->hasField('field_events')) {
+    return;
+  }
+  $events = $paragraph->get('field_events')->referencedEntities();
+  $renderedEvents = [];
+
+  foreach ($events as $event) {
+    /** @var \Drupal\recurring_events\Entity\EventInstance $event */
+    $viewBuilder = \Drupal::entityTypeManager()->getViewBuilder($event->getEntityTypeId());
+    $renderedEvents[] = $viewBuilder->view($event, 'list_teaser');
+  }
+  $variables['rendered_field_events'] = $renderedEvents;
+}
