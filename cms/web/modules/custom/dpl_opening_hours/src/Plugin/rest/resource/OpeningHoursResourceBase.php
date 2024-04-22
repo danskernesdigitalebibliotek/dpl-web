@@ -61,7 +61,7 @@ abstract class OpeningHoursResourceBase extends ResourceBase {
    * @return mixed[]
    *   OpenAPI schema for a single opening hours instance.
    */
-  public function openingHoursInstanceSchema(bool $require_id = TRUE): array {
+  protected function openingHoursInstanceSchema(bool $require_id = TRUE): array {
     return [
       "type" => "object",
       "properties" => [
