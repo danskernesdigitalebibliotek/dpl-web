@@ -2,6 +2,10 @@
   {% set date_tag = node.getCreatedTime()|format_date('date_full_month') %}
 {% endif %}
 
+{% if node.bundle == 'article' %}
+  {% set category_tag = content.field_categories.0 %}
+{% endif %}
+
 {% include '@novel/components/card.html.twig'
   with {
   attributes: attributes,
@@ -9,7 +13,7 @@
   variant: 'x-large',
   has_media: (content.field_teaser_image.0),
   teaser_text: content.field_teaser_text,
-  type_tag: node.type.entity.label(),
+  type_tag: category_tag|default(node.type.entity.label()),
   date_tag: date_tag,
   title: label,
   url: url
