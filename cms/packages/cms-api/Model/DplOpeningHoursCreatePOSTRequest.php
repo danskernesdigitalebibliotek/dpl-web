@@ -109,6 +109,16 @@ class DplOpeningHoursCreatePOSTRequest
     protected ?int $branchId = null;
 
     /**
+     * @var DplOpeningHoursCreatePOSTRequestRepetition|null
+     * @SerializedName("repetition")
+     * @Assert\NotNull()
+     * @Assert\Valid()
+     * @Assert\Type("DanskernesDigitaleBibliotek\CMS\Api\Model\DplOpeningHoursCreatePOSTRequestRepetition")
+     * @Type("DanskernesDigitaleBibliotek\CMS\Api\Model\DplOpeningHoursCreatePOSTRequestRepetition")
+     */
+    protected ?DplOpeningHoursCreatePOSTRequestRepetition $repetition = null;
+
+    /**
      * Constructor
      * @param array|null $data Associated array of property values initializing the model
      */
@@ -121,6 +131,7 @@ class DplOpeningHoursCreatePOSTRequest
             $this->startTime = array_key_exists('startTime', $data) ? $data['startTime'] : $this->startTime;
             $this->endTime = array_key_exists('endTime', $data) ? $data['endTime'] : $this->endTime;
             $this->branchId = array_key_exists('branchId', $data) ? $data['branchId'] : $this->branchId;
+            $this->repetition = array_key_exists('repetition', $data) ? $data['repetition'] : $this->repetition;
         }
     }
 
@@ -276,6 +287,32 @@ class DplOpeningHoursCreatePOSTRequest
     public function setBranchId(?int $branchId): self
     {
         $this->branchId = $branchId;
+
+        return $this;
+    }
+
+    /**
+     * Gets repetition.
+     *
+     * @return DplOpeningHoursCreatePOSTRequestRepetition|null
+     */
+    public function getRepetition(): ?DplOpeningHoursCreatePOSTRequestRepetition
+    {
+        return $this->repetition;
+    }
+
+
+
+    /**
+     * Sets repetition.
+     *
+     * @param DplOpeningHoursCreatePOSTRequestRepetition|null $repetition
+     *
+     * @return $this
+     */
+    public function setRepetition(?DplOpeningHoursCreatePOSTRequestRepetition $repetition): self
+    {
+        $this->repetition = $repetition;
 
         return $this;
     }
