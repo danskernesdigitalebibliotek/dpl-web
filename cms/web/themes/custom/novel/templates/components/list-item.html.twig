@@ -4,10 +4,15 @@
   'arrow__hover--right-small',
 ]
 %}
-
 <a {{ attributes.addClass(classes).setAttribute('href', url) }}>
   <div class="content-list-item__image-container">
-    {{ image }}
+    {% include '@novel/components/media-container.html.twig'
+      with {
+      attributes: create_attribute(),
+      media: image,
+      has_media: image,
+      placeholder_text: image_placeholder_text,
+    } only %}
   </div>
   <div class="content-list-item__content">
     {{ categories }}
