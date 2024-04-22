@@ -294,7 +294,7 @@ function novel_theme_suggestions_select_alter(array &$suggestions, array $variab
 /**
  * Preprocesses rows in a Drupal view to handle the display of event instances.
  *
- * Introduces an 'isStacked' attribute for event items to specify whether
+ * Introduces an 'shouldBeStacked' attribute for event items to specify whether
  * they should be presented in a stacked view mode.
  * This determination is made by comparing the current event's series ID with
  *  that of the preceding event.
@@ -303,26 +303,24 @@ function novel_theme_suggestions_select_alter(array &$suggestions, array $variab
  *   An array of variables to pass to the theme layer.
  */
 function novel_preprocess_views_view_unformatted(&$variables): void {
+
   $rows = &$variables['rows'];
-
   foreach ($rows as $index => &$row) {
-    if (isset($row['content']['#eventinstance'])) {
-      $eventInstance = $row['content']['#eventinstance'];
 
-      if ($eventInstance instanceof EventInstance) {
-        $eventSeriesId = $eventInstance->getEventSeries()->id();
+    if ($row['content']['#view_mode'] !== 'list_teaser_stacked_parent' ||
+      !($row['content']['#eventinstance'] instanceof EventInstance)) {
+      continue;
+    }
 
-        // Check if not the first row and if event_series_id matches
-        // the previous row.
-        $isStacked = $index > 0 && $eventSeriesId == $rows[$index - 1]['content']['#eventinstance']->getEventSeries()
-          ->id();
+    $eventInstance = $row['content']['#eventinstance'];
+    $eventSeriesId = $eventInstance->getEventSeries()->id();
 
-        $row['isStacked'] = $isStacked;
+    // Check if not first row and previous event_series_id matches.
+    $shouldBeStacked = $index > 0 && $eventSeriesId === $rows[$index - 1]['content']['#eventinstance']->getEventSeries()->id();
+    $row['shouldBeStacked'] = $shouldBeStacked;
 
-        if ($isStacked) {
-          $row['content']['#view_mode'] = 'stacked_event';
-        }
-      }
+    if ($shouldBeStacked) {
+      $row['content']['#view_mode'] = 'stacked_event';
     }
   }
 }

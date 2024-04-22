@@ -1,0 +1,52 @@
+uuid: 71523e5a-741f-4015-bcb3-58bd2cd0d1f5
+langcode: en
+status: true
+dependencies:
+  config:
+    - core.entity_view_mode.paragraph.preview
+    - field.field.paragraph.filtered_event_list.field_amount_of_events
+    - field.field.paragraph.filtered_event_list.field_filter_branches
+    - field.field.paragraph.filtered_event_list.field_filter_categories
+    - field.field.paragraph.filtered_event_list.field_filter_tags
+    - field.field.paragraph.filtered_event_list.field_title
+    - paragraphs.paragraphs_type.filtered_event_list
+id: paragraph.filtered_event_list.preview
+targetEntityType: paragraph
+bundle: filtered_event_list
+mode: preview
+content:
+  field_filter_branches:
+    type: entity_reference_label
+    label: above
+    settings:
+      link: true
+    third_party_settings: {  }
+    weight: 3
+    region: content
+  field_filter_categories:
+    type: entity_reference_label
+    label: above
+    settings:
+      link: true
+    third_party_settings: {  }
+    weight: 2
+    region: content
+  field_filter_tags:
+    type: entity_reference_label
+    label: above
+    settings:
+      link: true
+    third_party_settings: {  }
+    weight: 1
+    region: content
+  field_title:
+    type: string
+    label: above
+    settings:
+      link_to_entity: false
+    third_party_settings: {  }
+    weight: 0
+    region: content
+hidden:
+  field_amount_of_events: true
+  search_api_excerpt: true

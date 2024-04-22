@@ -1,0 +1,29 @@
+uuid: 493a1bec-7a87-4cac-b4d9-f9f736417d9c
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.paragraph.field_filter_categories
+    - paragraphs.paragraphs_type.filtered_event_list
+    - taxonomy.vocabulary.categories
+id: paragraph.filtered_event_list.field_filter_categories
+field_name: field_filter_categories
+entity_type: paragraph
+bundle: filtered_event_list
+label: 'Filter by categories'
+description: 'Add a category you want to include'
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings:
+  handler: 'default:taxonomy_term'
+  handler_settings:
+    target_bundles:
+      categories: categories
+    sort:
+      field: name
+      direction: asc
+    auto_create: false
+    auto_create_bundle: ''
+field_type: entity_reference

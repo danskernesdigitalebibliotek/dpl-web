@@ -1,0 +1,79 @@
+uuid: c101b9e5-2f43-4cd3-94e1-05cd68b5c243
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.field.paragraph.filtered_event_list.field_amount_of_events
+    - field.field.paragraph.filtered_event_list.field_filter_branches
+    - field.field.paragraph.filtered_event_list.field_filter_categories
+    - field.field.paragraph.filtered_event_list.field_filter_tags
+    - field.field.paragraph.filtered_event_list.field_title
+    - paragraphs.paragraphs_type.filtered_event_list
+  module:
+    - field_group
+third_party_settings:
+  field_group:
+    group_filters:
+      children:
+        - field_filter_tags
+        - field_filter_categories
+        - field_filter_branches
+      label: Filters
+      region: content
+      parent_name: ''
+      weight: 2
+      format_type: fieldset
+      format_settings:
+        classes: ''
+        show_empty_fields: false
+        id: ''
+        description: 'Add any tag, category or branch that should by included as a filter for the filtered event list. '
+        required_fields: true
+id: paragraph.filtered_event_list.default
+targetEntityType: paragraph
+bundle: filtered_event_list
+mode: default
+content:
+  field_amount_of_events:
+    type: options_select
+    weight: 1
+    region: content
+    settings: {  }
+    third_party_settings: {  }
+  field_filter_branches:
+    type: options_buttons
+    weight: 8
+    region: content
+    settings: {  }
+    third_party_settings: {  }
+  field_filter_categories:
+    type: entity_reference_autocomplete
+    weight: 7
+    region: content
+    settings:
+      match_operator: CONTAINS
+      match_limit: 10
+      size: 60
+      placeholder: 'Search categories..'
+    third_party_settings: {  }
+  field_filter_tags:
+    type: entity_reference_autocomplete
+    weight: 6
+    region: content
+    settings:
+      match_operator: CONTAINS
+      match_limit: 10
+      size: 60
+      placeholder: 'Search tags..'
+    third_party_settings: {  }
+  field_title:
+    type: string_textfield
+    weight: 0
+    region: content
+    settings:
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+hidden:
+  created: true
+  status: true
