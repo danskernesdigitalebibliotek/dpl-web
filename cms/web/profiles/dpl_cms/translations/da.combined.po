@@ -10406,11 +10406,11 @@ msgstr "Mulighederne vil blive sorteret alfabetisk."
 
 #: 
 msgid "Placeholder text"
-msgstr ""
+msgstr "Fyldtekst"
 
 #: 
 msgid "Text to be shown in the text field until it is edited. Leave blank for no placeholder to be set."
-msgstr ""
+msgstr "Tekst som vises i feltet indtil det overskrives. Efterlad feltet tomt hvis der ikke skal vises en tekst."
 
 #: 
 msgid "Use this field to rewrite the filter options displayed. Use the format of current_text|replacement_text, one replacement per line. For example: <pre>\n"
@@ -10794,7 +10794,7 @@ msgstr "Lås op"
 
 #: 
 msgid "Breaking existing lock by @name so that you may edit this node. (This lock was set @date ago and was stale since @stale_time.)"
-msgstr ""
+msgstr "Bryder eksisterende lås til @name så du kan redigere dette indhold. (Denne lås blev sat @date og har været inaktiv siden @stale_time.)"
 
 #: 
 msgid "Lock Timeouts"
@@ -10850,7 +10850,7 @@ msgstr "Denne indholdsoversættelse bliver redigeret af brugeren"
 
 #: 
 msgid "against simultaneous editing."
-msgstr ""
+msgstr "mod samtidig redigering"
 
 #: 
 msgid "updated."
@@ -10862,7 +10862,7 @@ msgstr "Generelt"
 
 #: 
 msgid "Content Lock"
-msgstr ""
+msgstr "Indholdslås"
 
 #: 
 msgid "Administer content locking settings."
@@ -10970,7 +10970,7 @@ msgstr ""
 
 #: 
 msgid "Are you sure you want to delete the crop type %type?"
-msgstr ""
+msgstr "Er du sikker på du vil slette beskæringstypen %type?"
 
 #: 
 msgid "Delete"
@@ -23704,7 +23704,7 @@ msgstr ""
 #: 
 msgctxt "facets.facet.content_categories:name"
 msgid "Category"
-msgstr ""
+msgstr "Kategori"
 
 #: 
 msgctxt "facets.facet.content_categories:missing_label"
@@ -23724,7 +23724,7 @@ msgstr ""
 #: 
 msgctxt "facets.facet.event_categories:name"
 msgid "Category"
-msgstr ""
+msgstr "Kategori"
 
 #: 
 msgctxt "facets.facet_source.search_api__views_page__articles__all:name"
