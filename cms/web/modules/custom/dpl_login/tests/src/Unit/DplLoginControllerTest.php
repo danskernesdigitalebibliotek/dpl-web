@@ -11,6 +11,7 @@ use Drupal\Core\Routing\TrustedRedirectResponse;
 use Drupal\Core\Routing\UrlGenerator;
 use Drupal\Core\Utility\UnroutedUrlAssemblerInterface;
 use Drupal\dpl_login\AccessToken;
+use Drupal\dpl_login\AccessTokenType;
 use Drupal\dpl_login\Adgangsplatformen\Config;
 use Drupal\dpl_login\Controller\DplLoginController;
 use Drupal\dpl_login\Exception\MissingConfigurationException;
@@ -55,11 +56,17 @@ class DplLoginControllerTest extends UnitTestCase {
         'expire' => 9999,
       ],
     ]);
+    $fake_registered_user_token = clone $fake_access_token;
+    $fake_registered_user_token->type = AccessTokenType::USER;
+
+    $fake_unregistered_user_token = clone $fake_access_token;
+    $fake_unregistered_user_token->type = AccessTokenType::UNREGISTERED_USER;
+
     $user_token_provider = $this->prophesize(UserTokensProvider::class);
-    $user_token_provider->getAccessToken()->willReturn($fake_access_token);
+    $user_token_provider->getAccessToken()->willReturn($fake_registered_user_token);
 
     $unregistered_user_token_provider = $this->prophesize(UnregisteredUserTokensProvider::class);
-    $unregistered_user_token_provider->getAccessToken()->willReturn($fake_access_token);
+    $unregistered_user_token_provider->getAccessToken()->willReturn($fake_unregistered_user_token);
 
     $config_factory = $this->prophesize(ConfigFactoryInterface::class);
     $config = $this->prophesize(ImmutableConfig::class);

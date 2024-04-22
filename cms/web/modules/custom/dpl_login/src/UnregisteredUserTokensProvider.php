@@ -7,7 +7,11 @@ use Drupal\Core\TempStore\PrivateTempStoreFactory;
 /**
  * Handles unregistered user token storage.
  */
-class UnregisteredUserTokensProvider extends UserTokensProvider implements UserTokensProviderInterface {
+class UnregisteredUserTokensProvider extends RegisteredUserTokensProvider implements UserTokensProviderInterface {
+  /**
+   * Access token type.
+   */
+  protected AccessTokenType $accessTokenType = AccessTokenType::UNREGISTERED_USER;
 
   /**
    * Constructor of UnregisteredUserTokensProvider.

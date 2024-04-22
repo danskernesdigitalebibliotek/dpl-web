@@ -47,7 +47,7 @@ class DplPatronRegController extends ControllerBase {
    */
   public static function create(ContainerInterface $container): DplPatronRegController|static {
     return new static(
-      $container->get('dpl_login.user_tokens'),
+      $container->get('dpl_login.registered_user_tokens'),
       $container->get('dpl_login.unregistered_user_tokens'),
       $container->get('openid_connect.session'),
       $container->get('plugin.manager.openid_connect_client'),

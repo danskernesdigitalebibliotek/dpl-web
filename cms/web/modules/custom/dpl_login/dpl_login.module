@@ -252,7 +252,7 @@ function _dpl_login_get_access_token_provider(AccessToken $token): UserTokensPro
     return \Drupal::service('dpl_login.unregistered_user_tokens');
   }
 
-  return \Drupal::service('dpl_login.user_tokens');
+  return \Drupal::service('dpl_login.registered_user_tokens');
 }
 
 /**
@@ -260,7 +260,7 @@ function _dpl_login_get_access_token_provider(AccessToken $token): UserTokensPro
  */
 function _dpl_login_delete_previous_user_tokens(): bool {
   $user_access_token_services = [
-    'dpl_login.user_tokens',
+    'dpl_login.registered_user_tokens',
     'dpl_login.unregistered_user_tokens',
   ];
   $statuses = [];

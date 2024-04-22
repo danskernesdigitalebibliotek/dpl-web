@@ -5,7 +5,8 @@ namespace Drupal\dpl_react\Controller;
 use Drupal\Core\Controller\ControllerBase;
 use Drupal\dpl_library_token\LibraryTokenHandler;
 use Drupal\dpl_login\AccessToken;
-use Drupal\dpl_login\UserTokensProviderInterface;
+use Drupal\dpl_login\AccessTokenType;
+use Drupal\dpl_login\UserTokensProvider;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\HttpFoundation\Response;
 use function Safe\sprintf;
@@ -24,34 +25,24 @@ class DplReactController extends ControllerBase {
   /**
    * The User token provider.
    *
-   * @var \Drupal\dpl_login\UserTokensProviderInterface
+   * @var \Drupal\dpl_login\UserTokensProvider
    */
-  protected UserTokensProviderInterface $userTokensProvider;
-  /**
-   * The User token provider.
-   *
-   * @var \Drupal\dpl_login\UserTokensProviderInterface
-   */
-  protected UserTokensProviderInterface $unregistreredUserTokensProvider;
+  protected UserTokensProvider $userTokensProvider;
 
   /**
    * DdplReactController constructor.
    *
    * @param \Drupal\dpl_library_token\LibraryTokenHandler $library_token_handler
    *   The Library token handler.
-   * @param \Drupal\dpl_login\UserTokensProviderInterface $user_token_provider
+   * @param \Drupal\dpl_login\UserTokensProvider $user_token_provider
    *   The user token provider.
-   * @param \Drupal\dpl_login\UserTokensProviderInterface $unregistered_user_token_provider
-   *   The unregistered user token provider.
    */
   public function __construct(
     LibraryTokenHandler $library_token_handler,
-    UserTokensProviderInterface $user_token_provider,
-    UserTokensProviderInterface $unregistered_user_token_provider
+    UserTokensProvider $user_token_provider,
   ) {
     $this->libraryTokenHandler = $library_token_handler;
     $this->userTokensProvider = $user_token_provider;
-    $this->unregistreredUserTokensProvider = $unregistered_user_token_provider;
   }
 
   /**
@@ -66,7 +57,6 @@ class DplReactController extends ControllerBase {
     return new static(
       $container->get('dpl_library_token.handler'),
       $container->get('dpl_login.user_tokens'),
-      $container->get('dpl_login.unregistered_user_tokens')
     );
   }
 
@@ -83,11 +73,13 @@ class DplReactController extends ControllerBase {
       $content_lines[] = sprintf('window.dplReact.setToken("library", "%s")', $token_agency);
     }
 
-    if ($access_token = $this->unregistreredUserTokensProvider->getAccessToken()) {
-      $this->setAccessTokenContentLine('unregistered-user', $access_token, $content_lines);
-    }
-    elseif ($access_token = $this->userTokensProvider->getAccessToken()) {
-      $this->setAccessTokenContentLine('user', $access_token, $content_lines);
+    if ($access_token = $this->userTokensProvider->getAccessToken()) {
+      if ($access_token->type === AccessTokenType::UNREGISTERED_USER) {
+        $this->setAccessTokenContentLine('unregistered-user', $access_token, $content_lines);
+      }
+      elseif ($access_token->type === AccessTokenType::USER) {
+        $this->setAccessTokenContentLine('user', $access_token, $content_lines);
+      }
     }
 
     $content = implode("\n", $content_lines);
