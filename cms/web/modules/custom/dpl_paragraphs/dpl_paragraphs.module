@@ -305,6 +305,11 @@ function dpl_paragraphs_preprocess_paragraph__material_grid_manual(array &$varia
 
 /**
  * Implements hook_preprocess_paragraph__TYPE() for paragraph type 'user_registration_linklist'.
+ *
+ * This function checks if the current paragraph has any sibling paragraphs
+ * of type 'user_registration_section', and if so, it retrieves
+ * 'user_registration_items' from that sibling to create navigation
+ * anchor links.
  */
 function dpl_paragraphs_preprocess_paragraph__user_registration_linklist(array &$variables) {
   $paragraph = $variables['paragraph'];
@@ -327,7 +332,8 @@ function dpl_paragraphs_preprocess_paragraph__user_registration_linklist(array &
 /**
  * Implements hook_preprocess_paragraph__TYPE().
  *
- * Prepares variables for paragraph--user-registration-section.html.twig.
+ * This function checks if there is a 'user_registration_linklist' paragraph
+ * among the siblings. If no such sibling is found, it generates 'anchor_links'.
  */
 function dpl_paragraphs_preprocess_paragraph__user_registration_section(array &$variables): void {
 

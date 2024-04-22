@@ -1,6 +1,0 @@
-dpl_paragraphs_behavior:
-  version: 1.x
-  js:
-    js/dpl_paragraphs.js: {}
-  dependencies:
-    - core/drupal
