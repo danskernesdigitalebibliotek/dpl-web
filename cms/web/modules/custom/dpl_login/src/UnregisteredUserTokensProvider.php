@@ -8,10 +8,6 @@ use Drupal\Core\TempStore\PrivateTempStoreFactory;
  * Handles unregistered user token storage.
  */
 class UnregisteredUserTokensProvider extends UserTokensProviderAbstract implements UserTokensProviderInterface {
-  /**
-   * Access token type.
-   */
-  protected AccessTokenType $accessTokenType = AccessTokenType::UNREGISTERED_USER;
 
   /**
    * Constructor of UnregisteredUserTokensProvider.
@@ -21,6 +17,13 @@ class UnregisteredUserTokensProvider extends UserTokensProviderAbstract implemen
    */
   public function __construct(PrivateTempStoreFactory $temp_store_factory) {
     $this->tempStore = $temp_store_factory->get(static::class);
+  }
+
+  /**
+   * {@inheritdoc}
+   */
+  protected function getAccessTokenType(): AccessTokenType {
+    return AccessTokenType::UNREGISTERED_USER;
   }
 
 }

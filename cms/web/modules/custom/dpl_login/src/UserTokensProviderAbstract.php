@@ -10,11 +10,6 @@ use Drupal\Core\TempStore\PrivateTempStoreFactory;
  */
 abstract class UserTokensProviderAbstract implements UserTokensProviderInterface {
   /**
-   * Access token type.
-   */
-  protected AccessTokenType $accessTokenType = AccessTokenType::UNKNOWN;
-
-  /**
    * User session storage.
    *
    * @var \Drupal\Core\TempStore\PrivateTempStore
@@ -35,7 +30,7 @@ abstract class UserTokensProviderAbstract implements UserTokensProviderInterface
    * {@inheritdoc}
    */
   public function setAccessToken(AccessToken $accessToken): void {
-    $accessToken->type = $this->accessTokenType;
+    $accessToken->type = $this->getAccessTokenType();
     $this->tempStore->set('access_token', $accessToken);
   }
 
@@ -53,5 +48,10 @@ abstract class UserTokensProviderAbstract implements UserTokensProviderInterface
   public function deleteAccessToken(): bool {
     return $this->tempStore->delete('access_token');
   }
+
+  /**
+   * Get access token type.
+   */
+  abstract protected function getAccessTokenType(): AccessTokenType;
 
 }

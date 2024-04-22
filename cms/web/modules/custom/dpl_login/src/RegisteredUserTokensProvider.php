@@ -8,10 +8,6 @@ use Drupal\Core\TempStore\PrivateTempStoreFactory;
  * Handles user token storage.
  */
 class RegisteredUserTokensProvider extends UserTokensProviderAbstract implements UserTokensProviderInterface {
-  /**
-   * Access token type.
-   */
-  protected AccessTokenType $accessTokenType = AccessTokenType::USER;
 
   /**
    * Constructor of RegisteredUserTokensProvider.
@@ -21,6 +17,13 @@ class RegisteredUserTokensProvider extends UserTokensProviderAbstract implements
    */
   public function __construct(PrivateTempStoreFactory $temp_store_factory) {
     $this->tempStore = $temp_store_factory->get(static::class);
+  }
+
+  /**
+   * {@inheritdoc}
+   */
+  protected function getAccessTokenType(): AccessTokenType {
+    return AccessTokenType::USER;
   }
 
 }
