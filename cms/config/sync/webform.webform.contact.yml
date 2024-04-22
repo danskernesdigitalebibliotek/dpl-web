@@ -30,7 +30,7 @@ elements: |-
     '#type': webform_term_select
     '#title': Category
     '#required': true
-    '#vocabulary': contact_webform_categories
+    '#vocabulary': webform_email_categories
   subject:
     '#title': Subject
     '#type': textfield

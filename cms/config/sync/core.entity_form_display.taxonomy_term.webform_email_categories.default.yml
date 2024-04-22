@@ -3,11 +3,11 @@ langcode: en
 status: true
 dependencies:
   config:
-    - field.field.taxonomy_term.contact_webform_categories.field_email
-    - taxonomy.vocabulary.contact_webform_categories
-id: taxonomy_term.contact_webform_categories.default
+    - field.field.taxonomy_term.webform_email_categories.field_email
+    - taxonomy.vocabulary.webform_email_categories
+id: taxonomy_term.webform_email_categories.default
 targetEntityType: taxonomy_term
-bundle: contact_webform_categories
+bundle: webform_email_categories
 mode: default
 content:
   field_email:

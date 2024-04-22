@@ -4,11 +4,11 @@ status: true
 dependencies:
   config:
     - field.storage.taxonomy_term.field_email
-    - taxonomy.vocabulary.contact_webform_categories
-id: taxonomy_term.contact_webform_categories.field_email
+    - taxonomy.vocabulary.webform_email_categories
+id: taxonomy_term.webform_email_categories.field_email
 field_name: field_email
 entity_type: taxonomy_term
-bundle: contact_webform_categories
+bundle: webform_email_categories
 label: Email
 description: 'Add which email to send form submissions of this category to.'
 required: true
