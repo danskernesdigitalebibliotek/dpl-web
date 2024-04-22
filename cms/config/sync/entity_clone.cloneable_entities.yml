@@ -3,3 +3,4 @@ cloneable_entities:
   - path_alias
   - eventseries
   - paragraph
+  - redirect
