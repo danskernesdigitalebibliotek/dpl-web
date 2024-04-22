@@ -311,7 +311,7 @@ function dpl_paragraphs_preprocess_paragraph__material_grid_manual(array &$varia
  * 'user_registration_items' from that sibling to create navigation
  * anchor links.
  */
-function dpl_paragraphs_preprocess_paragraph__user_registration_linklist(array &$variables) {
+function dpl_paragraphs_preprocess_paragraph__user_registration_linklist(array &$variables): void {
   $paragraph = $variables['paragraph'];
 
   if ($paragraph->getParentEntity() && $paragraph->getParentEntity()->hasField('field_paragraphs')) {
@@ -362,13 +362,13 @@ function dpl_paragraphs_preprocess_paragraph__user_registration_section(array &$
 /**
  * Creates anchor links for user_registration_items.
  *
- * @param array $paragraphs
+ * @param \Drupal\paragraphs\Entity\Paragraph[] $paragraphs
  *   An array of paragraph entities to process.
  *
- * @return array
+ * @return array<array{title: string, anchor_id: string}>
  *   An array of anchor link information including titles and anchor IDs.
  */
-function dpl_paragraphs_create_navigation_anchor_links(array $paragraphs) {
+function dpl_paragraphs_create_navigation_anchor_links(array $paragraphs): array {
   $anchor_links = [];
 
   // Creates anchor links for items that should be displayed in the navigation.
