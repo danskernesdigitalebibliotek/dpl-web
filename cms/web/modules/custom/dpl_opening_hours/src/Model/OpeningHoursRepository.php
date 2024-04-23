@@ -96,24 +96,26 @@ class OpeningHoursRepository {
    * has an id. If the instance does not, and it is inserted then it will
    * be updated with the resulting id.
    *
-   * @return bool
-   *   Whether the operation was successful or not.
+   * @return OpeningHoursInstance
+   *   The updated instance
    */
-  public function upsert(OpeningHoursInstance $instance): bool {
+  public function upsert(OpeningHoursInstance $instance): OpeningHoursInstance {
     $data = $this->toFields($instance);
 
-    $numRowsAffected = $this->connection->upsert(self::DATABASE_TABLE)
+    $this->connection->upsert(self::DATABASE_TABLE)
       ->key('id')
       ->fields(array_keys($data), array_values($data))
       ->execute();
 
-    if ($instance->id === NULL) {
-      $instance->id = intval($this->connection->lastInsertId());
-    }
+    $id = $instance->id ?? intval($this->connection->lastInsertId());
 
-    // If a row was affected then the operation had an effect. That is a
-    // success.
-    return $numRowsAffected > 0;
+    return new OpeningHoursInstance(
+      $id,
+      $instance->branch,
+      $instance->categoryTerm,
+      $instance->startTime,
+      $instance->endTime
+    );
   }
 
   /**

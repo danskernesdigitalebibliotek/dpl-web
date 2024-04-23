@@ -60,9 +60,8 @@ final class OpeningHoursCreateResource extends OpeningHoursResourceBase {
     try {
       $requestData = $this->deserialize(OpeningHoursRequest::class, $request);
       $instance = $this->mapper->fromRequest($requestData);
-      $this->repository->upsert($instance);
-
-      $responseData = $this->mapper->toResponse($instance);
+      $createdInstance = $this->repository->upsert($instance);
+      $responseData = $this->mapper->toResponse($createdInstance);
       return new Response($this->serializer->serialize($responseData, $this->serializerFormat($request)));
     }
     catch (\InvalidArgumentException $e) {
