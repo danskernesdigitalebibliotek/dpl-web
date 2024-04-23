@@ -9656,7 +9656,7 @@ msgstr ""
 
 #: 
 msgid "The language code"
-msgstr ""
+msgstr "Sprogkoden."
 
 #: 
 msgid "The two-letter country code"
@@ -9724,7 +9724,7 @@ msgstr ""
 
 #: 
 msgid "Use field overrides to override the country-specific address format, forcing specific properties to always be hidden, optional, or required."
-msgstr ""
+msgstr "Brug områdeoverskrivninger til at overskrive det landspecifikke adresseformat og tvinge bestemte egenskaber til altid at være skjulte, valgfrie eller påkrævede."
 
 #: 
 msgid "Property"
@@ -10838,7 +10838,7 @@ msgstr "Dette indhold er nu låst for samtidig redigering. "
 
 #: 
 msgid "This content is now locked by you against simultaneous editing."
-msgstr ""
+msgstr "Dette indhold er nu låst af dig mod medredigering."
 
 #: 
 msgid "has been updated."
@@ -11152,7 +11152,7 @@ msgstr ""
 
 #: 
 msgid "X coordinate"
-msgstr ""
+msgstr "X koordinat"
 
 #: 
 msgid "The crop's X coordinate."
@@ -11160,7 +11160,7 @@ msgstr ""
 
 #: 
 msgid "Y coordinate"
-msgstr ""
+msgstr "Y koordinat"
 
 #: 
 msgid "The crop's Y coordinate."
@@ -11596,7 +11596,7 @@ msgstr "Den refererede entity (%type: %id) eksisterer ikke."
 
 #: 
 msgid "The referenced entity type (%type) is not allowed for this field."
-msgstr ""
+msgstr "Den refererede enhedstype (%type) er ikke tilladt i dette felt."
 
 #: 
 msgid "No bundle is allowed for (%type)"
@@ -13333,7 +13333,7 @@ msgstr ""
 
 #: 
 msgid "The text will be displayed on the <em>profile collection</em> page."
-msgstr ""
+msgstr "Teksten vil blive vist på <em>profile collection</em> siden."
 
 #: 
 msgid "Created new profile %label."
@@ -13825,7 +13825,7 @@ msgstr ""
 
 #: 
 msgid "The module uses <a href=\":tokens\">\"tokens\"</a> to automatically fill in values for different meta tags. Specific values may also be filled in."
-msgstr ""
+msgstr "Modulet bruger <a href=\":tokens\">\"tokens\"</a> til automatisk at udfylde værdier for forskellige metatags. Specifikke værdier kan også udfyldes."
 
 #: 
 msgid "The best way of using Metatag is as follows:"
@@ -13865,7 +13865,7 @@ msgstr ""
 
 #: 
 msgid "Use the following form to override the global default meta tags for a specific entity type or entity bundle. In practical terms, this allows the meta tags to be customized for a specific content type or taxonomy vocabulary, so that its content will have different meta tags <em>default values</em> than others."
-msgstr ""
+msgstr "Brug følgende formular til at overskrive de globale standardmetatags for en bestemt enhedstype eller enhedspakke. I praksis giver det mulighed for at tilpasse metatags til en bestemt indholdstype eller taksonomisk vokabular, så dens indhold har andre metatags <em>default values</em> end andre."
 
 #: 
 msgid "As a reminder, if the \"Metatag\" field is added to the entity type through its normal field settings, the meta tags can be further refined on a per entity basis; this allows each node to have its meta tags  customized on an individual basis."
@@ -14297,7 +14297,7 @@ msgstr ""
 
 #: 
 msgid "The meta tags for this display"
-msgstr ""
+msgstr "Metatags for denne visning"
 
 #: 
 msgid "Use replacement tokens from the first row"
@@ -14553,7 +14553,7 @@ msgstr ""
 
 #: 
 msgid "The metatags could not be created for the path: @url."
-msgstr ""
+msgstr "Metatags kunne ikke oprettes for stien: @url."
 
 #: 
 msgid "Enables metatags for custom routes"
@@ -14589,7 +14589,7 @@ msgstr "URL"
 
 #: 
 msgid "The URL which should represent the content."
-msgstr ""
+msgstr "URL'en der skal vise indholdet."
 
 #: 
 msgid "No search"
@@ -14825,7 +14825,7 @@ msgstr ""
 
 #: 
 msgid "The method by which items are added to a collection."
-msgstr ""
+msgstr "Metoden, der bruges til at tilføje elementer til en samling."
 
 #: 
 msgid "Date Submitted"
@@ -15065,7 +15065,7 @@ msgstr "Titel"
 
 #: 
 msgid "The name given to the resource."
-msgstr ""
+msgstr "Navnet givet til materialet."
 
 #: 
 msgid "Contributor"
@@ -15277,7 +15277,7 @@ msgstr "Sidetitel"
 
 #: 
 msgid "The text to display in the title bar of a visitor's web browser when they view this page. This meta tag may also be used as the title of the page when a visitor bookmarks or favorites this page, or as the page title in a search engine result. It is common to append '[site:name]' to the end of this, so the site's name is automatically added. It is recommended that the title is no greater than 55 - 65 characters long, including spaces."
-msgstr ""
+msgstr "Teksten, der vises i titellinjen i en besøgendes webbrowser, når de ser denne side. Dette metatag kan også bruges som sidens titel, når en besøgende bogmærker eller favoriserer denne side, eller som sidens titel i et søgemaskineresultat. Det er almindeligt at tilføje '[site:name]' til sidst, så sidens navn automatisk tilføjes. Det anbefales, at titlen ikke er mere end 55-65 tegn, inklusive mellemrum."
 
 #: 
 msgid "Geographical position"
@@ -15317,7 +15317,7 @@ msgstr ""
 
 #: 
 msgid "This field stores code meta tags."
-msgstr ""
+msgstr "Dette felt indeholder kodede meta tags."
 
 #: 
 msgid "Empty formatter"
@@ -15569,7 +15569,7 @@ msgstr ""
 
 #: 
 msgid "The iPad app's custom URL scheme (must include \"://\" after the scheme name)."
-msgstr ""
+msgstr "iPad-appens brugerdefinerede URL-oversigt (skal indeholde \"://\" efter oversigtens navn)."
 
 #: 
 msgid "iPhone app name"
@@ -15577,7 +15577,7 @@ msgstr ""
 
 #: 
 msgid "The name of the iPhone app."
-msgstr ""
+msgstr "Navnet på iPhone appen."
 
 #: 
 msgid "Media player height"
@@ -15617,7 +15617,7 @@ msgstr ""
 
 #: 
 msgid "The name of the app in the Google Play app store."
-msgstr ""
+msgstr "Appens navn i Google Play app butik."
 
 #: 
 msgid "Site's Twitter account"
@@ -15685,7 +15685,7 @@ msgstr ""
 
 #: 
 msgid "The iPhone app's custom URL scheme (must include \"://\" after the scheme name)."
-msgstr ""
+msgstr "iPhone-appens brugerdefinerede URL-oversigt (skal indeholde \"://\" efter oversigtens navn)."
 
 #: 
 msgid "MP4 media stream URL"
@@ -15721,7 +15721,7 @@ msgstr ""
 
 #: 
 msgid "The name of the iPad app."
-msgstr ""
+msgstr "Navnet på iPad appen."
 
 #: 
 msgid "Google Play app ID"
@@ -15837,7 +15837,7 @@ msgstr ""
 
 #: 
 msgid "The URL to a logo file that is 70px by 70px."
-msgstr ""
+msgstr "URL'en til en logofil, der er 70px af 70px."
 
 #: 
 msgid "MSApplication - Allow domain API calls"
@@ -15857,7 +15857,7 @@ msgstr ""
 
 #: 
 msgid "The URL to a logo file that is 310px by 310px."
-msgstr ""
+msgstr "URL'en til en logofil, der er 310px af 310px."
 
 #: 
 msgid "MSApplication - Wide logo, 310px x 150px"
@@ -15865,7 +15865,7 @@ msgstr ""
 
 #: 
 msgid "The URL to a logo file that is 310px by 150px."
-msgstr ""
+msgstr "URL'en til en logofil, der er 310px af 150px."
 
 #: 
 msgid "MSApplication - Tooltip"
@@ -15881,7 +15881,7 @@ msgstr ""
 
 #: 
 msgid "The URL to a logo file that is 150px by 150px."
-msgstr ""
+msgstr "URL'en til en logofil, der er 150px af 150px."
 
 #: 
 msgid "Apple Web App Title"
@@ -15986,7 +15986,7 @@ msgstr ""
 
 #: 
 msgid "The URL to the root page of the site."
-msgstr ""
+msgstr "URL'en til bunden af hjemmesiden."
 
 #: 
 msgid "Viewport"
@@ -16179,7 +16179,7 @@ msgstr "Windows Universal app navn"
 
 #: 
 msgid "The name of the app (suitable for display)"
-msgstr ""
+msgstr "Navnet på appen (egnet til visning)."
 
 #: 
 msgid "iPad app URL scheme"
@@ -16207,7 +16207,7 @@ msgstr "Window Phone app ID"
 
 #: 
 msgid "Windows Universal app URL scheme"
-msgstr ""
+msgstr "Windows Universal app URL oversigt"
 
 #: 
 msgid "Android app URL scheme"
@@ -16255,7 +16255,7 @@ msgstr ""
 
 #: 
 msgid "The name of the app (suitable for display)."
-msgstr ""
+msgstr "Navnet på appen (egnet til visning)."
 
 #: 
 msgid "iOS app URL scheme"
@@ -16447,7 +16447,7 @@ msgstr ""
 
 #: 
 msgid "The secure URL (HTTPS) of an image which should represent the content. The image must be at least 200 x 200 pixels in size; 600 x 316 pixels is a recommended minimum size, and for best results use an image least 1200 x 630 pixels in size. Supports PNG, JPEG and GIF formats."
-msgstr ""
+msgstr "Den sikre URL (HTTPS) af et billede, der skal repræsentere indholdet. Billedet skal mindst være 200 x 200 pixels i størrelse, 600 x 316 pixels er den anbefalede mindstestørrelse, og brug et billede på mindst 1200 x 630 pixels i størrelse for bedste resultat. Understøtter PNG, JPEG og GIF formater."
 
 #: 
 msgid "Director(s)"
@@ -16503,7 +16503,7 @@ msgstr ""
 
 #: 
 msgid "The URL to an audio file that complements this object."
-msgstr ""
+msgstr "URL'en til en lydfil, der komplimenterer dette objekt."
 
 #: 
 msgid "Article modification date & time"
@@ -18089,7 +18089,7 @@ msgstr ""
 
 #: 
 msgid "The language code of event entity."
-msgstr ""
+msgstr "Sprogkoden for arrangementenhed."
 
 #: 
 msgid "Created"
@@ -18097,7 +18097,7 @@ msgstr "Oprettet"
 
 #: 
 msgid "The time that the entity was created."
-msgstr ""
+msgstr "Tidspunktet enheden blev skabt."
 
 #: 
 msgid "Changed"
@@ -18105,7 +18105,7 @@ msgstr "Ændret"
 
 #: 
 msgid "The time that the entity was last edited."
-msgstr ""
+msgstr "Tidspunktet enheden sidst blev redigeret."
 
 #: 
 msgid "Revision translation affected"
@@ -18233,7 +18233,7 @@ msgstr "Hvilke dage på ugen finder arrangementet sted"
 
 #: 
 msgid "The time the events begin each day"
-msgstr ""
+msgstr "Tidspunktet arrangementerne begynder hver dag"
 
 #: 
 msgid "End Time"
@@ -18241,7 +18241,7 @@ msgstr "Sluttidspunkt"
 
 #: 
 msgid "The time the events end each day"
-msgstr ""
+msgstr "Tidspunktet arrangementerne slutter hver dag"
 
 #: 
 msgid "Duration"
@@ -18285,7 +18285,7 @@ msgstr "Slutdato"
 
 #: 
 msgid "The time the event begins"
-msgstr ""
+msgstr "Tidspunktet arrangementet begynder"
 
 #: 
 msgid "The duration of the event in minutes"
@@ -18293,7 +18293,7 @@ msgstr ""
 
 #: 
 msgid "The time the event ends"
-msgstr ""
+msgstr "Tidspunktet arrangementet slutter"
 
 #: 
 msgid "Duration or End Time"
@@ -18317,7 +18317,7 @@ msgstr "Måneder"
 
 #: 
 msgid "The months in which the event occurs"
-msgstr ""
+msgstr "Månederne. hvor arrangementerne foregår"
 
 #: 
 msgid "Year Interval"
@@ -19187,7 +19187,7 @@ msgstr ""
 
 #: 
 msgid "The subject of the email to send to the registrant"
-msgstr ""
+msgstr "Emnet for e-mail, der skal sendes til registranten"
 
 #: 
 msgid "Email Message"
@@ -19327,7 +19327,7 @@ msgstr "Skrevet af"
 
 #: 
 msgid "The user ID of author of the Registrant entity."
-msgstr ""
+msgstr "Forfatteren af den registrerede enheds brugerid."
 
 #: 
 msgid "Email Address"
@@ -19343,7 +19343,7 @@ msgstr ""
 
 #: 
 msgid "The registrant type."
-msgstr ""
+msgstr "Typen af registreret."
 
 #: 
 msgid "Event Instance ID"
@@ -19359,7 +19359,7 @@ msgstr "Om denne registrant står på venteliste"
 
 #: 
 msgid "The type of registration this is: series or instance"
-msgstr ""
+msgstr "Typen af registrering: serie eller tilfælde"
 
 #: 
 msgid "Is this registration complete?"
@@ -19839,7 +19839,7 @@ msgstr ""
 
 #: 
 msgid "The reminder message to send to registrants."
-msgstr ""
+msgstr "Påmindelsesbeskeden sendt til registrerede."
 
 #: 
 msgid "Event Rename Notification"
@@ -19895,7 +19895,7 @@ msgstr ""
 
 #: 
 msgid "The URL to edit a registrant."
-msgstr ""
+msgstr "URL'en til at redigere en registreret."
 
 #: 
 msgid "Delete Registrant URL"
@@ -19903,7 +19903,7 @@ msgstr ""
 
 #: 
 msgid "The URL to delete a registrant."
-msgstr ""
+msgstr "URL'en til at slette en registreret."
 
 #: 
 msgid "Registrant event instance"
@@ -20019,7 +20019,7 @@ msgstr "Lokation"
 
 #: 
 msgid "The intended venue for the event."
-msgstr ""
+msgstr "Det planlagte sted for arrangementet."
 
 #: 
 msgid "Priority"
@@ -21981,7 +21981,7 @@ msgstr "URLen på @entity."
 
 #: 
 msgid "The language of the @entity."
-msgstr ""
+msgstr "Sproget for @entity."
 
 #: 
 msgid "Original @entity"
@@ -22193,7 +22193,7 @@ msgstr "Sprognavn"
 
 #: 
 msgid "The language name."
-msgstr ""
+msgstr "Sprogets navn."
 
 #: 
 msgid "The language code."
@@ -22533,7 +22533,7 @@ msgstr "Gennemse tilgængelige tokens."
 
 #: 
 msgid "Token value for @token was not generated."
-msgstr ""
+msgstr "Token værdi for @token blev ikke produceret."
 
 #: 
 msgid "Token value for @token was '@actual', matching regular expression pattern '@expected'."
@@ -22605,7 +22605,7 @@ msgstr "Tilføjer en brugergrænseflade til Token APIet og nogle manglende core 
 
 #: 
 msgid "Token User picture"
-msgstr ""
+msgstr "Token Bruger billede"
 
 #: 
 msgid "Testing module that provides user pictures field."
@@ -22711,7 +22711,7 @@ msgstr "Timeout"
 
 #: 
 msgid "The timeout of the request in seconds."
-msgstr ""
+msgstr "Timeout for anmodningen i sekunder."
 
 #: 
 msgid "Connection timeout"
@@ -22719,7 +22719,7 @@ msgstr "Forbindelses-timeout"
 
 #: 
 msgid "The number of seconds to wait while trying to connect to a server."
-msgstr ""
+msgstr "Det antal sekunder, man skal vente, mens der forsøges at oprette forbindelse til en server."
 
 #: 
 msgid "<p>Tokens are replaced for the <b>Path</b> and header <b>Value</b> fields.</p>"
@@ -22743,7 +22743,7 @@ msgstr "Summen af begge timeouts kan ikke være højere end 10.00, fordi dette v
 
 #: 
 msgid "The sum of both timeouts cannot be lower as 0.4 as this can lead to too many failures under real usage conditions."
-msgstr ""
+msgstr "Summen af begge timeouts kan ikke være lavere end 0.4, eftersom dette kan lede til for mange fejl ved reelle brugsforhold."
 
 #: 
 msgid "@purger not configured."
@@ -23979,7 +23979,7 @@ msgstr ""
 #: 
 msgctxt "views.view.webform_submissions:display:default:display_options:pager:options:expose:items_per_page_options_all_label"
 msgid "- All -"
-msgstr ""
+msgstr "- Alle -"
 
 #: 
 msgctxt "views.view.webform_submissions:display:default:display_options:pager:options:expose:offset_label"
@@ -25854,7 +25854,7 @@ msgstr ""
 #: 
 msgctxt "paragraphs.paragraphs_type.manual_event_list:description"
 msgid "This paragraph will show a list of events that are manually selected."
-msgstr ""
+msgstr "Dette afsnit vil vise en liste over arrangementer, der er manuelt valgt."
 
 #: 
 msgctxt "system.action.redirect_delete_action:label"
@@ -25994,7 +25994,7 @@ msgstr ""
 #: 
 msgctxt "views.view.redirect:display:default:display_options:pager:options:expose:items_per_page_options_all_label"
 msgid "- All -"
-msgstr ""
+msgstr "- Alle -"
 
 #: 
 msgctxt "views.view.redirect:display:default:display_options:pager:options:expose:offset_label"
@@ -26014,7 +26014,7 @@ msgstr ""
 #: 
 msgctxt "views.view.redirect:display:default:display_options:exposed_form:options:exposed_sorts_label"
 msgid "Sort by"
-msgstr ""
+msgstr "Sortér efter"
 
 #: 
 msgctxt "views.view.redirect:display:default:display_options:exposed_form:options:sort_asc_label"
@@ -26029,12 +26029,12 @@ msgstr ""
 #: 
 msgctxt "views.view.redirect:display:default:display_options:empty:area_text_custom:content"
 msgid "There is no redirect yet."
-msgstr ""
+msgstr "Der er ingen omdirigering endnu."
 
 #: 
 msgctxt "views.view.redirect:display:default:display_options:filters:redirect_source__path:expose:label"
 msgid "From"
-msgstr ""
+msgstr "Fra"
 
 #: 
 msgctxt "views.view.redirect:display:default:display_options:filters:redirect_redirect__uri:expose:label"
@@ -26094,7 +26094,7 @@ msgstr ""
 #: 
 msgctxt "views.view.redirect:display:default:display_options:header:area:content:value"
 msgid "Use redirects, when you want to have dynamic URLs. E.g. when you've used a URL on a printed poster, and you may want to change the link to a different page."
-msgstr ""
+msgstr "Brug omdirigering, når du ønsker dynamiske URL'er. F.eks. når du har brugt en URL på en printet plakat, og du måske ønsker at ændre linket til en anden hjemmeside."
 
 #: 
 msgctxt "views.view.redirect:display:page_1:display_title"
