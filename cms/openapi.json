@@ -202,7 +202,8 @@
                     "type": {
                       "type": "string",
                       "description": "If/how the instance should be repeated in the future: <br/> - single: The instance should not be repeated <br/> - weekly: The instance should be repeated weekly from the first day of the repetition until the provided end date. The week day of the first instance defines which weekday should be used for the repeated instances.",
-                      "enum": ["none", "weekly"]
+                      "enum": ["none", "weekly"],
+                      "default": "none"
                     },
                     "weekly_data": {
                       "type": "object",
@@ -275,7 +276,8 @@
                     "type": {
                       "type": "string",
                       "description": "If/how the instance should be repeated in the future: <br/> - single: The instance should not be repeated <br/> - weekly: The instance should be repeated weekly from the first day of the repetition until the provided end date. The week day of the first instance defines which weekday should be used for the repeated instances.",
-                      "enum": ["none", "weekly"]
+                      "enum": ["none", "weekly"],
+                      "default": "none"
                     },
                     "weekly_data": {
                       "type": "object",
@@ -400,7 +402,8 @@
                       "type": {
                         "type": "string",
                         "description": "If/how the instance should be repeated in the future: <br/> - single: The instance should not be repeated <br/> - weekly: The instance should be repeated weekly from the first day of the repetition until the provided end date. The week day of the first instance defines which weekday should be used for the repeated instances.",
-                        "enum": ["none", "weekly"]
+                        "enum": ["none", "weekly"],
+                        "default": "none"
                       },
                       "weekly_data": {
                         "type": "object",
@@ -542,7 +545,8 @@
                     "type": {
                       "type": "string",
                       "description": "If/how the instance should be repeated in the future: <br/> - single: The instance should not be repeated <br/> - weekly: The instance should be repeated weekly from the first day of the repetition until the provided end date. The week day of the first instance defines which weekday should be used for the repeated instances.",
-                      "enum": ["none", "weekly"]
+                      "enum": ["none", "weekly"],
+                      "default": "none"
                     },
                     "weekly_data": {
                       "type": "object",
@@ -621,7 +625,8 @@
                     "type": {
                       "type": "string",
                       "description": "If/how the instance should be repeated in the future: <br/> - single: The instance should not be repeated <br/> - weekly: The instance should be repeated weekly from the first day of the repetition until the provided end date. The week day of the first instance defines which weekday should be used for the repeated instances.",
-                      "enum": ["none", "weekly"]
+                      "enum": ["none", "weekly"],
+                      "default": "none"
                     },
                     "weekly_data": {
                       "type": "object",

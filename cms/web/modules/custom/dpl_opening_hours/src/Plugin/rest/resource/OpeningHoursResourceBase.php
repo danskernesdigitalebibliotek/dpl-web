@@ -5,6 +5,7 @@ namespace Drupal\dpl_opening_hours\Plugin\rest\resource;
 use DanskernesDigitaleBibliotek\CMS\Api\Service\SerializerInterface;
 use DanskernesDigitaleBibliotek\CMS\Api\Service\TypeMismatchException;
 use Drupal\dpl_opening_hours\Mapping\OpeningHoursMapper;
+use Drupal\dpl_opening_hours\Mapping\OpeningHoursRepetitionType;
 use Drupal\dpl_opening_hours\Model\OpeningHoursRepository;
 use Drupal\rest\Plugin\ResourceBase;
 use Psr\Log\LoggerInterface;
@@ -124,10 +125,8 @@ abstract class OpeningHoursResourceBase extends ResourceBase {
                 "            provided end date. The week day of the first instance defines which weekday should be " .
                 "            used for the repeated instances."
               ),
-              "enum" => [
-                "none",
-                "weekly",
-              ],
+              "enum" => OpeningHoursRepetitionType::cases(),
+              "default" => OpeningHoursRepetitionType::None
             ],
             // If a repetition type requires additional data then a
             // corresponding property with the name "[repetition_type]_data"

@@ -64,7 +64,7 @@ class DplOpeningHoursListGET200ResponseInnerRepetition
      * @Assert\Type("string")
      * @Type("string")
      */
-    protected ?string $type = null;
+    protected ?string $type = 'none';
 
     /**
      * @var DplOpeningHoursListGET200ResponseInnerRepetitionWeeklyData|null

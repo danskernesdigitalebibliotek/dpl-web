@@ -3,9 +3,11 @@
 namespace Drupal\dpl_opening_hours\Mapping;
 
 use DanskernesDigitaleBibliotek\CMS\Api\Model\DplOpeningHoursCreatePOSTRequest as OpeningHoursRequest;
+use DanskernesDigitaleBibliotek\CMS\Api\Model\DplOpeningHoursCreatePOSTRequestRepetition;
 use DanskernesDigitaleBibliotek\CMS\Api\Model\DplOpeningHoursListGET200ResponseInner as OpeningHoursResponse;
 use DanskernesDigitaleBibliotek\CMS\Api\Model\DplOpeningHoursListGET200ResponseInnerCategory as OpeningHoursCategory;
 use Drupal\dpl_opening_hours\Model\OpeningHoursInstance;
+use Drupal\dpl_opening_hours\Model\Repetition\NoRepetition;
 use Drupal\node\NodeStorageInterface;
 use Drupal\taxonomy\TermInterface;
 use Drupal\taxonomy\TermStorageInterface;
@@ -49,6 +51,12 @@ class OpeningHoursMapper {
       throw new \InvalidArgumentException("Invalid category title '{$categoryTitle}'");
     }
 
+    $repetitionData = $request->getRepetition() ?? (new DplOpeningHoursCreatePOSTRequestRepetition())->setType(OpeningHoursRepetitionType::None->value);
+    $repetitionType = ($repetitionData->getType() !== NULL) ? OpeningHoursRepetitionType::tryFrom($repetitionData->getType()) : NULL;
+    if ($repetitionType === NULL) {
+      throw new \InvalidArgumentException("Invalid repetition type '{$repetitionData->getType()}'");
+    }
+
     try {
       return new OpeningHoursInstance(
         $request->getId(),
@@ -56,6 +64,7 @@ class OpeningHoursMapper {
         $categoryTerm,
         new DateTimeImmutable($request->getDate()?->format('Y-m-d') . " " . $request->getStartTime()),
         new DateTimeImmutable($request->getDate()?->format('Y-m-d') . " " . $request->getEndTime()),
+        new NoRepetition()
       );
     }
     catch (\Exception $e) {
