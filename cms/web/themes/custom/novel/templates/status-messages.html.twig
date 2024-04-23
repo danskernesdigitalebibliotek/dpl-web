@@ -33,21 +33,23 @@
       <ul>
         {% for message in messages %}
           <li>
-            {% if type != 'error' %}
-              {{ message }}
-            {% endif %}
             {% if type == 'error' %}
               {% include '@novel/error-message.html.twig' with {message: message} %}
+            {% elseif type == 'status' %}
+              {% include '@novel/status-message.html.twig' with {message: message} %}
+            {% else %}
+              {{ message }}
             {% endif %}
           </li>
         {% endfor %}
       </ul>
     {% else %}
-      {% if type != 'error' %}
-        {{ messages|first }}
-      {% endif %}
       {% if type == 'error' %}
         {% include '@novel/error-message.html.twig' with {message: messages|first} %}
+      {% elseif type == 'status' %}
+        {% include '@novel/status-message.html.twig' with {message: messages|first} %}
+      {% else %}
+        {{ messages|first }}
       {% endif %}
     {% endif %}
     {% if type == 'error' %}
