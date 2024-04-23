@@ -126,7 +126,7 @@ abstract class OpeningHoursResourceBase extends ResourceBase {
                 "            used for the repeated instances."
               ),
               "enum" => OpeningHoursRepetitionType::cases(),
-              "default" => OpeningHoursRepetitionType::None
+              "default" => OpeningHoursRepetitionType::None,
             ],
             // If a repetition type requires additional data then a
             // corresponding property with the name "[repetition_type]_data"

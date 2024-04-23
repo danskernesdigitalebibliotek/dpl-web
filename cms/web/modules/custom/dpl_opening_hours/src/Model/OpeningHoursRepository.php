@@ -3,6 +3,8 @@
 namespace Drupal\dpl_opening_hours\Model;
 
 use Drupal\Core\Database\Connection;
+use Drupal\dpl_opening_hours\Mapping\OpeningHoursRepetitionType;
+use Drupal\dpl_opening_hours\Model\Repetition\NoRepetition;
 use Drupal\node\NodeInterface;
 use Drupal\node\NodeStorageInterface;
 use Drupal\taxonomy\TermInterface;
@@ -15,7 +17,8 @@ use Safe\DateTimeImmutable;
  */
 class OpeningHoursRepository {
 
-  const DATABASE_TABLE = 'dpl_opening_hours_instance';
+  const INSTANCE_TABLE = 'dpl_opening_hours_instance';
+  const REPETITION_TABLE = 'dpl_opening_hours_repetition';
 
   /**
    * Constructor.
@@ -31,8 +34,8 @@ class OpeningHoursRepository {
    * Load a single opening hours instance.
    */
   public function load(int $id): ?OpeningHoursInstance {
-    $result = $this->connection->select(self::DATABASE_TABLE, self::DATABASE_TABLE)
-      ->fields(self::DATABASE_TABLE)
+    $result = $this->connection->select(self::INSTANCE_TABLE, self::INSTANCE_TABLE)
+      ->fields(self::INSTANCE_TABLE)
       ->condition('id', $id)
       ->execute();
     if (!$result) {
@@ -59,8 +62,8 @@ class OpeningHoursRepository {
    *   Opening hours instances which match the provided criteria.
    */
   public function loadMultiple(int $branchId = NULL, \DateTimeInterface $fromDate = NULL, \DateTimeInterface $toDate = NULL): array {
-    $query = $this->connection->select(self::DATABASE_TABLE, self::DATABASE_TABLE)
-      ->fields(self::DATABASE_TABLE);
+    $query = $this->connection->select(self::INSTANCE_TABLE, self::INSTANCE_TABLE)
+      ->fields(self::INSTANCE_TABLE);
     if ($branchId) {
       $query->condition('branch_nid', $branchId);
     }
@@ -102,7 +105,22 @@ class OpeningHoursRepository {
   public function upsert(OpeningHoursInstance $instance): OpeningHoursInstance {
     $data = $this->toFields($instance);
 
-    $this->connection->upsert(self::DATABASE_TABLE)
+    if ($instance->repetition->id === NULL) {
+      $type = match ($instance->repetition::class) {
+        NoRepetition::class => OpeningHoursRepetitionType::None,
+        default => OpeningHoursRepetitionType::None,
+      };
+      $repetition_id = $this->connection->insert(self::REPETITION_TABLE)
+        ->fields(['type' => $type->value])
+        ->execute();
+    }
+    else {
+      $repetition_id = $instance->repetition->id;
+    }
+    $data['repetition_id'] = $repetition_id;
+    $repetiton = new NoRepetition($repetition_id);
+
+    $this->connection->upsert(self::INSTANCE_TABLE)
       ->key('id')
       ->fields(array_keys($data), array_values($data))
       ->execute();
@@ -114,7 +132,8 @@ class OpeningHoursRepository {
       $instance->branch,
       $instance->categoryTerm,
       $instance->startTime,
-      $instance->endTime
+      $instance->endTime,
+      $repetiton,
     );
   }
 
@@ -125,9 +144,23 @@ class OpeningHoursRepository {
    *   Whether the operation was successful or not.
    */
   public function delete(int $id): bool {
-    $numRowsAffected = $this->connection->delete(self::DATABASE_TABLE)
+    $instance = $this->load($id);
+    if (!$instance) {
+      return FALSE;
+    }
+
+    $numRowsAffected = $this->connection->delete(self::INSTANCE_TABLE)
       ->condition('id', $id)
       ->execute();
+
+    // If the instance is not repeated then delete the corresponding singular
+    // repetition.
+    $repetition = $instance->repetition;
+    if ($repetition::class === NoRepetition::class && $instance->id !== NULL) {
+      $this->connection->delete(self::REPETITION_TABLE)
+        ->condition('id', $repetition->id)
+        ->execute();
+    }
 
     // If a row was affected then the operation had an effect. That is a
     // success.
@@ -155,7 +188,8 @@ class OpeningHoursRepository {
       $branch,
       $categoryTerm,
       new DateTimeImmutable($data['date'] . " " . $data['start_time']),
-      new DateTimeImmutable($data['date'] . " " . $data['end_time'])
+      new DateTimeImmutable($data['date'] . " " . $data['end_time']),
+      new NoRepetition()
     );
   }
 
