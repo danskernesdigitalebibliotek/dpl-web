@@ -15,8 +15,9 @@ use Drupal\dpl_login\AccessTokenType;
 use Drupal\dpl_login\Adgangsplatformen\Config;
 use Drupal\dpl_login\Controller\DplLoginController;
 use Drupal\dpl_login\Exception\MissingConfigurationException;
+use Drupal\dpl_login\RegisteredUserTokensProvider;
 use Drupal\dpl_login\UnregisteredUserTokensProvider;
-use Drupal\dpl_login\UserTokensProvider;
+use Drupal\dpl_login\UserTokens;
 use Drupal\openid_connect\OpenIDConnectClaims;
 use Drupal\openid_connect\Plugin\OpenIDConnectClientBase;
 use Drupal\Tests\UnitTestCase;
@@ -62,11 +63,17 @@ class DplLoginControllerTest extends UnitTestCase {
     $fake_unregistered_user_token = clone $fake_access_token;
     $fake_unregistered_user_token->type = AccessTokenType::UNREGISTERED_USER;
 
-    $user_token_provider = $this->prophesize(UserTokensProvider::class);
+    $user_token_provider = $this->prophesize(RegisteredUserTokensProvider::class);
     $user_token_provider->getAccessToken()->willReturn($fake_registered_user_token);
 
     $unregistered_user_token_provider = $this->prophesize(UnregisteredUserTokensProvider::class);
     $unregistered_user_token_provider->getAccessToken()->willReturn($fake_unregistered_user_token);
+
+    $registered_user_token_provider = $this->prophesize(RegisteredUserTokensProvider::class);
+    $registered_user_token_provider->getAccessToken()->willReturn($fake_registered_user_token);
+
+    $user_tokens = $this->prophesize(UserTokens::class);
+    $user_tokens->getCurrent()->willReturn($fake_unregistered_user_token);
 
     $config_factory = $this->prophesize(ConfigFactoryInterface::class);
     $config = $this->prophesize(ImmutableConfig::class);
@@ -88,7 +95,8 @@ class DplLoginControllerTest extends UnitTestCase {
 
     $container = new ContainerBuilder();
     $container->set('logger.factory', $logger_factory->reveal());
-    $container->set('dpl_login.user_tokens', $user_token_provider->reveal());
+    $container->set('dpl_login.user_tokens', $user_tokens->reveal());
+    $container->set('dpl_login.unregistered_user_tokens', $registered_user_token_provider->reveal());
     $container->set('dpl_login.unregistered_user_tokens', $unregistered_user_token_provider->reveal());
     $container->set('config.factory', $config_factory->reveal());
     $container->set('unrouted_url_assembler', $unrouted_url_assembler->reveal());
@@ -146,8 +154,10 @@ class DplLoginControllerTest extends UnitTestCase {
     ])->shouldBeCalledTimes(1);
     $config_factory = $this->prophesize(ConfigFactoryInterface::class);
     $config_factory->get(Config::CONFIG_KEY)->willReturn($config->reveal());
-    $user_token_provider = $this->prophesize(UserTokensProvider::class);
-    $user_token_provider->getAccessToken()->willReturn(NULL);
+    $user_tokens = $this->prophesize(UserTokens::class);
+    $user_tokens->getCurrent()->willReturn(NULL);
+    $registered_user_token_provider = $this->prophesize(RegisteredUserTokensProvider::class);
+    $registered_user_token_provider->getAccessToken()->willReturn(NULL);
     $unregistered_user_token_provider = $this->prophesize(UnregisteredUserTokensProvider::class);
     $unregistered_user_token_provider->getAccessToken()->willReturn(NULL);
     $url_generator = $this->prophesize(UrlGenerator::class);
@@ -155,7 +165,8 @@ class DplLoginControllerTest extends UnitTestCase {
 
     $container = \Drupal::getContainer();
     $container->set('dpl_login.adgangsplatformen.config', new Config($config_factory->reveal()));
-    $container->set('dpl_login.user_tokens', $user_token_provider->reveal());
+    $container->set('dpl_login.user_tokens', $user_tokens->reveal());
+    $container->set('dpl_login.registered_user_tokens', $registered_user_token_provider->reveal());
     $container->set('dpl_login.unregistered_user_tokens', $unregistered_user_token_provider->reveal());
     $container->set('url_generator', $url_generator->reveal());
     \Drupal::setContainer($container);

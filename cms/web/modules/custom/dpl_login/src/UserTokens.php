@@ -7,7 +7,7 @@ use Drupal\Component\DependencyInjection\ContainerInterface;
 /**
  * Handles logic around registered and unregistered user tokens.
  */
-class UserTokensProvider {
+class UserTokens {
 
   /**
    * {@inheritdoc}
@@ -30,7 +30,7 @@ class UserTokensProvider {
   /**
    * Get access token. If user is not registered, get unregistered user token.
    */
-  public function getAccessToken(): ?AccessToken {
+  public function getCurrent(): ?AccessToken {
     if ($access_token = $this->unregisteredUserTokensProvider->getAccessToken()) {
       return $access_token;
     }

@@ -8,7 +8,7 @@ use Drupal\Core\TempStore\PrivateTempStoreFactory;
 /**
  * Handles user token storage.
  */
-abstract class UserTokensProviderAbstract implements UserTokensProviderInterface {
+abstract class AbstractUserTokensProvider {
   /**
    * User session storage.
    *
@@ -17,7 +17,7 @@ abstract class UserTokensProviderAbstract implements UserTokensProviderInterface
   protected PrivateTempStore $tempStore;
 
   /**
-   * Constructor of UserTokensProvider.
+   * Constructor of UserTokens.
    *
    * @param \Drupal\Core\TempStore\PrivateTempStoreFactory $temp_store_factory
    *   User session store factory.

@@ -7,7 +7,7 @@ use Drupal\Core\TempStore\PrivateTempStoreFactory;
 /**
  * Handles user token storage.
  */
-class RegisteredUserTokensProvider extends UserTokensProviderAbstract implements UserTokensProviderInterface {
+class RegisteredUserTokensProvider extends AbstractUserTokensProvider implements UserTokensProviderInterface {
 
   /**
    * Constructor of RegisteredUserTokensProvider.
