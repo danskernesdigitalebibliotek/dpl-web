@@ -40,10 +40,10 @@
             "type": "package",
             "package": {
                 "name": "danskernesdigitalebibliotek/dpl-react",
-                "version": "2024.17.0-rc1",
+                "version": "2024.17.0",
                 "type": "drupal-library",
                 "dist": {
-                    "url": "https://github.com/danskernesdigitalebibliotek/dpl-react/releases/download/branch-release/hermod-sprint-12/dist-release-hermod-sprint-12.zip",
+                    "url": "https://github.com/danskernesdigitalebibliotek/dpl-react/releases/download/2024.17.0/dist-2024-17-0-f17430fde77d3471d62b520157008cd16b164d25.zip",
                     "type": "zip"
                 },
                 "require": {
@@ -56,9 +56,9 @@
             "package": {
                 "name": "danskernesdigitalebibliotek/dpl-design-system",
                 "type": "drupal-library",
-                "version": "2024.17.0-rc1",
+                "version": "2024.17.0",
                 "dist": {
-                    "url": "https://github.com/danskernesdigitalebibliotek/dpl-design-system/releases/download/branch-release/hermod-sprint-12/dist-release-hermod-sprint-12.zip",
+                    "url": "https://github.com/danskernesdigitalebibliotek/dpl-design-system/releases/download/2024.17.0/dist-2024-17-0-273114be2012777935c25d074706ed6187a64e74.zip",
                     "type": "zip"
                 }
             }
@@ -88,8 +88,8 @@
         "composer/installers": "1.12.0",
         "cweagans/composer-patches": "1.7.3",
         "danskernesdigitalebibliotek/cms-api": "*",
-        "danskernesdigitalebibliotek/dpl-design-system": "2024.17.0-rc1",
-        "danskernesdigitalebibliotek/dpl-react": "2024.17.0-rc1",
+        "danskernesdigitalebibliotek/dpl-design-system": "2024.17.0",
+        "danskernesdigitalebibliotek/dpl-react": "2024.17.0",
         "danskernesdigitalebibliotek/fbs-client": "*",
         "dealerdirect/phpcodesniffer-composer-installer": "^0.7.1",
         "deoliveiralucas/array-keys-case-transform": "^1.1",
@@ -207,7 +207,10 @@
     },
     "extra": {
         "composer-exit-on-patch-failure": true,
-        "installer-types": ["bower-asset", "npm-asset"],
+        "installer-types": [
+            "bower-asset",
+            "npm-asset"
+        ],
         "installer-paths": {
             "web/themes/custom/novel/assets/{$name}": [
                 "danskernesdigitalebibliotek/dpl-design-system"
