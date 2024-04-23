@@ -5,12 +5,12 @@ namespace Drupal\dpl_login;
 use Drupal\Core\TempStore\PrivateTempStoreFactory;
 
 /**
- * Handles unregistered user token storage.
+ * Handles user token storage.
  */
-class UnregisteredUserTokensProvider extends AbstractUserTokensProvider implements UserTokensProviderInterface {
+class RegisteredUserTokensProvider extends AbstractUserTokensProvider implements UserTokensProviderInterface {
 
   /**
-   * Constructor of UnregisteredUserTokensProvider.
+   * Constructor of RegisteredUserTokensProvider.
    *
    * @param \Drupal\Core\TempStore\PrivateTempStoreFactory $temp_store_factory
    *   User session store factory.
@@ -23,7 +23,7 @@ class UnregisteredUserTokensProvider extends AbstractUserTokensProvider implemen
    * {@inheritdoc}
    */
   protected function getAccessTokenType(): AccessTokenType {
-    return AccessTokenType::UNREGISTERED_USER;
+    return AccessTokenType::USER;
   }
 
 }
