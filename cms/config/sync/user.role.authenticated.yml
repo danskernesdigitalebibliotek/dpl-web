@@ -3,10 +3,12 @@ langcode: en
 status: true
 dependencies:
   config:
+    - filter.format.webform_default
     - rest.resource.campaign.match
     - rest.resource.dpl_opening_hours_list
     - rest.resource.proxy-url
   module:
+    - filter
     - media
     - openapi
     - recurring_events
@@ -24,6 +26,7 @@ permissions:
   - 'restful get dpl_opening_hours_list'
   - 'restful get proxy-url'
   - 'restful post campaign:match'
+  - 'use text format webform_default'
   - 'view eventinstance entity'
   - 'view eventseries entity'
   - 'view media'
