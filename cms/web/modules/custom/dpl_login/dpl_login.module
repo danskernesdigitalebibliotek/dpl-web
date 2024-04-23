@@ -212,6 +212,8 @@ function _dpl_login_is_user_associated_with_agency(array $context) : bool {
 
 /**
  * Is the user registered in FBS?
+ *
+ * @todo Should be a part of the UserTokens service.
  */
 function _dpl_login_user_is_registered(AccessToken $token): bool {
   try {
@@ -233,6 +235,8 @@ function _dpl_login_user_is_registered(AccessToken $token): bool {
 
 /**
  * Helper function that returns Drupal logger object.
+ *
+ * @todo Should be a part of the UserTokens service.
  */
 function _dpl_login_get_authorization_logger(?AccessToken $token = NULL): LoggerInterface {
   // If the user is not registered we use a key that tells us
@@ -246,6 +250,8 @@ function _dpl_login_get_authorization_logger(?AccessToken $token = NULL): Logger
 
 /**
  * Helper function that returns the correct token provider.
+ *
+ * @todo Should be a part of the UserTokens service.
  */
 function _dpl_login_get_access_token_provider(AccessToken $token): UserTokensProviderInterface {
   if (!_dpl_login_user_is_registered($token)) {
@@ -257,6 +263,8 @@ function _dpl_login_get_access_token_provider(AccessToken $token): UserTokensPro
 
 /**
  * Delete all previous user tokens.
+ *
+ * @todo Should be a part of the UserTokens service.
  */
 function _dpl_login_delete_previous_user_tokens(): bool {
   $user_access_token_services = [
