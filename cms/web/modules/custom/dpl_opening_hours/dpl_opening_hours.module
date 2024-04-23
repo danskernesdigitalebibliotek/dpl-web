@@ -36,6 +36,11 @@ void {
         'opening-hours-heading-text' => t('Opening Hours', [], ['context' => 'Opening Hours']),
         'show-opening-hours-for-week-text' => t('Show opening hours for week', [], ['context' => 'Opening Hours']),
         'week-text' => t('Week', [], ['context' => 'Opening Hours']),
+        'library-is-closed-text' => t('The library is closed this day', [],
+          [
+            'context' =>
+            'Opening Hours',
+          ]),
       ] + DplReactAppsController::externalApiBaseUrls(),
     ];
   }

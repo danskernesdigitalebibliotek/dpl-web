@@ -2,6 +2,9 @@ docker-compose-yaml: docker-compose.yml
 
 project: dpl-cms-core
 
+ssh: 20.238.147.183:22
+api: https://api.lagoon.dplplat01.dpl.reload.dk/graphql
+
 tasks:
   post-rollout:
     - run:

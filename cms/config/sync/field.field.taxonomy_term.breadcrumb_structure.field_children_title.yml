@@ -1,0 +1,19 @@
+uuid: 55aa9fbe-f468-46f9-97d4-906ff437965a
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.taxonomy_term.field_children_title
+    - taxonomy.vocabulary.breadcrumb_structure
+id: taxonomy_term.breadcrumb_structure.field_children_title
+field_name: field_children_title
+entity_type: taxonomy_term
+bundle: breadcrumb_structure
+label: 'Children title'
+description: 'The title that is shown above the list of referenced content. Will not be shown, if there are no children displayed.'
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: string
