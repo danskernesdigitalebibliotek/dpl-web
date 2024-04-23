@@ -6,10 +6,10 @@ use Drupal\Core\Controller\ControllerBase;
 use Drupal\Core\Routing\TrustedRedirectResponse;
 use Drupal\Core\StringTranslation\StringTranslationTrait;
 use Drupal\Core\Url;
-use Drupal\dpl_login\AccessToken;
+use Drupal\dpl_login\AccessTokenType;
 use Drupal\dpl_login\Adgangsplatformen\Config;
 use Drupal\dpl_login\Exception\MissingConfigurationException;
-use Drupal\dpl_login\UserTokensProviderInterface;
+use Drupal\dpl_login\UserTokens;
 use Drupal\openid_connect\OpenIDConnectClaims;
 use Drupal\openid_connect\Plugin\OpenIDConnectClientInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
@@ -27,8 +27,7 @@ class DplLoginController extends ControllerBase {
    * {@inheritdoc}
    */
   public function __construct(
-    protected UserTokensProviderInterface $userTokensProvider,
-    protected UserTokensProviderInterface $unregisteredUserTokensProvider,
+    protected UserTokens $userTokens,
     protected Config $config,
     protected OpenIDConnectClientInterface $client,
     protected OpenIDConnectClaims $claims
@@ -45,7 +44,6 @@ class DplLoginController extends ControllerBase {
   public static function create(ContainerInterface $container) {
     return new static(
       $container->get('dpl_login.user_tokens'),
-      $container->get('dpl_login.unregistered_user_tokens'),
       $container->get('dpl_login.adgangsplatformen.config'),
       $container->get('dpl_login.adgangsplatformen.client'),
       $container->get('openid_connect.claims')
@@ -66,8 +64,7 @@ class DplLoginController extends ControllerBase {
       throw new MissingConfigurationException('Adgangsplatformen plugin config variable logout_endpoint is missing');
     }
 
-    $access_token = $this->getAccessToken();
-
+    $access_token = $this->userTokens->getCurrent();
     // Log out user in Drupal.
     // We do this regardless whether it is possible to logout remotely or not.
     // We do not want the user to get stuck on the site in a logged in state.
@@ -138,11 +135,12 @@ class DplLoginController extends ControllerBase {
    */
   public function loginHandler(Request $request): TrustedRedirectResponse {
     if ($current_path = (string) $request->query->get('current-path')) {
-      if ($this->unregisteredUserTokensProvider->getAccessToken()) {
+      $accessToken = $this->userTokens->getCurrent();
+      if ($accessToken && $accessToken->type === AccessTokenType::UNREGISTERED_USER) {
         $url = Url::fromRoute('dpl_patron_reg.create')->toString(TRUE);
         return new TrustedRedirectResponse($url->getGeneratedUrl());
       }
-      if ($this->userTokensProvider->getAccessToken()) {
+      if ($accessToken && $accessToken->type === AccessTokenType::USER) {
         $url = Url::fromUri('internal:/' . ltrim($current_path, '/'))->toString(TRUE);
         return new TrustedRedirectResponse($url->getGeneratedUrl());
       }
@@ -150,22 +148,6 @@ class DplLoginController extends ControllerBase {
 
     $url = Url::fromRoute('<front>', [], ["absolute" => TRUE])->toString(TRUE);
     return new TrustedRedirectResponse($url->getGeneratedUrl());
-  }
-
-  /**
-   * Get access token. If user is not registered, get unregistered user token.
-   *
-   * @todo Should be moved to separate service that can be used througut the application.
-   */
-  protected function getAccessToken(): ?AccessToken {
-    if ($access_token = $this->unregisteredUserTokensProvider->getAccessToken()) {
-      return $access_token;
-    }
-    if ($access_token = $this->userTokensProvider->getAccessToken()) {
-      return $access_token;
-    }
-
-    return NULL;
   }
 
 }
