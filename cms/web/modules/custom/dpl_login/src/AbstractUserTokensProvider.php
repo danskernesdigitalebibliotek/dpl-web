@@ -38,8 +38,7 @@ abstract class AbstractUserTokensProvider {
    * {@inheritdoc}
    */
   public function getAccessToken(): ?AccessToken {
-    $token = $this->tempStore->get('access_token');
-    return $token;
+    return $this->tempStore->get('access_token');
   }
 
   /**
