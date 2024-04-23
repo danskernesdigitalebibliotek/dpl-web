@@ -2,9 +2,9 @@
 
 namespace Drupal\dpl_opening_hours\Mapping;
 
-use DanskernesDigitaleBibliotek\CMS\Api\Model\DplOpeningHoursCreatePOSTRequest;
-use DanskernesDigitaleBibliotek\CMS\Api\Model\DplOpeningHoursListGET200ResponseInner;
-use DanskernesDigitaleBibliotek\CMS\Api\Model\DplOpeningHoursListGET200ResponseInnerCategory;
+use DanskernesDigitaleBibliotek\CMS\Api\Model\DplOpeningHoursCreatePOSTRequest as OpeningHoursRequest;
+use DanskernesDigitaleBibliotek\CMS\Api\Model\DplOpeningHoursListGET200ResponseInner as OpeningHoursResponse;
+use DanskernesDigitaleBibliotek\CMS\Api\Model\DplOpeningHoursListGET200ResponseInnerCategory as OpeningHoursCategory;
 use Drupal\dpl_opening_hours\Model\OpeningHoursInstance;
 use Drupal\node\NodeStorageInterface;
 use Drupal\taxonomy\TermInterface;
@@ -28,7 +28,7 @@ class OpeningHoursMapper {
   /**
    * Map an OpenAPI request to a value object.
    */
-  public function fromRequest(DplOpeningHoursCreatePOSTRequest $request) : OpeningHoursInstance {
+  public function fromRequest(OpeningHoursRequest $request) : OpeningHoursInstance {
     $branch = $this->branchStorage->load($request->getBranchId());
     if (!$branch || $branch->bundle() !== "branch") {
       throw new \InvalidArgumentException("Invalid branch id '{$request->getBranchId()}'");
@@ -66,16 +66,16 @@ class OpeningHoursMapper {
   /**
    * Map a value object to an OpenAPI response.
    */
-  public function toResponse(OpeningHoursInstance $instance) : DplOpeningHoursListGET200ResponseInner {
+  public function toResponse(OpeningHoursInstance $instance) : OpeningHoursResponse {
     $colorField = $instance->categoryTerm->get('field_opening_hours_color')->first();
     if (!$colorField) {
       throw new \LogicException('Unable to retrieve color');
     }
-    $category = (new DplOpeningHoursListGET200ResponseInnerCategory())
+    $category = (new OpeningHoursCategory())
       ->setTitle((string) $instance->categoryTerm->label())
       ->setColor($colorField->getString());
 
-    return (new DplOpeningHoursListGET200ResponseInner())
+    return (new OpeningHoursResponse())
       ->setId($instance->id)
       ->setBranchId(intval($instance->branch->id()))
       ->setCategory($category)

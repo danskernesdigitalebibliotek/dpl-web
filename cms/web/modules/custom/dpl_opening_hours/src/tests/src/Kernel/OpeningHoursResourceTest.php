@@ -2,9 +2,9 @@
 
 namespace Drupal\Tests\dpl_opening_hours\Kernel;
 
-use DanskernesDigitaleBibliotek\CMS\Api\Model\DplOpeningHoursCreatePOSTRequest;
-use DanskernesDigitaleBibliotek\CMS\Api\Model\DplOpeningHoursListGET200ResponseInner;
-use DanskernesDigitaleBibliotek\CMS\Api\Model\DplOpeningHoursListGET200ResponseInnerCategory;
+use DanskernesDigitaleBibliotek\CMS\Api\Model\DplOpeningHoursCreatePOSTRequest as OpeningHoursRequest;
+use DanskernesDigitaleBibliotek\CMS\Api\Model\DplOpeningHoursListGET200ResponseInner as OpeningHoursResponse;
+use DanskernesDigitaleBibliotek\CMS\Api\Model\DplOpeningHoursListGET200ResponseInnerCategory as OpeningHoursCategory;
 use Drupal\Core\DependencyInjection\ContainerBuilder;
 use Drupal\Core\Field\FieldItemListInterface;
 use Drupal\Core\TypedData\TypedDataInterface;
@@ -151,7 +151,7 @@ class OpeningHoursResourceTest extends KernelTestBase {
     $this->assertNotNull($id);
 
     $updateResource = OpeningHoursUpdateResource::create($this->container, [], '', '');
-    $updateData = (new DplOpeningHoursCreatePOSTRequest())
+    $updateData = (new OpeningHoursRequest())
       ->setId($id)
       ->setDate(new DateTime('tomorrow'))
       ->setStartTime("10:00")
@@ -166,7 +166,7 @@ class OpeningHoursResourceTest extends KernelTestBase {
 
     $updateResponse = $updateResource->patch($id, $updateRequest);
     /** @var \DanskernesDigitaleBibliotek\CMS\Api\Model\DplOpeningHoursListGET200ResponseInner $updateData */
-    $updateData = $serializer->deserialize($updateResponse->getContent(), DplOpeningHoursListGET200ResponseInner::class, 'application/json');
+    $updateData = $serializer->deserialize($updateResponse->getContent(), OpeningHoursResponse::class, 'application/json');
 
     $this->assertEquals($updateData->getId(), $updateData->getId(), "Opening hour ids should not change across updates");
     $this->assertDateEquals(new DateTime("tomorrow"), $updateData->getDate(), "Opening hour dates should change when updated");
@@ -201,22 +201,22 @@ class OpeningHoursResourceTest extends KernelTestBase {
     string $endTime,
     string $categoryTitle,
     int $branchId
-  ): DplOpeningHoursListGET200ResponseInner {
+  ): OpeningHoursResponse {
     $createResource = OpeningHoursCreateResource::create($this->container, [], '', '');
 
     /** @var \DanskernesDigitaleBibliotek\CMS\Api\Service\JmsSerializer $serializer */
     $serializer = $this->container->get('dpl_opening_hours.serializer');
 
-    $requestData = (new DplOpeningHoursCreatePOSTRequest())
+    $requestData = (new OpeningHoursRequest())
       ->setDate($date)
       ->setStartTime($startTime)
       ->setEndTime($endTime)
-      ->setCategory((new DplOpeningHoursListGET200ResponseInnerCategory())->setTitle($categoryTitle))
+      ->setCategory((new OpeningHoursCategory())->setTitle($categoryTitle))
       ->setBranchId($branchId);
     $request = new Request(content: $serializer->serialize($requestData, 'application/json'));
     $response = $createResource->post($request);
     /** @var \DanskernesDigitaleBibliotek\CMS\Api\Model\DplOpeningHoursListGET200ResponseInner $responseData */
-    $responseData = $serializer->deserialize($response->getContent(), DplOpeningHoursListGET200ResponseInner::class, 'application/json');
+    $responseData = $serializer->deserialize($response->getContent(), OpeningHoursResponse::class, 'application/json');
     return $responseData;
   }
 
@@ -239,7 +239,7 @@ class OpeningHoursResourceTest extends KernelTestBase {
     /** @var \DanskernesDigitaleBibliotek\CMS\Api\Service\JmsSerializer $serializer */
     $serializer = $this->container->get('dpl_opening_hours.serializer');
     /** @var \DanskernesDigitaleBibliotek\CMS\Api\Model\DplOpeningHoursListGET200ResponseInner[] $responseData */
-    $responseData = $serializer->deserialize($response->getContent(), 'array<' . DplOpeningHoursListGET200ResponseInner::class . '>', 'application/json');
+    $responseData = $serializer->deserialize($response->getContent(), 'array<' . OpeningHoursResponse::class . '>', 'application/json');
     return $responseData;
   }
 
