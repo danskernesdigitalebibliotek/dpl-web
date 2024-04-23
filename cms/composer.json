@@ -92,6 +92,7 @@
         "drupal/address": "^1.0",
         "drupal/admin_toolbar": "^3.4",
         "drupal/administerusersbyrole": "^3.4",
+        "drupal/azure_mailer": "^2.0@beta",
         "drupal/color_field": "^3.0",
         "drupal/config_ignore": "^2.4",
         "drupal/config_translation_po": "^1.0",
