@@ -112,6 +112,7 @@
         "drupal/gin": "^3.0@RC",
         "drupal/gin_toolbar": "^1.0@RC",
         "drupal/handy_cache_tags": "^1.4",
+        "drupal/honeypot": "^2.1",
         "drupal/job_scheduler": "^4.0",
         "drupal/jsonlog": "^4.0",
         "drupal/language_neutral_aliases": "^3.1",

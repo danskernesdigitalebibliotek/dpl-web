@@ -1,0 +1,35 @@
+uuid: 730ee896-f421-4b4f-af86-f68a7d8328d9
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.field.taxonomy_term.webform_email_categories.field_email
+    - taxonomy.vocabulary.webform_email_categories
+id: taxonomy_term.webform_email_categories.default
+targetEntityType: taxonomy_term
+bundle: webform_email_categories
+mode: default
+content:
+  field_email:
+    type: email_default
+    weight: 1
+    region: content
+    settings:
+      placeholder: ''
+      size: 60
+    third_party_settings: {  }
+  name:
+    type: string_textfield
+    weight: 0
+    region: content
+    settings:
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+hidden:
+  description: true
+  langcode: true
+  path: true
+  publish_on: true
+  status: true
+  unpublish_on: true
