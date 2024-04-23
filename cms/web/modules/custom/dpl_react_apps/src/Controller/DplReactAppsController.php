@@ -405,6 +405,7 @@ class DplReactAppsController extends ControllerBase {
       'reservations-for-this-material-text' => $this->t('reservations for this material', [], ['context' => 'Work Page']),
       'reserve-book-text' => $this->t('Reserve book', [], ['context' => 'Work Page']),
       'reserve-text' => $this->t('Reserve', [], ['context' => 'Work Page']),
+      'reserve-with-material-type-text' => $this->t('Reserve @materialType', [], ['context' => 'Work Page']),
       'reviews-text' => $this->t('Reviews', [], ['context' => 'Work Page']),
       'scope-text' => $this->t('Scope', [], ['context' => 'Work Page']),
       'see-online-text' => $this->t('See online', [], ['context' => 'Work Page']),

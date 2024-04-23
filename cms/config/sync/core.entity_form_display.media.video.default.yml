@@ -7,6 +7,8 @@ dependencies:
     - media.type.video
   module:
     - media
+    - path
+    - select2_multicheck
 id: media.video.default
 targetEntityType: media
 bundle: video
@@ -47,14 +49,11 @@ content:
       display_label: true
     third_party_settings: {  }
   uid:
-    type: entity_reference_autocomplete
+    type: select2_multicheck
     weight: 5
     region: content
     settings:
-      match_operator: CONTAINS
-      match_limit: 10
-      size: 60
-      placeholder: ''
+      width: 100%
     third_party_settings: {  }
 hidden:
   name: true

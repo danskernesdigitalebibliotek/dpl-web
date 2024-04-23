@@ -268,7 +268,7 @@ display:
         options:
           view_modes:
             'entity:eventinstance':
-              default: list_teaser
+              default: list_teaser_stacked_parent
       query:
         type: search_api_query
         options:

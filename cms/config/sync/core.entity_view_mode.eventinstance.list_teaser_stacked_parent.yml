@@ -1,0 +1,10 @@
+uuid: 29cab4e1-3170-4434-a5ff-15d894661461
+langcode: en
+status: true
+dependencies:
+  module:
+    - recurring_events
+id: eventinstance.list_teaser_stacked_parent
+label: 'List teaser stacked parent'
+targetEntityType: eventinstance
+cache: true

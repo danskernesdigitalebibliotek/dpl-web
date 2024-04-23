@@ -37,7 +37,7 @@ content:
     settings:
       link: true
     third_party_settings: {  }
-    weight: 50
+    weight: 16
     region: content
   date:
     type: date_range_without_time
@@ -76,7 +76,7 @@ content:
     weight: 12
     region: content
   event_description:
-    type: text_default
+    type: basic_string
     label: hidden
     settings: {  }
     third_party_settings: {  }
@@ -175,7 +175,7 @@ content:
     label: hidden
     settings: {  }
     third_party_settings: {  }
-    weight: 16
+    weight: 15
     region: content
   title:
     type: string
