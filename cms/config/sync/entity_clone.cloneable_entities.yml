@@ -1,6 +1,5 @@
 cloneable_entities:
   - node
   - path_alias
-  - eventseries
-  - paragraph
   - redirect
+  - paragraph
