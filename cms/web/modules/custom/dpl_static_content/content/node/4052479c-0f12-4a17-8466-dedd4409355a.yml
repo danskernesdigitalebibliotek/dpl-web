@@ -3,7 +3,7 @@ _meta:
   entity_type: node
   uuid: 4052479c-0f12-4a17-8466-dedd4409355a
   bundle: page
-  default_langcode: en
+  default_langcode: da
 default:
   revision_uid:
     -
@@ -57,7 +57,7 @@ default:
           entity_type: paragraph
           uuid: 65d0b497-d64b-4744-a992-84212f55aa31
           bundle: text_body
-          default_langcode: en
+          default_langcode: da
         default:
           status:
             -
