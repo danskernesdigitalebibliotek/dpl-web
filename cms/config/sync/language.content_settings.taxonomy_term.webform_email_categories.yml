@@ -1,0 +1,11 @@
+uuid: db31e630-0c41-4a67-a420-4b86a82381a8
+langcode: en
+status: true
+dependencies:
+  config:
+    - taxonomy.vocabulary.webform_email_categories
+id: taxonomy_term.webform_email_categories
+target_entity_type_id: taxonomy_term
+target_bundle: webform_email_categories
+default_langcode: da
+language_alterable: false
