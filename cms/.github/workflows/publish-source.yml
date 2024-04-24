@@ -36,7 +36,7 @@ jobs:
       - name: Build and publish source
         run: |
           echo "Publishing tag: $RELEASE_TAG"
-          RELEASE_IMAGE_TAG=$RELEASE_TAG task source:deploy
+          RELEASE_IMAGE_TAG=$RELEASE_TAG RELEASE_IMAGE_REGISTRY=ghcr.io/${{ github.repository_owner}} task source:deploy
         if: ${{ steps.detect_tag.outputs.IS_RELEASE_TAG == 'true' }}
         env:
           CR_PAT: ${{ secrets.GITHUB_TOKEN }}
