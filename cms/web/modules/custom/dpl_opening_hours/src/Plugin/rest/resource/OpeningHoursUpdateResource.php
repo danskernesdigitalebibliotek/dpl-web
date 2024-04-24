@@ -68,9 +68,8 @@ final class OpeningHoursUpdateResource extends OpeningHoursResourceBase {
         throw new NotFoundHttpException("Invalid instance id: '{$id}'");
       }
 
-      $updatedInstance = $this->mapper->fromRequest($requestData);
-      $this->repository->upsert($updatedInstance);
-
+      $updateInstance = $this->mapper->fromRequest($requestData);
+      $updatedInstance = $this->repository->update($updateInstance);
       $responseData = $this->mapper->toResponse($updatedInstance);
       return new Response($this->serializer->serialize($responseData, $this->serializerFormat($request)));
     }

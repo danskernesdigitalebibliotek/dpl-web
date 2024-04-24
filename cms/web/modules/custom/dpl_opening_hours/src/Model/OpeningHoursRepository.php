@@ -5,12 +5,15 @@ namespace Drupal\dpl_opening_hours\Model;
 use Drupal\Core\Database\Connection;
 use Drupal\dpl_opening_hours\Mapping\OpeningHoursRepetitionType;
 use Drupal\dpl_opening_hours\Model\Repetition\NoRepetition;
+use Drupal\dpl_opening_hours\Model\Repetition\WeeklyRepetition;
 use Drupal\node\NodeInterface;
 use Drupal\node\NodeStorageInterface;
 use Drupal\taxonomy\TermInterface;
 use Drupal\taxonomy\TermStorageInterface;
 use Psr\Log\LoggerInterface;
 use Safe\DateTimeImmutable;
+use function Safe\json_decode as json_decode;
+use function Safe\json_encode as json_encode;
 
 /**
  * Repository for managing persistence of opening hours instance value objects.
@@ -93,47 +96,116 @@ class OpeningHoursRepository {
   }
 
   /**
-   * Insert or update a single opening hours instance.
+   * Insert an opening hours instance.
    *
-   * Decision on whether to insert or update depends on whether the instance
-   * has an id. If the instance does not, and it is inserted then it will
-   * be updated with the resulting id.
-   *
-   * @return OpeningHoursInstance
-   *   The updated instance
+   * @return OpeningHoursInstance[]
+   *   The created instances
    */
-  public function upsert(OpeningHoursInstance $instance): OpeningHoursInstance {
-    $data = $this->toFields($instance);
+  public function insert(OpeningHoursInstance $instance): array {
+    $repetition = $instance->repetition;
 
-    if ($instance->repetition->id === NULL) {
-      $type = match ($instance->repetition::class) {
-        NoRepetition::class => OpeningHoursRepetitionType::None,
-        default => OpeningHoursRepetitionType::None,
-      };
-      $repetition_id = $this->connection->insert(self::REPETITION_TABLE)
-        ->fields(['type' => $type->value])
+    // Create the initial repetition type.
+    $type = match ($repetition::class) {
+      NoRepetition::class => OpeningHoursRepetitionType::None,
+      WeeklyRepetition::class => OpeningHoursRepetitionType::Weekly,
+      default => throw new \InvalidArgumentException("Unknown repetition type " . $repetition::class),
+    };
+    $data = [];
+    if ($repetition::class === WeeklyRepetition::class) {
+      $data['endDate'] = $repetition->endDate;
+    }
+
+    $repetition_id = $this->connection->insert(self::REPETITION_TABLE)
+      ->fields([
+        'type' => $type->value,
+        'data' => json_encode($data),
+      ])
+      ->execute();
+    $repetition_id = intval($repetition_id);
+
+    $storedRepetition = match ($repetition::class) {
+      NoRepetition::class => new NoRepetition($repetition_id),
+      WeeklyRepetition::class => new WeeklyRepetition($repetition_id, $repetition->endDate),
+      default => throw new \InvalidArgumentException("Unknown repetition type " . $repetition::class),
+    };
+
+    $repetitions = match ($storedRepetition::class) {
+      NoRepetition::class => [$instance->startTime],
+      WeeklyRepetition::class => new \DatePeriod($instance->startTime, new \DateInterval("P1W"), $storedRepetition->endDate),
+      default => throw new \InvalidArgumentException("Unknown repetition type " . $repetition::class),
+    };
+
+    $instances = [];
+    // Generate an opening hours per repetition.
+    foreach ($repetitions as $date) {
+      // We would normally use \Safe\$updatedOpeningHours here but there seems
+      // to be a bug in the project when using add() so we stick with regular
+      // \DateTimeImmutable.
+      $startDate = \DateTimeImmutable::createFromInterface($date);
+      // Calculate the difference from the start date of the repetition to the
+      // current instance so we can adjust the end date accordingly.
+      // For opening hours without repetition there is only once instance and
+      // the difference/adjustment will be 0.
+      $dateShift = $instance->startTime->diff($startDate);
+      $endDate = \DateTimeImmutable::createFromInterface($instance->endTime)->add($dateShift);
+
+      $repeatedInstance = new OpeningHoursInstance(
+        NULL,
+        $instance->branch,
+        $instance->categoryTerm,
+        $startDate,
+        $endDate,
+        $storedRepetition,
+      );
+      $data = $this->toFields($repeatedInstance);
+
+      $this->connection->insert(self::INSTANCE_TABLE)
+        ->fields(array_keys($data), array_values($data))
         ->execute();
-    }
-    else {
-      $repetition_id = $instance->repetition->id;
-    }
-    $data['repetition_id'] = $repetition_id;
-    $repetiton = new NoRepetition($repetition_id);
+      $id = intval($this->connection->lastInsertId());
 
-    $this->connection->upsert(self::INSTANCE_TABLE)
-      ->key('id')
-      ->fields(array_keys($data), array_values($data))
+      $instances[] = new OpeningHoursInstance(
+        $id,
+        $repeatedInstance->branch,
+        $repeatedInstance->categoryTerm,
+        $repeatedInstance->startTime,
+        $repeatedInstance->endTime,
+        $storedRepetition,
+      );
+    }
+    return $instances;
+  }
+
+  /**
+   * Update a single opening hours instance.
+   */
+  public function update(OpeningHoursInstance $instance): OpeningHoursInstance {
+    // Create a new repetition for the instance. For now this will always
+    // be no repetition.
+    $repetition_id = $this->connection->insert(self::REPETITION_TABLE)
+      ->fields([
+        'type' => OpeningHoursRepetitionType::None->value,
+        'data' => json_encode([]),
+      ])
+      ->execute();
+    $repetition_id = intval($repetition_id);
+
+    $data = $this->toFields($instance);
+    $data['repetition_id'] = $repetition_id;
+
+    // For now this intentionally does not handle repetitions.
+    $this->connection->update(self::INSTANCE_TABLE)
+      ->fields($data)
+      ->condition('id', $instance->id)
       ->execute();
 
-    $id = $instance->id ?? intval($this->connection->lastInsertId());
-
     return new OpeningHoursInstance(
-      $id,
+      $instance->id,
       $instance->branch,
       $instance->categoryTerm,
       $instance->startTime,
       $instance->endTime,
-      $repetiton,
+      new NoRepetition($repetition_id)
     );
   }
 
@@ -183,13 +255,36 @@ class OpeningHoursRepository {
       throw new \OutOfBoundsException("Invalid category term id {$data['category_tid']} for opening hours instance {$data['category_tid']}");
     }
 
+    $result = $this->connection->select(self::REPETITION_TABLE)
+      ->fields(self::REPETITION_TABLE, ['id', 'type', 'data'])
+      ->condition('id', $data['repetition_id'])
+      ->execute();
+    if (!$result) {
+      throw new \OutOfBoundsException("Unable to retrieve repetition for opening hours instance {$data['id']}");
+    }
+    $repetitionData = $result->fetchAssoc();
+
+    if (!is_array($repetitionData)) {
+      throw new \OutOfBoundsException("Unable to retrieve repetition for opening hours instance {$data['id']}");
+    }
+    if ($repetitionData['type'] == OpeningHoursRepetitionType::Weekly->value) {
+      $weeklyData = json_decode($repetitionData['data'], TRUE);
+      $repetition = new WeeklyRepetition($repetitionData["id"], new DateTimeImmutable($weeklyData["endDate"]["date"]));
+    }
+    elseif ($repetitionData['type'] == OpeningHoursRepetitionType::None->value) {
+      $repetition = new NoRepetition($repetitionData["id"]);
+    }
+    else {
+      throw new \OutOfBoundsException("Invalid repetition type '{$repetitionData["type"]}' for id '{$repetitionData['id']}'");
+    }
+
     return new OpeningHoursInstance(
       $data['id'],
       $branch,
       $categoryTerm,
       new DateTimeImmutable($data['date'] . " " . $data['start_time']),
       new DateTimeImmutable($data['date'] . " " . $data['end_time']),
-      new NoRepetition()
+      $repetition
     );
   }
 
@@ -207,6 +302,7 @@ class OpeningHoursRepository {
       'date' => $object->startTime->format('Y-m-d'),
       'start_time' => $object->startTime->format('H:i'),
       'end_time' => $object->endTime->format('H:i'),
+      'repetition_id' => $object->repetition->id,
     ];
   }
 

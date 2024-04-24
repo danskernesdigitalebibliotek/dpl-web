@@ -58,7 +58,7 @@ function dpl_example_content_modules_installed(array $modules) : void {
       $date->setTime(rand(15, 20), 0),
       new NoRepetition()
     );
-    $repository->upsert($instance);
+    $repository->insert($instance);
     $num_instances++;
   }
 
