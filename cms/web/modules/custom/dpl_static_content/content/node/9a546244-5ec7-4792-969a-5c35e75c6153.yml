@@ -4,8 +4,6 @@ _meta:
   uuid: 9a546244-5ec7-4792-969a-5c35e75c6153
   bundle: page
   default_langcode: da
-  depends:
-    e00e1460-169e-468d-9835-d664f06d0969: file
 default:
   revision_uid:
     -
@@ -34,13 +32,6 @@ default:
   entity_clone_template_active:
     -
       value: false
-  entity_clone_template_image:
-    -
-      entity: e00e1460-169e-468d-9835-d664f06d0969
-      alt: ''
-      title: ''
-      width: 640
-      height: 443
   metatag:
     -
       tag: meta
@@ -50,6 +41,8 @@ default:
   path:
     -
       alias: /pausefunktion
+      langcode: und
+      pathauto: 1
   field_display_titles:
     -
       value: true
@@ -75,6 +68,9 @@ default:
           behavior_settings:
             -
               value: {  }
+          revision_translation_affected:
+            -
+              value: true
           field_body:
             -
               value: '<p>Skal du på ferie, kan du stadig holde din plads i reserveringskøen.</p><p>Hvis du ikke har mulighed for at komme og hente dine reserveringer i en periode, kan du angive en pauseperiode. Det betyder, at dine reserveringer bliver sat på pause.</p><p>Fordelen for dig er, at du undgår at komme bag i køen, hvis du ikke kan nå at hente dine reserveringer. I stedet bliver du sprunget over i køen, indtil din pauseperiode udløber.</p><p>Reserveringspausen gælder kun de reserveringer, vi ikke allerede har gjort klar til dig, og kun fysiske materialer.</p><p><strong>OBS: Denne service gælder for alle reserveringer på bibliotekets egne materialer, men ikke for de materialer, der skaffes hjem fra andre biblioteker.</strong></p><p>Sådan sætter du dine reserveringer på pause:</p><ol><li>Log ind på hjemmesiden</li><li>Tryk på brugerikonet så brugermenuen åbner</li><li>Tryk på <em>Reserveringer</em></li><li>Under <em>Sæt dine reserveringer på pause</em> kan du vælge en fraværsperiode. Vær opmærksom på at begge dage er omfanget af perioden</li><li>Tryk Gem for at gemme dine valg.</li></ol>'
