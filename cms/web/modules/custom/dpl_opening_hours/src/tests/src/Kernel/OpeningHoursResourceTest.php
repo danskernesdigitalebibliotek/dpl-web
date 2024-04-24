@@ -123,10 +123,10 @@ class OpeningHoursResourceTest extends KernelTestBase {
    * Test that opening hours filters work.
    */
   public function testListFilters(): void {
-    $this->createOpeningHours(new DateTime("yesterday"), "09:00", "17:00", "Open", 1);
-    $this->createOpeningHours(new DateTime("now"), "09:00", "17:00", "Open", 1);
-    $this->createOpeningHours(new DateTime("tomorrow"), "09:00", "17:00", "Open", 1);
-    $this->createOpeningHours(new DateTime("tomorrow"), "09:00", "17:00", "Open", 2);
+    $this->createOpeningHours(new DateTime("yesterday"), branchId: 1);
+    $this->createOpeningHours(new DateTime("now"), branchId: 1);
+    $this->createOpeningHours(new DateTime("tomorrow"), branchId: 1);
+    $this->createOpeningHours(new DateTime("tomorrow"), branchId: 2);
 
     $openingHoursByBranch = $this->listOpeningHours(branchId: 1);
     $this->assertCount(3, $openingHoursByBranch);
@@ -144,10 +144,10 @@ class OpeningHoursResourceTest extends KernelTestBase {
    * Test creation of multiple opening hours.
    */
   public function testMultipleCreation(): void {
-    $response1Data = $this->createOpeningHours(new DateTime(), "09:00", "17:00", "Open", 1);
+    $response1Data = $this->createOpeningHours();
     $responseOpeningHours1 = reset($response1Data);
     $this->assertNotEmpty($responseOpeningHours1);
-    $response2Data = $this->createOpeningHours(new DateTime(), "09:00", "17:00", "Open", 1);
+    $response2Data = $this->createOpeningHours();
     $responseOpeningHours2 = reset($response2Data);
     $this->assertNotEmpty($responseOpeningHours2);
 
@@ -170,12 +170,8 @@ class OpeningHoursResourceTest extends KernelTestBase {
     ];
 
     $createdOpeningHours = $this->createOpeningHours(
-      $startDate,
-      "09:00",
-      "17:00",
-      "Open",
-      1,
-      (new DplOpeningHoursCreatePOSTRequestRepetition())
+      date: $startDate,
+      repetition: (new DplOpeningHoursCreatePOSTRequestRepetition())
         ->setType(OpeningHoursRepetitionType::Weekly->value)
         ->setWeeklyData((new DplOpeningHoursListGET200ResponseInnerRepetitionWeeklyData())->setEndDate($endDate))
     );
@@ -220,7 +216,7 @@ class OpeningHoursResourceTest extends KernelTestBase {
    * Test that an opening hours instance can be updated.
    */
   public function testUpdate(): void {
-    $createdData = $this->createOpeningHours(new DateTime(), '09:00', '17:00', 'Open', 1);
+    $createdData = $this->createOpeningHours();
     $createdOpeningHours = reset($createdData);
     $this->assertNotEmpty($createdOpeningHours);
 
@@ -266,12 +262,8 @@ class OpeningHoursResourceTest extends KernelTestBase {
     $endDate = new DateTime("+2weeks");
 
     $createdOpeningHours = $this->createOpeningHours(
-      $startDate,
-      "09:00",
-      "17:00",
-      "Open",
-      1,
-      (new DplOpeningHoursCreatePOSTRequestRepetition())
+      date: $startDate,
+      repetition: (new DplOpeningHoursCreatePOSTRequestRepetition())
         ->setType(OpeningHoursRepetitionType::Weekly->value)
         ->setWeeklyData((new DplOpeningHoursListGET200ResponseInnerRepetitionWeeklyData())->setEndDate($endDate))
     );
@@ -319,7 +311,7 @@ class OpeningHoursResourceTest extends KernelTestBase {
    * Test that an opening hours instance can be deleted.
    */
   public function testDelete(): void {
-    $createdData = $this->createOpeningHours(new DateTime(), '09:00', '17:00', 'Open', 1);
+    $createdData = $this->createOpeningHours();
     $createdOpeningHours = reset($createdData);
     $this->assertNotEmpty($createdOpeningHours);
 
@@ -343,11 +335,7 @@ class OpeningHoursResourceTest extends KernelTestBase {
 
     $createdOpeningHours = $this->createOpeningHours(
       $startDate,
-      "09:00",
-      "17:00",
-      "Open",
-      1,
-      (new DplOpeningHoursCreatePOSTRequestRepetition())
+      repetition: (new DplOpeningHoursCreatePOSTRequestRepetition())
         ->setType(OpeningHoursRepetitionType::Weekly->value)
         ->setWeeklyData((new DplOpeningHoursListGET200ResponseInnerRepetitionWeeklyData())->setEndDate($endDate))
     );
@@ -373,15 +361,18 @@ class OpeningHoursResourceTest extends KernelTestBase {
   /**
    * Helper function for creating opening hours.
    *
+   * Default values for arguments are for test cases where the actual date is
+   * not relevant.
+   *
    * @return \DanskernesDigitaleBibliotek\CMS\Api\Model\DplOpeningHoursListGET200ResponseInner[]
    *   The created opening hours.
    */
   protected function createOpeningHours(
-    \DateTime $date,
-    string $startTime,
-    string $endTime,
-    string $categoryTitle,
-    int $branchId,
+    \DateTime $date = new DateTime("now"),
+    string $startTime = "09:00",
+    string $endTime = "17:00",
+    string $categoryTitle = "Open",
+    int $branchId = 1,
     ?OpeningHoursRepetitionRequest $repetition = NULL,
   ): array {
     $createResource = OpeningHoursCreateResource::create($this->container, [], '', '');
