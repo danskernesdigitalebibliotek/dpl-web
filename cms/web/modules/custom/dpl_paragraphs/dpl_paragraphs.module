@@ -304,9 +304,36 @@ function dpl_paragraphs_preprocess_paragraph__material_grid_manual(array &$varia
 }
 
 /**
+ * Implements hook_preprocess_paragraph__TYPE() for paragraph type 'user_registration_linklist'.
+ *
+ * This function checks if the current paragraph has any sibling paragraphs
+ * of type 'user_registration_section', and if so, it retrieves
+ * 'user_registration_items' from that sibling to create navigation
+ * anchor links.
+ */
+function dpl_paragraphs_preprocess_paragraph__user_registration_linklist(array &$variables): void {
+  $paragraph = $variables['paragraph'];
+
+  if ($paragraph->getParentEntity() && $paragraph->getParentEntity()->hasField('field_paragraphs')) {
+    $parent = $paragraph->getParentEntity();
+    $siblings = $parent->get('field_paragraphs')->referencedEntities();
+
+    foreach ($siblings as $sibling) {
+      if ($sibling->bundle() === 'user_registration_section') {
+        if ($sibling->hasField('field_user_registration_items')) {
+          $user_registration_items = $sibling->get('field_user_registration_items')->referencedEntities();
+          $variables['anchor_links'] = dpl_paragraphs_create_navigation_anchor_links($user_registration_items);
+        }
+      }
+    }
+  }
+}
+
+/**
  * Implements hook_preprocess_paragraph__TYPE().
  *
- * Prepares variables for paragraph--user-registration-section.html.twig.
+ * This function checks if there is a 'user_registration_linklist' paragraph
+ * among the siblings. If no such sibling is found, it generates 'anchor_links'.
  */
 function dpl_paragraphs_preprocess_paragraph__user_registration_section(array &$variables): void {
 
@@ -316,18 +343,47 @@ function dpl_paragraphs_preprocess_paragraph__user_registration_section(array &$
     return;
   }
 
+  if ($user_registration_section->getParentEntity() && $user_registration_section->getParentEntity()->hasField('field_paragraphs')) {
+    $parent = $user_registration_section->getParentEntity();
+    $siblings = $parent->get('field_paragraphs')->referencedEntities();
+
+    foreach ($siblings as $sibling) {
+      // Check if any sibling is of type 'user_registration_linklist'.
+      if ($sibling->bundle() === 'user_registration_linklist') {
+        return;
+      }
+    }
+  }
+
   $user_registration_items = $user_registration_section->get('field_user_registration_items')->referencedEntities();
-  $variables['anchor_links'] = [];
+  $variables['anchor_links'] = dpl_paragraphs_create_navigation_anchor_links($user_registration_items);
+}
+
+/**
+ * Creates anchor links for user_registration_items.
+ *
+ * @param \Drupal\paragraphs\Entity\Paragraph[] $paragraphs
+ *   An array of paragraph entities to process.
+ *
+ * @return array<array{title: string, anchor_id: string}>
+ *   An array of anchor link information including titles and anchor IDs.
+ */
+function dpl_paragraphs_create_navigation_anchor_links(array $paragraphs): array {
+  $anchor_links = [];
 
   // Creates anchor links for items that should be displayed in the navigation.
-  foreach ($user_registration_items as $item) {
-    if ($item->get('field_display_in_navigation')->value == 1) {
-      $variables['anchor_links'][] = [
-        'title' => $item->get('field_navigation_title')->value ?? $item->get('field_title')->value,
-        'anchor_id' => $item->get('field_anchor')->value ?? 'anchor-' . $item->id(),
+  foreach ($paragraphs as $paragraph) {
+    if ($paragraph->get('field_display_in_navigation')->value == 1) {
+      $navigation_title = $paragraph->get('field_navigation_title')->value ?? $paragraph->get('field_title')->value;
+      $anchor_id = $paragraph->get('field_anchor')->value ?? 'anchor-' . $paragraph->id();
+      $anchor_links[] = [
+        'title' => $navigation_title,
+        'anchor_id' => $anchor_id,
       ];
     }
   }
+
+  return $anchor_links;
 }
 
 /**

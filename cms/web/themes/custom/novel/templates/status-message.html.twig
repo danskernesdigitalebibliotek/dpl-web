@@ -1,0 +1,23 @@
+{#
+/**
+ * @file
+ * Custom status message template
+ *
+ * Used to display status messages.
+ *
+ * Available variables:
+ * - message: The status message to show.
+ */
+#}
+
+ <div class="status-message">
+  <div class="status-message__icon">
+    <img
+      src="/themes/custom/novel/assets/dpl-design-system/icons/basic/icon-check.svg"
+      alt="{{ 'Status message icon'|t({}, {'context': 'Status message handling'}) }}"
+    />
+  </div>
+  <div class="status-message__description">
+    {{ message }}
+  </div>
+</div>

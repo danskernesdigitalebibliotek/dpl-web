@@ -14,37 +14,40 @@ uid: null
 template: false
 archive: false
 id: contact
-title: Contact
-description: '<p>Basic email contact webform.</p>'
+title: Kontaktformular
+description: '<p>Standard kontaktformular.</p>'
 categories: {  }
 elements: |-
   name:
     '#type': textfield
-    '#title': 'Your Name'
+    '#title': 'Dit navn'
     '#required': true
   email:
     '#type': email
-    '#title': 'Your Email'
+    '#title': 'Din e-mailadresse'
     '#required': true
   category:
     '#type': webform_term_select
-    '#title': Category
+    '#title': Kategori
     '#required': true
     '#vocabulary': webform_email_categories
   subject:
-    '#title': Subject
     '#type': textfield
+    '#title': Emne
     '#required': true
     '#test': 'Testing contact webform from [site:name]'
   message:
-    '#title': Message
     '#type': textarea
+    '#title': Besked
     '#required': true
     '#test': 'Please ignore this email.'
   actions:
     '#type': webform_actions
     '#title': 'Submit button(s)'
-    '#submit__label': 'Send message'
+    '#submit__label': 'Send besked'
+  notice:
+    '#type': webform_markup
+    '#markup': '<p>BEMÆRK! Indsæt aldrig CPR-nummer eller følsomme oplysninger i formularen.</p><p>Læs mere om <a href="/privatlivspolitik" target="_blank">behandling af persondata i vores privatlivspolitik.</a></p>'
 css: ''
 javascript: ''
 settings:
@@ -149,10 +152,10 @@ settings:
   draft_loaded_message: ''
   draft_pending_single_message: ''
   draft_pending_multiple_message: ''
-  confirmation_type: url_message
+  confirmation_type: message
   confirmation_url: '<front>'
   confirmation_title: ''
-  confirmation_message: 'Your message has been sent.'
+  confirmation_message: '<p>Din besked er blevet sendt.</p>'
   confirmation_attributes: {  }
   confirmation_back: true
   confirmation_back_label: ''
