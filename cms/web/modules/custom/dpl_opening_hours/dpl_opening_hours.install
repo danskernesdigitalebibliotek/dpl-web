@@ -1,6 +1,7 @@
 <?php
 
 use Drupal\dpl_opening_hours\Mapping\OpeningHoursRepetitionType;
+use function Safe\json_encode as json_encode;
 
 /**
  * Implements hook_schema().
@@ -125,7 +126,10 @@ function dpl_opening_hours_update_10000(array &$sandbox): string {
   $ids = ($result) ? $result->fetchCol() : [];
   $updated_ids = array_filter($ids, function (int $id) use ($repetition_table, $instance_table) {
     $repetition_id = \Drupal::database()->insert($repetition_table)
-      ->fields(['type' => OpeningHoursRepetitionType::None->value])
+      ->fields([
+        'type' => OpeningHoursRepetitionType::None->value,
+        'data' => json_encode([]),
+      ])
       ->execute();
     return \Drupal::database()->update($instance_table)
       ->condition('id', $id)
