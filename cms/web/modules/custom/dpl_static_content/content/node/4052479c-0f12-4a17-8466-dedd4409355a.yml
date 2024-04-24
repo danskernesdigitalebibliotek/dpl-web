@@ -3,9 +3,7 @@ _meta:
   entity_type: node
   uuid: 4052479c-0f12-4a17-8466-dedd4409355a
   bundle: page
-  default_langcode: da
-  depends:
-    e00e1460-169e-468d-9835-d664f06d0969: file
+  default_langcode: en
 default:
   revision_uid:
     -
@@ -34,13 +32,6 @@ default:
   entity_clone_template_active:
     -
       value: false
-  entity_clone_template_image:
-    -
-      entity: e00e1460-169e-468d-9835-d664f06d0969
-      alt: ''
-      title: ''
-      width: 640
-      height: 443
   metatag:
     -
       tag: meta
@@ -50,6 +41,8 @@ default:
   path:
     -
       alias: /reglement
+      langcode: und
+      pathauto: 1
   field_display_titles:
     -
       value: true
@@ -64,7 +57,7 @@ default:
           entity_type: paragraph
           uuid: 65d0b497-d64b-4744-a992-84212f55aa31
           bundle: text_body
-          default_langcode: da
+          default_langcode: en
         default:
           status:
             -
@@ -75,6 +68,9 @@ default:
           behavior_settings:
             -
               value: {  }
+          revision_translation_affected:
+            -
+              value: true
           field_body:
             -
               value: '<p>Biblioteket kan benyttes af alle og det er gratis at benytte biblioteket, hvis du overholder lånetiden. Hvis du ikke har fast bopæl i Danmark, kan biblioteket opkræve depositum ved udlån. Biblioteket kan fastsætte et maksimalt antal reserveringer, som du kan have stående i systemet ad gangen.<br />&nbsp;</p><h3>Lånerkort</h3><p>Er du over 18 år fungerer sundhedskortet som adgang til at låne på biblioteket. Før du kan anvende sundhedskortet, skal du oprettes som bruger af biblioteket. Dette gør du via MitID på bibliotekets <a href="/opret-bruger">hjemmeside</a>, eller ved at du personligt henvender dig på biblioteket. Når du skal oprettes som bruger, skal du medbringe dit sundhedskort.</p><p>Hvis du er under 18 år, skal du vise dit sundhedskort og en indmeldelsesblanket med én af dine forældres eller en værges underskrift, når du skal oprettes som bruger.</p><p>Er du under 18 år kan du få dit eget lånerkort, men du kan også vælge at bruge dit sundhedskort som lånerkort.</p><p>Det er kun dig selv, der må benytte dit sundhedskort eller dit lånerkort til biblioteket, ligesom du selv er ansvarlig for de materialer, der bliver lånt på dit sundhedskort eller lånerkort.</p><p>Bliver dit sundhedskort eller lånerkort væk, skal du straks melde det til biblioteket, som spærrer dit lånerkort eller brugen af dit sundhedskort.<br />&nbsp;</p><h3>Hvis du har glemt din pinkode</h3><p>Har du glemt pinkoden til selvbetjening, kan du oprette en ny ved at logge ind på hjemmesiden med MitID og ændre koden under din lånerprofil eller ved, at du personligt henvender dig på et bibliotek. Ved personlig henvendelse skal du medbringe legitimation som sundhedskort, pas eller kørekort.<br />&nbsp;</p><h3>Servicemeddelelser via sms og e-mail</h3><p>Når du bliver oprettet som bruger af biblioteket og oplyser e-mail adresse eller mobilnummer, accepterer du at modtage servicemeddelelser om lån, bestillinger, reserveringer og om din egen brug af bibliotekernes forskellige tjenester. <a href="/privatlivspolitik">Læs mere om hvordan biblioteket bruger dine data.</a><br />&nbsp;</p><h3>Opdatering af dine oplysninger</h3><p>Det er dit ansvar at opdatere oplysninger som fx e-mail adresse og/eller mobilnummer, som du har oplyst biblioteket, så disse altid er korrekte. Du kan opdatere dine kontaktoplysninger under din profil på hjemmesiden, når du er logget ind eller ved henvendelse på biblioteket.<br />&nbsp;</p><h3>Ansvar</h3><p>Biblioteket påtager sig intet ansvar, hvis lånte materialer beskadiger din pc, programmer eller afspilningsudstyr. Du er selv ansvarlig for at se materialet igennem for fejl og mangler inden du låner og afleverer materialet.<br />&nbsp;</p><h3>Lånetid og aflevering</h3><p>Lånetiden er normalt 30 dage, men der kan være særligt efterspurgte materialer med kortere lånetid. Du kan se din afleveringsfrist under dine lån på hjemmesiden, i App’en Biblioteket eller på din udlånskvittering.</p><p>Normalt kan du forlænge lånetiden, hvis materialet ikke er bestilt af andre. Fornyelse af materialer kan først ske<strong> [XX] </strong>dage før afleveringsfristen. Der er fastsat et maksimalt antal gange lånetiden kan forlænges.</p><p>Du kan udskrive afleveringskvitteringer på bon eller få den tilsendt pr. mail. Afleveringskvitteringen er din dokumentation for, at du har afleveret de lånte materialer. Kontrollér ved afleveringen, at de materialer, du afleverer, svarer til de materialer, der nævnes på afleveringskvitteringen.</p><p>Du er selv ansvarlig for løbende at kontrollere, om du har registrerede lån af materialer under menupunktet <em>Lån</em> når du er logget ind på hjemmesiden. Du kan også kontrollere din lånerstatus på selvbetjeningsautomaterne på biblioteket.</p><p>Hvis du afleverer biblioteksmaterialer gennem brevsprækken på et bibliotek eller med postforsendelse, kan du ikke få en afleveringskvittering, og det er dit ansvar, hvis du anvender denne fremgangsmåde. Det skal bemærkes, at din aflevering først registreres på bibliotekets næste åbningsdag, eller når posten når frem. Dette kan have betydning for størrelsen af et eventuelt gebyr.<br />&nbsp;</p><h3>Aflevering af materialer lånt på folkebiblioteker udenfor <strong>[Danevang kommune]</strong></h3><p>Du kan aflevere materialer lånt på andre folkebiblioteker på folkebibliotekerne i [Dannevang]. Det fremgår af Kulturstyrelsens udtalelse herom, at "Det skal understreges, at denne eventuelle aflevering sker på borgerens eget ansvar, hvilket indebærer, at låneren har ansvaret for materialet ind til det er modtaget hos det långivende bibliotek.<br />&nbsp;</p><h3>Overskridelse af lånetiden</h3><p>Overskrider du lånetiden, skal du betale gebyr efter gældende takst (<a href="/takster">se takster</a>)</p><p>Du skal betale gebyr for overskridelse af lånetiden, også selv om der ikke er sendt en advis via e-mail, SMS eller Push-besked på App tre dage før udløb af lånetiden eller en hjemkaldelse til dig. Du har selv ansvar for at sikre at du afleverer til tiden.<br />&nbsp;</p><h3>Erstatning</h3><p>Hvis du ikke har afleveret et materiale <strong>[XX]</strong> uger efter lånetidens udløb, betragter biblioteket det som bortkommet. Bortkommet eller beskadiget biblioteksmateriale skal du erstatte med en erstatningspris. <a href="/takster">Læs mere om erstatninger her.</a><br />&nbsp;</p><h3>Blokering og bortvisning af brugere</h3><p>Skylder du biblioteket <strong>[xxx kr]</strong>. eller derover i gebyrer og/eller erstatninger, bliver du blokeret for at låne, indtil gælden er betalt.</p><p>Har du i gentagne tilfælde ikke afleveret lånte materialer eller afleverer lånte materialer i beskadiget stand, kan du udelukkes fra at låne på <strong>[Danevang Kommunes Biblioteker]</strong>.</p><p>Udelukkelse af dig som bruger skal ske med syv dages skriftligt varsel. I særlige tilfælde har biblioteket dog hjemmel til at foretage udelukkelse uden varsel.</p><p>Brugere, der ikke respekterer god ro og orden eller ikke følger personalets anvisninger, kan bortvises fra biblioteket.<br />&nbsp;</p><h3>Åbne biblioteker</h3><p>På en række biblioteker er der, ud over bemandet åbningstid, ubemandet åbningstid, hvor der ikke er personale til stede. Disse biblioteker kaldes ’åbne biblioteker’.</p><p>I den ubemandede åbningstid kan du låne og aflevere materialer, og benytte bibliotekets tilbud på stedet.</p><p>Der er adgang for alle, der er 14 år og derover, og som er registreret som brugere af biblioteket. Adgangen sker ved, at du anvender sundhedskort eller lånerkort.</p><p>Benyttelse af biblioteket i den ubemandede åbningstid sker på dit eget ansvar.</p><p>Der er adgang for alle, der er 13 år og derunder, hvis de ledsages af en person, der har adgang til biblioteket i den ubemandede åbningstid.</p><p>Det enkelte bibliotek kan fastsætte et nærmere ordensreglement for benyttelse af biblioteket.</p><p>Foldere med regler for benyttelse af biblioteket og takster får du udleveret ved indmeldelse, og de ligger desuden fremme i alle biblioteker.</p>'

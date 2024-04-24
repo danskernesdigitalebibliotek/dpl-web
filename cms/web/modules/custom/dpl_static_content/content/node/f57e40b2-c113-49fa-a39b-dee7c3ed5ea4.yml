@@ -3,9 +3,7 @@ _meta:
   entity_type: node
   uuid: f57e40b2-c113-49fa-a39b-dee7c3ed5ea4
   bundle: page
-  default_langcode: da
-  depends:
-    e00e1460-169e-468d-9835-d664f06d0969: file
+  default_langcode: en
 default:
   revision_uid:
     -
@@ -34,13 +32,6 @@ default:
   entity_clone_template_active:
     -
       value: false
-  entity_clone_template_image:
-    -
-      entity: e00e1460-169e-468d-9835-d664f06d0969
-      alt: ''
-      title: ''
-      width: 640
-      height: 443
   metatag:
     -
       tag: meta
@@ -50,6 +41,8 @@ default:
   path:
     -
       alias: /takster
+      langcode: und
+      pathauto: 1
   field_display_titles:
     -
       value: true
@@ -64,7 +57,7 @@ default:
           entity_type: paragraph
           uuid: d6a344ff-f37b-4a40-9d39-3b9394a0cc2f
           bundle: text_body
-          default_langcode: da
+          default_langcode: en
         default:
           status:
             -
@@ -75,6 +68,9 @@ default:
           behavior_settings:
             -
               value: {  }
+          revision_translation_affected:
+            -
+              value: true
           field_body:
             -
               value: '<p>Du skal betale gebyr efter gældende takst, hvis du afleverer for sent. Gebyrerne er fastsat af Kommunalbestyrelsen i <strong>[Dannevang Kommune]</strong>.</p><p>Du kan på hjemmesiden under Gebyrer &amp; Erstatninger se, om du skylder et eller flere gebyrer. Eventuelle rykkergebyr fremgår ikke på hjemmesiden, men dem vil du kunne få oplyst ved henvendelse til Opkrævningen tlf. <strong>[XXXXXXX]</strong></p><p>Du er selv ansvarlig for løbende at kontrollere, hvad du har lånt og få det afleveret til tiden. Du kan se dine lån under Lån, hvor du også har mulighed for at forny.&nbsp; Du kan også kontrollere din lånerstatus på udlånsautomaterne på biblioteket.</p><p>Gebyr påløber fra dagen efter den dato, der fremgår af din kvittering og af din lånerstatus.</p><p>&nbsp;</p><h3><strong>Gebyrtakster:</strong></h3><p><strong>Børn under 18 år</strong></p><p>1 - 7 dage: kr. 10,-</p><p>8 - 14 dage kr. 40,-</p><p>15 - 30 dage kr. 55,-</p><p>Efter 30 dage kr. 120,-</p><p><br /><strong>Voksne fra 18 år</strong></p><p>1 - 7 dage: kr. 20,-</p><p>8 - 14 dage kr. 70,-</p><p>15 - 30 dage kr. 120,-</p><p>Efter 30 dage kr. 230,-</p><p>&nbsp;</p><p>Hvis du ikke afleverer til tiden, skal du betale et gebyr, og efter 30 dage også en erstatning. Afleverer du materialet i god stand senest 30 dage efter rettidig afleveringsdato, skal du kun betale gebyrerne. Afleveringskvitteringen er din dokumentation for at have afleveret de lånte materialer. Kontrollér ved aflevering, at alle materialer er korrekt registreret og står på din kvittering.</p><p>Ved overskridelse af afleveringsdatoen gælder:</p><ul><li>Hvis man låner flere materialer samtidig og afleverer/fornyer materialerne samlet, vil man få ét gebyr.</li><li>Hvis man låner flere materialer samtidig, men afleverer/fornyer materialerne af flere omgange, vil man få ét gebyr pr. aflevering.</li></ul><p>Du vil blive udelukket fra at låne og reservere materialer, hvis du skylder 200 kr. eller mere.<br />&nbsp;</p><h3>Erstatninger</h3><p>Hvis du ødelægger, mister eller ikke afleverer bibliotekets materialer, skal du erstatte dem. Du har som den sidst registrerede låner erstatningspligten, hvis du ikke har gjort opmærksom på en eventuel skade, før du lånte materialet.</p><p>Hvis du ikke har afleveret det lånte materiale 30 dage efter lånetidens udløb, betragter vi det som bortkommet og du vil få sendt en erstatning i din digitale post.</p><p>Bortkommet eller beskadiget materiale, skal erstattes med bibliotekets indkøbspris inkl. moms. Udover erstatningsbeløbet skal du betale for udgifter til fx indbinding og licensrettigheder. For DVD, video og multimedier som cd-rom og konsolspil bliver din udgift typisk flere gange den pris, varen fås til i almindelig detailhandel. Det skyldes, at bibliotekets pris indeholder betaling til rettighedshaverne for at få tilladelse til udlån.<br />&nbsp;</p><h3>Advis og hjemkaldelse på sms, e-mail eller App</h3><p>Hvis du har oplyst din e-mailadresse og/eller dit mobilnummer, vil du få tilsendt en advis <strong>[XX] </strong>dage før afleveringsfristen. Du kan indsætte dit mobilnummer og/eller din e-mail under brugerprofil, når du er logget ind. Du kan også få adviseringer som Push-beskeder i App’en ”Biblioteket”.<br />&nbsp;</p><h3>Vi rykker kun én gang</h3><p>Vær opmærksom på, at biblioteket kun udsender én hjemkaldelse ved overskridelse af lånetiden. Vi sender hjemkaldelsen <strong>[XX]</strong> dage efter, at lånetiden er udløbet. Du skal altid betale gebyr, hvis du afleverer for sent, også selvom du ikke har modtaget en påmindelse eller hjemkaldelse før afleveringsfristen.<br />&nbsp;</p><h3>Hold styr på udlåns- og afleveringsdatoerne</h3><p>På din udlånskvittering og i din lånerstatus står datoen for, hvornår du skal aflevere dine lånte materialer. Dette er sidste dag, du kan aflevere materialet, uden gebyr.</p><p>Bemærk at der kan gå op til 72 timer før din betaling kan ses på hjemmesiden og i Biblioteket app’en. Derfor vil du kunne opleve, at der stadig vises gebyrer/erstatninger på din konto, når du logger ind på hjemmesiden/app’en, selvom du lige har betalt din regning.<br />På Mit Betalingsoverblik kan du altid se en opdateret status på dine betalinger til biblioteket.<br />&nbsp;</p><h3>Sådan betaler du</h3><p>Betaling af regninger skal ske via <strong>[Dannevang Kommunes]</strong> Mit Betalingsoverblik, Netbank med MitID eller i banken. Har du spørgsmål til selve betalingen, skal du kontakte <strong>[XX]</strong> på tlf. <strong>[XXXX]</strong><br />&nbsp;</p><h3>Det er vigtigt få betalt</h3><p>Betaler du ikke inden betalingsfristen, vil der komme rykkergebyrer på regningen:</p><ul><li>For gæld under 500 kr. er rykkergebyret 150 kr.</li><li>For gæld over 500 kr. er rykkergebyret 250 kr.</li></ul><p>Har du spørgsmål til din regning kan du kontakte Opkrævningen tlf. <strong>[XXXXXXX]</strong><br />&nbsp;</p>'
