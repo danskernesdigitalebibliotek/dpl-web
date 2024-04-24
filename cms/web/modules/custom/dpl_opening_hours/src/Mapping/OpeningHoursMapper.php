@@ -3,12 +3,10 @@
 namespace Drupal\dpl_opening_hours\Mapping;
 
 use DanskernesDigitaleBibliotek\CMS\Api\Model\DplOpeningHoursCreatePOSTRequest as OpeningHoursRequest;
-use DanskernesDigitaleBibliotek\CMS\Api\Model\DplOpeningHoursCreatePOSTRequestRepetition;
 use DanskernesDigitaleBibliotek\CMS\Api\Model\DplOpeningHoursListGET200ResponseInner as OpeningHoursResponse;
 use DanskernesDigitaleBibliotek\CMS\Api\Model\DplOpeningHoursListGET200ResponseInnerCategory as OpeningHoursCategory;
-use DanskernesDigitaleBibliotek\CMS\Api\Model\DplOpeningHoursListGET200ResponseInnerRepetition as OpeningHoursRepetition;
 use Drupal\dpl_opening_hours\Model\OpeningHoursInstance;
-use Drupal\dpl_opening_hours\Model\Repetition\NoRepetition;
+use Drupal\dpl_opening_hours\Model\Repetition\WeeklyRepetition;
 use Drupal\node\NodeStorageInterface;
 use Drupal\taxonomy\TermInterface;
 use Drupal\taxonomy\TermStorageInterface;
@@ -26,6 +24,7 @@ class OpeningHoursMapper {
   public function __construct(
     private NodeStorageInterface $branchStorage,
     private TermStorageInterface $categoryStorage,
+    private RepetitionMapper $repetitionMapper,
   ) {}
 
   /**
@@ -52,15 +51,14 @@ class OpeningHoursMapper {
       throw new \InvalidArgumentException("Invalid category title '{$categoryTitle}'");
     }
 
-    $repetitionData = $request->getRepetition() ?? (new DplOpeningHoursCreatePOSTRequestRepetition())->setType(OpeningHoursRepetitionType::None->value);
-    $repetitionType = ($repetitionData->getType() !== NULL) ? OpeningHoursRepetitionType::tryFrom($repetitionData->getType()) : NULL;
-    if ($repetitionType === NULL) {
-      throw new \InvalidArgumentException("Invalid repetition type '{$repetitionData->getType()}'");
+    $repetitionData = $request->getRepetition();
+    if (!$repetitionData) {
+      throw new \InvalidArgumentException("Missing repetition data");
     }
-
-    $repetition = match($repetitionType) {
-      OpeningHoursRepetitionType::None => new NoRepetition($repetitionData->getId()),
-    };
+    $repetition = $this->repetitionMapper->fromRequest($repetitionData);
+    if ($repetition::class == WeeklyRepetition::class && $request->getDate() > $repetition->endDate) {
+      throw new \InvalidArgumentException("Weekly repetition end date '{$repetition->endDate->format('Y-m-d')}' must not be before instance date '{$request->getDate()?->format('Y-m-d')}'");
+    }
 
     try {
       return new OpeningHoursInstance(
@@ -80,22 +78,16 @@ class OpeningHoursMapper {
   /**
    * Map a value object to an OpenAPI response.
    */
-  public function toResponse(OpeningHoursInstance $instance) : OpeningHoursResponse
-  {
+  public function toResponse(OpeningHoursInstance $instance) : OpeningHoursResponse {
     $colorField = $instance->categoryTerm->get('field_opening_hours_color')->first();
     if (!$colorField) {
       throw new \LogicException('Unable to retrieve color');
     }
     $category = (new OpeningHoursCategory())
-      ->setTitle((string)$instance->categoryTerm->label())
+      ->setTitle((string) $instance->categoryTerm->label())
       ->setColor($colorField->getString());
 
-    $repetition_type = match ($instance->repetition::class) {
-      NoRepetition::class => OpeningHoursRepetitionType::None->value,
-    };
-    $repetition = (new OpeningHoursRepetition())
-      ->setId($instance->repetition->id)
-      ->setType($repetition_type);
+    $repetitionResponse = $this->repetitionMapper->toResponse($instance->repetition);
 
     return (new OpeningHoursResponse())
       ->setId($instance->id)
@@ -104,9 +96,7 @@ class OpeningHoursMapper {
       ->setDate(new DateTime($instance->startTime->format('Y-m-d')))
       ->setStartTime($instance->startTime->format("H:i"))
       ->setEndTime($instance->endTime->format('H:i'))
-      ->setRepetition(
-        $repetition
-      );
+      ->setRepetition($repetitionResponse);
   }
 
 }

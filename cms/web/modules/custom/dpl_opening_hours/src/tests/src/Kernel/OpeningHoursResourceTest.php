@@ -91,7 +91,7 @@ class OpeningHoursResourceTest extends KernelTestBase {
     $this->assertEquals(1, $responseOpeningHours->getBranchId());
     $this->assertEquals("Open", $responseOpeningHours->getCategory()?->getTitle());
     $this->assertNotEmpty($responseOpeningHours->getRepetition()?->getId());
-    $this->assertEquals(OpeningHoursRepetitionType::None->value, $responseOpeningHours->getRepetition()?->getType());
+    $this->assertEquals(OpeningHoursRepetitionType::None->value, $responseOpeningHours->getRepetition()->getType());
   }
 
   /**
@@ -140,6 +140,8 @@ class OpeningHoursResourceTest extends KernelTestBase {
   public function testMultipleCreation(): void {
     $responseOpeningHours1 = $this->createOpeningHours(new DateTime(), "09:00", "17:00", "Open", 1);
     $responseOpeningHours2 = $this->createOpeningHours(new DateTime(), "09:00", "17:00", "Open", 1);
+    $this->assertNotEmpty($responseOpeningHours1);
+    $this->assertNotEmpty($responseOpeningHours2);
     $this->assertNotEquals($responseOpeningHours1->getId(), $responseOpeningHours2->getId(), "Two created opening hours must not have the same id.");
 
     $openingHoursList = $this->listOpeningHours();
