@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "d4eb910bad4523fe239ab27cad5f1a5c",
+    "content-hash": "6aa465628ff0ccb19e3660ac48c2adec",
     "packages": [
         {
             "name": "amazeeio/drupal_integrations",
@@ -2265,32 +2265,31 @@
         },
         {
             "name": "drupal/azure_mailer",
-            "version": "2.0.0-beta1",
+            "version": "1.0.3",
             "source": {
                 "type": "git",
                 "url": "https://git.drupalcode.org/project/azure_mailer.git",
-                "reference": "2.0.0-beta1"
+                "reference": "1.0.3"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://ftp.drupal.org/files/projects/azure_mailer-2.0.0-beta1.zip",
-                "reference": "2.0.0-beta1",
-                "shasum": "629cf702ecfc3d0605787f736108bf5ca5c72540"
+                "url": "https://ftp.drupal.org/files/projects/azure_mailer-1.0.3.zip",
+                "reference": "1.0.3",
+                "shasum": "0ccd0678dbee988ccb179c5e9fa1ef35f9f8f74e"
             },
             "require": {
-                "drupal/core": "^10 || ^11",
+                "drupal/core": "8.x || 9.x || 10.x",
                 "drupal/mailsystem": "^4.1.0",
-                "mobomo/guzzle-azure-hmac-auth": "dev-main",
-                "php": ">=8.1.0"
+                "mobomo/guzzle-azure-hmac-auth": "dev-main"
             },
             "type": "drupal-module",
             "extra": {
                 "drupal": {
-                    "version": "2.0.0-beta1",
-                    "datestamp": "1710950528",
+                    "version": "1.0.3",
+                    "datestamp": "1686584070",
                     "security-coverage": {
-                        "status": "not-covered",
-                        "message": "Beta releases are not covered by Drupal security advisories."
+                        "status": "covered",
+                        "message": "Covered by Drupal's security advisory policy"
                     }
                 }
             },
@@ -2309,7 +2308,7 @@
                     "homepage": "https://www.drupal.org/user/2236078"
                 }
             ],
-            "description": "Azure Communications Service mailer module for Drupal",
+            "description": "Azure Communications Service mailer module for Drupal 8+",
             "homepage": "https://drupal.org/project/azure_mailer",
             "support": {
                 "source": "https://git.drupalcode.org/project/azure_mailer",
@@ -18084,7 +18083,6 @@
     "aliases": [],
     "minimum-stability": "dev",
     "stability-flags": {
-        "drupal/azure_mailer": 10,
         "drupal/default_content": 15,
         "drupal/gin": 5,
         "drupal/gin_toolbar": 5,
