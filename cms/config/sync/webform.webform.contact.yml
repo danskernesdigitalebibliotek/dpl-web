@@ -155,7 +155,7 @@ settings:
   confirmation_type: message
   confirmation_url: '<front>'
   confirmation_title: ''
-  confirmation_message: '<p>Din besked er blevet sendt.</p>'
+  confirmation_message: '<p>Din forespørgsel er blevet modtaget. Du vil modtage en bekræftelse på mail.</p>'
   confirmation_attributes: {  }
   confirmation_back: true
   confirmation_back_label: ''
@@ -251,13 +251,13 @@ handlers:
       cc_options: {  }
       from_mail: _default
       from_options: {  }
-      from_name: _default
+      from_name: ''
       reply_to: ''
       return_path: ''
       sender_mail: ''
       sender_name: ''
       subject: '[webform_submission:values:subject:raw]'
-      body: '[webform_submission:values:message:value]'
+      body: '<p>Hej [webform_submission:values:name]&nbsp;</p><p>Vi bekræfter hermed at vi har modtaget følgende forespørgsel:&nbsp;</p><p>Modtaget: [webform_submission:created]</p><p>Forespørgsel:<br>[webform_submission:values:subject]</p><p>[webform_submission:values:message]</p><p>---------</p><p>Vi vil besvare dig hurtigst muligt på følgende email: [webform_submission:values:email]&nbsp;</p>'
       excluded_elements: {  }
       ignore_access: false
       exclude_empty: true
@@ -280,21 +280,21 @@ handlers:
     settings:
       states:
         - completed
-      to_mail: _default
+      to_mail: '[webform_submission:values:email:raw]'
       to_options: {  }
       bcc_mail: ''
       bcc_options: {  }
       cc_mail: ''
       cc_options: {  }
-      from_mail: '[webform_submission:values:email:raw]'
+      from_mail: _default
       from_options: {  }
-      from_name: '[webform_submission:values:name:raw]'
+      from_name: ''
       reply_to: ''
       return_path: ''
       sender_mail: ''
       sender_name: ''
       subject: '[webform_submission:values:subject:raw]'
-      body: '[webform_submission:values:message:value]'
+      body: '<p>Der er kommet en ny forespørgsel med følgende info:</p><p>Navn: [webform_submission:values:name]&nbsp;</p><p>Email: [webform_submission:values:email]&nbsp;</p><p>Modtaget: [webform_submission:created]</p><p>Emne: [webform_submission:values:subject]</p><p>Besked: [webform_submission:values:message]</p>'
       excluded_elements: {  }
       ignore_access: false
       exclude_empty: true
