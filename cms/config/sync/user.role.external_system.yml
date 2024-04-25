@@ -4,6 +4,7 @@ status: true
 dependencies:
   config:
     - rest.resource.event
+    - rest.resource.events
   module:
     - rest
     - system
@@ -14,5 +15,6 @@ weight: 7
 is_admin: null
 permissions:
   - 'access toolbar'
+  - 'restful get events'
   - 'restful patch event'
   - 'view the administration theme'
