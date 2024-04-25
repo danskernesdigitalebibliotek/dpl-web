@@ -9396,7 +9396,7 @@ msgstr "Postnr."
 #: 
 msgctxt "Address label"
 msgid "Sorting code"
-msgstr ""
+msgstr "Postnummer"
 
 #: 
 msgctxt "Address label"
@@ -9441,7 +9441,7 @@ msgstr ""
 #: 
 msgctxt "Address label"
 msgid "County"
-msgstr ""
+msgstr "Land"
 
 #: 
 msgctxt "Address label"
@@ -9451,7 +9451,7 @@ msgstr "Afdeling"
 #: 
 msgctxt "Address label"
 msgid "District"
-msgstr ""
+msgstr "Kommune"
 
 #: 
 msgctxt "Address label"
@@ -9501,7 +9501,7 @@ msgstr "By"
 #: 
 msgctxt "Address label"
 msgid "Post town"
-msgstr ""
+msgstr "By"
 
 #: 
 msgctxt "Address label"
@@ -9680,15 +9680,15 @@ msgstr "Postnummeret"
 
 #: 
 msgid "The sorting code"
-msgstr ""
+msgstr "Postnummeret"
 
 #: 
 msgid "The first line of the address block"
-msgstr ""
+msgstr "Adresselinje 1"
 
 #: 
 msgid "The second line of the address block"
-msgstr ""
+msgstr "Adresselinje 2"
 
 #: 
 msgid "The organization"
@@ -9764,7 +9764,7 @@ msgstr "Værdi"
 
 #: 
 msgid "Included postal codes"
-msgstr ""
+msgstr "Inkluderede postnumre"
 
 #: 
 msgid "Excluded postal codes"
@@ -13249,7 +13249,7 @@ msgstr ""
 
 #: 
 msgid "The arbitrary data for the job."
-msgstr ""
+msgstr "De vilkårlige data for jobbet."
 
 #: 
 msgid "Periodic"
@@ -13829,7 +13829,7 @@ msgstr "Modulet bruger <a href=\":tokens\">\"tokens\"</a> til automatisk at udfy
 
 #: 
 msgid "The best way of using Metatag is as follows:"
-msgstr ""
+msgstr "Den bedste måde at bruge Metatag er som følgende:"
 
 #: 
 msgid "Customize the <a href=\":defaults\">global defaults</a>, fill in the specific values and tokens that every page should have."
@@ -14533,7 +14533,7 @@ msgstr "Stien skal begynde med /"
 
 #: 
 msgid "The admin routes should not have metatags."
-msgstr ""
+msgstr "Administratorruterne bør ikke have metatags."
 
 #: 
 msgid "The entities routes metatags must be added by fields. @entity_type - @id"
@@ -14969,7 +14969,7 @@ msgstr ""
 
 #: 
 msgid "The content audience, e.g. \"all\"."
-msgstr ""
+msgstr "Målgruppen for indholdet, f.eks. \"alle\"."
 
 #: 
 msgid "Thumbnail"
@@ -15713,7 +15713,7 @@ msgstr ""
 
 #: 
 msgid "The alternative text of the image being linked to. Limited to 420 characters."
-msgstr ""
+msgstr "Den alternative tekst til det billede, der linkes til. Begrænset til 420 tegn."
 
 #: 
 msgid "iPad app name"
@@ -15761,7 +15761,7 @@ msgstr ""
 
 #: 
 msgid "The availability of the product."
-msgstr ""
+msgstr "Produktets tilgængelighed."
 
 #: 
 msgid "Product price currency"
@@ -15777,7 +15777,7 @@ msgstr ""
 
 #: 
 msgid "The condition of the product."
-msgstr ""
+msgstr "Produktets tilstand."
 
 #: 
 msgid "Product price amount"
@@ -16171,7 +16171,7 @@ msgstr "\n"
 
 #: 
 msgid "The app ID for the app store."
-msgstr ""
+msgstr "App-ID for app-butikken."
 
 #: 
 msgid "Windows Universal app name"
@@ -16559,7 +16559,7 @@ msgstr ""
 
 #: 
 msgid "The date the video was released."
-msgstr ""
+msgstr "Datoen for, hvornår videoen blev udgivet."
 
 #: 
 msgid "Video Secure URL"
@@ -19335,7 +19335,7 @@ msgstr "E-mail-adresse"
 
 #: 
 msgid "The email address of the registrant"
-msgstr ""
+msgstr "Emailadressen på den registrerede"
 
 #: 
 msgid "The UUID of the registrant entity."
@@ -19887,7 +19887,7 @@ msgstr ""
 
 #: 
 msgid "The email of the registrant."
-msgstr ""
+msgstr "Emailen på den registrerede."
 
 #: 
 msgid "Edit Registrant URL"
@@ -20055,7 +20055,7 @@ msgstr ""
 
 #: 
 msgid "The date on which an event first occurs."
-msgstr ""
+msgstr "Datoen for, hvornår et arrangement sker første gang."
 
 #: 
 msgid "Display the event instances associated with the series"
@@ -20739,7 +20739,7 @@ msgstr ""
 
 #: 
 msgid "The @entity_type_singular which is to have a scheduled publishing date set"
-msgstr ""
+msgstr "@entity_type_singular som skal have fastsat en planlagt dato for publicering"
 
 #: 
 msgid "Date for publishing"
@@ -20755,7 +20755,7 @@ msgstr ""
 
 #: 
 msgid "The @entity_type_singular which is to have a scheduled unpublishing date set"
-msgstr ""
+msgstr "@entity_type_singular som skal have fastsat en planlagt dato for afpublicering"
 
 #: 
 msgid "Date for unpublishing"
@@ -21115,7 +21115,7 @@ msgstr ""
 
 #: 
 msgid "The date and time format has been reset."
-msgstr ""
+msgstr "Dato- og tidsformatet er blevet nulstillet."
 
 #: 
 msgid "Default set on for new option \"Show a message after updating content\""
@@ -21169,7 +21169,7 @@ msgstr "Udgivelsesdato"
 
 #: 
 msgid "The date the %type will be published."
-msgstr ""
+msgstr "Datoen for, hvornår %type bliver publiceret."
 
 #: 
 msgid "Unpublish on date"
@@ -21177,7 +21177,7 @@ msgstr "Dato for afpublicering"
 
 #: 
 msgid "The date the %type will be unpublished."
-msgstr ""
+msgstr "Datoen for, hvornår %type bliver afpubliceret."
 
 #: 
 msgid "The Scheduler module provides the functionality for automatic publishing and unpublishing of entities, such and nodes and media items, at specified future dates."
@@ -21515,11 +21515,11 @@ msgstr ""
 
 #: 
 msgid "The content will only be published after approval."
-msgstr ""
+msgstr "Indholdet bliver kun publiceret efter godkendelse."
 
 #: 
 msgid "The competition will only be unpublished after all prizes have been claimed."
-msgstr ""
+msgstr "Konkurrencen bliver først afpubliceret, når alle præmier er vundet."
 
 #: 
 msgid "Node is scheduled for publishing"
@@ -22257,7 +22257,7 @@ msgstr "Grænsefladesprog"
 
 #: 
 msgid "The active user interface language."
-msgstr ""
+msgstr "Det aktive user interface-sprog."
 
 #: 
 msgid "Content language"
@@ -22265,7 +22265,7 @@ msgstr "Indholdssprog"
 
 #: 
 msgid "The active content language."
-msgstr ""
+msgstr "Det aktive indholdssprog."
 
 #: 
 msgid "Tokens related to URLs."
