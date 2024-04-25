@@ -2,6 +2,8 @@
 
 namespace Drupal\dpl_event;
 
+use Drupal\dpl_event\Services\EventHelper;
+use Drupal\drupal_typed\DrupalTyped;
 use Drupal\recurring_events\Entity\EventInstance;
 use Safe\DateTimeImmutable;
 
@@ -29,12 +31,15 @@ class EventWrapper {
    * An event is considered active if it has not occurred or been cancelled.
    */
   public function isActive() : bool {
-    $event_states = array_map(function (array $sfield_value): EventState {
-      return EventState::from($sfield_value['value']);
-    }, $this->event->get("event_state")->getValue());
+    $event_helper = DrupalTyped::service(EventHelper::class, 'dpl_event.event_helper');
 
-    return !(in_array(EventState::Cancelled, $event_states)
-      || in_array(EventState::Occurred, $event_states));
+    $state = $event_helper->getState($this->event);
+
+    if (!($state instanceof EventState)) {
+      return FALSE;
+    }
+
+    return !in_array($state, [EventState::Cancelled, EventState::Occurred]);
   }
 
   /**
