@@ -28,3 +28,13 @@ services:
       - "@job_scheduler.manager"
       - "@dpl_event.event_instance_storage"
       - "@config.factory"
+  dpl_event.route_subscriber:
+    class: Drupal\dpl_event\Routing\RouteSubscriber
+    tags:
+      - { name: event_subscriber }
+  dpl_event.access_event_instances_tab:
+    class: Drupal\dpl_event\Access\EventSeriesTabAccessCheck
+    arguments:
+      - "@entity_type.manager"
+    tags:
+      - { name: access_check, applies_to: _access_event_series_instances_tab }
