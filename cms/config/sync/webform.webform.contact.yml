@@ -280,7 +280,7 @@ handlers:
     settings:
       states:
         - completed
-      to_mail: '[webform_submission:values:email:raw]'
+      to_mail: '[webform_submission:values:category:entity:field_email:value]'
       to_options: {  }
       bcc_mail: ''
       bcc_options: {  }
@@ -294,7 +294,7 @@ handlers:
       sender_mail: ''
       sender_name: ''
       subject: '[webform_submission:values:subject:raw]'
-      body: '<p>Der er kommet en ny forespørgsel med følgende info:</p><p>Navn: [webform_submission:values:name]&nbsp;</p><p>Email: [webform_submission:values:email]&nbsp;</p><p>Modtaget: [webform_submission:created]</p><p>Emne: [webform_submission:values:subject]</p><p>Besked: [webform_submission:values:message]</p>'
+      body: '<p>Der er kommet en ny forespørgsel med følgende info:</p><p>Navn: [webform_submission:values:name]&nbsp;</p><p>Email: [webform_submission:values:email]&nbsp;</p><p>Modtaget: [webform_submission:created]</p><p>Kategori: [webform_submission:values:category]</p><p>Emne: [webform_submission:values:subject]</p><p>Besked: [webform_submission:values:message]</p>'
       excluded_elements: {  }
       ignore_access: false
       exclude_empty: true
