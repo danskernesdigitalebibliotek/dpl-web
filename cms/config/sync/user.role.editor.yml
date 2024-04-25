@@ -12,12 +12,16 @@ dependencies:
     - node.type.branch
     - node.type.campaign
     - node.type.page
+    - rest.resource.dpl_opening_hours_create
+    - rest.resource.dpl_opening_hours_delete
+    - rest.resource.dpl_opening_hours_update
     - taxonomy.vocabulary.categories
     - taxonomy.vocabulary.tags
   module:
     - content_lock
     - dpl_admin
     - dpl_footer
+    - dpl_opening_hours
     - entity_clone
     - file
     - filter
@@ -28,6 +32,7 @@ dependencies:
     - path
     - recurring_events
     - redirect
+    - rest
     - scheduler
     - simple_menu_permissions
     - system
@@ -124,6 +129,10 @@ permissions:
   - 'edit own video media'
   - 'edit terms in categories'
   - 'edit terms in tags'
+  - 'manage opening hours for branches'
+  - 'restful delete dpl_opening_hours_delete'
+  - 'restful patch dpl_opening_hours_update'
+  - 'restful post dpl_opening_hours_create'
   - 'revert all eventinstance revisions'
   - 'revert all eventseries revisions'
   - 'revert all revisions'
