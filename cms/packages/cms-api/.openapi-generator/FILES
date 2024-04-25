@@ -1,6 +1,15 @@
 Model/DplOpeningHoursCreatePOSTRequest.php
 Model/DplOpeningHoursListGET200ResponseInner.php
 Model/DplOpeningHoursListGET200ResponseInnerCategory.php
+Model/EventPATCHRequest.php
+Model/EventPATCHRequestExternalData.php
+Model/EventsGET200ResponseInner.php
+Model/EventsGET200ResponseInnerAddress.php
+Model/EventsGET200ResponseInnerDateTime.php
+Model/EventsGET200ResponseInnerImage.php
+Model/EventsGET200ResponseInnerSeries.php
+Model/EventsGET200ResponseInnerTicketCategoriesInner.php
+Model/EventsGET200ResponseInnerTicketCategoriesInnerPrice.php
 README.md
 Service/JmsSerializer.php
 Service/SerializerInterface.php
