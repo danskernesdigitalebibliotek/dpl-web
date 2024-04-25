@@ -2,8 +2,17 @@
 
 namespace Drupal\dpl_event\Plugin\rest\resource\v1;
 
-use Drupal\rest\ResourceResponse;
-use Symfony\Component\DependencyInjection\ContainerInterface;
+use DanskernesDigitaleBibliotek\CMS\Api\Model\EventsGET200ResponseInner;
+use Drupal\Core\Cache\CacheableJsonResponse;
+use Drupal\Core\Cache\CacheableMetadata;
+use Drupal\Core\Cache\CacheBackendInterface;
+use Drupal\Core\Entity\EntityTypeManagerInterface;
+use Drupal\dpl_event\Services\EventRestMapper;
+use Drupal\drupal_typed\DrupalTyped;
+use Drupal\recurring_events\Entity\EventInstance;
+use Symfony\Component\HttpFoundation\Request;
+
+use function Safe\strtotime;
 
 // Descriptions quickly become long and Doctrine annotations have no good way
 // of handling multiline strings.
@@ -57,7 +66,7 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
  *                 "url" = {
  *                   "type" = "string",
  *                   "format" = "uri",
- *                   "description" = "An absolute url for the image.",
+ *                   "description" = "An absolute url for the image. This is a link to the original, unaltered file, so the size, aspect ratio, and file format will be different from event to event.",
  *                 },
  *               },
  *               "required" = {
@@ -220,31 +229,59 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
  *   }
  * )
  */
-final class EventsResource extends ResourceBase {
 final class EventsResource extends EventResourceBase {
 // phpcs:enable Drupal.Files.LineLength.TooLong
 
   /**
-   * {@inheritdoc}
+   * GET request: Get all eventinstances, hopefully cached.
    */
-  public static function create(ContainerInterface $container, array $configuration, $plugin_id, $plugin_definition): self {
-    /** @var mixed[] $serializer_formats */
-    $serializer_formats = $container->getParameter('serializer.formats');
-    return new self(
-      $configuration,
-      $plugin_id,
-      $plugin_definition,
-      $serializer_formats,
-      $container->get('logger.factory')->get('rest'),
-    );
-  }
+  public function get(Request $request): CacheableJsonResponse {
+    // Entity query, pulling all eventinstances.
+    $entity_type_manager = DrupalTyped::service(EntityTypeManagerInterface::class, 'entity_type.manager');
 
-  /**
-   * Responds to GET requests.
-   */
-  public function get(): ResourceResponse {
-    // @todo Implement me
-    return new ResourceResponse([]);
+    $storage = $entity_type_manager->getStorage('eventinstance');
+    $ids = $storage->getQuery()
+      ->accessCheck(FALSE)
+      ->condition('status', TRUE)
+      ->execute();
+
+    $response_events = [];
+
+    $cache_manager = DrupalTyped::service(CacheBackendInterface::class, 'cache.data');
+
+    foreach ($ids as $id) {
+      $cache_id = "dpl_event.event_response.{$id}";
+      $cache = $cache_manager->get($cache_id);
+      $cached_event_response = !empty($cache->data) ? $cache->data : NULL;
+
+      if ($cached_event_response instanceof EventsGET200ResponseInner) {
+        $response_events[] = $cached_event_response;
+        continue;
+      }
+
+      $event_instance = $storage->load($id);
+
+      if ($event_instance instanceof EventInstance) {
+        $mapper = DrupalTyped::service(EventRestMapper::class, 'dpl_event.event_rest_mapper');
+
+        $event_response = $mapper->getResponse($event_instance);
+        $response_events[] = $event_response;
+        $cache_max_age = strtotime("+2 weeks");
+        $cache_manager->set($cache_id, $event_response, $cache_max_age, ["eventinstance:$id"]);
+      }
+    }
+
+    $serialized_events = $this->serializer->serialize($response_events, $this->serializerFormat($request));
+    $response = new CacheableJsonResponse($serialized_events);
+
+    // Create cache metadata.
+    $cache_metadata = new CacheableMetadata();
+    $cache_metadata->setCacheTags(['eventinstance_list', 'eventseries_list']);
+
+    // Add cache metadata to the response.
+    $response->addCacheableDependency($cache_metadata);
+
+    return $response;
   }
 
 }

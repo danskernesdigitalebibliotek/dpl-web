@@ -662,7 +662,7 @@
                       "url": {
                         "type": "string",
                         "format": "uri",
-                        "description": "An absolute url for the image."
+                        "description": "An absolute url for the image. This is a link to the original, unaltered file, so the size, aspect ratio, and file format will be different from event to event."
                       }
                     },
                     "required": ["url"]
