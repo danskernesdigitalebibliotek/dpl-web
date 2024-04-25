@@ -8,3 +8,4 @@ dependencies:
   - drupal:enum_field
   - drupal:job_scheduler
   - drupal:drupal_typed
+  - drupal:rest

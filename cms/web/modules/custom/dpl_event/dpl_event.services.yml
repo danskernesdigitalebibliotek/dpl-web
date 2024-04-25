@@ -31,3 +31,5 @@ services:
   dpl_event.event_helper:
     class: Drupal\dpl_event\Services\EventHelper
     arguments: []
+  dpl_event.serializer:
+    class: \DanskernesDigitaleBibliotek\CMS\Api\Service\JmsSerializer

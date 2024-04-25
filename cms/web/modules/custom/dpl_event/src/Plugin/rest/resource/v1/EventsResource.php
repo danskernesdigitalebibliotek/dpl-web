@@ -2,7 +2,6 @@
 
 namespace Drupal\dpl_event\Plugin\rest\resource\v1;
 
-use Drupal\rest\Plugin\ResourceBase;
 use Drupal\rest\ResourceResponse;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
@@ -222,6 +221,7 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
  * )
  */
 final class EventsResource extends ResourceBase {
+final class EventsResource extends EventResourceBase {
 // phpcs:enable Drupal.Files.LineLength.TooLong
 
   /**

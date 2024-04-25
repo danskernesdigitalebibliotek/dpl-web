@@ -3,7 +3,6 @@
 namespace Drupal\dpl_event\Plugin\rest\resource\v1;
 
 use Drupal\rest\ModifiedResourceResponse;
-use Drupal\rest\Plugin\ResourceBase;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
 // Descriptions quickly become long and Doctrine annotations have no good way
@@ -89,7 +88,7 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
  *   }
  * )
  */
-final class EventResource extends ResourceBase {
+final class EventResource extends EventResourceBase {
 // phpcs:enable Drupal.Files.LineLength.TooLong
 
   /**
