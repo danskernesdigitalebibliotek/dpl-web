@@ -155,7 +155,7 @@ settings:
   confirmation_type: message
   confirmation_url: '<front>'
   confirmation_title: ''
-  confirmation_message: '<p>Din forespørgsel er blevet modtaget. Du vil modtage en bekræftelse på mail.</p>'
+  confirmation_message: '<p>Your submission has been received. You will receive a confirmation mail soon.</p>'
   confirmation_attributes: {  }
   confirmation_back: true
   confirmation_back_label: ''
@@ -257,7 +257,7 @@ handlers:
       sender_mail: ''
       sender_name: ''
       subject: '[webform_submission:values:subject:raw]'
-      body: '<p>Hej [webform_submission:values:name]&nbsp;</p><p>Vi bekræfter hermed at vi har modtaget følgende forespørgsel:&nbsp;</p><p>Modtaget: [webform_submission:created]</p><p>Forespørgsel:<br>[webform_submission:values:subject]</p><p>[webform_submission:values:message]</p><p>---------</p><p>Vi vil besvare dig hurtigst muligt på følgende email: [webform_submission:values:email]&nbsp;</p>'
+      body: '<p>Hello [webform_submission:values:name]&nbsp;</p><p>We hereby confirm that we have received the following inquiry:</p><p>Time of arrival: [webform_submission:created]</p><p>Inquiry:<br>[webform_submission:values:subject]</p><p>[webform_submission:values:message]</p><p>---------</p><p>We will get back to you as soon as possible on the following mail: [webform_submission:values:email]&nbsp;<br><br>Kind regards</p>'
       excluded_elements: {  }
       ignore_access: false
       exclude_empty: true
@@ -294,7 +294,7 @@ handlers:
       sender_mail: ''
       sender_name: ''
       subject: '[webform_submission:values:subject:raw]'
-      body: '<p>Der er kommet en ny forespørgsel med følgende info:</p><p>Navn: [webform_submission:values:name]&nbsp;</p><p>Email: [webform_submission:values:email]&nbsp;</p><p>Modtaget: [webform_submission:created]</p><p>Kategori: [webform_submission:values:category]</p><p>Emne: [webform_submission:values:subject]</p><p>Besked: [webform_submission:values:message]</p>'
+      body: '<p>A new inquiry has arrived with the following info:</p><p>Name: [webform_submission:values:name]&nbsp;</p><p>Email: [webform_submission:values:email]&nbsp;</p><p>Time of arrival: [webform_submission:created]</p><p>Category: [webform_submission:values:category]</p><p>Subject: [webform_submission:values:subject]</p><p>Message: [webform_submission:values:message]</p>'
       excluded_elements: {  }
       ignore_access: false
       exclude_empty: true
