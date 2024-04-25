@@ -5,14 +5,14 @@ dependencies:
   config:
     - rest.resource.event
   module:
-    - recurring_events
     - rest
     - system
+    - toolbar
 id: external_system
 label: 'External system'
 weight: 7
 is_admin: null
 permissions:
-  - 'edit eventinstance entity'
+  - 'access toolbar'
   - 'restful patch event'
   - 'view the administration theme'

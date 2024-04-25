@@ -28,7 +28,6 @@ dependencies:
     - media
     - node
     - paragraphs
-    - paragraphs_ee
     - path
     - recurring_events
     - redirect
@@ -57,7 +56,6 @@ permissions:
   - 'administer dpl_footer settings'
   - 'administer menu'
   - 'administer nodes'
-  - 'administer paragraphs categories'
   - 'administer redirects'
   - 'break content lock'
   - 'bypass node access'
