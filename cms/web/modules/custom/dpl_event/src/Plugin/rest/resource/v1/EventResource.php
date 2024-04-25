@@ -2,8 +2,13 @@
 
 namespace Drupal\dpl_event\Plugin\rest\resource\v1;
 
+use DanskernesDigitaleBibliotek\CMS\Api\Model\EventPATCHRequest;
+use Drupal\Core\Entity\EntityTypeManagerInterface;
+use Drupal\dpl_event\Services\EventRestMapper;
+use Drupal\drupal_typed\DrupalTyped;
+use Drupal\recurring_events\Entity\EventInstance;
 use Drupal\rest\ModifiedResourceResponse;
-use Symfony\Component\DependencyInjection\ContainerInterface;
+use Symfony\Component\HttpFoundation\Request;
 
 // Descriptions quickly become long and Doctrine annotations have no good way
 // of handling multiline strings.
@@ -92,31 +97,34 @@ final class EventResource extends EventResourceBase {
 // phpcs:enable Drupal.Files.LineLength.TooLong
 
   /**
-   * {@inheritdoc}
+   * PATCH requests - Load the relevant eventinstance, and update values.
    */
-  public static function create(ContainerInterface $container, array $configuration, $plugin_id, $plugin_definition): self {
-    /** @var mixed[] $serializer_formats */
-    $serializer_formats = $container->getParameter('serializer.formats');
-    return new self(
-      $configuration,
-      $plugin_id,
-      $plugin_definition,
-      $serializer_formats,
-      $container->get('logger.factory')->get('rest'),
-    );
-  }
+  public function patch(string $uuid, Request $request): ModifiedResourceResponse {
+    $request_data = $this->deserialize(EventPATCHRequest::class, $request);
 
-  /**
-   * Responds to PATCH requests.
-   *
-   * @param string $id
-   *   The id of the event to update.
-   * @param mixed[] $data
-   *   The data posted by clients as a part of the request.
-   */
-  public function patch(string $id, array $data): ModifiedResourceResponse {
-    // @todo Implement me
-    return new ModifiedResourceResponse($data, 200);
+    $entity_type_manager = DrupalTyped::service(EntityTypeManagerInterface::class, 'entity_type.manager');
+    $storage = $entity_type_manager->getStorage('eventinstance');
+
+    $event_instances = $storage->loadByProperties([
+      'uuid' => $uuid,
+    ]);
+
+    $event_instance = reset($event_instances);
+
+    if (!($event_instance instanceof EventInstance)) {
+      return new ModifiedResourceResponse('Even not found', 404);
+    }
+
+    $state = $request_data->getState();
+    $event_instance->set('field_event_state', $state);
+    $event_instance->save();
+
+    $mapper = DrupalTyped::service(EventRestMapper::class, 'dpl_event.event_rest_mapper');
+    $event_response = $mapper->getResponse($event_instance);
+
+    $serialized_event = $this->serializer->serialize($event_response, $this->serializerFormat($request));
+
+    return new ModifiedResourceResponse($serialized_event);
   }
 
 }
