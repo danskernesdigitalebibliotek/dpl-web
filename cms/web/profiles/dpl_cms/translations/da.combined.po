@@ -673,7 +673,7 @@ msgstr "Reserveringer på dette materiale"
 #: 
 msgctxt "Work Page"
 msgid "Reserve book"
-msgstr "Ryserver bog"
+msgstr "Reserver bog"
 
 #: 
 msgctxt "Work Page"
