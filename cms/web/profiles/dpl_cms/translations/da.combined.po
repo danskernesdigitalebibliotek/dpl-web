@@ -5296,9 +5296,10 @@ msgid "Off"
 msgstr "Fra"
 
 #: 
+#, fuzzy
 msgctxt "field.field.node.page.field_hero_title:label"
 msgid "Hero title"
-msgstr "Hero titel"
+msgstr "Overskrift"
 
 #: 
 msgctxt "field.field.node.page.field_paragraphs:label"
@@ -5413,7 +5414,7 @@ msgstr "Hero link"
 #: 
 msgctxt "field.field.paragraph.hero.field_hero_title:label"
 msgid "Hero title"
-msgstr "Hero titel"
+msgstr "Overskrift"
 
 #: 
 msgctxt "field.field.paragraph.language_selector.field_language_icon:label"
@@ -23729,7 +23730,7 @@ msgstr ""
 #: 
 msgctxt "node.type.page:description"
 msgid "Pages can be used for various types of content, either temporary or permanent. A page can be simple, containing text about, for example, loan rules, or it can serve as a structural unit designed to display other pages in a section for communication or navigation."
-msgstr ""
+msgstr "Sider kan anvendes til en bred vifte af indhold af mere eller mindre blivende karakter. En side kan være simpel og indeholde tekst om fx. låneregler, men kan også være en strukturerende enhed, hvis formål er at udstille andre sider i en sektion med henblik på formidling eller navigation."
 
 #: 
 msgctxt "pathauto.pattern.breadcrumb_pattern_event_instance:label"
@@ -25669,7 +25670,7 @@ msgstr ""
 #: 
 msgctxt "core.entity_form_display.paragraph.filtered_event_list.default:third_party_settings:field_group:group_filters:format_settings:description"
 msgid "Add any tag, category or branch that should by included as a filter for the filtered event list. "
-msgstr ""
+msgstr "Tilføj et tag, kategori eller filial som skal anvendes som filter i den filtrerede arrangementsliste."
 
 #: 
 msgctxt "core.entity_view_display.eventinstance.default.list_teaser_stacked_parent:content:date:settings:date_format"
@@ -25839,7 +25840,7 @@ msgstr ""
 #: 
 msgctxt "paragraphs.paragraphs_type.filtered_event_list:label"
 msgid "Filtered event list"
-msgstr ""
+msgstr "Arrangementsliste - filtreret"
 
 #: 
 msgctxt "paragraphs.paragraphs_type.filtered_event_list:description"
@@ -25849,7 +25850,7 @@ msgstr ""
 #: 
 msgctxt "paragraphs.paragraphs_type.manual_event_list:label"
 msgid "Manual event list"
-msgstr ""
+msgstr "Arrangementsliste - manuel"
 
 #: 
 msgctxt "paragraphs.paragraphs_type.manual_event_list:description"
