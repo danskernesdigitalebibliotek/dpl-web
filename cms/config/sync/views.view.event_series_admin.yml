@@ -648,7 +648,7 @@ display:
         type: normal
         title: 'Event series'
         description: ''
-        weight: 0
+        weight: 3
         expanded: false
         menu_name: admin
         parent: system.admin_content
