@@ -11770,11 +11770,11 @@ msgstr ""
 
 #: 
 msgid "Take ownership"
-msgstr ""
+msgstr "Tag ejerskab"
 
 #: 
 msgid "Take ownership of the newly created cloned entity."
-msgstr ""
+msgstr "Tag ejerskab over den nyoprettede klonede enhed."
 
 #: 
 msgid "Exclude Cloned"
@@ -16388,11 +16388,11 @@ msgstr "Typen af indhold, f.eks. <em>movie</em>."
 
 #: 
 msgid "Tag words"
-msgstr ""
+msgstr "Tag ord"
 
 #: 
 msgid "Tag words associated with this video."
-msgstr ""
+msgstr "Tag ord forbundet med denne video."
 
 #: 
 msgid "Locality"
@@ -17436,7 +17436,7 @@ msgstr ""
 
 #: 
 msgid "The %label Paragraphs category was not saved."
-msgstr ""
+msgstr "%label paragrapher kategorien var ikke gemt."
 
 #: 
 msgid "The machine name you entered is reserved. Please use another one."
@@ -17946,7 +17946,7 @@ msgstr ""
 
 #: 
 msgid "Succesfully deleted @type: @label."
-msgstr ""
+msgstr "Succesfuldt slettet @type: @label."
 
 #: 
 msgid "Label for the Included dates."
@@ -19043,7 +19043,7 @@ msgstr ""
 
 #: 
 msgid "Successful Registration"
-msgstr ""
+msgstr "Succesfuld tilmelding"
 
 #: 
 msgid "This message will show in the message area when a user successfully registers for an event."
@@ -20804,7 +20804,7 @@ msgstr "@entity_type_label til afpublicering"
 
 #: 
 msgid "The @entity_type_singular to be unpublished now"
-msgstr ""
+msgstr "@entity_type_singular afpubliceres nu"
 
 #: 
 msgid "scheduled publishing"
