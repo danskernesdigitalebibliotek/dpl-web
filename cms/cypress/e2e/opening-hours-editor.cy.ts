@@ -252,7 +252,7 @@ const createOpeningHoursSeries = ({
   navigateToNextWeekOrMonthAdmin();
   checkMultipleOpeningHoursExistAdmin();
   visitOpeningHoursPage();
-  // Because we use oneMonthFromToday as endDate we can check the 4 næste weeks
+  // Because we use oneMonthFromToday as endDate we can check the four next weeks
   for (let i = 0; i < 5; i++) {
     checkOpeningHoursExistPage({ openingHourCategory, start, end });
     cy.getBySel("opening-hours-next-week-button").click();
