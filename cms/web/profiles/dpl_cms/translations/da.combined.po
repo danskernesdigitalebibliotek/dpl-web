@@ -673,7 +673,7 @@ msgstr "Reserveringer på dette materiale"
 #: 
 msgctxt "Work Page"
 msgid "Reserve book"
-msgstr "Reserver bog"
+msgstr "Ryserver bog"
 
 #: 
 msgctxt "Work Page"
@@ -11810,7 +11810,7 @@ msgstr ""
 
 #: 
 msgid "Available translations"
-msgstr ""
+msgstr "Tilgængelige oversættelser"
 
 #: 
 msgid "Clone"
@@ -13958,7 +13958,7 @@ msgstr "Meta Tags:"
 
 #: 
 msgid "length"
-msgstr ""
+msgstr "Længde"
 
 #: 
 msgid "Meta Tags: Trimming Options"
@@ -14730,7 +14730,7 @@ msgstr ""
 
 #: 
 msgid "License"
-msgstr ""
+msgstr "Licens"
 
 #: 
 msgid "A legal document giving official permission to do something with the resource."
@@ -14914,11 +14914,11 @@ msgstr ""
 
 #: 
 msgid "Date of copyright."
-msgstr ""
+msgstr "Copyrightdato"
 
 #: 
 msgid "Date Issued"
-msgstr ""
+msgstr "Udstedelsesdato"
 
 #: 
 msgid "Date of formal issuance (e.g., publication) of the resource."
@@ -14958,7 +14958,7 @@ msgstr "Status for dokumentet, f.eks. \"kladde\"."
 
 #: 
 msgid "Department"
-msgstr ""
+msgstr "Afdeling"
 
 #: 
 msgid "Department tag."
@@ -15070,7 +15070,7 @@ msgstr "Navnet givet til materialet."
 
 #: 
 msgid "Contributor"
-msgstr ""
+msgstr "Bidragyder"
 
 #: 
 msgid "An entity responsible for making contributions to the resource. Examples of a Contributor include a person, an organization, or a service. Typically, the name of a Contributor should be used to indicate the entity."
@@ -15282,7 +15282,7 @@ msgstr "Teksten, der vises i titellinjen i en besøgendes webbrowser, når de se
 
 #: 
 msgid "Geographical position"
-msgstr ""
+msgstr "Geografisk position"
 
 #: 
 msgid "Geo-spatial information in 'latitude; longitude' format, e.g. '50.167958; -97.133185'; <a href='https://en.wikipedia.org/wiki/Geographic_coordinate_system' aria-label='see Wikipedia for details on the geographic coordinate system'>see Wikipedia for details</a>."
