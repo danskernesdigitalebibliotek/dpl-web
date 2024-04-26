@@ -1191,7 +1191,7 @@ msgstr "Reserveringer"
 #: 
 msgctxt "Dashboard"
 msgid "You owe in total"
-msgstr "Du skylder i alt"
+msgstr "Du skylder i alt biblioteket"
 
 #: 
 msgctxt "Dashboard"
