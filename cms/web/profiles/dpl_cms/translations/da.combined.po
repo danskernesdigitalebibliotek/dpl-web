@@ -23755,7 +23755,7 @@ msgstr ""
 #: 
 msgctxt "views.view.entity_clone_template:display:default:display_options:footer:area_text_custom:content"
 msgid "<div class=\"admin-item\"><p>You can use existing content templates, to quickly re-use content structures that you have already created.</p><p>To create new templates that can be re-used, you need to create a new content from scratch, and choose to expose it as a template. Usually, this option is available in the sidebar in the edit form.</p><p>Once you've done this, the template will be shown here.</p><br /></div>"
-msgstr ""
+msgstr "Du kan anvende skabeloner for at genbruge strukturer du allerede har lavet. For at oprette en skabelon skal du lave et stykke indhold fra bunden af og derefter vælge at gemme det som skabelon. Det gør du i højre sidebar i redigeringstilstand. Når du har gemt skabelonen, vises den her."
 
 #: 
 msgctxt "Global"
