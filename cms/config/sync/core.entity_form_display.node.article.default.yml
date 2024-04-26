@@ -24,6 +24,7 @@ dependencies:
     - paragraphs_features
     - path
     - scheduler
+    - select2
     - select2_multicheck
 third_party_settings:
   field_group:
@@ -33,7 +34,7 @@ third_party_settings:
       label: 'Meta tags'
       region: content
       parent_name: ''
-      weight: 10
+      weight: 11
       format_type: details_sidebar
       format_settings:
         classes: ''
@@ -50,7 +51,7 @@ third_party_settings:
       label: 'Teaser card'
       region: content
       parent_name: ''
-      weight: 11
+      weight: 12
       format_type: details_sidebar
       format_settings:
         classes: ''
@@ -67,7 +68,25 @@ third_party_settings:
       label: Tagging
       region: content
       parent_name: ''
-      weight: 12
+      weight: 13
+      format_type: details_sidebar
+      format_settings:
+        classes: ''
+        show_empty_fields: false
+        id: ''
+        open: true
+        description: ''
+        required_fields: true
+        weight: 0
+    group_author:
+      children:
+        - uid
+        - field_show_override_author
+        - field_override_author
+      label: Author
+      region: content
+      parent_name: ''
+      weight: 10
       format_type: details_sidebar
       format_settings:
         classes: ''
@@ -106,7 +125,7 @@ content:
     third_party_settings: {  }
   field_override_author:
     type: string_textfield
-    weight: 4
+    weight: 19
     region: content
     settings:
       size: 60
@@ -114,7 +133,7 @@ content:
     third_party_settings: {  }
   field_paragraphs:
     type: paragraphs
-    weight: 5
+    weight: 3
     region: content
     settings:
       title: Paragraph
@@ -142,7 +161,7 @@ content:
         show_drag_and_drop: true
   field_show_override_author:
     type: boolean_checkbox
-    weight: 3
+    weight: 18
     region: content
     settings:
       display_label: true
@@ -181,24 +200,24 @@ content:
     third_party_settings: {  }
   path:
     type: path
-    weight: 30
+    weight: 14
     region: content
     settings: {  }
     third_party_settings: {  }
   publish_on:
     type: datetime_timestamp_no_default
-    weight: 8
+    weight: 6
     region: content
     settings: {  }
     third_party_settings: {  }
   scheduler_settings:
-    weight: 7
+    weight: 5
     region: content
     settings: {  }
     third_party_settings: {  }
   status:
     type: boolean_checkbox
-    weight: 6
+    weight: 4
     region: content
     settings:
       display_label: true
@@ -211,6 +230,16 @@ content:
       size: 60
       placeholder: ''
     third_party_settings: {  }
+  uid:
+    type: select2_entity_reference
+    weight: 17
+    region: content
+    settings:
+      width: 100%
+      autocomplete: false
+      match_operator: CONTAINS
+      match_limit: 10
+    third_party_settings: {  }
   unpublish_on:
     type: datetime_timestamp_no_default
     weight: 9
@@ -218,7 +247,7 @@ content:
     settings: {  }
     third_party_settings: {  }
   url_redirects:
-    weight: 50
+    weight: 15
     region: content
     settings: {  }
     third_party_settings: {  }
@@ -227,4 +256,3 @@ hidden:
   langcode: true
   promote: true
   sticky: true
-  uid: true
