@@ -82,7 +82,7 @@ function dpl_paragraphs_preprocess_paragraph__links(array &$variables): void {
       elseif ($normalized_path === $search_base_path || $normalized_path === $advanced_search_base_path) {
         $link_type = 'search';
       }
-
+      $href = $url->isExternal() ? $url->toUriString() : $url->toString();
       $linkIconClass = ($link_type === 'internal') ? 'link-with-icon__icon--rotate-180' : '';
 
       $attributes = [
@@ -93,7 +93,7 @@ function dpl_paragraphs_preprocess_paragraph__links(array &$variables): void {
       ][$link_type];
 
       $variables['links'][] = [
-        'href' => $url->toUriString(),
+        'href' => $href,
         'linkText' => $item['title'],
         'linkType' => $link_type,
         'target' => $attributes['target'],
