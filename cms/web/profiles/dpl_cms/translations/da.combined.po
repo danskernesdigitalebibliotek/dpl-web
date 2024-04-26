@@ -2287,7 +2287,7 @@ msgstr "Du kan derfor ikke reservere, låne eller forny lån. Kontakt biblioteke
 #: 
 msgctxt "Global"
 msgid "Pay your fees here"
-msgstr "Betal dine gebyrer og erstatniger her"
+msgstr "Betal dine gebyrer og erstatninger her"
 
 #: 
 msgctxt "Global"
