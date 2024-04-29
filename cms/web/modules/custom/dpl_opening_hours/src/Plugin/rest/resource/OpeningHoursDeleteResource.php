@@ -5,6 +5,7 @@ declare(strict_types = 1);
 namespace Drupal\dpl_opening_hours\Plugin\rest\resource;
 
 use Drupal\Component\Utility\NestedArray;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
 
@@ -27,6 +28,23 @@ final class OpeningHoursDeleteResource extends OpeningHoursResourceBase {
   public function getPluginDefinition(): array {
     return NestedArray::mergeDeep(
       parent::getPluginDefinition(),
+      [
+        'route_parameters' => [
+          Request::METHOD_DELETE => [
+            'repetition_id' => [
+              'name' => 'repetition_id',
+              'type' => 'integer',
+              'description' => $this->formatMultilineDescription(
+                "The id of the repetition to delete. \n" .
+                "If this is provided then all opening hours from the provided instance " .
+                "to the final instance in the provided repetition will be deleted."
+              ),
+              'in' => 'query',
+              'required' => FALSE,
+            ],
+          ],
+        ],
+      ],
       [
         'responses' => [
           Response::HTTP_NO_CONTENT => [
