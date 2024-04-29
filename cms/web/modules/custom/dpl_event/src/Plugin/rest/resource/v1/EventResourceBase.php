@@ -26,8 +26,7 @@ abstract class EventResourceBase extends RestResourceBase {
     LoggerInterface $logger,
     protected SerializerInterface $serializer,
     protected EventRestMapper $mapper,
-    protected EntityTypeManagerInterface $entityTypeManager,
-    protected CacheBackendInterface $cacheBackend
+    protected EntityTypeManagerInterface $entityTypeManager
   ) {
     parent::__construct($configuration, $plugin_id, $plugin_definition, $serializer_formats, $logger, $serializer);
   }
@@ -44,8 +43,7 @@ abstract class EventResourceBase extends RestResourceBase {
       $container->get('logger.factory')->get('rest'),
       $container->get('dpl_rest_base.serializer'),
       $container->get('dpl_event.event_rest_mapper'),
-      $container->get('entity_type.manager'),
-      $container->get('cache.data')
+      $container->get('entity_type.manager')
     );
   }
 

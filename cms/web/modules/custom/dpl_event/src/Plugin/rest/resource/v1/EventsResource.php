@@ -242,22 +242,11 @@ final class EventsResource extends EventResourceBase {
     $response_events = [];
 
     foreach ($ids as $id) {
-      $cache_id = "dpl_event.event_response.{$id}";
-      $cache = $this->cacheBackend->get($cache_id);
-      $cached_event_response = !empty($cache->data) ? $cache->data : NULL;
-
-      if ($cached_event_response instanceof EventsGET200ResponseInner) {
-        $response_events[] = $cached_event_response;
-        continue;
-      }
-
       $event_instance = $storage->load($id);
 
       if ($event_instance instanceof EventInstance) {
         $event_response = $this->mapper->getResponse($event_instance);
         $response_events[] = $event_response;
-        $cache_max_age = strtotime("+2 weeks");
-        $this->cacheBackend->set($cache_id, $event_response, $cache_max_age, ["eventinstance:$id"]);
       }
     }
 
