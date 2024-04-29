@@ -15,7 +15,9 @@ dependencies:
     - rest.resource.dpl_opening_hours_create
     - rest.resource.dpl_opening_hours_delete
     - rest.resource.dpl_opening_hours_update
+    - taxonomy.vocabulary.breadcrumb_structure
     - taxonomy.vocabulary.categories
+    - taxonomy.vocabulary.opening_hours_categories
     - taxonomy.vocabulary.tags
   module:
     - content_lock
@@ -28,7 +30,6 @@ dependencies:
     - media
     - node
     - paragraphs
-    - path
     - recurring_events
     - redirect
     - rest
@@ -71,9 +72,10 @@ permissions:
   - 'create image media'
   - 'create media'
   - 'create page content'
+  - 'create terms in breadcrumb_structure'
   - 'create terms in categories'
+  - 'create terms in opening_hours_categories'
   - 'create terms in tags'
-  - 'create url aliases'
   - 'create video media'
   - 'delete all revisions'
   - 'delete any article content'
@@ -102,7 +104,9 @@ permissions:
   - 'delete own page content'
   - 'delete own video media'
   - 'delete page revisions'
+  - 'delete terms in breadcrumb_structure'
   - 'delete terms in categories'
+  - 'delete terms in opening_hours_categories'
   - 'delete terms in tags'
   - 'dpl admin access pages'
   - 'edit any article content'
@@ -125,7 +129,9 @@ permissions:
   - 'edit own image media'
   - 'edit own page content'
   - 'edit own video media'
+  - 'edit terms in breadcrumb_structure'
   - 'edit terms in categories'
+  - 'edit terms in opening_hours_categories'
   - 'edit terms in tags'
   - 'manage opening hours for branches'
   - 'restful delete dpl_opening_hours_delete'
