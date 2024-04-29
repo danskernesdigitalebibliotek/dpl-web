@@ -5,5 +5,5 @@ package: DPL
 core_version_requirement: ^10
 
 dependencies:
-  - drupal:rest
+  - drupal:dpl_rest_base
   - drupal:drupal_typed

@@ -1,0 +1,7 @@
+name: "DPL REST base"
+type: module
+description: "A base module, sharing functionality between e.g. events and opening hours."
+package: DPL
+core_version_requirement: ^10
+dependencies:
+  - drupal:rest

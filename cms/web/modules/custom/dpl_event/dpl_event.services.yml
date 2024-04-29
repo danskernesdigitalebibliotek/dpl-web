@@ -35,5 +35,3 @@ services:
     class: Drupal\dpl_event\Services\EventRestMapper
     arguments:
       - "@dpl_event.event_helper"
-  dpl_event.serializer:
-    class: \DanskernesDigitaleBibliotek\CMS\Api\Service\JmsSerializer

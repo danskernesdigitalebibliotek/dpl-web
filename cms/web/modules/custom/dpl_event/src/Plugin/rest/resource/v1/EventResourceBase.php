@@ -3,20 +3,20 @@
 namespace Drupal\dpl_event\Plugin\rest\resource\v1;
 
 use DanskernesDigitaleBibliotek\CMS\Api\Service\SerializerInterface;
-use DanskernesDigitaleBibliotek\CMS\Api\Service\TypeMismatchException;
-use Drupal\rest\Plugin\ResourceBase;
+use Drupal\Core\Cache\CacheBackendInterface;
+use Drupal\Core\Entity\EntityTypeManagerInterface;
+use Drupal\dpl_event\Services\EventRestMapper;
+use Drupal\dpl_rest_base\Plugin\RestResourceBase;
 use Psr\Log\LoggerInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
-use Symfony\Component\HttpFoundation\Request;
 
 /**
- * An abstract constructor base, that the resources extend from.
+ * Adding dpl_event specific dependencies to the REST controller.
  */
-abstract class EventResourceBase extends ResourceBase {
-  // phpcs:enable Drupal.Files.LineLength.TooLong
+abstract class EventResourceBase extends RestResourceBase {
 
   /**
-   * {@inheritdoc}
+   * Constructor.
    */
   public function __construct(
     array $configuration,
@@ -24,9 +24,12 @@ abstract class EventResourceBase extends ResourceBase {
     $plugin_definition,
     array $serializer_formats,
     LoggerInterface $logger,
-    protected SerializerInterface $serializer
+    protected SerializerInterface $serializer,
+    protected EventRestMapper $mapper,
+    protected EntityTypeManagerInterface $entityTypeManager,
+    protected CacheBackendInterface $cacheBackend
   ) {
-    parent::__construct($configuration, $plugin_id, $plugin_definition, $serializer_formats, $logger);
+    parent::__construct($configuration, $plugin_id, $plugin_definition, $serializer_formats, $logger, $serializer);
   }
 
   /**
@@ -39,51 +42,11 @@ abstract class EventResourceBase extends ResourceBase {
       $plugin_definition,
       $container->getParameter('serializer.formats'),
       $container->get('logger.factory')->get('rest'),
-      $container->get('dpl_event.serializer'),
+      $container->get('dpl_rest_base.serializer'),
+      $container->get('dpl_event.event_rest_mapper'),
+      $container->get('entity_type.manager'),
+      $container->get('cache.data')
     );
-  }
-
-  /**
-   * Generate the format to use by the serializer from the request.
-   */
-  protected function serializerFormat(Request $request): string {
-    $contentTypeFormat = $request->getContentTypeFormat();
-    if (!$contentTypeFormat) {
-      // Default to JSON format. Some code generators will not provide a default
-      // value even though it is provided in the spec.
-      $contentTypeFormat = $request->get('_format', 'json');
-    }
-    $mimeType = $request->getMimeType($contentTypeFormat);
-    if (!$mimeType) {
-      throw new \InvalidArgumentException("Unable to identify serializer format from content type form: $contentTypeFormat");
-    }
-    return $mimeType;
-  }
-
-  /**
-   * Deserialize an HTTP request to an OpenAPI request.
-   *
-   * @param class-string<T> $className
-   *   The required class name to deserialize to.
-   * @param \Symfony\Component\HttpFoundation\Request $request
-   *   The incoming HTTP request to deserialize.
-   *
-   * @template T of object
-   *
-   * @return T
-   *   The specified response.
-   */
-  protected function deserialize(string $className, Request $request): object {
-    try {
-      $requestData = $this->serializer->deserialize($request->getContent(), $className, $this->serializerFormat($request));
-    }
-    catch (TypeMismatchException $e) {
-      throw new \InvalidArgumentException("Unable to deserialize request: {$e->getMessage()}");
-    }
-    if (!is_object($requestData) || !($requestData instanceof $className)) {
-      throw new \InvalidArgumentException("Unable to deserialize request");
-    }
-    return $requestData;
   }
 
 }

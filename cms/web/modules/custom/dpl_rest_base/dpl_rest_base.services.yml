@@ -1,0 +1,2 @@
+dpl_rest_base.serializer:
+  class: \DanskernesDigitaleBibliotek\CMS\Api\Service\JmsSerializer
