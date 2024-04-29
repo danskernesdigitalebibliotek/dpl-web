@@ -38,8 +38,11 @@ services:
       - "@entity_type.manager"
     tags:
       - { name: access_check, applies_to: _access_event_series_instances_tab }
-  dpl_event.events_redirect:
-    class: Drupal\dpl_event\EventSubscriber\EventsRedirect
-    arguments: ["@entity_type.manager"]
+  dpl_event.event_series_redirect:
+    class: Drupal\dpl_event\EventSubscriber\EventSeriesRedirect
+    tags:
+      - { name: event_subscriber }
+  dpl_event.event_instance_edit_redirect:
+    class: Drupal\dpl_event\EventSubscriber\EventInstanceEditRedirect
     tags:
       - { name: event_subscriber }
