@@ -9507,7 +9507,7 @@ msgstr "By"
 #: 
 msgctxt "Address label"
 msgid "Suburb"
-msgstr ""
+msgstr "Forstad"
 
 #: 
 msgctxt "Address label"
@@ -9841,7 +9841,7 @@ msgstr "Land"
 
 #: 
 msgid "Submitted: @country_code / @administrative_area / @included_postal_codes / @excluded_postal_codes."
-msgstr ""
+msgstr "Indsendt: @country_code / @administrative_area / @included_postal_codes / @excluded_postal_codes."
 
 #: 
 msgid "Payment method"
@@ -10239,7 +10239,7 @@ msgstr ""
 
 #: 
 msgid "Secondary option open by default"
-msgstr ""
+msgstr "Sekundær indstilling åben som standard"
 
 #: 
 msgid "Indicates whether the details element should be open by default."
@@ -10967,7 +10967,7 @@ msgstr " - Spring felt over -"
 
 #: 
 msgid "Select field that stores image which needs to be cropped."
-msgstr ""
+msgstr "Vælg det felt, der indeholder det billede, der skal beskæres."
 
 #: 
 msgid "Are you sure you want to delete the crop type %type?"
@@ -11415,7 +11415,7 @@ msgstr ""
 
 #: 
 msgid "The entity type to export."
-msgstr ""
+msgstr "Enhedstypen til eksport."
 
 #: 
 msgid "The ID of the entity to export."
@@ -12032,7 +12032,7 @@ msgstr "Skabelon aktiv"
 
 #: 
 msgid "Stores whether the current Entity a template for cloning or not."
-msgstr ""
+msgstr "Gemmer, om den aktuelle Entity er en skabelon til kloning eller ej."
 
 #: 
 msgid "Image for the template"
@@ -12136,7 +12136,7 @@ msgstr ""
 
 #: 
 msgid "Removing orphaned entities."
-msgstr ""
+msgstr "Fjerner hjemløse enheder."
 
 #: 
 msgid "Processed @current of @total entity types."
@@ -12384,7 +12384,7 @@ msgstr ""
 
 #: 
 msgid "Skipping @group because this type does not exist in current mode"
-msgstr ""
+msgstr "Springer @group over, fordi denne type ikke findes i den aktuelle tilstand"
 
 #: 
 msgid "No field groups were found in selected view mode."
@@ -12636,7 +12636,7 @@ msgstr ""
 
 #: 
 msgid "The \"jquery_ui_accordion\" module has been installed."
-msgstr ""
+msgstr "\"jquery_ui_accordion\" modulet er installeret."
 
 #: 
 msgid "Identifier"
@@ -12836,7 +12836,7 @@ msgstr ""
 
 #: 
 msgid "Source Field"
-msgstr ""
+msgstr "Kildefelt"
 
 #: 
 msgid "Select the field on the source entity from which to inherit data."
@@ -13001,7 +13001,7 @@ msgstr ""
 
 #: 
 msgid "Source Entity"
-msgstr ""
+msgstr "Kildeenhed"
 
 #: 
 msgid "Enter the name of the %bundle from which to inherit data."
@@ -13129,7 +13129,7 @@ msgstr ""
 
 #: 
 msgid "Scales and crops image while keeping its focal point close to centered."
-msgstr ""
+msgstr "Skalerer og beskærer billedet, mens fokuspunktet holdes tæt på midten."
 
 #: 
 msgid "Focal Point"
@@ -13897,7 +13897,7 @@ msgstr ""
 
 #: 
 msgid "Select the type of default meta tags you would like to add."
-msgstr ""
+msgstr "Vælg typen af standard meta tags, som du vil tilføje."
 
 #: 
 msgid "Warning: disabling the Global default metatag will prevent any metatags from being used."
@@ -13909,7 +13909,7 @@ msgstr ""
 
 #: 
 msgid "Saved the %label Metatag defaults."
-msgstr ""
+msgstr "Gemte %label Metatag standarder."
 
 #: 
 msgid "Edit default meta tags for @path"
@@ -14089,7 +14089,7 @@ msgstr ""
 
 #: 
 msgid "Strict Origin"
-msgstr ""
+msgstr "Streng oprindelse"
 
 #: 
 msgid "Strict Origin When Cross-Origin"
@@ -14229,7 +14229,7 @@ msgstr ""
 
 #: 
 msgid "Secure"
-msgstr ""
+msgstr "Sikker"
 
 #: 
 msgid "Multiple"
@@ -14281,7 +14281,7 @@ msgstr "Du er på vej til at omvende custom mega tags for %display_name forevisn
 
 #: 
 msgid "Reverted meta tags for @view_name : @display_name"
-msgstr ""
+msgstr "Tilbageførte meta tags for @view_name : display_name"
 
 #: 
 msgid "- Select a view -"
@@ -14397,7 +14397,7 @@ msgstr "Der var ingen Metatag records at opdatere."
 
 #: 
 msgid "Removed meta tags from the @config Metatag configuration."
-msgstr ""
+msgstr "Fjernede meta tags fra @config metatag konfiguration."
 
 #: 
 msgid "Metatag: Google Plus is not enabled, nothing to do."
@@ -14441,7 +14441,7 @@ msgstr ""
 
 #: 
 msgid "Schema.org Metatag is recommended"
-msgstr ""
+msgstr "Schema.org Metatag er anbefalet"
 
 #: 
 msgid "The <a href=\"@module\">Schema.org Metatag</a> module is highly recommended to add <a href=\"@jsonld\">JSON-LD</a> -formatted <a href=\"@schema\">schema.org</a> compatible data structures to the site."
@@ -14449,7 +14449,7 @@ msgstr ""
 
 #: 
 msgid "Schema.org Metatag is installed"
-msgstr ""
+msgstr "Schema.org Metatag er installeret"
 
 #: 
 msgid "The <a href=\"@module\">Schema.org Metatag</a> module is installed."
@@ -14529,7 +14529,7 @@ msgstr "Supportmodul til test af håndtering af en brugerdefineret rute."
 
 #: 
 msgid "Route / Path"
-msgstr ""
+msgstr "Rute / Sti"
 
 #: 
 msgid "Enter the route (path) for this new configuration, starting with a leading slash.<br />Note: this must already exist as a path in Drupal."
@@ -14681,7 +14681,7 @@ msgstr ""
 
 #: 
 msgid "Replaces"
-msgstr ""
+msgstr "Erstatter"
 
 #: 
 msgid "A related resource that is supplanted, displaced, or superseded by the described resource."
@@ -14845,7 +14845,7 @@ msgstr ""
 
 #: 
 msgid "Requires"
-msgstr ""
+msgstr "Påkræver"
 
 #: 
 msgid "A related resource that is required by the described resource to support its function, delivery, or coherence."
@@ -15205,7 +15205,7 @@ msgstr "Bruges til pagineret indhold ved at give URL med rel='prev'-link."
 
 #: 
 msgid "Revisit After"
-msgstr ""
+msgstr "Genbesøg efter"
 
 #: 
 msgid "Tell search engines when to index the page again. Very few search engines support this tag, it is more useful to use an <a href='https://www.drupal.org/project/xmlsitemap'>XML Sitemap</a> file."
@@ -16619,7 +16619,7 @@ msgstr "URL'en til et billede, der skal repræsentere indholdet. Billedet skal v
 
 #: 
 msgid "Scriptwriter(s)"
-msgstr ""
+msgstr "Manuskriptforfatter(e)"
 
 #: 
 msgid "Links to the Facebook profiles for scriptwriter(s) for the video."
@@ -17013,7 +17013,7 @@ msgstr ""
 
 #: 
 msgid "Save user claims on every login"
-msgstr ""
+msgstr "Gem brugerkrav ved hvert login"
 
 #: 
 msgid "If disabled, user claims will only be saved when the account is first created."
@@ -17480,11 +17480,11 @@ msgstr ""
 
 #: 
 msgid "Show all @title_plural"
-msgstr ""
+msgstr "Vis alle @title_plural"
 
 #: 
 msgid "Show @category_title only"
-msgstr ""
+msgstr "Vis kun @category_title"
 
 #: 
 msgid "Uncategorized"
@@ -17497,12 +17497,12 @@ msgstr ""
 #: 
 msgctxt "Paragraphs Editor Enhancements"
 msgid "Search"
-msgstr ""
+msgstr "Søg"
 
 #: 
 msgctxt "Paragraphs Editor Enhancements"
 msgid "Search @placeholder_value by title and description"
-msgstr ""
+msgstr "Søg i @placeholder_value efter titel og beskrivelse"
 
 #: 
 msgid "Use off-canvas dialog"
@@ -18760,7 +18760,7 @@ msgstr "24 timer"
 
 #: 
 msgid "Second(s)"
-msgstr ""
+msgstr "Sekund(er)"
 
 #: 
 msgid "Minute(s)"
@@ -19104,15 +19104,15 @@ msgstr ""
 
 #: 
 msgid "Send Email Notifications?"
-msgstr ""
+msgstr "Send emailnotifikationer?"
 
 #: 
 msgid "Send email notifications during registration or event updates?"
-msgstr ""
+msgstr "Send emailnotifikationer under registrering eller eventopdateringer?"
 
 #: 
 msgid "Send Email Notifications using a queue?"
-msgstr ""
+msgstr "Send emailnotifikationer ved hjælp af en kø?"
 
 #: 
 msgid "Email notifications can be added to a queue to be processed on each cron run. This could be beneficial if you have a large number of registrants to your series and/or instances, to prevent the system from crashing when sending notifications to all of those recipients at once. Depending on your PHP configuration, your system may hit time and memory limits when sending notifications to a massive list of registered people. In particular, the notification types below are designed to send an email to all registrants of a specific series or instance, so those might be the problematic ones:<br>\n"
@@ -19209,7 +19209,7 @@ msgstr ""
 
 #: 
 msgid "Resend Email"
-msgstr ""
+msgstr "Gensend e-mail"
 
 #: 
 msgid "Go Back to Registration List"
@@ -19221,7 +19221,7 @@ msgstr ""
 
 #: 
 msgid "Registration full."
-msgstr ""
+msgstr "Tilmelding er fuld."
 
 #: 
 msgid "Unfortunately, there are no spaces left for this @type. However, we can add you to the waitlist. If a space becomes available, the first registrant on the waitlist will be automatically registered."
@@ -19233,7 +19233,7 @@ msgstr "Beklager, @type har nået sin kapacitet, og der er ikke flere pladser ti
 
 #: 
 msgid "Registration is closed."
-msgstr ""
+msgstr "Tilmelding er lukket."
 
 #: 
 msgid "Unfortunately, registration for this @type is closed."
@@ -19309,7 +19309,7 @@ msgstr ""
 
 #: 
 msgid "Send Email(s)"
-msgstr ""
+msgstr "Send email(s)"
 
 #: 
 msgid "Successfully sent emails to %reg_count registrants and %wait_count waitlisted users."
@@ -19417,7 +19417,7 @@ msgstr ""
 
 #: 
 msgid "Select which type of registration applies to this event."
-msgstr ""
+msgstr "Vælg hvilken type tilmelding, der gælder for dette arrangement."
 
 #: 
 msgid "Registration Dates"
@@ -19469,7 +19469,7 @@ msgstr ""
 
 #: 
 msgid "Select when to close registrations."
-msgstr ""
+msgstr "Vælg, hvornår der skal lukkes for tilmeldinger."
 
 #: 
 msgid "Instance Registration Close Time"
@@ -19497,7 +19497,7 @@ msgstr ""
 
 #: 
 msgid "Restrict registration to once per email address?"
-msgstr ""
+msgstr "Begræns tilmeldte til én pr. e-mailadresse?"
 
 #: 
 msgid "Select whether to prevent a single email address from registering multiple times for the same event."
@@ -19541,15 +19541,15 @@ msgstr ""
 
 #: 
 msgid "Select this box to enable registrations for this event. By doing so you will be able to specify the capacity of the event, and if applicable enable a waitlist."
-msgstr ""
+msgstr "Vælg denne boks for at aktivere tilmeldinger til dette arrangement. På den måde kan du angive arrangementets kapacitet, og hvis det er relevant, kan du aktivere en venteliste."
 
 #: 
 msgid "Select this box to only allow an email address to register for an event one time."
-msgstr ""
+msgstr "Vælg dette felt for kun at tillade en e-mailadresse at tilmelde sig et arrangement én gang."
 
 #: 
 msgid "Select all the roles that can register, or leave blank to allow anybody to register."
-msgstr ""
+msgstr "Vælg alle de roller, der kan tilmelde sig, eller lad det være tomt for at tillade alle at tilmelde sig."
 
 #: 
 msgid "Select whether registrations are for the entire series, or for individual instances."
@@ -19593,7 +19593,7 @@ msgstr ""
 
 #: 
 msgid "Select when to open registration"
-msgstr ""
+msgstr "Vælg, hvornår der skal åbnes for tilmelding"
 
 #: 
 msgid "Now"
@@ -19637,7 +19637,7 @@ msgstr "Før arrangementet begynder"
 
 #: 
 msgid "Select when to close registration"
-msgstr ""
+msgstr "Vælg, hvornår der skal lukkes for tilmelding"
 
 #: 
 msgid "At the end of the event"
@@ -19713,7 +19713,7 @@ msgstr ""
 
 #: 
 msgid "Send an email to a registrant to confirm they were registered for an event?"
-msgstr ""
+msgstr "Send en e-mail til tilmeldte for at bekræfte deres tilmelding til et arrangement?"
 
 #: 
 msgid "Waitlist Notification"
@@ -19721,7 +19721,7 @@ msgstr "Venteliste notifikation"
 
 #: 
 msgid "Send an email to a registrant to confirm they were added to the waitlist?"
-msgstr ""
+msgstr "Send en e-mail til tilmeldte for at bekræfte, at de er tilføjet til ventelisten?"
 
 #: 
 msgid "Promotion Notification"
@@ -19729,7 +19729,7 @@ msgstr ""
 
 #: 
 msgid "Send an email to a registrant to confirm they were promoted from the waitlist?"
-msgstr ""
+msgstr "Send en e-mail til tilmeldte for at bekræfte, at de er blevet forfremmet fra ventelisten?"
 
 #: 
 msgid "Instance Deletion Notification"
@@ -19765,7 +19765,7 @@ msgstr ""
 
 #: 
 msgid "Resend Mail"
-msgstr ""
+msgstr "Gensend mail"
 
 #: 
 msgid "Register button"
@@ -19785,7 +19785,7 @@ msgstr ""
 
 #: 
 msgid "Reminder Sent"
-msgstr ""
+msgstr "Påmindelse sendt"
 
 #: 
 msgid "Enable Email Reminder"
@@ -19801,7 +19801,7 @@ msgstr ""
 
 #: 
 msgid "Select when the reminder should be sent out."
-msgstr ""
+msgstr "Vælg, hvornår påmindelsen skal sendes ud."
 
 #: 
 msgid "Reminder Time Units"
@@ -19817,11 +19817,11 @@ msgstr ""
 
 #: 
 msgid "Select this box to enable registration reminders for this event."
-msgstr ""
+msgstr "Vælg dette felt for at aktivere påmindelser om tilmelding til dette arrangement."
 
 #: 
 msgid "Send a reminder"
-msgstr ""
+msgstr "Send en påmindelse"
 
 #: 
 msgid "Reminder Message"
@@ -19857,7 +19857,7 @@ msgstr ""
 
 #: 
 msgid "Send an email to registrants when the event name changes?"
-msgstr ""
+msgstr "Send en e-mail til tilmeldte, når arrangementets navn ændres?"
 
 #: 
 msgid "Event Instance"
@@ -19993,7 +19993,7 @@ msgstr ""
 
 #: 
 msgid "Select the type of event for which to map iCalendar properties."
-msgstr ""
+msgstr "Vælg typen af arrangement, som iCalendar-egenskaberne skal knyttes til."
 
 #: 
 msgid "Summary"
@@ -20137,11 +20137,11 @@ msgstr ""
 
 #: 
 msgid "Skipping excluded date: @start_date - @end_date"
-msgstr ""
+msgstr "Springe udelukket dato over: @start_date - @end_date"
 
 #: 
 msgid "Skipping non-included date: @start_date - @end_date"
-msgstr ""
+msgstr "Springer ikke-inkluderet dato over: @start_date - @end_date"
 
 #: 
 msgid "2 days"
@@ -20329,7 +20329,7 @@ msgstr ""
 
 #: 
 msgid "Stores an event registration reminders configuration"
-msgstr ""
+msgstr "Gemmer en konfiguration af påmindelser om begivenhedsregistrering"
 
 #: 
 msgid "Event registration reminders widget"
@@ -20661,7 +20661,7 @@ msgstr ""
 
 #: 
 msgid "Remove scheduled publishing date"
-msgstr ""
+msgstr "Fjern planlagt publiceringsdato"
 
 #: 
 msgid "The node scheduled for unpublishing via Scheduler."
@@ -20669,7 +20669,7 @@ msgstr ""
 
 #: 
 msgid "Remove scheduled unpublishing date"
-msgstr ""
+msgstr "Fjern planlagt afpubliceringsdato"
 
 #: 
 msgid "Scheduler"
@@ -20713,7 +20713,7 @@ msgstr "@entity_type_label"
 
 #: 
 msgid "The @entity_type_singular to check for the type being enabled for scheduled publishing."
-msgstr ""
+msgstr "@entity_type_singular kontrollerer, om typen er aktiveret til planlagt publicering."
 
 #: 
 msgid "@entity_type_label type is enabled for scheduled unpublishing"
@@ -20721,7 +20721,7 @@ msgstr "@entity_type_label type er aktiveret for planlagt afpublicering"
 
 #: 
 msgid "The @entity_type_singular to check for the type being enabled for scheduled unpublishing."
-msgstr ""
+msgstr "@entity_type_singular kontrollerer, om typen er aktiveret til planlagt afpublicering."
 
 #: 
 msgid "@entity_type_label is scheduled for publishing"
@@ -20729,7 +20729,7 @@ msgstr "@entity_type_label er planlagt til publicering"
 
 #: 
 msgid "The @entity_type_singular to check for having a scheduled publishing date."
-msgstr ""
+msgstr "@entity_type_singular tjekker for en planlagt dato for publicering."
 
 #: 
 msgid "@entity_type_label is scheduled for unpublishing"
@@ -20737,7 +20737,7 @@ msgstr "@entity_type_label er planligt til afpublicering"
 
 #: 
 msgid "The @entity_type_singular to check for having a scheduled unpublishing date."
-msgstr ""
+msgstr "@entity_type_singular tjekker for en planlagt dato for afpublicering."
 
 #: 
 msgid "Set date for publishing a @entity_type_singular"
@@ -20777,19 +20777,19 @@ msgstr ""
 
 #: 
 msgid "Remove date for publishing a @entity_type_singular"
-msgstr ""
+msgstr "Fjern dato for publicering af @entity_type_singular"
 
 #: 
 msgid "The @entity_type_singular from which to remove the scheduled publishing date"
-msgstr ""
+msgstr "@entity_type_singular, hvorfra den planlagte dato for publicering skal fjernes"
 
 #: 
 msgid "Remove date for unpublishing a @entity_type_singular"
-msgstr ""
+msgstr "Fjern dato for afpublicering af @entity_type_singular"
 
 #: 
 msgid "The @entity_type_singular from which to remove the scheduled unpublishing date"
-msgstr ""
+msgstr "@entity_type_singular, hvorfra den planlagte dato for afpublicering skal fjernes"
 
 #: 
 msgid "Publish a @entity_type_singular immediately"
@@ -20817,11 +20817,11 @@ msgstr "@entity_type_singular afpubliceres nu"
 
 #: 
 msgid "scheduled publishing"
-msgstr ""
+msgstr "planlagt publicering"
 
 #: 
 msgid "scheduled unpublishing"
-msgstr ""
+msgstr "planlagt afpublicering"
 
 #: 
 msgid "@bundle_label is enabled for @activity"
@@ -20937,15 +20937,15 @@ msgstr ""
 
 #: 
 msgid "Scheduled content"
-msgstr ""
+msgstr "Planlagt indhold"
 
 #: 
 msgid "Scheduled media"
-msgstr ""
+msgstr "Planlagt medie"
 
 #: 
 msgid "Scheduled products"
-msgstr ""
+msgstr "Planlagte produkter"
 
 #: 
 msgid "Scheduled terms"
@@ -21057,7 +21057,7 @@ msgstr "Afpublicer på felt skjult for: @list"
 
 #: 
 msgid "Schedule publishing and unpublishing of %label"
-msgstr ""
+msgstr "Planlagt publicering og afpublicering af %label"
 
 #: 
 msgid "Allows users to set a start and end time for %singular_label publication."
@@ -21255,7 +21255,7 @@ msgstr ""
 
 #: 
 msgid "The entity type does not support the change of creation time."
-msgstr ""
+msgstr "Enhedstypen understøtter ikke ændring af oprettelsestidspunktet."
 
 #: 
 msgid "Require scheduled publishing"
@@ -21343,7 +21343,7 @@ msgstr "Vis besked"
 
 #: 
 msgid "Show a confirmation message when a scheduled %type @singular is saved"
-msgstr ""
+msgstr "Vis en bekræftelsesmeddelelse, når en planlagt %type @singular er gemt"
 
 #: 
 msgid "Scheduler settings"
@@ -21363,7 +21363,7 @@ msgstr ""
 
 #: 
 msgid "Scheduled dates will be set randomly within the selected time span."
-msgstr ""
+msgstr "Planlagte datoer vil blive fastsat tilfældigt inden for det valgte tidsrum."
 
 #: 
 msgid "Publishing date for Scheduler"
@@ -21561,7 +21561,7 @@ msgstr "Indstil dato for publicering af indholdselement"
 
 #: 
 msgid "Remove date for unpublishing a content item"
-msgstr ""
+msgstr "Fjern dato for afpublicering af et indholdselement"
 
 #: 
 msgid "Set date for unpublishing a content item"
@@ -21569,7 +21569,7 @@ msgstr "Indstil dato for afpublicering af indholdselement"
 
 #: 
 msgid "Remove date for publishing a content item"
-msgstr ""
+msgstr "Fjern dato for publicering af et indholdselement"
 
 #: 
 msgid "Publish a content item immediately"
@@ -22639,7 +22639,7 @@ msgstr ""
 
 #: 
 msgid "Request"
-msgstr ""
+msgstr "Påkræv"
 
 #: 
 msgid "In this section you configure how a single HTTP request looks like."
@@ -22655,7 +22655,7 @@ msgstr "Port"
 
 #: 
 msgid "Request Method"
-msgstr ""
+msgstr "Påkræv metode"
 
 #: 
 msgid "Scheme"
@@ -23130,7 +23130,7 @@ msgstr "- Alle -"
 #: 
 msgctxt "facets.facet_source.search_api__views_page__events__all:name"
 msgid "search_api:views_page__events__all"
-msgstr ""
+msgstr "search_api:views_page__events__all"
 
 #: 
 msgctxt "field.field.eventinstance.default.field_branch:description"
@@ -23699,7 +23699,7 @@ msgstr "Kategori"
 #: 
 msgctxt "facets.facet_source.search_api__views_page__articles__all:name"
 msgid "search_api:views_page__articles__all"
-msgstr ""
+msgstr "search_api:views_page__articles__all"
 
 #: 
 msgctxt "field.field.taxonomy_term.breadcrumb_structure.field_children_title:label"
@@ -23919,7 +23919,7 @@ msgstr "Fjern stjerne/flag fra indsendelse"
 #: 
 msgctxt "system.action.webform_unarchive_action:label"
 msgid "Restore webform"
-msgstr ""
+msgstr "Gendan webformular"
 
 #: 
 msgctxt "views.view.webform_submissions:label"
@@ -24004,7 +24004,7 @@ msgstr "Anvend"
 #: 
 msgctxt "views.view.webform_submissions:display:default:display_options:exposed_form:options:reset_button_label"
 msgid "Reset"
-msgstr ""
+msgstr "Nulstil"
 
 #: 
 msgctxt "views.view.webform_submissions:display:default:display_options:exposed_form:options:exposed_sorts_label"
@@ -24289,7 +24289,7 @@ msgstr "Denne formular er endnu ikke blevet åbnet for indsendelser."
 #: 
 msgctxt "webform.settings:settings:default_form_close_message"
 msgid "Sorry… This form is closed to new submissions."
-msgstr ""
+msgstr "Beklager... Denne formular er lukket for nye indsendelser."
 
 #: 
 msgctxt "webform.settings:settings:default_form_exception_message"
@@ -24349,7 +24349,7 @@ msgstr ""
 #: 
 msgctxt "webform.settings:settings:default_wizard_toggle_show_label"
 msgid "Show all"
-msgstr ""
+msgstr "Vis alle"
 
 #: 
 msgctxt "webform.settings:settings:default_wizard_toggle_hide_label"
@@ -24384,7 +24384,7 @@ msgstr ""
 #: 
 msgctxt "webform.settings:settings:default_draft_button_label"
 msgid "Save Draft"
-msgstr ""
+msgstr "Gem udkast"
 
 #: 
 msgctxt "webform.settings:settings:default_draft_saved_message"
@@ -24514,7 +24514,11 @@ msgid "Submitted on [webform_submission:created]\n"
 "Submitted values are:\n"
 "[webform_submission:values]\n"
 ""
-msgstr ""
+msgstr "Indsendt på [webform_submission:created]\n"
+"Indsendt af: [webform_submission:user]\n"
+"\n"
+"De indsendte værdier er:\n"
+"[webform_submission:values]"
 
 #: 
 msgctxt "webform.settings:mail:default_body_html"
@@ -25353,7 +25357,7 @@ msgstr ""
 #: 
 msgctxt "webform.webform_options.size:label"
 msgid "Size"
-msgstr ""
+msgstr "Størrelse"
 
 #: 
 msgctxt "webform.webform_options.size:category"
@@ -25771,7 +25775,7 @@ msgstr "AL: Alabama\n"
 #: 
 msgctxt "webform.webform_options.state_province_names:label"
 msgid "State/Province names"
-msgstr ""
+msgstr "Navne på stat/provins"
 
 #: 
 msgctxt "webform.webform_options.state_province_names:category"
