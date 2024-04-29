@@ -5,10 +5,6 @@ namespace Drupal\dpl_event\Plugin\rest\resource\v1;
 use DanskernesDigitaleBibliotek\CMS\Api\Model\EventsGET200ResponseInner;
 use Drupal\Core\Cache\CacheableJsonResponse;
 use Drupal\Core\Cache\CacheableMetadata;
-use Drupal\Core\Cache\CacheBackendInterface;
-use Drupal\Core\Entity\EntityTypeManagerInterface;
-use Drupal\dpl_event\Services\EventRestMapper;
-use Drupal\drupal_typed\DrupalTyped;
 use Drupal\recurring_events\Entity\EventInstance;
 use Symfony\Component\HttpFoundation\Request;
 
@@ -237,9 +233,7 @@ final class EventsResource extends EventResourceBase {
    */
   public function get(Request $request): CacheableJsonResponse {
     // Entity query, pulling all eventinstances.
-    $entity_type_manager = DrupalTyped::service(EntityTypeManagerInterface::class, 'entity_type.manager');
-
-    $storage = $entity_type_manager->getStorage('eventinstance');
+    $storage = $this->entityTypeManager->getStorage('eventinstance');
     $ids = $storage->getQuery()
       ->accessCheck(FALSE)
       ->condition('status', TRUE)
@@ -247,11 +241,9 @@ final class EventsResource extends EventResourceBase {
 
     $response_events = [];
 
-    $cache_manager = DrupalTyped::service(CacheBackendInterface::class, 'cache.data');
-
     foreach ($ids as $id) {
       $cache_id = "dpl_event.event_response.{$id}";
-      $cache = $cache_manager->get($cache_id);
+      $cache = $this->cacheBackend->get($cache_id);
       $cached_event_response = !empty($cache->data) ? $cache->data : NULL;
 
       if ($cached_event_response instanceof EventsGET200ResponseInner) {
@@ -262,12 +254,10 @@ final class EventsResource extends EventResourceBase {
       $event_instance = $storage->load($id);
 
       if ($event_instance instanceof EventInstance) {
-        $mapper = DrupalTyped::service(EventRestMapper::class, 'dpl_event.event_rest_mapper');
-
-        $event_response = $mapper->getResponse($event_instance);
+        $event_response = $this->mapper->getResponse($event_instance);
         $response_events[] = $event_response;
         $cache_max_age = strtotime("+2 weeks");
-        $cache_manager->set($cache_id, $event_response, $cache_max_age, ["eventinstance:$id"]);
+        $this->cacheBackend->set($cache_id, $event_response, $cache_max_age, ["eventinstance:$id"]);
       }
     }
 

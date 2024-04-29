@@ -9,10 +9,10 @@ use DanskernesDigitaleBibliotek\CMS\Api\Model\EventsGET200ResponseInnerImage;
 use DanskernesDigitaleBibliotek\CMS\Api\Model\EventsGET200ResponseInnerSeries;
 use DanskernesDigitaleBibliotek\CMS\Api\Model\EventsGET200ResponseInnerTicketCategoriesInner;
 use DanskernesDigitaleBibliotek\CMS\Api\Model\EventsGET200ResponseInnerTicketCategoriesInnerPrice;
+use Drupal\Component\DependencyInjection\ContainerInterface;
 use Drupal\Core\Entity\FieldableEntityInterface;
 use Drupal\Core\Field\FieldItemListInterface;
 use Drupal\Core\File\FileUrlGeneratorInterface;
-use Drupal\drupal_typed\DrupalTyped;
 use Drupal\file\FileInterface;
 use Drupal\media\MediaInterface;
 use Drupal\paragraphs\ParagraphInterface;
@@ -26,6 +26,11 @@ use function Safe\strtotime;
 class EventRestMapper {
 
   /**
+   * Used for generating URLs to files.
+   */
+  private FileUrlGeneratorInterface $fileUrlGenerator;
+
+  /**
    * The event helper service, that we use for generic event logic.
    */
   private EventHelper $eventHelper;
@@ -33,8 +38,22 @@ class EventRestMapper {
   /**
    * {@inheritDoc}
    */
-  public function __construct() {
-    $this->eventHelper = DrupalTyped::service(EventHelper::class, 'dpl_event.event_helper');
+  public function __construct(
+    FileUrlGeneratorInterface $file_url_generator,
+    EventHelper $event_helper,
+  ) {
+    $this->fileUrlGenerator = $file_url_generator;
+    $this->eventHelper = $event_helper;
+  }
+
+  /**
+   * {@inheritdoc}
+   */
+  public static function create(ContainerInterface $container): static {
+    return new static(
+      $container->get('file_url_generator'),
+      $container->get('dpl_event.event_helper'),
+    );
   }
 
   /**
@@ -218,9 +237,8 @@ class EventRestMapper {
     }
 
     $file_uri = $file->getFileUri();
-    $file_url_generator = DrupalTyped::service(FileUrlGeneratorInterface::class, 'file_url_generator');
 
-    $url = !empty($file_uri) ? $file_url_generator->generateAbsoluteString($file_uri) : NULL;
+    $url = !empty($file_uri) ? $this->fileUrlGenerator->generateAbsoluteString($file_uri) : NULL;
 
     return new EventsGET200ResponseInnerImage(['url' => $url]);
   }
