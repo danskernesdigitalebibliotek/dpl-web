@@ -7250,7 +7250,7 @@ msgstr "<strong>{{ title__value }}</strong> <small>({{ type }})</small>"
 #: 
 msgctxt "views.view.entity_clone_template:display:block:display_options:fields:nothing:alter:text"
 msgid "<a class=\"button\" href=\"/entity_clone/node/{{ nid }}\">{{ 'Use template'|trans }}</a>"
-msgstr "<a class=\"button\" href=\"/entity_clone/node/{{ nid }}\">{{ 'Use template'|trans }}</a>"
+msgstr "<a class=\"button\" href=\"/entity_clone/node/{{ nid }}\">{{ 'Brug skabelon'|trans }}</a>"
 
 #: 
 msgctxt "views.view.entity_clone_template:display:page:display_title"
@@ -23605,7 +23605,7 @@ msgstr "Alle"
 #: 
 msgctxt "Opening Hours"
 msgid "The library is closed this day"
-msgstr "Biblioteket er lukket denne dag"
+msgstr "Biblioteket er lukket"
 
 #: 
 msgctxt "DPL admin UX"
