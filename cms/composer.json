@@ -280,6 +280,7 @@
                 "2280639: Add the FieldStorageDefinition class to define field storage definitions in hook_entity_field_storage_info()": "https://www.drupal.org/files/issues/2023-09-05/2280639-d10-reroll-156.patch",
                 "3402656: Toolbar causes a Javascript error if the subtrees content changes between page loads": "https://git.drupalcode.org/issue/drupal-3402656/-/commit/61ac007a84014f54a07825f8f92bb6bc0dfbd170.patch",
                 "2259567: Support SVG files for theme logo setting": "https://www.drupal.org/files/issues/2023-05-08/2259567-168.patch",
+                "296693: Restrict access to empty top level administration pages": "https://www.drupal.org/files/issues/2023-08-31/296693-10.1.x_0.patch",
                 "Always assume chmod succeeds": "patches/core-304fd8b-chmod-true.patch"
             },
             "drupal/date_range_formatter": {
