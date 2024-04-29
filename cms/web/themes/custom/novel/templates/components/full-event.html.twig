@@ -29,5 +29,14 @@
     } only %}
   </section>
 
+  {% if event_instances %}
+    <section class="event-list-stacked">
+      <h2 class="event-list-stacked__heading">{{ 'Upcoming events'|t }}</h2>
+      {% for instance in event_instances %}
+          {{ instance }}
+      {% endfor %}
+    </section>
+  {% endif %}
+
   {{ paragraphs }}
 </article>
