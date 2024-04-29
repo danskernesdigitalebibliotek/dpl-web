@@ -3,6 +3,7 @@
 namespace Drupal\dpl_event\Plugin\rest\resource\v1;
 
 use DanskernesDigitaleBibliotek\CMS\Api\Model\EventPATCHRequest;
+use DanskernesDigitaleBibliotek\CMS\Api\Model\EventPATCHRequestExternalData;
 use Drupal\recurring_events\Entity\EventInstance;
 use Drupal\rest\ModifiedResourceResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -113,6 +114,13 @@ final class EventResource extends EventResourceBase {
     }
 
     $state = $request_data->getState();
+    $external_data = $request_data->getExternalData();
+
+    // Only override the URL(s), if external data is set.
+    if ($external_data instanceof EventPATCHRequestExternalData) {
+      $event_instance->set('field_event_link', $external_data->getUrl());
+    }
+
     $event_instance->set('field_event_state', $state);
     $event_instance->save();
 
