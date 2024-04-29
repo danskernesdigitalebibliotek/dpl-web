@@ -3,8 +3,4 @@
   {% set name = account.get('field_author_name').getString()|default(name) %}
 {% endif %}
 
-{% if link_path -%}
-  <a{{ attributes.addClass('article-header__author') }}>{{ name }}{{ extra }}</a>
-{%- else -%}
-  <span{{ attributes }}>{{ name }}{{ extra }}</span>
-{%- endif -%}
+<span{{ attributes }}>{{ name }}{{ extra }}</span>
