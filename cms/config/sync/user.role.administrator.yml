@@ -41,7 +41,6 @@ dependencies:
     - node
     - openid_connect
     - paragraphs
-    - paragraphs_ee
     - path
     - recurring_events
     - redirect
@@ -86,7 +85,6 @@ permissions:
   - 'administer nodes'
   - 'administer openid connect clients'
   - 'administer orphaned events entities'
-  - 'administer paragraphs categories'
   - 'administer redirects'
   - 'administer site configuration'
   - 'administer themes'
@@ -190,6 +188,7 @@ permissions:
   - 'role-assign users by role'
   - 'schedule publishing of eventseries'
   - 'schedule publishing of nodes'
+  - 'select account cancellation method'
   - 'translate interface'
   - 'update any media'
   - 'update media'

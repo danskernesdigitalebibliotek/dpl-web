@@ -37,7 +37,6 @@ dependencies:
     - node
     - openid_connect
     - paragraphs
-    - paragraphs_ee
     - path
     - recurring_events
     - redirect
@@ -61,6 +60,7 @@ permissions:
   - 'access files overview'
   - 'access media overview'
   - 'access site in maintenance mode'
+  - 'access site reports'
   - 'access taxonomy overview'
   - 'access toolbar'
   - 'access user profiles'
@@ -76,7 +76,6 @@ permissions:
   - 'administer nodes'
   - 'administer openid connect clients'
   - 'administer orphaned events entities'
-  - 'administer paragraphs categories'
   - 'administer redirects'
   - 'administer site configuration'
   - 'administer themes'
