@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "0ba5d342317c221acb5b246d77ab75c7",
+    "content-hash": "992271a77fb85909e1e98f1f37b3aaef",
     "packages": [
         {
             "name": "amazeeio/drupal_integrations",
@@ -1149,19 +1149,19 @@
         },
         {
             "name": "danskernesdigitalebibliotek/dpl-design-system",
-            "version": "2024.17.0",
+            "version": "2024.18.0",
             "dist": {
                 "type": "zip",
-                "url": "https://github.com/danskernesdigitalebibliotek/dpl-design-system/releases/download/2024.17.0/dist-2024-17-0-273114be2012777935c25d074706ed6187a64e74.zip"
+                "url": "https://github.com/danskernesdigitalebibliotek/dpl-design-system/releases/download/2024.18.0/dist-2024-18-0-d02b9076284ebf6320a0c838eccdc62087aa2ff5.zip"
             },
             "type": "drupal-library"
         },
         {
             "name": "danskernesdigitalebibliotek/dpl-react",
-            "version": "2024.17.0",
+            "version": "2024.18.0",
             "dist": {
                 "type": "zip",
-                "url": "https://github.com/danskernesdigitalebibliotek/dpl-react/releases/download/2024.17.0/dist-2024-17-0-f17430fde77d3471d62b520157008cd16b164d25.zip"
+                "url": "https://github.com/danskernesdigitalebibliotek/dpl-react/releases/download/2024.18.0/dist-2024-18-0-655660a99079323eb1f05ce93d88965748c578e5.zip"
             },
             "require": {
                 "composer/installers": "^1.2.0"
@@ -2209,6 +2209,68 @@
             "support": {
                 "source": "https://git.drupalcode.org/project/admin_toolbar",
                 "issues": "https://www.drupal.org/project/issues/admin_toolbar"
+            }
+        },
+        {
+            "name": "drupal/admin_user_language",
+            "version": "1.1.0",
+            "source": {
+                "type": "git",
+                "url": "https://git.drupalcode.org/project/admin_user_language.git",
+                "reference": "8.x-1.1"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://ftp.drupal.org/files/projects/admin_user_language-8.x-1.1.zip",
+                "reference": "8.x-1.1",
+                "shasum": "7118a2e8919cfdf1f466e2ab84c055e88bb095e1"
+            },
+            "require": {
+                "drupal/core": "^8 || ^9 || ^10"
+            },
+            "type": "drupal-module",
+            "extra": {
+                "drupal": {
+                    "version": "8.x-1.1",
+                    "datestamp": "1692365693",
+                    "security-coverage": {
+                        "status": "covered",
+                        "message": "Covered by Drupal's security advisory policy"
+                    }
+                }
+            },
+            "notification-url": "https://packages.drupal.org/8/downloads",
+            "license": [
+                "GPL-2.0+"
+            ],
+            "authors": [
+                {
+                    "name": "Alessio De Francesco",
+                    "homepage": "https://github.com/aless-io",
+                    "email": "alessio.de.francesco@pwc-digital.ch",
+                    "role": "Developer"
+                },
+                {
+                    "name": "Tom Whiston",
+                    "homepage": "https://github.com/twhiston",
+                    "email": "tom.whiston@pwc-digital.ch",
+                    "role": "Developer"
+                },
+                {
+                    "name": "DieterHolvoet",
+                    "homepage": "https://www.drupal.org/user/3567222"
+                }
+            ],
+            "description": "Forces a preferred administration pages language on user creation/update",
+            "homepage": "https://www.drupal.org/project/admin_user_language",
+            "keywords": [
+                "Drupal",
+                "admin_user_language",
+                "pwc",
+                "user language"
+            ],
+            "support": {
+                "source": "https://git.drupalcode.org/project/admin_user_language"
             }
         },
         {

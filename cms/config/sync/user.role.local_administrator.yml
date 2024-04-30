@@ -35,9 +35,9 @@ dependencies:
     - locale
     - media
     - node
+    - openapi
     - openid_connect
     - paragraphs
-    - paragraphs_ee
     - path
     - recurring_events
     - redirect
@@ -60,7 +60,9 @@ permissions:
   - 'access eventseries overview'
   - 'access files overview'
   - 'access media overview'
+  - 'access openapi api docs'
   - 'access site in maintenance mode'
+  - 'access site reports'
   - 'access taxonomy overview'
   - 'access toolbar'
   - 'access user profiles'
@@ -76,7 +78,6 @@ permissions:
   - 'administer nodes'
   - 'administer openid connect clients'
   - 'administer orphaned events entities'
-  - 'administer paragraphs categories'
   - 'administer redirects'
   - 'administer site configuration'
   - 'administer themes'
@@ -185,8 +186,6 @@ permissions:
   - 'use text format basic'
   - 'use text format limited'
   - 'view admin menu in menu list'
-  - 'view all eventinstance revisions'
-  - 'view all eventseries revisions'
   - 'view all media revisions'
   - 'view all revisions'
   - 'view any unpublished content'

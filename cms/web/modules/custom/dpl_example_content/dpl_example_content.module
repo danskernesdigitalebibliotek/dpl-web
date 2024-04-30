@@ -3,6 +3,7 @@
 use Drupal\Core\Entity\EntityRepositoryInterface;
 use Drupal\dpl_opening_hours\Model\OpeningHoursInstance;
 use Drupal\dpl_opening_hours\Model\OpeningHoursRepository;
+use Drupal\dpl_opening_hours\Model\Repetition\NoRepetition;
 use Drupal\drupal_typed\DrupalTyped;
 use Drupal\node\NodeInterface;
 use Drupal\taxonomy\TermInterface;
@@ -55,8 +56,9 @@ function dpl_example_content_modules_installed(array $modules) : void {
       $category_open,
       $date->setTime(rand(8, 10), 0),
       $date->setTime(rand(15, 20), 0),
+      new NoRepetition()
     );
-    $repository->upsert($instance);
+    $repository->insert($instance);
     $num_instances++;
   }
 

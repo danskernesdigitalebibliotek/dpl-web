@@ -40,10 +40,10 @@
             "type": "package",
             "package": {
                 "name": "danskernesdigitalebibliotek/dpl-react",
-                "version": "2024.17.0",
+                "version": "2024.18.0",
                 "type": "drupal-library",
                 "dist": {
-                    "url": "https://github.com/danskernesdigitalebibliotek/dpl-react/releases/download/2024.17.0/dist-2024-17-0-f17430fde77d3471d62b520157008cd16b164d25.zip",
+                    "url": "https://github.com/danskernesdigitalebibliotek/dpl-react/releases/download/2024.18.0/dist-2024-18-0-655660a99079323eb1f05ce93d88965748c578e5.zip",
                     "type": "zip"
                 },
                 "require": {
@@ -56,9 +56,9 @@
             "package": {
                 "name": "danskernesdigitalebibliotek/dpl-design-system",
                 "type": "drupal-library",
-                "version": "2024.17.0",
+                "version": "2024.18.0",
                 "dist": {
-                    "url": "https://github.com/danskernesdigitalebibliotek/dpl-design-system/releases/download/2024.17.0/dist-2024-17-0-273114be2012777935c25d074706ed6187a64e74.zip",
+                    "url": "https://github.com/danskernesdigitalebibliotek/dpl-design-system/releases/download/2024.18.0/dist-2024-18-0-d02b9076284ebf6320a0c838eccdc62087aa2ff5.zip",
                     "type": "zip"
                 }
             }
@@ -88,13 +88,14 @@
         "composer/installers": "1.12.0",
         "cweagans/composer-patches": "1.7.3",
         "danskernesdigitalebibliotek/cms-api": "*",
-        "danskernesdigitalebibliotek/dpl-design-system": "2024.17.0",
-        "danskernesdigitalebibliotek/dpl-react": "2024.17.0",
+        "danskernesdigitalebibliotek/dpl-design-system": "2024.18.0",
+        "danskernesdigitalebibliotek/dpl-react": "2024.18.0",
         "danskernesdigitalebibliotek/fbs-client": "*",
         "dealerdirect/phpcodesniffer-composer-installer": "^0.7.1",
         "deoliveiralucas/array-keys-case-transform": "^1.1",
         "drupal/address": "^1.0",
         "drupal/admin_toolbar": "^3.4",
+        "drupal/admin_user_language": "^1.1",
         "drupal/administerusersbyrole": "^3.4",
         "drupal/color_field": "^3.0",
         "drupal/config_ignore": "^2.4",
@@ -280,6 +281,8 @@
                 "2280639: Add the FieldStorageDefinition class to define field storage definitions in hook_entity_field_storage_info()": "https://www.drupal.org/files/issues/2023-09-05/2280639-d10-reroll-156.patch",
                 "3402656: Toolbar causes a Javascript error if the subtrees content changes between page loads": "https://git.drupalcode.org/issue/drupal-3402656/-/commit/61ac007a84014f54a07825f8f92bb6bc0dfbd170.patch",
                 "2259567: Support SVG files for theme logo setting": "https://www.drupal.org/files/issues/2023-05-08/2259567-168.patch",
+                "296693: Restrict access to empty top level administration pages": "https://www.drupal.org/files/issues/2023-08-31/296693-10.1.x_0.patch",
+                "3035578: Add details for AJAX response errors": "https://www.drupal.org/files/issues/2023-07-24/3035578-26.patch",
                 "Always assume chmod succeeds": "patches/core-304fd8b-chmod-true.patch"
             },
             "drupal/date_range_formatter": {

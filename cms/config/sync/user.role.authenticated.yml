@@ -10,7 +10,6 @@ dependencies:
   module:
     - filter
     - media
-    - openapi
     - recurring_events
     - rest
     - system
@@ -22,7 +21,6 @@ weight: 1
 is_admin: false
 permissions:
   - 'access content'
-  - 'access openapi api docs'
   - 'restful get dpl_opening_hours_list'
   - 'restful get proxy-url'
   - 'restful post campaign:match'

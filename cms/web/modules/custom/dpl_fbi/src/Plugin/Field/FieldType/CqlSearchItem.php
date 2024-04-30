@@ -61,7 +61,7 @@ final class CqlSearchItem extends FieldItemBase {
 
     $constraint_manager = $this->getTypedDataManager()->getValidationConstraintManager();
 
-    $options['value']['Length']['max'] = 255;
+    $options['value']['Length']['max'] = 16000;
 
     $constraints[] = $constraint_manager->create('ComplexData', $options);
     return $constraints;
@@ -80,7 +80,7 @@ final class CqlSearchItem extends FieldItemBase {
         'type' => 'varchar',
         'not null' => FALSE,
         'description' => 'CQL search string.',
-        'length' => 255,
+        'length' => 16000,
       ],
     ];
 
