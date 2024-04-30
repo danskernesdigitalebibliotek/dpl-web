@@ -19,6 +19,7 @@ dependencies:
     - taxonomy.vocabulary.categories
     - taxonomy.vocabulary.opening_hours_categories
     - taxonomy.vocabulary.tags
+    - taxonomy.vocabulary.webform_email_categories
   module:
     - administerusersbyrole
     - block
@@ -30,6 +31,7 @@ dependencies:
     - dpl_mapp
     - dpl_opening_hours
     - dpl_url_proxy
+    - dpl_webform
     - entity_clone
     - entity_reference_revisions
     - file
@@ -51,26 +53,38 @@ dependencies:
     - theme_permission
     - toolbar
     - view_unpublished
+    - webform
 id: administrator
 label: Administrator
 weight: 2
 is_admin: null
 permissions:
   - 'access administration pages'
+  - 'access any webform configuration'
   - 'access content overview'
   - 'access eventinstance overview'
   - 'access eventseries overview'
   - 'access files overview'
   - 'access media overview'
+  - 'access own webform configuration'
   - 'access site in maintenance mode'
   - 'access site reports'
   - 'access taxonomy overview'
   - 'access toolbar'
   - 'access user profiles'
   - 'access users overview'
+  - 'access webform help'
+  - 'access webform overview'
+  - 'access webform submission user'
   - 'add eventseries entity'
   - 'add new links to admin menu'
   - 'add new links to main menu'
+  - 'administer advanced access settings'
+  - 'administer advanced confirmation settings'
+  - 'administer advanced form settings'
+  - 'administer advanced general settings'
+  - 'administer advanced handler settings'
+  - 'administer advanced submission settings'
   - 'administer blocks'
   - 'administer dpl_footer settings'
   - 'administer dpl_mapp configuration'
@@ -89,6 +103,9 @@ permissions:
   - 'administer themes'
   - 'administer themes novel'
   - 'administer url proxy configuration'
+  - 'administer webform'
+  - 'administer webform element access'
+  - 'administer webform submission'
   - 'break content lock'
   - 'bypass node access'
   - 'cancel users by role'
@@ -108,8 +125,10 @@ permissions:
   - 'create terms in categories'
   - 'create terms in opening_hours_categories'
   - 'create terms in tags'
+  - 'create terms in webform_email_categories'
   - 'create users'
   - 'create video media'
+  - 'create webform'
   - 'delete all revisions'
   - 'delete any article content'
   - 'delete any branch content'
@@ -120,6 +139,8 @@ permissions:
   - 'delete any media'
   - 'delete any page content'
   - 'delete any video media'
+  - 'delete any webform'
+  - 'delete any webform submission'
   - 'delete article revisions'
   - 'delete branch revisions'
   - 'delete campaign revisions'
@@ -139,10 +160,13 @@ permissions:
   - 'delete own image media'
   - 'delete own page content'
   - 'delete own video media'
+  - 'delete own webform'
+  - 'delete own webform submission'
   - 'delete page revisions'
   - 'delete terms in breadcrumb_structure'
   - 'delete terms in categories'
   - 'delete terms in tags'
+  - 'delete terms in webform_email_categories'
   - 'dpl admin access pages'
   - 'edit admin menu'
   - 'edit any article content'
@@ -152,6 +176,8 @@ permissions:
   - 'edit any image media'
   - 'edit any page content'
   - 'edit any video media'
+  - 'edit any webform'
+  - 'edit any webform submission'
   - 'edit eventinstance entity'
   - 'edit eventseries entity'
   - 'edit links in admin menu'
@@ -166,12 +192,19 @@ permissions:
   - 'edit own image media'
   - 'edit own page content'
   - 'edit own video media'
+  - 'edit own webform'
+  - 'edit own webform submission'
   - 'edit terms in breadcrumb_structure'
   - 'edit terms in categories'
   - 'edit terms in opening_hours_categories'
   - 'edit terms in tags'
+  - 'edit terms in webform_email_categories'
   - 'edit themes novel'
   - 'edit users by role'
+  - 'edit webform assets'
+  - 'edit webform source'
+  - 'edit webform twig'
+  - 'edit webform variants'
   - 'link to any page'
   - 'manage opening hours for branches'
   - 'restful delete dpl_opening_hours_delete'
@@ -197,11 +230,13 @@ permissions:
   - 'view all media revisions'
   - 'view all revisions'
   - 'view any unpublished content'
+  - 'view any webform submission'
   - 'view article revisions'
   - 'view campaign revisions'
   - 'view main menu in menu list'
   - 'view own unpublished content'
   - 'view own unpublished media'
+  - 'view own webform submission'
   - 'view page revisions'
   - 'view scheduled content'
   - 'view scheduled eventseries'
