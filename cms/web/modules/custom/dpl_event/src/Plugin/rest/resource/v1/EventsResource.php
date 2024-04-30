@@ -6,7 +6,7 @@ use Drupal\Core\Cache\CacheableJsonResponse;
 use Drupal\Core\Cache\CacheableMetadata;
 use Drupal\dpl_event\EventRestMapper;
 use Drupal\recurring_events\Entity\EventInstance;
-use Symfony\Component\HttpFoundation\Request;
+use function Safe\json_decode;
 
 // Descriptions quickly become long and Doctrine annotations have no good way
 // of handling multiline strings.

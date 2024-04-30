@@ -88,19 +88,14 @@ class EventWrapper {
    * Load an eventinstance address - either from the series/instance or branch.
    */
   public function getAddressField(): ?FieldItemListInterface {
-    $instance_field_name = 'field_event_address';
-    $instance_fallback_field_name = 'event_address';
-    $instance_field = $this->getField($instance_field_name, $instance_fallback_field_name);
+    $instance_field = $this->getField('event_address');
 
     if ($instance_field instanceof FieldItemListInterface) {
       return $instance_field;
     }
 
-    // Okay, now we want to look up the branch - first the custom, and otherwise
-    // the fallback, from the series.
-    $instance_branch_field_name = 'field_branch';
-    $instance_fallback_branch_field_name = 'branch';
-    $branch_field = $this->getField($instance_branch_field_name, $instance_fallback_branch_field_name);
+    // Could not find data - look up address from branch instead.
+    $branch_field = $this->getField('branch');
 
     if (!$branch_field instanceof FieldItemListInterface) {
       return NULL;
@@ -120,7 +115,7 @@ class EventWrapper {
    * Get the EventState object of an eventinstance.
    */
   public function getState(): ?EventState {
-    $field = $this->getField('field_event_state', 'event_state');
+    $field = $this->getField('event_state');
 
     if (!$field instanceof FieldItemListInterface) {
       return NULL;
@@ -140,21 +135,15 @@ class EventWrapper {
   }
 
   /**
-   * Todo - this should take inheritance in mind.
+   * Loading the field if it exists.
+   *
+   * Bear in mind that you probably want to use e.g. event_description instead
+   * of field_description, as you then get the inheritance from series.
    */
-  public function getField(string $field_name, ?string $fallback_field_name = NULL): ?FieldItemListInterface {
+  public function getField(string $field_name): ?FieldItemListInterface {
     // First, let's look up the custom field - does it already have a value?
     if ($this->event->hasField($field_name)) {
       $field = $this->event->get($field_name);
-
-      if (!$field->isEmpty()) {
-        return $field;
-      }
-    }
-
-    // Otherwise, let's look at the fallback field, from the series.
-    if ($fallback_field_name && $this->event->hasField($fallback_field_name)) {
-      $field = $this->event->get($fallback_field_name);
 
       if (!$field->isEmpty()) {
         return $field;

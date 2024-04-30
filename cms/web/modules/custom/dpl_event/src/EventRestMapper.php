@@ -25,17 +25,17 @@ use function Safe\strtotime;
 class EventRestMapper {
 
   /**
-   * Xxx.
+   * File URL generator, used for creating image URLs.
    */
   private FileUrlGeneratorInterface $fileUrlGenerator;
 
   /**
-   * Xxx.
+   * EventWrapper, a suite of eventinstance helper methods.
    */
   private EventWrapper $eventWrapper;
 
   /**
-   * Xxx.
+   * The eventinstance.
    */
   private EventInstance $event;
 
@@ -60,7 +60,7 @@ class EventRestMapper {
       'title' => $this->event->label(),
       'uuid' => $this->event->uuid(),
       'url' => $this->event->toUrl()->setAbsolute(TRUE)->toString(TRUE)->getGeneratedUrl(),
-      'description' => $this->getValue('field_event_description', 'event_description'),
+      'description' => $this->getValue('event_description'),
       'state' => $this->eventWrapper->getState()?->value,
       'image' => $this->getImage(),
       'address' => $this->getAddress(),
@@ -115,7 +115,7 @@ class EventRestMapper {
 
     $categories = [];
 
-    $field = $this->eventWrapper->getField('field_ticket_categories', 'event_ticket_categories');
+    $field = $this->eventWrapper->getField('event_ticket_categories');
 
     if (!($field instanceof FieldItemListInterface)) {
       return $categories;
@@ -169,7 +169,7 @@ class EventRestMapper {
     $address_2 = $value[0]['address_line2'] ?? NULL;
 
     return new EventsGET200ResponseInnerAddress([
-      'location' => $this->getValue('field_event_place', 'event_place'),
+      'location' => $this->getValue('event_place'),
       'street' => "$address_1 $address_2",
       'zip_code' => !empty($zip) ? intval($zip) : NULL,
       'city' => $value[0]['locality'] ?? NULL,
@@ -196,9 +196,9 @@ class EventRestMapper {
   /**
    * Get string value of a possible field (or fallback field).
    */
-  private function getValue(string $field_name, ?string $fallback_field_name = NULL): ?string {
+  private function getValue(string $field_name): ?string {
 
-    $field = $this->eventWrapper->getField($field_name, $fallback_field_name);
+    $field = $this->eventWrapper->getField($field_name);
 
     if (!($field instanceof FieldItemListInterface)) {
       return NULL;
@@ -211,7 +211,7 @@ class EventRestMapper {
    * Get the event image, loading the file and generating the original URL.
    */
   private function getImage(): ?EventsGET200ResponseInnerImage {
-    $media_field = $this->eventWrapper->getField('field_event_image', 'event_image');
+    $media_field = $this->eventWrapper->getField('event_image');
 
     if (!($media_field instanceof FieldItemListInterface)) {
       return NULL;
