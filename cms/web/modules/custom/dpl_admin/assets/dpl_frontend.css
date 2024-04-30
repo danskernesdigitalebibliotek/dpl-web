@@ -25,10 +25,6 @@
   mask-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24"><path fill="currentColor" d="M5 13q-.425 0-.712-.288T4 12t.288-.712T5 11h6.6l5-5H15q-.425 0-.712-.288T14 5t.288-.712T15 4h4q.425 0 .713.288T20 5v4q0 .425-.288.713T19 10t-.712-.288T18 9V7.4l-5.025 5.025q-.275.275-.637.425t-.763.15zm10 7q-.425 0-.712-.288T14 19t.288-.712T15 18h1.6l-2.475-2.45q-.3-.3-.3-.712t.3-.713t.725-.3t.725.3L18 16.6V15q0-.425.288-.712T19 14t.713.288T20 15v4q0 .425-.288.713T19 20z"/></svg>') !important;
 }
 
-.gin-secondary-toolbar .toolbar-secondary .toolbar-icon-cache-clear:before {
-  mask-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24"><path fill="currentColor" d="M7 6v13zm4.25 15H5V6H4V4h5V3h6v1h5v2h-1v4.3q-.425-.125-.987-.213T17 10V6H7v13h3.3q.15.525.4 1.038t.55.962M9 17h1q0-1.575.5-2.588L11 13.4V8H9zm4-5.75q.425-.275.963-.55T15 10.3V8h-2zM17 22q-2.075 0-3.537-1.463T12 17t1.463-3.537T17 12t3.538 1.463T22 17t-1.463 3.538T17 22m1.65-2.65l.7-.7l-1.85-1.85V14h-1v3.2z"/></svg>') !important;
-}
-
 /* Gin wants to hide the text of the secondary toolbar items way too early. */
 @media (min-width: 61em) {
   .toolbar-horizontal .gin-secondary-toolbar .toolbar-secondary .toolbar-bar .toolbar-tab .toolbar-item {
