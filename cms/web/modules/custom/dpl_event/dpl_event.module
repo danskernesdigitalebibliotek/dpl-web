@@ -12,7 +12,6 @@ use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\Url;
 use Drupal\dpl_event\EventState;
 use Drupal\dpl_event\EventWrapper;
-use Drupal\dpl_event\Services\EventHelper;
 use Drupal\dpl_event\Workflows\OccurredSchedule;
 use Drupal\dpl_event\Workflows\UnpublishSchedule;
 use Drupal\drupal_typed\DrupalTyped;
@@ -91,9 +90,8 @@ function dpl_event_preprocess_field(array &$variables): void {
     return;
   }
 
-  $event_helper = DrupalTyped::service(EventHelper::class, 'dpl_event.event_helper');
-
-  $event_state = $event_helper->getState($entity);
+  $event_wrapper = new EventWrapper($entity);
+  $event_state = $event_wrapper->getState();
 
   // Check if the event state is valid. If not, return early.
   if (!($event_state instanceof EventState)) {

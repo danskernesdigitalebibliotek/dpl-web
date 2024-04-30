@@ -4,8 +4,7 @@ namespace Drupal\dpl_event\Plugin\Field\FieldFormatter;
 
 use Drupal\address\Plugin\Field\FieldFormatter\AddressDefaultFormatter;
 use Drupal\Core\Field\FieldItemListInterface;
-use Drupal\dpl_event\Services\EventHelper;
-use Drupal\drupal_typed\DrupalTyped;
+use Drupal\dpl_event\EventWrapper;
 use Drupal\recurring_events\Entity\EventInstance;
 
 /**
@@ -51,8 +50,8 @@ class BranchAddressFormatter extends AddressDefaultFormatter {
       return $default_return;
     }
 
-    $service = DrupalTyped::service(EventHelper::class, 'dpl_event.event_helper');
-    $field = $service->getAddressField($entity);
+    $wrapper = new EventWrapper($entity);
+    $field = $wrapper->getAddressField();
 
     if (!$field instanceof FieldItemListInterface) {
       return $default_return;
