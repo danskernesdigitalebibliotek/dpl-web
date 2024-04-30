@@ -169,6 +169,18 @@ if (getenv('LAGOON')) {
   }
 }
 
+$azure_mail_connection_string = getenv('AZURE_MAIL_CONNECTION_STRING');
+
+// Split the connection string by the ';' delimiter.
+$parts = explode(';', $azure_mail_connection_string);
+
+// Split each part by the '=' delimiter and store them in an associative array.
+$connection_parts = [];
+foreach ($parts as $part) {
+  [$key, $value] = explode('=', $part, 2);
+  $connection_parts[$key] = $value;
+}
+
 // Set the Azure Mailer secret and endpoint.
-$config['azure_mailer.settings']['secret'] = getenv('AZURE_MAILER_SECRET');
-$config['azure_mailer.settings']['endpoint'] = getenv('AZURE_MAILER_ENDPOINT');
+$config['azure_mailer.settings']['endpoint'] = parse_url($connection_parts['endpoint'], PHP_URL_HOST);
+$config['azure_mailer.settings']['secret'] = $connection_parts['accesskey'];
