@@ -3,9 +3,9 @@ langcode: en
 status: true
 dependencies:
   module:
-    - basic_auth
     - dpl_event
     - serialization
+    - user
 id: events
 plugin_id: events
 granularity: resource
@@ -15,4 +15,4 @@ configuration:
   formats:
     - json
   authentication:
-    - basic_auth
+    - cookie
