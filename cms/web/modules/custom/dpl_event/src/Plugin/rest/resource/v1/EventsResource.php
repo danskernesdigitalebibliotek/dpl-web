@@ -5,6 +5,7 @@ namespace Drupal\dpl_event\Plugin\rest\resource\v1;
 use Drupal\Core\Cache\CacheableMetadata;
 use Drupal\Core\Cache\CacheableResponse;
 use Drupal\recurring_events\Entity\EventInstance;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
 // Descriptions quickly become long and Doctrine annotations have no good way
@@ -228,7 +229,7 @@ final class EventsResource extends EventResourceBase {
   /**
    * GET request: Get all eventinstances, hopefully cached.
    */
-  public function get(): Response {
+  public function get(Request $request): Response {
     // Entity query, pulling all eventinstances.
     $storage = $this->entityTypeManager->getStorage('eventinstance');
     $ids = $storage->getQuery()
@@ -246,7 +247,7 @@ final class EventsResource extends EventResourceBase {
       }
     }
 
-    $event_responses = $this->serializer->serialize($event_responses, 'application/json');
+    $event_responses = $this->serializer->serialize($event_responses, $this->serializerFormat($request));
     $response = new CacheableResponse($event_responses);
 
     // Create cache metadata.

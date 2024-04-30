@@ -796,6 +796,9 @@
         "security": [
           {
             "basic_auth": []
+          }, 
+          {
+            "cookie": []
           }
         ]
       }
