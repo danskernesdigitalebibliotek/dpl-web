@@ -168,7 +168,3 @@ if (getenv('LAGOON')) {
     ];
   }
 }
-
-// Set the Azure Mailer secret and endpoint.
-$config += dpl_cms_get_azure_mailer_settings();
-var_dump($config);

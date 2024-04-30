@@ -42,6 +42,7 @@ module:
   dpl_library_token: 0
   dpl_loans: 0
   dpl_login: 0
+  dpl_mail: 0
   dpl_mapp: 0
   dpl_opening_hours: 0
   dpl_paragraphs: 0
