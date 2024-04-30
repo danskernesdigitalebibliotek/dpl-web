@@ -74,7 +74,7 @@ function dpl_breadcrumb_preprocess_page(array &$variables): void {
     $entity = $event_series ?? $event_instance;
   }
 
-  if (empty($entity)) {
+  if (!($entity instanceof FieldableEntityInterface)) {
     return;
   }
 

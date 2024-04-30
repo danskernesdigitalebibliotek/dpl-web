@@ -197,8 +197,6 @@ permissions:
   - 'use text format basic'
   - 'use text format limited'
   - 'view admin menu in menu list'
-  - 'view all eventinstance revisions'
-  - 'view all eventseries revisions'
   - 'view all media revisions'
   - 'view all revisions'
   - 'view any unpublished content'
