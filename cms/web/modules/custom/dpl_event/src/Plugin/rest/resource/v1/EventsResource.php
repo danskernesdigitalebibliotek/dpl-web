@@ -4,7 +4,6 @@ namespace Drupal\dpl_event\Plugin\rest\resource\v1;
 
 use Drupal\Core\Cache\CacheableMetadata;
 use Drupal\Core\Cache\CacheableResponse;
-use Drupal\dpl_event\EventRestMapper;
 use Drupal\recurring_events\Entity\EventInstance;
 use Symfony\Component\HttpFoundation\Response;
 
@@ -237,24 +236,18 @@ final class EventsResource extends EventResourceBase {
       ->condition('status', TRUE)
       ->execute();
 
-    $response_events = [];
+    $event_responses = [];
 
     foreach ($ids as $id) {
       $event_instance = $storage->load($id);
 
       if ($event_instance instanceof EventInstance) {
-        $mapper = new EventRestMapper($event_instance);
-
-        $response_event = $mapper->getResponse();
-        $response_event = $this->serializer->serialize($response_event, 'application/json');
-        // @todo this seems wrong..
-        $response_events[] = json_decode($response_event, TRUE);
-        $response_events[] = $mapper->getResponse();
+        $event_responses[] = $this->mapper->getResponse($event_instance);
       }
     }
 
-    $response_events = $this->serializer->serialize($response_events, 'application/json');
-    $response = new CacheableResponse($response_events);
+    $event_responses = $this->serializer->serialize($event_responses, 'application/json');
+    $response = new CacheableResponse($event_responses);
 
     // Create cache metadata.
     $cache_metadata = new CacheableMetadata();

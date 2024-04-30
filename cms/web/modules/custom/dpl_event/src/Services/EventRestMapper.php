@@ -1,6 +1,6 @@
 <?php
 
-namespace Drupal\dpl_event;
+namespace Drupal\dpl_event\Services;
 
 use DanskernesDigitaleBibliotek\CMS\Api\Model\EventsGET200ResponseInner;
 use DanskernesDigitaleBibliotek\CMS\Api\Model\EventsGET200ResponseInnerAddress;
@@ -9,9 +9,10 @@ use DanskernesDigitaleBibliotek\CMS\Api\Model\EventsGET200ResponseInnerImage;
 use DanskernesDigitaleBibliotek\CMS\Api\Model\EventsGET200ResponseInnerSeries;
 use DanskernesDigitaleBibliotek\CMS\Api\Model\EventsGET200ResponseInnerTicketCategoriesInner;
 use DanskernesDigitaleBibliotek\CMS\Api\Model\EventsGET200ResponseInnerTicketCategoriesInnerPrice;
+use Drupal\Component\DependencyInjection\ContainerInterface;
 use Drupal\Core\Field\FieldItemListInterface;
 use Drupal\Core\File\FileUrlGeneratorInterface;
-use Drupal\drupal_typed\DrupalTyped;
+use Drupal\dpl_event\EventWrapper;
 use Drupal\file\FileInterface;
 use Drupal\media\MediaInterface;
 use Drupal\paragraphs\ParagraphInterface;
@@ -42,20 +43,24 @@ class EventRestMapper {
   /**
    * {@inheritDoc}
    */
-  public function __construct(
-    EventInstance $event) {
-    $this->event = $event;
-    $this->eventWrapper = new EventWrapper($this->event);
-
-    // @todo Replace this with dependency injection
-    $this->fileUrlGenerator = DrupalTyped::service(FileUrlGeneratorInterface::class, 'file_url_generator');
-
+  public function __construct(FileUrlGeneratorInterface $file_url_generator) {
+    $this->fileUrlGenerator = $file_url_generator;
   }
 
   /**
    * {@inheritDoc}
    */
-  public function getResponse(): EventsGET200ResponseInner {
+  public static function create(ContainerInterface $container): static {
+    return new static($container->get('file_url_generator'));
+  }
+
+  /**
+   * {@inheritDoc}
+   */
+  public function getResponse(EventInstance $event_instance): EventsGET200ResponseInner {
+    $this->event = $event_instance;
+    $this->eventWrapper = new EventWrapper($this->event);
+
     return new EventsGET200ResponseInner([
       'title' => $this->event->label(),
       'uuid' => $this->event->uuid(),
