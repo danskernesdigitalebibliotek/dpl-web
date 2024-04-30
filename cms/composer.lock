@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "7ea4bbbbddb2a258cf247af24e22ce02",
+    "content-hash": "992271a77fb85909e1e98f1f37b3aaef",
     "packages": [
         {
             "name": "amazeeio/drupal_integrations",
@@ -1149,19 +1149,19 @@
         },
         {
             "name": "danskernesdigitalebibliotek/dpl-design-system",
-            "version": "2024.18.0-rc1",
+            "version": "2024.18.0",
             "dist": {
                 "type": "zip",
-                "url": "https://github.com/danskernesdigitalebibliotek/dpl-design-system/releases/download/branch-release/hermod-13/dist-release-hermod-13.zip"
+                "url": "https://github.com/danskernesdigitalebibliotek/dpl-design-system/releases/download/2024.18.0/dist-2024-18-0-d02b9076284ebf6320a0c838eccdc62087aa2ff5.zip"
             },
             "type": "drupal-library"
         },
         {
             "name": "danskernesdigitalebibliotek/dpl-react",
-            "version": "2024.18.0-rc1",
+            "version": "2024.18.0",
             "dist": {
                 "type": "zip",
-                "url": "https://github.com/danskernesdigitalebibliotek/dpl-react/releases/download/branch-release/hermod-13/dist-release-hermod-13.zip"
+                "url": "https://github.com/danskernesdigitalebibliotek/dpl-react/releases/download/2024.18.0/dist-2024-18-0-655660a99079323eb1f05ce93d88965748c578e5.zip"
             },
             "require": {
                 "composer/installers": "^1.2.0"
