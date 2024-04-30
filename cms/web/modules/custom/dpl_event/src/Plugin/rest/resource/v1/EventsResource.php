@@ -2,13 +2,11 @@
 
 namespace Drupal\dpl_event\Plugin\rest\resource\v1;
 
-use DanskernesDigitaleBibliotek\CMS\Api\Model\EventsGET200ResponseInner;
 use Drupal\Core\Cache\CacheableJsonResponse;
 use Drupal\Core\Cache\CacheableMetadata;
+use Drupal\dpl_event\EventRestMapper;
 use Drupal\recurring_events\Entity\EventInstance;
 use Symfony\Component\HttpFoundation\Request;
-
-use function Safe\strtotime;
 
 // Descriptions quickly become long and Doctrine annotations have no good way
 // of handling multiline strings.
@@ -231,7 +229,7 @@ final class EventsResource extends EventResourceBase {
   /**
    * GET request: Get all eventinstances, hopefully cached.
    */
-  public function get(Request $request): CacheableJsonResponse {
+  public function get(): CacheableJsonResponse {
     // Entity query, pulling all eventinstances.
     $storage = $this->entityTypeManager->getStorage('eventinstance');
     $ids = $storage->getQuery()
@@ -245,13 +243,16 @@ final class EventsResource extends EventResourceBase {
       $event_instance = $storage->load($id);
 
       if ($event_instance instanceof EventInstance) {
-        $event_response = $this->mapper->getResponse($event_instance);
-        $response_events[] = $event_response;
+        $mapper = new EventRestMapper($event_instance);
+
+        $response_event = $mapper->getResponse();
+        $response_event = $this->serializer->serialize($response_event, 'application/json');
+        // @todo this seems wrong..
+        $response_events[] = json_decode($response_event, TRUE);
       }
     }
 
-    $serialized_events = $this->serializer->serialize($response_events, $this->serializerFormat($request));
-    $response = new CacheableJsonResponse($serialized_events);
+    $response = new CacheableJsonResponse($response_events);
 
     // Create cache metadata.
     $cache_metadata = new CacheableMetadata();

@@ -28,8 +28,3 @@ services:
       - "@job_scheduler.manager"
       - "@dpl_event.event_instance_storage"
       - "@config.factory"
-  dpl_event.event_rest_mapper:
-    class: Drupal\dpl_event\Services\EventRestMapper
-    arguments:
-      - "@file_url_generator"
-      - "@dpl_event.event_helper"

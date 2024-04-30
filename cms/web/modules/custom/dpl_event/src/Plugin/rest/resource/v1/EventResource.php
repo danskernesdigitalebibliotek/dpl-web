@@ -4,6 +4,7 @@ namespace Drupal\dpl_event\Plugin\rest\resource\v1;
 
 use DanskernesDigitaleBibliotek\CMS\Api\Model\EventPATCHRequest;
 use DanskernesDigitaleBibliotek\CMS\Api\Model\EventPATCHRequestExternalData;
+use Drupal\dpl_event\EventRestMapper;
 use Drupal\recurring_events\Entity\EventInstance;
 use Drupal\rest\ModifiedResourceResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -113,6 +114,7 @@ final class EventResource extends EventResourceBase {
       throw new NotFoundHttpException("Event not found");
     }
 
+    $mapper = new EventRestMapper($event_instance);
     $state = $request_data->getState();
     $external_data = $request_data->getExternalData();
 
@@ -124,7 +126,7 @@ final class EventResource extends EventResourceBase {
     $event_instance->set('field_event_state', $state);
     $event_instance->save();
 
-    $event_response = $this->mapper->getResponse($event_instance);
+    $event_response = $mapper->getResponse();
 
     $serialized_event = $this->serializer->serialize($event_response, $this->serializerFormat($request));
 

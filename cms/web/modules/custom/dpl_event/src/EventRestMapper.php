@@ -1,6 +1,6 @@
 <?php
 
-namespace Drupal\dpl_event\Services;
+namespace Drupal\dpl_event;
 
 use DanskernesDigitaleBibliotek\CMS\Api\Model\EventsGET200ResponseInner;
 use DanskernesDigitaleBibliotek\CMS\Api\Model\EventsGET200ResponseInnerAddress;
@@ -9,10 +9,9 @@ use DanskernesDigitaleBibliotek\CMS\Api\Model\EventsGET200ResponseInnerImage;
 use DanskernesDigitaleBibliotek\CMS\Api\Model\EventsGET200ResponseInnerSeries;
 use DanskernesDigitaleBibliotek\CMS\Api\Model\EventsGET200ResponseInnerTicketCategoriesInner;
 use DanskernesDigitaleBibliotek\CMS\Api\Model\EventsGET200ResponseInnerTicketCategoriesInnerPrice;
-use Drupal\Component\DependencyInjection\ContainerInterface;
-use Drupal\Core\Entity\FieldableEntityInterface;
 use Drupal\Core\Field\FieldItemListInterface;
 use Drupal\Core\File\FileUrlGeneratorInterface;
+use Drupal\drupal_typed\DrupalTyped;
 use Drupal\file\FileInterface;
 use Drupal\media\MediaInterface;
 use Drupal\paragraphs\ParagraphInterface;
@@ -26,64 +25,60 @@ use function Safe\strtotime;
 class EventRestMapper {
 
   /**
-   * Used for generating URLs to files.
+   * Xxx.
    */
   private FileUrlGeneratorInterface $fileUrlGenerator;
 
   /**
-   * The event helper service, that we use for generic event logic.
+   * Xxx.
    */
-  private EventHelper $eventHelper;
+  private EventWrapper $eventWrapper;
+
+  /**
+   * Xxx.
+   */
+  private EventInstance $event;
 
   /**
    * {@inheritDoc}
    */
   public function __construct(
-    FileUrlGeneratorInterface $file_url_generator,
-    EventHelper $event_helper,
-  ) {
-    $this->fileUrlGenerator = $file_url_generator;
-    $this->eventHelper = $event_helper;
-  }
+    EventInstance $event) {
+    $this->event = $event;
+    $this->eventWrapper = new EventWrapper($this->event);
 
-  /**
-   * {@inheritdoc}
-   */
-  public static function create(ContainerInterface $container): static {
-    return new static(
-      $container->get('file_url_generator'),
-      $container->get('dpl_event.event_helper'),
-    );
+    // @todo Replace this with dependency injection
+    $this->fileUrlGenerator = DrupalTyped::service(FileUrlGeneratorInterface::class, 'file_url_generator');
+
   }
 
   /**
    * {@inheritDoc}
    */
-  public function getResponse(EventInstance $event_instance): EventsGET200ResponseInner {
+  public function getResponse(): EventsGET200ResponseInner {
     return new EventsGET200ResponseInner([
-      'title' => $event_instance->label(),
-      'uuid' => $event_instance->uuid(),
-      'url' => $event_instance->toUrl()->setAbsolute(TRUE)->toString(TRUE)->getGeneratedUrl(),
-      'description' => $this->getValue($event_instance, 'field_event_description', 'event_description'),
-      'state' => $this->eventHelper->getState($event_instance)?->value,
-      'image' => $this->getImage($event_instance),
-      'address' => $this->getAddress($event_instance),
-      'ticketCategories' => $this->getTicketCategories($event_instance),
-      'createdAt' => $this->getDateField($event_instance, 'created'),
-      'updatedAt' => $this->getDateField($event_instance, 'changed'),
-      'dateTime' => $this->getDate($event_instance),
+      'title' => $this->event->label(),
+      'uuid' => $this->event->uuid(),
+      'url' => $this->event->toUrl()->setAbsolute(TRUE)->toString(TRUE)->getGeneratedUrl(),
+      'description' => $this->getValue('field_event_description', 'event_description'),
+      'state' => $this->eventWrapper->getState()?->value,
+      'image' => $this->getImage(),
+      'address' => $this->getAddress(),
+      'ticketCategories' => $this->getTicketCategories(),
+      'createdAt' => $this->getDateField('created'),
+      'updatedAt' => $this->getDateField('changed'),
+      'dateTime' => $this->getDate(),
       'series' => new EventsGET200ResponseInnerSeries([
-        'uuid' => $event_instance->getEventSeries()->uuid(),
+        'uuid' => $this->event->getEventSeries()->uuid(),
       ]),
-    ]
-    );
+    ]);
   }
 
   /**
    * Helper, getting the event instance date in correct format.
    */
-  private function getDate(EventInstance $event_instance): ?EventsGET200ResponseInnerDateTime {
-    $field = $this->eventHelper->getField($event_instance, 'date');
+  private function getDate(): ?EventsGET200ResponseInnerDateTime {
+    $field = $this->eventWrapper->getField('date');
 
     if (!($field instanceof FieldItemListInterface)) {
       return NULL;
@@ -116,11 +111,11 @@ class EventRestMapper {
    * @return \DanskernesDigitaleBibliotek\CMS\Api\Model\EventsGET200ResponseInnerTicketCategoriesInner[]
    *   The built categories objects, for use in response.
    */
-  private function getTicketCategories(EventInstance $event_instance): array {
+  private function getTicketCategories(): array {
 
     $categories = [];
 
-    $field = $this->eventHelper->getField($event_instance, 'field_ticket_categories', 'event_ticket_categories');
+    $field = $this->eventWrapper->getField('field_ticket_categories', 'event_ticket_categories');
 
     if (!($field instanceof FieldItemListInterface)) {
       return $categories;
@@ -132,15 +127,15 @@ class EventRestMapper {
         continue;
       }
 
-      $title = $this->getValue($paragraph, 'field_ticket_category_name');
-      $price_value = $this->getValue($paragraph, 'field_ticket_category_price') ?? 0;
+      $title = $paragraph->hasField('field_ticket_category_name') ? $paragraph->get('field_ticket_category_name')->getString() : NULL;
+      $price_value = $paragraph->hasField('field_ticket_category_price') ? $paragraph->get('field_ticket_category_price')->getString() : 0;
 
       if (empty($title)) {
         continue;
       }
 
       $price = new EventsGET200ResponseInnerTicketCategoriesInnerPrice([
-        'value' => $price_value,
+        'value' => intval($price_value),
         'currency' => 'DKK',
       ]);
 
@@ -158,10 +153,10 @@ class EventRestMapper {
    *
    * Notice that this may be the address of the related branch.
    *
-   * @see eventHelper->getAddressField()
+   * @see eventWrapper->getAddressField()
    */
-  private function getAddress(EventInstance $event_instance): ?EventsGET200ResponseInnerAddress {
-    $field = $this->eventHelper->getAddressField($event_instance);
+  private function getAddress(): ?EventsGET200ResponseInnerAddress {
+    $field = $this->eventWrapper->getAddressField();
 
     if (!($field instanceof FieldItemListInterface)) {
       return NULL;
@@ -174,7 +169,7 @@ class EventRestMapper {
     $address_2 = $value[0]['address_line2'] ?? NULL;
 
     return new EventsGET200ResponseInnerAddress([
-      'location' => $this->getValue($event_instance, 'field_event_place', 'event_place'),
+      'location' => $this->getValue('field_event_place', 'event_place'),
       'street' => "$address_1 $address_2",
       'zip_code' => !empty($zip) ? intval($zip) : NULL,
       'city' => $value[0]['locality'] ?? NULL,
@@ -185,8 +180,8 @@ class EventRestMapper {
   /**
    * Interpret a date field as a datetime object.
    */
-  private function getDateField(FieldableEntityInterface $entity, string $field_name): ?DateTime {
-    $timestamp = $this->getValue($entity, $field_name);
+  private function getDateField(string $field_name): ?DateTime {
+    $timestamp = $this->getValue($field_name);
 
     if (empty($timestamp)) {
       return NULL;
@@ -201,9 +196,9 @@ class EventRestMapper {
   /**
    * Get string value of a possible field (or fallback field).
    */
-  private function getValue(FieldableEntityInterface $entity, string $field_name, ?string $fallback_field_name = NULL): ?string {
+  private function getValue(string $field_name, ?string $fallback_field_name = NULL): ?string {
 
-    $field = $this->eventHelper->getField($entity, $field_name, $fallback_field_name);
+    $field = $this->eventWrapper->getField($field_name, $fallback_field_name);
 
     if (!($field instanceof FieldItemListInterface)) {
       return NULL;
@@ -215,8 +210,8 @@ class EventRestMapper {
   /**
    * Get the event image, loading the file and generating the original URL.
    */
-  private function getImage(EventInstance $event_instance): ?EventsGET200ResponseInnerImage {
-    $media_field = $this->eventHelper->getField($event_instance, 'field_event_image', 'event_image');
+  private function getImage(): ?EventsGET200ResponseInnerImage {
+    $media_field = $this->eventWrapper->getField('field_event_image', 'event_image');
 
     if (!($media_field instanceof FieldItemListInterface)) {
       return NULL;
