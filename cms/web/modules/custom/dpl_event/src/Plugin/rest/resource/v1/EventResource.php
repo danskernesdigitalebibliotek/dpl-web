@@ -5,8 +5,8 @@ namespace Drupal\dpl_event\Plugin\rest\resource\v1;
 use DanskernesDigitaleBibliotek\CMS\Api\Model\EventPATCHRequest;
 use DanskernesDigitaleBibliotek\CMS\Api\Model\EventPATCHRequestExternalData;
 use Drupal\recurring_events\Entity\EventInstance;
-use Drupal\rest\ModifiedResourceResponse;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 // Descriptions quickly become long and Doctrine annotations have no good way
@@ -98,7 +98,7 @@ final class EventResource extends EventResourceBase {
   /**
    * PATCH requests - Load the relevant eventinstance, and update values.
    */
-  public function patch(string $uuid, Request $request): ModifiedResourceResponse {
+  public function patch(string $uuid, Request $request): Response {
     $request_data = $this->deserialize(EventPATCHRequest::class, $request);
 
     $storage = $this->entityTypeManager->getStorage('eventinstance');
@@ -128,7 +128,7 @@ final class EventResource extends EventResourceBase {
 
     $serialized_event = $this->serializer->serialize($event_response, $this->serializerFormat($request));
 
-    return new ModifiedResourceResponse($serialized_event);
+    return new Response($serialized_event);
   }
 
 }
