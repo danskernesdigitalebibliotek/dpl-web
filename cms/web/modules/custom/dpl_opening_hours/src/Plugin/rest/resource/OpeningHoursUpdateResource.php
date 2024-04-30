@@ -4,7 +4,7 @@ declare(strict_types = 1);
 
 namespace Drupal\dpl_opening_hours\Plugin\rest\resource;
 
-use DanskernesDigitaleBibliotek\CMS\Api\Model\DplOpeningHoursCreatePOSTRequest;
+use DanskernesDigitaleBibliotek\CMS\Api\Model\DplOpeningHoursCreatePOSTRequest as OpeningHoursRequest;
 use Drupal\Component\Utility\NestedArray;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -59,7 +59,7 @@ final class OpeningHoursUpdateResource extends OpeningHoursResourceBase {
    */
   public function patch(int $id, Request $request): Response {
     try {
-      $requestData = $this->deserialize(DplOpeningHoursCreatePOSTRequest::class, $request);
+      $requestData = $this->deserialize(OpeningHoursRequest::class, $request);
       if ($id !== $requestData->getId()) {
         throw new \InvalidArgumentException("Instance ids provided in path '{$id}' and body '{$requestData->getId()}' do not match ");
       }
@@ -68,9 +68,8 @@ final class OpeningHoursUpdateResource extends OpeningHoursResourceBase {
         throw new NotFoundHttpException("Invalid instance id: '{$id}'");
       }
 
-      $updatedInstance = $this->mapper->fromRequest($requestData);
-      $this->repository->upsert($updatedInstance);
-
+      $updateInstance = $this->mapper->fromRequest($requestData);
+      $updatedInstance = $this->repository->update($updateInstance);
       $responseData = $this->mapper->toResponse($updatedInstance);
       return new Response($this->serializer->serialize($responseData, $this->serializerFormat($request)));
     }
