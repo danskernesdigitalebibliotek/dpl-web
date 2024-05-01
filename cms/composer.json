@@ -33,10 +33,14 @@
             "url": "https://packages.drupal.org/8"
         },
         {
+            "type": "composer",
+            "url": "https://asset-packagist.org"
+        },
+        {
             "type": "package",
             "package": {
                 "name": "danskernesdigitalebibliotek/dpl-react",
-                "version": "2024.16.1",
+                "version": "2024.18.0",
                 "type": "drupal-library",
                 "dist": {
                     "url": "https://github.com/danskernesdigitalebibliotek/dpl-react/releases/download/branch-release%2Fbrahma-15/dist-release-brahma-15.zip",
@@ -52,7 +56,7 @@
             "package": {
                 "name": "danskernesdigitalebibliotek/dpl-design-system",
                 "type": "drupal-library",
-                "version": "2024.16.1",
+                "version": "2024.18.0",
                 "dist": {
                     "url": "https://github.com/danskernesdigitalebibliotek/dpl-design-system/releases/download/branch-release%2Fbrahma-15/dist-release-brahma-15.zip",
                     "type": "zip"
@@ -84,13 +88,14 @@
         "composer/installers": "1.12.0",
         "cweagans/composer-patches": "1.7.3",
         "danskernesdigitalebibliotek/cms-api": "*",
-        "danskernesdigitalebibliotek/dpl-design-system": "^2024.16",
-        "danskernesdigitalebibliotek/dpl-react": "^2024.16",
+        "danskernesdigitalebibliotek/dpl-design-system": "^2024.18",
+        "danskernesdigitalebibliotek/dpl-react": "^2024.18",
         "danskernesdigitalebibliotek/fbs-client": "*",
         "dealerdirect/phpcodesniffer-composer-installer": "^0.7.1",
         "deoliveiralucas/array-keys-case-transform": "^1.1",
         "drupal/address": "^1.0",
         "drupal/admin_toolbar": "^3.4",
+        "drupal/admin_user_language": "^1.1",
         "drupal/administerusersbyrole": "^3.4",
         "drupal/azure_mailer": "^1.0",
         "drupal/color_field": "^3.0",
@@ -133,10 +138,12 @@
         "drupal/potion": "dev-2.x#e48d6ee336d960b9d2efb5d88e68402db6d229a6",
         "drupal/purge": "^3.2",
         "drupal/recurring_events": "^2.0@RC",
+        "drupal/redirect": "^1.9",
         "drupal/redis": "^1.7",
         "drupal/restui": "^1.21",
         "drupal/scheduler": "^2.0",
         "drupal/search_api": "^1.31",
+        "drupal/select2_multicheck": "^1.0",
         "drupal/selective_better_exposed_filters": "^3.0",
         "drupal/simple_menu_permissions": "^2.0",
         "drupal/taxonomy_unique": "^2.5",
@@ -152,6 +159,8 @@
         "drush/drush": "^12",
         "mnsami/composer-custom-directory-installer": "^2.0",
         "myclabs/php-enum": "^1.8",
+        "npm-asset/select2": "^4.0",
+        "oomphinc/composer-installers-extender": "^2.0",
         "phpdocumentor/reflection-docblock": "^5.3",
         "spatie/color": "^1.5",
         "symfony/property-access": "^6.2",
@@ -189,7 +198,8 @@
             "phpstan/extension-installer": true,
             "zaporylie/composer-drupal-optimizations": true,
             "drupal/console-extend-plugin": true,
-            "mnsami/composer-custom-directory-installer": true
+            "mnsami/composer-custom-directory-installer": true,
+            "oomphinc/composer-installers-extender": true
         }
     },
     "scripts": {
@@ -200,6 +210,10 @@
     },
     "extra": {
         "composer-exit-on-patch-failure": true,
+        "installer-types": [
+            "bower-asset",
+            "npm-asset"
+        ],
         "installer-paths": {
             "web/themes/custom/novel/assets/{$name}": [
                 "danskernesdigitalebibliotek/dpl-design-system"
@@ -209,7 +223,9 @@
             ],
             "web/libraries/{$name}": [
                 "swagger-api/swagger-ui",
-                "type:drupal-library"
+                "type:drupal-library",
+                "type:bower-asset",
+                "type:npm-asset"
             ],
             "web/modules/contrib/{$name}": [
                 "type:drupal-module"
@@ -267,6 +283,8 @@
                 "2280639: Add the FieldStorageDefinition class to define field storage definitions in hook_entity_field_storage_info()": "https://www.drupal.org/files/issues/2023-09-05/2280639-d10-reroll-156.patch",
                 "3402656: Toolbar causes a Javascript error if the subtrees content changes between page loads": "https://git.drupalcode.org/issue/drupal-3402656/-/commit/61ac007a84014f54a07825f8f92bb6bc0dfbd170.patch",
                 "2259567: Support SVG files for theme logo setting": "https://www.drupal.org/files/issues/2023-05-08/2259567-168.patch",
+                "296693: Restrict access to empty top level administration pages": "https://www.drupal.org/files/issues/2023-08-31/296693-10.1.x_0.patch",
+                "3035578: Add details for AJAX response errors": "https://www.drupal.org/files/issues/2023-07-24/3035578-26.patch",
                 "Always assume chmod succeeds": "patches/core-304fd8b-chmod-true.patch"
             },
             "drupal/date_range_formatter": {
