@@ -81,6 +81,7 @@ permissions:
   - 'add new links to main menu'
   - 'administer advanced access settings'
   - 'administer advanced confirmation settings'
+  - 'administer advanced element settings'
   - 'administer advanced form settings'
   - 'administer advanced general settings'
   - 'administer advanced handler settings'
