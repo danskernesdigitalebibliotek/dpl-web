@@ -106,8 +106,8 @@ Class | Method | HTTP request | Description
 *DefaultApiInterface* | [**dplOpeningHoursDeleteDELETE**](docs/Api/DefaultApiInterface.md#dplopeninghoursdeletedelete) | **DELETE** /dpl_opening_hours/{id} | Delete individual opening hours
 *DefaultApiInterface* | [**dplOpeningHoursListGET**](docs/Api/DefaultApiInterface.md#dplopeninghourslistget) | **GET** /dpl_opening_hours | List all opening hours
 *DefaultApiInterface* | [**dplOpeningHoursUpdatePATCH**](docs/Api/DefaultApiInterface.md#dplopeninghoursupdatepatch) | **PATCH** /dpl_opening_hours/{id} | Update individual opening hours
-*DefaultApiInterface* | [**eventPATCH**](docs/Api/DefaultApiInterface.md#eventpatch) | **PATCH** /dpl_event/{uuid} | Update single events
-*DefaultApiInterface* | [**eventsGET**](docs/Api/DefaultApiInterface.md#eventsget) | **GET** /dpl_event | Retrieve all events
+*DefaultApiInterface* | [**eventPATCH**](docs/Api/DefaultApiInterface.md#eventpatch) | **PATCH** /api/v1/events/{uuid} | Update single events
+*DefaultApiInterface* | [**eventsGET**](docs/Api/DefaultApiInterface.md#eventsget) | **GET** /api/v1/events | Retrieve all events
 *DefaultApiInterface* | [**proxyUrlGET**](docs/Api/DefaultApiInterface.md#proxyurlget) | **GET** /dpl-url-proxy | Generate proxy url
 
 
@@ -119,8 +119,11 @@ Class | Method | HTTP request | Description
  - [CampaignMatchPOSTRequestInner](docs/Model/CampaignMatchPOSTRequestInner.md)
  - [CampaignMatchPOSTRequestInnerValuesInner](docs/Model/CampaignMatchPOSTRequestInnerValuesInner.md)
  - [DplOpeningHoursCreatePOSTRequest](docs/Model/DplOpeningHoursCreatePOSTRequest.md)
+ - [DplOpeningHoursCreatePOSTRequestRepetition](docs/Model/DplOpeningHoursCreatePOSTRequestRepetition.md)
  - [DplOpeningHoursListGET200ResponseInner](docs/Model/DplOpeningHoursListGET200ResponseInner.md)
  - [DplOpeningHoursListGET200ResponseInnerCategory](docs/Model/DplOpeningHoursListGET200ResponseInnerCategory.md)
+ - [DplOpeningHoursListGET200ResponseInnerRepetition](docs/Model/DplOpeningHoursListGET200ResponseInnerRepetition.md)
+ - [DplOpeningHoursListGET200ResponseInnerRepetitionWeeklyData](docs/Model/DplOpeningHoursListGET200ResponseInnerRepetitionWeeklyData.md)
  - [EventPATCHRequest](docs/Model/EventPATCHRequest.md)
  - [EventPATCHRequestExternalData](docs/Model/EventPATCHRequestExternalData.md)
  - [EventsGET200ResponseInner](docs/Model/EventsGET200ResponseInner.md)
@@ -129,7 +132,6 @@ Class | Method | HTTP request | Description
  - [EventsGET200ResponseInnerImage](docs/Model/EventsGET200ResponseInnerImage.md)
  - [EventsGET200ResponseInnerSeries](docs/Model/EventsGET200ResponseInnerSeries.md)
  - [EventsGET200ResponseInnerTicketCategoriesInner](docs/Model/EventsGET200ResponseInnerTicketCategoriesInner.md)
- - [EventsGET200ResponseInnerTicketCategoriesInnerCount](docs/Model/EventsGET200ResponseInnerTicketCategoriesInnerCount.md)
  - [EventsGET200ResponseInnerTicketCategoriesInnerPrice](docs/Model/EventsGET200ResponseInnerTicketCategoriesInnerPrice.md)
  - [ProxyUrlGET200Response](docs/Model/ProxyUrlGET200Response.md)
  - [ProxyUrlGET200ResponseData](docs/Model/ProxyUrlGET200ResponseData.md)

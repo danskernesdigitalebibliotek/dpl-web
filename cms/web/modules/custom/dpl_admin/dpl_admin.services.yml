@@ -1,0 +1,3 @@
+services:
+  dpl_admin.version_helper:
+    class: Drupal\dpl_admin\Services\VersionHelper

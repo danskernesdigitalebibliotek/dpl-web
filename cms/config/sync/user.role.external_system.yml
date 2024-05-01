@@ -5,14 +5,17 @@ dependencies:
   config:
     - rest.resource.event
   module:
-    - recurring_events
+    - openapi
     - rest
     - system
+    - toolbar
 id: external_system
 label: 'External system'
 weight: 7
 is_admin: null
 permissions:
-  - 'edit eventinstance entity'
+  - 'access administration pages'
+  - 'access openapi api docs'
+  - 'access toolbar'
   - 'restful patch event'
   - 'view the administration theme'

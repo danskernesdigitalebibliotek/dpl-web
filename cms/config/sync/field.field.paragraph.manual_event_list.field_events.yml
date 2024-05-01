@@ -1,0 +1,27 @@
+uuid: 74a4affa-daff-485d-9e21-a1e1b8f01513
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.paragraph.field_events
+    - paragraphs.paragraphs_type.manual_event_list
+  module:
+    - entity_reference_revisions
+id: paragraph.manual_event_list.field_events
+field_name: field_events
+entity_type: paragraph
+bundle: manual_event_list
+label: Events
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings:
+  handler: views
+  handler_settings:
+    view:
+      view_name: entity_reference_event_instance
+      display_name: entity_reference_1
+      arguments: {  }
+field_type: entity_reference_revisions

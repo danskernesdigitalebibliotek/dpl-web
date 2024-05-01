@@ -1,5 +1,8 @@
 <?php
 
+use Drupal\dpl_opening_hours\Mapping\OpeningHoursRepetitionType;
+use function Safe\json_encode as json_encode;
+
 /**
  * Implements hook_schema().
  */
@@ -46,10 +49,114 @@ function dpl_opening_hours_schema() : array {
         'length' => 5,
         'not null' => TRUE,
       ],
+      'repetition_id' => [
+        'description' => 'The id of the related repetition',
+        'type' => 'int',
+        'unsigned' => TRUE,
+        'not null' => TRUE,
+      ],
     ],
     'primary key' => ['id'],
-    'index' => ['branch_id', 'date'],
+    'index' => [
+      'branch_date' => ['branch_nid', 'date'],
+      'repetition_date' => ['repetition_id', 'date'],
+    ],
+  ];
+  $schema['dpl_opening_hours_repetition'] = [
+    'description' => 'Opening hours repetitions.',
+    'fields' => [
+      'id' => [
+        'description' => 'An serial unique id of the repetition',
+        'type' => 'serial',
+        'unsigned' => TRUE,
+        'not null' => TRUE,
+      ],
+      'type' => [
+        'description' => 'The id for the branch node the instance belongs to',
+        'type' => 'varchar',
+        'length' => 255,
+        'not null' => TRUE,
+      ],
+      'data' => [
+        'description' => 'Additional data related to the repetition encoded as JSON',
+        'type' => 'text',
+        // Drupal Schema API does not have a data type for JSON. We expect to
+        // be using MySQL only so use a proper JSON field here.
+        'mysql_type' => 'json',
+      ],
+    ],
+    'primary key' => ['id'],
   ];
 
   return $schema;
+}
+
+/**
+ * Add support for opening hours repetitions.
+ *
+ * @param mixed[] $sandbox
+ *   The update sandbox.
+ */
+function dpl_opening_hours_update_10000(array &$sandbox): string {
+  $messages = [];
+
+  $repetition_table = 'dpl_opening_hours_repetition';
+  $repetition_schema = dpl_opening_hours_schema()[$repetition_table];
+  $database = \Drupal::database()->schema();
+  if (!$database->tableExists($repetition_table)) {
+    $database->createTable($repetition_table, $repetition_schema);
+    $messages[] = "Created {$repetition_table} table";
+  }
+
+  $instance_table = 'dpl_opening_hours_instance';
+  $repetition_field = 'repetition_id';
+  $repetition_field_spec = dpl_opening_hours_schema()[$instance_table]['fields'][$repetition_field];
+  // Initially disable not null for repetition_id field. The field will not
+  // have values for existing rows until the migration is complete.
+  $repetition_field_spec['not null'] = FALSE;
+  if (!$database->fieldExists($instance_table, $repetition_field)) {
+    $database->addField($instance_table, $repetition_field, $repetition_field_spec);
+    $messages[] = "Added repetition field {$repetition_field} to {$instance_table}";
+  }
+
+  // Create none repetition for all existing opening hours instance.
+  $result = \Drupal::database()->select($instance_table)
+    ->fields($instance_table, ['id'])
+    ->execute();
+  $ids = ($result) ? $result->fetchCol() : [];
+  $updated_ids = array_filter($ids, function (int $id) use ($repetition_table, $instance_table) {
+    $repetition_id = \Drupal::database()->insert($repetition_table)
+      ->fields([
+        'type' => OpeningHoursRepetitionType::None->value,
+        'data' => json_encode([]),
+      ])
+      ->execute();
+    return \Drupal::database()->update($instance_table)
+      ->condition('id', $id)
+      ->fields(['repetition_id' => $repetition_id])
+      ->execute();
+  });
+  $num_updated_repetitions = count($updated_ids);
+  $messages[] = "Added default repetition to {$num_updated_repetitions} opening hours instances";
+
+  // Update the repetition_id field to enable not null.
+  $database->changeField($instance_table, $repetition_field, $repetition_field, $repetition_field_spec);
+
+  // Create new indices for instances.
+  $instance_schema = dpl_opening_hours_schema()[$instance_table];
+  $branch_index = 'branch_date';
+  $branch_index_fields = dpl_opening_hours_schema()[$instance_table]['index'][$branch_index];
+  if (!$database->indexExists($instance_table, $branch_index)) {
+    $database->addIndex($instance_table, $branch_index, $branch_index_fields, $instance_schema);
+    $messages[] = "Created {$branch_index} index for {$instance_table}";
+  }
+
+  $repetition_index = 'repetition_date';
+  $repetition_index_fields = dpl_opening_hours_schema()[$instance_table]['index'][$repetition_index];
+  if (!$database->indexExists($instance_table, $repetition_index)) {
+    $database->addIndex($instance_table, $repetition_index, $repetition_index_fields, $instance_schema);
+    $messages[] = "Created {$repetition_index} index for {$instance_table}";
+  }
+
+  return implode("\n", $messages);
 }

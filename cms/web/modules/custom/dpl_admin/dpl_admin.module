@@ -8,6 +8,8 @@
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\Render\Markup;
 use Drupal\Core\Url;
+use Drupal\dpl_admin\Services\VersionHelper;
+use Drupal\drupal_typed\DrupalTyped;
 use Drupal\menu_link_content\Entity\MenuLinkContent;
 use Drupal\recurring_events\Entity\EventInstance;
 use Drupal\system\Form\SiteInformationForm;
@@ -75,38 +77,10 @@ function dpl_admin_preprocess_views_view_field(array &$variables): void {
     return;
   }
 
-  if ($variables['view']->id() == 'event_admin' &&
-    str_ends_with($variables['field']->getField(), '.eventseries_id')) {
-    _dpl_admin_preprocess_views_view_field_event_admin_eventseries_id($variables);
-  }
-
   if ($variables['view']->id() == 'content' &&
     $variables['field']->getField() == '.name') {
     _dpl_admin_preprocess_views_view_field_content_name($variables);
   }
-}
-
-/**
- * Preprocesses the output of the id field in the "event_admin" view.
- *
- *  Altering the output to generate a unique indicator with a link to the
- *  eventseries.
- */
-function _dpl_admin_preprocess_views_view_field_event_admin_eventseries_id(array &$variables): void {
-  if (!isset($variables['output']) || !$variables['output'] instanceof Markup) {
-    return;
-  }
-
-  // Take the ID, and create a unique HSL color value, that we use for
-  // background image further down.
-  $id = $variables['output']->__toString();
-  $unique_hsl_value = ((intval($id) * 100) % 360);
-  $url = Url::fromRoute('entity.eventseries.canonical', ['eventseries' => $id]);
-
-  $sanitized_id = htmlspecialchars($id, ENT_QUOTES, 'UTF-8');
-  $markup = '<a class="dpl-admin__unique-indicator" style="background-color: hsl(' . $unique_hsl_value . ', 70%, 50%);" href="' . $url->toString() . '">' . $sanitized_id . '</a>';
-
-  $variables['output'] = Markup::create($markup);
 }
 
 /**
@@ -318,4 +292,31 @@ function dpl_admin_menu_link_content_presave(MenuLinkContent $entity): void {
  */
 function dpl_admin_dpl_protected_nodes_get_protected_nodes(): array {
   return dpl_protected_nodes_get_context(SiteInformationForm::class, 'system.site_information_settings');
+}
+
+/**
+ * Implements hook_toolbar_alter().
+ *
+ * Displaying the DPL CMS version in the secondary admin toolbar.
+ *
+ * @param array<mixed> $items
+ *   See hook_toolbar_alter().
+ */
+function dpl_admin_toolbar_alter(array &$items): void {
+  $service = DrupalTyped::service(VersionHelper::class, 'dpl_admin.version_helper');
+
+  $version = $service->getVersion();
+
+  if (empty($version)) {
+    return;
+  }
+
+  $items['cms_version'] = [
+    '#type' => 'toolbar_item',
+    'tab' => [
+      '#type' => 'link',
+      '#title' => t('CMS version: @version', ['@version' => $version], ['context' => 'DPL admin UX']),
+      '#url' => Url::fromRoute('system.status'),
+    ],
+  ];
 }

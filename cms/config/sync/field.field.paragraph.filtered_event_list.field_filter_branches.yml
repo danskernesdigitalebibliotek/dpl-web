@@ -1,0 +1,29 @@
+uuid: 8626ce10-e7bd-4ee5-bddf-347406dc86b9
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.paragraph.field_filter_branches
+    - node.type.branch
+    - paragraphs.paragraphs_type.filtered_event_list
+id: paragraph.filtered_event_list.field_filter_branches
+field_name: field_filter_branches
+entity_type: paragraph
+bundle: filtered_event_list
+label: 'Filter by branches'
+description: 'Add any branch you want to include'
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings:
+  handler: 'default:node'
+  handler_settings:
+    target_bundles:
+      branch: branch
+    sort:
+      field: title
+      direction: ASC
+    auto_create: false
+    auto_create_bundle: ''
+field_type: entity_reference
