@@ -15,15 +15,15 @@ class WebformAccessSubscriber extends RouteSubscriberBase {
    */
   protected function alterRoutes(RouteCollection $collection): void {
     if ($route = $collection->get('entity.webform.settings_access')) {
-      $route->setRequirement('_permission', 'administer advanced access settings');
+      $route->setRequirement('_permission', 'administer advanced webform access settings');
     }
 
     if ($route = $collection->get('entity.webform.settings_form')) {
-      $route->setRequirement('_permission', 'administer advanced form settings');
+      $route->setRequirement('_permission', 'administer advanced webform form settings');
     }
 
     if ($route = $collection->get('entity.webform.settings_submissions')) {
-      $route->setRequirement('_permission', 'administer advanced submission settings');
+      $route->setRequirement('_permission', 'administer advanced webform submission settings');
     }
   }
 

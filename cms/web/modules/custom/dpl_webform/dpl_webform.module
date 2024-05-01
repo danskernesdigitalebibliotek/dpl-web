@@ -49,7 +49,7 @@ function dpl_webform_theme_suggestions_form_element_alter(array &$suggestions, a
  */
 function dpl_webform_form_webform_settings_form_alter(array &$form, FormStateInterface &$form_state, string $form_id): void {
   $current_user = \Drupal::currentUser();
-  $access = $current_user->hasPermission('administer advanced general settings');
+  $access = $current_user->hasPermission('administer advanced webform general settings');
 
   // We restrict access to the following settings:
   $form['general_settings']['archive']['#access'] = $access;
@@ -67,7 +67,7 @@ function dpl_webform_form_webform_settings_form_alter(array &$form, FormStateInt
  */
 function dpl_webform_form_webform_settings_confirmation_form_alter(array &$form, FormStateInterface &$form_state, string $form_id): void {
   $current_user = \Drupal::currentUser();
-  $access = $current_user->hasPermission('administer advanced confirmation settings');
+  $access = $current_user->hasPermission('administer advanced webform confirmation settings');
 
   // We restrict access to the following settings:
   $form['confirmation_type']['#access'] = $access;
@@ -82,7 +82,7 @@ function dpl_webform_form_webform_settings_confirmation_form_alter(array &$form,
  */
 function dpl_webform_form_webform_ui_element_form_alter(array &$form, FormStateInterface &$form_state, string $form_id): void {
   $current_user = \Drupal::currentUser();
-  $access = $current_user->hasPermission('administer advanced element settings');
+  $access = $current_user->hasPermission('administer advanced webform element settings');
 
   // We restrict access to the following settings:
   $form['properties']['conditional_logic']['#access'] = $access;

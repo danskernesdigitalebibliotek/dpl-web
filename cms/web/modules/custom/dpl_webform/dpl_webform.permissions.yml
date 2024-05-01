@@ -1,30 +1,30 @@
-administer advanced access settings:
-  title: "Administer advanced access settings"
-  description: "Administer advanced access settings for webforms."
+administer advanced webform access settings:
+  title: "Administer advanced webform access settings"
+  description: "Administer advanced webform access settings for webforms."
   restrict access: true
 
-administer advanced confirmation settings:
-  title: "Administer advanced confirmation settings"
-  description: "Administer advanced confirmation settings for webforms."
+administer advanced webform confirmation settings:
+  title: "Administer advanced webform confirmation settings"
+  description: "Administer advanced webform confirmation settings for webforms."
 
-administer advanced element settings:
-  title: "Administer advanced element settings"
-  description: "Administer advanced element settings for webforms."
+administer advanced webform element settings:
+  title: "Administer advanced webform element settings"
+  description: "Administer advanced webform element settings for webforms."
 
-administer advanced form settings:
-  title: "Administer advanced form settings"
-  description: "Administer advanced form settings for webforms."
+administer advanced webform form settings:
+  title: "Administer advanced webform form settings"
+  description: "Administer advanced webform form settings for webforms."
   restrict access: true
 
-administer advanced general settings:
-  title: "Administer advanced general settings"
-  description: "Administer advanced general settings for webforms."
+administer advanced webform general settings:
+  title: "Administer advanced webform general settings"
+  description: "Administer advanced webform general settings for webforms."
 
-administer advanced handler settings:
-  title: "Administer advanced handler settings"
-  description: "Administer advanced handler settings for webforms."
+administer advanced webform handler settings:
+  title: "Administer advanced webform handler settings"
+  description: "Administer advanced webform handler settings for webforms."
 
-administer advanced submission settings:
-  title: "Administer advanced submission settings"
-  description: "Administer advanced submission settings for webforms."
+administer advanced webform submission settings:
+  title: "Administer advanced webform submission settings"
+  description: "Administer advanced webform submission settings for webforms."
   restrict access: true
