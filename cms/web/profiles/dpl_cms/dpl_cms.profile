@@ -6,7 +6,6 @@
  */
 
 use Drupal\user\Entity\User;
-use function Safe\parse_url;
 
 /**
  * Implements hook_updater_info_alter().
@@ -98,29 +97,4 @@ function dpl_cms_locale_translation_batch_fetch_finished(bool $success, array $r
   }
 
   locale_translation_batch_fetch_finished($success, $results);
-}
-
-/**
- * Get Azure Mailer settings.
- *
- * @return mixed[]
- *   Settings.
- */
-function dpl_cms_get_azure_mailer_settings(): array {
-  $config = [];
-  if (!$azure_mail_connection_string = getenv('AZURE_MAIL_CONNECTION_STRING')) {
-    return $config;
-  }
-
-  // Split the connection string by the ';' delimiter.
-  $parts = explode(';', $azure_mail_connection_string);
-  array_map(function ($element) use (&$config) {
-    [$key, $value] = explode('=', $element, 2);
-    if ($key === 'endpoint') {
-      $value = parse_url($value, PHP_URL_HOST);
-    }
-    $config['azure_mailer.settings'][$key] = $value;
-  }, $parts);
-
-  return $config;
 }
