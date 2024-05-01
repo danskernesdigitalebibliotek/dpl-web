@@ -26,13 +26,6 @@
 
   Drupal.behaviors.dplReactHandler = {
     attach(context) {
-
-      // TODO: Slet denne igen
-      document.addEventListener("click", function () {
-        test = TEST_THIS_IS_NOT_DEFINED_EITHER;
-      });
-      const test = TEST_THIS_IS_NOT_DEFINED;
-
       const element = getElement(context);
       if (element) {
         // Port jQuery.ajax with dataType script to vanilla JS with Fetch API.
