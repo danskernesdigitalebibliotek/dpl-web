@@ -341,7 +341,7 @@
                 "3105637: Edit, install and uninstall permission": "https://www.drupal.org/files/issues/2024-02-01/theme-permission-edit-install-uninstall-3105637-7.patch"
             },
             "drupal/twig_tweak": {
-                "3428226: Clear menu cache when adding first item": "https://git.drupalcode.org/project/twig_tweak/-/merge_requests/47.patch"
+                "3428226: Clear menu cache when adding first item": "https://git.drupalcode.org/project/twig_tweak/-/commit/6fd3997d45fe90fdf6545a3c85ff1c5b68e9bde1.patch"
             }
         }
     }
