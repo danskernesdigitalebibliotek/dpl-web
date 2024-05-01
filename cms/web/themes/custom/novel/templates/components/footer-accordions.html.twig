@@ -1,7 +1,7 @@
 {{ attach_library('novel/footer-accordions') }}
 
 <ul class="footer-accordions" data-footer-accordions="true">
-    {% for item in footer %}
+    {% for item in settings.footer_items %}
         {% set startsOpen = loop.index == 1 %}
         <li class="footer-accordion">
             <h3 class="footer-accordion__header footer__title">
