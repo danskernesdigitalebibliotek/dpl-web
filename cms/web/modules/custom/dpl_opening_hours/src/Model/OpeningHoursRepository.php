@@ -215,22 +215,33 @@ class OpeningHoursRepository {
    * @return bool
    *   Whether the operation was successful or not.
    */
-  public function delete(int $id): bool {
+  public function delete(int $id, ?int $repetitionId): bool {
     $instance = $this->load($id);
     if (!$instance) {
       return FALSE;
     }
+    if ($repetitionId && $instance->repetition->id !== $repetitionId) {
+      throw new \InvalidArgumentException("Instance '$id' does not match repetition '$repetitionId'");
+    }
 
-    $numRowsAffected = $this->connection->delete(self::INSTANCE_TABLE)
-      ->condition('id', $id)
-      ->execute();
+    $deleteQuery = $this->connection->delete(self::INSTANCE_TABLE);
+    if ($repetitionId) {
+      $deleteQuery
+        ->condition('repetition_id', $repetitionId)
+        ->condition('date', $instance->startTime->format('Y-m-d'), '>=');
+    }
+    else {
+      $deleteQuery->condition('id', $instance->id);
+    }
+    $numRowsAffected = $deleteQuery->execute();
 
-    // If the instance is not repeated then delete the corresponding singular
-    // repetition.
-    $repetition = $instance->repetition;
-    if ($repetition::class === NoRepetition::class && $instance->id !== NULL) {
+    // If there are no remaining instances for the repetition then delete it.
+    $repetitionInstanceCount = $this->connection->select(self::INSTANCE_TABLE)
+      ->condition('repetition_id', $instance->repetition->id)
+      ->countQuery()->execute()?->fetchField();
+    if ($repetitionInstanceCount === 0) {
       $this->connection->delete(self::REPETITION_TABLE)
-        ->condition('id', $repetition->id)
+        ->condition('id', $instance->repetition->id)
         ->execute();
     }
 

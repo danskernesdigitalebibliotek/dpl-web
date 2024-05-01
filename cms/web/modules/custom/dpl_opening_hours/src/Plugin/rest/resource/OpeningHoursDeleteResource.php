@@ -5,6 +5,7 @@ declare(strict_types = 1);
 namespace Drupal\dpl_opening_hours\Plugin\rest\resource;
 
 use Drupal\Component\Utility\NestedArray;
+use Drupal\drupal_typed\RequestTyped;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
@@ -64,8 +65,9 @@ final class OpeningHoursDeleteResource extends OpeningHoursResourceBase {
   /**
    * Delete an opening hours instance.
    */
-  public function delete(int $id): Response {
-    $deleted = $this->repository->delete($id);
+  public function delete(int $id, Request $request): Response {
+    $typedRequest = new RequestTyped($request);
+    $deleted = $this->repository->delete($id, $typedRequest->getInt('repetition_id'));
     if (!$deleted) {
       throw new BadRequestHttpException("No instance for id '{$id}'");
     }

@@ -5,6 +5,7 @@ namespace Drupal\Tests\dpl_opening_hours\Kernel;
 use DanskernesDigitaleBibliotek\CMS\Api\Model\DplOpeningHoursCreatePOSTRequest as OpeningHoursRequest;
 use DanskernesDigitaleBibliotek\CMS\Api\Model\DplOpeningHoursCreatePOSTRequestRepetition;
 use DanskernesDigitaleBibliotek\CMS\Api\Model\DplOpeningHoursCreatePOSTRequestRepetition as OpeningHoursRepetitionRequest;
+use DanskernesDigitaleBibliotek\CMS\Api\Model\DplOpeningHoursListGET200ResponseInner;
 use DanskernesDigitaleBibliotek\CMS\Api\Model\DplOpeningHoursListGET200ResponseInner as OpeningHoursResponse;
 use DanskernesDigitaleBibliotek\CMS\Api\Model\DplOpeningHoursListGET200ResponseInnerCategory as OpeningHoursCategory;
 use DanskernesDigitaleBibliotek\CMS\Api\Model\DplOpeningHoursListGET200ResponseInnerRepetition;
@@ -319,7 +320,7 @@ class OpeningHoursResourceTest extends KernelTestBase {
     $this->assertNotNull($id);
 
     $deleteResource = OpeningHoursDeleteResource::create($this->container, [], '', '');
-    $response = $deleteResource->delete($id);
+    $response = $deleteResource->delete($id, new Request());
     $this->assertTrue($response->isSuccessful());
 
     $openingHoursList = $this->listOpeningHours();
@@ -329,7 +330,7 @@ class OpeningHoursResourceTest extends KernelTestBase {
   /**
    * Test that opening hours with weekly repetition can be deleted.
    */
-  public function testDeleteWeeklyRepetition(): void {
+  public function testDeleteInstanceInWeeklyRepetition(): void {
     $startDate = new DateTime('now');
     $endDate = new DateTime("+2weeks");
 
@@ -345,7 +346,7 @@ class OpeningHoursResourceTest extends KernelTestBase {
     $this->assertNotNull($openingHours->getId(), "Created opening hours must have a valid id");
 
     $deleteResource = OpeningHoursDeleteResource::create($this->container, [], '', '');
-    $deleteResource->delete($openingHours->getId());
+    $deleteResource->delete($openingHours->getId(), new Request());
 
     $openingHoursAfterDeletion = $this->listOpeningHours();
     $this->assertCount(2, $openingHoursAfterDeletion, "Deleting a single opening hour in a repetition should retain the remaining instances");
@@ -356,6 +357,47 @@ class OpeningHoursResourceTest extends KernelTestBase {
     $this->assertEquals(OpeningHoursRepetitionType::Weekly->value, $firstOpeningHours->getRepetition()?->getType());
     $this->assertDateEquals($endDate, $firstOpeningHours->getRepetition()?->getWeeklyData()?->getEndDate());
     $this->assertEquals($firstOpeningHours->getRepetition(), $lastOpeningHours->getRepetition());
+  }
+
+  /**
+   * Test future instances of opening hours with repetition can be deleted.
+   */
+  public function testDeleteWeeklyRepetition(): void {
+    $startDate = new DateTime('now');
+    $endDate = new DateTime("+2weeks");
+
+    $createdOpeningHours = $this->createOpeningHours(
+      $startDate,
+      repetition: (new DplOpeningHoursCreatePOSTRequestRepetition())
+        ->setType(OpeningHoursRepetitionType::Weekly->value)
+        ->setWeeklyData((new DplOpeningHoursListGET200ResponseInnerRepetitionWeeklyData())->setEndDate($endDate))
+    );
+    // Create three more opening hour instances which should not be touched
+    // as they will belong to a separate repetition.
+    $this->createOpeningHours(
+      $startDate,
+      repetition: (new DplOpeningHoursCreatePOSTRequestRepetition())
+        ->setType(OpeningHoursRepetitionType::Weekly->value)
+        ->setWeeklyData((new DplOpeningHoursListGET200ResponseInnerRepetitionWeeklyData())->setEndDate($endDate))
+    );
+    $this->assertCount(6, $this->listOpeningHours());
+
+    $openingHours = $createdOpeningHours[1];
+    $this->assertNotNull($openingHours->getId(), "Created opening hours must have a valid id");
+    $this->assertNotNull($openingHours->getRepetition()?->getId(), "Opening hours created with a repetition must have a repetition id.");
+
+    $deleteResource = OpeningHoursDeleteResource::create($this->container, [], '', '');
+    $deleteResource->delete($openingHours->getId(), new Request(['repetition_id' => $openingHours->getRepetition()->getId()]));
+
+    $openingHoursAfterDeletion = $this->listOpeningHours();
+    $this->assertCount(4, $openingHoursAfterDeletion, "Deleting an opening hour in a repetition with the repetition id should neither affect prior instances nor instances for other branches.");
+
+    $firstOpeningHoursCreated = $createdOpeningHours[0];
+    $remainingOpeningHoursInRepetition = array_filter($openingHoursAfterDeletion, function (DplOpeningHoursListGET200ResponseInner $openingHours) use ($firstOpeningHoursCreated) {
+      return $openingHours->getRepetition()?->getId() == $firstOpeningHoursCreated->getRepetition()?->getId();
+    });
+    $this->assertCount(1, $remainingOpeningHoursInRepetition, "The past instance should remain when deleting an instance with a repetition.");
+    $this->assertEquals($firstOpeningHoursCreated->getId(), $remainingOpeningHoursInRepetition[0]->getId());
   }
 
   /**
