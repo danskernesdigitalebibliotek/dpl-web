@@ -33,6 +33,10 @@
             "url": "https://packages.drupal.org/8"
         },
         {
+            "type": "composer",
+            "url": "https://asset-packagist.org"
+        },        
+        {
             "type": "package",
             "package": {
                 "name": "danskernesdigitalebibliotek/dpl-react",
@@ -80,6 +84,7 @@
     ],
     "require": {
         "amazeeio/drupal_integrations": "^0.4",
+        "bower-asset/jsnlog": "^2.30",
         "brick/math": "^0.12.1",
         "composer/installers": "1.12.0",
         "cweagans/composer-patches": "1.7.3",
@@ -115,6 +120,7 @@
         "drupal/handy_cache_tags": "^1.4",
         "drupal/honeypot": "^2.1",
         "drupal/job_scheduler": "^4.0",
+        "drupal/jsnlog": "^1.3",
         "drupal/jsonlog": "^4.0",
         "drupal/language_neutral_aliases": "^3.1",
         "drupal/libraries": "^4.0",
@@ -196,7 +202,13 @@
         "post-drupal-scaffold-cmd": [
             "[[ ! -d /app/web/sites/default/files/modules_local ]] && mkdir -p /app/web/sites/default/files/modules_local || exit 0",
             "[[ ! -L /app/web/modules/local ]] && ln -s /app/web/sites/default/files/modules_local /app/web/modules/local || exit 0"
-        ]
+        ],
+        "post-install-cmd": [
+            "mkdir -p web/libraries/jsnlog && cp -R vendor/bower-asset/jsnlog web/libraries/jsnlog"
+        ],
+        "post-update-cmd": [
+            "mkdir -p web/libraries/jsnlog && cp -R vendor/bower-asset/jsnlog web/libraries/jsnlog"
+        ]        
     },
     "extra": {
         "composer-exit-on-patch-failure": true,
