@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "2085f0556c6a1a3722bd426d459bb21f",
+    "content-hash": "50d5ec6cf7cda880200106e4786b658b",
     "packages": [
         {
             "name": "amazeeio/drupal_integrations",
@@ -115,24 +115,6 @@
                 "source": "https://github.com/asm89/stack-cors/tree/v2.1.1"
             },
             "time": "2022-01-18T09:12:03+00:00"
-        },
-        {
-            "name": "bower-asset/jsnlog",
-            "version": "v2.30.0",
-            "source": {
-                "type": "git",
-                "url": "git@github.com:mperdeck/jsnlog.js.git",
-                "reference": "297b61745b98c827c48b27b92b7057df3ebfdcb7"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/mperdeck/jsnlog.js/zipball/297b61745b98c827c48b27b92b7057df3ebfdcb7",
-                "reference": "297b61745b98c827c48b27b92b7057df3ebfdcb7"
-            },
-            "type": "bower-asset",
-            "license": [
-                "MIT"
-            ]
         },
         {
             "name": "brick/math",
@@ -8795,6 +8777,18 @@
                 "source": "https://github.com/mobomo/guzzle-azure-hmac-auth/tree/main"
             },
             "time": "2023-06-06T18:57:46+00:00"
+        },
+        {
+            "name": "mperdeck/jsnlog.js",
+            "version": "v2.30.0",
+            "dist": {
+                "type": "tar",
+                "url": "https://github.com/mperdeck/jsnlog.js/archive/refs/tags/v2.30.0.tar.gz"
+            },
+            "type": "drupal-library",
+            "extra": {
+                "installer-name": "jsnlog"
+            }
         },
         {
             "name": "myclabs/php-enum",

@@ -33,10 +33,6 @@
             "url": "https://packages.drupal.org/8"
         },
         {
-            "type": "composer",
-            "url": "https://asset-packagist.org"
-        },        
-        {
             "type": "package",
             "package": {
                 "name": "danskernesdigitalebibliotek/dpl-react",
@@ -80,11 +76,25 @@
                     "danskernesdigitalebibliotek/cms-api": "dev-main"
                 }
             }
+        },
+        {
+            "type": "package",
+            "package": {
+                "name": "mperdeck/jsnlog.js",
+                "version": "v2.30.0",
+                "type": "drupal-library",
+                "dist": {
+                    "url": "https://github.com/mperdeck/jsnlog.js/archive/refs/tags/v2.30.0.tar.gz",
+                    "type": "tar"
+                },
+                "extra": {
+                    "installer-name": "jsnlog"
+                }
+            }
         }
     ],
     "require": {
         "amazeeio/drupal_integrations": "^0.4",
-        "bower-asset/jsnlog": "^2.30",
         "brick/math": "^0.12.1",
         "composer/installers": "1.12.0",
         "cweagans/composer-patches": "1.7.3",
@@ -157,6 +167,7 @@
         "drupal/webform": "^6.2",
         "drush/drush": "^12",
         "mnsami/composer-custom-directory-installer": "^2.0",
+        "mperdeck/jsnlog.js": "^2.30",
         "myclabs/php-enum": "^1.8",
         "phpdocumentor/reflection-docblock": "^5.3",
         "spatie/color": "^1.5",
@@ -202,13 +213,7 @@
         "post-drupal-scaffold-cmd": [
             "[[ ! -d /app/web/sites/default/files/modules_local ]] && mkdir -p /app/web/sites/default/files/modules_local || exit 0",
             "[[ ! -L /app/web/modules/local ]] && ln -s /app/web/sites/default/files/modules_local /app/web/modules/local || exit 0"
-        ],
-        "post-install-cmd": [
-            "mkdir -p web/libraries/jsnlog && cp -R vendor/bower-asset/jsnlog web/libraries/jsnlog"
-        ],
-        "post-update-cmd": [
-            "mkdir -p web/libraries/jsnlog && cp -R vendor/bower-asset/jsnlog web/libraries/jsnlog"
-        ]        
+        ]
     },
     "extra": {
         "composer-exit-on-patch-failure": true,
