@@ -16,7 +16,8 @@ use Drupal\views\Views;
  * @see _dpl_filter_paragraphs_prepare_filter_view()
  */
 function dpl_filter_paragraphs_preprocess_paragraph__card_grid_automatic(array &$variables): void {
-  $variables = _dpl_filter_paragraphs_prepare_filter_view($variables, 'card_grid');
+  $variables = _dpl_filter_paragraphs_prepare_filter_view($variables, 'content_paragraphs', 'card_grid', NULL);
+
 }
 
 /**
@@ -26,11 +27,17 @@ function dpl_filter_paragraphs_preprocess_paragraph__card_grid_automatic(array &
  *
  * @param array<mixed> $variables
  *   See the $variables in theme_preprocess_paragraph__NAME().
+ * @param string $view_name
+ *   The name of the view to load.
+ * @param string $item_view_mode
+ *   The display mode of the view to set.
+ * @param int|null $item_limit
+ *   (optional) The number of items to return. Only used if set.
  *
  * @return array<mixed>
  *   See the $variables in theme_preprocess_paragraph__NAME().
  */
-function _dpl_filter_paragraphs_prepare_filter_view(array $variables, string $item_view_mode): array {
+function _dpl_filter_paragraphs_prepare_filter_view(array $variables, string $view_name, string $item_view_mode, ?int $item_limit): array {
   // In the preview (AKA backend view), we don't want to load in the whole view.
   if ($variables['view_mode'] === 'preview') {
     return $variables;
@@ -48,7 +55,7 @@ function _dpl_filter_paragraphs_prepare_filter_view(array $variables, string $it
     return $variables;
   }
 
-  $view = Views::getView('content_paragraphs');
+  $view = Views::getView($view_name);
   if (!$view instanceof ViewExecutable) {
     return $variables;
   }
@@ -92,6 +99,11 @@ function _dpl_filter_paragraphs_prepare_filter_view(array $variables, string $it
   // Argument = Contextual filters.
   $view->setArguments($arguments);
 
+  // If there is an item_limit set, we'll set the pager to that.
+  if ($item_limit) {
+    $view->getPager()->setItemsPerPage($item_limit);
+  }
+
   // Making a unique cache key, based on the chosen arguments.
   // We need a unique cache key, as the view is getting embedded, and Drupal
   // does not understand that different contextual filters should result in
@@ -104,6 +116,9 @@ function _dpl_filter_paragraphs_prepare_filter_view(array $variables, string $it
 
   $view->execute();
 
+  $view_has_results = !empty($view->result);
+  $variables['view_has_results'] = $view_has_results;
+
   if ($paragraph->hasField('field_title')) {
     // Replacing the view title with our custom paragraph field_title.
     $paragraph_title = $paragraph->get('field_title')->getString();
@@ -112,6 +127,28 @@ function _dpl_filter_paragraphs_prepare_filter_view(array $variables, string $it
   }
 
   $variables['content']['view'] = $view->buildRenderable($item_view_mode);
+  $view->buildRenderable($item_view_mode);
 
   return $variables;
+}
+
+/**
+ * Implements hook_preprocess_HOOK() for paragraph__filtered_list_event.html.twig.
+ *
+ * @param array &$variables
+ *   Variables for the paragraph template, including the 'paragraph' entity.
+ */
+function dpl_filter_paragraphs_preprocess_paragraph__filtered_event_list(array &$variables): void {
+  $paragraph = $variables['paragraph'] ?? NULL;
+
+  if (!($paragraph instanceof Paragraph)) {
+    return;
+  }
+
+  $amount_of_events_to_display = NULL;
+  if ($variables['paragraph']->hasField('field_amount_of_events') && !$variables['paragraph']->get('field_amount_of_events')->isEmpty()) {
+    $amount_of_events_to_display = $variables['paragraph']->get('field_amount_of_events')->value;
+  }
+
+  $variables = _dpl_filter_paragraphs_prepare_filter_view($variables, 'filtered_event_list', 'default', $amount_of_events_to_display);
 }

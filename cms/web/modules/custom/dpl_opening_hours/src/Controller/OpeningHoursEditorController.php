@@ -35,13 +35,23 @@ class OpeningHoursEditorController extends ControllerBase {
       '#theme' => 'dpl_react_app',
       '#name' => 'opening-hours-editor',
       '#data' => [
-        'opening-hours-editor-categories-config' => $this->buildOpeningHoursCategoriesArray($openingHoursCategories),
         'opening-hours-branch-id-config' => $node->id(),
-        'opening-hours-remove-event-button-text' => $this->t('Remove event', [], ['context' => 'DPL Opening Hours']),
-        'opening-hours-event-form-title-text' => $this->t('Title', [], ['context' => 'DPL Opening Hours']),
-        'opening-hours-event-form-start-time-text' => $this->t('Start time', [], ['context' => 'DPL Opening Hours']),
-        'opening-hours-event-form-end-time-text' => $this->t('End time', [], ['context' => 'DPL Opening Hours']),
-        'opening-hours-event-form-submit-text' => $this->t('Save', [], ['context' => 'DPL Opening Hours']),
+        'opening-hours-editor-categories-config' => $this->buildOpeningHoursCategoriesArray($openingHoursCategories),
+        'opening-hours-confirm-add-repeated-text' => $this->t('Do you want to add this repeated opening hour?', [], ['context' => 'DPL Opening Hours Editor']),
+        'opening-hours-event-form-category-text' => $this->t('Opening hour', [], ['context' => 'DPL Opening Hours Editor']),
+        'opening-hours-event-form-end-date-text' => $this->t('End date', [], ['context' => 'DPL Opening Hours Editor']),
+        'opening-hours-event-form-end-time-text' => $this->t('End time', [], ['context' => 'DPL Opening Hours Editor']),
+        'opening-hours-event-form-every-weekday-text' => $this->t('Every', [], ['context' => 'DPL Opening Hours Editor']),
+        'opening-hours-event-form-repeated-text' => $this->t('Repeat opening hour weekly every @weekDayName from @startDate', [], ['context' => 'DPL Opening Hours Editor']),
+        'opening-hours-event-form-start-date-text' => $this->t('Start date', [], ['context' => 'DPL Opening Hours Editor']),
+        'opening-hours-event-form-start-time-text' => $this->t('Start time', [], ['context' => 'DPL Opening Hours Editor']),
+        'opening-hours-repeated-icon-alt-text'  => $this->t('Repeated opening hour', [], ['context' => 'DPL Opening Hours Editor']),
+
+        // Buttons:
+        'opening-hours-confirm-add-repeated-cancel-text' => $this->t('Cancel', [], ['context' => 'DPL Opening Hours Editor']),
+        'opening-hours-confirm-add-repeated-submit-text' => $this->t("I'm sure", [], ['context' => 'DPL Opening Hours Editor']),
+        'opening-hours-event-form-submit-text' => $this->t('Save', [], ['context' => 'DPL Opening Hours Editor']),
+        'opening-hours-remove-event-button-text' => $this->t('Remove event', [], ['context' => 'DPL Opening Hours Editor']),
       ],
     ];
   }

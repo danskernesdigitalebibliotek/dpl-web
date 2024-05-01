@@ -12,20 +12,27 @@ dependencies:
     - node.type.branch
     - node.type.campaign
     - node.type.page
+    - rest.resource.dpl_opening_hours_create
+    - rest.resource.dpl_opening_hours_delete
+    - rest.resource.dpl_opening_hours_update
+    - taxonomy.vocabulary.breadcrumb_structure
     - taxonomy.vocabulary.categories
+    - taxonomy.vocabulary.opening_hours_categories
     - taxonomy.vocabulary.tags
   module:
     - content_lock
     - dpl_admin
     - dpl_footer
+    - dpl_opening_hours
     - entity_clone
     - file
     - filter
     - media
     - node
     - paragraphs
-    - paragraphs_ee
     - recurring_events
+    - redirect
+    - rest
     - scheduler
     - simple_menu_permissions
     - system
@@ -37,6 +44,7 @@ label: Editor
 weight: 4
 is_admin: null
 permissions:
+  - 'access administration pages'
   - 'access content overview'
   - 'access eventinstance overview'
   - 'access eventseries overview'
@@ -50,7 +58,7 @@ permissions:
   - 'administer dpl_footer settings'
   - 'administer menu'
   - 'administer nodes'
-  - 'administer paragraphs categories'
+  - 'administer redirects'
   - 'break content lock'
   - 'bypass node access'
   - 'change own username'
@@ -65,7 +73,9 @@ permissions:
   - 'create image media'
   - 'create media'
   - 'create page content'
+  - 'create terms in breadcrumb_structure'
   - 'create terms in categories'
+  - 'create terms in opening_hours_categories'
   - 'create terms in tags'
   - 'create video media'
   - 'delete all revisions'
@@ -95,7 +105,9 @@ permissions:
   - 'delete own page content'
   - 'delete own video media'
   - 'delete page revisions'
+  - 'delete terms in breadcrumb_structure'
   - 'delete terms in categories'
+  - 'delete terms in opening_hours_categories'
   - 'delete terms in tags'
   - 'dpl admin access pages'
   - 'edit any article content'
@@ -118,8 +130,14 @@ permissions:
   - 'edit own image media'
   - 'edit own page content'
   - 'edit own video media'
+  - 'edit terms in breadcrumb_structure'
   - 'edit terms in categories'
+  - 'edit terms in opening_hours_categories'
   - 'edit terms in tags'
+  - 'manage opening hours for branches'
+  - 'restful delete dpl_opening_hours_delete'
+  - 'restful patch dpl_opening_hours_update'
+  - 'restful post dpl_opening_hours_create'
   - 'revert all eventinstance revisions'
   - 'revert all eventseries revisions'
   - 'revert all revisions'
@@ -132,8 +150,6 @@ permissions:
   - 'update media'
   - 'use text format basic'
   - 'use text format limited'
-  - 'view all eventinstance revisions'
-  - 'view all eventseries revisions'
   - 'view all media revisions'
   - 'view all revisions'
   - 'view any unpublished content'

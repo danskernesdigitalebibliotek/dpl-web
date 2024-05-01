@@ -1,5 +1,6 @@
-{% if link_path -%}
-    <a{{ attributes.addClass('article-header__author') }}>{{ name }}{{ extra }}</a>
-{%- else -%}
-    <span{{ attributes }}>{{ name }}{{ extra }}</span>
-{%- endif -%}
+{# If the user has an author name, we want to use that instead of username. #}
+{% if account.hasField('field_author_name') %}
+  {% set name = account.get('field_author_name').getString()|default(name) %}
+{% endif %}
+
+<span{{ attributes }}>{{ name }}{{ extra }}</span>

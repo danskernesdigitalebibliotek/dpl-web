@@ -1,0 +1,69 @@
+uuid: 4b1d0c36-fbe7-42af-9ddb-64631acec4f2
+langcode: en
+status: true
+dependencies:
+  module:
+    - options
+    - paragraphs
+id: paragraph.field_amount_of_events
+field_name: field_amount_of_events
+entity_type: paragraph
+type: list_integer
+settings:
+  allowed_values:
+    -
+      value: 1
+      label: '1'
+    -
+      value: 2
+      label: '2'
+    -
+      value: 3
+      label: '3'
+    -
+      value: 4
+      label: '4'
+    -
+      value: 5
+      label: '5'
+    -
+      value: 6
+      label: '6'
+    -
+      value: 7
+      label: '7'
+    -
+      value: 8
+      label: '8'
+    -
+      value: 9
+      label: '9'
+    -
+      value: 10
+      label: '10'
+    -
+      value: 11
+      label: '11'
+    -
+      value: 12
+      label: '12'
+    -
+      value: 13
+      label: '13'
+    -
+      value: 14
+      label: '14'
+    -
+      value: 15
+      label: '15'
+    -
+      value: 16
+      label: '16'
+  allowed_values_function: ''
+module: options
+locked: false
+cardinality: 1
+translatable: true
+indexes: {  }
+persist_with_no_fields: false
+custom_storage: false

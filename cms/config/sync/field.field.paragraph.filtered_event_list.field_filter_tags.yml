@@ -1,0 +1,29 @@
+uuid: 6fda82d4-26d7-4483-899d-ff4361dc23a6
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.paragraph.field_filter_tags
+    - paragraphs.paragraphs_type.filtered_event_list
+    - taxonomy.vocabulary.tags
+id: paragraph.filtered_event_list.field_filter_tags
+field_name: field_filter_tags
+entity_type: paragraph
+bundle: filtered_event_list
+label: 'Filter by tags'
+description: 'Add a tag you want to include'
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings:
+  handler: 'default:taxonomy_term'
+  handler_settings:
+    target_bundles:
+      tags: tags
+    sort:
+      field: name
+      direction: asc
+    auto_create: false
+    auto_create_bundle: categories
+field_type: entity_reference

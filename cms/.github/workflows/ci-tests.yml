@@ -256,6 +256,10 @@ jobs:
         run: task ci:openapi:download
       - name: Ensure specification has not drifted
         run: git diff --ignore-space-at-eol --exit-code openapi.json
+      - name: Generate package for CMS API specification
+        run: task dev:codegen:dpl-cms
+      - name: Ensure CMS API package code has not drifted
+        run: git diff --ignore-space-at-eol --exit-code packages/cms-api/*
 
   CheckDrupalConfig:
     name: Check Drupal Config

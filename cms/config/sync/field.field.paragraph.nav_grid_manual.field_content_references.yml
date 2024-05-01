@@ -65,6 +65,9 @@ settings:
   user:
     handler: 'default:user'
     handler_settings: {  }
+  redirect:
+    handler: 'default:redirect'
+    handler_settings: {  }
   webform_submission:
     handler: 'default:webform_submission'
     handler_settings: {  }

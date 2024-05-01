@@ -13,6 +13,7 @@ dependencies:
     - paragraphs.paragraphs_type.user_registration_item
   module:
     - linkit
+    - select2_multicheck
     - text
 id: paragraph.user_registration_item.default
 targetEntityType: paragraph
@@ -43,10 +44,11 @@ content:
       display_label: true
     third_party_settings: {  }
   field_link_target:
-    type: options_select
+    type: select2_multicheck
     weight: 6
     region: content
-    settings: {  }
+    settings:
+      width: 100%
     third_party_settings: {  }
   field_navigation_title:
     type: string_textfield

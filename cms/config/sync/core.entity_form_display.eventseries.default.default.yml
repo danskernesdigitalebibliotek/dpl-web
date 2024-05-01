@@ -30,6 +30,7 @@ dependencies:
     - paragraphs_features
     - recurring_events
     - scheduler
+    - select2_multicheck
 third_party_settings:
   field_group:
     group_teaser_card:
@@ -109,16 +110,18 @@ content:
     settings: {  }
     third_party_settings: {  }
   field_branch:
-    type: options_select
+    type: select2_multicheck
     weight: 0
     region: content
-    settings: {  }
+    settings:
+      width: 100%
     third_party_settings: {  }
   field_categories:
-    type: options_select
+    type: select2_multicheck
     weight: 11
     region: content
-    settings: {  }
+    settings:
+      width: 100%
     third_party_settings: {  }
   field_description:
     type: string_textarea
@@ -196,20 +199,18 @@ content:
       placeholder: ''
     third_party_settings: {  }
   field_event_state:
-    type: options_select
+    type: select2_multicheck
     weight: 9
     region: content
-    settings: {  }
+    settings:
+      width: 100%
     third_party_settings: {  }
   field_tags:
-    type: entity_reference_autocomplete_tags
+    type: select2_multicheck
     weight: 12
     region: content
     settings:
-      match_operator: CONTAINS
-      match_limit: 10
-      size: 60
-      placeholder: ''
+      width: 100%
     third_party_settings: {  }
   field_teaser_image:
     type: media_library_widget
@@ -275,10 +276,11 @@ content:
     settings: {  }
     third_party_settings: {  }
   recur_type:
-    type: options_select
+    type: select2_multicheck
     weight: 3
     region: content
-    settings: {  }
+    settings:
+      width: 100%
     third_party_settings: {  }
   scheduler_settings:
     weight: 18
