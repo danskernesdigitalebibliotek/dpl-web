@@ -37,7 +37,10 @@ parameters:
     - '#Method Drupal\\.*\\Plugin\\Field\\FieldFormatter\\.*\:\:viewElements\(\) return type has no value type specified in iterable type array\.#'
     # Drupal hook_theme_registry_alter() has parameter $theme_registry which we cannot provide more detailed typing of.
     - '#Function .*_theme_registry_alter\(\) has parameter \$theme_registry with no value type specified in iterable type array\.#'
-    # Phpstan is not right is this matter. The readItem method will return NULL when it has reached the last entry.
+    # Since methods are defined in interface there is no need to document signatures.
+    - '#Method Drupal\\dpl_mail\\Config\\AzureMailerConfigOverrides::.* no value type specified in iterable type array\.#'
+    # We are deliberately not using the method for anything but is required by interface. We can accept that null is returned.
+    - '#Method Drupal\\dpl_mail\\Config\\AzureMailerConfigOverrides::createConfigObject\(\) should return Drupal\\Core\\Config\\StorableConfigBase but returns null\.#'
     -
       message: '#While loop condition is always true\.#'
       path: web/modules/custom/dpl_po/src/Commands/DplPoCommands.php
