@@ -5,6 +5,7 @@
  * Primary module hooks for dpl_webform module.
  */
 
+use Drupal\Core\Form\FormStateInterface;
 use Drupal\webform\Entity\Webform;
 
 /**
@@ -14,6 +15,7 @@ function dpl_webform_webform_create(Webform $webform): void {
   // We want to avoid saving sensitive information from users because of GDPR.
   // Therefore we disable saving of results for all new webforms.
   $webform->setSetting('results_disabled', TRUE);
+  $webform->setSetting('results_disabled_ignore', TRUE);
 }
 
 /**
@@ -40,4 +42,56 @@ function dpl_webform_theme_suggestions_form_element_alter(array &$suggestions, a
   if (isset($variables['element']['#webform_element'])) {
     $suggestions[] = 'form_element__webform';
   }
+}
+
+/**
+ * Implements hook_form_FORM_ID_alter().
+ */
+function dpl_webform_form_webform_settings_form_alter(array &$form, FormStateInterface &$form_state, string $form_id): void {
+  $current_user = \Drupal::currentUser();
+  $access = $current_user->hasPermission('administer advanced webform general settings');
+
+  // We restrict access to the following settings:
+  $form['general_settings']['archive']['#access'] = $access;
+  $form['general_settings']['results_disabled']['#access'] = $access;
+  $form['general_settings']['results_disabled_error']['#access'] = $access;
+  $form['general_settings']['results_disabled_ignore']['#access'] = $access;
+  $form['general_settings']['categories']['#access'] = $access;
+  $form['page_settings']['#access'] = $access;
+  $form['ajax_settings']['#access'] = $access;
+  $form['third_party_settings']['#access'] = $access;
+}
+
+/**
+ * Implements hook_form_FORM_ID_alter().
+ */
+function dpl_webform_form_webform_settings_confirmation_form_alter(array &$form, FormStateInterface &$form_state, string $form_id): void {
+  $current_user = \Drupal::currentUser();
+  $access = $current_user->hasPermission('administer advanced webform confirmation settings');
+
+  // We restrict access to the following settings:
+  $form['confirmation_type']['#access'] = $access;
+  $form['confirmation_url']['#access'] = $access;
+  $form['confirmation_settings']['confirmation_title']['#access'] = $access;
+  $form['confirmation_attributes_container']['#access'] = $access;
+  $form['back']['#access'] = $access;
+}
+
+/**
+ * Implements hook_form_FORM_ID_alter().
+ */
+function dpl_webform_form_webform_ui_element_form_alter(array &$form, FormStateInterface &$form_state, string $form_id): void {
+  $current_user = \Drupal::currentUser();
+  $access = $current_user->hasPermission('administer advanced webform element settings');
+
+  // We restrict access to the following settings:
+  $form['properties']['conditional_logic']['#access'] = $access;
+  $form['properties']['display']['#access'] = $access;
+  $form['properties']['admin']['#access'] = $access;
+  $form['properties']['access']['#access'] = $access;
+  $form['properties']['multiple']['#access'] = $access;
+  $form['properties']['default']['#access'] = $access;
+  $form['properties']['wrapper_attributes']['#access'] = $access;
+  $form['properties']['element_attributes']['#access'] = $access;
+  $form['properties']['label_attributes']['#access'] = $access;
 }
