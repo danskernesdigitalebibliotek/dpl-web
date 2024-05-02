@@ -56,9 +56,9 @@
             "package": {
                 "name": "danskernesdigitalebibliotek/dpl-design-system",
                 "type": "drupal-library",
-                "version": "2024.19.0-rc1",
+                "version": "2024.18.2",
                 "dist": {
-                    "url": "https://github.com/danskernesdigitalebibliotek/dpl-design-system/releases/download/branch-release/hermod-14/dist-release-hermod-14.zip",
+                    "url": "https://github.com/danskernesdigitalebibliotek/dpl-design-system/releases/download/2024.18.2/dist-2024-18-2-75a2d16e8410fdaecc86c8d4b91b42601e7b1416.zip",
                     "type": "zip"
                 }
             }
@@ -88,7 +88,7 @@
         "composer/installers": "1.12.0",
         "cweagans/composer-patches": "1.7.3",
         "danskernesdigitalebibliotek/cms-api": "*",
-        "danskernesdigitalebibliotek/dpl-design-system": "2024.19.0-rc1",
+        "danskernesdigitalebibliotek/dpl-design-system": "2024.18.2",
         "danskernesdigitalebibliotek/dpl-react": "2024.19.0-rc1",
         "danskernesdigitalebibliotek/fbs-client": "*",
         "dealerdirect/phpcodesniffer-composer-installer": "^0.7.1",

@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "6e88707385d7354d384ebf773c4fcb7d",
+    "content-hash": "1d366f9bab576533b372b335a54d533e",
     "packages": [
         {
             "name": "amazeeio/drupal_integrations",
@@ -1149,10 +1149,10 @@
         },
         {
             "name": "danskernesdigitalebibliotek/dpl-design-system",
-            "version": "2024.19.0-rc1",
+            "version": "2024.18.2",
             "dist": {
                 "type": "zip",
-                "url": "https://github.com/danskernesdigitalebibliotek/dpl-design-system/releases/download/branch-release/hermod-14/dist-release-hermod-14.zip"
+                "url": "https://github.com/danskernesdigitalebibliotek/dpl-design-system/releases/download/2024.18.2/dist-2024-18-2-75a2d16e8410fdaecc86c8d4b91b42601e7b1416.zip"
             },
             "type": "drupal-library"
         },
