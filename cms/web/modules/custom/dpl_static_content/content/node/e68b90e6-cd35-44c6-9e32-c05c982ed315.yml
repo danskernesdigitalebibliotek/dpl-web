@@ -5,7 +5,6 @@ _meta:
   bundle: page
   default_langcode: da
   depends:
-    e00e1460-169e-468d-9835-d664f06d0969: file
     4052479c-0f12-4a17-8466-dedd4409355a: node
     f57e40b2-c113-49fa-a39b-dee7c3ed5ea4: node
     e0850f71-b87a-4510-a612-6319e18a61b4: node
@@ -37,13 +36,6 @@ default:
   entity_clone_template_active:
     -
       value: false
-  entity_clone_template_image:
-    -
-      entity: e00e1460-169e-468d-9835-d664f06d0969
-      alt: ''
-      title: ''
-      width: 640
-      height: 443
   metatag:
     -
       tag: meta
@@ -53,6 +45,8 @@ default:
   path:
     -
       alias: /opret-bruger
+      langcode: und
+      pathauto: 1
   field_display_titles:
     -
       value: true
@@ -78,10 +72,34 @@ default:
           behavior_settings:
             -
               value: {  }
+          revision_translation_affected:
+            -
+              value: true
           field_body:
             -
               value: '<p>Du skal være oprettet som bruger for at kunne reservere, låne og anvende alle vores digitale tilbud. Vælg hvilken type biblioteksbruger du vil oprette. Du skal have dit MitID klar for at kunne gennemføre oprettelsen.</p>'
               format: basic
+    -
+      entity:
+        _meta:
+          version: '1.0'
+          entity_type: paragraph
+          uuid: fc02ecc4-782b-4ff9-ac68-0bc76271cd46
+          bundle: user_registration_linklist
+          default_langcode: da
+        default:
+          status:
+            -
+              value: true
+          created:
+            -
+              value: 1713950229
+          behavior_settings:
+            -
+              value: {  }
+          revision_translation_affected:
+            -
+              value: true
     -
       entity:
         _meta:
@@ -100,6 +118,9 @@ default:
           behavior_settings:
             -
               value: {  }
+          revision_translation_affected:
+            -
+              value: true
           field_link:
             -
               target_uuid: 4052479c-0f12-4a17-8466-dedd4409355a
@@ -143,6 +164,9 @@ default:
           behavior_settings:
             -
               value: {  }
+          revision_translation_affected:
+            -
+              value: true
           field_user_registration_items:
             -
               entity:
@@ -162,6 +186,9 @@ default:
                   behavior_settings:
                     -
                       value: {  }
+                  revision_translation_affected:
+                    -
+                      value: true
                   field_body:
                     -
                       value: '<p>For at kunne oprette dig som bruger, skal du være fyldt 18 år. Du skal desuden have læst og accepteret vores reglement og takster og være informeret om, hvordan vi behandler dine personoplysninger.&nbsp;</p>'
@@ -201,6 +228,9 @@ default:
                   behavior_settings:
                     -
                       value: {  }
+                  revision_translation_affected:
+                    -
+                      value: true
                   field_body:
                     -
                       value: '<p>For at kunne oprette dig som bruger, skal du være fyldt 18 år. Du skal desuden have læst og accepteret vores reglement og takster og være informeret om, hvordan vi behandler dine personoplysninger.&nbsp;</p>'

@@ -40,10 +40,10 @@
             "type": "package",
             "package": {
                 "name": "danskernesdigitalebibliotek/dpl-react",
-                "version": "2024.18.0",
+                "version": "2024.18.1",
                 "type": "drupal-library",
                 "dist": {
-                    "url": "https://github.com/danskernesdigitalebibliotek/dpl-react/releases/download/2024.18.0/dist-2024-18-0-655660a99079323eb1f05ce93d88965748c578e5.zip",
+                    "url": "https://github.com/danskernesdigitalebibliotek/dpl-react/releases/download/2024.18.1/dist-2024-18-1-524b1924e5262a963a934ca5e308a4a725e495d2.zip",
                     "type": "zip"
                 },
                 "require": {
@@ -56,9 +56,9 @@
             "package": {
                 "name": "danskernesdigitalebibliotek/dpl-design-system",
                 "type": "drupal-library",
-                "version": "2024.18.0",
+                "version": "2024.18.1",
                 "dist": {
-                    "url": "https://github.com/danskernesdigitalebibliotek/dpl-design-system/releases/download/2024.18.0/dist-2024-18-0-d02b9076284ebf6320a0c838eccdc62087aa2ff5.zip",
+                    "url": "https://github.com/danskernesdigitalebibliotek/dpl-design-system/releases/download/2024.18.1/dist-2024-18-1-7e3b588f0ecdffd93b6e570b09b83369a18f8677.zip",
                     "type": "zip"
                 }
             }
@@ -88,8 +88,8 @@
         "composer/installers": "1.12.0",
         "cweagans/composer-patches": "1.7.3",
         "danskernesdigitalebibliotek/cms-api": "*",
-        "danskernesdigitalebibliotek/dpl-design-system": "2024.18.0",
-        "danskernesdigitalebibliotek/dpl-react": "2024.18.0",
+        "danskernesdigitalebibliotek/dpl-design-system": "^2024.18",
+        "danskernesdigitalebibliotek/dpl-react": "^2024.18",
         "danskernesdigitalebibliotek/fbs-client": "*",
         "dealerdirect/phpcodesniffer-composer-installer": "^0.7.1",
         "deoliveiralucas/array-keys-case-transform": "^1.1",
@@ -97,6 +97,7 @@
         "drupal/admin_toolbar": "^3.4",
         "drupal/admin_user_language": "^1.1",
         "drupal/administerusersbyrole": "^3.4",
+        "drupal/azure_mailer": "^1.0",
         "drupal/color_field": "^3.0",
         "drupal/config_ignore": "^2.4",
         "drupal/config_translation_po": "^1.0",
@@ -117,6 +118,7 @@
         "drupal/gin": "^3.0@RC",
         "drupal/gin_toolbar": "^1.0@RC",
         "drupal/handy_cache_tags": "^1.4",
+        "drupal/honeypot": "^2.1",
         "drupal/job_scheduler": "^4.0",
         "drupal/jsonlog": "^4.0",
         "drupal/language_neutral_aliases": "^3.1",
