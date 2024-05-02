@@ -80,21 +80,6 @@
                     "danskernesdigitalebibliotek/cms-api": "dev-main"
                 }
             }
-        },
-        {
-            "type": "package",
-            "package": {
-                "name": "mperdeck/jsnlog.js",
-                "version": "v2.30.0",
-                "type": "drupal-library",
-                "dist": {
-                    "url": "https://github.com/mperdeck/jsnlog.js/archive/refs/tags/v2.30.0.tar.gz",
-                    "type": "tar"
-                },
-                "extra": {
-                    "installer-name": "jsnlog"
-                }
-            }
         }
     ],
     "require": {
