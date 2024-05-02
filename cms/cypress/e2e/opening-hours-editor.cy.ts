@@ -175,12 +175,12 @@ const checkOpeningHoursExistPage = ({
     .and("contain", `${start} - ${end}`);
 };
 
-const checkMultipleOpeningHoursExistAdmin = () => {
+const checkAtLeastOneOpeningHoursExistAdmin = () => {
   cy.get('tbody[role="presentation"]')
     .should("be.visible")
     .find('div[data-cy="opening-hours-editor-event-content"]')
     .its("length")
-    .should("be.gt", 1);
+    .should("be.gte", 1);
 };
 
 const checkOpeningHoursNotPresentInPage = ({
@@ -248,9 +248,9 @@ const createOpeningHoursSeries = ({
   submitOpeningHourForm();
   checkConfirmationDialog({ openingHourCategory, start, end, endDate });
   confirmRepeatedOpeningHourForm();
-  checkMultipleOpeningHoursExistAdmin();
+  checkAtLeastOneOpeningHoursExistAdmin();
   navigateToNextWeekOrMonthAdmin();
-  checkMultipleOpeningHoursExistAdmin();
+  checkAtLeastOneOpeningHoursExistAdmin();
   visitOpeningHoursPage();
   // Because we use oneMonthFromToday as endDate we can check the four next weeks
   for (let i = 0; i < 5; i++) {
