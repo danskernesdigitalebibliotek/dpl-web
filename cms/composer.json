@@ -84,6 +84,7 @@
     ],
     "require": {
         "amazeeio/drupal_integrations": "^0.4",
+        "bower-asset/jsnlog": "^2.30",
         "brick/math": "^0.12.1",
         "composer/installers": "1.12.0",
         "cweagans/composer-patches": "1.7.3",
@@ -159,7 +160,6 @@
         "drupal/webform": "^6.2",
         "drush/drush": "^12",
         "mnsami/composer-custom-directory-installer": "^2.0",
-        "mperdeck/jsnlog.js": "^2.30",
         "myclabs/php-enum": "^1.8",
         "npm-asset/select2": "^4.0",
         "oomphinc/composer-installers-extender": "^2.0",
