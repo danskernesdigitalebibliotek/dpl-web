@@ -23348,7 +23348,7 @@ msgstr ""
 #: 
 msgctxt "DPL breadcrumb"
 msgid "Related content for \"@title\""
-msgstr "Relateret indhold til @title"
+msgstr "Relateret indhold til \"@title\""
 
 #: 
 msgctxt "DPL Breadcrumbs"
@@ -23377,7 +23377,7 @@ msgstr "Relaterede sider"
 #: 
 msgctxt "core.entity_form_display.taxonomy_term.breadcrumb_structure.default:content:field_children_title:settings:placeholder"
 msgid "Related content for \"@title\""
-msgstr "Relateret indhold til @title"
+msgstr "Relateret indhold til \"@title\""
 
 #: 
 msgctxt "core.entity_view_mode.media.list_teaser:label"
