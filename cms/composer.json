@@ -43,7 +43,7 @@
                 "version": "2024.18.1",
                 "type": "drupal-library",
                 "dist": {
-                    "url": "https://github.com/danskernesdigitalebibliotek/dpl-react/releases/download/2024.18.1/dist-2024-18-1-524b1924e5262a963a934ca5e308a4a725e495d2.zip",
+                    "url": "https://github.com/danskernesdigitalebibliotek/dpl-react/releases/download/branch-DDFLSBP-615-efter-registrering-skal-laner-force-logges-ud-og-blive-sendt-til-login-i-adgangsplatformen_separate-release/dist-ddflsbp-615-efter-registrering-skal-laner-force-logges-ud-og-blive-sendt-til-login-i-adgangsplatformen-separate-release.zip",
                     "type": "zip"
                 },
                 "require": {
@@ -58,7 +58,7 @@
                 "type": "drupal-library",
                 "version": "2024.18.2",
                 "dist": {
-                    "url": "https://github.com/danskernesdigitalebibliotek/dpl-design-system/releases/download/2024.18.2/dist-2024-18-2-75a2d16e8410fdaecc86c8d4b91b42601e7b1416.zip",
+                    "url": "https://github.com/danskernesdigitalebibliotek/dpl-design-system/releases/download/branch-DDFLSBP-615-efter-registrering-skal-laner-force-logges-ud-og-blive-sendt-til-login-i-adgangsplatformen_separate-release/dist-ddflsbp-615-efter-registrering-skal-laner-force-logges-ud-og-blive-sendt-til-login-i-adgangsplatformen-separate-release.zip",
                     "type": "zip"
                 }
             }
@@ -88,8 +88,8 @@
         "composer/installers": "1.12.0",
         "cweagans/composer-patches": "1.7.3",
         "danskernesdigitalebibliotek/cms-api": "*",
-        "danskernesdigitalebibliotek/dpl-design-system": "2024.18.2",
-        "danskernesdigitalebibliotek/dpl-react": "2024.18.1",
+        "danskernesdigitalebibliotek/dpl-design-system": "^2024.18",
+        "danskernesdigitalebibliotek/dpl-react": "^2024.18",
         "danskernesdigitalebibliotek/fbs-client": "*",
         "dealerdirect/phpcodesniffer-composer-installer": "^0.7.1",
         "deoliveiralucas/array-keys-case-transform": "^1.1",
