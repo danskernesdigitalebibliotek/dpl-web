@@ -5,7 +5,6 @@ dependencies:
   config:
     - field.storage.paragraph.field_grid_content
     - paragraphs.paragraphs_type.card_grid_manual
-    - recurring_events.eventseries_type.default
   module:
     - dynamic_entity_reference
 id: paragraph.card_grid_manual.field_grid_content
@@ -26,17 +25,7 @@ settings:
         view_name: entity_reference_content
         display_name: entity_reference_1
         arguments:
-          - article
-  eventseries:
-    handler: 'default:eventseries'
-    handler_settings:
-      target_bundles:
-        default: default
-      sort:
-        field: _none
-        direction: ASC
-      auto_create: false
-      auto_create_bundle: ''
+          - article+page
   crop:
     handler: 'default:crop'
     handler_settings: {  }
@@ -45,6 +34,9 @@ settings:
     handler_settings: {  }
   eventinstance:
     handler: 'default:eventinstance'
+    handler_settings: {  }
+  eventseries:
+    handler: 'default:eventseries'
     handler_settings: {  }
   file:
     handler: 'default:file'
@@ -57,6 +49,9 @@ settings:
     handler_settings: {  }
   paragraph:
     handler: 'default:paragraph'
+    handler_settings: {  }
+  redirect:
+    handler: 'default:redirect'
     handler_settings: {  }
   search_api_task:
     handler: 'default:search_api_task'

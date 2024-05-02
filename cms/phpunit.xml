@@ -34,6 +34,7 @@
     <env name="MINK_DRIVER_ARGS_PHANTOMJS" value=""/>
     <!-- Example for changing the driver args to webdriver tests MINK_DRIVER_ARGS_WEBDRIVER value: '["chrome", { "chromeOptions": { "w3c": false } }, "http://localhost:4444/wd/hub"]' For using the Firefox browser, replace "chrome" with "firefox" -->
     <env name="MINK_DRIVER_ARGS_WEBDRIVER" value=""/>
+    <env name="AZURE_MAIL_CONNECTION_STRING" value="endpoint=https://something.something.azure.com/;accesskey=someThing9999/p+somethinG9999==" />
   </php>
   <testsuites>
     <testsuite name="Custom Unit/Kernel tests">

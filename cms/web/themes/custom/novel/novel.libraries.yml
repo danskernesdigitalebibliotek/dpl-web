@@ -38,3 +38,7 @@ swiper:
 footer-accordions:
   js:
     assets/dpl-design-system/js/footer-accordions.js: {}
+
+show-more:
+  js:
+    assets/dpl-design-system/js/show-more.js: {}

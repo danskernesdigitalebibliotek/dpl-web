@@ -19,6 +19,7 @@ dependencies:
     - taxonomy.vocabulary.categories
     - taxonomy.vocabulary.opening_hours_categories
     - taxonomy.vocabulary.tags
+    - taxonomy.vocabulary.webform_email_categories
   module:
     - administerusersbyrole
     - content_lock
@@ -35,10 +36,12 @@ dependencies:
     - locale
     - media
     - node
+    - openapi
     - openid_connect
     - paragraphs
-    - paragraphs_ee
+    - path
     - recurring_events
+    - redirect
     - rest
     - scheduler
     - simple_menu_permissions
@@ -47,6 +50,7 @@ dependencies:
     - theme_permission
     - toolbar
     - view_unpublished
+    - webform
 id: local_administrator
 label: 'Local Administrator'
 weight: 3
@@ -58,11 +62,14 @@ permissions:
   - 'access eventseries overview'
   - 'access files overview'
   - 'access media overview'
+  - 'access openapi api docs'
   - 'access site in maintenance mode'
+  - 'access site reports'
   - 'access taxonomy overview'
   - 'access toolbar'
   - 'access user profiles'
   - 'access users overview'
+  - 'access webform overview'
   - 'add eventseries entity'
   - 'add new links to admin menu'
   - 'add new links to main menu'
@@ -74,7 +81,7 @@ permissions:
   - 'administer nodes'
   - 'administer openid connect clients'
   - 'administer orphaned events entities'
-  - 'administer paragraphs categories'
+  - 'administer redirects'
   - 'administer site configuration'
   - 'administer themes'
   - 'administer themes novel'
@@ -98,8 +105,11 @@ permissions:
   - 'create terms in categories'
   - 'create terms in opening_hours_categories'
   - 'create terms in tags'
+  - 'create terms in webform_email_categories'
+  - 'create url aliases'
   - 'create users'
   - 'create video media'
+  - 'create webform'
   - 'delete all revisions'
   - 'delete any article content'
   - 'delete any branch content'
@@ -110,6 +120,7 @@ permissions:
   - 'delete any media'
   - 'delete any page content'
   - 'delete any video media'
+  - 'delete any webform'
   - 'delete article revisions'
   - 'delete branch revisions'
   - 'delete campaign revisions'
@@ -128,10 +139,12 @@ permissions:
   - 'delete own image media'
   - 'delete own page content'
   - 'delete own video media'
+  - 'delete own webform'
   - 'delete page revisions'
   - 'delete terms in breadcrumb_structure'
   - 'delete terms in categories'
   - 'delete terms in tags'
+  - 'delete terms in webform_email_categories'
   - 'dpl admin access pages'
   - 'edit admin menu'
   - 'edit any article content'
@@ -141,6 +154,7 @@ permissions:
   - 'edit any image media'
   - 'edit any page content'
   - 'edit any video media'
+  - 'edit any webform'
   - 'edit eventinstance entity'
   - 'edit eventseries entity'
   - 'edit links in admin menu'
@@ -155,10 +169,12 @@ permissions:
   - 'edit own image media'
   - 'edit own page content'
   - 'edit own video media'
+  - 'edit own webform'
   - 'edit terms in breadcrumb_structure'
   - 'edit terms in categories'
   - 'edit terms in opening_hours_categories'
   - 'edit terms in tags'
+  - 'edit terms in webform_email_categories'
   - 'edit themes novel'
   - 'edit users by role'
   - 'manage opening hours for branches'
@@ -181,8 +197,6 @@ permissions:
   - 'use text format basic'
   - 'use text format limited'
   - 'view admin menu in menu list'
-  - 'view all eventinstance revisions'
-  - 'view all eventseries revisions'
   - 'view all media revisions'
   - 'view all revisions'
   - 'view any unpublished content'

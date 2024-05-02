@@ -1,6 +1,9 @@
 Model/DplOpeningHoursCreatePOSTRequest.php
+Model/DplOpeningHoursCreatePOSTRequestRepetition.php
 Model/DplOpeningHoursListGET200ResponseInner.php
 Model/DplOpeningHoursListGET200ResponseInnerCategory.php
+Model/DplOpeningHoursListGET200ResponseInnerRepetition.php
+Model/DplOpeningHoursListGET200ResponseInnerRepetitionWeeklyData.php
 README.md
 Service/JmsSerializer.php
 Service/SerializerInterface.php

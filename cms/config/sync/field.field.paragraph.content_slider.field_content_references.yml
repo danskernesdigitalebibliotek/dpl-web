@@ -69,6 +69,9 @@ settings:
   taxonomy_term:
     handler: 'default:taxonomy_term'
     handler_settings: {  }
+  redirect:
+    handler: 'default:redirect'
+    handler_settings: {  }
   webform_submission:
     handler: 'default:webform_submission'
     handler_settings: {  }

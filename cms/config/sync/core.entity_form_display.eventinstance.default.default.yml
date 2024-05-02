@@ -29,6 +29,7 @@ dependencies:
     - paragraphs
     - paragraphs_ee
     - paragraphs_features
+    - select2_multicheck
 third_party_settings:
   field_group:
     group_teaser_card:
@@ -94,16 +95,18 @@ content:
     settings: {  }
     third_party_settings: {  }
   field_branch:
-    type: options_select
+    type: select2_multicheck
     weight: 0
     region: content
-    settings: {  }
+    settings:
+      width: 100%
     third_party_settings: {  }
   field_categories:
-    type: options_select
+    type: select2_multicheck
     weight: 5
     region: content
-    settings: {  }
+    settings:
+      width: 100%
     third_party_settings: {  }
   field_description:
     type: string_textarea
@@ -195,14 +198,11 @@ content:
       placeholder: ''
     third_party_settings: {  }
   field_tags:
-    type: entity_reference_autocomplete_tags
+    type: select2_multicheck
     weight: 6
     region: content
     settings:
-      match_operator: CONTAINS
-      match_limit: 10
-      size: 60
-      placeholder: ''
+      width: 100%
     third_party_settings: {  }
   field_teaser_image:
     type: media_library_widget

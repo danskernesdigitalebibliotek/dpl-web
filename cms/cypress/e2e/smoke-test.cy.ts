@@ -10,13 +10,11 @@ describe("DPL CMS", () => {
     // logged in. For now we simply check whether the user is logged in. If that
     // is the case then the /user route will redirect to the user/id route.
     // Conversely when logged out the /user route will redirect to the
-    // /user/login route.
+    // frontpage route.
     cy.visit("/user")
       .url()
       .should("match", /user\/\d+/);
     cy.drupalLogout();
-    cy.visit("user")
-      .url()
-      .should("match", /user\/login$/);
+    cy.visit("user").url().should("match", /\//);
   });
 });

@@ -10,6 +10,7 @@ dependencies:
     - paragraphs.paragraphs_type.card_grid_automatic
   module:
     - field_group
+    - select2_multicheck
 third_party_settings:
   field_group:
     group_filters:
@@ -34,30 +35,25 @@ bundle: card_grid_automatic
 mode: default
 content:
   field_filter_branches:
-    type: options_buttons
+    type: select2_multicheck
     weight: 8
     region: content
-    settings: {  }
+    settings:
+      width: 100%
     third_party_settings: {  }
   field_filter_categories:
-    type: entity_reference_autocomplete
+    type: select2_multicheck
     weight: 7
     region: content
     settings:
-      match_operator: CONTAINS
-      match_limit: 10
-      size: 60
-      placeholder: 'Search categories..'
+      width: 100%
     third_party_settings: {  }
   field_filter_tags:
-    type: entity_reference_autocomplete
+    type: select2_multicheck
     weight: 6
     region: content
     settings:
-      match_operator: CONTAINS
-      match_limit: 10
-      size: 60
-      placeholder: 'Search tags..'
+      width: 100%
     third_party_settings: {  }
   field_title:
     type: string_textfield
