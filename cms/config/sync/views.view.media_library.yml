@@ -306,7 +306,7 @@ display:
           group_type: group
           admin_label: ''
           plugin_id: combine
-          operator: '='
+          operator: contains
           value: ''
           group: 1
           exposed: true
@@ -330,6 +330,7 @@ display:
               editor: '0'
               mediator: '0'
               patron: '0'
+              external_system: '0'
             placeholder: ''
           is_grouped: false
           group_info:
@@ -472,8 +473,17 @@ display:
         - user
         - user.permissions
       tags:
+        - 'config:core.entity_view_display.media.document.default'
+        - 'config:core.entity_view_display.media.document.media_library'
+        - 'config:core.entity_view_display.media.image.card'
         - 'config:core.entity_view_display.media.image.default'
+        - 'config:core.entity_view_display.media.image.hero_wide'
+        - 'config:core.entity_view_display.media.image.list_teaser'
         - 'config:core.entity_view_display.media.image.media_library'
+        - 'config:core.entity_view_display.media.image.paragraph_squared'
+        - 'config:core.entity_view_display.media.image.paragraph_wide'
+        - 'config:core.entity_view_display.media.video.default'
+        - 'config:core.entity_view_display.media.video.media_library'
   page:
     id: page
     display_title: Page
@@ -771,8 +781,17 @@ display:
         - user
         - user.permissions
       tags:
+        - 'config:core.entity_view_display.media.document.default'
+        - 'config:core.entity_view_display.media.document.media_library'
+        - 'config:core.entity_view_display.media.image.card'
         - 'config:core.entity_view_display.media.image.default'
+        - 'config:core.entity_view_display.media.image.hero_wide'
+        - 'config:core.entity_view_display.media.image.list_teaser'
         - 'config:core.entity_view_display.media.image.media_library'
+        - 'config:core.entity_view_display.media.image.paragraph_squared'
+        - 'config:core.entity_view_display.media.image.paragraph_wide'
+        - 'config:core.entity_view_display.media.video.default'
+        - 'config:core.entity_view_display.media.video.media_library'
   widget:
     id: widget
     display_title: Widget
@@ -1032,8 +1051,17 @@ display:
         - user
         - user.permissions
       tags:
+        - 'config:core.entity_view_display.media.document.default'
+        - 'config:core.entity_view_display.media.document.media_library'
+        - 'config:core.entity_view_display.media.image.card'
         - 'config:core.entity_view_display.media.image.default'
+        - 'config:core.entity_view_display.media.image.hero_wide'
+        - 'config:core.entity_view_display.media.image.list_teaser'
         - 'config:core.entity_view_display.media.image.media_library'
+        - 'config:core.entity_view_display.media.image.paragraph_squared'
+        - 'config:core.entity_view_display.media.image.paragraph_wide'
+        - 'config:core.entity_view_display.media.video.default'
+        - 'config:core.entity_view_display.media.video.media_library'
   widget_table:
     id: widget_table
     display_title: 'Widget (table)'

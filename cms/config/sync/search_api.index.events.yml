@@ -45,6 +45,14 @@ field_settings:
     dependencies:
       module:
         - field_inheritance
+  event_tags:
+    label: 'Event tags'
+    datasource_id: 'entity:eventinstance'
+    property_path: event_tags
+    type: integer
+    dependencies:
+      module:
+        - field_inheritance
   status:
     label: Published
     datasource_id: 'entity:eventinstance'

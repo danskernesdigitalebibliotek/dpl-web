@@ -168,7 +168,3 @@ if (getenv('LAGOON')) {
     ];
   }
 }
-
-// Set the Azure Mailer secret and endpoint.
-$config['azure_mailer.settings']['secret'] = getenv('AZURE_MAILER_SECRET');
-$config['azure_mailer.settings']['endpoint'] = getenv('AZURE_MAILER_ENDPOINT');

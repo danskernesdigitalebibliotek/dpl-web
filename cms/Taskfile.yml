@@ -299,7 +299,7 @@ tasks:
     desc: Generate CMS API package from OpenAPI specification
     cmds:
       - cmd: |
-          cd Mpackages/cms-api && find . ! -name '.' ! -name '..' ! -name '.openapi-generator-ignore' -type df -exec rm -rf {} +
+          cd packages/cms-api && find . ! -name '.' ! -name '..' ! -name '.openapi-generator-ignore' -type d -type f -exec rm -rf {} +
       - cmd: |
           docker run --rm \
           -v ${PWD}:/local \

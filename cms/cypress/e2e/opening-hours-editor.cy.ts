@@ -12,7 +12,15 @@ type OpeningHourFormType = {
   openingHourCategory: OpeningHourCategories;
   start: `${number}:${number}`;
   end: `${number}:${number}`;
+  endDate?: string;
 };
+
+const oneMonthFromToday = () =>
+  new Date(new Date().setMonth(new Date().getMonth() + 1))
+    .toISOString()
+    .slice(0, 10);
+
+const reverseDateString = (date: string) => date.split("-").reverse().join("-");
 
 const createTestBranchAndVisitOpeningHoursAdmin = () => {
   cy.drupalLogin("/node/add/branch");
@@ -78,7 +86,7 @@ const visitOpeningHoursPageAdmin = () => {
   }
 };
 
-const navigateToNextWeekAdmin = () => {
+const navigateToNextWeekOrMonthAdmin = () => {
   cy.get('button[title="Næste"]').click();
 };
 
@@ -103,6 +111,7 @@ const fillOpeningHourForm = ({
   openingHourCategory,
   start,
   end,
+  endDate,
 }: Partial<OpeningHourFormType>) => {
   cy.getBySel("opening-hours-editor-form").should("be.visible");
 
@@ -115,13 +124,35 @@ const fillOpeningHourForm = ({
   if (end) {
     cy.getBySel("opening-hours-editor-form-end-time").focus().type(end);
   }
+  if (endDate) {
+    cy.getBySel("opening-hours-editor-form-repeated").check();
+    cy.getBySel("opening-hours-editor-form-end-date").focus().type(endDate);
+  }
 };
 
 const submitOpeningHourForm = () => {
   cy.getBySel("opening-hours-editor-form-submit").click();
 };
 
-const checkOpeningHoursAdmin = ({
+const checkConfirmationDialog = ({
+  openingHourCategory,
+  start,
+  end,
+  endDate,
+}: Required<OpeningHourFormType>) => {
+  cy.getBySel("cy-opening-hours-editor-confirm-add-repeated-form")
+    .should("be.visible")
+    .and("contain", openingHourCategory)
+    .and("contain", start)
+    .and("contain", end)
+    .and("contain", reverseDateString(endDate));
+};
+
+const confirmRepeatedOpeningHourForm = () => {
+  cy.getBySel("cy-opening-hours-editor-form__confirm").click();
+};
+
+const checkOpeningHoursExistAdmin = ({
   openingHourCategory,
   start,
   end,
@@ -133,7 +164,7 @@ const checkOpeningHoursAdmin = ({
     .and("contain", `${start} - ${end}`);
 };
 
-const checkOpeningHoursPage = ({
+const checkOpeningHoursExistPage = ({
   openingHourCategory,
   start,
   end,
@@ -142,6 +173,14 @@ const checkOpeningHoursPage = ({
     .should("be.visible")
     .and("contain", openingHourCategory)
     .and("contain", `${start} - ${end}`);
+};
+
+const checkAtLeastOneOpeningHoursExistAdmin = () => {
+  cy.get('tbody[role="presentation"]')
+    .should("be.visible")
+    .find('div[data-cy="opening-hours-editor-event-content"]')
+    .its("length")
+    .should("be.gte", 1);
 };
 
 const checkOpeningHoursNotPresentInPage = ({
@@ -166,9 +205,9 @@ const createOpeningHour = ({
   selectTodayFromMonthViewAdmin();
   fillOpeningHourForm({ openingHourCategory, start, end });
   submitOpeningHourForm();
-  checkOpeningHoursAdmin({ openingHourCategory, start, end });
+  checkOpeningHoursExistAdmin({ openingHourCategory, start, end });
   visitOpeningHoursPage();
-  checkOpeningHoursPage({ openingHourCategory, start, end });
+  checkOpeningHoursExistPage({ openingHourCategory, start, end });
 };
 
 const createOpeningHourInNextWeek = ({
@@ -177,7 +216,7 @@ const createOpeningHourInNextWeek = ({
   end,
 }: OpeningHourFormType) => {
   visitOpeningHoursPageAdmin();
-  navigateToNextWeekAdmin();
+  navigateToNextWeekOrMonthAdmin();
   selectTimeOnThursdayFromWeekView({ start });
   fillOpeningHourForm({ openingHourCategory, end });
   cy.getBySel("opening-hours-editor-form-start-time").should(
@@ -193,7 +232,31 @@ const createOpeningHourInNextWeek = ({
     end,
   });
   cy.getBySel("opening-hours-next-week-button").click();
-  checkOpeningHoursPage({ openingHourCategory, start, end });
+  checkOpeningHoursExistPage({ openingHourCategory, start, end });
+};
+
+const createOpeningHoursSeries = ({
+  openingHourCategory,
+  start,
+  end,
+  endDate,
+}: Required<OpeningHourFormType>) => {
+  visitOpeningHoursPageAdmin();
+  navigateToMonthViewAdmin();
+  selectTodayFromMonthViewAdmin();
+  fillOpeningHourForm({ openingHourCategory, start, end, endDate });
+  submitOpeningHourForm();
+  checkConfirmationDialog({ openingHourCategory, start, end, endDate });
+  confirmRepeatedOpeningHourForm();
+  checkAtLeastOneOpeningHoursExistAdmin();
+  navigateToNextWeekOrMonthAdmin();
+  checkAtLeastOneOpeningHoursExistAdmin();
+  visitOpeningHoursPage();
+  // Because we use oneMonthFromToday as endDate we can check the four next weeks
+  for (let i = 0; i < 5; i++) {
+    checkOpeningHoursExistPage({ openingHourCategory, start, end });
+    cy.getBySel("opening-hours-next-week-button").click();
+  }
 };
 
 const updateOpeningHour = ({
@@ -209,9 +272,9 @@ const updateOpeningHour = ({
     .click();
   fillOpeningHourForm({ start, end });
   submitOpeningHourForm();
-  checkOpeningHoursAdmin({ openingHourCategory, start, end });
+  checkOpeningHoursExistAdmin({ openingHourCategory, start, end });
   visitOpeningHoursPage();
-  checkOpeningHoursPage({ openingHourCategory, start, end });
+  checkOpeningHoursExistPage({ openingHourCategory, start, end });
 };
 
 const deleteOpeningHour = ({
@@ -221,7 +284,7 @@ const deleteOpeningHour = ({
 }: OpeningHourFormType) => {
   visitOpeningHoursPageAdmin();
   navigateToMonthViewAdmin();
-  checkOpeningHoursAdmin({
+  checkOpeningHoursExistAdmin({
     openingHourCategory,
     start,
     end,
@@ -292,6 +355,15 @@ describe("Opening hours editor", () => {
       openingHourCategory: OpeningHourCategories.CitizenService,
       start: "10:00",
       end: "11:00",
+    });
+  });
+
+  it("Can create opening hours series", () => {
+    createOpeningHoursSeries({
+      openingHourCategory: OpeningHourCategories.SelfService,
+      start: "10:00",
+      end: "16:00",
+      endDate: oneMonthFromToday(),
     });
   });
 });

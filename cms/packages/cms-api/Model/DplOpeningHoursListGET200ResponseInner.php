@@ -110,6 +110,16 @@ class DplOpeningHoursListGET200ResponseInner
     protected ?int $branchId = null;
 
     /**
+     * @var DplOpeningHoursListGET200ResponseInnerRepetition|null
+     * @SerializedName("repetition")
+     * @Assert\NotNull()
+     * @Assert\Valid()
+     * @Assert\Type("DanskernesDigitaleBibliotek\CMS\Api\Model\DplOpeningHoursListGET200ResponseInnerRepetition")
+     * @Type("DanskernesDigitaleBibliotek\CMS\Api\Model\DplOpeningHoursListGET200ResponseInnerRepetition")
+     */
+    protected ?DplOpeningHoursListGET200ResponseInnerRepetition $repetition = null;
+
+    /**
      * Constructor
      * @param array|null $data Associated array of property values initializing the model
      */
@@ -122,6 +132,7 @@ class DplOpeningHoursListGET200ResponseInner
             $this->startTime = array_key_exists('startTime', $data) ? $data['startTime'] : $this->startTime;
             $this->endTime = array_key_exists('endTime', $data) ? $data['endTime'] : $this->endTime;
             $this->branchId = array_key_exists('branchId', $data) ? $data['branchId'] : $this->branchId;
+            $this->repetition = array_key_exists('repetition', $data) ? $data['repetition'] : $this->repetition;
         }
     }
 
@@ -277,6 +288,32 @@ class DplOpeningHoursListGET200ResponseInner
     public function setBranchId(?int $branchId): self
     {
         $this->branchId = $branchId;
+
+        return $this;
+    }
+
+    /**
+     * Gets repetition.
+     *
+     * @return DplOpeningHoursListGET200ResponseInnerRepetition|null
+     */
+    public function getRepetition(): ?DplOpeningHoursListGET200ResponseInnerRepetition
+    {
+        return $this->repetition;
+    }
+
+
+
+    /**
+     * Sets repetition.
+     *
+     * @param DplOpeningHoursListGET200ResponseInnerRepetition|null $repetition
+     *
+     * @return $this
+     */
+    public function setRepetition(?DplOpeningHoursListGET200ResponseInnerRepetition $repetition): self
+    {
+        $this->repetition = $repetition;
 
         return $this;
     }

@@ -34,6 +34,6 @@ definitions:
   dpl_footer__footer_form:
     menu_name: admin
     parent: system.admin_content
-    weight: 5
+    weight: 4
     expanded: false
     enabled: true

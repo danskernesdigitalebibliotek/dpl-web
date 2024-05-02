@@ -1,0 +1,26 @@
+{{ attach_library('novel/show-more') }}
+  <div {{ attributes.addClass('filtered-event-list') }} data-show-more-list-wrapper>
+    {% if content.field_title %}
+      <h2 class="filtered-event-list__heading">{{ content.field_title }}</h2>
+    {% endif %}
+    <ul class="filtered-event-list__list"
+        data-show-more-list
+        data-initial-visible-items="4"
+        data-hide-list-button-after-expand="true"
+        data-show-more-list-id="{{ 'manual-event-list'|clean_unique_id }}">
+      {% for rendered_event in rendered_field_events %}
+        <li class="filtered-event-list__list-item" data-show-more-item>
+          {{ rendered_event }}
+        </li>
+      {% endfor %}
+    </ul>
+    <button class="filtered-event-list__button btn-primary btn-outline
+    btn-medium"
+            type="button"
+            aria-expanded="false"
+            data-show-more-button
+            data-show-more-text="{{ 'Show all'|trans }}"
+            data-show-less-text="{{ 'Show less'|trans }}">
+      {{ 'Show all'|trans }}
+    </button>
+  </div>

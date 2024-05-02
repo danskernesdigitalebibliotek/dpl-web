@@ -1,0 +1,19 @@
+uuid: 8a2a4dc6-ce1c-4dfc-b790-ac0ec3f750bb
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.paragraph.field_title
+    - paragraphs.paragraphs_type.filtered_event_list
+id: paragraph.filtered_event_list.field_title
+field_name: field_title
+entity_type: paragraph
+bundle: filtered_event_list
+label: Title
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: string
