@@ -124,7 +124,7 @@ class PatronRegistrationBlock extends BlockBase implements ContainerFactoryPlugi
       'post-register-redirect-button-text' => $this->t("Log in again", [], ['context' => 'Create patron']),
 
       // Urls.
-      'redirect-on-user-created-url' => dpl_react_apps_format_app_url($config->get('redirect_on_user_created_url'), DplPatronRegSettings::REDIRECT_ON_USER_CREATED_URL),
+      'redirect-on-user-created-url' => $redirect_on_user_created_url,
     ] + DplReactAppsController::externalApiBaseUrls();
 
     return [
