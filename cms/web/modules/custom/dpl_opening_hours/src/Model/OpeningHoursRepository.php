@@ -151,29 +151,40 @@ class OpeningHoursRepository {
 
   /**
    * Update a single opening hours instance.
+   *
+   * @return OpeningHoursInstance[]
+   *   The updated instances
    */
-  public function update(OpeningHoursInstance $instance): OpeningHoursInstance {
-    // Create a new repetition for the instance. For now this will always
-    // be no repetition.
-    $repetition = $this->repetitionRepository->insert($instance->repetition);
+  public function update(OpeningHoursInstance $instance): array {
+    $storedInstance = $this->load($instance->id);
+    if (!$instance->repetition->id) {
+      if ($instance->repetition::class === NoRepetition::class) {
+        $this->delete($instance->id);
+      }
+      else {
+        $this->delete($instance->id, $storedInstance->repetition->id);
+      }
+      return $this->insert($instance);
+    }
+    else {
+      $data = $this->toFields($instance);
 
-    $data = $this->toFields($instance);
-    $data['repetition_id'] = $repetition->id;
+      // For now this intentionally does not handle repetitions.
+      $this->connection->update(self::INSTANCE_TABLE)
+        ->fields($data)
+        ->condition('id', $instance->id)
+        ->execute();
 
-    // For now this intentionally does not handle repetitions.
-    $this->connection->update(self::INSTANCE_TABLE)
-      ->fields($data)
-      ->condition('id', $instance->id)
-      ->execute();
-
-    return new OpeningHoursInstance(
-      $instance->id,
-      $instance->branch,
-      $instance->categoryTerm,
-      $instance->startTime,
-      $instance->endTime,
-      $repetition
-    );
+      return [new OpeningHoursInstance(
+        $instance->id,
+        $instance->branch,
+        $instance->categoryTerm,
+        $instance->startTime,
+        $instance->endTime,
+        $instance->repetition
+        ),
+      ];
+    }
   }
 
   /**
@@ -182,7 +193,7 @@ class OpeningHoursRepository {
    * @return bool
    *   Whether the operation was successful or not.
    */
-  public function delete(int $id, ?int $repetitionId): bool {
+  public function delete(int $id, ?int $repetitionId = NULL): bool {
     $instance = $this->load($id);
     if (!$instance) {
       return FALSE;

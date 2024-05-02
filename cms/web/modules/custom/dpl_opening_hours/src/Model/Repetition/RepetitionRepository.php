@@ -26,11 +26,6 @@ class RepetitionRepository {
    * Insert a repetition.
    */
   public function insert(Repetition $repetition) : Repetition {
-    if ($repetition->id) {
-      // If the repetition already has an id then it has already been inserted.
-      return $repetition;
-    }
-
     // Create the initial repetition type.
     $type = match ($repetition::class) {
       NoRepetition::class => OpeningHoursRepetitionType::None,

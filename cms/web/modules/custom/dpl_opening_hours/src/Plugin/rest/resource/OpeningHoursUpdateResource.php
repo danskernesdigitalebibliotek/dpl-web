@@ -6,6 +6,7 @@ namespace Drupal\dpl_opening_hours\Plugin\rest\resource;
 
 use DanskernesDigitaleBibliotek\CMS\Api\Model\DplOpeningHoursCreatePOSTRequest as OpeningHoursRequest;
 use Drupal\Component\Utility\NestedArray;
+use Drupal\dpl_opening_hours\Model\OpeningHoursInstance;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
@@ -41,7 +42,10 @@ final class OpeningHoursUpdateResource extends OpeningHoursResourceBase {
         'responses' => [
           Response::HTTP_OK => [
             'description' => Response::$statusTexts[Response::HTTP_OK],
-            'schema' => $this->openingHoursInstanceSchema(require_id: TRUE),
+            'schema' => [
+              "type" => "array",
+              "items" => $this->openingHoursInstanceSchema(require_id: TRUE),
+            ],
           ],
           Response::HTTP_BAD_REQUEST => [
             'description' => Response::$statusTexts[Response::HTTP_BAD_REQUEST],
@@ -69,8 +73,10 @@ final class OpeningHoursUpdateResource extends OpeningHoursResourceBase {
       }
 
       $updateInstance = $this->mapper->fromRequest($requestData);
-      $updatedInstance = $this->repository->update($updateInstance);
-      $responseData = $this->mapper->toResponse($updatedInstance);
+      $updatedInstances = $this->repository->update($updateInstance);
+      $responseData = array_map(function (OpeningHoursInstance $instance) {
+        return $this->mapper->toResponse($instance);
+      }, $updatedInstances);
       return new Response($this->serializer->serialize($responseData, $this->serializerFormat($request)));
     }
     catch (\InvalidArgumentException $e) {
