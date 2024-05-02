@@ -3789,7 +3789,7 @@ msgstr "Bruger ikke fundet"
 #: 
 msgctxt "Work Page"
 msgid "Ordered from another library"
-msgstr "Bestil fra et andet bibliotek"
+msgstr "Bestilt fra et andet bibliotek"
 
 #: 
 msgctxt "DPL admin UX"
