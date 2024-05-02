@@ -14,34 +14,40 @@ uid: null
 template: false
 archive: false
 id: contact
-title: Contact
-description: '<p>Basic email contact webform.</p>'
+title: Kontaktformular
+description: '<p>Standard kontaktformular.</p>'
 categories: {  }
-elements: |
+elements: |-
   name:
-    '#title': 'Your Name'
     '#type': textfield
+    '#title': 'Dit navn'
     '#required': true
-    '#default_value': '[current-user:display-name]'
   email:
-    '#title': 'Your Email'
     '#type': email
+    '#title': 'Din e-mailadresse'
     '#required': true
-    '#default_value': '[current-user:mail]'
+  category:
+    '#type': webform_term_select
+    '#title': Kategori
+    '#required': true
+    '#vocabulary': webform_email_categories
   subject:
-    '#title': Subject
     '#type': textfield
+    '#title': Emne
     '#required': true
     '#test': 'Testing contact webform from [site:name]'
   message:
-    '#title': Message
     '#type': textarea
+    '#title': Besked
     '#required': true
     '#test': 'Please ignore this email.'
   actions:
     '#type': webform_actions
     '#title': 'Submit button(s)'
-    '#submit__label': 'Send message'
+    '#submit__label': 'Send besked'
+  notice:
+    '#type': webform_markup
+    '#markup': '<p>BEMÆRK! Indsæt aldrig CPR-nummer eller følsomme oplysninger i formularen.</p><p>Læs mere om <a href="/privatlivspolitik" target="_blank">behandling af persondata i vores privatlivspolitik.</a></p>'
 css: ''
 javascript: ''
 settings:
@@ -146,10 +152,10 @@ settings:
   draft_loaded_message: ''
   draft_pending_single_message: ''
   draft_pending_multiple_message: ''
-  confirmation_type: url_message
+  confirmation_type: message
   confirmation_url: '<front>'
   confirmation_title: ''
-  confirmation_message: 'Your message has been sent.'
+  confirmation_message: '<p>Your submission has been received. You will receive a confirmation mail soon.</p>'
   confirmation_attributes: {  }
   confirmation_back: true
   confirmation_back_label: ''
@@ -171,7 +177,7 @@ settings:
   entity_limit_user_interval: null
   purge: none
   purge_days: null
-  results_disabled: false
+  results_disabled: true
   results_disabled_ignore: false
   results_customize: false
   token_view: false
@@ -237,7 +243,7 @@ handlers:
     settings:
       states:
         - completed
-      to_mail: '[current-user:mail]'
+      to_mail: '[webform_submission:values:email:raw]'
       to_options: {  }
       bcc_mail: ''
       bcc_options: {  }
@@ -245,13 +251,13 @@ handlers:
       cc_options: {  }
       from_mail: _default
       from_options: {  }
-      from_name: _default
+      from_name: ''
       reply_to: ''
       return_path: ''
       sender_mail: ''
       sender_name: ''
       subject: '[webform_submission:values:subject:raw]'
-      body: '[webform_submission:values:message:value]'
+      body: '<p>Hello [webform_submission:values:name]&nbsp;</p><p>We hereby confirm that we have received the following inquiry:</p><p>Time of arrival: [webform_submission:created]</p><p>Inquiry:<br>[webform_submission:values:subject]</p><p>[webform_submission:values:message]</p><p>---------</p><p>We will get back to you as soon as possible on the following mail: [webform_submission:values:email]&nbsp;<br><br>Kind regards</p>'
       excluded_elements: {  }
       ignore_access: false
       exclude_empty: true
@@ -274,21 +280,21 @@ handlers:
     settings:
       states:
         - completed
-      to_mail: _default
+      to_mail: '[webform_submission:values:category:entity:field_email:value]'
       to_options: {  }
       bcc_mail: ''
       bcc_options: {  }
       cc_mail: ''
       cc_options: {  }
-      from_mail: '[webform_submission:values:email:raw]'
+      from_mail: _default
       from_options: {  }
-      from_name: '[webform_submission:values:name:raw]'
+      from_name: ''
       reply_to: ''
       return_path: ''
       sender_mail: ''
       sender_name: ''
       subject: '[webform_submission:values:subject:raw]'
-      body: '[webform_submission:values:message:value]'
+      body: '<p>A new inquiry has arrived with the following info:</p><p>Name: [webform_submission:values:name]&nbsp;</p><p>Email: [webform_submission:values:email]&nbsp;</p><p>Time of arrival: [webform_submission:created]</p><p>Category: [webform_submission:values:category]</p><p>Subject: [webform_submission:values:subject]</p><p>Message: [webform_submission:values:message]</p>'
       excluded_elements: {  }
       ignore_access: false
       exclude_empty: true

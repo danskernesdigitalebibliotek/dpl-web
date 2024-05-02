@@ -1,0 +1,5 @@
+services:
+  dpl_webform.route_webform_access_check:
+    class: Drupal\dpl_webform\Routing\WebformAccessSubscriber
+    tags:
+      - { name: event_subscriber }

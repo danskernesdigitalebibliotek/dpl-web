@@ -134,6 +134,8 @@ class DplReactAppsController extends ControllerBase {
       'facet-work-types-text' => $this->t('Work types', [], ['context' => 'Search Result']),
       'facet-year-text' => $this->t('Year', [], ['context' => 'Search Result']),
       'filter-list-text' => $this->t('Filter list', [], ['context' => 'Search Result']),
+      'invalid-search-text' => $this->t('Invalid search', [], ['context' => 'Search Result']),
+      'invalid-search-description-text' => $this->t('Your search is invalid. Please try again. In order to perform a valid search, you need to include at least three letters.', [], ['context' => 'Search Result']),
       'results-text' => $this->t('results', [], ['context' => 'Search Result']),
       'show-results-text' => $this->t('Show results', [], ['context' => 'Search Result']),
       'showing-results-for-text' => $this->t('Showing results for "@query"', [], ['context' => 'Search Result']),

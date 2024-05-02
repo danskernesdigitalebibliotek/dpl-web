@@ -4,8 +4,6 @@ _meta:
   uuid: 74e3bb37-5b99-4164-a9a7-adfc165eaead
   bundle: page
   default_langcode: da
-  depends:
-    e00e1460-169e-468d-9835-d664f06d0969: file
 default:
   revision_uid:
     -
@@ -34,13 +32,6 @@ default:
   entity_clone_template_active:
     -
       value: false
-  entity_clone_template_image:
-    -
-      entity: e00e1460-169e-468d-9835-d664f06d0969
-      alt: ''
-      title: ''
-      width: 640
-      height: 443
   metatag:
     -
       tag: meta
@@ -50,6 +41,8 @@ default:
   path:
     -
       alias: /velkommen
+      langcode: und
+      pathauto: 1
   field_display_titles:
     -
       value: true
@@ -75,6 +68,9 @@ default:
           behavior_settings:
             -
               value: {  }
+          revision_translation_affected:
+            -
+              value: true
           field_body:
             -
               value: '<p>Du kan nu begynde at søge og reservere materialer, samt benytte dig af vores digitale tilbud.<br /><br /><a href="/user/me">Du kan se din brugerprofil her</a><br /><br />Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>'
