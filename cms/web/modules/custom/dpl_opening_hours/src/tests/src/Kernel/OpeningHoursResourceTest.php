@@ -256,6 +256,57 @@ class OpeningHoursResourceTest extends KernelTestBase {
   }
 
   /**
+   * Test all an opening hours with an existing repetition are updated.
+   */
+  public function testUpdateWithRepetition(): void {
+    $startDate = new DateTime('now');
+    $endDate = new DateTime("+2weeks");
+
+    $createdOpeningHours = $this->createOpeningHours(
+      date: $startDate,
+      repetition: (new OpeningHoursRepetitionRequest())
+        ->setType(OpeningHoursRepetitionType::Weekly->value)
+        ->setWeeklyData((new OpeningHoursWeeklyData())->setEndDate($endDate))
+    );
+    $this->assertCount(3, $this->listOpeningHours());
+
+    $createdOpeningHour = $createdOpeningHours[1];
+    $this->assertNotNull($createdOpeningHour->getId(), "Created opening hours must have a valid id");
+
+    $updateResource = OpeningHoursUpdateResource::create($this->container, [], '', '');
+
+    $updateRepetitionData = (new OpeningHoursRepetitionRequest())
+      ->setId($createdOpeningHour->getRepetition()?->getId())
+      ->setType($createdOpeningHour->getRepetition()?->getType())
+      ->setWeeklyData($createdOpeningHour->getRepetition()?->getWeeklyData());
+    $updateData = (new OpeningHoursRequest())
+      ->setId($createdOpeningHour->getId())
+      ->setDate(new DateTime('tomorrow'))
+      ->setStartTime("10:00")
+      ->setEndTime("18:00")
+      // It is a bit tricky to set up multiple categories so do not change
+      // these values for npw.
+      ->setCategory($createdOpeningHour->getCategory())
+      ->setBranchId(2)
+      ->setRepetition($updateRepetitionData);
+    /** @var \DanskernesDigitaleBibliotek\CMS\Api\Service\JmsSerializer $serializer */
+    $serializer = $this->container->get('dpl_opening_hours.serializer');
+    $updateRequest = new Request(content: $serializer->serialize($updateData, 'application/json'));
+
+    $updateResource->patch($createdOpeningHour->getId(), $updateRequest);
+    $openingHoursAfterUpdate = $this->listOpeningHours();
+    $this->assertCount(3, $openingHoursAfterUpdate);
+
+    $createdIds = array_map(fn (OpeningHoursResponse $openingHours) => $openingHours->getId(), $createdOpeningHours);
+    $idsAfterUpdate = array_map(fn (OpeningHoursResponse $allOpeningHours) => $allOpeningHours->getId(), $openingHoursAfterUpdate);
+    $this->assertEquals($createdIds, $idsAfterUpdate, "Opening hours instance ids should persist across updates");
+
+    $createdRepetitionIds = array_map(fn (OpeningHoursResponse $openingHours) => $openingHours->getRepetition()?->getId(), $createdOpeningHours);
+    $repetitionIdsAfterUpdate = array_map(fn (OpeningHoursResponse $openingHours) => $openingHours->getRepetition()?->getId(), $openingHoursAfterUpdate);
+    $this->assertEquals($createdRepetitionIds, $repetitionIdsAfterUpdate, "Opening hours repetition ids should persist across normal updates");
+  }
+
+  /**
    * Test that opening hours with weekly repetition can be created properly.
    */
   public function testUpdateInstanceInWeeklyRepetition(): void {
