@@ -61,6 +61,7 @@ class RedirectPatronSubscriber implements EventSubscriberInterface {
    *   Core http request event object.
    */
   public function checkAuthStatus(RequestEvent $event): void {
+
     if ($this->account->isAnonymous()) {
       $pages = mb_strtolower($this->configuration->get('pages'));
       if (!$pages) {
