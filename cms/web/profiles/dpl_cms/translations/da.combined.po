@@ -16907,7 +16907,7 @@ msgstr "UserInfo slutpunkt"
 
 #: 
 msgid "Logging in with @provider has been canceled."
-msgstr ""
+msgstr "Kunne ikke logge ind. Kontakt venligst biblioteket."
 
 #: 
 msgid "Unknown error."
@@ -16919,7 +16919,7 @@ msgstr ""
 
 #: 
 msgid "Logging in with @provider could not be completed due to an error."
-msgstr ""
+msgstr "Kunne ikke logge ind. Kontakt venligst biblioteket."
 
 #: 
 msgid "Account successfully connected with @provider."
