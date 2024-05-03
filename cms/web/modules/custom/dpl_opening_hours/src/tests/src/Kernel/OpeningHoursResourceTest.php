@@ -351,11 +351,17 @@ class OpeningHoursResourceTest extends KernelTestBase {
     $updatedOpeningHours = $serializer->deserialize($updateResponse->getContent(), 'array<' . OpeningHoursResponse::class . '>', 'application/json');
     $this->assertCount(3, $updatedOpeningHours);
     $updatedOpeningHour = $updatedOpeningHours[0];
-    $this->assertNotNull($updatedOpeningHour->getRepetition()->getId());
-    $this->assertNotEquals($createdOpeningHour->getRepetition()->getId(), $updatedOpeningHour->getRepetition()->getId());
+    $this->assertNotNull($updatedOpeningHour->getRepetition()?->getId());
+    $this->assertNotEquals($createdOpeningHour->getRepetition()?->getId(), $updatedOpeningHour->getRepetition()->getId(), "Updating opening hours with new repetition should yield a new repetitio  id.");
 
     $allOpeningHours = $this->listOpeningHours();
     $this->assertCount(4, $allOpeningHours);
+
+    $remainingInstances = array_filter($allOpeningHours, function (OpeningHoursResponse $openingHours) use ($createdOpeningHour): bool {
+      return $openingHours->getRepetition()?->getId() === $createdOpeningHour->getRepetition()?->getId();
+    });
+    $this->assertCount(1, $remainingInstances, "Only a single instance in the original repetition must remain");
+    $this->assertDateEquals($createdOpeningHours[0]->getDate(), $remainingInstances[0]->getRepetition()?->getWeeklyData()?->getEndDate(), "The remaining instance must have an updated repetition end date.");
   }
 
   /**
@@ -448,6 +454,7 @@ class OpeningHoursResourceTest extends KernelTestBase {
     });
     $this->assertCount(1, $remainingOpeningHoursInRepetition, "The past instance should remain when deleting an instance with a repetition.");
     $this->assertEquals($firstOpeningHoursCreated->getId(), $remainingOpeningHoursInRepetition[0]->getId());
+    $this->assertDateEquals($startDate, $remainingOpeningHoursInRepetition[0]->getRepetition()?->getWeeklyData()?->getEndDate(), "The remaining instance must have an updated repetition end date.");
   }
 
   /**
@@ -518,7 +525,7 @@ class OpeningHoursResourceTest extends KernelTestBase {
   public function assertDateEquals(?\DateTimeInterface $expected, ?\DateTimeInterface $actual, string $message = ''): void {
     $this->assertNotNull($expected, "Expected date should not be null");
     $this->assertNotNull($actual, "Actual date should not be null");
-    $this->assertEquals($expected->format('Y-m-d'), $actual->format('Y-m-d'), $message);
+    $this->assertEquals($expected->format('Y-m-d'), $actual->format('Y-m-d'), $message ?: "Failed asserting two dates are equal.");
   }
 
 }

@@ -98,4 +98,19 @@ class RepetitionRepository {
     return $numRowsAffected > 0;
   }
 
+  /**
+   * Update a weekly repetition.
+   *
+   * @return bool
+   *   Whether the operation was successful or not.
+   */
+  public function updateWeekly(WeeklyRepetition $repetition) {
+    $data = ['endDate' => $repetition->endDate];
+    $numRowsAffected = $this->connection->update(self::REPETITION_TABLE)
+      ->fields(['data' => json_encode($data)])
+      ->condition('id', $repetition->id)
+      ->execute();
+    return $numRowsAffected > 0;
+  }
+
 }

@@ -62,7 +62,7 @@ class OpeningHoursRepository {
    * @return OpeningHoursInstance[]
    *   Opening hours instances which match the provided criteria.
    */
-  public function loadMultiple(int $branchId = NULL, \DateTimeInterface $fromDate = NULL, \DateTimeInterface $toDate = NULL): array {
+  public function loadMultiple(int $branchId = NULL, \DateTimeInterface $fromDate = NULL, \DateTimeInterface $toDate = NULL, int $repetitionId = NULL): array {
     $query = $this->connection->select(self::INSTANCE_TABLE, self::INSTANCE_TABLE)
       ->fields(self::INSTANCE_TABLE);
     if ($branchId) {
@@ -73,6 +73,9 @@ class OpeningHoursRepository {
     }
     if ($toDate) {
       $query->condition('date', $toDate->format('Y-m-d'), '<=');
+    }
+    if ($repetitionId) {
+      $query->condition('repetition_id', $repetitionId);
     }
 
     $result = $query->execute();
@@ -156,7 +159,14 @@ class OpeningHoursRepository {
    *   The updated instances
    */
   public function update(OpeningHoursInstance $instance): array {
+    if (empty($instance->id)) {
+      throw new \InvalidArgumentException('Unable to update opening hours instance without id');
+    }
     $storedInstance = $this->load($instance->id);
+    if (!$storedInstance) {
+      throw new \InvalidArgumentException("Unable to load opening hours with id '{$instance->id}'");
+    }
+
     if (!$instance->repetition->id) {
       if ($instance->repetition::class === NoRepetition::class) {
         $this->delete($instance->id);
@@ -213,12 +223,17 @@ class OpeningHoursRepository {
     }
     $numRowsAffected = $deleteQuery->execute();
 
-    // If there are no remaining instances for the repetition then delete it.
-    $repetitionInstanceCount = $this->connection->select(self::INSTANCE_TABLE)
-      ->condition('repetition_id', $instance->repetition->id)
-      ->countQuery()->execute()?->fetchField();
-    if ($repetitionInstanceCount === 0) {
+    $remainingInstances = $this->loadMultiple(repetitionId: $repetitionId);
+    if (count($remainingInstances) === 0) {
+      // If there are no remaining instances for the repetition then delete it.
       $this->repetitionRepository->delete($instance->repetition);
+    }
+    elseif ($instance->repetition::class == WeeklyRepetition::class) {
+      // Use the date of the last remaining repetition as the new end date.
+      $remainingDates = array_map(fn (OpeningHoursInstance $instance) => $instance->startTime, $remainingInstances);
+      $lastDate = max($remainingDates);
+      $newRepetition = new WeeklyRepetition($instance->repetition->id, $lastDate);
+      $this->repetitionRepository->updateWeekly($newRepetition);
     }
 
     // If a row was affected then the operation had an effect. That is a
