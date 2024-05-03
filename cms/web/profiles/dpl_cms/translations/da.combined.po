@@ -26532,12 +26532,12 @@ msgstr ""
 #: 
 msgctxt "Global"
 msgid "Liked"
-msgstr ""
+msgstr "Husk"
 
 #: 
 msgctxt "Global"
 msgid "Login"
-msgstr ""
+msgstr "Log ind"
 
 #: 
 msgctxt "Search Result"
@@ -26584,7 +26584,7 @@ msgstr ""
 
 #: 
 msgid "Liked"
-msgstr ""
+msgstr "Husk"
 
 #: 
 msgctxt "field.field.taxonomy_term.webform_email_categories.field_email:label"
