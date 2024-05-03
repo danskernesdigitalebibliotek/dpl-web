@@ -13,3 +13,16 @@ use Drupal\dpl_patron_reg\Form\PatronRegSettingsForm;
 function dpl_patron_reg_dpl_protected_nodes_get_protected_nodes(): array {
   return dpl_protected_nodes_get_context(PatronRegSettingsForm::class, 'dpl_patron_reg.settings');
 }
+
+/**
+ * Implements hook_preprocess_HOOK().
+ */
+function dpl_patron_reg_preprocess_node__page(array &$variables): void {
+
+  $service = \Drupal::service('dpl_patron_reg.settings');
+  $user_creation_url = $service->getPatronRegistrationPageUrl();
+
+  if ($user_creation_url && $variables['url'] == $user_creation_url) {
+    \Drupal::service('page_cache_kill_switch')->trigger();
+  }
+}
