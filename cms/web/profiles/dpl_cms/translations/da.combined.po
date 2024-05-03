@@ -26144,7 +26144,7 @@ msgstr "Startdato"
 #: 
 msgctxt "DPL Opening Hours Editor"
 msgid "Start time"
-msgstr "Starttid"
+msgstr "Starttidspunkt"
 
 #: 
 msgctxt "DPL Opening Hours Editor"
