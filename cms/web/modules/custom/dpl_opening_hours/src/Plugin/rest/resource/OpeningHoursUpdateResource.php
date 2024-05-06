@@ -37,7 +37,7 @@ final class OpeningHoursUpdateResource extends OpeningHoursResourceBase {
           'description' => 'The opening hours instance to manage',
           'in' => 'body',
           'required' => TRUE,
-          'schema' => $this->openingHoursInstanceSchema(require_id: TRUE),
+          'schema' => $this->openingHoursInstanceSchema(require_id: FALSE),
         ],
         'responses' => [
           Response::HTTP_OK => [
