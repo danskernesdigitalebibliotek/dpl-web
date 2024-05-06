@@ -2607,7 +2607,7 @@ msgstr "i"
 #: 
 msgctxt "Global"
 msgid "Start typing in order to search"
-msgstr "Søg efter bøger, film, musik og mere"
+msgstr "Søg efter bøger, film, musik og meget mere..."
 
 #: 
 msgctxt "Global"
