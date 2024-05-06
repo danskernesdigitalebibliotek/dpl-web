@@ -122,8 +122,8 @@ class DplLoginController extends ControllerBase {
 
     if ($current_path = $request->query->get('current-path')) {
       $url->mergeOptions(['query' => ['current-path' => $current_path]]);
-
     }
+
     $generated_url = $url->toString(TRUE);
     $_SESSION['openid_connect_destination'] = $generated_url->getGeneratedUrl();
 
