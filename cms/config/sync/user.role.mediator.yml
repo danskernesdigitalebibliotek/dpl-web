@@ -20,6 +20,7 @@ dependencies:
     - filter
     - media
     - node
+    - override_node_options
     - paragraphs
     - recurring_events
     - redirect
@@ -95,6 +96,7 @@ permissions:
   - 'edit own page content'
   - 'edit own video media'
   - 'edit terms in tags'
+  - 'override article published option'
   - 'schedule publishing of eventseries'
   - 'schedule publishing of nodes'
   - 'update any media'
