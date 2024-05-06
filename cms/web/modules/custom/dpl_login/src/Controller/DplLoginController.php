@@ -6,7 +6,6 @@ use Drupal\Core\Controller\ControllerBase;
 use Drupal\Core\Routing\TrustedRedirectResponse;
 use Drupal\Core\StringTranslation\StringTranslationTrait;
 use Drupal\Core\Url;
-use Drupal\dpl_login\AccessTokenType;
 use Drupal\dpl_login\Adgangsplatformen\Config;
 use Drupal\dpl_login\Exception\MissingConfigurationException;
 use Drupal\dpl_login\UserTokens;
@@ -117,47 +116,12 @@ class DplLoginController extends ControllerBase {
    */
   public function login(Request $request): Response {
     $_SESSION['openid_connect_op'] = 'login';
-
-    $url = Url::fromRoute('dpl_login.login_handler');
-
     if ($current_path = $request->query->get('current-path')) {
-      $url->mergeOptions(['query' => ['current-path' => $current_path]]);
+      $_SESSION['openid_connect_destination'] = $current_path;
     }
-
-    $generated_url = $url->toString(TRUE);
-    $_SESSION['openid_connect_destination'] = $generated_url->getGeneratedUrl();
 
     $scopes = $this->claims->getScopes($this->client);
     return $this->client->authorize($scopes);
-  }
-
-  /**
-   * Check if a user token has been set and decide redirection.
-   *
-   * Check if a user token has been set and either allow redirecting
-   * to the original path or redirect to frontpage.
-   *
-   * @param \Symfony\Component\HttpFoundation\Request $request
-   *   Symfony request object.
-   *
-   * @return \Drupal\Core\Routing\TrustedRedirectResponse
-   *   A redirect to either the original redirect or to the frontpage.
-   */
-  public function loginHandler(Request $request): TrustedRedirectResponse {
-    if ($current_path = (string) $request->query->get('current-path')) {
-      $accessToken = $this->userTokens->getCurrent();
-      if ($accessToken && $accessToken->type === AccessTokenType::UNREGISTERED_USER) {
-        $url = Url::fromRoute('dpl_patron_reg.create')->toString(TRUE);
-        return new TrustedRedirectResponse($url->getGeneratedUrl());
-      }
-      if ($accessToken && $accessToken->type === AccessTokenType::USER) {
-        $url = Url::fromUri('internal:/' . ltrim($current_path, '/'))->toString(TRUE);
-        return new TrustedRedirectResponse($url->getGeneratedUrl());
-      }
-    }
-
-    $url = Url::fromRoute('<front>', [], ["absolute" => TRUE])->toString(TRUE);
-    return new TrustedRedirectResponse($url->getGeneratedUrl());
   }
 
 }
