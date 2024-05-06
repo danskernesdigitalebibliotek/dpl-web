@@ -16,6 +16,7 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use function Safe\sprintf;
 
 /**
  * DPL React Controller.
@@ -53,12 +54,15 @@ class DplLoginController extends ControllerBase {
   /**
    * Logs out user externally and internally.
    *
+   * @param \Symfony\Component\HttpFoundation\Request $request
+   *   Symfony request object.
+   *
    * @return \Drupal\Core\Routing\TrustedRedirectResponse|\Symfony\Component\HttpFoundation\RedirectResponse
    *   Redirect to external logout service or front if not possible.
    *
    * @throws \Drupal\dpl_login\Exception\MissingConfigurationException
    */
-  public function logout(): TrustedRedirectResponse|RedirectResponse {
+  public function logout(Request $request): TrustedRedirectResponse|RedirectResponse {
     // It is a global problem if the logout endpoint has not been configured.
     if (!$logout_endpoint = $this->config->getLogoutEndpoint()) {
       throw new MissingConfigurationException('Adgangsplatformen plugin config variable logout_endpoint is missing');
@@ -80,6 +84,12 @@ class DplLoginController extends ControllerBase {
     $redirect_uri = Url::fromRoute('<front>', [], ["absolute" => TRUE])
       ->toString(TRUE)
       ->getGeneratedUrl();
+
+    if ($current_path = (string) $request->query->get('current-path')) {
+      $redirect_uri = Url::fromUri(sprintf('internal:%s', $current_path), ['absolute' => TRUE])
+        ->toString(TRUE)
+        ->getGeneratedUrl();
+    }
 
     // Remote logout service url.
     $url = Url::fromUri($logout_endpoint, [

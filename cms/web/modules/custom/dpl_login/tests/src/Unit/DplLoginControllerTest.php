@@ -26,6 +26,7 @@ use phpmock\MockBuilder;
 use Prophecy\Argument;
 use Psr\Log\LoggerInterface;
 use Symfony\Component\HttpFoundation\RedirectResponse;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
 /**
@@ -116,7 +117,7 @@ class DplLoginControllerTest extends UnitTestCase {
     $controller = DplLoginController::create($container);
     $this->expectException(MissingConfigurationException::class);
     $this->expectExceptionMessage('Adgangsplatformen plugin config variable logout_endpoint is missing');
-    $controller->logout();
+    $controller->logout($this->prophesize(Request::class)->reveal());
   }
 
   /**
@@ -135,7 +136,7 @@ class DplLoginControllerTest extends UnitTestCase {
     \Drupal::setContainer($container);
 
     $controller = DplLoginController::create($container);
-    $response = $controller->logout();
+    $response = $controller->logout($this->prophesize(Request::class)->reveal());
 
     $this->assertInstanceOf(TrustedRedirectResponse::class, $response);
     $this->assertSame(
@@ -172,7 +173,7 @@ class DplLoginControllerTest extends UnitTestCase {
     \Drupal::setContainer($container);
 
     $controller = DplLoginController::create($container);
-    $response = $response = $controller->logout();
+    $response = $response = $controller->logout($this->prophesize(Request::class)->reveal());
 
     $this->assertInstanceOf(RedirectResponse::class, $response);
     $this->assertSame(
