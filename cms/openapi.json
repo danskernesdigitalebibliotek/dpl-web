@@ -135,7 +135,7 @@
         "security": []
       }
     },
-    "/dpl_opening_hours": {
+    "/api/v1/opening_hours": {
       "post": {
         "parameters": [
           {
@@ -443,7 +443,7 @@
         ]
       }
     },
-    "/dpl_opening_hours/{id}": {
+    "/api/v1/opening_hours/{id}": {
       "delete": {
         "parameters": [
           {

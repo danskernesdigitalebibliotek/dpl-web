@@ -2,7 +2,7 @@
 
 declare(strict_types = 1);
 
-namespace Drupal\dpl_opening_hours\Plugin\rest\resource;
+namespace Drupal\dpl_opening_hours\Plugin\rest\resource\v1;
 
 use Drupal\Component\Utility\NestedArray;
 use Drupal\drupal_typed\RequestTyped;
@@ -17,7 +17,7 @@ use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
  *   id = "dpl_opening_hours_delete",
  *   label = @Translation("Delete individual opening hours"),
  *   uri_paths = {
- *     "canonical" = "/dpl_opening_hours/{id}",
+ *     "canonical" = "/api/v1/opening_hours/{id}",
  *   },
  * )
  */

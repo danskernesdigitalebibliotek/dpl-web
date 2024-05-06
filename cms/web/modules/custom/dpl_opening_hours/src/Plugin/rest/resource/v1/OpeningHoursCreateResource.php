@@ -2,7 +2,7 @@
 
 declare(strict_types = 1);
 
-namespace Drupal\dpl_opening_hours\Plugin\rest\resource;
+namespace Drupal\dpl_opening_hours\Plugin\rest\resource\v1;
 
 use DanskernesDigitaleBibliotek\CMS\Api\Model\DplOpeningHoursCreatePOSTRequest as OpeningHoursRequest;
 use Drupal\Component\Utility\NestedArray;
@@ -18,7 +18,7 @@ use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
  *   id = "dpl_opening_hours_create",
  *   label = @Translation("Create individual opening hours"),
  *   uri_paths = {
- *     "create" = "/dpl_opening_hours",
+ *     "create" = "/api/v1/opening_hours",
  *   },
  * )
  */

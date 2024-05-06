@@ -102,10 +102,10 @@ All URIs are relative to *http://varnish:8080*
 Class | Method | HTTP request | Description
 ------------ | ------------- | ------------- | -------------
 *DefaultApiInterface* | [**campaignMatchPOST**](docs/Api/DefaultApiInterface.md#campaignmatchpost) | **POST** /dpl_campaign/match | Get campaign matching search result facets
-*DefaultApiInterface* | [**dplOpeningHoursCreatePOST**](docs/Api/DefaultApiInterface.md#dplopeninghourscreatepost) | **POST** /dpl_opening_hours | Create individual opening hours
-*DefaultApiInterface* | [**dplOpeningHoursDeleteDELETE**](docs/Api/DefaultApiInterface.md#dplopeninghoursdeletedelete) | **DELETE** /dpl_opening_hours/{id} | Delete individual opening hours
-*DefaultApiInterface* | [**dplOpeningHoursListGET**](docs/Api/DefaultApiInterface.md#dplopeninghourslistget) | **GET** /dpl_opening_hours | List all opening hours
-*DefaultApiInterface* | [**dplOpeningHoursUpdatePATCH**](docs/Api/DefaultApiInterface.md#dplopeninghoursupdatepatch) | **PATCH** /dpl_opening_hours/{id} | Update individual opening hours
+*DefaultApiInterface* | [**dplOpeningHoursCreatePOST**](docs/Api/DefaultApiInterface.md#dplopeninghourscreatepost) | **POST** /api/v1/opening_hours | Create individual opening hours
+*DefaultApiInterface* | [**dplOpeningHoursDeleteDELETE**](docs/Api/DefaultApiInterface.md#dplopeninghoursdeletedelete) | **DELETE** /api/v1/opening_hours/{id} | Delete individual opening hours
+*DefaultApiInterface* | [**dplOpeningHoursListGET**](docs/Api/DefaultApiInterface.md#dplopeninghourslistget) | **GET** /api/v1/opening_hours | List all opening hours
+*DefaultApiInterface* | [**dplOpeningHoursUpdatePATCH**](docs/Api/DefaultApiInterface.md#dplopeninghoursupdatepatch) | **PATCH** /api/v1/opening_hours/{id} | Update individual opening hours
 *DefaultApiInterface* | [**eventPATCH**](docs/Api/DefaultApiInterface.md#eventpatch) | **PATCH** /api/v1/events/{uuid} | Update single events
 *DefaultApiInterface* | [**eventsGET**](docs/Api/DefaultApiInterface.md#eventsget) | **GET** /api/v1/events | Retrieve all events
 *DefaultApiInterface* | [**proxyUrlGET**](docs/Api/DefaultApiInterface.md#proxyurlget) | **GET** /dpl-url-proxy | Generate proxy url

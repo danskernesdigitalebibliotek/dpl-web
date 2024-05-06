@@ -1,6 +1,6 @@
 <?php
 
-namespace Drupal\dpl_opening_hours\Plugin\rest\resource;
+namespace Drupal\dpl_opening_hours\Plugin\rest\resource\v1;
 
 use DanskernesDigitaleBibliotek\CMS\Api\Service\SerializerInterface;
 use Drupal\dpl_opening_hours\Mapping\OpeningHoursMapper;

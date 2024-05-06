@@ -2,7 +2,7 @@
 
 declare(strict_types = 1);
 
-namespace Drupal\dpl_opening_hours\Plugin\rest\resource;
+namespace Drupal\dpl_opening_hours\Plugin\rest\resource\v1;
 
 use DanskernesDigitaleBibliotek\CMS\Api\Model\DplOpeningHoursListGET200ResponseInner as OpeningHoursResponse;
 use Drupal\Component\Utility\NestedArray;
@@ -19,7 +19,7 @@ use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
  *   id = "dpl_opening_hours_list",
  *   label = @Translation("List all opening hours"),
  *   uri_paths = {
- *     "canonical" = "/dpl_opening_hours",
+ *     "canonical" = "/api/v1/opening_hours",
  *   },
  * )
  */
