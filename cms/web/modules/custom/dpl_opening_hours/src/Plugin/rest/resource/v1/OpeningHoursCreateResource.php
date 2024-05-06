@@ -64,7 +64,10 @@ final class OpeningHoursCreateResource extends OpeningHoursResourceBase {
     try {
       $requestData = $this->deserialize(OpeningHoursRequest::class, $request);
       $instance = $this->mapper->fromRequest($requestData);
+
       $createdInstances = $this->repository->insert($instance);
+      $this->invalidateCache();
+
       $responseData = array_map(function (OpeningHoursInstance $instance) {
         return $this->mapper->toResponse($instance);
       }, $createdInstances);

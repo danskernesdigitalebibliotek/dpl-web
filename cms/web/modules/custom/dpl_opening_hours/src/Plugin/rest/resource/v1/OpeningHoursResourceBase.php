@@ -3,6 +3,8 @@
 namespace Drupal\dpl_opening_hours\Plugin\rest\resource\v1;
 
 use DanskernesDigitaleBibliotek\CMS\Api\Service\SerializerInterface;
+use Drupal\Core\Cache\CacheableMetadata;
+use Drupal\Core\Cache\CacheTagsInvalidatorInterface;
 use Drupal\dpl_opening_hours\Mapping\OpeningHoursMapper;
 use Drupal\dpl_opening_hours\Mapping\OpeningHoursRepetitionType;
 use Drupal\dpl_opening_hours\Model\OpeningHoursRepository;
@@ -16,6 +18,11 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
 abstract class OpeningHoursResourceBase extends RestResourceBase {
 
   /**
+   * The cache tag to use for list operations.
+   */
+  const CACHE_TAG_LIST = 'dpl_opening_hours:list';
+
+  /**
    * Constructor.
    */
   public function __construct(
@@ -27,6 +34,7 @@ abstract class OpeningHoursResourceBase extends RestResourceBase {
     protected SerializerInterface $serializer,
     protected OpeningHoursRepository $repository,
     protected OpeningHoursMapper $mapper,
+    protected CacheTagsInvalidatorInterface $cacheTagsInvalidator,
   ) {
     parent::__construct($configuration, $plugin_id, $plugin_definition, $serializer_formats, $logger, $serializer);
   }
@@ -44,6 +52,7 @@ abstract class OpeningHoursResourceBase extends RestResourceBase {
       $container->get('dpl_rest_base.serializer'),
       $container->get('dpl_opening_hours.repository'),
       $container->get('dpl_opening_hours.mapper'),
+      $container->get('cache_tags.invalidator')
     );
   }
 
@@ -160,6 +169,29 @@ abstract class OpeningHoursResourceBase extends RestResourceBase {
         "repetition",
       ],
     ];
+  }
+
+  /**
+   * Get metadata for cacheable responses.
+   */
+  protected function cachableMetadata() : CacheableMetadata {
+    return (new CacheableMetadata())
+      // Provide a single cache tag for all responses. This provides a single,
+      // simple way to clear the entire response cache when any opening hour
+      // is updated.
+      ->setCacheTags([self::CACHE_TAG_LIST])
+      // Vary all responses based on url. Path and query arguments are used
+      // to filter opening hours so this provides individual cache entries
+      // per argument combination.
+      ->setCacheContexts(['url']);
+  }
+
+  /**
+   * Invalidate the response cache.
+   */
+  protected function invalidateCache(): void {
+    // Cache can only be invalidated by tags - not contexts.
+    $this->cacheTagsInvalidator->invalidateTags($this->cachableMetadata()->getCacheTags());
   }
 
 }

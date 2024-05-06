@@ -6,6 +6,7 @@ namespace Drupal\dpl_opening_hours\Plugin\rest\resource\v1;
 
 use DanskernesDigitaleBibliotek\CMS\Api\Model\DplOpeningHoursListGET200ResponseInner as OpeningHoursResponse;
 use Drupal\Component\Utility\NestedArray;
+use Drupal\Core\Cache\CacheableResponse;
 use Drupal\dpl_opening_hours\Model\OpeningHoursInstance;
 use Drupal\drupal_typed\RequestTyped;
 use Symfony\Component\HttpFoundation\Request;
@@ -97,7 +98,8 @@ final class OpeningHoursResource extends OpeningHoursResourceBase {
         return $this->mapper->toResponse($instance);
       }, $openingHoursInstances);
 
-      return new Response($this->serializer->serialize($responseData, $this->serializerFormat($request)));
+      return (new CacheableResponse($this->serializer->serialize($responseData, $this->serializerFormat($request))))
+        ->addCacheableDependency($this->cachableMetadata());
     }
     catch (\TypeError $e) {
       throw new BadRequestHttpException("Invalid input: {$e->getMessage()}",);

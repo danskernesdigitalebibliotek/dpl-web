@@ -72,6 +72,7 @@ final class OpeningHoursDeleteResource extends OpeningHoursResourceBase {
       throw new BadRequestHttpException("No instance for id '{$id}'");
     }
 
+    $this->invalidateCache();
     return new Response("", Response::HTTP_NO_CONTENT);
   }
 
