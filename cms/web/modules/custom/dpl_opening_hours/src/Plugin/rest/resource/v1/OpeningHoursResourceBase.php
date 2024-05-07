@@ -179,7 +179,10 @@ abstract class OpeningHoursResourceBase extends RestResourceBase {
       // Provide a single cache tag for all responses. This provides a single,
       // simple way to clear the entire response cache when any opening hour
       // is updated.
-      ->setCacheTags([self::CACHE_TAG_LIST])
+      // We also include the list cache tag for opening hours categories to
+      // ensure that any changes here (labels and colors) are reflected
+      // immediately.
+      ->setCacheTags([self::CACHE_TAG_LIST, 'taxonomy_term_list:opening_hours_categories'])
       // Vary all responses based on url. Path and query arguments are used
       // to filter opening hours so this provides individual cache entries
       // per argument combination.
@@ -191,7 +194,7 @@ abstract class OpeningHoursResourceBase extends RestResourceBase {
    */
   protected function invalidateCache(): void {
     // Cache can only be invalidated by tags - not contexts.
-    $this->cacheTagsInvalidator->invalidateTags($this->cachableMetadata()->getCacheTags());
+    $this->cacheTagsInvalidator->invalidateTags([self::CACHE_TAG_LIST]);
   }
 
 }
