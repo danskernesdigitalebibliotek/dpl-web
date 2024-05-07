@@ -12,7 +12,7 @@ function dpl_error_pages_install(): void {
 /**
  * Implements hook_update_N().
  */
-function dpl_error_pages_update_1001(): void  {
+function dpl_error_pages_update_1001(): void {
   dpl_error_pages_update_paths();
 }
 
@@ -22,16 +22,16 @@ function dpl_error_pages_update_1001(): void  {
  * This function retrieves the 403 and 404 error pages by their UUIDs
  * and updates the system configuration with their aliases.
  */
-function dpl_error_pages_update_paths(): void  {
+function dpl_error_pages_update_paths(): void {
 
   $paths = [
     'page.404' => '',
-    'page.403' => ''
+    'page.403' => '',
   ];
 
   $error_pages_uuids = [
     'page.404' => 'f14e3e68-6bd1-44f3-a61c-108967cc68e8',
-    'page.403' => 'd6fe11c3-4776-4e40-9527-29d5066311aa'
+    'page.403' => 'd6fe11c3-4776-4e40-9527-29d5066311aa',
   ];
 
   $entity_type_manager = \Drupal::entityTypeManager();
