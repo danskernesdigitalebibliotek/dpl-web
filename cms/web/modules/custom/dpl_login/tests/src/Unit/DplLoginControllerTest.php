@@ -124,6 +124,8 @@ class DplLoginControllerTest extends UnitTestCase {
    * The user is redirected to external login when logging out.
    */
   public function testThatExternalRedirectIsActivatedWhenLoggingOut(): void {
+    // @todo This test is skipped because after the current-path functionality
+    // was added to DplLoginController:logout(), we need to mock more services.
     $this->markTestSkipped('After logout is handling current-path, this test has to be updated.');
 
     $config = $this->prophesize(ImmutableConfig::class);
