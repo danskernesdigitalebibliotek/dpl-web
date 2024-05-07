@@ -6,12 +6,59 @@
  * Setting up custom pages for 404 (Not Found) and 403 (Forbidden) errors.
  */
 function dpl_error_pages_install(): void {
+  dpl_error_pages_update_paths();
+}
 
-  $path404 = '/error-page-404';
-  $path403 = '/error-page-403';
+/**
+ * Implements hook_update_N().
+ */
+function dpl_error_pages_update_1001(): void  {
+  dpl_error_pages_update_paths();
+}
+
+/**
+ * Update the paths for 403 and 404 error pages based on UUIDs.
+ *
+ * This function retrieves the 403 and 404 error pages by their UUIDs
+ * and updates the system configuration with their aliases.
+ */
+function dpl_error_pages_update_paths(): void  {
+
+  $paths = [
+    'page.404' => '',
+    'page.403' => ''
+  ];
+
+  $error_pages_uuids = [
+    'page.404' => 'f14e3e68-6bd1-44f3-a61c-108967cc68e8',
+    'page.403' => 'd6fe11c3-4776-4e40-9527-29d5066311aa'
+  ];
+
+  $entity_type_manager = \Drupal::entityTypeManager();
+  $path_alias_manager = \Drupal::service('path_alias.manager');
+  $node_storage = $entity_type_manager->getStorage('node');
+
+  // Helper function to get the alias path by UUID.
+  $get_alias_by_uuid = function ($uuid) use ($node_storage, $path_alias_manager) {
+    $nodes = $node_storage->loadByProperties(['uuid' => $uuid]);
+    if (!empty($nodes)) {
+      /** @var \Drupal\node\NodeInterface $node */
+      $node = reset($nodes);
+      $node_path = '/node/' . $node->id();
+      return $path_alias_manager->getAliasByPath($node_path);
+    }
+    return NULL;
+  };
+
+  // Retrieve and update the paths based on UUIDs.
+  foreach ($error_pages_uuids as $key => $uuid) {
+    if ($alias = $get_alias_by_uuid($uuid)) {
+      $paths[$key] = $alias;
+    }
+  }
 
   \Drupal::configFactory()->getEditable('system.site')
-    ->set('page.404', $path404)
-    ->set('page.403', $path403)
+    ->set('page.404', $paths['page.404'])
+    ->set('page.403', $paths['page.403'])
     ->save();
 }
