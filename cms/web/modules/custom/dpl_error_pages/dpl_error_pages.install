@@ -12,7 +12,7 @@ function dpl_error_pages_install(): void {
 /**
  * Implements hook_update_N().
  */
-function dpl_error_pages_update_1001(): void {
+function dpl_error_pages_update_10001(): void {
   dpl_error_pages_update_paths();
 }
 
