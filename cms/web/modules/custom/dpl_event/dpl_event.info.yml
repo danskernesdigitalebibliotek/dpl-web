@@ -5,7 +5,7 @@ package: DPL
 core_version_requirement: ^10
 
 dependencies:
-  - drupal:dpl_rest_base
+  - dpl_rest_base:dpl_rest_base
   - drupal:enum_field
   - drupal:job_scheduler
   - drupal:drupal_typed
