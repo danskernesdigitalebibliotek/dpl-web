@@ -207,7 +207,25 @@ const validateOpeningHoursChangesAdmin = ({
     });
 };
 
-const checkOpeningHoursNotPresentInPage = ({
+const validateOpeningHoursRemovedAdmin = ({
+  openingHourCategory,
+  start,
+  end,
+  editSeriesFromIndex,
+}) => {
+  return cy
+    .get('tbody[role="presentation"]')
+    .should("be.visible")
+    .find('div[data-cy="opening-hours-editor-event-content"]')
+    .should("have.length", editSeriesFromIndex)
+    .each((element) => {
+      cy.wrap(element)
+        .should("contain", openingHourCategory)
+        .and("contain", `${start} - ${end}`);
+    });
+};
+
+const validateOpeningHoursNotPresentPage = ({
   openingHourCategory,
   start,
   end,
@@ -423,6 +441,25 @@ const deleteOpeningHoursSeries = ({
   }
 };
 
+const deleteRestOfOpeningHoursSeries = ({
+  openingHourCategory,
+  start,
+  end,
+  editSeriesFromIndex = 0,
+}: OpeningHourFormType & { editSeriesFromIndex?: number }) => {
+  visitOpeningHoursPageAdmin();
+  navigateToMonthViewAdmin();
+  validateAtLeastOneOpeningHoursExistAdmin({
+    openingHourCategory,
+    start,
+    end,
+  })
+    .eq(editSeriesFromIndex)
+    .click();
+  cy.getBySel("opening-hours-editor-form__remove").click();
+  confirmEditRepeatedOpeningHourForm("all");
+};
+
 describe("Opening hours editor", () => {
   beforeEach(() => {
     deleteAllTestBranchesIfExists();
@@ -564,5 +601,45 @@ describe("Opening hours editor", () => {
     };
     createOpeningHoursSeries(openingHour);
     deleteOpeningHoursSeries(openingHour);
+  });
+
+  it("Can delete rest of opening hours series", () => {
+    const {
+      openingHourCategory,
+      start,
+      end,
+      endDate,
+      editSeriesFromIndex,
+    }: Required<OpeningHourFormType> & {
+      editSeriesFromIndex: number;
+    } = {
+      openingHourCategory: OpeningHourCategories.WithService,
+      start: "10:00",
+      end: "11:00",
+      endDate: oneMonthFromToday(),
+      editSeriesFromIndex: 2,
+    };
+
+    createOpeningHoursSeries({
+      openingHourCategory,
+      start,
+      end,
+      endDate,
+    });
+
+    deleteRestOfOpeningHoursSeries({
+      editSeriesFromIndex,
+      openingHourCategory,
+      start,
+      end,
+      endDate,
+    });
+
+    validateOpeningHoursRemovedAdmin({
+      editSeriesFromIndex,
+      openingHourCategory,
+      start,
+      end,
+    });
   });
 });
