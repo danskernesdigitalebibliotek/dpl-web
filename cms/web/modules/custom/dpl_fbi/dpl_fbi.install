@@ -70,4 +70,31 @@ function dpl_fbi_update_10000() :void {
       }
     }
   }
+
+}
+
+/**
+ * Update the CQL search field to have a max length of 16000.
+ */
+function dpl_fbi_update_10001():void {
+  $database = \Drupal::database();
+  $tables = [
+    'paragraph__field_cql_search',
+    'paragraph_revision__field_cql_search',
+  ];
+
+  $spec = [
+    'type' => 'varchar',
+    'length' => 16000,
+    'not null' => FALSE,
+  ];
+
+  foreach ($tables as $table_name) {
+    if ($database->schema()->fieldExists($table_name, 'field_cql_search_value')) {
+      $database->schema()->changeField($table_name, 'field_cql_search_value', 'field_cql_search_value', $spec);
+    }
+    else {
+      throw new \Exception("Field 'field_cql_search_value' does not exist in the table {$table_name}");
+    }
+  }
 }

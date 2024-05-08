@@ -181,6 +181,23 @@ function dpl_event_preprocess_eventseries(array &$variables): void {
   $variables['formatted_date'] =
     \Drupal::service('dpl_event.reoccurring_date_formatter')
       ->getSeriesDateString($event_series);
+
+  if ($event_series->getInstanceCount() < 2) {
+    return;
+  }
+
+  // Load event instances related to this series and prepare them for rendering.
+  $eventinstances_in_series = $event_series->get('event_instances')->referencedEntities();
+
+  $variables['event_instances'] = [];
+  foreach ($eventinstances_in_series as $index => $eventInstance) {
+    $viewMode = $index === 0 ? 'list_teaser_stacked_parent' : 'stacked_event';
+
+    $renderable_instances = \Drupal::entityTypeManager()
+      ->getViewBuilder('eventinstance')->view($eventInstance, $viewMode);
+
+    $variables['event_instances'][] = $renderable_instances;
+  }
 }
 
 /**

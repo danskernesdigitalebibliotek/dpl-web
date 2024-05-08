@@ -8,6 +8,7 @@ use Drupal\rest\Plugin\ResourceBase;
 use Psr\Log\LoggerInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\HttpFoundation\Request;
+use function Safe\preg_replace as preg_replace;
 
 /**
  * Base class for REST resources, with serializers.
@@ -83,6 +84,25 @@ abstract class RestResourceBase extends ResourceBase {
       throw new \InvalidArgumentException("Unable to deserialize request");
     }
     return $requestData;
+  }
+
+  /**
+   * Format a multiline OpenAPI description.
+   *
+   * Multiline descriptions should:
+   *
+   * 1. Be readable in local PHP code
+   * 2. Render well with Swagger UI
+   * 3. Be parsable by openapitools/openapi-generator-cli
+   *
+   * This ensures that linebreaks (\n) placed by developers are converted to
+   * break tags for Swagger UI. Duplicate whitespaces added for local
+   * readability is also stripped.
+   */
+  protected function formatMultilineDescription(string $description): string {
+    $no_newlines = preg_replace("/\n/", '<br/>', $description);
+    $no_extra_whitespace = preg_replace("/\s+/", " ", $no_newlines);
+    return $no_extra_whitespace;
   }
 
 }

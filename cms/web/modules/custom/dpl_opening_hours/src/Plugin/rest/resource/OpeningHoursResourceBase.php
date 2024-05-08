@@ -4,6 +4,7 @@ namespace Drupal\dpl_opening_hours\Plugin\rest\resource;
 
 use DanskernesDigitaleBibliotek\CMS\Api\Service\SerializerInterface;
 use Drupal\dpl_opening_hours\Mapping\OpeningHoursMapper;
+use Drupal\dpl_opening_hours\Mapping\OpeningHoursRepetitionType;
 use Drupal\dpl_opening_hours\Model\OpeningHoursRepository;
 use Drupal\dpl_rest_base\Plugin\RestResourceBase;
 use Psr\Log\LoggerInterface;
@@ -58,7 +59,7 @@ abstract class OpeningHoursResourceBase extends RestResourceBase {
    * @return mixed[]
    *   OpenAPI schema for a single opening hours instance.
    */
-  public function openingHoursInstanceSchema(bool $require_id = TRUE): array {
+  protected function openingHoursInstanceSchema(bool $require_id = TRUE): array {
     return [
       "type" => "object",
       "properties" => [
@@ -102,17 +103,62 @@ abstract class OpeningHoursResourceBase extends RestResourceBase {
           "type" => "integer",
           "description" => "The id for the branch the instance belongs to",
         ],
+        "repetition" => [
+          "type" => "object",
+          "properties" => [
+            "id" => [
+              "type" => "integer",
+              "description" => $this->formatMultilineDescription(
+                "A serial unique id of the repetition. All instances with the same id belongs to the " .
+                "same repetition.",
+              ),
+            ],
+            "type" => [
+              "type" => "string",
+              "description" => $this->formatMultilineDescription(
+                "If/how the instance should be repeated in the future: \n" .
+                "  - single: The instance should not be repeated \n" .
+                "  - weekly: The instance should be repeated weekly from the first day of the repetition until the " .
+                "            provided end date. The week day of the first instance defines which weekday should be " .
+                "            used for the repeated instances."
+              ),
+              "enum" => OpeningHoursRepetitionType::cases(),
+              "default" => OpeningHoursRepetitionType::None,
+            ],
+            // If a repetition type requires additional data then a
+            // corresponding property with the name "[repetition_type]_data"
+            // and the type "object" must be added. The properties of this
+            // object must contain all this data.
+            "weekly_data" => [
+              "type" => "object",
+              "properties" => [
+                "end_date" => [
+                  "type" => "string",
+                  "format" => "date",
+                  "description" => $this->formatMultilineDescription(
+                    "The end date of the repetition. If the end date is not on the same week day as the first " .
+                    "instance then the preceding occurrence of the weekday will be the last instance. \n\n" .
+                    "This field must be provided if type is 'weekly'",
+                  ),
+                ],
+              ],
+            ],
+          ],
+          "required" => [
+            ... ($require_id ? ["id"] : []),
+            "type",
+          ],
+        ],
       ],
-      "required" => array_merge(
-        ($require_id ? ["id"] : []),
-        [
-          "category",
-          "date",
-          "start_time",
-          "end_time",
-          "branch_id",
-        ]
-      ),
+      "required" => [
+        ... ($require_id ? ["id"] : []),
+        "category",
+        "date",
+        "start_time",
+        "end_time",
+        "branch_id",
+        "repetition",
+      ],
     ];
   }
 

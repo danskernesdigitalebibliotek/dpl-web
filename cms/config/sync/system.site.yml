@@ -3,11 +3,11 @@ _core:
 langcode: en
 uuid: 13ef1a53-dfb4-4c82-9b64-44586a366729
 name: 'DPL CMS'
-mail: admin@example.com
+mail: DoNotReply@folkebibliotekernescms.dk
 slogan: ''
 page:
   403: ''
-  404: /customerror/404
+  404: ''
   front: /user/login
 admin_compact_mode: false
 weight_select_max: 100

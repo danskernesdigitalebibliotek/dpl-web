@@ -6,6 +6,7 @@ dependencies:
     - rest.resource.event
     - rest.resource.events
   module:
+    - openapi
     - rest
     - system
     - toolbar
@@ -14,6 +15,8 @@ label: 'External system'
 weight: 7
 is_admin: null
 permissions:
+  - 'access administration pages'
+  - 'access openapi api docs'
   - 'access toolbar'
   - 'restful get events'
   - 'restful patch event'

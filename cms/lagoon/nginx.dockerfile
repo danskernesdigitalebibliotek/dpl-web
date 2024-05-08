@@ -14,5 +14,8 @@ RUN fix-permissions /etc/nginx/conf.d/drupal/server_append_drupal_authorize.conf
 COPY lagoon/conf/nginx/server_append_drupal_modules_local.conf /etc/nginx/conf.d/drupal/server_append_drupal_modules_local.conf
 RUN fix-permissions /etc/nginx/conf.d/drupal/server_append_drupal_modules_local.conf
 
+COPY lagoon/conf/nginx/server_append_drupal_rewrite_registration.conf /etc/nginx/conf.d/drupal/server_append_drupal_rewrite_registration.conf
+RUN fix-permissions /etc/nginx/conf.d/drupal/server_append_drupal_rewrite_registration.conf
+
 # Define where the Drupal Root is located
 ENV WEBROOT=web

@@ -323,6 +323,8 @@ function dpl_react_apps_texts(): array {
     'reservation-success-sub-title' => t('Click the button below to close this window', [], ['context' => 'Global']),
     'reservation-success-title' => t('Your reservation has been changed', [], ['context' => 'Global']),
     'search-header-dropdown' => t('Dropdown with additional search functions', [], ['context' => 'Global']),
+    'search-header-favorites' => t('Liked', [], ['context' => 'Global']),
+    'search-header-login' => t('Login', [], ['context' => 'Global']),
     'save-button' => t('Save', [], ['context' => 'Global']),
     'screen-reader-modal-description-email' => t('Screen reader modal description for email', [], ['context' => 'Global']),
     'screen-reader-modal-description-interest-period' => t('Screen reader modal description for interest period', [], ['context' => 'Global']),

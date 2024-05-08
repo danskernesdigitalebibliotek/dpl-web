@@ -1,0 +1,63 @@
+_meta:
+  version: "1.0"
+  entity_type: node
+  uuid: d50683cc-8011-49ba-a6ea-82e56de97b80
+  bundle: page
+  default_langcode: da
+default:
+  revision_uid:
+    - target_id: 1
+  status:
+    - value: true
+  uid:
+    - target_id: 1
+  title:
+    - value: Kontakt
+  created:
+    - value: 1713877854
+  promote:
+    - value: false
+  sticky:
+    - value: false
+  revision_translation_affected:
+    - value: true
+  entity_clone_template_active:
+    - value: false
+  metatag:
+    - tag: meta
+      attributes:
+        name: title
+        content: "Kontakt | DPL CMS"
+  path:
+    - alias: /kontakt
+      langcode: und
+      pathauto: 1
+  field_display_titles:
+    - value: true
+  field_hero_title:
+    - value: Kontakt
+  field_paragraphs:
+    - entity:
+        _meta:
+          version: "1.0"
+          entity_type: paragraph
+          uuid: 325c097a-7abc-47f9-ba77-f3e5a30a0fb2
+          bundle: webform
+          default_langcode: da
+        default:
+          status:
+            - value: true
+          created:
+            - value: 1713910314
+          behavior_settings:
+            - value: {}
+          revision_translation_affected:
+            - value: true
+          field_webform:
+            - target_id: contact
+              default_data: ""
+              status: open
+              open: ""
+              close: ""
+  field_subtitle:
+    - value: "Kontakt dit lokale bibliotek ved at udfylde formularen nedenfor."

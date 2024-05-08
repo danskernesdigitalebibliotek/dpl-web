@@ -22,6 +22,13 @@ class AccessToken {
   public int $expire;
 
   /**
+   * Token type.
+   *
+   * @var AccessTokenType
+   */
+  public AccessTokenType $type;
+
+  /**
    * Named constructor that create an Access Token object.
    *
    * From the data of the openid connect context.
@@ -43,6 +50,7 @@ class AccessToken {
     $token = new static();
     $token->token = $access_token;
     $token->expire = $expire;
+    $token->type = AccessTokenType::UNKNOWN;
 
     return $token;
   }
