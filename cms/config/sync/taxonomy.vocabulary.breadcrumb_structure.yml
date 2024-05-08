@@ -18,7 +18,7 @@ third_party_settings:
     unpublish_enable: false
     unpublish_required: false
     unpublish_revision: false
-name: 'Breadcrumb and URL structure'
+name: 'Brødkrummer og URL struktur'
 vid: breadcrumb_structure
 description: ''
 weight: 0
