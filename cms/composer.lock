@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "ad0a5a1b31fbd48f7ba4db196672d8f2",
+    "content-hash": "c9f78116680669de31b150f09856b60a",
     "packages": [
         {
             "name": "amazeeio/drupal_integrations",
@@ -1149,19 +1149,19 @@
         },
         {
             "name": "danskernesdigitalebibliotek/dpl-design-system",
-            "version": "2024.18.2",
+            "version": "2024.19.0",
             "dist": {
                 "type": "zip",
-                "url": "https://github.com/danskernesdigitalebibliotek/dpl-design-system/releases/download/branch-DDFLSBP-615-efter-registrering-skal-laner-force-logges-ud-og-blive-sendt-til-login-i-adgangsplatformen_separate-release/dist-ddflsbp-615-efter-registrering-skal-laner-force-logges-ud-og-blive-sendt-til-login-i-adgangsplatformen-separate-release.zip"
+                "url": "https://github.com/danskernesdigitalebibliotek/dpl-design-system/releases/download/2024.19.0/dist-2024-19-0-47fee90ec8435570f1a6eff822fe550e58ba941a.zip"
             },
             "type": "drupal-library"
         },
         {
             "name": "danskernesdigitalebibliotek/dpl-react",
-            "version": "2024.18.1",
+            "version": "2024.19.0",
             "dist": {
                 "type": "zip",
-                "url": "https://github.com/danskernesdigitalebibliotek/dpl-react/releases/download/branch-DDFLSBP-615-efter-registrering-skal-laner-force-logges-ud-og-blive-sendt-til-login-i-adgangsplatformen_separate-release/dist-ddflsbp-615-efter-registrering-skal-laner-force-logges-ud-og-blive-sendt-til-login-i-adgangsplatformen-separate-release.zip"
+                "url": "https://github.com/danskernesdigitalebibliotek/dpl-react/releases/download/2024.19.0/dist-2024-19-0-cfadb54414b3c9c6dc70f827cef9555bb3c2ad53.zip"
             },
             "require": {
                 "composer/installers": "^1.2.0"
