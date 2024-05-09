@@ -11786,7 +11786,7 @@ msgstr "Gemmer, om den aktuelle Entity er en skabelon til kloning eller ej."
 
 #: 
 msgid "Image for the template"
-msgstr "Billede for skabelonen"
+msgstr "Billede til skabelonen"
 
 #: 
 msgid "Stores an image associated to the template."
@@ -13051,7 +13051,7 @@ msgstr "Du skal angive navnet på jobbet."
 
 #: 
 msgid "Job Schedule"
-msgstr "Jobskema"
+msgstr "Job planlægning"
 
 #: 
 msgid "Job Scheduler"
@@ -15423,7 +15423,7 @@ msgstr "@username for content creator / forfatter for denne side, inkluder @ sym
 
 #: 
 msgid "MP4 media stream MIME-type"
-msgstr "MP4 mediestrøm MIME-type"
+msgstr "MP4 Media Stream MIME-type"
 
 #: 
 msgid "The MIME type for the media contained in the stream URL, as defined by <a href=':url'>RFC 4337</a>."
@@ -15447,7 +15447,7 @@ msgstr "iPhone-appens brugerdefinerede URL-oversigt (skal indeholde \"://\" efte
 
 #: 
 msgid "MP4 media stream URL"
-msgstr "MP4 mediestrøm URL"
+msgstr "MP4 Medie Stream URL"
 
 #: 
 msgid "The full URL for an MP4 video (h.264) or audio (AAC) stream, takes precedence over the other media player field."
@@ -20591,7 +20591,7 @@ msgstr "Handling %action er ikke gyldig fordi @activity ikke er aktiveret for %t
 
 #: 
 msgid "Most of the Scheduler options are set independently for each entity type and bundle. These can be accessed from the <a href=\"@link\">admin structure</a> page or directly by using the drop-button"
-msgstr "De fleste af Scheduler-indstillingerne er sat uafhængigt for hver enhedstype og bundt. Disse kan tilgås fra <a href=\"@link\">admin struktur</a> siden eller direkte ved at bruge drop-knappen"
+msgstr "De fleste af planlægningsindstillinger er sat uafhængigt for hver enhedstype og bundt. Disse kan tilgås fra <a href=\"@link\">admin struktur</a> siden eller direkte ved at bruge drop-knappen"
 
 #: 
 msgid "Entity Types"
@@ -22455,7 +22455,7 @@ msgstr ""
 
 #: 
 msgid "Maximum requests"
-msgstr "Maksimale anmodninger"
+msgstr "Maksimalt antal anmodninger"
 
 #: 
 msgid "Maximum number of HTTP requests that can be made during Drupal's execution lifetime. Usually PHP resource restraints lower this value dynamically, but can be met at the CLI."
@@ -26713,7 +26713,7 @@ msgstr "<p>Beklager. Formularen er lukket for nye indsendelser.</p>"
 #: 
 msgctxt "webform.settings:settings:default_form_exception_message"
 msgid "<p>Unable to display this webform. Please contact the site administrator.</p>"
-msgstr "<p>Webformularen kan ikke vises. Kontakt venligst sites administrator.</p>"
+msgstr "<p>Webformularen kan ikke vises. Kontakt venligst sitets administrator.</p>"
 
 #: 
 msgctxt "webform.settings:settings:default_form_confidential_message"
