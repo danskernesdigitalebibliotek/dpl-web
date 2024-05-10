@@ -34,7 +34,7 @@ class OpeningHoursResourceTest extends KernelTestBase {
   /**
    * {@inheritdoc}
    */
-  protected static $modules = ['dpl_opening_hours'];
+  protected static $modules = ['dpl_opening_hours', 'dpl_rest_base'];
 
   /**
    * {@inheritDoc}
@@ -239,7 +239,7 @@ class OpeningHoursResourceTest extends KernelTestBase {
           ->setType($createdOpeningHours->getRepetition()?->getType())
       );
     /** @var \DanskernesDigitaleBibliotek\CMS\Api\Service\JmsSerializer $serializer */
-    $serializer = $this->container->get('dpl_opening_hours.serializer');
+    $serializer = $this->container->get('dpl_rest_base.serializer');
     $updateRequest = new Request(content: $serializer->serialize($updateData, 'application/json'));
 
     $updateResponse = $updateResource->patch($id, $updateRequest);
@@ -285,7 +285,7 @@ class OpeningHoursResourceTest extends KernelTestBase {
       ->setRepetition((new DplOpeningHoursCreatePOSTRequestRepetition())
         ->setType(OpeningHoursRepetitionType::None->value));
     /** @var \DanskernesDigitaleBibliotek\CMS\Api\Service\JmsSerializer $serializer */
-    $serializer = $this->container->get('dpl_opening_hours.serializer');
+    $serializer = $this->container->get('dpl_rest_base.serializer');
     $updateRequest = new Request(content: $serializer->serialize($updateData, 'application/json'));
 
     $updateResponse = $updateResource->patch($createdOpeningHour->getId(), $updateRequest);
@@ -378,7 +378,7 @@ class OpeningHoursResourceTest extends KernelTestBase {
     $createResource = OpeningHoursCreateResource::create($this->container, [], '', '');
 
     /** @var \DanskernesDigitaleBibliotek\CMS\Api\Service\JmsSerializer $serializer */
-    $serializer = $this->container->get('dpl_opening_hours.serializer');
+    $serializer = $this->container->get('dpl_rest_base.serializer');
 
     $repetition = $repetition ?? (new OpeningHoursRepetitionRequest())->setType(OpeningHoursRepetitionType::None->value);
 
@@ -414,7 +414,7 @@ class OpeningHoursResourceTest extends KernelTestBase {
     $response = $listResource->get((new Request($query)));
 
     /** @var \DanskernesDigitaleBibliotek\CMS\Api\Service\JmsSerializer $serializer */
-    $serializer = $this->container->get('dpl_opening_hours.serializer');
+    $serializer = $this->container->get('dpl_rest_base.serializer');
     /** @var \DanskernesDigitaleBibliotek\CMS\Api\Model\DplOpeningHoursListGET200ResponseInner[] $responseData */
     $responseData = $serializer->deserialize($response->getContent(), 'array<' . OpeningHoursResponse::class . '>', 'application/json');
     return $responseData;
