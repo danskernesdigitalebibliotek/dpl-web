@@ -72,6 +72,16 @@
         } only %}
       </div>
     {% endif %}
+
+    {% if related_content %}
+      <div class="mt-64">
+        {% include '@novel/components/slider.html.twig'
+          with {
+          'title': 'Related content'|trans,
+          'items': related_content,
+        } only %}
+      </div>
+    {% endif %}
   </main>
 
   {% include '@novel/layout/footer.html.twig'
