@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "3a4b5cdc2aceae9382f66c47299bce08",
+    "content-hash": "6da39702e4582cc08c1333735f979dda",
     "packages": [
         {
             "name": "amazeeio/drupal_integrations",
@@ -1158,10 +1158,10 @@
         },
         {
             "name": "danskernesdigitalebibliotek/dpl-react",
-            "version": "2024.18.1",
+            "version": "0.0.0-dev",
             "dist": {
                 "type": "zip",
-                "url": "https://github.com/danskernesdigitalebibliotek/dpl-react/releases/download/2024.18.1/dist-2024-18-1-524b1924e5262a963a934ca5e308a4a725e495d2.zip"
+                "url": "https://github.com/danskernesdigitalebibliotek/dpl-react/releases/download/branch-DDFFORM-664-frontend/dist-ddfform-664-frontend.zip"
             },
             "require": {
                 "composer/installers": "^1.2.0"
@@ -18389,6 +18389,7 @@
     "aliases": [],
     "minimum-stability": "dev",
     "stability-flags": {
+        "danskernesdigitalebibliotek/dpl-react": 20,
         "drupal/default_content": 15,
         "drupal/gin": 5,
         "drupal/gin_toolbar": 5,
