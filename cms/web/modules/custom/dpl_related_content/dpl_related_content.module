@@ -1,0 +1,292 @@
+<?php
+
+use Drupal\Core\Database\Database;
+use Drupal\Core\Datetime\DrupalDateTime;
+use Drupal\Core\Entity\FieldableEntityInterface;
+use Drupal\datetime\Plugin\Field\FieldType\DateTimeItemInterface;
+use Drupal\node\Entity\Node;
+use Drupal\node\NodeInterface;
+use Drupal\recurring_events\Entity\EventInstance;
+
+/**
+ * Get terms from field as an array of IDs.
+ *
+ * @return array<int>
+ *   Term IDs.
+ */
+function _dpl_related_content_get_term_ids(FieldableEntityInterface $entity, string $field_name): array {
+  if (!$entity->hasField($field_name)) {
+    return [];
+  }
+
+  $terms = $entity->get($field_name)->getValue();
+  return array_column($terms, 'target_id');
+
+}
+
+/**
+ * Get matching eventinstance IDs.
+ *
+ * Allows for passing along various term IDs, that we look for in an OR group.
+ * Notice - we only look for the term values on series level, ignoring
+ * inheritance overriding in favor of a simpler codebase.
+ *
+ * @param string|null $current_uuid
+ *   A possible entity UUID, that will not get included in results.
+ * @param array<int> $tags
+ *   Tag term IDs, to look for.
+ * @param array<int> $categories
+ *   Category term IDs, to look for.
+ * @param array<int> $branches
+ *   Branch term IDs, to look for.
+ *
+ * @return array<int|string>
+ *   Matching eventinstance IDs
+ *
+ * @throws \Exception
+ */
+function _dpl_related_content_get_eventinstance_ids(?string $current_uuid, array $tags = [], array $categories = [], array $branches = []): array {
+  $date = new DrupalDateTime('today');
+  $date->setTimezone(new \DateTimezone(DateTimeItemInterface::STORAGE_TIMEZONE));
+  $formatted_date = $date->format(DateTimeItemInterface::DATETIME_STORAGE_FORMAT);
+
+  $connection = Database::getConnection();
+
+  // Prepare a subquery for eventseries IDs based on terms.
+  $subquery = $connection->select('eventseries', 'es');
+  $subquery->fields('es', ['id']);
+
+  // Join the term field tables.
+  // @todo this only looks at the values on the eventseries.
+  // Ideally, we'd want to also look if values exist on the instance level.
+  $subquery->leftJoin('eventseries__field_tags', 'es_tags', 'es.id = es_tags.entity_id');
+  $subquery->leftJoin('eventseries__field_categories', 'es_cats', 'es.id = es_cats.entity_id');
+  $subquery->leftJoin('eventseries__field_branch', 'es_bra', 'es.id = es_bra.entity_id');
+
+  if (!empty($tags) || !empty($categories) || !empty($branches)) {
+    $or_group = $subquery->orConditionGroup();
+
+    // To avoid errors, related to the OR GROUP only containing one condition,
+    // we'll add a fake condition to fill out a possible empty space.
+    $or_group->condition('title', 'ALWAYS_FALSE');
+
+    if (!empty($tags)) {
+      $or_group->condition('es_tags.field_tags_target_id', $tags, 'IN');
+    }
+
+    if (!empty($categories)) {
+      $or_group->condition('es_cats.field_categories_target_id', $categories, 'IN');
+    }
+
+    if (!empty($branches)) {
+      $or_group->condition('es_bra.field_branch_target_id', $branches, 'IN');
+    }
+
+    $subquery->condition($or_group);
+  }
+
+  $subquery->distinct(TRUE);
+
+  // Main query to select eventinstance ids, joining with
+  // eventinstance_field_data for condition fields.
+  $query = $connection->select('eventinstance_field_data', 'eid');
+  $query->join('eventinstance', 'ei', 'ei.id = eid.id');
+  $query->addField('eid', 'id', 'eventinstance_id');
+
+  if (!empty($tags) || !empty($categories) || !empty($branches)) {
+    // Use the subquery to filter by eventseries_id.
+    $query->condition('eid.eventseries_id', $subquery, 'IN');
+  }
+
+  $query->condition('ei.uuid', $current_uuid, '<>');
+
+  // We only want events in the future (e.g. - active events).
+  $query->condition('eid.date__value', $formatted_date, '>=');
+  $query->orderBy('eid.date__value', 'ASC');
+  $query->range(0, 16);
+
+  // Add a GROUP BY clause to make results distinct by eventseries_id.
+  $query->groupBy('eid.eventseries_id');
+
+  // Execute the query and return ids.
+  $result = $query->execute();
+
+  return $result?->fetchCol() ?? [];
+}
+
+/**
+ * Get matching node IDs.
+ *
+ * Allows for passing along various term IDs, that we look for in an OR group.
+ *
+ * @param string|null $current_uuid
+ *   A possible entity UUID, that will not get included in results.
+ * @param array<int> $tags
+ *   Tag term IDs, to look for.
+ * @param array<int> $categories
+ *   Category term IDs, to look for.
+ *
+ * @return array<int|string>
+ *   Matching article node IDs
+ */
+function _dpl_related_content_get_article_ids(?string $current_uuid, array $tags = [], array $categories = []): array {
+  $query = \Drupal::entityQuery('node')->accessCheck(TRUE)
+    ->condition('type', 'article')
+    ->condition('uuid', $current_uuid, '<>')
+    ->sort('created', 'DESC')
+    ->range(0, 16);
+
+  // To avoid errors, related to the OR GROUP only containing one condition,
+  // we'll add a fake condition to fill out a possible empty space.
+  if (!empty($tags) || !empty($categories)) {
+    // Use a condition group for OR logic.
+    $or_group = $query->orConditionGroup();
+
+    $or_group->condition('title', 'ALWAYS_FALSE');
+
+    if (!empty($tags)) {
+      $or_group->condition('field_tags', $tags, 'IN');
+    }
+
+    if (!empty($categories)) {
+      $or_group->condition('field_categories', $categories, 'IN');
+    }
+
+    $query->condition($or_group);
+  }
+
+  return $query->execute();
+}
+
+/**
+ * Get renderable, related content, based on current entities fields.
+ *
+ * @param \Drupal\Core\Entity\FieldableEntityInterface $entity
+ *   The current entity, to match results against.
+ *
+ * @return array<mixed>
+ *   Render arrays of eventinstances and nodes.
+ *
+ * @throws \Exception
+ */
+function _dpl_related_content_get_content(FieldableEntityInterface $entity): array {
+  $current_uuid = $entity->uuid();
+
+  $tags_field_name = 'field_tags';
+  $categories_field_name = 'field_categories';
+  $branches_field_name = 'field_branch';
+
+  // Eventinstances have different field names, as they use inheritance.
+  if ($entity instanceof EventInstance) {
+    $tags_field_name = 'event_tags';
+    $categories_field_name = 'event_categories';
+    $branches_field_name = 'branch';
+  }
+
+  $tags = _dpl_related_content_get_term_ids($entity, $tags_field_name);
+  $categories = _dpl_related_content_get_term_ids($entity, $categories_field_name);
+  $branches = _dpl_related_content_get_term_ids($entity, $branches_field_name);
+  $event_ids = [];
+  $article_ids = [];
+
+  if (!empty($tags)) {
+    // First, let's look up related content, based only on tags.
+    $event_ids = _dpl_related_content_get_eventinstance_ids($current_uuid, $tags);
+    $article_ids = _dpl_related_content_get_article_ids($current_uuid, $tags);
+  }
+
+  // If we found less than 4 results, we'll add categories to the mix in
+  // addition to tags.
+  if ((count($event_ids) + count($article_ids) < 4) && !empty($categories)) {
+
+    $event_ids = _dpl_related_content_get_eventinstance_ids($current_uuid, $tags, $categories);
+    $article_ids = _dpl_related_content_get_article_ids($current_uuid, $tags, $categories);
+  }
+
+  // If the count is still under 4, and we're on an event-page, we'll look up
+  // events with the same location.
+  if ((count($event_ids) + count($article_ids) < 4) && ($entity instanceof EventInstance) && !empty($branches)) {
+
+    $event_ids = _dpl_related_content_get_eventinstance_ids($current_uuid, $tags, $categories, $branches);
+  }
+
+  // If the count is still under 4, we'll find the upcoming events, and the
+  // latest articles instead.
+  if (count($event_ids) + count($article_ids) < 4) {
+    $event_ids = _dpl_related_content_get_eventinstance_ids($current_uuid);
+    $article_ids = _dpl_related_content_get_article_ids($current_uuid);
+  }
+
+  // If we still have less than 4, we just won't display anything.
+  if (count($event_ids) + count($article_ids) < 4) {
+    return [];
+  }
+
+  $events = EventInstance::loadMultiple($event_ids);
+  $articles = Node::loadMultiple($article_ids);
+
+  // We want to combine events and articles into a single array, however,
+  // we want to interlace them, so it becomes mixed, rather than just
+  // all the articles and then all the events.
+  // We could also sort the merging based on the actual date values, but this
+  // will be too expensive for what it is worth.
+  $content = [];
+
+  // Remove array keys, so we can do the sorting.
+  $events = array_values($events);
+  $articles = array_values($articles);
+
+  $node_view_builder = \Drupal::entityTypeManager()->getViewBuilder('node');
+  $event_view_builder = \Drupal::entityTypeManager()->getViewBuilder('eventinstance');
+
+  // First, we find the longer array.
+  $length = max(count($events), count($articles));
+
+  for ($i = 0; $i < $length; $i++) {
+    if (isset($events[$i])) {
+      $content[] = $event_view_builder->view($events[$i], 'card');
+    }
+
+    if (isset($articles[$i])) {
+      $content[] = $node_view_builder->view($articles[$i], 'card');
+    }
+  }
+
+  return $content;
+}
+
+/**
+ * Place a dynamic 'related content' list on articles and eventinstances.
+ *
+ * Content displayed is based on the field values of the current page entity.
+ */
+function dpl_related_content_preprocess_page(array &$variables): void {
+  $route_name = \Drupal::routeMatch()->getRouteName();
+
+  // We only want to display the related content slider on eventinstances, OR
+  // on article nodes.
+  if ($route_name === 'entity.node.canonical') {
+    $entity = \Drupal::routeMatch()->getParameter('node');
+
+    if (!($entity instanceof NodeInterface) || $entity->bundle() !== 'article') {
+      return;
+    }
+  }
+  elseif ($route_name === 'entity.eventinstance.canonical') {
+    $entity = \Drupal::routeMatch()->getParameter('eventinstance');
+  }
+  else {
+    return;
+  }
+
+  if (!($entity instanceof FieldableEntityInterface)) {
+    return;
+  }
+
+  try {
+    $variables['related_content'] = _dpl_related_content_get_content($entity);
+  }
+  catch (\Exception $e) {
+    \Drupal::logger('dpl_related_content')->error('Could not render related content slider.');
+  }
+}

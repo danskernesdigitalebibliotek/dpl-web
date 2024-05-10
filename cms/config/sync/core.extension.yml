@@ -57,6 +57,7 @@ module:
   dpl_react: 0
   dpl_react_apps: 0
   dpl_recommender: 0
+  dpl_related_content: 0
   dpl_reservations: 0
   dpl_rest_base: 0
   dpl_something_similar: 0
