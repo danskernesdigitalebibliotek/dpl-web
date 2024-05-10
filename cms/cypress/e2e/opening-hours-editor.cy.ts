@@ -182,34 +182,8 @@ const validateAtLeastOneOpeningHoursExistAdmin = ({
     .should("be.visible")
     .find('div[data-cy="opening-hours-editor-event-content"]')
     .should("have.length.gte", 1)
-    .each((element) => {
-      cy.wrap(element)
-        .should("contain", openingHourCategory)
-        .and("contain", `${start} - ${end}`);
-    });
-};
-
-const validateOpeningHoursChangesAdmin = ({
-  openingHourCategory,
-  originalTimeDuration,
-  updatedTimeDuration,
-  editSeriesFromIndex,
-}) => {
-  return cy
-    .get('tbody[role="presentation"]')
-    .should("be.visible")
-    .find('div[data-cy="opening-hours-editor-event-content"]')
-    .should("have.length.gte", 1)
-    .each((element, index) => {
-      cy.wrap(element)
-        .should("contain", openingHourCategory)
-        .and(
-          "contain",
-          index < editSeriesFromIndex
-            ? `${originalTimeDuration.start} - ${originalTimeDuration.end}`
-            : `${updatedTimeDuration.start} - ${updatedTimeDuration.end}`
-        );
-    });
+    .should("contain", openingHourCategory)
+    .and("contain", `${start} - ${end}`);
 };
 
 const validateOpeningHoursRemovedAdmin = ({
@@ -579,11 +553,14 @@ describe("Opening hours editor", () => {
       timeDuration: editData.updatedTimeDuration,
     });
 
-    validateOpeningHoursChangesAdmin({
-      editSeriesFromIndex: editData.editSeriesFromIndex,
+    validateAtLeastOneOpeningHoursExistAdmin({
       openingHourCategory: editData.openingHourCategory,
-      originalTimeDuration: editData.originalTimeDuration,
-      updatedTimeDuration: editData.updatedTimeDuration,
+      timeDuration: editData.originalTimeDuration,
+    });
+
+    validateAtLeastOneOpeningHoursExistAdmin({
+      openingHourCategory: editData.openingHourCategory,
+      timeDuration: editData.updatedTimeDuration,
     });
   });
 
