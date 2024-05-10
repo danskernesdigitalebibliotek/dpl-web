@@ -1,7 +1,13 @@
 uuid: 713b5ee6-6d21-42ea-ad30-8371e585b183
 langcode: en
 status: true
-dependencies: {  }
+dependencies:
+  module:
+    - paragraphs_ee
+third_party_settings:
+  paragraphs_ee:
+    paragraphs_categories:
+      user_creation: user_creation
 id: user_registration_item
 label: 'User registration item'
 icon_uuid: null

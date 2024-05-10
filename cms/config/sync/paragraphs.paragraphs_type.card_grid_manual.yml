@@ -4,6 +4,12 @@ status: true
 dependencies:
   content:
     - 'file:file:9afbf548-5995-42cc-a828-e98ea531a309'
+  module:
+    - paragraphs_ee
+third_party_settings:
+  paragraphs_ee:
+    paragraphs_categories:
+      structural_elements: structural_elements
 id: card_grid_manual
 label: 'Card grid - Manual'
 icon_uuid: 9afbf548-5995-42cc-a828-e98ea531a309
