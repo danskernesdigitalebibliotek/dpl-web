@@ -8,6 +8,53 @@ vars:
   LAGOON_PROJECT: "dpl-cms"
 
 tasks:
+  backup:restore:
+    desc: Restore the latest backup of files and database from a Lagoon project
+    cmds:
+      - task: backup:restore:database
+      - task: backup:restore:files
+
+  backup:restore:database:
+    desc: Restore the latest backup of the database from a Lagoon project
+    deps: [deps:lagoon, deps:jq, login]
+    vars:
+      LAGOON_ENVIRONMENT: main
+    cmds:
+      - |
+        BACKUPS=$(lagoon list backups -p ${LAGOON_PROJECT} -e {{.LAGOON_ENVIRONMENT}} --output-json);
+        BACKUP_ID=$(echo $BACKUPS | jq -r ".data[] | select(.source == \"mariadb\") | .backupid" | head -n 1);
+        BACKUP_URL="Error";
+        while [[ $BACKUP_URL == *"Error"* ]]; do
+          $(lagoon retrieve backup -p ${LAGOON_PROJECT} -e {{.LAGOON_ENVIRONMENT}} --backup-id ${BACKUP_ID} --force) 2>/dev/null || true;
+          BACKUP_URL=$(lagoon get backup -p ${LAGOON_PROJECT} -e {{.LAGOON_ENVIRONMENT}} --backup-id ${BACKUP_ID});
+        done;
+        curl -o ./restore/database/${LAGOON_PROJECT}-backup.tar.gz ${BACKUP_URL};
+        cd ./restore/database/ && tar -xvzf ${LAGOON_PROJECT}-backup.tar.gz;
+      - task dev:restore:database
+    preconditions:
+      - sh: "[ -v LAGOON_PROJECT ]"
+        msg: Please provide a LAGOON_PROJECT environment variable with the name of the Lagoon project to use
+
+  backup:restore:files:
+    desc: Restore the latest backup of the files from a Lagoon project
+    deps: [deps:lagoon, deps:jq, login]
+    vars:
+      LAGOON_ENVIRONMENT: main
+    cmds:
+      - |
+        BACKUPS=$(lagoon list backups -p ${LAGOON_PROJECT} -e {{.LAGOON_ENVIRONMENT}} --output-json);
+        BACKUP_ID=$(echo $BACKUPS | jq -r ".data[] | select(.source == \"nginx\") | .backupid" | head -n 1);
+        BACKUP_URL="Error";
+        while [[ $BACKUP_URL == *"Error"* ]]; do
+          $(lagoon retrieve backup -p ${LAGOON_PROJECT} -e {{.LAGOON_ENVIRONMENT}} --backup-id ${BACKUP_ID} --force) 2>/dev/null || true;
+          BACKUP_URL=$(lagoon get backup -p ${LAGOON_PROJECT} -e {{.LAGOON_ENVIRONMENT}} --backup-id ${BACKUP_ID});
+        done;
+        curl -o ./restore/files/${LAGOON_PROJECT}-backup.tar.gz ${BACKUP_URL};
+      - task dev:restore:files
+    preconditions:
+      - sh: "[ -v LAGOON_PROJECT ]"
+        msg: Please provide a LAGOON_PROJECT environment variable with the name of the Lagoon project to use
+
   drush:uli:
     desc: Get an Drupal one-time user login link for a Lagoon environment through Drush
     cmds:
