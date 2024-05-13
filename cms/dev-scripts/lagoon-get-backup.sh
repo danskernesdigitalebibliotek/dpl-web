@@ -19,10 +19,10 @@ BACKUP_URL="Error";
 # It must be retrieved before it can be downloaded.
 while [[ $BACKUP_URL == "Error"* ]]; do
   echo -n ".";
-  $(lagoon retrieve backup -p "${LAGOON_PROJECT}" -e ${LAGOON_ENVIRONMENT} --backup-id "${BACKUP_ID}" --force &> /dev/null) || true;
+  eval "lagoon retrieve backup -p \"${LAGOON_PROJECT}\" -e \"${LAGOON_ENVIRONMENT}\" --backup-id \"${BACKUP_ID}\" --force &> /dev/null" || true;
   # This will return an message in the format "Error: [error message]" if the
   # backup is not available for download yet.
-  BACKUP_URL=$(lagoon get backup -p "${LAGOON_PROJECT}" -e ${LAGOON_ENVIRONMENT} --backup-id "${BACKUP_ID}" 2>/dev/null) || true;
+  BACKUP_URL=$(lagoon get backup -p "${LAGOON_PROJECT}" -e "${LAGOON_ENVIRONMENT}" --backup-id "${BACKUP_ID}" 2>/dev/null) || true;
 done;
 echo "";
 curl -o "${BACKUP_DESTINATION}" "${BACKUP_URL}";
