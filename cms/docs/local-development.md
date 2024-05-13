@@ -99,7 +99,7 @@ Replace files locally:
 2. Start a local environment using `task dev:reset`
 3. Restore the filesš by running `task dev:restore:files`
 
-## Get a specific release of dpl-react - without using composer install
+### Get a specific release of dpl-react - without using composer install
 
 In a development context it is not very handy only
 to be able to get the latest version of the main branch of dpl-react.
