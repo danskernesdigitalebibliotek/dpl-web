@@ -20,16 +20,8 @@ tasks:
     vars:
       LAGOON_ENVIRONMENT: main
     cmds:
-      - |
-        BACKUPS=$(lagoon list backups -p ${LAGOON_PROJECT} -e {{.LAGOON_ENVIRONMENT}} --output-json);
-        BACKUP_ID=$(echo $BACKUPS | jq -r ".data[] | select(.source == \"mariadb\") | .backupid" | head -n 1);
-        BACKUP_URL="Error";
-        while [[ $BACKUP_URL == *"Error"* ]]; do
-          $(lagoon retrieve backup -p ${LAGOON_PROJECT} -e {{.LAGOON_ENVIRONMENT}} --backup-id ${BACKUP_ID} --force) 2>/dev/null || true;
-          BACKUP_URL=$(lagoon get backup -p ${LAGOON_PROJECT} -e {{.LAGOON_ENVIRONMENT}} --backup-id ${BACKUP_ID});
-        done;
-        curl -o ./restore/database/${LAGOON_PROJECT}-backup.tar.gz ${BACKUP_URL};
-        cd ./restore/database/ && tar -xvzf ${LAGOON_PROJECT}-backup.tar.gz;
+      - ./dev-scripts/lagoon-get-backup.sh ${LAGOON_PROJECT} mariadb {{.DIR_RESTORE_DATABASE}}/${LAGOON_PROJECT}-backup.tar.gz;
+      -  cd ./restore/database/ && tar -xvzf ${LAGOON_PROJECT}-backup.tar.gz;
       - task dev:restore:database
     preconditions:
       - sh: "[ -v LAGOON_PROJECT ]"
@@ -41,15 +33,7 @@ tasks:
     vars:
       LAGOON_ENVIRONMENT: main
     cmds:
-      - |
-        BACKUPS=$(lagoon list backups -p ${LAGOON_PROJECT} -e {{.LAGOON_ENVIRONMENT}} --output-json);
-        BACKUP_ID=$(echo $BACKUPS | jq -r ".data[] | select(.source == \"nginx\") | .backupid" | head -n 1);
-        BACKUP_URL="Error";
-        while [[ $BACKUP_URL == *"Error"* ]]; do
-          $(lagoon retrieve backup -p ${LAGOON_PROJECT} -e {{.LAGOON_ENVIRONMENT}} --backup-id ${BACKUP_ID} --force) 2>/dev/null || true;
-          BACKUP_URL=$(lagoon get backup -p ${LAGOON_PROJECT} -e {{.LAGOON_ENVIRONMENT}} --backup-id ${BACKUP_ID});
-        done;
-        curl -o ./restore/files/${LAGOON_PROJECT}-backup.tar.gz ${BACKUP_URL};
+      - ./dev-scripts/lagoon-get-backup.sh ${LAGOON_PROJECT} nginx {{.DIR_RESTORE_FILES}}/${LAGOON_PROJECT}-backup.tar.gz;
       - task dev:restore:files
     preconditions:
       - sh: "[ -v LAGOON_PROJECT ]"
