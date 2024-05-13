@@ -1,6 +1,6 @@
 # This is a go-task file solely for Lagoon integration.
-# It can be used independently but is meant to be used
-# in combination with the go-task file in the root of the project.
+# It is meant to be used in combination with the go-task file in the root of
+# the project.
 version: "3"
 
 vars:
