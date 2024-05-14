@@ -7,8 +7,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2024-05-14 15:49+0200\n"
-"PO-Revision-Date: 2024-05-14 15:49+0200\n"
+"POT-Creation-Date: 2024-05-14 17:18+0200\n"
+"PO-Revision-Date: 2024-05-14 17:18+0200\n"
 "Last-Translator: NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
 "MIME-Version: 1.0\n"
@@ -84,6 +84,30 @@ msgstr "Dette link vil kun blive vist, hvis der er indhold."
 
 msgid "Submit"
 msgstr "Indsend"
+
+msgctxt "DPL admin UX"
+msgid ""
+"<p>In previous versions of Drupal, you could clear the cache frequently "
+"without major consequences.<br> From Drupal 8 onwards, the caching system "
+"has been improved, allowing you to manage the cache more specifically and "
+"effectively, which enhances response times on the website.</p>\n"
+"         <p><strong>Be aware that clearing the entire cache can now slow "
+"down the website more than before. It's best to clear the cache only when "
+"necessary and report any persistent issues, so they can be further "
+"investigated.</strong></p>"
+msgstr ""
+
+msgctxt "DPL admin UX"
+msgid "Clear caches"
+msgstr ""
+
+msgctxt "DPL admin UX"
+msgid "Cache has been cleared manually."
+msgstr ""
+
+msgctxt "DPL admin UX"
+msgid "All caches cleared."
+msgstr ""
 
 msgid "Updated @count description fields on @entity_type"
 msgstr "Opdaterede @count beskrivelsesfelter på @entity_type"
@@ -2886,6 +2910,18 @@ msgid "Do you want to add this repeated opening hour?"
 msgstr "Vil du tilføje denne gentagne åbningstid?"
 
 msgctxt "DPL Opening Hours Editor"
+msgid "This and feuture instances"
+msgstr ""
+
+msgctxt "DPL Opening Hours Editor"
+msgid "Only this instance"
+msgstr ""
+
+msgctxt "DPL Opening Hours Editor"
+msgid "Edit opening hour"
+msgstr ""
+
+msgctxt "DPL Opening Hours Editor"
 msgid "Opening hour"
 msgstr "Åbningstid"
 
@@ -2912,6 +2948,10 @@ msgstr "Startdato"
 msgctxt "DPL Opening Hours Editor"
 msgid "Start time"
 msgstr "Starttidspunkt"
+
+msgctxt "DPL Opening Hours Editor"
+msgid "Remove opening hour"
+msgstr ""
 
 msgctxt "DPL Opening Hours Editor"
 msgid "Repeated opening hour"
@@ -3691,6 +3731,18 @@ msgstr "Sidefod"
 msgid "Functionality related to footer."
 msgstr "Funktionalitet relateret til footeren"
 
+msgid "Clear cache"
+msgstr "Ryd cache"
+
+msgid "Cache settings"
+msgstr ""
+
+msgid "DPL Cache settings"
+msgstr ""
+
+msgid "Giving admins a clearer access to cache-clearing, and the consequences."
+msgstr ""
+
 msgid "Event settings"
 msgstr "Arrangementsindstillinger"
 
@@ -3908,6 +3960,14 @@ msgstr ""
 "Disse moduler håndterer beskyttede noder ved at tjekke, om en node bliver "
 "brugt som reference i konfigurationen."
 
+msgid "DPL REST base"
+msgstr ""
+
+msgid ""
+"A base module for providing shared functionality between modules exposing "
+"REST services."
+msgstr ""
+
 msgid "Mapp Intelligence"
 msgstr "Mapp Intelligence"
 
@@ -4078,6 +4138,9 @@ msgstr "Log ud"
 
 msgid "Event series"
 msgstr "Arrangementserie"
+
+msgid "Media"
+msgstr "Media"
 
 msgid "Admin"
 msgstr "Administrator"
@@ -5948,9 +6011,6 @@ msgstr "Fil"
 
 msgid "Provides crop integration for core files."
 msgstr ""
-
-msgid "Media"
-msgstr "Media"
 
 msgid "Provides crop integration for media."
 msgstr ""
@@ -16667,6 +16727,9 @@ msgstr "En pager, der tillader \"infinite scroll\" for visninger."
 msgid "Error warning icon"
 msgstr "Fejl advarsel ikon"
 
+msgid "Go to frontpage"
+msgstr ""
+
 msgid "Status message icon"
 msgstr ""
 
@@ -19227,6 +19290,26 @@ msgctxt "paragraphs.paragraphs_type.webform:description"
 msgid "Paragraph used for embedding a webform."
 msgstr ""
 
+msgctxt "paragraphs_ee.paragraphs_category.content_elements:label"
+msgid "Content elements"
+msgstr ""
+
+msgctxt "paragraphs_ee.paragraphs_category.forms:label"
+msgid "Forms"
+msgstr ""
+
+msgctxt "paragraphs_ee.paragraphs_category.material_dissemination:label"
+msgid "Material Dissemination"
+msgstr ""
+
+msgctxt "paragraphs_ee.paragraphs_category.structural_elements:label"
+msgid "Structural elements"
+msgstr ""
+
+msgctxt "paragraphs_ee.paragraphs_category.user_creation:label"
+msgid "User creation"
+msgstr ""
+
 msgctxt "pathauto.pattern.breadcrumb_pattern:label"
 msgid "Breadcrumb pattern"
 msgstr ""
@@ -19442,8 +19525,8 @@ msgid "DPL CMS"
 msgstr ""
 
 msgctxt "taxonomy.vocabulary.breadcrumb_structure:name"
-msgid "Breadcrumb and URL structure"
-msgstr "Breadcrumb and URL structure"
+msgid "Brødkrummer og URL struktur"
+msgstr "Brødkrummer og URL struktur"
 
 msgctxt "taxonomy.vocabulary.categories:name"
 msgid "Categories"
