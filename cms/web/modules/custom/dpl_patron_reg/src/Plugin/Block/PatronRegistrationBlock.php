@@ -111,6 +111,9 @@ class PatronRegistrationBlock extends BlockBase implements ContainerFactoryPlugi
       'text-notifications-enabled-config' => (int) $this->reservationSettings->smsNotificationsIsEnabled(),
 
       // Texts.
+      'create-patron-branch-dropdown-note-text' => $this->t("Choose preferred library for pickup of your future reservations.", [], ['context' => 'Create patron']),
+      'create-patron-button-error-text' => $this->t("Error occurred", [], ['context' => 'Create patron']),
+      'create-patron-button-loading-text' => $this->t("Loading", [], ['context' => 'Create patron']),
       'create-patron-cancel-button-text' => $this->t("Cancel", [], ['context' => 'Create patron']),
       'create-patron-change-pickup-body-text' => $this->t("Select pickup location in the select", [], ['context' => 'Create patron']),
       'create-patron-change-pickup-header-text' => $this->t("Select pickup location", [], ['context' => 'Create patron']),
@@ -119,13 +122,12 @@ class PatronRegistrationBlock extends BlockBase implements ContainerFactoryPlugi
       'create-patron-invalid-ssn-body-text' => $this->t("This SSN is invalid", [], ['context' => 'Create patron']),
       'create-patron-invalid-ssn-header-text' => $this->t("Invalid SSN", [], ['context' => 'Create patron']),
       'patron-contact-name-label-text' => $this->t("Name", [], ['context' => 'Create patron']),
+      'post-register-redirect-info-bottom-text' => $this->t("You will be sent to the Adgangsplatformen to log in again in @seconds seconds.", [], ['context' => 'Create patron']),
+      'post-register-redirect-info-top-text' => $this->t("You are now registered as a user and need to log in again to be able to use the application.", [], ['context' => 'Create patron']),
+      'post-register-redirect-button-text' => $this->t("Log in again", [], ['context' => 'Create patron']),
 
       // Urls.
-      'redirect-on-user-created-url' => Url::fromRoute(
-        'dpl_patron_reg.post_register',
-        [],
-        ['query' => ['current-path' => $redirect_on_user_created_url]]
-      )->toString(),
+      'redirect-on-user-created-url' => $redirect_on_user_created_url,
     ] + DplReactAppsController::externalApiBaseUrls();
 
     return [
