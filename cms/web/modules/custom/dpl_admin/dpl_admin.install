@@ -5,8 +5,17 @@
  * DPL Admin install file.
  */
 
+use Drupal\Component\Utility\Random;
+use Drupal\content_lock\ContentLock\ContentLock;
+use Drupal\Core\Entity\EntityInterface;
+use Drupal\Core\Entity\EntityTypeInterface;
+use Drupal\Core\Entity\Query\QueryException;
+use Drupal\Core\Field\FieldItemListInterface;
+use Drupal\Core\Session\SessionManagerInterface;
 use Drupal\dpl_admin\Services\VersionHelper;
 use Drupal\drupal_typed\DrupalTyped;
+use Drupal\user\Entity\User;
+use Drupal\user\EntityOwnerInterface;
 
 /**
  * Implements hook_requirements().
@@ -31,4 +40,79 @@ function dpl_admin_requirements(string $phase): array {
   ];
 
   return $requirements;
+}
+
+/**
+ * Migrate administrative role to new user.
+ */
+function dpl_admin_update_10000(array &$sandbox) : string {
+  $feedback = [];
+
+  $user_1 = User::load(1);
+  if (!$user_1) {
+    throw new RuntimeException('Unable to load user 1');
+  }
+
+  // Some field values should not been transfered between the users as we
+  // intentionally want them to be unique.
+  $excluded_fields = ['uid' => TRUE, 'uuid' => TRUE, 'roles' => TRUE];
+  $user_1_fields = array_diff_key($user_1->getFields(include_computed: FALSE), $excluded_fields);
+  $user_1_field_values = array_map(function (FieldItemListInterface $field) {
+    return $field->value;
+  }, $user_1_fields);
+
+  // Transfer field data.
+  $new_user = (User::create($user_1_field_values))
+    ->addRole('local_administrator');
+
+  // Reset the existing user 1 account.
+  // Use random data for both username and password as this user is only meant
+  // to be used with onetime login links.
+  $random = new Random();
+  $user_1
+    ->set('field_author_name', "Administrator")
+    ->setUsername('admin_' . $random->name())
+    ->setEmail('')
+    ->setPassword($random->string(32));
+  $user_1->save();
+  $feedback[] = "Reset username and password for user 1";
+
+  $new_user->save();
+  $feedback[] = "Created new user {$new_user->id()} with local administrator role";
+
+  // Migrate entity ownership to the new user.
+  $entities_by_types = array_map(function (EntityTypeInterface $entity_type) use ($user_1) {
+    try {
+      return \Drupal::entityTypeManager()->getStorage($entity_type->id())->loadByProperties(['uid' => $user_1->id()]);
+    }
+    catch (QueryException $e) {
+      // An exception if thrown for entity types without an uid property. Ignore
+      // these as they do not have relations to the existing user.
+      return [];
+    }
+  }, \Drupal::entityTypeManager()->getDefinitions());
+
+  /** @var array<string, array<EntityInterface&EntityOwnerInterface>> $user_owned_entities_by_types */
+  $user_owned_entities_by_types = array_filter($entities_by_types, function (array $entities) {
+    return count($entities) > 0 && reset($entities) instanceof EntityOwnerInterface;
+  });
+
+  $status_by_types = array_map(function (array $entities, string $entity_type) use ($new_user) {
+    $entities = array_map(fn (EntityOwnerInterface $entity) => $entity->setOwner($new_user), $entities);
+    $entities = array_map(fn (EntityInterface $entity) => $entity->save(), $entities);
+
+    $num_entities = count($entities);
+    return "Updated owner for {$num_entities} {$entity_type} entities";
+  }, $user_owned_entities_by_types, array_keys($user_owned_entities_by_types));
+  $feedback = array_merge($feedback, $status_by_types);
+
+  $session_manager = DrupalTyped::service(SessionManagerInterface::class, 'session_manager');
+  $session_manager->delete((int) $user_1->id());
+  $feedback[] = "Deleted existing sessions for user 1";
+
+  $content_lock = DrupalTyped::service(ContentLock::class, 'content_lock');
+  $content_lock->releaseAllUserLocks((int) $user_1->id());
+  $feedback[] = "Released all content locks for user 1";
+
+  return implode("\n", $feedback);
 }
