@@ -7,8 +7,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2024-05-14 13:45+0200\n"
-"PO-Revision-Date: 2024-05-14 13:45+0200\n"
+"POT-Creation-Date: 2024-05-14 14:43+0200\n"
+"PO-Revision-Date: 2024-05-14 14:43+0200\n"
 "Last-Translator: NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
 "MIME-Version: 1.0\n"
@@ -418,12 +418,20 @@ msgid "Cancel reservation"
 msgstr "Slet reservering"
 
 msgctxt "Global"
+msgid "Cancel reservations"
+msgstr "Slet reserveringer"
+
+msgctxt "Global"
 msgid "Processing..."
 msgstr "Indlæser..."
 
 msgctxt "Global"
 msgid "Do you want to cancel your reservation?"
 msgstr "Vil du slette din reservering?"
+
+msgctxt "Global"
+msgid "Do you want to cancel your reservations?"
+msgstr ""
 
 msgctxt "Global"
 msgid "Something went wrong deleting your reservation. Please try again."
@@ -448,10 +456,6 @@ msgstr "Din reservering er slettet"
 msgctxt "Global"
 msgid "Reservations deleted"
 msgstr "Dine reserveringer er slettet"
-
-msgctxt "Global"
-msgid "Cancel reservations"
-msgstr "Slet reserveringer"
 
 msgctxt "Global"
 msgid "You cannot regret this action"
@@ -1644,6 +1648,30 @@ msgstr "Sidetal"
 msgctxt "Work Page"
 msgid "Type"
 msgstr "Type"
+
+msgctxt "Work Page"
+msgid "Age range"
+msgstr ""
+
+msgctxt "Work Page"
+msgid "Notes"
+msgstr ""
+
+msgctxt "Work Page"
+msgid "Dimensions"
+msgstr ""
+
+msgctxt "Work Page"
+msgid "Host Publication"
+msgstr ""
+
+msgctxt "Work Page"
+msgid "Source"
+msgstr ""
+
+msgctxt "Work Page"
+msgid "Contents"
+msgstr ""
 
 msgctxt "Work Page"
 msgid "Details of the material"
@@ -3244,6 +3272,26 @@ msgid "# @materialNumber"
 msgstr "Materialenummer @materialNumber"
 
 msgctxt "Fees list"
+msgid "Go to the loan list page to see your overdue loans"
+msgstr ""
+
+msgctxt "Fees list"
+msgid "See your overdue loans"
+msgstr ""
+
+msgctxt "Fees list"
+msgid ""
+"You have an overdue loan. You may be charged fees upon handing in or "
+"renewing it."
+msgstr ""
+
+msgctxt "Fees list"
+msgid ""
+"You have overdue loans. You may be charged fees upon handing in or renewing "
+"them."
+msgstr ""
+
+msgctxt "Fees list"
 msgid "You will be redirected to Mit Betalingsoverblik."
 msgstr "Du vil blive sendt videre til \"Mit Betalingsoverblik\""
 
@@ -3502,6 +3550,18 @@ msgstr ""
 "Redirect til en side når en bruger har oprettet sig. Du kan tilføje en "
 "relativ sti (f.x. /velkommen). Du kan fremsøge en intern URL. Du kan tilføje "
 "en ekstern URL (begyndende med http:// eller https://)"
+
+msgctxt "Create patron"
+msgid "Choose preferred library for pickup of your future reservations."
+msgstr ""
+
+msgctxt "Create patron"
+msgid "Error occurred"
+msgstr ""
+
+msgctxt "Create patron"
+msgid "Loading"
+msgstr ""
 
 msgctxt "Create patron"
 msgid "Cancel"
