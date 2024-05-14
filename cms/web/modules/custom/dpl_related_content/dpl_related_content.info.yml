@@ -1,5 +1,5 @@
 name: DPL related content
 description: Showing related content as a slider on articles and eventinstances.
-package: DDB
+package: DPL
 type: module
 core_version_requirement: ^10
