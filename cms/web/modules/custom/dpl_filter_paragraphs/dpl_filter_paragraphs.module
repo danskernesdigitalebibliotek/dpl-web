@@ -18,6 +18,13 @@ use Drupal\views\Views;
 function dpl_filter_paragraphs_preprocess_paragraph__card_grid_automatic(array &$variables): void {
   $variables = _dpl_filter_paragraphs_prepare_filter_view($variables, 'content_paragraphs', 'card_grid', NULL);
 
+  $paragraph = $variables['paragraph'] ?? NULL;
+
+  if ($paragraph instanceof Paragraph && $paragraph->hasField('field_card_grid_link') && !$paragraph->get('field_card_grid_link')->isEmpty()) {
+    $link = $paragraph->get('field_card_grid_link')->view('full');
+    $link['#attributes']['class'][] = 'card-grid__link';
+    $variables['content']['view']['#view']->display_handler->setOption('custom_card_grid_link', $link);
+  }
 }
 
 /**
@@ -151,4 +158,35 @@ function dpl_filter_paragraphs_preprocess_paragraph__filtered_event_list(array &
   }
 
   $variables = _dpl_filter_paragraphs_prepare_filter_view($variables, 'filtered_event_list', 'default', $amount_of_events_to_display);
+}
+
+/**
+ * Helper: Re-save all card_grid_automatic paragraphs.
+ *
+ * This is needed to show the field_card_grid_link field in the view.
+ */
+function _dpl_filter_paragraphs_resave_card_grid_automatic() : string {
+  $pids = \Drupal::entityQuery('paragraph')
+    ->condition('type', 'card_grid_automatic')
+    ->accessCheck(FALSE)
+    ->execute();
+
+  if (!is_array($pids)) {
+    $pids = [];
+  }
+
+  $paragraphs = \Drupal::entityTypeManager()->getStorage('paragraph')->loadMultiple($pids);
+
+  foreach ($paragraphs as $paragraph) {
+    $paragraph->save();
+  }
+
+  return t('Finished re-saving all card_grid_automatic paragraphs.');
+}
+
+/**
+ * Re-save all card_grid_automatic paragraphs.
+ */
+function dpl_filter_paragraphs_deploy_resave_card_grid_automatic() : string {
+  return _dpl_filter_paragraphs_resave_card_grid_automatic();
 }

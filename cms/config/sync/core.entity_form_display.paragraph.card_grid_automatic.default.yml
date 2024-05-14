@@ -3,6 +3,7 @@ langcode: en
 status: true
 dependencies:
   config:
+    - field.field.paragraph.card_grid_automatic.field_card_grid_link
     - field.field.paragraph.card_grid_automatic.field_filter_branches
     - field.field.paragraph.card_grid_automatic.field_filter_categories
     - field.field.paragraph.card_grid_automatic.field_filter_tags
@@ -10,6 +11,7 @@ dependencies:
     - paragraphs.paragraphs_type.card_grid_automatic
   module:
     - field_group
+    - link
     - select2
 third_party_settings:
   field_group:
@@ -34,6 +36,14 @@ targetEntityType: paragraph
 bundle: card_grid_automatic
 mode: default
 content:
+  field_card_grid_link:
+    type: link_default
+    weight: 9
+    region: content
+    settings:
+      placeholder_url: ''
+      placeholder_title: ''
+    third_party_settings: {  }
   field_filter_branches:
     type: select2_entity_reference
     weight: 8
