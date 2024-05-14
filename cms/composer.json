@@ -40,10 +40,10 @@
             "type": "package",
             "package": {
                 "name": "danskernesdigitalebibliotek/dpl-react",
-                "version": "2024.18.1",
+                "version": "2024.19.0",
                 "type": "drupal-library",
                 "dist": {
-                    "url": "https://github.com/danskernesdigitalebibliotek/dpl-react/releases/download/branch-release%2Fbrahma-15-1/dist-release-brahma-15-1.zip",
+                    "url": "https://github.com/danskernesdigitalebibliotek/dpl-react/releases/download/branch-release%2Fbrahma-16/dist-release-brahma-16.zip",
                     "type": "zip"
                 },
                 "require": {
@@ -56,9 +56,9 @@
             "package": {
                 "name": "danskernesdigitalebibliotek/dpl-design-system",
                 "type": "drupal-library",
-                "version": "2024.18.1",
+                "version": "2024.19.0",
                 "dist": {
-                    "url": "https://github.com/danskernesdigitalebibliotek/dpl-design-system/releases/download/branch-release%2Fbrahma-15-1/dist-release-brahma-15-1.zip",
+                    "url": "https://github.com/danskernesdigitalebibliotek/dpl-design-system/releases/download/branch-release%2Fbrahma-16/dist-release-brahma-16.zip",
                     "type": "zip"
                 }
             }
@@ -88,8 +88,8 @@
         "composer/installers": "1.12.0",
         "cweagans/composer-patches": "1.7.3",
         "danskernesdigitalebibliotek/cms-api": "*",
-        "danskernesdigitalebibliotek/dpl-design-system": "^2024.18",
-        "danskernesdigitalebibliotek/dpl-react": "^2024.18",
+        "danskernesdigitalebibliotek/dpl-design-system": "^2024.19",
+        "danskernesdigitalebibliotek/dpl-react": "^2024.19",
         "danskernesdigitalebibliotek/fbs-client": "*",
         "dealerdirect/phpcodesniffer-composer-installer": "^0.7.1",
         "deoliveiralucas/array-keys-case-transform": "^1.1",
@@ -337,13 +337,14 @@
                 "Combat NoCorrespondingEntityClassException": "patches/purge-5340bcf-combat-nocorresponding-entity-exception.patch"
             },
             "drupal/recurring_events": {
-                "3178696: Make compatible with Scheduler": "https://git.drupalcode.org/project/recurring_events/-/merge_requests/86.patch"
+                "3178696: Make compatible with Scheduler": "https://git.drupalcode.org/project/recurring_events/-/merge_requests/86.patch",
+                "3416436: Avoid array conversion warning when daily events are disabled": "https://git.drupalcode.org/project/recurring_events/-/commit/832ae52f135dd3f205eb74acf2d3715fb443e759.patch"
             },
             "drupal/theme_permission": {
                 "3105637: Edit, install and uninstall permission": "https://www.drupal.org/files/issues/2024-02-01/theme-permission-edit-install-uninstall-3105637-7.patch"
             },
             "drupal/twig_tweak": {
-                "3428226: Clear menu cache when adding first item": "https://git.drupalcode.org/project/twig_tweak/-/merge_requests/47.patch"
+                "3428226: Clear menu cache when adding first item": "https://git.drupalcode.org/project/twig_tweak/-/commit/6fd3997d45fe90fdf6545a3c85ff1c5b68e9bde1.patch"
             }
         }
     }

@@ -26,13 +26,3 @@ dpl_patron_reg.create:
     _permission: "access content"
   options:
     no_cache: true
-
-dpl_patron_reg.post_register:
-  path: "/post-register"
-  defaults:
-    _controller: '\Drupal\dpl_patron_reg\Controller\DplPatronRegController::postRegister'
-    _title: "Make sure that user is detected as registered after registration"
-  requirements:
-    _permission: "access content"
-  options:
-    no_cache: TRUE
