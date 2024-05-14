@@ -1,7 +1,13 @@
 uuid: e5cc6336-ae2f-4546-a4d9-1bae0aa15ce6
 langcode: en
 status: true
-dependencies: {  }
+dependencies:
+  module:
+    - paragraphs_ee
+third_party_settings:
+  paragraphs_ee:
+    paragraphs_categories:
+      user_creation: user_creation
 id: language_selector
 label: 'Language selector'
 icon_uuid: null
