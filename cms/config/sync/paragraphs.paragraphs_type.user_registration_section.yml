@@ -1,7 +1,13 @@
 uuid: 87b63531-f90e-4c9e-b9fe-2130104df615
 langcode: en
 status: true
-dependencies: {  }
+dependencies:
+  module:
+    - paragraphs_ee
+third_party_settings:
+  paragraphs_ee:
+    paragraphs_categories:
+      user_creation: user_creation
 id: user_registration_section
 label: 'User registration section'
 icon_uuid: null

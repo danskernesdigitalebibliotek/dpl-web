@@ -25,7 +25,6 @@ dependencies:
     - path
     - scheduler
     - select2
-    - select2_multicheck
 third_party_settings:
   field_group:
     group_article_meta_tags:
@@ -102,11 +101,14 @@ bundle: article
 mode: default
 content:
   field_branch:
-    type: select2_multicheck
+    type: select2_entity_reference
     weight: 0
     region: content
     settings:
       width: 100%
+      autocomplete: false
+      match_operator: CONTAINS
+      match_limit: 10
     third_party_settings: {  }
   field_canonical_url:
     type: link_default
@@ -117,11 +119,14 @@ content:
       placeholder_title: ''
     third_party_settings: {  }
   field_categories:
-    type: select2_multicheck
+    type: select2_entity_reference
     weight: 7
     region: content
     settings:
       width: 100%
+      autocomplete: false
+      match_operator: CONTAINS
+      match_limit: 10
     third_party_settings: {  }
   field_override_author:
     type: string_textfield
@@ -175,11 +180,14 @@ content:
       placeholder: ''
     third_party_settings: {  }
   field_tags:
-    type: select2_multicheck
+    type: select2_entity_reference
     weight: 8
     region: content
     settings:
       width: 100%
+      autocomplete: true
+      match_operator: CONTAINS
+      match_limit: 10
     third_party_settings: {  }
   field_teaser_image:
     type: media_library_widget
@@ -236,7 +244,7 @@ content:
     region: content
     settings:
       width: 100%
-      autocomplete: false
+      autocomplete: true
       match_operator: CONTAINS
       match_limit: 10
     third_party_settings: {  }
