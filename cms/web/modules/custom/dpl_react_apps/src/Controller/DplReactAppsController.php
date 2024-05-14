@@ -195,6 +195,7 @@ class DplReactAppsController extends ControllerBase {
       'advanced-search-filter-physical-text' => $this->t('physical', [], ['context' => 'advanced search']),
       'advanced-search-genre-text' => $this->t('genre', [], ['context' => 'advanced search']),
       'advanced-search-identifier-text' => $this->t('identifier', [], ['context' => 'advanced search']),
+      'advanced-search-input-label-text' => $this->t('Input field @inputNumber', [], ['context' => 'advanced search']),
       'advanced-search-input-placeholder-text' => $this->t('search term', [], ['context' => 'advanced search']),
       'advanced-search-language-text' => $this->t('language', [], ['context' => 'advanced search']),
       'advanced-search-link-to-this-search-text' => $this->t('link to this search', [], ['context' => 'advanced search']),
