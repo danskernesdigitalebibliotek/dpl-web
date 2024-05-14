@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "c9f78116680669de31b150f09856b60a",
+    "content-hash": "82e7db1f376175725241e0f9c72df275",
     "packages": [
         {
             "name": "amazeeio/drupal_integrations",
@@ -1149,19 +1149,19 @@
         },
         {
             "name": "danskernesdigitalebibliotek/dpl-design-system",
-            "version": "2024.19.0",
+            "version": "2024.20.0",
             "dist": {
                 "type": "zip",
-                "url": "https://github.com/danskernesdigitalebibliotek/dpl-design-system/releases/download/2024.19.0/dist-2024-19-0-47fee90ec8435570f1a6eff822fe550e58ba941a.zip"
+                "url": "https://github.com/danskernesdigitalebibliotek/dpl-design-system/releases/download/2024.20.0/dist-2024-20-0-bb61928f15b180c4f46433eff9142953b76ba00c.zip"
             },
             "type": "drupal-library"
         },
         {
             "name": "danskernesdigitalebibliotek/dpl-react",
-            "version": "2024.19.0",
+            "version": "2024.20.0",
             "dist": {
                 "type": "zip",
-                "url": "https://github.com/danskernesdigitalebibliotek/dpl-react/releases/download/2024.19.0/dist-2024-19-0-cfadb54414b3c9c6dc70f827cef9555bb3c2ad53.zip"
+                "url": "https://github.com/danskernesdigitalebibliotek/dpl-react/releases/download/2024.20.0/dist-2024-20-0-2c889c6c542dc2925182e0b14a5eaa5ffb7fab00.zip"
             },
             "require": {
                 "composer/installers": "^1.2.0"
@@ -3902,6 +3902,50 @@
             "support": {
                 "source": "http://cgit.drupalcode.org/field_inheritance",
                 "issues": "https://www.drupal.org/project/issues/field_inheritance"
+            }
+        },
+        {
+            "name": "drupal/flat_taxonomy",
+            "version": "2.0.0",
+            "source": {
+                "type": "git",
+                "url": "https://git.drupalcode.org/project/flat_taxonomy.git",
+                "reference": "2.0.0"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://ftp.drupal.org/files/projects/flat_taxonomy-2.0.0.zip",
+                "reference": "2.0.0",
+                "shasum": "b85d1bde4d8de589cd0dfc77b846e66f0906a0ce"
+            },
+            "require": {
+                "drupal/core": "^8 || ^9 || ^10"
+            },
+            "type": "drupal-module",
+            "extra": {
+                "drupal": {
+                    "version": "2.0.0",
+                    "datestamp": "1688494925",
+                    "security-coverage": {
+                        "status": "covered",
+                        "message": "Covered by Drupal's security advisory policy"
+                    }
+                }
+            },
+            "notification-url": "https://packages.drupal.org/8/downloads",
+            "license": [
+                "GPL-2.0-or-later"
+            ],
+            "authors": [
+                {
+                    "name": "vbouchet",
+                    "homepage": "https://www.drupal.org/user/1671428"
+                }
+            ],
+            "description": "Provides tools to force selected taxonomies to be flat.",
+            "homepage": "https://www.drupal.org/project/flat_taxonomy",
+            "support": {
+                "source": "https://git.drupalcode.org/project/flat_taxonomy"
             }
         },
         {

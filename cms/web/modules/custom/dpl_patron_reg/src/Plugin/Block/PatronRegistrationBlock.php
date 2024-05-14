@@ -111,6 +111,9 @@ class PatronRegistrationBlock extends BlockBase implements ContainerFactoryPlugi
       'text-notifications-enabled-config' => (int) $this->reservationSettings->smsNotificationsIsEnabled(),
 
       // Texts.
+      'create-patron-branch-dropdown-note-text' => $this->t("Choose preferred library for pickup of your future reservations.", [], ['context' => 'Create patron']),
+      'create-patron-button-error-text' => $this->t("Error occurred", [], ['context' => 'Create patron']),
+      'create-patron-button-loading-text' => $this->t("Loading", [], ['context' => 'Create patron']),
       'create-patron-cancel-button-text' => $this->t("Cancel", [], ['context' => 'Create patron']),
       'create-patron-change-pickup-body-text' => $this->t("Select pickup location in the select", [], ['context' => 'Create patron']),
       'create-patron-change-pickup-header-text' => $this->t("Select pickup location", [], ['context' => 'Create patron']),
