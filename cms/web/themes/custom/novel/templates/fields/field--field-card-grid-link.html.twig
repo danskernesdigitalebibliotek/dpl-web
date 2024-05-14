@@ -1,0 +1,5 @@
+{% for item in items %}
+  {% set url = item.content['#url'] %}
+  {% set title = item.content['#title'] %}
+  <a href="{{ url }}" class="card-grid__link">{{ title }}</a>
+{% endfor %}

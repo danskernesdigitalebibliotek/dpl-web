@@ -22,8 +22,9 @@ function dpl_filter_paragraphs_preprocess_paragraph__card_grid_automatic(array &
 
   if ($paragraph instanceof Paragraph && $paragraph->hasField('field_card_grid_link') && !$paragraph->get('field_card_grid_link')->isEmpty()) {
     $link = $paragraph->get('field_card_grid_link')->view('full');
-    $link['#attributes']['class'][] = 'card-grid__link';
-    $variables['content']['view']['#view']->display_handler->setOption('custom_card_grid_link', $link);
+    if (isset($variables['content']['view']['#view']->display_handler)) {
+      $variables['content']['view']['#view']->display_handler->setOption('custom_card_grid_link', $link);
+    }
   }
 }
 
