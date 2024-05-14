@@ -7,6 +7,7 @@ dotenv: [".task.env"]
 
 includes:
   translations: ./task/Taskfile.translations.yml
+  lagoon: ./task/Taskfile.lagoon.yml
 
 vars:
   # Docker image registry.
@@ -29,8 +30,6 @@ vars:
 
   # Where is the docker file(s) we use for our builds residing?
   LAGOON_DIR: "lagoon"
-  # The name of the project on Lagoon.
-  LAGOON_PROJECT: "dpl-cms"
 
   DOCKER_COMPOSE_FILES_DEFAULT: "-f docker-compose.yml"
   DOCKER_COMPOSE_FILES: "{{.DOCKER_COMPOSE_FILES | default .DOCKER_COMPOSE_FILES_DEFAULT }}"
@@ -470,44 +469,6 @@ tasks:
     cmds:
       - task: source:build
       - task: source:push
-
-  lagoon:drush:uli:
-    desc: Get an Drupal one-time user login link for a Lagoon environment through Drush
-    cmds:
-      - task lagoon:cli -- drush user-login
-
-  lagoon:cli:
-    desc: Performs a command in a Lagoon environment and display the output. Expects parameter(s).
-    deps: [deps:lagoon, deps:jq, lagoon:login]
-    cmds:
-      - |
-        RUN=$(lagoon run -p {{.LAGOON_PROJECT}} -e pr-"$PR" custom --command "{{.CLI_ARGS}}" --name "{{.CLI_ARGS}} from Taskfile" --output-json);
-        TASK_ID=$(echo $RUN | jq .data.id);
-        STATUS="pending";
-        while [ $STATUS != "complete" ]; do
-          sleep 0.5;
-          echo -n ".";
-          TASK=$(lagoon get task-by-id --id=$TASK_ID --logs --output-json);
-          STATUS=$(echo $TASK | jq -r .data[0].status);
-        done
-        echo -e "\n$(echo $TASK | jq -r .data[0].logs)";
-    preconditions:
-      - sh: "[ -v PR ]"
-        msg: Please provide a PR environment variable with the pull request number for the environment
-
-  lagoon:login:
-    internal: true
-    deps: [deps:lagoon]
-    cmds:
-      - lagoon login
-
-  # Tasks used to ensure that non-required CLI tools are available.
-  # Use these as dependencies for specific tasks.
-  deps:lagoon:
-    internal: true
-    preconditions:
-      - sh: lagoon --version
-        msg: Lagoon CLI is not installed. Please check https://uselagoon.github.io/lagoon-cli/.
 
   deps:jq:
     internal: true
