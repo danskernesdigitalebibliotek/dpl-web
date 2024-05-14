@@ -24,5 +24,5 @@ while [[ $BACKUP_URL == "Error"* ]]; do
   # backup is not available for download yet.
   BACKUP_URL=$(lagoon get backup -p "${LAGOON_PROJECT}" -e "${LAGOON_ENVIRONMENT}" --backup-id "${BACKUP_ID}" 2>/dev/null) || true;
 done;
-echo "";
+echo -e "\nDownloading backup from ${BACKUP_URL}\n\n";
 curl -o "${BACKUP_DESTINATION}" "${BACKUP_URL}";
