@@ -132,6 +132,7 @@
         "drupal/openapi_rest": "^2.0@RC",
         "drupal/openapi_ui_swagger": "^1.0",
         "drupal/openid_connect": "^1.4",
+        "drupal/override_node_options": "^2.8",
         "drupal/paragraphs": "^1.16",
         "drupal/paragraphs_ee": "^10",
         "drupal/pathauto": "^1.12",

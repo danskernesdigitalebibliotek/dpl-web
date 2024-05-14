@@ -6,4 +6,4 @@ roles:
   editor: safe
   mediator: safe
   patron: unsafe
-  external_system: unsafe
+  external_system: safe
