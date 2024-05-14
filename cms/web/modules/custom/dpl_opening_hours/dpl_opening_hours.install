@@ -1,6 +1,8 @@
 <?php
 
+use Drupal\Core\Extension\ModuleInstallerInterface;
 use Drupal\dpl_opening_hours\Mapping\OpeningHoursRepetitionType;
+use Drupal\drupal_typed\DrupalTyped;
 use function Safe\json_encode as json_encode;
 
 /**
@@ -162,12 +164,26 @@ function dpl_opening_hours_update_10000(array &$sandbox): string {
 }
 
 /**
- * Implements hook_update_N().
+ * Enable dpl_rest_base module.
  *
  * @param mixed[] $sandbox
  *   The update sandbox.
  */
 function dpl_opening_hours_update_10001(array &$sandbox) : void {
+  $module_installer = DrupalTyped::service(ModuleInstallerInterface::class, 'module_installer');
+  // The dpl_rest_base module is a dependency containing classes that this
+  // module relies on. We need to have it enabled before other update hooks
+  // can run.
+  $module_installer->install(['dpl_rest_base']);
+}
+
+/**
+ * Update repetition field description.
+ *
+ * @param mixed[] $sandbox
+ *   The update sandbox.
+ */
+function dpl_opening_hours_update_10002(array &$sandbox) : void {
   $repetition_table = 'dpl_opening_hours_repetition';
   $type_field = 'type';
   $repetition_schema = dpl_opening_hours_schema()[$repetition_table];
