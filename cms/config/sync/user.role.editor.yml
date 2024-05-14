@@ -50,7 +50,6 @@ permissions:
   - 'access content overview'
   - 'access eventinstance overview'
   - 'access eventseries overview'
-  - 'access files overview'
   - 'access media overview'
   - 'access site in maintenance mode'
   - 'access taxonomy overview'
