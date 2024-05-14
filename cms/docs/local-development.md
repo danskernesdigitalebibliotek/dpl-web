@@ -63,7 +63,7 @@ database, not any files from the site.
    "[How do I download a database dump?](https://docs.lagoon.sh/lagoon/resources/tutorials-and-webinars#how-do-i-download-a-database-dump)"
    guide in the official Lagoon. Skip this step if you already have a
    database-dump.
-2. Place the dump in the [database-dump](../database-dump) directory, be aware
+2. Place the dump in the [restore/database](../restore/database) directory, be aware
    that the directory is only allowed to contain a single `.sql` file.
 3. Start a local environment using `task dev:reset`
 4. Import the database by running `task dev:restore:database`
