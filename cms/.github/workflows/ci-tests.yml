@@ -199,6 +199,27 @@ jobs:
       - name: Lint Markdown
         run: npx markdownlint-cli2
 
+  Shellcheck:
+    name: Shellcheck
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: shellcheck
+        uses: reviewdog/action-shellcheck@v1
+        with:
+          github_token: ${{ secrets.github_token }}
+          fail_on_error: true
+          # Use the GitHub PullRequest review comment that reports findings
+          # as inlined comments in a PullRequest.
+          # Read more about reporters: https://github.com/reviewdog/reviewdog#reporters
+          reporter: github-pr-review
+          # We can exclude a single directory, so we go for .git.
+          path: dev-scripts
+          # Set the default filter-mode which only reports violations caused by
+          # added/modified lines.
+          # Read more about filter-mode: https://github.com/reviewdog/reviewdog#filter-mode
+          filter_mode: nofilter
+
   EslintDrupal:
     name: Lint Drupal assets
     runs-on: ubuntu-latest
