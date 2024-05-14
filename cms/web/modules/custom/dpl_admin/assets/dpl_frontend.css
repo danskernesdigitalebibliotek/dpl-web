@@ -33,3 +33,7 @@
     height: auto;
   }
 }
+
+.swagger-ui code {
+  background: transparent;
+}
