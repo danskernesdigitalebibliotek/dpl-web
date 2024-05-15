@@ -77,6 +77,14 @@ function dpl_admin_update_10000(array &$sandbox) : string {
   $user_1->save();
   $feedback[] = "Reset username and password for user 1";
 
+  $removed_roles = array_map(function (string $role) use ($user_1) {
+      $user_1->removeRole($role);
+      return $role;
+  }, $user_1->getRoles(exclude_locked_roles: TRUE));
+  $user_1->save();
+  $removed_roles_string = implode(', ', $removed_roles);
+  $feedback[] = "Removed roles {$removed_roles_string} for user 1";
+
   $new_user->save();
   $feedback[] = "Created new user {$new_user->id()} with local administrator role";
 
