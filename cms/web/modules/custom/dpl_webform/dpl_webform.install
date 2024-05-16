@@ -8,26 +8,16 @@
 /**
  * Implements hook_update_N().
  */
-function dpl_webform_update_10001(): void {
-
+function dpl_webform_update_10003(): void {
   $config_factory = \Drupal::configFactory();
   $config_ignore_config_key = 'config_ignore.settings';
 
-  // Get the current config_ignore settings.
+  // We add the new webform.webform.* to config_ignore.settings
+  // as the settings will otherwise risk being deleted by when
+  // drush deploy is running confiugraiton import.
   $config_ignore_settings = $config_factory->getEditable($config_ignore_config_key);
-
-  // Get the ignored configurations.
   $ignored_configs = $config_ignore_settings->get('ignored_config_entities');
-
-  // Check if the configuration is already being ignored.
-  if (array_key_exists('webform.webform.*', $ignored_configs)) {
-    \Drupal::messenger()->addMessage('webform.webform.* already exists in ignored configs. Exiting update hook.');
-    return;
-  }
-
-  // Save the updated config_ignore settings.
   $ignored_configs[] = 'webform.webform.*';
   $config_ignore_settings->set('ignored_config_entities', $ignored_configs)->save();
-
   \Drupal::messenger()->addMessage('webform.webform.* is added to ignored configs.');
 }
