@@ -61,6 +61,16 @@ function dpl_admin_update_10000(array &$sandbox) : string {
     return $field->value;
   }, $user_1_fields);
 
+  $result = \Drupal::database()->select('users_field_data')
+    ->fields('users_field_data', ['pass'])
+    ->condition('uid', $user_1->id())
+    ->execute();
+  if (!$result) {
+    throw new RuntimeException('Unable to retrieve password hash for user 1');
+  }
+  $password_hash = $result->fetchField();
+  $feedback[] = "Retrieved password hash for user 1";
+
   // Transfer field data.
   $new_user = (User::create($user_1_field_values))
     ->addRole('local_administrator');
@@ -87,6 +97,12 @@ function dpl_admin_update_10000(array &$sandbox) : string {
 
   $new_user->save();
   $feedback[] = "Created new user {$new_user->id()} with local administrator role";
+
+  \Drupal::database()->update('users_field_data')
+    ->fields(['pass' => $password_hash])
+    ->condition('uid', $new_user->id())
+    ->execute();
+  $feedback[] = "Transferred password hash from user 1 to new user {$new_user->id()}";
 
   // Migrate entity ownership to the new user.
   $entities_by_types = array_map(function (EntityTypeInterface $entity_type) use ($user_1) {
