@@ -13,7 +13,6 @@ describe("Mapp Tracking", () => {
       .parent()
       .get('[value="Save configuration"]')
       .click();
-    cy.drupalLogout();
     cy.visit("/");
     cy.getRequestCount({
       urlPathPattern: `^/resp/api/get/${customerId}.*`,
