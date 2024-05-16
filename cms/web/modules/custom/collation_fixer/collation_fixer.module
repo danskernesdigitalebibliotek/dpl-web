@@ -24,20 +24,6 @@ function collation_fixer_menu() {
 }
 
 /**
- * Implements hook_permission().
- *
- * Introduce a 'fix database collation' permission.
- */
-function collation_fixer_permission() {
-  return array(
-    'fix database collation' => array(
-      'title' => t('Fix database collation'),
-      'description' => t('Performs corrections of database collations.'),
-    ),
-  );
-}
-
-/**
  * Check table collations.
  *
  * @param string $table
@@ -154,7 +140,7 @@ function _collation_fixer_get_fallback_charset() {
     $fallback_charset = $connection_options['charset'];
   }
   else {
-    $fallback_charset = 'utf8';
+    $fallback_charset = 'utf8mb4';
   }
 
   return $fallback_charset;
