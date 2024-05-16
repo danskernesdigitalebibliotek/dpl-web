@@ -146,8 +146,8 @@ function dpl_filter_paragraphs_preprocess_paragraph__filtered_event_list(array &
   }
 
   $amount_of_events_to_display = NULL;
-  if ($variables['paragraph']->hasField('field_amount_of_events') && !$variables['paragraph']->get('field_amount_of_events')->isEmpty()) {
-    $amount_of_events_to_display = $variables['paragraph']->get('field_amount_of_events')->value;
+  if ($paragraph->hasField('field_amount_of_events') && !$paragraph->get('field_amount_of_events')->isEmpty()) {
+    $amount_of_events_to_display = $paragraph->get('field_amount_of_events')->value;
   }
 
   $variables = _dpl_filter_paragraphs_prepare_filter_view($variables, 'filtered_event_list', 'default', $amount_of_events_to_display);
