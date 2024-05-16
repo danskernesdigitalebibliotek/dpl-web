@@ -1,0 +1,50 @@
+<?php
+
+/**
+ * @file
+ * Install, update and uninstall functions for the collation_fixer module.
+ */
+
+/**
+ * Implements hook_requirements().
+ *
+ * A 'runtime' phase check (admin/reports/status) for checking database
+ * collation status.
+ */
+function collation_fixer_requirements($phase) {
+  if ($phase == 'runtime') {
+    $t = get_t();
+    $wrong_collations = collation_fixer_check_collation();
+
+    if (empty($wrong_collations)) {
+      return array(
+        'collation_fixer' => array(
+          'title' => $t('Database collation status'),
+          'value' => $t('OK'),
+          'description' => $t('All tables have the correct database collation.'),
+          'severity' => REQUIREMENT_OK,
+        ),
+      );
+    }
+    else {
+      $fix_collation_links = array();
+      foreach ($wrong_collations as $table) {
+        $fix_collation_links[] = l($table, 'admin/collation-fixer/' . $table . '/confirm');
+      }
+      return array(
+        'collation_fixer' => array(
+          'title' => $t('Database collation check.'),
+          'value' => $t('Error'),
+          'description' => $t('The following tables do not have the correct database collation: !tables.', array(
+                           '!tables' => implode(', ', $fix_collation_links),
+                         )),
+          'severity' => REQUIREMENT_ERROR,
+        ),
+      );
+    }
+  }
+  else {
+    // Function must return an array.
+    return array();
+  }
+}
