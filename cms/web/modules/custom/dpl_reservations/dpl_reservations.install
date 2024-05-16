@@ -1,0 +1,38 @@
+<?php
+
+/**
+ * @file
+ * DPL reservations install file.
+ */
+
+/**
+ * Implements hook_update_N().
+ */
+function dpl_reservations_update_9001(): void {
+  $config_factory = \Drupal::configFactory();
+  $dpl_reservations_old_config_key = 'dpl_reservation_list.settings';
+  $dpl_reservations_new_config_key = 'dpl_reservations.settings';
+  $config_ignore_config_key = 'config_ignore.settings';
+  $dpl_reservations_old_configuration = $config_factory->get($dpl_reservations_old_config_key);
+
+  // Check if the old configuration exists. If the old configuration
+  // does not exist, we do not need to update anything.
+  if ($dpl_reservations_old_configuration->isNew()) {
+    \Drupal::messenger()->addMessage('Nothing to update. Exiting update hook.');
+    return;
+  }
+
+  // We add the new dpl_reservations.settings to config_ignore.settings
+  // as the settings will otherwise risk being deleted by drush deploy.
+  $config_ignore_settings = $config_factory->getEditable($config_ignore_config_key);
+  $ignored_configs = $config_ignore_settings->get('ignored_config_entities');
+  $ignored_configs[] = $dpl_reservations_new_config_key;
+  $config_ignore_settings->set('ignored_config_entities', $ignored_configs)->save();
+
+  // We copy the old configuration to the new configuration key
+  // so we do not lose already added configuration.
+  $dpl_reservations_old_config_data = $dpl_reservations_old_configuration->get();
+  $config_factory->getEditable($dpl_reservations_new_config_key)->setData($dpl_reservations_old_config_data)->save();
+  $config_factory->getEditable($dpl_reservations_old_config_key)->delete();
+  \Drupal::messenger()->addMessage('dpl_reservation_list configuration migrated to dpl_reservations.');
+}
