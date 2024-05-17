@@ -153,7 +153,7 @@ msgstr "Skøn-/faglitteratur"
 #: 
 msgctxt "Search Result"
 msgid "Genre and form"
-msgstr "Genre og form"
+msgstr "Genre"
 
 #: 
 msgctxt "Search Result"
@@ -3139,7 +3139,7 @@ msgstr "Materialetype"
 #: 
 msgctxt "Search Result"
 msgid "Material types specific"
-msgstr "Specifik materialetype"
+msgstr "Format"
 
 #: 
 msgctxt "Search Result"
