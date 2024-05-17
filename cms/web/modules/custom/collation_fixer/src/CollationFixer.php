@@ -102,7 +102,7 @@ final class CollationFixer {
       // Alter character set and collation of table definition.
       if ($result = $this->connection->query(
         "ALTER TABLE :table_name CHARACTER SET :charset COLLATE :collation",
-        [':table_name' => $table, ':charset' => $charset, ':collation' => $collation]
+        [':table_name' => $table_name, ':charset' => $charset, ':collation' => $collation]
       )->execute()) {
         $status = $status && $result;
       };
@@ -110,7 +110,7 @@ final class CollationFixer {
       // Alter character set and collation of table data.
       if ($result = $this->connection->query(
         "ALTER TABLE :table_name CONVERT TO CHARACTER SET :charset COLLATE :collation",
-        [':table_name' => $table, ':charset' => $charset, ':collation' => $collation]
+        [':table_name' => $table_name, ':charset' => $charset, ':collation' => $collation]
       )->execute()) {
         $status = $status && $result;
       };
