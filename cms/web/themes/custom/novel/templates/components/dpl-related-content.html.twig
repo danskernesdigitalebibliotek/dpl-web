@@ -1,0 +1,19 @@
+<div class="mt-64">
+  {% if list_style == 'slider' %}
+    {% include '@novel/components/slider.html.twig'
+      with {
+      'attributes': attributes,
+      'title': title,
+      'items': items,
+    } only %}
+  {% elseif list_style == 'grid' %}
+    {% include '@novel/components/card-grid.html.twig'
+      with {
+      'attributes': attributes,
+      'title': title,
+      'items': items,
+    } only %}
+  {% else %}
+    {% include '@dpl_related_content/dpl-related-content.html.twig' %}
+  {% endif %}
+</div>

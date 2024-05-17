@@ -6,6 +6,7 @@ use Drupal\Core\Database\Connection;
 use Drupal\Core\Datetime\DrupalDateTime;
 use Drupal\Core\Entity\EntityTypeManagerInterface;
 use Drupal\Core\Entity\FieldableEntityInterface;
+use Drupal\Core\StringTranslation\TranslationInterface;
 use Drupal\datetime\Plugin\Field\FieldType\DateTimeItemInterface;
 use Drupal\recurring_events\Entity\EventInstance;
 
@@ -25,19 +26,24 @@ class RelatedContent {
   protected Connection $connection;
 
   /**
-   * The minimum of items that must be in the slider.
+   * The translation service.
    */
-  private int $minItems = 4;
+  protected TranslationInterface $translation;
 
   /**
-   * How many items we max display in the slider.
+   * The minimum of items that must be in the list.
    */
-  private int $maxItems = 16;
+  public int $minItems = 4;
+
+  /**
+   * How many items we max display in the list.
+   */
+  public int $maxItems = 16;
 
   /**
    * The field on nodes, to sort by. By default, the newest created content.
    */
-  private string $nodeSortField = 'created';
+  public string $nodeSortField = 'created';
 
   /**
    * The node bundles that should show up in the results.
@@ -45,7 +51,72 @@ class RelatedContent {
    * @var string[]
    *  List of node bundles - e.g. articles.
    */
-  private array $nodeBundles = ['article'];
+  public array $nodeBundles = ['article'];
+
+  /**
+   * If events should be included in the results.
+   */
+  public bool $includeEvents = TRUE;
+
+  /**
+   * A possible entity UUID, that will not get included in results.
+   *
+   * We use UUID instead of IDs, as UUID will be unique across entity types,
+   * and means we don't need to worry about sending a node UUID along to a
+   * event query.
+   */
+  public ?string $excludedUuid = NULL;
+
+  /**
+   * Tag term IDs, to look for.
+   *
+   * @var int[]
+   *  List of term IDs
+   */
+  private array $tags = [];
+
+  /**
+   * Tag categories IDs, to look for.
+   *
+   * @var int[]
+   *  List of term IDs
+   */
+  private array $categories = [];
+
+  /**
+   * Tag branch IDs, to look for.
+   *
+   * @var int[]
+   *  List of branch IDs
+   */
+  private array $branches = [];
+
+  /**
+   * If TRUE, the filter conditions will be AND - otherwise, they will be OR.
+   */
+  public bool $andConditions = TRUE;
+
+  /**
+   * If we should allow a simple date lookup if not enough matches are found.
+   */
+  public bool $allowDateFallback = TRUE;
+
+  /**
+   * What type of list do we want the items to be displayed in?
+   *
+   * @var "slider"|"grid"|"list"
+   */
+  private string $listStyle = 'slider';
+
+  /**
+   * The title that may be shown as part of the list.
+   */
+  public ?string $title = NULL;
+
+  /**
+   * View mode to use for displaying individual content item.
+   */
+  public string $contentViewMode = 'card';
 
   /**
    * {@inheritdoc}
@@ -53,9 +124,13 @@ class RelatedContent {
   public function __construct(
     EntityTypeManagerInterface $entity_type_manager,
     Connection $connection,
+    TranslationInterface $translation,
   ) {
     $this->entityTypeManager = $entity_type_manager;
     $this->connection = $connection;
+    $this->translation = $translation;
+
+    $this->title = $this->translation->translate('Related content', [], ['context' => 'DPL related content']);
   }
 
   /**
@@ -68,75 +143,76 @@ class RelatedContent {
    *   List of content render arrays.
    */
   public function getContentFromEntity(FieldableEntityInterface $entity) {
-    $excluded_uuid = $entity->uuid();
+    $this->excludedUuid = $entity->uuid();
 
     $tags_field_name = 'field_tags';
     $categories_field_name = 'field_categories';
     $branches_field_name = 'field_branch';
 
-    // Eventinstances have different field names, as they use inheritance.
+    // Other entity types have different field names, because of inheritance.
     if ($entity instanceof EventInstance) {
       $tags_field_name = 'event_tags';
       $categories_field_name = 'event_categories';
       $branches_field_name = 'branch';
     }
 
-    $tags = $this->getTermIds($entity, $tags_field_name);
-    $categories = $this->getTermIds($entity, $categories_field_name);
-    $branches = $this->getTermIds($entity, $branches_field_name);
+    $tags = ($entity->hasField($tags_field_name)) ? $entity->get($tags_field_name)->referencedEntities() : [];
+    $categories = ($entity->hasField($categories_field_name)) ? $entity->get($categories_field_name)->referencedEntities() : [];
+    $branches = ($entity->hasField($branches_field_name)) ? $entity->get($branches_field_name)->referencedEntities() : [];
 
-    return $this->getContent($excluded_uuid, $tags, $categories, $branches);
+    $this->setTags($tags);
+    $this->setCategories($categories);
+    $this->setBranches($branches);
+
+    return $this->getContent();
   }
 
   /**
    * Get matching node IDs.
    *
-   * Allows for passing along various term IDs, that we look for in an OR group.
-   *
-   * @param string|null $excluded_uuid
-   *   A possible entity UUID, that will not get included in results.
-   *   We use UUID instead of IDs, as UUID will be unique across entity types,
-   *   and means we don't need to worry about sending a node UUID along to a
-   *   event query.
-   * @param array<int> $tags
-   *   Tag term IDs, to look for.
-   * @param array<int> $categories
-   *   Category term IDs, to look for.
-   * @param array<int> $branches
-   *   Branch term IDs, to look for.
+   * Allows passing along various term IDs, that we look for in filter group.
    *
    * @return array<mixed>
    *   List of content render arrays.
    */
-  public function getContent(?string $excluded_uuid = NULL, $tags = [], $categories = [], $branches = []): array {
+  public function getContent(): array {
+
     $event_ids = [];
     $node_ids = [];
 
-    // First, let's look up related content, based only on tags.
-    if (!empty($tags)) {
-      $node_ids = $this->getNodeIds($excluded_uuid, $tags);
-      $event_ids = $this->getEventInstanceIds($excluded_uuid, $tags);
+    if ($this->andConditions) {
+      // First, let's look up related content, based only on tags.
+      if (!empty($this->tags)) {
+        $node_ids = $this->getNodeIds();
+        $event_ids = $this->getEventInstanceIds($this->tags);
+      }
+
+      // If we found less than minimum results, we'll add categories to the mix
+      // in addition to tags.
+      if ((count($event_ids) + count($node_ids) < $this->minItems) && !empty($this->categories)) {
+        $node_ids = $this->getNodeIds($this->tags, $this->categories);
+        $event_ids = $this->getEventInstanceIds($this->tags, $this->categories);
+      }
+
+      // If we found less than minimum results, we'll add branches to the mix in
+      // addition to tags and categories.
+      if ((count($event_ids) + count($node_ids) < $this->minItems) && !empty($this->branches)) {
+        $node_ids = $this->getNodeIds($this->tags, $this->categories, $this->branches);
+        $event_ids = $this->getEventInstanceIds($this->tags, $this->categories, $this->branches);
+      }
+    }
+    else {
+      $node_ids = $this->getNodeIds($this->tags, $this->categories, $this->branches);
+      $event_ids = $this->getEventInstanceIds($this->tags, $this->categories, $this->branches);
     }
 
-    // If we found less than minimum results, we'll add categories to the mix in
-    // addition to tags.
-    if ((count($event_ids) + count($node_ids) < $this->minItems) && !empty($categories)) {
-      $node_ids = $this->getNodeIds($excluded_uuid, $tags, $categories);
-      $event_ids = $this->getEventInstanceIds($excluded_uuid, $tags, $categories);
-    }
-
-    // If we found less than minimum results, we'll add branches to the mix in
-    // addition to tags and categories.
-    if ((count($event_ids) + count($node_ids) < $this->minItems) && !empty($branches)) {
-      $node_ids = $this->getNodeIds($excluded_uuid, $tags, $categories, $branches);
-      $event_ids = $this->getEventInstanceIds($excluded_uuid, $tags, $categories, $branches);
-    }
-
-    // If the count is still under minimum, we'll find the upcoming events,
-    // and the latest nodes instead.
-    if (count($event_ids) + count($node_ids) < $this->minItems) {
-      $node_ids = $this->getNodeIds($excluded_uuid);
-      $event_ids = $this->getEventInstanceIds($excluded_uuid);
+    if ($this->allowDateFallback) {
+      // If the count is still under minimum, we'll find the upcoming events,
+      // and the latest nodes instead.
+      if (count($event_ids) + count($node_ids) < $this->minItems) {
+        $node_ids = $this->getNodeIds();
+        $event_ids = $this->getEventInstanceIds();
+      }
     }
 
     // If we still have less than minimum, we just won't display anything.
@@ -170,7 +246,7 @@ class RelatedContent {
       }
 
       if (isset($events[$i])) {
-        $content[] = $event_view_builder->view($events[$i], 'card');
+        $content[] = $event_view_builder->view($events[$i], $this->contentViewMode);
         $i++;
       }
 
@@ -179,17 +255,19 @@ class RelatedContent {
       }
 
       if (isset($nodes[$i])) {
-        $content[] = $node_view_builder->view($nodes[$i], 'card');
+        $content[] = $node_view_builder->view($nodes[$i], $this->contentViewMode);
         $i++;
       }
     }
 
     return [
-      '#theme' => 'dpl_related_content_slider',
+      '#theme' => 'dpl_related_content',
+      '#title' => $this->title,
       '#items' => $content,
+      '#list_style' => $this->listStyle,
       // The results should be cached, but, they have a lot of dependencies -
       // even depending on the current time (finding future events).
-      // The individual peices of content are cached themselves, so for the full
+      // The individual pieces of content are cached themselves, so for the full
       // result list, we'll add an easily-invalidated cache, with a bunch of
       // cache tags, and even a time-based cache.
       '#cache' => [
@@ -203,10 +281,8 @@ class RelatedContent {
   /**
    * Get matching node IDs.
    *
-   * Allows for passing along various term IDs, that we look for in an OR group.
+   * Allow passing along various term IDs, that we look for in filter group.
    *
-   * @param string|null $excluded_uuid
-   *   A possible entity UUID, that will not get included in results.
    * @param array<int> $tags
    *   Tag term IDs, to look for.
    * @param array<int> $categories
@@ -217,13 +293,17 @@ class RelatedContent {
    * @return array<int|string>
    *   Matching node IDs
    */
-  private function getNodeIds(?string $excluded_uuid = NULL, array $tags = [], array $categories = [], array $branches = []): array {
+  private function getNodeIds(array $tags = [], array $categories = [], array $branches = []): array {
+    if (empty($this->nodeBundles)) {
+      return [];
+    }
+
     $query = $this->entityTypeManager->getStorage('node')->getQuery();
 
     $query->accessCheck(TRUE);
 
-    if (!empty($excluded_uuid)) {
-      $query->condition('uuid', $excluded_uuid, '<>');
+    if (!empty($this->excludedUuid)) {
+      $query->condition('uuid', $this->excludedUuid, '<>');
     }
 
     $query
@@ -233,27 +313,35 @@ class RelatedContent {
       // so we will limit the query to this.
       ->range(0, $this->maxItems);
 
-    if (!empty($tags) || !empty($categories) || empty($branches)) {
-      // Use a condition group for OR logic.
-      $or_group = $query->orConditionGroup();
+    if (!empty($tags) || !empty($categories) || !empty($branches)) {
+      if ($this->andConditions) {
+        $condition_group = $query->andConditionGroup();
 
-      // To avoid errors, related to the OR GROUP only containing one condition,
-      // we'll add a fake condition to fill out a possible empty space.
-      $or_group->condition('title', 'ALWAYS_FALSE');
+        // To avoid errors, related to the GROUP only containing one condition,
+        // we'll add a fake condition to fill out a possible empty space.
+        $condition_group->condition('title', 'ALWAYS_TRUE', '<>');
+      }
+      else {
+        $condition_group = $query->orConditionGroup();
+
+        // To avoid errors, related to the GROUP only containing one condition,
+        // we'll add a fake condition to fill out a possible empty space.
+        $condition_group->condition('title', 'ALWAYS_FALSE');
+      }
 
       if (!empty($tags)) {
-        $or_group->condition('field_tags', $tags, 'IN');
+        $condition_group->condition('field_tags', $tags, 'IN');
       }
 
       if (!empty($categories)) {
-        $or_group->condition('field_categories', $categories, 'IN');
+        $condition_group->condition('field_categories', $categories, 'IN');
       }
 
       if (!empty($branches)) {
-        $or_group->condition('field_branch', $branches, 'IN');
+        $condition_group->condition('field_branch', $branches, 'IN');
       }
 
-      $query->condition($or_group);
+      $query->condition($condition_group);
     }
 
     return $query->execute();
@@ -266,8 +354,6 @@ class RelatedContent {
    * Notice - we only look for the term values on series level, ignoring
    * inheritance overriding in favor of a simpler codebase.
    *
-   * @param string|null $excluded_uuid
-   *   A possible entity UUID, that will not get included in results.
    * @param array<int> $tags
    *   Tag term IDs, to look for.
    * @param array<int> $categories
@@ -280,7 +366,11 @@ class RelatedContent {
    *
    * @throws \Exception
    */
-  private function getEventInstanceIds(?string $excluded_uuid = NULL, array $tags = [], array $categories = [], array $branches = []): array {
+  private function getEventInstanceIds(array $tags = [], array $categories = [], array $branches = []): array {
+    if (!$this->includeEvents) {
+      return [];
+    }
+
     $date = new DrupalDateTime('today');
     $date->setTimezone(new \DateTimezone(DateTimeItemInterface::STORAGE_TIMEZONE));
     $formatted_date = $date->format(DateTimeItemInterface::DATETIME_STORAGE_FORMAT);
@@ -302,25 +392,34 @@ class RelatedContent {
     $subquery->leftJoin('eventseries__field_branch', 'es_bra', 'es.id = es_bra.entity_id');
 
     if (!empty($tags) || !empty($categories) || !empty($branches)) {
-      $or_group = $subquery->orConditionGroup();
+      if ($this->andConditions) {
+        $condition_group = $subquery->andConditionGroup();
 
-      // To avoid errors, related to the OR GROUP only containing one condition,
-      // we'll add a fake condition to fill out a possible empty space.
-      $or_group->condition('title', 'ALWAYS_FALSE');
+        // To avoid errors, related to the GROUP only containing one condition,
+        // we'll add a fake condition to fill out a possible empty space.
+        $condition_group->condition('title', 'ALWAYS_TRUE', '<>');
+      }
+      else {
+        $condition_group = $subquery->orConditionGroup();
+
+        // To avoid errors, related to the GROUP only containing one condition,
+        // we'll add a fake condition to fill out a possible empty space.
+        $condition_group->condition('title', 'ALWAYS_FALSE');
+      }
 
       if (!empty($tags)) {
-        $or_group->condition('es_tags.field_tags_target_id', $tags, 'IN');
+        $condition_group->condition('es_tags.field_tags_target_id', $tags, 'IN');
       }
 
       if (!empty($categories)) {
-        $or_group->condition('es_cats.field_categories_target_id', $categories, 'IN');
+        $condition_group->condition('es_cats.field_categories_target_id', $categories, 'IN');
       }
 
       if (!empty($branches)) {
-        $or_group->condition('es_bra.field_branch_target_id', $branches, 'IN');
+        $condition_group->condition('es_bra.field_branch_target_id', $branches, 'IN');
       }
 
-      $subquery->condition($or_group);
+      $subquery->condition($condition_group);
     }
 
     $subquery->distinct(TRUE);
@@ -336,8 +435,8 @@ class RelatedContent {
       $query->condition('eid.eventseries_id', $subquery, 'IN');
     }
 
-    if (!empty($excluded_uuid)) {
-      $query->condition('ei.uuid', $excluded_uuid, '<>');
+    if (!empty($this->excludedUuid)) {
+      $query->condition('ei.uuid', $this->excludedUuid, '<>');
     }
 
     // The consequence of direct DB that we cant use ->access(TRUE),
@@ -362,18 +461,92 @@ class RelatedContent {
   }
 
   /**
-   * Get terms from field as an array of IDs.
+   * Setter for tags.
    *
-   * @return array<int>
-   *   Term IDs.
+   * @param int[]|string[]|\Drupal\taxonomy\TermInterface[] $tags
+   *   The tags to set.
+   *
+   * @return int[]
+   *   The tag IDs.
    */
-  private function getTermIds(FieldableEntityInterface $entity, string $field_name): array {
-    if (!$entity->hasField($field_name)) {
-      return [];
+  public function setTags(array $tags) {
+    $this->tags = $this->setReferenceProperty($tags);
+    return $this->tags;
+  }
+
+  /**
+   * Setter for categories.
+   *
+   * @param int[]|string[]|\Drupal\taxonomy\TermInterface[] $categories
+   *   The categories to set.
+   *
+   * @return int[]
+   *   The category IDs.
+   */
+  public function setCategories(array $categories) {
+    $this->categories = $this->setReferenceProperty($categories);
+    return $this->categories;
+  }
+
+  /**
+   * Setter for branches.
+   *
+   * @param int[]|string[]|\Drupal\node\NodeInterface[] $branches
+   *   The branches to set.
+   *
+   * @return int[]
+   *   The branch IDs.
+   */
+  public function setBranches(array $branches) {
+    $this->branches = $this->setReferenceProperty($branches);
+    return $this->branches;
+  }
+
+  /**
+   * Setter for list style, and the auto-effects on maxItems and item viewmode.
+   *
+   * @param 'slider'|'grid'|'list' $list_style
+   *   The list style to set.
+   *
+   * @return 'slider'|'grid'|'list'
+   *   The list style.
+   */
+  public function setListStyle(string $list_style): string {
+    $this->listStyle = $list_style;
+
+    if ($this->listStyle == 'list') {
+      $this->contentViewMode = 'list_teaser';
     }
 
-    $terms = $entity->get($field_name)->getValue();
-    return array_column($terms, 'target_id');
+    if ($this->listStyle == 'grid') {
+      $this->maxItems = 6;
+    }
+
+    return $this->listStyle;
+  }
+
+  /**
+   * Parsing a list that may be an entity or simple array, to int[].
+   *
+   * @param int[]|string[]|FieldableEntityInterface[] $entities
+   *   The entities, that may just be strings or ints.
+   *
+   * @return int[]
+   *   The entity IDs.
+   */
+  private function setReferenceProperty(array $entities): array {
+    $ids = [];
+
+    foreach ($entities as $entity) {
+      if ($entity instanceof FieldableEntityInterface) {
+        $ids[] = intval($entity->id());
+        continue;
+      }
+
+      $ids[] = intval($entity);
+    }
+
+    return $ids;
   }
 
 }

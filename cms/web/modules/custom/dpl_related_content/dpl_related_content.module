@@ -13,7 +13,7 @@ use Drupal\node\NodeInterface;
 function dpl_related_content_preprocess_page(array &$variables): void {
   $route_name = \Drupal::routeMatch()->getRouteName();
 
-  // We only want to display the related content slider on eventinstances, OR
+  // We only want to display the related content list on eventinstances, OR
   // on article nodes.
   if ($route_name === 'entity.node.canonical') {
     $entity = \Drupal::routeMatch()->getParameter('node');
@@ -40,7 +40,7 @@ function dpl_related_content_preprocess_page(array &$variables): void {
   }
   catch (\Exception $e) {
     \Drupal::logger('dpl_related_content')->error(
-      'Could not render related content slider. Exception: @exception',
+      'Could not render related content list. Exception: @exception',
       ['@exception' => $e->getMessage()]
     );
   }
@@ -51,10 +51,11 @@ function dpl_related_content_preprocess_page(array &$variables): void {
  */
 function dpl_related_content_theme(array $existing, string $type, string $theme, string $path): array {
   return [
-    'dpl_related_content_slider' => [
+    'dpl_related_content' => [
       'variables' => [
-        'title' => t('Related content', [], ['context' => 'DPL related content']),
+        'title' => NULL,
         'items' => [],
+        'list_style' => 'slider',
       ],
     ],
   ];
