@@ -6,9 +6,9 @@
  */
 
 /**
- * Implements hook_update_N().
+ * Migrate dpl_reservation_list configuration to dpl_reservations.
  */
-function dpl_reservations_update_9001(): void {
+function dpl_reservations_update_9001(): string {
   $config_factory = \Drupal::configFactory();
   $dpl_reservations_old_config_key = 'dpl_reservation_list.settings';
   $dpl_reservations_new_config_key = 'dpl_reservations.settings';
@@ -18,8 +18,7 @@ function dpl_reservations_update_9001(): void {
   // Check if the old configuration exists. If the old configuration
   // does not exist, we do not need to update anything.
   if ($dpl_reservations_old_configuration->isNew()) {
-    \Drupal::messenger()->addMessage('Nothing to update. Exiting update hook.');
-    return;
+    return 'Nothing to update. Exiting update hook.';
   }
 
   // We add the new dpl_reservations.settings to config_ignore.settings
@@ -34,5 +33,5 @@ function dpl_reservations_update_9001(): void {
   $dpl_reservations_old_config_data = $dpl_reservations_old_configuration->get();
   $config_factory->getEditable($dpl_reservations_new_config_key)->setData($dpl_reservations_old_config_data)->save();
   $config_factory->getEditable($dpl_reservations_old_config_key)->delete();
-  \Drupal::messenger()->addMessage('dpl_reservation_list configuration migrated to dpl_reservations.');
+  return 'dpl_reservation_list configuration migrated to dpl_reservations.';
 }
