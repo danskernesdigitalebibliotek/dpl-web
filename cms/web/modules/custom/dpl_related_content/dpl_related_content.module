@@ -40,8 +40,8 @@ function dpl_related_content_preprocess_page(array &$variables): void {
   }
   catch (\Exception $e) {
     \Drupal::logger('dpl_related_content')->error(
-      'Could not render related content slider. Exception: {exception}',
-      ['exception' => $e->getMessage()]
+      'Could not render related content slider. Exception: @exception',
+      ['@exception' => $e->getMessage()]
     );
   }
 }
