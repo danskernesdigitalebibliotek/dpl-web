@@ -164,17 +164,23 @@ class RelatedContent {
     // We find the longer array, to do a simple FOR loop.
     $length = max(count($events), count($nodes));
 
-    for ($i = 0; $i < $length; $i++) {
+    for ($i = 0; $i < $length;) {
       if ($i >= $this->maxItems) {
         break;
       }
 
       if (isset($events[$i])) {
         $content[] = $event_view_builder->view($events[$i], 'card');
+        $i++;
+      }
+
+      if ($i >= $this->maxItems) {
+        break;
       }
 
       if (isset($nodes[$i])) {
         $content[] = $node_view_builder->view($nodes[$i], 'card');
+        $i++;
       }
     }
 
@@ -216,9 +222,12 @@ class RelatedContent {
 
     $query->accessCheck(TRUE);
 
+    if (!empty($excluded_uuid)) {
+      $query->condition('uuid', $excluded_uuid, '<>');
+    }
+
     $query
       ->condition('type', $this->nodeBundles, 'IN')
-      ->condition('uuid', $excluded_uuid, '<>')
       ->sort($this->nodeSortField, 'DESC')
       // We know that we will never need more than the maximum items,
       // so we will limit the query to this.
@@ -327,7 +336,9 @@ class RelatedContent {
       $query->condition('eid.eventseries_id', $subquery, 'IN');
     }
 
-    $query->condition('ei.uuid', $excluded_uuid, '<>');
+    if (!empty($excluded_uuid)) {
+      $query->condition('ei.uuid', $excluded_uuid, '<>');
+    }
 
     // The consequence of direct DB that we cant use ->access(TRUE),
     // so instead, we'll only look up published eventinstances.
