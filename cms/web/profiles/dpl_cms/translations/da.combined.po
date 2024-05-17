@@ -23189,7 +23189,7 @@ msgstr "Sideforælder"
 #: 
 msgctxt "field.field.node.page.field_breadcrumb_parent:description"
 msgid "TODO: A text about how the structure tree works.<br><br />\"If you want to make this page central, you need to save it first, and then <a href=\"/admin/structure/taxonomy/manage/breadcrumb_structure/add\" target=\"_blank\">add it as a reference in the content structure tree</a>"
-msgstr "To do: Her skal skrives en tekst om hvordan strukturtræet virker. Hvis du vil gøre denne side til en strukturerende side, skal du gemme siden først og  <a href=\"/admin/structure/taxonomy/manage/breadcrumb_structure/add\" target=\"_blank\">tilføje den som en reference i strukturtræet."
+msgstr "Hvis du vil gøre denne side til en strukturerende side, skal du gemme siden først og  <a href=\"/admin/structure/taxonomy/manage/breadcrumb_structure/add\" target=\"_blank\">tilføje den som en reference i strukturtræet."
 
 #: 
 msgctxt "field.field.paragraph.breadcrumb_children.field_breadcrumb_target:label"
@@ -23339,7 +23339,7 @@ msgstr "Relateret indhold til \"@title\""
 #: 
 msgctxt "DPL Breadcrumbs"
 msgid "TODO - A text that describes that this node already exists in the content structure and cannot be edited."
-msgstr "TODO - En tekst, der beskriver, at denne node allerede findes i indholdsstrukturen og ikke kan redigeres."
+msgstr "Denne side findes allerede findes i indholdsstrukturen og kan ikke redigeres."
 
 #: 
 msgctxt "DPL Breadcrumbs"
