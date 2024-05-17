@@ -5,6 +5,11 @@
  * Install, update and uninstall functions for the collation_fixer module.
  */
 
+use Drupal\collation_fixer\CollationFixer;
+use Drupal\Component\Render\FormattableMarkup;
+use Drupal\Core\Link;
+use Drupal\Core\Url;
+
 /**
  * Implements hook_requirements().
  *
@@ -13,38 +18,45 @@
  */
 function collation_fixer_requirements($phase) {
   if ($phase == 'runtime') {
-    $t = get_t();
-    $wrong_collations = collation_fixer_check_collation();
+    /** @var CollationFixer $collation_fixer */
+    $collation_fixer = \Drupal::service('collation_fixer.collation_fixer');
+    $wrong_collations = $collation_fixer->checkCollation();
 
     if (empty($wrong_collations)) {
-      return array(
-        'collation_fixer' => array(
-          'title' => $t('Database collation status'),
-          'value' => $t('OK'),
-          'description' => $t('All tables have the correct database collation.'),
+      return [
+        'collation_fixer' => [
+          'title' => t('Database collation status'),
+          'value' => t('OK'),
+          'description' => t('All tables have the correct database collation.'),
           'severity' => REQUIREMENT_OK,
-        ),
-      );
+        ],
+      ];
     }
     else {
-      $fix_collation_links = array();
-      foreach ($wrong_collations as $table) {
-        $fix_collation_links[] = l($table, 'admin/collation-fixer/' . $table . '/confirm');
-      }
-      return array(
-        'collation_fixer' => array(
-          'title' => $t('Database collation check.'),
-          'value' => $t('Error'),
-          'description' => $t('The following tables do not have the correct database collation: !tables.', array(
-                           '!tables' => implode(', ', $fix_collation_links),
-                         )),
+      $description['status'] = [
+        '#markup' => t('The following tables do not have the correct database collation:')
+      ];
+      $description['links'] = [
+        '#theme' => 'item_list',
+        '#list_type' => 'ul',
+      ];
+      $description['links']['#items'] = array_map(function(string $table) {
+        return (new Link($table,  Url::fromRoute('collation_fixer.confirm', ['table' => $table])))->toRenderable();
+      }, $wrong_collations);
+      /** @var \Drupal\Core\Render\RendererInterface $renderer */
+      $renderer = \Drupal::service('renderer');
+      return [
+        'collation_fixer' => [
+          'title' => t('Database collation check.'),
+          'value' => t('Error'),
+          'description' => $renderer->renderPlain($description),
           'severity' => REQUIREMENT_ERROR,
-        ),
-      );
+        ],
+      ];
     }
   }
   else {
     // Function must return an array.
-    return array();
+    return [];
   }
 }

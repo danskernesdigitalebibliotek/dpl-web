@@ -32,7 +32,7 @@ function collation_fixer_fix_collation_confirm_form_submit($form, &$form_state) 
   $table = $form_state['values']['table'];
 
   if (collation_fixer_fix_collation($table)) {
-    drupal_set_message(t('Fixed collation of table: %table', array('%table' => $table)));
+    drupal_set_message());
   };
   drupal_goto('admin/reports/status');
 }
