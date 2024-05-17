@@ -13,6 +13,13 @@
       'title': title,
       'items': items,
     } only %}
+  {% elseif list_style == 'list' %}
+    {% include '@novel/components/event-list.html.twig'
+      with {
+      'attributes': attributes,
+      'title': title,
+      'items': items,
+    } only %}
   {% else %}
     {% include '@dpl_related_content/dpl-related-content.html.twig' %}
   {% endif %}
