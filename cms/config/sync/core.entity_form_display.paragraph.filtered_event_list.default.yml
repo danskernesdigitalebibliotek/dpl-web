@@ -7,6 +7,7 @@ dependencies:
     - field.field.paragraph.filtered_event_list.field_filter_branches
     - field.field.paragraph.filtered_event_list.field_filter_categories
     - field.field.paragraph.filtered_event_list.field_filter_tags
+    - field.field.paragraph.filtered_event_list.field_max_item_amount
     - field.field.paragraph.filtered_event_list.field_title
     - paragraphs.paragraphs_type.filtered_event_list
   module:
@@ -19,6 +20,7 @@ third_party_settings:
         - field_filter_tags
         - field_filter_categories
         - field_filter_branches
+        - field_max_item_amount
       label: Filters
       region: content
       parent_name: ''
@@ -35,12 +37,6 @@ targetEntityType: paragraph
 bundle: filtered_event_list
 mode: default
 content:
-  field_amount_of_events:
-    type: options_select
-    weight: 1
-    region: content
-    settings: {  }
-    third_party_settings: {  }
   field_filter_branches:
     type: select2_entity_reference
     weight: 8
@@ -71,6 +67,13 @@ content:
       match_operator: CONTAINS
       match_limit: 10
     third_party_settings: {  }
+  field_max_item_amount:
+    type: select2
+    weight: 13
+    region: content
+    settings:
+      width: 100%
+    third_party_settings: {  }
   field_title:
     type: string_textfield
     weight: 0
@@ -81,4 +84,5 @@ content:
     third_party_settings: {  }
 hidden:
   created: true
+  field_amount_of_events: true
   status: true

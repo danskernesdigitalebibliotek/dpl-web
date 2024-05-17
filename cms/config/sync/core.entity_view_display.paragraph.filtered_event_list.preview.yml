@@ -8,8 +8,11 @@ dependencies:
     - field.field.paragraph.filtered_event_list.field_filter_branches
     - field.field.paragraph.filtered_event_list.field_filter_categories
     - field.field.paragraph.filtered_event_list.field_filter_tags
+    - field.field.paragraph.filtered_event_list.field_max_item_amount
     - field.field.paragraph.filtered_event_list.field_title
     - paragraphs.paragraphs_type.filtered_event_list
+  module:
+    - options
 id: paragraph.filtered_event_list.preview
 targetEntityType: paragraph
 bundle: filtered_event_list
@@ -38,6 +41,13 @@ content:
       link: true
     third_party_settings: {  }
     weight: 1
+    region: content
+  field_max_item_amount:
+    type: list_default
+    label: above
+    settings: {  }
+    third_party_settings: {  }
+    weight: 4
     region: content
   field_title:
     type: string
