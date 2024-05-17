@@ -2,8 +2,7 @@
 
 namespace Drupal\dpl_related_content\Services;
 
-use Drupal\Component\DependencyInjection\ContainerInterface;
-use Drupal\Core\Database\Database;
+use Drupal\Core\Database\Connection;
 use Drupal\Core\Datetime\DrupalDateTime;
 use Drupal\Core\Entity\EntityTypeManagerInterface;
 use Drupal\Core\Entity\FieldableEntityInterface;
@@ -21,6 +20,11 @@ class RelatedContent {
   protected EntityTypeManagerInterface $entityTypeManager;
 
   /**
+   * The direct DB connection.
+   */
+  protected Connection $connection;
+
+  /**
    * The minimum of items that must be in the slider.
    */
   private int $minItems = 4;
@@ -31,14 +35,14 @@ class RelatedContent {
   private int $maxItems = 16;
 
   /**
-   * The field on nodes, to sort by.
+   * The field on nodes, to sort by. By default, the newest created content.
    */
   private string $nodeSortField = 'created';
 
   /**
    * The node bundles that should show up in the results.
    *
-   * @var array|string[]
+   * @var string[]
    *  List of node bundles - e.g. articles.
    */
   private array $nodeBundles = ['article'];
@@ -48,17 +52,10 @@ class RelatedContent {
    */
   public function __construct(
     EntityTypeManagerInterface $entity_type_manager,
+    Connection $connection,
   ) {
     $this->entityTypeManager = $entity_type_manager;
-  }
-
-  /**
-   * {@inheritdoc}
-   */
-  public static function create(ContainerInterface $container): static {
-    return new static(
-      $container->get('entity_type.manager'),
-    );
+    $this->connection = $connection;
   }
 
   /**
@@ -282,7 +279,7 @@ class RelatedContent {
     // Ideally, we'd use EntityQueries instead of a direct DB connection, but
     // because we need to do some pretty complicated JOINs and subqueries, it
     // is not an option.
-    $connection = Database::getConnection();
+    $connection = $this->connection;
 
     // Prepare a subquery for eventseries IDs based on terms.
     $subquery = $connection->select('eventseries', 'es');
