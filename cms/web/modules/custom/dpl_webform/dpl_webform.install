@@ -8,7 +8,7 @@
 /**
  * Implements hook_update_N().
  */
-function dpl_webform_update_10003(): void {
+function dpl_webform_update_10000(): string {
   $config_factory = \Drupal::configFactory();
   $config_ignore_config_key = 'config_ignore.settings';
 
@@ -19,5 +19,5 @@ function dpl_webform_update_10003(): void {
   $ignored_configs = $config_ignore_settings->get('ignored_config_entities');
   $ignored_configs[] = 'webform.webform.*';
   $config_ignore_settings->set('ignored_config_entities', $ignored_configs)->save();
-  \Drupal::messenger()->addMessage('webform.webform.* is added to ignored configs.');
+  return 'webform.webform.* is added to ignored configs.';
 }
