@@ -1,0 +1,23 @@
+uuid: ff8fc28f-28ef-4d06-849e-6696dce86fb2
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.paragraph.field_filter_cond_type
+    - paragraphs.paragraphs_type.card_grid_automatic
+  module:
+    - options
+id: paragraph.card_grid_automatic.field_filter_cond_type
+field_name: field_filter_cond_type
+entity_type: paragraph
+bundle: card_grid_automatic
+label: 'OR or AND'
+description: ''
+required: true
+translatable: false
+default_value:
+  -
+    value: or
+default_value_callback: ''
+settings: {  }
+field_type: list_string

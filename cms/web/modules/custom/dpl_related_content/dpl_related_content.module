@@ -4,6 +4,7 @@ use Drupal\Core\Entity\FieldableEntityInterface;
 use Drupal\dpl_related_content\Services\RelatedContent;
 use Drupal\drupal_typed\DrupalTyped;
 use Drupal\node\NodeInterface;
+use Drupal\paragraphs\Entity\Paragraph;
 
 /**
  * Place a dynamic 'related content' list on articles and eventinstances.
@@ -44,6 +45,95 @@ function dpl_related_content_preprocess_page(array &$variables): void {
       ['@exception' => $e->getMessage()]
     );
   }
+}
+
+/**
+ * Implements theme_preprocess_paragraph__NAME().
+ */
+function dpl_related_content_preprocess_paragraph__card_grid_automatic(array &$variables): void {
+  $variables = _dpl_related_content_filter_paragraph($variables, 'grid');
+}
+
+/**
+ * Implements theme_preprocess_paragraph__NAME().
+ */
+function dpl_related_content_preprocess_paragraph__content_slider_automatic(array &$variables): void {
+  $variables = _dpl_related_content_filter_paragraph($variables, 'slider');
+}
+
+/**
+ * Implements hook_preprocess_HOOK() for paragraph__filtered_list_event.
+ */
+function dpl_related_content_preprocess_paragraph__filtered_event_list(array &$variables): void {
+
+  // @todo $service->nodeBundles = [];
+  $variables = _dpl_related_content_filter_paragraph($variables, 'list', 16);
+}
+
+/**
+ * Prepare a 'filter' paragraph, and load the RelatedContent list.
+ *
+ * @param array<mixed> $variables
+ *   The variables, from the preprocess hook.
+ * @param "slider"|"grid"|"list" $list_style
+ *   The style you want the list to be shown in.
+ * @param int|null $max_items
+ *   May be overriden by field_max_item_amount on the paragraph.
+ *
+ * @return array<mixed>
+ *   The updated $variables.
+ */
+function _dpl_related_content_filter_paragraph(array $variables, string $list_style = 'slider', ?int $max_items = NULL): array {
+  $paragraph = $variables['paragraph'] ?? NULL;
+  $view_mode = $variables['view_mode'] ?? NULL;
+
+  if ($view_mode === 'preview' || !($paragraph instanceof Paragraph)) {
+    return $variables;
+  }
+
+  try {
+    $service = DrupalTyped::service(RelatedContent::class, 'dpl_related_content.related_content');
+    $service->setListStyle($list_style);
+
+    if (!empty($max_items)) {
+      $service->maxItems = $max_items;
+    }
+
+    if ($paragraph->hasField('field_title')) {
+      $service->title = $paragraph->get('field_title')->getString();
+    }
+
+    // Deciding if we should treat the filters as AND.
+    if ($paragraph->hasField('field_filter_cond_type')) {
+      $service->andConditions = ($paragraph->get('field_filter_cond_type')->getString() == 'and');
+    }
+
+    if ($paragraph->hasField('field_filter_tags')) {
+      $service->setTags($paragraph->get('field_filter_tags')->referencedEntities());
+    }
+
+    if ($paragraph->hasField('field_filter_categories')) {
+      $service->setCategories($paragraph->get('field_filter_categories')->referencedEntities());
+    }
+
+    if ($paragraph->hasField('field_filter_branches')) {
+      $service->setBranches($paragraph->get('field_filter_branches')->referencedEntities());
+    }
+
+    if ($paragraph->hasField('field_max_item_amount')) {
+      $service->maxItems = intval($paragraph->get('field_max_item_amount')->getString());
+    }
+
+    $variables['content']['view'] = $service->getContent();
+  }
+  catch (\Exception $e) {
+    \Drupal::logger('dpl_related_content')->error(
+      'Could not render related content list. Exception: @exception',
+      ['@exception' => $e->getMessage()]
+    );
+  }
+
+  return $variables;
 }
 
 /**

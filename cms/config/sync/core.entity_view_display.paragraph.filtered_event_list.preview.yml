@@ -7,6 +7,7 @@ dependencies:
     - field.field.paragraph.filtered_event_list.field_amount_of_events
     - field.field.paragraph.filtered_event_list.field_filter_branches
     - field.field.paragraph.filtered_event_list.field_filter_categories
+    - field.field.paragraph.filtered_event_list.field_filter_cond_type
     - field.field.paragraph.filtered_event_list.field_filter_tags
     - field.field.paragraph.filtered_event_list.field_max_item_amount
     - field.field.paragraph.filtered_event_list.field_title
@@ -33,6 +34,13 @@ content:
       link: true
     third_party_settings: {  }
     weight: 2
+    region: content
+  field_filter_cond_type:
+    type: list_default
+    label: above
+    settings: {  }
+    third_party_settings: {  }
+    weight: 1
     region: content
   field_filter_tags:
     type: entity_reference_label

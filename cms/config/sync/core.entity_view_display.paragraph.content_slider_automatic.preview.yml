@@ -1,20 +1,20 @@
-uuid: 880f303e-0fe4-4b17-b679-d3938dd672b6
+uuid: d4c383c4-d8be-471b-b927-041fff87d588
 langcode: en
 status: true
 dependencies:
   config:
     - core.entity_view_mode.paragraph.preview
-    - field.field.paragraph.card_grid_automatic.field_filter_branches
-    - field.field.paragraph.card_grid_automatic.field_filter_categories
-    - field.field.paragraph.card_grid_automatic.field_filter_cond_type
-    - field.field.paragraph.card_grid_automatic.field_filter_tags
-    - field.field.paragraph.card_grid_automatic.field_title
-    - paragraphs.paragraphs_type.card_grid_automatic
+    - field.field.paragraph.content_slider_automatic.field_filter_branches
+    - field.field.paragraph.content_slider_automatic.field_filter_categories
+    - field.field.paragraph.content_slider_automatic.field_filter_cond_type
+    - field.field.paragraph.content_slider_automatic.field_filter_tags
+    - field.field.paragraph.content_slider_automatic.field_title
+    - paragraphs.paragraphs_type.content_slider_automatic
   module:
     - options
-id: paragraph.card_grid_automatic.preview
+id: paragraph.content_slider_automatic.preview
 targetEntityType: paragraph
-bundle: card_grid_automatic
+bundle: content_slider_automatic
 mode: preview
 content:
   field_filter_branches:

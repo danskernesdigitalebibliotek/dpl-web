@@ -1,0 +1,23 @@
+uuid: 4d509d7e-e701-4197-ac2a-ac677668d5b5
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.paragraph.field_filter_cond_type
+    - paragraphs.paragraphs_type.filtered_event_list
+  module:
+    - options
+id: paragraph.filtered_event_list.field_filter_cond_type
+field_name: field_filter_cond_type
+entity_type: paragraph
+bundle: filtered_event_list
+label: 'OR or AND'
+description: ''
+required: true
+translatable: false
+default_value:
+  -
+    value: or
+default_value_callback: ''
+settings: {  }
+field_type: list_string
