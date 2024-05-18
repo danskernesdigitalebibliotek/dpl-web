@@ -51,23 +51,23 @@ function dpl_related_content_preprocess_page(array &$variables): void {
  * Implements theme_preprocess_paragraph__NAME().
  */
 function dpl_related_content_preprocess_paragraph__card_grid_automatic(array &$variables): void {
-  $variables = _dpl_related_content_filter_paragraph($variables, 'grid');
+  $variables = _dpl_related_content_filter_paragraph($variables, list_style: 'grid');
 }
 
 /**
  * Implements theme_preprocess_paragraph__NAME().
  */
 function dpl_related_content_preprocess_paragraph__content_slider_automatic(array &$variables): void {
-  $variables = _dpl_related_content_filter_paragraph($variables, 'slider');
+  $variables = _dpl_related_content_filter_paragraph($variables, list_style: 'slider');
 }
 
 /**
  * Implements hook_preprocess_HOOK() for paragraph__filtered_list_event.
  */
 function dpl_related_content_preprocess_paragraph__filtered_event_list(array &$variables): void {
-
-  // @todo $service->nodeBundles = [];
-  $variables = _dpl_related_content_filter_paragraph($variables, 'list', 16);
+  $variables = _dpl_related_content_filter_paragraph(
+    $variables, list_style: 'list', max_items: 16, node_bundles: []
+  );
 }
 
 /**
@@ -79,11 +79,15 @@ function dpl_related_content_preprocess_paragraph__filtered_event_list(array &$v
  *   The style you want the list to be shown in.
  * @param int|null $max_items
  *   May be overriden by field_max_item_amount on the paragraph.
+ * @param string[] $node_bundles
+ *   The node bundles (e.g. 'article'), that we want to include.
+ *   Use this to disable nodes all together, by setting empty array.
+ *   Setting NULL will let RelatedContent decide.
  *
  * @return array<mixed>
  *   The updated $variables.
  */
-function _dpl_related_content_filter_paragraph(array $variables, string $list_style = 'slider', ?int $max_items = NULL): array {
+function _dpl_related_content_filter_paragraph(array $variables, string $list_style = 'slider', ?int $max_items = NULL, ?array $node_bundles = NULL): array {
   $paragraph = $variables['paragraph'] ?? NULL;
   $view_mode = $variables['view_mode'] ?? NULL;
 
@@ -94,6 +98,10 @@ function _dpl_related_content_filter_paragraph(array $variables, string $list_st
   try {
     $service = DrupalTyped::service(RelatedContent::class, 'dpl_related_content.related_content');
     $service->setListStyle($list_style);
+
+    if (is_array($node_bundles)) {
+      $service->nodeBundles = $node_bundles;
+    }
 
     if (!empty($max_items)) {
       $service->maxItems = $max_items;
