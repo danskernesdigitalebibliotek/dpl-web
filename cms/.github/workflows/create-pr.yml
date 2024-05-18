@@ -1,0 +1,77 @@
+name: Create PR with external dependency
+
+on:
+  repository_dispatch:
+    types: [create_pr]
+
+jobs:
+  build:
+    name: Create PR with external dependency
+    runs-on: ubuntu-latest
+    steps:
+      - name: Verify Event and set env
+        env:
+          BUILD_URL: ${{ github.event.client_payload.build_url }}
+          PR_BRANCH: ${{ github.event.client_payload.branch }}
+          PACKAGE: ${{ github.event.client_payload.dependency_package }}
+        run: |
+          echo "PR_BRANCH=$PR_BRANCH" >> $GITHUB_ENV
+          echo "BUILD_URL=$BUILD_URL" >> $GITHUB_ENV
+          echo "PACKAGE=$PACKAGE" >> $GITHUB_ENV
+
+          PULL_REQUEST_GIT_USER='${{ vars.PULL_REQUEST_GIT_USER }}'
+          echo "GIT_USER_NAME=$(echo "$PULL_REQUEST_GIT_USER" | jq -r .name)" >> $GITHUB_ENV
+          echo "GIT_USER_EMAIL=$(echo "$PULL_REQUEST_GIT_USER" | jq -r .email)" >> $GITHUB_ENV
+
+          BUILD_URL_IS_ACCEPTED=$(echo '${{ vars.ACCEPTED_BUILD_URL_PREFIXES }}' | jq --arg url "${{ env.BUILD_URL }}" 'any(.[]; . as $prefix | $url | contains($prefix))')
+          echo "BUILD_URL_IS_ACCEPTED=$BUILD_URL_IS_ACCEPTED" >> $GITHUB_ENV
+
+        if: ${{ github.event.action == 'create_pr' && github.event.client_payload.branch && github.event.client_payload.build_url && github.event.client_payload.dependency_package }}
+
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+        if: ${{ env.PR_BRANCH && env.BUILD_URL }}
+
+      - name: Insert dependency
+        uses: Wandalen/wretry.action@master
+        id: manipulate_composer
+        with:
+          command: |
+            composer config repositories.${{ env.PACKAGE }} '{"type":"package","package":{"name":"${{ env.PACKAGE }}","version":"dev-master","type":"drupal-library","dist":{"url":"${{ env.BUILD_URL }}","type":"zip"},"require":{"composer\/installers":"^1.2.0"}}}'
+
+            composer remove ${{ env.PACKAGE }} \
+            && composer require ${{ env.PACKAGE }}
+          attempt_limit: 200
+        if: ${{ env.BUILD_URL && env.PACKAGE && env.BUILD_URL_IS_ACCEPTED == 'true' }}
+
+      - name: Create branch and PR
+        id: create_pr
+        run: |
+          set -e
+          git config --global user.name ${{ env.GIT_USER_NAME }}
+          git config --global user.email ${{ env.GIT_USER_EMAIL }}
+
+          git checkout -b ${{ env.PR_BRANCH }}
+          git push --set-upstream origin ${{ env.PR_BRANCH }}
+
+          git add composer.json composer.lock
+          git commit -m "Insert new reference to dependency ${{ env.PACKAGE }}: ${{ env.BUILD_URL }}"
+          git push
+
+          gh pr create \
+          --base develop \
+          --head ${{ env.PR_BRANCH }} \
+          --title "${{ format('PR for {0}:{1}', env.PACKAGE, env.PR_BRANCH) }}" \
+          --body "${{ format('This is an automated PR for {0}:{1}', env.PACKAGE, env.PR_BRANCH) }}"
+        if: ${{ env.GIT_USER_NAME && env.GIT_USER_EMAIL && env.PACKAGE && env.PR_BRANCH && env.BUILD_URL && steps.manipulate_composer.outcome == 'success' }}
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Adding summary
+        run: |
+          URL=$(gh pr view --json=url ${{ env.PR_BRANCH }} | jq .url)
+          echo "Created automated PR at: ${URL}" >> $GITHUB_STEP_SUMMARY
+        if: ${{ steps.create_pr.outcome == 'success' }}
+        env:
+          GH_TOKEN: ${{ github.token }}
