@@ -28,10 +28,16 @@ jobs:
 
         if: ${{ github.event.action == 'create_pr' && github.event.client_payload.branch && github.event.client_payload.build_url && github.event.client_payload.dependency_package }}
 
+      - id: check_branch_exists
+        uses: GuillaumeFalourd/branch-exists@v1
+        with:
+          branch: ${{ env.PR_BRANCH }}
+        if: ${{ env.PR_BRANCH }}
+
       - uses: actions/checkout@v4
         with:
           fetch-depth: 0
-        if: ${{ env.PR_BRANCH && env.BUILD_URL }}
+        if: ${{ steps.check_branch_exists.outputs.exists == 'false' }}
 
       - name: Insert dependency
         uses: Wandalen/wretry.action@master
@@ -43,7 +49,7 @@ jobs:
             composer remove ${{ env.PACKAGE }} \
             && composer require ${{ env.PACKAGE }}
           attempt_limit: 200
-        if: ${{ env.BUILD_URL && env.PACKAGE && env.BUILD_URL_IS_ACCEPTED == 'true' }}
+        if: ${{ steps.check_branch_exists.outputs.exists == 'false' && env.BUILD_URL && env.PACKAGE && env.BUILD_URL_IS_ACCEPTED == 'true' }}
 
       - name: Create branch and PR
         id: create_pr
