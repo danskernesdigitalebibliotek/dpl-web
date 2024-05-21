@@ -1,12 +1,12 @@
-uuid: 5867ffd7-f793-4091-8ba1-90b0e8060283
+uuid: ffeb1e23-7db9-41c9-aeff-b6e965815903
 langcode: en
 status: true
 dependencies:
   module:
     - link
     - paragraphs
-id: paragraph.field_card_grid_link
-field_name: field_card_grid_link
+id: paragraph.field_more_link
+field_name: field_more_link
 entity_type: paragraph
 type: link
 settings: {  }

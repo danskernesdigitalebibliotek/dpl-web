@@ -3,8 +3,8 @@ langcode: en
 status: true
 dependencies:
   config:
-    - field.field.paragraph.card_grid_manual.field_card_grid_link
     - field.field.paragraph.card_grid_manual.field_grid_content
+    - field.field.paragraph.card_grid_manual.field_more_link
     - field.field.paragraph.card_grid_manual.field_title
     - paragraphs.paragraphs_type.card_grid_manual
   module:
@@ -15,14 +15,6 @@ targetEntityType: paragraph
 bundle: card_grid_manual
 mode: default
 content:
-  field_card_grid_link:
-    type: link_default
-    weight: 9
-    region: content
-    settings:
-      placeholder_url: ''
-      placeholder_title: ''
-    third_party_settings: {  }
   field_grid_content:
     type: dynamic_entity_reference_default
     weight: 1
@@ -32,6 +24,14 @@ content:
       match_limit: 10
       size: 40
       placeholder: 'Search content..'
+    third_party_settings: {  }
+  field_more_link:
+    type: link_default
+    weight: 10
+    region: content
+    settings:
+      placeholder_url: ''
+      placeholder_title: ''
     third_party_settings: {  }
   field_title:
     type: string_textfield

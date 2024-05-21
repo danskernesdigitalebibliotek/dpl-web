@@ -3,10 +3,10 @@ langcode: en
 status: true
 dependencies:
   config:
-    - field.field.paragraph.card_grid_automatic.field_card_grid_link
     - field.field.paragraph.card_grid_automatic.field_filter_branches
     - field.field.paragraph.card_grid_automatic.field_filter_categories
     - field.field.paragraph.card_grid_automatic.field_filter_tags
+    - field.field.paragraph.card_grid_automatic.field_more_link
     - field.field.paragraph.card_grid_automatic.field_title
     - paragraphs.paragraphs_type.card_grid_automatic
   module:
@@ -36,14 +36,6 @@ targetEntityType: paragraph
 bundle: card_grid_automatic
 mode: default
 content:
-  field_card_grid_link:
-    type: link_default
-    weight: 9
-    region: content
-    settings:
-      placeholder_url: ''
-      placeholder_title: ''
-    third_party_settings: {  }
   field_filter_branches:
     type: select2_entity_reference
     weight: 8
@@ -73,6 +65,14 @@ content:
       autocomplete: true
       match_operator: CONTAINS
       match_limit: 10
+    third_party_settings: {  }
+  field_more_link:
+    type: link_default
+    weight: 10
+    region: content
+    settings:
+      placeholder_url: ''
+      placeholder_title: ''
     third_party_settings: {  }
   field_title:
     type: string_textfield

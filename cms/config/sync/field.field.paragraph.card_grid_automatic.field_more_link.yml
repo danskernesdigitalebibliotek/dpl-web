@@ -1,17 +1,17 @@
-uuid: 33da0ae8-ba92-42b0-b5a7-378fbdeef337
+uuid: c89c18fc-9785-485a-a2ce-c81d90c5c04d
 langcode: en
 status: true
 dependencies:
   config:
-    - field.storage.paragraph.field_card_grid_link
-    - paragraphs.paragraphs_type.card_grid_manual
+    - field.storage.paragraph.field_more_link
+    - paragraphs.paragraphs_type.card_grid_automatic
   module:
     - link
-id: paragraph.card_grid_manual.field_card_grid_link
-field_name: field_card_grid_link
+id: paragraph.card_grid_automatic.field_more_link
+field_name: field_more_link
 entity_type: paragraph
-bundle: card_grid_manual
-label: 'Card grid link'
+bundle: card_grid_automatic
+label: 'More link'
 description: ''
 required: false
 translatable: false
@@ -19,7 +19,7 @@ default_value:
   -
     attributes: {  }
     uri: 'internal:/articles'
-    title: 'Show all news'
+    title: 'Show more'
     options: {  }
 default_value_callback: ''
 settings:

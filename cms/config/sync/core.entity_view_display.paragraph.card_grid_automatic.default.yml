@@ -3,10 +3,10 @@ langcode: en
 status: true
 dependencies:
   config:
-    - field.field.paragraph.card_grid_automatic.field_card_grid_link
     - field.field.paragraph.card_grid_automatic.field_filter_branches
     - field.field.paragraph.card_grid_automatic.field_filter_categories
     - field.field.paragraph.card_grid_automatic.field_filter_tags
+    - field.field.paragraph.card_grid_automatic.field_more_link
     - field.field.paragraph.card_grid_automatic.field_title
     - paragraphs.paragraphs_type.card_grid_automatic
   module:
@@ -16,7 +16,7 @@ targetEntityType: paragraph
 bundle: card_grid_automatic
 mode: default
 content:
-  field_card_grid_link:
+  field_more_link:
     type: link
     label: hidden
     settings:
@@ -26,7 +26,7 @@ content:
       rel: ''
       target: ''
     third_party_settings: {  }
-    weight: 0
+    weight: 1
     region: content
 hidden:
   field_filter_branches: true

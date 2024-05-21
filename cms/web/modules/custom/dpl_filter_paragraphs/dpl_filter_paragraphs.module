@@ -20,8 +20,8 @@ function dpl_filter_paragraphs_preprocess_paragraph__card_grid_automatic(array &
 
   $paragraph = $variables['paragraph'] ?? NULL;
 
-  if ($paragraph instanceof Paragraph && $paragraph->hasField('field_card_grid_link') && !$paragraph->get('field_card_grid_link')->isEmpty()) {
-    $link = $paragraph->get('field_card_grid_link')->view('full');
+  if ($paragraph instanceof Paragraph && $paragraph->hasField('field_more_link') && !$paragraph->get('field_more_link')->isEmpty()) {
+    $link = $paragraph->get('field_more_link')->view('full');
     if (isset($variables['content']['view']['#view']->display_handler)) {
       $variables['content']['view']['#view']->display_handler->setOption('custom_card_grid_link', $link);
     }
@@ -164,7 +164,7 @@ function dpl_filter_paragraphs_preprocess_paragraph__filtered_event_list(array &
 /**
  * Helper: Re-save all card_grid_automatic paragraphs.
  *
- * This is needed to show the field_card_grid_link field in the view.
+ * This is needed to show the field_more_link field in the view.
  */
 function _dpl_filter_paragraphs_resave_card_grid_automatic() : string {
   $pids = \Drupal::entityQuery('paragraph')

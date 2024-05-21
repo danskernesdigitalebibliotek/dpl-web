@@ -4,10 +4,10 @@ status: true
 dependencies:
   config:
     - core.entity_view_mode.paragraph.preview
-    - field.field.paragraph.card_grid_automatic.field_card_grid_link
     - field.field.paragraph.card_grid_automatic.field_filter_branches
     - field.field.paragraph.card_grid_automatic.field_filter_categories
     - field.field.paragraph.card_grid_automatic.field_filter_tags
+    - field.field.paragraph.card_grid_automatic.field_more_link
     - field.field.paragraph.card_grid_automatic.field_title
     - paragraphs.paragraphs_type.card_grid_automatic
   module:
@@ -17,18 +17,6 @@ targetEntityType: paragraph
 bundle: card_grid_automatic
 mode: preview
 content:
-  field_card_grid_link:
-    type: link
-    label: above
-    settings:
-      trim_length: 80
-      url_only: false
-      url_plain: false
-      rel: ''
-      target: ''
-    third_party_settings: {  }
-    weight: 4
-    region: content
   field_filter_branches:
     type: entity_reference_label
     label: above
@@ -52,6 +40,18 @@ content:
       link: true
     third_party_settings: {  }
     weight: 1
+    region: content
+  field_more_link:
+    type: link
+    label: above
+    settings:
+      trim_length: 80
+      url_only: false
+      url_plain: false
+      rel: ''
+      target: ''
+    third_party_settings: {  }
+    weight: 4
     region: content
   field_title:
     type: string
