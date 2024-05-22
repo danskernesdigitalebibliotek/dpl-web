@@ -1,1 +1,9 @@
 <?php
+
+/**
+ * This file is left empty on purpose.
+ *
+ * The dpl_filter_paragraphs module is deprecated, and will be deactivated
+ * and deleted in the future, but Drupal will be confused if the .module
+ * file is deleted before the module is disabled.
+ */
