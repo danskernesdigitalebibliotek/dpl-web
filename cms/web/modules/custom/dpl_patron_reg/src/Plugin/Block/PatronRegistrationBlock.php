@@ -120,7 +120,7 @@ class PatronRegistrationBlock extends BlockBase implements ContainerFactoryPlugi
       'create-patron-invalid-ssn-body-text' => $this->t("This SSN is invalid", [], ['context' => 'Create patron']),
       'create-patron-invalid-ssn-header-text' => $this->t("Invalid SSN", [], ['context' => 'Create patron']),
       'patron-contact-name-label-text' => $this->t("Name", [], ['context' => 'Create patron']),
-      'pincode-section-description-text' => t('Length of 4 characters', [], ['context' => 'Create patron']),
+      'pincode-section-description-text' => $this->t('Length of 4 characters', [], ['context' => 'Create patron']),
       'post-register-redirect-info-bottom-text' => $this->t("You will be sent to the Adgangsplatformen to log in again in @seconds seconds.", [], ['context' => 'Create patron']),
       'post-register-redirect-info-top-text' => $this->t("You are now registered as a user and need to log in again to be able to use the application.", [], ['context' => 'Create patron']),
       'post-register-redirect-button-text' => $this->t("Log in again", [], ['context' => 'Create patron']),
