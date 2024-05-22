@@ -116,9 +116,10 @@ final class EventResource extends EventResourceBase {
     $state = $request_data->getState();
     $external_data = $request_data->getExternalData();
 
-    // Only override the URL(s), if external data is set.
+    // Only override external data, if external data is set.
     if ($external_data instanceof EventPATCHRequestExternalData) {
       $event_instance->set('field_event_link', $external_data->getUrl());
+      $event_instance->set('field_external_admin_link', $external_data->getAdminUrl());
     }
 
     $event_instance->set('field_event_state', $state);
