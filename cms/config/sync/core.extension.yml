@@ -27,6 +27,7 @@ module:
   dpl_admin: 0
   dpl_article: 0
   dpl_breadcrumb: 0
+  dpl_cache_settings: 0
   dpl_campaign: 0
   dpl_dashboard: 0
   dpl_error_pages: 0
@@ -80,6 +81,7 @@ module:
   field_inheritance: 0
   file: 0
   filter: 0
+  flat_taxonomy: 0
   focal_point: 0
   gin_toolbar: 0
   handy_cache_tags: 0
@@ -114,6 +116,7 @@ module:
   openapi_ui_swagger: 0
   openid_connect: 0
   options: 0
+  override_node_options: 0
   paragraphs_features: 0
   path: 0
   path_alias: 0

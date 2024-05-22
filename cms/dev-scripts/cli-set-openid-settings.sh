@@ -1,5 +1,6 @@
 #!/usr/bin/env bash
 
+# shellcheck source=/dev/null
 set -aeo pipefail; source .env; set +a
 
 # Check if all environment variables are defined

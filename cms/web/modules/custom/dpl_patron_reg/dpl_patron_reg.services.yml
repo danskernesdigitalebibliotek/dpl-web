@@ -2,16 +2,3 @@ services:
   dpl_patron_reg.settings:
     class: Drupal\dpl_patron_reg\DplPatronRegSettings
     arguments: ["@config.manager"]
-
-  dpl_patron_reg.event_subscriber:
-    class: Drupal\dpl_patron_reg\EventSubscriber\DplPatronRegEventSubscriber
-    arguments:
-      [
-        "@current_user",
-        "@path_alias.manager",
-        "@path.current",
-        "@path.matcher",
-        "@dpl_patron_reg.settings",
-      ]
-    tags:
-      - { name: event_subscriber }

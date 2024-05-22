@@ -3,20 +3,19 @@
 namespace Drupal\Tests\dpl_opening_hours\Kernel;
 
 use DanskernesDigitaleBibliotek\CMS\Api\Model\DplOpeningHoursCreatePOSTRequest as OpeningHoursRequest;
-use DanskernesDigitaleBibliotek\CMS\Api\Model\DplOpeningHoursCreatePOSTRequestRepetition;
 use DanskernesDigitaleBibliotek\CMS\Api\Model\DplOpeningHoursCreatePOSTRequestRepetition as OpeningHoursRepetitionRequest;
 use DanskernesDigitaleBibliotek\CMS\Api\Model\DplOpeningHoursListGET200ResponseInner as OpeningHoursResponse;
 use DanskernesDigitaleBibliotek\CMS\Api\Model\DplOpeningHoursListGET200ResponseInnerCategory as OpeningHoursCategory;
-use DanskernesDigitaleBibliotek\CMS\Api\Model\DplOpeningHoursListGET200ResponseInnerRepetition;
-use DanskernesDigitaleBibliotek\CMS\Api\Model\DplOpeningHoursListGET200ResponseInnerRepetitionWeeklyData;
+use DanskernesDigitaleBibliotek\CMS\Api\Model\DplOpeningHoursListGET200ResponseInnerRepetition as OpeningHoursRepetitionResponse;
+use DanskernesDigitaleBibliotek\CMS\Api\Model\DplOpeningHoursListGET200ResponseInnerRepetitionWeeklyData as OpeningHoursWeeklyData;
 use Drupal\Core\DependencyInjection\ContainerBuilder;
 use Drupal\Core\Field\FieldItemListInterface;
 use Drupal\Core\TypedData\TypedDataInterface;
 use Drupal\dpl_opening_hours\Mapping\OpeningHoursRepetitionType;
-use Drupal\dpl_opening_hours\Plugin\rest\resource\OpeningHoursCreateResource;
-use Drupal\dpl_opening_hours\Plugin\rest\resource\OpeningHoursDeleteResource;
-use Drupal\dpl_opening_hours\Plugin\rest\resource\OpeningHoursResource;
-use Drupal\dpl_opening_hours\Plugin\rest\resource\OpeningHoursUpdateResource;
+use Drupal\dpl_opening_hours\Plugin\rest\resource\v1\OpeningHoursCreateResource;
+use Drupal\dpl_opening_hours\Plugin\rest\resource\v1\OpeningHoursDeleteResource;
+use Drupal\dpl_opening_hours\Plugin\rest\resource\v1\OpeningHoursResource;
+use Drupal\dpl_opening_hours\Plugin\rest\resource\v1\OpeningHoursUpdateResource;
 use Drupal\KernelTests\KernelTestBase;
 use Drupal\node\NodeInterface;
 use Drupal\node\NodeStorageInterface;
@@ -171,9 +170,9 @@ class OpeningHoursResourceTest extends KernelTestBase {
 
     $createdOpeningHours = $this->createOpeningHours(
       date: $startDate,
-      repetition: (new DplOpeningHoursCreatePOSTRequestRepetition())
+      repetition: (new OpeningHoursRepetitionRequest())
         ->setType(OpeningHoursRepetitionType::Weekly->value)
-        ->setWeeklyData((new DplOpeningHoursListGET200ResponseInnerRepetitionWeeklyData())->setEndDate($endDate))
+        ->setWeeklyData((new OpeningHoursWeeklyData())->setEndDate($endDate))
     );
     $this->assertCount(3, $createdOpeningHours);
 
@@ -195,7 +194,7 @@ class OpeningHoursResourceTest extends KernelTestBase {
 
     // Check that the first repetition is correct.
     $repetition = reset($repetitions);
-    $this->assertInstanceOf(DplOpeningHoursListGET200ResponseInnerRepetition::class, $repetition);
+    $this->assertInstanceOf(OpeningHoursRepetitionResponse::class, $repetition);
     $this->assertNotNull($repetition->getId(), "Created opening hours must have a valid repetiton id");
     $this->assertEquals($repetition->getType(), OpeningHoursRepetitionType::Weekly->value, "Created opening hours with weekly repetition must have the correct type");
     $this->assertDateEquals($repetition->getWeeklyData()?->getEndDate(), $endDate, "Created opening hours with weekly repetition must have the provided end date");
@@ -223,74 +222,83 @@ class OpeningHoursResourceTest extends KernelTestBase {
     $id = $createdOpeningHours->getId();
     $this->assertNotNull($id);
 
-    $updateResource = OpeningHoursUpdateResource::create($this->container, [], '', '');
-    $updateData = (new OpeningHoursRequest())
-      ->setId($id)
-      ->setDate(new DateTime('tomorrow'))
-      ->setStartTime("10:00")
-      ->setEndTime("18:00")
-      // It is a bit tricky to set up multiple categories so do not change
-      // these values for npw.
-      ->setCategory($createdOpeningHours->getCategory())
-      ->setBranchId(2)
-      ->setRepetition(
-        (new OpeningHoursRepetitionRequest())
-          ->setId($createdOpeningHours->getRepetition()?->getId())
-          ->setType($createdOpeningHours->getRepetition()?->getType())
-      );
-    /** @var \DanskernesDigitaleBibliotek\CMS\Api\Service\JmsSerializer $serializer */
-    $serializer = $this->container->get('dpl_rest_base.serializer');
-    $updateRequest = new Request(content: $serializer->serialize($updateData, 'application/json'));
+    $updatedOpeningHours = $this->updateOpeningHours(
+      $createdOpeningHours,
+      date: new DateTime("tomorrow"),
+      startTime: "10:00",
+      endTime: "18:00",
+      branchId: 2,
+    );
+    $this->assertCount(1, $updatedOpeningHours, "Updating an opening hours without repetition must only return a single opening hours.");
+    $firstUpdatedOpeningHours = $updatedOpeningHours[0];
 
-    $updateResponse = $updateResource->patch($id, $updateRequest);
-    /** @var \DanskernesDigitaleBibliotek\CMS\Api\Model\DplOpeningHoursListGET200ResponseInner $updatedOpeningHours */
-    $updatedOpeningHours = $serializer->deserialize($updateResponse->getContent(), OpeningHoursResponse::class, 'application/json');
-
-    $this->assertEquals($createdOpeningHours->getId(), $updatedOpeningHours->getId(), "Opening hour ids should not change across updates");
-    $this->assertDateEquals(new DateTime("tomorrow"), $updateData->getDate(), "Opening hour dates should change when updated");
-    $this->assertEquals("10:00", $updateData->getStartTime());
-    $this->assertEquals("18:00", $updateData->getEndTime());
-    $this->assertEquals(2, $updateData->getBranchId());
-    $this->assertEquals(OpeningHoursRepetitionType::None->value, $updateData->getRepetition()?->getType());
+    $this->assertEquals($createdOpeningHours->getId(), $firstUpdatedOpeningHours->getId(), "Opening hour ids should not change across updates");
+    $this->assertDateEquals(new DateTime("tomorrow"), $firstUpdatedOpeningHours->getDate(), "Opening hour dates should change when updated");
+    $this->assertEquals("10:00", $firstUpdatedOpeningHours->getStartTime());
+    $this->assertEquals("18:00", $firstUpdatedOpeningHours->getEndTime());
+    $this->assertEquals(2, $firstUpdatedOpeningHours->getBranchId());
+    $this->assertEquals(OpeningHoursRepetitionType::None->value, $firstUpdatedOpeningHours->getRepetition()?->getType());
   }
 
   /**
-   * Test that opening hours with weekly repetition can be created properly.
+   * Test all an opening hours with an existing repetition are updated.
    */
-  public function testUpdateWeeklyRepetition(): void {
+  public function testUpdateWithRepetition(): void {
     $startDate = new DateTime('now');
     $endDate = new DateTime("+2weeks");
 
     $createdOpeningHours = $this->createOpeningHours(
       date: $startDate,
-      repetition: (new DplOpeningHoursCreatePOSTRequestRepetition())
+      repetition: (new OpeningHoursRepetitionRequest())
         ->setType(OpeningHoursRepetitionType::Weekly->value)
-        ->setWeeklyData((new DplOpeningHoursListGET200ResponseInnerRepetitionWeeklyData())->setEndDate($endDate))
+        ->setWeeklyData((new OpeningHoursWeeklyData())->setEndDate($endDate))
     );
     $this->assertCount(3, $this->listOpeningHours());
 
     $createdOpeningHour = $createdOpeningHours[1];
     $this->assertNotNull($createdOpeningHour->getId(), "Created opening hours must have a valid id");
 
-    $updateResource = OpeningHoursUpdateResource::create($this->container, [], '', '');
-    $updateData = (new OpeningHoursRequest())
-      ->setId($createdOpeningHour->getId())
-      ->setDate(new DateTime('tomorrow'))
-      ->setStartTime("10:00")
-      ->setEndTime("18:00")
-      // It is a bit tricky to set up multiple categories so do not change
-      // these values for npw.
-      ->setCategory($createdOpeningHour->getCategory())
-      ->setBranchId(2)
-      ->setRepetition((new DplOpeningHoursCreatePOSTRequestRepetition())
-        ->setType(OpeningHoursRepetitionType::None->value));
-    /** @var \DanskernesDigitaleBibliotek\CMS\Api\Service\JmsSerializer $serializer */
-    $serializer = $this->container->get('dpl_rest_base.serializer');
-    $updateRequest = new Request(content: $serializer->serialize($updateData, 'application/json'));
+    $updateRepetition = (new OpeningHoursRepetitionRequest())
+      ->setId($createdOpeningHour->getRepetition()?->getId())
+      ->setType(OpeningHoursRepetitionType::Weekly->value)
+      ->setWeeklyData($createdOpeningHour->getRepetition()?->getWeeklyData());
 
-    $updateResponse = $updateResource->patch($createdOpeningHour->getId(), $updateRequest);
-    /** @var \DanskernesDigitaleBibliotek\CMS\Api\Model\DplOpeningHoursListGET200ResponseInner $updatedOpeningHours */
-    $updatedOpeningHours = $serializer->deserialize($updateResponse->getContent(), OpeningHoursResponse::class, 'application/json');
+    $this->updateOpeningHours($createdOpeningHour, repetition: $updateRepetition);
+    $openingHoursAfterUpdate = $this->listOpeningHours();
+    $this->assertCount(3, $openingHoursAfterUpdate);
+
+    $createdIds = array_map(fn (OpeningHoursResponse $openingHours) => $openingHours->getId(), $createdOpeningHours);
+    $idsAfterUpdate = array_map(fn (OpeningHoursResponse $allOpeningHours) => $allOpeningHours->getId(), $openingHoursAfterUpdate);
+    $this->assertEquals($createdIds, $idsAfterUpdate, "Opening hours instance ids should persist across updates");
+
+    $createdRepetitionIds = array_map(fn (OpeningHoursResponse $openingHours) => $openingHours->getRepetition()?->getId(), $createdOpeningHours);
+    $repetitionIdsAfterUpdate = array_map(fn (OpeningHoursResponse $openingHours) => $openingHours->getRepetition()?->getId(), $openingHoursAfterUpdate);
+    $this->assertEquals($createdRepetitionIds, $repetitionIdsAfterUpdate, "Opening hours repetition ids should persist across normal updates");
+  }
+
+  /**
+   * Test that opening hours with weekly repetition can be created properly.
+   */
+  public function testUpdateInstanceInWeeklyRepetition(): void {
+    $startDate = new DateTime('now');
+    $endDate = new DateTime("+2weeks");
+
+    $createdOpeningHours = $this->createOpeningHours(
+      date: $startDate,
+      repetition: (new OpeningHoursRepetitionRequest())
+        ->setType(OpeningHoursRepetitionType::Weekly->value)
+        ->setWeeklyData((new OpeningHoursWeeklyData())->setEndDate($endDate))
+    );
+    $this->assertCount(3, $this->listOpeningHours());
+
+    $createdOpeningHour = $createdOpeningHours[1];
+    $this->assertNotNull($createdOpeningHour->getId(), "Created opening hours must have a valid id");
+
+    $singleRepetition = (new OpeningHoursRepetitionRequest())
+      ->setType(OpeningHoursRepetitionType::None->value);
+    $updatedOpeningHours = $this->updateOpeningHours($createdOpeningHour, repetition: $singleRepetition);
+    $this->assertCount(1, $updatedOpeningHours);
+    $updatedOpeningHours = $updatedOpeningHours[0];
 
     $this->assertNotEmpty($updatedOpeningHours->getRepetition()?->getId(), "Updated opening hours repetition must have an id");
     $this->assertNotEquals($createdOpeningHour->getRepetition()?->getId(), $updatedOpeningHours->getRepetition()->getId(), "Updated opening hours repetitions must have new ids");
@@ -308,6 +316,46 @@ class OpeningHoursResourceTest extends KernelTestBase {
   }
 
   /**
+   * Test that updating a repetition with a repetition yields a new repetition.
+   */
+  public function testUpdateNewWeeklyRepetition(): void {
+    $startDate = new DateTime('now');
+    $endDate = new DateTime("+2weeks");
+
+    $createdOpeningHours = $this->createOpeningHours(
+      date: $startDate,
+      repetition: (new OpeningHoursRepetitionRequest())
+        ->setType(OpeningHoursRepetitionType::Weekly->value)
+        ->setWeeklyData((new OpeningHoursWeeklyData())->setEndDate($endDate))
+    );
+    $this->assertCount(3, $this->listOpeningHours());
+
+    $createdOpeningHour = $createdOpeningHours[1];
+    $this->assertNotNull($createdOpeningHour->getId(), "Created opening hours must have a valid id");
+
+    $extendedRepetition = (new OpeningHoursRepetitionRequest())
+      ->setType(OpeningHoursRepetitionType::Weekly->value)
+      ->setWeeklyData((new OpeningHoursWeeklyData())
+        ->setEndDate(new DateTime('+3weeks'))
+      );
+    $updatedOpeningHours = $this->updateOpeningHours($createdOpeningHour, repetition: $extendedRepetition);
+    $this->assertCount(3, $updatedOpeningHours);
+
+    $updatedOpeningHour = $updatedOpeningHours[0];
+    $this->assertNotNull($updatedOpeningHour->getRepetition()?->getId());
+    $this->assertNotEquals($createdOpeningHour->getRepetition()?->getId(), $updatedOpeningHour->getRepetition()->getId(), "Updating opening hours with new repetition should yield a new repetitio  id.");
+
+    $allOpeningHours = $this->listOpeningHours();
+    $this->assertCount(4, $allOpeningHours);
+
+    $remainingInstances = array_filter($allOpeningHours, function (OpeningHoursResponse $openingHours) use ($createdOpeningHour): bool {
+      return $openingHours->getRepetition()?->getId() === $createdOpeningHour->getRepetition()?->getId();
+    });
+    $this->assertCount(1, $remainingInstances, "Only a single instance in the original repetition must remain");
+    $this->assertDateEquals($createdOpeningHours[0]->getDate(), $remainingInstances[0]->getRepetition()?->getWeeklyData()?->getEndDate(), "The remaining instance must have an updated repetition end date.");
+  }
+
+  /**
    * Test that an opening hours instance can be deleted.
    */
   public function testDelete(): void {
@@ -319,7 +367,7 @@ class OpeningHoursResourceTest extends KernelTestBase {
     $this->assertNotNull($id);
 
     $deleteResource = OpeningHoursDeleteResource::create($this->container, [], '', '');
-    $response = $deleteResource->delete($id);
+    $response = $deleteResource->delete($id, new Request());
     $this->assertTrue($response->isSuccessful());
 
     $openingHoursList = $this->listOpeningHours();
@@ -329,15 +377,15 @@ class OpeningHoursResourceTest extends KernelTestBase {
   /**
    * Test that opening hours with weekly repetition can be deleted.
    */
-  public function testDeleteWeeklyRepetition(): void {
+  public function testDeleteInstanceInWeeklyRepetition(): void {
     $startDate = new DateTime('now');
     $endDate = new DateTime("+2weeks");
 
     $createdOpeningHours = $this->createOpeningHours(
       $startDate,
-      repetition: (new DplOpeningHoursCreatePOSTRequestRepetition())
+      repetition: (new OpeningHoursRepetitionRequest())
         ->setType(OpeningHoursRepetitionType::Weekly->value)
-        ->setWeeklyData((new DplOpeningHoursListGET200ResponseInnerRepetitionWeeklyData())->setEndDate($endDate))
+        ->setWeeklyData((new OpeningHoursWeeklyData())->setEndDate($endDate))
     );
     $this->assertCount(3, $this->listOpeningHours());
 
@@ -345,7 +393,7 @@ class OpeningHoursResourceTest extends KernelTestBase {
     $this->assertNotNull($openingHours->getId(), "Created opening hours must have a valid id");
 
     $deleteResource = OpeningHoursDeleteResource::create($this->container, [], '', '');
-    $deleteResource->delete($openingHours->getId());
+    $deleteResource->delete($openingHours->getId(), new Request());
 
     $openingHoursAfterDeletion = $this->listOpeningHours();
     $this->assertCount(2, $openingHoursAfterDeletion, "Deleting a single opening hour in a repetition should retain the remaining instances");
@@ -356,6 +404,48 @@ class OpeningHoursResourceTest extends KernelTestBase {
     $this->assertEquals(OpeningHoursRepetitionType::Weekly->value, $firstOpeningHours->getRepetition()?->getType());
     $this->assertDateEquals($endDate, $firstOpeningHours->getRepetition()?->getWeeklyData()?->getEndDate());
     $this->assertEquals($firstOpeningHours->getRepetition(), $lastOpeningHours->getRepetition());
+  }
+
+  /**
+   * Test future instances of opening hours with repetition can be deleted.
+   */
+  public function testDeleteWeeklyRepetition(): void {
+    $startDate = new DateTime('now');
+    $endDate = new DateTime("+2weeks");
+
+    $createdOpeningHours = $this->createOpeningHours(
+      $startDate,
+      repetition: (new OpeningHoursRepetitionRequest())
+        ->setType(OpeningHoursRepetitionType::Weekly->value)
+        ->setWeeklyData((new OpeningHoursWeeklyData())->setEndDate($endDate))
+    );
+    // Create three more opening hour instances which should not be touched
+    // as they will belong to a separate repetition.
+    $this->createOpeningHours(
+      $startDate,
+      repetition: (new OpeningHoursRepetitionRequest())
+        ->setType(OpeningHoursRepetitionType::Weekly->value)
+        ->setWeeklyData((new OpeningHoursWeeklyData())->setEndDate($endDate))
+    );
+    $this->assertCount(6, $this->listOpeningHours());
+
+    $openingHours = $createdOpeningHours[1];
+    $this->assertNotNull($openingHours->getId(), "Created opening hours must have a valid id");
+    $this->assertNotNull($openingHours->getRepetition()?->getId(), "Opening hours created with a repetition must have a repetition id.");
+
+    $deleteResource = OpeningHoursDeleteResource::create($this->container, [], '', '');
+    $deleteResource->delete($openingHours->getId(), new Request(['repetition_id' => $openingHours->getRepetition()->getId()]));
+
+    $openingHoursAfterDeletion = $this->listOpeningHours();
+    $this->assertCount(4, $openingHoursAfterDeletion, "Deleting an opening hour in a repetition with the repetition id should neither affect prior instances nor instances for other branches.");
+
+    $firstOpeningHoursCreated = $createdOpeningHours[0];
+    $remainingOpeningHoursInRepetition = array_filter($openingHoursAfterDeletion, function (OpeningHoursResponse $openingHours) use ($firstOpeningHoursCreated) {
+      return $openingHours->getRepetition()?->getId() == $firstOpeningHoursCreated->getRepetition()?->getId();
+    });
+    $this->assertCount(1, $remainingOpeningHoursInRepetition, "The past instance should remain when deleting an instance with a repetition.");
+    $this->assertEquals($firstOpeningHoursCreated->getId(), $remainingOpeningHoursInRepetition[0]->getId());
+    $this->assertDateEquals($startDate, $remainingOpeningHoursInRepetition[0]->getRepetition()?->getWeeklyData()?->getEndDate(), "The remaining instance must have an updated repetition end date.");
   }
 
   /**
@@ -398,6 +488,52 @@ class OpeningHoursResourceTest extends KernelTestBase {
   }
 
   /**
+   * Helper function for updating opening hours.
+   *
+   * Default values for arguments are for test cases where the actual values
+   * are not important. They are different than createOpeningHours().
+   *
+   * @return \DanskernesDigitaleBibliotek\CMS\Api\Model\DplOpeningHoursListGET200ResponseInner[]
+   *   The updated opening hours.
+   */
+  protected function updateOpeningHours(
+    OpeningHoursResponse $openingHours,
+    ?\DateTime $date = NULL,
+    string $startTime = "10:00",
+    string $endTime = "18:00",
+    ?OpeningHoursCategory $category = NULL,
+    ?int $branchId = NULL,
+    ?OpeningHoursRepetitionRequest $repetition = NULL,
+  ): array {
+    if (!$openingHours->getId()) {
+      throw new \InvalidArgumentException("Unable to update opening hours without an id");
+    }
+
+    $updateResource = OpeningHoursUpdateResource::create($this->container, [], '', '');
+
+    $updateRepetitionData = $repetition ?? (new OpeningHoursRepetitionRequest())
+      ->setId($openingHours->getRepetition()?->getId())
+      ->setType($openingHours->getRepetition()?->getType());
+
+    $updateData = (new OpeningHoursRequest())
+      ->setId($openingHours->getId())
+      ->setDate($date ?? $openingHours->getDate())
+      ->setStartTime($startTime)
+      ->setEndTime($endTime)
+      ->setCategory($category ?? $openingHours->getCategory())
+      ->setBranchId($branchId ?? $openingHours->getBranchId())
+      ->setRepetition($updateRepetitionData);
+    /** @var \DanskernesDigitaleBibliotek\CMS\Api\Service\JmsSerializer $serializer */
+    $serializer = $this->container->get('dpl_rest_base.serializer');
+    $updateRequest = new Request(content: $serializer->serialize($updateData, 'application/json'));
+
+    $updateResponse = $updateResource->patch($openingHours->getId(), $updateRequest);
+    /** @var \DanskernesDigitaleBibliotek\CMS\Api\Model\DplOpeningHoursListGET200ResponseInner[] $updatedOpeningHours */
+    $updatedOpeningHours = $serializer->deserialize($updateResponse->getContent(), 'array<' . OpeningHoursResponse::class . '>', 'application/json');
+    return $updatedOpeningHours;
+  }
+
+  /**
    * Helper function for listing opening hours.
    *
    * @return \DanskernesDigitaleBibliotek\CMS\Api\Model\DplOpeningHoursListGET200ResponseInner[]
@@ -426,7 +562,7 @@ class OpeningHoursResourceTest extends KernelTestBase {
   public function assertDateEquals(?\DateTimeInterface $expected, ?\DateTimeInterface $actual, string $message = ''): void {
     $this->assertNotNull($expected, "Expected date should not be null");
     $this->assertNotNull($actual, "Actual date should not be null");
-    $this->assertEquals($expected->format('Y-m-d'), $actual->format('Y-m-d'), $message);
+    $this->assertEquals($expected->format('Y-m-d'), $actual->format('Y-m-d'), $message ?: "Failed asserting two dates are equal.");
   }
 
 }

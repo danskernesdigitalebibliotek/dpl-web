@@ -78,6 +78,15 @@ class FeesListBlock extends BlockBase implements ContainerFactoryPluginInterface
       'fee-list-days-text' => $this->t("Days", [], ['context' => 'Fees list']),
       'fee-list-headline-text' => $this->t("Fees & replacement costs", [], ['context' => 'Fees list']),
       'fee-list-material-number-text' => $this->t("# @materialNumber", [], ['context' => 'Fees list']),
+      'fee-list-see-your-overdue-loans-aria-text' => $this->t("Go to the loan list page to see your overdue loans", [], ['context' => 'Fees list']),
+      'fee-list-see-your-overdue-loans-text' => $this->t("See your overdue loans", [], ['context' => 'Fees list']),
+      'fee-list-you-have-overdue-loans-text' => [
+        'type' => 'plural',
+        'text' => [
+          $this->t('You have an overdue loan. You may be charged fees upon handing in or renewing it.', [], ['context' => 'Fees list']),
+          $this->t('You have overdue loans. You may be charged fees upon handing in or renewing them.', [], ['context' => 'Fees list']),
+        ],
+      ],
       'fee-payment-modal-body-text' => $this->t("You will be redirected to Mit Betalingsoverblik.", [], ['context' => 'Fees list']),
       'fee-payment-modal-cancel-text' => $this->t("Cancel", [], ['context' => 'Fees list']),
       'fee-payment-modal-goto-text' => $this->t("Go to Mit Betalingsoverblik", [], ['context' => 'Fees list']),

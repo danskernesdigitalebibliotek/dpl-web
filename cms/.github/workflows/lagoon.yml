@@ -17,10 +17,25 @@ env:
   LAGOON_PROJECT: "dpl-cms"
 
 jobs:
+  BranchNameLength:
+    name: Check branch length
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Ensure branch name length
+        uses: lekterable/branchlint-action@2.1.0
+        if: github.ref_type == 'branch' || github.ref_type == 'pull_request'
+        with:
+          allowed: |
+            /^.{1,50}$/
+          errorMessage: 'Branch name too long. This cannot be deployed to Lagoon.'
+
   CheckEnvironment:
     name: Check environment
     runs-on: ubuntu-latest
     if: ${{ github.event.action == 'opened' || github.event.action == 'reopened' || github.event.action == 'synchronize' }}
+    needs: [BranchNameLength]
     permissions:
       # Give the default GITHUB_TOKEN permission to create and update deployments
       deployments: write
@@ -105,6 +120,7 @@ jobs:
   InformLagoon:
     name: Send synthetic event to Lagoon
     runs-on: ubuntu-latest
+    needs: [BranchNameLength]
     steps:
     - name: Send pull request event
       uses: distributhor/workflow-webhook@v3

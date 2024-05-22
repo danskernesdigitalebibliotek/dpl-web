@@ -135,7 +135,7 @@
         "security": []
       }
     },
-    "/dpl_opening_hours": {
+    "/api/v1/opening_hours": {
       "post": {
         "parameters": [
           {
@@ -443,7 +443,7 @@
         ]
       }
     },
-    "/dpl_opening_hours/{id}": {
+    "/api/v1/opening_hours/{id}": {
       "delete": {
         "parameters": [
           {
@@ -460,6 +460,13 @@
             "type": "string",
             "in": "path",
             "required": true
+          }, 
+          {
+            "name": "repetition_id",
+            "type": "integer",
+            "description": "The id of the repetition to delete. <br/>If this is provided then all opening hours from the provided instance to the final instance in the provided repetition will be deleted.",
+            "in": "query",
+            "required": false
           }
         ],
         "responses": {
@@ -562,10 +569,10 @@
                       }
                     }
                   },
-                  "required": ["id", "type"]
+                  "required": ["type"]
                 }
               },
-              "required": ["id", "category", "date", "start_time", "end_time", "branch_id", "repetition"]
+              "required": ["category", "date", "start_time", "end_time", "branch_id", "repetition"]
             }
           }, 
           {
@@ -579,73 +586,76 @@
           "200": {
             "description": "OK",
             "schema": {
-              "type": "object",
-              "properties": {
-                "id": {
-                  "type": "integer",
-                  "description": "An serial unique id of the opening hours instance."
-                },
-                "category": {
-                  "type": "object",
-                  "properties": {
-                    "title": {
-                      "type": "string"
-                    },
-                    "color": {
-                      "type": "string",
-                      "description": "A CSS compatible color code which can be used to represent the category",
-                      "example": "#ff0099"
-                    }
+              "type": "array",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "id": {
+                    "type": "integer",
+                    "description": "An serial unique id of the opening hours instance."
                   },
-                  "required": ["title", "color"]
-                },
-                "date": {
-                  "type": "string",
-                  "format": "date",
-                  "description": "The date which the opening hours applies to. In ISO 8601 format."
-                },
-                "start_time": {
-                  "type": "string",
-                  "example": "09:00",
-                  "description": "When the opening hours start. In format HH:MM"
-                },
-                "end_time": {
-                  "type": "string",
-                  "example": "17:00",
-                  "description": "When the opening hours end. In format HH:MM"
-                },
-                "branch_id": {
-                  "type": "integer",
-                  "description": "The id for the branch the instance belongs to"
-                },
-                "repetition": {
-                  "type": "object",
-                  "properties": {
-                    "id": {
-                      "type": "integer",
-                      "description": "A serial unique id of the repetition. All instances with the same id belongs to the same repetition."
+                  "category": {
+                    "type": "object",
+                    "properties": {
+                      "title": {
+                        "type": "string"
+                      },
+                      "color": {
+                        "type": "string",
+                        "description": "A CSS compatible color code which can be used to represent the category",
+                        "example": "#ff0099"
+                      }
                     },
-                    "type": {
-                      "type": "string",
-                      "description": "If/how the instance should be repeated in the future: <br/> - single: The instance should not be repeated <br/> - weekly: The instance should be repeated weekly from the first day of the repetition until the provided end date. The week day of the first instance defines which weekday should be used for the repeated instances.",
-                      "enum": ["none", "weekly"],
-                      "default": "none"
-                    },
-                    "weekly_data": {
-                      "type": "object",
-                      "properties": {
-                        "end_date": {
-                          "type": "string",
-                          "format": "date",
-                          "description": "The end date of the repetition. If the end date is not on the same week day as the first instance then the preceding occurrence of the weekday will be the last instance. <br/><br/>This field must be provided if type is 'weekly'"
+                    "required": ["title", "color"]
+                  },
+                  "date": {
+                    "type": "string",
+                    "format": "date",
+                    "description": "The date which the opening hours applies to. In ISO 8601 format."
+                  },
+                  "start_time": {
+                    "type": "string",
+                    "example": "09:00",
+                    "description": "When the opening hours start. In format HH:MM"
+                  },
+                  "end_time": {
+                    "type": "string",
+                    "example": "17:00",
+                    "description": "When the opening hours end. In format HH:MM"
+                  },
+                  "branch_id": {
+                    "type": "integer",
+                    "description": "The id for the branch the instance belongs to"
+                  },
+                  "repetition": {
+                    "type": "object",
+                    "properties": {
+                      "id": {
+                        "type": "integer",
+                        "description": "A serial unique id of the repetition. All instances with the same id belongs to the same repetition."
+                      },
+                      "type": {
+                        "type": "string",
+                        "description": "If/how the instance should be repeated in the future: <br/> - single: The instance should not be repeated <br/> - weekly: The instance should be repeated weekly from the first day of the repetition until the provided end date. The week day of the first instance defines which weekday should be used for the repeated instances.",
+                        "enum": ["none", "weekly"],
+                        "default": "none"
+                      },
+                      "weekly_data": {
+                        "type": "object",
+                        "properties": {
+                          "end_date": {
+                            "type": "string",
+                            "format": "date",
+                            "description": "The end date of the repetition. If the end date is not on the same week day as the first instance then the preceding occurrence of the weekday will be the last instance. <br/><br/>This field must be provided if type is 'weekly'"
+                          }
                         }
                       }
-                    }
-                  },
-                  "required": ["id", "type"]
-                }
-              },
-              "required": ["id", "category", "date", "start_time", "end_time", "branch_id", "repetition"]
+                    },
+                    "required": ["id", "type"]
+                  }
+                },
+                "required": ["id", "category", "date", "start_time", "end_time", "branch_id", "repetition"]
+              }
             }
           },
           "400": {
