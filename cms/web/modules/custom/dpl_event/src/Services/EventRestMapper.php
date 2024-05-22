@@ -2,6 +2,7 @@
 
 namespace Drupal\dpl_event\Services;
 
+use DanskernesDigitaleBibliotek\CMS\Api\Model\EventPATCHRequestExternalData;
 use DanskernesDigitaleBibliotek\CMS\Api\Model\EventsGET200ResponseInner;
 use DanskernesDigitaleBibliotek\CMS\Api\Model\EventsGET200ResponseInnerAddress;
 use DanskernesDigitaleBibliotek\CMS\Api\Model\EventsGET200ResponseInnerDateTime;
@@ -73,9 +74,20 @@ class EventRestMapper {
       'createdAt' => $this->getDateField('created'),
       'updatedAt' => $this->getDateField('changed'),
       'dateTime' => $this->getDate(),
+      'externalData' => $this->getExternalData(),
       'series' => new EventsGET200ResponseInnerSeries([
         'uuid' => $this->event->getEventSeries()->uuid(),
       ]),
+    ]);
+  }
+
+  /**
+   * Getting the external data, supplied by third party PATCH.
+   */
+  private function getExternalData(): EventPATCHRequestExternalData {
+    return new EventPATCHRequestExternalData([
+      'adminUrl' => $this->getValue('field_external_admin_link'),
+      'url' => $this->getValue('event_link'),
     ]);
   }
 
