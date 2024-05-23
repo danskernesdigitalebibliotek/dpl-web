@@ -117,6 +117,15 @@ function _dpl_related_content_filter_paragraph(array $variables, RelatedContentL
       $service->andConditions = ($paragraph->get('field_filter_cond_type')->getString() == 'and');
     }
 
+    if ($paragraph->hasField('field_filter_content_types')) {
+      // Turning 'xx, yy, zz' into an array.
+      $content_types = explode(', ', $paragraph->get('field_filter_content_types')->getString());
+
+      $service->includeEvents = in_array('event', $content_types);
+
+      $service->nodeBundles = $content_types;
+    }
+
     if ($paragraph->hasField('field_filter_tags')) {
       $service->setTags($paragraph->get('field_filter_tags')->referencedEntities());
     }
@@ -143,6 +152,32 @@ function _dpl_related_content_filter_paragraph(array $variables, RelatedContentL
   }
 
   return $variables;
+}
+
+/**
+ * Used as dynamic list options (allowed_values_function) for a field.
+ *
+ * See field.storage.paragraph.field_filter_content_types.yml for more info.
+ *
+ * @return array<int|string, \Drupal\Core\StringTranslation\TranslatableMarkup|string|null>
+ *   The options, used in field_filter_content_types dropdown.
+ */
+function dpl_related_content_field_filter_content_types_options(): array {
+  $content_types = ['event' => t('Event', [], ['context' => 'DPL admin UX'])];
+
+  $node_types = \Drupal::entityTypeManager()
+    ->getStorage('node_type')
+    ->loadMultiple();
+
+  $allowed_node_types = ['article', 'page'];
+
+  foreach ($node_types as $node_type) {
+    if (in_array($node_type->id(), $allowed_node_types)) {
+      $content_types[$node_type->id()] = $node_type->label();
+    }
+  }
+
+  return $content_types;
 }
 
 /**

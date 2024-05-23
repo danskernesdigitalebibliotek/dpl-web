@@ -7,6 +7,7 @@ dependencies:
     - field.field.paragraph.content_slider_automatic.field_filter_branches
     - field.field.paragraph.content_slider_automatic.field_filter_categories
     - field.field.paragraph.content_slider_automatic.field_filter_cond_type
+    - field.field.paragraph.content_slider_automatic.field_filter_content_types
     - field.field.paragraph.content_slider_automatic.field_filter_tags
     - field.field.paragraph.content_slider_automatic.field_title
     - paragraphs.paragraphs_type.content_slider_automatic
@@ -39,6 +40,13 @@ content:
     settings: {  }
     third_party_settings: {  }
     weight: 1
+    region: content
+  field_filter_content_types:
+    type: list_default
+    label: above
+    settings: {  }
+    third_party_settings: {  }
+    weight: 5
     region: content
   field_filter_tags:
     type: entity_reference_label

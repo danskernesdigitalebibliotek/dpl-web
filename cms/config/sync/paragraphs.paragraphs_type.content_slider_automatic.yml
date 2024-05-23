@@ -4,6 +4,12 @@ status: true
 dependencies:
   content:
     - 'file:file:9a13f88e-e587-4708-b600-5300ea74be5a'
+  module:
+    - paragraphs_ee
+third_party_settings:
+  paragraphs_ee:
+    paragraphs_categories:
+      structural_elements: structural_elements
 id: content_slider_automatic
 label: 'Content slider - automatic'
 icon_uuid: 9a13f88e-e587-4708-b600-5300ea74be5a

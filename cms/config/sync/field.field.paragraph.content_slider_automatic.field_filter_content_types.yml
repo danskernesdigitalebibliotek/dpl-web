@@ -1,0 +1,21 @@
+uuid: db3489a0-6b46-48cb-955c-2ea1a4ad1fb6
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.paragraph.field_filter_content_types
+    - paragraphs.paragraphs_type.content_slider_automatic
+  module:
+    - options
+id: paragraph.content_slider_automatic.field_filter_content_types
+field_name: field_filter_content_types
+entity_type: paragraph
+bundle: content_slider_automatic
+label: 'Filter by content types'
+description: 'Filtering by content type is always applied - e.g. it will always be "Other filters AND Content type".'
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: list_string

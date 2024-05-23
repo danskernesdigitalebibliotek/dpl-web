@@ -1,0 +1,21 @@
+uuid: ec6068be-a6be-4500-a7a5-a870f6136c8b
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.paragraph.field_filter_content_types
+    - paragraphs.paragraphs_type.filtered_event_list
+  module:
+    - options
+id: paragraph.filtered_event_list.field_filter_content_types
+field_name: field_filter_content_types
+entity_type: paragraph
+bundle: filtered_event_list
+label: 'Filter by content types'
+description: 'Filtering by content type is always applied - e.g. it will always be "Other filters AND Content type".'
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: list_string

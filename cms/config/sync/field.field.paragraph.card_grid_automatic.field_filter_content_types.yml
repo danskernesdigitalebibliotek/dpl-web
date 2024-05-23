@@ -1,0 +1,21 @@
+uuid: a6162359-0081-4e5d-a348-158d2fa9ff34
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.paragraph.field_filter_content_types
+    - paragraphs.paragraphs_type.card_grid_automatic
+  module:
+    - options
+id: paragraph.card_grid_automatic.field_filter_content_types
+field_name: field_filter_content_types
+entity_type: paragraph
+bundle: card_grid_automatic
+label: 'Filter by content types'
+description: 'Filtering by content type is always applied - e.g. it will always be "Other filters AND Content type".'
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: list_string

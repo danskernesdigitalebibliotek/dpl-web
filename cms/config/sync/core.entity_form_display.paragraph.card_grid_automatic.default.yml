@@ -6,6 +6,7 @@ dependencies:
     - field.field.paragraph.card_grid_automatic.field_filter_branches
     - field.field.paragraph.card_grid_automatic.field_filter_categories
     - field.field.paragraph.card_grid_automatic.field_filter_cond_type
+    - field.field.paragraph.card_grid_automatic.field_filter_content_types
     - field.field.paragraph.card_grid_automatic.field_filter_tags
     - field.field.paragraph.card_grid_automatic.field_title
     - paragraphs.paragraphs_type.card_grid_automatic
@@ -20,6 +21,7 @@ third_party_settings:
         - field_filter_tags
         - field_filter_categories
         - field_filter_branches
+        - field_filter_content_types
       label: Filters
       region: content
       parent_name: ''
@@ -61,6 +63,13 @@ content:
     weight: 9
     region: content
     settings: {  }
+    third_party_settings: {  }
+  field_filter_content_types:
+    type: select2
+    weight: 13
+    region: content
+    settings:
+      width: 100%
     third_party_settings: {  }
   field_filter_tags:
     type: select2_entity_reference

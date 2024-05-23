@@ -6,11 +6,33 @@ dependencies:
     - field.field.paragraph.content_slider_automatic.field_filter_branches
     - field.field.paragraph.content_slider_automatic.field_filter_categories
     - field.field.paragraph.content_slider_automatic.field_filter_cond_type
+    - field.field.paragraph.content_slider_automatic.field_filter_content_types
     - field.field.paragraph.content_slider_automatic.field_filter_tags
     - field.field.paragraph.content_slider_automatic.field_title
     - paragraphs.paragraphs_type.content_slider_automatic
   module:
+    - field_group
     - select2
+third_party_settings:
+  field_group:
+    group_filters:
+      children:
+        - field_filter_cond_type
+        - field_filter_tags
+        - field_filter_categories
+        - field_filter_branches
+        - field_filter_content_types
+      label: Filters
+      region: content
+      parent_name: ''
+      weight: 1
+      format_type: fieldset
+      format_settings:
+        classes: ''
+        show_empty_fields: false
+        id: ''
+        description: ''
+        required_fields: true
 id: paragraph.content_slider_automatic.default
 targetEntityType: paragraph
 bundle: content_slider_automatic
@@ -18,7 +40,7 @@ mode: default
 content:
   field_filter_branches:
     type: select2_entity_reference
-    weight: 12
+    weight: 5
     region: content
     settings:
       width: 100%
@@ -28,7 +50,7 @@ content:
     third_party_settings: {  }
   field_filter_categories:
     type: select2_entity_reference
-    weight: 11
+    weight: 4
     region: content
     settings:
       width: 100%
@@ -38,13 +60,20 @@ content:
     third_party_settings: {  }
   field_filter_cond_type:
     type: options_buttons
-    weight: 9
+    weight: 2
     region: content
     settings: {  }
     third_party_settings: {  }
+  field_filter_content_types:
+    type: select2
+    weight: 6
+    region: content
+    settings:
+      width: 100%
+    third_party_settings: {  }
   field_filter_tags:
     type: select2_entity_reference
-    weight: 10
+    weight: 3
     region: content
     settings:
       width: 100%
