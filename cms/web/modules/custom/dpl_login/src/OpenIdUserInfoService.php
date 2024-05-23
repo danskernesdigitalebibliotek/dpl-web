@@ -35,14 +35,31 @@ class OpenIdUserInfoService {
    *
    */
   public function getSubHashFromUserInfo(array $userinfo): string {
-    if (!$cpr = $userinfo['attributes']['cpr'] ?? FALSE) {
-      if (!$uniqueId = $userinfo['attributes']['uniqueId'] ?? FALSE) {
-        throw new \Exception('Unable to identify user. Both CPR and uniqueId are missing.');
-      }
+    return $this->hashIdentifier($this->getIdentifierDataFromUserInfo($userinfo)['id']);
+  }
+
+  /**
+   *
+   */
+  public function getIdentifierDataFromUserInfo(array $userinfo): array {
+    $cpr = $userinfo['attributes']['cpr'] ?? FALSE;
+    $unique_id = $userinfo['attributes']['uniqueId'] ?? FALSE;
+
+    if (!$cpr && !$unique_id) {
+      throw new \Exception('Unable to identify user. Both CPR and uniqueId are missing.');
     }
 
-    $id = $cpr ?: $uniqueId;
-    return $this->hashIdentifier($id);
+    if ($unique_id) {
+      $id = $unique_id;
+      $type = AuthorizationIdType::UNIQUE_ID;
+    }
+
+    if ($cpr) {
+      $id = $cpr;
+      $type = AuthorizationIdType::CPR;
+    }
+
+    return ['id' => $id, 'type' => $type];
   }
 
   /**

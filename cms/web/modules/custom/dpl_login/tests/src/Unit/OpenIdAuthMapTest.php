@@ -3,6 +3,7 @@
 namespace Drupal\Tests\dpl_login\Unit;
 
 use Drupal\Core\Site\Settings;
+use Drupal\dpl_login\AuthorizationIdType;
 use Drupal\dpl_login\OpenIdUserInfoService;
 use Drupal\Tests\UnitTestCase;
 
@@ -29,10 +30,12 @@ class OpenIdAuthMapTest extends UnitTestCase {
   /**
    * @dataProvider cprHasPrecedenceOverUniqueIdData
    */
-  public function testHashCreationThatCprHasPrecedenceOverUniqueid(array $userinfo, string $expected_hash) {
+  public function testHashCreationThatCprHasPrecedenceOverUniqueid(array $userinfo, string $expected_hash, AuthorizationIdType $expected_id_type) {
     $open_id_user_info_service = new OpenIdUserInfoService($this->settings);
     $hash = $open_id_user_info_service->getSubHashFromUserInfo($userinfo);
+    $id_type = $open_id_user_info_service->getIdentifierDataFromUserInfo($userinfo)['type'];
     $this->assertEquals($expected_hash, $hash);
+    $this->assertEquals($expected_id_type, $id_type);
   }
 
   /**
@@ -72,6 +75,7 @@ class OpenIdAuthMapTest extends UnitTestCase {
           ],
         ],
         'e32K92Yudky16',
+        AuthorizationIdType::CPR,
       ],
       'uniqueId is getting hashed when cpr is missing' => [
         [
@@ -80,6 +84,7 @@ class OpenIdAuthMapTest extends UnitTestCase {
           ],
         ],
         'e3ydd5oyGyQNc',
+        AuthorizationIdType::UNIQUE_ID,
       ],
     ];
   }
