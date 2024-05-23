@@ -41,7 +41,7 @@ content:
       placeholder: ''
     third_party_settings: {  }
   field_recommendation_work_id:
-    type: dpl_fbi_work_id_with_type
+    type: dpl_fbi_work_id_search_for_material
     weight: 4
     region: content
     settings: {  }
