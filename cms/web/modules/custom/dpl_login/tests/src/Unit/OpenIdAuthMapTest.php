@@ -30,11 +30,12 @@ class OpenIdAuthMapTest extends UnitTestCase {
   /**
    * @dataProvider cprHasPrecedenceOverUniqueIdData
    */
-  public function testHashCreationThatCprHasPrecedenceOverUniqueid(array $userinfo, string $expected_hash, AuthorizationIdType $expected_id_type) {
+  public function testHashCreationThatCprHasPrecedenceOverUniqueid(array $userinfo, string $expected_sub_id, AuthorizationIdType $expected_id_type) {
     $open_id_user_info_service = new OpenIdUserInfoService($this->settings);
-    $hash = $open_id_user_info_service->getSubHashFromUserInfo($userinfo);
+    $sub_id = $open_id_user_info_service->getSubIdFromUserInfo($userinfo);
     $id_type = $open_id_user_info_service->getIdentifierDataFromUserInfo($userinfo)['type'];
-    $this->assertEquals($expected_hash, $hash);
+
+    $this->assertEquals($expected_sub_id, $sub_id);
     $this->assertEquals($expected_id_type, $id_type);
   }
 
@@ -49,7 +50,7 @@ class OpenIdAuthMapTest extends UnitTestCase {
     $this->expectException(\Exception::class);
     $this->expectExceptionMessage('Unable to identify user. Both CPR and uniqueId are missing.');
 
-    $open_id_user_info_service->getSubHashFromUserInfo($userinfo);
+    $open_id_user_info_service->getSubIdFromUserInfo($userinfo);
   }
 
   /**
@@ -83,7 +84,7 @@ class OpenIdAuthMapTest extends UnitTestCase {
             'uniqueId' => '9d67c9fa-81d6-41ce-8b42-9d187b306fd9',
           ],
         ],
-        'e3ydd5oyGyQNc',
+        '9d67c9fa-81d6-41ce-8b42-9d187b306fd9',
         AuthorizationIdType::UNIQUE_ID,
       ],
     ];

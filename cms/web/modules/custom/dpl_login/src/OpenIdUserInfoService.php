@@ -26,7 +26,7 @@ class OpenIdUserInfoService {
     // Drupal needs a username. We use the unique id to apply to that rule.
     $userinfo['name'] = $name;
     // openid_connect module needs the sub for creating the auth map.
-    $userinfo['sub'] = $this->getSubHashFromUserInfo($response);
+    $userinfo['sub'] = $this->getSubIdFromUserInfo($response);
 
     return $userinfo;
   }
@@ -34,8 +34,20 @@ class OpenIdUserInfoService {
   /**
    *
    */
-  public function getSubHashFromUserInfo(array $userinfo): string {
-    return $this->hashIdentifier($this->getIdentifierDataFromUserInfo($userinfo)['id']);
+  public function getSubIdFromUserInfo(array $userinfo): ?string {
+    $identifier_data = $this->getIdentifierDataFromUserInfo($userinfo);
+
+    switch ($identifier_data['type']) {
+      case AuthorizationIdType::CPR:
+        return $this->hashIdentifier($identifier_data['id']);
+
+      // We use the unique id as is. DBC says we can trust the uniquenes of it.
+      case AuthorizationIdType::UNIQUE_ID:
+        return $identifier_data['id'];
+
+      default:
+        return NULL;
+    }
   }
 
   /**
