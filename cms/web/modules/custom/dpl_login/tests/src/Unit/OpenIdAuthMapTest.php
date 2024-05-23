@@ -66,6 +66,17 @@ class OpenIdAuthMapTest extends UnitTestCase {
   /**
    *
    */
+  public function testThatHashedIdentifierIsReproducible() {
+    $service = new OpenIdUserInfoService($this->settings);
+    $id = '9d67c9fa-81d6-41ce-8b42-9d187b306fd9';
+    $hash1 = $service->hashIdentifier($id);
+    $hash2 = $service->hashIdentifier($id);
+    $this->assertEquals($hash1, $hash2);
+  }
+
+  /**
+   *
+   */
   public function cprHasPrecedenceOverUniqueIdData(): array {
     return [
       'cpr is getting hashed when both cpr and uniqueId are present' => [
