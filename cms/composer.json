@@ -58,7 +58,7 @@
                 "type": "drupal-library",
                 "version": "2024.19.0",
                 "dist": {
-                    "url": "https://github.com/danskernesdigitalebibliotek/dpl-design-system/releases/download/branch-release%2Fbrahma-16/dist-release-brahma-16.zip",
+                    "url": "https://github.com/danskernesdigitalebibliotek/dpl-design-system/archive/refs/tags/branch-release/brahma-16.zip",
                     "type": "zip"
                 }
             }
