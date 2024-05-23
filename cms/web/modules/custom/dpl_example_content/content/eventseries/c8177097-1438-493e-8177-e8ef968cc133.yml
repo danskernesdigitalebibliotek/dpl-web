@@ -107,6 +107,11 @@ default:
       attributes:
         rel: canonical
         href: '/user/login'
+  path:
+    -
+      alias: /bronshoj-bibliotek/arrangementer/design-teknologi/fernisering-moderne-dans-0
+      langcode: und
+      pathauto: 1
   event_instances:
     -
       entity: e424f47d-6b01-443e-8a03-0d3b436e20d3

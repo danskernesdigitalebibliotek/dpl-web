@@ -125,6 +125,11 @@ default:
       attributes:
         rel: canonical
         href: '/user/login'
+  path:
+    -
+      alias: /hovedbiblioteket/arrangementer/vi-anbefaler/fars-legestue
+      langcode: und
+      pathauto: 1
   event_instances:
     -
       entity: 7188667e-7497-409d-abf9-e82d816c9076

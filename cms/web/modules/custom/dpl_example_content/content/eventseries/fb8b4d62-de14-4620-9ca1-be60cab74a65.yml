@@ -99,6 +99,11 @@ default:
       attributes:
         rel: canonical
         href: '/user/login'
+  path:
+    -
+      alias: /arrangementer/klima/genbrugsstof-fremfor-plastik-0
+      langcode: und
+      pathauto: 1
   event_instances:
     -
       entity: fde19c73-3a38-4788-aa84-a376d3ee6cf6

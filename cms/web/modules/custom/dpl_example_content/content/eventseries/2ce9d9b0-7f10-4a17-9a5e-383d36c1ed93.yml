@@ -99,6 +99,11 @@ default:
       attributes:
         rel: canonical
         href: '/user/login'
+  path:
+    -
+      alias: /hovedbiblioteket/arrangementer/vi-anbefaler/juleballet-noddeknaekkeren-0
+      langcode: und
+      pathauto: 1
   event_instances:
     -
       entity: 28602a8e-98eb-4905-9e13-a58782c2894d
