@@ -67,6 +67,10 @@ class OpenIdUserInfoService {
   public function getIdentifierDataFromUserInfo(array $userinfo): array {
     $cpr = $userinfo['attributes']['cpr'] ?? FALSE;
     $unique_id = $userinfo['attributes']['uniqueId'] ?? FALSE;
+    // This is added to make Phpstan happy.
+    // The fact that an exception is thrown if both are missing
+    // should make it impossible to end up with NULL values.
+    // But Phpstan does not understand that.
     $id = $type = NULL;
 
     if (!$cpr && !$unique_id) {
