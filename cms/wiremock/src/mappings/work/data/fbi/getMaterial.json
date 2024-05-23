@@ -1,105 +1,112 @@
 {
   "data": {
     "work": {
-      "workId": "work-of:870970-basis:52557240",
+      "workId": "work-of:870970-basis:25245784",
       "titles": {
         "full": ["Harry Potter og Fønixordenen"],
-        "original": ["The seven sisters"]
+        "original": ["Harry Potter and the Order of the Phoenix"]
       },
       "abstract": [
-        "Pa Salt dør og hans seks adoptivdøtre står tilbage med muligheden for at finde deres ophav."
+        "Da Harry Potter vender tilbage til Hogwarts er meget ændret. Man tror, at han lyver angående Voldemort, og ministeriet sender en repræsentant til skolen, der snart er delt i to fjendtlige lejre."
       ],
       "creators": [
         {
-          "display": "Lucinda Riley",
+          "display": "Joanne K. Rowling",
           "__typename": "Person"
         }
       ],
       "series": [
         {
-          "title": "De syv søstre-serien",
+          "title": "Harry Potter (bøger)",
           "isPopular": true,
           "numberInSeries": {
-            "display": "1",
-            "number": [1]
+            "display": "5",
+            "number": [5]
           },
-          "readThisFirst": true,
+          "readThisFirst": null,
           "readThisWhenever": null
         }
       ],
       "seriesMembers": [
         {
-          "workId": "work-of:870970-basis:52557240",
+          "workId": "work-of:870970-basis:22252852",
+          "titles": {
+            "main": ["Harry Potter og De Vises Sten"],
+            "full": ["Harry Potter og De Vises Sten"],
+            "original": ["Harry Potter and the philosopher's stone"]
+          }
+        },
+        {
+          "workId": "work-of:870970-basis:25197887",
+          "titles": {
+            "main": ["Harry Potter og Hemmelighedernes Kammer"],
+            "full": ["Harry Potter og Hemmelighedernes Kammer"],
+            "original": ["Harry Potter and the Chamber of Secrets"]
+          }
+        },
+        {
+          "workId": "work-of:870970-basis:25197879",
+          "titles": {
+            "main": ["Harry Potter og fangen fra Azkaban"],
+            "full": ["Harry Potter og fangen fra Azkaban"],
+            "original": ["Harry Potter and the Chamber of Secrets"]
+          }
+        },
+        {
+          "workId": "work-of:870970-basis:25197909",
+          "titles": {
+            "main": ["Harry Potter og Flammernes Pokal"],
+            "full": ["Harry Potter og Flammernes Pokal"],
+            "original": ["Harry Potter and the goblet of fire"]
+          }
+        },
+        {
+          "workId": "work-of:870970-basis:25245784",
           "titles": {
             "main": ["Harry Potter og Fønixordenen"],
             "full": ["Harry Potter og Fønixordenen"],
-            "original": ["Harry Potter"]
+            "original": ["Harry Potter and the Order of the Phoenix"]
           }
         },
         {
-          "workId": "work-of:870970-basis:52970628",
+          "workId": "work-of:870970-basis:25807995",
           "titles": {
-            "main": ["Stormsøsteren"],
-            "full": ["Stormsøsteren : Allys historie"],
-            "original": ["The storm sister"]
+            "main": ["Harry Potter og Halvblodsprinsen"],
+            "full": ["Harry Potter og Halvblodsprinsen"],
+            "original": ["Harry Potter and the half-blood prince"]
           }
         },
         {
-          "workId": "work-of:870970-basis:53280749",
+          "workId": "work-of:870970-basis:27267912",
           "titles": {
-            "main": ["Skyggesøsteren"],
-            "full": ["Skyggesøsteren : Stars historie"],
-            "original": ["The shadow sister"]
+            "main": ["Harry Potter og Dødsregalierne"],
+            "full": ["Harry Potter og Dødsregalierne"],
+            "original": ["Harry Potter and the deathly hallows"]
           }
         },
         {
-          "workId": "work-of:870970-basis:53802001",
+          "workId": "work-of:870970-basis:52646251",
           "titles": {
-            "main": ["Perlesøsteren"],
-            "full": ["Perlesøsteren : CeCes historie"],
-            "original": ["The pearl sister"]
-          }
-        },
-        {
-          "workId": "work-of:870970-basis:54189141",
-          "titles": {
-            "main": ["Månesøsteren"],
-            "full": ["Månesøsteren : Tiggys historie"],
-            "original": ["The moon sister"]
-          }
-        },
-        {
-          "workId": "work-of:870970-basis:46656172",
-          "titles": {
-            "main": ["Solsøsteren"],
-            "full": ["Solsøsteren : Electras historie"],
-            "original": ["The sun sister"]
-          }
-        },
-        {
-          "workId": "work-of:870970-basis:38500775",
-          "titles": {
-            "main": ["Den forsvundne søster"],
-            "full": ["Den forsvundne søster"],
-            "original": ["The missing sister"]
-          }
-        },
-        {
-          "workId": "work-of:870970-basis:134823658",
-          "titles": {
-            "main": ["Atlas"],
-            "full": ["Atlas : historien om Pa Salt"],
-            "original": ["Atlas (engelsk)"]
+            "main": ["Harry Potter og det forbandede barn"],
+            "full": ["Harry Potter og det forbandede barn : del et & to"],
+            "original": ["Harry Potter and the cursed child"]
           }
         }
       ],
-      "workYear": null,
-      "genreAndForm": ["roman", "slægtsromaner", "romaner"],
+      "workYear": {
+        "year": 2003
+      },
+      "genreAndForm": [
+        "roman",
+        "fantasy",
+        "eventyrlige fortællinger",
+        "romaner"
+      ],
       "manifestations": {
         "all": [
           {
-            "pid": "870970-basis:52557240",
-            "genreAndForm": ["roman", "slægtsromaner"],
+            "pid": "710100-katalog:24880605",
+            "genreAndForm": ["roman", "fantasy"],
             "source": ["Bibliotekskatalog"],
             "languages": {
               "main": [
@@ -111,8 +118,8 @@
               "notes": []
             },
             "titles": {
-              "main": ["De syv søstre"],
-              "original": ["The seven sisters"]
+              "main": ["Harry Potter og Fønixordenen"],
+              "original": ["Harry Potter and the Order of the Phoenix"]
             },
             "fictionNonfiction": {
               "display": "skønlitteratur",
@@ -127,44 +134,40 @@
             ],
             "creators": [
               {
-                "display": "Lucinda Riley",
+                "display": "Joanne K. Rowling",
                 "__typename": "Person"
               }
             ],
-            "publisher": ["Cicero"],
+            "publisher": ["Gyldendal"],
             "identifiers": [
               {
-                "value": "9788763844116"
+                "value": "87-02-02222-2"
               }
             ],
-            "contributors": [
-              {
-                "display": "Ulla Lauridsen",
-                "roles": [
-                  {
-                    "function": {
-                      "singular": "oversætter"
-                    }
-                  }
-                ]
-              }
-            ],
+            "contributors": [],
             "edition": {
-              "summary": "1. udgave, 2016",
+              "summary": "2003",
               "publicationYear": {
-                "display": "2016"
+                "display": "2003"
               }
             },
-            "dateFirstEdition": null,
+            "dateFirstEdition": {
+              "display": "2003",
+              "year": 2003
+            },
             "audience": {
               "generalAudience": [],
-              "ages": []
+              "ages": [
+                {
+                  "display": "12-14"
+                }
+              ]
             },
             "notes": [],
             "physicalDescriptions": [
               {
-                "summary": "523 sider",
-                "numberOfPages": 523,
+                "summary": "923 sider",
+                "numberOfPages": 923,
                 "playingTime": null
               }
             ],
@@ -182,110 +185,24 @@
               }
             ],
             "shelfmark": null,
-            "workYear": null,
+            "workYear": {
+              "year": 2003
+            },
             "catalogueCodes": {
-              "nationalBibliography": ["DBF201835"],
-              "otherCatalogues": ["ACC201634", "BKM201835"]
-            }
-          },
-          {
-            "pid": "870970-basis:52590302",
-            "genreAndForm": ["roman", "slægtsromaner"],
-            "source": ["eReolen"],
-            "languages": {
-              "main": [
-                {
-                  "display": "dansk",
-                  "isoCode": "dan"
-                }
-              ],
-              "notes": []
-            },
-            "titles": {
-              "main": ["De syv søstre"],
-              "original": ["The seven sisters"]
-            },
-            "fictionNonfiction": {
-              "display": "skønlitteratur",
-              "code": "FICTION"
-            },
-            "materialTypes": [
-              {
-                "materialTypeSpecific": {
-                  "display": "e-bog"
-                }
-              }
-            ],
-            "creators": [
-              {
-                "display": "Lucinda Riley",
-                "__typename": "Person"
-              }
-            ],
-            "publisher": ["Cicero"],
-            "identifiers": [
-              {
-                "value": "9788763844123"
-              },
-              {
-                "value": "9788763844123"
-              }
-            ],
-            "contributors": [
-              {
-                "display": "Ulla Lauridsen",
-                "roles": [
-                  {
-                    "function": {
-                      "singular": "oversætter"
-                    }
-                  }
-                ]
-              }
-            ],
-            "edition": {
-              "summary": "1. eBogsudgave, 2016",
-              "publicationYear": {
-                "display": "2016"
-              }
-            },
-            "dateFirstEdition": null,
-            "audience": {
-              "generalAudience": [],
-              "ages": []
-            },
-            "notes": [],
-            "physicalDescriptions": [],
-            "hostPublication": null,
-            "manifestationParts": null,
-            "accessTypes": [
-              {
-                "code": "ONLINE"
-              }
-            ],
-            "access": [
-              {
-                "__typename": "Ereol",
-                "origin": "eReolen",
-                "url": "https://ereolen.dk/ting/object/870970-basis:52590302",
-                "canAlwaysBeLoaned": false
-              }
-            ],
-            "shelfmark": null,
-            "workYear": null,
-            "catalogueCodes": {
-              "nationalBibliography": ["DBF201639"],
+              "nationalBibliography": ["DBF200344"],
               "otherCatalogues": [
-                "ACC201636",
-                "BKM201639",
-                "ERE202235",
-                "DAT201713"
+                "SFD200344",
+                "ACC200340",
+                "ACC200347",
+                "DAT201518",
+                "DAT202200",
+                "LIU200344"
               ]
             }
           },
           {
-            "pid": "870970-basis:52643414",
-            "genreAndForm": ["roman"],
+            "pid": "870970-basis:134693959",
+            "genreAndForm": ["roman", "fantasy", "romaner"],
             "source": ["Bibliotekskatalog"],
             "languages": {
               "main": [
@@ -297,8 +214,8 @@
               "notes": []
             },
             "titles": {
-              "main": ["De syv søstre (mp3)"],
-              "original": ["The seven sisters"]
+              "main": ["Harry Potter og Fønixordenen (Ill. Jim Kay)"],
+              "original": ["Harry Potter and the Order of the Phoenix"]
             },
             "fictionNonfiction": {
               "display": "skønlitteratur",
@@ -307,35 +224,50 @@
             "materialTypes": [
               {
                 "materialTypeSpecific": {
-                  "display": "lydbog (cd-mp3)"
+                  "display": "bog"
                 }
               }
             ],
             "creators": [
               {
-                "display": "Lucinda Riley",
+                "display": "Joanne K. Rowling",
                 "__typename": "Person"
               }
             ],
-            "publisher": ["Rosinante"],
+            "publisher": ["Gyldendal"],
             "identifiers": [
               {
-                "value": "9788763850636"
+                "value": "9788702307566"
               }
             ],
             "contributors": [
               {
-                "display": "Maria Stokholm",
+                "display": "Jim Kay",
                 "roles": [
                   {
                     "function": {
-                      "singular": "indlæser"
+                      "singular": "illustrator"
+                    }
+                  },
+                  {
+                    "function": {
+                      "singular": "(hovedansvarlig)"
                     }
                   }
                 ]
               },
               {
-                "display": "Ulla Lauridsen",
+                "display": "Neil Packer",
+                "roles": [
+                  {
+                    "function": {
+                      "singular": "illustrator"
+                    }
+                  }
+                ]
+              },
+              {
+                "display": "Hanna Lützen",
                 "roles": [
                   {
                     "function": {
@@ -346,32 +278,29 @@
               }
             ],
             "edition": {
-              "summary": "1. lydbogsudgave, 2016",
+              "summary": "Illustreret udgave, 7. udgave, 2022",
               "publicationYear": {
-                "display": "2016"
+                "display": "2022"
               }
             },
-            "dateFirstEdition": {
-              "display": "2016",
-              "year": 2016
-            },
+            "dateFirstEdition": null,
             "audience": {
-              "generalAudience": [],
-              "ages": []
+              "generalAudience": [
+                "Højtlæsning fra 8 år. Selvlæsning fra 12 år",
+                "for højtlæsning"
+              ],
+              "ages": [
+                {
+                  "display": "8-16"
+                }
+              ]
             },
-            "notes": [
-              {
-                "display": [
-                  "Gengivelse af bogen",
-                  "Indlæst efter 1. udgave. 2016. ISBN: 9788763844116"
-                ]
-              }
-            ],
+            "notes": [],
             "physicalDescriptions": [
               {
-                "summary": "1 cd i 1 mappe (mp3) 16 t., 30 min.",
-                "numberOfPages": null,
-                "playingTime": "16 t., 30 min."
+                "summary": "565 sider: ill. i farver ; 28 cm",
+                "numberOfPages": 565,
+                "playingTime": null
               }
             ],
             "hostPublication": null,
@@ -388,16 +317,416 @@
               }
             ],
             "shelfmark": null,
-            "workYear": null,
+            "workYear": {
+              "year": 2003
+            },
             "catalogueCodes": {
-              "nationalBibliography": ["DLF201642"],
-              "otherCatalogues": ["BKM201642", "DAT201713"]
+              "nationalBibliography": ["DBF202245"],
+              "otherCatalogues": ["ACC202240", "BKM202245", "DAT202200"]
+            }
+          },
+          {
+            "pid": "870970-basis:26167663",
+            "genreAndForm": ["roman"],
+            "source": ["Bibliotekskatalog"],
+            "languages": {
+              "main": [
+                {
+                  "display": "dansk",
+                  "isoCode": "dan"
+                }
+              ],
+              "notes": []
+            },
+            "titles": {
+              "main": ["Harry Potter og Fønixordenen"],
+              "original": ["Harry Potter and the Order of the Phoenix"]
+            },
+            "fictionNonfiction": {
+              "display": "skønlitteratur",
+              "code": "FICTION"
+            },
+            "materialTypes": [
+              {
+                "materialTypeSpecific": {
+                  "display": "lydbog (cd)"
+                }
+              }
+            ],
+            "creators": [
+              {
+                "display": "Joanne K. Rowling",
+                "__typename": "Person"
+              },
+              {
+                "display": "Jesper Christensen (f. 1948)",
+                "__typename": "Person"
+              }
+            ],
+            "publisher": ["Gyldendal Lyd"],
+            "identifiers": [
+              {
+                "value": "87-02-04746-2"
+              }
+            ],
+            "contributors": [],
+            "edition": {
+              "summary": "2006",
+              "publicationYear": {
+                "display": "2006"
+              }
+            },
+            "dateFirstEdition": null,
+            "audience": {
+              "generalAudience": [],
+              "ages": [
+                {
+                  "display": "12-14"
+                }
+              ]
+            },
+            "notes": [
+              {
+                "display": [
+                  "Gengivelse af bogen",
+                  "Indlæst efter: Kbh. : Gyldendal"
+                ]
+              }
+            ],
+            "physicalDescriptions": [
+              {
+                "summary": "25 cd'er 29 t., 33 min.",
+                "numberOfPages": null,
+                "playingTime": "29 t., 33 min."
+              }
+            ],
+            "hostPublication": null,
+            "manifestationParts": null,
+            "accessTypes": [
+              {
+                "code": "PHYSICAL"
+              }
+            ],
+            "access": [
+              {
+                "__typename": "InterLibraryLoan",
+                "loanIsPossible": true
+              }
+            ],
+            "shelfmark": null,
+            "workYear": {
+              "year": 2003
+            },
+            "catalogueCodes": {
+              "nationalBibliography": ["DLF200701"],
+              "otherCatalogues": ["SFA200701", "DAT201518", "DAT202200"]
+            }
+          },
+          {
+            "pid": "870970-basis:29368872",
+            "genreAndForm": ["roman", "fantasy"],
+            "source": ["Bibliotekskatalog"],
+            "languages": {
+              "main": [
+                {
+                  "display": "dansk",
+                  "isoCode": "dan"
+                }
+              ],
+              "notes": []
+            },
+            "titles": {
+              "main": ["Harry Potter og Fønixordenen"],
+              "original": ["Harry Potter and the Order of the Phoenix"]
+            },
+            "fictionNonfiction": {
+              "display": "skønlitteratur",
+              "code": "FICTION"
+            },
+            "materialTypes": [
+              {
+                "materialTypeSpecific": {
+                  "display": "bog"
+                }
+              }
+            ],
+            "creators": [
+              {
+                "display": "Joanne K. Rowling",
+                "__typename": "Person"
+              }
+            ],
+            "publisher": ["Gyldendal"],
+            "identifiers": [
+              {
+                "value": "9788702114393"
+              }
+            ],
+            "contributors": [
+              {
+                "display": "Hanna Lützen",
+                "roles": [
+                  {
+                    "function": {
+                      "singular": "oversætter"
+                    }
+                  }
+                ]
+              }
+            ],
+            "edition": {
+              "summary": "4. udgave, 2012",
+              "publicationYear": {
+                "display": "2012"
+              }
+            },
+            "dateFirstEdition": null,
+            "audience": {
+              "generalAudience": [],
+              "ages": [
+                {
+                  "display": "12-16"
+                }
+              ]
+            },
+            "notes": [],
+            "physicalDescriptions": [
+              {
+                "summary": "923 sider",
+                "numberOfPages": 923,
+                "playingTime": null
+              }
+            ],
+            "hostPublication": null,
+            "manifestationParts": null,
+            "accessTypes": [
+              {
+                "code": "PHYSICAL"
+              }
+            ],
+            "access": [
+              {
+                "__typename": "InterLibraryLoan",
+                "loanIsPossible": true
+              }
+            ],
+            "shelfmark": null,
+            "workYear": {
+              "year": 2003
+            },
+            "catalogueCodes": {
+              "nationalBibliography": ["DBF201226"],
+              "otherCatalogues": [
+                "ACC201219",
+                "BKM201226",
+                "DAT201518",
+                "DAT202200"
+              ]
+            }
+          },
+          {
+            "pid": "870970-basis:51980204",
+            "genreAndForm": ["roman", "fantasy"],
+            "source": ["Bibliotekskatalog"],
+            "languages": {
+              "main": [
+                {
+                  "display": "dansk",
+                  "isoCode": "dan"
+                }
+              ],
+              "notes": []
+            },
+            "titles": {
+              "main": ["Harry Potter og Fønixordenen"],
+              "original": ["Harry Potter and the Order of the Phoenix"]
+            },
+            "fictionNonfiction": {
+              "display": "skønlitteratur",
+              "code": "FICTION"
+            },
+            "materialTypes": [
+              {
+                "materialTypeSpecific": {
+                  "display": "bog"
+                }
+              }
+            ],
+            "creators": [
+              {
+                "display": "Joanne K. Rowling",
+                "__typename": "Person"
+              }
+            ],
+            "publisher": ["Gyldendal"],
+            "identifiers": [
+              {
+                "value": "9788702173260"
+              }
+            ],
+            "contributors": [
+              {
+                "display": "Hanna Lützen",
+                "roles": [
+                  {
+                    "function": {
+                      "singular": "oversætter"
+                    }
+                  }
+                ]
+              }
+            ],
+            "edition": {
+              "summary": "5. udgave, 2015",
+              "publicationYear": {
+                "display": "2015"
+              }
+            },
+            "dateFirstEdition": null,
+            "audience": {
+              "generalAudience": [],
+              "ages": [
+                {
+                  "display": "12-16"
+                }
+              ]
+            },
+            "notes": [],
+            "physicalDescriptions": [
+              {
+                "summary": "841 sider",
+                "numberOfPages": 841,
+                "playingTime": null
+              }
+            ],
+            "hostPublication": null,
+            "manifestationParts": null,
+            "accessTypes": [
+              {
+                "code": "PHYSICAL"
+              }
+            ],
+            "access": [
+              {
+                "__typename": "InterLibraryLoan",
+                "loanIsPossible": true
+              }
+            ],
+            "shelfmark": null,
+            "workYear": {
+              "year": 2003
+            },
+            "catalogueCodes": {
+              "nationalBibliography": ["DBF201545"],
+              "otherCatalogues": [
+                "ACC201541",
+                "BKM201545",
+                "BKR201841",
+                "DAT202200"
+              ]
+            }
+          },
+          {
+            "pid": "870970-basis:54871996",
+            "genreAndForm": ["roman", "fantasy"],
+            "source": ["Bibliotekskatalog"],
+            "languages": {
+              "main": [
+                {
+                  "display": "dansk",
+                  "isoCode": "dan"
+                }
+              ],
+              "notes": []
+            },
+            "titles": {
+              "main": ["Harry Potter og Fønixordenen"],
+              "original": ["Harry Potter and the Order of the Phoenix"]
+            },
+            "fictionNonfiction": {
+              "display": "skønlitteratur",
+              "code": "FICTION"
+            },
+            "materialTypes": [
+              {
+                "materialTypeSpecific": {
+                  "display": "bog"
+                }
+              }
+            ],
+            "creators": [
+              {
+                "display": "Joanne K. Rowling",
+                "__typename": "Person"
+              }
+            ],
+            "publisher": ["Gyldendal"],
+            "identifiers": [
+              {
+                "value": "9788702272482"
+              }
+            ],
+            "contributors": [
+              {
+                "display": "Hanna Lützen",
+                "roles": [
+                  {
+                    "function": {
+                      "singular": "oversætter"
+                    }
+                  }
+                ]
+              }
+            ],
+            "edition": {
+              "summary": "6. udgave, 2018",
+              "publicationYear": {
+                "display": "2018"
+              }
+            },
+            "dateFirstEdition": null,
+            "audience": {
+              "generalAudience": [],
+              "ages": [
+                {
+                  "display": "12-16"
+                }
+              ]
+            },
+            "notes": [],
+            "physicalDescriptions": [
+              {
+                "summary": "841 sider",
+                "numberOfPages": 841,
+                "playingTime": null
+              }
+            ],
+            "hostPublication": null,
+            "manifestationParts": null,
+            "accessTypes": [
+              {
+                "code": "PHYSICAL"
+              }
+            ],
+            "access": [
+              {
+                "__typename": "InterLibraryLoan",
+                "loanIsPossible": true
+              }
+            ],
+            "shelfmark": null,
+            "workYear": {
+              "year": 2003
+            },
+            "catalogueCodes": {
+              "nationalBibliography": ["DBF201841"],
+              "otherCatalogues": ["ACC201838", "BKM201841", "DAT202200"]
             }
           }
         ],
         "latest": {
-          "pid": "870970-basis:52643414",
-          "genreAndForm": ["roman"],
+          "pid": "870970-basis:134693959",
+          "genreAndForm": ["roman", "fantasy", "romaner"],
           "source": ["Bibliotekskatalog"],
           "languages": {
             "main": [
@@ -409,8 +738,8 @@
             "notes": []
           },
           "titles": {
-            "main": ["De syv søstre (mp3)"],
-            "original": ["The seven sisters"]
+            "main": ["Harry Potter og Fønixordenen (Ill. Jim Kay)"],
+            "original": ["Harry Potter and the Order of the Phoenix"]
           },
           "fictionNonfiction": {
             "display": "skønlitteratur",
@@ -419,35 +748,50 @@
           "materialTypes": [
             {
               "materialTypeSpecific": {
-                "display": "lydbog (cd-mp3)"
+                "display": "bog"
               }
             }
           ],
           "creators": [
             {
-              "display": "Lucinda Riley",
+              "display": "Joanne K. Rowling",
               "__typename": "Person"
             }
           ],
-          "publisher": ["Rosinante"],
+          "publisher": ["Gyldendal"],
           "identifiers": [
             {
-              "value": "9788763850636"
+              "value": "9788702307566"
             }
           ],
           "contributors": [
             {
-              "display": "Maria Stokholm",
+              "display": "Jim Kay",
               "roles": [
                 {
                   "function": {
-                    "singular": "indlæser"
+                    "singular": "illustrator"
+                  }
+                },
+                {
+                  "function": {
+                    "singular": "(hovedansvarlig)"
                   }
                 }
               ]
             },
             {
-              "display": "Ulla Lauridsen",
+              "display": "Neil Packer",
+              "roles": [
+                {
+                  "function": {
+                    "singular": "illustrator"
+                  }
+                }
+              ]
+            },
+            {
+              "display": "Hanna Lützen",
               "roles": [
                 {
                   "function": {
@@ -458,32 +802,29 @@
             }
           ],
           "edition": {
-            "summary": "1. lydbogsudgave, 2016",
+            "summary": "Illustreret udgave, 7. udgave, 2022",
             "publicationYear": {
-              "display": "2016"
+              "display": "2022"
             }
           },
-          "dateFirstEdition": {
-            "display": "2016",
-            "year": 2016
-          },
+          "dateFirstEdition": null,
           "audience": {
-            "generalAudience": [],
-            "ages": []
+            "generalAudience": [
+              "Højtlæsning fra 8 år. Selvlæsning fra 12 år",
+              "for højtlæsning"
+            ],
+            "ages": [
+              {
+                "display": "8-16"
+              }
+            ]
           },
-          "notes": [
-            {
-              "display": [
-                "Gengivelse af bogen",
-                "Indlæst efter 1. udgave. 2016. ISBN: 9788763844116"
-              ]
-            }
-          ],
+          "notes": [],
           "physicalDescriptions": [
             {
-              "summary": "1 cd i 1 mappe (mp3) 16 t., 30 min.",
-              "numberOfPages": null,
-              "playingTime": "16 t., 30 min."
+              "summary": "565 sider: ill. i farver ; 28 cm",
+              "numberOfPages": 565,
+              "playingTime": null
             }
           ],
           "hostPublication": null,
@@ -500,15 +841,17 @@
             }
           ],
           "shelfmark": null,
-          "workYear": null,
+          "workYear": {
+            "year": 2003
+          },
           "catalogueCodes": {
-            "nationalBibliography": ["DLF201642"],
-            "otherCatalogues": ["BKM201642", "DAT201713"]
+            "nationalBibliography": ["DBF202245"],
+            "otherCatalogues": ["ACC202240", "BKM202245", "DAT202200"]
           }
         },
         "bestRepresentation": {
-          "pid": "870970-basis:52643414",
-          "genreAndForm": ["roman"],
+          "pid": "870970-basis:134693959",
+          "genreAndForm": ["roman", "fantasy", "romaner"],
           "source": ["Bibliotekskatalog"],
           "languages": {
             "main": [
@@ -520,8 +863,8 @@
             "notes": []
           },
           "titles": {
-            "main": ["De syv søstre (mp3)"],
-            "original": ["The seven sisters"]
+            "main": ["Harry Potter og Fønixordenen (Ill. Jim Kay)"],
+            "original": ["Harry Potter and the Order of the Phoenix"]
           },
           "fictionNonfiction": {
             "display": "skønlitteratur",
@@ -530,35 +873,50 @@
           "materialTypes": [
             {
               "materialTypeSpecific": {
-                "display": "lydbog (cd-mp3)"
+                "display": "bog"
               }
             }
           ],
           "creators": [
             {
-              "display": "Lucinda Riley",
+              "display": "Joanne K. Rowling",
               "__typename": "Person"
             }
           ],
-          "publisher": ["Rosinante"],
+          "publisher": ["Gyldendal"],
           "identifiers": [
             {
-              "value": "9788763850636"
+              "value": "9788702307566"
             }
           ],
           "contributors": [
             {
-              "display": "Maria Stokholm",
+              "display": "Jim Kay",
               "roles": [
                 {
                   "function": {
-                    "singular": "indlæser"
+                    "singular": "illustrator"
+                  }
+                },
+                {
+                  "function": {
+                    "singular": "(hovedansvarlig)"
                   }
                 }
               ]
             },
             {
-              "display": "Ulla Lauridsen",
+              "display": "Neil Packer",
+              "roles": [
+                {
+                  "function": {
+                    "singular": "illustrator"
+                  }
+                }
+              ]
+            },
+            {
+              "display": "Hanna Lützen",
               "roles": [
                 {
                   "function": {
@@ -569,32 +927,29 @@
             }
           ],
           "edition": {
-            "summary": "1. lydbogsudgave, 2016",
+            "summary": "Illustreret udgave, 7. udgave, 2022",
             "publicationYear": {
-              "display": "2016"
+              "display": "2022"
             }
           },
-          "dateFirstEdition": {
-            "display": "2016",
-            "year": 2016
-          },
+          "dateFirstEdition": null,
           "audience": {
-            "generalAudience": [],
-            "ages": []
+            "generalAudience": [
+              "Højtlæsning fra 8 år. Selvlæsning fra 12 år",
+              "for højtlæsning"
+            ],
+            "ages": [
+              {
+                "display": "8-16"
+              }
+            ]
           },
-          "notes": [
-            {
-              "display": [
-                "Gengivelse af bogen",
-                "Indlæst efter 1. udgave. 2016. ISBN: 9788763844116"
-              ]
-            }
-          ],
+          "notes": [],
           "physicalDescriptions": [
             {
-              "summary": "1 cd i 1 mappe (mp3) 16 t., 30 min.",
-              "numberOfPages": null,
-              "playingTime": "16 t., 30 min."
+              "summary": "565 sider: ill. i farver ; 28 cm",
+              "numberOfPages": 565,
+              "playingTime": null
             }
           ],
           "hostPublication": null,
@@ -611,27 +966,24 @@
             }
           ],
           "shelfmark": null,
-          "workYear": null,
+          "workYear": {
+            "year": 2003
+          },
           "catalogueCodes": {
-            "nationalBibliography": ["DLF201642"],
-            "otherCatalogues": ["BKM201642", "DAT201713"]
+            "nationalBibliography": ["DBF202245"],
+            "otherCatalogues": ["ACC202240", "BKM202245", "DAT202200"]
           }
         }
       },
       "materialTypes": [
         {
           "materialTypeSpecific": {
-            "display": "lydbog (cd-mp3)"
-          }
-        },
-        {
-          "materialTypeSpecific": {
-            "display": "e-bog"
-          }
-        },
-        {
-          "materialTypeSpecific": {
             "display": "bog"
+          }
+        },
+        {
+          "materialTypeSpecific": {
+            "display": "lydbog (cd)"
           }
         }
       ],
@@ -644,30 +996,138 @@
       "subjects": {
         "all": [
           {
-            "display": "kærlighed"
+            "display": "eventyrlige fortællinger"
           },
           {
-            "display": "adoption"
+            "display": "troldmænd"
           },
           {
-            "display": "familien"
+            "display": "magi"
           },
           {
-            "display": "slægtsromaner"
+            "display": "Harry Potter"
+          },
+          {
+            "display": "Ron Weasley"
+          },
+          {
+            "display": "Hermione Granger"
+          },
+          {
+            "display": "Børnebøger"
+          },
+          {
+            "display": "for 12 år"
+          },
+          {
+            "display": "for 13 år"
+          },
+          {
+            "display": "for 14 år"
+          },
+          {
+            "display": "for 15 år"
+          },
+          {
+            "display": "for 16 år"
+          },
+          {
+            "display": "kostskoler"
+          },
+          {
+            "display": "spændende"
+          },
+          {
+            "display": "trist"
+          },
+          {
+            "display": "uhyggelig"
+          },
+          {
+            "display": "fantasy"
+          },
+          {
+            "display": "sport"
+          },
+          {
+            "display": "venskaber"
+          },
+          {
+            "display": "mit liv"
+          },
+          {
+            "display": "skæve karakterer"
+          },
+          {
+            "display": "eventyrlig"
+          },
+          {
+            "display": "gys"
+          },
+          {
+            "display": "action"
+          },
+          {
+            "display": "krea og kultur"
           }
         ],
         "dbcVerified": [
           {
-            "display": "kærlighed"
+            "display": "Harry Potter"
           },
           {
-            "display": "adoption"
+            "display": "Ron Weasley"
           },
           {
-            "display": "familien"
+            "display": "Hermione Granger"
           },
           {
-            "display": "slægtsromaner"
+            "display": "troldmænd"
+          },
+          {
+            "display": "magi"
+          },
+          {
+            "display": "eventyrlige fortællinger"
+          },
+          {
+            "display": "kostskoler"
+          },
+          {
+            "display": "spændende"
+          },
+          {
+            "display": "trist"
+          },
+          {
+            "display": "uhyggelig"
+          },
+          {
+            "display": "fantasy"
+          },
+          {
+            "display": "sport"
+          },
+          {
+            "display": "venskaber"
+          },
+          {
+            "display": "mit liv"
+          },
+          {
+            "display": "skæve karakterer"
+          },
+          {
+            "display": "eventyrlig"
+          },
+          {
+            "display": "gys"
+          },
+          {
+            "display": "action"
+          },
+          {
+            "display": "krea og kultur"
           }
         ]
       },
@@ -681,13 +1141,40 @@
       "relations": {
         "hasReview": [
           {
-            "pid": "150005-anmeld:81092"
+            "pid": "870971-anmeld:88045416"
           },
           {
-            "pid": "870976-anmeld:129471824"
+            "pid": "150005-anmeld:74720"
           },
           {
-            "pid": "870971-anmeld:37104132"
+            "pid": "870971-anmeld:87471594"
+          },
+          {
+            "pid": "870971-anmeld:87468186"
+          },
+          {
+            "pid": "870971-anmeld:87468143"
+          },
+          {
+            "pid": "870976-anmeld:128548289"
+          },
+          {
+            "pid": "870971-anmeld:87471551"
+          },
+          {
+            "pid": "870971-anmeld:87564029"
+          },
+          {
+            "pid": "870971-anmeld:135062367"
+          },
+          {
+            "pid": "870971-anmeld:136322567"
+          },
+          {
+            "pid": "150005-anmeld:103202"
+          },
+          {
+            "pid": "870976-anmeld:134964286"
           }
         ],
         "hasAdaptation": []
