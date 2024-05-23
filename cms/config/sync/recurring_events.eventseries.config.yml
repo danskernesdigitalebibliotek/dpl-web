@@ -1,6 +1,6 @@
 _core:
   default_config_hash: HuNc0wdz6BZa5IceY8HDpVfwTwqvp1rpRQeuS5szwSo
-interval: 30
+interval: 15
 min_time: '08:00am'
 max_time: '11:45pm'
 date_format: 'd/m/y - H:i'
