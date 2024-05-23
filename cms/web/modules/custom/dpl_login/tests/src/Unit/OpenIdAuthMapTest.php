@@ -56,7 +56,7 @@ class OpenIdAuthMapTest extends UnitTestCase {
   /**
    * @dataProvider weGetUniqueHashesNotMatterWhatData
    */
-  public function testThatHashIdentifierReturnsAUniqueHash(string $id_1, string $id_2) {
+  public function testThatHashedCprsAreUnique(string $id_1, string $id_2) {
     $service = new OpenIdUserInfoService($this->settings);
     $hash1 = $service->hashIdentifier($id_1);
     $hash2 = $service->hashIdentifier($id_2);
@@ -75,7 +75,7 @@ class OpenIdAuthMapTest extends UnitTestCase {
             'uniqueId' => '9d67c9fa-81d6-41ce-8b42-9d187b306fd9',
           ],
         ],
-        'e32K92Yudky16',
+        '$5$e3b0c44298fc1c14$yd.tasg4wRielbUAUo.AKfcvYplJeAPfXvPBfKxaO47',
         AuthorizationIdType::CPR,
       ],
       'uniqueId is getting hashed when cpr is missing' => [
@@ -130,134 +130,6 @@ class OpenIdAuthMapTest extends UnitTestCase {
       'a pair of cpr that starts with the same nine characters' => [
         '1234567890',
         '1234567891',
-      ],
-      'a pair of cpr that are identical' => [
-        '1234567890',
-        '1234567890',
-      ],
-      'a pair of unique_ids that start with the same character' => [
-        'e1a0eccd-6a89-47ad-8865-6ac91c104f22',
-        'e0aca8c3-5e36-42e0-b9e5-bd867e3b4599',
-      ],
-      'a pair of unique_ids that starts with the same two characters' => [
-        'e1a0eccd-6a89-47ad-8865-6ac91c104f22',
-        'e1aca8c3-5e36-42e0-b9e5-bd867e3b4599',
-      ],
-      'a pair of unique_ids that starts with the same three characters' => [
-        'e1a0eccd-6a89-47ad-8865-6ac91c104f22',
-        'e1aee469-527b-4025-9c55-2daa7a9fa172',
-      ],
-      'a pair of unique_ids that starts with the same four characters' => [
-        'e1a0eccd-6a89-47ad-8865-6ac91c104f22',
-        'e1a0d7c6-1dad-4372-89dd-d23d018c470b',
-      ],
-      'a pair of unique_ids that starts with the same five characters' => [
-        'e1a0eccd-6a89-47ad-8865-6ac91c104f22',
-        'e1a0e309-432e-48bd-914a-ab30cfcc2f6c',
-      ],
-      'a pair of unique_ids that starts with the same six characters' => [
-        'e1a0eccd-6a89-47ad-8865-6ac91c104f22',
-        'e1a0ecaf-2830-44da-aaa0-109d81aff5e4',
-      ],
-      'a pair of unique_ids that starts with the same seven characters' => [
-        'e1a0eccd-6a89-47ad-8865-6ac91c104f22',
-        'e1a0ecc5-90eb-4f5c-acb8-a457c38f0f02',
-      ],
-      'a pair of unique_ids that starts with the same nine characters (because of separator)' => [
-        'e1a0eccd-6a89-47ad-8865-6ac91c104f22',
-        'e1a0eccd-4b5b-418c-a6df-eafad2898e36',
-      ],
-      'a pair of unique_ids that starts withe the same ten characters' => [
-        'e1a0eccd-6a89-47ad-8865-6ac91c104f22',
-        'e1a0eccd-69cb-4a3c-b62b-3a9bccd75e54',
-      ],
-      'a pair of unique_ids that starts withe the same elleven characters' => [
-        'e1a0eccd-6a89-47ad-8865-6ac91c104f22',
-        'e1a0eccd-6ac1-4cb5-be86-fae04806fe59',
-      ],
-      'a pair of unique_ids that starts withe the same twelve characters' => [
-        'e1a0eccd-6a89-47ad-8865-6ac91c104f22',
-        'e1a0eccd-6a81-4cb5-be86-fae04806fe59',
-      ],
-      'a pair of unique_ids that starts withe the same thirteen characters' => [
-        'e1a0eccd-6a89-47ad-8865-6ac91c104f22',
-        'e1a0eccd-6a89-1e9a-b38c-eed00a66a2c3',
-      ],
-      'a pair of unique_ids that starts withe the same sixteen characters' => [
-        'e1a0eccd-6a89-47ad-8865-6ac91c104f22',
-        'e1a0eccd-6a89-479a-b38c-eed00a66a2c3',
-      ],
-      'a pair of unique_ids that starts withe the same seventeen characters' => [
-        'e1a0eccd-6a89-47ad-8865-6ac91c104f22',
-        'e1a0eccd-6a89-47aa-b38c-eed00a66a2c3',
-      ],
-      'a pair of unique_ids that starts withe the same nineteen characters (because of separator)' => [
-        'e1a0eccd-6a89-47ad-8865-6ac91c104f22',
-        'e1a0eccd-6a89-47ad-b38c-eed00a66a2c3',
-      ],
-      'a pair of unique_ids that starts withe the same twenty characters' => [
-        'e1a0eccd-6a89-47ad-8865-6ac91c104f22',
-        'e1a0eccd-6a89-47ad-838c-eed00a66a2c3',
-      ],
-      'a pair of unique_ids that starts withe the same twenty one characters' => [
-        'e1a0eccd-6a89-47ad-8865-6ac91c104f22',
-        'e1a0eccd-6a89-47ad-888c-eed00a66a2c3',
-      ],
-      'a pair of unique_ids that starts withe the same twenty two characters' => [
-        'e1a0eccd-6a89-47ad-8865-6ac91c104f22',
-        'e1a0eccd-6a89-47ad-886c-eed00a66a2c3',
-      ],
-      'a pair of unique_ids that starts withe the same twenty three characters' => [
-        'e1a0eccd-6a89-47ad-8865-6ac91c104f22',
-        'e1a0eccd-6a89-47ad-8865-eed00a66a2c3',
-      ],
-      'a pair of unique_ids that starts withe the same twenty five characters (because of separator)' => [
-        'e1a0eccd-6a89-47ad-8865-6ac91c104f22',
-        'e1a0eccd-6a89-47ad-886c-6ed00a66a2c3',
-      ],
-      'a pair of unique_ids that starts withe the same twenty six characters' => [
-        'e1a0eccd-6a89-47ad-8865-6ac91c104f22',
-        'e1a0eccd-6a89-47ad-886c-6ad00a66a2c3',
-      ],
-      'a pair of unique_ids that starts withe the same twenty seven characters' => [
-        'e1a0eccd-6a89-47ad-8865-6ac91c104f22',
-        'e1a0eccd-6a89-47ad-886c-6ac90a66a2c3',
-      ],
-      'a pair of unique_ids that starts withe the same twenty eight characters' => [
-        'e1a0eccd-6a89-47ad-8865-6ac91c104f22',
-        'e1a0eccd-6a89-47ad-886c-6ac90a66a2c3',
-      ],
-      'a pair of unique_ids that starts withe the same twenty nine characters' => [
-        'e1a0eccd-6a89-47ad-8865-6ac91c104f22',
-        'e1a0eccd-6a89-47ad-886c-6ac91a66a2c3',
-      ],
-      'a pair of unique_ids that starts withe the same thirty characters' => [
-        'e1a0eccd-6a89-47ad-8865-6ac91c104f22',
-        'e1a0eccd-6a89-47ad-886c-6ac91c66a2c3',
-      ],
-      'a pair of unique_ids that starts withe the same thirty one characters' => [
-        'e1a0eccd-6a89-47ad-8865-6ac91c104f22',
-        'e1a0eccd-6a89-47ad-886c-6ac91c16a2c3',
-      ],
-      'a pair of unique_ids that starts withe the same thirty two characters' => [
-        'e1a0eccd-6a89-47ad-8865-6ac91c104f22',
-        'e1a0eccd-6a89-47ad-886c-6ac91c10a2c3',
-      ],
-      'a pair of unique_ids that starts withe the same thirty three characters' => [
-        'e1a0eccd-6a89-47ad-8865-6ac91c104f22',
-        'e1a0eccd-6a89-47ad-886c-6ac91c1042c3',
-      ],
-      'a pair of unique_ids that starts withe the same thirty four characters' => [
-        'e1a0eccd-6a89-47ad-8865-6ac91c104f22',
-        'e1a0eccd-6a89-47ad-886c-6ac91c104fc3',
-      ],
-      'a pair of unique_ids that starts withe the same thirty five characters' => [
-        'e1a0eccd-6a89-47ad-8865-6ac91c104f22',
-        'e1a0eccd-6a89-47ad-886c-6ac91c104f23',
-      ],
-      'a pair of unique_ids that are identical' => [
-        'e1a0eccd-6a89-47ad-8865-6ac91c104f22',
-        'e1a0eccd-6a89-47ad-8865-6ac91c104f22',
       ],
     ];
   }

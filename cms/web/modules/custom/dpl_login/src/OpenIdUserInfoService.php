@@ -78,7 +78,7 @@ class OpenIdUserInfoService {
    *
    */
   public function hashIdentifier(string $identifier): string {
-    return crypt($identifier, $this->settings::getHashSalt());
+    return crypt($identifier, sprintf('$5$%s', $this->settings::getHashSalt()));
   }
 
 }
