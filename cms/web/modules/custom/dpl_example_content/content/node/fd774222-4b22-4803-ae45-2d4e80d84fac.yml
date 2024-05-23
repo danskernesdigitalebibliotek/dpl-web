@@ -344,6 +344,9 @@ default:
           revision_translation_affected:
             -
               value: true
+          field_filter_cond_type:
+            -
+              value: or
           field_title:
             -
               value: 'Nye artikler'

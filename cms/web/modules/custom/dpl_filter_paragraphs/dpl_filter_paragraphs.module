@@ -1,6 +1,7 @@
 <?php
 
 /**
+ * @file
  * This file is left empty on purpose.
  *
  * The dpl_filter_paragraphs module is deprecated, and will be deactivated

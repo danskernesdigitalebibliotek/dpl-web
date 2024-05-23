@@ -18,7 +18,7 @@ function dpl_related_content_deploy_port_amount_item(): string {
 
   $ids =
     \Drupal::entityQuery('paragraph')
-      ->condition($source_field, '', '<>')
+      ->condition('type', 'filtered_event_list')
       ->accessCheck(FALSE)
       ->execute();
 
@@ -30,7 +30,7 @@ function dpl_related_content_deploy_port_amount_item(): string {
     \Drupal::entityTypeManager()->getStorage('paragraph')->loadMultiple($ids);
 
   foreach ($entities as $entity) {
-    if (!($entity instanceof Paragraph) || !$entity->hasField($target_field)) {
+    if (!($entity instanceof Paragraph) || !$entity->hasField($source_field) || !$entity->hasField($target_field)) {
       continue;
     }
 

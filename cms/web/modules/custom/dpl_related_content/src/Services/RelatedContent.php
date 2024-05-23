@@ -8,6 +8,7 @@ use Drupal\Core\Entity\EntityTypeManagerInterface;
 use Drupal\Core\Entity\FieldableEntityInterface;
 use Drupal\Core\StringTranslation\TranslationInterface;
 use Drupal\datetime\Plugin\Field\FieldType\DateTimeItemInterface;
+use Drupal\dpl_related_content\RelatedContentListStyle;
 use Drupal\recurring_events\Entity\EventInstance;
 
 /**
@@ -103,10 +104,8 @@ class RelatedContent {
 
   /**
    * What type of list do we want the items to be displayed in?
-   *
-   * @var "slider"|"grid"|"list"
    */
-  private string $listStyle = 'slider';
+  private RelatedContentListStyle $listStyle = RelatedContentListStyle::Slider;
 
   /**
    * The title that may be shown as part of the list.
@@ -470,7 +469,7 @@ class RelatedContent {
    *   The tag IDs.
    */
   public function setTags(array $tags) {
-    $this->tags = $this->setReferenceProperty($tags);
+    $this->tags = $this->getReferenceIds($tags);
     return $this->tags;
   }
 
@@ -484,7 +483,7 @@ class RelatedContent {
    *   The category IDs.
    */
   public function setCategories(array $categories) {
-    $this->categories = $this->setReferenceProperty($categories);
+    $this->categories = $this->getReferenceIds($categories);
     return $this->categories;
   }
 
@@ -498,27 +497,21 @@ class RelatedContent {
    *   The branch IDs.
    */
   public function setBranches(array $branches) {
-    $this->branches = $this->setReferenceProperty($branches);
+    $this->branches = $this->getReferenceIds($branches);
     return $this->branches;
   }
 
   /**
    * Setter for list style, and the auto-effects on maxItems and item viewmode.
-   *
-   * @param 'slider'|'grid'|'list' $list_style
-   *   The list style to set.
-   *
-   * @return 'slider'|'grid'|'list'
-   *   The list style.
    */
-  public function setListStyle(string $list_style): string {
+  public function setListStyle(RelatedContentListStyle $list_style): RelatedContentListStyle {
     $this->listStyle = $list_style;
 
-    if ($this->listStyle == 'list') {
+    if ($this->listStyle == RelatedContentListStyle::EventList) {
       $this->contentViewMode = 'list_teaser';
     }
 
-    if ($this->listStyle == 'grid') {
+    if ($this->listStyle == RelatedContentListStyle::Grid) {
       $this->maxItems = 6;
     }
 
@@ -526,15 +519,15 @@ class RelatedContent {
   }
 
   /**
-   * Parsing a list that may be an entity or simple array, to int[].
+   * Parsing a list that may be an entity or simple ID array, to int[].
    *
    * @param int[]|string[]|FieldableEntityInterface[] $entities
-   *   The entities, that may just be strings or ints.
+   *   The entities, or an array of IDs that may be strings or ints.
    *
    * @return int[]
    *   The entity IDs.
    */
-  private function setReferenceProperty(array $entities): array {
+  private function getReferenceIds(array $entities): array {
     $ids = [];
 
     foreach ($entities as $entity) {

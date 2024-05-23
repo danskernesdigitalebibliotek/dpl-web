@@ -1,6 +1,7 @@
 <?php
 
 use Drupal\Core\Entity\FieldableEntityInterface;
+use Drupal\dpl_related_content\RelatedContentListStyle;
 use Drupal\dpl_related_content\Services\RelatedContent;
 use Drupal\drupal_typed\DrupalTyped;
 use Drupal\node\NodeInterface;
@@ -51,14 +52,14 @@ function dpl_related_content_preprocess_page(array &$variables): void {
  * Implements theme_preprocess_paragraph__NAME().
  */
 function dpl_related_content_preprocess_paragraph__card_grid_automatic(array &$variables): void {
-  $variables = _dpl_related_content_filter_paragraph($variables, list_style: 'grid');
+  $variables = _dpl_related_content_filter_paragraph($variables, list_style: RelatedContentListStyle::Grid);
 }
 
 /**
  * Implements theme_preprocess_paragraph__NAME().
  */
 function dpl_related_content_preprocess_paragraph__content_slider_automatic(array &$variables): void {
-  $variables = _dpl_related_content_filter_paragraph($variables, list_style: 'slider');
+  $variables = _dpl_related_content_filter_paragraph($variables, list_style: RelatedContentListStyle::Slider);
 }
 
 /**
@@ -66,7 +67,7 @@ function dpl_related_content_preprocess_paragraph__content_slider_automatic(arra
  */
 function dpl_related_content_preprocess_paragraph__filtered_event_list(array &$variables): void {
   $variables = _dpl_related_content_filter_paragraph(
-    $variables, list_style: 'list', max_items: 16, node_bundles: []
+    $variables, list_style: RelatedContentListStyle::EventList, max_items: 16, node_bundles: []
   );
 }
 
@@ -75,7 +76,7 @@ function dpl_related_content_preprocess_paragraph__filtered_event_list(array &$v
  *
  * @param array<mixed> $variables
  *   The variables, from the preprocess hook.
- * @param "slider"|"grid"|"list" $list_style
+ * @param \Drupal\dpl_related_content\RelatedContentListStyle $list_style
  *   The style you want the list to be shown in.
  * @param int|null $max_items
  *   May be overriden by field_max_item_amount on the paragraph.
@@ -87,7 +88,7 @@ function dpl_related_content_preprocess_paragraph__filtered_event_list(array &$v
  * @return array<mixed>
  *   The updated $variables.
  */
-function _dpl_related_content_filter_paragraph(array $variables, string $list_style = 'slider', ?int $max_items = NULL, ?array $node_bundles = NULL): array {
+function _dpl_related_content_filter_paragraph(array $variables, RelatedContentListStyle $list_style = RelatedContentListStyle::Slider, ?int $max_items = NULL, ?array $node_bundles = NULL): array {
   $paragraph = $variables['paragraph'] ?? NULL;
   $view_mode = $variables['view_mode'] ?? NULL;
 
@@ -153,8 +154,20 @@ function dpl_related_content_theme(array $existing, string $type, string $theme,
       'variables' => [
         'title' => NULL,
         'items' => [],
-        'list_style' => 'slider',
+        'list_style' => RelatedContentListStyle::Slider,
       ],
     ],
   ];
+}
+
+/**
+ * Implements hook_theme_suggestions_HOOK_alter().
+ */
+function dpl_related_content_theme_suggestions_dpl_related_content_alter(array &$suggestions, array $variables): void {
+  $list_style = $variables['list_style'] ?? RelatedContentListStyle::Slider;
+  if (!($list_style instanceof RelatedContentListStyle)) {
+    return;
+  }
+
+  $suggestions[] = "dpl_related_content__{$list_style->value}";
 }
