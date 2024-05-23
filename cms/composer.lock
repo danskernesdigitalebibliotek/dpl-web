@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "eec8f460556d291f770573562cdd7477",
+    "content-hash": "9dcd95c951ed0a77115ccc825751f8b2",
     "packages": [
         {
             "name": "amazeeio/drupal_integrations",
@@ -1152,7 +1152,7 @@
             "version": "2024.19.0",
             "dist": {
                 "type": "zip",
-                "url": "https://github.com/danskernesdigitalebibliotek/dpl-design-system/archive/refs/tags/branch-release/brahma-16.zip"
+                "url": "https://github.com/danskernesdigitalebibliotek/dpl-design-system/releases/download/release-brahma-16/dist-release-brahma-16-a77db2de4a64eb4ae095e24812347f5e920ab029.zip"
             },
             "type": "drupal-library"
         },
