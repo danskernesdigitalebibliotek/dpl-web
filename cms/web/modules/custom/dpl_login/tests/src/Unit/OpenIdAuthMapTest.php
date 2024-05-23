@@ -6,6 +6,7 @@ use Drupal\Core\Site\Settings;
 use Drupal\dpl_login\AuthorizationIdType;
 use Drupal\dpl_login\OpenIdUserInfoService;
 use Drupal\Tests\UnitTestCase;
+use phpmock\MockBuilder;
 
 /**
  * Unit test for the Adgangsplatformen configuration.
@@ -24,7 +25,16 @@ class OpenIdAuthMapTest extends UnitTestCase {
     $settings = [];
     $settings['hash_salt'] = 'e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855';
     $this->settings = new Settings($settings);
-
+    $builder = new MockBuilder();
+    $builder->setNamespace('Drupal\dpl_login')
+      ->setName("uniqid")
+      ->setFunction(
+                function () {
+                    return '9999999999999';
+                }
+            );
+    $mock = $builder->build();
+    $mock->enable();
   }
 
   /**
@@ -72,6 +82,25 @@ class OpenIdAuthMapTest extends UnitTestCase {
     $hash1 = $service->hashIdentifier($id);
     $hash2 = $service->hashIdentifier($id);
     $this->assertEquals($hash1, $hash2);
+  }
+
+  /**
+   *
+   */
+  public function testThatWeGetExpectedUserInfoFromService() {
+    $service = new OpenIdUserInfoService($this->settings);
+    $userinfo = $service->getOpenIdUserInfoFromAdgangsplatformenUserInfoResponse([
+      'attributes' => [
+        'cpr' => '1234567890',
+        'uniqueId' => '9d67c9fa-81d6-41ce-8b42-9d187b306fd9',
+      ],
+    ]);
+
+    $this->assertEquals([
+      'email' => '9999999999999@dpl-cms.invalid',
+      'name' => '9999999999999',
+      'sub' => '$5$e3b0c44298fc1c14$yd.tasg4wRielbUAUo.AKfcvYplJeAPfXvPBfKxaO47',
+    ], $userinfo);
   }
 
   /**
