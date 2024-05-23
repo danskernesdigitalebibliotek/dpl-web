@@ -12,14 +12,22 @@ use function Safe\sprintf;
 class OpenIdUserInfoService {
 
   /**
-   *
+   * Constructor.
    */
   public function __construct(
     private Settings $settings
   ) {}
 
   /**
+   * Get the user info from the response.
    *
+   * From the adgangsplatformen userinfo endpoint.
+   *
+   * @param mixed[] $response
+   *   The response from the userinfo endpoint.
+   *
+   * @return mixed[]
+   *   The openid_connect user info.
    */
   public function getOpenIdUserInfoFromAdgangsplatformenUserInfoResponse(array $response): array {
     $name = uniqid();
@@ -34,7 +42,13 @@ class OpenIdUserInfoService {
   }
 
   /**
+   * Get the hashed userinfo id.
    *
+   * @param mixed[] $userinfo
+   *   The userinfo from the adgangsplatformen userinfo endpoint.
+   *
+   * @return string
+   *   The hashed opemid_connect sub id.
    */
   public function getSubIdFromUserInfo(array $userinfo): string {
     $identifier_data = $this->getIdentifierDataFromUserInfo($userinfo);
@@ -42,11 +56,18 @@ class OpenIdUserInfoService {
   }
 
   /**
+   * Get the identifier data from the userinfo.
    *
+   * @param mixed[] $userinfo
+   *   The userinfo from the adgangsplatformen userinfo endpoint.
+   *
+   * @return mixed[]
+   *   The identifier data: Raw id and type of id.
    */
   public function getIdentifierDataFromUserInfo(array $userinfo): array {
     $cpr = $userinfo['attributes']['cpr'] ?? FALSE;
     $unique_id = $userinfo['attributes']['uniqueId'] ?? FALSE;
+    $id = $type = NULL;
 
     if (!$cpr && !$unique_id) {
       throw new \Exception('Unable to identify user. Both CPR and uniqueId are missing.');
@@ -66,7 +87,13 @@ class OpenIdUserInfoService {
   }
 
   /**
+   * Hash the identifier.
    *
+   * @param string $identifier
+   *   The identifier to hash.
+   *
+   * @return string
+   *   The hashed identifier.
    */
   public function hashIdentifier(string $identifier): string {
     return crypt($identifier, sprintf('$5$%s', $this->settings::getHashSalt()));

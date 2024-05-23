@@ -14,6 +14,9 @@ use phpmock\MockBuilder;
  * @covers \Drupal\dpl_login\Adgangsplatformen\Config
  */
 class OpenIdUserInfoServiceTest extends UnitTestCase {
+  /**
+   * Drupal settings.
+   */
   private Settings $settings;
 
   /**
@@ -28,6 +31,8 @@ class OpenIdUserInfoServiceTest extends UnitTestCase {
   }
 
   /**
+   * Test precedence of CPR over uniqueId.
+   *
    * @dataProvider cprHasPrecedenceOverUniqueIdData
    */
   public function testHashCreationThatCprHasPrecedenceOverUniqueid(array $userinfo, string $expected_sub_id, AuthorizationIdType $expected_id_type) {
@@ -40,7 +45,7 @@ class OpenIdUserInfoServiceTest extends UnitTestCase {
   }
 
   /**
-   *
+   * Test Exception if both CPR and uniqueId are missing.
    */
   public function testThatGettingSubHashFromUserInfoThrowsAnExceptionIfBothCprAndUniqueIdAreMissing() {
     $service = new OpenIdUserInfoService($this->settings);
@@ -54,6 +59,8 @@ class OpenIdUserInfoServiceTest extends UnitTestCase {
   }
 
   /**
+   * Test that hashed identifiers are unique.
+   *
    * @dataProvider weGetUniqueHashesNotMatterWhatData
    */
   public function testThatHashedIdentifiersAreUnique(string $id_1, string $id_2) {
@@ -64,7 +71,7 @@ class OpenIdUserInfoServiceTest extends UnitTestCase {
   }
 
   /**
-   *
+   * Test that hashed identifier is reproducible.
    */
   public function testThatHashedIdentifierIsReproducible() {
     $service = new OpenIdUserInfoService($this->settings);
@@ -75,7 +82,7 @@ class OpenIdUserInfoServiceTest extends UnitTestCase {
   }
 
   /**
-   *
+   * Test that we get expected user info from service.
    */
   public function testThatWeGetExpectedUserInfoFromService() {
     // getOpenIdUserInfoFromAdgangsplatformenUserInfoResponse uses uniqid()
@@ -110,7 +117,7 @@ class OpenIdUserInfoServiceTest extends UnitTestCase {
   }
 
   /**
-   *
+   * Data provider for testHashCreationThatCprHasPrecedenceOverUniqueid.
    */
   public function cprHasPrecedenceOverUniqueIdData(): array {
     return [
@@ -137,7 +144,7 @@ class OpenIdUserInfoServiceTest extends UnitTestCase {
   }
 
   /**
-   *
+   * Data provider for testThatHashedIdentifiersAreUnique.
    */
   public function weGetUniqueHashesNotMatterWhatData(): array {
     return [
