@@ -43,7 +43,7 @@
                 "version": "2024.19.0",
                 "type": "drupal-library",
                 "dist": {
-                    "url": "https://github.com/danskernesdigitalebibliotek/dpl-react/releases/download/branch-release%2Fbrahma-16/dist-release-brahma-16.zip",
+                    "url": "https://github.com/danskernesdigitalebibliotek/dpl-react/releases/download/release-brahma-16/dist-release-brahma-16-8e09cc899b620e0db6a363b479980c63d0e50f0d.zip",
                     "type": "zip"
                 },
                 "require": {
