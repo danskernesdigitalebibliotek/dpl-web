@@ -13,7 +13,7 @@ use phpmock\MockBuilder;
  *
  * @covers \Drupal\dpl_login\Adgangsplatformen\Config
  */
-class OpenIdAuthMapTest extends UnitTestCase {
+class OpenIdUserInfoServiceTest extends UnitTestCase {
   private Settings $settings;
 
   /**
