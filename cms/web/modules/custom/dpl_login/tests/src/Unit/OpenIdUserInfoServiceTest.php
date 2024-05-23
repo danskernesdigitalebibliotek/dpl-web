@@ -28,24 +28,6 @@ class OpenIdUserInfoServiceTest extends UnitTestCase {
   }
 
   /**
-   *
-   */
-  public static function setUpBeforeClass(): void {
-    parent::setUpBeforeClass();
-
-    $builder = new MockBuilder();
-    $builder->setNamespace('Drupal\dpl_login')
-      ->setName("uniqid")
-      ->setFunction(
-                function () {
-                    return '9999999999999';
-                }
-            );
-    $mock = $builder->build();
-    $mock->enable();
-  }
-
-  /**
    * @dataProvider cprHasPrecedenceOverUniqueIdData
    */
   public function testHashCreationThatCprHasPrecedenceOverUniqueid(array $userinfo, string $expected_sub_id, AuthorizationIdType $expected_id_type) {
@@ -96,6 +78,20 @@ class OpenIdUserInfoServiceTest extends UnitTestCase {
    *
    */
   public function testThatWeGetExpectedUserInfoFromService() {
+    // getOpenIdUserInfoFromAdgangsplatformenUserInfoResponse uses uniqid()
+    // to generate a unique user name. We need to mock it to get a predictable
+    // result.
+    $builder = new MockBuilder();
+    $builder->setNamespace('Drupal\dpl_login')
+      ->setName("uniqid")
+      ->setFunction(
+                function () {
+                    return '9999999999999';
+                }
+            );
+    $mock = $builder->build();
+    $mock->enable();
+
     $service = new OpenIdUserInfoService($this->settings);
     $userinfo = $service->getOpenIdUserInfoFromAdgangsplatformenUserInfoResponse([
       'attributes' => [
@@ -109,6 +105,8 @@ class OpenIdUserInfoServiceTest extends UnitTestCase {
       'name' => '9999999999999',
       'sub' => '$5$e3b0c44298fc1c14$yd.tasg4wRielbUAUo.AKfcvYplJeAPfXvPBfKxaO47',
     ], $userinfo);
+
+    $mock->disable();
   }
 
   /**
