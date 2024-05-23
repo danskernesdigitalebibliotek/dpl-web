@@ -34,20 +34,9 @@ class OpenIdUserInfoService {
   /**
    *
    */
-  public function getSubIdFromUserInfo(array $userinfo): ?string {
+  public function getSubIdFromUserInfo(array $userinfo): string {
     $identifier_data = $this->getIdentifierDataFromUserInfo($userinfo);
-
-    switch ($identifier_data['type']) {
-      case AuthorizationIdType::CPR:
-        return $this->hashIdentifier($identifier_data['id']);
-
-      // We use the unique id as is. DBC says we can trust the uniquenes of it.
-      case AuthorizationIdType::UNIQUE_ID:
-        return $identifier_data['id'];
-
-      default:
-        return NULL;
-    }
+    return $this->hashIdentifier($identifier_data['id']);
   }
 
   /**
