@@ -79,7 +79,7 @@ NB: The keys for these configuration files should already be in
 <!-- markdownlint-disable ol-prefix -->
 1. Add the module to the project code base or as a Composer dependency
 2. Create an update hook in the DPL CMS installation profile which enables the
-   module[^1]
+   module[^1]. You may want to use `dpl_base.install`.
 
 ```php
 function dpl_cms_update_9000() {

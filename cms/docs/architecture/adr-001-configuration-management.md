@@ -32,23 +32,46 @@ A solution to configuration management must live up to the following test:
 
 ## Decision
 
-We use the [Configuration Ignore module](https://www.drupal.org/project/config_ignore)
+We use the
+[Configuration Ignore module](https://www.drupal.org/project/config_ignore)
+and the [Config Ignore Auto module](https://www.drupal.org/project/config_ignore_auto)
 to manage configuration.
 
-The module maintains a list of patterns for configuration which will be ignored
-during the configuration import process. This allows us to avoid updating local
-configuration.
+The base module maintains a list of patterns for configuration which will be
+ignored  during the configuration import process. This allows us to avoid
+updating local configuration.
 
-By adding the wildcard `*` at the top of this list we choose an approach where
-all configuration is considered local by default.
+Here, we can add some of the settings files that we already know needs to be
+ignored and admin-respected.
+But in reality, we don't need to do this manually, because of the second module:
 
-Core configuration which should not be ignored can then be added to subsequent
-lines with the `~` which prefix. On a site these configuration entries will be
-updated to match what is in the core configuration.
+**Config Ignore Auto** is only enabled on non-development sites.
+It works by treating any settings that are updated (site settings, module
+settings etc.) as to be ignored.
+These settings will NOT be overriden on next deploy by `drush config-import`.
 
-Config Ignore also has the option of ignoring specific values within settings.
-This is relevant for settings such as `system.site` where we consider the site
-name local configuration but 404 page paths core configuration.
+The consequences of using this setup is
+
+1) We need to ignore `core.extension.yml`, for administrators to manage modules
+   - This means that we need to enable/disable new modules using code.
+     See `dpl_base.install` for how to do this, through Drupal update hooks.
+2) If a faulty permission has been added, or if a decision has been made to
+   remove an existing permission, there might be config that we dont want to
+   ignore, that is ignored on some libraries.
+
+   - This means we'll first have to detect which libraries have overriden config
+
+     ```bash
+       drush config:get config_ignore_auto.settings ignored_config_entities
+         --format json
+     ```
+
+      and then either decide to override it, or migrate the existing.
+
+3) A last, and final consequence, is that we need to treat permissions more
+   strictly that we do now.
+   - An exampls is `adminster site settings` also both allows stuff we want to
+     ignore (site name), but also things we don't want to ignore (404 node ID).
 
 ## Alternatives considered
 
@@ -69,28 +92,6 @@ remove configuration which is not present in the configuration filesystem.
 
 We prefer Config Ignore as it provides a single solution to handle the entire
 problem space.
-
-### Config Ignore Auto
-
-[The Config Ignore Auto module](https://www.drupal.org/project/config_ignore_auto)
-extends the Config Ignore module. Config Ignore Auto registers configuration
-changes and adds them to an ignore list. This way they are not overridden on
-future deployments.
-
-The module is based on the assumption that if an user has access to a
-configuration form they should also be allowed to modify that configuration for
-their site.
-
-This turns the approach from Config Ignore on its head. All configuration is now
-considered core until it is changed on the individual site.
-
-We prefer Config Ignore as it only has local configuration which may vary
-between sites. With Config Ignore Auto we would have local configuration *and*
-the configuration of Config Ignore Auto.
-
-Config Ignore Auto also have special handling of the `core.extensions`
-configuration which manages the set of installed modules. Since webmaster sites
-can have additional modules installed we would need workarounds to handle these.
 
 ### Config Split
 
