@@ -26,7 +26,7 @@ class OpenIdUserInfoService {
    * @param mixed[] $response
    *   The response from the userinfo endpoint.
    *
-   * @return mixed[]
+   * @return array{'email': string, 'name': string, 'sub': string}
    *   The openid_connect user info.
    */
   public function getOpenIdUserInfoFromAdgangsplatformenUserInfoResponse(array $response): array {
