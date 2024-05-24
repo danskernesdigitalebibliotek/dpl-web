@@ -2,6 +2,7 @@ import { WireMockRestClient } from "wiremock-rest-client";
 import { Options } from "wiremock-rest-client/dist/model/options.model";
 import { StubMapping } from "wiremock-rest-client/dist/model/stub-mapping.model";
 import { RequestPattern } from "wiremock-rest-client/dist/model/request-pattern.model";
+import { randomUUID } from "node:crypto";
 
 const wiremock = (baseUri?: string, options?: Options) => {
   return new WireMockRestClient(
@@ -215,22 +216,43 @@ Cypress.Commands.add(
     accessToken,
     userCPR,
     userGuid,
+    validate = true,
+    restoreId,
   }: {
     authorizationCode: string;
     accessToken: string;
     userCPR?: number;
     userGuid?: string;
+    validate?: boolean;
+    restoreId?: string;
   }) => {
-    adgangsplatformenLoginOauthMappings({
-      userIsAlreadyRegistered: true,
-      authorizationCode,
-      accessToken,
-      userCPR,
-      userGuid,
-    });
+    const sessionId = restoreId ?? Math.random();
+    cy.session(
+      { authorizationCode, accessToken, userCPR, userGuid, sessionId },
+      () => {
+        adgangsplatformenLoginOauthMappings({
+          userIsAlreadyRegistered: true,
+          authorizationCode,
+          accessToken,
+          userCPR,
+          userGuid,
+        });
 
-    cy.visit("/user/login");
-    cy.contains("Log in with Adgangsplatformen").click();
+        cy.visit("/user/login");
+        cy.contains("Log in with Adgangsplatformen").click();
+      },
+      {
+        validate: () => {
+          if (!validate) return;
+          cy.request("/dpl-react/user-tokens")
+            .its("body")
+            .should(
+              "contain",
+              `window.dplReact.setToken("user", "${accessToken}")`
+            );
+        },
+      }
+    );
   }
 );
 Cypress.Commands.add(
@@ -321,6 +343,8 @@ declare global {
         accessToken: string;
         userCPR?: number;
         userGuid?: string;
+        validate?: boolean;
+        restoreId?: string;
       }): Chainable<null>;
       setupAdgangsplatformenRegisterMappinngs(params: {
         authorizationCode: string;
