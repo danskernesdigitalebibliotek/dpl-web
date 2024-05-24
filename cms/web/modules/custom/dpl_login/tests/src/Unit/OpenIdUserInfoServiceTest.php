@@ -37,7 +37,7 @@ class OpenIdUserInfoServiceTest extends UnitTestCase {
    */
   public function testHashCreationThatCprHasPrecedenceOverUniqueid(array $userinfo, string $expected_sub_id, AuthorizationIdType $expected_id_type) {
     $service = new OpenIdUserInfoService($this->settings);
-    $sub_id = $service->getSubIdFromUserInfo($userinfo);
+    $sub_id = $service->getSubjectIdFromUserInfo($userinfo);
     $id_type = $service->getIdentifierDataFromUserInfo($userinfo)['type'];
 
     $this->assertEquals($expected_sub_id, $sub_id);
@@ -55,7 +55,7 @@ class OpenIdUserInfoServiceTest extends UnitTestCase {
     $this->expectException(\Exception::class);
     $this->expectExceptionMessage('Unable to identify user. Both CPR and uniqueId are missing.');
 
-    $service->getSubIdFromUserInfo($userinfo);
+    $service->getSubjectIdFromUserInfo($userinfo);
   }
 
   /**

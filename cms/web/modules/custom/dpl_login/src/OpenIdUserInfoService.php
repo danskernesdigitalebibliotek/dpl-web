@@ -37,8 +37,8 @@ class OpenIdUserInfoService {
     $userinfo['email'] = sprintf('%s@dpl-cms.invalid', $name);
     // Drupal needs a username. We use the unique id to apply to that rule.
     $userinfo['name'] = $name;
-    // openid_connect module needs the sub for creating the auth map.
-    $userinfo['sub'] = $this->getSubIdFromUserInfo($response);
+    // openid_connect module needs the subject id for creating the auth map.
+    $userinfo['sub'] = $this->getSubjectIdFromUserInfo($response);
 
     return $userinfo;
   }
@@ -46,13 +46,17 @@ class OpenIdUserInfoService {
   /**
    * Get the hashed userinfo id.
    *
+   * The openid_connect module uses the sub as the identifier for the authmap.
+   *
    * @param mixed[] $userinfo
    *   The userinfo from the adgangsplatformen userinfo endpoint.
    *
+   * @see https://openid.net/specs/openid-connect-core-1_0.html#SubjectIDTypes
+   *
    * @return string
-   *   The hashed opemid_connect sub id.
+   *   The hashed openid_connect subject identifier.
    */
-  public function getSubIdFromUserInfo(array $userinfo): string {
+  public function getSubjectIdFromUserInfo(array $userinfo): string {
     $identifier_data = $this->getIdentifierDataFromUserInfo($userinfo);
     return $this->hashIdentifier($identifier_data['id']);
   }
@@ -69,11 +73,6 @@ class OpenIdUserInfoService {
   public function getIdentifierDataFromUserInfo(array $userinfo): array {
     $cpr = $userinfo['attributes']['cpr'] ?? FALSE;
     $unique_id = $userinfo['attributes']['uniqueId'] ?? FALSE;
-    // This is added to make Phpstan happy.
-    // The fact that an exception is thrown if both are missing
-    // should make it impossible to end up with NULL values.
-    // But Phpstan does not understand that.
-    $id = $type = NULL;
 
     if (!$cpr && !$unique_id) {
       throw new \Exception('Unable to identify user. Both CPR and uniqueId are missing.');
