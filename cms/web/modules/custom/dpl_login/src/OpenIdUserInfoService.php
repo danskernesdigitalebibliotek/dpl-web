@@ -61,7 +61,7 @@ class OpenIdUserInfoService {
    * @param mixed[] $userinfo
    *   The userinfo from the adgangsplatformen userinfo endpoint.
    *
-   * @return mixed[]
+   * @return array{"id": string, "type": AuthorizationIdType}
    *   The identifier data: Raw id and type of id.
    */
   public function getIdentifierDataFromUserInfo(array $userinfo): array {
