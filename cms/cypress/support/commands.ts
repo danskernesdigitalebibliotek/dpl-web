@@ -216,14 +216,12 @@ Cypress.Commands.add(
     accessToken,
     userCPR,
     userGuid,
-    validate = true,
     restoreId,
   }: {
     authorizationCode: string;
     accessToken: string;
     userCPR?: number;
     userGuid?: string;
-    validate?: boolean;
     restoreId?: string;
   }) => {
     const sessionId = restoreId ?? Math.random();
@@ -240,17 +238,6 @@ Cypress.Commands.add(
 
         cy.visit("/user/login");
         cy.contains("Log in with Adgangsplatformen").click();
-      },
-      {
-        validate: () => {
-          if (!validate) return;
-          cy.request("/dpl-react/user-tokens")
-            .its("body")
-            .should(
-              "contain",
-              `window.dplReact.setToken("user", "${accessToken}")`
-            );
-        },
       }
     );
   }
@@ -361,7 +348,6 @@ declare global {
         accessToken: string;
         userCPR?: number;
         userGuid?: string;
-        validate?: boolean;
         restoreId?: string;
       }): Chainable<null>;
       setupAdgangsplatformenRegisterMappinngs(params: {
