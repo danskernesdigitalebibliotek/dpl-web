@@ -22,12 +22,6 @@ describe("Adgangsplatformen / CMS users", () => {
     userGuid: "19a4ae39-be07-4db9-a8b7-8bbb29f03da7",
   };
 
-  function verifyUserTokens(accessToken: string) {
-    cy.request("/dpl-react/user-tokens")
-      .its("body")
-      .should("contain", `window.dplReact.setToken("user", "${accessToken}")`);
-  }
-
   beforeEach(() => {
     Cypress.session.clearAllSavedSessions();
     cy.resetMappings();
@@ -39,33 +33,31 @@ describe("Adgangsplatformen / CMS users", () => {
 
   it("handles logins with identical idents", () => {
     cy.adgangsplatformenLogin(patron1);
-
-    verifyUserTokens(patron1.accessToken);
+    cy.verifyToken({ tokenType: "user", token: patron1.accessToken });
 
     cy.adgangsplatformenLogin(patron1);
-
-    verifyUserTokens(patron1.accessToken);
+    cy.verifyToken({ tokenType: "user", token: patron1.accessToken });
   });
 
   it("handles logins with overlapping idents", () => {
     cy.adgangsplatformenLogin({ ...patron1, restoreId: "overlap" });
-    verifyUserTokens(patron1.accessToken);
+    cy.verifyToken({ tokenType: "user", token: patron1.accessToken });
 
     cy.adgangsplatformenLogin(patron2);
-    verifyUserTokens(patron2.accessToken);
+    cy.verifyToken({ tokenType: "user", token: patron2.accessToken });
 
     cy.adgangsplatformenLogin({ ...patron1, restoreId: "overlap" });
-    verifyUserTokens(patron1.accessToken);
+    cy.verifyToken({ tokenType: "user", token: patron1.accessToken });
   });
 
   it("handles logins with different idents", () => {
     cy.adgangsplatformenLogin({ ...patron1, restoreId: "different" });
-    verifyUserTokens(patron1.accessToken);
+    cy.verifyToken({ tokenType: "user", token: patron1.accessToken });
 
     cy.adgangsplatformenLogin(patron3);
-    verifyUserTokens(patron3.accessToken);
+    cy.verifyToken({ tokenType: "user", token: patron3.accessToken });
 
     cy.adgangsplatformenLogin({ ...patron1, restoreId: "different" });
-    verifyUserTokens(patron1.accessToken);
+    cy.verifyToken({ tokenType: "user", token: patron1.accessToken });
   });
 });

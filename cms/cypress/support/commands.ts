@@ -318,6 +318,24 @@ Cypress.Commands.add(
   }
 );
 
+Cypress.Commands.add(
+  "verifyToken",
+  ({
+    token,
+    tokenType,
+  }: {
+    tokenType: "library" | "user" | "unregistered-user";
+    token: string;
+  }) => {
+    cy.request("/dpl-react/user-tokens")
+      .its("body")
+      .should(
+        "contain",
+        `window.dplReact.setToken("${tokenType}", "${token}")`
+      );
+  }
+);
+
 const visible = (checkVisible: boolean) => (checkVisible ? ":visible" : "");
 Cypress.Commands.add("getBySel", (selector, checkVisible = false, ...args) => {
   return cy.get(`[data-cy="${selector}"]${visible(checkVisible)}`, ...args);
@@ -351,6 +369,10 @@ declare global {
         accessToken: string;
         userCPR?: number;
         userGuid?: string;
+      }): Chainable<null>;
+      verifyToken(params: {
+        tokenType: "library" | "user" | "unregistered-user";
+        token: string;
       }): Chainable<null>;
       getBySel(
         selector: string,
