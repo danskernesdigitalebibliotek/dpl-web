@@ -100,6 +100,7 @@
         "drupal/azure_mailer": "^1.0",
         "drupal/color_field": "^3.0",
         "drupal/config_ignore": "^2.4",
+        "drupal/config_ignore_auto": "^2.0",
         "drupal/config_translation_po": "^1.0",
         "drupal/content_lock": "^2.3",
         "drupal/core-composer-scaffold": "~10.1.7",

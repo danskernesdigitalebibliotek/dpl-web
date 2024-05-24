@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "ac6f0f0f7a95237c8621dfd0fab4cfae",
+    "content-hash": "be40107eff53d6b0b58c79dfc750ec15",
     "packages": [
         {
             "name": "amazeeio/drupal_integrations",
@@ -2627,6 +2627,55 @@
                 "source": "https://git.drupalcode.org/project/config_ignore",
                 "issues": "https://drupal.org/project/config_ignore",
                 "irc": "irc://irc.freenode.org/drupal-contribute"
+            }
+        },
+        {
+            "name": "drupal/config_ignore_auto",
+            "version": "2.0.5",
+            "source": {
+                "type": "git",
+                "url": "https://git.drupalcode.org/project/config_ignore_auto.git",
+                "reference": "2.0.5"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://ftp.drupal.org/files/projects/config_ignore_auto-2.0.5.zip",
+                "reference": "2.0.5",
+                "shasum": "9f9a41b9a2e102cd249e6982342e0a15a91c1564"
+            },
+            "require": {
+                "drupal/config_ignore": "*",
+                "drupal/core": "^8 || ^9 || ^10"
+            },
+            "type": "drupal-module",
+            "extra": {
+                "drupal": {
+                    "version": "2.0.5",
+                    "datestamp": "1698784332",
+                    "security-coverage": {
+                        "status": "covered",
+                        "message": "Covered by Drupal's security advisory policy"
+                    }
+                }
+            },
+            "notification-url": "https://packages.drupal.org/8/downloads",
+            "license": [
+                "GPL-2.0-or-later"
+            ],
+            "authors": [
+                {
+                    "name": "hanoii",
+                    "homepage": "https://www.drupal.org/user/23157"
+                },
+                {
+                    "name": "spencerbrooks",
+                    "homepage": "https://www.drupal.org/user/400066"
+                }
+            ],
+            "description": "Automatically ignore configs that were modified.",
+            "homepage": "https://www.drupal.org/project/config_ignore_auto",
+            "support": {
+                "source": "https://git.drupalcode.org/project/config_ignore_auto"
             }
         },
         {

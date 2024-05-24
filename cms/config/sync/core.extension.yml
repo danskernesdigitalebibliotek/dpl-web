@@ -14,6 +14,7 @@ module:
   color_field: 0
   config_filter: 0
   config_ignore: 0
+  config_ignore_auto: 0
   config_translation: 0
   config_translation_po: 0
   content_lock: 0
