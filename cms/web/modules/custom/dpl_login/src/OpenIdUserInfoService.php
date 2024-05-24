@@ -7,7 +7,9 @@ use Drupal\Core\Site\Settings;
 use function Safe\sprintf;
 
 /**
- * Access Token.
+ * OpenIdUserInfoService.
+ *
+ * Used for handling the userinfo from the adgangsplatformen userinfo endpoint.
  */
 class OpenIdUserInfoService {
 
