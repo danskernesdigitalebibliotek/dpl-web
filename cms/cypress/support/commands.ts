@@ -2,7 +2,6 @@ import { WireMockRestClient } from "wiremock-rest-client";
 import { Options } from "wiremock-rest-client/dist/model/options.model";
 import { StubMapping } from "wiremock-rest-client/dist/model/stub-mapping.model";
 import { RequestPattern } from "wiremock-rest-client/dist/model/request-pattern.model";
-import { randomUUID } from "node:crypto";
 
 const wiremock = (baseUri?: string, options?: Options) => {
   return new WireMockRestClient(
