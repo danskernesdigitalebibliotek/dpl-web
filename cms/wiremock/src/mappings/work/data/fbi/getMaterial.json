@@ -1139,44 +1139,7 @@
         "display": "Skønlitteratur"
       },
       "relations": {
-        "hasReview": [
-          {
-            "pid": "870971-anmeld:88045416"
-          },
-          {
-            "pid": "150005-anmeld:74720"
-          },
-          {
-            "pid": "870971-anmeld:87471594"
-          },
-          {
-            "pid": "870971-anmeld:87468186"
-          },
-          {
-            "pid": "870971-anmeld:87468143"
-          },
-          {
-            "pid": "870976-anmeld:128548289"
-          },
-          {
-            "pid": "870971-anmeld:87471551"
-          },
-          {
-            "pid": "870971-anmeld:87564029"
-          },
-          {
-            "pid": "870971-anmeld:135062367"
-          },
-          {
-            "pid": "870971-anmeld:136322567"
-          },
-          {
-            "pid": "150005-anmeld:103202"
-          },
-          {
-            "pid": "870976-anmeld:134964286"
-          }
-        ],
+        "hasReview": [],
         "hasAdaptation": []
       }
     }
