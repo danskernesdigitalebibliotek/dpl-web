@@ -91,7 +91,11 @@ class OpenIdUserInfoService {
   }
 
   /**
-   * Hash the identifier.
+   * We need a unique identifier for the openid_connect authmap.
+   *
+   * Since we cannot use the CPR or uniqueId directly as the identifier
+   * we hash it with a salt. That way we can still identify the user
+   * but the actual identifier is not stored in the database.
    *
    * @param string $identifier
    *   The identifier to hash.
