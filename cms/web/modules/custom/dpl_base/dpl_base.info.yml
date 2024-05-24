@@ -1,0 +1,5 @@
+name: "DPL Base"
+type: module
+description: "Generalized logic, such as enabling/disabling modules, migrating data or similar."
+package: DPL
+core_version_requirement: ^10

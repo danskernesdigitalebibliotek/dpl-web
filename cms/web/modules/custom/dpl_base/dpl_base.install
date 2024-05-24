@@ -1,0 +1,30 @@
+<?php
+
+/**
+ * @file
+ * Base update hooks.
+ *
+ * These get run BEFORE config-import.
+ * This is where you enable/disable modules, as core.extension.yml is in
+ * config_ignore as library administrators can add their own modules.
+ */
+
+/**
+ * Run on the initial site setup. Remember to add individual update hooks.
+ */
+function dpl_base_install(): string {
+  $messages[] = dpl_base_update_10001();
+
+  return implode('\r\n', $messages);
+}
+
+/**
+ * Installing config_ignore_auto module.
+ *
+ * This is mostly here as an example for how to enable modules in the future.
+ */
+function dpl_base_update_10001(): string {
+  \Drupal::service('module_installer')->install(['config_ignore_auto']);
+
+  return 'Module config_ignore_auto has been enabled.';
+}
