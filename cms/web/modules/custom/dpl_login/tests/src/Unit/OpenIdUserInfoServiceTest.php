@@ -110,7 +110,7 @@ class OpenIdUserInfoServiceTest extends UnitTestCase {
     $this->assertEquals([
       'email' => '9999999999999@dpl-cms.invalid',
       'name' => '9999999999999',
-      'sub' => '$5$e3b0c44298fc1c14$yd.tasg4wRielbUAUo.AKfcvYplJeAPfXvPBfKxaO47',
+      'sub' => 'e2057a73dd0aa38c7fa4450a9a0561494cd4baa4a1b769d6f04deb3e3677379e',
     ], $userinfo);
 
     $mock->disable();
@@ -128,7 +128,7 @@ class OpenIdUserInfoServiceTest extends UnitTestCase {
             'uniqueId' => '9d67c9fa-81d6-41ce-8b42-9d187b306fd9',
           ],
         ],
-        '$5$e3b0c44298fc1c14$yd.tasg4wRielbUAUo.AKfcvYplJeAPfXvPBfKxaO47',
+        'e2057a73dd0aa38c7fa4450a9a0561494cd4baa4a1b769d6f04deb3e3677379e',
         AuthorizationIdType::CPR,
       ],
       'uniqueId is getting hashed when cpr is missing' => [
@@ -137,7 +137,7 @@ class OpenIdUserInfoServiceTest extends UnitTestCase {
             'uniqueId' => '9d67c9fa-81d6-41ce-8b42-9d187b306fd9',
           ],
         ],
-        '$5$e3b0c44298fc1c14$Dj8wC1wNLslq2iqawXGyEEX.Rh0DD3QNQY7pxX/Hvx6',
+        '70abf093ee19f055b16d35e494e3cc1c6a0f4bae36c6b07ae9ed0d7867bf1909',
         AuthorizationIdType::UNIQUE_ID,
       ],
     ];

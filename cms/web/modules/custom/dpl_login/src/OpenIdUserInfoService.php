@@ -104,7 +104,7 @@ class OpenIdUserInfoService {
    *   The hashed identifier.
    */
   public function hashIdentifier(string $identifier): string {
-    return crypt($identifier, sprintf('$5$%s', $this->settings::getHashSalt()));
+    return hash_hmac('sha256', $identifier, $this->settings::getHashSalt());
   }
 
 }
