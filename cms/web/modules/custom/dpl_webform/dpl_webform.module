@@ -16,6 +16,11 @@ function dpl_webform_webform_create(Webform $webform): void {
   // Therefore we disable saving of results for all new webforms.
   $webform->setSetting('results_disabled', TRUE);
   $webform->setSetting('results_disabled_ignore', TRUE);
+
+  // We want to set a new "default_value" to the "confirmation_type" setting.
+  // If we do not set this, the editors will have to manually change it when
+  // creating a new webform.
+  $webform->setSetting('confirmation_type', 'message');
 }
 
 /**
