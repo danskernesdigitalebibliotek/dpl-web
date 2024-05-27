@@ -47,13 +47,8 @@ describe("DPL React Apps", () => {
       userGuid,
     });
 
-    cy.request("/dpl-react/user-tokens")
-      .its("body")
-      .should(
-        "contain",
-        `window.dplReact.setToken("library", "${libraryAccessToken}")`
-      )
-      .should("contain", `window.dplReact.setToken("user", "${accessToken}")`);
+    cy.verifyToken({ tokenType: "library", token: libraryAccessToken });
+    cy.verifyToken({ tokenType: "user", token: accessToken });
   });
 
   beforeEach(() => {

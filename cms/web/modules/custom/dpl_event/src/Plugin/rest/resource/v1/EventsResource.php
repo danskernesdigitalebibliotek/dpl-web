@@ -2,9 +2,11 @@
 
 namespace Drupal\dpl_event\Plugin\rest\resource\v1;
 
-use Drupal\rest\Plugin\ResourceBase;
-use Drupal\rest\ResourceResponse;
-use Symfony\Component\DependencyInjection\ContainerInterface;
+use Drupal\Core\Cache\CacheableMetadata;
+use Drupal\Core\Cache\CacheableResponse;
+use Drupal\recurring_events\Entity\EventInstance;
+use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 
 // Descriptions quickly become long and Doctrine annotations have no good way
 // of handling multiline strings.
@@ -58,7 +60,7 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
  *                 "url" = {
  *                   "type" = "string",
  *                   "format" = "uri",
- *                   "description" = "An absolute url for the image.",
+ *                   "description" = "An absolute url for the image. This is a link to the original, unaltered file, so the size, aspect ratio, and file format will be different from event to event.",
  *                 },
  *               },
  *               "required" = {
@@ -221,30 +223,41 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
  *   }
  * )
  */
-final class EventsResource extends ResourceBase {
+final class EventsResource extends EventResourceBase {
 // phpcs:enable Drupal.Files.LineLength.TooLong
 
   /**
-   * {@inheritdoc}
+   * GET request: Get all eventinstances, hopefully cached.
    */
-  public static function create(ContainerInterface $container, array $configuration, $plugin_id, $plugin_definition): self {
-    /** @var mixed[] $serializer_formats */
-    $serializer_formats = $container->getParameter('serializer.formats');
-    return new self(
-      $configuration,
-      $plugin_id,
-      $plugin_definition,
-      $serializer_formats,
-      $container->get('logger.factory')->get('rest'),
-    );
-  }
+  public function get(Request $request): Response {
+    // Entity query, pulling all eventinstances.
+    $storage = $this->entityTypeManager->getStorage('eventinstance');
+    $ids = $storage->getQuery()
+      ->accessCheck(FALSE)
+      ->condition('status', TRUE)
+      ->execute();
 
-  /**
-   * Responds to GET requests.
-   */
-  public function get(): ResourceResponse {
-    // @todo Implement me
-    return new ResourceResponse([]);
+    $event_responses = [];
+
+    foreach ($ids as $id) {
+      $event_instance = $storage->load($id);
+
+      if ($event_instance instanceof EventInstance) {
+        $event_responses[] = $this->mapper->getResponse($event_instance);
+      }
+    }
+
+    $event_responses = $this->serializer->serialize($event_responses, $this->serializerFormat($request));
+    $response = new CacheableResponse($event_responses);
+
+    // Create cache metadata.
+    $cache_metadata = new CacheableMetadata();
+    $cache_metadata->setCacheTags(['eventinstance_list', 'eventseries_list']);
+
+    // Add cache metadata to the response.
+    $response->addCacheableDependency($cache_metadata);
+
+    return $response;
   }
 
 }

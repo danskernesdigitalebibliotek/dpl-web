@@ -2,9 +2,12 @@
 
 namespace Drupal\dpl_event\Plugin\rest\resource\v1;
 
-use Drupal\rest\ModifiedResourceResponse;
-use Drupal\rest\Plugin\ResourceBase;
-use Symfony\Component\DependencyInjection\ContainerInterface;
+use DanskernesDigitaleBibliotek\CMS\Api\Model\EventPATCHRequest;
+use DanskernesDigitaleBibliotek\CMS\Api\Model\EventPATCHRequestExternalData;
+use Drupal\recurring_events\Entity\EventInstance;
+use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 // Descriptions quickly become long and Doctrine annotations have no good way
 // of handling multiline strings.
@@ -89,35 +92,43 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
  *   }
  * )
  */
-final class EventResource extends ResourceBase {
+final class EventResource extends EventResourceBase {
 // phpcs:enable Drupal.Files.LineLength.TooLong
 
   /**
-   * {@inheritdoc}
+   * PATCH requests - Load the relevant eventinstance, and update values.
    */
-  public static function create(ContainerInterface $container, array $configuration, $plugin_id, $plugin_definition): self {
-    /** @var mixed[] $serializer_formats */
-    $serializer_formats = $container->getParameter('serializer.formats');
-    return new self(
-      $configuration,
-      $plugin_id,
-      $plugin_definition,
-      $serializer_formats,
-      $container->get('logger.factory')->get('rest'),
-    );
-  }
+  public function patch(string $uuid, Request $request): Response {
+    $request_data = $this->deserialize(EventPATCHRequest::class, $request);
 
-  /**
-   * Responds to PATCH requests.
-   *
-   * @param string $id
-   *   The id of the event to update.
-   * @param mixed[] $data
-   *   The data posted by clients as a part of the request.
-   */
-  public function patch(string $id, array $data): ModifiedResourceResponse {
-    // @todo Implement me
-    return new ModifiedResourceResponse($data, 200);
+    $storage = $this->entityTypeManager->getStorage('eventinstance');
+
+    $event_instances = $storage->loadByProperties([
+      'uuid' => $uuid,
+    ]);
+
+    $event_instance = reset($event_instances);
+
+    if (!($event_instance instanceof EventInstance)) {
+      throw new NotFoundHttpException("Event not found");
+    }
+
+    $state = $request_data->getState();
+    $external_data = $request_data->getExternalData();
+
+    // Only override the URL(s), if external data is set.
+    if ($external_data instanceof EventPATCHRequestExternalData) {
+      $event_instance->set('field_event_link', $external_data->getUrl());
+    }
+
+    $event_instance->set('field_event_state', $state);
+    $event_instance->save();
+
+    $event_response = $this->mapper->getResponse($event_instance);
+
+    $serialized_event = $this->serializer->serialize($event_response, $this->serializerFormat($request));
+
+    return new Response($serialized_event);
   }
 
 }
