@@ -535,7 +535,7 @@ describe("Opening hours editor", () => {
   };
   it("Can edit rest of opening hours series", () => {
     const editData: EditRestOfOpeningHoursSeriesType = {
-      editSeriesFromIndex: 2,
+      editSeriesFromIndex: 1,
       openingHourCategory: OpeningHourCategories.SelfService,
       originalTimeDuration: { start: "10:00", end: "16:00" },
       updatedTimeDuration: { start: "09:00", end: "15:00" },
@@ -581,7 +581,7 @@ describe("Opening hours editor", () => {
       openingHourCategory: OpeningHourCategories.WithService,
       timeDuration: { start: "10:00", end: "11:00" },
       endDate: oneMonthFromToday(),
-      editSeriesFromIndex: 2,
+      editSeriesFromIndex: 1,
     };
 
     createOpeningHoursSeries({
