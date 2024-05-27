@@ -14,6 +14,7 @@ dependencies:
     - field.field.eventinstance.default.field_event_place
     - field.field.eventinstance.default.field_event_state
     - field.field.eventinstance.default.field_event_title
+    - field.field.eventinstance.default.field_external_admin_link
     - field.field.eventinstance.default.field_tags
     - field.field.eventinstance.default.field_teaser_image
     - field.field.eventinstance.default.field_teaser_text
@@ -198,6 +199,7 @@ hidden:
   field_event_place: true
   field_event_state: true
   field_event_title: true
+  field_external_admin_link: true
   field_tags: true
   field_teaser_image: true
   field_teaser_text: true
