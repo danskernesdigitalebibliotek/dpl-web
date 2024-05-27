@@ -117,6 +117,7 @@
         "drupal/flat_taxonomy": "^2.0",
         "drupal/focal_point": "^2.0",
         "drupal/gin": "^3.0@RC",
+        "drupal/gin_login": "^2.0",
         "drupal/gin_toolbar": "^1.0@RC",
         "drupal/handy_cache_tags": "^1.4",
         "drupal/honeypot": "^2.1",
