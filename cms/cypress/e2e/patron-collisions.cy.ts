@@ -23,6 +23,26 @@ describe("Adgangsplatformen / CMS user / session mapping", () => {
     userGuid: "19a4ae39-be07-4db9-a8b7-8bbb29f03da7",
   };
 
+  const patron4 = {
+    authorizationCode: "7c5e3213aea6ef42ec97dfeaa6f5b1d454d856de",
+    accessToken: "patron4-token",
+    userGuid: "19a4ae39-be07-4db9-a8b7-8bbb29f03da8",
+  };
+
+  const patron5 = {
+    authorizationCode: "7c5e3213aea6ef42ec97dfeaa6f5b1d454d856df",
+    accessToken: "patron5-token",
+    // This patron has a GUID which partially overlaps with patron4.
+    userGuid: "19a4ae39-be07-4db9-a8b7-8bbb29f03da9",
+  };
+
+  const patron6 = {
+    authorizationCode: "7c5e3213aea6ef42ec97dfeaa6f5b1d454d856df",
+    accessToken: "patron5-token",
+    // This patron has a GUID which is entirely different from patron 4.
+    userGuid: "12345678-abcd-1234-abcd-123456789012",
+  };
+
   beforeEach(() => {
     Cypress.session.clearAllSavedSessions();
     cy.resetMappings();
@@ -65,5 +85,27 @@ describe("Adgangsplatformen / CMS user / session mapping", () => {
 
     cy.adgangsplatformenLogin(patron1);
     cy.verifyToken({ tokenType: "user", token: patron1.accessToken });
+  });
+
+  it("handles logins with overlapping GUIDs", () => {
+    cy.adgangsplatformenLogin(patron4);
+    cy.verifyToken({ tokenType: "user", token: patron4.accessToken });
+
+    cy.adgangsplatformenLogin(patron5);
+    cy.verifyToken({ tokenType: "user", token: patron5.accessToken });
+
+    cy.adgangsplatformenLogin(patron4);
+    cy.verifyToken({ tokenType: "user", token: patron4.accessToken });
+  });
+
+  it("handles logins with different GUIDs", () => {
+    cy.adgangsplatformenLogin(patron4);
+    cy.verifyToken({ tokenType: "user", token: patron4.accessToken });
+
+    cy.adgangsplatformenLogin(patron6);
+    cy.verifyToken({ tokenType: "user", token: patron6.accessToken });
+
+    cy.adgangsplatformenLogin(patron4);
+    cy.verifyToken({ tokenType: "user", token: patron4.accessToken });
   });
 });
