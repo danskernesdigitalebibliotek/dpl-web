@@ -4,7 +4,6 @@ describe("Adgangsplatformen / CMS users", () => {
     accessToken: "patron1-token",
     userCPR: 9999999998,
     userGuid: "19a4ae39-be07-4db9-a8b7-8bbb29f03da5",
-    validate: false,
   };
 
   const patron2 = {
