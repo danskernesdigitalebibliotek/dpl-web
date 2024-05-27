@@ -21,11 +21,10 @@ third_party_settings:
         - field_filter_tags
         - field_filter_categories
         - field_filter_branches
-        - field_filter_content_types
       label: Filters
       region: content
       parent_name: ''
-      weight: 1
+      weight: 2
       format_type: fieldset
       format_settings:
         classes: ''
@@ -66,7 +65,7 @@ content:
     third_party_settings: {  }
   field_filter_content_types:
     type: select2
-    weight: 6
+    weight: 1
     region: content
     settings:
       width: 100%

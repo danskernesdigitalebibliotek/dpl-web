@@ -21,11 +21,10 @@ third_party_settings:
         - field_filter_tags
         - field_filter_categories
         - field_filter_branches
-        - field_filter_content_types
       label: Filters
       region: content
       parent_name: ''
-      weight: 1
+      weight: 2
       format_type: fieldset
       format_settings:
         classes: ''
@@ -40,7 +39,7 @@ mode: default
 content:
   field_filter_branches:
     type: select2_entity_reference
-    weight: 12
+    weight: 17
     region: content
     settings:
       width: 100%
@@ -50,7 +49,7 @@ content:
     third_party_settings: {  }
   field_filter_categories:
     type: select2_entity_reference
-    weight: 11
+    weight: 16
     region: content
     settings:
       width: 100%
@@ -60,20 +59,20 @@ content:
     third_party_settings: {  }
   field_filter_cond_type:
     type: options_buttons
-    weight: 9
+    weight: 14
     region: content
     settings: {  }
     third_party_settings: {  }
   field_filter_content_types:
     type: select2
-    weight: 13
+    weight: 1
     region: content
     settings:
       width: 100%
     third_party_settings: {  }
   field_filter_tags:
     type: select2_entity_reference
-    weight: 10
+    weight: 15
     region: content
     settings:
       width: 100%

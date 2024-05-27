@@ -11,8 +11,8 @@ id: paragraph.card_grid_automatic.field_filter_content_types
 field_name: field_filter_content_types
 entity_type: paragraph
 bundle: card_grid_automatic
-label: 'Filter by content types'
-description: 'Filtering by content type is always applied - e.g. it will always be "Other filters AND Content type".'
+label: 'Displayed content types'
+description: 'If nothing is selected, all will be chosen.'
 required: false
 translatable: false
 default_value: {  }
