@@ -1,22 +1,26 @@
 <?php
 
-namespace Drupal\dpl_opening_hours\Plugin\rest\resource;
+namespace Drupal\dpl_opening_hours\Plugin\rest\resource\v1;
 
 use DanskernesDigitaleBibliotek\CMS\Api\Service\SerializerInterface;
-use DanskernesDigitaleBibliotek\CMS\Api\Service\TypeMismatchException;
+use Drupal\Core\Cache\CacheableMetadata;
+use Drupal\Core\Cache\CacheTagsInvalidatorInterface;
 use Drupal\dpl_opening_hours\Mapping\OpeningHoursMapper;
 use Drupal\dpl_opening_hours\Mapping\OpeningHoursRepetitionType;
 use Drupal\dpl_opening_hours\Model\OpeningHoursRepository;
-use Drupal\rest\Plugin\ResourceBase;
+use Drupal\dpl_rest_base\Plugin\RestResourceBase;
 use Psr\Log\LoggerInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
-use Symfony\Component\HttpFoundation\Request;
-use function Safe\preg_replace as preg_replace;
 
 /**
  * Base class for REST resources exposing opening hours.
  */
-abstract class OpeningHoursResourceBase extends ResourceBase {
+abstract class OpeningHoursResourceBase extends RestResourceBase {
+
+  /**
+   * The cache tag to use for list operations.
+   */
+  const CACHE_TAG_LIST = 'dpl_opening_hours:list';
 
   /**
    * Constructor.
@@ -27,11 +31,12 @@ abstract class OpeningHoursResourceBase extends ResourceBase {
     $plugin_definition,
     array $serializer_formats,
     LoggerInterface $logger,
+    protected SerializerInterface $serializer,
     protected OpeningHoursRepository $repository,
     protected OpeningHoursMapper $mapper,
-    protected SerializerInterface $serializer
+    protected CacheTagsInvalidatorInterface $cacheTagsInvalidator,
   ) {
-    parent::__construct($configuration, $plugin_id, $plugin_definition, $serializer_formats, $logger);
+    parent::__construct($configuration, $plugin_id, $plugin_definition, $serializer_formats, $logger, $serializer);
   }
 
   /**
@@ -44,9 +49,10 @@ abstract class OpeningHoursResourceBase extends ResourceBase {
       $plugin_definition,
       $container->getParameter('serializer.formats'),
       $container->get('logger.factory')->get('rest'),
+      $container->get('dpl_rest_base.serializer'),
       $container->get('dpl_opening_hours.repository'),
       $container->get('dpl_opening_hours.mapper'),
-      $container->get('dpl_opening_hours.serializer'),
+      $container->get('cache_tags.invalidator')
     );
   }
 
@@ -166,65 +172,29 @@ abstract class OpeningHoursResourceBase extends ResourceBase {
   }
 
   /**
-   * Generate the format to use by the serializer from the request.
+   * Get metadata for cacheable responses.
    */
-  protected function serializerFormat(Request $request): string {
-    $contentTypeFormat = $request->getContentTypeFormat();
-    if (!$contentTypeFormat) {
-      // Default to JSON format. Some code generators will not provide a default
-      // value even though it is provided in the spec.
-      $contentTypeFormat = $request->get('_format', 'json');
-    }
-    $mimeType = $request->getMimeType($contentTypeFormat);
-    if (!$mimeType) {
-      throw new \InvalidArgumentException("Unable to identify serializer format from content type form: $contentTypeFormat");
-    }
-    return $mimeType;
+  protected function cachableMetadata() : CacheableMetadata {
+    return (new CacheableMetadata())
+      // Provide a single cache tag for all responses. This provides a single,
+      // simple way to clear the entire response cache when any opening hour
+      // is updated.
+      // We also include the list cache tag for opening hours categories to
+      // ensure that any changes here (labels and colors) are reflected
+      // immediately.
+      ->setCacheTags([self::CACHE_TAG_LIST, 'taxonomy_term_list:opening_hours_categories'])
+      // Vary all responses based on url. Path and query arguments are used
+      // to filter opening hours so this provides individual cache entries
+      // per argument combination.
+      ->setCacheContexts(['url']);
   }
 
   /**
-   * Deserialize an HTTP request to an OpenAPI request.
-   *
-   * @param class-string<T> $className
-   *   The required class name to deserialize to.
-   * @param \Symfony\Component\HttpFoundation\Request $request
-   *   The incoming HTTP request to deserialize.
-   *
-   * @template T of object
-   *
-   * @return T
-   *   The specified response.
+   * Invalidate the response cache.
    */
-  protected function deserialize(string $className, Request $request): object {
-    try {
-      $requestData = $this->serializer->deserialize($request->getContent(), $className, $this->serializerFormat($request));
-    }
-    catch (TypeMismatchException $e) {
-      throw new \InvalidArgumentException("Unable to deserialize request: {$e->getMessage()}");
-    }
-    if (!is_object($requestData) || !($requestData instanceof $className)) {
-      throw new \InvalidArgumentException("Unable to deserialize request");
-    }
-    return $requestData;
-  }
-
-  /**
-   * Format a multiline OpenAPI description.
-   *
-   * Multiline descriptions should:
-   *
-   * 1. Be readable in local PHP code
-   * 2. Render well with Swagger UI
-   * 3. Be parsable by openapitools/openapi-generator-cli
-   *
-   * This ensures that linebreaks (\n) placed by developers are converted to
-   * break tags for Swagger UI. Duplicate whitespaces added for local
-   * readability is also stripped.
-   */
-  private function formatMultilineDescription(string $description): string {
-    $no_newlines = preg_replace("/\n/", '<br/>', $description);
-    $no_extra_whitespace = preg_replace("/\s+/", " ", $no_newlines);
-    return $no_extra_whitespace;
+  protected function invalidateCache(): void {
+    // Cache can only be invalidated by tags - not contexts.
+    $this->cacheTagsInvalidator->invalidateTags([self::CACHE_TAG_LIST]);
   }
 
 }

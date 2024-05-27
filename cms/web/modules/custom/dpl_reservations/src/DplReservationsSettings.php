@@ -15,7 +15,7 @@ class DplReservationsSettings extends DplReactConfigBase {
    * Gets the configuration key for reservation settings.
    */
   public function getConfigKey(): string {
-    return 'dpl_reservation_list.settings';
+    return 'dpl_reservations.settings';
   }
 
   /**

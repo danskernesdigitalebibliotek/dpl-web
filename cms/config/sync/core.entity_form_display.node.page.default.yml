@@ -21,7 +21,7 @@ dependencies:
     - paragraphs_features
     - path
     - scheduler
-    - select2_multicheck
+    - select2
 third_party_settings:
   field_group:
     group_teaser_card:
@@ -47,18 +47,24 @@ bundle: page
 mode: default
 content:
   field_branch:
-    type: select2_multicheck
+    type: select2_entity_reference
     weight: 0
     region: content
     settings:
       width: 100%
+      autocomplete: false
+      match_operator: CONTAINS
+      match_limit: 10
     third_party_settings: {  }
   field_breadcrumb_parent:
-    type: select2_multicheck
+    type: select2_entity_reference
     weight: 1
     region: content
     settings:
       width: 100%
+      autocomplete: false
+      match_operator: CONTAINS
+      match_limit: 10
     third_party_settings: {  }
   field_display_titles:
     type: boolean_checkbox

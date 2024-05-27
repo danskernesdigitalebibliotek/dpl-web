@@ -24,13 +24,13 @@ THIS_DIR=$(dirname "$0")
 
 
 # First import translations from custom modules.
-drush potion:generate $LANGUAGE modules/custom/ $PO_DIR --recursive --default-write-mode=override
+drush potion:generate "$LANGUAGE" modules/custom/ "$PO_DIR" --recursive --default-write-mode=override
 
 # Define an array of contrib modules to include
 include_modules=()
 while IFS= read -r line; do
     include_modules+=("$line")
-done < ${THIS_DIR}/scanned_modules.txt
+done < "${THIS_DIR}"/scanned_modules.txt
 
 for module in "${include_modules[@]}"; do
     # Prepend the base path to the directory
@@ -38,10 +38,10 @@ for module in "${include_modules[@]}"; do
 
     if [ -d "$dir" ]; then
         echo "Processing $module:"
-        dir=$(echo $dir | sed 's/^web\///')
-        drush potion:generate da $dir profiles/dpl_cms/translations --recursive --default-write-mode=merge
+        dir=$(echo "$dir" | sed 's/^web\///')
+        drush potion:generate da "$dir" profiles/dpl_cms/translations --recursive --default-write-mode=merge
     fi
 done
 
 # Generate translations for custom themes.
-drush potion:generate $LANGUAGE themes/custom/ $PO_DIR --recursive --default-write-mode=merge
+drush potion:generate "$LANGUAGE" themes/custom/ "$PO_DIR" --recursive --default-write-mode=merge

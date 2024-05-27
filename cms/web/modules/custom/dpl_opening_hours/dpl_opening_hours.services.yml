@@ -17,6 +17,11 @@ services:
       - "@database"
       - "@dpl_opening_hours.branch_storage"
       - "@dpl_opening_hours.category_storage"
+      - "@dpl_opening_hours.repetition_repository"
+  dpl_opening_hours.repetition_repository:
+    class: Drupal\dpl_opening_hours\Model\Repetition\RepetitionRepository
+    arguments:
+      - "@database"
   dpl_opening_hours.repetition_mapper:
     class: Drupal\dpl_opening_hours\Mapping\RepetitionMapper
   dpl_opening_hours.mapper:
@@ -25,9 +30,6 @@ services:
       - "@dpl_opening_hours.branch_storage"
       - "@dpl_opening_hours.category_storage"
       - "@dpl_opening_hours.repetition_mapper"
-  dpl_opening_hours.serializer:
-    class: \DanskernesDigitaleBibliotek\CMS\Api\Service\JmsSerializer
-
   dpl_opening_hours.route_subscriber:
     class: Drupal\dpl_opening_hours\EventSubscriber\ApiRouteSubscriber
     tags:
