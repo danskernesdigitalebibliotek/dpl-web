@@ -241,6 +241,7 @@ function dpl_react_apps_texts(): array {
     'patron-page-pincode-label' => t('New pin', [], ['context' => 'Global']),
     'patron-page-pincode-too-short-validation' => t('The pincode should be minimum @pincodeLengthMin and maximum @pincodeLengthMax characters long', [], ['context' => 'Global']),
     'patron-page-pincodes-not-the-same' => t('The pincodes are not the same', [], ['context' => 'Global']),
+    'pincode-section-description' => t('Length of 4 characters', [], ['context' => 'Global']),
     'publizon-audio-book' => t('Audiobook', [], ['context' => 'Global']),
     'publizon-ebook' => t('E-book', [], ['context' => 'Global']),
     'publizon-podcast' => t('Podcast', [], ['context' => 'Global']),
