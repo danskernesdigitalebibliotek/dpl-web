@@ -215,30 +215,24 @@ Cypress.Commands.add(
     accessToken,
     userCPR,
     userGuid,
-    restoreId,
   }: {
     authorizationCode: string;
     accessToken: string;
     userCPR?: number;
     userGuid?: string;
-    restoreId?: string;
   }) => {
-    const sessionId = restoreId ?? Math.random();
-    cy.session(
-      { authorizationCode, accessToken, userCPR, userGuid, sessionId },
-      () => {
-        adgangsplatformenLoginOauthMappings({
-          userIsAlreadyRegistered: true,
-          authorizationCode,
-          accessToken,
-          userCPR,
-          userGuid,
-        });
+    cy.session({ authorizationCode, accessToken, userCPR, userGuid }, () => {
+      adgangsplatformenLoginOauthMappings({
+        userIsAlreadyRegistered: true,
+        authorizationCode,
+        accessToken,
+        userCPR,
+        userGuid,
+      });
 
-        cy.visit("/user/login");
-        cy.contains("Log in with Adgangsplatformen").click();
-      }
-    );
+      cy.visit("/user/login");
+      cy.contains("Log in with Adgangsplatformen").click();
+    });
   }
 );
 Cypress.Commands.add(
@@ -347,7 +341,6 @@ declare global {
         accessToken: string;
         userCPR?: number;
         userGuid?: string;
-        restoreId?: string;
       }): Chainable<null>;
       setupAdgangsplatformenRegisterMappinngs(params: {
         authorizationCode: string;

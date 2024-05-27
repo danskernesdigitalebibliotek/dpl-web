@@ -39,24 +39,24 @@ describe("Adgangsplatformen / CMS users", () => {
   });
 
   it("handles logins with overlapping idents", () => {
-    cy.adgangsplatformenLogin({ ...patron1, restoreId: "overlap" });
+    cy.adgangsplatformenLogin(patron1);
     cy.verifyToken({ tokenType: "user", token: patron1.accessToken });
 
     cy.adgangsplatformenLogin(patron2);
     cy.verifyToken({ tokenType: "user", token: patron2.accessToken });
 
-    cy.adgangsplatformenLogin({ ...patron1, restoreId: "overlap" });
+    cy.adgangsplatformenLogin(patron1);
     cy.verifyToken({ tokenType: "user", token: patron1.accessToken });
   });
 
   it("handles logins with different idents", () => {
-    cy.adgangsplatformenLogin({ ...patron1, restoreId: "different" });
+    cy.adgangsplatformenLogin(patron1);
     cy.verifyToken({ tokenType: "user", token: patron1.accessToken });
 
     cy.adgangsplatformenLogin(patron3);
     cy.verifyToken({ tokenType: "user", token: patron3.accessToken });
 
-    cy.adgangsplatformenLogin({ ...patron1, restoreId: "different" });
+    cy.adgangsplatformenLogin(patron1);
     cy.verifyToken({ tokenType: "user", token: patron1.accessToken });
   });
 });
