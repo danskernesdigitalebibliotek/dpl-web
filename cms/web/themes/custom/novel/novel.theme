@@ -322,5 +322,12 @@ function novel_preprocess_views_view_unformatted(&$variables): void {
     if ($shouldBeStacked) {
       $row['content']['#view_mode'] = 'stacked_event';
     }
+
+    // Add cache tags to ensure stacked view is recalculated for factors that
+    // can affect the order:
+    // - Events are created/updated/deleted
+    // - Path and url arguments as this can effect filtering and ordering.
+    $row['content']['#cache']['tags'][] = 'eventinstance_list';
+    $row['content']['#cache']['contexts'][] = 'url';
   }
 }

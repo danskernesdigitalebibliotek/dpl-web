@@ -8,7 +8,7 @@ dependencies:
   module:
     - file
     - path
-    - select2_multicheck
+    - select2
 id: media.document.default
 targetEntityType: media
 bundle: document
@@ -56,11 +56,14 @@ content:
       display_label: true
     third_party_settings: {  }
   uid:
-    type: select2_multicheck
+    type: select2_entity_reference
     weight: 4
     region: content
     settings:
       width: 100%
+      autocomplete: true
+      match_operator: CONTAINS
+      match_limit: 10
     third_party_settings: {  }
 hidden:
   publish_on: true

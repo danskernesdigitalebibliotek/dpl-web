@@ -43,7 +43,7 @@
                 "version": "2024.19.0",
                 "type": "drupal-library",
                 "dist": {
-                    "url": "https://github.com/danskernesdigitalebibliotek/dpl-react/releases/download/release-brahma-16/dist-release-brahma-16-8e09cc899b620e0db6a363b479980c63d0e50f0d.zip",
+                    "url": "https://github.com/danskernesdigitalebibliotek/dpl-react/releases/download/branch-release%2Fbrahma-17/dist-release-brahma-17.zip",
                     "type": "zip"
                 },
                 "require": {
@@ -58,7 +58,7 @@
                 "type": "drupal-library",
                 "version": "2024.19.0",
                 "dist": {
-                    "url": "https://github.com/danskernesdigitalebibliotek/dpl-design-system/releases/download/release-brahma-16/dist-release-brahma-16-a77db2de4a64eb4ae095e24812347f5e920ab029.zip",
+                    "url": "https://github.com/danskernesdigitalebibliotek/dpl-design-system/releases/download/branch-release%2Fbrahma-17/dist-release-brahma-17.zip",
                     "type": "zip"
                 }
             }
@@ -114,6 +114,7 @@
         "drupal/facets": "^2.0",
         "drupal/field_group": "^3.4",
         "drupal/field_inheritance": "^2.0",
+        "drupal/flat_taxonomy": "^2.0",
         "drupal/focal_point": "^2.0",
         "drupal/gin": "^3.0@RC",
         "drupal/gin_login": "^2.0",
@@ -133,6 +134,7 @@
         "drupal/openapi_rest": "^2.0@RC",
         "drupal/openapi_ui_swagger": "^1.0",
         "drupal/openid_connect": "^1.4",
+        "drupal/override_node_options": "^2.8",
         "drupal/paragraphs": "^1.16",
         "drupal/paragraphs_ee": "^10",
         "drupal/pathauto": "^1.12",

@@ -13,7 +13,6 @@ use DanskernesDigitaleBibliotek\FBS\Model\BlockStatus;
 use Drupal\Core\Cache\CacheableMetadata;
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\Session\AccountInterface;
-use Drupal\Core\Site\Settings;
 use Drupal\dpl_fbs\Patron\BlockedReason;
 use Drupal\dpl_login\AccessToken;
 use Drupal\dpl_login\DplLoginInterface;
@@ -22,8 +21,6 @@ use Drupal\dpl_login\UserTokensProviderInterface;
 use Drupal\user\UserInterface;
 use Psr\Log\LoggerInterface;
 use Psr\Log\LogLevel;
-
-use function Safe\sprintf as sprintf;
 
 /**
  * Implements hook_openid_connect_userinfo_alter().
@@ -36,25 +33,11 @@ use function Safe\sprintf as sprintf;
  * @throws Exception
  */
 function dpl_login_openid_connect_userinfo_alter(array &$userinfo, array $context): void {
-
-  // If we cannot resolve both cpr and uniqueId we cannot continue.
-  if (!$cpr = $userinfo['attributes']['cpr'] ?? FALSE) {
-    if (!$uniqueId = $userinfo['attributes']['uniqueId'] ?? FALSE) {
-      throw new \Exception('Unable to identify user. Both CPR and uniqueId are missing.');
-    }
-  }
-
-  $id = $cpr ?: $uniqueId;
-
-  $id_hash = crypt($id, Settings::getHashSalt());
-
-  $name = uniqid();
-  // Drupal needs an email. We set a unique one to apply to that rule.
-  $userinfo['email'] = sprintf('%s@dpl-cms.invalid', $name);
-  // Drupal needs a username. We use the unique id to apply to that rule.
-  $userinfo['name'] = $name;
-  // openid_connect module needs the sub for creating the auth map.
-  $userinfo['sub'] = $id_hash;
+  $service = \Drupal::service('dpl_login.openid_user_info');
+  $userinfo = array_merge(
+    $userinfo,
+    $service->getOpenIdUserInfoFromAdgangsplatformenUserInfoResponse($userinfo)
+  );
 }
 
 /**

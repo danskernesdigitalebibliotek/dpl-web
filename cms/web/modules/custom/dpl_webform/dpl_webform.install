@@ -1,0 +1,23 @@
+<?php
+
+/**
+ * @file
+ * DPL webform install file.
+ */
+
+/**
+ * Add all webforms to config ignore.
+ */
+function dpl_webform_update_10000(): string {
+  $config_factory = \Drupal::configFactory();
+  $config_ignore_config_key = 'config_ignore.settings';
+
+  // We add the new webform.webform.* to config_ignore.settings
+  // as the settings will otherwise risk being deleted by when
+  // drush deploy is running configuration import.
+  $config_ignore_settings = $config_factory->getEditable($config_ignore_config_key);
+  $ignored_configs = $config_ignore_settings->get('ignored_config_entities');
+  $ignored_configs[] = 'webform.webform.*';
+  $config_ignore_settings->set('ignored_config_entities', $ignored_configs)->save();
+  return 'webform.webform.* is added to ignored configs.';
+}

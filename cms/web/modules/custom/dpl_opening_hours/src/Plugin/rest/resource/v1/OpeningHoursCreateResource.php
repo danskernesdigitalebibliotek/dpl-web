@@ -2,27 +2,27 @@
 
 declare(strict_types = 1);
 
-namespace Drupal\dpl_opening_hours\Plugin\rest\resource;
+namespace Drupal\dpl_opening_hours\Plugin\rest\resource\v1;
 
 use DanskernesDigitaleBibliotek\CMS\Api\Model\DplOpeningHoursCreatePOSTRequest as OpeningHoursRequest;
 use Drupal\Component\Utility\NestedArray;
+use Drupal\dpl_opening_hours\Model\OpeningHoursInstance;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
-use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 /**
- * Update individual opening hours.
+ * Create individual opening hours.
  *
  * @RestResource (
- *   id = "dpl_opening_hours_update",
- *   label = @Translation("Update individual opening hours"),
+ *   id = "dpl_opening_hours_create",
+ *   label = @Translation("Create individual opening hours"),
  *   uri_paths = {
- *     "canonical" = "/dpl_opening_hours/{id}",
+ *     "create" = "/api/v1/opening_hours",
  *   },
  * )
  */
-final class OpeningHoursUpdateResource extends OpeningHoursResourceBase {
+final class OpeningHoursCreateResource extends OpeningHoursResourceBase {
 
   /**
    * {@inheritDoc}
@@ -36,12 +36,15 @@ final class OpeningHoursUpdateResource extends OpeningHoursResourceBase {
           'description' => 'The opening hours instance to manage',
           'in' => 'body',
           'required' => TRUE,
-          'schema' => $this->openingHoursInstanceSchema(require_id: TRUE),
+          'schema' => $this->openingHoursInstanceSchema(require_id: FALSE),
         ],
         'responses' => [
           Response::HTTP_OK => [
             'description' => Response::$statusTexts[Response::HTTP_OK],
-            'schema' => $this->openingHoursInstanceSchema(require_id: TRUE),
+            'schema' => [
+              "type" => "array",
+              "items" => $this->openingHoursInstanceSchema(require_id: TRUE),
+            ],
           ],
           Response::HTTP_BAD_REQUEST => [
             'description' => Response::$statusTexts[Response::HTTP_BAD_REQUEST],
@@ -55,26 +58,23 @@ final class OpeningHoursUpdateResource extends OpeningHoursResourceBase {
   }
 
   /**
-   * Update an opening hours instance.
+   * Create new opening hours instances.
    */
-  public function patch(int $id, Request $request): Response {
+  public function post(Request $request): Response {
     try {
       $requestData = $this->deserialize(OpeningHoursRequest::class, $request);
-      if ($id !== $requestData->getId()) {
-        throw new \InvalidArgumentException("Instance ids provided in path '{$id}' and body '{$requestData->getId()}' do not match ");
-      }
-      $instance = $this->repository->load($id);
-      if (!$instance) {
-        throw new NotFoundHttpException("Invalid instance id: '{$id}'");
-      }
+      $instance = $this->mapper->fromRequest($requestData);
 
-      $updateInstance = $this->mapper->fromRequest($requestData);
-      $updatedInstance = $this->repository->update($updateInstance);
-      $responseData = $this->mapper->toResponse($updatedInstance);
+      $createdInstances = $this->repository->insert($instance);
+      $this->invalidateCache();
+
+      $responseData = array_map(function (OpeningHoursInstance $instance) {
+        return $this->mapper->toResponse($instance);
+      }, $createdInstances);
       return new Response($this->serializer->serialize($responseData, $this->serializerFormat($request)));
     }
     catch (\InvalidArgumentException $e) {
-      throw new BadRequestHttpException('Invalid input: ' . $e->getMessage());
+      throw new BadRequestHttpException("Invalid input: {$e->getMessage()}");
     }
   }
 
