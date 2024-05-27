@@ -62,6 +62,9 @@ parameters:
       path: web/modules/custom/dpl_po/src/Services/CtpConfigManager.php
     # Drupal field widget formElement() method has parameters and return type which we cannot provide more detailed typing of.
     - '#Method Drupal\\.*\\Plugin\\Field\\FieldWidget\\.*::formElement\(\) .* no value type specified in iterable type array\.#'
+    -
+      message: "#Variable .* might not be defined#"
+      path: web/modules/custom/dpl_login/src/OpenIdUserInfoService.php
   scanFiles:
     # Needed to make locale_translation_batch_fetch_finished() discoverable.
     - web/core/modules/locale/locale.batch.inc

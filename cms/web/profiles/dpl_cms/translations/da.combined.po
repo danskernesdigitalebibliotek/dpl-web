@@ -5610,7 +5610,7 @@ msgstr "Titel"
 #: 
 msgctxt "field.field.paragraph.user_registration_section.field_user_registration_items:label"
 msgid "User registration items"
-msgstr "Brugerregistrering elementer"
+msgstr "Brugerregistreringselementer"
 
 #: 
 msgctxt "field.field.paragraph.user_registration_section.field_user_registration_items:description"
@@ -13975,7 +13975,7 @@ msgstr ""
 
 #: 
 msgid "Label / Description"
-msgstr ""
+msgstr "Label / Beskrivelse"
 
 #: 
 msgid "Secure"
@@ -25762,7 +25762,7 @@ msgstr "Tilføj et tag, kategori eller filial som skal anvendes som filter i den
 #: 
 msgctxt "core.entity_view_display.eventinstance.default.list_teaser_stacked_parent:content:date:settings:date_format"
 msgid "Y-m-d\\TH:i:s"
-msgstr ""
+msgstr "Y-m-d\\TH:i:s"
 
 #: 
 msgctxt "core.entity_view_display.eventinstance.default.list_teaser_stacked_parent:content:date:settings:one_day"
@@ -26682,12 +26682,12 @@ msgstr ""
 #: 
 msgctxt "paragraphs.paragraphs_type.user_registration_linklist:label"
 msgid "User registration linklist"
-msgstr ""
+msgstr "Brugerregistrerings linkliste"
 
 #: 
 msgctxt "paragraphs.paragraphs_type.user_registration_linklist:description"
 msgid "This paragraph determines the placement of shortcuts to individual User Registration Section paragraphs. It allows administrators to specify where these shortcuts should appear."
-msgstr ""
+msgstr "Denne paragraph bestemmer placeringen af genveje til \"Brugeregistreingsparagraphs\". Paragraphen tillader redaktører at specificere, om disse genveje skal vises."
 
 #: 
 msgctxt "taxonomy.vocabulary.webform_email_categories:name"
@@ -26854,17 +26854,17 @@ msgstr ""
 #: 
 msgctxt "Work Page"
 msgid "Notes"
-msgstr ""
+msgstr "Noter"
 
 #: 
 msgctxt "Work Page"
 msgid "Dimensions"
-msgstr ""
+msgstr "Omfang"
 
 #: 
 msgctxt "Work Page"
 msgid "Host Publication"
-msgstr ""
+msgstr "Findes i"
 
 #: 
 msgctxt "Work Page"
@@ -26874,7 +26874,7 @@ msgstr ""
 #: 
 msgctxt "Work Page"
 msgid "Contents"
-msgstr ""
+msgstr "Indhold"
 
 #: 
 msgctxt "Fees list"
@@ -26983,27 +26983,27 @@ msgstr ""
 #: 
 msgctxt "paragraphs_ee.paragraphs_category.content_elements:label"
 msgid "Content elements"
-msgstr ""
+msgstr "Indholdselementer"
 
 #: 
 msgctxt "paragraphs_ee.paragraphs_category.forms:label"
 msgid "Forms"
-msgstr ""
+msgstr "Formularer"
 
 #: 
 msgctxt "paragraphs_ee.paragraphs_category.material_dissemination:label"
 msgid "Material Dissemination"
-msgstr ""
+msgstr "Materialeformidling"
 
 #: 
 msgctxt "paragraphs_ee.paragraphs_category.structural_elements:label"
 msgid "Structural elements"
-msgstr ""
+msgstr "Strukturerende elementer"
 
 #: 
 msgctxt "paragraphs_ee.paragraphs_category.user_creation:label"
 msgid "User creation"
-msgstr ""
+msgstr "Brugeroprettelse"
 
 #: 
 msgctxt "taxonomy.vocabulary.breadcrumb_structure:name"
