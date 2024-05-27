@@ -5,7 +5,7 @@ dependencies:
   module:
     - focal_point
 name: card_medium
-label: 'Card - Medium - 321:426'
+label: 'Card - Medium - 551×731'
 effects:
   744cf13a-8bbe-48fb-bb3d-b0eb15a69472:
     uuid: 744cf13a-8bbe-48fb-bb3d-b0eb15a69472
@@ -13,13 +13,5 @@ effects:
     weight: -10
     data:
       width: 551
-      height: 551
+      height: 731
       crop_type: focal_point
-  d67bdd4c-783b-4750-85a3-c831f00ba8c7:
-    uuid: d67bdd4c-783b-4750-85a3-c831f00ba8c7
-    id: image_scale_and_crop
-    weight: -9
-    data:
-      width: 321
-      height: 426
-      anchor: center-center
