@@ -1,4 +1,4 @@
-uuid: 0b16ac89-12e1-4143-aba8-7cde23d227a1
+uuid: 0256f6b3-6438-4a21-96c5-dbd8ed820175
 langcode: en
 status: true
 dependencies:
@@ -6,6 +6,7 @@ dependencies:
     - basic_auth
     - dpl_event
     - serialization
+    - user
 id: events
 plugin_id: events
 granularity: resource
@@ -16,3 +17,4 @@ configuration:
     - json
   authentication:
     - basic_auth
+    - cookie

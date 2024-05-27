@@ -1,0 +1,5 @@
+dpl_cache_settings.cache_clear:
+  title: "Clear cache"
+  route_name: dpl_cache_settings.settings_form
+  parent: system.admin_config_development
+  weight: 1000

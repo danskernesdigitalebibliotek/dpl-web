@@ -46,3 +46,6 @@ services:
   dpl_login.adgangsplatformen.config:
     class: Drupal\dpl_login\Adgangsplatformen\Config
     arguments: ["@config.factory"]
+  dpl_login.openid_user_info:
+    class: Drupal\dpl_login\OpenIdUserInfoService
+    arguments: ["@settings"]
