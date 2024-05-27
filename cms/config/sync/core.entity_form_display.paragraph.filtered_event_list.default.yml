@@ -7,7 +7,6 @@ dependencies:
     - field.field.paragraph.filtered_event_list.field_filter_branches
     - field.field.paragraph.filtered_event_list.field_filter_categories
     - field.field.paragraph.filtered_event_list.field_filter_cond_type
-    - field.field.paragraph.filtered_event_list.field_filter_content_types
     - field.field.paragraph.filtered_event_list.field_filter_tags
     - field.field.paragraph.filtered_event_list.field_max_item_amount
     - field.field.paragraph.filtered_event_list.field_title
@@ -66,13 +65,6 @@ content:
     weight: 9
     region: content
     settings: {  }
-    third_party_settings: {  }
-  field_filter_content_types:
-    type: select2
-    weight: 13
-    region: content
-    settings:
-      width: 100%
     third_party_settings: {  }
   field_filter_tags:
     type: select2_entity_reference
