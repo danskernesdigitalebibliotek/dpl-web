@@ -95,7 +95,7 @@ class RelatedContent {
   /**
    * If TRUE, the filter conditions will be AND - otherwise, they will be OR.
    */
-  public bool $andConditions = TRUE;
+  public bool $andConditions = FALSE;
 
   /**
    * If we should allow a simple date lookup if not enough matches are found.
