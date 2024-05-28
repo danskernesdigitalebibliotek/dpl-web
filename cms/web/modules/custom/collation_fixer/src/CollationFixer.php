@@ -57,7 +57,7 @@ final class CollationFixer {
         'SELECT CCSA.character_set_name FROM information_schema.`TABLES` T,information_schema.`COLLATION_CHARACTER_SET_APPLICABILITY` CCSA WHERE CCSA.collation_name = T.table_collation AND T.table_schema = :table_schema AND T.table_name = :table_name',
         [':table_schema' => $database_name, ':table_name' => $table_name]
       );
-      $db_charset = ($charset_result instanceof StatementInterface) ? $charset_result->fetchCol() : $fallback_charset;
+      $db_charset = ($charset_result instanceof StatementInterface) ? $charset_result->fetchField() : $fallback_charset;
 
       $schema_collation = $fallback_collation;
       $collation_result = $this->connection->query(
