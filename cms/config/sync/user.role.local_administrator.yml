@@ -77,6 +77,7 @@ permissions:
   - 'add new links to admin menu'
   - 'add new links to main menu'
   - 'administer advanced webform confirmation settings'
+  - 'administer advanced webform element settings'
   - 'administer dpl_footer settings'
   - 'administer dpl_mapp configuration'
   - 'administer instant loan configuration'
