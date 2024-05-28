@@ -5,6 +5,7 @@ declare(strict_types = 1);
 namespace Drupal\collation_fixer;
 
 use Drupal\Core\Database\Connection;
+use Drupal\Core\Database\StatementInterface;
 use Drupal\Core\Entity\ContentEntityTypeInterface;
 use Drupal\Core\Entity\EntityFieldManagerInterface;
 use Drupal\Core\Entity\EntityTypeManagerInterface;
@@ -33,10 +34,10 @@ final class CollationFixer {
    *   Name of a table to check for collation correctness.
    *   Defaults to all tables if not set.
    *
-   * @return array
+   * @return string[]
    *   A list of tables with wrong collations.
    */
-  public function checkCollation(?string $table = NULL) {
+  public function checkCollation(?string $table = NULL): array {
     $schema = $this->getSchema($table);
 
     $database_name = &drupal_static(__FUNCTION__);
@@ -52,16 +53,18 @@ final class CollationFixer {
 
     foreach ($schema as $table_name) {
       $schema_charset = $fallback_charset;
-      $db_charset = $this->connection->query(
+      $charset_result = $this->connection->query(
         'SELECT CCSA.character_set_name FROM information_schema.`TABLES` T,information_schema.`COLLATION_CHARACTER_SET_APPLICABILITY` CCSA WHERE CCSA.collation_name = T.table_collation AND T.table_schema = :table_schema AND T.table_name = :table_name',
         [':table_schema' => $database_name, ':table_name' => $table_name]
-      )->fetchField();
+      );
+      $db_charset = ($charset_result instanceof StatementInterface) ? $charset_result->fetchCol() : $fallback_charset;
 
       $schema_collation = $fallback_collation;
-      $db_collation = $this->connection->query(
+      $collation_result = $this->connection->query(
         'SELECT TABLE_COLLATION FROM information_schema.tables WHERE TABLE_SCHEMA = :table_schema AND TABLE_NAME = :table_name',
         [':table_schema' => $database_name, ':table_name' => $table_name]
-      )->fetchField();
+      );
+      $db_collation = ($collation_result instanceof StatementInterface) ? $collation_result->fetchField() : $fallback_collation;
 
       if (($schema_charset != $db_charset) || ($schema_collation != $db_collation)) {
         $wrong_collations[] = $table_name;
@@ -96,18 +99,22 @@ final class CollationFixer {
       $collation = $fallback_collation;
 
       // Alter character set and collation of table definition.
-      if ($result = $this->connection->query(
+      $query = $this->connection->query(
         "ALTER TABLE {$table_name} CHARACTER SET {$charset} COLLATE {$collation}"
-      )->execute()) {
+      );
+      if ($query instanceof StatementInterface) {
+        $result = $query->execute();
         $status = $status && $result;
-      };
+      }
 
       // Alter character set and collation of table data.
-      if ($result = $this->connection->query(
+      $query = $this->connection->query(
         "ALTER TABLE {$table_name} CONVERT TO CHARACTER SET {$charset} COLLATE {$collation}"
-      )->execute()) {
+      );
+      if ($query instanceof StatementInterface) {
+        $result = $query->execute();
         $status = $status && $result;
-      };
+      }
     }
 
     return $status;
@@ -119,10 +126,10 @@ final class CollationFixer {
    * @param ?string $table
    *   A specific table name to check.
    *
-   * @return array
+   * @return string[]
    *   An array of table names.
    */
-  private function getSchema(?string $table = NULL) {
+  private function getSchema(?string $table = NULL): array {
     $schemas = array_map(function (string $module) {
       if ($this->moduleHandler->loadInclude($module, 'install')) {
         return $this->moduleHandler->invoke($module, 'schema') ?? [];
@@ -136,11 +143,10 @@ final class CollationFixer {
     $entitySchemas = [];
     foreach ($this->entityTypeManager->getDefinitions() as $entityType) {
       // Only list content entity types using SQL storage.
-      if ($entityType instanceof ContentEntityTypeInterface && in_array(SqlEntityStorageInterface::class, class_implements($entityType->getStorageClass()))) {
-        $storage = $this->entityTypeManager->getStorage($entityType->id());
-
+      $entityStorage = $this->entityTypeManager->getStorage($entityType->id());
+      if ($entityType instanceof ContentEntityTypeInterface && $entityStorage instanceof SqlEntityStorageInterface) {
         foreach ($this->fieldManager->getFieldStorageDefinitions($entityType->id()) as $field) {
-          $entitySchemas = array_merge($entitySchemas, $storage->getTableMapping()->getAllFieldTableNames($field->getName()));
+          $entitySchemas = array_merge($entitySchemas, $entityStorage->getTableMapping()->getAllFieldTableNames($field->getName()));
         }
       }
     }
@@ -159,7 +165,7 @@ final class CollationFixer {
   /**
    * Get the default charset to use if nothing else is specified.
    */
-  private function getFallbackCharset() {
+  private function getFallbackCharset(): string {
     $connection_options = $this->connection->getConnectionOptions();
     if (isset($connection_options['charset'])) {
       $fallback_charset = $connection_options['charset'];
@@ -174,7 +180,7 @@ final class CollationFixer {
   /**
    * Get the default collation to use if nothing else is specified.
    */
-  private function getFallbackCollation() {
+  private function getFallbackCollation(): string {
     $connection_options = $this->connection->getConnectionOptions();
     if (isset($connection_options['collation'])) {
       $fallback_collation = $connection_options['collation'];

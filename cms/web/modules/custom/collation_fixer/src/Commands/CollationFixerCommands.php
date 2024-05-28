@@ -25,14 +25,15 @@ final class CollationFixerCommands extends DrushCommands {
    * @command collation-fixer
    * @option table Name of a table to fix collation on. Defaults to all tables.
    */
-  public function fixTable($options = ['table' => NULL]) {
+  public function fixTable(array $options = ['table' => NULL]) : void {
     $tables = $this->collationFixer->checkCollation($options['table']);
-    $total = array_map(function (string $table) {
+    $fixes = array_filter(array_map(function (string $table) {
       return $this->collationFixer->fixCollation($table);
-    }, $tables);
+    }, $tables));
 
-    if (count($total)) {
-      $this->io()->success(sprintf('%s tables were processed.', count($total)));
+    $numFixes = count($fixes);
+    if ($numFixes > 1) {
+      $this->io()->success("{$numFixes} tables were processed.");
     }
     else {
       $this->io()->info('No collation fixes needs to be done');

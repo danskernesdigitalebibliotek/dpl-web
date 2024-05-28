@@ -29,7 +29,7 @@ final class CollationFixerForm extends ConfirmFormBase {
   /**
    * {@inheritdoc}
    */
-  public static function create(ContainerInterface $container) {
+  public static function create(ContainerInterface $container) : static {
     return new static(
       $container->get('collation_fixer.collation_fixer')
     );

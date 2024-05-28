@@ -14,7 +14,7 @@ use Drupal\Core\Url;
  * A 'runtime' phase check (admin/reports/status) for checking database
  * collation status.
  */
-function collation_fixer_requirements($phase) {
+function collation_fixer_requirements(string $phase): array {
   if ($phase == 'runtime') {
     /** @var \Drupal\collation_fixer\CollationFixer $collation_fixer */
     $collation_fixer = \Drupal::service('collation_fixer.collation_fixer');
