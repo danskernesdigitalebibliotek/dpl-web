@@ -7,8 +7,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2024-05-28 13:00+0200\n"
-"PO-Revision-Date: 2024-05-28 13:00+0200\n"
+"POT-Creation-Date: 2024-05-28 13:14+0200\n"
+"PO-Revision-Date: 2024-05-28 13:14+0200\n"
 "Last-Translator: NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
 "MIME-Version: 1.0\n"
@@ -86,16 +86,6 @@ msgstr ""
 msgctxt "Create patron"
 msgid "Cancel"
 msgstr "Fortryd"
-
-msgctxt "Create patron"
-msgid "Select pickup location in the select"
-msgstr ""
-"Vælg dit standard afhentningssted. Du kan vælge et andet afhentningssted når "
-"du foretager en reservering."
-
-msgctxt "Create patron"
-msgid "Select pickup location"
-msgstr "Vælg afhentningssted"
 
 msgctxt "Create patron"
 msgid "Confirm"
@@ -1552,6 +1542,10 @@ msgid "The pincodes are not the same"
 msgstr "Pinkoderne er ikke identiske"
 
 msgctxt "Global"
+msgid "Length of 4 characters"
+msgstr ""
+
+msgctxt "Global"
 msgid "Audiobook"
 msgstr "Lydbog"
 
@@ -1971,6 +1965,14 @@ msgid "Filter list"
 msgstr "Flere filtre"
 
 msgctxt "Search Result"
+msgid "Available filters"
+msgstr ""
+
+msgctxt "Search Result"
+msgid "Selected filters"
+msgstr ""
+
+msgctxt "Search Result"
 msgid "Invalid search"
 msgstr "Ugyldig søgning"
 
@@ -2099,6 +2101,10 @@ msgstr "Genre"
 msgctxt "advanced search"
 msgid "identifier"
 msgstr "ID"
+
+msgctxt "advanced search"
+msgid "Input field @inputNumber"
+msgstr ""
 
 msgctxt "advanced search"
 msgid "search term"
@@ -3486,6 +3492,10 @@ msgstr "Brugerprofil"
 msgctxt "Patron menu (aria)"
 msgid "Open user menu"
 msgstr "Åbn brugermenu"
+
+msgctxt "Patron menu (aria)"
+msgid "Open login menu"
+msgstr ""
 
 msgctxt "Patron menu"
 msgid "Reservations ready for pickup"
