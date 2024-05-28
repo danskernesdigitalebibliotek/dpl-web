@@ -106,6 +106,7 @@ permissions:
   - 'administer orphaned events entities'
   - 'administer redirects'
   - 'administer site configuration'
+  - 'administer software updates'
   - 'administer themes'
   - 'administer themes novel'
   - 'administer url proxy configuration'
