@@ -6,8 +6,7 @@ MySQL centric).
 
 Offers the ability to fix tables with wrong database collation.
 
-The collation is either specified in your database settings or in
-hook_schema() or hook_schema_alter().
+The collation is either specified in your database settings.
 
 This can be useful when developing non-english sites.
 
@@ -30,21 +29,13 @@ hook_schema_alter()):
     ),
   );
 
-Example of specifying via hook_schema_alter():
-
-  /**
-   * Implements hook_schema_alter().
-   */
-  function my_module_schema_alter(&$schema) {
-    $schema['field_data_title_field']['collation'] = 'utf8_danish_ci';
-  }
-
 If you (as a developer) changes the collation in of an existing table you
 will probably want to fix the table right away in an update hook:
 
   /**
    * Fix collation of {my_table}.
    */
-  function my_module_update_7101(&$sandbox) {
-    collation_fixer_fix_collation('my_table');
+  function my_module_update_10001(&$sandbox) {
+    $collation_fixer = \Drupal::service('collation_fixer.collation_fixer');
+    collation_fixer->fixCollation('my_table');
   }
