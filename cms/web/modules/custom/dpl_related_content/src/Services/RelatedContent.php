@@ -93,6 +93,14 @@ class RelatedContent {
   private array $branches = [];
 
   /**
+   * What the results are based on - helps with debugging.
+   *
+   * @var string[]
+   *  The types of filters that can be used.
+   */
+  private array $resultBasis = [];
+
+  /**
    * If TRUE, the filter conditions will be AND - otherwise, they will be OR.
    */
   public bool $andConditions = FALSE;
@@ -184,6 +192,7 @@ class RelatedContent {
       if (!empty($this->tags)) {
         $node_ids = $this->getNodeIds($this->tags);
         $event_ids = $this->getEventInstanceIds($this->tags);
+        $this->resultBasis = ['tags'];
       }
 
       // If we found less than minimum results, we'll add categories to the mix
@@ -191,6 +200,7 @@ class RelatedContent {
       if ((count($event_ids) + count($node_ids) < $this->minItems) && !empty($this->categories)) {
         $node_ids = $this->getNodeIds($this->tags, $this->categories);
         $event_ids = $this->getEventInstanceIds($this->tags, $this->categories);
+        $this->resultBasis = ['tags', 'categories'];
       }
 
       // If we found less than minimum results, we'll add branches to the mix in
@@ -198,11 +208,13 @@ class RelatedContent {
       if ((count($event_ids) + count($node_ids) < $this->minItems) && !empty($this->branches)) {
         $node_ids = $this->getNodeIds($this->tags, $this->categories, $this->branches);
         $event_ids = $this->getEventInstanceIds($this->tags, $this->categories, $this->branches);
+        $this->resultBasis = ['tags', 'categories', 'branches'];
       }
     }
     else {
       $node_ids = $this->getNodeIds($this->tags, $this->categories, $this->branches);
       $event_ids = $this->getEventInstanceIds($this->tags, $this->categories, $this->branches);
+      $this->resultBasis = ['tags', 'categories', 'branches'];
     }
 
     if ($this->allowDateFallback) {
@@ -211,6 +223,7 @@ class RelatedContent {
       if (count($event_ids) + count($node_ids) < $this->minItems) {
         $node_ids = $this->getNodeIds();
         $event_ids = $this->getEventInstanceIds();
+        $this->resultBasis = ['date'];
       }
     }
 
@@ -264,6 +277,7 @@ class RelatedContent {
       '#title' => $this->title,
       '#items' => $content,
       '#list_style' => $this->listStyle,
+      '#result_basis' => $this->resultBasis,
       // The results should be cached, but, they have a lot of dependencies -
       // even depending on the current time (finding future events).
       // The individual pieces of content are cached themselves, so for the full

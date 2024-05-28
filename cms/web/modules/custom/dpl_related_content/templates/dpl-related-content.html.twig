@@ -1,5 +1,9 @@
-{{ title }}
+<div class="mt-64" data-related-result-basis="{{ result_basis|join(', ') }}">
+  {% block content %}
+    {{ title }}
 
-{% for item in items %}
-  {{ item }}
-{% endfor %}
+    {% for item in items %}
+      {{ item }}
+    {% endfor %}
+  {% endblock content %}
+</div>

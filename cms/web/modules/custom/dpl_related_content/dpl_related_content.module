@@ -189,6 +189,7 @@ function dpl_related_content_theme(array $existing, string $type, string $theme,
       'variables' => [
         'title' => NULL,
         'items' => [],
+        'result_basis' => [],
         'list_style' => RelatedContentListStyle::Slider,
       ],
     ],
