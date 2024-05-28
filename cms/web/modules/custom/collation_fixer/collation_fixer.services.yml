@@ -2,7 +2,7 @@ services:
   collation_fixer.collation_fixer:
     class: Drupal\collation_fixer\CollationFixer
     arguments:
-      - '@database'
-      - '@module_handler'
-      - '@entity_type.manager'
-      - '@entity_field.manager'
+      - "@database"
+      - "@module_handler"
+      - "@entity_type.manager"
+      - "@entity_field.manager"

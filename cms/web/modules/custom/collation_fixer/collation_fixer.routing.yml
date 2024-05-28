@@ -1,7 +1,7 @@
 collation_fixer.confirm:
-  path: 'admin/collation-fixer/{table}/confirm'
+  path: "admin/collation-fixer/{table}/confirm"
   defaults:
-    _title: 'Fix collation'
+    _title: "Fix collation"
     _form: 'Drupal\collation_fixer\Form\CollationFixerForm'
   requirements:
-    _permission: 'fix database collation'
+    _permission: "fix database collation"
