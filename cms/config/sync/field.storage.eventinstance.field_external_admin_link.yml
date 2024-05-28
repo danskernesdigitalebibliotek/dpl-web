@@ -1,0 +1,19 @@
+uuid: e26cf97b-07b1-4e98-9008-88d6e06b157c
+langcode: en
+status: true
+dependencies:
+  module:
+    - link
+    - recurring_events
+id: eventinstance.field_external_admin_link
+field_name: field_external_admin_link
+entity_type: eventinstance
+type: link
+settings: {  }
+module: link
+locked: false
+cardinality: 1
+translatable: true
+indexes: {  }
+persist_with_no_fields: false
+custom_storage: false
