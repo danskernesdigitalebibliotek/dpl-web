@@ -68,6 +68,7 @@ tasks:
           set -e
           # Only create test users if they do not exist already.
           if editor_user=$(drush sqlq 'select * from users_field_data where name = "editor"') && [ -z "$editor_user" ]; then
+            drush user:create editor --password="$PR_DRUPAL_PWD"
             drush user:role:add 'editor' editor
 
             drush user:create administrator --password="$PR_DRUPAL_PWD"
