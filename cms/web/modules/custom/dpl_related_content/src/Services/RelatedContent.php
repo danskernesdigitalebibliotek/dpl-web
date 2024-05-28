@@ -182,7 +182,7 @@ class RelatedContent {
     if ($this->andConditions) {
       // First, let's look up related content, based only on tags.
       if (!empty($this->tags)) {
-        $node_ids = $this->getNodeIds();
+        $node_ids = $this->getNodeIds($this->tags);
         $event_ids = $this->getEventInstanceIds($this->tags);
       }
 
