@@ -36,10 +36,6 @@ final class CollationFixer {
    */
   public function checkCollation(?string $table = NULL) {
     $schema = $this->getSchema($table);
-    if (!is_null($table) && empty($schema[$table])) {
-      drupal_set_message(t('Unknown table: @table', array('@table' => $table)), 'error');
-      return FALSE;
-    }
 
     $database_name = &drupal_static(__FUNCTION__);
     if (empty($database_name)) {
@@ -50,16 +46,16 @@ final class CollationFixer {
     $fallback_charset = $this->getFallbackCharset();
     $fallback_collation = $this->getFallbackCollation();
 
-    $wrong_collations = array();
+    $wrong_collations = [];
 
-    foreach ($schema as $table_name => $table_schema) {
-      $schema_charset = !empty($table_schema['charset']) ? $table_schema['charset'] : $fallback_charset;
+    foreach ($schema as $table_name) {
+      $schema_charset = $fallback_charset;
       $db_charset = $this->connection->query(
         'SELECT CCSA.character_set_name FROM information_schema.`TABLES` T,information_schema.`COLLATION_CHARACTER_SET_APPLICABILITY` CCSA WHERE CCSA.collation_name = T.table_collation AND T.table_schema = :table_schema AND T.table_name = :table_name',
         [':table_schema' => $database_name, ':table_name' => $table_name]
       )->fetchField();
 
-      $schema_collation = !empty($table_schema['collation']) ? $table_schema['collation'] : $fallback_collation;
+      $schema_collation = $fallback_collation;
       $db_collation = $this->connection->query(
         'SELECT TABLE_COLLATION FROM information_schema.tables WHERE TABLE_SCHEMA = :table_schema AND TABLE_NAME = :table_name',
         [':table_schema' => $database_name, ':table_name' => $table_name]
@@ -85,8 +81,7 @@ final class CollationFixer {
    */
   function fixCollation(?string $table = NULL) {
     $schema = $this->getSchema($table);
-    if (!is_null($table) && empty($schema[$table])) {
-      drupal_set_message(t('Unknown table: @table', array('@table' => $table)), 'error');
+    if (!empty($table) && !in_array($table, $schema)) {
       return FALSE;
     }
 
@@ -95,22 +90,20 @@ final class CollationFixer {
 
     $status = TRUE;
 
-    foreach ($schema as $table_name => $table_schema) {
-      $charset = !empty($table_schema['charset']) ? $table_schema['charset'] : $fallback_charset;
-      $collation = !empty($table_schema['collation']) ? $table_schema['collation'] : $fallback_collation;
+    foreach ($schema as $table_name) {
+      $charset = $fallback_charset;
+      $collation = $fallback_collation;
 
       // Alter character set and collation of table definition.
       if ($result = $this->connection->query(
-        "ALTER TABLE :table_name CHARACTER SET :charset COLLATE :collation",
-        [':table_name' => $table_name, ':charset' => $charset, ':collation' => $collation]
+        "ALTER TABLE {$table_name} CHARACTER SET {$charset} COLLATE {$collation}"
       )->execute()) {
         $status = $status && $result;
       };
 
       // Alter character set and collation of table data.
       if ($result = $this->connection->query(
-        "ALTER TABLE :table_name CONVERT TO CHARACTER SET :charset COLLATE :collation",
-        [':table_name' => $table_name, ':charset' => $charset, ':collation' => $collation]
+        "ALTER TABLE {$table_name} CONVERT TO CHARACTER SET {$charset} COLLATE {$collation}"
       )->execute()) {
         $status = $status && $result;
       };
@@ -140,7 +133,13 @@ final class CollationFixer {
         }
       }
     }
-    return array_unique(array_merge($moduleSchemas, $entitySchemas));
+    $table_names = array_unique(array_merge(array_keys($moduleSchemas), $entitySchemas));
+
+    if (!empty($table)) {
+      return array_filter($table_names, function($table_name) use ($table) { return $table == $table_name; });
+    } else {
+      return $table_names;
+    }
   }
 
   private function getFallbackCharset() {

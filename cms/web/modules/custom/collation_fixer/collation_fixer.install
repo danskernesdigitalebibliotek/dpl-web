@@ -34,7 +34,7 @@ function collation_fixer_requirements($phase) {
     }
     else {
       $description['status'] = [
-        '#markup' => t('The following tables do not have the correct database collation:')
+        '#markup' => t('The following tables do not have the correct database collation and/or charset:')
       ];
       $description['links'] = [
         '#theme' => 'item_list',
@@ -47,7 +47,7 @@ function collation_fixer_requirements($phase) {
       $renderer = \Drupal::service('renderer');
       return [
         'collation_fixer' => [
-          'title' => t('Database collation check.'),
+          'title' => t('Database collation check'),
           'value' => t('Error'),
           'description' => $renderer->renderPlain($description),
           'severity' => REQUIREMENT_ERROR,
