@@ -4,6 +4,12 @@ status: true
 dependencies:
   content:
     - 'file:file:e3cffc2e-4684-4156-8464-493bdc79aae1'
+  module:
+    - paragraphs_ee
+third_party_settings:
+  paragraphs_ee:
+    paragraphs_categories:
+      content_elements: content_elements
 id: medias
 label: Media(s)
 icon_uuid: e3cffc2e-4684-4156-8464-493bdc79aae1

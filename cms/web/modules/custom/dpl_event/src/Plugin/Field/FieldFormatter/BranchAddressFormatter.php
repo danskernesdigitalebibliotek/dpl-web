@@ -4,12 +4,13 @@ namespace Drupal\dpl_event\Plugin\Field\FieldFormatter;
 
 use Drupal\address\Plugin\Field\FieldFormatter\AddressDefaultFormatter;
 use Drupal\Core\Field\FieldItemListInterface;
-use Drupal\node\NodeInterface;
+use Drupal\dpl_event\EventWrapper;
+use Drupal\recurring_events\Entity\EventInstance;
 
 /**
  * A custom address field formatter: Get fallback address from branch.
  *
- * E.g. - a branch node can be associated with some content (such as events),
+ * E.g. - a branch node can be associated with eventinstances.
  * and that branch may have an address.
  * If it does, we will use this as a fallback, if no custom address is set.
  *
@@ -45,32 +46,18 @@ class BranchAddressFormatter extends AddressDefaultFormatter {
 
     $entity = $items->getEntity();
 
-    // Does the current entity even have a branch field?
-    // Otherwise, we return the standard viewElements.
-    if (!$entity->hasField('field_branch') || $entity->get('field_branch')->isEmpty()) {
+    if (!($entity instanceof EventInstance)) {
       return $default_return;
     }
 
-    // Getting the branch entities.
-    $branches = $entity->get('field_branch')->referencedEntities();
-    $addresses = [];
+    $wrapper = new EventWrapper($entity);
+    $field = $wrapper->getAddressField();
 
-    // Looping through all the connected branches, and if they have an address,
-    // we create it as a render array.
-    foreach ($branches as $branch) {
-      if (!($branch instanceof NodeInterface) || !$branch->hasField('field_address')) {
-        continue;
-      }
-
-      $addresses[] = $branch->get('field_address')->view();
-    }
-
-    // If we didn't find any addresses, we'll just use whatever already exists.
-    if (empty($addresses)) {
+    if (!$field instanceof FieldItemListInterface) {
       return $default_return;
     }
 
-    return $addresses;
+    return $field->view();
   }
 
 }

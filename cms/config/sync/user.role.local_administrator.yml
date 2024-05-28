@@ -24,6 +24,7 @@ dependencies:
     - administerusersbyrole
     - content_lock
     - dpl_admin
+    - dpl_cache_settings
     - dpl_footer
     - dpl_instant_loan
     - dpl_library_agency
@@ -59,6 +60,7 @@ is_admin: null
 permissions:
   - 'access administration pages'
   - 'access content overview'
+  - 'access dpl cache settings'
   - 'access eventinstance overview'
   - 'access eventseries overview'
   - 'access files overview'

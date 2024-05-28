@@ -21,3 +21,4 @@ ignored_config_entities:
   - novel.settings
   - openid_connect.settings.adgangsplatformen
   - system.site
+  - 'webform.webform.*'

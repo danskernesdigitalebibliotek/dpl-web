@@ -221,16 +221,18 @@ Cypress.Commands.add(
     userCPR?: number;
     userGuid?: string;
   }) => {
-    adgangsplatformenLoginOauthMappings({
-      userIsAlreadyRegistered: true,
-      authorizationCode,
-      accessToken,
-      userCPR,
-      userGuid,
-    });
+    cy.session({ authorizationCode, accessToken, userCPR, userGuid }, () => {
+      adgangsplatformenLoginOauthMappings({
+        userIsAlreadyRegistered: true,
+        authorizationCode,
+        accessToken,
+        userCPR,
+        userGuid,
+      });
 
-    cy.visit("/user/login");
-    cy.contains("Log in with Adgangsplatformen").click();
+      cy.visit("/user/login");
+      cy.contains("Log in with Adgangsplatformen").click();
+    });
   }
 );
 Cypress.Commands.add(
@@ -296,6 +298,24 @@ Cypress.Commands.add(
   }
 );
 
+Cypress.Commands.add(
+  "verifyToken",
+  ({
+    token,
+    tokenType,
+  }: {
+    tokenType: "library" | "user" | "unregistered-user";
+    token: string;
+  }) => {
+    cy.request("/dpl-react/user-tokens")
+      .its("body")
+      .should(
+        "contain",
+        `window.dplReact.setToken("${tokenType}", "${token}")`
+      );
+  }
+);
+
 const visible = (checkVisible: boolean) => (checkVisible ? ":visible" : "");
 Cypress.Commands.add("getBySel", (selector, checkVisible = false, ...args) => {
   return cy.get(`[data-cy="${selector}"]${visible(checkVisible)}`, ...args);
@@ -327,6 +347,10 @@ declare global {
         accessToken: string;
         userCPR?: number;
         userGuid?: string;
+      }): Chainable<null>;
+      verifyToken(params: {
+        tokenType: "library" | "user" | "unregistered-user";
+        token: string;
       }): Chainable<null>;
       getBySel(
         selector: string,

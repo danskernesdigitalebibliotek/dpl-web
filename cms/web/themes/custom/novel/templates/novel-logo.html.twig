@@ -1,11 +1,13 @@
 {% set has_image = (image is not empty) and logo_img_enable %}
 
-<figure class="logo">
+<a href="{{ path('<front>') }}" class="logo" aria-label="{{ 'Go to frontpage'|t({}, {'context': 'Logo aria-label'}) }}">
+  <figure class="logo__content">
     {% if has_image %}
-        {{ image }}
+      {{ image }}
     {% endif %}
-    <figcaption class="logo-fallback {{ has_image ? 'logo-fallback--has-image' : '' }}">
-        <p class=" logo-fallback__text-name">{{ title }}</p>
-        <p class="logo-fallback__text-libraries">{{ place }}</p>
-    </figcaption>
-</figure>
+    <div class="logo__description  {{ has_image ? 'logo__description--has-image' : '' }}">
+      <p class="logo__library-name">{{ title }}</p>
+      <p>{{ place }}</p>
+    </div>
+  </figure>
+</a>

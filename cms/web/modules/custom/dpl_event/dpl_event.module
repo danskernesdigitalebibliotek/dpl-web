@@ -85,27 +85,13 @@ function dpl_event_preprocess_field(array &$variables): void {
   }
 
   $entity = $variables['element']['#object'] ?? NULL;
-  if (!($entity instanceof FieldableEntityInterface)) {
+
+  if (!($entity instanceof EventInstance)) {
     return;
   }
 
-  // Try to retrieve the event state field for the entity.
-  // Prefer field_event_state which is the direct value on series or instances
-  // over event_state which is fallback value for instances from series.
-  if ($entity->hasField('field_event_state') && !$entity->get('field_event_state')->isEmpty()) {
-    $event_state_field = $entity->get('field_event_state');
-  }
-  elseif ($entity->hasField('event_state') && !$entity->get('event_state')->isEmpty()) {
-    $event_state_field = $entity->get('event_state');
-  }
-  else {
-    throw new LogicException('Unable to retrieve state field for event');
-  }
-
-  $event_states = array_map(function (array $sfield_value) {
-    return EventState::from($sfield_value['value']);
-  }, $event_state_field->getValue());
-  $event_state = $event_states[0] ?? NULL;
+  $event_wrapper = new EventWrapper($entity);
+  $event_state = $event_wrapper->getState();
 
   // Check if the event state is valid. If not, return early.
   if (!($event_state instanceof EventState)) {

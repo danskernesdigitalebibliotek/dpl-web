@@ -1,7 +1,13 @@
 uuid: 9ec44262-802a-4927-8f35-c9534b149b9f
 langcode: en
 status: true
-dependencies: {  }
+dependencies:
+  module:
+    - paragraphs_ee
+third_party_settings:
+  paragraphs_ee:
+    paragraphs_categories:
+      structural_elements: structural_elements
 id: breadcrumb_children
 label: 'Breadcrumb children'
 icon_uuid: null

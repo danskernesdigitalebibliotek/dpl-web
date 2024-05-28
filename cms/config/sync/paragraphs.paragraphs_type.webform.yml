@@ -1,7 +1,13 @@
 uuid: d4816e9e-7dfa-4c86-98cc-a83f1b4cf2bd
 langcode: en
 status: true
-dependencies: {  }
+dependencies:
+  module:
+    - paragraphs_ee
+third_party_settings:
+  paragraphs_ee:
+    paragraphs_categories:
+      forms: forms
 id: webform
 label: Webform
 icon_uuid: null
