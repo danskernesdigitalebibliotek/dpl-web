@@ -224,50 +224,10 @@ class RelatedContent {
       return [];
     }
 
-    $events = $this->entityTypeManager->getStorage('eventinstance')->loadMultiple($event_ids);
-    $nodes = $this->entityTypeManager->getStorage('node')->loadMultiple($node_ids);
-
-    // We want to combine events and nodes into a single array, however,
-    // we want to interlace them, so it becomes mixed, rather than just
-    // all the nodes and then all the events.
-    // We could also sort the merging based on the actual date values, but this
-    // will be too expensive for what it is worth.
-    $content = [];
-
-    // Remove array keys, so we can do the sorting.
-    $events = array_values($events);
-    $nodes = array_values($nodes);
-
-    $node_view_builder = $this->entityTypeManager->getViewBuilder('node');
-    $event_view_builder = $this->entityTypeManager->getViewBuilder('eventinstance');
-
-    // We find the longer array, to do a simple FOR loop.
-    $length = max(count($events), count($nodes));
-
-    for ($i = 0; $i < $length;) {
-      if ($i >= $this->maxItems) {
-        break;
-      }
-
-      if (isset($events[$i])) {
-        $content[] = $event_view_builder->view($events[$i], $this->contentViewMode);
-        $i++;
-      }
-
-      if ($i >= $this->maxItems) {
-        break;
-      }
-
-      if (isset($nodes[$i])) {
-        $content[] = $node_view_builder->view($nodes[$i], $this->contentViewMode);
-        $i++;
-      }
-    }
-
     return [
       '#theme' => 'dpl_related_content',
       '#title' => $this->title,
-      '#items' => $content,
+      '#items' => $this->renderMergeResults($event_ids, $node_ids),
       '#list_style' => $this->listStyle,
       '#result_basis' => $this->resultBasis,
       // The results should be cached, but, they have a lot of dependencies -
@@ -281,6 +241,61 @@ class RelatedContent {
         '#tags' => ['eventinstance_list', 'eventseries_list', 'node_list'],
       ],
     ];
+  }
+
+  /**
+   * Merges and renders nodes and eventinstances. (N1, E1, N2, E2..).
+   *
+   * This function takes two arrays of objects (or any type of elements) and
+   * merges them together such that elements from the two arrays are mixed.
+   * If the arrays are of different lengths, the remaining elements from the
+   * longer array are appended at the end.
+   * We could also sort the merging based on the actual date values, but this
+   * will be too expensive for what it is worth.
+   *
+   * @param array<int|string> $event_ids
+   *   The array of node IDs.
+   * @param array<int|string> $node_ids
+   *   The array of eventinstance IDs.
+   *
+   * @return array<mixed>
+   *   The merged array with rendered objects.
+   */
+  private function renderMergeResults(array $event_ids, array $node_ids): array {
+    $events = $this->entityTypeManager->getStorage('eventinstance')->loadMultiple($event_ids);
+    $nodes = $this->entityTypeManager->getStorage('node')->loadMultiple($node_ids);
+
+    // Remove array keys, so we can do the sorting.
+    $events = array_values($events);
+    $nodes = array_values($nodes);
+
+    $event_view_builder = $this->entityTypeManager->getViewBuilder('eventinstance');
+    $node_view_builder = $this->entityTypeManager->getViewBuilder('node');
+
+    $node_length = count($nodes);
+    $event_length = count($events);
+    $max_length = max($node_length, $event_length);
+    $content = [];
+
+    for ($i = 0; $i < $max_length; $i++) {
+      if (count($content) >= $this->maxItems) {
+        break;
+      }
+
+      if ($i < $event_length) {
+        $content[] = $event_view_builder->view($events[$i], $this->contentViewMode);
+      }
+
+      if (count($content) >= $this->maxItems) {
+        break;
+      }
+
+      if ($i < $node_length) {
+        $content[] = $node_view_builder->view($nodes[$i], $this->contentViewMode);
+      }
+    }
+
+    return $content;
   }
 
   /**
