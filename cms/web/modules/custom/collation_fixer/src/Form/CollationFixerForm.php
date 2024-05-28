@@ -1,4 +1,6 @@
-<?php declare(strict_types = 1);
+<?php
+
+declare(strict_types = 1);
 
 namespace Drupal\collation_fixer\Form;
 
@@ -11,8 +13,14 @@ use Drupal\Core\Url;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
+/**
+ * Administrative form for fixing the collation of a single table.
+ */
 final class CollationFixerForm extends ConfirmFormBase {
 
+  /**
+   * Constructor.
+   */
   public function __construct(
     private CollationFixer $collationFixer,
     private string $table = ''
@@ -48,6 +56,9 @@ final class CollationFixerForm extends ConfirmFormBase {
     return new Url('system.status');
   }
 
+  /**
+   * {@inheritdoc}
+   */
   public function buildForm(array $form, FormStateInterface $form_state, string $table = '') {
     if (!$this->collationFixer->checkCollation($table)) {
       throw new NotFoundHttpException();
@@ -62,8 +73,9 @@ final class CollationFixerForm extends ConfirmFormBase {
   public function submitForm(array &$form, FormStateInterface $form_state): void {
     try {
       $this->collationFixer->fixCollation($this->table);
-      $this->messenger()->addStatus($this->t('Fixed collation of table: %table', [ '%table' => $this->table ]));
-    } catch (DatabaseException $e) {
+      $this->messenger()->addStatus($this->t('Fixed collation of table: %table', ['%table' => $this->table]));
+    }
+    catch (DatabaseException $e) {
       $this->messenger()->addError($this->t(
         'Unable to fix collation for table %table: %message',
         ['%table' => $this->table, '%message' => $e->getMessage()]

@@ -1,4 +1,6 @@
-<?php declare(strict_types = 1);
+<?php
+
+declare(strict_types = 1);
 
 namespace Drupal\collation_fixer;
 
@@ -8,15 +10,14 @@ use Drupal\Core\Entity\EntityFieldManagerInterface;
 use Drupal\Core\Entity\EntityTypeManagerInterface;
 use Drupal\Core\Entity\Sql\SqlEntityStorageInterface;
 use Drupal\Core\Extension\ModuleHandlerInterface;
-use Drupal\TestTools\Extension\SchemaInspector;
 
 /**
- * @todo Add class description.
+ * Core class for fixing collations.
  */
 final class CollationFixer {
 
   /**
-   * Constructs a CollationFixer object.
+   * Constructor.
    */
   public function __construct(
     private readonly Connection $connection,
@@ -29,7 +30,8 @@ final class CollationFixer {
    * Check table collations.
    *
    * @param string $table
-   *   Name of a table to check for collation correctness. Defaults to all tables.
+   *   Name of a table to check for collation correctness.
+   *   Defaults to all tables if not set.
    *
    * @return array
    *   A list of tables with wrong collations.
@@ -69,7 +71,6 @@ final class CollationFixer {
     return $wrong_collations;
   }
 
-
   /**
    * Fix tables collations.
    *
@@ -79,7 +80,7 @@ final class CollationFixer {
    * @return bool
    *   TRUE if collations where changed successfully.
    */
-  function fixCollation(?string $table = NULL) {
+  public function fixCollation(?string $table = NULL) {
     $schema = $this->getSchema($table);
     if (!empty($table) && !in_array($table, $schema)) {
       return FALSE;
@@ -112,11 +113,21 @@ final class CollationFixer {
     return $status;
   }
 
+  /**
+   * Returns all available schemas ie. table names.
+   *
+   * @param ?string $table
+   *   A specific table name to check.
+   *
+   * @return array
+   *   An array of table names.
+   */
   private function getSchema(?string $table = NULL) {
-    $schemas = array_map(function(string $module) {
+    $schemas = array_map(function (string $module) {
       if ($this->moduleHandler->loadInclude($module, 'install')) {
         return $this->moduleHandler->invoke($module, 'schema') ?? [];
-      } else {
+      }
+      else {
         return [];
       }
     }, array_keys($this->moduleHandler->getModuleList()));
@@ -136,12 +147,18 @@ final class CollationFixer {
     $table_names = array_unique(array_merge(array_keys($moduleSchemas), $entitySchemas));
 
     if (!empty($table)) {
-      return array_filter($table_names, function($table_name) use ($table) { return $table == $table_name; });
-    } else {
+      return array_filter($table_names, function ($table_name) use ($table) {
+        return $table == $table_name;
+      });
+    }
+    else {
       return $table_names;
     }
   }
 
+  /**
+   * Get the default charset to use if nothing else is specified.
+   */
   private function getFallbackCharset() {
     $connection_options = $this->connection->getConnectionOptions();
     if (isset($connection_options['charset'])) {
@@ -154,6 +171,9 @@ final class CollationFixer {
     return $fallback_charset;
   }
 
+  /**
+   * Get the default collation to use if nothing else is specified.
+   */
   private function getFallbackCollation() {
     $connection_options = $this->connection->getConnectionOptions();
     if (isset($connection_options['collation'])) {
@@ -165,6 +185,5 @@ final class CollationFixer {
 
     return $fallback_collation;
   }
-
 
 }

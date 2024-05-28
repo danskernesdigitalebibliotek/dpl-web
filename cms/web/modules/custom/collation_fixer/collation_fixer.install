@@ -5,8 +5,6 @@
  * Install, update and uninstall functions for the collation_fixer module.
  */
 
-use Drupal\collation_fixer\CollationFixer;
-use Drupal\Component\Render\FormattableMarkup;
 use Drupal\Core\Link;
 use Drupal\Core\Url;
 
@@ -18,7 +16,7 @@ use Drupal\Core\Url;
  */
 function collation_fixer_requirements($phase) {
   if ($phase == 'runtime') {
-    /** @var CollationFixer $collation_fixer */
+    /** @var \Drupal\collation_fixer\CollationFixer $collation_fixer */
     $collation_fixer = \Drupal::service('collation_fixer.collation_fixer');
     $wrong_collations = $collation_fixer->checkCollation();
 
@@ -34,14 +32,14 @@ function collation_fixer_requirements($phase) {
     }
     else {
       $description['status'] = [
-        '#markup' => t('The following tables do not have the correct database collation and/or charset:')
+        '#markup' => t('The following tables do not have the correct database collation and/or charset:'),
       ];
       $description['links'] = [
         '#theme' => 'item_list',
         '#list_type' => 'ul',
       ];
-      $description['links']['#items'] = array_map(function(string $table) {
-        return (new Link($table,  Url::fromRoute('collation_fixer.confirm', ['table' => $table])))->toRenderable();
+      $description['links']['#items'] = array_map(function (string $table) {
+        return (new Link($table, Url::fromRoute('collation_fixer.confirm', ['table' => $table])))->toRenderable();
       }, $wrong_collations);
       /** @var \Drupal\Core\Render\RendererInterface $renderer */
       $renderer = \Drupal::service('renderer');

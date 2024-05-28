@@ -2,18 +2,16 @@
 
 namespace Drupal\collation_fixer\Commands;
 
-use Consolidation\OutputFormatters\StructuredData\RowsOfFields;
 use Drupal\collation_fixer\CollationFixer;
-use Drupal\Core\Utility\Token;
-use Drush\Attributes as CLI;
 use Drush\Commands\DrushCommands;
-use Symfony\Component\DependencyInjection\ContainerInterface;
 
-final class CollationFixerCommands extends DrushCommands
-{
+/**
+ * Drush commands for fixing collations from the command line.
+ */
+final class CollationFixerCommands extends DrushCommands {
 
   /**
-   * Constructs a CollationFixerCommands object.
+   * Constructor.
    */
   public function __construct(
     private CollationFixer $collationFixer,
@@ -22,10 +20,10 @@ final class CollationFixerCommands extends DrushCommands
   }
 
   /**
-   * Command description here.
+   * Fix collation for one or more tables.
    *
    * @command collation-fixer
-   * @option table Name of a table to fix collation on. Defaults to all tables
+   * @option table Name of a table to fix collation on. Defaults to all tables.
    */
   public function fixTable($options = ['table' => NULL]) {
     $tables = $this->collationFixer->checkCollation($options['table']);
@@ -35,7 +33,8 @@ final class CollationFixerCommands extends DrushCommands
 
     if (count($total)) {
       $this->io()->success(sprintf('%s tables were processed.', count($total)));
-    } else {
+    }
+    else {
       $this->io()->info('No collation fixes needs to be done');
     }
   }

@@ -1,6 +1,4 @@
 type: module
 name: "Collation Fixer"
 description: "Fix MySQL Collations"
-package: Development
 core_version_requirement: ^10
-
