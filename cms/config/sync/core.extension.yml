@@ -17,6 +17,7 @@ module:
   config_translation: 0
   config_translation_po: 0
   content_lock: 0
+  cookieinformation: 0
   crop: 0
   date_range_formatter: 0
   datetime: 0
