@@ -100,6 +100,8 @@ final class CollationFixer {
 
       // Alter character set and collation of table definition.
       $query = $this->connection->query(
+        // Placeholders are intentionally not used there. It does not seem as
+        // if is it supported.
         "ALTER TABLE {$table_name} CHARACTER SET {$charset} COLLATE {$collation}"
       );
       if ($query instanceof StatementInterface) {
@@ -109,6 +111,8 @@ final class CollationFixer {
 
       // Alter character set and collation of table data.
       $query = $this->connection->query(
+        // Placeholders are intentionally not used there. It does not seem as
+        // if is it supported.
         "ALTER TABLE {$table_name} CONVERT TO CHARACTER SET {$charset} COLLATE {$collation}"
       );
       if ($query instanceof StatementInterface) {
