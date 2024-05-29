@@ -26869,22 +26869,22 @@ msgstr "Indhold"
 #: 
 msgctxt "Fees list"
 msgid "Go to the loan list page to see your overdue loans"
-msgstr ""
+msgstr "Gå til lånelisten for at se dine overskredne lån"
 
 #: 
 msgctxt "Fees list"
 msgid "See your overdue loans"
-msgstr ""
+msgstr "Se dine overskredne lån"
 
 #: 
 msgctxt "Fees list"
 msgid "You have an overdue loan. You may be charged fees upon handing in or renewing it."
-msgstr ""
+msgstr "Du har et lån som skulle have været afleveret. Du kan blive afkrævet et gebyr når du afleverer det."
 
 #: 
 msgctxt "Fees list"
 msgid "You have overdue loans. You may be charged fees upon handing in or renewing them."
-msgstr ""
+msgstr "Du har lån som skulle have været afleveret. Du kan blive afkrævet et gebyr når du afleverer dem."
 
 #: 
 msgctxt "Create patron"
