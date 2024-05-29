@@ -468,12 +468,12 @@ msgstr "Materialet er udlånt"
 #: 
 msgctxt "Work Page"
 msgid "1 copy has been reserved"
-msgstr "1 eksemplar er reserveret."
+msgstr "Der er 1 reservering til dette materiale."
 
 #: 
 msgctxt "Work Page"
 msgid "@count copies have been reserved"
-msgstr "@count eksemplarer er reserveret."
+msgstr "Der er @count reserveringer til dette materiale."
 
 #: 
 msgctxt "Work Page"
