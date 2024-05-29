@@ -34,8 +34,8 @@ final class CollationFixer {
    *   Name of a table to check for collation correctness.
    *   Defaults to all tables if not set.
    *
-   * @return string[]
-   *   A list of tables with wrong collations.
+   * @return TableCollation[]
+   *   A list of tables with wrong collation or charset.
    */
   public function checkCollation(?string $table = NULL): array {
     $schema = $this->getSchema($table);
@@ -67,7 +67,7 @@ final class CollationFixer {
       $db_collation = ($collation_result instanceof StatementInterface) ? $collation_result->fetchField() : $fallback_collation;
 
       if (($schema_charset != $db_charset) || ($schema_collation != $db_collation)) {
-        $wrong_collations[] = $table_name;
+        $wrong_collations[] = new TableCollation($table_name, $db_collation, $db_charset);
       }
     }
 

@@ -3,6 +3,7 @@
 namespace Drupal\collation_fixer\Commands;
 
 use Drupal\collation_fixer\CollationFixer;
+use Drupal\collation_fixer\TableCollation;
 use Drush\Commands\DrushCommands;
 
 /**
@@ -27,8 +28,8 @@ final class CollationFixerCommands extends DrushCommands {
    */
   public function fixTable(array $options = ['table' => NULL]) : void {
     $tables = $this->collationFixer->checkCollation($options['table']);
-    $fixes = array_filter(array_map(function (string $table) {
-      return $this->collationFixer->fixCollation($table);
+    $fixes = array_filter(array_map(function (TableCollation $table) {
+      return $this->collationFixer->fixCollation($table->table);
     }, $tables));
 
     $numFixes = count($fixes);
