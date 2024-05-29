@@ -171,6 +171,10 @@ final class CollationFixer {
       $fallback_charset = $connection_options['charset'];
     }
     else {
+      // There does not seem to be a default charset used for Drupal 10.
+      // utf8mb4 was the charset suggested when multibyte UTF-8 support was
+      // added to Drupal 7. In lack of other sources we use this as well here.
+      // https://www.drupal.org/node/2754539
       $fallback_charset = 'utf8mb4';
     }
 
@@ -186,7 +190,12 @@ final class CollationFixer {
       $fallback_collation = $connection_options['collation'];
     }
     else {
-      $fallback_collation = 'utf8mb4_general_ci';
+      // There does not seem to be a default collation used for Drupal 10.
+      // utf8mb4_unicode_ci was the collation suggested when multibyte UTF-8
+      // support was added to Drupal 7. In lack of other sources we use this as
+      // well here.
+      // https://www.drupal.org/node/2754539
+      $fallback_collation = 'utf8mb4_unicode_ci';
     }
 
     return $fallback_collation;
