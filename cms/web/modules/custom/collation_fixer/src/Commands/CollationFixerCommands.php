@@ -33,7 +33,7 @@ final class CollationFixerCommands extends DrushCommands {
     }, $tables));
 
     $numFixes = count($fixes);
-    if ($numFixes > 1) {
+    if ($numFixes > 0) {
       $this->io()->success("{$numFixes} tables were processed.");
     }
     else {
