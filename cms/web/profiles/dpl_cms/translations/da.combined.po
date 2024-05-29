@@ -653,7 +653,7 @@ msgstr "Pop-up til reservering"
 #: 
 msgctxt "Work Page"
 msgid "is reserved for you"
-msgstr "er reserveret til dig"
+msgstr "er reserveret til dig."
 
 #: 
 msgctxt "Work Page"
