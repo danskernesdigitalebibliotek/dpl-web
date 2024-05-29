@@ -31,6 +31,7 @@ dependencies:
     - dpl_mapp
     - dpl_opening_hours
     - dpl_url_proxy
+    - dpl_webform
     - entity_clone
     - file
     - filter
@@ -75,6 +76,7 @@ permissions:
   - 'add eventseries entity'
   - 'add new links to admin menu'
   - 'add new links to main menu'
+  - 'administer advanced webform element settings'
   - 'administer dpl_footer settings'
   - 'administer dpl_mapp configuration'
   - 'administer instant loan configuration'

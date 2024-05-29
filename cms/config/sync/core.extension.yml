@@ -84,6 +84,7 @@ module:
   filter: 0
   flat_taxonomy: 0
   focal_point: 0
+  gin_login: 0
   gin_toolbar: 0
   handy_cache_tags: 0
   honeypot: 0
