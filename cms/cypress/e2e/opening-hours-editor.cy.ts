@@ -274,8 +274,7 @@ const createOpeningHour = ({
 }: OpeningHourFormType) => {
   visitOpeningHoursPageAdmin();
   navigateToMonthViewAdmin();
-  navigateToFirstJanuary2024("monthViewAdmin");
-  clickFirstDayInMonthViewAdmin();
+  selectTodayFromMonthViewAdmin();
   fillOpeningHourForm({ openingHourCategory, timeDuration: { start, end } });
   submitOpeningHourForm();
   validateAtLeastOneOpeningHoursExistAdmin({
@@ -283,7 +282,6 @@ const createOpeningHour = ({
     timeDuration: { start, end },
   });
   visitOpeningHoursPage();
-  navigateToFirstJanuary2024("weekViewPage");
   validateOpeningHoursPage({
     openingHourCategory,
     timeDuration: { start, end },
@@ -365,7 +363,6 @@ const updateOpeningHour = ({
   // Assume that the event is already created and is visible
   visitOpeningHoursPageAdmin();
   navigateToMonthViewAdmin();
-  navigateToFirstJanuary2024("monthViewAdmin");
   cy.getBySel("opening-hours-editor-event-content")
     .contains(openingHourCategory)
     .click();
@@ -376,7 +373,6 @@ const updateOpeningHour = ({
     timeDuration: { start, end },
   });
   visitOpeningHoursPage();
-  navigateToFirstJanuary2024("weekViewPage");
   validateOpeningHoursPage({
     openingHourCategory,
     timeDuration: { start, end },
@@ -413,7 +409,7 @@ const updateOpeningHoursSeries = ({
     });
     visitOpeningHoursPage();
     navigateToFirstJanuary2024("weekViewPage");
-    // Because we use "2024-02-29" as endDate we can check the four next weeks
+    // Because we use oneMonthFromToday as endDate we can check the four next weeks
     for (let i = 0; i < 5; i++) {
       validateOpeningHoursPage({
         openingHourCategory,
@@ -430,7 +426,6 @@ const deleteOpeningHour = ({
 }: OpeningHourFormType) => {
   visitOpeningHoursPageAdmin();
   navigateToMonthViewAdmin();
-  navigateToFirstJanuary2024("monthViewAdmin");
   validateAtLeastOneOpeningHoursExistAdmin({
     openingHourCategory,
     timeDuration: { start, end },
@@ -441,7 +436,6 @@ const deleteOpeningHour = ({
     timeDuration: { start, end },
   });
   visitOpeningHoursPage();
-  navigateToFirstJanuary2024("weekViewPage");
   validateOpeningHoursNotPresentPage({
     openingHourCategory,
     timeDuration: { start, end },
