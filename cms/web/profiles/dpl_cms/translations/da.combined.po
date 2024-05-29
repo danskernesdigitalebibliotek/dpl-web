@@ -663,7 +663,7 @@ msgstr "Materialet er nu reserveret til dig!"
 #: 
 msgctxt "Work Page"
 msgid "Material is available and you will get a message when it is ready for pickup - pickup at @branch"
-msgstr "Materialet er tilgængeligt og du vil få en besked når det er klar til afhentning - afhentes på @branch"
+msgstr "Du vil få en besked når det er klar til afhentning - afhentes på @branch"
 
 #: 
 msgctxt "Work Page"
