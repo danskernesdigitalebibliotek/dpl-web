@@ -4,12 +4,12 @@
     {% for item in settings.footer_items %}
         {% set startsOpen = loop.index == 1 %}
         <li class="footer-accordion">
-            <h3 class="footer-accordion__header footer__title">
+            <h2 class="footer-accordion__header footer__title">
                 <button class="footer-accordion__header-button" aria-expanded="{{ startsOpen ? 'true' : 'false' }}" data-footer-accordion-trigger>
                     {{ item.name }}
                     <img class="footer-accordion__header-button__arrow" src="/themes/custom/novel/assets/dpl-design-system/icons/basic/icon-triangle.svg" alt="">
                 </button>
-            </h3>
+            </h2>
 
             <div class="footer__content {{ startsOpen ? '' : 'footer__content--hidden' }}">
                 {{ item.content.value|raw }}

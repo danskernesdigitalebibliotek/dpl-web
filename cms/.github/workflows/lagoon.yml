@@ -28,7 +28,7 @@ jobs:
         if: github.ref_type == 'branch' || github.ref_type == 'pull_request'
         with:
           allowed: |
-            /^.{1,50}$/
+            /^.{1,100}$/
           errorMessage: 'Branch name too long. This cannot be deployed to Lagoon.'
 
   CheckEnvironment:
