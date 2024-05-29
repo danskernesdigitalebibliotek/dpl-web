@@ -61,8 +61,14 @@ final class CollationFixerForm extends ConfirmFormBase {
       throw new \RuntimeException('Unable to determine table');
     }
     return $this->t(
-      'Current charset: %charset<br/>Current collation: %collation',
-      ['%charset' => $this->table->charset, '%collation' => $this->table->collation]
+      'Do you want to fix collation of table %table by converting charset from %from_charset to %to_charset and collation from %from_collation to %to_collation?',
+      [
+        '%table' => $this->table->table,
+        '%from_charset' => $this->table->currentCharset,
+        '%from_collation' => $this->table->currentCollation,
+        '%to_charset' => $this->table->expectedCharset,
+        '%to_collation' => $this->table->expectedCollation,
+      ]
     );
   }
 
@@ -95,8 +101,14 @@ final class CollationFixerForm extends ConfirmFormBase {
     try {
       $this->collationFixer->fixCollation($this->table->table);
       $this->messenger()->addStatus($this->t(
-        'Fixed collation of table %table with charset %charset and collation %collation',
-        ['%table' => $this->table->table, '%charset' => $this->table->charset, '%collation' => $this->table->collation]
+        'Fixed collation of table %table. Converted charset from %from_charset to %to_charset and collation from %from_collation to %to_collation.',
+        [
+          '%table' => $this->table->table,
+          '%from_charset' => $this->table->currentCharset,
+          '%from_collation' => $this->table->currentCollation,
+          '%to_charset' => $this->table->expectedCharset,
+          '%to_collation' => $this->table->expectedCollation,
+        ]
       ));
     }
     catch (DatabaseException $e) {

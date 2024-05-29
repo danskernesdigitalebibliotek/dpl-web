@@ -12,8 +12,10 @@ class TableCollation {
    */
   public function __construct(
     public string $table,
-    public string $collation,
-    public string $charset
+    public string $currentCollation,
+    public string $currentCharset,
+    public string $expectedCollation,
+    public string $expectedCharset,
   ) {}
 
 }

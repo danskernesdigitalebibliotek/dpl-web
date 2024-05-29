@@ -67,7 +67,7 @@ final class CollationFixer {
       $db_collation = ($collation_result instanceof StatementInterface) ? $collation_result->fetchField() : $fallback_collation;
 
       if (($schema_charset != $db_charset) || ($schema_collation != $db_collation)) {
-        $wrong_collations[] = new TableCollation($table_name, $db_collation, $db_charset);
+        $wrong_collations[] = new TableCollation($table_name, $db_collation, $db_charset, $schema_collation, $schema_charset);
       }
     }
 
@@ -84,25 +84,17 @@ final class CollationFixer {
    *   TRUE if collations where changed successfully.
    */
   public function fixCollation(?string $table = NULL) {
-    $schema = $this->getSchema($table);
-    if (!empty($table) && !in_array($table, $schema)) {
-      return FALSE;
-    }
-
-    $fallback_charset = $this->getFallbackCharset();
-    $fallback_collation = $this->getFallbackCollation();
+    $wrongCollations = $this->checkCollation($table);
 
     $status = TRUE;
 
-    foreach ($schema as $table_name) {
-      $charset = $fallback_charset;
-      $collation = $fallback_collation;
+    foreach ($wrongCollations as $tableCollation) {
 
       // Alter character set and collation of table definition.
       $query = $this->connection->query(
         // Placeholders are intentionally not used there. It does not seem as
         // if is it supported.
-        "ALTER TABLE {$table_name} CHARACTER SET {$charset} COLLATE {$collation}"
+        "ALTER TABLE {$tableCollation->table} CHARACTER SET {$tableCollation->expectedCharset} COLLATE {$tableCollation->expectedCollation}"
       );
       if ($query instanceof StatementInterface) {
         $result = $query->execute();
@@ -113,7 +105,7 @@ final class CollationFixer {
       $query = $this->connection->query(
         // Placeholders are intentionally not used there. It does not seem as
         // if is it supported.
-        "ALTER TABLE {$table_name} CONVERT TO CHARACTER SET {$charset} COLLATE {$collation}"
+        "ALTER TABLE {$tableCollation->table} CONVERT TO CHARACTER SET {$tableCollation->expectedCharset} COLLATE {$tableCollation->expectedCollation}"
       );
       if ($query instanceof StatementInterface) {
         $result = $query->execute();

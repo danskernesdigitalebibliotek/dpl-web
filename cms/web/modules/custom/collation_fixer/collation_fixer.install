@@ -35,18 +35,26 @@ function collation_fixer_requirements(string $phase): array {
       $description['status'] = [
         '#markup' => t('The following tables do not have the correct database collation and/or charset:'),
       ];
-      $description['links'] = [
-        '#theme' => 'item_list',
-        '#list_type' => 'ul',
+      $description['tables'] = [
+        '#type' => 'table',
+        '#header' => [
+          'table' => t('Fix table'),
+          'current_charset' => t('Current charset'),
+          'current_collation' => t('Current collation'),
+          'expected_charset' => t('Expected charset'),
+          'expected_collation' => t('Expected collation'),
+        ],
       ];
-      $description['links']['#items'] = array_map(function (TableCollation $table) {
-        return (new Link(
-          t(
-            "%table (charset: %charset/ collation: %collation",
-            ['%table' => $table->table, '%charset' => $table->charset, '%collation' => $table->collation]
-          ),
-          Url::fromRoute('collation_fixer.confirm', ['table' => $table->table]))
-        )->toRenderable();
+      $description['tables']['#rows'] = array_map(function (TableCollation $table) {
+        return [
+          'table' => [
+            'data' => (new Link($table->table, Url::fromRoute('collation_fixer.confirm', ['table' => $table->table])))->toRenderable(),
+          ],
+          'current_charset' => $table->currentCharset,
+          'current_collation' => $table->currentCollation,
+          'expected_charset' => $table->expectedCharset,
+          'expected_collation' => $table->expectedCollation,
+        ];
       }, $wrong_collations);
       /** @var \Drupal\Core\Render\RendererInterface $renderer */
       $renderer = \Drupal::service('renderer');
