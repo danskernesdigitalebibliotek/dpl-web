@@ -163,9 +163,9 @@ class RelatedContent {
       $branches_field_name = 'branch';
     }
 
-    $tags = ($entity->hasField($tags_field_name)) ? $entity->get($tags_field_name)->referencedEntities() : [];
-    $categories = ($entity->hasField($categories_field_name)) ? $entity->get($categories_field_name)->referencedEntities() : [];
-    $branches = ($entity->hasField($branches_field_name)) ? $entity->get($branches_field_name)->referencedEntities() : [];
+    $tags = ($entity->hasField($tags_field_name)) ? $entity->get($tags_field_name)->referencedEntities() : NULL;
+    $categories = ($entity->hasField($categories_field_name)) ? $entity->get($categories_field_name)->referencedEntities() : NULL;
+    $branches = ($entity->hasField($branches_field_name)) ? $entity->get($branches_field_name)->referencedEntities() : NULL;
 
     $this->setTags($tags);
     $this->setCategories($categories);
