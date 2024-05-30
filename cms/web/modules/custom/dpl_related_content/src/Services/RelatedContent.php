@@ -3,9 +3,13 @@
 namespace Drupal\dpl_related_content\Services;
 
 use Drupal\Core\Database\Connection;
+use Drupal\Core\Database\Query\ConditionInterface as DBConditionInterface;
+use Drupal\Core\Database\Query\SelectInterface;
 use Drupal\Core\Datetime\DrupalDateTime;
 use Drupal\Core\Entity\EntityTypeManagerInterface;
 use Drupal\Core\Entity\FieldableEntityInterface;
+use Drupal\Core\Entity\Query\ConditionInterface;
+use Drupal\Core\Entity\Query\QueryInterface;
 use Drupal\Core\StringTranslation\TranslationInterface;
 use Drupal\datetime\Plugin\Field\FieldType\DateTimeItemInterface;
 use Drupal\dpl_related_content\RelatedContentListStyle;
@@ -306,6 +310,40 @@ class RelatedContent {
   }
 
   /**
+   * Getting a combined condition group, taking into account AND/OR logic.
+   *
+   * @param \Drupal\Core\Entity\Query\QueryInterface|SelectInterface $query
+   *   The query on which we should create the condition group.
+   * @param array<mixed> $filters
+   *   Array of field_keys => value, that we want to look up.
+   *
+   * @return \Drupal\Core\Entity\Query\ConditionInterface|DBConditionInterface
+   *   A condition group that can be added to a query.
+   */
+  private function getConditionGroup(QueryInterface|SelectInterface $query, array $filters): ConditionInterface|DBConditionInterface {
+    $condition_group = $this->andConditions ? $query->andConditionGroup() : $query->orConditionGroup();
+
+    foreach ($filters as $field_name => $values) {
+      $group = NULL;
+
+      if (empty($values)) {
+        continue;
+      }
+
+      foreach ($values as $value) {
+        $group = $this->andConditions ? $query->andConditionGroup() : $query->orConditionGroup();
+        $group->condition($field_name, [$value], 'IN');
+      }
+
+      if ($group) {
+        $condition_group->condition($group);
+      }
+    }
+
+    return $condition_group;
+  }
+
+  /**
    * Get matching node IDs.
    *
    * Allow passing along various term IDs, that we look for in filter group.
@@ -340,34 +378,15 @@ class RelatedContent {
       // so we will limit the query to this.
       ->range(0, $this->maxItems);
 
-    if (!empty($tags) || !empty($categories) || !empty($branches)) {
-      if ($this->andConditions) {
-        $condition_group = $query->andConditionGroup();
+    $filters = [
+      'field_tags' => $tags,
+      'field_categories' => $categories,
+      'field_branches' => $branches,
+    ];
 
-        // To avoid errors, related to the GROUP only containing one condition,
-        // we'll add a fake condition to fill out a possible empty space.
-        $condition_group->condition('title', 'ALWAYS_TRUE', '<>');
-      }
-      else {
-        $condition_group = $query->orConditionGroup();
+    $condition_group = $this->getConditionGroup($query, $filters);
 
-        // To avoid errors, related to the GROUP only containing one condition,
-        // we'll add a fake condition to fill out a possible empty space.
-        $condition_group->condition('title', 'ALWAYS_FALSE');
-      }
-
-      if (!empty($tags)) {
-        $condition_group->condition('field_tags', $tags, 'IN');
-      }
-
-      if (!empty($categories)) {
-        $condition_group->condition('field_categories', $categories, 'IN');
-      }
-
-      if (!empty($branches)) {
-        $condition_group->condition('field_branch', $branches, 'IN');
-      }
-
+    if ($condition_group instanceof ConditionInterface) {
       $query->condition($condition_group);
     }
 
@@ -407,6 +426,12 @@ class RelatedContent {
     // is not an option.
     $connection = $this->connection;
 
+    // Main query to select eventinstance ids, joining with
+    // eventinstance_field_data for condition fields.
+    $query = $connection->select('eventinstance_field_data', 'eid');
+    $query->join('eventinstance', 'ei', 'ei.id = eid.id');
+    $query->addField('eid', 'id', 'eventinstance_id');
+
     // Prepare a subquery for eventseries IDs based on terms.
     $subquery = $connection->select('eventseries', 'es');
     $subquery->fields('es', ['id']);
@@ -418,49 +443,22 @@ class RelatedContent {
     $subquery->leftJoin('eventseries__field_categories', 'es_cats', 'es.id = es_cats.entity_id');
     $subquery->leftJoin('eventseries__field_branch', 'es_bra', 'es.id = es_bra.entity_id');
 
-    if (!empty($tags) || !empty($categories) || !empty($branches)) {
-      if ($this->andConditions) {
-        $condition_group = $subquery->andConditionGroup();
+    $filters = [
+      'es_tags.field_tags_target_id' => $tags,
+      'es_cats.field_categories_target_id' => $categories,
+      'es_bra.field_branch_target_id' => $branches,
+    ];
 
-        // To avoid errors, related to the GROUP only containing one condition,
-        // we'll add a fake condition to fill out a possible empty space.
-        $condition_group->condition('title', 'ALWAYS_TRUE', '<>');
-      }
-      else {
-        $condition_group = $subquery->orConditionGroup();
+    $condition_group = $this->getConditionGroup($query, $filters);
 
-        // To avoid errors, related to the GROUP only containing one condition,
-        // we'll add a fake condition to fill out a possible empty space.
-        $condition_group->condition('title', 'ALWAYS_FALSE');
-      }
-
-      if (!empty($tags)) {
-        $condition_group->condition('es_tags.field_tags_target_id', $tags, 'IN');
-      }
-
-      if (!empty($categories)) {
-        $condition_group->condition('es_cats.field_categories_target_id', $categories, 'IN');
-      }
-
-      if (!empty($branches)) {
-        $condition_group->condition('es_bra.field_branch_target_id', $branches, 'IN');
-      }
-
+    if ($condition_group instanceof DBConditionInterface) {
       $subquery->condition($condition_group);
     }
 
+    // Use the subquery to filter by eventseries_id.
+    $query->condition('eid.eventseries_id', $subquery, 'IN');
+
     $subquery->distinct(TRUE);
-
-    // Main query to select eventinstance ids, joining with
-    // eventinstance_field_data for condition fields.
-    $query = $connection->select('eventinstance_field_data', 'eid');
-    $query->join('eventinstance', 'ei', 'ei.id = eid.id');
-    $query->addField('eid', 'id', 'eventinstance_id');
-
-    if (!empty($tags) || !empty($categories) || !empty($branches)) {
-      // Use the subquery to filter by eventseries_id.
-      $query->condition('eid.eventseries_id', $subquery, 'IN');
-    }
 
     if (!empty($this->excludedUuid)) {
       $query->condition('ei.uuid', $this->excludedUuid, '<>');
