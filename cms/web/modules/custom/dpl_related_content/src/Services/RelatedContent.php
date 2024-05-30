@@ -186,27 +186,34 @@ class RelatedContent {
     $event_ids = [];
     $node_ids = [];
 
-    // First, let's look up related content, based only on tags.
-    if (!empty($this->tags)) {
-      $node_ids = $this->getNodeIds($this->tags);
-      $event_ids = $this->getEventInstanceIds($this->tags);
-      $this->resultBasis = ['tags'];
-    }
-
-    // If we found less than minimum results, we'll add categories to the mix
-    // in addition to tags.
-    if ((count($event_ids) + count($node_ids) < $this->minItems) && !empty($this->categories)) {
-      $node_ids = $this->getNodeIds($this->tags, $this->categories);
-      $event_ids = $this->getEventInstanceIds($this->tags, $this->categories);
-      $this->resultBasis = ['tags', 'categories'];
-    }
-
-    // If we found less than minimum results, we'll add branches to the mix in
-    // addition to tags and categories.
-    if ((count($event_ids) + count($node_ids) < $this->minItems) && !empty($this->branches)) {
+    if ($this->andConditions) {
       $node_ids = $this->getNodeIds($this->tags, $this->categories, $this->branches);
       $event_ids = $this->getEventInstanceIds($this->tags, $this->categories, $this->branches);
       $this->resultBasis = ['tags', 'categories', 'branches'];
+    }
+    else {
+      // First, let's look up related content, based only on tags.
+      if (!empty($this->tags)) {
+        $node_ids = $this->getNodeIds($this->tags);
+        $event_ids = $this->getEventInstanceIds($this->tags);
+        $this->resultBasis = ['tags'];
+      }
+
+      // If we found less than minimum results, we'll add categories to the mix
+      // in addition to tags.
+      if ((count($event_ids) + count($node_ids) < $this->minItems) && !empty($this->categories)) {
+        $node_ids = $this->getNodeIds($this->tags, $this->categories);
+        $event_ids = $this->getEventInstanceIds($this->tags, $this->categories);
+        $this->resultBasis = ['tags', 'categories'];
+      }
+
+      // If we found less than minimum results, we'll add branches to the mix in
+      // addition to tags and categories.
+      if ((count($event_ids) + count($node_ids) < $this->minItems) && !empty($this->branches)) {
+        $node_ids = $this->getNodeIds($this->tags, $this->categories, $this->branches);
+        $event_ids = $this->getEventInstanceIds($this->tags, $this->categories, $this->branches);
+        $this->resultBasis = ['tags', 'categories', 'branches'];
+      }
     }
 
     if ($this->allowDateFallback) {
