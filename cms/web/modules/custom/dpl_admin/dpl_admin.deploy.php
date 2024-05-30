@@ -7,6 +7,9 @@
  * These get run AFTER config-import.
  */
 
+use Drupal\collation_fixer\CollationFixer;
+use Drupal\drupal_typed\DrupalTyped;
+
 /**
  * We've limited the text formats for CKEditor fields. Let's move old to new.
  */
@@ -64,4 +67,16 @@ function dpl_admin_deploy_set_config_auto(): string {
   $config->save(TRUE);
 
   return 'config_ignore_auto.settings.ignored_config_entities has been reset.';
+}
+
+/**
+ * Fix collation for all tables to fix alphabetical sorting.
+ */
+function dpl_admin_deploy_fix_collation(): string {
+  if (!\Drupal::moduleHandler()->moduleExists('collation_fixer')) {
+    return "No table collations fixed. collation_fixer module is not enabled.";
+  }
+  $collation_fixer = DrupalTyped::service(CollationFixer::class, 'collation_fixer.collation_fixer');
+  $collation_fixer->fixCollation();
+  return "Fixed collation for all tables";
 }
