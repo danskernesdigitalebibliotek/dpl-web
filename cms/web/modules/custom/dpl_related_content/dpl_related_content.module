@@ -100,6 +100,8 @@ function _dpl_related_content_filter_paragraph(array $variables, RelatedContentL
     $service = DrupalTyped::service(RelatedContent::class, 'dpl_related_content.related_content');
     $service->setListStyle($list_style);
 
+    $service->excludedUuid = $paragraph->getParentEntity()?->uuid();
+    $service->allowDateFallback = FALSE;
     if (is_array($node_bundles)) {
       $service->nodeBundles = $node_bundles;
     }
