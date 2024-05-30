@@ -115,11 +115,11 @@ function _dpl_related_content_filter_paragraph(array $variables, RelatedContentL
     }
 
     // Deciding if we should treat the filters as AND.
-    if ($paragraph->hasField('field_filter_cond_type')) {
+    if ($paragraph->hasField('field_filter_cond_type') && !$paragraph->get('field_filter_cond_type')->isEmpty()) {
       $service->andConditions = ($paragraph->get('field_filter_cond_type')->getString() == 'and');
     }
 
-    if ($paragraph->hasField('field_filter_content_types')) {
+    if ($paragraph->hasField('field_filter_content_types') && !$paragraph->get('field_filter_content_types')->isEmpty()) {
       // Turning 'xx, yy, zz' into an array.
       $content_types = explode(', ', $paragraph->get('field_filter_content_types')->getString());
 
@@ -128,19 +128,19 @@ function _dpl_related_content_filter_paragraph(array $variables, RelatedContentL
       $service->nodeBundles = $content_types;
     }
 
-    if ($paragraph->hasField('field_filter_tags')) {
+    if ($paragraph->hasField('field_filter_tags') && !$paragraph->get('field_filter_tags')->isEmpty()) {
       $service->setTags($paragraph->get('field_filter_tags')->referencedEntities());
     }
 
-    if ($paragraph->hasField('field_filter_categories')) {
+    if ($paragraph->hasField('field_filter_categories') && !$paragraph->get('field_filter_categories')->isEmpty()) {
       $service->setCategories($paragraph->get('field_filter_categories')->referencedEntities());
     }
 
-    if ($paragraph->hasField('field_filter_branches')) {
+    if ($paragraph->hasField('field_filter_branches') && !$paragraph->get('field_filter_branches')->isEmpty()) {
       $service->setBranches($paragraph->get('field_filter_branches')->referencedEntities());
     }
 
-    if ($paragraph->hasField('field_max_item_amount')) {
+    if ($paragraph->hasField('field_max_item_amount') && !$paragraph->get('field_max_item_amount')->isEmpty()) {
       $service->maxItems = intval($paragraph->get('field_max_item_amount')->getString());
     }
 
