@@ -1,4 +1,4 @@
-enable_popup: true
+enable_popup: false
 google_consent_mode: ''
 block_iframes: false
 block_iframes_category: functional
