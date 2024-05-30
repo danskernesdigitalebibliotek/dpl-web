@@ -10,8 +10,4 @@ module.exports = defineConfig({
     // Environment variables for services are set in docker-compose.ci.yml for
     // CI and Taskfile.yml for local development.
   },
-  retries: {
-    runMode: 3,
-    openMode: 0,
-  },
 });
