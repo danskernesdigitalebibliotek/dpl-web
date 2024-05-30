@@ -6,7 +6,6 @@ namespace Drupal\collation_fixer;
 
 use Drupal\Core\Database\Connection;
 use Drupal\Core\Database\StatementInterface;
-use Drupal\Core\Entity\ContentEntityTypeInterface;
 use Drupal\Core\Entity\EntityFieldManagerInterface;
 use Drupal\Core\Entity\EntityTypeManagerInterface;
 use Drupal\Core\Entity\Sql\SqlEntityStorageInterface;
@@ -140,7 +139,7 @@ final class CollationFixer {
     foreach ($this->entityTypeManager->getDefinitions() as $entityType) {
       // Only list content entity types using SQL storage.
       $entityStorage = $this->entityTypeManager->getStorage($entityType->id());
-      if ($entityType instanceof ContentEntityTypeInterface && $entityStorage instanceof SqlEntityStorageInterface) {
+      if ($entityStorage instanceof SqlEntityStorageInterface) {
         foreach ($this->fieldManager->getFieldStorageDefinitions($entityType->id()) as $field) {
           $entitySchemas = array_merge($entitySchemas, $entityStorage->getTableMapping()->getAllFieldTableNames($field->getName()));
         }
