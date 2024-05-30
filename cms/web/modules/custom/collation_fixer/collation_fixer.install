@@ -33,7 +33,10 @@ function collation_fixer_requirements(string $phase): array {
     }
     else {
       $description['status'] = [
-        '#markup' => t('The following tables do not have the correct database collation and/or charset:'),
+        '#markup' => t(
+          'The following %count tables do not have the correct database collation and/or charset:',
+          ['%count' => count($wrong_collations)],
+        ),
       ];
       $description['tables'] = [
         '#type' => 'table',
