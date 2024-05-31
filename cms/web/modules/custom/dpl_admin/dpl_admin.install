@@ -11,6 +11,7 @@ use Drupal\Core\Entity\EntityInterface;
 use Drupal\Core\Entity\EntityTypeInterface;
 use Drupal\Core\Entity\Query\QueryException;
 use Drupal\Core\Field\FieldItemListInterface;
+use Drupal\Core\Language\LanguageManagerInterface;
 use Drupal\Core\Password\DefaultPasswordGenerator;
 use Drupal\dpl_admin\Services\VersionHelper;
 use Drupal\drupal_typed\DrupalTyped;
@@ -87,7 +88,7 @@ function dpl_admin_update_10000(array &$sandbox) : string {
   $password_generator = DrupalTyped::service(DefaultPasswordGenerator::class, 'password_generator');
   $user_1->setPassword($password_generator->generate());
 
-  $language_manager = DrupalTyped::service(\Drupal\Core\Language\LanguageManagerInterface::class, 'language_manager');
+  $language_manager = DrupalTyped::service(LanguageManagerInterface::class, 'language_manager');
   $user_1->set('preferred_admin_langcode', $language_manager->getDefaultLanguage()->getId());
 
   $user_1->save();
