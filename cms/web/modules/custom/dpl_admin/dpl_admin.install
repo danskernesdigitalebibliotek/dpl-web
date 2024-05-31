@@ -105,6 +105,7 @@ function dpl_admin_update_10000(array &$sandbox) : string {
   $feedback[] = "Transferred password hash from user 1 to new user {$new_user->id()}";
 
   // Migrate entity ownership to the new user.
+  // Retrieve all entities currently owned by user 1 grouped by entity type.
   $entities_by_types = array_map(function (EntityTypeInterface $entity_type) use ($user_1) {
     try {
       return \Drupal::entityTypeManager()->getStorage($entity_type->id())->loadByProperties(['uid' => $user_1->id()]);
@@ -116,11 +117,16 @@ function dpl_admin_update_10000(array &$sandbox) : string {
     }
   }, \Drupal::entityTypeManager()->getDefinitions());
 
+  // Only consider entities of a type which implements EntityOwnerInterface.
+  // This is required for us to update ownership.
   /** @var array<string, array<EntityInterface&EntityOwnerInterface>> $user_owned_entities_by_types */
   $user_owned_entities_by_types = array_filter($entities_by_types, function (array $entities) {
     return count($entities) > 0 && reset($entities) instanceof EntityOwnerInterface;
   });
 
+  // Update owner for all relevant entities, save them. This functionality is
+  // spread across multiple interfaces.
+  // For each type generate an appropriate status message.
   $status_by_types = array_map(function (array $entities, string $entity_type) use ($new_user) {
     $entities = array_map(fn (EntityOwnerInterface $entity) => $entity->setOwner($new_user), $entities);
     $entities = array_map(fn (EntityInterface $entity) => $entity->save(), $entities);
