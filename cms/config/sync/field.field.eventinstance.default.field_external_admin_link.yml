@@ -1,0 +1,23 @@
+uuid: 06d1537d-2f6f-455a-9b23-21f628d4273b
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.eventinstance.field_external_admin_link
+    - recurring_events.eventinstance_type.default
+  module:
+    - link
+id: eventinstance.default.field_external_admin_link
+field_name: field_external_admin_link
+entity_type: eventinstance
+bundle: default
+label: 'External admin link'
+description: 'External systems, such as event management systems, are able to set a value that points to where you can edit the content in their system.'
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings:
+  title: 0
+  link_type: 16
+field_type: link

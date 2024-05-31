@@ -16,7 +16,7 @@ fi
 set -u
 
 while true; do
-    read -p "The command will erase the current files directory. Do you want to continue [yY/nN]? " yn
+    read -r -p "The command will erase the current files directory. Do you want to continue [yY/nN]? " yn
     case $yn in
         [Yy]* ) break;;
         [Nn]* ) exit;;

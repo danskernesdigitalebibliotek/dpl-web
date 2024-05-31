@@ -28,15 +28,15 @@ function dpl_event_deploy_port_description_fields() : string {
 function _dpl_event_port_wysiwyg(string $entity_type, string $source_field, string $target_field): string {
   $ids =
     \Drupal::entityQuery($entity_type)
-      ->condition($source_field, '', '<>')
       ->accessCheck(FALSE)
       ->execute();
 
   $entities =
     \Drupal::entityTypeManager()->getStorage($entity_type)->loadMultiple($ids);
 
+  $numEntitiesUpdated = 0;
   foreach ($entities as $entity) {
-    if (!($entity instanceof FieldableEntityInterface) || !$entity->hasField($target_field)) {
+    if (!($entity instanceof FieldableEntityInterface) || !$entity->hasField($source_field) || $entity->get($source_field)->isEmpty() || !$entity->hasField($target_field)) {
       continue;
     }
 
@@ -47,10 +47,12 @@ function _dpl_event_port_wysiwyg(string $entity_type, string $source_field, stri
     $entity->set($target_field, $text);
     $entity->set($source_field, NULL);
     $entity->save();
+
+    $numEntitiesUpdated++;
   }
 
   return t("Updated @count description fields on @entity_type \r\n", [
-    "@count" => count($entities),
+    "@count" => $numEntitiesUpdated,
     "@entity_type" => $entity_type,
   ])->render();
 }

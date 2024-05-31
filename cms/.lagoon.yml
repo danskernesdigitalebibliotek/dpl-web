@@ -10,6 +10,7 @@ tasks:
     - run:
         name: If drupal is not installed
         command: |
+          set -e
           if tables=$(drush sqlq "show tables like 'node';") && [ -z "$tables" ]; then
             # Install and set the admin password to a Lagoon variable if it exists.
             if [[ -n $PR_DRUPAL_PWD ]]; then
@@ -28,6 +29,7 @@ tasks:
     - run:
         name: drush deploy
         command: |
+          set -e
           if [[ -f config/sync/system.site.yml ]]; then
             echo "Config detected, doing a drush deploy"
             drush deploy
@@ -47,6 +49,7 @@ tasks:
         # it will be gone.
         name: Create module upload directory in public files
         command: |
+          set -e
           if [[ ! -d "web/sites/default/files/modules_local" ]]; then
             echo "Creating directory for module uploads"
             mkdir web/sites/default/files/modules_local
@@ -55,26 +58,33 @@ tasks:
     - run:
         name: Import translations
         command: |
+          set -e;
           drush locale-check
           drush locale-update
         service: cli
     - run:
         name: Create test users
         command: |
-          drush user:create editor --password="$PR_DRUPAL_PWD"
-          drush user:role:add 'editor' editor
+          set -e
+          # Only create test users if they do not exist already.
+          if editor_user=$(drush sqlq 'select * from users_field_data where name = "editor"') && [ -z "$editor_user" ]; then
+            drush user:create editor --password="$PR_DRUPAL_PWD"
+            drush user:role:add 'editor' editor
 
-          drush user:create administrator --password="$PR_DRUPAL_PWD"
-          drush user:role:add 'administrator' administrator
+            drush user:create administrator --password="$PR_DRUPAL_PWD"
+            drush user:role:add 'administrator' administrator
 
-          drush user:create mediator --password="$PR_DRUPAL_PWD"
-          drush user:role:add 'mediator' mediator
+            drush user:create mediator --password="$PR_DRUPAL_PWD"
+            drush user:role:add 'mediator' mediator
 
-          drush user:create local_administrator --password="$PR_DRUPAL_PWD"
-          drush user:role:add 'local_administrator' local_administrator
+            drush user:create local_administrator --password="$PR_DRUPAL_PWD"
+            drush user:role:add 'local_administrator' local_administrator
 
-          drush user:create patron --password="$PR_DRUPAL_PWD"
-          drush user:role:add 'patron' patron
+            drush user:create patron --password="$PR_DRUPAL_PWD"
+            drush user:role:add 'patron' patron
+          else
+            echo "Test users already exist. Skipping creation..."
+          fi
         service: cli
 
 environments:

@@ -96,9 +96,21 @@ function dpl_react_apps_texts(): array {
     'delete-reservation-modal-aria-description' => t('This button opens a modal that covers the entire page and contains the possibility to delete a selected reservation, or multiple selected reservations', [], ['context' => 'Global']),
     'delete-reservation-modal-button' => t('Cancel', [], ['context' => 'Global']),
     'delete-reservation-modal-close-modal' => t('Close delete reservation modal', [], ['context' => 'Global']),
-    'delete-reservation-modal-delete-button' => t('Cancel reservation', [], ['context' => 'Global']),
+    'delete-reservation-modal-delete-button' => json_encode([
+      'type' => 'plural',
+      'text' => [
+        t('Cancel reservation', [], ['context' => 'Global']),
+        t('Cancel reservations', [], ['context' => 'Global']),
+      ],
+    ]),
     'delete-reservation-modal-delete-processing' => t('Processing...', [], ['context' => 'Global']),
-    'delete-reservation-modal-delete-question' => t('Do you want to cancel your reservation?', [], ['context' => 'Global']),
+    'delete-reservation-modal-delete-question' => json_encode([
+      'type' => 'plural',
+      'text' => [
+        t('Do you want to cancel your reservation?', [], ['context' => 'Global']),
+        t('Do you want to cancel your reservations?', [], ['context' => 'Global']),
+      ],
+    ]),
     'delete-reservation-modal-errors-status' => t('Something went wrong deleting your reservation. Please try again.', [], ['context' => 'Global']),
     'delete-reservation-modal-errors-title' => t('Deleting your reservation failed', [], ['context' => 'Global']),
     'delete-reservation-modal-success-status' => json_encode([
@@ -229,6 +241,7 @@ function dpl_react_apps_texts(): array {
     'patron-page-pincode-label' => t('New pin', [], ['context' => 'Global']),
     'patron-page-pincode-too-short-validation' => t('The pincode should be minimum @pincodeLengthMin and maximum @pincodeLengthMax characters long', [], ['context' => 'Global']),
     'patron-page-pincodes-not-the-same' => t('The pincodes are not the same', [], ['context' => 'Global']),
+    'pincode-section-description' => t('Length of 4 characters', [], ['context' => 'Global']),
     'publizon-audio-book' => t('Audiobook', [], ['context' => 'Global']),
     'publizon-ebook' => t('E-book', [], ['context' => 'Global']),
     'publizon-podcast' => t('Podcast', [], ['context' => 'Global']),

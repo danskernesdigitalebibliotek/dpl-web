@@ -24,12 +24,14 @@ dependencies:
     - administerusersbyrole
     - content_lock
     - dpl_admin
+    - dpl_cache_settings
     - dpl_footer
     - dpl_instant_loan
     - dpl_library_agency
     - dpl_mapp
     - dpl_opening_hours
     - dpl_url_proxy
+    - dpl_webform
     - entity_clone
     - file
     - filter
@@ -58,6 +60,7 @@ is_admin: null
 permissions:
   - 'access administration pages'
   - 'access content overview'
+  - 'access dpl cache settings'
   - 'access eventinstance overview'
   - 'access eventseries overview'
   - 'access files overview'
@@ -73,6 +76,8 @@ permissions:
   - 'add eventseries entity'
   - 'add new links to admin menu'
   - 'add new links to main menu'
+  - 'administer advanced webform confirmation settings'
+  - 'administer advanced webform element settings'
   - 'administer dpl_footer settings'
   - 'administer dpl_mapp configuration'
   - 'administer instant loan configuration'

@@ -49,7 +49,23 @@ temporarily through a task:
 4. When you are finished, hit `enter` in the terminal where you enabled XDebug.
    This will disable XDebug
 
-### Copy database from Lagoon environment to local setup
+### Download database and files from Lagoon
+
+#### Retrieve the latest backup of database and files from Lagoon
+
+Prerequisites:
+
+* [A connected Lagoon CLI](https://github.com/danskernesdigitalebibliotek/dpl-platform/blob/main/docs/runbooks/connecting-the-lagoon-cli.md)
+* [`jq`](https://jqlang.github.io/jq/) installed locally
+
+Run the following command to retrieve the latest backup of database and files
+from a Lagoon project:
+
+```bash
+LAGOON_PROJECT=<lagoon-project-name> task lagoon:backup:restore
+```
+
+#### Copy a specific database snapshot from Lagoon environment to local setup
 
 Prerequisites:
 
@@ -63,12 +79,12 @@ database, not any files from the site.
    "[How do I download a database dump?](https://docs.lagoon.sh/lagoon/resources/tutorials-and-webinars#how-do-i-download-a-database-dump)"
    guide in the official Lagoon. Skip this step if you already have a
    database-dump.
-2. Place the dump in the [database-dump](../database-dump) directory, be aware
+2. Place the dump in the [restore/database](../restore/database) directory, be aware
    that the directory is only allowed to contain a single `.sql` file.
 3. Start a local environment using `task dev:reset`
 4. Import the database by running `task dev:restore:database`
 
-### Copy files from Lagoon environment to local setup
+#### Copy a specific snapshot of files from Lagoon environment to local setup
 
 Prerequisites:
 
@@ -99,7 +115,7 @@ Replace files locally:
 2. Start a local environment using `task dev:reset`
 3. Restore the filesš by running `task dev:restore:files`
 
-## Get a specific release of dpl-react - without using composer install
+### Get a specific release of dpl-react - without using composer install
 
 In a development context it is not very handy only
 to be able to get the latest version of the main branch of dpl-react.

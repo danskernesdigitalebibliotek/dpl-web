@@ -16,8 +16,9 @@ ignored_config_entities:
   - dpl_patron_reg.settings
   - dpl_publizon.settings
   - dpl_recommender.settings
-  - dpl_reservation_list.settings
+  - dpl_reservations.settings
   - dpl_url_proxy.settings
   - novel.settings
   - openid_connect.settings.adgangsplatformen
   - system.site
+  - 'webform.webform.*'
