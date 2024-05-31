@@ -66,20 +66,25 @@ tasks:
         name: Create test users
         command: |
           set -e
-          drush user:create editor --password="$PR_DRUPAL_PWD"
-          drush user:role:add 'editor' editor
+          # Only create test users if they do not exist already.
+          if editor_user=$(drush sqlq 'select * from users_field_data where name = "editor"') && [ -z "$editor_user" ]; then
+            drush user:create editor --password="$PR_DRUPAL_PWD"
+            drush user:role:add 'editor' editor
 
-          drush user:create administrator --password="$PR_DRUPAL_PWD"
-          drush user:role:add 'administrator' administrator
+            drush user:create administrator --password="$PR_DRUPAL_PWD"
+            drush user:role:add 'administrator' administrator
 
-          drush user:create mediator --password="$PR_DRUPAL_PWD"
-          drush user:role:add 'mediator' mediator
+            drush user:create mediator --password="$PR_DRUPAL_PWD"
+            drush user:role:add 'mediator' mediator
 
-          drush user:create local_administrator --password="$PR_DRUPAL_PWD"
-          drush user:role:add 'local_administrator' local_administrator
+            drush user:create local_administrator --password="$PR_DRUPAL_PWD"
+            drush user:role:add 'local_administrator' local_administrator
 
-          drush user:create patron --password="$PR_DRUPAL_PWD"
-          drush user:role:add 'patron' patron
+            drush user:create patron --password="$PR_DRUPAL_PWD"
+            drush user:role:add 'patron' patron
+          else
+            echo "Test users already exist. Skipping creation..."
+          fi
         service: cli
 
 environments:

@@ -7,7 +7,7 @@
         "original": ["Harry Potter and the Order of the Phoenix"]
       },
       "abstract": [
-        "Stor, flot og gennemillustreret udgave af bind 5 i \"Harry Potter\"-serien. Harry går stadig på kostskolen Hogwarts, men det bliver ikke et let år.  Bogen er meget velegnet til oplæsning for børn fra 8 år - og kan selvlæses fra 12 år"
+        "Da Harry Potter vender tilbage til Hogwarts er meget ændret. Man tror, at han lyver angående Voldemort, og ministeriet sender en repræsentant til skolen, der snart er delt i to fjendtlige lejre."
       ],
       "creators": [
         {
@@ -29,15 +29,15 @@
       ],
       "seriesMembers": [
         {
-          "workId": "work-of:870970-basis:22629344",
+          "workId": "work-of:870970-basis:22252852",
           "titles": {
-            "main": ["Harry Potter og de vises sten"],
-            "full": ["Harry Potter og de vises sten"],
+            "main": ["Harry Potter og De Vises Sten"],
+            "full": ["Harry Potter og De Vises Sten"],
             "original": ["Harry Potter and the philosopher's stone"]
           }
         },
         {
-          "workId": "work-of:870970-basis:22677780",
+          "workId": "work-of:870970-basis:25197887",
           "titles": {
             "main": ["Harry Potter og Hemmelighedernes Kammer"],
             "full": ["Harry Potter og Hemmelighedernes Kammer"],
@@ -45,15 +45,15 @@
           }
         },
         {
-          "workId": "work-of:870970-basis:22995154",
+          "workId": "work-of:870970-basis:25197879",
           "titles": {
             "main": ["Harry Potter og fangen fra Azkaban"],
             "full": ["Harry Potter og fangen fra Azkaban"],
-            "original": ["Harry Potter and the prisoner of Azkaban"]
+            "original": ["Harry Potter and the Chamber of Secrets"]
           }
         },
         {
-          "workId": "work-of:870970-basis:23540703",
+          "workId": "work-of:870970-basis:25197909",
           "titles": {
             "main": ["Harry Potter og Flammernes Pokal"],
             "full": ["Harry Potter og Flammernes Pokal"],
@@ -71,16 +71,16 @@
         {
           "workId": "work-of:870970-basis:25807995",
           "titles": {
-            "main": ["Harry Potter og halvblodsprinsen"],
-            "full": ["Harry Potter og halvblodsprinsen"],
+            "main": ["Harry Potter og Halvblodsprinsen"],
+            "full": ["Harry Potter og Halvblodsprinsen"],
             "original": ["Harry Potter and the half-blood prince"]
           }
         },
         {
           "workId": "work-of:870970-basis:27267912",
           "titles": {
-            "main": ["Harry Potter og dødsregalierne"],
-            "full": ["Harry Potter og dødsregalierne"],
+            "main": ["Harry Potter og Dødsregalierne"],
+            "full": ["Harry Potter og Dødsregalierne"],
             "original": ["Harry Potter and the deathly hallows"]
           }
         },
@@ -105,94 +105,18 @@
       "manifestations": {
         "all": [
           {
-            "pid": "870970-basis:134693959",
-            "genreAndForm": ["roman", "fantasy", "romaner"],
+            "pid": "710100-katalog:24880605",
+            "genreAndForm": ["roman", "fantasy"],
             "source": ["Bibliotekskatalog"],
-            "titles": {
-              "main": ["Harry Potter og Fønixordenen (Ill. Jim Kay)"],
-              "original": ["Harry Potter and the Order of the Phoenix"]
-            },
-            "fictionNonfiction": {
-              "display": "skønlitteratur",
-              "code": "FICTION"
-            },
-            "materialTypes": [
-              {
-                "materialTypeSpecific": { "display": "bog" }
-              }
-            ],
-            "creators": [
-              {
-                "display": "Joanne K. Rowling",
-                "__typename": "Person"
-              }
-            ],
-            "publisher": ["Gyldendal"],
             "languages": {
               "main": [
                 {
-                  "display": "dansk"
+                  "display": "dansk",
+                  "isoCode": "da"
                 }
-              ]
+              ],
+              "notes": []
             },
-            "identifiers": [
-              {
-                "value": "9788702307566"
-              }
-            ],
-            "contributors": [
-              {
-                "display": "Jim Kay"
-              },
-              {
-                "display": "Neil Packer"
-              },
-              {
-                "display": "Hanna Lützen"
-              }
-            ],
-            "edition": {
-              "summary": "Illustreret udgave, 7. udgave, 2022",
-              "publicationYear": {
-                "display": "2022"
-              }
-            },
-            "dateFirstEdition": null,
-            "audience": {
-              "generalAudience": [
-                "Højtlæsning fra 8 år. Selvlæsning fra 12 år",
-                "for højtlæsning"
-              ]
-            },
-            "physicalDescriptions": [
-              {
-                "numberOfPages": 565,
-                "playingTime": null
-              }
-            ],
-            "accessTypes": [
-              {
-                "code": "PHYSICAL"
-              }
-            ],
-            "access": [
-              {
-                "__typename": "InterLibraryLoan",
-                "loanIsPossible": true
-              }
-            ],
-            "shelfmark": {
-              "postfix": "Rowling",
-              "shelfmark": "83"
-            },
-            "workYear": {
-              "year": 2003
-            }
-          },
-          {
-            "pid": "870970-basis:24880605",
-            "genreAndForm": ["roman", "fantasy"],
-            "source": ["Bibliotekskatalog"],
             "titles": {
               "main": ["Harry Potter og Fønixordenen"],
               "original": ["Harry Potter and the Order of the Phoenix"]
@@ -203,7 +127,9 @@
             },
             "materialTypes": [
               {
-                "materialTypeSpecific": { "display": "bog" }
+                "materialTypeSpecific": {
+                  "display": "bog"
+                }
               }
             ],
             "creators": [
@@ -213,13 +139,6 @@
               }
             ],
             "publisher": ["Gyldendal"],
-            "languages": {
-              "main": [
-                {
-                  "display": "dansk"
-                }
-              ]
-            },
             "identifiers": [
               {
                 "value": "87-02-02222-2"
@@ -237,14 +156,23 @@
               "year": 2003
             },
             "audience": {
-              "generalAudience": []
+              "generalAudience": [],
+              "ages": [
+                {
+                  "display": "12-14"
+                }
+              ]
             },
+            "notes": [],
             "physicalDescriptions": [
               {
+                "summary": "923 sider",
                 "numberOfPages": 923,
                 "playingTime": null
               }
             ],
+            "hostPublication": null,
+            "manifestationParts": null,
             "accessTypes": [
               {
                 "code": "PHYSICAL"
@@ -256,102 +184,37 @@
                 "loanIsPossible": true
               }
             ],
-            "shelfmark": {
-              "postfix": "Rowling",
-              "shelfmark": "83"
-            },
+            "shelfmark": null,
             "workYear": {
               "year": 2003
+            },
+            "catalogueCodes": {
+              "nationalBibliography": ["DBF200344"],
+              "otherCatalogues": [
+                "SFD200344",
+                "ACC200340",
+                "ACC200347",
+                "DAT201518",
+                "DAT202200",
+                "LIU200344"
+              ]
             }
           },
           {
-            "pid": "870970-basis:24973670",
-            "genreAndForm": ["roman"],
+            "pid": "870970-basis:134693959",
+            "genreAndForm": ["roman", "fantasy", "romaner"],
             "source": ["Bibliotekskatalog"],
-            "titles": {
-              "main": ["Harry Potter og Fønixordenen"],
-              "original": ["Harry Potter and the Order of the Phoenix"]
-            },
-            "fictionNonfiction": {
-              "display": "skønlitteratur",
-              "code": "FICTION"
-            },
-            "materialTypes": [
-              {
-                "materialTypeSpecific": { "display": "lydbog (bånd)" }
-              }
-            ],
-            "creators": [
-              {
-                "display": "Joanne K. Rowling",
-                "__typename": "Person"
-              }
-            ],
-            "publisher": ["Danmarks Blindebibliotek"],
             "languages": {
               "main": [
                 {
-                  "display": "dansk"
+                  "display": "dansk",
+                  "isoCode": "da"
                 }
-              ]
+              ],
+              "notes": []
             },
-            "identifiers": [
-              {
-                "value": "Best.nr. 14948"
-              }
-            ],
-            "contributors": [
-              {
-                "display": "Mikkel Schou"
-              },
-              {
-                "display": "Mikkel Schou"
-              }
-            ],
-            "edition": {
-              "summary": "2003",
-              "publicationYear": {
-                "display": "2003"
-              }
-            },
-            "dateFirstEdition": {
-              "display": "2003",
-              "year": 2003
-            },
-            "audience": {
-              "generalAudience": []
-            },
-            "physicalDescriptions": [
-              {
-                "numberOfPages": null,
-                "playingTime": "27 t., 58 min."
-              }
-            ],
-            "accessTypes": [
-              {
-                "code": "PHYSICAL"
-              }
-            ],
-            "access": [
-              {
-                "__typename": "InterLibraryLoan",
-                "loanIsPossible": true
-              }
-            ],
-            "shelfmark": {
-              "postfix": "Rowling",
-              "shelfmark": "83"
-            },
-            "workYear": {
-              "year": 2003
-            }
-          },
-          {
-            "pid": "870970-basis:25040007",
-            "genreAndForm": ["roman", "eventyrlige fortællinger"],
-            "source": ["Bibliotekskatalog"],
             "titles": {
-              "main": ["Harry Potter og Fønixordenen"],
+              "main": ["Harry Potter og Fønixordenen (Ill. Jim Kay)"],
               "original": ["Harry Potter and the Order of the Phoenix"]
             },
             "fictionNonfiction": {
@@ -360,230 +223,9 @@
             },
             "materialTypes": [
               {
-                "materialTypeSpecific": { "display": "diskette" }
-              }
-            ],
-            "creators": [
-              {
-                "display": "Joanne K. Rowling",
-                "__typename": "Person"
-              }
-            ],
-            "publisher": ["Danmarks Blindebibliotek"],
-            "languages": {
-              "main": [
-                {
-                  "display": "dansk"
+                "materialTypeSpecific": {
+                  "display": "bog"
                 }
-              ]
-            },
-            "identifiers": [
-              {
-                "value": "Best.nr. ascii 503142"
-              },
-              {
-                "value": "Best.nr. html 603142"
-              }
-            ],
-            "contributors": [],
-            "edition": {
-              "summary": "2003",
-              "publicationYear": {
-                "display": "2003"
-              }
-            },
-            "dateFirstEdition": {
-              "display": "2003",
-              "year": 2003
-            },
-            "audience": {
-              "generalAudience": []
-            },
-            "physicalDescriptions": [
-              {
-                "numberOfPages": null,
-                "playingTime": null
-              }
-            ],
-            "accessTypes": [
-              {
-                "code": "PHYSICAL"
-              }
-            ],
-            "access": [
-              {
-                "__typename": "InterLibraryLoan",
-                "loanIsPossible": true
-              }
-            ],
-            "shelfmark": {
-              "postfix": "Rowling",
-              "shelfmark": "83"
-            },
-            "workYear": {
-              "year": 2003
-            }
-          },
-          {
-            "pid": "870970-basis:25082427",
-            "genreAndForm": ["roman"],
-            "source": ["Bibliotekskatalog"],
-            "titles": {
-              "main": ["Harry Potter og Fønixordenen"],
-              "original": ["Harry Potter and the Order of the Phoenix"]
-            },
-            "fictionNonfiction": {
-              "display": "skønlitteratur",
-              "code": "FICTION"
-            },
-            "materialTypes": [
-              {
-                "materialTypeSpecific": { "display": "bog" }
-              }
-            ],
-            "creators": [
-              {
-                "display": "Joanne K. Rowling",
-                "__typename": "Person"
-              }
-            ],
-            "publisher": ["Gyldendals Bogklubber"],
-            "languages": {
-              "main": [
-                {
-                  "display": "dansk"
-                }
-              ]
-            },
-            "identifiers": [
-              {
-                "value": "87-03-00004-4"
-              }
-            ],
-            "contributors": [],
-            "edition": {
-              "summary": "1. bogklubudgave, 2004",
-              "publicationYear": {
-                "display": "2004"
-              }
-            },
-            "dateFirstEdition": null,
-            "audience": {
-              "generalAudience": []
-            },
-            "physicalDescriptions": [
-              {
-                "numberOfPages": 923,
-                "playingTime": null
-              }
-            ],
-            "accessTypes": [
-              {
-                "code": "PHYSICAL"
-              }
-            ],
-            "access": [
-              {
-                "__typename": "InterLibraryLoan",
-                "loanIsPossible": true
-              }
-            ],
-            "shelfmark": {
-              "postfix": "Rowling",
-              "shelfmark": "83"
-            },
-            "workYear": null
-          },
-          {
-            "pid": "870970-basis:25096517",
-            "genreAndForm": ["roman"],
-            "source": ["Bibliotekskatalog"],
-            "titles": {
-              "main": ["Harry Potter og Fønixordenen"],
-              "original": ["Harry Potter and the Order of the Phoenix"]
-            },
-            "fictionNonfiction": {
-              "display": "skønlitteratur",
-              "code": "FICTION"
-            },
-            "materialTypes": [
-              {
-                "materialTypeSpecific": { "display": "punktskrift" }
-              }
-            ],
-            "creators": [
-              {
-                "display": "Joanne K. Rowling",
-                "__typename": "Person"
-              }
-            ],
-            "publisher": ["Danmarks Blindebibliotek"],
-            "languages": {
-              "main": [
-                {
-                  "display": "dansk"
-                }
-              ]
-            },
-            "identifiers": [
-              {
-                "value": "Best.nr. 103081"
-              }
-            ],
-            "contributors": [],
-            "edition": {
-              "summary": "2003",
-              "publicationYear": {
-                "display": "2003"
-              }
-            },
-            "dateFirstEdition": {
-              "display": "2003",
-              "year": 2003
-            },
-            "audience": {
-              "generalAudience": []
-            },
-            "physicalDescriptions": [
-              {
-                "numberOfPages": 21,
-                "playingTime": null
-              }
-            ],
-            "accessTypes": [
-              {
-                "code": "PHYSICAL"
-              }
-            ],
-            "access": [
-              {
-                "__typename": "InterLibraryLoan",
-                "loanIsPossible": true
-              }
-            ],
-            "shelfmark": {
-              "postfix": "Rowling",
-              "shelfmark": "83"
-            },
-            "workYear": {
-              "year": 2003
-            }
-          },
-          {
-            "pid": "870970-basis:25245784",
-            "genreAndForm": ["roman", "fantasy"],
-            "source": ["Bibliotekskatalog"],
-            "titles": {
-              "main": ["Harry Potter og Fønixordenen"],
-              "original": ["Harry Potter and the Order of the Phoenix"]
-            },
-            "fictionNonfiction": {
-              "display": "skønlitteratur",
-              "code": "FICTION"
-            },
-            "materialTypes": [
-              {
-                "materialTypeSpecific": { "display": "bog" }
               }
             ],
             "creators": [
@@ -593,41 +235,76 @@
               }
             ],
             "publisher": ["Gyldendal"],
-            "languages": {
-              "main": [
+            "identifiers": [
+              {
+                "value": "9788702307566"
+              }
+            ],
+            "contributors": [
+              {
+                "display": "Jim Kay",
+                "roles": [
+                  {
+                    "function": {
+                      "singular": "illustrator"
+                    }
+                  },
+                  {
+                    "function": {
+                      "singular": "(hovedansvarlig)"
+                    }
+                  }
+                ]
+              },
+              {
+                "display": "Neil Packer",
+                "roles": [
+                  {
+                    "function": {
+                      "singular": "illustrator"
+                    }
+                  }
+                ]
+              },
+              {
+                "display": "Hanna Lützen",
+                "roles": [
+                  {
+                    "function": {
+                      "singular": "oversætter"
+                    }
+                  }
+                ]
+              }
+            ],
+            "edition": {
+              "summary": "Illustreret udgave, 7. udgave, 2022",
+              "publicationYear": {
+                "display": "2022"
+              }
+            },
+            "dateFirstEdition": null,
+            "audience": {
+              "generalAudience": [
+                "Højtlæsning fra 8 år. Selvlæsning fra 12 år",
+                "for højtlæsning"
+              ],
+              "ages": [
                 {
-                  "display": "dansk"
+                  "display": "8-16"
                 }
               ]
             },
-            "identifiers": [
-              {
-                "value": "9788702029444"
-              },
-              {
-                "value": "87-02-02944-8"
-              }
-            ],
-            "contributors": [],
-            "edition": {
-              "summary": "2. udgave, 2004",
-              "publicationYear": {
-                "display": "2004"
-              }
-            },
-            "dateFirstEdition": {
-              "display": "2003",
-              "year": 2003
-            },
-            "audience": {
-              "generalAudience": []
-            },
+            "notes": [],
             "physicalDescriptions": [
               {
-                "numberOfPages": 923,
+                "summary": "565 sider: ill. i farver ; 28 cm",
+                "numberOfPages": 565,
                 "playingTime": null
               }
             ],
+            "hostPublication": null,
+            "manifestationParts": null,
             "accessTypes": [
               {
                 "code": "PHYSICAL"
@@ -639,18 +316,28 @@
                 "loanIsPossible": true
               }
             ],
-            "shelfmark": {
-              "postfix": "Rowling",
-              "shelfmark": "83"
-            },
+            "shelfmark": null,
             "workYear": {
               "year": 2003
+            },
+            "catalogueCodes": {
+              "nationalBibliography": ["DBF202245"],
+              "otherCatalogues": ["ACC202240", "BKM202245", "DAT202200"]
             }
           },
           {
             "pid": "870970-basis:26167663",
             "genreAndForm": ["roman"],
             "source": ["Bibliotekskatalog"],
+            "languages": {
+              "main": [
+                {
+                  "display": "dansk",
+                  "isoCode": "da"
+                }
+              ],
+              "notes": []
+            },
             "titles": {
               "main": ["Harry Potter og Fønixordenen"],
               "original": ["Harry Potter and the Order of the Phoenix"]
@@ -661,33 +348,28 @@
             },
             "materialTypes": [
               {
-                "materialTypeSpecific": { "display": "lydbog (cd)" }
+                "materialTypeSpecific": {
+                  "display": "lydbog (cd)"
+                }
               }
             ],
             "creators": [
               {
                 "display": "Joanne K. Rowling",
                 "__typename": "Person"
+              },
+              {
+                "display": "Jesper Christensen (f. 1948)",
+                "__typename": "Person"
               }
             ],
             "publisher": ["Gyldendal Lyd"],
-            "languages": {
-              "main": [
-                {
-                  "display": "dansk"
-                }
-              ]
-            },
             "identifiers": [
               {
                 "value": "87-02-04746-2"
               }
             ],
-            "contributors": [
-              {
-                "display": "Jesper Christensen (f. 1948)"
-              }
-            ],
+            "contributors": [],
             "edition": {
               "summary": "2006",
               "publicationYear": {
@@ -696,14 +378,30 @@
             },
             "dateFirstEdition": null,
             "audience": {
-              "generalAudience": []
+              "generalAudience": [],
+              "ages": [
+                {
+                  "display": "12-14"
+                }
+              ]
             },
+            "notes": [
+              {
+                "display": [
+                  "Gengivelse af bogen",
+                  "Indlæst efter: Kbh. : Gyldendal"
+                ]
+              }
+            ],
             "physicalDescriptions": [
               {
+                "summary": "25 cd'er 29 t., 33 min.",
                 "numberOfPages": null,
                 "playingTime": "29 t., 33 min."
               }
             ],
+            "hostPublication": null,
+            "manifestationParts": null,
             "accessTypes": [
               {
                 "code": "PHYSICAL"
@@ -715,167 +413,28 @@
                 "loanIsPossible": true
               }
             ],
-            "shelfmark": {
-              "postfix": "Rowling",
-              "shelfmark": "83"
-            },
+            "shelfmark": null,
             "workYear": {
               "year": 2003
-            }
-          },
-          {
-            "pid": "870970-basis:26470498",
-            "genreAndForm": ["roman"],
-            "source": ["Bibliotekskatalog"],
-            "titles": {
-              "main": ["Harry Potter og Fønixordenen"],
-              "original": ["Harry Potter and the Order of the Phoenix"]
             },
-            "fictionNonfiction": {
-              "display": "skønlitteratur",
-              "code": "FICTION"
-            },
-            "materialTypes": [
-              {
-                "materialTypeSpecific": { "display": "bog" }
-              }
-            ],
-            "creators": [
-              {
-                "display": "Joanne K. Rowling",
-                "__typename": "Person"
-              }
-            ],
-            "publisher": ["Gyldendals Bogklubber"],
-            "languages": {
-              "main": [
-                {
-                  "display": "dansk"
-                }
-              ]
-            },
-            "identifiers": [
-              {
-                "value": "9788703014807"
-              },
-              {
-                "value": "87-03-01480-0"
-              }
-            ],
-            "contributors": [],
-            "edition": {
-              "summary": "2. bogklubudgave, 2006",
-              "publicationYear": {
-                "display": "2006"
-              }
-            },
-            "dateFirstEdition": null,
-            "audience": {
-              "generalAudience": []
-            },
-            "physicalDescriptions": [
-              {
-                "numberOfPages": 923,
-                "playingTime": null
-              }
-            ],
-            "accessTypes": [
-              {
-                "code": "PHYSICAL"
-              }
-            ],
-            "access": [
-              {
-                "__typename": "InterLibraryLoan",
-                "loanIsPossible": true
-              }
-            ],
-            "shelfmark": {
-              "postfix": "Rowling",
-              "shelfmark": "83"
-            },
-            "workYear": null
-          },
-          {
-            "pid": "870970-basis:27639534",
-            "genreAndForm": ["roman"],
-            "source": ["Bibliotekskatalog"],
-            "titles": {
-              "main": ["Harry Potter og Fønixordenen (mp3)"],
-              "original": ["Harry Potter and the Order of the Phoenix"]
-            },
-            "fictionNonfiction": {
-              "display": "skønlitteratur",
-              "code": "FICTION"
-            },
-            "materialTypes": [
-              {
-                "materialTypeSpecific": { "display": "lydbog (cd-mp3)" }
-              }
-            ],
-            "creators": [
-              {
-                "display": "Joanne K. Rowling",
-                "__typename": "Person"
-              }
-            ],
-            "publisher": ["Gyldendal Lyd"],
-            "languages": {
-              "main": [
-                {
-                  "display": "dansk"
-                }
-              ]
-            },
-            "identifiers": [
-              {
-                "value": "9788702075427"
-              }
-            ],
-            "contributors": [
-              {
-                "display": "Jesper Christensen (f. 1948)"
-              }
-            ],
-            "edition": {
-              "summary": "2009",
-              "publicationYear": {
-                "display": "2009"
-              }
-            },
-            "dateFirstEdition": null,
-            "audience": {
-              "generalAudience": []
-            },
-            "physicalDescriptions": [
-              {
-                "numberOfPages": null,
-                "playingTime": "29 t., 34 min."
-              }
-            ],
-            "accessTypes": [
-              {
-                "code": "PHYSICAL"
-              }
-            ],
-            "access": [
-              {
-                "__typename": "InterLibraryLoan",
-                "loanIsPossible": true
-              }
-            ],
-            "shelfmark": {
-              "postfix": "Rowling",
-              "shelfmark": "83"
-            },
-            "workYear": {
-              "year": 2003
+            "catalogueCodes": {
+              "nationalBibliography": ["DLF200701"],
+              "otherCatalogues": ["SFA200701", "DAT201518", "DAT202200"]
             }
           },
           {
             "pid": "870970-basis:29368872",
             "genreAndForm": ["roman", "fantasy"],
             "source": ["Bibliotekskatalog"],
+            "languages": {
+              "main": [
+                {
+                  "display": "dansk",
+                  "isoCode": "da"
+                }
+              ],
+              "notes": []
+            },
             "titles": {
               "main": ["Harry Potter og Fønixordenen"],
               "original": ["Harry Potter and the Order of the Phoenix"]
@@ -886,7 +445,9 @@
             },
             "materialTypes": [
               {
-                "materialTypeSpecific": { "display": "bog" }
+                "materialTypeSpecific": {
+                  "display": "bog"
+                }
               }
             ],
             "creators": [
@@ -896,13 +457,6 @@
               }
             ],
             "publisher": ["Gyldendal"],
-            "languages": {
-              "main": [
-                {
-                  "display": "dansk"
-                }
-              ]
-            },
             "identifiers": [
               {
                 "value": "9788702114393"
@@ -910,7 +464,14 @@
             ],
             "contributors": [
               {
-                "display": "Hanna Lützen"
+                "display": "Hanna Lützen",
+                "roles": [
+                  {
+                    "function": {
+                      "singular": "oversætter"
+                    }
+                  }
+                ]
               }
             ],
             "edition": {
@@ -921,14 +482,23 @@
             },
             "dateFirstEdition": null,
             "audience": {
-              "generalAudience": []
+              "generalAudience": [],
+              "ages": [
+                {
+                  "display": "12-16"
+                }
+              ]
             },
+            "notes": [],
             "physicalDescriptions": [
               {
+                "summary": "923 sider",
                 "numberOfPages": 923,
                 "playingTime": null
               }
             ],
+            "hostPublication": null,
+            "manifestationParts": null,
             "accessTypes": [
               {
                 "code": "PHYSICAL"
@@ -940,18 +510,33 @@
                 "loanIsPossible": true
               }
             ],
-            "shelfmark": {
-              "postfix": "Rowling",
-              "shelfmark": "83"
-            },
+            "shelfmark": null,
             "workYear": {
               "year": 2003
+            },
+            "catalogueCodes": {
+              "nationalBibliography": ["DBF201226"],
+              "otherCatalogues": [
+                "ACC201219",
+                "BKM201226",
+                "DAT201518",
+                "DAT202200"
+              ]
             }
           },
           {
             "pid": "870970-basis:51980204",
             "genreAndForm": ["roman", "fantasy"],
             "source": ["Bibliotekskatalog"],
+            "languages": {
+              "main": [
+                {
+                  "display": "dansk",
+                  "isoCode": "da"
+                }
+              ],
+              "notes": []
+            },
             "titles": {
               "main": ["Harry Potter og Fønixordenen"],
               "original": ["Harry Potter and the Order of the Phoenix"]
@@ -962,7 +547,9 @@
             },
             "materialTypes": [
               {
-                "materialTypeSpecific": { "display": "bog" }
+                "materialTypeSpecific": {
+                  "display": "bog"
+                }
               }
             ],
             "creators": [
@@ -972,13 +559,6 @@
               }
             ],
             "publisher": ["Gyldendal"],
-            "languages": {
-              "main": [
-                {
-                  "display": "dansk"
-                }
-              ]
-            },
             "identifiers": [
               {
                 "value": "9788702173260"
@@ -986,7 +566,14 @@
             ],
             "contributors": [
               {
-                "display": "Hanna Lützen"
+                "display": "Hanna Lützen",
+                "roles": [
+                  {
+                    "function": {
+                      "singular": "oversætter"
+                    }
+                  }
+                ]
               }
             ],
             "edition": {
@@ -997,14 +584,23 @@
             },
             "dateFirstEdition": null,
             "audience": {
-              "generalAudience": []
+              "generalAudience": [],
+              "ages": [
+                {
+                  "display": "12-16"
+                }
+              ]
             },
+            "notes": [],
             "physicalDescriptions": [
               {
+                "summary": "841 sider",
                 "numberOfPages": 841,
                 "playingTime": null
               }
             ],
+            "hostPublication": null,
+            "manifestationParts": null,
             "accessTypes": [
               {
                 "code": "PHYSICAL"
@@ -1016,18 +612,33 @@
                 "loanIsPossible": true
               }
             ],
-            "shelfmark": {
-              "postfix": "Rowling",
-              "shelfmark": "83"
-            },
+            "shelfmark": null,
             "workYear": {
               "year": 2003
+            },
+            "catalogueCodes": {
+              "nationalBibliography": ["DBF201545"],
+              "otherCatalogues": [
+                "ACC201541",
+                "BKM201545",
+                "BKR201841",
+                "DAT202200"
+              ]
             }
           },
           {
             "pid": "870970-basis:54871996",
             "genreAndForm": ["roman", "fantasy"],
             "source": ["Bibliotekskatalog"],
+            "languages": {
+              "main": [
+                {
+                  "display": "dansk",
+                  "isoCode": "da"
+                }
+              ],
+              "notes": []
+            },
             "titles": {
               "main": ["Harry Potter og Fønixordenen"],
               "original": ["Harry Potter and the Order of the Phoenix"]
@@ -1038,7 +649,9 @@
             },
             "materialTypes": [
               {
-                "materialTypeSpecific": { "display": "bog" }
+                "materialTypeSpecific": {
+                  "display": "bog"
+                }
               }
             ],
             "creators": [
@@ -1048,13 +661,6 @@
               }
             ],
             "publisher": ["Gyldendal"],
-            "languages": {
-              "main": [
-                {
-                  "display": "dansk"
-                }
-              ]
-            },
             "identifiers": [
               {
                 "value": "9788702272482"
@@ -1062,7 +668,14 @@
             ],
             "contributors": [
               {
-                "display": "Hanna Lützen"
+                "display": "Hanna Lützen",
+                "roles": [
+                  {
+                    "function": {
+                      "singular": "oversætter"
+                    }
+                  }
+                ]
               }
             ],
             "edition": {
@@ -1073,14 +686,23 @@
             },
             "dateFirstEdition": null,
             "audience": {
-              "generalAudience": []
+              "generalAudience": [],
+              "ages": [
+                {
+                  "display": "12-16"
+                }
+              ]
             },
+            "notes": [],
             "physicalDescriptions": [
               {
+                "summary": "841 sider",
                 "numberOfPages": 841,
                 "playingTime": null
               }
             ],
+            "hostPublication": null,
+            "manifestationParts": null,
             "accessTypes": [
               {
                 "code": "PHYSICAL"
@@ -1092,12 +714,13 @@
                 "loanIsPossible": true
               }
             ],
-            "shelfmark": {
-              "postfix": "Rowling",
-              "shelfmark": "83"
-            },
+            "shelfmark": null,
             "workYear": {
               "year": 2003
+            },
+            "catalogueCodes": {
+              "nationalBibliography": ["DBF201841"],
+              "otherCatalogues": ["ACC201838", "BKM201841", "DAT202200"]
             }
           }
         ],
@@ -1105,6 +728,15 @@
           "pid": "870970-basis:134693959",
           "genreAndForm": ["roman", "fantasy", "romaner"],
           "source": ["Bibliotekskatalog"],
+          "languages": {
+            "main": [
+              {
+                "display": "dansk",
+                "isoCode": "da"
+              }
+            ],
+            "notes": []
+          },
           "titles": {
             "main": ["Harry Potter og Fønixordenen (Ill. Jim Kay)"],
             "original": ["Harry Potter and the Order of the Phoenix"]
@@ -1115,7 +747,9 @@
           },
           "materialTypes": [
             {
-              "materialTypeSpecific": { "display": "bog" }
+              "materialTypeSpecific": {
+                "display": "bog"
+              }
             }
           ],
           "creators": [
@@ -1125,13 +759,6 @@
             }
           ],
           "publisher": ["Gyldendal"],
-          "languages": {
-            "main": [
-              {
-                "display": "dansk"
-              }
-            ]
-          },
           "identifiers": [
             {
               "value": "9788702307566"
@@ -1139,13 +766,39 @@
           ],
           "contributors": [
             {
-              "display": "Jim Kay"
+              "display": "Jim Kay",
+              "roles": [
+                {
+                  "function": {
+                    "singular": "illustrator"
+                  }
+                },
+                {
+                  "function": {
+                    "singular": "(hovedansvarlig)"
+                  }
+                }
+              ]
             },
             {
-              "display": "Neil Packer"
+              "display": "Neil Packer",
+              "roles": [
+                {
+                  "function": {
+                    "singular": "illustrator"
+                  }
+                }
+              ]
             },
             {
-              "display": "Hanna Lützen"
+              "display": "Hanna Lützen",
+              "roles": [
+                {
+                  "function": {
+                    "singular": "oversætter"
+                  }
+                }
+              ]
             }
           ],
           "edition": {
@@ -1159,14 +812,23 @@
             "generalAudience": [
               "Højtlæsning fra 8 år. Selvlæsning fra 12 år",
               "for højtlæsning"
+            ],
+            "ages": [
+              {
+                "display": "8-16"
+              }
             ]
           },
+          "notes": [],
           "physicalDescriptions": [
             {
+              "summary": "565 sider: ill. i farver ; 28 cm",
               "numberOfPages": 565,
               "playingTime": null
             }
           ],
+          "hostPublication": null,
+          "manifestationParts": null,
           "accessTypes": [
             {
               "code": "PHYSICAL"
@@ -1178,18 +840,28 @@
               "loanIsPossible": true
             }
           ],
-          "shelfmark": {
-            "postfix": "Rowling",
-            "shelfmark": "83"
-          },
+          "shelfmark": null,
           "workYear": {
             "year": 2003
+          },
+          "catalogueCodes": {
+            "nationalBibliography": ["DBF202245"],
+            "otherCatalogues": ["ACC202240", "BKM202245", "DAT202200"]
           }
         },
         "bestRepresentation": {
           "pid": "870970-basis:134693959",
           "genreAndForm": ["roman", "fantasy", "romaner"],
           "source": ["Bibliotekskatalog"],
+          "languages": {
+            "main": [
+              {
+                "display": "dansk",
+                "isoCode": "da"
+              }
+            ],
+            "notes": []
+          },
           "titles": {
             "main": ["Harry Potter og Fønixordenen (Ill. Jim Kay)"],
             "original": ["Harry Potter and the Order of the Phoenix"]
@@ -1200,7 +872,9 @@
           },
           "materialTypes": [
             {
-              "materialTypeSpecific": { "display": "bog" }
+              "materialTypeSpecific": {
+                "display": "bog"
+              }
             }
           ],
           "creators": [
@@ -1210,13 +884,6 @@
             }
           ],
           "publisher": ["Gyldendal"],
-          "languages": {
-            "main": [
-              {
-                "display": "dansk"
-              }
-            ]
-          },
           "identifiers": [
             {
               "value": "9788702307566"
@@ -1224,13 +891,39 @@
           ],
           "contributors": [
             {
-              "display": "Jim Kay"
+              "display": "Jim Kay",
+              "roles": [
+                {
+                  "function": {
+                    "singular": "illustrator"
+                  }
+                },
+                {
+                  "function": {
+                    "singular": "(hovedansvarlig)"
+                  }
+                }
+              ]
             },
             {
-              "display": "Neil Packer"
+              "display": "Neil Packer",
+              "roles": [
+                {
+                  "function": {
+                    "singular": "illustrator"
+                  }
+                }
+              ]
             },
             {
-              "display": "Hanna Lützen"
+              "display": "Hanna Lützen",
+              "roles": [
+                {
+                  "function": {
+                    "singular": "oversætter"
+                  }
+                }
+              ]
             }
           ],
           "edition": {
@@ -1244,14 +937,23 @@
             "generalAudience": [
               "Højtlæsning fra 8 år. Selvlæsning fra 12 år",
               "for højtlæsning"
+            ],
+            "ages": [
+              {
+                "display": "8-16"
+              }
             ]
           },
+          "notes": [],
           "physicalDescriptions": [
             {
+              "summary": "565 sider: ill. i farver ; 28 cm",
               "numberOfPages": 565,
               "playingTime": null
             }
           ],
+          "hostPublication": null,
+          "manifestationParts": null,
           "accessTypes": [
             {
               "code": "PHYSICAL"
@@ -1263,186 +965,172 @@
               "loanIsPossible": true
             }
           ],
-          "shelfmark": {
-            "postfix": "Rowling",
-            "shelfmark": "83"
-          },
+          "shelfmark": null,
           "workYear": {
             "year": 2003
+          },
+          "catalogueCodes": {
+            "nationalBibliography": ["DBF202245"],
+            "otherCatalogues": ["ACC202240", "BKM202245", "DAT202200"]
           }
         }
       },
       "materialTypes": [
         {
-          "materialTypeSpecific": { "display": "bog" }
+          "materialTypeSpecific": {
+            "display": "bog"
+          }
         },
         {
-          "materialTypeSpecific": { "display": "lydbog (cd)" }
-        },
-        {
-          "materialTypeSpecific": { "display": "punktskrift" }
-        },
-        {
-          "materialTypeSpecific": { "display": "diskette" }
-        },
-        {
-          "materialTypeSpecific": { "display": "lydbog (bånd)" }
-        },
-        {
-          "materialTypeSpecific": { "display": "lydbog (cd-mp3)" }
+          "materialTypeSpecific": {
+            "display": "lydbog (cd)"
+          }
         }
       ],
       "mainLanguages": [
         {
           "display": "dansk",
-          "isoCode": "dan"
+          "isoCode": "da"
         }
       ],
       "subjects": {
         "all": [
           {
-            "display": "kærlighed"
+            "display": "eventyrlige fortællinger"
           },
           {
-            "display": "adoption"
+            "display": "troldmænd"
           },
           {
-            "display": "familien"
+            "display": "magi"
           },
           {
-            "display": "slægtsromaner"
+            "display": "Harry Potter"
           },
           {
-            "display": "kærleiki"
+            "display": "Ron Weasley"
           },
           {
-            "display": "ættleiðing"
+            "display": "Hermione Granger"
           },
           {
-            "display": "familjan"
+            "display": "Børnebøger"
           },
           {
-            "display": "ættarsøgur"
+            "display": "for 12 år"
+          },
+          {
+            "display": "for 13 år"
+          },
+          {
+            "display": "for 14 år"
+          },
+          {
+            "display": "for 15 år"
+          },
+          {
+            "display": "for 16 år"
+          },
+          {
+            "display": "kostskoler"
+          },
+          {
+            "display": "spændende"
+          },
+          {
+            "display": "trist"
+          },
+          {
+            "display": "uhyggelig"
+          },
+          {
+            "display": "fantasy"
+          },
+          {
+            "display": "sport"
+          },
+          {
+            "display": "venskaber"
+          },
+          {
+            "display": "mit liv"
+          },
+          {
+            "display": "skæve karakterer"
+          },
+          {
+            "display": "eventyrlig"
+          },
+          {
+            "display": "gys"
+          },
+          {
+            "display": "action"
+          },
+          {
+            "display": "krea og kultur"
           }
         ],
         "dbcVerified": [
           {
-            "display": "kærlighed"
+            "display": "Harry Potter"
           },
           {
-            "display": "adoption"
+            "display": "Ron Weasley"
           },
           {
-            "display": "familien"
+            "display": "Hermione Granger"
           },
           {
-            "display": "slægtsromaner"
+            "display": "troldmænd"
           },
           {
-            "display": "kærleiki"
+            "display": "magi"
           },
           {
-            "display": "ættleiðing"
+            "display": "eventyrlige fortællinger"
           },
           {
-            "display": "familjan"
+            "display": "kostskoler"
           },
           {
-            "display": "ættarsøgur"
+            "display": "spændende"
+          },
+          {
+            "display": "trist"
+          },
+          {
+            "display": "uhyggelig"
+          },
+          {
+            "display": "fantasy"
+          },
+          {
+            "display": "sport"
+          },
+          {
+            "display": "venskaber"
+          },
+          {
+            "display": "mit liv"
+          },
+          {
+            "display": "skæve karakterer"
+          },
+          {
+            "display": "eventyrlig"
+          },
+          {
+            "display": "gys"
+          },
+          {
+            "display": "action"
+          },
+          {
+            "display": "krea og kultur"
           }
         ]
       },
-      "reviews": [
-        {
-          "__typename": "LibrariansReview",
-          "author": "Elisabeth Bennetsen",
-          "date": "2022-11-04",
-          "sections": [
-            {
-              "code": "ABOUT",
-              "heading": "Kort om bogen",
-              "text": "Stor, flot og gennemillustreret udgave af bind 5 i \"Harry Potter\"-serien. Harry går stadig på kostskolen Hogwarts, men det bliver ikke et let år.  Bogen er meget velegnet til oplæsning for børn fra 8 år - og kan selvlæses fra 12 år"
-            },
-            {
-              "code": "DESCRIPTION",
-              "heading": "Beskrivelse",
-              "text": "Harry er nu blevet 15 år, og han glæder sig til at starte på femte år på Hogwarts efter en lang og meget ensom sommerferie hos hans forfærdelige familie. Men han glæder sig for tidligt, for det bliver et meget anderledes år. Ingen og slet ikke Ministeriet for Magi tror på, at Voldemort er vendt tilbage, og derfor underlægger Ministeriet Hogwarts en helt særlig og ubehagelig kontrol i form af den ondskabsfulde Professor Nidkjær. Men det hele skal blive meget værre. Harry opdager, at Voldemort har en særlig adgang til hans tanker og drømme, og det får en grusom konsekvens. Bogen er som de øvrige bind i denne serie illustreret af Jim Kay, men også Neil Packer har bidraget"
-            },
-            {
-              "code": "EVALUATION",
-              "heading": "Vurdering",
-              "text": "Teksten er der ikke ændret på, og handlingen holder stadig, selv om bogen hører til de længere og mere mørke i serien. Jim Kays illustrationer er suveræne og gør bogen meget egnet til oplæsning for yngre børn, selv om den er tung at sidde med. Det bliver desværre nok det sidste bind med Jim Kay som tegner. Neil Packer har tegnet en del vignetter, og de er ret anderledes og nok mere kedelige"
-            },
-            {
-              "code": "OTHER",
-              "heading": "Andre bøger om samme emne",
-              "text": " "
-            },
-            {
-              "code": "OTHER",
-              "heading": "Andre bøger om samme emne",
-              "text": " er en udgave uden illustrationer. "
-            },
-            {
-              "code": "OTHER",
-              "heading": "Andre bøger om samme emne",
-              "text": " er  en flot illustreret bog med popup-effekter"
-            }
-          ]
-        },
-        {
-          "__typename": "InfomediaReview",
-          "author": "Victoria Westzynthius",
-          "date": "2004-10-09",
-          "origin": "Politiken",
-          "rating": null,
-          "id": "e0288656"
-        },
-        {
-          "__typename": "InfomediaReview",
-          "author": "Jes Stein Pedersen",
-          "date": "2003-10-11",
-          "origin": "Politiken",
-          "rating": null,
-          "id": "e00ddd88"
-        },
-        {
-          "__typename": "InfomediaReview",
-          "author": "Lars Tjalve",
-          "date": "2003-10-11",
-          "origin": "Kristeligt dagblad",
-          "rating": null,
-          "id": "e03e4e0a"
-        },
-        {
-          "__typename": "InfomediaReview",
-          "author": "ar",
-          "date": "2003-10-10",
-          "origin": "Jyllands-posten",
-          "rating": null,
-          "id": "e00dd0cc"
-        },
-        {
-          "__typename": "InfomediaReview",
-          "author": "Therese Hjorth",
-          "date": "2003-10-10",
-          "origin": "Berlingske tidende",
-          "rating": null,
-          "id": "e00dced4"
-        },
-        {
-          "__typename": "LibrariansReview",
-          "author": "Vera Jensen",
-          "date": "2003-10-01",
-          "sections": [
-            {
-              "code": "ALL",
-              "heading": null,
-              "text": "Den 5. Harry Potter-bog er et digert værk på over 900 sider. Det kræver overblik af forfatteren at kunne holde styr på de mange personer, intriger og sidehistorier i denne mursten af en bog. Men heldigvis lykkes det stadig for Rowling at imponere. Godt nok er handlingen lidt længe om at komme i gang, men inden længe er man opslugt af Rowlings forunderlige og omfattende fantasiunivers. Historien har ikke den samme intense gotiske uhygge som de tidligere bind, men til gengæld bruger den det omfattende antal sider til at skildre undervisningsmiljøet på troldmandsskolen Hogwarts og til at trænge mere om bag personernes psyke. Man kommer til at lære mere om den nu 15-årige Harry i denne bog, og man får svaret på nogle af de mange mysterier omkring hans fortid. Harry kommer også her ud for sit første møde med kærligheden. Der bliver snakket og filosoferet meget, men der er da også hæsblæsende og dramatiske opgør mellem de gode og de onde kræfter. Temaer, sprog og psykologi får i dette værk et mere voksent præg, men bogen kan alligevel læses fra 12 år, såfremt der er tale om gode læsere med et solidt ordforråd. Flot dramatisk forside"
-            }
-          ]
-        }
-      ],
       "fictionNonfiction": {
         "display": "skønlitteratur",
         "code": "FICTION"
@@ -1451,89 +1139,8 @@
         "display": "Skønlitteratur"
       },
       "relations": {
-        "hasAdaptation": [
-          {
-            "ownerWork": {
-              "workId": "work-of:870970-basis:28995938",
-              "workTypes": ["MOVIE"],
-              "titles": {
-                "main": ["Harry Potter and the Order of the Phoenix"]
-              }
-            }
-          },
-          {
-            "ownerWork": {
-              "workId": "work-of:870970-basis:28995938",
-              "workTypes": ["MOVIE"],
-              "titles": {
-                "main": ["Harry Potter and the Order of the Phoenix"]
-              }
-            }
-          },
-          {
-            "ownerWork": {
-              "workId": "work-of:870970-basis:28995938",
-              "workTypes": ["MOVIE"],
-              "titles": {
-                "main": ["Harry Potter and the Order of the Phoenix"]
-              }
-            }
-          },
-          {
-            "ownerWork": {
-              "workId": "work-of:870970-basis:28995938",
-              "workTypes": ["MOVIE"],
-              "titles": {
-                "main": ["Harry Potter and the Order of the Phoenix"]
-              }
-            }
-          },
-          {
-            "ownerWork": {
-              "workId": "work-of:870970-basis:28995938",
-              "workTypes": ["MOVIE"],
-              "titles": {
-                "main": ["Harry Potter and the Order of the Phoenix"]
-              }
-            }
-          },
-          {
-            "ownerWork": {
-              "workId": "work-of:870970-basis:28995938",
-              "workTypes": ["MOVIE"],
-              "titles": {
-                "main": ["Harry Potter and the Order of the Phoenix"]
-              }
-            }
-          },
-          {
-            "ownerWork": {
-              "workId": "work-of:870970-basis:28995938",
-              "workTypes": ["MOVIE"],
-              "titles": {
-                "main": ["Harry Potter and the Order of the Phoenix"]
-              }
-            }
-          },
-          {
-            "ownerWork": {
-              "workId": "work-of:870970-basis:28995938",
-              "workTypes": ["MOVIE"],
-              "titles": {
-                "main": ["Harry Potter and the Order of the Phoenix"]
-              }
-            }
-          },
-          {
-            "ownerWork": {
-              "workId": "work-of:870970-basis:28995938",
-              "workTypes": ["MOVIE"],
-              "titles": {
-                "main": ["Harry Potter and the Order of the Phoenix"]
-              }
-            }
-          }
-        ]
+        "hasReview": [],
+        "hasAdaptation": []
       }
     }
   }
