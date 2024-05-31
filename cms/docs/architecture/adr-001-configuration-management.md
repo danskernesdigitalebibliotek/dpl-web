@@ -54,7 +54,7 @@ The consequences of using this setup is
 
 1) We need to ignore `core.extension.yml`, for administrators to manage modules
    - This means that we need to enable/disable new modules using code.
-     See `dpl_base.install` for how to do this, through Drupal update hooks.
+     See `dpl_update.install` for how to do this, through Drupal update hooks.
 2) If a faulty permission has been added, or if a decision has been made to
    remove an existing permission, there might be config that we dont want to
    ignore, that is ignored on some libraries.

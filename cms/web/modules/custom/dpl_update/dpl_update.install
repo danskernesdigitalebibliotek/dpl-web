@@ -10,10 +10,13 @@
  */
 
 /**
- * Run on the initial site setup. Remember to add individual update hooks.
+ * Run on the initial site setup.
+ *
+ * Remember to references to individual update hooks, as these updates probably
+ * will want to happen both on new and existing sites.
  */
-function dpl_base_install(): string {
-  $messages[] = dpl_base_update_10001();
+function dpl_update_install(): string {
+  $messages[] = dpl_update_update_10001();
 
   return implode('\r\n', $messages);
 }
@@ -23,7 +26,7 @@ function dpl_base_install(): string {
  *
  * This is mostly here as an example for how to enable modules in the future.
  */
-function dpl_base_update_10001(): string {
+function dpl_update_update_10001(): string {
   \Drupal::service('module_installer')->install(['config_ignore_auto']);
 
   return 'Module config_ignore_auto has been enabled.';
