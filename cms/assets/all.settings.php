@@ -17,6 +17,10 @@ use Drupal\Core\Installer\InstallerKernel;
 // site install.
 $config['system.site']['uuid'] = '13ef1a53-dfb4-4c82-9b64-44586a366729';
 
+// Hardcode the site mail as we don't want to allow changing it in the UI.
+// The email needs to match what is setup in Azure Communication Services.
+$config['system.site']['mail'] = 'mail@folkebibliotekernescms.dk';
+
 // Configure logging using the project name and environment from the Lagoon
 // environment.
 $config['jsonlog.settings']['jsonlog_siteid'] = getenv('LAGOON_PROJECT') . '_' . getenv('LAGOON_ENVIRONMENT');

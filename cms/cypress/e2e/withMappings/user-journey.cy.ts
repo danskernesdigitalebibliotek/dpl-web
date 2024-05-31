@@ -1,6 +1,6 @@
 describe("User journey", () => {
   it("Shows search suggestions & redirects to search result page", () => {
-    cy.visit("/")
+    cy.visit("/arrangementer")
       .getBySel("search-header-input")
       .type("harry")
       .getBySel("autosuggest")
