@@ -1,6 +1,6 @@
 # Configuration Management
 
-We use the [Configuration Ignore module](architecture/adr-001-configuration-management.md)
+We use the [Configuration Ignore Auto module](architecture/adr-001b-configuration-management)
 to manage configuration.
 
 In general all configuration is ignored except for configuration which should
