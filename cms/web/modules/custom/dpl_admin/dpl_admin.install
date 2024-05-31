@@ -79,12 +79,17 @@ function dpl_admin_update_10000(array &$sandbox) : string {
   // Use random data for both username and password as this user is only meant
   // to be used with onetime login links.
   $random = new Random();
-  $password_generator = DrupalTyped::service(DefaultPasswordGenerator::class, 'password_generator');
   $user_1
     ->set('field_author_name', "Administrator")
     ->setUsername('admin_' . $random->name())
-    ->setEmail('')
-    ->setPassword($password_generator->generate());
+    ->setEmail('');
+
+  $password_generator = DrupalTyped::service(DefaultPasswordGenerator::class, 'password_generator');
+  $user_1->setPassword($password_generator->generate());
+
+  $language_manager = DrupalTyped::service(\Drupal\Core\Language\LanguageManagerInterface::class, 'language_manager');
+  $user_1->set('preferred_admin_langcode', $language_manager->getDefaultLanguage()->getId());
+
   $user_1->save();
   $feedback[] = "Reset username and password for user 1";
 
