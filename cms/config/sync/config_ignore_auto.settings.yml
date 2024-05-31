@@ -1,7 +1,12 @@
 _core:
-  default_config_hash: cOHDL5_7SklYQjpqa23wFKZ4rGPUSCmPOnFJ9e1yRGE
+  default_config_hash: s2rKO-wXqIkVbzZgmSGZGBSZTnvTUEwKZ3158TVXcaw
 status: true
-ignored_config_entities:
-  - config_ignore.settings
 whitelist_config_entities:
   - core.extension
+direction_operations:
+  - import_create
+  - import_update
+  - import_delete
+  - export_create
+  - export_update
+  - export_delete
