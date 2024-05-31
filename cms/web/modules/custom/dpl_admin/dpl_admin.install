@@ -12,6 +12,7 @@ use Drupal\Core\Entity\EntityTypeInterface;
 use Drupal\Core\Entity\Query\QueryException;
 use Drupal\Core\Field\FieldItemListInterface;
 use Drupal\Core\Session\SessionManagerInterface;
+use Drupal\Core\Password\DefaultPasswordGenerator;
 use Drupal\dpl_admin\Services\VersionHelper;
 use Drupal\drupal_typed\DrupalTyped;
 use Drupal\user\Entity\User;
@@ -79,11 +80,12 @@ function dpl_admin_update_10000(array &$sandbox) : string {
   // Use random data for both username and password as this user is only meant
   // to be used with onetime login links.
   $random = new Random();
+  $password_generator = DrupalTyped::service(DefaultPasswordGenerator::class, 'password_generator');
   $user_1
     ->set('field_author_name', "Administrator")
     ->setUsername('admin_' . $random->name())
     ->setEmail('')
-    ->setPassword($random->string(32));
+    ->setPassword($password_generator->generate());
   $user_1->save();
   $feedback[] = "Reset username and password for user 1";
 
