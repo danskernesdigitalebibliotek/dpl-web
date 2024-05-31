@@ -11,7 +11,6 @@ use Drupal\Core\Entity\EntityInterface;
 use Drupal\Core\Entity\EntityTypeInterface;
 use Drupal\Core\Entity\Query\QueryException;
 use Drupal\Core\Field\FieldItemListInterface;
-use Drupal\Core\Session\SessionManagerInterface;
 use Drupal\Core\Password\DefaultPasswordGenerator;
 use Drupal\dpl_admin\Services\VersionHelper;
 use Drupal\drupal_typed\DrupalTyped;
@@ -138,8 +137,11 @@ function dpl_admin_update_10000(array &$sandbox) : string {
   }, $user_owned_entities_by_types, array_keys($user_owned_entities_by_types));
   $feedback = array_merge($feedback, $status_by_types);
 
-  $session_manager = DrupalTyped::service(SessionManagerInterface::class, 'session_manager');
-  $session_manager->delete((int) $user_1->id());
+  // Use a direct database connection here instead of SessionManager as this
+  // does not allow ending sessions from the CLI.
+  \Drupal::database()->delete('sessions')
+    ->condition('uid', $user_1->id())
+    ->execute();
   $feedback[] = "Deleted existing sessions for user 1";
 
   $content_lock = DrupalTyped::service(ContentLock::class, 'content_lock');
