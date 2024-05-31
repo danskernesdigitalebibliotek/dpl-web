@@ -113,27 +113,33 @@ const navigateToFirstJanuary2024 = (
 ) => {
   if (type === "monthViewAdmin") {
     checkAndNavigate({
-      selector: ".fc-toolbar-title",
-      targetText: "januar 2024",
+      selector: '[data-date="2024-01-01"]',
       navigateAction: () => cy.get('button[title="Forrige"]').click(),
     });
   } else if (type === "weekViewPage") {
     checkAndNavigate({
-      selector: ".opening-hours__week-display",
-      targetText: "Week 1, 2024",
+      selector: '[data-cy="2024-01-01"]',
       navigateAction: () =>
         cy.getBySel("opening-hours-previous-week-button").click(),
     });
   }
 };
 
-const checkAndNavigate = ({ selector, targetText, navigateAction }) => {
-  cy.get(selector).then(($title) => {
-    if ($title.text().includes(targetText)) {
-      cy.log(`Found '${targetText}'`);
+const checkAndNavigate = ({ selector, navigateAction }) => {
+  cy.get("body").then(($body) => {
+    if ($body.find(selector).length) {
+      cy.log(`Found element with selector attribute '${selector}'`);
     } else {
+      cy.intercept({
+        method: "GET",
+        url: "/api/v1/opening_hours?*",
+      }).as("openinghours");
       navigateAction();
-      checkAndNavigate({ selector, targetText, navigateAction });
+      cy.wait("@openinghours");
+      // Wait for the react component to update
+      // eslint-disable-next-line
+      cy.wait(500);
+      checkAndNavigate({ selector, navigateAction });
     }
   });
 };
