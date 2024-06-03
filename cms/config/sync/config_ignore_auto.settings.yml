@@ -2,7 +2,6 @@ _core:
   default_config_hash: s2rKO-wXqIkVbzZgmSGZGBSZTnvTUEwKZ3158TVXcaw
 status: true
 whitelist_config_entities:
-  - core.extension
   - user.role.anonymous
   - user.role.authenticated
   - user.role.local_administrator
