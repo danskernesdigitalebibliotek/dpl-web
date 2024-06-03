@@ -111,6 +111,13 @@ function dpl_admin_update_10000(array &$sandbox) : string {
     ->condition('uid', $new_user->id())
     ->execute();
   $feedback[] = "Transferred password hash from user 1 to new user {$new_user->id()}";
+  
+  // Use a direct database connection here instead of SessionManager as this
+  // does not allow ending sessions from the CLI.
+  \Drupal::database()->delete('sessions')
+    ->condition('uid', $user_1->id())
+    ->execute();
+  $feedback[] = "Deleted existing sessions for user 1";
 
   // Migrate entity ownership to the new user.
   // Retrieve all entities currently owned by user 1 grouped by entity type.
@@ -143,13 +150,6 @@ function dpl_admin_update_10000(array &$sandbox) : string {
     return "Updated owner for {$num_entities} {$entity_type} entities";
   }, $user_owned_entities_by_types, array_keys($user_owned_entities_by_types));
   $feedback = array_merge($feedback, $status_by_types);
-
-  // Use a direct database connection here instead of SessionManager as this
-  // does not allow ending sessions from the CLI.
-  \Drupal::database()->delete('sessions')
-    ->condition('uid', $user_1->id())
-    ->execute();
-  $feedback[] = "Deleted existing sessions for user 1";
 
   $content_lock = DrupalTyped::service(ContentLock::class, 'content_lock');
   $content_lock->releaseAllUserLocks((int) $user_1->id());
