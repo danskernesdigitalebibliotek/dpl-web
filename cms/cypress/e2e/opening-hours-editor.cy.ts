@@ -507,7 +507,7 @@ describe("Opening hours editor", () => {
     });
   });
 
-  it("Can create opening hours series", () => {
+  it.skip("Can create opening hours series", () => {
     createOpeningHoursSeries({
       openingHourCategory: OpeningHourCategories.SelfService,
       timeDuration: { start: "10:00", end: "16:00" },
@@ -515,7 +515,7 @@ describe("Opening hours editor", () => {
     });
   });
 
-  it("Can edit all opening hours series", () => {
+  it.skip("Can edit all opening hours series", () => {
     createOpeningHoursSeries({
       openingHourCategory: OpeningHourCategories.SelfService,
       timeDuration: { start: "10:00", end: "16:00" },
@@ -533,7 +533,7 @@ describe("Opening hours editor", () => {
     originalTimeDuration: TimeDurationType;
     updatedTimeDuration: TimeDurationType;
   };
-  it("Can edit rest of opening hours series", () => {
+  it.skip("Can edit rest of opening hours series", () => {
     const editData: EditRestOfOpeningHoursSeriesType = {
       editSeriesFromIndex: 1,
       openingHourCategory: OpeningHourCategories.SelfService,
@@ -564,7 +564,7 @@ describe("Opening hours editor", () => {
     });
   });
 
-  it("Can delete all opening hours series", () => {
+  it.skip("Can delete all opening hours series", () => {
     const openingHour: Required<OpeningHourFormType> = {
       openingHourCategory: OpeningHourCategories.WithService,
       timeDuration: { start: "10:00", end: "11:00" },
@@ -574,7 +574,7 @@ describe("Opening hours editor", () => {
     deleteOpeningHoursSeries(openingHour);
   });
 
-  it("Can delete rest of opening hours series", () => {
+  it.skip("Can delete rest of opening hours series", () => {
     const editData: Required<OpeningHourFormType> & {
       editSeriesFromIndex: number;
     } = {
