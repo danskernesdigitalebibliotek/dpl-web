@@ -111,7 +111,7 @@ function dpl_admin_update_10000(array &$sandbox) : string {
     ->condition('uid', $new_user->id())
     ->execute();
   $feedback[] = "Transferred password hash from user 1 to new user {$new_user->id()}";
-  
+
   // Use a direct database connection here instead of SessionManager as this
   // does not allow ending sessions from the CLI.
   \Drupal::database()->delete('sessions')
