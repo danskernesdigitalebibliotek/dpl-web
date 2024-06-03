@@ -104,6 +104,7 @@ permissions:
   - 'administer nodes'
   - 'administer openid connect clients'
   - 'administer orphaned events entities'
+  - 'administer permissions'
   - 'administer redirects'
   - 'administer site configuration'
   - 'administer software updates'
