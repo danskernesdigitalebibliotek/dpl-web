@@ -3,7 +3,7 @@
 # The PR will be created from the develop branch.
 # Needed env variables:
 #   PULL_REQUEST_GIT_USER - The git user that will be used to create the branch and the PR.
-#   ACCEPTED_BUILD_URL_PREFIXES - The build URL need to match one of the prefixes in order to be accepted.
+#   ACCEPTED_PACKAGES - A JSON array of accepted package names.
 name: Create PR with external dependency
 
 on:
@@ -17,26 +17,29 @@ jobs:
     steps:
       - name: Verify Event and set env
         env:
-          BUILD_URL: ${{ github.event.client_payload.build_url }}
           PR_BRANCH: ${{ github.event.client_payload.branch }}
           PACKAGE: ${{ github.event.client_payload.dependency_package }}
         run: |
+          PACKAGE_NAME=$(echo "${{ github.event.client_payload.dependency_package }}" | sed 's/[^\/]*\///')
           echo "PR_BRANCH=$PR_BRANCH" >> $GITHUB_ENV
-          echo "BUILD_URL=$BUILD_URL" >> $GITHUB_ENV
           echo "PACKAGE=$PACKAGE" >> $GITHUB_ENV
+          echo "PACKAGE_NAME=$PACKAGE_NAME" >> $GITHUB_ENV
 
-          PULL_REQUEST_GIT_USER='${{ vars.PULL_REQUEST_GIT_USER }}'
-          echo "GIT_USER_NAME=$(echo "$PULL_REQUEST_GIT_USER" | jq -r .name)" >> $GITHUB_ENV
-          echo "GIT_USER_EMAIL=$(echo "$PULL_REQUEST_GIT_USER" | jq -r .email)" >> $GITHUB_ENV
+          PACKAGE_NAME_IS_VALID=$(echo '${{ vars.ACCEPTED_PACKAGES }}' | jq --arg project "${{ env.PACKAGE }}" 'any(.[]; . as $name | $project | match($name))')
+          echo "PACKAGE_NAME_IS_VALID=$PACKAGE_NAME_IS_VALID" >> $GITHUB_ENV
+        if: ${{ github.event.action == 'create_pr' && github.event.client_payload.branch && github.event.client_payload.dependency_package }}
 
-          BUILD_URL_IS_ACCEPTED=$(echo '${{ vars.ACCEPTED_BUILD_URL_PREFIXES }}' | jq --arg url "${{ env.BUILD_URL }}" 'any(.[]; . as $prefix | $url | contains($prefix))')
-          echo "BUILD_URL_IS_ACCEPTED=$BUILD_URL_IS_ACCEPTED" >> $GITHUB_ENV
+      - name: Stop workflow if any variables are missing
+        run: |
+          echo "::error::Some variable is missing. Have to stop..."
+          exit 1
+        if: ${{ !env.PR_BRANCH || !env.PACKAGE || !env.PACKAGE_NAME}}
 
-        if: ${{ github.event.action == 'create_pr' && github.event.client_payload.branch && github.event.client_payload.build_url && github.event.client_payload.dependency_package }}
-
-      - name: Stop workflow if build url is not valid
-        run: echo "::error::The build URL is not valid. Should match one of the accepted prefixes."
-        if: ${{ env.BUILD_URL_IS_ACCEPTED != 'true' }}
+      - name: Stop workflow if package name is not valid
+        run: |
+          echo "::error::The package name is not valid. Should match one of the accepted package names."
+          exit 1
+        if: ${{ env.PACKAGE_NAME_IS_VALID != 'true' }}
 
       - uses: actions/checkout@v4
         with:
@@ -46,44 +49,64 @@ jobs:
         uses: GuillaumeFalourd/branch-exists@v1
         with:
           branch: ${{ env.PR_BRANCH }}
-        if: ${{ env.PR_BRANCH }}
 
       - name: Stop workflow if branch already exists
-        run: echo "::error::A branch with the same name as the requested branch name already exists."
+        run: |
+          echo "::error::A branch with the same name as the requested branch name already exists."
+          exit 1
         if: ${{ steps.check_branch_exists.outputs.exists == 'true' }}
 
-      - name: Insert dependency
-        uses: Wandalen/wretry.action@master
-        id: manipulate_composer
+      - name: Resolve composer task command
+        id: resolve_composer_task_command
+        run: |
+          set -e
+
+          declare -a CMDS=(
+              [poc-dpl-react-pr-trigger]='dev:composer:update-design-system'
+              [poc-dpl-design-system-pr-trigger]='dev:composer:update-react'
+          )
+
+          COMPOSER_TASK_COMMAND=${CMDS[${{ env.PACKAGE_NAME }}]}
+
+          if [[ -n "${COMPOSER_TASK_COMMAND}" ]]; then
+            echo "COMPOSER_TASK_COMMAND=$COMPOSER_TASK_COMMAND" >> $GITHUB_ENV
+          else
+            echo "::error::Could not resolve composer task command."
+            exit 1
+          fi
+
+      - name: Install go-task
+        uses: arduino/setup-task@v2
         with:
-          command: |
-            composer config repositories.${{ env.PACKAGE }} '{"type":"package","package":{"name":"${{ env.PACKAGE }}","version":"dev-master","type":"drupal-library","dist":{"url":"${{ env.BUILD_URL }}","type":"zip"},"require":{"composer\/installers":"^1.2.0"}}}'
+          repo-token: ${{ secrets.GITHUB_TOKEN }}
+        if: ${{ steps.resolve_composer_task_command.outcome == 'success' }}
 
-            composer remove ${{ env.PACKAGE }} \
-            && composer require ${{ env.PACKAGE }}
-          attempt_limit: 200
-        if: ${{ env.BUILD_URL && env.PACKAGE}}
+      - name: Insert dependency
+        id: manipulate_composer
+        run: task ${{ env.COMPOSER_TASK_COMMAND }}
+        env:
+          BRANCH: ${{ env.PR_BRANCH }}
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: Create branch and PR
+      - name: Create branch
+        id: create_branch
+        uses: stefanzweifel/git-auto-commit-action@v5
+        with:
+          branch: ${{ env.PR_BRANCH }}
+          commit_message: "Insert new reference to dependency ${{ env.PACKAGE }}: ${{ env.BUILD_URL }}"
+          create_branch: true
+        if: ${{ steps.manipulate_composer.outcome == 'success' }}
+
+      - name: Create PR
         id: create_pr
         run: |
           set -e
-          git config --global user.name ${{ env.GIT_USER_NAME }}
-          git config --global user.email ${{ env.GIT_USER_EMAIL }}
-
-          git checkout -b ${{ env.PR_BRANCH }}
-          git push --set-upstream origin ${{ env.PR_BRANCH }}
-
-          git add composer.json composer.lock
-          git commit -m "Insert new reference to dependency ${{ env.PACKAGE }}: ${{ env.BUILD_URL }}"
-          git push
-
           gh pr create \
           --base develop \
           --head ${{ env.PR_BRANCH }} \
           --title "${{ format('PR for {0}:{1}', env.PACKAGE, env.PR_BRANCH) }}" \
           --body "${{ format('This is an automated PR for {0}:{1}', env.PACKAGE, env.PR_BRANCH) }}"
-        if: ${{ env.GIT_USER_NAME && env.GIT_USER_EMAIL && env.PACKAGE && env.PR_BRANCH && env.BUILD_URL && steps.manipulate_composer.outcome == 'success' }}
+        if: ${{ steps.create_branch.outcome == 'success' }}
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
