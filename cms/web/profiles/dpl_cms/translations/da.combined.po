@@ -27038,10 +27038,10 @@ msgstr ""
 #: 
 msgctxt "Dashboard"
 msgid "All loans"
-msgstr ""
+msgstr "Alle lån"
 
 #: 
 msgctxt "Dashboard"
 msgid "All reservations"
-msgstr ""
+msgstr "Alle reserveringer"
 
