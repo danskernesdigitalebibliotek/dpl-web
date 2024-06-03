@@ -100,7 +100,8 @@ function dpl_admin_update_10000(array &$sandbox) : string {
   }, $user_1->getRoles(exclude_locked_roles: TRUE));
   $user_1->save();
   $removed_roles_string = implode(', ', $removed_roles);
-  $feedback[] = "Removed roles {$removed_roles_string} from user 1";
+  $removed_role_count = count($removed_roles);
+  $feedback[] = "Removed {$removed_role_count} roles {$removed_roles_string} from user 1";
 
   $new_user->save();
   $feedback[] = "Created new user {$new_user->id()} with local administrator role";
