@@ -24,6 +24,7 @@ dependencies:
     - administerusersbyrole
     - block
     - content_lock
+    - cookieinformation
     - dpl_admin
     - dpl_cache_settings
     - dpl_footer
@@ -92,6 +93,7 @@ permissions:
   - 'administer advanced webform handler settings'
   - 'administer advanced webform submission settings'
   - 'administer blocks'
+  - 'administer cookie information settings'
   - 'administer dpl_footer settings'
   - 'administer dpl_mapp configuration'
   - 'administer filters'
@@ -176,6 +178,7 @@ permissions:
   - 'delete terms in categories'
   - 'delete terms in tags'
   - 'delete terms in webform_email_categories'
+  - 'disable cookie information consent'
   - 'dpl admin access pages'
   - 'edit admin menu'
   - 'edit any article content'

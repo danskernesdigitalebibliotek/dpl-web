@@ -162,19 +162,15 @@ element:
     checkboxes: checkboxes
     color: color
     container: container
-    date: date
     datelist: datelist
-    datetime: datetime
     details: details
     entity_autocomplete: entity_autocomplete
     fieldset: fieldset
-    hidden: hidden
     item: item
     label: label
     language_select: language_select
     machine_name: machine_name
     managed_file: managed_file
-    number: number
     password: password
     password_confirm: password_confirm
     processed_text: processed_text
@@ -183,7 +179,6 @@ element:
     search: search
     table: table
     tableselect: tableselect
-    tel: tel
     text_format: text_format
     url: url
     value: value
@@ -219,7 +214,6 @@ element:
     webform_same: webform_same
     webform_scale: webform_scale
     webform_section: webform_section
-    webform_select_other: webform_select_other
     webform_signature: webform_signature
     webform_table: webform_table
     webform_table_row: webform_table_row

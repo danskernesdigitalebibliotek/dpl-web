@@ -43,7 +43,7 @@
                 "version": "2024.22.2",
                 "type": "drupal-library",
                 "dist": {
-                    "url": "https://github.com/danskernesdigitalebibliotek/dpl-react/releases/download/2024.22.2/dist-2024-22-2-53d999a95d3cd177850e852d5a8f161eb98f93f2.zip",
+                    "url": "https://github.com/danskernesdigitalebibliotek/dpl-react/releases/download/branch-develop/dist-develop.zip",
                     "type": "zip"
                 },
                 "require": {
@@ -58,7 +58,7 @@
                 "type": "drupal-library",
                 "version": "2024.22.1",
                 "dist": {
-                    "url": "https://github.com/danskernesdigitalebibliotek/dpl-design-system/releases/download/2024.22.1/dist-2024-22-1-b8d8d854c8395e5e91d3ffcd9de344e08fffb83e.zip",
+                    "url": "https://github.com/danskernesdigitalebibliotek/dpl-design-system/releases/download/branch-develop/dist-develop.zip",
                     "type": "zip"
                 }
             }
@@ -89,7 +89,7 @@
         "cweagans/composer-patches": "1.7.3",
         "danskernesdigitalebibliotek/cms-api": "*",
         "danskernesdigitalebibliotek/dpl-design-system": "^2024.22",
-        "danskernesdigitalebibliotek/dpl-react": "2024.22.2",
+        "danskernesdigitalebibliotek/dpl-react": "^2024.22",
         "danskernesdigitalebibliotek/fbs-client": "*",
         "dealerdirect/phpcodesniffer-composer-installer": "^0.7.1",
         "deoliveiralucas/array-keys-case-transform": "^1.1",
@@ -104,6 +104,7 @@
         "drupal/config_ignore_auto": "^3",
         "drupal/config_translation_po": "^1.0",
         "drupal/content_lock": "^2.3",
+        "drupal/cookieinformation": "^2.1",
         "drupal/core-composer-scaffold": "~10.1.7",
         "drupal/core-project-message": "~10.1.7",
         "drupal/core-recommended": "~10.1.7",
@@ -119,6 +120,7 @@
         "drupal/flat_taxonomy": "^2.0",
         "drupal/focal_point": "^2.0",
         "drupal/gin": "^3.0@RC",
+        "drupal/gin_login": "^2.0",
         "drupal/gin_toolbar": "^1.0@RC",
         "drupal/handy_cache_tags": "^1.4",
         "drupal/honeypot": "^2.1",

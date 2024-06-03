@@ -18,6 +18,7 @@ module:
   config_translation: 0
   config_translation_po: 0
   content_lock: 0
+  cookieinformation: 0
   crop: 0
   date_range_formatter: 0
   datetime: 0
@@ -85,6 +86,7 @@ module:
   filter: 0
   flat_taxonomy: 0
   focal_point: 0
+  gin_login: 0
   gin_toolbar: 0
   handy_cache_tags: 0
   honeypot: 0
