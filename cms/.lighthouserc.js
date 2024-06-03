@@ -2,7 +2,9 @@ module.exports = {
   ci: {
     collect: {
       url: [
-        "http://varnish:8080/",
+        // TODO: Develop a test with representative homepage example content:
+        // https://reload.atlassian.net/browse/DDFLSBP-668
+        // "http://varnish:8080/",
         "http://varnish:8080/search?q=harry+potter&x=0&y=0",
         // TODO: Unfortunately the work page test is failing due to a low Lighthouse score.
         // When performance is improved this should be re-enabled.
