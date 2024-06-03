@@ -57,9 +57,11 @@ function dpl_admin_set_allowed_textformat_helper(string $field_name, string $typ
 /**
  * Set a logical default for config_ignore_auto.settings.
  */
-function dpl_admin_deploy_set_config_auto() {
+function dpl_admin_deploy_set_config_auto(): string {
   $config_factory = \Drupal::configFactory();
   $config = $config_factory->getEditable('config_ignore_auto.settings');
   $config->set('ignored_config_entities', []);
   $config->save(TRUE);
+
+  return 'config_ignore_auto.settings.ignored_config_entities has been reset.';
 }

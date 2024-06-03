@@ -53,13 +53,13 @@ These settings will NOT be overriden on next deploy by `drush config-import`.
 The consequences of using this setup is
 
 1) We need to ignore `core.extension.yml`, for administrators to manage modules
-  - This means that we need to enable/disable new modules using code.
-    See `dpl_base.install` for how to do this, through Drupal update hooks.
+  This means that we need to enable/disable new modules using code.
+  See `dpl_base.install` for how to do this, through Drupal update hooks.
 2) If a faulty permission has been added, or if a decision has been made to
    remove an existing permission, there might be config that we dont want to
    ignore, that is ignored on some libraries.
 
-  - This means we'll first have to detect which libraries have overriden config
+    This means we'll first have to detect which libraries have overriden config
 
     ```bash
       drush config:get config_ignore_auto.settings ignored_config_entities
@@ -70,7 +70,8 @@ The consequences of using this setup is
 
 3) A last, and final consequence, is that we need to treat permissions more
    strictly that we do now.
-  - An example is `adminster site settings` also both allows stuff we want to
+
+    An example is `adminster site settings` also both allows stuff we want to
     ignore (site name), but also things we don't want to ignore (404 node ID).
 
 ## Alternatives considered

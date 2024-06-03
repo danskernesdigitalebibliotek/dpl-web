@@ -1,11 +1,8 @@
 # Architecture Decision Record: Configuration Management
 
-<details>
-<summary>
-  <strong>Notice - this is outdated, and left here only for historical purposes.</strong><br>
-  <strong>✚ Click here to see more!</strong>
-  <br>See the new ADR in adr-001b-configuration-management.md
-</summary>
+## Notice - this is outdated, and left here only for historical purposes
+
+See the new ADR in [adr-001b-configuration-management.md](adr-001b-configuration-management.md)
 
 ## Context
 
@@ -118,5 +115,3 @@ passed the provided test.
 - Because `core.extension` is ignored Core developers will have to explicitly
   enable and uninstall modules through code as a part of the development
   process.
-
-</details>
