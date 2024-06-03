@@ -17,6 +17,7 @@ use Drupal\dpl_admin\Services\VersionHelper;
 use Drupal\drupal_typed\DrupalTyped;
 use Drupal\user\Entity\User;
 use Drupal\user\EntityOwnerInterface;
+use Drupal\user\UserInterface;
 
 /**
  * Implements hook_requirements().
@@ -156,4 +157,18 @@ function dpl_admin_update_10000(array &$sandbox) : string {
   $feedback[] = "Released all content locks for user 1";
 
   return implode("\n", $feedback);
+}
+
+/**
+ * Migrate administrators to local administrators.
+ */
+function dpl_admin_update_10001(array &$sandbox): string {
+  $administrators = \Drupal::entityTypeManager()->getStorage('user')->loadByProperties(['roles' => 'administrator']);
+  $updates = array_map(function (UserInterface $administrator) {
+      $administrator->removeRole('administrator');
+      $administrator->addRole('local_administrator');
+      $administrator->save();
+      return "Converted user {$administrator->id()} from administrator to local administrator";
+  }, $administrators);
+  return implode("\n", $updates);
 }
