@@ -54,7 +54,7 @@ function dpl_admin_update_10000(array &$sandbox) : string {
     throw new RuntimeException('Unable to load user 1');
   }
 
-  // Some field values should not been transfered between the users as we
+  // Some field values should not been transferred between the users as we
   // intentionally want them to be unique.
   $excluded_fields = ['uid' => TRUE, 'uuid' => TRUE, 'roles' => TRUE];
   $user_1_fields = array_diff_key($user_1->getFields(include_computed: FALSE), $excluded_fields);
@@ -100,7 +100,7 @@ function dpl_admin_update_10000(array &$sandbox) : string {
   }, $user_1->getRoles(exclude_locked_roles: TRUE));
   $user_1->save();
   $removed_roles_string = implode(', ', $removed_roles);
-  $feedback[] = "Removed roles {$removed_roles_string} for user 1";
+  $feedback[] = "Removed roles {$removed_roles_string} from user 1";
 
   $new_user->save();
   $feedback[] = "Created new user {$new_user->id()} with local administrator role";
