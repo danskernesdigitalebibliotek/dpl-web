@@ -9,7 +9,7 @@ id: eventseries.default.field_description
 field_name: field_description
 entity_type: eventseries
 bundle: default
-label: Description
+label: Subtitle
 description: ''
 required: true
 translatable: false
