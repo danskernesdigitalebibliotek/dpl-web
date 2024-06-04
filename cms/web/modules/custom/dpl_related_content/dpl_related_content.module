@@ -52,7 +52,7 @@ function dpl_related_content_preprocess_page(array &$variables): void {
  * Implements theme_preprocess_paragraph__NAME().
  */
 function dpl_related_content_preprocess_paragraph__card_grid_automatic(array &$variables): void {
-  $variables = _dpl_related_content_filter_paragraph($variables, list_style: RelatedContentListStyle::Grid);
+  $variables = _dpl_related_content_filter_paragraph($variables, list_style: RelatedContentListStyle::Grid, min_items: 3);
 }
 
 /**
@@ -67,7 +67,7 @@ function dpl_related_content_preprocess_paragraph__content_slider_automatic(arra
  */
 function dpl_related_content_preprocess_paragraph__filtered_event_list(array &$variables): void {
   $variables = _dpl_related_content_filter_paragraph(
-    $variables, list_style: RelatedContentListStyle::EventList, max_items: 16, node_bundles: []
+    $variables, list_style: RelatedContentListStyle::EventList, min_items: 1, max_items: 16, node_bundles: []
   );
 }
 
@@ -88,7 +88,7 @@ function dpl_related_content_preprocess_paragraph__filtered_event_list(array &$v
  * @return array<mixed>
  *   The updated $variables.
  */
-function _dpl_related_content_filter_paragraph(array $variables, RelatedContentListStyle $list_style = RelatedContentListStyle::Slider, ?int $max_items = NULL, ?array $node_bundles = NULL): array {
+function _dpl_related_content_filter_paragraph(array $variables, RelatedContentListStyle $list_style = RelatedContentListStyle::Slider, ?int $min_items = NULL, ?int $max_items = NULL, ?array $node_bundles = NULL): array {
   $paragraph = $variables['paragraph'] ?? NULL;
   $view_mode = $variables['view_mode'] ?? NULL;
 
@@ -104,6 +104,10 @@ function _dpl_related_content_filter_paragraph(array $variables, RelatedContentL
 
     if (is_array($node_bundles)) {
       $service->nodeBundles = $node_bundles;
+    }
+
+    if (!empty($min_items)) {
+      $service->minItems = $min_items;
     }
 
     if (!empty($max_items)) {

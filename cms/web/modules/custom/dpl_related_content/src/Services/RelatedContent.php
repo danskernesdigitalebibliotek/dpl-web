@@ -436,8 +436,8 @@ class RelatedContent {
     $formatted_date = $date->format(DateTimeItemInterface::DATETIME_STORAGE_FORMAT);
 
     // Ideally, we'd use EntityQueries instead of a direct DB connection, but
-    // EntityQuery doesnt support the GroupBy functionality that we want to
-    // use to to only get one eventinstance per eventseries.
+    // EntityQuery doesn't support the GroupBy functionality that we want to
+    // use to, to only get one eventinstance per eventseries.
     $query = $this->connection->select('eventinstance_field_data', 'eid');
     $query->join('eventinstance', 'ei', 'ei.id = eid.id');
     $query->addField('eid', 'id', 'eventinstance_id');
