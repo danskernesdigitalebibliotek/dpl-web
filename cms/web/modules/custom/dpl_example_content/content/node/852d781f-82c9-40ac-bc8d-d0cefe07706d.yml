@@ -49,8 +49,9 @@ default:
         content: 'Brønshøj Bibliotek | DPL CMS'
   path:
     -
-      alias: ''
-      langcode: da
+      alias: /bronshoj-bibliotek
+      langcode: und
+      pathauto: 1
   field_address:
     -
       langcode: da

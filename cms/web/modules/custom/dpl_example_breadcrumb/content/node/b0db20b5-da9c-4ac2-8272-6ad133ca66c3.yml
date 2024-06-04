@@ -40,7 +40,7 @@ default:
         name: title
         content: '"DIY-projekter" læseklubber | DPL CMS'
   path:
-    - alias: /laesefilialen/laeseklubber/genre/diy-projekter
+    - alias: /laesefilialen/laeseklubber/genre/diy-projekter-laeseklubber
       langcode: und
       pathauto: 1
   field_branch:

@@ -49,8 +49,9 @@ default:
         content: '3 gode til godnat 3-6 år | DPL CMS'
   path:
     -
-      alias: ''
-      langcode: da
+      alias: /artikler/3-gode-til-godnat-3-6-ar
+      langcode: und
+      pathauto: 1
   field_paragraphs:
     -
       entity:

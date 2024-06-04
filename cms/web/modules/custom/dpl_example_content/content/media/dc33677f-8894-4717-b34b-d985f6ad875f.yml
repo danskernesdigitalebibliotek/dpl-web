@@ -37,6 +37,7 @@ default:
     -
       alias: ''
       langcode: da
+      pathauto: 1
   field_media_file:
     -
       entity: 3403d0ba-cbdc-425d-93f4-6cdabb5378b1

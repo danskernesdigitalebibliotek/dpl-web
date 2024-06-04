@@ -54,8 +54,9 @@ default:
         content: 'Bibliotekarerne anbefaler læsning til den mørke tid | DPL CMS'
   path:
     -
-      alias: ''
-      langcode: da
+      alias: /artikler/bibliotekarerne-anbefaler-laesning-til-den-morke-tid
+      langcode: und
+      pathauto: 1
   field_override_author:
     -
       value: 'Det Digitale Folkebibliotek'
