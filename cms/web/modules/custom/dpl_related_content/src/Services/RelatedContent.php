@@ -381,7 +381,7 @@ class RelatedContent {
     $filters = [
       'field_tags' => $tags,
       'field_categories' => $categories,
-      'field_branches' => $branches,
+      'field_branch' => $branches,
     ];
 
     $condition_group = $this->getConditionGroup($query, $filters);
