@@ -3,12 +3,10 @@
 namespace Drupal\dpl_related_content\Services;
 
 use Drupal\Core\Database\Connection;
-use Drupal\Core\Database\Query\ConditionInterface as DBConditionInterface;
 use Drupal\Core\Database\Query\SelectInterface;
 use Drupal\Core\Datetime\DrupalDateTime;
 use Drupal\Core\Entity\EntityTypeManagerInterface;
 use Drupal\Core\Entity\FieldableEntityInterface;
-use Drupal\Core\Entity\Query\ConditionInterface;
 use Drupal\Core\Entity\Query\QueryInterface;
 use Drupal\Core\StringTranslation\TranslationInterface;
 use Drupal\datetime\Plugin\Field\FieldType\DateTimeItemInterface;
@@ -316,31 +314,41 @@ class RelatedContent {
    *   The query on which we should create the condition group.
    * @param array<mixed> $filters
    *   Array of field_keys => value, that we want to look up.
-   *
-   * @return \Drupal\Core\Entity\Query\ConditionInterface|DBConditionInterface
-   *   A condition group that can be added to a query.
    */
-  private function getConditionGroup(QueryInterface|SelectInterface $query, array $filters): ConditionInterface|DBConditionInterface {
-    $condition_group = $this->andConditions ? $query->andConditionGroup() : $query->orConditionGroup();
+  private function addFilterConditions(QueryInterface|SelectInterface $query, array $filters): void {
+    // Get rid of any empty filters.
+    $filters = array_filter($filters);
+
+    if (empty($filters)) {
+      return;
+    }
+
+    // If we're creating an OR condition, we need to add the filters in their
+    // own condition group, to not pollute other values, such as UUID check.
+    // If it's an AND condition, it doesn't matter, as all filters will be AND.
+    $or_group = $this->andConditions ? NULL : $query->orConditionGroup();
 
     foreach ($filters as $field_name => $values) {
-      $group = NULL;
+      // Get rid of any empty values.
+      $values = array_filter($values);
 
-      if (empty($values)) {
+      if ($or_group) {
+        $or_group->condition($field_name, $values, 'IN');
         continue;
       }
 
+      // Looping through, and adding the values.
+      // The reason we add a condition group for every single value, is that
+      // it is the only way it creates JOIN for each value, and allows us to
+      // make "CONTAINS ALL OF X".
       foreach ($values as $value) {
-        $group = $this->andConditions ? $query->andConditionGroup() : $query->orConditionGroup();
-        $group->condition($field_name, [$value], 'IN');
-      }
-
-      if ($group) {
-        $condition_group->condition($group);
+        $query->condition($query->andConditionGroup()->condition($field_name, $value));
       }
     }
 
-    return $condition_group;
+    if ($or_group) {
+      $query->condition($or_group);
+    }
   }
 
   /**
@@ -384,21 +392,15 @@ class RelatedContent {
       'field_branch' => $branches,
     ];
 
-    $condition_group = $this->getConditionGroup($query, $filters);
-
-    if ($condition_group instanceof ConditionInterface) {
-      $query->condition($condition_group);
-    }
+    $this->addFilterConditions($query, $filters);
 
     return $query->execute();
   }
 
   /**
-   * Get matching eventinstance IDs.
+   * Get matching EventInstance IDs.
    *
-   * Allows for passing along various term IDs, that we look for in an OR group.
-   * Notice - we only look for the term values on series level, ignoring
-   * inheritance overriding in favor of a simpler codebase.
+   * Allow passing along various term IDs, that we look for in filter group.
    *
    * @param array<int> $tags
    *   Tag term IDs, to look for.
@@ -408,57 +410,40 @@ class RelatedContent {
    *   Branch term IDs, to look for.
    *
    * @return array<int|string>
-   *   Matching eventinstance IDs
-   *
-   * @throws \Exception
+   *   Matching Event Instance IDs
    */
   private function getEventInstanceIds(array $tags = [], array $categories = [], array $branches = []): array {
     if (!$this->includeEvents) {
       return [];
     }
 
+    $es_query = $this->entityTypeManager->getStorage('eventseries')->getQuery();
+
+    $es_query->accessCheck(TRUE);
+
+    $filters = [
+      'field_tags' => $tags,
+      'field_categories' => $categories,
+      'field_branch' => $branches,
+    ];
+
+    $this->addFilterConditions($es_query, $filters);
+
+    $es_ids = $es_query->execute();
+
     $date = new DrupalDateTime('today');
     $date->setTimezone(new \DateTimezone(DateTimeItemInterface::STORAGE_TIMEZONE));
     $formatted_date = $date->format(DateTimeItemInterface::DATETIME_STORAGE_FORMAT);
 
     // Ideally, we'd use EntityQueries instead of a direct DB connection, but
-    // because we need to do some pretty complicated JOINs and subqueries, it
-    // is not an option.
-    $connection = $this->connection;
-
-    // Main query to select eventinstance ids, joining with
-    // eventinstance_field_data for condition fields.
-    $query = $connection->select('eventinstance_field_data', 'eid');
+    // EntityQuery doesnt support the GroupBy functionality that we want to
+    // use to to only get one eventinstance per eventseries.
+    $query = $this->connection->select('eventinstance_field_data', 'eid');
     $query->join('eventinstance', 'ei', 'ei.id = eid.id');
     $query->addField('eid', 'id', 'eventinstance_id');
 
-    // Prepare a subquery for eventseries IDs based on terms.
-    $subquery = $connection->select('eventseries', 'es');
-    $subquery->fields('es', ['id']);
-
-    // Join the term field tables.
-    // @todo this only looks at the values on the eventseries.
-    // Ideally, we'd want to also look if values exist on the instance level.
-    $subquery->leftJoin('eventseries__field_tags', 'es_tags', 'es.id = es_tags.entity_id');
-    $subquery->leftJoin('eventseries__field_categories', 'es_cats', 'es.id = es_cats.entity_id');
-    $subquery->leftJoin('eventseries__field_branch', 'es_bra', 'es.id = es_bra.entity_id');
-
-    $filters = [
-      'es_tags.field_tags_target_id' => $tags,
-      'es_cats.field_categories_target_id' => $categories,
-      'es_bra.field_branch_target_id' => $branches,
-    ];
-
-    $condition_group = $this->getConditionGroup($query, $filters);
-
-    if ($condition_group instanceof DBConditionInterface) {
-      $subquery->condition($condition_group);
-    }
-
-    // Use the subquery to filter by eventseries_id.
-    $query->condition('eid.eventseries_id', $subquery, 'IN');
-
-    $subquery->distinct(TRUE);
+    // Match against the eventseries we found earlier.
+    $query->condition('eid.eventseries_id', $es_ids, 'IN');
 
     if (!empty($this->excludedUuid)) {
       $query->condition('ei.uuid', $this->excludedUuid, '<>');
@@ -466,6 +451,8 @@ class RelatedContent {
 
     // The consequence of direct DB that we cant use ->access(TRUE),
     // so instead, we'll only look up published eventinstances.
+    // We've however already used access() on the eventseries lookup, so this
+    // should be plenty.
     $query->condition('eid.status', 1);
 
     // We only want events in the future (e.g. - active events).
@@ -481,7 +468,6 @@ class RelatedContent {
 
     // Execute the query and return ids.
     $result = $query->execute();
-
     return $result?->fetchCol() ?? [];
   }
 
