@@ -5,8 +5,19 @@
  * DPL Admin install file.
  */
 
+use Drupal\Component\Utility\Random;
+use Drupal\content_lock\ContentLock\ContentLock;
+use Drupal\Core\Entity\EntityInterface;
+use Drupal\Core\Entity\EntityTypeInterface;
+use Drupal\Core\Entity\Query\QueryException;
+use Drupal\Core\Field\FieldItemListInterface;
+use Drupal\Core\Language\LanguageManagerInterface;
+use Drupal\Core\Password\DefaultPasswordGenerator;
 use Drupal\dpl_admin\Services\VersionHelper;
 use Drupal\drupal_typed\DrupalTyped;
+use Drupal\user\Entity\User;
+use Drupal\user\EntityOwnerInterface;
+use Drupal\user\UserInterface;
 
 /**
  * Implements hook_requirements().
@@ -31,4 +42,133 @@ function dpl_admin_requirements(string $phase): array {
   ];
 
   return $requirements;
+}
+
+/**
+ * Migrate administrative role to new user.
+ */
+function dpl_admin_update_10000(array &$sandbox) : string {
+  $feedback = [];
+
+  $user_1 = User::load(1);
+  if (!$user_1) {
+    throw new RuntimeException('Unable to load user 1');
+  }
+
+  // Some field values should not been transferred between the users as we
+  // intentionally want them to be unique.
+  $excluded_fields = ['uid' => TRUE, 'uuid' => TRUE, 'roles' => TRUE];
+  $user_1_fields = array_diff_key($user_1->getFields(include_computed: FALSE), $excluded_fields);
+  $user_1_field_values = array_map(function (FieldItemListInterface $field) {
+    return $field->value;
+  }, $user_1_fields);
+
+  $result = \Drupal::database()->select('users_field_data')
+    ->fields('users_field_data', ['pass'])
+    ->condition('uid', $user_1->id())
+    ->execute();
+  if (!$result) {
+    throw new RuntimeException('Unable to retrieve password hash for user 1');
+  }
+  $password_hash = $result->fetchField();
+  $feedback[] = "Retrieved password hash for user 1";
+
+  // Transfer field data.
+  $new_user = (User::create($user_1_field_values))
+    ->addRole('local_administrator');
+
+  // Reset the existing user 1 account.
+  // Use random data for both username and password as this user is only meant
+  // to be used with onetime login links.
+  $random = new Random();
+  $user_1
+    ->set('field_author_name', "Administrator")
+    ->setUsername('admin_' . $random->name())
+    ->setEmail('');
+
+  $password_generator = DrupalTyped::service(DefaultPasswordGenerator::class, 'password_generator');
+  $user_1->setPassword($password_generator->generate());
+
+  $language_manager = DrupalTyped::service(LanguageManagerInterface::class, 'language_manager');
+  $user_1->set('preferred_admin_langcode', $language_manager->getDefaultLanguage()->getId());
+
+  $user_1->save();
+  $feedback[] = "Reset username and password for user 1";
+
+  $removed_roles = array_map(function (string $role) use ($user_1) {
+      $user_1->removeRole($role);
+      return $role;
+  }, $user_1->getRoles(exclude_locked_roles: TRUE));
+  $user_1->save();
+  $removed_roles_string = implode(', ', $removed_roles);
+  $removed_role_count = count($removed_roles);
+  $feedback[] = "Removed {$removed_role_count} roles {$removed_roles_string} from user 1";
+
+  $new_user->save();
+  $feedback[] = "Created new user {$new_user->id()} with local administrator role";
+
+  \Drupal::database()->update('users_field_data')
+    ->fields(['pass' => $password_hash])
+    ->condition('uid', $new_user->id())
+    ->execute();
+  $feedback[] = "Transferred password hash from user 1 to new user {$new_user->id()}";
+
+  // Use a direct database connection here instead of SessionManager as this
+  // does not allow ending sessions from the CLI.
+  \Drupal::database()->delete('sessions')
+    ->condition('uid', $user_1->id())
+    ->execute();
+  $feedback[] = "Deleted existing sessions for user 1";
+
+  // Migrate entity ownership to the new user.
+  // Retrieve all entities currently owned by user 1 grouped by entity type.
+  $entities_by_types = array_map(function (EntityTypeInterface $entity_type) use ($user_1) {
+    try {
+      return \Drupal::entityTypeManager()->getStorage($entity_type->id())->loadByProperties(['uid' => $user_1->id()]);
+    }
+    catch (QueryException $e) {
+      // An exception if thrown for entity types without an uid property. Ignore
+      // these as they do not have relations to the existing user.
+      return [];
+    }
+  }, \Drupal::entityTypeManager()->getDefinitions());
+
+  // Only consider entities of a type which implements EntityOwnerInterface.
+  // This is required for us to update ownership.
+  /** @var array<string, array<EntityInterface&EntityOwnerInterface>> $user_owned_entities_by_types */
+  $user_owned_entities_by_types = array_filter($entities_by_types, function (array $entities) {
+    return count($entities) > 0 && reset($entities) instanceof EntityOwnerInterface;
+  });
+
+  // Update owner for all relevant entities, save them. This functionality is
+  // spread across multiple interfaces.
+  // For each type generate an appropriate status message.
+  $status_by_types = array_map(function (array $entities, string $entity_type) use ($new_user) {
+    $entities = array_map(fn (EntityOwnerInterface $entity) => $entity->setOwner($new_user), $entities);
+    $entities = array_map(fn (EntityInterface $entity) => $entity->save(), $entities);
+
+    $num_entities = count($entities);
+    return "Updated owner for {$num_entities} {$entity_type} entities";
+  }, $user_owned_entities_by_types, array_keys($user_owned_entities_by_types));
+  $feedback = array_merge($feedback, $status_by_types);
+
+  $content_lock = DrupalTyped::service(ContentLock::class, 'content_lock');
+  $content_lock->releaseAllUserLocks((int) $user_1->id());
+  $feedback[] = "Released all content locks for user 1";
+
+  return implode("\n", $feedback);
+}
+
+/**
+ * Migrate administrators to local administrators.
+ */
+function dpl_admin_update_10001(array &$sandbox): string {
+  $administrators = \Drupal::entityTypeManager()->getStorage('user')->loadByProperties(['roles' => 'administrator']);
+  $updates = array_map(function (UserInterface $administrator) {
+      $administrator->removeRole('administrator');
+      $administrator->addRole('local_administrator');
+      $administrator->save();
+      return "Converted user {$administrator->id()} from administrator to local administrator";
+  }, $administrators);
+  return implode("\n", $updates);
 }
