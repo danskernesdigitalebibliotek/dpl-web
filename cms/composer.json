@@ -99,7 +99,9 @@
         "drupal/administerusersbyrole": "^3.4",
         "drupal/azure_mailer": "^1.0",
         "drupal/color_field": "^3.0",
-        "drupal/config_ignore": "^2.4",
+        "drupal/config_filter": "^2.6",
+        "drupal/config_ignore": "^3",
+        "drupal/config_ignore_auto": "^3",
         "drupal/config_translation_po": "^1.0",
         "drupal/content_lock": "^2.3",
         "drupal/cookieinformation": "^2.1",
@@ -271,9 +273,6 @@
             }
         },
         "patches": {
-            "drupal/config_ignore": {
-                "3252291: Support force exclude for keys": "https://www.drupal.org/files/issues/2021-12-02/config_ignore-force-exclude-keys-3252291-3.patch"
-            },
             "drupal/multivalue_form_element": {
                 "3199172: multivalue_form_element-3199172": "https://www.drupal.org/files/issues/2023-12-05/nested_elements-3199172-14.patch"
             },
