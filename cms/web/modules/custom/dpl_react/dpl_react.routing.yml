@@ -1,9 +1,9 @@
 dpl_react.user_token:
-  path: '/dpl-react/user-tokens'
+  path: "/dpl-react/user-tokens"
   defaults:
     _controller: '\Drupal\dpl_react\Controller\DplReactController::user'
-    _title: 'DPL React User Token'
+    _title: "DPL React User Token"
   requirements:
-    _permission: 'access content'
+    _permission: "access content"
   options:
-    no_cache: 'TRUE'
+    no_cache: "TRUE"

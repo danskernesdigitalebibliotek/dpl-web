@@ -1,0 +1,36 @@
+uuid: 57419f33-5d4d-4c08-a343-a66c088e6325
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.field.paragraph.manual_event_list.field_events
+    - field.field.paragraph.manual_event_list.field_title
+    - paragraphs.paragraphs_type.manual_event_list
+  module:
+    - entity_reference_revisions
+id: paragraph.manual_event_list.default
+targetEntityType: paragraph
+bundle: manual_event_list
+mode: default
+content:
+  field_events:
+    type: entity_reference_revisions_autocomplete
+    weight: 1
+    region: content
+    settings:
+      match_operator: CONTAINS
+      match_limit: 10
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+  field_title:
+    type: string_textfield
+    weight: 0
+    region: content
+    settings:
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+hidden:
+  created: true
+  status: true

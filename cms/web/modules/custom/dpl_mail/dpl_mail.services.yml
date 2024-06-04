@@ -1,0 +1,5 @@
+services:
+  dpl_mail.azure_mailer_config_overrider:
+    class: Drupal\dpl_mail\Config\AzureMailerConfigOverrides
+    tags:
+      - { name: config.factory.override, priority: 5 }

@@ -1,0 +1,43 @@
+uuid: 08e68b80-e5d2-443a-b5dd-613ff4deee1f
+langcode: en
+status: true
+dependencies:
+  config:
+    - core.entity_view_mode.media.paragraph_squared
+    - field.field.media.image.field_byline
+    - field.field.media.image.field_media_image
+    - image.style.paragraph_squared
+    - media.type.image
+  module:
+    - image
+id: media.image.paragraph_squared
+targetEntityType: media
+bundle: image
+mode: paragraph_squared
+content:
+  field_byline:
+    type: string
+    label: hidden
+    settings:
+      link_to_entity: false
+    third_party_settings: {  }
+    weight: 1
+    region: content
+  field_media_image:
+    type: image
+    label: hidden
+    settings:
+      image_link: ''
+      image_style: paragraph_squared
+      image_loading:
+        attribute: lazy
+    third_party_settings: {  }
+    weight: 0
+    region: content
+hidden:
+  created: true
+  langcode: true
+  name: true
+  search_api_excerpt: true
+  thumbnail: true
+  uid: true

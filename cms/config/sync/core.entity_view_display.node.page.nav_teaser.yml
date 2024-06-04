@@ -1,0 +1,44 @@
+uuid: c764f0cd-a350-4a01-945b-b39f319710ed
+langcode: en
+status: true
+dependencies:
+  config:
+    - core.entity_view_mode.node.nav_teaser
+    - field.field.node.page.field_branch
+    - field.field.node.page.field_breadcrumb_parent
+    - field.field.node.page.field_display_titles
+    - field.field.node.page.field_hero_title
+    - field.field.node.page.field_paragraphs
+    - field.field.node.page.field_subtitle
+    - field.field.node.page.field_teaser_image
+    - field.field.node.page.field_teaser_text
+    - node.type.page
+  module:
+    - user
+id: node.page.nav_teaser
+targetEntityType: node
+bundle: page
+mode: nav_teaser
+content:
+  field_subtitle:
+    type: basic_string
+    label: hidden
+    settings: {  }
+    third_party_settings: {  }
+    weight: 0
+    region: content
+  links:
+    settings: {  }
+    third_party_settings: {  }
+    weight: 100
+    region: content
+hidden:
+  field_branch: true
+  field_breadcrumb_parent: true
+  field_display_titles: true
+  field_hero_title: true
+  field_paragraphs: true
+  field_teaser_image: true
+  field_teaser_text: true
+  langcode: true
+  search_api_excerpt: true

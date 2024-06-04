@@ -1,0 +1,7 @@
+name: DPL Patron redirect
+description: Redirect patron to login if required.
+package: DPL
+type: module
+dependencies:
+  - dpl_login:dpl_login
+core_version_requirement: ^9 || ^10

@@ -1,0 +1,27 @@
+From 7474644e9b71813f82081d40e6a99956b675dcd0 Mon Sep 17 00:00:00 2001
+From: =?UTF-8?q?Kasper=20Garn=C3=A6s?= <kasperg@users.noreply.github.com>
+Date: Tue, 9 Jan 2024 12:00:40 +0100
+Subject: [PATCH] Use Drupal Annotation StaticReflectionParser
+
+The Doctrine class has been removed in later versions which is used
+with Drupal 10.1 and on. Use the Drupal version instead. It should be
+a direct switch.
+---
+ src/Extractor/AnnotationExtractor.php | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/src/Extractor/AnnotationExtractor.php b/src/Extractor/AnnotationExtractor.php
+index c83b2f5..2aae124 100644
+--- a/src/Extractor/AnnotationExtractor.php
++++ b/src/Extractor/AnnotationExtractor.php
+@@ -6,7 +6,7 @@ use Symfony\Component\Finder\Finder;
+ use Drupal\potion\Exception\ExtractorException;
+ use Drupal\Component\Annotation\Doctrine\SimpleAnnotationReader;
+ use Drupal\potion\Utility;
+-use Doctrine\Common\Reflection\StaticReflectionParser;
++use Drupal\Component\Annotation\Doctrine\StaticReflectionParser;
+ use Drupal\Component\Annotation\Reflection\MockFileFinder;
+ use Symfony\Component\Finder\SplFileInfo;
+ use Doctrine\Common\Annotations\AnnotationRegistry;
+--
+2.39.3 (Apple Git-145)+GitX

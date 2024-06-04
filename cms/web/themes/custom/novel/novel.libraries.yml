@@ -1,10 +1,44 @@
 base:
-  version: '1.0'
   css:
     theme:
       assets/dpl-design-system/css/base.css: {}
-  js:
-    assets/dpl-design-system/js/initheader.js: {}
-    assets/dpl-design-system/js/initaccordion.js: {}
+      css/novel.css: {}
   dependencies:
     - core/drupal
+
+nav-grid:
+  js:
+    assets/dpl-design-system/js/init-nav-grid.js: {}
+
+header:
+  js:
+    assets/dpl-design-system/js/header-sticky.js: {}
+    assets/dpl-design-system/js/header-state.js: {}
+    assets/dpl-design-system/js/header-sidebar-nav-js.js: {}
+
+slider:
+  js:
+    assets/dpl-design-system/js/init-slider.js: {}
+  dependencies:
+    - novel/swiper
+
+swiper:
+  remote: "https://github.com/nolimits4web/swiper.git"
+  license:
+    name: MIT
+    url: https://github.com/nolimits4web/swiper/blob/master/LICENSE
+    gpl-compatible: true
+  js:
+    "https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js":
+      { type: external }
+  css:
+    theme:
+      "https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css":
+        { type: external }
+footer-accordions:
+  js:
+    assets/dpl-design-system/js/footer-accordions.js: {}
+
+show-more:
+  js:
+    assets/dpl-design-system/js/show-more.js: {}

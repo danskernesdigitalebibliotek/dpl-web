@@ -1,0 +1,185 @@
+uuid: cd5de9a2-bc04-434a-ab77-ee6c10912c1c
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.field.node.page.field_branch
+    - field.field.node.page.field_breadcrumb_parent
+    - field.field.node.page.field_display_titles
+    - field.field.node.page.field_hero_title
+    - field.field.node.page.field_paragraphs
+    - field.field.node.page.field_subtitle
+    - field.field.node.page.field_teaser_image
+    - field.field.node.page.field_teaser_text
+    - node.type.page
+  module:
+    - field_group
+    - media_library
+    - media_library_edit
+    - paragraphs
+    - paragraphs_ee
+    - paragraphs_features
+    - path
+    - scheduler
+    - select2
+third_party_settings:
+  field_group:
+    group_teaser_card:
+      children:
+        - field_teaser_text
+        - field_teaser_image
+      label: 'Teaser card'
+      region: content
+      parent_name: ''
+      weight: 12
+      format_type: details_sidebar
+      format_settings:
+        classes: ''
+        show_empty_fields: true
+        id: ''
+        open: true
+        description: ''
+        required_fields: true
+        weight: 0
+id: node.page.default
+targetEntityType: node
+bundle: page
+mode: default
+content:
+  field_branch:
+    type: select2_entity_reference
+    weight: 0
+    region: content
+    settings:
+      width: 100%
+      autocomplete: false
+      match_operator: CONTAINS
+      match_limit: 10
+    third_party_settings: {  }
+  field_breadcrumb_parent:
+    type: select2_entity_reference
+    weight: 1
+    region: content
+    settings:
+      width: 100%
+      autocomplete: false
+      match_operator: CONTAINS
+      match_limit: 10
+    third_party_settings: {  }
+  field_display_titles:
+    type: boolean_checkbox
+    weight: 3
+    region: content
+    settings:
+      display_label: true
+    third_party_settings: {  }
+  field_hero_title:
+    type: string_textarea
+    weight: 4
+    region: content
+    settings:
+      rows: 2
+      placeholder: 'If empty, the regular page title will be shown.'
+    third_party_settings: {  }
+  field_paragraphs:
+    type: paragraphs
+    weight: 6
+    region: content
+    settings:
+      title: Paragraph
+      title_plural: Paragraphs
+      edit_mode: closed
+      closed_mode: preview
+      autocollapse: none
+      closed_mode_threshold: 0
+      add_mode: modal
+      form_display_mode: default
+      default_paragraph_type: _none
+      features:
+        add_above: '0'
+        collapse_edit_all: collapse_edit_all
+        duplicate: duplicate
+    third_party_settings:
+      paragraphs_ee:
+        paragraphs_ee:
+          dialog_off_canvas: false
+          dialog_style: tiles
+      paragraphs_features:
+        add_in_between: true
+        add_in_between_link_count: 0
+        delete_confirmation: true
+        show_drag_and_drop: true
+  field_subtitle:
+    type: string_textarea
+    weight: 5
+    region: content
+    settings:
+      rows: 3
+      placeholder: ''
+    third_party_settings: {  }
+  field_teaser_image:
+    type: media_library_widget
+    weight: 10
+    region: content
+    settings:
+      media_types: {  }
+    third_party_settings:
+      media_library_edit:
+        show_edit: '1'
+  field_teaser_text:
+    type: string_textfield
+    weight: 9
+    region: content
+    settings:
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+  path:
+    type: path
+    weight: 11
+    region: content
+    settings: {  }
+    third_party_settings: {  }
+  publish_on:
+    type: datetime_timestamp_no_default
+    weight: 9
+    region: content
+    settings: {  }
+    third_party_settings: {  }
+  scheduler_settings:
+    weight: 8
+    region: content
+    settings: {  }
+    third_party_settings: {  }
+  status:
+    type: boolean_checkbox
+    weight: 7
+    region: content
+    settings:
+      display_label: true
+    third_party_settings: {  }
+  title:
+    type: string_textfield
+    weight: 2
+    region: content
+    settings:
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+  unpublish_on:
+    type: datetime_timestamp_no_default
+    weight: 10
+    region: content
+    settings: {  }
+    third_party_settings: {  }
+  url_redirects:
+    weight: 50
+    region: content
+    settings: {  }
+    third_party_settings: {  }
+hidden:
+  created: true
+  langcode: true
+  promote: true
+  sticky: true
+  uid: true

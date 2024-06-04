@@ -1,0 +1,12 @@
+name: DPL dashboard
+description: Handle the user profile dashboard page
+package: DPL
+dependencies:
+  - drupal:block
+  - dpl_fbs:dpl_fbs
+  - dpl_publizon:dpl_publizon
+  - dpl_library_agency:dpl_library_agency
+  - dpl_react:dpl_react
+  - dpl_react_apps:dpl_react_apps
+type: module
+core_version_requirement: ^9 || ^10

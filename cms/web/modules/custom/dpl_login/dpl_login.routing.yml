@@ -1,8 +1,19 @@
 dpl_login.logout:
-  path: '/logout'
+  path: "/logout"
   defaults:
     _controller: '\Drupal\dpl_login\Controller\DplLoginController::logout'
-    _title: 'Dpl Login Logout Route'
+    _title: "Dpl Login Logout Route"
   requirements:
-    _user_is_logged_in: 'TRUE'
-  no_cache: TRUE
+    _user_is_logged_in: "TRUE"
+  options:
+    no_cache: TRUE
+
+dpl_login.login:
+  path: "/login"
+  defaults:
+    _controller: '\Drupal\dpl_login\Controller\DplLoginController::login'
+    _title: "Login via Adgangsplatformen"
+  requirements:
+    _permission: "access content"
+  options:
+    no_cache: TRUE

@@ -6,6 +6,47 @@
  */
 
 use Drupal\Core\Config\Config;
+use Drupal\Core\Link;
+use Drupal\dpl_login\Exception\MissingConfigurationException;
+
+/**
+ * Implements hook_requirements().
+ *
+ * @param string $phase
+ *   The phase for checking requirements.
+ *
+ * @return array[]
+ *   Any requirements for the module.
+ */
+function dpl_login_requirements($phase) : array {
+  if ($phase != "runtime") {
+    return [];
+  }
+
+  $context = ['context' => "Login"];
+  $requirement = [
+    'title' => t('Adgangsplatformen', [], $context),
+    'severity' => REQUIREMENT_OK,
+    'value' => t('Integration configured', [], $context),
+  ];
+
+  /** @var \Drupal\dpl_login\Adgangsplatformen\Config $config */
+  $config = \Drupal::service('dpl_login.adgangsplatformen.config');
+  try {
+    $config->getAgencyId();
+    $config->getClientId();
+    $config->getClientSecret();
+    $config->getTokenEndpoint();
+    $config->getLogoutEndpoint();
+  }
+  catch (MissingConfigurationException $e) {
+    $requirement['severity'] = REQUIREMENT_ERROR;
+    $requirement['value'] = $e->getMessage();
+  }
+  $requirement['value'] = Link::createFromRoute($requirement['value'], 'openid_connect.admin_settings');
+
+  return ['dpl_login' => $requirement];
+}
 
 /**
  * Implements hook_install().

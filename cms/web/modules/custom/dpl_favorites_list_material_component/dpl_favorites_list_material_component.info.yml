@@ -1,0 +1,9 @@
+name: DPL favorites list material component
+description: Handle the favorites list material component pages
+package: DPL
+dependencies:
+  - drupal:block
+  - dpl_react:dpl_react
+  - dpl_react_apps:dpl_react_apps
+type: module
+core_version_requirement: ^9 || ^10

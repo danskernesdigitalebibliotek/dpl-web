@@ -1,0 +1,49 @@
+_meta:
+  version: '1.0'
+  entity_type: media
+  uuid: eef50571-39dc-461a-96ff-b6b7180ade61
+  bundle: image
+  default_langcode: da
+  depends:
+    4b4fee24-a6ed-497a-b1c4-964c7ed00cfd: file
+default:
+  status:
+    -
+      value: true
+  uid:
+    -
+      target_id: 1
+  name:
+    -
+      value: jon-tyson-kGUmNEYaSMY-unsplash.jpg
+  created:
+    -
+      value: 1703140678
+  revision_translation_affected:
+    -
+      value: true
+  metatag:
+    -
+      tag: meta
+      attributes:
+        name: title
+        content: '| DPL CMS'
+    -
+      tag: link
+      attributes:
+        rel: canonical
+        href: '/user/login'
+  path:
+    -
+      alias: ''
+      langcode: da
+  field_byline:
+    -
+      value: 'Af Jon Tyson / Unsplash'
+  field_media_image:
+    -
+      entity: 4b4fee24-a6ed-497a-b1c4-964c7ed00cfd
+      alt: 'Stol ved bogreol'
+      title: ''
+      width: 640
+      height: 853

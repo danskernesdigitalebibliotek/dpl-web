@@ -2,14 +2,13 @@
 
 namespace Drupal\dpl_library_token;
 
-use Psr\Log\LogLevel;
+use Drupal\Core\KeyValueStore\KeyValueExpirableFactoryInterface;
+use Drupal\Core\Logger\LoggerChannelFactoryInterface;
+use Drupal\dpl_login\Adgangsplatformen\Config;
 use GuzzleHttp\ClientInterface;
 use GuzzleHttp\Exception\RequestException;
-use Drupal\Core\Config\ConfigFactoryInterface;
-use Drupal\Core\Logger\LoggerChannelFactoryInterface;
-use Drupal\Core\KeyValueStore\KeyValueExpirableFactoryInterface;
-use Drupal\dpl_library_token\Exception\MissingConfigurationException;
-use function Safe\sprintf as sprintf;
+use Psr\Log\LogLevel;
+use function Safe\sprintf;
 
 /**
  * Library Token Handler Service.
@@ -19,18 +18,14 @@ class LibraryTokenHandler {
   const LIBRARY_TOKEN_KEY = 'library_token';
   const TOKEN_COLLECTION_KEY = 'dpl_library_token';
   const NEXT_EXECUTION_KEY = 'dpl_library_token.next_execution';
-  // @todo This could be moved to a new service
-  // handling adgangsplatform configuration.
-  // @see dpl_login_install() and \Drupal\dpl_login\Controller\DplLoginController
-  const SETTINGS_KEY = 'openid_connect.settings.adgangsplatformen';
   const LOGGER_KEY = 'dpl_library_tokens';
 
   /**
-   * Cron Configuration.
+   * Configuration for Adgangsplatformen.
    *
-   * @var mixed[]
+   * @var \Drupal\dpl_login\Adgangsplatformen\Config
    */
-  protected $settings;
+  protected $adgangsplatformenConfig;
   /**
    * Key value store.
    *
@@ -53,42 +48,44 @@ class LibraryTokenHandler {
   /**
    * Constructs the LibraryTokenHandler service.
    *
+   * @param \Drupal\dpl_login\Adgangsplatformen\Config $config
+   *   Configuration.
    * @param \Drupal\Core\KeyValueStore\KeyValueExpirableFactoryInterface $keyValueFactory
    *   The key value expire keyValueFactory.
-   * @param \Drupal\Core\Config\ConfigFactoryInterface $configFactory
-   *   Configuration.
    * @param \GuzzleHttp\ClientInterface $http_client
    *   The HTTP client.
    * @param \Drupal\Core\Logger\LoggerChannelFactoryInterface $logger
    *   The library token logger channel.
    */
   public function __construct(
+    Config $config,
     KeyValueExpirableFactoryInterface $keyValueFactory,
-    ConfigFactoryInterface $configFactory,
     ClientInterface $http_client,
     LoggerChannelFactoryInterface $logger
   ) {
+    $this->adgangsplatformenConfig = $config;
     $this->tokenCollection = $keyValueFactory->get(self::TOKEN_COLLECTION_KEY);
-    $this->settings = $configFactory
-      ->get(self::SETTINGS_KEY)->get('settings');
     $this->httpClient = $http_client;
     $this->logger = $logger->get(self::LOGGER_KEY);
-
-    $this->validateSettings();
   }
 
   /**
    * Retrieve token from external service and save it.
    */
-  public function retrieveAndStoreToken(): void {
-    // If no token stored.
-    if (!$this->getToken()) {
-      // Then try to fetch one.
-      if ($token = $this->fectchToken()) {
-        // And store it.
-        $this->setToken($token);
-      }
+  public function retrieveAndStoreToken(bool $force = FALSE): null|bool {
+    // If force is False and if token is already stored.
+    if (!$force && $this->getToken()) {
+      return NULL;
     }
+
+    // Try to fetch token, if not possible return false.
+    if (!$token = $this->fetchToken()) {
+      return FALSE;
+    }
+
+    // Set token.
+    $this->setToken($token);
+    return TRUE;
   }
 
   /**
@@ -101,7 +98,7 @@ class LibraryTokenHandler {
     // Set token and expire time to half the given one.
     // In that way we are sure that the token is always valid.
     $this->tokenCollection
-      ->setWithExpireIfNotExists(
+      ->setWithExpire(
         self::LIBRARY_TOKEN_KEY,
         $token->token,
         (int) round($token->expire / 2)
@@ -110,9 +107,6 @@ class LibraryTokenHandler {
 
   /**
    * Get stored library token.
-   *
-   * @return string|null
-   *   The token if found or else NULL.
    */
   public function getToken(): ?string {
     return $this->tokenCollection->get(self::LIBRARY_TOKEN_KEY);
@@ -124,22 +118,22 @@ class LibraryTokenHandler {
    * @return \Drupal\dpl_library_token\LibraryToken|null
    *   If token was fetched it is returned. Otherwise NULL.
    */
-  public function fectchToken(): ?LibraryToken {
+  public function fetchToken(): ?LibraryToken {
     $token = NULL;
 
     try {
-      $agency = sprintf('@%d', $this->settings['agency_id']);
+      $agency = sprintf('@%d', $this->adgangsplatformenConfig->getAgencyId());
 
       $response = $this->httpClient
-        ->request('POST', $this->settings['token_endpoint'], [
+        ->request('POST', $this->adgangsplatformenConfig->getTokenEndpoint(), [
           'form_params' => [
             'grant_type' => 'password',
             'username' => $agency,
             'password' => $agency,
           ],
           'auth' => [
-            $this->settings['client_id'],
-            $this->settings['client_secret'],
+            $this->adgangsplatformenConfig->getClientId(),
+            $this->adgangsplatformenConfig->getClientSecret(),
           ],
         ]);
 
@@ -169,24 +163,6 @@ class LibraryTokenHandler {
     }
 
     return $token;
-  }
-
-  /**
-   * Validate settings. Exception is thrown if a setting is missing.
-   */
-  protected function validateSettings(): void {
-    foreach ([
-      'token_endpoint',
-      'client_id',
-      'client_secret',
-      'agency_id',
-    ] as $config_key) {
-      if (empty($this->settings[$config_key])) {
-        throw new MissingConfigurationException(
-          sprintf('Adgangsplatformen plugin config variable %s is missing', $config_key)
-        );
-      }
-    }
   }
 
 }

@@ -1,0 +1,12 @@
+{% include '@novel/components/card.html.twig'
+  with {
+  attributes: attributes,
+  media: content.field_teaser_image,
+  variant: 'x-large',
+  has_media: (content.field_teaser_image.0),
+  teaser_text: content.field_teaser_text,
+  type_tag: 'Event'|trans,
+  date_tag: formatted_date,
+  title: content.title,
+  url: url('entity.eventseries.canonical', {'eventseries': eventseries.id()})
+} only %}

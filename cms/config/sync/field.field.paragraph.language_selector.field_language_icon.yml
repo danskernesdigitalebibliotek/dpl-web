@@ -1,0 +1,38 @@
+uuid: 1109e308-69b8-4988-9b8c-de5e8ff63126
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.paragraph.field_language_icon
+    - paragraphs.paragraphs_type.language_selector
+  module:
+    - image
+id: paragraph.language_selector.field_language_icon
+field_name: field_language_icon
+entity_type: paragraph
+bundle: language_selector
+label: 'Language icon'
+description: ''
+required: true
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings:
+  handler: 'default:file'
+  handler_settings: {  }
+  file_directory: '[date:custom:Y]-[date:custom:m]'
+  file_extensions: 'png gif jpg jpeg'
+  max_filesize: ''
+  max_resolution: ''
+  min_resolution: ''
+  alt_field: false
+  alt_field_required: true
+  title_field: false
+  title_field_required: false
+  default_image:
+    uuid: ''
+    alt: ''
+    title: ''
+    width: null
+    height: null
+field_type: image

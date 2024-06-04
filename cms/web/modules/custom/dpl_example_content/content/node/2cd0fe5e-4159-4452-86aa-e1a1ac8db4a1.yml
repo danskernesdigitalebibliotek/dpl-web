@@ -1,0 +1,382 @@
+_meta:
+  version: '1.0'
+  entity_type: node
+  uuid: 2cd0fe5e-4159-4452-86aa-e1a1ac8db4a1
+  bundle: article
+  default_langcode: da
+  depends:
+    e00e1460-169e-468d-9835-d664f06d0969: file
+    92033694-15ac-4d9e-b275-ddfd18e48d9f: taxonomy_term
+    aba3cea8-cee5-42c1-a152-e30c2ab135e2: media
+    d97a25fd-a6ae-48b9-9a1a-7aec5372688e: media
+    eef50571-39dc-461a-96ff-b6b7180ade61: media
+    dc33677f-8894-4717-b34b-d985f6ad875f: media
+    f0204f0b-1f63-4c76-bb67-e3f7489ee392: media
+    1006441f-bb39-43b5-8c08-1a79344abf8b: taxonomy_term
+    53133c2e-1023-43a9-baf2-64a5081eea0f: taxonomy_term
+    190beb00-d5af-4c9a-be8d-65a646b37bbb: taxonomy_term
+    725e0059-9c5d-4c4e-8e3d-6d8cf2042fa4: taxonomy_term
+    ec76c707-898d-4dfd-8cd2-e258aef1d6dd: taxonomy_term
+    0502836d-0f7b-4b21-9371-c40ae9e01495: taxonomy_term
+default:
+  revision_uid:
+    -
+      target_id: 1
+  status:
+    -
+      value: true
+  uid:
+    -
+      target_id: 1
+  title:
+    -
+      value: 'Jesper Stein vinder Læsernes Bogpris for Rampen'
+  created:
+    -
+      value: 1702544343
+  promote:
+    -
+      value: false
+  sticky:
+    -
+      value: false
+  revision_translation_affected:
+    -
+      value: true
+  entity_clone_template_active:
+    -
+      value: false
+  entity_clone_template_image:
+    -
+      entity: e00e1460-169e-468d-9835-d664f06d0969
+      alt: ''
+      title: ''
+      width: 640
+      height: 443
+  metatag:
+    -
+      tag: meta
+      attributes:
+        name: title
+        content: 'Jesper Stein vinder Læsernes Bogpris for Rampen | DPL CMS'
+  path:
+    -
+      alias: ''
+      langcode: da
+  field_categories:
+    -
+      entity: 92033694-15ac-4d9e-b275-ddfd18e48d9f
+  field_override_author:
+    -
+      value: 'Lene Kuhlmann Frandsen '
+  field_paragraphs:
+    -
+      entity:
+        _meta:
+          version: '1.0'
+          entity_type: paragraph
+          uuid: 831f4306-eeb0-4d92-9bda-fb11750050e4
+          bundle: text_body
+          default_langcode: da
+        default:
+          status:
+            -
+              value: true
+          created:
+            -
+              value: 1702544343
+          behavior_settings:
+            -
+              value: {  }
+          revision_translation_affected:
+            -
+              value: true
+          field_body:
+            -
+              value: '<h2>Landets læsere har stemt på deres favorit</h2><p>Danmarks Biblioteksforening og de danske folkebiblioteker har endnu en gang bedt landets læsere om at stemme på deres favorit blandt danske bogudgivelser fra det forgangne år. Og nu har læserne talt.</p><p>10 danske kvalitetsudgivelser fra 2020 var nomineret til <a href="https://laesernesbogpris.dk/">Læsernes bogpris 2021</a>. Bibliotekarer fra hele landet har bl.a. på baggrund af meldinger fra læserne været med til at udvælge de nominerede i samarbejde med nomineringskomiteen, som udgøres af Danmarks Biblioteksforening og Litteratursiden.</p>'
+              format: basic
+    -
+      entity:
+        _meta:
+          version: '1.0'
+          entity_type: paragraph
+          uuid: d5548ba9-eb44-4aab-bd50-4ed9dc544ecc
+          bundle: links
+          default_langcode: da
+        default:
+          status:
+            -
+              value: true
+          created:
+            -
+              value: 1702544409
+          behavior_settings:
+            -
+              value: {  }
+          revision_translation_affected:
+            -
+              value: true
+          field_link:
+            -
+              uri: 'https://laesernesbogpris.dk/'
+              title: 'Se alle de nominerede til Læsernes bogpris 2021 på laesernesbogpris.dk'
+              options:
+                href: 'https://laesernesbogpris.dk/'
+                data-entity-type: ''
+                data-entity-uuid: ''
+                data-entity-substitution: ''
+    -
+      entity:
+        _meta:
+          version: '1.0'
+          entity_type: paragraph
+          uuid: d6be2b76-dcee-478b-be88-a2fda29a1976
+          bundle: medias
+          default_langcode: da
+        default:
+          status:
+            -
+              value: true
+          created:
+            -
+              value: 1703140300
+          behavior_settings:
+            -
+              value: {  }
+          revision_translation_affected:
+            -
+              value: true
+          field_medias:
+            -
+              entity: aba3cea8-cee5-42c1-a152-e30c2ab135e2
+    -
+      entity:
+        _meta:
+          version: '1.0'
+          entity_type: paragraph
+          uuid: 618a997a-501c-4c57-aeda-70b2cba29414
+          bundle: text_body
+          default_langcode: da
+        default:
+          status:
+            -
+              value: true
+          created:
+            -
+              value: 1702544451
+          behavior_settings:
+            -
+              value: {  }
+          revision_translation_affected:
+            -
+              value: true
+          field_body:
+            -
+              value: '<h2>Stor interesse for deltagelse</h2><p>Tre ugers afstemning er nu slut, og interessen for at deltage var stor. Opløbet blev tæt, men til sidst stod det klart, at Jesper Steins selvbiografiske roman ”Rampen” nu kan kåres som vinderen af Læsernes bogpris 2021.</p><h2>Om romanen</h2><p>Jesper Stein har med ”Rampen” (Politikens Forlag, 2020) skrevet hudløst ærligt om sin families opløsning. Han ser tilbage på sine forældres opslidende og uværdige skilsmisse og forsøger at forstå dem og sig selv, mens han ser sine egne dæmoner i form af et periodisk og massivt alkoholmisbrug i øjnene.</p><p>”Min bog er fortællingen om svigt og kærlighed i en kernefamilie, der går i opløsning, og jeg håber, man læser den sådan og forstår, at der i fortællingen ligger en stor forsoning med den smerte, som man uundgåeligt bliver påført, når man er børn af forældre, der ikke er perfekte, men blot mennesker, som reagerer som mennesker, når deres liv kæntrer.”</p><p><a href="/">Læs vores anmeldelse af "Rampen"</a>.</p>'
+              format: basic
+    -
+      entity:
+        _meta:
+          version: '1.0'
+          entity_type: paragraph
+          uuid: c456747c-5540-483d-b742-cf67b43ca3b7
+          bundle: medias
+          default_langcode: da
+        default:
+          status:
+            -
+              value: true
+          created:
+            -
+              value: 1703140387
+          behavior_settings:
+            -
+              value: {  }
+          revision_translation_affected:
+            -
+              value: true
+          field_medias:
+            -
+              entity: d97a25fd-a6ae-48b9-9a1a-7aec5372688e
+            -
+              entity: eef50571-39dc-461a-96ff-b6b7180ade61
+    -
+      entity:
+        _meta:
+          version: '1.0'
+          entity_type: paragraph
+          uuid: e4868e82-abe8-493d-849a-7dfefd806f0d
+          bundle: text_body
+          default_langcode: da
+        default:
+          status:
+            -
+              value: true
+          created:
+            -
+              value: 1702544508
+          behavior_settings:
+            -
+              value: {  }
+          revision_translation_affected:
+            -
+              value: true
+          field_body:
+            -
+              value: '<h2>Baggrunden for at skrive bogen</h2><p>Da bogen blev nomineret til Læsernes bogpris 2021, talte Litteratursiden.dk med Jesper Stein om baggrunden for at skrive bogen: ”Ambitionen har været at skrive den bedst mulige, den sandeste og reneste bog om mit liv med mine forældre, men når man som forfatter så oplever, at ens bog sætter noget i gang hos læserne, noget eksistentielt, så tager man det jo på sig og søger den dialog. Og nomineringen til Læsernes Bogpris er for mig en hædring af lige netop den egenskab i min bog. At den rækker ud efter læseren og beder hende eller ham tænke over sit eget liv.”</p><h2>Prisoverrækkelsen</h2><p>I dag den 8. april modtager Jesper Stein så Læsernes bogpris 2021. Sammen med hæderen fra landets læsere følger også prisen på 50.000 kr. fra Danmarks Biblioteksforening.</p>'
+              format: basic
+    -
+      entity:
+        _meta:
+          version: '1.0'
+          entity_type: paragraph
+          uuid: b6d76dff-c719-4966-83f9-d5cccbd28f0f
+          bundle: links
+          default_langcode: da
+        default:
+          status:
+            -
+              value: true
+          created:
+            -
+              value: 1702544540
+          behavior_settings:
+            -
+              value: {  }
+          revision_translation_affected:
+            -
+              value: true
+          field_link:
+            -
+              uri: 'https://youtube.com'
+              title: 'Følg prisoverrækkelsen live fra kl. 15:30'
+              options:
+                href: 'https://youtube.com'
+                data-entity-type: ''
+                data-entity-uuid: ''
+                data-entity-substitution: ''
+    -
+      entity:
+        _meta:
+          version: '1.0'
+          entity_type: paragraph
+          uuid: a541c1f2-58b5-41b5-86da-0c063977f5a6
+          bundle: links
+          default_langcode: da
+        default:
+          status:
+            -
+              value: true
+          created:
+            -
+              value: 1702544578
+          behavior_settings:
+            -
+              value: {  }
+          revision_translation_affected:
+            -
+              value: true
+          field_link:
+            -
+              uri: 'internal:/search?q=Jesper Stein'
+              title: 'Se alle bøger med Jesper Stein'
+              options:
+                href: '/search?q=Jesper Stein'
+                data-entity-type: ''
+                data-entity-uuid: ''
+                data-entity-substitution: ''
+    -
+      entity:
+        _meta:
+          version: '1.0'
+          entity_type: paragraph
+          uuid: 759d82c8-0bdb-412d-a0b7-e3e504f8e25a
+          bundle: files
+          default_langcode: da
+        default:
+          status:
+            -
+              value: true
+          created:
+            -
+              value: 1704276125
+          behavior_settings:
+            -
+              value: {  }
+          revision_translation_affected:
+            -
+              value: true
+          field_files:
+            -
+              entity: dc33677f-8894-4717-b34b-d985f6ad875f
+    -
+      entity:
+        _meta:
+          version: '1.0'
+          entity_type: paragraph
+          uuid: d58e99d9-0551-4d67-924d-f3968a7526ce
+          bundle: text_body
+          default_langcode: da
+        default:
+          status:
+            -
+              value: true
+          created:
+            -
+              value: 1702544622
+          behavior_settings:
+            -
+              value: {  }
+          revision_translation_affected:
+            -
+              value: true
+          field_body:
+            -
+              value: "<ol><li>Jesper Stein har med 'Rampen', udgivet på Politikens Forlag, skrevet hudløst ærligt om sin families opløsning. I romanen ser han tilbage på sine forældres opslidende og uværdige skilsmisse. Mens han forsøger at forstå dem og sig selv, ser han samtidig sine egne dæmoner, i form af et periodisk og massivt alkoholmisbrug, i øjnene.</li><li>Jesper Stein har med 'Rampen', udgivet på Politikens Forlag, skrevet hudløst ærligt om sin families opløsning. I romanen ser han tilbage på sine forældres opslidende og uværdige skilsmisse. Mens han forsøger at forstå dem og sig selv, ser han samtidig sine egne dæmoner, i form af et periodisk og massivt alkoholmisbrug, i øjnene.</li><li>Jesper Stein har med 'Rampen', udgivet på Politikens Forlag, skrevet hudløst ærligt om sin families opløsning. I romanen ser han tilbage på sine forældres opslidende og uværdige skilsmisse. Mens han forsøger at forstå dem og sig selv, ser han samtidig sine egne dæmoner, i form af et periodisk og massivt alkoholmisbrug, i øjnene.</li></ol><p><a href=\"/\">Følg prisoverrækkelsen live fra kl. 15:30</a></p><p><a href=\"/\">Følg prisoverrækkelsen live fra text text text text text text text kl. 15:30</a></p><p><a href=\"/\">Følg prisoverrækkelsen live fra kl. 15:30</a></p><ul><li>Jesper Stein har med 'Rampen', udgivet på Politikens Forlag, skrevet hudløst ærligt om sin families opløsning. I romanen ser han tilbage på sine forældres opslidende og uværdige skilsmisse. Mens han forsøger at forstå dem og sig selv, ser han samtidig sine egne dæmoner, i form af et periodisk og massivt alkoholmisbrug, i øjnene</li><li>Jesper Stein har med 'Rampen', udgivet på Politikens Forlag, skrevet hudløst ærligt om sin families opløsning. I romanen ser han tilbage på sine forældres opslidende og uværdige skilsmisse. Mens han forsøger at forstå dem og sig selv, ser han samtidig sine egne dæmoner, i form af et periodisk og massivt alkoholmisbrug, i øjnene</li><li>Jesper Stein har med 'Rampen', udgivet på Politikens Forlag, skrevet hudløst ærligt om sin families opløsning. I romanen ser han tilbage på sine forældres opslidende og uværdige skilsmisse. Mens han forsøger at forstå dem og sig selv, ser han samtidig sine egne dæmoner, i form af et periodisk og massivt alkoholmisbrug, i øjnene</li></ul>"
+              format: basic
+    -
+      entity:
+        _meta:
+          version: '1.0'
+          entity_type: paragraph
+          uuid: 5b2e6dd2-e87a-439b-9fd7-c3dd2af54e64
+          bundle: video
+          default_langcode: da
+        default:
+          status:
+            -
+              value: true
+          created:
+            -
+              value: 1704456492
+          behavior_settings:
+            -
+              value: {  }
+          revision_translation_affected:
+            -
+              value: true
+          field_embed_video:
+            -
+              entity: f0204f0b-1f63-4c76-bb67-e3f7489ee392
+  field_show_override_author:
+    -
+      value: true
+  field_subtitle:
+    -
+      value: 'Jesper Stein har begået en hudløst ærlig og tankevækkende skildring af en skilsmisseramt familie. En selvbiografisk roman, som har ramt læserne  i hjertet.'
+  field_tags:
+    -
+      entity: 1006441f-bb39-43b5-8c08-1a79344abf8b
+    -
+      entity: 53133c2e-1023-43a9-baf2-64a5081eea0f
+    -
+      entity: 190beb00-d5af-4c9a-be8d-65a646b37bbb
+    -
+      entity: 725e0059-9c5d-4c4e-8e3d-6d8cf2042fa4
+    -
+      entity: ec76c707-898d-4dfd-8cd2-e258aef1d6dd
+    -
+      entity: 0502836d-0f7b-4b21-9371-c40ae9e01495
+  field_teaser_image:
+    -
+      entity: aba3cea8-cee5-42c1-a152-e30c2ab135e2

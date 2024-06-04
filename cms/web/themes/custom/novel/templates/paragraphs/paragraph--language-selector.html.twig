@@ -1,0 +1,12 @@
+{% if content.field_link_language and content.field_language_icon.0 %}
+  {% set link_url = content.field_link_language[0]['#url'] %}
+  {% set link_title = content.field_link_language[0]['#title'] %}
+  {% set image_entity = paragraph.fields.field_language_icon.0 %}
+
+  <div class="icon-text-link">
+    {{ drupal_image(image_entity.target_id, 'flag_icon', {class: ''}) }}
+    <a class="link-tag icon-text-link__text paragraphs-language_selector__link" href="{{ link_url }}" title="{{ link_title }}">
+      {{ link_title }}
+    </a>
+  </div>
+{% endif %}

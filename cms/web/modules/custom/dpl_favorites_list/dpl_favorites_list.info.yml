@@ -1,0 +1,11 @@
+name: DPL favorites
+description: Handle the favorites list
+package: DPL
+dependencies:
+  - drupal:block
+  - dpl_fbs:dpl_fbs
+  - dpl_publizon:dpl_publizon
+  - dpl_react:dpl_react
+  - dpl_react_apps:dpl_react_apps
+type: module
+core_version_requirement: ^9 || ^10

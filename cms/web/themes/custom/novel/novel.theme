@@ -4,3 +4,330 @@
  * @file
  * Novel Theme.
  */
+
+use Drupal\Core\Form\FormStateInterface;
+use Drupal\Core\StringTranslation\TranslatableMarkup;
+use Drupal\recurring_events\Entity\EventInstance;
+use Spatie\Color\Hex;
+use Spatie\Color\Hsl;
+use function Safe\file_get_contents;
+use function Safe\sprintf;
+
+/**
+ * Implements hook_theme().
+ *
+ * @param mixed[] $existing
+ *   An array of existing implementations that may be used
+ *   for override purposes.
+ * @param string $type
+ *   Whether a theme, module, etc. is being processed.
+ * @param string $theme
+ *   The actual name of theme, module, etc. that is being being processed.
+ * @param string $path
+ *   The directory path of the theme or module,
+ *   so that it doesn't need to be looked up.
+ *
+ * @return mixed[]
+ *   An associative array of information about theme implementations.
+ */
+function novel_theme(
+  array $existing,
+  string $type,
+  string $theme,
+  string $path
+): array {
+  return [
+    'search_result_item' => [
+      'variables' => [],
+    ],
+    'novel_logo' => [
+      'variables' => [
+        'image' => NULL,
+        'title' => NULL,
+        'place' => NULL,
+        'logo_img_enable' => NULL,
+      ],
+    ],
+  ];
+}
+
+/**
+ * Implements hook_preprocess_HOOK().
+ *
+ * @param mixed[] $variables
+ *   The variables for the theme hook.
+ */
+function novel_preprocess_dpl_react_app__search_header(array &$variables): void {
+  $search_svg = file_get_contents(sprintf('%s/%s',
+    \Drupal::theme()->getActiveTheme()->getPath(),
+    '/assets/dpl-design-system/icons/collection/Search.svg'
+  ));
+
+  $variables += [
+    'search_icon' => $search_svg,
+    'search_action' => $variables['data']['search-url'] ?? "",
+    'input_placeholder_text' => $variables['data']['input-placeholder-text'] ?? "",
+  ];
+}
+
+/**
+ * Implements hook_preprocess_HOOK().
+ *
+ * @param mixed[] $variables
+ *   The variables for the theme hook.
+ */
+function novel_preprocess_dpl_react_app__search_result(array &$variables): void {
+  $q = \Drupal::request()->query->get('q') ?? "";
+  $loading_text = (string) ($variables['data']['showing-results-for-text'] ?? "");
+  // We deliberately do not use the translation API here.
+  // The text data prop has already been translated
+  // and now we need to replace the placeholder.
+  $showing_results_for_text = (
+    // We have already translated the string in the react app.
+    // phpcs:ignore Drupal.Semantics.FunctionT.NotLiteralString
+  new TranslatableMarkup($loading_text, ['@query' => $q])
+  )->__toString();
+
+  $variables += [
+    'showing_results_for_text' => $showing_results_for_text,
+    'number_of_fake_result_items' => 5,
+  ];
+
+  // Make sure that the app is re-rendered when the query string changes.
+  // That enables us to vary the "searching" title line.
+  $variables['#cache']['contexts'][] = "url.query_args:q";
+}
+
+/**
+ * Implements hook_preprocess_HOOK().
+ *
+ * @param mixed[] $variables
+ *   The variables for the theme hook.
+ */
+function novel_preprocess_dpl_react_app__loan_list(array &$variables): void {
+  $variables += [
+    'number_of_fake_loan_items_list_physical' => 2,
+    'number_of_fake_loan_items_list_digital' => 2,
+  ];
+}
+
+/**
+ * Implements hook_preprocess_HOOK().
+ *
+ * Add the base icon path to the variables array.
+ *
+ * @param mixed[] $variables
+ *   The variables for the theme hook.
+ */
+function novel_preprocess(array &$variables): void {
+  $directory = $variables['directory'] ?? 'web/themes/custom/novel';
+  $variables['baseIconPath'] = "/{$directory}/assets/dpl-design-system/icons";
+}
+
+/**
+ * Implements hook_preprocess_page().
+ *
+ * Simplify setting of logo titles and URLs using the theme settings and
+ * defaults.
+ *
+ * @param mixed[] $variables
+ *   The variables for the theme hook.
+ */
+function novel_preprocess_page(array &$variables): void {
+  $variables['logo'] = [
+    '#theme' => 'novel_logo',
+    '#title' => theme_get_setting('logo_title') ?? 'Logo title (bold)',
+    '#place' => theme_get_setting('logo_place') ?? 'Logo place',
+    '#logo_img_enable' => theme_get_setting('logo_img_enable', 'novel') ?? 1,
+  ];
+
+  // Directly assign logo URL if it's set.
+  if ($logo_path = theme_get_setting('logo.path')) {
+
+    // SVG images does not support image-styles, and will fail if you attempt
+    // to render it with the 'logo' image style.
+    if (str_ends_with($logo_path, '.svg')) {
+      $logo_render_array = [
+        '#theme' => 'image',
+        '#uri' => $logo_path,
+      ];
+    }
+    else {
+      $logo_render_array = [
+        '#theme' => 'image_style',
+        '#style_name' => 'logo',
+        '#uri' => $logo_path,
+      ];
+    }
+
+    $variables['logo']['#image'] = $logo_render_array;
+  }
+}
+
+/**
+ * Implements hook_form_system_theme_settings_alter().
+ *
+ * Ensure form settings for logo are initialized and provide a UI for logo
+ * title.
+ *
+ * @param array<string, mixed> $form
+ *   An associative array containing the structure of the form.
+ * @param \Drupal\Core\Form\FormStateInterface $form_state
+ *   The current state of the form.
+ */
+function novel_form_system_theme_settings_alter(array &$form, FormStateInterface $form_state): void {
+  $form['logo']['settings'] = $form['logo']['settings'] ?? [];
+
+  $form['logo']['settings']['logo_upload']['#description'] = t('Upload the logo in PNG or SVG. You will get the best results with 11:5 format (e.g. width: 220px height: 100px), but any size will work.', [], ['context' => 'Novel settings']);
+
+  $form['logo']['settings']['logo_title'] = [
+    '#type' => 'textfield',
+    '#title' => t('Title', [], ['context' => 'Novel settings']),
+    '#default_value' => theme_get_setting('logo_title') ?? 'Logo title (bold)',
+    '#description' => t("Enter the text that will be shown as the logo on smaller screens.", [], ['context' => 'Novel settings']),
+  ];
+  $form['logo']['settings']['logo_place'] = [
+    '#type' => 'textfield',
+    '#title' => t('Place', [], ['context' => 'Novel settings']),
+    '#default_value' => theme_get_setting('logo_place') ?? 'Logo place',
+    '#description' => t("Text displayed under the logo title.", [], ['context' => 'Novel settings']),
+  ];
+  $form['logo']['settings']['logo_img_enable'] = [
+    '#type' => 'checkbox',
+    '#title' => t('Enable image logo', [], ['context' => 'Novel settings']),
+    '#default_value' => theme_get_setting('logo_img_enable', 'novel') ?? 1,
+    '#description' => t("Use image logo when its possible.", [], ['context' => 'Novel settings']),
+  ];
+
+  // We want to hide the logo and favicon path to simplify the UI.
+  unset($form['logo']['settings']['logo_path']);
+  unset($form['favicon']['settings']['favicon_path']);
+
+  $form['identity']['settings'] = [
+    '#type' => 'fieldset',
+    '#title' => t('Novel settings', [], ['context' => 'Novel settings']),
+  ];
+  $form['identity']['settings']['identity_color'] = [
+    '#type' => 'color',
+    '#title' => t('Identity Color', [], ['context' => 'Novel settings']),
+    '#default_value' => theme_get_setting('identity_color'),
+    '#description' => t('Choose library identity color.', [], ['context' => 'Novel settings']),
+  ];
+}
+
+/**
+ * Preprocesses variables for HTML templates.
+ */
+function novel_preprocess_html(array &$variables): void {
+  $identityColor = theme_get_setting('identity_color');
+
+  if ($identityColor) {
+    $hslColor = Hex::fromString($identityColor)->toHsl();
+    novel_attach_identity_color_styles($variables, $hslColor);
+  }
+}
+
+/**
+ * Attaches identity color styles to the page.
+ *
+ * @param array<mixed> $variables
+ *   An associative array containing the following possible keys:
+ *   - '#attached': An array of attachments for rendering.
+ * @param \Spatie\Color\Hsl $hslColor
+ *   The HSL color object.
+ */
+function novel_attach_identity_color_styles(array &$variables, Hsl $hslColor): void {
+  $custom_css = "
+    :root {
+      --identity-color-h: {$hslColor->hue()} !important;
+      --identity-color-s: {$hslColor->saturation()}% !important;
+      --identity-color-l: {$hslColor->lightness()}% !important;
+    }
+  ";
+
+  $variables['#attached']['html_head'][] = [
+    [
+      '#type' => 'inline_template',
+      '#template' => '<style type="text/css">{{ style|safe_join("") }}</style>',
+      '#context' => ['style' => [$custom_css]],
+    ],
+    'novel_custom_identity_color',
+  ];
+}
+
+/**
+ * Implements hook_theme_suggestions_field_alter().
+ */
+function novel_theme_suggestions_field_alter(array &$suggestions, array $variables): void {
+  $element = $variables['element'];
+
+  // Add theme suggestions per view mode...
+  $suggestions[] = 'field__' . $element['#entity_type'] . '__' .
+    $element['#field_name'] . '__' . $element['#view_mode'];
+  // ... per bundle and view mode.
+  $suggestions[] = 'field__' . $element['#entity_type'] . '__' .
+    $element['#field_name'] . '__' . $element['#bundle'] . '__' .
+    $element['#view_mode'];
+}
+
+/**
+ * Implements hook_theme_suggestions_select_alter().
+ *
+ * Allow us to differencate from single and multi-selects.
+ *
+ * @param string[] &$suggestions
+ *   An array of theme suggestion strings.
+ * @param array<mixed> $variables
+ *   An array of variables of mixed types, passed to the theme layer.
+ */
+function novel_theme_suggestions_select_alter(array &$suggestions, array $variables): void {
+  $has_multiple = !empty($variables['element']['#multiple']);
+
+  if ($has_multiple) {
+    $suggestions[] = 'select__multiple';
+  }
+  else {
+    $suggestions[] = 'select__single';
+  }
+}
+
+/**
+ * Preprocesses rows in a Drupal view to handle the display of event instances.
+ *
+ * Introduces an 'shouldBeStacked' attribute for event items to specify whether
+ * they should be presented in a stacked view mode.
+ * This determination is made by comparing the current event's series ID with
+ *  that of the preceding event.
+ *
+ * @param array &$variables
+ *   An array of variables to pass to the theme layer.
+ */
+function novel_preprocess_views_view_unformatted(&$variables): void {
+
+  $rows = &$variables['rows'];
+  foreach ($rows as $index => &$row) {
+
+    if ($row['content']['#view_mode'] !== 'list_teaser_stacked_parent' ||
+      !($row['content']['#eventinstance'] instanceof EventInstance)) {
+      continue;
+    }
+
+    $eventInstance = $row['content']['#eventinstance'];
+    $eventSeriesId = $eventInstance->getEventSeries()->id();
+
+    // Check if not first row and previous event_series_id matches.
+    $shouldBeStacked = $index > 0 && $eventSeriesId === $rows[$index - 1]['content']['#eventinstance']->getEventSeries()->id();
+    $row['shouldBeStacked'] = $shouldBeStacked;
+
+    if ($shouldBeStacked) {
+      $row['content']['#view_mode'] = 'stacked_event';
+    }
+
+    // Add cache tags to ensure stacked view is recalculated for factors that
+    // can affect the order:
+    // - Events are created/updated/deleted
+    // - Path and url arguments as this can effect filtering and ordering.
+    $row['content']['#cache']['tags'][] = 'eventinstance_list';
+    $row['content']['#cache']['contexts'][] = 'url';
+  }
+}

@@ -1,0 +1,96 @@
+<?php
+
+/**
+ * @file
+ * Dpl_patron_menu drupal module file.
+ *
+ * Renders the patron menu.
+ */
+
+use Drupal\Core\Form\FormStateInterface;
+use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
+
+/**
+ * Implements template_preprocess_page().
+ *
+ * @param mixed[] $variables
+ *   Theme variables.
+ */
+function dpl_patron_menu_preprocess_page(array &$variables): void {
+
+  $is_admin_route = \Drupal::service('router.admin_context')->isAdminRoute(\Drupal::routeMatch()->getRouteObject());
+
+  // If the current route is an admin route, don't render the patron menu.
+  if ($is_admin_route) {
+    return;
+  }
+
+  $blockManager = \Drupal::getContainer()->get('plugin.manager.block');
+
+  /** @var \Drupal\dpl_patron_menu\Plugin\Block\PatronMenuBlock $plugin_block */
+  $plugin_block = $blockManager->createInstance('dpl_patron_menu_block', []);
+
+  // @todo create service for access check.
+  $access_result = $plugin_block->access(\Drupal::currentUser());
+  if (is_object($access_result) && $access_result->isForbidden() || is_bool($access_result) && !$access_result) {
+    throw new AccessDeniedHttpException();
+  }
+
+  $variables['patron'] = [
+    'menu' => $plugin_block->build(),
+  ];
+}
+
+/**
+ * Implements hook_form_FORM_ID_alter().
+ */
+function dpl_patron_menu_form_dpl_library_agency_list_size_settings_form_alter(array &$form, FormStateInterface $form_state): void {
+  /** @var \Drupal\dpl_patron_menu\DplMenuSettings $patron_menu_settings */
+  $patron_menu_settings = \Drupal::service('dpl_patron_menu.settings');
+
+  $form['patron_menu_list_size_settings'] = [
+    '#type' => 'fieldset',
+    '#title' => t('Patron menu list size settings', [], ['context' => 'List size (settings)']),
+    '#description' => t('The number of items to display in the patron menu list.', [], ['context' => 'List size (settings)']),
+    '#tree' => FALSE,
+  ];
+
+  $form['patron_menu_list_size_settings']['patron_menu_list_size_desktop'] = [
+    '#type' => 'number',
+    '#title' => t('Patron menu list size on desktop', [], ['context' => 'List size (settings)']),
+    '#default_value' => $patron_menu_settings->getListSizeDesktop(),
+    '#min' => 1,
+    '#step' => 1,
+    '#required' => TRUE,
+  ];
+
+  $form['patron_menu_list_size_settings']['patron_menu_list_size_mobile'] = [
+    '#type' => 'number',
+    '#title' => t('Patron menu list size on mobile', [], ['context' => 'List size (settings)']),
+    '#default_value' => $patron_menu_settings->getListSizeMobile(),
+    '#min' => 1,
+    '#step' => 1,
+    '#required' => TRUE,
+  ];
+
+  $form['#submit'][] = 'dpl_patron_menu_handler_submit';
+}
+
+/**
+ * Custom submit callback.
+ *
+ * @param array<mixed> $form
+ *   An associative array containing the structure of the form.
+ * @param \Drupal\Core\Form\FormStateInterface $form_state
+ *   The current state of the form.
+ */
+function dpl_patron_menu_handler_submit(array &$form, FormStateInterface $form_state): void {
+  /** @var \Drupal\dpl_patron_menu\DplMenuSettings $patron_menu_settings */
+  $patron_menu_settings = \Drupal::service('dpl_patron_menu.settings');
+
+  \Drupal::service('config.factory')
+    ->getEditable($patron_menu_settings->getConfigKey())
+    ->set('patron_menu_list_size_desktop', $form_state->getValue('patron_menu_list_size_desktop'))
+    ->set('patron_menu_list_size_mobile', $form_state->getValue('patron_menu_list_size_mobile'))
+    ->save();
+}

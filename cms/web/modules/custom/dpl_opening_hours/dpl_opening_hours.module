@@ -1,0 +1,47 @@
+<?php
+
+/**
+ * @file
+ * Preprocesses' related to Opening Hours.
+ */
+
+use Drupal\dpl_react_apps\Controller\DplReactAppsController;
+use Drupal\paragraphs\ParagraphInterface;
+
+/**
+ * Implements hook_preprocess_paragraph__TYPE().
+ *
+ * Prepares variables for the Opening Hours app in the Opening Hours paragraph.
+ *
+ * @param array &$variables
+ *   Variables for the paragraph template, including the 'paragraph' entity.
+ */
+function dpl_opening_hours_preprocess_paragraph__opening_hours(&$variables):
+void {
+  $paragraph = $variables['paragraph'] ?? NULL;
+  if (!$paragraph instanceof ParagraphInterface) {
+    return;
+  }
+
+  $parentNode = $paragraph->getParentEntity();
+  if ($parentNode && $parentNode->bundle() === 'branch') {
+    $branchId = $parentNode->id();
+
+    // Prepare variables for the React app.
+    $variables['react_app_opening_hours'] = [
+      '#theme' => 'dpl_react_app',
+      '#name' => 'opening-hours',
+      '#data' => [
+        'branch-id' => $branchId,
+        'opening-hours-heading-text' => t('Opening Hours', [], ['context' => 'Opening Hours']),
+        'show-opening-hours-for-week-text' => t('Show opening hours for week', [], ['context' => 'Opening Hours']),
+        'week-text' => t('Week', [], ['context' => 'Opening Hours']),
+        'library-is-closed-text' => t('The library is closed this day', [],
+          [
+            'context' =>
+            'Opening Hours',
+          ]),
+      ] + DplReactAppsController::externalApiBaseUrls(),
+    ];
+  }
+}

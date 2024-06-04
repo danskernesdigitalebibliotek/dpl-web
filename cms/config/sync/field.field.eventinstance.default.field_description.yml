@@ -1,0 +1,19 @@
+uuid: 2181b43b-4386-46d3-8cc7-e5227940a73f
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.eventinstance.field_description
+    - recurring_events.eventinstance_type.default
+id: eventinstance.default.field_description
+field_name: field_description
+entity_type: eventinstance
+bundle: default
+label: Subtitle
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: string_long

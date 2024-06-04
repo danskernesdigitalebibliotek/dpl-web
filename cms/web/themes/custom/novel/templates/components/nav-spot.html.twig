@@ -1,0 +1,31 @@
+{%
+  set classes = [
+  'nav-spot',
+  'arrow__hover--right-large',
+  has_media ? 'nav-spot--has-media' : 'nav-spot--has-no-media'
+]
+%}
+
+<article {{ attributes.addClass(classes).setAttribute('data-variant', variant) }}>
+  <a href="{{ url }}" class="nav-spot__content">
+    <figure class="nav-spot__media">
+      {% include '@novel/components/media-container.html.twig'
+        with {
+        attributes: create_attribute(),
+        media: media,
+        has_media: has_media,
+        placeholder_text: teaser_text,
+      } only %}
+    </figure>
+
+    <div class="nav-spot__text">
+      <h2 class="nav-spot__title">{{ title }}</h2>
+
+      {% if subtitle %}
+        <p class="nav-spot__subtitle">{{ subtitle }}</p>
+      {% endif %}
+
+      {{ source(baseIconPath ~ '/arrow-ui/icon-arrow-ui-large-right.svg') }}
+    </div>
+  </a>
+</article>

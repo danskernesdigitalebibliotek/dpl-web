@@ -1,0 +1,18 @@
+uuid: 4de10c95-bb53-42c4-ad3f-7fce7dbba4c4
+langcode: da
+status: true
+dependencies:
+  module:
+    - dpl_login
+    - dpl_url_proxy
+    - serialization
+id: proxy-url
+plugin_id: proxy-url
+granularity: resource
+configuration:
+  methods:
+    - GET
+  formats:
+    - json
+  authentication:
+    - dpl_login_user_token

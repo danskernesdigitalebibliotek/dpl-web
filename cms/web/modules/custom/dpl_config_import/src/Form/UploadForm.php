@@ -59,7 +59,11 @@ class UploadForm extends FormBase {
     $form['file'] = [
       '#type' => 'file',
       '#title' => $this->t('Configuration file'),
-      '#description' => $this->t('Select a configuration file in YAML format to upload.'),
+      '#description' => $this->t(
+        'Select a configuration file in YAML format to upload.',
+        [],
+        ['context' => 'DPL Config Import']
+      ),
     ];
     $form['submit'] = [
       '#type' => 'submit',
@@ -80,21 +84,29 @@ class UploadForm extends FormBase {
     ];
     $file = file_save_upload('file', $validators, FALSE, 0);
     if (!$file || is_array($file)) {
-      $this->messenger->addError($this->t('Unable to handle the uploaded file'));
+      $this->messenger->addError($this->t(
+        'Unable to handle the uploaded file',
+        [],
+        ['context' => 'DPL Config Import']
+      ));
       return;
     }
 
     try {
-      $yaml_data = $this->yamlParser->parseFile($file->getFileUri());
+      $yaml_data = $this->yamlParser->parseFile((string) $file->getFileUri());
     }
     catch (ParseException $e) {
-      $this->messenger->addError($this->t('Unable to parse YAML file: %reason', ['%reason' => $e->getMessage()]));
+      $this->messenger->addError($this->t(
+        'Unable to parse YAML file: %reason',
+        ['%reason' => $e->getMessage()],
+        ['context' => 'DPL Config Import']
+      ));
       return;
     }
 
     $configuration = $yaml_data['configuration'] ?? [];
-    array_map(function ($value, string $key) {
-      $config = $this->config->getEditable($key);
+    array_map(function ($value, int|string $key) {
+      $config = $this->config->getEditable((string) $key);
       $new_config = NestedArray::mergeDeepArray([$config->getRawData(), $value], TRUE);
       $config->setData($new_config);
       $config->save();
@@ -107,13 +119,16 @@ class UploadForm extends FormBase {
       $this->moduleInstaller->install($install_modules);
       $this->messenger->addStatus($this->t(
         'Installed modules: %modules_list',
-        ['%modules_list' => implode(', ', $install_modules)]
+        ['%modules_list' => implode(', ', $install_modules)],
+        ['context' => 'DPL Config Import']
       ));
     }
     catch (MissingDependencyException $e) {
-      // Drupal provides a meaningful error message out of the box.
-      // phpcs:ignore Drupal.Semantics.FunctionT.NotLiteralString
-      $this->messenger->addError($this->t($e->getMessage()));
+      $this->messenger->addError($this->t(
+        'Failed to install modules: @reason',
+        ['@reason' => $e->getMessage()],
+        ['context' => 'DPL Config Import']
+      ));
     }
 
     $uninstall_modules = $modules['uninstall'] ?? [];
@@ -121,13 +136,16 @@ class UploadForm extends FormBase {
       $this->moduleInstaller->uninstall($uninstall_modules);
       $this->messenger->addStatus($this->t(
         'Uninstalled modules: %modules_list',
-        ['%modules_list' => implode(', ', $uninstall_modules)]
+        ['%modules_list' => implode(', ', $uninstall_modules)],
+        ['context' => 'DPL Config Import']
       ));
     }
     catch (ModuleUninstallValidatorException $e) {
-      // Drupal provides a meaningful error message out of the box.
-      // phpcs:ignore Drupal.Semantics.FunctionT.NotLiteralString
-      $this->messenger->addError($this->t($e->getMessage()));
+      $this->messenger->addError($this->t(
+        'Failed to uninstall modules: @reason',
+        ['@reason' => $e->getMessage()],
+        ['context' => 'DPL Config Import']
+      ));
     }
   }
 

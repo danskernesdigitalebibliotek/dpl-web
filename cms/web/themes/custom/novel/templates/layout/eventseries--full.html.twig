@@ -1,0 +1,25 @@
+{#
+  Reuse eventinstance template.
+  To support this we have to reconstruct the structure of instances from
+  event series without field inheritance.
+#}
+{%
+  set instancelike_content = {
+    "date": formatted_date,
+    "event_address": content.field_event_address,
+    "event_categories": content.field_categories,
+    "event_description": content.field_description,
+    "event_image": content.field_event_image,
+    "event_link": content.field_event_link,
+    "event_paragraphs": content.field_event_paragraphs,
+    "event_place": content.field_event_place,
+    "event_state": content.field_event_state,
+    "event_ticket_categories": content.field_ticket_categories,
+    "event_tags": content.field_tags,
+    "event_branch": content.field_branch,
+    "event_teaser_text": content.field_teaser_text,
+  }
+%}
+{% include '@novel/layout/eventinstance--full.html.twig' with {
+    content: content|merge(instancelike_content)
+} %}

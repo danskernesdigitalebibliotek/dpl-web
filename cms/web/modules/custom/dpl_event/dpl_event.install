@@ -1,0 +1,125 @@
+<?php
+
+/**
+ * @file
+ * DPL Event install file. These hooks will be run *before* config import.
+ */
+
+use Drupal\Core\Field\BaseFieldDefinition;
+use Drupal\drupal_typed\DrupalTyped;
+use Drupal\field\Entity\FieldConfig;
+use Drupal\field\Entity\FieldStorageConfig;
+use Drupal\locale\SourceString;
+use Drupal\locale\StringDatabaseStorage;
+
+/**
+ * Implements hook_install().
+ */
+function dpl_event_install(): void {
+  _dpl_event_create_mock_title();
+  _dpl_event_add_weekday_translations();
+}
+
+/**
+ * Delete the deprecated event description fields, prior to CIM.
+ *
+ * This field has been replaced by field_description.
+ * The data has already been migrated, in a prior deploy.
+ */
+function dpl_event_update_10002(): string {
+  $types = ['eventseries', 'eventinstance'];
+  $message = '';
+
+  foreach ($types as $type) {
+    $storage = FieldStorageConfig::loadByName($type, 'field_event_description');
+
+    if ($storage instanceof FieldStorageConfig) {
+      $storage->delete();
+
+      $message .= "All field_event_description storage of {$type} has been deleted.";
+    }
+
+    $config = FieldConfig::loadByName($type, 'default', 'field_event_description');
+
+    if ($config instanceof FieldConfig) {
+      $config->delete();
+
+      $message .= "All field_event_description config of {$type} has been deleted.";
+    }
+  }
+
+  return $message;
+}
+
+/**
+ * Add a mock title field to eventinstance, to fix entity reference fields.
+ *
+ * @see https://www.drupal.org/project/eck/issues/2956378
+ */
+function dpl_event_update_10003(): string {
+  return _dpl_event_create_mock_title();
+}
+
+/**
+ * Translate weekdays to danish.
+ */
+function dpl_event_update_10004(): string {
+  return _dpl_event_add_weekday_translations();
+}
+
+/**
+ * Add a mock title field to eventinstance, to fix entity reference fields.
+ *
+ * @see https://www.drupal.org/project/eck/issues/2956378
+ */
+function _dpl_event_create_mock_title(): string {
+  $entity_type = 'eventinstance';
+
+  $field_storage_definition = BaseFieldDefinition::create('string')
+    ->setName('title')
+    ->setLabel(t('Mock-title field'))
+    ->setDescription(t('This is a mock title field, unused and read only. It is required, for eventinstances to work with entity reference autocomplete fields.'))
+    ->setReadOnly(TRUE)
+    ->setRevisionable(FALSE);
+
+  \Drupal::entityDefinitionUpdateManager()
+    ->installFieldStorageDefinition('title', $entity_type, $entity_type, $field_storage_definition);
+
+  return "Mock title field has been added to the $entity_type entity.";
+}
+
+/**
+ * Programmatically add translations for un-capitalized weekdays.
+ */
+function _dpl_event_add_weekday_translations(): string {
+  $translations = [
+    'monday' => 'mandag',
+    'tuesday' => 'tirsdag',
+    'wednesday' => 'onsdag',
+    'thursday' => 'torsdag',
+    'friday' => 'fredag',
+    'saturday' => 'lørdag',
+    'sunday' => 'søndag',
+  ];
+
+  $translator = DrupalTyped::service(StringDatabaseStorage::class, 'locale.storage');
+
+  foreach ($translations as $english => $danish) {
+    $string = $translator->findString(['source' => $english]);
+
+    if (is_null($string)) {
+      $string = new SourceString();
+      $string->setString($english);
+      $string->setStorage($translator);
+      $string->save();
+    }
+
+    $translator->createTranslation([
+      'lid' => $string->lid,
+      'language' => 'da',
+      'translation' => $danish,
+    ])->save();
+  }
+
+  return "Weekdays have been translated to danish.";
+}

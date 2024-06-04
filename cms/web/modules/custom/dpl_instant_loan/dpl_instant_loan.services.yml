@@ -1,0 +1,4 @@
+services:
+  dpl_instant_loan.settings:
+    class: Drupal\dpl_instant_loan\DplInstantLoanSettings
+    arguments: ["@config.manager"]

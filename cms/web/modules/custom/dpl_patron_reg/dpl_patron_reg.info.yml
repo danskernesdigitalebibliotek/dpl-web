@@ -1,0 +1,12 @@
+name: Patron registration
+description: Enable registration of new patrons
+package: DPL
+type: module
+core_version_requirement: ^9 || ^10
+dependencies:
+  - dpl_library_agency:dpl_library_agency
+  - dpl_patron_page:dpl_patron_page
+  - dpl_react:dpl_react
+  - dpl_react_apps:dpl_react_apps
+  - dpl_protected_nodes:dpl_protected_nodes
+  - dpl_login:dpl_login

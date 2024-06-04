@@ -1,0 +1,51 @@
+uuid: 49692e98-ea96-45ff-9ba1-bd08759d0af2
+langcode: en
+status: true
+dependencies:
+  module:
+    - options
+    - paragraphs
+id: paragraph.field_campaign_rule_facet
+field_name: field_campaign_rule_facet
+entity_type: paragraph
+type: list_string
+settings:
+  allowed_values:
+    -
+      value: accessTypes
+      label: Access
+    -
+      value: childrenOrAdults
+      label: 'Children or adult materials'
+    -
+      value: creators
+      label: Creators
+    -
+      value: fictionNonfiction
+      label: 'Fiction or non-fiction'
+    -
+      value: fictionalCharacter
+      label: 'Fictional character'
+    -
+      value: genreAndForm
+      label: 'Genre and form'
+    -
+      value: mainLanguages
+      label: 'Main languages'
+    -
+      value: materialTypes
+      label: 'Material types'
+    -
+      value: subjects
+      label: Subjects
+    -
+      value: workTypes
+      label: 'Work types'
+  allowed_values_function: ''
+module: options
+locked: false
+cardinality: 1
+translatable: true
+indexes: {  }
+persist_with_no_fields: false
+custom_storage: false

@@ -1,0 +1,49 @@
+_meta:
+  version: '1.0'
+  entity_type: media
+  uuid: 65432ee1-43f1-4130-9565-5683467d4b5a
+  bundle: image
+  default_langcode: da
+  depends:
+    6d5e9b4c-389d-4735-a8a3-82883f64aeb0: file
+default:
+  status:
+    -
+      value: true
+  uid:
+    -
+      target_id: 1
+  name:
+    -
+      value: ahmad-odeh-JhqhGfX_Wd8-unsplash.jpg
+  created:
+    -
+      value: 1703143347
+  revision_translation_affected:
+    -
+      value: true
+  metatag:
+    -
+      tag: meta
+      attributes:
+        name: title
+        content: '| DPL CMS'
+    -
+      tag: link
+      attributes:
+        rel: canonical
+        href: '/user/login'
+  path:
+    -
+      alias: ''
+      langcode: da
+  field_byline:
+    -
+      value: 'Af Admad Odeh / Unsplash'
+  field_media_image:
+    -
+      entity: 6d5e9b4c-389d-4735-a8a3-82883f64aeb0
+      alt: 'Silhuet af kvinde der danser med lang eksponering'
+      title: ''
+      width: 1920
+      height: 1280

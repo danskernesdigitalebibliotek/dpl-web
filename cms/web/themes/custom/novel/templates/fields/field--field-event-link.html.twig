@@ -1,0 +1,21 @@
+{% for item in items %}
+    {% set url = item.content['#url'].toString() %}
+    {% set title = item.content['#title'] %}
+
+    {% set classes = [
+    "btn-primary",
+    "btn-filled",
+    "btn-large",
+    "event-header__button"
+    ] %}
+
+    {% if event_is_active %}
+        <a {{ item.attributes.setAttribute('href', url).addClass(classes).setAttribute('target', '_blank') }}>
+            {{ title }}
+        </a>
+    {% else %}
+        <span {{ item.attributes.addClass(classes).setAttribute('disabled', true) }}>
+            {{ title }}
+        </span>
+    {% endif %}
+{% endfor %}

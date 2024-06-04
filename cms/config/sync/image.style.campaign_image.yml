@@ -1,0 +1,15 @@
+uuid: 24276556-dbe2-404f-a899-9e1e756cebe2
+langcode: en
+status: true
+dependencies: {  }
+name: campaign_image
+label: 'Campaign image (? x 150px)'
+effects:
+  d2931fb8-e714-4189-9b45-86be75b9aa86:
+    uuid: d2931fb8-e714-4189-9b45-86be75b9aa86
+    id: image_scale
+    weight: 1
+    data:
+      width: null
+      height: 150
+      upscale: false

@@ -17,10 +17,28 @@ env:
   LAGOON_PROJECT: "dpl-cms"
 
 jobs:
+  BranchNameLength:
+    name: Check branch length
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Ensure branch name length
+        uses: lekterable/branchlint-action@2.1.0
+        if: github.ref_type == 'branch' || github.ref_type == 'pull_request'
+        with:
+          allowed: |
+            /^.{1,100}$/
+          errorMessage: 'Branch name too long. This cannot be deployed to Lagoon.'
+
   CheckEnvironment:
     name: Check environment
     runs-on: ubuntu-latest
     if: ${{ github.event.action == 'opened' || github.event.action == 'reopened' || github.event.action == 'synchronize' }}
+    needs: [BranchNameLength]
+    permissions:
+      # Give the default GITHUB_TOKEN permission to create and update deployments
+      deployments: write
     steps:
       - name: Generate environment data
         id: environment
@@ -29,7 +47,7 @@ jobs:
           echo ::set-output name=url::'https://varnish.pr-${{github.event.number}}.${{ env.LAGOON_PROJECT }}.${{ env.LAGOON_HOST }}/'
           echo ::set-output name=logs::'https://ui.lagoon.${{ env.LAGOON_HOST }}/projects/${{ env.LAGOON_PROJECT }}/${{ env.LAGOON_PROJECT }}-pr-${{github.event.number}}/deployments'
       - name: Start deployment
-        uses: bobheadxi/deployments@v0.6.1
+        uses: bobheadxi/deployments@v1.5.0
         id: deployment
         with:
           step: start
@@ -37,48 +55,57 @@ jobs:
           env: ${{ steps.environment.outputs.id }}
           ref: ${{ github.head_ref }}
           logs: ${{ steps.environment.outputs.logs }}
-          log_args: true
+          debug: ${{ runner.debug && 'true' || 'false' }}
+      - name: Generate wait-on config
+        # Retrieval of Let's Encrypt certificate sometimes fail in Lagoon.
+        # In this case a self-signed certificate will be used. Allow this.
+        run: |
+          echo "{\"strictSSL\": false}" > $RUNNER_TEMP/wait-on.config.json
       - name: Wait for environment to become available
-        uses: nev7n/wait_for_response@v1
+        uses: iFaxity/wait-on-action@v1.1.0
         with:
-          url: ${{ steps.environment.outputs.url }}
-          responseCode: 200
+          resource: ${{ steps.environment.outputs.url }}
           # Time in ms. Wait for 15 mins for deployment to complete. We have
           # seen deployments taking up to 12 mins.
-          timeout: 600000
+          timeout: 900000
           # Poll every 10 seconds. For whatever reason Lagoon environments may
           # return 200 during the deployment process even though the deployment
           # is not complete. Reduce polling interval to the risk of this
           # happening.
           interval: 10000
+          config: ${{ runner.temp }}/wait-on.config.json
       - name: Finish deployment
         if: always()
-        uses: bobheadxi/deployments@v0.6.1
+        uses: bobheadxi/deployments@v1.5.0
         with:
           step: finish
           token: ${{ secrets.GITHUB_TOKEN }}
           status: ${{ job.status }}
           deployment_id: ${{ steps.deployment.outputs.deployment_id }}
+          env: ${{ steps.deployment.outputs.env }}
           env_url: ${{ steps.environment.outputs.url }}
           logs: ${{ steps.environment.outputs.logs }}
-          log_args: true
+          debug: ${{ runner.debug && 'true' || 'false' }}
 
   CloseEnvironment:
     name: Close environment
     runs-on: ubuntu-latest
     if: ${{ github.event.action == 'closed' }}
+    permissions:
+      # Give the default GITHUB_TOKEN permission to close deployments.
+      deployments: write
     steps:
       - name: Generate environment data
         id: environment
         run: |
           echo ::set-output name=id::pr-${{github.event.number}}
       - name: Close environment
-        uses: bobheadxi/deployments@v0.6.1
+        uses: bobheadxi/deployments@v1.5.0
         with:
           step: deactivate-env
           token: ${{ secrets.GITHUB_TOKEN }}
           env: ${{ steps.environment.outputs.id }}
-          log_args: true
+          debug: ${{ runner.debug && 'true' || 'false' }}
 
   # We only permit the integration with Lagoon to run if the user is
   # authorized. This saves on resources and ensures we only spin up sites for
@@ -93,9 +120,10 @@ jobs:
   InformLagoon:
     name: Send synthetic event to Lagoon
     runs-on: ubuntu-latest
+    needs: [BranchNameLength]
     steps:
     - name: Send pull request event
-      uses: distributhor/workflow-webhook@v2
+      uses: distributhor/workflow-webhook@v3
       env:
         webhook_url: ${{ secrets.LAGOON_WEBHOOK_URL }}
         webhook_secret: ${{ secrets.LAGOON_WEBHOOK_SECRET }}

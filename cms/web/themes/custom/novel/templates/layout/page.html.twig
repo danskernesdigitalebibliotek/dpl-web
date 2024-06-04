@@ -43,19 +43,40 @@
  */
 #}
 
-<div>
+{# Overflow hidden is necessary, to avoid the header breaking out on mobile. #}
+<div class="overflow-hidden">
   {% include '@novel/layout/header.html.twig'
     with {
     'header': page.header,
-    'search_header': search.header
+    'search_header': search.header,
+    'patron_menu': patron.menu,
+    'logo': logo,
+    'opening_hours_url': opening_hours_url,
   } only %}
+
+  {{ drupal_block('system_messages_block') }}
+
+  {{ breadcrumb }}
 
   <main id="main-content" role="main">
     {{ page.content }}
+
+    {% if related_children.items %}
+      {# @todo - this needs to be replaced by proper styling. #}
+      <div class="mt-64">
+        {% include '@novel/components/breadcrumb-children.html.twig'
+          with {
+          title: related_children.title,
+          show_subtitles: related_children.show_subtitles,
+          items: related_children.items,
+        } only %}
+      </div>
+    {% endif %}
   </main>
 
   {% include '@novel/layout/footer.html.twig'
     with {
-    'footer': page.footer
+    'settings': footer_settings,
+    'logo': logo,
   } only %}
 </div>

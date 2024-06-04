@@ -1,10 +1,24 @@
 version: '2.3'
 
 services:
-  chrome:
-    image: justinribeiro/chrome-headless:stable
-    cap_add:
-      - SYS_ADMIN
+  node-chrome:
+    build:
+      context: .
+      dockerfile: docker/node-chromium.dockerfile
+    volumes:
+      - 'projectroot:/app'
+    depends_on:
+      - wiremock
+    environment:
+      CYPRESS_INSTALL_BINARY: 0
+      YARN_CACHE_FOLDER: '/app/.cache/yarn'
+
+  cypress:
+    image: cypress/included:13.5.0
+    volumes:
+      - 'projectroot:/app'
+      - './cypress/tsconfig.json:/app/tsconfig.json'
+    working_dir: '/app'
     depends_on:
       - wiremock
     environment:
@@ -13,50 +27,43 @@ services:
       # Do not proxy traffic to the website nor to Google services serving
       # frontend assets. This pollutes the WireMock log output.
       NO_PROXY: "varnish,*.gstatic.com,*.googleapis.com"
-    command:
-      - "--headless"
-      - "--disable-gpu"
-      - "--remote-debugging-address=0.0.0.0"
-      - "--remote-debugging-port=9222"
-      # We do not have a proper SSL setup with trusted certificates from
-      # WireMock so ignore certificate errors for now.
-      - "--ignore-certificate-errors"
-
-  node-chrome:
-    build:
-      context: .
-      dockerfile: docker/node-chromium.dockerfile
-    volumes:
-      - 'projectroot:/app'
+      CYPRESS_BASE_URL: "http://varnish:8080"
+      CYPRESS_WIREMOCK_URL: "http://wiremock"
 
   wiremock:
     # We use wiremock-gui as it exposes a UI for inspecting the state of
     # WireMock. This can make debugging easier. It can seamlessly be replaced
     # with the official wiremock/wiremock image.
-    image: holomekc/wiremock-gui:2.29.1
+    image: wiremock/wiremock:2.32.0
+    # The following options are used:
+    # --enable-browser-proxying: Allows Wiremock to intercept all traffic from
+    # services  with HTTP(s)_PROXY pointing at it.
+    # --local-response-templating lets WireMock transfer values from request
+    # to mocked response
+    # --enable-stub-cors is required to make a browser running React
+    # components request resources.
+    # --verbose makes it easier to see requests and whether they are matched
+    # or not.
+    command: "--port=80 --https-port=443 --enable-browser-proxying --local-response-templating --enable-stub-cors --verbose --disable-banner"
     volumes:
       - 'projectroot:/app'
     ports:
       - 80
       - 443
     environment:
-      # The following options are used:
-      # --enable-browser-proxying: Allows Wiremock to intercept all traffic from
-      # services  with HTTP(s)_PROXY pointing at it.
-      # --local-response-templating lets WireMock transfer values from request
-      # to mocked response
-      # --enable-stub-cors is required to make a browser running React
-      # components request resources.
-      # --verbose makes it easier to see requests and whether they are matched
-      # or not.
-      WIREMOCK_OPTIONS: "--port=80,--https-port=443,--enable-browser-proxying,--local-response-templating,--enable-stub-cors,--verbose,--disable-banner"
       VIRTUAL_HOST: wiremock.${COMPOSE_PROJECT_NAME}.docker
       VIRTUAL_PORT: 80
+
+  cli:
+    environment:
+      CI: true
+      LAGOON_ENVIRONMENT_TYPE: ci
 
   php:
     depends_on:
       - wiremock
     environment:
-      HTTP_PROXY: http://wiremock
-      HTTPS_PROXY: https://wiremock
+      http_proxy: http://wiremock:80
+      https_proxy: https://wiremock:443
       CI: true
+      LAGOON_ENVIRONMENT_TYPE: ci

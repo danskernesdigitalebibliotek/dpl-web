@@ -1,0 +1,4 @@
+name: Instant Loan
+type: module
+description: Supports promoting materials available for instant loans to patrons.
+core_version_requirement: ^9 || ^10

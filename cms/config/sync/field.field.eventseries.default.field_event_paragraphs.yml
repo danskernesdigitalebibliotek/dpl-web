@@ -1,0 +1,45 @@
+uuid: 0062f2e0-a8f8-4e1c-a190-0a823ed7f608
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.eventseries.field_event_paragraphs
+    - paragraphs.paragraphs_type.campaign_rule
+    - paragraphs.paragraphs_type.event_ticket_category
+    - recurring_events.eventseries_type.default
+  module:
+    - entity_reference_revisions
+id: eventseries.default.field_event_paragraphs
+field_name: field_event_paragraphs
+entity_type: eventseries
+bundle: default
+label: Paragraphs
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings:
+  handler: 'default:paragraph'
+  handler_settings:
+    target_bundles:
+      campaign_rule: campaign_rule
+      event_ticket_category: event_ticket_category
+    negate: 1
+    target_bundles_drag_drop:
+      campaign_rule:
+        weight: 6
+        enabled: true
+      event_ticket_category:
+        weight: 7
+        enabled: true
+      links:
+        weight: 8
+        enabled: false
+      medias:
+        weight: 9
+        enabled: false
+      text_body:
+        weight: 10
+        enabled: false
+field_type: entity_reference_revisions

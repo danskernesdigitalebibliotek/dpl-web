@@ -1,0 +1,16 @@
+name: DPL menu
+description: Handle the patron user menu
+package: DPL
+dependencies:
+  - drupal:block
+  - dpl_dashboard:dpl_dashboard
+  - dpl_favorites_list:dpl_favorites_list
+  - dpl_fees:dpl_fees
+  - dpl_library_agency:dpl_library_agency
+  - dpl_loans:dpl_loans
+  - dpl_patron_reg:dpl_patron_reg
+  - dpl_reservations:dpl_reservations
+  - dpl_react_apps:dpl_react_apps
+
+type: module
+core_version_requirement: ^9 || ^10

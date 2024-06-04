@@ -1,11 +1,73 @@
 parameters:
-  level: max
+  level: 8
+  checkGenericClassInNonGenericObjectType: false
   paths:
     - web/modules/custom
+    - web/profiles/dpl_cms
     - web/themes/custom
-    - tests/behat/context
+  excludePaths:
+    - **/tests/src/Unit/*
   ignoreErrors:
     - '#Unsafe usage of new static\(\).#'
     # Drupal Form API makes extensive use for arrays which we cannot provide
     # more detailed typing of.
-    - '#.*\:\:(buildForm|getEditableConfigNames|submitForm)\(\) .* no value type specified in iterable type array\.#'
+    - '#.*\:\:(buildForm|getEditableConfigNames|submitForm|validateForm)\(\) .* no value type specified in iterable type array\.#'
+    - '#_alter\(\) has parameter \$form with no value type specified in iterable type array\.#'
+    # Drupal preprocess functions uses variables array which we cannot provide more detailed typing of.
+    - '#Function .*_preprocess_.*\(\) has parameter \$variables with no value type specified in iterable type array\.#'
+    # Drupal theme suggestions uses arrays which we cannot provide more detailed typing of.
+    - '#Function .*_theme_suggestions_.*\(\) has parameter .* with no value type specified in iterable type array\.#'
+    # Drupal hook_page_attachments functions uses page array which we cannot provide more detailed typing of.
+    - '#Function .*_page_attachments\(\) has parameter \$page with no value type specified in iterable type array\.#'
+    # Drupal hook_requirements() implementation returns array which we cannot provide more detailed typing of.
+    - '#Function .*_requirements\(\) return type has no value type specified in iterable type array\.#'
+    # Drupal hook_schema() implementation returns array which we cannot provide more detailed typing of.
+    - '#Function .*_schema\(\) return type has no value type specified in iterable type array\.#'
+    # Drupal hook_update() sandbox which we cannot provide more detailed typing of.
+    - '#Function .*_update_\d+\(\) has parameter \$sandbox with no value type specified in iterable type array\.#'
+    # Ignore Plugin configuration parameter.
+    - '#Drupal\\.*\\Plugin\\.*::__construct\(\) .* no value type specified in iterable type array\.#'
+    - '#Drupal\\.*\\Plugin\\.*::create\(\) .* no value type specified in iterable type array\.#'
+    # Ignore Plugin definitions parameter.
+    - '#Drupal\\.*\\Plugin\\.*::getPluginDefinition\(\) return type has no value type specified in iterable type array\.#'
+    # Ignore iterable types for FieldItemListInterface.
+    - '#no value type specified in iterable type Drupal\\Core\\Field\\FieldItemListInterface#'
+    # Allow no doc block details in HOOK_dpl_react_apps_data() functions
+    - '#Function .*_dpl_react_apps_data\(\) has parameter \$variables with no value type specified in iterable type array\.#'
+    - '#Function .*_dpl_react_apps_data\(\) has parameter \$data with no value type specified in iterable type array\.#'
+    # Allow no doc block details in hook_dpl_protected_nodes_get_protected_nodes() functions
+    - '#Function .*_dpl_protected_nodes_get_protected_nodes\(\) return type has no value type specified in iterable type array\.#'
+    # Field formatters return render arrays which we cannot provide more detailed typing of.
+    - '#Method Drupal\\.*\\Plugin\\Field\\FieldFormatter\\.*\:\:viewElements\(\) return type has no value type specified in iterable type array\.#'
+    # Drupal hook_theme_registry_alter() has parameter $theme_registry which we cannot provide more detailed typing of.
+    - '#Function .*_theme_registry_alter\(\) has parameter \$theme_registry with no value type specified in iterable type array\.#'
+    # Since methods are defined in interface there is no need to document signatures.
+    - '#Method Drupal\\dpl_mail\\Config\\AzureMailerConfigOverrides::.* no value type specified in iterable type array\.#'
+    # We are deliberately not using the method for anything but is required by interface. We can accept that null is returned.
+    - '#Method Drupal\\dpl_mail\\Config\\AzureMailerConfigOverrides::createConfigObject\(\) should return Drupal\\Core\\Config\\StorableConfigBase but returns null\.#'
+    -
+      message: '#While loop condition is always true\.#'
+      path: web/modules/custom/dpl_po/src/Commands/DplPoCommands.php
+    # This is an error caused byt the former error which is a false negative.
+    -
+      message: '#Unreachable statement - code above always terminates\.#'
+      path: web/modules/custom/dpl_po/src/Commands/DplPoCommands.php
+    # We are extending existing code. It does not make sense to address the errors coming from a contrib module.
+    - '#Method Drupal\\dpl_po\\Services\\CtpConfigManager::processTranslatableData\(\).*#'
+    - '#Method Drupal\\dpl_po\\Services\\CtpConfigManager::preparePoItem\(\).*#'
+    -
+      message: "#Call to function .* with .* will always evaluate to false.#"
+      path: web/modules/custom/dpl_po/src/Services/CtpConfigManager.php
+    # Drupal field widget formElement() method has parameters and return type which we cannot provide more detailed typing of.
+    - '#Method Drupal\\.*\\Plugin\\Field\\FieldWidget\\.*::formElement\(\) .* no value type specified in iterable type array\.#'
+    -
+      message: "#Variable .* might not be defined#"
+      path: web/modules/custom/dpl_login/src/OpenIdUserInfoService.php
+  scanFiles:
+    # Needed to make locale_translation_batch_fetch_finished() discoverable.
+    - web/core/modules/locale/locale.batch.inc
+    - web/core/modules/locale/locale.bulk.inc
+    - web/modules/contrib/config_translation_po/config_translation_po.bulk.inc
+
+includes:
+	- phpstan-baseline.neon

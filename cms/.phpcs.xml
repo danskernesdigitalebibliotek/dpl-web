@@ -2,10 +2,10 @@
 <ruleset>
   <arg name="extensions" value="php,module,inc,install,test,profile,theme,css,info,txt,md,yml"/>
   <file>web/modules/custom</file>
+  <file>web/profiles/dpl_cms</file>
   <file>web/themes/custom</file>
   <!-- Exclude built assets used by Novel -->
   <exclude-pattern>web/themes/custom/novel/assets/*</exclude-pattern>
-  <file>tests/behat/context</file>
   <file>assets/all.settings.php</file>
 
   <rule ref="Drupal" />
@@ -19,5 +19,25 @@
     <exclude name="Drupal.Commenting.HookComment.HookParamDoc"/>
     <exclude name="Drupal.Commenting.HookComment.HookReturnDoc"/>
     <exclude name="Drupal.Commenting.HookComment.HookCommentFormat"/>
+    <exclude name="Drupal.Commenting.FileComment.Missing"/>
+    <!--
+      Disable variable checking rules which both overlap and conflict with
+      PHPStan as suggested by Drupal Coder developers:
+      https://www.drupal.org/project/coder/issues/3253472#comment-14508517
+    -->
+    <exclude name="Drupal.Commenting.VariableComment.IncorrectVarType"/>
+    <exclude name="Drupal.Commenting.VariableComment.IncorrectVarType"/>
+    <!--
+      Disable deprecation related sniffs that are seem to Drupal Core development.
+    -->
+    <!--
+      Do not require specifying when deprecated function will be removed.
+      We do not enforce this whin the project.
+    -->
+    <exclude name="Drupal.Commenting.Deprecated.IncorrectTextLayout"/>
+    <!--
+      Do not require a @see tag with link to Drupal.org for deprecation.
+    -->
+    <exclude name="Drupal.Commenting.Deprecated.DeprecatedMissingSeeTag"/>
   </rule>
 </ruleset>

@@ -1,3 +1,39 @@
-definitions: {  }
 _core:
   default_config_hash: jdY7AU0tU-QsjmiOw3W8vwpYMb-By--_MSFgbqKUTYM
+definitions:
+  events__admin__content:
+    menu_name: admin
+    parent: system.admin_content
+    weight: 1
+    expanded: false
+    enabled: false
+  entity__eventseries__add_page:
+    menu_name: admin
+    parent: events.admin.content
+    weight: 1
+    expanded: false
+    enabled: false
+  eventseries__listing:
+    menu_name: admin
+    parent: events.admin.content
+    weight: 2
+    expanded: false
+    enabled: false
+  eventinstance__listing:
+    menu_name: admin
+    parent: events.admin.content
+    weight: 3
+    expanded: false
+    enabled: false
+  dpl_admin__add_content:
+    menu_name: admin
+    parent: system.admin_content
+    weight: 2
+    expanded: false
+    enabled: true
+  dpl_footer__footer_form:
+    menu_name: admin
+    parent: system.admin_content
+    weight: 4
+    expanded: false
+    enabled: true

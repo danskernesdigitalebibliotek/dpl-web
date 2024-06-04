@@ -1,0 +1,10 @@
+uuid: 531bbd81-a29d-4a4f-b7a2-507deb08f39b
+langcode: en
+status: true
+dependencies: {  }
+id: structural_elements
+label: 'Structural elements'
+description:
+  value: ''
+  format: basic
+weight: 0

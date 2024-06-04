@@ -1,0 +1,32 @@
+{%
+  set classes = [
+  'card',
+  'card--' ~ variant|default('x-large'),
+  has_media ? 'card--has-media' : 'card--has-no-media'
+]
+%}
+
+<article {{ attributes.addClass(classes) }}>
+  <a href="{{ url }}">
+    <figure class="card__media">
+      {% include '@novel/components/media-container.html.twig'
+        with {
+        attributes: create_attribute(),
+        media: media,
+        has_media: has_media,
+        placeholder_text: teaser_text,
+      } only %}
+    </figure>
+    <div class="card__tags">
+      {% if type_tag %}
+        <span class="card__tag card__tag--type">{{ type_tag }}</span>
+      {% endif %}
+      {% if date_tag %}
+        <span class="card__tag">{{ date_tag }}</span>
+      {% endif %}
+    </div>
+    <h3 class="card__title">
+      {{ title }}
+    </h3>
+  </a>
+</article>

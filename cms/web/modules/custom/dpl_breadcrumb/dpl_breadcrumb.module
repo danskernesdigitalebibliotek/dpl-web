@@ -1,0 +1,258 @@
+<?php
+
+use Drupal\Core\Entity\FieldableEntityInterface;
+use Drupal\Core\Form\FormStateInterface;
+use Drupal\dpl_breadcrumb\Services\BreadcrumbHelper;
+use Drupal\drupal_typed\DrupalTyped;
+use Drupal\node\Entity\Node;
+use Drupal\paragraphs\Entity\Paragraph;
+use Drupal\taxonomy\TermInterface;
+
+/**
+ * Implements hook_form_FORM_ID_alter().
+ */
+function dpl_breadcrumb_form_taxonomy_term_breadcrumb_structure_form_alter(array &$form, FormStateInterface $form_state, string $form_id): void {
+  $service = DrupalTyped::service(BreadcrumbHelper::class, 'dpl_breadcrumb.breadcrumb_helper');
+
+  $breadcrumb_item = \Drupal::routeMatch()->getParameter('taxonomy_term');
+
+  if (!($breadcrumb_item instanceof TermInterface)) {
+    return;
+  }
+
+  $form['breadcrumb_children'] = [
+    '#type' => 'details',
+    '#title' => t('Content that has set this breadcrumb as a parent', [], ['context' => 'DPL admin UX']),
+    '#weight' => 5,
+    'items' => $service->getRenderedReferencingNodes($breadcrumb_item, 'teaser'),
+  ];
+}
+
+/**
+ * Implements hook_preprocess_paragraph__TYPE().
+ *
+ * Prepares dynamic items for automatically displaying breadcrumb children.
+ */
+function dpl_breadcrumb_preprocess_paragraph__breadcrumb_children(array &$variables): void {
+  $paragraph = $variables['paragraph'] ?? NULL;
+
+  // In the preview (AKA backend view), we don't want to load dynamics.
+  if (!($paragraph instanceof Paragraph) || $variables['view_mode'] === 'preview') {
+    return;
+  }
+
+  $breadcrumb_items = $paragraph->get('field_breadcrumb_target')->referencedEntities();
+  $breadcrumb_item = reset($breadcrumb_items);
+
+  if (!($breadcrumb_item instanceof TermInterface)) {
+    return;
+  }
+
+  $service = DrupalTyped::service(BreadcrumbHelper::class, 'dpl_breadcrumb.breadcrumb_helper');
+
+  $variables['items'] = $service->getRenderedReferencingNodes($breadcrumb_item);
+
+  // Drupal will cache the whole paragraph, as it does not know that it is
+  // embedding a dynamic list. We'll add a simple cache tag,
+  // so it be invalidated if any nodes have been updated - e.g. the same kind of
+  // cache tag that a view has.
+  $variables['#cache']['tags'][] = 'node_list';
+}
+
+/**
+ * Custom helper function for preparing breadcrumb.
+ *
+ * We get it based on a node's field_breadcrumb_parent.
+ */
+function dpl_breadcrumb_preprocess_page(array &$variables): void {
+  $entity = \Drupal::routeMatch()->getParameter('node');
+
+  if (empty($entity)) {
+    $event_series = \Drupal::routeMatch()->getParameter('eventseries');
+    $event_instance = \Drupal::routeMatch()->getParameter('eventinstance');
+
+    $entity = $event_series ?? $event_instance;
+  }
+
+  if (!($entity instanceof FieldableEntityInterface)) {
+    return;
+  }
+
+  $service = DrupalTyped::service(BreadcrumbHelper::class, 'dpl_breadcrumb.breadcrumb_helper');
+
+  // Building the breadcrumb, displayed at the top of the page.
+  $variables['breadcrumb'] = $service->getBreadcrumb($entity);
+
+  // If this entity is part of the structure tree, we might display an automatic
+  // list of the related children.
+  // This is seperate from the breadcrumb that is dispalyed on the page.
+  $breadcrumb_item = $service->getBreadcrumbItem($entity);
+
+  if ($breadcrumb_item instanceof TermInterface &&
+      $breadcrumb_item->get('field_show_children')->getString() == '1') {
+    // Turning a checkbox field into a TRUE/FALSE.
+    $show_subtitles = $breadcrumb_item->hasField('field_show_children_subtitles') &&
+      $breadcrumb_item->get('field_show_children_subtitles')->getString() == '1';
+
+    $custom_title = $breadcrumb_item->hasField('field_children_title') ?
+      $breadcrumb_item->get('field_children_title')->getString() : NULL;
+
+    $default_title = t(
+      'Related content for "@title"',
+      ['@title' => $breadcrumb_item->getName()],
+      ['context' => 'DPL breadcrumb']
+    );
+
+    $variables['related_children'] = [
+      'items' => $service->getRenderedReferencingNodes($breadcrumb_item),
+      'title' => !empty($custom_title) ? $custom_title : $default_title,
+      'show_subtitles' => $show_subtitles,
+    ];
+
+    // Drupal will cache the whole page, as it does not know that it is
+    // embedding a dynamic list. We'll add a simple cache tag,
+    // so it be invalidated if any nodes have been updated - e.g. the same kind
+    // of cache tag that a view has.
+    // You could expand this to be a more specific cache tag, but it will only
+    // affect this one page, so node_list should be sufficient.
+    $variables['#cache']['tags'][] = 'node_list';
+  }
+}
+
+/**
+ * Implements hook_form_alter().
+ *
+ * Altering the node edit form, and detect if the current node already exists
+ * in the content structure. If it does, we do not want the editor to be
+ * able to change it, as it will be overwritten in the save() hook - and having
+ * the field disabled, with a description is also good AX.
+ */
+function dpl_breadcrumb_form_alter(array &$form, FormStateInterface $form_state, string $form_id): void {
+  if (!str_starts_with($form_id, 'node_') || !str_ends_with($form_id, '_edit_form')) {
+    return;
+  }
+
+  $service = DrupalTyped::service(BreadcrumbHelper::class, 'dpl_breadcrumb.breadcrumb_helper');
+  $field_name = $service->getStructureFieldName();
+
+  if (empty($form[$field_name]['widget'])) {
+    return;
+  }
+
+  $field = &$form[$field_name]['widget'];
+  $node = \Drupal::routeMatch()->getParameter('node');
+  $breadcrumb_item = $service->getBreadcrumbItem($node);
+
+  // If this node exists in the structure tree, we want to override data.
+  if ($breadcrumb_item) {
+    $breadcrumb_parent = $service->getStructureParent($breadcrumb_item);
+
+    $field['#disabled'] = TRUE;
+    $field['#default_value'] = [$breadcrumb_parent?->id()];
+    $field['#description'] = t('TODO - A text that describes that this node already exists in the content structure and cannot be edited.', [], ['context' => 'DPL Breadcrumbs']);
+  }
+
+}
+
+/**
+ * Implements hook_ENTITY_TYPE_presave().
+ *
+ * When saving nodes, we want to check if it has been inserted in the
+ * breadcrumb structure tree. If it has, we want to override any data that may
+ * be set manually, and replace it with a reference of the parent of the
+ * breadcrumb.
+ */
+function dpl_breadcrumb_node_presave(Node $node): void {
+  $service = DrupalTyped::service(BreadcrumbHelper::class, 'dpl_breadcrumb.breadcrumb_helper');
+
+  $field_name = $service->getStructureFieldName();
+
+  if (!$node->hasField($field_name)) {
+    return;
+  }
+
+  $breadcrumb_item = $service->getBreadcrumbItem($node);
+
+  // We did not find the node in the tree - quit out.
+  if (!($breadcrumb_item instanceof TermInterface)) {
+    return;
+  }
+
+  // We need to find the parent of the breadcrumb item, as this is actually
+  // what we want the field to be set to.
+  // The reason we want to set it to the parent, is that it is the correct
+  // logic, for making sure this node shows up in the correct automatic
+  // breadcrumb lists.
+  $breadcrumb_parent = $service->getStructureParent($breadcrumb_item);
+
+  $node->set($field_name, [$breadcrumb_parent?->id()]);
+
+}
+
+/**
+ * Implements hook_token_info().
+ *
+ *  Introducing our custom token, used to build pretty breadcrumb URLs.
+ *
+ * @return array<mixed>
+ *   see hook_token_info.
+ */
+function dpl_breadcrumb_token_info(): array {
+  return [
+    'types' => [
+      'dpl_breadcrumb' => [
+        'name' => 'DPL Breadcrumb',
+      ],
+    ],
+    'tokens' => [
+      'dpl_breadcrumb' => [
+        'breadcrumb-url-alias' => [
+          'name' => 'Breadcrumb URL alias',
+        ],
+      ],
+    ],
+  ];
+}
+
+/**
+ * Implements hook_tokens().
+ *
+ * Used to create the URL alias, based on breadcrumb.
+ *
+ * @param string $type
+ *   See hook_tokens().
+ * @param array<mixed> $tokens
+ *   See hook_tokens().
+ * @param array<mixed> $data
+ *   See hook_tokens().
+ *
+ * @return array<mixed>
+ *   See hook_tokens().
+ */
+function dpl_breadcrumb_tokens(string $type, array $tokens, array $data): array {
+  $token_original = $tokens['breadcrumb-url-alias'] ?? NULL;
+
+  if ($type !== 'dpl_breadcrumb' || empty($token_original)) {
+    return [];
+  }
+
+  $entity = $data['node'] ?? NULL;
+
+  if (empty($entity)) {
+    $event_series = $data['eventseries'] ?? NULL;
+    $event_instance = $data['eventinstance'] ?? NULL;
+
+    $entity = $event_series ?? $event_instance;
+  }
+
+  if (!($entity instanceof FieldableEntityInterface)) {
+    return [];
+  }
+
+  $breadcrumb =
+    \Drupal::service('dpl_breadcrumb.breadcrumb_helper')->getBreadcrumbUrlString($entity);
+
+  return [
+    $token_original => $breadcrumb,
+  ];
+}

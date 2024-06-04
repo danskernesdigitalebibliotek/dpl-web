@@ -1,0 +1,61 @@
+_meta:
+  version: '1.0'
+  entity_type: node
+  uuid: 480a6997-4ca2-4cc6-a8f2-61254401d044
+  bundle: branch
+  default_langcode: da
+  depends:
+    e00e1460-169e-468d-9835-d664f06d0969: file
+default:
+  revision_uid:
+    -
+      target_id: 1
+  status:
+    -
+      value: true
+  uid:
+    -
+      target_id: 1
+  title:
+    -
+      value: 'Det virtuelle bibliotek'
+  created:
+    -
+      value: 1708941109
+  promote:
+    -
+      value: false
+  sticky:
+    -
+      value: false
+  revision_translation_affected:
+    -
+      value: true
+  entity_clone_template_image:
+    -
+      entity: e00e1460-169e-468d-9835-d664f06d0969
+      alt: ''
+      title: ''
+      width: 640
+      height: 443
+  metatag:
+    -
+      tag: meta
+      attributes:
+        name: title
+        content: 'Det virtuelle bibliotek | DPL CMS'
+  path:
+    -
+      alias: ''
+      langcode: da
+  field_address:
+    -
+      langcode: en
+      country_code: DK
+      locality: ''
+      postal_code: ''
+      address_line1: ''
+      address_line2: ''
+  field_promoted_on_lists:
+    -
+      value: false

@@ -1,0 +1,16 @@
+.php-cs-fixer.dist.php
+README.md
+composer.json
+lib/Api/ExternalAgencyidPatronsApi.php
+lib/Api/ExternalV1AgencyidApi.php
+lib/ApiException.php
+lib/Configuration.php
+lib/HeaderSelector.php
+lib/Model/AddressV2.php
+lib/Model/AgencyBranch.php
+lib/Model/AuthenticatedPatronV6.php
+lib/Model/BlockStatus.php
+lib/Model/ModelInterface.php
+lib/Model/PatronV5.php
+lib/Model/Period.php
+lib/ObjectSerializer.php

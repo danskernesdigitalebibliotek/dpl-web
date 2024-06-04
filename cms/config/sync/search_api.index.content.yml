@@ -1,0 +1,87 @@
+uuid: 60c71c87-5d98-47a0-9f28-10af48e55feb
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_branch
+    - field.storage.node.field_categories
+    - search_api.server.db_search
+  module:
+    - node
+    - search_api
+id: content
+name: Content
+description: ''
+read_only: false
+field_settings:
+  created:
+    label: 'Authored on'
+    datasource_id: 'entity:node'
+    property_path: created
+    type: date
+    dependencies:
+      module:
+        - node
+  field_branch:
+    label: Branch
+    datasource_id: 'entity:node'
+    property_path: field_branch
+    type: integer
+    dependencies:
+      config:
+        - field.storage.node.field_branch
+  field_categories:
+    label: Categories
+    datasource_id: 'entity:node'
+    property_path: field_categories
+    type: integer
+    dependencies:
+      config:
+        - field.storage.node.field_categories
+  status:
+    label: Published
+    datasource_id: 'entity:node'
+    property_path: status
+    type: boolean
+    dependencies:
+      module:
+        - node
+  title:
+    label: Title
+    datasource_id: 'entity:node'
+    property_path: title
+    type: string
+    dependencies:
+      module:
+        - node
+  type:
+    label: 'Content type'
+    datasource_id: 'entity:node'
+    property_path: type
+    type: string
+    dependencies:
+      module:
+        - node
+datasource_settings:
+  'entity:node':
+    bundles:
+      default: true
+      selected: {  }
+    languages:
+      default: true
+      selected: {  }
+processor_settings:
+  add_url: {  }
+  aggregated_field: {  }
+  custom_value: {  }
+  entity_type: {  }
+  language_with_fallback: {  }
+  rendered_item: {  }
+tracker_settings:
+  default:
+    indexing_order: fifo
+options:
+  cron_limit: 50
+  index_directly: true
+  track_changes_in_references: true
+server: db_search

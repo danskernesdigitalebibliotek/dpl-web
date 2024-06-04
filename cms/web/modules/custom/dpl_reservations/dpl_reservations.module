@@ -1,0 +1,79 @@
+<?php
+
+/**
+ * @file
+ * Dpl_reservations drupal module file.
+ *
+ * Shows the reservation list.
+ */
+
+use Drupal\Core\Form\FormStateInterface;
+use Drupal\Core\Url;
+
+/**
+ * Implements hook_dpl_react_apps_data().
+ */
+function dpl_reservations_dpl_react_apps_data(array &$data): void {
+  $data['urls'] += [
+    'reservations' => dpl_react_apps_ensure_url_is_string(
+      Url::fromRoute('dpl_reservations.list', [], ['absolute' => TRUE])->toString()
+    ),
+  ];
+  $data['texts'] += [
+    'reservation-list-loan-before' => t('Borrow before @date', [], ['context' => 'Reservation list']),
+  ];
+}
+
+/**
+ * Implements hook_form_FORM_ID_alter().
+ */
+function dpl_reservations_form_dpl_library_agency_list_size_settings_form_alter(array &$form, FormStateInterface $form_state): void {
+  /** @var \Drupal\dpl_reservations\DplReservationsSettings $reservations_settings */
+  $reservations_settings = \Drupal::service('dpl_reservations.settings');
+
+  $form['reservations_list_size_settings'] = [
+    '#type' => 'fieldset',
+    '#title' => t('Reservations list size settings', [], ['context' => 'List size (settings)']),
+    '#description' => t('The number of items to display in the reservation list.', [], ['context' => 'List size (settings)']),
+    '#tree' => FALSE,
+  ];
+
+  $form['reservations_list_size_settings']['reservations_list_size_desktop'] = [
+    '#type' => 'number',
+    '#title' => t('Reservations list size on desktop', [], ['context' => 'List size (settings)']),
+    '#default_value' => $reservations_settings->getListSizeDesktop(),
+    '#min' => 1,
+    '#step' => 1,
+    '#required' => TRUE,
+  ];
+
+  $form['reservations_list_size_settings']['reservations_list_size_mobile'] = [
+    '#type' => 'number',
+    '#title' => t('Reservations list size on mobile', [], ['context' => 'List size (settings)']),
+    '#default_value' => $reservations_settings->getListSizeMobile(),
+    '#min' => 1,
+    '#step' => 1,
+    '#required' => TRUE,
+  ];
+
+  $form['#submit'][] = 'dpl_reservations_handler_submit';
+}
+
+/**
+ * Custom submit callback.
+ *
+ * @param array<mixed> $form
+ *   An associative array containing the structure of the form.
+ * @param \Drupal\Core\Form\FormStateInterface $form_state
+ *   The current state of the form.
+ */
+function dpl_reservations_handler_submit(array &$form, FormStateInterface $form_state): void {
+  /** @var \Drupal\dpl_reservations\DplReservationsSettings $reservations_settings */
+  $reservations_settings = \Drupal::service('dpl_reservations.settings');
+
+  \Drupal::service('config.factory')
+    ->getEditable($reservations_settings->getConfigKey())
+    ->set('reservations_list_size_desktop', $form_state->getValue('reservations_list_size_desktop'))
+    ->set('reservations_list_size_mobile', $form_state->getValue('reservations_list_size_mobile'))
+    ->save();
+}

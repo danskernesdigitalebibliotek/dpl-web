@@ -1,0 +1,323 @@
+<?php
+
+/**
+ * @file
+ * Functionality for admin / editor UX.
+ */
+
+use Drupal\Core\Form\FormStateInterface;
+use Drupal\Core\Render\Markup;
+use Drupal\Core\Url;
+use Drupal\dpl_admin\Services\VersionHelper;
+use Drupal\drupal_typed\DrupalTyped;
+use Drupal\menu_link_content\Entity\MenuLinkContent;
+use Drupal\recurring_events\Entity\EventInstance;
+use Drupal\system\Form\SiteInformationForm;
+use Drupal\views\Plugin\views\field\EntityField;
+use Drupal\views\ResultRow;
+use Drupal\views\ViewExecutable;
+
+/**
+ * Implements template_preprocess_html().
+ *
+ * Sets a class to tell our admin.scss that we're on an admin page, and also
+ * loading our custom admin CSS.
+ */
+function dpl_admin_preprocess_html(array &$variables): void {
+  $variables['#attached']['library'][] = 'dpl_admin/frontend';
+
+  if (!\Drupal::service('router.admin_context')->isAdminRoute()) {
+    return;
+  }
+
+  $variables['attributes']['class'][] = 'is-admin-page';
+  $variables['#attached']['library'][] = 'dpl_admin/base';
+}
+
+/**
+ * Implements hook_local_tasks_alter().
+ *
+ * Remove and alter unused local tasks, displayed on /admin/content.
+ *
+ * @param array<mixed> $local_tasks
+ *   See the $form in hook_local_tasks_alter().
+ */
+function dpl_admin_local_tasks_alter(array &$local_tasks): void {
+  unset($local_tasks['entity.eventseries.collection']);
+  unset($local_tasks['entity.eventinstance.collection']);
+  unset($local_tasks['entity.media.collection']);
+}
+
+/**
+ * Implements hook_menu_local_actions_alter().
+ *
+ * @param array<mixed> $local_actions
+ *   See the $form in hook_local_actions_alter().
+ */
+function dpl_admin_menu_local_actions_alter(&$local_actions) : void {
+  // Remove all tasks appearing on /events.
+  array_walk($local_actions, function (array &$action) {
+    $action['appears_on'] = array_filter($action['appears_on'], function (string $route) {
+      return $route !== 'entity.eventinstance.collection';
+    });
+  });
+
+  // Remove the 'add content' button, as we have our own custom one shown+.
+  unset($local_actions['node.add_page']);
+}
+
+/**
+ * Implements template_preprocess_views_view_field().
+ */
+function dpl_admin_preprocess_views_view_field(array &$variables): void {
+  if (
+    !isset($variables['view'], $variables['field']) ||
+    !$variables['view'] instanceof ViewExecutable ||
+    !$variables['field'] instanceof EntityField
+  ) {
+    return;
+  }
+
+  if ($variables['view']->id() == 'content' &&
+    $variables['field']->getField() == '.name') {
+    _dpl_admin_preprocess_views_view_field_content_name($variables);
+  }
+}
+
+/**
+ * Preprocess the author field in the "content" admin view.
+ *
+ * Add information if the content is locked by another user.
+ */
+function _dpl_admin_preprocess_views_view_field_content_name(array &$variables) : void {
+  if (
+    !isset($variables['output'], $variables['row']) ||
+    !$variables['row'] instanceof ResultRow ||
+    !$variables['output'] instanceof Markup
+  ) {
+    return;
+  }
+
+  /** @var \Drupal\user\UserInterface|null $content_lock_owner */
+  $content_lock_owner = $variables['row']->_relationship_entities['uid_1'] ?? NULL;
+
+  if (!$content_lock_owner) {
+    return;
+  }
+
+  $variables['output'] = Markup::create("
+    {$variables['output']}
+    <br/>
+    <small>" .
+    t('(Locked by @username)', ['@username' => $content_lock_owner->toLink()->toString()], ["context" => "DPL admin UX"]) .
+    "</small>"
+  );
+}
+
+/**
+ * Implements hook_form_alter() for altering the event series form.
+ *
+ * Wraps certain form elements within a flex container to apply styling.
+ *
+ * @param array<mixed> $form
+ *   See the $form in dpl_admin_form_alter().
+ */
+function _dpl_admin_form_alter_eventseries(array &$form, FormStateInterface $form_state, string $form_id): void {
+  $keys = ['weekly_recurring_date', 'monthly_recurring_date', 'yearly_recurring_date', 'daily_recurring_date'];
+
+  // Set the reccurance type to 'custom' by default, if nothing else is set.
+  if (isset($form['recur_type']['widget']['#default_value']) && empty($form['recur_type']['widget']['#default_value'])) {
+    $form['recur_type']['widget']['#default_value'] = 'custom';
+  }
+
+  foreach ($keys as $key) {
+    $form_element_date_start = $form[$key]['widget'][0]['value'] ?? NULL;
+    $form_element_date_end = $form[$key]['widget'][0]['end_value'] ?? NULL;
+
+    // Wrapping the "between these dates" fields with a flex wrapper.
+    if (!empty($form_element_date_start) && !empty($form_element_date_end)) {
+      $form_element_date_start['#prefix'] = '<div class="dpl-admin__flex-container">';
+      $form_element_date_end['#suffix'] = '</div>';
+
+      $form[$key]['widget'][0]['value'] = $form_element_date_start;
+      $form[$key]['widget'][0]['end_value'] = $form_element_date_end;
+    }
+
+    $form_element_time_start = $form[$key]['widget'][0]['time'] ?? NULL;
+    $form_element_time_end = $form[$key]['widget'][0]['duration'] ?? NULL;
+
+    // Wrapping the "start date" fields with a flex wrapper.
+    if (!empty($form_element_time_start) && !empty($form_element_time_end)) {
+      $form_element_time_start['#prefix'] = '<div class="dpl-admin__flex-container">';
+      $form_element_time_end['#suffix'] = '</div>';
+
+      $form[$key]['widget'][0]['time'] = $form_element_time_start;
+      $form[$key]['widget'][0]['duration'] = $form_element_time_end;
+    }
+  }
+}
+
+/**
+ * Implements hook_form_FORM_ID_alter() for the event instance form.
+ *
+ * Adds warning messages to the form that the user is editing a single event
+ * in an event series, and provides a link to edit the series.
+ *
+ * @param array<mixed> $form
+ *   See the $form in dpl_admin_form_alter().
+ */
+function _dpl_admin_form_alter_eventinstance(array &$form, FormStateInterface $form_state, string $form_id): void {
+  $event_instance = \Drupal::routeMatch()->getParameter('eventinstance');
+  $message_suffix = '';
+
+  if ($event_instance instanceof EventInstance) {
+    $event_series = $event_instance->getEventSeries();
+
+    $event_series_edit_url = Url::fromRoute(
+      'entity.eventseries.edit_form',
+      ['eventseries' => $event_series->id()]
+    )->toString();
+
+    $message_suffix =
+      t('<a href="@url">Edit the series here</a>',
+        ['@url' => $event_series_edit_url],
+        ['context' => 'DPL admin UX']
+      );
+  }
+
+  \Drupal::messenger()->addWarning(t(
+    'You are currently editing a single event, in an event series. @suffix',
+    ['@suffix' => $message_suffix],
+    ['context' => 'DPL admin UX']
+  ));
+  \Drupal::messenger()->addWarning(t(
+    'Any changes you make here will only override this single event.',
+    [], ['context' => 'DPL admin UX']
+  ));
+  \Drupal::messenger()->addWarning(t('If you leave fields empty, the data from the parent series will be used.',
+    [], ['context' => 'DPL admin UX']
+  ));
+}
+
+/**
+ * Implements hook_form_FORM_ID_alter() for the page node CT edit/add form.
+ *
+ * Hides hero fields, if display_titles is not toggled on.
+ *
+ * @param array<mixed> $form
+ *   See the $form in dpl_admin_form_alter().
+ */
+function _dpl_admin_form_alter_node_page(array &$form, FormStateInterface $form_state, string $form_id): void {
+
+  // Hide title fields, if the editor choose to disable it.
+  if (!empty($form['field_display_titles'])) {
+    $inactive_state = [':input[name="field_display_titles[value]"]' => ['checked' => FALSE]];
+
+    $form['field_hero_title']['#states']['invisible'] = $inactive_state;
+    $form['field_subtitle']['#states']['invisible'] = $inactive_state;
+  }
+
+}
+
+/**
+ * Implements hook_form_alter().
+ *
+ * Alter the edit/add forms for eventseries/event instances.
+ *
+ * @param array<mixed> $form
+ *   See the $form in hook_form_alter().
+ */
+function dpl_admin_form_alter(array &$form, FormStateInterface $form_state, string $form_id): void {
+  if (in_array($form_id, ['eventseries_default_add_form', 'eventseries_default_edit_form'])) {
+    _dpl_admin_form_alter_eventseries($form, $form_state, $form_id);
+  }
+
+  if (in_array($form_id, ['eventinstance_default_add_form', 'eventinstance_default_edit_form'])) {
+    _dpl_admin_form_alter_eventinstance($form, $form_state, $form_id);
+  }
+
+  if (in_array($form_id, ['node_page_form', 'node_page_edit_form'])) {
+    _dpl_admin_form_alter_node_page($form, $form_state, $form_id);
+  }
+}
+
+/**
+ * Implements hook_element_info_alter().
+ *
+ * Override the datetime element, to remove seconds input.
+ *
+ * @param array<mixed> $types
+ *   See the $types in hook_element_info_alter().
+ */
+function dpl_admin_element_info_alter(array &$types): void {
+  $types['datetime']['#process'][] = 'dpl_admin_datetime_set_format';
+}
+
+/**
+ * Element process callback for datetime fields.
+ *
+ * @param array<mixed> $element
+ *   The form element that we are overriding.
+ *
+ * @return array<mixed>
+ *   Updated version of $element.
+ */
+function dpl_admin_datetime_set_format(array $element): array {
+  // Remove seconds in browsers that support HTML5 type=date.
+  $element['time']['#attributes']['step'] = 60;
+  return $element;
+}
+
+/**
+ * Implements hook_ENTITY_TYPE_presave().
+ *
+ * The editor can place links in the main menu in several levels, but we only
+ * display the first level in the frontend.
+ * If the editor still places a multi-level link, we'll give them a warning.
+ */
+function dpl_admin_menu_link_content_presave(MenuLinkContent $entity): void {
+  if ('main' !== $entity->getMenuName()) {
+    return;
+  }
+
+  if (!$entity->get('parent')->isEmpty()) {
+    \Drupal::messenger()->addWarning(t(
+      'You have added a menu link with a parent. Please notice that this menu link will not be displayed, as we do not support multi-levels in the main menu.',
+      [], ['context' => 'DPL admin UX']
+    ));
+  }
+}
+
+/**
+ * Implements hook_dpl_protected_nodes_get_protected_nodes().
+ */
+function dpl_admin_dpl_protected_nodes_get_protected_nodes(): array {
+  return dpl_protected_nodes_get_context(SiteInformationForm::class, 'system.site_information_settings');
+}
+
+/**
+ * Implements hook_toolbar_alter().
+ *
+ * Displaying the DPL CMS version in the secondary admin toolbar.
+ *
+ * @param array<mixed> $items
+ *   See hook_toolbar_alter().
+ */
+function dpl_admin_toolbar_alter(array &$items): void {
+  $service = DrupalTyped::service(VersionHelper::class, 'dpl_admin.version_helper');
+
+  $version = $service->getVersion();
+
+  if (empty($version)) {
+    return;
+  }
+
+  $items['cms_version'] = [
+    '#type' => 'toolbar_item',
+    'tab' => [
+      '#type' => 'link',
+      '#title' => t('CMS version: @version', ['@version' => $version], ['context' => 'DPL admin UX']),
+      '#url' => Url::fromRoute('system.status'),
+    ],
+  ];
+}

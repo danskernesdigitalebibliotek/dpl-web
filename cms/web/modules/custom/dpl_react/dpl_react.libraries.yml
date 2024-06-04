@@ -1,4 +1,3 @@
-
 hello-world:
   remote: https://github.com/danskernesdigitalebibliotek/dpl-react
   license:
@@ -6,7 +5,7 @@ hello-world:
     url: https://github.com/danskernesdigitalebibliotek/dpl-react/blob/master/LICENSE
     gpl-compatible: true
   js:
-    /libraries/dpl-react/hello-world.js: {}
+    /libraries/dpl-react/hello-world.js: { preprocess: false }
   dependencies:
     - dpl_react/base
     - dpl_react/handler
@@ -18,7 +17,19 @@ search-header:
     url: https://github.com/danskernesdigitalebibliotek/dpl-react/blob/master/LICENSE
     gpl-compatible: true
   js:
-    /libraries/dpl-react/search-header.js: {}
+    /libraries/dpl-react/search-header.js: { preprocess: false }
+  dependencies:
+    - dpl_react/base
+    - dpl_react/handler
+
+advanced-search:
+  remote: https://github.com/danskernesdigitalebibliotek/dpl-react
+  license:
+    name: GNU AFFERO
+    url: https://github.com/danskernesdigitalebibliotek/dpl-react/blob/master/LICENSE
+    gpl-compatible: true
+  js:
+    /libraries/dpl-react/AdvancedSearch.js: {}
   dependencies:
     - dpl_react/base
     - dpl_react/handler
@@ -30,7 +41,31 @@ search-result:
     url: https://github.com/danskernesdigitalebibliotek/dpl-react/blob/master/LICENSE
     gpl-compatible: true
   js:
-    /libraries/dpl-react/search-result.js: {}
+    /libraries/dpl-react/search-result.js: { preprocess: false }
+  dependencies:
+    - dpl_react/base
+    - dpl_react/handler
+
+patron-page:
+  remote: https://github.com/danskernesdigitalebibliotek/dpl-react
+  license:
+    name: GNU AFFERO
+    url: https://github.com/danskernesdigitalebibliotek/dpl-react/blob/master/LICENSE
+    gpl-compatible: true
+  js:
+    /libraries/dpl-react/PatronPage.js: { preprocess: false }
+  dependencies:
+    - dpl_react/base
+    - dpl_react/handler
+
+create-patron:
+  remote: https://github.com/danskernesdigitalebibliotek/dpl-react
+  license:
+    name: GNU AFFERO
+    url: https://github.com/danskernesdigitalebibliotek/dpl-react/blob/master/LICENSE
+    gpl-compatible: true
+  js:
+    /libraries/dpl-react/CreatePatron.js: { preprocess: false }
   dependencies:
     - dpl_react/base
     - dpl_react/handler
@@ -42,7 +77,192 @@ material:
     url: https://github.com/danskernesdigitalebibliotek/dpl-react/blob/master/LICENSE
     gpl-compatible: true
   js:
-    /libraries/dpl-react/material.js: {}
+    /libraries/dpl-react/material.js: { preprocess: false }
+  dependencies:
+    - dpl_react/base
+    - dpl_react/handler
+
+loan-list:
+  remote: https://github.com/danskernesdigitalebibliotek/dpl-react
+  license:
+    name: GNU AFFERO
+    url: https://github.com/danskernesdigitalebibliotek/dpl-react/blob/master/LICENSE
+    gpl-compatible: true
+  js:
+    /libraries/dpl-react/loan-list.js: { preprocess: false }
+  dependencies:
+    - dpl_react/base
+    - dpl_react/handler
+
+recommender:
+  remote: https://github.com/danskernesdigitalebibliotek/dpl-react
+  license:
+    name: GNU AFFERO
+    url: https://github.com/danskernesdigitalebibliotek/dpl-react/blob/master/LICENSE
+    gpl-compatible: true
+  js:
+    /libraries/dpl-react/Recommender.js: { preprocess: false }
+  dependencies:
+    - dpl_react/base
+    - dpl_react/handler
+
+something-similar:
+  remote: https://github.com/danskernesdigitalebibliotek/dpl-react
+  license:
+    name: GNU AFFERO
+    url: https://github.com/danskernesdigitalebibliotek/dpl-react/blob/master/LICENSE
+    gpl-compatible: true
+  js:
+    /libraries/dpl-react/SomethingSimilar.js: { preprocess: false }
+  dependencies:
+    - dpl_react/base
+    - dpl_react/handler
+
+fee-list:
+  remote: https://github.com/danskernesdigitalebibliotek/dpl-react
+  license:
+    name: GNU AFFERO
+    url: https://github.com/danskernesdigitalebibliotek/dpl-react/blob/master/LICENSE
+    gpl-compatible: true
+  js:
+    /libraries/dpl-react/FeeList.js: { preprocess: false }
+  dependencies:
+    - dpl_react/base
+    - dpl_react/handler
+
+favorites-list-material-component:
+  remote: https://github.com/danskernesdigitalebibliotek/dpl-react
+  license:
+    name: GNU AFFERO
+    url: https://github.com/danskernesdigitalebibliotek/dpl-react/blob/master/LICENSE
+    gpl-compatible: true
+  js:
+    /libraries/dpl-react/FavoritesListMaterialComponent.js:
+      { preprocess: false }
+  dependencies:
+    - dpl_react/base
+    - dpl_react/handler
+
+reservation-list:
+  remote: https://github.com/danskernesdigitalebibliotek/dpl-react
+  license:
+    name: GNU AFFERO
+    url: https://github.com/danskernesdigitalebibliotek/dpl-react/blob/master/LICENSE
+    gpl-compatible: true
+  js:
+    /libraries/dpl-react/reservation-list.js: { preprocess: false }
+  dependencies:
+    - dpl_react/base
+    - dpl_react/handler
+
+DashBoard:
+  remote: https://github.com/danskernesdigitalebibliotek/dpl-react
+  license:
+    name: GNU AFFERO
+    url: https://github.com/danskernesdigitalebibliotek/dpl-react/blob/master/LICENSE
+    gpl-compatible: true
+  js:
+    /libraries/dpl-react/dashboard.js: { preprocess: false }
+  dependencies:
+    - dpl_react/base
+    - dpl_react/handler
+
+favorites-list:
+  remote: https://github.com/danskernesdigitalebibliotek/dpl-react
+  license:
+    name: GNU AFFERO
+    url: https://github.com/danskernesdigitalebibliotek/dpl-react/blob/master/LICENSE
+    gpl-compatible: true
+  js:
+    /libraries/dpl-react/FavoritesList.js: { preprocess: false }
+  dependencies:
+    - dpl_react/base
+    - dpl_react/handler
+
+recommended-material:
+  remote: https://github.com/danskernesdigitalebibliotek/dpl-react
+  license:
+    name: GNU AFFERO
+    url: https://github.com/danskernesdigitalebibliotek/dpl-react/blob/master/LICENSE
+    gpl-compatible: true
+  js:
+    /libraries/dpl-react/RecommendedMaterial.js: {}
+  dependencies:
+    - dpl_react/base
+    - dpl_react/handler
+
+recommendation:
+  remote: https://github.com/danskernesdigitalebibliotek/dpl-react
+  license:
+    name: GNU AFFERO
+    url: https://github.com/danskernesdigitalebibliotek/dpl-react/blob/master/LICENSE
+    gpl-compatible: true
+  js:
+    /libraries/dpl-react/recommendation.js: {}
+  dependencies:
+    - dpl_react/base
+    - dpl_react/handler
+
+opening-hours:
+  remote: https://github.com/danskernesdigitalebibliotek/dpl-react
+  license:
+    name: GNU AFFERO
+    url: https://github.com/danskernesdigitalebibliotek/dpl-react/blob/master/LICENSE
+    gpl-compatible: true
+  js:
+    /libraries/dpl-react/OpeningHours.js: {}
+  dependencies:
+    - dpl_react/base
+    - dpl_react/handler
+
+material-grid-automatic:
+  remote: https://github.com/danskernesdigitalebibliotek/dpl-react
+  license:
+    name: GNU AFFERO
+    url: https://github.com/danskernesdigitalebibliotek/dpl-react/blob/master/LICENSE
+    gpl-compatible: true
+  js:
+    /libraries/dpl-react/MaterialGridAutomatic.js: {}
+  dependencies:
+    - dpl_react/base
+    - dpl_react/handler
+
+material-grid-manual:
+  remote: https://github.com/danskernesdigitalebibliotek/dpl-react
+  license:
+    name: GNU AFFERO
+    url: https://github.com/danskernesdigitalebibliotek/dpl-react/blob/master/LICENSE
+    gpl-compatible: true
+  js:
+    /libraries/dpl-react/MaterialGridManual.js: {}
+  dependencies:
+    - dpl_react/base
+    - dpl_react/handler
+
+opening-hours-editor:
+  remote: https://github.com/danskernesdigitalebibliotek/dpl-react
+  license:
+    name: GNU AFFERO
+    url: https://github.com/danskernesdigitalebibliotek/dpl-react/blob/master/LICENSE
+    gpl-compatible: true
+  js:
+    /libraries/dpl-react/OpeningHoursEditor.js: {}
+  css:
+    base:
+      /themes/custom/novel/assets/dpl-design-system/css/opening-hours-editor.css:
+        {}
+  dependencies:
+    - dpl_react/base
+    - dpl_react/handler
+
+menu:
+  remote: https://github.com/danskernesdigitalebibliotek/dpl-react
+  license:
+    name: GNU AFFERO
+    url: https://github.com/danskernesdigitalebibliotek/dpl-react/blob/master/LICENSE
+    gpl-compatible: true
+  js:
+    /libraries/dpl-react/menu.js: { preprocess: false }
   dependencies:
     - dpl_react/base
     - dpl_react/handler
@@ -54,15 +274,14 @@ base:
     url: https://github.com/danskernesdigitalebibliotek/dpl-react/blob/master/LICENSE
     gpl-compatible: true
   js:
-    /libraries/dpl-react/runtime.js: { weight: -19 }
-    /libraries/dpl-react/bundle.js: { weight: -18 }
-    /libraries/dpl-react/mount.js: { weight: -16 }
+    /libraries/dpl-react/runtime.js: { preprocess: false, weight: -19 }
+    /libraries/dpl-react/bundle.js: { preprocess: false, weight: -18 }
+    /libraries/dpl-react/mount.js: { preprocess: false, weight: -16 }
   css:
     theme:
       /libraries/dpl-react/components.css: {}
 
 handler:
-  version: 1.0
   js:
     js/handler.js: {}
   dependencies:

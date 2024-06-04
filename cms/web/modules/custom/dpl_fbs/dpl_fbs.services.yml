@@ -1,0 +1,6 @@
+services:
+  dpl_fbs.api_factory:
+    class: Drupal\dpl_fbs\FbsApiFactory
+    arguments:
+      - "@config.manager"
+      - "@http_client"

@@ -2,5 +2,5 @@ name: Mapp Intelligence
 type: module
 description: Integration with Mapp Intelligence to track site usage.
 package: DPL
-core_version_requirement: ^9
+core_version_requirement: ^9 || ^10
 configure: dpl_mapp.settings_form

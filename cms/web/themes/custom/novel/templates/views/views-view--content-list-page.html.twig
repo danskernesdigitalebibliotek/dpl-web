@@ -1,0 +1,36 @@
+{%
+  set classes = [
+  dom_id ? 'js-view-dom-id-' ~ dom_id,
+  'content-list-page'
+]
+%}
+<div{{ attributes.addClass(classes) }}>
+  {% if view.getTitle() %}
+    {{ title_prefix }}
+    <h1 class="content-list-page__heading">{{ view.getTitle() }}</h1>
+    {{ title_suffix }}
+  {% endif %}
+
+  {{ header }}
+
+  <div class="content-list-page__filters">
+    {{ exposed }}
+
+    {% block facets %}
+    {% endblock %}
+  </div>
+
+  {{ attachment_before }}
+
+  {% if rows -%}
+    {{ rows }}
+  {% elseif empty -%}
+    {{ empty }}
+  {% endif %}
+
+  {{ pager }}
+  {{ attachment_after }}
+  {{ more }}
+  {{ footer }}
+  {{ feed_icons }}
+</div>

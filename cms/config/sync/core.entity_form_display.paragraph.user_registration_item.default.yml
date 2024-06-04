@@ -1,0 +1,81 @@
+uuid: 7702fd02-8250-4b83-b309-41c1cc6b5b43
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.field.paragraph.user_registration_item.field_anchor
+    - field.field.paragraph.user_registration_item.field_body
+    - field.field.paragraph.user_registration_item.field_display_in_navigation
+    - field.field.paragraph.user_registration_item.field_link_target
+    - field.field.paragraph.user_registration_item.field_navigation_title
+    - field.field.paragraph.user_registration_item.field_registration_link
+    - field.field.paragraph.user_registration_item.field_title
+    - paragraphs.paragraphs_type.user_registration_item
+  module:
+    - linkit
+    - select2
+    - text
+id: paragraph.user_registration_item.default
+targetEntityType: paragraph
+bundle: user_registration_item
+mode: default
+content:
+  field_anchor:
+    type: string_textfield
+    weight: 4
+    region: content
+    settings:
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+  field_body:
+    type: text_textarea
+    weight: 1
+    region: content
+    settings:
+      rows: 5
+      placeholder: ''
+    third_party_settings: {  }
+  field_display_in_navigation:
+    type: boolean_checkbox
+    weight: 2
+    region: content
+    settings:
+      display_label: true
+    third_party_settings: {  }
+  field_link_target:
+    type: select2
+    weight: 6
+    region: content
+    settings:
+      width: 100%
+    third_party_settings: {  }
+  field_navigation_title:
+    type: string_textfield
+    weight: 3
+    region: content
+    settings:
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+  field_registration_link:
+    type: linkit
+    weight: 5
+    region: content
+    settings:
+      placeholder_url: ''
+      placeholder_title: ''
+      linkit_profile: default
+      linkit_auto_link_text: false
+    third_party_settings: {  }
+  field_title:
+    type: string_textfield
+    weight: 0
+    region: content
+    settings:
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+hidden:
+  created: true
+  status: true

@@ -3,11 +3,13 @@
 namespace Drupal\dpl_react\Controller;
 
 use Drupal\Core\Controller\ControllerBase;
-use Symfony\Component\HttpFoundation\Response;
 use Drupal\dpl_library_token\LibraryTokenHandler;
-use Drupal\dpl_login\UserTokensProvider;
+use Drupal\dpl_login\AccessToken;
+use Drupal\dpl_login\AccessTokenType;
+use Drupal\dpl_login\UserTokens;
 use Symfony\Component\DependencyInjection\ContainerInterface;
-use function Safe\sprintf as sprintf;
+use Symfony\Component\HttpFoundation\Response;
+use function Safe\sprintf;
 
 /**
  * DDB React Controller.
@@ -23,24 +25,24 @@ class DplReactController extends ControllerBase {
   /**
    * The User token provider.
    *
-   * @var \Drupal\dpl_login\UserTokensProvider
+   * @var \Drupal\dpl_login\UserTokens
    */
-  protected userTokensProvider $userTokensProvider;
+  protected UserTokens $userTokens;
 
   /**
    * DdplReactController constructor.
    *
    * @param \Drupal\dpl_library_token\LibraryTokenHandler $library_token_handler
    *   The Library token handler.
-   * @param \Drupal\dpl_login\UserTokensProvider $user_token_provider
-   *   The Uuser token provider.
+   * @param \Drupal\dpl_login\UserTokens $user_tokens
+   *   The user token service.
    */
   public function __construct(
     LibraryTokenHandler $library_token_handler,
-    UserTokensProvider $user_token_provider
+    UserTokens $user_tokens,
   ) {
     $this->libraryTokenHandler = $library_token_handler;
-    $this->userTokensProvider = $user_token_provider;
+    $this->userTokens = $user_tokens;
   }
 
   /**
@@ -71,9 +73,12 @@ class DplReactController extends ControllerBase {
       $content_lines[] = sprintf('window.dplReact.setToken("library", "%s")', $token_agency);
     }
 
-    if ($acces_token = $this->userTokensProvider->getAccessToken()) {
-      if ($token_user = $acces_token->token ?? FALSE) {
-        $content_lines[] = sprintf('window.dplReact.setToken("user", "%s")', $token_user);
+    if ($access_token = $this->userTokens->getCurrent()) {
+      if ($access_token->type === AccessTokenType::UNREGISTERED_USER) {
+        $this->setAccessTokenContentLine('unregistered-user', $access_token, $content_lines);
+      }
+      elseif ($access_token->type === AccessTokenType::USER) {
+        $this->setAccessTokenContentLine('user', $access_token, $content_lines);
       }
     }
 
@@ -82,6 +87,22 @@ class DplReactController extends ControllerBase {
     $response->setContent($content);
     $response->headers->set('Content-Type', 'application/javascript');
     return $response;
+  }
+
+  /**
+   * Set access token content line if token is present.
+   *
+   * @param string $token_type
+   *   The token type.
+   * @param \Drupal\dpl_login\AccessToken $access_token
+   *   The access token.
+   * @param string[] $content_lines
+   *   The token script content lines.
+   */
+  protected function setAccessTokenContentLine(string $token_type, AccessToken $access_token, array &$content_lines): void {
+    if ($token = $access_token->token ?? FALSE) {
+      $content_lines[] = sprintf('window.dplReact.setToken("%s", "%s")', $token_type, $token);
+    }
   }
 
 }

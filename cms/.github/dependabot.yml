@@ -1,0 +1,75 @@
+# Dependabot configuration files that automate our dependency updates by creating pull requests.
+# The PRs are labeled and grouped by package ecosystem and semver update type.
+# We intentionally use grouping and pull request limits to avoid creating too many PRs and
+# exhausting the number of available pull requests in Lagoon.
+version: 2
+updates:
+  - package-ecosystem: github-actions
+    directory: "/"
+    open-pull-requests-limit: 2
+    groups:
+      minor-github-actions-dependencies:
+        update-types:
+          - "minor"
+          - "patch"
+    schedule:
+      interval: weekly
+      timezone: Europe/Copenhagen
+    labels:
+      - "dependencies"
+      - "github_actions"
+  - package-ecosystem: composer
+    directory: "/"
+    open-pull-requests-limit: 3
+    groups:
+      minor-composer-dependencies:
+        update-types:
+          - "minor"
+          - "patch"
+        exclude-patterns:
+          - "drupal/*"
+      drupal-core-minor-major-releases:
+        patterns:
+          - "drupal/core*"
+        update-types:
+          - "major"
+          - "minor"
+      drupal-core-patch-releases:
+        patterns:
+          - "drupal/core*"
+        update-types:
+          - "patch"
+    schedule:
+      interval: weekly
+      timezone: Europe/Copenhagen
+    labels:
+      - "dependencies"
+      - "drupal"
+  - package-ecosystem: composer
+    directory: "/dev-scripts"
+    open-pull-requests-limit: 2
+    groups:
+      minor-composer-dependencies:
+        update-types:
+          - "minor"
+          - "patch"
+    schedule:
+      interval: weekly
+      timezone: Europe/Copenhagen
+    labels:
+      - "dependencies"
+      - "dev-scripts"
+  - package-ecosystem: npm
+    directory: "/"
+    open-pull-requests-limit: 2
+    groups:
+      minor-js-dependencies:
+        update-types:
+          - "minor"
+          - "patch"
+    schedule:
+      interval: weekly
+      timezone: Europe/Copenhagen
+    labels:
+      - "dependencies"
+      - "js-dependencies"

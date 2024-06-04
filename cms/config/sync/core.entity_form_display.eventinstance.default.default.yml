@@ -1,0 +1,287 @@
+uuid: 1671f9da-6b59-4f3d-9afd-ce1395224dcf
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.field.eventinstance.default.field_branch
+    - field.field.eventinstance.default.field_categories
+    - field.field.eventinstance.default.field_description
+    - field.field.eventinstance.default.field_event_address
+    - field.field.eventinstance.default.field_event_image
+    - field.field.eventinstance.default.field_event_link
+    - field.field.eventinstance.default.field_event_paragraphs
+    - field.field.eventinstance.default.field_event_partners
+    - field.field.eventinstance.default.field_event_place
+    - field.field.eventinstance.default.field_event_state
+    - field.field.eventinstance.default.field_event_title
+    - field.field.eventinstance.default.field_external_admin_link
+    - field.field.eventinstance.default.field_tags
+    - field.field.eventinstance.default.field_teaser_image
+    - field.field.eventinstance.default.field_teaser_text
+    - field.field.eventinstance.default.field_ticket_categories
+    - recurring_events.eventinstance_type.default
+  module:
+    - address
+    - datetime_range
+    - field_group
+    - link
+    - media_library
+    - media_library_edit
+    - paragraphs
+    - paragraphs_ee
+    - paragraphs_features
+    - path
+    - select2
+third_party_settings:
+  field_group:
+    group_teaser_card:
+      children:
+        - field_teaser_text
+        - field_teaser_image
+      label: 'Teaser card'
+      region: content
+      parent_name: ''
+      weight: 12
+      format_type: details_sidebar
+      format_settings:
+        classes: ''
+        show_empty_fields: true
+        id: ''
+        open: true
+        description: ''
+        required_fields: true
+        weight: 0
+    group_tagging:
+      children:
+        - field_categories
+        - field_tags
+      label: Tagging
+      region: content
+      parent_name: ''
+      weight: 13
+      format_type: details_sidebar
+      format_settings:
+        classes: ''
+        show_empty_fields: false
+        id: ''
+        open: true
+        description: ''
+        required_fields: true
+        weight: 0
+    group_event_details:
+      children:
+        - field_event_image
+        - field_event_state
+        - field_external_admin_link
+      label: 'Event details'
+      region: content
+      parent_name: ''
+      weight: 11
+      format_type: details_sidebar
+      format_settings:
+        classes: ''
+        show_empty_fields: false
+        id: ''
+        open: true
+        description: ''
+        required_fields: true
+        weight: 0
+id: eventinstance.default.default
+targetEntityType: eventinstance
+bundle: default
+mode: default
+content:
+  date:
+    type: daterange_default
+    weight: 3
+    region: content
+    settings: {  }
+    third_party_settings: {  }
+  field_branch:
+    type: select2_entity_reference
+    weight: 0
+    region: content
+    settings:
+      width: 100%
+      autocomplete: false
+      match_operator: CONTAINS
+      match_limit: 10
+    third_party_settings: {  }
+  field_categories:
+    type: select2_entity_reference
+    weight: 5
+    region: content
+    settings:
+      width: 100%
+      autocomplete: false
+      match_operator: CONTAINS
+      match_limit: 10
+    third_party_settings: {  }
+  field_description:
+    type: string_textarea
+    weight: 2
+    region: content
+    settings:
+      rows: 3
+      placeholder: ''
+    third_party_settings: {  }
+  field_event_address:
+    type: address_default
+    weight: 4
+    region: content
+    settings: {  }
+    third_party_settings: {  }
+  field_event_image:
+    type: media_library_widget
+    weight: 5
+    region: content
+    settings:
+      media_types: {  }
+    third_party_settings:
+      media_library_edit:
+        show_edit: '1'
+  field_event_link:
+    type: link_default
+    weight: 5
+    region: content
+    settings:
+      placeholder_url: ''
+      placeholder_title: ''
+    third_party_settings: {  }
+  field_event_paragraphs:
+    type: paragraphs
+    weight: 10
+    region: content
+    settings:
+      title: Paragraph
+      title_plural: Paragraphs
+      edit_mode: closed
+      closed_mode: preview
+      autocollapse: none
+      closed_mode_threshold: 0
+      add_mode: modal
+      form_display_mode: default
+      default_paragraph_type: text_body
+      features:
+        add_above: add_above
+        collapse_edit_all: collapse_edit_all
+        duplicate: duplicate
+    third_party_settings:
+      paragraphs_features:
+        add_in_between: true
+        add_in_between_link_count: 0
+        delete_confirmation: true
+        show_drag_and_drop: true
+      paragraphs_ee:
+        paragraphs_ee:
+          dialog_off_canvas: false
+          dialog_style: tiles
+  field_event_partners:
+    type: string_textfield
+    weight: 8
+    region: content
+    settings:
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+  field_event_place:
+    type: string_textfield
+    weight: 7
+    region: content
+    settings:
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+  field_event_state:
+    type: select2
+    weight: 6
+    region: content
+    settings:
+      width: 100%
+    third_party_settings: {  }
+  field_event_title:
+    type: string_textfield
+    weight: 1
+    region: content
+    settings:
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+  field_external_admin_link:
+    type: link_default
+    weight: 7
+    region: content
+    settings:
+      placeholder_url: ''
+      placeholder_title: ''
+    third_party_settings: {  }
+  field_tags:
+    type: select2_entity_reference
+    weight: 6
+    region: content
+    settings:
+      width: 100%
+      autocomplete: true
+      match_operator: CONTAINS
+      match_limit: 10
+    third_party_settings: {  }
+  field_teaser_image:
+    type: media_library_widget
+    weight: 13
+    region: content
+    settings:
+      media_types: {  }
+    third_party_settings:
+      media_library_edit:
+        show_edit: '1'
+  field_teaser_text:
+    type: string_textfield
+    weight: 12
+    region: content
+    settings:
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+  field_ticket_categories:
+    type: paragraphs
+    weight: 6
+    region: content
+    settings:
+      title: Paragraph
+      title_plural: Paragraphs
+      edit_mode: open
+      closed_mode: summary
+      autocollapse: none
+      closed_mode_threshold: 0
+      add_mode: dropdown
+      form_display_mode: default
+      default_paragraph_type: _none
+      features:
+        add_above: add_above
+        collapse_edit_all: collapse_edit_all
+        duplicate: duplicate
+    third_party_settings:
+      paragraphs_features:
+        add_in_between: false
+        add_in_between_link_count: 3
+        delete_confirmation: false
+        show_drag_and_drop: true
+      paragraphs_ee:
+        paragraphs_ee:
+          dialog_off_canvas: false
+          dialog_style: tiles
+  path:
+    type: path
+    weight: 14
+    region: content
+    settings: {  }
+    third_party_settings: {  }
+  status:
+    type: boolean_checkbox
+    weight: 9
+    region: content
+    settings:
+      display_label: true
+    third_party_settings: {  }
+hidden:
+  body: true

@@ -1,0 +1,77 @@
+# This is a go-task file solely for Lagoon integration.
+# It is meant to be used in combination with the go-task file in the root of
+# the project.
+version: "3"
+
+tasks:
+  backup:restore:
+    desc: Restore the latest backup of files and database from a Lagoon project
+    cmds:
+      - task: backup:restore:database
+      - task: backup:restore:files
+
+  backup:restore:database:
+    desc: Restore the latest backup of the database from a Lagoon project
+    deps: [deps:lagoon, deps:jq, login]
+    vars:
+      LAGOON_ENVIRONMENT: main
+    cmds:
+      - ./dev-scripts/lagoon-get-backup.sh ${LAGOON_PROJECT} mariadb {{.DIR_RESTORE_DATABASE}}/${LAGOON_PROJECT}-backup.tar.gz;
+      -  cd ./restore/database/ && tar -xvzf ${LAGOON_PROJECT}-backup.tar.gz;
+      - task dev:restore:database
+    preconditions:
+      - sh: "[ -v LAGOON_PROJECT ]"
+        msg: Please provide a LAGOON_PROJECT environment variable with the name of the Lagoon project to use
+
+  backup:restore:files:
+    desc: Restore the latest backup of the files from a Lagoon project
+    deps: [deps:lagoon, deps:jq, login]
+    vars:
+      LAGOON_ENVIRONMENT: main
+    cmds:
+      - ./dev-scripts/lagoon-get-backup.sh ${LAGOON_PROJECT} nginx {{.DIR_RESTORE_FILES}}/${LAGOON_PROJECT}-backup.tar.gz;
+      - task dev:restore:files
+    preconditions:
+      - sh: "[ -v LAGOON_PROJECT ]"
+        msg: Please provide a LAGOON_PROJECT environment variable with the name of the Lagoon project to use
+
+  drush:uli:
+    desc: Get an Drupal one-time user login link for a Lagoon environment through Drush
+    cmds:
+      - task lagoon:cli -- drush user-login
+
+  cli:
+    desc: Performs a command in a Lagoon environment and display the output. Expects parameter(s).
+    deps: [deps:lagoon, deps:jq, login]
+    cmds:
+      - |
+        RUN=$(lagoon run -p ${LAGOON_PROJECT:-dpl-cms} -e ${LAGOON_ENVIRONMENT:-main} custom --command "{{.CLI_ARGS}}" --name "{{.CLI_ARGS}} from Taskfile" --output-json);
+        TASK_ID=$(echo $RUN | jq .data.id);
+        STATUS="pending";
+        while [ $STATUS != "complete" ]; do
+          sleep 0.5;
+          echo -n ".";
+          TASK=$(lagoon get task-by-id --id=$TASK_ID --logs --output-json);
+          STATUS=$(echo $TASK | jq -r .data[0].status);
+        done
+        echo -e "\n$(echo $TASK | jq -r .data[0].logs)";
+
+  login:
+    internal: true
+    deps: [deps:lagoon]
+    cmds:
+      - lagoon login
+
+  # Tasks used to ensure that non-required CLI tools are available.
+  # Use these as dependencies for specific tasks.
+  deps:lagoon:
+    internal: true
+    preconditions:
+      - sh: lagoon --version
+        msg: Lagoon CLI is not installed. Please check https://uselagoon.github.io/lagoon-cli/.
+
+  deps:jq:
+    internal: true
+    preconditions:
+      - sh: jq --version
+        msg: jq is not installed. Please check https://stedolan.github.io/jq/.

@@ -1,0 +1,19 @@
+uuid: 4f4e4176-8197-44e8-9322-40d1c92b90b3
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.paragraph.field_campaign_rule_term
+    - paragraphs.paragraphs_type.campaign_rule
+id: paragraph.campaign_rule.field_campaign_rule_term
+field_name: field_campaign_rule_term
+entity_type: paragraph
+bundle: campaign_rule
+label: Term
+description: ''
+required: true
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: string

@@ -1,0 +1,27 @@
+uuid: 7a4fdace-0cc4-4501-9226-dc2305ee98df
+langcode: en
+status: true
+dependencies:
+  module:
+    - options
+    - paragraphs
+id: paragraph.field_link_target
+field_name: field_link_target
+entity_type: paragraph
+type: list_string
+settings:
+  allowed_values:
+    -
+      value: _self
+      label: 'Open the linked document in the same window or tab (default)'
+    -
+      value: _blank
+      label: 'Open the linked document in a new window or tab'
+  allowed_values_function: ''
+module: options
+locked: false
+cardinality: 1
+translatable: true
+indexes: {  }
+persist_with_no_fields: false
+custom_storage: false

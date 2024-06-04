@@ -1,0 +1,5 @@
+dpl_dashboard.list:
+  title: "Dashboard"
+  menu_name: user-profile-menu
+  route_name: dpl_dashboard.list
+  description: "User dashboard"

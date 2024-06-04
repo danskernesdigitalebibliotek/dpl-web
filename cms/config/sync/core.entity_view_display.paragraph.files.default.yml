@@ -1,0 +1,23 @@
+uuid: d0ba7a9f-9f9f-48a1-a0d9-2a860f1ea65c
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.field.paragraph.files.field_files
+    - paragraphs.paragraphs_type.files
+id: paragraph.files.default
+targetEntityType: paragraph
+bundle: files
+mode: default
+content:
+  field_files:
+    type: entity_reference_entity_view
+    label: hidden
+    settings:
+      view_mode: default
+      link: true
+    third_party_settings: {  }
+    weight: 0
+    region: content
+hidden:
+  search_api_excerpt: true

@@ -1,0 +1,21 @@
+name: "DPL static content: Contact page"
+type: module
+description: Adds default contact page and contact webform categories
+package: DPL
+core_version_requirement: ^9 || ^10
+dependencies:
+  - default_content:default_content
+
+hidden: true
+
+default_content:
+  node:
+    # Pages
+    - d50683cc-8011-49ba-a6ea-82e56de97b80 # Contact Page
+
+  taxonomy_term:
+    # Contact webform categories
+    - bb4917fe-2197-4d53-b3e8-4a04ce074c29 # Forslag til indkøb
+    - b42cf13a-4047-4a36-b451-f632472c8035 # Gebyrer og erstatninger
+    - b97946d7-f415-45e7-bd48-131d3675fbd0 # Hjemmeside og app
+    - 6d9e3138-f948-4d8b-aba1-3ca46a05175e # Spørgsmål til biblioteket

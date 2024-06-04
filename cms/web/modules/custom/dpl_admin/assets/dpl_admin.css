@@ -1,0 +1,177 @@
+/* @file
+ * This file is loaded into admin pages.
+ */
+
+/*
+ * We dont want the filter help link below CKEditor, as it just confuses more
+ * than it helps, and we already make sure to show the styles directly
+ * in the editor.
+ */
+.filter-help {
+  display: none;
+}
+
+/* Overriding wrong styling from reset.scss */
+.button:focus {
+  padding: calc(var(--gin-spacing-m) - 2px) calc(var(--gin-spacing-l) - 2px);
+}
+
+/* Display medias more compact in paragraph preview. */
+.paragraph--view-mode--preview .field--name-field-medias {
+  .field__items {
+    display: flex;
+    gap: 20px;
+  }
+
+  .field__item {
+    max-width: 220px;
+  }
+}
+
+/* Displaying the byline on the media-library preview. */
+.media-library-item__preview {
+  position: relative;
+}
+
+.media-library-item__preview-wrapper .field--name-field-byline {
+  position: absolute;
+  max-height: 125px;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  padding: 5px;
+  z-index: 2;
+  font-weight: bold;
+  font-size: 13px;
+  color: white;
+  background-color: rgba(0, 0, 0, 0.5);
+  overflow: auto;
+}
+
+/* Make the inner dialog widget take more space of the screen. */
+.ui-dialog.ui-widget[style],
+.ui-dialog.ui-widget {
+  top: 20px !important;
+  bottom: 20px !important;
+  left: 20px !important;
+  right: 20px !important;
+  width: auto !important;
+  height: auto !important;
+  max-width: none !important;
+  /* In some situation the sidebar was covering the dialog,
+     and some buttons were not clickable. */
+  z-index: var(--jui-dialog-z-index);
+}
+
+.ui-dialog.ui-widget .ui-dialog-content,
+.ui-dialog.ui-widget .ui-dialog-content[style] {
+  height: calc(100% - 100px) !important;
+  max-height: none !important;
+}
+
+/* Elements didn't fill the whole container. */
+.ui-dialog.ui-widget .paragraphs-ee-category-list-wrapper,
+.ui-dialog.ui-widget .paragraphs-ee-button-wrapper {
+  max-height: unset !important;
+}
+
+/* Make UI modals larger on smaller screens. (Overriding inline styling.) */
+.ui-dialog,
+.ui-dialog[style] {
+  top: 25px !important;
+  bottom: 25px !important;
+  width: 90% !important;
+}
+
+.ui-dialog-content,
+.ui-dialog-content[style] {
+  height: calc(100% - 140px) !important;
+  max-height: 100% !important;
+  padding-top: 20px;
+  padding-bottom: 20px;
+  box-sizing: border-box;
+}
+
+/* Tweak the focal point preview. */
+.focal-point-derivative-preview-label {
+  font-size: 1em;
+}
+
+/* Display name and price fields inline for ticket categories. */
+.ticket-category-inline-fields {
+  display: grid;
+  grid-template-columns: minmax(0, max-content) minmax(5rem, 10rem);
+  gap: var(--gin-spacing-m);
+}
+
+/* A simple flex container, when forms are being daft. */
+.dpl-admin__flex-container {
+  display: flex;
+  gap: 20px;
+  flex-wrap: wrap;
+}
+
+.dpl-admin__flex-container .form-boolean-group {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+/* Place checkboxes horizontally when possible, for readabilty. */
+.is-admin-page [data-drupal-selector$="-recurring-date-wrapper"] .form-checkboxes {
+  display: flex;
+  gap: 15px;
+  max-width: 100%;
+  flex-wrap: wrap;
+}
+
+/* Hide the built-in message, as we're creating an alternative ourselves. */
+.gin--edit-form .event-notification-message {
+  display: none;
+}
+
+/* Hide some fields on the edit menu UI. */
+.menu-link-content-form .field--name-description,
+.menu-link-content-form .field--name-expanded {
+  display: none;
+}
+
+
+/* Hiding the ability to place main menu items in levels. */
+.menu-edit-form[action="/admin/structure/menu/manage/main"] {
+  .menu-link-content-form .form-item--menu-parent,
+  > .form-item {
+    display: none;
+  }
+}
+
+/* Tweaking our custom 'add content' dashboard page. */
+.dpl-add-content {
+  .views-element-container {
+    width: 100%;
+    margin: auto;
+  }
+
+  .views-table {
+    margin: 0;
+  }
+
+  .view-content {
+    padding: 0;
+    width: 95%;
+    margin: 0 auto;
+  }
+
+  .gin-table-scroll-wrapper {
+    overflow: hidden;
+    padding-top: 0;
+    padding-bottom: 0;
+    margin: 0;
+  }
+}
+
+.field-group-details-sidebar {
+  .form-item {
+    max-width: 100%;
+  }
+}

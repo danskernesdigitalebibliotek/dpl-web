@@ -1,0 +1,12 @@
+name: DPL Reservations
+description: Handle the user profile reservations pages
+package: DPL
+dependencies:
+  - drupal:block
+  - dpl_fbs:dpl_fbs
+  - dpl_publizon:dpl_publizon
+  - dpl_react:dpl_react
+  - dpl_react_apps:dpl_react_apps
+  - dpl_library_agency:dpl_library_agency
+type: module
+core_version_requirement: ^9 || ^10

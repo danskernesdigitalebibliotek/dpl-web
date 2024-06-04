@@ -1,0 +1,50 @@
+_meta:
+  version: "1.0"
+  entity_type: node
+  uuid: 9356ccd7-ad1e-4a34-b7ca-37cd1cb0a832
+  bundle: page
+  default_langcode: en
+  depends:
+    c57495b6-2b50-4558-b6ad-a50d24c5310c: file
+    486b17a2-60e6-426d-a952-793fe24e391d: node
+    316e6db1-8d4e-40f7-9d95-b12e1294735e: taxonomy_term
+default:
+  revision_uid:
+    - target_id: 1
+  status:
+    - value: true
+  uid:
+    - target_id: 1
+  title:
+    - value: 'Østerbro - "Bestseller" læseklub'
+  created:
+    - value: 1712261836
+  promote:
+    - value: false
+  sticky:
+    - value: false
+  revision_translation_affected:
+    - value: true
+  entity_clone_template_active:
+    - value: false
+  entity_clone_template_image:
+    - entity: c57495b6-2b50-4558-b6ad-a50d24c5310c
+      alt: ""
+      title: ""
+      width: 6250
+      height: 2200
+  metatag:
+    - tag: meta
+      attributes:
+        name: title
+        content: 'Østerbro - "Bestseller" læseklub | DPL CMS'
+  path:
+    - alias: /laesefilialen/laeseklubber/genre/bestsellers/osterbro-bestseller-laeseklub
+      langcode: und
+      pathauto: 1
+  field_branch:
+    - entity: 486b17a2-60e6-426d-a952-793fe24e391d
+  field_breadcrumb_parent:
+    - entity: 316e6db1-8d4e-40f7-9d95-b12e1294735e
+  field_display_titles:
+    - value: true

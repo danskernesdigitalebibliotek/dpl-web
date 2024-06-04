@@ -1,0 +1,7 @@
+<p class="article-header__info">
+    {{ 'By @username'|t({'@username': author_name}) }}
+
+    <time class="article-header__date" datetime="{{ node.created.value|date('c') }}">
+        {{ node.created.value|format_date('date_full_month') }}
+    </time>
+</p>

@@ -17,6 +17,10 @@ use Drupal\Core\Installer\InstallerKernel;
 // site install.
 $config['system.site']['uuid'] = '13ef1a53-dfb4-4c82-9b64-44586a366729';
 
+// Hardcode the site mail as we don't want to allow changing it in the UI.
+// The email needs to match what is setup in Azure Communication Services.
+$config['system.site']['mail'] = 'mail@folkebibliotekernescms.dk';
+
 // Configure logging using the project name and environment from the Lagoon
 // environment.
 $config['jsonlog.settings']['jsonlog_siteid'] = getenv('LAGOON_PROJECT') . '_' . getenv('LAGOON_ENVIRONMENT');
@@ -30,7 +34,16 @@ if (InstallerKernel::installationAttempted()) {
 }
 
 // Exclude development modules from configuration export.
-$settings['config_exclude_modules'] = ['devel'];
+$settings['config_exclude_modules'] = [
+  'dpl_example_content',
+  'dpl_example_breadcrumb',
+  'devel',
+  'field_ui',
+  'views_ui',
+  'restui',
+  'upgrade_status',
+  'uuid_url',
+];
 
 // Defines where the sync folder of your configuration lives. In this case it's
 // inside the Drupal root, which is protected by amazee.io Nginx configs, so it
@@ -38,6 +51,13 @@ $settings['config_exclude_modules'] = ['devel'];
 // (like 'web') you can put the config folder outside this subfolder for an
 // advanced security measure: '../config/sync'.
 $settings['config_sync_directory'] = '../config/sync';
+
+// Set service base urls for the react apps.
+$config['dpl_react_apps.settings']['services'] = [
+  'cover' => ['base_url' => 'https://cover.dandigbib.org'],
+  'fbi' => ['base_url' => 'https://fbi-api.dbc.dk/[profile]/graphql'],
+  'material-list' => ['base_url' => 'https://prod.materiallist.dandigbib.org'],
+];
 
 if (getenv('CI')) {
   // Curl settings needed to make PHP ignore SSL errors when using Wiremock as
@@ -47,11 +67,34 @@ if (getenv('CI')) {
     CURLOPT_PROXY_SSL_VERIFYHOST => 0,
     CURLOPT_PROXY_SSL_VERIFYPEER => FALSE,
   ];
+  // Specify non-HTTP versions of endpoints. This is required to make Cypress
+  // mocking work. It does not support ignoring self-signed certificates from
+  // Wiremock.
+  // Service base urls for the external APIs.
+  $config['dpl_fbs.settings'] = ['base_url' => 'http://fbs-openplatform.dbc.dk'];
+  $config['dpl_publizon.settings'] = ['base_url' => 'http://pubhub-openplatform.dbc.dk'];
+  // Adgangsplatformen OpenID Connect client.
+  $config['openid_connect.settings.adgangsplatformen']['settings']['authorization_endpoint'] = 'http://login.bib.dk/oauth/authorize';
+  $config['openid_connect.settings.adgangsplatformen']['settings']['token_endpoint'] = 'http://login.bib.dk/oauth/token/';
+  $config['openid_connect.settings.adgangsplatformen']['settings']['userinfo_endpoint'] = 'http://login.bib.dk/userinfo/';
+  $config['openid_connect.settings.adgangsplatformen']['settings']['logout_endpoint'] = 'http://login.bib.dk/logout';
   // The actual values here are not important. The primary thing is that the
   // Adgangsplatformen OpenID Connect client is configured.
   $config['openid_connect.settings.adgangsplatformen']['settings']['client_id'] = 'dummy-id';
   $config['openid_connect.settings.adgangsplatformen']['settings']['client_id'] = 'dummy-secret';
   $config['openid_connect.settings.adgangsplatformen']['settings']['agency_id'] = '100200';
+
+  // Set service base urls for the react apps.
+  // We need http domains for testing in CI context.
+  $config['dpl_react_apps.settings']['services'] = [
+    'cover' => ['base_url' => 'http://cover.dandigbib.org'],
+    'fbi' => ['base_url' => 'http://fbi-api.dbc.dk/[profile]/graphql'],
+    'material-list' => ['base_url' => 'http://prod.materiallist.dandigbib.org'],
+  ];
+
+  // We need to be fixed language in our UI texts
+  // because we use them for assertions in tests.
+  $config['language.negotiation']['selected_langcode'] = 'en';
 }
 
 if (getenv('LAGOON_ENVIRONMENT_TYPE') !== 'production') {
@@ -78,7 +121,7 @@ if (getenv('LAGOON')) {
   if (
     // Do not enable the cache during install.
     !InstallerKernel::installationAttempted()
-    // Do not enable the the cache if php does not have the extension enabled.
+    // Do not enable the cache if php does not have the extension enabled.
     && extension_loaded('redis')
   ) {
     // Enable the cache backend.

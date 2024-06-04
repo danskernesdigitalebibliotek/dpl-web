@@ -1,0 +1,12 @@
+{% set heading = heading|default('h2') %}
+
+<div class="text-small-caption horizontal-term-line">
+  <{{ heading }} class="text-label-bold">
+    {{ title }}
+  </{{ heading }}>
+  {% for item in items %}
+    <span>
+      {{ item.content }}
+    </span>
+  {% endfor %}
+</div>

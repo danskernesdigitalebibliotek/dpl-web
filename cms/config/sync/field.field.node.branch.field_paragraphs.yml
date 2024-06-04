@@ -1,0 +1,75 @@
+uuid: e6592e81-8996-4f14-8b54-8977cc821bb2
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_paragraphs
+    - node.type.branch
+    - paragraphs.paragraphs_type.campaign_rule
+    - paragraphs.paragraphs_type.event_ticket_category
+  module:
+    - entity_reference_revisions
+id: node.branch.field_paragraphs
+field_name: field_paragraphs
+entity_type: node
+bundle: branch
+label: Paragraphs
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings:
+  handler: 'default:paragraph'
+  handler_settings:
+    target_bundles:
+      campaign_rule: campaign_rule
+      event_ticket_category: event_ticket_category
+    negate: 1
+    target_bundles_drag_drop:
+      accordion:
+        weight: 16
+        enabled: false
+      campaign_rule:
+        weight: 2
+        enabled: true
+      card_grid_automatic:
+        weight: 18
+        enabled: false
+      card_grid_manual:
+        weight: 19
+        enabled: false
+      content_slider:
+        weight: 20
+        enabled: false
+      event_ticket_category:
+        weight: 7
+        enabled: true
+      files:
+        weight: 22
+        enabled: false
+      hero:
+        weight: 23
+        enabled: false
+      links:
+        weight: 8
+        enabled: false
+      medias:
+        weight: 9
+        enabled: false
+      nav_grid_manual:
+        weight: 26
+        enabled: false
+      nav_spots_manual:
+        weight: 27
+        enabled: false
+      recommendation:
+        weight: 28
+        enabled: false
+      text_body:
+        weight: 4
+        enabled: false
+      video:
+        weight: 30
+        enabled: false
+field_type: entity_reference_revisions

@@ -1,0 +1,63 @@
+uuid: d7f110c8-50bf-4897-bd19-3add63d0021c
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.field.taxonomy_term.breadcrumb_structure.field_children_title
+    - field.field.taxonomy_term.breadcrumb_structure.field_content
+    - field.field.taxonomy_term.breadcrumb_structure.field_show_children
+    - field.field.taxonomy_term.breadcrumb_structure.field_show_children_subtitles
+    - taxonomy.vocabulary.breadcrumb_structure
+  module:
+    - text
+id: taxonomy_term.breadcrumb_structure.default
+targetEntityType: taxonomy_term
+bundle: breadcrumb_structure
+mode: default
+content:
+  description:
+    type: text_default
+    label: hidden
+    settings: {  }
+    third_party_settings: {  }
+    weight: 0
+    region: content
+  field_children_title:
+    type: string
+    label: above
+    settings:
+      link_to_entity: false
+    third_party_settings: {  }
+    weight: 3
+    region: content
+  field_content:
+    type: entity_reference_label
+    label: above
+    settings:
+      link: true
+    third_party_settings: {  }
+    weight: 1
+    region: content
+  field_show_children:
+    type: boolean
+    label: above
+    settings:
+      format: default
+      format_custom_false: ''
+      format_custom_true: ''
+    third_party_settings: {  }
+    weight: 2
+    region: content
+  field_show_children_subtitles:
+    type: boolean
+    label: above
+    settings:
+      format: default
+      format_custom_false: ''
+      format_custom_true: ''
+    third_party_settings: {  }
+    weight: 4
+    region: content
+hidden:
+  langcode: true
+  search_api_excerpt: true

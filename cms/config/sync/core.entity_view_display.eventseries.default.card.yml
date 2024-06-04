@@ -1,0 +1,85 @@
+uuid: 5ed35999-7c97-4f12-ae9a-bf92364f92cb
+langcode: en
+status: true
+dependencies:
+  config:
+    - core.entity_view_mode.eventseries.card
+    - field.field.eventseries.default.field_branch
+    - field.field.eventseries.default.field_categories
+    - field.field.eventseries.default.field_description
+    - field.field.eventseries.default.field_event_address
+    - field.field.eventseries.default.field_event_image
+    - field.field.eventseries.default.field_event_link
+    - field.field.eventseries.default.field_event_paragraphs
+    - field.field.eventseries.default.field_event_partners
+    - field.field.eventseries.default.field_event_place
+    - field.field.eventseries.default.field_event_state
+    - field.field.eventseries.default.field_tags
+    - field.field.eventseries.default.field_teaser_image
+    - field.field.eventseries.default.field_teaser_text
+    - field.field.eventseries.default.field_ticket_categories
+    - recurring_events.eventseries_type.default
+  module:
+    - options
+_core:
+  default_config_hash: U53j_RaqaehEh393bzj6vrqXorzo8lkcjhQNCNTPjmQ
+id: eventseries.default.card
+targetEntityType: eventseries
+bundle: default
+mode: card
+content:
+  field_teaser_image:
+    type: entity_reference_entity_view
+    label: hidden
+    settings:
+      view_mode: card
+      link: false
+    third_party_settings: {  }
+    weight: 2
+    region: content
+  field_teaser_text:
+    type: string
+    label: hidden
+    settings:
+      link_to_entity: false
+    third_party_settings: {  }
+    weight: 1
+    region: content
+  recur_type:
+    type: list_default
+    label: hidden
+    settings: {  }
+    third_party_settings: {  }
+    weight: 3
+    region: content
+  title:
+    type: string
+    label: hidden
+    settings:
+      link_to_entity: false
+    third_party_settings: {  }
+    weight: 0
+    region: content
+hidden:
+  body: true
+  consecutive_recurring_date: true
+  custom_date: true
+  daily_recurring_date: true
+  event_instances: true
+  event_registration: true
+  field_branch: true
+  field_categories: true
+  field_description: true
+  field_event_address: true
+  field_event_image: true
+  field_event_link: true
+  field_event_paragraphs: true
+  field_event_partners: true
+  field_event_place: true
+  field_event_state: true
+  field_tags: true
+  field_ticket_categories: true
+  monthly_recurring_date: true
+  search_api_excerpt: true
+  weekly_recurring_date: true
+  yearly_recurring_date: true

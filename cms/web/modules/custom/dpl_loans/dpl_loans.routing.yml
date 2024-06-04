@@ -1,0 +1,6 @@
+dpl_loans.list:
+  path: "/user/me/loans"
+  defaults:
+    _controller: '\Drupal\dpl_loans\Controller\DplLoansController::list'
+  requirements:
+    _permission: "access content"

@@ -1,21 +1,19 @@
 {
   "extends": [
-    "drupal"
+    "plugin:drupal-contrib/9.x"
   ],
-  "globals": {
-    "once": true
-  },
   "rules": {
     "no-console": ["error", { "allow": ["debug", "warn", "error"] }]
   },
   "ignorePatterns": [
-    "**/vendor/",
     "**/web/core/",
     "**/web/libraries/",
     "**/web/modules/contrib/",
     "**/web/sites/**/files/",
     "**/web/themes/custom/novel/assets/",
     "**/web/themes/contrib/",
-    "**/web/modules/local/"
+    "**/web/modules/local/",
+    "**/web/modules/custom/dpl_example_content/content/",
+    "**/web/modules/custom/dpl_static_content/content/"
   ]
 }

@@ -1,0 +1,114 @@
+uuid: b72ccbb3-ffcb-4db2-ae04-80e3e9f5ac5c
+langcode: en
+status: true
+dependencies:
+  config:
+    - core.entity_view_mode.eventinstance.stacked_event
+    - field.field.eventinstance.default.field_branch
+    - field.field.eventinstance.default.field_categories
+    - field.field.eventinstance.default.field_description
+    - field.field.eventinstance.default.field_event_address
+    - field.field.eventinstance.default.field_event_image
+    - field.field.eventinstance.default.field_event_link
+    - field.field.eventinstance.default.field_event_paragraphs
+    - field.field.eventinstance.default.field_event_partners
+    - field.field.eventinstance.default.field_event_place
+    - field.field.eventinstance.default.field_event_state
+    - field.field.eventinstance.default.field_event_title
+    - field.field.eventinstance.default.field_external_admin_link
+    - field.field.eventinstance.default.field_tags
+    - field.field.eventinstance.default.field_teaser_image
+    - field.field.eventinstance.default.field_teaser_text
+    - field.field.eventinstance.default.field_ticket_categories
+    - recurring_events.eventinstance_type.default
+  module:
+    - date_range_formatter
+    - link
+_core:
+  default_config_hash: lFFUFIZPBUZQjrIYYvP6U1hzVLGjKMl0DYK93zPM_80
+id: eventinstance.default.stacked_event
+targetEntityType: eventinstance
+bundle: default
+mode: stacked_event
+content:
+  branch:
+    type: entity_reference_label
+    label: visible
+    settings:
+      link: true
+    third_party_settings: {  }
+    weight: 50
+    region: content
+  date:
+    type: date_range_without_time
+    label: hidden
+    settings:
+      timezone_override: ''
+      date_format: 'Y-m-d\TH:i:s'
+      separator: '-'
+      one_day: 'd. M Y'
+      one_month: 'd. - {d}. M Y'
+      several_months: 'd. M - {d}. {M} Y'
+      several_years: 'd. M Y - {d}. {M} {Y}'
+    third_party_settings: {  }
+    weight: 0
+    region: content
+  event_addres:
+    type: address_default
+    label: above
+    settings: {  }
+    third_party_settings: {  }
+    weight: 2
+    region: content
+  event_link:
+    type: link
+    label: hidden
+    settings:
+      trim_length: 80
+      url_only: false
+      url_plain: false
+      rel: ''
+      target: ''
+    third_party_settings: {  }
+    weight: 1
+    region: content
+  title:
+    type: string
+    label: above
+    settings:
+      link_to_entity: false
+    third_party_settings: {  }
+    weight: 2
+    region: content
+hidden:
+  body: true
+  description: true
+  event_address: true
+  event_categories: true
+  event_description: true
+  event_image: true
+  event_paragraphs: true
+  event_partners: true
+  event_place: true
+  event_state: true
+  event_tags: true
+  event_teaser_image: true
+  event_teaser_text: true
+  event_ticket_categories: true
+  field_branch: true
+  field_categories: true
+  field_description: true
+  field_event_address: true
+  field_event_image: true
+  field_event_link: true
+  field_event_paragraphs: true
+  field_event_partners: true
+  field_event_place: true
+  field_event_state: true
+  field_event_title: true
+  field_external_admin_link: true
+  field_tags: true
+  field_teaser_image: true
+  field_teaser_text: true
+  field_ticket_categories: true
+  search_api_excerpt: true

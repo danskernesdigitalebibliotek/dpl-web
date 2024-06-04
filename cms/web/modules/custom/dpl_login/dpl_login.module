@@ -7,12 +7,20 @@
  * Handles authentication against Adgangsplatformen.
  */
 
-use Drupal\Core\Site\Settings;
-use Drupal\dpl_login\AccessToken;
+use DanskernesDigitaleBibliotek\FBS\ApiException;
+use DanskernesDigitaleBibliotek\FBS\Model\AuthenticatedPatronV6;
+use DanskernesDigitaleBibliotek\FBS\Model\BlockStatus;
+use Drupal\Core\Cache\CacheableMetadata;
+use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\Session\AccountInterface;
+use Drupal\dpl_fbs\Patron\BlockedReason;
+use Drupal\dpl_login\AccessToken;
 use Drupal\dpl_login\DplLoginInterface;
+use Drupal\dpl_login\Exception\AccessTokenCreationException;
+use Drupal\dpl_login\UserTokensProviderInterface;
 use Drupal\user\UserInterface;
-use function Safe\sprintf as sprintf;
+use Psr\Log\LoggerInterface;
+use Psr\Log\LogLevel;
 
 /**
  * Implements hook_openid_connect_userinfo_alter().
@@ -21,24 +29,94 @@ use function Safe\sprintf as sprintf;
  *   User info from external service.
  * @param mixed[] $context
  *   Various openid_connect context. Tokens etc.
+ *
+ * @throws Exception
  */
 function dpl_login_openid_connect_userinfo_alter(array &$userinfo, array $context): void {
+  $service = \Drupal::service('dpl_login.openid_user_info');
+  $userinfo = array_merge(
+    $userinfo,
+    $service->getOpenIdUserInfoFromAdgangsplatformenUserInfoResponse($userinfo)
+  );
+}
 
-  // If we cannot resolve uinque id we cannot continue.
-  if (!$id = $userinfo['attributes']['uniqueId'] ?? FALSE) {
-    $userinfo = [];
-    return;
+/**
+ * Implements hook_openid_connect_pre_authorize().
+ *
+ * @param \Drupal\Core\Session\AccountInterface|false $account
+ *   User account.
+ * @param mixed[] $context
+ *   Various openid_connect context. Tokens etc.
+ *
+ * @throws \Drupal\dpl_login\Exception\MissingConfigurationException
+ */
+function dpl_login_openid_connect_pre_authorize(AccountInterface|FALSE $account, array $context): bool {
+  $logger = _dpl_login_get_authorization_logger();
+
+  try {
+    $token = AccessToken::createFromOpenidConnectContext($context);
+  }
+  catch (AccessTokenCreationException $e) {
+    $logger->error('Authorization blocked. Unable to create access token: @message', [
+      '@message' => $e->getMessage(),
+    ]);
+    return FALSE;
   }
 
-  $id_hash = crypt($id, Settings::getHashSalt());
+  // Check if the user is previously associated with an agency (library).
+  // If not, we assume the user is new and skip the patron blocked check.
+  if (!_dpl_login_is_user_associated_with_agency($context)) {
+    $logger->info('Pre authorize hook - User was not associated with current library.');
+    return TRUE;
+  }
 
-  $name = uniqid();
-  // Drupal needs an email. We set a unique one to apply to that rule.
-  $userinfo['email'] = sprintf('%s@dpl-cms.invalid', $name);
-  // Drupal needs a user name. We use the unique id to apply to that rule.
-  $userinfo['name'] = $name;
-  // openid_connect module needs the sub for creating the auth map.
-  $userinfo['sub'] = $id_hash;
+  $logger->info('Pre authorize hook - User already associated with library agency.');
+
+  try {
+    $patron = _dpl_login_get_patron($token);
+    $patron_block_status = $patron->getPatron()?->getBlockStatus() ?? [];
+    $patron_blocked_reasons = array_map(function (BlockStatus $block_status) use ($logger) {
+      try {
+        return BlockedReason::from($block_status->getBlockedReason());
+      }
+      catch (UnexpectedValueException $e) {
+        $logger->warning('Unable to map blocked reason @reason: @message', [
+          '@reason' => $block_status->getBlockedReason(),
+          '@message' => $e->getMessage(),
+        ]);
+        return BlockedReason::UNKNOWN();
+      }
+    }, $patron_block_status);
+
+    // Only a subset of the blocked reasons should block login.
+    $deny_login_reasons = [
+      BlockedReason::DECEASED(),
+      BlockedReason::ACCOUNT_STOLEN(),
+      BlockedReason::BLOCKED_FROM_SELFSERVICE(),
+    ];
+    $patron_deny_reasons = array_intersect($patron_blocked_reasons, $deny_login_reasons);
+
+    // Return FALSE to block login if the patron block reasons match one or
+    // more of the deny reasons. The OpenID Connect module will provide
+    // feedback.
+    return !(count($patron_deny_reasons) > 0);
+  }
+  catch (ApiException $e) {
+    $logger->error('Authorization blocked. Unable to get patron information: @message', [
+      '@message' => $e->getMessage(),
+    ]);
+    return FALSE;
+  }
+}
+
+/**
+ * Get patron information from FBS.
+ */
+function _dpl_login_get_patron(AccessToken $token): AuthenticatedPatronV6 {
+  /** @var \Drupal\dpl_fbs\FbsApiFactory $api_factory */
+  $api_factory = \Drupal::service('dpl_fbs.api_factory');
+  $api = $api_factory->getPatronApi($token->token);
+  return $api->getPatronInformationByPatronIdV2();
 }
 
 /**
@@ -51,9 +129,16 @@ function dpl_login_openid_connect_userinfo_alter(array &$userinfo, array $contex
  */
 function dpl_login_openid_connect_post_authorize(AccountInterface $account, array $context): void {
   $access_token = AccessToken::createFromOpenidConnectContext($context);
-  /** @var Drupal\dpl_login\UserTokensProvider $token_provider */
-  $token_provider = \Drupal::service('dpl_login.user_tokens');
-  $token_provider->setAccessToken($access_token);
+  $token_provider = _dpl_login_get_access_token_provider($access_token);
+  $logger = _dpl_login_get_authorization_logger($access_token);
+
+  if (_dpl_login_delete_previous_user_tokens()) {
+    $token_provider->setAccessToken($access_token);
+    $logger->info('Post authorize hook - User token was set.');
+  }
+  else {
+    $logger->error('Post authorize hook - Unable to delete previous user tokens.');
+  }
 }
 
 /**
@@ -63,11 +148,6 @@ function dpl_login_openid_connect_post_authorize(AccountInterface $account, arra
  *   The user account being saved.
  * @param mixed[] $context
  *   Various openid_connect context. Tokens etc.
- *
- *   We are ignoring the function declaration
- *   because PhpStan gives us an iterable error on UserInterface
- *   which we cannot handle for the moment.
- *   @phpstan-ignore-next-line
  */
 function dpl_login_openid_connect_userinfo_save(UserInterface $account, array $context): void {
   // If the user is new we attach a role to the user.
@@ -78,18 +158,166 @@ function dpl_login_openid_connect_userinfo_save(UserInterface $account, array $c
 }
 
 /**
+ * Check if the agency id is already associated with the user.
+ *
+ * @param mixed[] $context
+ *   Various openid_connect context.
+ *
+ * @throws \Drupal\dpl_login\Exception\MissingConfigurationException
+ */
+function _dpl_login_is_user_associated_with_agency(array $context) : bool {
+  /** @var \Drupal\dpl_login\Adgangsplatformen\Config $adgangsplatformen_config */
+  $adgangsplatformen_config = \Drupal::service('dpl_login.adgangsplatformen.config');
+  $agency_id = $adgangsplatformen_config->getAgencyId();
+
+  if (empty($context['userinfo']['attributes']['agencies'])) {
+    return FALSE;
+  }
+
+  // Checks if the Agency ID is already associated with the user.
+  // This is done by checking if the user has an Agency ID that matches
+  // the current Agency ID and has the userIdType set as LOCAL.
+  $agency_list = $context['userinfo']['attributes']['agencies'];
+  $result = array_filter($agency_list, function ($agency) use ($agency_id) {
+    return $agency['agencyId'] === $agency_id && $agency['userIdType'] === 'LOCAL';
+  });
+
+  return !empty($result);
+}
+
+/**
+ * Is the user registered in FBS?
+ *
+ * @todo Should be a part of the UserTokens service.
+ */
+function _dpl_login_user_is_registered(AccessToken $token): bool {
+  try {
+    $patron = _dpl_login_get_patron($token);
+  }
+  // @todo We expect that an API Exception means that the user is not registered.
+  // However this is not a safe assumption, so we have flagged this as TODO for
+  // later inspection.
+  catch (ApiException $e) {
+    $logger = \Drupal::logger('dpl_login');
+    $logger->error('Authorization blocked. Unable to create access token: @message', [
+      '@message' => $e->getMessage(),
+    ]);
+    return FALSE;
+  }
+
+  return $patron->getAuthenticateStatus() === 'VALID';
+}
+
+/**
+ * Helper function that returns Drupal logger object.
+ *
+ * @todo Should be a part of the UserTokens service.
+ */
+function _dpl_login_get_authorization_logger(?AccessToken $token = NULL): LoggerInterface {
+  // If the user is not registered we use a key that tells us
+  // that we are in a registering flow.
+  if ($token && !_dpl_login_user_is_registered($token)) {
+    return \Drupal::logger(DplLoginInterface::LOGGER_KEY_UNREGISTERED_USER);
+  }
+
+  return \Drupal::logger(DplLoginInterface::LOGGER_KEY);
+}
+
+/**
+ * Helper function that returns the correct token provider.
+ *
+ * @todo Should be a part of the UserTokens service.
+ */
+function _dpl_login_get_access_token_provider(AccessToken $token): UserTokensProviderInterface {
+  if (!_dpl_login_user_is_registered($token)) {
+    return \Drupal::service('dpl_login.unregistered_user_tokens');
+  }
+
+  return \Drupal::service('dpl_login.registered_user_tokens');
+}
+
+/**
+ * Delete all previous user tokens.
+ *
+ * @todo Should be a part of the UserTokens service.
+ */
+function _dpl_login_delete_previous_user_tokens(): bool {
+  $user_access_token_services = [
+    'dpl_login.registered_user_tokens',
+    'dpl_login.unregistered_user_tokens',
+  ];
+  $statuses = [];
+  foreach ($user_access_token_services as $service) {
+    /** @var \Drupal\dpl_login\UserTokensProviderInterface $user_tokens_provider */
+    $user_tokens_provider = \Drupal::service($service);
+    $statuses[] = $user_tokens_provider->deleteAccessToken();
+  }
+
+  return (bool) array_filter($statuses);
+}
+
+/**
  * Decide if the user has already been processed.
  *
  * @param mixed[] $openid_connect_context
  *   Various openid_connect context. Tokens etc.
- *
- * @return bool
- *   Yes or no?
  */
 function _dpl_login_user_has_been_processed(array $openid_connect_context): bool {
   // If we for some reason do not have the information
   // about the user.
   // Or if we are sure that the user is an already created user
   // then we do not attach any information.
-  return !$openid_connect_context['is_new'] ?? FALSE;
+  return (isset($openid_connect_context['is_new'])) ? !$openid_connect_context['is_new'] : FALSE;
+}
+
+/**
+ * Implements hook_dpl_react_apps_data().
+ */
+function dpl_login_dpl_react_apps_data(array &$data, array &$variables): void {
+  $openid_config = \Drupal::config('openid_connect.settings.adgangsplatformen');
+  // Make sure that changed settings are invalidating the cache.
+  $cache_metadata = CacheableMetadata::createFromRenderArray($variables);
+  $cache_metadata->addCacheableDependency($openid_config);
+  $cache_metadata->applyTo($variables);
+
+  $data['urls'] += [
+    'userinfo' => $openid_config->get('settings')['userinfo_endpoint'] ?? '/',
+  ];
+}
+
+/**
+ * Implements hook_preprocess_html().
+ */
+function dpl_login_preprocess_html(array &$variables): void {
+  if (\Drupal::currentUser()->isAuthenticated()) {
+    $variables['head_title'][] = t('Logged in', [], ['context' => 'dpl_login']);
+  }
+}
+
+/**
+ * Implements hook_form_FORM_ID_alter().
+ */
+function dpl_login_form_openid_connect_admin_settings_alter(array &$form, FormStateInterface $form_state): void {
+  $form['#submit'][] = 'dpl_login_openid_connect_admin_settings_submit';
+}
+
+/**
+ * Custom submit handler for openid_connect_admin_settings form.
+ *
+ * @param array<mixed> $form
+ *   An associative array containing the structure of the form.
+ * @param \Drupal\Core\Form\FormStateInterface $form_state
+ *   The current state of the form.
+ *
+ * @throws \Drupal\dpl_login\Exception\MissingConfigurationException
+ */
+function dpl_login_openid_connect_admin_settings_submit(array &$form, FormStateInterface $form_state): void {
+  $messenger = \Drupal::messenger();
+
+  /** @var Drupal\dpl_library_token\LibraryTokenHandler $handler */
+  $handler = Drupal::service('dpl_library_token.handler');
+
+  if (!$handler->retrieveAndStoreToken(TRUE)) {
+    $messenger->addMessage(t('Unable to retrieve token from Adgangsplatformen. Please check if the provided Agency ID is correct.', [], ['context' => 'OpenId Connect Settings']), LogLevel::ERROR);
+  }
 }

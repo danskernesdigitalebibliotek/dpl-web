@@ -1,0 +1,23 @@
+<div {{ attributes }}>
+    <form class="header__menu-second" action="{{ search_action }}">
+        <div class="header__menu-search" role="combobox" aria-haspopup="listbox" aria-expanded="false">
+      <input
+        name="q"
+        class="header__menu-search-input text-body-medium-regular"
+        type="text"
+        autocomplete="off"
+        placeholder="{{ input_placeholder_text }}"
+        aria-label="{{ input_placeholder_text }}"
+        value=""
+      />
+      {% if search_icon %}
+        <input
+          type="image"
+          src="data:image/svg+xml,{{ search_icon }}"
+          alt="Search button"
+          class="header__menu-search-icon"
+        />
+      {% endif %}
+        </div>
+    </form>
+</div>

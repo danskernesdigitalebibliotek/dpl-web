@@ -3,8 +3,8 @@ description: Handles authentication/login via Adgangsplatformen
 package: DPL
 
 type: module
-core_version_requirement: ^9
+core_version_requirement: ^9 || ^10
 
 dependencies:
+  - dpl_fbs:dpl_fbs
   - openid_connect:openid_connect
-  - dpl_library_token:dpl_library_token

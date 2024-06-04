@@ -1,0 +1,59 @@
+uuid: 6ef381de-df09-4eca-8d7b-af6b2ae8ada1
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.field.paragraph.card_grid_manual.field_grid_content
+    - field.field.paragraph.card_grid_manual.field_title
+    - paragraphs.paragraphs_type.card_grid_manual
+  module:
+    - dynamic_entity_reference
+id: paragraph.card_grid_manual.default
+targetEntityType: paragraph
+bundle: card_grid_manual
+mode: default
+content:
+  field_grid_content:
+    type: dynamic_entity_reference_entity_view
+    label: hidden
+    settings:
+      node:
+        view_mode: card
+      eventseries:
+        view_mode: card
+      crop:
+        view_mode: default
+        link: false
+      menu_link_content:
+        view_mode: default
+        link: false
+      eventinstance:
+        view_mode: default
+        link: false
+      file:
+        view_mode: default
+        link: false
+      job_schedule:
+        view_mode: default
+        link: false
+      media:
+        view_mode: default
+        link: false
+      paragraph:
+        view_mode: default
+        link: false
+      search_api_task:
+        view_mode: default
+        link: false
+      path_alias:
+        view_mode: default
+        link: false
+      user:
+        view_mode: default
+        link: false
+    third_party_settings: {  }
+    weight: 0
+    region: content
+hidden:
+  field_title: true
+  search_api_excerpt: true

@@ -1,0 +1,10 @@
+uuid: 75a9d2e3-314a-484c-9263-c62597cedcab
+langcode: en
+status: true
+dependencies:
+  module:
+    - node
+id: node.nav_teaser
+label: 'Navigation teaser'
+targetEntityType: node
+cache: true

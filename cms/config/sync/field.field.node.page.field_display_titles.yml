@@ -1,0 +1,21 @@
+uuid: 3b20d6a7-e6e9-4a29-86e7-639ab9b33972
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_display_titles
+    - node.type.page
+id: node.page.field_display_titles
+field_name: field_display_titles
+entity_type: node
+bundle: page
+label: 'Display titles'
+description: 'By default, titles and subtitles are not displayed on pages. If you wish to have it displayed, you can enable this setting.'
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings:
+  on_label: 'On'
+  off_label: 'Off'
+field_type: boolean

@@ -2,19 +2,34 @@ docker-compose-yaml: docker-compose.yml
 
 project: dpl-cms-core
 
+ssh: 20.238.147.183:22
+api: https://api.lagoon.dplplat01.dpl.reload.dk/graphql
+
 tasks:
   post-rollout:
     - run:
         name: If drupal is not installed
         command: |
+          set -e
           if tables=$(drush sqlq "show tables like 'node';") && [ -z "$tables" ]; then
-            drush si --existing-config -y
+            # Install and set the admin password to a Lagoon variable if it exists.
+            if [[ -n $PR_DRUPAL_PWD ]]; then
+              drush si --existing-config -y --account-pass=$PR_DRUPAL_PWD
+            else
+            # Otherwise install and let drush generate a password.
+              drush si --existing-config -y
+            fi
+
+            # Practice shows that the cache needs to be cleared to avoid
+            # configuration errors even after a site install.
+            drush cr
           fi
         service: cli
         shell: bash
     - run:
         name: drush deploy
         command: |
+          set -e
           if [[ -f config/sync/system.site.yml ]]; then
             echo "Config detected, doing a drush deploy"
             drush deploy
@@ -34,6 +49,7 @@ tasks:
         # it will be gone.
         name: Create module upload directory in public files
         command: |
+          set -e
           if [[ ! -d "web/sites/default/files/modules_local" ]]; then
             echo "Creating directory for module uploads"
             mkdir web/sites/default/files/modules_local
@@ -42,14 +58,67 @@ tasks:
     - run:
         name: Import translations
         command: |
+          set -e;
           drush locale-check
           drush locale-update
+        service: cli
+    - run:
+        name: Create test users
+        command: |
+          set -e
+          # Only create test users if they do not exist already.
+          if editor_user=$(drush sqlq 'select * from users_field_data where name = "editor"') && [ -z "$editor_user" ]; then
+            drush user:create editor --password="$PR_DRUPAL_PWD"
+            drush user:role:add 'editor' editor
+
+            drush user:create administrator --password="$PR_DRUPAL_PWD"
+            drush user:role:add 'administrator' administrator
+
+            drush user:create mediator --password="$PR_DRUPAL_PWD"
+            drush user:role:add 'mediator' mediator
+
+            drush user:create local_administrator --password="$PR_DRUPAL_PWD"
+            drush user:role:add 'local_administrator' local_administrator
+
+            drush user:create patron --password="$PR_DRUPAL_PWD"
+            drush user:role:add 'patron' patron
+          else
+            echo "Test users already exist. Skipping creation..."
+          fi
         service: cli
 
 environments:
   main:
     cronjobs:
-    - name: drush cron
-      schedule: "M/15 * * * *"
-      command: drush cron
-      service: cli
+      - name: drush cron
+        schedule: "M/15 * * * *"
+        command: drush cron
+        service: cli
+      - name: import translations
+        # TODO Consider if translation checking frequency should be reduced.
+        # A high frequency is used to ensure quick turnaround time during
+        # development. Updating (or checking) translations could have side effects on
+        # caching etc. and once things have settled down a lower frequency may be
+        # more appropriate.
+        schedule: "M/30 * * * *"
+        command: drush locale-check && drush locale-update
+        service: cli
+      - name: import danish config translations
+        schedule: "M/30 * * * *"
+        command: drush dpl_po:import-remote-config-po da https://danskernesdigitalebibliotek.github.io/dpl-cms/translations/da.config.po
+        service: cli
+  pr-581:
+    cronjobs:
+      - name: drush cron
+        schedule: "M/15 * * * *"
+        command: drush cron
+        service: cli
+      - name: import translations
+        # Quite frequent translation import because of businezz.
+        schedule: "M/30 * * * *"
+        command: drush locale-check && drush locale-update
+        service: cli
+      - name: import danish config translations
+        schedule: "M/30 * * * *"
+        command: drush dpl_po:import-remote-config-po da https://danskernesdigitalebibliotek.github.io/dpl-cms/translations/da.config.po
+        service: cli

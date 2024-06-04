@@ -1,6 +1,6 @@
 uuid: 692cc50a-dbda-4b8d-88e2-dfc872bc7a77
 langcode: en
-status: true
+status: false
 dependencies:
   theme:
     - novel
@@ -9,14 +9,14 @@ _core:
 id: novel_local_tasks
 theme: novel
 region: content
-weight: -20
+weight: -2
 provider: null
 plugin: local_tasks_block
 settings:
   id: local_tasks_block
   label: Tabs
-  provider: core
   label_display: '0'
+  provider: core
   primary: true
   secondary: true
 visibility: {  }

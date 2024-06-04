@@ -1,7 +1,18 @@
 uuid: ac73cc4c-82c5-44f5-a4a9-b84be3bbe547
 langcode: en
 status: true
-dependencies: {  }
+dependencies:
+  config:
+    - rest.resource.campaign.match
+    - rest.resource.dpl_opening_hours_list
+    - rest.resource.events
+    - rest.resource.proxy-url
+  module:
+    - media
+    - openapi
+    - recurring_events
+    - rest
+    - system
 _core:
   default_config_hash: j5zLMOdJBqC0bMvSdth5UebkprJB8g_2FXHqhfpJzow
 id: anonymous
@@ -10,3 +21,11 @@ weight: 0
 is_admin: false
 permissions:
   - 'access content'
+  - 'access openapi api docs'
+  - 'restful get dpl_opening_hours_list'
+  - 'restful get events'
+  - 'restful get proxy-url'
+  - 'restful post campaign:match'
+  - 'view eventinstance entity'
+  - 'view eventseries entity'
+  - 'view media'

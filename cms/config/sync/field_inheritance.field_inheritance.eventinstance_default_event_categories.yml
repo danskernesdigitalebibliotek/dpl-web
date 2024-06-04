@@ -1,0 +1,14 @@
+uuid: 572336b9-66cf-4919-8d77-aac055afd6ea
+langcode: en
+status: true
+dependencies: {  }
+id: eventinstance_default_event_categories
+label: 'Event categories'
+type: fallback
+sourceEntityType: eventseries
+sourceEntityBundle: default
+sourceField: field_categories
+destinationEntityType: eventinstance
+destinationEntityBundle: default
+destinationField: field_categories
+plugin: entity_reference_inheritance

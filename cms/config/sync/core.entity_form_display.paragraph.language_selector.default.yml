@@ -1,0 +1,36 @@
+uuid: 3b3559cb-e75d-47d1-868c-9782f4f447cd
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.field.paragraph.language_selector.field_language_icon
+    - field.field.paragraph.language_selector.field_link_language
+    - image.style.flag_icon
+    - paragraphs.paragraphs_type.language_selector
+  module:
+    - image
+    - link
+id: paragraph.language_selector.default
+targetEntityType: paragraph
+bundle: language_selector
+mode: default
+content:
+  field_language_icon:
+    type: image_image
+    weight: 3
+    region: content
+    settings:
+      progress_indicator: throbber
+      preview_image_style: flag_icon
+    third_party_settings: {  }
+  field_link_language:
+    type: link_default
+    weight: 0
+    region: content
+    settings:
+      placeholder_url: ''
+      placeholder_title: ''
+    third_party_settings: {  }
+hidden:
+  created: true
+  status: true

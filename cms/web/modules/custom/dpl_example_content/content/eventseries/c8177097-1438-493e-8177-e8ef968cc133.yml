@@ -1,0 +1,349 @@
+_meta:
+  version: '1.0'
+  entity_type: eventseries
+  uuid: c8177097-1438-493e-8177-e8ef968cc133
+  bundle: default
+  default_langcode: en
+  depends:
+    e424f47d-6b01-443e-8a03-0d3b436e20d3: eventinstance
+    852d781f-82c9-40ac-bc8d-d0cefe07706d: node
+    f457c4c2-dc28-45cd-9b6e-fda4248d9d45: taxonomy_term
+    618e176a-a45a-4c36-a197-664230aa0a34: media
+    dc33677f-8894-4717-b34b-d985f6ad875f: media
+    65432ee1-43f1-4130-9565-5683467d4b5a: media
+    1006441f-bb39-43b5-8c08-1a79344abf8b: taxonomy_term
+    53133c2e-1023-43a9-baf2-64a5081eea0f: taxonomy_term
+    190beb00-d5af-4c9a-be8d-65a646b37bbb: taxonomy_term
+    725e0059-9c5d-4c4e-8e3d-6d8cf2042fa4: taxonomy_term
+    ec76c707-898d-4dfd-8cd2-e258aef1d6dd: taxonomy_term
+    0502836d-0f7b-4b21-9371-c40ae9e01495: taxonomy_term
+default:
+  revision_uid:
+    -
+      target_id: 1
+  status:
+    -
+      value: true
+  uid:
+    -
+      target_id: 1
+  title:
+    -
+      value: 'Fernisering Moderne Dans'
+  recur_type:
+    -
+      value: custom
+  consecutive_recurring_date:
+    -
+      value: ''
+      end_value: ''
+      time: '08:00 am'
+      end_time: '11:30 pm'
+      duration: 5
+      duration_units: minute
+      buffer: 0
+      buffer_units: minute
+  daily_recurring_date:
+    -
+      value: ''
+      end_value: ''
+      time: '08:00 am'
+      duration: 900
+      end_time: '08:00 am'
+      duration_or_end_time: duration
+  weekly_recurring_date:
+    -
+      value: ''
+      end_value: ''
+      time: '08:00 am'
+      duration: 900
+      end_time: '08:00 am'
+      duration_or_end_time: duration
+      days: ''
+  monthly_recurring_date:
+    -
+      value: ''
+      end_value: ''
+      time: '08:00 am'
+      duration: 900
+      end_time: '08:00 am'
+      duration_or_end_time: duration
+      days: ''
+      type: ''
+      day_occurrence: ''
+      day_of_month: ''
+  yearly_recurring_date:
+    -
+      value: ''
+      end_value: ''
+      time: '08:00 am'
+      duration: 900
+      end_time: '08:00 am'
+      duration_or_end_time: duration
+      days: ''
+      type: ''
+      day_occurrence: ''
+      day_of_month: ''
+      year_interval: 1
+      months: ''
+  custom_date:
+    -
+      value: '2031-12-06T18:30:00'
+      end_value: '2032-01-12T20:00:00'
+  created:
+    -
+      value: 1704607084
+  revision_translation_affected:
+    -
+      value: true
+  metatag:
+    -
+      tag: meta
+      attributes:
+        name: title
+        content: '| DPL CMS'
+    -
+      tag: link
+      attributes:
+        rel: canonical
+        href: '/user/login'
+  event_instances:
+    -
+      entity: e424f47d-6b01-443e-8a03-0d3b436e20d3
+  field_branch:
+    -
+      entity: 852d781f-82c9-40ac-bc8d-d0cefe07706d
+  field_categories:
+    -
+      entity: f457c4c2-dc28-45cd-9b6e-fda4248d9d45
+  field_description:
+    -
+      value: 'Foreningen for Integreret Moderne Dans arbejder med at udvide normalitetsbegrebet i scenekunsten. For hvad er normalt? Rosenreglen og Mødrenes hus. I 2022 udgav hun også den stærkt politiske digtsamling Jeg vil have en statsminister.'
+  field_event_address:
+    -
+      langcode: en
+      country_code: DK
+      locality: Aarhus
+      postal_code: '8000'
+      address_line1: 'Kampmanns Plads 2'
+  field_event_image:
+    -
+      entity: 618e176a-a45a-4c36-a197-664230aa0a34
+  field_event_link:
+    -
+      uri: 'https://billetto.dk/'
+      title: ''
+      options: {  }
+  field_event_paragraphs:
+    -
+      entity:
+        _meta:
+          version: '1.0'
+          entity_type: paragraph
+          uuid: 8c45af24-0412-49b6-8d46-baf4117606ea
+          bundle: text_body
+          default_langcode: en
+        default:
+          status:
+            -
+              value: true
+          created:
+            -
+              value: 1704607118
+          behavior_settings:
+            -
+              value: {  }
+          revision_translation_affected:
+            -
+              value: true
+          field_body:
+            -
+              value: '<h2>Om udstillingen</h2><p>Deltagende kunstnere: Ei Arakawa, Mohamed Bourouissa, Cao Fei, Simon Denny, Lara Favaretto, GCC, Guan Xiao, Shadi Habib Allah, Roger Hiorns, Oliver Laric, Liz Magic Laser, Katja Novitskova, Laura Owens, Yuri Pattison, Sondra Perry, Josephine Pryde, Nick Relph, Cameron Rowland, Hito Steyerl, Martine Syms, Nora Turato.<br /><br />Post-Capital: Art and the Economics of the Digital Age er kurateret af Michelle Cotton og produceret af Mudam Luxembourg – Musée d’Art Moderne Grand-Duc Jean i tæt samarbejde med Kunsthal Charlottenborg.</p><p><a href="https://www.danskdanseteater.dk/">Planlæg dit besøg</a>.</p>'
+              format: basic
+    -
+      entity:
+        _meta:
+          version: '1.0'
+          entity_type: paragraph
+          uuid: cff285c5-8332-43e0-89cd-d9dfb2addcaa
+          bundle: links
+          default_langcode: en
+        default:
+          status:
+            -
+              value: true
+          created:
+            -
+              value: 1704607139
+          behavior_settings:
+            -
+              value: {  }
+          revision_translation_affected:
+            -
+              value: true
+          field_link:
+            -
+              uri: 'https://www.danskdanseteater.dk/'
+              title: 'Se alle de nominerede til Modern Dans 2022 på moderndans.dk'
+              options:
+                href: 'https://www.danskdanseteater.dk/'
+                data-entity-type: ''
+                data-entity-uuid: ''
+                data-entity-substitution: ''
+    -
+      entity:
+        _meta:
+          version: '1.0'
+          entity_type: paragraph
+          uuid: 2afaa805-058c-471e-aacb-1a8ce2ae6fb8
+          bundle: files
+          default_langcode: en
+        default:
+          status:
+            -
+              value: true
+          created:
+            -
+              value: 1704607178
+          behavior_settings:
+            -
+              value: {  }
+          revision_translation_affected:
+            -
+              value: true
+          field_files:
+            -
+              entity: dc33677f-8894-4717-b34b-d985f6ad875f
+    -
+      entity:
+        _meta:
+          version: '1.0'
+          entity_type: paragraph
+          uuid: 2984685a-eeb9-4adb-901b-1aed453e034c
+          bundle: medias
+          default_langcode: en
+        default:
+          status:
+            -
+              value: true
+          created:
+            -
+              value: 1704607213
+          behavior_settings:
+            -
+              value: {  }
+          revision_translation_affected:
+            -
+              value: true
+          field_medias:
+            -
+              entity: 65432ee1-43f1-4130-9565-5683467d4b5a
+    -
+      entity:
+        _meta:
+          version: '1.0'
+          entity_type: paragraph
+          uuid: 34dbdb93-9d66-4658-b7c9-d1f74e6bf93b
+          bundle: text_body
+          default_langcode: en
+        default:
+          status:
+            -
+              value: true
+          created:
+            -
+              value: 1704607234
+          behavior_settings:
+            -
+              value: {  }
+          revision_translation_affected:
+            -
+              value: true
+          field_body:
+            -
+              value: '<h2>Barokken er en kulturperiode der i Danmark gør sig gældende fra omkring 1650 – 1720</h2><p>Barokken er udtryk for en storslået og prangende stilretning inden for billedkunst, musik, arkitektur og litteratur, hvor man dyrkede det teatralske, storladne og sanselige udtryk. I dansk litteraturhistorie er det Anders Arrebo (1587-1637), som indleder barokken med sin oversættelse af Davis salmer i 1623 og Kingo bliver den kanoniserede repræsentant for perioden.<br /><br />Barokkens vigtigste prosaværk i Danmark er Leonora Christina Ulfeldts (1621-1698) biografi ”Jammers minde”. ”Jammers minde” beskriver de 22 år, Leonora Christine sad fængslet i Blåtårn, anklaget for højforræderi af kong Frederik den 3.<br /><br />Under perioden blev kunsten nærmest propaganda, som bl.a. i form af hyldestdigte understregede, at kongens plads var lige efter Guds. Salmer hyldede Gud som den, der giver verden mening. Samlerne er fyldt med billedsprog og modsætninger, som skal vise splittelsen mellem vores overfladiske liv og Gud, som lover, at der er en mening med tilværelsen.</p>'
+              format: basic
+  field_event_partners:
+    -
+      value: 'Aarhus Musikskole'
+    -
+      value: 'Den Vestdanske Filmpulje sammen med Åby Biblioteks venner'
+  field_event_place:
+    -
+      value: Hovedbibliotek
+    -
+      value: 'Greve bibliotek'
+  field_event_state:
+    -
+      value: Active
+  field_tags:
+    -
+      entity: 1006441f-bb39-43b5-8c08-1a79344abf8b
+    -
+      entity: 53133c2e-1023-43a9-baf2-64a5081eea0f
+    -
+      entity: 190beb00-d5af-4c9a-be8d-65a646b37bbb
+    -
+      entity: 725e0059-9c5d-4c4e-8e3d-6d8cf2042fa4
+    -
+      entity: ec76c707-898d-4dfd-8cd2-e258aef1d6dd
+    -
+      entity: 0502836d-0f7b-4b21-9371-c40ae9e01495
+  field_teaser_image:
+    -
+      entity: 618e176a-a45a-4c36-a197-664230aa0a34
+  field_ticket_categories:
+    -
+      entity:
+        _meta:
+          version: '1.0'
+          entity_type: paragraph
+          uuid: 81c68ed2-7bad-470e-9c22-649bea691fcd
+          bundle: event_ticket_category
+          default_langcode: en
+        default:
+          status:
+            -
+              value: true
+          created:
+            -
+              value: 1704607441
+          behavior_settings:
+            -
+              value: {  }
+          revision_translation_affected:
+            -
+              value: true
+          field_ticket_category_name:
+            -
+              value: Børn
+          field_ticket_category_price:
+            -
+              value: '0.00'
+    -
+      entity:
+        _meta:
+          version: '1.0'
+          entity_type: paragraph
+          uuid: d33f71b3-c0c0-4930-86dc-902279073e88
+          bundle: event_ticket_category
+          default_langcode: en
+        default:
+          status:
+            -
+              value: true
+          created:
+            -
+              value: 1704607084
+          behavior_settings:
+            -
+              value: {  }
+          revision_translation_affected:
+            -
+              value: true
+          field_ticket_category_name:
+            -
+              value: Voksne
+          field_ticket_category_price:
+            -
+              value: '65.00'

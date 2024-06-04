@@ -1,0 +1,49 @@
+_meta:
+  version: '1.0'
+  entity_type: media
+  uuid: aba3cea8-cee5-42c1-a152-e30c2ab135e2
+  bundle: image
+  default_langcode: da
+  depends:
+    b0fea511-57df-4b49-b127-1c445beacfe7: file
+default:
+  status:
+    -
+      value: true
+  uid:
+    -
+      target_id: 1
+  name:
+    -
+      value: jilbert-ebrahimi-HAwA1N2gjo8-unsplash.jpg
+  created:
+    -
+      value: 1703140309
+  revision_translation_affected:
+    -
+      value: true
+  metatag:
+    -
+      tag: meta
+      attributes:
+        name: title
+        content: '| DPL CMS'
+    -
+      tag: link
+      attributes:
+        rel: canonical
+        href: '/user/login'
+  path:
+    -
+      alias: ''
+      langcode: da
+  field_byline:
+    -
+      value: 'Af Jilbert Ebrahimi / Unsplash'
+  field_media_image:
+    -
+      entity: b0fea511-57df-4b49-b127-1c445beacfe7
+      alt: 'Mand læser bog med bøger i baggrunden'
+      title: ''
+      width: 1920
+      height: 1280

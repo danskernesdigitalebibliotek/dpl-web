@@ -1,0 +1,24 @@
+uuid: a6ff7ad6-9d0d-4e73-a6e9-b985f7f4b219
+langcode: en
+status: true
+dependencies:
+  config:
+    - core.entity_view_mode.paragraph.preview
+    - field.field.paragraph.medias.field_medias
+    - paragraphs.paragraphs_type.medias
+id: paragraph.medias.preview
+targetEntityType: paragraph
+bundle: medias
+mode: preview
+content:
+  field_medias:
+    type: entity_reference_entity_view
+    label: above
+    settings:
+      view_mode: media_library
+      link: false
+    third_party_settings: {  }
+    weight: 0
+    region: content
+hidden:
+  search_api_excerpt: true

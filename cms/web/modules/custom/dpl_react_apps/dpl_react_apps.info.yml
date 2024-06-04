@@ -2,7 +2,14 @@ name: DPL React Apps
 description: For integration of dpl_react apps on the site.
 package: DPL
 dependencies:
+  - dpl_login:dpl_login
   - dpl_react:dpl_react
+  - dpl_react_apps:dpl_react_apps
+  - dpl_library_agency:dpl_library_agency
+  - dpl_instant_loan:dpl_instant_loan
+  - dpl_dashboard:dpl_dashboard
+  - dpl_fees:dpl_fees
+  - dpl_recommender:dpl_recommender
 
 type: module
-core_version_requirement: ^9
+core_version_requirement: ^9 || ^10

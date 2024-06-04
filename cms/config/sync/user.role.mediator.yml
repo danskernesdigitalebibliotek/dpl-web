@@ -1,9 +1,116 @@
 uuid: 9cb4763e-19ed-475b-8582-2cddd9002d25
 langcode: en
 status: true
-dependencies: {  }
+dependencies:
+  config:
+    - filter.format.basic
+    - filter.format.limited
+    - media.type.document
+    - media.type.image
+    - media.type.video
+    - node.type.article
+    - node.type.campaign
+    - node.type.page
+    - taxonomy.vocabulary.tags
+  module:
+    - content_lock
+    - dpl_admin
+    - entity_clone
+    - file
+    - filter
+    - media
+    - node
+    - override_node_options
+    - paragraphs
+    - recurring_events
+    - redirect
+    - scheduler
+    - system
+    - taxonomy
+    - toolbar
+    - view_unpublished
 id: mediator
 label: Mediator
 weight: 5
 is_admin: null
-permissions: {  }
+permissions:
+  - 'access administration pages'
+  - 'access content overview'
+  - 'access eventinstance overview'
+  - 'access eventseries overview'
+  - 'access media overview'
+  - 'access site in maintenance mode'
+  - 'access taxonomy overview'
+  - 'access toolbar'
+  - 'add eventseries entity'
+  - 'administer redirects'
+  - 'break content lock'
+  - 'change own username'
+  - 'clone eventinstance entity'
+  - 'clone eventseries entity'
+  - 'clone eventseries_type entity'
+  - 'clone node entity'
+  - 'create article content'
+  - 'create campaign content'
+  - 'create document media'
+  - 'create image media'
+  - 'create media'
+  - 'create page content'
+  - 'create terms in tags'
+  - 'create video media'
+  - 'delete any article content'
+  - 'delete any campaign content'
+  - 'delete any document media'
+  - 'delete any image media'
+  - 'delete any media'
+  - 'delete any page content'
+  - 'delete any video media'
+  - 'delete eventinstance entity'
+  - 'delete eventseries entity'
+  - 'delete media'
+  - 'delete own article content'
+  - 'delete own campaign content'
+  - 'delete own document media'
+  - 'delete own eventinstance entity'
+  - 'delete own eventseries entity'
+  - 'delete own files'
+  - 'delete own image media'
+  - 'delete own page content'
+  - 'delete own video media'
+  - 'dpl admin access pages'
+  - 'edit any article content'
+  - 'edit any campaign content'
+  - 'edit any document media'
+  - 'edit any image media'
+  - 'edit any page content'
+  - 'edit any video media'
+  - 'edit eventinstance entity'
+  - 'edit eventseries entity'
+  - 'edit own article content'
+  - 'edit own campaign content'
+  - 'edit own document media'
+  - 'edit own eventinstance entity'
+  - 'edit own eventseries entity'
+  - 'edit own image media'
+  - 'edit own page content'
+  - 'edit own video media'
+  - 'edit terms in tags'
+  - 'override all published option'
+  - 'schedule publishing of eventseries'
+  - 'schedule publishing of nodes'
+  - 'update any media'
+  - 'update media'
+  - 'use text format basic'
+  - 'use text format limited'
+  - 'view all media revisions'
+  - 'view any unpublished content'
+  - 'view own unpublished content'
+  - 'view own unpublished media'
+  - 'view scheduled content'
+  - 'view scheduled eventseries'
+  - 'view scheduled media'
+  - 'view scheduled taxonomy_term'
+  - 'view the administration theme'
+  - 'view unpublished eventinstance entity'
+  - 'view unpublished eventseries entity'
+  - 'view unpublished paragraphs'

@@ -2,14 +2,20 @@
 
 namespace Drupal\dpl_login\Controller;
 
-use Drupal\Core\Url;
-use Drupal\dpl_login\UserTokensProvider;
 use Drupal\Core\Controller\ControllerBase;
-use Drupal\Core\Config\ConfigFactoryInterface;
 use Drupal\Core\Routing\TrustedRedirectResponse;
 use Drupal\Core\StringTranslation\StringTranslationTrait;
+use Drupal\Core\Url;
+use Drupal\dpl_login\Adgangsplatformen\Config;
 use Drupal\dpl_login\Exception\MissingConfigurationException;
+use Drupal\dpl_login\UserTokens;
+use Drupal\openid_connect\OpenIDConnectClaims;
+use Drupal\openid_connect\Plugin\OpenIDConnectClientInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
+use Symfony\Component\HttpFoundation\RedirectResponse;
+use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
+use function Safe\sprintf;
 
 /**
  * DPL React Controller.
@@ -17,47 +23,15 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
 class DplLoginController extends ControllerBase {
   use StringTranslationTrait;
 
-  const LOGGER_KEY = 'dpl_login';
-  // @todo This could be moved to a new service
-  // handling adgangsplatform configuration.
-  // @see dpl_login_install() and \Drupal\dpl_library_token\LibraryTokenHandler.
-  const SETTINGS_KEY = 'openid_connect.settings.adgangsplatformen';
-
   /**
-   * The User token provider.
-   *
-   * @var \Drupal\dpl_login\UserTokensProvider
-   */
-  protected userTokensProvider $userTokensProvider;
-  /**
-   * The Messenger service.
-   *
-   * @var \Drupal\Core\Messenger\MessengerInterface
-   */
-  protected $messenger;
-  /**
-   * Configuration.
-   *
-   * @var mixed[]
-   */
-  protected $settings;
-
-  /**
-   * DdplReactController constructor.
-   *
-   * @param \Drupal\dpl_login\UserTokensProvider $user_token_provider
-   *   The Uuser token provider.
-   * @param \Drupal\Core\Config\ConfigFactoryInterface $configFactory
-   *   Configuration.
+   * {@inheritdoc}
    */
   public function __construct(
-    UserTokensProvider $user_token_provider,
-    ConfigFactoryInterface $configFactory
-  ) {
-    $this->userTokensProvider = $user_token_provider;
-    $this->settings = $configFactory
-      ->get(self::SETTINGS_KEY)->get('settings');
-  }
+    protected UserTokens $userTokens,
+    protected Config $config,
+    protected OpenIDConnectClientInterface $client,
+    protected OpenIDConnectClaims $claims
+  ) {}
 
   /**
    * {@inheritdoc}
@@ -70,31 +44,32 @@ class DplLoginController extends ControllerBase {
   public static function create(ContainerInterface $container) {
     return new static(
       $container->get('dpl_login.user_tokens'),
-      $container->get('config.factory')
+      $container->get('dpl_login.adgangsplatformen.config'),
+      $container->get('dpl_login.adgangsplatformen.client'),
+      $container->get('openid_connect.claims')
     );
   }
 
   /**
    * Logs out user externally and internally.
    *
-   * @todo Insert TrustedRedirectResponse|RedirectResponse as return type when going to PHP ^8.0.
+   * @param \Symfony\Component\HttpFoundation\Request $request
+   *   Symfony request object.
    *
    * @return \Drupal\Core\Routing\TrustedRedirectResponse|\Symfony\Component\HttpFoundation\RedirectResponse
    *   Redirect to external logout service or front if not possible.
+   *
+   * @throws \Drupal\dpl_login\Exception\MissingConfigurationException
    */
-  public function logout() {
+  public function logout(Request $request): TrustedRedirectResponse|RedirectResponse {
     // It is a global problem if the logout endpoint has not been configured.
-    // @todo This could be moved to a new service
-    // handling adgangsplatform configuration.
-    // @see dpl_login_install() and \Drupal\dpl_library_token\LibraryTokenHandler.
-    if (!$logout_endpoint = $this->settings['logout_endpoint'] ?? NULL) {
+    if (!$logout_endpoint = $this->config->getLogoutEndpoint()) {
       throw new MissingConfigurationException('Adgangsplatformen plugin config variable logout_endpoint is missing');
     }
 
-    $access_token = $this->userTokensProvider->getAccessToken();
-
+    $access_token = $this->userTokens->getCurrent();
     // Log out user in Drupal.
-    // We do this regardless wether it is possible to logout remotely or not.
+    // We do this regardless whether it is possible to logout remotely or not.
     // We do not want the user to get stuck on the site in a logged in state.
     user_logout();
 
@@ -105,14 +80,15 @@ class DplLoginController extends ControllerBase {
       return $this->redirect('<front>');
     }
 
-    // Create url for logout service that it should redirect back to.
-    // Since toString(TRUE) is called
-    // we know that the return value of toString() is GeneratedUrl
-    // and consequently we are able to call getGeneratedUrl in the end.
-    /* @phpstan-ignore-next-line */
     $redirect_uri = Url::fromRoute('<front>', [], ["absolute" => TRUE])
       ->toString(TRUE)
       ->getGeneratedUrl();
+
+    if ($current_path = (string) $request->query->get('current-path')) {
+      $redirect_uri = Url::fromUri(sprintf('internal:%s', $current_path), ['absolute' => TRUE])
+        ->toString(TRUE)
+        ->getGeneratedUrl();
+    }
 
     // Remote logout service url.
     $url = Url::fromUri($logout_endpoint, [
@@ -123,7 +99,29 @@ class DplLoginController extends ControllerBase {
       ],
     ]);
 
-    return TrustedRedirectResponse::create($url->toUriString());
+    return new TrustedRedirectResponse($url->toUriString());
+  }
+
+  /**
+   * Authorize user from embedded app.
+   *
+   * Retrieve current path parameter, generate new URL and store
+   * it in session for later redirect and authorize user.
+   *
+   * @param \Symfony\Component\HttpFoundation\Request $request
+   *   Symfony request object.
+   *
+   * @return \Symfony\Component\HttpFoundation\Response
+   *   A redirect to the authorization endpoint.
+   */
+  public function login(Request $request): Response {
+    $_SESSION['openid_connect_op'] = 'login';
+    if ($current_path = $request->query->get('current-path')) {
+      $_SESSION['openid_connect_destination'] = $current_path;
+    }
+
+    $scopes = $this->claims->getScopes($this->client);
+    return $this->client->authorize($scopes);
   }
 
 }

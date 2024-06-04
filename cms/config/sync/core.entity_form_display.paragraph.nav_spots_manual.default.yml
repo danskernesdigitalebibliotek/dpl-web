@@ -1,0 +1,27 @@
+uuid: b7ccb04b-4815-4eba-b58f-89ffda72d6c8
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.field.paragraph.nav_spots_manual.field_nav_spots_content
+    - paragraphs.paragraphs_type.nav_spots_manual
+  module:
+    - dynamic_entity_reference
+id: paragraph.nav_spots_manual.default
+targetEntityType: paragraph
+bundle: nav_spots_manual
+mode: default
+content:
+  field_nav_spots_content:
+    type: dynamic_entity_reference_default
+    weight: 0
+    region: content
+    settings:
+      match_operator: CONTAINS
+      match_limit: 10
+      size: 40
+      placeholder: ''
+    third_party_settings: {  }
+hidden:
+  created: true
+  status: true

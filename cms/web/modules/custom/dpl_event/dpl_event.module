@@ -1,0 +1,303 @@
+<?php
+
+/**
+ * @file
+ * Module file for DPL Event.
+ */
+
+use Drupal\Core\Datetime\DrupalDateTime;
+use Drupal\Core\Entity\EntityInterface;
+use Drupal\Core\Entity\FieldableEntityInterface;
+use Drupal\Core\Form\FormStateInterface;
+use Drupal\Core\Url;
+use Drupal\dpl_event\EventState;
+use Drupal\dpl_event\EventWrapper;
+use Drupal\dpl_event\Workflows\OccurredSchedule;
+use Drupal\dpl_event\Workflows\UnpublishSchedule;
+use Drupal\drupal_typed\DrupalTyped;
+use Drupal\recurring_events\Entity\EventInstance;
+use Drupal\recurring_events\Entity\EventSeries;
+
+/**
+ * Implements hook_cron_job_scheduler_info().
+ *
+ * @return non-empty-array<string, array{'worker callback': callable}>
+ *   Job scheduler information.
+ */
+function dpl_event_cron_job_scheduler_info(): array {
+  $occurred_schedule = DrupalTyped::service(OccurredSchedule::class, 'dpl_event.occurred_schedule');
+  $unpublish_schedule = DrupalTyped::service(UnpublishSchedule::class, 'dpl_event.unpublish_schedule');
+  return array_merge(
+    $occurred_schedule->getSchedule(),
+    $unpublish_schedule->getSchedule()
+  );
+}
+
+/**
+ * Implements hook_node_insert().
+ */
+function dpl_event_eventinstance_insert(EntityInterface $entity): void {
+  $occurred_schedule = DrupalTyped::service(OccurredSchedule::class, 'dpl_event.occurred_schedule');
+  $unpublish_schedule = DrupalTyped::service(UnpublishSchedule::class, 'dpl_event.unpublish_schedule');
+  if (!$entity instanceof EventInstance) {
+    return;
+  }
+
+  (new EventWrapper($entity))->isActive() && $occurred_schedule->scheduleOccurred($entity);
+  $unpublish_schedule->scheduleUnpublication($entity);
+}
+
+/**
+ * Implements hook_node_update().
+ */
+function dpl_event_eventinstance_update(EntityInterface $entity): void {
+  $occurred_schedule = DrupalTyped::service(OccurredSchedule::class, 'dpl_event.occurred_schedule');
+  $unpublish_schedule = DrupalTyped::service(UnpublishSchedule::class, 'dpl_event.unpublish_schedule');
+  if (!$entity instanceof EventInstance) {
+    return;
+  }
+  $updated_event = new EventWrapper($entity);
+  if (isset($entity->original) && $entity->original instanceof EventInstance) {
+    // If there are no changes to the date then skip updating schedules.
+    if ($updated_event->hasSameDate($entity->original)) {
+      return;
+    }
+  }
+
+  $updated_event->isActive() && $occurred_schedule->scheduleOccurred($entity);
+  $unpublish_schedule->scheduleUnpublication($entity);
+}
+
+/**
+ * Implements hook_preprocess_HOOK() for field templates.
+ *
+ * Preprocesses the 'field_event_link' for Drupal entities to alter its display
+ * based on the event's state. It updates the button title and sets an
+ * 'event_is_active' flag depending on the event state.
+ */
+function dpl_event_preprocess_field(array &$variables): void {
+  // Get the field name from the variables array. Default to NULL if not set.
+  $field_name = $variables['field_name'] ?? NULL;
+
+  if (!in_array($field_name, ['field_event_link', 'event_link']) ||
+    empty($variables['items'][0]['content']['#title'])) {
+    return;
+  }
+
+  $entity = $variables['element']['#object'] ?? NULL;
+
+  if (!($entity instanceof EventInstance)) {
+    return;
+  }
+
+  $event_wrapper = new EventWrapper($entity);
+  $event_state = $event_wrapper->getState();
+
+  // Check if the event state is valid. If not, return early.
+  if (!($event_state instanceof EventState)) {
+    return;
+  }
+
+  // Set 'event_is_active' flag if event state is neither of the following.
+  $variables['event_is_active'] = !in_array($event_state, [
+    EventState::Occurred,
+    EventState::Cancelled,
+    EventState::SoldOut,
+    EventState::TicketSaleNotOpen,
+  ]);
+
+  // After determining the 'event_is_active' flag, check if the event is active.
+  if ($variables['event_is_active']) {
+    // If active, set a translatable string as the title.
+    $has_free_tickets = dpl_event_has_free_tickets($entity);
+
+    $variables['items'][0]['content']['#title'] = $has_free_tickets ? t('Get tickets') : t('Buy tickets');
+    return;
+  }
+  else {
+    // Update the title of the button to the label of the current event state.
+    $variables['items'][0]['content']['#title'] = $event_state->label();
+  }
+}
+
+/**
+ * Check if the event has free tickets.
+ *
+ * @param \Drupal\Core\Entity\FieldableEntityInterface $entity
+ *   The event entity.
+ *
+ * @return bool
+ *   True if the event has free tickets, false otherwise.
+ */
+function dpl_event_has_free_tickets(FieldableEntityInterface $entity): bool {
+  $price_formatter = \Drupal::service('dpl_event.price_formatter');
+  $categories_fields_to_check = ['event_ticket_categories', 'field_ticket_categories'];
+
+  // Use categories_fields_to_check because the categories field name is
+  // different for event series and instances.
+  foreach ($categories_fields_to_check as $field) {
+    if ($entity->hasField($field)) {
+      $ticket_categories = $entity->get($field)->referencedEntities();
+      foreach ($ticket_categories as $ticket_category) {
+        $ticket_category_price_fields = $ticket_category->get('field_ticket_category_price')
+          ->getValue();
+        foreach ($ticket_category_price_fields as $ticket_price) {
+          if ($price_formatter->formatRawPrice($ticket_price['value']) == 0) {
+            return TRUE;
+          }
+        }
+      }
+    }
+  }
+  return FALSE;
+}
+
+/**
+ * Implements hook_preprocess_field__field_ticket_category_price().
+ *
+ * Adds an array of formatted prices.
+ */
+function dpl_event_preprocess_field__field_ticket_category_price(array &$variables) : void {
+  /** @var \Drupal\dpl_event\PriceFormatter $price_formatter */
+  $price_formatter = \Drupal::service('dpl_event.price_formatter');
+  /** @var \Drupal\Core\Field\FieldItemListInterface $items */
+  $items = $variables['element']['#items'];
+  $prices = array_map(function (array $price) use ($price_formatter): string {
+    return $price_formatter->formatPrice($price["value"]);
+  }, $items->getValue());
+  $variables['prices'] = $prices;
+}
+
+/**
+ * Implement hook_preprocess() for event series.
+ */
+function dpl_event_preprocess_eventseries(array &$variables): void {
+  $event_series = $variables['eventseries'] ?? NULL;
+
+  if (!($event_series instanceof EventSeries)) {
+    return;
+  }
+
+  $variables['formatted_date'] =
+    \Drupal::service('dpl_event.reoccurring_date_formatter')
+      ->getSeriesDateString($event_series);
+
+  if ($event_series->getInstanceCount() < 2) {
+    return;
+  }
+
+  // Load event instances related to this series and prepare them for rendering.
+  $eventinstances_in_series = $event_series->get('event_instances')->referencedEntities();
+
+  $variables['event_instances'] = [];
+  foreach ($eventinstances_in_series as $index => $eventInstance) {
+    $viewMode = $index === 0 ? 'list_teaser_stacked_parent' : 'stacked_event';
+
+    $renderable_instances = \Drupal::entityTypeManager()
+      ->getViewBuilder('eventinstance')->view($eventInstance, $viewMode);
+
+    $variables['event_instances'][] = $renderable_instances;
+  }
+}
+
+/**
+ * Implements hook_preprocess_HOOK() for node templates.
+ *
+ * Preprocesses variables for the eventinstance.
+ * - Generating ticket pricing display.
+ * - Generating the URL for the full view of the event instance.
+ * - Extracting image URL and alt text from the 'event_image' field.
+ * - Processing start and end dates from the 'date' field and formatting them
+ *   in the site's timezone.
+ *
+ * Includes generating ticket pricing display in 'event_list_teaser' view mode.
+ *
+ * @param mixed[] $variables
+ *   The variables array for the node template.
+ *
+ * @throws \Safe\Exceptions\ArrayException
+ */
+function dpl_event_preprocess_eventinstance(array &$variables): void {
+  $eventInstance = $variables['eventinstance'];
+
+  if ($eventInstance->hasField('event_ticket_categories')) {
+    $ticket_categories = $eventInstance->get('event_ticket_categories')->referencedEntities();
+    $prices = [];
+    // Collect prices from ticket categories.
+    foreach ($ticket_categories as $category) {
+      if ($category->hasField('field_ticket_category_price') && !$category->get('field_ticket_category_price')->isEmpty()) {
+        $prices[] = $category->get('field_ticket_category_price')->value;
+      }
+    }
+
+    // Get the PriceFormatter service.
+    $price_formatter = \Drupal::service('dpl_event.price_formatter');
+    $variables['ticket_price_display'] = $price_formatter->formatPriceRange($prices);
+  }
+  $date_formatter = \Drupal::service('date.formatter');
+
+  $variables['eventinstance_url'] = Url::fromRoute('entity.eventinstance.canonical', ['eventinstance' => $eventInstance->id()])->toString();
+
+  // Extract start_time, end_time and datetime attributes.
+  if (!$eventInstance->get('date')->isEmpty()) {
+    $date_field = $eventInstance->get('date')->first();
+
+    $start_time = $date_field->start_date;
+    $end_time = $date_field->end_date;
+
+    if ($start_time instanceof DrupalDateTime) {
+      $variables['start_time'] = $date_formatter->format($start_time->getTimestamp(), 'custom', 'H:i');
+      $variables['datetime_attribute'] = $date_formatter->format($start_time->getTimestamp(), DATE_ATOM);
+    }
+    if ($end_time instanceof DrupalDateTime) {
+      $variables['end_time'] = $date_formatter->format($end_time->getTimestamp(), 'custom', 'H:i');
+    }
+  }
+}
+
+/**
+ * Implements hook_gin_content_form_routes().
+ *
+ * @return string[] An array of event-related routes which should be managed as
+ *   content forms by the Gin theme.
+ */
+function dpl_event_gin_content_form_routes() : array {
+  return [
+    'entity.eventseries.add_form',
+    'entity.eventseries.edit_form',
+    // There is no direct add form for instances. They are always created in
+    // relation to series.
+    'entity.eventseries.add_instance_form',
+    'entity.eventinstance.edit_form',
+  ];
+}
+
+/**
+ * Implements hook_form_FORM_ID_alter().
+ *
+ * Altering the form for EDITING (not creating) an event series.
+ */
+function dpl_event_form_eventseries_default_edit_form_alter(array &$form, FormStateInterface $form_state): void {
+  // When saving a series, and changing the dates, the recurring_events module
+  // will make a "custom" submit button, showing a 'are you sure' button.
+  // However, this does not include a 'cancel' button. This is because cancel
+  // basically just means navigating away, but, this is confusing for editors.
+  // We'll add our own "button", that is really just a link the same edit page.
+  if (!empty($form['diff']['confirm'])) {
+    $form['diff']['cancel'] = [
+      '#type' => 'link',
+      '#title' => t('Cancel all changes', [], ['context' => 'DPL admin UX']),
+      '#url' => Url::fromRoute('<current>'),
+      '#attributes' => [
+        'class' => [
+          'action-link', 'action-link--danger', 'action-link--icon-trash',
+        ],
+      ],
+    ];
+
+    // The save/delete buttons on the page does nothing, when a diff confirm
+    // is relevant. We'll hide them, just to make it less confusing for the
+    // editors.
+    unset($form['actions']);
+  }
+}

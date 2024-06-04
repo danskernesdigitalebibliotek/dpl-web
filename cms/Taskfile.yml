@@ -1,9 +1,13 @@
 # This is a go-task file for various developer tasks
 # e.g. building docker images and setting up local development.
 # You can read about the Task files here: https://taskfile.dev.
-version: '3'
+version: "3"
 
 dotenv: [".task.env"]
+
+includes:
+  translations: ./task/Taskfile.translations.yml
+  lagoon: ./task/Taskfile.lagoon.yml
 
 vars:
   # Docker image registry.
@@ -17,22 +21,44 @@ vars:
   # The version number we want to tag the source build with.
   # It can be specified by adding RELEASE_TAG=XX when running command.
   # Otherwise it will default to the COMMIT_COUNT variable.
-  RELEASE_IMAGE_TAG: '{{.RELEASE_IMAGE_TAG | default .COMMIT_COUNT }}'
+  RELEASE_IMAGE_TAG: "{{.RELEASE_IMAGE_TAG | default .COMMIT_COUNT }}"
   # Constructing docker image name.
   DOCKER_IMAGE_PREFIX: "{{ .RELEASE_IMAGE_REGISTRY }}/{{ .DOCKER_IMAGE_NAMESPACE }}"
   # Constructing docker image name.
   RELEASE_IMAGE_NAME: '{{.RELEASE_IMAGE_NAME | default "dpl-cms-source"}}'
-  RELEASE_FULL_NAME: '{{.RELEASE_IMAGE_REGISTRY}}/{{.RELEASE_IMAGE_NAME}}:{{.RELEASE_IMAGE_TAG}}'
+  RELEASE_FULL_NAME: "{{.RELEASE_IMAGE_REGISTRY}}/{{.RELEASE_IMAGE_NAME}}:{{.RELEASE_IMAGE_TAG}}"
+
   # Where is the docker file(s) we use for our builds residing?
   LAGOON_DIR: "lagoon"
-  DOCKER_COMPOSE_FILES_OSX: '{{if eq OS "darwin"}}-f docker-compose.mac-nfs.yml{{end}}'
-  DOCKER_COMPOSE_FILES_DEFAULT: '-f docker-compose.yml {{ .DOCKER_COMPOSE_FILES_OSX }}'
-  DOCKER_COMPOSE_FILES: '{{.DOCKER_COMPOSE_FILES | default .DOCKER_COMPOSE_FILES_DEFAULT }}'
-  DOCKER_COMPOSE_FILES_CI: '{{.DOCKER_COMPOSE_FILES}} -f docker-compose.ci.yml'
+
+  DOCKER_COMPOSE_FILES_DEFAULT: "-f docker-compose.yml"
+  DOCKER_COMPOSE_FILES: "{{.DOCKER_COMPOSE_FILES | default .DOCKER_COMPOSE_FILES_DEFAULT }}"
+  DOCKER_COMPOSE_FILES_CI: "{{.DOCKER_COMPOSE_FILES}} -f docker-compose.ci.yml"
   # Sql dump files directory
-  DIR_RESTORE_DATABASE: 'restore/database'
+  DIR_RESTORE_DATABASE: "restore/database"
   # Directory with lagoon backup files.
-  DIR_RESTORE_FILES: 'restore/files'
+  DIR_RESTORE_FILES: "restore/files"
+
+  # Default language
+  LANGUAGE: "da"
+
+  # Ports and host names:
+  # Using ports exposed on localhost is important.
+  # Host names or ports exposed by Dory or other similar projects
+  # introduce multiple layers of proxies and cause problems.
+  #
+  # Cypress.
+  CYPRESS_BASE_PORT:
+    sh: docker compose port varnish 8080 2>/dev/null | cut -d ":" -f2
+  CYPRESS_HOST_LOCAL: "http://localhost:{{ .CYPRESS_BASE_PORT }}"
+  # Wiremock.
+  WIREMOCK_HTTP_PORT:
+    sh: docker compose port wiremock 80 2>/dev/null | cut -d ":" -f2
+  WIREMOCK_HTTPS_PORT:
+    sh: docker compose port wiremock 443 2>/dev/null | cut -d ":" -f2
+  WIREMOCK_HOST_DOCKER: http://wiremock
+  WIREMOCK_HOST_LOCAL: "http://localhost:{{ .WIREMOCK_HTTP_PORT }}"
+  WIREMOCK_HOST_LOCAL_HTTPS: "https://localhost:{{ .WIREMOCK_HTTPS_PORT }}"
 
 tasks:
   ghcr:login:
@@ -43,15 +69,44 @@ tasks:
       - sh: "[ ! -z {{.CR_PAT}} ]"
         msg: "Env variable CR_PAT is not set or empty."
 
+  dev:format:
+    summary: Lint custom code, and fix when possible
+    cmds:
+      - cmd: task dev:cli -- php vendor/bin/phpcbf
+        # PHP Code Beautifier will fail even if it has fixed all errors.
+        # Continue regardless assumming that PHP Codesniffer will fail on
+        # any remaining errors.
+        ignore_error: true
+      - task dev:cli -- php vendor/bin/phpcs
+      - task dev:cli -- php vendor/bin/twig-cs-fixer lint --fix
+      - task dev:cli -- php vendor/bin/phpstan
+      - yarn install --frozen-lockfile
+      - npx eslint web -c .eslintrc.json --fix
+
+  dev:build:
+    summary: Build docker containers
+    # Ensure that we only rebuild if there are changes to Dockerfiles
+    sources:
+      - "{{ .LAGOON_DIR }}/*.dockerfile"
+    cmds:
+      - docker compose build
+
   dev:cli:
     summary: Performs command inside container. Expects parameter(s).
+    # This could have a dependency on dev:build but does not to avoid excessive
+    # log output. dev:cli gets called a lot.
     cmds:
       - docker compose {{ .DOCKER_COMPOSE_FILES }} run --rm cli sh -c "{{.CLI_ARGS}}"
 
   dev:start:
     summary: Run docker compose
+    deps:
+      - dev:build
     cmds:
-      - docker compose {{ .DOCKER_COMPOSE_FILES }} up -d
+      - docker compose {{ .DOCKER_COMPOSE_FILES }} up -d {{if eq .CI "true"}}--quiet-pull{{end}}
+    vars:
+      CI:
+        sh: '[[ -z "${CI}" ]] && echo "false" || echo "true"'
 
   dev:stop:
     summary: Stop docker compose environment
@@ -65,39 +120,116 @@ tasks:
       # causes the process to fail. Wait and retry if that is the case
       - docker compose {{ .DOCKER_COMPOSE_FILES }} down --volumes --remove-orphans || (sleep 3 && docker-compose down)
 
+  dev:pull:
+    summary: Pull latest docker images.
+    cmds:
+      - docker compose {{ .DOCKER_COMPOSE_FILES }} pull
+
   dev:reset:
     desc: Create local development setup in a clean state
-    cmds:
+    deps:
+      # Build new containers if necessary.
+      - dev:build
       # Stop potential running environment.
-      - task dev:down
+      - dev:down
+    cmds:
       # Create a .env file with recommended defaults.
       - cp -n .env.example .env || true
       # Build site.
       - task dev:cli -- composer install
+      # Always reinstall packages tracking develop builds. The content of such
+      # packages may change without composer package version changes so ensure
+      # we have the latest version.
+      - task dev:cli -- composer reinstall danskernesdigitalebibliotek/dpl-design-system danskernesdigitalebibliotek/dpl-react --no-cache
+      # (Re)run Drupal scaffolding.
+      - task dev:cli -- composer drupal:scaffold
       # Build dev scripts
       - task dev:cli -- $(cd dev-scripts/dpl-react; composer install)
+      # Pull the images (necessary for the first reset)
+      - task dev:pull
       # Start local environment.
       - task dev:start
       # Install site.
       - task dev:cli -- drush site-install --existing-config -y
+      # Practice shows that the cache needs to be cleared to avoid configuration
+      # errors even after a site install.
+      - task dev:cache:clear:drupal
       # Import translations.
-      - task dev:cli -- drush locale-check
-      - task dev:cli -- drush locale-update
-      # We don't really need to purge the external cache
-      # since we are working with fresh containers.
-      # But we want catch if something is wrong with the setup.
-      - task dev:cache:clear:external
+      - |
+        if [ -n "${SKIP_LANGUAGE_IMPORT}" ]; then
+          echo "Skipping language import due to SKIP_LANGUAGE_IMPORT environment variable"
+        else
+          task dev:cli -- drush locale-check
+          task dev:cli -- drush locale-update
+          task dev:cli -- drush dpl_po:import-remote-config-po da https://danskernesdigitalebibliotek.github.io/dpl-cms/translations/da.config.po
+        fi
+      # Clear all caches to ensure we have a pristine setup.
+      - task dev:cache:clear:all
+      # Run deploy hooks.
+      - task dev:cli -- drush deploy -y
+      # Ensure site is reachable and warm any caches
+      - task dev:cli -- curl --silent --show-error --fail --output /dev/null http://varnish:8080/
+      # Enable dev modules.
+      - task dev:enable-dev-tools
+      - task dev:create-users
       # Show a one-time login to the local site.
       - task dev:cli -- drush user-login
+
+  dev:openid:configure:
+    desc: Set openid connect settings based on .env variables. And run cron.
+    cmds:
+      - task dev:cli -- ./dev-scripts/cli-set-openid-settings.sh
+      - task dev:run-cron
+
+  dev:run-cron:
+    desc: Run cron in the container
+    cmds:
+      - task dev:cli -- drush cron
+
+  dev:enable-dev-tools:
+    desc: Enable dev modules and settings, which are not to be used in Prod. They are config-ignored
+    cmds:
+      - task dev:cli -- drush install -y devel dpl_example_content dpl_example_breadcrumb field_ui restui uuid_url views_ui dblog
+
+  dev:enable-xdebug:
+    desc: "Enable xdebug within the container."
+    cmds:
+      - XDEBUG_ENABLE=true task dev:start
+      - read -p "Press enter to disable Xdebug"
+      - task dev:start
 
   dev:phpunit:
     desc: Run PHPUnit tests with code coverage
     cmds:
-      - docker compose run -e XDEBUG_ENABLE=true cli vendor/bin/phpunit --coverage-text
+      - docker compose run -e XDEBUG_ENABLE=true -e XDEBUG_MODE=coverage,debug cli vendor/bin/phpunit --coverage-text
+
+  dev:create-users:
+    desc: Create test users, with test roles
+    cmds:
+      - task dev:cli -- drush user:create editor --password="test"
+      - task dev:cli -- drush user:role:add 'editor' editor
+
+      - task dev:cli -- drush user:create administrator --password="test"
+      - task dev:cli -- drush user:role:add 'administrator' administrator
+
+      - task dev:cli -- drush user:create mediator --password="test"
+      - task dev:cli -- drush user:role:add 'mediator' mediator
+
+      - task dev:cli -- drush user:create local_administrator --password="test"
+      - task dev:cli -- drush user:role:add 'local_administrator' local_administrator
+
+      - task dev:cli -- drush user:create patron --password="test"
+      - task dev:cli -- drush user:role:add 'patron' patron
+
+  dev:import-profile-translations:
+    desc: Import our custom profile translations. This is done automatically on deploy.
+    cmds:
+      - task dev:cli -- drush locale-import da profiles/dpl_cms/translations/da.po
 
   dev:restore:database:
     desc: 'Restore database from db dump file. Only one sql should be present the "{{ .DIR_RESTORE_DATABASE }}" directory.'
     cmds:
+      - task dev:cli -- drush sql:drop -y
       - docker-compose exec -T {{ .MYSQL_CONTAINER }} mysql < {{ .SQL_FILE }}
       - task dev:cache:clear:all
     preconditions:
@@ -111,18 +243,20 @@ tasks:
       SQL_FILE:
         sh: ls -t "{{ .DIR_RESTORE_DATABASE }}"/*.sql
       DIR_RESTORE_DATABASE_CONTENT:
-       sh: ls {{ .DIR_RESTORE_DATABASE }}
-      MYSQL_CONTAINER: 'mariadb'
+        sh: ls {{ .DIR_RESTORE_DATABASE }}
+      MYSQL_CONTAINER: "mariadb"
 
   dev:restore:files:
-    desc: 'Restore files by overwriting existing with the ones from the Lagoon backup package'
+    desc: "Restore files by overwriting existing with the ones from the Lagoon backup package"
     cmds:
       - docker-compose exec cli sh dev-scripts/cli-restore-lagoon-files.sh {{ .DIR_RESTORE_FILES }}
       - task dev:cache:clear:all
 
   dev:cache:clear:all:
     summary: Clears all cache
-    deps: [dev:cache:clear:drupal, dev:cache:clear:external]
+    cmds:
+      - task dev:cache:clear:drupal
+      - task dev:cache:clear:external
 
   dev:cache:clear:drupal:
     summary: Runs Drupal cache rebuild
@@ -139,8 +273,8 @@ tasks:
     cmds:
       - cmd: task dev:cli -- dev-scripts/dpl-react/bin/console construct-assets-url {{ .BRANCH }}
     preconditions:
-    - sh: "[ ! -z {{.BRANCH}} ]"
-      msg: "Env variable BRANCH is not set or empty."
+      - sh: "[ ! -z {{.BRANCH}} ]"
+        msg: "Env variable BRANCH is not set or empty."
 
   dev:dpl-react:overwrite:
     desc: Downloads assets from Github and overwrites existing dpl-react library
@@ -151,31 +285,174 @@ tasks:
       ASSET_URL:
         sh: task dev:dpl-react:get-asset-url
 
+  dev:codegen:fbs:
+    desc: Generate FBS client package from OpenAPI specification
+    cmds:
+      - cmd: |
+          docker run --rm \
+          -v ${PWD}:/local \
+          openapitools/openapi-generator-cli:v7.1.0 generate \
+          -i https://raw.githubusercontent.com/danskernesdigitalebibliotek/dpl-react/main/src/core/fbs/fbs-adapter.yaml \
+          -g php -o /local/packages/fbs-client \
+          -c /local/.openapi-generator/fbs.config.yaml
+
+  dev:codegen:dpl-cms:
+    desc: Generate CMS API package from OpenAPI specification
+    cmds:
+      - cmd: |
+          cd packages/cms-api && find . ! -name '.' ! -name '..' ! -name '.openapi-generator-ignore' -type d -type f -exec rm -rf {} +
+      - cmd: |
+          docker run --rm \
+          -v ${PWD}:/local \
+          openapitools/openapi-generator-cli:v7.1.0 generate \
+          -i ./local/openapi.json \
+          -g php-symfony -o /local/packages/cms-api \
+          -c /local/.openapi-generator/dpl-cms.config.yaml
+
+  dev:composer:update-design-system:
+    desc: Update the DPL design system package to a specific version or branch release.
+    summary: |
+      Environment variables:
+      - Required (one of):
+        BRANCH: The git branch to download the corresponding build for.
+        RELEASE: The release to download the corresponding build for
+      - Optional:
+        VERSION: The version to use for the package. Defaults to 0.0.0-dev
+      Usage:
+      - Update to a released version: RELEASE=2024.4.0 VERSION=2024.4.0 task dev:composer:update-design-system
+      - Update to a branch release: BRANCH=taxonomy_categories task dev:composer:update-design-system
+    deps: ["deps:jq", "deps:gh"]
+    cmds:
+      - task: dev:composer:update-package
+        vars:
+          NAME: "danskernesdigitalebibliotek/dpl-design-system"
+          VERSION:
+            sh: "echo ${VERSION:-0.0.0-dev}"
+          DOWNLOAD_URL:
+            sh: gh release view ${RELEASE:-branch-$BRANCH} --repo danskernesdigitalebibliotek/dpl-design-system --json assets | jq -r '.assets[].url'
+    preconditions:
+      - sh: "[[ -z $BRANCH || -z $RELEASE ]]"
+        msg: Please provide a BRANCH or RELEASE environment variable with the name of the design system branch/release to use
+
+  dev:composer:update-react:
+    desc: Update the DPL React package to a specific version or branch release.
+    summary: |
+      Environment variables:
+        - Required (one of):
+          BRANCH: The git branch to download the corresponding build for.
+          RELEASE: The release to download the corresponding build for
+        - Optional:
+          VERSION: The version to use for the package. Defaults to 0.0.0-dev
+      Usage:
+        - Update to a released version: RELEASE=2024.4.0 VERSION=2024.4.0 task dev:composer:update-react
+        - Update to a branch release: BRANCH=taxonomy_categories task dev:composer:update-react
+    deps: ["deps:jq", "deps:gh"]
+    cmds:
+      - task: dev:composer:update-package
+        vars:
+          NAME: "danskernesdigitalebibliotek/dpl-react"
+          VERSION:
+            sh: "echo ${VERSION:-0.0.0-dev}"
+          DOWNLOAD_URL:
+            sh: gh release view ${RELEASE:-branch-$BRANCH} --repo danskernesdigitalebibliotek/dpl-react --json assets | jq -r '.assets[].url'
+    preconditions:
+      - sh: "[[ -z $BRANCH || -z $RELEASE ]]"
+        msg: Please provide a BRANCH or RELEASE environment variable with the name of the React components branch/release to use
+
+  dev:composer:update-package:
+    deps: ["deps:jq", "deps:gh"]
+    internal: true
+    cmds:
+      - cmd: jq --indent {{ .JQ_INDENT }} -r '(.repositories[] | select(.package.name == "{{ .NAME }}").package.dist.url) = "{{ .DOWNLOAD_URL }}"' composer.json > composer.temp.json && mv composer.temp.json composer.json
+      - cmd: jq --indent {{ .JQ_INDENT }} -r '(.repositories[] | select(.package.name =="{{ .NAME }}").package.version) = ("{{ .VERSION }}")' composer.json > composer.temp.json && mv composer.temp.json composer.json
+      - cmd: sleep 1
+      - cmd: task dev:cli -- composer require {{ .NAME }}:{{ .VERSION }}
+    vars:
+      # This is what matches our composer.json file.
+      JQ_INDENT: 4
+
+  dev:example-content:update:
+    desc: Update the example content module with data from the current site
+    cmds:
+      - cmd: task dev:cli -- drush default-content:export-module dpl_example_content
+
   ci:reset:
     desc: Create CI setup in a clean state
     cmds:
       - task dev:reset
     env:
       DOCKER_COMPOSE_FILES: "{{ .DOCKER_COMPOSE_FILES_CI }}"
+      SKIP_LANGUAGE_IMPORT: "true"
 
-  ci:behat:
-    desc: Run Behat functional tests
+  ci:cypress:
+    desc: Run Cypress functional tests
+    deps: [ci:wiremock:create-mappings]
     cmds:
-      - task dev:cli -- vendor/bin/behat
+      - docker compose {{ .DOCKER_COMPOSE_FILES_CI }} run --rm node-chrome yarn install --frozen-lockfile
+      - task dev:cli -- drush user:password $CYPRESS_DRUPAL_USERNAME $CYPRESS_DRUPAL_PASSWORD
+      # We make sure to run the tests that require mappings first.
+      - docker compose {{ .DOCKER_COMPOSE_FILES_CI }} run --rm -e CYPRESS_DRUPAL_USERNAME=$CYPRESS_DRUPAL_USERNAME -e CYPRESS_DRUPAL_PASSWORD=$CYPRESS_DRUPAL_PASSWORD cypress --spec "cypress/e2e/withMappings/*.ts"
+      # All tests that delete mappings and make their own run afterwards.
+      - docker compose {{ .DOCKER_COMPOSE_FILES_CI }} run --rm -e CYPRESS_DRUPAL_USERNAME=$CYPRESS_DRUPAL_USERNAME -e CYPRESS_DRUPAL_PASSWORD=$CYPRESS_DRUPAL_PASSWORD cypress --spec "cypress/e2e/*.ts"
     env:
       DOCKER_COMPOSE_FILES: "{{ .DOCKER_COMPOSE_FILES_CI }}"
+      CYPRESS_DRUPAL_USERNAME: admin
+      CYPRESS_DRUPAL_PASSWORD: admin
+
+  ci:cypress:local:
+    desc: Run Cypress functional tests locally
+    deps: [ci:wiremock:create-mappings]
+    cmds:
+      - yarn install --frozen-lockfile
+      - task dev:cli -- drush user:password $CYPRESS_DRUPAL_USERNAME $CYPRESS_DRUPAL_PASSWORD
+      - http_proxy={{ .WIREMOCK_HOST_LOCAL }} https_proxy={{ .WIREMOCK_HOST_LOCAL_HTTPS }} npx cypress open
+    env:
+      DOCKER_COMPOSE_FILES: "{{ .DOCKER_COMPOSE_FILES_CI }}"
+      CYPRESS_BASE_URL: http://localhost:{{ .CYPRESS_BASE_PORT }}
+      CYPRESS_WIREMOCK_URL: "{{ .WIREMOCK_HOST_LOCAL }}"
+      CYPRESS_DRUPAL_USERNAME: admin
+      CYPRESS_DRUPAL_PASSWORD: admin
+      # Enable this to help with debugging with network and proxy requests.
+      # https://docs.cypress.io/guides/references/troubleshooting#Print-DEBUG-logs
+      # DEBUG: cypress:network:*,cypress:server:request,-cypress:network:cors
 
   ci:pa11y:
     desc: Run Pa11y to test accessiblity
+    deps: [ci:wiremock:create-mappings]
     cmds:
-      - docker compose {{ .DOCKER_COMPOSE_FILES_CI }} run node-chrome npm ci
-      - docker compose {{ .DOCKER_COMPOSE_FILES_CI }} run node-chrome npx pa11y-ci
+      - docker compose {{ .DOCKER_COMPOSE_FILES_CI }} run --rm -e HTTP_PROXY={{ .WIREMOCK_HOST_DOCKER }} node-chrome yarn pa11y:ci
+
+  ci:wiremock:browser:
+    desc: Watch the site with a wiremock http proxy. ⚠️  Depends on Chrome installed on OS ⚠️
+    deps: [ci:wiremock:create-mappings]
+    cmds:
+      - echo '⚠️  Please make sure that Chrome is installed in your OS.'
+      - yarn wiremock:browser
+    env:
+      HTTP_PROXY: "{{ .WIREMOCK_HOST_LOCAL }}"
+
+  ci:wiremock:create-mappings:
+    cmds:
+      - docker compose {{ .DOCKER_COMPOSE_FILES_CI }} run --rm node-chrome yarn install --frozen-lockfile
+      - docker compose {{ .DOCKER_COMPOSE_FILES_CI }} run --rm -e HTTP_PROXY={{ .WIREMOCK_HOST_DOCKER }} node-chrome yarn wiremock:create-mappings
 
   ci:lighthouse:
     desc: Run Lighthouse to test performance
+    deps: [ci:wiremock:create-mappings]
     cmds:
-      - docker compose {{ .DOCKER_COMPOSE_FILES_CI }} run node-chrome npm ci
-      - docker compose {{ .DOCKER_COMPOSE_FILES_CI }} run node-chrome npx lhci autorun
+      - docker compose {{ .DOCKER_COMPOSE_FILES_CI }} run --rm -e HTTP_PROXY={{ .WIREMOCK_HOST_DOCKER }} node-chrome npx lhci autorun
+
+  ci:openapi:validate:
+    desc: Validate the Drupal OpenAPI specification
+    cmds:
+      - docker compose {{ .DOCKER_COMPOSE_FILES_CI }} run --rm node-chrome yarn install --frozen-lockfile
+      - docker compose {{ .DOCKER_COMPOSE_FILES_CI }} run --rm node-chrome npx swagger-cli validate http://varnish:8080/openapi/rest?_format=json&language=en
+
+  ci:openapi:download:
+    desc: Download the Drupal OpenAPI specification from the running local site to the local filesystem
+    cmds:
+      - docker compose {{ .DOCKER_COMPOSE_FILES_CI }} run --rm node-chrome yarn install --frozen-lockfile
+      - docker compose {{ .DOCKER_COMPOSE_FILES_CI }} run --rm node-chrome curl "http://varnish:8080/openapi/rest?_format=json&language=en" | npx jsome -r > openapi.json
 
   source:build:
     summary: Build core source image.
@@ -194,3 +471,15 @@ tasks:
     cmds:
       - task: source:build
       - task: source:push
+
+  deps:jq:
+    internal: true
+    preconditions:
+      - sh: jq --version
+        msg: jq is not installed. Please check https://stedolan.github.io/jq/.
+
+  deps:gh:
+    internal: true
+    preconditions:
+      - sh: gh --version && gh auth status
+        msg: GitHub CLI is not installed or not authenticated. Please check https://cli.github.com/.

@@ -1,0 +1,23 @@
+uuid: 273db154-2b0c-487a-b584-4cc51603c63c
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_show_override_author
+    - node.type.article
+id: node.article.field_show_override_author
+field_name: field_show_override_author
+entity_type: node
+bundle: article
+label: "Override the author\t"
+description: 'By default, the author is set to the Drupal user that owns the content.<br /><br />If you want to override this, with a manual text, you can check this.'
+required: false
+translatable: false
+default_value:
+  -
+    value: 0
+default_value_callback: ''
+settings:
+  on_label: 'On'
+  off_label: 'Off'
+field_type: boolean

@@ -1,0 +1,5 @@
+dpl_loan.list:
+  title: "Loans"
+  menu_name: user-profile-menu
+  route_name: dpl_loans.list
+  description: "List user loans"

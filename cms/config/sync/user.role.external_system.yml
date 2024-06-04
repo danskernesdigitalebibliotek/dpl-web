@@ -1,0 +1,23 @@
+uuid: 688b92ba-c879-47cf-a846-8d5e527077e7
+langcode: en
+status: true
+dependencies:
+  config:
+    - rest.resource.event
+    - rest.resource.events
+  module:
+    - openapi
+    - rest
+    - system
+    - toolbar
+id: external_system
+label: 'External system'
+weight: 7
+is_admin: null
+permissions:
+  - 'access administration pages'
+  - 'access openapi api docs'
+  - 'access toolbar'
+  - 'restful get events'
+  - 'restful patch event'
+  - 'view the administration theme'

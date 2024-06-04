@@ -1,0 +1,23 @@
+uuid: ec9b9dbc-607a-4fef-ae12-c714fafabd8e
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.eventseries.field_event_link
+    - recurring_events.eventseries_type.default
+  module:
+    - link
+id: eventseries.default.field_event_link
+field_name: field_event_link
+entity_type: eventseries
+bundle: default
+label: 'Ticket link'
+description: 'Please enter the URL where attendees can buy/get tickets for this event.'
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings:
+  title: 0
+  link_type: 16
+field_type: link

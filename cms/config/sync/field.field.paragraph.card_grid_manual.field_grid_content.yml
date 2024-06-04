@@ -1,0 +1,71 @@
+uuid: b61cc1d4-61cd-492c-b733-432d504c64d0
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.paragraph.field_grid_content
+    - paragraphs.paragraphs_type.card_grid_manual
+  module:
+    - dynamic_entity_reference
+id: paragraph.card_grid_manual.field_grid_content
+field_name: field_grid_content
+entity_type: paragraph
+bundle: card_grid_manual
+label: Content
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings:
+  node:
+    handler: views
+    handler_settings:
+      view:
+        view_name: entity_reference_content
+        display_name: entity_reference_1
+        arguments:
+          - article+page
+  crop:
+    handler: 'default:crop'
+    handler_settings: {  }
+  menu_link_content:
+    handler: 'default:menu_link_content'
+    handler_settings: {  }
+  eventinstance:
+    handler: 'default:eventinstance'
+    handler_settings: {  }
+  eventseries:
+    handler: 'default:eventseries'
+    handler_settings: {  }
+  file:
+    handler: 'default:file'
+    handler_settings: {  }
+  job_schedule:
+    handler: 'default:job_schedule'
+    handler_settings: {  }
+  media:
+    handler: 'default:media'
+    handler_settings: {  }
+  paragraph:
+    handler: 'default:paragraph'
+    handler_settings: {  }
+  redirect:
+    handler: 'default:redirect'
+    handler_settings: {  }
+  search_api_task:
+    handler: 'default:search_api_task'
+    handler_settings: {  }
+  taxonomy_term:
+    handler: 'default:taxonomy_term'
+    handler_settings: {  }
+  path_alias:
+    handler: 'default:path_alias'
+    handler_settings: {  }
+  user:
+    handler: 'default:user'
+    handler_settings: {  }
+  webform_submission:
+    handler: 'default:webform_submission'
+    handler_settings: {  }
+field_type: dynamic_entity_reference

@@ -1,0 +1,18 @@
+uuid: df75e4d2-70fd-41f2-be15-b86ade59e1c8
+langcode: en
+status: true
+dependencies:
+  module:
+    - dpl_opening_hours
+    - serialization
+    - user
+id: dpl_opening_hours_delete
+plugin_id: dpl_opening_hours_delete
+granularity: resource
+configuration:
+  methods:
+    - DELETE
+  formats:
+    - json
+  authentication:
+    - cookie

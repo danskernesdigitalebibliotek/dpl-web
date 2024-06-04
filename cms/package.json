@@ -3,10 +3,31 @@
   "description": "Node.js tools for working with DPL CMS",
   "license": "AGPL-3.0",
   "devDependencies": {
-    "@lhci/cli": "^0.8.2",
-    "eslint": "^8.3.0",
-    "eslint-config-drupal": "^5.0.2",
+    "@apidevtools/swagger-cli": "^4.0.4",
+    "@lhci/cli": "^0.8",
+    "@types/node": "^18.11.11",
+    "@typescript-eslint/eslint-plugin": "^7.12.0",
+    "@typescript-eslint/parser": "^7.12.0",
+    "chrome-launcher": "^0.15.1",
+    "cypress": "^13.10.0",
+    "cypress-plugin-api": "^2.11.1",
+    "eslint": "^8.57.0",
+    "eslint-config-prettier": "^9.1.0",
+    "eslint-plugin-cypress": "^2.12.1",
+    "eslint-plugin-drupal-contrib": "^1.2.1",
+    "eslint-plugin-prettier": "^4.2.1",
+    "jsome": "^2.5.0",
     "markdownlint-cli2": "^0.3.2",
-    "pa11y-ci": "git+https://github.com/pa11y/pa11y-ci#5c842cf"
+    "pa11y-ci": "https://github.com/pa11y/pa11y-ci/archive/5c842cf1b9fe2867b70ff5354851d985be8d71c4.tar.gz",
+    "prettier": "^2.7.1",
+    "typescript": "^4.8.3",
+    "wiremock-rest-client": "^1.10.0"
+  },
+  "scripts": {
+    "wiremock:create-mappings": "yarn wiremock:build && node wiremock/build/createMappings.js",
+    "pa11y:ci": "pa11y-ci",
+    "wiremock:dev:watch": "tsc -p wiremock -w",
+    "wiremock:build": "tsc -p wiremock",
+    "wiremock:browser": "yarn wiremock:build && node wiremock/build/goggles.js"
   }
 }

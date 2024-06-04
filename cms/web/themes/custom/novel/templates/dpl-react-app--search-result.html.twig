@@ -1,0 +1,28 @@
+<div class="dpl-react-app-container--page">
+  <div{{ attributes }}>
+    <div class="card-list-page">
+      {% if showing_results_for_text %}
+        <h1 class="text-header-h2 mb-16 search-result-title text-loading">
+          {{ showing_results_for_text }}
+        </h1>
+      {% endif %}
+      <div class="card-list-page__skeleton-facet-line--mobile">
+        <div class="ssc mt-48">
+          <div class="ssc-head-line mb"></div>
+          <div class="ssc-head-line mb"></div>
+          <div class="ssc-head-line mb"></div>
+        </div>
+      </div>
+      <div class="card-list-page__skeleton-facet-line--desktop">
+        <div class="ssc mt-48">
+          <div class="ssc-head-line mb"></div>
+        </div>
+      </div>
+      <ul class="card-list-page__list my-32">
+        {% for i in 1..number_of_fake_result_items %}
+          <li>{% include 'search-result-item.html.twig' %}</li>
+        {% endfor %}
+      </ul>
+    </div>
+  </div>
+</div>

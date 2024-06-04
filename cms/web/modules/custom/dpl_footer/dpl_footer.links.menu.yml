@@ -1,0 +1,5 @@
+dpl_footer.footer_form:
+  title: "Footer Settings"
+  parent: system.admin_content
+  route_name: dpl_footer.footer_form
+  weight: 100

@@ -1,7 +1,7 @@
 dpl_config_upload.upload_form:
-  path: '/admin/config/configuration/import'
+  path: "/admin/config/configuration/import"
   defaults:
     _form: 'Drupal\dpl_config_import\Form\UploadForm'
-    _title: 'Upload configuration'
+    _title: "Upload configuration"
   requirements:
-    _permission: 'import configuration,administer modules'
+    _permission: "import configuration,administer modules"

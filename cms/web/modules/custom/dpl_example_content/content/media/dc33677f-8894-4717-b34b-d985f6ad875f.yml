@@ -1,0 +1,44 @@
+_meta:
+  version: '1.0'
+  entity_type: media
+  uuid: dc33677f-8894-4717-b34b-d985f6ad875f
+  bundle: document
+  default_langcode: da
+  depends:
+    3403d0ba-cbdc-425d-93f4-6cdabb5378b1: file
+default:
+  status:
+    -
+      value: true
+  uid:
+    -
+      target_id: 1
+  name:
+    -
+      value: sample.pdf
+  created:
+    -
+      value: 1704274926
+  revision_translation_affected:
+    -
+      value: true
+  metatag:
+    -
+      tag: meta
+      attributes:
+        name: title
+        content: '| DPL CMS'
+    -
+      tag: link
+      attributes:
+        rel: canonical
+        href: '/user/login'
+  path:
+    -
+      alias: ''
+      langcode: da
+  field_media_file:
+    -
+      entity: 3403d0ba-cbdc-425d-93f4-6cdabb5378b1
+      display: true
+      description: 'Download vores PDF'

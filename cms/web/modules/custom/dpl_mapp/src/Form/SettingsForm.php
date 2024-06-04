@@ -30,15 +30,15 @@ class SettingsForm extends ConfigFormBase {
   public function buildForm(array $form, FormStateInterface $form_state): array {
     $form['domain'] = [
       '#type' => 'textfield',
-      '#title' => $this->t('Domain'),
-      '#description' => $this->t('Specify the Tag Integration domain if the JavaScript-file should be loaded from the Mapp server.'),
+      '#title' => $this->t('Domain', [], ['context' => 'Dpl Mapp']),
+      '#description' => $this->t('Specify the Tag Integration domain if the JavaScript-file should be loaded from the Mapp server.', [], ['context' => 'Dpl Mapp']),
       '#default_value' => $this->config('dpl_mapp.settings')->get('domain'),
       '#required' => TRUE,
     ];
     $form['id'] = [
       '#type' => 'textfield',
-      '#title' => $this->t('Id'),
-      '#description' => $this->t('Enter your Tag Integration customer ID if the JavaScript-file should be loaded from the Mapp server.'),
+      '#title' => $this->t('Id', [], ['context' => 'Dpl Mapp']),
+      '#description' => $this->t('Enter your Tag Integration customer ID if the JavaScript-file should be loaded from the Mapp server.', [], ['context' => 'Dpl Mapp']),
       '#default_value' => $this->config('dpl_mapp.settings')->get('id'),
       '#required' => TRUE,
     ];

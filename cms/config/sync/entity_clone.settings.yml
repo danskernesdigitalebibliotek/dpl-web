@@ -1,0 +1,82 @@
+form_settings:
+  taxonomy_term:
+    default_value: true
+    disable: true
+    hidden: true
+  file:
+    default_value: true
+    disable: true
+    hidden: true
+  node:
+    default_value: false
+    disable: true
+    hidden: true
+  user:
+    default_value: false
+    disable: false
+    hidden: false
+  menu_link_content:
+    default_value: true
+    disable: true
+    hidden: true
+  crop:
+    default_value: true
+    disable: true
+    hidden: true
+  job_schedule:
+    default_value: true
+    disable: true
+    hidden: true
+  media:
+    disable: true
+    hidden: true
+    default_value: false
+  path_alias:
+    default_value: true
+    disable: true
+    hidden: true
+  eventseries:
+    default_value: true
+    disable: true
+    hidden: true
+  eventinstance:
+    default_value: true
+    disable: true
+    hidden: true
+  paragraph:
+    default_value: true
+    disable: true
+    hidden: true
+  search_api_task:
+    default_value: false
+    disable: false
+    hidden: false
+form_settings_after_clone:
+  taxonomy_term:
+    redirect_to: edit-form
+  file:
+    redirect_to: edit-form
+  node:
+    redirect_to: edit-form
+  user:
+    redirect_to: edit-form
+  menu_link_content:
+    redirect_to: edit-form
+  crop:
+    redirect_to: edit-form
+  job_schedule:
+    redirect_to: edit-form
+  media:
+    redirect_to: edit-form
+  path_alias:
+    redirect_to: edit-form
+  eventseries:
+    redirect_to: edit-form
+  eventinstance:
+    redirect_to: edit-form
+  search_api_task:
+    redirect_to: edit-form
+  paragraph:
+    redirect_to: edit-form
+no_suffix: false
+take_ownership: true

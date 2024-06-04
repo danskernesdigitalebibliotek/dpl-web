@@ -1,0 +1,49 @@
+_meta:
+  version: '1.0'
+  entity_type: media
+  uuid: d97a25fd-a6ae-48b9-9a1a-7aec5372688e
+  bundle: image
+  default_langcode: da
+  depends:
+    f19a4a4c-80b0-4290-a098-4f2f5fc137a2: file
+default:
+  status:
+    -
+      value: true
+  uid:
+    -
+      target_id: 1
+  name:
+    -
+      value: becca-tapert-GnY_mW1Q6Xc-unsplash.jpg
+  created:
+    -
+      value: 1703140433
+  revision_translation_affected:
+    -
+      value: true
+  metatag:
+    -
+      tag: meta
+      attributes:
+        name: title
+        content: '| DPL CMS'
+    -
+      tag: link
+      attributes:
+        rel: canonical
+        href: '/user/login'
+  path:
+    -
+      alias: ''
+      langcode: da
+  field_byline:
+    -
+      value: 'Af Becca Tapert / Unsplash'
+  field_media_image:
+    -
+      entity: f19a4a4c-80b0-4290-a098-4f2f5fc137a2
+      alt: 'Ung kvinde på bibliotek'
+      title: ''
+      width: 1920
+      height: 1280

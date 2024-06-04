@@ -1,0 +1,25 @@
+uuid: f8e42c30-b5c5-4171-83ab-ba9646c90899
+langcode: en
+status: true
+dependencies:
+  module:
+    - focal_point
+name: card_medium
+label: 'Card - Medium - 321:426'
+effects:
+  744cf13a-8bbe-48fb-bb3d-b0eb15a69472:
+    uuid: 744cf13a-8bbe-48fb-bb3d-b0eb15a69472
+    id: focal_point_scale_and_crop
+    weight: -10
+    data:
+      width: 551
+      height: 551
+      crop_type: focal_point
+  d67bdd4c-783b-4750-85a3-c831f00ba8c7:
+    uuid: d67bdd4c-783b-4750-85a3-c831f00ba8c7
+    id: image_scale_and_crop
+    weight: -9
+    data:
+      width: 321
+      height: 426
+      anchor: center-center

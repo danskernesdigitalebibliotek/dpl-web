@@ -1,0 +1,18 @@
+uuid: 3bae3fac-424c-4004-b928-60cc08ef4b0f
+langcode: en
+status: true
+dependencies:
+  module:
+    - dpl_campaign
+    - dpl_login
+    - serialization
+id: campaign.match
+plugin_id: 'campaign:match'
+granularity: resource
+configuration:
+  methods:
+    - POST
+  formats:
+    - json
+  authentication:
+    - dpl_login_user_token

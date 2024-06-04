@@ -1,0 +1,7 @@
+dpl_admin.add_content:
+  route_name: dpl_admin.add_content
+  title: "Add Content"
+  appears_on:
+    - events.admin.content
+    - view.event_series_admin.page_1
+    - system.admin_content

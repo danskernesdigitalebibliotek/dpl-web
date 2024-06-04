@@ -1,9 +1,261 @@
 uuid: 27bd621e-0df6-4f6e-a65a-1d63e419b143
 langcode: en
 status: true
-dependencies: {  }
+dependencies:
+  config:
+    - filter.format.basic
+    - filter.format.limited
+    - media.type.document
+    - media.type.image
+    - media.type.video
+    - node.type.article
+    - node.type.branch
+    - node.type.campaign
+    - node.type.page
+    - rest.resource.dpl_opening_hours_create
+    - rest.resource.dpl_opening_hours_delete
+    - rest.resource.dpl_opening_hours_update
+    - taxonomy.vocabulary.breadcrumb_structure
+    - taxonomy.vocabulary.categories
+    - taxonomy.vocabulary.opening_hours_categories
+    - taxonomy.vocabulary.tags
+    - taxonomy.vocabulary.webform_email_categories
+  module:
+    - administerusersbyrole
+    - block
+    - content_lock
+    - cookieinformation
+    - dpl_admin
+    - dpl_cache_settings
+    - dpl_footer
+    - dpl_instant_loan
+    - dpl_library_agency
+    - dpl_mapp
+    - dpl_opening_hours
+    - dpl_url_proxy
+    - dpl_webform
+    - entity_clone
+    - entity_reference_revisions
+    - file
+    - filter
+    - image
+    - language
+    - locale
+    - media
+    - node
+    - openapi
+    - openid_connect
+    - paragraphs
+    - path
+    - recurring_events
+    - redirect
+    - rest
+    - scheduler
+    - simple_menu_permissions
+    - system
+    - taxonomy
+    - theme_permission
+    - toolbar
+    - view_unpublished
+    - webform
 id: administrator
 label: Administrator
 weight: 2
 is_admin: null
-permissions: {  }
+permissions:
+  - 'access administration pages'
+  - 'access any webform configuration'
+  - 'access content overview'
+  - 'access dpl cache settings'
+  - 'access eventinstance overview'
+  - 'access eventseries overview'
+  - 'access files overview'
+  - 'access media overview'
+  - 'access openapi api docs'
+  - 'access own webform configuration'
+  - 'access site in maintenance mode'
+  - 'access site reports'
+  - 'access taxonomy overview'
+  - 'access toolbar'
+  - 'access user profiles'
+  - 'access users overview'
+  - 'access webform help'
+  - 'access webform overview'
+  - 'access webform submission user'
+  - 'add eventseries entity'
+  - 'add new links to admin menu'
+  - 'add new links to main menu'
+  - 'administer advanced webform access settings'
+  - 'administer advanced webform confirmation settings'
+  - 'administer advanced webform element settings'
+  - 'administer advanced webform form settings'
+  - 'administer advanced webform general settings'
+  - 'administer advanced webform handler settings'
+  - 'administer advanced webform submission settings'
+  - 'administer blocks'
+  - 'administer cookie information settings'
+  - 'administer dpl_footer settings'
+  - 'administer dpl_mapp configuration'
+  - 'administer filters'
+  - 'administer image styles'
+  - 'administer instant loan configuration'
+  - 'administer languages'
+  - 'administer library agency configuration'
+  - 'administer menu'
+  - 'administer modules'
+  - 'administer nodes'
+  - 'administer openid connect clients'
+  - 'administer orphaned events entities'
+  - 'administer permissions'
+  - 'administer redirects'
+  - 'administer site configuration'
+  - 'administer software updates'
+  - 'administer themes'
+  - 'administer themes novel'
+  - 'administer url proxy configuration'
+  - 'administer webform'
+  - 'administer webform element access'
+  - 'administer webform submission'
+  - 'break content lock'
+  - 'bypass node access'
+  - 'cancel users by role'
+  - 'change own username'
+  - 'clone eventinstance entity'
+  - 'clone eventseries entity'
+  - 'clone eventseries_type entity'
+  - 'clone node entity'
+  - 'create article content'
+  - 'create branch content'
+  - 'create campaign content'
+  - 'create document media'
+  - 'create image media'
+  - 'create media'
+  - 'create page content'
+  - 'create terms in breadcrumb_structure'
+  - 'create terms in categories'
+  - 'create terms in opening_hours_categories'
+  - 'create terms in tags'
+  - 'create terms in webform_email_categories'
+  - 'create url aliases'
+  - 'create users'
+  - 'create video media'
+  - 'create webform'
+  - 'delete all revisions'
+  - 'delete any article content'
+  - 'delete any branch content'
+  - 'delete any campaign content'
+  - 'delete any document media'
+  - 'delete any file'
+  - 'delete any image media'
+  - 'delete any media'
+  - 'delete any page content'
+  - 'delete any video media'
+  - 'delete any webform'
+  - 'delete any webform submission'
+  - 'delete article revisions'
+  - 'delete branch revisions'
+  - 'delete campaign revisions'
+  - 'delete eventinstance entity'
+  - 'delete eventseries entity'
+  - 'delete links in admin menu'
+  - 'delete links in main menu'
+  - 'delete media'
+  - 'delete orphan revisions'
+  - 'delete own article content'
+  - 'delete own branch content'
+  - 'delete own campaign content'
+  - 'delete own document media'
+  - 'delete own eventinstance entity'
+  - 'delete own eventseries entity'
+  - 'delete own files'
+  - 'delete own image media'
+  - 'delete own page content'
+  - 'delete own video media'
+  - 'delete own webform'
+  - 'delete own webform submission'
+  - 'delete page revisions'
+  - 'delete terms in breadcrumb_structure'
+  - 'delete terms in categories'
+  - 'delete terms in tags'
+  - 'delete terms in webform_email_categories'
+  - 'disable cookie information consent'
+  - 'dpl admin access pages'
+  - 'edit admin menu'
+  - 'edit any article content'
+  - 'edit any branch content'
+  - 'edit any campaign content'
+  - 'edit any document media'
+  - 'edit any image media'
+  - 'edit any page content'
+  - 'edit any video media'
+  - 'edit any webform'
+  - 'edit any webform submission'
+  - 'edit eventinstance entity'
+  - 'edit eventseries entity'
+  - 'edit links in admin menu'
+  - 'edit links in main menu'
+  - 'edit main menu'
+  - 'edit own article content'
+  - 'edit own branch content'
+  - 'edit own campaign content'
+  - 'edit own document media'
+  - 'edit own eventinstance entity'
+  - 'edit own eventseries entity'
+  - 'edit own image media'
+  - 'edit own page content'
+  - 'edit own video media'
+  - 'edit own webform'
+  - 'edit own webform submission'
+  - 'edit terms in breadcrumb_structure'
+  - 'edit terms in categories'
+  - 'edit terms in opening_hours_categories'
+  - 'edit terms in tags'
+  - 'edit terms in webform_email_categories'
+  - 'edit themes novel'
+  - 'edit users by role'
+  - 'edit webform assets'
+  - 'edit webform source'
+  - 'edit webform twig'
+  - 'edit webform variants'
+  - 'link to any page'
+  - 'manage opening hours for branches'
+  - 'restful delete dpl_opening_hours_delete'
+  - 'restful patch dpl_opening_hours_update'
+  - 'restful post dpl_opening_hours_create'
+  - 'revert all eventinstance revisions'
+  - 'revert all eventseries revisions'
+  - 'revert all revisions'
+  - 'revert article revisions'
+  - 'revert campaign revisions'
+  - 'revert page revisions'
+  - 'role-assign users by role'
+  - 'schedule publishing of eventseries'
+  - 'schedule publishing of nodes'
+  - 'select account cancellation method'
+  - 'translate interface'
+  - 'update any media'
+  - 'update media'
+  - 'use text format basic'
+  - 'use text format limited'
+  - 'view admin menu in menu list'
+  - 'view all media revisions'
+  - 'view all revisions'
+  - 'view any unpublished content'
+  - 'view any webform submission'
+  - 'view article revisions'
+  - 'view campaign revisions'
+  - 'view main menu in menu list'
+  - 'view own unpublished content'
+  - 'view own unpublished media'
+  - 'view own webform submission'
+  - 'view page revisions'
+  - 'view scheduled content'
+  - 'view scheduled eventseries'
+  - 'view scheduled media'
+  - 'view scheduled taxonomy_term'
+  - 'view the administration theme'
+  - 'view unpublished eventinstance entity'
+  - 'view unpublished eventseries entity'
+  - 'view unpublished paragraphs'
+  - 'view user email addresses'
+  - 'view users by role'

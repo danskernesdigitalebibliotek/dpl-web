@@ -1,0 +1,100 @@
+uuid: b4d56140-5fc0-4cab-a105-abf96c9fbc9a
+langcode: en
+status: true
+dependencies:
+  config:
+    - core.entity_view_mode.node.list_teaser
+    - field.field.node.article.field_branch
+    - field.field.node.article.field_canonical_url
+    - field.field.node.article.field_categories
+    - field.field.node.article.field_override_author
+    - field.field.node.article.field_paragraphs
+    - field.field.node.article.field_show_override_author
+    - field.field.node.article.field_subtitle
+    - field.field.node.article.field_tags
+    - field.field.node.article.field_teaser_image
+    - field.field.node.article.field_teaser_text
+    - node.type.article
+  module:
+    - user
+id: node.article.list_teaser
+targetEntityType: node
+bundle: article
+mode: list_teaser
+content:
+  field_branch:
+    type: entity_reference_label
+    label: hidden
+    settings:
+      link: false
+    third_party_settings: {  }
+    weight: 7
+    region: content
+  field_categories:
+    type: entity_reference_label
+    label: visually_hidden
+    settings:
+      link: false
+    third_party_settings: {  }
+    weight: 6
+    region: content
+  field_override_author:
+    type: string
+    label: hidden
+    settings:
+      link_to_entity: false
+    third_party_settings: {  }
+    weight: 2
+    region: content
+  field_show_override_author:
+    type: boolean
+    label: hidden
+    settings:
+      format: default
+      format_custom_false: ''
+      format_custom_true: ''
+    third_party_settings: {  }
+    weight: 3
+    region: content
+  field_subtitle:
+    type: basic_string
+    label: hidden
+    settings: {  }
+    third_party_settings: {  }
+    weight: 1
+    region: content
+  field_tags:
+    type: entity_reference_label
+    label: hidden
+    settings:
+      link: false
+    third_party_settings: {  }
+    weight: 8
+    region: content
+  field_teaser_image:
+    type: entity_reference_entity_view
+    label: hidden
+    settings:
+      view_mode: list_teaser
+      link: false
+    third_party_settings: {  }
+    weight: 5
+    region: content
+  field_teaser_text:
+    type: string
+    label: hidden
+    settings:
+      link_to_entity: false
+    third_party_settings: {  }
+    weight: 4
+    region: content
+  links:
+    settings: {  }
+    third_party_settings: {  }
+    weight: 0
+    region: content
+hidden:
+  field_canonical_url: true
+  field_paragraphs: true
+  langcode: true
+  search_api_excerpt: true

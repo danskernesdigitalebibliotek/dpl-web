@@ -1,0 +1,6 @@
+dpl_dashboard.list:
+  path: "/user/me/dashboard"
+  defaults:
+    _controller: '\Drupal\dpl_dashboard\Controller\DplDashboardController::list'
+  requirements:
+    _permission: "access content"

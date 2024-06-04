@@ -1,0 +1,25 @@
+uuid: b4a62064-284a-4c03-8a08-eb235f583e7c
+langcode: en
+status: true
+dependencies:
+  config:
+    - core.entity_view_mode.paragraph.preview
+    - field.field.paragraph.nav_spots_manual.field_nav_spots_content
+    - paragraphs.paragraphs_type.nav_spots_manual
+  module:
+    - dynamic_entity_reference
+id: paragraph.nav_spots_manual.preview
+targetEntityType: paragraph
+bundle: nav_spots_manual
+mode: preview
+content:
+  field_nav_spots_content:
+    type: dynamic_entity_reference_label
+    label: above
+    settings:
+      link: true
+    third_party_settings: {  }
+    weight: 0
+    region: content
+hidden:
+  search_api_excerpt: true

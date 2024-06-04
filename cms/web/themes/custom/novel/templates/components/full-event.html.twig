@@ -1,0 +1,42 @@
+<article {{ attributes.addClass('event-page') }}>
+  <header class="event-header">
+    {% include "@novel/components/hero.html.twig" with {
+      attributes: create_attribute(),
+      title: label,
+      teaser_text: teaser_text,
+      categories: categories,
+      date: date,
+      media: image.0,
+      baseIconPath: baseIconPath,
+      cta: cta
+    } only %}
+  </header>
+
+  <section class="event-description">
+    <div class="event-description__content">
+      <div class="event-description__description">{{ description }}</div>
+      <div class="event-description__links">
+        {% if tags.0 %}
+          {{ tags }}
+        {% endif %}
+      </div>
+    </div>
+
+    {% include "@novel/components/list-description.html.twig" with {
+      attributes: create_attribute(),
+      type: 'event',
+      items: description_items,
+    } only %}
+  </section>
+
+  {% if event_instances %}
+    <section class="event-list-stacked">
+      <h2 class="event-list-stacked__heading">{{ 'Upcoming events'|t }}</h2>
+      {% for instance in event_instances %}
+          {{ instance }}
+      {% endfor %}
+    </section>
+  {% endif %}
+
+  {{ paragraphs }}
+</article>

@@ -1,0 +1,21 @@
+uuid: 15b16f61-8ccf-4ecf-be92-73bd1853efe6
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.paragraph.field_show_subtitles
+    - paragraphs.paragraphs_type.nav_grid_manual
+id: paragraph.nav_grid_manual.field_show_subtitles
+field_name: field_show_subtitles
+entity_type: paragraph
+bundle: nav_grid_manual
+label: 'Show subtitles'
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings:
+  on_label: 'On'
+  off_label: 'Off'
+field_type: boolean

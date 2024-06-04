@@ -1,0 +1,9 @@
+dpl_instant_loan.settings:
+  path: "/admin/config/dpl-library-agency/instant-loan"
+  defaults:
+    _form: '\Drupal\dpl_instant_loan\Form\DplInstantLoanSettingsForm'
+    _title: "Instant loan settings"
+  requirements:
+    _permission: "administer instant loan configuration"
+  options:
+    _admin_route: TRUE

@@ -1,0 +1,192 @@
+<?php
+
+use Drupal\Core\Extension\ModuleInstallerInterface;
+use Drupal\dpl_opening_hours\Mapping\OpeningHoursRepetitionType;
+use Drupal\drupal_typed\DrupalTyped;
+use function Safe\json_encode as json_encode;
+
+/**
+ * Implements hook_schema().
+ */
+function dpl_opening_hours_schema() : array {
+  $schema['dpl_opening_hours_instance'] = [
+    'description' => 'Opening hours instances.',
+    'fields' => [
+      'id' => [
+        'description' => 'An serial unique id of the opening hours instance',
+        'type' => 'serial',
+        'unsigned' => TRUE,
+        'not null' => TRUE,
+      ],
+      'branch_nid' => [
+        'description' => 'The id for the branch node the instance belongs to',
+        'type' => 'int',
+        'unsigned' => TRUE,
+        'not null' => TRUE,
+      ],
+      'category_tid' => [
+        'description' => 'The id of the related category term id',
+        'type' => 'int',
+        'unsigned' => TRUE,
+        'not null' => TRUE,
+      ],
+      'date' => [
+        'description' => 'The date which the opening hours applies to. In ISO 8601 format.',
+        'type' => 'varchar',
+        // Drupal Schema API does not have a data type for dates. We expect to
+        // be using MySQL only so use a proper date here.
+        'mysql_type' => 'date',
+        'length' => 10,
+        'not null' => TRUE,
+      ],
+      'start_time' => [
+        'description' => 'When the opening hours start. In format HH:MM',
+        'type' => 'varchar',
+        'length' => 5,
+        'not null' => TRUE,
+      ],
+      'end_time' => [
+        'description' => 'When the opening hours end. In format HH:MM',
+        'type' => 'varchar',
+        'length' => 5,
+        'not null' => TRUE,
+      ],
+      'repetition_id' => [
+        'description' => 'The id of the related repetition',
+        'type' => 'int',
+        'unsigned' => TRUE,
+        'not null' => TRUE,
+      ],
+    ],
+    'primary key' => ['id'],
+    'index' => [
+      'branch_date' => ['branch_nid', 'date'],
+      'repetition_date' => ['repetition_id', 'date'],
+    ],
+  ];
+  $schema['dpl_opening_hours_repetition'] = [
+    'description' => 'Opening hours repetitions.',
+    'fields' => [
+      'id' => [
+        'description' => 'An serial unique id of the repetition',
+        'type' => 'serial',
+        'unsigned' => TRUE,
+        'not null' => TRUE,
+      ],
+      'type' => [
+        'description' => 'A string to represent the repetition type',
+        'type' => 'varchar',
+        'length' => 255,
+        'not null' => TRUE,
+      ],
+      'data' => [
+        'description' => 'Additional data related to the repetition encoded as JSON',
+        'type' => 'text',
+        // Drupal Schema API does not have a data type for JSON. We expect to
+        // be using MySQL only so use a proper JSON field here.
+        'mysql_type' => 'json',
+      ],
+    ],
+    'primary key' => ['id'],
+  ];
+
+  return $schema;
+}
+
+/**
+ * Add support for opening hours repetitions.
+ *
+ * @param mixed[] $sandbox
+ *   The update sandbox.
+ */
+function dpl_opening_hours_update_10000(array &$sandbox): string {
+  $messages = [];
+
+  $repetition_table = 'dpl_opening_hours_repetition';
+  $repetition_schema = dpl_opening_hours_schema()[$repetition_table];
+  $database = \Drupal::database()->schema();
+  if (!$database->tableExists($repetition_table)) {
+    $database->createTable($repetition_table, $repetition_schema);
+    $messages[] = "Created {$repetition_table} table";
+  }
+
+  $instance_table = 'dpl_opening_hours_instance';
+  $repetition_field = 'repetition_id';
+  $repetition_field_spec = dpl_opening_hours_schema()[$instance_table]['fields'][$repetition_field];
+  // Initially disable not null for repetition_id field. The field will not
+  // have values for existing rows until the migration is complete.
+  $repetition_field_spec['not null'] = FALSE;
+  if (!$database->fieldExists($instance_table, $repetition_field)) {
+    $database->addField($instance_table, $repetition_field, $repetition_field_spec);
+    $messages[] = "Added repetition field {$repetition_field} to {$instance_table}";
+  }
+
+  // Create none repetition for all existing opening hours instance.
+  $result = \Drupal::database()->select($instance_table)
+    ->fields($instance_table, ['id'])
+    ->execute();
+  $ids = ($result) ? $result->fetchCol() : [];
+  $updated_ids = array_filter($ids, function (int $id) use ($repetition_table, $instance_table) {
+    $repetition_id = \Drupal::database()->insert($repetition_table)
+      ->fields([
+        'type' => OpeningHoursRepetitionType::None->value,
+        'data' => json_encode([]),
+      ])
+      ->execute();
+    return \Drupal::database()->update($instance_table)
+      ->condition('id', $id)
+      ->fields(['repetition_id' => $repetition_id])
+      ->execute();
+  });
+  $num_updated_repetitions = count($updated_ids);
+  $messages[] = "Added default repetition to {$num_updated_repetitions} opening hours instances";
+
+  // Update the repetition_id field to enable not null.
+  $database->changeField($instance_table, $repetition_field, $repetition_field, $repetition_field_spec);
+
+  // Create new indices for instances.
+  $instance_schema = dpl_opening_hours_schema()[$instance_table];
+  $branch_index = 'branch_date';
+  $branch_index_fields = dpl_opening_hours_schema()[$instance_table]['index'][$branch_index];
+  if (!$database->indexExists($instance_table, $branch_index)) {
+    $database->addIndex($instance_table, $branch_index, $branch_index_fields, $instance_schema);
+    $messages[] = "Created {$branch_index} index for {$instance_table}";
+  }
+
+  $repetition_index = 'repetition_date';
+  $repetition_index_fields = dpl_opening_hours_schema()[$instance_table]['index'][$repetition_index];
+  if (!$database->indexExists($instance_table, $repetition_index)) {
+    $database->addIndex($instance_table, $repetition_index, $repetition_index_fields, $instance_schema);
+    $messages[] = "Created {$repetition_index} index for {$instance_table}";
+  }
+
+  return implode("\n", $messages);
+}
+
+/**
+ * Enable dpl_rest_base module.
+ *
+ * @param mixed[] $sandbox
+ *   The update sandbox.
+ */
+function dpl_opening_hours_update_10001(array &$sandbox) : void {
+  $module_installer = DrupalTyped::service(ModuleInstallerInterface::class, 'module_installer');
+  // The dpl_rest_base module is a dependency containing classes that this
+  // module relies on. We need to have it enabled before other update hooks
+  // can run.
+  $module_installer->install(['dpl_rest_base']);
+}
+
+/**
+ * Update repetition field description.
+ *
+ * @param mixed[] $sandbox
+ *   The update sandbox.
+ */
+function dpl_opening_hours_update_10002(array &$sandbox) : void {
+  $repetition_table = 'dpl_opening_hours_repetition';
+  $type_field = 'type';
+  $repetition_schema = dpl_opening_hours_schema()[$repetition_table];
+  $database = \Drupal::database()->schema();
+  $database->changeField($repetition_table, $type_field, $type_field, $repetition_schema['fields'][$type_field]);
+}

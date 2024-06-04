@@ -1,0 +1,16 @@
+uuid: e5cc6336-ae2f-4546-a4d9-1bae0aa15ce6
+langcode: en
+status: true
+dependencies:
+  module:
+    - paragraphs_ee
+third_party_settings:
+  paragraphs_ee:
+    paragraphs_categories:
+      user_creation: user_creation
+id: language_selector
+label: 'Language selector'
+icon_uuid: null
+icon_default: null
+description: 'Enables website visitors to choose their preferred language.'
+behavior_plugins: {  }

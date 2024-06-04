@@ -1,0 +1,195 @@
+uuid: 420b7a3d-224d-4c3f-8709-fbc6613ea456
+langcode: en
+status: true
+dependencies:
+  config:
+    - core.entity_view_mode.eventinstance.list_teaser_stacked_parent
+    - field.field.eventinstance.default.field_branch
+    - field.field.eventinstance.default.field_categories
+    - field.field.eventinstance.default.field_description
+    - field.field.eventinstance.default.field_event_address
+    - field.field.eventinstance.default.field_event_image
+    - field.field.eventinstance.default.field_event_link
+    - field.field.eventinstance.default.field_event_paragraphs
+    - field.field.eventinstance.default.field_event_partners
+    - field.field.eventinstance.default.field_event_place
+    - field.field.eventinstance.default.field_event_state
+    - field.field.eventinstance.default.field_event_title
+    - field.field.eventinstance.default.field_external_admin_link
+    - field.field.eventinstance.default.field_tags
+    - field.field.eventinstance.default.field_teaser_image
+    - field.field.eventinstance.default.field_teaser_text
+    - field.field.eventinstance.default.field_ticket_categories
+    - recurring_events.eventinstance_type.default
+  module:
+    - address
+    - date_range_formatter
+    - entity_reference_revisions
+    - link
+_core:
+  default_config_hash: lFFUFIZPBUZQjrIYYvP6U1hzVLGjKMl0DYK93zPM_80
+id: eventinstance.default.list_teaser_stacked_parent
+targetEntityType: eventinstance
+bundle: default
+mode: list_teaser_stacked_parent
+content:
+  branch:
+    type: entity_reference_label
+    label: hidden
+    settings:
+      link: false
+    third_party_settings: {  }
+    weight: 14
+    region: content
+  date:
+    type: date_range_without_time
+    label: hidden
+    settings:
+      timezone_override: ''
+      date_format: 'Y-m-d\TH:i:s'
+      separator: '-'
+      one_day: 'd F Y'
+      one_month: 'd - {d} F Y'
+      several_months: 'd F - {d} {F} Y'
+      several_years: 'd F Y - {d} {F} {Y}'
+    third_party_settings: {  }
+    weight: 1
+    region: content
+  event_addres:
+    type: address_default
+    label: above
+    settings: {  }
+    third_party_settings: {  }
+    weight: 2
+    region: content
+  event_address:
+    type: address_default
+    label: hidden
+    settings: {  }
+    third_party_settings: {  }
+    weight: 2
+    region: content
+  event_categories:
+    type: entity_reference_label
+    label: hidden
+    settings:
+      link: false
+    third_party_settings: {  }
+    weight: 12
+    region: content
+  event_description:
+    type: basic_string
+    label: hidden
+    settings: {  }
+    third_party_settings: {  }
+    weight: 3
+    region: content
+  event_image:
+    type: entity_reference_entity_view
+    label: hidden
+    settings:
+      view_mode: list_teaser
+      link: false
+    third_party_settings: {  }
+    weight: 4
+    region: content
+  event_link:
+    type: link
+    label: hidden
+    settings:
+      trim_length: 80
+      url_only: false
+      url_plain: false
+      rel: ''
+      target: ''
+    third_party_settings: {  }
+    weight: 5
+    region: content
+  event_paragraphs:
+    type: entity_reference_revisions_entity_view
+    label: hidden
+    settings:
+      view_mode: default
+      link: ''
+    third_party_settings: {  }
+    weight: 6
+    region: content
+  event_partners:
+    type: string
+    label: hidden
+    settings:
+      link_to_entity: false
+    third_party_settings: {  }
+    weight: 9
+    region: content
+  event_place:
+    type: string
+    label: hidden
+    settings:
+      link_to_entity: false
+    third_party_settings: {  }
+    weight: 7
+    region: content
+  event_tags:
+    type: entity_reference_label
+    label: hidden
+    settings:
+      link: true
+    third_party_settings: {  }
+    weight: 13
+    region: content
+  event_teaser_image:
+    type: entity_reference_entity_view
+    label: hidden
+    settings:
+      view_mode: list_teaser
+      link: false
+    third_party_settings: {  }
+    weight: 10
+    region: content
+  event_teaser_text:
+    type: string
+    label: hidden
+    settings:
+      link_to_entity: false
+    third_party_settings: {  }
+    weight: 11
+    region: content
+  event_ticket_categories:
+    type: entity_reference_revisions_entity_view
+    label: hidden
+    settings:
+      view_mode: default
+      link: ''
+    third_party_settings: {  }
+    weight: 8
+    region: content
+  title:
+    type: string
+    label: hidden
+    settings:
+      link_to_entity: false
+    third_party_settings: {  }
+    weight: 0
+    region: content
+hidden:
+  body: true
+  description: true
+  event_state: true
+  field_branch: true
+  field_categories: true
+  field_description: true
+  field_event_address: true
+  field_event_image: true
+  field_event_link: true
+  field_event_paragraphs: true
+  field_event_partners: true
+  field_event_place: true
+  field_event_state: true
+  field_event_title: true
+  field_external_admin_link: true
+  field_tags: true
+  field_teaser_image: true
+  field_teaser_text: true
+  field_ticket_categories: true
+  search_api_excerpt: true

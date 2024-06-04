@@ -1,0 +1,41 @@
+{% set date = eventinstance.get('date').get(0) %}
+{% set description_items = [
+  {
+    label: "Time"|trans,
+    value: date ? date.get('start_date').getValue().getTimestamp()|format_date('custom', 'H:i') ~ ' - ' ~ date.get('end_date').getValue().getTimestamp()|format_date('custom', 'H:i') : null
+  },
+  {
+    label: "Price"|trans,
+    value: content.event_ticket_categories.0 ? content.event_ticket_categories : null
+  },
+  {
+    label: "Place"|trans,
+    value: content.event_place.0 ? content.event_place : null
+  },
+  {
+    label: "Branch"|trans,
+    value: content.branch.0 ? content.branch : null
+  },
+  {
+    label: "Partners"|trans,
+    value: content.event_partners.0 ? content.event_partners : null
+  },
+  {
+    label: "Address"|trans,
+    value: content.event_address.0 ? content.event_address : null
+  }
+] %}
+
+{% include '@novel/components/full-event.html.twig' with {
+  'label': content.title,
+  'image': content.event_image,
+  'cta': content.event_link,
+  'paragraphs': content.event_paragraphs,
+  'date': content.date,
+  'description': content.event_description,
+  'description_items': description_items,
+  'categories': content.event_categories,
+  'teaser_text': content.event_teaser_text,
+  'tags': content.event_tags,
+  'event_instances': event_instances,
+} only %}

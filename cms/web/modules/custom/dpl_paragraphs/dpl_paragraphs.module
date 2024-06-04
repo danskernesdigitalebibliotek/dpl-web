@@ -1,0 +1,461 @@
+<?php
+
+/**
+ * @file
+ * DPL Paragraphs tweaks.
+ */
+
+use Drupal\Core\Field\WidgetBase;
+use Drupal\Core\Form\FormStateInterface;
+use Drupal\Core\Url;
+use Drupal\dpl_react_apps\Controller\DplReactAppsController;
+use Drupal\field\Entity\FieldConfig;
+use Drupal\paragraphs\Entity\Paragraph;
+use Drupal\paragraphs\ParagraphInterface;
+use function Safe\parse_url;
+use function Safe\preg_match;
+
+/**
+ * Implements hook_preprocess_paragraph().
+ *
+ * Adds the absolute base URL to all paragraph entities. This is used to
+ * construct absolute paths for assets like icons in the paragraph templates.
+ */
+function dpl_paragraphs_preprocess_paragraph(array &$variables): void {
+  if (isset($variables['paragraph'])) {
+    $variables['absoluteBaseUrl'] = \Drupal::request()->getSchemeAndHttpHost();
+  }
+}
+
+/**
+ * Implements hook_preprocess_paragraph__TYPE() for paragraph--links.html.twig.
+ *
+ * Prepares variables for paragraph--links.html.twig template.
+ */
+function dpl_paragraphs_preprocess_paragraph__links(array &$variables): void {
+
+  $url_generator = \Drupal::service('url_generator');
+
+  // To infer if a link is downloadable with we have a basic approach, with
+  // various limitations. It's important to know, that internal files in
+  // project, will be uploaded through the media library using a seperate
+  // paragraph. As such the check here is primarily for external links to
+  // downloadable files. The approach here checks the URL's file extension to
+  // determine if it's a downloadable file. The fallback of an external file
+  // not being recognized as downloadable, is to treat it as an external link.
+  // Limitations include:
+  // 1. URLs endings does not guarantee the content is downloadable.
+  // 2. Some downloadable content may not have a typical file extension.
+  // 3. Does not consider server responses that dictates downloadability.
+  $downloadable_file_extensions = 'pdf|docx|txt|png|jpg|jpeg|gif|csv|xls|xlsx|ppt|pptx';
+
+  // Generate base paths for predefined routes (search and advanced search).
+  $search_base_path = $url_generator->generateFromRoute('dpl_react_apps.search_result', [], ['absolute' => FALSE]);
+  $advanced_search_base_path = $url_generator->generateFromRoute('dpl_react_apps.advanced_search', [], ['absolute' => FALSE]);
+
+  /** @var \Drupal\paragraphs\ParagraphInterface $paragraph */
+  $paragraph = $variables['paragraph'];
+
+  if ($paragraph->hasField('field_link') && !$paragraph->get('field_link')->isEmpty()) {
+
+    $items = $paragraph->get('field_link')->getValue();
+    $variables['links'] = [];
+
+    foreach ($items as $item) {
+
+      $url = Url::fromUri($item['uri']);
+
+      // Get the normalized path. If null, default to an empty string.
+      $parsed_url = parse_url($url->toString(), PHP_URL_PATH);
+      $normalized_path = is_null($parsed_url) ? '' : rtrim($parsed_url, '/');
+
+      $link_type = 'internal';
+
+      if ($url->isExternal()) {
+        if (preg_match('/\.(' . $downloadable_file_extensions . ')(\?.*)?$/i', $normalized_path)) {
+          $link_type = 'download';
+        }
+        else {
+          $link_type = 'external';
+        }
+      }
+      elseif ($normalized_path === $search_base_path || $normalized_path === $advanced_search_base_path) {
+        $link_type = 'search';
+      }
+      $href = $url->isExternal() ? $url->toUriString() : $url->toString();
+      $linkIconClass = ($link_type === 'internal') ? 'link-with-icon__icon--rotate-180' : '';
+
+      $attributes = [
+        'internal' => ['target' => '_self', 'iconFile' => 'ArrowBack', 'iconFolder' => 'collection'],
+        'external' => ['target' => '_blank', 'iconFile' => 'icon-external-link', 'iconFolder' => 'basic'],
+        'download' => ['target' => '_blank', 'iconFile' => 'Ebook', 'iconFolder' => 'collection'],
+        'search' => ['target' => '_self', 'iconFile' => 'SearchBooks', 'iconFolder' => 'collection'],
+      ][$link_type];
+
+      $variables['links'][] = [
+        'href' => $href,
+        'linkText' => $item['title'],
+        'linkType' => $link_type,
+        'target' => $attributes['target'],
+        'iconFile' => $attributes['iconFile'],
+        'iconFolder' => $attributes['iconFolder'],
+        'linkIconClass' => $linkIconClass,
+      ];
+    }
+  }
+}
+
+/**
+ * Implements theme_preprocess_paragraph__NAME().
+ *
+ * On the 'medias' paragraph, a possible second image should have a different
+ * image-style. We do this, by setting a different view mode on the paragraph.
+ */
+function dpl_paragraphs_preprocess_paragraph__medias(array &$variables): void {
+  $paragraph = $variables['paragraph'] ?? NULL;
+  $view_mode = $variables['view_mode'] ?? NULL;
+
+  if ($view_mode === 'preview' ||
+      !($paragraph instanceof Paragraph) ||
+      (empty($variables['content']['field_medias'][1])) ||
+      (!$paragraph->hasField('field_medias'))) {
+    return;
+  }
+
+  $alternative_images = $paragraph->get('field_medias')->view('alternative');
+  $variables['content']['field_medias'][1] = $alternative_images[1] ?? NULL;
+}
+
+/**
+ * Implements hook_preprocess_paragraph__TYPE().
+ *
+ * Prepares variables for paragraph--recommendation.html.twig template.
+ *
+ * If the paragraph has a title or description, we use the recommended-material
+ * React app. Otherwise, we use the recommendation React app.
+ */
+function dpl_paragraphs_preprocess_paragraph__recommendation(array &$variables): void {
+
+  $paragraph = $variables['paragraph'] ?? NULL;
+  if (!($paragraph instanceof ParagraphInterface) || !$paragraph->hasField('field_recommendation_work_id') || $paragraph->get('field_recommendation_work_id')->isEmpty()) {
+    return;
+  }
+
+  // Check for the existence of additional fields.
+  if ($paragraph->hasField('field_recommendation_title') &&
+    $paragraph->hasField('field_recommendation_description') &&
+    $paragraph->hasField('field_image_position_right')) {
+
+    $paragraph_title = $paragraph->get('field_recommendation_title')->getString();
+    $paragraph_description = $paragraph->get('field_recommendation_description')->getString();
+    $paragraph_image_position_right = $paragraph->get('field_image_position_right')->getString();
+
+    $work_id_field = $paragraph->get('field_recommendation_work_id');
+    $work_id = $work_id_field->value;
+    $material_type = $work_id_field->material_type ?? NULL;
+
+    if (!empty($paragraph_title) || !empty($paragraph_description)) {
+      // The URL only needs to be constructed if the paragraph has a title
+      // or description, otherwise the URL is constructed in the React app.
+      $route_parameters = ['wid' => $work_id];
+      $query_parameters = [];
+
+      if (!empty($material_type)) {
+        $query_parameters['type'] = $material_type;
+      }
+
+      $material_url_object = Url::fromRoute('dpl_react_apps.work', $route_parameters,
+        ['absolute' => TRUE, 'query' => $query_parameters]);
+
+      $material_url = $material_url_object->toString();
+
+      $variables['react_app'] = [
+        '#theme' => 'dpl_react_app',
+        '#name' => 'recommended-material',
+        '#data' => [
+          'wid' => $work_id,
+          'material-type' => $material_type,
+        ] + DplReactAppsController::externalApiBaseUrls(),
+        '#material_url' => $material_url,
+        '#position_image_right' => $paragraph_image_position_right,
+      ];
+    }
+    else {
+      // Align React's prop type: String '1' for true, boolean false otherwise.
+      $paragraph_image_position_right = $paragraph_image_position_right === '1' ? '1' : FALSE;
+      $variables['react_app'] = [
+        '#theme' => 'dpl_react_app',
+        '#name' => 'recommendation',
+        '#data' => [
+          'wid' => $work_id,
+          'material-type' => $material_type,
+          'position-image-right' => $paragraph_image_position_right,
+        ] + DplReactAppsController::externalApiBaseUrls(),
+      ];
+    }
+  }
+}
+
+/**
+ * Prepares the React app data for the Material Grid (Automatic)  paragraph.
+ *
+ * Data from the paragraph fields used to configure the Material Grid,
+ * includes the grid's title, a CQL search string for material filtering,
+ * and how many materials should be displayed.
+ *
+ * @param array &$variables
+ *   Variables for the paragraph template, including the 'paragraph' entity.
+ *
+ * @see \Drupal\paragraphs\Entity\Paragraph
+ * @see dpl_react_apps/src/Controller/DplReactAppsController.php
+ */
+function dpl_paragraphs_preprocess_paragraph__material_grid_automatic(array &$variables): void {
+
+  $paragraph = $variables['paragraph'] ?? NULL;
+
+  if (!($paragraph instanceof ParagraphInterface)) {
+    return;
+  }
+
+  if (!$paragraph->hasField('field_amount_of_materials') || !$paragraph->hasField('field_material_grid_title') || !$paragraph->hasField('field_cql_search')) {
+    return;
+  }
+
+  // Extract field values.
+  $material_grid_title = $paragraph->get('field_material_grid_title')->getString();
+  $cql = $paragraph->get('field_cql_search')->getString();
+  $selected_amount_of_materials_for_display = (int) $paragraph->get('field_amount_of_materials')->getString();
+
+  // Build configurations for blacklisted search branches and all branches.
+  $branchSettings = \Drupal::service('dpl_library_agency.branch_settings');
+  $branchRepository = \Drupal::service('dpl_library_agency.branch.repository');
+  $blacklistedSearchBranchesConfig = DplReactAppsController::buildBranchesListProp($branchSettings->getExcludedSearchBranches());
+  $branchesConfig = DplReactAppsController::buildBranchesJsonProp($branchRepository->getBranches());
+
+  // Prepare the React app variables.
+  $variables['react_app_material_grid_automatic'] = [
+    '#theme' => 'dpl_react_app',
+    '#name' => 'material-grid-automatic',
+    '#data' => [
+      'title' => $material_grid_title,
+      'cql' => $cql,
+      'selected-amount-of-materials-for-display' => $selected_amount_of_materials_for_display,
+      'button-text' => t('Show all', [], ['context' => 'Material Grid']),
+      'blacklisted-search-branches-config' => $blacklistedSearchBranchesConfig,
+      'branches-config' => $branchesConfig,
+    ] + DplReactAppsController::externalApiBaseUrls(),
+  ];
+}
+
+/**
+ * Prepares the React app data for the Material Grid (Manual) paragraph.
+ *
+ * Data from the paragraph fields used to configure the Material Grid,
+ * includes the grid's title, and an array of materialId's (work-ids).
+ *
+ * @param array &$variables
+ *   Variables for the paragraph template, including the 'paragraph' entity.
+ *
+ * @see \Drupal\paragraphs\Entity\Paragraph
+ * @see dpl_react_apps/src/Controller/DplReactAppsController.php
+ */
+function dpl_paragraphs_preprocess_paragraph__material_grid_manual(array &$variables): void {
+
+  $paragraph = $variables['paragraph'] ?? NULL;
+
+  if (!($paragraph instanceof ParagraphInterface)  || !$paragraph->hasField('field_material_grid_title') || !$paragraph->hasField('field_material_grid_work_ids')) {
+    return;
+  }
+
+  // Extract field values.
+  $material_grid_title = $paragraph->get('field_material_grid_title')->getString();
+  $materials = [];
+
+  if (!$paragraph->get('field_material_grid_work_ids')->isEmpty()) {
+    foreach ($paragraph->get('field_material_grid_work_ids')->getValue() as $item) {
+
+      $wid = $item['value'];
+      $materialType = $item['material_type'];
+
+      $materials[] = [
+        'wid' => $wid,
+        'materialType' => $materialType,
+      ];
+    }
+  }
+  // Build configurations for blacklisted search branches and all branches.
+  $branchSettings = \Drupal::service('dpl_library_agency.branch_settings');
+  $branchRepository = \Drupal::service('dpl_library_agency.branch.repository');
+  $blacklistedSearchBranchesConfig = DplReactAppsController::buildBranchesListProp($branchSettings->getExcludedSearchBranches());
+  $branchesConfig = DplReactAppsController::buildBranchesJsonProp($branchRepository->getBranches());
+
+  // Prepare the React app variables.
+  $variables['react_app_material_grid_manual'] = [
+    '#theme' => 'dpl_react_app',
+    '#name' => 'material-grid-manual',
+    '#data' => [
+      'materials' => $materials,
+      'title' => $material_grid_title,
+      'button-text' => t('Show all', [], ['context' => 'Material Grid']),
+      'blacklisted-search-branches-config' => $blacklistedSearchBranchesConfig,
+      'branches-config' => $branchesConfig,
+    ] + DplReactAppsController::externalApiBaseUrls(),
+  ];
+}
+
+/**
+ * Implements hook_preprocess_paragraph__TYPE() for paragraph type 'user_registration_linklist'.
+ *
+ * This function checks if the current paragraph has any sibling paragraphs
+ * of type 'user_registration_section', and if so, it retrieves
+ * 'user_registration_items' from that sibling to create navigation
+ * anchor links.
+ */
+function dpl_paragraphs_preprocess_paragraph__user_registration_linklist(array &$variables): void {
+  $paragraph = $variables['paragraph'];
+
+  if ($paragraph->getParentEntity() && $paragraph->getParentEntity()->hasField('field_paragraphs')) {
+    $parent = $paragraph->getParentEntity();
+    $siblings = $parent->get('field_paragraphs')->referencedEntities();
+
+    foreach ($siblings as $sibling) {
+      if ($sibling->bundle() === 'user_registration_section') {
+        if ($sibling->hasField('field_user_registration_items')) {
+          $user_registration_items = $sibling->get('field_user_registration_items')->referencedEntities();
+          $variables['anchor_links'] = dpl_paragraphs_create_navigation_anchor_links($user_registration_items);
+        }
+      }
+    }
+  }
+}
+
+/**
+ * Implements hook_preprocess_paragraph__TYPE().
+ *
+ * This function checks if there is a 'user_registration_linklist' paragraph
+ * among the siblings. If no such sibling is found, it generates 'anchor_links'.
+ */
+function dpl_paragraphs_preprocess_paragraph__user_registration_section(array &$variables): void {
+
+  $user_registration_section = $variables['paragraph'] ?? NULL;
+
+  if (!($user_registration_section instanceof ParagraphInterface || !$user_registration_section->hasField('field_material_grid_title'))) {
+    return;
+  }
+
+  if ($user_registration_section->getParentEntity() && $user_registration_section->getParentEntity()->hasField('field_paragraphs')) {
+    $parent = $user_registration_section->getParentEntity();
+    $siblings = $parent->get('field_paragraphs')->referencedEntities();
+
+    foreach ($siblings as $sibling) {
+      // Check if any sibling is of type 'user_registration_linklist'.
+      if ($sibling->bundle() === 'user_registration_linklist') {
+        return;
+      }
+    }
+  }
+
+  $user_registration_items = $user_registration_section->get('field_user_registration_items')->referencedEntities();
+  $variables['anchor_links'] = dpl_paragraphs_create_navigation_anchor_links($user_registration_items);
+}
+
+/**
+ * Creates anchor links for user_registration_items.
+ *
+ * @param \Drupal\paragraphs\Entity\Paragraph[] $paragraphs
+ *   An array of paragraph entities to process.
+ *
+ * @return array<array{title: string, anchor_id: string}>
+ *   An array of anchor link information including titles and anchor IDs.
+ */
+function dpl_paragraphs_create_navigation_anchor_links(array $paragraphs): array {
+  $anchor_links = [];
+
+  // Creates anchor links for items that should be displayed in the navigation.
+  foreach ($paragraphs as $paragraph) {
+    if ($paragraph->get('field_display_in_navigation')->value == 1) {
+      $navigation_title = $paragraph->get('field_navigation_title')->value ?? $paragraph->get('field_title')->value;
+      $anchor_id = $paragraph->get('field_anchor')->value ?? 'anchor-' . $paragraph->id();
+      $anchor_links[] = [
+        'title' => $navigation_title,
+        'anchor_id' => $anchor_id,
+      ];
+    }
+  }
+
+  return $anchor_links;
+}
+
+/**
+ * Implements hook_field_widget_single_element_WIDGET_TYPE_form_alter().
+ *
+ * Adjusts the visibility of field_navigation_title based on
+ * the state of field_display_in_navigation.
+ *
+ * @param array<mixed> &$element
+ *   The form element to be altered.
+ * @param \Drupal\Core\Form\FormStateInterface $form_state
+ *   The current state of the form.
+ * @param array<mixed> $context
+ *   An associative array containing contextual information about the field.
+ *
+ * @see hook_field_widget_single_element_WIDGET_TYPE_form_alter()
+ */
+function dpl_paragraphs_field_widget_single_element_paragraphs_form_alter(array &$element, FormStateInterface $form_state, array $context): void {
+
+  /** @var \Drupal\Core\Field\FieldItemListInterface $items */
+  $items = $context['items'];
+
+  // Retrieve the field definition from the context.
+  $field_definition = $items->getFieldDefinition();
+
+  // Check if the field definition is an instance of FieldConfig
+  // and matches the specific field ID.
+  if ($field_definition instanceof FieldConfig &&
+    $field_definition->id() === 'paragraph.user_registration_section.field_user_registration_items') {
+    $field_name = $field_definition->getName();
+
+    $widget_state = WidgetBase::getWidgetState($element['#field_parents'], $field_name, $form_state);
+
+    /** @var \Drupal\paragraphs\Entity\Paragraph $paragraph_instance */
+    $paragraph_instance = $widget_state['paragraphs'][$element['#delta']]['entity'];
+    $paragraph_type = $paragraph_instance->bundle();
+
+    if ($paragraph_type == 'user_registration_item') {
+      $parents = $element['#field_parents'][0] . '[' . $element['#field_parents'][1] . '][' . $element['#field_parents'][2] . ']';
+
+      // Conditionally hide the field based on the state of another field.
+      $element['subform']['field_navigation_title']['#states'] = [
+        'invisible' => [
+          ':input[name="' . $parents . '[' . $field_name . '][' . $element['#delta'] . '][subform][field_display_in_navigation][value]"]' => ['checked' => FALSE],
+        ],
+      ];
+    }
+  }
+}
+
+/**
+ * Prepare 'manual_event_list' paragraphs to include rendered event entities.
+ *
+ * Adds rendered event entities to the paragraph's variables for use in
+ * templates, utilizing the 'list_teaser' view mode.
+ *
+ * @param array &$variables
+ *   Variables to be passed to the template.
+ */
+function dpl_paragraphs_preprocess_paragraph__manual_event_list(array &$variables): void {
+  $paragraph = $variables['paragraph'] ?? NULL;
+
+  if (!($paragraph instanceof ParagraphInterface) || !$paragraph->hasField('field_events')) {
+    return;
+  }
+  $events = $paragraph->get('field_events')->referencedEntities();
+  $renderedEvents = [];
+
+  foreach ($events as $event) {
+    /** @var \Drupal\recurring_events\Entity\EventInstance $event */
+    $viewBuilder = \Drupal::entityTypeManager()->getViewBuilder($event->getEntityTypeId());
+    $renderedEvents[] = $viewBuilder->view($event, 'list_teaser');
+  }
+  $variables['rendered_field_events'] = $renderedEvents;
+}

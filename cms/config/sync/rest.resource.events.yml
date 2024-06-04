@@ -1,0 +1,20 @@
+uuid: 0256f6b3-6438-4a21-96c5-dbd8ed820175
+langcode: en
+status: true
+dependencies:
+  module:
+    - basic_auth
+    - dpl_event
+    - serialization
+    - user
+id: events
+plugin_id: events
+granularity: resource
+configuration:
+  methods:
+    - GET
+  formats:
+    - json
+  authentication:
+    - basic_auth
+    - cookie

@@ -1,0 +1,31 @@
+uuid: af91ceb0-384b-42b2-832e-fbb988903c7d
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_campaign_rules
+    - node.type.campaign
+    - paragraphs.paragraphs_type.campaign_rule
+  module:
+    - entity_reference_revisions
+id: node.campaign.field_campaign_rules
+field_name: field_campaign_rules
+entity_type: node
+bundle: campaign
+label: Triggers
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings:
+  handler: 'default:paragraph'
+  handler_settings:
+    target_bundles:
+      campaign_rule: campaign_rule
+    negate: 0
+    target_bundles_drag_drop:
+      campaign_rule:
+        weight: 2
+        enabled: true
+field_type: entity_reference_revisions

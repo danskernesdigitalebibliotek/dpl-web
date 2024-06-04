@@ -1,0 +1,16 @@
+<article>
+  {% set title = content.field_hero_title.0|default(label) %}
+  {% if node.hasField('field_display_titles') and
+        node.get('field_display_titles').getString() == '1' %}
+    <header class="article-header">
+      <h1 class="article-header__title">{{ title }}</h1>
+
+      {{ content.field_subtitle }}
+    </header>
+  {% else %}
+    {# We want the title to still be available for SEO/Accessibility. #}
+    <h1 class="hide-visually">{{ title }}</h1>
+  {% endif %}
+
+  {{ content.field_paragraphs }}
+</article>

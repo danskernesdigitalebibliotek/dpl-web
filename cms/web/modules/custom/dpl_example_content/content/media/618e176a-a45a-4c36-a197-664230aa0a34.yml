@@ -1,0 +1,49 @@
+_meta:
+  version: '1.0'
+  entity_type: media
+  uuid: 618e176a-a45a-4c36-a197-664230aa0a34
+  bundle: image
+  default_langcode: da
+  depends:
+    3d1cb5f0-b6a4-4235-b4b3-705d5185e90e: file
+default:
+  status:
+    -
+      value: true
+  uid:
+    -
+      target_id: 1
+  name:
+    -
+      value: ahmad-odeh-KHipnBn7sdY-unsplash.jpg
+  created:
+    -
+      value: 1703141622
+  revision_translation_affected:
+    -
+      value: true
+  metatag:
+    -
+      tag: meta
+      attributes:
+        name: title
+        content: '| DPL CMS'
+    -
+      tag: link
+      attributes:
+        rel: canonical
+        href: '/user/login'
+  path:
+    -
+      alias: ''
+      langcode: da
+  field_byline:
+    -
+      value: 'Af Ahmad Odeh / Unsplash'
+  field_media_image:
+    -
+      entity: 3d1cb5f0-b6a4-4235-b4b3-705d5185e90e
+      alt: 'Kvinde der danser med lang eksponering'
+      title: ''
+      width: 1920
+      height: 1280

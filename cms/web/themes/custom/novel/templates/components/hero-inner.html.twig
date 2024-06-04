@@ -1,0 +1,44 @@
+<div class="hero__inner">
+  <div class="hero__tag">
+    {{ categories }}
+  </div>
+
+  <div class="hero__details">
+    {% if content_type %}
+      <span class="hero__details__type">{{ content_type }}</span>
+    {% endif %}
+    {% if content_type and date %}|{% endif %}
+    {% if date %}
+      <time class="hero__details__date">{{ date }}</time>
+    {% endif %}
+  </div>
+
+  <h1 class="hero__title">{{ title }}</h1>
+
+  {% if description %}
+    <div class="hero__description">
+      {{ description }}
+
+      {% if arrow %}
+        <div>
+          {{ source(baseIconPath ~ '/arrow-ui/icon-arrow-ui-large-right.svg') }}
+        </div>
+      {% endif %}
+  </div>
+  {% endif %}
+
+  {% if cta %}
+    <div class="hero__cta">
+      {{ cta }}
+    </div>
+  {% endif %}
+
+  {% if description_items %}
+    {% include "@novel/components/list-description.html.twig" with {
+      attributes: create_attribute(),
+      type: 'hero',
+      items: description_items,
+    } only %}
+  {% endif %}
+
+</div>

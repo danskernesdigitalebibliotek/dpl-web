@@ -1,0 +1,1001 @@
+{
+  "swagger": "2.0",
+  "schemes": ["http"],
+  "info": {
+    "description": "The REST API provide by the core REST module.",
+    "title": "DPL CMS - REST API",
+    "version": "Versioning not supported"
+  },
+  "host": "varnish:8080",
+  "basePath": "/",
+  "securityDefinitions": {
+    "basic_auth": {
+      "type": "basic"
+    },
+    "csrf_token": {
+      "type": "apiKey",
+      "name": "X-CSRF-Token",
+      "in": "header",
+      "x-tokenUrl": "http://varnish:8080/user/token"
+    }
+  },
+  "security": [
+    {
+      "basic_auth": []
+    }, 
+    {
+      "csrf_token": []
+    }
+  ],
+  "consumes": ["application/json"],
+  "produces": ["application/json"],
+  "paths": {
+    "/dpl_campaign/match": {
+      "post": {
+        "parameters": [
+          {
+            "name": "_format",
+            "in": "query",
+            "type": "string",
+            "enum": ["json"],
+            "required": true,
+            "description": "Request format",
+            "default": "json"
+          }, 
+          {
+            "name": "facets",
+            "description": "A facet to match against",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "name": {
+                    "type": "string"
+                  },
+                  "values": {
+                    "type": "array",
+                    "items": {
+                      "type": "object",
+                      "properties": {
+                        "key": {
+                          "type": "string"
+                        },
+                        "term": {
+                          "type": "string"
+                        },
+                        "score": {
+                          "type": "integer"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "data": {
+                  "type": "object",
+                  "description": "The matching campaign",
+                  "properties": {
+                    "id": {
+                      "type": "string",
+                      "description": "The campaign id"
+                    },
+                    "title": {
+                      "type": "string",
+                      "description": "The title of the campaign"
+                    },
+                    "text": {
+                      "type": "string",
+                      "description": "The text to be shown for the campaign"
+                    },
+                    "image": {
+                      "type": "object",
+                      "description": "The image to be shown for the campaign",
+                      "properties": {
+                        "url": {
+                          "type": "string",
+                          "description": "The url to the image"
+                        },
+                        "alt": {
+                          "type": "string",
+                          "description": "The alt text for the image"
+                        }
+                      }
+                    },
+                    "url": {
+                      "type": "string",
+                      "description": "The url the campaign should link to"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "No matching campaign found"
+          },
+          "500": {
+            "description": "Internal server error"
+          }
+        },
+        "summary": "Get campaign matching search result facets",
+        "operationId": "campaign:match:POST",
+        "schemes": ["http"],
+        "security": []
+      }
+    },
+    "/api/v1/opening_hours": {
+      "post": {
+        "parameters": [
+          {
+            "name": "_format",
+            "in": "query",
+            "type": "string",
+            "enum": ["json"],
+            "required": true,
+            "description": "Request format",
+            "default": "json"
+          }, 
+          {
+            "name": "opening_hours_instance",
+            "description": "The opening hours instance to manage",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "type": "object",
+              "properties": {
+                "id": {
+                  "type": "integer",
+                  "description": "An serial unique id of the opening hours instance."
+                },
+                "category": {
+                  "type": "object",
+                  "properties": {
+                    "title": {
+                      "type": "string"
+                    },
+                    "color": {
+                      "type": "string",
+                      "description": "A CSS compatible color code which can be used to represent the category",
+                      "example": "#ff0099"
+                    }
+                  },
+                  "required": ["title", "color"]
+                },
+                "date": {
+                  "type": "string",
+                  "format": "date",
+                  "description": "The date which the opening hours applies to. In ISO 8601 format."
+                },
+                "start_time": {
+                  "type": "string",
+                  "example": "09:00",
+                  "description": "When the opening hours start. In format HH:MM"
+                },
+                "end_time": {
+                  "type": "string",
+                  "example": "17:00",
+                  "description": "When the opening hours end. In format HH:MM"
+                },
+                "branch_id": {
+                  "type": "integer",
+                  "description": "The id for the branch the instance belongs to"
+                },
+                "repetition": {
+                  "type": "object",
+                  "properties": {
+                    "id": {
+                      "type": "integer",
+                      "description": "A serial unique id of the repetition. All instances with the same id belongs to the same repetition."
+                    },
+                    "type": {
+                      "type": "string",
+                      "description": "If/how the instance should be repeated in the future: <br/> - single: The instance should not be repeated <br/> - weekly: The instance should be repeated weekly from the first day of the repetition until the provided end date. The week day of the first instance defines which weekday should be used for the repeated instances.",
+                      "enum": ["none", "weekly"],
+                      "default": "none"
+                    },
+                    "weekly_data": {
+                      "type": "object",
+                      "properties": {
+                        "end_date": {
+                          "type": "string",
+                          "format": "date",
+                          "description": "The end date of the repetition. If the end date is not on the same week day as the first instance then the preceding occurrence of the weekday will be the last instance. <br/><br/>This field must be provided if type is 'weekly'"
+                        }
+                      }
+                    }
+                  },
+                  "required": ["type"]
+                }
+              },
+              "required": ["category", "date", "start_time", "end_time", "branch_id", "repetition"]
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "id": {
+                    "type": "integer",
+                    "description": "An serial unique id of the opening hours instance."
+                  },
+                  "category": {
+                    "type": "object",
+                    "properties": {
+                      "title": {
+                        "type": "string"
+                      },
+                      "color": {
+                        "type": "string",
+                        "description": "A CSS compatible color code which can be used to represent the category",
+                        "example": "#ff0099"
+                      }
+                    },
+                    "required": ["title", "color"]
+                  },
+                  "date": {
+                    "type": "string",
+                    "format": "date",
+                    "description": "The date which the opening hours applies to. In ISO 8601 format."
+                  },
+                  "start_time": {
+                    "type": "string",
+                    "example": "09:00",
+                    "description": "When the opening hours start. In format HH:MM"
+                  },
+                  "end_time": {
+                    "type": "string",
+                    "example": "17:00",
+                    "description": "When the opening hours end. In format HH:MM"
+                  },
+                  "branch_id": {
+                    "type": "integer",
+                    "description": "The id for the branch the instance belongs to"
+                  },
+                  "repetition": {
+                    "type": "object",
+                    "properties": {
+                      "id": {
+                        "type": "integer",
+                        "description": "A serial unique id of the repetition. All instances with the same id belongs to the same repetition."
+                      },
+                      "type": {
+                        "type": "string",
+                        "description": "If/how the instance should be repeated in the future: <br/> - single: The instance should not be repeated <br/> - weekly: The instance should be repeated weekly from the first day of the repetition until the provided end date. The week day of the first instance defines which weekday should be used for the repeated instances.",
+                        "enum": ["none", "weekly"],
+                        "default": "none"
+                      },
+                      "weekly_data": {
+                        "type": "object",
+                        "properties": {
+                          "end_date": {
+                            "type": "string",
+                            "format": "date",
+                            "description": "The end date of the repetition. If the end date is not on the same week day as the first instance then the preceding occurrence of the weekday will be the last instance. <br/><br/>This field must be provided if type is 'weekly'"
+                          }
+                        }
+                      }
+                    },
+                    "required": ["id", "type"]
+                  }
+                },
+                "required": ["id", "category", "date", "start_time", "end_time", "branch_id", "repetition"]
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        },
+        "summary": "Create individual opening hours",
+        "operationId": "dpl_opening_hours_create:POST",
+        "schemes": ["http"],
+        "security": [
+          {
+            "cookie": []
+          }
+        ]
+      },
+      "get": {
+        "parameters": [
+          {
+            "name": "_format",
+            "in": "query",
+            "type": "string",
+            "enum": ["json"],
+            "required": true,
+            "description": "Request format",
+            "default": "json"
+          }, 
+          {
+            "name": "branch_id",
+            "type": "integer",
+            "description": "The id of the branch for which to retrieve opening hours.",
+            "in": "query",
+            "required": false
+          }, 
+          {
+            "name": "from_date",
+            "type": "string",
+            "format": "date",
+            "description": "Retrieve opening hours which occur after and including the provided date. In ISO 8601 format.",
+            "in": "query",
+            "required": false
+          }, 
+          {
+            "name": "to_date",
+            "type": "string",
+            "format": "date",
+            "description": "Retrieve opening hours which occur before and including the provided date. In ISO 8601 format.",
+            "in": "query",
+            "required": false
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "id": {
+                    "type": "integer",
+                    "description": "An serial unique id of the opening hours instance."
+                  },
+                  "category": {
+                    "type": "object",
+                    "properties": {
+                      "title": {
+                        "type": "string"
+                      },
+                      "color": {
+                        "type": "string",
+                        "description": "A CSS compatible color code which can be used to represent the category",
+                        "example": "#ff0099"
+                      }
+                    },
+                    "required": ["title", "color"]
+                  },
+                  "date": {
+                    "type": "string",
+                    "format": "date",
+                    "description": "The date which the opening hours applies to. In ISO 8601 format."
+                  },
+                  "start_time": {
+                    "type": "string",
+                    "example": "09:00",
+                    "description": "When the opening hours start. In format HH:MM"
+                  },
+                  "end_time": {
+                    "type": "string",
+                    "example": "17:00",
+                    "description": "When the opening hours end. In format HH:MM"
+                  },
+                  "branch_id": {
+                    "type": "integer",
+                    "description": "The id for the branch the instance belongs to"
+                  },
+                  "repetition": {
+                    "type": "object",
+                    "properties": {
+                      "id": {
+                        "type": "integer",
+                        "description": "A serial unique id of the repetition. All instances with the same id belongs to the same repetition."
+                      },
+                      "type": {
+                        "type": "string",
+                        "description": "If/how the instance should be repeated in the future: <br/> - single: The instance should not be repeated <br/> - weekly: The instance should be repeated weekly from the first day of the repetition until the provided end date. The week day of the first instance defines which weekday should be used for the repeated instances.",
+                        "enum": ["none", "weekly"],
+                        "default": "none"
+                      },
+                      "weekly_data": {
+                        "type": "object",
+                        "properties": {
+                          "end_date": {
+                            "type": "string",
+                            "format": "date",
+                            "description": "The end date of the repetition. If the end date is not on the same week day as the first instance then the preceding occurrence of the weekday will be the last instance. <br/><br/>This field must be provided if type is 'weekly'"
+                          }
+                        }
+                      }
+                    },
+                    "required": ["id", "type"]
+                  }
+                },
+                "required": ["id", "category", "date", "start_time", "end_time", "branch_id", "repetition"]
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        },
+        "summary": "List all opening hours",
+        "operationId": "dpl_opening_hours_list:GET",
+        "schemes": ["http"],
+        "security": [
+          {
+            "cookie": []
+          }
+        ]
+      }
+    },
+    "/api/v1/opening_hours/{id}": {
+      "delete": {
+        "parameters": [
+          {
+            "name": "_format",
+            "in": "query",
+            "type": "string",
+            "enum": ["json"],
+            "required": true,
+            "description": "Request format",
+            "default": "json"
+          }, 
+          {
+            "name": "id",
+            "type": "string",
+            "in": "path",
+            "required": true
+          }, 
+          {
+            "name": "repetition_id",
+            "type": "integer",
+            "description": "The id of the repetition to delete. <br/>If this is provided then all opening hours from the provided instance to the final instance in the provided repetition will be deleted.",
+            "in": "query",
+            "required": false
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "No Content"
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        },
+        "summary": "Delete individual opening hours",
+        "operationId": "dpl_opening_hours_delete:DELETE",
+        "schemes": ["http"],
+        "security": [
+          {
+            "cookie": []
+          }
+        ]
+      },
+      "patch": {
+        "parameters": [
+          {
+            "name": "_format",
+            "in": "query",
+            "type": "string",
+            "enum": ["json"],
+            "required": true,
+            "description": "Request format",
+            "default": "json"
+          }, 
+          {
+            "name": "opening_hours_instance",
+            "description": "The opening hours instance to manage",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "type": "object",
+              "properties": {
+                "id": {
+                  "type": "integer",
+                  "description": "An serial unique id of the opening hours instance."
+                },
+                "category": {
+                  "type": "object",
+                  "properties": {
+                    "title": {
+                      "type": "string"
+                    },
+                    "color": {
+                      "type": "string",
+                      "description": "A CSS compatible color code which can be used to represent the category",
+                      "example": "#ff0099"
+                    }
+                  },
+                  "required": ["title", "color"]
+                },
+                "date": {
+                  "type": "string",
+                  "format": "date",
+                  "description": "The date which the opening hours applies to. In ISO 8601 format."
+                },
+                "start_time": {
+                  "type": "string",
+                  "example": "09:00",
+                  "description": "When the opening hours start. In format HH:MM"
+                },
+                "end_time": {
+                  "type": "string",
+                  "example": "17:00",
+                  "description": "When the opening hours end. In format HH:MM"
+                },
+                "branch_id": {
+                  "type": "integer",
+                  "description": "The id for the branch the instance belongs to"
+                },
+                "repetition": {
+                  "type": "object",
+                  "properties": {
+                    "id": {
+                      "type": "integer",
+                      "description": "A serial unique id of the repetition. All instances with the same id belongs to the same repetition."
+                    },
+                    "type": {
+                      "type": "string",
+                      "description": "If/how the instance should be repeated in the future: <br/> - single: The instance should not be repeated <br/> - weekly: The instance should be repeated weekly from the first day of the repetition until the provided end date. The week day of the first instance defines which weekday should be used for the repeated instances.",
+                      "enum": ["none", "weekly"],
+                      "default": "none"
+                    },
+                    "weekly_data": {
+                      "type": "object",
+                      "properties": {
+                        "end_date": {
+                          "type": "string",
+                          "format": "date",
+                          "description": "The end date of the repetition. If the end date is not on the same week day as the first instance then the preceding occurrence of the weekday will be the last instance. <br/><br/>This field must be provided if type is 'weekly'"
+                        }
+                      }
+                    }
+                  },
+                  "required": ["type"]
+                }
+              },
+              "required": ["category", "date", "start_time", "end_time", "branch_id", "repetition"]
+            }
+          }, 
+          {
+            "name": "id",
+            "type": "string",
+            "in": "path",
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "id": {
+                    "type": "integer",
+                    "description": "An serial unique id of the opening hours instance."
+                  },
+                  "category": {
+                    "type": "object",
+                    "properties": {
+                      "title": {
+                        "type": "string"
+                      },
+                      "color": {
+                        "type": "string",
+                        "description": "A CSS compatible color code which can be used to represent the category",
+                        "example": "#ff0099"
+                      }
+                    },
+                    "required": ["title", "color"]
+                  },
+                  "date": {
+                    "type": "string",
+                    "format": "date",
+                    "description": "The date which the opening hours applies to. In ISO 8601 format."
+                  },
+                  "start_time": {
+                    "type": "string",
+                    "example": "09:00",
+                    "description": "When the opening hours start. In format HH:MM"
+                  },
+                  "end_time": {
+                    "type": "string",
+                    "example": "17:00",
+                    "description": "When the opening hours end. In format HH:MM"
+                  },
+                  "branch_id": {
+                    "type": "integer",
+                    "description": "The id for the branch the instance belongs to"
+                  },
+                  "repetition": {
+                    "type": "object",
+                    "properties": {
+                      "id": {
+                        "type": "integer",
+                        "description": "A serial unique id of the repetition. All instances with the same id belongs to the same repetition."
+                      },
+                      "type": {
+                        "type": "string",
+                        "description": "If/how the instance should be repeated in the future: <br/> - single: The instance should not be repeated <br/> - weekly: The instance should be repeated weekly from the first day of the repetition until the provided end date. The week day of the first instance defines which weekday should be used for the repeated instances.",
+                        "enum": ["none", "weekly"],
+                        "default": "none"
+                      },
+                      "weekly_data": {
+                        "type": "object",
+                        "properties": {
+                          "end_date": {
+                            "type": "string",
+                            "format": "date",
+                            "description": "The end date of the repetition. If the end date is not on the same week day as the first instance then the preceding occurrence of the weekday will be the last instance. <br/><br/>This field must be provided if type is 'weekly'"
+                          }
+                        }
+                      }
+                    },
+                    "required": ["id", "type"]
+                  }
+                },
+                "required": ["id", "category", "date", "start_time", "end_time", "branch_id", "repetition"]
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        },
+        "summary": "Update individual opening hours",
+        "operationId": "dpl_opening_hours_update:PATCH",
+        "schemes": ["http"],
+        "security": [
+          {
+            "cookie": []
+          }
+        ]
+      }
+    },
+    "/api/v1/events/{uuid}": {
+      "patch": {
+        "parameters": [
+          {
+            "name": "_format",
+            "in": "query",
+            "type": "string",
+            "enum": ["json"],
+            "required": true,
+            "description": "Request format",
+            "default": "json"
+          }, 
+          {
+            "name": "event",
+            "description": "Data to update the event with.",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "type": "object",
+              "properties": {
+                "state": {
+                  "type": "string",
+                  "description": "The state of the event.",
+                  "enum": ["TicketSaleNotOpen", "Active", "SoldOut", "Cancelled", "Occurred"]
+                },
+                "external_data": {
+                  "type": "object",
+                  "description": "Data for the event provided by a third party.",
+                  "properties": {
+                    "url": {
+                      "type": "string",
+                      "format": "uri",
+                      "description": "An absolute url provided by the third party where end users can access the event."
+                    },
+                    "admin_url": {
+                      "type": "string",
+                      "format": "uri",
+                      "description": "An absolute url provided by the third party where editorial users can administer the event. Accessing this url should require authentication."
+                    }
+                  }
+                }
+              }
+            }
+          }, 
+          {
+            "name": "uuid",
+            "type": "string",
+            "in": "path",
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "400": {
+            "description": "Invalid input format"
+          },
+          "403": {
+            "description": "Access denied"
+          },
+          "404": {
+            "description": "Event not found"
+          },
+          "500": {
+            "description": "Internal server error"
+          }
+        },
+        "summary": "Update single events",
+        "operationId": "event:PATCH",
+        "schemes": ["http"],
+        "security": [
+          {
+            "basic_auth": []
+          }
+        ]
+      }
+    },
+    "/api/v1/events": {
+      "get": {
+        "parameters": [
+          {
+            "name": "_format",
+            "in": "query",
+            "type": "string",
+            "enum": ["json"],
+            "required": true,
+            "description": "Request format",
+            "default": "json"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "List of all publicly available events.",
+            "schema": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "uuid": {
+                    "type": "string",
+                    "format": "uuid",
+                    "description": "A unique identifer for the event."
+                  },
+                  "title": {
+                    "type": "string",
+                    "description": "The event title."
+                  },
+                  "url": {
+                    "type": "string",
+                    "format": "uri",
+                    "description": "An absolute url end users should use to view the event at the website."
+                  },
+                  "created_at": {
+                    "type": "string",
+                    "format": "date-time",
+                    "description": "When the event was created. In ISO 8601 format."
+                  },
+                  "updated_at": {
+                    "type": "string",
+                    "format": "date-time",
+                    "description": "When the event was last updated. In ISO 8601 format."
+                  },
+                  "image": {
+                    "type": "object",
+                    "description": "The main image for the event.",
+                    "properties": {
+                      "url": {
+                        "type": "string",
+                        "format": "uri",
+                        "description": "An absolute url for the image. This is a link to the original, unaltered file, so the size, aspect ratio, and file format will be different from event to event."
+                      }
+                    },
+                    "required": ["url"]
+                  },
+                  "state": {
+                    "type": "string",
+                    "description": "The state of the event.",
+                    "enum": ["TicketSaleNotOpen", "Active", "SoldOut", "Cancelled", "Occurred"]
+                  },
+                  "date_time": {
+                    "type": "object",
+                    "description": "When the event occurs.",
+                    "required": ["start", "end"],
+                    "properties": {
+                      "start": {
+                        "type": "string",
+                        "format": "date-time",
+                        "description": "Start time in ISO 8601 format."
+                      },
+                      "end": {
+                        "type": "string",
+                        "format": "date-time",
+                        "description": "End time in ISO 8601 format."
+                      }
+                    }
+                  },
+                  "address": {
+                    "type": "object",
+                    "description": "Where the event occurs.",
+                    "properties": {
+                      "location": {
+                        "type": "string",
+                        "description": "Name of the location where the event occurs. This could be the name of a library branch."
+                      },
+                      "street": {
+                        "type": "string",
+                        "description": "Street name and number."
+                      },
+                      "zip_code": {
+                        "type": "integer",
+                        "description": "Zip code."
+                      },
+                      "city": {
+                        "type": "string",
+                        "description": "City."
+                      },
+                      "country": {
+                        "type": "string",
+                        "description": "Country code in ISO 3166-1 alpha-2 format. E.g. DK for Denmark."
+                      }
+                    },
+                    "required": ["street", "zip_code", "city", "country"]
+                  },
+                  "ticket_categories": {
+                    "type": "array",
+                    "description": "Ticket categories used for the event. Not present for events without ticketing.",
+                    "items": {
+                      "type": "object",
+                      "properties": {
+                        "title": {
+                          "type": "string",
+                          "description": "The name of the ticket category."
+                        },
+                        "price": {
+                          "type": "object",
+                          "description": "The price of a ticket in the category",
+                          "properties": {
+                            "currency": {
+                              "type": "string",
+                              "description": "The currency of the price in ISO 4217 format. E.g. DKK for Danish krone."
+                            },
+                            "value": {
+                              "type": "number",
+                              "description": "The price of a ticket in the minor unit of the currency. E.g. 750 for 7,50 EUR. Use 0 for free tickets."
+                            }
+                          },
+                          "required": ["currency", "value"]
+                        }
+                      },
+                      "required": ["title", "price"]
+                    }
+                  },
+                  "ticket_capacity": {
+                    "type": "integer",
+                    "description": "Total number of tickets which can be sold for the event."
+                  },
+                  "series": {
+                    "type": "object",
+                    "description": "An event may be part of a series. One example of this is recurring events.",
+                    "properties": {
+                      "uuid": {
+                        "type": "string",
+                        "format": "uuid",
+                        "description": "The unique identifier for the series. All events belonging to the same series will have the same value."
+                      }
+                    },
+                    "required": ["uuid"]
+                  },
+                  "description": {
+                    "type": "string",
+                    "description": "An editorial description of the event."
+                  },
+                  "external_data": {
+                    "type": "object",
+                    "description": "Data for the event provided by a third party.",
+                    "properties": {
+                      "url": {
+                        "type": "string",
+                        "format": "uri",
+                        "description": "An absolute url provided by the third party where end users can access the event."
+                      },
+                      "admin_url": {
+                        "type": "string",
+                        "format": "uri",
+                        "description": "An absolute url provided by the third party where editorial users can administer the event. Accessing this url should require authentication."
+                      }
+                    }
+                  }
+                },
+                "required": ["uuid", "title", "created_at", "updated_at", "url", "state", "date_time"]
+              }
+            }
+          },
+          "500": {
+            "description": "Internal server error"
+          }
+        },
+        "summary": "Retrieve all events",
+        "operationId": "events:GET",
+        "schemes": ["http"],
+        "security": [
+          {
+            "basic_auth": []
+          }, 
+          {
+            "cookie": []
+          }
+        ]
+      }
+    },
+    "/dpl-url-proxy": {
+      "get": {
+        "parameters": [
+          {
+            "name": "_format",
+            "in": "query",
+            "type": "string",
+            "enum": ["json"],
+            "required": true,
+            "description": "Request format",
+            "default": "json"
+          }, 
+          {
+            "name": "url",
+            "description": "A url to an online resource which may be accessible through a proxy which requires rewriting of the url",
+            "type": "string",
+            "in": "query",
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "data": {
+                  "type": "object",
+                  "properties": {
+                    "url": {
+                      "type": "string",
+                      "description": "The url with any configured proxies applied"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid url provided"
+          },
+          "500": {
+            "description": "Internal server error"
+          }
+        },
+        "summary": "Generate proxy url",
+        "operationId": "proxy-url:GET",
+        "schemes": ["http"],
+        "security": []
+      }
+    }
+  }
+}

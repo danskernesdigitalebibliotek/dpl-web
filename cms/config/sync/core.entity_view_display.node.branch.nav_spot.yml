@@ -1,0 +1,34 @@
+uuid: 169ac826-ff17-45d4-ab77-722ea8ec1a87
+langcode: en
+status: true
+dependencies:
+  config:
+    - core.entity_view_mode.node.nav_spot
+    - field.field.node.branch.field_address
+    - field.field.node.branch.field_email
+    - field.field.node.branch.field_main_media
+    - field.field.node.branch.field_paragraphs
+    - field.field.node.branch.field_phone
+    - field.field.node.branch.field_promoted_on_lists
+    - node.type.branch
+  module:
+    - user
+id: node.branch.nav_spot
+targetEntityType: node
+bundle: branch
+mode: nav_spot
+content:
+  links:
+    settings: {  }
+    third_party_settings: {  }
+    weight: 100
+    region: content
+hidden:
+  field_address: true
+  field_email: true
+  field_main_media: true
+  field_paragraphs: true
+  field_phone: true
+  field_promoted_on_lists: true
+  langcode: true
+  search_api_excerpt: true

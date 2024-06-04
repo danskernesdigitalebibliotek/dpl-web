@@ -1,0 +1,32 @@
+_meta:
+  version: "1.0"
+  entity_type: taxonomy_term
+  uuid: 9c2f0d96-88e1-497c-bf82-e18eb9d5769c
+  bundle: opening_hours_categories
+  default_langcode: da
+default:
+  status:
+    - value: true
+  name:
+    - value: Åbent
+  weight:
+    - value: 0
+  parent:
+    - target_id: 0
+  revision_translation_affected:
+    - value: true
+  metatag:
+    - tag: meta
+      attributes:
+        name: title
+        content: "Åbent | DPL CMS"
+    - tag: link
+      attributes:
+        rel: canonical
+        href: "http://dapple-cms.docker/taxonomy/term/15"
+  path:
+    - alias: ""
+      langcode: da
+  field_opening_hours_color:
+    - color: "#4986E7"
+      opacity: 0.0

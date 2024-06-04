@@ -1,0 +1,36 @@
+uuid: 1d95a417-f335-4da0-b97b-828c042b3753
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.field.paragraph.breadcrumb_children.field_breadcrumb_target
+    - field.field.paragraph.breadcrumb_children.field_title
+    - paragraphs.paragraphs_type.breadcrumb_children
+  module:
+    - select2
+id: paragraph.breadcrumb_children.default
+targetEntityType: paragraph
+bundle: breadcrumb_children
+mode: default
+content:
+  field_breadcrumb_target:
+    type: select2_entity_reference
+    weight: 1
+    region: content
+    settings:
+      width: 100%
+      autocomplete: false
+      match_operator: CONTAINS
+      match_limit: 10
+    third_party_settings: {  }
+  field_title:
+    type: string_textfield
+    weight: 0
+    region: content
+    settings:
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+hidden:
+  created: true
+  status: true

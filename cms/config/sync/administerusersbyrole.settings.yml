@@ -1,0 +1,9 @@
+_core:
+  default_config_hash: UiTY9bhUKWJOIWDlOKM3akeeyHuJJRspXETsv3SY6jw
+roles:
+  administrator: unsafe
+  local_administrator: safe
+  editor: safe
+  mediator: safe
+  patron: unsafe
+  external_system: safe

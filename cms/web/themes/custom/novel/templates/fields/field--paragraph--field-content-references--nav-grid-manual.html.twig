@@ -1,0 +1,19 @@
+{% set parent_entity = element['#object'] %}
+
+{% if parent_entity %}
+  {% if parent_entity.hasField('field_title') %}
+    {% set title = parent_entity.get('field_title').getString() %}
+  {% endif %}
+
+  {% if parent_entity.hasField('field_show_subtitles') %}
+    {% set show_subtitles = parent_entity.get('field_show_subtitles').getString() == "1" %}
+  {% endif %}
+{% endif %}
+
+{% include '@novel/components/nav-grid.html.twig'
+  with {
+  'attributes': attributes,
+  'title': title,
+  'items': items,
+  'show_subtitles': show_subtitles
+} only %}

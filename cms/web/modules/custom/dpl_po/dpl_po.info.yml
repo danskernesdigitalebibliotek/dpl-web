@@ -1,0 +1,9 @@
+name: DPL PO
+description: PO file handling. Export/import, splitting etc.
+package: DPL
+
+dependencies:
+  - config_translation_po:config_translation_po
+
+type: module
+core_version_requirement: ^9 || ^10
