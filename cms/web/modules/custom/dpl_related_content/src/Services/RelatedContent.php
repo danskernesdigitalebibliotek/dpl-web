@@ -195,7 +195,7 @@ class RelatedContent {
       $event_ids = $this->getEventInstanceIds($this->tags, $this->categories, $this->branches);
       $this->resultBasis = ['tags', 'categories', 'branches'];
     }
-    else {
+    elseif (!empty($this->tags) || !empty($this->categories) || !empty($this->branches)) {
       // First, let's look up related content, based only on tags.
       if (!empty($this->tags)) {
         $node_ids = $this->getNodeIds($this->tags);
