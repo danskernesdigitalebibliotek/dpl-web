@@ -1,0 +1,119 @@
+# This workflow is triggered when the remote dependency repos request it.
+# It will create a PR with the new dependency and the new branch.
+# The PR will be created from the develop branch.
+# Needed env variables:
+#   PULL_REQUEST_GIT_USER - The git user that will be used to create the branch and the PR.
+#   ACCEPTED_PACKAGES - A JSON array of accepted package names.
+name: Create PR with external dependency
+
+on:
+  repository_dispatch:
+    types: [create_pr]
+
+jobs:
+  build:
+    name: Create PR with external dependency
+    runs-on: ubuntu-latest
+    steps:
+      - name: Verify Event and set env
+        env:
+          PR_BRANCH: ${{ github.event.client_payload.branch }}
+          PACKAGE: ${{ github.event.client_payload.dependency_package }}
+        run: |
+          PACKAGE_NAME=$(echo "${{ github.event.client_payload.dependency_package }}" | sed 's/[^\/]*\///')
+          echo "PR_BRANCH=$PR_BRANCH" >> $GITHUB_ENV
+          echo "PACKAGE=$PACKAGE" >> $GITHUB_ENV
+          echo "PACKAGE_NAME=$PACKAGE_NAME" >> $GITHUB_ENV
+
+          PACKAGE_NAME_IS_VALID=$(echo '${{ vars.ACCEPTED_PACKAGES }}' | jq --arg project "${{ env.PACKAGE }}" 'any(.[]; . as $name | $project | match($name))')
+          echo "PACKAGE_NAME_IS_VALID=$PACKAGE_NAME_IS_VALID" >> $GITHUB_ENV
+        if: ${{ github.event.action == 'create_pr' && github.event.client_payload.branch && github.event.client_payload.dependency_package }}
+
+      - name: Stop workflow if any variables are missing
+        run: |
+          echo "::error::Some variable is missing. Have to stop..."
+          exit 1
+        if: ${{ !env.PR_BRANCH || !env.PACKAGE || !env.PACKAGE_NAME}}
+
+      - name: Stop workflow if package name is not valid
+        run: |
+          echo "::error::The package name is not valid. Should match one of the accepted package names."
+          exit 1
+        if: ${{ env.PACKAGE_NAME_IS_VALID != 'true' }}
+
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - id: check_branch_exists
+        uses: GuillaumeFalourd/branch-exists@v1
+        with:
+          branch: ${{ env.PR_BRANCH }}
+
+      - name: Stop workflow if branch already exists
+        run: |
+          echo "::error::A branch with the same name as the requested branch name already exists."
+          exit 1
+        if: ${{ steps.check_branch_exists.outputs.exists == 'true' }}
+
+      - name: Resolve composer task command
+        id: resolve_composer_task_command
+        run: |
+          set -e
+
+          declare -a CMDS=(
+              [poc-dpl-react-pr-trigger]='dev:composer:update-design-system'
+              [poc-dpl-design-system-pr-trigger]='dev:composer:update-react'
+          )
+
+          COMPOSER_TASK_COMMAND=${CMDS[${{ env.PACKAGE_NAME }}]}
+
+          if [[ -n "${COMPOSER_TASK_COMMAND}" ]]; then
+            echo "COMPOSER_TASK_COMMAND=$COMPOSER_TASK_COMMAND" >> $GITHUB_ENV
+          else
+            echo "::error::Could not resolve composer task command."
+            exit 1
+          fi
+
+      - name: Install go-task
+        uses: arduino/setup-task@v2
+        with:
+          repo-token: ${{ secrets.GITHUB_TOKEN }}
+        if: ${{ steps.resolve_composer_task_command.outcome == 'success' }}
+
+      - name: Insert dependency
+        id: manipulate_composer
+        run: task ${{ env.COMPOSER_TASK_COMMAND }}
+        env:
+          BRANCH: ${{ env.PR_BRANCH }}
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Create branch
+        id: create_branch
+        uses: stefanzweifel/git-auto-commit-action@v5
+        with:
+          branch: ${{ env.PR_BRANCH }}
+          commit_message: "Insert new reference to dependency ${{ env.PACKAGE }}: ${{ env.BUILD_URL }}"
+          create_branch: true
+        if: ${{ steps.manipulate_composer.outcome == 'success' }}
+
+      - name: Create PR
+        id: create_pr
+        run: |
+          set -e
+          gh pr create \
+          --base develop \
+          --head ${{ env.PR_BRANCH }} \
+          --title "${{ format('PR for {0}:{1}', env.PACKAGE, env.PR_BRANCH) }}" \
+          --body "${{ format('This is an automated PR for {0}:{1}', env.PACKAGE, env.PR_BRANCH) }}"
+        if: ${{ steps.create_branch.outcome == 'success' }}
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Adding summary
+        run: |
+          URL=$(gh pr view --json=url ${{ env.PR_BRANCH }} | jq .url)
+          echo "Created automated PR at: ${URL}" >> $GITHUB_STEP_SUMMARY
+        if: ${{ steps.create_pr.outcome == 'success' }}
+        env:
+          GH_TOKEN: ${{ github.token }}
