@@ -1,0 +1,138 @@
+_meta:
+  version: '1.0'
+  entity_type: eventseries
+  uuid: ffb75415-6568-49a9-9cdf-1e16cc6ca0d3
+  bundle: default
+  default_langcode: en
+  depends:
+    be0655e2-d4df-4922-8bc8-d9d5749877be: eventinstance
+    5d70c9f7-779c-4337-a587-ced7a8ecc770: taxonomy_term
+default:
+  revision_uid:
+    -
+      target_id: 1
+  status:
+    -
+      value: true
+  uid:
+    -
+      target_id: 1
+  title:
+    -
+      value: "Event 4 |\_tag2"
+  recur_type:
+    -
+      value: custom
+  consecutive_recurring_date:
+    -
+      value: ''
+      end_value: ''
+      time: '08:00 am'
+      end_time: '11:30 pm'
+      duration: 5
+      duration_units: minute
+      buffer: 0
+      buffer_units: minute
+  daily_recurring_date:
+    -
+      value: ''
+      end_value: ''
+      time: ''
+      duration: 0
+      end_time: ''
+      duration_or_end_time: duration
+  weekly_recurring_date:
+    -
+      value: ''
+      end_value: ''
+      time: '08:00 am'
+      duration: 900
+      end_time: '08:00 am'
+      duration_or_end_time: duration
+      days: ''
+  monthly_recurring_date:
+    -
+      value: ''
+      end_value: ''
+      time: '08:00 am'
+      duration: 900
+      end_time: '08:00 am'
+      duration_or_end_time: duration
+      days: ''
+      type: ''
+      day_occurrence: ''
+      day_of_month: ''
+  yearly_recurring_date:
+    -
+      value: ''
+      end_value: ''
+      time: ''
+      duration: 0
+      end_time: ''
+      duration_or_end_time: duration
+      days: ''
+      type: ''
+      day_occurrence: ''
+      day_of_month: ''
+      year_interval: 0
+      months: ''
+  custom_date:
+    -
+      value: '2027-09-27T08:00:00'
+      end_value: '2027-09-27T09:00:00'
+  created:
+    -
+      value: 1717513051
+  revision_translation_affected:
+    -
+      value: true
+  metatag:
+    -
+      tag: meta
+      attributes:
+        name: title
+        content: '| DPL CMS'
+    -
+      tag: link
+      attributes:
+        rel: canonical
+        href: 'http://dpl-cms.docker/user/login'
+  path:
+    -
+      alias: /arrangementer/event-4-tag2-0
+      langcode: und
+      pathauto: 1
+  event_instances:
+    -
+      entity: be0655e2-d4df-4922-8bc8-d9d5749877be
+  field_description:
+    -
+      value: desc
+  field_event_paragraphs:
+    -
+      entity:
+        _meta:
+          version: '1.0'
+          entity_type: paragraph
+          uuid: 5b3f7e3a-6f95-4cb8-bd6d-b1c12a89375c
+          bundle: text_body
+          default_langcode: en
+        default:
+          status:
+            -
+              value: true
+          created:
+            -
+              value: 1717513051
+          behavior_settings:
+            -
+              value: {  }
+          revision_translation_affected:
+            -
+              value: true
+  field_event_state:
+    -
+      value: Active
+  field_tags:
+    -
+      entity: 5d70c9f7-779c-4337-a587-ced7a8ecc770

@@ -1,0 +1,272 @@
+_meta:
+  version: '1.0'
+  entity_type: node
+  uuid: 1f4f09dd-83dd-4f82-a57d-95086966c7a3
+  bundle: article
+  default_langcode: da
+  depends:
+    ec9dd467-24d5-484f-b19a-e8653c493177: node
+    9df8ee6a-939d-4d8f-9d79-d082b00286ac: taxonomy_term
+    ab73e9ee-9195-4245-bb95-f5de1c4eb06f: taxonomy_term
+    3369e523-14d9-49a5-93e2-eda5585c6eaa: taxonomy_term
+    5d70c9f7-779c-4337-a587-ced7a8ecc770: taxonomy_term
+default:
+  revision_uid:
+    -
+      target_id: 1
+  status:
+    -
+      value: true
+  uid:
+    -
+      target_id: 1
+  title:
+    -
+      value: 'RelatedContent test'
+  created:
+    -
+      value: 1717516357
+  promote:
+    -
+      value: false
+  sticky:
+    -
+      value: false
+  revision_translation_affected:
+    -
+      value: true
+  entity_clone_template_active:
+    -
+      value: false
+  metatag:
+    -
+      tag: meta
+      attributes:
+        name: title
+        content: 'RelatedContent test | DPL CMS'
+  path:
+    -
+      alias: /branch1/articles/cat2/relatedcontent-test
+      langcode: und
+      pathauto: 1
+  field_branch:
+    -
+      entity: ec9dd467-24d5-484f-b19a-e8653c493177
+  field_categories:
+    -
+      entity: 9df8ee6a-939d-4d8f-9d79-d082b00286ac
+  field_paragraphs:
+    -
+      entity:
+        _meta:
+          version: '1.0'
+          entity_type: paragraph
+          uuid: b2cc4e4c-68a5-4a12-891c-63af28feea9b
+          bundle: filtered_event_list
+          default_langcode: da
+        default:
+          status:
+            -
+              value: true
+          created:
+            -
+              value: 1717516451
+          behavior_settings:
+            -
+              value: {  }
+          revision_translation_affected:
+            -
+              value: true
+          field_filter_cond_type:
+            -
+              value: or
+          field_filter_tags:
+            -
+              entity: ab73e9ee-9195-4245-bb95-f5de1c4eb06f
+          field_max_item_amount:
+            -
+              value: '12'
+          field_title:
+            -
+              value: 'Event list - automatic - tag1'
+    -
+      entity:
+        _meta:
+          version: '1.0'
+          entity_type: paragraph
+          uuid: 32250239-124c-4fdd-a693-003f57e23306
+          bundle: content_slider_automatic
+          default_langcode: da
+        default:
+          status:
+            -
+              value: true
+          created:
+            -
+              value: 1717516473
+          behavior_settings:
+            -
+              value: {  }
+          revision_translation_affected:
+            -
+              value: true
+          field_filter_branches:
+            -
+              entity: ec9dd467-24d5-484f-b19a-e8653c493177
+          field_filter_categories:
+            -
+              entity: 3369e523-14d9-49a5-93e2-eda5585c6eaa
+          field_filter_cond_type:
+            -
+              value: or
+          field_filter_content_types:
+            -
+              value: event
+            -
+              value: article
+          field_filter_tags:
+            -
+              entity: ab73e9ee-9195-4245-bb95-f5de1c4eb06f
+          field_title:
+            -
+              value: 'Slider - Article + Events + Tag 1 + Cat 1 + Branch 1 (OR)'
+    -
+      entity:
+        _meta:
+          version: '1.0'
+          entity_type: paragraph
+          uuid: a74126ed-e24d-45f3-910f-dde2680bd916
+          bundle: content_slider_automatic
+          default_langcode: da
+        default:
+          status:
+            -
+              value: true
+          created:
+            -
+              value: 1717516473
+          behavior_settings:
+            -
+              value: {  }
+          revision_translation_affected:
+            -
+              value: true
+          field_filter_categories:
+            -
+              entity: 3369e523-14d9-49a5-93e2-eda5585c6eaa
+          field_filter_cond_type:
+            -
+              value: and
+          field_filter_content_types:
+            -
+              value: event
+            -
+              value: article
+          field_filter_tags:
+            -
+              entity: ab73e9ee-9195-4245-bb95-f5de1c4eb06f
+          field_title:
+            -
+              value: 'Slider - Events + Articles + Tag 1 + Cat 1 (AND)'
+    -
+      entity:
+        _meta:
+          version: '1.0'
+          entity_type: paragraph
+          uuid: 171dc2e5-8716-4df2-bf0c-8c0d8e01f44f
+          bundle: content_slider_automatic
+          default_langcode: da
+        default:
+          status:
+            -
+              value: true
+          created:
+            -
+              value: 1717516526
+          behavior_settings:
+            -
+              value: {  }
+          revision_translation_affected:
+            -
+              value: true
+          field_filter_categories:
+            -
+              entity: 3369e523-14d9-49a5-93e2-eda5585c6eaa
+            -
+              entity: 9df8ee6a-939d-4d8f-9d79-d082b00286ac
+          field_filter_cond_type:
+            -
+              value: or
+          field_title:
+            -
+              value: 'Slider - Branch1+Cat1+Cat2 (OR)'
+    -
+      entity:
+        _meta:
+          version: '1.0'
+          entity_type: paragraph
+          uuid: 3bd1e337-e322-4f5c-9576-eae680eccc81
+          bundle: content_slider_automatic
+          default_langcode: da
+        default:
+          status:
+            -
+              value: true
+          created:
+            -
+              value: 1717516526
+          behavior_settings:
+            -
+              value: {  }
+          revision_translation_affected:
+            -
+              value: true
+          field_filter_cond_type:
+            -
+              value: and
+          field_filter_tags:
+            -
+              entity: ab73e9ee-9195-4245-bb95-f5de1c4eb06f
+            -
+              entity: 5d70c9f7-779c-4337-a587-ced7a8ecc770
+          field_title:
+            -
+              value: 'Slider - Tag1+Tag2 (AND)'
+    -
+      entity:
+        _meta:
+          version: '1.0'
+          entity_type: paragraph
+          uuid: 052840b7-538c-44c5-a5f3-b58ff37b4834
+          bundle: content_slider_automatic
+          default_langcode: da
+        default:
+          status:
+            -
+              value: true
+          created:
+            -
+              value: 1717519477
+          behavior_settings:
+            -
+              value: {  }
+          revision_translation_affected:
+            -
+              value: true
+          field_filter_cond_type:
+            -
+              value: or
+          field_filter_content_types:
+            -
+              value: event
+            -
+              value: page
+          field_title:
+            -
+              value: 'Slider - Page+Events'
+  field_show_override_author:
+    -
+      value: false
+  field_tags:
+    -
+      entity: 5d70c9f7-779c-4337-a587-ced7a8ecc770

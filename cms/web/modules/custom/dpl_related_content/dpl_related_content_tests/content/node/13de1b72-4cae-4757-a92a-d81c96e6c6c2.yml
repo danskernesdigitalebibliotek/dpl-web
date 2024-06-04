@@ -1,0 +1,65 @@
+_meta:
+  version: '1.0'
+  entity_type: node
+  uuid: 13de1b72-4cae-4757-a92a-d81c96e6c6c2
+  bundle: article
+  default_langcode: da
+  depends:
+    e00e1460-169e-468d-9835-d664f06d0969: file
+    76c9684c-7178-4f75-ba67-58799f4d6fc0: node
+    ab73e9ee-9195-4245-bb95-f5de1c4eb06f: taxonomy_term
+default:
+  revision_uid:
+    -
+      target_id: 1
+  status:
+    -
+      value: true
+  uid:
+    -
+      target_id: 1
+  title:
+    -
+      value: 'Artikel 4 | tag1, branch2'
+  created:
+    -
+      value: 1717497635
+  promote:
+    -
+      value: false
+  sticky:
+    -
+      value: false
+  revision_translation_affected:
+    -
+      value: true
+  entity_clone_template_active:
+    -
+      value: false
+  entity_clone_template_image:
+    -
+      entity: e00e1460-169e-468d-9835-d664f06d0969
+      alt: ''
+      title: ''
+      width: 640
+      height: 443
+  metatag:
+    -
+      tag: meta
+      attributes:
+        name: title
+        content: 'Artikel 4 | tag1, branch2 | DPL CMS'
+  path:
+    -
+      alias: /testfilialen2/articles/artikel-4-tag1-branch2
+      langcode: und
+      pathauto: 1
+  field_branch:
+    -
+      entity: 76c9684c-7178-4f75-ba67-58799f4d6fc0
+  field_show_override_author:
+    -
+      value: false
+  field_tags:
+    -
+      entity: ab73e9ee-9195-4245-bb95-f5de1c4eb06f
