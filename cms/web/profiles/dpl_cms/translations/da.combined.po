@@ -7,8 +7,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2024-06-03 14:14+0200\n"
-"PO-Revision-Date: 2024-06-03 14:14+0200\n"
+"POT-Creation-Date: 2024-06-04 10:35+0200\n"
+"PO-Revision-Date: 2024-06-04 10:35+0200\n"
 "Last-Translator: NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
 "MIME-Version: 1.0\n"
@@ -17775,7 +17775,7 @@ msgid "Categories"
 msgstr ""
 
 msgctxt "field.field.eventinstance.default.field_description:label"
-msgid "Description"
+msgid "Subtitle"
 msgstr ""
 
 msgctxt "field.field.eventinstance.default.field_event_address:label"
@@ -17871,7 +17871,7 @@ msgid "Categories"
 msgstr ""
 
 msgctxt "field.field.eventseries.default.field_description:label"
-msgid "Description"
+msgid "Subtitle"
 msgstr ""
 
 msgctxt "field.field.eventseries.default.field_event_address:label"
