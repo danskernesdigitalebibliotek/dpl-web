@@ -11,7 +11,7 @@ id: paragraph.filtered_event_list.field_filter_cond_type
 field_name: field_filter_cond_type
 entity_type: paragraph
 bundle: filtered_event_list
-label: 'OR or AND'
+label: 'Condition type'
 description: ''
 required: true
 translatable: false
