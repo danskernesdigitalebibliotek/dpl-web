@@ -6,17 +6,20 @@ MySQL centric).
 
 Offers the ability to fix tables with wrong database collation.
 
-The collation is either specified in your database settings.
-
 This can be useful when developing non-english sites.
 
-Example of specifying in database settings in settings.php (will
-affect all tables - it's probably better to do it in hook_schema() or
-hook_schema_alter()):
+The collation can be specified in two ways:
 
-  $databases = array(
-    'default' => array(
-      'default' => array(
+1. For all tables in your database connection settings
+2. For specific tables by implementing hook
+   collation_fixer_expected_collations
+
+Example of specifying character set and collation in general through database
+settings in settings.php:
+
+  $databases = [
+    'default' => [
+      'default' => [
         'database' => 'my-db',
         'username' => 'my-user',
         'password' => 'my-password',
@@ -24,10 +27,20 @@ hook_schema_alter()):
         'port' => '',
         'driver' => 'mysql',
         'prefix' => '',
+        'charset' => 'utf8mb4',
         'collation' => 'utf8mb4_danish_ci',
-      ),
-    ),
-  );
+      ],
+    ],
+  ];
+
+Example of specifying character set and collation for a specific table by
+implementing collation_fixer_expected_collations:
+
+  function my_module_collation_fixer_expected_collations(array &$expected_collations): void {
+    if (isset($expected_collations['my_table'])) {
+      $expected_collations['my_table']->collation = 'utf8mb4_danish_ci';
+    }
+  }
 
 If you (as a developer) change the collation of an existing table you
 will probably want to fix the table right away in an update hook:

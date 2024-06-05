@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Drupal\collation_fixer\Commands;
 
 use Drupal\collation_fixer\CollationFixer;
-use Drupal\collation_fixer\TableCollation;
+use Drupal\collation_fixer\CollationMismatch;
 use Drush\Commands\DrushCommands;
 
 /**
@@ -30,8 +30,8 @@ final class CollationFixerCommands extends DrushCommands {
    */
   public function fixTable(array $options = ['table' => NULL]) : void {
     $tables = $this->collationFixer->checkCollation($options['table']);
-    $fixes = array_filter(array_map(function (TableCollation $table) {
-      return $this->collationFixer->fixCollation($table->table);
+    $fixes = array_filter(array_map(function (CollationMismatch $mismatch) {
+      return $this->collationFixer->fixCollation($mismatch->actual->table);
     }, $tables));
 
     $numFixes = count($fixes);

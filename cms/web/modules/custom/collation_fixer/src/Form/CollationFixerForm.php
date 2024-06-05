@@ -5,7 +5,7 @@ declare(strict_types = 1);
 namespace Drupal\collation_fixer\Form;
 
 use Drupal\collation_fixer\CollationFixer;
-use Drupal\collation_fixer\TableCollation;
+use Drupal\collation_fixer\CollationMismatch;
 use Drupal\Core\Database\DatabaseException;
 use Drupal\Core\Form\ConfirmFormBase;
 use Drupal\Core\Form\FormStateInterface;
@@ -24,7 +24,7 @@ final class CollationFixerForm extends ConfirmFormBase {
    */
   public function __construct(
     private CollationFixer $collationFixer,
-    private ?TableCollation $table = NULL,
+    private ?CollationMismatch $mismatch = NULL,
   ) {}
 
   /**
@@ -47,27 +47,27 @@ final class CollationFixerForm extends ConfirmFormBase {
    * {@inheritdoc}
    */
   public function getQuestion(): TranslatableMarkup {
-    if (!$this->table) {
+    if (!$this->mismatch) {
       throw new \RuntimeException('Unable to determine table');
     }
-    return $this->t('Fix table %table', ['%table' => $this->table->table]);
+    return $this->t('Fix table %table', ['%table' => $this->mismatch->actual->table]);
   }
 
   /**
    * {@inheritdoc}
    */
   public function getDescription() {
-    if (!$this->table) {
+    if (!$this->mismatch) {
       throw new \RuntimeException('Unable to determine table');
     }
     return $this->t(
       'Do you want to fix collation of table %table by converting charset from %from_charset to %to_charset and collation from %from_collation to %to_collation?',
       [
-        '%table' => $this->table->table,
-        '%from_charset' => $this->table->currentCharset,
-        '%from_collation' => $this->table->currentCollation,
-        '%to_charset' => $this->table->expectedCharset,
-        '%to_collation' => $this->table->expectedCollation,
+        '%table' => $this->mismatch->actual->table,
+        '%from_charset' => $this->mismatch->actual->charset,
+        '%from_collation' => $this->mismatch->actual->collation,
+        '%to_charset' => $this->mismatch->expected->charset,
+        '%to_collation' => $this->mismatch->expected->collation,
       ]
     );
   }
@@ -87,7 +87,7 @@ final class CollationFixerForm extends ConfirmFormBase {
     if (empty($tableCollations)) {
       throw new NotFoundHttpException();
     }
-    $this->table = reset($tableCollations);
+    $this->mismatch = reset($tableCollations);
     return parent::buildForm($form, $form_state);
   }
 
@@ -95,26 +95,26 @@ final class CollationFixerForm extends ConfirmFormBase {
    * {@inheritdoc}
    */
   public function submitForm(array &$form, FormStateInterface $form_state): void {
-    if (!$this->table) {
+    if (!$this->mismatch) {
       throw new \RuntimeException('Unable to determine table');
     }
     try {
-      $this->collationFixer->fixCollation($this->table->table);
+      $this->collationFixer->fixCollation($this->mismatch->actual->table);
       $this->messenger()->addStatus($this->t(
         'Fixed collation of table %table. Converted charset from %from_charset to %to_charset and collation from %from_collation to %to_collation.',
         [
-          '%table' => $this->table->table,
-          '%from_charset' => $this->table->currentCharset,
-          '%from_collation' => $this->table->currentCollation,
-          '%to_charset' => $this->table->expectedCharset,
-          '%to_collation' => $this->table->expectedCollation,
+          '%table' => $this->mismatch->actual->table,
+          '%from_charset' => $this->mismatch->actual->charset,
+          '%from_collation' => $this->mismatch->actual->collation,
+          '%to_charset' => $this->mismatch->expected->charset,
+          '%to_collation' => $this->mismatch->expected->collation,
         ]
       ));
     }
     catch (DatabaseException $e) {
       $this->messenger()->addError($this->t(
         'Unable to fix collation and charset for table %table: %message',
-        ['%table' => $this->table, '%message' => $e->getMessage()]
+        ['%table' => $this->mismatch->actual->table, '%message' => $e->getMessage()]
       ));
     }
     $form_state->setRedirectUrl(new Url('system.status'));

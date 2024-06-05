@@ -7,7 +7,7 @@
 
 declare(strict_types=1);
 
-use Drupal\collation_fixer\TableCollation;
+use Drupal\collation_fixer\CollationMismatch;
 use Drupal\Core\Link;
 use Drupal\Core\Url;
 
@@ -50,15 +50,15 @@ function collation_fixer_requirements(string $phase): array {
           'expected_collation' => t('Expected collation'),
         ],
       ];
-      $description['tables']['#rows'] = array_map(function (TableCollation $table) {
+      $description['tables']['#rows'] = array_map(function (CollationMismatch $mismatch) {
         return [
           'table' => [
-            'data' => (new Link($table->table, Url::fromRoute('collation_fixer.confirm', ['table' => $table->table])))->toRenderable(),
+            'data' => (new Link($mismatch->actual->table, Url::fromRoute('collation_fixer.confirm', ['table' => $mismatch->actual->table])))->toRenderable(),
           ],
-          'current_charset' => $table->currentCharset,
-          'current_collation' => $table->currentCollation,
-          'expected_charset' => $table->expectedCharset,
-          'expected_collation' => $table->expectedCollation,
+          'current_charset' => $mismatch->actual->charset,
+          'current_collation' => $mismatch->actual->collation,
+          'expected_charset' => $mismatch->expected->charset,
+          'expected_collation' => $mismatch->expected->collation,
         ];
       }, $wrong_collations);
       /** @var \Drupal\Core\Render\RendererInterface $renderer */
