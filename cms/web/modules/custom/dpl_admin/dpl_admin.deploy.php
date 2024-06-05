@@ -77,7 +77,7 @@ function dpl_admin_deploy_fix_collation(): string {
   if (!\Drupal::moduleHandler()->moduleExists('collation_fixer')) {
     return "No table collations fixed. collation_fixer module is not enabled.";
   }
-  $collation_fixer = DrupalTyped::service(CollationFixer::class, 'collation_fixer.collation_fixer');
+  $collation_fixer = DrupalTyped::service(CollationFixer::class, CollationFixer::class);
   $collation_fixer->fixCollation();
   return "Fixed collation for all tables";
 }
