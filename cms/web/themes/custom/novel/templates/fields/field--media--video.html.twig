@@ -1,0 +1,21 @@
+{% for item in items %}
+  {{ item.content }}
+{% endfor %}
+
+<div class="consent-placeholder cookie-placeholder" data-category="cookie_cat_marketing">
+  <div class="cookie-placeholder__wrapper">
+    <div class="cookie-placeholder__description">
+        <div id="dpl-react-apps-cookie-placeholder">
+        {{ "To view this content, we need your consent to use cookies." | t }}
+        </div>
+    </div>
+    <button
+        type="button"
+        class="cookie-placeholder__manage-consent-button btn-primary btn-outline btn-xlarge arrow__hover--right-small"
+        aria-label="Manage consent"
+        onClick="javascript:CookieConsent.renew();"
+    >
+        {{ "Manage consent" | t }}
+    </button>
+  </div>
+</div>
