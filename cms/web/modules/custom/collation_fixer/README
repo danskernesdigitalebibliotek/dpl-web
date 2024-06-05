@@ -24,7 +24,7 @@ hook_schema_alter()):
         'port' => '',
         'driver' => 'mysql',
         'prefix' => '',
-        'collation' => 'utf8_danish_ci',
+        'collation' => 'utf8mb4_danish_ci',
       ),
     ),
   );
