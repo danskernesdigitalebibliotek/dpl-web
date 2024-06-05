@@ -5,6 +5,8 @@
  * Install, update and uninstall functions for the collation_fixer module.
  */
 
+declare(strict_types=1);
+
 use Drupal\collation_fixer\TableCollation;
 use Drupal\Core\Link;
 use Drupal\Core\Url;

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Drupal\collation_fixer\Commands;
 
 use Drupal\collation_fixer\CollationFixer;
