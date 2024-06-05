@@ -8,8 +8,10 @@
 /**
  * Implements hook_preprocess_media().
  */
-function dpl_cookies_preprocess_field__media(array &$variables): void {
+function dpl_cookies_preprocess_field__media__video(array &$variables): void {
   foreach ($variables['items'] as &$item) {
+
+		dpm($item);
     $item['content']['#attributes']['data-once'] = 'cookieinformation-iframe';
     $item['content']['#attributes']['data-category-consent'] = 'cookie_cat_marketing';
     $item['content']['#attributes']['data-consent-src'] = $item['content']['#attributes']['src'];
