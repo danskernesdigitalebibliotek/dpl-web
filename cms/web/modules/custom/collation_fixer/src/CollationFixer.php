@@ -129,9 +129,7 @@ final class CollationFixer {
       if ($this->moduleHandler->loadInclude($module, 'install')) {
         return $this->moduleHandler->invoke($module, 'schema') ?? [];
       }
-      else {
-        return [];
-      }
+      return [];
     }, array_keys($this->moduleHandler->getModuleList()));
     $moduleSchemas = array_merge(...$schemas);
 
@@ -152,9 +150,7 @@ final class CollationFixer {
         return $table == $table_name;
       });
     }
-    else {
-      return $table_names;
-    }
+    return $table_names;
   }
 
   /**
