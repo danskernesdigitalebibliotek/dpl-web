@@ -7,8 +7,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2024-05-31 11:30+0200\n"
-"PO-Revision-Date: 2024-05-31 11:30+0200\n"
+"POT-Creation-Date: 2024-06-04 16:29+0200\n"
+"PO-Revision-Date: 2024-06-04 16:29+0200\n"
 "Last-Translator: NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
 "MIME-Version: 1.0\n"
@@ -73,7 +73,7 @@ msgstr ""
 
 msgctxt "Create patron"
 msgid "Choose preferred library for pickup of your future reservations."
-msgstr ""
+msgstr "Vælg hvor du vil hente dine reserveringer."
 
 msgctxt "Create patron"
 msgid "Error occurred"
@@ -1525,7 +1525,7 @@ msgstr "Hent før @date"
 
 msgctxt "Global"
 msgid "Choose pickup branch"
-msgstr "Vælg afhentningssted "
+msgstr "Vælg afhentningssted"
 
 msgctxt "Global"
 msgid "Nothing selected"
@@ -1547,7 +1547,7 @@ msgstr "Pinkoderne er ikke identiske"
 
 msgctxt "Global"
 msgid "Length of 4 characters"
-msgstr ""
+msgstr "Pinkode skal være 4 cifre"
 
 msgctxt "Global"
 msgid "Audiobook"
@@ -2891,7 +2891,7 @@ msgid "The link will only be displayed if there is content."
 msgstr "Dette link vil kun blive vist, hvis der er indhold."
 
 msgid "Submit"
-msgstr "Indsend"
+msgstr "Submit"
 
 msgid "Get tickets"
 msgstr "Hent billetter"
@@ -2915,7 +2915,7 @@ msgid "Ticket sale not open"
 msgstr "Ikke åbent for billetsalg"
 
 msgid "Active"
-msgstr "Aktiv"
+msgstr "Active"
 
 msgid "Sold out"
 msgstr "Udsolgt"
@@ -3550,11 +3550,11 @@ msgstr "Vælg alle"
 
 msgctxt "Dashboard"
 msgid "All loans"
-msgstr ""
+msgstr "Alle lån"
 
 msgctxt "Dashboard"
 msgid "All reservations"
-msgstr ""
+msgstr "Alle reserveringer"
 
 msgctxt "Dashboard"
 msgid "See more"
@@ -4112,6 +4112,12 @@ msgstr ""
 msgid "Clear cache"
 msgstr "Ryd cache"
 
+msgid "DPL Update"
+msgstr ""
+
+msgid "Generalized update logic, such as enabling modules."
+msgstr ""
+
 msgid "dpl_campaign"
 msgstr "dpl_campaign"
 
@@ -4229,7 +4235,7 @@ msgid "Country"
 msgstr "Land"
 
 msgid "- All -"
-msgstr "- Alle -"
+msgstr "- All -"
 
 msgid "Limit by postal code"
 msgstr "Begræns efter postnummer"
@@ -4254,7 +4260,7 @@ msgid "Territory"
 msgstr "Territorium"
 
 msgid "Operations"
-msgstr "Handlinger"
+msgstr "Operations"
 
 msgid "Remove"
 msgstr "Fjern"
@@ -4367,7 +4373,7 @@ msgid "broken configuration"
 msgstr ""
 
 msgid "Sort by"
-msgstr "Sortér efter"
+msgstr "Sort by"
 
 msgid "Country name"
 msgstr "Landenavn"
@@ -4657,7 +4663,7 @@ msgid "Plain"
 msgstr "Enkel"
 
 msgid "Default"
-msgstr "Standard"
+msgstr "Default"
 
 msgid "Zone"
 msgstr "Zone"
@@ -4932,7 +4938,7 @@ msgid "This permission only works when combined with %base"
 msgstr "Denne tilladelse virker kun, når den kombineres med %base"
 
 msgid "Roles"
-msgstr "Roller"
+msgstr "Roles"
 
 msgid "Administer Users by Role"
 msgstr "Administrer Brugere efter Rolle"
@@ -5445,13 +5451,13 @@ msgid "The @type being locked."
 msgstr "@type er låst."
 
 msgid "Lock owner"
-msgstr "Låsens ejer"
+msgstr "Lock owner"
 
 msgid "The user locking the node."
 msgstr ""
 
 msgid "Lock Date/Time"
-msgstr "Lås Dato/Tid"
+msgstr "Lock Date/Time"
 
 msgid "Timestamp of the lock"
 msgstr "Tidsstempel for låsen"
@@ -5559,7 +5565,7 @@ msgid "Entity type protected"
 msgstr ""
 
 msgid "All"
-msgstr "Alle"
+msgstr "All"
 
 msgid "Select the bundles on which enable content lock"
 msgstr ""
@@ -5679,7 +5685,7 @@ msgid "Break Lock"
 msgstr "Bryd lås"
 
 msgid "General"
-msgstr "Generelt"
+msgstr "General"
 
 msgid "Settings"
 msgstr "Indstillinger"
@@ -5762,7 +5768,7 @@ msgstr ""
 "som er installeret."
 
 msgid "Name"
-msgstr "Navn"
+msgstr "Name"
 
 msgid "Description"
 msgstr "Beskrivelse"
@@ -5771,7 +5777,7 @@ msgid "Aspect Ratio"
 msgstr "Aspekt ratio"
 
 msgid "Used in"
-msgstr "Brugt i"
+msgstr "Used in"
 
 msgid "@first, @second and @count more"
 msgstr "@first, @second og @count flere"
@@ -5875,7 +5881,7 @@ msgid "Are you sure you want to delete the crop type %type?"
 msgstr "Er du sikker på du vil slette beskæringstypen %type?"
 
 msgid "Delete"
-msgstr "Slet"
+msgstr "Delete"
 
 msgid ""
 "%type is used by 1 piece of content on your site. You can not remove this "
@@ -5929,7 +5935,7 @@ msgid "ID of entity crop belongs to."
 msgstr "ID for enhed, hvis beskæring tilhører."
 
 msgid "Entity type"
-msgstr "Entity-type"
+msgstr "Entity type"
 
 msgid "The type of entity crop belongs to."
 msgstr ""
@@ -5980,7 +5986,7 @@ msgid "No crop types available."
 msgstr "Ingen beskæringstyper tilgængelige."
 
 msgid "Edit"
-msgstr "Redigér"
+msgstr "Edit"
 
 msgid "Edit @name crop type"
 msgstr "Rediger @name beskæringstype"
@@ -6334,7 +6340,7 @@ msgid "There are no test entity entities matching \"%value\"."
 msgstr "Der er ingen testenheder, der matcher \"%value\"."
 
 msgid "Preview"
-msgstr "Gennemse"
+msgstr "Preview"
 
 msgid "@type %title has been created."
 msgstr "@type %title oprettet."
@@ -6656,7 +6662,7 @@ msgid "Provide a Drupal Views to select templates from content types"
 msgstr ""
 
 msgid "Entity Clone Template"
-msgstr "Gem som skabelon"
+msgstr "Entity Clone Template"
 
 msgid "Allow this content type to define Entity Clone templates"
 msgstr "Tillad dette indhold at blive gemt som skabelon"
@@ -7653,7 +7659,7 @@ msgid ""
 msgstr ""
 
 msgid "Focal point"
-msgstr "Fokuspunkt"
+msgstr "Focal point"
 
 msgid ""
 "Specify the focus of this image in the form \"leftoffset,topoffset\" where "
@@ -7814,7 +7820,7 @@ msgid "Timestamp when a job is to be executed."
 msgstr "Tidsstempel for, hvornår et job skal udføres."
 
 msgid "Scheduled"
-msgstr "Planlagt"
+msgstr "Scheduled"
 
 msgid "Timestamp when a job was scheduled."
 msgstr "Tidsstempel for, hvornår et job blev planlagt."
@@ -7970,7 +7976,7 @@ msgid "Thumbnail image style"
 msgstr "Thumbnail billedstil"
 
 msgid "Front page"
-msgstr "Forside"
+msgstr "Front page"
 
 msgid "System"
 msgstr "System"
@@ -8184,10 +8190,10 @@ msgid "Canonical URL"
 msgstr "Kanonisk URL"
 
 msgid "Content"
-msgstr "Indhold"
+msgstr "Content"
 
 msgid "Taxonomy term"
-msgstr "Ord i ordforråd"
+msgstr "Taxonomy term"
 
 msgid "Email"
 msgstr "E-mail"
@@ -8196,7 +8202,7 @@ msgid "Contact form"
 msgstr "Kontaktformular"
 
 msgid "User"
-msgstr "Bruger"
+msgstr "User"
 
 msgid "Linkit URL converter"
 msgstr "Linkit URL-konverter"
@@ -8511,7 +8517,7 @@ msgid "Revert"
 msgstr "Gendan"
 
 msgid "Language"
-msgstr "Sprog"
+msgstr "Language"
 
 msgid "@language (original)"
 msgstr "@language (original)"
@@ -9486,7 +9492,7 @@ msgid ""
 msgstr ""
 
 msgid "Username"
-msgstr "Brugernavn"
+msgstr "Username"
 
 msgid "A pseudonym / alias of this person."
 msgstr "Et pseudonym / alias af denne person."
@@ -9539,7 +9545,7 @@ msgid "Locality"
 msgstr "Lokalitet"
 
 msgid "Gender"
-msgstr "Køn"
+msgstr "Gender"
 
 msgid ""
 "Any of Facebook's gender values should be allowed, the initial two being "
@@ -9654,7 +9660,7 @@ msgid "Street address"
 msgstr "Gadenavn"
 
 msgid "Title"
-msgstr "Titel"
+msgstr "Title"
 
 msgid "The title of the content, e.g., <em>The Rock</em>."
 msgstr "Titlen på indhold, f.eks., <em>The Rock</em>."
@@ -9684,7 +9690,7 @@ msgid "Tag words associated with this video."
 msgstr "Tags forbundet med denne video."
 
 msgid "Content type"
-msgstr "Indholdstype"
+msgstr "Content type"
 
 msgid "The type of the content, e.g., <em>movie</em>."
 msgstr "Typen af indhold, f.eks. <em>movie</em>."
@@ -10398,7 +10404,7 @@ msgid ""
 msgstr ""
 
 msgid "Date"
-msgstr "Dato"
+msgstr "Date"
 
 msgid ""
 "A point or period of time associated with an event in the lifecycle of the "
@@ -11094,7 +11100,7 @@ msgid "Simple meta tags."
 msgstr "Simple meta tags."
 
 msgid "Page title"
-msgstr "Sidetitel"
+msgstr "Page title"
 
 msgid ""
 "The text to display in the title bar of a visitor's web browser when they "
@@ -11148,7 +11154,7 @@ msgid ""
 msgstr ""
 
 msgid "Author"
-msgstr "Forfatter"
+msgstr "Author"
 
 msgid "Define the author of a page."
 msgstr "Definer forfatteren af en side."
@@ -12201,7 +12207,7 @@ msgid "Provides Test scaffolds for Paragraphs Features module."
 msgstr "Leverer teststel for Paragraphs Features modul."
 
 msgid "Register"
-msgstr "Opret konto"
+msgstr "Register"
 
 msgid ""
 "You have not created any event types yet. Go to the <a "
@@ -12800,7 +12806,7 @@ msgid "Instance"
 msgstr "Instans"
 
 msgid "Complete"
-msgstr "Komplet"
+msgstr "Complete"
 
 msgid "Pending"
 msgstr "Afventer"
@@ -13229,7 +13235,7 @@ msgid "The type of registration this is: series or instance"
 msgstr "Typen af registrering: serie eller tilfælde"
 
 msgid "Created"
-msgstr "Oprettet"
+msgstr "Created"
 
 msgid "The time that the entity was created."
 msgstr "Tidspunktet enheden blev skabt."
@@ -13619,7 +13625,7 @@ msgid "Format: @format"
 msgstr "Format: @format"
 
 msgid "Months"
-msgstr "Måneder"
+msgstr "Months"
 
 msgid "January"
 msgstr "Januar"
@@ -13875,7 +13881,7 @@ msgid "Monthly Type"
 msgstr "Månedlig type"
 
 msgid "Days"
-msgstr "Dage"
+msgstr "Days"
 
 msgid "Day of the Month"
 msgstr "Dag i måneden"
@@ -14247,7 +14253,7 @@ msgstr ""
 "fjernet og genoprettet. Denne handling kan ikke fortrydes."
 
 msgid "Published"
-msgstr "Udgivet"
+msgstr "Published"
 
 msgid "Not published"
 msgstr "Ikke udgivet"
@@ -14302,10 +14308,10 @@ msgid "Series Starts"
 msgstr ""
 
 msgid "Updated"
-msgstr "Opdateret"
+msgstr "Updated"
 
 msgid "Unpublished"
-msgstr "Ikke udgivet"
+msgstr "Unpublished"
 
 msgid "Excluded Dates"
 msgstr "Udelukkede datoer"
@@ -15218,10 +15224,10 @@ msgstr ""
 "matche, enten begge til eller begge fra."
 
 msgid "Publish on"
-msgstr "Udgiv den"
+msgstr "Publish on"
 
 msgid "Unpublish on"
-msgstr "Afpublicér den"
+msgstr "Unpublish on"
 
 msgid "Media Field Data"
 msgstr "Mediefeltdatabaser"
@@ -16077,7 +16083,7 @@ msgid "The user roles associated with the user account."
 msgstr "Brugerrollerne forbundet til brugerkontoen."
 
 msgid "IP address"
-msgstr "IP-adresse"
+msgstr "IP address"
 
 msgid "The IP address of the current user."
 msgstr "Nuværende brugers IP-adresse."
@@ -16844,7 +16850,7 @@ msgid "By @username"
 msgstr "Af @username"
 
 msgid "Show all"
-msgstr "Vis alle"
+msgstr "Show all"
 
 msgid "Show more"
 msgstr "Vis flere"
@@ -17775,7 +17781,7 @@ msgid "Categories"
 msgstr ""
 
 msgctxt "field.field.eventinstance.default.field_description:label"
-msgid "Description"
+msgid "Subtitle"
 msgstr ""
 
 msgctxt "field.field.eventinstance.default.field_event_address:label"
@@ -17871,7 +17877,7 @@ msgid "Categories"
 msgstr ""
 
 msgctxt "field.field.eventseries.default.field_description:label"
-msgid "Description"
+msgid "Subtitle"
 msgstr ""
 
 msgctxt "field.field.eventseries.default.field_event_address:label"

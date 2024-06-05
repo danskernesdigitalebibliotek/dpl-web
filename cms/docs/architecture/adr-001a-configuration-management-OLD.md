@@ -1,5 +1,9 @@
 # Architecture Decision Record: Configuration Management
 
+## Notice - this is outdated, and left here only for historical purposes
+
+See the new ADR in [adr-001b-configuration-management.md](adr-001b-configuration-management.md)
+
 ## Context
 
 Configuration management for DPL CMS is a complex issue. The complexity stems

@@ -1,6 +1,6 @@
 # Configuration Management
 
-We use the [Configuration Ignore module](architecture/adr-001-configuration-management.md)
+We use the [Configuration Ignore Auto module](architecture/adr-001b-configuration-management)
 to manage configuration.
 
 In general all configuration is ignored except for configuration which should
@@ -79,10 +79,10 @@ NB: The keys for these configuration files should already be in
 <!-- markdownlint-disable ol-prefix -->
 1. Add the module to the project code base or as a Composer dependency
 2. Create an update hook in the DPL CMS installation profile which enables the
-   module[^1]
+   module[^1]. You may want to use `dpl_update.install`.
 
 ```php
-function dpl_cms_update_9000() {
+function dpl_update_update_9000() {
    \Drupal::service('module_installer')->install(['shortcut']);
 }
 ```
