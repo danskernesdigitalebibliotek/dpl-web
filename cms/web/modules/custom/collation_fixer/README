@@ -29,13 +29,13 @@ hook_schema_alter()):
     ),
   );
 
-If you (as a developer) changes the collation in of an existing table you
+If you (as a developer) change the collation of an existing table you
 will probably want to fix the table right away in an update hook:
 
   /**
    * Fix collation of {my_table}.
    */
-  function my_module_update_10001(&$sandbox) {
+  function my_module_update_10001(array &$sandbox): void {
     $collation_fixer = \Drupal::service('collation_fixer.collation_fixer');
     collation_fixer->fixCollation('my_table');
   }
