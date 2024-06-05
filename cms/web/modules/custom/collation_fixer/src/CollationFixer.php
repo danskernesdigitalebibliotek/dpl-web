@@ -39,38 +39,38 @@ final class CollationFixer {
   public function checkCollation(?string $table = NULL): array {
     $schema = $this->getSchema($table);
 
-    $database_name = &drupal_static(__FUNCTION__);
-    if (empty($database_name)) {
+    $databaseName = &drupal_static(__FUNCTION__);
+    if (empty($databaseName)) {
       $connection_options = $this->connection->getConnectionOptions();
-      $database_name = $connection_options['database'];
+      $databaseName = $connection_options['database'];
     }
 
-    $fallback_charset = $this->getFallbackCharset();
-    $fallback_collation = $this->getFallbackCollation();
+    $fallbackCharset = $this->getFallbackCharset();
+    $fallbackCollation = $this->getFallbackCollation();
 
-    $wrong_collations = [];
+    $wrongCollations = [];
 
-    foreach ($schema as $table_name) {
-      $schema_charset = $fallback_charset;
-      $charset_result = $this->connection->query(
+    foreach ($schema as $tableName) {
+      $schemaCharset = $fallbackCharset;
+      $charsetResult = $this->connection->query(
         'SELECT CCSA.character_set_name FROM information_schema.`TABLES` T,information_schema.`COLLATION_CHARACTER_SET_APPLICABILITY` CCSA WHERE CCSA.collation_name = T.table_collation AND T.table_schema = :table_schema AND T.table_name = :table_name',
-        [':table_schema' => $database_name, ':table_name' => $table_name]
+        [':table_schema' => $databaseName, ':table_name' => $tableName]
       );
-      $db_charset = ($charset_result instanceof StatementInterface) ? $charset_result->fetchField() : $fallback_charset;
+      $databaseCharset = ($charsetResult instanceof StatementInterface) ? $charsetResult->fetchField() : $fallbackCharset;
 
-      $schema_collation = $fallback_collation;
-      $collation_result = $this->connection->query(
+      $schemaCollation = $fallbackCollation;
+      $collationResult = $this->connection->query(
         'SELECT TABLE_COLLATION FROM information_schema.tables WHERE TABLE_SCHEMA = :table_schema AND TABLE_NAME = :table_name',
-        [':table_schema' => $database_name, ':table_name' => $table_name]
+        [':table_schema' => $databaseName, ':table_name' => $tableName]
       );
-      $db_collation = ($collation_result instanceof StatementInterface) ? $collation_result->fetchField() : $fallback_collation;
+      $databaseCollation = ($collationResult instanceof StatementInterface) ? $collationResult->fetchField() : $fallbackCollation;
 
-      if (($schema_charset != $db_charset) || ($schema_collation != $db_collation)) {
-        $wrong_collations[] = new TableCollation($table_name, $db_collation, $db_charset, $schema_collation, $schema_charset);
+      if (($schemaCharset != $databaseCharset) || ($schemaCollation != $databaseCollation)) {
+        $wrongCollations[] = new TableCollation($tableName, $databaseCollation, $databaseCharset, $schemaCollation, $schemaCharset);
       }
     }
 
-    return $wrong_collations;
+    return $wrongCollations;
   }
 
   /**
@@ -143,42 +143,42 @@ final class CollationFixer {
         }
       }
     }
-    $table_names = array_unique(array_merge(array_keys($moduleSchemas), $entitySchemas));
+    $tableNames = array_unique(array_merge(array_keys($moduleSchemas), $entitySchemas));
 
     if (!empty($table)) {
-      return array_filter($table_names, function ($table_name) use ($table) {
+      return array_filter($tableNames, function ($table_name) use ($table) {
         return $table == $table_name;
       });
     }
-    return $table_names;
+    return $tableNames;
   }
 
   /**
    * Get the default charset to use if nothing else is specified.
    */
   private function getFallbackCharset(): string {
-    $connection_options = $this->connection->getConnectionOptions();
-    if (isset($connection_options['charset'])) {
-      $fallback_charset = $connection_options['charset'];
+    $connectionOptions = $this->connection->getConnectionOptions();
+    if (isset($connectionOptions['charset'])) {
+      $fallbackCharset = $connectionOptions['charset'];
     }
     else {
       // There does not seem to be a default charset used for Drupal 10.
       // utf8mb4 was the charset suggested when multibyte UTF-8 support was
       // added to Drupal 7. In lack of other sources we use this as well here.
       // https://www.drupal.org/node/2754539
-      $fallback_charset = 'utf8mb4';
+      $fallbackCharset = 'utf8mb4';
     }
 
-    return $fallback_charset;
+    return $fallbackCharset;
   }
 
   /**
    * Get the default collation to use if nothing else is specified.
    */
   private function getFallbackCollation(): string {
-    $connection_options = $this->connection->getConnectionOptions();
-    if (isset($connection_options['collation'])) {
-      $fallback_collation = $connection_options['collation'];
+    $connectionOptions = $this->connection->getConnectionOptions();
+    if (isset($connectionOptions['collation'])) {
+      $fallbackCollation = $connectionOptions['collation'];
     }
     else {
       // There does not seem to be a default collation used for Drupal 10.
@@ -186,10 +186,10 @@ final class CollationFixer {
       // support was added to Drupal 7. In lack of other sources we use this as
       // well here.
       // https://www.drupal.org/node/2754539
-      $fallback_collation = 'utf8mb4_unicode_ci';
+      $fallbackCollation = 'utf8mb4_unicode_ci';
     }
 
-    return $fallback_collation;
+    return $fallbackCollation;
   }
 
 }
