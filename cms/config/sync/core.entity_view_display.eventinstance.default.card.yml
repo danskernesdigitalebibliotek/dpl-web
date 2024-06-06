@@ -19,6 +19,7 @@ dependencies:
     - field.field.eventinstance.default.field_tags
     - field.field.eventinstance.default.field_teaser_image
     - field.field.eventinstance.default.field_teaser_text
+    - field.field.eventinstance.default.field_ticket_capacity
     - field.field.eventinstance.default.field_ticket_categories
     - recurring_events.eventinstance_type.default
   module:
@@ -127,5 +128,6 @@ hidden:
   field_tags: true
   field_teaser_image: true
   field_teaser_text: true
+  field_ticket_capacity: true
   field_ticket_categories: true
   search_api_excerpt: true

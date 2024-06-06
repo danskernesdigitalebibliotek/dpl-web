@@ -1,0 +1,23 @@
+uuid: 8033c412-6f6b-4932-93d1-eb527b23b3bc
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.eventseries.field_ticket_capacity
+    - recurring_events.eventseries_type.default
+id: eventseries.default.field_ticket_capacity
+field_name: field_ticket_capacity
+entity_type: eventseries
+bundle: default
+label: 'Total ticket capacity'
+description: 'Used by third party services to detect when an event is sold out.<br /><br />Is not displayed to the end-user.'
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings:
+  min: 0
+  max: null
+  prefix: ''
+  suffix: ''
+field_type: integer
