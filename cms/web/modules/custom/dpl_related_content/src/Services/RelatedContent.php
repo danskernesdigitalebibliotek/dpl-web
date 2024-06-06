@@ -97,6 +97,11 @@ class RelatedContent {
   /**
    * What the results are based on - helps with debugging.
    *
+   * The result basis is shown in the frontend, in a data-attribute as part
+   * of the list. It helps developers and technical editors see what the results
+   * are based on. E.g. it may say "tags, categories".
+   * In the future, we may want to display this clearer for editors.
+   *
    * @var string[]
    *  The types of filters that can be used.
    */
@@ -165,6 +170,8 @@ class RelatedContent {
       $branches_field_name = 'branch';
     }
 
+    // By passing along NULL, we're saying that ANY tags are okay.
+    // If we were to pass along an empty array, it would mean NO tags are okay.
     $tags = ($entity->hasField($tags_field_name)) ? $entity->get($tags_field_name)->referencedEntities() : NULL;
     $categories = ($entity->hasField($categories_field_name)) ? $entity->get($categories_field_name)->referencedEntities() : NULL;
     $branches = ($entity->hasField($branches_field_name)) ? $entity->get($branches_field_name)->referencedEntities() : NULL;
