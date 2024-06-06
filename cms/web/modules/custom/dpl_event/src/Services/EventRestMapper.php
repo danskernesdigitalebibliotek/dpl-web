@@ -90,7 +90,7 @@ class EventRestMapper {
    * Getting associated branches.
    *
    * @return ?string[]
-   *  The translated branch labels.
+   *   The translated branch labels.
    */
   private function getBranches(): ?array {
     $return = [];
@@ -109,14 +109,14 @@ class EventRestMapper {
       }
     }
 
-    return empty($return) ? null : $return;
+    return empty($return) ? NULL : $return;
   }
 
   /**
    * Getting associated tags.
    *
    * @return ?string[]
-   *  The translated tag labels.
+   *   The translated tag labels.
    */
   private function getTags(): ?array {
     $return = [];
@@ -128,14 +128,14 @@ class EventRestMapper {
       $return[] = $tag->getName();
     }
 
-    return empty($return) ? null : $return;
+    return empty($return) ? NULL : $return;
   }
 
   /**
    * Getting the description, from the first available text paragraph.
    */
   private function getDescription(): ?string {
-    /** @var ParagraphInterface[] $paragraphs */
+    /** @var \Drupal\paragraphs\ParagraphInterface[] $paragraphs */
     $paragraphs = $this->event->get('event_paragraphs')->referencedEntities();
 
     foreach ($paragraphs as $paragraph) {
