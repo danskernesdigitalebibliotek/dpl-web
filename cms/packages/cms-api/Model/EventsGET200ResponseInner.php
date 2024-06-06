@@ -177,7 +177,7 @@ class EventsGET200ResponseInner
     protected ?EventsGET200ResponseInnerSeries $series = null;
 
     /**
-     * An editorial description of the event.
+     * An editorial WYSIWYG/HTML description of the event.
      *
      * @var string|null
      * @SerializedName("description")

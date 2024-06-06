@@ -13,6 +13,7 @@ use DanskernesDigitaleBibliotek\CMS\Api\Model\EventsGET200ResponseInnerTicketCat
 use Drupal\Component\DependencyInjection\ContainerInterface;
 use Drupal\Core\Field\FieldItemListInterface;
 use Drupal\Core\File\FileUrlGeneratorInterface;
+use Drupal\Core\StringTranslation\TranslatableMarkup;
 use Drupal\dpl_event\EventWrapper;
 use Drupal\file\FileInterface;
 use Drupal\media\MediaInterface;
@@ -67,6 +68,7 @@ class EventRestMapper {
       'uuid' => $this->event->uuid(),
       'url' => $this->event->toUrl()->setAbsolute(TRUE)->toString(TRUE)->getGeneratedUrl(),
       'subtitle' => $this->getValue('event_description'),
+      'description' => $this->getDescription(),
       'state' => $this->eventWrapper->getState()?->value,
       'image' => $this->getImage(),
       'address' => $this->getAddress(),
@@ -79,6 +81,22 @@ class EventRestMapper {
         'uuid' => $this->event->getEventSeries()->uuid(),
       ]),
     ]);
+  }
+
+  /**
+   * Getting the description, from the first available text paragraph.
+   */
+  private function getDescription(): ?string {
+    /** @var ParagraphInterface[] $paragraphs */
+    $paragraphs = $this->event->get('event_paragraphs')->referencedEntities();
+
+    foreach ($paragraphs as $paragraph) {
+      if ($paragraph->bundle() === 'text_body') {
+        return $paragraph->get('field_body')->getValue()[0]['value'] ?? NULL;
+      }
+    }
+
+    return NULL;
   }
 
   /**
