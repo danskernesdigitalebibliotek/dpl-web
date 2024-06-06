@@ -36,7 +36,7 @@ class RelatedContent {
   /**
    * The minimum of items that must be in the list.
    */
-  public int $minItems = 4;
+  public int $minItems = 1;
 
   /**
    * How many items we max display in the list.
@@ -519,12 +519,21 @@ class RelatedContent {
   public function setListStyle(RelatedContentListStyle $list_style): RelatedContentListStyle {
     $this->listStyle = $list_style;
 
-    if ($this->listStyle == RelatedContentListStyle::EventList) {
-      $this->contentViewMode = 'list_teaser';
+    if ($this->listStyle == RelatedContentListStyle::Slider) {
+      // Visually, the slider looks broken with less than 4 items.
+      $this->maxItems = 4;
     }
 
     if ($this->listStyle == RelatedContentListStyle::Grid) {
+      // Visually, grid looks broken with less than 3 items, and does not
+      // support more than 6.
+      $this->minItems = 3;
       $this->maxItems = 6;
+    }
+
+    if ($this->listStyle == RelatedContentListStyle::EventList) {
+      $this->contentViewMode = 'list_teaser';
+      $this->minItems = 1;
     }
 
     return $this->listStyle;
