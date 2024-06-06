@@ -1,5 +1,5 @@
 _meta:
-  version: '1.0'
+  version: "1.0"
   entity_type: eventseries
   uuid: 2abdab73-6a04-4646-8e34-76cad335a9e7
   bundle: default
@@ -37,184 +37,132 @@ _meta:
     5d70c9f7-779c-4337-a587-ced7a8ecc770: taxonomy_term
 default:
   revision_uid:
-    -
-      target_id: 1
+    - target_id: 1
   status:
-    -
-      value: true
+    - value: true
   uid:
-    -
-      target_id: 1
+    - target_id: 1
   title:
-    -
-      value: 'Event 2 | tag1, tag2, cat1, branch1'
+    - value: "Event 2 | tag1, tag2, cat1, branch1"
   recur_type:
-    -
-      value: weekly_recurring_date
+    - value: weekly_recurring_date
   consecutive_recurring_date:
-    -
-      value: ''
-      end_value: ''
-      time: '08:00 am'
-      end_time: '11:30 pm'
+    - value: ""
+      end_value: ""
+      time: "08:00 am"
+      end_time: "11:30 pm"
       duration: 5
       duration_units: minute
       buffer: 0
       buffer_units: minute
   daily_recurring_date:
-    -
-      value: ''
-      end_value: ''
-      time: ''
+    - value: ""
+      end_value: ""
+      time: ""
       duration: 0
-      end_time: ''
+      end_time: ""
       duration_or_end_time: duration
   weekly_recurring_date:
-    -
-      value: '2027-06-04T16:08:16'
-      end_value: '2027-12-04T17:08:16'
-      time: '08:00 am'
+    - value: "2027-06-04T16:08:16"
+      end_value: "2027-12-04T17:08:16"
+      time: "08:00 am"
       duration: 900
-      end_time: '08:00 am'
+      end_time: "08:00 am"
       duration_or_end_time: duration
       days: friday
   monthly_recurring_date:
-    -
-      value: ''
-      end_value: ''
-      time: '08:00 am'
+    - value: ""
+      end_value: ""
+      time: "08:00 am"
       duration: 900
-      end_time: '08:00 am'
+      end_time: "08:00 am"
       duration_or_end_time: duration
-      days: ''
-      type: ''
-      day_occurrence: ''
-      day_of_month: ''
+      days: ""
+      type: ""
+      day_occurrence: ""
+      day_of_month: ""
   yearly_recurring_date:
-    -
-      value: ''
-      end_value: ''
-      time: ''
+    - value: ""
+      end_value: ""
+      time: ""
       duration: 0
-      end_time: ''
+      end_time: ""
       duration_or_end_time: duration
-      days: ''
-      type: ''
-      day_occurrence: ''
-      day_of_month: ''
+      days: ""
+      type: ""
+      day_occurrence: ""
+      day_of_month: ""
       year_interval: 0
-      months: ''
+      months: ""
   created:
-    -
-      value: 1717499182
+    - value: 1717499182
   revision_translation_affected:
-    -
-      value: true
+    - value: true
   metatag:
-    -
-      tag: meta
+    - tag: meta
       attributes:
         name: title
-        content: '| DPL CMS'
-    -
-      tag: link
+        content: "| DPL CMS"
+    - tag: link
       attributes:
         rel: canonical
-        href: 'http://dpl-cms.docker/user/login'
+        href: "http://dpl-cms.docker/user/login"
   path:
-    -
-      alias: /testfilialen/events/cat1/event-2-tag1-tag2-cat1-branch1
+    - alias: /testfilialen/events/cat1/event-2-tag1-tag2-cat1-branch1
       langcode: und
       pathauto: 1
   event_instances:
-    -
-      entity: b226421d-dc76-423f-935a-2d0b78a0cb68
-    -
-      entity: d32dc2ee-d838-45e6-b64c-d1e676243055
-    -
-      entity: 75b80f8c-442b-4f7b-a5cd-c9310365ee79
-    -
-      entity: 905fd7c5-907b-44f2-b77b-0f52d5addb96
-    -
-      entity: 77d122b9-2202-4c94-8ea0-ed337873b87b
-    -
-      entity: d6cb68e3-d9ba-407a-ac53-15f298013966
-    -
-      entity: d0380f26-9d4b-4223-879c-d68a38677564
-    -
-      entity: 7a6e6c58-ddb5-4930-b979-5596f178080d
-    -
-      entity: 01dbfb20-752c-4586-9cea-858799e8ede3
-    -
-      entity: 2d9503b1-8230-4ffb-a3a1-d97c01fa5942
-    -
-      entity: 92409f86-89b3-4762-8c58-5c87812c8661
-    -
-      entity: de4d6beb-5103-4361-bd0d-5eabddf29bcb
-    -
-      entity: 2f2f5920-ac1e-4e66-9d1d-487a8f5f95ab
-    -
-      entity: 0a6466d6-799b-4929-b7d0-a09246e99ee9
-    -
-      entity: f259fdf7-20de-47df-ab06-ee2ad3538955
-    -
-      entity: d23ed643-5679-43c9-a03e-2044f1611605
-    -
-      entity: 008f1bdc-bb49-45c5-9de8-4c24f6d5efce
-    -
-      entity: 9dcf959a-a95b-46d6-9144-cea80f457880
-    -
-      entity: a93f034c-0ab8-4d5c-af4b-485bc1e8d6ac
-    -
-      entity: 3476664b-5e46-4c33-9f79-ae5c3b85a769
-    -
-      entity: 71e08fcc-fd04-4c27-b8ac-1019c7f8b8e0
-    -
-      entity: 62a83121-2cf5-4787-b629-4dd4585e2bbe
-    -
-      entity: d7040817-2340-4b00-a6c7-d5f3c45de634
-    -
-      entity: d2fc4088-364c-484a-a207-5bcc867862aa
-    -
-      entity: ca600840-4477-4506-b8ff-1eaa002acb2a
-    -
-      entity: c24f3319-a9e4-4b8b-bc32-d11010315d01
+    - entity: b226421d-dc76-423f-935a-2d0b78a0cb68
+    - entity: d32dc2ee-d838-45e6-b64c-d1e676243055
+    - entity: 75b80f8c-442b-4f7b-a5cd-c9310365ee79
+    - entity: 905fd7c5-907b-44f2-b77b-0f52d5addb96
+    - entity: 77d122b9-2202-4c94-8ea0-ed337873b87b
+    - entity: d6cb68e3-d9ba-407a-ac53-15f298013966
+    - entity: d0380f26-9d4b-4223-879c-d68a38677564
+    - entity: 7a6e6c58-ddb5-4930-b979-5596f178080d
+    - entity: 01dbfb20-752c-4586-9cea-858799e8ede3
+    - entity: 2d9503b1-8230-4ffb-a3a1-d97c01fa5942
+    - entity: 92409f86-89b3-4762-8c58-5c87812c8661
+    - entity: de4d6beb-5103-4361-bd0d-5eabddf29bcb
+    - entity: 2f2f5920-ac1e-4e66-9d1d-487a8f5f95ab
+    - entity: 0a6466d6-799b-4929-b7d0-a09246e99ee9
+    - entity: f259fdf7-20de-47df-ab06-ee2ad3538955
+    - entity: d23ed643-5679-43c9-a03e-2044f1611605
+    - entity: 008f1bdc-bb49-45c5-9de8-4c24f6d5efce
+    - entity: 9dcf959a-a95b-46d6-9144-cea80f457880
+    - entity: a93f034c-0ab8-4d5c-af4b-485bc1e8d6ac
+    - entity: 3476664b-5e46-4c33-9f79-ae5c3b85a769
+    - entity: 71e08fcc-fd04-4c27-b8ac-1019c7f8b8e0
+    - entity: 62a83121-2cf5-4787-b629-4dd4585e2bbe
+    - entity: d7040817-2340-4b00-a6c7-d5f3c45de634
+    - entity: d2fc4088-364c-484a-a207-5bcc867862aa
+    - entity: ca600840-4477-4506-b8ff-1eaa002acb2a
+    - entity: c24f3319-a9e4-4b8b-bc32-d11010315d01
   field_branch:
-    -
-      entity: ec9dd467-24d5-484f-b19a-e8653c493177
+    - entity: ec9dd467-24d5-484f-b19a-e8653c493177
   field_categories:
-    -
-      entity: 3369e523-14d9-49a5-93e2-eda5585c6eaa
+    - entity: 3369e523-14d9-49a5-93e2-eda5585c6eaa
   field_description:
-    -
-      value: desc
+    - value: desc
   field_event_paragraphs:
-    -
-      entity:
+    - entity:
         _meta:
-          version: '1.0'
+          version: "1.0"
           entity_type: paragraph
           uuid: 48b2695d-31dd-4a1d-b37d-1bed1a0a9443
           bundle: text_body
           default_langcode: en
         default:
           status:
-            -
-              value: true
+            - value: true
           created:
-            -
-              value: 1717499182
+            - value: 1717499182
           behavior_settings:
-            -
-              value: {  }
+            - value: {}
           revision_translation_affected:
-            -
-              value: true
+            - value: true
   field_event_state:
-    -
-      value: Active
+    - value: Active
   field_tags:
-    -
-      entity: ab73e9ee-9195-4245-bb95-f5de1c4eb06f
-    -
-      entity: 5d70c9f7-779c-4337-a587-ced7a8ecc770
+    - entity: ab73e9ee-9195-4245-bb95-f5de1c4eb06f
+    - entity: 5d70c9f7-779c-4337-a587-ced7a8ecc770

@@ -1,5 +1,5 @@
 _meta:
-  version: '1.0'
+  version: "1.0"
   entity_type: node
   uuid: 2b38f99d-f500-42a8-9b21-9732d765ed44
   bundle: article
@@ -12,61 +12,44 @@ _meta:
     5d70c9f7-779c-4337-a587-ced7a8ecc770: taxonomy_term
 default:
   revision_uid:
-    -
-      target_id: 1
+    - target_id: 1
   status:
-    -
-      value: true
+    - value: true
   uid:
-    -
-      target_id: 1
+    - target_id: 1
   title:
-    -
-      value: 'Artikel 2 | tag1, tag2, cat1, branch1'
+    - value: "Artikel 2 | tag1, tag2, cat1, branch1"
   created:
-    -
-      value: 1717497549
+    - value: 1717497549
   promote:
-    -
-      value: false
+    - value: false
   sticky:
-    -
-      value: false
+    - value: false
   revision_translation_affected:
-    -
-      value: true
+    - value: true
   entity_clone_template_active:
-    -
-      value: false
+    - value: false
   entity_clone_template_image:
-    -
-      entity: e00e1460-169e-468d-9835-d664f06d0969
-      alt: ''
-      title: ''
+    - entity: e00e1460-169e-468d-9835-d664f06d0969
+      alt: ""
+      title: ""
       width: 640
       height: 443
   metatag:
-    -
-      tag: meta
+    - tag: meta
       attributes:
         name: title
-        content: 'Artikel 2 | tag1, tag2, cat1, branch1 | DPL CMS'
+        content: "Artikel 2 | tag1, tag2, cat1, branch1 | DPL CMS"
   path:
-    -
-      alias: /branch1/articles/cat1/artikel-2-tag1-tag2-cat1-branch1
+    - alias: /branch1/articles/cat1/artikel-2-tag1-tag2-cat1-branch1
       langcode: und
       pathauto: 1
   field_branch:
-    -
-      entity: ec9dd467-24d5-484f-b19a-e8653c493177
+    - entity: ec9dd467-24d5-484f-b19a-e8653c493177
   field_categories:
-    -
-      entity: 3369e523-14d9-49a5-93e2-eda5585c6eaa
+    - entity: 3369e523-14d9-49a5-93e2-eda5585c6eaa
   field_show_override_author:
-    -
-      value: false
+    - value: false
   field_tags:
-    -
-      entity: ab73e9ee-9195-4245-bb95-f5de1c4eb06f
-    -
-      entity: 5d70c9f7-779c-4337-a587-ced7a8ecc770
+    - entity: ab73e9ee-9195-4245-bb95-f5de1c4eb06f
+    - entity: 5d70c9f7-779c-4337-a587-ced7a8ecc770

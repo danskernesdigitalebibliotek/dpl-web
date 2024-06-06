@@ -1,45 +1,34 @@
 _meta:
-  version: '1.0'
+  version: "1.0"
   entity_type: node
   uuid: ec9dd467-24d5-484f-b19a-e8653c493177
   bundle: branch
   default_langcode: da
 default:
   revision_uid:
-    -
-      target_id: 1
+    - target_id: 1
   status:
-    -
-      value: true
+    - value: true
   uid:
-    -
-      target_id: 1
+    - target_id: 1
   title:
-    -
-      value: Branch1
+    - value: Branch1
   created:
-    -
-      value: 1717516636
+    - value: 1717516636
   promote:
-    -
-      value: false
+    - value: false
   sticky:
-    -
-      value: false
+    - value: false
   revision_translation_affected:
-    -
-      value: true
+    - value: true
   metatag:
-    -
-      tag: meta
+    - tag: meta
       attributes:
         name: title
-        content: 'Branch1 | DPL CMS'
+        content: "Branch1 | DPL CMS"
   path:
-    -
-      alias: /branch1
+    - alias: /branch1
       langcode: und
       pathauto: 1
   field_promoted_on_lists:
-    -
-      value: false
+    - value: false

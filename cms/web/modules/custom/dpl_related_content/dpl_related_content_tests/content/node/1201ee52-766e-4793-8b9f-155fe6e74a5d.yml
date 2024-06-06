@@ -1,5 +1,5 @@
 _meta:
-  version: '1.0'
+  version: "1.0"
   entity_type: node
   uuid: 1201ee52-766e-4793-8b9f-155fe6e74a5d
   bundle: page
@@ -8,46 +8,33 @@ _meta:
     ec9dd467-24d5-484f-b19a-e8653c493177: node
 default:
   revision_uid:
-    -
-      target_id: 1
+    - target_id: 1
   status:
-    -
-      value: true
+    - value: true
   uid:
-    -
-      target_id: 1
+    - target_id: 1
   title:
-    -
-      value: 'Page1 | Branch1'
+    - value: "Page1 | Branch1"
   created:
-    -
-      value: 1717517161
+    - value: 1717517161
   promote:
-    -
-      value: false
+    - value: false
   sticky:
-    -
-      value: false
+    - value: false
   revision_translation_affected:
-    -
-      value: true
+    - value: true
   entity_clone_template_active:
-    -
-      value: false
+    - value: false
   metatag:
-    -
-      tag: meta
+    - tag: meta
       attributes:
         name: title
-        content: 'Page1 | Branch1 | DPL CMS'
+        content: "Page1 | Branch1 | DPL CMS"
   path:
-    -
-      alias: /testfilialen/page1-branch1
+    - alias: /testfilialen/page1-branch1
       langcode: und
       pathauto: 1
   field_branch:
-    -
-      entity: ec9dd467-24d5-484f-b19a-e8653c493177
+    - entity: ec9dd467-24d5-484f-b19a-e8653c493177
   field_display_titles:
-    -
-      value: false
+    - value: false

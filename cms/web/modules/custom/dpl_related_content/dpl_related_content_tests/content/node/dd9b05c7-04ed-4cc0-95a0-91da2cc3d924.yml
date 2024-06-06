@@ -1,5 +1,5 @@
 _meta:
-  version: '1.0'
+  version: "1.0"
   entity_type: node
   uuid: dd9b05c7-04ed-4cc0-95a0-91da2cc3d924
   bundle: article
@@ -9,53 +9,39 @@ _meta:
     9df8ee6a-939d-4d8f-9d79-d082b00286ac: taxonomy_term
 default:
   revision_uid:
-    -
-      target_id: 1
+    - target_id: 1
   status:
-    -
-      value: true
+    - value: true
   uid:
-    -
-      target_id: 1
+    - target_id: 1
   title:
-    -
-      value: 'Artikel 6 | cat2'
+    - value: "Artikel 6 | cat2"
   created:
-    -
-      value: 1717497734
+    - value: 1717497734
   promote:
-    -
-      value: false
+    - value: false
   sticky:
-    -
-      value: false
+    - value: false
   revision_translation_affected:
-    -
-      value: true
+    - value: true
   entity_clone_template_active:
-    -
-      value: false
+    - value: false
   entity_clone_template_image:
-    -
-      entity: e00e1460-169e-468d-9835-d664f06d0969
-      alt: ''
-      title: ''
+    - entity: e00e1460-169e-468d-9835-d664f06d0969
+      alt: ""
+      title: ""
       width: 640
       height: 443
   metatag:
-    -
-      tag: meta
+    - tag: meta
       attributes:
         name: title
-        content: 'Artikel 6 | cat2 | DPL CMS'
+        content: "Artikel 6 | cat2 | DPL CMS"
   path:
-    -
-      alias: /articles/cat2/artikel-6-cat2
+    - alias: /articles/cat2/artikel-6-cat2
       langcode: und
       pathauto: 1
   field_categories:
-    -
-      entity: 9df8ee6a-939d-4d8f-9d79-d082b00286ac
+    - entity: 9df8ee6a-939d-4d8f-9d79-d082b00286ac
   field_show_override_author:
-    -
-      value: false
+    - value: false
