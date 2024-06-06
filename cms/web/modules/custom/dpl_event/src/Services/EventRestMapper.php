@@ -71,7 +71,9 @@ class EventRestMapper {
       'description' => $this->getDescription(),
       'state' => $this->eventWrapper->getState()?->value,
       'image' => $this->getImage(),
+      'branches' => $this->getBranches(),
       'address' => $this->getAddress(),
+      'tags' => $this->getTags(),
       'ticketCategories' => $this->getTicketCategories(),
       'createdAt' => $this->getDateField('created'),
       'updatedAt' => $this->getDateField('changed'),
@@ -81,6 +83,51 @@ class EventRestMapper {
         'uuid' => $this->event->getEventSeries()->uuid(),
       ]),
     ]);
+  }
+
+  /**
+   * Getting associated branches.
+   *
+   * @return ?string[]
+   *  The translated branch labels.
+   */
+  private function getBranches(): ?array {
+    $return = [];
+
+    /** @var \Drupal\node\NodeInterface[] $branches */
+    $branches = $this->event->get('branch')->referencedEntities();
+
+    foreach ($branches as $branch) {
+      $label = $branch->label();
+
+      if ($label instanceof TranslatableMarkup) {
+        $return[] = $label->render();
+      }
+      elseif (is_string($label)) {
+        $return[] = $label;
+      }
+    }
+
+    return empty($return) ? null : $return;
+  }
+
+  /**
+   * Getting associated tags.
+   *
+   * @return ?string[]
+   *  The translated tag labels.
+   */
+  private function getTags(): ?array {
+    $return = [];
+
+    /** @var \Drupal\taxonomy\TermInterface[] $tags */
+    $tags = $this->event->get('event_tags')->referencedEntities();
+
+    foreach ($tags as $tag) {
+      $return[] = $tag->getName();
+    }
+
+    return empty($return) ? null : $return;
   }
 
   /**

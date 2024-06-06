@@ -139,12 +139,36 @@ class EventsGET200ResponseInner
     protected ?EventsGET200ResponseInnerDateTime $dateTime = null;
 
     /**
+     * The associated library branches.
+     *
+     * @var string[]|null
+     * @SerializedName("branches")
+     * @Assert\All({
+     *   @Assert\Type("string")
+     * })
+     * @Type("array<string>")
+     */
+    protected ?array $branches = null;
+
+    /**
      * @var EventsGET200ResponseInnerAddress|null
      * @SerializedName("address")
      * @Assert\Type("DanskernesDigitaleBibliotek\CMS\Api\Model\EventsGET200ResponseInnerAddress")
      * @Type("DanskernesDigitaleBibliotek\CMS\Api\Model\EventsGET200ResponseInnerAddress")
      */
     protected ?EventsGET200ResponseInnerAddress $address = null;
+
+    /**
+     * The tags associated with the event.
+     *
+     * @var string[]|null
+     * @SerializedName("tags")
+     * @Assert\All({
+     *   @Assert\Type("string")
+     * })
+     * @Type("array<string>")
+     */
+    protected ?array $tags = null;
 
     /**
      * Ticket categories used for the event. Not present for events without ticketing.
@@ -210,7 +234,9 @@ class EventsGET200ResponseInner
             $this->image = array_key_exists('image', $data) ? $data['image'] : $this->image;
             $this->state = array_key_exists('state', $data) ? $data['state'] : $this->state;
             $this->dateTime = array_key_exists('dateTime', $data) ? $data['dateTime'] : $this->dateTime;
+            $this->branches = array_key_exists('branches', $data) ? $data['branches'] : $this->branches;
             $this->address = array_key_exists('address', $data) ? $data['address'] : $this->address;
+            $this->tags = array_key_exists('tags', $data) ? $data['tags'] : $this->tags;
             $this->ticketCategories = array_key_exists('ticketCategories', $data) ? $data['ticketCategories'] : $this->ticketCategories;
             $this->ticketCapacity = array_key_exists('ticketCapacity', $data) ? $data['ticketCapacity'] : $this->ticketCapacity;
             $this->series = array_key_exists('series', $data) ? $data['series'] : $this->series;
@@ -454,6 +480,32 @@ class EventsGET200ResponseInner
     }
 
     /**
+     * Gets branches.
+     *
+     * @return string[]|null
+     */
+    public function getBranches(): ?array
+    {
+        return $this->branches;
+    }
+
+
+
+    /**
+     * Sets branches.
+     *
+     * @param string[]|null $branches  The associated library branches.
+     *
+     * @return $this
+     */
+    public function setBranches(?array $branches = null): self
+    {
+        $this->branches = $branches;
+
+        return $this;
+    }
+
+    /**
      * Gets address.
      *
      * @return EventsGET200ResponseInnerAddress|null
@@ -475,6 +527,32 @@ class EventsGET200ResponseInner
     public function setAddress(?EventsGET200ResponseInnerAddress $address = null): self
     {
         $this->address = $address;
+
+        return $this;
+    }
+
+    /**
+     * Gets tags.
+     *
+     * @return string[]|null
+     */
+    public function getTags(): ?array
+    {
+        return $this->tags;
+    }
+
+
+
+    /**
+     * Sets tags.
+     *
+     * @param string[]|null $tags  The tags associated with the event.
+     *
+     * @return $this
+     */
+    public function setTags(?array $tags = null): self
+    {
+        $this->tags = $tags;
 
         return $this;
     }

@@ -103,6 +103,14 @@ use Symfony\Component\HttpFoundation\Response;
  *                 "end",
  *               }
  *             },
+ *             "branches" = {
+ *               "type" = "array",
+ *               "description" = "The associated library branches.",
+ *                "items" = {
+ *                   "type" = "string",
+ *                   "description" = "The translated label of a branch.",
+ *                 },
+ *             },
  *             "address" = {
  *               "type" = "object",
  *               "description" = "Where the event occurs.",
@@ -134,6 +142,14 @@ use Symfony\Component\HttpFoundation\Response;
  *                 "city",
  *                 "country",
  *               }
+ *             },
+ *             "tags" = {
+ *                "type" = "array",
+ *                "description" = "The tags associated with the event.",
+ *                "items" = {
+ *                  "type" = "string",
+ *                  "description" = "The translated label of a tag.",
+ *                },
  *             },
  *             "ticket_categories" = {
  *               "type" = "array",
