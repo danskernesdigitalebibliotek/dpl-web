@@ -66,7 +66,7 @@ class EventRestMapper {
       'title' => $this->event->label(),
       'uuid' => $this->event->uuid(),
       'url' => $this->event->toUrl()->setAbsolute(TRUE)->toString(TRUE)->getGeneratedUrl(),
-      'description' => $this->getValue('event_description'),
+      'subtitle' => $this->getValue('event_description'),
       'state' => $this->eventWrapper->getState()?->value,
       'image' => $this->getImage(),
       'address' => $this->getAddress(),

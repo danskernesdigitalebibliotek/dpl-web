@@ -38,6 +38,10 @@ use Symfony\Component\HttpFoundation\Response;
  *               "type" = "string",
  *               "description" = "The event title.",
  *             },
+ *             "subtitle" = {
+ *                "type" = "string",
+ *                "description" = "The event subtitle.",
+ *              },
  *             "url" = {
  *               "type" = "string",
  *               "format" = "uri",
@@ -186,7 +190,7 @@ use Symfony\Component\HttpFoundation\Response;
  *             },
  *             "description" = {
  *               "type" = "string",
- *               "description" = "An editorial description of the event.",
+ *               "description" = "An editorial WYSIWYG/HTML description of the event.",
  *             },
  *             "external_data" = {
  *               "type" = "object",

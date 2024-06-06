@@ -66,6 +66,16 @@ class EventsGET200ResponseInner
     protected ?string $title = null;
 
     /**
+     * The event subtitle.
+     *
+     * @var string|null
+     * @SerializedName("subtitle")
+     * @Assert\Type("string")
+     * @Type("string")
+     */
+    protected ?string $subtitle = null;
+
+    /**
      * An absolute url end users should use to view the event at the website.
      *
      * @var string|null
@@ -193,6 +203,7 @@ class EventsGET200ResponseInner
         if (is_array($data)) {
             $this->uuid = array_key_exists('uuid', $data) ? $data['uuid'] : $this->uuid;
             $this->title = array_key_exists('title', $data) ? $data['title'] : $this->title;
+            $this->subtitle = array_key_exists('subtitle', $data) ? $data['subtitle'] : $this->subtitle;
             $this->url = array_key_exists('url', $data) ? $data['url'] : $this->url;
             $this->createdAt = array_key_exists('createdAt', $data) ? $data['createdAt'] : $this->createdAt;
             $this->updatedAt = array_key_exists('updatedAt', $data) ? $data['updatedAt'] : $this->updatedAt;
@@ -256,6 +267,32 @@ class EventsGET200ResponseInner
     public function setTitle(?string $title): self
     {
         $this->title = $title;
+
+        return $this;
+    }
+
+    /**
+     * Gets subtitle.
+     *
+     * @return string|null
+     */
+    public function getSubtitle(): ?string
+    {
+        return $this->subtitle;
+    }
+
+
+
+    /**
+     * Sets subtitle.
+     *
+     * @param string|null $subtitle  The event subtitle.
+     *
+     * @return $this
+     */
+    public function setSubtitle(?string $subtitle = null): self
+    {
+        $this->subtitle = $subtitle;
 
         return $this;
     }
@@ -535,7 +572,7 @@ class EventsGET200ResponseInner
     /**
      * Sets description.
      *
-     * @param string|null $description  An editorial description of the event.
+     * @param string|null $description  An editorial WYSIWYG/HTML description of the event.
      *
      * @return $this
      */
