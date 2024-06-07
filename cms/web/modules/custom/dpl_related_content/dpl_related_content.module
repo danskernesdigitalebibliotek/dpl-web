@@ -37,6 +37,7 @@ function dpl_related_content_preprocess_page(array &$variables): void {
 
   try {
     $service = DrupalTyped::service(RelatedContent::class, 'dpl_related_content.related_content');
+    $service->setListStyle(RelatedContentListStyle::Slider);
 
     $variables['related_content'] = $service->getContentFromEntity($entity);
   }

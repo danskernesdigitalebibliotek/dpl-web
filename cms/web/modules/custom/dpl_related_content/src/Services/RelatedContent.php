@@ -120,7 +120,7 @@ class RelatedContent {
   /**
    * What type of list do we want the items to be displayed in?
    */
-  private RelatedContentListStyle $listStyle = RelatedContentListStyle::Slider;
+  private RelatedContentListStyle $listStyle = RelatedContentListStyle::EventList;
 
   /**
    * The title that may be shown as part of the list.
@@ -542,6 +542,8 @@ class RelatedContent {
 
     if ($this->listStyle == RelatedContentListStyle::EventList) {
       $this->contentViewMode = 'list_teaser';
+      $this->minItems = 1;
+      $this->maxItems = 12;
     }
 
     return $this->listStyle;
