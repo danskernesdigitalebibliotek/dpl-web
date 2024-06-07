@@ -41,7 +41,7 @@ class RelatedContent {
   /**
    * How many items we max display in the list.
    */
-  public int $maxItems = 16;
+  public int $maxItems = 12;
 
   /**
    * The field on nodes, to sort by. By default, the newest created content.
@@ -527,8 +527,10 @@ class RelatedContent {
     $this->listStyle = $list_style;
 
     if ($this->listStyle == RelatedContentListStyle::Slider) {
-      // Visually, the slider looks broken with less than 4 items.
-      $this->maxItems = 4;
+      // Visually, the slider looks broken with less than 4 items,
+      // or more than 16.
+      $this->minItems = 4;
+      $this->maxItems = 16;
     }
 
     if ($this->listStyle == RelatedContentListStyle::Grid) {
@@ -540,7 +542,6 @@ class RelatedContent {
 
     if ($this->listStyle == RelatedContentListStyle::EventList) {
       $this->contentViewMode = 'list_teaser';
-      $this->minItems = 1;
     }
 
     return $this->listStyle;
