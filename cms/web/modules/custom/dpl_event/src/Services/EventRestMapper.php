@@ -19,7 +19,6 @@ use Drupal\media\MediaInterface;
 use Drupal\paragraphs\ParagraphInterface;
 use Drupal\recurring_events\Entity\EventInstance;
 use Safe\DateTime;
-use function Safe\strtotime;
 
 /**
  * Translator understand the link between EventInstances and resource objects.
@@ -172,11 +171,12 @@ class EventRestMapper {
       return NULL;
     }
 
-    $date_start = new DateTime();
-    $date_start->setTimestamp(strtotime($start));
+    $site_timezone = new \DateTimeZone(date_default_timezone_get());
 
-    $date_end = new DateTime();
-    $date_end->setTimestamp(strtotime($end));
+    $date_start = new DateTime($start, new \DateTimeZone('UTC'));
+    $date_start->setTimezone($site_timezone);
+    $date_end = new DateTime($end, new \DateTimeZone('UTC'));
+    $date_end->setTimezone($site_timezone);
 
     return new EventsGET200ResponseInnerDateTime([
       'start' => $date_start,
