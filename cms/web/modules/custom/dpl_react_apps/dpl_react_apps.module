@@ -344,7 +344,6 @@ function dpl_react_apps_texts(): array {
     'screen-reader-modal-description-pickup' => t('Screen reader modal description for pickup', [], ['context' => 'Global']),
     'screen-reader-modal-description-sms' => t('Screen reader modal description for sms', [], ['context' => 'Global']),
     'search-header-icon-alt' => t('Search button', [], ['context' => 'Global']),
-    'search-header-input-label' => t('Search header input', [], ['context' => 'Global']),
     'search-no-valid-characters-error' => t('Input must contain at least one non-whitespace character.', [], ['context' => 'Global']),
     'shift' => t('Shift', [], ['context' => 'Global']),
     'show-more' => t('show more', [], ['context' => 'Global']),

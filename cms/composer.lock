@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "6185dd923ef2bc73d2b5b6506aad8c3e",
+    "content-hash": "dbf6e9272083d79a8927aa364e6f8fca",
     "packages": [
         {
             "name": "amazeeio/drupal_integrations",
@@ -1176,10 +1176,10 @@
         },
         {
             "name": "danskernesdigitalebibliotek/dpl-react",
-            "version": "2024.22.2",
+            "version": "2024.22.2-dev",
             "dist": {
                 "type": "zip",
-                "url": "https://github.com/danskernesdigitalebibliotek/dpl-react/releases/download/branch-develop/dist-develop.zip"
+                "url": "https://github.com/danskernesdigitalebibliotek/dpl-react/releases/download/branch-feature%2FDDFLSBP-569-logging-i-frontend/dist-feature-ddflsbp-569-logging-i-frontend.zip"
             },
             "require": {
                 "composer/installers": "^1.2.0"
@@ -18727,6 +18727,7 @@
     "aliases": [],
     "minimum-stability": "dev",
     "stability-flags": {
+        "danskernesdigitalebibliotek/dpl-react": 20,
         "drupal/default_content": 15,
         "drupal/gin": 5,
         "drupal/gin_toolbar": 5,
