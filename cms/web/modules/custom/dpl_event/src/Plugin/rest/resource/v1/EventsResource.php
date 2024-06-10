@@ -38,9 +38,9 @@ use Symfony\Component\HttpFoundation\Response;
  *               "type" = "string",
  *               "description" = "The event title.",
  *             },
- *             "subtitle" = {
+ *             "description" = {
  *                "type" = "string",
- *                "description" = "The event subtitle.",
+ *                "description" = "The short event description.",
  *              },
  *             "url" = {
  *               "type" = "string",
@@ -108,7 +108,7 @@ use Symfony\Component\HttpFoundation\Response;
  *               "description" = "The associated library branches.",
  *                "items" = {
  *                   "type" = "string",
- *                   "description" = "The translated label of a branch.",
+ *                   "description" = "The translated name of a branch.",
  *                 },
  *             },
  *             "address" = {
@@ -148,7 +148,7 @@ use Symfony\Component\HttpFoundation\Response;
  *                "description" = "The tags associated with the event.",
  *                "items" = {
  *                  "type" = "string",
- *                  "description" = "The translated label of a tag.",
+ *                  "description" = "The translated name of a tag.",
  *                },
  *             },
  *             "ticket_categories" = {
@@ -204,7 +204,7 @@ use Symfony\Component\HttpFoundation\Response;
  *                 "uuid",
  *               }
  *             },
- *             "description" = {
+ *             "body" = {
  *               "type" = "string",
  *               "description" = "An editorial WYSIWYG/HTML description of the event.",
  *             },

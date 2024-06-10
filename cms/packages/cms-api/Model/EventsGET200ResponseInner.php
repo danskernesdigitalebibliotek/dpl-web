@@ -66,14 +66,14 @@ class EventsGET200ResponseInner
     protected ?string $title = null;
 
     /**
-     * The event subtitle.
+     * The short event description.
      *
      * @var string|null
-     * @SerializedName("subtitle")
+     * @SerializedName("description")
      * @Assert\Type("string")
      * @Type("string")
      */
-    protected ?string $subtitle = null;
+    protected ?string $description = null;
 
     /**
      * An absolute url end users should use to view the event at the website.
@@ -204,11 +204,11 @@ class EventsGET200ResponseInner
      * An editorial WYSIWYG/HTML description of the event.
      *
      * @var string|null
-     * @SerializedName("description")
+     * @SerializedName("body")
      * @Assert\Type("string")
      * @Type("string")
      */
-    protected ?string $description = null;
+    protected ?string $body = null;
 
     /**
      * @var EventPATCHRequestExternalData|null
@@ -227,7 +227,7 @@ class EventsGET200ResponseInner
         if (is_array($data)) {
             $this->uuid = array_key_exists('uuid', $data) ? $data['uuid'] : $this->uuid;
             $this->title = array_key_exists('title', $data) ? $data['title'] : $this->title;
-            $this->subtitle = array_key_exists('subtitle', $data) ? $data['subtitle'] : $this->subtitle;
+            $this->description = array_key_exists('description', $data) ? $data['description'] : $this->description;
             $this->url = array_key_exists('url', $data) ? $data['url'] : $this->url;
             $this->createdAt = array_key_exists('createdAt', $data) ? $data['createdAt'] : $this->createdAt;
             $this->updatedAt = array_key_exists('updatedAt', $data) ? $data['updatedAt'] : $this->updatedAt;
@@ -240,7 +240,7 @@ class EventsGET200ResponseInner
             $this->ticketCategories = array_key_exists('ticketCategories', $data) ? $data['ticketCategories'] : $this->ticketCategories;
             $this->ticketCapacity = array_key_exists('ticketCapacity', $data) ? $data['ticketCapacity'] : $this->ticketCapacity;
             $this->series = array_key_exists('series', $data) ? $data['series'] : $this->series;
-            $this->description = array_key_exists('description', $data) ? $data['description'] : $this->description;
+            $this->body = array_key_exists('body', $data) ? $data['body'] : $this->body;
             $this->externalData = array_key_exists('externalData', $data) ? $data['externalData'] : $this->externalData;
         }
     }
@@ -298,27 +298,27 @@ class EventsGET200ResponseInner
     }
 
     /**
-     * Gets subtitle.
+     * Gets description.
      *
      * @return string|null
      */
-    public function getSubtitle(): ?string
+    public function getDescription(): ?string
     {
-        return $this->subtitle;
+        return $this->description;
     }
 
 
 
     /**
-     * Sets subtitle.
+     * Sets description.
      *
-     * @param string|null $subtitle  The event subtitle.
+     * @param string|null $description  The short event description.
      *
      * @return $this
      */
-    public function setSubtitle(?string $subtitle = null): self
+    public function setDescription(?string $description = null): self
     {
-        $this->subtitle = $subtitle;
+        $this->description = $description;
 
         return $this;
     }
@@ -636,27 +636,27 @@ class EventsGET200ResponseInner
     }
 
     /**
-     * Gets description.
+     * Gets body.
      *
      * @return string|null
      */
-    public function getDescription(): ?string
+    public function getBody(): ?string
     {
-        return $this->description;
+        return $this->body;
     }
 
 
 
     /**
-     * Sets description.
+     * Sets body.
      *
-     * @param string|null $description  An editorial WYSIWYG/HTML description of the event.
+     * @param string|null $body  An editorial WYSIWYG/HTML description of the event.
      *
      * @return $this
      */
-    public function setDescription(?string $description = null): self
+    public function setBody(?string $body = null): self
     {
-        $this->description = $description;
+        $this->body = $body;
 
         return $this;
     }
