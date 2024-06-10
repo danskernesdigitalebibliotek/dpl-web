@@ -13,7 +13,6 @@ use DanskernesDigitaleBibliotek\CMS\Api\Model\EventsGET200ResponseInnerTicketCat
 use Drupal\Component\DependencyInjection\ContainerInterface;
 use Drupal\Core\Field\FieldItemListInterface;
 use Drupal\Core\File\FileUrlGeneratorInterface;
-use Drupal\Core\StringTranslation\TranslatableMarkup;
 use Drupal\dpl_event\EventWrapper;
 use Drupal\file\FileInterface;
 use Drupal\media\MediaInterface;
@@ -89,46 +88,43 @@ class EventRestMapper {
   /**
    * Getting associated branches.
    *
-   * @return ?string[]
+   * @return string[]
    *   The translated branch labels.
    */
-  private function getBranches(): ?array {
-    $return = [];
+  private function getBranches(): array {
+    $names = [];
 
     /** @var \Drupal\node\NodeInterface[] $branches */
     $branches = $this->event->get('branch')->referencedEntities();
 
     foreach ($branches as $branch) {
-      $label = $branch->label();
+      $label = $branch->getTitle();
 
-      if ($label instanceof TranslatableMarkup) {
-        $return[] = $label->render();
-      }
-      elseif (is_string($label)) {
-        $return[] = $label;
+      if (!empty($label)) {
+        $names[] = $label;
       }
     }
 
-    return empty($return) ? NULL : $return;
+    return $names;
   }
 
   /**
    * Getting associated tags.
    *
-   * @return ?string[]
+   * @return string[]
    *   The translated tag labels.
    */
-  private function getTags(): ?array {
-    $return = [];
+  private function getTags(): array {
+    $names = [];
 
     /** @var \Drupal\taxonomy\TermInterface[] $tags */
     $tags = $this->event->get('event_tags')->referencedEntities();
 
     foreach ($tags as $tag) {
-      $return[] = $tag->getName();
+      $names[] = $tag->getName();
     }
 
-    return empty($return) ? NULL : $return;
+    return $names;
   }
 
   /**
