@@ -172,3 +172,18 @@ function dpl_admin_update_10001(array &$sandbox): string {
   }, $administrators);
   return implode("\n", $updates);
 }
+
+/**
+ * Implements hook_update_N().
+ *
+ * This update ensures that all sites are returned to normal state
+ * (not in maintenance mode) after limiting access to maintenance mode
+ * to only administrators.
+ *
+ * See https://github.com/danskernesdigitalebibliotek/dpl-cms/pull/1171
+ */
+function dpl_admin_update_10002(): string {
+  // Set all sites to normal mode.
+  \Drupal::state()->set('system.maintenance_mode', FALSE);
+  return 'All sites have been moved back to normal state.';
+}

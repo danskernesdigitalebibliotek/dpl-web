@@ -21,6 +21,7 @@ use Drupal\drupal_typed\DrupalTyped;
 function dpl_update_install(): string {
   $messages[] = dpl_update_update_10001();
   $messages[] = dpl_update_update_10002();
+  $messages[] = dpl_update_update_10003();
 
   return implode('\r\n', $messages);
 }
@@ -39,6 +40,13 @@ function dpl_update_update_10001(): string {
  */
 function dpl_update_update_10002(): string {
   return _dpl_update_install_modules(['collation_fixer']);
+}
+
+/**
+ * Installing config_perms module.
+ */
+function dpl_update_update_10003(): string {
+  return _dpl_update_install_modules(['config_perms']);
 }
 
 /**
