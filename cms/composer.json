@@ -323,6 +323,9 @@
                 "3171530 + 3116760: Add support for parameter and response descriptions": "patches/openapi-parameter-response-descriptions-14-3.patch",
                 "3343816: Specification includes disabled resources": "https://git.drupalcode.org/project/openapi_rest/-/merge_requests/4.patch"
             },
+            "drupal/paragraphs": {
+                "3027525: Show the paragraph and field label of fields that fail validation": "https://www.drupal.org/files/issues/2023-10-03/3027525_22.patch"
+            },
             "drupal/paragraphs_ee": {
                 "3106254: Sorting paragraph list alphabetically in modal": "https://www.drupal.org/files/issues/2023-03-30/paragraphs_ee_sort.patch",
                 "3246408: Arrow buttons instead of drag n drop": "https://git.drupalcode.org/project/paragraphs_ee/-/merge_requests/21.patch"
