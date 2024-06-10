@@ -157,6 +157,7 @@ module:
   user: 0
   varnish_purge_tags: 0
   varnish_purger: 0
+  verf: 0
   view_unpublished: 0
   views_infinite_scroll: 0
   webform: 0
