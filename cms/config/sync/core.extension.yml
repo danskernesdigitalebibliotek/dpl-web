@@ -14,6 +14,7 @@ module:
   color_field: 0
   config_filter: 0
   config_ignore: 0
+  config_ignore_auto: 0
   config_translation: 0
   config_translation_po: 0
   content_lock: 0
@@ -66,6 +67,7 @@ module:
   dpl_static_content_20240404_opening_hours: 0
   dpl_static_content_20240418_views_aliases: 0
   dpl_static_content_20240422_contact_page: 0
+  dpl_update: 0
   dpl_url_proxy: 0
   dpl_webform: 0
   drupal_typed: 0

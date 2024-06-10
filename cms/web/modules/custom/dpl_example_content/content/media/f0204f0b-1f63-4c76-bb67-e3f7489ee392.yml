@@ -35,6 +35,7 @@ default:
     -
       alias: ''
       langcode: en
+      pathauto: 1
   field_media_oembed_video:
     -
       value: 'https://www.youtube.com/watch?v=CmzKQ3PSrow'

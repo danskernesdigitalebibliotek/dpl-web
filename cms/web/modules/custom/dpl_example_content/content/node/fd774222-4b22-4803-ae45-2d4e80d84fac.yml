@@ -58,8 +58,9 @@ default:
         content: 'Frontpage | DPL CMS'
   path:
     -
-      alias: ''
-      langcode: da
+      alias: /frontpage
+      langcode: und
+      pathauto: 1
   field_paragraphs:
     -
       entity:

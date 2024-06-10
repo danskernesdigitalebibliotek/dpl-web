@@ -17,7 +17,7 @@ required: false
 translatable: false
 default_value:
   -
-    langcode: en
+    langcode: da
     country_code: DK
     administrative_area: null
     locality: ''
@@ -34,6 +34,10 @@ default_value_callback: ''
 settings:
   available_countries:
     DK: DK
+    FO: FO
+    DE: DE
+    GL: GL
+    IS: IS
   langcode_override: da
   field_overrides:
     givenName:

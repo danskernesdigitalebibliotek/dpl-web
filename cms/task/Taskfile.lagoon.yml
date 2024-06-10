@@ -3,10 +3,6 @@
 # the project.
 version: "3"
 
-vars:
-  # The name of the project on Lagoon.
-  LAGOON_PROJECT: "dpl-cms"
-
 tasks:
   backup:restore:
     desc: Restore the latest backup of files and database from a Lagoon project
@@ -49,7 +45,7 @@ tasks:
     deps: [deps:lagoon, deps:jq, login]
     cmds:
       - |
-        RUN=$(lagoon run -p {{.LAGOON_PROJECT}} -e pr-"$PR" custom --command "{{.CLI_ARGS}}" --name "{{.CLI_ARGS}} from Taskfile" --output-json);
+        RUN=$(lagoon run -p ${LAGOON_PROJECT:-dpl-cms} -e ${LAGOON_ENVIRONMENT:-main} custom --command "{{.CLI_ARGS}}" --name "{{.CLI_ARGS}} from Taskfile" --output-json);
         TASK_ID=$(echo $RUN | jq .data.id);
         STATUS="pending";
         while [ $STATUS != "complete" ]; do
@@ -59,9 +55,6 @@ tasks:
           STATUS=$(echo $TASK | jq -r .data[0].status);
         done
         echo -e "\n$(echo $TASK | jq -r .data[0].logs)";
-    preconditions:
-      - sh: "[ -v PR ]"
-        msg: Please provide a PR environment variable with the pull request number for the environment
 
   login:
     internal: true
