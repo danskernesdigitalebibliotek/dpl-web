@@ -7,8 +7,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2024-06-10 08:19+0200\n"
-"PO-Revision-Date: 2024-06-10 08:19+0200\n"
+"POT-Creation-Date: 2024-06-10 19:29+0200\n"
+"PO-Revision-Date: 2024-06-10 19:29+0200\n"
 "Last-Translator: NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
 "MIME-Version: 1.0\n"
@@ -6774,6 +6774,9 @@ msgstr ""
 msgid "Reference revisions"
 msgstr "Referencerevisioner"
 
+msgid "Other (revisions)"
+msgstr ""
+
 msgid "Choose the entity type to clear"
 msgstr ""
 
@@ -6832,6 +6835,15 @@ msgstr ""
 "<strong>Bemærk:</strong> I 'Entity Reference' displays bliver alle felter "
 "vist inline medmindre der foretages et eksplicit valg af felter her."
 
+msgid "Link label to the referenced entity"
+msgstr "Link label til den refererede entity"
+
+msgid "Link to the referenced entity"
+msgstr "Link til den refererede entity"
+
+msgid "No link"
+msgstr "Intet link"
+
 msgid "View mode"
 msgstr "View mode"
 
@@ -6840,6 +6852,9 @@ msgstr "Renderet som @mode"
 
 msgid "Type of item to reference"
 msgstr "Typen af element der skal refereres til"
+
+msgid "@entity_type (revisions)"
+msgstr ""
 
 msgid "@label revision ID"
 msgstr "@label revisions ID"
@@ -6920,6 +6935,9 @@ msgstr ""
 msgid ""
 "All kind of entities with revision information, e.g. nodes, comments or "
 "users."
+msgstr ""
+
+msgid "Display the label of the referenced entity revisions."
 msgstr ""
 
 msgid "An entity field containing an entity reference to a specific revision."
@@ -13601,12 +13619,6 @@ msgstr "Skilletegn"
 
 msgid "Enter the separator to use between start and end dates."
 msgstr "Indtast separatoren, der skal bruges mellem start- og slutdatoer."
-
-msgid "Link to the referenced entity"
-msgstr "Link til den refererede entity"
-
-msgid "No link"
-msgstr "Intet link"
 
 msgid "Format: %format"
 msgstr "Format: %format"
