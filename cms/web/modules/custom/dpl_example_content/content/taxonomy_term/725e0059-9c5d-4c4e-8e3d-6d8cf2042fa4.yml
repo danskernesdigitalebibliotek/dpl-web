@@ -30,7 +30,7 @@ default:
       tag: link
       attributes:
         rel: canonical
-        href: '/taxonomy/term/8'
+        href: '/taxonomy/term/15'
   path:
     -
       alias: ''

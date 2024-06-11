@@ -5,7 +5,7 @@ _meta:
   bundle: default
   default_langcode: en
   depends:
-    e424f47d-6b01-443e-8a03-0d3b436e20d3: eventinstance
+    94abec00-1839-48a9-880a-df019700e34e: eventinstance
     852d781f-82c9-40ac-bc8d-d0cefe07706d: node
     f457c4c2-dc28-45cd-9b6e-fda4248d9d45: taxonomy_term
     618e176a-a45a-4c36-a197-664230aa0a34: media
@@ -114,7 +114,7 @@ default:
       pathauto: 1
   event_instances:
     -
-      entity: e424f47d-6b01-443e-8a03-0d3b436e20d3
+      entity: 94abec00-1839-48a9-880a-df019700e34e
   field_branch:
     -
       entity: 852d781f-82c9-40ac-bc8d-d0cefe07706d

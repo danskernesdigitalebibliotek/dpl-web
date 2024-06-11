@@ -64,9 +64,6 @@ default:
       alias: /frontpage
       langcode: und
       pathauto: 1
-  field_display_titles:
-    -
-      value: false
   field_paragraphs:
     -
       entity:
