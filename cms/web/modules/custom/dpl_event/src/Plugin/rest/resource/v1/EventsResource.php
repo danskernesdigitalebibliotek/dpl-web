@@ -108,7 +108,7 @@ use Symfony\Component\HttpFoundation\Response;
  *               "description" = "The associated library branches.",
  *                "items" = {
  *                   "type" = "string",
- *                   "description" = "The translated name of a branch.",
+ *                   "description" = "The name of a branch.",
  *                 },
  *             },
  *             "address" = {
@@ -148,7 +148,7 @@ use Symfony\Component\HttpFoundation\Response;
  *                "description" = "The tags associated with the event.",
  *                "items" = {
  *                  "type" = "string",
- *                  "description" = "The translated name of a tag.",
+ *                  "description" = "The name of a tag.",
  *                },
  *             },
  *             "ticket_categories" = {
