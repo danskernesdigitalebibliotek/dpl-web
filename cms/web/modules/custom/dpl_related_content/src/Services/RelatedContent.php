@@ -388,6 +388,7 @@ class RelatedContent {
 
     $query
       ->condition('type', $this->nodeBundles, 'IN')
+      ->condition('status', TRUE)
       ->sort($this->nodeSortField, 'DESC')
       // We know that we will never need more than the maximum items,
       // so we will limit the query to this.
@@ -426,6 +427,7 @@ class RelatedContent {
 
     $es_query = $this->entityTypeManager->getStorage('eventseries')->getQuery();
 
+    $es_query->condition('status', TRUE);
     $es_query->accessCheck(TRUE);
 
     $filters = [
