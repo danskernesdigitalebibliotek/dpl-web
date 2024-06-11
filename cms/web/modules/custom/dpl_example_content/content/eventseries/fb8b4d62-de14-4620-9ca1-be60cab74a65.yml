@@ -137,6 +137,9 @@ default:
   field_teaser_image:
     -
       entity: d6d67fd2-775c-46e7-a1bf-6af46290a5c8
+  field_ticket_capacity:
+    -
+      value: 10
   field_ticket_categories:
     -
       entity:
