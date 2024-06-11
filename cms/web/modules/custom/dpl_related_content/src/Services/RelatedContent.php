@@ -440,6 +440,12 @@ class RelatedContent {
 
     $es_ids = $es_query->execute();
 
+    // If we found no eventseries that match, we cannot look up relevant
+    // eventinstances.
+    if (empty($es_ids)) {
+      return [];
+    }
+
     $date = new DrupalDateTime('today');
     $date->setTimezone(new \DateTimezone(DateTimeItemInterface::STORAGE_TIMEZONE));
     $formatted_date = $date->format(DateTimeItemInterface::DATETIME_STORAGE_FORMAT);
@@ -452,9 +458,7 @@ class RelatedContent {
     $query->addField('eid', 'id', 'eventinstance_id');
 
     // Match against the eventseries we found earlier.
-    if (!empty($es_ids)) {
-      $query->condition('eid.eventseries_id', $es_ids, 'IN');
-    }
+    $query->condition('eid.eventseries_id', $es_ids, 'IN');
 
     if (!empty($this->excludedUuid)) {
       $query->condition('ei.uuid', $this->excludedUuid, '<>');
