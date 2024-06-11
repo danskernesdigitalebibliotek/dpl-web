@@ -8,11 +8,13 @@ dependencies:
     - field.field.node.page.field_display_titles
     - field.field.node.page.field_hero_title
     - field.field.node.page.field_paragraphs
+    - field.field.node.page.field_publication_date
     - field.field.node.page.field_subtitle
     - field.field.node.page.field_teaser_image
     - field.field.node.page.field_teaser_text
     - node.type.page
   module:
+    - datetime
     - field_group
     - media_library
     - media_library_edit
@@ -109,6 +111,12 @@ content:
         add_in_between_link_count: 0
         delete_confirmation: true
         show_drag_and_drop: true
+  field_publication_date:
+    type: datetime_default
+    weight: 7
+    region: content
+    settings: {  }
+    third_party_settings: {  }
   field_subtitle:
     type: string_textarea
     weight: 5
