@@ -66,6 +66,16 @@ class EventsGET200ResponseInner
     protected ?string $title = null;
 
     /**
+     * The short event description.
+     *
+     * @var string|null
+     * @SerializedName("description")
+     * @Assert\Type("string")
+     * @Type("string")
+     */
+    protected ?string $description = null;
+
+    /**
      * An absolute url end users should use to view the event at the website.
      *
      * @var string|null
@@ -129,12 +139,36 @@ class EventsGET200ResponseInner
     protected ?EventsGET200ResponseInnerDateTime $dateTime = null;
 
     /**
+     * The associated library branches.
+     *
+     * @var string[]|null
+     * @SerializedName("branches")
+     * @Assert\All({
+     *   @Assert\Type("string")
+     * })
+     * @Type("array<string>")
+     */
+    protected ?array $branches = null;
+
+    /**
      * @var EventsGET200ResponseInnerAddress|null
      * @SerializedName("address")
      * @Assert\Type("DanskernesDigitaleBibliotek\CMS\Api\Model\EventsGET200ResponseInnerAddress")
      * @Type("DanskernesDigitaleBibliotek\CMS\Api\Model\EventsGET200ResponseInnerAddress")
      */
     protected ?EventsGET200ResponseInnerAddress $address = null;
+
+    /**
+     * The tags associated with the event.
+     *
+     * @var string[]|null
+     * @SerializedName("tags")
+     * @Assert\All({
+     *   @Assert\Type("string")
+     * })
+     * @Type("array<string>")
+     */
+    protected ?array $tags = null;
 
     /**
      * Ticket categories used for the event. Not present for events without ticketing.
@@ -167,14 +201,14 @@ class EventsGET200ResponseInner
     protected ?EventsGET200ResponseInnerSeries $series = null;
 
     /**
-     * An editorial description of the event.
+     * An editorial WYSIWYG/HTML description of the event.
      *
      * @var string|null
-     * @SerializedName("description")
+     * @SerializedName("body")
      * @Assert\Type("string")
      * @Type("string")
      */
-    protected ?string $description = null;
+    protected ?string $body = null;
 
     /**
      * @var EventPATCHRequestExternalData|null
@@ -193,17 +227,20 @@ class EventsGET200ResponseInner
         if (is_array($data)) {
             $this->uuid = array_key_exists('uuid', $data) ? $data['uuid'] : $this->uuid;
             $this->title = array_key_exists('title', $data) ? $data['title'] : $this->title;
+            $this->description = array_key_exists('description', $data) ? $data['description'] : $this->description;
             $this->url = array_key_exists('url', $data) ? $data['url'] : $this->url;
             $this->createdAt = array_key_exists('createdAt', $data) ? $data['createdAt'] : $this->createdAt;
             $this->updatedAt = array_key_exists('updatedAt', $data) ? $data['updatedAt'] : $this->updatedAt;
             $this->image = array_key_exists('image', $data) ? $data['image'] : $this->image;
             $this->state = array_key_exists('state', $data) ? $data['state'] : $this->state;
             $this->dateTime = array_key_exists('dateTime', $data) ? $data['dateTime'] : $this->dateTime;
+            $this->branches = array_key_exists('branches', $data) ? $data['branches'] : $this->branches;
             $this->address = array_key_exists('address', $data) ? $data['address'] : $this->address;
+            $this->tags = array_key_exists('tags', $data) ? $data['tags'] : $this->tags;
             $this->ticketCategories = array_key_exists('ticketCategories', $data) ? $data['ticketCategories'] : $this->ticketCategories;
             $this->ticketCapacity = array_key_exists('ticketCapacity', $data) ? $data['ticketCapacity'] : $this->ticketCapacity;
             $this->series = array_key_exists('series', $data) ? $data['series'] : $this->series;
-            $this->description = array_key_exists('description', $data) ? $data['description'] : $this->description;
+            $this->body = array_key_exists('body', $data) ? $data['body'] : $this->body;
             $this->externalData = array_key_exists('externalData', $data) ? $data['externalData'] : $this->externalData;
         }
     }
@@ -256,6 +293,32 @@ class EventsGET200ResponseInner
     public function setTitle(?string $title): self
     {
         $this->title = $title;
+
+        return $this;
+    }
+
+    /**
+     * Gets description.
+     *
+     * @return string|null
+     */
+    public function getDescription(): ?string
+    {
+        return $this->description;
+    }
+
+
+
+    /**
+     * Sets description.
+     *
+     * @param string|null $description  The short event description.
+     *
+     * @return $this
+     */
+    public function setDescription(?string $description = null): self
+    {
+        $this->description = $description;
 
         return $this;
     }
@@ -417,6 +480,32 @@ class EventsGET200ResponseInner
     }
 
     /**
+     * Gets branches.
+     *
+     * @return string[]|null
+     */
+    public function getBranches(): ?array
+    {
+        return $this->branches;
+    }
+
+
+
+    /**
+     * Sets branches.
+     *
+     * @param string[]|null $branches  The associated library branches.
+     *
+     * @return $this
+     */
+    public function setBranches(?array $branches = null): self
+    {
+        $this->branches = $branches;
+
+        return $this;
+    }
+
+    /**
      * Gets address.
      *
      * @return EventsGET200ResponseInnerAddress|null
@@ -438,6 +527,32 @@ class EventsGET200ResponseInner
     public function setAddress(?EventsGET200ResponseInnerAddress $address = null): self
     {
         $this->address = $address;
+
+        return $this;
+    }
+
+    /**
+     * Gets tags.
+     *
+     * @return string[]|null
+     */
+    public function getTags(): ?array
+    {
+        return $this->tags;
+    }
+
+
+
+    /**
+     * Sets tags.
+     *
+     * @param string[]|null $tags  The tags associated with the event.
+     *
+     * @return $this
+     */
+    public function setTags(?array $tags = null): self
+    {
+        $this->tags = $tags;
 
         return $this;
     }
@@ -521,27 +636,27 @@ class EventsGET200ResponseInner
     }
 
     /**
-     * Gets description.
+     * Gets body.
      *
      * @return string|null
      */
-    public function getDescription(): ?string
+    public function getBody(): ?string
     {
-        return $this->description;
+        return $this->body;
     }
 
 
 
     /**
-     * Sets description.
+     * Sets body.
      *
-     * @param string|null $description  An editorial description of the event.
+     * @param string|null $body  An editorial WYSIWYG/HTML description of the event.
      *
      * @return $this
      */
-    public function setDescription(?string $description = null): self
+    public function setBody(?string $body = null): self
     {
-        $this->description = $description;
+        $this->body = $body;
 
         return $this;
     }

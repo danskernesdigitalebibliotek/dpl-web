@@ -7,7 +7,6 @@ _meta:
   depends:
     c57495b6-2b50-4558-b6ad-a50d24c5310c: file
     486b17a2-60e6-426d-a952-793fe24e391d: node
-    a6ad2b81-5337-4f46-be41-f1e6d4a201df: taxonomy_term
     35166ac7-4b0e-4644-8a60-3f29f3c8ecbe: media
 default:
   revision_uid:
@@ -40,13 +39,11 @@ default:
         name: title
         content: '"Bestseller" læseklubber | DPL CMS'
   path:
-    - alias: /laesefilialen/laeseklubber/genre/bestsellers
+    - alias: /laesefilialen/bestseller-laeseklubber
       langcode: und
       pathauto: 1
   field_branch:
     - entity: 486b17a2-60e6-426d-a952-793fe24e391d
-  field_breadcrumb_parent:
-    - entity: a6ad2b81-5337-4f46-be41-f1e6d4a201df
   field_display_titles:
     - value: true
   field_teaser_image:

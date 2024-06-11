@@ -7,8 +7,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2024-06-04 16:29+0200\n"
-"PO-Revision-Date: 2024-06-04 16:29+0200\n"
+"POT-Creation-Date: 2024-06-11 14:33+0200\n"
+"PO-Revision-Date: 2024-06-11 14:33+0200\n"
 "Last-Translator: NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
 "MIME-Version: 1.0\n"
@@ -2709,8 +2709,7 @@ msgctxt "Work Page"
 msgid ""
 "Material is available and you will get a message when it is ready for pickup "
 "- pickup at @branch"
-msgstr ""
-"Du vil få en besked når det er klar til afhentning - afhentes på @branch"
+msgstr "Du vil få en besked, når det er klar til afhentning på @branch"
 
 msgctxt "Work Page"
 msgid "reservations for this material"
@@ -6775,6 +6774,9 @@ msgstr ""
 msgid "Reference revisions"
 msgstr "Referencerevisioner"
 
+msgid "Other (revisions)"
+msgstr ""
+
 msgid "Choose the entity type to clear"
 msgstr ""
 
@@ -6833,6 +6835,15 @@ msgstr ""
 "<strong>Bemærk:</strong> I 'Entity Reference' displays bliver alle felter "
 "vist inline medmindre der foretages et eksplicit valg af felter her."
 
+msgid "Link label to the referenced entity"
+msgstr "Link label til den refererede entity"
+
+msgid "Link to the referenced entity"
+msgstr "Link til den refererede entity"
+
+msgid "No link"
+msgstr "Intet link"
+
 msgid "View mode"
 msgstr "View mode"
 
@@ -6841,6 +6852,9 @@ msgstr "Renderet som @mode"
 
 msgid "Type of item to reference"
 msgstr "Typen af element der skal refereres til"
+
+msgid "@entity_type (revisions)"
+msgstr ""
 
 msgid "@label revision ID"
 msgstr "@label revisions ID"
@@ -6921,6 +6935,9 @@ msgstr ""
 msgid ""
 "All kind of entities with revision information, e.g. nodes, comments or "
 "users."
+msgstr ""
+
+msgid "Display the label of the referenced entity revisions."
 msgstr ""
 
 msgid "An entity field containing an entity reference to a specific revision."
@@ -13603,12 +13620,6 @@ msgstr "Skilletegn"
 msgid "Enter the separator to use between start and end dates."
 msgstr "Indtast separatoren, der skal bruges mellem start- og slutdatoer."
 
-msgid "Link to the referenced entity"
-msgstr "Link til den refererede entity"
-
-msgid "No link"
-msgstr "Intet link"
-
 msgid "Format: %format"
 msgstr "Format: %format"
 
@@ -17858,6 +17869,16 @@ msgctxt "field.field.eventinstance.default.field_teaser_text:label"
 msgid "Teaser text"
 msgstr ""
 
+msgctxt "field.field.eventinstance.default.field_ticket_capacity:label"
+msgid "Total ticket capacity"
+msgstr ""
+
+msgctxt "field.field.eventinstance.default.field_ticket_capacity:description"
+msgid ""
+"Used by third party services to detect when an event is sold out.<br /><br /"
+">Is not displayed to the end-user."
+msgstr ""
+
 msgctxt "field.field.eventinstance.default.field_ticket_categories:label"
 msgid "Ticket categories"
 msgstr ""
@@ -17938,6 +17959,16 @@ msgstr ""
 
 msgctxt "field.field.eventseries.default.field_teaser_text:label"
 msgid "Teaser text"
+msgstr ""
+
+msgctxt "field.field.eventseries.default.field_ticket_capacity:label"
+msgid "Total ticket capacity"
+msgstr ""
+
+msgctxt "field.field.eventseries.default.field_ticket_capacity:description"
+msgid ""
+"Used by third party services to detect when an event is sold out.<br /><br /"
+">Is not displayed to the end-user."
 msgstr ""
 
 msgctxt "field.field.eventseries.default.field_ticket_categories:label"

@@ -108,7 +108,7 @@ jobs:
           --body "${{ format('This is an automated PR for {0}:{1}', env.PACKAGE, env.PR_BRANCH) }}"
         if: ${{ steps.create_branch.outcome == 'success' }}
         env:
-          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GH_TOKEN: ${{ secrets.CMS_PR_CREATION_PAT }}
 
       - name: Adding summary
         run: |

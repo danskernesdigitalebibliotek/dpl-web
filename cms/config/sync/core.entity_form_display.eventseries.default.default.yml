@@ -16,6 +16,7 @@ dependencies:
     - field.field.eventseries.default.field_tags
     - field.field.eventseries.default.field_teaser_image
     - field.field.eventseries.default.field_teaser_text
+    - field.field.eventseries.default.field_ticket_capacity
     - field.field.eventseries.default.field_ticket_categories
     - recurring_events.eventseries_type.default
   module:
@@ -41,7 +42,7 @@ third_party_settings:
       label: 'Teaser card'
       region: content
       parent_name: ''
-      weight: 21
+      weight: 22
       format_type: details_sidebar
       format_settings:
         classes: ''
@@ -58,7 +59,7 @@ third_party_settings:
       label: Tagging
       region: content
       parent_name: ''
-      weight: 22
+      weight: 23
       format_type: details_sidebar
       format_settings:
         classes: ''
@@ -75,7 +76,7 @@ third_party_settings:
       label: 'Event details'
       region: content
       parent_name: ''
-      weight: 20
+      weight: 21
       format_type: details_sidebar
       format_settings:
         classes: ''
@@ -122,7 +123,7 @@ content:
     third_party_settings: {  }
   field_categories:
     type: select2_entity_reference
-    weight: 11
+    weight: 32
     region: content
     settings:
       width: 100%
@@ -146,7 +147,7 @@ content:
     third_party_settings: {  }
   field_event_image:
     type: media_library_widget
-    weight: 8
+    weight: 32
     region: content
     settings:
       media_types: {  }
@@ -163,7 +164,7 @@ content:
     third_party_settings: {  }
   field_event_paragraphs:
     type: paragraphs
-    weight: 19
+    weight: 20
     region: content
     settings:
       title: Paragraph
@@ -191,7 +192,7 @@ content:
           dialog_style: tiles
   field_event_partners:
     type: string_textfield
-    weight: 14
+    weight: 15
     region: content
     settings:
       size: 60
@@ -199,7 +200,7 @@ content:
     third_party_settings: {  }
   field_event_place:
     type: string_textfield
-    weight: 13
+    weight: 14
     region: content
     settings:
       size: 60
@@ -207,14 +208,14 @@ content:
     third_party_settings: {  }
   field_event_state:
     type: select2
-    weight: 9
+    weight: 33
     region: content
     settings:
       width: 100%
     third_party_settings: {  }
   field_tags:
     type: select2_entity_reference
-    weight: 12
+    weight: 33
     region: content
     settings:
       width: 100%
@@ -239,9 +240,16 @@ content:
       size: 60
       placeholder: ''
     third_party_settings: {  }
+  field_ticket_capacity:
+    type: number
+    weight: 12
+    region: content
+    settings:
+      placeholder: ''
+    third_party_settings: {  }
   field_ticket_categories:
     type: paragraphs
-    weight: 12
+    weight: 13
     region: content
     settings:
       title: Paragraph
@@ -275,13 +283,13 @@ content:
     third_party_settings: {  }
   path:
     type: path
-    weight: 30
+    weight: 24
     region: content
     settings: {  }
     third_party_settings: {  }
   publish_on:
     type: datetime_timestamp_no_default
-    weight: 16
+    weight: 17
     region: content
     settings: {  }
     third_party_settings: {  }
@@ -293,13 +301,13 @@ content:
       width: 100%
     third_party_settings: {  }
   scheduler_settings:
-    weight: 18
+    weight: 19
     region: content
     settings: {  }
     third_party_settings: {  }
   status:
     type: boolean_checkbox
-    weight: 15
+    weight: 16
     region: content
     settings:
       display_label: true
@@ -324,7 +332,7 @@ content:
     third_party_settings: {  }
   unpublish_on:
     type: datetime_timestamp_no_default
-    weight: 17
+    weight: 18
     region: content
     settings: {  }
     third_party_settings: {  }
