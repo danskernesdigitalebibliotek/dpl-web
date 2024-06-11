@@ -450,7 +450,9 @@ class RelatedContent {
     $query->addField('eid', 'id', 'eventinstance_id');
 
     // Match against the eventseries we found earlier.
-    $query->condition('eid.eventseries_id', $es_ids, 'IN');
+    if (!empty($es_ids)) {
+      $query->condition('eid.eventseries_id', $es_ids, 'IN');
+    }
 
     if (!empty($this->excludedUuid)) {
       $query->condition('ei.uuid', $this->excludedUuid, '<>');
