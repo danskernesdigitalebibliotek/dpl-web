@@ -384,3 +384,6 @@ default:
               entity: 2ce9d9b0-7f10-4a17-9a5e-383d36c1ed93
             -
               entity: 9cfd15df-32b4-4af9-b2da-56b039b5bf6b
+  field_publication_date:
+    -
+      value: '2024-01-31'
