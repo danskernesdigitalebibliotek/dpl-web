@@ -1,0 +1,5 @@
+name: "DPL publication"
+type: module
+description: "Sets the publication date field when content is published.&#039;"
+package: Custom
+core_version_requirement: ^10

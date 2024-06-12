@@ -1,0 +1,21 @@
+<?php
+
+use Drupal\Core\Datetime\DrupalDateTime;
+use Drupal\node\NodeInterface;
+
+/**
+ * Implements hook_node_presave().
+ *
+ * Sets the field_publication_date to the current date
+ * if the node is being published and the publication date is not already set.
+ */
+function dpl_publication_node_presave(NodeInterface $node): void {
+  /** @var \Drupal\node\NodeInterface|null $original_node */
+  $original_node = $node->original;
+
+  if ($original_node && $node->isPublished() && !$original_node->isPublished()) {
+    $current_date = new DrupalDateTime('now');
+    $formatted_date = $current_date->format('Y-m-d');
+    $node->set('field_publication_date', $formatted_date);
+  }
+}

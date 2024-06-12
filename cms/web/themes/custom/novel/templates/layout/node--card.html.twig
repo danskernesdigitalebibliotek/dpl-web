@@ -1,5 +1,5 @@
 {% if node.bundle != 'page' %}
-  {% set date_tag = node.getCreatedTime()|format_date('date_full_month') %}
+  {% set date_tag = node.field_publication_date.value|date('U')|format_date('date_short_month') %}
 {% endif %}
 
 {% if node.bundle == 'article' %}
