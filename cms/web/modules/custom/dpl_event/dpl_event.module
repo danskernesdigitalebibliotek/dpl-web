@@ -86,6 +86,8 @@ function dpl_event_preprocess_field(array &$variables): void {
 
   $entity = $variables['element']['#object'] ?? NULL;
 
+  $variables['has_event_link'] = FALSE;
+
   if (!($entity instanceof EventInstance)) {
     return;
   }
@@ -97,6 +99,8 @@ function dpl_event_preprocess_field(array &$variables): void {
   if (!($event_state instanceof EventState)) {
     return;
   }
+
+  $variables['has_event_link'] = TRUE;
 
   // Set 'event_is_active' flag if event state is neither of the following.
   $variables['event_is_active'] = !in_array($event_state, [
