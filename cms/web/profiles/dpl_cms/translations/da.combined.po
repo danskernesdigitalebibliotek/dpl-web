@@ -19041,7 +19041,7 @@ msgstr "Arrangementinstans ID"
 
 #: 
 msgid "The ID of the eventinstance entity."
-msgstr "ID'et på arrangmentsinstans enheden."
+msgstr "ID'et på arrangementsinstansen."
 
 #: 
 msgid "Whether this registrant is waitlisted."
@@ -19617,7 +19617,7 @@ msgstr ""
 
 #: 
 msgid "The number of registration spaces available for an event instance."
-msgstr "Antallet af tilmeldingspladser tilgængelige for et arrangmentinstans."
+msgstr "Antallet af tilmeldingspladser tilgængelige for en arrangementsinstans."
 
 #: 
 msgid "Whether the event instance has availability."
@@ -20245,7 +20245,7 @@ msgstr ""
 
 #: 
 msgid "Events Management"
-msgstr "Events Management"
+msgstr "Arrangementshåndtering"
 
 #: 
 msgid "Event Series types"
@@ -26315,7 +26315,7 @@ msgstr "Admin for arrangementserie"
 #: 
 msgctxt "views.view.event_series_admin:description"
 msgid "This is the view for displaying a list of event series. Used on admin/content/eventseries"
-msgstr "Dette er listevisning over arrangementserier. Bruges på admin/indhold/arrangementserier"
+msgstr "Dette er listevisning over arrangementsserier. Bruges på admin/content/eventseries"
 
 #: 
 msgctxt "views.view.event_series_admin:display:default:display_title"
