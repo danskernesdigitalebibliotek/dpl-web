@@ -17523,7 +17523,7 @@ msgstr "Arrangementsvisning"
 
 #: 
 msgid "Event Series Items"
-msgstr "Emner i arrangementserie"
+msgstr "Emner i arrangementsserie"
 
 #: 
 msgid "Enter the number of items to show per page in the default event series listing table."
@@ -19525,7 +19525,7 @@ msgstr "Tokens for eventseries-enhedstypen."
 
 #: 
 msgid "Event Series Reminder Message"
-msgstr "Påmindelsesbesked for arrangementserie"
+msgstr "Påmindelsesbesked for arrangementsserie"
 
 #: 
 msgid "The reminder message to send to registrants."
@@ -19757,7 +19757,7 @@ msgstr "Instanser i arrangementsserie"
 
 #: 
 msgid "Display event series if it has the selected taxonomy terms, or children of the selected terms."
-msgstr ""
+msgstr "Vis arrangementsserier, hvis de har den valgte taksonomi. "
 
 #: 
 msgid "Event Series has taxonomy term ID (with depth)"
@@ -19877,7 +19877,7 @@ msgstr "URL'en for arrangementsinstansen."
 
 #: 
 msgid "Event Series Title"
-msgstr "Titel for arrangementserie"
+msgstr "Titel for arrangementsserie"
 
 #: 
 msgid "The title of the event series."
@@ -20149,7 +20149,7 @@ msgstr "Versioner"
 
 #: 
 msgid "Event Series Settings"
-msgstr "Indstillinger for arrangementserie"
+msgstr "Indstillinger for arrangementsserie"
 
 #: 
 msgid "Event Instance Settings"
@@ -20173,7 +20173,7 @@ msgstr "Tilføj nyt arrangement"
 
 #: 
 msgid "Event series listing."
-msgstr "Liste over arrangementserier"
+msgstr "Liste over arrangementsserier"
 
 #: 
 msgid "Event instance listing."
@@ -20189,7 +20189,7 @@ msgstr ""
 
 #: 
 msgid "Event Series Types"
-msgstr "Typer af arrangementserier"
+msgstr "Typer af arrangementsserier"
 
 #: 
 msgid "Configure Event Series Types"
