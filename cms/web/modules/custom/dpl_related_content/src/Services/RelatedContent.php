@@ -44,9 +44,9 @@ class RelatedContent {
   public int $maxItems = 12;
 
   /**
-   * The field on nodes, to sort by. By default, the newest created content.
+   * The field on nodes, to sort by. By default, the latest publication date.
    */
-  public string $nodeSortField = 'created';
+  public string $nodeSortField = 'field_publication_date';
 
   /**
    * The node bundles that should show up in the results.
