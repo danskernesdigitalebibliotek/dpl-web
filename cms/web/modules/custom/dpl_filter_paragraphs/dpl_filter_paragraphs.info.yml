@@ -1,5 +1,6 @@
-name: "DPL Filtered Paragraphs"
+name: "DPL Filtered Paragraphs (Deprecated)"
 type: module
-description: "Filtered paragraphs, embedding views."
+description: "This module is deprecated, and will be deleted in the future."
 package: "DPL"
 core_version_requirement: ^10
+hidden: true

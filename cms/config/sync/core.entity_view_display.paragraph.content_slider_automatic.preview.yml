@@ -1,22 +1,21 @@
-uuid: 71523e5a-741f-4015-bcb3-58bd2cd0d1f5
+uuid: d4c383c4-d8be-471b-b927-041fff87d588
 langcode: en
 status: true
 dependencies:
   config:
     - core.entity_view_mode.paragraph.preview
-    - field.field.paragraph.filtered_event_list.field_amount_of_events
-    - field.field.paragraph.filtered_event_list.field_filter_branches
-    - field.field.paragraph.filtered_event_list.field_filter_categories
-    - field.field.paragraph.filtered_event_list.field_filter_cond_type
-    - field.field.paragraph.filtered_event_list.field_filter_tags
-    - field.field.paragraph.filtered_event_list.field_max_item_amount
-    - field.field.paragraph.filtered_event_list.field_title
-    - paragraphs.paragraphs_type.filtered_event_list
+    - field.field.paragraph.content_slider_automatic.field_filter_branches
+    - field.field.paragraph.content_slider_automatic.field_filter_categories
+    - field.field.paragraph.content_slider_automatic.field_filter_cond_type
+    - field.field.paragraph.content_slider_automatic.field_filter_content_types
+    - field.field.paragraph.content_slider_automatic.field_filter_tags
+    - field.field.paragraph.content_slider_automatic.field_title
+    - paragraphs.paragraphs_type.content_slider_automatic
   module:
     - options
-id: paragraph.filtered_event_list.preview
+id: paragraph.content_slider_automatic.preview
 targetEntityType: paragraph
-bundle: filtered_event_list
+bundle: content_slider_automatic
 mode: preview
 content:
   field_filter_branches:
@@ -25,7 +24,7 @@ content:
     settings:
       link: false
     third_party_settings: {  }
-    weight: 3
+    weight: 5
     region: content
   field_filter_categories:
     type: entity_reference_label
@@ -33,7 +32,7 @@ content:
     settings:
       link: false
     third_party_settings: {  }
-    weight: 2
+    weight: 4
     region: content
   field_filter_cond_type:
     type: list_default
@@ -42,20 +41,20 @@ content:
     third_party_settings: {  }
     weight: 1
     region: content
+  field_filter_content_types:
+    type: list_default
+    label: above
+    settings: {  }
+    third_party_settings: {  }
+    weight: 2
+    region: content
   field_filter_tags:
     type: entity_reference_label
     label: above
     settings:
       link: false
     third_party_settings: {  }
-    weight: 1
-    region: content
-  field_max_item_amount:
-    type: list_default
-    label: above
-    settings: {  }
-    third_party_settings: {  }
-    weight: 4
+    weight: 3
     region: content
   field_title:
     type: string
@@ -66,5 +65,4 @@ content:
     weight: 0
     region: content
 hidden:
-  field_amount_of_events: true
   search_api_excerpt: true
