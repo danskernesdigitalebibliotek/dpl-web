@@ -39,7 +39,6 @@ module:
   dpl_fbi: 0
   dpl_fbs: 0
   dpl_fees: 0
-  dpl_filter_paragraphs: 0
   dpl_footer: 0
   dpl_instant_loan: 0
   dpl_library_agency: 0
@@ -61,6 +60,7 @@ module:
   dpl_react: 0
   dpl_react_apps: 0
   dpl_recommender: 0
+  dpl_related_content: 0
   dpl_reservations: 0
   dpl_rest_base: 0
   dpl_something_similar: 0

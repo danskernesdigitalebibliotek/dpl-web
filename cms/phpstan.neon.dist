@@ -13,6 +13,10 @@ parameters:
     # more detailed typing of.
     - '#.*\:\:(buildForm|getEditableConfigNames|submitForm|validateForm)\(\) .* no value type specified in iterable type array\.#'
     - '#_alter\(\) has parameter \$form with no value type specified in iterable type array\.#'
+    # Drupal *_theme() implementation returns array which we cannot provide more detailed typing of.
+    - '#Function .*_theme\(\) return type has no value type specified in iterable type array\.#'
+    # Drupal *_theme() uses arrays which we cannot provide more detailed typing of.
+    - '#Function .*_theme\(\) has parameter .* with no value type specified in iterable type array\.#'
     # Drupal preprocess functions uses variables array which we cannot provide more detailed typing of.
     - '#Function .*_preprocess_.*\(\) has parameter \$variables with no value type specified in iterable type array\.#'
     # Drupal theme suggestions uses arrays which we cannot provide more detailed typing of.

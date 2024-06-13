@@ -15,6 +15,9 @@ _meta:
     2cd0fe5e-4159-4452-86aa-e1a1ac8db4a1: node
     2ce9d9b0-7f10-4a17-9a5e-383d36c1ed93: eventseries
     9cfd15df-32b4-4af9-b2da-56b039b5bf6b: node
+    0fa7245a-3434-4d96-9793-a1848a22d37a: taxonomy_term
+    0502836d-0f7b-4b21-9371-c40ae9e01495: taxonomy_term
+    dac275e4-9b8c-4959-a13a-6b9fdbc1f6b0: node
 default:
   revision_uid:
     -
@@ -329,30 +332,6 @@ default:
         _meta:
           version: '1.0'
           entity_type: paragraph
-          uuid: 1d63cada-c08e-44db-bac6-1193dcf3b2b5
-          bundle: card_grid_automatic
-          default_langcode: da
-        default:
-          status:
-            -
-              value: true
-          created:
-            -
-              value: 1707919338
-          behavior_settings:
-            -
-              value: {  }
-          revision_translation_affected:
-            -
-              value: true
-          field_title:
-            -
-              value: 'Nye artikler'
-    -
-      entity:
-        _meta:
-          version: '1.0'
-          entity_type: paragraph
           uuid: 773cfec1-0fc5-4004-813b-c7a66f9af3fa
           bundle: content_slider
           default_langcode: da
@@ -387,3 +366,96 @@ default:
   field_publication_date:
     -
       value: '2024-01-31'
+    -
+      entity:
+        _meta:
+          version: '1.0'
+          entity_type: paragraph
+          uuid: 1d63cada-c08e-44db-bac6-1193dcf3b2b5
+          bundle: card_grid_automatic
+          default_langcode: da
+        default:
+          status:
+            -
+              value: true
+          created:
+            -
+              value: 1707919338
+          behavior_settings:
+            -
+              value: {  }
+          revision_translation_affected:
+            -
+              value: true
+          field_filter_cond_type:
+            -
+              value: or
+          field_title:
+            -
+              value: 'Nyt indhold'
+    -
+      entity:
+        _meta:
+          version: '1.0'
+          entity_type: paragraph
+          uuid: 779e6e9c-29c8-4e9e-acdd-93884e3025f4
+          bundle: content_slider_automatic
+          default_langcode: da
+        default:
+          status:
+            -
+              value: true
+          created:
+            -
+              value: 1716456787
+          behavior_settings:
+            -
+              value: {  }
+          revision_translation_affected:
+            -
+              value: true
+          field_filter_categories:
+            -
+              entity: 0fa7245a-3434-4d96-9793-a1848a22d37a
+          field_filter_cond_type:
+            -
+              value: and
+          field_filter_tags:
+            -
+              entity: 0502836d-0f7b-4b21-9371-c40ae9e01495
+          field_title:
+            -
+              value: '3-8 årige'
+    -
+      entity:
+        _meta:
+          version: '1.0'
+          entity_type: paragraph
+          uuid: 5ab4f2a6-23f7-4287-96c6-29ce27f58fe1
+          bundle: filtered_event_list
+          default_langcode: da
+        default:
+          status:
+            -
+              value: true
+          created:
+            -
+              value: 1716456974
+          behavior_settings:
+            -
+              value: {  }
+          revision_translation_affected:
+            -
+              value: true
+          field_filter_branches:
+            -
+              entity: dac275e4-9b8c-4959-a13a-6b9fdbc1f6b0
+          field_filter_cond_type:
+            -
+              value: or
+          field_max_item_amount:
+            -
+              value: '12'
+          field_title:
+            -
+              value: "Hovedbib's arrangementer"

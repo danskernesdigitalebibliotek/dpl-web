@@ -5,6 +5,8 @@ dependencies:
   config:
     - field.field.paragraph.card_grid_automatic.field_filter_branches
     - field.field.paragraph.card_grid_automatic.field_filter_categories
+    - field.field.paragraph.card_grid_automatic.field_filter_cond_type
+    - field.field.paragraph.card_grid_automatic.field_filter_content_types
     - field.field.paragraph.card_grid_automatic.field_filter_tags
     - field.field.paragraph.card_grid_automatic.field_title
     - paragraphs.paragraphs_type.card_grid_automatic
@@ -16,6 +18,8 @@ content: {  }
 hidden:
   field_filter_branches: true
   field_filter_categories: true
+  field_filter_cond_type: true
+  field_filter_content_types: true
   field_filter_tags: true
   field_title: true
   search_api_excerpt: true

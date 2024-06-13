@@ -1,0 +1,30 @@
+_meta:
+  version: "1.0"
+  entity_type: taxonomy_term
+  uuid: 3369e523-14d9-49a5-93e2-eda5585c6eaa
+  bundle: categories
+  default_langcode: da
+default:
+  status:
+    - value: true
+  name:
+    - value: Cat1
+  weight:
+    - value: 0
+  parent:
+    - target_id: 0
+  revision_translation_affected:
+    - value: true
+  metatag:
+    - tag: meta
+      attributes:
+        name: title
+        content: "Cat1 | DPL CMS"
+    - tag: link
+      attributes:
+        rel: canonical
+        href: "http://dpl-cms.docker/taxonomy/term/29"
+  path:
+    - alias: ""
+      langcode: da
+      pathauto: 0
