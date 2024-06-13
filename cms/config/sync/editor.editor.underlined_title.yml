@@ -1,0 +1,16 @@
+uuid: dbe2fc16-2e2a-461e-aec2-def6976bf98f
+langcode: en
+status: true
+dependencies:
+  config:
+    - filter.format.underlined_title
+  module:
+    - ckeditor5
+format: underlined_title
+editor: ckeditor5
+settings:
+  toolbar:
+    items:
+      - underline
+  plugins: {  }
+image_upload: {  }
