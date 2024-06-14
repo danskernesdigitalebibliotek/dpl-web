@@ -7,8 +7,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2024-06-14 13:39+0200\n"
-"PO-Revision-Date: 2024-06-14 13:39+0200\n"
+"POT-Creation-Date: 2024-06-14 13:52+0200\n"
+"PO-Revision-Date: 2024-06-14 13:52+0200\n"
 "Last-Translator: NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
 "MIME-Version: 1.0\n"
@@ -17231,6 +17231,10 @@ msgstr ""
 
 msgctxt "block.block.novel_tools:settings:label"
 msgid "Tools"
+msgstr ""
+
+msgctxt "config_perms.custom_perms_entity.administer_maintenance_mode:label"
+msgid "Administer maintenance mode"
 msgstr ""
 
 msgctxt "core.base_field_override.media.image.status:label"
