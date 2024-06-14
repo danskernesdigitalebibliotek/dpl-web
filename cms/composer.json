@@ -290,7 +290,8 @@
                 "2259567: Support SVG files for theme logo setting": "https://www.drupal.org/files/issues/2023-05-08/2259567-168.patch",
                 "296693: Restrict access to empty top level administration pages": "https://www.drupal.org/files/issues/2023-08-31/296693-10.1.x_0.patch",
                 "3035578: Add details for AJAX response errors": "https://www.drupal.org/files/issues/2023-07-24/3035578-26.patch",
-                "Always assume chmod succeeds": "patches/core-304fd8b-chmod-true.patch"
+                "Always assume chmod succeeds": "patches/core-304fd8b-chmod-true.patch",
+                "Debug Form triggering element detection": "patches/form-triggering-element-detection-paragraphs-ee.patch"
             },
             "drupal/date_range_formatter": {
                 "3309324: Fails when start and end date are identical": "https://www.drupal.org/files/issues/2023-12-22/date_range_formatter_3309324_1.patch"
