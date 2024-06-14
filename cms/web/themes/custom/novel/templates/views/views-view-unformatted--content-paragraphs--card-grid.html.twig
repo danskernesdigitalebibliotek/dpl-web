@@ -1,9 +1,0 @@
-{% set custom_card_grid_link = view.display_handler.getOption('custom_card_grid_link') %}
-
-{% include '@novel/components/card-grid.html.twig'
-  with {
-  'attributes': attributes,
-  'title': view.getTitle(),
-  'items': rows,
-  'link': custom_card_grid_link
-} only %}
