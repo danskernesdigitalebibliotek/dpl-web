@@ -247,11 +247,9 @@ material-search:
     gpl-compatible: true
   js:
     /libraries/dpl-react/MaterialSearch.js: {}
-  css:
-    base:
-      /themes/custom/novel/assets/dpl-design-system/css/admin-base.css: {}
   dependencies:
     - dpl_react/base
+    - dpl_react/admin_base
     - dpl_react/handler
 
 opening-hours-editor:
@@ -262,11 +260,9 @@ opening-hours-editor:
     gpl-compatible: true
   js:
     /libraries/dpl-react/OpeningHoursEditor.js: {}
-  css:
-    base:
-      /themes/custom/novel/assets/dpl-design-system/css/admin-base.css: {}
   dependencies:
     - dpl_react/base
+    - dpl_react/admin_base
     - dpl_react/handler
 
 menu:
@@ -294,6 +290,11 @@ base:
   css:
     theme:
       /libraries/dpl-react/components.css: {}
+
+admin_base:
+  css:
+    theme:
+      /themes/custom/novel/assets/dpl-design-system/css/admin-base.css: {}
 
 handler:
   js:
