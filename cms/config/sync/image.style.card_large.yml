@@ -13,13 +13,5 @@ effects:
     weight: -10
     data:
       width: 551
-      height: 551
-      crop_type: focal_point
-  6fb9e0dc-cb84-4e15-ba24-7387618e636d:
-    uuid: 6fb9e0dc-cb84-4e15-ba24-7387618e636d
-    id: image_scale_and_crop
-    weight: -9
-    data:
-      width: 551
       height: 312
-      anchor: center-center
+      crop_type: focal_point
