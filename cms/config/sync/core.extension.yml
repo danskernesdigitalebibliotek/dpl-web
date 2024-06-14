@@ -11,12 +11,15 @@ module:
   block: 0
   breakpoint: 0
   ckeditor5: 0
+  collation_fixer: 0
   color_field: 0
   config_filter: 0
   config_ignore: 0
+  config_ignore_auto: 0
   config_translation: 0
   config_translation_po: 0
   content_lock: 0
+  cookieinformation: 0
   crop: 0
   date_range_formatter: 0
   datetime: 0
@@ -37,7 +40,6 @@ module:
   dpl_fbi: 0
   dpl_fbs: 0
   dpl_fees: 0
-  dpl_filter_paragraphs: 0
   dpl_footer: 0
   dpl_instant_loan: 0
   dpl_library_agency: 0
@@ -58,6 +60,7 @@ module:
   dpl_react: 0
   dpl_react_apps: 0
   dpl_recommender: 0
+  dpl_related_content: 0
   dpl_reservations: 0
   dpl_rest_base: 0
   dpl_something_similar: 0
@@ -65,6 +68,7 @@ module:
   dpl_static_content_20240404_opening_hours: 0
   dpl_static_content_20240418_views_aliases: 0
   dpl_static_content_20240422_contact_page: 0
+  dpl_update: 0
   dpl_url_proxy: 0
   dpl_webform: 0
   drupal_typed: 0
@@ -81,7 +85,9 @@ module:
   field_inheritance: 0
   file: 0
   filter: 0
+  flat_taxonomy: 0
   focal_point: 0
+  gin_login: 0
   gin_toolbar: 0
   handy_cache_tags: 0
   honeypot: 0
@@ -115,6 +121,7 @@ module:
   openapi_ui_swagger: 0
   openid_connect: 0
   options: 0
+  override_node_options: 0
   paragraphs_features: 0
   path: 0
   path_alias: 0

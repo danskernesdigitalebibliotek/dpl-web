@@ -12,6 +12,7 @@ use Drupal\dpl_react_apps\Controller\DplReactAppsController;
 use Drupal\field\Entity\FieldConfig;
 use Drupal\paragraphs\Entity\Paragraph;
 use Drupal\paragraphs\ParagraphInterface;
+use Symfony\Component\Routing\Exception\InvalidParameterException;
 use function Safe\parse_url;
 use function Safe\preg_match;
 
@@ -159,15 +160,24 @@ function dpl_paragraphs_preprocess_paragraph__recommendation(array &$variables):
       // or description, otherwise the URL is constructed in the React app.
       $route_parameters = ['wid' => $work_id];
       $query_parameters = [];
+      $material_url = NULL;
 
       if (!empty($material_type)) {
         $query_parameters['type'] = $material_type;
       }
 
-      $material_url_object = Url::fromRoute('dpl_react_apps.work', $route_parameters,
-        ['absolute' => TRUE, 'query' => $query_parameters]);
+      try {
+        $material_url_object = Url::fromRoute('dpl_react_apps.work', $route_parameters,
+          ['absolute' => TRUE, 'query' => $query_parameters]);
 
-      $material_url = $material_url_object->toString();
+        $material_url = $material_url_object->toString();
+      }
+      catch (InvalidParameterException $e) {
+        \Drupal::logger('dpl_paragraphs')->error(
+          'Could not render Recommendation paragraph - most likely cause the @wid WorkID is in wrong format. @exception',
+          ['@wid' => $work_id, '@exception' => $e->getMessage()]
+        );
+      }
 
       $variables['react_app'] = [
         '#theme' => 'dpl_react_app',

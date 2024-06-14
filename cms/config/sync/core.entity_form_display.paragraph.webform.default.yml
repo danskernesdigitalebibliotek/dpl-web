@@ -17,7 +17,7 @@ content:
     weight: 0
     region: content
     settings:
-      default_data: true
+      default_data: false
       webforms: {  }
     third_party_settings: {  }
 hidden:

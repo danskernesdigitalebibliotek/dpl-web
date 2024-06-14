@@ -1,0 +1,30 @@
+name: DPL related content - test suite
+description: Testing the functionality of DPL Related Content.
+package: DPL
+type: module
+core_version_requirement: ^10
+dependencies:
+  - default_content:default_content
+  - dpl_related_content:dpl_related_content
+default_content:
+  node:
+    - 1f4f09dd-83dd-4f82-a57d-95086966c7a3
+    - ec9dd467-24d5-484f-b19a-e8653c493177
+    - 1201ee52-766e-4793-8b9f-155fe6e74a5d
+    - 76c9684c-7178-4f75-ba67-58799f4d6fc0
+    - dd9b05c7-04ed-4cc0-95a0-91da2cc3d924
+    - 085fdde8-5319-43b2-8ed8-7d9d27886069
+    - cfd18e96-efb6-4e3b-af79-7a4033860f1d
+    - 2b38f99d-f500-42a8-9b21-9732d765ed44
+    - 13de1b72-4cae-4757-a92a-d81c96e6c6c2
+    - 994a7d47-fe90-4ca8-a3b6-e9114d45d585
+  eventseries:
+    - cc6da236-c27d-43f7-83df-a5214f9c1026
+    - ffb75415-6568-49a9-9cdf-1e16cc6ca0d3
+    - cbd3796e-c870-4e53-b47e-b43a4ec29a13
+    - 2abdab73-6a04-4646-8e34-76cad335a9e7
+  taxonomy_term:
+    - 9df8ee6a-939d-4d8f-9d79-d082b00286ac
+    - 3369e523-14d9-49a5-93e2-eda5585c6eaa
+    - 5d70c9f7-779c-4337-a587-ced7a8ecc770
+    - ab73e9ee-9195-4245-bb95-f5de1c4eb06f

@@ -45,6 +45,7 @@ function dpl_admin_preprocess_html(array &$variables): void {
 function dpl_admin_local_tasks_alter(array &$local_tasks): void {
   unset($local_tasks['entity.eventseries.collection']);
   unset($local_tasks['entity.eventinstance.collection']);
+  unset($local_tasks['entity.media.collection']);
 }
 
 /**

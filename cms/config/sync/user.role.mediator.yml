@@ -20,6 +20,7 @@ dependencies:
     - filter
     - media
     - node
+    - override_node_options
     - paragraphs
     - recurring_events
     - redirect
@@ -37,7 +38,6 @@ permissions:
   - 'access content overview'
   - 'access eventinstance overview'
   - 'access eventseries overview'
-  - 'access files overview'
   - 'access media overview'
   - 'access site in maintenance mode'
   - 'access taxonomy overview'
@@ -95,6 +95,7 @@ permissions:
   - 'edit own page content'
   - 'edit own video media'
   - 'edit terms in tags'
+  - 'override all published option'
   - 'schedule publishing of eventseries'
   - 'schedule publishing of nodes'
   - 'update any media'

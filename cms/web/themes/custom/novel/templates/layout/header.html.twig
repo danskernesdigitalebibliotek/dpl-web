@@ -1,27 +1,28 @@
 {{ attach_library('novel/header') }}
 <header class="header">
     <div class="header__logo-desktop">
-        <a class="header__logo-desktop-link" href="/">
-                {{ logo }}
-        </a>
+            {{ logo }}
     </div>
     <div class="header__menu">
         <nav class="header__menu-first" aria-label="Primary site navigation">
             <div>
                 <div class="header__menu-navigation-mobile">
-                    <div class="pagefold-parent--small header__menu-navigation-button header__button" id="header-sidebar-nav__toggle"
-                    aria-controls="sidebarNav"
-                    aria-expanded="false"
-                    role="button"
-                    tabIndex="0">
+                  <button
+                  class="header__menu-navigation-button header__button"
+                  id="header-sidebar-nav__toggle"
+                  aria-controls="sidebarNav"
+                  aria-expanded="false"
+                  >
+                    <div class="pagefold-parent--small
+                    header__menu-navigation-pagefold">
                         <div class="pagefold-triangle--small"></div>
                         <img width="20" height="14" src="/themes/custom/novel/assets/dpl-design-system/icons/basic/icon-menu.svg" alt="List of bookmarks"/>
                     </div>
-                    <div class="header__menu-navigation-logo">
-                       {{ logo }}
-                    </div>
+                  </button>
+                  <div class="header__menu-navigation-logo">
+                    {{ logo }}
+                  </div>
                 </div>
-
                 {{ drupal_menu('main') }}
             </div>
       {{ patron_menu }}

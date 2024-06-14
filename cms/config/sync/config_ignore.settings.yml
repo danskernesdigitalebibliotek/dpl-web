@@ -1,5 +1,6 @@
 _core:
   default_config_hash: UVH1aJ4b44UM-VdPVN7hNNuuVqfReJxwfVeDQH1Hvsk
+mode: simple
 ignored_config_entities:
   - dpl_dashboard.settings
   - dpl_event.settings
@@ -16,8 +17,9 @@ ignored_config_entities:
   - dpl_patron_reg.settings
   - dpl_publizon.settings
   - dpl_recommender.settings
-  - dpl_reservation_list.settings
+  - dpl_reservations.settings
   - dpl_url_proxy.settings
   - novel.settings
   - openid_connect.settings.adgangsplatformen
   - system.site
+  - 'webform.webform.*'

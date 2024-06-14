@@ -1,0 +1,5 @@
+name: DPL related content
+description: Showing related content on articles, events and in paragraphs.
+package: DPL
+type: module
+core_version_requirement: ^10

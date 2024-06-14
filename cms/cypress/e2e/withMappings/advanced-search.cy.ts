@@ -1,6 +1,6 @@
 describe("User journey", () => {
   it("Can access the advanced search page from home page", () => {
-    cy.visit("/").getBySel("search-header-dropdown-icon").click();
+    cy.visit("/arrangementer").getBySel("search-header-dropdown-icon").click();
     cy.getBySel("search-header-dropdown").click();
     cy.url().should("include", "advanced-search");
     cy.get("h1").should("contain", "advanced search");

@@ -1,0 +1,22 @@
+{% set alternative_image_styles = {'large': 'card_large', 'medium': 'card_medium'} %}
+{% set item = items.0 %}
+
+<div {{ attributes.addClass('image-credited__image') }}>
+  {#
+    We want to render some override images, that CSS takes care of displaying if relevant.
+    This is necessary, as the cards have different image styles.
+  #}
+  {% for image_style_name, image_style in alternative_image_styles %}
+    {% set uri = item.content['#item'].entity.getFileUri() %}
+    {% set url = uri|image_style(image_style) %}
+
+    {% if url %}
+      <div  class="card__override-images" data-card-style="{{ image_style_name }}"
+        style="display: none; background-image: url('{{ uri|image_style(image_style) }}')"></div>
+    {% endif %}
+
+  {% endfor %}
+
+  {# Render the default, fallback image. #}
+  {{ item.content }}
+</div>

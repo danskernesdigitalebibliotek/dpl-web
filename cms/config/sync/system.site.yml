@@ -3,7 +3,7 @@ _core:
 langcode: en
 uuid: 13ef1a53-dfb4-4c82-9b64-44586a366729
 name: 'DPL CMS'
-mail: DoNotReply@folkebibliotekernescms.dk
+mail: mail@folkebibliotekernescms.dk
 slogan: ''
 page:
   403: ''

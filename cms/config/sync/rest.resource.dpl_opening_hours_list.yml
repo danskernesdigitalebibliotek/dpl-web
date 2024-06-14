@@ -3,6 +3,7 @@ langcode: en
 status: true
 dependencies:
   module:
+    - dpl_login
     - dpl_opening_hours
     - serialization
     - user
@@ -15,4 +16,5 @@ configuration:
   formats:
     - json
   authentication:
+    - dpl_login_user_token
     - cookie

@@ -1,0 +1,21 @@
+uuid: 0228d4ce-f3bb-4aab-afd2-5f33f53934be
+langcode: en
+status: true
+dependencies:
+  module:
+    - options
+    - paragraphs
+id: paragraph.field_filter_content_types
+field_name: field_filter_content_types
+entity_type: paragraph
+type: list_string
+settings:
+  allowed_values: {  }
+  allowed_values_function: dpl_related_content_field_filter_content_types_options
+module: options
+locked: false
+cardinality: -1
+translatable: true
+indexes: {  }
+persist_with_no_fields: false
+custom_storage: false

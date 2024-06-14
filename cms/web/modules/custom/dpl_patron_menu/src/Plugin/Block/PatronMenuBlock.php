@@ -179,7 +179,8 @@ class PatronMenuBlock extends BlockBase implements ContainerFactoryPluginInterfa
       'menu-profile-links-aria-label-text' => $this->t('Profile links', [], ['context' => 'Patron menu (aria)']),
       'menu-sign-up-text' => $this->t('Sign up', [], ['context' => 'Patron menu']),
       'menu-user-profile-url-text' => $this->t('My Account', [], ['context' => 'Patron menu']),
-      'menu-user-icon-aria-label-text' => $this->t('Open user menu', [], ['context' => 'Patron menu (aria)']),
+      'menu-user-icon-aria-label-logged-out-text' => $this->t('Open user menu', [], ['context' => 'Patron menu (aria)']),
+      'menu-user-icon-aria-label-text' => $this->t('Open login menu', [], ['context' => 'Patron menu (aria)']),
       'menu-view-your-profile-text' => $this->t('Dashboard', [], ['context' => 'Patron menu']),
       'reservations-ready-for-pickup-text' => $this->t('Reservations ready for pickup', [], ['context' => 'Patron menu']),
     ] + DplReactAppsController::externalApiBaseUrls();

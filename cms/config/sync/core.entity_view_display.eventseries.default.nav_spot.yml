@@ -17,6 +17,7 @@ dependencies:
     - field.field.eventseries.default.field_tags
     - field.field.eventseries.default.field_teaser_image
     - field.field.eventseries.default.field_teaser_text
+    - field.field.eventseries.default.field_ticket_capacity
     - field.field.eventseries.default.field_ticket_categories
     - recurring_events.eventseries_type.default
 _core:
@@ -30,7 +31,7 @@ content:
     type: entity_reference_entity_view
     label: hidden
     settings:
-      view_mode: hero_wide
+      view_mode: list_teaser
       link: false
     third_party_settings: {  }
     weight: 2
@@ -69,6 +70,7 @@ hidden:
   field_event_place: true
   field_event_state: true
   field_tags: true
+  field_ticket_capacity: true
   field_ticket_categories: true
   monthly_recurring_date: true
   recur_type: true

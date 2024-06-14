@@ -25,6 +25,7 @@ dependencies:
     - dpl_admin
     - dpl_footer
     - dpl_opening_hours
+    - dpl_webform
     - entity_clone
     - file
     - filter
@@ -50,7 +51,6 @@ permissions:
   - 'access content overview'
   - 'access eventinstance overview'
   - 'access eventseries overview'
-  - 'access files overview'
   - 'access media overview'
   - 'access site in maintenance mode'
   - 'access taxonomy overview'
@@ -58,6 +58,8 @@ permissions:
   - 'access webform overview'
   - 'add eventseries entity'
   - 'add new links to main menu'
+  - 'administer advanced webform confirmation settings'
+  - 'administer advanced webform element settings'
   - 'administer dpl_footer settings'
   - 'administer menu'
   - 'administer nodes'

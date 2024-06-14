@@ -1,0 +1,16 @@
+<?php
+
+/**
+ * @file
+ * DPL mail install file.
+ */
+
+/**
+ * Make sure site email is set according to Azure (ACS) specification.
+ */
+function dpl_mail_update_10000(): string {
+  $config_factory = \Drupal::configFactory();
+  $system_site_config_key = 'system.site';
+  $config_factory->getEditable($system_site_config_key)->set('mail', 'mail@folkebibliotekernescms.dk')->save();
+  return 'Site mail set to mail@folkebibliotekernescms.dk';
+}

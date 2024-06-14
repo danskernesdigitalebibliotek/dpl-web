@@ -17,6 +17,10 @@ use Drupal\Core\Installer\InstallerKernel;
 // site install.
 $config['system.site']['uuid'] = '13ef1a53-dfb4-4c82-9b64-44586a366729';
 
+// Hardcode the site mail as we don't want to allow changing it in the UI.
+// The email needs to match what is setup in Azure Communication Services.
+$config['system.site']['mail'] = 'mail@folkebibliotekernescms.dk';
+
 // Configure logging using the project name and environment from the Lagoon
 // environment.
 $config['jsonlog.settings']['jsonlog_siteid'] = getenv('LAGOON_PROJECT') . '_' . getenv('LAGOON_ENVIRONMENT');
@@ -31,6 +35,7 @@ if (InstallerKernel::installationAttempted()) {
 
 // Exclude development modules from configuration export.
 $settings['config_exclude_modules'] = [
+  'dpl_related_content_tests',
   'dpl_example_content',
   'dpl_example_breadcrumb',
   'devel',
@@ -54,6 +59,11 @@ $config['dpl_react_apps.settings']['services'] = [
   'fbi' => ['base_url' => 'https://fbi-api.dbc.dk/[profile]/graphql'],
   'material-list' => ['base_url' => 'https://prod.materiallist.dandigbib.org'],
 ];
+
+// Use Danish collation to support proper sorting with Danish characters.
+// Without this ÆØÅ will not be handled properly.
+$databases['default']['default']['charset'] = 'utf8mb4';
+$databases['default']['default']['collation'] = 'utf8mb4_danish_ci';
 
 if (getenv('CI')) {
   // Curl settings needed to make PHP ignore SSL errors when using Wiremock as
