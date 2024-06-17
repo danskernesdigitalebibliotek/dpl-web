@@ -68,6 +68,9 @@ jobs:
 
           COMPOSER_TASK_COMMAND=${CMDS[${{ env.PACKAGE_NAME }}]}
 
+          echo "COMPOSER_TASK_COMMAND=$COMPOSER_TASK_COMMAND"
+          echo "PACKAGE_NAME=${{ env.PACKAGE_NAME }}"
+
           if [[ -n "${COMPOSER_TASK_COMMAND}" ]]; then
             echo "COMPOSER_TASK_COMMAND=$COMPOSER_TASK_COMMAND" >> $GITHUB_ENV
           else
