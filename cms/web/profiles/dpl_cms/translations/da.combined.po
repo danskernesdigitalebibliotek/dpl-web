@@ -7,8 +7,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2024-06-14 13:52+0200\n"
-"PO-Revision-Date: 2024-06-14 13:52+0200\n"
+"POT-Creation-Date: 2024-06-17 11:54+0200\n"
+"PO-Revision-Date: 2024-06-17 11:54+0200\n"
 "Last-Translator: NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
 "MIME-Version: 1.0\n"
@@ -3247,6 +3247,17 @@ msgstr ""
 msgid "<br /><a href=\":url\">@title</a>"
 msgstr "<br /><a href=\":url\">@title</a>"
 
+msgid "CQL Search String"
+msgstr ""
+
+msgid "Enter CQL search string"
+msgstr ""
+
+msgid ""
+"CQL search string field. Perform an advanced search and copy/paste the "
+"string to this field."
+msgstr ""
+
 msgid "Work ID"
 msgstr "VærkID"
 
@@ -3757,6 +3768,9 @@ msgstr "Lav individuelle åbningstider"
 msgid "Update individual opening hours"
 msgstr "Opdater enkelte åbningstider"
 
+msgid "List all opening hours for legacy API"
+msgstr ""
+
 msgid "Delete individual opening hours"
 msgstr "Slet enkelte åbningstider"
 
@@ -3771,6 +3785,15 @@ msgstr "Adresse fallback på filial"
 
 msgid "Generate proxy url"
 msgstr "Generate proxy URL / Generer proxy URL"
+
+msgid "CQL Search Formatter"
+msgstr ""
+
+msgid "Work ID Formatter"
+msgstr ""
+
+msgid "CQL Search Widget"
+msgstr ""
 
 msgid "Work id with type"
 msgstr "VærkID med type"
@@ -18734,6 +18757,20 @@ msgid ""
 msgstr ""
 
 msgctxt ""
+"field.field.paragraph.material_grid_automatic."
+"field_material_grid_description:label"
+msgid "Material grid description"
+msgstr ""
+
+msgctxt ""
+"field.field.paragraph.material_grid_automatic."
+"field_material_grid_description:description"
+msgid ""
+"This is the optional description for the material grid. <br />Leave blank if "
+"you do not want a description."
+msgstr ""
+
+msgctxt ""
 "field.field.paragraph.material_grid_automatic.field_material_grid_title:label"
 msgid "Title of the material grid"
 msgstr ""
@@ -18744,6 +18781,20 @@ msgctxt ""
 msgid ""
 "The title for the material grid. Leave this blank if you do not want a "
 "title. "
+msgstr ""
+
+msgctxt ""
+"field.field.paragraph.material_grid_manual.field_material_grid_description:"
+"label"
+msgid "Material grid description"
+msgstr ""
+
+msgctxt ""
+"field.field.paragraph.material_grid_manual.field_material_grid_description:"
+"description"
+msgid ""
+"This is the optional description for the material grid. <br />Leave blank if "
+"you do not want a description."
 msgstr ""
 
 msgctxt ""
