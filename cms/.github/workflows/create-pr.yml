@@ -64,9 +64,9 @@ jobs:
           echo "COMPOSER_TASK_COMMAND=$COMPOSER_TASK_COMMAND"
           echo "PACKAGE_NAME=${{ env.PACKAGE_NAME }}"
 
-          if [[ "${{ env.PACKAGE_NAME }}" == "dpl-design-system"]]; then
+          if [[ "${{ env.PACKAGE_NAME }}" == "dpl-design-system" ]]; then
             echo "COMPOSER_TASK_COMMAND='dev:composer:update-design-system'" >> $GITHUB_ENV
-          elif [[ "${{ env.PACKAGE_NAME }}" == "dpl-react"]]; then
+          elif [[ "${{ env.PACKAGE_NAME }}" == "dpl-react" ]]; then
             echo "COMPOSER_TASK_COMMAND='dev:composer:update-react'" >> $GITHUB_ENV
           else
             echo "::error::Could not resolve composer task command."
