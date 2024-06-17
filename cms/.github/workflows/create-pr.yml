@@ -62,8 +62,8 @@ jobs:
           set -e
 
           declare -a CMDS=(
-              [poc-dpl-react-pr-trigger]='dev:composer:update-design-system'
-              [poc-dpl-design-system-pr-trigger]='dev:composer:update-react'
+              [dpl-design-system]='dev:composer:update-design-system'
+              [dpl-react]='dev:composer:update-react'
           )
 
           COMPOSER_TASK_COMMAND=${CMDS[${{ env.PACKAGE_NAME }}]}
