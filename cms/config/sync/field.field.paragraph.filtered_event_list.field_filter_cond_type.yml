@@ -11,8 +11,8 @@ id: paragraph.filtered_event_list.field_filter_cond_type
 field_name: field_filter_cond_type
 entity_type: paragraph
 bundle: filtered_event_list
-label: 'Condition type'
-description: ''
+label: 'Condition type (INACTIVE)'
+description: 'This field will be used in relation to the dpl_related_content in the future, but currently has no effect.'
 required: true
 translatable: false
 default_value:

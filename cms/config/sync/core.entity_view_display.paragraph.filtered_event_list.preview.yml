@@ -35,13 +35,6 @@ content:
     third_party_settings: {  }
     weight: 2
     region: content
-  field_filter_cond_type:
-    type: list_default
-    label: inline
-    settings: {  }
-    third_party_settings: {  }
-    weight: 1
-    region: content
   field_filter_tags:
     type: entity_reference_label
     label: above
@@ -67,4 +60,5 @@ content:
     region: content
 hidden:
   field_amount_of_events: true
+  field_filter_cond_type: true
   search_api_excerpt: true
