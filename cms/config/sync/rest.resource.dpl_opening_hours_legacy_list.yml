@@ -1,0 +1,18 @@
+uuid: 8f7ad677-2d41-4d00-ad6f-fbfc2b9c2951
+langcode: en
+status: true
+dependencies:
+  module:
+    - dpl_opening_hours
+    - serialization
+    - user
+id: dpl_opening_hours_legacy_list
+plugin_id: dpl_opening_hours_legacy_list
+granularity: resource
+configuration:
+  methods:
+    - GET
+  formats:
+    - json
+  authentication:
+    - cookie

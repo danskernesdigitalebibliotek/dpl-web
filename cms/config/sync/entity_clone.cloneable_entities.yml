@@ -3,3 +3,4 @@ cloneable_entities:
   - path_alias
   - redirect
   - paragraph
+  - custom_perms_entity

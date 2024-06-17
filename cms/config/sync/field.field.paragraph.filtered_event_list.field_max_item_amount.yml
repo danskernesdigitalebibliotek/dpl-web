@@ -1,0 +1,23 @@
+uuid: 745d1879-529a-4f99-b01c-97eb20fb9f45
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.paragraph.field_max_item_amount
+    - paragraphs.paragraphs_type.filtered_event_list
+  module:
+    - options
+id: paragraph.filtered_event_list.field_max_item_amount
+field_name: field_max_item_amount
+entity_type: paragraph
+bundle: filtered_event_list
+label: 'Max item amount'
+description: 'Select the amount of events you want to display. <br /><br />If the amount displayed is less than what you put here, it is likely because there are not enough results based on your selected filters. '
+required: true
+translatable: false
+default_value:
+  -
+    value: '12'
+default_value_callback: ''
+settings: {  }
+field_type: list_string

@@ -1,0 +1,53 @@
+_meta:
+  version: "1.0"
+  entity_type: node
+  uuid: 994a7d47-fe90-4ca8-a3b6-e9114d45d585
+  bundle: article
+  default_langcode: da
+  depends:
+    e00e1460-169e-468d-9835-d664f06d0969: file
+    ec9dd467-24d5-484f-b19a-e8653c493177: node
+    9df8ee6a-939d-4d8f-9d79-d082b00286ac: taxonomy_term
+    5d70c9f7-779c-4337-a587-ced7a8ecc770: taxonomy_term
+default:
+  revision_uid:
+    - target_id: 1
+  status:
+    - value: true
+  uid:
+    - target_id: 1
+  title:
+    - value: "Artikel 5 | tag2, cat2, branch2"
+  created:
+    - value: 1717497685
+  promote:
+    - value: false
+  sticky:
+    - value: false
+  revision_translation_affected:
+    - value: true
+  entity_clone_template_active:
+    - value: false
+  entity_clone_template_image:
+    - entity: e00e1460-169e-468d-9835-d664f06d0969
+      alt: ""
+      title: ""
+      width: 640
+      height: 443
+  metatag:
+    - tag: meta
+      attributes:
+        name: title
+        content: "Artikel 5 | tag2, cat2, branch2 | DPL CMS"
+  path:
+    - alias: /testfilialen/articles/cat2/artikel-5-tag2-cat2-branch2
+      langcode: und
+      pathauto: 1
+  field_branch:
+    - entity: ec9dd467-24d5-484f-b19a-e8653c493177
+  field_categories:
+    - entity: 9df8ee6a-939d-4d8f-9d79-d082b00286ac
+  field_show_override_author:
+    - value: false
+  field_tags:
+    - entity: 5d70c9f7-779c-4337-a587-ced7a8ecc770
