@@ -13,13 +13,17 @@ function dpl_publication_node_presave(NodeInterface $node): void {
   if (!$node->hasField('field_publication_date')) {
     return;
   }
-  /** @var \Drupal\node\NodeInterface|null $original_node */
-  $original_node = $node->original;
+
+  $original_node = $node->original ?? NULL;
+
+  if (!($original_node instanceof NodeInterface)) {
+    return;
+  }
 
   // Only update the publication date, if nothing is set, or if the status is
   // moved to 'published'.
-  if (($node->get('field_publication_date')->isEmpty()) ||
-    $original_node && $node->isPublished() && !$original_node->isPublished()) {
+  if ($node->get('field_publication_date')->isEmpty() ||
+    ($node->isPublished() && !$original_node->isPublished())) {
     $current_date = new DrupalDateTime('now');
     $formatted_date = $current_date->format('Y-m-d');
     $node->set('field_publication_date', $formatted_date);

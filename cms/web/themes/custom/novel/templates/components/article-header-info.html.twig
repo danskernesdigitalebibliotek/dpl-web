@@ -1,4 +1,9 @@
-{% set publication_date = node.field_publication_date.value|date('U') %}
+{% set publication_date = node.created.value %}
+
+{% if node.hasField('field_publication_date') %}
+  {% set publication_date = node.field_publication_date.value|date('U') %}
+{% endif %}
+
 <p class="article-header__info">
     {{ 'By @username'|t({'@username': author_name}) }}
 
