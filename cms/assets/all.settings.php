@@ -60,6 +60,11 @@ $config['dpl_react_apps.settings']['services'] = [
   'material-list' => ['base_url' => 'https://prod.materiallist.dandigbib.org'],
 ];
 
+// Use Danish collation to support proper sorting with Danish characters.
+// Without this ÆØÅ will not be handled properly.
+$databases['default']['default']['charset'] = 'utf8mb4';
+$databases['default']['default']['collation'] = 'utf8mb4_danish_ci';
+
 if (getenv('CI')) {
   // Curl settings needed to make PHP ignore SSL errors when using Wiremock as
   // a proxy. We do not have a proper SSL setup with trusted certificates.
