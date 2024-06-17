@@ -12,12 +12,13 @@ types:
   path_alias: {  }
   eventseries:
     '*': '*'
-  eventinstance:
-    '*': '*'
+  eventinstance: {  }
   search_api_task: {  }
   taxonomy_term: {  }
   user: {  }
   paragraph: {  }
+  redirect: {  }
+  webform_submission: {  }
 types_translation_lock: {  }
 types_js_lock: {  }
 form_op_lock:
@@ -58,5 +59,11 @@ form_op_lock:
     mode: 0
     values: {  }
   paragraph:
+    mode: 0
+    values: {  }
+  redirect:
+    mode: 0
+    values: {  }
+  webform_submission:
     mode: 0
     values: {  }
