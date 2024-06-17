@@ -81,10 +81,11 @@ third_party_settings:
         weight: 0
     group_author:
       children:
+        - field_publication_date
         - uid
         - field_show_override_author
         - field_override_author
-      label: Author
+      label: 'Author & Date'
       region: content
       parent_name: ''
       weight: 9
@@ -132,7 +133,7 @@ content:
     third_party_settings: {  }
   field_override_author:
     type: string_textfield
-    weight: 19
+    weight: 10
     region: content
     settings:
       size: 60
@@ -174,7 +175,7 @@ content:
     third_party_settings: {  }
   field_show_override_author:
     type: boolean_checkbox
-    weight: 18
+    weight: 9
     region: content
     settings:
       display_label: true
@@ -248,7 +249,7 @@ content:
     third_party_settings: {  }
   uid:
     type: select2_entity_reference
-    weight: 17
+    weight: 8
     region: content
     settings:
       width: 100%
