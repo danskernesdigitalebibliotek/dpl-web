@@ -227,12 +227,16 @@ function dpl_paragraphs_preprocess_paragraph__material_grid_automatic(array &$va
     return;
   }
 
-  if (!$paragraph->hasField('field_amount_of_materials') || !$paragraph->hasField('field_material_grid_title') || !$paragraph->hasField('field_cql_search')) {
+  if (!$paragraph->hasField('field_amount_of_materials') ||
+    !$paragraph->hasField('field_material_grid_title') ||
+    !$paragraph->hasField('field_material_grid_description') ||
+    !$paragraph->hasField('field_cql_search')) {
     return;
   }
 
   // Extract field values.
   $material_grid_title = $paragraph->get('field_material_grid_title')->getString();
+  $material_grid_description = $paragraph->get('field_material_grid_description')->getString();
   $cql = $paragraph->get('field_cql_search')->getString();
   $selected_amount_of_materials_for_display = (int) $paragraph->get('field_amount_of_materials')->getString();
 
@@ -248,6 +252,7 @@ function dpl_paragraphs_preprocess_paragraph__material_grid_automatic(array &$va
     '#name' => 'material-grid-automatic',
     '#data' => [
       'title' => $material_grid_title,
+      'description' => $material_grid_description,
       'cql' => $cql,
       'selected-amount-of-materials-for-display' => $selected_amount_of_materials_for_display,
       'button-text' => t('Show all', [], ['context' => 'Material Grid']),
@@ -273,12 +278,16 @@ function dpl_paragraphs_preprocess_paragraph__material_grid_manual(array &$varia
 
   $paragraph = $variables['paragraph'] ?? NULL;
 
-  if (!($paragraph instanceof ParagraphInterface)  || !$paragraph->hasField('field_material_grid_title') || !$paragraph->hasField('field_material_grid_work_ids')) {
+  if (!($paragraph instanceof ParagraphInterface)  ||
+    !$paragraph->hasField('field_material_grid_title') ||
+    !$paragraph->hasField('field_material_grid_description') ||
+    !$paragraph->hasField('field_material_grid_work_ids')) {
     return;
   }
 
   // Extract field values.
   $material_grid_title = $paragraph->get('field_material_grid_title')->getString();
+  $material_grid_description = $paragraph->get('field_material_grid_description')->getString();
   $materials = [];
 
   if (!$paragraph->get('field_material_grid_work_ids')->isEmpty()) {
@@ -306,6 +315,7 @@ function dpl_paragraphs_preprocess_paragraph__material_grid_manual(array &$varia
     '#data' => [
       'materials' => $materials,
       'title' => $material_grid_title,
+      'description' => $material_grid_description,
       'button-text' => t('Show all', [], ['context' => 'Material Grid']),
       'blacklisted-search-branches-config' => $blacklistedSearchBranchesConfig,
       'branches-config' => $branchesConfig,
