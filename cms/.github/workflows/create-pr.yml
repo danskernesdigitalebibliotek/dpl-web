@@ -61,18 +61,13 @@ jobs:
         run: |
           set -e
 
-          declare -a CMDS=(
-              [dpl-design-system]='dev:composer:update-design-system'
-              [dpl-react]='dev:composer:update-react'
-          )
-
-          COMPOSER_TASK_COMMAND=${CMDS[${{ env.PACKAGE_NAME }}]}
-
           echo "COMPOSER_TASK_COMMAND=$COMPOSER_TASK_COMMAND"
           echo "PACKAGE_NAME=${{ env.PACKAGE_NAME }}"
 
-          if [[ -n "${COMPOSER_TASK_COMMAND}" ]]; then
-            echo "COMPOSER_TASK_COMMAND=$COMPOSER_TASK_COMMAND" >> $GITHUB_ENV
+          if [[ "${{ env.PACKAGE_NAME }}" == "dpl-design-system"]]; then
+            echo "COMPOSER_TASK_COMMAND='dev:composer:update-design-system'" >> $GITHUB_ENV
+          elif [[ "${{ env.PACKAGE_NAME }}" == "dpl-react"]]; then
+            echo "COMPOSER_TASK_COMMAND='dev:composer:update-react'" >> $GITHUB_ENV
           else
             echo "::error::Could not resolve composer task command."
             exit 1
