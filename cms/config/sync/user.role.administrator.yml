@@ -23,6 +23,7 @@ dependencies:
   module:
     - administerusersbyrole
     - block
+    - config_perms
     - content_lock
     - cookieinformation
     - dpl_admin
@@ -64,6 +65,7 @@ label: Administrator
 weight: 2
 is_admin: null
 permissions:
+  - 'Administer maintenance mode'
   - 'access administration pages'
   - 'access any webform configuration'
   - 'access content overview'

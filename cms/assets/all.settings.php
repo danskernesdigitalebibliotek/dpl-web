@@ -35,6 +35,7 @@ if (InstallerKernel::installationAttempted()) {
 
 // Exclude development modules from configuration export.
 $settings['config_exclude_modules'] = [
+  'dpl_related_content_tests',
   'dpl_example_content',
   'dpl_example_breadcrumb',
   'devel',
@@ -58,6 +59,11 @@ $config['dpl_react_apps.settings']['services'] = [
   'fbi' => ['base_url' => 'https://fbi-api.dbc.dk/[profile]/graphql'],
   'material-list' => ['base_url' => 'https://prod.materiallist.dandigbib.org'],
 ];
+
+// Use Danish collation to support proper sorting with Danish characters.
+// Without this ÆØÅ will not be handled properly.
+$databases['default']['default']['charset'] = 'utf8mb4';
+$databases['default']['default']['collation'] = 'utf8mb4_danish_ci';
 
 if (getenv('CI')) {
   // Curl settings needed to make PHP ignore SSL errors when using Wiremock as

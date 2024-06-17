@@ -1,0 +1,7 @@
+services:
+  collation_fixer.commands:
+    class: \Drupal\collation_fixer\Commands\CollationFixerCommands
+    arguments:
+      - "@collation_fixer.collation_fixer"
+    tags:
+      - { name: drush.command }

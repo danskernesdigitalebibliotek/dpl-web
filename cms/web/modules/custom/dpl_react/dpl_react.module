@@ -84,20 +84,6 @@ function dpl_react_cover_service_url(): string {
 
 /**
  * Implements hook_theme().
- *
- * @param mixed[] $existing
- *   An array of existing implementations that may be used
- *   for override purposes.
- * @param string $type
- *   Whether a theme, module, etc. is being processed.
- * @param string $theme
- *   The actual name of theme, module, etc. that is being being processed.
- * @param string $path
- *   The directory path of the theme or module,
- *   so that it doesn't need to be looked up.
- *
- * @return mixed[]
- *   An associative array of information about theme implementations.
  */
 function dpl_react_theme(
   array $existing,
