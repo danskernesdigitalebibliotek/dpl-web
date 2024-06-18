@@ -31,6 +31,18 @@ final class EventsResource extends EventResourceBase {
     return NestedArray::mergeDeep(
       parent::getPluginDefinition(),
       [
+        'route_parameters' => [
+          Request::METHOD_GET => [
+            'from_date' => [
+              'name' => 'from_date',
+              'type' => 'string',
+              'format' => 'date',
+              'description' => 'Retrieve events which occur after and including the provided date. In ISO 8601 format.',
+              'in' => 'query',
+              'required' => FALSE,
+            ],
+          ],
+        ],
         'responses' => [
           200 => [
             'description' => 'List of all publicly available events.',
@@ -233,10 +245,22 @@ final class EventsResource extends EventResourceBase {
   public function get(Request $request): Response {
     // Entity query, pulling all eventinstances.
     $storage = $this->entityTypeManager->getStorage('eventinstance');
-    $ids = $storage->getQuery()
+    $query = $storage->getQuery()
       ->accessCheck(FALSE)
       ->condition('status', TRUE)
-      ->execute();
+      ->sort('date.value');
+
+    // Getting a possible from_date URL parameter, and use it in the look-up,
+    // to only find events that start from and after this date.
+    $typed_request = new RequestTyped($request);
+    $from_date = $typed_request->getDateTime('from_date');
+
+    if ($from_date) {
+      $formatted_date = $from_date->format(DateTimeItemInterface::DATETIME_STORAGE_FORMAT);
+      $query->condition('date.value', $formatted_date, '>=');
+    }
+
+    $ids = $query->execute();
 
     $event_responses = [];
 

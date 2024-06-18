@@ -858,6 +858,14 @@
             "required": true,
             "description": "Request format",
             "default": "json"
+          }, 
+          {
+            "name": "from_date",
+            "type": "string",
+            "format": "date",
+            "description": "Retrieve events which occur after and including the provided date. In ISO 8601 format.",
+            "in": "query",
+            "required": false
           }
         ],
         "responses": {
