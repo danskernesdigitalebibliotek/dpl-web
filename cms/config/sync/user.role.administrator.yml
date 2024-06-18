@@ -37,6 +37,7 @@ dependencies:
     - dpl_webform
     - entity_clone
     - entity_reference_revisions
+    - field_inheritance
     - file
     - filter
     - image
@@ -98,6 +99,7 @@ permissions:
   - 'administer cookie information settings'
   - 'administer dpl_footer settings'
   - 'administer dpl_mapp configuration'
+  - 'administer entity field inheritance'
   - 'administer filters'
   - 'administer image styles'
   - 'administer instant loan configuration'

@@ -27,6 +27,7 @@ dependencies:
     - dpl_opening_hours
     - dpl_webform
     - entity_clone
+    - field_inheritance
     - file
     - filter
     - media
@@ -61,6 +62,7 @@ permissions:
   - 'administer advanced webform confirmation settings'
   - 'administer advanced webform element settings'
   - 'administer dpl_footer settings'
+  - 'administer entity field inheritance'
   - 'administer menu'
   - 'administer nodes'
   - 'administer redirects'
