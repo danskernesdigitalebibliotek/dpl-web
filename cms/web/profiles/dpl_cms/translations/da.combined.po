@@ -7,8 +7,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2024-06-18 11:15+0200\n"
-"PO-Revision-Date: 2024-06-18 11:15+0200\n"
+"POT-Creation-Date: 2024-06-18 11:25+0200\n"
+"PO-Revision-Date: 2024-06-18 11:25+0200\n"
 "Last-Translator: NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
 "MIME-Version: 1.0\n"
@@ -4004,6 +4004,12 @@ msgstr "Brugerprofilen viser brugerinformation"
 
 msgid "Change patron page settings"
 msgstr "Skift indstillinger for brugerprofil"
+
+msgid "DPL publication"
+msgstr ""
+
+msgid "Sets the publication date field when content is published.&#039;"
+msgstr ""
 
 msgid "Fees settings"
 msgstr "Indstillinger for gebyrside"
@@ -17549,7 +17555,7 @@ msgstr ""
 msgctxt ""
 "core.entity_form_display.node.article.default:third_party_settings:"
 "field_group:group_author:label"
-msgid "Author"
+msgid "Author & Date"
 msgstr ""
 
 msgctxt ""
@@ -17598,6 +17604,12 @@ msgctxt ""
 "core.entity_form_display.node.page.default:third_party_settings:field_group:"
 "group_teaser_card:label"
 msgid "Teaser card"
+msgstr ""
+
+msgctxt ""
+"core.entity_form_display.node.page.default:third_party_settings:field_group:"
+"group_author_date:label"
+msgid "Author & Date"
 msgstr ""
 
 msgctxt ""
@@ -18356,6 +18368,10 @@ msgctxt "field.field.node.article.field_paragraphs:label"
 msgid "Paragraphs"
 msgstr ""
 
+msgctxt "field.field.node.article.field_publication_date:label"
+msgid "Publication date"
+msgstr ""
+
 msgctxt "field.field.node.article.field_show_override_author:label"
 msgid "Override the author\t"
 msgstr ""
@@ -18509,6 +18525,10 @@ msgstr ""
 
 msgctxt "field.field.node.page.field_paragraphs:label"
 msgid "Paragraphs"
+msgstr ""
+
+msgctxt "field.field.node.page.field_publication_date:label"
+msgid "Publication date"
 msgstr ""
 
 msgctxt "field.field.node.page.field_subtitle:label"
