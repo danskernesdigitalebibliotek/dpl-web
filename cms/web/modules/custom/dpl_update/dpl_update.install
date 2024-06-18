@@ -22,6 +22,7 @@ function dpl_update_install(): string {
   $messages[] = dpl_update_update_10001();
   $messages[] = dpl_update_update_10002();
   $messages[] = dpl_update_update_10003();
+  $messages[] = dpl_update_update_10004();
 
   return implode('\r\n', $messages);
 }
@@ -47,6 +48,13 @@ function dpl_update_update_10002(): string {
  */
 function dpl_update_update_10003(): string {
   return _dpl_update_install_modules(['config_perms']);
+}
+
+/**
+ * Installing dpl_related_content and dpl_publication.
+ */
+function dpl_update_update_10004(): string {
+  return _dpl_update_install_modules(['dpl_related_content', 'dpl_publication']);
 }
 
 /**
