@@ -24,6 +24,7 @@ function dpl_update_install(): string {
   $messages[] = dpl_update_update_10003();
   $messages[] = dpl_update_update_10004();
   $messages[] = dpl_update_update_10005();
+  $messages[] = dpl_update_update_10006();
 
   return implode('\r\n', $messages);
 }
@@ -65,6 +66,13 @@ function dpl_update_update_10005(): string {
   return _dpl_update_install_modules([
     'dpl_publication',
   ]);
+}
+
+/**
+ * Installing verf module.
+ */
+function dpl_update_update_10006(): string {
+  return _dpl_update_install_modules(['verf']);
 }
 
 /**
