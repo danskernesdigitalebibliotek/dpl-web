@@ -17,7 +17,6 @@ third_party_settings:
   field_group:
     group_filters:
       children:
-        - field_filter_cond_type
         - field_filter_tags
         - field_filter_categories
         - field_filter_branches
@@ -57,12 +56,6 @@ content:
       match_operator: CONTAINS
       match_limit: 10
     third_party_settings: {  }
-  field_filter_cond_type:
-    type: options_buttons
-    weight: 14
-    region: content
-    settings: {  }
-    third_party_settings: {  }
   field_filter_content_types:
     type: select2
     weight: 1
@@ -90,4 +83,5 @@ content:
     third_party_settings: {  }
 hidden:
   created: true
+  field_filter_cond_type: true
   status: true
