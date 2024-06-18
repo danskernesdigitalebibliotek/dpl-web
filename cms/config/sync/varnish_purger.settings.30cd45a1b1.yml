@@ -18,5 +18,5 @@ runtime_measurement: true
 timeout: 1.0
 connect_timeout: 1.0
 cooldown_time: 0.0
-max_requests: 100
+max_requests: 30
 http_errors: true
