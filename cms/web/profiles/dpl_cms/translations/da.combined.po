@@ -7,8 +7,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2024-06-17 16:54+0200\n"
-"PO-Revision-Date: 2024-06-17 16:54+0200\n"
+"POT-Creation-Date: 2024-06-18 11:15+0200\n"
+"PO-Revision-Date: 2024-06-18 11:15+0200\n"
 "Last-Translator: NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
 "MIME-Version: 1.0\n"
@@ -162,6 +162,12 @@ msgstr ""
 "Redirect til en side når en bruger har oprettet sig. Du kan tilføje en "
 "relativ sti (f.x. /velkommen). Du kan fremsøge en intern URL. Du kan tilføje "
 "en ekstern URL (begyndende med http:// eller https://)"
+
+msgid "Updated @count automatic paragraphs, setting 'article' as CT default."
+msgstr ""
+
+msgid "Updated @count entities, @source_field => @target_field"
+msgstr ""
 
 msgctxt "Library Agency Configuration"
 msgid "Reservations"
@@ -351,13 +357,6 @@ msgid ""
 msgstr ""
 "Standard interesseperiode skal indstilles i feltet \"Standard "
 "interesseperiode for reserveringer\"."
-
-msgid "Updated @count entities, @source_field => @target_field"
-msgstr ""
-
-msgctxt "DPL admin UX"
-msgid "Event"
-msgstr ""
 
 msgctxt "DPL related content"
 msgid "Related content"
@@ -3247,6 +3246,56 @@ msgstr ""
 msgid "<br /><a href=\":url\">@title</a>"
 msgstr "<br /><a href=\":url\">@title</a>"
 
+msgid "Field work ID"
+msgstr ""
+
+msgid "Field material type"
+msgstr ""
+
+msgctxt "Material search"
+msgid "Search for material"
+msgstr ""
+
+msgctxt "Material search"
+msgid "Select material type"
+msgstr ""
+
+msgctxt "Material search"
+msgid "No material selected"
+msgstr ""
+
+msgctxt "Material search"
+msgid "Title"
+msgstr ""
+
+msgctxt "Material search"
+msgid "Author"
+msgstr ""
+
+msgctxt "Material search"
+msgid "Publication year"
+msgstr ""
+
+msgctxt "Material search"
+msgid "Source"
+msgstr ""
+
+msgctxt "Material search"
+msgid "Work ID"
+msgstr ""
+
+msgctxt "Material search"
+msgid "Loading..."
+msgstr ""
+
+msgctxt "Material search"
+msgid "Total amount of results"
+msgstr ""
+
+msgctxt "Material search"
+msgid "Select work with the title @title"
+msgstr ""
+
 msgid "CQL Search String"
 msgstr ""
 
@@ -3790,6 +3839,9 @@ msgid "CQL Search Formatter"
 msgstr ""
 
 msgid "Work ID Formatter"
+msgstr ""
+
+msgid "Work ID search for material"
 msgstr ""
 
 msgid "CQL Search Widget"
@@ -18532,7 +18584,14 @@ msgstr ""
 
 msgctxt ""
 "field.field.paragraph.card_grid_automatic.field_filter_cond_type:label"
-msgid "Condition type"
+msgid "Condition type (INACTIVE)"
+msgstr ""
+
+msgctxt ""
+"field.field.paragraph.card_grid_automatic.field_filter_cond_type:description"
+msgid ""
+"This field will be used in relation to the dpl_related_content in the "
+"future, but currently has no effect."
 msgstr ""
 
 msgctxt ""
@@ -18582,7 +18641,15 @@ msgstr ""
 
 msgctxt ""
 "field.field.paragraph.content_slider_automatic.field_filter_cond_type:label"
-msgid "Condition type"
+msgid "Condition type (INACTIVE)"
+msgstr ""
+
+msgctxt ""
+"field.field.paragraph.content_slider_automatic.field_filter_cond_type:"
+"description"
+msgid ""
+"This field will be used in relation to the dpl_related_content in the "
+"future, but currently has no effect."
 msgstr ""
 
 msgctxt ""
@@ -18651,7 +18718,14 @@ msgstr ""
 
 msgctxt ""
 "field.field.paragraph.filtered_event_list.field_filter_cond_type:label"
-msgid "Condition type"
+msgid "Condition type (INACTIVE)"
+msgstr ""
+
+msgctxt ""
+"field.field.paragraph.filtered_event_list.field_filter_cond_type:description"
+msgid ""
+"This field will be used in relation to the dpl_related_content in the "
+"future, but currently has no effect."
 msgstr ""
 
 msgctxt "field.field.paragraph.filtered_event_list.field_filter_tags:label"
@@ -20926,6 +21000,83 @@ msgctxt ""
 msgid "Find and manage content"
 msgstr ""
 
+msgctxt "views.view.content_paragraphs:label"
+msgid "Content lists, embedded in Paragraphs"
+msgstr ""
+
+msgctxt "views.view.content_paragraphs:description"
+msgid ""
+"Lists for displaying content, through embedded views in paragraphs. Also "
+"allows the editor to set filter options in the paragraphs, that will be sent "
+"along using contextual filters. See dpl_filter_paragraphs.module"
+msgstr ""
+
+msgctxt "views.view.content_paragraphs:display:default:display_title"
+msgid "Default"
+msgstr ""
+
+msgctxt ""
+"views.view.content_paragraphs:display:default:display_options:exposed_form:"
+"options:submit_button"
+msgid "Apply"
+msgstr ""
+
+msgctxt ""
+"views.view.content_paragraphs:display:default:display_options:exposed_form:"
+"options:reset_button_label"
+msgid "Reset"
+msgstr ""
+
+msgctxt ""
+"views.view.content_paragraphs:display:default:display_options:exposed_form:"
+"options:exposed_sorts_label"
+msgid "Sort by"
+msgstr ""
+
+msgctxt ""
+"views.view.content_paragraphs:display:default:display_options:exposed_form:"
+"options:sort_asc_label"
+msgid "Asc"
+msgstr ""
+
+msgctxt ""
+"views.view.content_paragraphs:display:default:display_options:exposed_form:"
+"options:sort_desc_label"
+msgid "Desc"
+msgstr ""
+
+msgctxt ""
+"views.view.content_paragraphs:display:default:display_options:arguments:"
+"field_tags_target_id:exception:title"
+msgid "All"
+msgstr ""
+
+msgctxt ""
+"views.view.content_paragraphs:display:default:display_options:arguments:"
+"field_categories_target_id:exception:title"
+msgid "All"
+msgstr ""
+
+msgctxt ""
+"views.view.content_paragraphs:display:default:display_options:arguments:"
+"field_branch_target_id:exception:title"
+msgid "All"
+msgstr ""
+
+msgctxt ""
+"views.view.content_paragraphs:display:default:display_options:arguments:type:"
+"exception:title"
+msgid "All"
+msgstr ""
+
+msgctxt "views.view.content_paragraphs:display:card_grid:display_title"
+msgid "Card grid"
+msgstr ""
+
+msgctxt "views.view.content_paragraphs:display:slider:display_title"
+msgid "Slider"
+msgstr ""
+
 msgctxt "views.view.entity_clone_template:label"
 msgid "Entity Clone Template"
 msgstr ""
@@ -22010,6 +22161,68 @@ msgstr ""
 
 msgctxt "views.view.files:display:page_2:display_options:arguments:fid:title"
 msgid "File usage information for {{ arguments.fid }}"
+msgstr ""
+
+msgctxt "views.view.filtered_event_list:label"
+msgid "Filtered events"
+msgstr ""
+
+msgctxt "views.view.filtered_event_list:description"
+msgid ""
+"This view displays a filtered list of upcoming events sorted by date "
+"ascending. Filters include categories, tags and branches"
+msgstr ""
+
+msgctxt "views.view.filtered_event_list:display:default:display_title"
+msgid "Default"
+msgstr ""
+
+msgctxt ""
+"views.view.filtered_event_list:display:default:display_options:exposed_form:"
+"options:submit_button"
+msgid "Apply"
+msgstr ""
+
+msgctxt ""
+"views.view.filtered_event_list:display:default:display_options:exposed_form:"
+"options:reset_button_label"
+msgid "Reset"
+msgstr ""
+
+msgctxt ""
+"views.view.filtered_event_list:display:default:display_options:exposed_form:"
+"options:exposed_sorts_label"
+msgid "Sort by"
+msgstr ""
+
+msgctxt ""
+"views.view.filtered_event_list:display:default:display_options:exposed_form:"
+"options:sort_asc_label"
+msgid "Asc"
+msgstr ""
+
+msgctxt ""
+"views.view.filtered_event_list:display:default:display_options:exposed_form:"
+"options:sort_desc_label"
+msgid "Desc"
+msgstr ""
+
+msgctxt ""
+"views.view.filtered_event_list:display:default:display_options:arguments:"
+"event_tags:exception:title"
+msgid "All"
+msgstr ""
+
+msgctxt ""
+"views.view.filtered_event_list:display:default:display_options:arguments:"
+"event_categories:exception:title"
+msgid "All"
+msgstr ""
+
+msgctxt ""
+"views.view.filtered_event_list:display:default:display_options:arguments:"
+"branch:exception:title"
+msgid "All"
 msgstr ""
 
 msgctxt "views.view.locked_content:label"

@@ -237,6 +237,9 @@ default:
             -
               value: 'work-of:870970-basis:53642101'
               material_type: ''
+  field_publication_date:
+    -
+      value: '2024-02-02'
   field_show_override_author:
     -
       value: false

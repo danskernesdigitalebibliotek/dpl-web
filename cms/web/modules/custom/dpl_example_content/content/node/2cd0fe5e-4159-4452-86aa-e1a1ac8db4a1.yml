@@ -359,6 +359,9 @@ default:
           field_embed_video:
             -
               entity: f0204f0b-1f63-4c76-bb67-e3f7489ee392
+  field_publication_date:
+    -
+      value: '2023-12-14'
   field_show_override_author:
     -
       value: true

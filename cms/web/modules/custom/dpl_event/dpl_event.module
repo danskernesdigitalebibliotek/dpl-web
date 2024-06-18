@@ -17,6 +17,7 @@ use Drupal\dpl_event\Workflows\UnpublishSchedule;
 use Drupal\drupal_typed\DrupalTyped;
 use Drupal\recurring_events\Entity\EventInstance;
 use Drupal\recurring_events\Entity\EventSeries;
+use Safe\DateTime;
 
 /**
  * Implements hook_cron_job_scheduler_info().
@@ -186,18 +187,30 @@ function dpl_event_preprocess_eventseries(array &$variables): void {
     return;
   }
 
-  // Load event instances related to this series and prepare them for rendering.
+  // Load event instances & filter out past events.
   $eventinstances_in_series = $event_series->get('event_instances')->referencedEntities();
+  $current_date = (new DateTime())->setTime(0, 0, 0);
 
+  $eventinstances_in_series_filtered = array_filter($eventinstances_in_series, function ($eventInstance) use ($current_date) {
+    $event_start_date = new DateTime($eventInstance->get('date')->start_date);
+    return $event_start_date >= $current_date;
+  });
+
+  $eventinstances_in_series_filtered = array_values($eventinstances_in_series_filtered);
+
+  $viewBuilder = \Drupal::entityTypeManager()->getViewBuilder('eventinstance');
   $variables['event_instances'] = [];
-  foreach ($eventinstances_in_series as $index => $eventInstance) {
+  foreach ($eventinstances_in_series_filtered as $index => $eventInstance) {
     $viewMode = $index === 0 ? 'list_teaser_stacked_parent' : 'stacked_event';
-
-    $renderable_instances = \Drupal::entityTypeManager()
-      ->getViewBuilder('eventinstance')->view($eventInstance, $viewMode);
-
-    $variables['event_instances'][] = $renderable_instances;
+    $renderable_instance = $viewBuilder->view($eventInstance, $viewMode);
+    $variables['event_instances'][] = $renderable_instance;
   }
+
+  // Add cache tags and 12-hours max-age fallback.
+  $variables['#cache'] = [
+    '#max-age' => (60 * 60 * 12),
+    '#tags' => ['eventinstance_list', 'eventseries_list'],
+  ];
 }
 
 /**

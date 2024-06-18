@@ -23,7 +23,7 @@ default:
     - tag: link
       attributes:
         rel: canonical
-        href: "http://dapple-cms.docker/taxonomy/term/25"
+        href: "/taxonomy/term/25"
   path:
     - alias: ""
       langcode: da

@@ -6,6 +6,7 @@ use Drupal\dpl_related_content\Services\RelatedContent;
 use Drupal\drupal_typed\DrupalTyped;
 use Drupal\node\NodeInterface;
 use Drupal\paragraphs\Entity\Paragraph;
+use Drupal\views\Views;
 
 /**
  * Place a dynamic 'related content' list on articles and eventinstances.
@@ -90,6 +91,16 @@ function dpl_related_content_preprocess_paragraph__filtered_event_list(array &$v
  *   The updated $variables.
  */
 function _dpl_related_content_filter_paragraph(array $variables, RelatedContentListStyle $list_style = RelatedContentListStyle::Slider, ?int $max_items = NULL, ?array $node_bundles = NULL): array {
+  // @todo This code is unused for now. It was merged into develop, but the
+  // functionality regarding RelatedContent+Paragraphs must be deactivated,
+  // to prepare for migration. However, the rest of the RelatedContent
+  // functionality is still relevant.
+  // When removing this, remember to also update
+  // dpl_related_content_field_filter_content_types_options().
+  if (Views::getView('content_paragraphs')) {
+    return $variables;
+  }
+
   $paragraph = $variables['paragraph'] ?? NULL;
   $view_mode = $variables['view_mode'] ?? NULL;
 
@@ -169,8 +180,10 @@ function _dpl_related_content_filter_paragraph(array $variables, RelatedContentL
  *   The options, used in field_filter_content_types dropdown.
  */
 function dpl_related_content_field_filter_content_types_options(): array {
-  $content_types = ['event' => t('Event', [], ['context' => 'DPL admin UX'])];
-
+  // @todo This can first be enabled when RelatedContent is updated to be used
+  // by paragraphs. See _dpl_related_content_filter_paragraph().
+  // $content_types =['event' => t('Event', [], ['context' => 'DPL admin UX'])];
+  $content_types = [];
   $node_types = \Drupal::entityTypeManager()
     ->getStorage('node_type')
     ->loadMultiple();

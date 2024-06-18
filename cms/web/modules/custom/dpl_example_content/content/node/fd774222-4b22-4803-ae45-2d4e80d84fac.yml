@@ -456,3 +456,6 @@ default:
           field_title:
             -
               value: "Hovedbib's arrangementer"
+  field_publication_date:
+    -
+      value: '2024-01-31'
