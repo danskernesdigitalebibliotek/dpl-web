@@ -17,6 +17,9 @@ settings:
     -
       value: and
       label: 'Must match on ALL filters - "AND"'
+    -
+      value: outer_and
+      label: 'Must match in each filter-category - "OUTER-AND"'
   allowed_values_function: ''
 module: options
 locked: false

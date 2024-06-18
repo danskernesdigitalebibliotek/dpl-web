@@ -108,9 +108,19 @@ class RelatedContent {
   private array $resultBasis = [];
 
   /**
-   * If TRUE, the filter conditions will be AND - otherwise, they will be OR.
+   * If TRUE, the outer conditions will be AND - otherwise, they will be OR.
+   *
+   * Outer conditions: "between filters" - e.g. between tags and categories.
    */
-  public bool $andConditions = FALSE;
+  public bool $outerAndConditions = FALSE;
+
+  /**
+   * If TRUE, the filter conditions will be AND - otherwise, they will be OR.
+   *
+   * Inner conditions: "within filters" - e.g. between tag1, tag2 etc.
+   */
+  public bool $innerAndConditions = FALSE;
+
 
   /**
    * If we should allow a simple date lookup if not enough matches are found.
@@ -195,7 +205,7 @@ class RelatedContent {
     $event_ids = [];
     $node_ids = [];
 
-    if ($this->andConditions) {
+    if ($this->outerAndConditions) {
       $node_ids = $this->getNodeIds($this->tags, $this->categories, $this->branches);
       $event_ids = $this->getEventInstanceIds($this->tags, $this->categories, $this->branches);
       $this->resultBasis = ['tags', 'categories', 'branches'];
@@ -330,32 +340,37 @@ class RelatedContent {
       return;
     }
 
-    // If we're creating an OR condition, we need to add the filters in their
-    // own condition group, to not pollute other values, such as UUID check.
-    // If it's an AND condition, it doesn't matter, as all filters will be AND.
-    $or_group = $this->andConditions ? NULL : $query->orConditionGroup();
+    // Creating the group that all the filters will be placed in.
+    $outer_group = $this->outerAndConditions ?
+      $query->andConditionGroup() : $query->orConditionGroup();
 
     foreach ($filters as $field_name => $values) {
       // Get rid of any empty values.
       $values = array_filter($values);
 
-      if ($or_group) {
-        $or_group->condition($field_name, $values, 'IN');
+      // If we have the INNER group as OR, we can just do a simple 'IN' check,
+      // and place it directly on the OUTER group.
+      if (!$this->innerAndConditions) {
+        $outer_group->condition($field_name, $values, 'IN');
         continue;
       }
+
+      // If we reached this stage, innerAndConditions is TRUE, and it means
+      // we need to treat each value as an AND.
+      $inner_group = $query->andConditionGroup();
 
       // Looping through, and adding the values.
       // The reason we add a condition group for every single value, is that
       // it is the only way it creates JOIN for each value, and allows us to
       // make "CONTAINS ALL OF X".
       foreach ($values as $value) {
-        $query->condition($query->andConditionGroup()->condition($field_name, $value));
+        $inner_group->condition($query->andConditionGroup()->condition($field_name, $value));
       }
+
+      $outer_group->condition($inner_group);
     }
 
-    if ($or_group) {
-      $query->condition($or_group);
-    }
+    $query->condition($outer_group);
   }
 
   /**

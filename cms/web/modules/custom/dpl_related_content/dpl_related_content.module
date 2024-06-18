@@ -6,7 +6,6 @@ use Drupal\dpl_related_content\Services\RelatedContent;
 use Drupal\drupal_typed\DrupalTyped;
 use Drupal\node\NodeInterface;
 use Drupal\paragraphs\Entity\Paragraph;
-use Drupal\views\Views;
 
 /**
  * Place a dynamic 'related content' list on articles and eventinstances.
@@ -118,7 +117,24 @@ function _dpl_related_content_filter_paragraph(array $variables, RelatedContentL
 
     // Deciding if we should treat the filters as AND.
     if ($paragraph->hasField('field_filter_cond_type') && !$paragraph->get('field_filter_cond_type')->isEmpty()) {
-      $service->andConditions = ($paragraph->get('field_filter_cond_type')->getString() == 'and');
+      $condition = $paragraph->get('field_filter_cond_type')->getString();
+
+      switch ($condition) {
+        case 'and':
+          $service->innerAndConditions = TRUE;
+          $service->outerAndConditions = TRUE;
+          break;
+
+        case 'or':
+          $service->innerAndConditions = FALSE;
+          $service->outerAndConditions = FALSE;
+          break;
+
+        case 'outer_and':
+          $service->innerAndConditions = FALSE;
+          $service->outerAndConditions = TRUE;
+          break;
+      }
     }
 
     if ($paragraph->hasField('field_filter_content_types') && !$paragraph->get('field_filter_content_types')->isEmpty()) {
