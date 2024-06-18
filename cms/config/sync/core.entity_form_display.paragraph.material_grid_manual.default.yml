@@ -32,7 +32,7 @@ content:
       placeholder: ''
     third_party_settings: {  }
   field_material_grid_work_ids:
-    type: dpl_fbi_work_id_with_type
+    type: dpl_fbi_work_id_search_for_material
     weight: 2
     region: content
     settings: {  }
