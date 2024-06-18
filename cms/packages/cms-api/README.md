@@ -104,6 +104,7 @@ Class | Method | HTTP request | Description
 *DefaultApiInterface* | [**campaignMatchPOST**](docs/Api/DefaultApiInterface.md#campaignmatchpost) | **POST** /dpl_campaign/match | Get campaign matching search result facets
 *DefaultApiInterface* | [**dplOpeningHoursCreatePOST**](docs/Api/DefaultApiInterface.md#dplopeninghourscreatepost) | **POST** /api/v1/opening_hours | Create individual opening hours
 *DefaultApiInterface* | [**dplOpeningHoursDeleteDELETE**](docs/Api/DefaultApiInterface.md#dplopeninghoursdeletedelete) | **DELETE** /api/v1/opening_hours/{id} | Delete individual opening hours
+*DefaultApiInterface* | [**dplOpeningHoursLegacyListGET**](docs/Api/DefaultApiInterface.md#dplopeninghourslegacylistget) | **GET** /opening_hours/instances | List all opening hours for legacy API
 *DefaultApiInterface* | [**dplOpeningHoursListGET**](docs/Api/DefaultApiInterface.md#dplopeninghourslistget) | **GET** /api/v1/opening_hours | List all opening hours
 *DefaultApiInterface* | [**dplOpeningHoursUpdatePATCH**](docs/Api/DefaultApiInterface.md#dplopeninghoursupdatepatch) | **PATCH** /api/v1/opening_hours/{id} | Update individual opening hours
 *DefaultApiInterface* | [**eventPATCH**](docs/Api/DefaultApiInterface.md#eventpatch) | **PATCH** /api/v1/events/{uuid} | Update single events
@@ -120,6 +121,7 @@ Class | Method | HTTP request | Description
  - [CampaignMatchPOSTRequestInnerValuesInner](docs/Model/CampaignMatchPOSTRequestInnerValuesInner.md)
  - [DplOpeningHoursCreatePOSTRequest](docs/Model/DplOpeningHoursCreatePOSTRequest.md)
  - [DplOpeningHoursCreatePOSTRequestRepetition](docs/Model/DplOpeningHoursCreatePOSTRequestRepetition.md)
+ - [DplOpeningHoursLegacyListGET200ResponseInner](docs/Model/DplOpeningHoursLegacyListGET200ResponseInner.md)
  - [DplOpeningHoursListGET200ResponseInner](docs/Model/DplOpeningHoursListGET200ResponseInner.md)
  - [DplOpeningHoursListGET200ResponseInnerCategory](docs/Model/DplOpeningHoursListGET200ResponseInnerCategory.md)
  - [DplOpeningHoursListGET200ResponseInnerRepetition](docs/Model/DplOpeningHoursListGET200ResponseInnerRepetition.md)

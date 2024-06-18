@@ -16,6 +16,7 @@ dependencies:
     - content_lock
     - dpl_admin
     - entity_clone
+    - field_inheritance
     - file
     - filter
     - media
@@ -43,6 +44,7 @@ permissions:
   - 'access taxonomy overview'
   - 'access toolbar'
   - 'add eventseries entity'
+  - 'administer entity field inheritance'
   - 'administer redirects'
   - 'break content lock'
   - 'change own username'

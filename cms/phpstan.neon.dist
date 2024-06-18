@@ -13,6 +13,10 @@ parameters:
     # more detailed typing of.
     - '#.*\:\:(buildForm|getEditableConfigNames|submitForm|validateForm)\(\) .* no value type specified in iterable type array\.#'
     - '#_alter\(\) has parameter \$form with no value type specified in iterable type array\.#'
+    # Drupal *_theme() implementation returns array which we cannot provide more detailed typing of.
+    - '#Function .*_theme\(\) return type has no value type specified in iterable type array\.#'
+    # Drupal *_theme() uses arrays which we cannot provide more detailed typing of.
+    - '#Function .*_theme\(\) has parameter .* with no value type specified in iterable type array\.#'
     # Drupal preprocess functions uses variables array which we cannot provide more detailed typing of.
     - '#Function .*_preprocess_.*\(\) has parameter \$variables with no value type specified in iterable type array\.#'
     # Drupal theme suggestions uses arrays which we cannot provide more detailed typing of.
@@ -63,6 +67,13 @@ parameters:
     -
       message: "#Variable .* might not be defined#"
       path: web/modules/custom/dpl_login/src/OpenIdUserInfoService.php
+    # Ignore options for Drush commands. These are specified using specialized annotations.
+    - '#Method Drupal\\.*\Commands\\.* has parameter \$options with no value type specified in iterable type array\.#'
+    # Ignore safe check for collation_fixer. We plan to upstream it and do not want to add this dependency.
+    -
+      message: "#thecodingmachine\/safe#"
+      path: web/modules/custom/collation_fixer
+
   scanFiles:
     # Needed to make locale_translation_batch_fetch_finished() discoverable.
     - web/core/modules/locale/locale.batch.inc

@@ -6,33 +6,22 @@ dependencies:
     - field.field.paragraph.filtered_event_list.field_amount_of_events
     - field.field.paragraph.filtered_event_list.field_filter_branches
     - field.field.paragraph.filtered_event_list.field_filter_categories
+    - field.field.paragraph.filtered_event_list.field_filter_cond_type
     - field.field.paragraph.filtered_event_list.field_filter_tags
+    - field.field.paragraph.filtered_event_list.field_max_item_amount
     - field.field.paragraph.filtered_event_list.field_title
     - paragraphs.paragraphs_type.filtered_event_list
-  module:
-    - options
 id: paragraph.filtered_event_list.default
 targetEntityType: paragraph
 bundle: filtered_event_list
 mode: default
-content:
-  field_amount_of_events:
-    type: list_default
-    label: above
-    settings: {  }
-    third_party_settings: {  }
-    weight: 1
-    region: content
-  field_title:
-    type: string
-    label: hidden
-    settings:
-      link_to_entity: false
-    third_party_settings: {  }
-    weight: 0
-    region: content
+content: {  }
 hidden:
+  field_amount_of_events: true
   field_filter_branches: true
   field_filter_categories: true
+  field_filter_cond_type: true
   field_filter_tags: true
+  field_max_item_amount: true
+  field_title: true
   search_api_excerpt: true

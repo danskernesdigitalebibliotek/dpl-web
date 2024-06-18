@@ -1,3 +1,9 @@
+{% set publication_date = node.created.value %}
+
+{% if node.hasField('field_publication_date') %}
+  {% set publication_date = node.field_publication_date.value|date('U') %}
+{% endif %}
+
 {% include '@novel/components/list-item.html.twig'
   with {
   attributes: attributes,
@@ -6,7 +12,7 @@
   title: label.0,
   image: content.field_teaser_image.0,
   categories: content.field_categories,
-  date: node.changed.value|date('U')|format_date('date_short_month'),
+  date: publication_date|format_date('date_short_month'),
   description: content.field_subtitle,
   bottom: content.field_branch,
 } only %}

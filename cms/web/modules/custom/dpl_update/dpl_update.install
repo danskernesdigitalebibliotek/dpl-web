@@ -9,6 +9,9 @@
  * config_ignore as library administrators can add their own modules.
  */
 
+use Drupal\Core\Extension\ModuleInstallerInterface;
+use Drupal\drupal_typed\DrupalTyped;
+
 /**
  * Run on the initial site setup.
  *
@@ -17,6 +20,11 @@
  */
 function dpl_update_install(): string {
   $messages[] = dpl_update_update_10001();
+  $messages[] = dpl_update_update_10002();
+  $messages[] = dpl_update_update_10003();
+  $messages[] = dpl_update_update_10004();
+  $messages[] = dpl_update_update_10005();
+  $messages[] = dpl_update_update_10006();
 
   return implode('\r\n', $messages);
 }
@@ -27,7 +35,57 @@ function dpl_update_install(): string {
  * This is mostly here as an example for how to enable modules in the future.
  */
 function dpl_update_update_10001(): string {
-  \Drupal::service('module_installer')->install(['config_ignore_auto']);
+  return _dpl_update_install_modules(['config_ignore_auto']);
+}
 
-  return 'Module config_ignore_auto has been enabled.';
+/**
+ * Install collation_fixer module.
+ */
+function dpl_update_update_10002(): string {
+  return _dpl_update_install_modules(['collation_fixer']);
+}
+
+/**
+ * Installing config_perms module.
+ */
+function dpl_update_update_10003(): string {
+  return _dpl_update_install_modules(['config_perms']);
+}
+
+/**
+ * Installing dpl_filter_paragraphs and dpl_related_content modules.
+ */
+function dpl_update_update_10004(): string {
+  return _dpl_update_install_modules(['dpl_filter_paragraphs', 'dpl_related_content']);
+}
+
+/**
+ * Installing dpl_publication.
+ */
+function dpl_update_update_10005(): string {
+  return _dpl_update_install_modules([
+    'dpl_publication',
+  ]);
+}
+
+/**
+ * Installing verf module.
+ */
+function dpl_update_update_10006(): string {
+  return _dpl_update_install_modules(['verf']);
+}
+
+/**
+ * Helper function to install modules.
+ *
+ * @param string[] $modules
+ *   The modules to install.
+ *
+ * @return string
+ *   The feedback message.
+ */
+function _dpl_update_install_modules(array $modules): string {
+  DrupalTyped::service(ModuleInstallerInterface::class, 'module_installer')->install($modules);
+  $modules_string = implode(', ', $modules);
+  return "Enabled modules: {$modules_string}.";
 }

@@ -5,9 +5,11 @@ dependencies:
   config:
     - field.field.paragraph.material_grid_automatic.field_amount_of_materials
     - field.field.paragraph.material_grid_automatic.field_cql_search
+    - field.field.paragraph.material_grid_automatic.field_material_grid_description
     - field.field.paragraph.material_grid_automatic.field_material_grid_title
     - paragraphs.paragraphs_type.material_grid_automatic
   module:
+    - dpl_fbi
     - options
 id: paragraph.material_grid_automatic.default
 targetEntityType: paragraph
@@ -16,6 +18,20 @@ mode: default
 content:
   field_amount_of_materials:
     type: list_default
+    label: above
+    settings: {  }
+    third_party_settings: {  }
+    weight: 2
+    region: content
+  field_cql_search:
+    type: cql_search_formatter
+    label: above
+    settings: {  }
+    third_party_settings: {  }
+    weight: 3
+    region: content
+  field_material_grid_description:
+    type: basic_string
     label: above
     settings: {  }
     third_party_settings: {  }
@@ -30,5 +46,4 @@ content:
     weight: 0
     region: content
 hidden:
-  field_cql_search: true
   search_api_excerpt: true

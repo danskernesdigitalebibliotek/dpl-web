@@ -40,10 +40,10 @@
             "type": "package",
             "package": {
                 "name": "danskernesdigitalebibliotek/dpl-react",
-                "version": "2024.24.0",
+                "version": "2024.25.0",
                 "type": "drupal-library",
                 "dist": {
-                    "url": "https://github.com/danskernesdigitalebibliotek/dpl-react/releases/download/2024.24.0/dist-2024-24-0-b4521a6ffe2a7a647bd3d230b41effd6150cc658.zip",
+                    "url": "https://github.com/danskernesdigitalebibliotek/dpl-react/releases/download/2024.25.0/dist-2024-25-0-c522214d040e91df6a847e19dfcd77ae3321db93.zip",
                     "type": "zip"
                 },
                 "require": {
@@ -56,9 +56,9 @@
             "package": {
                 "name": "danskernesdigitalebibliotek/dpl-design-system",
                 "type": "drupal-library",
-                "version": "2024.24.0",
+                "version": "2024.25.0",
                 "dist": {
-                    "url": "https://github.com/danskernesdigitalebibliotek/dpl-design-system/releases/download/2024.24.0/dist-2024-24-0-a0dc4c3e07c1ed827a21261d75ffebc87f50e8e9.zip",
+                    "url": "https://github.com/danskernesdigitalebibliotek/dpl-design-system/releases/download/2024.25.0/dist-2024-25-0-44a88057ebe723f137f5ebe751cf0b6953c029b3.zip",
                     "type": "zip"
                 }
             }
@@ -88,8 +88,8 @@
         "composer/installers": "1.12.0",
         "cweagans/composer-patches": "1.7.3",
         "danskernesdigitalebibliotek/cms-api": "*",
-        "danskernesdigitalebibliotek/dpl-design-system": "^2024.24",
-        "danskernesdigitalebibliotek/dpl-react": "^2024.24",
+        "danskernesdigitalebibliotek/dpl-design-system": "2024.25.0",
+        "danskernesdigitalebibliotek/dpl-react": "2024.25.0",
         "danskernesdigitalebibliotek/fbs-client": "*",
         "dealerdirect/phpcodesniffer-composer-installer": "^0.7.1",
         "deoliveiralucas/array-keys-case-transform": "^1.1",
@@ -102,6 +102,7 @@
         "drupal/config_filter": "^2.6",
         "drupal/config_ignore": "^3",
         "drupal/config_ignore_auto": "^3",
+        "drupal/config_perms": "^2.1",
         "drupal/config_translation_po": "^1.0",
         "drupal/content_lock": "^2.3",
         "drupal/cookieinformation": "^2.1",
@@ -159,6 +160,7 @@
         "drupal/upgrade_status": "^4.0",
         "drupal/uuid_url": "^1.3",
         "drupal/varnish_purge": "^2.2",
+        "drupal/verf": "^2.0",
         "drupal/view_unpublished": "^1.1",
         "drupal/views_infinite_scroll": "^2.0",
         "drupal/webform": "^6.2",
@@ -288,7 +290,8 @@
                 "2259567: Support SVG files for theme logo setting": "https://www.drupal.org/files/issues/2023-05-08/2259567-168.patch",
                 "296693: Restrict access to empty top level administration pages": "https://www.drupal.org/files/issues/2023-08-31/296693-10.1.x_0.patch",
                 "3035578: Add details for AJAX response errors": "https://www.drupal.org/files/issues/2023-07-24/3035578-26.patch",
-                "Always assume chmod succeeds": "patches/core-304fd8b-chmod-true.patch"
+                "Always assume chmod succeeds": "patches/core-304fd8b-chmod-true.patch",
+                "Debug Form triggering element detection": "patches/form-triggering-element-detection-paragraphs-ee.patch"
             },
             "drupal/date_range_formatter": {
                 "3309324: Fails when start and end date are identical": "https://www.drupal.org/files/issues/2023-12-22/date_range_formatter_3309324_1.patch"
@@ -305,6 +308,9 @@
             },
             "drupal/entity_clone_template": {
                 "3424597: Fix error when creating entity of type without templates": "https://git.drupalcode.org/project/entity_clone_template/-/merge_requests/3.patch"
+            },
+            "drupal/field_inheritance": {
+                "3454350: Create seperate permission for adding field inheritance": "https://www.drupal.org/files/issues/2024-06-13/field_inheritance_permission.patch"
             },
             "drupal/focal_point": {
                 "3162210: Preview link accidentally closes the media library": "https://www.drupal.org/files/issues/2020-10-11/preview_link_accidentally_closes_the_media_library-3162210-19.patch"
@@ -344,7 +350,8 @@
             },
             "drupal/recurring_events": {
                 "3178696: Make compatible with Scheduler": "https://git.drupalcode.org/project/recurring_events/-/merge_requests/86.patch",
-                "3416436: Avoid array conversion warning when daily events are disabled": "https://git.drupalcode.org/project/recurring_events/-/commit/832ae52f135dd3f205eb74acf2d3715fb443e759.patch"
+                "3416436: Avoid array conversion warning when daily events are disabled": "https://git.drupalcode.org/project/recurring_events/-/commit/832ae52f135dd3f205eb74acf2d3715fb443e759.patch",
+                "3451613: Start date of weekly reccurring event jumps incorrectly": "https://git.drupalcode.org/project/recurring_events/-/commit/581c53dd1b0b067a8b6454d76cc0187887f7b187.patch"
             },
             "drupal/theme_permission": {
                 "3105637: Edit, install and uninstall permission": "https://www.drupal.org/files/issues/2024-02-01/theme-permission-edit-install-uninstall-3105637-7.patch"

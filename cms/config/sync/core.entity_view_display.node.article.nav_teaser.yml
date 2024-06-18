@@ -9,6 +9,7 @@ dependencies:
     - field.field.node.article.field_categories
     - field.field.node.article.field_override_author
     - field.field.node.article.field_paragraphs
+    - field.field.node.article.field_publication_date
     - field.field.node.article.field_show_override_author
     - field.field.node.article.field_subtitle
     - field.field.node.article.field_tags
@@ -35,6 +36,7 @@ hidden:
   field_categories: true
   field_override_author: true
   field_paragraphs: true
+  field_publication_date: true
   field_show_override_author: true
   field_tags: true
   field_teaser_image: true

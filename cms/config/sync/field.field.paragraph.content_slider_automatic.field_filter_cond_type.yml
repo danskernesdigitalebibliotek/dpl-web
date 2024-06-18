@@ -1,0 +1,23 @@
+uuid: 572b805f-a805-4d06-9f99-4e1cb64f996a
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.paragraph.field_filter_cond_type
+    - paragraphs.paragraphs_type.content_slider_automatic
+  module:
+    - options
+id: paragraph.content_slider_automatic.field_filter_cond_type
+field_name: field_filter_cond_type
+entity_type: paragraph
+bundle: content_slider_automatic
+label: 'Condition type (INACTIVE)'
+description: 'This field will be used in relation to the dpl_related_content in the future, but currently has no effect.'
+required: true
+translatable: false
+default_value:
+  -
+    value: or
+default_value_callback: ''
+settings: {  }
+field_type: list_string

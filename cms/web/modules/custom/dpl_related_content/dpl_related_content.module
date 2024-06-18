@@ -1,0 +1,228 @@
+<?php
+
+use Drupal\Core\Entity\FieldableEntityInterface;
+use Drupal\dpl_related_content\RelatedContentListStyle;
+use Drupal\dpl_related_content\Services\RelatedContent;
+use Drupal\drupal_typed\DrupalTyped;
+use Drupal\node\NodeInterface;
+use Drupal\paragraphs\Entity\Paragraph;
+use Drupal\views\Views;
+
+/**
+ * Place a dynamic 'related content' list on articles and eventinstances.
+ *
+ * Content displayed is based on the field values of the current page entity.
+ */
+function dpl_related_content_preprocess_page(array &$variables): void {
+  $route_name = \Drupal::routeMatch()->getRouteName();
+
+  // We only want to display the related content list on eventinstances, OR
+  // on article nodes.
+  if ($route_name === 'entity.node.canonical') {
+    $entity = \Drupal::routeMatch()->getParameter('node');
+
+    if (!($entity instanceof NodeInterface) || $entity->bundle() !== 'article') {
+      return;
+    }
+  }
+  elseif ($route_name === 'entity.eventinstance.canonical') {
+    $entity = \Drupal::routeMatch()->getParameter('eventinstance');
+  }
+  else {
+    return;
+  }
+
+  if (!($entity instanceof FieldableEntityInterface)) {
+    return;
+  }
+
+  try {
+    $service = DrupalTyped::service(RelatedContent::class, 'dpl_related_content.related_content');
+    $service->setListStyle(RelatedContentListStyle::Slider);
+
+    $variables['related_content'] = $service->getContentFromEntity($entity);
+  }
+  catch (\Exception $e) {
+    \Drupal::logger('dpl_related_content')->error(
+      'Could not render related content list. Exception: @exception',
+      ['@exception' => $e->getMessage()]
+    );
+  }
+}
+
+/**
+ * Implements theme_preprocess_paragraph__NAME().
+ */
+function dpl_related_content_preprocess_paragraph__card_grid_automatic(array &$variables): void {
+  $variables = _dpl_related_content_filter_paragraph($variables, list_style: RelatedContentListStyle::Grid);
+}
+
+/**
+ * Implements theme_preprocess_paragraph__NAME().
+ */
+function dpl_related_content_preprocess_paragraph__content_slider_automatic(array &$variables): void {
+  $variables = _dpl_related_content_filter_paragraph($variables, list_style: RelatedContentListStyle::Slider);
+}
+
+/**
+ * Implements hook_preprocess_HOOK() for paragraph__filtered_list_event.
+ */
+function dpl_related_content_preprocess_paragraph__filtered_event_list(array &$variables): void {
+  $variables = _dpl_related_content_filter_paragraph(
+    $variables, list_style: RelatedContentListStyle::EventList, max_items: 16, node_bundles: []
+  );
+}
+
+/**
+ * Prepare a 'filter' paragraph, and load the RelatedContent list.
+ *
+ * @param array<mixed> $variables
+ *   The variables, from the preprocess hook.
+ * @param \Drupal\dpl_related_content\RelatedContentListStyle $list_style
+ *   The style you want the list to be shown in.
+ * @param int|null $max_items
+ *   May be overriden by field_max_item_amount on the paragraph.
+ * @param string[] $node_bundles
+ *   The node bundles (e.g. 'article'), that we want to include.
+ *   Use this to disable nodes all together, by setting empty array.
+ *   Setting NULL will let RelatedContent decide.
+ *
+ * @return array<mixed>
+ *   The updated $variables.
+ */
+function _dpl_related_content_filter_paragraph(array $variables, RelatedContentListStyle $list_style = RelatedContentListStyle::Slider, ?int $max_items = NULL, ?array $node_bundles = NULL): array {
+  // @todo This code is unused for now. It was merged into develop, but the
+  // functionality regarding RelatedContent+Paragraphs must be deactivated,
+  // to prepare for migration. However, the rest of the RelatedContent
+  // functionality is still relevant.
+  // When removing this, remember to also update
+  // dpl_related_content_field_filter_content_types_options().
+  if (Views::getView('content_paragraphs')) {
+    return $variables;
+  }
+
+  $paragraph = $variables['paragraph'] ?? NULL;
+  $view_mode = $variables['view_mode'] ?? NULL;
+
+  if ($view_mode === 'preview' || !($paragraph instanceof Paragraph)) {
+    return $variables;
+  }
+
+  try {
+    $service = DrupalTyped::service(RelatedContent::class, 'dpl_related_content.related_content');
+    $service->setListStyle($list_style);
+
+    $service->excludedUuid = $paragraph->getParentEntity()?->uuid();
+
+    if (is_array($node_bundles)) {
+      $service->nodeBundles = $node_bundles;
+    }
+
+    if (!empty($max_items)) {
+      $service->maxItems = $max_items;
+    }
+
+    if ($paragraph->hasField('field_title')) {
+      $service->title = $paragraph->get('field_title')->getString();
+    }
+
+    // Deciding if we should treat the filters as AND.
+    if ($paragraph->hasField('field_filter_cond_type') && !$paragraph->get('field_filter_cond_type')->isEmpty()) {
+      $service->andConditions = ($paragraph->get('field_filter_cond_type')->getString() == 'and');
+    }
+
+    if ($paragraph->hasField('field_filter_content_types') && !$paragraph->get('field_filter_content_types')->isEmpty()) {
+      // Turning 'xx, yy, zz' into an array.
+      $content_types = explode(', ', $paragraph->get('field_filter_content_types')->getString());
+
+      $service->includeEvents = in_array('event', $content_types);
+
+      $service->nodeBundles = $content_types;
+    }
+
+    if ($paragraph->hasField('field_filter_tags') && !$paragraph->get('field_filter_tags')->isEmpty()) {
+      $service->setTags($paragraph->get('field_filter_tags')->referencedEntities());
+      $service->allowDateFallback = FALSE;
+    }
+
+    if ($paragraph->hasField('field_filter_categories') && !$paragraph->get('field_filter_categories')->isEmpty()) {
+      $service->setCategories($paragraph->get('field_filter_categories')->referencedEntities());
+      $service->allowDateFallback = FALSE;
+    }
+
+    if ($paragraph->hasField('field_filter_branches') && !$paragraph->get('field_filter_branches')->isEmpty()) {
+      $service->setBranches($paragraph->get('field_filter_branches')->referencedEntities());
+      $service->allowDateFallback = FALSE;
+    }
+
+    if ($paragraph->hasField('field_max_item_amount') && !$paragraph->get('field_max_item_amount')->isEmpty()) {
+      $service->maxItems = intval($paragraph->get('field_max_item_amount')->getString());
+    }
+
+    $variables['content']['view'] = $service->getContent();
+  }
+  catch (\Exception $e) {
+    \Drupal::logger('dpl_related_content')->error(
+      'Could not render related content list. Exception: @exception',
+      ['@exception' => $e->getMessage()]
+    );
+  }
+
+  return $variables;
+}
+
+/**
+ * Used as dynamic list options (allowed_values_function) for a field.
+ *
+ * See field.storage.paragraph.field_filter_content_types.yml for more info.
+ *
+ * @return array<int|string, \Drupal\Core\StringTranslation\TranslatableMarkup|string|null>
+ *   The options, used in field_filter_content_types dropdown.
+ */
+function dpl_related_content_field_filter_content_types_options(): array {
+  // @todo This can first be enabled when RelatedContent is updated to be used
+  // by paragraphs. See _dpl_related_content_filter_paragraph().
+  // $content_types =['event' => t('Event', [], ['context' => 'DPL admin UX'])];
+  $content_types = [];
+  $node_types = \Drupal::entityTypeManager()
+    ->getStorage('node_type')
+    ->loadMultiple();
+
+  $allowed_node_types = ['article', 'page'];
+
+  foreach ($node_types as $node_type) {
+    if (in_array($node_type->id(), $allowed_node_types)) {
+      $content_types[$node_type->id()] = $node_type->label();
+    }
+  }
+
+  return $content_types;
+}
+
+/**
+ * Implements hook_theme().
+ */
+function dpl_related_content_theme(array $existing, string $type, string $theme, string $path): array {
+  return [
+    'dpl_related_content' => [
+      'variables' => [
+        'title' => NULL,
+        'items' => [],
+        'result_basis' => [],
+        'list_style' => RelatedContentListStyle::Slider,
+      ],
+    ],
+  ];
+}
+
+/**
+ * Implements hook_theme_suggestions_HOOK_alter().
+ */
+function dpl_related_content_theme_suggestions_dpl_related_content_alter(array &$suggestions, array $variables): void {
+  $list_style = $variables['list_style'] ?? RelatedContentListStyle::Slider;
+  if (!($list_style instanceof RelatedContentListStyle)) {
+    return;
+  }
+
+  $suggestions[] = "dpl_related_content__{$list_style->value}";
+}
