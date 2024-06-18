@@ -18,11 +18,9 @@ third_party_settings:
   field_group:
     group_filters:
       children:
-        - field_filter_cond_type
         - field_filter_tags
         - field_filter_categories
         - field_filter_branches
-        - field_filter_content_types
         - field_max_item_amount
       label: Filters
       region: content
@@ -60,12 +58,6 @@ content:
       match_operator: CONTAINS
       match_limit: 10
     third_party_settings: {  }
-  field_filter_cond_type:
-    type: options_buttons
-    weight: 9
-    region: content
-    settings: {  }
-    third_party_settings: {  }
   field_filter_tags:
     type: select2_entity_reference
     weight: 10
@@ -94,4 +86,5 @@ content:
 hidden:
   created: true
   field_amount_of_events: true
+  field_filter_cond_type: true
   status: true
