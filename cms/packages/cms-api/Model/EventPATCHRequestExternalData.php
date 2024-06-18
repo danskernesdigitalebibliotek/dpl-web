@@ -46,7 +46,7 @@ use JMS\Serializer\Annotation\SerializedName;
 class EventPATCHRequestExternalData 
 {
         /**
-     * An absolute url provided by the third party where end users can access the event.
+     * An absolute URL provided by the third party where end users can access the event.
      *
      * @var string|null
      * @SerializedName("url")
@@ -56,7 +56,7 @@ class EventPATCHRequestExternalData
     protected ?string $url = null;
 
     /**
-     * An absolute url provided by the third party where editorial users can administer the event. Accessing this url should require authentication.
+     * An absolute URL provided by the third party where editorial users can administer the event. Accessing this URL should require authentication.
      *
      * @var string|null
      * @SerializedName("admin_url")
@@ -92,7 +92,7 @@ class EventPATCHRequestExternalData
     /**
      * Sets url.
      *
-     * @param string|null $url  An absolute url provided by the third party where end users can access the event.
+     * @param string|null $url  An absolute URL provided by the third party where end users can access the event.
      *
      * @return $this
      */
@@ -118,7 +118,7 @@ class EventPATCHRequestExternalData
     /**
      * Sets adminUrl.
      *
-     * @param string|null $adminUrl  An absolute url provided by the third party where editorial users can administer the event. Accessing this url should require authentication.
+     * @param string|null $adminUrl  An absolute URL provided by the third party where editorial users can administer the event. Accessing this URL should require authentication.
      *
      * @return $this
      */
