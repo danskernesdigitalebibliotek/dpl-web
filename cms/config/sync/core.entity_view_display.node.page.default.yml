@@ -8,11 +8,13 @@ dependencies:
     - field.field.node.page.field_display_titles
     - field.field.node.page.field_hero_title
     - field.field.node.page.field_paragraphs
+    - field.field.node.page.field_publication_date
     - field.field.node.page.field_subtitle
     - field.field.node.page.field_teaser_image
     - field.field.node.page.field_teaser_text
     - node.type.page
   module:
+    - datetime
     - user
 id: node.page.default
 targetEntityType: node
@@ -34,6 +36,15 @@ content:
       link: true
     third_party_settings: {  }
     weight: 110
+    region: content
+  field_publication_date:
+    type: datetime_default
+    label: above
+    settings:
+      timezone_override: ''
+      format_type: medium
+    third_party_settings: {  }
+    weight: 113
     region: content
   field_teaser_image:
     type: entity_reference_label
