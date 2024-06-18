@@ -34,6 +34,13 @@ content:
     third_party_settings: {  }
     weight: 3
     region: content
+  field_filter_cond_type:
+    type: list_default
+    label: above
+    settings: {  }
+    third_party_settings: {  }
+    weight: 5
+    region: content
   field_filter_content_types:
     type: list_default
     label: above
@@ -58,5 +65,4 @@ content:
     weight: 0
     region: content
 hidden:
-  field_filter_cond_type: true
   search_api_excerpt: true
