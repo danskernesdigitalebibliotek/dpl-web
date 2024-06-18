@@ -239,6 +239,19 @@ material-grid-manual:
     - dpl_react/base
     - dpl_react/handler
 
+material-search:
+  remote: https://github.com/danskernesdigitalebibliotek/dpl-react
+  license:
+    name: GNU AFFERO
+    url: https://github.com/danskernesdigitalebibliotek/dpl-react/blob/master/LICENSE
+    gpl-compatible: true
+  js:
+    /libraries/dpl-react/MaterialSearch.js: {}
+  dependencies:
+    - dpl_react/base
+    - dpl_react/admin_base
+    - dpl_react/handler
+
 opening-hours-editor:
   remote: https://github.com/danskernesdigitalebibliotek/dpl-react
   license:
@@ -247,12 +260,9 @@ opening-hours-editor:
     gpl-compatible: true
   js:
     /libraries/dpl-react/OpeningHoursEditor.js: {}
-  css:
-    base:
-      /themes/custom/novel/assets/dpl-design-system/css/opening-hours-editor.css:
-        {}
   dependencies:
     - dpl_react/base
+    - dpl_react/admin_base
     - dpl_react/handler
 
 menu:
@@ -280,6 +290,11 @@ base:
   css:
     theme:
       /libraries/dpl-react/components.css: {}
+
+admin_base:
+  css:
+    theme:
+      /themes/custom/novel/assets/dpl-design-system/css/admin-base.css: {}
 
 handler:
   js:

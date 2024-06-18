@@ -9,6 +9,7 @@ use Drupal\Core\Entity\FieldableEntityInterface;
 use Drupal\Core\Language\LanguageManagerInterface;
 use Drupal\Core\Link;
 use Drupal\Core\StringTranslation\TranslationInterface;
+use Drupal\node\NodeInterface;
 use Drupal\pathauto\AliasCleanerInterface;
 use Drupal\recurring_events\Entity\EventInstance;
 use Drupal\taxonomy\TermInterface;
@@ -443,6 +444,7 @@ class BreadcrumbHelper {
     $query = $node_storage->getQuery();
     $nids = $query
       ->condition($field_name, $breadcrumb_item->id())
+      ->condition('status', NodeInterface::PUBLISHED)
       ->accessCheck(TRUE)
       ->sort('title', 'ASC')
       ->execute();

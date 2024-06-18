@@ -7,8 +7,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2024-06-17 16:54+0200\n"
-"PO-Revision-Date: 2024-06-17 16:54+0200\n"
+"POT-Creation-Date: 2024-06-18 10:34+0200\n"
+"PO-Revision-Date: 2024-06-18 10:34+0200\n"
 "Last-Translator: NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
 "MIME-Version: 1.0\n"
@@ -3247,6 +3247,56 @@ msgstr ""
 msgid "<br /><a href=\":url\">@title</a>"
 msgstr "<br /><a href=\":url\">@title</a>"
 
+msgid "Field work ID"
+msgstr ""
+
+msgid "Field material type"
+msgstr ""
+
+msgctxt "Material search"
+msgid "Search for material"
+msgstr ""
+
+msgctxt "Material search"
+msgid "Select material type"
+msgstr ""
+
+msgctxt "Material search"
+msgid "No material selected"
+msgstr ""
+
+msgctxt "Material search"
+msgid "Title"
+msgstr ""
+
+msgctxt "Material search"
+msgid "Author"
+msgstr ""
+
+msgctxt "Material search"
+msgid "Publication year"
+msgstr ""
+
+msgctxt "Material search"
+msgid "Source"
+msgstr ""
+
+msgctxt "Material search"
+msgid "Work ID"
+msgstr ""
+
+msgctxt "Material search"
+msgid "Loading..."
+msgstr ""
+
+msgctxt "Material search"
+msgid "Total amount of results"
+msgstr ""
+
+msgctxt "Material search"
+msgid "Select work with the title @title"
+msgstr ""
+
 msgid "CQL Search String"
 msgstr ""
 
@@ -3790,6 +3840,9 @@ msgid "CQL Search Formatter"
 msgstr ""
 
 msgid "Work ID Formatter"
+msgstr ""
+
+msgid "Work ID search for material"
 msgstr ""
 
 msgid "CQL Search Widget"

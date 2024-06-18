@@ -23,6 +23,7 @@ function dpl_update_install(): string {
   $messages[] = dpl_update_update_10002();
   $messages[] = dpl_update_update_10003();
   $messages[] = dpl_update_update_10004();
+  $messages[] = dpl_update_update_10005();
 
   return implode('\r\n', $messages);
 }
@@ -51,10 +52,19 @@ function dpl_update_update_10003(): string {
 }
 
 /**
- * Installing dpl_related_content and dpl_publication.
+ * Installing dpl_filter_paragraphs and dpl_related_content modules.
  */
 function dpl_update_update_10004(): string {
-  return _dpl_update_install_modules(['dpl_related_content', 'dpl_publication']);
+  return _dpl_update_install_modules(['dpl_filter_paragraphs', 'dpl_related_content']);
+}
+
+/**
+ * Installing dpl_publication.
+ */
+function dpl_update_update_10005(): string {
+  return _dpl_update_install_modules([
+    'dpl_publication',
+  ]);
 }
 
 /**
