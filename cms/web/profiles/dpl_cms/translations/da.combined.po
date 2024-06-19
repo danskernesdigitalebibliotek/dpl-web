@@ -1710,7 +1710,7 @@ msgstr "Opret bruger"
 #: 
 msgctxt "Patron menu (aria)"
 msgid "Open user menu"
-msgstr "Åbn brugermenu"
+msgstr "Åben Log ind-menuen"
 
 #: 
 msgctxt "Patron menu (aria)"
@@ -26943,7 +26943,7 @@ msgstr "Inputfelt @inputNumber"
 #: 
 msgctxt "Patron menu (aria)"
 msgid "Open login menu"
-msgstr "Åben login menuen"
+msgstr "Åben brugermenuen"
 
 #: 
 msgctxt "Dashboard"
