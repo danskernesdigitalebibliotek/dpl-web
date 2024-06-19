@@ -16174,7 +16174,7 @@ msgstr "En beskrivelse af hvad der er på billedet, ikke en billedtekst. Hvis si
 
 #: 
 msgid "Article publication date & time"
-msgstr "Artiklens publiseringsdato & -tid"
+msgstr "Artiklens publiceringsdato & -tid"
 
 #: 
 msgid "The date this content was published on, with an optional time value. Needs to be in <a href='https://en.wikipedia.org/wiki/ISO_8601'>ISO 8601</a> format."
@@ -20341,7 +20341,7 @@ msgstr "Indstil planlagt dato for publicering"
 
 #: 
 msgid "The node for unpublishing via Scheduler."
-msgstr "Noden til afpublisering via Scheduler."
+msgstr "Noden til afpublicering via Scheduler."
 
 #: 
 msgid "Unpublish-on Date"
@@ -20369,7 +20369,7 @@ msgstr "Fjern planlagt publiceringsdato"
 
 #: 
 msgid "The node scheduled for unpublishing via Scheduler."
-msgstr "Noden planlagt til afpublisering via Scheduler."
+msgstr "Noden planlagt til afpublicering via Scheduler."
 
 #: 
 msgid "Remove scheduled unpublishing date"
@@ -20397,7 +20397,7 @@ msgstr "Efter opdatering af en @entity_type, der er planlagt til offentliggørel
 
 #: 
 msgid "After updating a @entity_type that is scheduled for unpublishing"
-msgstr "Efter opdatering af en @entity_type, der er planlagt til afpublisering"
+msgstr "Efter opdatering af en @entity_type, der er planlagt til afpublicering"
 
 #: 
 msgid "After Scheduler has published a @entity_type"
@@ -20895,7 +20895,7 @@ msgstr "Datoen for, hvornår %type bliver afpubliceret."
 
 #: 
 msgid "The Scheduler module provides the functionality for automatic publishing and unpublishing of entities, such and nodes and media items, at specified future dates."
-msgstr "Scheduler-modulet giver funktionalitet til automatisk offentliggørelse og afpublisering af enheder, såsom noder og medieelementer, på specificerede fremtidige datoer."
+msgstr "Scheduler-modulet giver funktionalitet til automatisk offentliggørelse og afpublicering af enheder, såsom noder og medieelementer, på specificerede fremtidige datoer."
 
 #: 
 msgid "You can read more in the <a href=\"@readme\">readme</a> file or our <a href=\"@project\">project page on Drupal.org</a>."
@@ -21169,7 +21169,7 @@ msgstr "Scheduler_Api_Test: Udgivelsesfeltet er skjult for orange eller grønne 
 
 #: 
 msgid "Scheduler_Api_Test: The unpublish_on field is hidden for yellow or green node titles."
-msgstr "Scheduler_Api_Test: Afpubliseringsfeltet er skjult for gule eller grønne nodetitler."
+msgstr "Scheduler_Api_Test: Afpubliceringsfeltet er skjult for gule eller grønne nodetitler."
 
 #: 
 msgid "Scheduler_Api_Test: Red nodes should cause Scheduler to abandon publishing."
@@ -21181,11 +21181,11 @@ msgstr "Scheduler_Api_Test: Gule noder bør ikke have udgivelse behandlet af Sch
 
 #: 
 msgid "Scheduler_Api_Test: Blue nodes should cause Scheduler to abandon unpublishing."
-msgstr "Scheduler_Api_Test: Blå noder bør få Scheduler til at opgive afpublisering."
+msgstr "Scheduler_Api_Test: Blå noder bør få Scheduler til at opgive afpublicering."
 
 #: 
 msgid "Scheduler_Api_Test: Orange nodes should not have unpublishing processed by Scheduler."
-msgstr "Scheduler_Api_Test: Orange noder bør ikke have afpublisering behandlet af Scheduler."
+msgstr "Scheduler_Api_Test: Orange noder bør ikke have afpublicering behandlet af Scheduler."
 
 #: 
 msgid "%title is scheduled for publishing @publish_time, but will not be published until approved."
@@ -21205,11 +21205,11 @@ msgstr "Scheduler_Api_Test: Udgivelsesfeltet er skjult for grøn."
 
 #: 
 msgid "Scheduler_Api_Test: The unpublish_on field is hidden for yellow."
-msgstr "Scheduler_Api_Test: Afpubliseringsfeltet er skjult for gult."
+msgstr "Scheduler_Api_Test: Afpubliceringsfeltet er skjult for gult."
 
 #: 
 msgid "Scheduler_Api_Test: The unpublish_on field is hidden for green."
-msgstr "Scheduler_Api_Test: Afpubliseringsfeltet er skjult for grøn."
+msgstr "Scheduler_Api_Test: Afpubliceringsfeltet er skjult for grøn."
 
 #: 
 msgid "Scheduler_Api_Test: Red should cause Scheduler to abandon publishing."
@@ -21221,7 +21221,7 @@ msgstr "Scheduler_Api_Test: Gult bør ikke have udgivelse behandlet af Scheduler
 
 #: 
 msgid "Scheduler_Api_Test: Blue should cause Scheduler to abandon unpublishing."
-msgstr "Scheduler_Api_Test: Blå bør få Scheduler til at opgive afpublisering."
+msgstr "Scheduler_Api_Test: Blå bør få Scheduler til at opgive afpublicering."
 
 #: 
 msgid "Scheduler_Api_Test: Orange should not have unpublishing processed by Scheduler."
@@ -21245,11 +21245,11 @@ msgstr "Indhold (Scheduler)"
 
 #: 
 msgid "Node type is enabled for scheduled unpublishing"
-msgstr "Node type er aktiveret for planlagt afpublisering"
+msgstr "Node type er aktiveret for planlagt afpublicering"
 
 #: 
 msgid "Node is scheduled for unpublishing"
-msgstr "Node er planlagt til afpublisering"
+msgstr "Node er planlagt til afpublicering"
 
 #: 
 msgid "Node type is enabled for scheduled publishing"
