@@ -11,9 +11,9 @@ id: paragraph.filtered_event_list.field_amount_of_events
 field_name: field_amount_of_events
 entity_type: paragraph
 bundle: filtered_event_list
-label: 'Amount of events'
-description: 'Select the amount of events you want to display. <br /><br />If the amount displayed is less than what you put here, it is likely because there are not enough results based on your selected filters. '
-required: true
+label: '(DO NOT USE - DEPRECATED) Amount of events'
+description: 'This field is no longer in use, and will be deleted in the future.'
+required: false
 translatable: false
 default_value: {  }
 default_value_callback: ''

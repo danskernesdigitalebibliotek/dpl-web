@@ -6,9 +6,13 @@ dependencies:
     - core.entity_view_mode.paragraph.preview
     - field.field.paragraph.card_grid_automatic.field_filter_branches
     - field.field.paragraph.card_grid_automatic.field_filter_categories
+    - field.field.paragraph.card_grid_automatic.field_filter_cond_type
+    - field.field.paragraph.card_grid_automatic.field_filter_content_types
     - field.field.paragraph.card_grid_automatic.field_filter_tags
     - field.field.paragraph.card_grid_automatic.field_title
     - paragraphs.paragraphs_type.card_grid_automatic
+  module:
+    - options
 id: paragraph.card_grid_automatic.preview
 targetEntityType: paragraph
 bundle: card_grid_automatic
@@ -18,25 +22,32 @@ content:
     type: entity_reference_label
     label: above
     settings:
-      link: true
+      link: false
     third_party_settings: {  }
-    weight: 3
+    weight: 4
     region: content
   field_filter_categories:
     type: entity_reference_label
     label: above
     settings:
-      link: true
+      link: false
     third_party_settings: {  }
-    weight: 2
+    weight: 3
+    region: content
+  field_filter_content_types:
+    type: list_default
+    label: above
+    settings: {  }
+    third_party_settings: {  }
+    weight: 1
     region: content
   field_filter_tags:
     type: entity_reference_label
     label: above
     settings:
-      link: true
+      link: false
     third_party_settings: {  }
-    weight: 1
+    weight: 2
     region: content
   field_title:
     type: string
@@ -47,4 +58,5 @@ content:
     weight: 0
     region: content
 hidden:
+  field_filter_cond_type: true
   search_api_excerpt: true

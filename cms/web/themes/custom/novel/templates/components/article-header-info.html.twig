@@ -1,7 +1,13 @@
+{% set publication_date = node.created.value %}
+
+{% if node.hasField('field_publication_date') %}
+  {% set publication_date = node.field_publication_date.value|date('U') %}
+{% endif %}
+
 <p class="article-header__info">
     {{ 'By @username'|t({'@username': author_name}) }}
 
-    <time class="article-header__date" datetime="{{ node.created.value|date('c') }}">
-        {{ node.created.value|format_date('date_full_month') }}
+    <time class="article-header__date" datetime="{{ publication_date|date('c') }}">
+        {{ publication_date|format_date('date_full_month') }}
     </time>
 </p>

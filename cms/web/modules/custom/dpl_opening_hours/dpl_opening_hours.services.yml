@@ -34,3 +34,5 @@ services:
     class: Drupal\dpl_opening_hours\EventSubscriber\ApiRouteSubscriber
     tags:
       - { name: event_subscriber }
+  dpl_opening_hours.custom_serializer:
+    class: Drupal\dpl_opening_hours\Plugin\rest\resource\v1\CustomContextSerializer

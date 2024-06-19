@@ -1,0 +1,54 @@
+# Collation Fixer
+
+A 'runtime' requirements checker (admin/reports/status) for checking
+all database tables have the right database collation (probably very
+MySQL centric).
+
+Offers the ability to fix tables with wrong database collation.
+
+This can be useful when developing non-english sites.
+
+The collation can be specified in two ways:
+
+1. For all tables in your database connection settings
+2. For specific tables by implementing hook
+   collation_fixer_expected_collations
+
+Example of specifying character set and collation in general through database
+settings in settings.php:
+
+  $databases = [
+    'default' => [
+      'default' => [
+        'database' => 'my-db',
+        'username' => 'my-user',
+        'password' => 'my-password',
+        'host' => 'localhost',
+        'port' => '',
+        'driver' => 'mysql',
+        'prefix' => '',
+        'charset' => 'utf8mb4',
+        'collation' => 'utf8mb4_danish_ci',
+      ],
+    ],
+  ];
+
+Example of specifying character set and collation for a specific table by
+implementing collation_fixer_expected_collations:
+
+  function my_module_collation_fixer_expected_collations(array &$expected_collations): void {
+    if (isset($expected_collations['my_table'])) {
+      $expected_collations['my_table']->collation = 'utf8mb4_danish_ci';
+    }
+  }
+
+If you (as a developer) change the collation of an existing table you
+will probably want to fix the table right away in an update hook:
+
+  /**
+   * Fix collation of {my_table}.
+   */
+  function my_module_update_10001(array &$sandbox): void {
+    $collation_fixer = \Drupal::service(\Drupal\collation_fixer\CollationFixer::class);
+    collation_fixer->fixCollation('my_table');
+  }
