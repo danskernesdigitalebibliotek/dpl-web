@@ -107,7 +107,7 @@ environments:
         schedule: "M/30 * * * *"
         command: drush dpl_po:import-remote-config-po da https://danskernesdigitalebibliotek.github.io/dpl-cms/translations/da.config.po
         service: cli
-  pr-581:
+  pr-1219:
     cronjobs:
       - name: drush cron
         schedule: "M/15 * * * *"
@@ -122,3 +122,8 @@ environments:
         schedule: "M/30 * * * *"
         command: drush dpl_po:import-remote-config-po da https://danskernesdigitalebibliotek.github.io/dpl-cms/translations/da.config.po
         service: cli
+    routes:
+      - nginx:
+          - reload.dresscoder.dk:
+              tls-acme: "false"
+              insecure: Allow
