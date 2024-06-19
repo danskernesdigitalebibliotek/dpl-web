@@ -37,6 +37,7 @@ default:
     -
       alias: ''
       langcode: da
+      pathauto: 1
   field_byline:
     -
       value: 'Af Jilbert Ebrahimi / Unsplash'

@@ -1,0 +1,58 @@
+From 6c49a270b2b9979344c75268ddccdd4aa089b2fe Mon Sep 17 00:00:00 2001
+From: =?UTF-8?q?Kasper=20Garn=C3=A6s?= <kasperg@users.noreply.github.com>
+Date: Fri, 14 Jun 2024 13:19:30 +0200
+Subject: [PATCH] Debug detection and logging of Form triggering element
+ detection
+
+When editors select a paragraph to add to a page we are seeing
+unexpected behavior:
+
+1. Users see an error message: "Oops - something went wrong". This
+occurs because Drupal cannot determine the AJAX callback for the
+triggering element in FormAjaxResponseBuilder::buildResponse()
+2. The UI behaves as if a different button has been clicked by opening
+the edit form of an existing paragraph instead.
+
+This may occur because Drupal fails to detect the triggering element.
+In these situations Drupal will instead try to use the first button
+on the page.
+
+We do not know why this happens.
+
+One theory is that the #value of the clicked button differs e.g. due
+to translations.
+
+In this situation it should actually be sufficient to check for the
+triggering element name as these differ between different paragraph
+types. The value makes no difference in this regard.
+
+We cannot easily un/reset the #value for the element in the Paragraph
+Editor Enhancements module. Instead we try to work around the issue
+by only comparing the element name if the element looks like a
+Paragraphs Editor Enhancement button.
+
+To provide additional information we try to add more logging for
+situations where there is no match between element values.
+---
+ lib/Drupal/Core/Form/FormBuilder.php | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
+
+diff --git a/lib/Drupal/Core/Form/FormBuilder.php b/lib/Drupal/Core/Form/FormBuilder.php
+index d7c4bf9374..06e0e904e5 100644
+--- a/lib/Drupal/Core/Form/FormBuilder.php
++++ b/lib/Drupal/Core/Form/FormBuilder.php
+@@ -1344,8 +1344,10 @@ class FormBuilder implements FormBuilderInterface, FormValidatorInterface, FormS
+   protected function elementTriggeredScriptedSubmission($element, FormStateInterface &$form_state) {
+     $input = $form_state->getUserInput();
+     if (!empty($input['_triggering_element_name']) && $element['#name'] == $input['_triggering_element_name']) {
+-      if (empty($input['_triggering_element_value']) || $input['_triggering_element_value'] == $element['#value']) {
++      if (empty($input['_triggering_element_value']) || $input['_triggering_element_value'] == $element['#value'] || preg_match('/^field_paragraphs_.*_add_more$/', $input['_triggering_element_name'])) {
+         return TRUE;
++      } else {
++        \Drupal::logger('form_builder')->debug("Value for triggering element {$input['_triggering_element_name']} does not match. Expected: {$element['#value']}. Actual: {$input['_triggering_element_value']}");
+       }
+     }
+     return FALSE;
+-- 
+2.43.4
+

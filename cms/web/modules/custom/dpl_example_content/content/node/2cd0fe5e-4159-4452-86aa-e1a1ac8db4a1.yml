@@ -61,8 +61,9 @@ default:
         content: 'Jesper Stein vinder Læsernes Bogpris for Rampen | DPL CMS'
   path:
     -
-      alias: ''
-      langcode: da
+      alias: /artikler/netmedier/jesper-stein-vinder-laesernes-bogpris-rampen
+      langcode: und
+      pathauto: 1
   field_categories:
     -
       entity: 92033694-15ac-4d9e-b275-ddfd18e48d9f
@@ -358,6 +359,9 @@ default:
           field_embed_video:
             -
               entity: f0204f0b-1f63-4c76-bb67-e3f7489ee392
+  field_publication_date:
+    -
+      value: '2023-12-14'
   field_show_override_author:
     -
       value: true

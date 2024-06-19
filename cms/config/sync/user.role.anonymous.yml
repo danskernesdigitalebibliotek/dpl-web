@@ -4,6 +4,7 @@ status: true
 dependencies:
   config:
     - rest.resource.campaign.match
+    - rest.resource.dpl_opening_hours_legacy_list
     - rest.resource.dpl_opening_hours_list
     - rest.resource.events
     - rest.resource.proxy-url
@@ -22,6 +23,7 @@ is_admin: false
 permissions:
   - 'access content'
   - 'access openapi api docs'
+  - 'restful get dpl_opening_hours_legacy_list'
   - 'restful get dpl_opening_hours_list'
   - 'restful get events'
   - 'restful get proxy-url'

@@ -1,0 +1,87 @@
+uuid: 0d0de661-206b-411e-b6f5-83d4c9bfb33c
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.field.paragraph.content_slider_automatic.field_filter_branches
+    - field.field.paragraph.content_slider_automatic.field_filter_categories
+    - field.field.paragraph.content_slider_automatic.field_filter_cond_type
+    - field.field.paragraph.content_slider_automatic.field_filter_content_types
+    - field.field.paragraph.content_slider_automatic.field_filter_tags
+    - field.field.paragraph.content_slider_automatic.field_title
+    - paragraphs.paragraphs_type.content_slider_automatic
+  module:
+    - field_group
+    - select2
+third_party_settings:
+  field_group:
+    group_filters:
+      children:
+        - field_filter_tags
+        - field_filter_categories
+        - field_filter_branches
+      label: Filters
+      region: content
+      parent_name: ''
+      weight: 2
+      format_type: fieldset
+      format_settings:
+        classes: ''
+        show_empty_fields: false
+        id: ''
+        description: ''
+        required_fields: true
+id: paragraph.content_slider_automatic.default
+targetEntityType: paragraph
+bundle: content_slider_automatic
+mode: default
+content:
+  field_filter_branches:
+    type: select2_entity_reference
+    weight: 5
+    region: content
+    settings:
+      width: 100%
+      autocomplete: false
+      match_operator: CONTAINS
+      match_limit: 10
+    third_party_settings: {  }
+  field_filter_categories:
+    type: select2_entity_reference
+    weight: 4
+    region: content
+    settings:
+      width: 100%
+      autocomplete: false
+      match_operator: CONTAINS
+      match_limit: 10
+    third_party_settings: {  }
+  field_filter_content_types:
+    type: select2
+    weight: 1
+    region: content
+    settings:
+      width: 100%
+    third_party_settings: {  }
+  field_filter_tags:
+    type: select2_entity_reference
+    weight: 3
+    region: content
+    settings:
+      width: 100%
+      autocomplete: true
+      match_operator: CONTAINS
+      match_limit: 10
+    third_party_settings: {  }
+  field_title:
+    type: string_textfield
+    weight: 0
+    region: content
+    settings:
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+hidden:
+  created: true
+  field_filter_cond_type: true
+  status: true

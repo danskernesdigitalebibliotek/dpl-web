@@ -31,6 +31,9 @@ default:
   revision_translation_affected:
     -
       value: true
+  entity_clone_template_active:
+    -
+      value: true
   entity_clone_template_image:
     -
       entity: e00e1460-169e-468d-9835-d664f06d0969
@@ -46,8 +49,9 @@ default:
         content: 'Det virtuelle bibliotek | DPL CMS'
   path:
     -
-      alias: ''
-      langcode: da
+      alias: /det-virtuelle-bibliotek
+      langcode: und
+      pathauto: 1
   field_address:
     -
       langcode: en

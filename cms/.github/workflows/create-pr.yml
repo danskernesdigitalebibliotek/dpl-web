@@ -61,15 +61,10 @@ jobs:
         run: |
           set -e
 
-          declare -a CMDS=(
-              [poc-dpl-react-pr-trigger]='dev:composer:update-design-system'
-              [poc-dpl-design-system-pr-trigger]='dev:composer:update-react'
-          )
-
-          COMPOSER_TASK_COMMAND=${CMDS[${{ env.PACKAGE_NAME }}]}
-
-          if [[ -n "${COMPOSER_TASK_COMMAND}" ]]; then
-            echo "COMPOSER_TASK_COMMAND=$COMPOSER_TASK_COMMAND" >> $GITHUB_ENV
+          if [[ "${{ env.PACKAGE_NAME }}" == "dpl-design-system" ]]; then
+            echo "COMPOSER_TASK_COMMAND='dev:composer:update-design-system'" >> $GITHUB_ENV
+          elif [[ "${{ env.PACKAGE_NAME }}" == "dpl-react" ]]; then
+            echo "COMPOSER_TASK_COMMAND='dev:composer:update-react'" >> $GITHUB_ENV
           else
             echo "::error::Could not resolve composer task command."
             exit 1
@@ -108,7 +103,7 @@ jobs:
           --body "${{ format('This is an automated PR for {0}:{1}', env.PACKAGE, env.PR_BRANCH) }}"
         if: ${{ steps.create_branch.outcome == 'success' }}
         env:
-          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GH_TOKEN: ${{ secrets.CMS_PR_CREATION_PAT }}
 
       - name: Adding summary
         run: |

@@ -1,0 +1,136 @@
+_meta:
+  version: "1.0"
+  entity_type: eventseries
+  uuid: cbd3796e-c870-4e53-b47e-b43a4ec29a13
+  bundle: default
+  default_langcode: en
+  depends:
+    1885a10c-f968-4e9e-9662-f9a49154bd73: eventinstance
+    3faab6ee-ba70-46c3-8561-39ceab48805c: eventinstance
+    29d4624b-7f52-454d-92c8-968a238e6d4b: eventinstance
+    5d0130ea-b0d4-4131-852f-a99cb9a962da: eventinstance
+    516dbac4-e77d-402a-95de-e31a6af59d11: eventinstance
+    b0f01637-e9fa-4847-890b-d7f24e6de05b: eventinstance
+    aa888ef0-dad3-4264-af19-6a1ced157798: eventinstance
+    baef163a-aed4-438a-be07-fea6778f330d: eventinstance
+    7f791863-b8da-4fc0-ae7a-d0a5a214e585: eventinstance
+    58900cc8-68d2-4432-bb75-aacf9d9616b2: eventinstance
+    b11bbd49-ca79-4ec4-8fa0-247e494c3ca2: eventinstance
+    76c9684c-7178-4f75-ba67-58799f4d6fc0: node
+    9df8ee6a-939d-4d8f-9d79-d082b00286ac: taxonomy_term
+    5d70c9f7-779c-4337-a587-ced7a8ecc770: taxonomy_term
+default:
+  revision_uid:
+    - target_id: 1
+  status:
+    - value: true
+  uid:
+    - target_id: 1
+  title:
+    - value: "Event 3 |\_tag2, cat2, branch2"
+  recur_type:
+    - value: weekly_recurring_date
+  consecutive_recurring_date:
+    - value: ""
+      end_value: ""
+      time: "08:00 am"
+      end_time: "11:30 pm"
+      duration: 5
+      duration_units: minute
+      buffer: 0
+      buffer_units: minute
+  daily_recurring_date:
+    - value: ""
+      end_value: ""
+      time: ""
+      duration: 0
+      end_time: ""
+      duration_or_end_time: duration
+  weekly_recurring_date:
+    - value: "2027-05-17T16:08:26"
+      end_value: "2027-08-06T16:08:26"
+      time: "08:00 am"
+      duration: 900
+      end_time: "08:00 am"
+      duration_or_end_time: duration
+      days: monday
+  monthly_recurring_date:
+    - value: ""
+      end_value: ""
+      time: "08:00 am"
+      duration: 900
+      end_time: "08:00 am"
+      duration_or_end_time: duration
+      days: ""
+      type: ""
+      day_occurrence: ""
+      day_of_month: ""
+  yearly_recurring_date:
+    - value: ""
+      end_value: ""
+      time: ""
+      duration: 0
+      end_time: ""
+      duration_or_end_time: duration
+      days: ""
+      type: ""
+      day_occurrence: ""
+      day_of_month: ""
+      year_interval: 0
+      months: ""
+  created:
+    - value: 1717512986
+  revision_translation_affected:
+    - value: true
+  metatag:
+    - tag: meta
+      attributes:
+        name: title
+        content: "| DPL CMS"
+    - tag: link
+      attributes:
+        rel: canonical
+        href: "http://dpl-cms.docker/user/login"
+  path:
+    - alias: /testfilialen2/events/cat2/event-3-tag2-cat2-branch2
+      langcode: und
+      pathauto: 1
+  event_instances:
+    - entity: 1885a10c-f968-4e9e-9662-f9a49154bd73
+    - entity: 3faab6ee-ba70-46c3-8561-39ceab48805c
+    - entity: 29d4624b-7f52-454d-92c8-968a238e6d4b
+    - entity: 5d0130ea-b0d4-4131-852f-a99cb9a962da
+    - entity: 516dbac4-e77d-402a-95de-e31a6af59d11
+    - entity: b0f01637-e9fa-4847-890b-d7f24e6de05b
+    - entity: aa888ef0-dad3-4264-af19-6a1ced157798
+    - entity: baef163a-aed4-438a-be07-fea6778f330d
+    - entity: 7f791863-b8da-4fc0-ae7a-d0a5a214e585
+    - entity: 58900cc8-68d2-4432-bb75-aacf9d9616b2
+    - entity: b11bbd49-ca79-4ec4-8fa0-247e494c3ca2
+  field_branch:
+    - entity: 76c9684c-7178-4f75-ba67-58799f4d6fc0
+  field_categories:
+    - entity: 9df8ee6a-939d-4d8f-9d79-d082b00286ac
+  field_description:
+    - value: desc
+  field_event_paragraphs:
+    - entity:
+        _meta:
+          version: "1.0"
+          entity_type: paragraph
+          uuid: 03c12132-4913-4953-8703-9a43f39e56fa
+          bundle: text_body
+          default_langcode: en
+        default:
+          status:
+            - value: true
+          created:
+            - value: 1717512986
+          behavior_settings:
+            - value: {}
+          revision_translation_affected:
+            - value: true
+  field_event_state:
+    - value: Active
+  field_tags:
+    - entity: 5d70c9f7-779c-4337-a587-ced7a8ecc770

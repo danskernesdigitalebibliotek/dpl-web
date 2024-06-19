@@ -1,0 +1,10 @@
+{% extends '@dpl_related_content/dpl-related-content.html.twig' %}
+
+{% block content %}
+  {% include '@novel/components/slider.html.twig'
+    with {
+    'attributes': attributes,
+    'title': title,
+    'items': items,
+  } only %}
+{% endblock %}

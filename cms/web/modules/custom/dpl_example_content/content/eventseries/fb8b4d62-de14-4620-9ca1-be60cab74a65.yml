@@ -5,7 +5,7 @@ _meta:
   bundle: default
   default_langcode: en
   depends:
-    fde19c73-3a38-4788-aa84-a376d3ee6cf6: eventinstance
+    300ac622-eae3-4e75-918f-e56d0e1d5b9c: eventinstance
     e539b26b-2992-406b-accf-03e549522c0d: taxonomy_term
     d6d67fd2-775c-46e7-a1bf-6af46290a5c8: media
     4704c566-afc2-4131-ab81-3d636f2451bf: taxonomy_term
@@ -99,9 +99,14 @@ default:
       attributes:
         rel: canonical
         href: '/user/login'
+  path:
+    -
+      alias: /arrangementer/klima/genbrugsstof-fremfor-plastik-0
+      langcode: und
+      pathauto: 1
   event_instances:
     -
-      entity: fde19c73-3a38-4788-aa84-a376d3ee6cf6
+      entity: 300ac622-eae3-4e75-918f-e56d0e1d5b9c
   field_categories:
     -
       entity: e539b26b-2992-406b-accf-03e549522c0d
@@ -132,6 +137,9 @@ default:
   field_teaser_image:
     -
       entity: d6d67fd2-775c-46e7-a1bf-6af46290a5c8
+  field_ticket_capacity:
+    -
+      value: 10
   field_ticket_categories:
     -
       entity:

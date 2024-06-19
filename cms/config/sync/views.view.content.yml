@@ -2,10 +2,15 @@ uuid: 33d3c91b-e52f-4f4c-b926-fb2ce5bd2add
 langcode: en
 status: true
 dependencies:
+  config:
+    - taxonomy.vocabulary.categories
+    - taxonomy.vocabulary.tags
   module:
     - content_lock
     - node
+    - taxonomy
     - user
+    - verf
 _core:
   default_config_hash: 12Bd0mJQFIaXAkRfMVCAAcZ0oaxm94PoK8oHR9hkLmY
 id: content
@@ -416,29 +421,41 @@ display:
                 title: Unpublished
                 operator: '='
                 value: '0'
-        langcode:
-          id: langcode
+        status_extra:
+          id: status_extra
           table: node_field_data
-          field: langcode
+          field: status_extra
+          entity_type: node
+          plugin_id: node_status
+          operator: '='
+          value: false
+          group: 1
+          expose:
+            operator_limit_selection: false
+            operator_list: {  }
+        uid:
+          id: uid
+          table: node_field_data
+          field: uid
           relationship: none
           group_type: group
           admin_label: ''
           entity_type: node
-          entity_field: langcode
-          plugin_id: language
+          entity_field: uid
+          plugin_id: user_name
           operator: in
           value: {  }
           group: 1
           exposed: true
           expose:
-            operator_id: langcode_op
-            label: Language
+            operator_id: uid_op
+            label: 'Authored by'
             description: ''
             use_operator: false
-            operator: langcode_op
+            operator: uid_op
             operator_limit_selection: false
             operator_list: {  }
-            identifier: langcode
+            identifier: uid
             required: false
             remember: false
             multiple: false
@@ -446,6 +463,11 @@ display:
               authenticated: authenticated
               anonymous: '0'
               administrator: '0'
+              local_administrator: '0'
+              editor: '0'
+              mediator: '0'
+              patron: '0'
+              external_system: '0'
             reduce: false
           is_grouped: false
           group_info:
@@ -459,18 +481,162 @@ display:
             default_group: All
             default_group_multiple: {  }
             group_items: {  }
-        status_extra:
-          id: status_extra
-          table: node_field_data
-          field: status_extra
-          entity_type: node
-          plugin_id: node_status
-          operator: '='
-          value: false
+        field_categories_target_id:
+          id: field_categories_target_id
+          table: node__field_categories
+          field: field_categories_target_id
+          relationship: none
+          group_type: group
+          admin_label: ''
+          plugin_id: taxonomy_index_tid
+          operator: or
+          value: {  }
           group: 1
+          exposed: true
           expose:
+            operator_id: field_categories_target_id_op
+            label: Categories
+            description: ''
+            use_operator: false
+            operator: field_categories_target_id_op
             operator_limit_selection: false
             operator_list: {  }
+            identifier: field_categories_target_id
+            required: false
+            remember: false
+            multiple: false
+            remember_roles:
+              authenticated: authenticated
+              anonymous: '0'
+              administrator: '0'
+              local_administrator: '0'
+              editor: '0'
+              mediator: '0'
+              patron: '0'
+              external_system: '0'
+            reduce: false
+          is_grouped: false
+          group_info:
+            label: ''
+            description: ''
+            identifier: ''
+            optional: true
+            widget: select
+            multiple: false
+            remember: false
+            default_group: All
+            default_group_multiple: {  }
+            group_items: {  }
+          reduce_duplicates: false
+          vid: categories
+          type: select
+          hierarchy: false
+          limit: true
+          error_message: true
+        field_tags_target_id:
+          id: field_tags_target_id
+          table: node__field_tags
+          field: field_tags_target_id
+          relationship: none
+          group_type: group
+          admin_label: ''
+          plugin_id: taxonomy_index_tid
+          operator: or
+          value: {  }
+          group: 1
+          exposed: true
+          expose:
+            operator_id: field_tags_target_id_op
+            label: Tags
+            description: ''
+            use_operator: false
+            operator: field_tags_target_id_op
+            operator_limit_selection: false
+            operator_list: {  }
+            identifier: field_tags_target_id
+            required: false
+            remember: false
+            multiple: false
+            remember_roles:
+              authenticated: authenticated
+              anonymous: '0'
+              administrator: '0'
+              local_administrator: '0'
+              editor: '0'
+              mediator: '0'
+              patron: '0'
+              external_system: '0'
+            reduce: false
+          is_grouped: false
+          group_info:
+            label: ''
+            description: ''
+            identifier: ''
+            optional: true
+            widget: select
+            multiple: false
+            remember: false
+            default_group: All
+            default_group_multiple: {  }
+            group_items: {  }
+          reduce_duplicates: false
+          vid: tags
+          type: textfield
+          hierarchy: false
+          limit: true
+          error_message: true
+        field_branch_target_id_verf:
+          id: field_branch_target_id_verf
+          table: node__field_branch
+          field: field_branch_target_id_verf
+          relationship: none
+          group_type: group
+          admin_label: ''
+          plugin_id: verf
+          operator: in
+          value: {  }
+          group: 1
+          exposed: true
+          expose:
+            operator_id: field_branch_target_id_verf_op
+            label: Branch
+            description: ''
+            use_operator: false
+            operator: field_branch_target_id_verf_op
+            operator_limit_selection: false
+            operator_list: {  }
+            identifier: branch
+            required: false
+            remember: false
+            multiple: false
+            remember_roles:
+              authenticated: authenticated
+              anonymous: '0'
+              administrator: '0'
+              local_administrator: '0'
+              editor: '0'
+              mediator: '0'
+              patron: '0'
+              external_system: '0'
+            reduce: 0
+          is_grouped: false
+          group_info:
+            label: ''
+            description: ''
+            identifier: ''
+            optional: true
+            widget: select
+            multiple: false
+            remember: false
+            default_group: All
+            default_group_multiple: {  }
+            group_items: {  }
+          verf_target_bundles:
+            branch: branch
+            article: '0'
+            campaign: '0'
+            page: '0'
+          show_unpublished: 0
       filter_groups:
         operator: AND
         groups:
@@ -591,6 +757,15 @@ display:
           admin_label: 'Lock owner'
           plugin_id: standard
           required: false
+        field_branch:
+          id: field_branch
+          table: node__field_branch
+          field: field_branch
+          relationship: none
+          group_type: group
+          admin_label: 'field_branch: Content'
+          plugin_id: standard
+          required: false
       show_admin_links: false
       display_extenders: {  }
     cache_metadata:
@@ -603,7 +778,9 @@ display:
         - user
         - 'user.node_grants:view'
         - user.permissions
-      tags: {  }
+      tags:
+        - 'config:views.view.content'
+        - node_list
   page_1:
     id: page_1
     display_title: Page
@@ -635,4 +812,6 @@ display:
         - user
         - 'user.node_grants:view'
         - user.permissions
-      tags: {  }
+      tags:
+        - 'config:views.view.content'
+        - node_list

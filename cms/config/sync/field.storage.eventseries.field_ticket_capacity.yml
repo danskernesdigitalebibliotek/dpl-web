@@ -1,0 +1,20 @@
+uuid: 57339c96-f239-4834-80a7-834309e5ee01
+langcode: en
+status: true
+dependencies:
+  module:
+    - recurring_events
+id: eventseries.field_ticket_capacity
+field_name: field_ticket_capacity
+entity_type: eventseries
+type: integer
+settings:
+  unsigned: false
+  size: normal
+module: core
+locked: false
+cardinality: 1
+translatable: true
+indexes: {  }
+persist_with_no_fields: false
+custom_storage: false
