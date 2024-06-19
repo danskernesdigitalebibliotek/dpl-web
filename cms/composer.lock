@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "fd62f0679143f742484add6a9ae9011f",
+    "content-hash": "f9a56b1acf9222f782c3269b2b522ebc",
     "packages": [
         {
             "name": "amazeeio/drupal_integrations",
@@ -1149,10 +1149,10 @@
         },
         {
             "name": "danskernesdigitalebibliotek/dpl-design-system",
-            "version": "2024.25.0",
+            "version": "0.0.0-dev",
             "dist": {
                 "type": "zip",
-                "url": "https://github.com/danskernesdigitalebibliotek/dpl-design-system/releases/download/2024.25.0/dist-2024-25-0-44a88057ebe723f137f5ebe751cf0b6953c029b3.zip"
+                "url": "https://github.com/danskernesdigitalebibliotek/dpl-design-system/releases/download/branch-fix%2FDDFLSBP-660-webforms-scrolling-selectbox-er-ikke-stylet/dist-fix-ddflsbp-660-webforms-scrolling-selectbox-er-ikke-stylet.zip"
             },
             "type": "drupal-library"
         },
@@ -18784,6 +18784,7 @@
     "aliases": [],
     "minimum-stability": "dev",
     "stability-flags": {
+        "danskernesdigitalebibliotek/dpl-design-system": 20,
         "drupal/default_content": 15,
         "drupal/gin": 5,
         "drupal/gin_toolbar": 5,
