@@ -125,5 +125,5 @@ environments:
     routes:
       - nginx:
           - reload.dresscoder.dk:
-              tls-acme: "false"
-              insecure: Allow
+              tls-acme: "true"
+              insecure: Redirect
