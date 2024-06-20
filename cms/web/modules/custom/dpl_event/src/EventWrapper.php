@@ -3,8 +3,10 @@
 namespace Drupal\dpl_event;
 
 use Drupal\Core\Field\FieldItemListInterface;
+use Drupal\drupal_typed\DrupalTyped;
 use Drupal\node\NodeInterface;
 use Drupal\recurring_events\Entity\EventInstance;
+use Psr\Log\LoggerInterface;
 use Safe\DateTimeImmutable;
 
 /**
@@ -122,7 +124,18 @@ class EventWrapper {
     }
 
     $states = array_map(function (array $value) {
-      return EventState::from($value['value']);
+      $value = $value['value'] ?? NULL;
+      $enum = EventState::tryFrom($value);
+
+      if (is_null($enum)) {
+        $logger = DrupalTyped::service(LoggerInterface::class, 'dpl_event.logger');
+
+        $logger->error("Could not map '@value' to EventState enum.", [
+          '@value' => $value ?? 'NULL',
+        ]);
+      }
+
+      return $enum;
     }, $field->getValue());
 
     $state = $states[0] ?? NULL;

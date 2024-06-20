@@ -4,6 +4,7 @@ namespace Drupal\dpl_event\Plugin\rest\resource\v1;
 
 use DanskernesDigitaleBibliotek\CMS\Api\Model\EventPATCHRequest;
 use DanskernesDigitaleBibliotek\CMS\Api\Model\EventPATCHRequestExternalData;
+use Drupal\dpl_event\EventState;
 use Drupal\recurring_events\Entity\EventInstance;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -114,6 +115,19 @@ final class EventResource extends EventResourceBase {
     }
 
     $state = $request_data->getState();
+
+    if ($state) {
+      $state_enum = EventState::tryFrom($state);
+
+      if (is_null($state_enum)) {
+        $this->logger->error("Could not map '@value' to EventState enum.", [
+          '@value' => $state,
+        ]);
+      }
+
+      $state = $state_enum?->value;
+    }
+
     $external_data = $request_data->getExternalData();
 
     // Only override external data, if external data is set.
