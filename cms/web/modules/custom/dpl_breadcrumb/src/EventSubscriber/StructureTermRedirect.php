@@ -2,6 +2,7 @@
 
 namespace Drupal\dpl_breadcrumb\EventSubscriber;
 
+use Drupal\Core\Entity\FieldableEntityInterface;
 use Drupal\dpl_breadcrumb\Services\BreadcrumbHelper;
 use Drupal\taxonomy\Entity\Term;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
@@ -62,11 +63,12 @@ class StructureTermRedirect implements EventSubscriberInterface {
       }
 
       $contents = $term->get('field_content')->referencedEntities();
-      /** @var \Drupal\Core\Entity\FieldableEntityInterface $content */
       $content = reset($contents);
 
-      $response = new RedirectResponse($content->toUrl()->toString());
-      $event->setResponse($response);
+      if ($content instanceof FieldableEntityInterface) {
+        $response = new RedirectResponse($content->toUrl()->toString());
+        $event->setResponse($response);
+      }
     }
   }
 

@@ -339,8 +339,9 @@ class BreadcrumbHelper {
     }
 
     $breadcrumb_items = $entity->get($field_key)->referencedEntities();
+    $first_breadcrumb = reset($breadcrumb_items);
 
-    return reset($breadcrumb_items);
+    return $first_breadcrumb instanceof TermInterface ? $first_breadcrumb : NULL;
   }
 
   /**
@@ -423,8 +424,9 @@ class BreadcrumbHelper {
     }
 
     $slice = array_slice($parents, 1, 1, TRUE);
+    $first_slide = reset($slice);
 
-    return reset($slice);
+    return $first_slide instanceof TermInterface ? $first_slide : NULL;
   }
 
   /**
