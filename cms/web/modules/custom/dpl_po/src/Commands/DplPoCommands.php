@@ -24,6 +24,9 @@ use function Safe\sprintf;
 class DplPoCommands extends DrushCommands {
   use StringTranslationTrait;
 
+  // This context pattern is used to filter the configuration strings in or out.
+  // Since the contexts are in the form of 'component.key...' we can use this
+  // pattern.
   protected const CONFIG_PO_FILE_CONTEXT_PATTERN = '/^([a-z]+\.)+/';
 
   /**
