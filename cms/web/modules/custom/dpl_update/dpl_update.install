@@ -13,6 +13,21 @@ use Drupal\Core\Extension\ModuleInstallerInterface;
 use Drupal\drupal_typed\DrupalTyped;
 
 /**
+ * Helper function to install modules.
+ *
+ * @param string[] $modules
+ *   The modules to install.
+ *
+ * @return string
+ *   The feedback message.
+ */
+function _dpl_update_install_modules(array $modules): string {
+  DrupalTyped::service(ModuleInstallerInterface::class, 'module_installer')->install($modules);
+  $modules_string = implode(', ', $modules);
+  return "Enabled modules: {$modules_string}.";
+}
+
+/**
  * Run on the initial site setup.
  *
  * Remember to references to individual update hooks, as these updates probably
@@ -73,19 +88,4 @@ function dpl_update_update_10005(): string {
  */
 function dpl_update_update_10006(): string {
   return _dpl_update_install_modules(['verf']);
-}
-
-/**
- * Helper function to install modules.
- *
- * @param string[] $modules
- *   The modules to install.
- *
- * @return string
- *   The feedback message.
- */
-function _dpl_update_install_modules(array $modules): string {
-  DrupalTyped::service(ModuleInstallerInterface::class, 'module_installer')->install($modules);
-  $modules_string = implode(', ', $modules);
-  return "Enabled modules: {$modules_string}.";
 }
