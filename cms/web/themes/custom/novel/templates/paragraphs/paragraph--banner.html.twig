@@ -1,16 +1,16 @@
-<a href="{{ content.field_banner_link[0]['#url'] }}" class="banner">
-  {% if content.field_banner_image %}
-    <div class="banner__media-wrapper">
-      {% include '@novel/components/media-container.html.twig'
-        with {
-        attributes: create_attribute(),
-        media: content.field_banner_image,
-        has_media: content.field_banner_image,
-      } only %}
-    </div>
+
+{% if content.field_banner_image|length > 0 %}
+  {% set image_entity = content.field_banner_image[0]['#media'] %}
+  {% set image_field = image_entity.field_media_image.0 %}
+  {% if image_field.entity.uri.value is defined %}
+    {% set image_url = file_url(image_field.entity.uri.value|image_style('banner')) %}
   {% endif %}
-  <div class="banner__content-wrapper {{ content.field_banner_image[0] ? '' : 'banner__content-wrapper--no-image' }}">
-    <div class="banner__content arrow__hover--right-large {{ content.field_banner_image[0] ? '' : 'banner__content--no-image' }}">
+{% endif %}
+
+<a href="{{ content.field_banner_link[0]['#url'] }}" class="banner arrow__hover--right-large {{ image_url ? 'banner--has-image' : '' }}"
+  {% if image_url %} style="background-image: url('{{ image_url }}');" {% endif %}>
+  <div class="banner__content-wrapper">
+    <div class="banner__content {{ image_url ? 'banner__content--has-image' : '' }}">
       <h2 class="banner__title">
         {{ content.field_underlined_title|render|striptags('<u>')|raw }}
       </h2>
