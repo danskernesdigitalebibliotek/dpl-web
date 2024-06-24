@@ -60,13 +60,13 @@ function _dpl_update_update_field_inheritance(string $field_inheritance_name): s
   foreach ($entities as $entity) {
     try {
       if (!($entity instanceof EventInstance)) {
-        continue;
+        throw new Exception('Entity is not an expected EventInstance.');
       }
 
       $event_series = $entity->getEventSeries();
 
       if (!($event_series instanceof EventSeries)) {
-        continue;
+        throw new Exception('Entity parent is not an expected EventSeries.');
       }
 
       // This matches the key that is defined in field_inheritance.
@@ -85,7 +85,7 @@ function _dpl_update_update_field_inheritance(string $field_inheritance_name): s
       $entity->save();
       $count++;
     }
-    catch (\Exception $e) {
+    catch (\Throwable $e) {
       \Drupal::logger('dpl_update')->error('Could not update field_inheritance on eventinstance @id - Error: @message', [
         '@message' => $e->getMessage(),
         '@id' => $entity->id(),
@@ -93,10 +93,7 @@ function _dpl_update_update_field_inheritance(string $field_inheritance_name): s
     }
   }
 
-  return t(
-    "Updated @count eventinstances, linking field  '@field' to inherit from eventseries.",
-    ['@field' => $field_inheritance_name, '@count' => $count]
-  )->render();
+  return "Updated $count eventinstances, linking field  '$field_inheritance_name' to inherit from eventseries.";
 }
 
 /**
