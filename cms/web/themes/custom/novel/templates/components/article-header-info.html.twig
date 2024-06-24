@@ -1,6 +1,6 @@
 {% set publication_date = node.created.value %}
 
-{% if node.hasField('field_publication_date') %}
+{% if node.field_publication_date.value is not empty %}
   {% set publication_date = node.field_publication_date.value|date('U') %}
 {% endif %}
 
