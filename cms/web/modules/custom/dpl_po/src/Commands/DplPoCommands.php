@@ -16,6 +16,7 @@ use Drush\Commands\DrushCommands;
 use GuzzleHttp\ClientInterface;
 use GuzzleHttp\Exception\TransferException;
 use function Safe\preg_match;
+use function Safe\sprintf;
 
 /**
  * A Drush commandfile.
@@ -23,6 +24,9 @@ use function Safe\preg_match;
 class DplPoCommands extends DrushCommands {
   use StringTranslationTrait;
 
+  // This context pattern is used to filter the configuration strings in or out.
+  // Since the contexts are in the form of 'component.key...' we can use this
+  // pattern.
   protected const CONFIG_PO_FILE_CONTEXT_PATTERN = '/^([a-z]+\.)+/';
 
   /**
@@ -68,8 +72,23 @@ class DplPoCommands extends DrushCommands {
     $this->validateSource($source);
     $this->validateDestination($destination);
 
+    // @todo This is a quick way ignore some contexts we do not want to end up in the PO file.
+    // It would be better to have a more flexible way to ignore
+    // contexts. For now we know that all webform contexts should be ignored.
+    $ignoredContexts = [
+      '^webform\..+',
+    ];
+    $ignoreContext = function ($item) use ($ignoredContexts) {
+      foreach ($ignoredContexts as $context) {
+        if (preg_match(sprintf('/%s/', $context), $item->getContext())) {
+          return TRUE;
+        }
+      }
+      return FALSE;
+    };
+
     try {
-      $file = $this->extractTranslationsIntoFile(self::CONFIG_PO_FILE_CONTEXT_PATTERN, $source);
+      $file = $this->extractTranslationsIntoFile(self::CONFIG_PO_FILE_CONTEXT_PATTERN, $source, 'include', $ignoreContext);
       $destination = $this->fileSystem->move($file, $destination, FileSystemInterface::EXISTS_REPLACE);
     }
     catch (\Exception $e) {
@@ -399,7 +418,7 @@ class DplPoCommands extends DrushCommands {
   /**
    * Extract translations into a file.
    */
-  protected function extractTranslationsIntoFile(string $pattern, string $source, string $mode = 'include'): \SplFileInfo {
+  protected function extractTranslationsIntoFile(string $pattern, string $source, string $mode = 'include', ?callable $excludeCallback = NULL): \SplFileInfo {
     $reader = new PoStreamReader();
     $reader->setLangcode($this->languageCode);
     $reader->setURI($source);
@@ -420,6 +439,11 @@ class DplPoCommands extends DrushCommands {
     $writer->open();
 
     while ($item = $reader->readItem()) {
+      if ($excludeCallback && $excludeCallback($item)) {
+        $this->io()->info('Skipping item with context: ' . $item->getContext());
+        continue;
+      }
+
       if ($mode === 'include' && preg_match($pattern, $item->getContext())) {
         $writer->writeItem($item);
       }
