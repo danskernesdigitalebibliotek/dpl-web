@@ -1,7 +1,3 @@
-{% for item in items %}
-  {{ item.content }}
-{% endfor %}
-
 <div class="consent-placeholder cookie-placeholder cookie-placeholder__hide" data-category="cookie_cat_marketing">
   <div class="pagefold-triangle--medium pagefold-inherit-parent"></div>
   <div class="cookie-placeholder__wrapper">
@@ -20,3 +16,6 @@
     </button>
   </div>
 </div>
+{% for item in items %}
+  {{ item.content }}
+{% endfor %}
