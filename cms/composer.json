@@ -297,7 +297,7 @@
                 "3309324: Fails when start and end date are identical": "https://www.drupal.org/files/issues/2023-12-22/date_range_formatter_3309324_1.patch"
             },
             "drupal/default_content": {
-                "3200212: Overwrite files on import": "https://git.drupalcode.org/project/default_content/-/merge_requests/8.patch"
+                "3200212: Overwrite files on import": "https://www.drupal.org/files/issues/2021-12-08/default_content-3200212.patch"
             },
             "drupal/dynamic_entity_reference": {
                 "3405253: Update the FieldType category for clarity": "https://git.drupalcode.org/project/dynamic_entity_reference/-/commit/3f048d296f671906d15b0cdfbbadbea38f5f3c8b.patch",
