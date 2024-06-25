@@ -3,6 +3,7 @@
 namespace Drupal\dpl_po\Commands;
 
 use Drupal\Component\Gettext\PoHeader;
+use Drupal\Component\Gettext\PoItem;
 use Drupal\Component\Gettext\PoStreamReader;
 use Drupal\Component\Gettext\PoStreamWriter;
 use Drupal\Core\Config\ConfigFactoryInterface;
@@ -72,23 +73,8 @@ class DplPoCommands extends DrushCommands {
     $this->validateSource($source);
     $this->validateDestination($destination);
 
-    // @todo This is a quick way ignore some contexts we do not want to end up in the PO file.
-    // It would be better to have a more flexible way to ignore
-    // contexts. For now we know that all webform contexts should be ignored.
-    $ignoredContexts = [
-      '^webform\..+',
-    ];
-    $ignoreContext = function ($item) use ($ignoredContexts) {
-      foreach ($ignoredContexts as $context) {
-        if (preg_match(sprintf('/%s/', $context), $item->getContext())) {
-          return TRUE;
-        }
-      }
-      return FALSE;
-    };
-
     try {
-      $file = $this->extractTranslationsIntoFile(self::CONFIG_PO_FILE_CONTEXT_PATTERN, $source, 'include', $ignoreContext);
+      $file = $this->extractTranslationsIntoFile(self::CONFIG_PO_FILE_CONTEXT_PATTERN, $source, 'include');
       $destination = $this->fileSystem->move($file, $destination, FileSystemInterface::EXISTS_REPLACE);
     }
     catch (\Exception $e) {
@@ -106,6 +92,25 @@ class DplPoCommands extends DrushCommands {
       [
         'context' => 'translation handling',
       ]));
+  }
+
+  /**
+   * Ignore various contexts.
+   *
+   * @todo This is a quick way ignore some contexts we do not want to end up in the PO file.
+   * It would be better to have a more flexible way to ignore
+   * contexts. For now we know that all webform contexts should be ignored.
+   */
+  protected static function ignoreContexts(PoItem $item): bool {
+    $ignoredContexts = [
+      '^webform\..+',
+    ];
+    foreach ($ignoredContexts as $context) {
+      if (preg_match(sprintf('/%s/', $context), $item->getContext())) {
+        return TRUE;
+      }
+    }
+    return FALSE;
   }
 
   /**
@@ -342,6 +347,11 @@ class DplPoCommands extends DrushCommands {
 
       $writer->open();
       foreach ($items as $item) {
+        if (self::ignoreContexts($item)) {
+          $this->io()->info('Skipping item with context: ' . $item->getContext());
+          continue;
+        }
+
         $writer->writeItem($item);
       }
       $writer->close();
@@ -418,7 +428,7 @@ class DplPoCommands extends DrushCommands {
   /**
    * Extract translations into a file.
    */
-  protected function extractTranslationsIntoFile(string $pattern, string $source, string $mode = 'include', ?callable $excludeCallback = NULL): \SplFileInfo {
+  protected function extractTranslationsIntoFile(string $pattern, string $source, string $mode = 'include'): \SplFileInfo {
     $reader = new PoStreamReader();
     $reader->setLangcode($this->languageCode);
     $reader->setURI($source);
@@ -439,7 +449,7 @@ class DplPoCommands extends DrushCommands {
     $writer->open();
 
     while ($item = $reader->readItem()) {
-      if ($excludeCallback && $excludeCallback($item)) {
+      if (self::ignoreContexts($item)) {
         $this->io()->info('Skipping item with context: ' . $item->getContext());
         continue;
       }
