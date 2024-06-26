@@ -4034,7 +4034,7 @@ msgstr "Telefon"
 #: 
 msgctxt "Material Grid"
 msgid "Show all"
-msgstr "Vis alle"
+msgstr "Vis flere"
 
 #: 
 msgid "CQL search string"
