@@ -4,11 +4,23 @@
 # #-#-#-#-#  da.config.po (PROJECT VERSION)  #-#-#-#-#
 # da translation of DPL CMS
 #
+#, fuzzy
 msgid ""
 msgstr ""
+"#-#-#-#-#  da.po (PROJECT VERSION)  #-#-#-#-#\n"
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2024-06-26 14:26+0200\n"
-"PO-Revision-Date: 2024-06-26 14:26+0200\n"
+"POT-Creation-Date: 2024-06-26 16:31+0200\n"
+"PO-Revision-Date: 2024-06-26 16:31+0200\n"
+"Last-Translator: NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n > 1);\n"
+"#-#-#-#-#  da.config.po (PROJECT VERSION)  #-#-#-#-#\n"
+"Project-Id-Version: PROJECT VERSION\n"
+"POT-Creation-Date: 2024-06-26 16:32+0200\n"
+"PO-Revision-Date: 2024-06-26 16:32+0200\n"
 "Last-Translator: NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
 "MIME-Version: 1.0\n"
@@ -3913,6 +3925,12 @@ msgid ""
 "Integrate the TwentyThree video platform into the Media module with oEmbed "
 "support"
 msgstr "Integrer TwentyThree videoplatformen i mediemodulet med oEmbed support"
+
+msgid "DPL Cookies"
+msgstr ""
+
+msgid "A module that handles cookie functionality."
+msgstr ""
 
 msgid "Event settings"
 msgstr "Arrangementsindstillinger"
@@ -17582,6 +17600,12 @@ msgstr "Vis flere"
 
 msgid "Events in this series"
 msgstr "Arrangementer i denne serie"
+
+msgid "To view this content, we need your consent to use marketing cookies."
+msgstr ""
+
+msgid "Manage consent"
+msgstr ""
 
 msgid "Status message icon"
 msgstr "Statusmeddelelsesikon"
