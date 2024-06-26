@@ -10,4 +10,5 @@ visibility:
   request_path_pages: ''
   user_role_mode: 0
   user_role_roles:
-    authenticated: authenticated
+    anonymous: anonymous
+    patron: patron
