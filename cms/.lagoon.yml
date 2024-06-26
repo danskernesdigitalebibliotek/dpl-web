@@ -122,8 +122,3 @@ environments:
         schedule: "M/30 * * * *"
         command: drush dpl_po:import-remote-config-po da https://danskernesdigitalebibliotek.github.io/dpl-cms/translations/da.config.po
         service: cli
-    routes:
-      - nginx:
-          - reload.dresscoder.dk:
-              tls-acme: "true"
-              insecure: Redirect
