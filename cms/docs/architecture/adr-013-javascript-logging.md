@@ -40,6 +40,8 @@ logging infrastructure.
   - We deliberately dismissed options such as Sentry, Raygun, and similar
   third-party services due to our reluctance to introduce additional external
   dependencies and complexities.
+  - There are also possibilities for logging in Loki with a third-party library.
+  We avoided this because of unknown scope and complexities.
 
 ## Consequences
 
