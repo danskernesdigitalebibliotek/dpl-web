@@ -3,6 +3,7 @@ langcode: en
 status: true
 dependencies:
   config:
+    - field.field.paragraph.material_grid_manual.field_material_grid_description
     - field.field.paragraph.material_grid_manual.field_material_grid_title
     - field.field.paragraph.material_grid_manual.field_material_grid_work_ids
     - field.field.paragraph.material_grid_manual.field_work_id
@@ -12,6 +13,13 @@ targetEntityType: paragraph
 bundle: material_grid_manual
 mode: default
 content:
+  field_material_grid_description:
+    type: basic_string
+    label: above
+    settings: {  }
+    third_party_settings: {  }
+    weight: 1
+    region: content
   field_material_grid_title:
     type: string
     label: above

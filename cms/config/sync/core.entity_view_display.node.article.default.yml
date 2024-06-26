@@ -8,6 +8,7 @@ dependencies:
     - field.field.node.article.field_categories
     - field.field.node.article.field_override_author
     - field.field.node.article.field_paragraphs
+    - field.field.node.article.field_publication_date
     - field.field.node.article.field_show_override_author
     - field.field.node.article.field_subtitle
     - field.field.node.article.field_tags
@@ -15,6 +16,7 @@ dependencies:
     - field.field.node.article.field_teaser_text
     - node.type.article
   module:
+    - datetime
     - user
 id: node.article.default
 targetEntityType: node
@@ -44,6 +46,15 @@ content:
       link_to_entity: false
     third_party_settings: {  }
     weight: 106
+    region: content
+  field_publication_date:
+    type: datetime_default
+    label: above
+    settings:
+      timezone_override: ''
+      format_type: medium
+    third_party_settings: {  }
+    weight: 113
     region: content
   field_show_override_author:
     type: boolean

@@ -1,0 +1,30 @@
+_meta:
+  version: "1.0"
+  entity_type: taxonomy_term
+  uuid: 5d70c9f7-779c-4337-a587-ced7a8ecc770
+  bundle: tags
+  default_langcode: da
+default:
+  status:
+    - value: true
+  name:
+    - value: Tag2
+  weight:
+    - value: 0
+  parent:
+    - target_id: 0
+  revision_translation_affected:
+    - value: true
+  metatag:
+    - tag: meta
+      attributes:
+        name: title
+        content: "Tag2 | DPL CMS"
+    - tag: link
+      attributes:
+        rel: canonical
+        href: "http://dpl-cms.docker/taxonomy/term/28"
+  path:
+    - alias: ""
+      langcode: da
+      pathauto: 1

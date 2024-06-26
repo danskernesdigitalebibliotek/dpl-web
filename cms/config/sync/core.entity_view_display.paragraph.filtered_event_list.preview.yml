@@ -7,9 +7,13 @@ dependencies:
     - field.field.paragraph.filtered_event_list.field_amount_of_events
     - field.field.paragraph.filtered_event_list.field_filter_branches
     - field.field.paragraph.filtered_event_list.field_filter_categories
+    - field.field.paragraph.filtered_event_list.field_filter_cond_type
     - field.field.paragraph.filtered_event_list.field_filter_tags
+    - field.field.paragraph.filtered_event_list.field_max_item_amount
     - field.field.paragraph.filtered_event_list.field_title
     - paragraphs.paragraphs_type.filtered_event_list
+  module:
+    - options
 id: paragraph.filtered_event_list.preview
 targetEntityType: paragraph
 bundle: filtered_event_list
@@ -19,7 +23,7 @@ content:
     type: entity_reference_label
     label: above
     settings:
-      link: true
+      link: false
     third_party_settings: {  }
     weight: 3
     region: content
@@ -27,7 +31,7 @@ content:
     type: entity_reference_label
     label: above
     settings:
-      link: true
+      link: false
     third_party_settings: {  }
     weight: 2
     region: content
@@ -35,9 +39,16 @@ content:
     type: entity_reference_label
     label: above
     settings:
-      link: true
+      link: false
     third_party_settings: {  }
     weight: 1
+    region: content
+  field_max_item_amount:
+    type: list_default
+    label: above
+    settings: {  }
+    third_party_settings: {  }
+    weight: 4
     region: content
   field_title:
     type: string
@@ -49,4 +60,5 @@ content:
     region: content
 hidden:
   field_amount_of_events: true
+  field_filter_cond_type: true
   search_api_excerpt: true

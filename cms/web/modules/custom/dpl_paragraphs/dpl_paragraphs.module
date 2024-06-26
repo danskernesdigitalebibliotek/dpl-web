@@ -12,6 +12,7 @@ use Drupal\dpl_react_apps\Controller\DplReactAppsController;
 use Drupal\field\Entity\FieldConfig;
 use Drupal\paragraphs\Entity\Paragraph;
 use Drupal\paragraphs\ParagraphInterface;
+use Symfony\Component\Routing\Exception\InvalidParameterException;
 use function Safe\parse_url;
 use function Safe\preg_match;
 
@@ -159,15 +160,24 @@ function dpl_paragraphs_preprocess_paragraph__recommendation(array &$variables):
       // or description, otherwise the URL is constructed in the React app.
       $route_parameters = ['wid' => $work_id];
       $query_parameters = [];
+      $material_url = NULL;
 
       if (!empty($material_type)) {
         $query_parameters['type'] = $material_type;
       }
 
-      $material_url_object = Url::fromRoute('dpl_react_apps.work', $route_parameters,
-        ['absolute' => TRUE, 'query' => $query_parameters]);
+      try {
+        $material_url_object = Url::fromRoute('dpl_react_apps.work', $route_parameters,
+          ['absolute' => TRUE, 'query' => $query_parameters]);
 
-      $material_url = $material_url_object->toString();
+        $material_url = $material_url_object->toString();
+      }
+      catch (InvalidParameterException $e) {
+        \Drupal::logger('dpl_paragraphs')->error(
+          'Could not render Recommendation paragraph - most likely cause the @wid WorkID is in wrong format. @exception',
+          ['@wid' => $work_id, '@exception' => $e->getMessage()]
+        );
+      }
 
       $variables['react_app'] = [
         '#theme' => 'dpl_react_app',
@@ -217,12 +227,16 @@ function dpl_paragraphs_preprocess_paragraph__material_grid_automatic(array &$va
     return;
   }
 
-  if (!$paragraph->hasField('field_amount_of_materials') || !$paragraph->hasField('field_material_grid_title') || !$paragraph->hasField('field_cql_search')) {
+  if (!$paragraph->hasField('field_amount_of_materials') ||
+    !$paragraph->hasField('field_material_grid_title') ||
+    !$paragraph->hasField('field_material_grid_description') ||
+    !$paragraph->hasField('field_cql_search')) {
     return;
   }
 
   // Extract field values.
   $material_grid_title = $paragraph->get('field_material_grid_title')->getString();
+  $material_grid_description = $paragraph->get('field_material_grid_description')->getString();
   $cql = $paragraph->get('field_cql_search')->getString();
   $selected_amount_of_materials_for_display = (int) $paragraph->get('field_amount_of_materials')->getString();
 
@@ -238,6 +252,7 @@ function dpl_paragraphs_preprocess_paragraph__material_grid_automatic(array &$va
     '#name' => 'material-grid-automatic',
     '#data' => [
       'title' => $material_grid_title,
+      'description' => $material_grid_description,
       'cql' => $cql,
       'selected-amount-of-materials-for-display' => $selected_amount_of_materials_for_display,
       'button-text' => t('Show all', [], ['context' => 'Material Grid']),
@@ -263,12 +278,16 @@ function dpl_paragraphs_preprocess_paragraph__material_grid_manual(array &$varia
 
   $paragraph = $variables['paragraph'] ?? NULL;
 
-  if (!($paragraph instanceof ParagraphInterface)  || !$paragraph->hasField('field_material_grid_title') || !$paragraph->hasField('field_material_grid_work_ids')) {
+  if (!($paragraph instanceof ParagraphInterface)  ||
+    !$paragraph->hasField('field_material_grid_title') ||
+    !$paragraph->hasField('field_material_grid_description') ||
+    !$paragraph->hasField('field_material_grid_work_ids')) {
     return;
   }
 
   // Extract field values.
   $material_grid_title = $paragraph->get('field_material_grid_title')->getString();
+  $material_grid_description = $paragraph->get('field_material_grid_description')->getString();
   $materials = [];
 
   if (!$paragraph->get('field_material_grid_work_ids')->isEmpty()) {
@@ -296,6 +315,7 @@ function dpl_paragraphs_preprocess_paragraph__material_grid_manual(array &$varia
     '#data' => [
       'materials' => $materials,
       'title' => $material_grid_title,
+      'description' => $material_grid_description,
       'button-text' => t('Show all', [], ['context' => 'Material Grid']),
       'blacklisted-search-branches-config' => $blacklistedSearchBranchesConfig,
       'branches-config' => $branchesConfig,

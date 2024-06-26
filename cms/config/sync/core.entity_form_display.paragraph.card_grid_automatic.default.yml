@@ -5,6 +5,8 @@ dependencies:
   config:
     - field.field.paragraph.card_grid_automatic.field_filter_branches
     - field.field.paragraph.card_grid_automatic.field_filter_categories
+    - field.field.paragraph.card_grid_automatic.field_filter_cond_type
+    - field.field.paragraph.card_grid_automatic.field_filter_content_types
     - field.field.paragraph.card_grid_automatic.field_filter_tags
     - field.field.paragraph.card_grid_automatic.field_title
     - paragraphs.paragraphs_type.card_grid_automatic
@@ -21,7 +23,7 @@ third_party_settings:
       label: Filters
       region: content
       parent_name: ''
-      weight: 1
+      weight: 2
       format_type: fieldset
       format_settings:
         classes: ''
@@ -36,7 +38,7 @@ mode: default
 content:
   field_filter_branches:
     type: select2_entity_reference
-    weight: 8
+    weight: 17
     region: content
     settings:
       width: 100%
@@ -46,7 +48,7 @@ content:
     third_party_settings: {  }
   field_filter_categories:
     type: select2_entity_reference
-    weight: 7
+    weight: 16
     region: content
     settings:
       width: 100%
@@ -54,9 +56,16 @@ content:
       match_operator: CONTAINS
       match_limit: 10
     third_party_settings: {  }
+  field_filter_content_types:
+    type: select2
+    weight: 1
+    region: content
+    settings:
+      width: 100%
+    third_party_settings: {  }
   field_filter_tags:
     type: select2_entity_reference
-    weight: 6
+    weight: 15
     region: content
     settings:
       width: 100%
@@ -74,4 +83,5 @@ content:
     third_party_settings: {  }
 hidden:
   created: true
+  field_filter_cond_type: true
   status: true

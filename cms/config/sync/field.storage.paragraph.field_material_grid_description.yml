@@ -1,0 +1,19 @@
+uuid: b4bd5a5f-b0bf-496f-9d6f-19148b72d4fa
+langcode: en
+status: true
+dependencies:
+  module:
+    - paragraphs
+id: paragraph.field_material_grid_description
+field_name: field_material_grid_description
+entity_type: paragraph
+type: string_long
+settings:
+  case_sensitive: false
+module: core
+locked: false
+cardinality: 1
+translatable: true
+indexes: {  }
+persist_with_no_fields: false
+custom_storage: false

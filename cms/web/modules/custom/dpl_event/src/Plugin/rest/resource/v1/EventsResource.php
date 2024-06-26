@@ -38,6 +38,10 @@ use Symfony\Component\HttpFoundation\Response;
  *               "type" = "string",
  *               "description" = "The event title.",
  *             },
+ *             "description" = {
+ *                "type" = "string",
+ *                "description" = "The short event description.",
+ *              },
  *             "url" = {
  *               "type" = "string",
  *               "format" = "uri",
@@ -99,6 +103,14 @@ use Symfony\Component\HttpFoundation\Response;
  *                 "end",
  *               }
  *             },
+ *             "branches" = {
+ *               "type" = "array",
+ *               "description" = "The associated library branches.",
+ *                "items" = {
+ *                   "type" = "string",
+ *                   "description" = "The name of a branch.",
+ *                 },
+ *             },
  *             "address" = {
  *               "type" = "object",
  *               "description" = "Where the event occurs.",
@@ -130,6 +142,14 @@ use Symfony\Component\HttpFoundation\Response;
  *                 "city",
  *                 "country",
  *               }
+ *             },
+ *             "tags" = {
+ *                "type" = "array",
+ *                "description" = "The tags associated with the event.",
+ *                "items" = {
+ *                  "type" = "string",
+ *                  "description" = "The name of a tag.",
+ *                },
  *             },
  *             "ticket_categories" = {
  *               "type" = "array",
@@ -184,9 +204,9 @@ use Symfony\Component\HttpFoundation\Response;
  *                 "uuid",
  *               }
  *             },
- *             "description" = {
+ *             "body" = {
  *               "type" = "string",
- *               "description" = "An editorial description of the event.",
+ *               "description" = "An editorial WYSIWYG/HTML description of the event.",
  *             },
  *             "external_data" = {
  *               "type" = "object",

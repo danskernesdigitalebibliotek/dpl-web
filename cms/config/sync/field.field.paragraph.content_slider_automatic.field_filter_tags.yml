@@ -1,0 +1,29 @@
+uuid: 008e43e8-ad03-443a-80d1-e29f755454df
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.paragraph.field_filter_tags
+    - paragraphs.paragraphs_type.content_slider_automatic
+    - taxonomy.vocabulary.tags
+id: paragraph.content_slider_automatic.field_filter_tags
+field_name: field_filter_tags
+entity_type: paragraph
+bundle: content_slider_automatic
+label: 'Filter by tags'
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings:
+  handler: 'default:taxonomy_term'
+  handler_settings:
+    target_bundles:
+      tags: tags
+    sort:
+      field: name
+      direction: asc
+    auto_create: false
+    auto_create_bundle: categories
+field_type: entity_reference

@@ -675,6 +675,100 @@
         ]
       }
     },
+    "/opening_hours/instances": {
+      "get": {
+        "parameters": [
+          {
+            "name": "_format",
+            "in": "query",
+            "type": "string",
+            "enum": ["json"],
+            "required": true,
+            "description": "Request format",
+            "default": "json"
+          }, 
+          {
+            "name": "from_date",
+            "type": "string",
+            "format": "date",
+            "description": "Retrieve opening hours which occur after and including the provided date. In ISO 8601 format.",
+            "in": "query",
+            "required": true
+          }, 
+          {
+            "name": "to_date",
+            "type": "string",
+            "format": "date",
+            "description": "Retrieve opening hours which occur before and including the provided date. In ISO 8601 format.",
+            "in": "query",
+            "required": true
+          }, 
+          {
+            "name": "nid",
+            "type": "integer",
+            "description": "The (node) id of the node (Branch) that the opening hour applies to.",
+            "in": "query",
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "nid": {
+                    "type": "integer",
+                    "description": "The node Id of the branch the opening hours instance belongs to."
+                  },
+                  "category_tid": {
+                    "type": "integer",
+                    "description": "The (t)id of the opening hours category."
+                  },
+                  "date": {
+                    "type": "string",
+                    "format": "date",
+                    "description": "The date which the opening hours applies to. In ISO 8601 format."
+                  },
+                  "start_time": {
+                    "type": "string",
+                    "example": "09:00",
+                    "description": "When the opening hours start. In format HH:MM"
+                  },
+                  "end_time": {
+                    "type": "string",
+                    "example": "17:00",
+                    "description": "When the opening hours end. In format HH:MM"
+                  },
+                  "notice": {
+                    "type": "string",
+                    "description": "Additional notice regarding the opening hours.",
+                    "nullable": true
+                  }
+                },
+                "required": ["nid", "category_tid", "date", "start_time", "end_time", "notice"]
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        },
+        "summary": "List all opening hours for legacy API",
+        "operationId": "dpl_opening_hours_legacy_list:GET",
+        "schemes": ["http"],
+        "security": [
+          {
+            "cookie": []
+          }
+        ]
+      }
+    },
     "/api/v1/events/{uuid}": {
       "patch": {
         "parameters": [
@@ -783,6 +877,10 @@
                     "type": "string",
                     "description": "The event title."
                   },
+                  "description": {
+                    "type": "string",
+                    "description": "The short event description."
+                  },
                   "url": {
                     "type": "string",
                     "format": "uri",
@@ -832,6 +930,14 @@
                       }
                     }
                   },
+                  "branches": {
+                    "type": "array",
+                    "description": "The associated library branches.",
+                    "items": {
+                      "type": "string",
+                      "description": "The name of a branch."
+                    }
+                  },
                   "address": {
                     "type": "object",
                     "description": "Where the event occurs.",
@@ -858,6 +964,14 @@
                       }
                     },
                     "required": ["street", "zip_code", "city", "country"]
+                  },
+                  "tags": {
+                    "type": "array",
+                    "description": "The tags associated with the event.",
+                    "items": {
+                      "type": "string",
+                      "description": "The name of a tag."
+                    }
                   },
                   "ticket_categories": {
                     "type": "array",
@@ -904,9 +1018,9 @@
                     },
                     "required": ["uuid"]
                   },
-                  "description": {
+                  "body": {
                     "type": "string",
-                    "description": "An editorial description of the event."
+                    "description": "An editorial WYSIWYG/HTML description of the event."
                   },
                   "external_data": {
                     "type": "object",

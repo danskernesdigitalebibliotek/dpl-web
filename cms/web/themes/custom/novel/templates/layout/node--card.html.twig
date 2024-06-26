@@ -1,5 +1,11 @@
+{% set publication_date = node.created.value %}
+
+{% if node.field_publication_date.value is not empty %}
+  {% set publication_date = node.field_publication_date.value|date('U') %}
+{% endif %}
+
 {% if node.bundle != 'page' %}
-  {% set date_tag = node.getCreatedTime()|format_date('date_full_month') %}
+  {% set date_tag = publication_date|format_date('date_short_month') %}
 {% endif %}
 
 {% if node.bundle == 'article' %}
