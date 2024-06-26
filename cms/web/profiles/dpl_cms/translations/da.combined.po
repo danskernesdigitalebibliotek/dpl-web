@@ -11819,7 +11819,7 @@ msgstr "Behandlet @current af @total enhedstyper."
 
 #: 
 msgid "This batch encountered an error."
-msgstr ""
+msgstr "Der opstod en fejl."
 
 #: 
 msgid "@label: Deleted @revision_count revisions (@entity_count entities) in @interval."
@@ -24780,7 +24780,7 @@ msgstr "Ugyldig søgning"
 #: 
 msgctxt "Search Result"
 msgid "Your search is invalid. Please try again. In order to perform a valid search, you need to include at least three letters."
-msgstr ""
+msgstr "Din søgning virkede ikke. Prøv igen. For at foretage en søgning, skal der søges på minimum 3 tegn."
 
 #: 
 msgctxt "Dashboard"
