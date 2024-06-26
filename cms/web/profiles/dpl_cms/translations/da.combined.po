@@ -25448,7 +25448,7 @@ msgstr "CQL søgewidget"
 #: 
 msgctxt "field.field.paragraph.material_grid_automatic.field_material_grid_description:label"
 msgid "Material grid description"
-msgstr "Materialets gitterbeskrivelse"
+msgstr "Beskrivelse af indholdet i grid'et"
 
 #: 
 msgctxt "field.field.paragraph.material_grid_automatic.field_material_grid_description:description"
@@ -25458,7 +25458,7 @@ msgstr ""
 #: 
 msgctxt "field.field.paragraph.material_grid_manual.field_material_grid_description:label"
 msgid "Material grid description"
-msgstr "Materialets gitterbeskrivelse"
+msgstr "Beskrivelse af indholdet i grid'et"
 
 #: 
 msgctxt "field.field.paragraph.material_grid_manual.field_material_grid_description:description"
