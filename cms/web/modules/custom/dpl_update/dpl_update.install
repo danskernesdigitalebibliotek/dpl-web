@@ -110,6 +110,7 @@ function dpl_update_install(): string {
   $messages[] = dpl_update_update_10005();
   $messages[] = dpl_update_update_10006();
   $messages[] = dpl_update_update_10008();
+  $messages[] = dpl_update_update_10009();
 
   return implode('\r\n', $messages);
 }
@@ -148,9 +149,7 @@ function dpl_update_update_10004(): string {
  * Installing dpl_publication.
  */
 function dpl_update_update_10005(): string {
-  return _dpl_update_install_modules([
-    'dpl_publication',
-  ]);
+  return _dpl_update_install_modules(['dpl_publication']);
 }
 
 /**
@@ -172,4 +171,11 @@ function dpl_update_update_10007(): string {
  */
 function dpl_update_update_10008(): string {
   return _dpl_update_install_modules(['jsnlog']);
+}
+
+/**
+ * Installing dpl_cookies.
+ */
+function dpl_update_update_10009(): string {
+  return _dpl_update_install_modules(['dpl_cookies']);
 }
