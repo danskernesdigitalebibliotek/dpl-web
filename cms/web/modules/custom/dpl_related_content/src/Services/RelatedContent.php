@@ -156,24 +156,20 @@ class RelatedContent {
 
     $tags_field_name = 'field_tags';
     $categories_field_name = 'field_categories';
-    $branches_field_name = 'field_branch';
 
     // Other entity types have different field names, because of inheritance.
     if ($entity instanceof EventInstance) {
       $tags_field_name = 'event_tags';
       $categories_field_name = 'event_categories';
-      $branches_field_name = 'branch';
     }
 
     // By passing along NULL, we're saying that ANY tags are okay.
     // If we were to pass along an empty array, it would mean NO tags are okay.
     $tags = ($entity->hasField($tags_field_name)) ? $entity->get($tags_field_name)->referencedEntities() : NULL;
     $categories = ($entity->hasField($categories_field_name)) ? $entity->get($categories_field_name)->referencedEntities() : NULL;
-    $branches = ($entity->hasField($branches_field_name)) ? $entity->get($branches_field_name)->referencedEntities() : NULL;
 
     $this->setTags($tags);
     $this->setCategories($categories);
-    $this->setBranches($branches);
 
     return $this->getContent();
   }
