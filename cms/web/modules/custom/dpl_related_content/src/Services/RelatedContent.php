@@ -184,7 +184,6 @@ class RelatedContent {
     $event_ids = [];
     $node_ids = [];
 
-
     if (empty($this->tags) && empty($this->categories) && empty($this->branches)) {
       return [];
     }
@@ -479,7 +478,7 @@ class RelatedContent {
    * @return int[]
    *   The tag IDs.
    */
-  public function setTags(array $tags) {
+  public function setTags(array $tags): array {
     $this->tags = $this->getReferenceIds($tags);
     return $this->tags;
   }
@@ -493,7 +492,7 @@ class RelatedContent {
    * @return int[]
    *   The category IDs.
    */
-  public function setCategories(array $categories) {
+  public function setCategories(array $categories): array {
     $this->categories = $this->getReferenceIds($categories);
     return $this->categories;
   }
@@ -507,13 +506,13 @@ class RelatedContent {
    * @return int[]
    *   The branch IDs.
    */
-  public function setBranches(array $branches) {
+  public function setBranches(array $branches): array {
     $this->branches = $this->getReferenceIds($branches);
     return $this->branches;
   }
 
   /**
-   * Setter for list style, and the auto-effects on maxItems and item viewmode.
+   * Setter for list style, and the auto-effects on maxItems and item view mode.
    */
   public function setListStyle(RelatedContentListStyle $list_style): RelatedContentListStyle {
     $this->listStyle = $list_style;
@@ -545,7 +544,7 @@ class RelatedContent {
    * Parsing a list that may be an entity or simple ID array, to int[].
    *
    * @param int[]|string[]|FieldableEntityInterface[] $entities
-   *   The entities, or an array of IDs that may be strings or ints.
+   *   The entities, or an array of IDs that may be strings or integers.
    *
    * @return int[]
    *   The entity IDs.
