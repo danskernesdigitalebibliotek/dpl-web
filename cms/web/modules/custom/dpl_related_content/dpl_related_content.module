@@ -148,17 +148,14 @@ function _dpl_related_content_filter_paragraph(array $variables, RelatedContentL
 
     if ($paragraph->hasField('field_filter_tags') && !$paragraph->get('field_filter_tags')->isEmpty()) {
       $service->setTags($paragraph->get('field_filter_tags')->referencedEntities());
-      $service->allowDateFallback = FALSE;
     }
 
     if ($paragraph->hasField('field_filter_categories') && !$paragraph->get('field_filter_categories')->isEmpty()) {
       $service->setCategories($paragraph->get('field_filter_categories')->referencedEntities());
-      $service->allowDateFallback = FALSE;
     }
 
     if ($paragraph->hasField('field_filter_branches') && !$paragraph->get('field_filter_branches')->isEmpty()) {
       $service->setBranches($paragraph->get('field_filter_branches')->referencedEntities());
-      $service->allowDateFallback = FALSE;
     }
 
     if ($paragraph->hasField('field_max_item_amount') && !$paragraph->get('field_max_item_amount')->isEmpty()) {

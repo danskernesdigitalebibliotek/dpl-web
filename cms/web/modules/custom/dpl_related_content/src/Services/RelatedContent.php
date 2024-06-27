@@ -121,12 +121,6 @@ class RelatedContent {
    */
   public bool $innerAndConditions = FALSE;
 
-
-  /**
-   * If we should allow a simple date lookup if not enough matches are found.
-   */
-  public bool $allowDateFallback = TRUE;
-
   /**
    * What type of list do we want the items to be displayed in?
    */
@@ -205,12 +199,16 @@ class RelatedContent {
     $event_ids = [];
     $node_ids = [];
 
+    if (empty($this->tags) && empty($this->categories) && empty($this->branches)) {
+      return [];
+    }
+
     if ($this->outerAndConditions) {
       $node_ids = $this->getNodeIds($this->tags, $this->categories, $this->branches);
       $event_ids = $this->getEventInstanceIds($this->tags, $this->categories, $this->branches);
       $this->resultBasis = ['tags', 'categories', 'branches'];
     }
-    elseif (!empty($this->tags) || !empty($this->categories) || !empty($this->branches)) {
+    else {
       // First, let's look up related content, based only on tags.
       if (!empty($this->tags)) {
         $node_ids = $this->getNodeIds($this->tags);
@@ -232,16 +230,6 @@ class RelatedContent {
         $node_ids = $this->getNodeIds($this->tags, $this->categories, $this->branches);
         $event_ids = $this->getEventInstanceIds($this->tags, $this->categories, $this->branches);
         $this->resultBasis = ['tags', 'categories', 'branches'];
-      }
-    }
-
-    if ($this->allowDateFallback) {
-      // If the count is still under minimum, we'll find the upcoming events,
-      // and the latest nodes instead.
-      if (count($event_ids) + count($node_ids) < $this->minItems) {
-        $node_ids = $this->getNodeIds();
-        $event_ids = $this->getEventInstanceIds();
-        $this->resultBasis = ['date'];
       }
     }
 
