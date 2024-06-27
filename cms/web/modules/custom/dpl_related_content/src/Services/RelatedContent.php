@@ -163,10 +163,8 @@ class RelatedContent {
       $categories_field_name = 'event_categories';
     }
 
-    // By passing along NULL, we're saying that ANY tags are okay.
-    // If we were to pass along an empty array, it would mean NO tags are okay.
-    $tags = ($entity->hasField($tags_field_name)) ? $entity->get($tags_field_name)->referencedEntities() : NULL;
-    $categories = ($entity->hasField($categories_field_name)) ? $entity->get($categories_field_name)->referencedEntities() : NULL;
+    $tags = ($entity->hasField($tags_field_name)) ? $entity->get($tags_field_name)->referencedEntities() : [];
+    $categories = ($entity->hasField($categories_field_name)) ? $entity->get($categories_field_name)->referencedEntities() : [];
 
     $this->setTags($tags);
     $this->setCategories($categories);
