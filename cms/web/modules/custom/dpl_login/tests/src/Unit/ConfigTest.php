@@ -3,6 +3,7 @@
 namespace Drupal\Tests\dpl_login\Unit;
 
 use Drupal\Core\Config\ConfigFactoryInterface;
+use Drupal\Core\Config\ConfigManagerInterface;
 use Drupal\Core\Config\ImmutableConfig;
 use Drupal\dpl_login\Adgangsplatformen\Config;
 use Drupal\dpl_login\Exception\MissingConfigurationException;
@@ -26,9 +27,9 @@ class ConfigTest extends UnitTestCase {
   /**
    * A mock config factory which can return a mock config object.
    *
-   * @var \Prophecy\Prophecy\ObjectProphecy<ConfigFactoryInterface>
+   * @var \Prophecy\Prophecy\ObjectProphecy<ConfigManagerInterface>
    */
-  protected ObjectProphecy $configFactory;
+  protected ObjectProphecy $configManager;
 
   /**
    * {@inheritdoc}
@@ -49,18 +50,21 @@ class ConfigTest extends UnitTestCase {
       'logout_endpoint' => 'http://auth.tld/logout',
     ]);
 
-    $this->configFactory = $this->prophesize(ConfigFactoryInterface::class);
-    $this->configFactory->get(Config::CONFIG_KEY)->will(function () use ($config) {
+    $configFactory = $this->prophesize(ConfigFactoryInterface::class);
+    $configFactory->get(Config::CONFIG_KEY)->will(function () use ($config) {
       // Reveal the configuration on demand.
       return $config->reveal();
     });
+
+    $this->configManager = $this->prophesize(ConfigManagerInterface::class);
+    $this->configManager->getConfigFactory()->willReturn($configFactory);
   }
 
   /**
    * Ensure configuration is returned in a format expected by plugins.
    */
   public function testPluginConfig(): void {
-    $config = new Config($this->configFactory->reveal());
+    $config = new Config($this->configManager->reveal());
     $this->assertSame([
       'agency_id' => '775100',
       'client_id' => 'abcd-1234',
@@ -76,7 +80,7 @@ class ConfigTest extends UnitTestCase {
    */
   public function testMissingPluginConfig(): void {
     $this->config->get('settings')->willReturn(NULL);
-    $config = new Config($this->configFactory->reveal());
+    $config = new Config($this->configManager->reveal());
     $this->assertSame([], $config->pluginConfig());
   }
 
@@ -84,7 +88,7 @@ class ConfigTest extends UnitTestCase {
    * Accessors must provide typed access to the configuration.
    */
   public function testAccessors(): void {
-    $config = new Config($this->configFactory->reveal());
+    $config = new Config($this->configManager->reveal());
     $this->assertEquals('775100', $config->getAgencyId());
     $this->assertEquals('abcd-1234', $config->getClientId());
     $this->assertEquals('something_super_secret', $config->getClientSecret());
@@ -97,7 +101,7 @@ class ConfigTest extends UnitTestCase {
    */
   public function testAccessorsMissingConfig(): void {
     $this->config->get('settings')->willReturn([]);
-    $config = new Config($this->configFactory->reveal());
+    $config = new Config($this->configManager->reveal());
     $this->expectException(MissingConfigurationException::class);
     $config->getAgencyId();
   }
