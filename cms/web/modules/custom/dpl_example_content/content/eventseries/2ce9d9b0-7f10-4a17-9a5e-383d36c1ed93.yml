@@ -5,7 +5,7 @@ _meta:
   bundle: default
   default_langcode: en
   depends:
-    b3249815-92a1-4529-afa5-14c834e7e956: eventinstance
+    22a6f659-56ad-4f40-8622-eca65bf5271e: eventinstance
     dac275e4-9b8c-4959-a13a-6b9fdbc1f6b0: node
     0fa7245a-3434-4d96-9793-a1848a22d37a: taxonomy_term
     a0176f8c-bb7e-4f5a-bf23-b48cd8bab05f: media
@@ -94,11 +94,6 @@ default:
       attributes:
         name: title
         content: '| DPL CMS'
-    -
-      tag: link
-      attributes:
-        rel: canonical
-        href: '/user/login'
   path:
     -
       alias: /hovedbiblioteket/arrangementer/vi-anbefaler/juleballet-noddeknaekkeren-0
@@ -106,7 +101,7 @@ default:
       pathauto: 1
   event_instances:
     -
-      entity: b3249815-92a1-4529-afa5-14c834e7e956
+      entity: 22a6f659-56ad-4f40-8622-eca65bf5271e
   field_branch:
     -
       entity: dac275e4-9b8c-4959-a13a-6b9fdbc1f6b0

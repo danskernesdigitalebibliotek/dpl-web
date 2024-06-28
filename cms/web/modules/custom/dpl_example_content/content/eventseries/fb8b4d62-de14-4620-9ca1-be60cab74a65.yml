@@ -5,7 +5,7 @@ _meta:
   bundle: default
   default_langcode: en
   depends:
-    81a070c9-dc01-41d7-8efd-d4d3416abf0c: eventinstance
+    35fa5d3e-d2d1-42fa-9a0d-c4e1563f51f5: eventinstance
     e539b26b-2992-406b-accf-03e549522c0d: taxonomy_term
     d6d67fd2-775c-46e7-a1bf-6af46290a5c8: media
     4704c566-afc2-4131-ab81-3d636f2451bf: taxonomy_term
@@ -94,11 +94,6 @@ default:
       attributes:
         name: title
         content: '| DPL CMS'
-    -
-      tag: link
-      attributes:
-        rel: canonical
-        href: '/user/login'
   path:
     -
       alias: /arrangementer/klima/genbrugsstof-fremfor-plastik-0
@@ -106,7 +101,7 @@ default:
       pathauto: 1
   event_instances:
     -
-      entity: 81a070c9-dc01-41d7-8efd-d4d3416abf0c
+      entity: 35fa5d3e-d2d1-42fa-9a0d-c4e1563f51f5
   field_categories:
     -
       entity: e539b26b-2992-406b-accf-03e549522c0d
