@@ -72,7 +72,7 @@ class ConfigTest extends UnitTestCase {
       'token_endpoint' => 'http://auth.tld/token',
       'userinfo_endpoint' => 'http://auth.tld/userinfo',
       'logout_endpoint' => 'http://auth.tld/logout',
-    ], $config->pluginConfig());
+    ], $config->getConfig());
   }
 
   /**
@@ -81,7 +81,7 @@ class ConfigTest extends UnitTestCase {
   public function testMissingPluginConfig(): void {
     $this->config->get('settings')->willReturn(NULL);
     $config = new Config($this->configManager->reveal());
-    $this->assertSame([], $config->pluginConfig());
+    $this->assertSame([], $config->getConfig());
   }
 
   /**

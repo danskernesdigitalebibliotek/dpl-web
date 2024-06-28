@@ -22,25 +22,12 @@ class Config extends DplReactConfigBase {
   const CONFIG_KEY = "openid_connect.settings.adgangsplatformen";
 
   /**
-   * Returns the configuration formatted for an OpenID Connect plugin.
-   *
-   * @return string[]
-   *   Map of Adgangsplatformen configuration.
-   */
-  public function pluginConfig() : array {
-    $settings = $this->configManager->getConfigFactory()->get(self::CONFIG_KEY)->get('settings');
-    // Do not throw an exception here even if configuration is missing. Errors
-    // are handled is passed to the OpenID Connect plugin.
-    return (is_array($settings)) ? $settings : [];
-  }
-
-  /**
    * Get a specific configuration value.
    *
    * @throws \Drupal\dpl_login\Exception\MissingConfigurationException
    */
   private function getValue(string $key) : string {
-    $settings = $this->configManager->getConfigFactory()->get(self::CONFIG_KEY)->get('settings');
+    $settings = $this->getConfig();
     $setting = $settings[$key] ?? '';
     // Assume that the Adgangsplatformen configuration should always be set so
     // throw exception instead of returning a nullable or empty string.
@@ -105,7 +92,10 @@ class Config extends DplReactConfigBase {
    * {@inheritDoc}
    */
   public function getConfig(): array {
-    return $this->pluginConfig();
+    $settings = $this->configManager->getConfigFactory()->get(self::CONFIG_KEY)->get('settings');
+    // Do not throw an exception here even if configuration is missing. Errors
+    // are handled is passed to the OpenID Connect plugin.
+    return (is_array($settings)) ? $settings : [];
   }
 
   /**
