@@ -123,6 +123,11 @@ class ReoccurringDateFormatter {
     // Load the first event instance - the remaining IDs are useful later on,
     // when we want to check if it is alone or not.
     $upcoming_event_id = reset($upcoming_ids);
+
+    if (!$upcoming_event_id) {
+      return NULL;
+    }
+
     $event_instance = EventInstance::load($upcoming_event_id);
 
     if (!($event_instance instanceof EventInstance)) {
