@@ -10,13 +10,13 @@ default:
       value: true
   title:
     -
-      value: 'Børn & forældre'
+      value: Kontakt
   menu_name:
     -
       value: main
   link:
     -
-      uri: 'internal:/'
+      uri: 'internal:/kontakt'
       title: ''
       options: {  }
   external:
@@ -27,7 +27,7 @@ default:
       value: true
   weight:
     -
-      value: 4
+      value: -46
   expanded:
     -
       value: false

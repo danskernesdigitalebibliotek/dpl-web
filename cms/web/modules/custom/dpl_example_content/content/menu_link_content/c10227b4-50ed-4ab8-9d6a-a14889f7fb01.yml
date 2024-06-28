@@ -4,19 +4,21 @@ _meta:
   uuid: c10227b4-50ed-4ab8-9d6a-a14889f7fb01
   bundle: menu_link_content
   default_langcode: en
+  depends:
+    fd774222-4b22-4803-ae45-2d4e80d84fac: node
 default:
   enabled:
     -
       value: true
   title:
     -
-      value: Litteratur
+      value: Paragraphs
   menu_name:
     -
       value: main
   link:
     -
-      uri: 'internal:/'
+      target_uuid: fd774222-4b22-4803-ae45-2d4e80d84fac
       title: ''
       options: {  }
   external:
@@ -24,10 +26,10 @@ default:
       value: false
   rediscover:
     -
-      value: true
+      value: false
   weight:
     -
-      value: 3
+      value: -47
   expanded:
     -
       value: false

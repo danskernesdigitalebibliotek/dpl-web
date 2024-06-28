@@ -10,13 +10,13 @@ default:
       value: true
   title:
     -
-      value: 'Biblioteker & åbningstider'
+      value: Filialer
   menu_name:
     -
       value: main
   link:
     -
-      uri: 'internal:/'
+      uri: 'internal:/branches'
       title: ''
       options: {  }
   external:
@@ -27,7 +27,7 @@ default:
       value: true
   weight:
     -
-      value: 0
+      value: -48
   expanded:
     -
       value: false

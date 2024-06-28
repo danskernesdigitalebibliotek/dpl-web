@@ -5,36 +5,37 @@ _meta:
   bundle: default
   default_langcode: en
   depends:
-    1868b7de-62b3-4477-8c1e-4709634f492b: eventinstance
-    bd06c0c7-f58c-496c-bd21-4d8f253366bc: eventinstance
-    d492827c-2aff-42af-8e21-3fef52d0f5b9: eventinstance
-    370cd938-72e8-4f0d-b6e1-918a578a4eea: eventinstance
-    b68dcd31-22bf-449f-a4d6-cd5bcfab07bc: eventinstance
-    ee4da07b-822e-4742-aa74-73cdc67c53e9: eventinstance
-    ed4de2ff-b489-49b6-bad6-61d74202e48b: eventinstance
-    3ec03a0c-da16-42f6-9ce7-e79b39ab6d30: eventinstance
-    d325b893-2a77-47da-8aed-463730f9d004: eventinstance
-    71965c40-8125-4979-8a24-4cf18d836a7a: eventinstance
-    daf7d406-4701-45b0-8059-0b6b6fbaf001: eventinstance
-    b9404def-0ecc-46fc-8abc-bd48809ba347: eventinstance
-    53098528-ce61-4892-b1b5-5f3482ff5ac3: eventinstance
-    bf7e58e2-3a7d-4fa9-b53a-1186d5414317: eventinstance
-    5b381e41-9172-4d5d-ab4d-fe107f268a41: eventinstance
-    44803b51-8650-4cc3-95af-2043956ffb47: eventinstance
-    84932adf-3696-4f8e-a531-b40491ef85c6: eventinstance
-    88a9bf84-daf9-4f4f-a78e-329a01da10f7: eventinstance
-    c9a1f2f9-c702-4ee8-acb9-d6bb434b5579: eventinstance
-    fb8ba323-2e7c-4e04-aeca-edd39b531aec: eventinstance
-    3fd585d7-102b-49b3-826d-3e82e7f148c2: eventinstance
-    4a3ab7c1-5928-4c88-bc52-04c72cbb92fa: eventinstance
-    4fe0f3ea-dcc4-479f-ab03-4ce8d36884de: eventinstance
-    a446bb13-ff2a-407a-a9bf-7a62580699d3: eventinstance
+    745e18aa-8b89-40a8-ab25-a7f07942a6ee: eventinstance
+    a88b1f9a-238c-4497-bd42-8c98e285c273: eventinstance
+    9b455d97-6686-4363-afe9-1f9c80943a94: eventinstance
+    9b79caea-8d9f-419f-96a6-9e141f7eab51: eventinstance
+    48dab534-c2f0-4f0d-9bdd-711e1c683f0e: eventinstance
+    7cc9b04f-6a91-4e39-936c-31e7cd9bf41c: eventinstance
+    e161af22-7079-4834-a1e2-e7039adf5763: eventinstance
+    e9d5da78-1b58-4a6b-8022-141db751c662: eventinstance
+    6bb7d488-8786-4559-a80c-cd7a068a0da9: eventinstance
+    9b146ad0-efa4-46d2-bdbe-9f798b4fc461: eventinstance
+    8bc48107-2f51-4d61-a626-f81e97633c73: eventinstance
+    31ad7bcb-098b-46b1-8c53-7602094cec88: eventinstance
+    9c48ca53-db96-4519-9a47-562f810819e9: eventinstance
+    eb88062c-5659-401e-928f-d2605c5a2818: eventinstance
+    e507939c-5f19-451b-bfb8-49fa75c6ff16: eventinstance
+    e7c43d7b-3c84-49cb-bc13-68c90b7562a7: eventinstance
+    70367229-37c1-42cc-97fd-626dbdcd8433: eventinstance
+    78aea2cc-ec33-4cf3-8857-dc4bf98fc347: eventinstance
+    afdd8057-b0dd-4360-bc96-fd75475d6368: eventinstance
+    70bb29d0-7c68-4ca2-8c83-63602a419c68: eventinstance
+    fe632cbc-a961-4633-81e9-1ad12b1418a0: eventinstance
+    5786d4e1-7e32-4ccf-98c3-e5056db9feed: eventinstance
+    720963eb-74d2-4980-a0c3-5c07003836d6: eventinstance
+    b00b46a4-6a60-494c-88f8-2b15893b184d: eventinstance
     dac275e4-9b8c-4959-a13a-6b9fdbc1f6b0: node
     0fa7245a-3434-4d96-9793-a1848a22d37a: taxonomy_term
     ca329ad9-5a1c-4f55-b8a9-a60843b66466: media
     e4ce7616-976d-43fc-aed2-a01c42b67db9: media
     e8283d3c-968a-4e74-ae02-9f02b76bb839: media
     f0204f0b-1f63-4c76-bb67-e3f7489ee392: media
+    1006441f-bb39-43b5-8c08-1a79344abf8b: taxonomy_term
 default:
   revision_uid:
     -
@@ -71,8 +72,8 @@ default:
       duration_or_end_time: duration
   weekly_recurring_date:
     -
-      value: '2024-01-01T09:24:38'
-      end_value: '2030-01-01T09:24:38'
+      value: '2024-01-01T10:31:13'
+      end_value: '2030-01-01T10:31:13'
       time: '08:00 am'
       duration: 900
       end_time: '08:00 am'
@@ -80,8 +81,8 @@ default:
       days: monday
   monthly_recurring_date:
     -
-      value: '2034-01-01T09:24:38'
-      end_value: '2036-01-01T09:24:38'
+      value: '2034-01-01T10:31:13'
+      end_value: '2036-01-01T10:31:13'
       time: '10:00 am'
       duration: 18000
       end_time: '08:00 am'
@@ -122,58 +123,58 @@ default:
         content: '| DPL CMS'
   path:
     -
-      alias: /hovedbiblioteket/arrangementer/vi-anbefaler/fars-legestue
+      alias: /hovedbiblioteket/events/vi-anbefaler/fars-legestue
       langcode: und
       pathauto: 1
   event_instances:
     -
-      entity: 1868b7de-62b3-4477-8c1e-4709634f492b
+      entity: 745e18aa-8b89-40a8-ab25-a7f07942a6ee
     -
-      entity: bd06c0c7-f58c-496c-bd21-4d8f253366bc
+      entity: a88b1f9a-238c-4497-bd42-8c98e285c273
     -
-      entity: d492827c-2aff-42af-8e21-3fef52d0f5b9
+      entity: 9b455d97-6686-4363-afe9-1f9c80943a94
     -
-      entity: 370cd938-72e8-4f0d-b6e1-918a578a4eea
+      entity: 9b79caea-8d9f-419f-96a6-9e141f7eab51
     -
-      entity: b68dcd31-22bf-449f-a4d6-cd5bcfab07bc
+      entity: 48dab534-c2f0-4f0d-9bdd-711e1c683f0e
     -
-      entity: ee4da07b-822e-4742-aa74-73cdc67c53e9
+      entity: 7cc9b04f-6a91-4e39-936c-31e7cd9bf41c
     -
-      entity: ed4de2ff-b489-49b6-bad6-61d74202e48b
+      entity: e161af22-7079-4834-a1e2-e7039adf5763
     -
-      entity: 3ec03a0c-da16-42f6-9ce7-e79b39ab6d30
+      entity: e9d5da78-1b58-4a6b-8022-141db751c662
     -
-      entity: d325b893-2a77-47da-8aed-463730f9d004
+      entity: 6bb7d488-8786-4559-a80c-cd7a068a0da9
     -
-      entity: 71965c40-8125-4979-8a24-4cf18d836a7a
+      entity: 9b146ad0-efa4-46d2-bdbe-9f798b4fc461
     -
-      entity: daf7d406-4701-45b0-8059-0b6b6fbaf001
+      entity: 8bc48107-2f51-4d61-a626-f81e97633c73
     -
-      entity: b9404def-0ecc-46fc-8abc-bd48809ba347
+      entity: 31ad7bcb-098b-46b1-8c53-7602094cec88
     -
-      entity: 53098528-ce61-4892-b1b5-5f3482ff5ac3
+      entity: 9c48ca53-db96-4519-9a47-562f810819e9
     -
-      entity: bf7e58e2-3a7d-4fa9-b53a-1186d5414317
+      entity: eb88062c-5659-401e-928f-d2605c5a2818
     -
-      entity: 5b381e41-9172-4d5d-ab4d-fe107f268a41
+      entity: e507939c-5f19-451b-bfb8-49fa75c6ff16
     -
-      entity: 44803b51-8650-4cc3-95af-2043956ffb47
+      entity: e7c43d7b-3c84-49cb-bc13-68c90b7562a7
     -
-      entity: 84932adf-3696-4f8e-a531-b40491ef85c6
+      entity: 70367229-37c1-42cc-97fd-626dbdcd8433
     -
-      entity: 88a9bf84-daf9-4f4f-a78e-329a01da10f7
+      entity: 78aea2cc-ec33-4cf3-8857-dc4bf98fc347
     -
-      entity: c9a1f2f9-c702-4ee8-acb9-d6bb434b5579
+      entity: afdd8057-b0dd-4360-bc96-fd75475d6368
     -
-      entity: fb8ba323-2e7c-4e04-aeca-edd39b531aec
+      entity: 70bb29d0-7c68-4ca2-8c83-63602a419c68
     -
-      entity: 3fd585d7-102b-49b3-826d-3e82e7f148c2
+      entity: fe632cbc-a961-4633-81e9-1ad12b1418a0
     -
-      entity: 4a3ab7c1-5928-4c88-bc52-04c72cbb92fa
+      entity: 5786d4e1-7e32-4ccf-98c3-e5056db9feed
     -
-      entity: 4fe0f3ea-dcc4-479f-ab03-4ce8d36884de
+      entity: 720963eb-74d2-4980-a0c3-5c07003836d6
     -
-      entity: a446bb13-ff2a-407a-a9bf-7a62580699d3
+      entity: b00b46a4-6a60-494c-88f8-2b15893b184d
   field_branch:
     -
       entity: dac275e4-9b8c-4959-a13a-6b9fdbc1f6b0
@@ -308,9 +309,15 @@ default:
   field_event_state:
     -
       value: Active
+  field_tags:
+    -
+      entity: 1006441f-bb39-43b5-8c08-1a79344abf8b
   field_teaser_image:
     -
       entity: e4ce7616-976d-43fc-aed2-a01c42b67db9
+  field_teaser_text:
+    -
+      value: 'Fars legestue teaser tekst'
   field_ticket_categories:
     -
       entity:

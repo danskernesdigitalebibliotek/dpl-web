@@ -10,13 +10,13 @@ default:
       value: true
   title:
     -
-      value: 'Digitale tilbud'
+      value: Artikler
   menu_name:
     -
       value: main
   link:
     -
-      uri: 'internal:/'
+      uri: 'internal:/articles'
       title: ''
       options: {  }
   external:
@@ -27,7 +27,7 @@ default:
       value: true
   weight:
     -
-      value: 0
+      value: -49
   expanded:
     -
       value: false
