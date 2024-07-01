@@ -51,7 +51,7 @@ default:
         content: 'Læseklubber - efter genre | DPL CMS'
   path:
     -
-      alias: /laesefilialen/laeseklubber/genre
+      alias: /laesefilialen/laeseklubber/laeseklubber-efter-genre
       langcode: und
       pathauto: 1
   field_branch:

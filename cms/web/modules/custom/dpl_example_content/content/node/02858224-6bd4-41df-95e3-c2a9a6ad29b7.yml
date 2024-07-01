@@ -5,6 +5,7 @@ _meta:
   bundle: page
   default_langcode: da
   depends:
+    e00e1460-169e-468d-9835-d664f06d0969: file
     fd774222-4b22-4803-ae45-2d4e80d84fac: node
     eef50571-39dc-461a-96ff-b6b7180ade61: media
     aba3cea8-cee5-42c1-a152-e30c2ab135e2: media
@@ -17,10 +18,8 @@ _meta:
     479ad4da-b402-4eab-801f-0d3db375df1c: node
     9cfd15df-32b4-4af9-b2da-56b039b5bf6b: node
     33a56f4a-fa42-42e1-9097-84f759bbbe4c: node
-    316e6db1-8d4e-40f7-9d95-b12e1294735e: taxonomy_term
     807e6053-86ed-4dce-b6a9-a48b566b5910: taxonomy_term
     e4ce7616-976d-43fc-aed2-a01c42b67db9: media
-    02858224-6bd4-41df-95e3-c2a9a6ad29b7: node
 default:
   revision_uid:
     -
@@ -49,6 +48,13 @@ default:
   entity_clone_template_active:
     -
       value: false
+  entity_clone_template_image:
+    -
+      entity: e00e1460-169e-468d-9835-d664f06d0969
+      alt: ''
+      title: ''
+      width: 640
+      height: 443
   metatag:
     -
       tag: meta
@@ -835,9 +841,6 @@ default:
           revision_translation_affected:
             -
               value: true
-          field_breadcrumb_target:
-            -
-              entity: 316e6db1-8d4e-40f7-9d95-b12e1294735e
           field_title:
             -
               value: 'Breadcrumb paragraph - Bestsellers'
@@ -878,11 +881,6 @@ default:
           field_hero_image:
             -
               entity: e4ce7616-976d-43fc-aed2-a01c42b67db9
-          field_hero_link:
-            -
-              target_uuid: 02858224-6bd4-41df-95e3-c2a9a6ad29b7
-              title: ''
-              options: {  }
           field_hero_title:
             -
               value: 'Hero paragraph'

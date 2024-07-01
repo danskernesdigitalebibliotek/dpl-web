@@ -5,10 +5,10 @@ _meta:
   bundle: default
   default_langcode: en
   depends:
-    0bc8c21c-d4f8-480b-b7d9-42f6e8354bc6: eventinstance
-    073bc580-9b74-4099-8298-73d3f6fe86f8: eventinstance
-    423c3668-1061-46c6-a98d-8543dcefb150: eventinstance
-    31a886a8-6292-4eb1-b982-3d49a2ae9024: eventinstance
+    0df8ece6-3062-4f88-bd10-3320670e1a2e: eventinstance
+    5da62d89-5521-4719-97d7-fe32c4f81c5b: eventinstance
+    c9fc3d9d-ae84-4049-984b-6f4966d1e4f5: eventinstance
+    239b6c8f-c515-40ba-a058-d7da45eddd3b: eventinstance
     852d781f-82c9-40ac-bc8d-d0cefe07706d: node
     f457c4c2-dc28-45cd-9b6e-fda4248d9d45: taxonomy_term
     618e176a-a45a-4c36-a197-664230aa0a34: media
@@ -107,18 +107,18 @@ default:
         content: '| DPL CMS'
   path:
     -
-      alias: /bronshoj-bibliotek/events/design-teknologi/fernisering-moderne-dans
+      alias: /bronshoj-bibliotek/arrangementer/design-teknologi/fernisering-moderne-dans
       langcode: und
       pathauto: 1
   event_instances:
     -
-      entity: 0bc8c21c-d4f8-480b-b7d9-42f6e8354bc6
+      entity: 0df8ece6-3062-4f88-bd10-3320670e1a2e
     -
-      entity: 073bc580-9b74-4099-8298-73d3f6fe86f8
+      entity: 5da62d89-5521-4719-97d7-fe32c4f81c5b
     -
-      entity: 423c3668-1061-46c6-a98d-8543dcefb150
+      entity: c9fc3d9d-ae84-4049-984b-6f4966d1e4f5
     -
-      entity: 31a886a8-6292-4eb1-b982-3d49a2ae9024
+      entity: 239b6c8f-c515-40ba-a058-d7da45eddd3b
   field_branch:
     -
       entity: 852d781f-82c9-40ac-bc8d-d0cefe07706d

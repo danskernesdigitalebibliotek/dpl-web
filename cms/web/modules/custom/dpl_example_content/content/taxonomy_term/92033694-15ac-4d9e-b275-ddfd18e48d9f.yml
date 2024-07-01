@@ -30,7 +30,7 @@ default:
       tag: link
       attributes:
         rel: canonical
-        href: 'http://dapple-cms.docker/taxonomy/term/11'
+        href: 'http://dapple-cms.docker/taxonomy/term/10'
   path:
     -
       alias: ''

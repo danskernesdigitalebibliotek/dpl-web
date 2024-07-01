@@ -5,6 +5,7 @@ _meta:
   bundle: page
   default_langcode: da
   depends:
+    e00e1460-169e-468d-9835-d664f06d0969: file
     06ea0cdb-aa83-4bb4-8025-eeae135f2e5d: taxonomy_term
 default:
   revision_uid:
@@ -34,6 +35,13 @@ default:
   entity_clone_template_active:
     -
       value: false
+  entity_clone_template_image:
+    -
+      entity: e00e1460-169e-468d-9835-d664f06d0969
+      alt: ''
+      title: ''
+      width: 640
+      height: 443
   metatag:
     -
       tag: meta
