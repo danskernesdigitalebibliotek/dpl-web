@@ -4,10 +4,12 @@ status: true
 dependencies:
   config:
     - field.field.paragraph.card_grid_manual.field_grid_content
+    - field.field.paragraph.card_grid_manual.field_more_link
     - field.field.paragraph.card_grid_manual.field_title
     - paragraphs.paragraphs_type.card_grid_manual
   module:
     - dynamic_entity_reference
+    - link
 id: paragraph.card_grid_manual.default
 targetEntityType: paragraph
 bundle: card_grid_manual
@@ -51,8 +53,29 @@ content:
       user:
         view_mode: default
         link: false
+      redirect:
+        view_mode: default
+        link: false
+      taxonomy_term:
+        view_mode: default
+        link: false
+      webform_submission:
+        view_mode: default
+        link: false
     third_party_settings: {  }
     weight: 0
+    region: content
+  field_more_link:
+    type: link
+    label: hidden
+    settings:
+      trim_length: 80
+      url_only: false
+      url_plain: false
+      rel: ''
+      target: ''
+    third_party_settings: {  }
+    weight: 1
     region: content
 hidden:
   field_title: true
