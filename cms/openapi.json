@@ -801,12 +801,12 @@
                     "url": {
                       "type": "string",
                       "format": "uri",
-                      "description": "An absolute url provided by the third party where end users can access the event."
+                      "description": "An absolute URL provided by the third party where end users can access the event."
                     },
                     "admin_url": {
                       "type": "string",
                       "format": "uri",
-                      "description": "An absolute url provided by the third party where editorial users can administer the event. Accessing this url should require authentication."
+                      "description": "An absolute URL provided by the third party where editorial users can administer the event. Accessing this URL should require authentication."
                     }
                   }
                 }
@@ -858,6 +858,14 @@
             "required": true,
             "description": "Request format",
             "default": "json"
+          }, 
+          {
+            "name": "from_date",
+            "type": "string",
+            "format": "date",
+            "description": "Retrieve events which occur after and including the provided date. In ISO 8601 format.",
+            "in": "query",
+            "required": false
           }
         ],
         "responses": {
@@ -871,7 +879,7 @@
                   "uuid": {
                     "type": "string",
                     "format": "uuid",
-                    "description": "A unique identifer for the event."
+                    "description": "A unique identifier for the event."
                   },
                   "title": {
                     "type": "string",
@@ -884,7 +892,7 @@
                   "url": {
                     "type": "string",
                     "format": "uri",
-                    "description": "An absolute url end users should use to view the event at the website."
+                    "description": "An absolute URL end users should use to view the event at the website."
                   },
                   "created_at": {
                     "type": "string",
@@ -903,7 +911,7 @@
                       "url": {
                         "type": "string",
                         "format": "uri",
-                        "description": "An absolute url for the image. This is a link to the original, unaltered file, so the size, aspect ratio, and file format will be different from event to event."
+                        "description": "An absolute URL for the image. This is a link to the original, unaltered file, so the size, aspect ratio, and file format will be different from event to event."
                       }
                     },
                     "required": ["url"]
@@ -916,7 +924,6 @@
                   "date_time": {
                     "type": "object",
                     "description": "When the event occurs.",
-                    "required": ["start", "end"],
                     "properties": {
                       "start": {
                         "type": "string",
@@ -928,7 +935,8 @@
                         "format": "date-time",
                         "description": "End time in ISO 8601 format."
                       }
-                    }
+                    },
+                    "required": ["start", "end"]
                   },
                   "branches": {
                     "type": "array",
@@ -1029,12 +1037,12 @@
                       "url": {
                         "type": "string",
                         "format": "uri",
-                        "description": "An absolute url provided by the third party where end users can access the event."
+                        "description": "An absolute URL provided by the third party where end users can access the event."
                       },
                       "admin_url": {
                         "type": "string",
                         "format": "uri",
-                        "description": "An absolute url provided by the third party where editorial users can administer the event. Accessing this url should require authentication."
+                        "description": "An absolute URL provided by the third party where editorial users can administer the event. Accessing this URL should require authentication."
                       }
                     }
                   }
