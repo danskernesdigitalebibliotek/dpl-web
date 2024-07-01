@@ -17,6 +17,8 @@ default_content:
     - dac275e4-9b8c-4959-a13a-6b9fdbc1f6b0
     - 852d781f-82c9-40ac-bc8d-d0cefe07706d
     - 480a6997-4ca2-4cc6-a8f2-61254401d044
+    - ac8fcbaf-94fc-47de-89a4-13228668031f
+    - f4c9b704-79db-49a1-a5f0-2b9ae5fb86d4
   eventseries:
     # https://www.figma.com/file/Zx9GrkFA3l4ISvyZD2q0Qi/Designsystem?type=design&node-id=7477-39713&mode=dev
     - c8177097-1438-493e-8177-e8ef968cc133
@@ -68,6 +70,7 @@ default_content:
     - 807e6053-86ed-4dce-b6a9-a48b566b5910
     - 4704c566-afc2-4131-ab81-3d636f2451bf
     - e539b26b-2992-406b-accf-03e549522c0d
+    - 06ea0cdb-aa83-4bb4-8025-eeae135f2e5d
   menu_link_content:
     - ff6db3ce-49e0-4107-b283-3403e22c5e6d
     - c391079e-a4f5-4d29-992f-92ed1a2dd96c

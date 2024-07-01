@@ -1,0 +1,56 @@
+_meta:
+  version: '1.0'
+  entity_type: node
+  uuid: f4c9b704-79db-49a1-a5f0-2b9ae5fb86d4
+  bundle: page
+  default_langcode: da
+  depends:
+    480a6997-4ca2-4cc6-a8f2-61254401d044: node
+default:
+  revision_uid:
+    -
+      target_id: 1
+  status:
+    -
+      value: true
+  uid:
+    -
+      target_id: 1
+  title:
+    -
+      value: 'Praktisk information'
+  created:
+    -
+      value: 1719478077
+  promote:
+    -
+      value: false
+  sticky:
+    -
+      value: false
+  revision_translation_affected:
+    -
+      value: true
+  entity_clone_template_active:
+    -
+      value: false
+  metatag:
+    -
+      tag: meta
+      attributes:
+        name: title
+        content: 'Praktisk information | DPL CMS'
+  path:
+    -
+      alias: /det-virtuelle-bibliotek/praktisk-information
+      langcode: und
+      pathauto: 1
+  field_branch:
+    -
+      entity: 480a6997-4ca2-4cc6-a8f2-61254401d044
+  field_display_titles:
+    -
+      value: false
+  field_publication_date:
+    -
+      value: '2024-06-27'

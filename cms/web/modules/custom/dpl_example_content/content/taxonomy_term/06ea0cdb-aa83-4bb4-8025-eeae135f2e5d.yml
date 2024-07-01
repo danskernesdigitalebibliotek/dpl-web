@@ -1,0 +1,49 @@
+_meta:
+  version: '1.0'
+  entity_type: taxonomy_term
+  uuid: 06ea0cdb-aa83-4bb4-8025-eeae135f2e5d
+  bundle: breadcrumb_structure
+  default_langcode: en
+  depends:
+    f4c9b704-79db-49a1-a5f0-2b9ae5fb86d4: node
+default:
+  status:
+    -
+      value: true
+  name:
+    -
+      value: 'Praktisk information'
+  weight:
+    -
+      value: 0
+  parent:
+    -
+      target_id: 0
+  revision_translation_affected:
+    -
+      value: true
+  metatag:
+    -
+      tag: meta
+      attributes:
+        name: title
+        content: 'Praktisk information | DPL CMS'
+    -
+      tag: link
+      attributes:
+        rel: canonical
+        href: 'http://dapple-cms.docker/taxonomy/term/32'
+  path:
+    -
+      alias: ''
+      langcode: en
+      pathauto: 1
+  field_content:
+    -
+      entity: f4c9b704-79db-49a1-a5f0-2b9ae5fb86d4
+  field_show_children:
+    -
+      value: true
+  field_show_children_subtitles:
+    -
+      value: false
