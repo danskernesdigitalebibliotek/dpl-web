@@ -1,0 +1,17 @@
+{#
+@todo This file (and view) can be deleted when RelatedContent takes over again.
+This markup already exists in event-list.html.twig, but due to how this and
+the old (this) view works, it cannot use a single twig file like
+RelatedContent can.
+#}
+<ul class="filtered-event-list__list"
+    data-show-more-list
+    data-initial-visible-items="4"
+    data-hide-list-button-after-expand="true"
+    data-show-more-list-id="{{ 'filtered-event-list'|clean_unique_id }}">
+  {% for row in rows %}
+    <li class="filtered-event-list__list-item" data-show-more-item>
+      {{ row.content }}
+    </li>
+  {% endfor %}
+</ul>

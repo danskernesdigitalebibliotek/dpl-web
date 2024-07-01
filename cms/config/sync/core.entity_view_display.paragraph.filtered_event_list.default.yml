@@ -15,7 +15,15 @@ id: paragraph.filtered_event_list.default
 targetEntityType: paragraph
 bundle: filtered_event_list
 mode: default
-content: {  }
+content:
+  field_title:
+    type: string
+    label: hidden
+    settings:
+      link_to_entity: false
+    third_party_settings: {  }
+    weight: 0
+    region: content
 hidden:
   field_amount_of_events: true
   field_filter_branches: true
@@ -23,5 +31,4 @@ hidden:
   field_filter_cond_type: true
   field_filter_tags: true
   field_max_item_amount: true
-  field_title: true
   search_api_excerpt: true
