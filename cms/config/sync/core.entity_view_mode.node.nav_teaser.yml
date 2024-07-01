@@ -6,5 +6,6 @@ dependencies:
     - node
 id: node.nav_teaser
 label: 'Navigation teaser'
+description: ''
 targetEntityType: node
 cache: true

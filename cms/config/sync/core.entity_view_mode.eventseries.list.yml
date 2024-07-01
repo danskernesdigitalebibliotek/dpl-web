@@ -8,5 +8,6 @@ _core:
   default_config_hash: mz23POjw79mHYOJRaxmdHod9XnOhofZ0TaOuLMQHhyQ
 id: eventseries.list
 label: List
+description: ''
 targetEntityType: eventseries
 cache: true
