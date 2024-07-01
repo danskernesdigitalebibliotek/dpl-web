@@ -134,7 +134,7 @@ content:
     type: entity_reference_label
     label: hidden
     settings:
-      link: true
+      link: false
     third_party_settings: {  }
     weight: 13
     region: content
@@ -157,7 +157,7 @@ content:
     region: content
   event_ticket_capacity:
     type: number_integer
-    label: visible
+    label: above
     settings:
       thousand_separator: ''
       prefix_suffix: true
