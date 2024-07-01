@@ -38,7 +38,7 @@ final class EventsResource extends EventResourceBase {
               'name' => 'from_date',
               'type' => 'string',
               'format' => 'date',
-              'description' => 'Retrieve events which occur after and including the provided date. In ISO 8601 format. If not set, only upcoming events will be shown.',
+              'description' => 'Retrieve events which occur after and including the provided date. In ISO 8601 format.',
               'in' => 'query',
               'required' => FALSE,
             ],
@@ -244,27 +244,25 @@ final class EventsResource extends EventResourceBase {
    * GET request: Get all eventinstances, hopefully cached.
    */
   public function get(Request $request): Response {
-    // Getting a possible from_date URL parameter, and use it in the look-up,
-    // to only find events that start from and after this date.
-    $typed_request = new RequestTyped($request);
-    $from_date = $typed_request->getDateTime('from_date');
 
-    // If no explicit date is set, we'll create a default to only show
-    // upcoming events.
-    if (!$from_date) {
-      $from_date = new DateTime('today');
-    }
-
-    $formatted_from_date = $from_date->format(DateTimeItemInterface::DATETIME_STORAGE_FORMAT);
 
     // Entity query, pulling all eventinstances.
     $storage = $this->entityTypeManager->getStorage('eventinstance');
     $query = $storage->getQuery()
       ->accessCheck(FALSE)
       ->condition('status', TRUE)
-      ->condition('date.value', $formatted_from_date, '>=')
       ->sort('date.value');
 
+    // Getting a possible from_date URL parameter, and use it in the look-up,
+    // to only find events that start from and after this date.
+    $typed_request = new RequestTyped($request);
+
+      $from_date = $typed_request->getDateTime('from_date');
+
+      if ($from_date) {
+        $formatted_from_date = $from_date->format(DateTimeItemInterface::DATETIME_STORAGE_FORMAT);
+        $query->condition('date.value', $formatted_from_date, '>=');
+      }
     $ids = $query->execute();
 
     $event_responses = [];
