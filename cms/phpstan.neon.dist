@@ -8,6 +8,9 @@ parameters:
     - **/tests/src/Unit/*
   ignoreErrors:
     - '#Unsafe usage of new static\(\).#'
+    - '#Method .*\(\) has parameter \$items with generic interface Drupal\\Core\\Field\\FieldItemListInterface but does not specify its types: T#'
+    - '#Method .*\(\) return type with generic interface Drupal\\Core\\Field\\FieldItemListInterface does not specify its types: T#'
+    - '#PHPDoc tag @var for variable \$.* contains generic interface Drupal\\Core\\Field\\FieldItemListInterface but does not specify its types: T#'
     - '#Call to deprecated method legacyConfig\(\) of class Drupal\\dpl_react\\DplReactConfigBase.#'
     # Drupal Form API makes extensive use for arrays which we cannot provide
     # more detailed typing of.
