@@ -1,0 +1,38 @@
+_meta:
+  version: '1.0'
+  entity_type: taxonomy_term
+  uuid: 73471caa-b735-427f-a4f4-15281e42d5b5
+  bundle: tags
+  default_langcode: da
+default:
+  status:
+    -
+      value: true
+  name:
+    -
+      value: læsesal
+  weight:
+    -
+      value: 0
+  parent:
+    -
+      target_id: 0
+  revision_translation_affected:
+    -
+      value: true
+  metatag:
+    -
+      tag: meta
+      attributes:
+        name: title
+        content: 'læsesal | DPL CMS'
+    -
+      tag: link
+      attributes:
+        rel: canonical
+        href: 'http://dapple-cms.docker/taxonomy/term/29'
+  path:
+    -
+      alias: ''
+      langcode: da
+      pathauto: 1

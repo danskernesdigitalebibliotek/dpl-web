@@ -1,0 +1,891 @@
+_meta:
+  version: '1.0'
+  entity_type: node
+  uuid: 02858224-6bd4-41df-95e3-c2a9a6ad29b7
+  bundle: page
+  default_langcode: da
+  depends:
+    fd774222-4b22-4803-ae45-2d4e80d84fac: node
+    eef50571-39dc-461a-96ff-b6b7180ade61: media
+    aba3cea8-cee5-42c1-a152-e30c2ab135e2: media
+    d97a25fd-a6ae-48b9-9a1a-7aec5372688e: media
+    dc33677f-8894-4717-b34b-d985f6ad875f: media
+    f0204f0b-1f63-4c76-bb67-e3f7489ee392: media
+    dac275e4-9b8c-4959-a13a-6b9fdbc1f6b0: node
+    2cd0fe5e-4159-4452-86aa-e1a1ac8db4a1: node
+    982e0d87-f6b8-4b84-8de8-c8c8bcfef557: node
+    479ad4da-b402-4eab-801f-0d3db375df1c: node
+    9cfd15df-32b4-4af9-b2da-56b039b5bf6b: node
+    33a56f4a-fa42-42e1-9097-84f759bbbe4c: node
+    316e6db1-8d4e-40f7-9d95-b12e1294735e: taxonomy_term
+    807e6053-86ed-4dce-b6a9-a48b566b5910: taxonomy_term
+    e4ce7616-976d-43fc-aed2-a01c42b67db9: media
+    02858224-6bd4-41df-95e3-c2a9a6ad29b7: node
+default:
+  revision_uid:
+    -
+      target_id: 1
+  status:
+    -
+      value: true
+  uid:
+    -
+      target_id: 1
+  title:
+    -
+      value: 'Paragraph side'
+  created:
+    -
+      value: 1719473483
+  promote:
+    -
+      value: false
+  sticky:
+    -
+      value: false
+  revision_translation_affected:
+    -
+      value: true
+  entity_clone_template_active:
+    -
+      value: false
+  metatag:
+    -
+      tag: meta
+      attributes:
+        name: title
+        content: 'Paragraph side | DPL CMS'
+  path:
+    -
+      alias: /paragraph-side
+      langcode: und
+      pathauto: 1
+  field_display_titles:
+    -
+      value: false
+  field_paragraphs:
+    -
+      entity:
+        _meta:
+          version: '1.0'
+          entity_type: paragraph
+          uuid: db665ee1-a9b9-4d6a-a185-bd66109b93cc
+          bundle: text_body
+          default_langcode: da
+        default:
+          status:
+            -
+              value: true
+          created:
+            -
+              value: 1719473483
+          behavior_settings:
+            -
+              value: {  }
+          revision_translation_affected:
+            -
+              value: true
+          field_body:
+            -
+              value: '<p><strong>Text body paragraph</strong></p><p><em>Kursiv tekst</em></p><ul><li>Bullet liste</li><li>Bullet liste</li><li>Bullet liste</li></ul><ol><li>Nummereret liste</li><li>Nummereret liste</li><li>Nummereret liste</li></ol><blockquote><p>Citat lorem</p></blockquote><blockquote><p>Langt citat : <strong>Lorem Ipsum</strong> is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry''s standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type</p></blockquote><p>&nbsp;</p><p><br><a href="Https://google.com ">Eksternt link til google</a></p><table><thead><tr><th>Table header 1</th><th>Table header 2</th><th>Table header 3</th><th>Table header 3</th></tr></thead><tbody><tr><td>Table body 1</td><td>Table body 2</td><td>Table body 3</td><td>Table body 4</td></tr></tbody></table>'
+              format: basic
+    -
+      entity:
+        _meta:
+          version: '1.0'
+          entity_type: paragraph
+          uuid: 38326d58-fac7-475b-994a-8f70b256c60f
+          bundle: links
+          default_langcode: da
+        default:
+          status:
+            -
+              value: true
+          created:
+            -
+              value: 1719473502
+          behavior_settings:
+            -
+              value: {  }
+          revision_translation_affected:
+            -
+              value: true
+          field_link:
+            -
+              target_uuid: fd774222-4b22-4803-ae45-2d4e80d84fac
+              title: 'Internt link til Frontpage'
+              options:
+                href: 'entity:node/16'
+                data-entity-type: node
+                data-entity-uuid: fd774222-4b22-4803-ae45-2d4e80d84fac
+                data-entity-substitution: canonical
+            -
+              uri: 'https://google.com'
+              title: 'Eksternt link til google'
+              options:
+                href: 'https://google.com'
+                data-entity-type: ''
+                data-entity-uuid: ''
+                data-entity-substitution: ''
+    -
+      entity:
+        _meta:
+          version: '1.0'
+          entity_type: paragraph
+          uuid: 6040644d-5b52-4441-b9ab-3f8563f7dd6e
+          bundle: text_body
+          default_langcode: da
+        default:
+          status:
+            -
+              value: true
+          created:
+            -
+              value: 1719474104
+          behavior_settings:
+            -
+              value: {  }
+          revision_translation_affected:
+            -
+              value: true
+          field_body:
+            -
+              value: '<p>Tekst til at opdele</p>'
+              format: basic
+    -
+      entity:
+        _meta:
+          version: '1.0'
+          entity_type: paragraph
+          uuid: 297f91fd-857b-4ed9-8d04-89c7dec5ed15
+          bundle: links
+          default_langcode: da
+        default:
+          status:
+            -
+              value: true
+          created:
+            -
+              value: 1719473642
+          behavior_settings:
+            -
+              value: {  }
+          revision_translation_affected:
+            -
+              value: true
+          field_link:
+            -
+              target_uuid: fd774222-4b22-4803-ae45-2d4e80d84fac
+              title: 'Enkeltstående internt link'
+              options:
+                href: /node/16
+                data-entity-type: node
+                data-entity-uuid: fd774222-4b22-4803-ae45-2d4e80d84fac
+                data-entity-substitution: canonical
+    -
+      entity:
+        _meta:
+          version: '1.0'
+          entity_type: paragraph
+          uuid: 72bf8465-0ca5-4341-93ce-abbd83a78835
+          bundle: medias
+          default_langcode: da
+        default:
+          status:
+            -
+              value: true
+          created:
+            -
+              value: 1719473580
+          behavior_settings:
+            -
+              value: {  }
+          revision_translation_affected:
+            -
+              value: true
+          field_medias:
+            -
+              entity: eef50571-39dc-461a-96ff-b6b7180ade61
+    -
+      entity:
+        _meta:
+          version: '1.0'
+          entity_type: paragraph
+          uuid: a5d9a33b-140e-4e18-a808-14522ff3ece4
+          bundle: medias
+          default_langcode: da
+        default:
+          status:
+            -
+              value: true
+          created:
+            -
+              value: 1719473603
+          behavior_settings:
+            -
+              value: {  }
+          revision_translation_affected:
+            -
+              value: true
+          field_medias:
+            -
+              entity: aba3cea8-cee5-42c1-a152-e30c2ab135e2
+            -
+              entity: d97a25fd-a6ae-48b9-9a1a-7aec5372688e
+    -
+      entity:
+        _meta:
+          version: '1.0'
+          entity_type: paragraph
+          uuid: 160db61a-ead0-4894-949b-c1315b92e621
+          bundle: text_body
+          default_langcode: da
+        default:
+          status:
+            -
+              value: true
+          created:
+            -
+              value: 1719473704
+          behavior_settings:
+            -
+              value: {  }
+          revision_translation_affected:
+            -
+              value: true
+          field_body:
+            -
+              value: '<p>Tekst til at opdele enkeltstående link og fil</p>'
+              format: basic
+    -
+      entity:
+        _meta:
+          version: '1.0'
+          entity_type: paragraph
+          uuid: c79bd705-cc36-4aa2-864f-e022693056c0
+          bundle: files
+          default_langcode: da
+        default:
+          status:
+            -
+              value: true
+          created:
+            -
+              value: 1719473674
+          behavior_settings:
+            -
+              value: {  }
+          revision_translation_affected:
+            -
+              value: true
+          field_files:
+            -
+              entity: dc33677f-8894-4717-b34b-d985f6ad875f
+    -
+      entity:
+        _meta:
+          version: '1.0'
+          entity_type: paragraph
+          uuid: 4dc6f4c0-71b6-447f-bdc7-87f0eca1fee4
+          bundle: text_body
+          default_langcode: da
+        default:
+          status:
+            -
+              value: true
+          created:
+            -
+              value: 1719474163
+          behavior_settings:
+            -
+              value: {  }
+          revision_translation_affected:
+            -
+              value: true
+          field_body:
+            -
+              value: '<p>Tekst til at opdele</p>'
+              format: basic
+    -
+      entity:
+        _meta:
+          version: '1.0'
+          entity_type: paragraph
+          uuid: 32b8e386-ac1b-4674-abad-3aa7bfb906e5
+          bundle: files
+          default_langcode: da
+        default:
+          status:
+            -
+              value: true
+          created:
+            -
+              value: 1719473760
+          behavior_settings:
+            -
+              value: {  }
+          revision_translation_affected:
+            -
+              value: true
+          field_files:
+            -
+              entity: dc33677f-8894-4717-b34b-d985f6ad875f
+    -
+      entity:
+        _meta:
+          version: '1.0'
+          entity_type: paragraph
+          uuid: 28f2e8f9-9289-471d-bb17-ae37636ff863
+          bundle: files
+          default_langcode: da
+        default:
+          status:
+            -
+              value: true
+          created:
+            -
+              value: 1719473777
+          behavior_settings:
+            -
+              value: {  }
+          revision_translation_affected:
+            -
+              value: true
+          field_files:
+            -
+              entity: dc33677f-8894-4717-b34b-d985f6ad875f
+    -
+      entity:
+        _meta:
+          version: '1.0'
+          entity_type: paragraph
+          uuid: ea5e29b4-b0fa-4166-954c-40aab6ec8c8e
+          bundle: video
+          default_langcode: da
+        default:
+          status:
+            -
+              value: true
+          created:
+            -
+              value: 1719473745
+          behavior_settings:
+            -
+              value: {  }
+          revision_translation_affected:
+            -
+              value: true
+          field_embed_video:
+            -
+              entity: f0204f0b-1f63-4c76-bb67-e3f7489ee392
+    -
+      entity:
+        _meta:
+          version: '1.0'
+          entity_type: paragraph
+          uuid: 803f0d26-ccef-4580-8437-3cad08e30f60
+          bundle: text_body
+          default_langcode: da
+        default:
+          status:
+            -
+              value: true
+          created:
+            -
+              value: 1719474047
+          behavior_settings:
+            -
+              value: {  }
+          revision_translation_affected:
+            -
+              value: true
+          field_body:
+            -
+              value: '<p>Tekst til at opdele.</p>'
+              format: basic
+    -
+      entity:
+        _meta:
+          version: '1.0'
+          entity_type: paragraph
+          uuid: e1a0a779-eb20-4420-8e2c-11499041c81f
+          bundle: accordion
+          default_langcode: da
+        default:
+          status:
+            -
+              value: true
+          created:
+            -
+              value: 1719473975
+          behavior_settings:
+            -
+              value: {  }
+          revision_translation_affected:
+            -
+              value: true
+          field_accordion_description:
+            -
+              value: "<p><strong>Lorem Ipsum</strong> is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.</p>"
+              format: basic
+          field_accordion_title:
+            -
+              value: 'Sammenhængende Accordion'
+              format: plain_text
+    -
+      entity:
+        _meta:
+          version: '1.0'
+          entity_type: paragraph
+          uuid: 0fdf736c-1469-42b2-afd3-0f477eac165f
+          bundle: accordion
+          default_langcode: da
+        default:
+          status:
+            -
+              value: true
+          created:
+            -
+              value: 1719474017
+          behavior_settings:
+            -
+              value: {  }
+          revision_translation_affected:
+            -
+              value: true
+          field_accordion_description:
+            -
+              value: "<p><strong>Lorem Ipsum</strong> is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.</p>"
+              format: basic
+          field_accordion_title:
+            -
+              value: 'Sammenhængende Accordion'
+              format: plain_text
+    -
+      entity:
+        _meta:
+          version: '1.0'
+          entity_type: paragraph
+          uuid: b07c7967-1e9e-4d04-8162-ab99133c9dd7
+          bundle: text_body
+          default_langcode: da
+        default:
+          status:
+            -
+              value: true
+          created:
+            -
+              value: 1719474189
+          behavior_settings:
+            -
+              value: {  }
+          revision_translation_affected:
+            -
+              value: true
+          field_body:
+            -
+              value: '<p>tekst til at opdele</p>'
+              format: basic
+    -
+      entity:
+        _meta:
+          version: '1.0'
+          entity_type: paragraph
+          uuid: 11b72549-0180-4676-9373-108e354cacfb
+          bundle: accordion
+          default_langcode: da
+        default:
+          status:
+            -
+              value: true
+          created:
+            -
+              value: 1719474210
+          behavior_settings:
+            -
+              value: {  }
+          revision_translation_affected:
+            -
+              value: true
+          field_accordion_description:
+            -
+              value: "<p><strong>Lorem Ipsum</strong> is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.</p>"
+              format: basic
+          field_accordion_title:
+            -
+              value: 'Enkeltstående accordion'
+              format: plain_text
+    -
+      entity:
+        _meta:
+          version: '1.0'
+          entity_type: paragraph
+          uuid: d27d47af-cd0f-4335-a3b9-693b4799693f
+          bundle: material_grid_automatic
+          default_langcode: da
+        default:
+          status:
+            -
+              value: true
+          created:
+            -
+              value: 1719474244
+          behavior_settings:
+            -
+              value: {  }
+          revision_translation_affected:
+            -
+              value: true
+          field_amount_of_materials:
+            -
+              value: 8
+          field_cql_search:
+            -
+              value: "'gardening' AND term.mainlanguage= 'engelsk' AND 'garden' OR 'vegetables' AND term.accesstype='online'"
+          field_material_grid_description:
+            -
+              value: "Dette er beskrivelsen af hvad grid'et indeholder. Jeg har søgt på 'gardening' AND term.mainlanguage= 'engelsk' AND 'garden' OR 'vegetables' AND term.accesstype='online'"
+          field_material_grid_title:
+            -
+              value: 'Material Grid automatic (CQL) 8 materialer'
+    -
+      entity:
+        _meta:
+          version: '1.0'
+          entity_type: paragraph
+          uuid: c6ca8121-e254-480d-b0c4-6113a1f6126f
+          bundle: material_grid_automatic
+          default_langcode: da
+        default:
+          status:
+            -
+              value: true
+          created:
+            -
+              value: 1719474374
+          behavior_settings:
+            -
+              value: {  }
+          revision_translation_affected:
+            -
+              value: true
+          field_amount_of_materials:
+            -
+              value: 4
+          field_cql_search:
+            -
+              value: "'gardening' AND term.mainlanguage= 'engelsk' AND 'garden' OR 'vegetables' AND term.accesstype='online'"
+          field_material_grid_description:
+            -
+              value: "Dette er beskrivelsen af hvad grid'et indeholder. Jeg har søgt på 'gardening' AND term.mainlanguage= 'engelsk' AND 'garden' OR 'vegetables' AND term.accesstype='online'"
+          field_material_grid_title:
+            -
+              value: ' Material grid automatic (CQL) - 4 materialer'
+    -
+      entity:
+        _meta:
+          version: '1.0'
+          entity_type: paragraph
+          uuid: 6073bdaa-fbe7-47e3-b340-a3ab817c198e
+          bundle: material_grid_manual
+          default_langcode: da
+        default:
+          status:
+            -
+              value: true
+          created:
+            -
+              value: 1719474425
+          behavior_settings:
+            -
+              value: {  }
+          revision_translation_affected:
+            -
+              value: true
+          field_material_grid_description:
+            -
+              value: 'her har jeg manuelt valgt nogle titler ud.Chick litt til hængekøjen. '
+          field_material_grid_title:
+            -
+              value: 'Material grid manual - 4 materialer'
+          field_material_grid_work_ids:
+            -
+              value: 'work-of:870970-basis:51568923'
+              material_type: bog
+            -
+              value: 'work-of:870970-basis:54390122'
+              material_type: ''
+            -
+              value: 'work-of:870970-basis:51978978'
+              material_type: 'lydbog (online)'
+            -
+              value: 'work-of:870970-basis:23025930'
+              material_type: bog
+    -
+      entity:
+        _meta:
+          version: '1.0'
+          entity_type: paragraph
+          uuid: d5fe8156-6bd3-4f98-91dc-8a27d57bead1
+          bundle: recommendation
+          default_langcode: da
+        default:
+          status:
+            -
+              value: true
+          created:
+            -
+              value: 1719474597
+          behavior_settings:
+            -
+              value: {  }
+          revision_translation_affected:
+            -
+              value: true
+          field_image_position_right:
+            -
+              value: true
+          field_recommendation_work_id:
+            -
+              value: 'work-of:870970-basis:23158523'
+              material_type: e-bog
+    -
+      entity:
+        _meta:
+          version: '1.0'
+          entity_type: paragraph
+          uuid: 6f4825a8-deff-4a8f-a8b8-e13e4947ace6
+          bundle: recommendation
+          default_langcode: da
+        default:
+          status:
+            -
+              value: true
+          created:
+            -
+              value: 1719474725
+          behavior_settings:
+            -
+              value: {  }
+          revision_translation_affected:
+            -
+              value: true
+          field_image_position_right:
+            -
+              value: false
+          field_recommendation_description:
+            -
+              value: "Denne beskrivelse er manuelt overskrevet. - og er lang.\r\nLorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled"
+          field_recommendation_title:
+            -
+              value: 'Denne titel er manuelt overskrevet'
+              format: basic
+          field_recommendation_work_id:
+            -
+              value: 'work-of:870970-basis:25197887'
+              material_type: 'lydbog (cd-mp3)'
+    -
+      entity:
+        _meta:
+          version: '1.0'
+          entity_type: paragraph
+          uuid: 989c88e5-4187-4ee1-a6c3-99eadc8f8026
+          bundle: content_slider_automatic
+          default_langcode: da
+        default:
+          status:
+            -
+              value: true
+          created:
+            -
+              value: 1719474851
+          behavior_settings:
+            -
+              value: {  }
+          revision_translation_affected:
+            -
+              value: true
+          field_filter_cond_type:
+            -
+              value: or
+          field_filter_content_types:
+            -
+              value: article
+          field_title:
+            -
+              value: 'Content Slider automatic '
+    -
+      entity:
+        _meta:
+          version: '1.0'
+          entity_type: paragraph
+          uuid: 421542d1-3fa8-4f9a-a923-42125e652f21
+          bundle: filtered_event_list
+          default_langcode: da
+        default:
+          status:
+            -
+              value: true
+          created:
+            -
+              value: 1719475040
+          behavior_settings:
+            -
+              value: {  }
+          revision_translation_affected:
+            -
+              value: true
+          field_filter_branches:
+            -
+              entity: dac275e4-9b8c-4959-a13a-6b9fdbc1f6b0
+          field_filter_cond_type:
+            -
+              value: or
+          field_max_item_amount:
+            -
+              value: '12'
+          field_title:
+            -
+              value: 'Event list - automatic'
+    -
+      entity:
+        _meta:
+          version: '1.0'
+          entity_type: paragraph
+          uuid: b26d1ea6-f15a-41e8-9746-af3818dd0637
+          bundle: card_grid_automatic
+          default_langcode: da
+        default:
+          status:
+            -
+              value: true
+          created:
+            -
+              value: 1719475285
+          behavior_settings:
+            -
+              value: {  }
+          revision_translation_affected:
+            -
+              value: true
+          field_filter_cond_type:
+            -
+              value: or
+          field_filter_content_types:
+            -
+              value: article
+          field_title:
+            -
+              value: 'Card grid automatic - artikler'
+    -
+      entity:
+        _meta:
+          version: '1.0'
+          entity_type: paragraph
+          uuid: c02a1e27-450f-4b26-bb95-d0cda8f4c15b
+          bundle: card_grid_manual
+          default_langcode: da
+        default:
+          status:
+            -
+              value: true
+          created:
+            -
+              value: 1719475399
+          behavior_settings:
+            -
+              value: {  }
+          revision_translation_affected:
+            -
+              value: true
+          field_grid_content:
+            -
+              entity: 2cd0fe5e-4159-4452-86aa-e1a1ac8db4a1
+            -
+              entity: 982e0d87-f6b8-4b84-8de8-c8c8bcfef557
+            -
+              entity: fd774222-4b22-4803-ae45-2d4e80d84fac
+            -
+              entity: 479ad4da-b402-4eab-801f-0d3db375df1c
+            -
+              entity: 9cfd15df-32b4-4af9-b2da-56b039b5bf6b
+            -
+              entity: 33a56f4a-fa42-42e1-9097-84f759bbbe4c
+          field_title:
+            -
+              value: 'Card grid manual'
+    -
+      entity:
+        _meta:
+          version: '1.0'
+          entity_type: paragraph
+          uuid: ef0d89bf-7ea2-4881-bfc2-82feb3ae2e96
+          bundle: breadcrumb_children
+          default_langcode: da
+        default:
+          status:
+            -
+              value: true
+          created:
+            -
+              value: 1719478236
+          behavior_settings:
+            -
+              value: {  }
+          revision_translation_affected:
+            -
+              value: true
+          field_breadcrumb_target:
+            -
+              entity: 316e6db1-8d4e-40f7-9d95-b12e1294735e
+          field_title:
+            -
+              value: 'Breadcrumb paragraph - Bestsellers'
+    -
+      entity:
+        _meta:
+          version: '1.0'
+          entity_type: paragraph
+          uuid: 14335cfe-5bad-4fb3-ace4-0e23ec173474
+          bundle: hero
+          default_langcode: da
+        default:
+          status:
+            -
+              value: true
+          created:
+            -
+              value: 1719481435
+          behavior_settings:
+            -
+              value: {  }
+          revision_translation_affected:
+            -
+              value: true
+          field_hero_categories:
+            -
+              entity: 807e6053-86ed-4dce-b6a9-a48b566b5910
+          field_hero_content_type:
+            -
+              value: Page
+          field_hero_date:
+            -
+              value: '2028-07-08'
+          field_hero_description:
+            -
+              value: "<p><strong>Lorem Ipsum</strong> is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries,</p>"
+              format: basic
+          field_hero_image:
+            -
+              entity: e4ce7616-976d-43fc-aed2-a01c42b67db9
+          field_hero_link:
+            -
+              target_uuid: 02858224-6bd4-41df-95e3-c2a9a6ad29b7
+              title: ''
+              options: {  }
+          field_hero_title:
+            -
+              value: 'Hero paragraph'
+  field_publication_date:
+    -
+      value: '2024-06-27'
