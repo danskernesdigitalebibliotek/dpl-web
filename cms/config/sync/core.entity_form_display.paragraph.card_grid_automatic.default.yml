@@ -8,10 +8,12 @@ dependencies:
     - field.field.paragraph.card_grid_automatic.field_filter_cond_type
     - field.field.paragraph.card_grid_automatic.field_filter_content_types
     - field.field.paragraph.card_grid_automatic.field_filter_tags
+    - field.field.paragraph.card_grid_automatic.field_more_link
     - field.field.paragraph.card_grid_automatic.field_title
     - paragraphs.paragraphs_type.card_grid_automatic
   module:
     - field_group
+    - link
     - select2
 third_party_settings:
   field_group:
@@ -72,6 +74,14 @@ content:
       autocomplete: true
       match_operator: CONTAINS
       match_limit: 10
+    third_party_settings: {  }
+  field_more_link:
+    type: link_default
+    weight: 10
+    region: content
+    settings:
+      placeholder_url: ''
+      placeholder_title: ''
     third_party_settings: {  }
   field_title:
     type: string_textfield
