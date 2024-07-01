@@ -8,7 +8,6 @@ use Drupal\Core\Cache\CacheableResponse;
 use Drupal\datetime\Plugin\Field\FieldType\DateTimeItemInterface;
 use Drupal\drupal_typed\RequestTyped;
 use Drupal\recurring_events\Entity\EventInstance;
-use Safe\DateTime;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
@@ -245,7 +244,6 @@ final class EventsResource extends EventResourceBase {
    * GET request: Get all eventinstances, hopefully cached.
    */
   public function get(Request $request): Response {
-
 
     // Entity query, pulling all eventinstances.
     $storage = $this->entityTypeManager->getStorage('eventinstance');
