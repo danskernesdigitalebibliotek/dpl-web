@@ -9,9 +9,11 @@ dependencies:
     - field.field.paragraph.card_grid_automatic.field_filter_cond_type
     - field.field.paragraph.card_grid_automatic.field_filter_content_types
     - field.field.paragraph.card_grid_automatic.field_filter_tags
+    - field.field.paragraph.card_grid_automatic.field_more_link
     - field.field.paragraph.card_grid_automatic.field_title
     - paragraphs.paragraphs_type.card_grid_automatic
   module:
+    - link
     - options
 id: paragraph.card_grid_automatic.preview
 targetEntityType: paragraph
@@ -48,6 +50,18 @@ content:
       link: false
     third_party_settings: {  }
     weight: 2
+    region: content
+  field_more_link:
+    type: link
+    label: above
+    settings:
+      trim_length: 80
+      url_only: false
+      url_plain: false
+      rel: ''
+      target: ''
+    third_party_settings: {  }
+    weight: 4
     region: content
   field_title:
     type: string
