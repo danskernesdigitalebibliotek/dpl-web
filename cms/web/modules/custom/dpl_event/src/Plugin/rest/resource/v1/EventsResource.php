@@ -11,6 +11,7 @@ use Drupal\recurring_events\Entity\EventInstance;
 use Safe\DateTime;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
 
 /**
  * REST resource for listing events.
@@ -257,12 +258,18 @@ final class EventsResource extends EventResourceBase {
     // to only find events that start from and after this date.
     $typed_request = new RequestTyped($request);
 
+    try {
       $from_date = $typed_request->getDateTime('from_date');
 
       if ($from_date) {
         $formatted_from_date = $from_date->format(DateTimeItemInterface::DATETIME_STORAGE_FORMAT);
         $query->condition('date.value', $formatted_from_date, '>=');
       }
+    }
+    catch (\TypeError $e) {
+      throw new BadRequestHttpException("Invalid input: {$e->getMessage()}",);
+    }
+
     $ids = $query->execute();
 
     $event_responses = [];
