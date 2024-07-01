@@ -250,7 +250,7 @@ final class EventsResource extends EventResourceBase {
     // Entity query, pulling all eventinstances.
     $storage = $this->entityTypeManager->getStorage('eventinstance');
     $query = $storage->getQuery()
-      ->accessCheck(FALSE)
+      ->accessCheck(TRUE)
       ->condition('status', TRUE)
       ->sort('date.value');
 
