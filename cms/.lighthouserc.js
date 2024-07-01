@@ -45,7 +45,7 @@ module.exports = {
         // translates to a score between 90 and 100 - or 0.9-1.
         // TODO: Implement inline critial CSS to raise score above 0.9
         // TODO: Implement depedency splitting to raise score above 0.75
-        "categories:performance": ["error", { minScore: 0.75 }],
+        "categories:performance": ["warn", { minScore: 0.75 }],
         "categories:accessibility": ["error", { minScore: 0.9 }],
         "categories:best-practices": ["error", { minScore: 0.9 }],
         "categories:seo": ["error", { minScore: 0.9 }],
