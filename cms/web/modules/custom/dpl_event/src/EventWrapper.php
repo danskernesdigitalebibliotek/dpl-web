@@ -124,18 +124,14 @@ class EventWrapper {
     }
 
     $states = array_map(function (array $value) {
-      $value = $value['value'] ?? NULL;
-      $enum = EventState::tryFrom($value);
-
-      if (is_null($enum)) {
-        $logger = DrupalTyped::service(LoggerInterface::class, 'dpl_event.logger');
-
-        $logger->error("Could not map '@value' to EventState enum.", [
-          '@value' => $value ?? 'NULL',
-        ]);
+      try {
+        return EventState::from($value['value']);
       }
-
-      return $enum;
+      catch (\Error $e) {
+        $logger = DrupalTyped::service(LoggerInterface::class, 'dpl_event.logger');
+        $logger->error($e->getMessage());
+         return NULL;
+      }
     }, $field->getValue());
 
     $state = $states[0] ?? NULL;
