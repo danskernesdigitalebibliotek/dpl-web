@@ -61,7 +61,7 @@ class LibraryTokenHandler {
     Config $config,
     KeyValueExpirableFactoryInterface $keyValueFactory,
     ClientInterface $http_client,
-    LoggerChannelFactoryInterface $logger
+    LoggerChannelFactoryInterface $logger,
   ) {
     $this->adgangsplatformenConfig = $config;
     $this->tokenCollection = $keyValueFactory->get(self::TOKEN_COLLECTION_KEY);

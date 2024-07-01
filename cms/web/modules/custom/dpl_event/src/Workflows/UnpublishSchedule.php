@@ -1,6 +1,6 @@
 <?php
 
-declare(strict_types = 1);
+declare(strict_types=1);
 
 namespace Drupal\dpl_event\Workflows;
 
@@ -29,7 +29,7 @@ final class UnpublishSchedule {
     private TimeInterface $time,
     private JobSchedulerInterface $jobScheduler,
     private EventInstanceStorageInterface $eventInstanceStorage,
-    private ConfigFactoryInterface $configFactory
+    private ConfigFactoryInterface $configFactory,
   ) {}
 
   /**

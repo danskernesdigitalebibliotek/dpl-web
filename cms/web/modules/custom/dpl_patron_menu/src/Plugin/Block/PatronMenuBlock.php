@@ -45,14 +45,14 @@ class PatronMenuBlock extends BlockBase implements ContainerFactoryPluginInterfa
    *   Patron registration settings.
    */
   public function __construct(
-      array $configuration,
-      $plugin_id,
-      $plugin_definition,
-      private DplMenuSettings $patronMenuSettings,
-      private BranchSettings $branchSettings,
-      private BranchRepositoryInterface $branchRepository,
-      private GeneralSettings $generalSettings,
-      private DplPatronRegSettings $patronRegSettings,
+    array $configuration,
+    $plugin_id,
+    $plugin_definition,
+    private DplMenuSettings $patronMenuSettings,
+    private BranchSettings $branchSettings,
+    private BranchRepositoryInterface $branchRepository,
+    private GeneralSettings $generalSettings,
+    private DplPatronRegSettings $patronRegSettings,
   ) {
     parent::__construct($configuration, $plugin_id, $plugin_definition);
     $this->configuration = $configuration;

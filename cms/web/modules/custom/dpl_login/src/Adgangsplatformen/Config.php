@@ -25,7 +25,7 @@ class Config {
    * Constructor.
    */
   public function __construct(
-    private ConfigFactoryInterface $config
+    private ConfigFactoryInterface $config,
   ) {}
 
   /**

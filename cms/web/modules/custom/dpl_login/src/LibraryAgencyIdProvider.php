@@ -25,7 +25,7 @@ class LibraryAgencyIdProvider {
    * Constructor.
    */
   public function __construct(
-    private Config $config
+    private Config $config,
   ) {}
 
   /**
