@@ -4,6 +4,7 @@ status: true
 dependencies:
   config:
     - field.field.paragraph.breadcrumb_children.field_breadcrumb_target
+    - field.field.paragraph.breadcrumb_children.field_show_subtitles
     - field.field.paragraph.breadcrumb_children.field_title
     - paragraphs.paragraphs_type.breadcrumb_children
 id: paragraph.breadcrumb_children.default
@@ -21,4 +22,5 @@ content:
     region: content
 hidden:
   field_breadcrumb_target: true
+  field_show_subtitles: true
   search_api_excerpt: true
