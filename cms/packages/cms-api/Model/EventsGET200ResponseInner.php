@@ -44,7 +44,7 @@ use JMS\Serializer\Annotation\SerializedName;
 class EventsGET200ResponseInner 
 {
         /**
-     * A unique identifer for the event.
+     * A unique identifier for the event.
      *
      * @var string|null
      * @SerializedName("uuid")
@@ -76,7 +76,7 @@ class EventsGET200ResponseInner
     protected ?string $description = null;
 
     /**
-     * An absolute url end users should use to view the event at the website.
+     * An absolute URL end users should use to view the event at the website.
      *
      * @var string|null
      * @SerializedName("url")
@@ -260,7 +260,7 @@ class EventsGET200ResponseInner
     /**
      * Sets uuid.
      *
-     * @param string|null $uuid  A unique identifer for the event.
+     * @param string|null $uuid  A unique identifier for the event.
      *
      * @return $this
      */
@@ -338,7 +338,7 @@ class EventsGET200ResponseInner
     /**
      * Sets url.
      *
-     * @param string|null $url  An absolute url end users should use to view the event at the website.
+     * @param string|null $url  An absolute URL end users should use to view the event at the website.
      *
      * @return $this
      */
