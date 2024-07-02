@@ -41,6 +41,14 @@
     {
       "url": "http://varnish:8080/branches",
       "screenCapture": "/app/pa11y/screenshots/branch-list-page.png"
+    },
+    {
+      "url": "http://varnish:8080/by_uuid/node/e68b90e6-cd35-44c6-9e32-c05c982ed315",
+      "screenCapture": "/app/pa11y/screenshots/create-user-page.png"
+    },
+    {
+      "url": "http://varnish:8080/by_uuid/node/d50683cc-8011-49ba-a6ea-82e56de97b80",
+      "screenCapture": "/app/pa11y/screenshots/contact-webform-page.png"
     }
   ]
 }
