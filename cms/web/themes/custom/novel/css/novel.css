@@ -1,4 +1,60 @@
 .dpl-react-app-container--page {
   min-height: 100vh;
-  background-color: #f6f5f0;
+  background-color: var(--c-global-primary);
+}
+
+/* select2 theme */
+
+.select2-dropdown {
+  background-color: var(--c-global-primary);
+  font-family: var(--font-body);
+  font-size: 14px;
+  text-transform: uppercase;
+}
+
+.select2-container--open + .dropdown__arrows {
+  /* .select2-container--open has z-index: 1261 */
+  z-index: 2261;
+}
+
+.select2-container--default .select2-selection--single,
+.select2-container--default .select2-selection--multiple {
+  align-items: center;
+  background-color: var(--c-global-primary);
+  border: 1px solid var(--c-text-primary-black);
+  border-radius: 0;
+  display: flex;
+  height: 50px;
+}
+
+.select2-container--default .select2-selection--multiple {
+  padding: 10px 0;
+}
+
+.select2-container--default .select2-selection--single:focus,
+.select2-container--open {
+  outline: 2px solid var(--c-text-primary-black);
+}
+
+.select2-container .select2-selection--single .select2-selection__rendered {
+  font-weight: 500;
+  font-size: 14px;
+  color: var(--c-text-primary-black);
+  padding: 0 70px 0 20px;
+  text-transform: uppercase;
+}
+
+.select2-container--default .select2-selection__arrow {
+  display: none;
+}
+
+.select2-container--default .select2-selection--multiple .select2-selection__choice {
+  background-color: var(--c-global-secondary);
+  font-size: 14px;
+  line-height: 2.4em;
+  text-transform: uppercase;
+}
+
+.select2-container--default .select2-selection--multiple .select2-selection__choice__remove {
+  margin-right: 6px;
 }
