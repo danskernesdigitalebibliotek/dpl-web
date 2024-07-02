@@ -189,7 +189,26 @@ function dpl_breadcrumb_node_presave(Node $node): void {
 }
 
 /**
+ * Implements hook_ENTITY_TYPE_insert().
+ */
+function dpl_breadcrumb_taxonomy_term_insert(TermInterface $term): void {
+  _dpl_breadcrumb_taxonomy_term_post_save($term);
+}
+
+/**
+ * Implements hook_ENTITY_TYPE_update().
+ */
+function dpl_breadcrumb_taxonomy_term_update(TermInterface $term): void {
+  _dpl_breadcrumb_taxonomy_term_post_save($term);
+}
+
+/**
  * Make sure nodes are re-saved when placed in the breadcrumb tree.
+ *
+ * This is a custom helper function, that is called using _update() and
+ * _insert() hooks above.
+ * We cannot use _presave(), as the term needs to be saved before we can
+ * do the node_presave() logic.
  *
  * On some node types, we have a structure field, that allows the editor to
  * place the node as a child of an term.
@@ -197,13 +216,13 @@ function dpl_breadcrumb_node_presave(Node $node): void {
  * term has been created, that links to this node), we want to take this
  * editor control away, and automatically update the field.
  * This happens in dpl_breadcrumb_node_presave().
- * However, if you first setup the node with all it's content, and then go
+ * However, if you first set up the node with all it's content, and then go
  * add it to the tree, no save is triggered on the node, and then it ends up
  * with a "broken" state.
  * This hook's task, is to run save() on nodes that have been placed in
  * the tree.
  */
-function dpl_breadcrumb_taxonomy_term_presave(TermInterface $term): void {
+function _dpl_breadcrumb_taxonomy_term_post_save(TermInterface $term): void {
   $service = DrupalTyped::service(BreadcrumbHelper::class, 'dpl_breadcrumb.breadcrumb_helper');
 
   if ($term->bundle() !== $service->getStructureVid() || !$term->hasField('field_content')) {
