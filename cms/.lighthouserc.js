@@ -6,13 +6,16 @@ module.exports = {
         // https://reload.atlassian.net/browse/DDFLSBP-668
         // "http://varnish:8080/",
         "http://varnish:8080/search?q=harry+potter&x=0&y=0",
-        "http://varnish:8080/work/work-of:870970-basis:25245784?type=bog"
+        "http://varnish:8080/work/work-of:870970-basis:25245784?type=bog",
         "http://varnish:8080/articles",
-        "http://varnish:8080/events",
+        // TODO: Disabled because repeated events are not tap-friendly DDFFORM-929
+        //"http://varnish:8080/events",
         "http://varnish:8080/branches",
         // Article page from DPL Example Content
+        // TODO: Disabled because links in new window do not use rel="noopener" DDFFORM-925
         // "http://varnish:8080/by_uuid/node/2cd0fe5e-4159-4452-86aa-e1a1ac8db4a1",
         // Event instance page from DPL Example Content
+        // TODO: Disabled because links in new window do not use rel="noopener" DDFFORM-925
         // "http://varnish:8080/by_uuid/eventseries/c8177097-1438-493e-8177-e8ef968cc133",
         // Branch page from DPL Example Content
         "http://varnish:8080/by_uuid/node/dac275e4-9b8c-4959-a13a-6b9fdbc1f6b0",
