@@ -1,0 +1,23 @@
+uuid: fd72e42e-f823-43e6-993b-31a3bca8c752
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.paragraph.field_show_subtitles
+    - paragraphs.paragraphs_type.breadcrumb_children
+id: paragraph.breadcrumb_children.field_show_subtitles
+field_name: field_show_subtitles
+entity_type: paragraph
+bundle: breadcrumb_children
+label: 'Show subtitles'
+description: ''
+required: false
+translatable: false
+default_value:
+  -
+    value: 0
+default_value_callback: ''
+settings:
+  on_label: 'On'
+  off_label: 'Off'
+field_type: boolean

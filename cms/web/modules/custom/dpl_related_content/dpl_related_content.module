@@ -115,6 +115,10 @@ function _dpl_related_content_filter_paragraph(array $variables, RelatedContentL
       $service->title = $paragraph->get('field_title')->getString();
     }
 
+    if ($paragraph->hasField('field_more_link') && !$paragraph->get('field_more_link')->isEmpty()) {
+      $service->moreLink = $paragraph->get('field_more_link')->view();
+    }
+
     // Deciding if we should treat the filters as AND.
     if ($paragraph->hasField('field_filter_cond_type') && !$paragraph->get('field_filter_cond_type')->isEmpty()) {
       $condition = $paragraph->get('field_filter_cond_type')->getString();
@@ -208,6 +212,7 @@ function dpl_related_content_theme(array $existing, string $type, string $theme,
     'dpl_related_content' => [
       'variables' => [
         'title' => NULL,
+        'link' => NULL,
         'items' => [],
         'result_basis' => [],
         'list_style' => RelatedContentListStyle::Slider,

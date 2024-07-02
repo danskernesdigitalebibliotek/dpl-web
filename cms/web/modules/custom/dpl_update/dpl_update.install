@@ -109,6 +109,7 @@ function dpl_update_install(): string {
   $messages[] = dpl_update_update_10004();
   $messages[] = dpl_update_update_10005();
   $messages[] = dpl_update_update_10006();
+  $messages[] = dpl_update_update_10008();
   $messages[] = dpl_update_update_10009();
 
   return implode('\r\n', $messages);
@@ -163,6 +164,13 @@ function dpl_update_update_10006(): string {
  */
 function dpl_update_update_10007(): string {
   return _dpl_update_update_field_inheritance('event_ticket_capacity');
+}
+
+/**
+ * Installing JSNLog module.
+ */
+function dpl_update_update_10008(): string {
+  return _dpl_update_install_modules(['jsnlog']);
 }
 
 /**

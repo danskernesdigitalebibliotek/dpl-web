@@ -4,10 +4,12 @@ status: true
 dependencies:
   config:
     - field.field.paragraph.card_grid_manual.field_grid_content
+    - field.field.paragraph.card_grid_manual.field_more_link
     - field.field.paragraph.card_grid_manual.field_title
     - paragraphs.paragraphs_type.card_grid_manual
   module:
     - dynamic_entity_reference
+    - link
 id: paragraph.card_grid_manual.default
 targetEntityType: paragraph
 bundle: card_grid_manual
@@ -22,6 +24,14 @@ content:
       match_limit: 10
       size: 40
       placeholder: 'Search content..'
+    third_party_settings: {  }
+  field_more_link:
+    type: link_default
+    weight: 10
+    region: content
+    settings:
+      placeholder_url: ''
+      placeholder_title: ''
     third_party_settings: {  }
   field_title:
     type: string_textfield

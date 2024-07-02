@@ -5,10 +5,12 @@ dependencies:
   config:
     - core.entity_view_mode.paragraph.preview
     - field.field.paragraph.card_grid_manual.field_grid_content
+    - field.field.paragraph.card_grid_manual.field_more_link
     - field.field.paragraph.card_grid_manual.field_title
     - paragraphs.paragraphs_type.card_grid_manual
   module:
     - dynamic_entity_reference
+    - link
 id: paragraph.card_grid_manual.preview
 targetEntityType: paragraph
 bundle: card_grid_manual
@@ -21,6 +23,18 @@ content:
       link: true
     third_party_settings: {  }
     weight: 1
+    region: content
+  field_more_link:
+    type: link
+    label: above
+    settings:
+      trim_length: 80
+      url_only: false
+      url_plain: false
+      rel: ''
+      target: ''
+    third_party_settings: {  }
+    weight: 4
     region: content
   field_title:
     type: string

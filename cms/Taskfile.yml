@@ -218,6 +218,9 @@ tasks:
       - task dev:cli -- drush user:create local_administrator --password="test"
       - task dev:cli -- drush user:role:add 'local_administrator' local_administrator
 
+      - task dev:cli -- drush user:create external_system --password="external_system"
+      - task dev:cli -- drush user:role:add 'external_system' external_system
+
       - task dev:cli -- drush user:create patron --password="test"
       - task dev:cli -- drush user:role:add 'patron' patron
 

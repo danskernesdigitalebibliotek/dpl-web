@@ -4,6 +4,7 @@ status: true
 dependencies:
   config:
     - field.field.paragraph.breadcrumb_children.field_breadcrumb_target
+    - field.field.paragraph.breadcrumb_children.field_show_subtitles
     - field.field.paragraph.breadcrumb_children.field_title
     - paragraphs.paragraphs_type.breadcrumb_children
   module:
@@ -15,13 +16,20 @@ mode: default
 content:
   field_breadcrumb_target:
     type: select2_entity_reference
-    weight: 1
+    weight: 2
     region: content
     settings:
       width: 100%
       autocomplete: false
       match_operator: CONTAINS
       match_limit: 10
+    third_party_settings: {  }
+  field_show_subtitles:
+    type: boolean_checkbox
+    weight: 1
+    region: content
+    settings:
+      display_label: true
     third_party_settings: {  }
   field_title:
     type: string_textfield
