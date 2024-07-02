@@ -1,0 +1,33 @@
+<?php
+
+/**
+ * @file
+ * DPL breadcrumb update hooks.
+ *
+ * These get run BEFORE config-import.
+ */
+
+/**
+ * Re-save all breadcrumb terms, to get breadcrumb structure up-to-date.
+ *
+ * @see _dpl_breadcrumb_taxonomy_term_post_save()
+ */
+function dpl_breadcrumb_update_10001(): string {
+  $terms = \Drupal::entityTypeManager()->getStorage('taxonomy_term')
+    ->loadByProperties([
+      'vid' => 'breadcrumb_structure',
+    ]);
+
+  foreach ($terms as $term) {
+    try {
+      $term->save();
+    }
+    catch (\Exception $exception) {
+      \Drupal::logger('dpl_breadcrumb')->warning($exception->getMessage());
+    }
+  }
+
+  $count = count($terms);
+
+  return "Updated $count breadcrumb terms, and corresponding nodes.";
+}
