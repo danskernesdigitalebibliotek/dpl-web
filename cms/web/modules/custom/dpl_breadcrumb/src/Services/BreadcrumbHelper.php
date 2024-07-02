@@ -306,17 +306,21 @@ class BreadcrumbHelper {
    * Find a breadcrumb item by entity, if it is added to the content structure.
    */
   public function getBreadcrumbItem(FieldableEntityInterface $entity): ?TermInterface {
-    $storage = $this->entityTypeManager->getStorage('taxonomy_term');
-
     $id = $entity->id();
 
-    if (!$id) {
+    // The field_content on the taxonomy term only supports nodes.
+    // If we don't do a check for node here, we will experience a collision
+    // as an eventinstance ID probably is identical to an unrelated node ID.
+    if (!$id || $entity->getEntityTypeId() !== 'node') {
       return NULL;
     }
+
+    $storage = $this->entityTypeManager->getStorage('taxonomy_term');
 
     $breadcrumb_items = $storage->loadByProperties([
       'field_content' => $id,
       'vid' => $this->getStructureVid(),
+      'status' => TRUE,
     ]);
 
     $breadcrumb_item = reset($breadcrumb_items);

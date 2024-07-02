@@ -1,0 +1,14 @@
+_core:
+  default_config_hash: 4qnsEM8mK7TpBUJ0oH1Rla9mJS2K1xsoSTDtMlp0yYc
+enabled: 1
+logging_type: all
+library_type: min
+debug_level: 5000
+user_agent_regex: ''
+visibility:
+  request_path_mode: 0
+  request_path_pages: ''
+  user_role_mode: 0
+  user_role_roles:
+    anonymous: anonymous
+    patron: patron

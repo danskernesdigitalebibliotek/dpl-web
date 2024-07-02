@@ -1,0 +1,23 @@
+diff --git a/jsnlog.module b/jsnlog.module
+index dfe8438..30756c3 100644
+--- a/jsnlog.module
++++ b/jsnlog.module
+@@ -58,8 +58,7 @@ function jsnlog_page_attachments(array &$page) {
+ 
+   if ($jsnlog_access->visibilityPages() && $jsnlog_access->visibilityRoles($account)) {
+     $url = Url::fromRoute('jsnlog.ajax_log');
+-    $token = \Drupal::csrfToken()->get($url->getInternalPath());
+-    $url->setOptions(['absolute' => TRUE, 'query' => ['token' => $token]]);
++    $url->setOptions(['absolute' => TRUE]);
+ 
+     $page['#attached']['library'][] = 'jsnlog/jsnlog';
+     $page['#attached']['drupalSettings']['jsnlog'] = [
+diff --git a/jsnlog.routing.yml b/jsnlog.routing.yml
+index 6e99268..2d77910 100644
+--- a/jsnlog.routing.yml
++++ b/jsnlog.routing.yml
+@@ -14,4 +14,3 @@ jsnlog.ajax_log:
+   requirements:
+     _permission: 'access content'
+     _jsnlog_ajax_log_access: 'TRUE'
+-    _csrf_token: 'TRUE'

@@ -3,8 +3,10 @@
 namespace Drupal\dpl_event;
 
 use Drupal\Core\Field\FieldItemListInterface;
+use Drupal\drupal_typed\DrupalTyped;
 use Drupal\node\NodeInterface;
 use Drupal\recurring_events\Entity\EventInstance;
+use Psr\Log\LoggerInterface;
 use Safe\DateTimeImmutable;
 
 /**
@@ -122,7 +124,14 @@ class EventWrapper {
     }
 
     $states = array_map(function (array $value) {
-      return EventState::from($value['value']);
+      try {
+        return EventState::from($value['value']);
+      }
+      catch (\Error $e) {
+        $logger = DrupalTyped::service(LoggerInterface::class, 'dpl_event.logger');
+        $logger->error($e->getMessage());
+         return NULL;
+      }
     }, $field->getValue());
 
     $state = $states[0] ?? NULL;

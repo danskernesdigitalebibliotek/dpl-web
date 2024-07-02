@@ -113,11 +113,6 @@ class RelatedContent {
   public bool $andConditions = FALSE;
 
   /**
-   * If we should allow a simple date lookup if not enough matches are found.
-   */
-  public bool $allowDateFallback = TRUE;
-
-  /**
    * What type of list do we want the items to be displayed in?
    */
   private RelatedContentListStyle $listStyle = RelatedContentListStyle::EventList;
@@ -126,6 +121,14 @@ class RelatedContent {
    * The title that may be shown as part of the list.
    */
   public ?string $title = NULL;
+
+  /**
+   * The 'more link' that may be shown as part of the list.
+   *
+   * @var array<mixed>
+   *  The render array.
+   */
+  public array $moreLink = [];
 
   /**
    * View mode to use for displaying individual content item.
@@ -161,24 +164,18 @@ class RelatedContent {
 
     $tags_field_name = 'field_tags';
     $categories_field_name = 'field_categories';
-    $branches_field_name = 'field_branch';
 
     // Other entity types have different field names, because of inheritance.
     if ($entity instanceof EventInstance) {
       $tags_field_name = 'event_tags';
       $categories_field_name = 'event_categories';
-      $branches_field_name = 'branch';
     }
 
-    // By passing along NULL, we're saying that ANY tags are okay.
-    // If we were to pass along an empty array, it would mean NO tags are okay.
-    $tags = ($entity->hasField($tags_field_name)) ? $entity->get($tags_field_name)->referencedEntities() : NULL;
-    $categories = ($entity->hasField($categories_field_name)) ? $entity->get($categories_field_name)->referencedEntities() : NULL;
-    $branches = ($entity->hasField($branches_field_name)) ? $entity->get($branches_field_name)->referencedEntities() : NULL;
+    $tags = ($entity->hasField($tags_field_name)) ? $entity->get($tags_field_name)->referencedEntities() : [];
+    $categories = ($entity->hasField($categories_field_name)) ? $entity->get($categories_field_name)->referencedEntities() : [];
 
     $this->setTags($tags);
     $this->setCategories($categories);
-    $this->setBranches($branches);
 
     return $this->getContent();
   }
@@ -195,12 +192,16 @@ class RelatedContent {
     $event_ids = [];
     $node_ids = [];
 
+    if (empty($this->tags) && empty($this->categories) && empty($this->branches)) {
+      return [];
+    }
+
     if ($this->andConditions) {
       $node_ids = $this->getNodeIds($this->tags, $this->categories, $this->branches);
       $event_ids = $this->getEventInstanceIds($this->tags, $this->categories, $this->branches);
       $this->resultBasis = ['tags', 'categories', 'branches'];
     }
-    elseif (!empty($this->tags) || !empty($this->categories) || !empty($this->branches)) {
+    else {
       // First, let's look up related content, based only on tags.
       if (!empty($this->tags)) {
         $node_ids = $this->getNodeIds($this->tags);
@@ -225,16 +226,6 @@ class RelatedContent {
       }
     }
 
-    if ($this->allowDateFallback) {
-      // If the count is still under minimum, we'll find the upcoming events,
-      // and the latest nodes instead.
-      if (count($event_ids) + count($node_ids) < $this->minItems) {
-        $node_ids = $this->getNodeIds();
-        $event_ids = $this->getEventInstanceIds();
-        $this->resultBasis = ['date'];
-      }
-    }
-
     // If we still have less than minimum, we just won't display anything.
     if (count($event_ids) + count($node_ids) < $this->minItems) {
       return [];
@@ -243,6 +234,7 @@ class RelatedContent {
     return [
       '#theme' => 'dpl_related_content',
       '#title' => $this->title,
+      '#link' => $this->moreLink,
       '#items' => $this->renderMergeResults($event_ids, $node_ids),
       '#list_style' => $this->listStyle,
       '#result_basis' => $this->resultBasis,
@@ -495,7 +487,7 @@ class RelatedContent {
    * @return int[]
    *   The tag IDs.
    */
-  public function setTags(array $tags) {
+  public function setTags(array $tags): array {
     $this->tags = $this->getReferenceIds($tags);
     return $this->tags;
   }
@@ -509,7 +501,7 @@ class RelatedContent {
    * @return int[]
    *   The category IDs.
    */
-  public function setCategories(array $categories) {
+  public function setCategories(array $categories): array {
     $this->categories = $this->getReferenceIds($categories);
     return $this->categories;
   }
@@ -523,13 +515,13 @@ class RelatedContent {
    * @return int[]
    *   The branch IDs.
    */
-  public function setBranches(array $branches) {
+  public function setBranches(array $branches): array {
     $this->branches = $this->getReferenceIds($branches);
     return $this->branches;
   }
 
   /**
-   * Setter for list style, and the auto-effects on maxItems and item viewmode.
+   * Setter for list style, and the auto-effects on maxItems and item view mode.
    */
   public function setListStyle(RelatedContentListStyle $list_style): RelatedContentListStyle {
     $this->listStyle = $list_style;
@@ -561,7 +553,7 @@ class RelatedContent {
    * Parsing a list that may be an entity or simple ID array, to int[].
    *
    * @param int[]|string[]|FieldableEntityInterface[] $entities
-   *   The entities, or an array of IDs that may be strings or ints.
+   *   The entities, or an array of IDs that may be strings or integers.
    *
    * @return int[]
    *   The entity IDs.

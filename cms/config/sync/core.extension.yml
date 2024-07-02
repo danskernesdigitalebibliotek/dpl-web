@@ -33,6 +33,7 @@ module:
   dpl_breadcrumb: 0
   dpl_cache_settings: 0
   dpl_campaign: 0
+  dpl_cookies: 0
   dpl_dashboard: 0
   dpl_error_pages: 0
   dpl_event: 0
@@ -100,6 +101,7 @@ module:
   jquery_ui_datepicker: 0
   jquery_ui_slider: 0
   jquery_ui_touch_punch: 0
+  jsnlog: 0
   jsonlog: 0
   language: 0
   language_neutral_aliases: 0
