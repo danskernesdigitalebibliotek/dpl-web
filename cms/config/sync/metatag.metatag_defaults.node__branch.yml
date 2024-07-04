@@ -1,0 +1,11 @@
+uuid: 02184065-7ff3-44ec-89a2-d9e6482db32d
+langcode: en
+status: true
+dependencies: {  }
+id: node__branch
+label: 'Content: Branch'
+tags:
+  og_image: '[node:field_main_media:entity:field_media_image:open_graph]'
+  og_image_height: '[node:field_main_media:entity:field_media_image:open_graph:height]'
+  og_image_url: '[node:field_main_media:entity:field_media_image:open_graph:url]'
+  og_video_width: '[node:field_main_media:entity:field_media_image:open_graph:width]'

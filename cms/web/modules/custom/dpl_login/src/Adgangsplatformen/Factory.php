@@ -26,7 +26,7 @@ class Factory {
    */
   public function createInstance(): OpenIDConnectClientInterface {
     /** @var \Drupal\openid_connect\Plugin\OpenIDConnectClientInterface $plugin */
-    $plugin = $this->manager->createInstance('adgangsplatformen', $this->config->pluginConfig());
+    $plugin = $this->manager->createInstance('adgangsplatformen', $this->config->getConfig());
     return $plugin;
   }
 

@@ -52,6 +52,9 @@ function dpl_breadcrumb_preprocess_paragraph__breadcrumb_children(array &$variab
 
   $variables['items'] = $service->getRenderedReferencingNodes($breadcrumb_item);
 
+  if ($paragraph->hasField('field_show_subtitles')) {
+    $variables['show_subtitles'] = (bool) $paragraph->get('field_show_subtitles')->value;
+  }
   // Drupal will cache the whole paragraph, as it does not know that it is
   // embedding a dynamic list. We'll add a simple cache tag,
   // so it be invalidated if any nodes have been updated - e.g. the same kind of

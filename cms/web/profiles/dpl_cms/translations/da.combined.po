@@ -7,8 +7,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2024-07-02 09:12+0200\n"
-"PO-Revision-Date: 2024-07-02 09:12+0200\n"
+"POT-Creation-Date: 2024-07-04 13:06+0200\n"
+"PO-Revision-Date: 2024-07-04 13:06+0200\n"
 "Last-Translator: NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
 "MIME-Version: 1.0\n"
@@ -33,11 +33,11 @@ msgstr "Feltmaterialetype"
 
 msgctxt "Material search"
 msgid "Search for material"
-msgstr ""
+msgstr "Søg efter materiale"
 
 msgctxt "Material search"
 msgid "Select material type"
-msgstr ""
+msgstr "Vælg materialetype"
 
 msgctxt "Material search"
 msgid "No material selected"
@@ -45,7 +45,7 @@ msgstr "Intet materiale valgt"
 
 msgctxt "Material search"
 msgid "Title"
-msgstr ""
+msgstr "Titel"
 
 msgctxt "Material search"
 msgid "Author"
@@ -53,15 +53,15 @@ msgstr "Forfatter"
 
 msgctxt "Material search"
 msgid "Publication year"
-msgstr ""
+msgstr "Udgivelsesår"
 
 msgctxt "Material search"
 msgid "Source"
-msgstr ""
+msgstr "Kilde"
 
 msgctxt "Material search"
 msgid "Work ID"
-msgstr ""
+msgstr "VærkID"
 
 msgctxt "Material search"
 msgid "Loading..."
@@ -73,7 +73,7 @@ msgstr ""
 
 msgctxt "Material search"
 msgid "Select work with the title @title"
-msgstr ""
+msgstr "Vælg værk med titlen @title"
 
 msgid "CQL Search String"
 msgstr "CQL søgestreng"
@@ -134,20 +134,25 @@ msgstr ""
 "Hvor længe skal der gå fra et arrangement er afholdt, til det skal "
 "afpubliceres automatisk?"
 
+msgctxt "dpl_event"
 msgid "Ticket sale not open"
-msgstr "Ikke åbent for billetsalg"
+msgstr "Billetsalget er ikke åbnet"
 
+msgctxt "dpl_event"
 msgid "Active"
-msgstr "Active"
+msgstr "Aktiv"
 
+msgctxt "dpl_event"
 msgid "Sold out"
 msgstr "Udsolgt"
 
+msgctxt "dpl_event"
 msgid "Canceled"
-msgstr "Aflyst"
+msgstr "Annulleret"
 
+msgctxt "dpl_event"
 msgid "Occurred"
-msgstr "Afholdt"
+msgstr ""
 
 msgid "Expired"
 msgstr "Udløbet"
@@ -2353,6 +2358,7 @@ msgstr "FBS service URL"
 
 msgid "Updated @count automatic paragraphs, setting 'article' as CT default."
 msgstr ""
+"Opdateret @count automatiske afsnit, indstillet 'artikel' som CT standard."
 
 msgid "Updated @count entities, @source_field => @target_field"
 msgstr "Opdaterede @count enheder, @source_field => @target_field"
@@ -3281,7 +3287,7 @@ msgstr "Submit"
 
 msgctxt "DPL related content"
 msgid "Related content"
-msgstr "Inspiration"
+msgstr "Relateret indhold"
 
 msgctxt "Favorites list material component"
 msgid "Go to My list"
@@ -3844,13 +3850,13 @@ msgid "CQL Search"
 msgstr "CQL søgning"
 
 msgid "Work ID Formatter"
-msgstr ""
+msgstr "VærkID-formatter"
 
 msgid "CQL Search Formatter"
 msgstr "CQL søgeformater"
 
 msgid "Work ID search for material"
-msgstr ""
+msgstr "VærkID-søgning efter materiale"
 
 msgid "CQL Search Widget"
 msgstr "CQL søgewidget"
@@ -3915,10 +3921,10 @@ msgid ""
 msgstr "Integrer TwentyThree videoplatformen i mediemodulet med oEmbed support"
 
 msgid "DPL Cookies"
-msgstr ""
+msgstr "DPL Cookies"
 
 msgid "A module that handles cookie functionality."
-msgstr ""
+msgstr "En modul, der håndterer cookie-funktionalitet."
 
 msgid "Event settings"
 msgstr "Arrangementsindstillinger"
@@ -4279,7 +4285,7 @@ msgid "DPL publication"
 msgstr "DPL publikation"
 
 msgid "Sets the publication date field when content is published.&#039;"
-msgstr ""
+msgstr "Indstiller udgivelsesdato feltet, når indholdet offentliggøres."
 
 msgid "Instant loan settings"
 msgstr "Indstillinger for strakslån"
@@ -4367,7 +4373,7 @@ msgid "DPL static content: Views aliases"
 msgstr "DPL statisk indhold: Views aliasser"
 
 msgid "Adds path aliases to core views pages"
-msgstr ""
+msgstr "Tilføjer sti-aliasser til kernevisningssider"
 
 msgid "DPL static content"
 msgstr "DPL fast indhold"
@@ -4633,7 +4639,7 @@ msgid "The value of an exposed filter"
 msgstr "Værdien af et eksponeret filter"
 
 msgid "Country contextual filter"
-msgstr ""
+msgstr "Landkontekstfilter"
 
 msgid ""
 "You must add a contextual filter for the country code to use this filter for "
@@ -4643,7 +4649,7 @@ msgstr ""
 "filter til administrative områder."
 
 msgid "Exposed country filter to determine values"
-msgstr ""
+msgstr "Eksponeret landfilter for at bestemme værdier"
 
 msgid ""
 "You must add a filter for the country code to use this filter for "
@@ -4732,7 +4738,7 @@ msgid "The two-letter country code"
 msgstr "Den tocifrede landekode"
 
 msgid "The top-level administrative subdivision of the country"
-msgstr ""
+msgstr "Det øverste administrative underafdeling i landet"
 
 msgid "The locality (i.e. city)"
 msgstr "Lokalitet (by)"
@@ -4866,7 +4872,7 @@ msgid "Address Format"
 msgstr "Adresse Format"
 
 msgid "Address Field Diff"
-msgstr ""
+msgstr "Adressefelt Diff"
 
 msgid "An entity field containing a country"
 msgstr "Et felt der indeholder et land"
@@ -5476,7 +5482,7 @@ msgid "Display inline"
 msgstr "Vis inline"
 
 msgid "Display checkbox/radio options inline."
-msgstr ""
+msgstr "Vis afkrydsnings/radio muligheder inline."
 
 msgid "Range minimum"
 msgstr "Minimal rækkevidde"
@@ -5485,6 +5491,8 @@ msgid ""
 "The minimum allowed value for the jQuery range slider. It can be positive, "
 "negative, or zero and have up to 11 decimal places."
 msgstr ""
+"Den mindst tilladte værdi for jQuery-række slider. Det kan være positivt, "
+"negativt eller nul og have op til 11 decimaler."
 
 msgid "Range maximum"
 msgstr "Maksimal rækkevidde"
@@ -5730,10 +5738,10 @@ msgid "Disabled"
 msgstr "Deaktiveret"
 
 msgid "Enable lock for selected form operations"
-msgstr ""
+msgstr "Aktivér lås for udvalgte formularoperationer"
 
 msgid "Disable lock for selected form operations"
-msgstr ""
+msgstr "Deaktiver lås for udvalgte formularoperationer"
 
 msgid ""
 "Activating this options allows users to edit different entity forms "
@@ -5743,7 +5751,7 @@ msgstr ""
 "formularer samtidigt"
 
 msgid "Form operations"
-msgstr ""
+msgstr "Formularoperationer"
 
 msgid ""
 "This content translation is being edited by the user @name and is therefore "
@@ -5976,6 +5984,8 @@ msgid ""
 "Provides mechanisms for automatically unlocking nodes that have been locked "
 "for a certain length of time."
 msgstr ""
+"Tilbyder mekanismer til automatisk at låse op for noder, der har været låst "
+"i en bestemt periode."
 
 msgid "Content lock timeout settings"
 msgstr "Indstillinger for indholdslås timeout"
@@ -6138,7 +6148,7 @@ msgid "Revision ID"
 msgstr "Versions-ID"
 
 msgid "The crop revision ID."
-msgstr ""
+msgstr "Revisions-ID for beskæring."
 
 msgid "Type"
 msgstr "Type"
@@ -6162,13 +6172,13 @@ msgid "Entity type"
 msgstr "Entity type"
 
 msgid "The type of entity crop belongs to."
-msgstr ""
+msgstr "Den type enhed, beskæringen tilhører."
 
 msgid "URI"
 msgstr "URI"
 
 msgid "The URI of the image crop belongs to."
-msgstr ""
+msgstr "URI'en for billedet, beskæringen tilhører."
 
 msgid "The crop height."
 msgstr "Beskæringshøjden."
@@ -6341,7 +6351,7 @@ msgstr "Beskæringstypens maskinenavn"
 
 msgctxt "Validation"
 msgid "Crop Type aspect ratio"
-msgstr ""
+msgstr "Beskær type for billedformat"
 
 msgid "Crop"
 msgstr "Beskær"
@@ -6838,7 +6848,7 @@ msgid "Entities referenced by field <em>@label (@field_id)</em>."
 msgstr "Enheder refereret af feltet <em>@label (@field_id)</em>."
 
 msgid "Circular reference detected"
-msgstr ""
+msgstr "Cirkulær reference opdaget"
 
 msgid ""
 "Clone entity <strong>ID:</strong> <em>@entity_id</em>, <strong>Type:</"
@@ -6940,7 +6950,7 @@ msgid "Entity Clone"
 msgstr "Enhedsklon"
 
 msgid "Add a clone action for all entities"
-msgstr ""
+msgstr "Tilføj en kloningshandling for alle enheder"
 
 msgid "Entity clone settings"
 msgstr "Indstillinger for enhedsklon"
@@ -7031,7 +7041,7 @@ msgid ""
 msgstr ""
 
 msgid "Select the entity types to check for orphans"
-msgstr ""
+msgstr "Vælg de enhedstyper, der skal kontrolleres for forældreløse"
 
 msgid "Delete orphaned composite revisions"
 msgstr ""
@@ -7106,7 +7116,7 @@ msgid "@label revision ID"
 msgstr "@label revisions ID"
 
 msgid "The referenced entity revision"
-msgstr ""
+msgstr "Den refererede enhedsrevision"
 
 msgid "View mode"
 msgstr "View mode"
@@ -7200,19 +7210,19 @@ msgid "Parent ID"
 msgstr "Overordnet ID"
 
 msgid "The ID of the parent entity of which this entity is referenced."
-msgstr ""
+msgstr "ID'et for den overordnede enhed, som denne enhed refererer til."
 
 msgid "Parent type"
 msgstr ""
 
 msgid "The entity parent type to which this entity is referenced."
-msgstr ""
+msgstr "Den overordnede type for enheden, som denne enhed refererer til."
 
 msgid "Parent field name"
 msgstr ""
 
 msgid "The entity parent field name to which this entity is referenced."
-msgstr ""
+msgstr "Det overordnede feltnavn for enheden, som denne enhed refererer til."
 
 msgid "Entity Reference inline fields"
 msgstr "Entity Reference inline-felter"
@@ -7256,7 +7266,7 @@ msgstr ""
 "En enhedsfelt, der indeholder en enhedsreference til en specifik revision."
 
 msgid "Display the label of the referenced entity revisions."
-msgstr ""
+msgstr "Vis etiketten af de refererede enhedsrevisioner."
 
 msgid "Test entity host"
 msgstr "Test enhedsvært"
@@ -7278,7 +7288,7 @@ msgid "Entity with parent type and ID."
 msgstr "Enhed med overordnet type og ID."
 
 msgid "Adds a Entity Reference field type with revision support."
-msgstr ""
+msgstr "Tilføjer en Entity Reference felttype med versionsstøtte."
 
 msgid "Delete orphaned composite entities"
 msgstr ""
@@ -7294,7 +7304,7 @@ msgid "Enum class"
 msgstr ""
 
 msgid "Backed enum class to get the allowed values from."
-msgstr ""
+msgstr "Understøttet enum-klasse for at få tilladte værdier fra."
 
 msgid "Enum"
 msgstr ""
@@ -7420,7 +7430,7 @@ msgid "Element"
 msgstr "Element"
 
 msgid "E.g. div, section, aside etc."
-msgstr ""
+msgstr "F.eks. div, sektion, side osv."
 
 msgid "Show label"
 msgstr "Vis etiket"
@@ -7742,7 +7752,7 @@ msgid "Source of Data"
 msgstr "Datakilde"
 
 msgid "Source Entity Type"
-msgstr ""
+msgstr "Kildeenhedstype"
 
 msgid "Select the source entity type from which to inherit data."
 msgstr "Vælg kildenhedstypen hvorfra data skal arves."
@@ -7751,7 +7761,7 @@ msgid "Fetching source options..."
 msgstr "Henter kildemuligheder ..."
 
 msgid "Source Entity Bundle"
-msgstr ""
+msgstr "Kildeenhedsbundt"
 
 msgid "Select the source entity bundle from which to inherit data."
 msgstr "Vælg kildenhedsbundtet hvorfra data skal arves."
@@ -7769,7 +7779,7 @@ msgid "Destination of Data"
 msgstr "Destinations for data"
 
 msgid "Destination Entity Type"
-msgstr ""
+msgstr "Destinationsenhedstype"
 
 msgid "Select the destination entity type to which to inherit data."
 msgstr "Vælg destinationsenhedstypen, hvortil data skal arves."
@@ -7778,7 +7788,7 @@ msgid "Fetching destination options..."
 msgstr "Henter destinationsmuligheder ..."
 
 msgid "Destination Entity Bundle"
-msgstr ""
+msgstr "Destinationsenhedsbundt"
 
 msgid "Select the destination entity bundle to which to inherit data."
 msgstr "Vælg destinationsenhedsbundtet, hvortil data skal arves."
@@ -7860,10 +7870,10 @@ msgid "Machine name"
 msgstr "Internt navn"
 
 msgid "Source Entity/Bundle"
-msgstr ""
+msgstr "Kildeenhed/bundt"
 
 msgid "Destination Entity/Bundle"
-msgstr ""
+msgstr "Destinationsenhed/bundt"
 
 msgid "N/A"
 msgstr "N/A"
@@ -8102,7 +8112,7 @@ msgid "Rebuild"
 msgstr "Genopbyg"
 
 msgid "Detailed job scheduler logging"
-msgstr ""
+msgstr "Detaljeret jobplanlægningslogning"
 
 msgid "Run time info of jobs will be written to watchdog."
 msgstr "Information om kørselstid af jobs vil blive skrevet til watchdog."
@@ -8418,7 +8428,7 @@ msgstr ""
 "Hvis ingen af afkrydsningsfelterne er markeret, er alle bundter tilladt."
 
 msgid "Bundle grouping"
-msgstr ""
+msgstr "Bundtgruppering"
 
 msgid "Group by bundle"
 msgstr "Gruppér efter bundt"
@@ -8528,6 +8538,9 @@ msgid ""
 "profile page</a>. You can create a Linkit profile by clicking \"<a href=\":"
 "add_profile\">Add profile</a>\"."
 msgstr ""
+"Du kan oprette og redigere Linkit-profiler på <a href=\":profiles\">Linkit-"
+"profil siden</a>. Du kan oprette en Linkit-profil ved at klikke på \"<a "
+"href=\":add_profile\">Tilføj profil</a>\"."
 
 msgid ""
 "Linkit profiles define how Linkit will operate on fields that have Linkit "
@@ -8695,9 +8708,13 @@ msgid ""
 "Corrected the Twitter Card \"type\" value in the @config Metatag "
 "configuration."
 msgstr ""
+"Rettet Twitter Card \"type\"-værdien i @config meta tag-konfigurationen."
 
 msgid "Select the type of default meta tags you would like to add."
 msgstr "Vælg typen af standard meta tags, som du vil tilføje."
+
+msgid "Active"
+msgstr "Active"
 
 msgid ""
 "Warning: disabling the Global default metatag will prevent any metatags from "
@@ -8726,7 +8743,7 @@ msgstr ""
 "sædvanlige metatags blive bearbejdet."
 
 msgid "Separator used with multiple values"
-msgstr ""
+msgstr "Separator brugt med flere værdier"
 
 msgid ""
 "Controls the separator used when a meta tag allows multiple values. Multiple "
@@ -9045,7 +9062,7 @@ msgstr ""
 "Hvis markeret, vil feltet blive placeret i sidebaren på enhedsformularer."
 
 msgid "Wrap the meta tags in a collapsed details container."
-msgstr ""
+msgstr "Pak metatags ind i en sammenklappelig detaljecontainer."
 
 msgid ""
 "If checked, the contents of the field will be placed inside a collapsed "
@@ -9508,7 +9525,7 @@ msgid "Android app Activity Class"
 msgstr "Android-app aktivitetsklasse"
 
 msgid "A fully-qualified Activity class name for intent generation."
-msgstr ""
+msgstr "Et fuldt kvalificeret klassenavn for Activity til intentgenerering."
 
 msgid "Windows Universal app name"
 msgstr "Windows Universal app navn"
@@ -9641,7 +9658,7 @@ msgstr ""
 "til 'foto'."
 
 msgid "App store country"
-msgstr ""
+msgstr "App store land"
 
 msgid ""
 "If your application is not available in the US App Store, you must set this "
@@ -9669,6 +9686,8 @@ msgid ""
 "The numerical Twitter account ID for the website, which will be displayed in "
 "the Card's footer."
 msgstr ""
+"Det numeriske Twitter konto-ID for webstedet, som vil blive vist i kortets "
+"fodnote."
 
 msgid "iPad app ID"
 msgstr "iPad app ID"
@@ -9841,7 +9860,7 @@ msgstr ""
 "200 tegn."
 
 msgid "Twitter Cards"
-msgstr ""
+msgstr "Twitter Cards"
 
 msgid ""
 "A set of meta tags specially for controlling the summaries displayed when "
@@ -10179,7 +10198,7 @@ msgid "This field stores code meta tags."
 msgstr "Dette felt indeholder kodede meta tags."
 
 msgid "Empty formatter"
-msgstr ""
+msgstr "Tomme formatter"
 
 msgid "Advanced meta tags form"
 msgstr "Avanceret meta-tags felt"
@@ -10486,7 +10505,7 @@ msgid "Latitude"
 msgstr "Breddegrad"
 
 msgid "Audio secure URL"
-msgstr ""
+msgstr "Sikker URL for lyd"
 
 msgid ""
 "The secure URL to an audio file that complements this object. All 'http://' "
@@ -10618,7 +10637,7 @@ msgstr ""
 "fejlfinde eventuelle problemer med dine Open Graph tags."
 
 msgid "Yandex"
-msgstr ""
+msgstr "Yandex"
 
 msgid ""
 "A string provided by <a href=':yandex'>Yandex</a>, full details are "
@@ -10845,6 +10864,8 @@ msgstr "MSApplication - Værktøjstip"
 
 msgid "Controls the text shown in the tooltip for the pinned site's shortcut."
 msgstr ""
+"Styrer teksten, der vises i værktøjstippet for genvejen til den fastgjorte "
+"side."
 
 msgid "MSApplication - Tile color"
 msgstr "MSApplication - Flisefarve"
@@ -10934,7 +10955,7 @@ msgid "The URL to a logo file that is 70px by 70px."
 msgstr "URL'en til en logofil, der er 70px af 70px."
 
 msgid "X-UA-Compatible"
-msgstr ""
+msgstr "X-UA-Compatible"
 
 msgid ""
 "Indicates to IE which rendering engine should be used for the current page."
@@ -11049,7 +11070,7 @@ msgstr ""
 "standardadfærden er at bruge Safari til at vise webindhold."
 
 msgid "Cleartype"
-msgstr ""
+msgstr "Cleartype"
 
 msgid ""
 "A legacy meta tag for older versions of Internet Explorer on Windows, use "
@@ -11742,7 +11763,7 @@ msgid "Spatial characteristics of the resource."
 msgstr "Ressourcens rummelige egenskaber."
 
 msgid "Date Copyrighted"
-msgstr ""
+msgstr "Ophavsdato"
 
 msgid "Date of copyright."
 msgstr "Copyrightdato"
@@ -12005,7 +12026,7 @@ msgid "Metatag: App Links"
 msgstr "Metatag: App links"
 
 msgid "Metatag: Twitter Cards"
-msgstr ""
+msgstr "Meta tag: Twitter Cards"
 
 msgid "Provides support for Twitter's Card meta tags."
 msgstr "Leverer support for Twitters Card metatags."
@@ -12128,7 +12149,7 @@ msgid "Metatag: Page Manager"
 msgstr "Meta tag: Sidemanager"
 
 msgid "Provides metatag support for Page Manager variants."
-msgstr ""
+msgstr "Tilbyder meta tag-support til Page Manager-varianter."
 
 msgid "Metatag: Google Custom Search Engine (CSE)"
 msgstr "Metatag: Google Custom Search Engine (CSE)"
@@ -12179,7 +12200,7 @@ msgid "Foo"
 msgstr ""
 
 msgid "Bar"
-msgstr ""
+msgstr "Bar"
 
 msgid "Partial required"
 msgstr "Delvis krævet"
@@ -12243,7 +12264,7 @@ msgid "Multi-value form element test"
 msgstr "Flerværdi form-element test"
 
 msgid "Test module for Multi-value form element."
-msgstr ""
+msgstr "Testmodul for flerværdi formelement."
 
 msgid "Log in with @client_title"
 msgstr "Log ind med @client_title"
@@ -12516,7 +12537,7 @@ msgid "Okta domain"
 msgstr "Okta domæne"
 
 msgid "Authorization endpoint"
-msgstr ""
+msgstr "Autorisationsendpoint"
 
 msgid "Token endpoint"
 msgstr ""
@@ -12607,6 +12628,8 @@ msgid ""
 "During login and user registration user attributes can optionally be "
 "synchronized with the OpenID Connect claims mapping."
 msgstr ""
+"Under login og brugerregistrering kan brugerattributter valgfrit "
+"synkroniseres med OpenID Connect-kravskortlægning."
 
 msgid "The user's time zone."
 msgstr "Brugerens tidszone."
@@ -12630,7 +12653,7 @@ msgid "OpenID Connect login"
 msgstr "Login til Adgangsplatformen"
 
 msgid "A pluggable client implementation for the OpenID Connect protocol."
-msgstr ""
+msgstr "En udskiftelig klientimplementering for OpenID Connect-protokollen."
 
 msgid "Connected Accounts"
 msgstr "Forbundne konti"
@@ -13189,6 +13212,7 @@ msgstr "Gemt de %label inkluderede datoer."
 
 msgid "Revision from %revision-date of eventseries %title has been deleted."
 msgstr ""
+"Revision fra %revision-date af arrangementsrækken %title er blevet slettet."
 
 msgid "Label for the Event series type."
 msgstr "Label for typen af arrangementsserie."
@@ -14062,10 +14086,10 @@ msgid "All event instance types are already mapped."
 msgstr "Alle begivenhedsinstans typer er allerede kortlagt."
 
 msgid "%label iCalendar property mapping saved."
-msgstr ""
+msgstr "%label iCalendar-egenskabstilknytning gemt."
 
 msgid "%label iCalendar property mapping has been deleted."
-msgstr ""
+msgstr "%label iCalendar-egenskabstilknytning er blevet slettet."
 
 msgid "Download as iCal"
 msgstr "Download som iCal"
@@ -15040,7 +15064,7 @@ msgid "The email of the registrant."
 msgstr "Emailen på den registrerede."
 
 msgid "Edit Registrant URL"
-msgstr ""
+msgstr "Rediger deltager-URL"
 
 msgid "The URL to edit a registrant."
 msgstr "URL'en til at redigere en registreret."
@@ -15134,7 +15158,7 @@ msgid "Display the date of the referenced eventinstance using Date Compact."
 msgstr "Vis datoen for den refererede arrangement-instans med Date Compact."
 
 msgid "Consecutive recurring date widget"
-msgstr ""
+msgstr "Sammenhængende tilbagevendende dato-widget"
 
 msgid "Monthly recurring date widget"
 msgstr "Månedlig tilbagevendende dato widget"
@@ -15143,13 +15167,13 @@ msgid "Daily recurring date widget"
 msgstr "Dagligt tilbagevendende dato widget"
 
 msgid "Yearly recurring date widget"
-msgstr ""
+msgstr "Årlig tilbagevendende dato-widget"
 
 msgid "Weekly recurring date widget"
-msgstr ""
+msgstr "Ugentlig tilbagevendende dato-widget"
 
 msgid "Event series entity"
-msgstr ""
+msgstr "Arrangementserie enhed"
 
 msgid "Event Instance entity"
 msgstr "Arrangementinstans enhed"
@@ -15158,7 +15182,7 @@ msgid "A link to an event's iCalendar download."
 msgstr "Et link til et arrangement iCalendar."
 
 msgid "Event iCal property mapping"
-msgstr ""
+msgstr "Event iCal egenskabstilknytning"
 
 msgid "View Event Registration List"
 msgstr "Vis registreringslisten for arrangementet"
@@ -15171,7 +15195,7 @@ msgstr ""
 "arrangement."
 
 msgid "Adds Registrant entities to groups."
-msgstr ""
+msgstr "Tilføjer deltager-enheder til grupper."
 
 msgid "Stores an event registration configuration"
 msgstr "Gemmer en konfiguration til registrering af et arrangement"
@@ -15302,16 +15326,16 @@ msgstr ""
 "iCalendar filer"
 
 msgid "Add iCalendar property mapping"
-msgstr ""
+msgstr "Tilføj iCalendar-egenskabstilknytning"
 
 msgid "Edit iCalendar property mapping"
-msgstr ""
+msgstr "Rediger iCalendar-egenskabstilknytning"
 
 msgid "Delete iCalendar property mapping"
-msgstr ""
+msgstr "Slet iCalendar-egenskabstilknytning"
 
 msgid "Event iCalendar Property Mapping"
-msgstr ""
+msgstr "Event iCalendar egenskabstilknytning"
 
 msgid "Configure event instance tokens to populate iCalendar properties."
 msgstr ""
@@ -15806,7 +15830,7 @@ msgstr ""
 "\"Indhold\"-fanen"
 
 msgid "Added Scheduler date fields to the following entity types: %updated."
-msgstr ""
+msgstr "Tilføjede Scheduler-dato felter til følgende enhedstyper: %updated."
 
 msgid "No database fields had to be added."
 msgstr "Ingen databasefelter skulle tilføjes."
@@ -15838,7 +15862,7 @@ msgid "Node form scheduler"
 msgstr ""
 
 msgid "Scheduler date options on the Node form."
-msgstr ""
+msgstr "Scheduler datoindstillinger på node-formularen."
 
 msgid "Form"
 msgstr "Formular"
@@ -16101,6 +16125,8 @@ msgid ""
 "Scheduler's cron is at /scheduler/cron/{access-key} and a sample crontab "
 "entry to run scheduler every minute might look like:"
 msgstr ""
+"Scheduler's cron er på /scheduler/cron/{access-key} og et eksempel på en "
+"crontab-indgang til at køre scheduler hvert minut kunne se sådan ud:"
 
 msgid "or"
 msgstr "eller"
@@ -16252,6 +16278,11 @@ msgid ""
 "will be random within the range starting at entity creation date, up to a "
 "time in the future matching the same span as selected above."
 msgstr ""
+"Indtast en procentdel for tilfældigt at vælge Scheduler-aktiverede enheder, "
+"der skal have en offentliggørelsesdato. Indtast 0 for ingen, 100 for alle. "
+"Datoen og tiden vil være tilfældig inden for intervallet startende på "
+"enhedsoprettelsesdatoen, op til et tidspunkt i fremtiden, der matcher samme "
+"span som valgt ovenfor."
 
 msgid "Unpublishing date for Scheduler"
 msgstr "Dato for afpublicering af Scheduler"
@@ -16263,6 +16294,11 @@ msgid ""
 "date and publish-on date, up to a time in the future matching the same span "
 "as selected above."
 msgstr ""
+"Indtast en procentdel for tilfældigt at vælge Scheduler-aktiverede enheder, "
+"der skal have en afpubliseringsdato. Indtast 0 for ingen, 100 for alle. "
+"Datoen og tiden vil være tilfældig inden for intervallet startende senere "
+"end enhedsoprettelsesdatoen og offentliggørelsesdatoen, op til et tidspunkt "
+"i fremtiden, der matcher samme span som valgt ovenfor."
 
 msgid ""
 "There is a problem with @entity '@type' - The translatable settings for "
@@ -16353,7 +16389,7 @@ msgid "Provides support for scheduling node entities"
 msgstr "Leverer support for planlægning af nodeenheder"
 
 msgid "Taxonomy Term Scheduler Plugin"
-msgstr ""
+msgstr "Taxonomy Term Scheduler Plugin"
 
 msgid "Provides support for scheduling Taxonomy Term entities"
 msgstr "Leverer support for planlægning af taksonomiudtryk enheder"
@@ -16454,6 +16490,7 @@ msgstr "Vis kun brugte elementer"
 
 msgid "Restrict exposed filter values to those presented in the result set."
 msgstr ""
+"Begræns udsatte filterværdier til dem, der præsenteres i resultatsættet."
 
 msgid "Filter items based on filtered result set by other applied filters"
 msgstr ""
@@ -17376,7 +17413,7 @@ msgid "@purger uses http:// but its port is 443!"
 msgstr "@purger bruger http:// men dens port er 443!"
 
 msgid "All purgers configured."
-msgstr ""
+msgstr "Alle konfigurerede rensere."
 
 msgid "No content entities were found"
 msgstr "Ingen indholds-entiteter blev fundet"
@@ -17386,9 +17423,12 @@ msgid ""
 "for, if none selected, all bundles form all entity types will be used. Just "
 "the fields of type image will be purge."
 msgstr ""
+"Konfigurer bundter af enhedstyper, som Varnish-billedrensning skal bruges "
+"til; hvis ingen er valgt, vil alle bundter fra alle enhedstyper blive brugt. "
+"Kun felter af typen billede vil blive renset."
 
 msgid "administer Varnish image purge"
-msgstr ""
+msgstr "administrer Varnish-billedrensning"
 
 msgid "Purge image styles after entity update"
 msgstr "Slet billedstile efter enhedsopdatering"
@@ -17396,6 +17436,7 @@ msgstr "Slet billedstile efter enhedsopdatering"
 msgid ""
 "You need to setup Varnish to listen to the request method URIBAN. Example:"
 msgstr ""
+"Du skal opsætte Varnish til at lytte til anmodningsmetoden URIBAN. Eksempel:"
 
 msgid "Adminster"
 msgstr "Administrer"
@@ -17414,13 +17455,13 @@ msgid "Purge focal point entities after they are updated"
 msgstr "Slet fokuspunktsenheder efter de er opdateret"
 
 msgid "Varnish"
-msgstr ""
+msgstr "Varnish"
 
 msgid "Verifies that only fully configured Varnish purgers load."
 msgstr "Verificerer, at kun fuldt konfigurerede Varnish-purgere indlæses."
 
 msgid "Varnish Purger"
-msgstr ""
+msgstr "Varnish Purger"
 
 msgid ""
 "Configurable purger that makes HTTP requests for each given invalidation "
@@ -17430,7 +17471,7 @@ msgstr ""
 "invalidationsinstruktion."
 
 msgid "Varnish Bundled Purger"
-msgstr ""
+msgstr "Varnish Bundled Purger"
 
 msgid ""
 "Configurable purger that sends a single HTTP request for a set of "
@@ -17443,33 +17484,35 @@ msgid "Varnish zero-configuration purger"
 msgstr ""
 
 msgid "Invalidates Varnish powered load balancers."
-msgstr ""
+msgstr "Gør Varnish-drevne belastningsfordelere ugyldige."
 
 msgid "Varnish purger settings"
-msgstr ""
+msgstr "Indstillinger for Varnish Purger"
 
 msgid ""
 "Purger for varnish. Purges page caches from varnish. Works together with the "
 "purge module."
 msgstr ""
+"Purger for varnish. Renser sidecaches fra varnish. Fungerer sammen med purge-"
+"modulen."
 
 msgid "Varnish Purger Tags"
-msgstr ""
+msgstr "Varnish Purger Tags"
 
 msgid "Cache-Tags response header to support tag-based invalidation."
 msgstr ""
 
 msgid "Varnish image purge"
-msgstr ""
+msgstr "Varnish-billedrensning"
 
 msgid "Configure Varnish image purge"
 msgstr "Konfigurer Varnish billedepurge"
 
 msgid "Varnish Image Purge"
-msgstr ""
+msgstr "Varnish-billedrensning"
 
 msgid "Varnish Focal Point Purger"
-msgstr ""
+msgstr "Varnish Focal Point Purger"
 
 msgid "Purge image styles after a focal point entity needs to be updated"
 msgstr "Slet billedstile efter en fokuspunktsenhed skal opdateres"
@@ -17591,9 +17634,11 @@ msgstr "Arrangementer i denne serie"
 
 msgid "To view this content, we need your consent to use marketing cookies."
 msgstr ""
+"For at se dette indhold, har vi brug for dit samtykke til at bruge marketing-"
+"cookies."
 
 msgid "Manage consent"
-msgstr ""
+msgstr "Administrer samtykke"
 
 msgid "Status message icon"
 msgstr "Statusmeddelelsesikon"
@@ -17737,7 +17782,7 @@ msgstr ""
 
 msgctxt "config_perms.custom_perms_entity.administer_maintenance_mode:label"
 msgid "Administer maintenance mode"
-msgstr ""
+msgstr "Administrer vedligeholdelsestilstand"
 
 msgctxt "core.base_field_override.media.image.status:label"
 msgid "Published"
@@ -18991,6 +19036,22 @@ msgid ""
 "displayed. <br><br />Only one level of children will be shown."
 msgstr ""
 
+msgctxt "field.field.paragraph.breadcrumb_children.field_show_subtitles:label"
+msgid "Show subtitles"
+msgstr ""
+
+msgctxt ""
+"field.field.paragraph.breadcrumb_children.field_show_subtitles:settings:"
+"on_label"
+msgid "On"
+msgstr ""
+
+msgctxt ""
+"field.field.paragraph.breadcrumb_children.field_show_subtitles:settings:"
+"off_label"
+msgid "Off"
+msgstr ""
+
 msgctxt "field.field.paragraph.breadcrumb_children.field_title:label"
 msgid "Title"
 msgstr ""
@@ -20053,6 +20114,10 @@ msgctxt "image.style.media_library:label"
 msgid "Media Library thumbnail (220 x 220px)"
 msgstr ""
 
+msgctxt "image.style.open_graph:label"
+msgid "Open graph (1200x630)"
+msgstr ""
+
 msgctxt "image.style.paragraph_squared:label"
 msgid "Paragraph, Squared (1:1 / 496x496px)"
 msgstr ""
@@ -20125,6 +20190,52 @@ msgctxt "metatag.metatag_defaults.404:tags:shortlink"
 msgid "[site:url]"
 msgstr ""
 
+msgctxt "metatag.metatag_defaults.eventinstance__default:label"
+msgid "Event Instance entity: Default"
+msgstr ""
+
+msgctxt "metatag.metatag_defaults.eventinstance__default:tags:og_image"
+msgid "[eventinstance:event_teaser_image:entity:field_media_image:open_graph]"
+msgstr ""
+
+msgctxt "metatag.metatag_defaults.eventinstance__default:tags:og_image_height"
+msgid ""
+"[eventinstance:event_teaser_image:entity:field_media_image:open_graph:height]"
+msgstr ""
+
+msgctxt "metatag.metatag_defaults.eventinstance__default:tags:og_image_url"
+msgid ""
+"[eventinstance:event_teaser_image:entity:field_media_image:open_graph:url]"
+msgstr ""
+
+msgctxt "metatag.metatag_defaults.eventinstance__default:tags:og_image_width"
+msgid ""
+"[eventinstance:event_teaser_image:entity:field_media_image:open_graph:width]"
+msgstr ""
+
+msgctxt "metatag.metatag_defaults.eventseries__default:label"
+msgid "Event series entity: Default"
+msgstr ""
+
+msgctxt "metatag.metatag_defaults.eventseries__default:tags:og_image"
+msgid "[eventseries:field_teaser_image:entity:field_media_image:open_graph]"
+msgstr ""
+
+msgctxt "metatag.metatag_defaults.eventseries__default:tags:og_image_height"
+msgid ""
+"[eventseries:field_teaser_image:entity:field_media_image:open_graph:height]"
+msgstr ""
+
+msgctxt "metatag.metatag_defaults.eventseries__default:tags:og_image_url"
+msgid ""
+"[eventseries:field_teaser_image:entity:field_media_image:open_graph:url]"
+msgstr ""
+
+msgctxt "metatag.metatag_defaults.eventseries__default:tags:og_image_width"
+msgid ""
+"[eventseries:field_teaser_image:entity:field_media_image:open_graph:width]"
+msgstr ""
+
 msgctxt "metatag.metatag_defaults.front:label"
 msgid "Front page"
 msgstr ""
@@ -20161,8 +20272,44 @@ msgctxt "metatag.metatag_defaults.node:tags:description"
 msgid "[node:summary]"
 msgstr ""
 
+msgctxt "metatag.metatag_defaults.node:tags:og_image"
+msgid "[node:field_teaser_image:entity:field_media_image:open_graph]"
+msgstr ""
+
+msgctxt "metatag.metatag_defaults.node:tags:og_image_height"
+msgid "[node:field_teaser_image:entity:field_media_image:open_graph:height]"
+msgstr ""
+
+msgctxt "metatag.metatag_defaults.node:tags:og_image_url"
+msgid "[node:field_teaser_image:entity:field_media_image:open_graph:url]"
+msgstr ""
+
+msgctxt "metatag.metatag_defaults.node:tags:og_image_width"
+msgid "[node:field_teaser_image:entity:field_media_image:open_graph:width]"
+msgstr ""
+
 msgctxt "metatag.metatag_defaults.node:tags:title"
 msgid "[node:title] | [site:name]"
+msgstr ""
+
+msgctxt "metatag.metatag_defaults.node__branch:label"
+msgid "Content: Branch"
+msgstr ""
+
+msgctxt "metatag.metatag_defaults.node__branch:tags:og_image"
+msgid "[node:field_main_media:entity:field_media_image:open_graph]"
+msgstr ""
+
+msgctxt "metatag.metatag_defaults.node__branch:tags:og_image_height"
+msgid "[node:field_main_media:entity:field_media_image:open_graph:height]"
+msgstr ""
+
+msgctxt "metatag.metatag_defaults.node__branch:tags:og_image_url"
+msgid "[node:field_main_media:entity:field_media_image:open_graph:url]"
+msgstr ""
+
+msgctxt "metatag.metatag_defaults.node__branch:tags:og_video_width"
+msgid "[node:field_main_media:entity:field_media_image:open_graph:width]"
 msgstr ""
 
 msgctxt "metatag.metatag_defaults.taxonomy_term:label"
@@ -21574,7 +21721,17 @@ msgstr ""
 msgctxt ""
 "views.view.entity_clone_template:display:default:display_options:fields:"
 "nothing:alter:text"
-msgid "<a class=\"button\" href=\"/entity_clone/node/{{ nid }}\">Clone</a>"
+msgid ""
+"<a class=\"button\" href=\"/entity_clone/node/{{ nid }}\">{{ 'Use template'|"
+"trans }}</a>"
+msgstr ""
+
+msgctxt ""
+"views.view.entity_clone_template:display:default:display_options:fields:"
+"nothing_1:alter:text"
+msgid ""
+"<a href=\"/node/{{ nid }}/edit\" class=\"button\">{{ 'Edit template'|trans }}"
+"</a>"
 msgstr ""
 
 msgctxt ""
@@ -21635,6 +21792,14 @@ msgctxt ""
 msgid ""
 "<a class=\"button\" href=\"/entity_clone/node/{{ nid }}\">{{ 'Use template'|"
 "trans }}</a>"
+msgstr ""
+
+msgctxt ""
+"views.view.entity_clone_template:display:block:display_options:fields:"
+"nothing_1:alter:text"
+msgid ""
+"<a href=\"/node/{{ nid }}/edit\" class=\"button\">{{ 'Edit template'|trans }}"
+"</a>"
 msgstr ""
 
 msgctxt "views.view.entity_clone_template:display:page:display_title"
