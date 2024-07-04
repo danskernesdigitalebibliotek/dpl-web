@@ -3,6 +3,7 @@
 namespace Drupal\Tests\dpl_login\Unit;
 
 use Drupal\Core\Config\ConfigFactoryInterface;
+use Drupal\Core\Config\ConfigManagerInterface;
 use Drupal\Core\Config\ImmutableConfig;
 use Drupal\Core\DependencyInjection\ContainerBuilder;
 use Drupal\Core\GeneratedUrl;
@@ -80,6 +81,8 @@ class DplLoginControllerTest extends UnitTestCase {
     $config = $this->prophesize(ImmutableConfig::class);
     $config_factory = $this->prophesize(ConfigFactoryInterface::class);
     $config_factory->get(Config::CONFIG_KEY)->willReturn($config->reveal());
+    $config_manager = $this->prophesize(ConfigManagerInterface::class);
+    $config_manager->getConfigFactory()->willReturn($config_factory->reveal());
 
     $unrouted_url_assembler = $this->prophesize(UnroutedUrlAssemblerInterface::class);
     $generated_url = $this->prophesize(GeneratedUrl::class);
@@ -99,11 +102,11 @@ class DplLoginControllerTest extends UnitTestCase {
     $container->set('dpl_login.user_tokens', $user_tokens->reveal());
     $container->set('dpl_login.unregistered_user_tokens', $registered_user_token_provider->reveal());
     $container->set('dpl_login.unregistered_user_tokens', $unregistered_user_token_provider->reveal());
-    $container->set('config.factory', $config_factory->reveal());
+    $container->set('config.manager', $config_manager->reveal());
     $container->set('unrouted_url_assembler', $unrouted_url_assembler->reveal());
     $container->set('url_generator', $url_generator->reveal());
     $container->set('openid_connect.claims', $openid_connect_claims->reveal());
-    $container->set('dpl_login.adgangsplatformen.config', new Config($config_factory->reveal()));
+    $container->set('dpl_login.adgangsplatformen.config', new Config($config_manager->reveal()));
     $container->set('dpl_login.adgangsplatformen.client', $openid_connect_client->reveal());
 
     \Drupal::setContainer($container);
@@ -134,9 +137,11 @@ class DplLoginControllerTest extends UnitTestCase {
     ])->shouldBeCalledTimes(1);
     $config_factory = $this->prophesize(ConfigFactoryInterface::class);
     $config_factory->get(Config::CONFIG_KEY)->willReturn($config->reveal());
+    $config_manager = $this->prophesize(ConfigManagerInterface::class);
+    $config_manager->getConfigFactory()->willReturn($config_factory->reveal());
 
     $container = \Drupal::getContainer();
-    $container->set('dpl_login.adgangsplatformen.config', new Config($config_factory->reveal()));
+    $container->set('dpl_login.adgangsplatformen.config', new Config($config_manager->reveal()));
     \Drupal::setContainer($container);
 
     $controller = DplLoginController::create($container);
@@ -159,6 +164,8 @@ class DplLoginControllerTest extends UnitTestCase {
     ])->shouldBeCalledTimes(1);
     $config_factory = $this->prophesize(ConfigFactoryInterface::class);
     $config_factory->get(Config::CONFIG_KEY)->willReturn($config->reveal());
+    $config_manager = $this->prophesize(ConfigManagerInterface::class);
+    $config_manager->getConfigFactory()->willReturn($config_factory->reveal());
     $user_tokens = $this->prophesize(UserTokens::class);
     $user_tokens->getCurrent()->willReturn(NULL);
     $registered_user_token_provider = $this->prophesize(RegisteredUserTokensProvider::class);
@@ -169,7 +176,7 @@ class DplLoginControllerTest extends UnitTestCase {
     $url_generator->generateFromRoute('<front>', Argument::cetera())->willReturn('https://local.site');
 
     $container = \Drupal::getContainer();
-    $container->set('dpl_login.adgangsplatformen.config', new Config($config_factory->reveal()));
+    $container->set('dpl_login.adgangsplatformen.config', new Config($config_manager->reveal()));
     $container->set('dpl_login.user_tokens', $user_tokens->reveal());
     $container->set('dpl_login.registered_user_tokens', $registered_user_token_provider->reveal());
     $container->set('dpl_login.unregistered_user_tokens', $unregistered_user_token_provider->reveal());
