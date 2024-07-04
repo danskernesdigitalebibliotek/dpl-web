@@ -22,11 +22,12 @@ final class WorkIdSearchForMaterialWidget extends WidgetBase {
 
   /**
    * {@inheritdoc}
+   *
+   * @throws \Random\RandomException
    */
   public function formElement(FieldItemListInterface $items, $delta, array $element, array &$form, FormStateInterface $form_state): array {
 
-    $uniqueFieldId = $items->getFieldDefinition()->getUniqueIdentifier();
-    $identifier = "{$uniqueFieldId}-{$delta}";
+    $identifier = bin2hex(random_bytes(16));
 
     $element['fields_container'] = [
       '#type' => 'container',
