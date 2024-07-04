@@ -116,6 +116,7 @@ module:
   menu_link_content: 0
   menu_ui: 0
   metatag: 0
+  metatag_open_graph: 0
   multiple_fields_remove_button: 0
   multivalue_form_element: 0
   mysql: 0
