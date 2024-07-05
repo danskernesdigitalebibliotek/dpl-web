@@ -15,6 +15,7 @@ dependencies:
     - field.field.eventinstance.default.field_event_state
     - field.field.eventinstance.default.field_event_title
     - field.field.eventinstance.default.field_external_admin_link
+    - field.field.eventinstance.default.field_relevant_ticket_manager
     - field.field.eventinstance.default.field_tags
     - field.field.eventinstance.default.field_teaser_image
     - field.field.eventinstance.default.field_teaser_text
@@ -130,6 +131,16 @@ content:
     third_party_settings: {  }
     weight: 7
     region: content
+  event_relevant_ticket_manager:
+    type: boolean
+    label: visible
+    settings:
+      format: default
+      format_custom_false: ''
+      format_custom_true: ''
+    third_party_settings: {  }
+    weight: 60
+    region: content
   event_tags:
     type: entity_reference_label
     label: hidden
@@ -162,7 +173,7 @@ content:
       thousand_separator: ''
       prefix_suffix: true
     third_party_settings: {  }
-    weight: 64
+    weight: 17
     region: content
   event_ticket_categories:
     type: entity_reference_revisions_entity_view
@@ -210,6 +221,7 @@ hidden:
   field_event_state: true
   field_event_title: true
   field_external_admin_link: true
+  field_relevant_ticket_manager: true
   field_tags: true
   field_teaser_image: true
   field_teaser_text: true

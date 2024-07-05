@@ -179,3 +179,53 @@ function dpl_update_update_10008(): string {
 function dpl_update_update_10009(): string {
   return _dpl_update_install_modules(['dpl_cookies']);
 }
+
+/**
+ * Set default value for all existing eventseries:field_relevant_ticket_manager.
+ */
+function dpl_update_update_100010(): string {
+  $field_name = 'field_relevant_ticket_manager';
+
+  $ids =
+    \Drupal::entityQuery('eventseries')
+      ->accessCheck(FALSE)
+      ->execute();
+
+  if (empty($ids) || is_int($ids)) {
+    return 'No eventseries to update.';
+  }
+
+  $entities =
+    \Drupal::entityTypeManager()->getStorage('eventseries')->loadMultiple($ids);
+
+  $count = 0;
+
+  foreach ($entities as $entity) {
+    try {
+      if (!($entity instanceof EventSeries)) {
+        throw new Exception('Entity is not an expected EventSeries.');
+      }
+
+      $entity->set($field_name, TRUE);
+
+      $entity->save();
+      $count++;
+    }
+    catch (\Throwable $e) {
+      \Drupal::logger('dpl_update')->error('Could not set default value on @field_name on eventseries @id - Error: @message', [
+        '@message' => $e->getMessage(),
+        '@id' => $entity->id(),
+        '@field_name' => $field_name,
+      ]);
+    }
+  }
+
+  return "Set default value for $field_name on $count eventseries.";
+}
+
+/**
+ * Link new event_relevant_ticket_manager inheritance on eventinstances.
+ */
+function dpl_update_update_100011(): string {
+  return _dpl_update_update_field_inheritance('event_relevant_ticket_manager');
+}

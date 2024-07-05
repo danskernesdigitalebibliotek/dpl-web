@@ -13,6 +13,7 @@ dependencies:
     - field.field.eventseries.default.field_event_partners
     - field.field.eventseries.default.field_event_place
     - field.field.eventseries.default.field_event_state
+    - field.field.eventseries.default.field_relevant_ticket_manager
     - field.field.eventseries.default.field_tags
     - field.field.eventseries.default.field_teaser_image
     - field.field.eventseries.default.field_teaser_text
@@ -71,6 +72,7 @@ third_party_settings:
         weight: 0
     group_event_details:
       children:
+        - field_relevant_ticket_manager
         - field_event_image
         - field_event_state
       label: 'Event details'
@@ -147,7 +149,7 @@ content:
     third_party_settings: {  }
   field_event_image:
     type: media_library_widget
-    weight: 32
+    weight: 23
     region: content
     settings:
       media_types: {  }
@@ -208,14 +210,21 @@ content:
     third_party_settings: {  }
   field_event_state:
     type: select2
-    weight: 33
+    weight: 24
     region: content
     settings:
       width: 100%
     third_party_settings: {  }
+  field_relevant_ticket_manager:
+    type: boolean_checkbox
+    weight: 22
+    region: content
+    settings:
+      display_label: true
+    third_party_settings: {  }
   field_tags:
     type: select2_entity_reference
-    weight: 33
+    weight: 34
     region: content
     settings:
       width: 100%
@@ -225,7 +234,7 @@ content:
     third_party_settings: {  }
   field_teaser_image:
     type: media_library_widget
-    weight: 22
+    weight: 23
     region: content
     settings:
       media_types: {  }

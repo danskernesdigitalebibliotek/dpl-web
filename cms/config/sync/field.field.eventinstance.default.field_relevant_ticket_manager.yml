@@ -1,0 +1,23 @@
+uuid: d425e15b-3262-48f6-9b04-5f9716db9d34
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.eventinstance.field_relevant_ticket_manager
+    - recurring_events.eventinstance_type.default
+id: eventinstance.default.field_relevant_ticket_manager
+field_name: field_relevant_ticket_manager
+entity_type: eventinstance
+bundle: default
+label: 'Relevant for ticket manager'
+description: 'If you mark this event as relevant, it means that if you use an external ticket system, such as Place2Book, some data such as ticket link, status and others may be overriden.'
+required: false
+translatable: false
+default_value:
+  -
+    value: 1
+default_value_callback: ''
+settings:
+  on_label: 'On'
+  off_label: 'Off'
+field_type: boolean

@@ -15,6 +15,7 @@ dependencies:
     - field.field.eventinstance.default.field_event_state
     - field.field.eventinstance.default.field_event_title
     - field.field.eventinstance.default.field_external_admin_link
+    - field.field.eventinstance.default.field_relevant_ticket_manager
     - field.field.eventinstance.default.field_tags
     - field.field.eventinstance.default.field_teaser_image
     - field.field.eventinstance.default.field_teaser_text
@@ -71,6 +72,7 @@ third_party_settings:
         weight: 0
     group_event_details:
       children:
+        - field_relevant_ticket_manager
         - field_event_image
         - field_event_state
         - field_external_admin_link
@@ -134,7 +136,7 @@ content:
     third_party_settings: {  }
   field_event_image:
     type: media_library_widget
-    weight: 13
+    weight: 14
     region: content
     settings:
       media_types: {  }
@@ -197,7 +199,7 @@ content:
     third_party_settings: {  }
   field_event_state:
     type: select2
-    weight: 14
+    weight: 15
     region: content
     settings:
       width: 100%
@@ -212,11 +214,18 @@ content:
     third_party_settings: {  }
   field_external_admin_link:
     type: link_default
-    weight: 15
+    weight: 16
     region: content
     settings:
       placeholder_url: ''
       placeholder_title: ''
+    third_party_settings: {  }
+  field_relevant_ticket_manager:
+    type: boolean_checkbox
+    weight: 13
+    region: content
+    settings:
+      display_label: true
     third_party_settings: {  }
   field_tags:
     type: select2_entity_reference
@@ -230,7 +239,7 @@ content:
     third_party_settings: {  }
   field_teaser_image:
     type: media_library_widget
-    weight: 13
+    weight: 14
     region: content
     settings:
       media_types: {  }

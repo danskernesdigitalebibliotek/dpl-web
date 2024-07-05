@@ -65,6 +65,7 @@ class EventRestMapper {
       'title' => $this->event->label(),
       'uuid' => $this->event->uuid(),
       'url' => $this->event->toUrl()->setAbsolute(TRUE)->toString(TRUE)->getGeneratedUrl(),
+      'ticketManagerRelevance' => !empty($this->getValue('event_relevant_ticket_manager')),
       'description' => $this->getValue('event_description'),
       'body' => $this->getDescription(),
       'state' => $this->eventWrapper->getState()?->value,

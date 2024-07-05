@@ -1,0 +1,14 @@
+uuid: c43ebeba-e0c2-4ea8-b47c-237602954ef2
+langcode: en
+status: true
+dependencies: {  }
+id: eventinstance_default_event_relevant_ticket_manager
+label: 'Event Relevant for ticket manager'
+type: fallback
+sourceEntityType: eventseries
+sourceEntityBundle: default
+sourceField: field_relevant_ticket_manager
+destinationEntityType: eventinstance
+destinationEntityBundle: default
+destinationField: field_relevant_ticket_manager
+plugin: default_inheritance
