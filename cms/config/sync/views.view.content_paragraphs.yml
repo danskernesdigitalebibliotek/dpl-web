@@ -5,7 +5,6 @@ dependencies:
   config:
     - core.entity_view_mode.node.card
   module:
-    - datetime
     - node
     - user
 id: content_paragraphs
@@ -95,20 +94,6 @@ display:
         options: {  }
       empty: {  }
       sorts:
-        field_publication_date_value:
-          id: field_publication_date_value
-          table: node__field_publication_date
-          field: field_publication_date_value
-          relationship: none
-          group_type: group
-          admin_label: ''
-          plugin_id: datetime
-          order: DESC
-          expose:
-            label: ''
-            field_identifier: ''
-          exposed: false
-          granularity: second
         changed:
           id: changed
           table: node_field_data
