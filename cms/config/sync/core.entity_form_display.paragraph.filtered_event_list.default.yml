@@ -21,18 +21,17 @@ third_party_settings:
         - field_filter_cond_type
         - field_filter_tags
         - field_filter_categories
-        - field_filter_branches
         - field_max_item_amount
-      label: Filters
+      label: 'Grouped filters'
       region: content
       parent_name: ''
-      weight: 1
+      weight: 2
       format_type: fieldset
       format_settings:
         classes: ''
         show_empty_fields: false
         id: ''
-        description: 'Add any tag, category or branch that should by included as a filter for the filtered event list. '
+        description: 'Choose the filters, that defines what content is shown. These filters can have their conditions defined.'
         required_fields: true
 id: paragraph.filtered_event_list.default
 targetEntityType: paragraph
@@ -41,7 +40,7 @@ mode: default
 content:
   field_filter_branches:
     type: select2_entity_reference
-    weight: 16
+    weight: 1
     region: content
     settings:
       width: 100%

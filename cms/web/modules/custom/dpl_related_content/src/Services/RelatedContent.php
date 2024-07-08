@@ -206,9 +206,9 @@ class RelatedContent {
     }
 
     if ($this->outerAndConditions) {
-      $node_ids = $this->getNodeIds($this->tags, $this->categories, $this->branches);
-      $event_ids = $this->getEventInstanceIds($this->tags, $this->categories, $this->branches);
-      $this->resultBasis = ['tags', 'categories', 'branches'];
+      $node_ids = $this->getNodeIds($this->tags, $this->categories);
+      $event_ids = $this->getEventInstanceIds($this->tags, $this->categories);
+      $this->resultBasis = ['tags', 'categories'];
     }
     else {
       // First, let's look up related content, based only on tags.
@@ -224,14 +224,6 @@ class RelatedContent {
         $node_ids = $this->getNodeIds($this->tags, $this->categories);
         $event_ids = $this->getEventInstanceIds($this->tags, $this->categories);
         $this->resultBasis = ['tags', 'categories'];
-      }
-
-      // If we found less than minimum results, we'll add branches to the mix in
-      // addition to tags and categories.
-      if ((count($event_ids) + count($node_ids) < $this->minItems) && !empty($this->branches)) {
-        $node_ids = $this->getNodeIds($this->tags, $this->categories, $this->branches);
-        $event_ids = $this->getEventInstanceIds($this->tags, $this->categories, $this->branches);
-        $this->resultBasis = ['tags', 'categories', 'branches'];
       }
     }
 
@@ -373,13 +365,11 @@ class RelatedContent {
    *   Tag term IDs, to look for.
    * @param array<int> $categories
    *   Category term IDs, to look for.
-   * @param array<int> $branches
-   *   Branch term IDs, to look for.
    *
    * @return array<int|string>
    *   Matching node IDs
    */
-  private function getNodeIds(array $tags = [], array $categories = [], array $branches = []): array {
+  private function getNodeIds(array $tags = [], array $categories = []): array {
     if (empty($this->nodeBundles)) {
       return [];
     }
@@ -400,10 +390,13 @@ class RelatedContent {
       // so we will limit the query to this.
       ->range(0, $this->maxItems);
 
+    if (!empty($this->branches)) {
+      $query->condition('field_branch', $this->branches, 'IN');
+    }
+
     $filters = [
       'field_tags' => $tags,
       'field_categories' => $categories,
-      'field_branch' => $branches,
     ];
 
     $this->addFilterConditions($query, $filters);
@@ -420,13 +413,11 @@ class RelatedContent {
    *   Tag term IDs, to look for.
    * @param array<int> $categories
    *   Category term IDs, to look for.
-   * @param array<int> $branches
-   *   Branch term IDs, to look for.
    *
    * @return array<int|string>
    *   Matching Event Instance IDs
    */
-  private function getEventInstanceIds(array $tags = [], array $categories = [], array $branches = []): array {
+  private function getEventInstanceIds(array $tags = [], array $categories = []): array {
     if (!$this->includeEvents) {
       return [];
     }
@@ -436,10 +427,13 @@ class RelatedContent {
     $es_query->condition('status', TRUE);
     $es_query->accessCheck(TRUE);
 
+    if (!empty($this->branches)) {
+      $es_query->condition('field_branch', $this->branches, 'IN');
+    }
+
     $filters = [
       'field_tags' => $tags,
       'field_categories' => $categories,
-      'field_branch' => $branches,
     ];
 
     $this->addFilterConditions($es_query, $filters);

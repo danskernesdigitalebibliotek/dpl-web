@@ -22,17 +22,16 @@ third_party_settings:
         - field_filter_cond_type
         - field_filter_tags
         - field_filter_categories
-        - field_filter_branches
-      label: Filters
+      label: 'Grouped filters'
       region: content
       parent_name: ''
-      weight: 2
+      weight: 3
       format_type: fieldset
       format_settings:
         classes: ''
         show_empty_fields: true
         id: ''
-        description: 'Choose the filters, that defines what content is shown.'
+        description: 'Choose the filters, that defines what content is shown. These filters can have their conditions defined.'
         required_fields: true
 id: paragraph.card_grid_automatic.default
 targetEntityType: paragraph
@@ -41,7 +40,7 @@ mode: default
 content:
   field_filter_branches:
     type: select2_entity_reference
-    weight: 20
+    weight: 2
     region: content
     settings:
       width: 100%
@@ -84,7 +83,7 @@ content:
     third_party_settings: {  }
   field_more_link:
     type: link_default
-    weight: 10
+    weight: 4
     region: content
     settings:
       placeholder_url: ''

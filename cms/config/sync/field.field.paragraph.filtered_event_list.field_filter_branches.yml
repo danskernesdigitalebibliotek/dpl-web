@@ -11,7 +11,7 @@ field_name: field_filter_branches
 entity_type: paragraph
 bundle: filtered_event_list
 label: 'Filter by branches'
-description: 'Add any branch you want to include'
+description: 'If nothing is selected, all will be chosen.'
 required: false
 translatable: false
 default_value: {  }
