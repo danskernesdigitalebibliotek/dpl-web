@@ -60,8 +60,6 @@ final class WorkIdSearchForMaterialWidget extends WidgetBase {
       '#name' => 'material-search',
       '#data' => [
         'class' => ['react-app-container'],
-        'previously-selected-work-id' => $items[$delta]->value ?? NULL,
-        'previously-selected-material-type' => $items[$delta]->material_type ?? NULL,
         'unique-identifier' => $identifier,
         'material-search-search-input-text' => $this->t('Search for material', [], ['context' => 'Material search']),
         'material-search-material-type-selector-text' => $this->t('Select material type', [], ['context' => 'Material search']),
