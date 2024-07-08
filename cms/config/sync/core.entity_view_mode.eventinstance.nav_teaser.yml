@@ -6,5 +6,6 @@ dependencies:
     - recurring_events
 id: eventinstance.nav_teaser
 label: 'Navigation teaser'
+description: ''
 targetEntityType: eventinstance
 cache: true

@@ -26,7 +26,7 @@ class EventSeriesTabAccessCheck implements AccessInterface {
    * The entity type manager service.
    */
   public function __construct(
-    private EntityTypeManagerInterface $entityTypeManager
+    private EntityTypeManagerInterface $entityTypeManager,
   ) {}
 
   /**

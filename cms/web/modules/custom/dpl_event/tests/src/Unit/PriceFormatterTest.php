@@ -39,9 +39,9 @@ class PriceFormatterTest extends UnitTestCase {
    * @dataProvider priceProvider
    */
   public function testPriceFormatting(
-        string $price_string,
-        string $formatted_price
-    ): void {
+    string $price_string,
+    string $formatted_price,
+  ): void {
     $priceFormatter = new PriceFormatter($this->getStringTranslationStub());
     $this->assertSame(
           $formatted_price,
@@ -78,9 +78,9 @@ class PriceFormatterTest extends UnitTestCase {
    * @dataProvider rawPriceProvider
    */
   public function testRawPriceFormatting(
-        string $raw_price,
-        string $expected
-    ): void {
+    string $raw_price,
+    string $expected,
+  ): void {
     $priceFormatter = new PriceFormatter($this->getStringTranslationStub());
     $this->assertSame(
           $expected,
@@ -128,7 +128,7 @@ class PriceFormatterTest extends UnitTestCase {
    */
   public function testPriceRangeFormatting(
     array $prices,
-    string $expected
+    string $expected,
   ): void {
     $priceFormatter = new PriceFormatter($this->getStringTranslationStub());
     $this->assertSame(

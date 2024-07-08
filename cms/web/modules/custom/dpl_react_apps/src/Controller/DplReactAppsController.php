@@ -31,7 +31,7 @@ class DplReactAppsController extends ControllerBase {
     protected BranchSettings $branchSettings,
     protected BranchRepositoryInterface $branchRepository,
     protected DplInstantLoanSettings $instantLoanSettings,
-    protected GeneralSettings $generalSettings
+    protected GeneralSettings $generalSettings,
   ) {}
 
   /**

@@ -27,7 +27,7 @@ class DplDashboardController extends ControllerBase {
   public function __construct(
     private BlockManagerInterface $blockManager,
     private RendererInterface $renderer,
-    private DplReactConfigInterface $dashboardSettings
+    private DplReactConfigInterface $dashboardSettings,
   ) {
   }
 

@@ -26,7 +26,7 @@ class UploadForm extends FormBase {
     private Parser $yamlParser,
     private ConfigFactoryInterface $config,
     private ModuleInstallerInterface $moduleInstaller,
-    MessengerInterface $messenger
+    MessengerInterface $messenger,
   ) {
     // We cannot use constructor property promotion as the property is already
     // defined by a trait.

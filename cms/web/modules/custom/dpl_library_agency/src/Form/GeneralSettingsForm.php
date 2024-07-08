@@ -31,7 +31,7 @@ class GeneralSettingsForm extends ConfigFormBase {
     protected BranchRepositoryInterface $branchRepository,
     protected ReservationSettings $reservationSettings,
     protected BranchSettings $branchSettings,
-    protected GeneralSettings $generalSettings
+    protected GeneralSettings $generalSettings,
   ) {
     parent::__construct($configFactory);
   }

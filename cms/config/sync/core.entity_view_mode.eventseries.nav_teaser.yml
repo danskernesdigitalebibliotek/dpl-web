@@ -6,5 +6,6 @@ dependencies:
     - recurring_events
 id: eventseries.nav_teaser
 label: 'Navigation teaser'
+description: ''
 targetEntityType: eventseries
 cache: true

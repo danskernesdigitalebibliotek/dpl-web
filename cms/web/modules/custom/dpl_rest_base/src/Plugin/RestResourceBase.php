@@ -24,7 +24,7 @@ abstract class RestResourceBase extends ResourceBase {
     $plugin_definition,
     array $serializer_formats,
     LoggerInterface $logger,
-    protected SerializerInterface $serializer
+    protected SerializerInterface $serializer,
   ) {
     parent::__construct($configuration, $plugin_id, $plugin_definition, $serializer_formats, $logger);
   }

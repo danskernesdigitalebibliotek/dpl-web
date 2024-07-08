@@ -1,6 +1,5 @@
 parameters:
   level: 8
-  checkGenericClassInNonGenericObjectType: false
   paths:
     - web/modules/custom
     - web/profiles/dpl_cms
@@ -9,6 +8,10 @@ parameters:
     - **/tests/src/Unit/*
   ignoreErrors:
     - '#Unsafe usage of new static\(\).#'
+    - '#Method .*\(\) has parameter \$items with generic interface Drupal\\Core\\Field\\FieldItemListInterface but does not specify its types: T#'
+    - '#Method .*\(\) return type with generic interface Drupal\\Core\\Field\\FieldItemListInterface does not specify its types: T#'
+    - '#PHPDoc tag @var for variable \$.* contains generic interface Drupal\\Core\\Field\\FieldItemListInterface but does not specify its types: T#'
+    - '#Call to deprecated method legacyConfig\(\) of class Drupal\\dpl_react\\DplReactConfigBase.#'
     # Drupal Form API makes extensive use for arrays which we cannot provide
     # more detailed typing of.
     - '#.*\:\:(buildForm|getEditableConfigNames|submitForm|validateForm)\(\) .* no value type specified in iterable type array\.#'
@@ -47,8 +50,6 @@ parameters:
     - '#Function .*_theme_registry_alter\(\) has parameter \$theme_registry with no value type specified in iterable type array\.#'
     # Since methods are defined in interface there is no need to document signatures.
     - '#Method Drupal\\dpl_mail\\Config\\AzureMailerConfigOverrides::.* no value type specified in iterable type array\.#'
-    # We are deliberately not using the method for anything but is required by interface. We can accept that null is returned.
-    - '#Method Drupal\\dpl_mail\\Config\\AzureMailerConfigOverrides::createConfigObject\(\) should return Drupal\\Core\\Config\\StorableConfigBase but returns null\.#'
     -
       message: '#While loop condition is always true\.#'
       path: web/modules/custom/dpl_po/src/Commands/DplPoCommands.php
@@ -79,6 +80,3 @@ parameters:
     - web/core/modules/locale/locale.batch.inc
     - web/core/modules/locale/locale.bulk.inc
     - web/modules/contrib/config_translation_po/config_translation_po.bulk.inc
-
-includes:
-	- phpstan-baseline.neon

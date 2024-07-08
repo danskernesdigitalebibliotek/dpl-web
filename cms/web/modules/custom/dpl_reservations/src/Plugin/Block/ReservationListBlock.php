@@ -41,13 +41,13 @@ class ReservationListBlock extends BlockBase implements ContainerFactoryPluginIn
    *   General settings.
    */
   public function __construct(
-      array $configuration,
-      string $plugin_id,
-      array $plugin_definition,
-      private DplReservationsSettings $reservationsSettings,
-      private BranchSettings $branchSettings,
-      private BranchRepositoryInterface $branchRepository,
-      private GeneralSettings $generalSettings,
+    array $configuration,
+    string $plugin_id,
+    array $plugin_definition,
+    private DplReservationsSettings $reservationsSettings,
+    private BranchSettings $branchSettings,
+    private BranchRepositoryInterface $branchRepository,
+    private GeneralSettings $generalSettings,
   ) {
     parent::__construct($configuration, $plugin_id, $plugin_definition);
     $this->configuration = $configuration;

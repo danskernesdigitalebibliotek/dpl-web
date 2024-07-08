@@ -28,7 +28,7 @@ third_party_settings:
 name: Campaign
 type: campaign
 description: 'Campaign to be shown among search results depending on matching facets and terms'
-help: ''
+help: null
 new_revision: true
 preview_mode: 1
 display_submitted: false
