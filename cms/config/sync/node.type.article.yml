@@ -28,7 +28,7 @@ third_party_settings:
 name: Article
 type: article
 description: 'Use articles for news-worthy content, that does not get updated regularly.'
-help: ''
+help: null
 new_revision: false
 preview_mode: 1
 display_submitted: true

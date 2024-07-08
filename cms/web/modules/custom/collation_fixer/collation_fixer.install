@@ -67,7 +67,7 @@ function collation_fixer_requirements(string $phase): array {
         'collation_fixer' => [
           'title' => t('Database collation check'),
           'value' => t('Error'),
-          'description' => $renderer->renderPlain($description),
+          'description' => $renderer->renderInIsolation($description),
           'severity' => REQUIREMENT_ERROR,
         ],
       ];

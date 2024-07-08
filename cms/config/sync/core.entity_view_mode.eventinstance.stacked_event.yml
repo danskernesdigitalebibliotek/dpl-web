@@ -6,5 +6,6 @@ dependencies:
     - recurring_events
 id: eventinstance.stacked_event
 label: 'Stacked event'
+description: ''
 targetEntityType: eventinstance
 cache: true

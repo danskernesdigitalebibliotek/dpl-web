@@ -37,7 +37,7 @@ class DplPatronRegController extends ControllerBase {
     protected BranchRepositoryInterface $branchRepository,
     protected BlockManagerInterface $blockManager,
     protected RendererInterface $renderer,
-    protected DplReactConfigInterface $patronRegSettings
+    protected DplReactConfigInterface $patronRegSettings,
   ) {
   }
 

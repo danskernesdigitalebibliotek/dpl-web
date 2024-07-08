@@ -6,5 +6,6 @@ dependencies:
     - recurring_events
 id: eventseries.nav_spot
 label: 'Nav spot'
+description: ''
 targetEntityType: eventseries
 cache: true

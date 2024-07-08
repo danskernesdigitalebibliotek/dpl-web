@@ -24,7 +24,7 @@ class PatronRegSettingsForm extends ConfigFormBase {
    */
   public function __construct(
     ConfigFactoryInterface $config_factory,
-    protected DplReactConfigInterface $configService
+    protected DplReactConfigInterface $configService,
   ) {
     $this->setConfigFactory($config_factory);
   }

@@ -27,7 +27,7 @@ class DplFeesController extends ControllerBase {
   public function __construct(
     private BlockManagerInterface $blockManager,
     private RendererInterface $renderer,
-    private DplReactConfigInterface $feesSettings
+    private DplReactConfigInterface $feesSettings,
   ) {
   }
 

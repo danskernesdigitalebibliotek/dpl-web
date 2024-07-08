@@ -6,11 +6,23 @@ module.exports = {
         // https://reload.atlassian.net/browse/DDFLSBP-668
         // "http://varnish:8080/",
         "http://varnish:8080/search?q=harry+potter&x=0&y=0",
-        "http://varnish:8080/work/work-of:870970-basis:25245784?type=bog"
+        "http://varnish:8080/work/work-of:870970-basis:25245784?type=bog",
+        "http://varnish:8080/articles",
+        // TODO: Disabled because repeated events are not tap-friendly DDFFORM-929
+        //"http://varnish:8080/events",
+        "http://varnish:8080/branches",
         // Article page from DPL Example Content
+        // TODO: Disabled because links in new window do not use rel="noopener" DDFFORM-925
         // "http://varnish:8080/by_uuid/node/2cd0fe5e-4159-4452-86aa-e1a1ac8db4a1",
         // Event instance page from DPL Example Content
+        // TODO: Disabled because links in new window do not use rel="noopener" DDFFORM-925
         // "http://varnish:8080/by_uuid/eventseries/c8177097-1438-493e-8177-e8ef968cc133",
+        // Branch page from DPL Example Content
+        "http://varnish:8080/by_uuid/node/dac275e4-9b8c-4959-a13a-6b9fdbc1f6b0",
+        // Create user page from DPL Static Content
+        "http://varnish:8080/by_uuid/node/e68b90e6-cd35-44c6-9e32-c05c982ed315",
+        // Contact page with webform from DPL Static Content
+        "http://varnish:8080/by_uuid/node/d50683cc-8011-49ba-a6ea-82e56de97b80",
       ],
       // Use 3 runs to test both cold and warm caches.
       numberOfRuns: 3,

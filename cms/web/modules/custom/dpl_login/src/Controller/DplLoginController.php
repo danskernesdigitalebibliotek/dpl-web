@@ -30,7 +30,7 @@ class DplLoginController extends ControllerBase {
     protected UserTokens $userTokens,
     protected Config $config,
     protected OpenIDConnectClientInterface $client,
-    protected OpenIDConnectClaims $claims
+    protected OpenIDConnectClaims $claims,
   ) {}
 
   /**

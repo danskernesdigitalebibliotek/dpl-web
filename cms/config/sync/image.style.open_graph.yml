@@ -1,0 +1,17 @@
+uuid: 019d1ff4-6a3c-4b40-8643-96ce5ef2d2de
+langcode: en
+status: true
+dependencies:
+  module:
+    - focal_point
+name: open_graph
+label: 'Open graph (1200x630)'
+effects:
+  91c78e07-efa7-42a2-8a40-47f4916ac17c:
+    uuid: 91c78e07-efa7-42a2-8a40-47f4916ac17c
+    id: focal_point_scale_and_crop
+    weight: 1
+    data:
+      width: 1200
+      height: 630
+      crop_type: focal_point

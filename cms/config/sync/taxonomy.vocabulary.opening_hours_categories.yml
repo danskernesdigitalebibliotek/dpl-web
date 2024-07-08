@@ -25,3 +25,4 @@ name: Åbningstidskategorier
 vid: opening_hours_categories
 description: 'Kategorier af åbningstider, f.eks. "Åbent" eller "Telefontid"'
 weight: 0
+new_revision: false

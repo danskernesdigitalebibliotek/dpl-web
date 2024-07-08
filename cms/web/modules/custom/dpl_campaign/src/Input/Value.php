@@ -22,7 +22,7 @@ class Value {
   public function __construct(
     public string $key,
     public string $term,
-    public int $score = 0
+    public int $score = 0,
   ) {
   }
 

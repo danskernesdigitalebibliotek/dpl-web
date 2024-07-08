@@ -14,7 +14,7 @@ class UserTokens {
    */
   public function __construct(
     protected UserTokensProviderInterface $registeredUserTokensProvider,
-    protected UserTokensProviderInterface $unregisteredUserTokensProvider
+    protected UserTokensProviderInterface $unregisteredUserTokensProvider,
   ) {}
 
   /**

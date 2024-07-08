@@ -48,7 +48,7 @@ class PatronPageBlock extends BlockBase implements ContainerFactoryPluginInterfa
     protected ReservationSettings $reservationSettings,
     private BranchSettings $branchSettings,
     private BranchRepositoryInterface $branchRepository,
-    private DplReactConfigInterface $patronPageSettings
+    private DplReactConfigInterface $patronPageSettings,
   ) {
     parent::__construct($configuration, $plugin_id, $plugin_definition);
     $this->configuration = $configuration;

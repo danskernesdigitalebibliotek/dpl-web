@@ -16,7 +16,7 @@ abstract class DplReactConfigBase implements CacheableDependencyInterface, DplRe
    * Constructs a new DplReactConfig object.
    */
   public function __construct(
-    protected ConfigManagerInterface $configManager
+    protected ConfigManagerInterface $configManager,
   ) {}
 
   /**
