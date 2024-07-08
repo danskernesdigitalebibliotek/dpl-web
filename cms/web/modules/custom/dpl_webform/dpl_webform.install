@@ -36,22 +36,3 @@ function dpl_webform_update_10001(): string {
 
   return 'All webform email handlers saved.';
 }
-
-/**
- * Delete all webform configuration translations.
- *
- * We don't want to have translated webform configurations as
- * they are taking preceedence over the original configuration,
- * and thus making editors unable to change configuration on the
- * contact webform.
- */
-function dpl_webform_update_10002(): string {
-  $webform_id = 'webform.webform.contact';
-  $language = 'da';
-
-  /** @var \Drupal\language\Config\LanguageConfigFactoryOverride $language_config_factory_override */
-  $language_config_factory_override = \Drupal::service('language.config_factory_override');
-  $language_config_factory_override->getOverride($language, $webform_id)->delete();
-
-  return 'All translations for the webform ' . $webform_id . ' have been deleted.';
-}
