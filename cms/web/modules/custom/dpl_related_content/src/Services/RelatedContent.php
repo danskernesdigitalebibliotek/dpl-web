@@ -122,6 +122,11 @@ class RelatedContent {
   public bool $innerAndConditions = FALSE;
 
   /**
+   * Allow broad search, looking for all filters, with date-fallback.
+   */
+  public bool $broadSearch = TRUE;
+
+  /**
    * What type of list do we want the items to be displayed in?
    */
   private RelatedContentListStyle $listStyle = RelatedContentListStyle::EventList;
@@ -201,11 +206,11 @@ class RelatedContent {
     $event_ids = [];
     $node_ids = [];
 
-    if (empty($this->tags) && empty($this->categories) && empty($this->branches)) {
+    if (empty($this->tags) && empty($this->categories) && !$this->broadSearch) {
       return [];
     }
 
-    if ($this->outerAndConditions) {
+    if ($this->outerAndConditions || $this->broadSearch) {
       $node_ids = $this->getNodeIds($this->tags, $this->categories);
       $event_ids = $this->getEventInstanceIds($this->tags, $this->categories);
       $this->resultBasis = ['tags', 'categories'];
