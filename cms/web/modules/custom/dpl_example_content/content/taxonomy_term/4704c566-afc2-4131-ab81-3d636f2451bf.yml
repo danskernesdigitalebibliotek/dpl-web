@@ -26,11 +26,6 @@ default:
       attributes:
         name: title
         content: 'Genbrug | DPL CMS'
-    -
-      tag: link
-      attributes:
-        rel: canonical
-        href: '/taxonomy/term/19'
   path:
     -
       alias: ''

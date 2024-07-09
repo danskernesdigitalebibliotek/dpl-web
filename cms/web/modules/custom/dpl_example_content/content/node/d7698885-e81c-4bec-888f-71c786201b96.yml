@@ -1,0 +1,125 @@
+_meta:
+  version: '1.0'
+  entity_type: node
+  uuid: d7698885-e81c-4bec-888f-71c786201b96
+  bundle: article
+  default_langcode: da
+  depends:
+    e00e1460-169e-468d-9835-d664f06d0969: file
+    dac275e4-9b8c-4959-a13a-6b9fdbc1f6b0: node
+    807e6053-86ed-4dce-b6a9-a48b566b5910: taxonomy_term
+    0df34d30-6a44-4efe-99ca-94d215a09532: taxonomy_term
+    35166ac7-4b0e-4644-8a60-3f29f3c8ecbe: media
+default:
+  revision_uid:
+    -
+      target_id: 1
+  status:
+    -
+      value: true
+  uid:
+    -
+      target_id: 1
+  title:
+    -
+      value: 'De Fortryllede Krøniker: En Rejse Gennem Aetherias Mystiske Bibliotek'
+  created:
+    -
+      value: 1719477163
+  promote:
+    -
+      value: false
+  sticky:
+    -
+      value: false
+  revision_translation_affected:
+    -
+      value: true
+  entity_clone_template_active:
+    -
+      value: false
+  entity_clone_template_image:
+    -
+      entity: e00e1460-169e-468d-9835-d664f06d0969
+      alt: ''
+      title: ''
+      width: 640
+      height: 443
+  metatag:
+    -
+      tag: meta
+      attributes:
+        name: title
+        content: 'De Fortryllede Krøniker: En Rejse Gennem Aetherias Mystiske Bibliotek | DPL CMS'
+    -
+      tag: meta
+      attributes:
+        property: 'og:image'
+        content: 'http://dapple-cms.docker/sites/default/files/styles/open_graph/public/2024-04/laeseklubber.jpg?h=bf621e20&itok=LC-DwEtO'
+    -
+      tag: meta
+      attributes:
+        property: 'og:image:url'
+        content: 'http://dapple-cms.docker/sites/default/files/styles/open_graph/public/2024-04/laeseklubber.jpg?h=bf621e20&itok=LC-DwEtO'
+    -
+      tag: meta
+      attributes:
+        property: 'og:image:width'
+        content: '1200'
+    -
+      tag: meta
+      attributes:
+        property: 'og:image:height'
+        content: '630'
+  path:
+    -
+      alias: /hovedbiblioteket/artikler/litteratur/de-fortryllede-kroniker-en-rejse-gennem-aetherias-mystiske
+      langcode: und
+      pathauto: 1
+  field_branch:
+    -
+      entity: dac275e4-9b8c-4959-a13a-6b9fdbc1f6b0
+  field_categories:
+    -
+      entity: 807e6053-86ed-4dce-b6a9-a48b566b5910
+  field_paragraphs:
+    -
+      entity:
+        _meta:
+          version: '1.0'
+          entity_type: paragraph
+          uuid: ac7fc2c6-2275-4c53-9e6f-83173a15b4a8
+          bundle: text_body
+          default_langcode: da
+        default:
+          status:
+            -
+              value: true
+          created:
+            -
+              value: 1719477180
+          behavior_settings:
+            -
+              value: {  }
+          revision_translation_affected:
+            -
+              value: true
+          field_body:
+            -
+              value: '<p><strong>I hjertet af Aetheria</strong> ligger et bibliotek, der er omgærdet af mystik og magi. "De Fortryllede Krøniker" fører læserne på en eventyrlig rejse gennem dette forunderlige sted, hvor bøgerne selv hvisker gamle hemmeligheder, og hylderne skifter form for at afsløre skjulte passager. Hvert kapitel afslører en ny verden inden for bibliotekets mure, fyldt med fantastiske væsener, gamle skriftruller og glemte legender. Læserne vil blive fortryllet af de mange fortællinger og opdage, at dette bibliotek ikke blot rummer bøger, men også nøglen til tidløse mysterier.</p>'
+              format: basic
+  field_publication_date:
+    -
+      value: '2024-06-27'
+  field_show_override_author:
+    -
+      value: false
+  field_subtitle:
+    -
+      value: 'Hvor Bøger Hvisker, Hylder Skifter Form, og Hemmeligheder Venter i Skyggens Kroge'
+  field_tags:
+    -
+      entity: 0df34d30-6a44-4efe-99ca-94d215a09532
+  field_teaser_image:
+    -
+      entity: 35166ac7-4b0e-4644-8a60-3f29f3c8ecbe

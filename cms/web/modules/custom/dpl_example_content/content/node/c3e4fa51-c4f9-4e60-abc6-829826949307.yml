@@ -1,5 +1,5 @@
 _meta:
-  version: "1.0"
+  version: '1.0'
   entity_type: node
   uuid: c3e4fa51-c4f9-4e60-abc6-829826949307
   bundle: page
@@ -10,41 +10,59 @@ _meta:
     2929bb32-bbf4-4b5d-975b-7c24a3ae949b: taxonomy_term
 default:
   revision_uid:
-    - target_id: 1
+    -
+      target_id: 1
   status:
-    - value: true
+    -
+      value: true
   uid:
-    - target_id: 1
+    -
+      target_id: 1
   title:
-    - value: 'Nørrebro - "DIY" læseklub'
+    -
+      value: 'Nørrebro - "DIY" læseklub'
   created:
-    - value: 1712261872
+    -
+      value: 1712261872
   promote:
-    - value: false
+    -
+      value: false
   sticky:
-    - value: false
+    -
+      value: false
   revision_translation_affected:
-    - value: true
+    -
+      value: true
   entity_clone_template_active:
-    - value: false
+    -
+      value: false
   entity_clone_template_image:
-    - entity: c57495b6-2b50-4558-b6ad-a50d24c5310c
-      alt: ""
-      title: ""
+    -
+      entity: c57495b6-2b50-4558-b6ad-a50d24c5310c
+      alt: ''
+      title: ''
       width: 6250
       height: 2200
   metatag:
-    - tag: meta
+    -
+      tag: meta
       attributes:
         name: title
         content: 'Nørrebro - "DIY" læseklub | DPL CMS'
   path:
-    - alias: /laesefilialen/laeseklubber/genre/diy-projekter/norrebro-diy-laeseklub
+    -
+      alias: /laesefilialen/laeseklubber/genre/diy-projekter/norrebro-diy-laeseklub
       langcode: und
       pathauto: 1
   field_branch:
-    - entity: 486b17a2-60e6-426d-a952-793fe24e391d
+    -
+      entity: 486b17a2-60e6-426d-a952-793fe24e391d
   field_breadcrumb_parent:
-    - entity: 2929bb32-bbf4-4b5d-975b-7c24a3ae949b
+    -
+      entity: 2929bb32-bbf4-4b5d-975b-7c24a3ae949b
   field_display_titles:
-    - value: true
+    -
+      value: true
+  field_publication_date:
+    -
+      value: '2024-06-27'

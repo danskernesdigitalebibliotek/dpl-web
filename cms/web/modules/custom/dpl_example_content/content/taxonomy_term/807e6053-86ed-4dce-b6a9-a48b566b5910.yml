@@ -26,11 +26,6 @@ default:
       attributes:
         name: title
         content: 'Litteratur | DPL CMS'
-    -
-      tag: link
-      attributes:
-        rel: canonical
-        href: '/taxonomy/term/10'
   path:
     -
       alias: ''

@@ -4,19 +4,21 @@ _meta:
   uuid: c10227b4-50ed-4ab8-9d6a-a14889f7fb01
   bundle: menu_link_content
   default_langcode: en
+  depends:
+    02858224-6bd4-41df-95e3-c2a9a6ad29b7: node
 default:
   enabled:
     -
       value: true
   title:
     -
-      value: Litteratur
+      value: Paragraphs
   menu_name:
     -
       value: main
   link:
     -
-      uri: 'internal:/'
+      target_uuid: 02858224-6bd4-41df-95e3-c2a9a6ad29b7
       title: ''
       options: {  }
   external:
@@ -24,10 +26,10 @@ default:
       value: false
   rediscover:
     -
-      value: true
+      value: false
   weight:
     -
-      value: 3
+      value: -47
   expanded:
     -
       value: false
@@ -40,8 +42,3 @@ default:
       attributes:
         name: title
         content: '| DPL CMS'
-    -
-      tag: link
-      attributes:
-        rel: canonical
-        href: '/user/login'
