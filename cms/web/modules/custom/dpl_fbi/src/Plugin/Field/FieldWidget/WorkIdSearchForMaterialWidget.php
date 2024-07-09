@@ -22,11 +22,12 @@ final class WorkIdSearchForMaterialWidget extends WidgetBase {
 
   /**
    * {@inheritdoc}
+   *
+   * @throws \Random\RandomException
    */
   public function formElement(FieldItemListInterface $items, $delta, array $element, array &$form, FormStateInterface $form_state): array {
 
-    $uniqueFieldId = $items->getFieldDefinition()->getUniqueIdentifier();
-    $identifier = "{$uniqueFieldId}-{$delta}";
+    $identifier = bin2hex(random_bytes(16));
 
     $element['fields_container'] = [
       '#type' => 'container',
@@ -59,8 +60,6 @@ final class WorkIdSearchForMaterialWidget extends WidgetBase {
       '#name' => 'material-search',
       '#data' => [
         'class' => ['react-app-container'],
-        'previously-selected-work-id' => $items[$delta]->value ?? NULL,
-        'previously-selected-material-type' => $items[$delta]->material_type ?? NULL,
         'unique-identifier' => $identifier,
         'material-search-search-input-text' => $this->t('Search for material', [], ['context' => 'Material search']),
         'material-search-material-type-selector-text' => $this->t('Select material type', [], ['context' => 'Material search']),
@@ -75,6 +74,15 @@ final class WorkIdSearchForMaterialWidget extends WidgetBase {
         'material-search-amount-of-results-text' => $this->t('Total amount of results', [], ['context' => 'Material search']),
         'material-search-aria-button-select-work-with-text' => $this->t('Select work with the title @title', [], ['context' => 'Material search']),
         'material-search-search-input-placeholder-text' => $this->t('Search for material', [], ['context' => 'Material search']),
+        'material-search-warning-title-text' => $this->t('Warning', [], ['context' => 'Material search']),
+        'material-search-error-title-text' => $this->t('Title', [], ['context' => 'Material search']),
+        'material-search-error-author-text' => $this->t('Author', [], ['context' => 'Material search']),
+        'material-search-error-link-text' => $this->t('Link', [], ['context' => 'Material search']),
+        'material-search-error-header-text' => $this->t('This material needs to be updated.', [], ['context' => 'Material search']),
+        'material-search-error-material-type-not-found-text' => $this->t('The currently selected type of the material is no longer available in the system. <br> As a result of this, the link is likely broken. <br> Use the title or link underneath to find and update the material and its type, or replace / delete it.', [], ['context' => 'Material search']),
+        'material-search-error-work-not-found-text' => $this->t('The material that was previously selected is no longer available in the system. Either delete this entry or search for a new material to replace it.', [], ['context' => 'Material search']),
+        'material-search-error-hidden-inputs-not-found-heading-text' => $this->t('Error retrieving saved data. Inputs not found.', [], ['context' => 'Material search']),
+        'material-search-error-hidden-inputs-not-found-description-text' => $this->t('Something went wrong when trying to find the previously saved values. Please try again. If the problem persists, something could be wrong with the app.', [], ['context' => 'Material search']),
       ] + DplReactAppsController::externalApiBaseUrls(),
     ];
 
