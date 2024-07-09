@@ -66,13 +66,8 @@ function dpl_example_content_modules_installed(array $modules) : void {
 
   // Set page.front link to /frontpage.
   $config_site = \Drupal::configFactory()->getEditable('system.site');
-  $current_front_page = $config_site->get('page.front');
-
   $new_front_page = '/frontpage';
-  if ($current_front_page !== $new_front_page) {
-    $config_site->set('page.front', '/frontpage')->save();
-  }
-
+  $config_site->set('page.front', '/frontpage')->save();
   $logger->info("Update frontpage link to {$new_front_page}, as part of example content installation.");
 
   // Set example logo.
