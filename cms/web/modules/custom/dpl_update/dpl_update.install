@@ -186,7 +186,6 @@ function dpl_update_update_10009(): string {
 function dpl_update_update_10010() : string {
   if (\Drupal::moduleHandler()->moduleExists('dpl_example_breadcrumb')) {
     \Drupal::service('module_installer')->uninstall(['dpl_example_breadcrumb']);
-    \Drupal::logger('dpl_update')->notice('dpl_breadcrumb_example module has been uninstalled.');
     return "Uninstalled dpl_example_breadcrumb module.";
   }
   return "dpl_example_breadcrumb module was not located. Skipped removal";
