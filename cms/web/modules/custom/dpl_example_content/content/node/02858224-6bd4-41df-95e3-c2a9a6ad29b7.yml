@@ -21,6 +21,7 @@ _meta:
     2929bb32-bbf4-4b5d-975b-7c24a3ae949b: taxonomy_term
     807e6053-86ed-4dce-b6a9-a48b566b5910: taxonomy_term
     e4ce7616-976d-43fc-aed2-a01c42b67db9: media
+    02858224-6bd4-41df-95e3-c2a9a6ad29b7: node
 default:
   revision_uid:
     -
@@ -781,6 +782,11 @@ default:
           field_filter_content_types:
             -
               value: article
+          field_more_link:
+            -
+              uri: 'internal:/articles'
+              title: 'Vis mere'
+              options: {  }
           field_title:
             -
               value: 'Card grid automatic - artikler'
@@ -818,6 +824,11 @@ default:
               entity: 9cfd15df-32b4-4af9-b2da-56b039b5bf6b
             -
               entity: 33a56f4a-fa42-42e1-9097-84f759bbbe4c
+          field_more_link:
+            -
+              uri: 'internal:/articles'
+              title: 'Vis mere'
+              options: {  }
           field_title:
             -
               value: 'Card grid manual'
@@ -845,9 +856,12 @@ default:
           field_breadcrumb_target:
             -
               entity: 2929bb32-bbf4-4b5d-975b-7c24a3ae949b
+          field_show_subtitles:
+            -
+              value: false
           field_title:
             -
-              value: 'Breadcrumb paragraph - Bestsellers'
+              value: 'Breadcrumb paragraph - DIY-projekter'
     -
       entity:
         _meta:
@@ -888,6 +902,83 @@ default:
           field_hero_title:
             -
               value: 'Hero paragraph'
+    -
+      entity:
+        _meta:
+          version: '1.0'
+          entity_type: paragraph
+          uuid: 41c65c1f-15c9-4d75-a128-bf1cf6c3d5c0
+          bundle: banner
+          default_langcode: da
+        default:
+          status:
+            -
+              value: true
+          created:
+            -
+              value: 1720528917
+          behavior_settings:
+            -
+              value: {  }
+          revision_translation_affected:
+            -
+              value: true
+          field_banner_description:
+            -
+              value: "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s."
+          field_banner_image:
+            -
+              entity: eef50571-39dc-461a-96ff-b6b7180ade61
+          field_banner_link:
+            -
+              target_uuid: 02858224-6bd4-41df-95e3-c2a9a6ad29b7
+              title: ''
+              options:
+                href: /node/22
+                data-entity-type: node
+                data-entity-uuid: 02858224-6bd4-41df-95e3-c2a9a6ad29b7
+                data-entity-substitution: canonical
+          field_underlined_title:
+            -
+              value: '<p><u>Banner</u> paragraph <u>with</u> image</p>'
+              format: underlined_title
+    -
+      entity:
+        _meta:
+          version: '1.0'
+          entity_type: paragraph
+          uuid: 6d07523b-af27-4628-9473-0ceb7de2cda3
+          bundle: banner
+          default_langcode: da
+        default:
+          status:
+            -
+              value: true
+          created:
+            -
+              value: 1720528982
+          behavior_settings:
+            -
+              value: {  }
+          revision_translation_affected:
+            -
+              value: true
+          field_banner_description:
+            -
+              value: "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s,"
+          field_banner_link:
+            -
+              target_uuid: 02858224-6bd4-41df-95e3-c2a9a6ad29b7
+              title: ''
+              options:
+                href: /node/22
+                data-entity-type: node
+                data-entity-uuid: 02858224-6bd4-41df-95e3-c2a9a6ad29b7
+                data-entity-substitution: canonical
+          field_underlined_title:
+            -
+              value: '<p><u>Banner</u> paragraph <u>without</u> image</p>'
+              format: underlined_title
   field_publication_date:
     -
       value: '2024-06-27'
