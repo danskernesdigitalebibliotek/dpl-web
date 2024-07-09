@@ -13,4 +13,5 @@ settings:
     items:
       - underline
   plugins: {  }
-image_upload: {  }
+image_upload:
+  status: false
