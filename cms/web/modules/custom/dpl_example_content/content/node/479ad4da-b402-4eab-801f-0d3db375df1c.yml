@@ -51,6 +51,26 @@ default:
       attributes:
         name: title
         content: 'Litterær skovbadning | DPL CMS'
+    -
+      tag: meta
+      attributes:
+        property: 'og:image'
+        content: 'http://dapple-cms.docker/sites/default/files/styles/open_graph/public/2024-02/robert-collins-tvc5imO5pXk-unsplash_0.jpg?h=9b4b1e73&itok=EwW8kaGw'
+    -
+      tag: meta
+      attributes:
+        property: 'og:image:url'
+        content: 'http://dapple-cms.docker/sites/default/files/styles/open_graph/public/2024-02/robert-collins-tvc5imO5pXk-unsplash_0.jpg?h=9b4b1e73&itok=EwW8kaGw'
+    -
+      tag: meta
+      attributes:
+        property: 'og:image:width'
+        content: '1200'
+    -
+      tag: meta
+      attributes:
+        property: 'og:image:height'
+        content: '630'
   path:
     -
       alias: /hovedbiblioteket/artikler/klima/litteraer-skovbadning

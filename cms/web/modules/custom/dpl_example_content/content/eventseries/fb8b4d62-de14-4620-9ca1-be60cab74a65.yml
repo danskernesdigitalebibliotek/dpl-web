@@ -5,7 +5,7 @@ _meta:
   bundle: default
   default_langcode: en
   depends:
-    2527e0c4-419c-4143-8794-58aedb5e85a0: eventinstance
+    ba6383c1-a296-4599-b2ab-b20df519e7c1: eventinstance
     e539b26b-2992-406b-accf-03e549522c0d: taxonomy_term
     d6d67fd2-775c-46e7-a1bf-6af46290a5c8: media
     4704c566-afc2-4131-ab81-3d636f2451bf: taxonomy_term
@@ -94,6 +94,26 @@ default:
       attributes:
         name: title
         content: '| DPL CMS'
+    -
+      tag: meta
+      attributes:
+        property: 'og:image'
+        content: 'http://dapple-cms.docker/sites/default/files/styles/open_graph/public/2024-02/markus-spiske-i5tesTFPBjw-unsplash.jpg?h=82e97bbe&itok=pGUWz_Jb'
+    -
+      tag: meta
+      attributes:
+        property: 'og:image:url'
+        content: 'http://dapple-cms.docker/sites/default/files/styles/open_graph/public/2024-02/markus-spiske-i5tesTFPBjw-unsplash.jpg?h=82e97bbe&itok=pGUWz_Jb'
+    -
+      tag: meta
+      attributes:
+        property: 'og:image:width'
+        content: '1200'
+    -
+      tag: meta
+      attributes:
+        property: 'og:image:height'
+        content: '630'
   path:
     -
       alias: /arrangementer/klima/genbrugsstof-fremfor-plastik-0
@@ -101,7 +121,7 @@ default:
       pathauto: 1
   event_instances:
     -
-      entity: 2527e0c4-419c-4143-8794-58aedb5e85a0
+      entity: ba6383c1-a296-4599-b2ab-b20df519e7c1
   field_categories:
     -
       entity: e539b26b-2992-406b-accf-03e549522c0d

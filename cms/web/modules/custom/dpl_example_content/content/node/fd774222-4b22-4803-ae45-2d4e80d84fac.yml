@@ -435,3 +435,6 @@ default:
             -
               value: '<p>Opret en <u>bruger</u> på biblioteket</p>'
               format: underlined_title
+  field_publication_date:
+    -
+      value: '2024-07-09'
