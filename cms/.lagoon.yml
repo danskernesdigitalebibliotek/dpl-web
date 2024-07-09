@@ -86,6 +86,12 @@ tasks:
             echo "Test users already exist. Skipping creation..."
           fi
         service: cli
+    - run:
+        name: Enable example content
+        command: |
+          set -e
+          drush en -y dpl_example_content
+        service: cli
 
 environments:
   main:
