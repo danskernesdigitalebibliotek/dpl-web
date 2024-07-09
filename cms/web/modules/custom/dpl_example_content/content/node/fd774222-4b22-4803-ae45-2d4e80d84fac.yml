@@ -18,6 +18,8 @@ _meta:
     0fa7245a-3434-4d96-9793-a1848a22d37a: taxonomy_term
     0502836d-0f7b-4b21-9371-c40ae9e01495: taxonomy_term
     dac275e4-9b8c-4959-a13a-6b9fdbc1f6b0: node
+    d97a25fd-a6ae-48b9-9a1a-7aec5372688e: media
+    e68b90e6-cd35-44c6-9e32-c05c982ed315: node
 default:
   revision_uid:
     -
@@ -64,6 +66,9 @@ default:
       alias: /frontpage
       langcode: und
       pathauto: 1
+  field_display_titles:
+    -
+      value: false
   field_paragraphs:
     -
       entity:
@@ -456,6 +461,39 @@ default:
           field_title:
             -
               value: "Hovedbib's arrangementer"
-  field_publication_date:
     -
-      value: '2024-01-31'
+      entity:
+        _meta:
+          version: '1.0'
+          entity_type: paragraph
+          uuid: 41558fc1-eb0b-4560-9120-f2f1adbeae1a
+          bundle: banner
+          default_langcode: da
+        default:
+          status:
+            -
+              value: true
+          created:
+            -
+              value: 1718290821
+          behavior_settings:
+            -
+              value: {  }
+          revision_translation_affected:
+            -
+              value: true
+          field_banner_description:
+            -
+              value: 'Velkommen til vores bibliotek! For at få adgang til vores omfattende samling af bøger, e-bøger, lydbøger, og andre ressourcer, skal du oprette en brugerprofil. Det er nemt og hurtigt!'
+          field_banner_image:
+            -
+              entity: d97a25fd-a6ae-48b9-9a1a-7aec5372688e
+          field_banner_link:
+            -
+              target_uuid: e68b90e6-cd35-44c6-9e32-c05c982ed315
+              title: ''
+              options: {  }
+          field_underlined_title:
+            -
+              value: '<p>Opret en <u>bruger</u> på biblioteket</p>'
+              format: underlined_title

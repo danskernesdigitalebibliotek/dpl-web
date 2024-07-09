@@ -1,0 +1,24 @@
+uuid: b34fcd65-9be7-4de2-b88c-c9bdaf42ba11
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.paragraph.field_underlined_title
+    - filter.format.underlined_title
+    - paragraphs.paragraphs_type.banner
+  module:
+    - text
+id: paragraph.banner.field_underlined_title
+field_name: field_underlined_title
+entity_type: paragraph
+bundle: banner
+label: 'Underlined title'
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings:
+  allowed_formats:
+    - underlined_title
+field_type: text_long
