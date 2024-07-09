@@ -183,7 +183,7 @@
         "drupal/core-dev": "~10.1.7",
         "jangregor/phpstan-prophecy": "^1",
         "mglaman/phpstan-drupal": "^1.2",
-        "palantirnet/drupal-rector": "^0.18.1",
+        "palantirnet/drupal-rector": "^0.20.3",
         "php-mock/php-mock": "^2.3",
         "phpspec/prophecy-phpunit": "^2",
         "phpstan/extension-installer": "^1.3",
