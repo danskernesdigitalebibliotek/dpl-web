@@ -80,6 +80,6 @@ function dpl_example_content_modules_installed(array $modules) : void {
     ->set('logo.path', $logo_path)
     ->save();
 
-  \Drupal::logger('dpl_example_content')->notice('Updated theme settings for novel theme.');
+  $logger->notice('Updated theme settings for novel theme.');
 
 }
