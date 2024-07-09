@@ -112,12 +112,18 @@ function _dpl_related_content_filter_paragraph(array $variables, RelatedContentL
       $service->maxItems = $max_items;
     }
 
-    if ($paragraph->hasField('field_title')) {
+    if ($paragraph->hasField('field_underlined_title') && !$paragraph->get('field_underlined_title')->isEmpty()) {
+      $service->title = $paragraph->get('field_underlined_title')->view();
+      unset($variables['content']['field_underlined_title']);
+    }
+    elseif ($paragraph->hasField('field_title') && !$paragraph->get('field_title')->isEmpty()) {
       $service->title = $paragraph->get('field_title')->getString();
+      unset($variables['content']['field_title']);
     }
 
     if ($paragraph->hasField('field_more_link') && !$paragraph->get('field_more_link')->isEmpty()) {
       $service->moreLink = $paragraph->get('field_more_link')->view();
+      unset($variables['content']['field_more_link']);
     }
 
     // Deciding if we should treat the filters as AND.
