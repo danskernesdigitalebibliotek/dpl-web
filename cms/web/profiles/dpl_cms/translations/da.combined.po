@@ -7,8 +7,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2024-07-09 07:49+0200\n"
-"PO-Revision-Date: 2024-07-09 07:49+0200\n"
+"POT-Creation-Date: 2024-07-09 09:45+0200\n"
+"PO-Revision-Date: 2024-07-09 09:45+0200\n"
 "Last-Translator: NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
 "MIME-Version: 1.0\n"
@@ -18395,6 +18395,10 @@ msgctxt "core.entity_view_mode.file.token:label"
 msgid "Token"
 msgstr ""
 
+msgctxt "core.entity_view_mode.media.banner:label"
+msgid "Banner"
+msgstr ""
+
 msgctxt "core.entity_view_mode.media.card:label"
 msgid "Card"
 msgstr ""
@@ -19022,6 +19026,22 @@ msgstr ""
 
 msgctxt "field.field.paragraph.accordion.field_accordion_title:label"
 msgid "Accordion title"
+msgstr ""
+
+msgctxt "field.field.paragraph.banner.field_banner_description:label"
+msgid "Banner description"
+msgstr ""
+
+msgctxt "field.field.paragraph.banner.field_banner_image:label"
+msgid "Banner Image"
+msgstr ""
+
+msgctxt "field.field.paragraph.banner.field_banner_link:label"
+msgid "Banner Link"
+msgstr ""
+
+msgctxt "field.field.paragraph.banner.field_underlined_title:label"
+msgid "Underlined title"
 msgstr ""
 
 msgctxt ""
@@ -20062,8 +20082,16 @@ msgctxt "filter.format.plain_text:name"
 msgid "Plain text"
 msgstr ""
 
+msgctxt "filter.format.underlined_title:name"
+msgid "Underlined title"
+msgstr ""
+
 msgctxt "filter.format.webform_default:name"
 msgid "Webform (Default) - DO NOT EDIT"
+msgstr ""
+
+msgctxt "image.style.banner:label"
+msgid "Banner"
 msgstr ""
 
 msgctxt "image.style.campaign_image:label"
@@ -20387,6 +20415,16 @@ msgstr ""
 
 msgctxt "paragraphs.paragraphs_type.accordion:label"
 msgid "Accordion"
+msgstr ""
+
+msgctxt "paragraphs.paragraphs_type.banner:label"
+msgid "Banner"
+msgstr ""
+
+msgctxt "paragraphs.paragraphs_type.banner:description"
+msgid ""
+"Banner's purpose is to link internally or externally and can be used with or "
+"without a background image."
 msgstr ""
 
 msgctxt "paragraphs.paragraphs_type.breadcrumb_children:label"
