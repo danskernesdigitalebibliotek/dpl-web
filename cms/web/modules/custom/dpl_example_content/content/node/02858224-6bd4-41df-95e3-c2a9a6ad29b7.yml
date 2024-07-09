@@ -18,6 +18,7 @@ _meta:
     479ad4da-b402-4eab-801f-0d3db375df1c: node
     9cfd15df-32b4-4af9-b2da-56b039b5bf6b: node
     33a56f4a-fa42-42e1-9097-84f759bbbe4c: node
+    2929bb32-bbf4-4b5d-975b-7c24a3ae949b: taxonomy_term
     807e6053-86ed-4dce-b6a9-a48b566b5910: taxonomy_term
     e4ce7616-976d-43fc-aed2-a01c42b67db9: media
 default:
@@ -841,6 +842,9 @@ default:
           revision_translation_affected:
             -
               value: true
+          field_breadcrumb_target:
+            -
+              entity: 2929bb32-bbf4-4b5d-975b-7c24a3ae949b
           field_title:
             -
               value: 'Breadcrumb paragraph - Bestsellers'
