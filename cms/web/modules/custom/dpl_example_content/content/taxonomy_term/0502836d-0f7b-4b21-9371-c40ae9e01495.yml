@@ -26,11 +26,6 @@ default:
       attributes:
         name: title
         content: '3-8 årige | DPL CMS'
-    -
-      tag: link
-      attributes:
-        rel: canonical
-        href: 'http://dapple-cms.docker/taxonomy/term/20'
   path:
     -
       alias: ''

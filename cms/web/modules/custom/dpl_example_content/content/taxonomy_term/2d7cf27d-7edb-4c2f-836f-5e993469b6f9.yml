@@ -26,11 +26,6 @@ default:
       attributes:
         name: title
         content: 'bøger | DPL CMS'
-    -
-      tag: link
-      attributes:
-        rel: canonical
-        href: 'http://dapple-cms.docker/taxonomy/term/27'
   path:
     -
       alias: ''

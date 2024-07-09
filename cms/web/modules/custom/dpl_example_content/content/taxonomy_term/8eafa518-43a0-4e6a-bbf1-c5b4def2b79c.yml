@@ -26,11 +26,6 @@ default:
       attributes:
         name: title
         content: 'husk tags med mellemrum | DPL CMS'
-    -
-      tag: link
-      attributes:
-        rel: canonical
-        href: 'http://dapple-cms.docker/taxonomy/term/31'
   path:
     -
       alias: ''

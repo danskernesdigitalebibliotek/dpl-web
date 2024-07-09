@@ -26,11 +26,6 @@ default:
       attributes:
         name: title
         content: 'studieliv | DPL CMS'
-    -
-      tag: link
-      attributes:
-        rel: canonical
-        href: 'http://dapple-cms.docker/taxonomy/term/30'
   path:
     -
       alias: ''
