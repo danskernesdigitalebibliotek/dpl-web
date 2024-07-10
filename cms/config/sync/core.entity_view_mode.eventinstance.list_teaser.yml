@@ -6,5 +6,6 @@ dependencies:
     - recurring_events
 id: eventinstance.list_teaser
 label: 'List teaser'
+description: ''
 targetEntityType: eventinstance
 cache: true

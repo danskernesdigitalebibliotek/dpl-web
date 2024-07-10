@@ -66,3 +66,6 @@ default:
   field_phone:
     -
       value: '88888888'
+  field_promoted_on_lists:
+    -
+      value: false

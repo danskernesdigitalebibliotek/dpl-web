@@ -89,7 +89,7 @@ function dpl_react_theme(
   array $existing,
   string $type,
   string $theme,
-  string $path
+  string $path,
 ): array {
   return [
     'dpl_react_app' => [

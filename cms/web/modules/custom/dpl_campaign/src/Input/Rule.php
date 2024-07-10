@@ -21,7 +21,8 @@ class Rule {
   public function __construct(
     public string $facetName,
     public string $valueTerm,
-    public int $ranking) {
+    public int $ranking,
+  ) {
   }
 
 }

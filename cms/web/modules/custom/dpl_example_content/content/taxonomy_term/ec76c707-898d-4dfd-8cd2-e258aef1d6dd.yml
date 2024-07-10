@@ -26,11 +26,6 @@ default:
       attributes:
         name: title
         content: 'digt | DPL CMS'
-    -
-      tag: link
-      attributes:
-        rel: canonical
-        href: '/taxonomy/term/16'
   path:
     -
       alias: ''

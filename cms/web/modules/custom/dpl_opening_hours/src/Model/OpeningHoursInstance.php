@@ -22,7 +22,7 @@ class OpeningHoursInstance {
     public readonly TermInterface $categoryTerm,
     public readonly \DateTimeInterface $startTime,
     public readonly \DateTimeInterface $endTime,
-    public readonly Repetition $repetition = new NoRepetition()
+    public readonly Repetition $repetition = new NoRepetition(),
   ) {
     // An opening hours instance must start and end on the same day. We do not
     // have any standard date structure to represent this so instead validate

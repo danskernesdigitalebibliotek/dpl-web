@@ -9,7 +9,6 @@
 #
 # Consult https://github.com/danskernesdigitalebibliotek/dpl-platform for
 # further details.
-version: '2.3'
 
 # This block is used for inclusion in the environment section of each container.
 x-volumes:

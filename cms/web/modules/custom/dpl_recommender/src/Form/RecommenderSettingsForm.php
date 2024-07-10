@@ -23,7 +23,7 @@ class RecommenderSettingsForm extends ConfigFormBase {
    */
   public function __construct(
     ConfigFactoryInterface $config_factory,
-    protected DplReactConfigInterface $configService
+    protected DplReactConfigInterface $configService,
   ) {
     parent::__construct($config_factory);
   }

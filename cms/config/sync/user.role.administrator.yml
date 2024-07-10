@@ -5,6 +5,7 @@ dependencies:
   config:
     - filter.format.basic
     - filter.format.limited
+    - filter.format.underlined_title
     - media.type.document
     - media.type.image
     - media.type.video
@@ -241,6 +242,7 @@ permissions:
   - 'update media'
   - 'use text format basic'
   - 'use text format limited'
+  - 'use text format underlined_title'
   - 'view admin menu in menu list'
   - 'view all media revisions'
   - 'view all revisions'

@@ -6,5 +6,6 @@ dependencies:
     - recurring_events
 id: eventseries.card
 label: Card
+description: ''
 targetEntityType: eventseries
 cache: true

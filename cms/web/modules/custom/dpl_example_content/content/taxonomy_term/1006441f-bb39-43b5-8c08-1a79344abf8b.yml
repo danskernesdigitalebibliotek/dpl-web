@@ -26,11 +26,6 @@ default:
       attributes:
         name: title
         content: 'dans | DPL CMS'
-    -
-      tag: link
-      attributes:
-        rel: canonical
-        href: '/taxonomy/term/12'
   path:
     -
       alias: ''

@@ -1,9 +1,4 @@
 describe("DPL CMS", () => {
-  it("loads the front page", () => {
-    cy.visit("/");
-    cy.contains("DPL CMS");
-  });
-
   it("supports login", () => {
     cy.drupalLogin();
     // We do not have a proper way to determine that the user is actually

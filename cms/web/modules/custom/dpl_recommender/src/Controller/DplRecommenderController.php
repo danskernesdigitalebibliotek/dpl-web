@@ -27,7 +27,7 @@ class DplRecommenderController extends ControllerBase {
   public function __construct(
     private BlockManagerInterface $blockManager,
     private RendererInterface $renderer,
-    private DplReactConfigInterface $recommenderSettings
+    private DplReactConfigInterface $recommenderSettings,
   ) {
   }
 

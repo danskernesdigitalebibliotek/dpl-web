@@ -52,6 +52,26 @@ default:
       attributes:
         name: title
         content: 'Bibliotekarerne anbefaler læsning til den mørke tid | DPL CMS'
+    -
+      tag: meta
+      attributes:
+        property: 'og:image'
+        content: 'http://dapple-cms.docker/sites/default/files/styles/open_graph/public/2023-12/jon-tyson-kGUmNEYaSMY-unsplash.jpg?h=99e0c21c&itok=xGkZN7pv'
+    -
+      tag: meta
+      attributes:
+        property: 'og:image:url'
+        content: 'http://dapple-cms.docker/sites/default/files/styles/open_graph/public/2023-12/jon-tyson-kGUmNEYaSMY-unsplash.jpg?h=99e0c21c&itok=xGkZN7pv'
+    -
+      tag: meta
+      attributes:
+        property: 'og:image:width'
+        content: '1200'
+    -
+      tag: meta
+      attributes:
+        property: 'og:image:height'
+        content: '630'
   path:
     -
       alias: /artikler/bibliotekarerne-anbefaler-laesning-til-den-morke-tid

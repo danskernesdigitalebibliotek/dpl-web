@@ -23,8 +23,32 @@
       "screenCapture": "/app/pa11y/screenshots/article-page.png"
     },
     {
+      "url": "http://varnish:8080/articles",
+      "screenCapture": "/app/pa11y/screenshots/article-list-page.png"
+    },
+    {
       "url": "http://varnish:8080/by_uuid/eventseries/c8177097-1438-493e-8177-e8ef968cc133",
       "screenCapture": "/app/pa11y/screenshots/event-page.png"
+    },
+    {
+      "url": "http://varnish:8080/events",
+      "screenCapture": "/app/pa11y/screenshots/event-list-page.png"
+    },
+    {
+      "url": "http://varnish:8080/by_uuid/node/dac275e4-9b8c-4959-a13a-6b9fdbc1f6b0",
+      "screenCapture": "/app/pa11y/screenshots/branch-page.png"
+    },
+    {
+      "url": "http://varnish:8080/branches",
+      "screenCapture": "/app/pa11y/screenshots/branch-list-page.png"
+    },
+    {
+      "url": "http://varnish:8080/by_uuid/node/e68b90e6-cd35-44c6-9e32-c05c982ed315",
+      "screenCapture": "/app/pa11y/screenshots/create-user-page.png"
+    },
+    {
+      "url": "http://varnish:8080/by_uuid/node/d50683cc-8011-49ba-a6ea-82e56de97b80",
+      "screenCapture": "/app/pa11y/screenshots/contact-webform-page.png"
     }
   ]
 }

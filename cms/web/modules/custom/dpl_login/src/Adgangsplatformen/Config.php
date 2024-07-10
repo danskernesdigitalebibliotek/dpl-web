@@ -2,8 +2,8 @@
 
 namespace Drupal\dpl_login\Adgangsplatformen;
 
-use Drupal\Core\Config\ConfigFactoryInterface;
 use Drupal\dpl_login\Exception\MissingConfigurationException;
+use Drupal\dpl_react\DplReactConfigBase;
 use function Safe\sprintf as sprintf;
 
 /**
@@ -14,7 +14,7 @@ use function Safe\sprintf as sprintf;
  * This class provides structured access to what would otherwise be an map
  * of strings.
  */
-class Config {
+class Config extends DplReactConfigBase {
 
   /**
    * The Drupal configuration key under which the config is stored.
@@ -22,32 +22,12 @@ class Config {
   const CONFIG_KEY = "openid_connect.settings.adgangsplatformen";
 
   /**
-   * Constructor.
-   */
-  public function __construct(
-    private ConfigFactoryInterface $config
-  ) {}
-
-  /**
-   * Returns the configuration formatted for an OpenID Connect plugin.
-   *
-   * @return string[]
-   *   Map of Adgangsplatformen configuration.
-   */
-  public function pluginConfig() : array {
-    $settings = $this->config->get(self::CONFIG_KEY)->get('settings');
-    // Do not throw an exception here even if configuration is missing. Errors
-    // are handled is passed to the OpenID Connect plugin.
-    return (is_array($settings)) ? $settings : [];
-  }
-
-  /**
    * Get a specific configuration value.
    *
    * @throws \Drupal\dpl_login\Exception\MissingConfigurationException
    */
   private function getValue(string $key) : string {
-    $settings = $this->config->get(self::CONFIG_KEY)->get('settings');
+    $settings = $this->getConfig();
     $setting = $settings[$key] ?? '';
     // Assume that the Adgangsplatformen configuration should always be set so
     // throw exception instead of returning a nullable or empty string.
@@ -106,6 +86,23 @@ class Config {
    */
   public function getClientSecret(): string {
     return $this->getValue('client_secret');
+  }
+
+  /**
+   * {@inheritDoc}
+   */
+  public function getConfig(): array {
+    $settings = $this->configManager->getConfigFactory()->get(self::CONFIG_KEY)->get('settings');
+    // Do not throw an exception here even if configuration is missing. Errors
+    // are handled is passed to the OpenID Connect plugin.
+    return (is_array($settings)) ? $settings : [];
+  }
+
+  /**
+   * {@inheritDoc}
+   */
+  public function getConfigKey(): string {
+    return self::CONFIG_KEY;
   }
 
 }

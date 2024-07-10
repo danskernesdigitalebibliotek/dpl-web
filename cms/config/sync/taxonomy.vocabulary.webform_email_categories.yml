@@ -25,3 +25,4 @@ name: 'Webform email categories'
 vid: webform_email_categories
 description: 'List of email categories used for sending webform submissions. Each category is associated with an email address.'
 weight: 0
+new_revision: false

@@ -30,7 +30,7 @@ class DplInstantLoanSettings extends DplReactConfigBase {
       public function __construct(
         public bool $enabled = FALSE,
         public ?string $threshold = NULL,
-        public ?array $matchStrings = NULL
+        public ?array $matchStrings = NULL,
       ) {}
 
     };

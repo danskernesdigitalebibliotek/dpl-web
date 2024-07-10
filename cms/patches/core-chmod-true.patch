@@ -1,0 +1,62 @@
+diff --git a/core/lib/Drupal/Core/File/FileSystem.php b/core/lib/Drupal/Core/File/FileSystem.php
+index be1d70ad6e..9446e63be2 100644
+--- a/core/lib/Drupal/Core/File/FileSystem.php
++++ b/core/lib/Drupal/Core/File/FileSystem.php
+@@ -101,7 +101,11 @@ public function chmod($uri, $mode = NULL) {
+       }
+     }
+ 
+-    return @chmod($uri, $mode);
++    @chmod($uri, $mode);
++
++    // We have an issue with CHMOD, meaning it reports to fail without it
++    // actually being an issue.
++    return TRUE;
+   }
+ 
+   /**
+@@ -109,7 +113,7 @@ public function chmod($uri, $mode = NULL) {
+    */
+   public function unlink($uri, $context = NULL) {
+     if (!$this->streamWrapperManager->isValidUri($uri) && str_starts_with(PHP_OS, 'WIN')) {
+-      chmod($uri, 0600);
++      $this->chmod($uri, 0600);
+     }
+     if ($context) {
+       return unlink($uri, $context);
+@@ -215,7 +219,7 @@ public function mkdir($uri, $mode = NULL, $recursive = FALSE, $context = NULL) {
+             return FALSE;
+           }
+           // Not necessary to use self::chmod() as there is no scheme.
+-          if (!chmod($recursive_path, $mode)) {
++          if (!$this->chmod($recursive_path, $mode)) {
+             return FALSE;
+           }
+         }
+@@ -230,7 +234,7 @@ public function mkdir($uri, $mode = NULL, $recursive = FALSE, $context = NULL) {
+       return FALSE;
+     }
+     // Not necessary to use self::chmod() as there is no scheme.
+-    return chmod($uri, $mode);
++    return $this->chmod($uri, $mode);
+   }
+ 
+   /**
+@@ -252,7 +256,7 @@ protected function mkdirCall($uri, $mode, $recursive, $context) {
+    */
+   public function rmdir($uri, $context = NULL) {
+     if (!$this->streamWrapperManager->isValidUri($uri) && str_starts_with(PHP_OS, 'WIN')) {
+-      chmod($uri, 0700);
++      $this->chmod($uri, 0700);
+     }
+     if ($context) {
+       return rmdir($uri, $context);
+@@ -378,7 +382,7 @@ public function move($source, $destination, /* FileExists */$fileExists = FileEx
+     // Ensure compatibility with Windows.
+     // @see \Drupal\Core\File\FileSystemInterface::unlink().
+     if (!$this->streamWrapperManager->isValidUri($source) && str_starts_with(PHP_OS, 'WIN')) {
+-      chmod($source, 0600);
++      $this->chmod($source, 0600);
+     }
+     // Attempt to resolve the URIs. This is necessary in certain
+     // configurations (see above) and can also permit fast moves across local

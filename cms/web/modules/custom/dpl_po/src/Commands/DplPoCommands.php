@@ -10,6 +10,7 @@ use Drupal\Core\Config\ConfigFactoryInterface;
 use Drupal\Core\Extension\ModuleHandlerInterface;
 use Drupal\Core\File\Exception\FileException;
 use Drupal\Core\File\Exception\InvalidStreamWrapperException;
+use Drupal\Core\File\FileExists;
 use Drupal\Core\File\FileSystemInterface;
 use Drupal\Core\StringTranslation\StringTranslationTrait;
 use Drupal\dpl_po\Services\CtpConfigManager;
@@ -75,7 +76,7 @@ class DplPoCommands extends DrushCommands {
 
     try {
       $file = $this->extractTranslationsIntoFile(self::CONFIG_PO_FILE_CONTEXT_PATTERN, $source, 'include');
-      $destination = $this->fileSystem->move($file, $destination, FileSystemInterface::EXISTS_REPLACE);
+      $destination = $this->fileSystem->move($file, $destination, FileExists::Replace);
     }
     catch (\Exception $e) {
       $this->io()->error($this->t(
@@ -134,7 +135,7 @@ class DplPoCommands extends DrushCommands {
 
     try {
       $file = $this->extractTranslationsIntoFile(self::CONFIG_PO_FILE_CONTEXT_PATTERN, $source, 'exclude');
-      $destination = $this->fileSystem->move($file, $destination, FileSystemInterface::EXISTS_REPLACE);
+      $destination = $this->fileSystem->move($file, $destination, FileExists::Replace);
     }
     catch (\Exception $e) {
       $this->io()->error($this->t(
@@ -260,7 +261,7 @@ class DplPoCommands extends DrushCommands {
       return;
     }
 
-    if ($destination = $this->fileSystem->move($filepath, $import_po_file, FileSystemInterface::EXISTS_REPLACE)) {
+    if ($destination = $this->fileSystem->move($filepath, $import_po_file, FileExists::Replace)) {
       $this->importConfigPoFileBatch($destination);
       $this->io()->success($this->t(
         'Config translations were imported from: @url',
@@ -289,7 +290,7 @@ class DplPoCommands extends DrushCommands {
 
     try {
       $response = $this->httpClient->request('GET', $source);
-      $result_path = $this->fileSystem->saveData($response->getBody(), $destination, FileSystemInterface::EXISTS_REPLACE);
+      $result_path = $this->fileSystem->saveData($response->getBody(), $destination, FileExists::Replace);
     }
     catch (TransferException $e) {
       $this->io()->error($this->t(
@@ -365,7 +366,7 @@ class DplPoCommands extends DrushCommands {
           ]));
         return;
       }
-      if ($destination = $this->fileSystem->move($tmp_filename, $destination, FileSystemInterface::EXISTS_REPLACE)) {
+      if ($destination = $this->fileSystem->move($tmp_filename, $destination, FileExists::Replace)) {
         $this->io()->success($this->t(
           'File created on: @destination',
           ['@destination' => $destination],
