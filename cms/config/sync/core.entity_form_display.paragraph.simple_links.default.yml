@@ -1,0 +1,27 @@
+uuid: 377b2641-ddfc-4e61-87a7-dc72525a154f
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.field.paragraph.simple_links.field_link
+    - paragraphs.paragraphs_type.simple_links
+  module:
+    - linkit
+id: paragraph.simple_links.default
+targetEntityType: paragraph
+bundle: simple_links
+mode: default
+content:
+  field_link:
+    type: linkit
+    weight: 0
+    region: content
+    settings:
+      placeholder_url: ''
+      placeholder_title: ''
+      linkit_profile: default
+      linkit_auto_link_text: false
+    third_party_settings: {  }
+hidden:
+  created: true
+  status: true
