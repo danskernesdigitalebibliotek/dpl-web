@@ -7,8 +7,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2024-07-12 15:14+0200\n"
-"PO-Revision-Date: 2024-07-12 15:14+0200\n"
+"POT-Creation-Date: 2024-07-12 15:27+0200\n"
+"PO-Revision-Date: 2024-07-12 15:27+0200\n"
 "Last-Translator: NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
 "MIME-Version: 1.0\n"
@@ -19589,6 +19589,10 @@ msgid ""
 "This field will be deleted in the future. Please use another work id field."
 msgstr ""
 
+msgctxt "field.field.paragraph.simple_links.field_link:label"
+msgid "Link"
+msgstr ""
+
 msgctxt "field.field.paragraph.text_body.field_body:label"
 msgid "Body"
 msgstr ""
@@ -20603,6 +20607,14 @@ msgstr ""
 
 msgctxt "paragraphs.paragraphs_type.recommendation:description"
 msgid "This paragraph is used to recommend a material. "
+msgstr ""
+
+msgctxt "paragraphs.paragraphs_type.simple_links:label"
+msgid "Simple links"
+msgstr ""
+
+msgctxt "paragraphs.paragraphs_type.simple_links:description"
+msgid "This is paragraph that will display links without icons. "
 msgstr ""
 
 msgctxt "paragraphs.paragraphs_type.text_body:label"
