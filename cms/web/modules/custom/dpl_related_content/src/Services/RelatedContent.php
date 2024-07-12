@@ -549,7 +549,7 @@ class RelatedContent {
     if ($this->listStyle == RelatedContentListStyle::Grid) {
       // Visually, grid looks broken with less than 3 items, and does not
       // support more than 6.
-      $this->minItems = 3;
+      $this->minItems = 1;
       $this->maxItems = 6;
     }
 
