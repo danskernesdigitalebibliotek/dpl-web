@@ -15,10 +15,7 @@
 {%
   set classes = [
     'input-label',
-    title_display == 'after' ? 'option',
-    title_display == 'invisible' ? 'visually-hidden',
-    required ? 'js-form-required',
-    required ? 'form-required',
+    required ? 'input-label--required',
   ]
 %}
 {% if title is not empty or required -%}
