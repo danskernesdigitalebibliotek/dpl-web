@@ -40,10 +40,10 @@
             "type": "package",
             "package": {
                 "name": "danskernesdigitalebibliotek/dpl-react",
-                "version": "2024.28.0",
+                "version": "0.0.0-dev",
                 "type": "drupal-library",
                 "dist": {
-                    "url": "https://github.com/danskernesdigitalebibliotek/dpl-react/releases/download/2024.28.0/dist-2024-28-0-e876a29a31e0a8a225d20b3a91cd432491cf5680.zip",
+                    "url": "https://github.com/danskernesdigitalebibliotek/dpl-react/releases/download/branch-DDFLSBP-659-add-visual-indicators-on-requied-fields/dist-ddflsbp-659-add-visual-indicators-on-requied-fields.zip",
                     "type": "zip"
                 },
                 "require": {
@@ -91,7 +91,7 @@
         "cweagans/composer-patches": "1.7.3",
         "danskernesdigitalebibliotek/cms-api": "*",
         "danskernesdigitalebibliotek/dpl-design-system": "2024.28.0",
-        "danskernesdigitalebibliotek/dpl-react": "2024.28.0",
+        "danskernesdigitalebibliotek/dpl-react": "0.0.0-dev",
         "danskernesdigitalebibliotek/fbs-client": "*",
         "dealerdirect/phpcodesniffer-composer-installer": "^1.0.0",
         "deoliveiralucas/array-keys-case-transform": "^1.1",

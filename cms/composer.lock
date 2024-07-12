@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "88871fb8deadf16e6a989e5b0bd25181",
+    "content-hash": "9e73e067930f9882788bb30d3ef212d1",
     "packages": [
         {
             "name": "amazeeio/drupal_integrations",
@@ -1175,10 +1175,10 @@
         },
         {
             "name": "danskernesdigitalebibliotek/dpl-react",
-            "version": "2024.28.0",
+            "version": "0.0.0-dev",
             "dist": {
                 "type": "zip",
-                "url": "https://github.com/danskernesdigitalebibliotek/dpl-react/releases/download/2024.28.0/dist-2024-28-0-e876a29a31e0a8a225d20b3a91cd432491cf5680.zip"
+                "url": "https://github.com/danskernesdigitalebibliotek/dpl-react/releases/download/branch-DDFLSBP-659-add-visual-indicators-on-requied-fields/dist-ddflsbp-659-add-visual-indicators-on-requied-fields.zip"
             },
             "require": {
                 "composer/installers": "^1.2.0"
@@ -19005,6 +19005,7 @@
     "aliases": [],
     "minimum-stability": "dev",
     "stability-flags": {
+        "danskernesdigitalebibliotek/dpl-react": 20,
         "drupal/default_content": 15,
         "drupal/gin": 5,
         "drupal/gin_toolbar": 5,
