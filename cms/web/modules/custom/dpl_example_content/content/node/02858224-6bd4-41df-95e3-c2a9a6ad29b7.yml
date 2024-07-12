@@ -10,6 +10,7 @@ _meta:
     eef50571-39dc-461a-96ff-b6b7180ade61: media
     aba3cea8-cee5-42c1-a152-e30c2ab135e2: media
     d97a25fd-a6ae-48b9-9a1a-7aec5372688e: media
+    02858224-6bd4-41df-95e3-c2a9a6ad29b7: node
     dc33677f-8894-4717-b34b-d985f6ad875f: media
     f0204f0b-1f63-4c76-bb67-e3f7489ee392: media
     dac275e4-9b8c-4959-a13a-6b9fdbc1f6b0: node
@@ -21,7 +22,6 @@ _meta:
     2929bb32-bbf4-4b5d-975b-7c24a3ae949b: taxonomy_term
     807e6053-86ed-4dce-b6a9-a48b566b5910: taxonomy_term
     e4ce7616-976d-43fc-aed2-a01c42b67db9: media
-    02858224-6bd4-41df-95e3-c2a9a6ad29b7: node
 default:
   revision_uid:
     -
@@ -245,6 +245,99 @@ default:
         _meta:
           version: '1.0'
           entity_type: paragraph
+          uuid: bf413ed2-d80d-4a59-b1cb-f26e75c9bc1c
+          bundle: simple_links
+          default_langcode: da
+        default:
+          status:
+            -
+              value: true
+          created:
+            -
+              value: 1720777037
+          behavior_settings:
+            -
+              value: {  }
+          revision_translation_affected:
+            -
+              value: true
+          field_link:
+            -
+              target_uuid: 02858224-6bd4-41df-95e3-c2a9a6ad29b7
+              title: 'Sammenhængende simple link'
+              options:
+                href: /node/22
+                data-entity-type: node
+                data-entity-uuid: 02858224-6bd4-41df-95e3-c2a9a6ad29b7
+                data-entity-substitution: canonical
+            -
+              target_uuid: 02858224-6bd4-41df-95e3-c2a9a6ad29b7
+              title: 'Sammenhængende simple link'
+              options:
+                href: /node/22
+                data-entity-type: node
+                data-entity-uuid: 02858224-6bd4-41df-95e3-c2a9a6ad29b7
+                data-entity-substitution: canonical
+    -
+      entity:
+        _meta:
+          version: '1.0'
+          entity_type: paragraph
+          uuid: ae87017a-c603-44c7-85aa-2f2cf722d79d
+          bundle: text_body
+          default_langcode: da
+        default:
+          status:
+            -
+              value: true
+          created:
+            -
+              value: 1720777100
+          behavior_settings:
+            -
+              value: {  }
+          revision_translation_affected:
+            -
+              value: true
+          field_body:
+            -
+              value: '<p>Tekst til at opdele</p>'
+              format: basic
+    -
+      entity:
+        _meta:
+          version: '1.0'
+          entity_type: paragraph
+          uuid: a50ef666-ce44-4f55-9285-0f0eafa70d0f
+          bundle: simple_links
+          default_langcode: da
+        default:
+          status:
+            -
+              value: true
+          created:
+            -
+              value: 1720777109
+          behavior_settings:
+            -
+              value: {  }
+          revision_translation_affected:
+            -
+              value: true
+          field_link:
+            -
+              target_uuid: 02858224-6bd4-41df-95e3-c2a9a6ad29b7
+              title: 'Enkeltstående link'
+              options:
+                href: /node/22
+                data-entity-type: node
+                data-entity-uuid: 02858224-6bd4-41df-95e3-c2a9a6ad29b7
+                data-entity-substitution: canonical
+    -
+      entity:
+        _meta:
+          version: '1.0'
+          entity_type: paragraph
           uuid: 160db61a-ead0-4894-949b-c1315b92e621
           bundle: text_body
           default_langcode: da
@@ -263,7 +356,7 @@ default:
               value: true
           field_body:
             -
-              value: '<p>Tekst til at opdele enkeltstående link og fil</p>'
+              value: '<p>Tekst til at opdele&nbsp;</p>'
               format: basic
     -
       entity:
