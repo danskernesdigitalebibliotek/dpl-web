@@ -158,8 +158,6 @@ element:
   default_empty_option_optional: ''
   excluded_elements:
     address: address
-    checkbox: checkbox
-    checkboxes: checkboxes
     color: color
     container: container
     datelist: datelist
@@ -174,7 +172,6 @@ element:
     password: password
     password_confirm: password_confirm
     processed_text: processed_text
-    radios: radios
     range: range
     search: search
     table: table
