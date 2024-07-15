@@ -81,12 +81,23 @@ function dpl_webform_update_10003(): string {
  * Remove last traces of faulty webform translation.
  */
 function dpl_webform_update_10004(): string {
+  // Let's try to re-run the deletion of lang.da.webform_settings.
+  // We add it in a try catch, to avoid any issues incase it has already
+  // been deleted.
+  try {
+    dpl_webform_update_10003();
+  }
+  catch (Exception) {
+
+  }
+
   $translation_storage = DrupalTyped::service(StringStorageInterface::class, 'locale.storage');
   $translation = $translation_storage->findTranslation(['context' => 'webform.settings:test:names']);
   if ($translation) {
     $translation->delete();
     return 'Deleted faulty translation for webform.settings:test:names';
-  } else {
+  }
+  else {
     return 'Unable to locate faulty translation for webform.settings:test:names.';
   }
 }
