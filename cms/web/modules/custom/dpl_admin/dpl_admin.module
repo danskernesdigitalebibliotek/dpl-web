@@ -338,6 +338,8 @@ function dpl_admin_form_eventseries_default_edit_form_alter(array &$form, FormSt
   // basically just means navigating away, but, this is confusing for editors.
   // We'll add our own "button", that is really just a link the same edit page.
   if (!empty($form['diff']['confirm'])) {
+    $form['#attributes']['class'][] = 'eventseries-form--confirm';
+
     $form['diff']['cancel'] = [
       '#type' => 'link',
       '#title' => t('Cancel all changes', [], ['context' => 'DPL admin UX']),
@@ -348,10 +350,5 @@ function dpl_admin_form_eventseries_default_edit_form_alter(array &$form, FormSt
         ],
       ],
     ];
-
-    // The save/delete buttons on the page does nothing, when a diff confirm
-    // is relevant. We'll hide them, just to make it less confusing for the
-    // editors.
-    unset($form['actions']);
   }
 }
