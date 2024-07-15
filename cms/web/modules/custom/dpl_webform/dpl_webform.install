@@ -5,6 +5,9 @@
  * DPL webform install file.
  */
 
+use Drupal\drupal_typed\DrupalTyped;
+use Drupal\locale\StringStorageInterface;
+
 /**
  * Add all webforms to config ignore.
  */
@@ -72,4 +75,18 @@ function dpl_webform_update_10003(): string {
   $language_config_factory_override->getOverride($language, $config_id)->delete();
 
   return "DA translations for the $config_id have been deleted.";
+}
+
+/**
+ * Remove last traces of faulty webform translation.
+ */
+function dpl_webform_update_10004(): string {
+  $translation_storage = DrupalTyped::service(StringStorageInterface::class, 'locale.storage');
+  $translation = $translation_storage->findTranslation(['context' => 'webform.settings:test:names']);
+  if ($translation) {
+    $translation->delete();
+    return 'Deleted faulty translation for webform.settings:test:names';
+  } else {
+    return 'Unable to locate faulty translation for webform.settings:test:names.';
+  }
 }
