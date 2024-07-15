@@ -7,8 +7,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2024-07-12 15:27+0200\n"
-"PO-Revision-Date: 2024-07-12 15:27+0200\n"
+"POT-Creation-Date: 2024-07-15 14:56+0200\n"
+"PO-Revision-Date: 2024-07-15 14:56+0200\n"
 "Last-Translator: NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
 "MIME-Version: 1.0\n"
@@ -5279,6 +5279,15 @@ msgstr "Globale erstatningsmønstre (kun for beskrivelsesfeltet)"
 msgid "Test module for Better Exposed Filters"
 msgstr "Testmodul for Better Exposed Filters"
 
+msgid "One"
+msgstr "En"
+
+msgid "Three"
+msgstr "Tre"
+
+msgid "Two"
+msgstr "To"
+
 msgid "Links"
 msgstr "Links"
 
@@ -5465,11 +5474,28 @@ msgstr ""
 "Hvis du bruger hierarkiske taksonomifiltre, skal du ikke inkludere førende "
 "bindestreger i den aktuelle tekst."
 
+msgid "Rewrite the text displayed based on key"
+msgstr ""
+
+msgid ""
+"Change behavior of \"Rewrite the text displayed\" to overwrite labels based "
+"on option key. eg. All|New label"
+msgstr ""
+
 msgid "Make filter options collapsible"
 msgstr "Gør filterindstillinger sammenklappelige"
 
 msgid "Puts the filter options in a collapsible details element."
 msgstr "Placerer filtermulighederne i et sammenklappeligt detaljeelement."
+
+msgid "Disable the automatic opening of collapsed filters with selections"
+msgstr ""
+
+msgid ""
+"When a selection is made, by default the collapsed filter will be set to "
+"open. If you provide an alternative means for the user to see filter "
+"selections, you can the default open behavior by enabling this."
+msgstr ""
 
 msgid "This is a secondary option"
 msgstr "Dette er en sekundær mulighed"
@@ -5480,25 +5506,33 @@ msgstr ""
 "Placerer dette element i den sekundære indstillingsdel af den eksponerede "
 "formular."
 
+msgid "Minimum"
+msgstr "Minimum"
+
+msgid "Adds a min attribute to the input field."
+msgstr ""
+
+msgid "Maximum"
+msgstr "Maksimum"
+
+msgid "Adds a max attribute to the input field."
+msgstr ""
+
 msgid "Range minimum"
 msgstr "Minimal rækkevidde"
 
 msgid ""
-"The minimum allowed value for the jQuery range slider. It can be positive, "
+"The minimum allowed value for the range slider. It can be positive, "
 "negative, or zero and have up to 11 decimal places."
 msgstr ""
-"Den mindst tilladte værdi for jQuery-række slider. Det kan være positivt, "
-"negativt eller nul og have op til 11 decimaler."
 
 msgid "Range maximum"
 msgstr "Maksimal rækkevidde"
 
 msgid ""
-"The maximum allowed value for the jQuery range slider. It can be positive, "
+"The maximum allowed value for the range slider. It can be positive, "
 "negative, or zero and have up to 11 decimal places."
 msgstr ""
-"Den maksimalt tilladte værdi for jQuery rækkevidde slideren. Det kan være "
-"positivt, negativt, eller nul og have op til 11 decimaler."
 
 msgid "Step"
 msgstr "Trin"
@@ -5526,14 +5560,14 @@ msgstr "Animationshastighed"
 msgid "None"
 msgstr "Ingen"
 
-msgid "Slow"
-msgstr "Langsom"
+msgid "Slow (600 ms)"
+msgstr ""
 
-msgid "Normal"
-msgstr "Normal"
+msgid "Normal (400 ms)"
+msgstr ""
 
-msgid "Fast"
-msgstr "Hurtig"
+msgid "Fast (200 ms)"
+msgstr ""
 
 msgid ""
 "Whether to slide handle smoothly when user click outside handle on the bar."
@@ -5554,7 +5588,7 @@ msgstr "Horisontal"
 msgid "Vertical"
 msgstr "Vertikal"
 
-msgid "The orientation of the jQuery range slider."
+msgid "The orientation of the range slider."
 msgstr ""
 
 msgid "The slider max value must be greater than the slider min value."
@@ -5608,17 +5642,12 @@ msgid "Combine sort order with sort by"
 msgstr "Kombiner sorteringsrækkefølge med sortering efter"
 
 msgid ""
-"Combines the sort by options and order (ascending or decending) into a "
+"Combines the sort by options and order (ascending or descending) into a "
 "single list.  Use this to display \"Option1 (ascending)\", \"Option1 "
 "(descending)\", \"Option2 (ascending)\", \"Option2 (descending)\" in a "
 "single form element. Sort order should first be exposed by selecting "
 "<em>Allow people to choose the sort order</em>."
 msgstr ""
-"Kombinerer sorteringsmulighederne og rækkefølgen (stigende eller faldende) i "
-"en enkelt liste. Brug dette til at vise \"Mulighed1 (stigende)\", "
-"\"Mulighed1 (faldende)\", \"Mulighed2 (stigende)\", \"Mulighed2 (faldende)\" "
-"i et enkelt formelement. Sorteringsrækkefølgen skal først være udsat ved at "
-"vælge <em>Lad folk vælge sorteringsrækkefølgen</em>."
 
 msgid ""
 "Use this field to rewrite the text displayed for combined sort options and "
@@ -5678,14 +5707,17 @@ msgstr "Better Exposed Filters"
 msgid "Provides additional options for exposed form elements."
 msgstr ""
 
-msgid "jQuery UI Slider"
-msgstr "jQuery UI Slider"
+msgid "Number"
+msgstr "Antal"
+
+msgid "Sliders"
+msgstr ""
 
 msgid "Checkboxes/Radio Buttons"
 msgstr "Afkrydsningsfelter"
 
-msgid "jQuery UI Date Picker"
-msgstr "jQuery UI datovælger"
+msgid "Date Picker"
+msgstr ""
 
 msgid "Single On/Off Checkbox"
 msgstr "Enkelt Tænd/Sluk afkrydsningsfelt"
@@ -7356,9 +7388,6 @@ msgstr ""
 msgid "This field stores integer values from a backed enum."
 msgstr ""
 
-msgid "Number"
-msgstr "Antal"
-
 msgid "Enum (text)"
 msgstr ""
 
@@ -7507,6 +7536,12 @@ msgstr "Persienne"
 
 msgid "Speed"
 msgstr "Hastighed"
+
+msgid "Slow"
+msgstr "Langsom"
+
+msgid "Fast"
+msgstr "Hurtig"
 
 msgid "Element: @element"
 msgstr "Element: @element"
