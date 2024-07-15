@@ -5,6 +5,9 @@
  * DPL webform install file.
  */
 
+use Drupal\drupal_typed\DrupalTyped;
+use Drupal\locale\StringStorageInterface;
+
 /**
  * Add all webforms to config ignore.
  */
@@ -72,4 +75,35 @@ function dpl_webform_update_10003(): string {
   $language_config_factory_override->getOverride($language, $config_id)->delete();
 
   return "DA translations for the $config_id have been deleted.";
+}
+
+/**
+ * Remove last traces of faulty webform translation.
+ */
+function dpl_webform_update_10004(): string {
+  $feedback = [];
+
+  // Rerun deletion of existing translation. It will have been recreated if
+  // translation import has run after dpl_webform_update_10003() as the
+  // translation will be lingering in the local string storage.
+  try {
+    $feedback[] = dpl_webform_update_10003();
+  }
+  catch (\Throwable $t) {
+    $feedback[] = "Unable to rerun dpl_webform_update_10003: {$t->getMessage()}.";
+  }
+
+  $translation_storage = DrupalTyped::service(StringStorageInterface::class, 'locale.storage');
+  // webform.settings:test:names is the part of the configuration with invalid
+  // data. This is set as the translation context so we can query based on this.
+  $translation = $translation_storage->findTranslation(['context' => 'webform.settings:test:names']);
+  if ($translation) {
+    $translation->delete();
+    $feedback[] = 'Deleted faulty local translation string for webform.settings:test:names.';
+  }
+  else {
+    $feedback[] = 'Unable to locate faulty local translation string for webform.settings:test:names.';
+  }
+
+  return implode("\n", $feedback);
 }
