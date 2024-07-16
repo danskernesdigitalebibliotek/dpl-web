@@ -1,6 +1,7 @@
 <?php
 
 use Drupal\collation_fixer\CollationFixer;
+use Drupal\Core\Entity\FieldableEntityInterface;
 use Drupal\drupal_typed\DrupalTyped;
 use Drupal\node\NodeInterface;
 use Drupal\recurring_events\Entity\EventInstance;
@@ -74,6 +75,51 @@ function _dpl_update_field_inheritance(string $field_inheritance_name): string {
 }
 
 /**
+ * Helper function, for setting field value on entities content on new fields.
+ *
+ * This is useful if you have created a new field, and want to set a
+ * default value.
+ */
+function _dpl_update_set_value(string $field_name, mixed $value, string $entity_type = 'node'): string {
+  $ids =
+    \Drupal::entityQuery($entity_type)
+      ->accessCheck(FALSE)
+      ->execute();
+
+  if (!is_array($ids) || empty($ids)) {
+    return "No $entity_type entities to update.";
+  }
+
+  $entities =
+    \Drupal::entityTypeManager()->getStorage($entity_type)->loadMultiple($ids);
+
+  $count = 0;
+
+  foreach ($entities as $entity) {
+    try {
+      if (!($entity instanceof FieldableEntityInterface)) {
+        throw new Exception('Entity is not an expected FieldableEntity.');
+      }
+
+      $entity->set($field_name, $value);
+
+      $entity->save();
+      $count++;
+    }
+    catch (\Throwable $e) {
+      \Drupal::logger('dpl_update')->error('Could not set default value on @field_name on @entity_type @id - Error: @message', [
+        '@message' => $e->getMessage(),
+        '@entity_type' => $entity_type,
+        '@id' => $entity->id(),
+        '@field_name' => $field_name,
+      ]);
+    }
+  }
+
+  return "Set default value for $field_name on $count $entity_type.";
+}
+
+/**
  * Fix collation for all tables to fix alphabetical sorting.
  */
 function dpl_update_deploy_fix_collation(): string {
@@ -109,43 +155,7 @@ function dpl_update_deploy_set_branches_not_promoted(): string {
  * Set default value for all existing eventseries:field_relevant_ticket_manager.
  */
 function dpl_update_deploy_field_relevant_ticket_manager(): string {
-  $field_name = 'field_relevant_ticket_manager';
-
-  $ids =
-    \Drupal::entityQuery('eventseries')
-      ->accessCheck(FALSE)
-      ->execute();
-
-  if (empty($ids) || is_int($ids)) {
-    return 'No eventseries to update.';
-  }
-
-  $entities =
-    \Drupal::entityTypeManager()->getStorage('eventseries')->loadMultiple($ids);
-
-  $count = 0;
-
-  foreach ($entities as $entity) {
-    try {
-      if (!($entity instanceof EventSeries)) {
-        throw new Exception('Entity is not an expected EventSeries.');
-      }
-
-      $entity->set($field_name, TRUE);
-
-      $entity->save();
-      $count++;
-    }
-    catch (\Throwable $e) {
-      \Drupal::logger('dpl_update')->error('Could not set default value on @field_name on eventseries @id - Error: @message', [
-        '@message' => $e->getMessage(),
-        '@id' => $entity->id(),
-        '@field_name' => $field_name,
-      ]);
-    }
-  }
-
-  return "Set default value for $field_name on $count eventseries.";
+  return _dpl_update_set_value('field_relevant_ticket_manager', TRUE, 'eventseries');
 }
 
 /**
