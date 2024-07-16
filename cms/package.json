@@ -5,6 +5,7 @@
   "devDependencies": {
     "@apidevtools/swagger-cli": "^4.0.4",
     "@lhci/cli": "^0.8",
+    "@testing-library/cypress": "^10.0.2",
     "@types/node": "^18.11.11",
     "@typescript-eslint/eslint-plugin": "^7.16.1",
     "@typescript-eslint/parser": "^7.16.1",
