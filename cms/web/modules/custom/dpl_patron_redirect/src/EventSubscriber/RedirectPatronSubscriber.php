@@ -49,7 +49,7 @@ class RedirectPatronSubscriber implements EventSubscriberInterface {
     private CurrentPathStack $currentPath,
     ConfigFactoryInterface $configFactory,
     private AccountProxyInterface $account,
-    private KillSwitch $killSwitch
+    private KillSwitch $killSwitch,
   ) {
     $this->configuration = $configFactory->get('dpl_patron_redirect.settings');
   }

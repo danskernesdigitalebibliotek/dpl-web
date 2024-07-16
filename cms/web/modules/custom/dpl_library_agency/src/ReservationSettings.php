@@ -17,7 +17,7 @@ class ReservationSettings implements CacheableDependencyInterface {
    * Constructs a new ReservationSettings object.
    */
   public function __construct(
-    protected ConfigManagerInterface $configManager
+    protected ConfigManagerInterface $configManager,
   ) {}
 
   /**

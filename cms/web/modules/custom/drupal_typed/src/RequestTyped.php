@@ -14,7 +14,7 @@ class RequestTyped {
    * Constructor.
    */
   public function __construct(
-    private Request $request
+    private Request $request,
   ) {}
 
   /**

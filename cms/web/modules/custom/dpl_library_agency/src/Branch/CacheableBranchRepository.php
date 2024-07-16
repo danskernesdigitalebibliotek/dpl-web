@@ -24,11 +24,11 @@ class CacheableBranchRepository implements BranchRepositoryInterface {
    *   Use CacheBackendInterface::CACHE_PERMANENT to disable time-based expiry.
    */
   public function __construct(
-      protected BranchRepositoryInterface $api,
-      protected CacheBackendInterface $cache,
-      protected TimeInterface $time,
-      protected int $lifetime = CacheBackendInterface::CACHE_PERMANENT
-    ) {}
+    protected BranchRepositoryInterface $api,
+    protected CacheBackendInterface $cache,
+    protected TimeInterface $time,
+    protected int $lifetime = CacheBackendInterface::CACHE_PERMANENT,
+  ) {}
 
   /**
    * {@inheritdoc}

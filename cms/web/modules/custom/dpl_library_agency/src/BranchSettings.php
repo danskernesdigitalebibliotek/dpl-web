@@ -49,7 +49,7 @@ class BranchSettings implements CacheableDependencyInterface {
    *   The configuration manager containing all configuration.
    */
   public function __construct(
-    protected ConfigManagerInterface $config
+    protected ConfigManagerInterface $config,
   ) {}
 
   /**

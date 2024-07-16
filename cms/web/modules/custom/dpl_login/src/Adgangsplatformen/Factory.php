@@ -18,7 +18,7 @@ class Factory {
    */
   public function __construct(
     private PluginManagerInterface $manager,
-    private Config $config
+    private Config $config,
   ) {}
 
   /**

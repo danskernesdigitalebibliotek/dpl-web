@@ -18,7 +18,7 @@ class FallbackBranchRepository implements BranchRepositoryInterface {
   public function __construct(
     private BranchRepositoryInterface $primaryRepository,
     private BranchRepositoryInterface $secondaryRepository,
-    private LoggerInterface $logger
+    private LoggerInterface $logger,
   ) {}
 
   /**

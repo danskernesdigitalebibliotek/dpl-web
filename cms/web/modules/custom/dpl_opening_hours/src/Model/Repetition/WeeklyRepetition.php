@@ -16,7 +16,7 @@ class WeeklyRepetition extends Repetition {
    */
   public function __construct(
     public readonly ?int $id,
-    public readonly \DateTimeInterface $endDate
+    public readonly \DateTimeInterface $endDate,
   ) {}
 
 }

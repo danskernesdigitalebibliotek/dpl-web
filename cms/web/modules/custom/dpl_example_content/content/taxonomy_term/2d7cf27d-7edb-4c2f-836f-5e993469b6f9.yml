@@ -1,0 +1,33 @@
+_meta:
+  version: '1.0'
+  entity_type: taxonomy_term
+  uuid: 2d7cf27d-7edb-4c2f-836f-5e993469b6f9
+  bundle: tags
+  default_langcode: da
+default:
+  status:
+    -
+      value: true
+  name:
+    -
+      value: bøger
+  weight:
+    -
+      value: 0
+  parent:
+    -
+      target_id: 0
+  revision_translation_affected:
+    -
+      value: true
+  metatag:
+    -
+      tag: meta
+      attributes:
+        name: title
+        content: 'bøger | DPL CMS'
+  path:
+    -
+      alias: ''
+      langcode: da
+      pathauto: 1

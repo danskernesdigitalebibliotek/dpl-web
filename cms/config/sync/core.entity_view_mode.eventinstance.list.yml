@@ -8,5 +8,6 @@ _core:
   default_config_hash: ACEZJZgLGd5uEPKxI_r1I6XmjWtbyxxqjGHGxG_Lnkw
 id: eventinstance.list
 label: List
+description: ''
 targetEntityType: eventinstance
 cache: true

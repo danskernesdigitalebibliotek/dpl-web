@@ -26,11 +26,6 @@ default:
       attributes:
         name: title
         content: 'contemporary | DPL CMS'
-    -
-      tag: link
-      attributes:
-        rel: canonical
-        href: '/taxonomy/term/13'
   path:
     -
       alias: ''

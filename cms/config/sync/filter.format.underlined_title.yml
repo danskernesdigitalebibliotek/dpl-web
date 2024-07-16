@@ -1,0 +1,17 @@
+uuid: c5de36b9-4fad-49ec-99ad-d8ca1404c989
+langcode: en
+status: true
+dependencies: {  }
+name: 'Underlined title'
+format: underlined_title
+weight: 0
+filters:
+  filter_html:
+    id: filter_html
+    provider: filter
+    status: true
+    weight: -10
+    settings:
+      allowed_html: '<br> <p> <u>'
+      filter_html_help: true
+      filter_html_nofollow: false

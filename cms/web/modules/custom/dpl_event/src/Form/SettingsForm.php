@@ -1,6 +1,6 @@
 <?php
 
-declare(strict_types = 1);
+declare(strict_types=1);
 
 namespace Drupal\dpl_event\Form;
 
@@ -23,9 +23,9 @@ final class SettingsForm extends ConfigFormBase {
    * Constructor for the settings form.
    */
   public function __construct(
-      ConfigFactoryInterface $config_factory,
-      private DateFormatterInterface $dateFormatter,
-      private UnpublishSchedule $unpublishSchedule
+    ConfigFactoryInterface $config_factory,
+    private DateFormatterInterface $dateFormatter,
+    private UnpublishSchedule $unpublishSchedule,
   ) {
     parent::__construct($config_factory);
   }

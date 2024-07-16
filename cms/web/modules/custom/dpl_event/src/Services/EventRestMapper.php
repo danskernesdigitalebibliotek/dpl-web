@@ -248,13 +248,14 @@ class EventRestMapper {
     $address_1 = $value[0]['address_line1'] ?? NULL;
     $address_2 = $value[0]['address_line2'] ?? NULL;
 
-    return new EventsGET200ResponseInnerAddress([
-      'location' => $this->getValue('event_place'),
-      'street' => "$address_1 $address_2",
-      'zip_code' => !empty($zip) ? intval($zip) : NULL,
-      'city' => $value[0]['locality'] ?? NULL,
-      'country' => $value[0]['country_code'] ?? NULL,
-    ]);
+    $address = new EventsGET200ResponseInnerAddress();
+    $address->setLocation($this->getValue('event_place'));
+    $address->setStreet("$address_1 $address_2");
+    $address->setZipCode(!empty($zip) ? intval($zip) : NULL);
+    $address->setCity($value[0]['locality'] ?? NULL);
+    $address->setCountry($value[0]['country_code'] ?? NULL);
+
+    return $address;
   }
 
   /**

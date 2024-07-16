@@ -6,5 +6,6 @@ dependencies:
     - recurring_events
 id: eventinstance.list_teaser_stacked_parent
 label: 'List teaser stacked parent'
+description: ''
 targetEntityType: eventinstance
 cache: true

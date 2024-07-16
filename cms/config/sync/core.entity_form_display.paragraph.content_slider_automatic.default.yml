@@ -17,19 +17,19 @@ third_party_settings:
   field_group:
     group_filters:
       children:
+        - field_filter_cond_type
         - field_filter_tags
         - field_filter_categories
-        - field_filter_branches
-      label: Filters
+      label: 'Grouped filters'
       region: content
       parent_name: ''
-      weight: 2
+      weight: 3
       format_type: fieldset
       format_settings:
         classes: ''
         show_empty_fields: false
         id: ''
-        description: ''
+        description: 'Choose the filters, that defines what content is shown. These filters can have their conditions defined.'
         required_fields: true
 id: paragraph.content_slider_automatic.default
 targetEntityType: paragraph
@@ -38,7 +38,7 @@ mode: default
 content:
   field_filter_branches:
     type: select2_entity_reference
-    weight: 5
+    weight: 2
     region: content
     settings:
       width: 100%
@@ -48,13 +48,19 @@ content:
     third_party_settings: {  }
   field_filter_categories:
     type: select2_entity_reference
-    weight: 4
+    weight: 6
     region: content
     settings:
       width: 100%
       autocomplete: false
       match_operator: CONTAINS
       match_limit: 10
+    third_party_settings: {  }
+  field_filter_cond_type:
+    type: options_select
+    weight: 4
+    region: content
+    settings: {  }
     third_party_settings: {  }
   field_filter_content_types:
     type: select2
@@ -65,7 +71,7 @@ content:
     third_party_settings: {  }
   field_filter_tags:
     type: select2_entity_reference
-    weight: 3
+    weight: 5
     region: content
     settings:
       width: 100%
@@ -83,5 +89,4 @@ content:
     third_party_settings: {  }
 hidden:
   created: true
-  field_filter_cond_type: true
   status: true

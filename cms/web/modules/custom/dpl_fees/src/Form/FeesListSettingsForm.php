@@ -27,7 +27,7 @@ class FeesListSettingsForm extends ConfigFormBase {
   public function __construct(
     ConfigFactoryInterface $config_factory,
     protected DplReactConfigInterface $configService,
-    protected DplFeesSettings $feesSettings
+    protected DplFeesSettings $feesSettings,
   ) {
     $this->setConfigFactory($config_factory);
   }

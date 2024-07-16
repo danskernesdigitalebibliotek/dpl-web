@@ -63,7 +63,7 @@ class BreadcrumbHelper {
     EntityTypeManagerInterface $entity_type_manager,
     LanguageManagerInterface $language_manager,
     AliasCleanerInterface $alias_cleaner,
-    TranslationInterface $translation
+    TranslationInterface $translation,
   ) {
     $this->entityTypeManager = $entity_type_manager;
     $this->languageManager = $language_manager;

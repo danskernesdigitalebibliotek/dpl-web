@@ -24,7 +24,7 @@ class EventWrapper {
    * Constuctor.
    */
   public function __construct(
-    private EventInstance $event
+    private EventInstance $event,
   ) {}
 
   /**

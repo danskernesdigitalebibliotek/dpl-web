@@ -52,7 +52,7 @@ class PatronRegistrationBlock extends BlockBase implements ContainerFactoryPlugi
     private BranchRepositoryInterface $branchRepository,
     protected ReservationSettings $reservationSettings,
     private DplReactConfigInterface $patronPageSettings,
-    private DplReactConfigInterface $patronRegSettings
+    private DplReactConfigInterface $patronRegSettings,
   ) {
     parent::__construct($configuration, $plugin_id, $plugin_definition);
     $this->configuration = $configuration;

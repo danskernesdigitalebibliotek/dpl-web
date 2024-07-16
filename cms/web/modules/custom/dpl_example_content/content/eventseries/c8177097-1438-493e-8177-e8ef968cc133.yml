@@ -5,7 +5,10 @@ _meta:
   bundle: default
   default_langcode: en
   depends:
-    056f9f3d-904c-40d6-8681-9679090ecbb7: eventinstance
+    4835c656-0c3a-44b4-b682-194a581c317a: eventinstance
+    804be5aa-8bfa-4dda-b6f0-49a938e1d32d: eventinstance
+    4f628b4f-874b-4e20-8d61-a3426964f749: eventinstance
+    45d5d740-f553-4c37-843c-7cf634907604: eventinstance
     852d781f-82c9-40ac-bc8d-d0cefe07706d: node
     f457c4c2-dc28-45cd-9b6e-fda4248d9d45: taxonomy_term
     618e176a-a45a-4c36-a197-664230aa0a34: media
@@ -32,7 +35,7 @@ default:
       value: 'Fernisering Moderne Dans'
   recur_type:
     -
-      value: custom
+      value: weekly_recurring_date
   consecutive_recurring_date:
     -
       value: ''
@@ -53,13 +56,13 @@ default:
       duration_or_end_time: duration
   weekly_recurring_date:
     -
-      value: ''
-      end_value: ''
+      value: '2028-10-04T09:29:20'
+      end_value: '2028-10-25T09:29:20'
       time: '08:00 am'
       duration: 900
       end_time: '08:00 am'
       duration_or_end_time: duration
-      days: ''
+      days: wednesday
   monthly_recurring_date:
     -
       value: ''
@@ -103,18 +106,39 @@ default:
         name: title
         content: '| DPL CMS'
     -
-      tag: link
+      tag: meta
       attributes:
-        rel: canonical
-        href: '/user/login'
+        property: 'og:image'
+        content: 'http://dapple-cms.docker/sites/default/files/styles/open_graph/public/2023-12/ahmad-odeh-KHipnBn7sdY-unsplash.jpg?h=e5aec6c8&itok=TN518yY6'
+    -
+      tag: meta
+      attributes:
+        property: 'og:image:url'
+        content: 'http://dapple-cms.docker/sites/default/files/styles/open_graph/public/2023-12/ahmad-odeh-KHipnBn7sdY-unsplash.jpg?h=e5aec6c8&itok=TN518yY6'
+    -
+      tag: meta
+      attributes:
+        property: 'og:image:width'
+        content: '1200'
+    -
+      tag: meta
+      attributes:
+        property: 'og:image:height'
+        content: '630'
   path:
     -
-      alias: /bronshoj-bibliotek/arrangementer/design-teknologi/fernisering-moderne-dans-0
+      alias: /bronshoj-bibliotek/arrangementer/design-teknologi/fernisering-moderne-dans
       langcode: und
       pathauto: 1
   event_instances:
     -
-      entity: 056f9f3d-904c-40d6-8681-9679090ecbb7
+      entity: 4835c656-0c3a-44b4-b682-194a581c317a
+    -
+      entity: 804be5aa-8bfa-4dda-b6f0-49a938e1d32d
+    -
+      entity: 4f628b4f-874b-4e20-8d61-a3426964f749
+    -
+      entity: 45d5d740-f553-4c37-843c-7cf634907604
   field_branch:
     -
       entity: 852d781f-82c9-40ac-bc8d-d0cefe07706d
