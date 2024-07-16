@@ -72,9 +72,9 @@ third_party_settings:
         weight: 0
     group_event_details:
       children:
-        - field_relevant_ticket_manager
         - field_event_image
         - field_event_state
+        - field_relevant_ticket_manager
       label: 'Event details'
       region: content
       parent_name: ''
@@ -217,7 +217,7 @@ content:
     third_party_settings: {  }
   field_relevant_ticket_manager:
     type: boolean_checkbox
-    weight: 22
+    weight: 25
     region: content
     settings:
       display_label: true

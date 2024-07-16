@@ -10,7 +10,7 @@ field_name: field_relevant_ticket_manager
 entity_type: eventseries
 bundle: default
 label: 'Relevant for ticket manager'
-description: 'If you mark this event as relevant, it means that if you use an external ticket system, such as Place2Book, some data such as ticket link, status and others may be overriden.'
+description: 'If you mark this event as relevant, it means that if you use an external ticket system, some data such as ticket link, status and others may be overridden.'
 required: false
 translatable: false
 default_value:
