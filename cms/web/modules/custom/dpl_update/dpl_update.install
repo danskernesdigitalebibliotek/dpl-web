@@ -11,6 +11,8 @@
 
 use Drupal\Core\Extension\ModuleInstallerInterface;
 use Drupal\drupal_typed\DrupalTyped;
+use Drupal\locale\SourceString;
+use Drupal\locale\StringDatabaseStorage;
 use Drupal\recurring_events\Entity\EventInstance;
 use Drupal\recurring_events\Entity\EventSeries;
 
@@ -94,6 +96,36 @@ function _dpl_update_update_field_inheritance(string $field_inheritance_name): s
   }
 
   return "Updated $count eventinstances, linking field  '$field_inheritance_name' to inherit from eventseries.";
+}
+
+/**
+ * Helper function, for adding translations.
+ *
+ * Generally speaking, this should be avoided, as it is DDF's responsibility
+ * to add translations. That also means that this function may overwrite
+ * translations made by DDF, or these translations may be overwritten in the
+ * future.
+ */
+function _dpl_update_update_translation(string $english, string $danish, ?string $context = NULL): string {
+  $translator = DrupalTyped::service(StringDatabaseStorage::class, 'locale.storage');
+
+  $string = $translator->findString(['source' => $english]);
+
+  if (is_null($string)) {
+    $string = new SourceString();
+    $string->setString($english);
+    $string->setStorage($translator);
+    $string->save();
+  }
+
+  $translator->createTranslation([
+    'lid' => $string->lid,
+    'language' => 'da',
+    'translation' => $danish,
+    'context' => $context,
+  ])->save();
+
+  return "'$english' has been translated to '$danish'";
 }
 
 /**
@@ -189,4 +221,11 @@ function dpl_update_update_10010() : string {
     return "Uninstalled dpl_example_breadcrumb module.";
   }
   return "dpl_example_breadcrumb module was not located. Skipped removal";
+}
+
+/**
+ * Add translation of DKK currency suffix, for displaying event prices.
+ */
+function dpl_update_update_10011(): string {
+  return _dpl_update_update_translation(' DKK', ' kr.', 'DPL event');
 }
