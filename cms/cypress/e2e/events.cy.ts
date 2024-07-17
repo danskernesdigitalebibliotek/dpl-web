@@ -11,6 +11,17 @@ const events = {
   },
 };
 
+const setDate = (field: "Start date" | "End date", date: dayjs.Dayjs) => {
+  cy.findByText(field)
+    .siblings()
+    .findByLabelText("Date")
+    .type(date.format("YYYY-MM-DD"));
+  cy.findByText(field)
+    .siblings()
+    .findByLabelText("Time")
+    .type(date.format("HH:mm"));
+};
+
 describe("Events", () => {
   it("can be created with a single occurrence", () => {
     // Login as admin.
@@ -21,22 +32,8 @@ describe("Events", () => {
       // We have to use force when using Select2.
       force: true,
     });
-    cy.findByText("Start date")
-      .siblings()
-      .findByLabelText("Date")
-      .type(events.singleEvent.start.format("YYYY-MM-DD"));
-    cy.findByText("Start date")
-      .siblings()
-      .findByLabelText("Time")
-      .type(events.singleEvent.start.format("HH:mm"));
-    cy.findByText("End date")
-      .siblings()
-      .findByLabelText("Date")
-      .type(events.singleEvent.end.format("YYYY-MM-DD"));
-    cy.findByText("End date")
-      .siblings()
-      .findByLabelText("Time")
-      .type(events.singleEvent.end.format("HH:mm"));
+    setDate("Start date", events.singleEvent.start);
+    setDate("End date", events.singleEvent.end);
     cy.findByRole("button", { name: "Save" }).click();
 
     // Ensure that the core data from the event is displayed on the resulting page.
@@ -53,14 +50,7 @@ describe("Events", () => {
   it("prefills end date/time based on start date/time", () => {
     // Login as admin.
     cy.drupalLogin("/events/add/default");
-    cy.findByText("Start date")
-      .siblings()
-      .findByLabelText("Date")
-      .type(events.singleEvent.start.format("YYYY-MM-DD"));
-    cy.findByText("Start date")
-      .siblings()
-      .findByLabelText("Time")
-      .type(events.singleEvent.start.format("HH:mm"));
+    setDate("Start date", events.singleEvent.start);
     cy.findByText("End date")
       .siblings()
       .findByLabelText("Date")
