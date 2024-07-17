@@ -73,6 +73,8 @@ describe("Events", () => {
         cy.findByRole("dialog")
           .findByRole("button", { name: "Delete" })
           .click();
+
+        // Return to the event list to prepare for the next iteration.
         cy.visit("/admin/content/eventseries");
       });
   });
