@@ -347,7 +347,8 @@
                 "3413314: Include .links.menu.yml files in YamlExtractor.php": "https://www.drupal.org/files/issues/2024-01-08/potion-add_links_menu_yml_title_and_description_to_yaml_extractor-3413314-3.patch"
             },
             "drupal/purge": {
-                "Combat NoCorrespondingEntityClassException": "patches/purge-5340bcf-combat-nocorresponding-entity-exception.patch"
+                "Combat NoCorrespondingEntityClassException": "patches/purge-5340bcf-combat-nocorresponding-entity-exception.patch",
+                "3462078: Disabling late runtime processor when using CLI": "https://git.drupalcode.org/project/purge/-/commit/14c09e0ec4f1f46df0f19876ad6b3e8c93921e00.patch"
             },
             "drupal/recurring_events": {
                 "3178696: Make compatible with Scheduler": "https://git.drupalcode.org/project/recurring_events/-/merge_requests/86.patch",
