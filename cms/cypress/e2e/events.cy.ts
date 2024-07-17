@@ -1,4 +1,5 @@
 import * as dayjs from "dayjs";
+import "cypress-if";
 
 const events = {
   singleEvent: {
@@ -52,22 +53,27 @@ describe("Events", () => {
   before(() => {
     cy.drupalLogin("/admin/content/eventseries");
     // Delete all preexisting instances of each event.
-    cy.findAllByRole("link", { name: events.singleEvent.title }).each(() => {
-      // We have to repeat the selector as Cypress will otherwise complain about
-      // missing references to elements when clicking the page.
-      cy.findAllByRole("link", { name: events.singleEvent.title })
-        .first()
-        .click();
-      cy.findByRole("link", {
-        name: `Edit ${events.singleEvent.title}`,
-      }).click();
-      cy.findByRole("button", { name: "More actions" })
-        .click()
-        .parent()
-        .findByRole("link", { name: "Delete" })
-        .click();
-      cy.findByRole("dialog").findByRole("button", { name: "Delete" }).click();
-      cy.visit("/admin/content/eventseries");
-    });
+    cy.get("a")
+      .contains(events.singleEvent.title)
+      .if()
+      .each(() => {
+        // We have to repeat the selector as Cypress will otherwise complain about
+        // missing references to elements when clicking the page.
+        cy.findAllByRole("link", { name: events.singleEvent.title })
+          .first()
+          .click();
+        cy.findByRole("link", {
+          name: `Edit ${events.singleEvent.title}`,
+        }).click();
+        cy.findByRole("button", { name: "More actions" })
+          .click()
+          .parent()
+          .findByRole("link", { name: "Delete" })
+          .click();
+        cy.findByRole("dialog")
+          .findByRole("button", { name: "Delete" })
+          .click();
+        cy.visit("/admin/content/eventseries");
+      });
   });
 });
