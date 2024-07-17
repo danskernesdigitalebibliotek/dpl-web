@@ -50,6 +50,32 @@ describe("Events", () => {
     );
   });
 
+  it("prefills end date/time based on start date/time", () => {
+    // Login as admin.
+    cy.drupalLogin("/events/add/default");
+    cy.findByText("Start date")
+      .siblings()
+      .findByLabelText("Date")
+      .type(events.singleEvent.start.format("YYYY-MM-DD"));
+    cy.findByText("Start date")
+      .siblings()
+      .findByLabelText("Time")
+      .type(events.singleEvent.start.format("HH:mm"));
+    cy.findByText("End date")
+      .siblings()
+      .findByLabelText("Date")
+      .focus()
+      .should("have.value", events.singleEvent.start.format("YYYY-MM-DD"));
+    cy.findByText("End date")
+      .siblings()
+      .findByLabelText("Time")
+      .focus()
+      .should(
+        "have.value",
+        events.singleEvent.start.add(1, "hour").format("HH:mm")
+      );
+  });
+
   before(() => {
     cy.drupalLogin("/admin/content/eventseries");
     // Delete all preexisting instances of each event.
