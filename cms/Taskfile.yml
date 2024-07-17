@@ -189,7 +189,7 @@ tasks:
   dev:enable-dev-tools:
     desc: Enable dev modules and settings, which are not to be used in Prod. They are config-ignored
     cmds:
-      - task dev:cli -- drush install -y devel dpl_example_content field_ui restui uuid_url views_ui dblog
+      - task dev:cli -- drush install -y devel dpl_example_content field_ui purge_ui restui uuid_url views_ui dblog
 
   dev:enable-xdebug:
     desc: "Enable xdebug within the container."
