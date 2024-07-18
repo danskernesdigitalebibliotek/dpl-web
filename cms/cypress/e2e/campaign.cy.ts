@@ -287,6 +287,49 @@ describe("Campaign creation and endpoint", () => {
       .should("equal", 404);
   });
 
+  it("returns data for editorial users", () => {
+    cy.drupalLogin();
+    cy.api("POST", "/dpl_campaign/match", [
+      {
+        name: "materialTypes",
+        values: [
+          {
+            key: "Bog",
+            term: "Bog",
+            score: 1,
+          },
+        ],
+      },
+    ]).then((response) => {
+      expect(response.status).to.eq(200);
+    });
+    cy.anonymousUser();
+  });
+
+  it("returns data for patron users", () => {
+    cy.adgangsplatformenLogin({
+      authorizationCode: "auth-code",
+      userCPR: 1234567890,
+      userGuid: "abcd-1234-efgh",
+      accessToken: "some-token",
+    });
+    cy.api("POST", "/dpl_campaign/match", [
+      {
+        name: "materialTypes",
+        values: [
+          {
+            key: "Bog",
+            term: "Bog",
+            score: 1,
+          },
+        ],
+      },
+    ]).then((response) => {
+      expect(response.status).to.eq(200);
+    });
+    cy.anonymousUser();
+  });
+
   before(() => {
     cy.drupalLogin();
 
