@@ -43,7 +43,10 @@ describe("Varnish", () => {
     cy.visit(node.path);
     cy.findByRole("link", {
       name: `Edit ${node.title}`,
-    }).click();
+    }).click({
+      // Use force as the toolbar may cover the Edit link.
+      force: true,
+    });
     cy.findByLabelText("Subtitle").type(node.subtitle);
     cy.findByRole("button", { name: "Save" }).click();
     cy.contains(node.title);
