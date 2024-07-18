@@ -95,6 +95,10 @@ Cypress.Commands.add("drupalLogin", (url?: string) => {
   }
 });
 
+Cypress.Commands.add("anonymousUser", () => {
+  cy.session("anonymous", () => {});
+});
+
 Cypress.Commands.add("drupalLogout", () => {
   cy.visit("/logout");
 });
@@ -338,6 +342,7 @@ declare global {
       logRequests(): Chainable<null>;
       getRequestCount(request: RequestPattern): Chainable<number>;
       resetRequests(): Chainable<null>;
+      anonymousUser(): Chainable<null>;
       drupalLogin(url?: string): Chainable<null>;
       drupalLogout(): Chainable<null>;
       drupalCron(): Chainable<null>;

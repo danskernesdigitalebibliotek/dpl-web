@@ -10,7 +10,7 @@ const varnishCacheHeader = "x-varnish-cache";
 
 describe("Varnish", () => {
   it("is caching responses for anonymous users", () => {
-    cy.session("anonymous", () => {});
+    cy.anonymousUser();
     // Query the front page twice to ensure that Varnish has had a chance to
     // cache the response.
     cy.request("/");
@@ -33,7 +33,7 @@ describe("Varnish", () => {
 
     // Check that the node is accessible and rendered with the expected content
     // for anonymous users.
-    cy.session("anonymous", () => {});
+    cy.anonymousUser();
     cy.visit(node.path);
     cy.contains(node.title);
     cy.should("not.contain", node.subtitle);
@@ -54,7 +54,7 @@ describe("Varnish", () => {
 
     // Ensure that the cache is purged and update shown immediately to
     // anonymous users.
-    cy.session("anonymous", () => {});
+    cy.anonymousUser();
     cy.request(node.path).then((response) => {
       cy.log("Headers", response.headers);
       expect(response.headers).to.have.property(varnishCacheHeader, "MISS");
@@ -89,5 +89,7 @@ describe("Varnish", () => {
         // Return to the node list to prepare for the next iteration.
         cy.visit("/admin/content");
       });
+
+    cy.anonymousUser();
   });
 });
