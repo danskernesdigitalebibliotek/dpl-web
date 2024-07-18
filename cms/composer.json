@@ -126,6 +126,7 @@
         "drupal/gin_login": "^2.1",
         "drupal/gin_toolbar": "^1.0@RC",
         "drupal/handy_cache_tags": "^1.4",
+        "drupal/health_check": "^3.1",
         "drupal/honeypot": "^2.1",
         "drupal/job_scheduler": "^4.0",
         "drupal/jsnlog": "^1.3",
