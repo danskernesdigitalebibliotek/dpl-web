@@ -6,6 +6,7 @@ dependencies:
     - dpl_campaign
     - dpl_login
     - serialization
+    - user
 id: campaign.match
 plugin_id: 'campaign:match'
 granularity: resource
@@ -16,3 +17,4 @@ configuration:
     - json
   authentication:
     - dpl_login_user_token
+    - cookie
