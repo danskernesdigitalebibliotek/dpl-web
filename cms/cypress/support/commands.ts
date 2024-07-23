@@ -1,3 +1,4 @@
+import "@testing-library/cypress/add-commands";
 import { WireMockRestClient } from "wiremock-rest-client";
 import { Options } from "wiremock-rest-client/dist/model/options.model";
 import { StubMapping } from "wiremock-rest-client/dist/model/stub-mapping.model";
