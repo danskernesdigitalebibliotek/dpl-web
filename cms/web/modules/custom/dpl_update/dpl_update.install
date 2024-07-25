@@ -197,3 +197,15 @@ function dpl_update_update_10010() : string {
 function dpl_update_update_10011(): string {
   return _dpl_update_install_modules(['health_check']);
 }
+
+/**
+ * Install password policy modules.
+ */
+function dpl_update_update_10012(): string {
+  return _dpl_update_install_modules([
+    'password_policy',
+    'password_policy_length',
+    'password_policy_characters',
+    'password_policy_character_types',
+  ]);
+}
