@@ -45,13 +45,11 @@ class PriceFormatter {
 
     switch ($currency) {
       case 'DKK':
-        $this->currencyPrefix = NULL;
         $this->currencySuffix = $this->translation->translate(' DKK', [], ['context' => "DPL event"])->render();
         break;
 
       case 'EUR':
         $this->currencyPrefix = '€ ';
-        $this->currencySuffix = NULL;
         break;
     }
   }
