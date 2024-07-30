@@ -15,6 +15,7 @@ dependencies:
     - field.field.eventinstance.default.field_event_state
     - field.field.eventinstance.default.field_event_title
     - field.field.eventinstance.default.field_external_admin_link
+    - field.field.eventinstance.default.field_screen_names
     - field.field.eventinstance.default.field_tags
     - field.field.eventinstance.default.field_teaser_image
     - field.field.eventinstance.default.field_teaser_text
@@ -56,6 +57,7 @@ third_party_settings:
       children:
         - field_categories
         - field_tags
+        - field_screen_names
       label: Tagging
       region: content
       parent_name: ''
@@ -219,13 +221,23 @@ content:
       placeholder_url: ''
       placeholder_title: ''
     third_party_settings: {  }
-  field_tags:
+  field_screen_names:
     type: select2_entity_reference
     weight: 7
     region: content
     settings:
       width: 100%
       autocomplete: false
+      match_operator: CONTAINS
+      match_limit: 10
+    third_party_settings: {  }
+  field_tags:
+    type: select2_entity_reference
+    weight: 6
+    region: content
+    settings:
+      width: 100%
+      autocomplete: true
       match_operator: CONTAINS
       match_limit: 10
     third_party_settings: {  }

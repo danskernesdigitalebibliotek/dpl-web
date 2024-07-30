@@ -1,0 +1,29 @@
+uuid: 1587448d-7660-4bd9-849c-d0de6318a5a2
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.eventseries.field_screen_names
+    - recurring_events.eventseries_type.default
+    - taxonomy.vocabulary.screen_name
+id: eventseries.default.field_screen_names
+field_name: field_screen_names
+entity_type: eventseries
+bundle: default
+label: 'Screen names'
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings:
+  handler: 'default:taxonomy_term'
+  handler_settings:
+    target_bundles:
+      screen_name: screen_name
+    sort:
+      field: name
+      direction: asc
+    auto_create: false
+    auto_create_bundle: ''
+field_type: entity_reference
