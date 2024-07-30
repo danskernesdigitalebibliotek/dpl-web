@@ -133,8 +133,11 @@ class RelatedContent {
 
   /**
    * The title that may be shown as part of the list.
+   *
+   * @var NULL|string|array<mixed>
+   *  The render array, or plain text title.
    */
-  public ?string $title = NULL;
+  public NULL|string|array $title = NULL;
 
   /**
    * The 'more link' that may be shown as part of the list.
@@ -547,9 +550,7 @@ class RelatedContent {
     }
 
     if ($this->listStyle == RelatedContentListStyle::Grid) {
-      // Visually, grid looks broken with less than 3 items, and does not
-      // support more than 6.
-      $this->minItems = 3;
+      $this->minItems = 1;
       $this->maxItems = 6;
     }
 

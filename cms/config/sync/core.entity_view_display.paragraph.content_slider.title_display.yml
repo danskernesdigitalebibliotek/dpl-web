@@ -1,36 +1,28 @@
-uuid: d956e12e-1d01-4330-ad74-d5316984263d
+uuid: 8509e3a6-dbe3-4740-a160-d4d2234f73f3
 langcode: en
 status: true
 dependencies:
   config:
-    - core.entity_view_mode.paragraph.preview
+    - core.entity_view_mode.paragraph.title_display
     - field.field.paragraph.content_slider.field_content_references
     - field.field.paragraph.content_slider.field_title
     - field.field.paragraph.content_slider.field_underlined_title
     - paragraphs.paragraphs_type.content_slider
   module:
-    - dynamic_entity_reference
     - text
-id: paragraph.content_slider.preview
+id: paragraph.content_slider.title_display
 targetEntityType: paragraph
 bundle: content_slider
-mode: preview
+mode: title_display
 content:
-  field_content_references:
-    type: dynamic_entity_reference_label
-    label: above
-    settings:
-      link: true
-    third_party_settings: {  }
-    weight: 1
-    region: content
   field_underlined_title:
     type: text_default
-    label: above
+    label: hidden
     settings: {  }
     third_party_settings: {  }
     weight: 0
     region: content
 hidden:
+  field_content_references: true
   field_title: true
   search_api_excerpt: true

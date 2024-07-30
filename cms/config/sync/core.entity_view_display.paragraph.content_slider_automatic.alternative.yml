@@ -1,8 +1,9 @@
-uuid: dd275d62-127e-415e-a228-b12dbd00b4ec
+uuid: 849cede3-2228-40b1-b29d-7177810fbc8b
 langcode: en
-status: true
+status: false
 dependencies:
   config:
+    - core.entity_view_mode.paragraph.alternative
     - field.field.paragraph.content_slider_automatic.field_filter_branches
     - field.field.paragraph.content_slider_automatic.field_filter_categories
     - field.field.paragraph.content_slider_automatic.field_filter_cond_type
@@ -13,10 +14,10 @@ dependencies:
     - paragraphs.paragraphs_type.content_slider_automatic
   module:
     - text
-id: paragraph.content_slider_automatic.default
+id: paragraph.content_slider_automatic.alternative
 targetEntityType: paragraph
 bundle: content_slider_automatic
-mode: default
+mode: alternative
 content:
   field_underlined_title:
     type: text_default

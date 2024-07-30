@@ -1,0 +1,24 @@
+uuid: 90768212-7738-44fe-8043-9db7f76dd92e
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.paragraph.field_underlined_title
+    - filter.format.underlined_title
+    - paragraphs.paragraphs_type.content_slider
+  module:
+    - text
+id: paragraph.content_slider.field_underlined_title
+field_name: field_underlined_title
+entity_type: paragraph
+bundle: content_slider
+label: Title
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings:
+  allowed_formats:
+    - underlined_title
+field_type: text_long
