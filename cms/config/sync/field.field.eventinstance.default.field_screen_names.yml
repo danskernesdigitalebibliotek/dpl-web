@@ -11,7 +11,7 @@ field_name: field_screen_names
 entity_type: eventinstance
 bundle: default
 label: 'Screen names'
-description: ''
+description: 'Select which screens to display this event on. '
 required: false
 translatable: false
 default_value: {  }
