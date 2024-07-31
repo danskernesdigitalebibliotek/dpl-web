@@ -73,6 +73,7 @@ class EventRestMapper {
       'series' => new EventsGET200ResponseInnerSeries([
         'uuid' => $this->event->getEventSeries()->uuid(),
       ]),
+      'screenNames' => $this->eventWrapper->getScreenNames(),
     ]);
   }
 

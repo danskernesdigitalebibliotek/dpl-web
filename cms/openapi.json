@@ -1079,6 +1079,14 @@
                         "description": "An absolute URL provided by the third party where editorial users can administer the event. Accessing this URL should require authentication."
                       }
                     }
+                  },
+                  "screen_names": {
+                    "type": "array",
+                    "description": "The screens this event should be shown on.",
+                    "items": {
+                      "type": "string",
+                      "description": "A screen name."
+                    }
                   }
                 },
                 "required": ["uuid", "title", "created_at", "updated_at", "url", "state", "date_time"]

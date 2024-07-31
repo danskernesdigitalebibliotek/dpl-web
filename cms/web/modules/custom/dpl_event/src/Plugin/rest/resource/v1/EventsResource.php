@@ -245,6 +245,14 @@ final class EventsResource extends EventResourceBase {
                       ],
                     ],
                   ],
+                  'screen_names' => [
+                    'type' => 'array',
+                    'description' => 'The screens this event should be shown on.',
+                    'items' => [
+                      'type' => 'string',
+                      'description' => 'A screen name.',
+                    ],
+                  ],
                 ],
                 'required' => ['uuid', 'title', 'created_at', 'updated_at', 'url', 'state', 'date_time'],
               ],

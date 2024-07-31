@@ -121,6 +121,25 @@ class EventWrapper {
   }
 
   /**
+   * Getting associated screen names.
+   *
+   * @return string[]
+   *   The screen names.
+   */
+  public function getScreenNames(): array {
+    $names = [];
+
+    /** @var \Drupal\taxonomy\TermInterface[] $screens */
+    $screens = $this->event->get('event_screen_names')->referencedEntities();
+
+    foreach ($screens as $screen) {
+      $names[] = $screen->getName();
+    }
+
+    return $names;
+  }
+
+  /**
    * Get the EventState object of an eventinstance.
    */
   public function getState(): ?EventState {
