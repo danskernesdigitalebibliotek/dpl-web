@@ -8,9 +8,12 @@
 use Drupal\Core\Datetime\DrupalDateTime;
 use Drupal\Core\Entity\EntityInterface;
 use Drupal\Core\Entity\FieldableEntityInterface;
+use Drupal\Core\Entity\Query\QueryInterface;
+use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\Url;
 use Drupal\dpl_event\EventState;
 use Drupal\dpl_event\EventWrapper;
+use Drupal\dpl_event\Form\SettingsForm;
 use Drupal\dpl_event\Workflows\OccurredSchedule;
 use Drupal\dpl_event\Workflows\UnpublishSchedule;
 use Drupal\drupal_typed\DrupalTyped;
@@ -286,4 +289,35 @@ function dpl_event_gin_content_form_routes() : array {
     'entity.eventseries.add_instance_form',
     'entity.eventinstance.edit_form',
   ];
+}
+
+/**
+ * Implements hook_entity_query_TAG_alter().
+ *
+ * Alter vocabulary queries to hide the vocabulary when the screens feature
+ * is disabled.
+ */
+function dpl_event_entity_query_taxonomy_vocabulary_alter(QueryInterface $query): void {
+  if (!\Drupal::config(SettingsForm::CONFIG_NAME)->get('enable_screen_name')) {
+    $query->condition('vid', 'screen_name', '<>');
+  }
+}
+
+/**
+ * Implements hook_form_alter().
+ *
+ * Alter event forms to hide screen names when the feature is disabled.
+ */
+function dpl_event_form_alter(array &$form, FormStateInterface $form_state, string $form_id): void {
+  if (!in_array($form_id, ['eventseries_default_edit_form', 'eventinstance_default_edit_form'])) {
+    return;
+  }
+
+  if (\Drupal::config(SettingsForm::CONFIG_NAME)->get('enable_screen_name')) {
+    return;
+  }
+
+  if (isset($form['field_screen_names'])) {
+    $form['field_screen_names']['#access'] = FALSE;
+  }
 }
