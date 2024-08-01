@@ -313,11 +313,19 @@ function dpl_event_form_alter(array &$form, FormStateInterface $form_state, stri
     return;
   }
 
+  if (!isset($form['field_screen_names'])) {
+    return;
+  }
+
+  // Undo select2s adding of help text.
+  if (isset($form['field_screen_names']['widget']['#description']['#items'])) {
+    $form['field_screen_names']['widget']['#description'] =
+      $form['field_screen_names']['widget']['#description']['#items'][0];
+  }
+
   if (\Drupal::config(SettingsForm::CONFIG_NAME)->get('enable_screen_name')) {
     return;
   }
 
-  if (isset($form['field_screen_names'])) {
-    $form['field_screen_names']['#access'] = FALSE;
-  }
+  $form['field_screen_names']['#access'] = FALSE;
 }
