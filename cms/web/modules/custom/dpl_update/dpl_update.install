@@ -143,6 +143,10 @@ function dpl_update_install(): string {
   $messages[] = dpl_update_update_10006();
   $messages[] = dpl_update_update_10008();
   $messages[] = dpl_update_update_10009();
+  $messages[] = dpl_update_update_10011();
+  $messages[] = dpl_update_update_10010();
+  $messages[] = dpl_update_update_10012();
+  $messages[] = dpl_update_update_10013();
 
   return implode('\r\n', $messages);
 }
@@ -235,4 +239,12 @@ function dpl_update_update_10011(): string {
  */
 function dpl_update_update_10012(): string {
   return _dpl_update_update_translation(' DKK', ' kr.', 'DPL event');
+}
+
+
+/**
+ * Installing editor_advanced_link.
+ */
+function dpl_update_update_10013(): string {
+  return _dpl_update_install_modules(['editor_advanced_link']);
 }
