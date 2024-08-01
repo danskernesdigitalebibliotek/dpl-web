@@ -58,7 +58,6 @@ third_party_settings:
       children:
         - field_categories
         - field_tags
-        - field_screen_names
       label: Tagging
       region: content
       parent_name: ''
@@ -81,6 +80,22 @@ third_party_settings:
       region: content
       parent_name: ''
       weight: 21
+      format_type: details_sidebar
+      format_settings:
+        classes: ''
+        show_empty_fields: false
+        id: ''
+        open: true
+        description: ''
+        required_fields: true
+        weight: 0
+    group_infoscreen:
+      children:
+        - field_screen_names
+      label: Infoscreen
+      region: content
+      parent_name: ''
+      weight: 24
       format_type: details_sidebar
       format_settings:
         classes: ''
@@ -227,7 +242,7 @@ content:
     third_party_settings: {  }
   field_screen_names:
     type: select2_entity_reference
-    weight: 34
+    weight: 35
     region: content
     settings:
       width: 100%
@@ -305,7 +320,7 @@ content:
     third_party_settings: {  }
   path:
     type: path
-    weight: 24
+    weight: 25
     region: content
     settings: {  }
     third_party_settings: {  }
