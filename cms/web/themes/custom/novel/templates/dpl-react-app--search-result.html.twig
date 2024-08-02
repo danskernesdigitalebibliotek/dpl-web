@@ -1,4 +1,10 @@
 <div class="dpl-react-app-container--page">
+
+  {#
+    Everything inside this div will be replaced by the react app.
+    That means that all of this content is just skeleton, to avoid a brief
+    blank page whilst React is booting up.
+  #}
   <div{{ attributes }}>
     <div class="card-list-page">
       {% if showing_results_for_text %}
@@ -6,6 +12,13 @@
           {{ showing_results_for_text }}
         </h1>
       {% endif %}
+
+      {% if web_search_link %}
+      <h2 class="text-header-h5 mb-8">
+        {{ web_search_link }}
+      </h2>
+      {% endif %}
+
       <div class="card-list-page__skeleton-facet-line--mobile">
         <div class="ssc mt-48">
           <div class="ssc-head-line mb"></div>

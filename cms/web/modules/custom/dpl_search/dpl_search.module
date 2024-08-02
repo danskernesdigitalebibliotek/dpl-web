@@ -13,6 +13,57 @@ use Drupal\views\ViewExecutable;
 use Drupal\views\Views;
 
 /**
+ * Implements hook_preprocess().
+ *
+ * Add a link to the editorial web search, on the material search page,
+ * if we find any results from the search string query.
+ */
+function dpl_search_preprocess_dpl_react_app(array &$variables): void {
+  $name = $variables['name'] ?? NULL;
+
+  if ($name !== 'search-result') {
+    return;
+  }
+
+  $input = \Drupal::request()->query->get(DplSearchSettings::MATERIAL_QUERY_KEY);
+
+  if (empty($input) || !is_string($input)) {
+    return;
+  }
+
+  $input = urldecode($input);
+
+  $view = Views::getView(DplSearchSettings::EDITORIAL_VIEW_ID);
+
+  if (!($view instanceof ViewExecutable)) {
+    return;
+  }
+
+  $view->setDisplay('page');
+  $view->setExposedInput([DplSearchSettings::EDITORIAL_QUERY_KEY => $input]);
+  $view->execute();
+  if (empty($view->total_rows)) {
+    return;
+  }
+
+  $link = Link::createFromRoute(
+    t(
+      'Show website results for "@input" (@total)',
+      ['@input' => $input, '@total' => $view->total_rows],
+    ['context' => 'dpl_search']),
+    'view.' . DplSearchSettings::EDITORIAL_VIEW_ID . '.page',
+    [],
+    ['query' => [DplSearchSettings::EDITORIAL_QUERY_KEY => $input]]
+  );
+
+  $variables['attributes']['data-web-search-link-text'] = $link->getText();
+  $variables['attributes']['data-web-search-link-url'] = $link->getUrl()->setAbsolute(TRUE)->toString();
+
+  // This link is only used for the brief skeleton view, whilst React loads.
+  $variables['web_search_link'] = $link;
+}
+
+/**
  * Implements hook_preprocess_HOOK().
  *
  * Altering the editorial view, to show dynamic links and title.

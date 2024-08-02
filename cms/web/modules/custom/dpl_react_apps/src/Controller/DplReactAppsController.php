@@ -112,6 +112,9 @@ class DplReactAppsController extends ControllerBase {
       'blacklisted-availability-branches-config' => $this->buildBranchesListProp($this->branchSettings->getExcludedAvailabilityBranches()),
       'blacklisted-search-branches-config' => $this->buildBranchesListProp($this->branchSettings->getExcludedSearchBranches()),
       'branches-config' => $this->buildBranchesJsonProp($this->branchRepository->getBranches()),
+      // Dynamic values, set through preprocess.
+      'web-search-link-text' => NULL,
+      'web-search-link-url' => NULL,
 
       // Texts.
       'add-more-filters-text' => $this->t('+ more filters', [], ['context' => 'Search Result']),
