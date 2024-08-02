@@ -68,6 +68,7 @@ module:
   dpl_related_content: 0
   dpl_reservations: 0
   dpl_rest_base: 0
+  dpl_search: 0
   dpl_something_similar: 0
   dpl_static_content: 0
   dpl_static_content_20240404_opening_hours: 0
