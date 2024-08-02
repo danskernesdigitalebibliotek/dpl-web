@@ -7,8 +7,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2024-08-02 07:59+0200\n"
-"PO-Revision-Date: 2024-08-02 07:59+0200\n"
+"POT-Creation-Date: 2024-08-02 11:44+0200\n"
+"PO-Revision-Date: 2024-08-02 11:44+0200\n"
 "Last-Translator: NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
 "MIME-Version: 1.0\n"
@@ -280,6 +280,24 @@ msgid ""
 msgstr ""
 
 msgctxt "DPL event"
+msgid "Price Currency"
+msgstr ""
+
+msgctxt "DPL event"
+msgid ""
+"The currency that is used whenever prices are displayed - both on the "
+"website, but also in the event API."
+msgstr ""
+
+msgctxt "DPL event"
+msgid "Danish kroner"
+msgstr ""
+
+msgctxt "DPL event"
+msgid "Euros"
+msgstr ""
+
+msgctxt "DPL event"
 msgid "Automatic unpublication"
 msgstr "Automatisk afpublicering"
 
@@ -314,6 +332,10 @@ msgstr "Næste"
 msgctxt "DPL Event"
 msgid "Use the address from associated branch as fallback."
 msgstr "Brug adressen fra det tilknyttede bibliotek som fallback."
+
+msgctxt "DPL event"
+msgid "DKK"
+msgstr ""
 
 msgid "Free"
 msgstr "Gratis"
