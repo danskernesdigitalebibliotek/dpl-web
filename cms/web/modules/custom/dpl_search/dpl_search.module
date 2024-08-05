@@ -5,7 +5,6 @@
  * DPL Search drupal module file.
  */
 
-use Drupal\Core\Link;
 use Drupal\Core\Url;
 use Drupal\dpl_react_apps\Controller\DplReactAppsController;
 use Drupal\dpl_search\DplSearchSettings;
@@ -46,21 +45,20 @@ function dpl_search_preprocess_dpl_react_app(array &$variables): void {
     return;
   }
 
-  $link = Link::createFromRoute(
-    t(
-      'Show website results for "@input" (@total)',
-      ['@input' => $input, '@total' => $view->total_rows],
-    ['context' => 'dpl_search']),
+  $url = Url::fromRoute(
     'view.' . DplSearchSettings::EDITORIAL_VIEW_ID . '.page',
     [],
     ['query' => [DplSearchSettings::EDITORIAL_QUERY_KEY => $input]]
-  );
+  )->setAbsolute(TRUE)->toString();
 
-  $variables['attributes']['data-web-search-link-text'] = $link->getText();
-  $variables['attributes']['data-web-search-link-url'] = $link->getUrl()->setAbsolute(TRUE)->toString();
+  $config = [
+    'webSearchText' => $input,
+    'webSearchTotal' => $view->total_rows,
+    'webSearchUrl' => $url,
+    'hasWebSearchResults' => TRUE,
+  ];
 
-  // This link is only used for the brief skeleton view, whilst React loads.
-  $variables['web_search_link'] = $link;
+  $variables['attributes']['data-web-search-config'] = Safe\json_encode($config);
 }
 
 /**
@@ -91,9 +89,9 @@ function dpl_search_preprocess_views_view(array &$variables): void {
     $material_url = Url::fromRoute('dpl_react_apps.search_result', [], ['query' => [DplSearchSettings::MATERIAL_QUERY_KEY => $search_input]])->toString();
 
     $variables['header']['description'] = [
-      '#prefix' => '<h2 class="content-list-page__subheading"><a href="' . $material_url . '">',
+      '#prefix' => '<h2 class="content-list-page__subheading">Switch to results for the <a href="' . $material_url . '">',
       '#suffix' => '</h2></a>',
-      '#markup' => t('Switch to results for the library materials.', [], ['context' => 'dpl_search']),
+      '#markup' => t('library materials.', [], ['context' => 'dpl_search']),
     ];
 
   }
