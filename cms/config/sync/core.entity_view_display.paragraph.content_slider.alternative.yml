@@ -1,18 +1,20 @@
-uuid: ffe2edaa-033c-4df9-b2d8-7740217d8ade
+uuid: fadd206c-8a36-443e-a9e2-e0d785cb33d1
 langcode: en
-status: true
+status: false
 dependencies:
   config:
+    - core.entity_view_mode.paragraph.alternative
     - field.field.paragraph.content_slider.field_content_references
     - field.field.paragraph.content_slider.field_title
     - field.field.paragraph.content_slider.field_underlined_title
     - paragraphs.paragraphs_type.content_slider
   module:
     - dynamic_entity_reference
-id: paragraph.content_slider.default
+    - text
+id: paragraph.content_slider.alternative
 targetEntityType: paragraph
 bundle: content_slider
-mode: default
+mode: alternative
 content:
   field_content_references:
     type: dynamic_entity_reference_entity_view
@@ -61,9 +63,15 @@ content:
         view_mode: default
         link: false
     third_party_settings: {  }
+    weight: 1
+    region: content
+  field_underlined_title:
+    type: text_default
+    label: hidden
+    settings: {  }
+    third_party_settings: {  }
     weight: 0
     region: content
 hidden:
   field_title: true
-  field_underlined_title: true
   search_api_excerpt: true

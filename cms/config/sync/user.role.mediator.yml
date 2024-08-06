@@ -14,6 +14,7 @@ dependencies:
     - node.type.page
     - taxonomy.vocabulary.tags
   module:
+    - administerusersbyrole
     - content_lock
     - dpl_admin
     - entity_clone
@@ -44,6 +45,8 @@ permissions:
   - 'access site in maintenance mode'
   - 'access taxonomy overview'
   - 'access toolbar'
+  - 'access user profiles'
+  - 'access users overview'
   - 'add eventseries entity'
   - 'administer entity field inheritance'
   - 'administer redirects'
@@ -118,3 +121,4 @@ permissions:
   - 'view unpublished eventinstance entity'
   - 'view unpublished eventseries entity'
   - 'view unpublished paragraphs'
+  - 'view users by role'
