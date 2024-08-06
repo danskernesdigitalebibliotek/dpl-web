@@ -131,6 +131,9 @@ module:
   options: 0
   override_node_options: 0
   paragraphs_features: 0
+  password_policy_character_types: 0
+  password_policy_characters: 0
+  password_policy_length: 0
   path: 0
   path_alias: 0
   phpass: 0
@@ -173,6 +176,7 @@ module:
   webform_ui: 0
   pathauto: 1
   selective_better_exposed_filters: 1
+  password_policy: 10
   views: 10
   paragraphs: 11
   paragraphs_ee: 15

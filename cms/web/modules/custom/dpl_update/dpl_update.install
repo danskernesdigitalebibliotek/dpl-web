@@ -148,6 +148,7 @@ function dpl_update_install(): string {
   $messages[] = dpl_update_update_10011();
   $messages[] = dpl_update_update_10012();
   $messages[] = dpl_update_update_10013();
+  $messages[] = dpl_update_update_10014();
 
   return implode('\r\n', $messages);
 }
@@ -247,4 +248,16 @@ function dpl_update_update_10012(): string {
  */
 function dpl_update_update_10013(): string {
   return _dpl_update_update_translation(' DKK', ' kr.', 'DPL event');
+}
+
+/**
+ * Install password policy modules.
+ */
+function dpl_update_update_10014(): string {
+  return _dpl_update_install_modules([
+    'password_policy',
+    'password_policy_length',
+    'password_policy_characters',
+    'password_policy_character_types',
+  ]);
 }
