@@ -52,12 +52,12 @@ default:
       tag: meta
       attributes:
         property: 'og:image'
-        content: 'http://dapple-cms.docker/sites/default/files/styles/open_graph/public/2024-01/inaki-del-olmo-NIJuEQw0RKg-unsplash_0.jpg?h=4c1fc98e&itok=5YzDLuIH'
+        content: 'http://dapple-cms.docker/sites/default/files/styles/open_graph/public/2024-01/inaki-del-olmo-NIJuEQw0RKg-unsplash_0.jpg?h=4c1fc98e&itok=ZFfa6Bkd'
     -
       tag: meta
       attributes:
         property: 'og:image:url'
-        content: 'http://dapple-cms.docker/sites/default/files/styles/open_graph/public/2024-01/inaki-del-olmo-NIJuEQw0RKg-unsplash_0.jpg?h=4c1fc98e&itok=5YzDLuIH'
+        content: 'http://dapple-cms.docker/sites/default/files/styles/open_graph/public/2024-01/inaki-del-olmo-NIJuEQw0RKg-unsplash_0.jpg?h=4c1fc98e&itok=ZFfa6Bkd'
     -
       tag: meta
       attributes:

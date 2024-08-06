@@ -39,6 +39,8 @@ updates:
           - "drupal/core*"
         update-types:
           - "patch"
+    ignore:
+      - dependency-name: 'drupal/potion'
     schedule:
       interval: weekly
       timezone: Europe/Copenhagen

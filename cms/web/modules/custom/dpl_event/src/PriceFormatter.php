@@ -3,7 +3,9 @@
 namespace Drupal\dpl_event;
 
 use Brick\Math\BigDecimal;
+use Drupal\Core\Config\ConfigFactoryInterface;
 use Drupal\Core\StringTranslation\TranslationInterface;
+use Drupal\dpl_event\Form\SettingsForm;
 use function Safe\sort;
 
 /**
@@ -15,11 +17,42 @@ use function Safe\sort;
 class PriceFormatter {
 
   /**
-   * Constructor.
+   * The currency that prices should be shown in (ISO 4217 code).
+   */
+  public string $currency = 'DKK';
+
+  /**
+   * A possible prefix, shown in currency labels. E.g. "€ ".
+   */
+  public ?string $currencyPrefix = NULL;
+
+  /**
+   * A possible suffix, shown in currency labels. E.g. " DKK".
+   */
+  public ?string $currencySuffix = NULL;
+
+  /**
+   * {@inheritDoc}
    */
   public function __construct(
     protected TranslationInterface $translation,
-  ) {}
+    protected ConfigFactoryInterface $configFactory,
+  ) {
+    $config = $this->configFactory->get(SettingsForm::CONFIG_NAME);
+
+    $currency = $config->get('price_currency') ?? $this->currency;
+    $this->currency = $currency;
+
+    switch ($currency) {
+      case 'DKK':
+        $this->currencySuffix = $this->translation->translate(' DKK', [], ['context' => "DPL event"])->render();
+        break;
+
+      case 'EUR':
+        $this->currencyPrefix = '€ ';
+        break;
+    }
+  }
 
   /**
    * Format a single price.
@@ -35,10 +68,7 @@ class PriceFormatter {
       // Format the numeric part of the price using formatRawPrice.
       $formatted_price = $this->formatRawPrice($price_string);
 
-      // Add the 'kr.' suffix for now.
-      // For multi-currency support this should be replaced by a configurable
-      // suffix and appropriate separators.
-      return $formatted_price . ' kr.';
+      return "{$this->currencyPrefix}$formatted_price{$this->currencySuffix}";
     }
   }
 
@@ -67,22 +97,32 @@ class PriceFormatter {
     $filtered_prices = array_filter($prices, fn($price) => $price > 0);
 
     // Determine the highest price in the range.
-    $highest_price = max($filtered_prices);
-
-    // Format the highest price.
-    $formatted_highest_price = $this->formatRawPrice((string) $highest_price);
+    $highest_price_raw = max($filtered_prices);
 
     // Construct the price range string.
     if ($has_free_price) {
+      // Get the price, with prefix and suffix, as we only use this one.
+      $highest_price_formatted = $this->formatPrice((string) $highest_price_raw);
+
       // Only display "Free" and the highest price.
-      return $this->translation->translate("Free") . ' - ' . $formatted_highest_price . ' kr.';
+      return $this->translation->translate("Free") . " - $highest_price_formatted";
     }
-    else {
+
+    $lowest_price_raw = min($filtered_prices);
+
+    if ($lowest_price_raw != $highest_price_raw) {
       // If no free price, display the range from the lowest to highest price.
-      $lowest_price = min($filtered_prices);
-      $formatted_lowest_price = $this->formatRawPrice((string) $lowest_price);
-      return $formatted_lowest_price . ($lowest_price != $highest_price ? ' - ' . $formatted_highest_price : '') . ' kr.';
+      // We get the prices without prefix and suffix, as we only want one
+      // prefix in the beginning of the whole string, and one suffix in the end
+      // of the string.
+      $lowest_price = $this->formatRawPrice((string) $lowest_price_raw);
+      $highest_price = $this->formatRawPrice((string) $highest_price_raw);
+
+      return "{$this->currencyPrefix}$lowest_price - $highest_price{$this->currencySuffix}";
     }
+
+    // Get the price, with prefix and suffix, as we only use this one.
+    return $this->formatPrice((string) $lowest_price_raw);
   }
 
   /**

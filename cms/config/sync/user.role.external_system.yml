@@ -6,6 +6,7 @@ dependencies:
     - rest.resource.event
     - rest.resource.events
   module:
+    - administerusersbyrole
     - openapi
     - rest
     - system
@@ -18,6 +19,8 @@ permissions:
   - 'access administration pages'
   - 'access openapi api docs'
   - 'access toolbar'
+  - 'access user profiles'
   - 'restful get events'
   - 'restful patch event'
   - 'view the administration theme'
+  - 'view users by role'
