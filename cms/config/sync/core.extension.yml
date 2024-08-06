@@ -5,6 +5,7 @@ module:
   admin_toolbar: 0
   admin_user_language: 0
   administerusersbyrole: 0
+  antibot: 0
   azure_mailer: 0
   basic_auth: 0
   better_exposed_filters: 0

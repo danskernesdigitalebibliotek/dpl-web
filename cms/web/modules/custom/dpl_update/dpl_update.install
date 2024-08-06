@@ -141,8 +141,13 @@ function dpl_update_install(): string {
   $messages[] = dpl_update_update_10004();
   $messages[] = dpl_update_update_10005();
   $messages[] = dpl_update_update_10006();
+  $messages[] = dpl_update_update_10007();
   $messages[] = dpl_update_update_10008();
   $messages[] = dpl_update_update_10009();
+  $messages[] = dpl_update_update_10010();
+  $messages[] = dpl_update_update_10011();
+  $messages[] = dpl_update_update_10012();
+  $messages[] = dpl_update_update_10013();
 
   return implode('\r\n', $messages);
 }
@@ -224,15 +229,22 @@ function dpl_update_update_10010() : string {
 }
 
 /**
- * Install health check module.
+ * Installing antibot module.
  */
 function dpl_update_update_10011(): string {
+  return _dpl_update_install_modules(['antibot']);
+}
+
+/**
+ * Install health check module.
+ */
+function dpl_update_update_10012(): string {
   return _dpl_update_install_modules(['health_check']);
 }
 
 /**
  * Add translation of DKK currency suffix, for displaying event prices.
  */
-function dpl_update_update_10012(): string {
+function dpl_update_update_10013(): string {
   return _dpl_update_update_translation(' DKK', ' kr.', 'DPL event');
 }
