@@ -4,7 +4,11 @@ status: true
 dependencies:
   config:
     - field.field.user.user.field_author_name
+    - field.field.user.user.field_last_password_reset
+    - field.field.user.user.field_password_expiration
+    - field.field.user.user.field_pending_expire_sent
   module:
+    - datetime
     - user
 id: user.user.default
 targetEntityType: user
@@ -24,11 +28,25 @@ content:
       size: 60
       placeholder: ''
     third_party_settings: {  }
+  field_last_password_reset:
+    type: datetime_default
+    weight: 4
+    region: content
+    settings: {  }
+    third_party_settings: {  }
+  field_password_expiration:
+    type: boolean_checkbox
+    weight: 3
+    region: content
+    settings:
+      display_label: true
+    third_party_settings: {  }
   language:
     weight: 2
     region: content
     settings: {  }
     third_party_settings: {  }
 hidden:
+  field_pending_expire_sent: true
   langcode: true
   path: true
