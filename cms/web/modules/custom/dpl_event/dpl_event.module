@@ -318,7 +318,9 @@ function dpl_event_form_alter(array &$form, FormStateInterface $form_state, stri
   }
 
   // Undo select2s adding of help text.
-  if (isset($form['field_screen_names']['widget']['#description']['#items'])) {
+  if (isset($form['field_screen_names']['widget']['#description']) &&
+      is_array($form['field_screen_names']['widget']['#description']) &&
+      is_array($form['field_screen_names']['widget']['#description']['#items'])) {
     $form['field_screen_names']['widget']['#description'] =
       $form['field_screen_names']['widget']['#description']['#items'][0];
   }
