@@ -309,7 +309,13 @@ function dpl_event_entity_query_taxonomy_vocabulary_alter(QueryInterface $query)
  * Alter event forms to hide screen names when the feature is disabled.
  */
 function dpl_event_form_alter(array &$form, FormStateInterface $form_state, string $form_id): void {
-  if (!in_array($form_id, ['eventseries_default_edit_form', 'eventinstance_default_edit_form'])) {
+  $forms = [
+    'eventseries_default_edit_form',
+    'eventseries_default_add_form',
+    'eventinstance_default_edit_form',
+    'eventinstance_default_add_form',
+  ];
+  if (!in_array($form_id, $forms)) {
     return;
   }
 
