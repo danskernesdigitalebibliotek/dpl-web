@@ -258,7 +258,7 @@ msgstr "Beskrivelse"
 #: 
 msgctxt "Work Page"
 msgid "Edition"
-msgstr "Udgave / år"
+msgstr "Nr."
 
 #: 
 msgctxt "Work Page"
