@@ -4,3 +4,4 @@ cloneable_entities:
   - redirect
   - paragraph
   - custom_perms_entity
+  - password_policy

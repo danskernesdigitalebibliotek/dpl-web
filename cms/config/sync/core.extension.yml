@@ -5,6 +5,7 @@ module:
   admin_toolbar: 0
   admin_user_language: 0
   administerusersbyrole: 0
+  antibot: 0
   azure_mailer: 0
   basic_auth: 0
   better_exposed_filters: 0
@@ -47,6 +48,7 @@ module:
   dpl_instant_loan: 0
   dpl_library_agency: 0
   dpl_library_token: 0
+  dpl_link: 0
   dpl_loans: 0
   dpl_login: 0
   dpl_mail: 0
@@ -79,6 +81,7 @@ module:
   dynamic_entity_reference: 0
   dynamic_page_cache: 0
   editor: 0
+  editor_advanced_link: 0
   entity_clone: 0
   entity_clone_template: 0
   entity_reference_revisions: 0
@@ -94,6 +97,7 @@ module:
   gin_login: 0
   gin_toolbar: 0
   handy_cache_tags: 0
+  health_check: 0
   honeypot: 0
   image: 0
   job_scheduler: 0
@@ -129,6 +133,9 @@ module:
   options: 0
   override_node_options: 0
   paragraphs_features: 0
+  password_policy_character_types: 0
+  password_policy_characters: 0
+  password_policy_length: 0
   path: 0
   path_alias: 0
   phpass: 0
@@ -171,6 +178,7 @@ module:
   webform_ui: 0
   pathauto: 1
   selective_better_exposed_filters: 1
+  password_policy: 10
   views: 10
   paragraphs: 11
   paragraphs_ee: 15

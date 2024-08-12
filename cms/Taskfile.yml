@@ -144,7 +144,7 @@ tasks:
       # (Re)run Drupal scaffolding.
       - task dev:cli -- composer drupal:scaffold
       # Build dev scripts
-      - task dev:cli -- $(cd dev-scripts/dpl-react; composer install)
+      - task dev:cli -- composer -d dev-scripts/dpl-react install
       # Pull the images (necessary for the first reset)
       - task dev:pull
       # Start local environment.

@@ -9,8 +9,8 @@ id: paragraph.content_slider_automatic.field_title
 field_name: field_title
 entity_type: paragraph
 bundle: content_slider_automatic
-label: Title
-description: ''
+label: 'Title (deprecated)'
+description: deprecated
 required: false
 translatable: false
 default_value: {  }
