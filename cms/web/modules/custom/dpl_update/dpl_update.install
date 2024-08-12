@@ -141,13 +141,16 @@ function dpl_update_install(): string {
   $messages[] = dpl_update_update_10004();
   $messages[] = dpl_update_update_10005();
   $messages[] = dpl_update_update_10006();
+  $messages[] = dpl_update_update_10007();
   $messages[] = dpl_update_update_10008();
   $messages[] = dpl_update_update_10009();
-  $messages[] = dpl_update_update_10011();
   $messages[] = dpl_update_update_10010();
+  $messages[] = dpl_update_update_10011();
   $messages[] = dpl_update_update_10012();
   $messages[] = dpl_update_update_10013();
   $messages[] = dpl_update_update_10014();
+  $messages[] = dpl_update_update_10015();
+  $messages[] = dpl_update_update_10016();
 
   return implode('\r\n', $messages);
 }
@@ -229,29 +232,48 @@ function dpl_update_update_10010() : string {
 }
 
 /**
- * Install health check module.
+ * Installing antibot module.
  */
 function dpl_update_update_10011(): string {
+  return _dpl_update_install_modules(['antibot']);
+}
+
+/**
+ * Install health check module.
+ */
+function dpl_update_update_10012(): string {
   return _dpl_update_install_modules(['health_check']);
 }
 
 /**
  * Add translation of DKK currency suffix, for displaying event prices.
  */
-function dpl_update_update_10012(): string {
+function dpl_update_update_10013(): string {
   return _dpl_update_update_translation(' DKK', ' kr.', 'DPL event');
+}
+
+/**
+ * Install password policy modules.
+ */
+function dpl_update_update_10014(): string {
+  return _dpl_update_install_modules([
+    'password_policy',
+    'password_policy_length',
+    'password_policy_characters',
+    'password_policy_character_types',
+  ]);
 }
 
 /**
  * Installing editor_advanced_link.
  */
-function dpl_update_update_10013(): string {
+function dpl_update_update_10015(): string {
   return _dpl_update_install_modules(['editor_advanced_link']);
 }
 
 /**
  * Installing dpl_link.
  */
-function dpl_update_update_10014(): string {
+function dpl_update_update_10016(): string {
   return _dpl_update_install_modules(['dpl_link']);
 }

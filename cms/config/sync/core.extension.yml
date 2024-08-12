@@ -5,6 +5,7 @@ module:
   admin_toolbar: 0
   admin_user_language: 0
   administerusersbyrole: 0
+  antibot: 0
   azure_mailer: 0
   basic_auth: 0
   better_exposed_filters: 0
@@ -132,6 +133,9 @@ module:
   options: 0
   override_node_options: 0
   paragraphs_features: 0
+  password_policy_character_types: 0
+  password_policy_characters: 0
+  password_policy_length: 0
   path: 0
   path_alias: 0
   phpass: 0
@@ -174,6 +178,7 @@ module:
   webform_ui: 0
   pathauto: 1
   selective_better_exposed_filters: 1
+  password_policy: 10
   views: 10
   paragraphs: 11
   paragraphs_ee: 15
