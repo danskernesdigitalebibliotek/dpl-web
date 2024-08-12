@@ -149,6 +149,8 @@ function dpl_update_install(): string {
   $messages[] = dpl_update_update_10012();
   $messages[] = dpl_update_update_10013();
   $messages[] = dpl_update_update_10014();
+  $messages[] = dpl_update_update_10015();
+  $messages[] = dpl_update_update_10016();
 
   return implode('\r\n', $messages);
 }
@@ -260,4 +262,18 @@ function dpl_update_update_10014(): string {
     'password_policy_characters',
     'password_policy_character_types',
   ]);
+}
+
+/**
+ * Installing editor_advanced_link.
+ */
+function dpl_update_update_10015(): string {
+  return _dpl_update_install_modules(['editor_advanced_link']);
+}
+
+/**
+ * Installing dpl_link.
+ */
+function dpl_update_update_10016(): string {
+  return _dpl_update_install_modules(['dpl_link']);
 }

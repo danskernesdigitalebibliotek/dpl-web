@@ -116,6 +116,7 @@
         "drupal/default_content": "^2.0@alpha",
         "drupal/devel": "^5.1",
         "drupal/dynamic_entity_reference": "^3.1",
+        "drupal/editor_advanced_link": "^2.2",
         "drupal/entity_clone_template": "^2.0",
         "drupal/enum_field": "^1.0",
         "drupal/facets": "^2.0",
