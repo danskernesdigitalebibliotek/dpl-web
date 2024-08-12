@@ -100,7 +100,7 @@
         "drupal/admin_user_language": "^1.1",
         "drupal/administerusersbyrole": "^3.4",
         "drupal/antibot": "^2.0",
-        "drupal/azure_mailer": "^1.0",
+        "drupal/azure_mailer": "^2.0",
         "drupal/color_field": "^3.0",
         "drupal/config_filter": "^2.6",
         "drupal/config_ignore": "^3",
