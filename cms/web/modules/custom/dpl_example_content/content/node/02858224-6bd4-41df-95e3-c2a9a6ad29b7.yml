@@ -123,7 +123,7 @@ default:
               target_uuid: fd774222-4b22-4803-ae45-2d4e80d84fac
               title: 'Internt link til Frontpage'
               options:
-                href: 'entity:node/16'
+                href: 'entity:node/15'
                 data-entity-type: node
                 data-entity-uuid: fd774222-4b22-4803-ae45-2d4e80d84fac
                 data-entity-substitution: canonical
@@ -186,7 +186,7 @@ default:
               target_uuid: fd774222-4b22-4803-ae45-2d4e80d84fac
               title: 'Enkeltstående internt link'
               options:
-                href: /node/16
+                href: 'entity:node/15'
                 data-entity-type: node
                 data-entity-uuid: fd774222-4b22-4803-ae45-2d4e80d84fac
                 data-entity-substitution: canonical
@@ -815,6 +815,10 @@ default:
           field_title:
             -
               value: 'Content Slider automatic '
+          field_underlined_title:
+            -
+              value: '<p>Content <u>Slider</u> automatic</p>'
+              format: underlined_title
     -
       entity:
         _meta:
@@ -1024,13 +1028,13 @@ default:
               entity: eef50571-39dc-461a-96ff-b6b7180ade61
           field_banner_link:
             -
-              target_uuid: 02858224-6bd4-41df-95e3-c2a9a6ad29b7
+              uri: 'https://www.google.com/'
               title: ''
               options:
-                href: /node/22
-                data-entity-type: node
-                data-entity-uuid: 02858224-6bd4-41df-95e3-c2a9a6ad29b7
-                data-entity-substitution: canonical
+                href: 'https://www.google.com/'
+                data-entity-type: ''
+                data-entity-uuid: ''
+                data-entity-substitution: ''
           field_underlined_title:
             -
               value: '<p><u>Banner</u> paragraph <u>with</u> image</p>'
@@ -1061,13 +1065,13 @@ default:
               value: "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s,"
           field_banner_link:
             -
-              target_uuid: 02858224-6bd4-41df-95e3-c2a9a6ad29b7
+              uri: 'https://www.google.com/'
               title: ''
               options:
-                href: /node/22
-                data-entity-type: node
-                data-entity-uuid: 02858224-6bd4-41df-95e3-c2a9a6ad29b7
-                data-entity-substitution: canonical
+                href: 'https://www.google.com/'
+                data-entity-type: ''
+                data-entity-uuid: ''
+                data-entity-substitution: ''
           field_underlined_title:
             -
               value: '<p><u>Banner</u> paragraph <u>without</u> image</p>'
