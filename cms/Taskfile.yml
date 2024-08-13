@@ -144,7 +144,7 @@ tasks:
       # (Re)run Drupal scaffolding.
       - task dev:cli -- composer drupal:scaffold
       # Build dev scripts
-      - task dev:cli -- $(cd dev-scripts/dpl-react; composer install)
+      - task dev:cli -- composer -d dev-scripts/dpl-react install
       # Pull the images (necessary for the first reset)
       - task dev:pull
       # Start local environment.
@@ -189,7 +189,7 @@ tasks:
   dev:enable-dev-tools:
     desc: Enable dev modules and settings, which are not to be used in Prod. They are config-ignored
     cmds:
-      - task dev:cli -- drush install -y devel dpl_example_content dpl_example_breadcrumb field_ui restui uuid_url views_ui dblog
+      - task dev:cli -- drush install -y devel dpl_example_content field_ui purge_ui restui uuid_url views_ui dblog
 
   dev:enable-xdebug:
     desc: "Enable xdebug within the container."

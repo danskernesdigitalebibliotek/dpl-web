@@ -8,7 +8,6 @@
 use Drupal\Core\Datetime\DrupalDateTime;
 use Drupal\Core\Entity\EntityInterface;
 use Drupal\Core\Entity\FieldableEntityInterface;
-use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\Url;
 use Drupal\dpl_event\EventState;
 use Drupal\dpl_event\EventWrapper;
@@ -287,34 +286,4 @@ function dpl_event_gin_content_form_routes() : array {
     'entity.eventseries.add_instance_form',
     'entity.eventinstance.edit_form',
   ];
-}
-
-/**
- * Implements hook_form_FORM_ID_alter().
- *
- * Altering the form for EDITING (not creating) an event series.
- */
-function dpl_event_form_eventseries_default_edit_form_alter(array &$form, FormStateInterface $form_state): void {
-  // When saving a series, and changing the dates, the recurring_events module
-  // will make a "custom" submit button, showing a 'are you sure' button.
-  // However, this does not include a 'cancel' button. This is because cancel
-  // basically just means navigating away, but, this is confusing for editors.
-  // We'll add our own "button", that is really just a link the same edit page.
-  if (!empty($form['diff']['confirm'])) {
-    $form['diff']['cancel'] = [
-      '#type' => 'link',
-      '#title' => t('Cancel all changes', [], ['context' => 'DPL admin UX']),
-      '#url' => Url::fromRoute('<current>'),
-      '#attributes' => [
-        'class' => [
-          'action-link', 'action-link--danger', 'action-link--icon-trash',
-        ],
-      ],
-    ];
-
-    // The save/delete buttons on the page does nothing, when a diff confirm
-    // is relevant. We'll hide them, just to make it less confusing for the
-    // editors.
-    unset($form['actions']);
-  }
 }

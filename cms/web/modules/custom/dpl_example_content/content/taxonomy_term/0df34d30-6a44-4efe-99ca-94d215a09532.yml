@@ -1,0 +1,33 @@
+_meta:
+  version: '1.0'
+  entity_type: taxonomy_term
+  uuid: 0df34d30-6a44-4efe-99ca-94d215a09532
+  bundle: tags
+  default_langcode: da
+default:
+  status:
+    -
+      value: true
+  name:
+    -
+      value: læsning
+  weight:
+    -
+      value: 0
+  parent:
+    -
+      target_id: 0
+  revision_translation_affected:
+    -
+      value: true
+  metatag:
+    -
+      tag: meta
+      attributes:
+        name: title
+        content: 'læsning | DPL CMS'
+  path:
+    -
+      alias: ''
+      langcode: da
+      pathauto: 1

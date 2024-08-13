@@ -175,3 +175,12 @@
     max-width: 100%;
   }
 }
+
+/**
+ Hide default action button on confirm form.
+ Editors should focus on the date-related changes.
+ Selector is convoluted due to Gin DOM structure.
+*/
+body:has(.eventseries-form--confirm) .form-actions {
+  display: none;
+}

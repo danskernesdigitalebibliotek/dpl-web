@@ -23,4 +23,4 @@ focus_color: ''
 layout_density: medium
 show_description_toggle: false
 show_user_theme_settings: false
-sticky_action_buttons: true
+sticky_action_buttons: false

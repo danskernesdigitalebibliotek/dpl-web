@@ -10,7 +10,7 @@ default:
       value: true
   title:
     -
-      value: 'Det sker'
+      value: Arrangementer
   menu_name:
     -
       value: main
@@ -27,7 +27,7 @@ default:
       value: true
   weight:
     -
-      value: -1
+      value: -50
   expanded:
     -
       value: false
@@ -40,8 +40,3 @@ default:
       attributes:
         name: title
         content: '| DPL CMS'
-    -
-      tag: link
-      attributes:
-        rel: canonical
-        href: '/user/login'

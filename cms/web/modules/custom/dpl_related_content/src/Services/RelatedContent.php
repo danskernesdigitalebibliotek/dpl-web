@@ -108,9 +108,23 @@ class RelatedContent {
   private array $resultBasis = [];
 
   /**
-   * If TRUE, the filter conditions will be AND - otherwise, they will be OR.
+   * If TRUE, the outer conditions will be AND - otherwise, they will be OR.
+   *
+   * Outer conditions: "between filters" - e.g. between tags and categories.
    */
-  public bool $andConditions = FALSE;
+  public bool $outerAndConditions = FALSE;
+
+  /**
+   * If TRUE, the filter conditions will be AND - otherwise, they will be OR.
+   *
+   * Inner conditions: "within filters" - e.g. between tag1, tag2 etc.
+   */
+  public bool $innerAndConditions = FALSE;
+
+  /**
+   * Allow broad search, looking for all filters, with date-fallback.
+   */
+  public bool $broadSearch = TRUE;
 
   /**
    * What type of list do we want the items to be displayed in?
@@ -119,8 +133,11 @@ class RelatedContent {
 
   /**
    * The title that may be shown as part of the list.
+   *
+   * @var NULL|string|array<mixed>
+   *  The render array, or plain text title.
    */
-  public ?string $title = NULL;
+  public NULL|string|array $title = NULL;
 
   /**
    * The 'more link' that may be shown as part of the list.
@@ -136,7 +153,7 @@ class RelatedContent {
   public string $contentViewMode = 'card';
 
   /**
-   * {@inheritdoc}
+   * {@inheritDoc}
    */
   public function __construct(
     EntityTypeManagerInterface $entity_type_manager,
@@ -192,14 +209,14 @@ class RelatedContent {
     $event_ids = [];
     $node_ids = [];
 
-    if (empty($this->tags) && empty($this->categories) && empty($this->branches)) {
+    if (empty($this->tags) && empty($this->categories) && !$this->broadSearch) {
       return [];
     }
 
-    if ($this->andConditions) {
-      $node_ids = $this->getNodeIds($this->tags, $this->categories, $this->branches);
-      $event_ids = $this->getEventInstanceIds($this->tags, $this->categories, $this->branches);
-      $this->resultBasis = ['tags', 'categories', 'branches'];
+    if ($this->outerAndConditions || $this->broadSearch) {
+      $node_ids = $this->getNodeIds($this->tags, $this->categories);
+      $event_ids = $this->getEventInstanceIds($this->tags, $this->categories);
+      $this->resultBasis = ['tags', 'categories'];
     }
     else {
       // First, let's look up related content, based only on tags.
@@ -215,14 +232,6 @@ class RelatedContent {
         $node_ids = $this->getNodeIds($this->tags, $this->categories);
         $event_ids = $this->getEventInstanceIds($this->tags, $this->categories);
         $this->resultBasis = ['tags', 'categories'];
-      }
-
-      // If we found less than minimum results, we'll add branches to the mix in
-      // addition to tags and categories.
-      if ((count($event_ids) + count($node_ids) < $this->minItems) && !empty($this->branches)) {
-        $node_ids = $this->getNodeIds($this->tags, $this->categories, $this->branches);
-        $event_ids = $this->getEventInstanceIds($this->tags, $this->categories, $this->branches);
-        $this->resultBasis = ['tags', 'categories', 'branches'];
       }
     }
 
@@ -322,32 +331,37 @@ class RelatedContent {
       return;
     }
 
-    // If we're creating an OR condition, we need to add the filters in their
-    // own condition group, to not pollute other values, such as UUID check.
-    // If it's an AND condition, it doesn't matter, as all filters will be AND.
-    $or_group = $this->andConditions ? NULL : $query->orConditionGroup();
+    // Creating the group that all the filters will be placed in.
+    $outer_group = $this->outerAndConditions ?
+      $query->andConditionGroup() : $query->orConditionGroup();
 
     foreach ($filters as $field_name => $values) {
       // Get rid of any empty values.
       $values = array_filter($values);
 
-      if ($or_group) {
-        $or_group->condition($field_name, $values, 'IN');
+      // If we have the INNER group as OR, we can just do a simple 'IN' check,
+      // and place it directly on the OUTER group.
+      if (!$this->innerAndConditions) {
+        $outer_group->condition($field_name, $values, 'IN');
         continue;
       }
+
+      // If we reached this stage, innerAndConditions is TRUE, and it means
+      // we need to treat each value as an AND.
+      $inner_group = $query->andConditionGroup();
 
       // Looping through, and adding the values.
       // The reason we add a condition group for every single value, is that
       // it is the only way it creates JOIN for each value, and allows us to
       // make "CONTAINS ALL OF X".
       foreach ($values as $value) {
-        $query->condition($query->andConditionGroup()->condition($field_name, $value));
+        $inner_group->condition($query->andConditionGroup()->condition($field_name, $value));
       }
+
+      $outer_group->condition($inner_group);
     }
 
-    if ($or_group) {
-      $query->condition($or_group);
-    }
+    $query->condition($outer_group);
   }
 
   /**
@@ -359,13 +373,11 @@ class RelatedContent {
    *   Tag term IDs, to look for.
    * @param array<int> $categories
    *   Category term IDs, to look for.
-   * @param array<int> $branches
-   *   Branch term IDs, to look for.
    *
    * @return array<int|string>
    *   Matching node IDs
    */
-  private function getNodeIds(array $tags = [], array $categories = [], array $branches = []): array {
+  private function getNodeIds(array $tags = [], array $categories = []): array {
     if (empty($this->nodeBundles)) {
       return [];
     }
@@ -386,10 +398,13 @@ class RelatedContent {
       // so we will limit the query to this.
       ->range(0, $this->maxItems);
 
+    if (!empty($this->branches)) {
+      $query->condition('field_branch', $this->branches, 'IN');
+    }
+
     $filters = [
       'field_tags' => $tags,
       'field_categories' => $categories,
-      'field_branch' => $branches,
     ];
 
     $this->addFilterConditions($query, $filters);
@@ -406,13 +421,11 @@ class RelatedContent {
    *   Tag term IDs, to look for.
    * @param array<int> $categories
    *   Category term IDs, to look for.
-   * @param array<int> $branches
-   *   Branch term IDs, to look for.
    *
    * @return array<int|string>
    *   Matching Event Instance IDs
    */
-  private function getEventInstanceIds(array $tags = [], array $categories = [], array $branches = []): array {
+  private function getEventInstanceIds(array $tags = [], array $categories = []): array {
     if (!$this->includeEvents) {
       return [];
     }
@@ -422,10 +435,13 @@ class RelatedContent {
     $es_query->condition('status', TRUE);
     $es_query->accessCheck(TRUE);
 
+    if (!empty($this->branches)) {
+      $es_query->condition('field_branch', $this->branches, 'IN');
+    }
+
     $filters = [
       'field_tags' => $tags,
       'field_categories' => $categories,
-      'field_branch' => $branches,
     ];
 
     $this->addFilterConditions($es_query, $filters);
@@ -534,9 +550,7 @@ class RelatedContent {
     }
 
     if ($this->listStyle == RelatedContentListStyle::Grid) {
-      // Visually, grid looks broken with less than 3 items, and does not
-      // support more than 6.
-      $this->minItems = 3;
+      $this->minItems = 1;
       $this->maxItems = 6;
     }
 

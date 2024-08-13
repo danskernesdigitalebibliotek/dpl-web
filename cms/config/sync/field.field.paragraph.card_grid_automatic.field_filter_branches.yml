@@ -11,7 +11,7 @@ field_name: field_filter_branches
 entity_type: paragraph
 bundle: card_grid_automatic
 label: 'Filter by branches'
-description: ''
+description: 'If nothing is selected, all will be chosen.'
 required: false
 translatable: false
 default_value: {  }

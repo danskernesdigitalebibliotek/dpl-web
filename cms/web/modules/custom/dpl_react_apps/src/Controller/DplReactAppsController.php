@@ -186,6 +186,7 @@ class DplReactAppsController extends ControllerBase {
       'advanced-search-filter-book-text' => $this->t('book', [], ['context' => 'advanced search']),
       'advanced-search-filter-ebook-text' => $this->t('ebook', [], ['context' => 'advanced search']),
       'advanced-search-filter-fiction-text' => $this->t('fiction', [], ['context' => 'advanced search']),
+      'advanced-search-filter-holding-status-text' => $this->t('holding', [], ['context' => 'advanced search']),
       'advanced-search-filter-literature-form-text' => $this->t('literature form', [], ['context' => 'advanced search']),
       'advanced-search-filter-material-type-text' => $this->t('material type', [], ['context' => 'advanced search']),
       'advanced-search-filter-movie-text' => $this->t('movie', [], ['context' => 'advanced search']),

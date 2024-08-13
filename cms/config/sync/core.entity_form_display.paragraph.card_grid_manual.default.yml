@@ -8,8 +8,8 @@ dependencies:
     - field.field.paragraph.card_grid_manual.field_title
     - paragraphs.paragraphs_type.card_grid_manual
   module:
+    - dpl_link
     - dynamic_entity_reference
-    - link
 id: paragraph.card_grid_manual.default
 targetEntityType: paragraph
 bundle: card_grid_manual
@@ -26,12 +26,15 @@ content:
       placeholder: 'Search content..'
     third_party_settings: {  }
   field_more_link:
-    type: link_default
+    type: dpl_link_options
     weight: 10
     region: content
     settings:
       placeholder_url: ''
       placeholder_title: ''
+      target_blank: 0
+      linkit_profile: default
+      linkit_auto_link_text: false
     third_party_settings: {  }
   field_title:
     type: string_textfield
