@@ -157,10 +157,3 @@ function dpl_update_deploy_set_branches_not_promoted(): string {
 function dpl_update_deploy_field_relevant_ticket_manager(): string {
   return _dpl_update_set_value('field_relevant_ticket_manager', TRUE, 'eventseries');
 }
-
-/**
- * Link new event_relevant_ticket_manager inheritance on eventinstances.
- */
-function dpl_update_deploy_field_relevant_ticket_manager_inheritance(): string {
-  return _dpl_update_field_inheritance('event_relevant_ticket_manager');
-}

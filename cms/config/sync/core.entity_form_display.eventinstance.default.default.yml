@@ -15,7 +15,6 @@ dependencies:
     - field.field.eventinstance.default.field_event_state
     - field.field.eventinstance.default.field_event_title
     - field.field.eventinstance.default.field_external_admin_link
-    - field.field.eventinstance.default.field_relevant_ticket_manager
     - field.field.eventinstance.default.field_tags
     - field.field.eventinstance.default.field_teaser_image
     - field.field.eventinstance.default.field_teaser_text
@@ -219,13 +218,6 @@ content:
     settings:
       placeholder_url: ''
       placeholder_title: ''
-    third_party_settings: {  }
-  field_relevant_ticket_manager:
-    type: boolean_checkbox
-    weight: 16
-    region: content
-    settings:
-      display_label: true
     third_party_settings: {  }
   field_tags:
     type: select2_entity_reference
