@@ -172,7 +172,7 @@ function _dpl_breadcrumb_form_alter_delete_confirm(array &$form, FormStateInterf
         [
           '@title' => $node->label(),
           '@breadcrumb_title' => $breadcrumb_item->getName(),
-          '@breacrumb_edit_url' => Url::fromRoute('entity.taxonomy_term.edit_form', ['taxonomy_term' => $breadcrumb_item->id()])->toString(),
+          '@breadcrumb_edit_url' => Url::fromRoute('entity.taxonomy_term.edit_form', ['taxonomy_term' => $breadcrumb_item->id()])->toString(),
         ],
         ['context' => 'DPL admin UX']
     ),
