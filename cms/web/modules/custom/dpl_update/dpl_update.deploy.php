@@ -203,8 +203,8 @@ function dpl_update_deploy_migrate_content_slider_titles(): string {
   return "Migrated titles ($count): " . implode(', ', $updated_titles);
 }
 
-/*
-* Set default value for all existing eventseries:field_relevant_ticket_manager.
+/**
+ * Set default value for all existing eventseries:field_relevant_ticket_manager.
  */
 function dpl_update_deploy_field_relevant_ticket_manager(): string {
   return _dpl_update_set_value('field_relevant_ticket_manager', TRUE, 'eventseries');
