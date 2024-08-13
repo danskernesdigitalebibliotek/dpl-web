@@ -152,7 +152,59 @@ function dpl_update_deploy_set_branches_not_promoted(): string {
 }
 
 /**
- * Set default value for all existing eventseries:field_relevant_ticket_manager.
+ * Migrate values from field_title to field_underlined_title.
+ */
+function dpl_update_deploy_migrate_content_slider_titles(): string {
+  $paragraph_storage = Drupal::entityTypeManager()->getStorage('paragraph');
+
+  $old_field = 'field_title';
+  $new_field = 'field_underlined_title';
+
+  $paragraph_ids = Drupal::entityQuery('paragraph')
+    ->condition('type', ['content_slider', 'content_slider_automatic'], 'IN')
+    ->condition("$old_field.value", "", "<>")
+    ->accessCheck(FALSE)
+    ->execute();
+
+  if (empty($paragraph_ids)) {
+    return "No content sliders found.";
+  }
+
+  $paragraph_ids = is_array($paragraph_ids) ? $paragraph_ids : [];
+  $paragraphs = $paragraph_storage->loadMultiple($paragraph_ids);
+
+  $updated_titles = [];
+  foreach ($paragraphs as $paragraph) {
+    /** @var \Drupal\paragraphs\Entity\Paragraph $paragraph */
+    if (!$paragraph->hasField($new_field)) {
+      continue;
+    }
+
+    $old_value = $paragraph->get($old_field)->getString();
+
+    if (!$paragraph->get($new_field)->isEmpty()) {
+      continue;
+    }
+
+    $paragraph->set($new_field, [
+      'value' => $old_value,
+      'format' => 'underlined_title',
+    ]);
+    $paragraph->save();
+    $updated_titles[] = $old_value;
+  }
+
+  if (empty($updated_titles)) {
+    return 'No titles were migrated.';
+  }
+
+  $count = count($updated_titles);
+
+  return "Migrated titles ($count): " . implode(', ', $updated_titles);
+}
+
+/*
+* Set default value for all existing eventseries:field_relevant_ticket_manager.
  */
 function dpl_update_deploy_field_relevant_ticket_manager(): string {
   return _dpl_update_set_value('field_relevant_ticket_manager', TRUE, 'eventseries');

@@ -40,6 +40,7 @@ $settings['config_exclude_modules'] = [
   'dpl_example_breadcrumb',
   'devel',
   'field_ui',
+  'purge_ui',
   'views_ui',
   'restui',
   'upgrade_status',

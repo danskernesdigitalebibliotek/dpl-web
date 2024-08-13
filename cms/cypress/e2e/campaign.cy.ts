@@ -288,8 +288,6 @@ describe("Campaign creation and endpoint", () => {
   });
 
   before(() => {
-    // Login as admin.
-    cy.clearCookies();
     cy.drupalLogin();
 
     // Create campaigns.
@@ -298,13 +296,10 @@ describe("Campaign creation and endpoint", () => {
     createRankingAndCampaign();
     createRankingOrCampaign();
 
-    // Logout (obviously).
-    cy.drupalLogout();
+    cy.anonymousUser();
   });
 
   after(() => {
-    // Login as admin.
-    cy.clearCookies();
     cy.drupalLogin();
 
     // Delete campaigns.
@@ -313,8 +308,7 @@ describe("Campaign creation and endpoint", () => {
     deleteCampaign(campaigns.rankingAndCampaign);
     deleteCampaign(campaigns.rankingOrCampaign);
 
-    // Logout (obviously).
-    cy.drupalLogout();
+    cy.anonymousUser();
   });
 
   beforeEach(() => {

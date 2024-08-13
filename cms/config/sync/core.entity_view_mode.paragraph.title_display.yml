@@ -1,0 +1,11 @@
+uuid: e7909e7e-f642-41d6-bed6-e10b9a57123e
+langcode: en
+status: true
+dependencies:
+  module:
+    - paragraphs
+id: paragraph.title_display
+label: 'Title display'
+description: ''
+targetEntityType: paragraph
+cache: true

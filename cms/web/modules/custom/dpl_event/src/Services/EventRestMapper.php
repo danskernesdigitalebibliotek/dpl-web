@@ -10,10 +10,11 @@ use DanskernesDigitaleBibliotek\CMS\Api\Model\EventsGET200ResponseInnerImage;
 use DanskernesDigitaleBibliotek\CMS\Api\Model\EventsGET200ResponseInnerSeries;
 use DanskernesDigitaleBibliotek\CMS\Api\Model\EventsGET200ResponseInnerTicketCategoriesInner;
 use DanskernesDigitaleBibliotek\CMS\Api\Model\EventsGET200ResponseInnerTicketCategoriesInnerPrice;
-use Drupal\Component\DependencyInjection\ContainerInterface;
+use Drupal\Core\Config\ConfigFactoryInterface;
 use Drupal\Core\Field\FieldItemListInterface;
 use Drupal\Core\File\FileUrlGeneratorInterface;
 use Drupal\dpl_event\EventWrapper;
+use Drupal\dpl_event\Form\SettingsForm;
 use Drupal\file\FileInterface;
 use Drupal\media\MediaInterface;
 use Drupal\paragraphs\ParagraphInterface;
@@ -26,11 +27,6 @@ use Safe\DateTime;
 class EventRestMapper {
 
   /**
-   * File URL generator, used for creating image URLs.
-   */
-  private FileUrlGeneratorInterface $fileUrlGenerator;
-
-  /**
    * EventWrapper, a suite of eventinstance helper methods.
    */
   private EventWrapper $eventWrapper;
@@ -41,18 +37,12 @@ class EventRestMapper {
   private EventInstance $event;
 
   /**
-   * {@inheritDoc}
+   * Constructor.
    */
-  public function __construct(FileUrlGeneratorInterface $file_url_generator) {
-    $this->fileUrlGenerator = $file_url_generator;
-  }
-
-  /**
-   * {@inheritDoc}
-   */
-  public static function create(ContainerInterface $container): static {
-    return new static($container->get('file_url_generator'));
-  }
+  public function __construct(
+    protected FileUrlGeneratorInterface $fileUrlGenerator,
+    protected ConfigFactoryInterface $configFactory,
+  ) {}
 
   /**
    * {@inheritDoc}
@@ -214,9 +204,11 @@ class EventRestMapper {
         continue;
       }
 
+      $config = $this->configFactory->get(SettingsForm::CONFIG_NAME);
+
       $price = new EventsGET200ResponseInnerTicketCategoriesInnerPrice([
         'value' => intval($price_value),
-        'currency' => 'DKK',
+        'currency' => $config->get('price_currency') ?? 'DKK',
       ]);
 
       $categories[] = new EventsGET200ResponseInnerTicketCategoriesInner([

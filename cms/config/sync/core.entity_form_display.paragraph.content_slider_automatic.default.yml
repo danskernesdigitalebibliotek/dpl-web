@@ -9,10 +9,12 @@ dependencies:
     - field.field.paragraph.content_slider_automatic.field_filter_content_types
     - field.field.paragraph.content_slider_automatic.field_filter_tags
     - field.field.paragraph.content_slider_automatic.field_title
+    - field.field.paragraph.content_slider_automatic.field_underlined_title
     - paragraphs.paragraphs_type.content_slider_automatic
   module:
     - field_group
     - select2
+    - text
 third_party_settings:
   field_group:
     group_filters:
@@ -79,14 +81,15 @@ content:
       match_operator: CONTAINS
       match_limit: 10
     third_party_settings: {  }
-  field_title:
-    type: string_textfield
+  field_underlined_title:
+    type: text_textarea
     weight: 0
     region: content
     settings:
-      size: 60
+      rows: 2
       placeholder: ''
     third_party_settings: {  }
 hidden:
   created: true
+  field_title: true
   status: true
