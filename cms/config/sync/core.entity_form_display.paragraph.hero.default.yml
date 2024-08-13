@@ -13,7 +13,7 @@ dependencies:
     - paragraphs.paragraphs_type.hero
   module:
     - datetime
-    - link
+    - dpl_link
     - media_library
     - select2
     - text
@@ -62,12 +62,15 @@ content:
       media_types: {  }
     third_party_settings: {  }
   field_hero_link:
-    type: link_default
+    type: dpl_link_options
     weight: 4
     region: content
     settings:
       placeholder_url: ''
       placeholder_title: ''
+      linkit_profile: default
+      linkit_auto_link_text: false
+      target_blank: 0
     third_party_settings: {  }
   field_hero_title:
     type: string_textfield

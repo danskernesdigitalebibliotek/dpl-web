@@ -7,8 +7,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2024-08-06 11:11+0200\n"
-"PO-Revision-Date: 2024-08-06 11:11+0200\n"
+"POT-Creation-Date: 2024-08-13 09:22+0200\n"
+"PO-Revision-Date: 2024-08-13 09:22+0200\n"
 "Last-Translator: NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
 "MIME-Version: 1.0\n"
@@ -561,6 +561,9 @@ msgstr ""
 
 msgid "Updated @count entities, @source_field => @target_field"
 msgstr "Opdaterede @count enheder, @source_field => @target_field"
+
+msgid "Open link in new window/tab"
+msgstr ""
 
 msgctxt "Dpl Fbs"
 msgid "Basic settings"
@@ -2673,7 +2676,7 @@ msgstr "Reserveringer på fysiske materialer"
 
 msgctxt "Global"
 msgid "Pick up before @date"
-msgstr "Hent før @date"
+msgstr "Hent senest @date"
 
 msgctxt "Global"
 msgid "Choose pickup branch"
@@ -3426,7 +3429,7 @@ msgstr "Forfattere"
 
 msgctxt "Work Page"
 msgid "Edition"
-msgstr "Udgave / år"
+msgstr "Nr."
 
 msgctxt "Work Page"
 msgid "Edition year"
@@ -3930,6 +3933,9 @@ msgstr "CQL søgning"
 msgid "FBI"
 msgstr "FBI"
 
+msgid "DPL Linkit with options"
+msgstr ""
+
 msgid "DPL: Branch address fallback"
 msgstr "Adresse fallback på filial"
 
@@ -4066,6 +4072,12 @@ msgstr "DPL filtreret Paragraphs (Forældet)"
 
 msgid "This module is deprecated, and will be deleted in the future."
 msgstr "Dette modul er forældet og vil blive slettet i fremtiden."
+
+msgid "DPL Link"
+msgstr ""
+
+msgid "Add functionality to link field"
+msgstr ""
 
 msgid "DPL Cookies"
 msgstr "DPL Cookies"
@@ -19869,6 +19881,37 @@ msgctxt "field.field.user.user.field_author_name:description"
 msgid "This will be used as the front-facing name on articles."
 msgstr ""
 
+msgctxt "field.field.user.user.field_last_password_reset:label"
+msgid "Last Password Reset"
+msgstr ""
+
+msgctxt "field.field.user.user.field_password_expiration:label"
+msgid "Password Expiration"
+msgstr ""
+
+msgctxt "field.field.user.user.field_password_expiration:description"
+msgid ""
+"Control whether the user must reset their password. If the password has "
+"expired, this field is automatically checked after the execution of Cron."
+msgstr ""
+
+msgctxt "field.field.user.user.field_password_expiration:settings:on_label"
+msgid "Expired Password"
+msgstr ""
+
+msgctxt "field.field.user.user.field_password_expiration:settings:off_label"
+msgid "Non-expired Password"
+msgstr ""
+
+msgctxt "field.field.user.user.field_pending_expire_sent:label"
+msgid "Pending Expiration Mail Count"
+msgstr ""
+
+msgctxt "field.field.user.user.field_pending_expire_sent:description"
+msgid ""
+"Whether an email notifying of a pending password expiration has been sent"
+msgstr ""
+
 msgctxt ""
 "field.storage.node.field_campaign_rules_logic:settings:allowed_values:0:label"
 msgid "AND"
@@ -20775,6 +20818,14 @@ msgstr "Strukturerende elementer"
 msgctxt "paragraphs_ee.paragraphs_category.user_creation:label"
 msgid "User creation"
 msgstr "Brugeroprettelse"
+
+msgctxt "password_policy.password_policy.admins:label"
+msgid "Admins"
+msgstr ""
+
+msgctxt "password_policy.password_policy.non_admins:label"
+msgid "Non-admins"
+msgstr ""
 
 msgctxt "pathauto.pattern.breadcrumb_pattern:label"
 msgid "Breadcrumb pattern"

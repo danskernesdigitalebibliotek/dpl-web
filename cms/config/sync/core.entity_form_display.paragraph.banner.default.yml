@@ -9,7 +9,7 @@ dependencies:
     - field.field.paragraph.banner.field_underlined_title
     - paragraphs.paragraphs_type.banner
   module:
-    - linkit
+    - dpl_link
     - media_library
     - media_library_edit
     - text
@@ -36,7 +36,7 @@ content:
       media_library_edit:
         show_edit: '1'
   field_banner_link:
-    type: linkit
+    type: dpl_link_options
     weight: 0
     region: content
     settings:
@@ -44,6 +44,7 @@ content:
       placeholder_title: ''
       linkit_profile: default
       linkit_auto_link_text: false
+      target_blank: 0
     third_party_settings: {  }
   field_underlined_title:
     type: text_textarea

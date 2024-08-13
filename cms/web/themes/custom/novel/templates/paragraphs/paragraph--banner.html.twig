@@ -7,7 +7,10 @@
   {% endif %}
 {% endif %}
 
-<a href="{{ content.field_banner_link[0]['#url'] }}" class="banner arrow__hover--right-large {{ image_url ? 'banner--has-image' : '' }}"
+{% set url = content.field_banner_link[0]['#url'] %}
+{% set target = url.options.target|default('_self') %}
+
+<a href="{{ url }}" target="{{ target }}" class="banner arrow__hover--right-large {{ image_url ? 'banner--has-image' : '' }}"
   {% if image_url %} style="background-image: url('{{ image_url }}');" {% endif %}>
   <div class="banner__content-wrapper">
     <div class="banner__content {{ image_url ? 'banner__content--has-image' : '' }}">

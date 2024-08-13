@@ -78,17 +78,25 @@ Cypress.Commands.add("logRequests", () => {
 });
 
 Cypress.Commands.add("drupalLogin", (url?: string) => {
-  cy.clearCookies();
-  cy.visit("/user/login");
-  cy.get('[name="name"]')
-    .type(Cypress.env("DRUPAL_USERNAME"))
-    .parent()
-    .get('[name="pass"]')
-    .type(Cypress.env("DRUPAL_PASSWORD"));
-  cy.get('[value="Log in"]').click();
+  const username = Cypress.env("DRUPAL_USERNAME");
+  const password = Cypress.env("DRUPAL_PASSWORD");
+  cy.session({ username, password }, () => {
+    cy.visit("/user/login");
+    cy.get('[name="name"]')
+      .type(username)
+      .parent()
+      .get('[name="pass"]')
+      .type(password);
+    cy.get('[value="Log in"]').click();
+  });
+
   if (url) {
     cy.visit(url);
   }
+});
+
+Cypress.Commands.add("anonymousUser", () => {
+  cy.session("anonymous", () => {});
 });
 
 Cypress.Commands.add("drupalLogout", () => {
@@ -334,6 +342,7 @@ declare global {
       logRequests(): Chainable<null>;
       getRequestCount(request: RequestPattern): Chainable<number>;
       resetRequests(): Chainable<null>;
+      anonymousUser(): Chainable<null>;
       drupalLogin(url?: string): Chainable<null>;
       drupalLogout(): Chainable<null>;
       drupalCron(): Chainable<null>;
