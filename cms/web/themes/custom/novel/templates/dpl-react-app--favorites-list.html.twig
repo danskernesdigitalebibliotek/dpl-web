@@ -1,14 +1,13 @@
 <div class="dpl-react-app-container--page">
     <div {{ attributes }}>
-        <div class="card-list-page">
-            {# Todo: use content-list-page__heading #}
-            <h1 class="text-header-h2 mb-16 search-result-title">
+        <div class="content-list-page">
+            <h1 class="content-list-page__heading">
                 {{ attributes['data-favorites-list-header-text']|raw }}
             </h1>
             <div class="ssc">
                 <div class="ssc-line w-10 my-32">&nbsp;</div>
             </div>
-            <ul class="card-list-page__list my-32">
+            <ul class="content-list">
                 {% for i in 1..5 %}
                 <li>
                     <article class="card-list-item ssc">
