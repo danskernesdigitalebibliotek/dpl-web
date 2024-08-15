@@ -169,6 +169,11 @@ final class EventsResource extends EventResourceBase {
                     'items' => [
                       'type' => 'object',
                       'properties' => [
+                        'uuid' => [
+                          'type' => 'string',
+                          'format' => 'uuid',
+                          'description' => 'A unique identifier for the ticket category.',
+                        ],
                         'title' => [
                           'type' => 'string',
                           'description' => 'The name of the ticket category.',
