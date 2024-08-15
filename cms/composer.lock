@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "7d4ca1be4ee0d755b5ceaee8a7cae082",
+    "content-hash": "91088f13e1fd3a181a83245fb791c2ae",
     "packages": [
         {
             "name": "amazeeio/drupal_integrations",
@@ -1169,7 +1169,7 @@
             "version": "0.0.0-dev",
             "dist": {
                 "type": "zip",
-                "url": "https://github.com/danskernesdigitalebibliotek/dpl-design-system/releases/download/branch-editorial_search_DDFFORM-678/dist-editorial-search-ddfform-678.zip"
+                "url": "https://github.com/danskernesdigitalebibliotek/dpl-design-system/releases/download/branch-unify-lists-between-cms-and-react/dist-unify-lists-between-cms-and-react.zip"
             },
             "type": "drupal-library"
         },
@@ -1178,7 +1178,7 @@
             "version": "0.0.0-dev",
             "dist": {
                 "type": "zip",
-                "url": "https://github.com/danskernesdigitalebibliotek/dpl-react/releases/download/branch-editorial_search_DDFFORM-678/dist-editorial-search-ddfform-678.zip"
+                "url": "https://github.com/danskernesdigitalebibliotek/dpl-react/releases/download/branch-unify-lists-between-cms-and-react/dist-unify-lists-between-cms-and-react.zip"
             },
             "require": {
                 "composer/installers": "^1.2.0"
