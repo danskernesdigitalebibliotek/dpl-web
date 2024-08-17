@@ -14,6 +14,7 @@ use MyCLabs\Enum\Enum;
  * @method static BlockedReason EXTENDED_SUSPENSION()
  * @method static BlockedReason SUSPENSION()
  * @method static BlockedReason ACCOUNT_STOLEN()
+ * @method static BlockedReason FEE()
  * @method static BlockedReason MISSING_PATRON_CATEGORY()
  * @method static BlockedReason UNKNOWN()
  */
@@ -24,6 +25,7 @@ class BlockedReason extends Enum {
   private const EXTENDED_SUSPENSION = 'F';
   private const SUSPENSION = 'U';
   private const ACCOUNT_STOLEN = 'O';
+  private const FEE = 'E';
   /**
    * The user has not been assigned a correct patron category.
    *
