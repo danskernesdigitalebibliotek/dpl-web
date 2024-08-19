@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "9e73e067930f9882788bb30d3ef212d1",
+    "content-hash": "1d18c298464216d4af1ad231f5ee1c3d",
     "packages": [
         {
             "name": "amazeeio/drupal_integrations",
@@ -1166,10 +1166,10 @@
         },
         {
             "name": "danskernesdigitalebibliotek/dpl-design-system",
-            "version": "2024.28.0",
+            "version": "0.0.0-dev",
             "dist": {
                 "type": "zip",
-                "url": "https://github.com/danskernesdigitalebibliotek/dpl-design-system/releases/download/2024.28.0/dist-2024-28-0-100e48a2a38f735862212d267438eeb6dc86e31b.zip"
+                "url": "https://github.com/danskernesdigitalebibliotek/dpl-design-system/releases/download/branch-DDFLSBP-659-add-visual-indicators-on-required-fields/dist-ddflsbp-659-add-visual-indicators-on-required-fields.zip"
             },
             "type": "drupal-library"
         },
@@ -19005,7 +19005,6 @@
     "aliases": [],
     "minimum-stability": "dev",
     "stability-flags": {
-        "danskernesdigitalebibliotek/dpl-react": 20,
         "drupal/default_content": 15,
         "drupal/gin": 5,
         "drupal/gin_toolbar": 5,
