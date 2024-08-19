@@ -28,6 +28,7 @@ sequenceDiagram
   activate DplCms
   DplCms ->> ExternalSystem: List of all publicly available events
   deactivate DplCms
+  ExternalSystem ->> ExternalSystem: (Optional) Filter out any events that have not been marked as relevant (ticket_manager_relevance)
   ExternalSystem ->> ExternalSystem: Identify new events by UUID and create them locally
   ExternalSystem ->> DplCms: Update events with external urls
   ExternalSystem ->> ExternalSystem: Identify existing events by UUID and update them locally
