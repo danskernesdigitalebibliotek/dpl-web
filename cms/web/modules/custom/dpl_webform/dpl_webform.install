@@ -117,12 +117,10 @@ function dpl_webform_update_10004(): string {
  * prevent this in the future, we now set the default language to english.
  */
 function dpl_webform_update_10005(): string {
-  $feedback = [];
-
   \Drupal::configFactory()->getEditable('system.site')->set('langcode', 'en')->save();
   \Drupal::configFactory()->getEditable('system.site')->set('default_langcode', 'en')->save();
 
-  return implode("\n", $feedback);
+  return "The 'langcode' and 'default_language' has been set to english.";
 }
 
 /**
@@ -139,7 +137,7 @@ function dpl_webform_update_10006(): string {
   $ignored_configs = $config_ignore_auto_settings->get('ignored_config_entities');
 
   // Remove webform.settings from config ignore list.
-  if (($key = array_search('webform.settings', $ignored_configs)) !== FALSE) {
+  if (($key = array_search('webform.settings', $ignored_configs))) {
     unset($ignored_configs[$key]);
     $config_ignore_auto_settings->set('ignored_config_entities', $ignored_configs)->save();
     $feedback[] = "Removed 'webform.settings' from ignored_config_entities.";
