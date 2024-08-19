@@ -40,10 +40,10 @@
             "type": "package",
             "package": {
                 "name": "danskernesdigitalebibliotek/dpl-react",
-                "version": "2024.27.0",
+                "version": "0.0.0-dev",
                 "type": "drupal-library",
                 "dist": {
-                    "url": "https://github.com/danskernesdigitalebibliotek/dpl-react/releases/download/2024.27.0/dist-2024-27-0-50e06f8c8065bb4cf80407a247f937f11660ff2c.zip",
+                    "url": "https://github.com/danskernesdigitalebibliotek/dpl-react/releases/download/branch-DDFLSBP-659-add-visual-indicators-on-requied-fields/dist-ddflsbp-659-add-visual-indicators-on-requied-fields.zip",
                     "type": "zip"
                 },
                 "require": {
@@ -56,9 +56,9 @@
             "package": {
                 "name": "danskernesdigitalebibliotek/dpl-design-system",
                 "type": "drupal-library",
-                "version": "2024.27.0",
+                "version": "0.0.0-dev",
                 "dist": {
-                    "url": "https://github.com/danskernesdigitalebibliotek/dpl-design-system/releases/download/2024.27.0/dist-2024-27-0-50a60f2057fffa8dac33aaaa4ceff523369c6b68.zip",
+                    "url": "https://github.com/danskernesdigitalebibliotek/dpl-design-system/releases/download/branch-DDFLSBP-659-add-visual-indicators-on-required-fields/dist-ddflsbp-659-add-visual-indicators-on-required-fields.zip",
                     "type": "zip"
                 }
             }
@@ -83,22 +83,24 @@
         }
     ],
     "require": {
+        "php": "8.1.*",
         "amazeeio/drupal_integrations": "^0.4",
         "bower-asset/jsnlog": "^2.30",
         "brick/math": "^0.12.1",
         "composer/installers": "1.12.0",
         "cweagans/composer-patches": "1.7.3",
         "danskernesdigitalebibliotek/cms-api": "*",
-        "danskernesdigitalebibliotek/dpl-design-system": "2024.27.0",
-        "danskernesdigitalebibliotek/dpl-react": "2024.27.0",
+        "danskernesdigitalebibliotek/dpl-design-system": "0.0.0-dev",
+        "danskernesdigitalebibliotek/dpl-react": "0.0.0-dev",
         "danskernesdigitalebibliotek/fbs-client": "*",
-        "dealerdirect/phpcodesniffer-composer-installer": "^0.7.1",
+        "dealerdirect/phpcodesniffer-composer-installer": "^1.0.0",
         "deoliveiralucas/array-keys-case-transform": "^1.1",
         "drupal/address": "^1.0",
         "drupal/admin_toolbar": "^3.4",
         "drupal/admin_user_language": "^1.1",
         "drupal/administerusersbyrole": "^3.4",
-        "drupal/azure_mailer": "^1.0",
+        "drupal/antibot": "^2.0",
+        "drupal/azure_mailer": "^2.0",
         "drupal/color_field": "^3.0",
         "drupal/config_filter": "^2.6",
         "drupal/config_ignore": "^3",
@@ -114,6 +116,7 @@
         "drupal/default_content": "^2.0@alpha",
         "drupal/devel": "^5.1",
         "drupal/dynamic_entity_reference": "^3.1",
+        "drupal/editor_advanced_link": "^2.2",
         "drupal/entity_clone_template": "^2.0",
         "drupal/enum_field": "^1.0",
         "drupal/facets": "^2.0",
@@ -125,6 +128,7 @@
         "drupal/gin_login": "^2.1",
         "drupal/gin_toolbar": "^1.0@RC",
         "drupal/handy_cache_tags": "^1.4",
+        "drupal/health_check": "^3.1",
         "drupal/honeypot": "^2.1",
         "drupal/job_scheduler": "^4.0",
         "drupal/jsnlog": "^1.3",
@@ -143,9 +147,10 @@
         "drupal/override_node_options": "^2.8",
         "drupal/paragraphs": "^1.16",
         "drupal/paragraphs_ee": "^10",
+        "drupal/password_policy": "^4.0",
         "drupal/pathauto": "^1.12",
         "drupal/potion": "dev-2.x#e48d6ee336d960b9d2efb5d88e68402db6d229a6",
-        "drupal/purge": "^3.2",
+        "drupal/purge": "^3.6",
         "drupal/recurring_events": "^2.0@RC",
         "drupal/redirect": "^1.9",
         "drupal/redis": "^1.7",
@@ -182,7 +187,7 @@
         "drupal/core-dev": "~10.1.7",
         "jangregor/phpstan-prophecy": "^1",
         "mglaman/phpstan-drupal": "^1.2",
-        "palantirnet/drupal-rector": "^0.18.1",
+        "palantirnet/drupal-rector": "^0.20.3",
         "php-mock/php-mock": "^2.3",
         "phpspec/prophecy-phpunit": "^2",
         "phpstan/extension-installer": "^1.3",
@@ -314,8 +319,7 @@
                 "3162210: Preview link accidentally closes the media library": "https://www.drupal.org/files/issues/2020-10-11/preview_link_accidentally_closes_the_media_library-3162210-19.patch"
             },
             "drupal/job_scheduler": {
-                "3426366: Callables as worker callbacks": "https://git.drupalcode.org/project/job_scheduler/-/merge_requests/7.patch",
-                "3426378: Views support": "https://git.drupalcode.org/project/job_scheduler/-/merge_requests/8.patch"
+                "3426366: Callables as worker callbacks": "https://git.drupalcode.org/project/job_scheduler/-/merge_requests/7.patch"
             },
             "drupal/jsnlog": {
                 "Disable CSRF token": "patches/jsnlog-disable-csrf_token.patch"
@@ -346,20 +350,18 @@
                 "3413314: Include .links.menu.yml files in YamlExtractor.php": "https://www.drupal.org/files/issues/2024-01-08/potion-add_links_menu_yml_title_and_description_to_yaml_extractor-3413314-3.patch"
             },
             "drupal/purge": {
-                "3391383: Uninstalling module triggers ServiceNotFoundException exception": "https://git.drupalcode.org/project/purge/-/commit/88546a6e6c043f10832be43e02ae4ae65cf5ceb2.patch",
-                "Combat NoCorrespondingEntityClassException": "patches/purge-5340bcf-combat-nocorresponding-entity-exception.patch"
+                "Combat NoCorrespondingEntityClassException": "patches/purge-5340bcf-combat-nocorresponding-entity-exception.patch",
+                "3462078: Disabling late runtime processor when using CLI": "https://git.drupalcode.org/project/purge/-/commit/14c09e0ec4f1f46df0f19876ad6b3e8c93921e00.patch"
             },
             "drupal/recurring_events": {
                 "3178696: Make compatible with Scheduler": "https://git.drupalcode.org/project/recurring_events/-/merge_requests/86.patch",
                 "3416436: Avoid array conversion warning when daily events are disabled": "https://git.drupalcode.org/project/recurring_events/-/commit/832ae52f135dd3f205eb74acf2d3715fb443e759.patch",
-                "3451613: Start date of weekly reccurring event jumps incorrectly": "https://git.drupalcode.org/project/recurring_events/-/commit/581c53dd1b0b067a8b6454d76cc0187887f7b187.patch"
+                "3451613: Start date of weekly reccurring event jumps incorrectly": "https://git.drupalcode.org/project/recurring_events/-/commit/581c53dd1b0b067a8b6454d76cc0187887f7b187.patch",
+                "3461740: Fatal error when using 'Event series start date' filter in views": "https://www.drupal.org/files/issues/2024-07-16/reccuring_events_event_start_date.patch"
             },
             "drupal/theme_permission": {
                 "3105637: Edit, install and uninstall permission": "https://www.drupal.org/files/issues/2024-02-01/theme-permission-edit-install-uninstall-3105637-7.patch",
                 "3458263: WSOD error fails on Drupal 10.3+": "https://www.drupal.org/files/issues/2024-07-01/theme_permssion-d10_3_d11.patch"
-            },
-            "drupal/twig_tweak": {
-                "3428226: Clear menu cache when adding first item": "https://git.drupalcode.org/project/twig_tweak/-/commit/6fd3997d45fe90fdf6545a3c85ff1c5b68e9bde1.patch"
             }
         }
     }

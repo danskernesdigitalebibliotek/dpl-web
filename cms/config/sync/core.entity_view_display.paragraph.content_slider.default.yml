@@ -5,6 +5,7 @@ dependencies:
   config:
     - field.field.paragraph.content_slider.field_content_references
     - field.field.paragraph.content_slider.field_title
+    - field.field.paragraph.content_slider.field_underlined_title
     - paragraphs.paragraphs_type.content_slider
   module:
     - dynamic_entity_reference
@@ -50,9 +51,19 @@ content:
       user:
         view_mode: default
         link: false
+      redirect:
+        view_mode: default
+        link: false
+      taxonomy_term:
+        view_mode: default
+        link: false
+      webform_submission:
+        view_mode: default
+        link: false
     third_party_settings: {  }
-    weight: 1
+    weight: 0
     region: content
 hidden:
   field_title: true
+  field_underlined_title: true
   search_api_excerpt: true

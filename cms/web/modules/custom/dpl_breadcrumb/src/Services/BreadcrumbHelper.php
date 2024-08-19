@@ -13,6 +13,7 @@ use Drupal\node\NodeInterface;
 use Drupal\pathauto\AliasCleanerInterface;
 use Drupal\recurring_events\Entity\EventInstance;
 use Drupal\taxonomy\TermInterface;
+use Psr\Log\LoggerInterface;
 use Safe\DateTime;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
@@ -42,6 +43,11 @@ class BreadcrumbHelper {
   protected TranslationInterface $translation;
 
   /**
+   * Custom logger service.
+   */
+  protected LoggerInterface $logger;
+
+  /**
    * Should the current page also be shown in the breadcrumb?
    */
   protected bool $includeCurrentPage = TRUE;
@@ -64,11 +70,13 @@ class BreadcrumbHelper {
     LanguageManagerInterface $language_manager,
     AliasCleanerInterface $alias_cleaner,
     TranslationInterface $translation,
+    LoggerInterface $logger,
   ) {
     $this->entityTypeManager = $entity_type_manager;
     $this->languageManager = $language_manager;
     $this->aliasCleaner = $alias_cleaner;
     $this->translation = $translation;
+    $this->logger = $logger;
   }
 
   /**
@@ -80,6 +88,7 @@ class BreadcrumbHelper {
       $container->get('language.manager'),
       $container->get('pathauto.alias_cleaner'),
       $container->get('string_translation'),
+      $container->get('dpl_breadcrumb.logger'),
     );
   }
 
@@ -182,6 +191,24 @@ class BreadcrumbHelper {
     $this->getCategoryBreadcrumb($entity, $breadcrumb);
 
     $this->getBaseBreadcrumb($entity, $breadcrumb);
+
+    $links = $breadcrumb->getLinks();
+
+    // If there is only one link in the breadcrumb, we want to check if it
+    // is the current page. If that is the case, we'll reset the breadcrumb,
+    // so we don't display a breadcrumb with a single, irrelevant link.
+    if (count($links) === 1) {
+      try {
+        $breadcrumb_entity = $links[0]->getUrl()->getOption('entity');
+
+        if ($breadcrumb_entity === $entity) {
+          $breadcrumb = new Breadcrumb();
+        }
+      }
+      catch (\Exception $e) {
+        $this->logger->error("Failed checking breadcrumb solo logic. Message: %message", ["%message" => $e->getMessage()]);
+      }
+    }
 
     return $breadcrumb;
   }

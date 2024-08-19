@@ -1,0 +1,67 @@
+_meta:
+  version: '1.0'
+  entity_type: node
+  uuid: ac8fcbaf-94fc-47de-89a4-13228668031f
+  bundle: page
+  default_langcode: da
+  depends:
+    e00e1460-169e-468d-9835-d664f06d0969: file
+    06ea0cdb-aa83-4bb4-8025-eeae135f2e5d: taxonomy_term
+default:
+  revision_uid:
+    -
+      target_id: 1
+  status:
+    -
+      value: false
+  uid:
+    -
+      target_id: 1
+  title:
+    -
+      value: 'Afpubliseret side  (skal IKKE vises i brødkrumme kontekst)'
+  created:
+    -
+      value: 1719478578
+  promote:
+    -
+      value: false
+  sticky:
+    -
+      value: false
+  revision_translation_affected:
+    -
+      value: true
+  entity_clone_template_active:
+    -
+      value: false
+  entity_clone_template_image:
+    -
+      entity: e00e1460-169e-468d-9835-d664f06d0969
+      alt: ''
+      title: ''
+      width: 640
+      height: 443
+  metatag:
+    -
+      tag: meta
+      attributes:
+        name: title
+        content: 'Afpubliseret side (skal IKKE vises i brødkrumme kontekst) | DPL CMS'
+  path:
+    -
+      alias: /praktisk-information/afpubliseret-side-skal-ikke-vises-i-brodkrumme-kontekst
+      langcode: und
+      pathauto: 1
+  field_breadcrumb_parent:
+    -
+      entity: 06ea0cdb-aa83-4bb4-8025-eeae135f2e5d
+  field_display_titles:
+    -
+      value: true
+  field_hero_title:
+    -
+      value: 'Afpubliseret side  (skal IKKE vises i brødkrumme kontekst)'
+  field_publication_date:
+    -
+      value: '2024-06-27'

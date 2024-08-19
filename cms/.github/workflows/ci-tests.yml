@@ -301,3 +301,28 @@ jobs:
         run: task dev:cli -- drush config-export -y
       - name: Check for uncommited configuration after install
         run: git diff --ignore-space-at-eol --exit-code config/sync/*.yml
+
+  CheckPhpVersion:
+    name: Check PHP version
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+      - name: Check PHP version in composer.json
+        run: |
+          if ! jq .require.php composer.json | grep ${{ env.PHP_VERSION }}; then
+            echo "PHP version in composer.json does not match the version in the GitHub Actions."
+            exit 1
+          fi
+      - name: Check PHP version in PHP service
+        run: |
+          if ! docker compose run php -- php --version | grep ${{ env.PHP_VERSION }}; then
+            echo "PHP version for PHP service docker-compose.yml does not match the version in the GitHub Actions."
+            exit 1
+          fi
+      - name: Check PHP version in CLI service
+        run: |
+          if ! docker compose run php -- php --version | grep ${{ env.PHP_VERSION }}; then
+            echo "PHP version for CLI service docker-compose.yml does not match the version in the GitHub Actions."
+            exit 1
+          fi

@@ -10,6 +10,7 @@ dependencies:
     - field.field.paragraph.content_slider_automatic.field_filter_content_types
     - field.field.paragraph.content_slider_automatic.field_filter_tags
     - field.field.paragraph.content_slider_automatic.field_title
+    - field.field.paragraph.content_slider_automatic.field_underlined_title
     - paragraphs.paragraphs_type.content_slider_automatic
   module:
     - options
@@ -24,13 +25,20 @@ content:
     settings:
       link: false
     third_party_settings: {  }
-    weight: 4
+    weight: 2
     region: content
   field_filter_categories:
     type: entity_reference_label
     label: above
     settings:
       link: false
+    third_party_settings: {  }
+    weight: 5
+    region: content
+  field_filter_cond_type:
+    type: list_default
+    label: above
+    settings: {  }
     third_party_settings: {  }
     weight: 3
     region: content
@@ -47,7 +55,7 @@ content:
     settings:
       link: false
     third_party_settings: {  }
-    weight: 2
+    weight: 4
     region: content
   field_title:
     type: string
@@ -58,5 +66,5 @@ content:
     weight: 0
     region: content
 hidden:
-  field_filter_cond_type: true
+  field_underlined_title: true
   search_api_excerpt: true

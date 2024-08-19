@@ -59,6 +59,26 @@ default:
       attributes:
         name: title
         content: 'Jesper Stein vinder Læsernes Bogpris for Rampen | DPL CMS'
+    -
+      tag: meta
+      attributes:
+        property: 'og:image'
+        content: 'http://dapple-cms.docker/sites/default/files/styles/open_graph/public/2023-12/jilbert-ebrahimi-HAwA1N2gjo8-unsplash.jpg?h=e5aec6c8&itok=ak6Ih9uR'
+    -
+      tag: meta
+      attributes:
+        property: 'og:image:url'
+        content: 'http://dapple-cms.docker/sites/default/files/styles/open_graph/public/2023-12/jilbert-ebrahimi-HAwA1N2gjo8-unsplash.jpg?h=e5aec6c8&itok=ak6Ih9uR'
+    -
+      tag: meta
+      attributes:
+        property: 'og:image:width'
+        content: '1200'
+    -
+      tag: meta
+      attributes:
+        property: 'og:image:height'
+        content: '630'
   path:
     -
       alias: /artikler/netmedier/jesper-stein-vinder-laesernes-bogpris-rampen

@@ -2,9 +2,11 @@
 
 use Drupal\Core\Entity\FieldableEntityInterface;
 use Drupal\Core\Form\FormStateInterface;
+use Drupal\Core\Url;
 use Drupal\dpl_breadcrumb\Services\BreadcrumbHelper;
 use Drupal\drupal_typed\DrupalTyped;
 use Drupal\node\Entity\Node;
+use Drupal\node\NodeInterface;
 use Drupal\paragraphs\Entity\Paragraph;
 use Drupal\taxonomy\TermInterface;
 
@@ -131,10 +133,69 @@ function dpl_breadcrumb_preprocess_page(array &$variables): void {
  * the field disabled, with a description is also good AX.
  */
 function dpl_breadcrumb_form_alter(array &$form, FormStateInterface $form_state, string $form_id): void {
-  if (!str_starts_with($form_id, 'node_') || !str_ends_with($form_id, '_edit_form')) {
+  if (str_starts_with($form_id, 'node_') && str_ends_with($form_id, '_delete_form')) {
+    _dpl_breadcrumb_form_alter_delete_confirm($form, $form_state, $form_id);
+  }
+
+  if (str_starts_with($form_id, 'node_') && str_ends_with($form_id, '_edit_form')) {
+    _dpl_breadcrumb_form_alter_node_form($form, $form_state, $form_id);
+  }
+}
+
+/**
+ * Alter the node-confirmation form, adding warning if relevant.
+ *
+ * @param array<mixed> $form
+ *   See the $form in dpl_breadcrumb_form_alter().
+ */
+function _dpl_breadcrumb_form_alter_delete_confirm(array &$form, FormStateInterface $form_state, string $form_id): void {
+  $service = DrupalTyped::service(BreadcrumbHelper::class, 'dpl_breadcrumb.breadcrumb_helper');
+  $node = \Drupal::routeMatch()->getParameter('node');
+
+  if (!($node instanceof NodeInterface)) {
     return;
   }
 
+  $breadcrumb_item = $service->getBreadcrumbItem($node);
+
+  if (!$breadcrumb_item) {
+    return;
+  }
+
+  // Overwrite the existing description.
+  $form['description'] = [
+    '#weight' => -10,
+    '#markup' => t(
+        '<p>You are about to delete <strong>"@title"</strong>. This page is linked to the breadcrumb <strong>"@breadcrumb_title"</strong>.
+        <br>You cannot delete this content until you replace the page in the "Content to link to" field in <strong>"@breadcrumb_title"</strong>.
+        <br><strong><a href="@breadcrumb_edit_url" target="_blank">Edit the breadcrumb "@breadcrumb_title"</a></strong></p>',
+        [
+          '@title' => $node->label(),
+          '@breadcrumb_title' => $breadcrumb_item->getName(),
+          '@breadcrumb_edit_url' => Url::fromRoute('entity.taxonomy_term.edit_form', ['taxonomy_term' => $breadcrumb_item->id()])->toString(),
+        ],
+        ['context' => 'DPL admin UX']
+    ),
+  ];
+
+  // Disable the delete button. Technically, the editor still have access to
+  // delete the content, but if they do find a way around it, then it is their
+  // own 'problem' as this is a helping functionality.
+  $form['actions']['submit']['#disabled'] = TRUE;
+}
+
+/**
+ * Alters node edit form.
+ *
+ * Altering the node edit form, and detect if the current node already exists
+ * in the content structure. If it does, we do not want the editor to be
+ * able to change it, as it will be overwritten in the save() hook - and having
+ * the field disabled, with a description is also good AX.
+ *
+ * @param array<mixed> $form
+ *   See the $form in dpl_breadcrumb_form_alter().
+ */
+function _dpl_breadcrumb_form_alter_node_form(array &$form, FormStateInterface $form_state, string $form_id): void {
   $service = DrupalTyped::service(BreadcrumbHelper::class, 'dpl_breadcrumb.breadcrumb_helper');
   $field_name = $service->getStructureFieldName();
 
@@ -154,7 +215,6 @@ function dpl_breadcrumb_form_alter(array &$form, FormStateInterface $form_state,
     $field['#default_value'] = [$breadcrumb_parent?->id()];
     $field['#description'] = t('TODO - A text that describes that this node already exists in the content structure and cannot be edited.', [], ['context' => 'DPL Breadcrumbs']);
   }
-
 }
 
 /**

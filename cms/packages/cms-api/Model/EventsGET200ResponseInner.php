@@ -109,6 +109,16 @@ class EventsGET200ResponseInner
     protected ?\DateTime $updatedAt = null;
 
     /**
+     * Whether the event is marked as relevant for ticket management systems
+     *
+     * @var bool|null
+     * @SerializedName("ticket_manager_relevance")
+     * @Assert\Type("bool")
+     * @Type("bool")
+     */
+    protected ?bool $ticketManagerRelevance = null;
+
+    /**
      * @var EventsGET200ResponseInnerImage|null
      * @SerializedName("image")
      * @Assert\Type("DanskernesDigitaleBibliotek\CMS\Api\Model\EventsGET200ResponseInnerImage")
@@ -231,6 +241,7 @@ class EventsGET200ResponseInner
             $this->url = array_key_exists('url', $data) ? $data['url'] : $this->url;
             $this->createdAt = array_key_exists('createdAt', $data) ? $data['createdAt'] : $this->createdAt;
             $this->updatedAt = array_key_exists('updatedAt', $data) ? $data['updatedAt'] : $this->updatedAt;
+            $this->ticketManagerRelevance = array_key_exists('ticketManagerRelevance', $data) ? $data['ticketManagerRelevance'] : $this->ticketManagerRelevance;
             $this->image = array_key_exists('image', $data) ? $data['image'] : $this->image;
             $this->state = array_key_exists('state', $data) ? $data['state'] : $this->state;
             $this->dateTime = array_key_exists('dateTime', $data) ? $data['dateTime'] : $this->dateTime;
@@ -397,6 +408,32 @@ class EventsGET200ResponseInner
     public function setUpdatedAt(?\DateTime $updatedAt): self
     {
         $this->updatedAt = $updatedAt;
+
+        return $this;
+    }
+
+    /**
+     * Gets ticketManagerRelevance.
+     *
+     * @return bool|null
+     */
+    public function isTicketManagerRelevance(): ?bool
+    {
+        return $this->ticketManagerRelevance;
+    }
+
+
+
+    /**
+     * Sets ticketManagerRelevance.
+     *
+     * @param bool|null $ticketManagerRelevance  Whether the event is marked as relevant for ticket management systems
+     *
+     * @return $this
+     */
+    public function setTicketManagerRelevance(?bool $ticketManagerRelevance = null): self
+    {
+        $this->ticketManagerRelevance = $ticketManagerRelevance;
 
         return $this;
     }

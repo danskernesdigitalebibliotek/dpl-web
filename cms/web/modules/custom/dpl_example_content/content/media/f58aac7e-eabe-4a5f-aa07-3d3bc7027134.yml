@@ -1,0 +1,42 @@
+_meta:
+  version: '1.0'
+  entity_type: media
+  uuid: f58aac7e-eabe-4a5f-aa07-3d3bc7027134
+  bundle: image
+  default_langcode: da
+  depends:
+    a6715bb0-3282-4d03-9404-bc8de03b7f5a: file
+default:
+  status:
+    -
+      value: true
+  uid:
+    -
+      target_id: 1
+  name:
+    -
+      value: 'Eksempel logo'
+  created:
+    -
+      value: 1719836437
+  revision_translation_affected:
+    -
+      value: true
+  metatag:
+    -
+      tag: meta
+      attributes:
+        name: title
+        content: '| DPL CMS'
+  path:
+    -
+      alias: ''
+      langcode: da
+      pathauto: 0
+  field_media_image:
+    -
+      entity: a6715bb0-3282-4d03-9404-bc8de03b7f5a
+      alt: ''
+      title: ''
+      width: 220
+      height: 100

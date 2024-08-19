@@ -10,10 +10,11 @@ use DanskernesDigitaleBibliotek\CMS\Api\Model\EventsGET200ResponseInnerImage;
 use DanskernesDigitaleBibliotek\CMS\Api\Model\EventsGET200ResponseInnerSeries;
 use DanskernesDigitaleBibliotek\CMS\Api\Model\EventsGET200ResponseInnerTicketCategoriesInner;
 use DanskernesDigitaleBibliotek\CMS\Api\Model\EventsGET200ResponseInnerTicketCategoriesInnerPrice;
-use Drupal\Component\DependencyInjection\ContainerInterface;
+use Drupal\Core\Config\ConfigFactoryInterface;
 use Drupal\Core\Field\FieldItemListInterface;
 use Drupal\Core\File\FileUrlGeneratorInterface;
 use Drupal\dpl_event\EventWrapper;
+use Drupal\dpl_event\Form\SettingsForm;
 use Drupal\file\FileInterface;
 use Drupal\media\MediaInterface;
 use Drupal\paragraphs\ParagraphInterface;
@@ -26,11 +27,6 @@ use Safe\DateTime;
 class EventRestMapper {
 
   /**
-   * File URL generator, used for creating image URLs.
-   */
-  private FileUrlGeneratorInterface $fileUrlGenerator;
-
-  /**
    * EventWrapper, a suite of eventinstance helper methods.
    */
   private EventWrapper $eventWrapper;
@@ -41,18 +37,12 @@ class EventRestMapper {
   private EventInstance $event;
 
   /**
-   * {@inheritDoc}
+   * Constructor.
    */
-  public function __construct(FileUrlGeneratorInterface $file_url_generator) {
-    $this->fileUrlGenerator = $file_url_generator;
-  }
-
-  /**
-   * {@inheritDoc}
-   */
-  public static function create(ContainerInterface $container): static {
-    return new static($container->get('file_url_generator'));
-  }
+  public function __construct(
+    protected FileUrlGeneratorInterface $fileUrlGenerator,
+    protected ConfigFactoryInterface $configFactory,
+  ) {}
 
   /**
    * {@inheritDoc}
@@ -65,6 +55,7 @@ class EventRestMapper {
       'title' => $this->event->label(),
       'uuid' => $this->event->uuid(),
       'url' => $this->event->toUrl()->setAbsolute(TRUE)->toString(TRUE)->getGeneratedUrl(),
+      'ticketManagerRelevance' => !empty($this->getSeriesValue('field_relevant_ticket_manager')),
       'description' => $this->getValue('event_description'),
       'body' => $this->getDescription(),
       'state' => $this->eventWrapper->getState()?->value,
@@ -213,12 +204,15 @@ class EventRestMapper {
         continue;
       }
 
+      $config = $this->configFactory->get(SettingsForm::CONFIG_NAME);
+
       $price = new EventsGET200ResponseInnerTicketCategoriesInnerPrice([
         'value' => intval($price_value),
-        'currency' => 'DKK',
+        'currency' => $config->get('price_currency') ?? 'DKK',
       ]);
 
       $categories[] = new EventsGET200ResponseInnerTicketCategoriesInner([
+        'uuid' => $paragraph->uuid(),
         'title' => $title,
         'price' => $price,
       ]);
@@ -247,13 +241,14 @@ class EventRestMapper {
     $address_1 = $value[0]['address_line1'] ?? NULL;
     $address_2 = $value[0]['address_line2'] ?? NULL;
 
-    return new EventsGET200ResponseInnerAddress([
-      'location' => $this->getValue('event_place'),
-      'street' => "$address_1 $address_2",
-      'zip_code' => !empty($zip) ? intval($zip) : NULL,
-      'city' => $value[0]['locality'] ?? NULL,
-      'country' => $value[0]['country_code'] ?? NULL,
-    ]);
+    $address = new EventsGET200ResponseInnerAddress();
+    $address->setLocation($this->getValue('event_place'));
+    $address->setStreet("$address_1 $address_2");
+    $address->setZipCode(!empty($zip) ? intval($zip) : NULL);
+    $address->setCity($value[0]['locality'] ?? NULL);
+    $address->setCountry($value[0]['country_code'] ?? NULL);
+
+    return $address;
   }
 
   /**
@@ -278,6 +273,29 @@ class EventRestMapper {
   private function getValue(string $field_name): ?string {
 
     $field = $this->eventWrapper->getField($field_name);
+
+    if (!($field instanceof FieldItemListInterface)) {
+      return NULL;
+    }
+
+    return $field->getString();
+  }
+
+  /**
+   * Load value directly from associated event series.
+   *
+   * Usually, this is not necessary, as we use field inheritance, but some
+   * fields only exist on the series, and will never be overriden on instance
+   * level.
+   */
+  private function getSeriesValue(string $field_name): ?string {
+    $series = $this->event->getEventSeries();
+
+    if (!$series->hasField($field_name)) {
+      return NULL;
+    }
+
+    $field = $series->get($field_name);
 
     if (!($field instanceof FieldItemListInterface)) {
       return NULL;
