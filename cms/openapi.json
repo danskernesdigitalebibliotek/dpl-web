@@ -904,6 +904,10 @@
                     "format": "date-time",
                     "description": "When the event was last updated. In ISO 8601 format."
                   },
+                  "ticket_manager_relevance": {
+                    "type": "boolean",
+                    "description": "Whether the event is marked as relevant for ticket management systems"
+                  },
                   "image": {
                     "type": "object",
                     "description": "The main image for the event.",
