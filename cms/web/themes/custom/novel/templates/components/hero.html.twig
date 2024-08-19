@@ -6,8 +6,11 @@
 %}
 
 <section {{ attributes.addClass(classes) }}>
-  {% if url %}
-    <a href="{{ url }}" class="hero__content arrow arrow__hover--right-large">
+  {% if link %}
+    {% set url = link.0['#url'] %}
+    {% set target = url.options.target|default('_self') %}
+
+    <a href="{{ url }}" target="{{ target }}" class="hero__content arrow arrow__hover--right-large">
       {% include "@novel/components/hero-inner.html.twig" %}
 
       <div>

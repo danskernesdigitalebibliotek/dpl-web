@@ -4,6 +4,9 @@ status: true
 dependencies:
   config:
     - field.field.user.user.field_author_name
+    - field.field.user.user.field_last_password_reset
+    - field.field.user.user.field_password_expiration
+    - field.field.user.user.field_pending_expire_sent
   module:
     - user
 id: user.user.default
@@ -13,6 +16,9 @@ mode: default
 content: {  }
 hidden:
   field_author_name: true
+  field_last_password_reset: true
+  field_password_expiration: true
+  field_pending_expire_sent: true
   langcode: true
   member_for: true
   search_api_excerpt: true

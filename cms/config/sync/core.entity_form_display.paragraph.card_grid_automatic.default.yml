@@ -12,8 +12,8 @@ dependencies:
     - field.field.paragraph.card_grid_automatic.field_title
     - paragraphs.paragraphs_type.card_grid_automatic
   module:
+    - dpl_link
     - field_group
-    - link
     - select2
 third_party_settings:
   field_group:
@@ -82,12 +82,15 @@ content:
       match_limit: 10
     third_party_settings: {  }
   field_more_link:
-    type: link_default
+    type: dpl_link_options
     weight: 4
     region: content
     settings:
       placeholder_url: ''
       placeholder_title: ''
+      target_blank: 0
+      linkit_profile: default
+      linkit_auto_link_text: false
     third_party_settings: {  }
   field_title:
     type: string_textfield
