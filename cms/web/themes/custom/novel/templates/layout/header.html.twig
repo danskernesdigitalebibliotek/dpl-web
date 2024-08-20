@@ -8,7 +8,7 @@
             <div>
                 <div class="header__menu-navigation-mobile">
                   <button
-                  class="header__menu-navigation-button header__button"
+                  class="header__button header__button--right-border"
                   id="header-sidebar-nav__toggle"
                   aria-controls="sidebarNav"
                   aria-expanded="false"
@@ -26,10 +26,14 @@
                 {{ drupal_menu('main') }}
             </div>
       {{ patron_menu }}
-            <div class="header__menu-bookmarked header__button">
-                <a href="{{ url('dpl_favorites_list.list') }}">
-                    <img width="24" height="24" src="/themes/custom/novel/assets/dpl-design-system/icons/basic/icon-heart.svg" alt="{{ 'List of bookmarks'|t({}, {'context': 'Header'}) }}"/>
-                    <span class="text-small-caption">{{ "Liked"|t({}, {'context': 'Global'}) }}</span>
+            <div class="header__button-responsive-switch">
+                <a href="{{ opening_hours_url }}" class="header__button header__button--left-border">
+                    <img class="header__button-icon" loading="lazy" width="24" height="24" src="/themes/custom/novel/assets/dpl-design-system/icons/basic/icon-watch-static.svg" alt="clock icon"/>
+                    <span  class="header__button-text">{{ "Opening hours"|t }}</span>
+                </a>
+                <a href="{{ url('dpl_favorites_list.list') }}" class="header__button header__button--left-border">
+                    <img class="header__button-icon" width="24" height="24" src="/themes/custom/novel/assets/dpl-design-system/icons/basic/icon-heart.svg" alt="{{ 'List of bookmarks'|t({}, {'context': 'Header'}) }}"/>
+                    <span class="header__button-text">{{ "Liked"|t({}, {'context': 'Global'}) }}</span>
                 </a>
             </div>
         </nav>
