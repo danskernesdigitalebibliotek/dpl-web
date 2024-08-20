@@ -7,8 +7,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2024-08-20 10:38+0200\n"
-"PO-Revision-Date: 2024-08-20 10:38+0200\n"
+"POT-Creation-Date: 2024-08-20 13:09+0200\n"
+"PO-Revision-Date: 2024-08-20 13:09+0200\n"
 "Last-Translator: NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
 "MIME-Version: 1.0\n"
@@ -7544,40 +7544,26 @@ msgid ""
 "Fieldgroup will, as the name implies, group fields together. All fieldable "
 "entities will have the possibility to add groups to wrap their fields "
 "together. Fieldgroup comes with default HTML wrappers like vertical tabs, "
-"horizontal tabs, accordions, fieldsets or div wrappers."
+"horizontal tabs, fieldsets or div wrappers."
 msgstr ""
-"Feltgruppe vil, som navnet antyder, gruppere felter sammen. Alle feltbare "
-"enheder vil have mulighed for at tilføje grupper for at indpakke deres "
-"felter sammen. Feltgruppe leveres med standard HTML-indpakninger som "
-"lodrette faner, vandrette faner, accordeoner, fieldsets eller div-"
-"indpakninger."
 
 msgid ""
 "The field group project is a follow-up on the field group module in <a "
-"href=\"@linkcck\">CCK</a>. The release will only exist for Drupal 7 release "
+"href=\"@link-cck\">CCK</a>. The release will only exist for Drupal 7 release "
 "and higher, so since the existence of the Fields API in core.</br>By moving "
 "field group to a separate module, this may open some new perspectives."
 msgstr ""
-"Feltgruppeprojektet er en opfølgning på feltgruppemodulet i <a "
-"href=\"@linkcck\">CCK</a>. Udgivelsen vil kun eksistere for Drupal 7-"
-"versioner og nyere, siden det eksisterer i kernen af Fiels API. Ved at "
-"flytte feltgruppen til et separat modul, kan det åbne nogle nye perspektiver."
 
 msgid "More Information"
 msgstr "Mere Information"
 
 msgid ""
-"For more information about this module please visit the <a "
+"For more information about this module feel free to visit the <a "
 "href=\"@link\">module page</a>."
 msgstr ""
-"For mere information om dette modul, besøg venligst <a "
-"href=\"@link\">modulsiden</a>."
 
-msgid "Field Group"
-msgstr "Feltgruppe"
-
-msgid "jQuery UI Accordion not enabled"
-msgstr "jQuery UI Accordion ikke aktiveret"
+msgid "The \"jquery_ui_accordion\" module has been installed."
+msgstr "\"jquery_ui_accordion\" modulet er installeret."
 
 msgid ""
 "If you want to use the Field Group accordion formatter, you will need to "
@@ -7587,12 +7573,6 @@ msgstr ""
 "Hvis du ønsker at bruge Field Group accordion-formatteren, skal du "
 "installere <a href=\":link\" target=\"_blank\">jQuery UI Accordion</a> "
 "modulet."
-
-msgid "The jQuery UI Accordion module is installed"
-msgstr "jQuery UI Accordion modulet er installeret"
-
-msgid "The \"jquery_ui_accordion\" module has been installed."
-msgstr "\"jquery_ui_accordion\" modulet er installeret."
 
 msgid "Field group label"
 msgstr "Feltgruppemærkat"
@@ -7605,11 +7585,20 @@ msgid ""
 msgstr ""
 "Vis denne feltgruppe, selvom de indeholdte felter i øjeblikket er tomme."
 
+msgid "Allow HTML in label"
+msgstr ""
+
+msgid "Allows using (XSS-filtered) HTML in the label (e.g. icons)."
+msgstr ""
+
 msgid "Extra CSS classes"
 msgstr "Ekstra CSS-klasser"
 
 msgid "Show Empty Fields"
 msgstr "Vis tomme felter"
+
+msgid "Allow HTML in label: @label_as_html"
+msgstr ""
 
 msgid "Id: @id"
 msgstr "Id: @id"
@@ -7648,15 +7637,6 @@ msgstr "Opret gruppe"
 msgid "Horizontal Tabs"
 msgstr "Horisontale faner"
 
-msgid "Effect"
-msgstr "Effekt"
-
-msgid "Bounce slide"
-msgstr "Springer"
-
-msgid "Effect : @effect"
-msgstr "Effekt: @effect"
-
 msgid "Element"
 msgstr "Element"
 
@@ -7687,11 +7667,11 @@ msgstr "Attributter"
 msgid "E.g. name=\"anchor\""
 msgstr "F.eks. name=\"anchor\""
 
+msgid "Effect"
+msgstr "Effekt"
+
 msgid "Collapsible"
 msgstr "Sammenklappelig"
-
-msgid "Blind"
-msgstr "Persienne"
 
 msgid "Speed"
 msgstr "Hastighed"
@@ -7742,9 +7722,6 @@ msgstr "Vægt"
 msgid "Weight: @weight"
 msgstr "Vægt: @weight"
 
-msgid "Description : @description"
-msgstr "Beskrivelse : @description"
-
 msgid "Display element open by default."
 msgstr "Vis element åbent som standard."
 
@@ -7757,11 +7734,23 @@ msgstr "Standardtilstand lukket"
 msgid "Add field group"
 msgstr "Tilføj feltgruppe"
 
-msgid "Accordion"
-msgstr "Accordion"
+msgid "Field Group"
+msgstr "Feltgruppe"
 
-msgid "This fieldgroup renders child groups as jQuery accordion."
-msgstr "Denne feltgruppe renderer undergrupper som en jQuery accordion."
+msgid "jQuery UI Accordion is deprecated"
+msgstr ""
+
+msgid "This module is deprecated, as the Jquery UI library is EOL."
+msgstr ""
+
+msgid "Bounce slide"
+msgstr "Springer"
+
+msgid "Effect : @effect"
+msgstr "Effekt: @effect"
+
+msgid "Description : @description"
+msgstr "Beskrivelse : @description"
 
 msgid "HTML element"
 msgstr "HTML-element"
@@ -7791,13 +7780,6 @@ msgstr "Detaljer for sidebar"
 msgid "Add a details sidebar element"
 msgstr "Tilføj et detaljeret sidebarmodul"
 
-msgid "Accordion Item"
-msgstr "Accordion element"
-
-msgid "This fieldgroup renders the content in a div, part of accordion group."
-msgstr ""
-"Denne feltgruppe renderer indholdet i en div som del af en accordion-gruppe."
-
 msgid "Details"
 msgstr "Detaljer"
 
@@ -7811,6 +7793,19 @@ msgid ""
 "This fieldgroup renders the inner content in a fieldset with the title as "
 "legend."
 msgstr ""
+
+msgid "Accordion (Deprecated)"
+msgstr ""
+
+msgid "This fieldgroup renders child groups as jQuery accordion."
+msgstr "Denne feltgruppe renderer undergrupper som en jQuery accordion."
+
+msgid "Accordion Item (Deprecated)"
+msgstr ""
+
+msgid "This fieldgroup renders the content in a div, part of accordion group."
+msgstr ""
+"Denne feltgruppe renderer indholdet i en div som del af en accordion-gruppe."
 
 msgid "Field Group Migrate"
 msgstr ""
@@ -7827,6 +7822,14 @@ msgstr "Testmodul for feltgruppe"
 msgid "Provides the ability to group your fields on both form and display."
 msgstr ""
 "Leverer muligheden for at gruppere dine felter både på form og display."
+
+msgid "Field Group: Accordion formatter (Deprecated)"
+msgstr ""
+
+msgid ""
+"Provides the option to render groups as accordion. This module is deprecated "
+"as Jquery UI is EOL."
+msgstr ""
 
 msgid "@label"
 msgstr "@label"
