@@ -45,3 +45,30 @@ void {
     ];
   }
 }
+
+/**
+ * Implements template_preprocess_page().
+ *
+ * @param mixed[] $variables
+ *   Theme variables.
+ */
+function dpl_opening_hours_preprocess_page(array &$variables): void {
+  $variables['opening_hours_sidebar_large'] = [
+    '#theme' => 'dpl_react_app',
+    '#name' => 'opening-hours-sidebar',
+    '#data' => [
+      'size' => "large",
+      'opening-hours-text' => t('Opening hours', [], ['context' => 'Opening Hours sidebar']),
+      'opening-hours-sidebar-today-text' => t('Today (@toDayString)', [], ['context' => 'Opening Hours sidebar']),
+    ] + DplReactAppsController::externalApiBaseUrls(),
+  ];
+  $variables['opening_hours_sidebar_small'] = [
+    '#theme' => 'dpl_react_app',
+    '#name' => 'opening-hours-sidebar',
+    '#data' => [
+      'size' => "small",
+      'opening-hours-text' => t('Opening hours', [], ['context' => 'Opening Hours sidebar']),
+      'opening-hours-sidebar-today-text' => t('Today (@toDayString)', [], ['context' => 'Opening Hours sidebar']),
+    ] + DplReactAppsController::externalApiBaseUrls(),
+  ];
+}

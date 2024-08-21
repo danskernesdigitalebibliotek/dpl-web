@@ -27,10 +27,7 @@
             </div>
       {{ patron_menu }}
             <div class="header__button-responsive-switch">
-                <a href="{{ opening_hours_url }}" class="header__button header__button--left-border">
-                    <img class="header__button-icon" loading="lazy" width="24" height="24" src="/themes/custom/novel/assets/dpl-design-system/icons/basic/icon-watch-static.svg" alt="clock icon"/>
-                    <span  class="header__button-text">{{ "Opening hours"|t }}</span>
-                </a>
+                {{ opening_hours_sidebar_small }}
                 <a href="{{ url('dpl_favorites_list.list') }}" class="header__button header__button--left-border">
                     <img class="header__button-icon" width="24" height="24" src="/themes/custom/novel/assets/dpl-design-system/icons/basic/icon-heart.svg" alt="{{ 'List of bookmarks'|t({}, {'context': 'Header'}) }}"/>
                     <span class="header__button-text">{{ "Liked"|t({}, {'context': 'Global'}) }}</span>
@@ -39,15 +36,7 @@
         </nav>
         {{ search_header }}
     </div>
-    <div class="header__clock">
-        <div class="pagefold-parent--medium">
-            <div class="pagefold-triangle--medium"></div>
-        </div>
-        <a href="{{ opening_hours_url }}" class="header__clock-items">
-            <img loading="lazy" width="58" height="58" src="/themes/custom/novel/assets/dpl-design-system/icons/basic/icon-watch-static.svg" class="mb-8" alt=""/>
-            <span  class="text-small-caption">{{ "Opening hours"|t }}</span>
-        </a>
-    </div>
+    {{ opening_hours_sidebar_large }}
 </header>
 <div class="header-sidebar-nav" data-open="closed">
     <div class="header-sidebar-nav__background-wrapper">
