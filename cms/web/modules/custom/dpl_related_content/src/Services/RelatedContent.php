@@ -254,8 +254,8 @@ class RelatedContent {
       // cache tags, and even a time-based cache.
       '#cache' => [
         // Max age of 12 hours.
-        '#max-age' => (60 * 60 * 12),
-        '#tags' => ['eventinstance_list', 'eventseries_list', 'node_list'],
+        'max-age' => (60 * 60 * 12),
+        'tags' => ['eventinstance_list', 'eventseries_list', 'node_list'],
       ],
     ];
   }
