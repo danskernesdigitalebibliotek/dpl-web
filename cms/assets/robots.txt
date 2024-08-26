@@ -1,0 +1,2 @@
+# Reduce load from crawlers by requesting a 10s delay between requests
+Crawl-delay: 10
