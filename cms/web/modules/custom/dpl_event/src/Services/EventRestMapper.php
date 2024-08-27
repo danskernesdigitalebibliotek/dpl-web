@@ -212,6 +212,7 @@ class EventRestMapper {
       ]);
 
       $categories[] = new EventsGET200ResponseInnerTicketCategoriesInner([
+        'uuid' => $paragraph->uuid(),
         'title' => $title,
         'price' => $price,
       ]);

@@ -1,7 +1,7 @@
 {% for item in content.field_link %}
   {% if item['#type'] == 'link' %}
-    <a href="{{ item['#url'].toString() }}" target="{{ item['#options'].attributes.target|default('_self') }}"
-       class="simple-link arrow__hover--right-small">
+    {% set url = item['#url'].external ? item['#url'].uri : item['#url'].toString() %}
+    <a href="{{ url }}" target="{{ item['#options'].attributes.target|default('_self') }}" class="simple-link arrow__hover--right-small">
       {{ item['#title'] }}
       {{ source(baseIconPath ~ '/arrow-ui/icon-arrow-ui-small-right.svg') }}    </a>
   {% endif %}

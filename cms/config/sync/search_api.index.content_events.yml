@@ -1,0 +1,170 @@
+uuid: 916f7e48-7edf-48cf-b61d-b2ad4c6c1116
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_branch
+    - field.storage.node.field_categories
+    - field.storage.eventseries.field_description
+    - field.storage.eventseries.field_event_place
+    - field.storage.node.field_hero_title
+    - field.storage.node.field_subtitle
+    - field.storage.node.field_tags
+    - field.storage.eventseries.field_tags
+    - field.storage.node.field_teaser_text
+    - field.storage.eventseries.field_teaser_text
+    - search_api.server.db_search
+  module:
+    - node
+    - recurring_events
+    - search_api
+id: content_events
+name: 'Content + Events'
+description: ''
+read_only: false
+field_settings:
+  field_branch:
+    label: Branch
+    datasource_id: 'entity:node'
+    property_path: field_branch
+    type: integer
+    dependencies:
+      config:
+        - field.storage.node.field_branch
+  field_categories:
+    label: Categories
+    datasource_id: 'entity:node'
+    property_path: field_categories
+    type: integer
+    dependencies:
+      config:
+        - field.storage.node.field_categories
+  field_description_event:
+    label: Subtitle
+    datasource_id: 'entity:eventseries'
+    property_path: field_description
+    type: text
+    dependencies:
+      config:
+        - field.storage.eventseries.field_description
+  field_event_place_event:
+    label: Place
+    datasource_id: 'entity:eventseries'
+    property_path: field_event_place
+    type: string
+    dependencies:
+      config:
+        - field.storage.eventseries.field_event_place
+  field_hero_title:
+    label: 'Hero title'
+    datasource_id: 'entity:node'
+    property_path: field_hero_title
+    type: text
+    boost: 1.2
+    dependencies:
+      config:
+        - field.storage.node.field_hero_title
+  field_subtitle:
+    label: Subtitle
+    datasource_id: 'entity:node'
+    property_path: field_subtitle
+    type: text
+    dependencies:
+      config:
+        - field.storage.node.field_subtitle
+  field_tags:
+    label: Tags
+    datasource_id: 'entity:node'
+    property_path: field_tags
+    type: integer
+    dependencies:
+      config:
+        - field.storage.node.field_tags
+  field_tags_event:
+    label: Tags
+    datasource_id: 'entity:eventseries'
+    property_path: field_tags
+    type: integer
+    dependencies:
+      config:
+        - field.storage.eventseries.field_tags
+  field_teaser_text:
+    label: 'Teaser text'
+    datasource_id: 'entity:node'
+    property_path: field_teaser_text
+    type: text
+    dependencies:
+      config:
+        - field.storage.node.field_teaser_text
+  field_teaser_text_event:
+    label: 'Teaser text'
+    datasource_id: 'entity:eventseries'
+    property_path: field_teaser_text
+    type: string
+    dependencies:
+      config:
+        - field.storage.eventseries.field_teaser_text
+  title:
+    label: Title
+    datasource_id: 'entity:node'
+    property_path: title
+    type: text
+    boost: 1.2
+    dependencies:
+      module:
+        - node
+  title_event:
+    label: Title
+    datasource_id: 'entity:eventseries'
+    property_path: title
+    type: text
+    boost: 1.2
+    dependencies:
+      module:
+        - recurring_events
+datasource_settings:
+  'entity:eventseries':
+    bundles:
+      default: true
+      selected: {  }
+    languages:
+      default: true
+      selected: {  }
+  'entity:node':
+    bundles:
+      default: false
+      selected:
+        - article
+        - page
+    languages:
+      default: true
+      selected: {  }
+processor_settings:
+  add_url: {  }
+  aggregated_field: {  }
+  custom_value: {  }
+  entity_type: {  }
+  ignorecase:
+    weights:
+      preprocess_index: -20
+      preprocess_query: -20
+    all_fields: true
+    fields:
+      - field_description_event
+      - field_event_place_event
+      - field_hero_title
+      - field_subtitle
+      - field_teaser_text
+      - field_teaser_text_event
+      - title
+      - title_event
+  language_with_fallback: {  }
+  rendered_item: {  }
+tracker_settings:
+  default:
+    indexing_order: fifo
+options:
+  cron_limit: 50
+  index_directly: true
+  track_changes_in_references: true
+server: db_search

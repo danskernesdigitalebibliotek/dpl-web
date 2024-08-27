@@ -78,7 +78,7 @@ describe("Adgangsplatformen", () => {
     cy.clearCookies();
     cy.visit("/arrangementer");
     // Open user menu.
-    cy.get(".header__menu-profile").click();
+    cy.getBySel("header-menu-profile-button").click();
     // Click create profile.
     cy.get(".modal-login__btn-create-profile").click();
     cy.get("main#main-content")
@@ -104,7 +104,7 @@ describe("Adgangsplatformen", () => {
 
     cy.clearCookies();
     cy.visit("/arrangementer");
-    cy.get(".header__menu-profile").click();
+    cy.getBySel("header-menu-profile-button").click();
     cy.get(".modal-login__btn-create-profile").click();
     cy.get("main#main-content")
       .get(".paragraphs__item--user_registration_section__link")
@@ -140,7 +140,7 @@ describe("Adgangsplatformen", () => {
 
     cy.clearCookies();
     cy.visit("/arrangementer");
-    cy.get(".header__menu-profile").click();
+    cy.getBySel("header-menu-profile-button").click();
     cy.get(".modal-login__btn-create-profile").click();
     cy.get("main#main-content")
       .get(".paragraphs__item--user_registration_section__link")

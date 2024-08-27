@@ -13,26 +13,7 @@ use Drupal\Core\Cache\CacheableMetadata;
 use Drupal\Core\GeneratedUrl;
 use Drupal\Core\Url;
 use Drupal\dpl_library_agency\GeneralSettings;
-use Drupal\dpl_react_apps\Controller\DplReactAppsController;
 use function Safe\json_encode;
-
-/**
- * Implements template_preprocess_page().
- *
- * @param mixed[] $variables
- *   Theme variables.
- */
-function dpl_react_apps_preprocess_page(array &$variables): void {
-  $variables['search'] = [
-    'header' => [
-      '#theme' => 'dpl_react_app',
-      '#name' => 'search-header',
-      '#data' => [
-      // Add external API base urls.
-      ] + DplReactAppsController::externalApiBaseUrls(),
-    ],
-  ];
-}
 
 /**
  * Texts for all apps.

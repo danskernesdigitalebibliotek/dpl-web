@@ -7,14 +7,23 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2024-08-13 09:22+0200\n"
-"PO-Revision-Date: 2024-08-13 09:22+0200\n"
+"POT-Creation-Date: 2024-08-27 12:41+0200\n"
+"PO-Revision-Date: 2024-08-27 12:41+0200\n"
 "Last-Translator: NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
+
+msgid "Search content"
+msgstr "Søg indhold"
+
+msgid "Search the website"
+msgstr ""
+
+msgid "Search button"
+msgstr ""
 
 msgctxt "Library Agency Configuration"
 msgid "Reservations"
@@ -204,6 +213,18 @@ msgid ""
 msgstr ""
 "Standard interesseperiode skal indstilles i feltet \"Standard "
 "interesseperiode for reserveringer\"."
+
+msgctxt "dpl_search"
+msgid "Showing web results for \"@input\" (@total_results)"
+msgstr ""
+
+msgctxt "dpl_search"
+msgid "library materials."
+msgstr ""
+
+msgctxt "dpl_search"
+msgid "Showing web results (@total_results)"
+msgstr ""
 
 msgid "Configuration file"
 msgstr "Konfigurationsfil"
@@ -1877,6 +1898,16 @@ msgctxt "DPL breadcrumb"
 msgid "Related content for \"@title\""
 msgstr "Relateret indhold til \"@title\""
 
+msgctxt "DPL admin UX"
+msgid ""
+"<p>You are about to delete <strong>\"@title\"</strong>. This page is linked "
+"to the breadcrumb <strong>\"@breadcrumb_title\"</strong>.\n"
+"        <br>You cannot delete this content until you replace the page in the "
+"\"Content to link to\" field in <strong>\"@breadcrumb_title\"</strong>.\n"
+"        <br><strong><a href=\"@breadcrumb_edit_url\" target=\"_blank\">Edit "
+"the breadcrumb \"@breadcrumb_title\"</a></strong></p>"
+msgstr ""
+
 msgctxt "DPL Breadcrumbs"
 msgid ""
 "TODO - A text that describes that this node already exists in the content "
@@ -3159,6 +3190,10 @@ msgctxt "Search Result"
 msgid "Showing"
 msgstr "Viser"
 
+msgctxt "Search Result"
+msgid "Switch to the results for the library content."
+msgstr ""
+
 msgctxt "advanced search"
 msgid "source"
 msgstr "Kilde"
@@ -3994,6 +4029,12 @@ msgstr "DPL webformular"
 
 msgid "Handles custom webform configuration"
 msgstr "Håndterer brugerdefineret webform konfiguration"
+
+msgid "DPL Search"
+msgstr ""
+
+msgid "Handling the search pages."
+msgstr ""
 
 msgid "DPL error pages"
 msgstr "DPL fejlsider"
@@ -7534,40 +7575,26 @@ msgid ""
 "Fieldgroup will, as the name implies, group fields together. All fieldable "
 "entities will have the possibility to add groups to wrap their fields "
 "together. Fieldgroup comes with default HTML wrappers like vertical tabs, "
-"horizontal tabs, accordions, fieldsets or div wrappers."
+"horizontal tabs, fieldsets or div wrappers."
 msgstr ""
-"Feltgruppe vil, som navnet antyder, gruppere felter sammen. Alle feltbare "
-"enheder vil have mulighed for at tilføje grupper for at indpakke deres "
-"felter sammen. Feltgruppe leveres med standard HTML-indpakninger som "
-"lodrette faner, vandrette faner, accordeoner, fieldsets eller div-"
-"indpakninger."
 
 msgid ""
 "The field group project is a follow-up on the field group module in <a "
-"href=\"@linkcck\">CCK</a>. The release will only exist for Drupal 7 release "
+"href=\"@link-cck\">CCK</a>. The release will only exist for Drupal 7 release "
 "and higher, so since the existence of the Fields API in core.</br>By moving "
 "field group to a separate module, this may open some new perspectives."
 msgstr ""
-"Feltgruppeprojektet er en opfølgning på feltgruppemodulet i <a "
-"href=\"@linkcck\">CCK</a>. Udgivelsen vil kun eksistere for Drupal 7-"
-"versioner og nyere, siden det eksisterer i kernen af Fiels API. Ved at "
-"flytte feltgruppen til et separat modul, kan det åbne nogle nye perspektiver."
 
 msgid "More Information"
 msgstr "Mere Information"
 
 msgid ""
-"For more information about this module please visit the <a "
+"For more information about this module feel free to visit the <a "
 "href=\"@link\">module page</a>."
 msgstr ""
-"For mere information om dette modul, besøg venligst <a "
-"href=\"@link\">modulsiden</a>."
 
-msgid "Field Group"
-msgstr "Feltgruppe"
-
-msgid "jQuery UI Accordion not enabled"
-msgstr "jQuery UI Accordion ikke aktiveret"
+msgid "The \"jquery_ui_accordion\" module has been installed."
+msgstr "\"jquery_ui_accordion\" modulet er installeret."
 
 msgid ""
 "If you want to use the Field Group accordion formatter, you will need to "
@@ -7577,12 +7604,6 @@ msgstr ""
 "Hvis du ønsker at bruge Field Group accordion-formatteren, skal du "
 "installere <a href=\":link\" target=\"_blank\">jQuery UI Accordion</a> "
 "modulet."
-
-msgid "The jQuery UI Accordion module is installed"
-msgstr "jQuery UI Accordion modulet er installeret"
-
-msgid "The \"jquery_ui_accordion\" module has been installed."
-msgstr "\"jquery_ui_accordion\" modulet er installeret."
 
 msgid "Field group label"
 msgstr "Feltgruppemærkat"
@@ -7595,11 +7616,20 @@ msgid ""
 msgstr ""
 "Vis denne feltgruppe, selvom de indeholdte felter i øjeblikket er tomme."
 
+msgid "Allow HTML in label"
+msgstr ""
+
+msgid "Allows using (XSS-filtered) HTML in the label (e.g. icons)."
+msgstr ""
+
 msgid "Extra CSS classes"
 msgstr "Ekstra CSS-klasser"
 
 msgid "Show Empty Fields"
 msgstr "Vis tomme felter"
+
+msgid "Allow HTML in label: @label_as_html"
+msgstr ""
 
 msgid "Id: @id"
 msgstr "Id: @id"
@@ -7638,15 +7668,6 @@ msgstr "Opret gruppe"
 msgid "Horizontal Tabs"
 msgstr "Horisontale faner"
 
-msgid "Effect"
-msgstr "Effekt"
-
-msgid "Bounce slide"
-msgstr "Springer"
-
-msgid "Effect : @effect"
-msgstr "Effekt: @effect"
-
 msgid "Element"
 msgstr "Element"
 
@@ -7677,11 +7698,11 @@ msgstr "Attributter"
 msgid "E.g. name=\"anchor\""
 msgstr "F.eks. name=\"anchor\""
 
+msgid "Effect"
+msgstr "Effekt"
+
 msgid "Collapsible"
 msgstr "Sammenklappelig"
-
-msgid "Blind"
-msgstr "Persienne"
 
 msgid "Speed"
 msgstr "Hastighed"
@@ -7732,9 +7753,6 @@ msgstr "Vægt"
 msgid "Weight: @weight"
 msgstr "Vægt: @weight"
 
-msgid "Description : @description"
-msgstr "Beskrivelse : @description"
-
 msgid "Display element open by default."
 msgstr "Vis element åbent som standard."
 
@@ -7747,11 +7765,23 @@ msgstr "Standardtilstand lukket"
 msgid "Add field group"
 msgstr "Tilføj feltgruppe"
 
-msgid "Accordion"
-msgstr "Accordion"
+msgid "Field Group"
+msgstr "Feltgruppe"
 
-msgid "This fieldgroup renders child groups as jQuery accordion."
-msgstr "Denne feltgruppe renderer undergrupper som en jQuery accordion."
+msgid "jQuery UI Accordion is deprecated"
+msgstr ""
+
+msgid "This module is deprecated, as the Jquery UI library is EOL."
+msgstr ""
+
+msgid "Bounce slide"
+msgstr "Springer"
+
+msgid "Effect : @effect"
+msgstr "Effekt: @effect"
+
+msgid "Description : @description"
+msgstr "Beskrivelse : @description"
 
 msgid "HTML element"
 msgstr "HTML-element"
@@ -7781,13 +7811,6 @@ msgstr "Detaljer for sidebar"
 msgid "Add a details sidebar element"
 msgstr "Tilføj et detaljeret sidebarmodul"
 
-msgid "Accordion Item"
-msgstr "Accordion element"
-
-msgid "This fieldgroup renders the content in a div, part of accordion group."
-msgstr ""
-"Denne feltgruppe renderer indholdet i en div som del af en accordion-gruppe."
-
 msgid "Details"
 msgstr "Detaljer"
 
@@ -7801,6 +7824,19 @@ msgid ""
 "This fieldgroup renders the inner content in a fieldset with the title as "
 "legend."
 msgstr ""
+
+msgid "Accordion (Deprecated)"
+msgstr ""
+
+msgid "This fieldgroup renders child groups as jQuery accordion."
+msgstr "Denne feltgruppe renderer undergrupper som en jQuery accordion."
+
+msgid "Accordion Item (Deprecated)"
+msgstr ""
+
+msgid "This fieldgroup renders the content in a div, part of accordion group."
+msgstr ""
+"Denne feltgruppe renderer indholdet i en div som del af en accordion-gruppe."
 
 msgid "Field Group Migrate"
 msgstr ""
@@ -7817,6 +7853,14 @@ msgstr "Testmodul for feltgruppe"
 msgid "Provides the ability to group your fields on both form and display."
 msgstr ""
 "Leverer muligheden for at gruppere dine felter både på form og display."
+
+msgid "Field Group: Accordion formatter (Deprecated)"
+msgstr ""
+
+msgid ""
+"Provides the option to render groups as accordion. This module is deprecated "
+"as Jquery UI is EOL."
+msgstr ""
 
 msgid "@label"
 msgstr "@label"
@@ -17791,14 +17835,14 @@ msgstr "Gå til hovedindhold"
 msgid "Phone"
 msgstr "Telefon"
 
+msgid "Opening hours"
+msgstr "Åbningstider"
+
 msgid "List of bookmarks"
 msgstr "Bogmærkeliste"
 
 msgid "Liked"
 msgstr "Husk"
-
-msgid "Opening hours"
-msgstr "Åbningstider"
 
 msgid "Go to frontpage"
 msgstr "Gå til forsiden"
@@ -18505,6 +18549,10 @@ msgctxt "core.entity_view_mode.eventseries.list:label"
 msgid "List"
 msgstr ""
 
+msgctxt "core.entity_view_mode.eventseries.list_teaser:label"
+msgid "List teaser"
+msgstr ""
+
 msgctxt "core.entity_view_mode.eventseries.nav_spot:label"
 msgid "Nav spot"
 msgstr ""
@@ -18869,6 +18917,30 @@ msgstr ""
 
 msgctxt "field.field.eventseries.default.field_event_state:label"
 msgid "State"
+msgstr ""
+
+msgctxt "field.field.eventseries.default.field_relevant_ticket_manager:label"
+msgid "Relevant for ticket manager"
+msgstr ""
+
+msgctxt ""
+"field.field.eventseries.default.field_relevant_ticket_manager:description"
+msgid ""
+"If you mark this event as relevant, it means that if you use an external "
+"ticket system, some data such as ticket link, status and others may be "
+"overridden."
+msgstr ""
+
+msgctxt ""
+"field.field.eventseries.default.field_relevant_ticket_manager:settings:"
+"on_label"
+msgid "On"
+msgstr ""
+
+msgctxt ""
+"field.field.eventseries.default.field_relevant_ticket_manager:settings:"
+"off_label"
+msgid "Off"
 msgstr ""
 
 msgctxt "field.field.eventseries.default.field_tags:label"
@@ -20851,6 +20923,10 @@ msgctxt "search_api.index.content:name"
 msgid "Content"
 msgstr "Indhold"
 
+msgctxt "search_api.index.content_events:name"
+msgid "Content + Events"
+msgstr ""
+
 msgctxt "search_api.index.events:name"
 msgid "Events"
 msgstr "Arrangementer"
@@ -21838,6 +21914,82 @@ msgstr ""
 msgctxt ""
 "views.view.content:display:page_1:display_options:tab_options:description"
 msgid "Find and manage content"
+msgstr ""
+
+msgctxt "views.view.editorial_search:label"
+msgid "Editorial search"
+msgstr ""
+
+msgctxt "views.view.editorial_search:display:default:display_title"
+msgid "Default"
+msgstr ""
+
+msgctxt "views.view.editorial_search:display:default:display_options:title"
+msgid "Search"
+msgstr ""
+
+msgctxt ""
+"views.view.editorial_search:display:default:display_options:pager:options:"
+"expose:items_per_page_label"
+msgid "Items per page"
+msgstr ""
+
+msgctxt ""
+"views.view.editorial_search:display:default:display_options:pager:options:"
+"expose:items_per_page_options_all_label"
+msgid "- All -"
+msgstr ""
+
+msgctxt ""
+"views.view.editorial_search:display:default:display_options:pager:options:"
+"expose:offset_label"
+msgid "Offset"
+msgstr ""
+
+msgctxt ""
+"views.view.editorial_search:display:default:display_options:pager:options:"
+"views_infinite_scroll:button_text"
+msgid "Showing @current_items out of @total results"
+msgstr ""
+
+msgctxt ""
+"views.view.editorial_search:display:default:display_options:exposed_form:"
+"options:submit_button"
+msgid "Apply"
+msgstr ""
+
+msgctxt ""
+"views.view.editorial_search:display:default:display_options:exposed_form:"
+"options:reset_button_label"
+msgid "Reset"
+msgstr ""
+
+msgctxt ""
+"views.view.editorial_search:display:default:display_options:exposed_form:"
+"options:exposed_sorts_label"
+msgid "Sort by"
+msgstr ""
+
+msgctxt ""
+"views.view.editorial_search:display:default:display_options:exposed_form:"
+"options:sort_asc_label"
+msgid "Asc"
+msgstr ""
+
+msgctxt ""
+"views.view.editorial_search:display:default:display_options:exposed_form:"
+"options:sort_desc_label"
+msgid "Desc"
+msgstr ""
+
+msgctxt ""
+"views.view.editorial_search:display:default:display_options:filters:"
+"search_api_fulltext:expose:label"
+msgid "Fulltext search"
+msgstr ""
+
+msgctxt "views.view.editorial_search:display:page:display_title"
+msgid "Page"
 msgstr ""
 
 msgctxt "views.view.entity_clone_template:label"
