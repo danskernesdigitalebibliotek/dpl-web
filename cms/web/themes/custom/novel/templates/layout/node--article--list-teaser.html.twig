@@ -13,6 +13,6 @@
   image: content.field_teaser_image.0,
   categories: content.field_categories,
   date: publication_date|format_date('date_short_month'),
-  description: content.field_subtitle,
+  description: content.field_teaser_text.0|default(content.field_subtitle),
   bottom: content.field_branch,
 } only %}
