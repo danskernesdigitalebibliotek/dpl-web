@@ -44,6 +44,16 @@ content:
     third_party_settings: {  }
     weight: 2
     region: content
+  event_relevant_ticket_manager:
+    type: boolean
+    label: visible
+    settings:
+      format: default
+      format_custom_false: ''
+      format_custom_true: ''
+    third_party_settings: {  }
+    weight: 60
+    region: content
   event_teaser_image:
     type: entity_reference_entity_view
     label: hidden

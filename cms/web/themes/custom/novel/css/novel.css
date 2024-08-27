@@ -9,7 +9,6 @@
   background-color: var(--c-global-primary);
   font-family: var(--font-body);
   font-size: 14px;
-  text-transform: uppercase;
 }
 
 .select2-container--open + .dropdown__arrows {
@@ -41,7 +40,6 @@
   font-size: 14px;
   color: var(--c-text-primary-black);
   padding: 0 70px 0 20px;
-  text-transform: uppercase;
 }
 
 .select2-container--default .select2-selection__arrow {
@@ -52,7 +50,6 @@
   background-color: var(--c-global-secondary);
   font-size: 14px;
   line-height: 2.4em;
-  text-transform: uppercase;
 }
 
 .select2-container--default .select2-selection--multiple .select2-selection__choice__remove {

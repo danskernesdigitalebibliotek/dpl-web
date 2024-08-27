@@ -55,6 +55,7 @@ class EventRestMapper {
       'title' => $this->event->label(),
       'uuid' => $this->event->uuid(),
       'url' => $this->event->toUrl()->setAbsolute(TRUE)->toString(TRUE)->getGeneratedUrl(),
+      'ticketManagerRelevance' => !empty($this->getSeriesValue('field_relevant_ticket_manager')),
       'description' => $this->getValue('event_description'),
       'body' => $this->getDescription(),
       'state' => $this->eventWrapper->getState()?->value,
@@ -211,6 +212,7 @@ class EventRestMapper {
       ]);
 
       $categories[] = new EventsGET200ResponseInnerTicketCategoriesInner([
+        'uuid' => $paragraph->uuid(),
         'title' => $title,
         'price' => $price,
       ]);
@@ -271,6 +273,29 @@ class EventRestMapper {
   private function getValue(string $field_name): ?string {
 
     $field = $this->eventWrapper->getField($field_name);
+
+    if (!($field instanceof FieldItemListInterface)) {
+      return NULL;
+    }
+
+    return $field->getString();
+  }
+
+  /**
+   * Load value directly from associated event series.
+   *
+   * Usually, this is not necessary, as we use field inheritance, but some
+   * fields only exist on the series, and will never be overriden on instance
+   * level.
+   */
+  private function getSeriesValue(string $field_name): ?string {
+    $series = $this->event->getEventSeries();
+
+    if (!$series->hasField($field_name)) {
+      return NULL;
+    }
+
+    $field = $series->get($field_name);
 
     if (!($field instanceof FieldItemListInterface)) {
       return NULL;
