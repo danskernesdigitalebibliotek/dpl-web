@@ -128,6 +128,7 @@ hidden:
   field_event_paragraphs: true
   field_event_partners: true
   field_event_state: true
+  field_relevant_ticket_manager: true
   field_ticket_capacity: true
   field_ticket_categories: true
   monthly_recurring_date: true
