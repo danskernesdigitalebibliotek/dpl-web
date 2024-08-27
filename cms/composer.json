@@ -43,7 +43,7 @@
                 "version": "0.0.0-dev",
                 "type": "drupal-library",
                 "dist": {
-                    "url": "https://github.com/danskernesdigitalebibliotek/dpl-react/releases/download/branch-editorial_search_DDFFORM-678/dist-editorial-search-ddfform-678.zip",
+                    "url": "https://github.com/danskernesdigitalebibliotek/dpl-react/releases/download/branch-unify-lists-between-cms-and-react/dist-unify-lists-between-cms-and-react.zip",
                     "type": "zip"
                 },
                 "require": {
@@ -58,7 +58,7 @@
                 "type": "drupal-library",
                 "version": "0.0.0-dev",
                 "dist": {
-                    "url": "https://github.com/danskernesdigitalebibliotek/dpl-design-system/releases/download/branch-editorial_search_DDFFORM-678/dist-editorial-search-ddfform-678.zip",
+                    "url": "https://github.com/danskernesdigitalebibliotek/dpl-design-system/releases/download/branch-unify-lists-between-cms-and-react/dist-unify-lists-between-cms-and-react.zip",
                     "type": "zip"
                 }
             }
