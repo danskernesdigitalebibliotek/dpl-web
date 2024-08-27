@@ -7,14 +7,23 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2024-08-26 22:38+0200\n"
-"PO-Revision-Date: 2024-08-26 22:38+0200\n"
+"POT-Creation-Date: 2024-08-27 11:11+0200\n"
+"PO-Revision-Date: 2024-08-27 11:11+0200\n"
 "Last-Translator: NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
+
+msgid "Search content"
+msgstr "Søg indhold"
+
+msgid "Search the website"
+msgstr ""
+
+msgid "Search button"
+msgstr ""
 
 msgctxt "Library Agency Configuration"
 msgid "Reservations"
@@ -204,6 +213,18 @@ msgid ""
 msgstr ""
 "Standard interesseperiode skal indstilles i feltet \"Standard "
 "interesseperiode for reserveringer\"."
+
+msgctxt "dpl_search"
+msgid "Showing web results for \"@input\" (@total_results)"
+msgstr ""
+
+msgctxt "dpl_search"
+msgid "library materials."
+msgstr ""
+
+msgctxt "dpl_search"
+msgid "Showing web results (@total_results)"
+msgstr ""
 
 msgid "Configuration file"
 msgstr "Konfigurationsfil"
@@ -3169,6 +3190,10 @@ msgctxt "Search Result"
 msgid "Showing"
 msgstr "Viser"
 
+msgctxt "Search Result"
+msgid "Switch to the results for the library content."
+msgstr ""
+
 msgctxt "advanced search"
 msgid "source"
 msgstr "Kilde"
@@ -4004,6 +4029,12 @@ msgstr "DPL webformular"
 
 msgid "Handles custom webform configuration"
 msgstr "Håndterer brugerdefineret webform konfiguration"
+
+msgid "DPL Search"
+msgstr ""
+
+msgid "Handling the search pages."
+msgstr ""
 
 msgid "DPL error pages"
 msgstr "DPL fejlsider"
@@ -18518,6 +18549,10 @@ msgctxt "core.entity_view_mode.eventseries.list:label"
 msgid "List"
 msgstr ""
 
+msgctxt "core.entity_view_mode.eventseries.list_teaser:label"
+msgid "List teaser"
+msgstr ""
+
 msgctxt "core.entity_view_mode.eventseries.nav_spot:label"
 msgid "Nav spot"
 msgstr ""
@@ -20888,6 +20923,10 @@ msgctxt "search_api.index.content:name"
 msgid "Content"
 msgstr "Indhold"
 
+msgctxt "search_api.index.content_events:name"
+msgid "Content + Events"
+msgstr ""
+
 msgctxt "search_api.index.events:name"
 msgid "Events"
 msgstr "Arrangementer"
@@ -21875,6 +21914,82 @@ msgstr ""
 msgctxt ""
 "views.view.content:display:page_1:display_options:tab_options:description"
 msgid "Find and manage content"
+msgstr ""
+
+msgctxt "views.view.editorial_search:label"
+msgid "Editorial search"
+msgstr ""
+
+msgctxt "views.view.editorial_search:display:default:display_title"
+msgid "Default"
+msgstr ""
+
+msgctxt "views.view.editorial_search:display:default:display_options:title"
+msgid "Search"
+msgstr ""
+
+msgctxt ""
+"views.view.editorial_search:display:default:display_options:pager:options:"
+"expose:items_per_page_label"
+msgid "Items per page"
+msgstr ""
+
+msgctxt ""
+"views.view.editorial_search:display:default:display_options:pager:options:"
+"expose:items_per_page_options_all_label"
+msgid "- All -"
+msgstr ""
+
+msgctxt ""
+"views.view.editorial_search:display:default:display_options:pager:options:"
+"expose:offset_label"
+msgid "Offset"
+msgstr ""
+
+msgctxt ""
+"views.view.editorial_search:display:default:display_options:pager:options:"
+"views_infinite_scroll:button_text"
+msgid "Showing @current_items out of @total results"
+msgstr ""
+
+msgctxt ""
+"views.view.editorial_search:display:default:display_options:exposed_form:"
+"options:submit_button"
+msgid "Apply"
+msgstr ""
+
+msgctxt ""
+"views.view.editorial_search:display:default:display_options:exposed_form:"
+"options:reset_button_label"
+msgid "Reset"
+msgstr ""
+
+msgctxt ""
+"views.view.editorial_search:display:default:display_options:exposed_form:"
+"options:exposed_sorts_label"
+msgid "Sort by"
+msgstr ""
+
+msgctxt ""
+"views.view.editorial_search:display:default:display_options:exposed_form:"
+"options:sort_asc_label"
+msgid "Asc"
+msgstr ""
+
+msgctxt ""
+"views.view.editorial_search:display:default:display_options:exposed_form:"
+"options:sort_desc_label"
+msgid "Desc"
+msgstr ""
+
+msgctxt ""
+"views.view.editorial_search:display:default:display_options:filters:"
+"search_api_fulltext:expose:label"
+msgid "Fulltext search"
+msgstr ""
+
+msgctxt "views.view.editorial_search:display:page:display_title"
+msgid "Page"
 msgstr ""
 
 msgctxt "views.view.entity_clone_template:label"
