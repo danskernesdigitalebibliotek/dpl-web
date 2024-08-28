@@ -391,6 +391,7 @@ class DplReactAppsController extends ControllerBase {
       'order-digital-copy-error-button-text' => $this->t('Close', [], ['context' => 'Work Page']),
       'order-digital-copy-error-description-text' => $this->t('An error occurred while ordering the digital copy. Please try again later.', [], ['context' => 'Work Page']),
       'order-digital-copy-error-title-text' => $this->t('Error ordering digital copy', [], ['context' => 'Work Page']),
+      'order-digital-copy-feedback-internal-error-text' => $this->t('Internal error', [], ['context' => 'Work Page']),
       'order-digital-copy-modal-close-modal-aria-label-text' => $this->t('Close Order digital copy modal', [], ['context' => 'Work Page']),
       'order-digital-copy-modal-screen-reader-modal-description-text' => $this->t('Modal for Order digital copy', [], ['context' => 'Work Page']),
       'order-digital-copy-success-button-text' => $this->t('Close', [], ['context' => 'Work Page']),
