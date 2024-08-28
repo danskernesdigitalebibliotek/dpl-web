@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "0621136dd2c14e089674ed837846efa0",
+    "content-hash": "c4c1b9794c85c24c92e9ecfa554a49e9",
     "packages": [
         {
             "name": "amazeeio/drupal_integrations",
@@ -1175,10 +1175,10 @@
         },
         {
             "name": "danskernesdigitalebibliotek/dpl-react",
-            "version": "2024.35.0",
+            "version": "2024.35.1",
             "dist": {
                 "type": "zip",
-                "url": "https://github.com/danskernesdigitalebibliotek/dpl-react/releases/download/2024.35.0/dist-2024-35-0-f9fee07960e48aa175771a6436124939ad15838c.zip"
+                "url": "https://github.com/danskernesdigitalebibliotek/dpl-react/releases/download/2024.35.1/dist-2024-35-1-801bd18b3033ca76689ac8de76423076c7c8e763.zip"
             },
             "require": {
                 "composer/installers": "^1.2.0"
