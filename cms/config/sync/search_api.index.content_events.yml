@@ -30,6 +30,8 @@ field_settings:
 
 
 
+
+
       fields:
         - 'entity:eventseries/field_categories'
         - 'entity:node/field_categories'
@@ -97,6 +99,8 @@ field_settings:
     configuration:
       type: union
       separator: |+
+
+
 
 
 
