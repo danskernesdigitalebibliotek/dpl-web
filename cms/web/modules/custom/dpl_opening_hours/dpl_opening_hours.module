@@ -6,6 +6,7 @@
  */
 
 use Drupal\dpl_react_apps\Controller\DplReactAppsController;
+use Drupal\node\NodeInterface;
 use Drupal\paragraphs\ParagraphInterface;
 
 /**
@@ -53,22 +54,48 @@ void {
  *   Theme variables.
  */
 function dpl_opening_hours_preprocess_page(array &$variables): void {
+  $branchNodes = \Drupal::entityTypeManager()->getStorage('node')->loadByProperties(['type' => 'branch']);
+  $branchesArray = dpl_opening_hours_build_branches_array($branchNodes);
+
+  $openingHoursSidebarData = [
+    'opening-hours-sidebar-branches-config' => $branchesArray,
+    'opening-hours-text' => t('Opening hours', [], ['context' => 'Opening Hours sidebar']),
+    'opening-hours-sidebar-today-text' => t('Today (@toDayString)', [], ['context' => 'Opening Hours sidebar']),
+    'opening-hours-sidebar-link-text' => t('See all opening hours', [], ['context' => 'Opening Hours sidebar']),
+  ] + DplReactAppsController::externalApiBaseUrls();
+
   $variables['opening_hours_sidebar_large'] = [
     '#theme' => 'dpl_react_app',
     '#name' => 'opening-hours-sidebar',
-    '#data' => [
-      'size' => "large",
-      'opening-hours-text' => t('Opening hours', [], ['context' => 'Opening Hours sidebar']),
-      'opening-hours-sidebar-today-text' => t('Today (@toDayString)', [], ['context' => 'Opening Hours sidebar']),
-    ] + DplReactAppsController::externalApiBaseUrls(),
+    '#data' => $openingHoursSidebarData + ['size' => 'large'],
   ];
   $variables['opening_hours_sidebar_small'] = [
     '#theme' => 'dpl_react_app',
     '#name' => 'opening-hours-sidebar',
-    '#data' => [
-      'size' => "small",
-      'opening-hours-text' => t('Opening hours', [], ['context' => 'Opening Hours sidebar']),
-      'opening-hours-sidebar-today-text' => t('Today (@toDayString)', [], ['context' => 'Opening Hours sidebar']),
-    ] + DplReactAppsController::externalApiBaseUrls(),
+    '#data' => $openingHoursSidebarData + ['size' => 'small'],
   ];
+}
+
+/**
+ * Build the branches array.
+ *
+ * @param \Drupal\node\NodeInterface[] $branches
+ *   Array of branch nodes.
+ *
+ * @return array<array{'branch_id': int|string|null, 'name': string|null, 'link': string, 'promoted': bool}>
+ *   Array of branch details.
+ */
+function dpl_opening_hours_build_branches_array(array $branches): array {
+  $branchesArray = [];
+  foreach ($branches as $branch) {
+    if ($branch instanceof NodeInterface) {
+      $branchesArray[] = [
+        'branch_id' => $branch->id(),
+        'name' => $branch->getTitle(),
+        'link' => $branch->toUrl()->toString(),
+        'promoted' => $branch->hasField('field_promoted_on_lists') && !$branch->get('field_promoted_on_lists')->isEmpty() ? (bool) $branch->get('field_promoted_on_lists')->value : FALSE,
+      ];
+    }
+  }
+  return $branchesArray;
 }
