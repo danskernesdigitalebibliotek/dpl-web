@@ -355,7 +355,6 @@
             },
             "drupal/recurring_events": {
                 "3461740: Fatal error when using 'Event series start date' filter in views": "https://www.drupal.org/files/issues/2024-07-16/reccuring_events_event_start_date.patch",
-                "3468300: Allow 00:00 => 23:59 as min/max times in settings.": "https://git.drupalcode.org/project/recurring_events/-/merge_requests/104.patch",
                 "3468521: When changing recurrance, identical date combinations should not be deleted & recreated": "https://git.drupalcode.org/project/recurring_events/-/merge_requests/105.patch"
             },
             "drupal/search_api": {
