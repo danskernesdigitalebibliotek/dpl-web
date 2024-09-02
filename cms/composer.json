@@ -274,6 +274,9 @@
                 "[web-root]/.eslintrc.json": false,
                 "[project-root]/.gitattributes": {
                     "append": "assets/.gitattributes"
+                },
+                "[web-root]/robots.txt": {
+                    "append": "assets/robots.txt"
                 }
             },
             "gitignore": false,
