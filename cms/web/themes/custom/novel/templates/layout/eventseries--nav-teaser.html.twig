@@ -3,6 +3,6 @@
   attributes: attributes,
   title: content.title,
   subtitle: content.field_teaser_text.0,
-  url: url('entity.eventseries.canonical', {'eventseries': eventseries.id()}),
+  url: eventseries|entity_url.toString(),
   baseIconPath: baseIconPath
 } only %}
