@@ -1,11 +1,19 @@
 <div class="dpl-react-app-container--page">
+
+  {#
+    Everything inside this div will be replaced by the react app.
+    That means that all of this content is just skeleton, to avoid a brief
+    blank page whilst React is booting up.
+  #}
   <div{{ attributes }}>
-    <div class="card-list-page">
+    <div class="content-list-page">
       {% if showing_results_for_text %}
-        <h1 class="text-header-h2 mb-16 search-result-title text-loading">
+        {# Todo: use content-list-page__heading #}
+        <h1 class="content-list-page__heading">
           {{ showing_results_for_text }}
         </h1>
       {% endif %}
+
       <div class="card-list-page__skeleton-facet-line--mobile">
         <div class="ssc mt-48">
           <div class="ssc-head-line mb"></div>
@@ -18,9 +26,9 @@
           <div class="ssc-head-line mb"></div>
         </div>
       </div>
-      <ul class="card-list-page__list my-32">
+      <ul class="content-list">
         {% for i in 1..number_of_fake_result_items %}
-          <li>{% include 'search-result-item.html.twig' %}</li>
+          <li class="content-list__item">{% include 'search-result-item.html.twig' %}</li>
         {% endfor %}
       </ul>
     </div>

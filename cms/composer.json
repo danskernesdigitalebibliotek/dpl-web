@@ -40,10 +40,10 @@
             "type": "package",
             "package": {
                 "name": "danskernesdigitalebibliotek/dpl-react",
-                "version": "0.0.0-dev",
+                "version": "2024.35.1",
                 "type": "drupal-library",
                 "dist": {
-                    "url": "https://github.com/danskernesdigitalebibliotek/dpl-react/releases/download/branch-develop/dist-develop.zip",
+                    "url": "https://github.com/danskernesdigitalebibliotek/dpl-react/releases/download/2024.35.1/dist-2024-35-1-801bd18b3033ca76689ac8de76423076c7c8e763.zip",
                     "type": "zip"
                 },
                 "require": {
@@ -56,9 +56,9 @@
             "package": {
                 "name": "danskernesdigitalebibliotek/dpl-design-system",
                 "type": "drupal-library",
-                "version": "0.0.0-dev",
+                "version": "2024.35.0",
                 "dist": {
-                    "url": "https://github.com/danskernesdigitalebibliotek/dpl-design-system/releases/download/branch-develop/dist-develop.zip",
+                    "url": "https://github.com/danskernesdigitalebibliotek/dpl-design-system/releases/download/2024.35.0/dist-2024-35-0-51a788b9ad03847b1f42b0006322e88e24968b90.zip",
                     "type": "zip"
                 }
             }
@@ -90,8 +90,8 @@
         "composer/installers": "1.12.0",
         "cweagans/composer-patches": "1.7.3",
         "danskernesdigitalebibliotek/cms-api": "*",
-        "danskernesdigitalebibliotek/dpl-design-system": "0.0.0-dev",
-        "danskernesdigitalebibliotek/dpl-react": "0.0.0-dev",
+        "danskernesdigitalebibliotek/dpl-design-system": "^2024.35",
+        "danskernesdigitalebibliotek/dpl-react": "^2024.35",
         "danskernesdigitalebibliotek/fbs-client": "*",
         "dealerdirect/phpcodesniffer-composer-installer": "^1.0.0",
         "deoliveiralucas/array-keys-case-transform": "^1.1",
@@ -361,9 +361,6 @@
                 "3416436: Avoid array conversion warning when daily events are disabled": "https://git.drupalcode.org/project/recurring_events/-/commit/832ae52f135dd3f205eb74acf2d3715fb443e759.patch",
                 "3451613: Start date of weekly reccurring event jumps incorrectly": "https://git.drupalcode.org/project/recurring_events/-/commit/581c53dd1b0b067a8b6454d76cc0187887f7b187.patch",
                 "3461740: Fatal error when using 'Event series start date' filter in views": "https://www.drupal.org/files/issues/2024-07-16/reccuring_events_event_start_date.patch"
-            },
-            "drupal/search_api": {
-                "3414725: Tag- and time-based views cache plugin": "https://git.drupalcode.org/issue/search_api-3414725/-/commit/d84c193ab35991464e77423d0ec33f2623f24f0d.patch"
             },
             "drupal/theme_permission": {
                 "3105637: Edit, install and uninstall permission": "https://www.drupal.org/files/issues/2024-02-01/theme-permission-edit-install-uninstall-3105637-7.patch",

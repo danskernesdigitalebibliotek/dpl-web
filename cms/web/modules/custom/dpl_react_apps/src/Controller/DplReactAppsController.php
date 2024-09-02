@@ -112,6 +112,10 @@ class DplReactAppsController extends ControllerBase {
       'blacklisted-availability-branches-config' => $this->buildBranchesListProp($this->branchSettings->getExcludedAvailabilityBranches()),
       'blacklisted-search-branches-config' => $this->buildBranchesListProp($this->branchSettings->getExcludedSearchBranches()),
       'branches-config' => $this->buildBranchesJsonProp($this->branchRepository->getBranches()),
+      // Dynamic values, set through preprocess.
+      'web-search-config' => json_encode([
+        'hasWebSearchResults' => FALSE,
+      ]),
 
       // Texts.
       'add-more-filters-text' => $this->t('+ more filters', [], ['context' => 'Search Result']),
@@ -142,6 +146,7 @@ class DplReactAppsController extends ControllerBase {
       'show-results-text' => $this->t('Show results', [], ['context' => 'Search Result']),
       'showing-results-for-text' => $this->t('Showing results for "@query"', [], ['context' => 'Search Result']),
       'showing-text' => $this->t('Showing', [], ['context' => 'Search Result']),
+      'web-search-link-text' => $this->t('Switch to the results for the library content.', [], ['context' => 'Search Result']),
       // Add external API base urls.
     ] + self::externalApiBaseUrls();
 
@@ -386,6 +391,7 @@ class DplReactAppsController extends ControllerBase {
       'order-digital-copy-error-button-text' => $this->t('Close', [], ['context' => 'Work Page']),
       'order-digital-copy-error-description-text' => $this->t('An error occurred while ordering the digital copy. Please try again later.', [], ['context' => 'Work Page']),
       'order-digital-copy-error-title-text' => $this->t('Error ordering digital copy', [], ['context' => 'Work Page']),
+      'order-digital-copy-feedback-internal-error-text' => $this->t('Internal error', [], ['context' => 'Work Page']),
       'order-digital-copy-modal-close-modal-aria-label-text' => $this->t('Close Order digital copy modal', [], ['context' => 'Work Page']),
       'order-digital-copy-modal-screen-reader-modal-description-text' => $this->t('Modal for Order digital copy', [], ['context' => 'Work Page']),
       'order-digital-copy-success-button-text' => $this->t('Close', [], ['context' => 'Work Page']),
