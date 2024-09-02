@@ -7,8 +7,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2024-09-02 16:27+0200\n"
-"PO-Revision-Date: 2024-09-02 16:27+0200\n"
+"POT-Creation-Date: 2024-09-02 17:16+0200\n"
+"PO-Revision-Date: 2024-09-02 17:16+0200\n"
 "Last-Translator: NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
 "MIME-Version: 1.0\n"
@@ -8811,26 +8811,8 @@ msgstr "Rediger medieelement"
 msgid "Media Library Edit"
 msgstr "Rediger mediebibliotek"
 
-msgid "Hello, world!"
-msgstr "Hej, verden!"
-
-msgid "Meta tags"
-msgstr "Meta tags"
-
-msgid "Metatag defaults"
-msgstr "Metatag standardindstillinger"
-
-msgid "Save translation"
-msgstr "Gem oversættelse"
-
-msgid "Save content type"
-msgstr "Gem indholdstype"
-
 msgid "Support module for testing handling of a custom route."
 msgstr "Supportmodul til test af håndtering af en brugerdefineret rute."
-
-msgid "<p>Hello world!</p>"
-msgstr "<p>Hej verden!</p>"
 
 msgid "Metatags"
 msgstr "Metatags"
@@ -8958,11 +8940,14 @@ msgid ""
 msgstr ""
 "Følgende tokens er tilgængelige. Du kan bruge Twig-syntaks i dette felt."
 
+msgid "Meta tags"
+msgstr "Meta-tags"
+
 msgid "Overridden"
 msgstr "Tilsidesat"
 
 msgid "Using defaults"
-msgstr "Brug af standardindstillinger"
+msgstr "Bruger standardindstillinger"
 
 msgid ""
 "The custom admin pages for managing Views meta tags at /admin/config/search/"
@@ -9703,7 +9688,7 @@ msgstr ""
 "overholder et formelt identifikationssystem."
 
 msgid "Creator"
-msgstr "Forfatter"
+msgstr "Skaber"
 
 msgid ""
 "An entity primarily responsible for making the resource. Examples of a "
@@ -10462,7 +10447,7 @@ msgstr ""
 "forfatterens profilsider eller deres Facebook-profil ID'er."
 
 msgid "Street address"
-msgstr "Gadenavn"
+msgstr "Adresse"
 
 msgid "A one to two sentence description of the content."
 msgstr "En til to sætninger som beskrivelser indholdet."
@@ -10503,7 +10488,7 @@ msgid "URLs to related content"
 msgstr "URL'er til relateret indhold"
 
 msgid "Fax number"
-msgstr "Fax nummer"
+msgstr "Faxnummer"
 
 msgid "Audio secure URL"
 msgstr "Sikker URL for lyd"
@@ -11453,7 +11438,7 @@ msgid "Temporal characteristics of the resource."
 msgstr "Midlertidige karakteristika af ressourcen."
 
 msgid "Abstract"
-msgstr "Abstract"
+msgstr "Resume"
 
 msgid "A summary of the resource."
 msgstr "En oversigt over ressourcen."
@@ -11650,6 +11635,9 @@ msgstr ""
 "Dette plugin vil blive klonet fra disse indstillinger for hvert aktiveret "
 "sprog."
 
+msgid "Metatag defaults"
+msgstr "Metatag standardindstillinger"
+
 msgid "Basic tags"
 msgstr "Grundlæggende tags"
 
@@ -11767,8 +11755,7 @@ msgid ""
 "Describes the name and version number of the software or publishing tool "
 "used to create the page."
 msgstr ""
-"Beskriver navn og versionsnummer på softwaren eller publiceringsværktøjet, "
-"der blev brugt til at oprette siden."
+"Beskriver navn og versionsnummer på det værktøj, der har genereret siden."
 
 msgid "Revisit After"
 msgstr "Genbesøg efter"
@@ -11940,8 +11927,8 @@ msgid ""
 "Provides search engines with specific directions for what to do when this "
 "page is indexed."
 msgstr ""
-"Leverer søgemaskiner med specifikke instruktioner for hvad der skal gøres, "
-"når denne side er indekseret."
+"Giver søgemaskiner anvisninger til, hvad de skal gøre, når de indekserer "
+"denne side."
 
 msgid "Shortlink URL"
 msgstr "Shortlink URL"
@@ -12223,7 +12210,7 @@ msgid "Provides support for Twitter's Card meta tags."
 msgstr "Leverer support for Twitters Card metatags."
 
 msgid "Add default meta tags"
-msgstr "Tilføj default meta-tags"
+msgstr "Tilføj standard meta-tag"
 
 msgid "Metatag: Favicons"
 msgstr "Metatag: Favicons"
