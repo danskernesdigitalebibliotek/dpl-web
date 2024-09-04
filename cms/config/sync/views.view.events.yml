@@ -295,7 +295,7 @@ display:
               patron: '0'
               external_system: '0'
             expose_fields: false
-            placeholder: 'Søg'
+            placeholder: Søg
             searched_fields_id: search_api_fulltext_searched_fields
             value_maxlength: 128
           is_grouped: false
