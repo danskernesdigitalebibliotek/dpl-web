@@ -1,0 +1,7 @@
+{# web/core/themes/stable9/templates/form/form-element.html.twig #}
+{{ children }}
+{% if errors %}
+  <div class="form-item--error-message">
+    {{ errors }}
+  </div>
+{% endif %}

@@ -45,6 +45,14 @@ field_settings:
     dependencies:
       module:
         - field_inheritance
+  event_description:
+    label: 'Event description'
+    datasource_id: 'entity:eventinstance'
+    property_path: event_description
+    type: text
+    dependencies:
+      module:
+        - field_inheritance
   event_tags:
     label: 'Event tags'
     datasource_id: 'entity:eventinstance'
@@ -61,6 +69,14 @@ field_settings:
     dependencies:
       module:
         - recurring_events
+  title:
+    label: 'Event title'
+    datasource_id: 'entity:eventinstance'
+    property_path: title
+    type: text
+    dependencies:
+      module:
+        - field_inheritance
 datasource_settings:
   'entity:eventinstance':
     bundles:
@@ -74,6 +90,14 @@ processor_settings:
   aggregated_field: {  }
   custom_value: {  }
   entity_type: {  }
+  ignorecase:
+    weights:
+      preprocess_index: -20
+      preprocess_query: -20
+    all_fields: true
+    fields:
+      - event_description
+      - title
   language_with_fallback: {  }
   rendered_item: {  }
 tracker_settings:
