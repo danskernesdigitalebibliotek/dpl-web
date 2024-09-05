@@ -80,6 +80,10 @@ final class EventsResource extends EventResourceBase {
                     'format' => 'date-time',
                     'description' => 'When the event was last updated. In ISO 8601 format.',
                   ],
+                  'ticket_manager_relevance' => [
+                    'type' => 'boolean',
+                    'description' => 'Whether the event is marked as relevant for ticket management systems',
+                  ],
                   'image' => [
                     'type' => 'object',
                     'description' => 'The main image for the event.',
@@ -169,6 +173,11 @@ final class EventsResource extends EventResourceBase {
                     'items' => [
                       'type' => 'object',
                       'properties' => [
+                        'uuid' => [
+                          'type' => 'string',
+                          'format' => 'uuid',
+                          'description' => 'A unique identifier for the ticket category.',
+                        ],
                         'title' => [
                           'type' => 'string',
                           'description' => 'The name of the ticket category.',

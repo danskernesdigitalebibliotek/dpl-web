@@ -24,8 +24,10 @@ module.exports = {
         // Contact page with webform from DPL Static Content
         "http://varnish:8080/by_uuid/node/d50683cc-8011-49ba-a6ea-82e56de97b80",
       ],
-      // Use 3 runs to test both cold and warm caches.
-      numberOfRuns: 3,
+      // Use only 1 run to improve test speed. Multiple runs to handle caching
+      // should not be required while we have downgraded performance from
+      // error to warning.
+      numberOfRuns: 1,
       settings: {
         chromeFlags: "--no-sandbox",
         // Lighthouse best practices require HTTPS but we do not this available

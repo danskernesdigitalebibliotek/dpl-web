@@ -1,7 +1,9 @@
 {% set parent_entity = element['#object'] %}
 
-{% if parent_entity and parent_entity.hasField('field_title') %}
-  {% set title = parent_entity.get('field_title').getString() %}
+{% if parent_entity %}
+  {% set title_field = parent_entity.hasField('field_underlined_title') ? 'field_underlined_title' : 'field_title' %}
+
+  {% set title = drupal_field(title_field, parent_entity.getEntityTypeId(), parent_entity.id(), 'title_display') %}
 {% endif %}
 
 {% include '@novel/components/slider.html.twig'

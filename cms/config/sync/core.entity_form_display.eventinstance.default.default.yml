@@ -73,6 +73,7 @@ third_party_settings:
       children:
         - field_event_image
         - field_event_state
+        - field_relevant_ticket_manager
         - field_external_admin_link
       label: 'Event details'
       region: content
@@ -134,7 +135,7 @@ content:
     third_party_settings: {  }
   field_event_image:
     type: media_library_widget
-    weight: 13
+    weight: 14
     region: content
     settings:
       media_types: {  }
@@ -197,7 +198,7 @@ content:
     third_party_settings: {  }
   field_event_state:
     type: select2
-    weight: 14
+    weight: 15
     region: content
     settings:
       width: 100%
@@ -212,7 +213,7 @@ content:
     third_party_settings: {  }
   field_external_admin_link:
     type: link_default
-    weight: 15
+    weight: 17
     region: content
     settings:
       placeholder_url: ''
@@ -230,7 +231,7 @@ content:
     third_party_settings: {  }
   field_teaser_image:
     type: media_library_widget
-    weight: 13
+    weight: 14
     region: content
     settings:
       media_types: {  }

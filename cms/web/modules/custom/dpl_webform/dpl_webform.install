@@ -5,6 +5,10 @@
  * DPL webform install file.
  */
 
+use Drupal\drupal_typed\DrupalTyped;
+use Drupal\locale\StringStorageInterface;
+use function Safe\preg_match;
+
 /**
  * Add all webforms to config ignore.
  */
@@ -54,4 +58,155 @@ function dpl_webform_update_10002(): string {
   $language_config_factory_override->getOverride($language, $webform_id)->delete();
 
   return 'All translations for the webform ' . $webform_id . ' have been deleted.';
+}
+
+/**
+ * Delete translation of webform.settings.yml.
+ *
+ * Due to some faulty, prior translation, the danish version of this file
+ * has duplicate keys, which causes major issues on the site when loading
+ * the webform settings.
+ */
+function dpl_webform_update_10003(): string {
+  $config_id = 'webform.settings';
+  $language = 'da';
+
+  /** @var \Drupal\language\Config\LanguageConfigFactoryOverride $language_config_factory_override */
+  $language_config_factory_override = \Drupal::service('language.config_factory_override');
+  $language_config_factory_override->getOverride($language, $config_id)->delete();
+
+  return "DA translations for the $config_id have been deleted.";
+}
+
+/**
+ * Remove last traces of faulty webform translation.
+ */
+function dpl_webform_update_10004(): string {
+  $feedback = [];
+
+  // Rerun deletion of existing translation. It will have been recreated if
+  // translation import has run after dpl_webform_update_10003() as the
+  // translation will be lingering in the local string storage.
+  try {
+    $feedback[] = dpl_webform_update_10003();
+  }
+  catch (\Throwable $t) {
+    $feedback[] = "Unable to rerun dpl_webform_update_10003: {$t->getMessage()}.";
+  }
+
+  $translation_storage = DrupalTyped::service(StringStorageInterface::class, 'locale.storage');
+  // webform.settings:test:names is the part of the configuration with invalid
+  // data. This is set as the translation context so we can query based on this.
+  $translation = $translation_storage->findTranslation(['context' => 'webform.settings:test:names']);
+  if ($translation) {
+    $translation->delete();
+    $feedback[] = 'Deleted faulty local translation string for webform.settings:test:names.';
+  }
+  else {
+    $feedback[] = 'Unable to locate faulty local translation string for webform.settings:test:names.';
+  }
+
+  return implode("\n", $feedback);
+}
+
+/**
+ * Set default language to english.
+ *
+ * We have experienced issues with the default site language being set to
+ * danish, which causes issues when doing configuration translations. To
+ * prevent this in the future, we now set the default language to english.
+ */
+function dpl_webform_update_10005(): string {
+  \Drupal::configFactory()->getEditable('system.site')->set('langcode', 'en')->save();
+  \Drupal::configFactory()->getEditable('system.site')->set('default_langcode', 'en')->save();
+
+  return "The 'langcode' and 'default_language' has been set to english.";
+}
+
+/**
+ * Remove unwanted webform settings from config ignore.
+ *
+ * Some libraries has been able to add unwanted webform settings to the
+ * config ignore list. This is preventing us from fixing some faulty
+ * webform translation configurations. This update hook will remove all
+ * webform.webform_options.* and webform.settings from the ignore list.
+ */
+function dpl_webform_update_10006(): string {
+  $config_factory = \Drupal::configFactory();
+  $config_ignore_auto_settings = $config_factory->getEditable('config_ignore_auto.settings');
+  $ignored_configs = $config_ignore_auto_settings->get('ignored_config_entities');
+
+  // Remove webform.settings from config ignore list.
+  if (($key = array_search('webform.settings', $ignored_configs)) !== FALSE) {
+    unset($ignored_configs[$key]);
+    $config_ignore_auto_settings->set('ignored_config_entities', $ignored_configs)->save();
+    $feedback[] = "Removed 'webform.settings' from ignored_config_entities.";
+  }
+  else {
+    $feedback[] = "Config 'webform.settings' not found in ignored_config_entities.";
+  }
+
+  // Filter out all strings matching the pattern webform.webform_options.*.
+  $pattern_to_remove = '/^webform\.webform_options\..*/';
+  $filtered_configs = array_filter($ignored_configs, function ($config) use ($pattern_to_remove) {
+    return !preg_match($pattern_to_remove, $config);
+  });
+
+  if (count($ignored_configs) !== count($filtered_configs)) {
+    $config_ignore_auto_settings->set('ignored_config_entities', array_values($filtered_configs))->save();
+    $feedback[] = "Removed all strings matching 'webform.webform_options.*' from ignored_config_entities.";
+  }
+  else {
+    $feedback[] = "No strings matching 'webform.webform_options.*' found in ignored_config_entities.";
+  }
+  return implode("\n", $feedback);
+}
+
+/**
+ * Rerun old update hooks.
+ *
+ * Some earlier update hooks did not have the desired effect due to some
+ * configuration ignore issues. We will rerun the code from the update
+ * hooks again, to make sure that we have deleted all faulty translations.
+ * We rerun update_10002 to delete existing contact webform translations.
+ * We rerun update_10003 to delete existing webform.settings translations.
+ * We rerun update 10004 to make sure to delete faulty translations with
+ * duplicate keys.
+ */
+function dpl_webform_update_10007(): string {
+
+  $feedback = [];
+
+  // Rerun update_10002 update hook.
+  $webform_id = 'webform.webform.contact';
+  $language = 'da';
+
+  /** @var \Drupal\language\Config\LanguageConfigFactoryOverride $language_config_factory_override */
+  $language_config_factory_override = \Drupal::service('language.config_factory_override');
+  $language_config_factory_override->getOverride($language, $webform_id)->delete();
+  $feedback[] = 'All translations for the webform ' . $webform_id . ' have been deleted.';
+
+  // Rerun update_10003 update hook.
+  $config_id = 'webform.settings';
+
+  /** @var \Drupal\language\Config\LanguageConfigFactoryOverride $language_config_factory_override */
+  $language_config_factory_override = \Drupal::service('language.config_factory_override');
+  $language_config_factory_override->getOverride($language, $config_id)->delete();
+
+  $feedback[] = "DA translations for the $config_id have been deleted.";
+
+  // Rerun update_10004 update hook.
+  $translation_storage = DrupalTyped::service(StringStorageInterface::class, 'locale.storage');
+  // webform.settings:test:names is the part of the configuration with invalid
+  // data. This is set as the translation context so we can query based on this.
+  $translation = $translation_storage->findTranslation(['context' => 'webform.settings:test:names']);
+  if ($translation) {
+    $translation->delete();
+    $feedback[] = 'Deleted faulty local translation string for webform.settings:test:names.';
+  }
+  else {
+    $feedback[] = 'Unable to locate faulty local translation string for webform.settings:test:names.';
+  }
+
+  return implode("\n", $feedback);
 }

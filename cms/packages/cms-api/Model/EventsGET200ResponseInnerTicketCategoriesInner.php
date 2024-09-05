@@ -44,6 +44,16 @@ use JMS\Serializer\Annotation\SerializedName;
 class EventsGET200ResponseInnerTicketCategoriesInner 
 {
         /**
+     * A unique identifier for the ticket category.
+     *
+     * @var string|null
+     * @SerializedName("uuid")
+     * @Assert\Type("string")
+     * @Type("string")
+     */
+    protected ?string $uuid = null;
+
+    /**
      * The name of the ticket category.
      *
      * @var string|null
@@ -71,9 +81,36 @@ class EventsGET200ResponseInnerTicketCategoriesInner
     public function __construct(array $data = null)
     {
         if (is_array($data)) {
+            $this->uuid = array_key_exists('uuid', $data) ? $data['uuid'] : $this->uuid;
             $this->title = array_key_exists('title', $data) ? $data['title'] : $this->title;
             $this->price = array_key_exists('price', $data) ? $data['price'] : $this->price;
         }
+    }
+
+    /**
+     * Gets uuid.
+     *
+     * @return string|null
+     */
+    public function getUuid(): ?string
+    {
+        return $this->uuid;
+    }
+
+
+
+    /**
+     * Sets uuid.
+     *
+     * @param string|null $uuid  A unique identifier for the ticket category.
+     *
+     * @return $this
+     */
+    public function setUuid(?string $uuid = null): self
+    {
+        $this->uuid = $uuid;
+
+        return $this;
     }
 
     /**

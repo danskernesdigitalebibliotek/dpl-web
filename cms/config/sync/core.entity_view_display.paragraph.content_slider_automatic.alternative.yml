@@ -1,0 +1,36 @@
+uuid: 849cede3-2228-40b1-b29d-7177810fbc8b
+langcode: en
+status: false
+dependencies:
+  config:
+    - core.entity_view_mode.paragraph.alternative
+    - field.field.paragraph.content_slider_automatic.field_filter_branches
+    - field.field.paragraph.content_slider_automatic.field_filter_categories
+    - field.field.paragraph.content_slider_automatic.field_filter_cond_type
+    - field.field.paragraph.content_slider_automatic.field_filter_content_types
+    - field.field.paragraph.content_slider_automatic.field_filter_tags
+    - field.field.paragraph.content_slider_automatic.field_title
+    - field.field.paragraph.content_slider_automatic.field_underlined_title
+    - paragraphs.paragraphs_type.content_slider_automatic
+  module:
+    - text
+id: paragraph.content_slider_automatic.alternative
+targetEntityType: paragraph
+bundle: content_slider_automatic
+mode: alternative
+content:
+  field_underlined_title:
+    type: text_default
+    label: hidden
+    settings: {  }
+    third_party_settings: {  }
+    weight: 0
+    region: content
+hidden:
+  field_filter_branches: true
+  field_filter_categories: true
+  field_filter_cond_type: true
+  field_filter_content_types: true
+  field_filter_tags: true
+  field_title: true
+  search_api_excerpt: true

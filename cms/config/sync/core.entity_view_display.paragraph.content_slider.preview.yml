@@ -6,9 +6,11 @@ dependencies:
     - core.entity_view_mode.paragraph.preview
     - field.field.paragraph.content_slider.field_content_references
     - field.field.paragraph.content_slider.field_title
+    - field.field.paragraph.content_slider.field_underlined_title
     - paragraphs.paragraphs_type.content_slider
   module:
     - dynamic_entity_reference
+    - text
 id: paragraph.content_slider.preview
 targetEntityType: paragraph
 bundle: content_slider
@@ -22,13 +24,13 @@ content:
     third_party_settings: {  }
     weight: 1
     region: content
-  field_title:
-    type: string
+  field_underlined_title:
+    type: text_default
     label: above
-    settings:
-      link_to_entity: false
+    settings: {  }
     third_party_settings: {  }
     weight: 0
     region: content
 hidden:
+  field_title: true
   search_api_excerpt: true

@@ -3,5 +3,6 @@
   attributes: attributes,
   url: url,
   baseIconPath: baseIconPath,
-  title: label,
+  title: field_hero_title.0|default(label),
+  description: content.field_teaser_text.0|default(content.field_subtitle),
 } only %}

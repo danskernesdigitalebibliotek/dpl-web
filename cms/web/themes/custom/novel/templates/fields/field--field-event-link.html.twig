@@ -1,6 +1,6 @@
 {% if has_event_link %}
   {% for item in items %}
-      {% set url = item.content['#url'].toString() %}
+      {% set url = item.content['#url'].external ? item.content['#url'].uri : item.content['#url'].toString() %}
       {% set title = item.content['#title'] %}
 
       {% set classes = [
