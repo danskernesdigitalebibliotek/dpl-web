@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "148432ecd280b58c756f149b96f2a7ab",
+    "content-hash": "07dc396215d82ab4689521d59676f044",
     "packages": [
         {
             "name": "amazeeio/drupal_integrations",
@@ -1166,10 +1166,10 @@
         },
         {
             "name": "danskernesdigitalebibliotek/dpl-design-system",
-            "version": "2024.36.0",
+            "version": "0.0.0-dev",
             "dist": {
                 "type": "zip",
-                "url": "https://github.com/danskernesdigitalebibliotek/dpl-design-system/releases/download/2024.36.0/dist-2024-36-0-b82b94df2d6d6d798fa5c695a2622133b60cd16d.zip"
+                "url": "https://github.com/danskernesdigitalebibliotek/dpl-design-system/releases/download/branch-DDFLSBP-647-add-checkbox-and-radio-elements/dist-ddflsbp-647-add-checkbox-and-radio-elements.zip"
             },
             "type": "drupal-library"
         },
