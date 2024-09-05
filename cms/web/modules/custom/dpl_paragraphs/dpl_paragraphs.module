@@ -10,6 +10,7 @@ use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\Url;
 use Drupal\dpl_react_apps\Controller\DplReactAppsController;
 use Drupal\field\Entity\FieldConfig;
+use Drupal\node\NodeForm;
 use Drupal\paragraphs\Entity\Paragraph;
 use Drupal\paragraphs\ParagraphInterface;
 use Symfony\Component\Routing\Exception\InvalidParameterException;
@@ -478,4 +479,61 @@ function dpl_paragraphs_preprocess_paragraph__manual_event_list(array &$variable
     $renderedEvents[] = $viewBuilder->view($event, 'list_teaser');
   }
   $variables['rendered_field_events'] = $renderedEvents;
+}
+
+/**
+ * Implements hook_form_alter().
+ */
+function dpl_paragraphs_form_alter(array &$form, FormStateInterface $form_state, string $form_id): void {
+  if (!$form_state->getFormObject() instanceof NodeForm) {
+    return;
+  }
+
+  /** @var \Drupal\node\NodeInterface $node */
+  $node = $form_state->getFormObject()->getEntity();
+
+  $content_types = [
+    'page',
+    'article',
+  ];
+
+  if (!$node->hasField('type') || !in_array($node->bundle(), $content_types)) {
+    return;
+  }
+
+  if (!isset($form['field_paragraphs']['widget'])) {
+    return;
+  }
+
+  $paragraphs_widget = &$form['field_paragraphs']['widget'];
+
+  foreach ($paragraphs_widget as &$paragraph) {
+    $is_hero_paragraph = is_array($paragraph) && isset($paragraph['#paragraph_type']) && $paragraph['#paragraph_type'] === 'hero';
+    if (!$is_hero_paragraph || empty($paragraph['subform'])) {
+      continue;
+    }
+
+    $subform = &$paragraph['subform'];
+
+    if (isset($subform['field_hero_title']) && empty($subform['field_hero_title']['widget'][0]['value']['#default_value'])) {
+      $subform['field_hero_title']['widget'][0]['value']['#default_value'] = $form["title"]["widget"][0]["value"]["#default_value"];
+    }
+
+    // Since 'hero_description' is a WYSIWYG field and 'field_teaser_text' is a
+    // simple text field, we manually set the default values instead of
+    // directly copying them.
+    if (isset($subform['field_hero_description']) && empty($subform['field_hero_description']['widget'][0]['#default_value'])) {
+      $teaser_text = $node->get('field_teaser_text')->value;
+      $subform['field_hero_description']['widget'][0]['#default_value'] = $teaser_text;
+      $subform['field_hero_description']['widget'][0]['format']['#default_value'] = 'basic';
+    }
+
+    if (isset($subform['field_hero_date']) && empty($subform['field_hero_date']['widget'][0]['value']['#default_value'])) {
+      $subform['field_hero_date']['widget'][0]['value']['#default_value'] = $form["field_publication_date"]["widget"][0]["value"]["#default_value"];
+    }
+
+    if (isset($subform['field_hero_image']) && empty($subform['field_hero_image']['widget']['selection'][0])) {
+      $subform['field_hero_image']['widget']['selection'] = $form['field_teaser_image']['widget']['selection'];
+    }
+  }
 }
