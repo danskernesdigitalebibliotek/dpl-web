@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "148432ecd280b58c756f149b96f2a7ab",
+    "content-hash": "3e3993b518169580e245698f36dd6464",
     "packages": [
         {
             "name": "amazeeio/drupal_integrations",
@@ -1175,10 +1175,10 @@
         },
         {
             "name": "danskernesdigitalebibliotek/dpl-react",
-            "version": "2024.36.0",
+            "version": "0.0.0-dev",
             "dist": {
                 "type": "zip",
-                "url": "https://github.com/danskernesdigitalebibliotek/dpl-react/releases/download/2024.36.0/dist-2024-36-0-980a9ceb8b46195dfe6633b6e66a1f0c4167f4ec.zip"
+                "url": "https://github.com/danskernesdigitalebibliotek/dpl-react/releases/download/branch-DDFLSBP-671-add-aria-label-to-delete-row-button/dist-ddflsbp-671-add-aria-label-to-delete-row-button.zip"
             },
             "require": {
                 "composer/installers": "^1.2.0"
