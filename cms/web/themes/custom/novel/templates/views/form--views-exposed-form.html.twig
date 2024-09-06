@@ -1,6 +1,6 @@
 {# web/core/themes/stable9/templates/form/form.html.twig #}
 <li class="content-list-page__filter content-list-page__filter--right">
-  <label class="input-label" id="{{ element['#id'] }}">{{ element.search_api_fulltext['#title'] }}</label>
+  <label class="input-label">{{ element.search_api_fulltext['#title'] }}</label>
   <form{{ attributes.addClass('search-full-text') }}>
     {{ children }}
   </form>
