@@ -90,7 +90,7 @@ function dpl_search_preprocess_views_view(array &$variables): void {
 
     $variables['header']['description'] = [
       '#prefix' => '<h2 class="content-list-page__subheading">' . t('Switch to results for the', [], ['context' => 'dpl_search']) . ' <a href="' . $material_url . '">',
-      '#suffix' => '</h2></a>',
+      '#suffix' => '</a></h2>',
       '#markup' => t('library materials.', [], ['context' => 'dpl_search']),
     ];
 
