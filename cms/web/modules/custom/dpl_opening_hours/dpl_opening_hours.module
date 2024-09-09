@@ -48,7 +48,11 @@ void {
 }
 
 /**
- * Implements template_preprocess_page().
+ * Implements hook_preprocess_HOOK() for page templates.
+ *
+ * Adds two instances of the Opening Hours sidebar React app to the page.
+ * Since there are two triggers to open the sidebar, two instances of the app
+ * are required. The app will adjust its markup based on the `size` property.
  *
  * @param mixed[] $variables
  *   Theme variables.
@@ -77,25 +81,31 @@ function dpl_opening_hours_preprocess_page(array &$variables): void {
 }
 
 /**
- * Build the branches array.
+ * Builds an array of branch details.
  *
  * @param \Drupal\node\NodeInterface[] $branches
- *   Array of branch nodes.
+ *   An array of branch nodes.
  *
- * @return array<array{'branch_id': int|string|null, 'name': string|null, 'link': string, 'promoted': bool}>
- *   Array of branch details.
+ * @return array<array{'branch_id': int|string|null, 'name': string|null,
+ *   'link': string, 'promoted': bool}>
+ *   An array of branch details.
+ *
+ * @throws \Drupal\Core\Entity\EntityMalformedException
+ *   Thrown when the entity is malformed.
  */
 function dpl_opening_hours_build_branches_array(array $branches): array {
   $branchesArray = [];
   foreach ($branches as $branch) {
-    if ($branch instanceof NodeInterface) {
-      $branchesArray[] = [
-        'branch_id' => $branch->id(),
-        'name' => $branch->getTitle(),
-        'link' => $branch->toUrl()->toString(),
-        'promoted' => $branch->hasField('field_promoted_on_lists') && !$branch->get('field_promoted_on_lists')->isEmpty() ? (bool) $branch->get('field_promoted_on_lists')->value : FALSE,
-      ];
+    if (!($branch instanceof NodeInterface)) {
+      continue;
     }
+
+    $branchesArray[] = [
+      'branch_id' => $branch->id(),
+      'name' => $branch->getTitle(),
+      'link' => $branch->toUrl()->toString(),
+      'promoted' => (bool) $branch->get('field_promoted_on_lists')->value,
+    ];
   }
   return $branchesArray;
 }
