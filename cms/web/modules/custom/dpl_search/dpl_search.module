@@ -89,7 +89,7 @@ function dpl_search_preprocess_views_view(array &$variables): void {
     $material_url = Url::fromRoute('dpl_react_apps.search_result', [], ['query' => [DplSearchSettings::MATERIAL_QUERY_KEY => $search_input]])->toString();
 
     $variables['header']['description'] = [
-      '#prefix' => '<h2 class="content-list-page__subheading">Switch to results for the <a href="' . $material_url . '">',
+      '#prefix' => '<h2 class="content-list-page__subheading">' . t('Switch to results for the', [], ['context' => 'dpl_search']) . ' <a href="' . $material_url . '">',
       '#suffix' => '</h2></a>',
       '#markup' => t('library materials.', [], ['context' => 'dpl_search']),
     ];
