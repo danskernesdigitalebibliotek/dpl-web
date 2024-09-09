@@ -483,6 +483,22 @@ function dpl_paragraphs_preprocess_paragraph__manual_event_list(array &$variable
 
 /**
  * Implements hook_form_alter().
+ *
+ * Prefills hero paragraph fields with default values from the parent node
+ * to assist editors by reducing manual input. This is applied to certain
+ * content types ('page', 'article').
+ *
+ * - Sets hero title from the node title.
+ * - Sets hero description from the teaser text.
+ * - Sets hero date from the publication date.
+ * - Sets hero image from the teaser image.
+ *
+ * @param array $form
+ *   The form array.
+ * @param \Drupal\Core\Form\FormStateInterface $form_state
+ *   The current state of the form.
+ * @param string $form_id
+ *   The form ID.
  */
 function dpl_paragraphs_form_alter(array &$form, FormStateInterface $form_state, string $form_id): void {
   if (!$form_state->getFormObject() instanceof NodeForm) {
