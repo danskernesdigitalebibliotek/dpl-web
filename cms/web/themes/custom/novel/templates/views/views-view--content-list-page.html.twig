@@ -25,7 +25,9 @@
   {% if rows -%}
     {{ rows }}
   {% elseif empty -%}
-    {{ empty }}
+    <div class="empty-view">
+      {{ empty }}
+    </div>
   {% endif %}
 
   {{ pager }}
