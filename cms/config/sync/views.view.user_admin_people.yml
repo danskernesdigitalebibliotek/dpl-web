@@ -4,7 +4,11 @@ status: true
 dependencies:
   config:
     - field.storage.user.field_author_name
-    - user.role.patron
+    - user.role.administrator
+    - user.role.editor
+    - user.role.external_system
+    - user.role.local_administrator
+    - user.role.mediator
   module:
     - user
 _core:
@@ -827,8 +831,8 @@ display:
             default_group: All
             default_group_multiple: {  }
             group_items: {  }
-        roles_target_id_1:
-          id: roles_target_id_1
+        roles_target_id_2:
+          id: roles_target_id_2
           table: user__roles
           field: roles_target_id
           relationship: none
@@ -837,9 +841,13 @@ display:
           entity_type: user
           entity_field: roles
           plugin_id: user_roles
-          operator: not
+          operator: or
           value:
-            patron: patron
+            administrator: administrator
+            local_administrator: local_administrator
+            editor: editor
+            mediator: mediator
+            external_system: external_system
           group: 1
           exposed: false
           expose:
