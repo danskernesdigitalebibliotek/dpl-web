@@ -152,6 +152,7 @@ permissions:
   - 'delete page revisions'
   - 'delete terms in breadcrumb_structure'
   - 'delete terms in categories'
+  - 'delete terms in opening_hours_categories'
   - 'delete terms in tags'
   - 'delete terms in webform_email_categories'
   - 'dpl admin access pages'
