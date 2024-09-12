@@ -90,4 +90,37 @@ function dpl_opening_hours_form_taxonomy_term_opening_hours_categories_delete_fo
     '@term_label' => $term_label,
     '@count' => $opening_hours_count,
   ]);
+
+  // Add a custom submit handler to delete the opening hours associated with the term.
+  array_unshift($form['actions']['submit']['#submit'], 'dpl_opening_hours_term_delete_submit');
+}
+
+/**
+ * Custom submit handler for deleting opening hours associated with a taxonomy
+ * term.
+ *
+ * @param array $form
+ *   The form structure array.
+ * @param \Drupal\Core\Form\FormStateInterface $form_state
+ *   The current state of the form.
+ */
+function dpl_opening_hours_term_delete_submit(array &$form, FormStateInterface $form_state): void {
+  $form_object = $form_state->getFormObject();
+  if (!$form_object instanceof EntityFormInterface) {
+    return;
+  }
+
+  $term = $form_object->getEntity();
+  if (!$term instanceof Term) {
+    return;
+  }
+
+  $term_id = (int) $term->id();
+
+  $opening_hours_repository = \Drupal::service('dpl_opening_hours.repository');
+
+  $opening_hours_instances = $opening_hours_repository->loadMultiple(categoryId: $term_id);
+  foreach ($opening_hours_instances as $instance) {
+    $opening_hours_repository->delete((int) $instance->id);
+  }
 }
