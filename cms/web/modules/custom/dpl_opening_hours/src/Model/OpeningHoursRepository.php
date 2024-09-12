@@ -62,7 +62,7 @@ class OpeningHoursRepository {
    * @return OpeningHoursInstance[]
    *   Opening hours instances which match the provided criteria.
    */
-  public function loadMultiple(int $branchId = NULL, \DateTimeInterface $fromDate = NULL, \DateTimeInterface $toDate = NULL, int $repetitionId = NULL): array {
+  public function loadMultiple(int $branchId = NULL, \DateTimeInterface $fromDate = NULL, \DateTimeInterface $toDate = NULL, int $repetitionId = NULL, int $categoryId = NULL): array {
     $query = $this->connection->select(self::INSTANCE_TABLE, self::INSTANCE_TABLE)
       ->fields(self::INSTANCE_TABLE);
     if ($branchId) {
@@ -76,6 +76,10 @@ class OpeningHoursRepository {
     }
     if ($repetitionId) {
       $query->condition('repetition_id', $repetitionId);
+    }
+
+    if ($categoryId) {
+      $query->condition('category_tid', $categoryId);
     }
 
     $result = $query->execute();

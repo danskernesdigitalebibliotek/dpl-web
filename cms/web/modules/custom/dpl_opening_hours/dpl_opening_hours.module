@@ -5,8 +5,11 @@
  * Preprocesses' related to Opening Hours.
  */
 
+use Drupal\Core\Entity\EntityFormInterface;
+use Drupal\Core\Form\FormStateInterface;
 use Drupal\dpl_react_apps\Controller\DplReactAppsController;
 use Drupal\paragraphs\ParagraphInterface;
+use Drupal\taxonomy\Entity\Term;
 
 /**
  * Implements hook_preprocess_paragraph__TYPE().
@@ -44,4 +47,47 @@ void {
       ] + DplReactAppsController::externalApiBaseUrls(),
     ];
   }
+}
+
+/**
+ * Implements hook_form_FORM_ID_alter() for the taxonomy term deletion form
+ * related to opening hours.
+ *
+ * This hook modifies the deletion confirmation form for taxonomy terms within
+ * a specific vocabulary, adding custom messages and handling the deletion of
+ * associated opening hours.
+ *
+ * @param array $form
+ *   The form structure array.
+ * @param \Drupal\Core\Form\FormStateInterface $form_state
+ *   The current state of the form.
+ * @param string $form_id
+ *   The ID of the form being altered.
+ */
+function dpl_opening_hours_form_taxonomy_term_opening_hours_categories_delete_form_alter(array &$form, FormStateInterface $form_state, string $form_id): void {
+  $form_object = $form_state->getFormObject();
+  if (!$form_object instanceof EntityFormInterface) {
+    return;
+  }
+
+  $term = $form_object->getEntity();
+  if (!$term instanceof Term) {
+    return;
+  }
+
+  $term_id = (int) $term->id();
+  $term_label = $term->label();
+
+  $form['#title'] = t('Are you sure you want to delete all "@term_label" opening hours?', [
+    '@term_label' => $term_label,
+  ]);
+
+  $opening_hours_repository = \Drupal::service('dpl_opening_hours.repository');
+  $opening_hours_in_category = $opening_hours_repository->loadMultiple(categoryId: $term_id);
+  $opening_hours_count = count($opening_hours_in_category);
+
+  $form['description']['#markup'] = t('@term_label is associated with @count opening hours. Deleting @term_label will also delete these opening hours. Are you sure you want to continue?', [
+    '@term_label' => $term_label,
+    '@count' => $opening_hours_count,
+  ]);
 }
