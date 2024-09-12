@@ -40,10 +40,10 @@
             "type": "package",
             "package": {
                 "name": "danskernesdigitalebibliotek/dpl-react",
-                "version": "0.0.0-dev",
+                "version": "2024.37.0",
                 "type": "drupal-library",
                 "dist": {
-                    "url": "https://github.com/danskernesdigitalebibliotek/dpl-react/releases/download/branch-develop/dist-develop.zip",
+                    "url": "https://github.com/danskernesdigitalebibliotek/dpl-react/releases/download/2024.37.0/dist-2024-37-0-f2db689d6703c683823d449e282f7f51809702f4.zip",
                     "type": "zip"
                 },
                 "require": {
@@ -56,9 +56,9 @@
             "package": {
                 "name": "danskernesdigitalebibliotek/dpl-design-system",
                 "type": "drupal-library",
-                "version": "0.0.0-dev",
+                "version": "2024.37.0",
                 "dist": {
-                    "url": "https://github.com/danskernesdigitalebibliotek/dpl-design-system/releases/download/branch-develop/dist-develop.zip",
+                    "url": "https://github.com/danskernesdigitalebibliotek/dpl-design-system/releases/download/2024.37.0/dist-2024-37-0-d007a043185fe27649dc16ba7d4996eab9ee1caf.zip",
                     "type": "zip"
                 }
             }
@@ -90,8 +90,8 @@
         "composer/installers": "1.12.0",
         "cweagans/composer-patches": "1.7.3",
         "danskernesdigitalebibliotek/cms-api": "*",
-        "danskernesdigitalebibliotek/dpl-design-system": "0.0.0-dev",
-        "danskernesdigitalebibliotek/dpl-react": "0.0.0-dev",
+        "danskernesdigitalebibliotek/dpl-design-system": "2024.37.0",
+        "danskernesdigitalebibliotek/dpl-react": "2024.37.0",
         "danskernesdigitalebibliotek/fbs-client": "*",
         "dealerdirect/phpcodesniffer-composer-installer": "^1.0.0",
         "deoliveiralucas/array-keys-case-transform": "^1.1",
@@ -191,6 +191,7 @@
         "php-mock/php-mock": "^2.3",
         "phpspec/prophecy-phpunit": "^2",
         "phpstan/extension-installer": "^1.3",
+        "phpstan/phpstan": "~1.11.11",
         "phpstan/phpstan-phpunit": "^1.3",
         "phpunit/phpunit": "9.5.10",
         "thecodingmachine/phpstan-safe-rule": "^1.0",
@@ -274,6 +275,9 @@
                 "[web-root]/.eslintrc.json": false,
                 "[project-root]/.gitattributes": {
                     "append": "assets/.gitattributes"
+                },
+                "[web-root]/robots.txt": {
+                    "append": "assets/robots.txt"
                 }
             },
             "gitignore": false,
@@ -355,10 +359,7 @@
             },
             "drupal/recurring_events": {
                 "3461740: Fatal error when using 'Event series start date' filter in views": "https://www.drupal.org/files/issues/2024-07-16/reccuring_events_event_start_date.patch",
-                "3468521: When changing recurrance, identical date combinations should not be deleted & recreated": "https://git.drupalcode.org/project/recurring_events/-/merge_requests/105.patch"
-            },
-            "drupal/search_api": {
-                "3414725: Tag- and time-based views cache plugin": "https://git.drupalcode.org/issue/search_api-3414725/-/commit/d84c193ab35991464e77423d0ec33f2623f24f0d.patch"
+                "3468521: When changing recurrance, identical date combinations should not be deleted and recreated": "https://git.drupalcode.org/project/recurring_events/-/merge_requests/105.patch"
             },
             "drupal/theme_permission": {
                 "3105637: Edit, install and uninstall permission": "https://www.drupal.org/files/issues/2024-02-01/theme-permission-edit-install-uninstall-3105637-7.patch",
