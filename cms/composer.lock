@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "07dc396215d82ab4689521d59676f044",
+    "content-hash": "869386f3928d16c6e62464d75d56b6cc",
     "packages": [
         {
             "name": "amazeeio/drupal_integrations",
@@ -1166,19 +1166,19 @@
         },
         {
             "name": "danskernesdigitalebibliotek/dpl-design-system",
-            "version": "0.0.0-dev",
+            "version": "2024.37.0",
             "dist": {
                 "type": "zip",
-                "url": "https://github.com/danskernesdigitalebibliotek/dpl-design-system/releases/download/branch-DDFLSBP-647-add-checkbox-and-radio-elements/dist-ddflsbp-647-add-checkbox-and-radio-elements.zip"
+                "url": "https://github.com/danskernesdigitalebibliotek/dpl-design-system/releases/download/2024.37.0/dist-2024-37-0-d007a043185fe27649dc16ba7d4996eab9ee1caf.zip"
             },
             "type": "drupal-library"
         },
         {
             "name": "danskernesdigitalebibliotek/dpl-react",
-            "version": "2024.36.0",
+            "version": "2024.37.0",
             "dist": {
                 "type": "zip",
-                "url": "https://github.com/danskernesdigitalebibliotek/dpl-react/releases/download/2024.36.0/dist-2024-36-0-980a9ceb8b46195dfe6633b6e66a1f0c4167f4ec.zip"
+                "url": "https://github.com/danskernesdigitalebibliotek/dpl-react/releases/download/2024.37.0/dist-2024-37-0-f2db689d6703c683823d449e282f7f51809702f4.zip"
             },
             "require": {
                 "composer/installers": "^1.2.0"
