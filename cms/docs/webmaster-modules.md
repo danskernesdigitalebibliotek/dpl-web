@@ -30,7 +30,7 @@ Adding new configuration for modules not in DPL CMS is more safe, but
 you should look out for dependencies. If a configuration depends on a
 particular node type or field being available for instance.
 
-## Overview
+### Overview
 
 Configuration handling in webmaster modules consists of three parts:
 
@@ -44,9 +44,9 @@ Configuration handling in webmaster modules consists of three parts:
 
 We'll describe the parts in detail in the following walk-through.
 
-## Walk-through
+### Walk-through
 
-### Initial configuration
+#### Initial configuration
 
 1. Start with a fresh DPL CMS site with the code base from git, that
    has up to date configuration (`task dev:cli -- drush cim` should do
@@ -60,18 +60,19 @@ We'll describe the parts in detail in the following walk-through.
    module and revert the changes to the files in the root
    `config/sync` folder.
 
-### Event subscriber
+#### Event subscriber
 
 In order to get DPL CMS to actually use the configuration you just
 saved, we'll need to make it visible to Drupal. This can be done by
 implementing an event subscriber that overlays the configuration on
-`ConfigEvents::STORAGE_TRANSFORM_IMPORT`. An implementation can be
-found in
+`ConfigEvents::STORAGE_TRANSFORM_IMPORT`.
+
+An implementation can be found in
 [kdb_brugbyen](https://github.com/kdb/kdb_brugbyen/blob/main/src/EventSubscriber/OverlayConfigEventSubscriber.php).
 You can simply copy that and fix the two references to the module (the
 namespace and the configuration path).
 
-### Install/update hook
+#### Install/update hook
 
 The above will add in the module configuration when the configuration
 is imported, but installing or updating a module does not trigger a
@@ -89,7 +90,7 @@ service and requires digging out thirteen different services in order
 to be instantiated. Again, you can just copy the code from
 [kdb_brugbyen](https://github.com/kdb/kdb_brugbyen/blob/main/kdb_brugbyen.install).
 
-## Maintenance
+### Maintenance
 
 Keeping the module configuration up to date might pose some
 challenges.
