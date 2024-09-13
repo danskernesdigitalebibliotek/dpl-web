@@ -1,14 +1,5 @@
 on:
   pull_request:
-    # We have two groups of jobs in this workflow that reacts on actions:
-    #
-    # 1. We update the status of a Github Deployment on:
-    # - opened
-    # - synchronize
-    # - reopened
-    # - closed
-    #
-    # 2. We forward all events to lagoon via InformLagoon
     types: [ opened, synchronize, reopened, closed, edited ]
 name: Lagoon integration
 
@@ -30,62 +21,6 @@ jobs:
           allowed: |
             /^.{1,100}$/
           errorMessage: 'Branch name too long. This cannot be deployed to Lagoon.'
-
-  CheckEnvironment:
-    name: Check environment
-    runs-on: ubuntu-latest
-    if: ${{ github.event.action == 'opened' || github.event.action == 'reopened' || github.event.action == 'synchronize' }}
-    needs: [BranchNameLength]
-    permissions:
-      # Give the default GITHUB_TOKEN permission to create and update deployments
-      deployments: write
-    steps:
-      - name: Generate environment data
-        id: environment
-        run: |
-          echo ::set-output name=id::pr-${{github.event.number}}
-          echo ::set-output name=url::'https://varnish.pr-${{github.event.number}}.${{ env.LAGOON_PROJECT }}.${{ env.LAGOON_HOST }}/'
-          echo ::set-output name=logs::'https://ui.lagoon.${{ env.LAGOON_HOST }}/projects/${{ env.LAGOON_PROJECT }}/${{ env.LAGOON_PROJECT }}-pr-${{github.event.number}}/deployments'
-      - name: Start deployment
-        uses: bobheadxi/deployments@v1.5.0
-        id: deployment
-        with:
-          step: start
-          token: ${{ secrets.GITHUB_TOKEN }}
-          env: ${{ steps.environment.outputs.id }}
-          ref: ${{ github.head_ref }}
-          logs: ${{ steps.environment.outputs.logs }}
-          debug: ${{ runner.debug && 'true' || 'false' }}
-      - name: Generate wait-on config
-        # Retrieval of Let's Encrypt certificate sometimes fail in Lagoon.
-        # In this case a self-signed certificate will be used. Allow this.
-        run: |
-          echo "{\"strictSSL\": false}" > $RUNNER_TEMP/wait-on.config.json
-      - name: Wait for environment to become available
-        uses: iFaxity/wait-on-action@v1.1.0
-        with:
-          resource: ${{ steps.environment.outputs.url }}
-          # Time in ms. Wait for 20 mins for deployment to complete. We have
-          # seen deployments taking up to 17 mins.
-          timeout: 1200000
-          # Poll every 10 seconds. For whatever reason Lagoon environments may
-          # return 200 during the deployment process even though the deployment
-          # is not complete. Reduce polling interval to the risk of this
-          # happening.
-          interval: 10000
-          config: ${{ runner.temp }}/wait-on.config.json
-      - name: Finish deployment
-        if: always()
-        uses: bobheadxi/deployments@v1.5.0
-        with:
-          step: finish
-          token: ${{ secrets.GITHUB_TOKEN }}
-          status: ${{ job.status }}
-          deployment_id: ${{ steps.deployment.outputs.deployment_id }}
-          env: ${{ steps.deployment.outputs.env }}
-          env_url: ${{ steps.environment.outputs.url }}
-          logs: ${{ steps.environment.outputs.logs }}
-          debug: ${{ runner.debug && 'true' || 'false' }}
 
   CloseEnvironment:
     name: Close environment
@@ -112,19 +47,14 @@ jobs:
   # legitimate contributions.
   # The integration is controlled by creating synthetic events related to select
   # pull-request events, and send them to Lagoon.
-  #
-  # The job expects the following secrets:
-  # LAGOON_WEBHOOK_URL: The url events are to be delivered to
-  # LAGOON_WEBHOOK_SECRET: Shared lagoon webhook secret
-  #
   InformLagoon:
     name: Send synthetic event to Lagoon
     runs-on: ubuntu-latest
     needs: [BranchNameLength]
     steps:
-    - name: Send pull request event
-      uses: distributhor/workflow-webhook@v3
-      env:
-        webhook_url: ${{ secrets.LAGOON_WEBHOOK_URL }}
-        webhook_secret: ${{ secrets.LAGOON_WEBHOOK_SECRET }}
-        webhook_type: 'json-extended'
+      - name: Send pull request event
+        uses: distributhor/workflow-webhook@v3
+        env:
+          webhook_url: ${{ secrets.LAGOON_WEBHOOK_URL }}
+          webhook_secret: ${{ secrets.LAGOON_WEBHOOK_SECRET }}
+          webhook_type: 'json-extended'
