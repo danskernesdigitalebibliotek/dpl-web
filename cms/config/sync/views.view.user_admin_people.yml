@@ -10,6 +10,7 @@ dependencies:
     - user.role.local_administrator
     - user.role.mediator
   module:
+    - better_exposed_filters
     - user
 _core:
   default_config_hash: GbPVHdpSCucZ1MunS3Lai6FtyVVfmP9rJHk1GZ73JY0
@@ -562,7 +563,7 @@ display:
             offset_label: Offset
           quantity: 9
       exposed_form:
-        type: basic
+        type: bef
         options:
           submit_button: Filter
           reset_button: true
@@ -571,6 +572,76 @@ display:
           expose_sort_order: true
           sort_asc_label: Asc
           sort_desc_label: Desc
+          text_input_required: 'Select any filter and click on Apply to see results'
+          text_input_required_format: basic
+          bef:
+            general:
+              autosubmit: false
+              autosubmit_exclude_textfield: false
+              autosubmit_textfield_delay: 500
+              autosubmit_hide: false
+              input_required: false
+              allow_secondary: false
+              secondary_label: 'Advanced options'
+              secondary_open: false
+              reset_button_always_show: false
+            filter:
+              combine:
+                plugin_id: default
+                advanced:
+                  placeholder_text: ''
+                  collapsible: false
+                  collapsible_disable_automatic_open: false
+                  is_secondary: false
+                options_show_only_used: false
+                options_show_only_used_filtered: false
+                options_hide_when_empty: false
+                options_show_items_count: false
+              status:
+                plugin_id: default
+                advanced:
+                  sort_options: false
+                  rewrite:
+                    filter_rewrite_values: ''
+                    filter_rewrite_values_key: false
+                  collapsible: false
+                  collapsible_disable_automatic_open: false
+                  is_secondary: false
+                options_show_only_used: false
+                options_show_only_used_filtered: false
+                options_hide_when_empty: false
+                options_show_items_count: false
+              roles_target_id:
+                plugin_id: bef
+                advanced:
+                  sort_options: false
+                  rewrite:
+                    filter_rewrite_values: ''
+                    filter_rewrite_values_key: false
+                  collapsible: true
+                  collapsible_disable_automatic_open: false
+                  is_secondary: false
+                select_all_none: true
+                select_all_none_nested: false
+                display_inline: true
+                options_show_only_used: false
+                options_show_only_used_filtered: false
+                options_hide_when_empty: false
+                options_show_items_count: false
+              permission:
+                plugin_id: default
+                advanced:
+                  sort_options: false
+                  rewrite:
+                    filter_rewrite_values: ''
+                    filter_rewrite_values_key: false
+                  collapsible: false
+                  collapsible_disable_automatic_open: false
+                  is_secondary: false
+                options_show_only_used: false
+                options_show_only_used_filtered: false
+                options_hide_when_empty: false
+                options_show_items_count: false
       access:
         type: perm
         options:
@@ -716,7 +787,12 @@ display:
           admin_label: ''
           plugin_id: user_roles
           operator: or
-          value: {  }
+          value:
+            administrator: administrator
+            local_administrator: local_administrator
+            editor: editor
+            mediator: mediator
+            external_system: external_system
           group: 1
           exposed: true
           expose:
@@ -730,12 +806,17 @@ display:
             identifier: role
             required: false
             remember: false
-            multiple: false
+            multiple: true
             remember_roles:
               authenticated: authenticated
               anonymous: '0'
               administrator: '0'
-            reduce: false
+              local_administrator: '0'
+              editor: '0'
+              mediator: '0'
+              patron: '0'
+              external_system: '0'
+            reduce: true
           is_grouped: false
           group_info:
             label: ''
@@ -777,6 +858,11 @@ display:
               authenticated: authenticated
               anonymous: '0'
               administrator: '0'
+              local_administrator: '0'
+              editor: '0'
+              mediator: '0'
+              patron: '0'
+              external_system: '0'
             reduce: false
           is_grouped: false
           group_info:
@@ -831,53 +917,6 @@ display:
             default_group: All
             default_group_multiple: {  }
             group_items: {  }
-        roles_target_id_2:
-          id: roles_target_id_2
-          table: user__roles
-          field: roles_target_id
-          relationship: none
-          group_type: group
-          admin_label: ''
-          entity_type: user
-          entity_field: roles
-          plugin_id: user_roles
-          operator: or
-          value:
-            administrator: administrator
-            local_administrator: local_administrator
-            editor: editor
-            mediator: mediator
-            external_system: external_system
-          group: 1
-          exposed: false
-          expose:
-            operator_id: ''
-            label: ''
-            description: ''
-            use_operator: false
-            operator: ''
-            operator_limit_selection: false
-            operator_list: {  }
-            identifier: ''
-            required: false
-            remember: false
-            multiple: false
-            remember_roles:
-              authenticated: authenticated
-            reduce: false
-          is_grouped: false
-          group_info:
-            label: ''
-            description: ''
-            identifier: ''
-            optional: true
-            widget: select
-            multiple: false
-            remember: false
-            default_group: All
-            default_group_multiple: {  }
-            group_items: {  }
-          reduce_duplicates: false
       filter_groups:
         operator: AND
         groups:
