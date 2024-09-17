@@ -70,7 +70,7 @@ content:
     region: content
     settings:
       width: 100%
-      autocomplete: true
+      autocomplete: false
       match_operator: CONTAINS
       match_limit: 10
     third_party_settings: {  }

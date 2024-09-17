@@ -210,6 +210,7 @@ class DplReactAppsController extends ControllerBase {
       'advanced-search-preview-empty-text' => $this->t('-', [], ['context' => 'advanced search']),
       'advanced-search-preview-headline-text' => $this->t('CQL search string', [], ['context' => 'advanced search']),
       'advanced-search-publisher-text' => $this->t('publisher', [], ['context' => 'advanced search']),
+      'advanced-search-remove-row-text' => $this->t('remove row @inputNumber', [], ['context' => 'advanced search']),
       'advanced-search-reset-text' => $this->t('reset', [], ['context' => 'advanced search']),
       'advanced-search-search-button-text' => $this->t('search', [], ['context' => 'advanced search']),
       'advanced-search-source-text' => $this->t('source', [], ['context' => 'advanced search']),
