@@ -187,8 +187,9 @@ class GeneralSettingsForm extends ConfigFormBase {
 
     $form['opening_hours_url'] = [
       '#type' => 'linkit',
-      '#title' => $this->t('Opening hours link', [], ['context' => 'Library Agency Configuration']),
+      '#title' => $this->t('Opening Hours Link (remove link to enable sidebar)', [], ['context' => 'Library Agency Configuration']),
       '#description' => $this->t('The link with information about opening hours. <br />
+                                         If no link is added, the opening hours sidebar modal is enabled. <br />
                                          You can add a relative url (e.g. /takster). <br />
                                          You can search for an internal url. <br />
                                          You can add an external url (starting with "http://" or "https://").', [], ['context' => 'Library Agency Configuration']),
