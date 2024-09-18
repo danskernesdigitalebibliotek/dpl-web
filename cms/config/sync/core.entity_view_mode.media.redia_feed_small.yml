@@ -1,0 +1,11 @@
+uuid: fd0b39a0-f244-4d82-af84-54c63cf451bc
+langcode: en
+status: true
+dependencies:
+  module:
+    - media
+id: media.redia_feed_small
+label: 'Redia feed - small'
+description: ''
+targetEntityType: media
+cache: true
