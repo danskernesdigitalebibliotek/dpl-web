@@ -6,8 +6,7 @@ import {
   advancedSearchFiction,
   advancedSearchMaterialTypes,
   AdvancedSearchQuery,
-  initialAdvancedSearchQuery,
-  FirstAccessionOperatorFilter
+  initialAdvancedSearchQuery
 } from "./types";
 import { useText } from "../../core/utils/text";
 import PreviewSection from "./PreviewSection";
@@ -24,12 +23,6 @@ import {
 import { Button } from "../../components/Buttons/Button";
 import CheckBox from "../../components/checkbox/Checkbox";
 import { LocationFilter } from "./LocationFilter";
-import {
-  useCollectPageStatistics,
-  usePageStatistics
-} from "../../core/statistics/useStatistics";
-import { statistics } from "../../core/statistics/statistics";
-import Link from "../../components/atoms/links/Link";
 
 export type AdvancedSearchHeaderProps = {
   dataCy?: string;
@@ -41,15 +34,7 @@ export type AdvancedSearchHeaderProps = {
   setOnShelf: (checked: boolean) => void;
   onLocationChange: (location: string) => void;
   onSublocationChange: (sublocation: string) => void;
-  onBranchChange: (branch: string) => void;
-  onDepartmentChange: (department: string) => void;
-  onFirstAccessionDateChange: (firstAccession: string) => void;
-  onFirstAccessionOperatorChange: (
-    firstAccession: FirstAccessionOperatorFilter
-  ) => void;
   locationFilter: LocationFilter;
-  firstAccessionDateFilter: string;
-  firstAccessionOperatorFilter: FirstAccessionOperatorFilter;
 };
 
 const AdvancedSearchHeader: React.FC<AdvancedSearchHeaderProps> = ({
@@ -62,13 +47,7 @@ const AdvancedSearchHeader: React.FC<AdvancedSearchHeaderProps> = ({
   setOnShelf,
   onLocationChange,
   onSublocationChange,
-  onBranchChange,
-  onDepartmentChange,
-  onFirstAccessionDateChange,
-  onFirstAccessionOperatorChange,
-  locationFilter,
-  firstAccessionDateFilter,
-  firstAccessionOperatorFilter
+  locationFilter
 }) => {
   const t = useText();
   const [isFormMode, setIsFormMode] = useState<boolean>(true);
@@ -82,8 +61,6 @@ const AdvancedSearchHeader: React.FC<AdvancedSearchHeaderProps> = ({
   const [previewCql, setPreviewCql] = useState<string>(searchQuery || "");
   const [rawCql, setRawCql] = useState<string>("");
   const [focusedRow, setFocusedRow] = useState<number | null>(null);
-  const { updatePageStatistics } = usePageStatistics();
-  const { resetAndCollectPageStatistics } = useCollectPageStatistics();
 
   const handleOnShelfChange = (checked: boolean) => {
     setOnShelf(checked);
@@ -124,14 +101,8 @@ const AdvancedSearchHeader: React.FC<AdvancedSearchHeaderProps> = ({
       element.scrollIntoView({ behavior: "smooth" });
     }
   };
-  const handleSearch = () => {
-    // CQL search (free text mode)
+  const handleSearchButtonClick = () => {
     if (rawCql.trim() !== "" && !isFormMode) {
-      resetAndCollectPageStatistics({
-        ...statistics.advancedSearchCql,
-        trackedData: rawCql
-      });
-      updatePageStatistics({ waitTime: 1000 });
       setSearchQuery(rawCql);
       // Half a second makes sure search result is rendered before scrolling to it.
       setTimeout(() => {
@@ -139,13 +110,6 @@ const AdvancedSearchHeader: React.FC<AdvancedSearchHeaderProps> = ({
       }, 500);
       return;
     }
-    // Advanced search (form mode)
-    resetAndCollectPageStatistics({
-      ...statistics.advancedSearchTerm,
-      trackedData: translatedCql
-    });
-    updatePageStatistics({ waitTime: 1000 });
-
     setSearchObject(internalSearchObject);
     // Half a second makes sure search result is rendered before scrolling to it.
     setTimeout(() => {
@@ -172,24 +136,8 @@ const AdvancedSearchHeader: React.FC<AdvancedSearchHeaderProps> = ({
     );
   }, [internalSearchObject, rawCql, isFormMode]);
 
-  useEffect(() => {
-    if (!isFormMode) {
-      resetAndCollectPageStatistics({
-        ...statistics.advancedSearchCql,
-        trackedData: rawCql
-      });
-    }
-
-    if (isFormMode) {
-      resetAndCollectPageStatistics({
-        ...statistics.advancedSearchTerm,
-        trackedData: translatedCql
-      });
-    }
-  }, [isFormMode, rawCql, resetAndCollectPageStatistics, translatedCql]);
-
   return (
-    <form action={handleSearch}>
+    <>
       {isFormMode && (
         <>
           <h1 className="text-header-h2 advanced-search__title capitalize-first">
@@ -281,38 +229,34 @@ const AdvancedSearchHeader: React.FC<AdvancedSearchHeaderProps> = ({
           handleOnShelfChange={handleOnShelfChange}
           onLocationChange={onLocationChange}
           onSublocationChange={onSublocationChange}
-          onBranchChange={onBranchChange}
-          onDepartmentChange={onDepartmentChange}
-          onFirstAccessionDateChange={onFirstAccessionDateChange}
-          onFirstAccessionOperatorChange={onFirstAccessionOperatorChange}
           locationFilter={locationFilter}
-          firstAccessionDateFilter={firstAccessionDateFilter}
-          firstAccessionOperatorFilter={firstAccessionOperatorFilter}
         />
       )}
 
       <section className="advanced-search__footer">
         {!isFormMode && (
-          <Link
+          <button
+            type="button"
             className="link-tag advanced-search__back-button cursor-pointer"
-            href={new URL("/advancedsearch", window.location.href)}
+            onClick={() => setIsFormMode(true)}
+            onKeyUp={(e) => e.key === "Enter" ?? setIsFormMode(!true)}
           >
             {t("toAdvancedSearchButtonText")}
-          </Link>
+          </button>
         )}
         <Button
           dataCy="search-button"
           buttonType="none"
-          type="submit"
           disabled={isSearchButtonDisabled}
           size="xlarge"
           variant="filled"
           classNames="advanced-search__search-button"
           collapsible
           label={t("advancedSearchSearchButtonText")}
+          onClick={handleSearchButtonClick}
         />
       </section>
-    </form>
+    </>
   );
 };
 

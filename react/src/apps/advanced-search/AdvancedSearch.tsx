@@ -2,15 +2,8 @@ import React, { useEffect, useState } from "react";
 import { useEffectOnce } from "react-use";
 import AdvancedSearchHeader from "./AdvancedSearchHeader";
 import AdvancedSearchResult from "./AdvancedSearchResults";
-import {
-  commaSeparatedStringToArray,
-  translateSearchObjectToCql
-} from "./helpers";
-import {
-  AdvancedSearchQuery,
-  AdvancedSortMapStrings,
-  FirstAccessionOperatorFilter
-} from "./types";
+import { translateSearchObjectToCql } from "./helpers";
+import { AdvancedSearchQuery } from "./types";
 import {
   getUrlQueryParam,
   removeQueryParametersFromUrl,
@@ -35,20 +28,12 @@ const AdvancedSearch: React.FC<AdvancedSearchProps> = ({ pageSize }) => {
   const [showResultOnly, setShowResultOnly] = useState<boolean>(false);
   // This is the CQL query that is actually executed.
   const [executedQuery, setExecutedQuery] = useState<string | null>(null);
+
   const [locationFilter, setLocationFilter] = useState<LocationFilter>({});
-  const [firstAccessionDateFilter, setFirstAccessionDateFilter] =
-    useState<string>("");
-  const [firstAccessionOperatorFilter, setFirstAccessionOperatorFilter] =
-    useState<FirstAccessionOperatorFilter>(">");
-
-  const [sort, setSort] = useState<AdvancedSortMapStrings>(
-    AdvancedSortMapStrings.Relevance
-  );
-
   const handleLocationChange = (location: string) => {
     setLocationFilter((prevFilter) => ({
       ...prevFilter,
-      location: commaSeparatedStringToArray(location)
+      location: [location]
     }));
     if (location) {
       setQueryParametersInUrl({ location });
@@ -56,68 +41,16 @@ const AdvancedSearch: React.FC<AdvancedSearchProps> = ({ pageSize }) => {
       removeQueryParametersFromUrl("location");
     }
   };
-
   const handleSublocationChange = (sublocation: string) => {
     setLocationFilter((prevFilter) => ({
       ...prevFilter,
-      sublocation: commaSeparatedStringToArray(sublocation)
+      sublocation: [sublocation]
     }));
     if (sublocation) {
       setQueryParametersInUrl({ sublocation });
     } else {
       removeQueryParametersFromUrl("sublocation");
     }
-  };
-
-  const handleBranchChange = (branch: string) => {
-    setLocationFilter((prevFilter) => ({
-      ...prevFilter,
-      branch: commaSeparatedStringToArray(branch)
-    }));
-    if (branch) {
-      setQueryParametersInUrl({ branch });
-    } else {
-      removeQueryParametersFromUrl("branch");
-    }
-  };
-
-  const handleDepartmentChange = (department: string) => {
-    setLocationFilter((prevFilter) => ({
-      ...prevFilter,
-      department: commaSeparatedStringToArray(department)
-    }));
-    if (department) {
-      setQueryParametersInUrl({ department });
-    } else {
-      removeQueryParametersFromUrl("department");
-    }
-  };
-
-  const handleFirstAccessionDateChange = (firstAccession: string) => {
-    setFirstAccessionDateFilter(firstAccession);
-    if (firstAccession) {
-      setQueryParametersInUrl({
-        firstaccessiondateitem: `${firstAccessionOperatorFilter}${firstAccession}`
-      });
-    } else {
-      removeQueryParametersFromUrl("firstaccessiondateitem");
-    }
-  };
-
-  const handleFirstAccessionOperatorChange = (
-    operator: FirstAccessionOperatorFilter
-  ) => {
-    setFirstAccessionOperatorFilter(operator);
-    if (firstAccessionDateFilter) {
-      setQueryParametersInUrl({
-        firstaccessiondateitem: `${operator}${firstAccessionDateFilter}`
-      });
-    }
-  };
-
-  const handleSortChange = (value: AdvancedSortMapStrings) => {
-    setSort(value);
-    setQueryParametersInUrl({ sort: value });
   };
 
   const [onShelf, setOnShelf] = useState(false);
@@ -165,7 +98,7 @@ const AdvancedSearch: React.FC<AdvancedSearchProps> = ({ pageSize }) => {
     if (locationParam) {
       setLocationFilter((prevFilter) => ({
         ...prevFilter,
-        location: commaSeparatedStringToArray(locationParam)
+        location: [locationParam]
       }));
     }
 
@@ -173,39 +106,8 @@ const AdvancedSearch: React.FC<AdvancedSearchProps> = ({ pageSize }) => {
     if (sublocationParam) {
       setLocationFilter((prevFilter) => ({
         ...prevFilter,
-        sublocation: commaSeparatedStringToArray(sublocationParam)
+        sublocation: [sublocationParam]
       }));
-    }
-
-    const branchParam = getUrlQueryParam("branch");
-    if (branchParam) {
-      setLocationFilter((prevFilter) => ({
-        ...prevFilter,
-        branch: commaSeparatedStringToArray(branchParam)
-      }));
-    }
-
-    const departmentParam = getUrlQueryParam("department");
-    if (departmentParam) {
-      setLocationFilter((prevFilter) => ({
-        ...prevFilter,
-        department: commaSeparatedStringToArray(departmentParam)
-      }));
-    }
-
-    const sortParam = getUrlQueryParam("sort");
-    if (sortParam) {
-      setSort(sortParam as AdvancedSortMapStrings);
-    }
-
-    const firstAccessionDateParam = getUrlQueryParam("firstaccessiondateitem");
-    if (firstAccessionDateParam) {
-      const operator = firstAccessionDateParam.charAt(
-        0
-      ) as FirstAccessionOperatorFilter;
-      const date = firstAccessionDateParam.slice(1);
-      setFirstAccessionOperatorFilter(operator as FirstAccessionOperatorFilter);
-      setFirstAccessionDateFilter(date);
     }
   });
 
@@ -244,13 +146,7 @@ const AdvancedSearch: React.FC<AdvancedSearchProps> = ({ pageSize }) => {
           setOnShelf={handleOnShelfChange}
           onLocationChange={handleLocationChange}
           onSublocationChange={handleSublocationChange}
-          onBranchChange={handleBranchChange}
-          onDepartmentChange={handleDepartmentChange}
-          onFirstAccessionDateChange={handleFirstAccessionDateChange}
-          onFirstAccessionOperatorChange={handleFirstAccessionOperatorChange}
           locationFilter={locationFilter}
-          firstAccessionDateFilter={firstAccessionDateFilter}
-          firstAccessionOperatorFilter={firstAccessionOperatorFilter}
         />
       )}
       {executedQuery && (
@@ -260,10 +156,6 @@ const AdvancedSearch: React.FC<AdvancedSearchProps> = ({ pageSize }) => {
           showContentOnly={showResultOnly}
           onShelf={onShelf}
           locationFilter={locationFilter}
-          firstAccessionDateFilter={firstAccessionDateFilter}
-          firstAccessionOperatorFilter={firstAccessionOperatorFilter}
-          sort={sort}
-          setSort={handleSortChange}
         />
       )}
     </div>
