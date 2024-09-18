@@ -73,7 +73,6 @@ third_party_settings:
       children:
         - field_event_image
         - field_event_state
-        - field_relevant_ticket_manager
         - field_external_admin_link
       label: 'Event details'
       region: content
@@ -225,7 +224,7 @@ content:
     region: content
     settings:
       width: 100%
-      autocomplete: true
+      autocomplete: false
       match_operator: CONTAINS
       match_limit: 10
     third_party_settings: {  }
