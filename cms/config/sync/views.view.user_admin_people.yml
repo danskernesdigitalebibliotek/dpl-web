@@ -9,6 +9,7 @@ dependencies:
     - user.role.external_system
     - user.role.local_administrator
     - user.role.mediator
+    - user.role.patron
   module:
     - better_exposed_filters
     - user
@@ -611,6 +612,20 @@ display:
                 options_show_only_used_filtered: false
                 options_hide_when_empty: false
                 options_show_items_count: false
+              permission:
+                plugin_id: default
+                advanced:
+                  sort_options: false
+                  rewrite:
+                    filter_rewrite_values: ''
+                    filter_rewrite_values_key: false
+                  collapsible: false
+                  collapsible_disable_automatic_open: false
+                  is_secondary: false
+                options_show_only_used: false
+                options_show_only_used_filtered: false
+                options_hide_when_empty: false
+                options_show_items_count: false
               roles_target_id:
                 plugin_id: bef
                 advanced:
@@ -618,17 +633,17 @@ display:
                   rewrite:
                     filter_rewrite_values: ''
                     filter_rewrite_values_key: false
-                  collapsible: true
+                  collapsible: false
                   collapsible_disable_automatic_open: false
                   is_secondary: false
-                select_all_none: true
+                select_all_none: false
                 select_all_none_nested: false
                 display_inline: true
                 options_show_only_used: false
                 options_show_only_used_filtered: false
                 options_hide_when_empty: false
                 options_show_items_count: false
-              permission:
+              roles_target_id_1:
                 plugin_id: default
                 advanced:
                   sort_options: false
@@ -778,6 +793,222 @@ display:
                 title: Blocked
                 operator: '='
                 value: '0'
+        permission:
+          id: permission
+          table: user__roles
+          field: permission
+          relationship: none
+          group_type: group
+          admin_label: ''
+          plugin_id: user_permissions
+          operator: or
+          value: {  }
+          group: 1
+          exposed: true
+          expose:
+            operator_id: permission_op
+            label: Permission
+            description: ''
+            use_operator: false
+            operator: permission_op
+            operator_limit_selection: false
+            operator_list: {  }
+            identifier: permission
+            required: false
+            remember: false
+            multiple: false
+            remember_roles:
+              authenticated: authenticated
+              anonymous: '0'
+              administrator: '0'
+              local_administrator: '0'
+              editor: '0'
+              mediator: '0'
+              patron: '0'
+              external_system: '0'
+            reduce: false
+          is_grouped: false
+          group_info:
+            label: ''
+            description: ''
+            identifier: ''
+            optional: true
+            widget: select
+            multiple: false
+            remember: false
+            default_group: All
+            default_group_multiple: {  }
+            group_items: {  }
+          reduce_duplicates: false
+        roles_target_id_1:
+          id: roles_target_id_1
+          table: user__roles
+          field: roles_target_id
+          relationship: none
+          group_type: group
+          admin_label: ''
+          entity_type: user
+          entity_field: roles
+          plugin_id: user_roles
+          operator: not
+          value: {  }
+          group: 1
+          exposed: true
+          expose:
+            operator_id: roles_target_id_1_op
+            label: 'Has no role'
+            description: ''
+            use_operator: false
+            operator: roles_target_id_1_op
+            operator_limit_selection: false
+            operator_list: {  }
+            identifier: no_roles
+            required: false
+            remember: false
+            multiple: false
+            remember_roles:
+              authenticated: authenticated
+              anonymous: '0'
+              administrator: '0'
+              local_administrator: '0'
+              editor: '0'
+              mediator: '0'
+              patron: '0'
+              external_system: '0'
+            reduce: false
+          is_grouped: true
+          group_info:
+            label: 'Has role'
+            description: ''
+            identifier: has_role
+            optional: true
+            widget: select
+            multiple: false
+            remember: false
+            default_group: '2'
+            default_group_multiple: {  }
+            group_items:
+              1:
+                title: 'Has no role'
+                operator: not
+                value:
+                  administrator: administrator
+                  local_administrator: local_administrator
+                  editor: editor
+                  mediator: mediator
+                  patron: patron
+                  external_system: external_system
+              2:
+                title: 'Has role'
+                operator: or
+                value:
+                  administrator: administrator
+                  local_administrator: local_administrator
+                  editor: editor
+                  mediator: mediator
+                  patron: patron
+                  external_system: external_system
+          reduce_duplicates: false
+        roles_target_id_2:
+          id: roles_target_id_2
+          table: user__roles
+          field: roles_target_id
+          relationship: none
+          group_type: group
+          admin_label: ''
+          entity_type: user
+          entity_field: roles
+          plugin_id: user_roles
+          operator: or
+          value:
+            patron: patron
+          group: 1
+          exposed: true
+          expose:
+            operator_id: roles_target_id_2_op
+            label: 'Include patron'
+            description: ''
+            use_operator: false
+            operator: roles_target_id_2_op
+            operator_limit_selection: false
+            operator_list: {  }
+            identifier: patron
+            required: false
+            remember: false
+            multiple: false
+            remember_roles:
+              authenticated: authenticated
+              anonymous: '0'
+              administrator: '0'
+              local_administrator: '0'
+              editor: '0'
+              mediator: '0'
+              patron: '0'
+              external_system: '0'
+            reduce: false
+          is_grouped: true
+          group_info:
+            label: 'Include patron'
+            description: ''
+            identifier: roles_target_id_2
+            optional: true
+            widget: select
+            multiple: false
+            remember: false
+            default_group: '2'
+            default_group_multiple: {  }
+            group_items:
+              1:
+                title: 'Include patrons'
+                operator: or
+                value:
+                  patron: patron
+              2:
+                title: 'Exclude patrons'
+                operator: not
+                value:
+                  patron: patron
+          reduce_duplicates: false
+        default_langcode:
+          id: default_langcode
+          table: users_field_data
+          field: default_langcode
+          relationship: none
+          group_type: group
+          admin_label: ''
+          entity_type: user
+          entity_field: default_langcode
+          plugin_id: boolean
+          operator: '='
+          value: '1'
+          group: 1
+          exposed: false
+          expose:
+            operator_id: ''
+            label: ''
+            description: ''
+            use_operator: false
+            operator: ''
+            operator_limit_selection: false
+            operator_list: {  }
+            identifier: ''
+            required: false
+            remember: false
+            multiple: false
+            remember_roles:
+              authenticated: authenticated
+          is_grouped: false
+          group_info:
+            label: ''
+            description: ''
+            identifier: ''
+            optional: true
+            widget: select
+            multiple: false
+            remember: false
+            default_group: All
+            default_group_multiple: {  }
+            group_items: {  }
         roles_target_id:
           id: roles_target_id
           table: user__roles
@@ -830,93 +1061,6 @@ display:
             default_group_multiple: {  }
             group_items: {  }
           reduce_duplicates: false
-        permission:
-          id: permission
-          table: user__roles
-          field: permission
-          relationship: none
-          group_type: group
-          admin_label: ''
-          plugin_id: user_permissions
-          operator: or
-          value: {  }
-          group: 1
-          exposed: true
-          expose:
-            operator_id: permission_op
-            label: Permission
-            description: ''
-            use_operator: false
-            operator: permission_op
-            operator_limit_selection: false
-            operator_list: {  }
-            identifier: permission
-            required: false
-            remember: false
-            multiple: false
-            remember_roles:
-              authenticated: authenticated
-              anonymous: '0'
-              administrator: '0'
-              local_administrator: '0'
-              editor: '0'
-              mediator: '0'
-              patron: '0'
-              external_system: '0'
-            reduce: false
-          is_grouped: false
-          group_info:
-            label: ''
-            description: ''
-            identifier: ''
-            optional: true
-            widget: select
-            multiple: false
-            remember: false
-            default_group: All
-            default_group_multiple: {  }
-            group_items: {  }
-          reduce_duplicates: false
-        default_langcode:
-          id: default_langcode
-          table: users_field_data
-          field: default_langcode
-          relationship: none
-          group_type: group
-          admin_label: ''
-          entity_type: user
-          entity_field: default_langcode
-          plugin_id: boolean
-          operator: '='
-          value: '1'
-          group: 1
-          exposed: false
-          expose:
-            operator_id: ''
-            label: ''
-            description: ''
-            use_operator: false
-            operator: ''
-            operator_limit_selection: false
-            operator_list: {  }
-            identifier: ''
-            required: false
-            remember: false
-            multiple: false
-            remember_roles:
-              authenticated: authenticated
-          is_grouped: false
-          group_info:
-            label: ''
-            description: ''
-            identifier: ''
-            optional: true
-            widget: select
-            multiple: false
-            remember: false
-            default_group: All
-            default_group_multiple: {  }
-            group_items: {  }
       filter_groups:
         operator: AND
         groups:
@@ -1001,7 +1145,7 @@ display:
         options:
           query_comment: ''
           disable_sql_rewrite: false
-          distinct: false
+          distinct: true
           replica: false
           query_tags: {  }
       css_class: ''
