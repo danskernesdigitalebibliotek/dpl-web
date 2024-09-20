@@ -40,10 +40,10 @@
             "type": "package",
             "package": {
                 "name": "danskernesdigitalebibliotek/dpl-react",
-                "version": "2024.38.0",
+                "version": "2024.38.1",
                 "type": "drupal-library",
                 "dist": {
-                    "url": "https://github.com/danskernesdigitalebibliotek/dpl-react/releases/download/2024.38.0/dist-2024-38-0-65e8999aef4dbfa5d8367576aa634a090b83d10b.zip",
+                    "url": "https://github.com/danskernesdigitalebibliotek/dpl-react/releases/download/2024.38.1/dist-2024-38-1-a36a48adae0337d3f12539a38d9e5dd2bb4f52fb.zip",
                     "type": "zip"
                 },
                 "require": {
@@ -91,7 +91,7 @@
         "cweagans/composer-patches": "1.7.3",
         "danskernesdigitalebibliotek/cms-api": "*",
         "danskernesdigitalebibliotek/dpl-design-system": "2024.38.0",
-        "danskernesdigitalebibliotek/dpl-react": "2024.38.0",
+        "danskernesdigitalebibliotek/dpl-react": "2024.38.1",
         "danskernesdigitalebibliotek/fbs-client": "*",
         "dealerdirect/phpcodesniffer-composer-installer": "^1.0.0",
         "deoliveiralucas/array-keys-case-transform": "^1.1",
