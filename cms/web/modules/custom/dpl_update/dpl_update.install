@@ -82,6 +82,7 @@ function dpl_update_install(): string {
   $messages[] = dpl_update_update_10015();
   $messages[] = dpl_update_update_10016();
   $messages[] = dpl_update_update_10017();
+  $messages[] = dpl_update_update_10018();
 
   return implode('\r\n', $messages);
 }
@@ -207,4 +208,11 @@ function dpl_update_update_10016(): string {
  */
 function dpl_update_update_10017(): string {
   return _dpl_update_install_modules(['dpl_search']);
+}
+
+/**
+ * Install dpl_search module.
+ */
+function dpl_update_update_10018(): string {
+  return _dpl_update_install_modules(['dpl_redia_legacy']);
 }
