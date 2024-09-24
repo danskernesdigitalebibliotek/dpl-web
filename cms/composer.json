@@ -40,10 +40,10 @@
             "type": "package",
             "package": {
                 "name": "danskernesdigitalebibliotek/dpl-react",
-                "version": "2024.38.1",
+                "version": "2024.39.0",
                 "type": "drupal-library",
                 "dist": {
-                    "url": "https://github.com/danskernesdigitalebibliotek/dpl-react/releases/download/2024.38.1/dist-2024-38-1-a36a48adae0337d3f12539a38d9e5dd2bb4f52fb.zip",
+                    "url": "https://github.com/danskernesdigitalebibliotek/dpl-react/releases/download/2024.39.0/dist-2024-39-0-67b544aa0a75abf24d4d152fdd5f9c80082eceb0.zip",
                     "type": "zip"
                 },
                 "require": {
@@ -56,9 +56,9 @@
             "package": {
                 "name": "danskernesdigitalebibliotek/dpl-design-system",
                 "type": "drupal-library",
-                "version": "2024.38.0",
+                "version": "2024.39.0",
                 "dist": {
-                    "url": "https://github.com/danskernesdigitalebibliotek/dpl-design-system/releases/download/2024.38.0/dist-2024-38-0-0dbeffee4f1a1dce73311d4744a9bf02acceeeb1.zip",
+                    "url": "https://github.com/danskernesdigitalebibliotek/dpl-design-system/releases/download/2024.39.0/dist-2024-39-0-b108f0932dde82a7db1ef93e7d09a109d2c58363.zip",
                     "type": "zip"
                 }
             }
@@ -90,8 +90,8 @@
         "composer/installers": "1.12.0",
         "cweagans/composer-patches": "1.7.3",
         "danskernesdigitalebibliotek/cms-api": "*",
-        "danskernesdigitalebibliotek/dpl-design-system": "2024.38.0",
-        "danskernesdigitalebibliotek/dpl-react": "2024.38.1",
+        "danskernesdigitalebibliotek/dpl-design-system": "^2024.39",
+        "danskernesdigitalebibliotek/dpl-react": "^2024.39",
         "danskernesdigitalebibliotek/fbs-client": "*",
         "dealerdirect/phpcodesniffer-composer-installer": "^1.0.0",
         "deoliveiralucas/array-keys-case-transform": "^1.1",
@@ -151,7 +151,7 @@
         "drupal/pathauto": "^1.12",
         "drupal/potion": "dev-2.x#e48d6ee336d960b9d2efb5d88e68402db6d229a6",
         "drupal/purge": "^3.6",
-        "drupal/recurring_events": "^2.0@RC",
+        "drupal/recurring_events": "^2",
         "drupal/redirect": "^1.9",
         "drupal/redis": "^1.7",
         "drupal/restui": "^1.21",
@@ -314,7 +314,7 @@
                 "2708731: Allow redirect to edit form after cloning": "https://www.drupal.org/files/issues/2022-11-15/improve-workflow-of-cloned-entity-2708731-39.patch"
             },
             "drupal/entity_clone_template": {
-                "3424597: Fix error when creating entity of type without templates": "https://git.drupalcode.org/project/entity_clone_template/-/merge_requests/3.patch"
+                "3424597: Fix error when creating entity of type without templates": "https://git.drupalcode.org/project/entity_clone_template/-/commit/ad4964dd51f7f5e814111fcb73e6e472eefccf5c.patch"
             },
             "drupal/field_inheritance": {
                 "3454350: Create seperate permission for adding field inheritance": "https://www.drupal.org/files/issues/2024-06-13/field_inheritance_permission.patch"
@@ -323,7 +323,7 @@
                 "3162210: Preview link accidentally closes the media library": "https://www.drupal.org/files/issues/2020-10-11/preview_link_accidentally_closes_the_media_library-3162210-19.patch"
             },
             "drupal/job_scheduler": {
-                "3426366: Callables as worker callbacks": "https://git.drupalcode.org/project/job_scheduler/-/merge_requests/7.patch"
+                "3426366: Callables as worker callbacks": "https://git.drupalcode.org/project/job_scheduler/-/commit/da200da280c4c95e6e91f2416581ad3797ab1428.patch"
             },
             "drupal/jsnlog": {
                 "Disable CSRF token": "patches/jsnlog-disable-csrf_token.patch"
@@ -332,18 +332,18 @@
                 "3251587: Change logging from stdout to stderr": "https://www.drupal.org/files/issues/2021-11-29/jsonlog-change-stdout-to-stderr-3251587-3.patch"
             },
             "drupal/openapi": {
-                "3313521: OpenAPI security field does not validate": "https://git.drupalcode.org/project/openapi/-/merge_requests/6.patch"
+                "3313521: OpenAPI security field does not validate": "https://git.drupalcode.org/project/openapi/-/commit/4964cf725242040ddfb0c591b6044ee1fa5912ef.patch"
             },
             "drupal/openapi_rest": {
                 "3171530 + 3116760: Add support for parameter and response descriptions": "patches/openapi-parameter-response-descriptions-14-3.patch",
-                "3343816: Specification includes disabled resources": "https://git.drupalcode.org/project/openapi_rest/-/merge_requests/4.patch"
+                "3343816: Specification includes disabled resources": "https://git.drupalcode.org/project/openapi_rest/-/commit/6618157334feca93fad1041583375eed660b9085.patch"
             },
             "drupal/paragraphs": {
                 "3027525: Show the paragraph and field label of fields that fail validation": "https://www.drupal.org/files/issues/2023-10-03/3027525_22.patch"
             },
             "drupal/paragraphs_ee": {
                 "3106254: Sorting paragraph list alphabetically in modal": "https://www.drupal.org/files/issues/2023-03-30/paragraphs_ee_sort.patch",
-                "3246408: Arrow buttons instead of drag n drop": "https://git.drupalcode.org/project/paragraphs_ee/-/merge_requests/21.patch"
+                "3246408: Arrow buttons instead of drag n drop": "https://git.drupalcode.org/project/paragraphs_ee/-/commit/4e16e0d79386dcf13db901f5634f2e30f0814137.patch"
             },
             "drupal/potion": {
                 "3201365: Allow setting a default write mode when running potion:generate": "https://www.drupal.org/files/issues/2021-03-03/potion-allow_setting_a_default_write_mode-3201365-2.patch",
@@ -358,10 +358,11 @@
                 "3462078: Disabling late runtime processor when using CLI": "https://git.drupalcode.org/project/purge/-/commit/14c09e0ec4f1f46df0f19876ad6b3e8c93921e00.patch"
             },
             "drupal/recurring_events": {
-                "3178696: Make compatible with Scheduler": "https://git.drupalcode.org/project/recurring_events/-/merge_requests/86.patch",
-                "3416436: Avoid array conversion warning when daily events are disabled": "https://git.drupalcode.org/project/recurring_events/-/commit/832ae52f135dd3f205eb74acf2d3715fb443e759.patch",
-                "3451613: Start date of weekly reccurring event jumps incorrectly": "https://git.drupalcode.org/project/recurring_events/-/commit/581c53dd1b0b067a8b6454d76cc0187887f7b187.patch",
-                "3461740: Fatal error when using 'Event series start date' filter in views": "https://www.drupal.org/files/issues/2024-07-16/reccuring_events_event_start_date.patch"
+                "3461740: Fatal error when using 'Event series start date' filter in views": "https://www.drupal.org/files/issues/2024-07-16/reccuring_events_event_start_date.patch",
+                "3468521: (1/4) When changing recurrance, identical date combinations should not be deleted and recreated": "https://git.drupalcode.org/project/recurring_events/-/commit/67261f4ac34546f2c9514199d9febb6dcce6fd10.patch",
+                "3468521: (2/4)": "https://git.drupalcode.org/project/recurring_events/-/commit/603d34936b97535f66e11429dcc9a2c61fc7cb40.patch",
+                "3468521: (3/4)": "https://git.drupalcode.org/project/recurring_events/-/commit/ad8a4294b1ffb754a338bb2cfa0146f203aa6fc1.patch",
+                "3468521: (4/4)": "https://git.drupalcode.org/project/recurring_events/-/commit/ad99ae79f5c55fc2db17427e9936ab141314609d.patch"
             },
             "drupal/theme_permission": {
                 "3105637: Edit, install and uninstall permission": "https://www.drupal.org/files/issues/2024-02-01/theme-permission-edit-install-uninstall-3105637-7.patch",
