@@ -159,13 +159,22 @@ display:
         options:
           perm: 'access content'
       cache:
-        type: search_api_time_tag
-        options:
-          results_lifespan: '3600'
-          results_lifespan_custom: '0'
-          output_lifespan: '3600'
-          output_lifespan_custom: '0'
-      empty: {  }
+        type: none
+        options: {  }
+      empty:
+        area:
+          id: area
+          table: views
+          field: area
+          relationship: none
+          group_type: group
+          admin_label: ''
+          plugin_id: text
+          empty: true
+          content:
+            value: 'Unfortunately, there were no results for your search. Try using a different search term.'
+            format: basic
+          tokenize: false
       sorts:
         date:
           id: date
@@ -265,6 +274,58 @@ display:
             default_group: All
             default_group_multiple: {  }
             group_items: {  }
+        search_api_fulltext:
+          id: search_api_fulltext
+          table: search_api_index_events
+          field: search_api_fulltext
+          relationship: none
+          group_type: group
+          admin_label: ''
+          plugin_id: search_api_fulltext
+          operator: and
+          value: ''
+          group: 1
+          exposed: true
+          expose:
+            operator_id: search_api_fulltext_op
+            label: Search
+            description: ''
+            use_operator: false
+            operator: search_api_fulltext_op
+            operator_limit_selection: false
+            operator_list: {  }
+            identifier: search_api_fulltext
+            required: false
+            remember: false
+            multiple: false
+            remember_roles:
+              authenticated: authenticated
+              anonymous: '0'
+              administrator: '0'
+              local_administrator: '0'
+              editor: '0'
+              mediator: '0'
+              patron: '0'
+              external_system: '0'
+            expose_fields: false
+            placeholder: Søg
+            searched_fields_id: search_api_fulltext_searched_fields
+            value_maxlength: 128
+          is_grouped: false
+          group_info:
+            label: ''
+            description: ''
+            identifier: ''
+            optional: true
+            widget: select
+            multiple: false
+            remember: false
+            default_group: All
+            default_group_multiple: {  }
+            group_items: {  }
+          parse_mode: terms
+          min_length: null
+          fields: {  }
       style:
         type: default
       row:
@@ -281,7 +342,7 @@ display:
           preserve_facet_query_args: false
           query_tags: {  }
       relationships: {  }
-      use_ajax: true
+      use_ajax: false
       header: {  }
       footer: {  }
       display_extenders: {  }
@@ -289,6 +350,7 @@ display:
       max-age: -1
       contexts:
         - 'languages:language_interface'
+        - url
         - url.query_args
         - user.permissions
       tags:
@@ -309,44 +371,8 @@ display:
       max-age: -1
       contexts:
         - 'languages:language_interface'
+        - url
         - url.query_args
-        - user.permissions
-      tags:
-        - 'config:facets.facet.branch'
-        - 'config:facets.facet.event_categories'
-        - 'config:search_api.index.events'
-        - 'search_api_list:events'
-  related:
-    id: related
-    display_title: 'Related events'
-    display_plugin: block
-    position: 1
-    display_options:
-      title: ''
-      pager:
-        type: none
-        options:
-          offset: 0
-      style:
-        type: default
-        options: {  }
-      row:
-        type: search_api
-        options:
-          view_modes:
-            'entity:node':
-              event: card
-      defaults:
-        title: false
-        pager: false
-        style: false
-        row: false
-      display_description: ''
-      display_extenders: {  }
-    cache_metadata:
-      max-age: -1
-      contexts:
-        - 'languages:language_interface'
         - user.permissions
       tags:
         - 'config:search_api.index.events'

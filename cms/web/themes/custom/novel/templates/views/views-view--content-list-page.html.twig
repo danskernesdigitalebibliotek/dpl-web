@@ -13,19 +13,21 @@
 
   {{ header }}
 
-  <div class="content-list-page__filters">
-    {{ exposed }}
-
+  <ul class="content-list-page__filters">
     {% block facets %}
     {% endblock %}
-  </div>
+
+    {{ exposed }}
+  </ul>
 
   {{ attachment_before }}
 
   {% if rows -%}
     {{ rows }}
   {% elseif empty -%}
-    {{ empty }}
+    <div class="empty-view">
+      {{ empty }}
+    </div>
   {% endif %}
 
   {{ pager }}

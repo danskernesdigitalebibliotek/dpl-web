@@ -1,0 +1,152 @@
+<?php
+
+/**
+ * @file
+ * DPL Search drupal module file.
+ */
+
+use Drupal\Core\Url;
+use Drupal\dpl_react_apps\Controller\DplReactAppsController;
+use Drupal\dpl_search\DplSearchSettings;
+use Drupal\views\ViewExecutable;
+use Drupal\views\Views;
+
+/**
+ * Implements hook_preprocess().
+ *
+ * Add a link to the editorial web search, on the material search page,
+ * if we find any results from the search string query.
+ */
+function dpl_search_preprocess_dpl_react_app(array &$variables): void {
+  $name = $variables['name'] ?? NULL;
+
+  if ($name !== 'search-result') {
+    return;
+  }
+
+  $input = \Drupal::request()->query->get(DplSearchSettings::MATERIAL_QUERY_KEY);
+
+  if (empty($input) || !is_string($input)) {
+    return;
+  }
+
+  $input = urldecode($input);
+
+  $view = Views::getView(DplSearchSettings::EDITORIAL_VIEW_ID);
+
+  if (!($view instanceof ViewExecutable)) {
+    return;
+  }
+
+  $view->setDisplay('page');
+  $view->setExposedInput([DplSearchSettings::EDITORIAL_QUERY_KEY => $input]);
+  $view->execute();
+  if (empty($view->total_rows)) {
+    return;
+  }
+
+  $url = Url::fromRoute(
+    'view.' . DplSearchSettings::EDITORIAL_VIEW_ID . '.page',
+    [],
+    ['query' => [DplSearchSettings::EDITORIAL_QUERY_KEY => $input]]
+  )->setAbsolute(TRUE)->toString();
+
+  $config = [
+    'webSearchText' => $input,
+    'webSearchTotal' => $view->total_rows,
+    'webSearchUrl' => $url,
+    'hasWebSearchResults' => TRUE,
+  ];
+
+  $variables['attributes']['data-web-search-config'] = Safe\json_encode($config);
+}
+
+/**
+ * Implements hook_preprocess_HOOK().
+ *
+ * Altering the editorial view, to show dynamic links and title.
+ */
+function dpl_search_preprocess_views_view(array &$variables): void {
+  $view = $variables['view'] ?? NULL;
+  $id = $variables['id'] ?? NULL;
+  if ($id !== DplSearchSettings::EDITORIAL_VIEW_ID || !$view instanceof ViewExecutable) {
+    return;
+  }
+
+  // Hiding the exposed search filter, as we display it in the header.
+  unset($variables['exposed']);
+
+  $exposed_inputs = $view->getExposedInput();
+  $search_input = $exposed_inputs[DplSearchSettings::EDITORIAL_QUERY_KEY] ?? NULL;
+
+  if ($search_input) {
+    $title = t(
+      'Showing web results for "@input" (@total_results)',
+      ['@input' => $search_input, '@total_results' => $view->total_rows],
+      ['context' => 'dpl_search']
+    );
+
+    $material_url = Url::fromRoute('dpl_react_apps.search_result', [], ['query' => [DplSearchSettings::MATERIAL_QUERY_KEY => $search_input]])->toString();
+
+    $variables['header']['description'] = [
+      '#prefix' => '<h2 class="content-list-page__subheading">' . t('Switch to results for the', [], ['context' => 'dpl_search']) . ' <a href="' . $material_url . '">',
+      '#suffix' => '</a></h2>',
+      '#markup' => t('library materials.', [], ['context' => 'dpl_search']),
+    ];
+
+  }
+  else {
+    $title = t(
+      'Showing web results (@total_results)',
+      ['@total_results' => $view->total_rows],
+      ['context' => 'dpl_search']
+    );
+  }
+
+  $view->setTitle($title);
+}
+
+/**
+ * Implements template_preprocess_page().
+ *
+ * If we are on the editorial search view, we replace the material search
+ * toolbar with a custom form that leads to the editorial search.
+ * That way, the user can see and change their fulltext search in the header.
+ */
+function dpl_search_preprocess_page(array &$variables): void {
+  $route_name = \Drupal::routeMatch()->getRouteName();
+  $view_route_name = 'view.' . DplSearchSettings::EDITORIAL_VIEW_ID . '.page';
+  if ($route_name === $view_route_name) {
+    $variables['search']['header'] = [
+      '#theme' => 'dpl_search_header',
+      '#form_route' => $view_route_name,
+      '#default_input' => \Drupal::request()->query->get(DplSearchSettings::EDITORIAL_QUERY_KEY),
+    ];
+
+    return;
+  }
+
+  // We are not on the editorial search page - Let's just add the standard
+  // material search header, powered by react.
+  $variables['search']['header'] = [
+    '#theme' => 'dpl_react_app',
+    '#name' => 'search-header',
+    '#data' => [
+        // Add external API base urls.
+      ] + DplReactAppsController::externalApiBaseUrls(),
+  ];
+}
+
+/**
+ * Implements hook_theme().
+ */
+function dpl_search_theme(): array {
+  return [
+    'dpl_search_header' => [
+      'variables' => [
+        'form_route' => NULL,
+        'default_input' => NULL,
+      ],
+    ],
+  ];
+}
