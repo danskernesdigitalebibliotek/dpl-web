@@ -14,7 +14,6 @@
           ],
           "creators": [],
           "series": [],
-          "seriesMembers": [],
           "workYear": null,
           "genreAndForm": [],
           "manifestations": {
@@ -80,12 +79,10 @@
                     "for højtlæsning"
                   ]
                 },
-                "physicalDescriptions": [
-                  {
-                    "numberOfPages": 143,
-                    "playingTime": null
-                  }
-                ],
+                "physicalDescriptions": {
+                  "numberOfPages": 143,
+                  "playingTime": null
+                },
                 "accessTypes": [
                   {
                     "code": "PHYSICAL"
@@ -165,12 +162,10 @@
                   "for højtlæsning"
                 ]
               },
-              "physicalDescriptions": [
-                {
-                  "numberOfPages": 143,
-                  "playingTime": null
-                }
-              ],
+              "physicalDescriptions": {
+                "numberOfPages": 143,
+                "playingTime": null
+              },
               "accessTypes": [
                 {
                   "code": "PHYSICAL"
@@ -249,12 +244,10 @@
                   "for højtlæsning"
                 ]
               },
-              "physicalDescriptions": [
-                {
-                  "numberOfPages": 143,
-                  "playingTime": null
-                }
-              ],
+              "physicalDescriptions": {
+                "numberOfPages": 143,
+                "playingTime": null
+              },
               "accessTypes": [
                 {
                   "code": "PHYSICAL"
@@ -293,78 +286,100 @@
             {
               "title": "Harry Potter (bøger)",
               "isPopular": true,
-              "numberInSeries": {
-                "display": "5",
-                "number": [5]
-              },
               "readThisFirst": null,
-              "readThisWhenever": null
-            }
-          ],
-          "seriesMembers": [
-            {
-              "workId": "work-of:870970-basis:22629344",
-              "titles": {
-                "main": ["Harry Potter og de vises sten"],
-                "full": ["Harry Potter og de vises sten"],
-                "original": ["Harry Potter and the philosopher's stone"]
-              }
-            },
-            {
-              "workId": "work-of:870970-basis:22677780",
-              "titles": {
-                "main": ["Harry Potter og Hemmelighedernes Kammer"],
-                "full": ["Harry Potter og Hemmelighedernes Kammer"],
-                "original": ["Harry Potter and the Chamber of Secrets"]
-              }
-            },
-            {
-              "workId": "work-of:870970-basis:22995154",
-              "titles": {
-                "main": ["Harry Potter og fangen fra Azkaban"],
-                "full": ["Harry Potter og fangen fra Azkaban"],
-                "original": ["Harry Potter and the prisoner of Azkaban"]
-              }
-            },
-            {
-              "workId": "work-of:870970-basis:23540703",
-              "titles": {
-                "main": ["Harry Potter og Flammernes Pokal"],
-                "full": ["Harry Potter og Flammernes Pokal"],
-                "original": ["Harry Potter and the goblet of fire"]
-              }
-            },
-            {
-              "workId": "work-of:870970-basis:25245784",
-              "titles": {
-                "main": ["Harry Potter og Fønixordenen"],
-                "full": ["Harry Potter og Fønixordenen"],
-                "original": ["Harry Potter and the Order of the Phoenix"]
-              }
-            },
-            {
-              "workId": "work-of:870970-basis:25807995",
-              "titles": {
-                "main": ["Harry Potter og halvblodsprinsen"],
-                "full": ["Harry Potter og halvblodsprinsen"],
-                "original": ["Harry Potter and the half-blood prince"]
-              }
-            },
-            {
-              "workId": "work-of:870970-basis:27267912",
-              "titles": {
-                "main": ["Harry Potter og dødsregalierne"],
-                "full": ["Harry Potter og dødsregalierne"],
-                "original": ["Harry Potter and the deathly hallows"]
-              }
-            },
-            {
-              "workId": "work-of:870970-basis:52646251",
-              "titles": {
-                "main": ["Harry Potter og det forbandede barn"],
-                "full": ["Harry Potter og det forbandede barn : del et & to"],
-                "original": ["Harry Potter and the cursed child"]
-              }
+              "readThisWhenever": null,
+              "members": [
+                {
+                  "numberInSeries": "5",
+                  "work": {
+                    "workId": "work-of:870970-basis:22629344",
+                    "titles": {
+                      "main": ["Harry Potter og de vises sten"],
+                      "full": ["Harry Potter og de vises sten"],
+                      "original": ["Harry Potter and the philosopher's stone"]
+                    }
+                  }
+                },
+                {
+                  "numberInSeries": "5",
+                  "work": {
+                    "workId": "work-of:870970-basis:22677780",
+                    "titles": {
+                      "main": ["Harry Potter og Hemmelighedernes Kammer"],
+                      "full": ["Harry Potter og Hemmelighedernes Kammer"],
+                      "original": ["Harry Potter and the Chamber of Secrets"]
+                    }
+                  }
+                },
+                {
+                  "numberInSeries": "5",
+                  "work": {
+                    "workId": "work-of:870970-basis:22995154",
+                    "titles": {
+                      "main": ["Harry Potter og fangen fra Azkaban"],
+                      "full": ["Harry Potter og fangen fra Azkaban"],
+                      "original": ["Harry Potter and the prisoner of Azkaban"]
+                    }
+                  }
+                },
+                {
+                  "numberInSeries": "5",
+                  "work": {
+                    "workId": "work-of:870970-basis:23540703",
+                    "titles": {
+                      "main": ["Harry Potter og Flammernes Pokal"],
+                      "full": ["Harry Potter og Flammernes Pokal"],
+                      "original": ["Harry Potter and the goblet of fire"]
+                    }
+                  }
+                },
+                {
+                  "numberInSeries": "5",
+                  "work": {
+                    "workId": "work-of:870970-basis:25245784",
+                    "titles": {
+                      "main": ["Harry Potter og Fønixordenen"],
+                      "full": ["Harry Potter og Fønixordenen"],
+                      "original": ["Harry Potter and the Order of the Phoenix"]
+                    }
+                  }
+                },
+                {
+                  "numberInSeries": "5",
+                  "work": {
+                    "workId": "work-of:870970-basis:25807995",
+                    "titles": {
+                      "main": ["Harry Potter og halvblodsprinsen"],
+                      "full": ["Harry Potter og halvblodsprinsen"],
+                      "original": ["Harry Potter and the half-blood prince"]
+                    }
+                  }
+                },
+                {
+                  "numberInSeries": "5",
+                  "work": {
+                    "workId": "work-of:870970-basis:27267912",
+                    "titles": {
+                      "main": ["Harry Potter og dødsregalierne"],
+                      "full": ["Harry Potter og dødsregalierne"],
+                      "original": ["Harry Potter and the deathly hallows"]
+                    }
+                  }
+                },
+                {
+                  "numberInSeries": "5",
+                  "work": {
+                    "workId": "work-of:870970-basis:52646251",
+                    "titles": {
+                      "main": ["Harry Potter og det forbandede barn"],
+                      "full": [
+                        "Harry Potter og det forbandede barn : del et & to"
+                      ],
+                      "original": ["Harry Potter and the cursed child"]
+                    }
+                  }
+                }
+              ]
             }
           ],
           "workYear": {
@@ -438,12 +453,10 @@
                     "for højtlæsning"
                   ]
                 },
-                "physicalDescriptions": [
-                  {
-                    "numberOfPages": 565,
-                    "playingTime": null
-                  }
-                ],
+                "physicalDescriptions": {
+                  "numberOfPages": 565,
+                  "playingTime": null
+                },
                 "accessTypes": [
                   {
                     "code": "PHYSICAL"
@@ -513,12 +526,10 @@
                 "audience": {
                   "generalAudience": []
                 },
-                "physicalDescriptions": [
-                  {
-                    "numberOfPages": 923,
-                    "playingTime": null
-                  }
-                ],
+                "physicalDescriptions": {
+                  "numberOfPages": 923,
+                  "playingTime": null
+                },
                 "accessTypes": [
                   {
                     "code": "PHYSICAL"
@@ -595,12 +606,10 @@
                 "audience": {
                   "generalAudience": []
                 },
-                "physicalDescriptions": [
-                  {
-                    "numberOfPages": null,
-                    "playingTime": "27 t., 58 min."
-                  }
-                ],
+                "physicalDescriptions": {
+                  "numberOfPages": null,
+                  "playingTime": "27 t., 58 min."
+                },
                 "accessTypes": [
                   {
                     "code": "PHYSICAL"
@@ -673,12 +682,10 @@
                 "audience": {
                   "generalAudience": []
                 },
-                "physicalDescriptions": [
-                  {
-                    "numberOfPages": null,
-                    "playingTime": null
-                  }
-                ],
+                "physicalDescriptions": {
+                  "numberOfPages": null,
+                  "playingTime": null
+                },
                 "accessTypes": [
                   {
                     "code": "PHYSICAL"
@@ -745,12 +752,10 @@
                 "audience": {
                   "generalAudience": []
                 },
-                "physicalDescriptions": [
-                  {
-                    "numberOfPages": 923,
-                    "playingTime": null
-                  }
-                ],
+                "physicalDescriptions": {
+                  "numberOfPages": 923,
+                  "playingTime": null
+                },
                 "accessTypes": [
                   {
                     "code": "PHYSICAL"
@@ -818,12 +823,10 @@
                 "audience": {
                   "generalAudience": []
                 },
-                "physicalDescriptions": [
-                  {
-                    "numberOfPages": 21,
-                    "playingTime": null
-                  }
-                ],
+                "physicalDescriptions": {
+                  "numberOfPages": 21,
+                  "playingTime": null
+                },
                 "accessTypes": [
                   {
                     "code": "PHYSICAL"
@@ -896,12 +899,10 @@
                 "audience": {
                   "generalAudience": []
                 },
-                "physicalDescriptions": [
-                  {
-                    "numberOfPages": 923,
-                    "playingTime": null
-                  }
-                ],
+                "physicalDescriptions": {
+                  "numberOfPages": 923,
+                  "playingTime": null
+                },
                 "accessTypes": [
                   {
                     "code": "PHYSICAL"
@@ -972,12 +973,10 @@
                 "audience": {
                   "generalAudience": []
                 },
-                "physicalDescriptions": [
-                  {
-                    "numberOfPages": null,
-                    "playingTime": "29 t., 33 min."
-                  }
-                ],
+                "physicalDescriptions": {
+                  "numberOfPages": null,
+                  "playingTime": "29 t., 33 min."
+                },
                 "accessTypes": [
                   {
                     "code": "PHYSICAL"
@@ -1047,12 +1046,10 @@
                 "audience": {
                   "generalAudience": []
                 },
-                "physicalDescriptions": [
-                  {
-                    "numberOfPages": 923,
-                    "playingTime": null
-                  }
-                ],
+                "physicalDescriptions": {
+                  "numberOfPages": 923,
+                  "playingTime": null
+                },
                 "accessTypes": [
                   {
                     "code": "PHYSICAL"
@@ -1121,12 +1118,10 @@
                 "audience": {
                   "generalAudience": []
                 },
-                "physicalDescriptions": [
-                  {
-                    "numberOfPages": null,
-                    "playingTime": "29 t., 34 min."
-                  }
-                ],
+                "physicalDescriptions": {
+                  "numberOfPages": null,
+                  "playingTime": "29 t., 34 min."
+                },
                 "accessTypes": [
                   {
                     "code": "PHYSICAL"
@@ -1197,12 +1192,10 @@
                 "audience": {
                   "generalAudience": []
                 },
-                "physicalDescriptions": [
-                  {
-                    "numberOfPages": 923,
-                    "playingTime": null
-                  }
-                ],
+                "physicalDescriptions": {
+                  "numberOfPages": 923,
+                  "playingTime": null
+                },
                 "accessTypes": [
                   {
                     "code": "PHYSICAL"
@@ -1273,12 +1266,10 @@
                 "audience": {
                   "generalAudience": []
                 },
-                "physicalDescriptions": [
-                  {
-                    "numberOfPages": 841,
-                    "playingTime": null
-                  }
-                ],
+                "physicalDescriptions": {
+                  "numberOfPages": 841,
+                  "playingTime": null
+                },
                 "accessTypes": [
                   {
                     "code": "PHYSICAL"
@@ -1349,12 +1340,10 @@
                 "audience": {
                   "generalAudience": []
                 },
-                "physicalDescriptions": [
-                  {
-                    "numberOfPages": 841,
-                    "playingTime": null
-                  }
-                ],
+                "physicalDescriptions": {
+                  "numberOfPages": 841,
+                  "playingTime": null
+                },
                 "accessTypes": [
                   {
                     "code": "PHYSICAL"
@@ -1435,12 +1424,10 @@
                   "for højtlæsning"
                 ]
               },
-              "physicalDescriptions": [
-                {
-                  "numberOfPages": 565,
-                  "playingTime": null
-                }
-              ],
+              "physicalDescriptions": {
+                "numberOfPages": 565,
+                "playingTime": null
+              },
               "accessTypes": [
                 {
                   "code": "PHYSICAL"
@@ -1520,12 +1507,10 @@
                   "for højtlæsning"
                 ]
               },
-              "physicalDescriptions": [
-                {
-                  "numberOfPages": 565,
-                  "playingTime": null
-                }
-              ],
+              "physicalDescriptions": {
+                "numberOfPages": 565,
+                "playingTime": null
+              },
               "accessTypes": [
                 {
                   "code": "PHYSICAL"
@@ -1566,78 +1551,100 @@
             {
               "title": "Harry Potter (bøger)",
               "isPopular": true,
-              "numberInSeries": {
-                "display": "1",
-                "number": [1]
-              },
               "readThisFirst": true,
-              "readThisWhenever": null
-            }
-          ],
-          "seriesMembers": [
-            {
-              "workId": "work-of:870970-basis:22629344",
-              "titles": {
-                "main": ["Harry Potter og de vises sten"],
-                "full": ["Harry Potter og de vises sten"],
-                "original": ["Harry Potter and the philosopher's stone"]
-              }
-            },
-            {
-              "workId": "work-of:870970-basis:22677780",
-              "titles": {
-                "main": ["Harry Potter og Hemmelighedernes Kammer"],
-                "full": ["Harry Potter og Hemmelighedernes Kammer"],
-                "original": ["Harry Potter and the Chamber of Secrets"]
-              }
-            },
-            {
-              "workId": "work-of:870970-basis:22995154",
-              "titles": {
-                "main": ["Harry Potter og fangen fra Azkaban"],
-                "full": ["Harry Potter og fangen fra Azkaban"],
-                "original": ["Harry Potter and the prisoner of Azkaban"]
-              }
-            },
-            {
-              "workId": "work-of:870970-basis:23540703",
-              "titles": {
-                "main": ["Harry Potter og Flammernes Pokal"],
-                "full": ["Harry Potter og Flammernes Pokal"],
-                "original": ["Harry Potter and the goblet of fire"]
-              }
-            },
-            {
-              "workId": "work-of:870970-basis:25245784",
-              "titles": {
-                "main": ["Harry Potter og Fønixordenen"],
-                "full": ["Harry Potter og Fønixordenen"],
-                "original": ["Harry Potter and the Order of the Phoenix"]
-              }
-            },
-            {
-              "workId": "work-of:870970-basis:25807995",
-              "titles": {
-                "main": ["Harry Potter og halvblodsprinsen"],
-                "full": ["Harry Potter og halvblodsprinsen"],
-                "original": ["Harry Potter and the half-blood prince"]
-              }
-            },
-            {
-              "workId": "work-of:870970-basis:27267912",
-              "titles": {
-                "main": ["Harry Potter og dødsregalierne"],
-                "full": ["Harry Potter og dødsregalierne"],
-                "original": ["Harry Potter and the deathly hallows"]
-              }
-            },
-            {
-              "workId": "work-of:870970-basis:52646251",
-              "titles": {
-                "main": ["Harry Potter og det forbandede barn"],
-                "full": ["Harry Potter og det forbandede barn : del et & to"],
-                "original": ["Harry Potter and the cursed child"]
-              }
+              "readThisWhenever": null,
+              "members": [
+                {
+                  "numberInSeries": "1",
+                  "work": {
+                    "workId": "work-of:870970-basis:22629344",
+                    "titles": {
+                      "main": ["Harry Potter og de vises sten"],
+                      "full": ["Harry Potter og de vises sten"],
+                      "original": ["Harry Potter and the philosopher's stone"]
+                    }
+                  }
+                },
+                {
+                  "numberInSeries": "1",
+                  "work": {
+                    "workId": "work-of:870970-basis:22677780",
+                    "titles": {
+                      "main": ["Harry Potter og Hemmelighedernes Kammer"],
+                      "full": ["Harry Potter og Hemmelighedernes Kammer"],
+                      "original": ["Harry Potter and the Chamber of Secrets"]
+                    }
+                  }
+                },
+                {
+                  "numberInSeries": "1",
+                  "work": {
+                    "workId": "work-of:870970-basis:22995154",
+                    "titles": {
+                      "main": ["Harry Potter og fangen fra Azkaban"],
+                      "full": ["Harry Potter og fangen fra Azkaban"],
+                      "original": ["Harry Potter and the prisoner of Azkaban"]
+                    }
+                  }
+                },
+                {
+                  "numberInSeries": "1",
+                  "work": {
+                    "workId": "work-of:870970-basis:23540703",
+                    "titles": {
+                      "main": ["Harry Potter og Flammernes Pokal"],
+                      "full": ["Harry Potter og Flammernes Pokal"],
+                      "original": ["Harry Potter and the goblet of fire"]
+                    }
+                  }
+                },
+                {
+                  "numberInSeries": "1",
+                  "work": {
+                    "workId": "work-of:870970-basis:25245784",
+                    "titles": {
+                      "main": ["Harry Potter og Fønixordenen"],
+                      "full": ["Harry Potter og Fønixordenen"],
+                      "original": ["Harry Potter and the Order of the Phoenix"]
+                    }
+                  }
+                },
+                {
+                  "numberInSeries": "1",
+                  "work": {
+                    "workId": "work-of:870970-basis:25807995",
+                    "titles": {
+                      "main": ["Harry Potter og halvblodsprinsen"],
+                      "full": ["Harry Potter og halvblodsprinsen"],
+                      "original": ["Harry Potter and the half-blood prince"]
+                    }
+                  }
+                },
+                {
+                  "numberInSeries": "1",
+                  "work": {
+                    "workId": "work-of:870970-basis:27267912",
+                    "titles": {
+                      "main": ["Harry Potter og dødsregalierne"],
+                      "full": ["Harry Potter og dødsregalierne"],
+                      "original": ["Harry Potter and the deathly hallows"]
+                    }
+                  }
+                },
+                {
+                  "numberInSeries": "1",
+                  "work": {
+                    "workId": "work-of:870970-basis:52646251",
+                    "titles": {
+                      "main": ["Harry Potter og det forbandede barn"],
+                      "full": [
+                        "Harry Potter og det forbandede barn : del et & to"
+                      ],
+                      "original": ["Harry Potter and the cursed child"]
+                    }
+                  }
+                }
+              ]
             }
           ],
           "workYear": {
@@ -1699,12 +1706,10 @@
                 "audience": {
                   "generalAudience": []
                 },
-                "physicalDescriptions": [
-                  {
-                    "numberOfPages": 303,
-                    "playingTime": null
-                  }
-                ],
+                "physicalDescriptions": {
+                  "numberOfPages": 303,
+                  "playingTime": null
+                },
                 "accessTypes": [
                   {
                     "code": "PHYSICAL"
@@ -1771,12 +1776,10 @@
                 "audience": {
                   "generalAudience": []
                 },
-                "physicalDescriptions": [
-                  {
-                    "numberOfPages": 303,
-                    "playingTime": null
-                  }
-                ],
+                "physicalDescriptions": {
+                  "numberOfPages": 303,
+                  "playingTime": null
+                },
                 "accessTypes": [
                   {
                     "code": "PHYSICAL"
@@ -1841,12 +1844,10 @@
                 "audience": {
                   "generalAudience": []
                 },
-                "physicalDescriptions": [
-                  {
-                    "numberOfPages": null,
-                    "playingTime": "10 t., 27 min."
-                  }
-                ],
+                "physicalDescriptions": {
+                  "numberOfPages": null,
+                  "playingTime": "10 t., 27 min."
+                },
                 "accessTypes": [
                   {
                     "code": "PHYSICAL"
@@ -1919,12 +1920,10 @@
                 "audience": {
                   "generalAudience": []
                 },
-                "physicalDescriptions": [
-                  {
-                    "numberOfPages": 303,
-                    "playingTime": null
-                  }
-                ],
+                "physicalDescriptions": {
+                  "numberOfPages": 303,
+                  "playingTime": null
+                },
                 "accessTypes": [
                   {
                     "code": "PHYSICAL"
@@ -1994,12 +1993,10 @@
                 "audience": {
                   "generalAudience": []
                 },
-                "physicalDescriptions": [
-                  {
-                    "numberOfPages": 7,
-                    "playingTime": null
-                  }
-                ],
+                "physicalDescriptions": {
+                  "numberOfPages": 7,
+                  "playingTime": null
+                },
                 "accessTypes": [
                   {
                     "code": "PHYSICAL"
@@ -2076,12 +2073,10 @@
                 "audience": {
                   "generalAudience": []
                 },
-                "physicalDescriptions": [
-                  {
-                    "numberOfPages": null,
-                    "playingTime": "10 t., 27 min."
-                  }
-                ],
+                "physicalDescriptions": {
+                  "numberOfPages": null,
+                  "playingTime": "10 t., 27 min."
+                },
                 "accessTypes": [
                   {
                     "code": "PHYSICAL"
@@ -2148,12 +2143,10 @@
                 "audience": {
                   "generalAudience": []
                 },
-                "physicalDescriptions": [
-                  {
-                    "numberOfPages": null,
-                    "playingTime": "10 t., 25 min."
-                  }
-                ],
+                "physicalDescriptions": {
+                  "numberOfPages": null,
+                  "playingTime": "10 t., 25 min."
+                },
                 "accessTypes": [
                   {
                     "code": "PHYSICAL"
@@ -2226,12 +2219,10 @@
                 "audience": {
                   "generalAudience": []
                 },
-                "physicalDescriptions": [
-                  {
-                    "numberOfPages": null,
-                    "playingTime": null
-                  }
-                ],
+                "physicalDescriptions": {
+                  "numberOfPages": null,
+                  "playingTime": null
+                },
                 "accessTypes": [
                   {
                     "code": "PHYSICAL"
@@ -2307,12 +2298,10 @@
                 "audience": {
                   "generalAudience": []
                 },
-                "physicalDescriptions": [
-                  {
-                    "numberOfPages": null,
-                    "playingTime": null
-                  }
-                ],
+                "physicalDescriptions": {
+                  "numberOfPages": null,
+                  "playingTime": null
+                },
                 "accessTypes": [
                   {
                     "code": "PHYSICAL"
@@ -2385,12 +2374,10 @@
                 "audience": {
                   "generalAudience": []
                 },
-                "physicalDescriptions": [
-                  {
-                    "numberOfPages": null,
-                    "playingTime": "9 t., 40 min."
-                  }
-                ],
+                "physicalDescriptions": {
+                  "numberOfPages": null,
+                  "playingTime": "9 t., 40 min."
+                },
                 "accessTypes": [
                   {
                     "code": "PHYSICAL"
@@ -2466,12 +2453,10 @@
                 "audience": {
                   "generalAudience": []
                 },
-                "physicalDescriptions": [
-                  {
-                    "numberOfPages": null,
-                    "playingTime": "9 t., 40 min."
-                  }
-                ],
+                "physicalDescriptions": {
+                  "numberOfPages": null,
+                  "playingTime": "9 t., 40 min."
+                },
                 "accessTypes": [
                   {
                     "code": "PHYSICAL"
@@ -2538,12 +2523,10 @@
                 "audience": {
                   "generalAudience": []
                 },
-                "physicalDescriptions": [
-                  {
-                    "numberOfPages": 303,
-                    "playingTime": null
-                  }
-                ],
+                "physicalDescriptions": {
+                  "numberOfPages": 303,
+                  "playingTime": null
+                },
                 "accessTypes": [
                   {
                     "code": "PHYSICAL"
@@ -2613,12 +2596,10 @@
                 "audience": {
                   "generalAudience": []
                 },
-                "physicalDescriptions": [
-                  {
-                    "numberOfPages": 303,
-                    "playingTime": null
-                  }
-                ],
+                "physicalDescriptions": {
+                  "numberOfPages": 303,
+                  "playingTime": null
+                },
                 "accessTypes": [
                   {
                     "code": "PHYSICAL"
@@ -2689,12 +2670,10 @@
                 "audience": {
                   "generalAudience": []
                 },
-                "physicalDescriptions": [
-                  {
-                    "numberOfPages": null,
-                    "playingTime": "9 t., 40 min."
-                  }
-                ],
+                "physicalDescriptions": {
+                  "numberOfPages": null,
+                  "playingTime": "9 t., 40 min."
+                },
                 "accessTypes": [
                   {
                     "code": "PHYSICAL"
@@ -2765,12 +2744,10 @@
                 "audience": {
                   "generalAudience": []
                 },
-                "physicalDescriptions": [
-                  {
-                    "numberOfPages": 303,
-                    "playingTime": null
-                  }
-                ],
+                "physicalDescriptions": {
+                  "numberOfPages": 303,
+                  "playingTime": null
+                },
                 "accessTypes": [
                   {
                     "code": "PHYSICAL"
@@ -2847,12 +2824,10 @@
                     "for højtlæsning"
                   ]
                 },
-                "physicalDescriptions": [
-                  {
-                    "numberOfPages": 356,
-                    "playingTime": null
-                  }
-                ],
+                "physicalDescriptions": {
+                  "numberOfPages": 356,
+                  "playingTime": null
+                },
                 "accessTypes": [
                   {
                     "code": "PHYSICAL"
@@ -2926,12 +2901,10 @@
                 "audience": {
                   "generalAudience": []
                 },
-                "physicalDescriptions": [
-                  {
-                    "numberOfPages": 303,
-                    "playingTime": null
-                  }
-                ],
+                "physicalDescriptions": {
+                  "numberOfPages": 303,
+                  "playingTime": null
+                },
                 "accessTypes": [
                   {
                     "code": "PHYSICAL"
@@ -3002,12 +2975,10 @@
                 "audience": {
                   "generalAudience": []
                 },
-                "physicalDescriptions": [
-                  {
-                    "numberOfPages": 355,
-                    "playingTime": null
-                  }
-                ],
+                "physicalDescriptions": {
+                  "numberOfPages": 355,
+                  "playingTime": null
+                },
                 "accessTypes": [
                   {
                     "code": "PHYSICAL"
@@ -3081,12 +3052,10 @@
                 "audience": {
                   "generalAudience": []
                 },
-                "physicalDescriptions": [
-                  {
-                    "numberOfPages": 246,
-                    "playingTime": null
-                  }
-                ],
+                "physicalDescriptions": {
+                  "numberOfPages": 246,
+                  "playingTime": null
+                },
                 "accessTypes": [
                   {
                     "code": "PHYSICAL"
@@ -3157,12 +3126,10 @@
                 "audience": {
                   "generalAudience": []
                 },
-                "physicalDescriptions": [
-                  {
-                    "numberOfPages": 355,
-                    "playingTime": null
-                  }
-                ],
+                "physicalDescriptions": {
+                  "numberOfPages": 355,
+                  "playingTime": null
+                },
                 "accessTypes": [
                   {
                     "code": "PHYSICAL"
@@ -3240,12 +3207,10 @@
                   "for højtlæsning"
                 ]
               },
-              "physicalDescriptions": [
-                {
-                  "numberOfPages": 356,
-                  "playingTime": null
-                }
-              ],
+              "physicalDescriptions": {
+                "numberOfPages": 356,
+                "playingTime": null
+              },
               "accessTypes": [
                 {
                   "code": "PHYSICAL"
@@ -3322,12 +3287,10 @@
                   "for højtlæsning"
                 ]
               },
-              "physicalDescriptions": [
-                {
-                  "numberOfPages": 356,
-                  "playingTime": null
-                }
-              ],
+              "physicalDescriptions": {
+                "numberOfPages": 356,
+                "playingTime": null
+              },
               "accessTypes": [
                 {
                   "code": "PHYSICAL"
@@ -3368,78 +3331,100 @@
             {
               "title": "Harry Potter (bøger)",
               "isPopular": true,
-              "numberInSeries": {
-                "display": "6",
-                "number": [6]
-              },
               "readThisFirst": null,
-              "readThisWhenever": null
-            }
-          ],
-          "seriesMembers": [
-            {
-              "workId": "work-of:870970-basis:22629344",
-              "titles": {
-                "main": ["Harry Potter og de vises sten"],
-                "full": ["Harry Potter og de vises sten"],
-                "original": ["Harry Potter and the philosopher's stone"]
-              }
-            },
-            {
-              "workId": "work-of:870970-basis:22677780",
-              "titles": {
-                "main": ["Harry Potter og Hemmelighedernes Kammer"],
-                "full": ["Harry Potter og Hemmelighedernes Kammer"],
-                "original": ["Harry Potter and the Chamber of Secrets"]
-              }
-            },
-            {
-              "workId": "work-of:870970-basis:22995154",
-              "titles": {
-                "main": ["Harry Potter og fangen fra Azkaban"],
-                "full": ["Harry Potter og fangen fra Azkaban"],
-                "original": ["Harry Potter and the prisoner of Azkaban"]
-              }
-            },
-            {
-              "workId": "work-of:870970-basis:23540703",
-              "titles": {
-                "main": ["Harry Potter og Flammernes Pokal"],
-                "full": ["Harry Potter og Flammernes Pokal"],
-                "original": ["Harry Potter and the goblet of fire"]
-              }
-            },
-            {
-              "workId": "work-of:870970-basis:25245784",
-              "titles": {
-                "main": ["Harry Potter og Fønixordenen"],
-                "full": ["Harry Potter og Fønixordenen"],
-                "original": ["Harry Potter and the Order of the Phoenix"]
-              }
-            },
-            {
-              "workId": "work-of:870970-basis:25807995",
-              "titles": {
-                "main": ["Harry Potter og halvblodsprinsen"],
-                "full": ["Harry Potter og halvblodsprinsen"],
-                "original": ["Harry Potter and the half-blood prince"]
-              }
-            },
-            {
-              "workId": "work-of:870970-basis:27267912",
-              "titles": {
-                "main": ["Harry Potter og dødsregalierne"],
-                "full": ["Harry Potter og dødsregalierne"],
-                "original": ["Harry Potter and the deathly hallows"]
-              }
-            },
-            {
-              "workId": "work-of:870970-basis:52646251",
-              "titles": {
-                "main": ["Harry Potter og det forbandede barn"],
-                "full": ["Harry Potter og det forbandede barn : del et & to"],
-                "original": ["Harry Potter and the cursed child"]
-              }
+              "readThisWhenever": null,
+              "members": [
+                {
+                  "numberInSeries": "6",
+                  "work": {
+                    "workId": "work-of:870970-basis:22629344",
+                    "titles": {
+                      "main": ["Harry Potter og de vises sten"],
+                      "full": ["Harry Potter og de vises sten"],
+                      "original": ["Harry Potter and the philosopher's stone"]
+                    }
+                  }
+                },
+                {
+                  "numberInSeries": "6",
+                  "work": {
+                    "workId": "work-of:870970-basis:22677780",
+                    "titles": {
+                      "main": ["Harry Potter og Hemmelighedernes Kammer"],
+                      "full": ["Harry Potter og Hemmelighedernes Kammer"],
+                      "original": ["Harry Potter and the Chamber of Secrets"]
+                    }
+                  }
+                },
+                {
+                  "numberInSeries": "6",
+                  "work": {
+                    "workId": "work-of:870970-basis:22995154",
+                    "titles": {
+                      "main": ["Harry Potter og fangen fra Azkaban"],
+                      "full": ["Harry Potter og fangen fra Azkaban"],
+                      "original": ["Harry Potter and the prisoner of Azkaban"]
+                    }
+                  }
+                },
+                {
+                  "numberInSeries": "6",
+                  "work": {
+                    "workId": "work-of:870970-basis:23540703",
+                    "titles": {
+                      "main": ["Harry Potter og Flammernes Pokal"],
+                      "full": ["Harry Potter og Flammernes Pokal"],
+                      "original": ["Harry Potter and the goblet of fire"]
+                    }
+                  }
+                },
+                {
+                  "numberInSeries": "6",
+                  "work": {
+                    "workId": "work-of:870970-basis:25245784",
+                    "titles": {
+                      "main": ["Harry Potter og Fønixordenen"],
+                      "full": ["Harry Potter og Fønixordenen"],
+                      "original": ["Harry Potter and the Order of the Phoenix"]
+                    }
+                  }
+                },
+                {
+                  "numberInSeries": "6",
+                  "work": {
+                    "workId": "work-of:870970-basis:25807995",
+                    "titles": {
+                      "main": ["Harry Potter og halvblodsprinsen"],
+                      "full": ["Harry Potter og halvblodsprinsen"],
+                      "original": ["Harry Potter and the half-blood prince"]
+                    }
+                  }
+                },
+                {
+                  "numberInSeries": "6",
+                  "work": {
+                    "workId": "work-of:870970-basis:27267912",
+                    "titles": {
+                      "main": ["Harry Potter og dødsregalierne"],
+                      "full": ["Harry Potter og dødsregalierne"],
+                      "original": ["Harry Potter and the deathly hallows"]
+                    }
+                  }
+                },
+                {
+                  "numberInSeries": "6",
+                  "work": {
+                    "workId": "work-of:870970-basis:52646251",
+                    "titles": {
+                      "main": ["Harry Potter og det forbandede barn"],
+                      "full": [
+                        "Harry Potter og det forbandede barn : del et & to"
+                      ],
+                      "original": ["Harry Potter and the cursed child"]
+                    }
+                  }
+                }
+              ]
             }
           ],
           "workYear": {
@@ -3499,12 +3484,10 @@
                 "audience": {
                   "generalAudience": []
                 },
-                "physicalDescriptions": [
-                  {
-                    "numberOfPages": null,
-                    "playingTime": "21 t., 30 min."
-                  }
-                ],
+                "physicalDescriptions": {
+                  "numberOfPages": null,
+                  "playingTime": "21 t., 30 min."
+                },
                 "accessTypes": [
                   {
                     "code": "PHYSICAL"
@@ -3574,12 +3557,10 @@
                 "audience": {
                   "generalAudience": []
                 },
-                "physicalDescriptions": [
-                  {
-                    "numberOfPages": 607,
-                    "playingTime": null
-                  }
-                ],
+                "physicalDescriptions": {
+                  "numberOfPages": 607,
+                  "playingTime": null
+                },
                 "accessTypes": [
                   {
                     "code": "PHYSICAL"
@@ -3649,7 +3630,7 @@
                 "audience": {
                   "generalAudience": []
                 },
-                "physicalDescriptions": [],
+                "physicalDescriptions": {},
                 "accessTypes": [
                   {
                     "code": "ONLINE"
@@ -3721,12 +3702,10 @@
                 "audience": {
                   "generalAudience": []
                 },
-                "physicalDescriptions": [
-                  {
-                    "numberOfPages": 16,
-                    "playingTime": null
-                  }
-                ],
+                "physicalDescriptions": {
+                  "numberOfPages": 16,
+                  "playingTime": null
+                },
                 "accessTypes": [
                   {
                     "code": "PHYSICAL"
@@ -3803,12 +3782,10 @@
                 "audience": {
                   "generalAudience": []
                 },
-                "physicalDescriptions": [
-                  {
-                    "numberOfPages": null,
-                    "playingTime": "22 t., 52 min."
-                  }
-                ],
+                "physicalDescriptions": {
+                  "numberOfPages": null,
+                  "playingTime": "22 t., 52 min."
+                },
                 "accessTypes": [
                   {
                     "code": "PHYSICAL"
@@ -3875,12 +3852,10 @@
                 "audience": {
                   "generalAudience": []
                 },
-                "physicalDescriptions": [
-                  {
-                    "numberOfPages": 607,
-                    "playingTime": null
-                  }
-                ],
+                "physicalDescriptions": {
+                  "numberOfPages": 607,
+                  "playingTime": null
+                },
                 "accessTypes": [
                   {
                     "code": "PHYSICAL"
@@ -3951,12 +3926,10 @@
                 "audience": {
                   "generalAudience": []
                 },
-                "physicalDescriptions": [
-                  {
-                    "numberOfPages": 607,
-                    "playingTime": null
-                  }
-                ],
+                "physicalDescriptions": {
+                  "numberOfPages": 607,
+                  "playingTime": null
+                },
                 "accessTypes": [
                   {
                     "code": "PHYSICAL"
@@ -4027,12 +4000,10 @@
                 "audience": {
                   "generalAudience": []
                 },
-                "physicalDescriptions": [
-                  {
-                    "numberOfPages": null,
-                    "playingTime": "19 t., 50 min."
-                  }
-                ],
+                "physicalDescriptions": {
+                  "numberOfPages": null,
+                  "playingTime": "19 t., 50 min."
+                },
                 "accessTypes": [
                   {
                     "code": "PHYSICAL"
@@ -4103,12 +4074,10 @@
                 "audience": {
                   "generalAudience": []
                 },
-                "physicalDescriptions": [
-                  {
-                    "numberOfPages": 607,
-                    "playingTime": null
-                  }
-                ],
+                "physicalDescriptions": {
+                  "numberOfPages": 607,
+                  "playingTime": null
+                },
                 "accessTypes": [
                   {
                     "code": "PHYSICAL"
@@ -4179,12 +4148,10 @@
                 "audience": {
                   "generalAudience": []
                 },
-                "physicalDescriptions": [
-                  {
-                    "numberOfPages": 557,
-                    "playingTime": null
-                  }
-                ],
+                "physicalDescriptions": {
+                  "numberOfPages": 557,
+                  "playingTime": null
+                },
                 "accessTypes": [
                   {
                     "code": "PHYSICAL"
@@ -4255,12 +4222,10 @@
                 "audience": {
                   "generalAudience": []
                 },
-                "physicalDescriptions": [
-                  {
-                    "numberOfPages": 557,
-                    "playingTime": null
-                  }
-                ],
+                "physicalDescriptions": {
+                  "numberOfPages": 557,
+                  "playingTime": null
+                },
                 "accessTypes": [
                   {
                     "code": "PHYSICAL"
@@ -4332,12 +4297,10 @@
               "audience": {
                 "generalAudience": []
               },
-              "physicalDescriptions": [
-                {
-                  "numberOfPages": 557,
-                  "playingTime": null
-                }
-              ],
+              "physicalDescriptions": {
+                "numberOfPages": 557,
+                "playingTime": null
+              },
               "accessTypes": [
                 {
                   "code": "PHYSICAL"
@@ -4408,12 +4371,10 @@
               "audience": {
                 "generalAudience": []
               },
-              "physicalDescriptions": [
-                {
-                  "numberOfPages": 557,
-                  "playingTime": null
-                }
-              ],
+              "physicalDescriptions": {
+                "numberOfPages": 557,
+                "playingTime": null
+              },
               "accessTypes": [
                 {
                   "code": "PHYSICAL"
@@ -4454,78 +4415,100 @@
             {
               "title": "Harry Potter (bøger)",
               "isPopular": true,
-              "numberInSeries": {
-                "display": "2",
-                "number": [2]
-              },
               "readThisFirst": null,
-              "readThisWhenever": null
-            }
-          ],
-          "seriesMembers": [
-            {
-              "workId": "work-of:870970-basis:22629344",
-              "titles": {
-                "main": ["Harry Potter og de vises sten"],
-                "full": ["Harry Potter og de vises sten"],
-                "original": ["Harry Potter and the philosopher's stone"]
-              }
-            },
-            {
-              "workId": "work-of:870970-basis:22677780",
-              "titles": {
-                "main": ["Harry Potter og Hemmelighedernes Kammer"],
-                "full": ["Harry Potter og Hemmelighedernes Kammer"],
-                "original": ["Harry Potter and the Chamber of Secrets"]
-              }
-            },
-            {
-              "workId": "work-of:870970-basis:22995154",
-              "titles": {
-                "main": ["Harry Potter og fangen fra Azkaban"],
-                "full": ["Harry Potter og fangen fra Azkaban"],
-                "original": ["Harry Potter and the prisoner of Azkaban"]
-              }
-            },
-            {
-              "workId": "work-of:870970-basis:23540703",
-              "titles": {
-                "main": ["Harry Potter og Flammernes Pokal"],
-                "full": ["Harry Potter og Flammernes Pokal"],
-                "original": ["Harry Potter and the goblet of fire"]
-              }
-            },
-            {
-              "workId": "work-of:870970-basis:25245784",
-              "titles": {
-                "main": ["Harry Potter og Fønixordenen"],
-                "full": ["Harry Potter og Fønixordenen"],
-                "original": ["Harry Potter and the Order of the Phoenix"]
-              }
-            },
-            {
-              "workId": "work-of:870970-basis:25807995",
-              "titles": {
-                "main": ["Harry Potter og halvblodsprinsen"],
-                "full": ["Harry Potter og halvblodsprinsen"],
-                "original": ["Harry Potter and the half-blood prince"]
-              }
-            },
-            {
-              "workId": "work-of:870970-basis:27267912",
-              "titles": {
-                "main": ["Harry Potter og dødsregalierne"],
-                "full": ["Harry Potter og dødsregalierne"],
-                "original": ["Harry Potter and the deathly hallows"]
-              }
-            },
-            {
-              "workId": "work-of:870970-basis:52646251",
-              "titles": {
-                "main": ["Harry Potter og det forbandede barn"],
-                "full": ["Harry Potter og det forbandede barn : del et & to"],
-                "original": ["Harry Potter and the cursed child"]
-              }
+              "readThisWhenever": null,
+              "members": [
+                {
+                  "numberInSeries": "2",
+                  "work": {
+                    "workId": "work-of:870970-basis:22629344",
+                    "titles": {
+                      "main": ["Harry Potter og de vises sten"],
+                      "full": ["Harry Potter og de vises sten"],
+                      "original": ["Harry Potter and the philosopher's stone"]
+                    }
+                  }
+                },
+                {
+                  "numberInSeries": "2",
+                  "work": {
+                    "workId": "work-of:870970-basis:22677780",
+                    "titles": {
+                      "main": ["Harry Potter og Hemmelighedernes Kammer"],
+                      "full": ["Harry Potter og Hemmelighedernes Kammer"],
+                      "original": ["Harry Potter and the Chamber of Secrets"]
+                    }
+                  }
+                },
+                {
+                  "numberInSeries": "2",
+                  "work": {
+                    "workId": "work-of:870970-basis:22995154",
+                    "titles": {
+                      "main": ["Harry Potter og fangen fra Azkaban"],
+                      "full": ["Harry Potter og fangen fra Azkaban"],
+                      "original": ["Harry Potter and the prisoner of Azkaban"]
+                    }
+                  }
+                },
+                {
+                  "numberInSeries": "2",
+                  "work": {
+                    "workId": "work-of:870970-basis:23540703",
+                    "titles": {
+                      "main": ["Harry Potter og Flammernes Pokal"],
+                      "full": ["Harry Potter og Flammernes Pokal"],
+                      "original": ["Harry Potter and the goblet of fire"]
+                    }
+                  }
+                },
+                {
+                  "numberInSeries": "2",
+                  "work": {
+                    "workId": "work-of:870970-basis:25245784",
+                    "titles": {
+                      "main": ["Harry Potter og Fønixordenen"],
+                      "full": ["Harry Potter og Fønixordenen"],
+                      "original": ["Harry Potter and the Order of the Phoenix"]
+                    }
+                  }
+                },
+                {
+                  "numberInSeries": "2",
+                  "work": {
+                    "workId": "work-of:870970-basis:25807995",
+                    "titles": {
+                      "main": ["Harry Potter og halvblodsprinsen"],
+                      "full": ["Harry Potter og halvblodsprinsen"],
+                      "original": ["Harry Potter and the half-blood prince"]
+                    }
+                  }
+                },
+                {
+                  "numberInSeries": "2",
+                  "work": {
+                    "workId": "work-of:870970-basis:27267912",
+                    "titles": {
+                      "main": ["Harry Potter og dødsregalierne"],
+                      "full": ["Harry Potter og dødsregalierne"],
+                      "original": ["Harry Potter and the deathly hallows"]
+                    }
+                  }
+                },
+                {
+                  "numberInSeries": "2",
+                  "work": {
+                    "workId": "work-of:870970-basis:52646251",
+                    "titles": {
+                      "main": ["Harry Potter og det forbandede barn"],
+                      "full": [
+                        "Harry Potter og det forbandede barn : del et & to"
+                      ],
+                      "original": ["Harry Potter and the cursed child"]
+                    }
+                  }
+                }
+              ]
             }
           ],
           "workYear": {
@@ -4587,12 +4570,10 @@
                 "audience": {
                   "generalAudience": []
                 },
-                "physicalDescriptions": [
-                  {
-                    "numberOfPages": 338,
-                    "playingTime": null
-                  }
-                ],
+                "physicalDescriptions": {
+                  "numberOfPages": 338,
+                  "playingTime": null
+                },
                 "accessTypes": [
                   {
                     "code": "PHYSICAL"
@@ -4665,12 +4646,10 @@
                 "audience": {
                   "generalAudience": []
                 },
-                "physicalDescriptions": [
-                  {
-                    "numberOfPages": 338,
-                    "playingTime": null
-                  }
-                ],
+                "physicalDescriptions": {
+                  "numberOfPages": 338,
+                  "playingTime": null
+                },
                 "accessTypes": [
                   {
                     "code": "PHYSICAL"
@@ -4743,12 +4722,10 @@
                 "audience": {
                   "generalAudience": []
                 },
-                "physicalDescriptions": [
-                  {
-                    "numberOfPages": null,
-                    "playingTime": "11 t., 14 min."
-                  }
-                ],
+                "physicalDescriptions": {
+                  "numberOfPages": null,
+                  "playingTime": "11 t., 14 min."
+                },
                 "accessTypes": [
                   {
                     "code": "PHYSICAL"
@@ -4815,12 +4792,10 @@
                 "audience": {
                   "generalAudience": []
                 },
-                "physicalDescriptions": [
-                  {
-                    "numberOfPages": 338,
-                    "playingTime": null
-                  }
-                ],
+                "physicalDescriptions": {
+                  "numberOfPages": 338,
+                  "playingTime": null
+                },
                 "accessTypes": [
                   {
                     "code": "PHYSICAL"
@@ -4888,12 +4863,10 @@
                 "audience": {
                   "generalAudience": []
                 },
-                "physicalDescriptions": [
-                  {
-                    "numberOfPages": 9,
-                    "playingTime": null
-                  }
-                ],
+                "physicalDescriptions": {
+                  "numberOfPages": 9,
+                  "playingTime": null
+                },
                 "accessTypes": [
                   {
                     "code": "PHYSICAL"
@@ -4966,12 +4939,10 @@
                 "audience": {
                   "generalAudience": []
                 },
-                "physicalDescriptions": [
-                  {
-                    "numberOfPages": null,
-                    "playingTime": null
-                  }
-                ],
+                "physicalDescriptions": {
+                  "numberOfPages": null,
+                  "playingTime": null
+                },
                 "accessTypes": [
                   {
                     "code": "PHYSICAL"
@@ -5048,12 +5019,10 @@
                 "audience": {
                   "generalAudience": []
                 },
-                "physicalDescriptions": [
-                  {
-                    "numberOfPages": null,
-                    "playingTime": "11 t., 57 min."
-                  }
-                ],
+                "physicalDescriptions": {
+                  "numberOfPages": null,
+                  "playingTime": "11 t., 57 min."
+                },
                 "accessTypes": [
                   {
                     "code": "PHYSICAL"
@@ -5120,12 +5089,10 @@
                 "audience": {
                   "generalAudience": []
                 },
-                "physicalDescriptions": [
-                  {
-                    "numberOfPages": 338,
-                    "playingTime": null
-                  }
-                ],
+                "physicalDescriptions": {
+                  "numberOfPages": 338,
+                  "playingTime": null
+                },
                 "accessTypes": [
                   {
                     "code": "PHYSICAL"
@@ -5198,12 +5165,10 @@
                 "audience": {
                   "generalAudience": []
                 },
-                "physicalDescriptions": [
-                  {
-                    "numberOfPages": null,
-                    "playingTime": "11 t., 3 min."
-                  }
-                ],
+                "physicalDescriptions": {
+                  "numberOfPages": null,
+                  "playingTime": "11 t., 3 min."
+                },
                 "accessTypes": [
                   {
                     "code": "PHYSICAL"
@@ -5273,12 +5238,10 @@
                 "audience": {
                   "generalAudience": []
                 },
-                "physicalDescriptions": [
-                  {
-                    "numberOfPages": 338,
-                    "playingTime": null
-                  }
-                ],
+                "physicalDescriptions": {
+                  "numberOfPages": 338,
+                  "playingTime": null
+                },
                 "accessTypes": [
                   {
                     "code": "PHYSICAL"
@@ -5349,12 +5312,10 @@
                 "audience": {
                   "generalAudience": []
                 },
-                "physicalDescriptions": [
-                  {
-                    "numberOfPages": null,
-                    "playingTime": "11 t., 3 min."
-                  }
-                ],
+                "physicalDescriptions": {
+                  "numberOfPages": null,
+                  "playingTime": "11 t., 3 min."
+                },
                 "accessTypes": [
                   {
                     "code": "PHYSICAL"
@@ -5425,12 +5386,10 @@
                 "audience": {
                   "generalAudience": []
                 },
-                "physicalDescriptions": [
-                  {
-                    "numberOfPages": 338,
-                    "playingTime": null
-                  }
-                ],
+                "physicalDescriptions": {
+                  "numberOfPages": 338,
+                  "playingTime": null
+                },
                 "accessTypes": [
                   {
                     "code": "PHYSICAL"
@@ -5501,12 +5460,10 @@
                 "audience": {
                   "generalAudience": []
                 },
-                "physicalDescriptions": [
-                  {
-                    "numberOfPages": 396,
-                    "playingTime": null
-                  }
-                ],
+                "physicalDescriptions": {
+                  "numberOfPages": 396,
+                  "playingTime": null
+                },
                 "accessTypes": [
                   {
                     "code": "PHYSICAL"
@@ -5582,12 +5539,10 @@
                 "audience": {
                   "generalAudience": []
                 },
-                "physicalDescriptions": [
-                  {
-                    "numberOfPages": 259,
-                    "playingTime": null
-                  }
-                ],
+                "physicalDescriptions": {
+                  "numberOfPages": 259,
+                  "playingTime": null
+                },
                 "accessTypes": [
                   {
                     "code": "PHYSICAL"
@@ -5658,12 +5613,10 @@
                 "audience": {
                   "generalAudience": []
                 },
-                "physicalDescriptions": [
-                  {
-                    "numberOfPages": 396,
-                    "playingTime": null
-                  }
-                ],
+                "physicalDescriptions": {
+                  "numberOfPages": 396,
+                  "playingTime": null
+                },
                 "accessTypes": [
                   {
                     "code": "PHYSICAL"
@@ -5739,12 +5692,10 @@
                 "audience": {
                   "generalAudience": []
                 },
-                "physicalDescriptions": [
-                  {
-                    "numberOfPages": 384,
-                    "playingTime": null
-                  }
-                ],
+                "physicalDescriptions": {
+                  "numberOfPages": 384,
+                  "playingTime": null
+                },
                 "accessTypes": [
                   {
                     "code": "PHYSICAL"
@@ -5821,12 +5772,10 @@
               "audience": {
                 "generalAudience": []
               },
-              "physicalDescriptions": [
-                {
-                  "numberOfPages": 384,
-                  "playingTime": null
-                }
-              ],
+              "physicalDescriptions": {
+                "numberOfPages": 384,
+                "playingTime": null
+              },
               "accessTypes": [
                 {
                   "code": "PHYSICAL"
@@ -5902,12 +5851,10 @@
               "audience": {
                 "generalAudience": []
               },
-              "physicalDescriptions": [
-                {
-                  "numberOfPages": 384,
-                  "playingTime": null
-                }
-              ],
+              "physicalDescriptions": {
+                "numberOfPages": 384,
+                "playingTime": null
+              },
               "accessTypes": [
                 {
                   "code": "PHYSICAL"
