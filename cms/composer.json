@@ -43,7 +43,7 @@
                 "version": "2024.39.0",
                 "type": "drupal-library",
                 "dist": {
-                    "url": "https://github.com/danskernesdigitalebibliotek/dpl-react/releases/download/2024.39.0/dist-2024-39-0-ffbef7fb6bc88407e932f9fb981278fac9d5bf45.zip",
+                    "url": "https://github.com/danskernesdigitalebibliotek/dpl-react/releases/download/2024.39.0/dist-2024-39-0-67b544aa0a75abf24d4d152fdd5f9c80082eceb0.zip",
                     "type": "zip"
                 },
                 "require": {
@@ -91,7 +91,7 @@
         "cweagans/composer-patches": "1.7.3",
         "danskernesdigitalebibliotek/cms-api": "*",
         "danskernesdigitalebibliotek/dpl-design-system": "^2024.39",
-        "danskernesdigitalebibliotek/dpl-react": "^2024.39",
+        "danskernesdigitalebibliotek/dpl-react": "2024.39.0",
         "danskernesdigitalebibliotek/fbs-client": "*",
         "dealerdirect/phpcodesniffer-composer-installer": "^1.0.0",
         "deoliveiralucas/array-keys-case-transform": "^1.1",
