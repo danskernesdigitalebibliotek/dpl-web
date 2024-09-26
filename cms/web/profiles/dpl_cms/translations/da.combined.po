@@ -7,8 +7,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2024-09-24 13:58+0200\n"
-"PO-Revision-Date: 2024-09-24 13:58+0200\n"
+"POT-Creation-Date: 2024-09-25 12:17+0200\n"
+"PO-Revision-Date: 2024-09-25 12:17+0200\n"
 "Last-Translator: NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
 "MIME-Version: 1.0\n"
@@ -13495,8 +13495,8 @@ msgid "Whether this event recurs based on weekdays, or days of the month"
 msgstr ""
 "Om denne begivenhed gentager sig baseret på ugedage eller dage i måneden"
 
-msgid "Which occurrence of the day(s) of the week should event take place"
-msgstr ""
+msgid "Which occurence of the day(s) of the week should event take place"
+msgstr "Hvilken ugedag(e) skal begivenheden finde sted på"
 
 msgid "Day of Month"
 msgstr "Dag i måned"
@@ -13726,8 +13726,8 @@ msgstr ""
 "Sletning af arrangement-serietypen vil også slette den tilsvarende "
 "deltagertype."
 
-msgid "Successfully deleted @type: @label."
-msgstr ""
+msgid "Succesfully deleted @type: @label."
+msgstr "Succesfuldt slettet @type: @label."
 
 msgid ""
 "eventinstance %title has been reverted to the revision from %revision-date."
@@ -13939,10 +13939,11 @@ msgid "Confirm Date Changes"
 msgstr "Bekræft ændring af dato/tidspunkt"
 
 msgid ""
-"Recurrence configuration has been changed. New instances may be created, and "
-"now-unrelevant instances will be deleted, along with any custom changes made "
-"to these instances. This action cannot be undone."
+"Recurrence configuration has been changed, as a result all instances will be "
+"removed and recreated. This action cannot be undone."
 msgstr ""
+"Gentagelseskonfigurationen er ændret, som resultat vil alle instanser blive "
+"fjernet og genoprettet. Denne handling kan ikke fortrydes."
 
 msgid "Stored"
 msgstr "Opbevaret"
@@ -15192,9 +15193,6 @@ msgstr "Antal deltagere i en arrangementsinstans."
 msgid "The number of waitlisted registrants for an event instance."
 msgstr "Antal deltagere på venteliste til en arrangementsinstans."
 
-msgid "The type of registration allowed for the series."
-msgstr ""
-
 msgid "Event Registration Reminders"
 msgstr "Påmindelse om registrering"
 
@@ -15292,6 +15290,12 @@ msgstr "Arrangementinstans enhed"
 msgid "Event series entity"
 msgstr "Arrangementserie enhed"
 
+msgid "Recurring event series scheduler plugin"
+msgstr "Planlægger-plugin for tilbagevendende arrangementserie"
+
+msgid "Provides support for scheduling Recurring event series entities"
+msgstr "Leverer support for planlægning af tilbagevendende arrangementsenheder"
+
 msgid "Daily recurring date widget"
 msgstr "Dagligt tilbagevendende dato widget"
 
@@ -15382,6 +15386,9 @@ msgstr "Widget for påmindelse om registrering"
 
 msgid "Stores an event registration reminders configuration"
 msgstr "Gemmer en konfiguration af påmindelser om begivenhedsregistrering"
+
+msgid "Revisions"
+msgstr "Versioner"
 
 msgid "Event Series Settings"
 msgstr "Indstillinger for arrangementsserie"
