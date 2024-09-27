@@ -1,8 +1,9 @@
 import React from "react";
 
+import { Button } from "@/app/components/shared/button/Button";
 import DarkModeToggle from "@/app/components/shared/darkModeToggle/DarkModeToggle";
 import Icon from "@/app/components/shared/icon/Icon";
-import { Button } from "../../shared/button/Button";
+import { SearchInput } from "@/app/components/shared/searchInput/SearchInput";
 
 function Header() {
   return (
@@ -11,20 +12,28 @@ function Header() {
         <p>Biblioterernes ebøger og lyderbøger</p>
       </div>
       <div className="h-navigation-height grid grid-cols-3 items-center content-container ">
-        <Icon className="h-[40px]" name="logo" />
-        <div className="flex justify-center">
+        <div className="flex-0">
+          <Icon className="h-[40px]" name="logo" />
+        </div>
+        <div className="flex justify-center flex-1">
           <DarkModeToggle />
         </div>
-        <div className="flex justify-end space-x-4">
+        <div className="flex justify-end space-x-4 flex-0">
           <Button variant="icon">
-            <Icon name="question-mark" />
+            <Icon className="w-[24px] h-[24px]" name="question-mark" />
           </Button>
           <Button variant="icon">
-            <Icon name="search" />
+            <Icon className="w-[24px] h-[24px]" name="search" />
           </Button>
         </div>
       </div>
-      <div className="bg-slate-500 h-navigation-search-height"></div>
+      <div className=" h-navigation-search-height">
+        <div className="content-container">
+          <div className="flex items-center h-full w-full">
+            <SearchInput />
+          </div>
+        </div>
+      </div>
     </div>
   );
 }

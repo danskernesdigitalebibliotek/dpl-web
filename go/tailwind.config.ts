@@ -19,7 +19,7 @@ const config: Config = {
       full: "9999px",
       lg: "calc(var(--base-radius) + 10px)",
       md: "calc(var(--base-radius) + 5px)",
-      base: "var(--base-radius)",
+      base: "var(--base-radius)", // 15px
       sm: "calc(var(--base-radius) - 5px)",
       input: "var(--input-radius)"
     },
@@ -47,6 +47,8 @@ const config: Config = {
         },
         foreground: "hsl(var(--foreground))",
         border: "hsl(var(--border))",
+
+        // shadcn colors
         card: {
           DEFAULT: "hsl(var(--card))",
           foreground: "hsl(var(--card-foreground))"
@@ -109,11 +111,6 @@ const config: Config = {
         "grid-column": "var(--grid-column)",
         "grid-column-half": "calc(var(--grid-column)/2)",
         "grid-column-quarter": "calc(var(--grid-column)/4)"
-      },
-      borderRadius: {
-        lg: "var(--radius)",
-        md: "calc(var(--radius) - 2px)",
-        sm: "calc(var(--radius) - 4px)"
       },
       boxShadow: {
         button: "2px 2px 0 0px hsl(var(--foreground))"

@@ -28,9 +28,9 @@
   --grid-column-2: calc(var(--grid-column) * 2 + var(--grid-gap-x) * 1);
 
   /* NAVIGATION */
-  --navigation-top-height: 2rem; /* 32px */
-  --navigation-height: 5rem; /* 80px */
-  --navigation-search-height: 6.25rem; /* 100px */
+  --navigation-top-height: 1.375rem; /* 22px */
+  --navigation-height: 3.5rem; /* 56px */
+  --navigation-search-height: 4rem; /* 64px */
   --navigation-combined-height: calc(
     var(--navigation-height) + var(--navigation-search-height) +
       var(--navigation-top-height)
@@ -88,7 +88,9 @@
   --content-blue-300: 201, 67%, 29%;
 
   /* DYNAMIC COLORS */
+  --background: var(--beige);
   --background-foreground: var(--beige-dimmed);
+  --foreground: var(--black);
 
   /* TRANSITION DURATIONS */
   --dark-mode-transition: 1000ms;
@@ -101,23 +103,23 @@
     --grid-gap-x: 0.625rem; /* 10px */
 
     /* NAVIGATION */
-    --navigation-top-height: 1.375rem; /* 22px */
-    --navigation-height: 3.5rem; /* 56px */
-    --navigation-search-height: 4rem; /* 64px */
+    --navigation-top-height: 2rem; /* 32px */
+    --navigation-height: 5rem; /* 80px */
+    --navigation-search-height: 6.25rem; /* 100px */
   }
 }
 
 @media (prefers-color-scheme: dark) {
   body:not(.user-interacted) {
-    --background: var(--blue);
-    --background-foreground: var(--blue-light);
+    --background: var(--blue-light);
+    --background-foreground: var(--blue);
     --foreground: var(--beige);
   }
 }
 
 .dark-mode {
-  --background: var(--blue);
-  --background-foreground: var(--blue-light);
+  --background: var(--blue-light);
+  --background-foreground: var(--blue);
   --foreground: var(--beige);
 }
 
@@ -144,10 +146,9 @@ body > * {
   }
 }
 
+/* shadcn variables */
 @layer base {
   :root {
-    --background: 0 0% 100%;
-    --foreground: 0 0% 3.9%;
     --card: 0 0% 100%;
     --card-foreground: 0 0% 3.9%;
     --popover: 0 0% 100%;
