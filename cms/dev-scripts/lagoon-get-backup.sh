@@ -2,17 +2,17 @@
 # Restore and download files from a Lagoon backup.
 set -eo pipefail
 
-LAGOON_ENVIRONMENT="main"
+LAGOON_ENVIRONMENT="${LAGOON_ENVIRONMENT:-main}"
 
 if [[ -z "${LAGOON_PROJECT}" || -z "${BACKUP_TYPE}" || -z "${BACKUP_DESTINATION}" ]]; then
 	echo "usage: LAGOON_PROJECT=<LAGOON_PROJECT> BACKUP_TYPE=<BACKUP_TYPE> BACKUP_DESTINATION=<BACKUP_DESTINATION> $0" >&2
 	exit 1
 fi
 
-BACKUPS=$(lagoon list backups -p "${LAGOON_PROJECT}" -e ${LAGOON_ENVIRONMENT} --output-json);
+BACKUPS=$(lagoon list backups -p "${LAGOON_PROJECT}" -e "${LAGOON_ENVIRONMENT}" --output-json);
 BACKUP_ID=$(echo "$BACKUPS" | jq -r ".data[] | select(.source == \"${BACKUP_TYPE}\") | .backupid" | head -n 1);
 BACKUP_URL="Error";
-echo -e "\nRetrieving ${BACKUP_TYPE} backup from ${LAGOON_PROJECT}\n\n";
+echo -e "\nRetrieving ${BACKUP_TYPE} backup from ${LAGOON_ENVIRONMENT} environment of ${LAGOON_PROJECT} project \n\n";
 # Wait a while we wait for the backup to become available.
 # It must be retrieved before it can be downloaded.
 while [[ $BACKUP_URL == "Error"* ]]; do
