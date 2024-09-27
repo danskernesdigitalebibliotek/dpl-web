@@ -10,7 +10,7 @@ function DarkModeToggle() {
 
   return (
     <button onClick={toggleTheme}>
-      <Icon name="dark-mode-toggle" />
+      <Icon className="h-[40px]" name="dark-mode-toggle" />
     </button>
   );
 }
