@@ -9,6 +9,5 @@
 # fi
 
 cd /app
-npm run start
-
+yarn build && yarn start
 exit 0;
