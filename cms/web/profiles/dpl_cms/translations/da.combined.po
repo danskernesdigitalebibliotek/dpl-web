@@ -26120,7 +26120,7 @@ msgstr ""
 #: 
 msgctxt "views.view.editorial_search:display:default:display_options:title"
 msgid "Search"
-msgstr ""
+msgstr "Søg"
 
 #: 
 msgctxt "views.view.editorial_search:display:default:display_options:pager:options:expose:items_per_page_label"
@@ -26219,7 +26219,7 @@ msgstr "Din søgning gav desværre ingen resultater."
 #: 
 msgctxt "views.view.articles:display:default:display_options:filters:search_api_fulltext:expose:label"
 msgid "Search"
-msgstr ""
+msgstr "Søg"
 
 #: 
 msgctxt "views.view.articles:display:default:display_options:filters:search_api_fulltext:expose:placeholder"
@@ -26234,7 +26234,7 @@ msgstr "Din søgning gav desværre ingen resultater."
 #: 
 msgctxt "views.view.events:display:default:display_options:filters:search_api_fulltext:expose:label"
 msgid "Search"
-msgstr ""
+msgstr "Søg"
 
 #: 
 msgctxt "views.view.events:display:default:display_options:filters:search_api_fulltext:expose:placeholder"
