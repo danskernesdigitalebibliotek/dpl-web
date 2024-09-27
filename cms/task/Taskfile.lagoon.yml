@@ -16,12 +16,15 @@ tasks:
     vars:
       LAGOON_ENVIRONMENT: main
     cmds:
-      - ./dev-scripts/lagoon-get-backup.sh ${LAGOON_PROJECT} mariadb {{.DIR_RESTORE_DATABASE}}/${LAGOON_PROJECT}-backup.tar.gz;
+      - ./dev-scripts/lagoon-get-backup.sh
       -  cd ./restore/database/ && tar -xvzf ${LAGOON_PROJECT}-backup.tar.gz;
       - task dev:restore:database
     preconditions:
       - sh: "[ -v LAGOON_PROJECT ]"
         msg: Please provide a LAGOON_PROJECT environment variable with the name of the Lagoon project to use
+    env:
+      BACKUP_TYPE: "mariadb"
+      BACKUP_DESTINATION: "{{.DIR_RESTORE_DATABASE}}/{{.LAGOON_PROJECT}}-backup.tar.gz"
 
   backup:restore:files:
     desc: Restore the latest backup of the files from a Lagoon project
@@ -29,11 +32,14 @@ tasks:
     vars:
       LAGOON_ENVIRONMENT: main
     cmds:
-      - ./dev-scripts/lagoon-get-backup.sh ${LAGOON_PROJECT} nginx {{.DIR_RESTORE_FILES}}/${LAGOON_PROJECT}-backup.tar.gz;
+      - ./dev-scripts/lagoon-get-backup.sh
       - task dev:restore:files
     preconditions:
       - sh: "[ -v LAGOON_PROJECT ]"
         msg: Please provide a LAGOON_PROJECT environment variable with the name of the Lagoon project to use
+    env:
+      BACKUP_TYPE: "nginx"
+      BACKUP_DESTINATION: "{{.DIR_RESTORE_FILES}}/{{.LAGOON_PROJECT}}-backup.tar.gz"
 
   drush:uli:
     desc: Get an Drupal one-time user login link for a Lagoon environment through Drush
