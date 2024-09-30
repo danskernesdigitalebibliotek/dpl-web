@@ -4,11 +4,11 @@ import Label from "../label/Label";
 
 export interface TextareaProps {
   id: string;
+  name: string;
   label: string;
   rows?: number;
   cols?: number;
   className?: string;
-  labelClassName?: string;
   placeholder?: string;
   onChange?: (event: ChangeEvent<HTMLTextAreaElement>) => void;
   defaultValue?: string;
@@ -17,11 +17,11 @@ export interface TextareaProps {
 
 const Textarea: FC<TextareaProps> = ({
   id,
+  name,
   label,
   rows = 8,
   cols = 80,
   className,
-  labelClassName,
   placeholder,
   onChange,
   defaultValue,
@@ -29,14 +29,13 @@ const Textarea: FC<TextareaProps> = ({
 }) => {
   return (
     <div className="dpl-input">
-      <Label id={id} className={labelClassName}>
-        {label}
-      </Label>
+      <Label id={id}>{label}</Label>
       <div>
         <textarea
           data-cy={dataCy}
           className={clsx(className)}
           id={id}
+          name={name}
           rows={rows}
           cols={cols}
           placeholder={placeholder}

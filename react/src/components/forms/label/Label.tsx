@@ -5,13 +5,11 @@ export interface LabelProps {
   id: string;
   children: string;
   className?: string;
-  required?: boolean;
 }
 
-const Label: FC<LabelProps> = ({ id, className, children, required }) => (
+const Label: FC<LabelProps> = ({ id, className, children }) => (
   <label htmlFor={id} className={clsx(className)}>
     {children}
-    {required && <span> *</span>}
   </label>
 );
 
