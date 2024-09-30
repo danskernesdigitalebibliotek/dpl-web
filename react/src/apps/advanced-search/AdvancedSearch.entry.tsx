@@ -7,9 +7,6 @@ import { withUrls } from "../../core/utils/url";
 import GlobalUrlEntryPropsInterface from "../../core/utils/types/global-url-props";
 import AdvancedSearch from "./AdvancedSearch";
 import { GlobalEntryTextProps } from "../../core/storybook/globalTextArgs";
-import { MappArgs } from "../../core/storybook/mappArgs";
-import withPageStatistics from "../../core/statistics/withPageStatistics";
-import { AdvancedSortSelectArgs } from "../../core/storybook/AdvancedSortSelect";
 
 interface AdvancedSearchEntryTextProps {
   byAuthorText: string;
@@ -69,24 +66,9 @@ interface AdvancedSearchEntryTextProps {
   advancedSearchFilterNonFictionText: string;
   advancedSearchFilterHoldingStatusText: string;
   advancedSearchInputLabelText: string;
-  advancedSearchInputPlaceholderText: string;
   advancedSearchRemoveRowText: string;
   advancedSearchFilterLocationText: string;
-  advancedSearchFilterLocationDescriptionText: string;
   advancedSearchFilterSublocationText: string;
-  advancedSearchFilterSublocationDescriptionText: string;
-  advancedSearchFilterBranchText: string;
-  advancedSearchFilterBranchDescriptionText: string;
-  advancedSearchFilterDepartmentText: string;
-  advancedSearchFilterDepartmentDescriptionText: string;
-  advancedSearchFirstAccessionDateText: string;
-  advancedSearchFirstAccessionDateOperatorText: string;
-  advancedSearchFilterLaterThanText: string;
-  advancedSearchFilterExactDateText: string;
-  advancedSearchFilterEarlierThanText: string;
-  advancedSearchFirstAccessionDateDescriptionText: string;
-  advancedSearchFirstAccessionDateSpecifyDateText: string;
-  cqlSearchExternalHelpLinkText: string;
 }
 
 interface AdvancedSearchEntryConfigProps {
@@ -100,12 +82,9 @@ export interface AdvancedSearchEntryProps
   extends GlobalUrlEntryPropsInterface,
     GlobalEntryTextProps,
     AdvancedSearchEntryConfigProps,
-    AdvancedSearchEntryTextProps,
-    MappArgs,
-    AdvancedSortSelectArgs {
-  pageSizeDesktop: number;
-  pageSizeMobile: number;
-  showingMaterialsText: string;
+    AdvancedSearchEntryTextProps {
+  pageSizeDesktop?: number;
+  pageSizeMobile?: number;
 }
 
 const AdvancedSearchEntry: React.FC<AdvancedSearchEntryProps> = ({
@@ -129,6 +108,4 @@ const AdvancedSearchEntry: React.FC<AdvancedSearchEntryProps> = ({
   );
 };
 
-export default withConfig(
-  withUrls(withText(withPageStatistics(AdvancedSearchEntry)))
-);
+export default withConfig(withUrls(withText(AdvancedSearchEntry)));
