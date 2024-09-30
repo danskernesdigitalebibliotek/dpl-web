@@ -1,0 +1,52 @@
+# This is a go-task file for various developer tasks
+# e.g. building docker images and setting up local development.
+# You can read about the Task files here: https://taskfile.dev.
+version: "3"
+
+dotenv: [".task.env"]
+
+vars:
+  # Docker image registry.
+  # Eg.
+  #   - ghcr.io/danskernesdigitalebibliotek
+  #   - docker.io/someregistry
+  RELEASE_IMAGE_REGISTRY: '{{.RELEASE_IMAGE_REGISTRY | default "ghcr.io/danskernesdigitalebibliotek"}}'
+  # Get total amount of commits on the main branch. Used as build number.
+  COMMIT_COUNT:
+    sh: git rev-list --count origin/main
+  # The version number we want to tag the source build with.
+  # It can be specified by adding RELEASE_TAG=XX when running command.
+  # Otherwise it will default to the COMMIT_COUNT variable.
+  RELEASE_IMAGE_TAG: "{{.RELEASE_IMAGE_TAG | default .COMMIT_COUNT }}"
+  # Constructing docker image name.
+  RELEASE_IMAGE_NAME: '{{.RELEASE_IMAGE_NAME | default "dpl-go-node"}}'
+  RELEASE_FULL_NAME: "{{.RELEASE_IMAGE_REGISTRY}}/{{.RELEASE_IMAGE_NAME}}:{{.RELEASE_IMAGE_TAG}}"
+  # Where is the docker file(s) we use for our builds residing?
+  LAGOON_DIR: "lagoon"
+
+  
+tasks:
+  ghcr:login:
+    summary: Login into Github Container Registry
+    cmds:
+      - echo {{ .CR_PAT }} | docker login {{ .RELEASE_IMAGE_REGISTRY }} -u username-not-used --password-stdin
+    preconditions:
+      - sh: "[ ! -z {{.CR_PAT}} ]"
+        msg: "Env variable CR_PAT is not set or empty."
+  
+  source:build:
+    summary: Build node image.
+    cmds:
+      - docker build -f {{ .LAGOON_DIR }}/node.dockerfile --tag {{ .RELEASE_FULL_NAME }} .
+
+  source:push:
+    summary: Push core source image to container registry.
+    deps: [ghcr:login]
+    cmds:
+      - docker push {{ .RELEASE_FULL_NAME }}
+
+  source:deploy:
+    desc: Build and push core source docker image.
+    cmds:
+      - task: source:build
+      - task: source:push
