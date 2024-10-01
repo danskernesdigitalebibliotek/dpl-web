@@ -3,26 +3,33 @@ langcode: en
 status: true
 dependencies:
   config:
-    - field.storage.node.field_branch
-    - field.storage.node.field_categories
-    - field.storage.eventseries.field_description
     - field.storage.eventseries.field_event_place
+    - field.storage.eventseries.field_description
+    - field.storage.eventseries.field_teaser_text
+    - field.storage.node.field_branch
     - field.storage.node.field_hero_title
     - field.storage.node.field_subtitle
-    - field.storage.node.field_tags
-    - field.storage.eventseries.field_tags
     - field.storage.node.field_teaser_text
-    - field.storage.eventseries.field_teaser_text
     - search_api.server.db_search
   module:
-    - node
     - recurring_events
+    - node
     - search_api
 id: content_events
 name: 'Content + Events'
 description: ''
 read_only: false
 field_settings:
+  categories:
+    label: 'Categories (Aggregrated)'
+    property_path: aggregated_field
+    type: string
+    configuration:
+      type: union
+      separator: '-not used-'
+      fields:
+        - 'entity:eventseries/field_categories'
+        - 'entity:node/field_categories'
   field_branch:
     label: Branch
     datasource_id: 'entity:node'
@@ -31,14 +38,6 @@ field_settings:
     dependencies:
       config:
         - field.storage.node.field_branch
-  field_categories:
-    label: Categories
-    datasource_id: 'entity:node'
-    property_path: field_categories
-    type: integer
-    dependencies:
-      config:
-        - field.storage.node.field_categories
   field_description_event:
     label: Subtitle
     datasource_id: 'entity:eventseries'
@@ -72,22 +71,6 @@ field_settings:
     dependencies:
       config:
         - field.storage.node.field_subtitle
-  field_tags:
-    label: Tags
-    datasource_id: 'entity:node'
-    property_path: field_tags
-    type: integer
-    dependencies:
-      config:
-        - field.storage.node.field_tags
-  field_tags_event:
-    label: Tags
-    datasource_id: 'entity:eventseries'
-    property_path: field_tags
-    type: integer
-    dependencies:
-      config:
-        - field.storage.eventseries.field_tags
   field_teaser_text:
     label: 'Teaser text'
     datasource_id: 'entity:node'
@@ -104,6 +87,16 @@ field_settings:
     dependencies:
       config:
         - field.storage.eventseries.field_teaser_text
+  tags:
+    label: 'Tags (Aggregrated)'
+    property_path: aggregated_field
+    type: string
+    configuration:
+      type: union
+      separator: '-not used-'
+      fields:
+        - 'entity:eventseries/field_tags'
+        - 'entity:node/field_tags'
   title:
     label: Title
     datasource_id: 'entity:node'
@@ -150,12 +143,14 @@ processor_settings:
       preprocess_query: -20
     all_fields: true
     fields:
+      - categories
       - field_description_event
       - field_event_place_event
       - field_hero_title
       - field_subtitle
       - field_teaser_text
       - field_teaser_text_event
+      - tags
       - title
       - title_event
   language_with_fallback: {  }

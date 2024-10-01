@@ -1,6 +1,7 @@
 <?php
 
 use Drupal\collation_fixer\CollationFixer;
+use Drupal\Core\Entity\EntityInterface;
 use Drupal\Core\Entity\FieldableEntityInterface;
 use Drupal\drupal_typed\DrupalTyped;
 use Drupal\node\NodeInterface;
@@ -120,6 +121,36 @@ function _dpl_update_set_value(string $field_name, mixed $value, string $entity_
 }
 
 /**
+ * Re-generating missing URL aliases for entity types.
+ *
+ * Useful, if you've created or altered a new pattern.
+ */
+function _dpl_update_generate_url_aliases(string $entity_type): string {
+  $ids =
+    \Drupal::entityQuery($entity_type)
+      ->accessCheck(FALSE)
+      ->execute();
+
+  if (!is_array($ids) || empty($ids)) {
+    return "No $entity_type entities to update.";
+  }
+
+  foreach ($ids as $id) {
+    $entity = \Drupal::entityTypeManager()->getStorage($entity_type)->load($id);
+
+    if (!($entity instanceof EntityInterface)) {
+      continue;
+    }
+
+    \Drupal::service('pathauto.generator')->updateEntityAlias($entity, 'update');
+  }
+
+  $count = count($ids);
+
+  return "Updated $count aliased entities of type $entity_type.";
+}
+
+/**
  * Fix collation for all tables to fix alphabetical sorting.
  */
 function dpl_update_deploy_fix_collation(): string {
@@ -208,4 +239,14 @@ function dpl_update_deploy_migrate_content_slider_titles(): string {
  */
 function dpl_update_deploy_field_relevant_ticket_manager(): string {
   return _dpl_update_set_value('field_relevant_ticket_manager', TRUE, 'eventseries');
+}
+
+/**
+ * Re-generating the URL aliases of taxonomy terms.
+ *
+ * Relevant after we've created "search" overview on the term pages of tags
+ * and categories.
+ */
+function dpl_update_deploy_update_term_url_aliases(): string {
+  return _dpl_update_generate_url_aliases('taxonomy_term');
 }

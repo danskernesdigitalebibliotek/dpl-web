@@ -1,0 +1,22 @@
+uuid: 6d9e0463-1e18-45be-b9cd-9e30b50bdf53
+langcode: en
+status: true
+dependencies:
+  module:
+    - taxonomy
+id: category_term
+label: 'Category term - embedded search'
+type: 'canonical_entities:taxonomy_term'
+pattern: '/search/web/categories/[term:name]'
+selection_criteria:
+  0f0f2190-bf04-4b11-9d33-5404ab1352ef:
+    id: 'entity_bundle:taxonomy_term'
+    negate: false
+    uuid: 0f0f2190-bf04-4b11-9d33-5404ab1352ef
+    context_mapping:
+      taxonomy_term: taxonomy_term
+    bundles:
+      categories: categories
+selection_logic: and
+weight: -5
+relationships: {  }

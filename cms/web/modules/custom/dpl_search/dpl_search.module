@@ -8,6 +8,7 @@
 use Drupal\Core\Url;
 use Drupal\dpl_react_apps\Controller\DplReactAppsController;
 use Drupal\dpl_search\DplSearchSettings;
+use Drupal\taxonomy\TermInterface;
 use Drupal\views\ViewExecutable;
 use Drupal\views\Views;
 
@@ -73,6 +74,10 @@ function dpl_search_preprocess_views_view(array &$variables): void {
     return;
   }
 
+  if ($view->current_display !== 'page') {
+    return;
+  }
+
   // Hiding the exposed search filter, as we display it in the header.
   unset($variables['exposed']);
 
@@ -135,6 +140,73 @@ function dpl_search_preprocess_page(array &$variables): void {
         // Add external API base urls.
       ] + DplReactAppsController::externalApiBaseUrls(),
   ];
+}
+
+/**
+ * Implements theme_preprocess_taxonomy_term().
+ *
+ * Show a view of tagged content on terms of certain vocabularies.
+ * The view is identical to the editorial view on /search/web, but with
+ * contextual filters applied.
+ */
+function dpl_search_preprocess_taxonomy_term(array &$variables): void {
+  $view_mode = $variables['view_mode'] ?? NULL;
+
+  // If we're not on the full display, we don't want to load the search view.
+  if ($view_mode !== 'full') {
+    return;
+  }
+
+  $term = $variables['term'] ?? NULL;
+  $bundle = $term?->bundle();
+
+  // The vocabularies we allow as contextual filters in the embedded view.
+  // ! IMPORTANT ! - The order in this array matters, as views does not allow
+  // for named contextual filters - it MUST match the order that is set in
+  // the Views UI.
+  $allowed_contextual_vocabularies = [
+    'categories',
+    'tags',
+  ];
+
+  if (!($term instanceof TermInterface) ||
+      !in_array($bundle, $allowed_contextual_vocabularies)) {
+    return;
+  }
+
+  $contextual_filters = [];
+
+  // Looping through the allowed vocabularies, and setting the current
+  // term as a contextual filter, if the term is in that vocabulary.
+  foreach ($allowed_contextual_vocabularies as $vocabulary) {
+    if ($vocabulary === $bundle) {
+      $contextual_filters[] = $term->id();
+    }
+    else {
+      $contextual_filters[] = 'all';
+    }
+  }
+
+  $view = Views::getView(DplSearchSettings::EDITORIAL_VIEW_ID);
+
+  if (!($view instanceof ViewExecutable)) {
+    return;
+  }
+
+  $view->setDisplay('term_page');
+  $view->setArguments($contextual_filters);
+  $view->execute();
+  $view->setTitle(t(
+    'Showing web results related to "@term" (@total_results)',
+    ['@term' => $term->label(), '@total_results' => $view->total_rows],
+    ['context' => 'dpl_search']
+  ));
+
+  // We only want the view to show up - not the title, which cannot be removed
+  // through the Drupal admin UI.
+  unset($variables['content']);
+
+  $variables['content']['view'] = $view->buildRenderable('term_page');
 }
 
 /**
