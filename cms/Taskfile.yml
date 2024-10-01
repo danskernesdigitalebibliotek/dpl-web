@@ -233,7 +233,7 @@ tasks:
     desc: 'Restore database from db dump file. Only one sql should be present the "{{ .DIR_RESTORE_DATABASE }}" directory.'
     cmds:
       - task dev:cli -- drush sql:drop -y
-      - docker-compose exec -T {{ .MYSQL_CONTAINER }} mysql < {{ .SQL_FILE }}
+      - docker compose exec -T {{ .MYSQL_CONTAINER }} mysql < {{ .SQL_FILE }}
       - task dev:cache:clear:all
     preconditions:
       - sh: "[ {{ .SQL_FILES_COUNT }} -gt 0 ]"
@@ -252,7 +252,7 @@ tasks:
   dev:restore:files:
     desc: "Restore files by overwriting existing with the ones from the Lagoon backup package"
     cmds:
-      - docker-compose exec cli sh dev-scripts/cli-restore-lagoon-files.sh {{ .DIR_RESTORE_FILES }}
+      - docker compose exec cli sh dev-scripts/cli-restore-lagoon-files.sh {{ .DIR_RESTORE_FILES }}
       - task dev:cache:clear:all
 
   dev:cache:clear:all:

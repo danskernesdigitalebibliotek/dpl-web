@@ -1,4 +1,11 @@
+{% set item_classes = [
+  'tag',
+  'tag--large',
+  'tag--fill',
+] %}
+
 {% for item in items %}
-  {% set item = item|merge({'attributes': item.attributes.addClass('tag--large')}) %}
+  <a href="{{ item.content['#url'].toString() }}" class="tag tag--large tag--fill">
+    {{ item.content['#title'] }}
+  </a>
 {% endfor %}
-{% include 'field--field-categories.html.twig' %}
