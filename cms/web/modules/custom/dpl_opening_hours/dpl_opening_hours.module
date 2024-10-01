@@ -117,7 +117,7 @@ function dpl_opening_hours_taxonomy_term_predelete(TermInterface $term): void {
   $opening_hours_in_category = $opening_hours_repository->loadMultiple(categoryId: (int) $term_id);
 
   foreach ($opening_hours_in_category as $instance) {
-    if ($instance->id && $instance->repetition->id) {
+    if ($instance->id) {
       $opening_hours_repository->delete($instance->id, $instance->repetition->id);
     }
   }
