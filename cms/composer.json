@@ -366,6 +366,9 @@
             "drupal/theme_permission": {
                 "3105637: Edit, install and uninstall permission": "https://www.drupal.org/files/issues/2024-02-01/theme-permission-edit-install-uninstall-3105637-7.patch",
                 "3458263: WSOD error fails on Drupal 10.3+": "https://www.drupal.org/files/issues/2024-07-01/theme_permssion-d10_3_d11.patch"
+            },
+            "drupal/search_api": {
+                "3425506: Fix faulty config output. (Remove when updating search API)": "patches/3425506_search_api_patch.patch"
             }
         }
     }
