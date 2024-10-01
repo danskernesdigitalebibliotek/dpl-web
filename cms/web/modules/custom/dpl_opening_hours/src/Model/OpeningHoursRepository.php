@@ -77,7 +77,6 @@ class OpeningHoursRepository {
     if ($repetitionId) {
       $query->condition('repetition_id', $repetitionId);
     }
-
     if ($categoryId) {
       $query->condition('category_tid', $categoryId);
     }
