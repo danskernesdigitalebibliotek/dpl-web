@@ -1,6 +1,7 @@
 <?php
 
 use Drupal\collation_fixer\CollationFixer;
+use Drupal\Core\Entity\EntityInterface;
 use Drupal\Core\Entity\FieldableEntityInterface;
 use Drupal\drupal_typed\DrupalTyped;
 use Drupal\node\NodeInterface;
@@ -136,6 +137,10 @@ function _dpl_update_generate_url_aliases(string $entity_type): string {
 
   foreach ($ids as $id) {
     $entity = \Drupal::entityTypeManager()->getStorage($entity_type)->load($id);
+
+    if (!($entity instanceof EntityInterface)) {
+      continue;
+    }
 
     \Drupal::service('pathauto.generator')->updateEntityAlias($entity, 'update');
   }
