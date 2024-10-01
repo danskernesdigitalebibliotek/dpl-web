@@ -33,6 +33,7 @@ field_settings:
 
 
 
+
       fields:
         - 'entity:eventseries/field_categories'
         - 'entity:node/field_categories'
@@ -96,10 +97,11 @@ field_settings:
   tags:
     label: 'Tags (Aggregrated)'
     property_path: aggregated_field
-    type: integer
+    type: string
     configuration:
       type: union
       separator: |+
+
 
 
 
@@ -162,6 +164,7 @@ processor_settings:
       - field_subtitle
       - field_teaser_text
       - field_teaser_text_event
+      - tags
       - title
       - title_event
   language_with_fallback: {  }
