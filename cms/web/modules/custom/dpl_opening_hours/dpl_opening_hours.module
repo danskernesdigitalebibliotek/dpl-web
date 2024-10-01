@@ -12,7 +12,6 @@ use Drupal\dpl_react_apps\Controller\DplReactAppsController;
 use Drupal\drupal_typed\DrupalTyped;
 use Drupal\node\NodeInterface;
 use Drupal\paragraphs\ParagraphInterface;
-use Drupal\taxonomy\Entity\Term;
 use Drupal\taxonomy\TermInterface;
 
 /**
@@ -72,7 +71,7 @@ function dpl_opening_hours_form_taxonomy_term_opening_hours_categories_delete_fo
   }
 
   $term = $form_object->getEntity();
-  if (!$term instanceof Term) {
+  if (!$term instanceof TermInterface) {
     return;
   }
 
