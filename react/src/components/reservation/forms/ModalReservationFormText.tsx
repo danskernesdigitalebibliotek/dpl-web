@@ -4,6 +4,7 @@ import { PatronV5 } from "../../../core/fbs/model";
 import { stringifyValue } from "../../../core/utils/helpers/general";
 import Modal, { useModalButtonHandler } from "../../../core/utils/modal";
 import { useText, UseTextFunction } from "../../../core/utils/text";
+
 import { getInputType, getReservationModalTypeTranslation } from "../helper";
 import {
   modalReservationFormId,

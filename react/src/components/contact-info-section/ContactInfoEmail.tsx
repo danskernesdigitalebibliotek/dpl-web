@@ -1,5 +1,6 @@
 import * as React from "react";
 import { FC } from "react";
+
 import { PatronSettingsV3, PatronV5 } from "../../core/fbs/model";
 import { useText } from "../../core/utils/text";
 import CheckBox from "../checkbox/Checkbox";
