@@ -1,13 +1,11 @@
-import type { Preview } from "@storybook/react";
 import "../src/components/components.scss";
 import "@danskernesdigitalebibliotek/dpl-design-system/build/css/base.css";
 import { setToken, TOKEN_LIBRARY_KEY, TOKEN_USER_KEY } from "../src/core/token";
 import "../src/core/mount";
+import Store from "../src/components/store";
 import React from "react";
 import { withErrorBoundary } from "react-error-boundary";
 import ErrorBoundaryAlert from "../src/components/error-boundary-alert/ErrorBoundaryAlert";
-import Store from "../src/components/store";
-
 
 const getSessionStorage = (type) => window.sessionStorage.getItem(type);
 const userToken =
@@ -42,28 +40,18 @@ const WrappedStory = (app) =>
     }
   });
 
-function App({ story }) {
-  return (
-    <Store>
-      <>{story}</>
-    </Store>
-  );
-}
+const App = ({ story }) => <Store>{WrappedStory(story)}</Store>;
 
-const preview: Preview = {
-  parameters: {
-    layout: "fullscreen",
-    controls: {
-      expanded: true
-    }
-  },
-  decorators: [
-    (Story) => (
-      <>
-        <App story={Story()} />
-      </>
-    )
-  ]
+// Consideration for the future - using addon-redux could bring value.
+// It wasn't implemented to begin with because it wasn't compatible with Storybook 6.
+export const decorators = [
+  (Story) => (
+    <>
+      <App story={Story} />
+    </>
+  )
+];
+
+export const parameters = {
+  layout: "fullscreen"
 };
-
-export default preview;
