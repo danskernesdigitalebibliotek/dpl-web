@@ -93,7 +93,7 @@ function dpl_opening_hours_form_taxonomy_term_opening_hours_categories_delete_fo
   $form['description']['#markup'] = t('@term_label is associated with @count opening hours. Deleting @term_label will also delete these opening hours. Are you sure you want to continue?', [
     '@term_label' => $term_label,
     '@count' => $opening_hours_count,
-  ]);
+  ], ['context' => 'Opening Hours']);
 }
 
 /**
