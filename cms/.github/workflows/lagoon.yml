@@ -4,9 +4,10 @@ on:
 name: Lagoon integration
 
 env:
-  LAGOON_HOST: "dplplat01.dpl.reload.dk"
-  LAGOON_PROJECT: "dpl-cms"
-
+  LAGOON_ENVIRONMENT: "pr-${{github.event.number}}"
+  GH_TOKEN: ${{ secrets.GH_DEPLOYMENT_TOKEN }}
+  OWNER: ${{ github.repository_owner }}
+  REPO: ${{ github.event.repository.name }}
 jobs:
   BranchNameLength:
     name: Check branch length
@@ -22,25 +23,34 @@ jobs:
             /^.{1,100}$/
           errorMessage: 'Branch name too long. This cannot be deployed to Lagoon.'
 
+  # Creating the deployment that Lagoon will look for, and add status to.
+  CreateDeployment:
+    name: Creating deployment
+    runs-on: ubuntu-latest
+    if: ${{ github.event.action == 'opened' || github.event.action == 'reopened' }}
+    steps:
+      - run: |
+          LAGOON_DEPLOYS_LOG_URL=$(echo "https://ui.lagoon.dplplat01.dpl.reload.dk/projects/dpl-cms/dpl-cms-${{ env.LAGOON_ENVIRONMENT }}/deployments")
+
+          DEPLOYMENT_ID=$(echo '{
+            "ref": "${{ github.head_ref || github.ref_name }}",
+            "environment": "${{ env.LAGOON_ENVIRONMENT }}",
+            "auto_merge": false,
+            "required_contexts": []
+          }' | gh api --method POST "/repos/${{ env.OWNER }}/${{ env.REPO }}/deployments" --input - --jq '.id')
+
+          gh api --method POST "/repos/${{ env.OWNER }}/${{ env.REPO }}/deployments/$DEPLOYMENT_ID/statuses" \
+            -f "state=in_progress" -f "log_url=$LAGOON_DEPLOYS_LOG_URL"
+
+          echo "deployment_id=$DEPLOYMENT_ID" >> $GITHUB_OUTPUT
+
+  # When we close the pull request, we want to set the environment as inactive.
   CloseEnvironment:
     name: Close environment
     runs-on: ubuntu-latest
     if: ${{ github.event.action == 'closed' }}
-    permissions:
-      # Give the default GITHUB_TOKEN permission to close deployments.
-      deployments: write
     steps:
-      - name: Generate environment data
-        id: environment
-        run: |
-          echo ::set-output name=id::pr-${{github.event.number}}
-      - name: Close environment
-        uses: bobheadxi/deployments@v1.5.0
-        with:
-          step: deactivate-env
-          token: ${{ secrets.GITHUB_TOKEN }}
-          env: ${{ steps.environment.outputs.id }}
-          debug: ${{ runner.debug && 'true' || 'false' }}
+      - run: gh api --method DELETE "/repos/${{ env.OWNER }}/${{ env.REPO }}/environments/${{ env.LAGOON_ENVIRONMENT }}"
 
   # We only permit the integration with Lagoon to run if the user is
   # authorized. This saves on resources and ensures we only spin up sites for

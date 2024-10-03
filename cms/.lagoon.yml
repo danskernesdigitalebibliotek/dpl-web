@@ -12,23 +12,22 @@ tasks:
     - run:
         name: Create new GH deployment
         command: |
-          GH_DEPLOYMENT=$(curl -L -X POST -H "Authorization: Bearer $GH_DEPLOYMENT_TOKEN" \
-          https://api.github.com/repos/danskernesdigitalebibliotek/dpl-cms/deployments \
-          -d "{\"ref\":\"$LAGOON_PR_HEAD_BRANCH\", \"environment\":\"$LAGOON_ENVIRONMENT\", \
-              \"description\":\"Triggered by Lagoon\", \"transient_environment\": true, \
-              \"auto_merge\": false, \"required_contexts\": []}")
+          GH_DEPLOYMENTS=$(curl -H "Authorization: Bearer $GH_DEPLOYMENT_TOKEN" \
+          "https://api.github.com/repos/danskernesdigitalebibliotek/dpl-cms/deployments?ref=$LAGOON_PR_HEAD_BRANCH&environment=$LAGOON_ENVIRONMENT")
+          GH_DEPLOYMENT_ID=$(echo "$GH_DEPLOYMENTS" | grep '"id":' | head -n 1 | sed 's/[^0-9]*\([0-9]*\).*/\1/')
 
-          echo "$GH_DEPLOYMENT"
-          GH_DEPLOYMENT_ID=$(echo "$GH_DEPLOYMENT" | grep -m 1 '"id":' | sed -E 's/.*"id": ([0-9]+),.*/\1/')
-
-          echo "Created GH deployment with ID '$GH_DEPLOYMENT_ID'"
+          echo "$GH_DEPLOYMENTS"
+          echo "Found GH deployment with ID '$GH_DEPLOYMENT_ID'"
 
           # The only way to keep a value between tasks, is saving it in a
           # file. Environment variables are killed between tasks, apart from
           # the global ones.
           echo "$GH_DEPLOYMENT_ID" > /tmp/GH_DEPLOYMENT_ID
-          LAGOON_DEPLOYS_LOG_URL=$(echo "https://ui.lagoon.dplplat01.dpl.reload.dk/projects/$LAGOON_PROJECT/dpl-cms-$LAGOON_ENVIRONMENT/deployments")
-          echo "$LAGOON_DEPLOYS_URL" > /tmp/LAGOON_DEPLOYS_LOG_URL
+          LAGOON_DEPLOYS_LOG_URL="https://ui.lagoon.dplplat01.dpl.reload.dk/projects/$LAGOON_PROJECT/dpl-cms-$LAGOON_ENVIRONMENT/deployments"
+          echo "$LAGOON_DEPLOYS_LOG_URL" > /tmp/LAGOON_DEPLOYS_LOG_URL
+
+          echo "Creating a initial pending deployment status."
+          ./dev-scripts/lagoon-set-gh-deploy-status.sh "in_progress"
         service: cli
     - run:
         name: If drupal is not installed
@@ -124,22 +123,9 @@ tasks:
     - run:
         name: Setting Deployment status success
         command: |
-          DEPLOYMENT_STATUS="success"
           DRUPAL_URL=$(drush browse)
 
-          # Read the deployment ID from the file
-          GH_DEPLOYMENT_ID=$(cat /tmp/GH_DEPLOYMENT_ID)
-          LAGOON_DEPLOYS_LOG_URL=$(cat /tmp/LAGOON_DEPLOYS_LOG_URL)
-
-          echo "Setting GH deployment status '$GH_DEPLOYMENT_ID': '$DEPLOYMENT_STATUS'"
-
-          # Setting the deployment status, on the GH deployment created earlier.
-          curl -L \
-            -X POST \
-            -H "Authorization: Bearer $GH_DEPLOYMENT_TOKEN" \
-            https://api.github.com/repos/danskernesdigitalebibliotek/dpl-cms/deployments/$GH_DEPLOYMENT_ID/statuses \
-            -d "{\"environment\":\"$LAGOON_ENVIRONMENT\",\"state\":\"$DEPLOYMENT_STATUS\", \
-                  \"environment_url\":\"$DRUPAL_URL\", \"log_url\":\"$LAGOON_DEPLOYS_LOG_URL\"}"
+          ./dev-scripts/lagoon-set-gh-deploy-status.sh "success" "$DRUPAL_URL"
         service: cli
 
 environments:
