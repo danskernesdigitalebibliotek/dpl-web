@@ -6281,7 +6281,7 @@ msgstr "DPL CMS"
 #: 
 msgctxt "taxonomy.vocabulary.categories:name"
 msgid "Categories"
-msgstr "Kategorier"
+msgstr "Categories"
 
 #: 
 msgctxt "taxonomy.vocabulary.tags:name"
