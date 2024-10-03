@@ -25604,7 +25604,7 @@ msgstr ""
 #: 
 msgctxt "core.entity_form_display.paragraph.card_grid_automatic.default:third_party_settings:field_group:group_filters:format_settings:description"
 msgid "Choose the filters, that defines what content is shown. These filters can have their conditions defined."
-msgstr ""
+msgstr "Vælg de filtre, som definerer hvilket indhold, der vises. Filtrene kan hver især defineres med deres egne betingelser."
 
 #: 
 msgctxt "core.entity_form_display.paragraph.content_slider_automatic.default:third_party_settings:field_group:group_filters:label"
@@ -25614,7 +25614,7 @@ msgstr ""
 #: 
 msgctxt "core.entity_form_display.paragraph.content_slider_automatic.default:third_party_settings:field_group:group_filters:format_settings:description"
 msgid "Choose the filters, that defines what content is shown. These filters can have their conditions defined."
-msgstr ""
+msgstr "Vælg de filtre, som definerer hvilket indhold, der vises. Filtrene kan hver især defineres med deres egne betingelser."
 
 #: 
 msgctxt "core.entity_form_display.paragraph.filtered_event_list.default:third_party_settings:field_group:group_filters:label"
@@ -25624,7 +25624,7 @@ msgstr ""
 #: 
 msgctxt "core.entity_form_display.paragraph.filtered_event_list.default:third_party_settings:field_group:group_filters:format_settings:description"
 msgid "Choose the filters, that defines what content is shown. These filters can have their conditions defined."
-msgstr ""
+msgstr "Vælg de filtre, som definerer hvilket indhold, der vises. Filtrene kan hver især defineres med deres egne betingelser."
 
 #: 
 msgctxt "field.field.paragraph.card_grid_automatic.field_filter_branches:description"
@@ -25659,17 +25659,17 @@ msgstr ""
 #: 
 msgctxt "field.storage.paragraph.field_filter_cond_type:settings:allowed_values:0:label"
 msgid "Must match on ANY filter - \"OR\""
-msgstr ""
+msgstr "Skal matche på et HVILKET SOM HELST filter - \"OR\""
 
 #: 
 msgctxt "field.storage.paragraph.field_filter_cond_type:settings:allowed_values:1:label"
 msgid "Must match on ALL filters - \"AND\""
-msgstr ""
+msgstr "Skal matche på ALLE filtre - \"AND\""
 
 #: 
 msgctxt "field.storage.paragraph.field_filter_cond_type:settings:allowed_values:2:label"
 msgid "Must match in each filter-category - \"OUTER-AND\""
-msgstr ""
+msgstr "Skal matche i hver filter-kategori - \"OUTER_AND\""
 
 #: 
 msgctxt "advanced search"
