@@ -359,7 +359,11 @@
             },
             "drupal/recurring_events": {
                 "3178696: Make compatible with Scheduler": "https://git.drupalcode.org/project/recurring_events/-/commit/35045cb17c7bbd1184553f83771939047175bc24.patch",
-                "3461740: Fatal error when using 'Event series start date' filter in views": "https://www.drupal.org/files/issues/2024-07-16/reccuring_events_event_start_date.patch"
+                "3461740: Fatal error when using 'Event series start date' filter in views": "https://www.drupal.org/files/issues/2024-07-16/reccuring_events_event_start_date.patch",
+                "3468521: (1/4) When changing recurrance, identical date combinations should not be deleted and recreated": "https://git.drupalcode.org/project/recurring_events/-/commit/67261f4ac34546f2c9514199d9febb6dcce6fd10.patch",
+                "3468521: (2/4)": "https://git.drupalcode.org/project/recurring_events/-/commit/603d34936b97535f66e11429dcc9a2c61fc7cb40.patch",
+                "3468521: (3/4)": "https://git.drupalcode.org/project/recurring_events/-/commit/ad8a4294b1ffb754a338bb2cfa0146f203aa6fc1.patch",
+                "3468521: (4/4)": "https://git.drupalcode.org/project/recurring_events/-/commit/ad99ae79f5c55fc2db17427e9936ab141314609d.patch"
             },
             "drupal/theme_permission": {
                 "3105637: Edit, install and uninstall permission": "https://www.drupal.org/files/issues/2024-02-01/theme-permission-edit-install-uninstall-3105637-7.patch",
