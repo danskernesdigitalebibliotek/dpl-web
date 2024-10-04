@@ -208,3 +208,25 @@ function dpl_update_update_10016(): string {
 function dpl_update_update_10017(): string {
   return _dpl_update_install_modules(['dpl_search']);
 }
+
+/**
+ * Add initial translation for paragraph error messages.
+ */
+function dpl_update_update_10019(): string {
+  $return = _dpl_update_update_translation(
+    'Error in field %field #@position (@bundle): @message',
+    'Fejl i feltet "%field" nr. #@position ("@bundle"): @message'
+  );
+
+  $return .= _dpl_update_update_translation(
+    'Error in field %field #@position (@bundle), %subfield : @message',
+    'Fejl i feltet "%field" nr. #@position ("@bundle"), %subfield : @message'
+  );
+
+  $return .= _dpl_update_update_translation(
+    'The referenced entity (%type: %id) does not exist.',
+    'Det refererede indhold (%type: %id) findes ikke, og er muligvis blevet slettet.'
+  );
+
+  return $return;
+}
