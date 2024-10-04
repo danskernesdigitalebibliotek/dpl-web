@@ -9,6 +9,7 @@ dependencies:
     - rest.resource.events
     - rest.resource.proxy-url
   module:
+    - graphql
     - media
     - openapi
     - recurring_events
@@ -23,6 +24,7 @@ is_admin: false
 permissions:
   - 'access content'
   - 'access openapi api docs'
+  - 'execute graphql_compose_server arbitrary graphql requests'
   - 'restful get dpl_opening_hours_legacy_list'
   - 'restful get dpl_opening_hours_list'
   - 'restful get events'
