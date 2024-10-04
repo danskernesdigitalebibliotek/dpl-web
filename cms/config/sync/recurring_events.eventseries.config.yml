@@ -1,8 +1,8 @@
 _core:
   default_config_hash: HuNc0wdz6BZa5IceY8HDpVfwTwqvp1rpRQeuS5szwSo
-interval: 15
-min_time: '08:00am'
-max_time: '11:45pm'
+interval: 5
+min_time: '12:00am'
+max_time: '11:59pm'
 date_format: 'd/m/y - H:i'
 time_format: 'H:i'
 days: 'monday,tuesday,wednesday,thursday,friday,saturday,sunday'
