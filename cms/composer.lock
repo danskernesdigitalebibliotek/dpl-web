@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "66b70e07beafebf8f3d5cd2b157b298e",
+    "content-hash": "d860ec5949d41c8fadafc84cd92f42f0",
     "packages": [
         {
             "name": "amazeeio/drupal_integrations",
@@ -1166,19 +1166,19 @@
         },
         {
             "name": "danskernesdigitalebibliotek/dpl-design-system",
-            "version": "2024.39.0",
+            "version": "2024.40.0",
             "dist": {
                 "type": "zip",
-                "url": "https://github.com/danskernesdigitalebibliotek/dpl-design-system/releases/download/2024.39.0/dist-2024-39-0-b108f0932dde82a7db1ef93e7d09a109d2c58363.zip"
+                "url": "https://github.com/danskernesdigitalebibliotek/dpl-design-system/releases/download/2024.40.0/dist-2024-40-0-c006877c658f7b12d834a352487fc8ab333f83bc.zip"
             },
             "type": "drupal-library"
         },
         {
             "name": "danskernesdigitalebibliotek/dpl-react",
-            "version": "2024.39.0",
+            "version": "2024.40.0",
             "dist": {
                 "type": "zip",
-                "url": "https://github.com/danskernesdigitalebibliotek/dpl-react/releases/download/2024.39.0/dist-2024-39-0-67b544aa0a75abf24d4d152fdd5f9c80082eceb0.zip"
+                "url": "https://github.com/danskernesdigitalebibliotek/dpl-react/releases/download/2024.40.0/dist-2024-40-0-e1fa2d58695103229aea70732cf19035f4fe6380.zip"
             },
             "require": {
                 "composer/installers": "^1.2.0"
@@ -6970,17 +6970,17 @@
         },
         {
             "name": "drupal/recurring_events",
-            "version": "2.0.0",
+            "version": "2.0.2",
             "source": {
                 "type": "git",
                 "url": "https://git.drupalcode.org/project/recurring_events.git",
-                "reference": "2.0.0"
+                "reference": "2.0.2"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://ftp.drupal.org/files/projects/recurring_events-2.0.0.zip",
-                "reference": "2.0.0",
-                "shasum": "7bc7a42b18c02d88aaaa12b35ac6434140f9f432"
+                "url": "https://ftp.drupal.org/files/projects/recurring_events-2.0.2.zip",
+                "reference": "2.0.2",
+                "shasum": "97f9ccda4fc424ea4f2adc40fa499b0ec33e1842"
             },
             "require": {
                 "drupal/core": "^9.3 || ^10",
@@ -6994,8 +6994,8 @@
             "type": "drupal-module",
             "extra": {
                 "drupal": {
-                    "version": "2.0.0",
-                    "datestamp": "1706902867",
+                    "version": "2.0.2",
+                    "datestamp": "1718917018",
                     "security-coverage": {
                         "status": "covered",
                         "message": "Covered by Drupal's security advisory policy"
@@ -7008,8 +7008,16 @@
             ],
             "authors": [
                 {
+                    "name": "Lullabot",
+                    "homepage": "https://www.drupal.org/user/3815489"
+                },
+                {
                     "name": "owenbush",
                     "homepage": "https://www.drupal.org/user/2765259"
+                },
+                {
+                    "name": "pfrenssen",
+                    "homepage": "https://www.drupal.org/user/382067"
                 },
                 {
                     "name": "podarok",
@@ -20457,8 +20465,7 @@
         "drupal/gin_toolbar": 5,
         "drupal/multivalue_form_element": 10,
         "drupal/openapi_rest": 5,
-        "drupal/potion": 20,
-        "drupal/recurring_events": 5
+        "drupal/potion": 20
     },
     "prefer-stable": true,
     "prefer-lowest": false,
