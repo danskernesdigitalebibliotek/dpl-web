@@ -24,7 +24,11 @@
     "zustand": "^5.0.0-rc.2"
   },
   "devDependencies": {
+    "@0no-co/graphqlsp": "^1.12.16",
+    "@graphql-codegen/cli": "^5.0.2",
+    "@graphql-codegen/schema-ast": "^4.1.0",
     "@next/eslint-plugin-next": "^14.2.13",
+    "@parcel/watcher": "^2.4.1",
     "@svgr/webpack": "^8.1.0",
     "@types/node": "^20.0.0",
     "@types/react": "^18.3.0",
