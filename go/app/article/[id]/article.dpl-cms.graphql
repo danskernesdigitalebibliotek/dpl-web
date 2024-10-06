@@ -1,4 +1,3 @@
-
 query getArticle($id: ID!) {
   nodeArticle(id: $id) {
     title

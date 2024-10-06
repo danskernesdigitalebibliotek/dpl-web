@@ -2,9 +2,9 @@ import type { CodegenConfig } from "@graphql-codegen/cli";
 
 const config: CodegenConfig = {
   overwrite: true,
-  documents: "**/*.graphql",
   generates: {
-    "generated/graphql/dpl-cms/graphql.tsx": {
+    "lib/generated/graphql/dpl-cms/graphql.tsx": {
+      documents: "**/*.dpl-cms.graphql",
       // TODO: Make this configurable
       schema: "http://dapple-cms.docker/graphql",
       plugins: [
@@ -27,12 +27,50 @@ const config: CodegenConfig = {
             }
           })
         }
+      },
+      hooks: {
+        afterOneFileWrite: ["yarn eslint --fix"]
       }
     },
-    "generated/graphql/dpl-cms/graphql.schema.json": {
+    "lib/generated/graphql/dpl-cms/graphql.schema.json": {
       // TODO: Make this configurable
       schema: "http://dapple-cms.docker/graphql",
       plugins: ["introspection"]
+    },
+    "lib/generated/graphql/fbi/graphql.tsx": {
+      documents: "**/*.fbi.graphql",
+      schema: [
+        {
+          // TODO: Make this configurable
+          "https://fbi-api.dbc.dk/ereolgo/graphql": {
+            headers: {
+              Authorization: "Bearer {TOKEN}".replace(
+                "{TOKEN}",
+                process.env.LIBRARY_TOKEN ?? ""
+              )
+            }
+          }
+        }
+      ],
+      plugins: [
+        "typescript",
+        "typescript-operations",
+        "typescript-react-query"
+      ],
+      config: {
+        // futureProofEnums: true,
+        // withHooks: true,
+        namingConvention: {
+          typeNames: "change-case-all#pascalCase",
+          transformUnderscore: true
+        },
+        defaultScalarType: "unknown",
+        reactQueryVersion: 5,
+        fetcher: "@/lib/fetchers/fbi.fetcher#fetchData"
+      },
+      hooks: {
+        afterOneFileWrite: ["yarn eslint --fix"]
+      }
     }
   }
 };
