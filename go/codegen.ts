@@ -15,6 +15,9 @@ const config: CodegenConfig = {
       config: {
         defaultScalarType: "unknown",
         reactQueryVersion: 5,
+        exposeFetcher: true,
+        exposeQueryKeys: true,
+        addSuspenseQuery: true,
         fetcher: {
           // TODO: Make this configurable
           endpoint: "http://dapple-cms.docker/graphql",
