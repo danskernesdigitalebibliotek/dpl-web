@@ -75,4 +75,10 @@ settings:
   webform_submission:
     handler: 'default:webform_submission'
     handler_settings: {  }
+  consumer:
+    handler: 'default:consumer'
+    handler_settings: {  }
+  oauth2_token:
+    handler: 'default:oauth2_token'
+    handler_settings: {  }
 field_type: dynamic_entity_reference
