@@ -16,10 +16,10 @@
 {%- endif %}
 
 <label class="input-label" id="facet_{{ facet.id }}_label">{{ facet.label }}</label>
-<div class="dropdown">
+<div class="dropdown dropdown--grey-borders">
   {% if items or empty %}
     {%- if items -%}
-      <{{ list_type }}{{ attributes.addClass("dropdown__select") }}>
+      <{{ list_type }}{{ attributes.addClass(['dropdown__select', 'dropdown__select--grey']) }}>
       {%- for item in items -%}
         <li{{ item.attributes }}>{{ item.value }}</li>
       {%- endfor -%}

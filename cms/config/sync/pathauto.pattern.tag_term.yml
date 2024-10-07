@@ -1,0 +1,22 @@
+uuid: 7b51f435-12a6-4a18-8f2b-6421bccf8ea2
+langcode: en
+status: true
+dependencies:
+  module:
+    - taxonomy
+id: tag_term
+label: 'Tag term - embedded search'
+type: 'canonical_entities:taxonomy_term'
+pattern: '/search/web/tag/[term:name]'
+selection_criteria:
+  e724c960-d9f3-4d9a-afbf-565dc700683f:
+    id: 'entity_bundle:taxonomy_term'
+    negate: false
+    uuid: e724c960-d9f3-4d9a-afbf-565dc700683f
+    context_mapping:
+      taxonomy_term: taxonomy_term
+    bundles:
+      tags: tags
+selection_logic: and
+weight: -5
+relationships: {  }
