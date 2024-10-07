@@ -61,6 +61,8 @@ class RediaEvent extends ControllerBase {
     $this->subtitle = $event_wrapper->getField('event_description')?->getString();
     $this->startTime = $start_date->format('U');
     $this->endTime = $end_date->format('U');
+    $this->media = NULL;
+    $this->mediaThumbnail = NULL;
 
     if ($media) {
       $this->media = new RediaEventMedia($media, 'redia_feed_large');

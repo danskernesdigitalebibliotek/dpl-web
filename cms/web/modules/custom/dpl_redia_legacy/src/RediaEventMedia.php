@@ -16,12 +16,12 @@ class RediaEventMedia extends ControllerBase {
   // We'll disable the documentation rules for the member properties, as
   // they are pretty self-explanatory.
   // phpcs:disable
-  public ?string $url;
-  public ?int $size;
-  public ?int $width;
-  public ?int $height;
-  public ?string $type;
-  public ?string $md5;
+  public ?string $url = NULL;
+  public ?int $size = NULL;
+  public ?int $width = NULL;
+  public ?int $height = NULL;
+  public ?string $type = NULL;
+  public ?string $md5 = NULL;
   public string $medium = 'image';
   // phpcs:enable
 
@@ -50,7 +50,7 @@ class RediaEventMedia extends ControllerBase {
     $image_sizes = getimagesize($file_uri);
     $file_size = filesize($file_uri);
 
-    $image_type = exif_imagetype($file_uri);
+    $image_type = $image_sizes[2] ?? NULL;
 
     if ($image_type) {
       $this->type = image_type_to_mime_type($image_type);

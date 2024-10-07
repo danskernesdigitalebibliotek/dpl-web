@@ -5,7 +5,7 @@ namespace Drupal\dpl_redia_legacy\Controller\RssFeeds;
 use Drupal\Core\Cache\CacheableMetadata;
 use Drupal\Core\Cache\CacheableResponse;
 use Drupal\Core\Controller\ControllerBase;
-use Drupal\Core\Datetime\DrupalDateTime;
+use Drupal\Core\Datetime\DateFormatterInterface;
 use Drupal\Core\File\FileUrlGeneratorInterface;
 use Drupal\Core\Url;
 use Drupal\dpl_redia_legacy\RediaEvent;
@@ -23,6 +23,7 @@ class EventsController extends ControllerBase {
    */
   public function __construct(
     protected FileUrlGeneratorInterface $fileUrlGenerator,
+    protected DateFormatterInterface $dateFormatter,
   ) {}
 
   /**
@@ -30,8 +31,8 @@ class EventsController extends ControllerBase {
    */
   public static function create(ContainerInterface $container): static {
     return new static(
-      $container->get('file_url_generator')
-
+      $container->get('file_url_generator'),
+      $container->get('date.formatter'),
     );
   }
 
@@ -74,7 +75,7 @@ class EventsController extends ControllerBase {
     $ids = $query->execute();
 
     /** @var \Drupal\recurring_events\Entity\EventInstance[] $events */
-    $events = $this->entityTypeManager()->getStorage('eventinstance')->loadMultiple($ids);
+    $events = $storage->loadMultiple($ids);
 
     $items = [];
 
@@ -101,8 +102,7 @@ class EventsController extends ControllerBase {
     $feed_url->setAbsolute();
     $feed_url = $feed_url->toString();
 
-    $current_date = new DrupalDateTime();
-    $date = $current_date->format('r');
+    $date = $this->dateFormatter->format(time(), 'custom', 'r');
 
     $rss_feed = <<<RSS
 <?xml version="1.0" encoding="UTF-8"?>

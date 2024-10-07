@@ -212,7 +212,7 @@ function dpl_update_update_10017(): string {
 }
 
 /**
- * Install dpl_search module.
+ * Install dpl_redia_legacy module.
  */
 function dpl_update_update_10018(): string {
   return _dpl_update_install_modules(['dpl_redia_legacy']);
