@@ -28,6 +28,6 @@ default:
         content: 'Genbrug | DPL CMS'
   path:
     -
-      alias: ''
-      langcode: da
+      alias: /search/web/tag/genbrug
+      langcode: und
       pathauto: 1
