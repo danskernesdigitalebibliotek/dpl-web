@@ -90,19 +90,12 @@ class ReoccurringDateFormatter {
   }
 
   /**
-   * Retrieves the upcoming event details for a given event series.
+   * Finding the IDs of all events that are in the future.
    *
-   * @param \Drupal\recurring_events\Entity\EventSeries $event_series
-   *   The event series object.
-   *
-   * @return null|array{'start': \Drupal\Core\Datetime\DrupalDateTime, 'end': \Drupal\Core\Datetime\DrupalDateTime, 'upcoming_ids': array<int, string>}
-   *   An array containing the following keys:
-   *   - start: The start date of the upcoming event as a DrupalDateTime object.
-   *   - end: The end date of the upcoming event as a DrupalDateTime object.
-   *   - upcoming_ids: An array of upcoming event instance IDs.
-   *   Returns NULL if the start and end dates are not found.
+   * @return array<int, string>
+   *   An array of matching eventinstance IDs.
    */
-  public function getUpcomingEventDetails(EventSeries $event_series): array|null {
+  public function getUpcomingEventIds(EventSeries $event_series): array {
     $date = new DrupalDateTime();
     $formatted = $date->format(DateTimeItemInterface::DATETIME_STORAGE_FORMAT);
 
@@ -116,9 +109,24 @@ class ReoccurringDateFormatter {
       ->sort('date.value', 'ASC')
       ->execute();
 
-    if (empty($upcoming_ids)) {
-      return NULL;
-    }
+    return $upcoming_ids;
+  }
+
+  /**
+   * Retrieves the upcoming event details for a given event series.
+   *
+   * @param \Drupal\recurring_events\Entity\EventSeries $event_series
+   *   The event series object.
+   *
+   * @return null|array{'start': \Drupal\Core\Datetime\DrupalDateTime, 'end': \Drupal\Core\Datetime\DrupalDateTime, 'upcoming_ids': array<int, string>}
+   *   An array containing the following keys:
+   *   - start: The start date of the upcoming event as a DrupalDateTime object.
+   *   - end: The end date of the upcoming event as a DrupalDateTime object.
+   *   - upcoming_ids: An array of upcoming event instance IDs.
+   *   Returns NULL if the start and end dates are not found.
+   */
+  public function getUpcomingEventDetails(EventSeries $event_series): array|null {
+    $upcoming_ids = $this->getUpcomingEventIds($event_series);
 
     // Load the first event instance - the remaining IDs are useful later on,
     // when we want to check if it is alone or not.
@@ -141,10 +149,16 @@ class ReoccurringDateFormatter {
     /** @var \Drupal\datetime_range\Plugin\Field\FieldType\DateRangeItem $event_instance_date */
     $event_instance_date = $event_instance->get('date')->first();
 
+    /** @var \Drupal\Core\Datetime\DrupalDateTime $start_date */
+    $start_date = $event_instance_date->get('start_date')->getValue();
+
+    /** @var \Drupal\Core\Datetime\DrupalDateTime $end_date */
+    $end_date = $event_instance_date->get('end_date')->getValue();
+
     // Return the dates, and the related IDs.
     return [
-      'start' => $event_instance_date->get('start_date')->getValue(),
-      'end' => $event_instance_date->get('end_date')->getValue(),
+      'start' => $start_date,
+      'end' => $end_date,
       'upcoming_ids' => $upcoming_ids,
     ];
   }
