@@ -226,27 +226,29 @@ class EventRestMapper {
    *
    * Notice that this may be the address of the related branch.
    *
-   * @see eventWrapper->getAddressField()
+   * @see BranchAddressFormatter
    */
-  private function getAddress(): ?EventsGET200ResponseInnerAddress {
-    $field = $this->eventWrapper->getAddressField();
+  private function getAddress(): EventsGET200ResponseInnerAddress {
+    // Loading the field, and rendering it, to let the BranchAddressFormatter
+    // do the work of looking up a possible branch.
+    $rendered = $this->event->get('event_address')->view('full');
 
-    if (!($field instanceof FieldItemListInterface)) {
-      return NULL;
+    $zip = $rendered[0]['postal_code']['#value'] ?? NULL;
+    $address_1 = $rendered[0]['address_line1']['#value'] ?? NULL;
+    $address_2 = $rendered[0]['address_line2']['#value'] ?? NULL;
+
+    $street = "$address_1 $address_2";
+
+    if (empty($address_1) && empty($address_2)) {
+      $street = NULL;
     }
-
-    $value = $field->getValue();
-
-    $zip = $value[0]['postal_code'] ?? NULL;
-    $address_1 = $value[0]['address_line1'] ?? NULL;
-    $address_2 = $value[0]['address_line2'] ?? NULL;
 
     $address = new EventsGET200ResponseInnerAddress();
     $address->setLocation($this->getValue('event_place'));
-    $address->setStreet("$address_1 $address_2");
+    $address->setStreet($street);
     $address->setZipCode(!empty($zip) ? intval($zip) : NULL);
-    $address->setCity($value[0]['locality'] ?? NULL);
-    $address->setCountry($value[0]['country_code'] ?? NULL);
+    $address->setCity($rendered[0]['locality']['#value'] ?? NULL);
+    $address->setCountry($rendered[0]['country_code']['#value'] ?? NULL);
 
     return $address;
   }

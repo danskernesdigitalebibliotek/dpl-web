@@ -4,7 +4,6 @@ namespace Drupal\dpl_event;
 
 use Drupal\Core\Field\FieldItemListInterface;
 use Drupal\drupal_typed\DrupalTyped;
-use Drupal\node\NodeInterface;
 use Drupal\recurring_events\Entity\EventInstance;
 use Psr\Log\LoggerInterface;
 use Safe\DateTimeImmutable;
@@ -84,33 +83,6 @@ class EventWrapper {
     // Drupal stores dates in UTC by default but if no timezone is specified
     // then the default timezone will be assumed.
     return new DateTimeImmutable($event_date_values[$value], new \DateTimeZone('UTC'));
-  }
-
-  /**
-   * Load an eventinstance address - either from the series/instance or branch.
-   */
-  public function getAddressField(): ?FieldItemListInterface {
-    $instance_field = $this->getField('event_address');
-
-    if ($instance_field instanceof FieldItemListInterface) {
-      return $instance_field;
-    }
-
-    // Could not find data - look up address from branch instead.
-    $branch_field = $this->getField('branch');
-
-    if (!$branch_field instanceof FieldItemListInterface) {
-      return NULL;
-    }
-
-    $branch_address_field = 'field_address';
-    $branch = $branch_field->referencedEntities()[0] ?? NULL;
-
-    if (!($branch instanceof NodeInterface) || !$branch->hasField($branch_address_field)) {
-      return NULL;
-    }
-
-    return $branch->get($branch_address_field);
   }
 
   /**
