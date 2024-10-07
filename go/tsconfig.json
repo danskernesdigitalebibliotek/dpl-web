@@ -15,6 +15,10 @@
     "plugins": [
       {
         "name": "next"
+      },
+      {
+        "name": "@0no-co/graphqlsp",
+        "schema": "generated/graphql/dpl-cms/graphql.schema.json"
       }
     ],
     "paths": {
