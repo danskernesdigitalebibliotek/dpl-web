@@ -185,6 +185,7 @@ function dpl_event_preprocess_eventseries(array &$variables): void {
   $service = DrupalTyped::service(ReoccurringDateFormatter::class, 'dpl_event.reoccurring_date_formatter');
   $upcoming_ids = $service->getUpcomingEventIds($event_series);
 
+  $variables['expired'] = empty($upcoming_ids);
 
   $variables['formatted_date'] = $service->getSeriesDateString($event_series);
 

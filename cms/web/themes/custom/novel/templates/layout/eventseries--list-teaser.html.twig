@@ -1,12 +1,14 @@
-{% include '@novel/components/list-item.html.twig'
-  with {
-  attributes: attributes,
-  url: eventseries|entity_url.toString(),
-  baseIconPath: baseIconPath,
-  title: content.title,
-  image: content.field_teaser_image.0,
-  categories: content.field_categories,
-  date: formatted_date,
-  description: content.field_teaser_text.0|default(content.field_subtitle),
-  bottom: content.field_branch,
-} only %}
+{% if not expired %}
+  {% include '@novel/components/list-item.html.twig'
+    with {
+    attributes: attributes,
+    url: eventseries|entity_url.toString(),
+    baseIconPath: baseIconPath,
+    title: content.title,
+    image: content.field_teaser_image.0,
+    categories: content.field_categories,
+    date: formatted_date,
+    description: content.field_teaser_text.0|default(content.field_subtitle),
+    bottom: content.field_branch,
+  } only %}
+{% endif %}

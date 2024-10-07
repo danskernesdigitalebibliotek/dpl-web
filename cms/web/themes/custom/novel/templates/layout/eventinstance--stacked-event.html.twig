@@ -1,11 +1,13 @@
-{% include '@novel/components/list-item-stacked.html.twig'
-  with {
-  attributes: attributes,
-  url: eventinstance_url,
-  baseIconPath: baseIconPath,
-  title: content.title,
-  datetime_attribute: datetime_attribute,
-  date: content.date,
-  start_time: start_time,
-  end_time: end_time,
-} only %}
+{% if not expired %}
+  {% include '@novel/components/list-item-stacked.html.twig'
+    with {
+    attributes: attributes,
+    url: eventinstance_url,
+    baseIconPath: baseIconPath,
+    title: content.title,
+    datetime_attribute: datetime_attribute,
+    date: content.date,
+    start_time: start_time,
+    end_time: end_time,
+  } only %}
+{% endif %}
