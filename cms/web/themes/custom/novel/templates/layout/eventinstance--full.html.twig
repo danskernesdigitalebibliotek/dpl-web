@@ -1,6 +1,10 @@
 {% set date = eventinstance.get('date').get(0) %}
 {% set description_items = [
   {
+    label: "Date"|trans,
+    value: content.date
+  },
+  {
     label: "Time"|trans,
     value: date ? date.get('start_date').getValue().getTimestamp()|format_date('custom', 'H:i') ~ ' - ' ~ date.get('end_date').getValue().getTimestamp()|format_date('custom', 'H:i') : null
   },
@@ -38,4 +42,5 @@
   'teaser_text': content.event_teaser_text,
   'tags': content.event_tags,
   'event_instances': event_instances,
+  'expired': expired
 } only %}

@@ -266,6 +266,7 @@ function dpl_event_preprocess_eventinstance(array &$variables): void {
       $variables['datetime_attribute'] = $date_formatter->format($start_time->getTimestamp(), DATE_ATOM);
     }
     if ($end_time instanceof DrupalDateTime) {
+      $variables['expired'] = ($end_time->getTimestamp() < \Drupal::time()->getCurrentTime());
       $variables['end_time'] = $date_formatter->format($end_time->getTimestamp(), 'custom', 'H:i');
     }
   }

@@ -230,3 +230,13 @@ function dpl_update_update_10019(): string {
 
   return $return;
 }
+
+/**
+ * Add initial translation for event field.
+ */
+function dpl_update_update_10020(): string {
+  return _dpl_update_update_translation(
+    'Date',
+    'Dato'
+  );
+}
