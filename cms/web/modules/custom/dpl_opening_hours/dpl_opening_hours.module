@@ -84,7 +84,7 @@ function dpl_opening_hours_form_taxonomy_term_opening_hours_categories_delete_fo
 
   $form['#title'] = t('Are you sure you want to delete all "@term_label" opening hours?', [
     '@term_label' => $term_label,
-  ]);
+  ], ['context' => 'Opening Hours']);
 
   $opening_hours_repository = DrupalTyped::service(OpeningHoursRepository::class, 'dpl_opening_hours.repository');
   $opening_hours_in_category = $opening_hours_repository->loadMultiple(categoryId: (int) $term_id);
