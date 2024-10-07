@@ -2,6 +2,7 @@
 
 namespace Drupal\dpl_redia_legacy\Controller\RssFeeds;
 
+use Drupal\Core\Cache\CacheableMetadata;
 use Drupal\Core\Cache\CacheableResponse;
 use Drupal\Core\Controller\ControllerBase;
 use Drupal\Core\Datetime\DrupalDateTime;
@@ -44,6 +45,14 @@ class EventsController extends ControllerBase {
 
     $response = new CacheableResponse();
     $response->setContent($rss_content);
+
+    // Create cache metadata.
+    $cache_metadata = new CacheableMetadata();
+    $cache_metadata->setCacheTags(['eventinstance_list', 'eventseries_list']);
+
+    // Add cache metadata to the response.
+    $response->addCacheableDependency($cache_metadata);
+
     $response->headers->set('Content-Type', 'application/rss+xml');
     return $response;
   }
