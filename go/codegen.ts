@@ -44,10 +44,7 @@ const config: CodegenConfig = {
           // TODO: Make this configurable
           "https://fbi-api.dbc.dk/ereolgo/graphql": {
             headers: {
-              Authorization: "Bearer {TOKEN}".replace(
-                "{TOKEN}",
-                process.env.LIBRARY_TOKEN ?? ""
-              )
+              Authorization: `Bearer ${process.env.LIBRARY_TOKEN ?? ""}`
             }
           }
         }
