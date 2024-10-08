@@ -5,7 +5,8 @@ const config: Config = {
   content: [
     "./pages/**/*.{js,ts,jsx,tsx,mdx}",
     "./components/**/*.{js,ts,jsx,tsx,mdx}",
-    "./app/**/*.{js,ts,jsx,tsx,mdx}"
+    "./app/**/*.{js,ts,jsx,tsx,mdx}",
+    "./styles/**/*.{js,ts,jsx,tsx,mdx}"
   ],
   theme: {
     screens: {
@@ -38,6 +39,156 @@ const config: Config = {
       "5/2": "var(--aspect-5-2)",
       "5/4": "var(--aspect-5-4)",
       "16/9": "var(--aspect-16-9)"
+    },
+    fontFamily: {
+      headline: "var(--font-headline)",
+      body: "var(--font-body)"
+    },
+    fontSize: {
+      "typo-huge": [
+        "var(--typo-huge-size)",
+        {
+          lineHeight: "var(--typo-huge-lineHeight)",
+          fontWeight: "var(--typo-huge-fontWeight)",
+          letterSpacing: "var(--typo-huge-letterSpacing)"
+        }
+      ],
+      "typo-heading-1": [
+        "var(--typo-heading-1-size)",
+        {
+          lineHeight: "var(--typo-heading-1-lineHeight)",
+          fontWeight: "var(--typo-heading-1-fontWeight)",
+          letterSpacing: "var(--typo-heading-1-letterSpacing)"
+        }
+      ],
+      "typo-heading-2": [
+        "var(--typo-heading-2-size)",
+        {
+          lineHeight: "var(--typo-heading-2-lineHeight)",
+          fontWeight: "var(--typo-heading-2-fontWeight)",
+          letterSpacing: "var(--typo-heading-2-letterSpacing)"
+        }
+      ],
+      "typo-heading-3": [
+        "var(--typo-heading-3-size)",
+        {
+          lineHeight: "var(--typo-heading-3-lineHeight)",
+          fontWeight: "var(--typo-heading-3-fontWeight)",
+          letterSpacing: "var(--typo-heading-3-letterSpacing)"
+        }
+      ],
+      "typo-heading-4": [
+        "var(--typo-heading-4-size)",
+        {
+          lineHeight: "var(--typo-heading-4-lineHeight)",
+          fontWeight: "var(--typo-heading-4-fontWeight)",
+          letterSpacing: "var(--typo-heading-4-letterSpacing)"
+        }
+      ],
+      "typo-heading-5": [
+        "var(--typo-heading-5-size)",
+        {
+          lineHeight: "var(--typo-heading-5-lineHeight)",
+          fontWeight: "var(--typo-heading-5-fontWeight)",
+          letterSpacing: "var(--typo-heading-5-letterSpacing)"
+        }
+      ],
+      "typo-subtitle-lg": [
+        "var(--typo-subtitle-lg-size)",
+        {
+          lineHeight: "var(--typo-subtitle-lg-lineHeight)",
+          fontWeight: "var(--typo-subtitle-lg-fontWeight)",
+          letterSpacing: "var(--typo-subtitle-lg-letterSpacing)"
+        }
+      ],
+      "typo-subtitle-md": [
+        "var(--typo-subtitle-md-size)",
+        {
+          lineHeight: "var(--typo-subtitle-md-lineHeight)",
+          fontWeight: "var(--typo-subtitle-md-fontWeight)",
+          letterSpacing: "var(--typo-subtitle-md-letterSpacing)"
+        }
+      ],
+      "typo-subtitle-sm": [
+        "var(--typo-subtitle-sm-size)",
+        {
+          lineHeight: "var(--typo-subtitle-sm-lineHeight)",
+          fontWeight: "var(--typo-subtitle-sm-fontWeight)",
+          letterSpacing: "var(--typo-subtitle-sm-letterSpacing)"
+        }
+      ],
+      "typo-body-lg": [
+        "var(--typo-body-lg-size)",
+        {
+          lineHeight: "var(--typo-body-lg-lineHeight)",
+          fontWeight: "var(--typo-body-lg-fontWeight)",
+          letterSpacing: "var(--typo-body-lg-letterSpacing)"
+        }
+      ],
+      "typo-body-md": [
+        "var(--typo-body-md-size)",
+        {
+          lineHeight: "var(--typo-body-md-lineHeight)",
+          fontWeight: "var(--typo-body-md-fontWeight)",
+          letterSpacing: "var(--typo-body-md-letterSpacing)"
+        }
+      ],
+      "typo-body-sm": [
+        "var(--typo-body-sm-size)",
+        {
+          lineHeight: "var(--typo-body-sm-lineHeight)",
+          fontWeight: "var(--typo-body-sm-fontWeight)",
+          letterSpacing: "var(--typo-body-sm-letterSpacing)"
+        }
+      ],
+      "typo-button-lg": [
+        "var(--typo-button-lg-size)",
+        {
+          lineHeight: "var(--typo-button-lg-lineHeight)",
+          fontWeight: "var(--typo-button-lg-fontWeight)",
+          letterSpacing: "var(--typo-button-lg-letterSpacing)"
+        }
+      ],
+      "typo-button-md": [
+        "var(--typo-button-md-size)",
+        {
+          lineHeight: "var(--typo-button-md-lineHeight)",
+          fontWeight: "var(--typo-button-md-fontWeight)",
+          letterSpacing: "var(--typo-button-md-letterSpacing)"
+        }
+      ],
+      "typo-link": [
+        "var(--typo-link-size)",
+        {
+          lineHeight: "var(--typo-link-lineHeight)",
+          fontWeight: "var(--typo-link-fontWeight)",
+          letterSpacing: "var(--typo-link-letterSpacing)"
+        }
+      ],
+      "typo-tag-lg": [
+        "var(--typo-tag-lg-size)",
+        {
+          lineHeight: "var(--typo-tag-lg-lineHeight)",
+          fontWeight: "var(--typo-tag-lg-fontWeight)",
+          letterSpacing: "var(--typo-tag-lg-letterSpacing)"
+        }
+      ],
+      "typo-tag-sm": [
+        "var(--typo-tag-sm-size)",
+        {
+          lineHeight: "var(--typo-tag-sm-lineHeight)",
+          fontWeight: "var(--typo-tag-sm-fontWeight)",
+          letterSpacing: "var(--typo-tag-sm-letterSpacing)"
+        }
+      ],
+      "typo-caption": [
+        "var(--typo-caption-size)",
+        {
+          lineHeight: "var(--typo-caption-lineHeight)",
+          fontWeight: "var(--typo-caption-fontWeight)",
+          letterSpacing: "var(--typo-caption-letterSpacing)"
+        }
+      ]
     },
     extend: {
       colors: {
