@@ -87,6 +87,22 @@ class EventWrapper {
   }
 
   /**
+   * Getting an events branches.
+   *
+   * @return array<NodeInterface>|null
+   *   The matching branches.
+   */
+  public function getBranches(): ?array {
+    $field = $this->getField('branch');
+
+    if (!$field instanceof FieldItemListInterface) {
+      return NULL;
+    }
+
+    return $field->referencedEntities() ?? NULL;
+  }
+
+  /**
    * Load an eventinstance address - either from the series/instance or branch.
    */
   public function getAddressField(): ?FieldItemListInterface {
@@ -96,21 +112,32 @@ class EventWrapper {
       return $instance_field;
     }
 
-    // Could not find data - look up address from branch instead.
-    $branch_field = $this->getField('branch');
-
-    if (!$branch_field instanceof FieldItemListInterface) {
-      return NULL;
-    }
+    // Could not find data - look up address from first branch instead.
+    $branch = $this->getBranches()[0] ?? NULL;
 
     $branch_address_field = 'field_address';
-    $branch = $branch_field->referencedEntities()[0] ?? NULL;
 
     if (!($branch instanceof NodeInterface) || !$branch->hasField($branch_address_field)) {
       return NULL;
     }
 
     return $branch->get($branch_address_field);
+  }
+
+  /**
+   * Getting the description, from the first available text paragraph.
+   */
+  public function getDescription(): ?string {
+    /** @var \Drupal\paragraphs\ParagraphInterface[] $paragraphs */
+    $paragraphs = $this->event->get('event_paragraphs')->referencedEntities();
+
+    foreach ($paragraphs as $paragraph) {
+      if ($paragraph->bundle() === 'text_body') {
+        return $paragraph->get('field_body')->getValue()[0]['value'] ?? NULL;
+      }
+    }
+
+    return NULL;
   }
 
   /**

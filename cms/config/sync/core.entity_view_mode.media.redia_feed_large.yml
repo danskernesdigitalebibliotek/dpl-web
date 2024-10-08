@@ -1,0 +1,11 @@
+uuid: 74eba980-7ec0-4b81-a6da-5c33830b08d9
+langcode: en
+status: true
+dependencies:
+  module:
+    - media
+id: media.redia_feed_large
+label: 'Redia feed - large'
+description: ''
+targetEntityType: media
+cache: true
