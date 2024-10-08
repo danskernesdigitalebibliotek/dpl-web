@@ -118,6 +118,7 @@
         "drupal/dynamic_entity_reference": "^3.1",
         "drupal/editor_advanced_link": "^2.2",
         "drupal/entity_clone_template": "^2.0",
+        "drupal/entity_reference_revisions": "^1.11.0",
         "drupal/enum_field": "^1.0",
         "drupal/facets": "^2.0",
         "drupal/field_group": "^3.4",
@@ -315,6 +316,9 @@
             },
             "drupal/entity_clone_template": {
                 "3424597: Fix error when creating entity of type without templates": "https://git.drupalcode.org/project/entity_clone_template/-/commit/ad4964dd51f7f5e814111fcb73e6e472eefccf5c.patch"
+            },
+            "drupal/entity_reference_revisions": {
+                "3039442: Circular dependencies in EntityReferenceRevisionsFieldItemList::hasAffectingChanges()": "https://www.drupal.org/files/issues/2023-11-20/entity_reference_revisions-fix_infinite_loop-3039442-8.patch"
             },
             "drupal/field_inheritance": {
                 "3454350: Create seperate permission for adding field inheritance": "https://www.drupal.org/files/issues/2024-06-13/field_inheritance_permission.patch"
