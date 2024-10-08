@@ -7,8 +7,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2024-10-08 16:59+0200\n"
-"PO-Revision-Date: 2024-10-08 16:59+0200\n"
+"POT-Creation-Date: 2024-10-08 17:27+0200\n"
+"PO-Revision-Date: 2024-10-08 17:27+0200\n"
 "Last-Translator: NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
 "MIME-Version: 1.0\n"
@@ -4008,9 +4008,6 @@ msgstr "Opdater enkelte åbningstider"
 msgid "Delete individual opening hours"
 msgstr "Slet enkelte åbningstider"
 
-msgid "List all opening hours for legacy API"
-msgstr "List alle åbningstider for ældre API"
-
 msgid "List all opening hours"
 msgstr "Vis alle åbningstider"
 
@@ -4043,6 +4040,9 @@ msgstr "CQL søgning"
 
 msgid "FBI"
 msgstr "FBI"
+
+msgid "List all opening hours for legacy API"
+msgstr "List alle åbningstider for ældre API"
 
 msgid "DPL Filtered Paragraphs (Deprecated)"
 msgstr "DPL filtreret Paragraphs (Forældet)"
@@ -4526,6 +4526,15 @@ msgstr "DPL PO"
 
 msgid "PO file handling. Export/import, splitting etc."
 msgstr "PO filhåndtering. Export/Import, opdeling etc."
+
+msgid "Redia APP Event"
+msgstr ""
+
+msgid "DPL Redia Legacy feeds"
+msgstr ""
+
+msgid "Various legacy integrations, used for the Redia App."
+msgstr ""
 
 msgid "DDB React"
 msgstr "DPL React"
@@ -18629,6 +18638,14 @@ msgctxt "core.entity_view_mode.media.paragraph_wide:label"
 msgid "Paragraph, wide"
 msgstr ""
 
+msgctxt "core.entity_view_mode.media.redia_feed_large:label"
+msgid "Redia feed - large"
+msgstr ""
+
+msgctxt "core.entity_view_mode.media.redia_feed_small:label"
+msgid "Redia feed - small"
+msgstr ""
+
 msgctxt "core.entity_view_mode.node.card:label"
 msgid "Card"
 msgstr ""
@@ -20430,6 +20447,14 @@ msgstr ""
 
 msgctxt "image.style.paragraph_wide:label"
 msgid "Paragraph, Wide (896x670px)"
+msgstr ""
+
+msgctxt "image.style.redia_feed_large:label"
+msgid "Redia feed large"
+msgstr ""
+
+msgctxt "image.style.redia_feed_small:label"
+msgid "Redia feed small"
 msgstr ""
 
 msgctxt "image.style.small_preview:label"
