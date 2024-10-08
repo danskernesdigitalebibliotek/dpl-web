@@ -59,33 +59,33 @@
   --block-spacing: 5rem; /* 80px */
 
   /* COLORS */
-  --black: 0, 0%, 10%;
-  --white: 0, 0%, 0%;
+  --black: 0 0% 10%;
+  --white: 0 0% 0%;
 
-  --beige: 36, 45%, 98%;
-  --beige-dimmed: 43, 26%, 95%;
+  --beige: 36 45% 98%;
+  --beige-dimmed: 43 26% 95%;
 
-  --blue: 238, 46%, 16%;
-  --blue-light: 228, 100%, 10%;
+  --blue: 238 46% 16%;
+  --blue-light: 228 100% 10%;
 
-  --border: 48, 4.4%, 77.8%;
+  --border: 48 4.4% 77.8%;
 
   /* CONTENT COLORS */
-  --content-pink-100: 320, 100%, 91%;
-  --content-pink-200: 317, 100%, 73%;
-  --content-pink-300: 320, 43%, 27%;
+  --content-pink-100: 320 100% 91%;
+  --content-pink-200: 317 100% 73%;
+  --content-pink-300: 320 43% 27%;
 
-  --content-purple-100: 265, 100%, 88%;
-  --content-purple-200: 258, 100%, 72%;
-  --content-purple-300: 258, 33%, 50%;
+  --content-purple-100: 265 100% 88%;
+  --content-purple-200: 258 100% 72%;
+  --content-purple-300: 258 33% 50%;
 
-  --content-orange-100: 30, 100%, 86%;
-  --content-orange-200: 34, 100%, 50%;
-  --content-orange-300: 30, 79%, 27%;
+  --content-orange-100: 30 100% 86%;
+  --content-orange-200: 34 100% 50%;
+  --content-orange-300: 30 79% 27%;
 
-  --content-blue-100: 200, 86%, 86%;
-  --content-blue-200: 202, 100%, 60%;
-  --content-blue-300: 201, 67%, 29%;
+  --content-blue-100: 200 86% 86%;
+  --content-blue-200: 202 100% 60%;
+  --content-blue-300: 201 67% 29%;
 
   /* DYNAMIC COLORS */
   --background: var(--beige);
@@ -226,11 +226,29 @@
 }
 
 body {
-  @apply text-foreground bg-background-foreground transition-all duration-dark-mode font-headline;
+  @apply text-foreground bg-background-foreground transition-all duration-dark-mode font-body;
 }
 
 body > * {
   @apply bg-background transition-all dark-mode-transition;
+}
+
+.text-typo-huge,
+.text-typo-heading-1,
+.text-typo-heading-2,
+.text-typo-heading-3,
+.text-typo-heading-4,
+.text-typo-heading-5,
+.text-typo-subtitle-lg,
+.text-typo-subtitle-md,
+.text-typo-subtitle-sm,
+.text-typo-button-lg,
+.text-typo-button-md,
+.text-typo-link,
+.text-typo-tag-lg,
+.text-typo-tag-sm,
+.text-typo-caption {
+  @apply font-headline;
 }
 
 @layer utilities {
@@ -258,7 +276,7 @@ body > * {
     --destructive-foreground: 0 0% 98%;
     --border: 0 0% 89.8%;
     --input: 0 0% 89.8%;
-    --ring: 0 0% 3.9%;
+    --ring: 43, 26%, 95%;
     --chart-1: 12 76% 61%;
     --chart-2: 173 58% 39%;
     --chart-3: 197 37% 24%;
