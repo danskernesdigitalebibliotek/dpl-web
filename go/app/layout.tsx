@@ -6,6 +6,7 @@ import localFont from "next/font/local";
 import Footer from "@/components/global/footer/Footer";
 import Header from "@/components/global/header/Header";
 import Theme from "@/components/global/theme/Theme";
+import ReactQueryProvider from "@/lib/providers/ReactQueryProvider";
 
 const GTFlexa = localFont({
   src: [
@@ -36,9 +37,11 @@ export default function RootLayout({
     <html lang="en">
       <body className={`${GTFlexa.variable} antialiased`}>
         <Theme>
-          <Header />
-          {children}
-          <Footer />
+          <ReactQueryProvider>
+            <Header />
+            {children}
+            <Footer />
+          </ReactQueryProvider>
         </Theme>
       </body>
     </html>

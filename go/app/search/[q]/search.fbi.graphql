@@ -1,0 +1,17 @@
+query searchWithPagination(
+  $q: SearchQuery!
+  $offset: Int!
+  $limit: PaginationLimit!
+  $filters: SearchFilters
+) {
+  search(q: $q, filters: $filters) {
+    hitcount
+    works(offset: $offset, limit: $limit) {
+      workId
+      titles {
+        full
+        original
+      }
+    }
+  }
+}
