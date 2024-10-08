@@ -1,9 +1,9 @@
 import React from "react";
 
-import { Button } from "@/app/components/shared/button/Button";
-import DarkModeToggle from "@/app/components/shared/darkModeToggle/DarkModeToggle";
-import Icon from "@/app/components/shared/icon/Icon";
-import { SearchInput } from "@/app/components/shared/searchInput/SearchInput";
+import { Button } from "@/components/shared/button/Button";
+import DarkModeToggle from "@/components/shared/darkModeToggle/DarkModeToggle";
+import Icon from "@/components/shared/icon/Icon";
+import { SearchInput } from "@/components/shared/searchInput/SearchInput";
 
 function Header() {
   return (

@@ -1,21 +1,25 @@
-import "./globals.css";
+import "@/styles/globals.css";
 
 import type { Metadata } from "next";
 import localFont from "next/font/local";
 
-import Footer from "@/app/components/global/footer/Footer";
-import Header from "@/app/components/global/header/Header";
-import Theme from "@/app/components/global/theme/Theme";
+import Footer from "@/components/global/footer/Footer";
+import Header from "@/components/global/header/Header";
+import Theme from "@/components/global/theme/Theme";
 
-const geistSans = localFont({
-  src: "./fonts/GeistVF.woff",
-  variable: "--font-geist-sans",
-  weight: "100 900"
-});
-const geistMono = localFont({
-  src: "./fonts/GeistMonoVF.woff",
-  variable: "--font-geist-mono",
-  weight: "100 900"
+const GTFlexa = localFont({
+  src: [
+    {
+      path: "../fonts/GT-Flexa-Expanded-Regular.woff2",
+      weight: "400"
+    },
+    {
+      path: "../fonts/GT-Flexa-Expanded-Medium.woff2",
+      weight: "500"
+    }
+  ],
+  variable: "--font-headline",
+  display: "swap"
 });
 
 export const metadata: Metadata = {
@@ -30,9 +34,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
-      >
+      <body className={`${GTFlexa.variable} antialiased`}>
         <Theme>
           <Header />
           {children}
