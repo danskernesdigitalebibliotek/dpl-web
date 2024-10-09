@@ -89,7 +89,7 @@ const visitOpeningHoursPage = () => {
   }
 };
 
-const visitOpeningHoursPageAdmin = () => {
+const visitOpeningHoursAdmin = () => {
   const adminUrl = Cypress.env("adminUrl");
   if (adminUrl) {
     cy.drupalLogin(adminUrl);
@@ -270,7 +270,7 @@ const confirmEditRepeatedOpeningHourForm = (value?: "all") => {
 
   // Need to reload the page to get the updated opening hours
   confirmAddRepeatedOpeningHourForm();
-  visitOpeningHoursPageAdmin();
+  visitOpeningHoursAdmin();
   navigateToMonthViewAdmin();
 };
 
@@ -278,7 +278,7 @@ const createOpeningHour = ({
   openingHourCategory,
   timeDuration: { start, end },
 }: OpeningHourFormType) => {
-  visitOpeningHoursPageAdmin();
+  visitOpeningHoursAdmin();
   navigateToMonthViewAdmin();
   selectTodayFromMonthViewAdmin();
   fillOpeningHourForm({ openingHourCategory, timeDuration: { start, end } });
@@ -298,7 +298,7 @@ const createOpeningHourInNextWeek = ({
   openingHourCategory,
   timeDuration: { start, end },
 }: OpeningHourFormType) => {
-  visitOpeningHoursPageAdmin();
+  visitOpeningHoursAdmin();
   navigateToNextWeekOrMonthAdmin();
   selectTimeOnThursdayFromWeekView(start);
   fillOpeningHourForm({ openingHourCategory, timeDuration: { end } });
@@ -325,7 +325,7 @@ const createOpeningHoursSeries = ({
   timeDuration: { start, end },
   endDate,
 }: Required<OpeningHourFormType>) => {
-  visitOpeningHoursPageAdmin();
+  visitOpeningHoursAdmin();
   navigateToMonthViewAdmin();
   navigateToFirstJanuary2024("monthViewAdmin");
   clickFirstDayInMonthViewAdmin();
@@ -367,7 +367,7 @@ const updateOpeningHour = ({
   timeDuration: { start, end },
 }: OpeningHourFormType) => {
   // Assume that the event is already created and is visible
-  visitOpeningHoursPageAdmin();
+  visitOpeningHoursAdmin();
   navigateToMonthViewAdmin();
   cy.getBySel("opening-hours-editor-event-content")
     .contains(openingHourCategory)
@@ -391,7 +391,7 @@ const updateOpeningHoursSeries = ({
   editSeriesFromIndex = 0,
 }: OpeningHourFormType & { editSeriesFromIndex?: number }) => {
   // Assume that the event is already created and is visible
-  visitOpeningHoursPageAdmin();
+  visitOpeningHoursAdmin();
   navigateToMonthViewAdmin();
   navigateToFirstJanuary2024("monthViewAdmin");
   cy.getBySel("opening-hours-editor-event-content")
@@ -430,7 +430,7 @@ const deleteOpeningHour = ({
   openingHourCategory,
   timeDuration: { start, end },
 }: OpeningHourFormType) => {
-  visitOpeningHoursPageAdmin();
+  visitOpeningHoursAdmin();
   navigateToMonthViewAdmin();
   validateAtLeastOneOpeningHoursExistAdmin({
     openingHourCategory,
@@ -452,7 +452,7 @@ const deleteOpeningHoursSeries = ({
   openingHourCategory,
   timeDuration: { start, end },
 }: OpeningHourFormType) => {
-  visitOpeningHoursPageAdmin();
+  visitOpeningHoursAdmin();
   navigateToMonthViewAdmin();
   navigateToFirstJanuary2024("monthViewAdmin");
   validateAtLeastOneOpeningHoursExistAdmin({
@@ -485,7 +485,7 @@ const deleteRestOfOpeningHoursSeries = ({
   timeDuration: { start, end },
   editSeriesFromIndex = 0,
 }: OpeningHourFormType & { editSeriesFromIndex?: number }) => {
-  visitOpeningHoursPageAdmin();
+  visitOpeningHoursAdmin();
   navigateToMonthViewAdmin();
   navigateToFirstJanuary2024("monthViewAdmin");
   validateAtLeastOneOpeningHoursExistAdmin({
@@ -505,7 +505,7 @@ describe("Opening hours editor", () => {
   });
 
   it("Checks opening hours categories", () => {
-    visitOpeningHoursPageAdmin();
+    visitOpeningHoursAdmin();
     navigateToMonthViewAdmin();
     selectTodayFromMonthViewAdmin();
     cy.getBySel("opening-hours-editor-form-select")
