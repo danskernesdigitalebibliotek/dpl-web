@@ -4,13 +4,36 @@ project: dpl-cms-core
 
 ssh: 20.238.147.183:22
 api: https://api.lagoon.dplplat01.dpl.reload.dk/graphql
+environment_variables:
+  git_sha: 'true'
 
 tasks:
   post-rollout:
     - run:
+        name: Create new GH deployment
+        command: |
+          GH_DEPLOYMENTS=$(curl -H "Authorization: Bearer $GH_DEPLOYMENT_TOKEN" \
+          "https://api.github.com/repos/danskernesdigitalebibliotek/dpl-cms/deployments?ref=$LAGOON_PR_HEAD_BRANCH&environment=$LAGOON_ENVIRONMENT")
+          GH_DEPLOYMENT_ID=$(echo "$GH_DEPLOYMENTS" | grep '"id":' | head -n 1 | sed 's/[^0-9]*\([0-9]*\).*/\1/')
+
+          echo "$GH_DEPLOYMENTS"
+          echo "Found GH deployment with ID '$GH_DEPLOYMENT_ID'"
+
+          # The only way to keep a value between tasks, is saving it in a
+          # file. Environment variables are killed between tasks, apart from
+          # the global ones.
+          echo "$GH_DEPLOYMENT_ID" > /tmp/GH_DEPLOYMENT_ID
+          LAGOON_DEPLOYS_LOG_URL="https://ui.lagoon.dplplat01.dpl.reload.dk/projects/$LAGOON_PROJECT/dpl-cms-$LAGOON_ENVIRONMENT/deployments"
+          echo "$LAGOON_DEPLOYS_LOG_URL" > /tmp/LAGOON_DEPLOYS_LOG_URL
+
+          echo "Creating a initial pending deployment status."
+          ./dev-scripts/lagoon-set-gh-deploy-status.sh "in_progress"
+        service: cli
+    - run:
         name: If drupal is not installed
         command: |
-          set -e
+          source dev-scripts/lagoon-error-handling.sh
+
           if tables=$(drush sqlq "show tables like 'node';") && [ -z "$tables" ]; then
             # Install and set the admin password to a Lagoon variable if it exists.
             if [[ -n $PR_DRUPAL_PWD ]]; then
@@ -29,7 +52,8 @@ tasks:
     - run:
         name: drush deploy
         command: |
-          set -e
+          source dev-scripts/lagoon-error-handling.sh
+
           if [[ -f config/sync/system.site.yml ]]; then
             echo "Config detected, doing a drush deploy"
             drush deploy
@@ -49,7 +73,8 @@ tasks:
         # it will be gone.
         name: Create module upload directory in public files
         command: |
-          set -e
+          source dev-scripts/lagoon-error-handling.sh
+
           if [[ ! -d "web/sites/default/files/modules_local" ]]; then
             echo "Creating directory for module uploads"
             mkdir web/sites/default/files/modules_local
@@ -58,14 +83,16 @@ tasks:
     - run:
         name: Import translations
         command: |
-          set -e;
+          source dev-scripts/lagoon-error-handling.sh
+
           drush locale-check
           drush locale-update
         service: cli
     - run:
         name: Create test users
         command: |
-          set -e
+          source dev-scripts/lagoon-error-handling.sh
+
           # Only create test users if they do not exist already.
           if editor_user=$(drush sqlq 'select * from users_field_data where name = "editor"') && [ -z "$editor_user" ]; then
             drush user:create editor --password="$PR_DRUPAL_PWD"
@@ -89,8 +116,16 @@ tasks:
     - run:
         name: Enable example content
         command: |
-          set -e
+          source dev-scripts/lagoon-error-handling.sh
+
           drush en -y dpl_example_content
+        service: cli
+    - run:
+        name: Setting Deployment status success
+        command: |
+          DRUPAL_URL=$(drush browse)
+
+          ./dev-scripts/lagoon-set-gh-deploy-status.sh "success" "$DRUPAL_URL"
         service: cli
 
 environments:
