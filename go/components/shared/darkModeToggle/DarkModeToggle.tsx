@@ -2,8 +2,8 @@
 
 import React from "react";
 
-import Icon from "@/app/components/shared/icon/Icon";
-import { useThemeStore } from "@/app/store/theme.store";
+import Icon from "@/components/shared/icon/Icon";
+import { useThemeStore } from "@/store/theme.store";
 
 function DarkModeToggle() {
   const { toggleTheme } = useThemeStore();

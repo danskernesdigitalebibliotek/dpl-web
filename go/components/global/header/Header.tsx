@@ -1,15 +1,15 @@
 import React from "react";
 
-import { Button } from "@/app/components/shared/button/Button";
-import DarkModeToggle from "@/app/components/shared/darkModeToggle/DarkModeToggle";
-import Icon from "@/app/components/shared/icon/Icon";
-import { SearchInput } from "@/app/components/shared/searchInput/SearchInput";
+import { Button } from "@/components/shared/button/Button";
+import DarkModeToggle from "@/components/shared/darkModeToggle/DarkModeToggle";
+import Icon from "@/components/shared/icon/Icon";
+import { SearchInput } from "@/components/shared/searchInput/SearchInput";
 
 function Header() {
   return (
     <div>
       <div className="bg-background-foreground dark-mode-transition flex items-center justify-center h-navigation-top-height">
-        <p>Biblioterernes ebøger og lyderbøger</p>
+        <p className="text-typo-caption">Biblioterernes ebøger og lyderbøger</p>
       </div>
       <div className="h-navigation-height grid grid-cols-3 items-center content-container ">
         <div className="flex-0">

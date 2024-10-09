@@ -1,4 +1,5 @@
 {
+  "extends": "@tsconfig/create-react-app/tsconfig.json",
   "compilerOptions": {
     "lib": ["dom", "dom.iterable", "esnext"],
     "allowJs": true,
@@ -10,7 +11,8 @@
     "moduleResolution": "bundler",
     "resolveJsonModule": true,
     "isolatedModules": true,
-    "jsx": "preserve",
+    "jsx": "react",
+    "target": "es6",
     "incremental": true,
     "plugins": [
       {

@@ -2,7 +2,7 @@
 
 import React, { useEffect } from "react";
 
-import { useThemeStore } from "@/app/store/theme.store";
+import { useThemeStore } from "@/store/theme.store";
 
 export default function Theme({
   children
