@@ -2,12 +2,13 @@
 
 declare(strict_types=1);
 
-namespace Drupal\dpl_opening_hours\Plugin\rest\resource\v1;
+namespace Drupal\dpl_redia_legacy\Plugin\rest\resource;
 
 use DanskernesDigitaleBibliotek\CMS\Api\Model\DplOpeningHoursLegacyListGET200ResponseInner as OpeningHoursLegacyResponse;
 use Drupal\Component\Utility\NestedArray;
 use Drupal\Core\Cache\CacheableResponse;
 use Drupal\dpl_opening_hours\Model\OpeningHoursInstance;
+use Drupal\dpl_opening_hours\Plugin\rest\resource\v1\OpeningHoursResourceBase;
 use Drupal\drupal_typed\RequestTyped;
 use JMS\Serializer\ContextFactory\DefaultSerializationContextFactory;
 use Safe\DateTime;
@@ -35,7 +36,7 @@ use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
  *   },
  * )
  */
-final class OpeningHoursLegacyResource extends OpeningHoursResourceBase {
+final class OpeningHoursResource extends OpeningHoursResourceBase {
 
   /**
    * {@inheritdoc}

@@ -86,6 +86,38 @@ class EventWrapper {
   }
 
   /**
+   * Getting an events branches.
+   *
+   * @return array<\Drupal\node\NodeInterface>|null
+   *   The matching branches.
+   */
+  public function getBranches(): ?array {
+    $field = $this->getField('branch');
+
+    if (!$field instanceof FieldItemListInterface) {
+      return NULL;
+    }
+
+    return $field->referencedEntities() ?? NULL;
+  }
+
+  /**
+   * Getting the description, from the first available text paragraph.
+   */
+  public function getDescription(): ?string {
+    /** @var \Drupal\paragraphs\ParagraphInterface[] $paragraphs */
+    $paragraphs = $this->event->get('event_paragraphs')->referencedEntities();
+
+    foreach ($paragraphs as $paragraph) {
+      if ($paragraph->bundle() === 'text_body') {
+        return $paragraph->get('field_body')->getValue()[0]['value'] ?? NULL;
+      }
+    }
+
+    return NULL;
+  }
+
+  /**
    * Get the EventState object of an eventinstance.
    */
   public function getState(): ?EventState {

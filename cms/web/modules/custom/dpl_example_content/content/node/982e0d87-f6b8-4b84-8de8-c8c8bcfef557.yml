@@ -56,12 +56,12 @@ default:
       tag: meta
       attributes:
         property: 'og:image'
-        content: 'http://dapple-cms.docker/sites/default/files/styles/open_graph/public/2023-12/jon-tyson-kGUmNEYaSMY-unsplash.jpg?h=99e0c21c&itok=uyZEM7nO'
+        content: 'http://dapple-cms.docker/sites/default/files/styles/open_graph/public/2023-12/jon-tyson-kGUmNEYaSMY-unsplash.jpg?h=99e0c21c&itok=T5LAeqss'
     -
       tag: meta
       attributes:
         property: 'og:image:url'
-        content: 'http://dapple-cms.docker/sites/default/files/styles/open_graph/public/2023-12/jon-tyson-kGUmNEYaSMY-unsplash.jpg?h=99e0c21c&itok=uyZEM7nO'
+        content: 'http://dapple-cms.docker/sites/default/files/styles/open_graph/public/2023-12/jon-tyson-kGUmNEYaSMY-unsplash.jpg?h=99e0c21c&itok=T5LAeqss'
     -
       tag: meta
       attributes:
