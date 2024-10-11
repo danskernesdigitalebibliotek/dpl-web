@@ -335,7 +335,8 @@
                 "3251587: Change logging from stdout to stderr": "https://www.drupal.org/files/issues/2021-11-29/jsonlog-change-stdout-to-stderr-3251587-3.patch"
             },
             "drupal/openapi": {
-                "3313521: OpenAPI security field does not validate": "https://git.drupalcode.org/project/openapi/-/commit/4964cf725242040ddfb0c591b6044ee1fa5912ef.patch"
+                "3313521: OpenAPI security field does not validate": "https://git.drupalcode.org/project/openapi/-/commit/4964cf725242040ddfb0c591b6044ee1fa5912ef.patch",
+                "3480050: Update oauth2 security definitions to match openapi v2 specification": "https://www.drupal.org/files/issues/2024-10-11/openapi-add-oauth2-accesscode-flow-3480050-3.patch"
             },
             "drupal/openapi_rest": {
                 "3171530 + 3116760: Add support for parameter and response descriptions": "patches/openapi-parameter-response-descriptions-14-3.patch",
