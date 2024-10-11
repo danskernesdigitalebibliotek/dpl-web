@@ -147,6 +147,13 @@ Authentication schemes defined for the API:
 
 - **Type**: HTTP basic authentication
 
+### oauth2
+
+- **Type**: OAuth
+- **Flow**: accessCode
+- **Authorization URL**: http://varnish:8080/oauth/authorize
+- **Scopes**: N/A
+
 ### csrf_token
 
 - **Type**: API key

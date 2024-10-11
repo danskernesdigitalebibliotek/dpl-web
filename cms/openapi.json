@@ -14,26 +14,9 @@
     },
     "oauth2": {
       "type": "oauth2",
-      "description": "For more information see https://developers.getbase.com/docs/rest/articles/oauth2/requests",
-      "flows": {
-        "password": {
-          "tokenUrl": "http://varnish:8080/oauth/token",
-          "refreshUrl": "http://varnish:8080/oauth/token"
-        },
-        "authorizationCode": {
-          "authorizationUrl": "http://varnish:8080/oauth/authorize",
-          "tokenUrl": "http://varnish:8080/oauth/token",
-          "refreshUrl": "http://varnish:8080/oauth/token"
-        },
-        "implicit": {
-          "authorizationUrl": "http://varnish:8080/oauth/authorize",
-          "refreshUrl": "http://varnish:8080/oauth/token"
-        },
-        "clientCredentials": {
-          "tokenUrl": "http://varnish:8080/oauth/token",
-          "refreshUrl": "http://varnish:8080/oauth/token"
-        }
-      }
+      "flow": "accessCode",
+      "authorizationUrl": "http://varnish:8080/oauth/authorize",
+      "tokenUrl": "http://varnish:8080/oauth/token"
     },
     "csrf_token": {
       "type": "apiKey",
