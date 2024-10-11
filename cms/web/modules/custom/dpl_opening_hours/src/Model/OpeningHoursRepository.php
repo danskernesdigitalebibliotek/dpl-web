@@ -93,7 +93,10 @@ class OpeningHoursRepository {
       }
     }, $result->fetchAll(\PDO::FETCH_ASSOC));
 
-    return array_filter($possible_objects);
+    // Using array_values to reindex the array after filtering out NULL values.
+    // This is necessary because we don't handle the deletion of opening hour
+    // instances that reference a branch which has been deleted.
+    return array_values(array_filter($possible_objects));
   }
 
   /**
