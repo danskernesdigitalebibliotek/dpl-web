@@ -1,33 +1,64 @@
-import * as React from "react";
+'use client'
 
-import { cn } from "@/lib/utils";
+import { useRouter, useSearchParams } from 'next/navigation'
+import React from 'react'
+import { useEffect, useRef } from 'react'
 
-import Icon from "../icon/Icon";
+import { cn } from '@/lib/utils'
 
-// eslint-disable-next-line @typescript-eslint/no-empty-object-type
-export interface InputProps
-  extends React.InputHTMLAttributes<HTMLInputElement> {}
+import Icon from '../icon/Icon'
 
-const SearchInput = React.forwardRef<HTMLInputElement, InputProps>(
-  ({ className, type, ...props }, ref) => {
-    return (
-      <div className="w-full relative">
-        <input
-          type={type}
-          className={cn(
-            "flex h-20 px-5 rounded-base w-full bg-background-foreground text-sm shadow-sm transition-colors file:border-0 file:bg-transparent file:text-sm file:font-medium file:text-foreground placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:cursor-not-allowed disabled:opacity-50 text-typo-subtitle-lg",
-            className
-          )}
-          ref={ref}
-          {...props}
-        />
-        <div className="absolute right-[24px] top-[50%] translate-y-[-50%]">
-          <Icon className="w-[32px] h-[32px]" name="search" />
-        </div>
-      </div>
-    );
+const SearchInput = ({ className }: { className?: string }) => {
+  const inputRef = useRef<HTMLInputElement>(null)
+  const router = useRouter()
+
+  const searchParams = useSearchParams()
+  const [queryString, setQueryString] = React.useState('')
+
+  useEffect(() => {
+    setQueryString(searchParams.get('q') || '')
+
+    window.addEventListener('keydown', handleKeydown)
+    return () => {
+      window.removeEventListener('keydown', handleKeydown)
+    }
+  }, [])
+
+  const handleKeydown = (event: KeyboardEvent) => {
+    if (!inputRef.current) return
+    const focusedElement = document.activeElement as HTMLElement
+
+    if (event.key === 'Enter' && focusedElement === inputRef.current) {
+      navigateToSearch()
+    }
   }
-);
-SearchInput.displayName = "SearchInput";
 
-export { SearchInput };
+  const navigateToSearch = () => {
+    if (!inputRef.current) return
+    const inputValue = inputRef.current.value
+    router.push(inputValue ? `/search?q=${inputValue}` : '/search')
+  }
+
+  return (
+    <div className="relative w-full">
+      <input
+        ref={inputRef}
+        className={cn(
+          'text-sm file:text-sm flex h-20 w-full rounded-base bg-background-foreground px-5 text-typo-subtitle-lg shadow-sm transition-colors file:border-0 file:bg-transparent file:font-medium file:text-foreground placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:cursor-not-allowed disabled:opacity-50',
+          className
+        )}
+        value={queryString}
+        onChange={(e) => setQueryString(e.target.value)}
+      />
+      <button
+        className="absolute right-[24px] top-[50%] translate-y-[-50%]"
+        onClick={navigateToSearch}
+      >
+        <Icon className="h-[32px] w-[32px]" name="search" />
+      </button>
+    </div>
+  )
+}
+SearchInput.displayName = 'SearchInput'
+
+export { SearchInput }

@@ -1,0 +1,19 @@
+fragment WorkTeaser on Work {
+  workId
+  titles {
+    full
+    original
+  }
+  creators {
+    display
+    __typename
+  }
+  workYear {
+    year
+  }
+  materialTypes {
+    materialTypeGeneral {
+      display
+    }
+  }
+}

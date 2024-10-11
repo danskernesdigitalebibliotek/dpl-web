@@ -95,7 +95,7 @@
   /* TRANSITION DURATIONS */
   --dark-mode-transition: 1000ms;
 
-  --font-headline: "GT Flexa", sans-serif;
+  --font-headline: 'GT Flexa', sans-serif;
   --font-body: helvetica, sans-serif;
 
   /* FONTS */
@@ -194,7 +194,7 @@
   :root {
     /* GRID */
     --grid-edge: 5rem; /* 80px */
-    --grid-gap-x: 0.625rem; /* 10px */
+    --grid-gap-x: 1.5rem; /* 24px */
 
     /* NAVIGATION */
     --navigation-top-height: 2rem; /* 32px */
@@ -226,11 +226,11 @@
 }
 
 body {
-  @apply text-foreground bg-background-foreground transition-all duration-dark-mode font-body;
+  @apply bg-background-foreground font-body text-foreground transition-all duration-dark-mode;
 }
 
 body > * {
-  @apply bg-background transition-all dark-mode-transition;
+  @apply dark-mode-transition bg-background transition-all;
 }
 
 .text-typo-huge,
