@@ -40,10 +40,10 @@
             "type": "package",
             "package": {
                 "name": "danskernesdigitalebibliotek/dpl-react",
-                "version": "2024.40.0",
+                "version": "2024.41.0",
                 "type": "drupal-library",
                 "dist": {
-                    "url": "https://github.com/danskernesdigitalebibliotek/dpl-react/releases/download/2024.40.0/dist-2024-40-0-e1fa2d58695103229aea70732cf19035f4fe6380.zip",
+                    "url": "https://github.com/danskernesdigitalebibliotek/dpl-react/releases/download/2024.41.0/dist-2024-41-0-52df86a22125c52c6de84e6c5e237d608e279b00.zip",
                     "type": "zip"
                 },
                 "require": {
@@ -56,9 +56,9 @@
             "package": {
                 "name": "danskernesdigitalebibliotek/dpl-design-system",
                 "type": "drupal-library",
-                "version": "2024.40.0",
+                "version": "2024.41.0",
                 "dist": {
-                    "url": "https://github.com/danskernesdigitalebibliotek/dpl-design-system/releases/download/2024.40.0/dist-2024-40-0-c006877c658f7b12d834a352487fc8ab333f83bc.zip",
+                    "url": "https://github.com/danskernesdigitalebibliotek/dpl-design-system/releases/download/2024.41.0/dist-2024-41-0-1ca7f9197d2f2f7a2865e34173fba6eca7f50edc.zip",
                     "type": "zip"
                 }
             }
@@ -90,8 +90,8 @@
         "composer/installers": "1.12.0",
         "cweagans/composer-patches": "1.7.3",
         "danskernesdigitalebibliotek/cms-api": "*",
-        "danskernesdigitalebibliotek/dpl-design-system": "^2024.40",
-        "danskernesdigitalebibliotek/dpl-react": "^2024.40",
+        "danskernesdigitalebibliotek/dpl-design-system": "^2024.41",
+        "danskernesdigitalebibliotek/dpl-react": "^2024.41",
         "danskernesdigitalebibliotek/fbs-client": "*",
         "dealerdirect/phpcodesniffer-composer-installer": "^1.0.0",
         "deoliveiralucas/array-keys-case-transform": "^1.1",
@@ -118,6 +118,7 @@
         "drupal/dynamic_entity_reference": "^3.1",
         "drupal/editor_advanced_link": "^2.2",
         "drupal/entity_clone_template": "^2.0",
+        "drupal/entity_reference_revisions": "^1.11.0",
         "drupal/enum_field": "^1.0",
         "drupal/facets": "^2.0",
         "drupal/field_group": "^3.4",
@@ -318,6 +319,9 @@
             },
             "drupal/entity_clone_template": {
                 "3424597: Fix error when creating entity of type without templates": "https://git.drupalcode.org/project/entity_clone_template/-/commit/ad4964dd51f7f5e814111fcb73e6e472eefccf5c.patch"
+            },
+            "drupal/entity_reference_revisions": {
+                "3039442: Circular dependencies in EntityReferenceRevisionsFieldItemList::hasAffectingChanges()": "https://www.drupal.org/files/issues/2023-11-20/entity_reference_revisions-fix_infinite_loop-3039442-8.patch"
             },
             "drupal/field_inheritance": {
                 "3454350: Create seperate permission for adding field inheritance": "https://www.drupal.org/files/issues/2024-06-13/field_inheritance_permission.patch"
