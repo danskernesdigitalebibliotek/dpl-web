@@ -18,15 +18,7 @@ const config: CodegenConfig = {
         exposeFetcher: true,
         exposeQueryKeys: true,
         addSuspenseQuery: true,
-        fetcher: {
-          // TODO: Make this configurable
-          endpoint: "http://dapple-cms.docker/graphql",
-          fetchParams: JSON.stringify({
-            headers: {
-              "Content-Type": "application/json"
-            }
-          })
-        }
+        fetcher: "@/lib/fetchers/dpl-cms.fetcher#fetchData"
       },
       hooks: {
         afterOneFileWrite: ["yarn eslint --fix"]
