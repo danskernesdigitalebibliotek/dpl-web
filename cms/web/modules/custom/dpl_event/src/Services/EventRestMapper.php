@@ -52,7 +52,7 @@ class EventRestMapper {
     $this->eventWrapper = new EventWrapper($this->event);
 
     return new EventsGET200ResponseInner([
-      'title' => $this->event->label(),
+      'title' => $this->getValue('title'),
       'uuid' => $this->event->uuid(),
       'url' => $this->event->toUrl()->setAbsolute(TRUE)->toString(TRUE)->getGeneratedUrl(),
       'ticketManagerRelevance' => !empty($this->getSeriesValue('field_relevant_ticket_manager')),
