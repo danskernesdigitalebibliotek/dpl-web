@@ -130,8 +130,6 @@ module:
   multiple_fields_remove_button: 0
   multivalue_form_element: 0
   mysql: 0
-  next: 0
-  next_graphql: 0
   node: 0
   openapi: 0
   openapi_rest: 0
@@ -165,7 +163,6 @@ module:
   select2: 0
   serialization: 0
   simple_menu_permissions: 0
-  simple_oauth: 0
   subrequests: 0
   system: 0
   taxonomy: 0
