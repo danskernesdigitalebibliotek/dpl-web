@@ -5,9 +5,14 @@
  * Preprocesses' related to Opening Hours.
  */
 
+use Drupal\Core\Entity\EntityFormInterface;
+use Drupal\Core\Form\FormStateInterface;
+use Drupal\dpl_opening_hours\Model\OpeningHoursRepository;
 use Drupal\dpl_react_apps\Controller\DplReactAppsController;
+use Drupal\drupal_typed\DrupalTyped;
 use Drupal\node\NodeInterface;
 use Drupal\paragraphs\ParagraphInterface;
+use Drupal\taxonomy\TermInterface;
 
 /**
  * Implements hook_preprocess_paragraph__TYPE().
@@ -17,8 +22,7 @@ use Drupal\paragraphs\ParagraphInterface;
  * @param array &$variables
  *   Variables for the paragraph template, including the 'paragraph' entity.
  */
-function dpl_opening_hours_preprocess_paragraph__opening_hours(&$variables):
-void {
+function dpl_opening_hours_preprocess_paragraph__opening_hours(&$variables): void {
   $paragraph = $variables['paragraph'] ?? NULL;
   if (!$paragraph instanceof ParagraphInterface) {
     return;
@@ -44,6 +48,78 @@ void {
           ]),
       ] + DplReactAppsController::externalApiBaseUrls(),
     ];
+  }
+}
+
+/**
+ * Implements hook_form_FORM_ID_alter() for the taxonomy term deletion form related to opening hours.
+ *
+ * This hook modifies the deletion confirmation form for taxonomy terms within
+ * the "opening_hours_categories" vocabulary, adding custom messages.
+ *
+ * @param array $form
+ *   The form structure array.
+ * @param \Drupal\Core\Form\FormStateInterface $form_state
+ *   The current state of the form.
+ * @param string $form_id
+ *   The ID of the form being altered.
+ */
+function dpl_opening_hours_form_taxonomy_term_opening_hours_categories_delete_form_alter(array &$form, FormStateInterface $form_state, string $form_id): void {
+  $form_object = $form_state->getFormObject();
+  if (!$form_object instanceof EntityFormInterface) {
+    return;
+  }
+
+  $term = $form_object->getEntity();
+  if (!$term instanceof TermInterface) {
+    return;
+  }
+
+  $term_id = $term->id();
+  if (!is_int($term_id) && !is_string($term_id)) {
+    return;
+  }
+
+  $term_label = $term->label();
+
+  $form['#title'] = t('Are you sure you want to delete all "@term_label" opening hours?', [
+    '@term_label' => $term_label,
+  ], ['context' => 'Opening Hours']);
+
+  $opening_hours_repository = DrupalTyped::service(OpeningHoursRepository::class, 'dpl_opening_hours.repository');
+  $opening_hours_in_category = $opening_hours_repository->loadMultiple(categoryId: (int) $term_id);
+
+  $form['description']['#markup'] = t('@term_label is associated with @count opening hours. Deleting @term_label will also delete these opening hours. Are you sure you want to continue?', [
+    '@term_label' => $term_label,
+    '@count' => count($opening_hours_in_category),
+  ], ['context' => 'Opening Hours']);
+}
+
+/**
+ * Implements hook_taxonomy_term_predelete().
+ *
+ * Deletes associated opening hours when a category term is deleted.
+ *
+ * @param \Drupal\taxonomy\TermInterface $term
+ *   The term being deleted.
+ */
+function dpl_opening_hours_taxonomy_term_predelete(TermInterface $term): void {
+  if ($term->bundle() !== 'opening_hours_categories') {
+    return;
+  }
+
+  $term_id = $term->id();
+  if (!is_int($term_id) && !is_string($term_id)) {
+    return;
+  }
+
+  $opening_hours_repository = DrupalTyped::service(OpeningHoursRepository::class, 'dpl_opening_hours.repository');
+  $opening_hours_in_category = $opening_hours_repository->loadMultiple(categoryId: (int) $term_id);
+
+  foreach ($opening_hours_in_category as $instance) {
+    if ($instance->id) {
+      $opening_hours_repository->delete($instance->id, $instance->repetition->id);
+    }
   }
 }
 
