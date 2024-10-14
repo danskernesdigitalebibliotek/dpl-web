@@ -1,15 +1,15 @@
 export const fetchData = <TData, TVariables>(
   query: string,
   variables?: TVariables,
-  options?: RequestInit["headers"]
+  options?: RequestInit['headers']
 ): (() => Promise<TData>) => {
   return async () => {
     const res = await fetch(
       `${process.env.NEXT_PUBLIC_GRAPHQL_SCHEMA_ENDPOINT_FBI}`,
       {
-        method: "POST",
+        method: 'POST',
         headers: {
-          "Content-Type": "application/json",
+          'Content-Type': 'application/json',
           Authorization: `Bearer ${process.env.NEXT_PUBLIC_LIBRARY_TOKEN}`,
           ...options
         },
@@ -18,15 +18,15 @@ export const fetchData = <TData, TVariables>(
           variables
         })
       }
-    );
+    )
 
-    const json = await res.json();
+    const json = await res.json()
 
     if (json.errors) {
-      const { message } = json.errors[0] || {};
-      throw new Error(message || "Error…");
+      const { message } = json.errors[0] || {}
+      throw new Error(message || 'Error…')
     }
 
-    return json.data;
-  };
-};
+    return json.data
+  }
+}

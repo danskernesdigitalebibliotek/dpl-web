@@ -16,12 +16,13 @@ query searchFacets(
   $q: SearchQuery!
   $facets: [FacetField!]!
   $facetLimit: Int!
+  $filters: SearchFilters
 ) {
-  search(q: $q) {
-    hitcount
+  search(q: $q, filters: $filters) {
     facets(facets: $facets) {
       name
       values(limit: $facetLimit) {
+        key
         term
         score
       }

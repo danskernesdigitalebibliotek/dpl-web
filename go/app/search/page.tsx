@@ -2,15 +2,21 @@ import { dehydrate, HydrationBoundary } from '@tanstack/react-query'
 
 import SearchPageLayout from '@/components/pages/searchPageLayout/SearchPageLayout'
 
-import prefetchSearchResult from './fetchSearchResult.server'
+import {
+  prefetchSearchFacets,
+  prefetchSearchResult
+} from './fetchSearchResult.server'
 import { Suspense } from 'react'
+import getQueryClient from '@/lib/getQueryClient'
 
 const Page = async ({
   searchParams: { q }
 }: {
   searchParams: { q: string }
 }) => {
-  const queryClient = await prefetchSearchResult(q)
+  const queryClient = getQueryClient()
+  await prefetchSearchResult(q, queryClient)
+  await prefetchSearchFacets(q, queryClient)
 
   return (
     <HydrationBoundary state={dehydrate(queryClient)}>

@@ -1,9 +1,12 @@
-import { useSearchWithPaginationQuery } from '@/lib/graphql/generated/fbi/graphql'
+import {
+  FacetField,
+  useSearchFacetsQuery,
+  useSearchWithPaginationQuery
+} from '@/lib/graphql/generated/fbi/graphql'
 import getQueryClient from '@/lib/getQueryClient'
+import { QueryClient } from '@tanstack/react-query'
 
-const prefetchSearchResult = async (q: string) => {
-  const queryClient = getQueryClient()
-
+const prefetchSearchResult = async (q: string, queryClient: QueryClient) => {
   await queryClient.prefetchQuery({
     queryKey: useSearchWithPaginationQuery.getKey({
       q: { all: q },
@@ -20,4 +23,35 @@ const prefetchSearchResult = async (q: string) => {
   return queryClient
 }
 
-export default prefetchSearchResult
+const prefetchSearchFacets = async (q: string, queryClient: QueryClient) => {
+  await queryClient.prefetchQuery({
+    queryKey: useSearchFacetsQuery.getKey({
+      q: { all: q },
+      facetLimit: 100,
+      facets: [
+        'materialTypesGeneral',
+        'mainLanguages',
+        'age',
+        'lix',
+        'subjects',
+        'let'
+      ] as FacetField[]
+    }),
+    queryFn: useSearchFacetsQuery.fetcher({
+      q: { all: q },
+      facetLimit: 100,
+      facets: [
+        'materialTypesGeneral',
+        'mainLanguages',
+        'age',
+        'lix',
+        'subjects',
+        'let'
+      ] as FacetField[]
+    })
+  })
+
+  return queryClient
+}
+
+export { prefetchSearchFacets, prefetchSearchResult }

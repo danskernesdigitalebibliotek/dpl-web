@@ -36,7 +36,9 @@ const SearchInput = ({ className }: { className?: string }) => {
   const navigateToSearch = () => {
     if (!inputRef.current) return
     const inputValue = inputRef.current.value
-    router.push(inputValue ? `/search?q=${inputValue}` : '/search')
+    router.push(inputValue ? `/search?q=${inputValue}` : '/search', {
+      scroll: false
+    })
   }
 
   return (
@@ -44,7 +46,7 @@ const SearchInput = ({ className }: { className?: string }) => {
       <input
         ref={inputRef}
         className={cn(
-          'text-sm file:text-sm flex h-20 w-full rounded-base bg-background-foreground px-5 text-typo-subtitle-lg shadow-sm transition-colors file:border-0 file:bg-transparent file:font-medium file:text-foreground placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:cursor-not-allowed disabled:opacity-50',
+          'text-sm file:text-sm flex h-[50px] w-full rounded-base bg-background-foreground px-5 text-typo-subtitle-lg shadow-sm transition-colors file:border-0 file:bg-transparent file:font-medium file:text-foreground placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:cursor-not-allowed disabled:opacity-50 lg:h-20',
           className
         )}
         value={queryString}
