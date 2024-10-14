@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "fd02622afb675c4512512840f22a6c20",
+    "content-hash": "27de6ecf3584189c7fbd0de5d5a50407",
     "packages": [
         {
             "name": "amazeeio/drupal_integrations",
@@ -1175,10 +1175,10 @@
         },
         {
             "name": "danskernesdigitalebibliotek/dpl-react",
-            "version": "2024.39.0",
+            "version": "0.0.0-dev",
             "dist": {
                 "type": "zip",
-                "url": "https://github.com/danskernesdigitalebibliotek/dpl-react/releases/download/branch-DDFLSBP-790-peg-pa-fb-is-aendrede-api/dist-ddflsbp-790-peg-pa-fb-is-aendrede-api.zip"
+                "url": "https://github.com/danskernesdigitalebibliotek/dpl-react/releases/download/branch-DDFBRA-100-filtrering-sker-ikke/dist-ddfbra-100-filtrering-sker-ikke.zip"
             },
             "require": {
                 "composer/installers": "^1.2.0"
@@ -19066,6 +19066,7 @@
     "aliases": [],
     "minimum-stability": "dev",
     "stability-flags": {
+        "danskernesdigitalebibliotek/dpl-react": 20,
         "drupal/default_content": 15,
         "drupal/gin": 5,
         "drupal/gin_toolbar": 5,
