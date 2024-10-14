@@ -317,11 +317,7 @@ class BreadcrumbHelper {
         ->loadAllParents($category_id);
 
       foreach ($categories as $category) {
-        $breadcrumb->addLink(Link::createFromRoute(
-          $category->getName(),
-          // We do not have a term page ready yet, so we will not add a link.
-          '<nolink>'
-        ));
+        $breadcrumb->addLink($category->toLink($category->getName()));
         $breadcrumb->addCacheableDependency($category);
       }
     }

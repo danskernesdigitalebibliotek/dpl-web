@@ -56,9 +56,9 @@
             "package": {
                 "name": "danskernesdigitalebibliotek/dpl-design-system",
                 "type": "drupal-library",
-                "version": "2024.39.0",
+                "version": "2024.41.0",
                 "dist": {
-                    "url": "https://github.com/danskernesdigitalebibliotek/dpl-design-system/releases/download/2024.39.0/dist-2024-39-0-b108f0932dde82a7db1ef93e7d09a109d2c58363.zip",
+                    "url": "https://github.com/danskernesdigitalebibliotek/dpl-design-system/releases/download/2024.41.0/dist-2024-41-0-1ca7f9197d2f2f7a2865e34173fba6eca7f50edc.zip",
                     "type": "zip"
                 }
             }
@@ -118,6 +118,7 @@
         "drupal/dynamic_entity_reference": "^3.1",
         "drupal/editor_advanced_link": "^2.2",
         "drupal/entity_clone_template": "^2.0",
+        "drupal/entity_reference_revisions": "^1.11.0",
         "drupal/enum_field": "^1.0",
         "drupal/facets": "^2.0",
         "drupal/field_group": "^3.4",
@@ -151,7 +152,7 @@
         "drupal/pathauto": "^1.12",
         "drupal/potion": "dev-2.x#e48d6ee336d960b9d2efb5d88e68402db6d229a6",
         "drupal/purge": "^3.6",
-        "drupal/recurring_events": "^2.0@RC",
+        "drupal/recurring_events": "^2",
         "drupal/redirect": "^1.9",
         "drupal/redis": "^1.7",
         "drupal/restui": "^1.21",
@@ -316,6 +317,9 @@
             "drupal/entity_clone_template": {
                 "3424597: Fix error when creating entity of type without templates": "https://git.drupalcode.org/project/entity_clone_template/-/commit/ad4964dd51f7f5e814111fcb73e6e472eefccf5c.patch"
             },
+            "drupal/entity_reference_revisions": {
+                "3039442: Circular dependencies in EntityReferenceRevisionsFieldItemList::hasAffectingChanges()": "https://www.drupal.org/files/issues/2023-11-20/entity_reference_revisions-fix_infinite_loop-3039442-8.patch"
+            },
             "drupal/field_inheritance": {
                 "3454350: Create seperate permission for adding field inheritance": "https://www.drupal.org/files/issues/2024-06-13/field_inheritance_permission.patch"
             },
@@ -359,9 +363,11 @@
             },
             "drupal/recurring_events": {
                 "3178696: Make compatible with Scheduler": "https://git.drupalcode.org/project/recurring_events/-/commit/35045cb17c7bbd1184553f83771939047175bc24.patch",
-                "3416436: Avoid array conversion warning when daily events are disabled": "https://git.drupalcode.org/project/recurring_events/-/commit/832ae52f135dd3f205eb74acf2d3715fb443e759.patch",
-                "3451613: Start date of weekly reccurring event jumps incorrectly": "https://git.drupalcode.org/project/recurring_events/-/commit/581c53dd1b0b067a8b6454d76cc0187887f7b187.patch",
-                "3461740: Fatal error when using 'Event series start date' filter in views": "https://www.drupal.org/files/issues/2024-07-16/reccuring_events_event_start_date.patch"
+                "3461740: Fatal error when using 'Event series start date' filter in views": "https://www.drupal.org/files/issues/2024-07-16/reccuring_events_event_start_date.patch",
+                "3468521: (1/4) When changing recurrance, identical date combinations should not be deleted and recreated": "https://git.drupalcode.org/project/recurring_events/-/commit/67261f4ac34546f2c9514199d9febb6dcce6fd10.patch",
+                "3468521: (2/4)": "https://git.drupalcode.org/project/recurring_events/-/commit/603d34936b97535f66e11429dcc9a2c61fc7cb40.patch",
+                "3468521: (3/4)": "https://git.drupalcode.org/project/recurring_events/-/commit/ad8a4294b1ffb754a338bb2cfa0146f203aa6fc1.patch",
+                "3468521: (4/4)": "https://git.drupalcode.org/project/recurring_events/-/commit/ad99ae79f5c55fc2db17427e9936ab141314609d.patch"
             },
             "drupal/theme_permission": {
                 "3105637: Edit, install and uninstall permission": "https://www.drupal.org/files/issues/2024-02-01/theme-permission-edit-install-uninstall-3105637-7.patch",

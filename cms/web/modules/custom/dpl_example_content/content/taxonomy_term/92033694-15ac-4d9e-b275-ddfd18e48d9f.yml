@@ -28,6 +28,6 @@ default:
         content: 'Netmedier | DPL CMS'
   path:
     -
-      alias: ''
-      langcode: da
+      alias: /search/web/categories/netmedier
+      langcode: und
       pathauto: 1

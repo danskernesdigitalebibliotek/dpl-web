@@ -226,6 +226,10 @@ class DplReactAppsController extends ControllerBase {
       'loading-results-text' => $this->t('Loading results...', [], ['context' => 'advanced search']),
       'showing-materials-text' => $this->t('showing materials', [], ['context' => 'advanced search']),
       'to-advanced-search-button-text' => $this->t('Back to advanced search', [], ['context' => 'advanced search']),
+      'advanced-search-filter-location-text' => $this->t('location', [], ['context' => 'advanced search']),
+      'advanced-search-filter-location-description-text' => $this->t('Add a comma separated list for multiple locations', [], ['context' => 'advanced search']),
+      'advanced-search-filter-sublocation-text' => $this->t('sublocation', [], ['context' => 'advanced search']),
+      'advanced-search-filter-sublocation-description-text' => $this->t('Add a comma separated list for multiple sublocations', [], ['context' => 'advanced search']),
       // Add external API base urls.
     ] + self::externalApiBaseUrls();
 

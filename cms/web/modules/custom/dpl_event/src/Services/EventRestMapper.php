@@ -57,7 +57,7 @@ class EventRestMapper {
       'url' => $this->event->toUrl()->setAbsolute(TRUE)->toString(TRUE)->getGeneratedUrl(),
       'ticketManagerRelevance' => !empty($this->getSeriesValue('field_relevant_ticket_manager')),
       'description' => $this->getValue('event_description'),
-      'body' => $this->getDescription(),
+      'body' => $this->eventWrapper->getDescription(),
       'state' => $this->eventWrapper->getState()?->value,
       'image' => $this->getImage(),
       'branches' => $this->getBranches(),
@@ -84,8 +84,7 @@ class EventRestMapper {
   private function getBranches(): array {
     $names = [];
 
-    /** @var \Drupal\node\NodeInterface[] $branches */
-    $branches = $this->event->get('branch')->referencedEntities();
+    $branches = $this->eventWrapper->getBranches() ?? [];
 
     foreach ($branches as $branch) {
       $label = $branch->getTitle();
@@ -115,22 +114,6 @@ class EventRestMapper {
     }
 
     return $names;
-  }
-
-  /**
-   * Getting the description, from the first available text paragraph.
-   */
-  private function getDescription(): ?string {
-    /** @var \Drupal\paragraphs\ParagraphInterface[] $paragraphs */
-    $paragraphs = $this->event->get('event_paragraphs')->referencedEntities();
-
-    foreach ($paragraphs as $paragraph) {
-      if ($paragraph->bundle() === 'text_body') {
-        return $paragraph->get('field_body')->getValue()[0]['value'] ?? NULL;
-      }
-    }
-
-    return NULL;
   }
 
   /**
