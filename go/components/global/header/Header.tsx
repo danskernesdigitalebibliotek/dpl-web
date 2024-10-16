@@ -25,12 +25,15 @@ function Header() {
           <Button variant="icon">
             <Icon className="w-[24px] h-[24px]" name="search" />
           </Button>
+          <Button variant="icon">
+            <Icon className="w-[24px] h-[24px]" name="profile" />
+          </Button>
         </div>
       </div>
       <div className=" h-navigation-search-height">
         <div className="content-container">
           <div className="flex items-center h-full w-full">
-            <SearchInput />
+            <SearchInput placeholder="Søg"/>
           </div>
         </div>
       </div>
