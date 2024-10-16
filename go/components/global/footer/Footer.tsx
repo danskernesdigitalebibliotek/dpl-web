@@ -1,5 +1,6 @@
-import Link from "next/link";
 import { Facebook, Instagram } from "lucide-react";
+import Link from "next/link";
+
 import Icon from "../../shared/icon/Icon";
 
 export default function Footer() {
