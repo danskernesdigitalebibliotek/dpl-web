@@ -1,18 +1,18 @@
-import { Facebook, Instagram } from "lucide-react";
-import Link from "next/link";
+import { Facebook, Instagram } from "lucide-react"
+import Link from "next/link"
 
-import Icon from "../../shared/icon/Icon";
+import Icon from "../../shared/icon/Icon"
 
 export default function Footer() {
   return (
     <footer className="bg-background-overlay py-12">
       <div className="content-container">
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+        <div className="grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-4">
           <div>
-            <h2 className="text-xl font-semibold mb-4">Åbningstider</h2>
+            <h2 className="text-xl mb-4 font-semibold">Åbningstider</h2>
             <p className="text-sm mb-4">
-              Bibliotekerne lorem ipsum consectetur, adipisci velit, sed quia
-              non numquam eius modi tempora incidunt ut labore.
+              Bibliotekerne lorem ipsum consectetur, adipisci velit, sed quia non numquam eius modi
+              tempora incidunt ut labore.
             </p>
             <Link href="#" className="text-sm underline">
               Se bibliotekernes åbningstider
@@ -20,7 +20,7 @@ export default function Footer() {
           </div>
 
           <div>
-            <h2 className="text-xl font-semibold mb-4">Om Bibliotekerne</h2>
+            <h2 className="text-xl mb-4 font-semibold">Om Bibliotekerne</h2>
             <ul className="space-y-2">
               {[
                 "Brug af bibliotekerne",
@@ -30,8 +30,8 @@ export default function Footer() {
                 "Internetadgang",
                 "Print, scan og kopi",
                 "Booking af lokaler",
-                "Nyhedsbrev"
-              ].map((item) => (
+                "Nyhedsbrev",
+              ].map(item => (
                 <li key={item}>
                   <Link href="#" className="text-sm hover:underline">
                     {item}
@@ -42,14 +42,9 @@ export default function Footer() {
           </div>
 
           <div>
-            <h2 className="text-xl font-semibold mb-4">Online tilbud</h2>
-            <ul className="space-y-2 mb-8">
-              {[
-                "Litteratursiden",
-                "Bibliotek.dk",
-                "eReolen",
-                "Filmstriben"
-              ].map((item) => (
+            <h2 className="text-xl mb-4 font-semibold">Online tilbud</h2>
+            <ul className="mb-8 space-y-2">
+              {["Litteratursiden", "Bibliotek.dk", "eReolen", "Filmstriben"].map(item => (
                 <li key={item}>
                   <Link href="#" className="text-sm hover:underline">
                     {item}
@@ -57,14 +52,14 @@ export default function Footer() {
                 </li>
               ))}
             </ul>
-            <h2 className="text-xl font-semibold mb-4">Text</h2>
+            <h2 className="text-xl mb-4 font-semibold">Text</h2>
             <ul className="space-y-2">
               {[
                 "Lorem ipsum a la lorem ip",
                 "Bibliotekerne lorem",
                 "Labore ipsum",
-                "Adipisci velit le lorem"
-              ].map((item) => (
+                "Adipisci velit le lorem",
+              ].map(item => (
                 <li key={item}>
                   <Link href="#" className="text-sm hover:underline">
                     {item}
@@ -75,7 +70,7 @@ export default function Footer() {
           </div>
 
           <div>
-            <h2 className="text-xl font-semibold mb-4">Kontakt</h2>
+            <h2 className="text-xl mb-4 font-semibold">Kontakt</h2>
             <p className="text-sm mb-4">
               Lyngby-Taarbæk Bibliotekerne
               <br />
@@ -94,15 +89,15 @@ export default function Footer() {
           </div>
         </div>
 
-        <div className="mt-8 pb-8 flex justify-between border-b border-border">
-          <select className="border rounded px-2 py-1 text-sm">
+        <div className="mt-8 flex justify-between border-b border-border pb-8">
+          <select className="rounded text-sm border px-2 py-1">
             <option>DK</option>
           </select>
           <Icon className="h-[40px]" name="library-logo" />
         </div>
 
-        <div className="mt-8 flex flex-col md:flex-row justify-between items-center">
-          <div className="flex items-center space-x-4 mb-4 md:mb-0">
+        <div className="mt-8 flex flex-col items-center justify-between md:flex-row">
+          <div className="mb-4 flex items-center space-x-4 md:mb-0">
             <Link href="#" className="text-gray-600 hover:text-gray-900">
               <Facebook size={20} />
               <span className="sr-only">Facebook</span>
@@ -112,7 +107,7 @@ export default function Footer() {
               <span className="sr-only">Instagram</span>
             </Link>
           </div>
-          <div className="flex flex-wrap justify-center md:justify-end space-x-4 text-sm">
+          <div className="text-sm flex flex-wrap justify-center space-x-4 md:justify-end">
             <Link href="#" className="hover:underline">
               Behandling af persondata
             </Link>
@@ -129,5 +124,5 @@ export default function Footer() {
         </div>
       </div>
     </footer>
-  );
+  )
 }
