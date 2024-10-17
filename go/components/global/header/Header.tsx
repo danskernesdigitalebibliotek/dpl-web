@@ -8,7 +8,7 @@ import { SearchInput } from "@/components/shared/searchInput/SearchInput";
 function Header() {
   return (
     <div>
-      <div className="bg-background-foreground dark-mode-transition flex items-center justify-center h-navigation-top-height">
+      <div className="bg-background-overlay dark-mode-transition flex items-center justify-center h-navigation-top-height">
         <p className="text-typo-caption">Biblioterernes ebøger og lyderbøger</p>
       </div>
       <div className="h-navigation-height grid grid-cols-3 items-center content-container ">
@@ -25,12 +25,15 @@ function Header() {
           <Button variant="icon">
             <Icon className="w-[24px] h-[24px]" name="search" />
           </Button>
+          <Button variant="icon">
+            <Icon className="w-[24px] h-[24px]" name="profile" />
+          </Button>
         </div>
       </div>
       <div className=" h-navigation-search-height">
         <div className="content-container">
           <div className="flex items-center h-full w-full">
-            <SearchInput />
+            <SearchInput placeholder="Søg"/>
           </div>
         </div>
       </div>
