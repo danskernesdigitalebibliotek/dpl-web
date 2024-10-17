@@ -1,30 +1,29 @@
-"use client";
+"use client"
+import React, { useEffect } from "react"
 
-import React, { useEffect } from "react";
-
-import { useThemeStore } from "@/store/theme.store";
+import { useThemeStore } from "@/store/theme.store"
 
 export default function Theme({
-  children
+  children,
 }: Readonly<{
-  children: React.ReactNode;
+  children: React.ReactNode
 }>) {
-  const { theme, userInteracted } = useThemeStore();
+  const { theme, userInteracted } = useThemeStore()
 
   useEffect(() => {
     if (userInteracted) {
-      document.body.classList.add(userInteracted ? "user-interacted" : "");
+      document.body.classList.add(userInteracted ? "user-interacted" : "")
     }
 
     if (theme === "dark") {
-      document.body.classList.add("dark-mode");
+      document.body.classList.add("dark-mode")
     } else {
-      document.body.classList.remove("dark-mode");
+      document.body.classList.remove("dark-mode")
     }
 
     // unmount action
-    return () => document.body.classList.remove("dark-mode");
-  }, [theme, userInteracted]);
+    return () => document.body.classList.remove("dark-mode")
+  }, [theme, userInteracted])
 
-  return children;
+  return children
 }
