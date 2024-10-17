@@ -1,9 +1,12 @@
 uuid: 2844cde3-5ba7-4a93-958a-70da917913a7
 langcode: en
 status: true
-dependencies: {  }
+dependencies:
+  module:
+    - graphql
 id: graphql_consumer
 label: 'GraphQl consumer'
 weight: 8
 is_admin: null
-permissions: {  }
+permissions:
+  - 'execute graphql_compose_server arbitrary graphql requests'
