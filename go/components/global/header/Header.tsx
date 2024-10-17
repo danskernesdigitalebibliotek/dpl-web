@@ -1,41 +1,44 @@
-import React from "react";
+import React from "react"
 
-import { Button } from "@/components/shared/button/Button";
-import DarkModeToggle from "@/components/shared/darkModeToggle/DarkModeToggle";
-import Icon from "@/components/shared/icon/Icon";
-import { SearchInput } from "@/components/shared/searchInput/SearchInput";
+import { Button } from "@/components/shared/button/Button"
+import DarkModeToggle from "@/components/shared/darkModeToggle/DarkModeToggle"
+import Icon from "@/components/shared/icon/Icon"
+import { SearchInput } from "@/components/shared/searchInput/SearchInput"
 
 function Header() {
   return (
     <div>
-      <div className="bg-background-foreground dark-mode-transition flex items-center justify-center h-navigation-top-height">
+      <div className="dark-mode-transition flex h-navigation-top-height items-center justify-center bg-background-overlay">
         <p className="text-typo-caption">Biblioterernes ebøger og lyderbøger</p>
       </div>
-      <div className="h-navigation-height grid grid-cols-3 items-center content-container ">
+      <div className="content-container grid h-navigation-height grid-cols-3 items-center">
         <div className="flex-0">
           <Icon className="h-[40px]" name="logo" />
         </div>
-        <div className="flex justify-center flex-1">
+        <div className="flex flex-1 justify-center">
           <DarkModeToggle />
         </div>
-        <div className="flex justify-end space-x-4 flex-0">
+        <div className="flex-0 flex justify-end space-x-4">
           <Button variant="icon">
-            <Icon className="w-[24px] h-[24px]" name="question-mark" />
+            <Icon className="h-[24px] w-[24px]" name="question-mark" />
           </Button>
           <Button variant="icon">
-            <Icon className="w-[24px] h-[24px]" name="search" />
+            <Icon className="h-[24px] w-[24px]" name="search" />
+          </Button>
+          <Button variant="icon">
+            <Icon className="h-[24px] w-[24px]" name="profile" />
           </Button>
         </div>
       </div>
-      <div className=" h-navigation-search-height">
+      <div className="h-navigation-search-height">
         <div className="content-container">
-          <div className="flex items-center h-full w-full">
-            <SearchInput />
+          <div className="flex h-full w-full items-center">
+            <SearchInput placeholder="Søg" />
           </div>
         </div>
       </div>
     </div>
-  );
+  )
 }
 
-export default Header;
+export default Header
