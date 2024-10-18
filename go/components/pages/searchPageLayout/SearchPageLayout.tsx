@@ -84,7 +84,7 @@ const SearchPageLayout = ({ searchQuery }: { searchQuery?: string }) => {
     {} as { [key: string]: string[] }
   )
 
-  const { data, error, isLoading, isPending, isFetching } = useSearchWithPaginationQuery({
+  const { data, error, isLoading } = useSearchWithPaginationQuery({
     q: { all: q },
     offset: 0,
     limit: 10,
@@ -98,8 +98,6 @@ const SearchPageLayout = ({ searchQuery }: { searchQuery?: string }) => {
     data: facetData,
     error: facetError,
     isLoading: facetIsLoading,
-    isPending: facetIsPending,
-    isFetching: facetIsFetching,
   } = useSearchFacetsQuery({
     q: { all: q },
     facetLimit: 100,
@@ -120,13 +118,11 @@ const SearchPageLayout = ({ searchQuery }: { searchQuery?: string }) => {
 
   return (
     <div className="content-container">
+      <h1 className="mt-[88px] text-typo-heading-2">{`Viser resultater for "${q}" ${data?.search.hitcount ? "(" + data?.search.hitcount + ")" : ""}`}</h1>
       <SearchFilterBar facets={facetData?.search?.facets || []} />
-      <h1 className="text-typo-heading-2">{`Viser resultater for "${q}" ${data?.search.hitcount ? "(" + data?.search.hitcount + ")" : ""}`}</h1>
-      {isFetching && <p>isFetching...</p>}
       {isLoading && <p>isLoading...</p>}
-      {isPending && <p>isPending...</p>}
       {data?.search.hitcount === 0 && <p>Ingen resultater</p>}
-      <div className="gap-grid-gap-x grid grid-cols-3">
+      <div className="grid grid-cols-3 gap-grid-gap-x">
         {data?.search?.hitcount &&
           data?.search?.hitcount > 0 &&
           data.search.works.map(work => (
