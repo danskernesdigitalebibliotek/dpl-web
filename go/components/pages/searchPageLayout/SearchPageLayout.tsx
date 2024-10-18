@@ -5,6 +5,7 @@ import { useSearchParams } from "next/navigation"
 import {
   FacetField,
   FacetValue,
+  SearchFilters,
   useSearchFacetsQuery,
   useSearchWithPaginationQuery,
 } from "@/lib/graphql/generated/fbi/graphql"
@@ -21,7 +22,16 @@ const facetDefinitions = [
   "let",
 ] as FacetField[]
 
-// TODO: Add branches through endpoint
+const mapFacetsToFilters = {
+  materialTypesGeneral: "materialTypesGeneral",
+  mainLanguages: "mainLanguages",
+  age: "age",
+  lix: "lixRange",
+  subjects: "subjects",
+  let: "letRange",
+} as Record<FacetField, keyof SearchFilters>
+
+// TODO: Add branches though endpoint
 const branchIds = [
   "775120",
   "775122",
@@ -70,18 +80,18 @@ const SearchPageLayout = ({ searchQuery }: { searchQuery?: string }) => {
   const q = searchQuery || searchParams.get("q") || ""
 
   const facetsForSearchRequest = facetDefinitions.reduce(
-    (acc, facetDefinition) => {
-      const value = searchParams.get(facetDefinition)
-      if (value) {
+    (acc: SearchFilters, facetDefinition) => {
+      const values = searchParams.getAll(facetDefinition)
+      if (values.length > 0) {
         return {
           ...acc,
-          [facetDefinition]: [value],
+          [mapFacetsToFilters[facetDefinition]]: [...values],
         }
       }
 
       return acc
     },
-    {} as { [key: string]: string[] }
+    {} as { [key: string]: keyof SearchFilters[] }
   )
 
   const { data, isLoading } = useSearchWithPaginationQuery({
