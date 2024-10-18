@@ -1,16 +1,16 @@
 "use client"
 
 import { useSearchParams } from "next/navigation"
-import { useEffect } from "react"
-
-import SearchFilterBar from "./SearchFilterBar"
 
 import {
   FacetField,
   FacetValue,
+  SearchFilters,
   useSearchFacetsQuery,
   useSearchWithPaginationQuery,
 } from "@/lib/graphql/generated/fbi/graphql"
+
+import SearchFilterBar from "./SearchFilterBar"
 
 const facetDefinitions = [
   "materialTypesGeneral",
@@ -20,6 +20,15 @@ const facetDefinitions = [
   "subjects",
   "let",
 ] as FacetField[]
+
+const mapFacetsToFilters = {
+  materialTypesGeneral: "materialTypesGeneral",
+  mainLanguages: "mainLanguages",
+  age: "age",
+  lix: "lixRange",
+  subjects: "subjects",
+  let: "letRange",
+} as Record<FacetField, keyof SearchFilters>
 
 // TODO: Add branches though endpoint
 const branchIds = [
@@ -70,18 +79,18 @@ const SearchPageLayout = ({ searchQuery }: { searchQuery?: string }) => {
   const q = searchQuery || searchParams.get("q") || ""
 
   const facetsForSearchRequest = facetDefinitions.reduce(
-    (acc, facetDefinition) => {
-      const value = searchParams.get(facetDefinition)
-      if (value) {
+    (acc: SearchFilters, facetDefinition) => {
+      const values = searchParams.getAll(facetDefinition)
+      if (values.length > 0) {
         return {
           ...acc,
-          [facetDefinition]: [value],
+          [mapFacetsToFilters[facetDefinition]]: [...values],
         }
       }
 
       return acc
     },
-    {} as { [key: string]: string[] }
+    {} as { [key: string]: keyof SearchFilters[] }
   )
 
   const { data, error, isLoading, isPending, isFetching } = useSearchWithPaginationQuery({
@@ -109,10 +118,6 @@ const SearchPageLayout = ({ searchQuery }: { searchQuery?: string }) => {
       ...facetsForSearchRequest,
     },
   })
-
-  useEffect(() => {
-    // const queryParams = new URLSearchParams(window.location.search);
-  }, [searchParams])
 
   if (error) {
     return <div>Error: {<pre>{JSON.stringify(error, null, 2)}</pre>}</div>
