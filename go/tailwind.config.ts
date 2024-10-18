@@ -261,6 +261,7 @@ const config: Config = {
         "grid-column": "var(--grid-column)",
         "grid-column-half": "calc(var(--grid-column)/2)",
         "grid-column-quarter": "calc(var(--grid-column)/4)",
+        "grid-gap-x": "var(--grid-gap-x)",
       },
       boxShadow: {
         button: "2px 2px 0 0px var(--foreground)",

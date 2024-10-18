@@ -3,7 +3,7 @@ import React from "react"
 import { Button } from "@/components/shared/button/Button"
 import DarkModeToggle from "@/components/shared/darkModeToggle/DarkModeToggle"
 import Icon from "@/components/shared/icon/Icon"
-import { SearchInput } from "@/components/shared/searchInput/SearchInput"
+import SearchInput from "@/components/shared/searchInput/SearchInput"
 
 function Header() {
   return (
