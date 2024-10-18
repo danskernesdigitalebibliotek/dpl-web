@@ -3,14 +3,14 @@
 import { useSearchParams } from "next/navigation"
 import { useEffect } from "react"
 
-import SearchFilterBar from "./SearchFilterBar"
-
 import {
   FacetField,
   FacetValue,
   useSearchFacetsQuery,
   useSearchWithPaginationQuery,
 } from "@/lib/graphql/generated/fbi/graphql"
+
+import SearchFilterBar from "./SearchFilterBar"
 
 const facetDefinitions = [
   "materialTypesGeneral",
@@ -21,7 +21,7 @@ const facetDefinitions = [
   "let",
 ] as FacetField[]
 
-// TODO: Add branches though endpoint
+// TODO: Add branches through endpoint
 const branchIds = [
   "775120",
   "775122",
