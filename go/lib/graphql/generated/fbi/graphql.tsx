@@ -1943,7 +1943,11 @@ export type WorkTeaserFragment = {
   workYear?: { __typename?: "PublicationYear"; year?: number | null } | null
   materialTypes: Array<{
     __typename?: "MaterialType"
-    materialTypeGeneral: { __typename?: "GeneralMaterialType"; display: string }
+    materialTypeGeneral: {
+      __typename?: "GeneralMaterialType"
+      display: string
+      code: GeneralMaterialTypeCode
+    }
   }>
 }
 
@@ -1969,7 +1973,11 @@ export type SearchWithPaginationQuery = {
       workYear?: { __typename?: "PublicationYear"; year?: number | null } | null
       materialTypes: Array<{
         __typename?: "MaterialType"
-        materialTypeGeneral: { __typename?: "GeneralMaterialType"; display: string }
+        materialTypeGeneral: {
+          __typename?: "GeneralMaterialType"
+          display: string
+          code: GeneralMaterialTypeCode
+        }
       }>
     }>
   }
