@@ -1958,7 +1958,7 @@ export type MoodSuggestResponse = {
   work?: Maybe<Work>;
 };
 
-export type WorkTeaserFragment = { __typename?: 'Work', workId: string, titles: { __typename?: 'WorkTitles', full: Array<string>, original?: Array<string> | null }, creators: Array<{ __typename: 'Corporation', display: string } | { __typename: 'Person', display: string }>, workYear?: { __typename?: 'PublicationYear', year?: number | null } | null, materialTypes: Array<{ __typename?: 'MaterialType', materialTypeGeneral: { __typename?: 'GeneralMaterialType', display: string } }> };
+export type WorkTeaserFragment = { __typename?: 'Work', workId: string, titles: { __typename?: 'WorkTitles', full: Array<string>, original?: Array<string> | null }, creators: Array<{ __typename: 'Corporation', display: string } | { __typename: 'Person', display: string }>, workYear?: { __typename?: 'PublicationYear', year?: number | null } | null, materialTypes: Array<{ __typename?: 'MaterialType', materialTypeGeneral: { __typename?: 'GeneralMaterialType', display: string, code: GeneralMaterialTypeCode } }> };
 
 export type SearchWithPaginationQueryVariables = Exact<{
   q: SearchQuery;
@@ -1968,7 +1968,7 @@ export type SearchWithPaginationQueryVariables = Exact<{
 }>;
 
 
-export type SearchWithPaginationQuery = { __typename?: 'Query', search: { __typename?: 'SearchResponse', hitcount: number, works: Array<{ __typename?: 'Work', workId: string, titles: { __typename?: 'WorkTitles', full: Array<string>, original?: Array<string> | null }, creators: Array<{ __typename: 'Corporation', display: string } | { __typename: 'Person', display: string }>, workYear?: { __typename?: 'PublicationYear', year?: number | null } | null, materialTypes: Array<{ __typename?: 'MaterialType', materialTypeGeneral: { __typename?: 'GeneralMaterialType', display: string } }> }> } };
+export type SearchWithPaginationQuery = { __typename?: 'Query', search: { __typename?: 'SearchResponse', hitcount: number, works: Array<{ __typename?: 'Work', workId: string, titles: { __typename?: 'WorkTitles', full: Array<string>, original?: Array<string> | null }, creators: Array<{ __typename: 'Corporation', display: string } | { __typename: 'Person', display: string }>, workYear?: { __typename?: 'PublicationYear', year?: number | null } | null, materialTypes: Array<{ __typename?: 'MaterialType', materialTypeGeneral: { __typename?: 'GeneralMaterialType', display: string, code: GeneralMaterialTypeCode } }> }> } };
 
 export type SearchFacetsQueryVariables = Exact<{
   q: SearchQuery;
@@ -1998,6 +1998,7 @@ export const WorkTeaserFragmentDoc = `
   materialTypes {
     materialTypeGeneral {
       display
+      code
     }
   }
 }
