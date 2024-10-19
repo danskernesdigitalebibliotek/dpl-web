@@ -1,6 +1,9 @@
 import { getIronSession, IronSession, SessionOptions } from "iron-session";
-import { TSessionType } from "../types/session";
 import { cookies } from "next/headers";
+
+import { TSessionType, TTokenSet } from "../types/session";
+import { add, isPast, sub } from "date-fns";
+import { NextRequest, NextResponse } from "next/server";
 
 export const sessionOptions: SessionOptions = {
   // TODO: generate a random password and store it in a secure place
@@ -20,7 +23,8 @@ export interface TSessionData {
   access_token?: string;
   refresh_token?: string;
   id_token?: string;
-  expire?: Date;
+  expires?: Date;
+  refresh_expires?: Date;
   code_verifier?: string;
   userInfo?: {
     sub: string;
@@ -35,23 +39,77 @@ export const defaultSession: TSessionData = {
   access_token: undefined,
   refresh_token: undefined,
   id_token: undefined,
-  expire: undefined,
+  expires: undefined,
+  refresh_expires: undefined,
   code_verifier: undefined,
   userInfo: undefined,
   type: "anonymous"
 };
 
-export async function getSession(): Promise<IronSession<TSessionData>> {
-  const session = await getIronSession<TSessionData>(cookies(), sessionOptions);
+export async function getSession(options?: {request: NextRequest, response: NextResponse}): Promise<IronSession<TSessionData>> {
+  const session = !options ? await getIronSession<TSessionData>(cookies(), sessionOptions) : await getIronSession<TSessionData>(options.request, options.response, sessionOptions);
   if (!session.isLoggedIn) {
     session.isLoggedIn = false;
     session.access_token = defaultSession.access_token;
     session.refresh_token = defaultSession.refresh_token;
     session.id_token = defaultSession.id_token;
-    session.expire = defaultSession.expire;
+    session.expires = defaultSession.expires;
+    session.refresh_expires = defaultSession.refresh_expires;
     session.userInfo = defaultSession.userInfo;
     session.type = defaultSession.type;
   }
 
   return session;
+}
+
+export const setTokensOnSession = (session: IronSession<TSessionData>, tokenSet: TTokenSet) => {
+  session.access_token = tokenSet.access_token;
+  session.refresh_token = tokenSet.refresh_token;
+  session.expires = add(new Date(), {
+    seconds: tokenSet.expires_in || 0,
+  });
+  session.refresh_expires = add(new Date(), {
+    seconds: Number(tokenSet?.refresh_expires_in),
+  });
+  // Since we have a limitation in how big cookies can be,
+  // we will have to store the user id in a separate cookie.
+  cookies().set("go-session:id_token", tokenSet.id_token);
+}
+
+export const accessTokenShouldBeRefreshed = (session: IronSession<TSessionData> ) => {
+  // If the session is not logged in, we don't need to refresh the access token.
+  if (!session.isLoggedIn) {
+    return false;
+  }
+
+  const bufferedExp = { expires: new Date(), refresh_expires: new Date() };
+
+  // Create a buffer of 1 minute on expire times to make sure we don't run into any timing issues.
+  if (session.expires) {
+    bufferedExp.expires = sub(session.expires, {minutes: 1});
+  }
+
+  if (session.refresh_expires) {
+    bufferedExp.refresh_expires = sub(session.refresh_expires, {minutes: 1});
+  }
+
+  if (session.refresh_expires && isPast(bufferedExp.refresh_expires)) {
+    return true;
+  }
+
+  if (bufferedExp.expires && isPast(bufferedExp.expires)) {
+    return true;
+  }
+
+  return false;
+}
+
+export const accessTokenIsExpired = (session: IronSession<TSessionData>) => {
+  // We need the timestamps to be set to consider the session expired.
+  // If they are not available, we consider the session expired.
+  if (!session.expires || !session.refresh_expires) {
+    return true;
+  }
+
+  return session.expires && isPast(session.expires);
 }

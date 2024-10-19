@@ -1,12 +1,12 @@
-import {
-  uniloginClientConfig,
-  getUniloginClient
-} from "@/lib/session/oauth/uniloginClient";
-import { getSession } from "@/lib/session/session";
 import { IncomingMessage } from "http";
-import { cookies } from "next/headers";
 import { IntrospectionResponse } from "openid-client";
-import { z } from "zod";
+
+import {
+  getUniloginClient,
+  uniloginClientConfig} from "@/lib/session/oauth/uniloginClient";
+import { getSession, setTokensOnSession } from "@/lib/session/session";
+import { TTokenSet } from "@/lib/types/session";
+
 import schemas from "./schemas";
 
 export interface TIntrospectionResponse extends IntrospectionResponse {
@@ -28,7 +28,7 @@ export async function GET(request: IncomingMessage) {
         code_verifier: session.code_verifier
       }
     );
-    const tokenSet = schemas.tokenSet.parse(tokenSetResponse);
+    const tokenSet = schemas.tokenSet.parse(tokenSetResponse) as TTokenSet;
 
     const introspectResponse = (await client.introspect(
       tokenSet.access_token!
@@ -43,12 +43,7 @@ export async function GET(request: IncomingMessage) {
     session.type = "unilogin";
 
     // Set token info.
-    session.access_token = tokenSet.access_token;
-    session.refresh_token = tokenSet.refresh_token;
-    session.expire = new Date(Date.now() + tokenSet.expires_in! * 1000);
-    // Since we have a limitation in how big cookies can be,
-    // we will have to store the user id in a separate cookie.
-    cookies().set("go-session:id_token", tokenSet.id_token);
+    setTokensOnSession(session, tokenSet);
 
     // Set user info.
     session.userInfo = {
