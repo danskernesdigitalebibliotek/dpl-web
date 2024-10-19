@@ -1,7 +1,6 @@
 "use client"
 
 import { useSearchParams } from "next/navigation"
-import { useEffect } from "react"
 
 import {
   FacetField,
@@ -11,6 +10,7 @@ import {
 } from "@/lib/graphql/generated/fbi/graphql"
 
 import SearchFilterBar from "./SearchFilterBar"
+import SearchResults from "./SearchResults"
 
 const facetDefinitions = [
   "materialTypesGeneral",
@@ -84,7 +84,7 @@ const SearchPageLayout = ({ searchQuery }: { searchQuery?: string }) => {
     {} as { [key: string]: string[] }
   )
 
-  const { data, error, isLoading } = useSearchWithPaginationQuery({
+  const { data, isLoading } = useSearchWithPaginationQuery({
     q: { all: q },
     offset: 0,
     limit: 10,
@@ -94,11 +94,7 @@ const SearchPageLayout = ({ searchQuery }: { searchQuery?: string }) => {
     },
   })
 
-  const {
-    data: facetData,
-    error: facetError,
-    isLoading: facetIsLoading,
-  } = useSearchFacetsQuery({
+  const { data: dataFacets, isLoading: isLoadingFacets } = useSearchFacetsQuery({
     q: { all: q },
     facetLimit: 100,
     facets: facetDefinitions,
@@ -108,33 +104,15 @@ const SearchPageLayout = ({ searchQuery }: { searchQuery?: string }) => {
     },
   })
 
-  useEffect(() => {
-    // const queryParams = new URLSearchParams(window.location.search);
-  }, [searchParams])
-
-  if (error) {
-    return <div>Error: {<pre>{JSON.stringify(error, null, 2)}</pre>}</div>
-  }
-
   return (
     <div className="content-container">
       <h1 className="mt-[88px] text-typo-heading-2">{`Viser resultater for "${q}" ${data?.search.hitcount ? "(" + data?.search.hitcount + ")" : ""}`}</h1>
-      <SearchFilterBar facets={facetData?.search?.facets || []} />
+      {isLoadingFacets && <p>isLoadingFacets...</p>}
+      {!dataFacets?.search?.facets?.length && <p>Ingen filter</p>}
+      {dataFacets?.search?.facets && <SearchFilterBar facets={dataFacets.search.facets || []} />}
       {isLoading && <p>isLoading...</p>}
-      {data?.search.hitcount === 0 && <p>Ingen resultater</p>}
-      <div className="grid grid-cols-3 gap-grid-gap-x">
-        {data?.search?.hitcount &&
-          data?.search?.hitcount > 0 &&
-          data.search.works.map(work => (
-            <div key={work.workId} className="bg-background-overlay p-4">
-              <p>{work.titles.full}</p>
-
-              <pre>{JSON.stringify(work, null, 2)}</pre>
-            </div>
-          ))}
-      </div>
-
-      <pre>{JSON.stringify(data, null, 2)}</pre>
+      {data?.search.hitcount === 0 && <p>Ingen søgeresultat</p>}
+      {data?.search?.works && <SearchResults works={data.search.works} />}
     </div>
   )
 }
