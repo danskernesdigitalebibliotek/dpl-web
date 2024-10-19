@@ -55,8 +55,8 @@
   --block-spacing: 5rem; /* 80px */
 
   /* COLORS */
-  --black: hsla(0, 0%, 10%, 1);
-  --white: hsla(0, 0%, 0%, 1);
+  --black: hsla(0, 0%, 0%, 1);
+  --white: hsla(255, 100%, 100%, 1);
 
   --beige: hsla(36, 45%, 98%, 1);
   --beige-overlay: hsla(42, 25%, 35%, 0.05);
@@ -65,6 +65,9 @@
   --blue-overlay: hsla(238, 54%, 89%, 0.09);
 
   --border: hsla(48, 4.4%, 77.8%, 1);
+
+  --shadow-1: hsla(0, 0%, 0%, 0.5);
+  --shadow-2: hsla(0, 0%, 0%, 0.15);
 
   /* CONTENT COLORS */
   --content-pink-100: 320 100% 91%;
