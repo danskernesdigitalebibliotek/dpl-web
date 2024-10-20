@@ -9,7 +9,7 @@ import {
   useSearchWithPaginationQuery,
 } from "@/lib/graphql/generated/fbi/graphql"
 
-import SearchFilterBar from "../../shared/searchFilters/SearchFilters"
+import SearchFilterBar from "../../shared/searchFilters/SearchFilterBar"
 import SearchResults from "./SearchResults"
 import { facetDefinitions, mapFacetsToFilters } from "@/components/shared/searchFilters/helper"
 
