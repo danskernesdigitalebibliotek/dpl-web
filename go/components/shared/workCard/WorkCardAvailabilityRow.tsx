@@ -10,8 +10,6 @@ type WorkCardAvailabilityRowProps = {
 }
 
 const WorkCardAvailabilityRow = ({ materialTypes }: WorkCardAvailabilityRowProps) => {
-  console.log({ materialTypes })
-
   return (
     <div className="mb-1 flex w-full flex-row justify-center gap-2">
       {isOfWorkTypeCategory(materialTypes, "reading") && (

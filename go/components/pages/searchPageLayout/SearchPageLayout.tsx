@@ -3,14 +3,13 @@
 import { useSearchParams } from "next/navigation"
 
 import {
-  FacetField,
   FacetValue,
   SearchFilters,
   useSearchFacetsQuery,
   useSearchWithPaginationQuery,
 } from "@/lib/graphql/generated/fbi/graphql"
 
-import SearchFilterBar from "./SearchFilterBar"
+import SearchFilterBar from "../../shared/searchFilters/SearchFilters"
 import SearchResults from "./SearchResults"
 import { facetDefinitions, mapFacetsToFilters } from "@/components/shared/searchFilters/helper"
 
