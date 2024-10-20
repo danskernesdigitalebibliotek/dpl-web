@@ -12,24 +12,7 @@ import {
 
 import SearchFilterBar from "./SearchFilterBar"
 import SearchResults from "./SearchResults"
-
-const facetDefinitions = [
-  "materialTypesGeneral",
-  "mainLanguages",
-  "age",
-  "lix",
-  "subjects",
-  "let",
-] as FacetField[]
-
-const mapFacetsToFilters = {
-  materialTypesGeneral: "materialTypesGeneral",
-  mainLanguages: "mainLanguages",
-  age: "age",
-  lix: "lixRange",
-  subjects: "subjects",
-  let: "letRange",
-} as Record<FacetField, keyof SearchFilters>
+import { facetDefinitions, mapFacetsToFilters } from "@/components/shared/searchFilters/helper"
 
 // TODO: Add branches though endpoint
 const branchIds = [
@@ -119,7 +102,9 @@ const SearchPageLayout = ({ searchQuery }: { searchQuery?: string }) => {
       <h1 className="mt-[88px] text-typo-heading-2">{`Viser resultater for "${q}" ${data?.search.hitcount ? "(" + data?.search.hitcount + ")" : ""}`}</h1>
       {isLoadingFacets && <p>isLoadingFacets...</p>}
       {!dataFacets?.search?.facets?.length && <p>Ingen filter</p>}
-      {dataFacets?.search?.facets && <SearchFilterBar facets={dataFacets.search.facets || []} />}
+      {dataFacets?.search?.facets && dataFacets?.search?.facets?.length > 0 && (
+        <SearchFilterBar facets={dataFacets.search.facets} />
+      )}
       {isLoading && <p>isLoading...</p>}
       {data?.search.hitcount === 0 && <p>Ingen søgeresultat</p>}
       {data?.search?.works && <SearchResults works={data.search.works} />}
