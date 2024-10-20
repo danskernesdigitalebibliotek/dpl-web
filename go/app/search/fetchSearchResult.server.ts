@@ -28,26 +28,12 @@ const prefetchSearchFacets = async (q: string, queryClient: QueryClient) => {
     queryKey: useSearchFacetsQuery.getKey({
       q: { all: q },
       facetLimit: 100,
-      facets: [
-        "materialTypesGeneral",
-        "mainLanguages",
-        "age",
-        "lix",
-        "subjects",
-        "let",
-      ] as FacetField[],
+      facets: ["materialTypesGeneral", "mainLanguages", "age", "lix", "subjects"] as FacetField[],
     }),
     queryFn: useSearchFacetsQuery.fetcher({
       q: { all: q },
       facetLimit: 100,
-      facets: [
-        "materialTypesGeneral",
-        "mainLanguages",
-        "age",
-        "lix",
-        "subjects",
-        "let",
-      ] as FacetField[],
+      facets: ["materialTypesGeneral", "mainLanguages", "age", "lix", "subjects"] as FacetField[],
     }),
   })
 
