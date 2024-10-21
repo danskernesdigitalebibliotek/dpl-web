@@ -1,14 +1,14 @@
 import { NextRequest, NextResponse } from "next/server";
 import { z } from "zod";
 
-import { getSession, setTokensOnSession } from "@/lib/session/session";
 import { getUniloginClient } from "@/lib/session/oauth/uniloginClient";
+import { getSession, setTokensOnSession } from "@/lib/session/session";
 import { TTokenSet } from "@/lib/types/session";
 
 const sessionTokenSchema = z.object({
   isLoggedIn: z.boolean(),
   access_token: z.string(),
-  refresh_token: z.string(),
+  refresh_token: z.string()
 });
 
 export async function GET(request: NextRequest, response: NextResponse) {
@@ -28,21 +28,23 @@ export async function GET(request: NextRequest, response: NextResponse) {
   try {
     const tokens = sessionTokenSchema.parse(session);
     const client = await getUniloginClient();
-    const newTokens = await (client.refresh(tokens.refresh_token) as Promise<TTokenSet>);
+    const newTokens = await (client.refresh(
+      tokens.refresh_token
+    ) as Promise<TTokenSet>);
     setTokensOnSession(session, newTokens);
     await session.save();
     console.log("Tokens refreshed successfully:", newTokens);
   } catch (error) {
-    const isZodError = error instanceof z.ZodError;
+    // TODO: maybe distinguish between ZodError and other errors?
+    // TODO: Should we redirect to an end-of-session page?
     // Session is corrupt so we need to destroy it.
-    if (isZodError) {
-      session.destroy();
-    }
+    session.destroy();
 
+    const isZodError = error instanceof z.ZodError;
     console.error(isZodError ? JSON.stringify(error.errors) : error);
   } finally {
     return NextResponse.redirect(redirect, { headers: response.headers });
   }
 }
 
-export const dynamic = 'force-dynamic';
+export const dynamic = "force-dynamic";

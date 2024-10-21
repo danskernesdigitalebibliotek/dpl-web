@@ -1,6 +1,6 @@
 import { z } from "zod";
 
-export default {
+const schemas = {
   tokenSet: z.object({
     access_token: z.string(),
     refresh_token: z.string(),
@@ -16,3 +16,5 @@ export default {
     sub: z.string()
   })
 };
+
+export default schemas;

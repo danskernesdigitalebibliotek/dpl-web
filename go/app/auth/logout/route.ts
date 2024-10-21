@@ -1,14 +1,16 @@
+import { cookies } from "next/headers";
+import { generators } from "openid-client";
+
 import {
   getUniloginClient,
   uniloginClientConfig
 } from "@/lib/session/oauth/uniloginClient";
 import { defaultSession, getSession } from "@/lib/session/session";
-import { cookies } from "next/headers";
-import { generators } from "openid-client";
 
 // TODO: This is a code block copy/pasted from an online article. Make it real yo.
 export async function GET() {
   const session = await getSession();
+  const frontpage = `${process.env.NEXT_PUBLIC_APP_URL!}/`;
 
   switch (session.type) {
     case "unilogin":
@@ -29,6 +31,6 @@ export async function GET() {
       await session.save();
       return Response.redirect(endSession);
     default:
-      return Response.redirect("/");
+      return Response.redirect(frontpage);
   }
 }
