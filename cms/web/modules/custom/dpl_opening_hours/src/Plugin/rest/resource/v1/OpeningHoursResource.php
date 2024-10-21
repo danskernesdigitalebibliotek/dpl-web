@@ -89,7 +89,7 @@ final class OpeningHoursResource extends OpeningHoursResourceBase {
 
     try {
       $openingHoursInstances = $this->repository->loadMultiple(
-        $typedRequest->getInt('branch_id'),
+        $typedRequest->getInts('branch_id'),
         $typedRequest->getDateTime('from_date'),
         $typedRequest->getDateTime('to_date')
       );

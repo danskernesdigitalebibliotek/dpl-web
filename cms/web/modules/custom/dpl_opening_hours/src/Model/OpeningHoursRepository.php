@@ -59,14 +59,25 @@ class OpeningHoursRepository {
   /**
    * Load a collection of opening hours.
    *
+   * @param int[] $branchIds
+   *   The branch ID or an array of branch IDs.
+   * @param \DateTimeInterface|null $fromDate
+   *   The start date.
+   * @param \DateTimeInterface|null $toDate
+   *   The end date.
+   * @param int|null $repetitionId
+   *   The repetition ID.
+   * @param int|null $categoryId
+   *   The category ID.
+   *
    * @return OpeningHoursInstance[]
    *   Opening hours instances which match the provided criteria.
    */
-  public function loadMultiple(int $branchId = NULL, \DateTimeInterface $fromDate = NULL, \DateTimeInterface $toDate = NULL, int $repetitionId = NULL, int $categoryId = NULL): array {
+  public function loadMultiple(array $branchIds = [], \DateTimeInterface $fromDate = NULL, \DateTimeInterface $toDate = NULL, int $repetitionId = NULL, int $categoryId = NULL): array {
     $query = $this->connection->select(self::INSTANCE_TABLE, self::INSTANCE_TABLE)
       ->fields(self::INSTANCE_TABLE);
-    if ($branchId) {
-      $query->condition('branch_nid', $branchId);
+    if ($branchIds) {
+      $query->condition('branch_nid', $branchIds, 'IN');
     }
     if ($fromDate) {
       $query->condition('date', $fromDate->format('Y-m-d'), '>=');

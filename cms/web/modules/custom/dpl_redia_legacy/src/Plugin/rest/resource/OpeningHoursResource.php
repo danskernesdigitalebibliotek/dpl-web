@@ -84,8 +84,12 @@ final class OpeningHoursResource extends OpeningHoursResourceBase {
             ],
             'nid' => [
               'name' => 'nid',
-              'type' => 'integer',
-              'description' => 'The (node) id of the node (Branch) that the opening hour applies to.',
+              'type' => 'array',
+              'items' => [
+                'type' => 'integer',
+              ],
+              'collectionFormat' => 'csv',
+              'description' => 'The id(s) of the branch(es) for which to retrieve opening hours. Can be a single id or a comma-separated list of ids.',
               'in' => 'query',
               'required' => TRUE,
             ],
@@ -118,8 +122,8 @@ final class OpeningHoursResource extends OpeningHoursResourceBase {
   public function get(Request $request): Response {
     $typedRequest = new RequestTyped($request);
 
-    $nid = $typedRequest->getInt('nid');
-    if ($nid === NULL) {
+    $nid = $typedRequest->getInts('nid');
+    if (empty($nid)) {
       throw new BadRequestHttpException("The 'nid' parameter is required.");
     }
     $fromDate = $typedRequest->getDateTime('from_date');
