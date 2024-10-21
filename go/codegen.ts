@@ -55,7 +55,15 @@ const config: CodegenConfig = {
         },
         defaultScalarType: "unknown",
         reactQueryVersion: 5,
-        fetcher: "@/lib/fetchers/fbi.fetcher#fetchData"
+        fetcher: {
+          // TODO: Make this configurable
+          endpoint: "http://dapple-cms.docker/graphql",
+          fetchParams: JSON.stringify({
+            headers: {
+              "Content-Type": "application/json"
+            }
+          })
+        }
       },
       hooks: {
         afterOneFileWrite: ["yarn eslint --fix"]
