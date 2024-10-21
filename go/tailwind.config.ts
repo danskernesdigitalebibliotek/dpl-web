@@ -241,6 +241,17 @@ const config: Config = {
       transitionDuration: {
         "dark-mode": "var(--dark-mode-transition)",
       },
+      keyframes: {
+        wiggle: {
+          "10% 90%": { transform: "rotate(10.0deg)" },
+          "20%, 80%": { transform: "rotate(-4.0deg)" },
+          "30%, 50%, 70%": { transform: "rotate(14.0deg)" },
+          "40%, 60%": { transform: "rotate(-8.0deg)" },
+        },
+      },
+      animation: {
+        wiggle: "wiggle 900ms linear 1",
+      },
       spacing: {
         "navigation-top-height": "var(--navigation-top-height)",
         "navigation-height": "var(--navigation-height)",
