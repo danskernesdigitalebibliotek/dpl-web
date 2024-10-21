@@ -20,12 +20,14 @@ export async function GET(request: NextRequest, response: NextResponse) {
     return NextResponse.redirect(frontpage, { headers: response.headers });
   }
   const redirect = request.nextUrl.searchParams.get("redirect");
+  console.log("Redirecting to:", redirect);
   // We need the redirect URL to be present in the query string.
   if (!redirect) {
     return NextResponse.redirect(frontpage, { headers: response.headers });
   }
 
   try {
+    // TODO: Consider if we want to handle different types of sessions than unilogin.
     const tokens = sessionTokenSchema.parse(session);
     const client = await getUniloginClient();
     const newTokens = await (client.refresh(

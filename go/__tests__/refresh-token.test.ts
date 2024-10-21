@@ -39,7 +39,7 @@ const sessionThatShouldBeRefreshed = () => ({
   id_token: "id",
 });
 
-test('That the refresh endpoint returns unauthorized if there is no active session', async () => {
+test('That the refresh endpoint redirects to the frontpage if there is no active session', async () => {
   // Simulate an anonymous session.
   getIronSession.mockResolvedValue({
     isLoggedIn: false,
@@ -48,72 +48,24 @@ test('That the refresh endpoint returns unauthorized if there is no active sessi
 
   await testApiHandler({
     appHandler: tokenRefreshHandler,
+    url: `/?redirect=http://john.johnson.com/john`,
     async test({ fetch }) {
-      const res = await fetch({ method: 'POST', body: JSON.stringify({type: "unilogin"}) });
-      const json = await res.json();
-      expect(res.status).toEqual(401);
-      expect(json).toMatchObject({ message: 'Unauthorized' });
+      const res = await fetch({ method: 'GET' });
+      expect(res.headers.get('location')).toEqual("http://localhost:3000/");
     }
   });
 });
 
-
-test('Gives an error if type is not provided in payload and only the type', async () => {
-  await testApiHandler({
-    appHandler: tokenRefreshHandler,
-    async test({ fetch }) {
-      const res = await fetch({ method: 'POST', body: JSON.stringify({animal: "horse"}) });
-      const json = await res.json();
-      expect(json.errors).toHaveLength(2);
-      expect(json.errors[0].code).toEqual("invalid_type");
-      expect(json.errors[1].code).toEqual("unrecognized_keys");
-   }
-  });
-  await testApiHandler({
-    appHandler: tokenRefreshHandler,
-    async test({ fetch }) {
-      const res = await fetch({ method: 'POST', body: JSON.stringify({animal: "horse", type: "unilogin"}) });
-      const json = await res.json();
-       expect(json.errors).toHaveLength(1);
-       expect(json.errors[0].code).toEqual("unrecognized_keys");
-
-    }
-  });
-});
-
-test('That the refresh endpoint only accepts known types', async () => {
+test('That the refresh endpoint redirects to the given endpoint after refreshing token', async () => {
   // This is an authorized session that should be refreshed.
   getIronSession.mockResolvedValue(sessionThatShouldBeRefreshed());
 
   await testApiHandler({
     appHandler: tokenRefreshHandler,
+    url: `/?redirect=http://john.johnson.com/john`,
     async test({ fetch }) {
-      const res = await fetch({ method: 'POST', body: JSON.stringify({type: "foo"}) });
-      const json = await res.json();
-       expect(json.errors).toHaveLength(1);
-       expect(json.errors[0].code).toEqual("invalid_enum_value");
-    }
-  });
-  await testApiHandler({
-    appHandler: tokenRefreshHandler,
-    async test({ fetch }) {
-      const res = await fetch({ method: 'POST', body: JSON.stringify({type: "unilogin"}) });
-      const json = await res.json();
-      expect(json).toMatchObject({message: "Access token was refreshed"});
-    }
-  });
-});
-
-test('That the refresh endpoint informs that the access token was refreshed if needed', async () => {
-  // This is an authorized session that should be refreshed.
-  getIronSession.mockResolvedValue(sessionThatShouldBeRefreshed());
-
-  await testApiHandler({
-    appHandler: tokenRefreshHandler,
-    async test({ fetch }) {
-      const res = await fetch({ method: 'POST', body: JSON.stringify({type: "unilogin"}) });
-      const json = await res.json();
-      expect(json).toMatchObject({message: "Access token was refreshed"});
+      const res = await fetch({ method: 'GET' });
+      expect(res.headers.get('location')).toEqual("http://john.johnson.com/john");
     }
   });
 
@@ -125,16 +77,9 @@ test('That the refresh endpoint informs that the access token was refreshed if n
       access_token: "access_token",
       refresh_token: "refresh"
     });
-
-    await testApiHandler({
-      appHandler: tokenRefreshHandler,
-      async test({ fetch }) {
-        const res = await fetch({ method: 'POST', body: JSON.stringify({type: "unilogin"}) });
-        const json = await res.json();
-        expect(json).toMatchObject({message: "Access token was NOT refreshed"});
-      }
-    });
 });
+
+// TODO: Write tests that proves that the session object is updated correctly after a successful refresh.
 
 test('That the refreshValidation validates if the access token should be refreshed correctly', async () => {
   // Since there is a buffer of 1 minute added to the refresh time,
@@ -143,6 +88,7 @@ test('That the refreshValidation validates if the access token should be refresh
     type: "unilogin",
     expires: add(new Date(), {seconds: 59}),
     refresh_expires: add(new Date(), {seconds: 59}),
+    isLoggedIn: true,
   } as IronSession<TSessionData>)).toBe(true);
 
   // Since there is a buffer of 1 minute added to the refresh time,
@@ -152,6 +98,7 @@ test('That the refreshValidation validates if the access token should be refresh
     type: "unilogin",
     expires: add(new Date(), {seconds: 60}),
     refresh_expires: add(new Date(), {seconds: 60}),
+    isLoggedIn: true,
   } as IronSession<TSessionData>)).toBe(false);
 
   // The refresh logic looks at both expires and refresh_expires.
@@ -160,11 +107,13 @@ test('That the refreshValidation validates if the access token should be refresh
     type: "unilogin",
     expires: add(new Date(), {seconds: 59}),
     refresh_expires: add(new Date(), {seconds: 1800}),
+    isLoggedIn: true,
   } as IronSession<TSessionData>)).toBe(true);
   // Here the refresh_expires is the tipping point.
   expect(accessTokenShouldBeRefreshed({
     type: "unilogin",
     expires: add(new Date(), {seconds: 300}),
     refresh_expires: add(new Date(), {seconds: 59}),
+    isLoggedIn: true,
   } as IronSession<TSessionData>)).toBe(true);
 });
