@@ -1,7 +1,7 @@
 "use client"
 
 import { useRouter } from "next/navigation"
-import React from "react"
+import React, { MouseEvent } from "react"
 
 import { Button } from "@/components/shared/button/Button"
 import Icon from "@/components/shared/icon/Icon"
@@ -15,8 +15,8 @@ import {
 } from "@/components/shared/sheet/Sheet"
 import useSession from "@/hooks/useSession"
 
-const HeaderButton = () => (
-  <Button variant="icon">
+const HeaderButton = ({ onClick }: { onClick?: (e: MouseEvent<HTMLButtonElement>) => void }) => (
+  <Button onClick={onClick} variant="icon">
     <Icon className="h-[24px] w-[24px]" name="profile" />
   </Button>
 )
@@ -24,7 +24,6 @@ const HeaderButton = () => (
 function ProfileButton() {
   const { session, loading } = useSession()
   const router = useRouter()
-
   if (loading) {
     return (
       <>
@@ -42,10 +41,10 @@ function ProfileButton() {
         <SheetContent>
           <SheetHeader>
             <SheetTitle className="text-typo-heading-4">Log ind</SheetTitle>
-            <SheetDescription className="flex flex-col items-center justify-center rounded-sm bg-background-overlay p-10">
-              <h4 className="text-typo-heading-6 mb-2 font-bold text-black">
+            <div className="flex flex-col items-center justify-center rounded-sm bg-background-overlay p-10">
+              <SheetDescription className="text-typo-heading-6 mb-2 font-bold text-black">
                 Log ind med UNI•Login
-              </h4>
+              </SheetDescription>
               <div>
                 <Button
                   className="size-sm bg-black text-stone-100 outline"
@@ -54,7 +53,7 @@ function ProfileButton() {
                   log ind
                 </Button>
               </div>
-            </SheetDescription>
+            </div>
           </SheetHeader>
         </SheetContent>
       </Sheet>
@@ -63,7 +62,7 @@ function ProfileButton() {
 
   return (
     <>
-      <HeaderButton />
+      <HeaderButton onClick={() => router.push("/user/profile")} />
     </>
   )
 }
