@@ -5,6 +5,8 @@ import DarkModeToggle from "@/components/shared/darkModeToggle/DarkModeToggle"
 import Icon from "@/components/shared/icon/Icon"
 import { SearchInput } from "@/components/shared/searchInput/SearchInput"
 
+import ProfileButton from "./ProfileButton"
+
 function Header() {
   return (
     <div>
@@ -25,9 +27,7 @@ function Header() {
           <Button variant="icon">
             <Icon className="h-[24px] w-[24px]" name="search" />
           </Button>
-          <Button variant="icon">
-            <Icon className="h-[24px] w-[24px]" name="profile" />
-          </Button>
+         <ProfileButton />
         </div>
       </div>
       <div className="h-navigation-search-height">
