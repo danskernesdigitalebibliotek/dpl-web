@@ -16,7 +16,6 @@ type SearchInputProps = {
 const SearchInput = ({ className, placeholder }: SearchInputProps) => {
   const inputRef = useRef<HTMLInputElement>(null)
   const router = useRouter()
-
   const searchParams = useSearchParams()
   const [queryString, setQueryString] = React.useState("")
 
