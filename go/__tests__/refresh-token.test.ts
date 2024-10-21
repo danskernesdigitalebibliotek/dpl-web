@@ -1,8 +1,7 @@
 // @vitest-environment node
-
 import { add } from "date-fns";
 import { getIronSession, IronSession,  } from "iron-session";
-import { testApiHandler } from 'next-test-api-route-handler'; // ◄ Must be first import
+import { testApiHandler } from 'next-test-api-route-handler';
 import { afterAll, beforeAll, beforeEach, expect, test, vi } from "vitest";
 
 import * as tokenRefreshHandler from '@/app/auth/token/refresh/route';
