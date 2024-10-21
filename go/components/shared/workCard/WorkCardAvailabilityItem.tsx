@@ -7,7 +7,7 @@ type WorkCardAvailabilityItemProps = {
 
 const WorkCardAvailabilityItem = ({ iconName }: WorkCardAvailabilityItemProps) => {
   return (
-    <div className="h-6 w-6 rounded-full bg-background md:h-10 md:w-10">
+    <div className="h-6 w-6 rounded-full bg-background-overlay md:h-10 md:w-10">
       <Icon className="h-6 w-6 md:h-10 md:w-10" name={iconName} />
     </div>
   )
