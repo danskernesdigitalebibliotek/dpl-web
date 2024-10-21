@@ -7,7 +7,6 @@ import {
 } from "@/lib/session/oauth/uniloginClient";
 import { defaultSession, getSession } from "@/lib/session/session";
 
-// TODO: This is a code block copy/pasted from an online article. Make it real yo.
 export async function GET() {
   const session = await getSession();
   const frontpage = `${process.env.NEXT_PUBLIC_APP_URL!}/`;
