@@ -1,5 +1,6 @@
 "use client";
 import useSession from "@/hooks/useSession";
+
 import { Button } from "../button/Button";
 
 const ExampleUniloginButton = () => {
@@ -21,7 +22,7 @@ const ExampleUniloginButton = () => {
   return (
     <Button
       onClick={() => {
-        window.location.href = "/auth/login";
+        window.location.href = "/auth/login/unilogin";
       }}
     >
       Login

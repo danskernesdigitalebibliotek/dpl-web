@@ -1,9 +1,10 @@
+import { generators } from "openid-client";
+
 import {
-  uniloginClientConfig,
-  getUniloginClient
+  getUniloginClient,
+  uniloginClientConfig
 } from "@/lib/session/oauth/uniloginClient";
 import { getSession } from "@/lib/session/session";
-import { generators } from "openid-client";
 
 export async function GET() {
   const session = await getSession();
