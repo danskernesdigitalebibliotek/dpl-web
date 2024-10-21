@@ -2,33 +2,16 @@
 
 import { useSearchParams } from "next/navigation"
 
+import { facetDefinitions, mapFacetsToFilters } from "@/components/shared/searchFilters/helper"
 import {
-  FacetField,
   FacetValue,
   SearchFilters,
   useSearchFacetsQuery,
   useSearchWithPaginationQuery,
 } from "@/lib/graphql/generated/fbi/graphql"
 
-import SearchFilterBar from "./SearchFilterBar"
-
-const facetDefinitions = [
-  "materialTypesGeneral",
-  "mainLanguages",
-  "age",
-  "lix",
-  "subjects",
-  "let",
-] as FacetField[]
-
-const mapFacetsToFilters = {
-  materialTypesGeneral: "materialTypesGeneral",
-  mainLanguages: "mainLanguages",
-  age: "age",
-  lix: "lixRange",
-  subjects: "subjects",
-  let: "letRange",
-} as Record<FacetField, keyof SearchFilters>
+import SearchFilterBar from "../../shared/searchFilters/SearchFilterBar"
+import SearchResults from "./SearchResults"
 
 // TODO: Add branches though endpoint
 const branchIds = [
@@ -93,7 +76,7 @@ const SearchPageLayout = ({ searchQuery }: { searchQuery?: string }) => {
     {} as { [key: string]: keyof SearchFilters[] }
   )
 
-  const { data, error, isLoading, isPending, isFetching } = useSearchWithPaginationQuery({
+  const { data, isLoading } = useSearchWithPaginationQuery({
     q: { all: q },
     offset: 0,
     limit: 10,
@@ -103,13 +86,7 @@ const SearchPageLayout = ({ searchQuery }: { searchQuery?: string }) => {
     },
   })
 
-  const {
-    data: facetData,
-    error: facetError,
-    isLoading: facetIsLoading,
-    isPending: facetIsPending,
-    isFetching: facetIsFetching,
-  } = useSearchFacetsQuery({
+  const { data: dataFacets, isLoading: isLoadingFacets } = useSearchFacetsQuery({
     q: { all: q },
     facetLimit: 100,
     facets: facetDefinitions,
@@ -119,31 +96,17 @@ const SearchPageLayout = ({ searchQuery }: { searchQuery?: string }) => {
     },
   })
 
-  if (error) {
-    return <div>Error: {<pre>{JSON.stringify(error, null, 2)}</pre>}</div>
-  }
-
   return (
     <div className="content-container">
-      <SearchFilterBar facets={facetData?.search?.facets || []} />
-      <h1 className="text-typo-heading-2">{`Viser resultater for "${q}" ${data?.search.hitcount ? "(" + data?.search.hitcount + ")" : ""}`}</h1>
-      {isFetching && <p>isFetching...</p>}
+      <h1 className="mt-[88px] text-typo-heading-2">{`Viser resultater for "${q}" ${data?.search.hitcount ? "(" + data?.search.hitcount + ")" : ""}`}</h1>
+      {isLoadingFacets && <p>isLoadingFacets...</p>}
+      {!dataFacets?.search?.facets?.length && <p>Ingen filter</p>}
+      {dataFacets?.search?.facets && dataFacets?.search?.facets?.length > 0 && (
+        <SearchFilterBar facets={dataFacets.search.facets} />
+      )}
       {isLoading && <p>isLoading...</p>}
-      {isPending && <p>isPending...</p>}
-      {data?.search.hitcount === 0 && <p>Ingen resultater</p>}
-      <div className="gap-grid-gap-x grid grid-cols-3">
-        {data?.search?.hitcount &&
-          data?.search?.hitcount > 0 &&
-          data.search.works.map(work => (
-            <div key={work.workId} className="bg-background-overlay p-4">
-              <p>{work.titles.full}</p>
-
-              <pre>{JSON.stringify(work, null, 2)}</pre>
-            </div>
-          ))}
-      </div>
-
-      <pre>{JSON.stringify(data, null, 2)}</pre>
+      {data?.search.hitcount === 0 && <p>Ingen søgeresultat</p>}
+      {data?.search?.works && <SearchResults works={data.search.works} />}
     </div>
   )
 }

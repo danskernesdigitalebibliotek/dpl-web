@@ -7,12 +7,21 @@ const nextConfig = {
         options.defaultLoaders.babel,
         {
           loader: "@svgr/webpack",
-          options: { babel: false }
-        }
-      ]
-    });
-    return config;
-  }
-};
+          options: { babel: false },
+        },
+      ],
+    })
+    return config
+  },
+  images: {
+    remotePatterns: [
+      {
+        protocol: "https",
+        hostname: "i.pinimg.com",
+        pathname: "/**",
+      },
+    ],
+  },
+}
 
-export default nextConfig;
+export default nextConfig

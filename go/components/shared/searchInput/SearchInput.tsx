@@ -8,7 +8,12 @@ import { cn } from "@/lib/utils"
 
 import Icon from "../icon/Icon"
 
-const SearchInput = ({ className }: { className?: string }) => {
+type SearchInputProps = {
+  className?: string
+  placeholder: string
+}
+
+const SearchInput = ({ className, placeholder }: SearchInputProps) => {
   const inputRef = useRef<HTMLInputElement>(null)
   const router = useRouter()
 
@@ -17,7 +22,6 @@ const SearchInput = ({ className }: { className?: string }) => {
 
   useEffect(() => {
     setQueryString(searchParams.get("q") || "")
-
     window.addEventListener("keydown", handleKeydown)
     return () => {
       window.removeEventListener("keydown", handleKeydown)
@@ -54,6 +58,7 @@ const SearchInput = ({ className }: { className?: string }) => {
         )}
         value={queryString}
         onChange={e => setQueryString(e.target.value)}
+        placeholder={placeholder}
       />
       <button
         className="absolute right-[24px] top-[50%] translate-y-[-50%]"
