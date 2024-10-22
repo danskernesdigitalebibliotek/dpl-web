@@ -45,9 +45,7 @@ const branchIds = [
   "775130",
 ] as string[]
 
-export type FilterItemTerm = Omit<FacetValue, "__typename">
-
-export const formatFacetTerms = (filters: { [key: string]: { [key: string]: FilterItemTerm } }) => {
+export const formatFacetTerms = (filters: { [key: string]: { [key: string]: FacetValue } }) => {
   return Object.keys(filters).reduce(
     (acc, key) => ({
       ...acc,
