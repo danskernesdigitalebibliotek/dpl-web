@@ -5,6 +5,7 @@ import {
   useSearchFacetsQuery,
   useSearchWithPaginationQuery,
 } from "@/lib/graphql/generated/fbi/graphql"
+import { facetDefinitions } from "@/components/shared/searchFilters/helper"
 
 const prefetchSearchResult = async (q: string, queryClient: QueryClient) => {
   await queryClient.prefetchQuery({
@@ -28,12 +29,12 @@ const prefetchSearchFacets = async (q: string, queryClient: QueryClient) => {
     queryKey: useSearchFacetsQuery.getKey({
       q: { all: q },
       facetLimit: 100,
-      facets: ["materialTypesGeneral", "mainLanguages", "age", "lix", "subjects"] as FacetField[],
+      facets: facetDefinitions,
     }),
     queryFn: useSearchFacetsQuery.fetcher({
       q: { all: q },
       facetLimit: 100,
-      facets: ["materialTypesGeneral", "mainLanguages", "age", "lix", "subjects"] as FacetField[],
+      facets: facetDefinitions,
     }),
   })
 
