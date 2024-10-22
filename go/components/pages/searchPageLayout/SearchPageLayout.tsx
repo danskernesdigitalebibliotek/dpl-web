@@ -74,25 +74,36 @@ const SearchPageLayout = ({ searchQuery }: { searchQuery?: string }) => {
     {} as { [key: string]: keyof SearchFilters[] }
   )
 
-  const { data, isLoading } = useSearchWithPaginationQuery({
-    q: { all: q },
-    offset: 0,
-    limit: 10,
-    filters: {
-      branchId: branchIds,
-      ...facetsForSearchRequest,
+  const { data, isLoading } = useSearchWithPaginationQuery(
+    {
+      q: { all: q },
+      offset: 0,
+      // TODO: This should be configurable.
+      limit: 10,
+      filters: {
+        branchId: branchIds,
+        ...facetsForSearchRequest,
+      },
     },
-  })
+    {
+      enabled: q?.length > 0,
+    }
+  )
 
-  const { data: dataFacets, isLoading: isLoadingFacets } = useSearchFacetsQuery({
-    q: { all: q },
-    facetLimit: 100,
-    facets: facetDefinitions,
-    filters: {
-      branchId: branchIds,
-      ...facetsForSearchRequest,
+  const { data: dataFacets, isLoading: isLoadingFacets } = useSearchFacetsQuery(
+    {
+      q: { all: q },
+      facetLimit: 100,
+      facets: facetDefinitions,
+      filters: {
+        branchId: branchIds,
+        ...facetsForSearchRequest,
+      },
     },
-  })
+    {
+      enabled: q?.length > 0,
+    }
+  )
 
   return (
     <div className="content-container">
