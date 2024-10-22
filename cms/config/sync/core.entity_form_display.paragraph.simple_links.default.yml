@@ -6,14 +6,14 @@ dependencies:
     - field.field.paragraph.simple_links.field_link
     - paragraphs.paragraphs_type.simple_links
   module:
-    - linkit
+    - dpl_link
 id: paragraph.simple_links.default
 targetEntityType: paragraph
 bundle: simple_links
 mode: default
 content:
   field_link:
-    type: linkit
+    type: dpl_link_options
     weight: 0
     region: content
     settings:
@@ -21,6 +21,7 @@ content:
       placeholder_title: ''
       linkit_profile: default
       linkit_auto_link_text: false
+      target_blank: 0
     third_party_settings: {  }
 hidden:
   created: true

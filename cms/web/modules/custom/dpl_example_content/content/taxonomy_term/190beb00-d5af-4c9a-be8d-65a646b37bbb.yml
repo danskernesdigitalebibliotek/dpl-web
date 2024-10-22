@@ -28,6 +28,6 @@ default:
         content: 'modern | DPL CMS'
   path:
     -
-      alias: ''
-      langcode: da
+      alias: /search/web/tag/modern
+      langcode: und
       pathauto: 1

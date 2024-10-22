@@ -5,7 +5,7 @@ _meta:
   bundle: default
   default_langcode: en
   depends:
-    897ae7ea-9378-41b4-bf24-977d666edbf7: eventinstance
+    55d695b0-9fbb-4789-8529-b6cca3cd1f6e: eventinstance
     dac275e4-9b8c-4959-a13a-6b9fdbc1f6b0: node
     0fa7245a-3434-4d96-9793-a1848a22d37a: taxonomy_term
     a0176f8c-bb7e-4f5a-bf23-b48cd8bab05f: media
@@ -98,12 +98,12 @@ default:
       tag: meta
       attributes:
         property: 'og:image'
-        content: 'http://dapple-cms.docker/sites/default/files/styles/open_graph/public/2024-02/ed-robertson-eeSdJfLfx1A-unsplash.jpg?h=4c1fc98e&itok=dhY96SeJ'
+        content: 'http://dapple-cms.docker/sites/default/files/styles/open_graph/public/2024-02/ed-robertson-eeSdJfLfx1A-unsplash.jpg?h=4c1fc98e&itok=mwRpee43'
     -
       tag: meta
       attributes:
         property: 'og:image:url'
-        content: 'http://dapple-cms.docker/sites/default/files/styles/open_graph/public/2024-02/ed-robertson-eeSdJfLfx1A-unsplash.jpg?h=4c1fc98e&itok=dhY96SeJ'
+        content: 'http://dapple-cms.docker/sites/default/files/styles/open_graph/public/2024-02/ed-robertson-eeSdJfLfx1A-unsplash.jpg?h=4c1fc98e&itok=mwRpee43'
     -
       tag: meta
       attributes:
@@ -121,7 +121,7 @@ default:
       pathauto: 1
   event_instances:
     -
-      entity: 897ae7ea-9378-41b4-bf24-977d666edbf7
+      entity: 55d695b0-9fbb-4789-8529-b6cca3cd1f6e
   field_branch:
     -
       entity: dac275e4-9b8c-4959-a13a-6b9fdbc1f6b0
@@ -155,6 +155,9 @@ default:
   field_event_state:
     -
       value: Active
+  field_relevant_ticket_manager:
+    -
+      value: true
   field_teaser_image:
     -
       entity: a0176f8c-bb7e-4f5a-bf23-b48cd8bab05f

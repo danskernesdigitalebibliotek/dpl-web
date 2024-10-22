@@ -28,6 +28,6 @@ default:
         content: 'contemporary | DPL CMS'
   path:
     -
-      alias: ''
-      langcode: da
+      alias: /search/web/tag/contemporary
+      langcode: und
       pathauto: 1

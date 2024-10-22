@@ -62,7 +62,7 @@ class OpeningHoursRepository {
    * @return OpeningHoursInstance[]
    *   Opening hours instances which match the provided criteria.
    */
-  public function loadMultiple(int $branchId = NULL, \DateTimeInterface $fromDate = NULL, \DateTimeInterface $toDate = NULL, int $repetitionId = NULL): array {
+  public function loadMultiple(int $branchId = NULL, \DateTimeInterface $fromDate = NULL, \DateTimeInterface $toDate = NULL, int $repetitionId = NULL, int $categoryId = NULL): array {
     $query = $this->connection->select(self::INSTANCE_TABLE, self::INSTANCE_TABLE)
       ->fields(self::INSTANCE_TABLE);
     if ($branchId) {
@@ -76,6 +76,9 @@ class OpeningHoursRepository {
     }
     if ($repetitionId) {
       $query->condition('repetition_id', $repetitionId);
+    }
+    if ($categoryId) {
+      $query->condition('category_tid', $categoryId);
     }
 
     $result = $query->execute();
@@ -93,7 +96,10 @@ class OpeningHoursRepository {
       }
     }, $result->fetchAll(\PDO::FETCH_ASSOC));
 
-    return array_filter($possible_objects);
+    // Using array_values to reindex the array after filtering out NULL values.
+    // This is necessary because we don't handle the deletion of opening hour
+    // instances that reference a branch which has been deleted.
+    return array_values(array_filter($possible_objects));
   }
 
   /**

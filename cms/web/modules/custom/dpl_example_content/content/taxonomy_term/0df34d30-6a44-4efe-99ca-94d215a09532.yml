@@ -28,6 +28,6 @@ default:
         content: 'læsning | DPL CMS'
   path:
     -
-      alias: ''
-      langcode: da
+      alias: /search/web/tag/laesning
+      langcode: und
       pathauto: 1

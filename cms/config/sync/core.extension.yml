@@ -20,6 +20,7 @@ module:
   config_perms: 0
   config_translation: 0
   config_translation_po: 0
+  consumers: 0
   content_lock: 0
   cookieinformation: 0
   crop: 0
@@ -27,6 +28,7 @@ module:
   datetime: 0
   datetime_range: 0
   dblog: 0
+  decoupled_router: 0
   default_content: 0
   devel_generate: 0
   dpl_admin: 0
@@ -66,6 +68,7 @@ module:
   dpl_react: 0
   dpl_react_apps: 0
   dpl_recommender: 0
+  dpl_redia_legacy: 0
   dpl_related_content: 0
   dpl_reservations: 0
   dpl_rest_base: 0
@@ -97,6 +100,8 @@ module:
   focal_point: 0
   gin_login: 0
   gin_toolbar: 0
+  graphql: 0
+  graphql_compose: 0
   handy_cache_tags: 0
   health_check: 0
   honeypot: 0
@@ -158,6 +163,7 @@ module:
   select2: 0
   serialization: 0
   simple_menu_permissions: 0
+  subrequests: 0
   system: 0
   taxonomy: 0
   taxonomy_unique: 0
@@ -168,6 +174,7 @@ module:
   token: 0
   toolbar: 0
   twig_tweak: 0
+  typed_data: 0
   update: 0
   user: 0
   varnish_purge_tags: 0

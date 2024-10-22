@@ -106,7 +106,7 @@ default:
     - tag: link
       attributes:
         rel: canonical
-        href: "http://dpl-cms.docker/user/login"
+        href: "http://dapple-cms.docker/user/login"
   path:
     - alias: /testfilialen/events/cat1/event-2-tag1-tag2-cat1-branch1
       langcode: und
