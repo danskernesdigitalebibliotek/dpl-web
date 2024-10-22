@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "dfd704dcf691e390bb55cc58c961c653",
+    "content-hash": "3e170fbd38312cf1e9d50a8f84085af9",
     "packages": [
         {
             "name": "amazeeio/drupal_integrations",
@@ -1166,19 +1166,19 @@
         },
         {
             "name": "danskernesdigitalebibliotek/dpl-design-system",
-            "version": "2024.41.0",
+            "version": "2024.43.0",
             "dist": {
                 "type": "zip",
-                "url": "https://github.com/danskernesdigitalebibliotek/dpl-design-system/releases/download/2024.41.0/dist-2024-41-0-1ca7f9197d2f2f7a2865e34173fba6eca7f50edc.zip"
+                "url": "https://github.com/danskernesdigitalebibliotek/dpl-design-system/releases/download/2024.43.0/dist-2024-43-0-633a657a46a0185d84279e07141bbcd31bdbe6f0.zip"
             },
             "type": "drupal-library"
         },
         {
             "name": "danskernesdigitalebibliotek/dpl-react",
-            "version": "2024.41.0",
+            "version": "2024.43.0",
             "dist": {
                 "type": "zip",
-                "url": "https://github.com/danskernesdigitalebibliotek/dpl-react/releases/download/branch-DDFBRA-100-filtrering-sker-ikke/dist-ddfbra-100-filtrering-sker-ikke.zip"
+                "url": "https://github.com/danskernesdigitalebibliotek/dpl-react/releases/download/2024.43.0/dist-2024-43-0-b43d959e5567bae1eec5e8554066b6b7eb9aedb8.zip"
             },
             "require": {
                 "composer/installers": "^1.2.0"
