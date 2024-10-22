@@ -29,7 +29,9 @@ const SearchFiltersColumn = ({
     const el = elementRef.current
     if (el) {
       const isOverflowing = el.scrollHeight > el.clientHeight || el.scrollWidth > el.clientWidth
-      isOverflowing ? setHasOverflow(true) : null
+      if (isOverflowing) {
+        setHasOverflow(true)
+      }
     }
   }, [elementRef])
 
