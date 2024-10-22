@@ -1,7 +1,6 @@
 import { QueryClient } from "@tanstack/react-query"
 
 import {
-  FacetField,
   useSearchFacetsQuery,
   useSearchWithPaginationQuery,
 } from "@/lib/graphql/generated/fbi/graphql"
@@ -12,11 +11,13 @@ const prefetchSearchResult = async (q: string, queryClient: QueryClient) => {
     queryKey: useSearchWithPaginationQuery.getKey({
       q: { all: q },
       offset: 0,
+      // TODO: This should be configurable.
       limit: 10,
     }),
     queryFn: useSearchWithPaginationQuery.fetcher({
       q: { all: q },
       offset: 0,
+      // TODO: This should be configurable.
       limit: 10,
     }),
   })
