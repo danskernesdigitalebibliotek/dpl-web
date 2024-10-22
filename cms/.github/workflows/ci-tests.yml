@@ -5,6 +5,12 @@ env:
   PHP_VERSION: 8.1
   COMPOSER_VERSION: v2
 
+# Detect if this action is already running, and cancel it.
+# This most likely happened because a second push has been made to a branch.
+concurrency:
+  group: ${{ github.repository_id }}-${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
 jobs:
   ValidateComposer:
     name: Validate Composer

@@ -132,7 +132,11 @@
         "summary": "Get campaign matching search result facets",
         "operationId": "campaign:match:POST",
         "schemes": ["http"],
-        "security": []
+        "security": [
+          {
+            "cookie": []
+          }
+        ]
       }
     },
     "/api/v1/opening_hours": {
