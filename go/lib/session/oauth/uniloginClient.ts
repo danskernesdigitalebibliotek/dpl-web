@@ -6,7 +6,7 @@ export const uniloginClientConfig = {
   audience: process.env.UNILOGIN_API_URL,
   client_id: process.env.UNILOGIN_CLIENT_ID,
   client_secret: process.env.UNILOGIN_CLIENT_SECRET,
-  scope: process.env.UNILOGIN_SCOPE,
+  scope: "openid",
   redirect_uri: `${process.env.APP_URL}/auth/callback/unilogin`,
   post_logout_redirect_uri: `${process.env.APP_URL}`,
   response_type: "code",
