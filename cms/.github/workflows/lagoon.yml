@@ -27,7 +27,7 @@ jobs:
   CreateDeployment:
     name: Creating deployment
     runs-on: ubuntu-latest
-    if: ${{ github.event.action == 'opened' || github.event.action == 'reopened' }}
+    if: ${{ github.event.action == 'opened' || github.event.action == 'reopened' || github.event.action == 'synchronize' }}
     steps:
       - run: |
           LAGOON_DEPLOYS_LOG_URL=$(echo "https://ui.lagoon.dplplat01.dpl.reload.dk/projects/dpl-cms/dpl-cms-${{ env.LAGOON_ENVIRONMENT }}/deployments")
