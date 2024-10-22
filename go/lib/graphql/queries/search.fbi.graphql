@@ -20,12 +20,7 @@ query searchFacets(
 ) {
   search(q: $q, filters: $filters) {
     facets(facets: $facets) {
-      name
-      values(limit: $facetLimit) {
-        key
-        term
-        score
-      }
+      ...SearchFacet
     }
   }
 }

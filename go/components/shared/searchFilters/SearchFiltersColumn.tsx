@@ -1,4 +1,4 @@
-import { SearchFacetsQuery } from "@/lib/graphql/generated/fbi/graphql"
+import { SearchFacetFragment } from "@/lib/graphql/generated/fbi/graphql"
 import { cn } from "@/lib/utils"
 import React, { useEffect, useRef, useState } from "react"
 import { mapFacetsToFilters, mapFilterNameToTranslation, toggleFilter } from "./helper"
@@ -7,7 +7,7 @@ import Icon from "../icon/Icon"
 import { Button } from "../button/Button"
 
 type SearchFiltersColumnProps = {
-  facet: SearchFacetsQuery["search"]["facets"][0]
+  facet: SearchFacetFragment
   isLast: boolean
   isExpanded: boolean
   setIsExpanded: React.Dispatch<React.SetStateAction<boolean>>
