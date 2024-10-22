@@ -43,7 +43,7 @@
                 "version": "2024.41.0",
                 "type": "drupal-library",
                 "dist": {
-                    "url": "https://github.com/danskernesdigitalebibliotek/dpl-react/releases/download/2024.41.0/dist-2024-41-0-52df86a22125c52c6de84e6c5e237d608e279b00.zip",
+                    "url": "https://github.com/danskernesdigitalebibliotek/dpl-react/releases/download/branch-DDFBRA-100-filtrering-sker-ikke/dist-ddfbra-100-filtrering-sker-ikke.zip",
                     "type": "zip"
                 },
                 "require": {

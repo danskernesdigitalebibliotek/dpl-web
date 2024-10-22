@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "c0b8045f68dcadbca9b6d46abaa49ee2",
+    "content-hash": "dfd704dcf691e390bb55cc58c961c653",
     "packages": [
         {
             "name": "amazeeio/drupal_integrations",
@@ -1178,7 +1178,7 @@
             "version": "2024.41.0",
             "dist": {
                 "type": "zip",
-                "url": "https://github.com/danskernesdigitalebibliotek/dpl-react/releases/download/2024.41.0/dist-2024-41-0-52df86a22125c52c6de84e6c5e237d608e279b00.zip"
+                "url": "https://github.com/danskernesdigitalebibliotek/dpl-react/releases/download/branch-DDFBRA-100-filtrering-sker-ikke/dist-ddfbra-100-filtrering-sker-ikke.zip"
             },
             "require": {
                 "composer/installers": "^1.2.0"
