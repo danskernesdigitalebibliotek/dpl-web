@@ -58,7 +58,6 @@ export const formatFacetTerms = (filters: { [key: string]: { [key: string]: Face
 const SearchPageLayout = ({ searchQuery }: { searchQuery?: string }) => {
   const searchParams = useSearchParams()
   const q = searchQuery || searchParams.get("q") || ""
-
   const facetsForSearchRequest = facetDefinitions.reduce(
     (acc: SearchFilters, facetDefinition) => {
       const values = searchParams.getAll(facetDefinition)
@@ -68,7 +67,6 @@ const SearchPageLayout = ({ searchQuery }: { searchQuery?: string }) => {
           [mapFacetsToFilters[facetDefinition]]: [...values],
         }
       }
-
       return acc
     },
     {} as { [key: string]: keyof SearchFilters[] }
@@ -105,17 +103,20 @@ const SearchPageLayout = ({ searchQuery }: { searchQuery?: string }) => {
     }
   )
 
+  const facetData = dataFacets?.search?.facets
+  const searchData = data?.search
+
   return (
     <div className="content-container">
-      <h1 className="mt-[88px] text-typo-heading-2">{`Viser resultater for "${q}" ${data?.search.hitcount ? "(" + data?.search.hitcount + ")" : ""}`}</h1>
+      <h1 className="mt-[88px] text-typo-heading-2">
+        {`Viser resultater for "${q}" ${data?.search.hitcount ? "(" + data?.search.hitcount + ")" : ""}`}
+      </h1>
       {isLoadingFacets && <p>isLoadingFacets...</p>}
-      {!dataFacets?.search?.facets?.length && <p>Ingen filter</p>}
-      {dataFacets?.search?.facets && dataFacets?.search?.facets?.length > 0 && (
-        <SearchFilterBar facets={dataFacets.search.facets} />
-      )}
+      {!facetData?.length && <p>Ingen filter</p>}
+      {facetData && facetData?.length > 0 && <SearchFilterBar facets={dataFacets.search.facets} />}
       {isLoading && <p>isLoading...</p>}
-      {data?.search.hitcount === 0 && <p>Ingen søgeresultat</p>}
-      {data?.search?.works && <SearchResults works={data.search.works} />}
+      {searchData?.hitcount === 0 && <p>Ingen søgeresultat</p>}
+      {searchData?.works && <SearchResults works={searchData.works} />}
     </div>
   )
 }
