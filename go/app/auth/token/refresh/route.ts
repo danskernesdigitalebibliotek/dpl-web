@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from "next/server"
 import { z } from "zod"
 
+import getConfig from "@/lib/config/config"
 import { getUniloginClient } from "@/lib/session/oauth/uniloginClient"
 import { getSession, setTokensOnSession } from "@/lib/session/session"
 import { TTokenSet } from "@/lib/types/session"
@@ -12,8 +13,9 @@ const sessionTokenSchema = z.object({
 })
 
 export async function GET(request: NextRequest, response: NextResponse) {
+  const appUrl = getConfig("url.app")
   const session = await getSession()
-  const frontpage = `${process.env.APP_URL!}/`
+  const frontpage = `${appUrl}/`
 
   // If the user is not logged in, we redirect to the frontpage.
   if (!session.isLoggedIn) {

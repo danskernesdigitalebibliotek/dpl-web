@@ -1,5 +1,9 @@
 import { Issuer } from "openid-client"
 
+import getConfig from "@/lib/config/config"
+
+const appUrl = getConfig("url.app")
+
 export const uniloginClientConfig = {
   wellKnownUrl: process.env.UNILOGIN_WELKNOWN_URL,
   url: process.env.UNILOGIN_API_URL,
@@ -7,11 +11,11 @@ export const uniloginClientConfig = {
   client_id: process.env.UNILOGIN_CLIENT_ID,
   client_secret: process.env.UNILOGIN_CLIENT_SECRET,
   scope: "openid",
-  redirect_uri: `${process.env.APP_URL}/auth/callback/unilogin`,
-  post_logout_redirect_uri: `${process.env.APP_URL}`,
+  redirect_uri: `${appUrl}/auth/callback/unilogin`,
+  post_logout_redirect_uri: `${appUrl}`,
   response_type: "code",
   grant_type: "authorization_code",
-  post_login_route: `${process.env.APP_URL}/user/profile`,
+  post_login_route: `${appUrl}/user/profile`,
 }
 
 export async function getUniloginClient() {
