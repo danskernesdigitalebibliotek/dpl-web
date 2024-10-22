@@ -22,7 +22,6 @@ export async function GET(request: NextRequest, response: NextResponse) {
     return NextResponse.redirect(frontpage, { headers: response.headers })
   }
   const redirect = request.nextUrl.searchParams.get("redirect")
-  console.log("Redirecting to:", redirect)
   // We need the redirect URL to be present in the query string.
   if (!redirect) {
     return NextResponse.redirect(frontpage, { headers: response.headers })
@@ -35,7 +34,6 @@ export async function GET(request: NextRequest, response: NextResponse) {
     const newTokens = await (client.refresh(tokens.refresh_token) as Promise<TTokenSet>)
     setTokensOnSession(session, newTokens)
     await session.save()
-    console.log("Tokens refreshed successfully:", newTokens)
   } catch (error) {
     // TODO: maybe distinguish between ZodError and other errors?
     // TODO: Should we redirect to an end-of-session page?
