@@ -6,7 +6,7 @@ export const displayCreators = (
   amount: number
 ) => {
   return creators.reduce((acc, creator, index) => {
-    // We shorten to max
+    // We shorten to max <amount> creators
     if (index === amount) {
       return acc + ", et. al"
     }
