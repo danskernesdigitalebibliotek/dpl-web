@@ -1,6 +1,7 @@
 import { FacetField, SearchFilters } from "@/lib/graphql/generated/fbi/graphql"
 import { AppRouterInstance } from "next/dist/shared/lib/app-router-context.shared-runtime"
 
+// TODO: Maybe there should be a part of config?
 export const facetDefinitions = [
   "materialTypesGeneral",
   "mainLanguages",
