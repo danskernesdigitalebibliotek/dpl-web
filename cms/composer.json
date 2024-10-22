@@ -40,7 +40,7 @@
             "type": "package",
             "package": {
                 "name": "danskernesdigitalebibliotek/dpl-react",
-                "version": "0.0.0-dev",
+                "version": "2024.41.0",
                 "type": "drupal-library",
                 "dist": {
                     "url": "https://github.com/danskernesdigitalebibliotek/dpl-react/releases/download/branch-DDFBRA-100-filtrering-sker-ikke/dist-ddfbra-100-filtrering-sker-ikke.zip",
