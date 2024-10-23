@@ -3,7 +3,7 @@ import React from "react"
 import { Button } from "@/components/shared/button/Button"
 import DarkModeToggle from "@/components/shared/darkModeToggle/DarkModeToggle"
 import Icon from "@/components/shared/icon/Icon"
-import { SearchInput } from "@/components/shared/searchInput/SearchInput"
+import SearchInput from "@/components/shared/searchInput/SearchInput"
 
 function Header() {
   return (
@@ -19,13 +19,11 @@ function Header() {
           <DarkModeToggle />
         </div>
         <div className="flex-0 flex justify-end space-x-4">
-          <Button variant="icon">
+          <Button variant="icon" aria-label="Tilgå hjælpesiden">
             <Icon className="h-[24px] w-[24px]" name="question-mark" />
           </Button>
-          <Button variant="icon">
-            <Icon className="h-[24px] w-[24px]" name="search" />
-          </Button>
-          <Button variant="icon">
+          {/* TODO: dynamic aria-label */}
+          <Button variant="icon" aria-label="Login / Tilgå profilsiden">
             <Icon className="h-[24px] w-[24px]" name="profile" />
           </Button>
         </div>
