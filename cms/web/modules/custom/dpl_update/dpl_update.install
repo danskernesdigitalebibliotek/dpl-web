@@ -84,6 +84,7 @@ function dpl_update_install(): string {
   $messages[] = dpl_update_update_10017();
   $messages[] = dpl_update_update_10018();
   $messages[] = dpl_update_update_10019();
+  $messages[] = dpl_update_update_10020();
 
   return implode('\r\n', $messages);
 }
@@ -238,4 +239,11 @@ function dpl_update_update_10019(): string {
   );
 
   return $return;
+}
+
+/**
+ * Install typed_data, graphql, graphql_compose and consumers modules.
+ */
+function dpl_update_update_10020(): string {
+  return _dpl_update_install_modules(['typed_data', 'graphql', 'graphql_compose', 'consumers']);
 }
