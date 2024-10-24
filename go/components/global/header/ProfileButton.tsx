@@ -54,10 +54,10 @@ function ProfileButton() {
               </SheetDescription>
               <div>
                 <Button
-                  className="border-background"
                   fill="foreground"
                   text="background"
-                  onClick={() => router.push("/auth/login/unilogin")}>
+                  onClick={() => router.push("/auth/login/unilogin")}
+                  className="border-background">
                   LOG IND
                 </Button>
               </div>
