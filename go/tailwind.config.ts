@@ -273,6 +273,8 @@ const config: Config = {
         "grid-column-half": "calc(var(--grid-column)/2)",
         "grid-column-quarter": "calc(var(--grid-column)/4)",
         "grid-gap-x": "var(--grid-gap-x)",
+        "grid-edge": "var(--grid-edge)",
+        "space-y": "var(--space-y)",
       },
       boxShadow: {
         button: "2px 2px 0 0px var(--foreground)",

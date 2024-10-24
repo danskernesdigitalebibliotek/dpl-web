@@ -12,7 +12,7 @@ import {
   SheetHeader,
   SheetTitle,
   SheetTrigger,
-} from "@/components/shared/sheet/Sheet"
+} from "@/components/shared/sheet/LoginSheet"
 import useSession from "@/hooks/useSession"
 
 const HeaderButton = ({
@@ -21,8 +21,9 @@ const HeaderButton = ({
 }: {
   onClick?: (e: MouseEvent<HTMLButtonElement>) => void
   asChild?: boolean
+  // TODO: Dynamic aria-label.
 }) => (
-  <Button onClick={onClick} variant="icon" asChild={asChild}>
+  <Button onClick={onClick} variant="icon" aria-label="Login / Tilgå profilsiden" asChild={asChild}>
     <Icon className="h-[24px] w-[24px]" name="profile" />
   </Button>
 )
@@ -44,19 +45,20 @@ function ProfileButton() {
         <SheetTrigger>
           <HeaderButton />
         </SheetTrigger>
-        <SheetContent>
+        <SheetContent className="p-grid-edge w-[560px]">
           <SheetHeader>
-            <SheetTitle className="text-typo-heading-4">Log ind</SheetTitle>
-            <div className="flex flex-col items-center justify-center rounded-sm bg-background-overlay p-10">
-              <SheetDescription className="text-typo-heading-6 mb-2 font-bold text-foreground">
+            <SheetTitle className="mb-space-y text-typo-heading-3">Log ind</SheetTitle>
+            <div className="py-space-y flex flex-col items-center justify-center rounded-sm bg-background-overlay">
+              <SheetDescription className="mb-4 text-typo-heading-4 font-bold text-foreground">
                 Log ind med UNI•Login
               </SheetDescription>
               <div>
                 <Button
-                  className="size-sm bg-foreground text-background outline"
-                  size="sm"
+                  className="border-background"
+                  fill="foreground"
+                  text="background"
                   onClick={() => router.push("/auth/login/unilogin")}>
-                  log ind
+                  LOG IND
                 </Button>
               </div>
             </div>
