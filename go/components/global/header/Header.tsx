@@ -24,10 +24,7 @@ function Header() {
           <Button variant="icon" aria-label="Tilgå hjælpesiden">
             <Icon className="h-[24px] w-[24px]" name="question-mark" />
           </Button>
-          {/* TODO: dynamic aria-label */}
-          <Button variant="icon" aria-label="Login / Tilgå profilsiden">
-            <Icon className="h-[24px] w-[24px]" name="profile" />
-          </Button>
+          <ProfileButton />
         </div>
       </div>
       <div className="h-navigation-search-height">
