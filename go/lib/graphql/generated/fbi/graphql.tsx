@@ -1,17 +1,13 @@
-import { useQuery, UseQueryOptions } from "@tanstack/react-query"
+import { useQuery, UseQueryOptions, useSuspenseQuery, UseSuspenseQueryOptions } from '@tanstack/react-query';
 
-import { fetchData } from "@/lib/fetchers/fbi.fetcher"
-export type Maybe<T> = T | null
-export type InputMaybe<T> = Maybe<T>
-export type Exact<T extends { [key: string]: unknown }> = { [K in keyof T]: T[K] }
-export type MakeOptional<T, K extends keyof T> = Omit<T, K> & { [SubKey in K]?: Maybe<T[SubKey]> }
-export type MakeMaybe<T, K extends keyof T> = Omit<T, K> & { [SubKey in K]: Maybe<T[SubKey]> }
-export type MakeEmpty<T extends { [key: string]: unknown }, K extends keyof T> = {
-  [_ in K]?: never
-}
-export type Incremental<T> =
-  | T
-  | { [P in keyof T]?: P extends " $fragmentName" | "__typename" ? T[P] : never }
+import { fetchData } from '@/lib/graphql/fetchers/fbi.fetcher';
+export type Maybe<T> = T | null;
+export type InputMaybe<T> = Maybe<T>;
+export type Exact<T extends { [key: string]: unknown }> = { [K in keyof T]: T[K] };
+export type MakeOptional<T, K extends keyof T> = Omit<T, K> & { [SubKey in K]?: Maybe<T[SubKey]> };
+export type MakeMaybe<T, K extends keyof T> = Omit<T, K> & { [SubKey in K]: Maybe<T[SubKey]> };
+export type MakeEmpty<T extends { [key: string]: unknown }, K extends keyof T> = { [_ in K]?: never };
+export type Incremental<T> = T | { [P in keyof T]?: P extends ' $fragmentName' | '__typename' ? T[P] : never };
 /** All built-in and custom scalars, mapped to their actual values */
 export type Scalars = {
   ID: { input: string; output: string }
@@ -1924,53 +1920,149 @@ export type MoodSuggestResponse = {
   work?: Maybe<Work>
 }
 
-export type SearchWithPaginationQueryVariables = Exact<{
-  q: SearchQuery
-  offset: Scalars["Int"]["input"]
-  limit: Scalars["PaginationLimit"]["input"]
-  filters?: InputMaybe<SearchFilters>
-}>
+export type SearchFacetFragment = { __typename?: 'FacetResult', name: string, values: Array<{ __typename?: 'FacetValue', key: string, term: string, score?: number | null }> };
 
-export type SearchWithPaginationQuery = {
-  __typename?: "Query"
-  search: {
-    __typename?: "SearchResponse"
-    hitcount: number
-    works: Array<{
-      __typename?: "Work"
-      workId: string
-      titles: { __typename?: "WorkTitles"; full: Array<string>; original?: Array<string> | null }
-    }>
+export type WorkTeaserFragment = { __typename?: 'Work', workId: string, titles: { __typename?: 'WorkTitles', full: Array<string>, original?: Array<string> | null }, creators: Array<{ __typename: 'Corporation', display: string } | { __typename: 'Person', display: string }>, workYear?: { __typename?: 'PublicationYear', year?: number | null } | null, materialTypes: Array<{ __typename?: 'MaterialType', materialTypeGeneral: { __typename?: 'GeneralMaterialType', display: string, code: GeneralMaterialTypeCode } }> };
+
+export type SearchWithPaginationQueryVariables = Exact<{
+  q: SearchQuery;
+  offset: Scalars['Int']['input'];
+  limit: Scalars['PaginationLimit']['input'];
+  filters?: InputMaybe<SearchFilters>;
+}>;
+
+
+export type SearchWithPaginationQuery = { __typename?: 'Query', search: { __typename?: 'SearchResponse', hitcount: number, works: Array<{ __typename?: 'Work', workId: string, titles: { __typename?: 'WorkTitles', full: Array<string>, original?: Array<string> | null }, creators: Array<{ __typename: 'Corporation', display: string } | { __typename: 'Person', display: string }>, workYear?: { __typename?: 'PublicationYear', year?: number | null } | null, materialTypes: Array<{ __typename?: 'MaterialType', materialTypeGeneral: { __typename?: 'GeneralMaterialType', display: string, code: GeneralMaterialTypeCode } }> }> } };
+
+export type SearchFacetsQueryVariables = Exact<{
+  q: SearchQuery;
+  facets: Array<FacetField> | FacetField;
+  facetLimit: Scalars['Int']['input'];
+  filters?: InputMaybe<SearchFilters>;
+}>;
+
+
+export type SearchFacetsQuery = { __typename?: 'Query', search: { __typename?: 'SearchResponse', facets: Array<{ __typename?: 'FacetResult', name: string, values: Array<{ __typename?: 'FacetValue', key: string, term: string, score?: number | null }> }> } };
+
+
+export const SearchFacetFragmentDoc = `
+    fragment SearchFacet on FacetResult {
+  name
+  values(limit: $facetLimit) {
+    key
+    term
+    score
   }
 }
-
+    `;
+export const WorkTeaserFragmentDoc = `
+    fragment WorkTeaser on Work {
+  workId
+  titles {
+    full
+    original
+  }
+  creators {
+    display
+    __typename
+  }
+  workYear {
+    year
+  }
+  materialTypes {
+    materialTypeGeneral {
+      display
+      code
+    }
+  }
+}
+    `;
 export const SearchWithPaginationDocument = `
     query searchWithPagination($q: SearchQuery!, $offset: Int!, $limit: PaginationLimit!, $filters: SearchFilters) {
   search(q: $q, filters: $filters) {
     hitcount
     works(offset: $offset, limit: $limit) {
-      workId
-      titles {
-        full
-        original
-      }
+      ...WorkTeaser
     }
   }
 }
-    `
+    ${WorkTeaserFragmentDoc}`;
 
 export const useSearchWithPaginationQuery = <TData = SearchWithPaginationQuery, TError = unknown>(
   variables: SearchWithPaginationQueryVariables,
   options?: Omit<UseQueryOptions<SearchWithPaginationQuery, TError, TData>, "queryKey"> & {
     queryKey?: UseQueryOptions<SearchWithPaginationQuery, TError, TData>["queryKey"]
   }
-) => {
-  return useQuery<SearchWithPaginationQuery, TError, TData>({
-    queryKey: ["searchWithPagination", variables],
-    queryFn: fetchData<SearchWithPaginationQuery, SearchWithPaginationQueryVariables>(
-      SearchWithPaginationDocument,
-      variables
-    ),
-    ...options,
-  })
+    )};
+
+useSearchWithPaginationQuery.getKey = (variables: SearchWithPaginationQueryVariables) => ['searchWithPagination', variables];
+
+export const useSuspenseSearchWithPaginationQuery = <
+      TData = SearchWithPaginationQuery,
+      TError = unknown
+    >(
+      variables: SearchWithPaginationQueryVariables,
+      options?: Omit<UseSuspenseQueryOptions<SearchWithPaginationQuery, TError, TData>, 'queryKey'> & { queryKey?: UseSuspenseQueryOptions<SearchWithPaginationQuery, TError, TData>['queryKey'] }
+    ) => {
+
+    return useSuspenseQuery<SearchWithPaginationQuery, TError, TData>(
+      {
+    queryKey: ['searchWithPaginationSuspense', variables],
+    queryFn: fetchData<SearchWithPaginationQuery, SearchWithPaginationQueryVariables>(SearchWithPaginationDocument, variables),
+    ...options
+  }
+    )};
+
+useSuspenseSearchWithPaginationQuery.getKey = (variables: SearchWithPaginationQueryVariables) => ['searchWithPaginationSuspense', variables];
+
+
+useSearchWithPaginationQuery.fetcher = (variables: SearchWithPaginationQueryVariables, options?: RequestInit['headers']) => fetchData<SearchWithPaginationQuery, SearchWithPaginationQueryVariables>(SearchWithPaginationDocument, variables, options);
+
+export const SearchFacetsDocument = `
+    query searchFacets($q: SearchQuery!, $facets: [FacetField!]!, $facetLimit: Int!, $filters: SearchFilters) {
+  search(q: $q, filters: $filters) {
+    facets(facets: $facets) {
+      ...SearchFacet
+    }
+  }
 }
+    ${SearchFacetFragmentDoc}`;
+
+export const useSearchFacetsQuery = <
+      TData = SearchFacetsQuery,
+      TError = unknown
+    >(
+      variables: SearchFacetsQueryVariables,
+      options?: Omit<UseQueryOptions<SearchFacetsQuery, TError, TData>, 'queryKey'> & { queryKey?: UseQueryOptions<SearchFacetsQuery, TError, TData>['queryKey'] }
+    ) => {
+
+    return useQuery<SearchFacetsQuery, TError, TData>(
+      {
+    queryKey: ['searchFacets', variables],
+    queryFn: fetchData<SearchFacetsQuery, SearchFacetsQueryVariables>(SearchFacetsDocument, variables),
+    ...options
+  }
+    )};
+
+useSearchFacetsQuery.getKey = (variables: SearchFacetsQueryVariables) => ['searchFacets', variables];
+
+export const useSuspenseSearchFacetsQuery = <
+      TData = SearchFacetsQuery,
+      TError = unknown
+    >(
+      variables: SearchFacetsQueryVariables,
+      options?: Omit<UseSuspenseQueryOptions<SearchFacetsQuery, TError, TData>, 'queryKey'> & { queryKey?: UseSuspenseQueryOptions<SearchFacetsQuery, TError, TData>['queryKey'] }
+    ) => {
+
+    return useSuspenseQuery<SearchFacetsQuery, TError, TData>(
+      {
+    queryKey: ['searchFacetsSuspense', variables],
+    queryFn: fetchData<SearchFacetsQuery, SearchFacetsQueryVariables>(SearchFacetsDocument, variables),
+    ...options
+  }
+    )};
+
+useSuspenseSearchFacetsQuery.getKey = (variables: SearchFacetsQueryVariables) => ['searchFacetsSuspense', variables];
+
+
+useSearchFacetsQuery.fetcher = (variables: SearchFacetsQueryVariables, options?: RequestInit['headers']) => fetchData<SearchFacetsQuery, SearchFacetsQueryVariables>(SearchFacetsDocument, variables, options);

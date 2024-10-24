@@ -1,5 +1,5 @@
-import { GetArticleQuery, useGetArticleQuery } from "@/lib/generated/graphql/dpl-cms/graphql"
 import getQueryClient from "@/lib/getQueryClient"
+import { GetArticleQuery, useGetArticleQuery } from "@/lib/graphql/generated/dpl-cms/graphql"
 
 const loadArticle = async (id: string) => {
   const queryClient = getQueryClient()

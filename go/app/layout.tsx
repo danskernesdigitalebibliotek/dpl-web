@@ -39,7 +39,7 @@ export default function RootLayout({
         <Theme>
           <ReactQueryProvider>
             <Header />
-            {children}
+            <div className="bg-background">{children}</div>
             <Footer />
           </ReactQueryProvider>
         </Theme>

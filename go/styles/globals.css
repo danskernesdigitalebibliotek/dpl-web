@@ -10,10 +10,7 @@
 
   /* SIZE OF EACH INDIVIDUAL COLUMN IN THE GRID  */
   --grid-column: calc(
-    (
-        (min(var(--page-width), 100vw) - (2 * var(--grid-edge))) -
-          (11 * var(--grid-gap-x))
-      ) / 12
+    ((min(var(--page-width), 100vw) - (2 * var(--grid-edge))) - (11 * var(--grid-gap-x))) / 12
   );
   --grid-column-12: calc(var(--grid-column) * 12 + var(--grid-gap-x) * 11);
   --grid-column-11: calc(var(--grid-column) * 11 + var(--grid-gap-x) * 10);
@@ -32,8 +29,7 @@
   --navigation-height: 3.5rem; /* 56px */
   --navigation-search-height: 4rem; /* 64px */
   --navigation-combined-height: calc(
-    var(--navigation-height) + var(--navigation-search-height) +
-      var(--navigation-top-height)
+    var(--navigation-height) + var(--navigation-search-height) + var(--navigation-top-height)
   );
   --screen-minus-navigation-height: calc(100vh - var(--navigation-combined));
 
@@ -59,8 +55,8 @@
   --block-spacing: 5rem; /* 80px */
 
   /* COLORS */
-  --black: hsla(0, 0%, 10%, 1);
-  --white: hsla(0, 0%, 0%, 1);
+  --black: hsla(0, 0%, 0%, 1);
+  --white: hsla(255, 100%, 100%, 1);
 
   --beige: hsla(36, 45%, 98%, 1);
   --beige-overlay: hsla(42, 25%, 35%, 0.05);
@@ -69,6 +65,9 @@
   --blue-overlay: hsla(238, 54%, 89%, 0.09);
 
   --border: hsla(48, 4.4%, 77.8%, 1);
+
+  --shadow-1: hsla(0, 0%, 0%, 0.5);
+  --shadow-2: hsla(0, 0%, 0%, 0.15);
 
   /* CONTENT COLORS */
   --content-pink-100: 320 100% 91%;
@@ -194,7 +193,7 @@
   :root {
     /* GRID */
     --grid-edge: 5rem; /* 80px */
-    --grid-gap-x: 0.625rem; /* 10px */
+    --grid-gap-x: 1.5rem; /* 24px */
 
     /* NAVIGATION */
     --navigation-top-height: 2rem; /* 32px */
@@ -226,11 +225,11 @@
 }
 
 body {
-  @apply text-foreground bg-background transition-all duration-dark-mode font-body;
+  @apply bg-background font-body text-foreground transition-all duration-dark-mode;
 }
 
 body > * {
-  @apply bg-background transition-all dark-mode-transition;
+  @apply dark-mode-transition bg-background transition-all;
 }
 
 .text-typo-huge,

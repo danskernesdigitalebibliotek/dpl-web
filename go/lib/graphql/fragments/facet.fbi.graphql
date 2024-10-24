@@ -1,0 +1,8 @@
+fragment SearchFacet on FacetResult {
+  name
+  values(limit: $facetLimit) {
+    key
+    term
+    score
+  }
+}

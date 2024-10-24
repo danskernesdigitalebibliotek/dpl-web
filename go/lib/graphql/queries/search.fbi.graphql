@@ -1,0 +1,26 @@
+query searchWithPagination(
+  $q: SearchQuery!
+  $offset: Int!
+  $limit: PaginationLimit!
+  $filters: SearchFilters
+) {
+  search(q: $q, filters: $filters) {
+    hitcount
+    works(offset: $offset, limit: $limit) {
+      ...WorkTeaser
+    }
+  }
+}
+
+query searchFacets(
+  $q: SearchQuery!
+  $facets: [FacetField!]!
+  $facetLimit: Int!
+  $filters: SearchFilters
+) {
+  search(q: $q, filters: $filters) {
+    facets(facets: $facets) {
+      ...SearchFacet
+    }
+  }
+}
