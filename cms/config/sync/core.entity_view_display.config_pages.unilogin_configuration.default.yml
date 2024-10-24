@@ -1,0 +1,49 @@
+uuid: c5f29971-1c0f-48a6-85b7-24156c418e1e
+langcode: en
+status: true
+dependencies:
+  config:
+    - config_pages.type.unilogin_configuration
+    - field.field.config_pages.unilogin_configuration.field_unilogin_api_endpoint
+    - field.field.config_pages.unilogin_configuration.field_unilogin_api_wellknown_end
+    - field.field.config_pages.unilogin_configuration.field_unilogin_client_id
+    - field.field.config_pages.unilogin_configuration.field_unilogin_client_secret
+id: config_pages.unilogin_configuration.default
+targetEntityType: config_pages
+bundle: unilogin_configuration
+mode: default
+content:
+  field_unilogin_api_endpoint:
+    type: string
+    label: above
+    settings:
+      link_to_entity: false
+    third_party_settings: {  }
+    weight: 0
+    region: content
+  field_unilogin_api_wellknown_end:
+    type: string
+    label: above
+    settings:
+      link_to_entity: false
+    third_party_settings: {  }
+    weight: 1
+    region: content
+  field_unilogin_client_id:
+    type: string
+    label: above
+    settings:
+      link_to_entity: false
+    third_party_settings: {  }
+    weight: 2
+    region: content
+  field_unilogin_client_secret:
+    type: string
+    label: above
+    settings:
+      link_to_entity: false
+    third_party_settings: {  }
+    weight: 3
+    region: content
+hidden:
+  search_api_excerpt: true

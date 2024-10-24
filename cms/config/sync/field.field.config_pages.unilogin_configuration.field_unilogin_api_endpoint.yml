@@ -1,0 +1,19 @@
+uuid: 584b4f22-52be-4575-9f8b-b90b278d0545
+langcode: en
+status: true
+dependencies:
+  config:
+    - config_pages.type.unilogin_configuration
+    - field.storage.config_pages.field_unilogin_api_endpoint
+id: config_pages.unilogin_configuration.field_unilogin_api_endpoint
+field_name: field_unilogin_api_endpoint
+entity_type: config_pages
+bundle: unilogin_configuration
+label: 'UniLogin API endpoint'
+description: 'The UniLogin API endpoint url.'
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: string
