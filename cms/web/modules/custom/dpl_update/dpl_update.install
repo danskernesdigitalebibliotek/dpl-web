@@ -239,3 +239,10 @@ function dpl_update_update_10019(): string {
 
   return $return;
 }
+
+/**
+ * Install config_pages module.
+ */
+function dpl_update_update_10021(): string {
+  return _dpl_update_install_modules(['config_pages']);
+}

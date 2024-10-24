@@ -17,6 +17,7 @@ module:
   config_filter: 0
   config_ignore: 0
   config_ignore_auto: 0
+  config_pages: 0
   config_perms: 0
   config_translation: 0
   config_translation_po: 0
@@ -28,7 +29,6 @@ module:
   datetime: 0
   datetime_range: 0
   dblog: 0
-  decoupled_router: 0
   default_content: 0
   devel_generate: 0
   dpl_admin: 0
@@ -163,7 +163,6 @@ module:
   select2: 0
   serialization: 0
   simple_menu_permissions: 0
-  subrequests: 0
   system: 0
   taxonomy: 0
   taxonomy_unique: 0
