@@ -1,6 +1,10 @@
 "use client"
 
+import { useInfiniteQuery } from "@tanstack/react-query"
+import { useInView } from "framer-motion"
+import { motion } from "framer-motion"
 import { useSearchParams } from "next/navigation"
+import { useEffect, useRef, useState } from "react"
 
 import { facetDefinitions, mapFacetsToFilters } from "@/components/shared/searchFilters/helper"
 import {
@@ -45,6 +49,8 @@ const branchIds = [
   "775130",
 ] as string[]
 
+const SEARCH_RESULTS_LIMIT = 9
+
 export type FilterItemTerm = Omit<FacetValue, "__typename">
 
 export const formatFacetTerms = (filters: { [key: string]: { [key: string]: FilterItemTerm } }) => {
@@ -60,6 +66,9 @@ export const formatFacetTerms = (filters: { [key: string]: { [key: string]: Filt
 const SearchPageLayout = ({ searchQuery }: { searchQuery?: string }) => {
   const searchParams = useSearchParams()
   const q = searchQuery || searchParams.get("q") || ""
+  const [currentPage, setCurrentPage] = useState(0)
+  const loadMoreRef = useRef(null)
+  const isInView = useInView(loadMoreRef)
 
   const facetsForSearchRequest = facetDefinitions.reduce(
     (acc: SearchFilters, facetDefinition) => {
@@ -76,14 +85,41 @@ const SearchPageLayout = ({ searchQuery }: { searchQuery?: string }) => {
     {} as { [key: string]: keyof SearchFilters[] }
   )
 
-  const { data, isLoading } = useSearchWithPaginationQuery({
-    q: { all: q },
-    offset: 0,
-    limit: 10,
-    filters: {
-      branchId: branchIds,
-      ...facetsForSearchRequest,
+  const {
+    data,
+    error,
+    fetchNextPage,
+    hasNextPage,
+    isLoading,
+    isFetching,
+    isFetchingNextPage,
+    status,
+  } = useInfiniteQuery({
+    queryKey: useSearchWithPaginationQuery.getKey({
+      q: { all: q },
+      offset: 0,
+      limit: SEARCH_RESULTS_LIMIT,
+      filters: {
+        branchId: branchIds,
+        ...facetsForSearchRequest,
+      },
+    }),
+    queryFn: useSearchWithPaginationQuery.fetcher({
+      q: { all: q },
+      offset: currentPage * SEARCH_RESULTS_LIMIT,
+      limit: SEARCH_RESULTS_LIMIT,
+      filters: {
+        branchId: branchIds,
+        ...facetsForSearchRequest,
+      },
+    }),
+    getNextPageParam: lastPage => {
+      const totalPages = Math.ceil(lastPage.search.hitcount / SEARCH_RESULTS_LIMIT)
+      const actualPage = (currentPage * SEARCH_RESULTS_LIMIT) / SEARCH_RESULTS_LIMIT
+      return actualPage < totalPages ? actualPage + 1 : undefined // By returning undefined if there are no more pages, hasNextPage boolean will be set to false
     },
+    initialPageParam: 0,
+    refetchOnWindowFocus: false,
   })
 
   const { data: dataFacets, isLoading: isLoadingFacets } = useSearchFacetsQuery({
@@ -96,17 +132,56 @@ const SearchPageLayout = ({ searchQuery }: { searchQuery?: string }) => {
     },
   })
 
+  const handleLoadMore = () => {
+    fetchNextPage()
+    setCurrentPage(currentPage + 1)
+  }
+
+  useEffect(() => {
+    if (isInView && hasNextPage) {
+      handleLoadMore()
+    }
+  }, [isInView])
+
   return (
     <div className="content-container">
-      <h1 className="mt-[88px] text-typo-heading-2">{`Viser resultater for "${q}" ${data?.search.hitcount ? "(" + data?.search.hitcount + ")" : ""}`}</h1>
+      <h1 className="mt-[88px] text-typo-heading-2">{`Viser resultater for "${q}" ${data?.pages?.[0]?.search.hitcount ? "(" + data?.pages?.[0]?.search.hitcount + ")" : ""}`}</h1>
       {isLoadingFacets && <p>isLoadingFacets...</p>}
       {!dataFacets?.search?.facets?.length && <p>Ingen filter</p>}
       {dataFacets?.search?.facets && dataFacets?.search?.facets?.length > 0 && (
         <SearchFilterBar facets={dataFacets.search.facets} />
       )}
       {isLoading && <p>isLoading...</p>}
-      {data?.search.hitcount === 0 && <p>Ingen søgeresultat</p>}
-      {data?.search?.works && <SearchResults works={data.search.works} />}
+      {data?.pages?.[0]?.search.hitcount === 0 && <p>Ingen søgeresultat</p>}
+      {data?.pages.map(
+        (page, i) =>
+          page.search.works && (
+            <motion.div
+              key={i}
+              animate={{
+                opacity: "0",
+                transitionEnd: {
+                  opacity: "100",
+                },
+              }}>
+              <SearchResults works={page.search.works} />
+            </motion.div>
+          )
+      )}
+
+      <div>
+        <button
+          ref={loadMoreRef}
+          disabled={!hasNextPage || isFetchingNextPage}
+          onClick={() => handleLoadMore()}>
+          {isFetchingNextPage
+            ? "Fetching next page"
+            : hasNextPage
+              ? "Fetch More Data"
+              : "No more data"}
+        </button>
+      </div>
+      <div>{isFetching && !isFetchingNextPage ? "Fetching..." : null}</div>
     </div>
   )
 }

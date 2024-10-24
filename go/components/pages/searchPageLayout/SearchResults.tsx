@@ -1,6 +1,5 @@
 "use client"
 
-// import { useRouter } from "next/navigation"
 import React from "react"
 
 import WorkCard from "@/components/shared/workCard/WorkCard"
@@ -11,8 +10,6 @@ type SearchResultProps = {
 }
 
 const SearchResults = ({ works }: SearchResultProps) => {
-  // const router = useRouter()
-
   return (
     <>
       <hr className="my-3 ml-[-12px] w-[100vw] border-black opacity-10 md:mx-auto md:mb-12 md:mt-6 md:w-full" />
