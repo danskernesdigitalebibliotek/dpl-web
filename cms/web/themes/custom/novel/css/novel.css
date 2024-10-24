@@ -55,3 +55,10 @@
 .select2-container--default .select2-selection--multiple .select2-selection__choice__remove {
   margin-right: 6px;
 }
+
+/*
+Hide the submit button from the "full text search" formn in (Events and articles view)
+The button cannot be removed directly in the Drupal view */
+.search-full-text input[value="Apply"] {
+  display: none;
+}
