@@ -1,4 +1,4 @@
-import { getServiceUrlWithParams } from "../../fetchers/helpers"
+import { getServiceUrlWithParams } from "../../fetchers/helper"
 
 export const fetcher = async <ResponseType>({
   url,

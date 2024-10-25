@@ -1,29 +1,26 @@
-import { buildParams, createAuthHeader } from "../helpers";
-import { FetcherOptions, RequestArguments, RequestCallback } from "../types";
+import { buildParams, createAuthHeader } from "../helper"
+import { FetcherOptions, RequestArguments, RequestCallback } from "../types"
 
-const fetcherFactory = (
-  fetcherOptions: FetcherOptions,
-  requestCallback: RequestCallback
-) => {
-  return async <TResponse>(
-    requestArguments: RequestArguments
-  ): Promise<TResponse> => {
-    const { baseUrl, headers, url, params, method, data, bearerToken } =
-      requestCallback({ ...fetcherOptions, ...requestArguments });
+const fetcherFactory = (fetcherOptions: FetcherOptions, requestCallback: RequestCallback) => {
+  return async <TResponse>(requestArguments: RequestArguments): Promise<TResponse> => {
+    const { baseUrl, headers, url, params, method, data, bearerToken } = requestCallback({
+      ...fetcherOptions,
+      ...requestArguments,
+    })
 
-    const urlParams = params ? buildParams(params).toString() : "";
-    const body = data ? JSON.stringify(data) : null;
+    const urlParams = params ? buildParams(params).toString() : ""
+    const body = data ? JSON.stringify(data) : null
     const response = await fetch(`${baseUrl}${url}${urlParams}`, {
       method,
       headers: {
         ...headers,
-        ...createAuthHeader(bearerToken)
+        ...createAuthHeader(bearerToken),
       },
-      body
-    });
+      body,
+    })
 
-    return response.json();
-  };
-};
+    return response.json()
+  }
+}
 
-export default fetcherFactory;
+export default fetcherFactory
