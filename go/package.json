@@ -9,7 +9,9 @@
     "start": "next start",
     "lint": "next lint",
     "test:unit": "vitest",
-    "graphql-codegen": "graphql-codegen --config codegen.ts"
+    "codegen:graphql": "graphql-codegen --config codegen.ts",
+    "codegen:all-rest-services": "orval",
+    "codegen:covers": "rm -rf src/core/cover-service-api/model/*.* && orval --project coverService"
   },
   "dependencies": {
     "@next/env": "^14.2.15",
