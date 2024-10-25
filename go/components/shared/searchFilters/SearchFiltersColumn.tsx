@@ -4,7 +4,6 @@ import React, { useEffect, useRef, useState } from "react"
 import { mapFacetsToFilters, mapFilterNameToTranslation, toggleFilter } from "./helper"
 import { useRouter, useSearchParams } from "next/navigation"
 import Icon from "../icon/Icon"
-import { Button } from "../button/Button"
 
 type SearchFiltersColumnProps = {
   facet: SearchFacetFragment
