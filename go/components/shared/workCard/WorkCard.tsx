@@ -2,9 +2,13 @@ import Image from "next/image"
 import Link from "next/link"
 import React from "react"
 
+import { useGetCoverCollection } from "@/lib/cover-service-api/cover-service"
+import { getRandomContentColorClass } from "@/lib/fetchers/helper"
 import { WorkTeaserFragment } from "@/lib/graphql/generated/fbi/graphql"
+import { cn } from "@/lib/utils"
 
-import { displayCreators } from "./helper"
+import Icon from "../icon/Icon"
+import { displayCreators, getAllWorkPids, getCoverUrls } from "./helper"
 import WorkCardAvailabilityRow from "./WorkCardAvailabilityRow"
 
 type WorkCardProps = {
@@ -12,22 +16,41 @@ type WorkCardProps = {
 }
 
 const WorkCard = ({ work }: WorkCardProps) => {
+  const { data } = useGetCoverCollection({
+    type: "pid",
+    identifiers: getAllWorkPids(work),
+    sizes: ["small", "large", "default", "original"],
+  })
+  const bestRepresentation = work.manifestations.bestRepresentation
+  const allPids = [bestRepresentation.pid, ...getAllWorkPids(work)]
+  const coverSrc = getCoverUrls(data, allPids || [], ["small", "large", "default", "original"])
+
   return (
     <div className="mb-4">
       <Link href={`/work/${work.workId}`}>
         <div key={work.workId} className="rounded-sm bg-background-overlay p-2 md:p-4">
           <div
-            className="px-auto shadow-coverPicture relative mx-auto mb-3 mt-6 flex aspect-[166/228] w-[calc(100%-76px-4px)]
-              items-center rounded-sm md:mb-6 md:mt-9 md:w-[calc(100%-106px)]">
-            <Image
-              // TODO: dynamic image
-              src="https://i.pinimg.com/564x/b0/4a/b2/b04ab2de27591aee4a76015e42e0e282.jpg"
-              alt="work image"
-              layout="responsive"
-              width={166}
-              height={228}
-              className="overflow-hidden rounded-sm"
-            />
+            className="px-auto relative mx-auto mb-3 mt-6 flex aspect-[166/228] w-[calc(100%-76px-4px)] items-center
+              rounded-sm md:mb-6 md:mt-9 md:w-[calc(100%-106px)]">
+            {!!coverSrc?.length && coverSrc.length > 0 && (
+              <Image
+                src={coverSrc[0]}
+                alt="work image"
+                layout="responsive"
+                width={166}
+                height={228}
+                className="overflow-hidden rounded-sm shadow-coverPicture"
+              />
+            )}
+            {(!coverSrc?.length || coverSrc.length === 0) && (
+              <div
+                className={cn(
+                  "bg-content-pink flex h-full w-full items-center justify-center rounded-sm",
+                  getRandomContentColorClass()
+                )}>
+                <Icon name="question-mark" className="h-[100px] text-background opacity-50" />
+              </div>
+            )}
           </div>
           <WorkCardAvailabilityRow materialTypes={work.materialTypes} />
         </div>
