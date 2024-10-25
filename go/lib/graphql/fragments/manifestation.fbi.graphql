@@ -1,0 +1,8 @@
+fragment ManifestationCover on Manifestation {
+  pid
+  materialTypes {
+    materialTypeGeneral {
+      code
+    }
+  }
+}

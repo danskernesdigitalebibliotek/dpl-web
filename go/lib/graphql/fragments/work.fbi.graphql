@@ -17,4 +17,12 @@ fragment WorkTeaser on Work {
       code
     }
   }
+  manifestations {
+    all {
+      ...ManifestationCover
+    }
+    bestRepresentation {
+      ...ManifestationCover
+    }
+  }
 }
