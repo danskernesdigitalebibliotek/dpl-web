@@ -50,3 +50,9 @@ export const getServiceUrlWithParams = ({
   const urlParams = params ? `?${buildParams(params as FetchParams)}` : ""
   return `${baseUrl}${url}${urlParams}`
 }
+
+export const filterFalsyValuesFromArray = <T>(
+  array: (T | undefined | null | false | 0 | "")[]
+): T[] => {
+  return array.filter(Boolean) as T[]
+}
