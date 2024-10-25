@@ -1,11 +1,9 @@
 {
   "root": true,
-  "plugins": ["@typescript-eslint", "simple-import-sort"],
+  "plugins": ["@typescript-eslint"],
   "extends": ["next/core-web-vitals", "next/typescript"],
   "rules": {
     "no-console": ["error", { "allow": ["warn", "error", "info"] }],
-    "simple-import-sort/imports": "warn",
-    "simple-import-sort/exports": "warn",
     "@typescript-eslint/ban-ts-comment": "off"
   }
 }
