@@ -198,7 +198,12 @@ const config: Config = {
         },
         foreground: "var(--foreground)",
         border: "var(--border)",
-
+        content: {
+          pink: "var(--content-pink)",
+          purple: "var(--content-purple)",
+          orange: "var(--content-orange)",
+          blue: "var(--content-blue)",
+        },
         // shadcn colors
         card: {
           DEFAULT: "var(--card)",
