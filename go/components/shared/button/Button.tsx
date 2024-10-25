@@ -5,10 +5,10 @@ import * as React from "react"
 import { cn } from "@/lib/utils"
 
 const buttonVariants = cva(
-  `inline-flex border shadow-button rounded-full items-center justify-center
+  `inline-flex border text-typo-body-sm text-foreground bg-background shadow-button rounded-full items-center justify-center
   whitespace-nowrap font-medium font-headline focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring
   disabled:pointer-events-none disabled:opacity-50 hover:translate-x-[1px] hover:translate-y-[1px] transition
-  hover:shadow-buttonHover active:translate-x-[4px] active:translate-y-[4px] active:shadow-none`,
+  hover:shadow-buttonHover active:translate-x-[4px] active:translate-y-[4px] active:shadow-none `,
   {
     variants: {
       variant: {
@@ -20,16 +20,6 @@ const buttonVariants = cva(
         xs: "h-[24px]",
         sm: "h-[32px]",
         lg: "h-[48px]",
-      },
-      fill: {
-        default: "",
-        background: "bg-background",
-        foreground: "bg-foreground",
-      },
-      text: {
-        default: "",
-        background: "text-background",
-        foreground: "text-foreground",
       },
     },
     compoundVariants: [
@@ -57,8 +47,6 @@ const buttonVariants = cva(
     defaultVariants: {
       variant: "default",
       size: "default",
-      fill: "default",
-      text: "default",
     },
   }
 )
@@ -70,11 +58,11 @@ export interface ButtonProps
 }
 
 const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
-  ({ className, variant, size, fill, text, asChild = false, ...props }, ref) => {
+  ({ className, variant, size, asChild = false, ...props }, ref) => {
     const Comp = asChild ? Slot : "button"
     // TODO: This sucks. @ThomasGross what to do?
-    const classes = cn(buttonVariants({ variant, size, fill, text, className }))
-    return <Comp className={`${classes} text-typo-body-sm`} ref={ref} {...props} />
+    const classes = cn(buttonVariants({ variant, size, className }))
+    return <Comp className={classes} ref={ref} {...props} />
   }
 )
 

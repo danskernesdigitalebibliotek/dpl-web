@@ -5,9 +5,9 @@ import { cn } from "@/lib/utils"
 
 test("That we can use cn in combination with cva variants", async () => {
   const resultClasses =
-    "inline-flex h-[40px] bg-foreground text-background px-10 border-background text-typo-body-sm"
+    "text-typo-body-sm text-foreground inline-flex h-[40px] px-10"
 
-  const buttonVariants = cva(`inline-flex`, {
+  const buttonVariants = cva(`text-typo-body-sm text-foreground inline-flex`, {
     variants: {
       variant: {
         default: "",
@@ -18,16 +18,6 @@ test("That we can use cn in combination with cva variants", async () => {
         xs: "h-[24px]",
         sm: "h-[32px]",
         lg: "h-[48px]",
-      },
-      fill: {
-        default: "",
-        background: "bg-background",
-        foreground: "bg-foreground",
-      },
-      text: {
-        default: "",
-        background: "text-background",
-        foreground: "text-foreground",
       },
     },
     compoundVariants: [
@@ -55,17 +45,13 @@ test("That we can use cn in combination with cva variants", async () => {
     defaultVariants: {
       variant: "default",
       size: "default",
-      fill: "default",
-      text: "default",
     },
   })
 
   const buttonVariantClasses = buttonVariants({
-    variant: undefined,
-    size: undefined,
-    fill: "foreground",
-    text: "background",
-    className: "border-background text-typo-body-sm",
+    variant: "default",
+    size: "default",
+    className: "",
   })
 
   // This passes.
