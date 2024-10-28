@@ -220,6 +220,14 @@
   @apply mx-auto max-w-[var(--page-width)] px-[var(--grid-edge)];
 }
 
+.grid-cols-go {
+  @apply grid-cols-12;
+}
+
+.grid-go {
+  @apply grid-cols-go grid gap-x-[--grid-gap-x];
+}
+
 .dark-mode-transition {
   @apply transition-[background] duration-dark-mode;
 }
