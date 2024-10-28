@@ -1,5 +1,5 @@
 import { SearchFacetFragment } from "@/lib/graphql/generated/fbi/graphql"
-import { cn } from "@/lib/utils"
+import { cn } from "@/lib/helpers/helper.cn"
 import React, { useEffect, useRef, useState } from "react"
 import { mapFacetsToFilters, mapFilterNameToTranslation, toggleFilter } from "./helper"
 import { useRouter, useSearchParams } from "next/navigation"
