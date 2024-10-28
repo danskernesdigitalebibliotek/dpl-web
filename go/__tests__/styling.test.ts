@@ -1,7 +1,7 @@
 import { expect, test, vi } from "vitest"
 
 import { cva } from "class-variance-authority"
-import { cn } from "@/lib/utils"
+import { cn } from "@/lib/helpers/helper.cn"
 
 test("That we can use cn in combination with cva variants", async () => {
   const resultClasses =
