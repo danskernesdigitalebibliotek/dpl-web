@@ -45,7 +45,7 @@ function ProfileButton() {
         <SheetTrigger>
           <HeaderButton />
         </SheetTrigger>
-        <SheetContent className="p-grid-edge w-[560px]">
+        <SheetContent className="p-grid-edge w-full max-w-[560px]">
           <SheetHeader>
             <SheetTitle className="mb-space-y text-typo-heading-3">Log ind</SheetTitle>
             <div className="py-space-y flex flex-col items-center justify-center rounded-sm bg-background-overlay">
