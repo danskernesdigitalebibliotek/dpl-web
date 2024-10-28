@@ -38,7 +38,7 @@ export const createAuthHeader = (
       }
     : {}
 
-export const getServiceUrlWithParams = ({
+export const getRestServiceUrlWithParams = ({
   baseUrl,
   url,
   params,

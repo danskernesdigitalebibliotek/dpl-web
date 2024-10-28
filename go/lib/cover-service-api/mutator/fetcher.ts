@@ -1,4 +1,4 @@
-import { getServiceUrlWithParams } from "../../fetchers/helper"
+import { getRestServiceUrlWithParams } from "../../fetchers/helper"
 
 export const fetcher = async <ResponseType>({
   url,
@@ -22,7 +22,7 @@ export const fetcher = async <ResponseType>({
   }
 
   const body = data ? JSON.stringify(data) : null
-  const serviceUrl = getServiceUrlWithParams({
+  const serviceUrl = getRestServiceUrlWithParams({
     baseUrl: "https://cover.dandigbib.org",
     url,
     params,
