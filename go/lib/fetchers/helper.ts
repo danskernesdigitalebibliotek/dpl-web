@@ -50,21 +50,3 @@ export const getServiceUrlWithParams = ({
   const urlParams = params ? `?${buildParams(params as FetchParams)}` : ""
   return `${baseUrl}${url}${urlParams}`
 }
-
-export const filterFalsyValuesFromArray = <T>(
-  array: (T | undefined | null | false | 0 | "")[]
-): T[] => {
-  return array.filter(Boolean) as T[]
-}
-
-export const contentColorClasses = [
-  "bg-content-pink",
-  "bg-content-purple",
-  "bg-content-orange",
-  "bg-content-blue",
-] as const
-
-export const getRandomContentColorClass = () => {
-  const randomIndex = Math.floor(Math.random() * contentColorClasses.length)
-  return contentColorClasses[randomIndex]
-}

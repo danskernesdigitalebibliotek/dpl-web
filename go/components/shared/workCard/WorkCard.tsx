@@ -3,13 +3,13 @@ import Link from "next/link"
 import React from "react"
 
 import { useGetCoverCollection } from "@/lib/cover-service-api/cover-service"
-import { getRandomContentColorClass } from "@/lib/fetchers/helper"
 import { WorkTeaserFragment } from "@/lib/graphql/generated/fbi/graphql"
 import { cn } from "@/lib/utils"
 
 import Icon from "../icon/Icon"
 import { displayCreators, getAllWorkPids, getCoverUrls } from "./helper"
 import WorkCardAvailabilityRow from "./WorkCardAvailabilityRow"
+import { getRandomContentColorClass } from "@/lib/helper"
 
 type WorkCardProps = {
   work: WorkTeaserFragment
@@ -19,11 +19,11 @@ const WorkCard = ({ work }: WorkCardProps) => {
   const { data } = useGetCoverCollection({
     type: "pid",
     identifiers: getAllWorkPids(work),
-    sizes: ["small", "large", "default", "original"],
+    sizes: ["small", "large", "medium-large", "original"],
   })
   const bestRepresentation = work.manifestations.bestRepresentation
   const allPids = [bestRepresentation.pid, ...getAllWorkPids(work)]
-  const coverSrc = getCoverUrls(data, allPids || [], ["small", "large", "default", "original"])
+  const coverSrc = getCoverUrls(data, allPids || [], ["small", "large", "medium-large", "original"])
 
   return (
     <div className="mb-4">
@@ -44,10 +44,7 @@ const WorkCard = ({ work }: WorkCardProps) => {
             )}
             {(!coverSrc?.length || coverSrc.length === 0) && (
               <div
-                className={cn(
-                  "bg-content-pink flex h-full w-full items-center justify-center rounded-sm",
-                  getRandomContentColorClass()
-                )}>
+                className={cn("flex h-full w-full items-center justify-center rounded-sm ", getRandomContentColorClass())}>
                 <Icon name="question-mark" className="h-[100px] text-background opacity-50" />
               </div>
             )}
