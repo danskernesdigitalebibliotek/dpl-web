@@ -1,9 +1,3 @@
-export const filterFalsyValuesFromArray = <T>(
-  array: (T | undefined | null | false | 0 | "")[]
-): T[] => {
-  return array.filter(Boolean) as T[]
-}
-
 export const contentColorClasses = [
   "bg-accents-pink",
   "bg-accents-purple",
