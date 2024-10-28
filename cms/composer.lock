@@ -7245,20 +7245,20 @@
         },
         {
             "name": "drupal/taxonomy_unique",
-            "version": "2.5.0",
+            "version": "2.6.0",
             "source": {
                 "type": "git",
                 "url": "https://git.drupalcode.org/project/taxonomy_unique.git",
-                "reference": "8.x-2.5"
+                "reference": "8.x-2.6"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://ftp.drupal.org/files/projects/taxonomy_unique-8.x-2.5.zip",
-                "reference": "8.x-2.5",
-                "shasum": "95d964d629f84c8da9d2f1d08b2d5c93acdfb9a2"
+                "url": "https://ftp.drupal.org/files/projects/taxonomy_unique-8.x-2.6.zip",
+                "reference": "8.x-2.6",
+                "shasum": "8b5d53ba14b6e26811fd97f1eb2ecda33ef0f7e8"
             },
             "require": {
-                "drupal/core": "^8.9 || ^9 || ^10"
+                "drupal/core": "^8.9 || ^9 || ^10 || ^11"
             },
             "require-dev": {
                 "drupal/coder": "^8.3.6",
@@ -7267,8 +7267,8 @@
             "type": "drupal-module",
             "extra": {
                 "drupal": {
-                    "version": "8.x-2.5",
-                    "datestamp": "1675954511",
+                    "version": "8.x-2.6",
+                    "datestamp": "1724782346",
                     "security-coverage": {
                         "status": "covered",
                         "message": "Covered by Drupal's security advisory policy"
@@ -7302,7 +7302,7 @@
                     "email": "rafael.schally@gmail.com"
                 },
                 {
-                    "name": "Grevil",
+                    "name": "grevil",
                     "homepage": "https://www.drupal.org/user/3668491"
                 },
                 {
