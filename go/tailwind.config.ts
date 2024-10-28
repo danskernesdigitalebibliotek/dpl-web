@@ -7,6 +7,7 @@ const config: Config = {
     "./components/**/*.{js,ts,jsx,tsx,mdx}",
     "./app/**/*.{js,ts,jsx,tsx,mdx}",
     "./styles/**/*.{js,ts,jsx,tsx,mdx}",
+    "./lib/**/*.{js,ts,jsx,tsx,mdx}",
   ],
   theme: {
     screens: {
@@ -198,7 +199,7 @@ const config: Config = {
         },
         foreground: "var(--foreground)",
         border: "var(--border)",
-        content: {
+        accents: {
           pink: "var(--content-pink)",
           purple: "var(--content-purple)",
           orange: "var(--content-orange)",
