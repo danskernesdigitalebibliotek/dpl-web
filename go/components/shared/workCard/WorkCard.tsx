@@ -5,7 +5,7 @@ import React from "react"
 import { useGetCoverCollection } from "@/lib/cover-service-api/cover-service"
 import { GetCoverCollectionSizesItem } from "@/lib/cover-service-api/model"
 import { WorkTeaserFragment } from "@/lib/graphql/generated/fbi/graphql"
-import { getRandomContentColorClass } from "@/lib/helper"
+import { getRandomContentColorClass } from "@/lib/helpers/helper.colors"
 import { cn } from "@/lib/utils"
 
 import Icon from "../icon/Icon"
@@ -19,14 +19,16 @@ type WorkCardProps = {
 const WorkCard = ({ work }: WorkCardProps) => {
   const { data } = useGetCoverCollection({
     type: "pid",
-    identifiers: getAllWorkPids(work),
+    identifiers: [getAllWorkPids(work).join(", ")],
     sizes: [
+      // TODO: These sizes should be defined in a general global config.
       "small, small-medium, medium, medium-large, large, original, default" as GetCoverCollectionSizesItem,
     ],
   })
   const bestRepresentation = work.manifestations.bestRepresentation
   const allPids = [bestRepresentation.pid, ...getAllWorkPids(work)]
   const coverSrc = getCoverUrls(data, allPids || [], [
+    // TODO: These sizes should be defined in a general global config.
     "default",
     "original",
     "large",
