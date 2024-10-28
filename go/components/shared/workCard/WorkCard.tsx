@@ -19,11 +19,11 @@ const WorkCard = ({ work }: WorkCardProps) => {
   const { data } = useGetCoverCollection({
     type: "pid",
     identifiers: getAllWorkPids(work),
-    sizes: ["small", "large", "medium-large", "original"],
+    sizes: ["small", "small-medium", "medium", "medium-large", "large", "original"],
   })
   const bestRepresentation = work.manifestations.bestRepresentation
   const allPids = [bestRepresentation.pid, ...getAllWorkPids(work)]
-  const coverSrc = getCoverUrls(data, allPids || [], ["small", "large", "medium-large", "original"])
+  const coverSrc = getCoverUrls(data, allPids || [], ["small", "small-medium", "medium", "medium-large", "large", "original"])
 
   return (
     <div className="mb-4">
