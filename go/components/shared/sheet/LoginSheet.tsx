@@ -2,14 +2,28 @@
 
 import * as SheetPrimitive from "@radix-ui/react-dialog"
 import { Cross2Icon } from "@radix-ui/react-icons"
-import { cva, type VariantProps } from "class-variance-authority"
+import { type VariantProps, cva } from "class-variance-authority"
 import * as React from "react"
 
 import { cn } from "@/lib/helpers/helper.cn"
 
 const Sheet = SheetPrimitive.Root
 
-const SheetTrigger = SheetPrimitive.Trigger
+const SheetTrigger = React.forwardRef<
+  React.ElementRef<typeof SheetPrimitive.Trigger>,
+  React.ComponentPropsWithoutRef<typeof SheetPrimitive.Trigger>
+>(({ className, ...props }, ref) => (
+  <SheetPrimitive.Trigger
+    ref={ref}
+    className={cn(
+      `rounded-full outline-none focus-visible:outline-none focus-visible:ring-2
+      focus-visible:ring-foreground focus-visible:ring-offset-2`,
+      className
+    )}
+    {...props}
+  />
+))
+SheetTrigger.displayName = SheetPrimitive.Trigger.displayName
 
 const SheetClose = SheetPrimitive.Close
 
