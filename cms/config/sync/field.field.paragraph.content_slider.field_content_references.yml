@@ -78,7 +78,4 @@ settings:
   consumer:
     handler: 'default:consumer'
     handler_settings: {  }
-  config_pages:
-    handler: 'default:config_pages'
-    handler_settings: {  }
 field_type: dynamic_entity_reference
