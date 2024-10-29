@@ -14,11 +14,11 @@ export const fetcher = async <ResponseType>({
   data?: BodyType<unknown>
   signal?: AbortSignal
 }) => {
-  const authHeaders = { Authorization: `Bearer ${process.env.LIBRARY_TOKEN}` } as object
+  const authHeaders = { Authorization: `Bearer ${process.env.NEXT_PUBLIC_LIBRARY_TOKEN}` } as object
 
   const body = data ? JSON.stringify(data) : null
   const serviceUrl = getRestServiceUrlWithParams({
-    baseUrl: "https://pubhub-openplatform.dbc.dk",
+    baseUrl: "https://pubhub-openplatform.test.dbc.dk",
     url,
     params,
   })
