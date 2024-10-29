@@ -66,8 +66,9 @@ export const formatFacetTerms = (filters: { [key: string]: { [key: string]: Filt
 const SearchPageLayout = ({ searchQuery }: { searchQuery?: string }) => {
   const searchParams = useSearchParams()
   const q = searchQuery || searchParams.get("q") || ""
+  const [currentQueryString, setCurrentQueryString] = useState("")
   const [currentPage, setCurrentPage] = useState(0)
-  const [filters, setFilters] = useState<SearchFilters>({})
+  const [facetFilters, setFacetFilters] = useState<SearchFilters>({})
   const loadMoreRef = useRef(null)
   const isInView = useInView(loadMoreRef)
 
@@ -85,32 +86,23 @@ const SearchPageLayout = ({ searchQuery }: { searchQuery?: string }) => {
     {} as { [key: string]: keyof SearchFilters[] }
   )
 
-  const {
-    data,
-    error,
-    fetchNextPage,
-    hasNextPage,
-    isLoading,
-    isFetching,
-    isFetchingNextPage,
-    status,
-  } = useInfiniteQuery({
+  const { data, fetchNextPage, isLoading } = useInfiniteQuery({
     queryKey: useSearchWithPaginationQuery.getKey({
-      q: { all: q },
+      q: { all: currentQueryString },
       offset: 0,
       limit: SEARCH_RESULTS_LIMIT,
       filters: {
         branchId: branchIds,
-        ...filters,
+        ...facetFilters,
       },
     }),
     queryFn: useSearchWithPaginationQuery.fetcher({
-      q: { all: q },
+      q: { all: currentQueryString },
       offset: currentPage * SEARCH_RESULTS_LIMIT,
       limit: SEARCH_RESULTS_LIMIT,
       filters: {
         branchId: branchIds,
-        ...filters,
+        ...facetFilters,
       },
     }),
     getNextPageParam: lastPage => {
@@ -118,14 +110,14 @@ const SearchPageLayout = ({ searchQuery }: { searchQuery?: string }) => {
       const nextPage = currentPage + 1
       return currentPage < totalPages ? nextPage : undefined // By returning undefined if there are no more pages, hasNextPage boolean will be set to false
     },
-    initialPageParam: 1,
+    initialPageParam: 0,
     refetchOnWindowFocus: false,
-    enabled: q?.length > 0, // Disable search result & search filter queries if q doesn't exist
+    enabled: currentQueryString?.length > 0, // Disable search result & search filter queries if q doesn't exist
   })
 
   const { data: dataFacets, isLoading: isLoadingFacets } = useSearchFacetsQuery(
     {
-      q: { all: q },
+      q: { all: currentQueryString },
       facetLimit: 100,
       facets: facetDefinitions,
       filters: {
@@ -134,19 +126,17 @@ const SearchPageLayout = ({ searchQuery }: { searchQuery?: string }) => {
       },
     },
     {
-      refetchOnReconnect: true,
-      refetchOnMount: true,
-      enabled: q?.length > 0,
+      refetchOnWindowFocus: false,
+      enabled: currentQueryString?.length > 0,
     }
   )
 
   const facetData = dataFacets?.search?.facets
-  const searchData = data?.pages?.[0]?.search
-
-  const totalPages = Math.ceil((data?.pages?.[0]?.search.hitcount ?? 0) / SEARCH_RESULTS_LIMIT)
 
   const handleLoadMore = () => {
-    if (currentPage + 1 < totalPages) {
+    const totalPages = Math.ceil((data?.pages?.[0]?.search.hitcount ?? 0) / SEARCH_RESULTS_LIMIT)
+
+    if (currentPage < totalPages) {
       fetchNextPage()
       setCurrentPage(currentPage + 1)
     }
@@ -159,14 +149,19 @@ const SearchPageLayout = ({ searchQuery }: { searchQuery?: string }) => {
   }, [isInView])
 
   useEffect(() => {
-    setFilters({ ...facetsForSearchRequest })
-    setCurrentPage(1)
-  }, [])
+    const page = data?.pages.length || 0
+    setCurrentPage(page)
+  }, [data?.pages])
 
   useEffect(() => {
-    const isFilterMatching = JSON.stringify(filters) === JSON.stringify(facetsForSearchRequest)
+    setCurrentPage(0)
+    setCurrentQueryString(q)
+  }, [q])
+
+  useEffect(() => {
+    const isFilterMatching = JSON.stringify(facetFilters) === JSON.stringify(facetsForSearchRequest)
     if (!isFilterMatching) {
-      setFilters(facetsForSearchRequest)
+      setFacetFilters(facetsForSearchRequest)
       setCurrentPage(0)
     }
   }, [facetsForSearchRequest])
