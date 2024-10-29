@@ -29,9 +29,9 @@ const HeaderButton = ({
 )
 
 function ProfileButton() {
-  const { session, loading } = useSession()
+  const { session, isLoading } = useSession()
   const router = useRouter()
-  if (loading) {
+  if (isLoading) {
     return (
       <>
         <HeaderButton />
@@ -53,10 +53,7 @@ function ProfileButton() {
                 Log ind med UNI•Login
               </SheetDescription>
               <div>
-                <Button
-                  onClick={() => router.push("/auth/login/unilogin")}>
-                  LOG IND
-                </Button>
+                <Button onClick={() => router.push("/auth/login/unilogin")}>LOG IND</Button>
               </div>
             </div>
           </SheetHeader>

@@ -277,7 +277,7 @@ body > * {
     --destructive-foreground: hsla(0, 0%, 98%, 1);
     --border: hsla(0, 0%, 89.8%, 1);
     --input: hsla(0, 0%, 89.8%, 1);
-    --ring: hsla(43, 26%, 95%, 1);
+    --ring: hsla(0, 0%, 3.9%, 1);
     --chart-1: hsla(12, 76%, 61%, 1);
     --chart-2: hsla(173, 58%, 39%, 1);
     --chart-3: hsla(197, 37%, 24%, 1);
