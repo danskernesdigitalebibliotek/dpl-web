@@ -5,8 +5,10 @@
 :root {
   /* GRID */
   --page-width: 1600px;
-  --grid-edge: 0.75rem; /* 12px */
+  --grid-edge: 2.5rem; /* 40px */
   --grid-gap-x: 0.75rem; /* 12px */
+
+  --space-y: 5rem; /* 80px */
 
   /* SIZE OF EACH INDIVIDUAL COLUMN IN THE GRID  */
   --grid-column: calc(
@@ -197,7 +199,7 @@
 @screen lg {
   :root {
     /* GRID */
-    --grid-edge: 5rem; /* 80px */
+    --grid-edge: 2.5rem; /* 40px */
     --grid-gap-x: 1.5rem; /* 24px */
 
     /* NAVIGATION */
