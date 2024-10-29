@@ -190,7 +190,12 @@ export const extendedTheme = {
       },
       foreground: "var(--foreground)",
       border: "var(--border)",
-
+      content: {
+        pink: "var(--content-pink)",
+        blue: "var(--content-blue)",
+        orange: "var(--content-orange)",
+        purple: "var(--content-purple)",
+      },
       // shadcn colors
       card: {
         DEFAULT: "var(--card)",
@@ -274,7 +279,7 @@ export const extendedTheme = {
       coverPicture: "-1px 1px 10px 0 var(--shadow-1), -3px 3px 20px 0 var(--shadow-2)",
     },
   },
-} satisfies Config['theme']
+} satisfies Config["theme"]
 
 const config: Config = {
   darkMode: ["class"],
@@ -283,7 +288,7 @@ const config: Config = {
     "./components/**/*.{js,ts,jsx,tsx,mdx}",
     "./app/**/*.{js,ts,jsx,tsx,mdx}",
     "./styles/**/*.{js,ts,jsx,tsx,mdx}",
-    "./lib/**/*.{js,ts,jsx,tsx,mdx}",
+    "./lib/**/*.{js,ts,jsx,tsx,mdx,colors}",
   ],
   theme: extendedTheme,
   // eslint-disable-next-line @typescript-eslint/no-require-imports
