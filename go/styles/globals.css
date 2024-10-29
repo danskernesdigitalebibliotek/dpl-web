@@ -71,6 +71,11 @@
   --shadow-1: hsla(0, 0%, 0%, 0.5);
   --shadow-2: hsla(0, 0%, 0%, 0.15);
 
+  --content-pink: hsla(317, 100%, 72%, 1);
+  --content-purple: hsla(258, 100%, 72%, 1);
+  --content-orange: hsla(34, 100%, 72%, 1);
+  --content-blue: hsla(202, 100%, 72%, 1);
+
   /* CONTENT COLORS */
   --content-pink-100: 320 100% 91%;
   --content-pink-200: 317 100% 73%;
