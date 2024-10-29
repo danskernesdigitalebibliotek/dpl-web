@@ -40,10 +40,10 @@
             "type": "package",
             "package": {
                 "name": "danskernesdigitalebibliotek/dpl-react",
-                "version": "2024.43.0",
+                "version": "2024.44.0",
                 "type": "drupal-library",
                 "dist": {
-                    "url": "https://github.com/danskernesdigitalebibliotek/dpl-react/releases/download/2024.43.0/dist-2024-43-0-b43d959e5567bae1eec5e8554066b6b7eb9aedb8.zip",
+                    "url": "https://github.com/danskernesdigitalebibliotek/dpl-react/releases/download/2024.44.0/dist-2024-44-0-569a1656d740c639d78cac425fac380e774cae75.zip",
                     "type": "zip"
                 },
                 "require": {
@@ -56,9 +56,9 @@
             "package": {
                 "name": "danskernesdigitalebibliotek/dpl-design-system",
                 "type": "drupal-library",
-                "version": "2024.43.0",
+                "version": "2024.44.0",
                 "dist": {
-                    "url": "https://github.com/danskernesdigitalebibliotek/dpl-design-system/releases/download/2024.43.0/dist-2024-43-0-633a657a46a0185d84279e07141bbcd31bdbe6f0.zip",
+                    "url": "https://github.com/danskernesdigitalebibliotek/dpl-design-system/releases/download/2024.44.0/dist-2024-44-0-34305e57a86041624c7b762d10fa91f044842144.zip",
                     "type": "zip"
                 }
             }
@@ -90,8 +90,8 @@
         "composer/installers": "1.12.0",
         "cweagans/composer-patches": "1.7.3",
         "danskernesdigitalebibliotek/cms-api": "*",
-        "danskernesdigitalebibliotek/dpl-design-system": "2024.43.0",
-        "danskernesdigitalebibliotek/dpl-react": "2024.43.0",
+        "danskernesdigitalebibliotek/dpl-design-system": "2024.44.0",
+        "danskernesdigitalebibliotek/dpl-react": "2024.44.0",
         "danskernesdigitalebibliotek/fbs-client": "*",
         "dealerdirect/phpcodesniffer-composer-installer": "^1.0.0",
         "deoliveiralucas/array-keys-case-transform": "^1.1",
