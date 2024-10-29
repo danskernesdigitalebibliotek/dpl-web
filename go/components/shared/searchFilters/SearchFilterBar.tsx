@@ -29,6 +29,7 @@ const SearchFilterBar = ({ facets }: SearchFilterBarProps) => {
           )
         })}
       </div>
+      <hr className="my-3 -mx-grid-edge w-screen border-black opacity-10 md:mx-auto md:mb-12 md:mt-6 md:w-full" />
     </>
   )
 }

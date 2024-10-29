@@ -67,6 +67,7 @@ const SearchPageLayout = ({ searchQuery }: { searchQuery?: string }) => {
   const searchParams = useSearchParams()
   const q = searchQuery || searchParams.get("q") || ""
   const [currentPage, setCurrentPage] = useState(0)
+  const [filters, setFilters] = useState<SearchFilters>({})
   const loadMoreRef = useRef(null)
   const isInView = useInView(loadMoreRef)
 
@@ -84,7 +85,6 @@ const SearchPageLayout = ({ searchQuery }: { searchQuery?: string }) => {
     {} as { [key: string]: keyof SearchFilters[] }
   )
 
-
   const {
     data,
     error,
@@ -101,7 +101,7 @@ const SearchPageLayout = ({ searchQuery }: { searchQuery?: string }) => {
       limit: SEARCH_RESULTS_LIMIT,
       filters: {
         branchId: branchIds,
-        ...facetsForSearchRequest,
+        ...filters,
       },
     }),
     queryFn: useSearchWithPaginationQuery.fetcher({
@@ -110,15 +110,15 @@ const SearchPageLayout = ({ searchQuery }: { searchQuery?: string }) => {
       limit: SEARCH_RESULTS_LIMIT,
       filters: {
         branchId: branchIds,
-        ...facetsForSearchRequest,
+        ...filters,
       },
     }),
     getNextPageParam: lastPage => {
       const totalPages = Math.ceil(lastPage.search.hitcount / SEARCH_RESULTS_LIMIT)
-      const actualPage = (currentPage * SEARCH_RESULTS_LIMIT) / SEARCH_RESULTS_LIMIT
-      return actualPage < totalPages ? actualPage + 1 : undefined // By returning undefined if there are no more pages, hasNextPage boolean will be set to false
+      const nextPage = currentPage + 1
+      return currentPage < totalPages ? nextPage : undefined // By returning undefined if there are no more pages, hasNextPage boolean will be set to false
     },
-    initialPageParam: 0,
+    initialPageParam: 1,
     refetchOnWindowFocus: false,
     enabled: q?.length > 0, // Disable search result & search filter queries if q doesn't exist
   })
@@ -134,6 +134,8 @@ const SearchPageLayout = ({ searchQuery }: { searchQuery?: string }) => {
       },
     },
     {
+      refetchOnReconnect: true,
+      refetchOnMount: true,
       enabled: q?.length > 0,
     }
   )
@@ -141,16 +143,33 @@ const SearchPageLayout = ({ searchQuery }: { searchQuery?: string }) => {
   const facetData = dataFacets?.search?.facets
   const searchData = data?.pages?.[0]?.search
 
+  const totalPages = Math.ceil((data?.pages?.[0]?.search.hitcount ?? 0) / SEARCH_RESULTS_LIMIT)
+
   const handleLoadMore = () => {
-    fetchNextPage()
-    setCurrentPage(currentPage + 1)
+    if (currentPage + 1 < totalPages) {
+      fetchNextPage()
+      setCurrentPage(currentPage + 1)
+    }
   }
 
   useEffect(() => {
-    if (isInView && hasNextPage) {
+    if (isInView) {
       handleLoadMore()
     }
   }, [isInView])
+
+  useEffect(() => {
+    setFilters({ ...facetsForSearchRequest })
+    setCurrentPage(1)
+  }, [])
+
+  useEffect(() => {
+    const isFilterMatching = JSON.stringify(filters) === JSON.stringify(facetsForSearchRequest)
+    if (!isFilterMatching) {
+      setFilters(facetsForSearchRequest)
+      setCurrentPage(0)
+    }
+  }, [facetsForSearchRequest])
 
   return (
     <div className="content-container">
@@ -161,27 +180,22 @@ const SearchPageLayout = ({ searchQuery }: { searchQuery?: string }) => {
       {isLoading && <p>isLoading...</p>}
 
       {data?.pages?.[0]?.search.hitcount === 0 && <p>Ingen søgeresultat</p>}
-      {data?.pages.map(
-        (page, i) =>
-          page.search.works && (
-            <motion.div
-              key={i}
-              animate={{
-                opacity: "0",
-                transitionEnd: {
-                  opacity: "100",
-                },
-              }}>
-              <SearchResults works={page.search.works} />
-            </motion.div>
-          )
-      )}
-
-      {searchData?.hitcount === 0 && <p>Ingen søgeresultat</p>}
-      {searchData?.works && <div ref={loadMoreRef}>
-        <SearchResults works={searchData.works} />
-      </div>}
-
+      <div className="mb-space-y flex flex-col gap-y-[calc(var(--grid-gap-x)*2)]">
+        {data?.pages.map(
+          (page, i) =>
+            page.search.works && (
+              <motion.div
+                key={i}
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                transition={{ duration: 0.5 }}
+                exit={{ opacity: 0 }}>
+                <SearchResults works={page.search.works} />
+              </motion.div>
+            )
+        )}
+      </div>
+      <div ref={loadMoreRef} className="h-0 opacity-0"></div>
     </div>
   )
 }
