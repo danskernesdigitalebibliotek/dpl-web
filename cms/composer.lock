@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "47bfbebceea8eb14f373649759c78e18",
+    "content-hash": "d3566bedfb999c8be1ee05efb82d09ce",
     "packages": [
         {
             "name": "amazeeio/drupal_integrations",
@@ -5713,29 +5713,32 @@
         },
         {
             "name": "drupal/openapi",
-            "version": "2.1.0",
+            "version": "2.2.0",
             "source": {
                 "type": "git",
                 "url": "https://git.drupalcode.org/project/openapi.git",
-                "reference": "8.x-2.1"
+                "reference": "8.x-2.2"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://ftp.drupal.org/files/projects/openapi-8.x-2.1.zip",
-                "reference": "8.x-2.1",
-                "shasum": "c0ce4095f555dad31c442f2354453ee4f6e9fadc"
+                "url": "https://ftp.drupal.org/files/projects/openapi-8.x-2.2.zip",
+                "reference": "8.x-2.2",
+                "shasum": "27805fddef69f7720cd49d2272c0e247f18fc715"
             },
             "require": {
-                "drupal/core": "^8 || ^9 || ^10"
+                "drupal/core": "^10 || ^11"
             },
             "conflict": {
                 "drupal/core": "<8.7"
             },
+            "require-dev": {
+                "drupal/openapi_ui": "1.x-dev"
+            },
             "type": "drupal-module",
             "extra": {
                 "drupal": {
-                    "version": "8.x-2.1",
-                    "datestamp": "1669682974",
+                    "version": "8.x-2.2",
+                    "datestamp": "1720625199",
                     "security-coverage": {
                         "status": "covered",
                         "message": "Covered by Drupal's security advisory policy"
@@ -19087,6 +19090,6 @@
     "platform": {
         "php": "8.1.*"
     },
-    "platform-dev": [],
+    "platform-dev": {},
     "plugin-api-version": "2.6.0"
 }
