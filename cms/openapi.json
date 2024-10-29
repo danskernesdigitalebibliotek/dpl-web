@@ -709,8 +709,12 @@
           }, 
           {
             "name": "nid",
-            "type": "integer",
-            "description": "The (node) id of the node (Branch) that the opening hour applies to.",
+            "type": "array",
+            "items": {
+              "type": "integer"
+            },
+            "collectionFormat": "csv",
+            "description": "The id(s) of the branch(es) for which to retrieve opening hours. Can be a single id or a comma-separated list of ids.",
             "in": "query",
             "required": true
           }
