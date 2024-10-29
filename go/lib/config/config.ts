@@ -12,8 +12,8 @@ const getConfig = (key: string) => {
         }
       }
 
-      if (process.env.APP_URL) {
-        return process.env.APP_URL
+      if (process.env.NEXT_PUBLIC_APP_URL) {
+        return process.env.NEXT_PUBLIC_APP_URL
       }
   }
 }

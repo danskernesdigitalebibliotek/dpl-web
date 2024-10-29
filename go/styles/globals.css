@@ -71,6 +71,11 @@
   --shadow-1: hsla(0, 0%, 0%, 0.5);
   --shadow-2: hsla(0, 0%, 0%, 0.15);
 
+  --content-pink: hsla(317, 100%, 72%, 1);
+  --content-purple: hsla(258, 100%, 72%, 1);
+  --content-orange: hsla(34, 100%, 72%, 1);
+  --content-blue: hsla(202, 100%, 72%, 1);
+
   /* CONTENT COLORS */
   --content-pink-100: 320 100% 91%;
   --content-pink-200: 317 100% 73%;
@@ -277,7 +282,7 @@ body > * {
     --destructive-foreground: hsla(0, 0%, 98%, 1);
     --border: hsla(0, 0%, 89.8%, 1);
     --input: hsla(0, 0%, 89.8%, 1);
-    --ring: hsla(43, 26%, 95%, 1);
+    --ring: hsla(0, 0%, 3.9%, 1);
     --chart-1: hsla(12, 76%, 61%, 1);
     --chart-2: hsla(173, 58%, 39%, 1);
     --chart-3: hsla(197, 37%, 24%, 1);

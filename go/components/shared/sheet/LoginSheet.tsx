@@ -2,14 +2,28 @@
 
 import * as SheetPrimitive from "@radix-ui/react-dialog"
 import { Cross2Icon } from "@radix-ui/react-icons"
-import { cva, type VariantProps } from "class-variance-authority"
+import { type VariantProps, cva } from "class-variance-authority"
 import * as React from "react"
 
 import { cn } from "@/lib/helpers/helper.cn"
 
 const Sheet = SheetPrimitive.Root
 
-const SheetTrigger = SheetPrimitive.Trigger
+const SheetTrigger = React.forwardRef<
+  React.ElementRef<typeof SheetPrimitive.Trigger>,
+  React.ComponentPropsWithoutRef<typeof SheetPrimitive.Trigger>
+>(({ className, ...props }, ref) => (
+  <SheetPrimitive.Trigger
+    ref={ref}
+    className={cn(
+      `rounded-full outline-none focus-visible:outline-none focus-visible:ring-2
+      focus-visible:ring-foreground focus-visible:ring-offset-2`,
+      className
+    )}
+    {...props}
+  />
+))
+SheetTrigger.displayName = SheetPrimitive.Trigger.displayName
 
 const SheetClose = SheetPrimitive.Close
 
@@ -32,12 +46,14 @@ const SheetOverlay = React.forwardRef<
 SheetOverlay.displayName = SheetPrimitive.Overlay.displayName
 
 const sheetVariants = cva(
-  "fixed z-50 gap-4 bg-background shadow-lg transition ease-in-out data-[state=closed]:duration-300 data-[state=open]:duration-500 data-[state=open]:animate-in data-[state=closed]:animate-out",
+  `fixed z-50 gap-4 bg-background shadow-lg transition ease-in-out data-[state=closed]:duration-300
+  data-[state=open]:duration-500 data-[state=open]:animate-in data-[state=closed]:animate-out`,
   {
     variants: {
       side: {
-        right:
-          "inset-y-0 bottom-0 sm:right-0 h-full border-l max-sm:data-[state=open]:slide-in-from-bottom max-sm:data-[state=closed]:slide-out-to-bottom sm:data-[state=closed]:slide-out-to-right sm:data-[state=open]:slide-in-from-right",
+        right: `inset-y-0 bottom-0 sm:right-0 h-full max-sm:data-[state=open]:slide-in-from-bottom
+          max-sm:data-[state=closed]:slide-out-to-bottom sm:data-[state=closed]:slide-out-to-right
+          sm:data-[state=open]:slide-in-from-right`,
       },
     },
     defaultVariants: {
@@ -59,8 +75,9 @@ const SheetContent = React.forwardRef<
     <SheetPrimitive.Content ref={ref} className={cn(sheetVariants({ side }), className)} {...props}>
       <SheetPrimitive.Close
         className="data-[state=open]:bg-secondary right-grid-edge top-grid-edge absolute rounded-sm
-          ring-offset-background transition-opacity hover:opacity-100 focus:outline-none focus:ring-2
-          focus:ring-ring focus:ring-offset-2 disabled:pointer-events-none">
+          ring-offset-background transition-opacity hover:opacity-100 focus-visible:outline-none
+          focus-visible:ring-2 focus-visible:ring-foreground focus-visible:ring-offset-2
+          disabled:pointer-events-none">
         <Cross2Icon className="h-8 w-8" />
         <span className="sr-only">Close</span>
       </SheetPrimitive.Close>
