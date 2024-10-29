@@ -10,6 +10,7 @@ import { cn } from "@/lib/helpers/helper.cn"
 import { getIsbnsFromWork } from "@/lib/helpers/ids"
 import { useGetV1ProductsIdentifier } from "@/lib/publizon-api/publizon"
 
+import { Badge } from "../badge/Badge"
 import Icon from "../icon/Icon"
 import WorkCardAvailabilityRow from "./WorkCardAvailabilityRow"
 import { displayCreators, getAllWorkPids, getCoverUrls } from "./helper"
@@ -58,11 +59,9 @@ const WorkCard = ({ work }: WorkCardProps) => {
       <Link href={`/work/${work.workId}`}>
         <div key={work.workId} className="relative rounded-sm bg-background-overlay p-2 md:p-4">
           {!!dataPublizon?.product?.costFree && (
-            <div
-              className="bg-content-blue absolute left-2 top-2 rounded-full px-2 py-1 text-typo-tag-sm text-white md:left-4
-                md:top-4">
+            <Badge variant={"blue"} className="absolute left-2 md:left-4 md:top-4">
               BLÅ
-            </div>
+            </Badge>
           )}
           <div
             className="px-auto relative mx-auto mb-3 mt-6 flex aspect-[166/228] w-[calc(100%-76px-4px)] items-center
