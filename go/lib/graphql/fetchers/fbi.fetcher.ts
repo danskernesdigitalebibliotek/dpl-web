@@ -4,11 +4,11 @@ export const fetchData = <TData, TVariables>(
   options?: RequestInit["headers"]
 ): (() => Promise<TData>) => {
   return async () => {
-    const res = await fetch(`${process.env.GRAPHQL_SCHEMA_ENDPOINT_FBI}`, {
+    const res = await fetch(`${process.env.NEXT_PUBLIC_GRAPHQL_SCHEMA_ENDPOINT_FBI}`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
-        Authorization: `Bearer ${process.env.LIBRARY_TOKEN}`,
+        Authorization: `Bearer ${process.env.NEXT_PUBLIC_LIBRARY_TOKEN}`,
         ...options,
       },
       body: JSON.stringify({
