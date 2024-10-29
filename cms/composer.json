@@ -40,10 +40,10 @@
             "type": "package",
             "package": {
                 "name": "danskernesdigitalebibliotek/dpl-react",
-                "version": "2024.43.0",
+                "version": "2024.44.0",
                 "type": "drupal-library",
                 "dist": {
-                    "url": "https://github.com/danskernesdigitalebibliotek/dpl-react/releases/download/2024.43.0/dist-2024-43-0-b43d959e5567bae1eec5e8554066b6b7eb9aedb8.zip",
+                    "url": "https://github.com/danskernesdigitalebibliotek/dpl-react/releases/download/2024.44.0/dist-2024-44-0-569a1656d740c639d78cac425fac380e774cae75.zip",
                     "type": "zip"
                 },
                 "require": {
@@ -56,9 +56,9 @@
             "package": {
                 "name": "danskernesdigitalebibliotek/dpl-design-system",
                 "type": "drupal-library",
-                "version": "2024.43.0",
+                "version": "2024.44.0",
                 "dist": {
-                    "url": "https://github.com/danskernesdigitalebibliotek/dpl-design-system/releases/download/2024.43.0/dist-2024-43-0-633a657a46a0185d84279e07141bbcd31bdbe6f0.zip",
+                    "url": "https://github.com/danskernesdigitalebibliotek/dpl-design-system/releases/download/2024.44.0/dist-2024-44-0-34305e57a86041624c7b762d10fa91f044842144.zip",
                     "type": "zip"
                 }
             }
@@ -90,12 +90,12 @@
         "composer/installers": "1.12.0",
         "cweagans/composer-patches": "1.7.3",
         "danskernesdigitalebibliotek/cms-api": "*",
-        "danskernesdigitalebibliotek/dpl-design-system": "2024.43.0",
-        "danskernesdigitalebibliotek/dpl-react": "2024.43.0",
+        "danskernesdigitalebibliotek/dpl-design-system": "2024.44.0",
+        "danskernesdigitalebibliotek/dpl-react": "2024.44.0",
         "danskernesdigitalebibliotek/fbs-client": "*",
         "dealerdirect/phpcodesniffer-composer-installer": "^1.0.0",
         "deoliveiralucas/array-keys-case-transform": "^1.1",
-        "drupal/address": "^1.0",
+        "drupal/address": "^2.0",
         "drupal/admin_toolbar": "^3.4",
         "drupal/admin_user_language": "^1.1",
         "drupal/administerusersbyrole": "^3.4",
@@ -335,15 +335,9 @@
             "drupal/jsonlog": {
                 "3251587: Change logging from stdout to stderr": "https://www.drupal.org/files/issues/2021-11-29/jsonlog-change-stdout-to-stderr-3251587-3.patch"
             },
-            "drupal/openapi": {
-                "3313521: OpenAPI security field does not validate": "https://git.drupalcode.org/project/openapi/-/commit/4964cf725242040ddfb0c591b6044ee1fa5912ef.patch"
-            },
             "drupal/openapi_rest": {
                 "3171530 + 3116760: Add support for parameter and response descriptions": "patches/openapi-parameter-response-descriptions-14-3.patch",
                 "3343816: Specification includes disabled resources": "https://git.drupalcode.org/project/openapi_rest/-/commit/6618157334feca93fad1041583375eed660b9085.patch"
-            },
-            "drupal/paragraphs": {
-                "3027525: Show the paragraph and field label of fields that fail validation": "https://www.drupal.org/files/issues/2023-10-03/3027525_22.patch"
             },
             "drupal/paragraphs_ee": {
                 "3106254: Sorting paragraph list alphabetically in modal": "https://www.drupal.org/files/issues/2023-03-30/paragraphs_ee_sort.patch",

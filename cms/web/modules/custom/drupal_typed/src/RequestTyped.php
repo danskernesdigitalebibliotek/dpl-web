@@ -65,4 +65,30 @@ class RequestTyped {
     }
   }
 
+  /**
+   * Retrieve a list of values as integers.
+   *
+   * This method retrieves a string value from the request, splits it using the
+   * provided separator, and returns an array of integers. If the value is null,
+   * the default array will be returned.
+   *
+   * @param string $key
+   *   The key to retrieve from the request.
+   * @param int[] $default
+   *   The default array of integers to return if the key does not exist.
+   * @param string $separator
+   *   The separator used to split the string value. Defaults to a comma (",").
+   *
+   * @return int[]
+   *   An array of integers.
+   */
+  public function getInts(string $key, array $default = [], string $separator = ","): array {
+    $value = $this->request->get($key);
+    if ($value === NULL) {
+      return $default;
+    }
+    $strings = \Safe\preg_split("/\s*{$separator}\s*/", $value, PREG_SPLIT_NO_EMPTY);
+    return array_map(fn($value) => intval($value), $strings);
+  }
+
 }
