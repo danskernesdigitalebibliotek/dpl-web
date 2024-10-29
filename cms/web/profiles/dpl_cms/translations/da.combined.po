@@ -4,23 +4,11 @@
 # #-#-#-#-#  da.config.po (PROJECT VERSION)  #-#-#-#-#
 # da translation of DPL CMS
 #
-#, fuzzy
 msgid ""
 msgstr ""
-"#-#-#-#-#  da.po (PROJECT VERSION)  #-#-#-#-#\n"
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2024-10-29 07:36+0100\n"
-"PO-Revision-Date: 2024-10-29 07:36+0100\n"
-"Last-Translator: NAME <EMAIL@ADDRESS>\n"
-"Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
-"MIME-Version: 1.0\n"
-"Content-Type: text/plain; charset=utf-8\n"
-"Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=2; plural=(n > 1);\n"
-"#-#-#-#-#  da.config.po (PROJECT VERSION)  #-#-#-#-#\n"
-"Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2024-10-29 07:37+0100\n"
-"PO-Revision-Date: 2024-10-29 07:37+0100\n"
+"POT-Creation-Date: 2024-10-29 08:39+0100\n"
+"PO-Revision-Date: 2024-10-29 08:39+0100\n"
 "Last-Translator: NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
 "MIME-Version: 1.0\n"
@@ -7402,9 +7390,6 @@ msgstr "Det overordnede feltnavn for enheden, som denne enhed refererer til."
 msgid "Entity test composite"
 msgstr ""
 
-msgid "Delete orphaned composite revisions"
-msgstr ""
-
 msgid ""
 "Checked @entity_type revisions for orphans: @current of @total in @interval "
 "(@deletions deleted)"
@@ -7447,6 +7432,9 @@ msgstr ""
 
 msgid "Select the entity types to check for orphans"
 msgstr "Vælg de enhedstyper, der skal kontrolleres for forældreløse"
+
+msgid "Delete orphaned composite revisions"
+msgstr ""
 
 msgid "Choose the entity type to clear"
 msgstr "Vælg enhedstypen, der skal ryddes"
