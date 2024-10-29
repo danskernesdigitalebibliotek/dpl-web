@@ -1,5 +1,5 @@
-import { SearchFacetsQuery } from "@/lib/graphql/generated/fbi/graphql"
-import { cn } from "@/lib/utils"
+import { SearchFacetFragment } from "@/lib/graphql/generated/fbi/graphql"
+import { cn } from "@/lib/helpers/helper.cn"
 import React, { useEffect, useRef, useState } from "react"
 import { mapFacetsToFilters, mapFilterNameToTranslation, toggleFilter } from "./helper"
 import { useRouter, useSearchParams } from "next/navigation"
@@ -7,7 +7,7 @@ import Icon from "../icon/Icon"
 import { Button } from "../button/Button"
 
 type SearchFiltersColumnProps = {
-  facet: SearchFacetsQuery["search"]["facets"][0]
+  facet: SearchFacetFragment
   isLast: boolean
   isExpanded: boolean
   setIsExpanded: React.Dispatch<React.SetStateAction<boolean>>
@@ -29,7 +29,9 @@ const SearchFiltersColumn = ({
     const el = elementRef.current
     if (el) {
       const isOverflowing = el.scrollHeight > el.clientHeight || el.scrollWidth > el.clientWidth
-      isOverflowing ? setHasOverflow(true) : null
+      if (isOverflowing) {
+        setHasOverflow(true)
+      }
     }
   }, [elementRef])
 

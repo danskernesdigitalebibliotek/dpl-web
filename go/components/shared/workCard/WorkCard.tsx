@@ -20,6 +20,7 @@ const WorkCard = ({ work }: WorkCardProps) => {
             className="px-auto shadow-coverPicture relative mx-auto mb-3 mt-6 flex aspect-[166/228] w-[calc(100%-76px-4px)]
               items-center rounded-sm md:mb-6 md:mt-9 md:w-[calc(100%-106px)]">
             <Image
+              // TODO: dynamic image
               src="https://i.pinimg.com/564x/b0/4a/b2/b04ab2de27591aee4a76015e42e0e282.jpg"
               alt="work image"
               layout="responsive"

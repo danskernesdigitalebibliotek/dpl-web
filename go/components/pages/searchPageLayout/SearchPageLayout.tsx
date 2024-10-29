@@ -79,11 +79,11 @@ const SearchPageLayout = ({ searchQuery }: { searchQuery?: string }) => {
           [mapFacetsToFilters[facetDefinition]]: [...values],
         }
       }
-
       return acc
     },
     {} as { [key: string]: keyof SearchFilters[] }
   )
+
 
   const {
     data,
@@ -120,17 +120,26 @@ const SearchPageLayout = ({ searchQuery }: { searchQuery?: string }) => {
     },
     initialPageParam: 0,
     refetchOnWindowFocus: false,
+    enabled: q?.length > 0, // Disable search result & search filter queries if q doesn't exist
   })
 
-  const { data: dataFacets, isLoading: isLoadingFacets } = useSearchFacetsQuery({
-    q: { all: q },
-    facetLimit: 100,
-    facets: facetDefinitions,
-    filters: {
-      branchId: branchIds,
-      ...facetsForSearchRequest,
+  const { data: dataFacets, isLoading: isLoadingFacets } = useSearchFacetsQuery(
+    {
+      q: { all: q },
+      facetLimit: 100,
+      facets: facetDefinitions,
+      filters: {
+        branchId: branchIds,
+        ...facetsForSearchRequest,
+      },
     },
-  })
+    {
+      enabled: q?.length > 0,
+    }
+  )
+
+  const facetData = dataFacets?.search?.facets
+  const searchData = data?.pages?.[0]?.search
 
   const handleLoadMore = () => {
     fetchNextPage()
@@ -147,11 +156,10 @@ const SearchPageLayout = ({ searchQuery }: { searchQuery?: string }) => {
     <div className="content-container">
       <h1 className="mt-[88px] text-typo-heading-2">{`Viser resultater for "${q}" ${data?.pages?.[0]?.search.hitcount ? "(" + data?.pages?.[0]?.search.hitcount + ")" : ""}`}</h1>
       {isLoadingFacets && <p>isLoadingFacets...</p>}
-      {!dataFacets?.search?.facets?.length && <p>Ingen filter</p>}
-      {dataFacets?.search?.facets && dataFacets?.search?.facets?.length > 0 && (
-        <SearchFilterBar facets={dataFacets.search.facets} />
-      )}
+      {!facetData?.length && <p>Ingen filter</p>}
+      {facetData && facetData?.length > 0 && <SearchFilterBar facets={dataFacets.search.facets} />}
       {isLoading && <p>isLoading...</p>}
+
       {data?.pages?.[0]?.search.hitcount === 0 && <p>Ingen søgeresultat</p>}
       {data?.pages.map(
         (page, i) =>
@@ -169,19 +177,11 @@ const SearchPageLayout = ({ searchQuery }: { searchQuery?: string }) => {
           )
       )}
 
-      <div>
-        <button
-          ref={loadMoreRef}
-          disabled={!hasNextPage || isFetchingNextPage}
-          onClick={() => handleLoadMore()}>
-          {isFetchingNextPage
-            ? "Fetching next page"
-            : hasNextPage
-              ? "Fetch More Data"
-              : "No more data"}
-        </button>
-      </div>
-      <div>{isFetching && !isFetchingNextPage ? "Fetching..." : null}</div>
+      {searchData?.hitcount === 0 && <p>Ingen søgeresultat</p>}
+      {searchData?.works && <div ref={loadMoreRef}>
+        <SearchResults works={searchData.works} />
+      </div>}
+
     </div>
   )
 }

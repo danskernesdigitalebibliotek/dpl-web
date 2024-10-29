@@ -2,11 +2,11 @@
 
 import React, { useState } from "react"
 
-import { SearchFacetsQuery } from "@/lib/graphql/generated/fbi/graphql"
+import { SearchFacetFragment } from "@/lib/graphql/generated/fbi/graphql"
 import SearchFiltersColumn from "./SearchFiltersColumn"
 
 type SearchFilterBarProps = {
-  facets: SearchFacetsQuery["search"]["facets"]
+  facets: SearchFacetFragment[]
 }
 
 const SearchFilterBar = ({ facets }: SearchFilterBarProps) => {

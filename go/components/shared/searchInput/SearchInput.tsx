@@ -4,7 +4,7 @@ import { useRouter, useSearchParams } from "next/navigation"
 import React from "react"
 import { useEffect, useRef } from "react"
 
-import { cn } from "@/lib/utils"
+import { cn } from "@/lib/helpers/helper.cn"
 
 import Icon from "../icon/Icon"
 
@@ -64,7 +64,8 @@ const SearchInput = ({ className, placeholder }: SearchInputProps) => {
       />
       <button
         className="absolute right-[24px] top-[50%] translate-y-[-50%]"
-        onClick={navigateToSearch}>
+        onClick={navigateToSearch}
+        aria-label="Søg">
         <Icon className="h-[32px] w-[32px]" name="search" />
       </button>
     </div>

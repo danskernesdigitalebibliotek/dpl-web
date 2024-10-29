@@ -1,12 +1,12 @@
 import React from "react"
 
-import { SearchWithPaginationQuery } from "@/lib/graphql/generated/fbi/graphql"
+import { WorkTeaserFragment } from "@/lib/graphql/generated/fbi/graphql"
 
 import { isOfWorkTypeCategory } from "./helper"
 import WorkCardAvailabilityItem from "./WorkCardAvailabilityItem"
 
 type WorkCardAvailabilityRowProps = {
-  materialTypes: SearchWithPaginationQuery["search"]["works"][0]["materialTypes"]
+  materialTypes: WorkTeaserFragment["materialTypes"]
 }
 
 const WorkCardAvailabilityRow = ({ materialTypes }: WorkCardAvailabilityRowProps) => {
