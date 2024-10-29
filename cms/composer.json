@@ -335,9 +335,6 @@
             "drupal/jsonlog": {
                 "3251587: Change logging from stdout to stderr": "https://www.drupal.org/files/issues/2021-11-29/jsonlog-change-stdout-to-stderr-3251587-3.patch"
             },
-            "drupal/openapi": {
-                "3313521: OpenAPI security field does not validate": "https://git.drupalcode.org/project/openapi/-/commit/4964cf725242040ddfb0c591b6044ee1fa5912ef.patch"
-            },
             "drupal/openapi_rest": {
                 "3171530 + 3116760: Add support for parameter and response descriptions": "patches/openapi-parameter-response-descriptions-14-3.patch",
                 "3343816: Specification includes disabled resources": "https://git.drupalcode.org/project/openapi_rest/-/commit/6618157334feca93fad1041583375eed660b9085.patch"
