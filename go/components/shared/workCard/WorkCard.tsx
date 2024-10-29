@@ -8,6 +8,7 @@ import { WorkTeaserFragment } from "@/lib/graphql/generated/fbi/graphql"
 import { getRandomContentColorClass } from "@/lib/helpers/colors"
 import { cn } from "@/lib/helpers/helper.cn"
 import { getIsbnsFromWork } from "@/lib/helpers/ids"
+import { useGetV1ProductsIdentifier } from "@/lib/publizon-api/publizon"
 
 import Icon from "../icon/Icon"
 import WorkCardAvailabilityRow from "./WorkCardAvailabilityRow"
@@ -18,7 +19,7 @@ type WorkCardProps = {
 }
 
 const WorkCard = ({ work }: WorkCardProps) => {
-  const { data } = useGetCoverCollection({
+  const { data: dataCovers } = useGetCoverCollection({
     type: "pid",
     identifiers: [getAllWorkPids(work).join(", ")],
     sizes: [
@@ -26,9 +27,19 @@ const WorkCard = ({ work }: WorkCardProps) => {
       "small, small-medium, medium, medium-large, large, original, default" as GetCoverCollectionSizesItem,
     ],
   })
+  const isbns = getIsbnsFromWork(work)
+
+  const { data: dataPublizon } = useGetV1ProductsIdentifier(isbns[0] ?? "", {
+    query: {
+      // Publizon / useGetV1ProductsIdentifier is responsible for online
+      // materials. It requires an ISBN to do lookups.
+      enabled: isbns[0] !== null && isbns[0] !== undefined,
+    },
+  })
+
   const bestRepresentation = work.manifestations.bestRepresentation
   const allPids = [bestRepresentation.pid, ...getAllWorkPids(work)]
-  const coverSrc = getCoverUrls(data, allPids || [], [
+  const coverSrc = getCoverUrls(dataCovers, allPids || [], [
     // TODO: These sizes should be defined in a general global config.
     "default",
     "original",
@@ -42,7 +53,14 @@ const WorkCard = ({ work }: WorkCardProps) => {
   return (
     <div className="mb-4">
       <Link href={`/work/${work.workId}`}>
-        <div key={work.workId} className="rounded-sm bg-background-overlay p-2 md:p-4">
+        <div key={work.workId} className="relative rounded-sm bg-background-overlay p-2 md:p-4">
+          {!!dataPublizon?.product?.costFree && (
+            <div
+              className="bg-content-blue absolute left-2 top-2 rounded-full px-2 py-1 text-typo-tag-sm text-white md:left-4
+                md:top-4">
+              BLÅ
+            </div>
+          )}
           <div
             className="px-auto relative mx-auto mb-3 mt-6 flex aspect-[166/228] w-[calc(100%-76px-4px)] items-center
               rounded-sm md:mb-6 md:mt-9 md:w-[calc(100%-106px)]">
