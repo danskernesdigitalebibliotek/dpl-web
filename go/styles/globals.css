@@ -290,7 +290,7 @@ body > * {
     --chart-5: hsla(27, 87%, 67%, 1);
     --radius: 0.5rem;
   }
-  .dark {
+  .dark-mode {
     --background: hsla(0, 0%, 3.9%, 1);
     --foreground: hsla(0, 0%, 98%, 1);
     --card: hsla(0, 0%, 3.9%, 1);
