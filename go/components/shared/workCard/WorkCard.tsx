@@ -7,6 +7,7 @@ import { GetCoverCollectionSizesItem } from "@/lib/cover-service-api/model"
 import { WorkTeaserFragment } from "@/lib/graphql/generated/fbi/graphql"
 import { getRandomContentColorClass } from "@/lib/helpers/colors"
 import { cn } from "@/lib/helpers/helper.cn"
+import { getIsbnsFromWork } from "@/lib/helpers/ids"
 
 import Icon from "../icon/Icon"
 import WorkCardAvailabilityRow from "./WorkCardAvailabilityRow"
