@@ -148,6 +148,7 @@ const SearchPageLayout = ({ searchQuery }: { searchQuery?: string }) => {
     }
   }, [isInView])
 
+  // TODO: consider finding a better way to control fetching of data without using the useEffects below
   useEffect(() => {
     const page = data?.pages.length || 0
     setCurrentPage(page)
@@ -169,6 +170,7 @@ const SearchPageLayout = ({ searchQuery }: { searchQuery?: string }) => {
   return (
     <div className="content-container">
       <h1 className="mt-[88px] text-typo-heading-2">{`Viser resultater for "${q}" ${data?.pages?.[0]?.search.hitcount ? "(" + data?.pages?.[0]?.search.hitcount + ")" : ""}`}</h1>
+      {/* TODO: add ghost loading and cleanup the code below  */}
       {isLoadingFacets && <p>isLoadingFacets...</p>}
       {!facetData?.length && <p>Ingen filter</p>}
       {facetData && facetData?.length > 0 && <SearchFilterBar facets={dataFacets.search.facets} />}
