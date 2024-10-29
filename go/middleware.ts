@@ -23,7 +23,7 @@ export async function middleware(request: NextRequest, event: NextFetchEvent) {
   // }
 
   if (accessTokenShouldBeRefreshed(session)) {
-    const currentPath = new URL(request.nextUrl.pathname, process.env.APP_URL!).toString()
+    const currentPath = new URL(request.nextUrl.pathname, process.env.NEXT_PUBLIC_APP_URL!).toString()
     const url = getConfig("url.app")
     return NextResponse.redirect(`${url}/auth/token/refresh?redirect=${currentPath}`, {
       headers: response.headers,
