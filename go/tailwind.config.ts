@@ -196,6 +196,7 @@ export const extendedTheme = {
         orange: "var(--content-orange)",
         purple: "var(--content-purple)",
       },
+      "blue-title": "var(--blue-title)",
       // shadcn colors
       card: {
         DEFAULT: "var(--card)",
