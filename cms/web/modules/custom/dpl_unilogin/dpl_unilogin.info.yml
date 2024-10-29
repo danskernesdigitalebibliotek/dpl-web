@@ -1,0 +1,5 @@
+name: 'DPL UniLogin'
+type: module
+description: 'Module containing unilogin configuration'
+package: DPL
+core_version_requirement: ^10 || ^11
