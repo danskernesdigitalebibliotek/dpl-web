@@ -1,18 +1,17 @@
-import { NextResponse } from 'next/server'
-import type { NextFetchEvent, NextRequest } from 'next/server'
-import { accessTokenShouldBeRefreshed, getSession } from './lib/session/session';
+import { NextResponse } from "next/server"
+import type { NextFetchEvent, NextRequest } from "next/server"
+import { accessTokenShouldBeRefreshed, getSession } from "./lib/session/session"
+import getConfig from "./lib/config/config"
 
 export async function middleware(request: NextRequest, event: NextFetchEvent) {
-  const { pathname } = request.nextUrl;
-  const response = NextResponse.next();
+  const { pathname } = request.nextUrl
+  const response = NextResponse.next()
 
   if (pathname.startsWith("/_next") || pathname.startsWith("/auth")) {
-    return response;
+    return response
   }
 
-  const session = await getSession({ request, response });
-
-
+  const session = await getSession({ request, response })
 
   // TODO: Check if we need to destroy the session if the refresh token is expired.
   // const session = await getIronSession<TSessionData>(request, response, sessionOptions);
@@ -24,9 +23,12 @@ export async function middleware(request: NextRequest, event: NextFetchEvent) {
   // }
 
   if (accessTokenShouldBeRefreshed(session)) {
-    const currentPath = new URL(request.nextUrl.pathname, process.env.NEXT_PUBLIC_APP_URL!).toString();
-    return NextResponse.redirect(`${process.env.NEXT_PUBLIC_APP_URL!}/auth/token/refresh?redirect=${currentPath}`, { headers: response.headers });
+    const currentPath = new URL(request.nextUrl.pathname, process.env.APP_URL!).toString()
+    const url = getConfig("url.app")
+    return NextResponse.redirect(`${url}/auth/token/refresh?redirect=${currentPath}`, {
+      headers: response.headers,
+    })
   }
 
-  return response;
+  return response
 }
