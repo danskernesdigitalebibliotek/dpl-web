@@ -4,6 +4,7 @@ import search from "./resolvers/search"
 import serviceDplCms from "./resolvers/service.dpl-cms"
 import serviceFbi from "./resolvers/service.fbi"
 import serviceUnilogin from "./resolvers/service.unilogin"
+import token from "./resolvers/token"
 
 const resolvers = {
   ...app,
@@ -11,6 +12,7 @@ const resolvers = {
   ...serviceFbi,
   ...serviceUnilogin,
   ...search,
+  ...token,
 }
 
 const retrieveValue = (key: keyof typeof resolvers) => {

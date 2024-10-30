@@ -10,7 +10,7 @@ export const fetchData = <TData, TVariables>(
       method: "POST",
       headers: {
         "Content-Type": "application/json",
-        Authorization: `Bearer ${getConfig("service.library-token")}`,
+        Authorization: `Bearer ${getConfig("token.adgangsplatformen.library")}`,
         ...options,
       },
       body: JSON.stringify({

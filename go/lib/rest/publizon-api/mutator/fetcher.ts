@@ -15,7 +15,9 @@ export const fetcher = async <ResponseType>({
   data?: BodyType<unknown>
   signal?: AbortSignal
 }) => {
-  const authHeaders = { Authorization: `Bearer ${getConfig("service.library-token")}` } as object
+  const authHeaders = {
+    Authorization: `Bearer ${getConfig("token.adgangsplatformen.library")}`,
+  } as object
 
   const body = data ? JSON.stringify(data) : null
   const serviceUrl = getRestServiceUrlWithParams({

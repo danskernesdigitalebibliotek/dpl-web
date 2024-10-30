@@ -5,7 +5,7 @@ const serviceFbi = {
     }
   },
   // TODO: This is a temporary solution. We need to fetch the token via a graphql request.
-  "service.library-token": () => {
+  "token.adgangsplatformen.library": () => {
     return process.env.NEXT_PUBLIC_LIBRARY_TOKEN
   },
 }
