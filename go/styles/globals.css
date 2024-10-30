@@ -5,7 +5,7 @@
 :root {
   /* GRID */
   --page-width: 1600px;
-  --grid-edge: 2.5rem; /* 40px */
+  --grid-edge: 1rem; /* 16px */
   --grid-gap-x: 0.75rem; /* 12px */
 
   --space-y: 5rem; /* 80px */

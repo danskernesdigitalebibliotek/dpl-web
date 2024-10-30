@@ -1,5 +1,4 @@
-import { useQuery, UseQueryOptions, useSuspenseQuery, UseSuspenseQueryOptions } from '@tanstack/react-query';
-
+import { useQuery, useSuspenseQuery, UseQueryOptions, UseSuspenseQueryOptions } from '@tanstack/react-query';
 import { fetchData } from '@/lib/graphql/fetchers/fbi.fetcher';
 export type Maybe<T> = T | null;
 export type InputMaybe<T> = Maybe<T>;

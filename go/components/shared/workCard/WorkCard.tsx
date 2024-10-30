@@ -5,12 +5,12 @@ import React from "react"
 import { useGetCoverCollection } from "@/lib/cover-service-api/cover-service"
 import { GetCoverCollectionSizesItem } from "@/lib/cover-service-api/model"
 import { WorkTeaserFragment } from "@/lib/graphql/generated/fbi/graphql"
+import { cn } from "@/lib/helpers/helper.cn"
 import { getRandomContentColorClass } from "@/lib/helpers/helper.colors"
 
 import Icon from "../icon/Icon"
 import WorkCardAvailabilityRow from "./WorkCardAvailabilityRow"
 import { displayCreators, getAllWorkPids, getCoverUrls } from "./helper"
-import { cn } from "@/lib/helpers/helper.cn"
 
 type WorkCardProps = {
   work: WorkTeaserFragment
