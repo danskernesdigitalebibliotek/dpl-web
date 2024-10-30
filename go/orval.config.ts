@@ -5,7 +5,7 @@ export default defineConfig({
     output: {
       mode: "split",
       target: "lib/rest/cover-service-api/generated/cover-service.ts",
-      schemas: "lib/cover-service-api/generated/model",
+      schemas: "lib/rest/cover-service-api/generated/model",
       client: "react-query",
       override: {
         mutator: {

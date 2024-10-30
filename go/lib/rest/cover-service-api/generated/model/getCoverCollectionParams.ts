@@ -8,8 +8,8 @@ The service is provided by [Det Digitale Folkebibliotek](https://detdigitalefolk
 Authentication is done via OAuth2 against auth.dbc.dk. To obtain a valid token follow the instructions here: [Open Platform](https://openplatform.dbc.dk/v3/). To use the "Authorize" option in this tool use your 'client_id' and 'client_secret' and fill in '@agency' (e.g. '@123456') for both username and password.
  * OpenAPI spec version: 2.0
  */
-import type { GetCoverCollectionType } from "./getCoverCollectionType"
 import type { GetCoverCollectionSizesItem } from "./getCoverCollectionSizesItem"
+import type { GetCoverCollectionType } from "./getCoverCollectionType"
 
 export type GetCoverCollectionParams = {
   /**
