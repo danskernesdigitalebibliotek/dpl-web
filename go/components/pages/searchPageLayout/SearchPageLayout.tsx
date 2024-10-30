@@ -7,6 +7,7 @@ import { useSearchParams } from "next/navigation"
 import { useEffect, useRef, useState } from "react"
 
 import { facetDefinitions, mapFacetsToFilters } from "@/components/shared/searchFilters/helper"
+import getConfig from "@/lib/config/config"
 import {
   FacetValue,
   SearchFilters,
@@ -17,39 +18,8 @@ import {
 import SearchFilterBar from "../../shared/searchFilters/SearchFilterBar"
 import SearchResults from "./SearchResults"
 
-// TODO: Add branches though endpoint
-const branchIds = [
-  "775120",
-  "775122",
-  "775144",
-  "775167",
-  "775146",
-  "775168",
-  "751010",
-  "775147",
-  "751032",
-  "751031",
-  "775126",
-  "751030",
-  "775149",
-  "775127",
-  "775160",
-  "775162",
-  "775140",
-  "751009",
-  "751029",
-  "751027",
-  "751026",
-  "751025",
-  "775133",
-  "751024",
-  "775100",
-  "775170",
-  "775150",
-  "775130",
-] as string[]
-
-const SEARCH_RESULTS_LIMIT = 9
+const branchIds = getConfig<`${number}`[]>("search.branch.ids")
+const SEARCH_RESULTS_LIMIT = getConfig<number>("search.item.limit")
 
 export type FilterItemTerm = Omit<FacetValue, "__typename">
 
