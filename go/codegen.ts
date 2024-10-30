@@ -10,7 +10,7 @@ const config: CodegenConfig = {
       schema: [
         {
           // TODO: Make this configurable
-          "https://fbi-api.dbc.dk/ereolgo/graphql": {
+          "https://temp.fbi-api.dbc.dk/ereolgo/graphql": {
             headers: {
               Authorization: `Bearer ${getConfig("service.fbi.graphql.endpoint")}`,
             },

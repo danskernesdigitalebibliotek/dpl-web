@@ -1,12 +1,13 @@
-import "@/styles/globals.css"
-
 import type { Metadata } from "next"
 import localFont from "next/font/local"
 
 import Footer from "@/components/global/footer/Footer"
+import GridHelper from "@/components/global/gridHelper/GridHelper"
 import Header from "@/components/global/header/Header"
 import Theme from "@/components/global/theme/Theme"
+import { getEnvironment } from "@/lib/helpers/helper.env"
 import ReactQueryProvider from "@/lib/providers/ReactQueryProvider"
+import "@/styles/globals.css"
 
 const GTFlexa = localFont({
   src: [
@@ -36,6 +37,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={`${GTFlexa.variable} antialiased`}>
+        {getEnvironment() === "development" && <GridHelper />}
         <Theme>
           <ReactQueryProvider>
             <Header />

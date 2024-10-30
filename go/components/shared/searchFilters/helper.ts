@@ -1,30 +1,30 @@
 import { AppRouterInstance } from "next/dist/shared/lib/app-router-context.shared-runtime"
 
-import { FacetField, SearchFilters } from "@/lib/graphql/generated/fbi/graphql"
+import { FacetFieldEnum, SearchFiltersInput } from "@/lib/graphql/generated/fbi/graphql"
 
 export const facetDefinitions = [
-  "materialTypesGeneral",
-  "mainLanguages",
-  "age",
-  "lix",
-  "subjects",
-] as FacetField[]
+  "MATERIALTYPESGENERAL",
+  "MAINLANGUAGES",
+  "AGE",
+  "LIX",
+  "SUBJECTS",
+] as FacetFieldEnum[]
 
 export const mapFacetsToFilters = {
-  materialTypesGeneral: "materialTypesGeneral",
-  mainLanguages: "mainLanguages",
-  age: "age",
-  lix: "lixRange",
-  subjects: "subjects",
-} as Record<FacetField, keyof SearchFilters>
+  MATERIALTYPESGENERAL: "materialTypesGeneral",
+  MAINLANGUAGES: "mainLanguages",
+  AGE: "age",
+  LIX: "lixRange",
+  SUBJECTS: "subjects",
+} as Record<FacetFieldEnum, keyof SearchFiltersInput>
 
 export const mapFilterNameToTranslation: Partial<Record<keyof typeof mapFacetsToFilters, string>> =
   {
-    materialTypesGeneral: "Type",
-    mainLanguages: "Sprog",
-    age: "Alder",
-    lix: "Lix",
-    subjects: "Emne",
+    MATERIALTYPESGENERAL: "Type",
+    MAINLANGUAGES: "Sprog",
+    AGE: "Alder",
+    LIX: "Lix",
+    SUBJECTS: "Emne",
   }
 
 export const toggleFilter = (filterName: string, value: string, router: AppRouterInstance) => {

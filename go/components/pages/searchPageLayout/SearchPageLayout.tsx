@@ -10,7 +10,7 @@ import { facetDefinitions, mapFacetsToFilters } from "@/components/shared/search
 import getConfig from "@/lib/config/config"
 import {
   FacetValue,
-  SearchFilters,
+  SearchFiltersInput,
   useSearchFacetsQuery,
   useSearchWithPaginationQuery,
 } from "@/lib/graphql/generated/fbi/graphql"
@@ -38,12 +38,12 @@ const SearchPageLayout = ({ searchQuery }: { searchQuery?: string }) => {
   const q = searchQuery || searchParams.get("q") || ""
   const [currentQueryString, setCurrentQueryString] = useState("")
   const [currentPage, setCurrentPage] = useState(0)
-  const [facetFilters, setFacetFilters] = useState<SearchFilters>({})
+  const [facetFilters, setFacetFilters] = useState<SearchFiltersInput>({})
   const loadMoreRef = useRef(null)
   const isInView = useInView(loadMoreRef)
 
   const facetsForSearchRequest = facetDefinitions.reduce(
-    (acc: SearchFilters, facetDefinition) => {
+    (acc: SearchFiltersInput, facetDefinition) => {
       const values = searchParams.getAll(facetDefinition)
       if (values.length > 0) {
         return {
@@ -53,10 +53,14 @@ const SearchPageLayout = ({ searchQuery }: { searchQuery?: string }) => {
       }
       return acc
     },
-    {} as { [key: string]: keyof SearchFilters[] }
+    {} as { [key: string]: keyof SearchFiltersInput[] }
   )
 
-  const { data, fetchNextPage, isLoading } = useInfiniteQuery({
+  const {
+    data,
+    fetchNextPage,
+    isLoading: isLoadingResults,
+  } = useInfiniteQuery({
     queryKey: useSearchWithPaginationQuery.getKey({
       q: { all: currentQueryString },
       offset: 0,
@@ -137,17 +141,18 @@ const SearchPageLayout = ({ searchQuery }: { searchQuery?: string }) => {
 
   const facetData = dataFacets?.search?.facets
   const hitcount = data?.pages?.[0]?.search.hitcount ?? 0
+  const isNoFilters = !!(!isLoadingFacets && !facetData?.length)
+  const isNoSearchResult = !!(!isLoadingResults && hitcount === 0)
 
   return (
     <div className="content-container">
       <h1 className="mt-[88px] text-typo-heading-2">{`Viser resultater for "${q}" ${hitcount ? "(" + hitcount + ")" : ""}`}</h1>
       {/* TODO: add ghost loading and cleanup the code below  */}
       {isLoadingFacets && <p>isLoadingFacets...</p>}
-      {!facetData?.length && <p>Ingen filter</p>}
+      {isNoFilters && <p>Ingen filter</p>}
       {facetData && facetData?.length > 0 && <SearchFilterBar facets={dataFacets.search.facets} />}
-      {isLoading && <p>isLoading...</p>}
-
-      {hitcount === 0 && <p>Ingen søgeresultat</p>}
+      {isLoadingResults && <p>isLoading...</p>}
+      {isNoSearchResult && <p>Ingen søgeresultat</p>}
       <div className="mb-space-y flex flex-col gap-y-[calc(var(--grid-gap-x)*2)]">
         {data?.pages.map(
           (page, i) =>
