@@ -7,8 +7,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2024-10-29 15:26+0100\n"
-"PO-Revision-Date: 2024-10-29 15:26+0100\n"
+"POT-Creation-Date: 2024-10-30 13:41+0100\n"
+"PO-Revision-Date: 2024-10-30 13:41+0100\n"
 "Last-Translator: NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
 "MIME-Version: 1.0\n"
@@ -21151,6 +21151,10 @@ msgctxt "system.action.user_add_role_action.external_system:label"
 msgid "Add the External system role to the selected user(s)"
 msgstr ""
 
+msgctxt "system.action.user_add_role_action.graphql_consumer:label"
+msgid "Add the GraphQl consumer role to the selected user(s)"
+msgstr ""
+
 msgctxt "system.action.user_block_user_action:label"
 msgid "Block the selected user(s)"
 msgstr ""
@@ -21161,6 +21165,10 @@ msgstr ""
 
 msgctxt "system.action.user_remove_role_action.external_system:label"
 msgid "Remove the External system role from the selected user(s)"
+msgstr ""
+
+msgctxt "system.action.user_remove_role_action.graphql_consumer:label"
+msgid "Remove the GraphQl consumer role from the selected user(s)"
 msgstr ""
 
 msgctxt "system.action.user_unblock_user_action:label"
@@ -21479,6 +21487,10 @@ msgstr ""
 
 msgctxt "user.role.external_system:label"
 msgid "External system"
+msgstr ""
+
+msgctxt "user.role.graphql_consumer:label"
+msgid "GraphQl consumer"
 msgstr ""
 
 msgctxt "user.role.local_administrator:label"
