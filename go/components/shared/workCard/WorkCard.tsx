@@ -64,8 +64,8 @@ const WorkCard = ({ work }: WorkCardProps) => {
             </Badge>
           )}
           <div
-            className="px-auto relative mx-auto mb-3 mt-6 flex aspect-[166/228] w-[calc(100%-76px-4px)] items-center
-              rounded-sm md:mb-6 md:mt-9 md:w-[calc(100%-106px)]">
+            className="relative mx-auto mb-3 mt-6 flex aspect-[166/228] w-[calc(100%-76px-4px)] items-center rounded-sm
+              md:mb-6 md:mt-9 md:w-[calc(100%-106px)]">
             {!!coverSrc?.length && coverSrc.length > 0 && (
               <Image
                 src={coverSrc[0]}
