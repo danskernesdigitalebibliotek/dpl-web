@@ -131,8 +131,6 @@ const SearchPageLayout = ({ searchQuery }: { searchQuery?: string }) => {
     }
   )
 
-  const facetData = dataFacets?.search?.facets
-
   const handleLoadMore = () => {
     const totalPages = Math.ceil((data?.pages?.[0]?.search.hitcount ?? 0) / SEARCH_RESULTS_LIMIT)
 
@@ -167,16 +165,19 @@ const SearchPageLayout = ({ searchQuery }: { searchQuery?: string }) => {
     }
   }, [facetsForSearchRequest])
 
+  const facetData = dataFacets?.search?.facets
+  const hitcount = data?.pages?.[0]?.search.hitcount ?? 0
+
   return (
     <div className="content-container">
-      <h1 className="mt-[88px] text-typo-heading-2">{`Viser resultater for "${q}" ${data?.pages?.[0]?.search.hitcount ? "(" + data?.pages?.[0]?.search.hitcount + ")" : ""}`}</h1>
+      <h1 className="mt-[88px] text-typo-heading-2">{`Viser resultater for "${q}" ${hitcount ? "(" + hitcount + ")" : ""}`}</h1>
       {/* TODO: add ghost loading and cleanup the code below  */}
       {isLoadingFacets && <p>isLoadingFacets...</p>}
       {!facetData?.length && <p>Ingen filter</p>}
       {facetData && facetData?.length > 0 && <SearchFilterBar facets={dataFacets.search.facets} />}
       {isLoading && <p>isLoading...</p>}
 
-      {data?.pages?.[0]?.search.hitcount === 0 && <p>Ingen søgeresultat</p>}
+      {hitcount === 0 && <p>Ingen søgeresultat</p>}
       <div className="mb-space-y flex flex-col gap-y-[calc(var(--grid-gap-x)*2)]">
         {data?.pages.map(
           (page, i) =>

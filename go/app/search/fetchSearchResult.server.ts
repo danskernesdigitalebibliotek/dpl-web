@@ -11,14 +11,14 @@ const prefetchSearchResult = async (q: string, queryClient: QueryClient) => {
     queryKey: useSearchWithPaginationQuery.getKey({
       q: { all: q },
       offset: 0,
-      // TODO: This should match the query on search page
-      limit: 10,
+      // TODO: This should match the query on search page and be configurable.
+      limit: 9,
     }),
     queryFn: useSearchWithPaginationQuery.fetcher({
       q: { all: q },
       offset: 0,
-      // TODO: This should match the query on search page
-      limit: 10,
+      // TODO: This should match the query on search page and be configurable.
+      limit: 9,
     }),
   })
 
