@@ -46,6 +46,7 @@ module:
   dpl_fees: 0
   dpl_filter_paragraphs: 0
   dpl_footer: 0
+  dpl_graphql: 0
   dpl_instant_loan: 0
   dpl_library_agency: 0
   dpl_library_token: 0
