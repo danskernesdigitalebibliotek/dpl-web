@@ -1,3 +1,5 @@
+import getConfig from "@/lib/config/config"
+
 import { getRestServiceUrlWithParams } from "../../../fetchers/helper"
 
 export const fetcher = async <ResponseType>({
@@ -13,7 +15,7 @@ export const fetcher = async <ResponseType>({
   signal?: AbortSignal
 }) => {
   const additionalHeaders = data?.headers === "object" ? (data?.headers as unknown as object) : {}
-  const authHeaders = { Authorization: `Bearer ${process.env.NEXT_PUBLIC_LIBRARY_TOKEN}` } as object
+  const authHeaders = { Authorization: `Bearer ${getConfig("service.library-token")}` } as object
 
   const headers = {
     ...authHeaders,

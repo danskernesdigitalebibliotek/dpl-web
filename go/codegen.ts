@@ -1,5 +1,7 @@
 import type { CodegenConfig } from "@graphql-codegen/cli"
 
+import getConfig from "./lib/config/config"
+
 const config: CodegenConfig = {
   overwrite: true,
   generates: {
@@ -10,7 +12,7 @@ const config: CodegenConfig = {
           // TODO: Make this configurable
           "https://fbi-api.dbc.dk/ereolgo/graphql": {
             headers: {
-              Authorization: `Bearer ${process.env.NEXT_PUBLIC_LIBRARY_TOKEN ?? ""}`,
+              Authorization: `Bearer ${getConfig("service.fbi.graphql.endpoint")}`,
             },
           },
         },
