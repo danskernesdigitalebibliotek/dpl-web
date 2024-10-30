@@ -20,6 +20,8 @@ import type {
   UseQueryResult,
 } from "@tanstack/react-query"
 
+import { fetcher } from "../mutator/fetcher"
+import type { BodyType, ErrorType } from "../mutator/fetcher"
 import type {
   ApiResult,
   ChecklistResult,
@@ -37,12 +39,10 @@ import type {
   ReservationInput,
   ReservationListResult,
 } from "./model"
-import { fetcher } from "./mutator/fetcher"
-import type { BodyType, ErrorType } from "./mutator/fetcher"
 
 /**
  * Sample **request**:
-            
+
     GET /friendly
     {
         "name": "Some name"

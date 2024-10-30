@@ -4,12 +4,12 @@ export default defineConfig({
   coverService: {
     output: {
       mode: "split",
-      target: "lib/cover-service-api/cover-service.ts",
-      schemas: "lib/cover-service-api/model",
+      target: "lib/rest/cover-service-api/generated/cover-service.ts",
+      schemas: "lib/cover-service-api/generated/model",
       client: "react-query",
       override: {
         mutator: {
-          path: "lib/cover-service-api/mutator/fetcher.ts",
+          path: "lib/rest/cover-service-api/mutator/fetcher.ts",
           name: "fetcher",
         },
         query: {
@@ -28,12 +28,12 @@ export default defineConfig({
   publizonAdapter: {
     output: {
       mode: "split",
-      target: "lib/publizon-api/publizon.ts",
-      schemas: "lib/publizon-api/model",
+      target: "lib/rest/publizon-api/generated/publizon.ts",
+      schemas: "lib/rest/publizon-api/generated/model",
       client: "react-query",
       override: {
         mutator: {
-          path: "lib/publizon-api/mutator/fetcher.ts",
+          path: "lib/rest/publizon-api/mutator/fetcher.ts",
           name: "fetcher",
         },
         query: {
@@ -50,7 +50,7 @@ export default defineConfig({
       prettier: true,
     },
     input: {
-      target: "lib/publizon-api/publizon-adapter.yaml",
+      target: "lib/rest/publizon-api/publizon-adapter.yaml",
       converterOptions: {
         indent: 2,
       },
