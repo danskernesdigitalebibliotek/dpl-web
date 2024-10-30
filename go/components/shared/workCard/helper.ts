@@ -1,11 +1,10 @@
 import { flatten } from "lodash"
 
 import { SearchWithPaginationQuery, WorkTeaserFragment } from "@/lib/graphql/generated/fbi/graphql"
+import { GeneralMaterialTypeCode } from "@/lib/graphql/generated/fbi/graphql"
 import { filterFalsyValuesFromArray } from "@/lib/helpers/arrays"
-
-import { GeneralMaterialTypeCode } from "./../../../lib/graphql/generated/fbi/graphql"
-import { Cover } from "./../../../lib/rest/cover-service-api/generated/model"
-import { CoverImageUrls } from "./../../../lib/rest/cover-service-api/generated/model/coverImageUrls"
+import { Cover } from "@/lib/rest/cover-service-api/generated/model"
+import { CoverImageUrls } from "@/lib/rest/cover-service-api/generated/model/coverImageUrls"
 
 export const displayCreators = (
   creators: SearchWithPaginationQuery["search"]["works"][0]["creators"],
