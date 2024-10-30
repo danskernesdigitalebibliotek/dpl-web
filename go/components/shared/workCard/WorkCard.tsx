@@ -59,7 +59,7 @@ const WorkCard = ({ work }: WorkCardProps) => {
       <Link href={`/work/${work.workId}`}>
         <div key={work.workId} className="relative rounded-sm bg-background-overlay p-2 md:p-4">
           {!!dataPublizon?.product?.costFree && (
-            <Badge variant={"blue"} className="absolute left-2 md:left-4 md:top-4">
+            <Badge variant={"blue-title"} className="absolute left-2 md:left-4 md:top-4">
               BLÅ
             </Badge>
           )}
