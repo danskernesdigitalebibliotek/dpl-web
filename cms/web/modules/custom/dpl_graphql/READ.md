@@ -16,6 +16,6 @@ handling other areas of the application.
 * Add a new GraphQL/SchemaExtension plugin to your module.
 * Your SchemaType plugin should define include 2 functions:
   * getTypes() - Should return an array defining your new Type and it's fields.
-  * getExtensions() - This is where you add your new Type to an already existing Schema.
+  * getExtensions() - Should add your new Type to an already existing Schema.
 * Your SchemaExtension plugin should include resolvers for your new Type.
   * Make sure to add resolvers that pass the relevant data to your new Type.

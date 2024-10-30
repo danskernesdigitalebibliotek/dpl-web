@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Drupal\dpl_login\Plugin\GraphQLCompose\SchemaType;
+namespace Drupal\dpl_unilogin\Plugin\GraphQLCompose\SchemaType;
 
 use Drupal\graphql_compose\Plugin\GraphQLCompose\GraphQLComposeSchemaTypeBase;
 use GraphQL\Type\Definition\ObjectType;
@@ -12,10 +12,10 @@ use GraphQL\Type\Definition\Type;
  * {@inheritdoc}
  *
  * @GraphQLComposeSchemaType(
- *   id = "DplGoUniloginConfiguration",
+ *   id = "UniloginConfiguration",
  * )
  */
-class DplGoUniloginConfigurationType extends GraphQLComposeSchemaTypeBase {
+class UniloginConfigurationType extends GraphQLComposeSchemaTypeBase {
 
   /**
    * {@inheritdoc}
@@ -38,18 +38,15 @@ class DplGoUniloginConfigurationType extends GraphQLComposeSchemaTypeBase {
   }
 
   /**
-   * {@inheritdoc}
+   * {@inheritDoc}
    */
   public function getExtensions(): array {
     $extensions = parent::getExtensions();
 
     $extensions[] = new ObjectType([
-      'name' => 'Query',
-      'fields' => fn () => [
-        'dplGoUniloginConfiguration' => [
-          'type' => Type::nonNull(static::type($this->getPluginId())),
-          'description' => (string) $this->t('List of DPL-Go Unilogin configuration.'),
-        ],
+      'name' => 'DplConfiguration',
+      'fields' => fn() => [
+        'unilogin' => static::type($this->getPluginId()),
       ],
     ]);
 

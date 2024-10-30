@@ -1,14 +1,14 @@
 <?php
 
-namespace Drupal\dpl_login\Plugin\GraphQL\SchemaExtension;
+namespace Drupal\dpl_unilogin\Plugin\GraphQL\SchemaExtension;
 
-use Drupal\config_pages\ConfigPagesLoaderServiceInterface;
 use Drupal\Core\Config\ConfigFactoryInterface;
 use Drupal\Core\Entity\EntityFieldManagerInterface;
 use Drupal\Core\Entity\EntityTypeManagerInterface;
 use Drupal\Core\Extension\ModuleHandlerInterface;
 use Drupal\Core\Language\LanguageManagerInterface;
 use Drupal\Core\Plugin\ContainerFactoryPluginInterface;
+use Drupal\dpl_unilogin\UniloginConfiguration;
 use Drupal\graphql\GraphQL\ResolverBuilder;
 use Drupal\graphql\GraphQL\ResolverRegistryInterface;
 use Drupal\graphql_compose\Plugin\GraphQL\SchemaExtension\ResolverOnlySchemaExtensionPluginBase;
@@ -18,26 +18,19 @@ use Drupal\graphql_compose\Plugin\GraphQLComposeSchemaTypeManager;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
 /**
- * Dpl-Go Unilogin configuration GraphQL schema extension.
+ * Unilogin configuration GraphQL schema extension.
  *
  * @SchemaExtension(
- *   id = "dpl_go_unilogin_configuration",
- *   name = "DPL-Go Unilogin Configuration",
- *   description = @Translation("DPL-Go Unilogin configuration schema extensions for GraphQL Compose."),
+ *   id = "unilogin_configuration",
+ *   name = "Unilogin Configuration",
+ *   description = @Translation("Unilogin configuration schema extensions for GraphQL Compose."),
  *   schema = "graphql_compose",
  * )
  */
-class DplGoUniloginConfigurationSchemaExtension extends ResolverOnlySchemaExtensionPluginBase implements ContainerFactoryPluginInterface {
+class UniloginConfigurationSchemaExtension extends ResolverOnlySchemaExtensionPluginBase implements ContainerFactoryPluginInterface {
 
   /**
-   * Drupal\config_pages\ConfigPagesInterface.
-   *
-   * @var \Drupal\config_pages\ConfigPagesInterface
-   */
-  protected $configPagesLoader;
-
-  /**
-   * DplGoUniloginConfigurationSchemaExtension constructor.
+   * UniloginConfigurationSchemaExtension constructor.
    *
    * @param array $configuration
    *   The plugin configuration array.
@@ -61,13 +54,13 @@ class DplGoUniloginConfigurationSchemaExtension extends ResolverOnlySchemaExtens
    *   The language manager service.
    * @param \Drupal\Core\Extension\ModuleHandlerInterface $moduleHandler
    *   The module handler service.
-   * @param \Drupal\config_pages\ConfigPagesLoaderServiceInterface $configPagesLoader
-   *   The ConfigPages loader service.
+   * @param \Drupal\dpl_unilogin\UniloginConfiguration $uniloginConfiguration
+   *   Unilogin configuration.
    */
   public function __construct(
     array $configuration,
     $pluginId,
-    array $pluginDefinition,
+    $pluginDefinition,
     protected ConfigFactoryInterface $configFactory,
     protected EntityFieldManagerInterface $entityFieldManager,
     protected EntityTypeManagerInterface $entityTypeManager,
@@ -76,7 +69,7 @@ class DplGoUniloginConfigurationSchemaExtension extends ResolverOnlySchemaExtens
     protected GraphQLComposeSchemaTypeManager $gqlSchemaTypeManager,
     protected LanguageManagerInterface $languageManager,
     protected ModuleHandlerInterface $moduleHandler,
-    ConfigPagesLoaderServiceInterface $configPagesLoader,
+    private UniloginConfiguration $uniloginConfiguration,
   ) {
     parent::__construct(
       $configuration,
@@ -91,7 +84,7 @@ class DplGoUniloginConfigurationSchemaExtension extends ResolverOnlySchemaExtens
       $languageManager,
       $moduleHandler
     );
-    $this->configPagesLoader = $configPagesLoader;
+    $this->configuration = $configuration;
   }
 
   /**
@@ -110,7 +103,7 @@ class DplGoUniloginConfigurationSchemaExtension extends ResolverOnlySchemaExtens
       $container->get('graphql_compose.schema_type_manager'),
       $container->get('language_manager'),
       $container->get('module_handler'),
-      $container->get('config_pages.loader')
+      $container->get('dpl_unilogin.settings')
     );
   }
 
@@ -119,28 +112,34 @@ class DplGoUniloginConfigurationSchemaExtension extends ResolverOnlySchemaExtens
    */
   public function registerResolvers(ResolverRegistryInterface $registry) {
 
-    $unilogin_configuration = $this->configPagesLoader->load('unilogin_configuration');
-    if (!$unilogin_configuration) {
-      \Drupal::logger('dpl_go_unilogin')->error('UniLogin configuration config not found.');
-
-    }
-    else {
-      $unilogin_api_endpoint = $unilogin_configuration->get('field_unilogin_api_endpoint')->value;
-      $unilogin_api_wellknown_endpoint = $unilogin_configuration->get('field_unilogin_api_wellknown_end')->value;
-      $unilogin_client_id = $unilogin_configuration->get('field_unilogin_client_id')->value;
-      $unilogin_client_secret = $unilogin_configuration->get('field_unilogin_client_secret')->value;
-    }
+    $unilogin_api_endpoint = $this->uniloginConfiguration->getUniloginApiEndpoint();
+    $unilogin_api_wellknown_endpoint = $this->uniloginConfiguration->getUniloginApiWellknownEndpoint();
+    $unilogin_client_id = $this->uniloginConfiguration->getUniloginApiClientId();
+    $unilogin_client_secret = $this->uniloginConfiguration->getUniloginApiClientSecret();
 
     $builder = new ResolverBuilder();
 
     $registry->addFieldResolver(
-      type: 'Query',
-      field: 'dplGoUniloginConfiguration',
+      type: 'DplConfiguration',
+      field: 'unilogin',
       resolver: $builder->callback(fn() => [
-        'unilogin_api_url' => isset($unilogin_api_endpoint) ?? '',
-        'unilogin_api_wellknown_url' => isset($unilogin_api_wellknown_endpoint) ?? '',
-        'unilogin_api_client_id' => isset($unilogin_client_id) ?? '',
-        'unilogin_api_client_secret' => isset($unilogin_client_secret) ?? '',
+        'unilogin_api_url' => $unilogin_api_endpoint,
+        'unilogin_api_wellknown_url' => $unilogin_api_wellknown_endpoint,
+        'unilogin_api_client_id' => $unilogin_client_id,
+        'unilogin_api_client_secret' => $unilogin_client_secret,
+      ])
+    );
+
+    $registry->addFieldResolver(
+      type: 'Query',
+      field: 'dplConfiguration',
+      resolver: $builder->callback(fn() => [
+        'unilogin' => [
+          'unilogin_api_url' => $unilogin_api_endpoint,
+          'unilogin_api_wellknown_url' => $unilogin_api_wellknown_endpoint,
+          'unilogin_api_client_id' => $unilogin_client_id,
+          'unilogin_api_client_secret' => $unilogin_client_secret,
+        ],
       ])
     );
   }
