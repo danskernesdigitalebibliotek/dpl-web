@@ -2,12 +2,15 @@ import Image from "next/image"
 import Link from "next/link"
 import React from "react"
 
-import { useGetCoverCollection } from "@/lib/cover-service-api/cover-service"
-import { GetCoverCollectionSizesItem } from "@/lib/cover-service-api/model"
 import { WorkTeaserFragment } from "@/lib/graphql/generated/fbi/graphql"
+import { getRandomContentColorClass } from "@/lib/helpers/colors"
 import { cn } from "@/lib/helpers/helper.cn"
-import { getRandomContentColorClass } from "@/lib/helpers/helper.colors"
+import { getIsbnsFromWork } from "@/lib/helpers/ids"
+import { useGetCoverCollection } from "@/lib/rest/cover-service-api/generated/cover-service"
+import { GetCoverCollectionSizesItem } from "@/lib/rest/cover-service-api/generated/model"
+import { useGetV1ProductsIdentifier } from "@/lib/rest/publizon-api/generated/publizon"
 
+import { Badge } from "../badge/Badge"
 import Icon from "../icon/Icon"
 import WorkCardAvailabilityRow from "./WorkCardAvailabilityRow"
 import { displayCreators, getAllWorkPids, getCoverUrls } from "./helper"
@@ -17,7 +20,7 @@ type WorkCardProps = {
 }
 
 const WorkCard = ({ work }: WorkCardProps) => {
-  const { data } = useGetCoverCollection({
+  const { data: dataCovers } = useGetCoverCollection({
     type: "pid",
     identifiers: [getAllWorkPids(work).join(", ")],
     sizes: [
@@ -25,9 +28,22 @@ const WorkCard = ({ work }: WorkCardProps) => {
       "small, small-medium, medium, medium-large, large, original, default" as GetCoverCollectionSizesItem,
     ],
   })
+  const isbns = getIsbnsFromWork(work)
+  const shouldQueryBeEnabled = () => {
+    return isbns && isbns.length > 0
+  }
+
+  const { data: dataPublizon } = useGetV1ProductsIdentifier(isbns[0] ?? "", {
+    query: {
+      // Publizon / useGetV1ProductsIdentifier is responsible for online
+      // materials. It requires an ISBN to do lookups.
+      enabled: shouldQueryBeEnabled(),
+    },
+  })
+
   const bestRepresentation = work.manifestations.bestRepresentation
   const allPids = [bestRepresentation.pid, ...getAllWorkPids(work)]
-  const coverSrc = getCoverUrls(data, allPids || [], [
+  const coverSrc = getCoverUrls(dataCovers, allPids || [], [
     // TODO: These sizes should be defined in a general global config.
     "default",
     "original",
@@ -41,10 +57,15 @@ const WorkCard = ({ work }: WorkCardProps) => {
   return (
     <div className="mb-4">
       <Link href={`/work/${work.workId}`}>
-        <div key={work.workId} className="rounded-sm bg-background-overlay p-2 md:p-4">
+        <div key={work.workId} className="relative rounded-sm bg-background-overlay p-2 md:p-4">
+          {!!dataPublizon?.product?.costFree && (
+            <Badge variant={"blue-title"} className="absolute left-2 md:left-4 md:top-4">
+              BLÅ
+            </Badge>
+          )}
           <div
-            className="px-auto relative mx-auto mb-3 mt-6 flex aspect-[166/228] w-[calc(100%-76px-4px)] items-center
-              rounded-sm md:mb-6 md:mt-9 md:w-[calc(100%-106px)]">
+            className="relative mx-auto mb-3 mt-6 flex aspect-[166/228] w-[calc(100%-76px-4px)] items-center rounded-sm
+              md:mb-6 md:mt-9 md:w-[calc(100%-106px)]">
             {!!coverSrc?.length && coverSrc.length > 0 && (
               <Image
                 src={coverSrc[0]}
@@ -52,7 +73,10 @@ const WorkCard = ({ work }: WorkCardProps) => {
                 layout="responsive"
                 width={166}
                 height={228}
-                className="overflow-hidden rounded-sm shadow-coverPicture"
+                className={cn(
+                  "overflow-hidden rounded-sm shadow-coverPicture",
+                  getRandomContentColorClass()
+                )}
               />
             )}
             {(!coverSrc?.length || coverSrc.length === 0) && (

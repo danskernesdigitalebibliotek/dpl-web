@@ -18,9 +18,10 @@ import type {
   UseQueryOptions,
   UseQueryResult,
 } from "@tanstack/react-query"
+
+import { fetcher } from "../mutator/fetcher"
+import type { ErrorType } from "../mutator/fetcher"
 import type { Cover, GetCoverCollectionParams } from "./model"
-import { fetcher } from "./mutator/fetcher"
-import type { ErrorType } from "./mutator/fetcher"
 
 /**
  * Get covers by identifier in specific image format(s), specific image size(s) and with or without generic covers.

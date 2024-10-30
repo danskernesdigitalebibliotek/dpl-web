@@ -55,7 +55,7 @@ const SearchInput = ({ className, placeholder }: SearchInputProps) => {
           `text-sm file:text-sm flex h-[50px] w-full rounded-base bg-background-overlay px-5
           text-typo-subtitle-lg shadow-sm transition-colors file:border-0 file:bg-transparent file:font-medium
           file:text-foreground placeholder:text-muted-foreground focus-visible:outline-none
-          focus-visible:ring-1 focus-visible:ring-ring disabled:cursor-not-allowed disabled:opacity-50 lg:h-20`,
+          focus-visible:ring-2 focus-visible:ring-ring disabled:cursor-not-allowed disabled:opacity-50 lg:h-20`,
           className
         )}
         value={queryString}

@@ -1,8 +1,8 @@
 export const contentColorClasses = [
-  "bg-accents-pink",
-  "bg-accents-purple",
-  "bg-accents-orange",
-  "bg-accents-blue",
+  "bg-content-pink",
+  "bg-content-purple",
+  "bg-content-orange",
+  "bg-content-blue",
 ] as const
 
 export const getRandomContentColorClass = () => {

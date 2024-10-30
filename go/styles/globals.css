@@ -76,6 +76,8 @@
   --content-orange: hsla(34, 100%, 72%, 1);
   --content-blue: hsla(202, 100%, 72%, 1);
 
+  --blue-title: hsla(202, 100%, 60%, 1);
+
   /* CONTENT COLORS */
   --content-pink-100: 320 100% 91%;
   --content-pink-200: 317 100% 73%;
@@ -290,7 +292,7 @@ body > * {
     --chart-5: hsla(27, 87%, 67%, 1);
     --radius: 0.5rem;
   }
-  .dark {
+  .dark-mode {
     --background: hsla(0, 0%, 3.9%, 1);
     --foreground: hsla(0, 0%, 98%, 1);
     --card: hsla(0, 0%, 3.9%, 1);
@@ -305,7 +307,7 @@ body > * {
     --muted-foreground: hsla(0, 0%, 63.9%, 1);
     --accent: hsla(0, 0%, 14.9%, 1);
     --accent-foreground: hsla(0, 0%, 98%, 1);
-    --destructive: hsla(0, 62.8%, 30.6%, 1);
+    --destructive: hsla(0, 84.2%, 60.2%, 1);
     --destructive-foreground: hsla(0, 0%, 98%, 1);
     --border: hsla(0, 0%, 14.9%, 1);
     --input: hsla(0, 0%, 14.9%, 1);
