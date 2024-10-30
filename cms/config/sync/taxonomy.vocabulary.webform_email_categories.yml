@@ -5,6 +5,7 @@ dependencies:
   module:
     - flat_taxonomy
     - scheduler
+    - taxonomy_unique
 third_party_settings:
   scheduler:
     expand_fieldset: when_required
@@ -21,6 +22,9 @@ third_party_settings:
     unpublish_revision: false
   flat_taxonomy:
     flat: 1
+  taxonomy_unique:
+    enabled: true
+    message: 'Term %term already exists in vocabulary %vocabulary.'
 name: 'Webform email categories'
 vid: webform_email_categories
 description: 'List of email categories used for sending webform submissions. Each category is associated with an email address.'

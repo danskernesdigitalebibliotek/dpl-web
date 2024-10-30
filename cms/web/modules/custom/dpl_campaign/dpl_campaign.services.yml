@@ -15,3 +15,7 @@ services:
     class: Symfony\Component\Serializer\Normalizer\ArrayDenormalizer
   dpl_campaign.extractor.phpdoc:
     class: Symfony\Component\PropertyInfo\Extractor\PhpDocExtractor
+  dpl_campaign.route_subscriber:
+    class: Drupal\dpl_campaign\EventSubscriber\ApiRouteSubscriber
+    tags:
+      - { name: event_subscriber }

@@ -42,7 +42,7 @@ class DplConfigurationSchemaExtension extends ResolverOnlySchemaExtensionPluginB
   /**
    * {@inheritdoc}
    */
-  public function registerResolvers(ResolverRegistryInterface $registry) {
+  public function registerResolvers(ResolverRegistryInterface $registry): void {
 
     $builder = new ResolverBuilder();
 

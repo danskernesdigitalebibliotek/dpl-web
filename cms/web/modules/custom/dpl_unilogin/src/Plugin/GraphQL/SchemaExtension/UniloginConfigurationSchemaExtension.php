@@ -110,7 +110,7 @@ class UniloginConfigurationSchemaExtension extends ResolverOnlySchemaExtensionPl
   /**
    * {@inheritdoc}
    */
-  public function registerResolvers(ResolverRegistryInterface $registry) {
+  public function registerResolvers(ResolverRegistryInterface $registry): void {
 
     $unilogin_api_endpoint = $this->uniloginConfiguration->getUniloginApiEndpoint();
     $unilogin_api_wellknown_endpoint = $this->uniloginConfiguration->getUniloginApiWellknownEndpoint();
