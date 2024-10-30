@@ -1,7 +1,7 @@
 import { flatten } from "lodash"
 
 import {
-  IdentifierType,
+  IdentifierTypeEnum,
   ManifestationIdentifiersFragment,
   WorkTeaserFragment,
 } from "../graphql/generated/fbi/graphql"
@@ -9,7 +9,7 @@ import { filterFalsyValuesFromArray } from "./arrays"
 
 export const getIsbnsFromManifestation = (manifestation: ManifestationIdentifiersFragment) => {
   return manifestation.identifiers.map(identifier => {
-    if (identifier.type === IdentifierType.Isbn) {
+    if (identifier.type === IdentifierTypeEnum.Isbn) {
       return identifier.value
     }
   })
