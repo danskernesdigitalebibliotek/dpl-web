@@ -1,0 +1,39 @@
+'use client'
+import { useEffect, useState } from 'react'
+
+// This component is used to show a grid overlay on the screen when the user presses cmd + g
+export default function GridHelper() {
+  const [isShowing, setIsShowing] = useState(false)
+
+  useEffect(() => {
+    window.addEventListener('keydown', handleKeydown)
+    return () => {
+      window.removeEventListener('keydown', handleKeydown)
+    }
+  }, [])
+
+  const handleKeydown = (event: KeyboardEvent) => {
+    if (event.metaKey && event.key === 'g') {
+      setIsShowing(currentValue => !currentValue)
+    }
+  }
+
+  const columns = 12
+
+  return (
+    <>
+      {isShowing ? (
+        <div className="content-container bg-transparent pointer-events-none fixed inset-0 z-[1000] mx-auto">
+          <div className="grid-go h-full">
+            {Array.from({ length: columns }).map((e, index) => (
+              <div
+                key={`gridHelper-column-${index}`}
+                className="h-full w-full bg-green-600 bg-opacity-10"
+              />
+            ))}
+          </div>
+        </div>
+      ) : null}
+    </>
+  )
+}
