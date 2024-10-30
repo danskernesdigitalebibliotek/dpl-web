@@ -7,8 +7,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2024-10-22 23:31+0200\n"
-"PO-Revision-Date: 2024-10-22 23:31+0200\n"
+"POT-Creation-Date: 2024-10-29 15:26+0100\n"
+"PO-Revision-Date: 2024-10-29 15:26+0100\n"
 "Last-Translator: NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
 "MIME-Version: 1.0\n"
@@ -4636,15 +4636,6 @@ msgstr "Faktureringsinformation"
 msgid "The street is \"@street\" and the country code is @country_code."
 msgstr "Gaden er @street og landekoden er @country_code."
 
-msgid "Save settings"
-msgstr "Gem indstillinger"
-
-msgid "Save"
-msgstr "Gem"
-
-msgid "County"
-msgstr "Amt"
-
 msgctxt "Address label"
 msgid "First name"
 msgstr "Fornavn"
@@ -4658,8 +4649,8 @@ msgid "Last name"
 msgstr "Efternavn"
 
 msgctxt "Address label"
-msgid "Company"
-msgstr "Firma"
+msgid "Organization"
+msgstr ""
 
 msgctxt "Address label"
 msgid "Address line 1"
@@ -4668,6 +4659,10 @@ msgstr "Adresse linje 1"
 msgctxt "Address label"
 msgid "Address line 2"
 msgstr "Adresse linje 2"
+
+msgctxt "Address label"
+msgid "Address line 3"
+msgstr ""
 
 msgctxt "Address label"
 msgid "Postal code"
@@ -4698,6 +4693,10 @@ msgid "Street address line 2"
 msgstr "Gadenavn linie 2"
 
 msgctxt "Address label"
+msgid "Street address line 3"
+msgstr ""
+
+msgctxt "Address label"
 msgid "Cedex"
 msgstr "Cedex"
 
@@ -4722,7 +4721,7 @@ msgid "District"
 msgstr "Kommune"
 
 msgctxt "Address label"
-msgid "Do si"
+msgid "Do/Si"
 msgstr ""
 
 msgctxt "Address label"
@@ -4732,10 +4731,6 @@ msgstr ""
 msgctxt "Address label"
 msgid "Island"
 msgstr "Ø"
-
-msgctxt "Address label"
-msgid "Oblast"
-msgstr ""
 
 msgctxt "Address label"
 msgid "Parish"
@@ -4748,6 +4743,10 @@ msgstr ""
 msgctxt "Address label"
 msgid "Province"
 msgstr "Provins"
+
+msgctxt "Address label"
+msgid "Region"
+msgstr ""
 
 msgctxt "Address label"
 msgid "State"
@@ -4766,12 +4765,16 @@ msgid "Suburb"
 msgstr "Forstad"
 
 msgctxt "Address label"
+msgid "Town/City"
+msgstr ""
+
+msgctxt "Address label"
 msgid "Neighborhood"
 msgstr "Nabolag"
 
 msgctxt "Address label"
-msgid "Village township"
-msgstr "Bydel"
+msgid "Village/Township"
+msgstr ""
 
 msgctxt "Address label"
 msgid "Townland"
@@ -4862,6 +4865,9 @@ msgstr "Adresselinje 1"
 msgid "The second line of the address block"
 msgstr "Adresselinje 2"
 
+msgid "The third line of the address block"
+msgstr ""
+
 msgid "The organization"
 msgstr "Organisationen"
 
@@ -4920,6 +4926,21 @@ msgstr "Felt til zone-etiket: @status"
 
 msgid "Shown"
 msgstr "Vist"
+
+msgid "Wrapper type"
+msgstr ""
+
+msgid "Wrapper type: @wrapper_type"
+msgstr ""
+
+msgid "Container (invisible)"
+msgstr ""
+
+msgid "Details (collapsible)"
+msgstr ""
+
+msgid "Fieldset (non-collapsible)"
+msgstr ""
 
 msgid "Display the subdivision name instead of the subdivision code"
 msgstr "Vis underafdelingsnavnet i stedet for underafdelingskoden"
@@ -5035,8 +5056,8 @@ msgstr ""
 msgid "broken configuration"
 msgstr "brudt konfiguration"
 
-msgid "Updated the names and subdivisions of each address."
-msgstr "Opdaterede navnene og underafdelingerne på hver adresse."
+msgid "Address"
+msgstr "Adresse"
 
 msgid "Plain"
 msgstr "Enkel"
@@ -5047,11 +5068,47 @@ msgstr "Default"
 msgid "An entity field containing a country"
 msgstr "Et felt der indeholder et land"
 
-msgid "Address"
-msgstr "Adresse"
-
 msgid "An entity field containing a postal address"
 msgstr "Et felt der indeholder en postadresse"
+
+msgid "Langcode"
+msgstr "Langcode"
+
+msgid "Administrative area"
+msgstr ""
+
+msgid "Locality"
+msgstr "Lokalitet"
+
+msgid "Dependent locality"
+msgstr ""
+
+msgid "Postal code"
+msgstr "Postnummer"
+
+msgid "Sorting code"
+msgstr ""
+
+msgid "Address line 1"
+msgstr ""
+
+msgid "Address line 2"
+msgstr ""
+
+msgid "Address line 3"
+msgstr ""
+
+msgid "Organization"
+msgstr "Organisation"
+
+msgid "Given name"
+msgstr "Fornavn"
+
+msgid "Additional name"
+msgstr ""
+
+msgid "Family name"
+msgstr "Efternavn"
 
 msgid "Zone"
 msgstr "Zone"
@@ -5933,6 +5990,9 @@ msgstr "Bryd lås"
 msgid "This content is now locked by you against simultaneous editing."
 msgstr "Dette indhold er nu låst af dig mod medredigering."
 
+msgid "Save"
+msgstr "Gem"
+
 msgid ""
 "This content translation is now locked against simultaneous editing. This "
 "content translation will remain locked if you navigate away from this page "
@@ -6725,6 +6785,9 @@ msgstr "References"
 msgid "Reference another entity."
 msgstr "Referér en anden enhed."
 
+msgid "Save settings"
+msgstr "Gem indstillinger"
+
 msgid "Save and continue"
 msgstr "Gem og fortsæt"
 
@@ -7327,9 +7390,6 @@ msgstr "Det overordnede feltnavn for enheden, som denne enhed refererer til."
 msgid "Entity test composite"
 msgstr ""
 
-msgid "Delete orphaned composite revisions"
-msgstr ""
-
 msgid ""
 "Checked @entity_type revisions for orphans: @current of @total in @interval "
 "(@deletions deleted)"
@@ -7372,6 +7432,9 @@ msgstr ""
 
 msgid "Select the entity types to check for orphans"
 msgstr "Vælg de enhedstyper, der skal kontrolleres for forældreløse"
+
+msgid "Delete orphaned composite revisions"
+msgstr ""
 
 msgid "Choose the entity type to clear"
 msgstr "Vælg enhedstypen, der skal ryddes"
@@ -8444,9 +8507,6 @@ msgstr "Sprogneutrale URL-aliasser"
 msgid "Use the same URL aliases regardless of language."
 msgstr "Brug de samme URL-aliaser uanset sprog."
 
-msgid "Confirm"
-msgstr "Bekræft"
-
 msgid "Dummy setting"
 msgstr "Dummy indstilling"
 
@@ -8705,6 +8765,15 @@ msgstr "Vis thumbnail"
 msgid "Thumbnail image style"
 msgstr "Thumbnail billedstil"
 
+msgid "External URL @url"
+msgstr ""
+
+msgid "External URL"
+msgstr ""
+
+msgid "Adds https:// to URL."
+msgstr ""
+
 msgid "Include unpublished: @include_unpublished"
 msgstr "Inkluder upubliceret: @include_unpublished"
 
@@ -8814,6 +8883,9 @@ msgstr "E-mail"
 
 msgid "Taxonomy term"
 msgstr "Taxonomy term"
+
+msgid "External"
+msgstr "Eksterne"
 
 msgid "Content"
 msgstr "Content"
@@ -10246,9 +10318,6 @@ msgstr "Video varighed (sekunder)"
 
 msgid "The length of the video in seconds"
 msgstr "Længden på videoen i sekunder"
-
-msgid "Locality"
-msgstr "Lokalitet"
 
 msgid "Open Graph"
 msgstr "Open Graph"
@@ -12581,14 +12650,8 @@ msgstr "En anden bruger er allerede forbundet til denne @provider konto."
 msgid "Full name"
 msgstr "Fulde navn"
 
-msgid "Given name"
-msgstr "Fornavn"
-
 msgid "Given name(s) or first name(s)"
 msgstr "Fornavn(e) eller fornavn(e)"
-
-msgid "Family name"
-msgstr "Efternavn"
 
 msgid "Surname(s) or last name(s)"
 msgstr "Familienavn(e) eller efternavn(e)"
