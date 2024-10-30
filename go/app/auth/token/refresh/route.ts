@@ -13,7 +13,7 @@ const sessionTokenSchema = z.object({
 })
 
 export async function GET(request: NextRequest, response: NextResponse) {
-  const appUrl = getConfig("url.app")
+  const appUrl = getConfig("app.url")
   const session = await getSession()
   const frontpage = `${appUrl}/`
 
