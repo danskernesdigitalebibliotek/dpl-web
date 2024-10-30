@@ -73,7 +73,10 @@ const WorkCard = ({ work }: WorkCardProps) => {
                 layout="responsive"
                 width={166}
                 height={228}
-                className="overflow-hidden rounded-sm shadow-coverPicture"
+                className={cn(
+                  "overflow-hidden rounded-sm shadow-coverPicture",
+                  getRandomContentColorClass()
+                )}
               />
             )}
             {(!coverSrc?.length || coverSrc.length === 0) && (
