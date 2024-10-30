@@ -4,7 +4,7 @@ import { useRouter, useSearchParams } from "next/navigation"
 import React from "react"
 import { useEffect, useRef } from "react"
 
-import { cn } from "@/lib/utils"
+import { cn } from "@/lib/helpers/helper.cn"
 
 import Icon from "../icon/Icon"
 
@@ -20,12 +20,15 @@ const SearchInput = ({ className, placeholder }: SearchInputProps) => {
   const [queryString, setQueryString] = React.useState("")
 
   useEffect(() => {
-    setQueryString(searchParams.get("q") || "")
     window.addEventListener("keydown", handleKeydown)
     return () => {
       window.removeEventListener("keydown", handleKeydown)
     }
   }, [])
+
+  useEffect(() => {
+    setQueryString(searchParams.get("q") || "")
+  }, [searchParams])
 
   const handleKeydown = (event: KeyboardEvent) => {
     if (!inputRef.current) return
