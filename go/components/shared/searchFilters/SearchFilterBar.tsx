@@ -3,6 +3,7 @@
 import React, { useState } from "react"
 
 import { SearchFacetFragment } from "@/lib/graphql/generated/fbi/graphql"
+
 import SearchFiltersColumn from "./SearchFiltersColumn"
 
 type SearchFilterBarProps = {
@@ -14,6 +15,7 @@ const SearchFilterBar = ({ facets }: SearchFilterBarProps) => {
 
   return (
     <>
+      {/* TODO: add mobile filter functionality and UI */}
       <div className="xl:hidden">Mobile Filters</div>
       <div className="mt-10 hidden flex-row gap-4 xl:flex">
         {facets.map((facet, index) => {
@@ -29,6 +31,7 @@ const SearchFilterBar = ({ facets }: SearchFilterBarProps) => {
           )
         })}
       </div>
+      <hr className="-mx-grid-edge my-3 w-screen border-black opacity-10 md:mx-auto md:mb-12 md:mt-6 md:w-full" />
     </>
   )
 }

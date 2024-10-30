@@ -20,12 +20,15 @@ const SearchInput = ({ className, placeholder }: SearchInputProps) => {
   const [queryString, setQueryString] = React.useState("")
 
   useEffect(() => {
-    setQueryString(searchParams.get("q") || "")
     window.addEventListener("keydown", handleKeydown)
     return () => {
       window.removeEventListener("keydown", handleKeydown)
     }
   }, [])
+
+  useEffect(() => {
+    setQueryString(searchParams.get("q") || "")
+  }, [searchParams])
 
   const handleKeydown = (event: KeyboardEvent) => {
     if (!inputRef.current) return

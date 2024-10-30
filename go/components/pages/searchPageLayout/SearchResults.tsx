@@ -11,14 +11,11 @@ type SearchResultProps = {
 
 const SearchResults = ({ works }: SearchResultProps) => {
   return (
-    <>
-      <hr className="my-3 ml-[-12px] w-[100vw] border-black opacity-10 md:mx-auto md:mb-12 md:mt-6 md:w-full" />
-      <div className="mb-10 grid grid-cols-2 gap-grid-gap-x md:mb-24 md:grid-cols-3">
-        {works.map(work => (
-          <WorkCard key={work.workId} work={work} />
-        ))}
-      </div>
-    </>
+    <div className="grid grid-cols-2 gap-x-grid-gap-x gap-y-[calc(var(--grid-gap-x)*2)] md:grid-cols-3">
+      {works.map(work => (
+        <WorkCard key={work.workId} work={work} />
+      ))}
+    </div>
   )
 }
 
