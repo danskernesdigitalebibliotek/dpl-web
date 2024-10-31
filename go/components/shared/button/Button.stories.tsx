@@ -11,7 +11,6 @@ const meta = {
   parameters: {
     layout: "centered",
   },
-  decorators: [Story => <Story />],
   tags: ["autodocs"],
 } satisfies Meta<typeof Button>
 

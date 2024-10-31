@@ -17,16 +17,16 @@ const preview: Preview = {
       appDirectory: true,
     },
   },
+  decorators: [
+    // 👇 Defining the decorator in the preview file applies it to all stories
+    (Story, { parameters }) => {
+      return (
+        <FontsProvider>
+          <Story {...parameters} />
+        </FontsProvider>
+      )
+    },
+  ],
 }
-
-export const decorators = [
-  Story => {
-    return (
-      <FontsProvider>
-        <Story />
-      </FontsProvider>
-    )
-  },
-]
 
 export default preview
