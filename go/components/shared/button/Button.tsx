@@ -5,7 +5,7 @@ import * as React from "react"
 import { cn } from "@/lib/helpers/helper.cn"
 
 const buttonVariants = cva(
-  `inline-flex border border-foreground text-typo-body-sm text-foreground shadow-button rounded-full items-center justify-center
+  `inline-flex border border-foreground uppercase text-typo-body-sm text-foreground shadow-button rounded-full items-center justify-center
   whitespace-nowrap font-medium font-headline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-foreground
   focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 hover:translate-x-[1px] hover:translate-y-[1px] transition
   hover:shadow-buttonHover active:translate-x-[4px] active:translate-y-[4px] active:shadow-none`,

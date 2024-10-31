@@ -1,27 +1,11 @@
-import "@/styles/globals.css"
-
 import type { Metadata } from "next"
-import localFont from "next/font/local"
 
 import Footer from "@/components/global/footer/Footer"
 import Header from "@/components/global/header/Header"
 import Theme from "@/components/global/theme/Theme"
+import FontsProvider from "@/lib/providers/FontsProvider"
 import ReactQueryProvider from "@/lib/providers/ReactQueryProvider"
-
-const GTFlexa = localFont({
-  src: [
-    {
-      path: "../fonts/GT-Flexa-Expanded-Regular.woff2",
-      weight: "400",
-    },
-    {
-      path: "../fonts/GT-Flexa-Expanded-Medium.woff2",
-      weight: "500",
-    },
-  ],
-  variable: "--font-headline",
-  display: "swap",
-})
+import "@/styles/globals.css"
 
 export const metadata: Metadata = {
   title: "Create Next App",
@@ -35,14 +19,16 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={`${GTFlexa.variable} antialiased`}>
-        <Theme>
-          <ReactQueryProvider>
-            <Header />
-            <div className="bg-background">{children}</div>
-            <Footer />
-          </ReactQueryProvider>
-        </Theme>
+      <body>
+        <FontsProvider>
+          <Theme>
+            <ReactQueryProvider>
+              <Header />
+              <div className="bg-background">{children}</div>
+              <Footer />
+            </ReactQueryProvider>
+          </Theme>
+        </FontsProvider>
       </body>
     </html>
   )
