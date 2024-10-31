@@ -24,7 +24,7 @@ export default function RootLayout({
           <Theme>
             <ReactQueryProvider>
               <Header />
-              <div className="bg-background">{children}</div>
+              {children}
               <Footer />
             </ReactQueryProvider>
           </Theme>
