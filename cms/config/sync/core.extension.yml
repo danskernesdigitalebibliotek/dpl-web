@@ -46,6 +46,7 @@ module:
   dpl_fees: 0
   dpl_filter_paragraphs: 0
   dpl_footer: 0
+  dpl_graphql: 0
   dpl_instant_loan: 0
   dpl_library_agency: 0
   dpl_library_token: 0
@@ -77,6 +78,7 @@ module:
   dpl_static_content_20240404_opening_hours: 0
   dpl_static_content_20240418_views_aliases: 0
   dpl_static_content_20240422_contact_page: 0
+  dpl_unilogin: 0
   dpl_update: 0
   dpl_url_proxy: 0
   dpl_webform: 0
