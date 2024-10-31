@@ -20,10 +20,6 @@ type Story = StoryObj<typeof meta>
 // More on writing stories with args: https://storybook.js.org/docs/writing-stories/args
 export const Default: Story = {
   argTypes: {
-    variant: {
-      options: ["default", "icon"],
-      control: { type: "radio" },
-    },
     size: {
       options: ["sm", "md", "lg"],
       control: { type: "radio" },
@@ -39,37 +35,14 @@ export const Default: Story = {
   ),
 }
 
-export const Secondary: Story = {
+export const IconStory: Story = {
+  name: "Icon story",
   args: {
     variant: "icon",
   },
   render: args => (
     <Button {...args} onClick={fn()}>
-      <Icon name="question-mark"></Icon>
-    </Button>
-  ),
-}
-
-export const Large: Story = {
-  args: {
-    size: "lg",
-    label: "Button",
-  },
-  render: args => (
-    <Button {...args} onClick={fn()}>
-      as.djasdkljhasd
-    </Button>
-  ),
-}
-
-export const Small: Story = {
-  args: {
-    size: "small",
-    label: "Button",
-  },
-  render: args => (
-    <Button {...args} onClick={fn()}>
-      as.djasdkljhasd
+      <Icon className="h-[24px] w-[24px]" name="question-mark" />
     </Button>
   ),
 }

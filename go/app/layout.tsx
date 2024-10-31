@@ -19,16 +19,15 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body>
-        <FontsProvider>
-          <Theme>
-            <ReactQueryProvider>
-              <Header />
-              {children}
-              <Footer />
-            </ReactQueryProvider>
-          </Theme>
-        </FontsProvider>
+      <body className="antialiased">
+        <FontsProvider />
+        <Theme>
+          <ReactQueryProvider>
+            <Header />
+            {children}
+            <Footer />
+          </ReactQueryProvider>
+        </Theme>
       </body>
     </html>
   )

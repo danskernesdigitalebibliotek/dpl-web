@@ -21,9 +21,10 @@ const preview: Preview = {
     // 👇 Defining the decorator in the preview file applies it to all stories
     (Story, { parameters }) => {
       return (
-        <FontsProvider>
+        <div>
+          <FontsProvider />
           <Story {...parameters} />
-        </FontsProvider>
+        </div>
       )
     },
   ],

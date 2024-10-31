@@ -1,5 +1,4 @@
 import type { StorybookConfig } from "@storybook/nextjs"
-import path from "path"
 
 const config: StorybookConfig = {
   stories: ["../components/**/*.stories.@(js|jsx|mjs|ts|tsx)"],
@@ -13,19 +12,7 @@ const config: StorybookConfig = {
     name: "@storybook/nextjs",
     options: {},
   },
-  staticDirs: [
-    "../public",
-    {
-      from: "../fonts",
-      to: "fonts",
-    },
-  ],
   webpackFinal: async (config: any) => {
-    config.resolve.alias = {
-      ...config.resolve?.alias,
-      "@": path.resolve(__dirname, "..", "/"),
-      "next/image": require.resolve("./mock/NextImage.tsx"),
-    }
     // This modifies the existing image rule to exclude `.svg` files
     // since we handle those with `@svgr/webpack`.
     const imageRule = config.module.rules.find(rule => {

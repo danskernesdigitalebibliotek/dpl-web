@@ -17,6 +17,14 @@ const GTFlexa = localFont({
   display: "swap",
 })
 
-export default function FontsProvider({ children }: React.PropsWithChildren) {
-  return <div className={`${GTFlexa.variable} antialiased`}>{children}</div>
+export default function FontsProvider() {
+  return (
+    <style jsx global>
+      {`
+        :root {
+          --font-headline: ${GTFlexa.style.fontFamily}, sans-serif;
+        }
+      `}
+    </style>
+  )
 }
