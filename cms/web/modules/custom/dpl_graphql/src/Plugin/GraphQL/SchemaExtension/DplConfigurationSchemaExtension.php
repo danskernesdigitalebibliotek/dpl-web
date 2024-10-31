@@ -112,10 +112,15 @@ class DplConfigurationSchemaExtension extends ResolverOnlySchemaExtensionPluginB
    */
   public function registerResolvers(ResolverRegistryInterface $registry): void {
 
-    $unilogin_api_endpoint = $this->uniloginConfiguration->getUniloginApiEndpoint();
-    $unilogin_api_wellknown_endpoint = $this->uniloginConfiguration->getUniloginApiWellknownEndpoint();
-    $unilogin_client_id = $this->uniloginConfiguration->getUniloginApiClientId();
-    $unilogin_client_secret = $this->uniloginConfiguration->getUniloginApiClientSecret();
+    $unilogin_config = [
+      'unilogin_api_url' => $this->uniloginConfiguration->getUniloginApiEndpoint(),
+      'unilogin_api_wellknown_url' => $this->uniloginConfiguration->getUniloginApiWellknownEndpoint(),
+      'unilogin_api_client_id' => $this->uniloginConfiguration->getUniloginApiClientId(),
+      'unilogin_api_client_secret' => $this->uniloginConfiguration->getUniloginApiClientSecret(),
+    ];
+
+    // Check if UniLogin configuration is empty, and return NULL if it is.
+    $unilogin_config_is_empty = (bool) array_filter(array_values($unilogin_config));
 
     $builder = new ResolverBuilder();
 
@@ -123,12 +128,7 @@ class DplConfigurationSchemaExtension extends ResolverOnlySchemaExtensionPluginB
       type: 'Query',
       field: 'dplConfiguration',
       resolver: $builder->callback(fn() => [
-        'unilogin' => [
-          'unilogin_api_url' => $unilogin_api_endpoint,
-          'unilogin_api_wellknown_url' => $unilogin_api_wellknown_endpoint,
-          'unilogin_api_client_id' => $unilogin_client_id,
-          'unilogin_api_client_secret' => $unilogin_client_secret,
-        ],
+        'unilogin' => $unilogin_config_is_empty ? $unilogin_config : NULL,
       ])
     );
   }

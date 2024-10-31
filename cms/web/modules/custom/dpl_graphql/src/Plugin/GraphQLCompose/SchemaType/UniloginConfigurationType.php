@@ -27,10 +27,10 @@ class UniloginConfigurationType extends GraphQLComposeSchemaTypeBase {
       'name' => $this->getPluginId(),
       'description' => (string) $this->t('List of DPL-Go Unilogin configuration.'),
       'fields' => fn () => [
-        'unilogin_api_url' => ['type' => Type::nonNull(Type::string())],
-        'unilogin_api_wellknown_url' => ['type' => Type::nonNull(Type::string())],
-        'unilogin_api_client_id' => ['type' => Type::nonNull(Type::string())],
-        'unilogin_api_client_secret' => ['type' => Type::nonNull(Type::string())],
+        'unilogin_api_url' => ['type' => Type::string()],
+        'unilogin_api_wellknown_url' => ['type' => Type::string()],
+        'unilogin_api_client_id' => ['type' => Type::string()],
+        'unilogin_api_client_secret' => ['type' => Type::string()],
       ],
     ]);
 
