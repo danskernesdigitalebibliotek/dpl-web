@@ -24,6 +24,9 @@ const SearchInput = ({ className, placeholder }: SearchInputProps) => {
     return () => {
       window.removeEventListener("keydown", handleKeydown)
     }
+    // We choose to ignore the eslint warning below
+    // because we do not want to add the handleKeydown callback which changes on every render.
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
   useEffect(() => {

@@ -118,6 +118,9 @@ const SearchPageLayout = ({ searchQuery }: { searchQuery?: string }) => {
     if (isInView) {
       handleLoadMore()
     }
+    // We choose to ignore the eslint warning below
+    // because we do not want to add the handleMore callback which changes on every render.
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isInView])
 
   // TODO: consider finding a better way to control fetching of data without using the useEffects below
@@ -137,7 +140,7 @@ const SearchPageLayout = ({ searchQuery }: { searchQuery?: string }) => {
       setFacetFilters(facetsForSearchRequest)
       setCurrentPage(0)
     }
-  }, [facetsForSearchRequest])
+  }, [facetFilters, facetsForSearchRequest])
 
   const facetData = dataFacets?.search?.facets
   const hitcount = data?.pages?.[0]?.search.hitcount ?? 0
