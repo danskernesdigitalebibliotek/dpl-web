@@ -44,7 +44,7 @@ const SearchPageLayout = ({ searchQuery }: { searchQuery?: string }) => {
 
   const facetsForSearchRequest = facetDefinitions.reduce(
     (acc: SearchFiltersInput, facetDefinition) => {
-      const values = searchParams.getAll(facetDefinition)
+      const values = searchParams.getAll(mapFacetsToFilters[facetDefinition])
       if (values.length > 0) {
         return {
           ...acc,
@@ -135,6 +135,7 @@ const SearchPageLayout = ({ searchQuery }: { searchQuery?: string }) => {
   }, [q])
 
   useEffect(() => {
+    // Check if the filters in URL have changed
     const isFilterMatching = JSON.stringify(facetFilters) === JSON.stringify(facetsForSearchRequest)
     if (!isFilterMatching) {
       setFacetFilters(facetsForSearchRequest)

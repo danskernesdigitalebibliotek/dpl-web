@@ -1,6 +1,11 @@
 import { AppRouterInstance } from "next/dist/shared/lib/app-router-context.shared-runtime"
+import { ReadonlyURLSearchParams } from "next/navigation"
 
-import { FacetFieldEnum, SearchFiltersInput } from "@/lib/graphql/generated/fbi/graphql"
+import {
+  FacetFieldEnum,
+  SearchFacetFragment,
+  SearchFiltersInput,
+} from "@/lib/graphql/generated/fbi/graphql"
 
 export const facetDefinitions = [
   "MATERIALTYPESGENERAL",
@@ -18,13 +23,13 @@ export const mapFacetsToFilters = {
   SUBJECTS: "subjects",
 } as Record<FacetFieldEnum, keyof SearchFiltersInput>
 
-export const mapFilterNameToTranslation: Partial<Record<keyof typeof mapFacetsToFilters, string>> =
+export const mapFilterNameToTranslation: Partial<Record<keyof SearchFiltersInput | "lix", string>> =
   {
-    MATERIALTYPESGENERAL: "Type",
-    MAINLANGUAGES: "Sprog",
-    AGE: "Alder",
-    LIX: "Lix",
-    SUBJECTS: "Emne",
+    materialTypesGeneral: "Type",
+    mainLanguages: "Sprog",
+    age: "Alder",
+    lix: "Lix",
+    subjects: "Emne",
   }
 
 export const toggleFilter = (filterName: string, value: string, router: AppRouterInstance) => {
@@ -47,4 +52,17 @@ export const toggleFilter = (filterName: string, value: string, router: AppRoute
   }
   const searchParamsString = searchParams.toString()
   router.push("/search" + searchParamsString ? `?${searchParamsString}` : "", { scroll: false })
+}
+
+export const sortByActiveFacets = (
+  facet: SearchFacetFragment,
+  searchParams: ReadonlyURLSearchParams
+) => {
+  return [...facet.values].sort((a, b) => {
+    const aIncluded = searchParams.getAll(facet.name).includes(a.term)
+    const bIncluded = searchParams.getAll(facet.name).includes(b.term)
+    if (aIncluded && !bIncluded) return -1
+    if (!aIncluded && bIncluded) return 1
+    return 0
+  })
 }

@@ -1,11 +1,11 @@
 import { useRouter, useSearchParams } from "next/navigation"
 import React, { useEffect, useRef, useState } from "react"
 
-import { SearchFacetFragment } from "@/lib/graphql/generated/fbi/graphql"
+import { SearchFacetFragment, SearchFiltersInput } from "@/lib/graphql/generated/fbi/graphql"
 import { cn } from "@/lib/helpers/helper.cn"
 
 import Icon from "../icon/Icon"
-import { mapFacetsToFilters, mapFilterNameToTranslation, toggleFilter } from "./helper"
+import { mapFilterNameToTranslation, sortByActiveFacets, toggleFilter } from "./helper"
 
 type SearchFiltersColumnProps = {
   facet: SearchFacetFragment
@@ -21,7 +21,8 @@ const SearchFiltersColumn = ({
   setIsExpanded,
 }: SearchFiltersColumnProps) => {
   const router = useRouter()
-  const facetName = facet.name as keyof typeof mapFacetsToFilters
+  const facetName = facet.name as keyof SearchFiltersInput
+
   const searchParams = useSearchParams()
   const elementRef = useRef<HTMLDivElement | null>(null)
   const [hasOverflow, setHasOverflow] = useState(false)
@@ -35,6 +36,9 @@ const SearchFiltersColumn = ({
       }
     }
   }, [elementRef])
+
+  // We show the selected values first in the list
+  facet.values = sortByActiveFacets(facet, searchParams)
 
   return (
     <>
