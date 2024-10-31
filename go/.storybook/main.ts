@@ -12,6 +12,7 @@ const config: StorybookConfig = {
     name: "@storybook/nextjs",
     options: {},
   },
+  staticDirs: ["../public"],
   webpackFinal: async (config: any) => {
     // This modifies the existing image rule to exclude `.svg` files
     // since we handle those with `@svgr/webpack`.
