@@ -17,21 +17,21 @@ const buttonVariants = cva(
       },
       size: {
         default: "h-[40px]",
-        xs: "h-[24px]",
         sm: "h-[32px]",
+        md: "h-[40px]",
         lg: "h-[48px]",
       },
     },
     compoundVariants: [
       {
         variant: "default",
-        size: "default",
-        class: "px-10 text-typo-button-lg",
+        size: "sm",
+        class: "px-8 text-typo-button-sm",
       },
       {
         variant: "default",
-        size: "sm",
-        class: "px-8 text-typo-button-sm",
+        size: ["default", "md"],
+        class: "px-10 text-typo-button-sm",
       },
       {
         variant: "default",
