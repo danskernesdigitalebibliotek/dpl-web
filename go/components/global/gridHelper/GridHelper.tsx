@@ -16,7 +16,7 @@ function GridHelper() {
   }, [])
 
   const handleKeydown = (event: KeyboardEvent) => {
-    if (event.metaKey && event.key === "g") {
+    if (event.metaKey && event.key === "k") {
       setIsShowing(currentValue => !currentValue)
     }
   }
