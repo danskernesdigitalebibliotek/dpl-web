@@ -37,7 +37,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={`${GTFlexa.variable} antialiased`}>
-        {getEnvironment() === "development" && <GridHelper />}
+        <GridHelper hideInProduction />
         <Theme>
           <ReactQueryProvider>
             <Header />
