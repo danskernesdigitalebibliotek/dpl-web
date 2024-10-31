@@ -7,8 +7,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2024-10-30 13:41+0100\n"
-"PO-Revision-Date: 2024-10-30 13:41+0100\n"
+"POT-Creation-Date: 2024-10-31 16:10+0100\n"
+"PO-Revision-Date: 2024-10-31 16:10+0100\n"
 "Last-Translator: NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
 "MIME-Version: 1.0\n"
@@ -273,6 +273,42 @@ msgid ""
 "structure and cannot be edited."
 msgstr ""
 "Denne side findes allerede findes i indholdsstrukturen og kan ikke redigeres."
+
+msgctxt "Unilogin configuration"
+msgid "Unilogin configuration"
+msgstr ""
+
+msgctxt "Unilogin configuration"
+msgid "UniLogin API endpoint URL."
+msgstr ""
+
+msgctxt "Unilogin configuration"
+msgid "The UniLogin API endpoint url."
+msgstr ""
+
+msgctxt "Unilogin configuration"
+msgid "UniLogin API wellknown endpoint URL"
+msgstr ""
+
+msgctxt "Unilogin configuration"
+msgid "The UniLogin API wellknown endpoint url."
+msgstr ""
+
+msgctxt "Unilogin configuration"
+msgid "UniLogin API client ID."
+msgstr ""
+
+msgctxt "Unilogin configuration"
+msgid "The UniLogin API client ID."
+msgstr ""
+
+msgctxt "Unilogin configuration"
+msgid "UniLogin API client secret."
+msgstr ""
+
+msgctxt "Unilogin configuration"
+msgid "The UniLogin API client secret."
+msgstr ""
 
 msgctxt "DPL admin UX"
 msgid "Event"
@@ -3730,6 +3766,15 @@ msgstr "Materialetype"
 msgid "Select the material type."
 msgstr "Vælg materialetype"
 
+msgid "List of DPL-Go Unilogin configuration."
+msgstr ""
+
+msgid "DPL Configuration."
+msgstr ""
+
+msgid "DPL Configuration"
+msgstr ""
+
 msgctxt "DPL admin UX"
 msgid ""
 "<p>In previous versions of Drupal, you could clear the cache frequently "
@@ -4054,6 +4099,9 @@ msgstr "VærkID-søgning efter materiale"
 msgid "Work id with type"
 msgstr "VærkID med type"
 
+msgid "DPL configuration schema extensions for GraphQL Compose."
+msgstr ""
+
 msgid "dpl_campaign"
 msgstr "dpl_campaign"
 
@@ -4220,6 +4268,21 @@ msgstr "Brødkrummer"
 
 msgid "Breadcrumbs and automatic URL aliases, based on content structure."
 msgstr "Brødkrummer og automatiske URL-aliasser, baseret på indholdsstruktur."
+
+msgid "DPL UniLogin"
+msgstr ""
+
+msgid "Module containing unilogin configuration"
+msgstr ""
+
+msgid "UniLogin configuration"
+msgstr ""
+
+msgid "Change UniLogin configuration"
+msgstr ""
+
+msgid "Unilogin configuration"
+msgstr ""
 
 msgid "DPL related content - test suite"
 msgstr "DPL relateret indhold - test suite"
@@ -4547,6 +4610,12 @@ msgstr "FBI integration"
 
 msgid "Integration with with FBI API, https://fbi-api.dbc.dk/."
 msgstr "Integration til FBI API, https://fbi-api.dbc.dk/."
+
+msgid "DPL GraphQL"
+msgstr ""
+
+msgid "Module used for handling graphql functionality."
+msgstr ""
 
 msgid "DPL Cache settings"
 msgstr "DPL cache-indstillinger"
