@@ -26,7 +26,7 @@ const retrieveValue = (key: keyof typeof resolvers) => {
   return null
 }
 
-const getConfig = <TValue>(key: keyof typeof resolvers) => {
+const goConfig = <TValue>(key: keyof typeof resolvers) => {
   const value = retrieveValue(key) as TValue
 
   if (!value && value !== 0) {
@@ -36,4 +36,4 @@ const getConfig = <TValue>(key: keyof typeof resolvers) => {
   return value
 }
 
-export default getConfig
+export default goConfig

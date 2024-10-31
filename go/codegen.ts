@@ -1,6 +1,6 @@
 import type { CodegenConfig } from "@graphql-codegen/cli"
 
-import getConfig from "./lib/config/config"
+import goConfig from "./lib/config/config"
 
 const config: CodegenConfig = {
   overwrite: true,
@@ -12,7 +12,7 @@ const config: CodegenConfig = {
           // TODO: Make this configurable
           "https://temp.fbi-api.dbc.dk/ereolgo/graphql": {
             headers: {
-              Authorization: `Bearer ${getConfig("token.adgangsplatformen.library")}`,
+              Authorization: `Bearer ${goConfig("token.adgangsplatformen.library")}`,
             },
           },
         },

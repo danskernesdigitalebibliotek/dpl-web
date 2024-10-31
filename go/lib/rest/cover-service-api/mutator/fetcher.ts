@@ -1,4 +1,4 @@
-import getConfig from "@/lib/config/config"
+import goConfig from "@/lib/config/config"
 
 import { getRestServiceUrlWithParams } from "../../../fetchers/helper"
 
@@ -16,7 +16,7 @@ export const fetcher = async <ResponseType>({
 }) => {
   const additionalHeaders = data?.headers === "object" ? (data?.headers as unknown as object) : {}
   const authHeaders = {
-    Authorization: `Bearer ${getConfig("token.adgangsplatformen.library")}`,
+    Authorization: `Bearer ${goConfig("token.adgangsplatformen.library")}`,
   } as object
 
   const headers = {

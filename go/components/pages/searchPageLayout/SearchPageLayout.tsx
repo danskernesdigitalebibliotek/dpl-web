@@ -7,7 +7,7 @@ import { useSearchParams } from "next/navigation"
 import { useEffect, useRef, useState } from "react"
 
 import { facetDefinitions, mapFacetsToFilters } from "@/components/shared/searchFilters/helper"
-import getConfig from "@/lib/config/config"
+import goConfig from "@/lib/config/config"
 import {
   FacetValue,
   SearchFiltersInput,
@@ -18,8 +18,8 @@ import {
 import SearchFilterBar from "../../shared/searchFilters/SearchFilterBar"
 import SearchResults from "./SearchResults"
 
-const branchIds = getConfig<`${number}`[]>("search.branch.ids")
-const SEARCH_RESULTS_LIMIT = getConfig<number>("search.item.limit")
+const branchIds = goConfig<`${number}`[]>("search.branch.ids")
+const SEARCH_RESULTS_LIMIT = goConfig<number>("search.item.limit")
 
 export type FilterItemTerm = Omit<FacetValue, "__typename">
 

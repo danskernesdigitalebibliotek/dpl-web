@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from "next/server"
 import { z } from "zod"
 
-import getConfig from "@/lib/config/config"
+import goConfig from "@/lib/config/config"
 import { getUniloginClient } from "@/lib/session/oauth/uniloginClient"
 import { getSession, setTokensOnSession } from "@/lib/session/session"
 import { TTokenSet } from "@/lib/types/session"
@@ -13,7 +13,7 @@ const sessionTokenSchema = z.object({
 })
 
 export async function GET(request: NextRequest, response: NextResponse) {
-  const appUrl = getConfig("app.url")
+  const appUrl = goConfig("app.url")
   const session = await getSession()
   const frontpage = `${appUrl}/`
 

@@ -3,12 +3,12 @@ import { IronSession, SessionOptions, getIronSession } from "iron-session"
 import { cookies } from "next/headers"
 import { NextRequest, NextResponse } from "next/server"
 
-import getConfig from "../config/config"
+import goConfig from "../config/config"
 import { TSessionType, TTokenSet } from "../types/session"
 
 export const sessionOptions: SessionOptions = {
   // TODO: generate a random password and store it in a secure place
-  password: getConfig("service.unilogin.session.secret"),
+  password: goConfig("service.unilogin.session.secret"),
   cookieName: "go-session",
   cookieOptions: {
     // secure only works in `https` environments

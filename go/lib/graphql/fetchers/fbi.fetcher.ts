@@ -1,4 +1,4 @@
-import getConfig from "@/lib/config/config"
+import goConfig from "@/lib/config/config"
 
 export const fetchData = <TData, TVariables>(
   query: string,
@@ -6,11 +6,11 @@ export const fetchData = <TData, TVariables>(
   options?: RequestInit["headers"]
 ): (() => Promise<TData>) => {
   return async () => {
-    const res = await fetch(`${getConfig("service.fbi.graphql.endpoint")}`, {
+    const res = await fetch(`${goConfig("service.fbi.graphql.endpoint")}`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
-        Authorization: `Bearer ${getConfig("token.adgangsplatformen.library")}`,
+        Authorization: `Bearer ${goConfig("token.adgangsplatformen.library")}`,
         ...options,
       },
       body: JSON.stringify({
