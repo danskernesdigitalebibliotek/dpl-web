@@ -44,7 +44,7 @@ const SearchPageLayout = ({ searchQuery }: { searchQuery?: string }) => {
 
   const facetsForSearchRequest = facetDefinitions.reduce(
     (acc: SearchFiltersInput, facetDefinition) => {
-      const values = searchParams.getAll(facetDefinition)
+      const values = searchParams.getAll(mapFacetsToFilters[facetDefinition])
       if (values.length > 0) {
         return {
           ...acc,
@@ -118,6 +118,7 @@ const SearchPageLayout = ({ searchQuery }: { searchQuery?: string }) => {
     if (isInView) {
       handleLoadMore()
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isInView])
 
   // TODO: consider finding a better way to control fetching of data without using the useEffects below
@@ -132,12 +133,13 @@ const SearchPageLayout = ({ searchQuery }: { searchQuery?: string }) => {
   }, [q])
 
   useEffect(() => {
+    // Check if the filters in URL have changed
     const isFilterMatching = JSON.stringify(facetFilters) === JSON.stringify(facetsForSearchRequest)
     if (!isFilterMatching) {
       setFacetFilters(facetsForSearchRequest)
       setCurrentPage(0)
     }
-  }, [facetsForSearchRequest])
+  }, [facetsForSearchRequest, facetFilters])
 
   const facetData = dataFacets?.search?.facets
   const hitcount = data?.pages?.[0]?.search.hitcount ?? 0
