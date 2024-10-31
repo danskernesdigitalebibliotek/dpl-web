@@ -5,7 +5,6 @@ import Footer from "@/components/global/footer/Footer"
 import GridHelper from "@/components/global/gridHelper/GridHelper"
 import Header from "@/components/global/header/Header"
 import Theme from "@/components/global/theme/Theme"
-import { getEnvironment } from "@/lib/helpers/helper.env"
 import ReactQueryProvider from "@/lib/providers/ReactQueryProvider"
 import "@/styles/globals.css"
 
