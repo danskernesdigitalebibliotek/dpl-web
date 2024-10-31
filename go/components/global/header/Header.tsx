@@ -1,4 +1,4 @@
-import React from "react"
+import React, { Suspense } from "react"
 
 import { Button } from "@/components/shared/button/Button"
 import DarkModeToggle from "@/components/shared/darkModeToggle/DarkModeToggle"
@@ -30,7 +30,9 @@ function Header() {
       <div className="h-navigation-search-height">
         <div className="content-container">
           <div className="flex h-full w-full items-center">
-            <SearchInput placeholder="Søg" />
+            <Suspense fallback={<p>Loading...</p>}>
+              <SearchInput placeholder="Søg" />
+            </Suspense>
           </div>
         </div>
       </div>
