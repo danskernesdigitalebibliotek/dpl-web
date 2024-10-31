@@ -19,10 +19,10 @@ fragment WorkTeaser on Work {
   }
   manifestations {
     all {
-      ...ManifestationCover
+      ...ManifestationTeaser
     }
     bestRepresentation {
-      ...ManifestationCover
+      ...ManifestationTeaser
     }
   }
 }

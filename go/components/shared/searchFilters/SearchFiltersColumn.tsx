@@ -1,9 +1,11 @@
-import { SearchFacetFragment } from "@/lib/graphql/generated/fbi/graphql"
-import { cn } from "@/lib/helpers/helper.cn"
-import React, { useEffect, useRef, useState } from "react"
-import { mapFacetsToFilters, mapFilterNameToTranslation, toggleFilter } from "./helper"
 import { useRouter, useSearchParams } from "next/navigation"
+import React, { useEffect, useRef, useState } from "react"
+
+import { SearchFacetFragment, SearchFiltersInput } from "@/lib/graphql/generated/fbi/graphql"
+import { cn } from "@/lib/helpers/helper.cn"
+
 import Icon from "../icon/Icon"
+import { mapFilterNameToTranslation, sortByActiveFacets, toggleFilter } from "./helper"
 
 type SearchFiltersColumnProps = {
   facet: SearchFacetFragment
@@ -19,7 +21,8 @@ const SearchFiltersColumn = ({
   setIsExpanded,
 }: SearchFiltersColumnProps) => {
   const router = useRouter()
-  const facetName = facet.name as keyof typeof mapFacetsToFilters
+  const facetName = facet.name as keyof SearchFiltersInput
+
   const searchParams = useSearchParams()
   const elementRef = useRef<HTMLDivElement | null>(null)
   const [hasOverflow, setHasOverflow] = useState(false)
@@ -33,6 +36,9 @@ const SearchFiltersColumn = ({
       }
     }
   }, [elementRef])
+
+  // We show the selected values first in the list
+  facet.values = sortByActiveFacets(facet, searchParams)
 
   return (
     <>
@@ -54,8 +60,8 @@ const SearchFiltersColumn = ({
             <button
               onClick={() => toggleFilter(facet.name, value.term, router)}
               className={cn([
-                `hover:animate-wiggle h-[29px] w-auto self-start whitespace-nowrap rounded-full bg-background-overlay
-                px-4 py-2`,
+                `h-[29px] w-auto self-start whitespace-nowrap rounded-full bg-background-overlay px-4 py-2
+                hover:animate-wiggle`,
                 searchParams.getAll(facet.name).includes(value.term) &&
                   "bg-foreground text-background",
               ])}
@@ -72,8 +78,8 @@ const SearchFiltersColumn = ({
             }}>
             <button
               className={cn(
-                `hover:animate-wiggle flex h-[29px] w-auto flex-row items-center self-start whitespace-nowrap
-                rounded-full bg-background-overlay pl-2 pr-4 text-typo-caption`,
+                `flex h-[29px] w-auto flex-row items-center self-start whitespace-nowrap rounded-full
+                bg-background-overlay pl-2 pr-4 text-typo-caption hover:animate-wiggle`,
                 isExpanded && "mt-1"
               )}>
               <Icon className={cn("h-8 w-8", isExpanded && "rotate-180")} name="arrow-down" />

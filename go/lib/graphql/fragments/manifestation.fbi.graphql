@@ -1,8 +1,20 @@
+fragment ManifestationTeaser on Manifestation {
+  ...ManifestationCover
+  ...ManifestationIdentifiers
+}
+
 fragment ManifestationCover on Manifestation {
   pid
   materialTypes {
     materialTypeGeneral {
       code
     }
+  }
+}
+
+fragment ManifestationIdentifiers on Manifestation {
+  identifiers {
+    type
+    value
   }
 }

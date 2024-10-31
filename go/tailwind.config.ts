@@ -190,34 +190,40 @@ export const extendedTheme = {
       },
       foreground: "var(--foreground)",
       border: "var(--border)",
-
+      content: {
+        pink: "var(--content-pink)",
+        blue: "var(--content-blue)",
+        orange: "var(--content-orange)",
+        purple: "var(--content-purple)",
+      },
+      "blue-title": "var(--blue-title)",
       // shadcn colors
       card: {
         DEFAULT: "var(--card)",
         foreground: "var(--card-foreground)",
       },
       popover: {
-        DEFAULT: "var(--popover))",
+        DEFAULT: "var(--popover)",
         foreground: "var(--popover-foreground)",
       },
       primary: {
-        DEFAULT: "var(--primary))",
+        DEFAULT: "var(--primary)",
         foreground: "var(--primary-foreground)",
       },
       secondary: {
-        DEFAULT: "var(--secondary))",
+        DEFAULT: "var(--secondary)",
         foreground: "var(--secondary-foreground)",
       },
       muted: {
-        DEFAULT: "var(--muted))",
+        DEFAULT: "var(--muted)",
         foreground: "var(--muted-foreground)",
       },
       accent: {
-        DEFAULT: "var(--accent))",
+        DEFAULT: "var(--accent)",
         foreground: "var(--accent-foreground)",
       },
       destructive: {
-        DEFAULT: "var(--destructive))",
+        DEFAULT: "var(--destructive)",
         foreground: "var(--destructive-foreground)",
       },
       input: "var(--input)",

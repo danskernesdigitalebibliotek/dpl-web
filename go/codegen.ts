@@ -1,5 +1,11 @@
 import type { CodegenConfig } from "@graphql-codegen/cli"
 
+import goConfig from "./lib/config/config"
+
+const { loadEnvConfig } = require("@next/env")
+
+loadEnvConfig(process.cwd())
+
 const config: CodegenConfig = {
   overwrite: true,
   generates: {
@@ -7,10 +13,9 @@ const config: CodegenConfig = {
       documents: "**/*.fbi.graphql",
       schema: [
         {
-          // TODO: Make this configurable
-          "https://fbi-api.dbc.dk/ereolgo/graphql": {
+          [goConfig<string>("service.fbi.graphql.endpoint")]: {
             headers: {
-              Authorization: `Bearer ${process.env.NEXT_PUBLIC_LIBRARY_TOKEN ?? ""}`,
+              Authorization: `Bearer ${goConfig("token.adgangsplatformen.library")}`,
             },
           },
         },

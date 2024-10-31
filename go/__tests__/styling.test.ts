@@ -1,11 +1,10 @@
-import { expect, test, vi } from "vitest"
-
 import { cva } from "class-variance-authority"
+import { expect, test } from "vitest"
+
 import { cn } from "@/lib/helpers/helper.cn"
 
 test("That we can use cn in combination with cva variants", async () => {
-  const resultClasses =
-    "text-typo-body-sm text-foreground inline-flex h-[40px] px-10"
+  const resultClasses = "text-typo-body-sm text-foreground inline-flex h-[40px] px-10"
 
   const buttonVariants = cva(`text-typo-body-sm text-foreground inline-flex`, {
     variants: {

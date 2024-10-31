@@ -1,8 +1,9 @@
 "use client"
 
-import React, { useState } from "react"
+import React, { Suspense, useState } from "react"
 
 import { SearchFacetFragment } from "@/lib/graphql/generated/fbi/graphql"
+
 import SearchFiltersColumn from "./SearchFiltersColumn"
 
 type SearchFilterBarProps = {
@@ -14,21 +15,24 @@ const SearchFilterBar = ({ facets }: SearchFilterBarProps) => {
 
   return (
     <>
+      {/* TODO: add mobile filter functionality and UI */}
       <div className="xl:hidden">Mobile Filters</div>
       <div className="mt-10 hidden flex-row gap-4 xl:flex">
         {facets.map((facet, index) => {
           const isLast = index === facets.length - 1
           return (
-            <SearchFiltersColumn
-              facet={facet}
-              isLast={isLast}
-              key={facet.name}
-              isExpanded={isExpanded}
-              setIsExpanded={setIsExpanded}
-            />
+            <Suspense key={facet.name} fallback={<p>Loading...</p>}>
+              <SearchFiltersColumn
+                facet={facet}
+                isLast={isLast}
+                isExpanded={isExpanded}
+                setIsExpanded={setIsExpanded}
+              />
+            </Suspense>
           )
         })}
       </div>
+      <hr className="-mx-grid-edge my-3 w-screen border-black opacity-10 md:mx-auto md:mb-12 md:mt-6 md:w-full" />
     </>
   )
 }

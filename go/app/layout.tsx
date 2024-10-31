@@ -2,6 +2,7 @@ import type { Metadata } from "next"
 import localFont from "next/font/local"
 
 import Footer from "@/components/global/footer/Footer"
+import GridHelper from "@/components/global/gridHelper/GridHelper"
 import Header from "@/components/global/header/Header"
 import Theme from "@/components/global/theme/Theme"
 import ReactQueryProvider from "@/lib/providers/ReactQueryProvider"
@@ -35,6 +36,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={`${GTFlexa.variable} antialiased`}>
+        <GridHelper hideInProduction />
         <Theme>
           <ReactQueryProvider>
             <Header />

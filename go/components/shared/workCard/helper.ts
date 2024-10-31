@@ -1,11 +1,13 @@
 import { flatten } from "lodash"
 
-import { Cover } from "@/lib/cover-service-api/model"
-import { SearchWithPaginationQuery, WorkTeaserFragment } from "@/lib/graphql/generated/fbi/graphql"
-import { filterFalsyValuesFromArray } from "@/lib/helpers/helper"
-
-import { CoverImageUrls } from "./../../../lib/cover-service-api/model/coverImageUrls"
-import { GeneralMaterialTypeCode } from "./../../../lib/graphql/generated/fbi/graphql"
+import {
+  GeneralMaterialTypeCodeEnum,
+  SearchWithPaginationQuery,
+  WorkTeaserFragment,
+} from "@/lib/graphql/generated/fbi/graphql"
+import { filterFalsyValuesFromArray } from "@/lib/helpers/arrays"
+import { Cover } from "@/lib/rest/cover-service-api/generated/model"
+import { CoverImageUrls } from "@/lib/rest/cover-service-api/generated/model/coverImageUrls"
 
 export const displayCreators = (
   creators: SearchWithPaginationQuery["search"]["works"][0]["creators"],
@@ -25,21 +27,21 @@ export const displayCreators = (
 
 const workCategories = {
   reading: [
-    GeneralMaterialTypeCode.Articles,
-    GeneralMaterialTypeCode.Books,
-    GeneralMaterialTypeCode.Comics,
-    GeneralMaterialTypeCode.Ebooks,
-    GeneralMaterialTypeCode.ImageMaterials,
-    GeneralMaterialTypeCode.NewspaperJournals,
+    GeneralMaterialTypeCodeEnum.Articles,
+    GeneralMaterialTypeCodeEnum.Books,
+    GeneralMaterialTypeCodeEnum.Comics,
+    GeneralMaterialTypeCodeEnum.Ebooks,
+    GeneralMaterialTypeCodeEnum.ImageMaterials,
+    GeneralMaterialTypeCodeEnum.NewspaperJournals,
   ],
   listening: [
-    GeneralMaterialTypeCode.AudioBooks,
-    GeneralMaterialTypeCode.Music,
-    GeneralMaterialTypeCode.Podcasts,
-    GeneralMaterialTypeCode.SheetMusic,
+    GeneralMaterialTypeCodeEnum.AudioBooks,
+    GeneralMaterialTypeCodeEnum.Music,
+    GeneralMaterialTypeCodeEnum.Podcasts,
+    GeneralMaterialTypeCodeEnum.SheetMusic,
   ],
-  gaming: [GeneralMaterialTypeCode.BoardGames, GeneralMaterialTypeCode.ComputerGames],
-  video: [GeneralMaterialTypeCode.Films, GeneralMaterialTypeCode.TvSeries],
+  gaming: [GeneralMaterialTypeCodeEnum.BoardGames, GeneralMaterialTypeCodeEnum.ComputerGames],
+  video: [GeneralMaterialTypeCodeEnum.Films, GeneralMaterialTypeCodeEnum.TvSeries],
 }
 
 export const isOfWorkTypeCategory = (

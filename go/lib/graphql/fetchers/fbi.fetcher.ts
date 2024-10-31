@@ -1,14 +1,16 @@
+import goConfig from "@/lib/config/config"
+
 export const fetchData = <TData, TVariables>(
   query: string,
   variables?: TVariables,
   options?: RequestInit["headers"]
 ): (() => Promise<TData>) => {
   return async () => {
-    const res = await fetch(`${process.env.NEXT_PUBLIC_GRAPHQL_SCHEMA_ENDPOINT_FBI}`, {
+    const res = await fetch(`${goConfig("service.fbi.graphql.endpoint")}`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
-        Authorization: `Bearer ${process.env.NEXT_PUBLIC_LIBRARY_TOKEN}`,
+        Authorization: `Bearer ${goConfig("token.adgangsplatformen.library")}`,
         ...options,
       },
       body: JSON.stringify({

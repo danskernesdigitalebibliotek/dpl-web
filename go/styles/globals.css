@@ -5,7 +5,7 @@
 :root {
   /* GRID */
   --page-width: 1600px;
-  --grid-edge: 2.5rem; /* 40px */
+  --grid-edge: 1rem; /* 16px */
   --grid-gap-x: 0.75rem; /* 12px */
 
   --space-y: 5rem; /* 80px */
@@ -75,6 +75,8 @@
   --content-purple: hsla(258, 100%, 72%, 1);
   --content-orange: hsla(34, 100%, 72%, 1);
   --content-blue: hsla(202, 100%, 72%, 1);
+
+  --blue-title: hsla(202, 100%, 60%, 1);
 
   /* CONTENT COLORS */
   --content-pink-100: 320 100% 91%;
@@ -227,6 +229,14 @@
   @apply mx-auto max-w-[var(--page-width)] px-[var(--grid-edge)];
 }
 
+.grid-cols-go {
+  @apply grid-cols-12;
+}
+
+.grid-go {
+  @apply grid-cols-go grid gap-x-[--grid-gap-x];
+}
+
 .dark-mode-transition {
   @apply transition-[background] duration-dark-mode;
 }
@@ -290,7 +300,7 @@ body > * {
     --chart-5: hsla(27, 87%, 67%, 1);
     --radius: 0.5rem;
   }
-  .dark {
+  .dark-mode {
     --background: hsla(0, 0%, 3.9%, 1);
     --foreground: hsla(0, 0%, 98%, 1);
     --card: hsla(0, 0%, 3.9%, 1);
@@ -305,7 +315,7 @@ body > * {
     --muted-foreground: hsla(0, 0%, 63.9%, 1);
     --accent: hsla(0, 0%, 14.9%, 1);
     --accent-foreground: hsla(0, 0%, 98%, 1);
-    --destructive: hsla(0, 62.8%, 30.6%, 1);
+    --destructive: hsla(0, 84.2%, 60.2%, 1);
     --destructive-foreground: hsla(0, 0%, 98%, 1);
     --border: hsla(0, 0%, 14.9%, 1);
     --input: hsla(0, 0%, 14.9%, 1);

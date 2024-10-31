@@ -11,7 +11,8 @@
     "test:unit": "vitest",
     "codegen:graphql": "graphql-codegen --config codegen.ts",
     "codegen:all-rest-services": "orval",
-    "codegen:covers": "rm -rf src/core/cover-service-api/model/*.* && orval --project coverService",
+    "codegen:covers": "rm -rf src/lib/rest/cover-service-api/generated/model/*.* && orval --project coverService",
+    "codegen:publizon": "rm -rf lib/rest/publizon-api/generated/model/*.* && orval --project publizonAdapter",
     "storybook": "storybook dev -p 6006",
     "build-storybook": "storybook build"
   },
@@ -26,6 +27,7 @@
     "class-variance-authority": "^0.7.0",
     "clsx": "^2.1.1",
     "date-fns": "^4.1.0",
+    "framer-motion": "^11.11.10",
     "graphql": "^16.9.0",
     "iron-session": "^8.0.3",
     "lodash": "^4.17.21",
