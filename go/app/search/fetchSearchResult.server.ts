@@ -1,6 +1,7 @@
 import { QueryClient } from "@tanstack/react-query"
 
 import { facetDefinitions } from "@/components/shared/searchFilters/helper"
+import goConfig from "@/lib/config/config"
 import {
   useSearchFacetsQuery,
   useSearchWithPaginationQuery,
@@ -10,15 +11,15 @@ const prefetchSearchResult = async (q: string, queryClient: QueryClient) => {
   await queryClient.prefetchQuery({
     queryKey: useSearchWithPaginationQuery.getKey({
       q: { all: q },
-      offset: 0,
+      offset: goConfig("search.offset.initial"),
       // TODO: This should match the query on search page and be configurable.
-      limit: 9,
+      limit: goConfig("search.item.limit"),
     }),
     queryFn: useSearchWithPaginationQuery.fetcher({
       q: { all: q },
-      offset: 0,
+      offset: goConfig("search.offset.initial"),
       // TODO: This should match the query on search page and be configurable.
-      limit: 9,
+      limit: goConfig("search.item.limit"),
     }),
   })
 
@@ -29,12 +30,12 @@ const prefetchSearchFacets = async (q: string, queryClient: QueryClient) => {
   await queryClient.prefetchQuery({
     queryKey: useSearchFacetsQuery.getKey({
       q: { all: q },
-      facetLimit: 100,
+      facetLimit: goConfig("search.facet.limit"),
       facets: facetDefinitions,
     }),
     queryFn: useSearchFacetsQuery.fetcher({
       q: { all: q },
-      facetLimit: 100,
+      facetLimit: goConfig("search.facet.limit"),
       facets: facetDefinitions,
     }),
   })

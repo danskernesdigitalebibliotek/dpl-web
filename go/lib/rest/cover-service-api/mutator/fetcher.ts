@@ -1,3 +1,5 @@
+import goConfig from "@/lib/config/config"
+
 import { getRestServiceUrlWithParams } from "../../../fetchers/helper"
 
 export const fetcher = async <ResponseType>({
@@ -13,7 +15,9 @@ export const fetcher = async <ResponseType>({
   signal?: AbortSignal
 }) => {
   const additionalHeaders = data?.headers === "object" ? (data?.headers as unknown as object) : {}
-  const authHeaders = { Authorization: `Bearer ${process.env.NEXT_PUBLIC_LIBRARY_TOKEN}` } as object
+  const authHeaders = {
+    Authorization: `Bearer ${goConfig("token.adgangsplatformen.library")}`,
+  } as object
 
   const headers = {
     ...authHeaders,

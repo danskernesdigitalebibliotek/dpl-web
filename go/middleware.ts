@@ -1,7 +1,8 @@
 import { NextResponse } from "next/server"
 import type { NextFetchEvent, NextRequest } from "next/server"
+
+import goConfig from "./lib/config/config"
 import { accessTokenShouldBeRefreshed, getSession } from "./lib/session/session"
-import getConfig from "./lib/config/config"
 
 export async function middleware(request: NextRequest, event: NextFetchEvent) {
   const { pathname } = request.nextUrl
@@ -23,8 +24,8 @@ export async function middleware(request: NextRequest, event: NextFetchEvent) {
   // }
 
   if (accessTokenShouldBeRefreshed(session)) {
-    const currentPath = new URL(request.nextUrl.pathname, process.env.NEXT_PUBLIC_APP_URL!).toString()
-    const url = getConfig("url.app")
+    const currentPath = new URL(request.nextUrl.pathname, goConfig("app.url")).toString()
+    const url = goConfig("app.url")
     return NextResponse.redirect(`${url}/auth/token/refresh?redirect=${currentPath}`, {
       headers: response.headers,
     })
