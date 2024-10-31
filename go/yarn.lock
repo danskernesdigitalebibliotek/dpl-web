@@ -2203,14 +2203,6 @@
   dependencies:
     "@types/mdx" "^2.0.0"
 
-"@newhighsco/storybook-addon-svgr@^2.0.31":
-  version "2.0.31"
-  resolved "https://registry.yarnpkg.com/@newhighsco/storybook-addon-svgr/-/storybook-addon-svgr-2.0.31.tgz#20fe1818d1b394b7fb83a3653ad9d58050098288"
-  integrity sha512-vXMEWYcRFSZQ56BWG4Ys8dYvFJnABhZ4Yn3mgifdqWiu8DYQvSElETn7lrZNZ85LXPLA/QMhyh9f7BULD2jzmw==
-  dependencies:
-    "@svgr/webpack" "8.1.0"
-    new-url-loader "0.1.1"
-
 "@next/env@14.2.13":
   version "14.2.13"
   resolved "https://registry.npmjs.org/@next/env/-/env-14.2.13.tgz"
@@ -3342,16 +3334,6 @@
   resolved "https://registry.yarnpkg.com/@storybook/react-dom-shim/-/react-dom-shim-8.4.0.tgz#4d3ae0401640fc3c5eb5f1f34050606d8013749a"
   integrity sha512-PYYZVdQ6/ts6hBMAwMEu4hfbyHFPzUYmVsZNtF2egaVJQ44xM4i1Zt+RJuo2NOt5VyBCfXJOs+lSIdmSBY2arw==
 
-"@storybook/react-webpack5@^8.4.0":
-  version "8.4.0"
-  resolved "https://registry.yarnpkg.com/@storybook/react-webpack5/-/react-webpack5-8.4.0.tgz#075d5ce0019ea268976d400524cc0e633f9d6a21"
-  integrity sha512-hhfXKVMwpidwYJIT3HL2YXB12sEfPOvKHVT0w9LgVVYebj5B5ClZ9jwwZFYaqeFQH2QlZb01RlScFPjwe9tqpg==
-  dependencies:
-    "@storybook/builder-webpack5" "8.4.0"
-    "@storybook/preset-react-webpack" "8.4.0"
-    "@storybook/react" "8.4.0"
-    "@types/node" "^22.0.0"
-
 "@storybook/react@8.4.0":
   version "8.4.0"
   resolved "https://registry.yarnpkg.com/@storybook/react/-/react-8.4.0.tgz#60e1c4fe38642d55f7c7af520ca2af7c6dd6fc4e"
@@ -3521,7 +3503,7 @@
     deepmerge "^4.3.1"
     svgo "^3.0.2"
 
-"@svgr/webpack@8.1.0", "@svgr/webpack@^8.1.0":
+"@svgr/webpack@^8.1.0":
   version "8.1.0"
   resolved "https://registry.npmjs.org/@svgr/webpack/-/webpack-8.1.0.tgz"
   integrity sha512-LnhVjMWyMQV9ZmeEy26maJk+8HTIbd59cH4F2MJ439k9DqejRisfFNGAPvRYlKETuh9LrImlS8aKsBgKjMA8WA==
@@ -8248,11 +8230,6 @@ neo-async@^2.6.2:
   resolved "https://registry.npmjs.org/neo-async/-/neo-async-2.6.2.tgz"
   integrity sha512-Yd3UES5mWCSqR+qNT93S3UoYUkqAZ9lLg8a7g9rimsWmYGK8cVToA4/sF3RrshdyV3sAGMXVUmpMYOw+dLpOuw==
 
-new-url-loader@0.1.1:
-  version "0.1.1"
-  resolved "https://registry.yarnpkg.com/new-url-loader/-/new-url-loader-0.1.1.tgz#d7bd273f34e9dfa25732ea17772092a5f4e66f66"
-  integrity sha512-e7v5Q3uFk2jXgnL1JSVCszPTg9MYkbNIpKI6azeNlAa1bAwboA63aBsC63jlTEWlTacNL45tqWPx0Nm0SkCxCQ==
-
 next-drupal@^2.0.0-beta.0:
   version "2.0.0-beta.0"
   resolved "https://registry.npmjs.org/next-drupal/-/next-drupal-2.0.0-beta.0.tgz"
@@ -10128,15 +10105,6 @@ string-width@^4.1.0, string-width@^4.2.0, string-width@^4.2.3:
     is-fullwidth-code-point "^3.0.0"
     strip-ansi "^6.0.1"
 
-string-width@^4.1.0, string-width@^4.2.0, string-width@^4.2.3:
-  version "4.2.3"
-  resolved "https://registry.npmjs.org/string-width/-/string-width-4.2.3.tgz"
-  integrity sha512-wKyQRQpjJ0sIp62ErSZdGsjMJWsap5oRNihHhu6G7JVO/9jIB6UyevL+tXuOqrng8j/cxKTWyWUwvSTriiZz/g==
-  dependencies:
-    emoji-regex "^8.0.0"
-    is-fullwidth-code-point "^3.0.0"
-    strip-ansi "^6.0.1"
-
 string-width@^5.0.1, string-width@^5.1.2:
   version "5.1.2"
   resolved "https://registry.npmjs.org/string-width/-/string-width-5.1.2.tgz"
@@ -10216,16 +10184,16 @@ string_decoder@^1.1.1, string_decoder@^1.3.0:
   dependencies:
     safe-buffer "~5.2.0"
 
+string_decoder@~1.1.1:
+  version "1.1.1"
+  resolved "https://registry.yarnpkg.com/string_decoder/-/string_decoder-1.1.1.tgz#9cf1611ba62685d7030ae9e4ba34149c3af03fc8"
+  integrity sha512-n/ShnvDi6FHbbVfviro+WojiFzv+s8MPMHBczVePfUpDJLwoLT0ht1l4YwBCbi8pJAveEEdnkHyPyTP/mzRfwg==
+  dependencies:
+    safe-buffer "~5.1.0"
+
 "strip-ansi-cjs@npm:strip-ansi@^6.0.1":
   version "6.0.1"
   resolved "https://registry.yarnpkg.com/strip-ansi/-/strip-ansi-6.0.1.tgz#9e26c63d30f53443e9489495b2105d37b67a85d9"
-  integrity sha512-Y38VPSHcqkFrCpFnQ9vuSXmquuv5oXOKpGeT6aGrr3o3Gc9AlVa6JBfUSOCnbxGGZF+/0ooI7KrPuUSztUdU5A==
-  dependencies:
-    ansi-regex "^5.0.1"
-
-strip-ansi@^6.0.0, strip-ansi@^6.0.1:
-  version "6.0.1"
-  resolved "https://registry.npmjs.org/strip-ansi/-/strip-ansi-6.0.1.tgz"
   integrity sha512-Y38VPSHcqkFrCpFnQ9vuSXmquuv5oXOKpGeT6aGrr3o3Gc9AlVa6JBfUSOCnbxGGZF+/0ooI7KrPuUSztUdU5A==
   dependencies:
     ansi-regex "^5.0.1"
