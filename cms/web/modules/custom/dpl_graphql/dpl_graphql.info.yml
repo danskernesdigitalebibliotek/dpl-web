@@ -6,3 +6,4 @@ core_version_requirement: ^10 || ^11
 dependencies:
   - graphql:graphql
   - graphql_compose:graphql_compose
+  - dpl_unilogin:dpl_unilogin

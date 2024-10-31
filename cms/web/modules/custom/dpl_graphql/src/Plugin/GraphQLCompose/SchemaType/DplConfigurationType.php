@@ -6,7 +6,6 @@ namespace Drupal\dpl_graphql\Plugin\GraphQLCompose\SchemaType;
 
 use Drupal\graphql_compose\Plugin\GraphQLCompose\GraphQLComposeSchemaTypeBase;
 use GraphQL\Type\Definition\ObjectType;
-use GraphQL\Type\Definition\Type;
 
 /**
  * {@inheritdoc}
@@ -26,7 +25,7 @@ class DplConfigurationType extends GraphQLComposeSchemaTypeBase {
       'name' => $this->getPluginId(),
       'description' => (string) $this->t('DPL Configuration.'),
       'fields' => fn () => [
-        'description' => ['type' => Type::string()],
+        'unilogin' => ['type' => static::type('UniloginConfiguration')],
       ],
     ]);
 

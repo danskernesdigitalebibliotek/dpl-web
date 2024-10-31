@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Drupal\dpl_unilogin\Plugin\GraphQLCompose\SchemaType;
+namespace Drupal\dpl_graphql\Plugin\GraphQLCompose\SchemaType;
 
 use Drupal\graphql_compose\Plugin\GraphQLCompose\GraphQLComposeSchemaTypeBase;
 use GraphQL\Type\Definition\ObjectType;
@@ -35,22 +35,6 @@ class UniloginConfigurationType extends GraphQLComposeSchemaTypeBase {
     ]);
 
     return $types;
-  }
-
-  /**
-   * {@inheritDoc}
-   */
-  public function getExtensions(): array {
-    $extensions = parent::getExtensions();
-
-    $extensions[] = new ObjectType([
-      'name' => 'DplConfiguration',
-      'fields' => fn() => [
-        'unilogin' => static::type($this->getPluginId()),
-      ],
-    ]);
-
-    return $extensions;
   }
 
 }

@@ -3,7 +3,3 @@ type: module
 description: "Module containing unilogin configuration"
 package: DPL
 core_version_requirement: ^10 || ^11
-dependencies:
-  - graphql:graphql
-  - graphql_compose:graphql_compose
-  - dpl_graphql:dpl_graphql
