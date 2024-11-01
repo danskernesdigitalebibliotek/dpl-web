@@ -61,7 +61,7 @@ class BranchAddressFormatter extends AddressDefaultFormatter {
   }
 
   /**
-   * Loading the field if it exists.
+   * Loading the field if it exists and has a value.
    */
   private function getField(EventSeries|EventInstance $event, string $field_name): ?FieldItemListInterface {
     // First, let's look up the custom field - does it already have a value?
