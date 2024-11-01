@@ -1,0 +1,9 @@
+dpl_unilogin.settings:
+  path: "/admin/config/services/unilogin-configuration"
+  defaults:
+    _form: '\Drupal\dpl_unilogin\Form\UniloginConfigurationForm'
+    _title: "Unilogin configuration"
+  requirements:
+    _permission: "administer site configuration"
+  options:
+    _admin_route: TRUE

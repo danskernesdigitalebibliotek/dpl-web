@@ -1,6 +1,6 @@
-name: 'DPL Consumers'
+name: "DPL Consumers"
 type: module
-description: 'Module for adding consumers to DPL CMS'
+description: "Module for adding consumers to DPL CMS"
 package: DPL
 core_version_requirement: ^10 || ^11
 dependencies:
