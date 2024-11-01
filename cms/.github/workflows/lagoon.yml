@@ -25,9 +25,10 @@ jobs:
 
   # Creating the deployment that Lagoon will look for, and add status to.
   CreateDeployment:
-    name: Creating deployment
+    name: Create deployment
     runs-on: ubuntu-latest
-    if: ${{ github.event.action == 'opened' || github.event.action == 'reopened' }}
+    if: ${{ github.event.action == 'opened' || github.event.action == 'reopened' || github.event.action == 'synchronize' }}
+    needs: [BranchNameLength]
     steps:
       - run: |
           LAGOON_DEPLOYS_LOG_URL=$(echo "https://ui.lagoon.dplplat01.dpl.reload.dk/projects/dpl-cms/dpl-cms-${{ env.LAGOON_ENVIRONMENT }}/deployments")
@@ -49,6 +50,7 @@ jobs:
     name: Close environment
     runs-on: ubuntu-latest
     if: ${{ github.event.action == 'closed' }}
+    needs: [BranchNameLength]
     steps:
       - run: gh api --method DELETE "/repos/${{ env.OWNER }}/${{ env.REPO }}/environments/${{ env.LAGOON_ENVIRONMENT }}"
 

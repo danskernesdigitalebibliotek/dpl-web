@@ -18,6 +18,7 @@ ignored_config_entities:
   - dpl_publizon.settings
   - dpl_recommender.settings
   - dpl_reservations.settings
+  - dpl_unilogin.settings
   - dpl_url_proxy.settings
   - novel.settings
   - openid_connect.settings.adgangsplatformen
