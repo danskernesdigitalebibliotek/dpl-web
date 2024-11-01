@@ -70,11 +70,10 @@ const WorkCard = ({ work }: WorkCardProps) => {
               <Image
                 src={coverSrc[0]}
                 alt="work image"
-                layout="responsive"
                 width={166}
                 height={228}
                 className={cn(
-                  "overflow-hidden rounded-sm shadow-coverPicture",
+                  "h-auto w-full overflow-hidden rounded-sm object-contain shadow-coverPicture",
                   getRandomContentColorClass()
                 )}
               />
