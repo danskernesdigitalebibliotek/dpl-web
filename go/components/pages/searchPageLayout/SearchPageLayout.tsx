@@ -6,7 +6,7 @@ import { motion } from "framer-motion"
 import { useSearchParams } from "next/navigation"
 import { useEffect, useRef, useState } from "react"
 
-import { facetDefinitions, mapFacetsToFilters } from "@/components/shared/searchFilters/helper"
+import { getFacetMachineNames } from "@/components/shared/searchFilters/helper"
 import goConfig from "@/lib/config/config"
 import {
   FacetValue,
@@ -17,21 +17,11 @@ import {
 
 import SearchFilterBar from "../../shared/searchFilters/SearchFilterBar"
 import SearchResults from "./SearchResults"
+import { getFacetsForSearchRequest, getNextPageParamsFunc, getSearchQueryArguments } from "./helper"
 
-const branchIds = goConfig<`${number}`[]>("search.branch.ids")
 const SEARCH_RESULTS_LIMIT = goConfig<number>("search.item.limit")
 
 export type FilterItemTerm = Omit<FacetValue, "__typename">
-
-export const formatFacetTerms = (filters: { [key: string]: { [key: string]: FilterItemTerm } }) => {
-  return Object.keys(filters).reduce(
-    (acc, key) => ({
-      ...acc,
-      [key]: Object.keys(filters[key]),
-    }),
-    {}
-  )
-}
 
 const SearchPageLayout = ({ searchQuery }: { searchQuery?: string }) => {
   const searchParams = useSearchParams()
@@ -41,20 +31,14 @@ const SearchPageLayout = ({ searchQuery }: { searchQuery?: string }) => {
   const [facetFilters, setFacetFilters] = useState<SearchFiltersInput>({})
   const loadMoreRef = useRef(null)
   const isInView = useInView(loadMoreRef)
+  const facets = getFacetMachineNames()
 
-  const facetsForSearchRequest = facetDefinitions.reduce(
-    (acc: SearchFiltersInput, facetDefinition) => {
-      const values = searchParams.getAll(mapFacetsToFilters[facetDefinition])
-      if (values.length > 0) {
-        return {
-          ...acc,
-          [mapFacetsToFilters[facetDefinition]]: [...values],
-        }
-      }
-      return acc
-    },
-    {} as { [key: string]: keyof SearchFiltersInput[] }
-  )
+  const facetsForSearchRequest = getFacetsForSearchRequest(searchParams)
+  const searchQueryArguments = getSearchQueryArguments({
+    q: currentQueryString,
+    currentPage,
+    facetFilters,
+  })
 
   const {
     data,
@@ -62,42 +46,22 @@ const SearchPageLayout = ({ searchQuery }: { searchQuery?: string }) => {
     isLoading: isLoadingResults,
   } = useInfiniteQuery({
     queryKey: useSearchWithPaginationQuery.getKey({
-      q: { all: currentQueryString },
-      offset: 0,
-      limit: SEARCH_RESULTS_LIMIT,
-      filters: {
-        branchId: branchIds,
-        ...facetFilters,
-      },
+      ...searchQueryArguments,
+      offset: goConfig("search.offset.initial"),
     }),
-    queryFn: useSearchWithPaginationQuery.fetcher({
-      q: { all: currentQueryString },
-      offset: currentPage * SEARCH_RESULTS_LIMIT,
-      limit: SEARCH_RESULTS_LIMIT,
-      filters: {
-        branchId: branchIds,
-        ...facetFilters,
-      },
-    }),
-    getNextPageParam: lastPage => {
-      const totalPages = Math.ceil(lastPage.search.hitcount / SEARCH_RESULTS_LIMIT)
-      const nextPage = currentPage + 1
-      return currentPage < totalPages ? nextPage : undefined // By returning undefined if there are no more pages, hasNextPage boolean will be set to false
-    },
-    initialPageParam: 0,
+    queryFn: useSearchWithPaginationQuery.fetcher(searchQueryArguments),
+    getNextPageParam: getNextPageParamsFunc(currentPage),
+    initialPageParam: goConfig<number>("search.param.initial"),
     refetchOnWindowFocus: false,
     enabled: currentQueryString?.length > 0, // Disable search result & search filter queries if q doesn't exist
   })
 
   const { data: dataFacets, isLoading: isLoadingFacets } = useSearchFacetsQuery(
     {
-      q: { all: currentQueryString },
-      facetLimit: 100,
-      facets: facetDefinitions,
-      filters: {
-        branchId: branchIds,
-        ...facetsForSearchRequest,
-      },
+      q: searchQueryArguments.q,
+      facetLimit: goConfig("search.facet.limit"),
+      facets,
+      filters: searchQueryArguments.filters,
     },
     {
       refetchOnWindowFocus: false,
