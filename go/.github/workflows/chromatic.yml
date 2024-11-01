@@ -34,11 +34,18 @@ jobs:
 
     steps:
       - name: Checkout code
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
         with:
           # Make sure the actual branch is checked out when running on pull requests.
           ref: ${{ github.head_ref }}
           fetch-depth: 0 # 👈 Required to retrieve git history
+      - name: Checkout code
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
 
       - name: Install dependencies
         run: npm install --legacy-peer-deps
@@ -49,6 +56,3 @@ jobs:
         with:
           # 👇 Chromatic projectToken, refer to the manage page to obtain it.
           projectToken: ${{ secrets.CHROMATIC_PROJECT_TOKEN }}
-        env:
-          STORYBOOK_SANITY_DATASET: ${{ secrets.STORYBOOK_SANITY_DATASET }}
-          STORYBOOK_SANITY_PROJECT_ID: ${{ secrets.STORYBOOK_SANITY_PROJECT_ID }}
