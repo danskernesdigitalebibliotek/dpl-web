@@ -1,8 +1,8 @@
 import { Issuer } from "openid-client"
 
-import getConfig from "@/lib/config/config"
+import goConfig from "@/lib/config/config"
 
-const appUrl = getConfig("url.app")
+const appUrl = goConfig("app.url")
 
 export const uniloginClientConfig = {
   wellKnownUrl: process.env.UNILOGIN_WELKNOWN_URL,

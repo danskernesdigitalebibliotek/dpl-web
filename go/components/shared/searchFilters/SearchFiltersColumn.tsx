@@ -5,7 +5,7 @@ import { SearchFacetFragment, SearchFiltersInput } from "@/lib/graphql/generated
 import { cn } from "@/lib/helpers/helper.cn"
 
 import Icon from "../icon/Icon"
-import { mapFilterNameToTranslation, sortByActiveFacets, toggleFilter } from "./helper"
+import { getFacetTranslation, sortByActiveFacets, toggleFilter } from "./helper"
 
 type SearchFiltersColumnProps = {
   facet: SearchFacetFragment
@@ -21,7 +21,7 @@ const SearchFiltersColumn = ({
   setIsExpanded,
 }: SearchFiltersColumnProps) => {
   const router = useRouter()
-  const facetName = facet.name as keyof SearchFiltersInput
+  const facetFilter = facet.name as keyof SearchFiltersInput
 
   const searchParams = useSearchParams()
   const elementRef = useRef<HTMLDivElement | null>(null)
@@ -45,9 +45,7 @@ const SearchFiltersColumn = ({
       <div
         key={facet.name}
         className={cn(["relative", !isLast && "min-w-32 flex-1", isLast && "flex-2"])}>
-        <h3 className="mb-2 text-typo-caption uppercase">
-          {mapFilterNameToTranslation[facetName]}
-        </h3>
+        <h3 className="mb-2 text-typo-caption uppercase">{getFacetTranslation(facetFilter)}</h3>
         <div
           className={cn([
             "flex gap-1 text-typo-caption",

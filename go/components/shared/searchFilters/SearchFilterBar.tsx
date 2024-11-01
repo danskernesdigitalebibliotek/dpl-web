@@ -1,6 +1,6 @@
 "use client"
 
-import React, { useState } from "react"
+import React, { Suspense, useState } from "react"
 
 import { SearchFacetFragment } from "@/lib/graphql/generated/fbi/graphql"
 
@@ -21,13 +21,14 @@ const SearchFilterBar = ({ facets }: SearchFilterBarProps) => {
         {facets.map((facet, index) => {
           const isLast = index === facets.length - 1
           return (
-            <SearchFiltersColumn
-              facet={facet}
-              isLast={isLast}
-              key={facet.name}
-              isExpanded={isExpanded}
-              setIsExpanded={setIsExpanded}
-            />
+            <Suspense key={facet.name} fallback={<p>Loading...</p>}>
+              <SearchFiltersColumn
+                facet={facet}
+                isLast={isLast}
+                isExpanded={isExpanded}
+                setIsExpanded={setIsExpanded}
+              />
+            </Suspense>
           )
         })}
       </div>

@@ -6,7 +6,8 @@ import { motion } from "framer-motion"
 import { useSearchParams } from "next/navigation"
 import { useEffect, useRef, useState } from "react"
 
-import { facetDefinitions, mapFacetsToFilters } from "@/components/shared/searchFilters/helper"
+import { getFacetMachineNames } from "@/components/shared/searchFilters/helper"
+import goConfig from "@/lib/config/config"
 import {
   FacetValue,
   SearchFiltersInput,
@@ -16,52 +17,11 @@ import {
 
 import SearchFilterBar from "../../shared/searchFilters/SearchFilterBar"
 import SearchResults from "./SearchResults"
+import { getFacetsForSearchRequest, getNextPageParamsFunc, getSearchQueryArguments } from "./helper"
 
-// TODO: Add branches though endpoint
-const branchIds = [
-  "775120",
-  "775122",
-  "775144",
-  "775167",
-  "775146",
-  "775168",
-  "751010",
-  "775147",
-  "751032",
-  "751031",
-  "775126",
-  "751030",
-  "775149",
-  "775127",
-  "775160",
-  "775162",
-  "775140",
-  "751009",
-  "751029",
-  "751027",
-  "751026",
-  "751025",
-  "775133",
-  "751024",
-  "775100",
-  "775170",
-  "775150",
-  "775130",
-] as string[]
-
-const SEARCH_RESULTS_LIMIT = 9
+const SEARCH_RESULTS_LIMIT = goConfig<number>("search.item.limit")
 
 export type FilterItemTerm = Omit<FacetValue, "__typename">
-
-export const formatFacetTerms = (filters: { [key: string]: { [key: string]: FilterItemTerm } }) => {
-  return Object.keys(filters).reduce(
-    (acc, key) => ({
-      ...acc,
-      [key]: Object.keys(filters[key]),
-    }),
-    {}
-  )
-}
 
 const SearchPageLayout = ({ searchQuery }: { searchQuery?: string }) => {
   const searchParams = useSearchParams()
@@ -71,20 +31,14 @@ const SearchPageLayout = ({ searchQuery }: { searchQuery?: string }) => {
   const [facetFilters, setFacetFilters] = useState<SearchFiltersInput>({})
   const loadMoreRef = useRef(null)
   const isInView = useInView(loadMoreRef)
+  const facets = getFacetMachineNames()
 
-  const facetsForSearchRequest = facetDefinitions.reduce(
-    (acc: SearchFiltersInput, facetDefinition) => {
-      const values = searchParams.getAll(mapFacetsToFilters[facetDefinition])
-      if (values.length > 0) {
-        return {
-          ...acc,
-          [mapFacetsToFilters[facetDefinition]]: [...values],
-        }
-      }
-      return acc
-    },
-    {} as { [key: string]: keyof SearchFiltersInput[] }
-  )
+  const facetsForSearchRequest = getFacetsForSearchRequest(searchParams)
+  const searchQueryArguments = getSearchQueryArguments({
+    q: currentQueryString,
+    currentPage,
+    facetFilters,
+  })
 
   const {
     data,
@@ -92,42 +46,22 @@ const SearchPageLayout = ({ searchQuery }: { searchQuery?: string }) => {
     isLoading: isLoadingResults,
   } = useInfiniteQuery({
     queryKey: useSearchWithPaginationQuery.getKey({
-      q: { all: currentQueryString },
-      offset: 0,
-      limit: SEARCH_RESULTS_LIMIT,
-      filters: {
-        branchId: branchIds,
-        ...facetFilters,
-      },
+      ...searchQueryArguments,
+      offset: goConfig("search.offset.initial"),
     }),
-    queryFn: useSearchWithPaginationQuery.fetcher({
-      q: { all: currentQueryString },
-      offset: currentPage * SEARCH_RESULTS_LIMIT,
-      limit: SEARCH_RESULTS_LIMIT,
-      filters: {
-        branchId: branchIds,
-        ...facetFilters,
-      },
-    }),
-    getNextPageParam: lastPage => {
-      const totalPages = Math.ceil(lastPage.search.hitcount / SEARCH_RESULTS_LIMIT)
-      const nextPage = currentPage + 1
-      return currentPage < totalPages ? nextPage : undefined // By returning undefined if there are no more pages, hasNextPage boolean will be set to false
-    },
-    initialPageParam: 0,
+    queryFn: useSearchWithPaginationQuery.fetcher(searchQueryArguments),
+    getNextPageParam: getNextPageParamsFunc(currentPage),
+    initialPageParam: goConfig<number>("search.param.initial"),
     refetchOnWindowFocus: false,
     enabled: currentQueryString?.length > 0, // Disable search result & search filter queries if q doesn't exist
   })
 
   const { data: dataFacets, isLoading: isLoadingFacets } = useSearchFacetsQuery(
     {
-      q: { all: currentQueryString },
-      facetLimit: 100,
-      facets: facetDefinitions,
-      filters: {
-        branchId: branchIds,
-        ...facetsForSearchRequest,
-      },
+      q: searchQueryArguments.q,
+      facetLimit: goConfig("search.facet.limit"),
+      facets,
+      filters: searchQueryArguments.filters,
     },
     {
       refetchOnWindowFocus: false,
@@ -148,6 +82,8 @@ const SearchPageLayout = ({ searchQuery }: { searchQuery?: string }) => {
     if (isInView) {
       handleLoadMore()
     }
+    // We choose to ignore the eslint warning below
+    // because we do not want to add the handleMore callback which changes on every render.
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isInView])
 
@@ -169,7 +105,7 @@ const SearchPageLayout = ({ searchQuery }: { searchQuery?: string }) => {
       setFacetFilters(facetsForSearchRequest)
       setCurrentPage(0)
     }
-  }, [facetsForSearchRequest, facetFilters])
+  }, [facetFilters, facetsForSearchRequest])
 
   const facetData = dataFacets?.search?.facets
   const hitcount = data?.pages?.[0]?.search.hitcount ?? 0
