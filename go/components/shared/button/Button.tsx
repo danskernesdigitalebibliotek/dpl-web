@@ -30,7 +30,12 @@ const buttonVariants = cva(
       },
       {
         variant: "default",
-        size: ["default", "md"],
+        size: "md",
+        class: "px-10 text-typo-button-sm",
+      },
+      {
+        variant: "default",
+        size: "default",
         class: "px-10 text-typo-button-sm",
       },
       {

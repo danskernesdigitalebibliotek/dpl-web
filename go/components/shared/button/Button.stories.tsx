@@ -27,6 +27,61 @@ export const Default: Story = {
   },
   args: {
     variant: "default",
+    size: "default",
+  },
+  render: args => (
+    <Button {...args} onClick={fn()}>
+      Prøv Lydbogen
+    </Button>
+  ),
+}
+
+export const Small: Story = {
+  argTypes: {
+    size: {
+      options: ["sm", "md", "lg"],
+      control: { type: "radio" },
+    },
+  },
+  args: {
+    variant: "default",
+    size: "sm",
+  },
+  render: args => (
+    <Button {...args} onClick={fn()}>
+      Prøv Lydbogen
+    </Button>
+  ),
+}
+
+export const Medium: Story = {
+  argTypes: {
+    size: {
+      options: ["sm", "md", "lg"],
+      control: { type: "radio" },
+    },
+  },
+  args: {
+    variant: "default",
+    size: "md",
+  },
+  render: args => (
+    <Button {...args} onClick={fn()}>
+      Prøv Lydbogen
+    </Button>
+  ),
+}
+
+export const Large: Story = {
+  argTypes: {
+    size: {
+      options: ["sm", "md", "lg"],
+      control: { type: "radio" },
+    },
+  },
+  args: {
+    variant: "default",
+    size: "lg",
   },
   render: args => (
     <Button {...args} onClick={fn()}>
