@@ -4,6 +4,7 @@ import React from "react"
 
 import "@/styles/globals.css"
 
+// When adding or changing fonts, remember to update the imports in the Layout file
 const GTFlexa = localFont({
   src: [
     {
