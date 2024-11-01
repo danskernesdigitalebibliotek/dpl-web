@@ -52,7 +52,7 @@ const SearchFiltersColumn = ({
           className={cn([
             "flex gap-1 text-typo-caption",
             !isLast && "flex-col",
-            isLast && "flex-row flex-wrap",
+            isLast && "flex-row flex-wrap content-start",
             !isExpanded && "h-[98px] overflow-hidden",
           ])}
           ref={elementRef}>
