@@ -224,6 +224,9 @@ tasks:
       - task dev:cli -- drush user:create patron --password="test"
       - task dev:cli -- drush user:role:add 'patron' patron
 
+      - task dev:cli -- drush user:create graphql_consumer --password="test"
+      - task dev:cli -- drush user:role:add 'graphql_consumer' graphql_consumer
+
   dev:import-profile-translations:
     desc: Import our custom profile translations. This is done automatically on deploy.
     cmds:
@@ -234,7 +237,7 @@ tasks:
     cmds:
       - task dev:cli -- drush sql:drop -y
       - docker compose exec -T {{ .MYSQL_CONTAINER }} mysql < {{ .SQL_FILE }}
-      - task dev:cache:clear:all
+      - task dev:cli -- drush deploy
     preconditions:
       - sh: "[ {{ .SQL_FILES_COUNT }} -gt 0 ]"
         msg: "There are no sql files in {{ .DIR_RESTORE_DATABASE }}/. Cannot continue."

@@ -1,0 +1,5 @@
+dpl_unilogin.settings_form:
+  title: "UniLogin configuration"
+  route_name: dpl_unilogin.settings
+  description: "Change UniLogin configuration"
+  parent: system.admin_config_services

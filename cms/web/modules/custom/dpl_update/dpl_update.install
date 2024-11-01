@@ -84,6 +84,9 @@ function dpl_update_install(): string {
   $messages[] = dpl_update_update_10017();
   $messages[] = dpl_update_update_10018();
   $messages[] = dpl_update_update_10019();
+  $messages[] = dpl_update_update_10020();
+  $messages[] = dpl_update_update_10021();
+  $messages[] = dpl_update_update_10022();
 
   return implode('\r\n', $messages);
 }
@@ -238,4 +241,25 @@ function dpl_update_update_10019(): string {
   );
 
   return $return;
+}
+
+/**
+ * Install typed_data, graphql, graphql_compose and consumers modules.
+ */
+function dpl_update_update_10020(): string {
+  return _dpl_update_install_modules(['typed_data', 'graphql', 'graphql_compose', 'consumers']);
+}
+
+/**
+ * Install dpl_unilogin module.
+ */
+function dpl_update_update_10021(): string {
+  return _dpl_update_install_modules(['dpl_unilogin']);
+}
+
+/**
+ * Install dpl_graphql module.
+ */
+function dpl_update_update_10022(): string {
+  return _dpl_update_install_modules(['dpl_graphql']);
 }

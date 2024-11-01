@@ -141,6 +141,12 @@ services:
     environment:
       << : *default-environment
 
+  node:
+    image: ghcr.io/danskernesdigitalebibliotek/dpl-go-node:0.0.12
+    labels:
+      lagoon.type: node
+      provenance: false
+
 volumes:
   projectroot:
     driver: local

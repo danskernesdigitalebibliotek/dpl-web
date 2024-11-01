@@ -54,7 +54,9 @@ class RediaEvent extends ControllerBase {
     }
 
     $this->title = $event_instance->label();
-    $this->description = $event_wrapper->getDescription();
+    // The description for an event may contain HTML tags which are not allowed
+    // in an RSS/XML feed. Encode them.
+    $this->description = htmlspecialchars($event_wrapper->getDescription() ?? "");
     $this->author = $event_instance->getOwner()->get('field_author_name')->getString();
     $this->id = $event_instance->id();
     $this->date = $changed_date->format('r');

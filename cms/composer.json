@@ -40,10 +40,10 @@
             "type": "package",
             "package": {
                 "name": "danskernesdigitalebibliotek/dpl-react",
-                "version": "2024.41.0",
+                "version": "2024.44.0",
                 "type": "drupal-library",
                 "dist": {
-                    "url": "https://github.com/danskernesdigitalebibliotek/dpl-react/releases/download/2024.41.0/dist-2024-41-0-52df86a22125c52c6de84e6c5e237d608e279b00.zip",
+                    "url": "https://github.com/danskernesdigitalebibliotek/dpl-react/releases/download/2024.44.0/dist-2024-44-0-569a1656d740c639d78cac425fac380e774cae75.zip",
                     "type": "zip"
                 },
                 "require": {
@@ -56,9 +56,9 @@
             "package": {
                 "name": "danskernesdigitalebibliotek/dpl-design-system",
                 "type": "drupal-library",
-                "version": "2024.41.0",
+                "version": "2024.44.0",
                 "dist": {
-                    "url": "https://github.com/danskernesdigitalebibliotek/dpl-design-system/releases/download/2024.41.0/dist-2024-41-0-1ca7f9197d2f2f7a2865e34173fba6eca7f50edc.zip",
+                    "url": "https://github.com/danskernesdigitalebibliotek/dpl-design-system/releases/download/2024.44.0/dist-2024-44-0-34305e57a86041624c7b762d10fa91f044842144.zip",
                     "type": "zip"
                 }
             }
@@ -90,12 +90,12 @@
         "composer/installers": "1.12.0",
         "cweagans/composer-patches": "1.7.3",
         "danskernesdigitalebibliotek/cms-api": "*",
-        "danskernesdigitalebibliotek/dpl-design-system": "2024.41.0",
-        "danskernesdigitalebibliotek/dpl-react": "2024.41.0",
+        "danskernesdigitalebibliotek/dpl-design-system": "^2024.44",
+        "danskernesdigitalebibliotek/dpl-react": "^2024.44",
         "danskernesdigitalebibliotek/fbs-client": "*",
         "dealerdirect/phpcodesniffer-composer-installer": "^1.0.0",
         "deoliveiralucas/array-keys-case-transform": "^1.1",
-        "drupal/address": "^1.0",
+        "drupal/address": "^2.0",
         "drupal/admin_toolbar": "^3.4",
         "drupal/admin_user_language": "^1.1",
         "drupal/administerusersbyrole": "^3.4",
@@ -107,6 +107,7 @@
         "drupal/config_ignore_auto": "^3",
         "drupal/config_perms": "^2.1",
         "drupal/config_translation_po": "^1.0",
+        "drupal/consumers": "^1.19",
         "drupal/content_lock": "^2.3",
         "drupal/cookieinformation": "^2.1",
         "drupal/core-composer-scaffold": "^10.3",
@@ -128,6 +129,8 @@
         "drupal/gin": "^3.0@RC",
         "drupal/gin_login": "^2.1",
         "drupal/gin_toolbar": "^1.0@RC",
+        "drupal/graphql": "^4.9",
+        "drupal/graphql_compose": "^2.2",
         "drupal/handy_cache_tags": "^1.4",
         "drupal/health_check": "^3.1",
         "drupal/honeypot": "^2.1",
@@ -335,15 +338,9 @@
             "drupal/jsonlog": {
                 "3251587: Change logging from stdout to stderr": "https://www.drupal.org/files/issues/2021-11-29/jsonlog-change-stdout-to-stderr-3251587-3.patch"
             },
-            "drupal/openapi": {
-                "3313521: OpenAPI security field does not validate": "https://git.drupalcode.org/project/openapi/-/commit/4964cf725242040ddfb0c591b6044ee1fa5912ef.patch"
-            },
             "drupal/openapi_rest": {
                 "3171530 + 3116760: Add support for parameter and response descriptions": "patches/openapi-parameter-response-descriptions-14-3.patch",
                 "3343816: Specification includes disabled resources": "https://git.drupalcode.org/project/openapi_rest/-/commit/6618157334feca93fad1041583375eed660b9085.patch"
-            },
-            "drupal/paragraphs": {
-                "3027525: Show the paragraph and field label of fields that fail validation": "https://www.drupal.org/files/issues/2023-10-03/3027525_22.patch"
             },
             "drupal/paragraphs_ee": {
                 "3106254: Sorting paragraph list alphabetically in modal": "https://www.drupal.org/files/issues/2023-03-30/paragraphs_ee_sort.patch",
@@ -367,7 +364,8 @@
                 "3468521: (1/4) When changing recurrance, identical date combinations should not be deleted and recreated": "https://git.drupalcode.org/project/recurring_events/-/commit/67261f4ac34546f2c9514199d9febb6dcce6fd10.patch",
                 "3468521: (2/4)": "https://git.drupalcode.org/project/recurring_events/-/commit/603d34936b97535f66e11429dcc9a2c61fc7cb40.patch",
                 "3468521: (3/4)": "https://git.drupalcode.org/project/recurring_events/-/commit/ad8a4294b1ffb754a338bb2cfa0146f203aa6fc1.patch",
-                "3468521: (4/4)": "https://git.drupalcode.org/project/recurring_events/-/commit/ad99ae79f5c55fc2db17427e9936ab141314609d.patch"
+                "3468521: (4/4)": "https://git.drupalcode.org/project/recurring_events/-/commit/ad99ae79f5c55fc2db17427e9936ab141314609d.patch",
+                "3468300: Update EventSeriesSettings to use datetime form element.": "https://git.drupalcode.org/project/recurring_events/-/commit/5d9bc3b1cf7c00972f053f3d14873012b1ad7140.patch"
             },
             "drupal/theme_permission": {
                 "3105637: Edit, install and uninstall permission": "https://www.drupal.org/files/issues/2024-02-01/theme-permission-edit-install-uninstall-3105637-7.patch",
