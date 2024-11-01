@@ -6,7 +6,7 @@ import { motion } from "framer-motion"
 import { useSearchParams } from "next/navigation"
 import { useEffect, useRef, useState } from "react"
 
-import { facetDefinitions, mapFacetsToFilters } from "@/components/shared/searchFilters/helper"
+import { getFacetMachineNames } from "@/components/shared/searchFilters/helper"
 import goConfig from "@/lib/config/config"
 import {
   FacetValue,
@@ -31,12 +31,9 @@ const SearchPageLayout = ({ searchQuery }: { searchQuery?: string }) => {
   const [facetFilters, setFacetFilters] = useState<SearchFiltersInput>({})
   const loadMoreRef = useRef(null)
   const isInView = useInView(loadMoreRef)
+  const facets = getFacetMachineNames()
 
-  const facetsForSearchRequest = getFacetsForSearchRequest({
-    facetDefinitions,
-    searchParams,
-    mapFacetsToFilters,
-  })
+  const facetsForSearchRequest = getFacetsForSearchRequest(searchParams)
   const searchQueryArguments = getSearchQueryArguments({
     q: currentQueryString,
     currentPage,
@@ -63,7 +60,7 @@ const SearchPageLayout = ({ searchQuery }: { searchQuery?: string }) => {
     {
       q: searchQueryArguments.q,
       facetLimit: goConfig("search.facet.limit"),
-      facets: facetDefinitions,
+      facets,
       filters: searchQueryArguments.filters,
     },
     {

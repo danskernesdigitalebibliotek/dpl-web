@@ -1,12 +1,10 @@
 import { GetNextPageParamFunction } from "@tanstack/react-query"
 import { ReadonlyURLSearchParams } from "next/navigation"
 
+import { getFacetMachineNames } from "@/components/shared/searchFilters/helper"
 import goConfig from "@/lib/config/config"
-import {
-  FacetFieldEnum,
-  SearchFiltersInput,
-  SearchWithPaginationQuery,
-} from "@/lib/graphql/generated/fbi/graphql"
+import { TConfigSearchFacets } from "@/lib/config/resolvers/search"
+import { SearchFiltersInput, SearchWithPaginationQuery } from "@/lib/graphql/generated/fbi/graphql"
 
 export const getSearchQueryArguments = ({
   q,
@@ -29,22 +27,17 @@ export const getSearchQueryArguments = ({
   }
 }
 
-export const getFacetsForSearchRequest = ({
-  facetDefinitions,
-  searchParams,
-  mapFacetsToFilters,
-}: {
-  facetDefinitions: FacetFieldEnum[]
-  searchParams: ReadonlyURLSearchParams
-  mapFacetsToFilters: Record<FacetFieldEnum, keyof SearchFiltersInput>
-}) => {
-  return facetDefinitions.reduce(
-    (acc: SearchFiltersInput, facetDefinition) => {
-      const values = searchParams.getAll(mapFacetsToFilters[facetDefinition])
+export const getFacetsForSearchRequest = (searchParams: ReadonlyURLSearchParams) => {
+  const facets = goConfig<TConfigSearchFacets>("search.facets")
+  const facetsMachineNames = getFacetMachineNames()
+
+  return facetsMachineNames.reduce(
+    (acc: SearchFiltersInput, machineName) => {
+      const values = searchParams.getAll(facets[machineName].filter)
       if (values.length > 0) {
         return {
           ...acc,
-          [mapFacetsToFilters[facetDefinition]]: [...values],
+          [facets[machineName].filter]: [...values],
         }
       }
       return acc

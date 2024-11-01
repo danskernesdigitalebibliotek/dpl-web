@@ -1,36 +1,13 @@
 import { AppRouterInstance } from "next/dist/shared/lib/app-router-context.shared-runtime"
 import { ReadonlyURLSearchParams } from "next/navigation"
 
+import goConfig from "@/lib/config/config"
+import { TConfigSearchFacets } from "@/lib/config/resolvers/search"
 import {
   FacetFieldEnum,
   SearchFacetFragment,
   SearchFiltersInput,
 } from "@/lib/graphql/generated/fbi/graphql"
-
-export const facetDefinitions = [
-  "MATERIALTYPESGENERAL",
-  "MAINLANGUAGES",
-  "AGE",
-  "LIX",
-  "SUBJECTS",
-] as FacetFieldEnum[]
-
-export const mapFacetsToFilters = {
-  MATERIALTYPESGENERAL: "materialTypesGeneral",
-  MAINLANGUAGES: "mainLanguages",
-  AGE: "age",
-  LIX: "lixRange",
-  SUBJECTS: "subjects",
-} as Record<FacetFieldEnum, keyof SearchFiltersInput>
-
-export const mapFilterNameToTranslation: Partial<Record<keyof SearchFiltersInput | "lix", string>> =
-  {
-    materialTypesGeneral: "Type",
-    mainLanguages: "Sprog",
-    age: "Alder",
-    lix: "Lix",
-    subjects: "Emne",
-  }
 
 export const toggleFilter = (filterName: string, value: string, router: AppRouterInstance) => {
   const searchParams = new URLSearchParams(window.location.search)
@@ -65,4 +42,20 @@ export const sortByActiveFacets = (
     if (!aIncluded && bIncluded) return 1
     return 0
   })
+}
+
+export const getFacetMachineNames = () => {
+  const facets = goConfig<Record<string, unknown>>("search.facets")
+  return Object.keys(facets) as FacetFieldEnum[]
+}
+
+export const getFacetTranslation = (facetFilter: keyof SearchFiltersInput) => {
+  const facets = goConfig<TConfigSearchFacets>("search.facets")
+  for (const [, facet] of Object.entries(facets)) {
+    if (facet.filter === facetFilter) {
+      return facet.translation
+    }
+  }
+
+  return null
 }
