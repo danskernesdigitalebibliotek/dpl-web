@@ -50,7 +50,7 @@ jobs:
 
       - uses: actions/setup-node@v4
         with:
-          node-version: "${{ steps.nvm.outputs.NVMRC }}"
+          node-version-file: ".nvrmc"
 
       - name: Install dependencies
         run: npm install --legacy-peer-deps
