@@ -39,6 +39,7 @@ $settings['config_exclude_modules'] = [
   'dpl_example_content',
   'dpl_example_breadcrumb',
   'devel',
+  'devel_generate',
   'field_ui',
   'purge_ui',
   'views_ui',
