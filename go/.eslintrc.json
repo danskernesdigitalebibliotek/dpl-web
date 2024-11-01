@@ -1,9 +1,24 @@
 {
   "root": true,
-  "plugins": ["@typescript-eslint"],
-  "extends": ["next/core-web-vitals", "next/typescript"],
+  "plugins": [
+    "@typescript-eslint"
+  ],
+  "extends": [
+    "next/core-web-vitals",
+    "next/typescript",
+    "plugin:storybook/recommended"
+  ],
   "rules": {
-    "no-console": ["error", { "allow": ["warn", "error", "info"] }],
+    "no-console": [
+      "error",
+      {
+        "allow": [
+          "warn",
+          "error",
+          "info"
+        ]
+      }
+    ],
     "@typescript-eslint/ban-ts-comment": "off"
   }
 }

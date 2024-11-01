@@ -141,12 +141,12 @@ export const extendedTheme = {
         letterSpacing: "var(--typo-button-lg-letter-spacing)",
       },
     ],
-    "typo-button-md": [
-      "var(--typo-button-md-size)",
+    "typo-button-sm": [
+      "var(--typo-button-sm-size)",
       {
-        lineHeight: "var(--typo-button-md-line-height)",
-        fontWeight: "var(--typo-button-md-weight)",
-        letterSpacing: "var(--typo-button-md-letter-spacing)",
+        lineHeight: "var(--typo-button-sm-line-height)",
+        fontWeight: "var(--typo-button-sm-weight)",
+        letterSpacing: "var(--typo-button-sm-letter-spacing)",
       },
     ],
     "typo-link": [
