@@ -1,6 +1,6 @@
 import { QueryClient } from "@tanstack/react-query"
 
-import { facetDefinitions } from "@/components/shared/searchFilters/helper"
+import { getFacetMachineNames } from "@/components/shared/searchFilters/helper"
 import goConfig from "@/lib/config/config"
 import {
   useSearchFacetsQuery,
@@ -27,16 +27,17 @@ const prefetchSearchResult = async (q: string, queryClient: QueryClient) => {
 }
 
 const prefetchSearchFacets = async (q: string, queryClient: QueryClient) => {
+  const facets = getFacetMachineNames()
   await queryClient.prefetchQuery({
     queryKey: useSearchFacetsQuery.getKey({
       q: { all: q },
       facetLimit: goConfig("search.facet.limit"),
-      facets: facetDefinitions,
+      facets,
     }),
     queryFn: useSearchFacetsQuery.fetcher({
       q: { all: q },
       facetLimit: goConfig("search.facet.limit"),
-      facets: facetDefinitions,
+      facets,
     }),
   })
 
