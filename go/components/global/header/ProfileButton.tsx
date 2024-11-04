@@ -12,7 +12,7 @@ import {
   SheetHeader,
   SheetTitle,
   SheetTrigger,
-} from "@/components/shared/sheet/LoginSheet"
+} from "@/components/shared/sheet/Sheet"
 import useSession from "@/hooks/useSession"
 
 const HeaderButton = ({

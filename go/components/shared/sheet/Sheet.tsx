@@ -54,6 +54,7 @@ const sheetVariants = cva(
         right: `inset-y-0 bottom-0 sm:right-0 h-full max-sm:data-[state=open]:slide-in-from-bottom
           max-sm:data-[state=closed]:slide-out-to-bottom sm:data-[state=closed]:slide-out-to-right
           sm:data-[state=open]:slide-in-from-right`,
+        bottom: `data-[state=closed]:slide-out-to-bottom data-[state=open]:slide-in-from-bottom h-full inset-0`,
       },
     },
     defaultVariants: {
