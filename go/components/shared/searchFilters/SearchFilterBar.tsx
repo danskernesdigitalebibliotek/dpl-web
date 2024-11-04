@@ -4,6 +4,8 @@ import React, { Suspense, useState } from "react"
 
 import { SearchFacetFragment } from "@/lib/graphql/generated/fbi/graphql"
 
+import Icon from "../icon/Icon"
+import { Sheet, SheetContent, SheetTrigger } from "../sheet/Sheet"
 import SearchFiltersColumn from "./SearchFiltersColumn"
 
 type SearchFilterBarProps = {
@@ -15,8 +17,19 @@ const SearchFilterBar = ({ facets }: SearchFilterBarProps) => {
 
   return (
     <>
-      {/* TODO: add mobile filter functionality and UI */}
-      <div className="xl:hidden">Mobile Filters</div>
+      <div className="mt-3 xl:hidden">
+        <Sheet>
+          <SheetTrigger
+            aria-label="Vis filtreringsmuligheder"
+            className="flex flex-row items-center gap-1 pl-2 pr-4 text-typo-link hover:bg-background-overlay">
+            <Icon name="adjust" className="h-[40px]" />
+            VIS FILTRE
+          </SheetTrigger>
+          <SheetContent className="w-full p-grid-edge pt-24" side="bottom">
+            XYZ
+          </SheetContent>
+        </Sheet>
+      </div>
       <div className="mt-10 hidden flex-row gap-4 xl:flex">
         {facets.map((facet, index) => {
           const isLast = index === facets.length - 1
