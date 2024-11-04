@@ -29,7 +29,6 @@ module:
   datetime_range: 0
   dblog: 0
   default_content: 0
-  devel_generate: 0
   dpl_admin: 0
   dpl_article: 0
   dpl_breadcrumb: 0
