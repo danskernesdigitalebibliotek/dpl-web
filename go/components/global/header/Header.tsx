@@ -11,7 +11,7 @@ function Header() {
   return (
     <div>
       <div className="dark-mode-transition flex h-navigation-top-height items-center justify-center bg-background-overlay">
-        <p className="text-typo-caption">Biblioterernes ebøger og lyderbøger</p>
+        <p className="text-typo-caption">Biblioterernes ebøger og lydbøger</p>
       </div>
       <div className="content-container grid h-navigation-height grid-cols-3 items-center">
         <div className="flex-0">
