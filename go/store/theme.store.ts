@@ -1,30 +1,28 @@
-import type {} from "@redux-devtools/extension"; // required for devtools typing
-import { create } from "zustand";
-import { devtools, persist } from "zustand/middleware";
+import type {} from "@redux-devtools/extension"
+// required for devtools typing
+import { create } from "zustand"
+import { devtools, persist } from "zustand/middleware"
 
 interface themeState {
-  theme: "light" | "dark";
-  userInteracted: boolean;
-  toggleTheme: () => void;
+  theme: "light" | "dark" | undefined
+  toggleTheme: () => void
 }
 
 const useThemeStore = create<themeState>()(
   devtools(
     persist(
-      (set) => ({
-        theme: "light",
+      set => ({
+        theme: undefined,
         toggleTheme: () =>
-          set((state) => ({
+          set(state => ({
             theme: state.theme === "light" ? "dark" : "light",
-            userInteracted: true
           })),
-        userInteracted: false
       }),
       {
-        name: "theme-storage"
+        name: "theme-storage",
       }
     )
   )
-);
+)
 
-export { useThemeStore };
+export { useThemeStore }
