@@ -22,7 +22,6 @@ export const fetcher = async <ResponseType>({
   const headers = {
     ...authHeaders,
     ...additionalHeaders,
-    "Accept-Version": "2",
   }
 
   const body = data ? JSON.stringify(data) : null
