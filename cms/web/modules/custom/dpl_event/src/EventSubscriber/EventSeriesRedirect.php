@@ -58,7 +58,9 @@ class EventSeriesRedirect implements EventSubscriberInterface {
 
     $upcoming_ids = $this->reoccurringDateFormatter->getUpcomingEventIds($event_series);
 
-    if (count($upcoming_ids) > 1) {
+    // Only redirect, if we can find a single eventinstance - otherwise, we
+    // want to stay on the series display.
+    if (count($upcoming_ids) == 1) {
       return;
     }
 
