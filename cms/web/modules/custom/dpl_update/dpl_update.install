@@ -30,6 +30,21 @@ function _dpl_update_install_modules(array $modules): string {
 }
 
 /**
+ * Helper function to uninstall modules.
+ *
+ * @param string[] $modules
+ *   The modules to install.
+ *
+ * @return string
+ *   The feedback message.
+ */
+function _dpl_update_uninstall_modules(array $modules): string {
+  DrupalTyped::service(ModuleInstallerInterface::class, 'module_installer')->uninstall($modules);
+  $modules_string = implode(', ', $modules);
+  return "Uninstalled modules: {$modules_string}.";
+}
+
+/**
  * Helper function, for adding translations.
  *
  * Generally speaking, this should be avoided, as it is DDF's responsibility
@@ -84,6 +99,7 @@ function dpl_update_install(): string {
   $messages[] = dpl_update_update_10017();
   $messages[] = dpl_update_update_10018();
   $messages[] = dpl_update_update_10019();
+  $messages[] = dpl_update_update_10020();
 
   return implode('\r\n', $messages);
 }
@@ -238,4 +254,11 @@ function dpl_update_update_10019(): string {
   );
 
   return $return;
+}
+
+/**
+ * Uninstall devel_generate module.
+ */
+function dpl_update_update_10020(): string {
+  return _dpl_update_uninstall_modules(['devel_generate']);
 }
