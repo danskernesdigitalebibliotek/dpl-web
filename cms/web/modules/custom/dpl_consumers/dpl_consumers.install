@@ -7,7 +7,7 @@
 
 declare(strict_types=1);
 
-use Drupal\dpl_consumers\DplGraphqlConsumersConstants;
+require_once __DIR__ . '/dpl_consumers.crud.php';
 
 /**
  * Implements hook_uninstall().
@@ -15,45 +15,4 @@ use Drupal\dpl_consumers\DplGraphqlConsumersConstants;
 function dpl_consumers_uninstall(): void {
   dpl_consumers_delete_user();
   dpl_consumers_delete_consumer();
-}
-
-/**
- * Delete the user.
- */
-function dpl_consumers_delete_user(): void {
-  try {
-    // Delete the user.
-    $user = \Drupal::entityTypeManager()
-      ->getStorage('user')
-      ->loadByProperties(['name' => DplGraphqlConsumersConstants::GRAPHQL_CONSUMER_USER_NAME]);
-
-    if (!empty($user)) {
-      $user = reset($user);
-      $user->delete();
-    }
-  }
-  catch (\Exception $e) {
-    // We just log here in the deletion. It's not critical if it fails.
-    \Drupal::logger('dpl_consumers')->error($e->getMessage());
-  }
-}
-
-/**
- * Delete the consumer.
- */
-function dpl_consumers_delete_consumer(): void {
-  try {
-    // Delete the consumer.
-    $consumer = \Drupal::entityTypeManager()
-      ->getStorage('consumer')
-      ->loadByProperties(['label' => DplGraphqlConsumersConstants::GRAPHQL_CONSUMER_CONSUMER_LABEL]);
-
-    if (!empty($consumer)) {
-      $consumer = reset($consumer);
-      $consumer->delete();
-    }
-  }
-  catch (\Exception $e) {
-    \Drupal::logger('dpl_consumers')->error($e->getMessage());
-  }
 }

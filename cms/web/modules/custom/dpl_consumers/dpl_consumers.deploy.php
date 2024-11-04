@@ -7,8 +7,7 @@
 
 declare(strict_types=1);
 
-use Drupal\dpl_consumers\DplGraphqlConsumersConstants;
-use Drupal\user\Entity\User;
+require_once __DIR__ . '/dpl_consumers.crud.php';
 
 /**
  * Run consumer creation on deploy.
@@ -22,31 +21,4 @@ use Drupal\user\Entity\User;
 function dpl_consumers_deploy_create_user(): void {
   dpl_consumers_create_user();
   dpl_consumers_create_consumer();
-}
-
-/**
- * Create a user used for draft-mode.
- */
-function dpl_consumers_create_user(): void {
-  $user = User::create([
-    'name' => DplGraphqlConsumersConstants::GRAPHQL_CONSUMER_USER_NAME,
-    'status' => 1,
-  ]);
-
-  $user->addRole(DplGraphqlConsumersConstants::GRAPHQL_CONSUMER_ROLE_ID);
-  $user->save();
-}
-
-/**
- * Create a consumer.
- */
-function dpl_consumers_create_consumer(): void {
-  $consumer = \Drupal::entityTypeManager()->getStorage('consumer')->create([
-    'label' => DplGraphqlConsumersConstants::GRAPHQL_CONSUMER_CONSUMER_LABEL,
-    'id' => DplGraphqlConsumersConstants::GRAPHQL_CONSUMER_CONSUMER_ID,
-    'client_id' => DplGraphqlConsumersConstants::GRAPHQL_CONSUMER_CLIENT_ID,
-    'third_party' => FALSE,
-  ]);
-
-  $consumer->save();
 }
