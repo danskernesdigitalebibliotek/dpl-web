@@ -2,7 +2,7 @@
 
 import React, { useEffect } from "react"
 
-import { addDarkMode, removeDarkMode } from "@/lib/helpers/helper.theme"
+import { useDarkMode, useLightMode } from "@/lib/helpers/helper.theme"
 import { useThemeStore } from "@/store/theme.store"
 
 //determines if the user has a set theme
@@ -12,7 +12,7 @@ function useDetectColorScheme() {
   //local storage is used to override OS theme settings
   if (theme) {
     return theme
-  } else if (!window.matchMedia) {
+  } else if (!window?.matchMedia) {
     //matchMedia method not supported
     return "light"
   } else if (window.matchMedia("(prefers-color-scheme: dark)").matches) {
@@ -27,14 +27,16 @@ export default function Theme({
   children: React.ReactNode
 }>) {
   const theme = useDetectColorScheme()
+  const darkMode = useDarkMode
+  const lightMode = useLightMode
 
   useEffect(() => {
     if (theme == "dark") {
-      addDarkMode()
+      darkMode()
     } else {
-      removeDarkMode()
+      lightMode()
     }
-  }, [theme])
+  }, [theme, darkMode, lightMode])
 
   return children
 }

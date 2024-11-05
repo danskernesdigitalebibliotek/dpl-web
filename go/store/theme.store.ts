@@ -3,8 +3,10 @@ import type {} from "@redux-devtools/extension"
 import { create } from "zustand"
 import { devtools, persist } from "zustand/middleware"
 
+import { themeVariants } from "@/lib/types/theme"
+
 interface themeState {
-  theme: "light" | "dark" | undefined
+  theme: themeVariants
   toggleTheme: () => void
 }
 
@@ -12,7 +14,7 @@ const useThemeStore = create<themeState>()(
   devtools(
     persist(
       set => ({
-        theme: undefined,
+        theme: "light",
         toggleTheme: () =>
           set(state => ({
             theme: state.theme === "light" ? "dark" : "light",

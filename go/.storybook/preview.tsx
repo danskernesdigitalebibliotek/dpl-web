@@ -4,7 +4,7 @@ import React from "react"
 
 import "@/styles/globals.css"
 
-import { addDarkMode, removeDarkMode } from "../lib/helpers/helper.theme"
+import { useDarkMode, useLightMode } from "../lib/helpers/helper.theme"
 
 // When adding or changing fonts, remember to update the imports in the Layout file
 const GTFlexa = localFont({
@@ -72,8 +72,10 @@ const preview: Preview = {
   decorators: [
     // 👇 Defining the decorator in the preview file applies it to all stories
     (Story, { parameters }) => {
-      removeDarkMode()
-      const params = { addDarkMode, ...parameters }
+      // Set the default theme to light mode
+      useLightMode()
+      // Add dark mode to the context of the story. This can be called later in the story decorator.
+      const params = { useDarkMode, ...parameters }
 
       return (
         <div className={`${GTFlexa.variable} antialiased`}>
