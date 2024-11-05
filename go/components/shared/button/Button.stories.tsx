@@ -1,4 +1,4 @@
-import type { Decorator, Meta, StoryObj } from "@storybook/react"
+import type { Meta, StoryObj } from "@storybook/react"
 import { fn } from "@storybook/test"
 
 import { darkModeDecorator } from "@/.storybook/decorators"
@@ -31,7 +31,7 @@ export const Default: Story = {
     variant: "default",
     size: "default",
   },
-  render: (args, context) => {
+  render: args => {
     return (
       <Button {...args} onClick={fn()}>
         Prøv Lydbogen
