@@ -42,8 +42,10 @@ const SearchFiltersMobile = ({ facets }: SearchFiltersMobileProps) => {
                   toggleFilter(facet.name, value.term, router)
                 }}
                 key={value.term}
-                isActive>
+                isActive
+                classNames="flex flex-row items-center pr-1">
                 {value.term}
+                <Icon name="close" className="w-[25px]" />
               </BadgeButton>
             )
           })
