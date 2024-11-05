@@ -50,7 +50,7 @@ test("That the refresh endpoint redirects to the frontpage if there is no active
     url: `/?redirect=http://john.johnson.com/john`,
     async test({ fetch }) {
       const res = await fetch({ method: "GET" })
-      expect(res.headers.get("location")).toEqual("http://john.johnson.com/john")
+      expect(res.headers.get("location")).toEqual("https://hellboy.the-movie.com/")
     },
   })
 })
