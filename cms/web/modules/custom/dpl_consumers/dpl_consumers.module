@@ -1,0 +1,44 @@
+<?php
+
+/**
+ * @file
+ * DPL consumers module.
+ */
+
+use Drupal\dpl_consumers\DplGraphqlConsumersConstants;
+
+/**
+ * Function is used for printing out the consumer credentials to the console.
+ */
+function dpl_consumers_print_consumer_credentials(): void {
+  $graphql_consumer_client_id = DplGraphqlConsumersConstants::GRAPHQL_CONSUMER_CLIENT_ID;
+  $consumer_uuid = dpl_consumers_get_consumer_uuid($graphql_consumer_client_id);
+  print_r('Consumer UUID: ' . $consumer_uuid);
+}
+
+/**
+ * Get consumer by Client ID.
+ *
+ * @return string
+ *   The consumer UUID.
+ */
+function dpl_consumers_get_consumer_uuid(string $client_id): string {
+  try {
+    $consumer = \Drupal::entityTypeManager()
+      ->getStorage('consumer')
+      ->loadByProperties(['client_id' => $client_id]);
+
+    if (!empty($consumer)) {
+      $consumer = reset($consumer);
+      $uuid = $consumer->uuid();
+      return $uuid ?? 'Consumer UUID not found.';
+    }
+    else {
+      return 'Consumer not found.';
+    }
+  }
+  catch (\Exception $e) {
+    \Drupal::logger('dpl_consumers')->error($e->getMessage());
+    return 'Error fetching consumer.';
+  }
+}
