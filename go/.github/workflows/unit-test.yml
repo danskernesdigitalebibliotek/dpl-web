@@ -1,0 +1,34 @@
+# Workflow name
+name: "Unit test"
+
+# Event for the workflow
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+# List of jobs
+jobs:
+  unit:
+    name: Unit test
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+        with:
+          # Make sure the actual branch is checked out when running on pull requests.
+          ref: ${{ github.head_ref }}
+          fetch-depth: 0 # 👈 Required to retrieve git history
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version-file: ".nvmrc"
+
+      - name: Install Dependencies
+        run: yarn install --frozen-lockfile
+
+      - name: Run unit tests
+        run: yarn test:unit
