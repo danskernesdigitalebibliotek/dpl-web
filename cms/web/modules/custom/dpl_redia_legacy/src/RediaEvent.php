@@ -27,6 +27,7 @@ class RediaEvent extends ControllerBase {
   public ?NodeInterface $branch;
   public ?RediaEventMedia $media;
   public ?RediaEventMedia $mediaThumbnail;
+  public ?string $bookingUrl;
   // phpcs:enable
 
   /**
@@ -70,6 +71,7 @@ class RediaEvent extends ControllerBase {
     }
 
     $this->branch = $branch;
+    $this->bookingUrl = $event_wrapper->getLink();
 
     // In the old system, there was a way for editors to mark content a
     // promoted. However, this does not exist in the new CMS, so we wil

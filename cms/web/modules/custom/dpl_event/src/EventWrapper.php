@@ -171,6 +171,18 @@ class EventWrapper {
   }
 
   /**
+   * Get the url of the event if available.
+   *
+   * The url will usually be the place where visitors can by tickets for the
+   * event.
+   */
+  public function getLink() : ?string {
+    $linkField = $this->getField('event_link');
+    return $linkField?->getString();
+  }
+  }
+
+  /**
    * Loading the field if it exists.
    *
    * Bear in mind that you probably want to use e.g. event_description instead

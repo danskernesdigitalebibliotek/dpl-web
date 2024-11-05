@@ -180,6 +180,10 @@ class EventsController extends ControllerBase {
               $xml->writeElement('content-rss:library-id', (string) $item->branch->id());
             }
 
+            if ($item->bookingUrl) {
+              $xml->writeElement('content-rss:booking-url', $item->bookingUrl);
+            }
+
             $xml->writeElement('content-rss:promoted', $item->promoted);
           $xml->endElement();
         }
