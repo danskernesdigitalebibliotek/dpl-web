@@ -37,8 +37,8 @@ const preview: Preview = {
     chromatic: {
       // Test each story in different viewport modes
       modes: {
-        mobile: allModes["small"],
-        desktop: allModes["large"],
+        mobile: { name: "Small", styles: { width: "640px", height: "900px" } },
+        desktop: { name: "Large", styles: { width: "1024px", height: "900px" } },
       },
     },
   },
