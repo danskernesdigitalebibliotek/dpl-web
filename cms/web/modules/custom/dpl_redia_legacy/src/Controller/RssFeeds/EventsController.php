@@ -104,8 +104,8 @@ class EventsController extends ControllerBase {
 
     $date = $this->dateFormatter->format(time(), 'custom', 'r');
 
-    // Disable CLI auto formatting. We use indentation to mark start/end
-    // elements.
+    // Disable formatting rules. We use indentation to mark start/end elements.
+    // phpcs:disable Drupal.WhiteSpace.ScopeIndent.IncorrectExact
     // @formatter:off
     $xml = new \XMLWriter();
     $xml->openMemory();
@@ -138,7 +138,7 @@ class EventsController extends ControllerBase {
             $xml->writeElement('author', $item->author);
             $xml->startElement('guid');
               $xml->writeAttribute('isPermaLink', 'false');
-              $xml->text($item->id);
+              $xml->text((string) $item->id);
             $xml->endElement();
             $xml->writeElement('pubDate', $item->date);
             $xml->startElement('source');
@@ -146,26 +146,28 @@ class EventsController extends ControllerBase {
               $xml->text($site_title);
             $xml->endElement();
 
-            if ($item->media) {
+            if ($item->media && $item->media->url) {
               $xml->startElement('media:content');
                 $xml->writeAttribute('url', $item->media->url);
-                $xml->writeAttribute('fileSize', $item->media->size);
-                $xml->writeAttribute('type', $item->media->type);
-                $xml->writeAttribute('contentmedium', $item->media->medium);
-                $xml->writeAttribute('width', $item->media->width);
-                $xml->writeAttribute('height', $item->media->height);
-                $xml->startElement('media:hash');
-                  $xml->writeAttribute('algo', 'md5');
-                  $xml->text($item->media->md5);
-                $xml->endElement();
+                $xml->writeAttribute('fileSize', (string) $item->media->size);
+                $xml->writeAttribute('type', (string) $item->media->type);
+                $xml->writeAttribute('medium', $item->media->medium);
+                $xml->writeAttribute('width', (string) $item->media->width);
+                $xml->writeAttribute('height', (string) $item->media->height);
+                if ($item->media->md5) {
+                  $xml->startElement('media:hash');
+                    $xml->writeAttribute('algo', 'md5');
+                    $xml->text($item->media->md5);
+                  $xml->endElement();
+                }
               $xml->endElement();
             }
 
-            if ($item->mediaThumbnail) {
+            if ($item->mediaThumbnail && $item->mediaThumbnail->url) {
               $xml->startElement('media:thumbnail');
                 $xml->writeAttribute('url', $item->mediaThumbnail->url);
-                $xml->writeAttribute('width', $item->mediaThumbnail->width);
-                $xml->writeAttribute('height', $item->mediaThumbnail->height);
+                $xml->writeAttribute('width', (string) $item->mediaThumbnail->width);
+                $xml->writeAttribute('height', (string) $item->mediaThumbnail->height);
               $xml->endElement();
             }
 
@@ -175,7 +177,7 @@ class EventsController extends ControllerBase {
 
             if ($item->branch) {
               $xml->writeElement('content-rss:arrangement-location', $item->branch->label());
-              $xml->writeElement('content-rss:library-id', $item->branch->id());
+              $xml->writeElement('content-rss:library-id', (string) $item->branch->id());
             }
 
             $xml->writeElement('content-rss:promoted', $item->promoted);
@@ -187,6 +189,7 @@ class EventsController extends ControllerBase {
     $xml->endDocument();
     return $xml->outputMemory();
     // @formatter:on
+    // phpcs:enable Drupal.WhiteSpace.ScopeIndent.IncorrectExact
   }
 
 }
