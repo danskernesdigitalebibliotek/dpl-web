@@ -106,45 +106,45 @@
   --font-headline: "GT Flexa", sans-serif;
   --font-body: helvetica, sans-serif;
 
-  /* FONTS */
-  --typo-huge-size: 92px;
+  /* FONTS MOBILE */
+  --typo-huge-size: 52px;
   --typo-huge-weight: 500;
-  --typo-huge-line-height: 92px;
+  --typo-huge-line-height: 58px;
   --typo-huge-letter-spacing: 0;
 
-  --typo-heading-1-size: 52px;
+  --typo-heading-1-size: 42px;
   --typo-heading-1-weight: 500;
-  --typo-heading-1-line-height: 58px;
+  --typo-heading-1-line-height: 46px;
   --typo-heading-1-letter-spacing: 0;
 
-  --typo-heading-2-size: 42px;
+  --typo-heading-2-size: 32px;
   --typo-heading-2-weight: 500;
-  --typo-heading-2-line-height: 46px;
+  --typo-heading-2-line-height: 36px;
   --typo-heading-2-letter-spacing: 0;
 
-  --typo-heading-3-size: 32px;
+  --typo-heading-3-size: 24px;
   --typo-heading-3-weight: 500;
-  --typo-heading-3-line-height: 36px;
+  --typo-heading-3-line-height: 27px;
   --typo-heading-3-letter-spacing: 0;
 
-  --typo-heading-4-size: 24px;
+  --typo-heading-4-size: 20px;
   --typo-heading-4-weight: 500;
-  --typo-heading-4-line-height: 27px;
+  --typo-heading-4-line-height: 22px;
   --typo-heading-4-letter-spacing: 0;
 
   --typo-heading-5-size: 20px;
   --typo-heading-5-weight: 500;
-  --typo-heading-5-line-height: 22px;
+  --typo-heading-5-line-height: 20px;
   --typo-heading-5-letter-spacing: 0;
 
-  --typo-subtitle-lg-size: 22px;
+  --typo-subtitle-lg-size: 16px;
   --typo-subtitle-lg-weight: 400;
-  --typo-subtitle-lg-line-height: 24px;
+  --typo-subtitle-lg-line-height: 18px;
   --typo-subtitle-lg-letter-spacing: 0;
 
-  --typo-subtitle-md-size: 18px;
+  --typo-subtitle-md-size: 16px;
   --typo-subtitle-md-weight: 400;
-  --typo-subtitle-md-line-height: 20px;
+  --typo-subtitle-md-line-height: 18px;
   --typo-subtitle-md-letter-spacing: 0;
 
   --typo-subtitle-sm-size: 14px;
@@ -208,6 +208,97 @@
     --navigation-top-height: 2rem; /* 32px */
     --navigation-height: 5rem; /* 80px */
     --navigation-search-height: 6.25rem; /* 100px */
+
+    /* FONTS */
+    --typo-huge-size: 92px;
+    --typo-huge-weight: 500;
+    --typo-huge-line-height: 92px;
+    --typo-huge-letter-spacing: 0;
+
+    --typo-heading-1-size: 52px;
+    --typo-heading-1-weight: 500;
+    --typo-heading-1-line-height: 58px;
+    --typo-heading-1-letter-spacing: 0;
+
+    --typo-heading-2-size: 42px;
+    --typo-heading-2-weight: 500;
+    --typo-heading-2-line-height: 46px;
+    --typo-heading-2-letter-spacing: 0;
+
+    --typo-heading-3-size: 32px;
+    --typo-heading-3-weight: 500;
+    --typo-heading-3-line-height: 36px;
+    --typo-heading-3-letter-spacing: 0;
+
+    --typo-heading-4-size: 24px;
+    --typo-heading-4-weight: 500;
+    --typo-heading-4-line-height: 27px;
+    --typo-heading-4-letter-spacing: 0;
+
+    --typo-heading-5-size: 20px;
+    --typo-heading-5-weight: 500;
+    --typo-heading-5-line-height: 22px;
+    --typo-heading-5-letter-spacing: 0;
+
+    --typo-subtitle-lg-size: 22px;
+    --typo-subtitle-lg-weight: 400;
+    --typo-subtitle-lg-line-height: 24px;
+    --typo-subtitle-lg-letter-spacing: 0;
+
+    --typo-subtitle-md-size: 18px;
+    --typo-subtitle-md-weight: 400;
+    --typo-subtitle-md-line-height: 20px;
+    --typo-subtitle-md-letter-spacing: 0;
+
+    --typo-subtitle-sm-size: 14px;
+    --typo-subtitle-sm-weight: 400;
+    --typo-subtitle-sm-line-height: 16px;
+    --typo-subtitle-sm-letter-spacing: 0;
+
+    --typo-body-lg-size: 18px;
+    --typo-body-lg-weight: 300;
+    --typo-body-lg-line-height: 26px;
+    --typo-body-lg-letter-spacing: 0.01em;
+
+    --typo-body-md-size: 16px;
+    --typo-body-md-weight: 300;
+    --typo-body-md-line-height: 22px;
+    --typo-body-md-letter-spacing: 0.01em;
+
+    --typo-body-sm-size: 14px;
+    --typo-body-sm-weight: 300;
+    --typo-body-sm-line-height: 18px;
+    --typo-body-sm-letter-spacing: 0.01em;
+
+    --typo-button-lg-size: 14px;
+    --typo-button-lg-weight: 500;
+    --typo-button-lg-line-height: 14px;
+    --typo-button-lg-letter-spacing: 0.1em;
+
+    --typo-button-sm-size: 12px;
+    --typo-button-sm-weight: 500;
+    --typo-button-sm-line-height: 12px;
+    --typo-button-sm-letter-spacing: 0.1em;
+
+    --typo-link-size: 14px;
+    --typo-link-weight: 400;
+    --typo-link-line-height: 14px;
+    --typo-link-letter-spacing: 0;
+
+    --typo-tag-lg-size: 12px;
+    --typo-tag-lg-weight: 500;
+    --typo-tag-lg-line-height: 12px;
+    --typo-tag-lg-letter-spacing: 0.05em;
+
+    --typo-tag-sm-size: 8px;
+    --typo-tag-sm-weight: 500;
+    --typo-tag-sm-line-height: 8px;
+    --typo-tag-sm-letter-spacing: 0;
+
+    --typo-caption-size: 10px;
+    --typo-caption-weight: 400;
+    --typo-caption-line-height: 13px;
+    --typo-caption-letter-spacing: 0;
   }
 }
 
@@ -250,7 +341,7 @@ body > * {
 }
 
 .focus-visible {
-  @apply focus-within:outline-none focus-within:ring-2 focus-within:ring-foreground focus-within:ring-offset-2 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-foreground focus-visible:ring-offset-2;
+  @apply focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-foreground focus-visible:ring-offset-2;
 }
 
 .text-typo-huge,
