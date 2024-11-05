@@ -20,7 +20,7 @@ function Header() {
         <div className="flex flex-1 justify-center">
           <DarkModeToggle />
         </div>
-        <div className="flex-0 flex justify-end space-x-4">
+        <div className="flex-0 flex justify-end space-x-4 pr-1">
           <Button variant="icon" aria-label="Tilgå hjælpesiden">
             <Icon className="h-[24px] w-[24px]" name="question-mark" />
           </Button>

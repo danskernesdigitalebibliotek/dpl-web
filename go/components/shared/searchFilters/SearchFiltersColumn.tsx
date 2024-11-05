@@ -44,14 +44,16 @@ const SearchFiltersColumn = ({
     <>
       <div
         key={facet.name}
-        className={cn(["relative", !isLast && "min-w-32 flex-1", isLast && "flex-2"])}>
-        <h3 className="mb-2 text-typo-caption uppercase">{getFacetTranslation(facetFilter)}</h3>
+        className={cn(["relative ml-[-4px]", !isLast && "min-w-32 flex-1", isLast && "flex-2"])}>
+        <h3 className="mb-2 pl-2 text-typo-caption uppercase">
+          {getFacetTranslation(facetFilter)}
+        </h3>
         <div
           className={cn([
-            "flex gap-1 text-typo-caption",
+            "flex gap-1 px-1 pt-2 text-typo-caption",
             !isLast && "flex-col",
             isLast && "flex-row flex-wrap content-start",
-            !isExpanded && "h-[98px] overflow-hidden",
+            !isExpanded && "h-[107px] overflow-hidden",
           ])}
           ref={elementRef}>
           {facet.values.map((value, index) => (

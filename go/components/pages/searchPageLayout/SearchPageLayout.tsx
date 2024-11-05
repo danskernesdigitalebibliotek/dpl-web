@@ -114,7 +114,9 @@ const SearchPageLayout = ({ searchQuery }: { searchQuery?: string }) => {
 
   return (
     <div className="content-container">
-      <h1 className="mt-[88px] text-typo-heading-2">{`Viser resultater for "${q}" ${hitcount ? "(" + hitcount + ")" : ""}`}</h1>
+      <h1 className="mt-5 text-typo-heading-3 lg:mt-[88px] lg:text-typo-heading-2">
+        {`Viser resultater for "${q}" ${hitcount ? "(" + hitcount + ")" : ""}`}
+      </h1>
       {/* TODO: add ghost loading and cleanup the code below  */}
       {isLoadingFacets && <p>isLoadingFacets...</p>}
       {isNoFilters && <p>Ingen filter</p>}
