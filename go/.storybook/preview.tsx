@@ -31,12 +31,18 @@ export const breakpoints = {
 }
 
 export const allModes = {
-  sm: { name: "Small", styles: { width: breakpoints["sm"], height: "900px" } },
+  sm: {
+    name: "Small",
+    styles: { width: breakpoints["sm"], height: "900px" },
+  },
   md: {
     name: "Medium",
     styles: { width: breakpoints["md"], height: "900px" },
   },
-  lg: { name: "Large", styles: { width: breakpoints["lg"], height: "900px" } },
+  lg: {
+    name: "Large",
+    styles: { width: breakpoints["lg"], height: "900px" },
+  },
   xl: {
     name: "Extra large",
     styles: { width: breakpoints["xl"], height: "900px" },
@@ -66,8 +72,8 @@ const preview: Preview = {
     chromatic: {
       // Test each story in different viewport modes
       modes: {
-        mobile: "sm",
-        desktop: "xl",
+        mobile: { viewport: "sm" },
+        desktop: { viewport: "xl" },
       },
     },
   },
