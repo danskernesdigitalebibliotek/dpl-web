@@ -1,4 +1,4 @@
-name: Build Test
+name: Type check
 
 on:
   push:
@@ -20,11 +20,6 @@ jobs:
           ref: ${{ github.head_ref }}
           fetch-depth: 0 # 👈 Required to retrieve git history
 
-      - name: Checkout code
-        uses: actions/checkout@v4
-        with:
-          fetch-depth: 0
-
       - uses: actions/setup-node@v4
         with:
           node-version-file: ".nvmrc"
@@ -32,5 +27,5 @@ jobs:
       - name: Install dependencies
         run: yarn install
 
-      - name: Build project
-        run: yarn build
+      - name: Run typescript compile check
+        run: npx tsc --noEmit
