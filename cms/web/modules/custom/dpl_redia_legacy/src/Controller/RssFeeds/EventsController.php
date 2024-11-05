@@ -104,48 +104,89 @@ class EventsController extends ControllerBase {
 
     $date = $this->dateFormatter->format(time(), 'custom', 'r');
 
-    $rss_feed = <<<RSS
-<?xml version="1.0" encoding="UTF-8"?>
-<rss version="2.0" xml:base="$site_url" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:media="http://search.yahoo.com/mrss/" xmlns:content-rss="http://xml.redia.dk/rss">
-  <channel>
-    <title>$site_title</title>
-    <link>$site_url</link>
-    <atom:link rel="self" href="$feed_url" />
-    <language>da</language>
-    <pubDate>$date</pubDate>
-    <lastBuildDate>$date</lastBuildDate>
-RSS;
+    // Disable CLI auto formatting. We use indentation to mark start/end
+    // elements.
+    // @formatter:off
+    $xml = new \XMLWriter();
+    $xml->openMemory();
+    $xml->startDocument('1.0', 'UTF-8');
+    $xml->startElement('rss');
+      $xml->writeAttribute('version', '2.0');
+      $xml->writeAttribute('xml:base', $site_url);
+      // We intentionally do not use the built-in XML Writer namespace handling.
+      // This allows us to produce output that matches the existing
+      // implementation as closely as possible.
+      $xml->writeAttribute('xmlns:atom', 'http://www.w3.org/2005/Atom');
+      $xml->writeAttribute('xmlns:media', 'http://search.yahoo.com/mrss/');
+      $xml->writeAttribute('xmlns:content-rss', 'http://xml.redia.dk/rss');
 
-    foreach ($items as $item) {
-      $rss_feed .= <<<ITEM
-    <item>
-      <title>{$item->title}</title>
-      <description>{$item->description}</description>
-      <author>{$item->author}</author>
-      <guid isPermaLink="false">{$item->id}</guid>
-      <pubDate>{$item->date}</pubDate>
-      <source url="$feed_url">$site_title</source>
-      <media:content url="{$item->media?->url}" fileSize="{$item->media?->size}" type="{$item->media?->type}" contentmedium="{$item->media?->medium}" width="{$item->media?->width}" height="{$item->media?->height}">
-        <media:hash algo="md5">{$item->media?->md5}</media:hash>
-      </media:content>
-      <media:thumbnail url="{$item->mediaThumbnail?->url}" width="{$item->mediaThumbnail?->width}" height="{$item->mediaThumbnail?->height}" />
-      <content-rss:subheadline>{$item->subtitle}</content-rss:subheadline>
-      <content-rss:arrangement-starttime>{$item->startTime}</content-rss:arrangement-starttime>
-      <content-rss:arrangement-endtime>{$item->endTime}</content-rss:arrangement-endtime>
-      <content-rss:arrangement-location>{$item->branch?->label()}</content-rss:arrangement-location>
-      <content-rss:library-id>{$item->branch?->id()}</content-rss:library-id>
-      <content-rss:promoted>{$item->promoted}</content-rss:promoted>
-    </item>
-ITEM;
-    }
+      $xml->startElement('channel');
+        $xml->writeElement('title', $site_title);
+        $xml->writeElement('link', $site_url);
+        $xml->startElement('atom:link');
+          $xml->writeAttribute('rel', 'self');
+          $xml->writeAttribute('href', $feed_url);
+        $xml->endElement();
+        $xml->writeElement('language', 'da');
+        $xml->writeElement('pubDate', $date);
+        $xml->writeElement('lastBuildDate', $date);
 
-    $rss_feed .= <<<RSS
-  </channel>
-</rss>
-RSS;
+        foreach ($items as $item) {
+          $xml->startElement('item');
+            $xml->writeElement('title', $item->title);
+            $xml->writeElement('description', $item->description);
+            $xml->writeElement('author', $item->author);
+            $xml->startElement('guid');
+              $xml->writeAttribute('isPermaLink', 'false');
+              $xml->text($item->id);
+            $xml->endElement();
+            $xml->writeElement('pubDate', $item->date);
+            $xml->startElement('source');
+              $xml->writeAttribute('url', $feed_url);
+              $xml->text($site_title);
+            $xml->endElement();
 
-    return $rss_feed;
+            if ($item->media) {
+              $xml->startElement('media:content');
+                $xml->writeAttribute('url', $item->media->url);
+                $xml->writeAttribute('fileSize', $item->media->size);
+                $xml->writeAttribute('type', $item->media->type);
+                $xml->writeAttribute('contentmedium', $item->media->medium);
+                $xml->writeAttribute('width', $item->media->width);
+                $xml->writeAttribute('height', $item->media->height);
+                $xml->startElement('media:hash');
+                  $xml->writeAttribute('algo', 'md5');
+                  $xml->text($item->media->md5);
+                $xml->endElement();
+              $xml->endElement();
+            }
 
+            if ($item->mediaThumbnail) {
+              $xml->startElement('media:thumbnail');
+                $xml->writeAttribute('url', $item->mediaThumbnail->url);
+                $xml->writeAttribute('width', $item->mediaThumbnail->width);
+                $xml->writeAttribute('height', $item->mediaThumbnail->height);
+              $xml->endElement();
+            }
+
+            $xml->writeElement('content-rss:subheadline', $item->subtitle);
+            $xml->writeElement('content-rss:arrangement-starttime', $item->startTime);
+            $xml->writeElement('content-rss:arrangement-endtime', $item->endTime);
+
+            if ($item->branch) {
+              $xml->writeElement('content-rss:arrangement-location', $item->branch->label());
+              $xml->writeElement('content-rss:library-id', $item->branch->id());
+            }
+
+            $xml->writeElement('content-rss:promoted', $item->promoted);
+          $xml->endElement();
+        }
+      $xml->endElement();
+
+    $xml->endElement();
+    $xml->endDocument();
+    return $xml->outputMemory();
+    // @formatter:on
   }
 
 }
