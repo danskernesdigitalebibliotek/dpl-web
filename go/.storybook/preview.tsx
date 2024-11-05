@@ -4,6 +4,7 @@ import React from "react"
 
 import "@/styles/globals.css"
 
+import { allModes } from "../.storybook/modes"
 import { addDarkMode, removeDarkMode } from "../lib/helpers/helper.theme"
 
 // When adding or changing fonts, remember to update the imports in the Layout file
@@ -32,6 +33,20 @@ const preview: Preview = {
     },
     nextjs: {
       appDirectory: true,
+    },
+    breakpoints: {
+      breakpointNames: {
+        small: "0",
+        medium: "500",
+        large: "1000",
+      },
+    },
+    chromatic: {
+      //🔶 Test each story for ArticleCard in two modes
+      modes: {
+        mobile: allModes["small"],
+        desktop: allModes["large"],
+      },
     },
   },
   decorators: [
