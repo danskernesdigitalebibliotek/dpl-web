@@ -10047,11 +10047,6 @@ stop-iteration-iterator@^1.0.0:
   dependencies:
     internal-slot "^1.0.4"
 
-storybook-addon-breakpoints@^1.0.0:
-  version "1.0.0"
-  resolved "https://registry.yarnpkg.com/storybook-addon-breakpoints/-/storybook-addon-breakpoints-1.0.0.tgz#41287428624de16397e716b50063fb0ae7e35407"
-  integrity sha512-sa9EBIpNyOK3yEaGwGGlceh2vFStlJqtVYeo8e2QZCKNHVBQLpP+1GAPTBLzK2359K4FlWyLgF6A97XAy6X+4A==
-
 storybook@^8.4.0:
   version "8.4.0"
   resolved "https://registry.npmjs.org/storybook/-/storybook-8.4.0.tgz"
