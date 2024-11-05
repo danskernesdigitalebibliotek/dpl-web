@@ -54,3 +54,17 @@ export const getFacetTranslation = (facetFilter: keyof SearchFiltersInput) => {
 
   return facets[facetFilter.toUpperCase() as keyof TConfigSearchFacets].translation || ""
 }
+
+export const getActiveFilters = (
+  allFacets: SearchFacetFragment[],
+  searchParams: ReadonlyURLSearchParams
+) => {
+  const filteredActive = allFacets.map(facet => {
+    const searchFacet = { ...facet }
+    searchFacet.values = searchFacet.values.filter(value => {
+      return searchParams.getAll(facet.name).includes(value.term)
+    })
+    return searchFacet
+  })
+  return filteredActive
+}
