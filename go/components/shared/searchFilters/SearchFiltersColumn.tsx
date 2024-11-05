@@ -4,6 +4,7 @@ import React, { useEffect, useRef, useState } from "react"
 import { SearchFacetFragment, SearchFiltersInput } from "@/lib/graphql/generated/fbi/graphql"
 import { cn } from "@/lib/helpers/helper.cn"
 
+import BadgeButton from "../badge/BadgeButton"
 import Icon from "../icon/Icon"
 import { getFacetTranslation, sortByActiveFacets, toggleFilter } from "./helper"
 
@@ -57,37 +58,25 @@ const SearchFiltersColumn = ({
           ])}
           ref={elementRef}>
           {facet.values.map((value, index) => (
-            <button
+            <BadgeButton
               onClick={() => toggleFilter(facet.name, value.term, router)}
-              className={cn([
-                `h-[29px] w-auto self-start whitespace-nowrap rounded-full bg-background-overlay px-4 py-2
-                hover:animate-wiggle`,
-                searchParams.getAll(facet.name).includes(value.term) &&
-                  "bg-foreground text-background",
-              ])}
+              isActive={!!searchParams.getAll(facet.name).includes(value.term)}
               key={index}>
               {value.term}
-            </button>
+            </BadgeButton>
           ))}
         </div>
         {hasOverflow && (
-          <div
-            className="h-9 w-9 cursor-pointer"
+          <BadgeButton
+            classNames={cn(`pl-3 w-auto flex flex-row items-center self-start  ml-1`)}
             onClick={() => {
               setIsExpanded(prev => !prev)
             }}>
-            <button
-              className={cn(
-                `flex h-[29px] w-auto flex-row items-center self-start whitespace-nowrap rounded-full
-                bg-background-overlay pl-2 pr-4 text-typo-caption hover:animate-wiggle`,
-                isExpanded && "mt-1"
-              )}>
-              <Icon className={cn("h-8 w-8", isExpanded && "rotate-180")} name="arrow-down" />
-              <p>
-                {!isExpanded && "Flere"} {isExpanded && "Skjul"}
-              </p>
-            </button>
-          </div>
+            <Icon className={cn("h-8 w-8", isExpanded && "rotate-180")} name="arrow-down" />
+            <p>
+              {!isExpanded && "Flere"} {isExpanded && "Skjul"}
+            </p>
+          </BadgeButton>
         )}
       </div>
     </>
