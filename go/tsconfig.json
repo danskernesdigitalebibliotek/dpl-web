@@ -33,6 +33,6 @@
     "lib/rest/cover-service-api/model",
     "lib/rest/cover-service-api/cover-service.ts",
     "lib/graphql/generated/fbi/*.tsx",
-    "__tests__/"
+    "__tests__"
   ]
 }
