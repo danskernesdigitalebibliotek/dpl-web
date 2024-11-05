@@ -91,8 +91,8 @@ const WorkCard = ({ work }: WorkCardProps) => {
           <WorkCardAvailabilityRow materialTypes={work.materialTypes} />
         </div>
       </Link>
-      <p className="mt-1 text-typo-subtitle-sm md:mt-5">{work.titles.full[0]}</p>
-      <p className="mt-1 text-typo-caption opacity-50 md:mt-2">
+      <p className="mt-2 text-typo-subtitle-lg md:mt-5">{work.titles.full[0]}</p>
+      <p className="mt-2 text-typo-caption opacity-50 md:mt-2">
         {displayCreators(work.creators, 2)}
       </p>
     </div>

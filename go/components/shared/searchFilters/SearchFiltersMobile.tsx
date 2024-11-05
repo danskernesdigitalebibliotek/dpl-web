@@ -33,7 +33,7 @@ const SearchFiltersMobile = ({ facets }: SearchFiltersMobileProps) => {
       </SheetTrigger>
 
       {/* Show currently selected filters */}
-      <div className="flex flex-row flex-wrap gap-1 pt-6">
+      <div className="flex flex-row flex-wrap gap-1 pt-2">
         {getActiveFilters(facets, searchParams).map(facet => {
           return facet.values.map(value => {
             return (
