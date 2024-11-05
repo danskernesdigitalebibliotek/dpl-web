@@ -34,9 +34,6 @@ export default function Theme({
     } else {
       removeDarkMode()
     }
-
-    // unmount action
-    return () => document.body.classList.remove("dark-mode")
   }, [theme])
 
   return children
