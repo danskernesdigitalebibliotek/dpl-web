@@ -4,7 +4,6 @@ import React from "react"
 
 import "@/styles/globals.css"
 
-import { allModes } from "../.storybook/modes"
 import { addDarkMode, removeDarkMode } from "../lib/helpers/helper.theme"
 
 // When adding or changing fonts, remember to update the imports in the Layout file
