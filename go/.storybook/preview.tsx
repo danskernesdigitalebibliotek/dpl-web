@@ -34,30 +34,6 @@ const preview: Preview = {
     nextjs: {
       appDirectory: true,
     },
-    viewport: {
-      viewports: {
-        sm: {
-          name: "Small",
-          styles: { width: "640px", height: "900px" },
-        },
-        md: {
-          name: "Medium",
-          styles: { width: "768px", height: "900px" },
-        },
-        lg: {
-          name: "Large",
-          styles: { width: "1024px", height: "900px" },
-        },
-        xl: {
-          name: "Extra large",
-          styles: { width: "1280px", height: "900px" },
-        },
-        "2xl": {
-          name: "2 Extra large",
-          styles: { width: "1536px", height: "900px" },
-        },
-      },
-    },
     chromatic: {
       // Test each story in different viewport modes
       modes: {
