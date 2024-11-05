@@ -15,11 +15,7 @@ const SheetTrigger = React.forwardRef<
 >(({ className, ...props }, ref) => (
   <SheetPrimitive.Trigger
     ref={ref}
-    className={cn(
-      `rounded-full outline-none focus-visible:outline-none focus-visible:ring-2
-      focus-visible:ring-foreground focus-visible:ring-offset-2`,
-      className
-    )}
+    className={cn("focus-visible rounded-full outline-none", className)}
     {...props}
   />
 ))
@@ -75,9 +71,8 @@ const SheetContent = React.forwardRef<
     <SheetOverlay />
     <SheetPrimitive.Content ref={ref} className={cn(sheetVariants({ side }), className)} {...props}>
       <SheetPrimitive.Close
-        className="absolute right-grid-edge top-grid-edge rounded-sm ring-offset-background transition-opacity
-          hover:opacity-100 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-foreground
-          focus-visible:ring-offset-2 disabled:pointer-events-none data-[state=open]:bg-secondary">
+        className="focus-visible absolute right-grid-edge top-grid-edge rounded-sm ring-offset-background
+          transition-opacity hover:opacity-100 disabled:pointer-events-none data-[state=open]:bg-secondary">
         <Cross2Icon className="h-8 w-8" />
         <span className="sr-only">Close</span>
       </SheetPrimitive.Close>

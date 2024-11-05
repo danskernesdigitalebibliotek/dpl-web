@@ -249,6 +249,10 @@ body > * {
   @apply dark-mode-transition bg-background transition-all;
 }
 
+.focus-visible {
+  @apply focus-within:outline-none focus-within:ring-2 focus-within:ring-foreground focus-within:ring-offset-2 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-foreground focus-visible:ring-offset-2;
+}
+
 .text-typo-huge,
 .text-typo-heading-1,
 .text-typo-heading-2,
