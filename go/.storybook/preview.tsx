@@ -4,7 +4,6 @@ import React from "react"
 
 import "@/styles/globals.css"
 
-import { allModes } from "../.storybook/modes"
 import { addDarkMode, removeDarkMode } from "../lib/helpers/helper.theme"
 
 // When adding or changing fonts, remember to update the imports in the Layout file
@@ -23,6 +22,31 @@ const GTFlexa = localFont({
   display: "swap",
 })
 
+export const breakpoints = {
+  sm: "640px",
+  md: "768px",
+  lg: "1024px",
+  xl: "1280px",
+  "2xl": "1536px",
+}
+
+export const allModes = {
+  sm: { name: "Small", styles: { width: breakpoints["sm"], height: "900px" } },
+  md: {
+    name: "Medium",
+    styles: { width: breakpoints["md"], height: "900px" },
+  },
+  lg: { name: "Large", styles: { width: breakpoints["lg"], height: "900px" } },
+  xl: {
+    name: "Extra large",
+    styles: { width: breakpoints["xl"], height: "900px" },
+  },
+  "2xl": {
+    name: "2 Extra large",
+    styles: { width: breakpoints["2xl"], height: "900px" },
+  },
+}
+
 const preview: Preview = {
   parameters: {
     controls: {
@@ -34,11 +58,16 @@ const preview: Preview = {
     nextjs: {
       appDirectory: true,
     },
+    viewport: {
+      viewports: {
+        ...allModes,
+      },
+    },
     chromatic: {
       // Test each story in different viewport modes
       modes: {
-        mobile: { name: "Small", styles: { width: "640px", height: "900px" } },
-        desktop: { name: "Large", styles: { width: "1024px", height: "900px" } },
+        mobile: allModes["small"],
+        desktop: allModes["large"],
       },
     },
   },
