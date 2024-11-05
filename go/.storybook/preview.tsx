@@ -34,15 +34,13 @@ const preview: Preview = {
     nextjs: {
       appDirectory: true,
     },
-    breakpoints: {
-      breakpointNames: {
-        small: "0",
-        medium: "500",
-        large: "1000",
+    viewport: {
+      viewports: {
+        ...allModes,
       },
     },
     chromatic: {
-      //🔶 Test each story for ArticleCard in two modes
+      // Test each story in different viewport modes
       modes: {
         mobile: allModes["small"],
         desktop: allModes["large"],
