@@ -66,8 +66,8 @@ const preview: Preview = {
     chromatic: {
       // Test each story in different viewport modes
       modes: {
-        mobile: allModes["small"],
-        desktop: allModes["large"],
+        mobile: "sm",
+        desktop: "xl",
       },
     },
   },
