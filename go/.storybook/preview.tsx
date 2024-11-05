@@ -4,6 +4,8 @@ import React from "react"
 
 import "@/styles/globals.css"
 
+import { useDarkMode, useLightMode } from "../lib/helpers/helper.theme"
+
 // When adding or changing fonts, remember to update the imports in the Layout file
 const GTFlexa = localFont({
   src: [
@@ -31,13 +33,53 @@ const preview: Preview = {
     nextjs: {
       appDirectory: true,
     },
+    viewport: {
+      viewports: {
+        sm: {
+          name: "Small",
+          styles: { width: "640px", height: "900px" },
+        },
+        md: {
+          name: "Medium",
+          styles: { width: "768px", height: "900px" },
+        },
+        lg: {
+          name: "Large",
+          styles: { width: "1024px", height: "900px" },
+        },
+        xl: {
+          name: "Extra large",
+          styles: { width: "1280px", height: "900px" },
+        },
+        "2xl": {
+          name: "2 Extra large",
+          styles: { width: "1536px", height: "900px" },
+        },
+      },
+    },
+    chromatic: {
+      // Test each story in different viewport modes
+      modes: {
+        mobile: {
+          viewport: "sm",
+        },
+        desktop: {
+          viewport: "xl",
+        },
+      },
+    },
   },
   decorators: [
     // 👇 Defining the decorator in the preview file applies it to all stories
     (Story, { parameters }) => {
+      // Set the default theme to light mode
+      useLightMode()
+      // Add dark mode to the context of the story. This can be called later in the story decorator.
+      const params = { useDarkMode, ...parameters }
+
       return (
         <div className={`${GTFlexa.variable} antialiased`}>
-          <Story {...parameters} />
+          <Story {...params} />
         </div>
       )
     },
