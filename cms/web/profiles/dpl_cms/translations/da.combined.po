@@ -11347,7 +11347,13 @@ msgid "For each type of child entity (the entity that's referenced by the entity
 "        (but still allowing them to see what will happen), use the middle column. The right-most column can be used\n"
 "        to hide the form options from users completely. This will run the clone operation with the defaults set here\n"
 "        (in the left-most column). See the clone form (by cloning an entity) for more information."
-msgstr ""
+msgstr "For each type of child entity (the entity that's referenced by the entity being\n"
+"        cloned), please set your cloning preferences. This will affect the clone form presented to users when they\n"
+"        clone entities. Default behaviour for whether or not the child entities should be cloned is specified in\n"
+"        the left-most column.  To prevent users from altering behaviour for each type when they're actually cloning\n"
+"        (but still allowing them to see what will happen), use the middle column. The right-most column can be used\n"
+"        to hide the form options from users completely. This will run the clone operation with the defaults set here\n"
+"        (in the left-most column). See the clone form (by cloning an entity) for more information."
 
 #: 
 msgid "Checkboxes default value"
@@ -26319,12 +26325,12 @@ msgstr ""
 #: 
 msgctxt "Opening Hours"
 msgid "Are you sure you want to delete all \"@term_label\" opening hours?"
-msgstr ""
+msgstr "Er du sikker på at du vil slette alle \"@term_label\" åbningstider?"
 
 #: 
 msgctxt "Opening Hours"
 msgid "@term_label is associated with @count opening hours. Deleting @term_label will also delete these opening hours. Are you sure you want to continue?"
-msgstr ""
+msgstr "@term_label anvendes ved @count åbningstider. Hvis du sletter @term_label sletter du også disse åbningstider. Vil du fortsætte?"
 
 #: 
 msgid "Enter the earliest an event can start."
@@ -26379,7 +26385,7 @@ msgstr ""
 
 #: 
 msgid "Wrapper type: @wrapper_type"
-msgstr ""
+msgstr "Wrapper type: @wrapper_type"
 
 #: 
 msgid "Container (invisible)"
@@ -26435,7 +26441,7 @@ msgstr ""
 
 #: 
 msgid "External URL @url"
-msgstr ""
+msgstr "Ekstern URL @url"
 
 #: 
 msgid "External URL"
