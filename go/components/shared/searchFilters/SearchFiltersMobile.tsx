@@ -15,7 +15,13 @@ import {
   shouldShowActiveFilters,
   toggleFilter,
 } from "@/components/shared/searchFilters/helper"
-import { Sheet, SheetContent, SheetTrigger } from "@/components/shared/sheet/Sheet"
+import {
+  Sheet,
+  SheetContent,
+  SheetHeader,
+  SheetTitle,
+  SheetTrigger,
+} from "@/components/shared/sheet/Sheet"
 import { SearchFacetFragment, SearchFiltersInput } from "@/lib/graphql/generated/fbi/graphql"
 
 import { Button } from "../button/Button"
@@ -67,30 +73,35 @@ const SearchFiltersMobile = ({ facets }: SearchFiltersMobileProps) => {
         )}
       </div>
 
-      <SheetContent className="w-full p-grid-edge pt-20" side="bottom">
-        <Accordion type="multiple" defaultValue={facets.map(facet => facet.name)}>
-          {facets.map(facet => {
-            const facetName = facet.name as keyof SearchFiltersInput
-            return (
-              <AccordionItem key={facetName} value={facetName}>
-                <AccordionTrigger>{getFacetTranslation(facetName)}</AccordionTrigger>
-                <AccordionContent className="flex flex-wrap gap-1">
-                  {facet.values.map((value, index) => (
-                    <BadgeButton
-                      onClick={() => {
-                        setIsSheetOpen(false)
-                        toggleFilter(facet.name, value.term, router)
-                      }}
-                      isActive={!!searchParams.getAll(facet.name).includes(value.term)}
-                      key={index}>
-                      {value.term}
-                    </BadgeButton>
-                  ))}
-                </AccordionContent>
-              </AccordionItem>
-            )
-          })}
-        </Accordion>
+      <SheetContent className="p-grid-edge" side="bottom">
+        <SheetHeader>
+          <SheetTitle className="mb-space-y text-typo-heading-3">Filtre</SheetTitle>
+          <div className="-mx-grid-edge">
+            <Accordion type="multiple" defaultValue={facets.map(facet => facet.name)}>
+              {facets.map(facet => {
+                const facetName = facet.name as keyof SearchFiltersInput
+                return (
+                  <AccordionItem key={facetName} value={facetName}>
+                    <AccordionTrigger>{getFacetTranslation(facetName)}</AccordionTrigger>
+                    <AccordionContent className="flex flex-wrap gap-1">
+                      {facet.values.map((value, index) => (
+                        <BadgeButton
+                          onClick={() => {
+                            setIsSheetOpen(false)
+                            toggleFilter(facet.name, value.term, router)
+                          }}
+                          isActive={!!searchParams.getAll(facet.name).includes(value.term)}
+                          key={index}>
+                          {value.term}
+                        </BadgeButton>
+                      ))}
+                    </AccordionContent>
+                  </AccordionItem>
+                )
+              })}
+            </Accordion>
+          </div>
+        </SheetHeader>
       </SheetContent>
     </Sheet>
   )
