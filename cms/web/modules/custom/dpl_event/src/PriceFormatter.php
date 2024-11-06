@@ -150,4 +150,31 @@ class PriceFormatter {
     }
   }
 
+  /**
+   * Formats a range of numeric prices into a string.
+   *
+   * Sorts and formats raw prices without currency pre/suffixes or rewriting 0
+   * to "Free".
+   *
+   * @param float[]|int[] $prices
+   *   Array of price values (numbers).
+   *
+   * @return string
+   *   Formatted price range string.
+   */
+  public function formatRawPriceRange(array $prices): string {
+    sort($prices);
+    $lowest_price = min($prices);
+    $highest_price = max($prices);
+
+    if ($lowest_price != $highest_price) {
+      $lowest_price = $this->formatRawPrice((string) $lowest_price);
+      $highest_price = $this->formatRawPrice((string) $highest_price);
+
+      return "$lowest_price - $highest_price";
+    }
+
+    return $this->formatRawPrice((string) $lowest_price);
+  }
+
 }
