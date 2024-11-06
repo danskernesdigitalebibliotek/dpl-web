@@ -45,7 +45,7 @@ const SearchFiltersColumn = ({
     <>
       <div
         key={facet.name}
-        className={cn(["relative ml-[-4px]", !isLast && "min-w-32 flex-1", isLast && "flex-2"])}>
+        className={cn("relative ml-[-4px]", !isLast && "min-w-32 flex-1", isLast && "flex-2")}>
         <h3 className="mb-2 pl-2 text-typo-caption uppercase">
           {getFacetTranslation(facetFilter)}
         </h3>
