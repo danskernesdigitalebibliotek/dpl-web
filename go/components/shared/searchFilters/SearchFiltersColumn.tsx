@@ -57,8 +57,8 @@ const SearchFiltersColumn = ({
             "flex gap-1 px-1 pt-2 text-typo-caption",
             !isLast && "flex-col",
             isLast && "flex-row flex-wrap content-start",
-            !isExpanded && "h-[107px] overflow-hidden",
-          ])}
+            !isExpanded && "h-[107px] overflow-hidden"
+          )}
           ref={elementRef}>
           {facet.values.map((value, index) => (
             <BadgeButton
@@ -75,7 +75,7 @@ const SearchFiltersColumn = ({
             onClick={() => {
               setIsExpanded(prev => !prev)
             }}>
-            <Icon className={cn("h-8 w-8", isExpanded ? "rotate-180" : '')} name="arrow-down" />
+            <Icon className={cn("h-8 w-8", isExpanded ? "rotate-180" : "")} name="arrow-down" />
             <p>
               {!isExpanded && "Flere"} {isExpanded && "Skjul"}
             </p>
