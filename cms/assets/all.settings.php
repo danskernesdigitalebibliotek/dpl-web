@@ -117,6 +117,10 @@ if (getenv('LAGOON_ENVIRONMENT_TYPE') !== 'production') {
   // because the user pulling in the changes won't have permissions to modify
   // files in the directory.
   $settings['skip_permissions_hardening'] = TRUE;
+
+  // Set default Unilogin configuration on non-production environments.
+  $config['dpl_unilogin.settings']['unilogin_api_endpoint'] = 'https://et-broker.unilogin.dk';
+  $config['dpl_unilogin.settings']['unilogin_api_wellknown_endpoint'] = 'https://et-broker.unilogin.dk/auth/realms/broker/.well-known/openid-configuration';
 }
 
 // Setup Redis.

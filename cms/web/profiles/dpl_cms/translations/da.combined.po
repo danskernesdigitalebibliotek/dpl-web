@@ -4,11 +4,23 @@
 # #-#-#-#-#  da.config.po (PROJECT VERSION)  #-#-#-#-#
 # da translation of DPL CMS
 #
+#, fuzzy
 msgid ""
 msgstr ""
+"#-#-#-#-#  da.po (PROJECT VERSION)  #-#-#-#-#\n"
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2024-10-29 15:26+0100\n"
-"PO-Revision-Date: 2024-10-29 15:26+0100\n"
+"POT-Creation-Date: 2024-11-06 13:12+0100\n"
+"PO-Revision-Date: 2024-11-06 13:12+0100\n"
+"Last-Translator: NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n > 1);\n"
+"#-#-#-#-#  da.config.po (PROJECT VERSION)  #-#-#-#-#\n"
+"Project-Id-Version: PROJECT VERSION\n"
+"POT-Creation-Date: 2024-11-06 13:13+0100\n"
+"PO-Revision-Date: 2024-11-06 13:13+0100\n"
 "Last-Translator: NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
 "MIME-Version: 1.0\n"
@@ -273,6 +285,42 @@ msgid ""
 "structure and cannot be edited."
 msgstr ""
 "Denne side findes allerede findes i indholdsstrukturen og kan ikke redigeres."
+
+msgctxt "Unilogin configuration"
+msgid "Unilogin configuration"
+msgstr ""
+
+msgctxt "Unilogin configuration"
+msgid "UniLogin API endpoint URL."
+msgstr ""
+
+msgctxt "Unilogin configuration"
+msgid "The UniLogin API endpoint url."
+msgstr ""
+
+msgctxt "Unilogin configuration"
+msgid "UniLogin API wellknown endpoint URL"
+msgstr ""
+
+msgctxt "Unilogin configuration"
+msgid "The UniLogin API wellknown endpoint url."
+msgstr ""
+
+msgctxt "Unilogin configuration"
+msgid "UniLogin API client ID."
+msgstr ""
+
+msgctxt "Unilogin configuration"
+msgid "The UniLogin API client ID."
+msgstr ""
+
+msgctxt "Unilogin configuration"
+msgid "UniLogin API client secret."
+msgstr ""
+
+msgctxt "Unilogin configuration"
+msgid "The UniLogin API client secret."
+msgstr ""
 
 msgctxt "DPL admin UX"
 msgid "Event"
@@ -779,13 +827,15 @@ msgstr "Biblioteket er lukket"
 
 msgctxt "Opening Hours"
 msgid "Are you sure you want to delete all \"@term_label\" opening hours?"
-msgstr ""
+msgstr "Er du sikker på at du vil slette alle \"@term_label\" åbningstider?"
 
 msgctxt "Opening Hours"
 msgid ""
 "@term_label is associated with @count opening hours. Deleting @term_label "
 "will also delete these opening hours. Are you sure you want to continue?"
 msgstr ""
+"@term_label anvendes ved @count åbningstider. Hvis du sletter @term_label "
+"sletter du også disse åbningstider. Vil du fortsætte?"
 
 msgctxt "Opening Hours sidebar"
 msgid "Opening hours"
@@ -1974,7 +2024,7 @@ msgid ""
 "possibility to delete a selected reservation, or multiple selected "
 "reservations"
 msgstr ""
-"Denne knap åbner en pop-up som gær det muligt at slette en eller flere "
+"Denne knap åbner en pop-up som gør det muligt at slette en eller flere "
 "reserveringer"
 
 msgctxt "Global"
@@ -3730,6 +3780,15 @@ msgstr "Materialetype"
 msgid "Select the material type."
 msgstr "Vælg materialetype"
 
+msgid "List of DPL-Go Unilogin configuration."
+msgstr ""
+
+msgid "DPL Configuration."
+msgstr ""
+
+msgid "DPL Configuration"
+msgstr ""
+
 msgctxt "DPL admin UX"
 msgid ""
 "<p>In previous versions of Drupal, you could clear the cache frequently "
@@ -4054,6 +4113,9 @@ msgstr "VærkID-søgning efter materiale"
 msgid "Work id with type"
 msgstr "VærkID med type"
 
+msgid "DPL configuration schema extensions for GraphQL Compose."
+msgstr ""
+
 msgid "dpl_campaign"
 msgstr "dpl_campaign"
 
@@ -4220,6 +4282,21 @@ msgstr "Brødkrummer"
 
 msgid "Breadcrumbs and automatic URL aliases, based on content structure."
 msgstr "Brødkrummer og automatiske URL-aliasser, baseret på indholdsstruktur."
+
+msgid "DPL UniLogin"
+msgstr ""
+
+msgid "Module containing unilogin configuration"
+msgstr ""
+
+msgid "UniLogin configuration"
+msgstr ""
+
+msgid "Change UniLogin configuration"
+msgstr ""
+
+msgid "Unilogin configuration"
+msgstr ""
 
 msgid "DPL related content - test suite"
 msgstr "DPL relateret indhold - test suite"
@@ -4518,6 +4595,12 @@ msgstr "Arrangement"
 msgid "Custom handling related to events."
 msgstr "Indstillinger for arrangementer"
 
+msgid "DPL Consumers"
+msgstr ""
+
+msgid "Module for adding consumers to DPL CMS"
+msgstr ""
+
 msgid "Footer Settings"
 msgstr "Footerindstillinger"
 
@@ -4547,6 +4630,12 @@ msgstr "FBI integration"
 
 msgid "Integration with with FBI API, https://fbi-api.dbc.dk/."
 msgstr "Integration til FBI API, https://fbi-api.dbc.dk/."
+
+msgid "DPL GraphQL"
+msgstr ""
+
+msgid "Module used for handling graphql functionality."
+msgstr ""
 
 msgid "DPL Cache settings"
 msgstr "DPL cache-indstillinger"
@@ -4674,7 +4763,7 @@ msgstr "Postnummer"
 
 msgctxt "Address label"
 msgid "Dependent locality (e.g. Neighbourhood)"
-msgstr ""
+msgstr "Dependent locality (e.g. Neighbourhood)"
 
 msgctxt "Address label"
 msgid "Locality (e.g. City)"
@@ -4706,7 +4795,7 @@ msgstr "Område"
 
 msgctxt "Address label"
 msgid "Canton"
-msgstr ""
+msgstr "Canton"
 
 msgctxt "Address label"
 msgid "County"
@@ -4931,7 +5020,7 @@ msgid "Wrapper type"
 msgstr ""
 
 msgid "Wrapper type: @wrapper_type"
-msgstr ""
+msgstr "Wrapper type: @wrapper_type"
 
 msgid "Container (invisible)"
 msgstr ""
@@ -7122,6 +7211,20 @@ msgid ""
 "        (in the left-most column). See the clone form (by cloning an entity) "
 "for more information."
 msgstr ""
+"For each type of child entity (the entity that's referenced by the entity "
+"being\n"
+"        cloned), please set your cloning preferences. This will affect the "
+"clone form presented to users when they\n"
+"        clone entities. Default behaviour for whether or not the child "
+"entities should be cloned is specified in\n"
+"        the left-most column.  To prevent users from altering behaviour for "
+"each type when they're actually cloning\n"
+"        (but still allowing them to see what will happen), use the middle "
+"column. The right-most column can be used\n"
+"        to hide the form options from users completely. This will run the "
+"clone operation with the defaults set here\n"
+"        (in the left-most column). See the clone form (by cloning an entity) "
+"for more information."
 
 msgid "Checkboxes default value"
 msgstr "Standardværdi for afkrydsningsfelter"
@@ -8766,7 +8869,7 @@ msgid "Thumbnail image style"
 msgstr "Thumbnail billedstil"
 
 msgid "External URL @url"
-msgstr ""
+msgstr "Ekstern URL @url"
 
 msgid "External URL"
 msgstr ""
@@ -21151,6 +21254,10 @@ msgctxt "system.action.user_add_role_action.external_system:label"
 msgid "Add the External system role to the selected user(s)"
 msgstr ""
 
+msgctxt "system.action.user_add_role_action.graphql_consumer:label"
+msgid "Add the GraphQl consumer role to the selected user(s)"
+msgstr ""
+
 msgctxt "system.action.user_block_user_action:label"
 msgid "Block the selected user(s)"
 msgstr ""
@@ -21161,6 +21268,10 @@ msgstr ""
 
 msgctxt "system.action.user_remove_role_action.external_system:label"
 msgid "Remove the External system role from the selected user(s)"
+msgstr ""
+
+msgctxt "system.action.user_remove_role_action.graphql_consumer:label"
+msgid "Remove the GraphQl consumer role from the selected user(s)"
 msgstr ""
 
 msgctxt "system.action.user_unblock_user_action:label"
@@ -21479,6 +21590,10 @@ msgstr ""
 
 msgctxt "user.role.external_system:label"
 msgid "External system"
+msgstr ""
+
+msgctxt "user.role.graphql_consumer:label"
+msgid "GraphQl consumer"
 msgstr ""
 
 msgctxt "user.role.local_administrator:label"
