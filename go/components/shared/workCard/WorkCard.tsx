@@ -70,11 +70,10 @@ const WorkCard = ({ work }: WorkCardProps) => {
               <Image
                 src={coverSrc[0]}
                 alt="work image"
-                layout="responsive"
                 width={166}
                 height={228}
                 className={cn(
-                  "overflow-hidden rounded-sm shadow-coverPicture",
+                  "h-auto w-full overflow-hidden rounded-sm object-contain shadow-coverPicture",
                   getRandomContentColorClass()
                 )}
               />
@@ -92,8 +91,8 @@ const WorkCard = ({ work }: WorkCardProps) => {
           <WorkCardAvailabilityRow materialTypes={work.materialTypes} />
         </div>
       </Link>
-      <p className="mt-1 text-typo-subtitle-sm md:mt-5">{work.titles.full[0]}</p>
-      <p className="mt-1 text-typo-caption opacity-50 md:mt-2">
+      <p className="mt-2 break-words text-typo-subtitle-lg md:mt-5">{work.titles.full[0]}</p>
+      <p className="mt-2 text-typo-caption opacity-50 md:mt-2">
         {displayCreators(work.creators, 2)}
       </p>
     </div>

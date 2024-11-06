@@ -11,7 +11,7 @@ function Header() {
   return (
     <div>
       <div className="dark-mode-transition flex h-navigation-top-height items-center justify-center bg-background-overlay">
-        <p className="text-typo-caption">Biblioterernes ebøger og lyderbøger</p>
+        <p className="text-typo-caption">Biblioterernes ebøger og lydbøger</p>
       </div>
       <div className="content-container grid h-navigation-height grid-cols-3 items-center">
         <div className="flex-0">
@@ -20,7 +20,7 @@ function Header() {
         <div className="flex flex-1 justify-center">
           <DarkModeToggle />
         </div>
-        <div className="flex-0 flex justify-end space-x-4">
+        <div className="flex-0 flex justify-end space-x-4 pr-1">
           <Button variant="icon" aria-label="Tilgå hjælpesiden">
             <Icon className="h-[24px] w-[24px]" name="question-mark" />
           </Button>

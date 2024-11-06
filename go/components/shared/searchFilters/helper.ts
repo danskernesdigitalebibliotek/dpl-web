@@ -1,3 +1,4 @@
+import { flatten } from "lodash"
 import { AppRouterInstance } from "next/dist/shared/lib/app-router-context.shared-runtime"
 import { ReadonlyURLSearchParams } from "next/navigation"
 
@@ -51,11 +52,27 @@ export const getFacetMachineNames = () => {
 
 export const getFacetTranslation = (facetFilter: keyof SearchFiltersInput) => {
   const facets = goConfig<TConfigSearchFacets>("search.facets")
-  for (const [, facet] of Object.entries(facets)) {
-    if (facet.filter === facetFilter) {
-      return facet.translation
-    }
-  }
 
-  return null
+  return facets[facetFilter.toUpperCase() as keyof TConfigSearchFacets].translation || ""
+}
+
+export const getActiveFilters = (
+  allFacets: SearchFacetFragment[],
+  searchParams: ReadonlyURLSearchParams
+) => {
+  const filteredActive = allFacets.map(facet => {
+    const searchFacet = { ...facet }
+    searchFacet.values = searchFacet.values.filter(value => {
+      return searchParams.getAll(facet.name).includes(value.term)
+    })
+    return searchFacet
+  })
+  return filteredActive
+}
+
+export const shouldShowActiveFilters = (
+  facets: SearchFacetFragment[],
+  searchParams: ReadonlyURLSearchParams
+) => {
+  return flatten(getActiveFilters(facets, searchParams).map(filter => filter.values)).length > 0
 }

@@ -15,11 +15,7 @@ const SheetTrigger = React.forwardRef<
 >(({ className, ...props }, ref) => (
   <SheetPrimitive.Trigger
     ref={ref}
-    className={cn(
-      `rounded-full outline-none focus-visible:outline-none focus-visible:ring-2
-      focus-visible:ring-foreground focus-visible:ring-offset-2`,
-      className
-    )}
+    className={cn("focus-visible rounded-full outline-none", className)}
     {...props}
   />
 ))
@@ -46,14 +42,15 @@ const SheetOverlay = React.forwardRef<
 SheetOverlay.displayName = SheetPrimitive.Overlay.displayName
 
 const sheetVariants = cva(
-  `fixed z-50 gap-4 bg-background shadow-lg transition ease-in-out data-[state=closed]:duration-300
-  data-[state=open]:duration-500 data-[state=open]:animate-in data-[state=closed]:animate-out`,
+  `fixed z-50 bg-background shadow-lg transition ease-in-out data-[state=closed]:duration-300
+  data-[state=open]:duration-500 data-[state=open]:animate-in data-[state=closed]:animate-out overflow-scroll pb-24`,
   {
     variants: {
       side: {
         right: `inset-y-0 bottom-0 sm:right-0 h-full max-sm:data-[state=open]:slide-in-from-bottom
           max-sm:data-[state=closed]:slide-out-to-bottom sm:data-[state=closed]:slide-out-to-right
           sm:data-[state=open]:slide-in-from-right`,
+        bottom: `data-[state=closed]:slide-out-to-bottom data-[state=open]:slide-in-from-bottom h-full inset-0`,
       },
     },
     defaultVariants: {
@@ -74,10 +71,8 @@ const SheetContent = React.forwardRef<
     <SheetOverlay />
     <SheetPrimitive.Content ref={ref} className={cn(sheetVariants({ side }), className)} {...props}>
       <SheetPrimitive.Close
-        className="data-[state=open]:bg-secondary right-grid-edge top-grid-edge absolute rounded-sm
-          ring-offset-background transition-opacity hover:opacity-100 focus-visible:outline-none
-          focus-visible:ring-2 focus-visible:ring-foreground focus-visible:ring-offset-2
-          disabled:pointer-events-none">
+        className="focus-visible absolute right-grid-edge top-grid-edge rounded-sm ring-offset-background
+          transition-opacity hover:opacity-100 disabled:pointer-events-none data-[state=open]:bg-secondary">
         <Cross2Icon className="h-8 w-8" />
         <span className="sr-only">Close</span>
       </SheetPrimitive.Close>

@@ -55,10 +55,10 @@ const SearchInput = ({ className, placeholder }: SearchInputProps) => {
       <input
         ref={inputRef}
         className={cn(
-          `text-sm file:text-sm flex h-[50px] w-full rounded-base bg-background-overlay px-5
+          `text-sm file:text-sm focus-visible flex h-[50px] w-full rounded-base bg-background-overlay px-5
           text-typo-subtitle-lg shadow-sm transition-colors file:border-0 file:bg-transparent file:font-medium
-          file:text-foreground placeholder:text-muted-foreground focus-visible:outline-none
-          focus-visible:ring-2 focus-visible:ring-ring disabled:cursor-not-allowed disabled:opacity-50 lg:h-20`,
+          file:text-foreground placeholder:text-muted-foreground disabled:cursor-not-allowed
+          disabled:opacity-50 lg:h-20`,
           className
         )}
         value={queryString}
@@ -66,7 +66,7 @@ const SearchInput = ({ className, placeholder }: SearchInputProps) => {
         placeholder={placeholder}
       />
       <button
-        className="absolute right-[24px] top-[50%] translate-y-[-50%]"
+        className="focus-visible absolute right-3 top-[50%] translate-y-[-50%] rounded-full md:right-[24px]"
         onClick={navigateToSearch}
         aria-label="Søg">
         <Icon className="h-[32px] w-[32px]" name="search" />
