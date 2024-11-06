@@ -311,7 +311,6 @@
                 "3200212: Overwrite files on import": "https://www.drupal.org/files/issues/2021-12-08/default_content-3200212.patch"
             },
             "drupal/dynamic_entity_reference": {
-                "3405253: Update the FieldType category for clarity": "https://git.drupalcode.org/project/dynamic_entity_reference/-/commit/3f048d296f671906d15b0cdfbbadbea38f5f3c8b.patch",
                 "3396393: Entity with a dynamic entity reference field can't be cloned using entity_clone": "https://www.drupal.org/files/issues/2023-10-24/3396393-2.patch"
             },
             "drupal/entity_clone": {
