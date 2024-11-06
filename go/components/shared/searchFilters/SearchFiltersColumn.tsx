@@ -72,7 +72,7 @@ const SearchFiltersColumn = ({
             onClick={() => {
               setIsExpanded(prev => !prev)
             }}>
-            <Icon className={cn("h-8 w-8", isExpanded && "rotate-180")} name="arrow-down" />
+            <Icon className={cn("h-8 w-8", isExpanded ? "rotate-180" : '')} name="arrow-down" />
             <p>
               {!isExpanded && "Flere"} {isExpanded && "Skjul"}
             </p>
