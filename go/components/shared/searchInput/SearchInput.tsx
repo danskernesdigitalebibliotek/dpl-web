@@ -66,7 +66,7 @@ const SearchInput = ({ className, placeholder }: SearchInputProps) => {
         placeholder={placeholder}
       />
       <button
-        className="focus-visible absolute right-[24px] top-[50%] translate-y-[-50%] rounded-full"
+        className="focus-visible absolute right-3 top-[50%] translate-y-[-50%] rounded-full md:right-[24px]"
         onClick={navigateToSearch}
         aria-label="Søg">
         <Icon className="h-[32px] w-[32px]" name="search" />
