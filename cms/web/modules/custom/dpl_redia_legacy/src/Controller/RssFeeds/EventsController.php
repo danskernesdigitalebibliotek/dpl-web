@@ -8,6 +8,7 @@ use Drupal\Core\Controller\ControllerBase;
 use Drupal\Core\Datetime\DateFormatterInterface;
 use Drupal\Core\File\FileUrlGeneratorInterface;
 use Drupal\Core\Url;
+use Drupal\dpl_event\PriceFormatter;
 use Drupal\dpl_redia_legacy\RediaEvent;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\HttpFoundation\Request;
@@ -24,6 +25,7 @@ class EventsController extends ControllerBase {
   public function __construct(
     protected FileUrlGeneratorInterface $fileUrlGenerator,
     protected DateFormatterInterface $dateFormatter,
+    protected PriceFormatter $priceFormatter,
   ) {}
 
   /**
@@ -33,6 +35,7 @@ class EventsController extends ControllerBase {
     return new static(
       $container->get('file_url_generator'),
       $container->get('date.formatter'),
+      $container->get('dpl_event.price_formatter'),
     );
   }
 
@@ -80,7 +83,7 @@ class EventsController extends ControllerBase {
     $items = [];
 
     foreach ($events as $event) {
-      $items[] = new RediaEvent($event);
+      $items[] = new RediaEvent($event, $this->priceFormatter);
     }
 
     return $items;
@@ -182,6 +185,11 @@ class EventsController extends ControllerBase {
 
             if ($item->bookingUrl) {
               $xml->writeElement('content-rss:booking-url', $item->bookingUrl);
+            }
+
+            // Events without a price element are interpreted as free.
+            if ($item->prices) {
+              $xml->writeElement('content-rss:arrangement-price', $item->prices);
             }
 
             $xml->writeElement('content-rss:promoted', $item->promoted);

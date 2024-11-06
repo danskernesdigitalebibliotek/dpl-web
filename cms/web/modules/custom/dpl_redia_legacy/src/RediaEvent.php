@@ -6,6 +6,7 @@ use Drupal\Core\Controller\ControllerBase;
 use Drupal\Core\Datetime\DrupalDateTime;
 use Drupal\Core\Field\FieldItemListInterface;
 use Drupal\dpl_event\EventWrapper;
+use Drupal\dpl_event\PriceFormatter;
 use Drupal\node\NodeInterface;
 use Drupal\recurring_events\Entity\EventInstance;
 
@@ -28,6 +29,7 @@ class RediaEvent extends ControllerBase {
   public ?RediaEventMedia $media;
   public ?RediaEventMedia $mediaThumbnail;
   public ?string $bookingUrl;
+  public ?string $prices;
   // phpcs:enable
 
   /**
@@ -38,7 +40,7 @@ class RediaEvent extends ControllerBase {
    */
   public string $promoted;
 
-  public function __construct(EventInstance $event_instance) {
+  public function __construct(EventInstance $event_instance, PriceFormatter $price_formatter) {
     $event_wrapper = new EventWrapper($event_instance);
 
     $branch = $event_wrapper->getBranches()[0] ?? NULL;
@@ -72,6 +74,14 @@ class RediaEvent extends ControllerBase {
 
     $this->branch = $branch;
     $this->bookingUrl = $event_wrapper->getLink();
+
+    if (!$event_wrapper->isFreeToAttend()) {
+      $prices = $event_wrapper->getTicketPrices();
+      $this->prices = $price_formatter->formatRawPriceRange($prices);
+    }
+    else {
+      $this->prices = NULL;
+    }
 
     // In the old system, there was a way for editors to mark content a
     // promoted. However, this does not exist in the new CMS, so we wil
