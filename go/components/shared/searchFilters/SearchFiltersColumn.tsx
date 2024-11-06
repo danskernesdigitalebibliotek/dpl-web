@@ -50,7 +50,7 @@ const SearchFiltersColumn = ({
           {getFacetTranslation(facetFilter)}
         </h3>
         <div
-          className={cn([
+          className={cn(
             "flex gap-1 px-1 pt-2 text-typo-caption",
             !isLast && "flex-col",
             isLast && "flex-row flex-wrap content-start",
