@@ -6,6 +6,7 @@ import { motion } from "framer-motion"
 import { useSearchParams } from "next/navigation"
 import { useEffect, useRef, useState } from "react"
 
+import SearchFiltersMobile from "@/components/shared/searchFilters/SearchFiltersMobile"
 import { getFacetMachineNames } from "@/components/shared/searchFilters/helper"
 import goConfig from "@/lib/config/config"
 import {
@@ -15,8 +16,10 @@ import {
   useSearchWithPaginationQuery,
 } from "@/lib/graphql/generated/fbi/graphql"
 
-import SearchFilterBar from "../../shared/searchFilters/SearchFilterBar"
-import SearchResults from "./SearchResults"
+import SearchFiltersDesktop, {
+  SearchFiltersDesktopGhost,
+} from "../../shared/searchFilters/SearchFiltersDesktop"
+import SearchResults, { SearchResultsGhost } from "./SearchResults"
 import { getFacetsForSearchRequest, getNextPageParamsFunc, getSearchQueryArguments } from "./helper"
 
 const SEARCH_RESULTS_LIMIT = goConfig<number>("search.item.limit")
@@ -44,6 +47,10 @@ const SearchPageLayout = ({ searchQuery }: { searchQuery?: string }) => {
     data,
     fetchNextPage,
     isLoading: isLoadingResults,
+    isFetchingNextPage: isFetchingMoreResults,
+    isFetching: isFetchingResults,
+    isPending: isPendingResults,
+    isRefetching: isRefetchingResults,
   } = useInfiniteQuery({
     queryKey: useSearchWithPaginationQuery.getKey({
       ...searchQueryArguments,
@@ -110,19 +117,33 @@ const SearchPageLayout = ({ searchQuery }: { searchQuery?: string }) => {
   const facetData = dataFacets?.search?.facets
   const hitcount = data?.pages?.[0]?.search.hitcount ?? 0
   const isNoFilters = !!(!isLoadingFacets && !facetData?.length)
+  const isLoading =
+    isLoadingResults || isFetchingMoreResults || isFetchingResults || isPendingResults
   const isNoSearchResult = !!(!isLoadingResults && hitcount === 0)
 
   return (
-    <div className="content-container">
-      <h1 className="mt-8 text-typo-heading-3 lg:mt-[88px] lg:text-typo-heading-2">
+    <div className="content-container space-y-grid-gap-2 mt-grid-gap-2">
+      <h1 className="text-typo-heading-3 lg:text-typo-heading-2">
         {`Viser resultater for "${q}" ${hitcount ? "(" + hitcount + ")" : ""}`}
       </h1>
-      {/* TODO: add ghost loading and cleanup the code below  */}
-      {isLoadingFacets && <p>isLoadingFacets...</p>}
-      {isNoFilters && <p>Ingen filter</p>}
-      {facetData && facetData?.length > 0 && <SearchFilterBar facets={dataFacets.search.facets} />}
-      {isLoadingResults && <p>isLoading...</p>}
-      {isNoSearchResult && <p>Ingen søgeresultat</p>}
+      {facetData && facetData?.length > 0 ? (
+        <div className="relative">
+          <div className="xl:hidden">
+            <SearchFiltersMobile facets={dataFacets.search.facets} />
+          </div>
+          <div className="hidden xl:block">
+            <SearchFiltersDesktop facets={dataFacets.search.facets} />
+          </div>
+        </div>
+      ) : (
+        <>
+          <div className="xl:hidden">{/* <SearchFiltersMobileGhost /> */}</div>
+          <div className="hidden xl:block">
+            <SearchFiltersDesktopGhost />
+          </div>
+        </>
+      )}
+      <hr className="-mx-grid-edge w-screen border-foreground opacity-10 md:mx-auto md:w-full" />
       <div className="mb-space-y flex flex-col gap-y-[calc(var(--grid-gap-x)*2)]">
         {data?.pages.map(
           (page, i) =>
@@ -137,6 +158,7 @@ const SearchPageLayout = ({ searchQuery }: { searchQuery?: string }) => {
               </motion.div>
             )
         )}
+        {isLoading && <SearchResultsGhost />}
       </div>
       <div ref={loadMoreRef} className="h-0 opacity-0"></div>
     </div>

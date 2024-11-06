@@ -6,7 +6,11 @@
   /* GRID */
   --page-width: 1600px;
   --grid-edge: 1rem; /* 16px */
-  --grid-gap-x: 0.75rem; /* 12px */
+  --grid-gap: 0.75rem; /* 12px */
+  --grid-gap-half: calc(var(--grid-gap) / 2); /* 6px */
+  --grid-gap-2: calc(var(--grid-gap) * 2); /* 24px */
+  --grid-gap-3: calc(var(--grid-gap) * 3); /* 36px */
+  --grid-gap-x: var(--grid-gap); /* 12px */
 
   --space-y: 5rem; /* 80px */
 
@@ -50,6 +54,7 @@
   --aspect-4-5: 4 / 5;
   --aspect-5-2: 5 / 2;
   --aspect-5-4: 5 / 4;
+  --aspect-7-9: 7 / 9;
   --aspect-16-9: 16 / 9;
   --aspect-9-16: 9 / 16;
 
@@ -202,7 +207,7 @@
   :root {
     /* GRID */
     --grid-edge: 2.5rem; /* 40px */
-    --grid-gap-x: 1.5rem; /* 24px */
+    --grid-gap: 1.5rem; /* 24px */
 
     /* NAVIGATION */
     --navigation-top-height: 2rem; /* 32px */
@@ -313,7 +318,7 @@
 }
 
 .grid-cols-go {
-  @apply grid-cols-12;
+  @apply grid-cols-6 lg:grid-cols-12;
 }
 
 .grid-go {

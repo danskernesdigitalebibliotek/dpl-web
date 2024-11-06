@@ -18,6 +18,8 @@ import {
 import { Sheet, SheetContent, SheetTrigger } from "@/components/shared/sheet/Sheet"
 import { SearchFacetFragment, SearchFiltersInput } from "@/lib/graphql/generated/fbi/graphql"
 
+import { Button } from "../button/Button"
+
 type SearchFiltersMobileProps = {
   facets: SearchFacetFragment[]
 }
@@ -29,35 +31,41 @@ const SearchFiltersMobile = ({ facets }: SearchFiltersMobileProps) => {
 
   return (
     <Sheet open={isSheetOpen} onOpenChange={setIsSheetOpen}>
-      <SheetTrigger
-        aria-label="Vis filtreringsmuligheder"
-        onClick={() => setIsSheetOpen(!isSheetOpen)}
-        className="flex flex-row items-center gap-1 pr-4 text-typo-link hover:bg-background-overlay">
-        <Icon name="adjust" className="h-[40px]" />
-        VIS FILTRE
-      </SheetTrigger>
+      <div className="space-y-grid-gap">
+        <SheetTrigger
+          aria-label="Vis filtreringsmuligheder"
+          onClick={() => setIsSheetOpen(!isSheetOpen)}
+          className="flex flex-row items-center gap-1 text-typo-link">
+          <Button asChild>
+            <div>
+              <Icon name="adjust" className="h-[40px]" />
+              VIS FILTRE
+            </div>
+          </Button>
+        </SheetTrigger>
 
-      {/* Show currently selected filters */}
-      {shouldShowActiveFilters(facets, searchParams) && (
-        <div className="flex flex-row flex-wrap gap-1 pt-2">
-          {getActiveFilters(facets, searchParams).map(facet => {
-            return facet.values.map(value => {
-              return (
-                <BadgeButton
-                  onClick={() => {
-                    toggleFilter(facet.name, value.term, router)
-                  }}
-                  key={value.term}
-                  isActive
-                  classNames="flex flex-row items-center pr-1">
-                  {value.term}
-                  <Icon name="close" className="w-[25px]" />
-                </BadgeButton>
-              )
-            })
-          })}
-        </div>
-      )}
+        {/* Show currently selected filters */}
+        {shouldShowActiveFilters(facets, searchParams) && (
+          <div className="flex flex-row flex-wrap gap-1">
+            {getActiveFilters(facets, searchParams).map(facet => {
+              return facet.values.map(value => {
+                return (
+                  <BadgeButton
+                    onClick={() => {
+                      toggleFilter(facet.name, value.term, router)
+                    }}
+                    key={value.term}
+                    isActive
+                    classNames="flex flex-row items-center pr-1">
+                    {value.term}
+                    <Icon name="close" className="w-[25px]" />
+                  </BadgeButton>
+                )
+              })
+            })}
+          </div>
+        )}
+      </div>
 
       <SheetContent className="w-full p-grid-edge pt-20" side="bottom">
         <Accordion type="multiple" defaultValue={facets.map(facet => facet.name)}>
