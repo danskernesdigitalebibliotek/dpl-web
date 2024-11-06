@@ -7,17 +7,16 @@ import {
   AccordionItem,
   AccordionTrigger,
 } from "@/components/accordion/Accordion"
-import { SearchFacetFragment, SearchFiltersInput } from "@/lib/graphql/generated/fbi/graphql"
-
-import BadgeButton from "../badge/BadgeButton"
-import Icon from "../icon/Icon"
-import { Sheet, SheetContent, SheetTrigger } from "../sheet/Sheet"
+import BadgeButton from "@/components/shared/badge/BadgeButton"
+import Icon from "@/components/shared/icon/Icon"
 import {
   getActiveFilters,
   getFacetTranslation,
   shouldShowActiveFilters,
   toggleFilter,
-} from "./helper"
+} from "@/components/shared/searchFilters/helper"
+import { Sheet, SheetContent, SheetTrigger } from "@/components/shared/sheet/Sheet"
+import { SearchFacetFragment, SearchFiltersInput } from "@/lib/graphql/generated/fbi/graphql"
 
 type SearchFiltersMobileProps = {
   facets: SearchFacetFragment[]

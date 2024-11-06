@@ -1,12 +1,15 @@
 import { useRouter, useSearchParams } from "next/navigation"
 import React, { useEffect, useRef, useState } from "react"
 
+import BadgeButton from "@/components/shared/badge/BadgeButton"
+import Icon from "@/components/shared/icon/Icon"
+import {
+  getFacetTranslation,
+  sortByActiveFacets,
+  toggleFilter,
+} from "@/components/shared/searchFilters/helper"
 import { SearchFacetFragment, SearchFiltersInput } from "@/lib/graphql/generated/fbi/graphql"
 import { cn } from "@/lib/helpers/helper.cn"
-
-import BadgeButton from "../badge/BadgeButton"
-import Icon from "../icon/Icon"
-import { getFacetTranslation, sortByActiveFacets, toggleFilter } from "./helper"
 
 type SearchFiltersColumnProps = {
   facet: SearchFacetFragment
