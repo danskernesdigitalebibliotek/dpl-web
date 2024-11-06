@@ -12,7 +12,12 @@ import { SearchFacetFragment, SearchFiltersInput } from "@/lib/graphql/generated
 import BadgeButton from "../badge/BadgeButton"
 import Icon from "../icon/Icon"
 import { Sheet, SheetContent, SheetTrigger } from "../sheet/Sheet"
-import { getActiveFilters, getFacetTranslation, toggleFilter } from "./helper"
+import {
+  getActiveFilters,
+  getFacetTranslation,
+  shouldShowActiveFilters,
+  toggleFilter,
+} from "./helper"
 
 type SearchFiltersMobileProps = {
   facets: SearchFacetFragment[]
@@ -22,6 +27,7 @@ const SearchFiltersMobile = ({ facets }: SearchFiltersMobileProps) => {
   const router = useRouter()
   const searchParams = useSearchParams()
   const [isSheetOpen, setIsSheetOpen] = useState(false)
+
   return (
     <Sheet open={isSheetOpen} onOpenChange={setIsSheetOpen}>
       <SheetTrigger
@@ -33,26 +39,28 @@ const SearchFiltersMobile = ({ facets }: SearchFiltersMobileProps) => {
       </SheetTrigger>
 
       {/* Show currently selected filters */}
-      <div className="flex flex-row flex-wrap gap-1 pt-2">
-        {getActiveFilters(facets, searchParams).map(facet => {
-          return facet.values.map(value => {
-            return (
-              <BadgeButton
-                onClick={() => {
-                  toggleFilter(facet.name, value.term, router)
-                }}
-                key={value.term}
-                isActive
-                classNames="flex flex-row items-center pr-1">
-                {value.term}
-                <Icon name="close" className="w-[25px]" />
-              </BadgeButton>
-            )
-          })
-        })}
-      </div>
+      {shouldShowActiveFilters(facets, searchParams) && (
+        <div className="flex flex-row flex-wrap gap-1 pt-2">
+          {getActiveFilters(facets, searchParams).map(facet => {
+            return facet.values.map(value => {
+              return (
+                <BadgeButton
+                  onClick={() => {
+                    toggleFilter(facet.name, value.term, router)
+                  }}
+                  key={value.term}
+                  isActive
+                  classNames="flex flex-row items-center pr-1">
+                  {value.term}
+                  <Icon name="close" className="w-[25px]" />
+                </BadgeButton>
+              )
+            })
+          })}
+        </div>
+      )}
 
-      <SheetContent className="w-full p-grid-edge pt-24" side="bottom">
+      <SheetContent className="w-full p-grid-edge pt-20" side="bottom">
         <Accordion type="multiple" defaultValue={facets.map(facet => facet.name)}>
           {facets.map(facet => {
             const facetName = facet.name as keyof SearchFiltersInput

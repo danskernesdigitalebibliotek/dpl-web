@@ -1,3 +1,4 @@
+import { flatten } from "lodash"
 import { AppRouterInstance } from "next/dist/shared/lib/app-router-context.shared-runtime"
 import { ReadonlyURLSearchParams } from "next/navigation"
 
@@ -67,4 +68,11 @@ export const getActiveFilters = (
     return searchFacet
   })
   return filteredActive
+}
+
+export const shouldShowActiveFilters = (
+  facets: SearchFacetFragment[],
+  searchParams: ReadonlyURLSearchParams
+) => {
+  return flatten(getActiveFilters(facets, searchParams).map(filter => filter.values)).length > 0
 }
