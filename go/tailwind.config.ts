@@ -15,6 +15,7 @@ export const extendedTheme = {
     base: "var(--base-radius)", // 15px
     sm: "calc(var(--base-radius) - 5px)",
     input: "var(--input-radius)",
+    none: "0",
   },
   zIndex: {
     "-1": "-1",
