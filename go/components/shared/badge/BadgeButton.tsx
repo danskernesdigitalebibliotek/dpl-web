@@ -13,12 +13,12 @@ const BadgeButton = ({ onClick, isActive = false, classNames, children }: BadgeB
   return (
     <button
       onClick={onClick}
-      className={cn([
+      className={cn(
         `focus-visible h-[29px] w-auto self-start whitespace-nowrap rounded-full bg-background-overlay px-4
         py-2 text-typo-caption hover:animate-wiggle`,
         isActive && "bg-foreground text-background",
         classNames,
-      ])}>
+      )}>
       {children}
     </button>
   )
