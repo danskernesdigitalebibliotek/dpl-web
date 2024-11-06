@@ -116,17 +116,15 @@ const SearchPageLayout = ({ searchQuery }: { searchQuery?: string }) => {
 
   const facetData = dataFacets?.search?.facets
   const hitcount = data?.pages?.[0]?.search.hitcount ?? 0
-  const isNoFilters = !!(!isLoadingFacets && !facetData?.length)
   const isLoading =
     isLoadingResults || isFetchingMoreResults || isFetchingResults || isPendingResults
-  const isNoSearchResult = !!(!isLoadingResults && hitcount === 0)
 
   return (
     <div className="content-container space-y-grid-gap-2 mt-grid-gap-2">
       <h1 className="text-typo-heading-3 lg:text-typo-heading-2">
         {`Viser resultater for "${q}" ${hitcount ? "(" + hitcount + ")" : ""}`}
       </h1>
-      {facetData && facetData?.length > 0 ? (
+      {!isLoadingFacets && facetData && facetData?.length > 0 ? (
         <div className="relative">
           <div className="xl:hidden">
             <SearchFiltersMobile facets={dataFacets.search.facets} />
