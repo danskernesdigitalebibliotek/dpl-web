@@ -302,14 +302,6 @@
   }
 }
 
-@media (prefers-color-scheme: dark) {
-  body:not(.user-interacted) {
-    --background: var(--blue);
-    --background-overlay: var(--blue-overlay);
-    --foreground: var(--beige);
-  }
-}
-
 .dark-mode {
   --background: var(--blue);
   --background-overlay: var(--blue-overlay);

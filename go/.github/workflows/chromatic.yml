@@ -39,10 +39,6 @@ jobs:
           # Make sure the actual branch is checked out when running on pull requests.
           ref: ${{ github.head_ref }}
           fetch-depth: 0 # 👈 Required to retrieve git history
-      - name: Checkout code
-        uses: actions/checkout@v4
-        with:
-          fetch-depth: 0
 
       - uses: actions/setup-node@v4
         with:
