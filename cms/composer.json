@@ -40,10 +40,10 @@
             "type": "package",
             "package": {
                 "name": "danskernesdigitalebibliotek/dpl-react",
-                "version": "2024.44.0",
+                "version": "2024.45.0",
                 "type": "drupal-library",
                 "dist": {
-                    "url": "https://github.com/danskernesdigitalebibliotek/dpl-react/releases/download/2024.44.0/dist-2024-44-0-569a1656d740c639d78cac425fac380e774cae75.zip",
+                    "url": "https://github.com/danskernesdigitalebibliotek/dpl-react/releases/download/2024.45.0/dist-2024-45-0-43d543d1b3e33cc859f2401cad3a7c18f0d7d19b.zip",
                     "type": "zip"
                 },
                 "require": {
@@ -56,9 +56,9 @@
             "package": {
                 "name": "danskernesdigitalebibliotek/dpl-design-system",
                 "type": "drupal-library",
-                "version": "2024.44.0",
+                "version": "2024.45.0",
                 "dist": {
-                    "url": "https://github.com/danskernesdigitalebibliotek/dpl-design-system/releases/download/2024.44.0/dist-2024-44-0-34305e57a86041624c7b762d10fa91f044842144.zip",
+                    "url": "https://github.com/danskernesdigitalebibliotek/dpl-design-system/releases/download/2024.45.0/dist-2024-45-0-61278e37e6e8fa118932c90aea48f0d491755b1f.zip",
                     "type": "zip"
                 }
             }
@@ -90,8 +90,8 @@
         "composer/installers": "1.12.0",
         "cweagans/composer-patches": "1.7.3",
         "danskernesdigitalebibliotek/cms-api": "*",
-        "danskernesdigitalebibliotek/dpl-design-system": "^2024.44",
-        "danskernesdigitalebibliotek/dpl-react": "^2024.44",
+        "danskernesdigitalebibliotek/dpl-design-system": "2024.45.0",
+        "danskernesdigitalebibliotek/dpl-react": "2024.45.0",
         "danskernesdigitalebibliotek/fbs-client": "*",
         "dealerdirect/phpcodesniffer-composer-installer": "^1.0.0",
         "deoliveiralucas/array-keys-case-transform": "^1.1",
