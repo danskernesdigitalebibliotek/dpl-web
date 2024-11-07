@@ -37,7 +37,7 @@
   --navigation-combined-height: calc(
     var(--navigation-height) + var(--navigation-search-height) + var(--navigation-top-height)
   );
-  --screen-minus-navigation-height: calc(100vh - var(--navigation-combined));
+  --screen-minus-navigation-height: calc(100vh - var(--navigation-combined-height));
 
   /* BORDER RADIUS */
   --base-radius: 0.625rem; /* 10px */
@@ -314,7 +314,7 @@
 }
 
 .content-container {
-  @apply mx-auto max-w-[var(--page-width)] px-[var(--grid-edge)];
+  @apply mx-auto w-full max-w-[var(--page-width)] px-[var(--grid-edge)];
 }
 
 .grid-cols-go {

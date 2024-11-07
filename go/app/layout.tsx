@@ -41,7 +41,9 @@ export default function RootLayout({
         <Theme>
           <ReactQueryProvider>
             <Header />
-            {children}
+            <div className="flex h-full min-h-screen-minus-navigation-height w-full flex-col">
+              {children}
+            </div>
             <Footer />
           </ReactQueryProvider>
         </Theme>

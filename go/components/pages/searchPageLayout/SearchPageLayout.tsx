@@ -119,45 +119,53 @@ const SearchPageLayout = ({ searchQuery }: { searchQuery?: string }) => {
     isLoadingResults || isFetchingMoreResults || isFetchingResults || isPendingResults
 
   return (
-    <div className="content-container space-y-grid-gap-2 mt-grid-gap-2">
+    <div className="content-container space-y-grid-gap-2 my-grid-gap-2">
       <h1 className="text-typo-heading-3 lg:text-typo-heading-2">
         {`Viser resultater for "${q}" ${hitcount ? "(" + hitcount + ")" : ""}`}
       </h1>
-      {!isLoadingFacets && facetData && facetData?.length > 0 ? (
-        <div className="relative">
-          <div className="xl:hidden">
-            <SearchFiltersMobile facets={dataFacets.search.facets} />
-          </div>
-          <div className="hidden xl:block">
-            <SearchFiltersDesktop facets={dataFacets.search.facets} />
-          </div>
-        </div>
-      ) : (
+      {q ? (
         <>
-          <div className="xl:hidden">{/* <SearchFiltersMobileGhost /> */}</div>
-          <div className="hidden xl:block">
-            <SearchFiltersDesktopGhost />
+          {!isLoadingFacets && facetData && facetData?.length > 0 ? (
+            <div className="relative">
+              <div className="xl:hidden">
+                <SearchFiltersMobile facets={dataFacets.search.facets} />
+              </div>
+              <div className="hidden xl:block">
+                <SearchFiltersDesktop facets={dataFacets.search.facets} />
+              </div>
+            </div>
+          ) : (
+            <>
+              <div className="xl:hidden">{/* <SearchFiltersMobileGhost /> */}</div>
+              <div className="hidden xl:block">
+                <SearchFiltersDesktopGhost />
+              </div>
+            </>
+          )}
+          <hr className="-mx-grid-edge w-screen border-foreground opacity-10 md:mx-auto md:w-full" />
+          <div className="mb-space-y flex flex-col gap-y-[calc(var(--grid-gap-x)*2)]">
+            {data?.pages.map(
+              (page, i) =>
+                page.search.works && (
+                  <motion.div
+                    key={i}
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                    transition={{ duration: 0.5 }}
+                    exit={{ opacity: 0 }}>
+                    <SearchResults works={page.search.works} />
+                  </motion.div>
+                )
+            )}
+            {isLoading && <SearchResultsGhost />}
           </div>
+          <div ref={loadMoreRef} className="h-0 opacity-0"></div>
         </>
+      ) : (
+        <div className="text-typo-body-1">
+          <p className="text-foreground opacity-80">Ingen søgeord fundet</p>
+        </div>
       )}
-      <hr className="-mx-grid-edge w-screen border-foreground opacity-10 md:mx-auto md:w-full" />
-      <div className="mb-space-y flex flex-col gap-y-[calc(var(--grid-gap-x)*2)]">
-        {data?.pages.map(
-          (page, i) =>
-            page.search.works && (
-              <motion.div
-                key={i}
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                transition={{ duration: 0.5 }}
-                exit={{ opacity: 0 }}>
-                <SearchResults works={page.search.works} />
-              </motion.div>
-            )
-        )}
-        {isLoading && <SearchResultsGhost />}
-      </div>
-      <div ref={loadMoreRef} className="h-0 opacity-0"></div>
     </div>
   )
 }
