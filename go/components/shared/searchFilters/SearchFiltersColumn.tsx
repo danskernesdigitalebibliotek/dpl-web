@@ -39,7 +39,9 @@ const SearchFiltersColumn = ({
   }, [elementRef])
 
   // We show the selected values first in the list
-  facet.values = sortByActiveFacets(facet, selectedFilters)
+  if (selectedFilters) {
+    facet.values = sortByActiveFacets(facet, selectedFilters)
+  }
 
   return (
     <>
@@ -64,11 +66,13 @@ const SearchFiltersColumn = ({
                 `h-[29px] w-auto self-start whitespace-nowrap rounded-full bg-background-overlay px-4 py-2
                 hover:animate-wiggle`,
                 {
-                  "bg-foreground text-background": facetTermIsSelected({
-                    facet: facet.name,
-                    term: value.term,
-                    filters: selectedFilters,
-                  }),
+                  "bg-foreground text-background":
+                    selectedFilters &&
+                    facetTermIsSelected({
+                      facet: facet.name,
+                      term: value.term,
+                      filters: selectedFilters,
+                    }),
                 }
               )}
               key={index}>

@@ -1,6 +1,7 @@
 import { GetNextPageParamFunction } from "@tanstack/react-query"
 import { useSelector } from "@xstate/react"
 import { ReadonlyURLSearchParams } from "next/navigation"
+import { AnyActorRef } from "xstate"
 
 import { getFacetMachineNames } from "@/components/shared/searchFilters/helper"
 import goConfig from "@/lib/config/config"
@@ -78,7 +79,11 @@ export const useSearchDataAndLoadingStates = () => {
     return snapshot.context.selectedFilters
   })
 
-  const hitcount = 100
+  return { q, data, selectedFilters, isLoadingFacets, isLoadingResults }
+}
 
-  return { q, data, selectedFilters, isLoadingFacets, isLoadingResults, hitcount }
+export const useDebugContext = (actor: AnyActorRef) => {
+  const context = useSelector(actor, snapshot => {
+    return snapshot.context
+  })
 }

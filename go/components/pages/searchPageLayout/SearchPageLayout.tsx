@@ -1,25 +1,26 @@
 "use client"
 
-import { motion } from "framer-motion"
+import { motion, useInView } from "framer-motion"
+import { useEffect, useRef } from "react"
 
 import goConfig from "@/lib/config/config"
-import {
-  FacetValue,
-  SearchFacetsQuery,
-  SearchWithPaginationQuery,
-} from "@/lib/graphql/generated/fbi/graphql"
+import { FacetValue } from "@/lib/graphql/generated/fbi/graphql"
+import useSearchMachineActor from "@/lib/machines/search/useSearchMachineActor"
 
 import SearchFilterBar from "../../shared/searchFilters/SearchFilterBar"
 import SearchResults from "./SearchResults"
-import { useSearchDataAndLoadingStates } from "./helper"
+import { useDebugContext, useSearchDataAndLoadingStates } from "./helper"
 
 const SEARCH_RESULTS_LIMIT = goConfig<number>("search.item.limit")
 
 export type FilterItemTerm = Omit<FacetValue, "__typename">
 
 const SearchPageLayout = ({ searchQuery }: { searchQuery?: string }) => {
-  const { data, hitcount, isLoadingFacets, isLoadingResults, q } = useSearchDataAndLoadingStates()
-
+  const loadMoreRef = useRef(null)
+  const isInView = useInView(loadMoreRef)
+  const actor = useSearchMachineActor()
+  const { data, isLoadingFacets, isLoadingResults, q } = useSearchDataAndLoadingStates()
+  useDebugContext(actor)
   // useMemo(() => {
   //   actor.send({ type: "SEARCH" })
   // }, [])
@@ -77,16 +78,17 @@ const SearchPageLayout = ({ searchQuery }: { searchQuery?: string }) => {
     //   fetchNextPage()
     //   setCurrentPage(currentPage + 1)
     // }
+    actor.send({ type: "LOAD_MORE" })
   }
 
-  // useEffect(() => {
-  //   if (isInView) {
-  //     handleLoadMore()
-  //   }
-  //   // We choose to ignore the eslint warning below
-  //   // because we do not want to add the handleMore callback which changes on every render.
-  //   // eslint-disable-next-line react-hooks/exhaustive-deps
-  // }, [isInView])
+  useEffect(() => {
+    if (isInView) {
+      handleLoadMore()
+    }
+    // We choose to ignore the eslint warning below
+    // because we do not want to add the handleMore callback which changes on every render.
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [isInView])
 
   // TODO: consider finding a better way to control fetching of data without using the useEffects below
   // useEffect(() => {
@@ -113,26 +115,38 @@ const SearchPageLayout = ({ searchQuery }: { searchQuery?: string }) => {
   // const isNoFilters = !!(!isLoadingFacets && !facetData?.length)
   // const isNoSearchResult = !!(!isLoadingResults && hitcount === 0)
 
+  const hitCountText = data.search?.hitcount ? `(${data.search.hitcount})` : ""
   return (
     <div className="content-container">
-      <h1 className="mt-[88px] text-typo-heading-2">{`Viser resultater for "${q}" ${hitcount ? "(" + hitcount + ")" : ""}`}</h1>
+      {q && (
+        <h1 className="mt-[88px] text-typo-heading-2">
+          {`Viser resultater for "${q}" ${hitCountText}`}
+        </h1>
+      )}
       {/* TODO: add ghost loading and cleanup the code below  */}
       {isLoadingFacets && <p>isLoadingFacets...</p>}
-      {/* {isNoFilters && <p>Ingen filter</p>} */}
+      {!data.facets && isLoadingResults && <p>Ingen filter</p>}
       {!isLoadingFacets && data.facets && <SearchFilterBar facets={data.facets} />}
       {isLoadingResults && <p>isLoading...</p>}
       {!data.search && !isLoadingResults && <p>Ingen søgeresultat</p>}
       {data.search && (
         <div className="mb-space-y flex flex-col gap-y-[calc(var(--grid-gap-x)*2)]">
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ duration: 0.5 }}
-            exit={{ opacity: 0 }}>
-            <SearchResults works={data.search.works} />
-          </motion.div>
+          {data.search.pages.map(
+            (works, i) =>
+              works && (
+                <motion.div
+                  key={i}
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  transition={{ duration: 0.5 }}
+                  exit={{ opacity: 0 }}>
+                  <SearchResults works={works} />
+                </motion.div>
+              )
+          )}
         </div>
       )}
+      <div ref={loadMoreRef} className="h-0 opacity-0"></div>
     </div>
   )
   return null

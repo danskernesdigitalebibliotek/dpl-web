@@ -6,15 +6,18 @@ import {
   SearchWithPaginationQuery,
 } from "@/lib/graphql/generated/fbi/graphql"
 
+export type TFilters = Omit<SearchFiltersInput, "status">
+
 export type TContext = {
   currentQ: string
-  searchData?: SearchWithPaginationQuery["search"]
+  searchData?: {
+    hitcount: SearchWithPaginationQuery["search"]["hitcount"]
+    pages: SearchWithPaginationQuery["search"]["works"][]
+  }
   facetData?: SearchFacetsQuery["search"]["facets"]
   selectedFilters: TFilters
   queryClient: QueryClient | null
 }
-
-export type TFilters = Omit<SearchFiltersInput, "status">
 
 export type TInput = {
   q?: string
