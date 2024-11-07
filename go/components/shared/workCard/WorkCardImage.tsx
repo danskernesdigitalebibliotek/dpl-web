@@ -1,5 +1,4 @@
 import { useWindowSize } from "@uidotdev/usehooks"
-import { log } from "console"
 import { motion } from "framer-motion"
 import Image from "next/image"
 import React, { FC, useEffect, useRef, useState } from "react"
@@ -28,7 +27,6 @@ export const WorkCardImage: FC<Props> = ({ src, lowResSrc, alt }) => {
 
   // calculate the max width using image aspect ratio and container width
   const imageWidthByContainerHeight = imageAspectRatio * containerHeight
-  const imageHeightByContainerWidth = imageWidthByContainerHeight / imageAspectRatio
   const paddingTop = 100 / imageAspectRatio + "%"
 
   useEffect(() => {}, [size.width])
@@ -48,32 +46,41 @@ export const WorkCardImage: FC<Props> = ({ src, lowResSrc, alt }) => {
           className={"relative m-auto"}
           style={{ paddingTop, width: `min(100%,${imageWidthByContainerHeight}px)` }}>
           <Image
-            src={src}
+            src={lowResSrc}
             alt={alt}
             height={imageHeight}
             width={imageWidth}
-            sizes="100vw"
+            sizes="20px"
             loading="eager"
             className={cn(
-              `absolute inset-0 h-auto w-full overflow-hidden rounded-sm bg-gray-50 object-contain
-              shadow-cover-picture transition-all duration-500 will-change-transform`,
-              imageLoaded ? "scale-100" : "blur-sm"
+              `absolute inset-0 h-auto w-full overflow-hidden rounded-sm object-contain transition-all duration-500
+              will-change-transform`,
+              imageLoaded ? "shadow-none" : "shadow-cover-picture"
             )}
             onLoad={({ target }) => {
               // get the intrinsic dimensions of the image
               const { naturalWidth, naturalHeight } = target as HTMLImageElement
               setImageHeight(naturalHeight)
               setImageWidth(naturalWidth)
+            }}
+          />
+          <Image
+            src={src}
+            alt={alt}
+            height={imageHeight}
+            width={imageWidth}
+            sizes="100vw"
+            loading="lazy"
+            className={cn(
+              `absolute inset-0 h-auto w-full overflow-hidden rounded-sm object-contain shadow-cover-picture
+              transition-all duration-500 will-change-transform`,
+              imageLoaded ? "opacity-100" : "opacity-0"
+            )}
+            onLoad={() => {
               setImageLoaded(true)
             }}
-            onError={e => {
+            onError={() => {
               setImageError(true)
-            }}
-            style={{
-              backgroundImage: `url('${lowResSrc}')`,
-              backgroundSize: "contain",
-              height: `${imageHeightByContainerWidth}`,
-              width: `min(100%,${imageWidthByContainerHeight}px)`,
             }}
           />
         </Tilt>

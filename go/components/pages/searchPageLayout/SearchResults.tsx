@@ -13,8 +13,8 @@ const SearchResults = ({ works }: SearchResultProps) => {
   return (
     <div className="grid-go gap-x-grid-gap-x gap-y-[calc(var(--grid-gap-x)*2)]">
       {works.map(work => (
-        <div className="col-span-3 lg:col-span-4">
-          <WorkCard key={work.workId} work={work} />
+        <div key={work.workId} className="col-span-3 lg:col-span-4">
+          <WorkCard work={work} />
         </div>
       ))}
     </div>
@@ -27,8 +27,8 @@ export const SearchResultsGhost = () => {
   return (
     <div className="grid-go gap-x-grid-gap-x gap-y-[calc(var(--grid-gap-x)*2)]">
       {ghostItems.map((_, index) => (
-        <div className="col-span-3 lg:col-span-4">
-          <WorkCardGhost key={index} />
+        <div className="col-span-3 lg:col-span-4" key={index}>
+          <WorkCardGhost />
         </div>
       ))}
     </div>

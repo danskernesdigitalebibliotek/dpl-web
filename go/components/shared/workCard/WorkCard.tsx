@@ -10,7 +10,7 @@ import { useGetV1ProductsIdentifier } from "@/lib/rest/publizon-api/generated/pu
 import { Badge } from "../badge/Badge"
 import WorkCardAvailabilityRow from "./WorkCardAvailabilityRow"
 import { WorkCardImage } from "./WorkCardImage"
-import { displayCreators, getAllWorkPids, getCoverUrls } from "./helper"
+import { displayCreators, getAllWorkPids, getCoverUrls, getLowResCoverUrl } from "./helper"
 
 type WorkCardProps = {
   work: WorkTeaserFragment
@@ -22,7 +22,7 @@ const WorkCard = ({ work }: WorkCardProps) => {
     identifiers: [getAllWorkPids(work).join(", ")],
     sizes: [
       // TODO: These sizes should be defined in a general global config.
-      "small, small-medium, medium, medium-large, large, original, default" as GetCoverCollectionSizesItem,
+      "xx-small, small, small-medium, medium, medium-large, large, original, default" as GetCoverCollectionSizesItem,
     ],
   })
   const isbns = getIsbnsFromWork(work)
@@ -49,7 +49,10 @@ const WorkCard = ({ work }: WorkCardProps) => {
     "medium",
     "small-medium",
     "small",
+    "xx-small",
   ])
+
+  const lowResCover = getLowResCoverUrl(dataCovers)
 
   return (
     <Link className="block space-y-3 lg:space-y-5" href={`/work/${work.workId}`}>
@@ -64,7 +67,7 @@ const WorkCard = ({ work }: WorkCardProps) => {
           )}
           <div className="relative mx-auto flex h-full w-full items-center">
             <WorkCardImage
-              lowResSrc={coverSrc?.[6] || ""}
+              lowResSrc={lowResCover || ""}
               src={coverSrc?.[0] || ""}
               alt="work image"
             />

@@ -34,7 +34,7 @@ export const AnimateChangeInHeight: React.FC<AnimateChangeInHeightProps> = ({
 
   return (
     <motion.div
-      className={cn(className, "overflow-hidden")}
+      className={cn("overflow-hidden", className)}
       style={{ height }}
       animate={{ height }}
       transition={{ duration: 0.1 }}>

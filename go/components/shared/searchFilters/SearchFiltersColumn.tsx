@@ -56,23 +56,23 @@ const SearchFiltersColumn = ({
           isLast && "flex-2"
         )}>
         <h3 className="text-typo-caption uppercase">{getFacetTranslation(facetFilter)}</h3>
-        <AnimateChangeInHeight>
+
+        <AnimateChangeInHeight className="overflow-visible">
           <div
             className={cn(
-              "flex gap-1 text-typo-caption",
+              "mx-[-10px] mt-[-10px] flex gap-1 px-[10px] pt-[10px] text-typo-caption",
               !isLast && "flex-col",
               isLast && "flex-row flex-wrap content-start",
-              !isExpanded && "h-[92px] overflow-hidden"
+              !isExpanded && "h-[102px] overflow-hidden"
             )}
             ref={elementRef}>
             {facet.values.map((value, index) => (
-              <div key={index}>
-                <BadgeButton
-                  onClick={() => toggleFilter(facet.name, value.term, router)}
-                  isActive={!!searchParams.getAll(facet.name).includes(value.term)}>
-                  {value.term}
-                </BadgeButton>
-              </div>
+              <BadgeButton
+                key={index}
+                onClick={() => toggleFilter(facet.name, value.term, router)}
+                isActive={!!searchParams.getAll(facet.name).includes(value.term)}>
+                {value.term}
+              </BadgeButton>
             ))}
           </div>
           {hasOverflow && (

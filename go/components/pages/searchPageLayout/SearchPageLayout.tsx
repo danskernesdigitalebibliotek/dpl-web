@@ -50,7 +50,6 @@ const SearchPageLayout = ({ searchQuery }: { searchQuery?: string }) => {
     isFetchingNextPage: isFetchingMoreResults,
     isFetching: isFetchingResults,
     isPending: isPendingResults,
-    isRefetching: isRefetchingResults,
   } = useInfiniteQuery({
     queryKey: useSearchWithPaginationQuery.getKey({
       ...searchQueryArguments,
