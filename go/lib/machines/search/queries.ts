@@ -1,30 +1,28 @@
 import { QueryClient } from "@tanstack/react-query"
-import { ReadonlyURLSearchParams } from "next/navigation"
 import { fromPromise } from "xstate"
 
-import { getFacetsForSearchRequest } from "@/components/pages/searchPageLayout/helper"
 import { getFacetMachineNames } from "@/components/shared/searchFilters/helper"
-import goConfig from "@/lib/config/config"
 import {
   SearchFacetsQuery,
-  SearchFiltersInput,
   SearchWithPaginationQuery,
   useSearchFacetsQuery,
   useSearchWithPaginationQuery,
 } from "@/lib/graphql/generated/fbi/graphql"
 
+import { TFilters } from "./types"
+
 export const performSearch = fromPromise(
   ({
-    input: { q, filters, offset, queryClient },
+    input: { q, filters, offset, limit, queryClient },
   }: {
-    input: { q: string; offset: number; filters: SearchFiltersInput; queryClient: QueryClient }
+    input: { q: string; offset: number; limit: number; filters: TFilters; queryClient: QueryClient }
   }): Promise<SearchWithPaginationQuery> => {
     const args = {
       q: { all: q },
       offset: offset,
-      limit: goConfig<number>("search.item.limit"),
-      filters
-  }
+      limit,
+      filters,
+    }
 
     return queryClient.fetchQuery({
       queryKey: useSearchWithPaginationQuery.getKey(args),
@@ -35,16 +33,15 @@ export const performSearch = fromPromise(
 
 export const getFacets = fromPromise(
   ({
-    input: { q, queryClient, filters },
+    input: { q, queryClient, filters, facetLimit },
   }: {
-    input: { q: string; filters: SearchFiltersInput; queryClient: QueryClient }
+    input: { q: string; facetLimit: number; filters: TFilters; queryClient: QueryClient }
   }): Promise<SearchFacetsQuery> => {
-    const searchParams = new URLSearchParams(window.location.search);
     const args = {
       q: { all: q },
       facets: getFacetMachineNames(),
-      facetLimit: <number>goConfig("search.facet.limit"),
-      filters
+      facetLimit,
+      filters,
     }
 
     return queryClient.fetchQuery({

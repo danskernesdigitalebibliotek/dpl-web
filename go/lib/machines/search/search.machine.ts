@@ -9,6 +9,7 @@ export default searchMachineSetup.createMachine({
   context: ({ input }) => ({
     searchOffset: input.initialOffset ?? 0,
     searchPageSize: input.searchPageSize,
+    facetLimit: input.facetLimit,
     currentQ: input.q ?? "",
     searchData: undefined,
     facetData: undefined,
@@ -84,6 +85,7 @@ export default searchMachineSetup.createMachine({
                     queryClient: context.queryClient,
                     filters: context.selectedFilters,
                     offset: context.searchOffset,
+                    limit: context.searchPageSize,
                   }
                 },
                 onDone: {
@@ -112,6 +114,7 @@ export default searchMachineSetup.createMachine({
                     q: context.currentQ,
                     queryClient: context.queryClient,
                     filters: context.selectedFilters,
+                    facetLimit: context.facetLimit,
                   }
                 },
                 onDone: {
@@ -147,6 +150,7 @@ export default searchMachineSetup.createMachine({
                 queryClient: context.queryClient,
                 filters: context.selectedFilters,
                 offset: context.searchOffset,
+                limit: context.searchPageSize,
               }
             },
             onDone: {

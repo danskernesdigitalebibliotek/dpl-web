@@ -9,6 +9,7 @@ import {
 export type TFilters = Omit<SearchFiltersInput, "status">
 
 export type TContext = {
+  facetLimit: number
   searchOffset: number
   searchPageSize: number
   currentQ: string
@@ -27,4 +28,5 @@ export type TInput = {
   queryClient?: QueryClient
   initialOffset: number
   searchPageSize: number
+  facetLimit: number
 }
