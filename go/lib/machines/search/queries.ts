@@ -15,13 +15,13 @@ import {
 
 export const performSearch = fromPromise(
   ({
-    input: { q, filters, queryClient },
+    input: { q, filters, offset, queryClient },
   }: {
-    input: { q: string; filters: SearchFiltersInput; queryClient: QueryClient }
+    input: { q: string; offset: number; filters: SearchFiltersInput; queryClient: QueryClient }
   }): Promise<SearchWithPaginationQuery> => {
     const args = {
       q: { all: q },
-      offset: goConfig<number>("search.offset.initial"),
+      offset: offset,
       limit: goConfig<number>("search.item.limit"),
       filters
   }

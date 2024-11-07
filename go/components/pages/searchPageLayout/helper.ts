@@ -81,9 +81,3 @@ export const useSearchDataAndLoadingStates = () => {
 
   return { q, data, selectedFilters, isLoadingFacets, isLoadingResults }
 }
-
-export const useDebugContext = (actor: AnyActorRef) => {
-  const context = useSelector(actor, snapshot => {
-    return snapshot.context
-  })
-}

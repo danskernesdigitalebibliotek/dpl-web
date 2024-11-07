@@ -51,6 +51,9 @@ export default setup({
     resetFilters: assign(() => ({
       selectedFilters: {},
     })),
+    resetSearchData: assign(() => ({
+      searchData: undefined,
+    })),
     setFacetDataInContext: assign({
       facetData: ({
         event: {
@@ -80,7 +83,12 @@ export default setup({
       selectedFilters: ({ event }) => event.filters,
     }),
     setLoadMoreValuesInContext: assign({
-      selectedFilters: ({ event }) => event.filters,
+      searchOffset: ({ context: { searchOffset, searchPageSize, searchData } }) => {
+        if (!searchData) {
+          return searchOffset
+        }
+        return searchOffset + searchPageSize
+      },
     }),
   },
   actors: {
@@ -96,6 +104,12 @@ export default setup({
     },
     contextHasQueryClient: ({ context }) => {
       return Boolean(context.queryClient)
+    },
+    maxLimitReached: ({ context: { searchPageSize, searchData } }) => {
+      if (!searchData) {
+        return false
+      }
+      return searchData.pages.length >= Math.ceil(searchData.hitcount / searchPageSize)
     },
   },
 })

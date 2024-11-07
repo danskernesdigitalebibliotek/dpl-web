@@ -9,6 +9,8 @@ import {
 export type TFilters = Omit<SearchFiltersInput, "status">
 
 export type TContext = {
+  searchOffset: number
+  searchPageSize: number
   currentQ: string
   searchData?: {
     hitcount: SearchWithPaginationQuery["search"]["hitcount"]
@@ -23,4 +25,6 @@ export type TInput = {
   q?: string
   filters?: TFilters
   queryClient?: QueryClient
+  initialOffset: number
+  searchPageSize: number
 }

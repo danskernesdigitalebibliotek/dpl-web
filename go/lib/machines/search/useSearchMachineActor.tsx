@@ -4,14 +4,18 @@ import { useQueryClient } from "@tanstack/react-query"
 import { ReadonlyURLSearchParams, useRouter } from "next/navigation"
 import { useSearchParams } from "next/navigation"
 import { useEffect, useRef, useState } from "react"
-import { createActor } from "xstate"
+import { AnyEventObject, createActor } from "xstate"
 
 import { getFacetsForSearchRequest } from "@/components/pages/searchPageLayout/helper"
+import goConfig from "@/lib/config/config"
 
 import searchMachine from "./search.machine"
 
 const searchActor = createActor(searchMachine, {
-  input: {},
+  input: {
+    initialOffset: goConfig<number>("search.offset.initial"),
+    searchPageSize: goConfig<number>("search.item.limit"),
+  },
 }).start()
 
 const useSearchMachineActor = () => {
@@ -43,12 +47,10 @@ const useSearchMachineActor = () => {
   }, [isBootstrapped])
 
   // Administer search query params when filters are toggled.
-  actor.on("filterToggled", emittedEvent => {
+  actor.on("filterToggled", (emittedEvent: AnyEventObject) => {
     const params = new URLSearchParams(searchParams.toString())
 
-    // TODO: Fix type problem here
     const {
-      // @ts-ignore
       toggled: { name: filterName, value: filterValue },
     } = emittedEvent
 
