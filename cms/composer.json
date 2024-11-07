@@ -326,7 +326,9 @@
                 "3454350: Create seperate permission for adding field inheritance": "https://www.drupal.org/files/issues/2024-06-13/field_inheritance_permission.patch"
             },
             "drupal/focal_point": {
-                "3162210: Preview link accidentally closes the media library": "https://www.drupal.org/files/issues/2020-10-11/preview_link_accidentally_closes_the_media_library-3162210-19.patch"
+                "3462165 (1/3): Preview results in Error: Call to a member function getDefinitions() on null": "https://git.drupalcode.org/project/focal_point/-/commit/e9803fdb1f74fecf4972120518f87a4e260ccf9e.patch",
+                "3462165 (2/3): Preview results in Error: Call to a member function getDefinitions() on null": "https://git.drupalcode.org/project/focal_point/-/commit/7d1c3bba96560d96a6ec5a9834d091eebcb7b9b5.patch",
+                "3462165 (3/3): Preview results in Error: Call to a member function getDefinitions() on null": "https://git.drupalcode.org/project/focal_point/-/commit/72d7a23c5251c2313557fe1f6d01263ddc729963.patch"
             },
             "drupal/job_scheduler": {
                 "3426366: Callables as worker callbacks": "https://git.drupalcode.org/project/job_scheduler/-/commit/da200da280c4c95e6e91f2416581ad3797ab1428.patch"
