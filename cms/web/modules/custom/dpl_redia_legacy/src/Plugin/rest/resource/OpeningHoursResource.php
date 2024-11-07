@@ -2,12 +2,13 @@
 
 declare(strict_types=1);
 
-namespace Drupal\dpl_opening_hours\Plugin\rest\resource\v1;
+namespace Drupal\dpl_redia_legacy\Plugin\rest\resource;
 
 use DanskernesDigitaleBibliotek\CMS\Api\Model\DplOpeningHoursLegacyListGET200ResponseInner as OpeningHoursLegacyResponse;
 use Drupal\Component\Utility\NestedArray;
 use Drupal\Core\Cache\CacheableResponse;
 use Drupal\dpl_opening_hours\Model\OpeningHoursInstance;
+use Drupal\dpl_opening_hours\Plugin\rest\resource\v1\OpeningHoursResourceBase;
 use Drupal\drupal_typed\RequestTyped;
 use JMS\Serializer\ContextFactory\DefaultSerializationContextFactory;
 use Safe\DateTime;
@@ -35,7 +36,7 @@ use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
  *   },
  * )
  */
-final class OpeningHoursLegacyResource extends OpeningHoursResourceBase {
+final class OpeningHoursResource extends OpeningHoursResourceBase {
 
   /**
    * {@inheritdoc}
@@ -83,8 +84,12 @@ final class OpeningHoursLegacyResource extends OpeningHoursResourceBase {
             ],
             'nid' => [
               'name' => 'nid',
-              'type' => 'integer',
-              'description' => 'The (node) id of the node (Branch) that the opening hour applies to.',
+              'type' => 'array',
+              'items' => [
+                'type' => 'integer',
+              ],
+              'collectionFormat' => 'csv',
+              'description' => 'The id(s) of the branch(es) for which to retrieve opening hours. Can be a single id or a comma-separated list of ids.',
               'in' => 'query',
               'required' => TRUE,
             ],
@@ -117,8 +122,8 @@ final class OpeningHoursLegacyResource extends OpeningHoursResourceBase {
   public function get(Request $request): Response {
     $typedRequest = new RequestTyped($request);
 
-    $nid = $typedRequest->getInt('nid');
-    if ($nid === NULL) {
+    $nid = $typedRequest->getInts('nid');
+    if (empty($nid)) {
       throw new BadRequestHttpException("The 'nid' parameter is required.");
     }
     $fromDate = $typedRequest->getDateTime('from_date');

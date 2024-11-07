@@ -5,6 +5,7 @@ dependencies:
   module:
     - flat_taxonomy
     - scheduler
+    - taxonomy_unique
 third_party_settings:
   scheduler:
     expand_fieldset: when_required
@@ -21,6 +22,9 @@ third_party_settings:
     unpublish_revision: false
   flat_taxonomy:
     flat: 1
+  taxonomy_unique:
+    enabled: true
+    message: 'Term %term already exists in vocabulary %vocabulary.'
 name: Åbningstidskategorier
 vid: opening_hours_categories
 description: 'Kategorier af åbningstider, f.eks. "Åbent" eller "Telefontid"'

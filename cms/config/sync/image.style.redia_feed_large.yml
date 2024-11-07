@@ -1,0 +1,15 @@
+uuid: 923e70e6-ea34-446d-ae06-2f6ac0ac4f00
+langcode: en
+status: true
+dependencies: {  }
+name: redia_feed_large
+label: 'Redia feed large'
+effects:
+  71f3eb2a-c6f8-4a85-a16f-651a6e43239e:
+    uuid: 71f3eb2a-c6f8-4a85-a16f-651a6e43239e
+    id: image_scale
+    weight: 1
+    data:
+      width: 2000
+      height: null
+      upscale: false

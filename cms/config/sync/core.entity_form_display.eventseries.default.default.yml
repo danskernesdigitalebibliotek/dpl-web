@@ -145,7 +145,8 @@ content:
     type: address_default
     weight: 10
     region: content
-    settings: {  }
+    settings:
+      wrapper_type: details
     third_party_settings: {  }
   field_event_image:
     type: media_library_widget
