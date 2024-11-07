@@ -87,7 +87,7 @@ class RequestTyped {
     if ($value === NULL) {
       return $default;
     }
-    $strings = \Safe\preg_split("/\s*{$separator}\s*/", $value, PREG_SPLIT_NO_EMPTY);
+    $strings = \Safe\preg_split("/\s*{$separator}\s*/", $value, -1, PREG_SPLIT_NO_EMPTY);
     return array_map(fn($value) => intval($value), $strings);
   }
 
