@@ -18,6 +18,17 @@ const searchActor = createActor(searchMachine, {
   },
 }).start()
 
+/**
+ *
+ * This hook is referencing the searchActor from the search.machine.ts file.
+ *
+ * The reason why we are using a ref is because we want to keep the same actor instance.
+ *
+ * The bootstrap state is used to set the initial filters and search string from the URL.
+ *
+ * Furthermore the queryClient is set to the actor context
+ * so we are able to use it in queries inside the machine.
+ */
 const useSearchMachineActor = () => {
   const searchParams = useSearchParams()
   const queryClient = useQueryClient()

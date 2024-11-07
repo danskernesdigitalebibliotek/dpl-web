@@ -1,14 +1,8 @@
 import { AppRouterInstance } from "next/dist/shared/lib/app-router-context.shared-runtime"
-import { ReadonlyURLSearchParams } from "next/navigation"
 
 import goConfig from "@/lib/config/config"
 import { TConfigSearchFacets } from "@/lib/config/resolvers/search"
-import {
-  FacetFieldEnum,
-  HoldingsStatusEnum,
-  SearchFacetFragment,
-  SearchFiltersInput,
-} from "@/lib/graphql/generated/fbi/graphql"
+import { FacetFieldEnum, SearchFacetFragment } from "@/lib/graphql/generated/fbi/graphql"
 import { TContext, TFilters } from "@/lib/machines/search/types"
 
 export const toggleFilter = (filterName: string, value: string, router: AppRouterInstance) => {
@@ -71,9 +65,4 @@ export const facetTermIsSelected = ({
   filters: TContext["selectedFilters"]
   facet: string
   term: string
-}) => {
-  // console.debug(filters[facet as keyof TContext["selectedFilters"]]?.includes(term))
-  // Fix type problem here
-  // @ts-ignore
-  return Boolean(filters[facet as keyof TContext["selectedFilters"]]?.includes(term))
-}
+}) => Boolean(filters[facet as keyof TContext["selectedFilters"]]?.includes(term))
