@@ -30,6 +30,21 @@ function _dpl_update_install_modules(array $modules): string {
 }
 
 /**
+ * Helper function to uninstall modules.
+ *
+ * @param string[] $modules
+ *   The modules to install.
+ *
+ * @return string
+ *   The feedback message.
+ */
+function _dpl_update_uninstall_modules(array $modules): string {
+  DrupalTyped::service(ModuleInstallerInterface::class, 'module_installer')->uninstall($modules);
+  $modules_string = implode(', ', $modules);
+  return "Uninstalled modules: {$modules_string}.";
+}
+
+/**
  * Helper function, for adding translations.
  *
  * Generally speaking, this should be avoided, as it is DDF's responsibility
@@ -87,6 +102,8 @@ function dpl_update_install(): string {
   $messages[] = dpl_update_update_10020();
   $messages[] = dpl_update_update_10021();
   $messages[] = dpl_update_update_10022();
+  $messages[] = dpl_update_update_10023();
+  $messages[] = dpl_update_update_10024();
 
   return implode('\r\n', $messages);
 }
@@ -244,32 +261,50 @@ function dpl_update_update_10019(): string {
 }
 
 /**
- * Install typed_data, graphql, graphql_compose and consumers modules.
+ * Uninstall devel_generate module.
  */
 function dpl_update_update_10020(): string {
+  return _dpl_update_uninstall_modules(['devel_generate']);
+}
+
+/**
+ * Install typed_data, graphql, graphql_compose and consumers modules.
+ */
+function dpl_update_update_10021(): string {
   return _dpl_update_install_modules(['typed_data', 'graphql', 'graphql_compose', 'consumers']);
 }
 
 /**
  * Install dpl_unilogin module.
  */
-function dpl_update_update_10021(): string {
+function dpl_update_update_10022(): string {
   return _dpl_update_install_modules(['dpl_unilogin']);
 }
 
 /**
  * Install dpl_graphql module.
  */
-function dpl_update_update_10022(): string {
+function dpl_update_update_10023(): string {
   return _dpl_update_install_modules(['dpl_graphql']);
 }
 
 /**
- * Add initial translation for event field.
+ * Install dpl_consumers.
  */
-function dpl_update_update_10023(): string {
-  return _dpl_update_update_translation(
+function dpl_update_update_10024(): string {
+  return _dpl_update_install_modules(['dpl_consumers']);
+}
+
+/**
+ * Add initial translation for event display.
+ */
+function dpl_update_update_10025(): string {
+  $return = _dpl_update_update_translation('Expired', 'Afholdt', 'DPL event');
+
+  $return .= _dpl_update_update_translation(
     'Date',
     'Dato'
   );
+
+  return $return;
 }

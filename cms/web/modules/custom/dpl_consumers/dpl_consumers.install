@@ -1,0 +1,18 @@
+<?php
+
+/**
+ * @file
+ * Install, update and uninstall functions for the dpl_consumers module.
+ */
+
+declare(strict_types=1);
+
+require_once __DIR__ . '/dpl_consumers.crud.php';
+
+/**
+ * Implements hook_uninstall().
+ */
+function dpl_consumers_uninstall(): void {
+  dpl_consumers_delete_user();
+  dpl_consumers_delete_consumer();
+}
