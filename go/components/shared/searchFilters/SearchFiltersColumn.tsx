@@ -1,11 +1,13 @@
-import { useRouter, useSearchParams } from "next/navigation"
 import React, { useEffect, useRef, useState } from "react"
 
-import { SearchFacetFragment, SearchFiltersInput } from "@/lib/graphql/generated/fbi/graphql"
+import { useSearchDataAndLoadingStates } from "@/components/pages/searchPageLayout/helper"
+import { SearchFacetFragment } from "@/lib/graphql/generated/fbi/graphql"
 import { cn } from "@/lib/helpers/helper.cn"
+import { TFilters } from "@/lib/machines/search/types"
+import useSearchMachineActor from "@/lib/machines/search/useSearchMachineActor"
 
 import Icon from "../icon/Icon"
-import { getFacetTranslation, sortByActiveFacets, toggleFilter } from "./helper"
+import { facetTermIsSelected, getFacetTranslation, sortByActiveFacets } from "./helper"
 
 type SearchFiltersColumnProps = {
   facet: SearchFacetFragment
@@ -20,12 +22,11 @@ const SearchFiltersColumn = ({
   isExpanded,
   setIsExpanded,
 }: SearchFiltersColumnProps) => {
-  const router = useRouter()
-  const facetFilter = facet.name as keyof SearchFiltersInput
-
-  const searchParams = useSearchParams()
+  const actor = useSearchMachineActor()
+  const facetFilter = facet.name as keyof TFilters
   const elementRef = useRef<HTMLDivElement | null>(null)
   const [hasOverflow, setHasOverflow] = useState(false)
+  const { selectedFilters } = useSearchDataAndLoadingStates()
 
   useEffect(() => {
     const el = elementRef.current
@@ -38,7 +39,7 @@ const SearchFiltersColumn = ({
   }, [elementRef])
 
   // We show the selected values first in the list
-  facet.values = sortByActiveFacets(facet, searchParams)
+  facet.values = sortByActiveFacets(facet, selectedFilters)
 
   return (
     <>
@@ -56,13 +57,20 @@ const SearchFiltersColumn = ({
           ref={elementRef}>
           {facet.values.map((value, index) => (
             <button
-              onClick={() => toggleFilter(facet.name, value.term, router)}
-              className={cn([
+              onClick={() =>
+                actor.send({ type: "TOGGLE_FILTER", name: facet.name, value: value.term })
+              }
+              className={cn(
                 `h-[29px] w-auto self-start whitespace-nowrap rounded-full bg-background-overlay px-4 py-2
                 hover:animate-wiggle`,
-                searchParams.getAll(facet.name).includes(value.term) &&
-                  "bg-foreground text-background",
-              ])}
+                {
+                  "bg-foreground text-background": facetTermIsSelected({
+                    facet: facet.name,
+                    term: value.term,
+                    filters: selectedFilters,
+                  }),
+                }
+              )}
               key={index}>
               {value.term}
             </button>
