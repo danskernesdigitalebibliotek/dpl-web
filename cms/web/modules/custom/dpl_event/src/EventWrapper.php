@@ -5,7 +5,6 @@ namespace Drupal\dpl_event;
 use Brick\Math\BigDecimal;
 use Drupal\Core\Field\FieldItemListInterface;
 use Drupal\drupal_typed\DrupalTyped;
-use Drupal\node\NodeInterface;
 use Drupal\paragraphs\ParagraphInterface;
 use Drupal\recurring_events\Entity\EventInstance;
 use Psr\Log\LoggerInterface;
@@ -91,7 +90,7 @@ class EventWrapper {
   /**
    * Getting an events branches.
    *
-   * @return array<NodeInterface>|null
+   * @return array<\Drupal\node\NodeInterface>|null
    *   The matching branches.
    */
   public function getBranches(): ?array {
@@ -102,28 +101,6 @@ class EventWrapper {
     }
 
     return $field->referencedEntities() ?? NULL;
-  }
-
-  /**
-   * Load an eventinstance address - either from the series/instance or branch.
-   */
-  public function getAddressField(): ?FieldItemListInterface {
-    $instance_field = $this->getField('event_address');
-
-    if ($instance_field instanceof FieldItemListInterface) {
-      return $instance_field;
-    }
-
-    // Could not find data - look up address from first branch instead.
-    $branch = $this->getBranches()[0] ?? NULL;
-
-    $branch_address_field = 'field_address';
-
-    if (!($branch instanceof NodeInterface) || !$branch->hasField($branch_address_field)) {
-      return NULL;
-    }
-
-    return $branch->get($branch_address_field);
   }
 
   /**
