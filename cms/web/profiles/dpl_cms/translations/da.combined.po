@@ -7,8 +7,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2024-11-08 10:36+0100\n"
-"PO-Revision-Date: 2024-11-08 10:36+0100\n"
+"POT-Creation-Date: 2024-11-08 11:44+0100\n"
+"PO-Revision-Date: 2024-11-08 11:44+0100\n"
 "Last-Translator: NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
 "MIME-Version: 1.0\n"
@@ -13184,6 +13184,14 @@ msgstr "Indeholder forskellige forbedringer til Paragraphs UI."
 
 msgid "Create and manage Paragraphs categories."
 msgstr "Opret og administrer Paragraphs kategorier."
+
+msgid "Show collapse all button"
+msgstr ""
+
+msgid ""
+"Disable the collapse all button when using inline entity forms in your "
+"paragraph types."
+msgstr ""
 
 msgid "Enable confirmation on paragraphs remove"
 msgstr "Aktiver bekræftelse ved fjernelse af paragraphs"
