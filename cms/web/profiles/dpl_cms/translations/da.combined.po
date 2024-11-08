@@ -7,8 +7,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2024-11-08 15:16+0100\n"
-"PO-Revision-Date: 2024-11-08 15:16+0100\n"
+"POT-Creation-Date: 2024-11-08 15:49+0100\n"
+"PO-Revision-Date: 2024-11-08 15:49+0100\n"
 "Last-Translator: NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
 "MIME-Version: 1.0\n"
@@ -8377,6 +8377,9 @@ msgstr ""
 msgid "Test Node"
 msgstr "Test Node"
 
+msgid "Source image with fid=%fid not confirmed as valid."
+msgstr ""
+
 msgid "Focal Point Preview Image"
 msgstr "Fokuspunkt forhåndsvisningsbillede"
 
@@ -8404,6 +8407,10 @@ msgstr ""
 
 msgid "Images preview"
 msgstr "Forhåndsvisning af billeder"
+
+msgid ""
+"Source image with fid=%fid not confirmed as valid while checking access."
+msgstr ""
 
 msgid "Display preview link"
 msgstr "Vis forhåndsvisningslink"
@@ -8441,6 +8448,9 @@ msgstr ""
 "Angiv fokus for dette billede i formen \"leftoffset,topoffset\" hvor "
 "forskydningerne er i procent. Eksempel: 25,75"
 
+msgid "File not found."
+msgstr ""
+
 msgid "Image (Focal Point)"
 msgstr "Billede (Fokuspunkt)"
 
@@ -8449,6 +8459,12 @@ msgstr "Fokuspunkt skalér og beskæring"
 
 msgid "Scales and crops image while keeping its focal point close to centered."
 msgstr "Skalerer og beskærer billedet, mens fokuspunktet holdes tæt på midten."
+
+msgid "Focal Point Crop by Width"
+msgstr ""
+
+msgid "Crops image while keeping its focal point and the original height."
+msgstr ""
 
 msgid "Focal Point Crop"
 msgstr "Fokuspunkt beskæring"
