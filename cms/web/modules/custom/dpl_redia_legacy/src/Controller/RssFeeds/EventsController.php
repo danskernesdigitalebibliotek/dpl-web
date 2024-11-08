@@ -2,7 +2,6 @@
 
 namespace Drupal\dpl_redia_legacy\Controller\RssFeeds;
 
-use Drupal\Core\Cache\CacheableMetadata;
 use Drupal\Core\Cache\CacheableResponse;
 use Drupal\Core\Controller\ControllerBase;
 use Drupal\Core\Datetime\DateFormatterInterface;
@@ -12,6 +11,7 @@ use Drupal\dpl_event\PriceFormatter;
 use Drupal\dpl_redia_legacy\RediaEvent;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 use function Safe\strtotime;
 
 /**
@@ -43,6 +43,9 @@ class EventsController extends ControllerBase {
    * Getting the RSS/XML feed of the items.
    */
   public function getFeed(Request $request): CacheableResponse {
+    // Disable the feed while we wait for validation by Redia.
+    return new CacheableResponse("Feed disabled temporarily", Response::HTTP_NOT_FOUND);
+    /*
     $items = $this->getItems();
 
     $rss_content = $this->buildRss($items, $request);
@@ -59,6 +62,7 @@ class EventsController extends ControllerBase {
 
     $response->headers->set('Content-Type', 'application/rss+xml');
     return $response;
+     */
   }
 
   /**
@@ -67,7 +71,7 @@ class EventsController extends ControllerBase {
    * @return \Drupal\dpl_redia_legacy\RediaEvent[]
    *   An array of necessary item fields, used in buildRss().
    */
-  private function getItems(): array {
+  protected function getItems(): array {
 
     $storage = $this->entityTypeManager()->getStorage('eventinstance');
     $query = $storage->getQuery()
@@ -97,7 +101,7 @@ class EventsController extends ControllerBase {
    * @param \Symfony\Component\HttpFoundation\Request $request
    *   The request, for looking up the current site info.
    */
-  private function buildRss(array $items, Request $request): string {
+  protected function buildRss(array $items, Request $request): string {
     $config = $this->config('system.site');
     $site_title = $config->get('name');
     $site_url = $request->getSchemeAndHttpHost();
