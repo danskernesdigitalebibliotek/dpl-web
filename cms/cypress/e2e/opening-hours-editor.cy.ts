@@ -1,4 +1,5 @@
 const branchTitle = "Test branch";
+const firstDateOfJanuary2024 = "2024-01-01";
 
 enum OpeningHourCategories {
   Opening = "Åbent",
@@ -111,16 +112,6 @@ const navigateToMonthViewAdmin = () => {
 
 const selectTodayFromMonthViewAdmin = () => {
   cy.get(".fc-day-today").click();
-};
-
-const navigateToFirstJanuary2024 = (type: "admin" | "page") => {
-  const firstDateOfJanuary2024 = "2024-01-01";
-  if (type === "admin") {
-    visitOpeningHoursAdmin(firstDateOfJanuary2024);
-  }
-  if (type === "page") {
-    visitOpeningHoursPage(firstDateOfJanuary2024);
-  }
 };
 
 const firstDateOfFebruary2024 = "2024-02-01";
@@ -308,7 +299,7 @@ const createOpeningHoursSeries = ({
   timeDuration: { start, end },
   endDate,
 }: Required<OpeningHourFormType>) => {
-  navigateToFirstJanuary2024("admin");
+  visitOpeningHoursAdmin(firstDateOfJanuary2024);
   navigateToMonthViewAdmin();
   clickFirstDayInMonthViewAdmin();
   fillOpeningHourForm({
@@ -335,7 +326,7 @@ const createOpeningHoursSeries = ({
     timeDuration: { start, end },
   });
   visitOpeningHoursPage();
-  navigateToFirstJanuary2024("page");
+  visitOpeningHoursPage(firstDateOfJanuary2024);
   // Because we use firstDateOfFebruary2024 as endDate we can check the four next weeks
   for (let i = 0; i < 5; i++) {
     validateOpeningHoursPage({
@@ -376,7 +367,7 @@ const updateOpeningHoursSeries = ({
   editSeriesFromIndex = 0,
 }: OpeningHourFormType & { editSeriesFromIndex?: number }) => {
   // Assume that the event is already created and is visible
-  navigateToFirstJanuary2024("admin");
+  visitOpeningHoursAdmin(firstDateOfJanuary2024);
   navigateToMonthViewAdmin();
   cy.getBySel("opening-hours-editor-event-content")
     .eq(editSeriesFromIndex)
@@ -385,7 +376,7 @@ const updateOpeningHoursSeries = ({
   fillOpeningHourForm({ timeDuration: { start, end } });
   submitOpeningHourForm();
   confirmEditRepeatedOpeningHourForm("all");
-  navigateToFirstJanuary2024("admin");
+  visitOpeningHoursAdmin(firstDateOfJanuary2024);
   navigateToMonthViewAdmin();
 };
 
@@ -416,7 +407,7 @@ const deleteOpeningHoursSeries = ({
   openingHourCategory,
   timeDuration: { start, end },
 }: OpeningHourFormType) => {
-  navigateToFirstJanuary2024("admin");
+  visitOpeningHoursAdmin(firstDateOfJanuary2024);
   navigateToMonthViewAdmin();
   validateNumberOfOpeningHoursExistAdmin({
     expectedOpeningHours: 5,
@@ -427,14 +418,14 @@ const deleteOpeningHoursSeries = ({
     .click();
   cy.getBySel("opening-hours-editor-form__remove").click();
   confirmEditRepeatedOpeningHourForm("all");
-  navigateToFirstJanuary2024("admin");
+  visitOpeningHoursAdmin(firstDateOfJanuary2024);
   navigateToMonthViewAdmin();
   validateOpeningHoursNotPresentAdmin({
     openingHourCategory,
     timeDuration: { start, end },
   });
   visitOpeningHoursPage();
-  navigateToFirstJanuary2024("page");
+  visitOpeningHoursPage(firstDateOfJanuary2024);
   // Because we use firstDateOfFebruary2024 as endDate we can check the four next weeks
   for (let i = 0; i < 5; i++) {
     validateOpeningHoursNotPresentPage({
@@ -450,7 +441,7 @@ const deleteRestOfOpeningHoursSeries = ({
   timeDuration: { start, end },
   editSeriesFromIndex = 0,
 }: OpeningHourFormType & { editSeriesFromIndex?: number }) => {
-  navigateToFirstJanuary2024("admin");
+  visitOpeningHoursAdmin(firstDateOfJanuary2024);
   navigateToMonthViewAdmin();
   validateNumberOfOpeningHoursExistAdmin({
     expectedOpeningHours: 5,
@@ -540,7 +531,7 @@ describe("Opening hours editor", () => {
       openingHourCategory: OpeningHourCategories.SelfService,
       timeDuration: { start: "09:00", end: "15:00" },
     });
-    navigateToFirstJanuary2024("page");
+    visitOpeningHoursPage(firstDateOfJanuary2024);
     // Because we use firstDateOfFebruary2024 as endDate we can check the four next weeks
     for (let i = 0; i < 5; i++) {
       validateOpeningHoursPage({
@@ -578,7 +569,7 @@ describe("Opening hours editor", () => {
       timeDuration: editData.updatedTimeDuration,
     });
 
-    navigateToFirstJanuary2024("admin");
+    visitOpeningHoursAdmin(firstDateOfJanuary2024);
     navigateToMonthViewAdmin();
     // Validate that the first series has not been updated
     validateNumberOfOpeningHoursExistAdmin({
@@ -627,7 +618,7 @@ describe("Opening hours editor", () => {
       endDate: editData.endDate,
     });
 
-    navigateToFirstJanuary2024("admin");
+    visitOpeningHoursAdmin(firstDateOfJanuary2024);
     navigateToMonthViewAdmin();
     validateOpeningHoursRemovedAdmin({
       editSeriesFromIndex: editData.editSeriesFromIndex,
