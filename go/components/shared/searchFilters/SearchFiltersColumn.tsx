@@ -1,13 +1,17 @@
 import React, { useEffect, useRef, useState } from "react"
 
 import { useSearchDataAndLoadingStates } from "@/components/pages/searchPageLayout/helper"
+import BadgeButton from "@/components/shared/badge/BadgeButton"
+import Icon from "@/components/shared/icon/Icon"
+import {
+  facetTermIsSelected,
+  getFacetTranslation,
+  sortByActiveFacets,
+} from "@/components/shared/searchFilters/helper"
 import { SearchFacetFragment } from "@/lib/graphql/generated/fbi/graphql"
 import { cn } from "@/lib/helpers/helper.cn"
 import { TFilters } from "@/lib/machines/search/types"
 import useSearchMachineActor from "@/lib/machines/search/useSearchMachineActor"
-
-import Icon from "../icon/Icon"
-import { facetTermIsSelected, getFacetTranslation, sortByActiveFacets } from "./helper"
 
 type SearchFiltersColumnProps = {
   facet: SearchFacetFragment
@@ -47,57 +51,44 @@ const SearchFiltersColumn = ({
     <>
       <div
         key={facet.name}
-        className={cn(["relative", !isLast && "min-w-32 flex-1", isLast && "flex-2"])}>
-        <h3 className="mb-2 text-typo-caption uppercase">{getFacetTranslation(facetFilter)}</h3>
+        className={cn("relative ml-[-4px]", !isLast && "min-w-32 flex-1", isLast && "flex-2")}>
+        <h3 className="mb-2 pl-2 text-typo-caption uppercase">
+          {getFacetTranslation(facetFilter)}
+        </h3>
         <div
-          className={cn([
-            "flex gap-1 text-typo-caption",
+          className={cn(
+            "flex gap-1 px-1 pt-2 text-typo-caption",
             !isLast && "flex-col",
-            isLast && "flex-row flex-wrap",
-            !isExpanded && "h-[98px] overflow-hidden",
-          ])}
+            isLast && "flex-row flex-wrap content-start",
+            !isExpanded && "h-[107px] overflow-hidden"
+          )}
           ref={elementRef}>
           {facet.values.map((value, index) => (
-            <button
+            <BadgeButton
               onClick={() =>
                 actor.send({ type: "TOGGLE_FILTER", name: facet.name, value: value.term })
               }
-              className={cn(
-                `h-[29px] w-auto self-start whitespace-nowrap rounded-full bg-background-overlay px-4 py-2
-                hover:animate-wiggle`,
-                {
-                  "bg-foreground text-background":
-                    selectedFilters &&
-                    facetTermIsSelected({
-                      facet: facet.name,
-                      term: value.term,
-                      filters: selectedFilters,
-                    }),
-                }
-              )}
+              isActive={facetTermIsSelected({
+                facet: facet.name,
+                term: value.term,
+                filters: selectedFilters,
+              })}
               key={index}>
               {value.term}
-            </button>
+            </BadgeButton>
           ))}
         </div>
         {hasOverflow && (
-          <div
-            className="h-9 w-9 cursor-pointer"
+          <BadgeButton
+            classNames={cn(`pl-3 w-auto flex flex-row items-center self-start  ml-1`)}
             onClick={() => {
               setIsExpanded(prev => !prev)
             }}>
-            <button
-              className={cn(
-                `flex h-[29px] w-auto flex-row items-center self-start whitespace-nowrap rounded-full
-                bg-background-overlay pl-2 pr-4 text-typo-caption hover:animate-wiggle`,
-                isExpanded && "mt-1"
-              )}>
-              <Icon className={cn("h-8 w-8", isExpanded && "rotate-180")} name="arrow-down" />
-              <p>
-                {!isExpanded && "Flere"} {isExpanded && "Skjul"}
-              </p>
-            </button>
-          </div>
+            <Icon className={cn("h-8 w-8", isExpanded ? "rotate-180" : "")} name="arrow-down" />
+            <p>
+              {!isExpanded && "Flere"} {isExpanded && "Skjul"}
+            </p>
+          </BadgeButton>
         )}
       </div>
     </>

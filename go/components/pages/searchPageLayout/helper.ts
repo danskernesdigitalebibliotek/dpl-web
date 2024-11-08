@@ -1,7 +1,6 @@
 import { GetNextPageParamFunction } from "@tanstack/react-query"
 import { useSelector } from "@xstate/react"
 import { ReadonlyURLSearchParams } from "next/navigation"
-import { AnyActorRef } from "xstate"
 
 import { getFacetMachineNames } from "@/components/shared/searchFilters/helper"
 import goConfig from "@/lib/config/config"

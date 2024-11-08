@@ -3,7 +3,7 @@
 import { useRouter } from "next/navigation"
 import React, { MouseEvent } from "react"
 
-import { Button } from "@/components/shared/button/Button"
+import { Button, buttonVariants } from "@/components/shared/button/Button"
 import Icon from "@/components/shared/icon/Icon"
 import {
   Sheet,
@@ -12,7 +12,7 @@ import {
   SheetHeader,
   SheetTitle,
   SheetTrigger,
-} from "@/components/shared/sheet/LoginSheet"
+} from "@/components/shared/sheet/Sheet"
 import useSession from "@/hooks/useSession"
 
 const HeaderButton = ({
@@ -42,13 +42,15 @@ function ProfileButton() {
   if (!session || !session.isLoggedIn) {
     return (
       <Sheet>
-        <SheetTrigger>
-          <HeaderButton />
+        <SheetTrigger
+          aria-label="Login / Tilgå profilsiden"
+          className={buttonVariants({ variant: "icon" })}>
+          <Icon className="h-[24px] w-[24px]" name="profile" />
         </SheetTrigger>
-        <SheetContent className="p-grid-edge w-full max-w-[560px]">
+        <SheetContent className="w-full max-w-[560px] p-grid-edge">
           <SheetHeader>
             <SheetTitle className="mb-space-y text-typo-heading-3">Log ind</SheetTitle>
-            <div className="py-space-y flex flex-col items-center justify-center rounded-sm bg-background-overlay">
+            <div className="flex flex-col items-center justify-center rounded-sm bg-background-overlay py-space-y">
               <SheetDescription className="mb-4 text-typo-heading-4 font-bold text-foreground">
                 Log ind med UNI•Login
               </SheetDescription>

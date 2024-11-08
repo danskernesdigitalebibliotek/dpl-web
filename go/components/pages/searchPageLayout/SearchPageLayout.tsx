@@ -3,13 +3,14 @@
 import { motion, useInView } from "framer-motion"
 import { useEffect, useRef } from "react"
 
+import { WorkTeaserFragment } from "@/lib/graphql/generated/fbi/graphql"
 import useSearchMachineActor from "@/lib/machines/search/useSearchMachineActor"
 
 import SearchFilterBar from "../../shared/searchFilters/SearchFilterBar"
 import SearchResults from "./SearchResults"
 import { useSearchDataAndLoadingStates } from "./helper"
 
-const SearchPageLayout = ({ searchQuery }: { searchQuery?: string }) => {
+const SearchPageLayout = () => {
   const loadMoreRef = useRef(null)
   const isInView = useInView(loadMoreRef)
   const actor = useSearchMachineActor()
@@ -30,7 +31,7 @@ const SearchPageLayout = ({ searchQuery }: { searchQuery?: string }) => {
   return (
     <div className="content-container">
       {q && (
-        <h1 className="mt-[88px] text-typo-heading-2">
+        <h1 className="mt-8 text-typo-heading-3 lg:mt-[88px] lg:text-typo-heading-2">
           {`Viser resultater for "${q}" ${hitCountText}`}
         </h1>
       )}
@@ -42,7 +43,7 @@ const SearchPageLayout = ({ searchQuery }: { searchQuery?: string }) => {
       {data.search && (
         <div className="mb-space-y flex flex-col gap-y-[calc(var(--grid-gap-x)*2)]">
           {data.search.pages.map(
-            (works, i) =>
+            (works: WorkTeaserFragment[], i: number) =>
               works && (
                 <motion.div
                   key={i}

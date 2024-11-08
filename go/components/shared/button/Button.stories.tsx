@@ -1,6 +1,8 @@
 import type { Meta, StoryObj } from "@storybook/react"
 import { fn } from "@storybook/test"
 
+import { darkModeDecorator } from "@/.storybook/decorators"
+
 import Icon from "../icon/Icon"
 import { Button } from "./Button"
 
@@ -29,11 +31,13 @@ export const Default: Story = {
     variant: "default",
     size: "default",
   },
-  render: args => (
-    <Button {...args} onClick={fn()}>
-      Prøv Lydbogen
-    </Button>
-  ),
+  render: args => {
+    return (
+      <Button {...args} onClick={fn()}>
+        Prøv Lydbogen
+      </Button>
+    )
+  },
 }
 
 export const Small: Story = {
@@ -47,6 +51,25 @@ export const Small: Story = {
     variant: "default",
     size: "sm",
   },
+  render: args => (
+    <Button {...args} onClick={fn()}>
+      Prøv Lydbogen
+    </Button>
+  ),
+}
+
+export const SmallDark: Story = {
+  argTypes: {
+    size: {
+      options: ["sm", "md", "lg"],
+      control: { type: "radio" },
+    },
+  },
+  args: {
+    variant: "default",
+    size: "sm",
+  },
+  decorators: [darkModeDecorator],
   render: args => (
     <Button {...args} onClick={fn()}>
       Prøv Lydbogen
@@ -72,6 +95,25 @@ export const Medium: Story = {
   ),
 }
 
+export const MediumDark: Story = {
+  argTypes: {
+    size: {
+      options: ["sm", "md", "lg"],
+      control: { type: "radio" },
+    },
+  },
+  args: {
+    variant: "default",
+    size: "md",
+  },
+  decorators: [darkModeDecorator],
+  render: args => (
+    <Button {...args} onClick={fn()}>
+      Prøv Lydbogen
+    </Button>
+  ),
+}
+
 export const Large: Story = {
   argTypes: {
     size: {
@@ -90,11 +132,43 @@ export const Large: Story = {
   ),
 }
 
+export const LargeDark: Story = {
+  argTypes: {
+    size: {
+      options: ["sm", "md", "lg"],
+      control: { type: "radio" },
+    },
+  },
+  args: {
+    variant: "default",
+    size: "lg",
+  },
+  decorators: [darkModeDecorator],
+  render: args => (
+    <Button {...args} onClick={fn()}>
+      Prøv Lydbogen
+    </Button>
+  ),
+}
+
 export const IconStory: Story = {
-  name: "Icon story",
+  name: "Icon",
   args: {
     variant: "icon",
   },
+  render: args => (
+    <Button {...args} onClick={fn()}>
+      <Icon className="h-[24px] w-[24px]" name="question-mark" />
+    </Button>
+  ),
+}
+
+export const IconStoryDark: Story = {
+  name: "Icon dark",
+  args: {
+    variant: "icon",
+  },
+  decorators: [darkModeDecorator],
   render: args => (
     <Button {...args} onClick={fn()}>
       <Icon className="h-[24px] w-[24px]" name="question-mark" />

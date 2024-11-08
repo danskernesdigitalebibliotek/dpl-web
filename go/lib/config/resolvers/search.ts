@@ -1,7 +1,7 @@
 import { FacetFieldEnum } from "@/lib/graphql/generated/fbi/graphql"
 
 const search = {
-  "search.item.limit": 9,
+  "search.item.limit": 12,
   "search.offset.initial": 0,
   "search.param.initial": 0,
   "search.facet.limit": 100,
