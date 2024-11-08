@@ -93,7 +93,7 @@ export const WorkCardImage: FC<Props> = ({ src, lowResSrc, alt }) => {
           exit={{ opacity: 0 }}
           className="flex w-full flex-col items-center justify-center">
           <Icon name="question-mark" className="h-[50px] text-foreground opacity-20 lg:h-[100px]" />
-          <p className="text-typo-caption opacity-50">Omslag kunne ikke vises</p>
+          <p className="text-center text-typo-caption opacity-50">Billede kunne ikke vises</p>
         </motion.div>
       )}
     </div>
