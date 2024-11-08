@@ -61,9 +61,10 @@ const SearchFiltersColumn = ({
           <div
             className={cn(
               "mx-[-10px] mt-[-10px] flex gap-1 px-[10px] pt-[10px] text-typo-caption",
-              !isLast && "flex-col",
-              isLast && "flex-row flex-wrap content-start",
-              !isExpanded && "h-[102px] overflow-hidden"
+              isLast ? "flex-row flex-wrap content-start" : "flex-col",
+              {
+                "h-[102px] overflow-hidden": !isExpanded,
+              }
             )}
             ref={elementRef}>
             {facet.values.map((value, index) => (
