@@ -56,6 +56,9 @@ const useSearchMachineActor = () => {
     actor.send({ type: "SET_QUERY_CLIENT", queryClient })
 
     setIsBootstrapped(true)
+    // We choose to ignore the eslint warning below
+    // because we want to make sure it only reruns if isBootstrapped changes.
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isBootstrapped])
 
   // Administer search query params when filters are toggled.
