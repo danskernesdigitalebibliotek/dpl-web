@@ -1,8 +1,7 @@
 "use client"
 
 import { useQueryClient } from "@tanstack/react-query"
-import { ReadonlyURLSearchParams, useRouter } from "next/navigation"
-import { useSearchParams } from "next/navigation"
+import { ReadonlyURLSearchParams, useSearchParams } from "next/navigation"
 import { useEffect, useRef, useState } from "react"
 import { AnyEventObject, createActor } from "xstate"
 
@@ -19,6 +18,22 @@ const searchActor = createActor(searchMachine, {
   },
 }).start()
 
+// Administer search query params when filters are toggled.
+searchActor.on("filterToggled", (emittedEvent: AnyEventObject) => {
+  const url = new URL(window.location.href)
+  const {
+    toggled: { name: filterName, value: filterValue },
+  } = emittedEvent
+
+  if (url.searchParams.has(filterName, filterValue)) {
+    url.searchParams.delete(filterName, filterValue)
+  } else {
+    url.searchParams.append(filterName, filterValue)
+  }
+
+  window.history.pushState({}, "", url.href)
+})
+
 /**
  *
  * This hook is referencing the searchActor from the search.machine.ts file.
@@ -34,7 +49,6 @@ const useSearchMachineActor = () => {
   const searchParams = useSearchParams()
   const queryClient = useQueryClient()
   const [isBootstrapped, setIsBootstrapped] = useState(false)
-  const router = useRouter()
   const actorRef = useRef(searchActor)
   const actor = actorRef.current
 
@@ -60,26 +74,6 @@ const useSearchMachineActor = () => {
     // because we want to make sure it only reruns if isBootstrapped changes.
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isBootstrapped])
-
-  // Administer search query params when filters are toggled.
-  actor.on("filterToggled", (emittedEvent: AnyEventObject) => {
-    const params = new URLSearchParams(searchParams.toString())
-
-    const {
-      toggled: { name: filterName, value: filterValue },
-    } = emittedEvent
-
-    if (params.has(filterName, filterValue)) {
-      params.delete(filterName, filterValue)
-    } else {
-      params.append(filterName, filterValue)
-    }
-
-    const searchParamsString = params.toString()
-    router.push("/search" + searchParamsString ? `?${searchParamsString}` : "", {
-      scroll: false,
-    })
-  })
 
   return actor
 }
