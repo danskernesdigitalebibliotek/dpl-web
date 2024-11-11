@@ -24,7 +24,6 @@ vars:
   # Where is the docker file(s) we use for our builds residing?
   LAGOON_DIR: "lagoon"
 
-  
 tasks:
   ghcr:login:
     summary: Login into Github Container Registry
@@ -33,7 +32,7 @@ tasks:
     preconditions:
       - sh: "[ ! -z {{.CR_PAT}} ]"
         msg: "Env variable CR_PAT is not set or empty."
-  
+
   source:build:
     summary: Build node image.
     cmds:
