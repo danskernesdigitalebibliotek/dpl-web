@@ -1,14 +1,7 @@
 type RouteParams = { [key: string]: string | number }
 type QueryParams = { [key: string]: string | number }
 
-// Example usage:
-// const userRoute = buildRoute("/users/:id", { id: 123 })
-// console.log(userRoute) // Output: /users/123
-
-// const searchRoute = buildRoute("/search", undefined, { query: "test" })
-// console.log(searchRoute) // Output: /search?query=test
-
-function buildRoute(route: string, params?: RouteParams, query?: QueryParams): string {
+export function buildRoute(route: string, params?: RouteParams, query?: QueryParams): string {
   if (params) {
     route = Object.keys(params).reduce((acc, key) => {
       const value = encodeURIComponent(params[key])
@@ -16,19 +9,40 @@ function buildRoute(route: string, params?: RouteParams, query?: QueryParams): s
     }, route)
   }
 
+  const queryParams = new URLSearchParams()
   if (query) {
-    const queryString = Object.keys(query)
-      .map(key => `${encodeURIComponent(key)}=${encodeURIComponent(query[key])}`)
-      .join("&")
-    route += `?${queryString}`
+    Object.keys(query).forEach(key => {
+      queryParams.append(key, query[key].toString())
+    })
+  }
+
+  if (queryParams.toString()) {
+    return `${route}?${queryParams}`
   }
 
   return route
 }
 
-// Add url resolvers for each route below
-const resolveWorkUrl = (id: string) => {
-  return buildRoute("/work/:id", { id: id })
-}
+type ResolveUrlOptions =
+  | {
+      type: "work"
+      routeParams?: { id: number | string }
+      queryParams?: QueryParams
+    }
+  | {
+      type: "search"
+      routeParams?: undefined
+      queryParams?: QueryParams
+    }
 
-export { resolveWorkUrl, buildRoute }
+export const resolveUrl = ({ type, routeParams, queryParams }: ResolveUrlOptions) => {
+  switch (type as ResolveUrlOptions["type"]) {
+    case "work":
+      if (!routeParams?.id) return ""
+      return buildRoute("/work/:id", { id: routeParams.id }, queryParams)
+    case "search":
+      return buildRoute("/search", undefined, queryParams)
+    default:
+      return ""
+  }
+}

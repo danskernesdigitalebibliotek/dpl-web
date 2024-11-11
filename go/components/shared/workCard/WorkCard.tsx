@@ -5,7 +5,7 @@ import React from "react"
 import { WorkTeaserFragment } from "@/lib/graphql/generated/fbi/graphql"
 import { getRandomContentColorClass } from "@/lib/helpers/colors"
 import { cn } from "@/lib/helpers/helper.cn"
-import { resolveWorkUrl } from "@/lib/helpers/helper.routes"
+import { resolveUrl } from "@/lib/helpers/helper.routes"
 import { getIsbnsFromWork } from "@/lib/helpers/ids"
 import { useGetCoverCollection } from "@/lib/rest/cover-service-api/generated/cover-service"
 import { GetCoverCollectionSizesItem } from "@/lib/rest/cover-service-api/generated/model"
@@ -56,9 +56,11 @@ const WorkCard = ({ work }: WorkCardProps) => {
   ])
 
   return (
-    <div className="mb-4">
-      <Link href={resolveWorkUrl(work.workId)}>
-        <div key={work.workId} className="relative rounded-sm bg-background-overlay p-2 md:p-4">
+    <Link
+      className="block space-y-3 lg:space-y-5"
+      href={resolveUrl({ type: "work", routeParams: { id: work.workId } })}>
+      <div>
+        <div className="relative flex aspect-4/5 h-auto w-full flex-col rounded-base bg-background-overlay px-[15%] pt-[15%]">
           {!!dataPublizon?.product?.costFree && (
             <Badge variant={"blue-title"} className="absolute left-2 md:left-4 md:top-4">
               BLÅ
@@ -74,7 +76,7 @@ const WorkCard = ({ work }: WorkCardProps) => {
                 width={166}
                 height={228}
                 className={cn(
-                  "h-auto w-full overflow-hidden rounded-sm object-contain shadow-coverPicture",
+                  "shadow-coverPicture h-auto w-full overflow-hidden rounded-sm object-contain",
                   getRandomContentColorClass()
                 )}
               />
@@ -91,12 +93,13 @@ const WorkCard = ({ work }: WorkCardProps) => {
           </div>
           <WorkCardAvailabilityRow materialTypes={work.materialTypes} />
         </div>
-      </Link>
-      <p className="mt-2 break-words text-typo-subtitle-lg md:mt-5">{work.titles.full[0]}</p>
-      <p className="mt-2 text-typo-caption opacity-50 md:mt-2">
-        {displayCreators(work.creators, 2)}
-      </p>
-    </div>
+
+        <p className="mt-2 break-words text-typo-subtitle-lg md:mt-5">{work.titles.full[0]}</p>
+        <p className="mt-2 text-typo-caption opacity-50 md:mt-2">
+          {displayCreators(work.creators, 2)}
+        </p>
+      </div>
+    </Link>
   )
 }
 
