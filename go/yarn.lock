@@ -3023,6 +3023,14 @@
     "@stoplight/yaml-ast-parser" "0.0.50"
     tslib "^2.2.0"
 
+"@storybook/addon-a11y@^8.4.2":
+  version "8.4.2"
+  resolved "https://registry.yarnpkg.com/@storybook/addon-a11y/-/addon-a11y-8.4.2.tgz#e827b69ae57dec2b6eeac9835ae125613c32ee34"
+  integrity sha512-v6Tl+qr3Eslf06qmt2hq1ticYi7oRLIFosePQUOlW1+cgdIbV+r1IxsZ7creCDWX4kIMTbUFhbET9LTYGHem1A==
+  dependencies:
+    "@storybook/addon-highlight" "8.4.2"
+    axe-core "^4.2.0"
+
 "@storybook/addon-actions@8.3.6":
   version "8.3.6"
   resolved "https://registry.npmjs.org/@storybook/addon-actions/-/addon-actions-8.3.6.tgz"
@@ -3091,6 +3099,13 @@
   version "8.3.6"
   resolved "https://registry.npmjs.org/@storybook/addon-highlight/-/addon-highlight-8.3.6.tgz"
   integrity sha512-A7uU+1OPVXGpkklEUJjSl2VEEDLCSNvmffUJlvW1GjajsNFIHOW2CSD+KnfFlQyPxyVbnWAYLqUP4XJxoqrvDw==
+  dependencies:
+    "@storybook/global" "^5.0.0"
+
+"@storybook/addon-highlight@8.4.2":
+  version "8.4.2"
+  resolved "https://registry.yarnpkg.com/@storybook/addon-highlight/-/addon-highlight-8.4.2.tgz#77fae7df40e178d33ff8e0bcf34282768d34dc5a"
+  integrity sha512-vTtwp7nyJ09SXrsMnH+pukCjHjRMjQXgHZHxvbrv09uoH8ldQMv9B7u+X+9Wcy/jYSKFz/ng7pWo4b4a2oXHkg==
   dependencies:
     "@storybook/global" "^5.0.0"
 
@@ -4602,6 +4617,11 @@ axe-core@^4.10.0:
   version "4.10.0"
   resolved "https://registry.npmjs.org/axe-core/-/axe-core-4.10.0.tgz"
   integrity sha512-Mr2ZakwQ7XUAjp7pAwQWRhhK8mQQ6JAaNWSjmjxil0R8BPioMtQsTLOolGYkji1rcL++3dCqZA3zWqpT+9Ew6g==
+
+axe-core@^4.2.0:
+  version "4.10.2"
+  resolved "https://registry.yarnpkg.com/axe-core/-/axe-core-4.10.2.tgz#85228e3e1d8b8532a27659b332e39b7fa0e022df"
+  integrity sha512-RE3mdQ7P3FRSe7eqCWoeQ/Z9QXrtniSjp1wUjt5nRC3WIpz5rSCve6o3fsZ2aCpJtrZjSZgjwXAoTO5k4tEI0w==
 
 axobject-query@^4.1.0:
   version "4.1.0"

@@ -54,6 +54,7 @@
     "@graphql-codegen/typescript-react-query": "^6.1.0",
     "@next/eslint-plugin-next": "^14.2.13",
     "@parcel/watcher": "^2.4.1",
+    "@storybook/addon-a11y": "^8.4.2",
     "@storybook/addon-essentials": "^8.3.6",
     "@storybook/addon-interactions": "^8.3.6",
     "@storybook/addon-links": "^8.3.6",
