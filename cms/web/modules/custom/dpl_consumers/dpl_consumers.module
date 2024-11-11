@@ -5,17 +5,6 @@
  * DPL consumers module.
  */
 
-use Drupal\dpl_consumers\DplGraphqlConsumersConstants;
-
-/**
- * Function is used for printing out the consumer credentials to the console.
- */
-function dpl_consumers_print_consumer_credentials(): void {
-  $graphql_consumer_client_id = DplGraphqlConsumersConstants::GRAPHQL_CONSUMER_CLIENT_ID;
-  $consumer_uuid = dpl_consumers_get_consumer_uuid($graphql_consumer_client_id);
-  print_r('Consumer UUID: ' . $consumer_uuid);
-}
-
 /**
  * Get consumer by Client ID.
  *
