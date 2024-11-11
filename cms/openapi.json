@@ -993,6 +993,14 @@
                       "description": "The name of a tag."
                     }
                   },
+                  "partners": {
+                    "type": "array",
+                    "description": "The partners associated with the event.",
+                    "items": {
+                      "type": "string",
+                      "description": "The name of a partner."
+                    }
+                  },
                   "ticket_categories": {
                     "type": "array",
                     "description": "Ticket categories used for the event. Not present for events without ticketing.",
