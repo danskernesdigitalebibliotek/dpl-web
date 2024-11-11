@@ -1,0 +1,41 @@
+# Workflow name
+name: "Accessibility Test"
+
+# Event for the workflow
+on: push
+
+# List of jobs
+jobs:
+  # Run interaction and accessibility tests
+  accessibility:
+    name: Accessibility tests
+
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+        # Make sure the actual branch is checked out when running on pull requests.
+        with:
+          ref: ${{ github.head_ref }}
+          fetch-depth: 0 # 👈 Required to retrieve git history
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version-file: ".nvmrc"
+
+      - name: Install dependencies
+        run: yarn
+
+      - name: Install Playwright
+        run: npx playwright install --with-deps
+
+      - name: Build Storybook
+        run: yarn build-storybook --quiet
+
+      - name: Serve Storybook and run tests
+        run: |
+          npx concurrently -k -s first -n "SB,TEST" -c "magenta,blue" \
+            "npx http-server storybook-static --port 6006 --silent" \
+            "npx wait-on tcp:6006 && yarn test-storybook"
