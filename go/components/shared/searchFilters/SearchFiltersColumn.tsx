@@ -62,6 +62,7 @@ const SearchFiltersColumn = ({
           ref={elementRef}>
           {facet.values.map((value, index) => (
             <BadgeButton
+              ariaLabel={value.term}
               onClick={() => toggleFilter(facet.name, value.term, router)}
               isActive={!!searchParams.getAll(facet.name).includes(value.term)}
               key={index}>
@@ -71,6 +72,7 @@ const SearchFiltersColumn = ({
         </div>
         {hasOverflow && (
           <BadgeButton
+            ariaLabel="Vis flere"
             classNames={cn(`pl-3 w-auto flex flex-row items-center self-start  ml-1`)}
             onClick={() => {
               setIsExpanded(prev => !prev)
