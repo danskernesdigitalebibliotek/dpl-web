@@ -4,17 +4,17 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "dev": "next dev",
+    "build-storybook": "storybook build",
     "build": "next build",
-    "start": "next start",
-    "lint": "next lint",
-    "test:unit": "vitest",
-    "codegen:graphql": "graphql-codegen --config codegen.ts",
     "codegen:all-rest-services": "orval",
     "codegen:covers": "rm -rf src/lib/rest/cover-service-api/generated/model/*.* && orval --project coverService",
+    "codegen:graphql": "graphql-codegen --config codegen.ts",
     "codegen:publizon": "rm -rf lib/rest/publizon-api/generated/model/*.* && orval --project publizonAdapter",
+    "dev": "next dev",
+    "lint": "next lint",
+    "start": "next start",
     "storybook": "storybook dev -p 6006",
-    "build-storybook": "storybook build"
+    "test:unit": "vitest"
   },
   "dependencies": {
     "@next/env": "^14.2.15",
