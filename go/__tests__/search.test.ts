@@ -109,7 +109,7 @@ describe("Facet functionality", () => {
   })
 
   it("getFacetTranslation should give a translated facet when given a facet machine name", () => {
-    const translation = getFacetTranslation("lixRange")
+    const translation = getFacetTranslation("LIX")
     expect(translation).toBe("Lix")
   })
 })

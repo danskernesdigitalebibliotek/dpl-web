@@ -5,6 +5,7 @@ import React from "react"
 import { WorkTeaserFragment } from "@/lib/graphql/generated/fbi/graphql"
 import { getRandomContentColorClass } from "@/lib/helpers/colors"
 import { cn } from "@/lib/helpers/helper.cn"
+import { resolveWorkUrl } from "@/lib/helpers/helper.routes"
 import { getIsbnsFromWork } from "@/lib/helpers/ids"
 import { useGetCoverCollection } from "@/lib/rest/cover-service-api/generated/cover-service"
 import { GetCoverCollectionSizesItem } from "@/lib/rest/cover-service-api/generated/model"
@@ -56,7 +57,7 @@ const WorkCard = ({ work }: WorkCardProps) => {
 
   return (
     <div className="mb-4">
-      <Link href={`/work/${work.workId}`}>
+      <Link href={resolveWorkUrl(work.workId)}>
         <div key={work.workId} className="relative rounded-sm bg-background-overlay p-2 md:p-4">
           {!!dataPublizon?.product?.costFree && (
             <Badge variant={"blue-title"} className="absolute left-2 md:left-4 md:top-4">
