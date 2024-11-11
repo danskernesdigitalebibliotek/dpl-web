@@ -14,7 +14,8 @@
     "lint": "next lint",
     "start": "next start",
     "storybook": "storybook dev -p 6006",
-    "test:unit": "vitest"
+    "test:unit": "vitest",
+    "test:accessibility": "test-storybook"
   },
   "dependencies": {
     "@next/env": "^14.2.15",
