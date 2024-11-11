@@ -28,6 +28,7 @@ export const Default: Story = {
     },
   },
   args: {
+    ariaLabel: "Prøv Lydbogen",
     variant: "default",
     size: "default",
   },
@@ -48,6 +49,7 @@ export const Small: Story = {
     },
   },
   args: {
+    ariaLabel: "Prøv Lydbogen",
     variant: "default",
     size: "sm",
   },
@@ -66,6 +68,7 @@ export const SmallDark: Story = {
     },
   },
   args: {
+    ariaLabel: "Prøv Lydbogen",
     variant: "default",
     size: "sm",
   },
@@ -85,6 +88,7 @@ export const Medium: Story = {
     },
   },
   args: {
+    ariaLabel: "Prøv Lydbogen",
     variant: "default",
     size: "md",
   },
@@ -103,6 +107,7 @@ export const MediumDark: Story = {
     },
   },
   args: {
+    ariaLabel: "Prøv Lydbogen",
     variant: "default",
     size: "md",
   },
@@ -122,6 +127,7 @@ export const Large: Story = {
     },
   },
   args: {
+    ariaLabel: "Prøv Lydbogen",
     variant: "default",
     size: "lg",
   },
@@ -140,6 +146,7 @@ export const LargeDark: Story = {
     },
   },
   args: {
+    ariaLabel: "Prøv Lydbogen",
     variant: "default",
     size: "lg",
   },
@@ -154,6 +161,7 @@ export const LargeDark: Story = {
 export const IconStory: Story = {
   name: "Icon",
   args: {
+    ariaLabel: "Tilgå hjælpesiden",
     variant: "icon",
   },
   render: args => (
@@ -166,6 +174,7 @@ export const IconStory: Story = {
 export const IconStoryDark: Story = {
   name: "Icon dark",
   args: {
+    ariaLabel: "Tilgå hjælpesiden",
     variant: "icon",
   },
   decorators: [darkModeDecorator],
