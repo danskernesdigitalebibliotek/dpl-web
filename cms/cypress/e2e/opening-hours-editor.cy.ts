@@ -1,4 +1,5 @@
 const branchTitle = "Test branch";
+const firstDateOfJanuary2024 = "2024-01-01";
 
 enum OpeningHourCategories {
   Opening = "Åbent",
@@ -30,23 +31,18 @@ type PartialOpeningHourFormType = Omit<OpeningHourFormType, "timeDuration"> & {
   timeDuration?: PartialTimeDurationType;
 };
 
-const oneMonthFromToday = () =>
-  new Date(new Date().setMonth(new Date().getMonth() + 1))
-    .toISOString()
-    .slice(0, 10);
-
 const reverseDateString = (date: string) => date.split("-").reverse().join("-");
 
 const createTestBranchAndVisitOpeningHoursAdmin = () => {
   cy.drupalLogin("/node/add/branch");
   cy.get("#edit-title-0-value").type(branchTitle);
   cy.get('button[title="Show all Paragraphs"]').click();
-  // Forcing and multiple was the only way i cud get this to work
+  // Forcing and multiple was the only way I could get this to work
   cy.get('button[value="Opening Hours"]').click({
     multiple: true,
     force: true,
   });
-  // Forcing is necessary because the feilds are hidden by an shown in at "popup"
+  // Forcing is necessary because the fields are hidden by and shown in a "popup"
   cy.get("#edit-field-address-0-address-address-line1")
     .type("Example Street", { force: true })
     .should("have.value", "Example Street");
@@ -66,6 +62,7 @@ const createTestBranchAndVisitOpeningHoursAdmin = () => {
     Cypress.env("pageUrl", pageUrl);
   });
 };
+
 const deleteAllTestBranchesIfExists = () => {
   const formattedSearchString = branchTitle.toLowerCase().replace(/ /g, "+");
   cy.drupalLogin();
@@ -87,17 +84,21 @@ const deleteAllTestBranchesIfExists = () => {
   });
 };
 
-const visitOpeningHoursPage = () => {
+const visitOpeningHoursPage = (initialDate?: string) => {
   const pageUrl = Cypress.env("pageUrl");
   if (pageUrl) {
-    cy.visit(pageUrl);
+    const url = initialDate ? `${pageUrl}?initialDate=${initialDate}` : pageUrl;
+    cy.visit(url);
   }
 };
 
-const visitOpeningHoursPageAdmin = () => {
+const visitOpeningHoursAdmin = (initialDate?: string) => {
   const adminUrl = Cypress.env("adminUrl");
   if (adminUrl) {
-    cy.drupalLogin(adminUrl);
+    const url = initialDate
+      ? `${adminUrl}?initialDate=${initialDate}`
+      : adminUrl;
+    cy.drupalLogin(url);
   }
 };
 
@@ -113,9 +114,15 @@ const selectTodayFromMonthViewAdmin = () => {
   cy.get(".fc-day-today").click();
 };
 
+const firstDateOfFebruary2024 = "2024-02-01";
+
+const clickFirstDayInMonthViewAdmin = () => {
+  cy.get('[data-date$="-01"]').first().click();
+};
+
 const selectTimeOnThursdayFromWeekView = (start: string): void => {
   // In FullCalendar, the date and time elements are siblings in the same overlaying div, which prevents selection by both date and time simultaneously.
-  // To work around this, we target a specific time slot. This example selects the a time slot, which spans all days.
+  // To work around this, we target a specific time slot. This example selects a time slot, which spans all days.
   // Since Cypress clicks at the center of the target element by default, and our time slots extend across all weekdays, it will interact with the slot for Thursday.
   cy.get(`td.fc-timegrid-slot-lane[data-time="${start}:00"]`).click();
 };
@@ -173,17 +180,23 @@ const validateOpeningHoursPage = ({
     .and("contain", `${start} - ${end}`);
 };
 
-const validateAtLeastOneOpeningHoursExistAdmin = ({
+const validateNumberOfOpeningHoursExistAdmin = ({
+  expectedOpeningHours,
   openingHourCategory,
   timeDuration: { start, end },
-}: OpeningHourFormType) => {
+}: OpeningHourFormType & { expectedOpeningHours: number }) => {
   return cy
     .get('tbody[role="presentation"]')
     .should("be.visible")
     .find('div[data-cy="opening-hours-editor-event-content"]')
-    .should("have.length.gte", 1)
-    .should("contain", openingHourCategory)
-    .and("contain", `${start} - ${end}`);
+    .filter((index, element) => {
+      const openingHour = Cypress.$(element).text();
+      return (
+        openingHour.includes(openingHourCategory) &&
+        openingHour.includes(`${start} - ${end}`)
+      );
+    })
+    .should("have.length", expectedOpeningHours);
 };
 
 const validateOpeningHoursRemovedAdmin = ({
@@ -231,22 +244,20 @@ const confirmEditRepeatedOpeningHourForm = (value?: "all") => {
       : "opening-hours-editor-form__radio-this";
   cy.getBySel(selector).click();
 
-  // Need to reload the page to get the updated opening hours
   confirmAddRepeatedOpeningHourForm();
-  visitOpeningHoursPageAdmin();
-  navigateToMonthViewAdmin();
 };
 
 const createOpeningHour = ({
   openingHourCategory,
   timeDuration: { start, end },
 }: OpeningHourFormType) => {
-  visitOpeningHoursPageAdmin();
+  visitOpeningHoursAdmin();
   navigateToMonthViewAdmin();
   selectTodayFromMonthViewAdmin();
   fillOpeningHourForm({ openingHourCategory, timeDuration: { start, end } });
   submitOpeningHourForm();
-  validateAtLeastOneOpeningHoursExistAdmin({
+  validateNumberOfOpeningHoursExistAdmin({
+    expectedOpeningHours: 1,
     openingHourCategory,
     timeDuration: { start, end },
   });
@@ -261,7 +272,7 @@ const createOpeningHourInNextWeek = ({
   openingHourCategory,
   timeDuration: { start, end },
 }: OpeningHourFormType) => {
-  visitOpeningHoursPageAdmin();
+  visitOpeningHoursAdmin();
   navigateToNextWeekOrMonthAdmin();
   selectTimeOnThursdayFromWeekView(start);
   fillOpeningHourForm({ openingHourCategory, timeDuration: { end } });
@@ -288,9 +299,9 @@ const createOpeningHoursSeries = ({
   timeDuration: { start, end },
   endDate,
 }: Required<OpeningHourFormType>) => {
-  visitOpeningHoursPageAdmin();
+  visitOpeningHoursAdmin(firstDateOfJanuary2024);
   navigateToMonthViewAdmin();
-  selectTodayFromMonthViewAdmin();
+  clickFirstDayInMonthViewAdmin();
   fillOpeningHourForm({
     openingHourCategory,
     timeDuration: { start, end },
@@ -303,17 +314,20 @@ const createOpeningHoursSeries = ({
     endDate,
   });
   confirmAddRepeatedOpeningHourForm();
-  validateAtLeastOneOpeningHoursExistAdmin({
+  validateNumberOfOpeningHoursExistAdmin({
+    expectedOpeningHours: 5,
     openingHourCategory,
     timeDuration: { start, end },
   });
   navigateToNextWeekOrMonthAdmin();
-  validateAtLeastOneOpeningHoursExistAdmin({
+  validateNumberOfOpeningHoursExistAdmin({
+    expectedOpeningHours: 1,
     openingHourCategory,
     timeDuration: { start, end },
   });
   visitOpeningHoursPage();
-  // Because we use oneMonthFromToday as endDate we can check the four next weeks
+  visitOpeningHoursPage(firstDateOfJanuary2024);
+  // Because we use firstDateOfFebruary2024 as endDate we can check the four next weeks
   for (let i = 0; i < 5; i++) {
     validateOpeningHoursPage({
       openingHourCategory,
@@ -328,14 +342,15 @@ const updateOpeningHour = ({
   timeDuration: { start, end },
 }: OpeningHourFormType) => {
   // Assume that the event is already created and is visible
-  visitOpeningHoursPageAdmin();
+  visitOpeningHoursAdmin();
   navigateToMonthViewAdmin();
   cy.getBySel("opening-hours-editor-event-content")
     .contains(openingHourCategory)
     .click();
   fillOpeningHourForm({ timeDuration: { start, end } });
   submitOpeningHourForm();
-  validateAtLeastOneOpeningHoursExistAdmin({
+  validateNumberOfOpeningHoursExistAdmin({
+    expectedOpeningHours: 1,
     openingHourCategory,
     timeDuration: { start, end },
   });
@@ -352,7 +367,7 @@ const updateOpeningHoursSeries = ({
   editSeriesFromIndex = 0,
 }: OpeningHourFormType & { editSeriesFromIndex?: number }) => {
   // Assume that the event is already created and is visible
-  visitOpeningHoursPageAdmin();
+  visitOpeningHoursAdmin(firstDateOfJanuary2024);
   navigateToMonthViewAdmin();
   cy.getBySel("opening-hours-editor-event-content")
     .eq(editSeriesFromIndex)
@@ -361,37 +376,18 @@ const updateOpeningHoursSeries = ({
   fillOpeningHourForm({ timeDuration: { start, end } });
   submitOpeningHourForm();
   confirmEditRepeatedOpeningHourForm("all");
-
-  // This validates if all the opening hours are updated
-  if (editSeriesFromIndex === 0) {
-    validateAtLeastOneOpeningHoursExistAdmin({
-      openingHourCategory,
-      timeDuration: { start, end },
-    });
-    navigateToNextWeekOrMonthAdmin();
-    validateAtLeastOneOpeningHoursExistAdmin({
-      openingHourCategory,
-      timeDuration: { start, end },
-    });
-    visitOpeningHoursPage();
-    // Because we use oneMonthFromToday as endDate we can check the four next weeks
-    for (let i = 0; i < 5; i++) {
-      validateOpeningHoursPage({
-        openingHourCategory,
-        timeDuration: { start, end },
-      });
-      cy.getBySel("opening-hours-next-week-button").click();
-    }
-  }
+  visitOpeningHoursAdmin(firstDateOfJanuary2024);
+  navigateToMonthViewAdmin();
 };
 
 const deleteOpeningHour = ({
   openingHourCategory,
   timeDuration: { start, end },
 }: OpeningHourFormType) => {
-  visitOpeningHoursPageAdmin();
+  visitOpeningHoursAdmin();
   navigateToMonthViewAdmin();
-  validateAtLeastOneOpeningHoursExistAdmin({
+  validateNumberOfOpeningHoursExistAdmin({
+    expectedOpeningHours: 1,
     openingHourCategory,
     timeDuration: { start, end },
   }).click();
@@ -411,9 +407,10 @@ const deleteOpeningHoursSeries = ({
   openingHourCategory,
   timeDuration: { start, end },
 }: OpeningHourFormType) => {
-  visitOpeningHoursPageAdmin();
+  visitOpeningHoursAdmin(firstDateOfJanuary2024);
   navigateToMonthViewAdmin();
-  validateAtLeastOneOpeningHoursExistAdmin({
+  validateNumberOfOpeningHoursExistAdmin({
+    expectedOpeningHours: 5,
     openingHourCategory,
     timeDuration: { start, end },
   })
@@ -421,12 +418,15 @@ const deleteOpeningHoursSeries = ({
     .click();
   cy.getBySel("opening-hours-editor-form__remove").click();
   confirmEditRepeatedOpeningHourForm("all");
+  visitOpeningHoursAdmin(firstDateOfJanuary2024);
+  navigateToMonthViewAdmin();
   validateOpeningHoursNotPresentAdmin({
     openingHourCategory,
     timeDuration: { start, end },
   });
   visitOpeningHoursPage();
-  // // Because we use oneMonthFromToday as endDate we can check the four next weeks
+  visitOpeningHoursPage(firstDateOfJanuary2024);
+  // Because we use firstDateOfFebruary2024 as endDate we can check the four next weeks
   for (let i = 0; i < 5; i++) {
     validateOpeningHoursNotPresentPage({
       openingHourCategory,
@@ -441,9 +441,10 @@ const deleteRestOfOpeningHoursSeries = ({
   timeDuration: { start, end },
   editSeriesFromIndex = 0,
 }: OpeningHourFormType & { editSeriesFromIndex?: number }) => {
-  visitOpeningHoursPageAdmin();
+  visitOpeningHoursAdmin(firstDateOfJanuary2024);
   navigateToMonthViewAdmin();
-  validateAtLeastOneOpeningHoursExistAdmin({
+  validateNumberOfOpeningHoursExistAdmin({
+    expectedOpeningHours: 5,
     openingHourCategory,
     timeDuration: { start, end },
   })
@@ -460,7 +461,7 @@ describe("Opening hours editor", () => {
   });
 
   it("Checks opening hours categories", () => {
-    visitOpeningHoursPageAdmin();
+    visitOpeningHoursAdmin();
     navigateToMonthViewAdmin();
     selectTodayFromMonthViewAdmin();
     cy.getBySel("opening-hours-editor-form-select")
@@ -507,24 +508,38 @@ describe("Opening hours editor", () => {
     });
   });
 
-  it.skip("Can create opening hours series", () => {
+  it("Can create opening hours series", () => {
     createOpeningHoursSeries({
       openingHourCategory: OpeningHourCategories.SelfService,
       timeDuration: { start: "10:00", end: "16:00" },
-      endDate: oneMonthFromToday(),
+      endDate: firstDateOfFebruary2024,
     });
   });
 
-  it.skip("Can edit all opening hours series", () => {
+  it("Can edit all opening hours series", () => {
     createOpeningHoursSeries({
       openingHourCategory: OpeningHourCategories.SelfService,
       timeDuration: { start: "10:00", end: "16:00" },
-      endDate: oneMonthFromToday(),
+      endDate: firstDateOfFebruary2024,
     });
     updateOpeningHoursSeries({
       openingHourCategory: OpeningHourCategories.SelfService,
       timeDuration: { start: "09:00", end: "15:00" },
     });
+    validateNumberOfOpeningHoursExistAdmin({
+      expectedOpeningHours: 5,
+      openingHourCategory: OpeningHourCategories.SelfService,
+      timeDuration: { start: "09:00", end: "15:00" },
+    });
+    visitOpeningHoursPage(firstDateOfJanuary2024);
+    // Because we use firstDateOfFebruary2024 as endDate we can check the four next weeks
+    for (let i = 0; i < 5; i++) {
+      validateOpeningHoursPage({
+        openingHourCategory: OpeningHourCategories.SelfService,
+        timeDuration: { start: "09:00", end: "15:00" },
+      });
+      cy.getBySel("opening-hours-next-week-button").click();
+    }
   });
 
   type EditRestOfOpeningHoursSeriesType = {
@@ -533,7 +548,8 @@ describe("Opening hours editor", () => {
     originalTimeDuration: TimeDurationType;
     updatedTimeDuration: TimeDurationType;
   };
-  it.skip("Can edit rest of opening hours series", () => {
+
+  it("Can edit rest of opening hours series", () => {
     const editData: EditRestOfOpeningHoursSeriesType = {
       editSeriesFromIndex: 1,
       openingHourCategory: OpeningHourCategories.SelfService,
@@ -544,7 +560,7 @@ describe("Opening hours editor", () => {
     createOpeningHoursSeries({
       openingHourCategory: editData.openingHourCategory,
       timeDuration: editData.originalTimeDuration,
-      endDate: oneMonthFromToday(),
+      endDate: firstDateOfFebruary2024,
     });
 
     updateOpeningHoursSeries({
@@ -553,34 +569,39 @@ describe("Opening hours editor", () => {
       timeDuration: editData.updatedTimeDuration,
     });
 
-    validateAtLeastOneOpeningHoursExistAdmin({
+    visitOpeningHoursAdmin(firstDateOfJanuary2024);
+    navigateToMonthViewAdmin();
+    // Validate that the first series has not been updated
+    validateNumberOfOpeningHoursExistAdmin({
+      expectedOpeningHours: 1,
       openingHourCategory: editData.openingHourCategory,
       timeDuration: editData.originalTimeDuration,
     });
-
-    validateAtLeastOneOpeningHoursExistAdmin({
+    // Validate that the rest of the series has been updated
+    validateNumberOfOpeningHoursExistAdmin({
+      expectedOpeningHours: 4,
       openingHourCategory: editData.openingHourCategory,
       timeDuration: editData.updatedTimeDuration,
     });
   });
 
-  it.skip("Can delete all opening hours series", () => {
+  it("Can delete all opening hours series", () => {
     const openingHour: Required<OpeningHourFormType> = {
       openingHourCategory: OpeningHourCategories.WithService,
       timeDuration: { start: "10:00", end: "11:00" },
-      endDate: oneMonthFromToday(),
+      endDate: firstDateOfFebruary2024,
     };
     createOpeningHoursSeries(openingHour);
     deleteOpeningHoursSeries(openingHour);
   });
 
-  it.skip("Can delete rest of opening hours series", () => {
+  it("Can delete rest of opening hours series", () => {
     const editData: Required<OpeningHourFormType> & {
       editSeriesFromIndex: number;
     } = {
       openingHourCategory: OpeningHourCategories.WithService,
       timeDuration: { start: "10:00", end: "11:00" },
-      endDate: oneMonthFromToday(),
+      endDate: firstDateOfFebruary2024,
       editSeriesFromIndex: 1,
     };
 
@@ -597,6 +618,8 @@ describe("Opening hours editor", () => {
       endDate: editData.endDate,
     });
 
+    visitOpeningHoursAdmin(firstDateOfJanuary2024);
+    navigateToMonthViewAdmin();
     validateOpeningHoursRemovedAdmin({
       editSeriesFromIndex: editData.editSeriesFromIndex,
       openingHourCategory: editData.openingHourCategory,
