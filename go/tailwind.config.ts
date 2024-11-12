@@ -15,6 +15,7 @@ export const extendedTheme = {
     base: "var(--base-radius)", // 15px
     sm: "calc(var(--base-radius) - 5px)",
     input: "var(--input-radius)",
+    none: "0",
   },
   zIndex: {
     "-1": "-1",
@@ -30,6 +31,7 @@ export const extendedTheme = {
     "4/5": "var(--aspect-4-5)",
     "5/2": "var(--aspect-5-2)",
     "5/4": "var(--aspect-5-4)",
+    "7/9": "var(--aspect-7-9)",
     "16/9": "var(--aspect-16-9)",
   },
   fontFamily: {
@@ -296,6 +298,10 @@ export const extendedTheme = {
       "grid-column": "var(--grid-column)",
       "grid-column-half": "calc(var(--grid-column)/2)",
       "grid-column-quarter": "calc(var(--grid-column)/4)",
+      "grid-gap": "var(--grid-gap)",
+      "grid-gap-half": "var(--grid-gap-half)",
+      "grid-gap-2": "var(--grid-gap-2)",
+      "grid-gap-3": "var(--grid-gap-3)",
       "grid-gap-x": "var(--grid-gap-x)",
       "grid-edge": "var(--grid-edge)",
       "space-y": "var(--space-y)",
@@ -303,7 +309,7 @@ export const extendedTheme = {
     boxShadow: {
       button: "2px 2px 0 0px var(--foreground)",
       buttonHover: "1px 1px 0 0px var(--foreground)",
-      coverPicture: "-1px 1px 10px 0 var(--shadow-1), -3px 3px 20px 0 var(--shadow-2)",
+      "cover-picture": "-1px 1px 10px 0 var(--shadow-1), -3px 3px 20px 0 var(--shadow-2)",
     },
   },
 } satisfies Config["theme"]

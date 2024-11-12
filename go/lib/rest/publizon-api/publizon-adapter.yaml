@@ -2,7 +2,7 @@ openapi: 3.0.1
 info:
   title: Publizon Library API
   description: "Pubhub exists in two separate environments, each with their own server, code and database. Please use the web service located at library-api.qa.pubhub.dk when developing and testing.\nOrders/loans created in test environment will not be invoiced. Please request a new license key for the production environment when you're ready to go live."
-  version: '1'
+  version: "1"
 paths:
   /v1/user/cardnumber/friendly:
     get:
@@ -31,39 +31,39 @@ paths:
           schema:
             type: string
       responses:
-        '200':
+        "200":
           description: Successfully retrieved the friendly card number.
           content:
             text/plain:
               schema:
                 type: array
                 items:
-                  $ref: '#/components/schemas/FriendlyCardResult'
-              example: {"friendlyCardNumber":"AABBCC123","code":101,"message":"OK"}
+                  $ref: "#/components/schemas/FriendlyCardResult"
+              example: { "friendlyCardNumber": "AABBCC123", "code": 101, "message": "OK" }
             application/json:
               schema:
                 type: array
                 items:
-                  $ref: '#/components/schemas/FriendlyCardResult'
-              example: {"friendlyCardNumber":"AABBCC123","code":101,"message":"OK"}
+                  $ref: "#/components/schemas/FriendlyCardResult"
+              example: { "friendlyCardNumber": "AABBCC123", "code": 101, "message": "OK" }
             text/json:
               schema:
                 type: array
                 items:
-                  $ref: '#/components/schemas/FriendlyCardResult'
-              example: {"friendlyCardNumber":"AABBCC123","code":101,"message":"OK"}
-        '400':
-          description: 'Error occurred, see message.'
+                  $ref: "#/components/schemas/FriendlyCardResult"
+              example: { "friendlyCardNumber": "AABBCC123", "code": 101, "message": "OK" }
+        "400":
+          description: "Error occurred, see message."
           content:
             text/plain:
               schema:
-                $ref: '#/components/schemas/ApiResult'
+                $ref: "#/components/schemas/ApiResult"
             application/json:
               schema:
-                $ref: '#/components/schemas/ApiResult'
+                $ref: "#/components/schemas/ApiResult"
             text/json:
               schema:
-                $ref: '#/components/schemas/ApiResult'
+                $ref: "#/components/schemas/ApiResult"
   /v1/user/checklist:
     get:
       tags:
@@ -87,19 +87,19 @@ paths:
           schema:
             type: string
       responses:
-        '200':
+        "200":
           description: Success
           content:
             text/plain:
               schema:
-                $ref: '#/components/schemas/ChecklistResult'
+                $ref: "#/components/schemas/ChecklistResult"
             application/json:
               schema:
-                $ref: '#/components/schemas/ChecklistResult'
+                $ref: "#/components/schemas/ChecklistResult"
             text/json:
               schema:
-                $ref: '#/components/schemas/ChecklistResult'
-  '/v1/user/checklist/{identifier}':
+                $ref: "#/components/schemas/ChecklistResult"
+  "/v1/user/checklist/{identifier}":
     post:
       tags:
         - Checklist
@@ -127,18 +127,18 @@ paths:
           schema:
             type: string
       responses:
-        '200':
+        "200":
           description: Success
           content:
             text/plain:
               schema:
-                $ref: '#/components/schemas/ApiResult'
+                $ref: "#/components/schemas/ApiResult"
             application/json:
               schema:
-                $ref: '#/components/schemas/ApiResult'
+                $ref: "#/components/schemas/ApiResult"
             text/json:
               schema:
-                $ref: '#/components/schemas/ApiResult'
+                $ref: "#/components/schemas/ApiResult"
     delete:
       tags:
         - Checklist
@@ -166,18 +166,18 @@ paths:
           schema:
             type: string
       responses:
-        '200':
+        "200":
           description: Success
           content:
             text/plain:
               schema:
-                $ref: '#/components/schemas/ApiResult'
+                $ref: "#/components/schemas/ApiResult"
             application/json:
               schema:
-                $ref: '#/components/schemas/ApiResult'
+                $ref: "#/components/schemas/ApiResult"
             text/json:
               schema:
-                $ref: '#/components/schemas/ApiResult'
+                $ref: "#/components/schemas/ApiResult"
   /v1/library/profile:
     get:
       tags:
@@ -195,18 +195,18 @@ paths:
           schema:
             type: string
       responses:
-        '200':
+        "200":
           description: Success
           content:
             text/plain:
               schema:
-                $ref: '#/components/schemas/LibraryProfile'
+                $ref: "#/components/schemas/LibraryProfile"
             application/json:
               schema:
-                $ref: '#/components/schemas/LibraryProfile'
+                $ref: "#/components/schemas/LibraryProfile"
             text/json:
               schema:
-                $ref: '#/components/schemas/LibraryProfile'
+                $ref: "#/components/schemas/LibraryProfile"
   /v1/user/loans:
     get:
       tags:
@@ -231,23 +231,23 @@ paths:
             type: string
         - name: bookType
           in: query
-          description: '0 = Ebook, 1 = Audio'
+          description: "0 = Ebook, 1 = Audio"
           schema:
-            $ref: '#/components/schemas/BookTypes'
+            $ref: "#/components/schemas/BookTypes"
       responses:
-        '200':
+        "200":
           description: Success
           content:
             text/plain:
               schema:
-                $ref: '#/components/schemas/LoanListResult'
+                $ref: "#/components/schemas/LoanListResult"
             application/json:
               schema:
-                $ref: '#/components/schemas/LoanListResult'
+                $ref: "#/components/schemas/LoanListResult"
             text/json:
               schema:
-                $ref: '#/components/schemas/LoanListResult'
-  '/v1/user/loans/{identifier}':
+                $ref: "#/components/schemas/LoanListResult"
+  "/v1/user/loans/{identifier}":
     get:
       tags:
         - Loan
@@ -277,18 +277,18 @@ paths:
             minLength: 13
             type: string
       responses:
-        '200':
+        "200":
           description: Success
           content:
             text/plain:
               schema:
-                $ref: '#/components/schemas/LoanResult'
+                $ref: "#/components/schemas/LoanResult"
             application/json:
               schema:
-                $ref: '#/components/schemas/LoanResult'
+                $ref: "#/components/schemas/LoanResult"
             text/json:
               schema:
-                $ref: '#/components/schemas/LoanResult'
+                $ref: "#/components/schemas/LoanResult"
     post:
       tags:
         - Loan
@@ -324,19 +324,19 @@ paths:
           schema:
             type: string
       responses:
-        '200':
+        "200":
           description: Success
           content:
             text/plain:
               schema:
-                $ref: '#/components/schemas/CreateLoanResult'
+                $ref: "#/components/schemas/CreateLoanResult"
             application/json:
               schema:
-                $ref: '#/components/schemas/CreateLoanResult'
+                $ref: "#/components/schemas/CreateLoanResult"
             text/json:
               schema:
-                $ref: '#/components/schemas/CreateLoanResult'
-  '/v1/loanstatus/{identifier}':
+                $ref: "#/components/schemas/CreateLoanResult"
+  "/v1/loanstatus/{identifier}":
     get:
       tags:
         - LoanStatus
@@ -364,18 +364,18 @@ paths:
           schema:
             type: string
       responses:
-        '200':
+        "200":
           description: Success
           content:
             text/plain:
               schema:
-                $ref: '#/components/schemas/LoanStatusResult'
+                $ref: "#/components/schemas/LoanStatusResult"
             application/json:
               schema:
-                $ref: '#/components/schemas/LoanStatusResult'
+                $ref: "#/components/schemas/LoanStatusResult"
             text/json:
               schema:
-                $ref: '#/components/schemas/LoanStatusResult'
+                $ref: "#/components/schemas/LoanStatusResult"
   /v1/loanstatus:
     post:
       tags:
@@ -416,19 +416,19 @@ paths:
               items:
                 type: string
       responses:
-        '200':
+        "200":
           description: Success
           content:
             text/plain:
               schema:
-                $ref: '#/components/schemas/LoanStatusListResult'
+                $ref: "#/components/schemas/LoanStatusListResult"
             application/json:
               schema:
-                $ref: '#/components/schemas/LoanStatusListResult'
+                $ref: "#/components/schemas/LoanStatusListResult"
             text/json:
               schema:
-                $ref: '#/components/schemas/LoanStatusListResult'
-  '/v1/products/{identifier}':
+                $ref: "#/components/schemas/LoanStatusListResult"
+  "/v1/products/{identifier}":
     get:
       tags:
         - Product
@@ -451,18 +451,18 @@ paths:
           schema:
             type: string
       responses:
-        '200':
+        "200":
           description: Success
           content:
             text/plain:
               schema:
-                $ref: '#/components/schemas/ProductResult'
+                $ref: "#/components/schemas/ProductResult"
             application/json:
               schema:
-                $ref: '#/components/schemas/ProductResult'
+                $ref: "#/components/schemas/ProductResult"
             text/json:
               schema:
-                $ref: '#/components/schemas/ProductResult'
+                $ref: "#/components/schemas/ProductResult"
   /v1/products:
     get:
       tags:
@@ -481,18 +481,18 @@ paths:
           schema:
             type: string
       responses:
-        '200':
+        "200":
           description: Success
           content:
             text/plain:
               schema:
-                $ref: '#/components/schemas/ProductListResult'
+                $ref: "#/components/schemas/ProductListResult"
             application/json:
               schema:
-                $ref: '#/components/schemas/ProductListResult'
+                $ref: "#/components/schemas/ProductListResult"
             text/json:
               schema:
-                $ref: '#/components/schemas/ProductListResult'
+                $ref: "#/components/schemas/ProductListResult"
   /v1/user/reservations:
     get:
       tags:
@@ -516,19 +516,19 @@ paths:
           schema:
             type: string
       responses:
-        '200':
+        "200":
           description: Success
           content:
             text/plain:
               schema:
-                $ref: '#/components/schemas/ReservationListResult'
+                $ref: "#/components/schemas/ReservationListResult"
             application/json:
               schema:
-                $ref: '#/components/schemas/ReservationListResult'
+                $ref: "#/components/schemas/ReservationListResult"
             text/json:
               schema:
-                $ref: '#/components/schemas/ReservationListResult'
-  '/v1/user/reservations/{identifier}':
+                $ref: "#/components/schemas/ReservationListResult"
+  "/v1/user/reservations/{identifier}":
     post:
       tags:
         - Reservation
@@ -559,26 +559,26 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/ReservationInput'
+              $ref: "#/components/schemas/ReservationInput"
           text/json:
             schema:
-              $ref: '#/components/schemas/ReservationInput'
+              $ref: "#/components/schemas/ReservationInput"
           application/*+json:
             schema:
-              $ref: '#/components/schemas/ReservationInput'
+              $ref: "#/components/schemas/ReservationInput"
       responses:
-        '200':
+        "200":
           description: Success
           content:
             text/plain:
               schema:
-                $ref: '#/components/schemas/ApiResult'
+                $ref: "#/components/schemas/ApiResult"
             application/json:
               schema:
-                $ref: '#/components/schemas/ApiResult'
+                $ref: "#/components/schemas/ApiResult"
             text/json:
               schema:
-                $ref: '#/components/schemas/ApiResult'
+                $ref: "#/components/schemas/ApiResult"
     patch:
       tags:
         - Reservation
@@ -609,26 +609,26 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/ReservationInput'
+              $ref: "#/components/schemas/ReservationInput"
           text/json:
             schema:
-              $ref: '#/components/schemas/ReservationInput'
+              $ref: "#/components/schemas/ReservationInput"
           application/*+json:
             schema:
-              $ref: '#/components/schemas/ReservationInput'
+              $ref: "#/components/schemas/ReservationInput"
       responses:
-        '200':
+        "200":
           description: Success
           content:
             text/plain:
               schema:
-                $ref: '#/components/schemas/ApiResult'
+                $ref: "#/components/schemas/ApiResult"
             application/json:
               schema:
-                $ref: '#/components/schemas/ApiResult'
+                $ref: "#/components/schemas/ApiResult"
             text/json:
               schema:
-                $ref: '#/components/schemas/ApiResult'
+                $ref: "#/components/schemas/ApiResult"
     delete:
       tags:
         - Reservation
@@ -656,18 +656,18 @@ paths:
           schema:
             type: string
       responses:
-        '200':
+        "200":
           description: Success
           content:
             text/plain:
               schema:
-                $ref: '#/components/schemas/ApiResult'
+                $ref: "#/components/schemas/ApiResult"
             application/json:
               schema:
-                $ref: '#/components/schemas/ApiResult'
+                $ref: "#/components/schemas/ApiResult"
             text/json:
               schema:
-                $ref: '#/components/schemas/ApiResult'
+                $ref: "#/components/schemas/ApiResult"
 components:
   schemas:
     ApiResponseCode:
@@ -697,13 +697,13 @@ components:
         - 152
         - 153
       type: integer
-      description: '101 = Success, 105 = InvalidContentIdentifier, 118 = InvalidRequestIdentity, 120 = MaxConcurrentLoansPerBorrowerExceeded, 125 = MaxAmountPerMonthExceeded, 128 = ContentNotFound, 131 = NotLoanable, 134 = CardTemporarilyBlocked, 135 = MaxLoansOnTitleReached, 136 = InsufficientCopiesException, 137 = ReservationLimitReached, 138 = GenericFault, 139 = InvalidAgreement, 140 = AlreadyReserved, 141 = InvalidEmail, 142 = InvalidPhone, 143 = CostFreeLimitReached, 147 = CountryNotFound, 148 = InvalidInstitutionId, 149 = InvalidCardFormat, 150 = InvalidCardByCulr, 151 = CardNotFound, 152 = InvalidClientId, 153 = LoanNotFound'
+      description: "101 = Success, 105 = InvalidContentIdentifier, 118 = InvalidRequestIdentity, 120 = MaxConcurrentLoansPerBorrowerExceeded, 125 = MaxAmountPerMonthExceeded, 128 = ContentNotFound, 131 = NotLoanable, 134 = CardTemporarilyBlocked, 135 = MaxLoansOnTitleReached, 136 = InsufficientCopiesException, 137 = ReservationLimitReached, 138 = GenericFault, 139 = InvalidAgreement, 140 = AlreadyReserved, 141 = InvalidEmail, 142 = InvalidPhone, 143 = CostFreeLimitReached, 147 = CountryNotFound, 148 = InvalidInstitutionId, 149 = InvalidCardFormat, 150 = InvalidCardByCulr, 151 = CardNotFound, 152 = InvalidClientId, 153 = LoanNotFound"
       format: int32
     ApiResult:
       type: object
       properties:
         code:
-          $ref: '#/components/schemas/ApiResponseCode'
+          $ref: "#/components/schemas/ApiResponseCode"
         message:
           type: string
           nullable: true
@@ -714,7 +714,7 @@ components:
         - 0
         - 1
       type: integer
-      description: '0 = Ebook, 1 = Audio'
+      description: "0 = Ebook, 1 = Audio"
       format: int32
     ChecklistItem:
       type: object
@@ -734,14 +734,14 @@ components:
       type: object
       properties:
         code:
-          $ref: '#/components/schemas/ApiResponseCode'
+          $ref: "#/components/schemas/ApiResponseCode"
         message:
           type: string
           nullable: true
         items:
           type: array
           items:
-            $ref: '#/components/schemas/ChecklistItem'
+            $ref: "#/components/schemas/ChecklistItem"
           nullable: true
       additionalProperties: false
       description: "Get checklist result. Checklist items are found in\r\n<br>Items\r\n."
@@ -755,13 +755,13 @@ components:
         - 5
         - 6
       type: integer
-      description: ''
+      description: ""
       format: int32
     CreateLoanResult:
       type: object
       properties:
         code:
-          $ref: '#/components/schemas/ApiResponseCode'
+          $ref: "#/components/schemas/ApiResponseCode"
         message:
           type: string
           nullable: true
@@ -782,13 +782,13 @@ components:
         - 3
         - 4
       type: integer
-      description: ''
+      description: ""
       format: int32
     FriendlyCardResult:
       type: object
       properties:
         code:
-          $ref: '#/components/schemas/ApiResponseCode'
+          $ref: "#/components/schemas/ApiResponseCode"
         message:
           type: string
           nullable: true
@@ -802,7 +802,7 @@ components:
         - 3
         - 15
       type: integer
-      description: ''
+      description: ""
       format: int32
     LibraryBook:
       type: object
@@ -811,7 +811,7 @@ components:
           type: string
           nullable: true
         identifierType:
-          $ref: '#/components/schemas/IdentifierTypeEnum'
+          $ref: "#/components/schemas/IdentifierTypeEnum"
         title:
           type: string
           nullable: true
@@ -862,7 +862,7 @@ components:
       type: object
       properties:
         idType:
-          $ref: '#/components/schemas/IdentifierTypeEnum'
+          $ref: "#/components/schemas/IdentifierTypeEnum"
         id:
           type: string
           nullable: true
@@ -920,7 +920,7 @@ components:
         testCards:
           type: array
           items:
-            $ref: '#/components/schemas/TestCard'
+            $ref: "#/components/schemas/TestCard"
           nullable: true
       additionalProperties: false
     Loan:
@@ -941,48 +941,48 @@ components:
         isSubscriptionLoan:
           type: boolean
         libraryBook:
-          $ref: '#/components/schemas/LibraryBook'
+          $ref: "#/components/schemas/LibraryBook"
         fileExtensionType:
-          $ref: '#/components/schemas/FileExtensionType'
+          $ref: "#/components/schemas/FileExtensionType"
       additionalProperties: false
     LoanListResult:
       type: object
       properties:
         code:
-          $ref: '#/components/schemas/ApiResponseCode'
+          $ref: "#/components/schemas/ApiResponseCode"
         message:
           type: string
           nullable: true
         loans:
           type: array
           items:
-            $ref: '#/components/schemas/Loan'
+            $ref: "#/components/schemas/Loan"
           nullable: true
         libraryData:
-          $ref: '#/components/schemas/LibraryData'
+          $ref: "#/components/schemas/LibraryData"
         userData:
-          $ref: '#/components/schemas/UserData'
+          $ref: "#/components/schemas/UserData"
       additionalProperties: false
     LoanResult:
       type: object
       properties:
         code:
-          $ref: '#/components/schemas/ApiResponseCode'
+          $ref: "#/components/schemas/ApiResponseCode"
         message:
           type: string
           nullable: true
         loan:
-          $ref: '#/components/schemas/Loan'
+          $ref: "#/components/schemas/Loan"
         libraryData:
-          $ref: '#/components/schemas/LibraryData'
+          $ref: "#/components/schemas/LibraryData"
         userData:
-          $ref: '#/components/schemas/UserData'
+          $ref: "#/components/schemas/UserData"
       additionalProperties: false
     LoanStatusItem:
       type: object
       properties:
         loanStatus:
-          $ref: '#/components/schemas/ContentLoanStatusEnum'
+          $ref: "#/components/schemas/ContentLoanStatusEnum"
         onChecklist:
           type: boolean
         identifier:
@@ -993,26 +993,26 @@ components:
       type: object
       properties:
         code:
-          $ref: '#/components/schemas/ApiResponseCode'
+          $ref: "#/components/schemas/ApiResponseCode"
         message:
           type: string
           nullable: true
         items:
           type: array
           items:
-            $ref: '#/components/schemas/LoanStatusItem'
+            $ref: "#/components/schemas/LoanStatusItem"
           nullable: true
       additionalProperties: false
     LoanStatusResult:
       type: object
       properties:
         code:
-          $ref: '#/components/schemas/ApiResponseCode'
+          $ref: "#/components/schemas/ApiResponseCode"
         message:
           type: string
           nullable: true
         loanStatus:
-          $ref: '#/components/schemas/ContentLoanStatusEnum'
+          $ref: "#/components/schemas/ContentLoanStatusEnum"
         onChecklist:
           type: boolean
         identifier:
@@ -1049,14 +1049,14 @@ components:
           type: integer
           format: int32
         externalProductId:
-          $ref: '#/components/schemas/LibraryProductExternalId'
+          $ref: "#/components/schemas/LibraryProductExternalId"
         internalProductId:
           type: string
           nullable: true
         contributors:
           type: array
           items:
-            $ref: '#/components/schemas/LibraryProductContributor'
+            $ref: "#/components/schemas/LibraryProductContributor"
           nullable: true
         format:
           type: string
@@ -1080,7 +1080,7 @@ components:
         productCategories:
           type: array
           items:
-            $ref: '#/components/schemas/LibraryProductCategory'
+            $ref: "#/components/schemas/LibraryProductCategory"
           nullable: true
         costFree:
           type: boolean
@@ -1089,14 +1089,14 @@ components:
       type: object
       properties:
         code:
-          $ref: '#/components/schemas/ApiResponseCode'
+          $ref: "#/components/schemas/ApiResponseCode"
         message:
           type: string
           nullable: true
         products:
           type: array
           items:
-            $ref: '#/components/schemas/Product'
+            $ref: "#/components/schemas/Product"
           nullable: true
       additionalProperties: false
       description: "Get product list result. Product items are found in\r\n<br>Products\r\n."
@@ -1104,12 +1104,12 @@ components:
       type: object
       properties:
         code:
-          $ref: '#/components/schemas/ApiResponseCode'
+          $ref: "#/components/schemas/ApiResponseCode"
         message:
           type: string
           nullable: true
         product:
-          $ref: '#/components/schemas/Product'
+          $ref: "#/components/schemas/Product"
       additionalProperties: false
       description: Get product result.
     Reservation:
@@ -1155,14 +1155,14 @@ components:
       type: object
       properties:
         code:
-          $ref: '#/components/schemas/ApiResponseCode'
+          $ref: "#/components/schemas/ApiResponseCode"
         message:
           type: string
           nullable: true
         reservations:
           type: array
           items:
-            $ref: '#/components/schemas/Reservation'
+            $ref: "#/components/schemas/Reservation"
           nullable: true
       additionalProperties: false
       description: "Reservation list result. Reservation items are found in\r\n<br>Reservations\r\n."
@@ -1204,12 +1204,11 @@ components:
   securitySchemes:
     oauth:
       type: oauth2
-      description: 'OAuth 2.0 password Grant'
+      description: "OAuth 2.0 password Grant"
       flows:
         password:
-          tokenUrl: 'https://login.bib.dk/oauth/token'
-          scopes: {  }
+          tokenUrl: "https://login.bib.dk/oauth/token"
+          scopes: {}
 security:
-  -
-    oauth: []
+  - oauth: []
 tags: []

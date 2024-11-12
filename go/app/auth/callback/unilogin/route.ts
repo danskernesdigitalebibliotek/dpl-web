@@ -1,6 +1,7 @@
 import { NextRequest } from "next/server"
 import { IntrospectionResponse } from "openid-client"
 
+import goConfig from "@/lib/config/config"
 import { getUniloginClient, uniloginClientConfig } from "@/lib/session/oauth/uniloginClient"
 import { getSession, setTokensOnSession } from "@/lib/session/session"
 import { TTokenSet } from "@/lib/types/session"
@@ -52,6 +53,6 @@ export async function GET(request: NextRequest) {
   } catch (error) {
     console.error(error)
     // TODO: Error page or redirect to login page.
-    return Response.redirect("/")
+    return Response.redirect(goConfig("app.url"))
   }
 }
