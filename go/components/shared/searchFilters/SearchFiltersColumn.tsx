@@ -51,7 +51,7 @@ const SearchFiltersColumn = ({
       <div
         key={facet.name}
         className={cn(
-          "space-y-grid-gap-half relative",
+          "relative space-y-grid-gap-half",
           !isLast && "min-w-32 flex-1",
           isLast && "flex-2"
         )}>
