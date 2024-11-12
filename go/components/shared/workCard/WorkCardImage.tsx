@@ -36,7 +36,7 @@ export const WorkCardImage: FC<Props> = ({ src, lowResSrc, alt }) => {
 
   return (
     <div className="flex h-full w-full items-center" ref={ref}>
-      {!imageError && (
+      {!imageError && src ? (
         <Tilt
           scale={1.05}
           transitionSpeed={2500}
@@ -45,48 +45,50 @@ export const WorkCardImage: FC<Props> = ({ src, lowResSrc, alt }) => {
           tiltReverse={true}
           className={"relative m-auto"}
           style={{ paddingTop, width: `min(100%,${imageWidthByContainerHeight}px)` }}>
-          <Image
-            src={lowResSrc}
-            alt={alt}
-            height={imageHeight}
-            width={imageWidth}
-            sizes="20px"
-            loading="eager"
-            className={cn(
-              `absolute inset-0 h-auto w-full overflow-hidden rounded-sm object-contain transition-all duration-500
-              will-change-transform`,
-              imageLoaded ? "shadow-none" : "shadow-cover-picture"
-            )}
-            onLoad={({ target }) => {
-              // get the intrinsic dimensions of the image
-              const { naturalWidth, naturalHeight } = target as HTMLImageElement
-              setImageHeight(naturalHeight)
-              setImageWidth(naturalWidth)
-            }}
-          />
-          <Image
-            src={src}
-            alt={alt}
-            height={imageHeight}
-            width={imageWidth}
-            sizes="100vw"
-            loading="lazy"
-            className={cn(
-              `absolute inset-0 h-auto w-full overflow-hidden rounded-sm object-contain shadow-cover-picture
-              transition-all duration-500 will-change-transform`,
-              imageLoaded ? "opacity-100" : "opacity-0"
-            )}
-            onLoad={() => {
-              setImageLoaded(true)
-            }}
-            onError={() => {
-              setImageError(true)
-            }}
-          />
+          {lowResSrc && (
+            <Image
+              src={lowResSrc}
+              alt={alt}
+              height={imageHeight}
+              width={imageWidth}
+              sizes="20px"
+              loading="eager"
+              className={cn(
+                `absolute inset-0 h-auto w-full overflow-hidden rounded-sm object-contain transition-all duration-500
+                  will-change-transform`,
+                imageLoaded ? "shadow-none" : "shadow-cover-picture"
+              )}
+              onLoad={({ target }) => {
+                // get the intrinsic dimensions of the image
+                const { naturalWidth, naturalHeight } = target as HTMLImageElement
+                setImageHeight(naturalHeight)
+                setImageWidth(naturalWidth)
+              }}
+            />
+          )}
+          {src && (
+            <Image
+              src={src}
+              alt={alt}
+              height={imageHeight}
+              width={imageWidth}
+              sizes="100vw"
+              loading="lazy"
+              className={cn(
+                `absolute inset-0 h-auto w-full overflow-hidden rounded-sm object-contain shadow-cover-picture
+                  transition-all duration-500 will-change-transform`,
+                imageLoaded ? "opacity-100" : "opacity-0"
+              )}
+              onLoad={() => {
+                setImageLoaded(true)
+              }}
+              onError={() => {
+                setImageError(true)
+              }}
+            />
+          )}
         </Tilt>
-      )}
-
-      {imageError && (
+      ) : (
         <motion.div
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
