@@ -6,7 +6,6 @@ use Drupal\dpl_opening_hours\Model\Repetition\NoRepetition;
 use Drupal\dpl_opening_hours\Model\Repetition\Repetition;
 use Drupal\node\NodeInterface;
 use Drupal\taxonomy\TermInterface;
-use function Safe\sprintf as sprintf;
 
 /**
  * Value object which defines a single time period where a branch is open.

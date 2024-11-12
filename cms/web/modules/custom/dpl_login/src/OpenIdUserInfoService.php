@@ -4,8 +4,6 @@ namespace Drupal\dpl_login;
 
 use Drupal\Core\Site\Settings;
 
-use function Safe\sprintf;
-
 /**
  * OpenIdUserInfoService.
  *

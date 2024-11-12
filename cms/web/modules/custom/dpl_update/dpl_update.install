@@ -104,7 +104,8 @@ function dpl_update_install(): string {
   $messages[] = dpl_update_update_10022();
   $messages[] = dpl_update_update_10023();
   $messages[] = dpl_update_update_10024();
-
+  // Do not uninstall dblog module on install. It is not installed by default.
+  // $messages[] = dpl_update_update_10025()
   return implode('\r\n', $messages);
 }
 
@@ -293,4 +294,11 @@ function dpl_update_update_10023(): string {
  */
 function dpl_update_update_10024(): string {
   return _dpl_update_install_modules(['dpl_consumers']);
+}
+
+/**
+ * Uninstall dblog module.
+ */
+function dpl_update_update_10025(): string {
+  return _dpl_update_uninstall_modules(['dblog']);
 }
