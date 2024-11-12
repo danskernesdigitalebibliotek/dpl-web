@@ -2,7 +2,7 @@ import Link from "next/link"
 import React from "react"
 
 import { WorkTeaserFragment } from "@/lib/graphql/generated/fbi/graphql"
-import { resolveWorkUrl } from "@/lib/helpers/helper.routes"
+import { resolveUrl } from "@/lib/helpers/helper.routes"
 import { getIsbnsFromWork } from "@/lib/helpers/ids"
 import { useGetCoverCollection } from "@/lib/rest/cover-service-api/generated/cover-service"
 import { GetCoverCollectionSizesItem } from "@/lib/rest/cover-service-api/generated/model"
@@ -56,7 +56,9 @@ const WorkCard = ({ work }: WorkCardProps) => {
   const lowResCover = getLowResCoverUrl(dataCovers)
 
   return (
-    <Link className="block space-y-3 lg:space-y-5" href={resolveWorkUrl(work.workId)}>
+    <Link
+      className="block space-y-3 lg:space-y-5"
+      href={resolveUrl({ type: "work", routeParams: { id: work.workId } })}>
       <div>
         <div
           key={work.workId}
