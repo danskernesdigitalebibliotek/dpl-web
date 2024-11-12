@@ -1,7 +1,15 @@
 type RouteParams = { [key: string]: string | number }
 type QueryParams = { [key: string]: string | number }
 
-export function buildRoute(route: string, params?: RouteParams, query?: QueryParams): string {
+export function buildRoute({
+  route,
+  params,
+  query,
+}: {
+  route: string
+  params?: RouteParams
+  query?: QueryParams
+}): string {
   if (params) {
     route = Object.keys(params).reduce((acc, key) => {
       const value = encodeURIComponent(params[key])
@@ -39,9 +47,9 @@ export const resolveUrl = ({ type, routeParams, queryParams }: ResolveUrlOptions
   switch (type as ResolveUrlOptions["type"]) {
     case "work":
       if (!routeParams?.id) return ""
-      return buildRoute("/work/:id", { id: routeParams.id }, queryParams)
+      return buildRoute({ route: "/work/:id", params: { id: routeParams.id }, query: queryParams })
     case "search":
-      return buildRoute("/search", undefined, queryParams)
+      return buildRoute({ route: "/search", query: queryParams })
     default:
       return ""
   }
