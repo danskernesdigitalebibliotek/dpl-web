@@ -69,12 +69,7 @@ function dpl_paragraphs_preprocess_paragraph__links(array &$variables): void {
 
       // Get the normalized path. If null, default to an empty string.
       $parsed_url = parse_url($url->toString(), PHP_URL_PATH);
-
-      if (!is_string($parsed_url)) {
-        $parsed_url = '';
-      }
-
-      $normalized_path = rtrim($parsed_url, '/');
+      $normalized_path = (is_string($parsed_url)) ? rtrim($parsed_url, '/') : '';
 
       $link_type = 'internal';
 
