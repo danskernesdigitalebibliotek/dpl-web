@@ -19,8 +19,8 @@ function dpl_consumers_get_consumer_uuid(string $client_id): string {
 
     if (!empty($consumer)) {
       $consumer = reset($consumer);
-      $uuid = $consumer->uuid();
-      return $uuid ?? 'Consumer UUID not found.';
+
+      return $consumer->uuid() ?? 'Consumer UUID not found.';
     }
     else {
       return 'Consumer not found.';
