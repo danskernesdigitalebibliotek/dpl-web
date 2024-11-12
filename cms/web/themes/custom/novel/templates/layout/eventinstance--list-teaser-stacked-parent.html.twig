@@ -1,19 +1,18 @@
-{% if not expired %}
-  {% include '@novel/components/list-item.html.twig'
-    with {
-    attributes: attributes,
-    url: eventinstance_url,
-    baseIconPath: baseIconPath,
-    image: content.event_teaser_image.0|default(content.event_image.0),
-    categories: content.event_categories,
-    date: content.date,
-    title: content.title,
-    description: content.event_description,
-    bottom: content.branch,
-    start_date: start_time,
-    end_date: end_time,
-    ticket_price: ticket_price_display,
-    datetime_attribute: datetime_attribute,
-    image_placeholder_text: content.event_teaser_text,
-  } only %}
-{% endif %}
+
+{% include '@novel/components/list-item.html.twig'
+  with {
+  attributes: attributes,
+  url: eventinstance_url,
+  baseIconPath: baseIconPath,
+  image: content.event_teaser_image.0|default(content.event_image.0),
+  categories: content.event_categories,
+  date: content.date,
+  title: content.title,
+  description: content.event_description,
+  bottom: content.branch,
+  start_date: start_time,
+  end_date: end_time,
+  ticket_price: ticket_price_display,
+  datetime_attribute: datetime_attribute,
+  image_placeholder_text: content.event_teaser_text,
+} only %}
