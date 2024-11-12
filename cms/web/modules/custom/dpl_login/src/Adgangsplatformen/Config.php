@@ -4,7 +4,6 @@ namespace Drupal\dpl_login\Adgangsplatformen;
 
 use Drupal\dpl_login\Exception\MissingConfigurationException;
 use Drupal\dpl_react\DplReactConfigBase;
-use function Safe\sprintf as sprintf;
 
 /**
  * Structured access to configuration for Adgangsplatformen.

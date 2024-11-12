@@ -70,10 +70,6 @@ parameters:
       path: web/modules/custom/dpl_login/src/OpenIdUserInfoService.php
     # Ignore options for Drush commands. These are specified using specialized annotations.
     - '#Method Drupal\\.*\Commands\\.* has parameter \$options with no value type specified in iterable type array\.#'
-    # Ignore safe check for collation_fixer. We plan to upstream it and do not want to add this dependency.
-    -
-      message: "#thecodingmachine\/safe#"
-      path: web/modules/custom/collation_fixer
 
   scanFiles:
     # Needed to make locale_translation_batch_fetch_finished() discoverable.
