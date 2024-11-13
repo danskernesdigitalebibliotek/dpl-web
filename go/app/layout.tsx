@@ -10,7 +10,8 @@ import "@/styles/globals.css"
 
 export const metadata: Metadata = {
   title: "Børnebiblioteket",
-  description: "GO",
+  description:
+    "Børnebiblioteket er en digital platform, der giver børn adgang til bøger, lydbøger og e-bøger.",
   icons: [
     { rel: "icon", type: "image/png", url: "/favicon-96x96.png", sizes: "96x96" },
     { rel: "shortcut icon", url: "/favicon.ico" },
