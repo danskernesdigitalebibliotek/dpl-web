@@ -14,9 +14,7 @@ use Drupal\dpl_library_agency\FbiProfileType;
 use Drupal\dpl_library_agency\GeneralSettings;
 use Drupal\dpl_library_agency\ReservationSettings;
 use Symfony\Component\DependencyInjection\ContainerInterface;
-use function Safe\array_combine as array_combine;
 use function Safe\preg_match as preg_match;
-use function Safe\usort as usort;
 
 /**
  * General Settings form for a library agency.

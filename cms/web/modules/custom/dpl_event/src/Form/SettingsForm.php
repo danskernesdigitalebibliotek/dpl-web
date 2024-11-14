@@ -10,7 +10,6 @@ use Drupal\Core\Form\ConfigFormBase;
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\dpl_event\Workflows\UnpublishSchedule;
 use Symfony\Component\DependencyInjection\ContainerInterface;
-use function Safe\array_combine as array_combine;
 
 /**
  * Configure Event settings for this site.
