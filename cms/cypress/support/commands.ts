@@ -1,31 +1,31 @@
-import "@testing-library/cypress/add-commands";
-import { WireMockRestClient } from "wiremock-rest-client";
-import { Options } from "wiremock-rest-client/dist/model/options.model";
-import { StubMapping } from "wiremock-rest-client/dist/model/stub-mapping.model";
-import { RequestPattern } from "wiremock-rest-client/dist/model/request-pattern.model";
+import '@testing-library/cypress/add-commands';
+import { WireMockRestClient } from 'wiremock-rest-client';
+import { Options } from 'wiremock-rest-client/dist/model/options.model';
+import { StubMapping } from 'wiremock-rest-client/dist/model/stub-mapping.model';
+import { RequestPattern } from 'wiremock-rest-client/dist/model/request-pattern.model';
 
 const wiremock = (baseUri?: string, options?: Options) => {
   return new WireMockRestClient(
-    baseUri || Cypress.env("WIREMOCK_URL"),
-    options
+    baseUri || Cypress.env('WIREMOCK_URL'),
+    options,
   );
 };
 
-Cypress.Commands.add("createMapping", (stub: StubMapping) => {
+Cypress.Commands.add('createMapping', (stub: StubMapping) => {
   cy.wrap(wiremock().mappings.createMapping(stub));
 });
 
-Cypress.Commands.add("resetMappings", () => {
+Cypress.Commands.add('resetMappings', () => {
   cy.wrap(wiremock().mappings.resetAllMappings());
 });
 
-Cypress.Commands.add("logMappingRequests", () => {
+Cypress.Commands.add('logMappingRequests', () => {
   cy.wrap(
     wiremock()
       .mappings.getAllMappings()
       .then((mappings) => {
         Cypress.log({
-          name: "Wiremock",
+          name: 'Wiremock',
           message: `Mappings: ${mappings.meta.total}`,
         });
         mappings.mappings.forEach((stub) => {
@@ -38,30 +38,30 @@ Cypress.Commands.add("logMappingRequests", () => {
                 stub.request.urlPath ||
                 stub.request.urlPathPattern;
               Cypress.log({
-                name: "Wiremock",
+                name: 'Wiremock',
                 message: `${stub.request.method}: ${requestUrlPath}: ${request.count} hit(s)`,
               });
             });
         });
-      })
+      }),
   );
 });
 
-Cypress.Commands.add("getRequestCount", (request: RequestPattern) => {
+Cypress.Commands.add('getRequestCount', (request: RequestPattern) => {
   cy.wrap(
     wiremock()
       .requests.getCount(request)
       .then((response: { count: number }) => {
         return response.count;
-      })
+      }),
   );
 });
 
-Cypress.Commands.add("resetRequests", () => {
+Cypress.Commands.add('resetRequests', () => {
   cy.wrap(wiremock().requests.resetAllRequests());
 });
 
-Cypress.Commands.add("logRequests", () => {
+Cypress.Commands.add('logRequests', () => {
   cy.wrap(
     wiremock()
       .requests.getAllRequests()
@@ -69,19 +69,19 @@ Cypress.Commands.add("logRequests", () => {
         data.requests.forEach((requestResponse) => {
           const request = requestResponse.request;
           Cypress.log({
-            name: "Wiremock",
+            name: 'Wiremock',
             message: `${request.method}: ${request.url}`,
           });
         });
-      })
+      }),
   );
 });
 
-Cypress.Commands.add("drupalLogin", (url?: string) => {
-  const username = Cypress.env("DRUPAL_USERNAME");
-  const password = Cypress.env("DRUPAL_PASSWORD");
+Cypress.Commands.add('drupalLogin', (url?: string) => {
+  const username = Cypress.env('DRUPAL_USERNAME');
+  const password = Cypress.env('DRUPAL_PASSWORD');
   cy.session({ username, password }, () => {
-    cy.visit("/user/login");
+    cy.visit('/user/login');
     cy.get('[name="name"]')
       .type(username)
       .parent()
@@ -95,24 +95,24 @@ Cypress.Commands.add("drupalLogin", (url?: string) => {
   }
 });
 
-Cypress.Commands.add("anonymousUser", () => {
-  cy.session("anonymous", () => {});
+Cypress.Commands.add('anonymousUser', () => {
+  cy.session('anonymous', () => {});
 });
 
-Cypress.Commands.add("drupalLogout", () => {
-  cy.visit("/logout");
+Cypress.Commands.add('drupalLogout', () => {
+  cy.visit('/logout');
 });
 
-Cypress.Commands.add("drupalCron", () => {
+Cypress.Commands.add('drupalCron', () => {
   // Because we run Wiremock as a proxy only services configured with the
   //  proxy will use it. We need to proxy requests during cron and only the
   // web container is configured to use the proxy and thus we have to run
   // cron through the web frontend. Using the proxy with the CLI container would
   // cause too many irrelevant requests to pass throuh the proxy.
   cy.drupalLogin();
-  cy.visit("/admin/config/system/cron");
+  cy.visit('/admin/config/system/cron');
   cy.get('[value="Run cron"]').click();
-  cy.contains("Cron ran successfully.");
+  cy.contains('Cron ran successfully.');
   cy.drupalLogout();
 });
 
@@ -131,11 +131,11 @@ const adgangsplatformenLoginOauthMappings = ({
 }) => {
   cy.createMapping({
     request: {
-      method: "GET",
-      urlPath: "/oauth/authorize",
+      method: 'GET',
+      urlPath: '/oauth/authorize',
       queryParameters: {
         response_type: {
-          equalTo: "code",
+          equalTo: 'code',
         },
       },
     },
@@ -144,17 +144,17 @@ const adgangsplatformenLoginOauthMappings = ({
       headers: {
         location: `{{request.query.[redirect_uri]}}?code=${authorizationCode}&state={{request.query.[state]}}`,
       },
-      transformers: ["response-template"],
+      transformers: ['response-template'],
     },
   });
 
   cy.createMapping({
     request: {
-      method: "POST",
-      urlPath: "/oauth/token/",
+      method: 'POST',
+      urlPath: '/oauth/token/',
       bodyPatterns: [
         {
-          contains: "grant_type=authorization_code",
+          contains: 'grant_type=authorization_code',
         },
         {
           contains: `code=${authorizationCode}`,
@@ -164,7 +164,7 @@ const adgangsplatformenLoginOauthMappings = ({
     response: {
       jsonBody: {
         access_token: accessToken,
-        token_type: "Bearer",
+        token_type: 'Bearer',
         expires_in: 2591999,
       },
     },
@@ -172,8 +172,8 @@ const adgangsplatformenLoginOauthMappings = ({
 
   cy.createMapping({
     request: {
-      method: "GET",
-      urlPath: "/userinfo/",
+      method: 'GET',
+      urlPath: '/userinfo/',
       headers: {
         Authorization: {
           equalTo: `Bearer ${accessToken}`,
@@ -192,7 +192,7 @@ const adgangsplatformenLoginOauthMappings = ({
 
   const patronBody = (userIsAlreadyRegistered: boolean) => {
     return {
-      authenticateStatus: userIsAlreadyRegistered ? "VALID" : "INVALID",
+      authenticateStatus: userIsAlreadyRegistered ? 'VALID' : 'INVALID',
       patron: {
         // This is not a complete patron object but with regards to login/register we only need to ensure an empty blocked
         // status so we leave out all other information.
@@ -203,8 +203,8 @@ const adgangsplatformenLoginOauthMappings = ({
 
   cy.createMapping({
     request: {
-      method: "GET",
-      urlPath: "/external/agencyid/patrons/patronid/v2",
+      method: 'GET',
+      urlPath: '/external/agencyid/patrons/patronid/v2',
       headers: {
         Authorization: {
           equalTo: `Bearer ${accessToken}`,
@@ -218,7 +218,7 @@ const adgangsplatformenLoginOauthMappings = ({
 };
 
 Cypress.Commands.add(
-  "adgangsplatformenLogin",
+  'adgangsplatformenLogin',
   ({
     authorizationCode,
     accessToken,
@@ -239,13 +239,13 @@ Cypress.Commands.add(
         userGuid,
       });
 
-      cy.visit("/user/login");
-      cy.contains("Log in with Adgangsplatformen").click();
+      cy.visit('/user/login');
+      cy.contains('Log in with Adgangsplatformen').click();
     });
-  }
+  },
 );
 Cypress.Commands.add(
-  "setupAdgangsplatformenRegisterMappinngs",
+  'setupAdgangsplatformenRegisterMappinngs',
   ({
     authorizationCode,
     accessToken,
@@ -266,8 +266,8 @@ Cypress.Commands.add(
     });
     cy.createMapping({
       request: {
-        method: "POST",
-        urlPattern: ".*/external/agencyid/patrons/v4",
+        method: 'POST',
+        urlPattern: '.*/external/agencyid/patrons/v4',
       },
       response: {
         jsonBody: {
@@ -278,9 +278,9 @@ Cypress.Commands.add(
     });
     cy.createMapping({
       request: {
-        method: "GET",
+        method: 'GET',
         // TODO: Create more exact urlPatterns
-        urlPattern: ".*/fees.*",
+        urlPattern: '.*/fees.*',
       },
       response: {
         jsonBody: {},
@@ -288,8 +288,8 @@ Cypress.Commands.add(
     });
     cy.createMapping({
       request: {
-        method: "GET",
-        urlPattern: ".*/reservations.*",
+        method: 'GET',
+        urlPattern: '.*/reservations.*',
       },
       response: {
         jsonBody: {},
@@ -297,36 +297,36 @@ Cypress.Commands.add(
     });
     cy.createMapping({
       request: {
-        method: "GET",
-        urlPattern: ".*/loans.*",
+        method: 'GET',
+        urlPattern: '.*/loans.*',
       },
       response: {
         jsonBody: {},
       },
     });
-  }
+  },
 );
 
 Cypress.Commands.add(
-  "verifyToken",
+  'verifyToken',
   ({
     token,
     tokenType,
   }: {
-    tokenType: "library" | "user" | "unregistered-user";
+    tokenType: 'library' | 'user' | 'unregistered-user';
     token: string;
   }) => {
-    cy.request("/dpl-react/user-tokens")
-      .its("body")
+    cy.request('/dpl-react/user-tokens')
+      .its('body')
       .should(
-        "contain",
-        `window.dplReact.setToken("${tokenType}", "${token}")`
+        'contain',
+        `window.dplReact.setToken("${tokenType}", "${token}")`,
       );
-  }
+  },
 );
 
-const visible = (checkVisible: boolean) => (checkVisible ? ":visible" : "");
-Cypress.Commands.add("getBySel", (selector, checkVisible = false, ...args) => {
+const visible = (checkVisible: boolean) => (checkVisible ? ':visible' : '');
+Cypress.Commands.add('getBySel', (selector, checkVisible = false, ...args) => {
   return cy.get(`[data-cy="${selector}"]${visible(checkVisible)}`, ...args);
 });
 
@@ -359,7 +359,7 @@ declare global {
         userGuid?: string;
       }): Chainable<null>;
       verifyToken(params: {
-        tokenType: "library" | "user" | "unregistered-user";
+        tokenType: 'library' | 'user' | 'unregistered-user';
         token: string;
       }): Chainable<null>;
       getBySel(
