@@ -40,7 +40,7 @@ export default setup({
     assignQToContext: assign({
       currentQ: ({ event }) => event.q,
     }),
-    resetFiltersIfNoQ: assign({
+    resetFiltersIfNoQuery: assign({
       selectedFilters: ({ context }) => {
         if (!context.currentQ) {
           return {}
