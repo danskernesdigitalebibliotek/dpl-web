@@ -78,7 +78,7 @@ All URIs are relative to *http://localhost*
 Class | Method | HTTP request | Description
 ------------ | ------------- | ------------- | -------------
 *ExternalAgencyidCatalogApi* | [**getAvailabilityV3**](docs/Api/ExternalAgencyidCatalogApi.md#getavailabilityv3) | **GET** /external/agencyid/catalog/availability/v3 | Get availability of bibliographical records.
-*ExternalAgencyidCatalogApi* | [**getHoldingsV3**](docs/Api/ExternalAgencyidCatalogApi.md#getholdingsv3) | **GET** /external/agencyid/catalog/holdings/v3 | Get placement holdings for bibliographical records.
+*ExternalAgencyidCatalogApi* | [**getHoldingsLogisticsV1**](docs/Api/ExternalAgencyidCatalogApi.md#getholdingslogisticsv1) | **GET** /external/agencyid/catalog/holdingsLogistics/v1 | Get placement holdings for bibliographical records.
 *ExternalAgencyidPatronPatronidApi* | [**getFeesV2**](docs/Api/ExternalAgencyidPatronPatronidApi.md#getfeesv2) | **GET** /external/agencyid/patron/patronid/fees/v2 | List of fees in FBS for the patron with all available information about the fee.
 *ExternalAgencyidPatronsApi* | [**createV4**](docs/Api/ExternalAgencyidPatronsApi.md#createv4) | **POST** /external/agencyid/patrons/v4 | Create a new patron who is a person.
 *ExternalAgencyidPatronsApi* | [**createWithGuardian**](docs/Api/ExternalAgencyidPatronsApi.md#createwithguardian) | **POST** /external/agencyid/patrons/withGuardian/v1 | Creates a person patron with a guardian (eg A financial responsible).
