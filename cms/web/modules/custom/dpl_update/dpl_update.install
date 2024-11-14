@@ -302,3 +302,10 @@ function dpl_update_update_10024(): string {
 function dpl_update_update_10025(): string {
   return _dpl_update_uninstall_modules(['dblog']);
 }
+
+/**
+ * Install dpl_webmaster.
+ */
+function dpl_update_update_10026(): string {
+  return _dpl_update_install_modules(['dpl_webmaster']);
+}
