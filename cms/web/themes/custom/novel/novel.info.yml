@@ -1,7 +1,7 @@
 name: Novel
 type: theme
 base theme: stable9
-description: "Custom theme for the Danish Public Libraries"
+description: 'Custom theme for the Danish Public Libraries'
 core_version_requirement: ^9 || ^10
 
 # We want to add dpl_react as a module dependency
@@ -19,9 +19,9 @@ libraries:
   - novel/base
 
 regions:
-  header: "Header"
-  content: "Content"
-  footer: "Footer"
+  header: 'Header'
+  content: 'Content'
+  footer: 'Footer'
 
 ckeditor5-stylesheets:
   - assets/dpl-design-system/css/wysiwyg.css

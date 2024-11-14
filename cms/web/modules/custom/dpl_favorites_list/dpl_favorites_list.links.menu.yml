@@ -1,5 +1,5 @@
 dpl_favorite.list:
-  title: "Favorites"
+  title: 'Favorites'
   menu_name: user-profile-menu
   route_name: dpl_favorites.list
-  description: "List user favorites"
+  description: 'List user favorites'
