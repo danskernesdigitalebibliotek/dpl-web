@@ -1,32 +1,29 @@
-import Image from "next/image"
 import Link from "next/link"
 import React from "react"
 
 import { WorkTeaserFragment } from "@/lib/graphql/generated/fbi/graphql"
-import { getRandomContentColorClass } from "@/lib/helpers/colors"
-import { cn } from "@/lib/helpers/helper.cn"
-import { resolveWorkUrl } from "@/lib/helpers/helper.routes"
+import { resolveUrl } from "@/lib/helpers/helper.routes"
 import { getIsbnsFromWork } from "@/lib/helpers/ids"
 import { useGetCoverCollection } from "@/lib/rest/cover-service-api/generated/cover-service"
 import { GetCoverCollectionSizesItem } from "@/lib/rest/cover-service-api/generated/model"
 import { useGetV1ProductsIdentifier } from "@/lib/rest/publizon-api/generated/publizon"
 
 import { Badge } from "../badge/Badge"
-import Icon from "../icon/Icon"
 import WorkCardAvailabilityRow from "./WorkCardAvailabilityRow"
-import { displayCreators, getAllWorkPids, getCoverUrls } from "./helper"
+import { WorkCardImage } from "./WorkCardImage"
+import { displayCreators, getAllWorkPids, getCoverUrls, getLowResCoverUrl } from "./helper"
 
 type WorkCardProps = {
   work: WorkTeaserFragment
 }
 
 const WorkCard = ({ work }: WorkCardProps) => {
-  const { data: dataCovers } = useGetCoverCollection({
+  const { data: dataCovers, isLoading: isLoadingCovers } = useGetCoverCollection({
     type: "pid",
     identifiers: [getAllWorkPids(work).join(", ")],
     sizes: [
       // TODO: These sizes should be defined in a general global config.
-      "small, small-medium, medium, medium-large, large, original, default" as GetCoverCollectionSizesItem,
+      "xx-small, small, small-medium, medium, medium-large, large, original, default" as GetCoverCollectionSizesItem,
     ],
   })
   const isbns = getIsbnsFromWork(work)
@@ -53,49 +50,62 @@ const WorkCard = ({ work }: WorkCardProps) => {
     "medium",
     "small-medium",
     "small",
+    "xx-small",
   ])
 
+  const lowResCover = getLowResCoverUrl(dataCovers)
+
   return (
-    <div className="mb-4">
-      <Link href={resolveWorkUrl(work.workId)}>
-        <div key={work.workId} className="relative rounded-sm bg-background-overlay p-2 md:p-4">
+    <Link
+      className="block space-y-3 lg:space-y-5"
+      href={resolveUrl({ type: "work", routeParams: { id: work.workId } })}>
+      <div>
+        <div
+          key={work.workId}
+          className="relative flex aspect-4/5 h-auto w-full flex-col rounded-base bg-background-overlay px-[15%] pt-[15%]">
           {!!dataPublizon?.product?.costFree && (
-            <Badge variant={"blue-title"} className="absolute left-2 md:left-4 md:top-4">
+            <Badge variant={"blue-title"} className="absolute left-4 top-4 md:left-4 md:top-4">
               BLÅ
             </Badge>
           )}
-          <div
-            className="relative mx-auto mb-3 mt-6 flex aspect-[166/228] w-[calc(100%-76px-4px)] items-center rounded-sm
-              md:mb-6 md:mt-9 md:w-[calc(100%-106px)]">
-            {!!coverSrc?.length && coverSrc.length > 0 && (
-              <Image
-                src={coverSrc[0]}
-                alt="work image"
-                width={166}
-                height={228}
-                className={cn(
-                  "h-auto w-full overflow-hidden rounded-sm object-contain shadow-coverPicture",
-                  getRandomContentColorClass()
-                )}
+          <div className="relative mx-auto flex h-full w-full items-center">
+            {!isLoadingCovers && (
+              <WorkCardImage
+                lowResSrc={lowResCover || ""}
+                src={coverSrc?.[0] || ""}
+                alt={`${work.titles.full[0]} cover billede`}
               />
             )}
-            {(!coverSrc?.length || coverSrc.length === 0) && (
-              <div
-                className={cn(
-                  "flex h-full w-full items-center justify-center rounded-sm",
-                  getRandomContentColorClass()
-                )}>
-                <Icon name="question-mark" className="h-[100px] text-background opacity-50" />
-              </div>
-            )}
           </div>
-          <WorkCardAvailabilityRow materialTypes={work.materialTypes} />
+          <div className="my-auto flex min-h-[15%] items-center py-3 md:py-4">
+            <WorkCardAvailabilityRow materialTypes={work.materialTypes} />
+          </div>
         </div>
-      </Link>
-      <p className="mt-2 break-words text-typo-subtitle-lg md:mt-5">{work.titles.full[0]}</p>
-      <p className="mt-2 text-typo-caption opacity-50 md:mt-2">
-        {displayCreators(work.creators, 2)}
-      </p>
+      </div>
+
+      <div className="space-y-2">
+        <p className="mr-grid-column-half break-words text-typo-subtitle-lg">
+          {work.titles.full[0]}
+        </p>
+        <p className="text-typo-caption opacity-60">{displayCreators(work.creators, 2)}</p>
+      </div>
+    </Link>
+  )
+}
+
+export const WorkCardGhost = () => {
+  return (
+    <div className="space-y-3 lg:space-y-5">
+      <div className="w-full animate-pulse rounded-base bg-background-overlay">
+        <div className="aspect-4/5 px-[15%] pt-[15%]"></div>
+        <div className="py-3 md:py-4">
+          <div className="h-6 md:h-10"></div>
+        </div>
+      </div>
+      <div className="space-y-2">
+        <div className="h-5 animate-pulse rounded-base bg-background-overlay lg:h-7"></div>
+        <div className="h-3 animate-pulse rounded-base bg-background-overlay lg:h-4"></div>
+      </div>
     </div>
   )
 }

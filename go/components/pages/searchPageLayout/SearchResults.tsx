@@ -2,7 +2,7 @@
 
 import React from "react"
 
-import WorkCard from "@/components/shared/workCard/WorkCard"
+import WorkCard, { WorkCardGhost } from "@/components/shared/workCard/WorkCard"
 import { WorkTeaserFragment } from "@/lib/graphql/generated/fbi/graphql"
 
 type SearchResultProps = {
@@ -11,9 +11,25 @@ type SearchResultProps = {
 
 const SearchResults = ({ works }: SearchResultProps) => {
   return (
-    <div className="grid grid-cols-2 gap-x-grid-gap-x gap-y-[calc(var(--grid-gap-x)*2)] md:grid-cols-3">
+    <div className="grid-go gap-x-grid-gap-x gap-y-[calc(var(--grid-gap-x)*2)]">
       {works.map(work => (
-        <WorkCard key={work.workId} work={work} />
+        <div key={work.workId} className="col-span-3 lg:col-span-4">
+          <WorkCard work={work} />
+        </div>
+      ))}
+    </div>
+  )
+}
+
+export const SearchResultsGhost = () => {
+  const ghostItems = Array.from({ length: 6 })
+
+  return (
+    <div className="grid-go gap-x-grid-gap-x gap-y-[calc(var(--grid-gap-x)*2)]">
+      {ghostItems.map((_, index) => (
+        <div className="col-span-3 lg:col-span-4" key={index}>
+          <WorkCardGhost />
+        </div>
       ))}
     </div>
   )
