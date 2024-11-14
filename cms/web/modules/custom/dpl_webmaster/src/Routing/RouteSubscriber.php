@@ -21,6 +21,14 @@ class RouteSubscriber extends RouteSubscriberBase {
     if ($route = $collection->get('update.module_install')) {
       $route->setRequirement('_access', 'FALSE');
     }
+
+    // Remove /admin/modules/update. It won't work for the majority of the
+    // listed modules (webmasters can't update contrib modules provided by DPL
+    // anyway). Limiting it to webmaster uploaded, Drupal contrib modules would
+    // be a nicer alternative, but currently out of scope.
+    if ($route = $collection->get('update.module_update')) {
+      $route->setRequirement('_access', 'FALSE');
+    }
   }
 
 }
