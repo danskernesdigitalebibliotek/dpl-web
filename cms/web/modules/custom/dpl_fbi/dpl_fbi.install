@@ -2,7 +2,6 @@
 
 use Drupal\Core\Database\Database;
 use Drupal\Core\Field\FieldStorageDefinitionInterface;
-use function Safe\sprintf as sprintf;
 
 /**
  * Adds 'material_type' column to 'dpl_fbi_work_id' field storage.
