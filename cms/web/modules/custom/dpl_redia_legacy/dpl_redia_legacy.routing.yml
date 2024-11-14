@@ -1,9 +1,9 @@
 dpl_redia_legacy.events:
-  path: "/ding-redia-rss/event"
+  path: '/ding-redia-rss/event'
   defaults:
     _controller: '\Drupal\dpl_redia_legacy\Controller\RssFeeds\EventsController::getFeed'
-    _title: "Redia APP Event"
+    _title: 'Redia APP Event'
   requirements:
-    _permission: "access content"
+    _permission: 'access content'
   options:
-    _format: "xml"
+    _format: 'xml'

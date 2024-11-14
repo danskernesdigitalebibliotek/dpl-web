@@ -1,4 +1,4 @@
 services:
   dpl_patron_page.settings:
     class: Drupal\dpl_patron_page\DplPatronPageSettings
-    arguments: ["@config.manager"]
+    arguments: ['@config.manager']

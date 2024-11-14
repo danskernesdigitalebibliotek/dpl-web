@@ -1,35 +1,35 @@
 services:
   dpl_opening_hours.logger:
     parent: logger.channel_base
-    arguments: ["dpl_opening_hours"]
+    arguments: ['dpl_opening_hours']
   dpl_opening_hours.branch_storage:
     class: \Drupal\Core\Entity\EntityStorageInterface
-    factory: ["@entity_type.manager", "getStorage"]
-    arguments: ["node"]
+    factory: ['@entity_type.manager', 'getStorage']
+    arguments: ['node']
   dpl_opening_hours.category_storage:
     class: \Drupal\Core\Entity\EntityStorageInterface
-    factory: ["@entity_type.manager", "getStorage"]
-    arguments: ["taxonomy_term"]
+    factory: ['@entity_type.manager', 'getStorage']
+    arguments: ['taxonomy_term']
   dpl_opening_hours.repository:
     class: Drupal\dpl_opening_hours\Model\OpeningHoursRepository
     arguments:
-      - "@dpl_opening_hours.logger"
-      - "@database"
-      - "@dpl_opening_hours.branch_storage"
-      - "@dpl_opening_hours.category_storage"
-      - "@dpl_opening_hours.repetition_repository"
+      - '@dpl_opening_hours.logger'
+      - '@database'
+      - '@dpl_opening_hours.branch_storage'
+      - '@dpl_opening_hours.category_storage'
+      - '@dpl_opening_hours.repetition_repository'
   dpl_opening_hours.repetition_repository:
     class: Drupal\dpl_opening_hours\Model\Repetition\RepetitionRepository
     arguments:
-      - "@database"
+      - '@database'
   dpl_opening_hours.repetition_mapper:
     class: Drupal\dpl_opening_hours\Mapping\RepetitionMapper
   dpl_opening_hours.mapper:
     class: Drupal\dpl_opening_hours\Mapping\OpeningHoursMapper
     arguments:
-      - "@dpl_opening_hours.branch_storage"
-      - "@dpl_opening_hours.category_storage"
-      - "@dpl_opening_hours.repetition_mapper"
+      - '@dpl_opening_hours.branch_storage'
+      - '@dpl_opening_hours.category_storage'
+      - '@dpl_opening_hours.repetition_mapper'
   dpl_opening_hours.route_subscriber:
     class: Drupal\dpl_opening_hours\EventSubscriber\ApiRouteSubscriber
     tags:
