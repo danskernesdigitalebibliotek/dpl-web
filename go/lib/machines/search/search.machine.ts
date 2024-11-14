@@ -23,7 +23,7 @@ export default searchMachineSetup.createMachine({
           actions: ["setQueryClientInContext"],
         },
         SET_SEARCH_STRING: {
-          actions: ["assignQToContext"],
+          actions: ["assignQueryToContext"],
         },
         SET_INITIAL_FILTERS: {
           guard: "contextHasQueryClient",
@@ -45,7 +45,7 @@ export default searchMachineSetup.createMachine({
           },
         ],
         TYPING: {
-          actions: ["assignQToContext"],
+          actions: ["assignQueryToContext"],
         },
         SEARCH: [
           {

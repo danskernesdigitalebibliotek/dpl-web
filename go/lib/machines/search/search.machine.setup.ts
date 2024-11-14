@@ -37,7 +37,7 @@ export default setup({
       type: "filterToggled",
       toggled: event,
     })),
-    assignQToContext: assign({
+    assignQueryToContext: assign({
       currentQ: ({ event }) => event.q,
     }),
     resetFiltersIfNoQuery: assign({
