@@ -73,13 +73,13 @@ const SearchPageLayout = () => {
               )}
             {isLoadingResults && <SearchResultsGhost />}
           </div>
-          <div ref={loadMoreRef} className="h-0 opacity-0"></div>
         </>
       ) : (
         <div className="text-typo-body-1">
           <p className="text-foreground opacity-80">Ingen søgeord fundet</p>
         </div>
       )}
+      <div ref={loadMoreRef} className="h-0 opacity-0"></div>
     </div>
   )
 }
