@@ -1,0 +1,9 @@
+dpl_webmaster.install_or_update:
+  # TODO: move
+  path: '/admin/modules/install-or-update'
+  defaults:
+    _form: '\Drupal\dpl_webmaster\Form\InstallOrUpdateModule'
+    _title: 'Install or update module'
+  requirements:
+    _permission: 'administer software updates'
+    _access_update_manager: 'TRUE'
