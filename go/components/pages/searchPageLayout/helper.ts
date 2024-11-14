@@ -63,8 +63,8 @@ export const getNextPageParamsFunc = (
 
 export const useSearchDataAndLoadingStates = () => {
   const actor = useSearchMachineActor()
-  const q = useSelector(actor, snapshot => {
-    return snapshot.context.currentQuery
+  const searchQuery = useSelector(actor, snapshot => {
+    return snapshot.context.submittedQuery
   })
   const data = useSelector(actor, snapshot => {
     const { facetData: facets, searchData: search } = snapshot.context
@@ -74,9 +74,16 @@ export const useSearchDataAndLoadingStates = () => {
     !data.facets || actor.getSnapshot().matches({ filteringAndSearching: "filter" })
   const isLoadingResults =
     !data.search || actor.getSnapshot().matches({ filteringAndSearching: "search" })
-  const selectedFilters = useSelector(actor, snapshot => {
-    return snapshot.context.selectedFilters
-  })
+  const machineIsReady = !actor.getSnapshot().matches("bootstrap")
 
-  return { q, data, selectedFilters, isLoadingFacets, isLoadingResults }
+  const selectedFilters = useSelector(actor, snapshot => snapshot.context.selectedFilters)
+
+  return {
+    searchQuery,
+    data,
+    selectedFilters,
+    isLoadingFacets,
+    isLoadingResults,
+    machineIsReady,
+  }
 }

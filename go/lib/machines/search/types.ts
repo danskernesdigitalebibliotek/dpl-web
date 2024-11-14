@@ -13,6 +13,7 @@ export type TContext = {
   searchOffset: number
   searchPageSize: number
   currentQuery: string
+  submittedQuery?: string
   searchData?: {
     hitcount: SearchWithPaginationQuery["search"]["hitcount"]
     pages: SearchWithPaginationQuery["search"]["works"][]

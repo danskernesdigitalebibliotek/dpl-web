@@ -3,7 +3,7 @@ import { and, not } from "xstate"
 import searchMachineSetup from "./search.machine.setup"
 
 export default searchMachineSetup.createMachine({
-  /** @xstate-layout N4IgpgJg5mDOIC5SzAQwE4GMAWA6ARgPaEAusJ6qADgMQDKAogCoD6AigKoMBKAmiwGEAMgEkGAOSYBtAAwBdRKCqFYASxKrCAO0UgAHogC0ANgCMAVlwAWAJzGATDIAcNmeYDM9zwBoQAT0QLAHZcYycnIKdTSNcndysAXwTfFAwcAmIyCmp6ZhZGAEFuAQAJfKZuEXEAcVkFJBBlNQ1tXQMEQytjS0cbKyCg0xdwpytzXwCEd2jcGxt3d1Gne273AaSUtCw8IlJySlpGViqRJhECoRYAMREhJh46Ot0m9U0dBvaTR1Cw0ysFpzmLxuCaIKxDXCmdw2cwyFamYyLKIbECpba4VQQAA2YBoTAA8tVqkIGNdbvduE8Gi8Wu9QO17F5cOZYvYgmFjMYZAtQQghvZcKNzEEbIN3MKrP9jCi0elMTi8YTiaSbnceFJTPUlCpXq0Pog2TZcF4+stnEEgd1eeYLLh3MYgvZ+mERWZpclUVs5djcUxeAAFKq1eTPHW0tpGcxWAU2P72OYLGEIoK8kVWSHAmRwh1RhEyr14eW4wrFEpU7XNN4RqZxZmuBzcxmmUw2OK8xFGm3GPoyQZODumfNpQs+3JFUoarWNMNV-VTAaQ6Ox7oW6IuYy82KCkXCxbzLw2ofoos0IT4goAERYAFl8dwGOXp5W9fTArHjX15tGnVmbfZec2cyCg4DrTMsayike6QAGaqFiJBgOgqhaFABRaBAdAFshUA0BA2hgLg5CoAhhEFrgsHwYh2FoRhWEoY+NKzq+HQtjIzLmOYEStlyNpWDIVjWumbiOmMgJOg4XRQXgFEIUhKE0Zhw7YaRw4qds2G4fhGJaAAboQADWBGytJcGydR6GKepKFqekxnYQgyF6ZgxFvHUDEzi++iBG4xizHYMjzBavJOk4sz2MKUThVJ5GmVR8kWXRUA2XgdkoTQiHoIQ6C4FQWLEdBWUALbJTFlFyahCVKdZxnJfZjmEM5tJuSG1IeXSXkIKMIR9kE8RBOC9imAFAF9LMcLxGs5jRTJcUVbRVVJTN2VLRpeFaAR9WGSVK3xfNVmLbFy2HXVukNS52jNVOjGee0Q0rNY4WRKY4XWkEbEuDIDhTR6NU7XNlk4MpS2lWZaUZVlOV5SQBXoMVv3HbtAPYEDh0g7NDmnY1rnyO5z7te0XXWH8n0vf4iBdsBPXfZsqlYoQqAQNh15ZWASPcHAACu8GwLVaVrRtp1bTVdMM0zLNs5z3O81AGNOedWiXaGePVoYLa+V0-HGP0LILINTibt84W5nMYThWM0Ui4zKHM+grMFuzsBc2Q0vpegmXZbl+VFSVlti7bEuO1LqUy-VWMXTjLUVrq+NGM9oVx89vZsh4krjGTfJeO4xpdINfxxH8FhJB6WiEBAcC6MZSvRyrgJZxEbL2uy-Qtmnkyq06uC9cKQ2cv1tiHj9ZG7FkBxV+Gc6GE4bjbg3Dpa4MMK8oYazGuKb2SuFX0wokg+qUWY9MR17eCoCnIImMDpxGE7afXakTihYrh8X000I-9iUHzdiC9SEwJdBErc3xjR-IyN64RRKvzKuZPagNqoFk-jHBAkRLAeBtOYL6AFezWHGr1GQQ0N7xkgaDd+C0SrBwQdWOIWdUEWAwenJ0IQ+JeH+BaIhs0FKJRKvzChc5nqRE7osaY0QcxPWCt2UIQIJqsN3uiP6HDSFLR4cxZBq9NYAN5EuO0oF0G9k4n0QcMiYJv3kftNGR0oEoSUR1Khqj-5BXTugo0jchjSJprI4xlVTHA24a1ZWvCfzMmGP1FYFpREOPfGYKmFt6ZWygDbO2w4HZO3gL46uE9bBGihDrTwyd4hjAAn8Sw-UJK9n+JxNY0TRbW3FvbSWztyGpPHsxToNpITinmDki0eTAEZwWNnBwzYrD53BN9JIQA */
+  /** @xstate-layout N4IgpgJg5mDOIC5SzAQwE4GMAWA6ARgPaEAusJ6qADgMQDKAogCoD6AigKoMBKAmiwGEAMgEkGAOSYBtAAwBdRKCqFYASxKrCAO0UgAHogC0ANgCMAVlwAWAJzGATDIAcNmeYDM9zwBoQAT0QLAHZcYycnIKdTSNcndysAXwTfFAwcAmIyCmp6ZhZGAEFuAQAJfKZuEXEAcVkFJBBlNQ1tXQMEQytjS0cbKyCg0xdwpytzXwCEd2jcGxt3d1Gne273AaSUtCw8IlJySlpGViqRJhECoRYAMREhJh46Ot0m9U0dBvaTR1Cw0ysFpzmLxuCaIKxDXCmdw2cwyFamYyLKIbECpbYZPbZWgAIQA8rimHQKgUAAosAAiuPEDCeDReLXeoE+5iiuCC0Js9isK36phhoIQphkNlC4Ui0RczniphRaPSuyyBxoeIJRO4pIpVJppnqShUr1aHyMLNMbI5XJ5g35-kQZlFESiMSl4NlW3SqggABswDQmLjqtUhAxrrd7txaXrmm82mD7CL2V4FjZwt0rFYBfZ7E5cB5hXzPOYhdN3K60ngPd7ff7A8GbnceFIdc99QyYwh7EERV4+stnEEgd0BYXLO5jEEuUEwp2zMZS+iKz6mLwSVVavJm1HDUzjdzZn84-NoYWxwLO1ZIcCZHCx+ZwbPkqi3eWvYvl6vG7rGi3o0bBUEZKEfwAu4t6eAi7gClC56jOYnaDCBQRpqOc7ui+uRFKUEZfpujL6IgizuDmrgODInj2KYfJxAKiIisefQyIMTg0TKD5ys+laFMUJQfhuBq4e0awhPuNgIrBhYxMYAqxLgEQwuyLieCBLGbGWuALjQQi4gU5IsAAsri3A0uudLflueGCiJuBxrY8SZlYV6FvYkF8iKTErOyQxeHBKF4AAZqonokGA6CqFoUAFFoEB0E+oVQDQEDaGAuDkKgQXJU+uD+YFwWxRFUUxWFWH0j+24dHyAHmJVslMW4fwyOmNoILeuBuOOYyAlyDhdD5mUBUFIVhXl0VlrF6WqWxsXxYlalaAAboQADWSVsb12UDeFkXDdso0rRNYUIKF82YKlbx1EVpn8YEbjGLMdjCms4yNVy2acrBUT2OYPVZf1uWbQVUBjeie1xcF6CEOguBUJ6qW+eDAC2gPpN9OWDX9I1hYjeDAwdc2EMdDJncZkZ8W2owhIx7L9OC5HCpBfSzHC8QPV9fUoxt+XowDyMQ9zk0JVoSWHYty0ZbzqMc9tGPc6tP37UL+OnfI504W2QorNYH3ih9Q7-jJxEfSza2-RLOCjdLYsg+gYMQ1DMPw5jMts0N-2OzzrPrTjR0ndohOfsVZntGT1h1Q4j2TMeMljkM-Y9Z6hCoBAsW6eDYBbTg3BwAAroFsCY3z01C0tDtxwnScp2n2AZ7A2dkHncu4wrPtK0T2Ek7+hh8jdXT1cY-TmIe5FOFJ3wfbeLlhB9Yyx-Hidhcn6Cp0+Vc17nwM0KD4OQ9DJCw+gCMrSXs9QPPi9lsvOd11Ant497Wi+7xrbt6YWYXu9DEdh4aZh4EiZWV05F-DiH8CwSQHxaEIBAOAug2IPxKuZQwgJCIRA7KOScvJrSTA7lyM0sEiwyDCB4FwPUFT7GoLAgORgnBuBkuOdkY5e5Wm-h0NYVkEL1W5OYUOMJEisQyguchl0yr2BkoCYwM4xhjjiGEai+DcBrDiMOVw9k+iG1luzCusUBFtnZCEYEXQIhML5AzRMlF+xpgoveFS6ILbO05pjLRv5IiWA8MOUOkEGLWEZvIqc443CqKdmjSWANdr-QcaVOIhEXEWDcU9fonivD-Bjrw1SNjAmmwxitfmYAwnmWfpEM0QDog3nFBmYwIpugJOZsk6x7tjYaKlu7HJ7QnGsJ7gYgU3IRSoISbCOM+DlKPhSbU8W9Subu1dpokyKtfwRNafo-sQ4ylyKjgY-x61bFBNdrgLJTSf72RzMMRC7k3qmCHJZMwFNPrVPSIfMuC8K7nzILsjotgRRQn7gsTM-Z4hjGcmMNk-9royD5O86epc57lyXlnC+wNnmdELJCECA8P4-MMb-TqACrBAPBFcpIQA */
   id: "search",
   initial: "bootstrap",
   context: ({ input }) => ({
@@ -11,6 +11,7 @@ export default searchMachineSetup.createMachine({
     searchPageSize: input.searchPageSize,
     facetLimit: input.facetLimit,
     currentQuery: input.q ?? "",
+    submittedQuery: undefined,
     searchData: undefined,
     facetData: undefined,
     selectedFilters: input.filters ?? {},
@@ -23,13 +24,20 @@ export default searchMachineSetup.createMachine({
           actions: ["setQueryClientInContext"],
         },
         SET_SEARCH_STRING: {
-          actions: ["assignQueryToContext"],
+          actions: ["setCurrentQueryInContext", "setSbmittedQueryInContext"],
         },
         SET_INITIAL_FILTERS: {
-          guard: "contextHasQueryClient",
           actions: ["setInitialFiltersInContext"],
-          target: "filteringAndSearching",
         },
+        BOOTSTRAP_DONE: [
+          {
+            guard: and(["contextHasQueryClient", "contextHasSearchString"]),
+            target: "filteringAndSearching",
+          },
+          {
+            target: "idle",
+          },
+        ],
       },
     },
     idle: {
@@ -44,13 +52,19 @@ export default searchMachineSetup.createMachine({
             target: "idle",
           },
         ],
-        TYPING: {
-          actions: ["assignQueryToContext"],
-        },
+        TYPING: [
+          {
+            guard: "eventHasSearchString",
+            actions: ["setCurrentQueryInContext"],
+          },
+          {
+            actions: ["emitQDeleted", "resetQuery"],
+          },
+        ],
         SEARCH: [
           {
             guard: "contextHasSearchString",
-            actions: ["resetSearchData", "resetFilters"],
+            actions: ["resetSearchData", "resetFilters", "setSbmittedQueryInContext"],
             target: "filteringAndSearching",
           },
           {

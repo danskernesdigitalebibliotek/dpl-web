@@ -37,19 +37,21 @@ export default setup({
       type: "filterToggled",
       toggled: event,
     })),
-    assignQueryToContext: assign({
+    emitQDeleted: emit(() => ({
+      type: "qDeleted",
+    })),
+    setCurrentQueryInContext: assign({
       currentQuery: ({ event }) => event.q,
     }),
-    resetFiltersIfNoQuery: assign({
-      selectedFilters: ({ context }) => {
-        if (!context.currentQuery) {
-          return {}
-        }
-        return context.selectedFilters
-      },
+    setSbmittedQueryInContext: assign({
+      submittedQuery: ({ context }) => (context.submittedQuery = context.currentQuery),
     }),
     resetFilters: assign(() => ({
       selectedFilters: {},
+    })),
+    resetQuery: assign(() => ({
+      currentQuery: undefined,
+      submittedQuery: undefined,
     })),
     resetSearchData: assign(() => ({
       searchData: undefined,

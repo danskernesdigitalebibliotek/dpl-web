@@ -16,7 +16,8 @@ const SearchPageLayout = () => {
   const loadMoreRef = useRef(null)
   const isInView = useInView(loadMoreRef)
   const actor = useSearchMachineActor()
-  const { data, isLoadingFacets, isLoadingResults, q } = useSearchDataAndLoadingStates()
+  const { data, isLoadingFacets, isLoadingResults, machineIsReady, searchQuery } =
+    useSearchDataAndLoadingStates()
 
   useEffect(() => {
     if (isInView) {
@@ -29,13 +30,16 @@ const SearchPageLayout = () => {
 
   const isNoSearchResult = !isLoadingResults && (!data.search || !data.search.pages[0].length)
   const hitCountText = data.search?.hitcount ? `(${data.search.hitcount})` : ""
+  const searchQueryText = searchQuery ? `"${searchQuery}"` : ""
 
   return (
     <div className="content-container my-grid-gap-2 space-y-grid-gap-2">
-      <h1 className="text-typo-heading-3 lg:text-typo-heading-2">
-        {`Viser resultater for "${q}" ${hitCountText}`}
-      </h1>
-      {q ? (
+      {searchQuery && (
+        <h1 className="text-typo-heading-3 lg:text-typo-heading-2">
+          {`Viser resultater for ${searchQueryText} ${hitCountText}`}
+        </h1>
+      )}
+      {searchQuery ? (
         <>
           {!isLoadingFacets && data.facets && data.facets.length > 0 ? (
             <div className="relative">
@@ -75,9 +79,13 @@ const SearchPageLayout = () => {
           </div>
         </>
       ) : (
-        <div className="text-typo-body-1">
-          <p className="text-foreground opacity-80">Ingen søgeord fundet</p>
-        </div>
+        <>
+          {machineIsReady && (
+            <div className="text-typo-body-1">
+              <p className="text-foreground opacity-80">Ingen søgeord fundet</p>
+            </div>
+          )}
+        </>
       )}
       <div ref={loadMoreRef} className="h-0 opacity-0"></div>
     </div>
