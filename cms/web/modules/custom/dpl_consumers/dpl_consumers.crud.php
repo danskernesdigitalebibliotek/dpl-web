@@ -35,18 +35,21 @@ function dpl_consumers_create_consumer(): void {
     return;
   }
 
-  $consumer = \Drupal::entityTypeManager()->getStorage('consumer')->create([
-    'label' => DplGraphqlConsumersConstants::GRAPHQL_CONSUMER_CONSUMER_LABEL,
-    'id' => DplGraphqlConsumersConstants::GRAPHQL_CONSUMER_CONSUMER_ID,
-    'client_id' => DplGraphqlConsumersConstants::GRAPHQL_CONSUMER_CLIENT_ID,
-    'secret' => 'secret',
-    'third_party' => FALSE,
-    'user_id' => $user->id(),
-    'roles' => [DplGraphqlConsumersConstants::GRAPHQL_CONSUMER_ROLE_ID],
+  $secret = getenv('GRAPHQL_CONSUMER_SECRET');
 
-  ]);
+  if ($secret) {
+    $consumer = \Drupal::entityTypeManager()->getStorage('consumer')->create([
+      'label' => DplGraphqlConsumersConstants::GRAPHQL_CONSUMER_LABEL,
+      'id' => DplGraphqlConsumersConstants::GRAPHQL_CONSUMER_CONSUMER_ID,
+      'client_id' => DplGraphqlConsumersConstants::GRAPHQL_CONSUMER_CLIENT_ID,
+      'secret' => $secret,
+      'third_party' => FALSE,
+      'user_id' => $user->id(),
+      'roles' => [DplGraphqlConsumersConstants::GRAPHQL_CONSUMER_ROLE_ID],
+    ]);
 
-  $consumer->save();
+    $consumer->save();
+  }
 }
 
 /**
@@ -76,7 +79,7 @@ function dpl_consumers_delete_consumer(): void {
   try {
     $consumer = \Drupal::entityTypeManager()
       ->getStorage('consumer')
-      ->loadByProperties(['label' => DplGraphqlConsumersConstants::GRAPHQL_CONSUMER_CONSUMER_LABEL]);
+      ->loadByProperties(['label' => DplGraphqlConsumersConstants::GRAPHQL_CONSUMER_LABEL]);
 
     if (!empty($consumer)) {
       $consumer = reset($consumer);
