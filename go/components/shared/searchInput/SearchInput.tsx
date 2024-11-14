@@ -19,19 +19,19 @@ const SearchInput = ({ className, placeholder }: SearchInputProps) => {
   const inputRef = useRef<HTMLInputElement>(null)
   const router = useRouter()
   const actor = useSearchMachineActor()
-  const currentQ = useSelector(actor, snapshot => {
+  const currentQuery = useSelector(actor, snapshot => {
     return snapshot.context.currentQ
   })
 
   useEffect(() => {
-    window.addEventListener("keydown", handleKeydown(currentQ))
+    window.addEventListener("keydown", handleKeydown(currentQuery))
     return () => {
-      window.removeEventListener("keydown", handleKeydown(currentQ))
+      window.removeEventListener("keydown", handleKeydown(currentQuery))
     }
     // We choose to ignore the eslint warning below
     // because we do not want to add the handleKeydown callback which changes on every render.
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [currentQ])
+  }, [currentQuery])
 
   const handleKeydown = (q: string) => (event: KeyboardEvent) => {
     if (!q) return
@@ -45,7 +45,7 @@ const SearchInput = ({ className, placeholder }: SearchInputProps) => {
   const navigateToSearch = (q: string) => () => {
     if (!q) return
     actor.send({ type: "SEARCH" })
-    router.push(currentQ ? `/search?q=${currentQ}` : "/search", {
+    router.push(currentQuery ? `/search?q=${currentQuery}` : "/search", {
       scroll: false,
     })
   }
@@ -61,13 +61,13 @@ const SearchInput = ({ className, placeholder }: SearchInputProps) => {
           disabled:opacity-50 lg:h-20`,
           className
         )}
-        value={currentQ}
+        value={currentQuery}
         onChange={({ target: { value } }) => actor.send({ type: "TYPING", q: value })}
         placeholder={placeholder}
       />
       <button
         className="focus-visible absolute right-3 top-[50%] translate-y-[-50%] rounded-full md:right-[24px]"
-        onClick={navigateToSearch(currentQ)}
+        onClick={navigateToSearch(currentQuery)}
         aria-label="Søg">
         <Icon className="h-[32px] w-[32px]" name="search" />
       </button>
