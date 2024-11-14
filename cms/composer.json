@@ -40,10 +40,10 @@
             "type": "package",
             "package": {
                 "name": "danskernesdigitalebibliotek/dpl-react",
-                "version": "0.0.0-dev",
+                "version": "2024.46.0",
                 "type": "drupal-library",
                 "dist": {
-                    "url": "https://github.com/danskernesdigitalebibliotek/dpl-react/releases/download/branch-develop/dist-develop.zip",
+                    "url": "https://github.com/danskernesdigitalebibliotek/dpl-react/releases/download/2024.46.0/dist-2024-46-0-7d4d8165940c12997e99f8f53768cb784021dccb.zip",
                     "type": "zip"
                 },
                 "require": {
@@ -56,9 +56,9 @@
             "package": {
                 "name": "danskernesdigitalebibliotek/dpl-design-system",
                 "type": "drupal-library",
-                "version": "2024.45.0",
+                "version": "2024.46.0",
                 "dist": {
-                    "url": "https://github.com/danskernesdigitalebibliotek/dpl-design-system/releases/download/2024.45.0/dist-2024-45-0-61278e37e6e8fa118932c90aea48f0d491755b1f.zip",
+                    "url": "https://github.com/danskernesdigitalebibliotek/dpl-design-system/releases/download/2024.46.0/dist-2024-46-0-26b569fe9286c99caa7d35dfffb9e4d176826c7a.zip",
                     "type": "zip"
                 }
             }
@@ -84,14 +84,14 @@
     ],
     "require": {
         "php": "8.1.*",
-        "amazeeio/drupal_integrations": "^0.4",
+        "amazeeio/drupal_integrations": "^0.5",
         "bower-asset/jsnlog": "^2.30",
         "brick/math": "^0.12.1",
         "composer/installers": "1.12.0",
         "cweagans/composer-patches": "1.7.3",
         "danskernesdigitalebibliotek/cms-api": "*",
-        "danskernesdigitalebibliotek/dpl-design-system": "^2024.45",
-        "danskernesdigitalebibliotek/dpl-react": "0.0.0-dev",
+        "danskernesdigitalebibliotek/dpl-design-system": "2024.46.0",
+        "danskernesdigitalebibliotek/dpl-react": "2024.46.0",
         "danskernesdigitalebibliotek/fbs-client": "*",
         "dealerdirect/phpcodesniffer-composer-installer": "^1.0.0",
         "deoliveiralucas/array-keys-case-transform": "^1.1",
@@ -110,9 +110,9 @@
         "drupal/consumers": "^1.19",
         "drupal/content_lock": "^2.3",
         "drupal/cookieinformation": "^2.1",
-        "drupal/core-composer-scaffold": "^10.3",
-        "drupal/core-project-message": "^10.3",
-        "drupal/core-recommended": "^10.3",
+        "drupal/core-composer-scaffold": "10.3.7",
+        "drupal/core-project-message": "10.3.7",
+        "drupal/core-recommended": "10.3.7",
         "drupal/date_range_formatter": "^4.0",
         "drupal/default_content": "^2.0@alpha",
         "drupal/devel": "^5.1",
@@ -185,7 +185,7 @@
         "spatie/color": "^1.5",
         "symfony/property-access": "^6.2",
         "symfony/property-info": "^6.2",
-        "thecodingmachine/safe": "^1.3",
+        "thecodingmachine/safe": "^2.5.0",
         "zaporylie/composer-drupal-optimizations": "1.2.0"
     },
     "require-dev": {

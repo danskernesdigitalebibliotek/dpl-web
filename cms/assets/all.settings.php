@@ -38,6 +38,7 @@ $settings['config_exclude_modules'] = [
   'dpl_related_content_tests',
   'dpl_example_content',
   'dpl_example_breadcrumb',
+  'dblog',
   'devel',
   'devel_generate',
   'field_ui',
