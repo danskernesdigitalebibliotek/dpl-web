@@ -12,7 +12,7 @@ export type TContext = {
   facetLimit: number
   searchOffset: number
   searchPageSize: number
-  currentQ: string
+  currentQuery: string
   searchData?: {
     hitcount: SearchWithPaginationQuery["search"]["hitcount"]
     pages: SearchWithPaginationQuery["search"]["works"][]

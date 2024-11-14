@@ -20,7 +20,7 @@ const SearchInput = ({ className, placeholder }: SearchInputProps) => {
   const router = useRouter()
   const actor = useSearchMachineActor()
   const currentQuery = useSelector(actor, snapshot => {
-    return snapshot.context.currentQ
+    return snapshot.context.currentQuery
   })
 
   useEffect(() => {

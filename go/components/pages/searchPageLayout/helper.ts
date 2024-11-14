@@ -64,7 +64,7 @@ export const getNextPageParamsFunc = (
 export const useSearchDataAndLoadingStates = () => {
   const actor = useSearchMachineActor()
   const q = useSelector(actor, snapshot => {
-    return snapshot.context.currentQ
+    return snapshot.context.currentQuery
   })
   const data = useSelector(actor, snapshot => {
     const { facetData: facets, searchData: search } = snapshot.context

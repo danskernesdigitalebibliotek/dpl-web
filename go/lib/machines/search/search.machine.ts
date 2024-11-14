@@ -10,7 +10,7 @@ export default searchMachineSetup.createMachine({
     searchOffset: input.initialOffset ?? 0,
     searchPageSize: input.searchPageSize,
     facetLimit: input.facetLimit,
-    currentQ: input.q ?? "",
+    currentQuery: input.q ?? "",
     searchData: undefined,
     facetData: undefined,
     selectedFilters: input.filters ?? {},
@@ -81,7 +81,7 @@ export default searchMachineSetup.createMachine({
                     throw new Error("QueryClient is not set in context.")
                   }
                   return {
-                    q: context.currentQ,
+                    q: context.currentQuery,
                     queryClient: context.queryClient,
                     filters: context.selectedFilters,
                     offset: context.searchOffset,
@@ -111,7 +111,7 @@ export default searchMachineSetup.createMachine({
                     throw new Error("QueryClient is not set in context.")
                   }
                   return {
-                    q: context.currentQ,
+                    q: context.currentQuery,
                     queryClient: context.queryClient,
                     filters: context.selectedFilters,
                     facetLimit: context.facetLimit,
@@ -146,7 +146,7 @@ export default searchMachineSetup.createMachine({
                 throw new Error("QueryClient is not set in context.")
               }
               return {
-                q: context.currentQ,
+                q: context.currentQuery,
                 queryClient: context.queryClient,
                 filters: context.selectedFilters,
                 offset: context.searchOffset,

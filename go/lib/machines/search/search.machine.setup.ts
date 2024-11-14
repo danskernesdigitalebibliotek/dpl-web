@@ -38,11 +38,11 @@ export default setup({
       toggled: event,
     })),
     assignQueryToContext: assign({
-      currentQ: ({ event }) => event.q,
+      currentQuery: ({ event }) => event.q,
     }),
     resetFiltersIfNoQuery: assign({
       selectedFilters: ({ context }) => {
-        if (!context.currentQ) {
+        if (!context.currentQuery) {
           return {}
         }
         return context.selectedFilters
@@ -100,7 +100,7 @@ export default setup({
       return Boolean(event.q && event.q.length > 0)
     },
     contextHasSearchString: ({ context }) => {
-      return Boolean(context.currentQ && context.currentQ.length > 0)
+      return Boolean(context.currentQuery && context.currentQuery.length > 0)
     },
     contextHasQueryClient: ({ context }) => {
       return Boolean(context.queryClient)
