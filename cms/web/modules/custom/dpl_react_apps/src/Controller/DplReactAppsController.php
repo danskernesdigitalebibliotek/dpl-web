@@ -15,7 +15,6 @@ use Drupal\dpl_library_agency\ReservationSettings;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use function Safe\json_encode as json_encode;
 use function Safe\preg_replace as preg_replace;
-use function Safe\sprintf as sprintf;
 
 /**
  * Controller for rendering full page DPL React apps.

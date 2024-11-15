@@ -15,7 +15,6 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\Exception\HttpException;
 use Symfony\Component\Serializer\Exception\UnexpectedValueException;
-use function Safe\usort as usort;
 
 // Descriptions quickly become long and Doctrine annotations have no good way
 // of handling multiline strings.

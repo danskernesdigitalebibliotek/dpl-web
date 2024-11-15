@@ -7,7 +7,6 @@ use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\Messenger\MessengerTrait;
 use Drupal\Core\StringTranslation\StringTranslationTrait;
 use Drupal\dpl_url_proxy\DplUrlProxyInterface;
-use function Safe\sprintf;
 
 /**
  * The administration form for handling the configuration of the DPL URL Proxy.

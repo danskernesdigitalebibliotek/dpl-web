@@ -9,7 +9,6 @@ use Drupal\dpl_login\AccessTokenType;
 use Drupal\dpl_login\UserTokens;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\HttpFoundation\Response;
-use function Safe\sprintf;
 
 /**
  * DDB React Controller.

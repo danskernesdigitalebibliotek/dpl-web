@@ -8,7 +8,6 @@ use Drupal\dpl_login\Adgangsplatformen\Config;
 use GuzzleHttp\ClientInterface;
 use GuzzleHttp\Exception\RequestException;
 use Psr\Log\LogLevel;
-use function Safe\sprintf;
 
 /**
  * Library Token Handler Service.
