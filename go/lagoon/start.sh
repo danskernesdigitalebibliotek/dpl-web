@@ -9,5 +9,7 @@
 # fi
 
 cd /app
-yarn build && yarn start
+# TODO: Remember to adjust the following line before deploying to production.
+# Using `yarn start:with-server-source-maps` is probably adding a performance overhead.
+yarn build && yarn start:with-server-source-maps
 exit 0;
