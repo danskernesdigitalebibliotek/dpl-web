@@ -5,6 +5,8 @@ import Footer from "@/components/global/footer/Footer"
 import GridHelper from "@/components/global/gridHelper/GridHelper"
 import Header from "@/components/global/header/Header"
 import Theme from "@/components/global/theme/Theme"
+import { initUniLoginConfiguration } from "@/lib/config/resolvers/service.unilogin"
+import getQueryClient from "@/lib/getQueryClient"
 import ReactQueryProvider from "@/lib/providers/ReactQueryProvider"
 import "@/styles/globals.css"
 
@@ -40,6 +42,10 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode
 }>) {
+  // This is a workaround to ensure that the uniloginConfiguration is loaded before the app is rendered
+  const queryClient = getQueryClient()
+  initUniLoginConfiguration(queryClient)
+
   return (
     <html lang="en">
       <body className={`${GTFlexa.variable} antialiased`}>

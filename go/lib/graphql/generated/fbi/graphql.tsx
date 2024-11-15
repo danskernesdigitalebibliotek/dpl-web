@@ -20,7 +20,7 @@ export type Scalars = {
 
 export type AccessType = {
   __typename?: 'AccessType';
-  code: AccessTypeCodeEnum;
+  code: AccessTypeCodeEnum | '%future added value';
   display: Scalars['String']['output'];
 };
 
@@ -41,9 +41,9 @@ export type AccessUrl = {
   /** The origin, e.g. "DBC Webarkiv" */
   origin: Scalars['String']['output'];
   /** Status from linkcheck */
-  status: LinkStatusEnum;
+  status: LinkStatusEnum | '%future added value';
   /** The type of content that can be found at this URL */
-  type?: Maybe<AccessUrlTypeEnum>;
+  type?: Maybe<AccessUrlTypeEnum | '%future added value'>;
   /** The url where manifestation is located */
   url: Scalars['String']['output'];
 };
@@ -95,7 +95,7 @@ export type CatalogueCodes = {
 
 export type ChildOrAdult = {
   __typename?: 'ChildOrAdult';
-  code: ChildOrAdultCodeEnum;
+  code: ChildOrAdultCodeEnum | '%future added value';
   display: Scalars['String']['output'];
 };
 
@@ -113,7 +113,7 @@ export type Classification = {
   /** The dk5Heading for the classification (DK5 only) */
   dk5Heading?: Maybe<Scalars['String']['output']>;
   /** For DK5 only. The DK5 entry type: main entry, national entry, or additional entry */
-  entryType?: Maybe<EntryTypeEnum>;
+  entryType?: Maybe<EntryTypeEnum | '%future added value'>;
   /** Name of the classification system */
   system: Scalars['String']['output'];
 };
@@ -177,7 +177,7 @@ export enum ComplexSearchFacetsEnum {
 /** The facets to ask for */
 export type ComplexSearchFacetsInput = {
   facetLimit: Scalars['Int']['input'];
-  facets?: InputMaybe<Array<ComplexSearchFacetsEnum>>;
+  facets?: InputMaybe<Array<ComplexSearchFacetsEnum | '%future added value'>>;
 };
 
 /** Search Filters */
@@ -190,6 +190,8 @@ export type ComplexSearchFiltersInput = {
   branchId?: InputMaybe<Array<Scalars['String']['input']>>;
   /** Overall location in library (eg. Voksne). */
   department?: InputMaybe<Array<Scalars['String']['input']>>;
+  /** Date of first accession */
+  firstAccessionDate?: InputMaybe<Scalars['String']['input']>;
   /** Id of publishing issue. */
   issueId?: InputMaybe<Array<Scalars['String']['input']>>;
   /** Local id of the item. */
@@ -197,7 +199,7 @@ export type ComplexSearchFiltersInput = {
   /** Where is the book physically located  (eg. skønlitteratur). */
   location?: InputMaybe<Array<Scalars['String']['input']>>;
   /** Onloan or OnShelf. */
-  status?: InputMaybe<Array<HoldingsStatusEnum>>;
+  status?: InputMaybe<Array<HoldingsStatusEnum | '%future added value'>>;
   /** More specific location (eg. Fantasy). */
   sublocation?: InputMaybe<Array<Scalars['String']['input']>>;
 };
@@ -280,7 +282,7 @@ export type CopyRequestInput = {
 
 export type CopyRequestResponse = {
   __typename?: 'CopyRequestResponse';
-  status: CopyRequestStatusEnum;
+  status: CopyRequestStatusEnum | '%future added value';
 };
 
 export enum CopyRequestStatusEnum {
@@ -319,7 +321,7 @@ export type Corporation = CreatorInterface & SubjectInterface & {
   roles: Array<Role>;
   /** Sub corporation or conference/meeting */
   sub?: Maybe<Scalars['String']['output']>;
-  type: SubjectTypeEnum;
+  type: SubjectTypeEnum | '%future added value';
   /** Year of the conference */
   year?: Maybe<Scalars['String']['output']>;
 };
@@ -454,7 +456,7 @@ export type FacetResult = {
   /** The name of the facet. */
   name: Scalars['String']['output'];
   /** The enum type of the facet. */
-  type: FacetFieldEnum;
+  type: FacetFieldEnum | '%future added value';
   /** The values of thie facet result */
   values: Array<FacetValue>;
 };
@@ -479,7 +481,7 @@ export type FacetValue = {
 export type FictionNonfiction = {
   __typename?: 'FictionNonfiction';
   /** Binary code fiction/nonfiction used for filtering */
-  code: FictionNonfictionCodeEnum;
+  code: FictionNonfictionCodeEnum | '%future added value';
   /** Displayable overall category/genre. In Danish skønlitteratur/faglitteratur for literature, fiktion/nonfiktion for other types. */
   display: Scalars['String']['output'];
 };
@@ -493,7 +495,7 @@ export enum FictionNonfictionCodeEnum {
 export type GeneralMaterialType = {
   __typename?: 'GeneralMaterialType';
   /** code for materialType # @TODO - is this a finite list ?? - and where to get it */
-  code: GeneralMaterialTypeCodeEnum;
+  code: GeneralMaterialTypeCodeEnum | '%future added value';
   /** Ths string to display */
   display: Scalars['String']['output'];
 };
@@ -554,7 +556,7 @@ export type HostPublication = {
 export type Identifier = {
   __typename?: 'Identifier';
   /** The type of identifier */
-  type: IdentifierTypeEnum;
+  type: IdentifierTypeEnum | '%future added value';
   /** The actual identifier */
   value: Scalars['String']['output'];
 };
@@ -605,7 +607,7 @@ export type InfomediaResponse = {
   __typename?: 'InfomediaResponse';
   article?: Maybe<InfomediaArticle>;
   /** Infomedia error */
-  error?: Maybe<InfomediaErrorEnum>;
+  error?: Maybe<InfomediaErrorEnum | '%future added value'>;
 };
 
 export type InfomediaService = {
@@ -703,7 +705,7 @@ export type LinkCheckResponse = {
   __typename?: 'LinkCheckResponse';
   brokenSince?: Maybe<Scalars['DateTime']['output']>;
   lastCheckedAt?: Maybe<Scalars['DateTime']['output']>;
-  status: LinkCheckStatusEnum;
+  status: LinkCheckStatusEnum | '%future added value';
   url: Scalars['String']['output'];
 };
 
@@ -817,7 +819,7 @@ export type Manifestation = {
   /** Information about on which volume this manifestation is in multi volume work */
   volume?: Maybe<Scalars['String']['output']>;
   /** Worktypes for this manifestations work */
-  workTypes: Array<WorkTypeEnum>;
+  workTypes: Array<WorkTypeEnum | '%future added value'>;
   /** The year this manifestation was originally published or produced */
   workYear?: Maybe<PublicationYear>;
 };
@@ -854,7 +856,7 @@ export type ManifestationParts = {
   /** The creator and title etc of the individual parts */
   parts: Array<ManifestationPart>;
   /** The type of manifestation parts, is this music tracks, book parts etc. */
-  type: ManifestationPartTypeEnum;
+  type: ManifestationPartTypeEnum | '%future added value';
 };
 
 export type ManifestationReview = {
@@ -919,12 +921,12 @@ export type Mood = SubjectInterface & {
   display: Scalars['String']['output'];
   language?: Maybe<Language>;
   local?: Maybe<Scalars['Boolean']['output']>;
-  type: SubjectTypeEnum;
+  type: SubjectTypeEnum | '%future added value';
 };
 
 export type MoodKidsRecommendFiltersInput = {
   difficulty?: InputMaybe<Array<Scalars['Int']['input']>>;
-  fictionNonfiction?: InputMaybe<FictionNonfictionCodeEnum>;
+  fictionNonfiction?: InputMaybe<FictionNonfictionCodeEnum | '%future added value'>;
   illustrationsLevel?: InputMaybe<Array<Scalars['Int']['input']>>;
   length?: InputMaybe<Array<Scalars['Int']['input']>>;
   realisticVsFictional?: InputMaybe<Array<Scalars['Int']['input']>>;
@@ -1054,7 +1056,7 @@ export type MoodSuggestItem = {
   /** Suggestion */
   term: Scalars['String']['output'];
   /** The type of suggestion title/creator/tag */
-  type: MoodSuggestEnum;
+  type: MoodSuggestEnum | '%future added value';
   /** A work associated with the suggestion */
   work?: Maybe<Work>;
 };
@@ -1083,7 +1085,7 @@ export type NarrativeTechnique = SubjectInterface & {
   display: Scalars['String']['output'];
   language?: Maybe<Language>;
   local?: Maybe<Scalars['Boolean']['output']>;
-  type: SubjectTypeEnum;
+  type: SubjectTypeEnum | '%future added value';
 };
 
 export type Note = {
@@ -1093,7 +1095,7 @@ export type Note = {
   /** Heading before note */
   heading?: Maybe<Scalars['String']['output']>;
   /** The type of note - e.g. note about language, genre etc, NOT_SPECIFIED if not known.  */
-  type: NoteTypeEnum;
+  type: NoteTypeEnum | '%future added value';
 };
 
 export enum NoteTypeEnum {
@@ -1155,7 +1157,7 @@ export type Person = CreatorInterface & SubjectInterface & {
   roles: Array<Role>;
   /** A roman numeral added to the person, like Christian IV */
   romanNumeral?: Maybe<Scalars['String']['output']>;
-  type: SubjectTypeEnum;
+  type: SubjectTypeEnum | '%future added value';
 };
 
 export type PhysicalUnitDescription = {
@@ -1435,7 +1437,7 @@ export type ReviewElement = {
   heading?: Maybe<Scalars['String']['output']>;
   /** Manifestations that can be used to generate and insert links into 'contentSubsitute'. */
   manifestations?: Maybe<Array<Maybe<Manifestation>>>;
-  type?: Maybe<ReviewElementTypeEnum>;
+  type?: Maybe<ReviewElementTypeEnum | '%future added value'>;
 };
 
 export enum ReviewElementTypeEnum {
@@ -1458,7 +1460,7 @@ export type Role = {
 
 export type SchoolUse = {
   __typename?: 'SchoolUse';
-  code: SchoolUseCodeEnum;
+  code: SchoolUseCodeEnum | '%future added value';
   display: Scalars['String']['output'];
 };
 
@@ -1489,7 +1491,7 @@ export type SearchFiltersInput = {
   mainLanguages?: InputMaybe<Array<Scalars['String']['input']>>;
   materialTypesGeneral?: InputMaybe<Array<Scalars['String']['input']>>;
   materialTypesSpecific?: InputMaybe<Array<Scalars['String']['input']>>;
-  status?: InputMaybe<Array<HoldingsStatusEnum>>;
+  status?: InputMaybe<Array<HoldingsStatusEnum | '%future added value'>>;
   subjects?: InputMaybe<Array<Scalars['String']['input']>>;
   sublocation?: InputMaybe<Array<Scalars['String']['input']>>;
   workTypes?: InputMaybe<Array<Scalars['String']['input']>>;
@@ -1607,7 +1609,7 @@ export type Setting = SubjectInterface & {
   display: Scalars['String']['output'];
   language?: Maybe<Language>;
   local?: Maybe<Scalars['Boolean']['output']>;
-  type: SubjectTypeEnum;
+  type: SubjectTypeEnum | '%future added value';
 };
 
 export type Shelfmark = {
@@ -1620,7 +1622,7 @@ export type Shelfmark = {
 
 export type SortInput = {
   index: Scalars['String']['input'];
-  order: SortOrderEnum;
+  order: SortOrderEnum | '%future added value';
 };
 
 export enum SortOrderEnum {
@@ -1650,7 +1652,7 @@ export type SubjectInterface = {
   language?: Maybe<Language>;
   local?: Maybe<Scalars['Boolean']['output']>;
   /** The type of subject - 'location', 'time period' etc., 'topic' if not specific kind of subject term */
-  type: SubjectTypeEnum;
+  type: SubjectTypeEnum | '%future added value';
 };
 
 export type SubjectText = SubjectInterface & {
@@ -1658,7 +1660,7 @@ export type SubjectText = SubjectInterface & {
   display: Scalars['String']['output'];
   language?: Maybe<Language>;
   local?: Maybe<Scalars['Boolean']['output']>;
-  type: SubjectTypeEnum;
+  type: SubjectTypeEnum | '%future added value';
 };
 
 export enum SubjectTypeEnum {
@@ -1697,7 +1699,7 @@ export type SubjectWithRating = SubjectInterface & {
   local?: Maybe<Scalars['Boolean']['output']>;
   /** Expressed as integer on a scale from 1 to 5 */
   rating?: Maybe<Scalars['Int']['output']>;
-  type: SubjectTypeEnum;
+  type: SubjectTypeEnum | '%future added value';
 };
 
 export type SuggestResponse = {
@@ -1710,7 +1712,7 @@ export type Suggestion = {
   /** The suggested term which can be searched for */
   term: Scalars['String']['output'];
   /** The type of suggestion: creator, subject or title */
-  type: SuggestionTypeEnum;
+  type: SuggestionTypeEnum | '%future added value';
   /** A work related to the term */
   work?: Maybe<Work>;
 };
@@ -1735,7 +1737,7 @@ export type TimePeriod = SubjectInterface & {
   language?: Maybe<Language>;
   local?: Maybe<Scalars['Boolean']['output']>;
   period: Range;
-  type: SubjectTypeEnum;
+  type: SubjectTypeEnum | '%future added value';
 };
 
 export type Translation = {
@@ -1809,7 +1811,7 @@ export type Universe = {
   /** An id that identifies a universe. */
   universeId?: Maybe<Scalars['String']['output']>;
   /** work types that are in this universe */
-  workTypes: Array<WorkTypeEnum>;
+  workTypes: Array<WorkTypeEnum | '%future added value'>;
   /** All works within the universe but not in any series */
   works: Array<Work>;
 };
@@ -1875,7 +1877,7 @@ export type Work = {
   /** Unique identification of the work based on work-presentation id e.g work-of:870970-basis:54029519 */
   workId: Scalars['String']['output'];
   /** Worktypes for this work - 'none' replaced by 'other' */
-  workTypes: Array<WorkTypeEnum>;
+  workTypes: Array<WorkTypeEnum | '%future added value'>;
   /** The year this work was originally published or produced */
   workYear?: Maybe<PublicationYear>;
 };
