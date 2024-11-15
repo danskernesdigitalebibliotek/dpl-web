@@ -106,6 +106,7 @@ class ReoccurringDateFormatter {
       ->condition('eventseries_id', $event_series->id())
       ->condition('date.value', $formatted, '>=')
       ->accessCheck(TRUE)
+      ->condition('status', TRUE)
       ->sort('date.value', 'ASC')
       ->execute();
 
