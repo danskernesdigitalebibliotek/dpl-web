@@ -13,7 +13,7 @@
     "format:write": "prettier --write .",
     "test:unit": "vitest",
     "typecheck": "tsc --noEmit",
-    "ci-check": "yarn typecheck && yarn lint && yarn test:unit && format:check",
+    "ci-check": "yarn typecheck && yarn lint && yarn test:unit && yarn format:check",
     "codegen:graphql": "graphql-codegen --require tsconfig-paths/register --config codegen.ts",
     "codegen:all-rest-services": "orval",
     "codegen:covers": "rm -rf src/lib/rest/cover-service-api/generated/model/*.* && orval --project coverService",
