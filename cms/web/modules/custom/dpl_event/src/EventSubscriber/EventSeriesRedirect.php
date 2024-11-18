@@ -12,7 +12,12 @@ use Symfony\Component\HttpKernel\Event\RequestEvent;
 use Symfony\Component\HttpKernel\KernelEvents;
 
 /**
- * Redirects requests for single instance event series to that instance.
+ * Redirect to AND from eventseries, depending on the situation.
+ *
+ * - If accessing an eventseries with a single active instance, redirect to
+ *   that instance
+ * - If failing to access an unpublished eventinstance, redirect to the
+ *   parent series.
  *
  * @package Drupal\dpl_event\EventSubscriber
  */
@@ -31,7 +36,14 @@ class EventSeriesRedirect implements EventSubscriberInterface {
    */
   public static function getSubscribedEvents(): array {
     return [
-      KernelEvents::REQUEST => 'checkEventSeriesRedirect',
+      KernelEvents::REQUEST => [
+        ['checkEventSeriesRedirect'],
+      ],
+      // Only target users that end up on an unpublished eventinstance page,
+      // without being allowed to see it.
+      KernelEvents::EXCEPTION => [
+        ['checkEventInstanceRedirect'],
+      ],
     ];
   }
 
@@ -47,7 +59,6 @@ class EventSeriesRedirect implements EventSubscriberInterface {
    *   The request event.
    */
   public function checkEventSeriesRedirect(RequestEvent $event): void {
-
     $request = $event->getRequest();
     $route_name = $request->attributes->get('_route');
     $event_series = $request->attributes->get('eventseries');
@@ -71,6 +82,33 @@ class EventSeriesRedirect implements EventSubscriberInterface {
       $response = new RedirectResponse($event_instance->toUrl()->toString());
       $event->setResponse($response);
     }
+  }
+
+  /**
+   * Redirect unpublished eventinstances to eventseries.
+   *
+   * @param \Symfony\Component\HttpKernel\Event\RequestEvent $event
+   *   The response event.
+   */
+  public function checkEventInstanceRedirect(RequestEvent $event): void {
+    $request = $event->getRequest();
+
+    if ($request->attributes->get('_route') !== 'entity.eventinstance.canonical') {
+      return;
+    }
+
+    $event_instance = $request->attributes->get('eventinstance');
+
+    if (!($event_instance instanceof EventInstance) || $event_instance->isPublished()) {
+      return;
+    }
+
+    // At this stage, we know we're on an unpublished eventinstance.
+    // Look up the eventseries, and redirect to it.
+    $event_series = $event_instance->getEventSeries();
+
+    $response = new RedirectResponse($event_series->toUrl()->toString());
+    $event->setResponse($response);
   }
 
 }
