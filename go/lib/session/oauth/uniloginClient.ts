@@ -2,18 +2,14 @@ import { Issuer } from "openid-client"
 
 import goConfig from "@/lib/config/config"
 
-const appUrl = goConfig("app.url") as string
-const uniloginApiUrl = goConfig("service.unilogin.api.url") as string
-const uniloginWellKnownUrl = goConfig("service.unilogin.wellknown.url") as string
-const clientId = goConfig("service.unilogin.client-id") as string
-const clientSecret = goConfig("service.unilogin.client-secret") as string
+const appUrl = goConfig("app.url")
 
 export const uniloginClientConfig = {
-  wellKnownUrl: uniloginWellKnownUrl,
-  url: uniloginApiUrl,
+  wellKnownUrl: process.env.UNILOGIN_WELKNOWN_URL,
+  url: process.env.UNILOGIN_API_URL,
   audience: process.env.UNILOGIN_API_URL,
-  client_id: clientId,
-  client_secret: clientSecret,
+  client_id: process.env.UNILOGIN_CLIENT_ID,
+  client_secret: process.env.UNILOGIN_CLIENT_SECRET,
   scope: "openid",
   redirect_uri: `${appUrl}/auth/callback/unilogin`,
   post_logout_redirect_uri: `${appUrl}`,
@@ -21,9 +17,8 @@ export const uniloginClientConfig = {
   grant_type: "authorization_code",
   post_login_route: `${appUrl}/user/profile`,
 }
-
 export async function getUniloginClient() {
-  const UniloginIssuer = await Issuer.discover(uniloginClientConfig.wellKnownUrl)
+  const UniloginIssuer = await Issuer.discover(uniloginClientConfig.wellKnownUrl!)
   const client = new UniloginIssuer.Client({
     client_id: uniloginClientConfig.client_id!,
     client_secret: uniloginClientConfig.client_secret!,
