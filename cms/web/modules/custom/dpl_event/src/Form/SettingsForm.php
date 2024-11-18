@@ -78,6 +78,8 @@ final class SettingsForm extends ConfigFormBase {
     ];
 
     $period = [
+    // 1 hour
+      3600,
     // 6 hours
       21600,
     // 12 hours
@@ -98,14 +100,66 @@ final class SettingsForm extends ConfigFormBase {
       15552000,
     ];
     $period = array_map([$this->dateFormatter, 'formatInterval'], array_combine($period, $period));
+
+    $form['unpublish']['unpublish_enable'] = [
+      '#type' => 'checkbox',
+      '#title' => $this->t('Unpublish eventinstances when they have occured (recommended)', [], ['context' => 'DPL event']),
+      '#default_value' => $config->get('unpublish_enable'),
+    ];
+
+    $form['unpublish']['unpublish_disable_warning'] = [
+      '#type' => 'container',
+      // js-form-wrapper is important - otherwise, Drupal states will not work.
+      '#prefix' => '<div class="dpl-form-warning js-form-wrapper">',
+      '#markup' => $this->t('Notice - if you do not choose that eventinstances get unpublished, they may show up in automatic and manual lists, across the site.', [], ['context' => 'DPL event']),
+      '#suffix' => '</div>',
+      '#states' => [
+        'visible' => [
+          ':input[name="unpublish_enable"]' => ['checked' => FALSE],
+        ],
+      ],
+    ];
+
     $form['unpublish']['unpublish_schedule'] = [
       '#type' => 'select',
-      '#title' => $this->t('Schedule', [], ['context' => "DPL event"]),
+      '#title' => $this->t('How much time should pass after an eventinstance has occurred before it should be unpublished?', [], ['context' => "DPL event"]),
       '#default_value' => $config->get('unpublish_schedule'),
       '#options' => $period,
-      '#empty_option' => $this->t('Automatic unpublication disabled', [], ['context' => "DPL event"]),
-      '#empty_value' => 0,
-      '#description' => $this->t('How much time should pass after an event has occurred before it should be unpublished automatically.', [], ['context' => "DPL event"]),
+      '#states' => [
+        'visible' => [
+          ':input[name="unpublish_enable"]' => ['checked' => TRUE],
+        ],
+      ],
+    ];
+
+    $form['unpublish']['unpublish_series_enable'] = [
+      '#type' => 'checkbox',
+      '#title' => $this->t('Unpublish the series when all instances have occurred (not recommended)', [], ['context' => "DPL event"]),
+      '#default_value' => $config->get('unpublish_series_enable'),
+      // Only display the field when unpublish schedule has a non-0 value.
+      '#states' => [
+        'visible' => [
+          ':input[name="unpublish_enable"]' => ['checked' => TRUE],
+        ],
+      ],
+    ];
+
+    $form['unpublish']['unpublish_series_enable_warning'] = [
+      '#type' => 'container',
+      // js-form-wrapper is important - otherwise, Drupal states will not work.
+      '#prefix' => '<div class="dpl-form-warning js-form-wrapper">',
+      '#markup' => $this->t('Notice - if series get unpublished, old instance links will no longer work. If you however keep the series published, expired instances will redirect to the associated series.', [], ['context' => 'DPL event']),
+      '#suffix' => '</div>',
+      '#states' => [
+        'visible' => [
+          ':input[name="unpublish_enable"]' => ['checked' => TRUE],
+          // PHPCS doesn't understand Drupal's weird way of doing states.
+          // phpcs:disable Squiz.Arrays.ArrayDeclaration.NoKeySpecified
+          'and',
+          // phpcs:enable Squiz.Arrays.ArrayDeclaration.NoKeySpecified
+          ':input[name="unpublish_series_enable"]' => ['checked' => TRUE],
+        ],
+      ],
     ];
 
     return parent::buildForm($form, $form_state);
@@ -117,7 +171,9 @@ final class SettingsForm extends ConfigFormBase {
   public function submitForm(array &$form, FormStateInterface $form_state): void {
     $this->config(self::CONFIG_NAME)
       ->set('price_currency', $form_state->getValue('price_currency'))
+      ->set('unpublish_enable', $form_state->getValue('unpublish_enable'))
       ->set('unpublish_schedule', $form_state->getValue('unpublish_schedule'))
+      ->set('unpublish_series_enable', $form_state->getValue('unpublish_series_enable'))
       ->save();
     parent::submitForm($form, $form_state);
 

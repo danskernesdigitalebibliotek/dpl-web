@@ -184,3 +184,12 @@
 body:has(.eventseries-form--confirm) .form-actions {
   display: none;
 }
+
+/**
+  A very simple element, used in Drupal forms when displaying warnings.
+ */
+.dpl-form-warning {
+  color: #d80404;
+  font-weight: bold;
+  max-width: 500px;
+}

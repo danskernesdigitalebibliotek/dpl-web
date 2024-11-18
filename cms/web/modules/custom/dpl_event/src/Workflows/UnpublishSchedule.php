@@ -50,6 +50,17 @@ final class UnpublishSchedule {
    * Callback to execute scheduled unpublication.
    */
   public function callback(JobSchedule $job): void {
+    $config = $this->configFactory->get(SettingsForm::CONFIG_NAME);
+
+    $enabled = (boolean) $config->get('unpublish_enable');
+
+    // If the automatic unpublication is disabled, we will skip past this job.
+    // This should technically not happen, as updating the settings will trigger
+    // rescheduleAll() on all eventinstances, but this is a nice fallback.
+    if (!$enabled) {
+      return;
+    }
+
     $event = $this->eventInstanceStorage->load($job->getId());
     if (!$event || !$event instanceof EventInstance) {
       throw new \UnexpectedValueException("Unable to load event instance {$job->getId()} for automatic unpublication");
@@ -57,8 +68,14 @@ final class UnpublishSchedule {
 
     $event->setUnpublished()->save();
 
-    // If all instances in the series are unpublished then also unpublish the
-    // series.
+    // Detect if site wishes series to be unpublished when all instances are
+    // unpublished.
+    $seriesUnpublishingEnabled = (boolean) $config->get('unpublish_series_enable');
+
+    if (!$seriesUnpublishingEnabled) {
+      return;
+    }
+
     // Count the number of published eventinstances, and if it is 0, unpublish
     // the series.
     $eventSeries = $event->getEventSeries();
@@ -80,6 +97,7 @@ final class UnpublishSchedule {
    */
   public function scheduleUnpublication(EventInstance $event): void {
     $config = $this->configFactory->get(SettingsForm::CONFIG_NAME);
+    $enabled = (boolean) $config->get('unpublish_enable');
     $schedule = (int) $config->get('unpublish_schedule');
     $now_timestamp = $this->time->getCurrentTime();
 
@@ -100,9 +118,10 @@ final class UnpublishSchedule {
 
     // Remove any preexisting job with the same name, type and id.
     $this->jobScheduler->remove($job);
+
     // If automatic unpublication is enabled and needed then schedule a new
     // unpublication.
-    if ($schedule > 0 && $event->isPublished()) {
+    if ($enabled && $schedule > 0 && $event->isPublished()) {
       $this->jobScheduler->set($job);
 
       $this->logger->debug(
@@ -118,7 +137,7 @@ final class UnpublishSchedule {
    * This will update schedules for all events even those that were not
    * scheduled in the past.
    */
-  public function rescheduleAll(): void {
+  public function rescheduleAll(): int {
     $this->jobScheduler->removeAll(self::JOB_SCHEDULE_NAME, self::JOB_SCHEDULE_TYPE);
 
     $publishedEventInstanceIds = ($this->eventInstanceStorage->getQuery())
@@ -131,6 +150,8 @@ final class UnpublishSchedule {
     array_walk($publishedEventInstances, function (EventInstance $event) {
       $this->scheduleUnpublication($event);
     });
+
+    return count($publishedEventInstanceIds);
   }
 
 }
