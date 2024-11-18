@@ -59,12 +59,18 @@ final class UnpublishSchedule {
 
     // If all instances in the series are unpublished then also unpublish the
     // series.
+    // Count the number of published eventinstances, and if it is 0, unpublish
+    // the series.
     $eventSeries = $event->getEventSeries();
-    $allEventInstances = $eventSeries->get('event_instances')->referencedEntities();
-    $publishedInstances = array_filter($allEventInstances, function (EventInstance $event) {
-      return $event->isPublished();
-    });
-    if (empty($publishedInstances)) {
+
+    $publishedEventInstanceIds = ($this->eventInstanceStorage->getQuery())
+      ->accessCheck(FALSE)
+      ->condition('eventseries_id', $eventSeries->id())
+      ->condition('status', 1)
+      ->count()
+      ->execute();
+
+    if (empty($publishedEventInstanceIds)) {
       $eventSeries->setUnpublished()->save();
     }
   }
@@ -109,7 +115,7 @@ final class UnpublishSchedule {
   /**
    * Reschedule all event instances for unpublication.
    *
-   * This will update schedules for all events even those that where not
+   * This will update schedules for all events even those that were not
    * scheduled in the past.
    */
   public function rescheduleAll(): void {
