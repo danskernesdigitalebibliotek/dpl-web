@@ -60,7 +60,7 @@ class EventSeriesRedirect implements EventSubscriberInterface {
 
     // Only redirect, if we can find a single eventinstance - otherwise, we
     // want to stay on the series display.
-    if (count($upcoming_ids) == 1) {
+    if (count($upcoming_ids) != 1) {
       return;
     }
 
