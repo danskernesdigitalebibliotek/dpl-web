@@ -618,6 +618,8 @@ export type InfomediaService = {
 
 export type InterLibraryLoan = {
   __typename?: 'InterLibraryLoan';
+  /** Is newly added - nice to know if there are no localizations */
+  accessNew: Scalars['Boolean']['output'];
   /** Is true when manifestation can be borrowed via ill */
   loanIsPossible: Scalars['Boolean']['output'];
 };

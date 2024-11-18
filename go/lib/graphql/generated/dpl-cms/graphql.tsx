@@ -1,4 +1,5 @@
 import { useQuery, useSuspenseQuery, UseQueryOptions, UseSuspenseQueryOptions } from '@tanstack/react-query';
+import { fetcher } from '@/lib/graphql/fetchers/dpl-cms.fetcher';
 export type Maybe<T> = T | null;
 export type InputMaybe<T> = Maybe<T>;
 export type Exact<T extends { [key: string]: unknown }> = { [K in keyof T]: T[K] };
@@ -6,26 +7,6 @@ export type MakeOptional<T, K extends keyof T> = Omit<T, K> & { [SubKey in K]?: 
 export type MakeMaybe<T, K extends keyof T> = Omit<T, K> & { [SubKey in K]: Maybe<T[SubKey]> };
 export type MakeEmpty<T extends { [key: string]: unknown }, K extends keyof T> = { [_ in K]?: never };
 export type Incremental<T> = T | { [P in keyof T]?: P extends ' $fragmentName' | '__typename' ? T[P] : never };
-
-function fetcher<TData, TVariables>(query: string, variables?: TVariables) {
-  return async (): Promise<TData> => {
-    const res = await fetch("http://dapple-cms.docker/graphql", {
-    method: "POST",
-    ...({"headers":{"Content-Type":"application/json","Authorization":"Basic Z3JhcGhxbF9jb25zdW1lcjp0ZXN0"}}),
-      body: JSON.stringify({ query, variables }),
-    });
-
-    const json = await res.json();
-
-    if (json.errors) {
-      const { message } = json.errors[0];
-
-      throw new Error(message);
-    }
-
-    return json.data;
-  }
-}
 /** All built-in and custom scalars, mapped to their actual values */
 export type Scalars = {
   ID: { input: string; output: string; }
@@ -878,7 +859,7 @@ export const useSuspenseGetArticleQuery = <
 useSuspenseGetArticleQuery.getKey = (variables: GetArticleQueryVariables) => ['getArticleSuspense', variables];
 
 
-useGetArticleQuery.fetcher = (variables: GetArticleQueryVariables) => fetcher<GetArticleQuery, GetArticleQueryVariables>(GetArticleDocument, variables);
+useGetArticleQuery.fetcher = (variables: GetArticleQueryVariables, options?: RequestInit['headers']) => fetcher<GetArticleQuery, GetArticleQueryVariables>(GetArticleDocument, variables, options);
 
 export const GetUniLoginConfigurationDocument = `
     query getUniLoginConfiguration {
@@ -930,4 +911,4 @@ export const useSuspenseGetUniLoginConfigurationQuery = <
 useSuspenseGetUniLoginConfigurationQuery.getKey = (variables?: GetUniLoginConfigurationQueryVariables) => variables === undefined ? ['getUniLoginConfigurationSuspense'] : ['getUniLoginConfigurationSuspense', variables];
 
 
-useGetUniLoginConfigurationQuery.fetcher = (variables?: GetUniLoginConfigurationQueryVariables) => fetcher<GetUniLoginConfigurationQuery, GetUniLoginConfigurationQueryVariables>(GetUniLoginConfigurationDocument, variables);
+useGetUniLoginConfigurationQuery.fetcher = (variables?: GetUniLoginConfigurationQueryVariables, options?: RequestInit['headers']) => fetcher<GetUniLoginConfigurationQuery, GetUniLoginConfigurationQueryVariables>(GetUniLoginConfigurationDocument, variables, options);

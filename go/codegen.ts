@@ -13,9 +13,9 @@ const config: CodegenConfig = {
       documents: "**/*.dpl-cms.graphql",
       // TODO: Make this configurable
       schema: {
-        "http://dapple-cms.docker/graphql": {
+        [`${process.env.NEXT_PUBLIC_GRAPHQL_SCHEMA_ENDPOINT_DPL_CMS}`]: {
           headers: {
-            Authorization: `Basic ${goConfig("service.unilogin.basic-auth.header")}`,
+            Authorization: `Basic ${process.env.GRAPHQL_SCHEMA_ENDPOINT_DPL_CMS_AUTH_HEADER}`,
           },
         },
       },
@@ -32,16 +32,7 @@ const config: CodegenConfig = {
           typeNames: "change-case-all#pascalCase",
           transformUnderscore: true,
         },
-        fetcher: {
-          // TODO: Make this configurable
-          endpoint: "http://dapple-cms.docker/graphql",
-          fetchParams: JSON.stringify({
-            headers: {
-              "Content-Type": "application/json",
-              Authorization: `Basic ${goConfig("service.unilogin.basic-auth.header")}`,
-            },
-          }),
-        },
+        fetcher: "@/lib/graphql/fetchers/dpl-cms.fetcher#fetcher",
       },
       hooks: {
         afterOneFileWrite: ["yarn eslint --fix"],
