@@ -100,3 +100,19 @@ export const getCoverUrls = (
 
   return filterFalsyValuesFromArray(coverUrls)
 }
+
+export const getLowResCoverUrl = (coversArray: Cover[] | null | undefined) => {
+  if (!coversArray) {
+    return null
+  }
+
+  // Get the first cover that has a xx-small image url
+  for (const cover of coversArray) {
+    const url = cover.imageUrls?.["xx-small"]?.url
+    if (url) {
+      return url
+    }
+  }
+
+  return ""
+}
