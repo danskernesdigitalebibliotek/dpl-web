@@ -35,15 +35,3 @@ export async function getUniloginClient({
   })
   return client
 }
-
-// export async function getUniloginClient() {
-//   const UniloginIssuer = await Issuer.discover(uniloginClientConfig.wellKnownUrl!)
-//   const client = new UniloginIssuer.Client({
-//     client_id: uniloginClientConfig.client_id!,
-//     client_secret: uniloginClientConfig.client_secret!,
-//     response_types: ["code"],
-//     redirect_uris: [uniloginClientConfig.redirect_uri],
-//     token_endpoint_auth_method: "client_secret_post",
-//   })
-//   return client
-// }
