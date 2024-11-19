@@ -369,8 +369,7 @@
                 "3487412: Fix WSOD when EventInstance has invalid translation.": "https://git.drupalcode.org/project/recurring_events/-/commit/996052eeb7518ce591df968a0bb12c4819fb4edf.patch"
             },
             "drupal/theme_permission": {
-                "3105637: Edit, install and uninstall permission": "https://www.drupal.org/files/issues/2024-02-01/theme-permission-edit-install-uninstall-3105637-7.patch",
-                "3458263: WSOD error fails on Drupal 10.3+": "https://www.drupal.org/files/issues/2024-07-01/theme_permssion-d10_3_d11.patch"
+                "3105637: Edit, install and uninstall permission": "https://www.drupal.org/files/issues/2024-02-01/theme-permission-edit-install-uninstall-3105637-7.patch"
             }
         }
     }
