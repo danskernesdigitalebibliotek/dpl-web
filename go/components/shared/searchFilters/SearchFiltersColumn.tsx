@@ -1,15 +1,17 @@
-import { useRouter, useSearchParams } from "next/navigation"
 import React, { useEffect, useRef, useState } from "react"
 
+import { useSearchDataAndLoadingStates } from "@/components/pages/searchPageLayout/helper"
 import BadgeButton from "@/components/shared/badge/BadgeButton"
 import Icon from "@/components/shared/icon/Icon"
 import {
+  facetTermIsSelected,
   getFacetTranslation,
   sortByActiveFacets,
-  toggleFilter,
 } from "@/components/shared/searchFilters/helper"
-import { SearchFacetFragment, SearchFiltersInput } from "@/lib/graphql/generated/fbi/graphql"
+import { SearchFacetFragment } from "@/lib/graphql/generated/fbi/graphql"
 import { cn } from "@/lib/helpers/helper.cn"
+import { TFilters } from "@/lib/machines/search/types"
+import useSearchMachineActor from "@/lib/machines/search/useSearchMachineActor"
 
 import { AnimateChangeInHeight } from "../animateChangeInHeight/AnimateChangeInHeight"
 
@@ -26,12 +28,11 @@ const SearchFiltersColumn = ({
   isExpanded,
   setIsExpanded,
 }: SearchFiltersColumnProps) => {
-  const router = useRouter()
-  const facetFilter = facet.name as keyof SearchFiltersInput
-
-  const searchParams = useSearchParams()
+  const actor = useSearchMachineActor()
+  const facetFilter = facet.name as keyof TFilters
   const elementRef = useRef<HTMLDivElement | null>(null)
   const [hasOverflow, setHasOverflow] = useState(false)
+  const { selectedFilters } = useSearchDataAndLoadingStates()
 
   useEffect(() => {
     const el = elementRef.current
@@ -44,7 +45,9 @@ const SearchFiltersColumn = ({
   }, [elementRef])
 
   // We show the selected values first in the list
-  facet.values = sortByActiveFacets(facet, searchParams)
+  if (selectedFilters) {
+    facet.values = sortByActiveFacets(facet, selectedFilters)
+  }
 
   return (
     <>
@@ -70,8 +73,14 @@ const SearchFiltersColumn = ({
             {facet.values.map((value, index) => (
               <BadgeButton
                 key={index}
-                onClick={() => toggleFilter(facet.name, value.term, router)}
-                isActive={!!searchParams.getAll(facet.name).includes(value.term)}>
+                onClick={() =>
+                  actor.send({ type: "TOGGLE_FILTER", name: facet.name, value: value.term })
+                }
+                isActive={facetTermIsSelected({
+                  facet: facet.name,
+                  term: value.term,
+                  filters: selectedFilters,
+                })}>
                 {value.term}
               </BadgeButton>
             ))}

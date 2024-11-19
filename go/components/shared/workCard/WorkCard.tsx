@@ -18,7 +18,7 @@ type WorkCardProps = {
 }
 
 const WorkCard = ({ work }: WorkCardProps) => {
-  const { data: dataCovers } = useGetCoverCollection({
+  const { data: dataCovers, isLoading: isLoadingCovers } = useGetCoverCollection({
     type: "pid",
     identifiers: [getAllWorkPids(work).join(", ")],
     sizes: [
@@ -69,11 +69,13 @@ const WorkCard = ({ work }: WorkCardProps) => {
             </Badge>
           )}
           <div className="relative mx-auto flex h-full w-full items-center">
-            <WorkCardImage
-              lowResSrc={lowResCover || ""}
-              src={coverSrc?.[0] || ""}
-              alt="work image"
-            />
+            {!isLoadingCovers && (
+              <WorkCardImage
+                lowResSrc={lowResCover || ""}
+                src={coverSrc?.[0] || ""}
+                alt={`${work.titles.full[0]} cover billede`}
+              />
+            )}
           </div>
           <div className="my-auto flex min-h-[15%] items-center py-3 md:py-4">
             <WorkCardAvailabilityRow materialTypes={work.materialTypes} />
