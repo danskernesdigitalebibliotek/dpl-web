@@ -18,3 +18,155 @@ fragment ManifestationIdentifiers on Manifestation {
     value
   }
 }
+
+fragment Manifestations on Manifestations {
+  all {
+    ...ManifestationsFields
+  }
+  latest {
+    ...ManifestationsFields
+  }
+  bestRepresentation {
+    ...ManifestationsFields
+  }
+}
+
+fragment ManifestationsAccess on Manifestations {
+  all {
+    pid
+    identifiers {
+      type
+      value
+    }
+    access {
+      __typename
+      ... on AccessUrl {
+        origin
+        url
+        loginRequired
+      }
+      ... on InfomediaService {
+        id
+      }
+      ... on InterLibraryLoan {
+        loanIsPossible
+      }
+      ... on Ereol {
+        origin
+        url
+        canAlwaysBeLoaned
+      }
+      ... on DigitalArticleService {
+        issn
+      }
+    }
+  }
+}
+
+fragment ManifestationsFields on Manifestation {
+  pid
+  genreAndForm
+  source
+  # ...WithLanguages
+  titles {
+    main
+    original
+  }
+  fictionNonfiction {
+    display
+    code
+  }
+  materialTypes {
+    materialTypeSpecific {
+      display
+    }
+  }
+  creators {
+    display
+    nameSort
+    __typename
+  }
+  publisher
+  identifiers {
+    value
+  }
+  contributors {
+    display
+    roles {
+      function {
+        singular
+      }
+    }
+  }
+  edition {
+    summary
+    publicationYear {
+      display
+    }
+  }
+  dateFirstEdition {
+    display
+    year
+  }
+  audience {
+    generalAudience
+    ages {
+      display
+    }
+  }
+  notes {
+    display
+  }
+  languages {
+    notes
+  }
+  physicalDescription {
+    summaryFull
+    numberOfPages
+    # playingTime
+  }
+  hostPublication {
+    summary
+  }
+  manifestationParts {
+    parts {
+      title
+    }
+  }
+  accessTypes {
+    code
+  }
+  access {
+    __typename
+    ... on AccessUrl {
+      origin
+      url
+      loginRequired
+    }
+    ... on InfomediaService {
+      id
+    }
+    ... on InterLibraryLoan {
+      loanIsPossible
+    }
+    ... on Ereol {
+      origin
+      url
+      canAlwaysBeLoaned
+    }
+    ... on DigitalArticleService {
+      issn
+    }
+  }
+  shelfmark {
+    postfix
+    shelfmark
+  }
+  workYear {
+    year
+  }
+  catalogueCodes {
+    nationalBibliography
+    otherCatalogues
+  }
+}

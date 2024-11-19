@@ -1,10 +1,12 @@
 import React from "react"
 
-function Page({ searchParams, queryParams }) {
+function Page({ params: { id } }: { params: { id: string } }) {
+
+  
+
   return (
     <div>
-      <pre>{JSON.stringify(queryParams, null, 2)}</pre>
-      <pre>{JSON.stringify(searchParams, null, 2)}</pre>
+      <pre>{JSON.stringify(id, null, 2)}</pre>
       Page
     </div>
   )

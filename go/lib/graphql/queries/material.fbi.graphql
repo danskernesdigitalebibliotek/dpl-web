@@ -1,0 +1,5 @@
+query getMaterial($wid: String!) {
+  work(id: $wid) {
+    ...Work
+  }
+}

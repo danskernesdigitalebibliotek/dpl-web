@@ -1,3 +1,26 @@
+fragment SeriesSimple on Series {
+  title
+  isPopular
+  members {
+    numberInSeries
+    work {
+      workId
+      titles {
+        main
+      }
+    }
+  }
+  readThisFirst
+  readThisWhenever
+}
+
+fragment WorkAccess on Work {
+  workId
+  manifestations {
+    ...ManifestationsAccess
+  }
+}
+
 fragment WorkTeaser on Work {
   workId
   titles {
@@ -23,6 +46,70 @@ fragment WorkTeaser on Work {
     }
     bestRepresentation {
       ...ManifestationTeaser
+    }
+  }
+}
+
+fragment Work on Work {
+  workId
+  titles {
+    full
+    original
+  }
+  abstract
+  creators {
+    display
+    __typename
+  }
+  series {
+    ...SeriesSimple
+  }
+  workYear {
+    year
+  }
+  genreAndForm
+  manifestations {
+    ...Manifestations
+  }
+  materialTypes {
+    materialTypeSpecific {
+      display
+    }
+  }
+  creators {
+    nameSort
+  }
+  mainLanguages {
+    display
+    isoCode
+  }
+  subjects {
+    all {
+      display
+    }
+    dbcVerified {
+      display
+    }
+  }
+  fictionNonfiction {
+    display
+    code
+  }
+  dk5MainEntry {
+    display
+  }
+  relations {
+    hasReview {
+      pid
+    }
+    hasAdaptation {
+      ownerWork {
+        workId
+        workTypes
+        titles {
+          main
+        }
+      }
     }
   }
 }
