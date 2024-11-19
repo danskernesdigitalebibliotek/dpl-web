@@ -1,5 +1,5 @@
 _meta:
-  version: "1.0"
+  version: '1.0'
   entity_type: path_alias
   uuid: 333d93e2-a403-4a0b-a57e-2e74e729887f
   default_langcode: und

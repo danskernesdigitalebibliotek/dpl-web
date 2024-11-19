@@ -5,11 +5,11 @@ Drupal.behaviors.dpl_admin = {
 
     const dateTimeFields = context.querySelectorAll(
       '[type="date"][name$="[value][date]"]:not(.is-dpl-admin-range-initialized),' +
-        '[type="time"][name$="[value][time]"]:not(.is-dpl-admin-range-initialized)'
+        '[type="time"][name$="[value][time]"]:not(.is-dpl-admin-range-initialized)',
     );
 
     dateTimeFields.forEach((input) => {
-      input.classList.add("is-dpl-admin-range-initialized");
+      input.classList.add('is-dpl-admin-range-initialized');
       that.dateRangeInit(input, context);
     });
   },
@@ -17,7 +17,7 @@ Drupal.behaviors.dpl_admin = {
   // A helper function, adding X minutes to a time string ("14:15" => "14:30").
   addMinutesToTime(timestring, minutesToAdd) {
     // Parse the input time string
-    const [hours, minutes] = timestring.split(":").map(Number);
+    const [hours, minutes] = timestring.split(':').map(Number);
 
     // Convert hours and minutes to minutes and add 15 minutes
     const totalMinutes = hours * 60 + minutes + minutesToAdd;
@@ -30,8 +30,8 @@ Drupal.behaviors.dpl_admin = {
     const newMinutes = totalMinutes % 60;
 
     // Format the new time as HH:MM, padding with zeroes if necessary
-    const formattedHours = newHours.toString().padStart(2, "0");
-    const formattedMinutes = newMinutes.toString().padStart(2, "0");
+    const formattedHours = newHours.toString().padStart(2, '0');
+    const formattedMinutes = newMinutes.toString().padStart(2, '0');
 
     return `${formattedHours}:${formattedMinutes}`;
   },
@@ -39,15 +39,15 @@ Drupal.behaviors.dpl_admin = {
   // Set the start date as a default date for end date input fields.
   dateRangeInit(input, context) {
     const that = this;
-    const name = input.getAttribute("name");
+    const name = input.getAttribute('name');
 
     if (!name) {
       return;
     }
 
     // Create the name of the end date element based on the name of the start date element
-    const endValueName = name.replace("[value]", "[end_value]");
-    input.addEventListener("change", () => {
+    const endValueName = name.replace('[value]', '[end_value]');
+    input.addEventListener('change', () => {
       // Recurring events/Drupal appears to insert the end value input using
       // AJAX after altering the start value, despite the input already
       // existing. We cant really listen for that, so we'll do a poor-mans
@@ -56,7 +56,7 @@ Drupal.behaviors.dpl_admin = {
       setTimeout(() => {
         let inputValue = input.value;
 
-        if (name.includes("[time]")) {
+        if (name.includes('[time]')) {
           inputValue = that.addMinutesToTime(inputValue, 60);
         }
 

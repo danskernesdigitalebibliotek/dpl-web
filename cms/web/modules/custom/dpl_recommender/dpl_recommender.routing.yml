@@ -1,16 +1,16 @@
 dpl_recommender.list:
-  path: "/recommender"
+  path: '/recommender'
   defaults:
     _controller: '\Drupal\dpl_recommender\Controller\DplRecommenderController::list'
   requirements:
-    _permission: "access content"
+    _permission: 'access content'
 
 dpl_recommender.settings:
-  path: "/admin/config/dpl-library-agency/recommender-settings"
+  path: '/admin/config/dpl-library-agency/recommender-settings'
   defaults:
     _form: '\Drupal\dpl_recommender\Form\RecommenderSettingsForm'
-    _title: "Recommender settings"
+    _title: 'Recommender settings'
   requirements:
-    _permission: "administer site configuration"
+    _permission: 'administer site configuration'
   options:
     _admin_route: TRUE

@@ -1,7 +1,7 @@
 dpl_admin.add_content:
-  path: "/admin/content/add"
+  path: '/admin/content/add'
   defaults:
     _controller: '\Drupal\dpl_admin\Controller\AdminPages::addContentPage'
-    _title: "Add new content"
+    _title: 'Add new content'
   requirements:
-    _permission: "dpl admin access pages"
+    _permission: 'dpl admin access pages'
