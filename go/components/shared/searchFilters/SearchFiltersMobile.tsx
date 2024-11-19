@@ -22,7 +22,8 @@ import {
   SheetTitle,
   SheetTrigger,
 } from "@/components/shared/sheet/Sheet"
-import { SearchFacetFragment, SearchFiltersInput } from "@/lib/graphql/generated/fbi/graphql"
+import { SearchFacetFragment } from "@/lib/graphql/generated/fbi/graphql"
+import { TFilters } from "@/lib/machines/search/types"
 
 import { Button } from "../button/Button"
 
@@ -79,7 +80,7 @@ const SearchFiltersMobile = ({ facets }: SearchFiltersMobileProps) => {
           <div className="-mx-grid-edge">
             <Accordion type="multiple" defaultValue={facets.map(facet => facet.name)}>
               {facets.map(facet => {
-                const facetName = facet.name as keyof SearchFiltersInput
+                const facetName = facet.name as keyof TFilters
                 return (
                   <AccordionItem key={facetName} value={facetName}>
                     <AccordionTrigger>{getFacetTranslation(facetName)}</AccordionTrigger>

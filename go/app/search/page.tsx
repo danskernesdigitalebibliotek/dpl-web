@@ -14,7 +14,7 @@ const Page = async ({ searchParams: { q } }: { searchParams: { q: string } }) =>
   return (
     <HydrationBoundary state={dehydrate(queryClient)}>
       <Suspense fallback={<p>Loading...</p>}>
-        <SearchPageLayout searchQuery={q} />
+        <SearchPageLayout />
       </Suspense>
     </HydrationBoundary>
   )
