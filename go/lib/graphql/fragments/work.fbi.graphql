@@ -50,7 +50,7 @@ fragment WorkTeaser on Work {
   }
 }
 
-fragment Work on Work {
+fragment WorkFragment on Work {
   workId
   titles {
     full
