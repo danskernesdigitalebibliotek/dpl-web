@@ -66,13 +66,44 @@ class EventRestMapper {
       'ticketCapacity' => $this->getValue('event_ticket_capacity'),
       'ticketCategories' => $this->getTicketCategories(),
       'createdAt' => $this->getDateField('created'),
-      'updatedAt' => $this->getDateField('changed'),
+      'updatedAt' => $this->getUpdatedDate(),
       'dateTime' => $this->getDate(),
       'externalData' => $this->getExternalData(),
       'series' => new EventsGET200ResponseInnerSeries([
         'uuid' => $this->event->getEventSeries()->uuid(),
       ]),
     ]);
+  }
+
+  /**
+   * Getting relevant updated date - either the series or instance.
+   *
+   * As we use inheritance, we want an updated series to also reflect in the
+   * updatedAt API property.
+   * We could implement this, by programmatically saving all instances when
+   * the series is saved, but this may have unforseen consequences, as it is
+   * running against the Drupal system.
+   * Instead, we'll look up the instance and series changed dates, and take
+   * which ever is newer.
+   */
+  private function getUpdatedDate(): ?DateTime {
+    $series = $this->event->getEventSeries();
+
+    $changed_instance = $this->event->getChangedTime();
+    $changed_series = $series->getChangedTime();
+
+    // Setting the timestamp to whichever is the larger.
+    $timestamp = ($changed_instance > $changed_series) ?
+      $changed_instance : $changed_series;
+
+    if (empty($timestamp)) {
+      return NULL;
+    }
+
+    $date = new DateTime();
+    $date->setTimestamp(intval($timestamp));
+
+    return $date;
   }
 
   /**
