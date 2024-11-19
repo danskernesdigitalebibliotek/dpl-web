@@ -7,3 +7,5 @@ dependencies:
   - graphql:graphql
   - graphql_compose:graphql_compose
   - dpl_unilogin:dpl_unilogin
+  - simple_oauth:simple_oauth
+  - dpl_consumers:dpl_consumers
