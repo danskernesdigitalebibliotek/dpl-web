@@ -1,16 +1,16 @@
 dpl_fees.list:
-  path: '/user/me/fees'
+  path: "/user/me/fees"
   defaults:
     _controller: '\Drupal\dpl_fees\Controller\DplFeesController::list'
   requirements:
-    _permission: 'access content'
+    _permission: "access content"
 
 dpl_fees.settings:
-  path: '/admin/config/dpl-library-agency/fees'
+  path: "/admin/config/dpl-library-agency/fees"
   defaults:
     _form: '\Drupal\dpl_fees\Form\FeesListSettingsForm'
-    _title: 'Fees settings'
+    _title: "Fees settings"
   requirements:
-    _permission: 'administer site configuration'
+    _permission: "administer site configuration"
   options:
     _admin_route: TRUE

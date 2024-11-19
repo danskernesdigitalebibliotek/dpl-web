@@ -1,8 +1,8 @@
 access dpl cache settings:
-  title: 'Access DPL cache settings'
-  description: 'This includes permission for clearing caches.'
+  title: "Access DPL cache settings"
+  description: "This includes permission for clearing caches."
   restrict access: TRUE
 access drupal performance settings:
-  title: 'Access Drupal performance settings'
-  description: 'A custom permission, to replace the generic basic settings.'
+  title: "Access Drupal performance settings"
+  description: "A custom permission, to replace the generic basic settings."
   restrict access: TRUE

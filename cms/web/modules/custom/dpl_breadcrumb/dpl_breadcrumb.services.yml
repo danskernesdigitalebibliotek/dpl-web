@@ -1,19 +1,19 @@
 services:
   dpl_breadcrumb.logger:
     parent: logger.channel_base
-    arguments: ['dpl_breadcrumb']
+    arguments: ["dpl_breadcrumb"]
   dpl_breadcrumb.breadcrumb_helper:
     class: Drupal\dpl_breadcrumb\Services\BreadcrumbHelper
     arguments:
       [
-        '@entity_type.manager',
-        '@language_manager',
-        '@pathauto.alias_cleaner',
-        '@string_translation',
-        '@dpl_breadcrumb.logger',
+        "@entity_type.manager",
+        "@language_manager",
+        "@pathauto.alias_cleaner",
+        "@string_translation",
+        "@dpl_breadcrumb.logger",
       ]
   dpl_breadcrumb.redirect_structure_term:
     class: Drupal\dpl_breadcrumb\EventSubscriber\StructureTermRedirect
-    arguments: ['@dpl_breadcrumb.breadcrumb_helper']
+    arguments: ["@dpl_breadcrumb.breadcrumb_helper"]
     tags:
       - { name: event_subscriber }

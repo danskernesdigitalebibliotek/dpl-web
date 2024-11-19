@@ -1,5 +1,5 @@
 config.sync:
-  title: 'Upload configuration'
-  description: 'Upload and import configuration from a YAML file'
+  title: "Upload configuration"
+  description: "Upload and import configuration from a YAML file"
   route_name: dpl_config_upload.upload_form
   parent: system.admin_config_development

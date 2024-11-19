@@ -1,27 +1,27 @@
 dpl_library_agency.settings:
-  path: '/admin/config/dpl-library-agency'
+  path: "/admin/config/dpl-library-agency"
   defaults:
     _controller: '\Drupal\system\Controller\SystemController::systemAdminMenuBlockPage'
-    _title: 'Library Agency'
+    _title: "Library Agency"
   requirements:
-    _permission: 'administer library agency configuration'
+    _permission: "administer library agency configuration"
 
 dpl_library_agency.general_settings:
-  path: '/admin/config/dpl-library-agency/general-settings'
+  path: "/admin/config/dpl-library-agency/general-settings"
   defaults:
     _form: '\Drupal\dpl_library_agency\Form\GeneralSettingsForm'
-    _title: 'General Settings'
+    _title: "General Settings"
   requirements:
-    _permission: 'administer library agency configuration'
+    _permission: "administer library agency configuration"
   options:
     _admin_route: TRUE
 
 dpl_library_agency.list_size_settings:
-  path: '/admin/config/dpl-library-agency/list-size-settings'
+  path: "/admin/config/dpl-library-agency/list-size-settings"
   defaults:
     _form: '\Drupal\dpl_library_agency\Form\ListSizeSettingsForm'
-    _title: 'List Size Settings'
+    _title: "List Size Settings"
   requirements:
-    _permission: 'administer library agency configuration'
+    _permission: "administer library agency configuration"
   options:
     _admin_route: TRUE

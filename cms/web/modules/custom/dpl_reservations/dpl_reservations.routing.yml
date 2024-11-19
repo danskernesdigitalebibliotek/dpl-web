@@ -1,6 +1,6 @@
 dpl_reservations.list:
-  path: '/user/me/reservations'
+  path: "/user/me/reservations"
   defaults:
     _controller: '\Drupal\dpl_reservations\Controller\DplReservationsController::list'
   requirements:
-    _permission: 'access content'
+    _permission: "access content"

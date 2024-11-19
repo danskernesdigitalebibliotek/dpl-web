@@ -1,5 +1,5 @@
-name: 'DPL Url Proxy'
+name: "DPL Url Proxy"
 type: module
-description: 'Module for generating specially formatted external urls'
-package: 'DPL'
+description: "Module for generating specially formatted external urls"
+package: "DPL"
 core_version_requirement: ^9 || ^10

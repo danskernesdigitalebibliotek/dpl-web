@@ -1,9 +1,9 @@
 dpl_patron_redirect.settings:
-  path: '/admin/config/redirect'
+  path: "/admin/config/redirect"
   defaults:
     _form: '\Drupal\dpl_patron_redirect\Form\PatronRedirectSettingsForm'
-    _title: 'Patron redirect settings'
+    _title: "Patron redirect settings"
   requirements:
-    _permission: 'administer site configuration'
+    _permission: "administer site configuration"
   options:
     _admin_route: TRUE

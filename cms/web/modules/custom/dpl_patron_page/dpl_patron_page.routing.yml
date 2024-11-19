@@ -1,16 +1,16 @@
 dpl_patron_page.profile:
-  path: '/user/me'
+  path: "/user/me"
   defaults:
     _controller: '\Drupal\dpl_patron_page\Controller\DplPatronPageController::profile'
   requirements:
-    _permission: 'access content'
+    _permission: "access content"
 
 dpl_patron_page.settings:
-  path: '/admin/config/dpl-library-agency/patron-page-settings'
+  path: "/admin/config/dpl-library-agency/patron-page-settings"
   defaults:
     _form: '\Drupal\dpl_patron_page\Form\PatronPageSettingsForm'
-    _title: 'Patron page settings'
+    _title: "Patron page settings"
   requirements:
-    _permission: 'administer site configuration'
+    _permission: "administer site configuration"
   options:
     _admin_route: TRUE

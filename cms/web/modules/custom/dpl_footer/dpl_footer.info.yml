@@ -1,7 +1,7 @@
-name: 'Footer'
+name: "Footer"
 type: module
-description: 'Functionality related to footer.'
-package: 'DPL'
+description: "Functionality related to footer."
+package: "DPL"
 core_version_requirement: ^10
 dependencies:
   - multivalue_form_element:multivalue_form_element

@@ -8,7 +8,7 @@ default:
   status:
     - value: true
   name:
-    - value: 'Forslag til indkøb'
+    - value: "Forslag til indkøb"
   weight:
     - value: 0
   parent:
@@ -19,13 +19,13 @@ default:
     - tag: meta
       attributes:
         name: title
-        content: 'Forslag til indkøb | DPL CMS'
+        content: "Forslag til indkøb | DPL CMS"
     - tag: link
       attributes:
         rel: canonical
-        href: '/taxonomy/term/23'
+        href: "/taxonomy/term/23"
   path:
-    - alias: ''
+    - alias: ""
       langcode: da
   field_email:
     - value: suggestions@test.dk

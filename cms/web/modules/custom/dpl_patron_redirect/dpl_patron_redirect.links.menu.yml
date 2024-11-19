@@ -1,5 +1,5 @@
 dpl_patron_redirect.settings_form:
-  title: 'Patron redirect settings'
+  title: "Patron redirect settings"
   route_name: dpl_patron_redirect.settings
-  description: 'Set auth redirect paths for patrons'
+  description: "Set auth redirect paths for patrons"
   parent: dpl_library_agency.settings

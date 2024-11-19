@@ -3,12 +3,12 @@ services:
     class: Drupal\dpl_patron_redirect\EventSubscriber\RedirectPatronSubscriber
     arguments:
       [
-        '@path_alias.manager',
-        '@path.matcher',
-        '@path.current',
-        '@config.factory',
-        '@current_user',
-        '@page_cache_kill_switch',
+        "@path_alias.manager",
+        "@path.matcher",
+        "@path.current",
+        "@config.factory",
+        "@current_user",
+        "@page_cache_kill_switch",
       ]
     tags:
       - { name: event_subscriber }

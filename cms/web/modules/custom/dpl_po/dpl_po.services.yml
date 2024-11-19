@@ -2,10 +2,10 @@ services:
   dpl_po.config_manager:
     class: Drupal\dpl_po\Services\CtpConfigManager
     arguments:
-      - '@config.storage'
-      - '@locale.storage'
-      - '@config.factory'
-      - '@config.typed'
-      - '@language_manager'
-      - '@locale.default.config.storage'
-      - '@config.manager'
+      - "@config.storage"
+      - "@locale.storage"
+      - "@config.factory"
+      - "@config.typed"
+      - "@language_manager"
+      - "@locale.default.config.storage"
+      - "@config.manager"

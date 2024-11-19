@@ -1,5 +1,5 @@
 _meta:
-  version: '1.0'
+  version: "1.0"
   entity_type: taxonomy_term
   uuid: 72249209-22bb-4142-9fc6-350a152f264a
   bundle: opening_hours_categories
@@ -19,14 +19,14 @@ default:
     - tag: meta
       attributes:
         name: title
-        content: 'Borgerservice | DPL CMS'
+        content: "Borgerservice | DPL CMS"
     - tag: link
       attributes:
         rel: canonical
-        href: '/taxonomy/term/19'
+        href: "/taxonomy/term/19"
   path:
-    - alias: ''
+    - alias: ""
       langcode: da
   field_opening_hours_color:
-    - color: '#4986E7'
+    - color: "#4986E7"
       opacity: 0.0
