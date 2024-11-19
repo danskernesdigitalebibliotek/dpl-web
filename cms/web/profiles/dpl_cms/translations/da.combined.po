@@ -7,8 +7,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2024-11-12 20:58+0100\n"
-"PO-Revision-Date: 2024-11-12 20:58+0100\n"
+"POT-Creation-Date: 2024-11-19 11:06+0100\n"
+"PO-Revision-Date: 2024-11-19 11:06+0100\n"
 "Last-Translator: NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
 "MIME-Version: 1.0\n"
@@ -948,6 +948,10 @@ msgstr "Skøn-/faglitteratur"
 msgctxt "Search Result"
 msgid "Fictional characters"
 msgstr "Fiktive personer"
+
+msgctxt "Search Result"
+msgid "Game platform"
+msgstr ""
 
 msgctxt "Search Result"
 msgid "Genre and form"
@@ -3394,7 +3398,7 @@ msgstr "Total @total"
 
 msgctxt "Fees list"
 msgid "Turned in @date"
-msgstr "Afleveret @date"
+msgstr "Mellemværende oprettet @date"
 
 msgctxt "Fees list"
 msgid "Unsettled debt - paid on site"
@@ -7090,7 +7094,7 @@ msgstr ""
 "enhedstypen."
 
 msgid "Dynamic Entity Reference Entity Provider"
-msgstr ""
+msgstr "Dynamic Entity Reference Entity Provider"
 
 msgid "A provider of an entity type."
 msgstr "En udbyder af en enhedstype."
@@ -7290,6 +7294,10 @@ msgid ""
 "entity\n"
 "        type is a referenced item in a field by another entity."
 msgstr ""
+"Enable the cloning functionalities for each entity type. For non-enabled\n"
+"        entity types, the cloning will be restricted, even when the given "
+"entity\n"
+"        type is a referenced item in a field by another entity."
 
 msgid "Enabled"
 msgstr "Aktiveret"
@@ -7340,13 +7348,13 @@ msgid "Entity clone settings"
 msgstr "Indstillinger for enhedsklon"
 
 msgid "Entity clone cloneable entities"
-msgstr ""
+msgstr "Entity clone cloneable entities"
 
 msgid "Entity clone settings."
 msgstr "Enhedsklon indstillinger."
 
 msgid "Entity clone cloneable entities setting."
-msgstr ""
+msgstr "Entity clone cloneable entities setting."
 
 msgid "Entity Clone"
 msgstr "Enhedsklon"
@@ -7364,7 +7372,7 @@ msgid "Allow this content type to define Entity Clone templates"
 msgstr "Tillad dette indhold at blive gemt som skabelon"
 
 msgid "Entity Clone Content"
-msgstr ""
+msgstr "Entity Clone Content"
 
 msgid "Enable Entity Clone Template"
 msgstr "Tillad oprettelse af skabeloner"
@@ -7491,19 +7499,19 @@ msgid "The ID of the parent entity of which this entity is referenced."
 msgstr "ID'et for den overordnede enhed, som denne enhed refererer til."
 
 msgid "Parent type"
-msgstr ""
+msgstr "Forældretype"
 
 msgid "The entity parent type to which this entity is referenced."
 msgstr "Den overordnede type for enheden, som denne enhed refererer til."
 
 msgid "Parent field name"
-msgstr ""
+msgstr "Navn på forældrefelt"
 
 msgid "The entity parent field name to which this entity is referenced."
 msgstr "Det overordnede feltnavn for enheden, som denne enhed refererer til."
 
 msgid "Entity test composite"
-msgstr ""
+msgstr "Entity test composite"
 
 msgid ""
 "Checked @entity_type revisions for orphans: @current of @total in @interval "
@@ -7544,12 +7552,15 @@ msgid ""
 "If there are no revisions left, the entity will be deleted as long as it is "
 "not used."
 msgstr ""
+"Delete orphaned composite entities revisions that are no longer referenced. "
+"If there are no revisions left, the entity will be deleted as long as it is "
+"not used."
 
 msgid "Select the entity types to check for orphans"
 msgstr "Vælg de enhedstyper, der skal kontrolleres for forældreløse"
 
 msgid "Delete orphaned composite revisions"
-msgstr ""
+msgstr "Delete orphaned composite revisions"
 
 msgid "Choose the entity type to clear"
 msgstr "Vælg enhedstypen, der skal ryddes"
@@ -7621,17 +7632,17 @@ msgid "Display the label of the referenced entity revisions."
 msgstr "Vis etiketten af de refererede enhedsrevisioner."
 
 msgid "Entity reference revisions"
-msgstr ""
+msgstr "Entity reference revisions"
 
 msgid "An entity field containing an entity reference to a specific revision."
 msgstr ""
 "En enhedsfelt, der indeholder en enhedsreference til en specifik revision."
 
 msgid "Field Diff for Paragraphs"
-msgstr ""
+msgstr "Field Diff for Paragraphs"
 
 msgid "Entity Revision"
-msgstr ""
+msgstr "Entity Revision"
 
 msgid ""
 "All kind of entities with revision information, e.g. nodes, comments or "
@@ -7647,38 +7658,39 @@ msgid "Displays the fields with an optional template."
 msgstr "Viser felterne med en valgfri skabelon."
 
 msgid "Entity Reference Revisions list"
-msgstr ""
+msgstr "Entity Reference Revisions list"
 
 msgid "Returns results as a PHP array of labels and rendered rows."
 msgstr "Returnerer resultater som en PHP-array af labels og renderede rækker."
 
 msgid "Entity Reference Revisions"
-msgstr ""
+msgstr "Entity Reference Revisions"
 
 msgid "Entity Reference Revisions Source"
-msgstr ""
+msgstr "Entity Reference Revisions Source"
 
 msgid "Selects referenceable entities for an entity reference revisions field."
 msgstr ""
+"Selects referenceable entities for an entity reference revisions field."
 
 msgid "Adds a Entity Reference field type with revision support."
 msgstr "Tilføjer en Entity Reference felttype med versionsstøtte."
 
 msgid "ERR Composite relationship test"
-msgstr ""
+msgstr "ERR Composite relationship test"
 
 msgid "Entity with parent type and ID."
 msgstr "Enhed med overordnet type og ID."
 
 msgid "Entity Host Base Field ERR"
-msgstr ""
+msgstr "Entity Host Base Field ERR"
 
 msgid ""
 "Entity host with base field definition using entity_reference_revisions."
 msgstr ""
 
 msgid "Delete orphaned composite entities"
-msgstr ""
+msgstr "Delete orphaned composite entities"
 
 msgid ""
 "Delete revisions of entities that are no longer used in Entity Reference "
@@ -8492,7 +8504,7 @@ msgid "Back to Administration"
 msgstr "Tilbage til Administration"
 
 msgid "Gin"
-msgstr ""
+msgstr "Gin"
 
 msgid ""
 "The Gin Toolbar module works with <a href=\"https://www.drupal.org/project/"
@@ -8509,10 +8521,10 @@ msgstr ""
 "kompatibelt med <a href=\"@href\" target=\"_blank\"> Gin Admin</a>."
 
 msgid "Gin Toolbar"
-msgstr ""
+msgstr "Gin Toolbar"
 
 msgid "Gin Toolbar for Gin Theme"
-msgstr ""
+msgstr "Gin Toolbar for Gin Theme"
 
 msgid "You must specify name of the job."
 msgstr "Du skal angive navnet på jobbet."
@@ -8621,7 +8633,7 @@ msgid "Job Scheduler Waiting"
 msgstr "Scheduler ventende job"
 
 msgid "Enables jobs with workers that wait indefinitely for jobs."
-msgstr ""
+msgstr "Enables jobs with workers that wait indefinitely for jobs."
 
 msgid "Job Scheduler"
 msgstr "Planlægger kørsel af jobs."
@@ -8657,7 +8669,7 @@ msgid "Available tokens"
 msgstr "Tilgængelige symboler"
 
 msgid "Matchers"
-msgstr ""
+msgstr "Matchers"
 
 msgid "No matchers added."
 msgstr "Ingen matchere tilføjet."
@@ -9374,7 +9386,7 @@ msgstr ""
 "Standardindstillingen er \":default\"."
 
 msgid "Entity type / Group Mapping"
-msgstr ""
+msgstr "Entity type / Group Mapping"
 
 msgid ""
 "Identify which metatag groups should be available on which entity type / "
@@ -9552,10 +9564,10 @@ msgid "- None -"
 msgstr "- Ingen -"
 
 msgid "No Referrer"
-msgstr ""
+msgstr "No Referrer"
 
 msgid "No Referrer When Downgrade"
-msgstr ""
+msgstr "No Referrer When Downgrade"
 
 msgid "Origin"
 msgstr "Oprindelse"
@@ -9570,7 +9582,7 @@ msgid "Strict Origin"
 msgstr "Streng oprindelse"
 
 msgid "Strict Origin When Cross-Origin"
-msgstr ""
+msgstr "Strict Origin When Cross-Origin"
 
 msgid "Unsafe URL"
 msgstr "Usikker URL"
@@ -9689,7 +9701,7 @@ msgid "The <a href=\"@module\">Schema.org Metatag</a> module is installed."
 msgstr "<a href=\"@module\">Schema.org Metatag</a> modulet er installeret."
 
 msgid "Token Or"
-msgstr ""
+msgstr "Token Or"
 
 msgid ""
 "The <a href=\"@module\">Token OR module</a> is suggested for when the basic "
@@ -9745,7 +9757,7 @@ msgid "App Card"
 msgstr "API Version"
 
 msgid "Player Card"
-msgstr ""
+msgstr "Player Card"
 
 msgid "Access %tag in %group"
 msgstr "Adgang %tag i %group"
@@ -10590,6 +10602,10 @@ msgid ""
 "describe the file format, physical medium, or dimensions of the resource, "
 "use the Format element."
 msgstr ""
+"The nature or genre of the resource. Recommended best practice is to use a "
+"controlled vocabulary such as the DCMI Type Vocabulary [DCMITYPE]. To "
+"describe the file format, physical medium, or dimensions of the resource, "
+"use the Format element."
 
 msgid "Rights"
 msgstr "Rettigheder"
@@ -10785,7 +10801,7 @@ msgid "Id"
 msgstr "Id"
 
 msgid "The Canonical Pinterest object to pin."
-msgstr ""
+msgstr "The Canonical Pinterest object to pin."
 
 msgid "No search"
 msgstr "Ingen søgning"
@@ -10849,7 +10865,7 @@ msgid "The URL to a logo file that is 310px by 150px."
 msgstr "URL'en til en logofil, der er 310px af 150px."
 
 msgid "Web app capable?"
-msgstr ""
+msgstr "Web app capable?"
 
 msgid ""
 "If set to 'yes', the application will run in full-screen mode; the default "
@@ -11699,7 +11715,7 @@ msgid "Date of copyright."
 msgstr "Copyrightdato"
 
 msgid "Conforms To"
-msgstr ""
+msgstr "Conforms To"
 
 msgid "An established standard to which the described resource conforms."
 msgstr "En etableret standard, som den beskrevne ressource overholder."
@@ -11732,7 +11748,7 @@ msgstr ""
 "beskrevne ressource."
 
 msgid "Accrual Policy"
-msgstr ""
+msgstr "Accrual Policy"
 
 msgid "The policy governing the addition of items to a collection."
 msgstr "Den politik, der styrer tilføjelsen af genstande til en samling."
@@ -11795,7 +11811,7 @@ msgstr ""
 "eksisterende beskrevne ressource, men i et andet format."
 
 msgid "Accrual Method"
-msgstr ""
+msgstr "Accrual Method"
 
 msgid "The method by which items are added to a collection."
 msgstr "Metoden, der bruges til at tilføje elementer til en samling."
@@ -11818,7 +11834,7 @@ msgid "Spatial characteristics of the resource."
 msgstr "Ressourcens rummelige egenskaber."
 
 msgid "Accrual Periodicity"
-msgstr ""
+msgstr "Accrual Periodicity"
 
 msgid "The frequency with which items are added to a collection."
 msgstr "Den hyppighed, hvormed elementer tilføjes til en samling."
@@ -12193,7 +12209,7 @@ msgstr ""
 "skemanavnet)."
 
 msgid "Twitter card type"
-msgstr ""
+msgstr "Twitter card type"
 
 msgid ""
 "Notes:<ul><li>no other fields are required for a Summary card</li><li>Media "
@@ -12364,7 +12380,7 @@ msgid "Facebook Pages"
 msgstr "Facebook Pages"
 
 msgid "Facebook Instant Articles claim URL token."
-msgstr ""
+msgstr "Facebook Instant Articles claim URL token."
 
 msgid "Facebook Application ID"
 msgstr "Facebook Applikations ID"
@@ -15642,13 +15658,13 @@ msgid "Recurring Events Views"
 msgstr "Visning af tilbagevendende arrangementer"
 
 msgid "Swaps all recurring events list builders for views"
-msgstr ""
+msgstr "Swaps all recurring events list builders for views"
 
 msgid "Group recurring events"
 msgstr "Gruppér tilbagevendende arrangementer"
 
 msgid "Enables Group functionality for the Recurring events module"
-msgstr ""
+msgstr "Enables Group functionality for the Recurring events module"
 
 msgid "Add existing events"
 msgstr "Tilføj eksisterende arrangementer"
@@ -15684,7 +15700,7 @@ msgid "Registrant types"
 msgstr "Deltagertyper"
 
 msgid "Orphaned Event Registrants"
-msgstr ""
+msgstr "Orphaned Event Registrants"
 
 msgid "Recurring Events Registration"
 msgstr "Tilmelding af tilbagevendende begivenheder"
@@ -15706,7 +15722,7 @@ msgid "Configure Registrant Types"
 msgstr "Konfigurer deltagertyper"
 
 msgid "Delete orphaned event registrants"
-msgstr ""
+msgstr "Delete orphaned event registrants"
 
 msgid "Add iCalendar property mapping"
 msgstr "Tilføj iCalendar-egenskabstilknytning"
