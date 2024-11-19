@@ -1,5 +1,5 @@
 _meta:
-  version: '1.0'
+  version: "1.0"
   entity_type: node
   uuid: d50683cc-8011-49ba-a6ea-82e56de97b80
   bundle: page
@@ -27,7 +27,7 @@ default:
     - tag: meta
       attributes:
         name: title
-        content: 'Kontakt | DPL CMS'
+        content: "Kontakt | DPL CMS"
   path:
     - alias: /kontakt
       langcode: und
@@ -39,7 +39,7 @@ default:
   field_paragraphs:
     - entity:
         _meta:
-          version: '1.0'
+          version: "1.0"
           entity_type: paragraph
           uuid: 325c097a-7abc-47f9-ba77-f3e5a30a0fb2
           bundle: webform
@@ -55,9 +55,9 @@ default:
             - value: true
           field_webform:
             - target_id: contact
-              default_data: ''
+              default_data: ""
               status: open
-              open: ''
-              close: ''
+              open: ""
+              close: ""
   field_subtitle:
-    - value: 'Kontakt dit lokale bibliotek ved at udfylde formularen nedenfor.'
+    - value: "Kontakt dit lokale bibliotek ved at udfylde formularen nedenfor."

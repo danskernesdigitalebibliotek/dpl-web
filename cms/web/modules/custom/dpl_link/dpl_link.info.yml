@@ -1,6 +1,6 @@
-name: 'DPL Link'
+name: "DPL Link"
 type: module
-description: 'Add functionality to link field'
+description: "Add functionality to link field"
 package: DPL
 core_version_requirement: ^10 || ^11
 dependencies:

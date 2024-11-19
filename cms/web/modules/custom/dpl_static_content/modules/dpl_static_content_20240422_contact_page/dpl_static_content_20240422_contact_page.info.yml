@@ -1,4 +1,4 @@
-name: 'DPL static content: Contact page'
+name: "DPL static content: Contact page"
 type: module
 description: Adds default contact page and contact webform categories
 package: DPL

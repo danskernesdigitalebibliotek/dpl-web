@@ -23,17 +23,17 @@ slider:
     - novel/swiper
 
 swiper:
-  remote: 'https://github.com/nolimits4web/swiper.git'
+  remote: "https://github.com/nolimits4web/swiper.git"
   license:
     name: MIT
     url: https://github.com/nolimits4web/swiper/blob/master/LICENSE
     gpl-compatible: true
   js:
-    'https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js':
+    "https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js":
       { type: external }
   css:
     theme:
-      'https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css':
+      "https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css":
         { type: external }
 footer-accordions:
   js:

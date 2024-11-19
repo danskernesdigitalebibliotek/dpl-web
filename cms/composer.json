@@ -224,8 +224,8 @@
     },
     "scripts": {
         "post-drupal-scaffold-cmd": [
-            "[ ! -d web/sites/default/files/modules_local ] && mkdir -p web/sites/default/files/modules_local || exit 0",
-            "[ ! -L web/modules/local ] && ln -s web/sites/default/files/modules_local web/modules/local || exit 0"
+            "[[ ! -d /app/web/sites/default/files/modules_local ]] && mkdir -p /app/web/sites/default/files/modules_local || exit 0",
+            "[[ ! -L /app/web/modules/local ]] && ln -s /app/web/sites/default/files/modules_local /app/web/modules/local || exit 0"
         ]
     },
     "extra": {

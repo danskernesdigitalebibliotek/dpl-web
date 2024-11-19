@@ -1,7 +1,7 @@
 dpl_cache_settings.settings_form:
-  path: '/admin/dpl/cache_settings'
+  path: "/admin/dpl/cache_settings"
   defaults:
     _form: '\Drupal\dpl_cache_settings\Form\CacheSettingsForm'
-    _title: 'Cache settings'
+    _title: "Cache settings"
   requirements:
-    _permission: 'access dpl cache settings'
+    _permission: "access dpl cache settings"

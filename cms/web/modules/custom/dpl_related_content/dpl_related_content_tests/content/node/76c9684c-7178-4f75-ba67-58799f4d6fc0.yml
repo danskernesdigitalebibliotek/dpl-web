@@ -1,5 +1,5 @@
 _meta:
-  version: '1.0'
+  version: "1.0"
   entity_type: node
   uuid: 76c9684c-7178-4f75-ba67-58799f4d6fc0
   bundle: branch
@@ -25,7 +25,7 @@ default:
     - tag: meta
       attributes:
         name: title
-        content: 'Branch2 | DPL CMS'
+        content: "Branch2 | DPL CMS"
   path:
     - alias: /branch2
       langcode: und

@@ -1,6 +1,6 @@
 dpl_something_similar.list:
-  path: '/something-similar/{faust}'
+  path: "/something-similar/{faust}"
   defaults:
     _controller: '\Drupal\dpl_something_similar\Controller\DplSomethingSimilarController::list'
   requirements:
-    _permission: 'access content'
+    _permission: "access content"

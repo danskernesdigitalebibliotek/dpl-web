@@ -1,5 +1,5 @@
-name: 'DrupalTyped'
+name: "DrupalTyped"
 type: module
-description: 'Better, faster, stronger types'
+description: "Better, faster, stronger types"
 package: Development
 core_version_requirement: ^10

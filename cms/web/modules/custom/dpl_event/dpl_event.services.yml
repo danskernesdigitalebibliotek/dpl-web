@@ -1,38 +1,38 @@
 services:
   dpl_event.logger:
     parent: logger.channel_base
-    arguments: ['dpl_event']
+    arguments: ["dpl_event"]
   dpl_event.event_instance_storage:
     class: \Drupal\recurring_events\EventInstanceStorage
-    factory: ['@entity_type.manager', 'getStorage']
-    arguments: ['eventinstance']
+    factory: ["@entity_type.manager", "getStorage"]
+    arguments: ["eventinstance"]
   dpl_event.price_formatter:
     class: Drupal\dpl_event\PriceFormatter
-    arguments: ['@string_translation', '@config.factory']
+    arguments: ["@string_translation", "@config.factory"]
   dpl_event.reoccurring_date_formatter:
     class: Drupal\dpl_event\ReoccurringDateFormatter
     arguments:
-      ['@string_translation', '@entity_type.manager', '@date.formatter']
+      ["@string_translation", "@entity_type.manager", "@date.formatter"]
   dpl_event.occurred_schedule:
     class: Drupal\dpl_event\Workflows\OccurredSchedule
     arguments:
-      - '@dpl_event.logger'
-      - '@datetime.time'
-      - '@job_scheduler.manager'
-      - '@dpl_event.event_instance_storage'
+      - "@dpl_event.logger"
+      - "@datetime.time"
+      - "@job_scheduler.manager"
+      - "@dpl_event.event_instance_storage"
   dpl_event.unpublish_schedule:
     class: Drupal\dpl_event\Workflows\UnpublishSchedule
     arguments:
-      - '@dpl_event.logger'
-      - '@datetime.time'
-      - '@job_scheduler.manager'
-      - '@dpl_event.event_instance_storage'
-      - '@config.factory'
+      - "@dpl_event.logger"
+      - "@datetime.time"
+      - "@job_scheduler.manager"
+      - "@dpl_event.event_instance_storage"
+      - "@config.factory"
   dpl_event.event_rest_mapper:
     class: Drupal\dpl_event\Services\EventRestMapper
     arguments:
-      - '@file_url_generator'
-      - '@config.factory'
+      - "@file_url_generator"
+      - "@config.factory"
   dpl_event.route_subscriber:
     class: Drupal\dpl_event\Routing\RouteSubscriber
     tags:
@@ -40,7 +40,7 @@ services:
   dpl_event.access_event_instances_tab:
     class: Drupal\dpl_event\Access\EventSeriesTabAccessCheck
     arguments:
-      - '@entity_type.manager'
+      - "@entity_type.manager"
     tags:
       - { name: access_check, applies_to: _access_event_series_instances_tab }
   dpl_event.event_series_redirect:

@@ -1,5 +1,5 @@
 _meta:
-  version: '1.0'
+  version: "1.0"
   entity_type: taxonomy_term
   uuid: 3369e523-14d9-49a5-93e2-eda5585c6eaa
   bundle: categories
@@ -19,12 +19,12 @@ default:
     - tag: meta
       attributes:
         name: title
-        content: 'Cat1 | DPL CMS'
+        content: "Cat1 | DPL CMS"
     - tag: link
       attributes:
         rel: canonical
-        href: 'http://dapple-cms.docker/taxonomy/term/29'
+        href: "http://dapple-cms.docker/taxonomy/term/29"
   path:
-    - alias: ''
+    - alias: ""
       langcode: da
       pathauto: 0

@@ -1,5 +1,5 @@
 _meta:
-  version: '1.0'
+  version: "1.0"
   entity_type: node
   uuid: 1f4f09dd-83dd-4f82-a57d-95086966c7a3
   bundle: article
@@ -18,7 +18,7 @@ default:
   uid:
     - target_id: 1
   title:
-    - value: 'RelatedContent test'
+    - value: "RelatedContent test"
   created:
     - value: 1717516357
   promote:
@@ -33,7 +33,7 @@ default:
     - tag: meta
       attributes:
         name: title
-        content: 'RelatedContent test | DPL CMS'
+        content: "RelatedContent test | DPL CMS"
   path:
     - alias: /branch1/articles/cat2/relatedcontent-test
       langcode: und
@@ -45,7 +45,7 @@ default:
   field_paragraphs:
     - entity:
         _meta:
-          version: '1.0'
+          version: "1.0"
           entity_type: paragraph
           uuid: b2cc4e4c-68a5-4a12-891c-63af28feea9b
           bundle: filtered_event_list
@@ -64,12 +64,12 @@ default:
           field_filter_tags:
             - entity: ab73e9ee-9195-4245-bb95-f5de1c4eb06f
           field_max_item_amount:
-            - value: '12'
+            - value: "12"
           field_title:
-            - value: 'Event list - automatic - tag1'
+            - value: "Event list - automatic - tag1"
     - entity:
         _meta:
-          version: '1.0'
+          version: "1.0"
           entity_type: paragraph
           uuid: 32250239-124c-4fdd-a693-003f57e23306
           bundle: content_slider_automatic
@@ -95,10 +95,10 @@ default:
           field_filter_tags:
             - entity: ab73e9ee-9195-4245-bb95-f5de1c4eb06f
           field_title:
-            - value: 'Slider - Article + Events + Tag 1 + Cat 1 + Branch 1 (OR)'
+            - value: "Slider - Article + Events + Tag 1 + Cat 1 + Branch 1 (OR)"
     - entity:
         _meta:
-          version: '1.0'
+          version: "1.0"
           entity_type: paragraph
           uuid: a74126ed-e24d-45f3-910f-dde2680bd916
           bundle: content_slider_automatic
@@ -122,10 +122,10 @@ default:
           field_filter_tags:
             - entity: ab73e9ee-9195-4245-bb95-f5de1c4eb06f
           field_title:
-            - value: 'Slider - Events + Articles + Tag 1 + Cat 1 (AND)'
+            - value: "Slider - Events + Articles + Tag 1 + Cat 1 (AND)"
     - entity:
         _meta:
-          version: '1.0'
+          version: "1.0"
           entity_type: paragraph
           uuid: 171dc2e5-8716-4df2-bf0c-8c0d8e01f44f
           bundle: content_slider_automatic
@@ -145,10 +145,10 @@ default:
           field_filter_cond_type:
             - value: or
           field_title:
-            - value: 'Slider - Branch1+Cat1+Cat2 (OR)'
+            - value: "Slider - Branch1+Cat1+Cat2 (OR)"
     - entity:
         _meta:
-          version: '1.0'
+          version: "1.0"
           entity_type: paragraph
           uuid: 3bd1e337-e322-4f5c-9576-eae680eccc81
           bundle: content_slider_automatic
@@ -168,10 +168,10 @@ default:
             - entity: ab73e9ee-9195-4245-bb95-f5de1c4eb06f
             - entity: 5d70c9f7-779c-4337-a587-ced7a8ecc770
           field_title:
-            - value: 'Slider - Tag1+Tag2 (AND)'
+            - value: "Slider - Tag1+Tag2 (AND)"
     - entity:
         _meta:
-          version: '1.0'
+          version: "1.0"
           entity_type: paragraph
           uuid: 052840b7-538c-44c5-a5f3-b58ff37b4834
           bundle: content_slider_automatic
@@ -191,7 +191,7 @@ default:
             - value: event
             - value: page
           field_title:
-            - value: 'Slider - Page+Events'
+            - value: "Slider - Page+Events"
   field_show_override_author:
     - value: false
   field_tags:

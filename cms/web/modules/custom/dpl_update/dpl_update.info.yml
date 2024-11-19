@@ -1,6 +1,6 @@
-name: 'DPL Update'
+name: "DPL Update"
 type: module
-description: 'Generalized update logic, such as enabling modules.'
+description: "Generalized update logic, such as enabling modules."
 package: DPL
 core_version_requirement: ^10
 dependencies:

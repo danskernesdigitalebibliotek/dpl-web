@@ -4,11 +4,11 @@
   // element with querySelectorAll, so this tries to do the right
   // thing.
   const getElement = function getElement(element) {
-    if (typeof element.querySelectorAll !== 'function') {
+    if (typeof element.querySelectorAll !== "function") {
       element = element[0] || element;
     }
 
-    if (typeof element.querySelectorAll !== 'function') {
+    if (typeof element.querySelectorAll !== "function") {
       return null;
     }
 
@@ -19,7 +19,7 @@
   // https://github.com/jquery/jquery/blob/3.6.0/src/core/DOMEval.js
   const DOMEval = function DOMEval(code) {
     const doc = document;
-    const script = doc.createElement('script');
+    const script = doc.createElement("script");
     script.text = code;
     doc.head.appendChild(script).parentNode.removeChild(script);
   };
@@ -29,17 +29,17 @@
       const element = getElement(context);
       if (element) {
         // Port jQuery.ajax with dataType script to vanilla JS with Fetch API.
-        fetch('/dpl-react/user-tokens', {
+        fetch("/dpl-react/user-tokens", {
           headers: {
             Accept:
-              'text/javascript, application/javascript, ' +
-              'application/ecmascript, application/x-ecmascript',
+              "text/javascript, application/javascript, " +
+              "application/ecmascript, application/x-ecmascript",
           },
         })
           .then((response) => {
             if (!response.ok) {
               throw new Error(
-                `HTTP error response: ${response.status} - ${response.statusText}`,
+                `HTTP error response: ${response.status} - ${response.statusText}`
               );
             }
             return response.text();

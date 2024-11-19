@@ -1,5 +1,5 @@
-name: 'Article'
+name: "Article"
 type: module
-description: 'Functionality related to creating article content.'
-package: 'DPL'
+description: "Functionality related to creating article content."
+package: "DPL"
 core_version_requirement: ^10

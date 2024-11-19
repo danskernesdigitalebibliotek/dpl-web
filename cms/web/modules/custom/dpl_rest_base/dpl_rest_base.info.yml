@@ -1,6 +1,6 @@
-name: 'DPL REST base'
+name: "DPL REST base"
 type: module
-description: 'A base module for providing shared functionality between modules exposing REST services.'
+description: "A base module for providing shared functionality between modules exposing REST services."
 package: DPL
 core_version_requirement: ^10
 dependencies:

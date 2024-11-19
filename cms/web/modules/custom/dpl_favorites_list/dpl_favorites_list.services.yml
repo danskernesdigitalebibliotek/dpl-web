@@ -1,4 +1,4 @@
 services:
   dpl_favorites_list.settings:
     class: Drupal\dpl_favorites_list\DplFavoritesListSettings
-    arguments: ['@config.manager']
+    arguments: ["@config.manager"]

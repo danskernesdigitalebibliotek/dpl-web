@@ -1,4 +1,4 @@
-name: 'DPL static content: Views aliases'
+name: "DPL static content: Views aliases"
 type: module
 description: Adds path aliases to core views pages
 package: DPL
