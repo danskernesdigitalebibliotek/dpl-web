@@ -1,6 +1,7 @@
 import React, { useEffect, useRef, useState } from "react"
 
 import { useSearchDataAndLoadingStates } from "@/components/pages/searchPageLayout/helper"
+import { AnimateChangeInHeight } from "@/components/shared/animateChangeInHeight/AnimateChangeInHeight"
 import BadgeButton from "@/components/shared/badge/BadgeButton"
 import Icon from "@/components/shared/icon/Icon"
 import {
@@ -12,8 +13,6 @@ import { SearchFacetFragment } from "@/lib/graphql/generated/fbi/graphql"
 import { cn } from "@/lib/helpers/helper.cn"
 import { TFilters } from "@/lib/machines/search/types"
 import useSearchMachineActor from "@/lib/machines/search/useSearchMachineActor"
-
-import { AnimateChangeInHeight } from "../animateChangeInHeight/AnimateChangeInHeight"
 
 type SearchFiltersColumnProps = {
   facet: SearchFacetFragment
@@ -73,6 +72,7 @@ const SearchFiltersColumn = ({
             {facet.values.map((value, index) => (
               <BadgeButton
                 key={index}
+                ariaLabel={value.term}
                 onClick={() =>
                   actor.send({ type: "TOGGLE_FILTER", name: facet.name, value: value.term })
                 }
@@ -87,14 +87,13 @@ const SearchFiltersColumn = ({
           </div>
           {hasOverflow && (
             <BadgeButton
-              classNames={cn(`w-auto flex flex-row items-center self-start mt-1`)}
+              ariaLabel={isExpanded ? "Vis færre" : "Vis flere"}
+              classNames={cn(`pl-3 w-auto flex flex-row items-center self-start  ml-1`)}
               onClick={() => {
                 setIsExpanded(prev => !prev)
               }}>
               <Icon className={cn("h-8 w-8", isExpanded ? "rotate-180" : "")} name="arrow-down" />
-              <p>
-                {!isExpanded && "Flere"} {isExpanded && "Skjul"}
-              </p>
+              <p>{isExpanded ? "Skjul" : "Flere"}</p>
             </BadgeButton>
           )}
         </AnimateChangeInHeight>

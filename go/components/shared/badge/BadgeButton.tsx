@@ -7,9 +7,16 @@ type BadgeButtonProps = {
   isActive?: boolean
   classNames?: string
   children: React.ReactNode
+  ariaLabel: string
 }
 
-const BadgeButton = ({ onClick, isActive = false, classNames, children }: BadgeButtonProps) => {
+const BadgeButton = ({
+  onClick,
+  isActive = false,
+  classNames,
+  children,
+  ariaLabel,
+}: BadgeButtonProps) => {
   return (
     <button
       onClick={onClick}
@@ -17,7 +24,8 @@ const BadgeButton = ({ onClick, isActive = false, classNames, children }: BadgeB
         `focus-visible h-[28px] w-auto self-start whitespace-nowrap rounded-full bg-background-overlay px-4
         py-2 text-typo-caption hover:animate-wiggle`,
         isActive && "bg-foreground text-background",
-        classNames
+        classNames,
+        ariaLabel
       )}>
       {children}
     </button>
