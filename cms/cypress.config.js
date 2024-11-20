@@ -4,7 +4,6 @@ module.exports = defineConfig({
   e2e: {
     // baseUrl is set using environment variables because it differs between
     // development and CI setups.
-    defaultCommandTimeout: 10000,
     retries: {
       runMode: 3,
       openMode: 0,
