@@ -1,0 +1,5 @@
+services:
+  dpl_consumer.commands:
+    class: \Drupal\dpl_consumers\Commands\DplConsumersCommands
+    tags:
+      - { name: drush.command }

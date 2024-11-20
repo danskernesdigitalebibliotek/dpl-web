@@ -382,6 +382,11 @@ tasks:
     cmds:
       - cmd: task dev:cli -- drush default-content:export-module dpl_example_content
 
+  dev:go:graphql-credentials:
+    desc: Get the GraphQL consumer credentials
+    cmds:
+      - cmd: task dev:cli -- drush dpl_consumers:consumer-credentials
+
   ci:reset:
     desc: Create CI setup in a clean state
     cmds:
