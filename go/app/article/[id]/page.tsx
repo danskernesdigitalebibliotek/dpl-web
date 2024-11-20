@@ -2,7 +2,13 @@ import { Suspense } from "react"
 
 import loadArticle from "./loadArticle"
 
-const Page = async ({ params: { id } }: { params: { id: string } }) => {
+const Page = async (props: { params: Promise<{ id: string }> }) => {
+  const params = await props.params;
+
+  const {
+    id
+  } = params;
+
   const data = await loadArticle(id)
   return (
     <Suspense fallback={<p>Loading...</p>}>
