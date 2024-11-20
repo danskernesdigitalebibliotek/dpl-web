@@ -39,5 +39,3 @@ export const appendAsset = ({ src, type }: AssetType) => {
     document.head.appendChild(linkElement)
   }
 }
-
-export default {}
