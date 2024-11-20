@@ -32,6 +32,7 @@ export const facets = {
 } as const
 
 beforeEach(() => {
+  // @ts-ignore
   ;(goConfig as jest.Mock).mockImplementation((key: string) => {
     if (key === "search.item.limit") {
       return 9 // Mocked return value for "search.item.limit"
@@ -49,6 +50,7 @@ beforeEach(() => {
 
 describe("Facet functionality", () => {
   it("getMachineNames should return all the facet machine names", () => {
+    // @ts-ignore
     goConfig.mockReturnValue(facets)
     const machineNames = getFacetMachineNames()
     expect(machineNames).toStrictEqual([
@@ -109,6 +111,7 @@ describe("Facet functionality", () => {
   })
 
   it("getFacetTranslation should give a translated facet when given a facet machine name", () => {
+    // @ts-ignore
     const translation = getFacetTranslation("LIX")
     expect(translation).toBe("Lix")
   })

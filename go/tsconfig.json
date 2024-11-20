@@ -23,6 +23,7 @@
         "schema": "graphql/generated/dpl-cms/graphql.schema.json"
       }
     ],
+    "baseUrl": ".",
     "paths": {
       "@/*": ["./*"]
     }
@@ -32,7 +33,6 @@
     "node_modules",
     "lib/rest/cover-service-api/model",
     "lib/rest/cover-service-api/cover-service.ts",
-    "lib/graphql/generated/fbi/*.tsx",
-    "__tests__"
+    "lib/graphql/generated/fbi/*.tsx"
   ]
 }

@@ -6,20 +6,23 @@
   "scripts": {
     "build-storybook": "storybook build",
     "build": "next build",
+    "ci-check": "yarn typecheck && yarn lint && yarn format:check && yarn test:unit:once",
     "codegen:all-rest-services": "orval",
     "codegen:covers": "rm -rf src/lib/rest/cover-service-api/generated/model/*.* && orval --project coverService",
-    "codegen:graphql": "graphql-codegen --config codegen.ts",
+    "codegen:graphql": "graphql-codegen --require tsconfig-paths/register --config codegen.ts",
     "codegen:publizon": "rm -rf lib/rest/publizon-api/generated/model/*.* && orval --project publizonAdapter",
-    "dev": "next dev",
     "dev:https": "next dev --experimental-https",
+    "dev": "next dev",
     "format:check": "prettier --check .",
     "format:write": "prettier --write .",
     "lint": "next lint",
-    "start": "next start",
     "start:with-server-source-maps": "NODE_OPTIONS='--enable-source-maps=true' next start",
+    "start": "next start",
     "storybook": "storybook dev -p 6006",
+    "test:accessibility": "test-storybook",
+    "test:unit:once": "vitest run",
     "test:unit": "vitest",
-    "test:accessibility": "test-storybook"
+    "typecheck": "tsc --noEmit"
   },
   "dependencies": {
     "@next/env": "^14.2.15",

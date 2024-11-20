@@ -4,6 +4,7 @@ import { IronSession, getIronSession } from "iron-session"
 import { testApiHandler } from "next-test-api-route-handler"
 import { afterAll, beforeAll, beforeEach, expect, test, vi } from "vitest"
 
+// @ts-ignore
 import * as tokenRefreshHandler from "@/app/auth/token/refresh/route"
 import { TSessionData, accessTokenShouldBeRefreshed } from "@/lib/session/session"
 
@@ -24,6 +25,7 @@ afterAll(() => {
 })
 
 beforeEach(() => {
+  // @ts-ignore
   getIronSession.mockResolvedValue({
     isLoggedIn: true,
   })
@@ -41,6 +43,7 @@ const sessionThatShouldBeRefreshed = () => ({
 
 test("That the refresh endpoint redirects to the frontpage if there is no active session", async () => {
   // Simulate an anonymous session.
+  // @ts-ignore
   getIronSession.mockResolvedValue({
     isLoggedIn: false,
   })
@@ -57,6 +60,7 @@ test("That the refresh endpoint redirects to the frontpage if there is no active
 
 test("That the refresh endpoint redirects to the given endpoint after refreshing token", async () => {
   // This is an authorized session that should be refreshed.
+  // @ts-ignore
   getIronSession.mockResolvedValue(sessionThatShouldBeRefreshed())
 
   await testApiHandler({
@@ -69,6 +73,7 @@ test("That the refresh endpoint redirects to the given endpoint after refreshing
   })
 
   // This is an authorized session that should NOT be refreshed.
+  // @ts-ignore
   getIronSession.mockResolvedValue({
     isLoggedIn: true,
     expires: add(new Date(), { seconds: 300 }),
