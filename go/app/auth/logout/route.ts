@@ -2,17 +2,13 @@ import { cookies } from "next/headers"
 import { generators } from "openid-client"
 
 import goConfig from "@/lib/config/config"
-import { getUniloginClient, uniloginClientConfig } from "@/lib/session/oauth/uniloginClient"
+import {
+  getOpenIdClientUniloginClientConfig,
+  getUniloginClient,
+} from "@/lib/session/oauth/uniloginClient"
 import { getSession } from "@/lib/session/session"
 
 export async function GET() {
-  const configResponse = await fetch(`${process.env.NEXT_PUBLIC_APP_URL}/auth/config`)
-  if (!configResponse.ok) {
-    throw new Error("Failed to fetch config")
-  }
-  const config = await configResponse.json()
-  const uniloginConfig = config?.dplConfiguration?.unilogin
-
   const session = await getSession()
   // TODO: Distinguish between session types here.
   const id_token = cookies().get("go-session:id_token")?.value
@@ -20,14 +16,17 @@ export async function GET() {
   if (!id_token) {
     return Response.redirect(goConfig("app.url"))
   }
-  const client = await getUniloginClient({
-    client_id: uniloginConfig.unilogin_api_client_id,
-    client_secret: uniloginConfig.unilogin_api_client_secret,
-    redirect_uri: `${process.env.NEXT_PUBLIC_APP_URL}/auth/callback/unilogin`,
-    wellKnownUrl: uniloginConfig.unilogin_api_wellknown_url,
-  })
+
+  const openIdClientConfig = await getOpenIdClientUniloginClientConfig()
+
+  if (!openIdClientConfig || !openIdClientConfig.post_logout_redirect_uri) {
+    throw new Error("Unilogin client config is invalid.")
+  }
+
+  const client = await getUniloginClient()
+
   const endSession = client.endSessionUrl({
-    post_logout_redirect_uri: uniloginClientConfig.post_logout_redirect_uri,
+    post_logout_redirect_uri: openIdClientConfig.post_logout_redirect_uri,
     id_token_hint: id_token,
     state: generators.state(),
   })

@@ -1,4 +1,3 @@
-import { QueryClient } from "@tanstack/react-query"
 import type { Metadata } from "next"
 import localFont from "next/font/local"
 
@@ -6,12 +5,6 @@ import Footer from "@/components/global/footer/Footer"
 import GridHelper from "@/components/global/gridHelper/GridHelper"
 import Header from "@/components/global/header/Header"
 import Theme from "@/components/global/theme/Theme"
-import getQueryClient from "@/lib/getQueryClient"
-import {
-  GetUniLoginConfigurationQuery,
-  useGetUniLoginConfigurationQuery,
-} from "@/lib/graphql/generated/dpl-cms/graphql"
-import ConfigProvider from "@/lib/providers/ConfigProvider"
 import ReactQueryProvider from "@/lib/providers/ReactQueryProvider"
 import "@/styles/globals.css"
 
@@ -42,38 +35,23 @@ const GTFlexa = localFont({
   display: "swap",
 })
 
-const getConfiguration = async (queryClient: QueryClient) => {
-  const data = await queryClient.fetchQuery<GetUniLoginConfigurationQuery>({
-    queryKey: useGetUniLoginConfigurationQuery.getKey(),
-    queryFn: useGetUniLoginConfigurationQuery.fetcher(),
-  })
-
-  return data
-}
-
-export default async function RootLayout({
+export default function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode
 }>) {
-  // This is a workaround to ensure that the uniloginConfiguration is loaded before the app is rendered
-  const queryClient = getQueryClient()
-  const configuration = await getConfiguration(queryClient)
-
   return (
     <html lang="en">
       <body className={`${GTFlexa.variable} antialiased`}>
         <GridHelper hideInProduction />
         <Theme>
-          <ConfigProvider uniloginConfiguration={configuration.dplConfiguration?.unilogin || {}}>
-            <ReactQueryProvider>
-              <Header />
-              <div className="flex h-full min-h-screen-minus-navigation-height w-full flex-col">
-                {children}
-              </div>
-              <Footer />
-            </ReactQueryProvider>
-          </ConfigProvider>
+          <ReactQueryProvider>
+            <Header />
+            <div className="flex h-full min-h-screen-minus-navigation-height w-full flex-col">
+              {children}
+            </div>
+            <Footer />
+          </ReactQueryProvider>
         </Theme>
       </body>
     </html>

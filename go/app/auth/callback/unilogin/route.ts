@@ -2,7 +2,10 @@ import { NextRequest } from "next/server"
 import { IntrospectionResponse } from "openid-client"
 
 import goConfig from "@/lib/config/config"
-import { getUniloginClient, uniloginClientConfig } from "@/lib/session/oauth/uniloginClient"
+import {
+  getOpenIdClientUniloginClientConfig,
+  getUniloginClient,
+} from "@/lib/session/oauth/uniloginClient"
 import { getSession, setTokensOnSession } from "@/lib/session/session"
 import { TTokenSet } from "@/lib/types/session"
 
@@ -14,25 +17,22 @@ export interface TIntrospectionResponse extends IntrospectionResponse {
 }
 
 export async function GET(request: NextRequest) {
-  const configResponse = await fetch(`${process.env.NEXT_PUBLIC_APP_URL}/auth/config`)
-  if (!configResponse.ok) {
-    throw new Error("Failed to fetch config")
-  }
-  const config = await configResponse.json()
-  const uniloginConfig = config?.dplConfiguration?.unilogin
-
   const session = await getSession()
-  const client = await getUniloginClient({
-    client_id: uniloginConfig.unilogin_api_client_id,
-    client_secret: uniloginConfig.unilogin_api_client_secret,
-    redirect_uri: `${process.env.NEXT_PUBLIC_APP_URL}/auth/callback/unilogin`,
-    wellKnownUrl: uniloginConfig.unilogin_api_wellknown_url,
-  })
+  const openIdClientConfig = await getOpenIdClientUniloginClientConfig()
+  if (
+    !openIdClientConfig ||
+    !openIdClientConfig.redirect_uri ||
+    !openIdClientConfig.post_login_route
+  ) {
+    throw new Error("Unilogin client config is invalid.")
+  }
+
+  const client = await getUniloginClient()
   const params = client.callbackParams(request.nextUrl.toString())
 
   // Fetch all user/token info.
   try {
-    const tokenSetResponse = await client.callback(uniloginClientConfig.redirect_uri, params, {
+    const tokenSetResponse = await client.callback(openIdClientConfig.redirect_uri, params, {
       code_verifier: session.code_verifier,
     })
     const tokenSet = schemas.tokenSet.parse(tokenSetResponse) as TTokenSet
@@ -61,7 +61,7 @@ export async function GET(request: NextRequest) {
 
     await session.save()
 
-    return Response.redirect(uniloginClientConfig.post_login_route)
+    return Response.redirect(openIdClientConfig.post_login_route)
   } catch (error) {
     console.error(error)
     // TODO: Error page or redirect to login page.
