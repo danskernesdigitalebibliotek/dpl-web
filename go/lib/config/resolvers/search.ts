@@ -1,5 +1,7 @@
 import { FacetFieldEnum } from "@/lib/graphql/generated/fbi/graphql"
 
+export type TConfigSearchFacets = Record<FacetFieldEnum, { filter: string; translation: string }>
+
 const search = {
   "search.item.limit": 12,
   "search.offset.initial": 0,
@@ -37,20 +39,18 @@ const search = {
     "775130",
   ],
   "search.facets": {
-    [FacetFieldEnum.Materialtypesgeneral]: {
+    MATERIALTYPESGENERAL: {
       filter: "materialTypesGeneral",
       translation: "Type",
     },
-    [FacetFieldEnum.Mainlanguages]: {
+    MAINLANGUAGES: {
       filter: "mainLanguages",
       translation: "Sprog",
     },
-    [FacetFieldEnum.Age]: { filter: "age", translation: "Alder" },
-    [FacetFieldEnum.Lix]: { filter: "lixRange", translation: "Lix" },
-    [FacetFieldEnum.Subjects]: { filter: "subjects", translation: "Emne" },
-  },
+    AGE: { filter: "age", translation: "Alder" },
+    LIX: { filter: "lixRange", translation: "Lix" },
+    SUBJECTS: { filter: "subjects", translation: "Emne" },
+  } as TConfigSearchFacets,
 }
-
-export type TConfigSearchFacets = Record<FacetFieldEnum, { filter: string; translation: string }>
 
 export default search
