@@ -10,6 +10,8 @@
  *
  * @return string
  *   The consumer UUID.
+ *
+ * @throws \Exception
  */
 function dpl_consumers_get_consumer_uuid(string $client_id): string {
   try {
@@ -17,17 +19,18 @@ function dpl_consumers_get_consumer_uuid(string $client_id): string {
       ->getStorage('consumer')
       ->loadByProperties(['client_id' => $client_id]);
 
+    // We assume that there is only one consumer with the given client ID
+    // as it is used an as unique identifier (machine name).
     if (!empty($consumer)) {
       $consumer = reset($consumer);
-      $uuid = $consumer->uuid();
-      return $uuid ?? 'Consumer UUID not found.';
+
+      return $consumer->uuid() ?? throw new \Exception('UUID not found.');
     }
     else {
-      return 'Consumer not found.';
+      throw new \Exception('Consumer not found.');
     }
   }
   catch (\Exception $e) {
-    \Drupal::logger('dpl_consumers')->error($e->getMessage());
-    return 'Error fetching consumer.';
+    throw new \Exception($e->getMessage());
   }
 }
