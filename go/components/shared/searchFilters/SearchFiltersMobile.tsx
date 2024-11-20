@@ -43,7 +43,7 @@ const SearchFiltersMobile = ({ facets }: SearchFiltersMobileProps) => {
           aria-label="Vis filtreringsmuligheder"
           onClick={() => setIsSheetOpen(!isSheetOpen)}
           className="flex flex-row items-center gap-1 text-typo-link">
-          <Button asChild>
+          <Button asChild ariaLabel="VIS FILTRE">
             <div>
               <Icon name="adjust" className="h-[40px]" />
               VIS FILTRE
@@ -62,6 +62,7 @@ const SearchFiltersMobile = ({ facets }: SearchFiltersMobileProps) => {
                       toggleFilter(facet.name, value.term, router)
                     }}
                     key={value.term}
+                    ariaLabel={value.term}
                     isActive
                     classNames="flex flex-row items-center pr-1">
                     {value.term}
@@ -92,7 +93,8 @@ const SearchFiltersMobile = ({ facets }: SearchFiltersMobileProps) => {
                             toggleFilter(facet.name, value.term, router)
                           }}
                           isActive={!!searchParams.getAll(facet.name).includes(value.term)}
-                          key={index}>
+                          key={index}
+                          ariaLabel={value.term}>
                           {value.term}
                         </BadgeButton>
                       ))}

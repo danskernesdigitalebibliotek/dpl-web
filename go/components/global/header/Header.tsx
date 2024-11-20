@@ -21,7 +21,7 @@ function Header() {
           <DarkModeToggle />
         </div>
         <div className="flex-0 flex justify-end space-x-4 pr-1">
-          <Button variant="icon" aria-label="Tilgå hjælpesiden">
+          <Button variant="icon" ariaLabel="Tilgå hjælpesiden">
             <Icon className="h-[24px] w-[24px]" name="question-mark" />
           </Button>
           <ProfileButton />
