@@ -1,9 +1,10 @@
-import { expect, test, vi } from "vitest"
+import { expect, test } from "vitest"
 
 import goConfig from "@/lib/config/config"
 import MissingConfigurationError from "@/lib/config/errors/MissingConfigurationError"
 
 test("That an error is thrown if we ask for unknown config", async () => {
+  // @ts-ignore
   expect(() => goConfig("unknown.thingy")).toThrowError(MissingConfigurationError)
 })
 
