@@ -175,6 +175,7 @@ const validateOpeningHoursPage = ({
   timeDuration: { start, end },
 }: OpeningHourFormType) => {
   cy.getBySel("opening-hours-week-list")
+    .scrollIntoView()
     .should("be.visible")
     .and("contain", openingHourCategory)
     .and("contain", `${start} - ${end}`);
