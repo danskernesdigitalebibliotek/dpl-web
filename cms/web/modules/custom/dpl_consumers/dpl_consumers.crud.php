@@ -79,8 +79,10 @@ function dpl_consumers_delete_consumer(): void {
   try {
     $consumer = \Drupal::entityTypeManager()
       ->getStorage('consumer')
-      ->loadByProperties(['label' => DplGraphqlConsumersConstants::GRAPHQL_CONSUMER_LABEL]);
+      ->loadByProperties(['client_id' => DplGraphqlConsumersConstants::GRAPHQL_CONSUMER_CLIENT_ID]);
 
+    // We assume that there is only one consumer with the given client ID
+    // as it is used an as unique identifier (machine name).
     if (!empty($consumer)) {
       $consumer = reset($consumer);
       $consumer->delete();

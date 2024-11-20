@@ -18,7 +18,7 @@ final class DplConsumersCommands extends DrushCommands {
    *
    * @var \Drupal\Core\Entity\EntityTypeManagerInterface
    */
-  protected $entityTypeManager;
+  protected EntityTypeManagerInterface $entityTypeManager;
 
   /**
    * Constructor.
@@ -34,6 +34,8 @@ final class DplConsumersCommands extends DrushCommands {
    * Function is used for setting the consumer secret.
    *
    * @command dpl_consumers:set-consumer-secret
+   *
+   * @throws \Exception
    */
   public function setConsumerSecret(): string {
     try {
@@ -51,11 +53,12 @@ final class DplConsumersCommands extends DrushCommands {
 
         return 'Consumer secret set successfully.';
       }
-
-      return 'Consumer secret was not found.';
+      else {
+        throw new \Exception('Consumer secret was not found.');
+      }
     }
     catch (\Exception $e) {
-      return 'Error fetching consumer.';
+      throw new \Exception($e->getMessage());
     }
   }
 
@@ -63,6 +66,8 @@ final class DplConsumersCommands extends DrushCommands {
    * Function is used for printing out the consumer credentials to the console.
    *
    * @command dpl_consumers:consumer-credentials
+   *
+   * @throws \Exception
    */
   public function getConsumerCredentials(): void {
     $graphql_consumer_client_id = DplGraphqlConsumersConstants::GRAPHQL_CONSUMER_CLIENT_ID;
