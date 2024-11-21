@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "fe80f18197df9c1e7897e069b09e066b",
+    "content-hash": "e5a48b91b3820f245a6a63c8c0274423",
     "packages": [
         {
             "name": "amazeeio/drupal_integrations",
@@ -1166,19 +1166,19 @@
         },
         {
             "name": "danskernesdigitalebibliotek/dpl-design-system",
-            "version": "2024.46.0",
+            "version": "2024.47.1",
             "dist": {
                 "type": "zip",
-                "url": "https://github.com/danskernesdigitalebibliotek/dpl-design-system/releases/download/2024.46.0/dist-2024-46-0-26b569fe9286c99caa7d35dfffb9e4d176826c7a.zip"
+                "url": "https://github.com/danskernesdigitalebibliotek/dpl-design-system/releases/download/2024.47.1/dist-2024-47-1-acd61eab1fefee5ed1bc3da76b31c9640caa8671.zip"
             },
             "type": "drupal-library"
         },
         {
             "name": "danskernesdigitalebibliotek/dpl-react",
-            "version": "2024.46.0",
+            "version": "2024.47.0",
             "dist": {
                 "type": "zip",
-                "url": "https://github.com/danskernesdigitalebibliotek/dpl-react/releases/download/2024.46.0/dist-2024-46-0-7d4d8165940c12997e99f8f53768cb784021dccb.zip"
+                "url": "https://github.com/danskernesdigitalebibliotek/dpl-react/releases/download/2024.47.0/dist-2024-47-0-d262e234fe972eeb86cc0e21d663245a3a96331a.zip"
             },
             "require": {
                 "composer/installers": "^1.2.0"
@@ -3287,16 +3287,16 @@
         },
         {
             "name": "drupal/core",
-            "version": "10.3.7",
+            "version": "10.3.9",
             "source": {
                 "type": "git",
                 "url": "https://github.com/drupal/core.git",
-                "reference": "5b11ec4e38e71748c51287cbd64cfcc43faeb624"
+                "reference": "42a6516491b4793158542a2326dc6ad1fe2aa5bd"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/drupal/core/zipball/5b11ec4e38e71748c51287cbd64cfcc43faeb624",
-                "reference": "5b11ec4e38e71748c51287cbd64cfcc43faeb624",
+                "url": "https://api.github.com/repos/drupal/core/zipball/42a6516491b4793158542a2326dc6ad1fe2aa5bd",
+                "reference": "42a6516491b4793158542a2326dc6ad1fe2aa5bd",
                 "shasum": ""
             },
             "require": {
@@ -3342,7 +3342,7 @@
                 "symfony/serializer": "^6.4",
                 "symfony/validator": "^6.4",
                 "symfony/yaml": "^6.4",
-                "twig/twig": "^3.14.0"
+                "twig/twig": "^3.14.2"
             },
             "conflict": {
                 "drush/drush": "<12.4.3"
@@ -3445,13 +3445,13 @@
             ],
             "description": "Drupal is an open source content management platform powering millions of websites and applications.",
             "support": {
-                "source": "https://github.com/drupal/core/tree/10.3.7"
+                "source": "https://github.com/drupal/core/tree/10.3.9"
             },
-            "time": "2024-11-07T08:22:50+00:00"
+            "time": "2024-11-20T17:59:45+00:00"
         },
         {
             "name": "drupal/core-composer-scaffold",
-            "version": "10.3.7",
+            "version": "10.3.9",
             "source": {
                 "type": "git",
                 "url": "https://github.com/drupal/core-composer-scaffold.git",
@@ -3495,13 +3495,13 @@
                 "drupal"
             ],
             "support": {
-                "source": "https://github.com/drupal/core-composer-scaffold/tree/10.3.7"
+                "source": "https://github.com/drupal/core-composer-scaffold/tree/10.3.9"
             },
             "time": "2024-08-22T14:31:34+00:00"
         },
         {
             "name": "drupal/core-project-message",
-            "version": "10.3.7",
+            "version": "10.3.9",
             "source": {
                 "type": "git",
                 "url": "https://github.com/drupal/core-project-message.git",
@@ -3536,22 +3536,22 @@
                 "drupal"
             ],
             "support": {
-                "source": "https://github.com/drupal/core-project-message/tree/11.0.5"
+                "source": "https://github.com/drupal/core-project-message/tree/11.1.0-beta1"
             },
             "time": "2023-07-24T07:55:25+00:00"
         },
         {
             "name": "drupal/core-recommended",
-            "version": "10.3.7",
+            "version": "10.3.9",
             "source": {
                 "type": "git",
                 "url": "https://github.com/drupal/core-recommended.git",
-                "reference": "4d0e3bcfaf847cb50433728116fe247f6847686e"
+                "reference": "03da2860a10c12b86714e778178433b620bb890d"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/drupal/core-recommended/zipball/4d0e3bcfaf847cb50433728116fe247f6847686e",
-                "reference": "4d0e3bcfaf847cb50433728116fe247f6847686e",
+                "url": "https://api.github.com/repos/drupal/core-recommended/zipball/03da2860a10c12b86714e778178433b620bb890d",
+                "reference": "03da2860a10c12b86714e778178433b620bb890d",
                 "shasum": ""
             },
             "require": {
@@ -3560,7 +3560,7 @@
                 "doctrine/annotations": "~1.14.3",
                 "doctrine/deprecations": "~1.1.3",
                 "doctrine/lexer": "~2.1.1",
-                "drupal/core": "10.3.7",
+                "drupal/core": "10.3.9",
                 "egulias/email-validator": "~4.0.2",
                 "guzzlehttp/guzzle": "~7.8.1",
                 "guzzlehttp/promises": "~2.0.2",
@@ -3609,7 +3609,7 @@
                 "symfony/var-dumper": "~v6.4.7",
                 "symfony/var-exporter": "~v6.4.7",
                 "symfony/yaml": "~v6.4.7",
-                "twig/twig": "~v3.14.0"
+                "twig/twig": "~v3.14.2"
             },
             "conflict": {
                 "webflo/drupal-core-strict": "*"
@@ -3621,9 +3621,9 @@
             ],
             "description": "Core and its dependencies with known-compatible minor versions. Require this project INSTEAD OF drupal/core.",
             "support": {
-                "source": "https://github.com/drupal/core-recommended/tree/10.3.7"
+                "source": "https://github.com/drupal/core-recommended/tree/10.3.9"
             },
-            "time": "2024-11-07T08:22:50+00:00"
+            "time": "2024-11-20T17:59:45+00:00"
         },
         {
             "name": "drupal/crop",
@@ -17525,26 +17525,27 @@
         },
         {
             "name": "phpspec/prophecy",
-            "version": "v1.19.0",
+            "version": "v1.20.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpspec/prophecy.git",
-                "reference": "67a759e7d8746d501c41536ba40cd9c0a07d6a87"
+                "reference": "a0165c648cab6a80311c74ffc708a07bb53ecc93"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpspec/prophecy/zipball/67a759e7d8746d501c41536ba40cd9c0a07d6a87",
-                "reference": "67a759e7d8746d501c41536ba40cd9c0a07d6a87",
+                "url": "https://api.github.com/repos/phpspec/prophecy/zipball/a0165c648cab6a80311c74ffc708a07bb53ecc93",
+                "reference": "a0165c648cab6a80311c74ffc708a07bb53ecc93",
                 "shasum": ""
             },
             "require": {
                 "doctrine/instantiator": "^1.2 || ^2.0",
-                "php": "^7.2 || 8.0.* || 8.1.* || 8.2.* || 8.3.*",
+                "php": "^7.2 || 8.0.* || 8.1.* || 8.2.* || 8.3.* || 8.4.*",
                 "phpdocumentor/reflection-docblock": "^5.2",
                 "sebastian/comparator": "^3.0 || ^4.0 || ^5.0 || ^6.0",
                 "sebastian/recursion-context": "^3.0 || ^4.0 || ^5.0 || ^6.0"
             },
             "require-dev": {
+                "friendsofphp/php-cs-fixer": "^3.40",
                 "phpspec/phpspec": "^6.0 || ^7.0",
                 "phpstan/phpstan": "^1.9",
                 "phpunit/phpunit": "^8.0 || ^9.0 || ^10.0"
@@ -17588,9 +17589,9 @@
             ],
             "support": {
                 "issues": "https://github.com/phpspec/prophecy/issues",
-                "source": "https://github.com/phpspec/prophecy/tree/v1.19.0"
+                "source": "https://github.com/phpspec/prophecy/tree/v1.20.0"
             },
-            "time": "2024-02-29T11:52:51+00:00"
+            "time": "2024-11-19T13:12:41+00:00"
         },
         {
             "name": "phpspec/prophecy-phpunit",

@@ -57,7 +57,7 @@ $settings['config_exclude_modules'] = [
 $settings['config_sync_directory'] = '../config/sync';
 
 /**
- * Private file path:
+ * Private file path.
  *
  * A local file system path where private files will be stored. This directory
  * must be absolute, outside the Drupal installation directory and not
