@@ -88,7 +88,7 @@ const SearchFiltersColumn = ({
           {hasOverflow && (
             <BadgeButton
               ariaLabel={isExpanded ? "Vis færre" : "Vis flere"}
-              classNames={cn(`pl-3 w-auto flex flex-row items-center self-start  ml-1`)}
+              classNames={cn(`pl-3 w-auto flex flex-row items-center self-start mt-1`)}
               onClick={() => {
                 setIsExpanded(prev => !prev)
               }}>
