@@ -37,6 +37,7 @@ const serviceUnilogin = {
     if (process.env.UNILOGIN_SESSION_SECRET) {
       return process.env.UNILOGIN_SESSION_SECRET
     }
+    throw new Error("No unilogin session secret found.")
   },
 }
 

@@ -14,9 +14,9 @@ import searchMachine from "./search.machine"
 
 const searchActor = createActor(searchMachine, {
   input: {
-    initialOffset: goConfig<number>("search.offset.initial"),
-    searchPageSize: goConfig<number>("search.item.limit"),
-    facetLimit: goConfig<number>("search.facet.limit"),
+    initialOffset: goConfig("search.offset.initial"),
+    searchPageSize: goConfig("search.item.limit"),
+    facetLimit: goConfig("search.facet.limit"),
   },
 }).start()
 

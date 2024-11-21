@@ -47,7 +47,7 @@ const config: CodegenConfig = {
       documents: "**/*.fbi.graphql",
       schema: [
         {
-          [goConfig<string>("service.fbi.graphql.endpoint")]: {
+          [String(goConfig("service.fbi.graphql.endpoint"))]: {
             headers: {
               Authorization: `Bearer ${goConfig("token.adgangsplatformen.library")}`,
             },

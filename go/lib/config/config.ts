@@ -13,7 +13,10 @@ const resolvers = {
   ...token,
 }
 
-const retrieveValue = (key: keyof typeof resolvers) => {
+type TResolvers = typeof resolvers
+type TConfigKey = keyof TResolvers
+
+const retrieveValue = (key: TConfigKey): any => {
   if (key in resolvers) {
     if (typeof resolvers[key] !== "function") {
       return resolvers[key]
@@ -24,8 +27,10 @@ const retrieveValue = (key: keyof typeof resolvers) => {
   return null
 }
 
-const goConfig = <TValue>(key: keyof typeof resolvers) => {
-  const value = retrieveValue(key) as TValue
+const goConfig = <K extends TConfigKey>(
+  key: K
+): TResolvers[K] extends () => infer R ? R : TResolvers[K] => {
+  const value = retrieveValue(key)
 
   if (!value && value !== 0) {
     throw new MissingConfigurationError(`Missing configuration for ${key}`)

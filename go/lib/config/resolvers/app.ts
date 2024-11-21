@@ -11,6 +11,7 @@ const app = {
         }
       }
     }
+    throw new Error("No app URL found.")
   },
 }
 

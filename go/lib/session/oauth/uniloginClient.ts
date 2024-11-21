@@ -3,15 +3,15 @@ import { Issuer } from "openid-client"
 import goConfig from "@/lib/config/config"
 
 export const getOpenIdClientUniloginClientConfig = async () => {
-  const appUrl = await goConfig<Promise<string | undefined>>("app.url")
-  const apiUrl = await goConfig<Promise<string | undefined>>("service.unilogin.api.url")
+  const appUrl = goConfig("app.url")
+  const apiUrl = await goConfig("service.unilogin.api.url")
 
   return {
-    wellKnownUrl: await goConfig<Promise<string | undefined>>("service.unilogin.wellknown.url"),
+    wellKnownUrl: await goConfig("service.unilogin.wellknown.url"),
     url: apiUrl,
     audience: apiUrl,
-    client_id: await goConfig<Promise<string | undefined>>("service.unilogin.client-id"),
-    client_secret: await goConfig<Promise<string | undefined>>("service.unilogin.client-secret"),
+    client_id: await goConfig("service.unilogin.client-id"),
+    client_secret: await goConfig("service.unilogin.client-secret"),
     scope: "openid",
     redirect_uri: `${appUrl}/auth/callback/unilogin`,
     post_logout_redirect_uri: appUrl,

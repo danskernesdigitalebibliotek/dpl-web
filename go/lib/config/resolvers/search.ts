@@ -51,6 +51,4 @@ const search = {
   },
 }
 
-export type TConfigSearchFacets = Record<FacetFieldEnum, { filter: string; translation: string }>
-
 export default search
