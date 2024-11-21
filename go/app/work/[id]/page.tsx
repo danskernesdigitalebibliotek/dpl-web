@@ -5,7 +5,13 @@ import WorkPageLayout from "@/components/pages/workPageLayout/WorkPageLayout"
 import getQueryClient from "@/lib/getQueryClient"
 import { useGetMaterialQuery } from "@/lib/graphql/generated/fbi/graphql"
 
-function Page({ params: { id } }: { params: { id: string } }) {
+type PageProps = {
+  params: {
+    id: string
+  }
+}
+
+function Page({ params: { id } }: PageProps) {
   const queryClient = getQueryClient()
 
   const decodedWid = decodeURIComponent(id)
@@ -17,11 +23,7 @@ function Page({ params: { id } }: { params: { id: string } }) {
 
   return (
     <HydrationBoundary state={dehydrate(queryClient)}>
-      <div>
-        <WorkPageLayout wid={decodedWid} />
-        <pre>{JSON.stringify(id, null, 2)}</pre>
-        Page
-      </div>
+      <WorkPageLayout workId={decodedWid} />
     </HydrationBoundary>
   )
 }

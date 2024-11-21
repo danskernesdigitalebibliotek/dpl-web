@@ -5,10 +5,14 @@ import React from "react"
 
 import { useGetMaterialQuery } from "@/lib/graphql/generated/fbi/graphql"
 
-function WorkPageLayout({ wid }: { wid: string }) {
-  const data = useQuery({
-    queryKey: useGetMaterialQuery.getKey({ wid }),
-    queryFn: useGetMaterialQuery.fetcher({ wid }),
+type WorkPageLayoutProps = {
+  workId: string
+}
+
+function WorkPageLayout({ workId }: WorkPageLayoutProps) {
+  const { data, isLoading } = useQuery({
+    queryKey: useGetMaterialQuery.getKey({ wid: workId }),
+    queryFn: useGetMaterialQuery.fetcher({ wid: workId }),
   })
 
   return (
