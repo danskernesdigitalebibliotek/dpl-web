@@ -33,7 +33,8 @@ function dpl_graphql_update_10001(): string {
   $file_system = DrupalTyped::service(FileSystemInterface::class, 'file_system');
   $key_generator = DrupalTyped::service(KeyGeneratorService::class, 'simple_oauth.key.generator');
 
-  $path = '../web/sites/default/files/simple_oauth_keys';
+  $private_files_path = $file_system->realpath('private://');
+  $path = $private_files_path . '/simple_oauth_keys';
   $file_system->prepareDirectory($path, FileSystemInterface::CREATE_DIRECTORY);
 
   try {
