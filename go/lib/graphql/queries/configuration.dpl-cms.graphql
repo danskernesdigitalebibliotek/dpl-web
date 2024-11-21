@@ -1,4 +1,4 @@
-query getUniLoginConfiguration {
+query getDplCmsConfiguration {
   dplConfiguration {
     unilogin {
       unilogin_api_url

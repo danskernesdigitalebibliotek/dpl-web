@@ -15,7 +15,7 @@ const config: CodegenConfig = {
       schema: {
         [`${process.env.NEXT_PUBLIC_GRAPHQL_SCHEMA_ENDPOINT_DPL_CMS}`]: {
           headers: {
-            Authorization: `Basic ${process.env.GRAPHQL_SCHEMA_ENDPOINT_DPL_CMS_AUTH_HEADER}`,
+            Authorization: `Basic ${process.env.GRAPHQL_SCHEMA_ENDPOINT_BASIC_TOKEN_DPL_CMS}`,
           },
         },
       },

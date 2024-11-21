@@ -2,7 +2,10 @@ import { NextRequest, NextResponse } from "next/server"
 import { z } from "zod"
 
 import goConfig from "@/lib/config/config"
-import { getUniloginClient } from "@/lib/session/oauth/uniloginClient"
+import {
+  getOpenIdClientUniloginClientConfig,
+  getUniloginClient,
+} from "@/lib/session/oauth/uniloginClient"
 import { getSession, setTokensOnSession } from "@/lib/session/session"
 import { TTokenSet } from "@/lib/types/session"
 
@@ -13,14 +16,7 @@ const sessionTokenSchema = z.object({
 })
 
 export async function GET(request: NextRequest, response: NextResponse) {
-  const configResponse = await fetch(`${process.env.NEXT_PUBLIC_APP_URL}/auth/config`)
-  if (!configResponse.ok) {
-    throw new Error("Failed to fetch config")
-  }
-  const config = await configResponse.json()
-  const uniloginConfig = config?.dplConfiguration?.unilogin
-
-  const appUrl = goConfig("app.url")
+  const appUrl = goConfig<string>("app.url")
   const session = await getSession()
   const frontpage = `${appUrl}/`
 
@@ -37,12 +33,8 @@ export async function GET(request: NextRequest, response: NextResponse) {
   try {
     // TODO: Consider if we want to handle different types of sessions than unilogin.
     const tokens = sessionTokenSchema.parse(session)
-    const client = await getUniloginClient({
-      client_id: uniloginConfig.unilogin_api_client_id,
-      client_secret: uniloginConfig.unilogin_api_client_secret,
-      redirect_uri: `${process.env.NEXT_PUBLIC_APP_URL}/auth/callback/unilogin`,
-      wellKnownUrl: uniloginConfig.unilogin_api_wellknown_url,
-    })
+    const client = await getUniloginClient()
+
     const newTokens = await (client.refresh(tokens.refresh_token) as Promise<TTokenSet>)
     setTokensOnSession(session, newTokens)
     await session.save()

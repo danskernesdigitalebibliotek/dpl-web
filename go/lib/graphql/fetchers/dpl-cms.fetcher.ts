@@ -1,11 +1,18 @@
 export function fetcher<TData, TVariables>(query: string, variables?: TVariables) {
+  const dplCmsGraphqlEndpoint = process.env.NEXT_PUBLIC_GRAPHQL_SCHEMA_ENDPOINT_DPL_CMS
+  const dplCmsGraphqlBasicToken = process.env.NEXT_PUBLIC_GRAPHQL_BASIC_TOKEN_DPL_CMS
+
+  if (!dplCmsGraphqlEndpoint || !dplCmsGraphqlBasicToken) {
+    throw new Error("Missing DPL CMS GraphQL endpoint or basic token")
+  }
+
   return async (): Promise<TData> => {
-    const res = await fetch(`${process.env.NEXT_PUBLIC_GRAPHQL_SCHEMA_ENDPOINT_DPL_CMS}`, {
+    const res = await fetch(dplCmsGraphqlEndpoint, {
       method: "POST",
       ...{
         headers: {
           "Content-Type": "application/json",
-          Authorization: "Basic " + process.env.GRAPHQL_SCHEMA_ENDPOINT_DPL_CMS_AUTH_HEADER,
+          Authorization: `Basic ${dplCmsGraphqlBasicToken}`,
         },
       },
       body: JSON.stringify({ query, variables }),
