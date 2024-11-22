@@ -1,11 +1,11 @@
 patron_page.profile:
-  title: "Patron page"
+  title: 'Patron page'
   menu_name: user-profile-menu
   route_name: dpl_patron_page.profile
-  description: "Patron page displays patron information"
+  description: 'Patron page displays patron information'
 
 patron_page.settings_form:
-  title: "Patron page settings"
+  title: 'Patron page settings'
   route_name: dpl_patron_page.settings
-  description: "Change patron page settings"
+  description: 'Change patron page settings'
   parent: dpl_library_agency.settings

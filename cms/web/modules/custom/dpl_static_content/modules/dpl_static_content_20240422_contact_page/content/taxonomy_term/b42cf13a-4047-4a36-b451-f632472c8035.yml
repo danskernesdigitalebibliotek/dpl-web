@@ -1,5 +1,5 @@
 _meta:
-  version: "1.0"
+  version: '1.0'
   entity_type: taxonomy_term
   uuid: b42cf13a-4047-4a36-b451-f632472c8035
   bundle: webform_email_categories
@@ -8,7 +8,7 @@ default:
   status:
     - value: true
   name:
-    - value: "Gebyrer og erstatninger"
+    - value: 'Gebyrer og erstatninger'
   weight:
     - value: 0
   parent:
@@ -19,13 +19,13 @@ default:
     - tag: meta
       attributes:
         name: title
-        content: "Gebyrer og erstatninger | DPL CMS"
+        content: 'Gebyrer og erstatninger | DPL CMS'
     - tag: link
       attributes:
         rel: canonical
-        href: "/taxonomy/term/25"
+        href: '/taxonomy/term/25'
   path:
-    - alias: ""
+    - alias: ''
       langcode: da
   field_email:
     - value: fees@test.dk

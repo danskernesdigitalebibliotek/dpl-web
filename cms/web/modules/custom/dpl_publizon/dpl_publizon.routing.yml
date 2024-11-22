@@ -1,9 +1,9 @@
 dpl_publizon.settings:
-  path: "/admin/config/services/publizon"
+  path: '/admin/config/services/publizon'
   defaults:
     _form: '\Drupal\dpl_publizon\Form\PublizonSettingsForm'
-    _title: "Publizon settings"
+    _title: 'Publizon settings'
   requirements:
-    _permission: "administer site configuration"
+    _permission: 'administer site configuration'
   options:
     _admin_route: TRUE

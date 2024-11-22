@@ -225,8 +225,8 @@
     },
     "scripts": {
         "post-drupal-scaffold-cmd": [
-            "[[ ! -d /app/web/sites/default/files/modules_local ]] && mkdir -p /app/web/sites/default/files/modules_local || exit 0",
-            "[[ ! -L /app/web/modules/local ]] && ln -s /app/web/sites/default/files/modules_local /app/web/modules/local || exit 0"
+            "[ ! -d web/sites/default/files/modules_local ] && mkdir -p web/sites/default/files/modules_local || exit 0",
+            "[ ! -L web/modules/local ] && ln -s web/sites/default/files/modules_local web/modules/local || exit 0"
         ]
     },
     "extra": {
@@ -298,7 +298,6 @@
                 "Add item count and url page parameter": "patches/add-item-count-views_infinite_scroll.patch"
             },
             "drupal/core": {
-                "Configure core to not check permissions before accepting an updated module": "patches/disable-core-upload-permission-check.diff",
                 "2280639: Add the FieldStorageDefinition class to define field storage definitions in hook_entity_field_storage_info()": "https://www.drupal.org/files/issues/2023-09-05/2280639-d10-reroll-156.patch",
                 "3402656: Toolbar causes a Javascript error if the subtrees content changes between page loads": "https://git.drupalcode.org/issue/drupal-3402656/-/commit/61ac007a84014f54a07825f8f92bb6bc0dfbd170.patch",
                 "3035578: Add details for AJAX response errors": "https://www.drupal.org/files/issues/2023-07-24/3035578-26.patch",

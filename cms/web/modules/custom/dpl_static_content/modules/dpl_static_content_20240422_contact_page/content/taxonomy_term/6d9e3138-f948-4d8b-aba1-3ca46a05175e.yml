@@ -1,5 +1,5 @@
 _meta:
-  version: "1.0"
+  version: '1.0'
   entity_type: taxonomy_term
   uuid: 6d9e3138-f948-4d8b-aba1-3ca46a05175e
   bundle: webform_email_categories
@@ -8,7 +8,7 @@ default:
   status:
     - value: true
   name:
-    - value: "Spørgsmål til biblioteket"
+    - value: 'Spørgsmål til biblioteket'
   weight:
     - value: 0
   parent:
@@ -19,13 +19,13 @@ default:
     - tag: meta
       attributes:
         name: title
-        content: "Spørgsmål til biblioteket | DPL CMS"
+        content: 'Spørgsmål til biblioteket | DPL CMS'
     - tag: link
       attributes:
         rel: canonical
-        href: "/taxonomy/term/22"
+        href: '/taxonomy/term/22'
   path:
-    - alias: ""
+    - alias: ''
       langcode: da
   field_email:
     - value: questions@test.dk

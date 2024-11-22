@@ -1,6 +1,6 @@
-name: "DPL Cookies"
+name: 'DPL Cookies'
 type: module
-description: "A module that handles cookie functionality."
+description: 'A module that handles cookie functionality.'
 package: DPL
 core_version_requirement: ^10
 dependencies:

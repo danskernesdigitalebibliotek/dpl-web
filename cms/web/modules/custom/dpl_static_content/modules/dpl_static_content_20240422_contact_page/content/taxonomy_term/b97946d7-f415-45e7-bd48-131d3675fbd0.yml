@@ -1,5 +1,5 @@
 _meta:
-  version: "1.0"
+  version: '1.0'
   entity_type: taxonomy_term
   uuid: b97946d7-f415-45e7-bd48-131d3675fbd0
   bundle: webform_email_categories
@@ -8,7 +8,7 @@ default:
   status:
     - value: true
   name:
-    - value: "Hjemmeside og app"
+    - value: 'Hjemmeside og app'
   weight:
     - value: 0
   parent:
@@ -19,13 +19,13 @@ default:
     - tag: meta
       attributes:
         name: title
-        content: "Hjemmeside og app | DPL CMS"
+        content: 'Hjemmeside og app | DPL CMS'
     - tag: link
       attributes:
         rel: canonical
-        href: "/taxonomy/term/24"
+        href: '/taxonomy/term/24'
   path:
-    - alias: ""
+    - alias: ''
       langcode: da
   field_email:
     - value: web@test.dk

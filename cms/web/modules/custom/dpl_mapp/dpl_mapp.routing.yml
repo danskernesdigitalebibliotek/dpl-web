@@ -1,7 +1,7 @@
 dpl_mapp.settings_form:
-  path: "/admin/config/system/dpl-mapp"
+  path: '/admin/config/system/dpl-mapp'
   defaults:
-    _title: "Mapp Intelligence settings"
+    _title: 'Mapp Intelligence settings'
     _form: 'Drupal\dpl_mapp\Form\SettingsForm'
   requirements:
-    _permission: "administer dpl_mapp configuration"
+    _permission: 'administer dpl_mapp configuration'
