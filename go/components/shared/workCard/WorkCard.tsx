@@ -1,7 +1,7 @@
 import Link from "next/link"
 import React from "react"
 
-import { WorkTeaserFragment } from "@/lib/graphql/generated/fbi/graphql"
+import { WorkTeaserSearchPageFragment } from "@/lib/graphql/generated/fbi/graphql"
 import { resolveUrl } from "@/lib/helpers/helper.routes"
 import { getIsbnsFromWork } from "@/lib/helpers/ids"
 import { useGetCoverCollection } from "@/lib/rest/cover-service-api/generated/cover-service"
@@ -14,7 +14,7 @@ import WorkCardAvailabilityRow from "./WorkCardAvailabilityRow"
 import { displayCreators, getAllWorkPids, getCoverUrls, getLowResCoverUrl } from "./helper"
 
 type WorkCardProps = {
-  work: WorkTeaserFragment
+  work: WorkTeaserSearchPageFragment
 }
 
 const WorkCard = ({ work }: WorkCardProps) => {
@@ -31,7 +31,7 @@ const WorkCard = ({ work }: WorkCardProps) => {
     return isbns && isbns.length > 0
   }
 
-  const { data: dataPublizon } = useGetV1ProductsIdentifier(isbns[0] ?? "", {
+  const { data: dataPublizon } = useGetV1ProductsIdentifier(isbns[0] || "", {
     query: {
       // Publizon / useGetV1ProductsIdentifier is responsible for online
       // materials. It requires an ISBN to do lookups.

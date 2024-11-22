@@ -3,7 +3,7 @@ import { flatten } from "lodash"
 import {
   GeneralMaterialTypeCodeEnum,
   SearchWithPaginationQuery,
-  WorkTeaserFragment,
+  WorkTeaserSearchPageFragment,
 } from "@/lib/graphql/generated/fbi/graphql"
 import { filterFalsyValuesFromArray } from "@/lib/helpers/arrays"
 import { Cover } from "@/lib/rest/cover-service-api/generated/model"
@@ -53,7 +53,7 @@ export const isOfWorkTypeCategory = (
   )
 }
 
-export const getAllWorkPids = (work: WorkTeaserFragment) => {
+export const getAllWorkPids = (work: WorkTeaserSearchPageFragment) => {
   return work.manifestations.all.map(manifestation => manifestation.pid)
 }
 
