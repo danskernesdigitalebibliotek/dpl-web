@@ -1,9 +1,9 @@
 dpl_url_proxy.configure:
-  path: "admin/config/services/dpl-url-proxy"
+  path: 'admin/config/services/dpl-url-proxy'
   defaults:
     _form: '\Drupal\dpl_url_proxy\Form\ProxyUrlConfigurationForm'
-    _title: "Configure proxy urls"
+    _title: 'Configure proxy urls'
   requirements:
-    _permission: "administer url proxy configuration"
+    _permission: 'administer url proxy configuration'
   options:
     _admin_route: TRUE

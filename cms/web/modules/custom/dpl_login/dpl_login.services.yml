@@ -9,43 +9,43 @@ services:
       - { name: event_subscriber }
   dpl_login.registered_user_tokens:
     class: Drupal\dpl_login\RegisteredUserTokensProvider
-    arguments: ["@tempstore.private"]
+    arguments: ['@tempstore.private']
   dpl_login.unregistered_user_tokens:
     class: Drupal\dpl_login\UnregisteredUserTokensProvider
-    arguments: ["@tempstore.private"]
+    arguments: ['@tempstore.private']
   dpl_login.user_tokens:
     class: Drupal\dpl_login\UserTokens
     arguments:
-      - "@dpl_login.registered_user_tokens"
-      - "@dpl_login.unregistered_user_tokens"
+      - '@dpl_login.registered_user_tokens'
+      - '@dpl_login.unregistered_user_tokens'
   dpl_login.authentication.user_token:
     class: Drupal\dpl_login\UserTokenAuthProvider
     arguments:
-      - "@dpl_login.adgangsplatformen.client"
-      - "@module_handler"
-      - "@openid_connect.authmap"
+      - '@dpl_login.adgangsplatformen.client'
+      - '@module_handler'
+      - '@openid_connect.authmap'
     tags:
       - {
           name: authentication_provider,
-          provider_id: "dpl_login_user_token",
+          provider_id: 'dpl_login_user_token',
           priority: 0,
         }
   dpl_login.library_agency_id_provider:
     class: Drupal\dpl_login\LibraryAgencyIdProvider
-    arguments: ["@dpl_login.adgangsplatformen.config"]
+    arguments: ['@dpl_login.adgangsplatformen.config']
   dpl_login.adgangsplatformen.client:
     class: Drupal\dpl_login\Plugin\OpenIDConnectClient\Adgangsplatformen
-    factory: ["@dpl_login.adgangsplatformen.factory", "createInstance"]
+    factory: ['@dpl_login.adgangsplatformen.factory', 'createInstance']
   dpl_login.adgangsplatformen.factory:
     class: Drupal\dpl_login\Adgangsplatformen\Factory
     arguments:
       [
-        "@plugin.manager.openid_connect_client",
-        "@dpl_login.adgangsplatformen.config",
+        '@plugin.manager.openid_connect_client',
+        '@dpl_login.adgangsplatformen.config',
       ]
   dpl_login.adgangsplatformen.config:
     class: Drupal\dpl_login\Adgangsplatformen\Config
-    arguments: ["@config.manager"]
+    arguments: ['@config.manager']
   dpl_login.openid_user_info:
     class: Drupal\dpl_login\OpenIdUserInfoService
-    arguments: ["@settings"]
+    arguments: ['@settings']

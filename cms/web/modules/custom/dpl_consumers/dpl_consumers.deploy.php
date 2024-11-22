@@ -21,7 +21,7 @@ require_once __DIR__ . '/dpl_consumers.crud.php';
  * We make sure to delete already existing user and consumers before
  * as we don't want to create duplicates.
  */
-function dpl_consumers_deploy_1(): void {
+function dpl_consumers_deploy_10001(): void {
   dpl_consumers_delete_user();
   dpl_consumers_delete_consumer();
   dpl_consumers_create_user();

@@ -1,4 +1,4 @@
 services:
   dpl_loans.settings:
     class: Drupal\dpl_loans\DplLoansSettings
-    arguments: ["@config.manager"]
+    arguments: ['@config.manager']

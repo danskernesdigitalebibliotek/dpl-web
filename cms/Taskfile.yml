@@ -86,8 +86,10 @@ tasks:
   dev:build:
     summary: Build docker containers
     # Ensure that we only rebuild if there are changes to Dockerfiles
+    # or the config files used.
     sources:
-      - "{{ .LAGOON_DIR }}/*.dockerfile"
+      - "{{ .LAGOON_DIR }}/**/*"
+      - "{{ .LAGOON_DIR }}/*"
     cmds:
       - docker compose build
 

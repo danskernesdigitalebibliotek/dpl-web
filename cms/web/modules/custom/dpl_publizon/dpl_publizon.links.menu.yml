@@ -1,5 +1,5 @@
 dpl_publizon.settings_form:
-  title: "Publizon settings"
+  title: 'Publizon settings'
   route_name: dpl_publizon.settings
-  description: "Change basic publizon settings"
+  description: 'Change basic publizon settings'
   parent: system.admin_config_services

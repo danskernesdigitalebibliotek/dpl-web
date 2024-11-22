@@ -1,20 +1,20 @@
 dpl_admin.add_content:
-  title: "Add content"
+  title: 'Add content'
   parent: system.admin_content
   route_name: dpl_admin.add_content
   weight: 5
 dpl_admin.redirect:
-  title: "Redirects"
+  title: 'Redirects'
   parent: system.admin
   route_name: redirect.list
   weight: 10
 dpl_admin.redirect_add:
-  title: "Add redirect"
+  title: 'Add redirect'
   parent: dpl_admin.redirect
   route_name: redirect.add
   weight: 1
 dpl_admin.logout:
-  title: "Logout"
+  title: 'Logout'
   parent: system.admin
   route_name: user.logout
   weight: 9999

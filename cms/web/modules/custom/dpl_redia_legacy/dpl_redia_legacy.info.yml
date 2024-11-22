@@ -1,6 +1,6 @@
-name: "DPL Redia Legacy feeds"
+name: 'DPL Redia Legacy feeds'
 type: module
-description: "Various legacy integrations, used for the Redia App."
+description: 'Various legacy integrations, used for the Redia App.'
 package: DPL
 core_version_requirement: ^10
 
