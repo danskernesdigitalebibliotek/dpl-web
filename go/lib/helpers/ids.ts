@@ -3,7 +3,7 @@ import { flatten } from "lodash"
 import {
   IdentifierTypeEnum,
   ManifestationIdentifiersFragment,
-  WorkTeaserFragment,
+  WorkTeaserSearchPageFragment,
 } from "../graphql/generated/fbi/graphql"
 import { filterFalsyValuesFromArray } from "./arrays"
 
@@ -15,7 +15,7 @@ export const getIsbnsFromManifestation = (manifestation: ManifestationIdentifier
   })
 }
 
-export const getIsbnsFromWork = (work: WorkTeaserFragment) => {
+export const getIsbnsFromWork = (work: WorkTeaserSearchPageFragment) => {
   const isbnsnested = work.manifestations.all.map(manifestation =>
     getIsbnsFromManifestation(manifestation)
   )
