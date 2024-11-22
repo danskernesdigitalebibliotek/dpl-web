@@ -2,18 +2,17 @@ type RouteParams = { [key: string]: string | number }
 type QueryParams = { [key: string]: string | number }
 
 export function buildRoute({
-  route,
   params,
   query,
 }: {
-  route: string
   params?: RouteParams
   query?: QueryParams
 }): string {
+  let route = ""
   if (params) {
     route = Object.keys(params).reduce((acc, key) => {
       const value = encodeURIComponent(params[key])
-      return acc.replace(`:${key}`, value)
+      return `${acc}/${value}`
     }, route)
   }
 
@@ -33,28 +32,25 @@ export function buildRoute({
 
 type ResolveUrlOptions =
   | {
-      type: "work"
-      routeParams?: { wid: number | string }
+      routeParams?: { work: "work"; wid: number | string }
       queryParams?: QueryParams
     }
   | {
-      type: "search"
-      routeParams?: undefined
+      routeParams?: { work: "work"; ":wid": number | string; read: "read" }
+      queryParams?: QueryParams
+    }
+  | {
+      routeParams?: { search: "search" }
       queryParams?: QueryParams
     }
 
-export const resolveUrl = ({ type, routeParams, queryParams }: ResolveUrlOptions) => {
-  switch (type as ResolveUrlOptions["type"]) {
-    case "work":
-      if (!routeParams?.wid) return ""
-      return buildRoute({
-        route: "/work/:wid",
-        params: { wid: routeParams.wid },
-        query: queryParams,
-      })
-    case "search":
-      return buildRoute({ route: "/search", query: queryParams })
-    default:
-      return ""
+export const resolveUrl = ({ routeParams, queryParams }: ResolveUrlOptions) => {
+  if (!routeParams) {
+    throw new Error("routeParams is required")
   }
+
+  return buildRoute({
+    params: routeParams,
+    query: queryParams,
+  })
 }

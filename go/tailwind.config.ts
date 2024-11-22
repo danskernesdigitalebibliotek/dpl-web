@@ -192,6 +192,7 @@ export const extendedTheme = {
       },
       foreground: "var(--foreground)",
       border: "var(--border)",
+      "reader-grey": "var(--reader-grey)",
       content: {
         pink: "var(--content-pink)",
         blue: "var(--content-blue)",

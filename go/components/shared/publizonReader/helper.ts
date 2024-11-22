@@ -39,3 +39,15 @@ export const appendAsset = ({ src, type }: AssetType) => {
     document.head.appendChild(linkElement)
   }
 }
+
+export const removeAsset = ({ src, type }: AssetType) => {
+  if (type === "script") {
+    const scriptElement = document.querySelector(`script[src="${src}"]`)
+    scriptElement?.remove()
+  }
+
+  if (type === "link") {
+    const linkElement = document.querySelector(`link[href="${src}"]`)
+    linkElement?.remove()
+  }
+}
