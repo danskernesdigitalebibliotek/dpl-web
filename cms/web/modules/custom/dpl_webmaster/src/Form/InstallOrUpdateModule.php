@@ -30,7 +30,7 @@ use Symfony\Component\HttpFoundation\Session\SessionInterface;
 class InstallOrUpdateModule extends FormBase {
 
   /**
-   * Constructs a new UpdateManagerInstall.
+   * Constructs a new InstallOrUpdateModule.
    *
    * @param string $root
    *   The root location under which installed projects will be saved.
@@ -83,6 +83,7 @@ class InstallOrUpdateModule extends FormBase {
    * {@inheritdoc}
    */
   public function buildForm(array $form, FormStateInterface $form_state): array {
+    // This is an unchanged copy of UpdateManagerInstall::buildForm().
     $this->moduleHandler->loadInclude('update', 'inc', 'update.manager');
     if (!_update_manager_check_backends($form, 'install')) {
       return $form;
@@ -134,6 +135,7 @@ class InstallOrUpdateModule extends FormBase {
    * {@inheritdoc}
    */
   public function validateForm(array &$form, FormStateInterface $form_state): void {
+    // Same as UpdateManagerInstall::validateForm();
     $all_files = $this->getRequest()->files->get('files', []);
     if ($this->moduleHandler->moduleExists('file')) {
       if (!($form_state->getValue('project_url') xor !empty($all_files['project_upload']))) {
@@ -151,6 +153,9 @@ class InstallOrUpdateModule extends FormBase {
    * {@inheritdoc}
    */
   public function submitForm(array &$form, FormStateInterface $form_state): void {
+    // This is mostly a copy of UpdateManagerInstall::submitForm(), apart from
+    // the handling of already installed modules and file permissions check
+    // (search for 'UpdateManagerInstall').
     $local_cache = '';
     $all_files = $this->getRequest()->files->get('files', []);
     if ($form_state->getValue('project_url')) {
@@ -235,6 +240,11 @@ class InstallOrUpdateModule extends FormBase {
       return;
     }
 
+    // This is where we diverge from UpdateManagerInstall. It simply errors out,
+    // we set a session variable to tell /admin/update/ready which module to
+    // update and redirect to it instead. It'll pick up the files for the module
+    // as we've already extracted it in the directory where it expects to find
+    // it.
     if ($updater->isInstalled()) {
       // Tell UpdateReady form which projects to update.
       $this->session->set('update_manager_update_projects', [$project => $project]);
@@ -254,11 +264,12 @@ class InstallOrUpdateModule extends FormBase {
     if (drupal_valid_test_ua()) {
       $test_authorize = $this->state->get('test_uploaders_via_prompt', FALSE);
     }
-    // If the owner of the directory we extracted is the same as the owner of
-    // our configuration directory (e.g. sites/default) where we're trying to
-    // install the code, there's no need to prompt for FTP/SSH credentials.
-    // Instead, we instantiate a Drupal\Core\FileTransfer\Local and invoke
-    // update_authorize_run_install() directly.
+
+    // This is the other difference from UpdateManagerInstall. Core checks if it
+    // can update the files directly by checking that the owner of the uploaded
+    // module files is the same as the owner of the site directory, but that
+    // doesn't work in our case. In reality, the only proper test is actually
+    // trying to write the files, so we just assume here.
     if (!$test_authorize) {
       $this->moduleHandler->loadInclude('update', 'inc', 'update.authorize');
       $filetransfer = new Local($this->root, $this->fileSystem);
