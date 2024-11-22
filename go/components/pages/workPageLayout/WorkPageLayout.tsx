@@ -25,7 +25,7 @@ function WorkPageLayout({ wid }: { wid: string }) {
   return (
     <div>
       {identifier && (
-        <Button asChild>
+        <Button ariaLabel="Prøv ebog" asChild>
           <SmartLink linkType="external" href={url}>
             Read
           </SmartLink>
