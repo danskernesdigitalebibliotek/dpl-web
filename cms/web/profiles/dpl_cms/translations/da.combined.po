@@ -7,8 +7,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2024-11-22 14:26+0100\n"
-"PO-Revision-Date: 2024-11-22 14:26+0100\n"
+"POT-Creation-Date: 2024-11-22 15:35+0100\n"
+"PO-Revision-Date: 2024-11-22 15:35+0100\n"
 "Last-Translator: NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
 "MIME-Version: 1.0\n"
@@ -21286,6 +21286,30 @@ msgstr "Arrangementer"
 msgctxt "search_api.server.db_search:name"
 msgid "DB Search"
 msgstr "DB Søgning"
+
+msgctxt "simple_oauth.oauth2_token.bundle.access_token:label"
+msgid "Access Token"
+msgstr ""
+
+msgctxt "simple_oauth.oauth2_token.bundle.access_token:description"
+msgid "The access token type."
+msgstr ""
+
+msgctxt "simple_oauth.oauth2_token.bundle.auth_code:label"
+msgid "Auth code"
+msgstr ""
+
+msgctxt "simple_oauth.oauth2_token.bundle.auth_code:description"
+msgid "The auth code type."
+msgstr ""
+
+msgctxt "simple_oauth.oauth2_token.bundle.refresh_token:label"
+msgid "Refresh token"
+msgstr ""
+
+msgctxt "simple_oauth.oauth2_token.bundle.refresh_token:description"
+msgid "The refresh token type."
+msgstr ""
 
 msgctxt "system.action.eventinstance_break_lock_action:label"
 msgid "Break lock eventinstance"
