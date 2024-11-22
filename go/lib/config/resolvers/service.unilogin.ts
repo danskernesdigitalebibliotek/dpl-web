@@ -1,7 +1,7 @@
 import { withUniloginConfig } from "../dpl-cms/dplCmsConfig"
 
 const serviceUnilogin = {
-  "service.unilogin.api.url": withUniloginConfig(config => {
+  "server-only.service.unilogin.api.url": withUniloginConfig(config => {
     if (process.env.UNILOGIN_API_URL) {
       return process.env.UNILOGIN_API_URL
     }
@@ -9,7 +9,7 @@ const serviceUnilogin = {
       return config?.unilogin_api_url
     }
   }),
-  "service.unilogin.wellknown.url": withUniloginConfig(config => {
+  "server-only.service.unilogin.wellknown.url": withUniloginConfig(config => {
     if (process.env.UNILOGIN_WELLKNOWN_URL) {
       return process.env.UNILOGIN_WELLKNOWN_URL
     }
@@ -17,7 +17,7 @@ const serviceUnilogin = {
       return config?.unilogin_api_wellknown_url
     }
   }),
-  "service.unilogin.client-id": withUniloginConfig(config => {
+  "server-only.service.unilogin.client-id": withUniloginConfig(config => {
     if (process.env.UNILOGIN_CLIENT_ID) {
       return process.env.UNILOGIN_CLIENT_ID
     }
@@ -25,7 +25,7 @@ const serviceUnilogin = {
       return config?.unilogin_api_client_id
     }
   }),
-  "service.unilogin.client-secret": withUniloginConfig(config => {
+  "server-only.service.unilogin.client-secret": withUniloginConfig(config => {
     if (process.env.UNILOGIN_CLIENT_SECRET) {
       return process.env.UNILOGIN_CLIENT_SECRET
     }
@@ -33,11 +33,10 @@ const serviceUnilogin = {
       return config?.unilogin_api_client_secret
     }
   }),
-  "service.unilogin.session.secret": () => {
+  "server-only.service.unilogin.session.secret": () => {
     if (process.env.UNILOGIN_SESSION_SECRET) {
       return process.env.UNILOGIN_SESSION_SECRET
     }
-    throw new Error("No unilogin session secret found.")
   },
 }
 

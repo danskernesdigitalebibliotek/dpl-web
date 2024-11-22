@@ -1,11 +1,8 @@
 import { NextRequest, NextResponse } from "next/server"
 import { z } from "zod"
 
-import goConfig from "@/lib/config/config"
-import {
-  getOpenIdClientUniloginClientConfig,
-  getUniloginClient,
-} from "@/lib/session/oauth/uniloginClient"
+import goConfig from "@/lib/config/goConfig"
+import { getUniloginClient } from "@/lib/session/oauth/uniloginClient"
 import { getSession, setTokensOnSession } from "@/lib/session/session"
 import { TTokenSet } from "@/lib/types/session"
 

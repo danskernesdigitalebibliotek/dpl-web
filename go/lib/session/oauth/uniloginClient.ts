@@ -1,17 +1,17 @@
 import { Issuer } from "openid-client"
 
-import goConfig from "@/lib/config/config"
+import goConfig from "@/lib/config/goConfig"
 
 export const getOpenIdClientUniloginClientConfig = async () => {
   const appUrl = goConfig("app.url")
-  const apiUrl = await goConfig("service.unilogin.api.url")
+  const apiUrl = await goConfig("server-only.service.unilogin.api.url")
 
   return {
-    wellKnownUrl: await goConfig("service.unilogin.wellknown.url"),
+    wellKnownUrl: await goConfig("server-only.service.unilogin.wellknown.url"),
     url: apiUrl,
     audience: apiUrl,
-    client_id: await goConfig("service.unilogin.client-id"),
-    client_secret: await goConfig("service.unilogin.client-secret"),
+    client_id: await goConfig("server-only.service.unilogin.client-id"),
+    client_secret: await goConfig("server-only.service.unilogin.client-secret"),
     scope: "openid",
     redirect_uri: `${appUrl}/auth/callback/unilogin`,
     post_logout_redirect_uri: appUrl,

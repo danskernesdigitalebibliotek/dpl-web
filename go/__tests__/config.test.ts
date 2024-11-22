@@ -1,7 +1,7 @@
 import { expect, test } from "vitest"
 
-import goConfig from "@/lib/config/config"
 import MissingConfigurationError from "@/lib/config/errors/MissingConfigurationError"
+import goConfig from "@/lib/config/goConfig"
 
 test("That an error is thrown if we ask for unknown config", async () => {
   // @ts-ignore

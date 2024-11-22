@@ -1,7 +1,7 @@
 import { cookies } from "next/headers"
 import { generators } from "openid-client"
 
-import goConfig from "@/lib/config/config"
+import goConfig from "@/lib/config/goConfig"
 import {
   getOpenIdClientUniloginClientConfig,
   getUniloginClient,

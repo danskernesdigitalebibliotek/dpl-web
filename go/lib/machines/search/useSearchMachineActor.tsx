@@ -8,7 +8,7 @@ import { useEffect, useRef, useState } from "react"
 import { AnyEventObject, createActor } from "xstate"
 
 import { getFacetsForSearchRequest } from "@/components/pages/searchPageLayout/helper"
-import goConfig from "@/lib/config/config"
+import goConfig from "@/lib/config/goConfig"
 
 import searchMachine from "./search.machine"
 

@@ -1,7 +1,7 @@
 import { NextRequest } from "next/server"
 import { IntrospectionResponse } from "openid-client"
 
-import goConfig from "@/lib/config/config"
+import goConfig from "@/lib/config/goConfig"
 import {
   getOpenIdClientUniloginClientConfig,
   getUniloginClient,

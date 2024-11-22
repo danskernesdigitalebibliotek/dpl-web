@@ -2,7 +2,7 @@ import { flatten } from "lodash"
 import { AppRouterInstance } from "next/dist/shared/lib/app-router-context.shared-runtime"
 import { ReadonlyURLSearchParams } from "next/navigation"
 
-import goConfig from "@/lib/config/config"
+import goConfig from "@/lib/config/goConfig"
 import { FacetFieldEnum, SearchFacetFragment } from "@/lib/graphql/generated/fbi/graphql"
 import { TContext, TFilters } from "@/lib/machines/search/types"
 

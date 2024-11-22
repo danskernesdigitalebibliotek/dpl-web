@@ -1,6 +1,6 @@
 import type { CodegenConfig } from "@graphql-codegen/cli"
 
-import goConfig from "./lib/config/config"
+import goConfig from "./lib/config/goConfig"
 
 const { loadEnvConfig } = require("@next/env")
 

@@ -1,8 +1,8 @@
 import Image from "next/image"
 
-import goConfig from "@/lib/config/config"
+import goConfig from "@/lib/config/goConfig"
 
-const wellknownUrl = goConfig("service.unilogin.wellknown.url")
+const wellknownUrl = goConfig("server-only.service.unilogin.wellknown.url")
 export default async function Home() {
   return (
     <div

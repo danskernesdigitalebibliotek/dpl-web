@@ -3,7 +3,7 @@ import { useSelector } from "@xstate/react"
 import { ReadonlyURLSearchParams } from "next/navigation"
 
 import { getFacetMachineNames } from "@/components/shared/searchFilters/helper"
-import goConfig from "@/lib/config/config"
+import goConfig from "@/lib/config/goConfig"
 import { SearchFiltersInput, SearchWithPaginationQuery } from "@/lib/graphql/generated/fbi/graphql"
 import { TFilters } from "@/lib/machines/search/types"
 import useSearchMachineActor from "@/lib/machines/search/useSearchMachineActor"
