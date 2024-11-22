@@ -80,7 +80,8 @@ const SearchFiltersColumn = ({
                   facet: facet.name,
                   term: value.term,
                   filters: selectedFilters,
-                })}>
+                })}
+                withAnimation>
                 {value.term}
               </BadgeButton>
             ))}
@@ -91,7 +92,8 @@ const SearchFiltersColumn = ({
               classNames={cn(`pl-3 w-auto flex flex-row items-center self-start mt-1`)}
               onClick={() => {
                 setIsExpanded(prev => !prev)
-              }}>
+              }}
+              withAnimation>
               <Icon className={cn("h-8 w-8", isExpanded ? "rotate-180" : "")} name="arrow-down" />
               <p>{isExpanded ? "Skjul" : "Flere"}</p>
             </BadgeButton>
