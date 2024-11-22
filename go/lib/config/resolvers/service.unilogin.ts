@@ -5,8 +5,8 @@ const serviceUnilogin = {
     }
   },
   "service.unilogin.wellknown.url": () => {
-    if (process.env.UNILOGIN_WELKNOWN_URL) {
-      return process.env.UNILOGIN_WELKNOWN_URL
+    if (process.env.UNILOGIN_WELLKNOWN_URL) {
+      return process.env.UNILOGIN_WELLKNOWN_URL
     }
   },
   "service.unilogin.refresh-token.url": () => {
