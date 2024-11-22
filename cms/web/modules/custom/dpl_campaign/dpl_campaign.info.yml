@@ -1,7 +1,7 @@
-name: "dpl_campaign"
+name: 'dpl_campaign'
 type: module
-description: "A module that deliveres possibility for campaign CRUD and integration with Dpl React Apps"
-package: "DPL"
+description: 'A module that deliveres possibility for campaign CRUD and integration with Dpl React Apps'
+package: 'DPL'
 core_version_requirement: ^9 || ^10
 dependencies:
   - drupal:serialization

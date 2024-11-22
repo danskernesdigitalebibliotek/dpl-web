@@ -1,5 +1,5 @@
 _meta:
-  version: "1.0"
+  version: '1.0'
   entity_type: node
   uuid: 1201ee52-766e-4793-8b9f-155fe6e74a5d
   bundle: page
@@ -14,7 +14,7 @@ default:
   uid:
     - target_id: 1
   title:
-    - value: "Page1 | Branch1"
+    - value: 'Page1 | Branch1'
   created:
     - value: 1717517161
   promote:
@@ -29,7 +29,7 @@ default:
     - tag: meta
       attributes:
         name: title
-        content: "Page1 | Branch1 | DPL CMS"
+        content: 'Page1 | Branch1 | DPL CMS'
   path:
     - alias: /testfilialen/page1-branch1
       langcode: und

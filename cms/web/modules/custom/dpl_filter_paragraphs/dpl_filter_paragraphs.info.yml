@@ -1,6 +1,6 @@
-name: "DPL Filtered Paragraphs (Deprecated)"
+name: 'DPL Filtered Paragraphs (Deprecated)'
 type: module
-description: "This module is deprecated, and will be deleted in the future."
-package: "DPL"
+description: 'This module is deprecated, and will be deleted in the future.'
+package: 'DPL'
 core_version_requirement: ^10
 hidden: true

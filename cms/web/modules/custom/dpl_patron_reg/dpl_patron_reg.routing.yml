@@ -1,28 +1,28 @@
 dpl_patron_reg.settings:
-  path: "/admin/config/people/registration"
+  path: '/admin/config/people/registration'
   defaults:
     _form: '\Drupal\dpl_patron_reg\Form\PatronRegSettingsForm'
-    _title: "Patron registration"
+    _title: 'Patron registration'
   requirements:
-    _permission: "administer site configuration"
+    _permission: 'administer site configuration'
   options:
     _admin_route: true
 
 dpl_patron_reg.auth:
-  path: "/user/registration/{client_name}/auth"
+  path: '/user/registration/{client_name}/auth'
   defaults:
     _controller: '\Drupal\dpl_patron_reg\Controller\DplPatronRegController::authRedirect'
-    _title: "Patron nem-login authentication"
+    _title: 'Patron nem-login authentication'
   requirements:
-    _permission: "access content"
+    _permission: 'access content'
   options:
     no_cache: true
 
 dpl_patron_reg.create:
-  path: "/user/registration/create"
+  path: '/user/registration/create'
   defaults:
     _controller: '\Drupal\dpl_patron_reg\Controller\DplPatronRegController::userRegistrationReactAppLoad'
   requirements:
-    _permission: "access content"
+    _permission: 'access content'
   options:
     no_cache: true

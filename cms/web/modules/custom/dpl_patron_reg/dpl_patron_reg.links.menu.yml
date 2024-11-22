@@ -1,5 +1,5 @@
 dpl_patron_reg.settings_form:
-  title: "Patron registration"
+  title: 'Patron registration'
   route_name: dpl_patron_reg.settings
-  description: "Change patron registration settings"
+  description: 'Change patron registration settings'
   parent: dpl_library_agency.settings
