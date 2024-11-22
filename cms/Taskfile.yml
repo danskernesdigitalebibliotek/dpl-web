@@ -384,6 +384,11 @@ tasks:
     cmds:
       - cmd: task dev:cli -- drush default-content:export-module dpl_example_content
 
+  dev:go:set-graphql-secret:
+    desc: Sets the GraphQL consumer secret based on the .env variable.
+    cmds:
+      - cmd: task dev:cli -- drush dpl_consumers:set-consumer-secret
+
   dev:go:graphql-credentials:
     desc: Get the GraphQL consumer credentials
     cmds:

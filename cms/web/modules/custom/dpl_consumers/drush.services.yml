@@ -1,5 +1,7 @@
 services:
   dpl_consumer.commands:
     class: \Drupal\dpl_consumers\Commands\DplConsumersCommands
+    arguments:
+      - '@entity_type.manager'
     tags:
       - { name: drush.command }
