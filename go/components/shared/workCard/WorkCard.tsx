@@ -9,8 +9,8 @@ import { GetCoverCollectionSizesItem } from "@/lib/rest/cover-service-api/genera
 import { useGetV1ProductsIdentifier } from "@/lib/rest/publizon-api/generated/publizon"
 
 import { Badge } from "../badge/Badge"
+import { CoverPicture } from "../coverPicture/CoverPicture"
 import WorkCardAvailabilityRow from "./WorkCardAvailabilityRow"
-import { WorkCardImage } from "./WorkCardImage"
 import { displayCreators, getAllWorkPids, getCoverUrls, getLowResCoverUrl } from "./helper"
 
 type WorkCardProps = {
@@ -70,10 +70,11 @@ const WorkCard = ({ work }: WorkCardProps) => {
           )}
           <div className="relative mx-auto flex h-full w-full items-center">
             {!isLoadingCovers && (
-              <WorkCardImage
+              <CoverPicture
                 lowResSrc={lowResCover || ""}
                 src={coverSrc?.[0] || ""}
                 alt={`${work.titles.full[0]} cover billede`}
+                withTilt
               />
             )}
           </div>

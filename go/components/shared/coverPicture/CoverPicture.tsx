@@ -1,20 +1,21 @@
 import { useWindowSize } from "@uidotdev/usehooks"
 import { motion } from "framer-motion"
 import Image from "next/image"
-import React, { FC, useEffect, useRef, useState } from "react"
+import React, { useEffect, useRef, useState } from "react"
 import Tilt from "react-parallax-tilt"
 
 import { cn } from "@/lib/helpers/helper.cn"
 
 import Icon from "../icon/Icon"
 
-interface Props {
+type CoverPictureProps = {
   lowResSrc: string
   src: string
   className?: string
   alt: string
+  withTilt?: boolean
 }
-export const WorkCardImage: FC<Props> = ({ src, lowResSrc, alt }) => {
+export const CoverPicture = ({ src, lowResSrc, alt, withTilt = false }: CoverPictureProps) => {
   const size = useWindowSize()
 
   const [imageHeight, setImageHeight] = useState(0)
@@ -38,10 +39,10 @@ export const WorkCardImage: FC<Props> = ({ src, lowResSrc, alt }) => {
     <div className="flex h-full w-full items-center" ref={ref}>
       {!imageError && src ? (
         <Tilt
-          scale={1.05}
+          scale={withTilt ? 1.05 : 1}
           transitionSpeed={2500}
-          tiltMaxAngleX={10}
-          tiltMaxAngleY={10}
+          tiltMaxAngleX={withTilt ? 10 : 0}
+          tiltMaxAngleY={withTilt ? 10 : 0}
           tiltReverse={true}
           className={"relative m-auto"}
           style={{ paddingTop, width: `min(100%,${imageWidthByContainerHeight}px)` }}>
