@@ -2,6 +2,7 @@
 
 namespace Drupal\dpl_react_apps\Controller;
 
+use Drupal\Core\Block\BlockManagerInterface;
 use Drupal\Core\Controller\ControllerBase;
 use Drupal\Core\Render\RendererInterface;
 use Drupal\dpl_fbs\Form\FbsSettingsForm;
@@ -13,8 +14,10 @@ use Drupal\dpl_library_agency\FbiProfileType;
 use Drupal\dpl_library_agency\GeneralSettings;
 use Drupal\dpl_library_agency\ReservationSettings;
 use Symfony\Component\DependencyInjection\ContainerInterface;
-use function Safe\json_encode as json_encode;
-use function Safe\preg_replace as preg_replace;
+use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
+use function Safe\json_encode;
+use function Safe\preg_replace;
 
 /**
  * Controller for rendering full page DPL React apps.
@@ -31,6 +34,7 @@ class DplReactAppsController extends ControllerBase {
     protected BranchRepositoryInterface $branchRepository,
     protected DplInstantLoanSettings $instantLoanSettings,
     protected GeneralSettings $generalSettings,
+    protected BlockManagerInterface $blockManager,
   ) {}
 
   /**
@@ -49,6 +53,7 @@ class DplReactAppsController extends ControllerBase {
       $container->get('dpl_library_agency.branch.repository'),
       $container->get('dpl_instant_loan.settings'),
       $container->get('dpl_library_agency.general_settings'),
+      $container->get('plugin.manager.block'),
     );
   }
 
@@ -500,6 +505,41 @@ class DplReactAppsController extends ControllerBase {
     }
 
     return $urls;
+  }
+
+  /**
+   * Render the Reader React app.
+   *
+   * @param \Symfony\Component\HttpFoundation\Request $request
+   *   The HTTP request containing query parameters.
+   *
+   * @return mixed[]
+   *   Render array with the Reader app block.
+   *
+   * @throws \Drupal\Component\Plugin\Exception\PluginException
+   */
+  public function reader(Request $request): array {
+
+    $identifier = $request->query->get('identifier');
+    $orderId = $request->query->get('orderId');
+
+    if (!$identifier && !$orderId) {
+      throw new \InvalidArgumentException('Either identifier or orderId must be provided.');
+    }
+
+    /** @var \Drupal\dpl_react_apps\Plugin\Block\ReaderAppBlock $plugin_block */
+    $plugin_block = $this->blockManager->createInstance('reader_app_block', [
+      'identifier' => $identifier,
+      'orderId' => $orderId,
+    ]);
+
+    // Access check for the block.
+    $access_result = $plugin_block->access($this->currentUser());
+    if (is_object($access_result) && $access_result->isForbidden() || is_bool($access_result) && !$access_result) {
+      throw new AccessDeniedHttpException();
+    }
+
+    return $plugin_block->build();
   }
 
 }
