@@ -24,7 +24,9 @@ function Header() {
           <Button variant="icon" ariaLabel="Tilgå hjælpesiden">
             <Icon className="h-[24px] w-[24px]" name="question-mark" />
           </Button>
-          <ProfileButton />
+          <Suspense fallback={<p>Loading...</p>}>
+            <ProfileButton />
+          </Suspense>
         </div>
       </div>
       <div className="h-navigation-search-height">
