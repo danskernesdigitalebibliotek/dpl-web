@@ -104,8 +104,11 @@ function dpl_update_install(): string {
   $messages[] = dpl_update_update_10022();
   $messages[] = dpl_update_update_10023();
   $messages[] = dpl_update_update_10024();
+
   // Do not uninstall dblog module on install. It is not installed by default.
   // $messages[] = dpl_update_update_10025()
+  $messages[] = dpl_update_update_10026();
+  $messages[] = dpl_update_update_10027();
   return implode('\r\n', $messages);
 }
 
@@ -308,4 +311,11 @@ function dpl_update_update_10025(): string {
  */
 function dpl_update_update_10026(): string {
   return _dpl_update_install_modules(['dpl_webmaster']);
+}
+
+/**
+ * Install simple_oauth.
+ */
+function dpl_update_update_10027(): string {
+  return _dpl_update_install_modules(['simple_oauth']);
 }

@@ -164,6 +164,7 @@ module:
   select2: 0
   serialization: 0
   simple_menu_permissions: 0
+  simple_oauth: 0
   system: 0
   taxonomy: 0
   taxonomy_unique: 0
