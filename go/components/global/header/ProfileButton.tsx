@@ -24,7 +24,7 @@ const HeaderButton = ({
   asChild?: boolean
   // TODO: Dynamic aria-label.
 }) => (
-  <Button onClick={onClick} variant="icon" aria-label="Login / Tilgå profilsiden" asChild={asChild}>
+  <Button onClick={onClick} variant="icon" ariaLabel="Login / Tilgå profilsiden" asChild={asChild}>
     <Icon className="h-[24px] w-[24px]" name="profile" />
   </Button>
 )
@@ -56,7 +56,9 @@ function ProfileButton() {
                 Log ind med UNI•Login
               </SheetDescription>
               <div>
-                <Button onClick={() => router.push("/auth/login/unilogin")}>LOG IND</Button>
+                <Button onClick={() => router.push("/auth/login/unilogin")} ariaLabel="Log ind">
+                  LOG IND
+                </Button>
               </div>
             </div>
           </SheetHeader>

@@ -1,8 +1,9 @@
 import { NextRequest, NextResponse } from "next/server"
+import * as client from "openid-client"
 import { z } from "zod"
 
 import goConfig from "@/lib/config/goConfig"
-import { getUniloginClient } from "@/lib/session/oauth/uniloginClient"
+import { getUniloginClientConfig } from "@/lib/session/oauth/uniloginClient"
 import { getSession, setTokensOnSession } from "@/lib/session/session"
 import { TTokenSet } from "@/lib/types/session"
 
@@ -13,7 +14,10 @@ const sessionTokenSchema = z.object({
 })
 
 export async function GET(request: NextRequest, response: NextResponse) {
-  const appUrl = goConfig("app.url")
+  const appUrl = String(goConfig("app.url"))
+  const config = await getUniloginClientConfig()
+  // TODO: Fix refresh token flow with new openid-client.
+
   const session = await getSession()
   const frontpage = `${appUrl}/`
 
@@ -30,9 +34,7 @@ export async function GET(request: NextRequest, response: NextResponse) {
   try {
     // TODO: Consider if we want to handle different types of sessions than unilogin.
     const tokens = sessionTokenSchema.parse(session)
-    const client = await getUniloginClient()
-
-    const newTokens = await (client.refresh(tokens.refresh_token) as Promise<TTokenSet>)
+    const newTokens = client.refreshTokenGrant(config, tokens.refresh_token) as unknown as TTokenSet
     setTokensOnSession(session, newTokens)
     await session.save()
   } catch (error) {

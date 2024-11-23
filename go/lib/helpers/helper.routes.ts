@@ -34,7 +34,7 @@ export function buildRoute({
 type ResolveUrlOptions =
   | {
       type: "work"
-      routeParams?: { id: number | string }
+      routeParams?: { wid: number | string }
       queryParams?: QueryParams
     }
   | {
@@ -46,8 +46,12 @@ type ResolveUrlOptions =
 export const resolveUrl = ({ type, routeParams, queryParams }: ResolveUrlOptions) => {
   switch (type as ResolveUrlOptions["type"]) {
     case "work":
-      if (!routeParams?.id) return ""
-      return buildRoute({ route: "/work/:id", params: { id: routeParams.id }, query: queryParams })
+      if (!routeParams?.wid) return ""
+      return buildRoute({
+        route: "/work/:wid",
+        params: { wid: routeParams.wid },
+        query: queryParams,
+      })
     case "search":
       return buildRoute({ route: "/search", query: queryParams })
     default:

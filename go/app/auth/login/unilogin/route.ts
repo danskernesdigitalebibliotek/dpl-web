@@ -1,39 +1,28 @@
-import { generators } from "openid-client"
+import * as client from "openid-client"
 
-import {
-  getOpenIdClientUniloginClientConfig,
-  getUniloginClient,
-} from "@/lib/session/oauth/uniloginClient"
+import goConfig from "@/lib/config/goConfig"
+import { getUniloginClientConfig } from "@/lib/session/oauth/uniloginClient"
 import { getSession } from "@/lib/session/session"
 
 export async function GET() {
   const session = await getSession()
+  const config = await getUniloginClientConfig()
+  const appUrl = goConfig("app.url")
+  const redirect_uri = `${appUrl}/auth/callback/unilogin`
 
-  session.code_verifier = generators.codeVerifier()
+  const code_verifier = client.randomPKCECodeVerifier()
+  const code_challenge = await client.calculatePKCECodeChallenge(code_verifier)
+  const code_challenge_method = "S256"
 
-  const code_challenge = generators.codeChallenge(session.code_verifier)
+  session.code_verifier = code_verifier
 
-  const openIdClientConfig = await getOpenIdClientUniloginClientConfig()
-
-  if (
-    !openIdClientConfig ||
-    !openIdClientConfig.scope ||
-    !openIdClientConfig.redirect_uri ||
-    !openIdClientConfig.audience
-  ) {
-    throw new Error("Unilogin client config is invalid.")
-  }
-
-  const client = await getUniloginClient()
-
-  const url = client.authorizationUrl({
-    scope: openIdClientConfig.scope,
-    audience: openIdClientConfig.audience,
-    redirect_uri: openIdClientConfig.redirect_uri,
+  const redirectTo = client.buildAuthorizationUrl(config, {
+    redirect_uri,
+    scope: "openid",
     code_challenge,
-    code_challenge_method: "S256",
+    code_challenge_method,
   })
 
   await session.save()
-  return Response.redirect(url)
+  return Response.redirect(redirectTo)
 }

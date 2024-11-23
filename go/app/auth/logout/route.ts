@@ -1,36 +1,35 @@
 import { cookies } from "next/headers"
-import { generators } from "openid-client"
+import * as client from "openid-client"
 
 import goConfig from "@/lib/config/goConfig"
-import {
-  getOpenIdClientUniloginClientConfig,
-  getUniloginClient,
-} from "@/lib/session/oauth/uniloginClient"
+import { getUniloginClientConfig } from "@/lib/session/oauth/uniloginClient"
 import { getSession } from "@/lib/session/session"
 
 export async function GET() {
   const session = await getSession()
+  const config = await getUniloginClientConfig()
+  const appUrl = new URL(String(goConfig("app.url")))
+
+  session.destroy()
+
   // TODO: Distinguish between session types here.
   const id_token = cookies().get("go-session:id_token")?.value
   // TODO: Is this where we want to redirect to if id token cannot be resolved?
   if (!id_token) {
-    return Response.redirect(goConfig("app.url"))
+    return Response.redirect(appUrl)
+  }
+  const endSessionEndpoint = config.serverMetadata().end_session_endpoint
+
+  if (!endSessionEndpoint) {
+    return Response.redirect(appUrl)
   }
 
-  const openIdClientConfig = await getOpenIdClientUniloginClientConfig()
-
-  if (!openIdClientConfig || !openIdClientConfig.post_logout_redirect_uri) {
-    throw new Error("Unilogin client config is invalid.")
-  }
-
-  const client = await getUniloginClient()
-
-  const endSession = client.endSessionUrl({
-    post_logout_redirect_uri: openIdClientConfig.post_logout_redirect_uri,
+  const endSessionUrl = client.buildEndSessionUrl(config, {
     id_token_hint: id_token,
-    state: generators.state(),
   })
 
-  session.destroy()
-  return Response.redirect(endSession)
+  // End session in Unilogin SSO.
+  await fetch(endSessionUrl)
+
+  return Response.redirect(`${appUrl.toString()}?reload-session=true`)
 }
