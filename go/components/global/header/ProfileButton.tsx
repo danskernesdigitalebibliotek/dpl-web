@@ -14,7 +14,6 @@ import {
   SheetTrigger,
 } from "@/components/shared/sheet/Sheet"
 import useSession from "@/hooks/useSession"
-import useGoConfig from "@/lib/config/useGoConfig"
 
 const HeaderButton = ({
   onClick,
