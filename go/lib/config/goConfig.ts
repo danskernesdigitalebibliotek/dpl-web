@@ -1,19 +1,28 @@
 import MissingConfigurationError from "./errors/MissingConfigurationError"
-import resolvers, { TConfigKey, TResolvers } from "./resolvers"
+import { TClientResolvers, TConfigKey, TResolvers, resolvers } from "./resolvers"
 
-export const retrieveValue = (key: TConfigKey): unknown => {
+export const retrieveValue = <
+  TConfigResolver extends TResolvers | TClientResolvers,
+  TConfigResolverKey extends keyof TConfigResolver,
+>(
+  key: TConfigResolverKey,
+  resolvers: TConfigResolver
+) => {
   if (key in resolvers) {
-    if (typeof resolvers[key] !== "function") {
-      return resolvers[key]
+    if (typeof resolvers[key as TConfigResolverKey] !== "function") {
+      return resolvers[key as TConfigResolverKey]
     }
-    return resolvers[key]()
+    const resolver = resolvers[key as TConfigResolverKey]
+    if (typeof resolver === "function") {
+      return resolver()
+    }
   }
 
   return null
 }
 
 const goConfig = <K extends TConfigKey>(key: K) => {
-  const value = retrieveValue(key)
+  const value = retrieveValue(key, resolvers)
 
   if (!value && value !== 0) {
     throw new MissingConfigurationError(`Missing configuration for ${key}`)
