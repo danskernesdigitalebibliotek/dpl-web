@@ -1,4 +1,8 @@
-export function fetcher<TData, TVariables>(query: string, variables?: TVariables) {
+export function fetcher<TData, TVariables>(
+  query: string,
+  variables?: TVariables,
+  options?: RequestInit["headers"]
+) {
   const dplCmsGraphqlEndpoint = process.env.NEXT_PUBLIC_GRAPHQL_SCHEMA_ENDPOINT_DPL_CMS
   const dplCmsGraphqlBasicToken = process.env.NEXT_PUBLIC_GRAPHQL_BASIC_TOKEN_DPL_CMS
 
@@ -13,6 +17,7 @@ export function fetcher<TData, TVariables>(query: string, variables?: TVariables
         headers: {
           "Content-Type": "application/json",
           Authorization: `Basic ${dplCmsGraphqlBasicToken}`,
+          ...options,
         },
       },
       body: JSON.stringify({ query, variables }),
