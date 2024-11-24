@@ -1,8 +1,8 @@
 import MissingConfigurationError from "./errors/MissingConfigurationError"
-import { TClientResolvers, TConfigKey, TResolvers, resolvers } from "./resolvers"
+import { TConfigKey, TResolvers, resolvers } from "./resolvers"
 
 export const retrieveValue = <
-  TConfigResolver extends TResolvers | TClientResolvers,
+  TConfigResolver extends TResolvers,
   TConfigResolverKey extends keyof TConfigResolver,
 >(
   key: TConfigResolverKey,

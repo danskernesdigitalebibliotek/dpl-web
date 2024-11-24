@@ -9,13 +9,15 @@ const queryDplCmsConfig = async (queryClient: QueryClient) => {
   const { dplConfiguration } = await queryClient.fetchQuery<GetDplCmsConfigurationQuery>({
     queryKey: useGetDplCmsConfigurationQuery.getKey(),
     queryFn: useGetDplCmsConfigurationQuery.fetcher(),
+    // Cache 5 minutes unless invalidated
+    staleTime: 60 * 5,
   })
 
   return dplConfiguration ?? null
 }
 
 // eslint-disable-next-line prefer-const
-let dplCmsConfigClient = new QueryClient()
+let dplCmsConfigClient = new QueryClient({})
 
 const getDplCmsConfig = async () => {
   const result = await queryDplCmsConfig(dplCmsConfigClient)

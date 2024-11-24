@@ -1,7 +1,7 @@
 import { getDplCmsUniloginConfig } from "../dpl-cms/dplCmsConfig"
 
 const serviceUnilogin = {
-  "server-only.service.unilogin.api.url": async () => {
+  "service.unilogin.api.url": async () => {
     if (process.env.UNILOGIN_API_URL) {
       return process.env.UNILOGIN_API_URL
     }
@@ -11,7 +11,7 @@ const serviceUnilogin = {
       return config?.unilogin_api_url
     }
   },
-  "server-only.service.unilogin.wellknown.url": async () => {
+  "service.unilogin.wellknown.url": async () => {
     if (process.env.UNILOGIN_WELLKNOWN_URL) {
       return process.env.UNILOGIN_WELLKNOWN_URL
     }
@@ -21,7 +21,7 @@ const serviceUnilogin = {
       return config?.unilogin_api_wellknown_url
     }
   },
-  "server-only.service.unilogin.client-id": async () => {
+  "service.unilogin.client-id": async () => {
     if (process.env.UNILOGIN_CLIENT_ID) {
       return process.env.UNILOGIN_CLIENT_ID
     }
@@ -31,7 +31,7 @@ const serviceUnilogin = {
       return config?.unilogin_api_client_id
     }
   },
-  "server-only.service.unilogin.client-secret": async () => {
+  "service.unilogin.client-secret": async () => {
     if (process.env.UNILOGIN_CLIENT_SECRET) {
       return process.env.UNILOGIN_CLIENT_SECRET
     }
@@ -41,7 +41,7 @@ const serviceUnilogin = {
       return config?.unilogin_api_client_secret
     }
   },
-  "server-only.service.unilogin.session.secret": () => {
+  "service.unilogin.session.secret": () => {
     if (process.env.UNILOGIN_SESSION_SECRET) {
       return process.env.UNILOGIN_SESSION_SECRET
     }

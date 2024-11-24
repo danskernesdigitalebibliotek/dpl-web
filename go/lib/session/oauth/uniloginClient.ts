@@ -7,10 +7,10 @@ export const uniloginClientSettings = {
 }
 
 export async function getUniloginClientConfig() {
-  const wellKnownUrl = await goConfig("server-only.service.unilogin.wellknown.url")
+  const wellKnownUrl = await goConfig("service.unilogin.wellknown.url")
 
   const server: URL = new URL(String(wellKnownUrl))
-  const clientId = (await goConfig("server-only.service.unilogin.client-id")) ?? ""
-  const clientSecret = (await goConfig("server-only.service.unilogin.client-secret")) ?? ""
+  const clientId = (await goConfig("service.unilogin.client-id")) ?? ""
+  const clientSecret = (await goConfig("service.unilogin.client-secret")) ?? ""
   return await client.discovery(server, clientId, clientSecret)
 }

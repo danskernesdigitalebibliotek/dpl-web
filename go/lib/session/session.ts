@@ -8,7 +8,7 @@ import { TSessionType, TTokenSet } from "../types/session"
 
 export const sessionOptions: SessionOptions = {
   // TODO: generate a random password and store it in a secure place
-  password: String(goConfig("server-only.service.unilogin.session.secret")),
+  password: String(goConfig("service.unilogin.session.secret")),
   cookieName: "go-session",
   cookieOptions: {
     // secure only works in `https` environments
