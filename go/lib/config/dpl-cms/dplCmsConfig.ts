@@ -23,18 +23,8 @@ const getDplCmsConfig = async () => {
   return result
 }
 
-const getDplCmsUniloginConfig = async () => {
+export const getDplCmsUniloginConfig = async () => {
   const config = await getDplCmsConfig()
 
   return config?.unilogin ?? null
-}
-
-export const withUniloginConfig = async (
-  configFunc: (
-    config: NonNullable<GetDplCmsConfigurationQuery["dplConfiguration"]>["unilogin"]
-  ) => string | undefined
-) => {
-  const uniloginConfig = await getDplCmsUniloginConfig()
-
-  return configFunc(uniloginConfig)
 }
