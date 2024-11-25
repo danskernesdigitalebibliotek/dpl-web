@@ -33,6 +33,6 @@
     "node_modules",
     "lib/rest/cover-service-api/model",
     "lib/rest/cover-service-api/cover-service.ts",
-    "lib/graphql/generated/fbi/*.tsx"
+    "lib/graphql/generated/**/*.tsx"
   ]
 }

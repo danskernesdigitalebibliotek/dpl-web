@@ -8,15 +8,15 @@ import { useEffect, useRef, useState } from "react"
 import { AnyEventObject, createActor } from "xstate"
 
 import { getFacetsForSearchRequest } from "@/components/pages/searchPageLayout/helper"
-import goConfig from "@/lib/config/config"
+import goConfig from "@/lib/config/goConfig"
 
 import searchMachine from "./search.machine"
 
 const searchActor = createActor(searchMachine, {
   input: {
-    initialOffset: goConfig<number>("search.offset.initial"),
-    searchPageSize: goConfig<number>("search.item.limit"),
-    facetLimit: goConfig<number>("search.facet.limit"),
+    initialOffset: goConfig("search.offset.initial"),
+    searchPageSize: goConfig("search.item.limit"),
+    facetLimit: goConfig("search.facet.limit"),
   },
 }).start()
 

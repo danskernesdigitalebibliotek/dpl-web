@@ -2,8 +2,7 @@ import { flatten } from "lodash"
 import { AppRouterInstance } from "next/dist/shared/lib/app-router-context.shared-runtime"
 import { ReadonlyURLSearchParams } from "next/navigation"
 
-import goConfig from "@/lib/config/config"
-import { TConfigSearchFacets } from "@/lib/config/resolvers/search"
+import goConfig from "@/lib/config/goConfig"
 import { FacetFieldEnum, SearchFacetFragment } from "@/lib/graphql/generated/fbi/graphql"
 import { TContext, TFilters } from "@/lib/machines/search/types"
 
@@ -44,14 +43,14 @@ export const sortByActiveFacets = (facet: SearchFacetFragment, selectedFilters: 
 }
 
 export const getFacetMachineNames = () => {
-  const facets = goConfig<Record<string, unknown>>("search.facets")
+  const facets = goConfig("search.facets")
   return Object.keys(facets) as FacetFieldEnum[]
 }
 
 export const getFacetTranslation = (facetFilter: keyof TFilters) => {
-  const facets = goConfig<TConfigSearchFacets>("search.facets")
+  const facets = goConfig("search.facets")
 
-  return facets[facetFilter.toUpperCase() as keyof TConfigSearchFacets].translation || ""
+  return facets[facetFilter.toUpperCase() as keyof typeof facets].translation || ""
 }
 
 export const getActiveFilters = (

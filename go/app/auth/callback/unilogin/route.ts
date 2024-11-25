@@ -2,7 +2,7 @@ import { sealData } from "iron-session"
 import { NextRequest, NextResponse } from "next/server"
 import * as client from "openid-client"
 
-import goConfig from "@/lib/config/config"
+import goConfig from "@/lib/config/goConfig"
 import { getUniloginClientConfig } from "@/lib/session/oauth/uniloginClient"
 import { getSession, sessionOptions, setTokensOnSession } from "@/lib/session/session"
 import { TTokenSet } from "@/lib/types/session"

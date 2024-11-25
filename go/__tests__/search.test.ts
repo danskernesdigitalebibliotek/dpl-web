@@ -6,10 +6,10 @@ import {
   getSearchQueryArguments,
 } from "@/components/pages/searchPageLayout/helper"
 import { getFacetMachineNames, getFacetTranslation } from "@/components/shared/searchFilters/helper"
-import goConfig from "@/lib/config/config"
+import goConfig from "@/lib/config/goConfig"
 import { FacetFieldEnum } from "@/lib/graphql/generated/fbi/graphql"
 
-vi.mock(import("@/lib/config/config"), async importOriginal => {
+vi.mock(import("@/lib/config/goConfig"), async importOriginal => {
   const actual = await importOriginal()
   return {
     ...actual,

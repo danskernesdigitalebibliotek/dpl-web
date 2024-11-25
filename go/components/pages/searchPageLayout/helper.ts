@@ -3,8 +3,7 @@ import { useSelector } from "@xstate/react"
 import { ReadonlyURLSearchParams } from "next/navigation"
 
 import { getFacetMachineNames } from "@/components/shared/searchFilters/helper"
-import goConfig from "@/lib/config/config"
-import { TConfigSearchFacets } from "@/lib/config/resolvers/search"
+import goConfig from "@/lib/config/goConfig"
 import { SearchFiltersInput, SearchWithPaginationQuery } from "@/lib/graphql/generated/fbi/graphql"
 import { TFilters } from "@/lib/machines/search/types"
 import useSearchMachineActor from "@/lib/machines/search/useSearchMachineActor"
@@ -18,29 +17,29 @@ export const getSearchQueryArguments = ({
   currentPage: number
   facetFilters: SearchFiltersInput
 }) => {
-  const limit = goConfig<number>("search.item.limit")
+  const limit = goConfig("search.item.limit")
   return {
     q: { all: q },
     offset: currentPage * limit,
     limit: limit,
     filters: {
-      branchId: goConfig<`${number}`[]>("search.branch.ids"),
+      branchId: goConfig("search.branch.ids"),
       ...facetFilters,
     },
   }
 }
 
 export const getFacetsForSearchRequest = (searchParams: ReadonlyURLSearchParams) => {
-  const facets = goConfig<TConfigSearchFacets>("search.facets")
+  const facets = goConfig("search.facets")
   const facetsMachineNames = getFacetMachineNames()
 
   return facetsMachineNames.reduce(
     (acc: TFilters, machineName) => {
-      const values = searchParams.getAll(facets[machineName].filter)
+      const values = searchParams.getAll(facets[machineName as keyof typeof facets].filter)
       if (values.length > 0) {
         return {
           ...acc,
-          [facets[machineName].filter]: [...values],
+          [facets[machineName as keyof typeof facets].filter]: [...values],
         }
       }
       return acc
@@ -52,7 +51,7 @@ export const getFacetsForSearchRequest = (searchParams: ReadonlyURLSearchParams)
 export const getNextPageParamsFunc = (
   currentPage: number
 ): GetNextPageParamFunction<number, SearchWithPaginationQuery> => {
-  const limit = goConfig<number>("search.item.limit")
+  const limit = goConfig("search.item.limit")
 
   return ({ search: { hitcount } }) => {
     const totalPages = Math.ceil(hitcount / limit)
