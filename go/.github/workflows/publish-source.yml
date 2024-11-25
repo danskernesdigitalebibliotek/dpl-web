@@ -18,6 +18,25 @@ jobs:
           else
             echo ::set-output name=IS_RELEASE_TAG::false
           fi
+
+      - uses: actions/setup-node@v4
+        if: ${{ steps.detect_tag.outputs.IS_RELEASE_TAG == 'true' }}
+        with:
+          node-version-file: ".nvmrc"
+
+      - name: Install dependencies
+        if: ${{ steps.detect_tag.outputs.IS_RELEASE_TAG == 'true' }}
+        run: yarn install --frozen-lockfile
+
+      - name: Run CI checks
+        if: ${{ steps.detect_tag.outputs.IS_RELEASE_TAG == 'true' }}
+        run: |
+          yarn ci-check
+          if [ $? -ne 0 ]; then
+            echo "Code quality checks failed"
+            exit 1
+          fi
+
       # Extract version from tag.
       - name: Get version
         id: get_version
@@ -41,3 +60,7 @@ jobs:
         env:
           CR_PAT: ${{ secrets.GITHUB_TOKEN }}
           RELEASE_TAG: ${{ steps.get_version.outputs.RELEASE_TAG }}
+
+      - name: Adding summary
+        run: |
+          echo "Source image was successfully build (version: ${{ github.ref }}) 🚀😎" >> $GITHUB_STEP_SUMMARY
