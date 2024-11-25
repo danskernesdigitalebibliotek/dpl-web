@@ -40,10 +40,10 @@
             "type": "package",
             "package": {
                 "name": "danskernesdigitalebibliotek/dpl-react",
-                "version": "2024.46.0",
+                "version": "2024.47.0",
                 "type": "drupal-library",
                 "dist": {
-                    "url": "https://github.com/danskernesdigitalebibliotek/dpl-react/releases/download/2024.46.0/dist-2024-46-0-7d4d8165940c12997e99f8f53768cb784021dccb.zip",
+                    "url": "https://github.com/danskernesdigitalebibliotek/dpl-react/releases/download/2024.47.0/dist-2024-47-0-d262e234fe972eeb86cc0e21d663245a3a96331a.zip",
                     "type": "zip"
                 },
                 "require": {
@@ -56,9 +56,9 @@
             "package": {
                 "name": "danskernesdigitalebibliotek/dpl-design-system",
                 "type": "drupal-library",
-                "version": "2024.46.0",
+                "version": "2024.47.1",
                 "dist": {
-                    "url": "https://github.com/danskernesdigitalebibliotek/dpl-design-system/releases/download/2024.46.0/dist-2024-46-0-26b569fe9286c99caa7d35dfffb9e4d176826c7a.zip",
+                    "url": "https://github.com/danskernesdigitalebibliotek/dpl-design-system/releases/download/2024.47.1/dist-2024-47-1-acd61eab1fefee5ed1bc3da76b31c9640caa8671.zip",
                     "type": "zip"
                 }
             }
@@ -90,8 +90,8 @@
         "composer/installers": "1.12.0",
         "cweagans/composer-patches": "1.7.3",
         "danskernesdigitalebibliotek/cms-api": "*",
-        "danskernesdigitalebibliotek/dpl-design-system": "2024.46.0",
-        "danskernesdigitalebibliotek/dpl-react": "2024.46.0",
+        "danskernesdigitalebibliotek/dpl-design-system": "^2024.47",
+        "danskernesdigitalebibliotek/dpl-react": "^2024.47",
         "danskernesdigitalebibliotek/fbs-client": "*",
         "dealerdirect/phpcodesniffer-composer-installer": "^1.0.0",
         "deoliveiralucas/array-keys-case-transform": "^1.1",
@@ -110,9 +110,9 @@
         "drupal/consumers": "^1.19",
         "drupal/content_lock": "^2.3",
         "drupal/cookieinformation": "^2.1",
-        "drupal/core-composer-scaffold": "10.3.7",
-        "drupal/core-project-message": "10.3.7",
-        "drupal/core-recommended": "10.3.7",
+        "drupal/core-composer-scaffold": "10.3.9",
+        "drupal/core-project-message": "10.3.9",
+        "drupal/core-recommended": "10.3.9",
         "drupal/date_range_formatter": "^4.0",
         "drupal/default_content": "^2.0@alpha",
         "drupal/devel": "^5.1",
@@ -133,7 +133,7 @@
         "drupal/graphql_compose": "^2.2",
         "drupal/handy_cache_tags": "^1.4",
         "drupal/health_check": "^3.1",
-        "drupal/honeypot": "^2.1",
+        "drupal/honeypot": "^2.2",
         "drupal/job_scheduler": "^4.0",
         "drupal/jsnlog": "^1.3",
         "drupal/jsonlog": "^4.0",
@@ -164,6 +164,7 @@
         "drupal/select2_multicheck": "^1.0",
         "drupal/selective_better_exposed_filters": "^3.0",
         "drupal/simple_menu_permissions": "^2.0",
+        "drupal/simple_oauth": "^5.2",
         "drupal/taxonomy_unique": "^2.5",
         "drupal/telephone_formatter": "^1.2",
         "drupal/theme_permission": "^2.0",
@@ -224,8 +225,8 @@
     },
     "scripts": {
         "post-drupal-scaffold-cmd": [
-            "[[ ! -d /app/web/sites/default/files/modules_local ]] && mkdir -p /app/web/sites/default/files/modules_local || exit 0",
-            "[[ ! -L /app/web/modules/local ]] && ln -s /app/web/sites/default/files/modules_local /app/web/modules/local || exit 0"
+            "[ ! -d web/sites/default/files/modules_local ] && mkdir -p web/sites/default/files/modules_local || exit 0",
+            "[ ! -L web/modules/local ] && ln -s web/sites/default/files/modules_local web/modules/local || exit 0"
         ]
     },
     "extra": {
@@ -297,7 +298,6 @@
                 "Add item count and url page parameter": "patches/add-item-count-views_infinite_scroll.patch"
             },
             "drupal/core": {
-                "Configure core to not check permissions before accepting an updated module": "patches/disable-core-upload-permission-check.diff",
                 "2280639: Add the FieldStorageDefinition class to define field storage definitions in hook_entity_field_storage_info()": "https://www.drupal.org/files/issues/2023-09-05/2280639-d10-reroll-156.patch",
                 "3402656: Toolbar causes a Javascript error if the subtrees content changes between page loads": "https://git.drupalcode.org/issue/drupal-3402656/-/commit/61ac007a84014f54a07825f8f92bb6bc0dfbd170.patch",
                 "3035578: Add details for AJAX response errors": "https://www.drupal.org/files/issues/2023-07-24/3035578-26.patch",
@@ -339,6 +339,9 @@
             "drupal/jsonlog": {
                 "3251587: Change logging from stdout to stderr": "https://www.drupal.org/files/issues/2021-11-29/jsonlog-change-stdout-to-stderr-3251587-3.patch"
             },
+            "drupal/openapi": {
+                "3480050: Update oauth2 security definitions to match openapi v2 specification": "https://www.drupal.org/files/issues/2024-10-11/openapi-add-oauth2-accesscode-flow-3480050-3.patch"
+            },
             "drupal/openapi_rest": {
                 "3171530 + 3116760: Add support for parameter and response descriptions": "patches/openapi-parameter-response-descriptions-14-3.patch",
                 "3343816: Specification includes disabled resources": "https://git.drupalcode.org/project/openapi_rest/-/commit/6618157334feca93fad1041583375eed660b9085.patch"
@@ -369,8 +372,7 @@
                 "3487412: Fix WSOD when EventInstance has invalid translation.": "https://git.drupalcode.org/project/recurring_events/-/commit/996052eeb7518ce591df968a0bb12c4819fb4edf.patch"
             },
             "drupal/theme_permission": {
-                "3105637: Edit, install and uninstall permission": "https://www.drupal.org/files/issues/2024-02-01/theme-permission-edit-install-uninstall-3105637-7.patch",
-                "3458263: WSOD error fails on Drupal 10.3+": "https://www.drupal.org/files/issues/2024-07-01/theme_permssion-d10_3_d11.patch"
+                "3105637: Edit, install and uninstall permission": "https://www.drupal.org/files/issues/2024-02-01/theme-permission-edit-install-uninstall-3105637-7.patch"
             }
         }
     }

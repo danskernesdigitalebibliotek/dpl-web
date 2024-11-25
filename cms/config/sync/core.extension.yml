@@ -81,6 +81,7 @@ module:
   dpl_update: 0
   dpl_url_proxy: 0
   dpl_webform: 0
+  dpl_webmaster: 0
   drupal_typed: 0
   dynamic_entity_reference: 0
   dynamic_page_cache: 0
@@ -163,6 +164,7 @@ module:
   select2: 0
   serialization: 0
   simple_menu_permissions: 0
+  simple_oauth: 0
   system: 0
   taxonomy: 0
   taxonomy_unique: 0

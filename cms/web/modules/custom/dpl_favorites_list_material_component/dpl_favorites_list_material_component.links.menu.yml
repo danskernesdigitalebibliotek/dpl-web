@@ -1,5 +1,5 @@
 dpl_favorites_list_material_component.list:
-  title: "Favorites list material component"
+  title: 'Favorites list material component'
   menu_name: user-profile-menu
   route_name: dpl_favorites_list_material_component.list
-  description: "Show favorites list material component"
+  description: 'Show favorites list material component'

@@ -1,4 +1,4 @@
-name: "DPL static content: Opening hours categories"
+name: 'DPL static content: Opening hours categories'
 type: module
 description: Adds default opening hours categories
 package: DPL

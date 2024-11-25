@@ -1,5 +1,5 @@
 _meta:
-  version: "1.0"
+  version: '1.0'
   entity_type: taxonomy_term
   uuid: 9c2f0d96-88e1-497c-bf82-e18eb9d5769c
   bundle: opening_hours_categories
@@ -19,14 +19,14 @@ default:
     - tag: meta
       attributes:
         name: title
-        content: "Åbent | DPL CMS"
+        content: 'Åbent | DPL CMS'
     - tag: link
       attributes:
         rel: canonical
-        href: "/taxonomy/term/15"
+        href: '/taxonomy/term/15'
   path:
-    - alias: ""
+    - alias: ''
       langcode: da
   field_opening_hours_color:
-    - color: "#4986E7"
+    - color: '#4986E7'
       opacity: 0.0

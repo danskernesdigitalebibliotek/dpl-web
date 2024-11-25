@@ -1,0 +1,36 @@
+<?php
+
+/**
+ * @file
+ * DPL consumers module.
+ */
+
+/**
+ * Get consumer by Client ID.
+ *
+ * @return string
+ *   The consumer UUID.
+ *
+ * @throws \Exception
+ */
+function dpl_consumers_get_consumer_uuid(string $client_id): string {
+  try {
+    $consumer = \Drupal::entityTypeManager()
+      ->getStorage('consumer')
+      ->loadByProperties(['client_id' => $client_id]);
+
+    // We assume that there is only one consumer with the given client ID
+    // as it is used an as unique identifier (machine name).
+    if (!empty($consumer)) {
+      $consumer = reset($consumer);
+
+      return $consumer->uuid() ?? throw new \Exception('UUID not found.');
+    }
+    else {
+      throw new \Exception('Consumer not found.');
+    }
+  }
+  catch (\Exception $e) {
+    throw new \Exception($e->getMessage());
+  }
+}
