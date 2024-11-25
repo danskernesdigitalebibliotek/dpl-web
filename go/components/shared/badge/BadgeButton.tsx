@@ -28,8 +28,8 @@ const BadgeButton = ({
         `focus-visible h-[28px] w-auto self-start whitespace-nowrap rounded-full bg-background-overlay px-4
         py-2 text-typo-caption`,
         withAnimation && "hover:animate-wiggle",
-        isActive && "bg-foreground text-background",
         variant === "transparent" && "bg-transparent",
+        isActive && "bg-foreground text-background",
         classNames,
         ariaLabel
       )}>
