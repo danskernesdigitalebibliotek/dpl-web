@@ -34,6 +34,8 @@ vars:
   DOCKER_COMPOSE_FILES_DEFAULT: "-f docker-compose.yml"
   DOCKER_COMPOSE_FILES: "{{.DOCKER_COMPOSE_FILES | default .DOCKER_COMPOSE_FILES_DEFAULT }}"
   DOCKER_COMPOSE_FILES_CI: "{{.DOCKER_COMPOSE_FILES}} -f docker-compose.ci.yml"
+  DOCKER_COMPOSE_FILES_DEV: "{{.DOCKER_COMPOSE_FILES}} -f docker-compose.dev.yml"
+
   # Sql dump files directory
   DIR_RESTORE_DATABASE: "restore/database"
   # Directory with lagoon backup files.
@@ -174,6 +176,8 @@ tasks:
       - task dev:create-users
       # Show a one-time login to the local site.
       - task dev:cli -- drush user-login
+    env:
+      DOCKER_COMPOSE_FILES: "{{ .DOCKER_COMPOSE_FILES_DEV }}"
 
   dev:openid:configure:
     desc: Set openid connect settings based on .env variables. And run cron.
