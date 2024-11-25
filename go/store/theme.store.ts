@@ -5,7 +5,7 @@ import { devtools, persist } from "zustand/middleware"
 
 import { themeVariants } from "@/lib/types/theme"
 
-interface themeState {
+type themeState = {
   theme: themeVariants
   toggleTheme: () => void
 }
