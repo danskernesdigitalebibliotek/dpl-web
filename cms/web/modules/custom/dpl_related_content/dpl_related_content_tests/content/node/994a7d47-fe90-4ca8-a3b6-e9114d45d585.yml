@@ -1,5 +1,5 @@
 _meta:
-  version: "1.0"
+  version: '1.0'
   entity_type: node
   uuid: 994a7d47-fe90-4ca8-a3b6-e9114d45d585
   bundle: article
@@ -17,7 +17,7 @@ default:
   uid:
     - target_id: 1
   title:
-    - value: "Artikel 5 | tag2, cat2, branch2"
+    - value: 'Artikel 5 | tag2, cat2, branch2'
   created:
     - value: 1717497685
   promote:
@@ -30,15 +30,15 @@ default:
     - value: false
   entity_clone_template_image:
     - entity: e00e1460-169e-468d-9835-d664f06d0969
-      alt: ""
-      title: ""
+      alt: ''
+      title: ''
       width: 640
       height: 443
   metatag:
     - tag: meta
       attributes:
         name: title
-        content: "Artikel 5 | tag2, cat2, branch2 | DPL CMS"
+        content: 'Artikel 5 | tag2, cat2, branch2 | DPL CMS'
   path:
     - alias: /testfilialen/articles/cat2/artikel-5-tag2-cat2-branch2
       langcode: und

@@ -3,12 +3,12 @@ configuration:
   # Values will be merged with existing values.
   system.site:
     # Configuration values can be set directly
-    slogan: "Imported by DPL config import"
+    slogan: 'Imported by DPL config import'
     # Nested configuration is also supported
     page:
       # All values in nested configuration must have a key. This is required to
       # support numeric configuration keys.
-      403: "/user/login"
+      403: '/user/login'
 
 modules:
   # Add module ids to install or uninstall

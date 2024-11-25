@@ -7,8 +7,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2024-11-15 14:41+0100\n"
-"PO-Revision-Date: 2024-11-15 14:41+0100\n"
+"POT-Creation-Date: 2024-11-22 16:24+0100\n"
+"PO-Revision-Date: 2024-11-22 16:24+0100\n"
 "Last-Translator: NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
 "MIME-Version: 1.0\n"
@@ -27,6 +27,54 @@ msgstr "Søg"
 
 msgid "Open link in new window/tab"
 msgstr ""
+
+msgid ""
+"You can find <a href=\":module_url\">modules</a> and <a href=\":"
+"theme_url\">themes</a> on <a href=\":drupal_org_url\">drupal.org</a>. The "
+"following file extensions are supported: %extensions."
+msgstr ""
+"Du kan finde <a href=\":module_url\">moduler</a> og <a href=\":"
+"theme_url\">temaer</a> på <a href=\":drupal_org_url\">drupal.org</a>. De "
+"følgende filendelser er understøttet: %extensions."
+
+msgid "Add from a URL"
+msgstr ""
+
+msgid "For example: %url"
+msgstr "For eksempel: %url"
+
+msgid "Or"
+msgstr "Eller"
+
+msgid "Upload a module or theme archive"
+msgstr ""
+
+msgid "For example: %filename from your local computer"
+msgstr "For eksempel: %filename fra din egen computer"
+
+msgid "Continue"
+msgstr "Fortsæt"
+
+msgid "You must either provide a URL or upload an archive file."
+msgstr ""
+
+msgid "You must provide a URL to install."
+msgstr ""
+
+msgid "Unable to retrieve Drupal project from %url."
+msgstr "Kan ikke hente Drupal-projekt fra %url."
+
+msgid "Provided archive contains no files."
+msgstr "Det angivne arkiv indeholder ingen filer."
+
+msgid "Unable to determine %project name."
+msgstr "Kan ikke fastslå %project navn."
+
+msgid "%project is not a module."
+msgstr ""
+
+msgid "Update manager"
+msgstr "Update manager"
 
 msgctxt "dpl_instant_loan"
 msgid "Enabled"
@@ -948,6 +996,10 @@ msgstr "Skøn-/faglitteratur"
 msgctxt "Search Result"
 msgid "Fictional characters"
 msgstr "Fiktive personer"
+
+msgctxt "Search Result"
+msgid "Game platform"
+msgstr ""
 
 msgctxt "Search Result"
 msgid "Genre and form"
@@ -4126,6 +4178,18 @@ msgstr ""
 msgid "Add functionality to link field"
 msgstr ""
 
+msgid "Webmaster"
+msgstr ""
+
+msgid "Webmaster library support functionality"
+msgstr ""
+
+msgid "Add new or update module"
+msgstr ""
+
+msgid "Install or update module"
+msgstr ""
+
 msgid "Article"
 msgstr "Artikel"
 
@@ -6886,9 +6950,6 @@ msgstr "Gem indstillinger"
 msgctxt "Entity type group"
 msgid "Content"
 msgstr "Indhold"
-
-msgid "Continue"
-msgstr "Fortsæt"
 
 msgid "Save and continue"
 msgstr "Gem og fortsæt"
@@ -21225,6 +21286,30 @@ msgstr "Arrangementer"
 msgctxt "search_api.server.db_search:name"
 msgid "DB Search"
 msgstr "DB Søgning"
+
+msgctxt "simple_oauth.oauth2_token.bundle.access_token:label"
+msgid "Access Token"
+msgstr ""
+
+msgctxt "simple_oauth.oauth2_token.bundle.access_token:description"
+msgid "The access token type."
+msgstr ""
+
+msgctxt "simple_oauth.oauth2_token.bundle.auth_code:label"
+msgid "Auth code"
+msgstr ""
+
+msgctxt "simple_oauth.oauth2_token.bundle.auth_code:description"
+msgid "The auth code type."
+msgstr ""
+
+msgctxt "simple_oauth.oauth2_token.bundle.refresh_token:label"
+msgid "Refresh token"
+msgstr ""
+
+msgctxt "simple_oauth.oauth2_token.bundle.refresh_token:description"
+msgid "The refresh token type."
+msgstr ""
 
 msgctxt "system.action.eventinstance_break_lock_action:label"
 msgid "Break lock eventinstance"

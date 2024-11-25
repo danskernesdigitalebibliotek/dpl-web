@@ -1,4 +1,4 @@
 services:
   dpl_unilogin.settings:
     class: Drupal\dpl_unilogin\UniloginConfiguration
-    arguments: ["@config.manager"]
+    arguments: ['@config.manager']

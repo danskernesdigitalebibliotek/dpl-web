@@ -56,6 +56,21 @@ $settings['config_exclude_modules'] = [
 // advanced security measure: '../config/sync'.
 $settings['config_sync_directory'] = '../config/sync';
 
+/**
+ * Private file path.
+ *
+ * A local file system path where private files will be stored. This directory
+ * must be absolute, outside the Drupal installation directory and not
+ * accessible over the web.
+ *
+ * Note: Caches need to be cleared when this value is changed to make the
+ * private:// stream wrapper available to the system.
+ *
+ * See https://www.drupal.org/documentation/modules/file for more information
+ * about securing private files.
+ */
+$settings['file_private_path'] = $app_root . '/sites/default/files/private';
+
 // Set service base urls for the react apps.
 $config['dpl_react_apps.settings']['services'] = [
   'cover' => ['base_url' => 'https://cover.dandigbib.org'],

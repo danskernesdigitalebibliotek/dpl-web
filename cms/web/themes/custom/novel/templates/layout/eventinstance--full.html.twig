@@ -1,7 +1,7 @@
 {% set date = eventinstance.get('date').get(0) %}
 {% set description_items = [
   {
-    label: "Date"|trans,
+    label: 'Date'|t({}, {'context': 'DPL event'}),
     value: content.date
   },
   {

@@ -128,6 +128,7 @@ class DplReactAppsController extends ControllerBase {
       'facet-dk5-text' => $this->t('Dk5', [], ['context' => 'Search Result']),
       'facet-fiction-nonfiction-text' => $this->t('Fiction or non-fiction', [], ['context' => 'Search Result']),
       'facet-fictional-characters-text' => $this->t('Fictional characters', [], ['context' => 'Search Result']),
+      'facet-game-platform-text' => $this->t('Game platform', [], ['context' => 'Search Result']),
       'facet-genre-and-form-text' => $this->t('Genre and form', [], ['context' => 'Search Result']),
       'facet-main-languages-text' => $this->t('Main languages', [], ['context' => 'Search Result']),
       'facet-material-types-text' => $this->t('Material types', [], ['context' => 'Search Result']),

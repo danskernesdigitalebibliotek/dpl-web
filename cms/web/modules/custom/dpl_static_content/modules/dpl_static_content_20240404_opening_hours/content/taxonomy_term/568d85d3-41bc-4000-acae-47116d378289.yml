@@ -1,5 +1,5 @@
 _meta:
-  version: "1.0"
+  version: '1.0'
   entity_type: taxonomy_term
   uuid: 568d85d3-41bc-4000-acae-47116d378289
   bundle: opening_hours_categories
@@ -19,14 +19,14 @@ default:
     - tag: meta
       attributes:
         name: title
-        content: "Telefontid | DPL CMS"
+        content: 'Telefontid | DPL CMS'
     - tag: link
       attributes:
         rel: canonical
-        href: "/taxonomy/term/18"
+        href: '/taxonomy/term/18'
   path:
-    - alias: ""
+    - alias: ''
       langcode: da
   field_opening_hours_color:
-    - color: "#4986E7"
+    - color: '#4986E7'
       opacity: 0.0

@@ -1,7 +1,7 @@
-name: "DPL Library Agency"
+name: 'DPL Library Agency'
 type: module
-description: "Module for handling library agency configuration and functionality"
-package: "DPL"
+description: 'Module for handling library agency configuration and functionality'
+package: 'DPL'
 core_version_requirement: ^9 || ^10
 dependencies:
   - dpl_fbs:dpl_fbs

@@ -1,7 +1,7 @@
 services:
   logger.channel.dpl_cache_settings:
     parent: logger.channel_base
-    arguments: ["dpl_cache_settings"]
+    arguments: ['dpl_cache_settings']
   dpl_cache_settings.route_subscriber:
     class: Drupal\dpl_cache_settings\Routing\RouteSubscriber
     tags:
