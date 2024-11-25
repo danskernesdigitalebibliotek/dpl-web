@@ -22,7 +22,6 @@ const WorkCard = ({ work }: WorkCardProps) => {
     type: "pid",
     identifiers: [getAllWorkPids(work).join(", ")],
     sizes: [
-      // TODO: These sizes should be defined in a general global config.
       "xx-small, small, small-medium, medium, medium-large, large, original, default" as GetCoverCollectionSizesItem,
     ],
   })
@@ -30,7 +29,6 @@ const WorkCard = ({ work }: WorkCardProps) => {
   const shouldQueryBeEnabled = () => {
     return isbns && isbns.length > 0
   }
-
   const { data: dataPublizon } = useGetV1ProductsIdentifier(isbns[0] || "", {
     query: {
       // Publizon / useGetV1ProductsIdentifier is responsible for online
@@ -42,7 +40,6 @@ const WorkCard = ({ work }: WorkCardProps) => {
   const bestRepresentation = work.manifestations.bestRepresentation
   const allPids = [bestRepresentation.pid, ...getAllWorkPids(work)]
   const coverSrc = getCoverUrls(dataCovers, allPids || [], [
-    // TODO: These sizes should be defined in a general global config.
     "default",
     "original",
     "large",
