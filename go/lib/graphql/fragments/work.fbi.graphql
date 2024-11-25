@@ -17,6 +17,7 @@ fragment WorkMaterialTypes on Work {
     }
   }
 }
+
 fragment WorkTitles on Work {
   titles {
     full
@@ -63,6 +64,9 @@ fragment WorkFullWorkPage on Work {
   ...WorkPublicationYear
   manifestations {
     all {
+      ...ManifestationWorkPage
+    }
+    bestRepresentation {
       ...ManifestationWorkPage
     }
   }
