@@ -20,8 +20,6 @@ function WorkPageLayout({ wid }: { wid: string }) {
 
   const manifestations = data?.work?.manifestations.all
 
-  console.log(manifestations)
-
   const identifier = manifestations?.[0].identifiers?.[0].value || ""
 
   const url = resolveUrl({

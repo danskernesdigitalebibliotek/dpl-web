@@ -37,8 +37,6 @@ const Player = ({ type, orderId, identifier }: ReaderType) => {
   }
 
   if (type === "demo") {
-    console.log(identifier)
-
     return (
       <iframe
         style={{ height: "300px" }}
