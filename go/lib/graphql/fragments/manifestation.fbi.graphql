@@ -43,6 +43,13 @@ fragment ManifestationAccess on Manifestation {
   }
 }
 
+fragment ManifestationTitles on Manifestation {
+  titles {
+    main
+    identifyingAddition
+  }
+}
+
 # Bigger chunks for specific pages (built from above fragments) ----------------
 
 fragment ManifestationSearchPageTeaser on Manifestation {
@@ -54,4 +61,5 @@ fragment ManifestationWorkPage on Manifestation {
   ...ManifestationIdentifiers
   ...ManifestationCover
   ...ManifestationAccess
+  ...ManifestationTitles
 }
