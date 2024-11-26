@@ -1,0 +1,48 @@
+<?php
+
+/**
+ * @file
+ * Install, update and uninstall functions for the dpl_graphql module.
+ */
+
+declare(strict_types=1);
+
+use Drupal\Core\File\FileSystemInterface;
+use Drupal\drupal_typed\DrupalTyped;
+use Drupal\simple_oauth\Service\Exception\ExtensionNotLoadedException;
+use Drupal\simple_oauth\Service\Exception\FilesystemValidationException;
+use Drupal\simple_oauth\Service\KeyGeneratorService;
+
+/**
+ * Run on initial site setup.
+ *
+ * We want to run the dpl_graphql_update_10001 on both
+ * new and existing sites.
+ */
+function dpl_graphql_install(): string {
+  $messages[] = dpl_graphql_update_10001();
+
+  return implode('\r\n', $messages);
+
+}
+
+/**
+ * Generates public and private keys used for the simple_oauth module.
+ */
+function dpl_graphql_update_10001(): string {
+  $file_system = DrupalTyped::service(FileSystemInterface::class, 'file_system');
+  $key_generator = DrupalTyped::service(KeyGeneratorService::class, 'simple_oauth.key.generator');
+
+  $private_files_path = $file_system->realpath('private://');
+  $path = $private_files_path . '/simple_oauth_keys';
+  $file_system->prepareDirectory($path, FileSystemInterface::CREATE_DIRECTORY);
+
+  try {
+    $key_generator->generateKeys($path);
+  }
+  catch (ExtensionNotLoadedException | FilesystemValidationException $e) {
+    return $e->getMessage();
+  }
+
+  return "Public and private key for simple_oauth generated successfully.";
+}

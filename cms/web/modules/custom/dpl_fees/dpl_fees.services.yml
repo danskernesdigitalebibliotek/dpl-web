@@ -1,4 +1,4 @@
 services:
   dpl_fees.settings:
     class: Drupal\dpl_fees\DplFeesSettings
-    arguments: ["@config.manager"]
+    arguments: ['@config.manager']

@@ -1,5 +1,5 @@
-name: "DPL Mail"
-description: "Handles mail related features and configuration"
+name: 'DPL Mail'
+description: 'Handles mail related features and configuration'
 package: DPL
 
 type: module

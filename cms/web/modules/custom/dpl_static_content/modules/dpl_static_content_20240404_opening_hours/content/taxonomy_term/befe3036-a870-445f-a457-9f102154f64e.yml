@@ -1,5 +1,5 @@
 _meta:
-  version: "1.0"
+  version: '1.0'
   entity_type: taxonomy_term
   uuid: befe3036-a870-445f-a457-9f102154f64e
   bundle: opening_hours_categories
@@ -19,14 +19,14 @@ default:
     - tag: meta
       attributes:
         name: title
-        content: "Selvbetjening | DPL CMS"
+        content: 'Selvbetjening | DPL CMS'
     - tag: link
       attributes:
         rel: canonical
-        href: "/taxonomy/term/16"
+        href: '/taxonomy/term/16'
   path:
-    - alias: ""
+    - alias: ''
       langcode: da
   field_opening_hours_color:
-    - color: "#4986E7"
+    - color: '#4986E7'
       opacity: 0.0
