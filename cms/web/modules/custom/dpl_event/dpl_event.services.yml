@@ -46,8 +46,8 @@ services:
   dpl_event.event_series_redirect:
     class: Drupal\dpl_event\EventSubscriber\EventSeriesRedirect
     arguments:
-      - "@entity_type.manager"
-      - "@dpl_event.reoccurring_date_formatter"
+      - '@entity_type.manager'
+      - '@dpl_event.reoccurring_date_formatter'
     tags:
       - { name: event_subscriber }
   dpl_event.event_instance_edit_redirect:
