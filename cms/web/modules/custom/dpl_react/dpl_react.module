@@ -13,7 +13,6 @@ use Drupal\dpl_react\DplReactInterface;
 
 use function Safe\file_get_contents as file_get_contents;
 use function Safe\json_encode;
-use function Safe\sprintf as sprintf;
 
 /**
  * Implements hook_library_info_alter().

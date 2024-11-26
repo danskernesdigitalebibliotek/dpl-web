@@ -1,4 +1,4 @@
 services:
   dpl_dashboard.settings:
     class: Drupal\dpl_dashboard\DplDashboardSettings
-    arguments: ["@config.manager"]
+    arguments: ['@config.manager']

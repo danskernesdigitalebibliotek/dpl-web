@@ -18,7 +18,6 @@ use Drush\Commands\DrushCommands;
 use GuzzleHttp\ClientInterface;
 use GuzzleHttp\Exception\TransferException;
 use function Safe\preg_match;
-use function Safe\sprintf;
 
 /**
  * A Drush commandfile.

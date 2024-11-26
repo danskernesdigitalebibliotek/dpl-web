@@ -86,8 +86,10 @@ tasks:
   dev:build:
     summary: Build docker containers
     # Ensure that we only rebuild if there are changes to Dockerfiles
+    # or the config files used.
     sources:
-      - "{{ .LAGOON_DIR }}/*.dockerfile"
+      - "{{ .LAGOON_DIR }}/**/*"
+      - "{{ .LAGOON_DIR }}/*"
     cmds:
       - docker compose build
 
@@ -381,6 +383,16 @@ tasks:
     desc: Update the example content module with data from the current site
     cmds:
       - cmd: task dev:cli -- drush default-content:export-module dpl_example_content
+
+  dev:go:set-graphql-secret:
+    desc: Sets the GraphQL consumer secret based on the .env variable.
+    cmds:
+      - cmd: task dev:cli -- drush dpl_consumers:set-consumer-secret
+
+  dev:go:graphql-credentials:
+    desc: Get the GraphQL consumer credentials
+    cmds:
+      - cmd: task dev:cli -- drush dpl_consumers:consumer-credentials
 
   ci:reset:
     desc: Create CI setup in a clean state
