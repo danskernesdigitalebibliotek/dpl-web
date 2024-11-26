@@ -1,6 +1,6 @@
 name: DPL CMS
 type: profile
-description: "Web platform for the Danish Public Libraries"
+description: 'Web platform for the Danish Public Libraries'
 core_version_requirement: ^9 || ^10
 
 distribution:
@@ -22,5 +22,5 @@ distribution:
 # Note that this will not set any theme as the default theme.
 #themes:
 
-"interface translation project": dpl_cms
-"interface translation server pattern": https://danskernesdigitalebibliotek.github.io/dpl-cms/translations/%language.po
+'interface translation project': dpl_cms
+'interface translation server pattern': https://danskernesdigitalebibliotek.github.io/dpl-cms/translations/%language.po

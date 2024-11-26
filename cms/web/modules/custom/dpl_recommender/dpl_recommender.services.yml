@@ -1,4 +1,4 @@
 services:
   dpl_recommender.settings:
     class: Drupal\dpl_recommender\DplRecommenderSettings
-    arguments: ["@config.manager"]
+    arguments: ['@config.manager']
