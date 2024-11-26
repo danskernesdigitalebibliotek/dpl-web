@@ -19,7 +19,7 @@ function WorkPageLayout({ workId }: WorkPageLayoutProps) {
     queryFn: useGetMaterialQuery.fetcher({ wid: workId }),
   })
   const pageContainerClasses =
-    "content-container my-grid-gap-2 flex-row flex-wrap space-y-grid-gap-2"
+    "content-container my-grid-gap-2 flex-row flex-wrap space-y-grid-gap-2 lg:space-y-grid-gap-1 lg:my-grid-gap-half"
   const { selectedManifestation, setSelectedManifestation } = useSelectedManifestationStore()
 
   useEffect(() => {
