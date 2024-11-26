@@ -25,9 +25,6 @@ export const CoverPicture = ({ src, lowResSrc, alt, withTilt = false }: CoverPic
   const [imageLoaded, setImageLoaded] = useState(false)
   const [imageError, setImageError] = useState(false)
 
-  // Decide the final width/height depending on whether the image is horizontal or vertical
-  const finalMeasurment = imageWidth >= imageHeight ? { width: "100%" } : { height: "70vh" }
-
   return (
     <div className="flex h-full w-full select-none items-center lg:w-[80%]" ref={ref}>
       {!imageError && src ? (
@@ -38,13 +35,13 @@ export const CoverPicture = ({ src, lowResSrc, alt, withTilt = false }: CoverPic
           tiltMaxAngleY={withTilt ? 10 : 0}
           tiltReverse={true}
           className={"relative w-full"}
-          style={{ paddingTop, ...finalMeasurment }}>
+          style={{ paddingTop, width: "100%" }}>
           {lowResSrc && (
             <Image
               src={lowResSrc}
               alt={alt}
-              height={imageHeight}
-              width={imageWidth}
+              height={0}
+              width={0}
               sizes="20px"
               loading="eager"
               className={cn(
@@ -64,8 +61,8 @@ export const CoverPicture = ({ src, lowResSrc, alt, withTilt = false }: CoverPic
             <Image
               src={src}
               alt={alt}
-              height={imageHeight}
-              width={imageWidth}
+              height={0}
+              width={0}
               sizes="100vw"
               loading="lazy"
               className={cn(
