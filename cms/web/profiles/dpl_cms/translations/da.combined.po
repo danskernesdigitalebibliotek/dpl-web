@@ -7,8 +7,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2024-11-26 09:23+0100\n"
-"PO-Revision-Date: 2024-11-26 09:23+0100\n"
+"POT-Creation-Date: 2024-11-26 09:31+0100\n"
+"PO-Revision-Date: 2024-11-26 09:31+0100\n"
 "Last-Translator: NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
 "MIME-Version: 1.0\n"
@@ -9134,6 +9134,15 @@ msgstr ""
 
 msgid "Show edit button"
 msgstr "Vis redigeringsknap"
+
+msgid "Edit form mode: @form_mode"
+msgstr ""
+
+msgid "Form mode"
+msgstr "Formulartilstand"
+
+msgid "You can select in which mode edit form will be rendered."
+msgstr ""
 
 msgid "Edit media item"
 msgstr "Rediger medieelement"
