@@ -66,7 +66,7 @@ const WorkCard = ({ work }: WorkCardProps) => {
               BLÅ
             </Badge>
           )}
-          <div className="relative mx-auto flex h-full w-full items-center">
+          <div className="relative mx-auto flex h-full w-full items-center justify-center">
             {!isLoadingCovers && (
               <CoverPicture
                 lowResSrc={lowResCover || ""}
