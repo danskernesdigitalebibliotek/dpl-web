@@ -1,7 +1,6 @@
-import { useWindowSize } from "@uidotdev/usehooks"
 import { motion } from "framer-motion"
 import Image from "next/image"
-import React, { useEffect, useRef, useState } from "react"
+import React, { useRef, useState } from "react"
 import Tilt from "react-parallax-tilt"
 
 import { cn } from "@/lib/helpers/helper.cn"
@@ -16,27 +15,21 @@ type CoverPictureProps = {
   withTilt?: boolean
 }
 export const CoverPicture = ({ src, lowResSrc, alt, withTilt = false }: CoverPictureProps) => {
-  const size = useWindowSize()
-
   const [imageHeight, setImageHeight] = useState(0)
   const [imageWidth, setImageWidth] = useState(0)
   const imageAspectRatio = imageWidth / imageHeight
 
   // get the container height
   const ref = useRef<HTMLDivElement>(null)
-  const containerHeight = ref.current?.getBoundingClientRect().height || 0
-
-  // calculate the max width using image aspect ratio and container width
-  const imageWidthByContainerHeight = imageAspectRatio * containerHeight
-  const paddingTop = 100 / imageAspectRatio + "%"
-
-  useEffect(() => {}, [size.width])
-
+  const paddingTop = `calc(${100 / imageAspectRatio}% + 50px)`
   const [imageLoaded, setImageLoaded] = useState(false)
   const [imageError, setImageError] = useState(false)
 
+  // Decide the final width/height depending on whether the image is horizontal or vertical
+  const finalMeasurment = imageWidth >= imageHeight ? { width: "100%" } : { height: "70vh" }
+
   return (
-    <div className="flex h-full w-full items-center" ref={ref}>
+    <div className="flex h-full w-full select-none items-center lg:w-[80%]" ref={ref}>
       {!imageError && src ? (
         <Tilt
           scale={withTilt ? 1.05 : 1}
@@ -44,8 +37,8 @@ export const CoverPicture = ({ src, lowResSrc, alt, withTilt = false }: CoverPic
           tiltMaxAngleX={withTilt ? 10 : 0}
           tiltMaxAngleY={withTilt ? 10 : 0}
           tiltReverse={true}
-          className={"relative m-auto"}
-          style={{ paddingTop, width: `min(100%,${imageWidthByContainerHeight}px)` }}>
+          className={"relative w-full"}
+          style={{ paddingTop, ...finalMeasurment }}>
           {lowResSrc && (
             <Image
               src={lowResSrc}
@@ -80,7 +73,11 @@ export const CoverPicture = ({ src, lowResSrc, alt, withTilt = false }: CoverPic
                   transition-all duration-500 will-change-transform`,
                 imageLoaded ? "opacity-100" : "opacity-0"
               )}
-              onLoad={() => {
+              onLoad={({ target }) => {
+                // get the intrinsic dimensions of the image
+                const { naturalWidth, naturalHeight } = target as HTMLImageElement
+                setImageHeight(naturalHeight)
+                setImageWidth(naturalWidth)
                 setImageLoaded(true)
               }}
               onError={() => {
