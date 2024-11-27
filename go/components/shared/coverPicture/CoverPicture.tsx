@@ -1,6 +1,6 @@
 import { motion } from "framer-motion"
 import Image from "next/image"
-import React, { useRef, useState } from "react"
+import React, { useState } from "react"
 import Tilt from "react-parallax-tilt"
 
 import { cn } from "@/lib/helpers/helper.cn"
@@ -18,15 +18,12 @@ export const CoverPicture = ({ src, lowResSrc, alt, withTilt = false }: CoverPic
   const [imageHeight, setImageHeight] = useState(0)
   const [imageWidth, setImageWidth] = useState(0)
   const imageAspectRatio = imageWidth / imageHeight
-
-  // get the container height
-  const ref = useRef<HTMLDivElement>(null)
   const paddingTop = `calc(${100 / imageAspectRatio}% + 50px)`
   const [imageLoaded, setImageLoaded] = useState(false)
   const [imageError, setImageError] = useState(false)
 
   return (
-    <div className="flex h-full w-full select-none items-center lg:w-[80%]" ref={ref}>
+    <div className="flex h-full w-full select-none items-center lg:w-[80%]">
       {!imageError && src ? (
         <Tilt
           scale={withTilt ? 1.05 : 1}
