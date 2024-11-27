@@ -1,4 +1,4 @@
-import goConfig from "@/lib/config/config"
+import goConfig from "@/lib/config/goConfig"
 
 export const fetchData = <TData, TVariables>(
   query: string,

@@ -1,4 +1,5 @@
-import { useQuery, UseQueryOptions, useSuspenseQuery, UseSuspenseQueryOptions } from '@tanstack/react-query';
+import { useQuery, useSuspenseQuery, UseQueryOptions, UseSuspenseQueryOptions } from '@tanstack/react-query';
+import { fetcher } from '@/lib/graphql/fetchers/dpl-cms.fetcher';
 export type Maybe<T> = T | null;
 export type InputMaybe<T> = Maybe<T>;
 export type Exact<T extends { [key: string]: unknown }> = { [K in keyof T]: T[K] };
@@ -6,26 +7,6 @@ export type MakeOptional<T, K extends keyof T> = Omit<T, K> & { [SubKey in K]?: 
 export type MakeMaybe<T, K extends keyof T> = Omit<T, K> & { [SubKey in K]: Maybe<T[SubKey]> };
 export type MakeEmpty<T extends { [key: string]: unknown }, K extends keyof T> = { [_ in K]?: never };
 export type Incremental<T> = T | { [P in keyof T]?: P extends ' $fragmentName' | '__typename' ? T[P] : never };
-
-function fetcher<TData, TVariables>(query: string, variables?: TVariables) {
-  return async (): Promise<TData> => {
-    const res = await fetch("http://dapple-cms.docker/graphql", {
-    method: "POST",
-    ...({"headers":{"Content-Type":"application/json"}}),
-      body: JSON.stringify({ query, variables }),
-    });
-
-    const json = await res.json();
-
-    if (json.errors) {
-      const { message } = json.errors[0];
-
-      throw new Error(message);
-    }
-
-    return json.data;
-  }
-}
 /** All built-in and custom scalars, mapped to their actual values */
 export type Scalars = {
   ID: { input: string; output: string; }
@@ -90,6 +71,12 @@ export type DateTime = {
   timestamp: Scalars['Timestamp']['output'];
   /** A field whose value exists in the standard IANA Time Zone Database. */
   timezone: Scalars['TimeZone']['output'];
+};
+
+/** DPL Configuration. */
+export type DplConfiguration = {
+  __typename?: 'DplConfiguration';
+  unilogin?: Maybe<UniloginConfiguration>;
 };
 
 /** A file object to represent an managed file. */
@@ -556,6 +543,8 @@ export type ParagraphUnion = ParagraphAccordion | ParagraphBanner | ParagraphBre
 /** The schema's entry-point for queries. */
 export type Query = {
   __typename?: 'Query';
+  /** DPL Configuration */
+  dplConfiguration?: Maybe<DplConfiguration>;
   /** Schema information. */
   info: SchemaInformation;
   /** Load a NodeArticle entity by id */
@@ -783,6 +772,15 @@ export type Translation = {
   title?: Maybe<Scalars['String']['output']>;
 };
 
+/** List of DPL-Go Unilogin configuration. */
+export type UniloginConfiguration = {
+  __typename?: 'UniloginConfiguration';
+  unilogin_api_client_id?: Maybe<Scalars['String']['output']>;
+  unilogin_api_client_secret?: Maybe<Scalars['String']['output']>;
+  unilogin_api_url?: Maybe<Scalars['String']['output']>;
+  unilogin_api_wellknown_url?: Maybe<Scalars['String']['output']>;
+};
+
 /**
  * Unsupported entity or field type in the schema.
  * This entity may not have been enabled in the schema yet and is being referenced via entity reference.
@@ -799,6 +797,11 @@ export type GetArticleQueryVariables = Exact<{
 
 
 export type GetArticleQuery = { __typename?: 'Query', nodeArticle?: { __typename?: 'NodeArticle', title: string, subtitle?: string | null, paragraphs?: Array<{ __typename: 'ParagraphAccordion' } | { __typename: 'ParagraphBanner' } | { __typename: 'ParagraphBreadcrumbChildren' } | { __typename: 'ParagraphCardGridAutomatic' } | { __typename: 'ParagraphCardGridManual' } | { __typename: 'ParagraphContentSlider' } | { __typename: 'ParagraphContentSliderAutomatic' } | { __typename: 'ParagraphFilteredEventList' } | { __typename: 'ParagraphManualEventList' } | { __typename: 'ParagraphTextBody', body?: { __typename?: 'Text', value?: string | null } | null }> | null } | null };
+
+export type GetDplCmsConfigurationQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type GetDplCmsConfigurationQuery = { __typename?: 'Query', dplConfiguration?: { __typename?: 'DplConfiguration', unilogin?: { __typename?: 'UniloginConfiguration', unilogin_api_url?: string | null, unilogin_api_wellknown_url?: string | null, unilogin_api_client_id?: string | null, unilogin_api_client_secret?: string | null } | null } | null };
 
 
 
@@ -856,4 +859,56 @@ export const useSuspenseGetArticleQuery = <
 useSuspenseGetArticleQuery.getKey = (variables: GetArticleQueryVariables) => ['getArticleSuspense', variables];
 
 
-useGetArticleQuery.fetcher = (variables: GetArticleQueryVariables) => fetcher<GetArticleQuery, GetArticleQueryVariables>(GetArticleDocument, variables);
+useGetArticleQuery.fetcher = (variables: GetArticleQueryVariables, options?: RequestInit['headers']) => fetcher<GetArticleQuery, GetArticleQueryVariables>(GetArticleDocument, variables, options);
+
+export const GetDplCmsConfigurationDocument = `
+    query getDplCmsConfiguration {
+  dplConfiguration {
+    unilogin {
+      unilogin_api_url
+      unilogin_api_wellknown_url
+      unilogin_api_client_id
+      unilogin_api_client_secret
+    }
+  }
+}
+    `;
+
+export const useGetDplCmsConfigurationQuery = <
+      TData = GetDplCmsConfigurationQuery,
+      TError = unknown
+    >(
+      variables?: GetDplCmsConfigurationQueryVariables,
+      options?: Omit<UseQueryOptions<GetDplCmsConfigurationQuery, TError, TData>, 'queryKey'> & { queryKey?: UseQueryOptions<GetDplCmsConfigurationQuery, TError, TData>['queryKey'] }
+    ) => {
+    
+    return useQuery<GetDplCmsConfigurationQuery, TError, TData>(
+      {
+    queryKey: variables === undefined ? ['getDplCmsConfiguration'] : ['getDplCmsConfiguration', variables],
+    queryFn: fetcher<GetDplCmsConfigurationQuery, GetDplCmsConfigurationQueryVariables>(GetDplCmsConfigurationDocument, variables),
+    ...options
+  }
+    )};
+
+useGetDplCmsConfigurationQuery.getKey = (variables?: GetDplCmsConfigurationQueryVariables) => variables === undefined ? ['getDplCmsConfiguration'] : ['getDplCmsConfiguration', variables];
+
+export const useSuspenseGetDplCmsConfigurationQuery = <
+      TData = GetDplCmsConfigurationQuery,
+      TError = unknown
+    >(
+      variables?: GetDplCmsConfigurationQueryVariables,
+      options?: Omit<UseSuspenseQueryOptions<GetDplCmsConfigurationQuery, TError, TData>, 'queryKey'> & { queryKey?: UseSuspenseQueryOptions<GetDplCmsConfigurationQuery, TError, TData>['queryKey'] }
+    ) => {
+    
+    return useSuspenseQuery<GetDplCmsConfigurationQuery, TError, TData>(
+      {
+    queryKey: variables === undefined ? ['getDplCmsConfigurationSuspense'] : ['getDplCmsConfigurationSuspense', variables],
+    queryFn: fetcher<GetDplCmsConfigurationQuery, GetDplCmsConfigurationQueryVariables>(GetDplCmsConfigurationDocument, variables),
+    ...options
+  }
+    )};
+
+useSuspenseGetDplCmsConfigurationQuery.getKey = (variables?: GetDplCmsConfigurationQueryVariables) => variables === undefined ? ['getDplCmsConfigurationSuspense'] : ['getDplCmsConfigurationSuspense', variables];
+
+
+useGetDplCmsConfigurationQuery.fetcher = (variables?: GetDplCmsConfigurationQueryVariables, options?: RequestInit['headers']) => fetcher<GetDplCmsConfigurationQuery, GetDplCmsConfigurationQueryVariables>(GetDplCmsConfigurationDocument, variables, options);

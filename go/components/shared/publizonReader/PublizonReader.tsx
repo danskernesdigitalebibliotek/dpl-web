@@ -9,15 +9,17 @@ type ReaderType =
   | {
       type: "demo"
       identifier: string
+      orderId?: never
       onBackCallback: () => void
     }
   | {
       type: "rent"
+      identifier?: never
       orderId: string
       onBackCallback: () => void
     }
 
-const Reader = (props: ReaderType) => {
+const Reader = ({ type, onBackCallback, identifier, orderId }: ReaderType) => {
   useEffect(() => {
     readerAssets.forEach(appendAsset)
 
@@ -26,7 +28,7 @@ const Reader = (props: ReaderType) => {
     // @ts-ignore
     // eslint-disable-next-line @typescript-eslint/no-shadow
     window.onReaderBackCallback = () => {
-      props.onBackCallback()
+      onBackCallback()
     }
 
     return () => {
@@ -35,16 +37,16 @@ const Reader = (props: ReaderType) => {
       delete window.onReaderBackCallback
       readerAssets.forEach(removeAsset)
     }
-  }, [props])
+  }, [])
 
-  if (props.type === "rent") {
+  if (type === "rent") {
     return (
       <div>
-        <p>orderId: {props.orderId}</p>
+        <p>orderId: {orderId}</p>
         <div
           id="pubhub-reader"
           // eslint-disable-next-line react/no-unknown-property
-          order-id={props.orderId}
+          order-id={orderId}
           role="button"
           tabIndex={0}
           close-href="javascript:window.onReaderBackCallback()"
@@ -54,14 +56,14 @@ const Reader = (props: ReaderType) => {
     )
   }
 
-  if (props.type === "demo") {
+  if (type === "demo") {
     return (
       <div
         id="pubhub-reader"
         // eslint-disable-next-line @typescript-eslint/ban-ts-comment
         // @ts-ignore
         // eslint-disable-next-line react/no-unknown-property
-        identifier={props.identifier}
+        identifier={identifier}
         close-href="javascript:window.onReaderBackCallback()"
         role="button"
         tabIndex={0}

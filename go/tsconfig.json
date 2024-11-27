@@ -1,6 +1,7 @@
 {
   "extends": "@tsconfig/create-react-app/tsconfig.json",
   "compilerOptions": {
+    "types": ["vitest/globals"],
     "lib": ["dom", "dom.iterable", "esnext"],
     "allowJs": true,
     "skipLibCheck": true,
@@ -33,6 +34,6 @@
     "node_modules",
     "lib/rest/cover-service-api/model",
     "lib/rest/cover-service-api/cover-service.ts",
-    "lib/graphql/generated/fbi/*.tsx"
+    "lib/graphql/generated/**/*.tsx"
   ]
 }
