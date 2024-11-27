@@ -1,5 +1,5 @@
 import { motion } from "framer-motion"
-import React, { useState } from "react"
+import React, { useEffect, useState } from "react"
 
 import { cn } from "@/lib/helpers/helper.cn"
 
@@ -12,11 +12,19 @@ export type SlideSelectOption = {
 
 export type SlideSelectProps = {
   options: SlideSelectOption[]
+  initialOption?: SlideSelectOption
   onOptionSelect: (option: SlideSelectOption) => void
 }
 
-const SlideSelect = ({ options, onOptionSelect }: SlideSelectProps) => {
+const SlideSelect = ({ options, initialOption, onOptionSelect }: SlideSelectProps) => {
   const [selected, setSelected] = useState<number>(0)
+
+  useEffect(() => {
+    if (initialOption) {
+      setSelected(options.findIndex(option => option.value === initialOption.value))
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [])
 
   return (
     <div className="relative flex flex-row flex-wrap justify-center rounded-full border-2 border-foreground p-1">
