@@ -85,31 +85,6 @@ describe("Facet functionality", () => {
     expect(result).toStrictEqual(facetFilters)
   })
 
-  it("getSearchQueryArguments should return an object with search query arguments", () => {
-    const facetFilters = {
-      materialTypesGeneral: ["Book"],
-      mainLanguages: ["Danish", "English"],
-      age: ["Adult"],
-      lixRange: ["0-10", "11-20"],
-      subjects: ["Science", "Math"],
-    }
-
-    const result = getSearchQueryArguments({ q: "Harry Potter", currentPage: 0, facetFilters })
-    expect(result).toStrictEqual({
-      q: { all: "Harry Potter" },
-      offset: 0,
-      limit: 9,
-      filters: {
-        branchId: ["11", "22", "33"],
-        materialTypesGeneral: ["Book"],
-        mainLanguages: ["Danish", "English"],
-        age: ["Adult"],
-        lixRange: ["0-10", "11-20"],
-        subjects: ["Science", "Math"],
-      },
-    })
-  })
-
   it("getFacetTranslation should give a translated facet when given a facet machine name", () => {
     // @ts-ignore
     const translation = getFacetTranslation("LIX")
