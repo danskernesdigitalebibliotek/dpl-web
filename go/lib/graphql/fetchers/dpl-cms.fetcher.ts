@@ -11,33 +11,26 @@ export function fetcher<TData, TVariables>(
   }
 
   return async (): Promise<TData> => {
-    try {
-      const res = await fetch(dplCmsGraphqlEndpoint, {
-        method: "POST",
-        ...{
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: `Basic ${dplCmsGraphqlBasicToken}`,
-            ...options,
-          },
+    const res = await fetch(dplCmsGraphqlEndpoint, {
+      method: "POST",
+      ...{
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Basic ${dplCmsGraphqlBasicToken}`,
+          ...options,
         },
-        body: JSON.stringify({ query, variables }),
-      })
-      try {
-        const json = await res.json()
+      },
+      body: JSON.stringify({ query, variables }),
+    })
 
-        if (json.errors) {
-          const { message } = json.errors[0]
+    const json = await res.json()
 
-          throw new Error(message)
-        }
+    if (json.errors) {
+      const { message } = json.errors[0]
 
-        return json.data
-      } catch {
-        throw new Error("Failed to parse DPL CMS GraphQL data")
-      }
-    } catch {
-      throw new Error(`Failed to fetch DPL CMS GraphQL data at ${dplCmsGraphqlEndpoint}`)
+      throw new Error(message)
     }
+
+    return json.data
   }
 }
