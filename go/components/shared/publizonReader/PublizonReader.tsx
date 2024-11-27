@@ -1,81 +1,72 @@
-import React, { CSSProperties, useEffect } from "react"
+"use client"
 
-import { appendAsset, readerAssets } from "./helper"
+import React, { useEffect } from "react"
 
-// type ReaderType = { identifier?: string; orderId?: string };
+import { appendAsset, readerAssets, removeAsset } from "./helper"
 
 // Define mutually exclusive types for identifier and orderId
 type ReaderType =
   | {
+      type: "demo"
       identifier: string
       orderId?: never
+      onBackCallback: () => void
     }
   | {
+      type: "rent"
       identifier?: never
       orderId: string
+      onBackCallback: () => void
     }
 
-const Reader = ({ identifier, orderId }: ReaderType) => {
+const Reader = ({ type, onBackCallback, identifier, orderId }: ReaderType) => {
   useEffect(() => {
     readerAssets.forEach(appendAsset)
-  }, [identifier, orderId])
 
-  const readerStyles: CSSProperties = {
-    position: "absolute",
-    top: "0", // Padding from the top
-    left: "0", // Padding from the left
-    right: "0", // Padding from the right
-    bottom: "0", // Padding from the bottom
-    padding: "20px", // Padding for the reader
-    width: "100%",
-    maxWidth: "unset",
-    zIndex: 1000,
-    // border: "1px dotted black", // Should be removed in production
-    margin: "0",
-  }
-
-  const handleBack = () => {
-    window.history.back()
-  }
-
-  const handleKeyDown = (event: React.KeyboardEvent<HTMLDivElement>) => {
-    if (event.key === "Escape") {
-      handleBack()
+    // Attach the onReaderBackCallback function to the window object to be able to enable callback methods calls through the close button
+    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+    // @ts-ignore
+    // eslint-disable-next-line @typescript-eslint/no-shadow
+    window.onReaderBackCallback = () => {
+      onBackCallback()
     }
-  }
 
-  if (orderId) {
+    return () => {
+      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+      // @ts-ignore
+      delete window.onReaderBackCallback
+      readerAssets.forEach(removeAsset)
+    }
+  }, [])
+
+  if (type === "rent") {
     return (
       <div>
         <p>orderId: {orderId}</p>
         <div
-          style={readerStyles}
           id="pubhub-reader"
           // eslint-disable-next-line react/no-unknown-property
           order-id={orderId}
           role="button"
           tabIndex={0}
-          onClick={handleBack}
-          onKeyDown={handleKeyDown}
+          close-href="javascript:window.onReaderBackCallback()"
           aria-label="Go back"
         />
       </div>
     )
   }
 
-  if (identifier) {
+  if (type === "demo") {
     return (
       <div
-        style={readerStyles}
         id="pubhub-reader"
         // eslint-disable-next-line @typescript-eslint/ban-ts-comment
         // @ts-ignore
         // eslint-disable-next-line react/no-unknown-property
         identifier={identifier}
+        close-href="javascript:window.onReaderBackCallback()"
         role="button"
         tabIndex={0}
-        onClick={handleBack}
-        onKeyDown={handleKeyDown}
         aria-label="Go back"
       />
     )

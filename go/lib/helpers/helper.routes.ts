@@ -1,60 +1,54 @@
+import goConfig from "../config/config"
+
 type RouteParams = { [key: string]: string | number }
 type QueryParams = { [key: string]: string | number }
 
 export function buildRoute({
-  route,
   params,
   query,
 }: {
-  route: string
   params?: RouteParams
   query?: QueryParams
 }): string {
+  let routeParams = ""
   if (params) {
-    route = Object.keys(params).reduce((acc, key) => {
+    routeParams = Object.keys(params).reduce((acc, key) => {
       const value = encodeURIComponent(params[key])
-      return acc.replace(`:${key}`, value)
-    }, route)
+      return `${acc}/${value}`
+    }, routeParams)
   }
 
-  const queryParams = new URLSearchParams()
+  const url = new URL(routeParams, goConfig("app.url"))
   if (query) {
     Object.keys(query).forEach(key => {
-      queryParams.append(key, query[key].toString())
+      url.searchParams.append(key, query[key].toString())
     })
   }
 
-  if (queryParams.toString()) {
-    return `${route}?${queryParams}`
-  }
-
-  return route
+  return url.toString()
 }
 
 type ResolveUrlOptions =
   | {
-      type: "work"
-      routeParams?: { wid: number | string }
+      routeParams?: { work: "work"; wid: number | string }
       queryParams?: QueryParams
     }
   | {
-      type: "search"
-      routeParams?: undefined
+      routeParams?: { work: "work"; ":wid": number | string; read: "read" }
+      queryParams?: QueryParams
+    }
+  | {
+      routeParams?: { search: "search" }
       queryParams?: QueryParams
     }
 
-export const resolveUrl = ({ type, routeParams, queryParams }: ResolveUrlOptions) => {
-  switch (type as ResolveUrlOptions["type"]) {
-    case "work":
-      if (!routeParams?.wid) return ""
-      return buildRoute({
-        route: "/work/:wid",
-        params: { wid: routeParams.wid },
-        query: queryParams,
-      })
-    case "search":
-      return buildRoute({ route: "/search", query: queryParams })
-    default:
-      return ""
+export const resolveUrl = ({ routeParams, queryParams }: ResolveUrlOptions) => {
+  if (!routeParams) {
+    throw new Error("routeParams is required")
   }
+
+  return buildRoute({
+    params: routeParams,
+    query: queryParams,
+  })
 }

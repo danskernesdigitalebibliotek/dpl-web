@@ -1,9 +1,9 @@
-type AssetType = {
+type TAssetType = {
   src: string
   type: "script" | "link"
 }
 
-export const readerAssets: AssetType[] = [
+export const readerAssets: TAssetType[] = [
   {
     src: "https://reader.pubhub.dk/2.2.0/js/chunk-vendors.js",
     type: "script",
@@ -22,7 +22,7 @@ export const readerAssets: AssetType[] = [
   },
 ]
 
-export const appendAsset = ({ src, type }: AssetType) => {
+export const appendAsset = ({ src, type }: TAssetType) => {
   if (type === "script") {
     const scriptElement = document.createElement("script")
     scriptElement.src = src
@@ -37,5 +37,17 @@ export const appendAsset = ({ src, type }: AssetType) => {
     linkElement.href = src
     linkElement.rel = "stylesheet"
     document.head.appendChild(linkElement)
+  }
+}
+
+export const removeAsset = ({ src, type }: TAssetType) => {
+  if (type === "script") {
+    const scriptElement = document.querySelector(`script[src="${src}"]`)
+    scriptElement?.remove()
+  }
+
+  if (type === "link") {
+    const linkElement = document.querySelector(`link[href="${src}"]`)
+    linkElement?.remove()
   }
 }
