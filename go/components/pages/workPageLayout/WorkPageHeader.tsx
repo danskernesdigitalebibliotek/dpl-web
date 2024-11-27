@@ -65,7 +65,10 @@ const WorkPageHeader = ({ work }: WorkPageHeaderProps) => {
         </div>
       </div>
       <div className="flex flex-col lg:order-1 lg:flex-1 lg:basis-1/3 lg:justify-end">
-        <h1 className="mt-grid-gap-3 break-words text-typo-heading-3 lg:mt-0 lg:text-typo-heading-2">
+        <h1
+          // In order to be able to break words, we need to set the lang attribute
+          lang="da"
+          className="mt-grid-gap-3 hyphens-auto break-words text-typo-heading-3 lg:mt-0 lg:text-typo-heading-2">
           {`${selectedManifestation?.titles?.main}${!!titleSuffix ? ` (${titleSuffix})` : ""}`}
         </h1>
         <p className="mt-grid-gap-2 text-typo-caption uppercase lg:mt-7">{`af ${displayCreators(work.creators, 100)}`}</p>
