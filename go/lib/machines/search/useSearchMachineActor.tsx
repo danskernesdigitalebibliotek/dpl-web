@@ -18,6 +18,8 @@ const searchActor = createActor(searchMachine, {
     searchPageSize: goConfig("search.item.limit"),
     facetLimit: goConfig("search.facet.limit"),
   },
+  // Uncomment this line to enable event debugging.
+  // inspect: debugEvents,
 }).start()
 
 // Administer search query params when filters are toggled.
