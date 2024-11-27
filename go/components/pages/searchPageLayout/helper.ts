@@ -4,30 +4,8 @@ import { ReadonlyURLSearchParams } from "next/navigation"
 
 import { getFacetMachineNames } from "@/components/shared/searchFilters/helper"
 import goConfig from "@/lib/config/goConfig"
-import { SearchFiltersInput, SearchWithPaginationQuery } from "@/lib/graphql/generated/fbi/graphql"
 import { TFilters } from "@/lib/machines/search/types"
 import useSearchMachineActor from "@/lib/machines/search/useSearchMachineActor"
-
-export const getSearchQueryArguments = ({
-  q,
-  currentPage,
-  facetFilters,
-}: {
-  q: string
-  currentPage: number
-  facetFilters: SearchFiltersInput
-}) => {
-  const limit = goConfig("search.item.limit")
-  return {
-    q: { all: q },
-    offset: currentPage * limit,
-    limit: limit,
-    filters: {
-      branchId: goConfig("search.branch.ids"),
-      ...facetFilters,
-    },
-  }
-}
 
 export const getFacetsForSearchRequest = (searchParams: ReadonlyURLSearchParams) => {
   const facets = goConfig("search.facets")
@@ -46,18 +24,6 @@ export const getFacetsForSearchRequest = (searchParams: ReadonlyURLSearchParams)
     },
     {} as { [key: string]: keyof TFilters[] }
   )
-}
-
-export const getNextPageParamsFunc = (
-  currentPage: number
-): GetNextPageParamFunction<number, SearchWithPaginationQuery> => {
-  const limit = goConfig("search.item.limit")
-
-  return ({ search: { hitcount } }) => {
-    const totalPages = Math.ceil(hitcount / limit)
-    const nextPage = currentPage + 1
-    return currentPage < totalPages ? nextPage : undefined // By returning undefined if there are no more pages, hasNextPage boolean will be set to false
-  }
 }
 
 export const useSearchDataAndLoadingStates = () => {
