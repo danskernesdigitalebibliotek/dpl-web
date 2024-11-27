@@ -37,7 +37,7 @@ const Reader = ({ type, onBackCallback, identifier, orderId }: ReaderType) => {
       delete window.onReaderBackCallback
       readerAssets.forEach(removeAsset)
     }
-  }, [])
+  }, [onBackCallback])
 
   if (type === "rent") {
     return (

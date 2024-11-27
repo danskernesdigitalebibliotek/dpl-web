@@ -1,4 +1,4 @@
-import goConfig from "../config/config"
+import goConfig from "../config/goConfig"
 
 type RouteParams = { [key: string]: string | number }
 type QueryParams = { [key: string]: string | number }
