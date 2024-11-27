@@ -14,6 +14,7 @@ function WorkPageLayout({ wid }: { wid: string }) {
     queryFn: useGetMaterialQuery.fetcher({ wid }),
   })
 
+  // TODO: Handle potential error states
   const manifestations = data?.work?.manifestations.all
   const identifier = manifestations?.[0].identifiers?.[0].value || ""
 
