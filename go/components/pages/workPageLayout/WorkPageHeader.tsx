@@ -29,9 +29,17 @@ const WorkPageHeader = ({ work }: WorkPageHeaderProps) => {
     },
     { query: { enabled: !!selectedManifestation?.pid } }
   )
-  const slideSelectOptions = getWorkMaterialTypes(work).map(materialType => {
+  const workMaterialTypes = getWorkMaterialTypes(work).map(materialType => {
     return { value: materialType.code, render: materialType.display }
   })
+  // We only want unique material types
+  const slideSelectOptions = workMaterialTypes.reduce<SlideSelectOption[]>((acc, materialType) => {
+    if (!acc.some(item => item.value === materialType.value)) {
+      acc.push(materialType)
+    }
+    return acc
+  }, [])
+
   const titleSuffix = selectedManifestation?.titles?.identifyingAddition
   const lowResCover = getLowResCoverUrl(dataCovers)
   const coverSrc = getCoverUrls(
@@ -39,11 +47,18 @@ const WorkPageHeader = ({ work }: WorkPageHeaderProps) => {
     [selectedManifestation?.pid || ""],
     ["default", "original", "large", "medium-large", "medium", "small-medium", "small", "xx-small"]
   )
+  const findInitialOption = () => {
+    return slideSelectOptions.find(option => {
+      return !!selectedManifestation?.materialTypes.find(materialType => {
+        return materialType.materialTypeGeneral.code.includes(option.value)
+      })
+    })
+  }
 
   return (
     <div className="mt-5 flex w-full flex-col lg:flex-row">
       <div className="h-auto lg:order-2 lg:flex lg:flex-1 lg:basis-1/3 lg:flex-col">
-        <div className="relative mx-auto flex h-full w-[70vw] items-stretch justify-center lg:w-full">
+        <div className="relative mx-auto flex h-full w-[70vw] justify-center lg:min-h-[60vh] lg:w-full">
           {!isLoadingCovers && (
             <CoverPicture
               alt="Forsidebillede på værket"
@@ -55,6 +70,7 @@ const WorkPageHeader = ({ work }: WorkPageHeaderProps) => {
         <div className="flex w-full justify-center">
           <SlideSelect
             options={slideSelectOptions}
+            initialOption={findInitialOption()}
             onOptionSelect={(optionSelected: SlideSelectOption) => {
               setSelectedManifestation(
                 getManifestationByMaterialType(work, optionSelected.value) ||
