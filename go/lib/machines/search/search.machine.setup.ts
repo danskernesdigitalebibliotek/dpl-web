@@ -21,9 +21,16 @@ export default setup({
         }
         // Remove filter.
         if (selectedFilters[filterName] && selectedFilters[filterName].includes(value)) {
+          const updatedFilterTerms = selectedFilters[filterName].filter(
+            filterValue => filterValue !== value
+          )
+          if (updatedFilterTerms.length === 0) {
+            delete selectedFilters[filterName]
+            return selectedFilters
+          }
           return {
             ...selectedFilters,
-            [name]: selectedFilters[filterName].filter(filterValue => filterValue !== value),
+            [name]: updatedFilterTerms,
           }
         }
         // Add filter.
