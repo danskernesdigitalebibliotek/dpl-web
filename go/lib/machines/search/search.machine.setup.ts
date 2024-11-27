@@ -44,21 +44,14 @@ export default setup({
       type: "filterToggled",
       toggled: event,
     })),
-    emitQDeleted: emit(() => ({
-      type: "qDeleted",
-    })),
     setCurrentQueryInContext: assign({
       currentQuery: ({ event }) => event.q,
     }),
-    setSbmittedQueryInContext: assign({
+    setSubmittedQueryInContext: assign({
       submittedQuery: ({ context }) => (context.submittedQuery = context.currentQuery),
     }),
     resetFilters: assign(() => ({
       selectedFilters: {},
-    })),
-    resetQuery: assign(() => ({
-      currentQuery: undefined,
-      submittedQuery: undefined,
     })),
     resetSearchData: assign(() => ({
       searchData: undefined,
@@ -105,9 +98,6 @@ export default setup({
     getFacets,
   },
   guards: {
-    eventHasSearchString: ({ event }) => {
-      return Boolean(event.q && event.q.length > 0)
-    },
     contextHasSearchString: ({ context }) => {
       return Boolean(context.currentQuery && context.currentQuery.length > 0)
     },
