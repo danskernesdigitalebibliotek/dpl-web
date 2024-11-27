@@ -1,12 +1,6 @@
 import { useRouter, useSearchParams } from "next/navigation"
 import React, { useState } from "react"
 
-import {
-  Accordion,
-  AccordionContent,
-  AccordionItem,
-  AccordionTrigger,
-} from "@/components/accordion/Accordion"
 import BadgeButton from "@/components/shared/badge/BadgeButton"
 import Icon from "@/components/shared/icon/Icon"
 import {
@@ -25,6 +19,12 @@ import {
 import { SearchFacetFragment } from "@/lib/graphql/generated/fbi/graphql"
 import { TFilters } from "@/lib/machines/search/types"
 
+import {
+  Accordion,
+  AccordionContent,
+  AccordionItem,
+  AccordionTrigger,
+} from "../accordion/Accordion"
 import { Button } from "../button/Button"
 
 type SearchFiltersMobileProps = {
