@@ -1,6 +1,5 @@
 import { and, not } from "xstate"
 
-import { getFiltersForSearchRequest } from "./helpers"
 import searchMachineSetup from "./search.machine.setup"
 
 export default searchMachineSetup.createMachine({
@@ -95,7 +94,7 @@ export default searchMachineSetup.createMachine({
                   return {
                     q: context.currentQuery,
                     queryClient: context.queryClient,
-                    filters: getFiltersForSearchRequest(context),
+                    filters: context.selectedFilters,
                     offset: context.searchOffset,
                     limit: context.searchPageSize,
                   }
@@ -125,7 +124,7 @@ export default searchMachineSetup.createMachine({
                   return {
                     q: context.currentQuery,
                     queryClient: context.queryClient,
-                    filters: getFiltersForSearchRequest(context),
+                    filters: context.selectedFilters,
                     facetLimit: context.facetLimit,
                   }
                 },
@@ -160,7 +159,7 @@ export default searchMachineSetup.createMachine({
               return {
                 q: context.currentQuery,
                 queryClient: context.queryClient,
-                filters: getFiltersForSearchRequest(context),
+                filters: context.selectedFilters,
                 offset: context.searchOffset,
                 limit: context.searchPageSize,
               }

@@ -7,9 +7,9 @@ import { useSearchParams } from "next/navigation"
 import { useEffect, useRef, useState } from "react"
 import { AnyEventObject, createActor } from "xstate"
 
-import { getFacetsForSearchRequest } from "@/components/pages/searchPageLayout/helper"
 import goConfig from "@/lib/config/goConfig"
 
+import { transformSearchParamsIntoFilters } from "./helpers"
 import searchMachine from "./search.machine"
 
 const searchActor = createActor(searchMachine, {
@@ -62,7 +62,7 @@ const useSearchMachineActor = () => {
     }
 
     const q = searchParams.get("q")
-    const filters = getFacetsForSearchRequest(searchParams as ReadonlyURLSearchParams)
+    const filters = transformSearchParamsIntoFilters(searchParams as ReadonlyURLSearchParams)
 
     if (!_.isEmpty(filters)) {
       actor.send({ type: "SET_INITIAL_FILTERS", filters })

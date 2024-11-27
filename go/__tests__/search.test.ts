@@ -1,13 +1,11 @@
 import { ReadonlyURLSearchParams } from "next/navigation"
 import { beforeEach, describe, expect, it, vi } from "vitest"
 
-import {
-  getFacetsForSearchRequest,
-  getSearchQueryArguments,
-} from "@/components/pages/searchPageLayout/helper"
+import { getFacetsForSearchRequest } from "@/components/pages/searchPageLayout/helper"
 import { getFacetMachineNames, getFacetTranslation } from "@/components/shared/searchFilters/helper"
 import goConfig from "@/lib/config/goConfig"
 import { FacetFieldEnum } from "@/lib/graphql/generated/fbi/graphql"
+import { correctFacetNames } from "@/lib/machines/search/helpers"
 
 vi.mock(import("@/lib/config/goConfig"), async importOriginal => {
   const actual = await importOriginal()
@@ -86,8 +84,117 @@ describe("Facet functionality", () => {
   })
 
   it("getFacetTranslation should give a translated facet when given a facet machine name", () => {
-    // @ts-ignore
-    const translation = getFacetTranslation("LIX")
+    const translation = getFacetTranslation("lixRange")
     expect(translation).toBe("Lix")
+  })
+
+  it("correctFacetNames should translate the facet names to input filter valid names", () => {
+    const facets = [
+      {
+        name: "materialTypesGeneral",
+        values: [
+          {
+            key: "podcasts",
+            term: "podcasts",
+            score: 179,
+          },
+        ],
+      },
+      {
+        name: "mainLanguages",
+        values: [
+          {
+            key: "dan",
+            term: "Dansk",
+            score: 238,
+          },
+        ],
+      },
+      {
+        name: "age",
+        values: [
+          {
+            key: "for 10 år",
+            term: "for 10 år",
+            score: 25,
+          },
+        ],
+      },
+      {
+        name: "lix",
+        values: [
+          {
+            key: "22",
+            term: "22",
+            score: 2,
+          },
+        ],
+      },
+      {
+        name: "subjects",
+        values: [
+          {
+            key: "magi",
+            term: "magi",
+            score: 192,
+          },
+        ],
+      },
+    ]
+
+    const result = correctFacetNames(facets)
+
+    expect(result).toStrictEqual([
+      {
+        name: "materialTypesGeneral",
+        values: [
+          {
+            key: "podcasts",
+            term: "podcasts",
+            score: 179,
+          },
+        ],
+      },
+      {
+        name: "mainLanguages",
+        values: [
+          {
+            key: "dan",
+            term: "Dansk",
+            score: 238,
+          },
+        ],
+      },
+      {
+        name: "age",
+        values: [
+          {
+            key: "for 10 år",
+            term: "for 10 år",
+            score: 25,
+          },
+        ],
+      },
+      {
+        name: "lixRange",
+        values: [
+          {
+            key: "22",
+            term: "22",
+            score: 2,
+          },
+        ],
+      },
+      {
+        name: "subjects",
+        values: [
+          {
+            key: "magi",
+            term: "magi",
+            score: 192,
+          },
+        ],
+      },
+    ])
   })
 })

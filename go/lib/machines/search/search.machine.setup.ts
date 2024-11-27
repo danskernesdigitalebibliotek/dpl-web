@@ -1,5 +1,6 @@
 import { assign, emit, setup } from "xstate"
 
+import { correctFacetNames } from "./helpers"
 import { getFacets, performSearch } from "./queries"
 import { TContext, TFilters, TInput } from "./types"
 
@@ -63,7 +64,9 @@ export default setup({
             search: { facets },
           },
         },
-      }) => facets,
+      }) => {
+        return correctFacetNames(facets)
+      },
     }),
     setSearchDataInContext: assign({
       searchData: ({
