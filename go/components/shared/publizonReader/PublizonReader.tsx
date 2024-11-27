@@ -2,7 +2,9 @@
 
 import React, { useEffect } from "react"
 
-import { appendAsset, readerAssets, removeAsset } from "./helper"
+import { appendAsset, removeAsset } from "@/lib/helpers/helper.scripts"
+
+import { readerAssets } from "./helper"
 
 // Define mutually exclusive types for identifier and orderId
 type ReaderType =
@@ -37,7 +39,7 @@ const Reader = ({ type, onBackCallback, identifier, orderId }: ReaderType) => {
       delete window.onReaderBackCallback
       readerAssets.forEach(removeAsset)
     }
-  }, [])
+  }, [onBackCallback])
 
   if (type === "rent") {
     return (

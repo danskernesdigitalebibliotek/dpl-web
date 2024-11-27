@@ -1,6 +1,6 @@
 import { expect, test } from "vitest"
 
-import goConfig from "@/lib/config/config"
+import goConfig from "@/lib/config/goConfig"
 
 import { resolveUrl } from "../lib/helpers/helper.routes"
 
