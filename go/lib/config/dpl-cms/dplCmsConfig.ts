@@ -6,14 +6,16 @@ import {
 } from "@/lib/graphql/generated/dpl-cms/graphql"
 
 const queryDplCmsConfig = async (queryClient: QueryClient) => {
-  const { dplConfiguration } = await queryClient.fetchQuery<GetDplCmsConfigurationQuery>({
+  const config = await queryClient.fetchQuery<GetDplCmsConfigurationQuery>({
     queryKey: useGetDplCmsConfigurationQuery.getKey(),
     queryFn: useGetDplCmsConfigurationQuery.fetcher(),
     // Cache 5 minutes unless invalidated
     staleTime: 60 * 5,
   })
 
-  return dplConfiguration ?? null
+  // TODO: Should we handle errors here?
+  // What if we cannot load remote config?
+  return config.dplConfiguration ?? null
 }
 
 // eslint-disable-next-line prefer-const
