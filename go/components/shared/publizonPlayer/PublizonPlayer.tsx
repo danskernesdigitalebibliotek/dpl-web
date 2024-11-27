@@ -2,7 +2,9 @@
 
 import React, { useEffect } from "react"
 
-import { appendAsset, assets, removeAsset } from "./helper"
+import { appendAsset, removeAsset } from "@/lib/helpers/helper.scripts"
+
+import { assets } from "./helper"
 
 // Define mutually exclusive types for identifier and orderId
 type ReaderType =
