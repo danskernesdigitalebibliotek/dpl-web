@@ -22,6 +22,12 @@ class ReaderAppBlock extends BlockBase implements ContainerFactoryPluginInterfac
    * @var string
    */
   protected string $identifier;
+  /**
+   * A unique orderid for the Reader resource.
+   *
+   * @var string
+   */
+  protected string $orderid;
 
   /**
    * ReaderAppBlock constructor.
@@ -42,7 +48,16 @@ class ReaderAppBlock extends BlockBase implements ContainerFactoryPluginInterfac
     }
     else {
       // Default to an empty string if not provided.
-      $this->identifier = 'Default';
+      $this->identifier = '';
+    }
+
+    // Assign the order ID from the configuration if available.
+    if (isset($configuration['orderid'])) {
+      $this->orderid = $configuration['orderid'];
+    }
+    else {
+      // Default to an empty string if not provided.
+      $this->orderid = '';
     }
   }
 
@@ -62,7 +77,7 @@ class ReaderAppBlock extends BlockBase implements ContainerFactoryPluginInterfac
   public function build(): array {
     $data = [
       'identifier' => $this->identifier ?? NULL,
-      'orderId' => $this->orderId ?? NULL,
+      'orderid' => $this->orderid ?? NULL,
     ];
 
     return [

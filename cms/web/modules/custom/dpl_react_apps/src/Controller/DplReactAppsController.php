@@ -525,16 +525,16 @@ class DplReactAppsController extends ControllerBase {
   public function reader(Request $request): array {
 
     $identifier = $request->query->get('identifier');
-    $orderId = $request->query->get('orderId');
+    $orderid = $request->query->get('orderid');
 
-    if (!$identifier && !$orderId) {
-      throw new \InvalidArgumentException('Either identifier or orderId must be provided.');
+    if (!$identifier && !$orderid) {
+      throw new \InvalidArgumentException('Either identifier or orderid must be provided.');
     }
 
     /** @var \Drupal\dpl_react_apps\Plugin\Block\ReaderAppBlock $plugin_block */
     $plugin_block = $this->blockManager->createInstance('reader_app_block', [
       'identifier' => $identifier,
-      'orderId' => $orderId,
+      'orderid' => $orderid,
     ]);
 
     // Access check for the block.
