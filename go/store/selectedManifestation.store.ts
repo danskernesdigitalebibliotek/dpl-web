@@ -7,7 +7,7 @@ import { ManifestationWorkPageFragment } from "@/lib/graphql/generated/fbi/graph
 
 type SelectedManifestationState = {
   selectedManifestation: ManifestationWorkPageFragment | null
-  setSelectedManifestation: (manifestation: ManifestationWorkPageFragment) => void
+  setSelectedManifestation: (manifestation: ManifestationWorkPageFragment | null) => void
 }
 
 const useSelectedManifestationStore = create<SelectedManifestationState>()(

@@ -22,12 +22,20 @@ function WorkPageLayout({ workId }: WorkPageLayoutProps) {
     "content-container my-grid-gap-2 flex-row flex-wrap space-y-grid-gap-2 lg:space-y-grid-gap-1 lg:my-grid-gap-half"
   const { selectedManifestation, setSelectedManifestation } = useSelectedManifestationStore()
 
+  // Cleanup at unmount
+  useEffect(() => {
+    return () => {
+      setSelectedManifestation(null)
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [])
+
   useEffect(() => {
     if (!data || !data.work) return
+    // Select on the initial load
     if (!selectedManifestation) {
       setSelectedManifestation(getBestRepresentation(data.work))
     }
-    // We only want to check whether selectedManifestation is empty whenever the value changes + on mount
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [selectedManifestation])
 
