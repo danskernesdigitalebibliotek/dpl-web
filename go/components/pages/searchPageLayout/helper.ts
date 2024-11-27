@@ -71,8 +71,10 @@ export const useSearchDataAndLoadingStates = () => {
   })
   const isLoadingFacets =
     !data.facets || actor.getSnapshot().matches({ filteringAndSearching: "filter" })
-  const isLoadingResults =
-    !data.search || actor.getSnapshot().matches({ filteringAndSearching: "search" })
+  const isLoadingResults = actor.getSnapshot().matches({ filteringAndSearching: "search" })
+  const isLoadingMoreResults = actor
+    .getSnapshot()
+    .matches({ loadingMoreSearchResults: "searching" })
   const machineIsReady = !actor.getSnapshot().matches("bootstrap")
 
   const selectedFilters = useSelector(actor, snapshot => snapshot.context.selectedFilters)
@@ -83,6 +85,7 @@ export const useSearchDataAndLoadingStates = () => {
     selectedFilters,
     isLoadingFacets,
     isLoadingResults,
+    isLoadingMoreResults,
     machineIsReady,
   }
 }
