@@ -24,7 +24,7 @@ export default searchMachineSetup.createMachine({
           actions: ["setQueryClientInContext"],
         },
         SET_SEARCH_STRING: {
-          actions: ["setCurrentQueryInContext", "setSbmittedQueryInContext"],
+          actions: ["setCurrentQueryInContext", "setSubmittedQueryInContext"],
         },
         SET_INITIAL_FILTERS: {
           actions: ["setInitialFiltersInContext"],
@@ -54,17 +54,13 @@ export default searchMachineSetup.createMachine({
         ],
         TYPING: [
           {
-            guard: "eventHasSearchString",
             actions: ["setCurrentQueryInContext"],
-          },
-          {
-            actions: ["emitQDeleted", "resetQuery"],
           },
         ],
         SEARCH: [
           {
             guard: "contextHasSearchString",
-            actions: ["resetSearchData", "resetFilters", "setSbmittedQueryInContext"],
+            actions: ["resetSearchData", "resetFilters", "setSubmittedQueryInContext"],
             target: "filteringAndSearching",
           },
           {

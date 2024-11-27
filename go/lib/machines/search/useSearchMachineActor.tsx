@@ -38,28 +38,6 @@ searchActor.on("filterToggled", (emittedEvent: AnyEventObject) => {
   window.history.pushState({}, "", url.href)
 })
 
-// Make sure the search query is removed from the URL when the search is cleared.
-// And the same goes for facets.
-searchActor.on("qDeleted", () => {
-  let urlShouldBeUpdated = false
-
-  const url = new URL(window.location.href)
-  if (url.searchParams.get("q")) {
-    url.searchParams.delete("q")
-    urlShouldBeUpdated = true
-  }
-
-  const facets = getFacetsForSearchRequest(url.searchParams as ReadonlyURLSearchParams)
-  for (const filter in facets) {
-    url.searchParams.delete(filter)
-    urlShouldBeUpdated = true
-  }
-
-  if (urlShouldBeUpdated) {
-    window.history.pushState({}, "", url.href)
-  }
-})
-
 /**
  *
  * This hook is referencing the searchActor from the search.machine.ts file.
