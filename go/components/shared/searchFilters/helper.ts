@@ -48,9 +48,9 @@ export const getFacetMachineNames = () => {
 }
 
 export const getFacetTranslation = (facetFilter: keyof TFilters) => {
-  const facets = goConfig("search.facets")
-
-  return facets[facetFilter.toUpperCase() as keyof typeof facets].translation || ""
+  const facetsConfig = Object.values(goConfig("search.facets"))
+  const translation = facetsConfig.find(facet => facet.filter === facetFilter)?.translation
+  return translation || ""
 }
 
 export const getActiveFilters = (
