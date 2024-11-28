@@ -1,11 +1,10 @@
 import { ReadonlyURLSearchParams } from "next/navigation"
 import { beforeEach, describe, expect, it, vi } from "vitest"
 
-import { getFacetsForSearchRequest } from "@/components/pages/searchPageLayout/helper"
 import { getFacetMachineNames, getFacetTranslation } from "@/components/shared/searchFilters/helper"
 import goConfig from "@/lib/config/goConfig"
 import { FacetFieldEnum } from "@/lib/graphql/generated/fbi/graphql"
-import { correctFacetNames } from "@/lib/machines/search/helpers"
+import { correctFacetNames, transformSearchParamsIntoFilters } from "@/lib/machines/search/helpers"
 
 vi.mock(import("@/lib/config/goConfig"), async importOriginal => {
   const actual = await importOriginal()
@@ -60,7 +59,7 @@ describe("Facet functionality", () => {
     ])
   })
 
-  it("getFacetsForSearchRequest should return an object with facet terms grouped by facet machine names", () => {
+  it("transformSearchParamsIntoFilters should return an object with facet terms grouped by facet machine names", () => {
     const searchParams = new URLSearchParams()
     searchParams.append("materialTypesGeneral", "Book")
     searchParams.append("mainLanguages", "Danish")
@@ -79,7 +78,7 @@ describe("Facet functionality", () => {
       subjects: ["Science", "Math"],
     }
 
-    const result = getFacetsForSearchRequest(searchParams as ReadonlyURLSearchParams)
+    const result = transformSearchParamsIntoFilters(searchParams as ReadonlyURLSearchParams)
     expect(result).toStrictEqual(facetFilters)
   })
 
