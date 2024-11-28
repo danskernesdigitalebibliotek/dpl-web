@@ -51,7 +51,7 @@ const WorkPageHeader = ({ work }: WorkPageHeaderProps) => {
   )
   const findInitialSliderValue = () => {
     return slideSelectOptions.find(option => {
-      return !!selectedManifestation?.materialTypes.find(materialType => {
+      return selectedManifestation?.materialTypes.find(materialType => {
         return materialType.materialTypeGeneral.code.includes(option.value)
       })
     })

@@ -23,8 +23,7 @@ const SlideSelect = ({ options, initialOption, onOptionSelect }: SlideSelectProp
     if (!!initialOption) {
       setSelected(options.findIndex(option => option.value === initialOption.value))
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [])
+  }, [initialOption, options])
 
   return (
     <div className="relative flex flex-row flex-nowrap justify-center rounded-full border-2 border-foreground p-1">
