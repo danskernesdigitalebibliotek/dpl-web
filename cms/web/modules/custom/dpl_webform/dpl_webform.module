@@ -72,7 +72,10 @@ function dpl_webform_preprocess_input__submit(array &$variables): void {
     ]);
   }
 
-  $variables['attributes']['data-cy'] = $variables['attributes']['name'];
+  // Add data-cy attributes to all input elements for cypress testing.
+  if (isset($variables['attributes']['name'])) {
+    $variables['attributes']['data-cy'] = $variables['attributes']['name'];
+  }
 }
 
 /**
