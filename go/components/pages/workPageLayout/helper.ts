@@ -49,3 +49,20 @@ export const getBestRepresentation = (
   }
   return work.manifestations.all[0]
 }
+
+const isOfMaterialType = (
+  manifestation: ManifestationWorkPageFragment,
+  materialType: GeneralMaterialTypeCodeEnum[0]
+) => {
+  return manifestation.materialTypes.some(type => type.materialTypeGeneral.code === materialType)
+}
+
+export const isEbook = (manifestation: ManifestationWorkPageFragment | undefined | null) => {
+  if (!manifestation) return false
+  return isOfMaterialType(manifestation, GeneralMaterialTypeCodeEnum.Ebooks)
+}
+
+export const isAudioBook = (manifestation: ManifestationWorkPageFragment | undefined | null) => {
+  if (!manifestation) return false
+  return isOfMaterialType(manifestation, GeneralMaterialTypeCodeEnum.AudioBooks)
+}
