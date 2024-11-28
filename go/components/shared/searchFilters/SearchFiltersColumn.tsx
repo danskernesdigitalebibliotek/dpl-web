@@ -5,6 +5,7 @@ import { AnimateChangeInHeight } from "@/components/shared/animateChangeInHeight
 import BadgeButton from "@/components/shared/badge/BadgeButton"
 import Icon from "@/components/shared/icon/Icon"
 import {
+  createToggleFilterCallback,
   facetTermIsSelected,
   getFacetTranslation,
   sortByActiveFacets,
@@ -32,6 +33,7 @@ const SearchFiltersColumn = ({
   const elementRef = useRef<HTMLDivElement | null>(null)
   const [hasOverflow, setHasOverflow] = useState(false)
   const { selectedFilters } = useSearchDataAndLoadingStates()
+  const toggleFilter = createToggleFilterCallback(actor)
 
   useEffect(() => {
     const el = elementRef.current
@@ -73,9 +75,7 @@ const SearchFiltersColumn = ({
               <BadgeButton
                 key={index}
                 ariaLabel={value.term}
-                onClick={() =>
-                  actor.send({ type: "TOGGLE_FILTER", name: facet.name, value: value.term })
-                }
+                onClick={() => toggleFilter({ name: facet.name, value: value.term })}
                 isActive={facetTermIsSelected({
                   facet: facet.name,
                   term: value.term,

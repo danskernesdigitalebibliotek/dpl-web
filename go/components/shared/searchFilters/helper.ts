@@ -1,32 +1,16 @@
 import { flatten } from "lodash"
-import { AppRouterInstance } from "next/dist/shared/lib/app-router-context.shared-runtime"
 import { ReadonlyURLSearchParams } from "next/navigation"
+import { AnyActor, AnyEventObject } from "xstate"
 
 import goConfig from "@/lib/config/goConfig"
 import { FacetFieldEnum, SearchFacetFragment } from "@/lib/graphql/generated/fbi/graphql"
 import { TContext, TFilters } from "@/lib/machines/search/types"
 
-export const toggleFilter = (filterName: string, value: string, router: AppRouterInstance) => {
-  const searchParams = new URLSearchParams(window.location.search)
-
-  if (searchParams.has(filterName)) {
-    const filterValues = [...searchParams.getAll(filterName)]
-    searchParams.delete(filterName)
-
-    if (filterValues.includes(value)) {
-      filterValues.splice(filterValues.indexOf(value), 1)
-    } else {
-      filterValues.push(value)
-    }
-    filterValues.forEach(filterValue => {
-      searchParams.append(filterName, filterValue)
-    })
-  } else {
-    searchParams.append(filterName, value)
+export const createToggleFilterCallback =
+  (actor: AnyActor) =>
+  ({ name, value }: { name: string; value: string }) => {
+    actor.send({ type: "TOGGLE_FILTER", name, value } as AnyEventObject)
   }
-  const searchParamsString = searchParams.toString()
-  router.push("/search" + searchParamsString ? `?${searchParamsString}` : "", { scroll: false })
-}
 
 export const sortByActiveFacets = (facet: SearchFacetFragment, selectedFilters: TFilters) => {
   return [...facet.values].sort((a, b) => {

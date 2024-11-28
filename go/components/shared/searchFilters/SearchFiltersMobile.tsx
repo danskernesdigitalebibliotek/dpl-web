@@ -1,5 +1,6 @@
 import { useRouter, useSearchParams } from "next/navigation"
 import React, { useState } from "react"
+import { AnyActor, AnyEventObject } from "xstate"
 
 import {
   Accordion,
@@ -10,10 +11,10 @@ import {
 import BadgeButton from "@/components/shared/badge/BadgeButton"
 import Icon from "@/components/shared/icon/Icon"
 import {
+  createToggleFilterCallback,
   getActiveFilters,
   getFacetTranslation,
   shouldShowActiveFilters,
-  toggleFilter,
 } from "@/components/shared/searchFilters/helper"
 import {
   Sheet,
@@ -24,6 +25,7 @@ import {
 } from "@/components/shared/sheet/Sheet"
 import { SearchFacetFragment } from "@/lib/graphql/generated/fbi/graphql"
 import { TFilters } from "@/lib/machines/search/types"
+import useSearchMachineActor from "@/lib/machines/search/useSearchMachineActor"
 
 import { Button } from "../button/Button"
 
@@ -35,6 +37,8 @@ const SearchFiltersMobile = ({ facets }: SearchFiltersMobileProps) => {
   const router = useRouter()
   const searchParams = useSearchParams()
   const [isSheetOpen, setIsSheetOpen] = useState(false)
+  const actor = useSearchMachineActor()
+  const toggleFilter = createToggleFilterCallback(actor)
 
   return (
     <Sheet open={isSheetOpen} onOpenChange={setIsSheetOpen}>
@@ -59,7 +63,7 @@ const SearchFiltersMobile = ({ facets }: SearchFiltersMobileProps) => {
                 return (
                   <BadgeButton
                     onClick={() => {
-                      toggleFilter(facet.name, value.term, router)
+                      toggleFilter({ name: facet.name, value: value.term })
                     }}
                     key={value.term}
                     ariaLabel={value.term}
@@ -90,7 +94,7 @@ const SearchFiltersMobile = ({ facets }: SearchFiltersMobileProps) => {
                         <BadgeButton
                           onClick={() => {
                             setIsSheetOpen(false)
-                            toggleFilter(facet.name, value.term, router)
+                            toggleFilter({ name: facet.name, value: value.term })
                           }}
                           isActive={!!searchParams.getAll(facet.name).includes(value.term)}
                           key={index}
