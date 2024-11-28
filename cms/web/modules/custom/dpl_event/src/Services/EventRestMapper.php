@@ -66,7 +66,7 @@ class EventRestMapper {
       'ticketCapacity' => $this->getValue('event_ticket_capacity'),
       'ticketCategories' => $this->getTicketCategories(),
       'createdAt' => $this->getDateField('created'),
-      'updatedAt' => $this->getDateField('changed'),
+      'updatedAt' => $this->eventWrapper->getUpdatedDate(),
       'dateTime' => $this->getDate(),
       'externalData' => $this->getExternalData(),
       'series' => new EventsGET200ResponseInnerSeries([
