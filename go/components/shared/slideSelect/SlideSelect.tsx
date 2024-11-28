@@ -27,7 +27,7 @@ const SlideSelect = ({ options, initialOption, onOptionSelect }: SlideSelectProp
   }, [])
 
   return (
-    <div className="relative flex flex-row flex-wrap justify-center rounded-full border-2 border-foreground p-1">
+    <div className="relative flex flex-row flex-nowrap justify-center rounded-full border-2 border-foreground p-1">
       {/* Animated black background */}
       <motion.div
         className="absolute top-1 z-[0] h-7 w-auto rounded-full bg-foreground"

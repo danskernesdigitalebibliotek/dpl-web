@@ -18,7 +18,7 @@ export const CoverPicture = ({ src, lowResSrc, alt, withTilt = false }: CoverPic
   const [imageHeight, setImageHeight] = useState(0)
   const [imageWidth, setImageWidth] = useState(0)
   const imageAspectRatio = imageWidth / imageHeight
-  const paddingTop = `calc(${100 / imageAspectRatio}% + 50px)`
+  const paddingTop = `${100 / imageAspectRatio}%`
   const [imageLoaded, setImageLoaded] = useState(false)
   const [imageError, setImageError] = useState(false)
 

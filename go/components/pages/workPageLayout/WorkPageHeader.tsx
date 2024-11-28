@@ -69,7 +69,7 @@ const WorkPageHeader = ({ work }: WorkPageHeaderProps) => {
     <>
       <div className="mt-5 flex w-full flex-col lg:flex-row">
         <div className="h-auto lg:order-2 lg:flex lg:flex-1 lg:basis-1/3 lg:flex-col">
-          <div className="relative mx-auto flex h-full w-[70vw] justify-center lg:min-h-[60vh] lg:w-full">
+          <div className="relative mx-auto mb-12 flex h-full w-[70vw] justify-center lg:min-h-[60vh] lg:w-full">
             {!isLoadingCovers && (
               <CoverPicture
                 alt="Forsidebillede på værket"
