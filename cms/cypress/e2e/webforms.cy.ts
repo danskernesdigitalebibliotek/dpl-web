@@ -15,6 +15,9 @@ describe('Webforms', () => {
     cy.get('[data-cy="category"]').select(1);
     cy.get('[data-cy="subject"]').type('Test');
     cy.get('[data-cy="message"]').type('Lorem ipsum');
+    // We bypass the linting here, as we need to force waiting as we need to
+    // wait for the honeypot timer to run out.
+    // eslint-disable-next-line cypress/no-unnecessary-waiting
     cy.wait(6000);
     cy.get('[data-cy="op"]').click();
     cy.url().should('match', /kontakt/);
@@ -60,6 +63,9 @@ describe('Webforms', () => {
     cy.get('[data-cy="subject"]').type('Test');
     cy.get('[data-cy="message"]').type('Lorem ipsum');
     cy.get('[data-cy="url"]').type('John Doe', { force: true });
+    // We bypass the linting here, as we need to force waiting as we need to
+    // wait for the honeypot timer to run out.
+    // eslint-disable-next-line cypress/no-unnecessary-waiting
     cy.wait(6000);
     cy.get('[data-cy="op"]').click();
     cy.get('.error-message__description').contains(
