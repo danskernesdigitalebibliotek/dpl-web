@@ -56,7 +56,7 @@ const WorkCard = ({ work }: WorkCardProps) => {
   return (
     <Link
       className="block space-y-3 lg:space-y-5"
-      href={resolveUrl({ type: "work", routeParams: { wid: work.workId } })}>
+      href={resolveUrl({ routeParams: { work: "work", wid: work.workId } })}>
       <div>
         <div
           key={work.workId}
