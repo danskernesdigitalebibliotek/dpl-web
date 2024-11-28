@@ -11,7 +11,7 @@ const SearchFiltersDesktop = ({ facets }: { facets: SearchFacetFragment[] }) => 
     <div className="flex flex-row gap-4">
       {facets.map((facet, index) => {
         const isLast = index === facets.length - 1
-        return <SearchFiltersColumn facet={facet} isLast={isLast} />
+        return <SearchFiltersColumn key={index} facet={facet} isLast={isLast} />
       })}
     </div>
   )

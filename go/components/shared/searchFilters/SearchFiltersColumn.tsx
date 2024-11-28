@@ -28,6 +28,7 @@ const SearchFiltersColumn = ({ facet, isLast }: SearchFiltersColumnProps) => {
   const [hasOverflow, setHasOverflow] = useState(false)
   const { selectedFilters } = useSearchDataAndLoadingStates()
   const toggleFilter = createToggleFilterCallback(actor)
+  const facetData = actor.getSnapshot().context.facetData
 
   // We show the selected values first in the list
   if (selectedFilters) {
@@ -49,7 +50,7 @@ const SearchFiltersColumn = ({ facet, isLast }: SearchFiltersColumnProps) => {
 
   useEffect(() => {
     setIsExpanded(false)
-  }, [actor.getSnapshot().context.facetData])
+  }, [facetData])
 
   return (
     <>
