@@ -20,7 +20,7 @@ const SlideSelect = ({ options, initialOption, onOptionSelect }: SlideSelectProp
   const [selected, setSelected] = useState<number>(0)
 
   useEffect(() => {
-    if (initialOption) {
+    if (!!initialOption) {
       setSelected(options.findIndex(option => option.value === initialOption.value))
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
