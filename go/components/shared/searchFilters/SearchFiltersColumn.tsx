@@ -5,6 +5,7 @@ import { AnimateChangeInHeight } from "@/components/shared/animateChangeInHeight
 import BadgeButton from "@/components/shared/badge/BadgeButton"
 import Icon from "@/components/shared/icon/Icon"
 import {
+  createToggleFilterCallback,
   facetTermIsSelected,
   getFacetTranslation,
   sortByActiveFacets,
@@ -17,36 +18,39 @@ import useSearchMachineActor from "@/lib/machines/search/useSearchMachineActor"
 type SearchFiltersColumnProps = {
   facet: SearchFacetFragment
   isLast: boolean
-  isExpanded: boolean
-  setIsExpanded: React.Dispatch<React.SetStateAction<boolean>>
 }
 
-const SearchFiltersColumn = ({
-  facet,
-  isLast,
-  isExpanded,
-  setIsExpanded,
-}: SearchFiltersColumnProps) => {
+const SearchFiltersColumn = ({ facet, isLast }: SearchFiltersColumnProps) => {
   const actor = useSearchMachineActor()
+  const [isExpanded, setIsExpanded] = useState<boolean>(false)
   const facetFilter = facet.name as keyof TFilters
   const elementRef = useRef<HTMLDivElement | null>(null)
   const [hasOverflow, setHasOverflow] = useState(false)
   const { selectedFilters } = useSearchDataAndLoadingStates()
-
-  useEffect(() => {
-    const el = elementRef.current
-    if (el) {
-      const isOverflowing = el.scrollHeight > el.clientHeight || el.scrollWidth > el.clientWidth
-      if (isOverflowing) {
-        setHasOverflow(true)
-      }
-    }
-  }, [elementRef])
+  const toggleFilter = createToggleFilterCallback(actor)
+  const facetData = actor.getSnapshot().context.facetData
 
   // We show the selected values first in the list
   if (selectedFilters) {
     facet.values = sortByActiveFacets(facet, selectedFilters)
   }
+
+  useEffect(() => {
+    const el = elementRef.current
+    if (el) {
+      const isOverflowing = el.scrollHeight > el.clientHeight
+
+      if (isOverflowing) {
+        setHasOverflow(true)
+      } else {
+        setHasOverflow(false)
+      }
+    }
+  }, [elementRef?.current?.scrollHeight])
+
+  useEffect(() => {
+    setIsExpanded(false)
+  }, [facetData])
 
   return (
     <>
@@ -73,9 +77,7 @@ const SearchFiltersColumn = ({
               <BadgeButton
                 key={index}
                 ariaLabel={value.term}
-                onClick={() =>
-                  actor.send({ type: "TOGGLE_FILTER", name: facet.name, value: value.term })
-                }
+                onClick={() => toggleFilter({ name: facet.name, value: value.term })}
                 isActive={facetTermIsSelected({
                   facet: facet.name,
                   term: value.term,
@@ -88,7 +90,7 @@ const SearchFiltersColumn = ({
           {hasOverflow && (
             <BadgeButton
               ariaLabel={isExpanded ? "Vis færre" : "Vis flere"}
-              classNames={cn(`pl-3 w-auto flex flex-row items-center self-start  ml-1`)}
+              classNames={cn(`pl-3 w-auto flex flex-row items-center self-start mt-1`)}
               onClick={() => {
                 setIsExpanded(prev => !prev)
               }}>

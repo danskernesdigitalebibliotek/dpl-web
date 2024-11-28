@@ -24,28 +24,28 @@ const SearchInput = ({ className, placeholder }: SearchInputProps) => {
   })
 
   useEffect(() => {
-    window.addEventListener("keydown", handleKeydown(currentQuery))
+    window.addEventListener("keydown", handleKeydown())
     return () => {
-      window.removeEventListener("keydown", handleKeydown(currentQuery))
+      window.removeEventListener("keydown", handleKeydown())
     }
     // We choose to ignore the eslint warning below
     // because we do not want to add the handleKeydown callback which changes on every render.
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [currentQuery])
 
-  const handleKeydown = (q: string) => (event: KeyboardEvent) => {
-    if (!q) return
+  const handleKeydown = () => (event: KeyboardEvent) => {
+    if (!currentQuery) return
     const focusedElement = document.activeElement as HTMLElement
 
     if (event.key === "Enter" && focusedElement === inputRef.current) {
-      navigateToSearch(q)()
+      navigateToSearch(currentQuery)
     }
   }
 
-  const navigateToSearch = (q: string) => () => {
+  const navigateToSearch = (q: string) => {
     if (!q) return
     actor.send({ type: "SEARCH" })
-    router.push(currentQuery ? `/search?q=${currentQuery}` : "/search", {
+    router.push(`/search?q=${q}`, {
       scroll: false,
     })
   }
@@ -67,7 +67,7 @@ const SearchInput = ({ className, placeholder }: SearchInputProps) => {
       />
       <button
         className="focus-visible absolute right-3 top-[50%] translate-y-[-50%] rounded-full md:right-[24px]"
-        onClick={navigateToSearch(currentQuery)}
+        onClick={() => currentQuery && navigateToSearch(currentQuery)}
         aria-label="Søg">
         <Icon className="h-[32px] w-[32px]" name="search" />
       </button>

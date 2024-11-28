@@ -1,5 +1,6 @@
 import { assign, emit, setup } from "xstate"
 
+import { correctFacetNames } from "./helpers"
 import { getFacets, performSearch } from "./queries"
 import { TContext, TFilters, TInput } from "./types"
 
@@ -21,9 +22,16 @@ export default setup({
         }
         // Remove filter.
         if (selectedFilters[filterName] && selectedFilters[filterName].includes(value)) {
+          const updatedFilterTerms = selectedFilters[filterName].filter(
+            filterValue => filterValue !== value
+          )
+          if (updatedFilterTerms.length === 0) {
+            delete selectedFilters[filterName]
+            return selectedFilters
+          }
           return {
             ...selectedFilters,
-            [name]: selectedFilters[filterName].filter(filterValue => filterValue !== value),
+            [name]: updatedFilterTerms,
           }
         }
         // Add filter.
@@ -37,21 +45,14 @@ export default setup({
       type: "filterToggled",
       toggled: event,
     })),
-    emitQDeleted: emit(() => ({
-      type: "qDeleted",
-    })),
     setCurrentQueryInContext: assign({
       currentQuery: ({ event }) => event.q,
     }),
-    setSbmittedQueryInContext: assign({
+    setSubmittedQueryInContext: assign({
       submittedQuery: ({ context }) => (context.submittedQuery = context.currentQuery),
     }),
     resetFilters: assign(() => ({
       selectedFilters: {},
-    })),
-    resetQuery: assign(() => ({
-      currentQuery: undefined,
-      submittedQuery: undefined,
     })),
     resetSearchData: assign(() => ({
       searchData: undefined,
@@ -63,7 +64,9 @@ export default setup({
             search: { facets },
           },
         },
-      }) => facets,
+      }) => {
+        return correctFacetNames(facets)
+      },
     }),
     setSearchDataInContext: assign({
       searchData: ({
@@ -98,9 +101,6 @@ export default setup({
     getFacets,
   },
   guards: {
-    eventHasSearchString: ({ event }) => {
-      return Boolean(event.q && event.q.length > 0)
-    },
     contextHasSearchString: ({ context }) => {
       return Boolean(context.currentQuery && context.currentQuery.length > 0)
     },

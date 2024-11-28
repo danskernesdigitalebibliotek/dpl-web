@@ -16,8 +16,14 @@ const SearchPageLayout = () => {
   const loadMoreRef = useRef(null)
   const isInView = useInView(loadMoreRef)
   const actor = useSearchMachineActor()
-  const { data, isLoadingFacets, isLoadingResults, machineIsReady, searchQuery } =
-    useSearchDataAndLoadingStates()
+  const {
+    data,
+    isLoadingFacets,
+    isLoadingResults,
+    isLoadingMoreResults,
+    machineIsReady,
+    searchQuery,
+  } = useSearchDataAndLoadingStates()
 
   useEffect(() => {
     if (isInView) {
@@ -75,7 +81,7 @@ const SearchPageLayout = () => {
                     </motion.div>
                   )
               )}
-            {isLoadingResults && <SearchResultsGhost />}
+            {isLoadingMoreResults && <SearchResultsGhost />}
           </div>
         </>
       ) : (
