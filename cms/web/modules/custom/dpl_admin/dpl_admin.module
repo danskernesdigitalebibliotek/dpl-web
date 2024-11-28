@@ -216,8 +216,35 @@ function _dpl_admin_form_alter_node_page(array &$form, FormStateInterface $form_
     $form['field_hero_title']['#states']['invisible'] = $inactive_state;
     $form['field_subtitle']['#states']['invisible'] = $inactive_state;
   }
+}
 
 /**
+ * Implements hook_form_FORM_ID_alter() for the user add/edit form.
+ *
+ * Re-ordering the user edit form, to make the password demands clearer.
+ *
+ * @param array<mixed> $form
+ *   See the $form in dpl_admin_form_alter().
+ */
+function _dpl_admin_form_alter_user_form(array &$form, FormStateInterface $form_state, string $form_id): void {
+  $form['account']['current_pass']['#weight'] = 997;
+  $form['account']['pass']['#weight'] = 998;
+  $form['account']['password_policy_status']['#weight'] = 999;
+}
+
+/**
+ * Implements hook_module_implements_alter().
+ *
+ * Make sure the dpl_admin form_alter happens last, after any other contrib
+ * modules. This is necessary for us to alter the password policy position.
+ */
+function dpl_admin_module_implements_alter(array &$implementations, string $hook): void {
+  if ($hook == 'form_alter') {
+    $group = $implementations['dpl_admin'];
+    unset($implementations['dpl_admin']);
+    $implementations['dpl_admin'] = $group;
+  }
+}
 
 /**
  * Implements hook_form_FORM_ID_alter().
@@ -262,6 +289,10 @@ function dpl_admin_form_alter(array &$form, FormStateInterface $form_state, stri
 
   if (in_array($form_id, ['node_page_form', 'node_page_edit_form'])) {
     _dpl_admin_form_alter_node_page($form, $form_state, $form_id);
+  }
+
+  if (in_array($form_id, ['user_register_form', 'user_form'])) {
+    _dpl_admin_form_alter_user_form($form, $form_state, $form_id);
   }
 }
 
