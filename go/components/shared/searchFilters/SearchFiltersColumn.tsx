@@ -18,37 +18,38 @@ import useSearchMachineActor from "@/lib/machines/search/useSearchMachineActor"
 type SearchFiltersColumnProps = {
   facet: SearchFacetFragment
   isLast: boolean
-  isExpanded: boolean
-  setIsExpanded: React.Dispatch<React.SetStateAction<boolean>>
 }
 
-const SearchFiltersColumn = ({
-  facet,
-  isLast,
-  isExpanded,
-  setIsExpanded,
-}: SearchFiltersColumnProps) => {
+const SearchFiltersColumn = ({ facet, isLast }: SearchFiltersColumnProps) => {
   const actor = useSearchMachineActor()
+  const [isExpanded, setIsExpanded] = useState<boolean>(false)
   const facetFilter = facet.name as keyof TFilters
   const elementRef = useRef<HTMLDivElement | null>(null)
   const [hasOverflow, setHasOverflow] = useState(false)
   const { selectedFilters } = useSearchDataAndLoadingStates()
   const toggleFilter = createToggleFilterCallback(actor)
 
-  useEffect(() => {
-    const el = elementRef.current
-    if (el) {
-      const isOverflowing = el.scrollHeight > el.clientHeight || el.scrollWidth > el.clientWidth
-      if (isOverflowing) {
-        setHasOverflow(true)
-      }
-    }
-  }, [elementRef])
-
   // We show the selected values first in the list
   if (selectedFilters) {
     facet.values = sortByActiveFacets(facet, selectedFilters)
   }
+
+  useEffect(() => {
+    const el = elementRef.current
+    if (el) {
+      const isOverflowing = el.scrollHeight > el.clientHeight
+
+      if (isOverflowing) {
+        setHasOverflow(true)
+      } else {
+        setHasOverflow(false)
+      }
+    }
+  }, [elementRef?.current?.scrollHeight])
+
+  useEffect(() => {
+    setIsExpanded(false)
+  }, [actor.getSnapshot().context.facetData])
 
   return (
     <>
@@ -88,7 +89,7 @@ const SearchFiltersColumn = ({
           {hasOverflow && (
             <BadgeButton
               ariaLabel={isExpanded ? "Vis færre" : "Vis flere"}
-              classNames={cn(`pl-3 w-auto flex flex-row items-center self-start  ml-1`)}
+              classNames={cn(`pl-3 w-auto flex flex-row items-center self-start mt-1`)}
               onClick={() => {
                 setIsExpanded(prev => !prev)
               }}>
