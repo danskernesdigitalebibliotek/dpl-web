@@ -72,6 +72,7 @@ const WorkPageHeader = ({ work }: WorkPageHeaderProps) => {
                 alt="Forsidebillede på værket"
                 lowResSrc={lowResCover || ""}
                 src={coverSrc?.[0] || ""}
+                classNames="lg:w-[80%] select-none"
               />
             )}
           </div>

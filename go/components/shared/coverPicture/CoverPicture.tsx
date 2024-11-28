@@ -10,11 +10,17 @@ import Icon from "../icon/Icon"
 type CoverPictureProps = {
   lowResSrc: string
   src: string
-  className?: string
+  classNames?: string
   alt: string
   withTilt?: boolean
 }
-export const CoverPicture = ({ src, lowResSrc, alt, withTilt = false }: CoverPictureProps) => {
+export const CoverPicture = ({
+  src,
+  lowResSrc,
+  alt,
+  withTilt = false,
+  classNames,
+}: CoverPictureProps) => {
   const [imageHeight, setImageHeight] = useState(0)
   const [imageWidth, setImageWidth] = useState(0)
   const imageAspectRatio = imageWidth / imageHeight
@@ -23,7 +29,7 @@ export const CoverPicture = ({ src, lowResSrc, alt, withTilt = false }: CoverPic
   const [imageError, setImageError] = useState(false)
 
   return (
-    <div className="flex h-full w-full select-none items-center lg:w-[80%]">
+    <div className={cn("flex h-full w-full items-center", classNames)}>
       {!imageError && src ? (
         <Tilt
           scale={withTilt ? 1.05 : 1}
