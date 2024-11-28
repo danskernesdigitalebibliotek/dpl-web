@@ -1,19 +1,15 @@
-import React, { useState } from "react"
+import React, { useEffect, useState } from "react"
 
-import { Button } from "@/components/shared/button/Button"
 import { CoverPicture } from "@/components/shared/coverPicture/CoverPicture"
-import Player from "@/components/shared/publizonPlayer/PublizonPlayer"
-import ResponsiveDialog from "@/components/shared/responsiveDialog/ResponsiveDialog"
 import SlideSelect, { SlideSelectOption } from "@/components/shared/slideSelect/SlideSelect"
-import SmartLink from "@/components/shared/smartLink/SmartLink"
 import { displayCreators } from "@/components/shared/workCard/helper"
 import { WorkFullWorkPageFragment } from "@/lib/graphql/generated/fbi/graphql"
 import { getCoverUrls, getLowResCoverUrl } from "@/lib/helpers/covers"
-import { resolveUrl } from "@/lib/helpers/helper.routes"
 import { useGetCoverCollection } from "@/lib/rest/cover-service-api/generated/cover-service"
 import { GetCoverCollectionSizesItem } from "@/lib/rest/cover-service-api/generated/model"
 import { useSelectedManifestationStore } from "@/store/selectedManifestation.store"
 
+import WorkPageButtons from "./WorkPageButtons"
 import { getManifestationByMaterialType, getWorkMaterialTypes } from "./helper"
 
 type WorkPageHeaderProps = {
@@ -33,7 +29,6 @@ const WorkPageHeader = ({ work }: WorkPageHeaderProps) => {
     },
     { query: { enabled: !!selectedManifestation?.pid } }
   )
-  const [isPlayerOpen, setIsPlayerOpen] = useState(false)
   const workMaterialTypes = getWorkMaterialTypes(work).map(materialType => {
     return { value: materialType.code, render: materialType.display }
   })
@@ -51,19 +46,21 @@ const WorkPageHeader = ({ work }: WorkPageHeaderProps) => {
     [selectedManifestation?.pid || ""],
     ["default", "original", "large", "medium-large", "medium", "small-medium", "small", "xx-small"]
   )
-  const findInitialOption = () => {
+  const [initialSliderValue, setinitialSliderValue] = useState<SlideSelectOption | undefined>(
+    undefined
+  )
+  const findInitialSliderValue = () => {
     return slideSelectOptions.find(option => {
       return !!selectedManifestation?.materialTypes.find(materialType => {
         return materialType.materialTypeGeneral.code.includes(option.value)
       })
     })
   }
-  const identifier = selectedManifestation?.identifiers?.[0].value || ""
-  const url = resolveUrl({
-    routeParams: { work: "work", ":wid": work.workId, read: "read" },
-    queryParams: { id: identifier },
-  })
-  const isIdentifierAvailable = !!selectedManifestation?.identifiers[0].value
+
+  useEffect(() => {
+    setinitialSliderValue(findInitialSliderValue())
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [selectedManifestation])
 
   return (
     <>
@@ -81,7 +78,7 @@ const WorkPageHeader = ({ work }: WorkPageHeaderProps) => {
           <div className="flex w-full justify-center">
             <SlideSelect
               options={slideSelectOptions}
-              initialOption={findInitialOption()}
+              initialOption={initialSliderValue}
               onOptionSelect={(optionSelected: SlideSelectOption) => {
                 setSelectedManifestation(
                   getManifestationByMaterialType(work, optionSelected.value) ||
@@ -101,38 +98,9 @@ const WorkPageHeader = ({ work }: WorkPageHeaderProps) => {
           <p className="mt-grid-gap-2 text-typo-caption uppercase lg:mt-7">{`af ${displayCreators(work.creators, 100)}`}</p>
         </div>
         <div className="mt-grid-gap-3 flex flex-col items-end justify-end gap-3 lg:order-3 lg:flex-1 lg:basis-1/3">
-          <Button
-            ariaLabel="Prøv ebog"
-            size={"default"}
-            className="min-w-full lg:min-w-80"
-            asChild
-            disabled={isIdentifierAvailable}>
-            <SmartLink linkType="external" href={url}>
-              {`Prøv ${selectedManifestation?.materialTypes[0].materialTypeGeneral.display || "materialet"}`}
-            </SmartLink>
-          </Button>
-          <Button
-            ariaLabel="Prøv lydbog"
-            disabled={isIdentifierAvailable}
-            className="min-w-full lg:min-w-80"
-            onClick={() => setIsPlayerOpen(!isPlayerOpen)}>
-            Prøv lytbog
-          </Button>
+          <WorkPageButtons workId={work.workId} />
         </div>
       </div>
-
-      {/* Reader / Player dialog */}
-      {isIdentifierAvailable && (
-        <ResponsiveDialog
-          open={isPlayerOpen}
-          onOpenChange={() => {
-            setIsPlayerOpen(!isPlayerOpen)
-          }}
-          title="Prøv lydbog"
-          description="For at låne lydbogen skal du være oprettet som bruger på GO.">
-          <Player type="demo" identifier={selectedManifestation.identifiers[0].value} />
-        </ResponsiveDialog>
-      )}
     </>
   )
 }
