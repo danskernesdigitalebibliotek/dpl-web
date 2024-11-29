@@ -29,7 +29,7 @@ const SlideSelect = ({ options, initialOption, onOptionSelect }: SlideSelectProp
     <div className="relative flex flex-row flex-nowrap justify-center rounded-full border-2 border-foreground p-1">
       {/* Animated black background */}
       <motion.div
-        className="absolute top-1 z-[0] h-7 w-auto rounded-full bg-foreground"
+        className="absolute top-1 h-7 w-auto rounded-full bg-foreground"
         layout // Framer Motion automatically animates layout changes
         initial={false} // Prevents the initial animation
         transition={{

@@ -98,7 +98,7 @@ const WorkPageHeader = ({ work }: WorkPageHeaderProps) => {
           </h1>
           <p className="mt-grid-gap-2 text-typo-caption uppercase lg:mt-7">{`af ${displayCreators(work.creators, 100)}`}</p>
         </div>
-        <div className="mt-grid-gap-3 flex flex-col items-end justify-end gap-3 lg:order-3 lg:flex-1 lg:basis-1/3">
+        <div className="mt-grid-gap-3 flex flex-col items-end justify-end lg:order-3 lg:mt-0 lg:flex-1 lg:basis-1/3">
           <WorkPageButtons workId={work.workId} />
         </div>
       </div>
