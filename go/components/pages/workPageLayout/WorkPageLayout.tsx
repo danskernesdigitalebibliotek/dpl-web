@@ -1,6 +1,7 @@
 "use client"
 
 import { useQuery } from "@tanstack/react-query"
+import { notFound } from "next/navigation"
 import React, { useEffect } from "react"
 
 import { GetMaterialQuery, useGetMaterialQuery } from "@/lib/graphql/generated/fbi/graphql"
@@ -46,7 +47,7 @@ function WorkPageLayout({ workId, dehydratedQueryData }: WorkPageLayoutProps) {
   }
 
   if (!data || !data.work) {
-    return <div className={pageContainerClasses}>So sorry page</div>
+    notFound()
   }
 
   return (
