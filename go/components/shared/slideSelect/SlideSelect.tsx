@@ -57,7 +57,7 @@ const SlideSelect = ({ options, initialOption, onOptionSelect }: SlideSelectProp
               onOptionSelect(option)
             }}
             variant="transparent"
-            classNames={cn("z-[10] w-28", selected === index && "text-background")}>
+            classNames={cn("z-slide-select w-28", selected === index && "text-background")}>
             {option.render}
           </BadgeButton>
         )

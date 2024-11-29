@@ -19,6 +19,9 @@ export const extendedTheme = {
   },
   zIndex: {
     "-1": "-1",
+    drawer: "50",
+    sheet: "50",
+    "slide-select": "10",
   },
   aspectRatio: {
     "1/1": "var(--aspect-1-1)",
