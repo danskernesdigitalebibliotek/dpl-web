@@ -1,6 +1,7 @@
+import { useWindowSize } from "@uidotdev/usehooks"
 import { motion } from "framer-motion"
 import Image from "next/image"
-import React, { useState } from "react"
+import React, { useEffect, useRef, useState } from "react"
 import Tilt from "react-parallax-tilt"
 
 import { cn } from "@/lib/helpers/helper.cn"
@@ -21,15 +22,22 @@ export const CoverPicture = ({
   withTilt = false,
   classNames,
 }: CoverPictureProps) => {
+  const size = useWindowSize()
+  const ref = useRef<HTMLDivElement>(null)
+  const containerHeight = ref.current?.getBoundingClientRect().height || 0
   const [imageHeight, setImageHeight] = useState(0)
   const [imageWidth, setImageWidth] = useState(0)
   const imageAspectRatio = imageWidth / imageHeight
+  // calculate the max width using image aspect ratio and container width
+  const imageWidthByContainerHeight = imageAspectRatio * containerHeight
   const paddingTop = `${100 / imageAspectRatio}%`
   const [imageLoaded, setImageLoaded] = useState(false)
   const [imageError, setImageError] = useState(false)
 
+  useEffect(() => {}, [size.width])
+
   return (
-    <div className={cn("flex h-full w-full items-center", classNames)}>
+    <div className={cn("flex h-full w-full items-center", classNames)} ref={ref}>
       {!imageError && src ? (
         <Tilt
           scale={withTilt ? 1.05 : 1}
@@ -38,7 +46,7 @@ export const CoverPicture = ({
           tiltMaxAngleY={withTilt ? 10 : 0}
           tiltReverse={true}
           className={"relative w-full"}
-          style={{ paddingTop, width: "100%" }}>
+          style={{ paddingTop, width: `min(100%,${imageWidthByContainerHeight}px)` }}>
           {lowResSrc && (
             <Image
               src={lowResSrc}
