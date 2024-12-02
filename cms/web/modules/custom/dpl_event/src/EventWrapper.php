@@ -8,6 +8,7 @@ use Drupal\drupal_typed\DrupalTyped;
 use Drupal\paragraphs\ParagraphInterface;
 use Drupal\recurring_events\Entity\EventInstance;
 use Psr\Log\LoggerInterface;
+use Safe\DateTime;
 use Safe\DateTimeImmutable;
 
 /**
@@ -190,6 +191,36 @@ class EventWrapper {
       return !$price->isZero();
     });
     return empty($nonFreePrice);
+  }
+
+  /**
+   * Getting relevant updated date - either the series or instance.
+   *
+   * As we use inheritance, we want an updated series to also reflect update.
+   * We could implement this, by programmatically saving all instances when
+   * the series is saved, but this may have unforseen consequences, as it is
+   * working against the Drupal system.
+   * Instead, we'll look up the instance and series changed dates, and take
+   * which ever is newer.
+   */
+  public function getUpdatedDate(): ?DateTime {
+    $series = $this->event->getEventSeries();
+
+    $changed_instance = $this->event->getChangedTime();
+    $changed_series = $series->getChangedTime();
+
+    // Setting the timestamp to whichever is the larger.
+    $timestamp = ($changed_instance > $changed_series) ?
+      $changed_instance : $changed_series;
+
+    if (empty($timestamp)) {
+      return NULL;
+    }
+
+    $date = new DateTime();
+    $date->setTimestamp(intval($timestamp));
+
+    return $date;
   }
 
   /**

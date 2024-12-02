@@ -52,7 +52,7 @@ services:
       << : *default-environment
       # VARNISH_BYPASS: "true" # Add this to disable caching in varnish.
       # Is used by [nginx-proxy](https://github.com/nginx-proxy/nginx-proxy) or [dory](https://github.com/FreedomBen/dory)
-      VIRTUAL_HOST: ${COMPOSE_PROJECT_NAME}.docker
+      VIRTUAL_HOST: ${COMPOSE_PROJECT_NAME}-varnish.docker
       VIRTUAL_PORT: 8080
 
   cli: # cli container, will be used for executing composer and any local commands (drush, drupal, etc.)

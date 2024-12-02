@@ -25,14 +25,31 @@ function dpl_consumers_create_user(): void {
  * Create a consumer.
  */
 function dpl_consumers_create_consumer(): void {
-  $consumer = \Drupal::entityTypeManager()->getStorage('consumer')->create([
-    'label' => DplGraphqlConsumersConstants::GRAPHQL_CONSUMER_CONSUMER_LABEL,
-    'id' => DplGraphqlConsumersConstants::GRAPHQL_CONSUMER_CONSUMER_ID,
-    'client_id' => DplGraphqlConsumersConstants::GRAPHQL_CONSUMER_CLIENT_ID,
-    'third_party' => FALSE,
-  ]);
+  $user = \Drupal::entityTypeManager()
+    ->getStorage('user')
+    ->loadByProperties(['name' => DplGraphqlConsumersConstants::GRAPHQL_CONSUMER_USER_NAME]);
 
-  $consumer->save();
+  $user = reset($user);
+
+  if (empty($user)) {
+    return;
+  }
+
+  $secret = getenv('GRAPHQL_CONSUMER_SECRET');
+
+  if ($secret) {
+    $consumer = \Drupal::entityTypeManager()->getStorage('consumer')->create([
+      'label' => DplGraphqlConsumersConstants::GRAPHQL_CONSUMER_LABEL,
+      'id' => DplGraphqlConsumersConstants::GRAPHQL_CONSUMER_CONSUMER_ID,
+      'client_id' => DplGraphqlConsumersConstants::GRAPHQL_CONSUMER_CLIENT_ID,
+      'secret' => $secret,
+      'third_party' => FALSE,
+      'user_id' => $user->id(),
+      'roles' => [DplGraphqlConsumersConstants::GRAPHQL_CONSUMER_ROLE_ID],
+    ]);
+
+    $consumer->save();
+  }
 }
 
 /**
@@ -40,7 +57,6 @@ function dpl_consumers_create_consumer(): void {
  */
 function dpl_consumers_delete_user(): void {
   try {
-    // Delete the user.
     $user = \Drupal::entityTypeManager()
       ->getStorage('user')
       ->loadByProperties(['name' => DplGraphqlConsumersConstants::GRAPHQL_CONSUMER_USER_NAME]);
@@ -61,17 +77,19 @@ function dpl_consumers_delete_user(): void {
  */
 function dpl_consumers_delete_consumer(): void {
   try {
-    // Delete the consumer.
     $consumer = \Drupal::entityTypeManager()
       ->getStorage('consumer')
-      ->loadByProperties(['label' => DplGraphqlConsumersConstants::GRAPHQL_CONSUMER_CONSUMER_LABEL]);
+      ->loadByProperties(['client_id' => DplGraphqlConsumersConstants::GRAPHQL_CONSUMER_CLIENT_ID]);
 
+    // We assume that there is only one consumer with the given client ID
+    // as it is used an as unique identifier (machine name).
     if (!empty($consumer)) {
       $consumer = reset($consumer);
       $consumer->delete();
     }
   }
   catch (\Exception $e) {
+    // We just log here in the deletion. It's not critical if it fails.
     \Drupal::logger('dpl_consumers')->error($e->getMessage());
   }
 }

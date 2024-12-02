@@ -38,6 +38,7 @@ $settings['config_exclude_modules'] = [
   'dpl_related_content_tests',
   'dpl_example_content',
   'dpl_example_breadcrumb',
+  'dblog',
   'devel',
   'devel_generate',
   'field_ui',
@@ -54,6 +55,21 @@ $settings['config_exclude_modules'] = [
 // (like 'web') you can put the config folder outside this subfolder for an
 // advanced security measure: '../config/sync'.
 $settings['config_sync_directory'] = '../config/sync';
+
+/**
+ * Private file path.
+ *
+ * A local file system path where private files will be stored. This directory
+ * must be absolute, outside the Drupal installation directory and not
+ * accessible over the web.
+ *
+ * Note: Caches need to be cleared when this value is changed to make the
+ * private:// stream wrapper available to the system.
+ *
+ * See https://www.drupal.org/documentation/modules/file for more information
+ * about securing private files.
+ */
+$settings['file_private_path'] = $app_root . '/sites/default/files/private';
 
 // Set service base urls for the react apps.
 $config['dpl_react_apps.settings']['services'] = [

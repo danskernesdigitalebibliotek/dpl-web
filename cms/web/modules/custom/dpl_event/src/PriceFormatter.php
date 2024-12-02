@@ -6,7 +6,6 @@ use Brick\Math\BigDecimal;
 use Drupal\Core\Config\ConfigFactoryInterface;
 use Drupal\Core\StringTranslation\TranslationInterface;
 use Drupal\dpl_event\Form\SettingsForm;
-use function Safe\sort;
 
 /**
  * Formats prices according to local rules.

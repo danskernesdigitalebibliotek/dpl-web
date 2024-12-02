@@ -2,15 +2,15 @@ services:
   dpl_campaign.serializer:
     class: Symfony\Component\Serializer\Serializer
     arguments:
-      - ["@dpl_campaign.normalizer.object", "@dpl_campaign.normalizer.array"]
-      - ["@serializer.encoder.json", "@serializer.encoder.xml"]
+      - ['@dpl_campaign.normalizer.object', '@dpl_campaign.normalizer.array']
+      - ['@serializer.encoder.json', '@serializer.encoder.xml']
   dpl_campaign.normalizer.object:
     class: Symfony\Component\Serializer\Normalizer\ObjectNormalizer
     arguments:
       - null
       - null
       - null
-      - "@dpl_campaign.extractor.phpdoc"
+      - '@dpl_campaign.extractor.phpdoc'
   dpl_campaign.normalizer.array:
     class: Symfony\Component\Serializer\Normalizer\ArrayDenormalizer
   dpl_campaign.extractor.phpdoc:

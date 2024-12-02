@@ -1,5 +1,5 @@
 _meta:
-  version: "1.0"
+  version: '1.0'
   entity_type: eventseries
   uuid: cbd3796e-c870-4e53-b47e-b43a4ec29a13
   bundle: default
@@ -31,53 +31,53 @@ default:
   recur_type:
     - value: weekly_recurring_date
   consecutive_recurring_date:
-    - value: ""
-      end_value: ""
-      time: "08:00 am"
-      end_time: "11:30 pm"
+    - value: ''
+      end_value: ''
+      time: '08:00 am'
+      end_time: '11:30 pm'
       duration: 5
       duration_units: minute
       buffer: 0
       buffer_units: minute
   daily_recurring_date:
-    - value: ""
-      end_value: ""
-      time: ""
+    - value: ''
+      end_value: ''
+      time: ''
       duration: 0
-      end_time: ""
+      end_time: ''
       duration_or_end_time: duration
   weekly_recurring_date:
-    - value: "2027-05-17T16:08:26"
-      end_value: "2027-08-06T16:08:26"
-      time: "08:00 am"
+    - value: '2027-05-17T16:08:26'
+      end_value: '2027-08-06T16:08:26'
+      time: '08:00 am'
       duration: 900
-      end_time: "08:00 am"
+      end_time: '08:00 am'
       duration_or_end_time: duration
       days: monday
   monthly_recurring_date:
-    - value: ""
-      end_value: ""
-      time: "08:00 am"
+    - value: ''
+      end_value: ''
+      time: '08:00 am'
       duration: 900
-      end_time: "08:00 am"
+      end_time: '08:00 am'
       duration_or_end_time: duration
-      days: ""
-      type: ""
-      day_occurrence: ""
-      day_of_month: ""
+      days: ''
+      type: ''
+      day_occurrence: ''
+      day_of_month: ''
   yearly_recurring_date:
-    - value: ""
-      end_value: ""
-      time: ""
+    - value: ''
+      end_value: ''
+      time: ''
       duration: 0
-      end_time: ""
+      end_time: ''
       duration_or_end_time: duration
-      days: ""
-      type: ""
-      day_occurrence: ""
-      day_of_month: ""
+      days: ''
+      type: ''
+      day_occurrence: ''
+      day_of_month: ''
       year_interval: 0
-      months: ""
+      months: ''
   created:
     - value: 1717512986
   revision_translation_affected:
@@ -86,11 +86,11 @@ default:
     - tag: meta
       attributes:
         name: title
-        content: "| DPL CMS"
+        content: '| DPL CMS'
     - tag: link
       attributes:
         rel: canonical
-        href: "http://dapple-cms.docker/user/login"
+        href: 'http://dapple-cms.docker/user/login'
   path:
     - alias: /testfilialen2/events/cat2/event-3-tag2-cat2-branch2
       langcode: und
@@ -116,7 +116,7 @@ default:
   field_event_paragraphs:
     - entity:
         _meta:
-          version: "1.0"
+          version: '1.0'
           entity_type: paragraph
           uuid: 03c12132-4913-4953-8703-9a43f39e56fa
           bundle: text_body
