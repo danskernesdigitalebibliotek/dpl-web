@@ -1,56 +1,58 @@
 import { useWindowSize } from "@uidotdev/usehooks"
 import { motion } from "framer-motion"
 import Image from "next/image"
-import React, { FC, useEffect, useRef, useState } from "react"
+import React, { useEffect, useRef, useState } from "react"
 import Tilt from "react-parallax-tilt"
 
 import { cn } from "@/lib/helpers/helper.cn"
 
 import Icon from "../icon/Icon"
 
-interface Props {
+type CoverPictureProps = {
   lowResSrc: string
   src: string
-  className?: string
+  classNames?: string
   alt: string
+  withTilt?: boolean
 }
-export const WorkCardImage: FC<Props> = ({ src, lowResSrc, alt }) => {
+export const CoverPicture = ({
+  src,
+  lowResSrc,
+  alt,
+  withTilt = false,
+  classNames,
+}: CoverPictureProps) => {
   const size = useWindowSize()
-
+  const ref = useRef<HTMLDivElement>(null)
+  const containerHeight = ref.current?.getBoundingClientRect().height || 0
   const [imageHeight, setImageHeight] = useState(0)
   const [imageWidth, setImageWidth] = useState(0)
   const imageAspectRatio = imageWidth / imageHeight
-
-  // get the container height
-  const ref = useRef<HTMLDivElement>(null)
-  const containerHeight = ref.current?.getBoundingClientRect().height || 0
-
   // calculate the max width using image aspect ratio and container width
   const imageWidthByContainerHeight = imageAspectRatio * containerHeight
-  const paddingTop = 100 / imageAspectRatio + "%"
-
-  useEffect(() => {}, [size.width])
-
+  const paddingTop = `${100 / imageAspectRatio}%`
   const [imageLoaded, setImageLoaded] = useState(false)
   const [imageError, setImageError] = useState(false)
 
+  useEffect(() => {}, [size.width])
+
   return (
-    <div className="flex h-full w-full items-center" ref={ref}>
+    <div className={cn("flex h-full w-full items-center", classNames)} ref={ref}>
       {!imageError && src ? (
         <Tilt
-          scale={1.05}
+          scale={withTilt ? 1.05 : 1}
           transitionSpeed={2500}
-          tiltMaxAngleX={10}
-          tiltMaxAngleY={10}
+          tiltMaxAngleX={withTilt ? 10 : 0}
+          tiltMaxAngleY={withTilt ? 10 : 0}
           tiltReverse={true}
-          className={"relative m-auto"}
+          className={"relative w-full"}
           style={{ paddingTop, width: `min(100%,${imageWidthByContainerHeight}px)` }}>
           {lowResSrc && (
             <Image
               src={lowResSrc}
               alt={alt}
-              height={imageHeight}
-              width={imageWidth}
+              height={0}
+              width={0}
               sizes="20px"
               loading="eager"
               className={cn(
@@ -70,8 +72,8 @@ export const WorkCardImage: FC<Props> = ({ src, lowResSrc, alt }) => {
             <Image
               src={src}
               alt={alt}
-              height={imageHeight}
-              width={imageWidth}
+              height={0}
+              width={0}
               sizes="100vw"
               loading="lazy"
               className={cn(
@@ -79,7 +81,11 @@ export const WorkCardImage: FC<Props> = ({ src, lowResSrc, alt }) => {
                   transition-all duration-500 will-change-transform`,
                 imageLoaded ? "opacity-100" : "opacity-0"
               )}
-              onLoad={() => {
+              onLoad={({ target }) => {
+                // get the intrinsic dimensions of the image
+                const { naturalWidth, naturalHeight } = target as HTMLImageElement
+                setImageHeight(naturalHeight)
+                setImageWidth(naturalWidth)
                 setImageLoaded(true)
               }}
               onError={() => {

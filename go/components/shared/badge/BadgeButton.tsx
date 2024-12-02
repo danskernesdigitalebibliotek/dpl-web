@@ -8,6 +8,8 @@ type BadgeButtonProps = {
   classNames?: string
   children: React.ReactNode
   ariaLabel: string
+  variant?: "default" | "transparent"
+  withAnimation?: boolean
 }
 
 const BadgeButton = ({
@@ -16,14 +18,18 @@ const BadgeButton = ({
   classNames,
   children,
   ariaLabel,
+  variant = "default",
+  withAnimation = false,
 }: BadgeButtonProps) => {
   return (
     <button
       onClick={onClick}
       className={cn(
         `focus-visible h-[28px] w-auto self-start whitespace-nowrap rounded-full bg-background-overlay px-4
-        py-2 text-typo-caption hover:animate-wiggle`,
-        isActive && "bg-foreground text-background",
+        py-2 text-typo-caption`,
+        withAnimation ? "hover:animate-wiggle" : "",
+        variant === "transparent" ? "bg-transparent" : "",
+        isActive ? "bg-foreground text-background" : "",
         classNames,
         ariaLabel
       )}>

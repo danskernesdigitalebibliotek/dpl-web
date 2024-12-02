@@ -1,7 +1,8 @@
 import Link from "next/link"
 import React from "react"
 
-import { WorkTeaserFragment } from "@/lib/graphql/generated/fbi/graphql"
+import { WorkTeaserSearchPageFragment } from "@/lib/graphql/generated/fbi/graphql"
+import { getCoverUrls, getLowResCoverUrl } from "@/lib/helpers/covers"
 import { resolveUrl } from "@/lib/helpers/helper.routes"
 import { getIsbnsFromWork } from "@/lib/helpers/ids"
 import { useGetCoverCollection } from "@/lib/rest/cover-service-api/generated/cover-service"
@@ -9,12 +10,12 @@ import { GetCoverCollectionSizesItem } from "@/lib/rest/cover-service-api/genera
 import { useGetV1ProductsIdentifier } from "@/lib/rest/publizon-api/generated/publizon"
 
 import { Badge } from "../badge/Badge"
+import { CoverPicture } from "../coverPicture/CoverPicture"
 import WorkCardAvailabilityRow from "./WorkCardAvailabilityRow"
-import { WorkCardImage } from "./WorkCardImage"
-import { displayCreators, getAllWorkPids, getCoverUrls, getLowResCoverUrl } from "./helper"
+import { displayCreators, getAllWorkPids } from "./helper"
 
 type WorkCardProps = {
-  work: WorkTeaserFragment
+  work: WorkTeaserSearchPageFragment
 }
 
 const WorkCard = ({ work }: WorkCardProps) => {
@@ -22,7 +23,6 @@ const WorkCard = ({ work }: WorkCardProps) => {
     type: "pid",
     identifiers: [getAllWorkPids(work).join(", ")],
     sizes: [
-      // TODO: These sizes should be defined in a general global config.
       "xx-small, small, small-medium, medium, medium-large, large, original, default" as GetCoverCollectionSizesItem,
     ],
   })
@@ -30,8 +30,7 @@ const WorkCard = ({ work }: WorkCardProps) => {
   const shouldQueryBeEnabled = () => {
     return isbns && isbns.length > 0
   }
-
-  const { data: dataPublizon } = useGetV1ProductsIdentifier(isbns[0] ?? "", {
+  const { data: dataPublizon } = useGetV1ProductsIdentifier(isbns[0] || "", {
     query: {
       // Publizon / useGetV1ProductsIdentifier is responsible for online
       // materials. It requires an ISBN to do lookups.
@@ -42,7 +41,6 @@ const WorkCard = ({ work }: WorkCardProps) => {
   const bestRepresentation = work.manifestations.bestRepresentation
   const allPids = [bestRepresentation.pid, ...getAllWorkPids(work)]
   const coverSrc = getCoverUrls(dataCovers, allPids || [], [
-    // TODO: These sizes should be defined in a general global config.
     "default",
     "original",
     "large",
@@ -68,12 +66,14 @@ const WorkCard = ({ work }: WorkCardProps) => {
               BLÅ
             </Badge>
           )}
-          <div className="relative mx-auto flex h-full w-full items-center">
+          <div className="relative mx-auto flex h-full w-full items-center justify-center">
             {!isLoadingCovers && (
-              <WorkCardImage
+              <CoverPicture
                 lowResSrc={lowResCover || ""}
                 src={coverSrc?.[0] || ""}
                 alt={`${work.titles.full[0]} cover billede`}
+                withTilt
+                classNames="select-none"
               />
             )}
           </div>
