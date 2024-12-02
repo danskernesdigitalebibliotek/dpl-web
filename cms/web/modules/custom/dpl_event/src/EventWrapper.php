@@ -2,8 +2,10 @@
 
 namespace Drupal\dpl_event;
 
+use Brick\Math\BigDecimal;
 use Drupal\Core\Field\FieldItemListInterface;
 use Drupal\drupal_typed\DrupalTyped;
+use Drupal\paragraphs\ParagraphInterface;
 use Drupal\recurring_events\Entity\EventInstance;
 use Psr\Log\LoggerInterface;
 use Safe\DateTime;
@@ -146,6 +148,49 @@ class EventWrapper {
     }
 
     return NULL;
+  }
+
+  /**
+   * Get the url of the event if available.
+   *
+   * The url will usually be the place where visitors can by tickets for the
+   * event.
+   */
+  public function getLink() : ?string {
+    $linkField = $this->getField('event_link');
+    return $linkField?->getString();
+  }
+
+  /**
+   * Get the price(s) for the event.
+   *
+   * @return int[]|float[]
+   *   Price(s) for the available ticket categories.
+   */
+  public function getTicketPrices(): array {
+    $field = $this->getField('event_ticket_categories');
+    if (!$field instanceof FieldItemListInterface) {
+      return [];
+    }
+
+    $ticketCategories = $field->referencedEntities();
+    return array_map(function (ParagraphInterface $ticketCategory) {
+      return $ticketCategory->get('field_ticket_category_price')->value;
+    }, $ticketCategories);
+  }
+
+  /**
+   * Returns whether the event can be freely attended.
+   *
+   * This means that the event does not require ticketing or that all ticket
+   * categories are free.
+   */
+  public function isFreeToAttend(): bool {
+    $nonFreePrice = array_filter($this->getTicketPrices(), function (int|float $price) {
+      $price = BigDecimal::of($price);
+      return !$price->isZero();
+    });
+    return empty($nonFreePrice);
   }
 
   /**
