@@ -73,7 +73,7 @@ const WorkCard = ({ work }: WorkCardProps) => {
                 src={coverSrc?.[0] || ""}
                 alt={`${work.titles.full[0]} cover billede`}
                 withTilt
-                classNames="select-none"
+                className="select-none"
               />
             )}
           </div>
