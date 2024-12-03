@@ -45,8 +45,8 @@ fragment ManifestationAccess on Manifestation {
 
 fragment ManifestationTitles on Manifestation {
   titles {
-    main
     identifyingAddition
+    full
   }
 }
 
