@@ -50,6 +50,15 @@ fragment ManifestationTitles on Manifestation {
   }
 }
 
+fragment ManifestationLanguages on Manifestation {
+  languages {
+    main {
+      display
+      isoCode
+    }
+  }
+}
+
 # Bigger chunks for specific pages (built from above fragments) ----------------
 
 fragment ManifestationSearchPageTeaser on Manifestation {
@@ -62,4 +71,5 @@ fragment ManifestationWorkPage on Manifestation {
   ...ManifestationCover
   ...ManifestationAccess
   ...ManifestationTitles
+  ...ManifestationLanguages
 }
