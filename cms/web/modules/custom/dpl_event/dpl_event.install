@@ -87,8 +87,8 @@ function _dpl_event_set_scheduler_settings(): string {
 
   $existing_schedule = $config->get('unpublish_schedule');
 
-  // If we have no existing schedule set, set it as default to one hour.
-  $schedule_time = !empty($existing_schedule) ? $existing_schedule : 3600;
+  // If we have no existing schedule set, set it as default to 6 hours.
+  $schedule_time = !empty($existing_schedule) ? $existing_schedule : 21600;
 
   // If no schedule is set already, we'll disable the setting.
   $unpublish_enable = ($existing_schedule != 0);
