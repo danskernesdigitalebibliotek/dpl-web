@@ -2,10 +2,13 @@
 
 namespace Drupal\dpl_event;
 
+use Brick\Math\BigDecimal;
 use Drupal\Core\Field\FieldItemListInterface;
 use Drupal\drupal_typed\DrupalTyped;
+use Drupal\paragraphs\ParagraphInterface;
 use Drupal\recurring_events\Entity\EventInstance;
 use Psr\Log\LoggerInterface;
+use Safe\DateTime;
 use Safe\DateTimeImmutable;
 
 /**
@@ -145,6 +148,79 @@ class EventWrapper {
     }
 
     return NULL;
+  }
+
+  /**
+   * Get the url of the event if available.
+   *
+   * The url will usually be the place where visitors can by tickets for the
+   * event.
+   */
+  public function getLink() : ?string {
+    $linkField = $this->getField('event_link');
+    return $linkField?->getString();
+  }
+
+  /**
+   * Get the price(s) for the event.
+   *
+   * @return int[]|float[]
+   *   Price(s) for the available ticket categories.
+   */
+  public function getTicketPrices(): array {
+    $field = $this->getField('event_ticket_categories');
+    if (!$field instanceof FieldItemListInterface) {
+      return [];
+    }
+
+    $ticketCategories = $field->referencedEntities();
+    return array_map(function (ParagraphInterface $ticketCategory) {
+      return $ticketCategory->get('field_ticket_category_price')->value;
+    }, $ticketCategories);
+  }
+
+  /**
+   * Returns whether the event can be freely attended.
+   *
+   * This means that the event does not require ticketing or that all ticket
+   * categories are free.
+   */
+  public function isFreeToAttend(): bool {
+    $nonFreePrice = array_filter($this->getTicketPrices(), function (int|float $price) {
+      $price = BigDecimal::of($price);
+      return !$price->isZero();
+    });
+    return empty($nonFreePrice);
+  }
+
+  /**
+   * Getting relevant updated date - either the series or instance.
+   *
+   * As we use inheritance, we want an updated series to also reflect update.
+   * We could implement this, by programmatically saving all instances when
+   * the series is saved, but this may have unforseen consequences, as it is
+   * working against the Drupal system.
+   * Instead, we'll look up the instance and series changed dates, and take
+   * which ever is newer.
+   */
+  public function getUpdatedDate(): ?DateTime {
+    $series = $this->event->getEventSeries();
+
+    $changed_instance = $this->event->getChangedTime();
+    $changed_series = $series->getChangedTime();
+
+    // Setting the timestamp to whichever is the larger.
+    $timestamp = ($changed_instance > $changed_series) ?
+      $changed_instance : $changed_series;
+
+    if (empty($timestamp)) {
+      return NULL;
+    }
+
+    $date = new DateTime();
+    $date->setTimestamp(intval($timestamp));
+
+    return $date;
   }
 
   /**

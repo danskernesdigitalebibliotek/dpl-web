@@ -7,8 +7,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2024-11-26 13:34+0100\n"
-"PO-Revision-Date: 2024-11-26 13:34+0100\n"
+"POT-Creation-Date: 2024-12-03 10:37+0100\n"
+"PO-Revision-Date: 2024-12-03 10:37+0100\n"
 "Last-Translator: NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
 "MIME-Version: 1.0\n"
@@ -3476,6 +3476,22 @@ msgctxt "List size (settings)"
 msgid "Fees list size on mobile"
 msgstr "Antal elementer der vises i en liste på mobil"
 
+msgctxt "DPL logging"
+msgid "New roles added to user: @roles"
+msgstr ""
+
+msgctxt "DPL logging"
+msgid "Old roles removed from user: @roles"
+msgstr ""
+
+msgctxt "DPL logging"
+msgid "Password was updated"
+msgstr ""
+
+msgctxt "DPL logging"
+msgid "@label (@key): @original_value changed to @value"
+msgstr ""
+
 msgid "Mock-title field"
 msgstr "Mock-titelfelt"
 
@@ -4640,6 +4656,12 @@ msgstr "DPL Cookies"
 
 msgid "A module that handles cookie functionality."
 msgstr "En modul, der håndterer cookie-funktionalitet."
+
+msgid "DPL logging"
+msgstr ""
+
+msgid "Logging custom DDF events, such as updates to users."
+msgstr ""
 
 msgid "Event settings"
 msgstr "Arrangementsindstillinger"
