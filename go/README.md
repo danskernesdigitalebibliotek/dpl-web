@@ -71,6 +71,8 @@ yarn dev:https
 
 The application is now running at [https://localhost:3000](https://localhost:3000)
 
+4. Set up the Drupal CMS ([dpl-cms][dpl-cms]) locally to access configuration variables for the Go app. Ensure the `NEXT_PUBLIC_GRAPHQL_SCHEMA_ENDPOINT_DPL_CMS` variable in the `.env.local` file points to the correct endpoint.
+
 ## Technical Overview
 
 - [Next.js][nextjs] with the [App Router][app-router]
@@ -337,3 +339,4 @@ Quality assurance (QA) is a critical aspect of our development process, ensuring
 [vitest]: https://vitest.dev/
 [axe]: https://playwright.dev/docs/accessibility-testing
 [playwright]: https://playwright.dev/
+[dpl-cms]: https://github.com/danskernesdigitalebibliotek/dpl-cms
