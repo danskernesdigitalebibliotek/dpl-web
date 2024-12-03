@@ -326,3 +326,10 @@ function dpl_update_update_10027(): string {
 function dpl_update_update_10028(): string {
   return _dpl_update_uninstall_modules(['config_filter']);
 }
+
+/**
+ * Installing dpl_logging.
+ */
+function dpl_update_update_10029(): string {
+  return _dpl_update_install_modules(['dpl_logging']);
+}

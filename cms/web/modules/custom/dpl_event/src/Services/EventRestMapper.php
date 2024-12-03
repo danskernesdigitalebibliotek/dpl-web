@@ -63,10 +63,11 @@ class EventRestMapper {
       'branches' => $this->getBranches(),
       'address' => $this->getAddress(),
       'tags' => $this->getTags(),
+      'partners' => $this->getMultiValue('event_partners'),
       'ticketCapacity' => $this->getValue('event_ticket_capacity'),
       'ticketCategories' => $this->getTicketCategories(),
       'createdAt' => $this->getDateField('created'),
-      'updatedAt' => $this->getDateField('changed'),
+      'updatedAt' => $this->eventWrapper->getUpdatedDate(),
       'dateTime' => $this->getDate(),
       'externalData' => $this->getExternalData(),
       'series' => new EventsGET200ResponseInnerSeries([
@@ -250,6 +251,25 @@ class EventRestMapper {
     $date->setTimestamp(intval($timestamp));
 
     return $date;
+  }
+
+  /**
+   * Get multiple string values as an array output.
+   *
+   * @return string[]
+   *   An array of string values.
+   */
+  private function getMultiValue(string $field_name): array {
+    $field = $this->eventWrapper->getField($field_name);
+
+    if (!($field instanceof FieldItemListInterface)) {
+      return [];
+    }
+
+    $values = $field->getValue();
+
+    // Turning the value keys into a simple, one-level array of strings.
+    return array_column($values, 'value');
   }
 
   /**

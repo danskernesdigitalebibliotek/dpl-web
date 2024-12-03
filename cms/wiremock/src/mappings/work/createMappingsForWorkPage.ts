@@ -43,7 +43,8 @@ export default (baseUri?: string, options?: Options) => {
     wiremock(baseUri, options).mappings.createMapping({
       request: {
         method: "GET",
-        urlPattern: "/external/agencyid/catalog/holdings/v3\\?recordid=.*",
+        urlPattern:
+          "/external/agencyid/catalog/holdingsLogistics/v1\\?recordid=.*",
       },
       response: {
         jsonBody: json.default,

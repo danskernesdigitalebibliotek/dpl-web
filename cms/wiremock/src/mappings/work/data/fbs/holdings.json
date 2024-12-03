@@ -1,238 +1,2513 @@
 [
   {
-    "recordId": "134693959",
+    "recordId": "24880605",
     "reservable": true,
-    "reservations": 3,
+    "reservations": 0,
     "holdings": [
       {
-        "branch": { "branchId": "FBS-751026", "title": "Fælles undervejs" },
-        "department": { "departmentId": "bø", "title": "Børn" },
-        "location": { "locationId": "fanta", "title": "Fantasy" },
-        "sublocation": null,
+        "branch": {
+          "branchId": "FBS-101007",
+          "title": "HB Rigshospitalet"
+        },
+        "lmsPlacement": {
+          "department": {
+            "departmentId": "bø",
+            "title": "Børn"
+          },
+          "section": null,
+          "location": null,
+          "sublocation": {
+            "sublocationId": "fant",
+            "title": "Fantasy"
+          }
+        },
+        "logisticsPlacement": [],
         "materials": [
           {
-            "itemNumber": "A1011423955A",
-            "available": false,
+            "itemNumber": "5205371674",
+            "available": true,
             "periodical": null,
             "materialGroup": {
-              "name": "standard",
-              "description": "31 dages lånetid til alm lånere"
+              "name": "RHnonres",
+              "description": "Nonres materialer på rigshospitalet (lavet så kun personer på RH kan låne og reserverer på disse)"
+            }
+          }
+        ]
+      },
+      {
+        "branch": {
+          "branchId": "FBS-101004",
+          "title": "HB Københavns fængsler"
+        },
+        "lmsPlacement": {
+          "department": {
+            "departmentId": "vo",
+            "title": "Voksen"
+          },
+          "section": null,
+          "location": null,
+          "sublocation": {
+            "sublocationId": "skøn",
+            "title": "Skønlitteratur"
+          }
+        },
+        "logisticsPlacement": [],
+        "materials": [
+          {
+            "itemNumber": "3764991841",
+            "available": true,
+            "periodical": null,
+            "materialGroup": {
+              "name": "nonres",
+              "description": "nonres"
             }
           },
           {
-            "itemNumber": "A1011423956A",
-            "available": false,
+            "itemNumber": "3764991361",
+            "available": true,
             "periodical": null,
             "materialGroup": {
-              "name": "standard",
-              "description": "31 dages lånetid til alm lånere"
+              "name": "nonres",
+              "description": "nonres"
             }
           },
           {
-            "itemNumber": "A1011423957A",
-            "available": false,
+            "itemNumber": "3764991116",
+            "available": true,
             "periodical": null,
             "materialGroup": {
-              "name": "standard",
-              "description": "31 dages lånetid til alm lånere"
+              "name": "nonres",
+              "description": "nonres"
             }
           },
           {
-            "itemNumber": "A1011423958A",
+            "itemNumber": "3764991825",
+            "available": true,
+            "periodical": null,
+            "materialGroup": {
+              "name": "nonres",
+              "description": "nonres"
+            }
+          }
+        ]
+      },
+      {
+        "branch": {
+          "branchId": "DK-710122",
+          "title": "Ørestad"
+        },
+        "lmsPlacement": null,
+        "logisticsPlacement": ["Ørestad", "1.sal", "Taskebøger & klassesæt"],
+        "materials": [
+          {
+            "itemNumber": "4892314638",
+            "available": true,
+            "periodical": null,
+            "materialGroup": {
+              "name": "sko28",
+              "description": "Skole 28 dages udlån"
+            }
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "recordId": "134693959",
+    "reservable": true,
+    "reservations": 1,
+    "holdings": [
+      {
+        "branch": {
+          "branchId": "DK-710114",
+          "title": "Bibliotekshuset"
+        },
+        "lmsPlacement": {
+          "department": {
+            "departmentId": "bø",
+            "title": "Børn"
+          },
+          "section": null,
+          "location": null,
+          "sublocation": {
+            "sublocationId": "fant",
+            "title": "Fantasy"
+          }
+        },
+        "logisticsPlacement": [],
+        "materials": [
+          {
+            "itemNumber": "5387480031",
             "available": false,
             "periodical": null,
             "materialGroup": {
-              "name": "standard",
-              "description": "31 dages lånetid til alm lånere"
+              "name": "Standard",
+              "description": "Std. materialegruppe"
             }
           },
           {
-            "itemNumber": "A1011423959A",
+            "itemNumber": "5387480236",
             "available": false,
             "periodical": null,
             "materialGroup": {
-              "name": "standard",
-              "description": "31 dages lånetid til alm lånere"
+              "name": "Standard",
+              "description": "Std. materialegruppe"
             }
           },
           {
-            "itemNumber": "A1011423960A",
+            "itemNumber": "5387480368",
             "available": false,
             "periodical": null,
             "materialGroup": {
-              "name": "standard",
-              "description": "31 dages lånetid til alm lånere"
+              "name": "Standard",
+              "description": "Std. materialegruppe"
             }
           },
           {
-            "itemNumber": "A1011423961A",
+            "itemNumber": "5387480384",
             "available": false,
             "periodical": null,
             "materialGroup": {
-              "name": "standard",
-              "description": "31 dages lånetid til alm lånere"
+              "name": "Standard",
+              "description": "Std. materialegruppe"
+            }
+          }
+        ]
+      },
+      {
+        "branch": {
+          "branchId": "FBS-101008",
+          "title": "Fjernlager 1"
+        },
+        "lmsPlacement": {
+          "department": {
+            "departmentId": "bø",
+            "title": "Børn"
+          },
+          "section": null,
+          "location": null,
+          "sublocation": {
+            "sublocationId": "fant",
+            "title": "Fantasy"
+          }
+        },
+        "logisticsPlacement": [],
+        "materials": [
+          {
+            "itemNumber": "5387480422",
+            "available": true,
+            "periodical": null,
+            "materialGroup": {
+              "name": "Standard",
+              "description": "Std. materialegruppe"
+            }
+          }
+        ]
+      },
+      {
+        "branch": {
+          "branchId": "DK-710109",
+          "title": "Øbro Jagtvej"
+        },
+        "lmsPlacement": null,
+        "logisticsPlacement": ["Øbro Jagtvej", "Stuen", "Børn", "Fantasy"],
+        "materials": [
+          {
+            "itemNumber": "5387480007",
+            "available": true,
+            "periodical": null,
+            "materialGroup": {
+              "name": "Standard",
+              "description": "Std. materialegruppe"
+            }
+          }
+        ]
+      },
+      {
+        "branch": {
+          "branchId": "DK-710104",
+          "title": "Blågården"
+        },
+        "lmsPlacement": {
+          "department": {
+            "departmentId": "bø",
+            "title": "Børn"
+          },
+          "section": null,
+          "location": null,
+          "sublocation": {
+            "sublocationId": "fant",
+            "title": "Fantasy"
+          }
+        },
+        "logisticsPlacement": [],
+        "materials": [
+          {
+            "itemNumber": "5387480171",
+            "available": false,
+            "periodical": null,
+            "materialGroup": {
+              "name": "Standard",
+              "description": "Std. materialegruppe"
             }
           },
           {
-            "itemNumber": "A1011423962A",
+            "itemNumber": "5402754038",
             "available": false,
             "periodical": null,
             "materialGroup": {
-              "name": "standard",
-              "description": "31 dages lånetid til alm lånere"
+              "name": "Standard",
+              "description": "Std. materialegruppe"
+            }
+          }
+        ]
+      },
+      {
+        "branch": {
+          "branchId": "DK-710115",
+          "title": "Sydhavn"
+        },
+        "lmsPlacement": null,
+        "logisticsPlacement": ["Sydhavn", "Børn", "Fantasy"],
+        "materials": [
+          {
+            "itemNumber": "5387479971",
+            "available": true,
+            "periodical": null,
+            "materialGroup": {
+              "name": "Standard",
+              "description": "Std. materialegruppe"
+            }
+          }
+        ]
+      },
+      {
+        "branch": {
+          "branchId": "DK-710112",
+          "title": "Solvang"
+        },
+        "lmsPlacement": {
+          "department": {
+            "departmentId": "bø",
+            "title": "Børn"
+          },
+          "section": null,
+          "location": null,
+          "sublocation": {
+            "sublocationId": "fant",
+            "title": "Fantasy"
+          }
+        },
+        "logisticsPlacement": [],
+        "materials": [
+          {
+            "itemNumber": "5402754054",
+            "available": false,
+            "periodical": null,
+            "materialGroup": {
+              "name": "Standard",
+              "description": "Std. materialegruppe"
+            }
+          }
+        ]
+      },
+      {
+        "branch": {
+          "branchId": "DK-710111",
+          "title": "Nørrebro"
+        },
+        "lmsPlacement": {
+          "department": {
+            "departmentId": "bø",
+            "title": "Børn"
+          },
+          "section": null,
+          "location": null,
+          "sublocation": {
+            "sublocationId": "fant",
+            "title": "Fantasy"
+          }
+        },
+        "logisticsPlacement": [],
+        "materials": [
+          {
+            "itemNumber": "5387480139",
+            "available": false,
+            "periodical": null,
+            "materialGroup": {
+              "name": "Standard",
+              "description": "Std. materialegruppe"
             }
           },
           {
-            "itemNumber": "A1011423963A",
+            "itemNumber": "5387480279",
             "available": false,
             "periodical": null,
             "materialGroup": {
-              "name": "standard",
-              "description": "31 dages lånetid til alm lånere"
+              "name": "Standard",
+              "description": "Std. materialegruppe"
             }
           },
           {
-            "itemNumber": "A1011423964A",
+            "itemNumber": "5387480287",
             "available": false,
             "periodical": null,
             "materialGroup": {
-              "name": "standard",
-              "description": "31 dages lånetid til alm lånere"
+              "name": "Standard",
+              "description": "Std. materialegruppe"
+            }
+          }
+        ]
+      },
+      {
+        "branch": {
+          "branchId": "DK-710121",
+          "title": "Østerbro"
+        },
+        "lmsPlacement": {
+          "department": {
+            "departmentId": "bø",
+            "title": "Børn"
+          },
+          "section": null,
+          "location": null,
+          "sublocation": {
+            "sublocationId": "fant",
+            "title": "Fantasy"
+          }
+        },
+        "logisticsPlacement": [],
+        "materials": [
+          {
+            "itemNumber": "5387480120",
+            "available": false,
+            "periodical": null,
+            "materialGroup": {
+              "name": "Standard",
+              "description": "Std. materialegruppe"
             }
           },
           {
-            "itemNumber": "A1011423965A",
+            "itemNumber": "5402754011",
             "available": false,
             "periodical": null,
             "materialGroup": {
-              "name": "standard",
-              "description": "31 dages lånetid til alm lånere"
+              "name": "Standard",
+              "description": "Std. materialegruppe"
+            }
+          }
+        ]
+      },
+      {
+        "branch": {
+          "branchId": "DK-710111",
+          "title": "Nørrebro"
+        },
+        "lmsPlacement": null,
+        "logisticsPlacement": ["Nørrebro", "Børn", "Fantasy"],
+        "materials": [
+          {
+            "itemNumber": "5387479998",
+            "available": true,
+            "periodical": null,
+            "materialGroup": {
+              "name": "Standard",
+              "description": "Std. materialegruppe"
+            }
+          }
+        ]
+      },
+      {
+        "branch": {
+          "branchId": "FBS-101007",
+          "title": "HB Rigshospitalet"
+        },
+        "lmsPlacement": {
+          "department": {
+            "departmentId": "bø",
+            "title": "Børn"
+          },
+          "section": null,
+          "location": null,
+          "sublocation": {
+            "sublocationId": "oplæs",
+            "title": "Højtlæsning"
+          }
+        },
+        "logisticsPlacement": [],
+        "materials": [
+          {
+            "itemNumber": "5420305267",
+            "available": true,
+            "periodical": null,
+            "materialGroup": {
+              "name": "RHnonres",
+              "description": "Nonres materialer på rigshospitalet (lavet så kun personer på RH kan låne og reserverer på disse)"
+            }
+          }
+        ]
+      },
+      {
+        "branch": {
+          "branchId": "DK-710108",
+          "title": "Islands Brygge"
+        },
+        "lmsPlacement": null,
+        "logisticsPlacement": ["Islands Brygge", "Børn", "Fantasy"],
+        "materials": [
+          {
+            "itemNumber": "5387480295",
+            "available": true,
+            "periodical": null,
+            "materialGroup": {
+              "name": "Standard",
+              "description": "Std. materialegruppe"
+            }
+          }
+        ]
+      },
+      {
+        "branch": {
+          "branchId": "DK-710107",
+          "title": "Husum"
+        },
+        "lmsPlacement": {
+          "department": {
+            "departmentId": "bø",
+            "title": "Børn"
+          },
+          "section": null,
+          "location": null,
+          "sublocation": {
+            "sublocationId": "fant",
+            "title": "Fantasy"
+          }
+        },
+        "logisticsPlacement": [],
+        "materials": [
+          {
+            "itemNumber": "5387480104",
+            "available": false,
+            "periodical": null,
+            "materialGroup": {
+              "name": "Standard",
+              "description": "Std. materialegruppe"
+            }
+          }
+        ]
+      },
+      {
+        "branch": {
+          "branchId": "DK-710119",
+          "title": "Vesterbro"
+        },
+        "lmsPlacement": {
+          "department": {
+            "departmentId": "bø",
+            "title": "Børn"
+          },
+          "section": null,
+          "location": null,
+          "sublocation": {
+            "sublocationId": "fant",
+            "title": "Fantasy"
+          }
+        },
+        "logisticsPlacement": [],
+        "materials": [
+          {
+            "itemNumber": "5387480090",
+            "available": false,
+            "periodical": null,
+            "materialGroup": {
+              "name": "Standard",
+              "description": "Std. materialegruppe"
             }
           },
           {
-            "itemNumber": "A1011423966A",
+            "itemNumber": "5387480163",
             "available": false,
             "periodical": null,
             "materialGroup": {
-              "name": "standard",
-              "description": "31 dages lånetid til alm lånere"
+              "name": "Standard",
+              "description": "Std. materialegruppe"
             }
           },
           {
-            "itemNumber": "A1011423967A",
+            "itemNumber": "5402754070",
             "available": false,
             "periodical": null,
             "materialGroup": {
-              "name": "standard",
-              "description": "31 dages lånetid til alm lånere"
+              "name": "Standard",
+              "description": "Std. materialegruppe"
+            }
+          }
+        ]
+      },
+      {
+        "branch": {
+          "branchId": "DK-710110",
+          "title": "Biblioteket Rentemestervej"
+        },
+        "lmsPlacement": null,
+        "logisticsPlacement": [
+          "Biblioteket Rentemestervej",
+          "1. sal",
+          "Børn",
+          "Fantasy"
+        ],
+        "materials": [
+          {
+            "itemNumber": "5387480155",
+            "available": true,
+            "periodical": null,
+            "materialGroup": {
+              "name": "Standard",
+              "description": "Std. materialegruppe"
+            }
+          }
+        ]
+      },
+      {
+        "branch": {
+          "branchId": "DK-710108",
+          "title": "Islands Brygge"
+        },
+        "lmsPlacement": {
+          "department": {
+            "departmentId": "bø",
+            "title": "Børn"
+          },
+          "section": null,
+          "location": null,
+          "sublocation": {
+            "sublocationId": "fant",
+            "title": "Fantasy"
+          }
+        },
+        "logisticsPlacement": [],
+        "materials": [
+          {
+            "itemNumber": "5387480023",
+            "available": false,
+            "periodical": null,
+            "materialGroup": {
+              "name": "Standard",
+              "description": "Std. materialegruppe"
+            }
+          }
+        ]
+      },
+      {
+        "branch": {
+          "branchId": "DK-710118",
+          "title": "Vanløse"
+        },
+        "lmsPlacement": {
+          "department": {
+            "departmentId": "bø",
+            "title": "Børn"
+          },
+          "section": null,
+          "location": null,
+          "sublocation": {
+            "sublocationId": "fant",
+            "title": "Fantasy"
+          }
+        },
+        "logisticsPlacement": [],
+        "materials": [
+          {
+            "itemNumber": "5387480317",
+            "available": false,
+            "periodical": null,
+            "materialGroup": {
+              "name": "Standard",
+              "description": "Std. materialegruppe"
+            }
+          }
+        ]
+      },
+      {
+        "branch": {
+          "branchId": "DK-710122",
+          "title": "Ørestad"
+        },
+        "lmsPlacement": null,
+        "logisticsPlacement": ["Ørestad", "Stuen", "Børn", "Fantasy"],
+        "materials": [
+          {
+            "itemNumber": "5387480228",
+            "available": true,
+            "periodical": null,
+            "materialGroup": {
+              "name": "Standard",
+              "description": "Std. materialegruppe"
             }
           },
           {
-            "itemNumber": "A1011423968A",
+            "itemNumber": "5402754062",
+            "available": true,
+            "periodical": null,
+            "materialGroup": {
+              "name": "Standard",
+              "description": "Std. materialegruppe"
+            }
+          }
+        ]
+      },
+      {
+        "branch": {
+          "branchId": "DK-710115",
+          "title": "Sydhavn"
+        },
+        "lmsPlacement": {
+          "department": {
+            "departmentId": "bø",
+            "title": "Børn"
+          },
+          "section": null,
+          "location": null,
+          "sublocation": {
+            "sublocationId": "fant",
+            "title": "Fantasy"
+          }
+        },
+        "logisticsPlacement": [],
+        "materials": [
+          {
+            "itemNumber": "5387480260",
             "available": false,
             "periodical": null,
             "materialGroup": {
-              "name": "standard",
-              "description": "31 dages lånetid til alm lånere"
+              "name": "Standard",
+              "description": "Std. materialegruppe"
+            }
+          }
+        ]
+      },
+      {
+        "branch": {
+          "branchId": "DK-710116",
+          "title": "Tingbjerg"
+        },
+        "lmsPlacement": {
+          "department": {
+            "departmentId": "bø",
+            "title": "Børn"
+          },
+          "section": null,
+          "location": null,
+          "sublocation": {
+            "sublocationId": "fant",
+            "title": "Fantasy"
+          }
+        },
+        "logisticsPlacement": [],
+        "materials": [
+          {
+            "itemNumber": "5387479955",
+            "available": true,
+            "periodical": null,
+            "materialGroup": {
+              "name": "Standard",
+              "description": "Std. materialegruppe"
             }
           },
           {
-            "itemNumber": "A1011423969A",
-            "available": false,
+            "itemNumber": "5387480058",
+            "available": true,
             "periodical": null,
             "materialGroup": {
-              "name": "standard",
-              "description": "31 dages lånetid til alm lånere"
+              "name": "Standard",
+              "description": "Std. materialegruppe"
+            }
+          }
+        ]
+      },
+      {
+        "branch": {
+          "branchId": "FBS-101009",
+          "title": "Fjernlager 2"
+        },
+        "lmsPlacement": {
+          "department": {
+            "departmentId": "bø",
+            "title": "Børn"
+          },
+          "section": null,
+          "location": null,
+          "sublocation": {
+            "sublocationId": "fant",
+            "title": "Fantasy"
+          }
+        },
+        "logisticsPlacement": [],
+        "materials": [
+          {
+            "itemNumber": "5402753988",
+            "available": true,
+            "periodical": null,
+            "materialGroup": {
+              "name": "Standard",
+              "description": "Std. materialegruppe"
             }
           },
           {
-            "itemNumber": "A1011423970A",
-            "available": false,
+            "itemNumber": "5402754003",
+            "available": true,
             "periodical": null,
             "materialGroup": {
-              "name": "standard",
-              "description": "31 dages lånetid til alm lånere"
+              "name": "Standard",
+              "description": "Std. materialegruppe"
             }
           },
           {
-            "itemNumber": "A1011423971A",
-            "available": false,
+            "itemNumber": "5402754046",
+            "available": true,
             "periodical": null,
             "materialGroup": {
-              "name": "standard",
-              "description": "31 dages lånetid til alm lånere"
+              "name": "Standard",
+              "description": "Std. materialegruppe"
             }
           },
           {
-            "itemNumber": "A1011423972A",
+            "itemNumber": "5402754089",
+            "available": true,
+            "periodical": null,
+            "materialGroup": {
+              "name": "Standard",
+              "description": "Std. materialegruppe"
+            }
+          }
+        ]
+      },
+      {
+        "branch": {
+          "branchId": "DK-710105",
+          "title": "Brønshøj"
+        },
+        "lmsPlacement": {
+          "department": {
+            "departmentId": "bø",
+            "title": "Børn"
+          },
+          "section": null,
+          "location": null,
+          "sublocation": {
+            "sublocationId": "fant",
+            "title": "Fantasy"
+          }
+        },
+        "logisticsPlacement": [],
+        "materials": [
+          {
+            "itemNumber": "5387480074",
             "available": false,
             "periodical": null,
             "materialGroup": {
-              "name": "standard",
-              "description": "31 dages lånetid til alm lånere"
+              "name": "Standard",
+              "description": "Std. materialegruppe"
             }
           },
           {
-            "itemNumber": "A1011423973A",
+            "itemNumber": "5387480082",
             "available": false,
             "periodical": null,
             "materialGroup": {
-              "name": "standard",
-              "description": "31 dages lånetid til alm lånere"
+              "name": "Standard",
+              "description": "Std. materialegruppe"
             }
           },
           {
-            "itemNumber": "A1011423974A",
+            "itemNumber": "5387480201",
             "available": false,
             "periodical": null,
             "materialGroup": {
-              "name": "standard",
-              "description": "31 dages lånetid til alm lånere"
+              "name": "Standard",
+              "description": "Std. materialegruppe"
+            }
+          }
+        ]
+      },
+      {
+        "branch": {
+          "branchId": "DK-710100",
+          "title": "Hovedbiblioteket"
+        },
+        "lmsPlacement": null,
+        "logisticsPlacement": [
+          "Hovedbiblioteket",
+          "2. sal > LÆS",
+          "Ny Fantasy"
+        ],
+        "materials": [
+          {
+            "itemNumber": "5387480414",
+            "available": true,
+            "periodical": null,
+            "materialGroup": {
+              "name": "Standard",
+              "description": "Std. materialegruppe"
+            }
+          }
+        ]
+      },
+      {
+        "branch": {
+          "branchId": "DK-710120",
+          "title": "Vigerslev"
+        },
+        "lmsPlacement": {
+          "department": {
+            "departmentId": "bø",
+            "title": "Børn"
+          },
+          "section": null,
+          "location": null,
+          "sublocation": {
+            "sublocationId": "fant",
+            "title": "Fantasy"
+          }
+        },
+        "logisticsPlacement": [],
+        "materials": [
+          {
+            "itemNumber": "5387480147",
+            "available": false,
+            "periodical": null,
+            "materialGroup": {
+              "name": "Standard",
+              "description": "Std. materialegruppe"
             }
           },
           {
-            "itemNumber": "A1011423975A",
+            "itemNumber": "5402753996",
             "available": false,
             "periodical": null,
             "materialGroup": {
-              "name": "standard",
-              "description": "31 dages lånetid til alm lånere"
+              "name": "Standard",
+              "description": "Std. materialegruppe"
+            }
+          }
+        ]
+      },
+      {
+        "branch": {
+          "branchId": "DK-710118",
+          "title": "Vanløse"
+        },
+        "lmsPlacement": null,
+        "logisticsPlacement": ["Vanløse", "Børn", "Fantasy"],
+        "materials": [
+          {
+            "itemNumber": "5387480252",
+            "available": true,
+            "periodical": null,
+            "materialGroup": {
+              "name": "Standard",
+              "description": "Std. materialegruppe"
+            }
+          }
+        ]
+      },
+      {
+        "branch": {
+          "branchId": "DK-710106",
+          "title": "Christianshavn"
+        },
+        "lmsPlacement": {
+          "department": {
+            "departmentId": "bø",
+            "title": "Børn"
+          },
+          "section": null,
+          "location": null,
+          "sublocation": {
+            "sublocationId": "fant",
+            "title": "Fantasy"
+          }
+        },
+        "logisticsPlacement": [],
+        "materials": [
+          {
+            "itemNumber": "5387479963",
+            "available": false,
+            "periodical": null,
+            "materialGroup": {
+              "name": "Standard",
+              "description": "Std. materialegruppe"
+            }
+          }
+        ]
+      },
+      {
+        "branch": {
+          "branchId": "DK-710117",
+          "title": "Valby"
+        },
+        "lmsPlacement": {
+          "department": {
+            "departmentId": "bø",
+            "title": "Børn"
+          },
+          "section": null,
+          "location": null,
+          "sublocation": {
+            "sublocationId": "fant",
+            "title": "Fantasy"
+          }
+        },
+        "logisticsPlacement": [],
+        "materials": [
+          {
+            "itemNumber": "5387480066",
+            "available": false,
+            "periodical": null,
+            "materialGroup": {
+              "name": "Standard",
+              "description": "Std. materialegruppe"
             }
           },
           {
-            "itemNumber": "A1011423976A",
+            "itemNumber": "5387480309",
             "available": false,
             "periodical": null,
             "materialGroup": {
-              "name": "standard",
-              "description": "31 dages lånetid til alm lånere"
+              "name": "Standard",
+              "description": "Std. materialegruppe"
             }
           },
           {
-            "itemNumber": "A1011423977A",
+            "itemNumber": "5387480333",
             "available": false,
             "periodical": null,
             "materialGroup": {
-              "name": "standard",
-              "description": "31 dages lånetid til alm lånere"
+              "name": "Standard",
+              "description": "Std. materialegruppe"
+            }
+          }
+        ]
+      },
+      {
+        "branch": {
+          "branchId": "DK-710100",
+          "title": "Hovedbiblioteket"
+        },
+        "lmsPlacement": {
+          "department": {
+            "departmentId": "bø",
+            "title": "Børn"
+          },
+          "section": null,
+          "location": null,
+          "sublocation": {
+            "sublocationId": "fant",
+            "title": "Fantasy"
+          }
+        },
+        "logisticsPlacement": [],
+        "materials": [
+          {
+            "itemNumber": "5387480112",
+            "available": false,
+            "periodical": null,
+            "materialGroup": {
+              "name": "Standard",
+              "description": "Std. materialegruppe"
             }
           },
           {
-            "itemNumber": "A1011423978A",
+            "itemNumber": "5387480341",
             "available": false,
             "periodical": null,
             "materialGroup": {
-              "name": "standard",
-              "description": "31 dages lånetid til alm lånere"
+              "name": "Standard",
+              "description": "Std. materialegruppe"
             }
           },
           {
-            "itemNumber": "A1011423979A",
+            "itemNumber": "5387480392",
             "available": false,
             "periodical": null,
             "materialGroup": {
-              "name": "standard",
-              "description": "31 dages lånetid til alm lånere"
+              "name": "Standard",
+              "description": "Std. materialegruppe"
+            }
+          },
+          {
+            "itemNumber": "5387480430",
+            "available": false,
+            "periodical": null,
+            "materialGroup": {
+              "name": "Standard",
+              "description": "Std. materialegruppe"
+            }
+          }
+        ]
+      },
+      {
+        "branch": {
+          "branchId": "DK-710113",
+          "title": "Sundby"
+        },
+        "lmsPlacement": null,
+        "logisticsPlacement": ["Sundby", "Stuen", "Børn", "Fantasy"],
+        "materials": [
+          {
+            "itemNumber": "5387480325",
+            "available": true,
+            "periodical": null,
+            "materialGroup": {
+              "name": "Standard",
+              "description": "Std. materialegruppe"
+            }
+          }
+        ]
+      },
+      {
+        "branch": {
+          "branchId": "DK-710113",
+          "title": "Sundby"
+        },
+        "lmsPlacement": {
+          "department": {
+            "departmentId": "bø",
+            "title": "Børn"
+          },
+          "section": null,
+          "location": null,
+          "sublocation": {
+            "sublocationId": "fant",
+            "title": "Fantasy"
+          }
+        },
+        "logisticsPlacement": [],
+        "materials": [
+          {
+            "itemNumber": "5387480406",
+            "available": false,
+            "periodical": null,
+            "materialGroup": {
+              "name": "Standard",
+              "description": "Std. materialegruppe"
+            }
+          }
+        ]
+      },
+      {
+        "branch": {
+          "branchId": "DK-710109",
+          "title": "Øbro Jagtvej"
+        },
+        "lmsPlacement": {
+          "department": {
+            "departmentId": "bø",
+            "title": "Børn"
+          },
+          "section": null,
+          "location": null,
+          "sublocation": {
+            "sublocationId": "fant",
+            "title": "Fantasy"
+          }
+        },
+        "logisticsPlacement": [],
+        "materials": [
+          {
+            "itemNumber": "5387480198",
+            "available": false,
+            "periodical": null,
+            "materialGroup": {
+              "name": "Standard",
+              "description": "Std. materialegruppe"
+            }
+          },
+          {
+            "itemNumber": "5387480376",
+            "available": false,
+            "periodical": null,
+            "materialGroup": {
+              "name": "Standard",
+              "description": "Std. materialegruppe"
+            }
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "recordId": "29368872",
+    "reservable": false,
+    "reservations": 0,
+    "holdings": []
+  },
+  {
+    "recordId": "51980204",
+    "reservable": true,
+    "reservations": 0,
+    "holdings": [
+      {
+        "branch": {
+          "branchId": "DK-710116",
+          "title": "Tingbjerg"
+        },
+        "lmsPlacement": {
+          "department": {
+            "departmentId": "bø",
+            "title": "Børn"
+          },
+          "section": null,
+          "location": null,
+          "sublocation": {
+            "sublocationId": "fant",
+            "title": "Fantasy"
+          }
+        },
+        "logisticsPlacement": [],
+        "materials": [
+          {
+            "itemNumber": "5385974649",
+            "available": true,
+            "periodical": null,
+            "materialGroup": {
+              "name": "Standard",
+              "description": "Std. materialegruppe"
+            }
+          }
+        ]
+      },
+      {
+        "branch": {
+          "branchId": "FBS-101009",
+          "title": "Fjernlager 2"
+        },
+        "lmsPlacement": {
+          "department": {
+            "departmentId": "bø",
+            "title": "Børn"
+          },
+          "section": null,
+          "location": null,
+          "sublocation": {
+            "sublocationId": "fant",
+            "title": "Fantasy"
+          }
+        },
+        "logisticsPlacement": [],
+        "materials": [
+          {
+            "itemNumber": "5159370277",
+            "available": true,
+            "periodical": null,
+            "materialGroup": {
+              "name": "Standard",
+              "description": "Std. materialegruppe"
+            }
+          },
+          {
+            "itemNumber": "5159370269",
+            "available": true,
+            "periodical": null,
+            "materialGroup": {
+              "name": "Standard",
+              "description": "Std. materialegruppe"
+            }
+          },
+          {
+            "itemNumber": "5417428382",
+            "available": true,
+            "periodical": null,
+            "materialGroup": {
+              "name": "Standard",
+              "description": "Std. materialegruppe"
+            }
+          },
+          {
+            "itemNumber": "5417428390",
+            "available": true,
+            "periodical": null,
+            "materialGroup": {
+              "name": "Standard",
+              "description": "Std. materialegruppe"
+            }
+          },
+          {
+            "itemNumber": "5417428404",
+            "available": true,
+            "periodical": null,
+            "materialGroup": {
+              "name": "Standard",
+              "description": "Std. materialegruppe"
+            }
+          },
+          {
+            "itemNumber": "5417428412",
+            "available": true,
+            "periodical": null,
+            "materialGroup": {
+              "name": "Standard",
+              "description": "Std. materialegruppe"
+            }
+          },
+          {
+            "itemNumber": "5417428420",
+            "available": true,
+            "periodical": null,
+            "materialGroup": {
+              "name": "Standard",
+              "description": "Std. materialegruppe"
+            }
+          },
+          {
+            "itemNumber": "5417428439",
+            "available": true,
+            "periodical": null,
+            "materialGroup": {
+              "name": "Standard",
+              "description": "Std. materialegruppe"
+            }
+          },
+          {
+            "itemNumber": "5417428447",
+            "available": true,
+            "periodical": null,
+            "materialGroup": {
+              "name": "Standard",
+              "description": "Std. materialegruppe"
+            }
+          },
+          {
+            "itemNumber": "5402753309",
+            "available": true,
+            "periodical": null,
+            "materialGroup": {
+              "name": "Standard",
+              "description": "Std. materialegruppe"
+            }
+          },
+          {
+            "itemNumber": "5417428463",
+            "available": true,
+            "periodical": null,
+            "materialGroup": {
+              "name": "Standard",
+              "description": "Std. materialegruppe"
+            }
+          }
+        ]
+      },
+      {
+        "branch": {
+          "branchId": "DK-710112",
+          "title": "Solvang"
+        },
+        "lmsPlacement": null,
+        "logisticsPlacement": ["Solvang Centret", "Børn", "Fantasy"],
+        "materials": [
+          {
+            "itemNumber": "5130673920",
+            "available": true,
+            "periodical": null,
+            "materialGroup": {
+              "name": "Standard",
+              "description": "Std. materialegruppe"
+            }
+          }
+        ]
+      },
+      {
+        "branch": {
+          "branchId": "DK-710110",
+          "title": "Biblioteket Rentemestervej"
+        },
+        "lmsPlacement": {
+          "department": {
+            "departmentId": "bø",
+            "title": "Børn"
+          },
+          "section": null,
+          "location": null,
+          "sublocation": {
+            "sublocationId": "fant",
+            "title": "Fantasy"
+          }
+        },
+        "logisticsPlacement": [],
+        "materials": [
+          {
+            "itemNumber": "5159359990",
+            "available": false,
+            "periodical": null,
+            "materialGroup": {
+              "name": "Standard",
+              "description": "Std. materialegruppe"
+            }
+          },
+          {
+            "itemNumber": "5402753287",
+            "available": false,
+            "periodical": null,
+            "materialGroup": {
+              "name": "Standard",
+              "description": "Std. materialegruppe"
+            }
+          }
+        ]
+      },
+      {
+        "branch": {
+          "branchId": "DK-710106",
+          "title": "Christianshavn"
+        },
+        "lmsPlacement": null,
+        "logisticsPlacement": ["Christianshavn", "Børn", "Fantasy"],
+        "materials": [
+          {
+            "itemNumber": "5402753236",
+            "available": true,
+            "periodical": null,
+            "materialGroup": {
+              "name": "Standard",
+              "description": "Std. materialegruppe"
+            }
+          }
+        ]
+      },
+      {
+        "branch": {
+          "branchId": "DK-710122",
+          "title": "Ørestad"
+        },
+        "lmsPlacement": {
+          "department": {
+            "departmentId": "bø",
+            "title": "Børn"
+          },
+          "section": null,
+          "location": null,
+          "sublocation": {
+            "sublocationId": "fant",
+            "title": "Fantasy"
+          }
+        },
+        "logisticsPlacement": [],
+        "materials": [
+          {
+            "itemNumber": "5385974614",
+            "available": false,
+            "periodical": null,
+            "materialGroup": {
+              "name": "Standard",
+              "description": "Std. materialegruppe"
+            }
+          }
+        ]
+      },
+      {
+        "branch": {
+          "branchId": "DK-710121",
+          "title": "Østerbro"
+        },
+        "lmsPlacement": null,
+        "logisticsPlacement": ["Østerbro", "Børn", "Fantasy"],
+        "materials": [
+          {
+            "itemNumber": "5159370226",
+            "available": true,
+            "periodical": null,
+            "materialGroup": {
+              "name": "Standard",
+              "description": "Std. materialegruppe"
+            }
+          }
+        ]
+      },
+      {
+        "branch": {
+          "branchId": "DK-710114",
+          "title": "Bibliotekshuset"
+        },
+        "lmsPlacement": {
+          "department": {
+            "departmentId": "bø",
+            "title": "Børn"
+          },
+          "section": null,
+          "location": null,
+          "sublocation": {
+            "sublocationId": "fant",
+            "title": "Fantasy"
+          }
+        },
+        "logisticsPlacement": [],
+        "materials": [
+          {
+            "itemNumber": "5159370188",
+            "available": false,
+            "periodical": null,
+            "materialGroup": {
+              "name": "Standard",
+              "description": "Std. materialegruppe"
+            }
+          },
+          {
+            "itemNumber": "5417428455",
+            "available": false,
+            "periodical": null,
+            "materialGroup": {
+              "name": "Standard",
+              "description": "Std. materialegruppe"
+            }
+          }
+        ]
+      },
+      {
+        "branch": {
+          "branchId": "DK-710120",
+          "title": "Vigerslev"
+        },
+        "lmsPlacement": {
+          "department": {
+            "departmentId": "bø",
+            "title": "Børn"
+          },
+          "section": null,
+          "location": null,
+          "sublocation": {
+            "sublocationId": "fant",
+            "title": "Fantasy"
+          }
+        },
+        "logisticsPlacement": [],
+        "materials": [
+          {
+            "itemNumber": "5417428374",
+            "available": false,
+            "periodical": null,
+            "materialGroup": {
+              "name": "Standard",
+              "description": "Std. materialegruppe"
+            }
+          }
+        ]
+      },
+      {
+        "branch": {
+          "branchId": "FBS-101008",
+          "title": "Fjernlager 1"
+        },
+        "lmsPlacement": {
+          "department": {
+            "departmentId": "bø",
+            "title": "Børn"
+          },
+          "section": null,
+          "location": null,
+          "sublocation": {
+            "sublocationId": "fant",
+            "title": "Fantasy"
+          }
+        },
+        "logisticsPlacement": [],
+        "materials": [
+          {
+            "itemNumber": "5385974665",
+            "available": true,
+            "periodical": null,
+            "materialGroup": {
+              "name": "Standard",
+              "description": "Std. materialegruppe"
+            }
+          }
+        ]
+      },
+      {
+        "branch": {
+          "branchId": "DK-710119",
+          "title": "Vesterbro"
+        },
+        "lmsPlacement": null,
+        "logisticsPlacement": ["Vesterbro", "1. Sal", "Børn", "Fantasy"],
+        "materials": [
+          {
+            "itemNumber": "5130665243",
+            "available": true,
+            "periodical": null,
+            "materialGroup": {
+              "name": "Standard",
+              "description": "Std. materialegruppe"
+            }
+          }
+        ]
+      },
+      {
+        "branch": {
+          "branchId": "DK-710104",
+          "title": "Blågården"
+        },
+        "lmsPlacement": {
+          "department": {
+            "departmentId": "bø",
+            "title": "Børn"
+          },
+          "section": null,
+          "location": null,
+          "sublocation": {
+            "sublocationId": "fant",
+            "title": "Fantasy"
+          }
+        },
+        "logisticsPlacement": [],
+        "materials": [
+          {
+            "itemNumber": "5402753228",
+            "available": false,
+            "periodical": null,
+            "materialGroup": {
+              "name": "Standard",
+              "description": "Std. materialegruppe"
+            }
+          },
+          {
+            "itemNumber": "5402753260",
+            "available": false,
+            "periodical": null,
+            "materialGroup": {
+              "name": "Standard",
+              "description": "Std. materialegruppe"
+            }
+          }
+        ]
+      },
+      {
+        "branch": {
+          "branchId": "DK-710118",
+          "title": "Vanløse"
+        },
+        "lmsPlacement": null,
+        "logisticsPlacement": ["Vanløse", "Børn", "Fantasy"],
+        "materials": [
+          {
+            "itemNumber": "5385974576",
+            "available": true,
+            "periodical": null,
+            "materialGroup": {
+              "name": "Standard",
+              "description": "Std. materialegruppe"
+            }
+          }
+        ]
+      },
+      {
+        "branch": {
+          "branchId": "DK-710117",
+          "title": "Valby"
+        },
+        "lmsPlacement": null,
+        "logisticsPlacement": ["Valby", "Børn", "Fantasy"],
+        "materials": [
+          {
+            "itemNumber": "5402753244",
+            "available": true,
+            "periodical": null,
+            "materialGroup": {
+              "name": "Standard",
+              "description": "Std. materialegruppe"
+            }
+          }
+        ]
+      },
+      {
+        "branch": {
+          "branchId": "DK-710111",
+          "title": "Nørrebro"
+        },
+        "lmsPlacement": {
+          "department": {
+            "departmentId": "bø",
+            "title": "Børn"
+          },
+          "section": null,
+          "location": null,
+          "sublocation": {
+            "sublocationId": "fant",
+            "title": "Fantasy"
+          }
+        },
+        "logisticsPlacement": [],
+        "materials": [
+          {
+            "itemNumber": "5130550357",
+            "available": false,
+            "periodical": null,
+            "materialGroup": {
+              "name": "Standard",
+              "description": "Std. materialegruppe"
+            }
+          }
+        ]
+      },
+      {
+        "branch": {
+          "branchId": "DK-710121",
+          "title": "Østerbro"
+        },
+        "lmsPlacement": {
+          "department": {
+            "departmentId": "bø",
+            "title": "Børn"
+          },
+          "section": null,
+          "location": null,
+          "sublocation": {
+            "sublocationId": "fant",
+            "title": "Fantasy"
+          }
+        },
+        "logisticsPlacement": [],
+        "materials": [
+          {
+            "itemNumber": "5385974568",
+            "available": false,
+            "periodical": null,
+            "materialGroup": {
+              "name": "Standard",
+              "description": "Std. materialegruppe"
+            }
+          }
+        ]
+      },
+      {
+        "branch": {
+          "branchId": "DK-710117",
+          "title": "Valby"
+        },
+        "lmsPlacement": {
+          "department": {
+            "departmentId": "bø",
+            "title": "Børn"
+          },
+          "section": null,
+          "location": null,
+          "sublocation": {
+            "sublocationId": "fant",
+            "title": "Fantasy"
+          }
+        },
+        "logisticsPlacement": [],
+        "materials": [
+          {
+            "itemNumber": "5402753279",
+            "available": false,
+            "periodical": null,
+            "materialGroup": {
+              "name": "Standard",
+              "description": "Std. materialegruppe"
+            }
+          },
+          {
+            "itemNumber": "5159388095",
+            "available": false,
+            "periodical": null,
+            "materialGroup": {
+              "name": "Standard",
+              "description": "Std. materialegruppe"
+            }
+          }
+        ]
+      },
+      {
+        "branch": {
+          "branchId": "FBS-101004",
+          "title": "HB Københavns fængsler"
+        },
+        "lmsPlacement": {
+          "department": {
+            "departmentId": "bø",
+            "title": "Børn"
+          },
+          "section": null,
+          "location": null,
+          "sublocation": {
+            "sublocationId": "fant",
+            "title": "Fantasy"
+          }
+        },
+        "logisticsPlacement": [],
+        "materials": [
+          {
+            "itemNumber": "5159370201",
+            "available": false,
+            "periodical": null,
+            "materialGroup": {
+              "name": "Standard",
+              "description": "Std. materialegruppe"
+            }
+          }
+        ]
+      },
+      {
+        "branch": {
+          "branchId": "DK-710119",
+          "title": "Vesterbro"
+        },
+        "lmsPlacement": {
+          "department": {
+            "departmentId": "bø",
+            "title": "Børn"
+          },
+          "section": null,
+          "location": null,
+          "sublocation": {
+            "sublocationId": "fant",
+            "title": "Fantasy"
+          }
+        },
+        "logisticsPlacement": [],
+        "materials": [
+          {
+            "itemNumber": "5402753317",
+            "available": false,
+            "periodical": null,
+            "materialGroup": {
+              "name": "Standard",
+              "description": "Std. materialegruppe"
+            }
+          },
+          {
+            "itemNumber": "5402753295",
+            "available": false,
+            "periodical": null,
+            "materialGroup": {
+              "name": "Standard",
+              "description": "Std. materialegruppe"
+            }
+          }
+        ]
+      },
+      {
+        "branch": {
+          "branchId": "DK-710100",
+          "title": "Hovedbiblioteket"
+        },
+        "lmsPlacement": {
+          "department": {
+            "departmentId": "bø",
+            "title": "Børn"
+          },
+          "section": null,
+          "location": null,
+          "sublocation": {
+            "sublocationId": "fant",
+            "title": "Fantasy"
+          }
+        },
+        "logisticsPlacement": [],
+        "materials": [
+          {
+            "itemNumber": "5385974606",
+            "available": false,
+            "periodical": null,
+            "materialGroup": {
+              "name": "Standard",
+              "description": "Std. materialegruppe"
+            }
+          },
+          {
+            "itemNumber": "5385974630",
+            "available": false,
+            "periodical": null,
+            "materialGroup": {
+              "name": "Standard",
+              "description": "Std. materialegruppe"
+            }
+          }
+        ]
+      },
+      {
+        "branch": {
+          "branchId": "DK-710108",
+          "title": "Islands Brygge"
+        },
+        "lmsPlacement": {
+          "department": {
+            "departmentId": "bø",
+            "title": "Børn"
+          },
+          "section": null,
+          "location": null,
+          "sublocation": {
+            "sublocationId": "fant",
+            "title": "Fantasy"
+          }
+        },
+        "logisticsPlacement": [],
+        "materials": [
+          {
+            "itemNumber": "5159388087",
+            "available": false,
+            "periodical": null,
+            "materialGroup": {
+              "name": "Standard",
+              "description": "Std. materialegruppe"
+            }
+          }
+        ]
+      },
+      {
+        "branch": {
+          "branchId": "DK-710118",
+          "title": "Vanløse"
+        },
+        "lmsPlacement": {
+          "department": {
+            "departmentId": "bø",
+            "title": "Børn"
+          },
+          "section": null,
+          "location": null,
+          "sublocation": {
+            "sublocationId": "fant",
+            "title": "Fantasy"
+          }
+        },
+        "logisticsPlacement": [],
+        "materials": [
+          {
+            "itemNumber": "5385974622",
+            "available": false,
+            "periodical": null,
+            "materialGroup": {
+              "name": "Standard",
+              "description": "Std. materialegruppe"
+            }
+          },
+          {
+            "itemNumber": "5385974592",
+            "available": false,
+            "periodical": null,
+            "materialGroup": {
+              "name": "Standard",
+              "description": "Std. materialegruppe"
+            }
+          },
+          {
+            "itemNumber": "5402753252",
+            "available": false,
+            "periodical": null,
+            "materialGroup": {
+              "name": "Standard",
+              "description": "Std. materialegruppe"
+            }
+          }
+        ]
+      },
+      {
+        "branch": {
+          "branchId": "DK-710109",
+          "title": "Øbro Jagtvej"
+        },
+        "lmsPlacement": {
+          "department": {
+            "departmentId": "bø",
+            "title": "Børn"
+          },
+          "section": null,
+          "location": null,
+          "sublocation": {
+            "sublocationId": "fant",
+            "title": "Fantasy"
+          }
+        },
+        "logisticsPlacement": [],
+        "materials": [
+          {
+            "itemNumber": "5385974657",
+            "available": false,
+            "periodical": null,
+            "materialGroup": {
+              "name": "Standard",
+              "description": "Std. materialegruppe"
+            }
+          },
+          {
+            "itemNumber": "5385974584",
+            "available": false,
+            "periodical": null,
+            "materialGroup": {
+              "name": "Standard",
+              "description": "Std. materialegruppe"
+            }
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "recordId": "54871996",
+    "reservable": true,
+    "reservations": 1,
+    "holdings": [
+      {
+        "branch": {
+          "branchId": "DK-710116",
+          "title": "Tingbjerg"
+        },
+        "lmsPlacement": {
+          "department": {
+            "departmentId": "bø",
+            "title": "Børn"
+          },
+          "section": null,
+          "location": null,
+          "sublocation": {
+            "sublocationId": "fant",
+            "title": "Fantasy"
+          }
+        },
+        "logisticsPlacement": [],
+        "materials": [
+          {
+            "itemNumber": "5417430174",
+            "available": true,
+            "periodical": null,
+            "materialGroup": {
+              "name": "Standard",
+              "description": "Std. materialegruppe"
+            }
+          }
+        ]
+      },
+      {
+        "branch": {
+          "branchId": "FBS-101009",
+          "title": "Fjernlager 2"
+        },
+        "lmsPlacement": {
+          "department": {
+            "departmentId": "bø",
+            "title": "Børn"
+          },
+          "section": null,
+          "location": null,
+          "sublocation": {
+            "sublocationId": "fant",
+            "title": "Fantasy"
+          }
+        },
+        "logisticsPlacement": [],
+        "materials": [
+          {
+            "itemNumber": "5402755719",
+            "available": true,
+            "periodical": null,
+            "materialGroup": {
+              "name": "Standard",
+              "description": "Std. materialegruppe"
+            }
+          },
+          {
+            "itemNumber": "5402755735",
+            "available": true,
+            "periodical": null,
+            "materialGroup": {
+              "name": "Standard",
+              "description": "Std. materialegruppe"
+            }
+          },
+          {
+            "itemNumber": "5417430239",
+            "available": true,
+            "periodical": null,
+            "materialGroup": {
+              "name": "Standard",
+              "description": "Std. materialegruppe"
+            }
+          }
+        ]
+      },
+      {
+        "branch": {
+          "branchId": "DK-710105",
+          "title": "Brønshøj"
+        },
+        "lmsPlacement": {
+          "department": {
+            "departmentId": "bø",
+            "title": "Børn"
+          },
+          "section": null,
+          "location": null,
+          "sublocation": {
+            "sublocationId": "fant",
+            "title": "Fantasy"
+          }
+        },
+        "logisticsPlacement": [],
+        "materials": [
+          {
+            "itemNumber": "5402755778",
+            "available": false,
+            "periodical": null,
+            "materialGroup": {
+              "name": "Standard",
+              "description": "Std. materialegruppe"
+            }
+          }
+        ]
+      },
+      {
+        "branch": {
+          "branchId": "DK-710121",
+          "title": "Østerbro"
+        },
+        "lmsPlacement": null,
+        "logisticsPlacement": ["Østerbro", "Børn", "Fantasy"],
+        "materials": [
+          {
+            "itemNumber": "5402755700",
+            "available": true,
+            "periodical": null,
+            "materialGroup": {
+              "name": "Standard",
+              "description": "Std. materialegruppe"
+            }
+          }
+        ]
+      },
+      {
+        "branch": {
+          "branchId": "DK-710114",
+          "title": "Bibliotekshuset"
+        },
+        "lmsPlacement": {
+          "department": {
+            "departmentId": "bø",
+            "title": "Børn"
+          },
+          "section": null,
+          "location": null,
+          "sublocation": {
+            "sublocationId": "fant",
+            "title": "Fantasy"
+          }
+        },
+        "logisticsPlacement": [],
+        "materials": [
+          {
+            "itemNumber": "5402755743",
+            "available": false,
+            "periodical": null,
+            "materialGroup": {
+              "name": "Standard",
+              "description": "Std. materialegruppe"
+            }
+          },
+          {
+            "itemNumber": "5417430182",
+            "available": false,
+            "periodical": null,
+            "materialGroup": {
+              "name": "Standard",
+              "description": "Std. materialegruppe"
+            }
+          },
+          {
+            "itemNumber": "5417430220",
+            "available": false,
+            "periodical": null,
+            "materialGroup": {
+              "name": "Standard",
+              "description": "Std. materialegruppe"
+            }
+          }
+        ]
+      },
+      {
+        "branch": {
+          "branchId": "DK-710104",
+          "title": "Blågården"
+        },
+        "lmsPlacement": {
+          "department": {
+            "departmentId": "bø",
+            "title": "Børn"
+          },
+          "section": null,
+          "location": null,
+          "sublocation": {
+            "sublocationId": "fant",
+            "title": "Fantasy"
+          }
+        },
+        "logisticsPlacement": [],
+        "materials": [
+          {
+            "itemNumber": "5385975556",
+            "available": false,
+            "periodical": null,
+            "materialGroup": {
+              "name": "Standard",
+              "description": "Std. materialegruppe"
+            }
+          }
+        ]
+      },
+      {
+        "branch": {
+          "branchId": "DK-710106",
+          "title": "Christianshavn"
+        },
+        "lmsPlacement": {
+          "department": {
+            "departmentId": "bø",
+            "title": "Børn"
+          },
+          "section": null,
+          "location": null,
+          "sublocation": {
+            "sublocationId": "fant",
+            "title": "Fantasy"
+          }
+        },
+        "logisticsPlacement": [],
+        "materials": [
+          {
+            "itemNumber": "5402755697",
+            "available": false,
+            "periodical": null,
+            "materialGroup": {
+              "name": "Standard",
+              "description": "Std. materialegruppe"
+            }
+          },
+          {
+            "itemNumber": "5402755751",
+            "available": false,
+            "periodical": null,
+            "materialGroup": {
+              "name": "Standard",
+              "description": "Std. materialegruppe"
+            }
+          }
+        ]
+      },
+      {
+        "branch": {
+          "branchId": "DK-710112",
+          "title": "Solvang"
+        },
+        "lmsPlacement": {
+          "department": {
+            "departmentId": "bø",
+            "title": "Børn"
+          },
+          "section": null,
+          "location": null,
+          "sublocation": {
+            "sublocationId": "fant",
+            "title": "Fantasy"
+          }
+        },
+        "logisticsPlacement": [],
+        "materials": [
+          {
+            "itemNumber": "5385975572",
+            "available": false,
+            "periodical": null,
+            "materialGroup": {
+              "name": "Standard",
+              "description": "Std. materialegruppe"
+            }
+          }
+        ]
+      },
+      {
+        "branch": {
+          "branchId": "DK-710111",
+          "title": "Nørrebro"
+        },
+        "lmsPlacement": {
+          "department": {
+            "departmentId": "bø",
+            "title": "Børn"
+          },
+          "section": null,
+          "location": null,
+          "sublocation": {
+            "sublocationId": "fant",
+            "title": "Fantasy"
+          }
+        },
+        "logisticsPlacement": [],
+        "materials": [
+          {
+            "itemNumber": "5215062033",
+            "available": false,
+            "periodical": null,
+            "materialGroup": {
+              "name": "Standard",
+              "description": "Std. materialegruppe"
+            }
+          },
+          {
+            "itemNumber": "5385975564",
+            "available": false,
+            "periodical": null,
+            "materialGroup": {
+              "name": "Standard",
+              "description": "Std. materialegruppe"
+            }
+          }
+        ]
+      },
+      {
+        "branch": {
+          "branchId": "DK-710117",
+          "title": "Valby"
+        },
+        "lmsPlacement": {
+          "department": {
+            "departmentId": "bø",
+            "title": "Børn"
+          },
+          "section": null,
+          "location": null,
+          "sublocation": {
+            "sublocationId": "fant",
+            "title": "Fantasy"
+          }
+        },
+        "logisticsPlacement": [],
+        "materials": [
+          {
+            "itemNumber": "5417430190",
+            "available": false,
+            "periodical": null,
+            "materialGroup": {
+              "name": "Standard",
+              "description": "Std. materialegruppe"
+            }
+          },
+          {
+            "itemNumber": "5417430204",
+            "available": false,
+            "periodical": null,
+            "materialGroup": {
+              "name": "Standard",
+              "description": "Std. materialegruppe"
+            }
+          },
+          {
+            "itemNumber": "5417430212",
+            "available": false,
+            "periodical": null,
+            "materialGroup": {
+              "name": "Standard",
+              "description": "Std. materialegruppe"
+            }
+          }
+        ]
+      },
+      {
+        "branch": {
+          "branchId": "DK-710119",
+          "title": "Vesterbro"
+        },
+        "lmsPlacement": {
+          "department": {
+            "departmentId": "bø",
+            "title": "Børn"
+          },
+          "section": null,
+          "location": null,
+          "sublocation": {
+            "sublocationId": "fant",
+            "title": "Fantasy"
+          }
+        },
+        "logisticsPlacement": [],
+        "materials": [
+          {
+            "itemNumber": "5417430247",
+            "available": false,
+            "periodical": null,
+            "materialGroup": {
+              "name": "Standard",
+              "description": "Std. materialegruppe"
+            }
+          }
+        ]
+      },
+      {
+        "branch": {
+          "branchId": "DK-710100",
+          "title": "Hovedbiblioteket"
+        },
+        "lmsPlacement": {
+          "department": {
+            "departmentId": "bø",
+            "title": "Børn"
+          },
+          "section": null,
+          "location": null,
+          "sublocation": {
+            "sublocationId": "fant",
+            "title": "Fantasy"
+          }
+        },
+        "logisticsPlacement": [],
+        "materials": [
+          {
+            "itemNumber": "5385975599",
+            "available": false,
+            "periodical": null,
+            "materialGroup": {
+              "name": "Standard",
+              "description": "Std. materialegruppe"
+            }
+          },
+          {
+            "itemNumber": "5417430263",
+            "available": true,
+            "periodical": null,
+            "materialGroup": {
+              "name": "Standard",
+              "description": "Std. materialegruppe"
+            }
+          }
+        ]
+      },
+      {
+        "branch": {
+          "branchId": "DK-710110",
+          "title": "Biblioteket Rentemestervej"
+        },
+        "lmsPlacement": null,
+        "logisticsPlacement": [
+          "Biblioteket Rentemestervej",
+          "1. sal",
+          "Børn",
+          "Fantasy"
+        ],
+        "materials": [
+          {
+            "itemNumber": "5385975580",
+            "available": true,
+            "periodical": null,
+            "materialGroup": {
+              "name": "Standard",
+              "description": "Std. materialegruppe"
+            }
+          }
+        ]
+      },
+      {
+        "branch": {
+          "branchId": "DK-710120",
+          "title": "Vigerslev"
+        },
+        "lmsPlacement": null,
+        "logisticsPlacement": ["Vigerslev", "Børn", "Fantasy"],
+        "materials": [
+          {
+            "itemNumber": "5402755727",
+            "available": true,
+            "periodical": null,
+            "materialGroup": {
+              "name": "Standard",
+              "description": "Std. materialegruppe"
+            }
+          }
+        ]
+      },
+      {
+        "branch": {
+          "branchId": "DK-710113",
+          "title": "Sundby"
+        },
+        "lmsPlacement": {
+          "department": {
+            "departmentId": "bø",
+            "title": "Børn"
+          },
+          "section": null,
+          "location": null,
+          "sublocation": {
+            "sublocationId": "fant",
+            "title": "Fantasy"
+          }
+        },
+        "logisticsPlacement": [],
+        "materials": [
+          {
+            "itemNumber": "5417430255",
+            "available": false,
+            "periodical": null,
+            "materialGroup": {
+              "name": "Standard",
+              "description": "Std. materialegruppe"
+            }
+          }
+        ]
+      },
+      {
+        "branch": {
+          "branchId": "DK-710118",
+          "title": "Vanløse"
+        },
+        "lmsPlacement": {
+          "department": {
+            "departmentId": "bø",
+            "title": "Børn"
+          },
+          "section": null,
+          "location": null,
+          "sublocation": {
+            "sublocationId": "fant",
+            "title": "Fantasy"
+          }
+        },
+        "logisticsPlacement": [],
+        "materials": [
+          {
+            "itemNumber": "5385975548",
+            "available": false,
+            "periodical": null,
+            "materialGroup": {
+              "name": "Standard",
+              "description": "Std. materialegruppe"
+            }
+          }
+        ]
+      },
+      {
+        "branch": {
+          "branchId": "DK-710109",
+          "title": "Øbro Jagtvej"
+        },
+        "lmsPlacement": {
+          "department": {
+            "departmentId": "bø",
+            "title": "Børn"
+          },
+          "section": null,
+          "location": null,
+          "sublocation": {
+            "sublocationId": "fant",
+            "title": "Fantasy"
+          }
+        },
+        "logisticsPlacement": [],
+        "materials": [
+          {
+            "itemNumber": "5385975602",
+            "available": false,
+            "periodical": null,
+            "materialGroup": {
+              "name": "Standard",
+              "description": "Std. materialegruppe"
             }
           }
         ]

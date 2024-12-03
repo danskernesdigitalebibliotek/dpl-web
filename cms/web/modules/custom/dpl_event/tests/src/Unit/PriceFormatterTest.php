@@ -148,4 +148,53 @@ class PriceFormatterTest extends UnitTestCase {
     );
   }
 
+  /**
+   * Provides examples of price arrays and their expected range formatting.
+   *
+   * @return array<array{array<int>, string}>
+   *   Array of examples. Each example contains an array of prices and how
+   *   they should be formatted. This matches signature of
+   *   testPriceRangeFormatting().
+   */
+  public function rawPriceRangeProvider(): array {
+    return [
+      // Only free prices.
+      [[0], "0"],
+      // Free and a single price.
+      [[0, 20], "0 - 20"],
+      // Range of prices.
+      [[20, 30], "20 - 30"],
+      // Single price.
+      [[20], "20"],
+      // Multiple prices.
+      [[10, 20, 30], "10 - 30"],
+      // Free with multiple prices.
+      [[0, 10, 20], "0 - 20"],
+      // Larger range of prices.
+      [[50, 100, 150], "50 - 150"],
+      [[0, 1000], "0 - 1000"],
+    ];
+  }
+
+  /**
+   * Test raw price range formatting.
+   *
+   * @param int[] $prices
+   *   Array of integers representing prices.
+   * @param string $expected
+   *   Expected formatted string.
+   *
+   * @dataProvider rawPriceRangeProvider
+   */
+  public function testRawPriceRangeFormatting(
+    array $prices,
+    string $expected,
+  ): void {
+    $priceFormatter = new PriceFormatter($this->getStringTranslationStub(), $this->getConfigFactoryStub($this->mockConfig));
+    $this->assertSame(
+      $expected,
+      $priceFormatter->formatRawPriceRange($prices)
+    );
+  }
+
 }
