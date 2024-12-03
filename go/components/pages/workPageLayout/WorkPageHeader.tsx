@@ -16,6 +16,7 @@ import WorkPageButtons from "./WorkPageButtons"
 import {
   getIsbnsFromManifestation,
   getManifestationByMaterialType,
+  getManifestationLanguageIsoCode,
   getWorkMaterialTypes,
 } from "./helper"
 
@@ -74,6 +75,7 @@ const WorkPageHeader = ({ work }: WorkPageHeaderProps) => {
       })
     })
   }
+  const languageIsoCode = getManifestationLanguageIsoCode(selectedManifestation)
 
   useEffect(() => {
     setinitialSliderValue(findInitialSliderValue())
@@ -118,7 +120,9 @@ const WorkPageHeader = ({ work }: WorkPageHeaderProps) => {
               BLÅ
             </Badge>
           )}
-          <h1 className="hyphens-auto break-words text-typo-heading-3 lg:mt-0 lg:text-typo-heading-2">
+          <h1
+            lang={languageIsoCode}
+            className="hyphens-auto break-words text-typo-heading-3 lg:mt-0 lg:text-typo-heading-2">
             {`${selectedManifestation?.titles?.full || ""}${!!titleSuffix ? ` (${titleSuffix})` : ""}`}
           </h1>
           <p className="mt-grid-gap-2 text-typo-caption uppercase lg:mt-7">{`af ${displayCreators(work.creators, 100)}`}</p>
