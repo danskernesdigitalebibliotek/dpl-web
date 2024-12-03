@@ -29,14 +29,14 @@ const WorkPageButtons = ({ workId }: WorkPageButtonsProps) => {
           <Button
             ariaLabel="Prøv ebog"
             size={"default"}
-            className="mb-grid-gap-half min-w-full lg:min-w-80"
+            className="mb-grid-gap-half w-full lg:min-w-72 lg:max-w-80"
             asChild
             disabled={!!identifier}>
             <SmartLink linkType="external" href={url}>
               Prøv ebog
             </SmartLink>
           </Button>
-          <Button ariaLabel="Lån/reserver/læse ebog" className="min-w-full lg:min-w-80">
+          <Button ariaLabel="Lån/reserver/læse ebog" className="w-full lg:min-w-72 lg:max-w-80">
             Not done yet
           </Button>
         </>
@@ -47,11 +47,11 @@ const WorkPageButtons = ({ workId }: WorkPageButtonsProps) => {
           <Button
             ariaLabel="Prøv lydbog"
             disabled={!!!identifier}
-            className="mb-grid-gap-half min-w-full lg:min-w-80"
+            className="mb-grid-gap-half w-full lg:min-w-72 lg:max-w-80"
             onClick={() => setIsPlayerOpen(!isPlayerOpen)}>
             Prøv lydbog
           </Button>
-          <Button ariaLabel="Lån/reserver/læse lydbog" className="min-w-full lg:min-w-80">
+          <Button ariaLabel="Lån/reserver/læse lydbog" className="w-full lg:min-w-72 lg:max-w-80">
             Not done yet
           </Button>
         </>

@@ -1,3 +1,4 @@
+import { motion } from "framer-motion"
 import React, { useEffect, useState } from "react"
 
 import { CoverPicture } from "@/components/shared/coverPicture/CoverPicture"
@@ -64,19 +65,24 @@ const WorkPageHeader = ({ work }: WorkPageHeaderProps) => {
 
   return (
     <>
-      <div className="mt-5 flex w-full flex-col lg:flex-row">
-        <div className="h-auto lg:order-2 lg:flex lg:flex-1 lg:basis-1/3 lg:flex-col">
-          <div className="relative mx-auto mb-12 flex h-full w-[70vw] justify-center lg:min-h-[60vh] lg:w-full">
+      <motion.div
+        key={work.workId}
+        className="lg:grid-go mt-5"
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ duration: 0.5 }}
+        exit={{ opacity: 0 }}>
+        <div className="col-span-4 h-auto lg:order-2">
+          <div className="flex aspect-1/1 h-auto w-full flex-col items-center justify-center rounded-base lg:aspect-4/5">
             {!isLoadingCovers && (
               <CoverPicture
                 alt="Forsidebillede på værket"
                 lowResSrc={lowResCover || ""}
                 src={coverSrc?.[0] || ""}
-                classNames="lg:w-[80%] select-none"
               />
             )}
           </div>
-          <div className="flex w-full justify-center">
+          <div className="flex w-full justify-center pt-12">
             <SlideSelect
               options={slideSelectOptions}
               initialOption={initialSliderValue}
@@ -89,19 +95,16 @@ const WorkPageHeader = ({ work }: WorkPageHeaderProps) => {
             />
           </div>
         </div>
-        <div className="flex flex-col lg:order-1 lg:flex-1 lg:basis-1/3 lg:justify-end">
-          <h1
-            // In order to be able to break words, we need to set the lang attribute
-            lang="da"
-            className="mt-grid-gap-3 hyphens-auto break-words text-typo-heading-3 lg:mt-0 lg:text-typo-heading-2">
-            {`${selectedManifestation?.titles?.main}${!!titleSuffix ? ` (${titleSuffix})` : ""}`}
+        <div className="col-span-4 flex flex-col justify-end">
+          <h1 className="mt-grid-gap-3 hyphens-auto break-words text-typo-heading-3 lg:mt-0 lg:text-typo-heading-2">
+            {`${selectedManifestation?.titles?.main || ""}${!!titleSuffix ? ` (${titleSuffix})` : ""}`}
           </h1>
           <p className="mt-grid-gap-2 text-typo-caption uppercase lg:mt-7">{`af ${displayCreators(work.creators, 100)}`}</p>
         </div>
-        <div className="mt-grid-gap-3 flex flex-col items-end justify-end lg:order-3 lg:mt-0 lg:flex-1 lg:basis-1/3">
+        <div className="col-span-4 mt-grid-gap-3 flex flex-col items-end justify-end lg:order-3 lg:mt-0">
           <WorkPageButtons workId={work.workId} />
         </div>
-      </div>
+      </motion.div>
     </>
   )
 }
