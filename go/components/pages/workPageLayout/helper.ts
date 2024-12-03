@@ -1,3 +1,5 @@
+import { head, uniqBy } from "lodash"
+
 import {
   GeneralMaterialTypeCodeEnum,
   IdentifierTypeEnum,
@@ -73,4 +75,22 @@ export const getIsbnsFromManifestation = (
 ) => {
   if (!manifestaion) return []
   return manifestaion.identifiers.filter(identifier => identifier.type === IdentifierTypeEnum.Isbn)
+}
+
+export const getManifestationLanguageIsoCode = (
+  manifestation: ManifestationWorkPageFragment | undefined | null
+) => {
+  if (!manifestation) return undefined
+
+  const uniqueLanguagesWithIsoCode = uniqBy(manifestation.languages?.main, "isoCode")
+
+  // We only want to set the lang attribute if there is only one isoCode
+  const uniqIsoCode =
+    uniqueLanguagesWithIsoCode.length === 1 && head(uniqueLanguagesWithIsoCode)?.isoCode
+
+  if (uniqIsoCode) {
+    return uniqIsoCode
+  }
+  // if there is no isoCode it return undefined so that the lang attribute is not set
+  return undefined
 }
