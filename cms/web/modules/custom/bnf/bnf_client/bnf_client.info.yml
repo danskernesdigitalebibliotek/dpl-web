@@ -1,0 +1,7 @@
+name: 'BNF Client'
+type: module
+description: 'BNF (Bibliotekernes Nationale Formidling) client, for sharing content with BNF'
+package: 'DPL - BNF'
+core_version_requirement: ^10
+dependencies:
+  - bnf:bnf
