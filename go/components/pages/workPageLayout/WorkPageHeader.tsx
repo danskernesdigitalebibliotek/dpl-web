@@ -1,4 +1,5 @@
 import { motion } from "framer-motion"
+import { useRouter } from "next/navigation"
 import React, { useEffect, useState } from "react"
 
 import { Badge } from "@/components/shared/badge/Badge"
@@ -48,6 +49,7 @@ const WorkPageHeader = ({ work }: WorkPageHeaderProps) => {
       enabled: isPublizonQueryEnabled(),
     },
   })
+  const router = useRouter()
   const workMaterialTypes = getWorkMaterialTypes(work).map(materialType => {
     return { value: materialType.code, render: materialType.display }
   })
@@ -76,6 +78,15 @@ const WorkPageHeader = ({ work }: WorkPageHeaderProps) => {
     })
   }
   const languageIsoCode = getManifestationLanguageIsoCode(selectedManifestation)
+  const onOptionSelect = (optionSelected: SlideSelectOption) => {
+    setSelectedManifestation(
+      getManifestationByMaterialType(work, optionSelected.value) ||
+        work.manifestations.bestRepresentation
+    )
+    const searchParams = new URLSearchParams(window.location.search)
+    searchParams.set("type", optionSelected.render)
+    router.push(`${window.location.pathname}?${searchParams.toString()}`)
+  }
 
   useEffect(() => {
     setinitialSliderValue(findInitialSliderValue())
@@ -105,12 +116,7 @@ const WorkPageHeader = ({ work }: WorkPageHeaderProps) => {
             <SlideSelect
               options={slideSelectOptions}
               initialOption={initialSliderValue}
-              onOptionSelect={(optionSelected: SlideSelectOption) => {
-                setSelectedManifestation(
-                  getManifestationByMaterialType(work, optionSelected.value) ||
-                    work.manifestations.bestRepresentation
-                )
-              }}
+              onOptionSelect={onOptionSelect}
             />
           </div>
         </div>
