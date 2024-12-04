@@ -71,6 +71,14 @@ const WorkPageHeader = ({ work }: WorkPageHeaderProps) => {
     undefined
   )
   const findInitialSliderValue = () => {
+    const searchParams = new URLSearchParams(window.location.search)
+    // If we have a material type specified in the URL, we use that
+    if (
+      searchParams.has("type") &&
+      slideSelectOptions.some(option => option.render === searchParams.get("type"))
+    ) {
+      return slideSelectOptions.find(option => option.render === searchParams.get("type"))
+    }
     return slideSelectOptions.find(option => {
       return selectedManifestation?.materialTypes.find(materialType => {
         return materialType.materialTypeGeneral.code.includes(option.value)
