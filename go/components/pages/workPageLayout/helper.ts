@@ -1,5 +1,6 @@
 import { head, uniqBy } from "lodash"
 
+import { SlideSelectOption } from "@/components/shared/slideSelect/SlideSelect"
 import {
   GeneralMaterialTypeCodeEnum,
   IdentifierTypeEnum,
@@ -25,7 +26,7 @@ export const getManifestationByMaterialType = (
   materialType: GeneralMaterialTypeCodeEnum[0]
 ): ManifestationWorkPageFragment | undefined => {
   return work.manifestations.all.find(manifestation =>
-    manifestation.materialTypes.some(type => type.materialTypeGeneral.code === materialType)
+    manifestation.materialTypes.some(type => type.materialTypeGeneral.display === materialType)
   )
 }
 
@@ -93,4 +94,24 @@ export const getManifestationLanguageIsoCode = (
   }
   // if there is no isoCode it return undefined so that the lang attribute is not set
   return undefined
+}
+
+export const findInitialSliderValue = (
+  sliderOptions: SlideSelectOption[] | undefined | null,
+  selectedManifestation: ManifestationWorkPageFragment | undefined | null,
+  searchParams: URLSearchParams
+) => {
+  // If we have a material type specified in the URL, we use that
+  if (
+    !!searchParams.get("type") &&
+    sliderOptions?.some(option => option.render === searchParams.get("type"))
+  ) {
+    return sliderOptions.find(option => option.render === searchParams.get("type"))
+  }
+  // Else select any
+  return sliderOptions?.find(option => {
+    return selectedManifestation?.materialTypes.find(materialType => {
+      return materialType.materialTypeGeneral.code.includes(option.value)
+    })
+  })
 }

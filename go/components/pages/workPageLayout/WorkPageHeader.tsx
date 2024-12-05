@@ -1,5 +1,5 @@
 import { motion } from "framer-motion"
-import { useRouter } from "next/navigation"
+import { useRouter, useSearchParams } from "next/navigation"
 import React, { useEffect, useState } from "react"
 
 import { Badge } from "@/components/shared/badge/Badge"
@@ -15,6 +15,7 @@ import { useSelectedManifestationStore } from "@/store/selectedManifestation.sto
 
 import WorkPageButtons from "./WorkPageButtons"
 import {
+  findInitialSliderValue,
   getIsbnsFromManifestation,
   getManifestationByMaterialType,
   getManifestationLanguageIsoCode,
@@ -26,7 +27,20 @@ type WorkPageHeaderProps = {
 }
 
 const WorkPageHeader = ({ work }: WorkPageHeaderProps) => {
+  const searchParams = useSearchParams()
+  const router = useRouter()
   const { selectedManifestation, setSelectedManifestation } = useSelectedManifestationStore()
+  const [slideSelectOptions, setSlideSelectOptions] = useState<SlideSelectOption[] | null>(null)
+  const isbns = getIsbnsFromManifestation(selectedManifestation)
+  const languageIsoCode = getManifestationLanguageIsoCode(selectedManifestation)
+  const titleSuffix = selectedManifestation?.titles?.identifyingAddition || ""
+  const [initialSliderValue, setinitialSliderValue] = useState<SlideSelectOption | undefined>(
+    undefined
+  )
+  const workMaterialTypes = getWorkMaterialTypes(work).map(materialType => {
+    return { value: materialType.code, render: materialType.display }
+  })
+
   const { data: dataCovers, isLoading: isLoadingCovers } = useGetCoverCollection(
     {
       type: "pid",
@@ -38,68 +52,59 @@ const WorkPageHeader = ({ work }: WorkPageHeaderProps) => {
     },
     { query: { enabled: !!selectedManifestation?.pid } }
   )
-  const isbns = getIsbnsFromManifestation(selectedManifestation)
-  const isPublizonQueryEnabled = () => {
-    return isbns && isbns.length > 0
-  }
+
   const { data: dataPublizon } = useGetV1ProductsIdentifier(isbns[0]?.value || "", {
     query: {
       // Publizon / useGetV1ProductsIdentifier is responsible for online
       // materials. It requires an ISBN to do lookups.
-      enabled: isPublizonQueryEnabled(),
+      enabled: isbns && isbns.length > 0,
     },
   })
-  const router = useRouter()
-  const workMaterialTypes = getWorkMaterialTypes(work).map(materialType => {
-    return { value: materialType.code, render: materialType.display }
-  })
-  // We only want unique material types
-  const slideSelectOptions = workMaterialTypes.reduce<SlideSelectOption[]>((acc, materialType) => {
-    if (!acc.some(item => item.value === materialType.value)) {
-      acc.push(materialType)
-    }
-    return acc
-  }, [])
-  const titleSuffix = selectedManifestation?.titles?.identifyingAddition
+
   const lowResCover = getLowResCoverUrl(dataCovers)
   const coverSrc = getCoverUrls(
     dataCovers,
-    [selectedManifestation?.pid || ""],
+    selectedManifestation?.pid ? [selectedManifestation.pid] : undefined,
     ["default", "original", "large", "medium-large", "medium", "small-medium", "small", "xx-small"]
   )
-  const [initialSliderValue, setinitialSliderValue] = useState<SlideSelectOption | undefined>(
-    undefined
-  )
-  const findInitialSliderValue = () => {
-    const searchParams = new URLSearchParams(window.location.search)
-    // If we have a material type specified in the URL, we use that
-    if (
-      searchParams.has("type") &&
-      slideSelectOptions.some(option => option.render === searchParams.get("type"))
-    ) {
-      return slideSelectOptions.find(option => option.render === searchParams.get("type"))
-    }
-    return slideSelectOptions.find(option => {
-      return selectedManifestation?.materialTypes.find(materialType => {
-        return materialType.materialTypeGeneral.code.includes(option.value)
-      })
-    })
-  }
-  const languageIsoCode = getManifestationLanguageIsoCode(selectedManifestation)
   const onOptionSelect = (optionSelected: SlideSelectOption) => {
-    setSelectedManifestation(
-      getManifestationByMaterialType(work, optionSelected.value) ||
-        work.manifestations.bestRepresentation
-    )
-    const searchParams = new URLSearchParams(window.location.search)
-    searchParams.set("type", optionSelected.render)
-    router.push(`${window.location.pathname}?${searchParams.toString()}`)
+    const params = new URLSearchParams(searchParams)
+    params.set("type", optionSelected.render)
+    router.push(`${window.location.pathname}?${params.toString()}`, { scroll: false })
   }
 
   useEffect(() => {
-    setinitialSliderValue(findInitialSliderValue())
+    // Initialize slideSelect options
+    const slideSelectOptions = workMaterialTypes.reduce<SlideSelectOption[]>(
+      (acc, materialType) => {
+        if (!acc.some(item => item.value === materialType.value)) {
+          acc.push(materialType) // We only want unique material types
+        }
+        return acc
+      },
+      []
+    )
+    setSlideSelectOptions(slideSelectOptions)
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [selectedManifestation])
+  }, [])
+
+  useEffect(() => {
+    // Initialize slideSelect initial value
+    const searchParams = new URLSearchParams(window.location.search)
+    setinitialSliderValue(
+      findInitialSliderValue(slideSelectOptions, selectedManifestation, searchParams)
+    )
+  }, [selectedManifestation, slideSelectOptions])
+
+  useEffect(() => {
+    if (!!searchParams.get("type")) {
+      setSelectedManifestation(
+        getManifestationByMaterialType(work, searchParams.get("type") as string) ||
+          selectedManifestation
+      )
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [searchParams])
 
   return (
     <>
@@ -120,13 +125,15 @@ const WorkPageHeader = ({ work }: WorkPageHeaderProps) => {
               />
             )}
           </div>
-          <div className="flex w-full justify-center pt-12">
-            <SlideSelect
-              options={slideSelectOptions}
-              initialOption={initialSliderValue}
-              onOptionSelect={onOptionSelect}
-            />
-          </div>
+          {slideSelectOptions && (
+            <div className="flex w-full justify-center pt-12">
+              <SlideSelect
+                options={slideSelectOptions}
+                initialOption={initialSliderValue}
+                onOptionSelect={onOptionSelect}
+              />
+            </div>
+          )}
         </div>
         <div className="col-span-4 flex flex-col items-start justify-end pt-grid-gap-3 lg:pt-0">
           {!!dataPublizon?.product?.costFree && (

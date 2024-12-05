@@ -12,10 +12,10 @@ const removeEmptyCovers = (coverData: Cover[], sizes: (keyof CoverImageUrls)[]) 
 
 export const getCoverUrls = (
   data: Cover[] | null | undefined,
-  pids: string[],
+  pids: string[] | undefined,
   sizes: (keyof CoverImageUrls)[]
 ) => {
-  if (!data || pids.length === 0) {
+  if (!data || !pids || pids.length === 0) {
     return null
   }
   // Make sure we only have covers in our data that has a url in the given size.

@@ -2,13 +2,14 @@
 
 import { useQuery } from "@tanstack/react-query"
 import { notFound } from "next/navigation"
+import { useSearchParams } from "next/navigation"
 import React, { useEffect } from "react"
 
 import { GetMaterialQuery, useGetMaterialQuery } from "@/lib/graphql/generated/fbi/graphql"
 import { useSelectedManifestationStore } from "@/store/selectedManifestation.store"
 
 import WorkPageHeader from "./WorkPageHeader"
-import { getBestRepresentation } from "./helper"
+import { getBestRepresentation, getManifestationByMaterialType } from "./helper"
 
 type WorkPageLayoutProps = {
   workId: string
@@ -16,6 +17,7 @@ type WorkPageLayoutProps = {
 }
 
 function WorkPageLayout({ workId, dehydratedQueryData }: WorkPageLayoutProps) {
+  const searchParams = useSearchParams()
   const { data, isLoading } = useQuery({
     queryKey: useGetMaterialQuery.getKey({ wid: workId }),
     queryFn: useGetMaterialQuery.fetcher({ wid: workId }),
@@ -35,10 +37,18 @@ function WorkPageLayout({ workId, dehydratedQueryData }: WorkPageLayoutProps) {
 
   useEffect(() => {
     if (!data || !data.work) return
-    // Select on the initial load
-    if (!selectedManifestation) {
+    if (selectedManifestation) return
+
+    // Select work manifestation on the initial load - 1. by URL params, 2. by best representation
+    if (!!searchParams.get("type")) {
+      setSelectedManifestation(
+        getManifestationByMaterialType(data.work, searchParams.get("type") as string) ||
+          getBestRepresentation(data.work)
+      )
+    } else {
       setSelectedManifestation(getBestRepresentation(data.work))
     }
+
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [selectedManifestation])
 
