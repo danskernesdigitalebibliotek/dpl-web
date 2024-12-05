@@ -318,18 +318,6 @@
   @apply mx-auto w-full max-w-[var(--page-width)] px-[var(--grid-edge)];
 }
 
-.dark-mode-transition {
-  @apply transition-[background] duration-dark-mode;
-}
-
-body {
-  @apply bg-background font-body text-foreground transition-all duration-dark-mode;
-}
-
-body > * {
-  @apply dark-mode-transition bg-background transition-all;
-}
-
 .focus-visible {
   @apply focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-foreground focus-visible:ring-offset-2;
 }
