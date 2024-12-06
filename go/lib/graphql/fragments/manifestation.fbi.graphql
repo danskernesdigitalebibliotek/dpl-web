@@ -45,8 +45,17 @@ fragment ManifestationAccess on Manifestation {
 
 fragment ManifestationTitles on Manifestation {
   titles {
-    main
     identifyingAddition
+    full
+  }
+}
+
+fragment ManifestationLanguages on Manifestation {
+  languages {
+    main {
+      display
+      isoCode
+    }
   }
 }
 
@@ -62,4 +71,5 @@ fragment ManifestationWorkPage on Manifestation {
   ...ManifestationCover
   ...ManifestationAccess
   ...ManifestationTitles
+  ...ManifestationLanguages
 }

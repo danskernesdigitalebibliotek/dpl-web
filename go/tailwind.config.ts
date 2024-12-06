@@ -19,6 +19,7 @@ export const extendedTheme = {
   },
   zIndex: {
     "-1": "-1",
+    dialog: "50",
     drawer: "50",
     sheet: "50",
     "slide-select": "10",
