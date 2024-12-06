@@ -1,6 +1,7 @@
 import { head, uniqBy } from "lodash"
 
 import { SlideSelectOption } from "@/components/shared/slideSelect/SlideSelect"
+import { materialTypeCategories } from "@/components/shared/workCard/helper"
 import {
   GeneralMaterialTypeCodeEnum,
   IdentifierTypeEnum,
@@ -114,4 +115,21 @@ export const findInitialSliderValue = (
       return materialType.materialTypeGeneral.code.includes(option.value)
     })
   })
+}
+
+export const addMaterialTypeIconToSelectOption = (option: SlideSelectOption) => {
+  const code = option.value as GeneralMaterialTypeCodeEnum
+  if (materialTypeCategories.reading.includes(code)) {
+    return { ...option, icon: "book" }
+  }
+  if (materialTypeCategories.listening.includes(code)) {
+    return { ...option, icon: "headphones" }
+  }
+  if (materialTypeCategories.gaming.includes(code)) {
+    return { ...option, icon: "controller" }
+  }
+  if (materialTypeCategories.video.includes(code)) {
+    return { ...option, icon: "video" }
+  }
+  return option
 }
