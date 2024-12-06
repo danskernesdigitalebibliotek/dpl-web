@@ -57,6 +57,9 @@ export default setup({
     resetSearchData: assign(() => ({
       searchData: undefined,
     })),
+    resetOffset: assign(() => ({
+      searchOffset: 0,
+    })),
     setFacetDataInContext: assign({
       facetData: ({
         event: {

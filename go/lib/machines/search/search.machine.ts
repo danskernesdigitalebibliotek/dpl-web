@@ -45,7 +45,12 @@ export default searchMachineSetup.createMachine({
         TOGGLE_FILTER: [
           {
             guard: "contextHasSearchString",
-            actions: ["resetSearchData", "toggleFilterInContext", "emitFilterToggled"],
+            actions: [
+              "resetSearchData",
+              "resetOffset",
+              "toggleFilterInContext",
+              "emitFilterToggled",
+            ],
             target: "filteringAndSearching",
           },
           {
@@ -60,7 +65,12 @@ export default searchMachineSetup.createMachine({
         SEARCH: [
           {
             guard: "contextHasSearchString",
-            actions: ["resetSearchData", "resetFilters", "setSubmittedQueryInContext"],
+            actions: [
+              "resetSearchData",
+              "resetFilters",
+              "setSubmittedQueryInContext",
+              "resetOffset",
+            ],
             target: "filteringAndSearching",
           },
           {
@@ -90,7 +100,12 @@ export default searchMachineSetup.createMachine({
         SEARCH: [
           {
             guard: "contextHasSearchString",
-            actions: ["resetSearchData", "resetFilters", "setSubmittedQueryInContext"],
+            actions: [
+              "resetSearchData",
+              "resetFilters",
+              "resetOffset",
+              "setSubmittedQueryInContext",
+            ],
             target: "filteringAndSearching",
           },
           {
