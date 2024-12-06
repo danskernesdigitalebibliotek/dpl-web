@@ -15,7 +15,6 @@ use Drupal\dpl_library_agency\GeneralSettings;
 use Drupal\dpl_library_agency\ReservationSettings;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
 use function Safe\json_encode;
 use function Safe\preg_replace;
 
@@ -522,7 +521,6 @@ class DplReactAppsController extends ControllerBase {
    * @throws \Drupal\Component\Plugin\Exception\PluginException
    */
   public function reader(Request $request): array {
-
     $identifier = $request->query->get('identifier');
     $orderid = $request->query->get('orderid');
 
@@ -530,19 +528,19 @@ class DplReactAppsController extends ControllerBase {
       throw new \InvalidArgumentException('Either identifier or orderid must be provided.');
     }
 
-    /** @var \Drupal\dpl_react_apps\Plugin\Block\ReaderAppBlock $plugin_block */
-    $plugin_block = $this->blockManager->createInstance('reader_app_block', [
-      'identifier' => $identifier,
-      'orderid' => $orderid,
-    ]);
+    $data = [
+      'identifier' => $identifier ?? NULL,
+      'orderid' => $orderid ?? NULL,
+    ];
 
-    // Access check for the block.
-    $access_result = $plugin_block->access($this->currentUser());
-    if (is_object($access_result) && $access_result->isForbidden() || is_bool($access_result) && !$access_result) {
-      throw new AccessDeniedHttpException();
-    }
+    $app = [
+      '#theme' => 'dpl_react_app',
+      '#name' => 'reader',
+      '#data' => $data,
+    ];
 
-    return $plugin_block->build();
+    return $app;
+
   }
 
 }
