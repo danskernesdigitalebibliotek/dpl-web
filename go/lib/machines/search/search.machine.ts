@@ -73,6 +73,9 @@ export default searchMachineSetup.createMachine({
           actions: ["setLoadMoreValuesInContext"],
           target: "loadingMoreSearchResults",
         },
+        RESET_BOOTSTRAP_STATE: {
+          target: "bootstrap",
+        },
       },
     },
     filteringAndSearching: {
