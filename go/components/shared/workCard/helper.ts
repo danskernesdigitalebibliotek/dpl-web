@@ -20,7 +20,7 @@ export const displayCreators = (
   }, "")
 }
 
-const workCategories = {
+export const materialTypeCategories = {
   reading: [
     GeneralMaterialTypeCodeEnum.Articles,
     GeneralMaterialTypeCodeEnum.Books,
@@ -41,10 +41,10 @@ const workCategories = {
 
 export const isOfWorkTypeCategory = (
   materialTypes: SearchWithPaginationQuery["search"]["works"][0]["materialTypes"],
-  category: keyof typeof workCategories
+  category: keyof typeof materialTypeCategories
 ) => {
   return materialTypes.some(materialType =>
-    workCategories[category].includes(materialType.materialTypeGeneral.code)
+    materialTypeCategories[category].includes(materialType.materialTypeGeneral.code)
   )
 }
 
