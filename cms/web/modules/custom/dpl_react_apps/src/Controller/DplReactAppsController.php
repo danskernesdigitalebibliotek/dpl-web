@@ -15,6 +15,7 @@ use Drupal\dpl_library_agency\GeneralSettings;
 use Drupal\dpl_library_agency\ReservationSettings;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
 use function Safe\json_encode;
 use function Safe\preg_replace;
 
@@ -518,14 +519,14 @@ class DplReactAppsController extends ControllerBase {
    * @return mixed[]
    *   Render array with the Reader app block.
    *
-   * @throws \Drupal\Component\Plugin\Exception\PluginException
+   * @throws \Symfony\Component\HttpKernel\Exception\BadRequestHttpException
    */
   public function reader(Request $request): array {
     $identifier = $request->query->get('identifier');
     $orderid = $request->query->get('orderid');
 
     if (!$identifier && !$orderid) {
-      throw new \InvalidArgumentException('Either identifier or orderid must be provided.');
+      throw new BadRequestHttpException('Either identifier or orderid must be provided.');
     }
 
     $data = [
