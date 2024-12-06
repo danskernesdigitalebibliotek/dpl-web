@@ -15,6 +15,7 @@ import { useSelectedManifestationStore } from "@/store/selectedManifestation.sto
 
 import WorkPageButtons from "./WorkPageButtons"
 import {
+  addMaterialTypeIconToSelectOption,
   findInitialSliderValue,
   getIsbnsFromManifestation,
   getManifestationByMaterialType,
@@ -78,7 +79,7 @@ const WorkPageHeader = ({ work }: WorkPageHeaderProps) => {
     const slideSelectOptions = workMaterialTypes.reduce<SlideSelectOption[]>(
       (acc, materialType) => {
         if (!acc.some(item => item.value === materialType.value)) {
-          acc.push(materialType) // We only want unique material types
+          acc.push(addMaterialTypeIconToSelectOption(materialType)) // We only want unique material types
         }
         return acc
       },
