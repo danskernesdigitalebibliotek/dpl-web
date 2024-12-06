@@ -77,7 +77,7 @@ class EventsController extends ControllerBase {
       ->sort('date.value');
     $ids = $query->execute();
 
-    /** @var \Drupal\recurring_events\Entity\EventInstance[] $events */
+    /** @var \Drupal\dpl_event\Entity\EventInstance[] $events */
     $events = $storage->loadMultiple($ids);
 
     $items = [];

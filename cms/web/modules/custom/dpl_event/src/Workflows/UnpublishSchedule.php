@@ -7,11 +7,10 @@ namespace Drupal\dpl_event\Workflows;
 use Drupal\Component\Datetime\TimeInterface;
 use Drupal\Core\Config\ConfigFactoryInterface;
 use Drupal\Core\Logger\LoggerChannelInterface;
-use Drupal\dpl_event\EventWrapper;
+use Drupal\dpl_event\Entity\EventInstance;
 use Drupal\dpl_event\Form\SettingsForm;
 use Drupal\job_scheduler\Entity\JobSchedule;
 use Drupal\job_scheduler\JobSchedulerInterface;
-use Drupal\recurring_events\Entity\EventInstance;
 use Drupal\recurring_events\EventInstanceStorageInterface;
 
 /**
@@ -77,7 +76,7 @@ final class UnpublishSchedule {
     $schedule = (int) $config->get('unpublish_schedule');
     $now_timestamp = $this->time->getCurrentTime();
 
-    $event_end_date = (new EventWrapper($event))->getEndDate();
+    $event_end_date = $event->getEndDate();
     $unpublication_date = (\DateTimeImmutable::createFromInterface($event_end_date))->modify("+{$schedule} seconds");
     $unpublication_timestamp = $unpublication_date->getTimestamp();
 
@@ -119,7 +118,7 @@ final class UnpublishSchedule {
       ->accessCheck(FALSE)
       ->condition('status', 1)
       ->execute();
-    /** @var \Drupal\recurring_events\Entity\EventInstance[] $publishedEventInstances */
+    /** @var \Drupal\dpl_event\Entity\EventInstance[] $publishedEventInstances */
     $publishedEventInstances = $this->eventInstanceStorage->loadMultiple($publishedEventInstanceIds);
 
     array_walk($publishedEventInstances, function (EventInstance $event) {
