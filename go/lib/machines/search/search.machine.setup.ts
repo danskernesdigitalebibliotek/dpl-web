@@ -2,6 +2,7 @@ import { assign, emit, setup } from "xstate"
 
 import { correctFacetNames } from "./helpers"
 import { getFacets, performSearch } from "./queries"
+import { initialContext } from "./search.machine"
 import { TContext, TFilters, TInput } from "./types"
 
 export default setup({
@@ -52,13 +53,13 @@ export default setup({
       submittedQuery: ({ context }) => (context.submittedQuery = context.currentQuery),
     }),
     resetFilters: assign(() => ({
-      selectedFilters: {},
+      selectedFilters: initialContext.selectedFilters,
     })),
     resetSearchData: assign(() => ({
-      searchData: undefined,
+      searchData: initialContext.searchData,
     })),
     resetOffset: assign(() => ({
-      searchOffset: 0,
+      searchOffset: initialContext.searchOffset,
     })),
     setFacetDataInContext: assign({
       facetData: ({
