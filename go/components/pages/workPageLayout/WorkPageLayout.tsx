@@ -48,7 +48,6 @@ function WorkPageLayout({ workId, dehydratedQueryData }: WorkPageLayoutProps) {
     } else {
       setSelectedManifestation(getBestRepresentation(data.work))
     }
-
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [selectedManifestation])
 
