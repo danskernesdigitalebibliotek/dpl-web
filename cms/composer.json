@@ -43,7 +43,7 @@
                 "version": "0.0.0-dev",
                 "type": "drupal-library",
                 "dist": {
-                    "url": "https://github.com/danskernesdigitalebibliotek/dpl-react/releases/download/branch-DDFBRA-183-anonymous-and-logged-in-user-can-try-ebook/dist-ddfbra-183-anonymous-and-logged-in-user-can-try-ebook.zip",
+                    "url": "https://github.com/danskernesdigitalebibliotek/dpl-react/releases/download/branch-DDFBRA-236-logged-in-user-can-go-from-digital-loans-to-material-to-listen-read/dist-ddfbra-236-logged-in-user-can-go-from-digital-loans-to-material-to-listen-read.zip",
                     "type": "zip"
                 },
                 "require": {
