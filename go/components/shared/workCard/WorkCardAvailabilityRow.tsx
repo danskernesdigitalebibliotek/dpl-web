@@ -1,12 +1,12 @@
 import React from "react"
 
-import { WorkTeaserFragment } from "@/lib/graphql/generated/fbi/graphql"
+import { WorkTeaserSearchPageFragment } from "@/lib/graphql/generated/fbi/graphql"
 
 import WorkCardAvailabilityItem from "./WorkCardAvailabilityItem"
 import { isOfWorkTypeCategory } from "./helper"
 
 type WorkCardAvailabilityRowProps = {
-  materialTypes: WorkTeaserFragment["materialTypes"]
+  materialTypes: WorkTeaserSearchPageFragment["materialTypes"]
 }
 
 const WorkCardAvailabilityRow = ({ materialTypes }: WorkCardAvailabilityRowProps) => {

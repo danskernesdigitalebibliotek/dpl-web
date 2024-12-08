@@ -3,10 +3,10 @@
 import React from "react"
 
 import WorkCard, { WorkCardGhost } from "@/components/shared/workCard/WorkCard"
-import { WorkTeaserFragment } from "@/lib/graphql/generated/fbi/graphql"
+import { WorkTeaserSearchPageFragment } from "@/lib/graphql/generated/fbi/graphql"
 
 type SearchResultProps = {
-  works: WorkTeaserFragment[]
+  works: WorkTeaserSearchPageFragment[]
 }
 
 const SearchResults = ({ works }: SearchResultProps) => {
