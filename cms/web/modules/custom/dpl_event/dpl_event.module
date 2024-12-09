@@ -11,15 +11,26 @@ use Drupal\Core\Entity\FieldableEntityInterface;
 use Drupal\Core\Entity\Query\QueryInterface;
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\Url;
+use Drupal\dpl_event\Entity\EventInstance;
 use Drupal\dpl_event\EventState;
-use Drupal\dpl_event\EventWrapper;
 use Drupal\dpl_event\Form\SettingsForm;
 use Drupal\dpl_event\Workflows\OccurredSchedule;
 use Drupal\dpl_event\Workflows\UnpublishSchedule;
 use Drupal\drupal_typed\DrupalTyped;
-use Drupal\recurring_events\Entity\EventInstance;
 use Drupal\recurring_events\Entity\EventSeries;
 use Safe\DateTime;
+
+/**
+ * Implements hook_entity_bundle_info_alter().
+ *
+ * @param mixed[] $bundles
+ *   Bundle info for altering.
+ */
+function dpl_event_entity_bundle_info_alter(array &$bundles): void {
+  if (isset($bundles['eventinstance']['default'])) {
+    $bundles['eventinstance']['default']['class'] = EventInstance::class;
+  }
+}
 
 /**
  * Implements hook_cron_job_scheduler_info().
@@ -46,7 +57,7 @@ function dpl_event_eventinstance_insert(EntityInterface $entity): void {
     return;
   }
 
-  (new EventWrapper($entity))->isActive() && $occurred_schedule->scheduleOccurred($entity);
+  $entity->isActive() && $occurred_schedule->scheduleOccurred($entity);
   $unpublish_schedule->scheduleUnpublication($entity);
 }
 
@@ -59,15 +70,15 @@ function dpl_event_eventinstance_update(EntityInterface $entity): void {
   if (!$entity instanceof EventInstance) {
     return;
   }
-  $updated_event = new EventWrapper($entity);
+
   if (isset($entity->original) && $entity->original instanceof EventInstance) {
     // If there are no changes to the date then skip updating schedules.
-    if ($updated_event->hasSameDate($entity->original)) {
+    if ($entity->hasSameDate($entity->original)) {
       return;
     }
   }
 
-  $updated_event->isActive() && $occurred_schedule->scheduleOccurred($entity);
+  $entity->isActive() && $occurred_schedule->scheduleOccurred($entity);
   $unpublish_schedule->scheduleUnpublication($entity);
 }
 
@@ -95,8 +106,7 @@ function dpl_event_preprocess_field(array &$variables): void {
     return;
   }
 
-  $event_wrapper = new EventWrapper($entity);
-  $event_state = $event_wrapper->getState();
+  $event_state = $entity->getState();
 
   // Check if the event state is valid. If not, return early.
   if (!($event_state instanceof EventState)) {
