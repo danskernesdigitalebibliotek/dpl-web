@@ -3,11 +3,9 @@ import { Suspense } from "react"
 import loadArticle from "./loadArticle"
 
 const Page = async (props: { params: Promise<{ id: string }> }) => {
-  const params = await props.params;
+  const params = await props.params
 
-  const {
-    id
-  } = params;
+  const { id } = params
 
   const data = await loadArticle(id)
   return (
