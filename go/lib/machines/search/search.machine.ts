@@ -2,20 +2,32 @@ import { and, not } from "xstate"
 
 import searchMachineSetup from "./search.machine.setup"
 
+export const initialContext = {
+  searchOffset: 0,
+  searchPageSize: 0,
+  facetLimit: 0,
+  currentQuery: "",
+  submittedQuery: undefined,
+  searchData: undefined,
+  facetData: undefined,
+  selectedFilters: {},
+  queryClient: null,
+}
+
 export default searchMachineSetup.createMachine({
-  /** @xstate-layout N4IgpgJg5mDOIC5SzAQwE4GMAWA6ARgPaEAusJ6qADgMQDKAogCoD6AigKoMBKAmiwGEAMgEkGAOSYBtAAwBdRKCqFYASxKrCAO0UgAHogC0ANgCMAVlwAWAJzGATDIAcNmeYDM9zwBoQAT0QLAHZcYycnIKdTSNcndysAXwTfFAwcAmIyCmp6ZhZGAEFuAQAJfKZuEXEAcVkFJBBlNQ1tXQMEQytjS0cbKyCg0xdwpytzXwCEd2jcGxt3d1Gne273AaSUtCw8IlJySlpGViqRJhECoRYAMREhJh46Ot0m9U0dBvaTR1Cw0ysFpzmLxuCaIKxDXCmdw2cwyFamYyLKIbECpbYZPbZWgAIQA8rimHQKgUAAosAAiuPEDCeDReLXeoE+5iiuCC0Js9isK36phhoIQphkNlC4Ui0RczniphRaPSuyyBxoeIJRO4pIpVJppnqShUr1aHyMLNMbI5XJ5g35-kQZlFESiMSl4NlW3SqggABswDQmLjqtUhAxrrd7txaXrmm82mD7CL2V4FjZwt0rFYBfZ7E5cB5hXzPOYhdN3K60ngPd7ff7A8GbnceFIdc99QyYwh7EERV4+stnEEgd0BYXLO5jEEuUEwp2zMZS+iKz6mLwSVVavJm1HDUzjdzZn84-NoYWxwLO1ZIcCZHCx+ZwbPkqi3eWvYvl6vG7rGi3o0bBUEZKEfwAu4t6eAi7gClC56jOYnaDCBQRpqOc7ui+uRFKUEZfpujL6IgizuDmrgODInj2KYfJxAKiIisefQyIMTg0TKD5ys+laFMUJQfhuBq4e0awhPuNgIrBhYxMYAqxLgEQwuyLieCBLGbGWuALjQQi4gU5IsAAsri3A0uudLflueGCiJuBxrY8SZlYV6FvYkF8iKTErOyQxeHBKF4AAZqonokGA6CqFoUAFFoEB0E+oVQDQEDaGAuDkKgQXJU+uD+YFwWxRFUUxWFWH0j+24dHyAHmJVslMW4fwyOmNoILeuBuOOYyAlyDhdD5mUBUFIVhXl0VlrF6WqWxsXxYlalaAAboQADWSVsb12UDeFkXDdso0rRNYUIKF82YKlbx1EVpn8YEbjGLMdjCms4yNVy2acrBUT2OYPVZf1uWbQVUBjeie1xcF6CEOguBUJ6qW+eDAC2gPpN9OWDX9I1hYjeDAwdc2EMdDJncZkZ8W2owhIx7L9OC5HCpBfSzHC8QPV9fUoxt+XowDyMQ9zk0JVoSWHYty0ZbzqMc9tGPc6tP37UL+OnfI504W2QorNYH3ih9Q7-jJxEfSza2-RLOCjdLYsg+gYMQ1DMPw5jMts0N-2OzzrPrTjR0ndohOfsVZntGT1h1Q4j2TMeMljkM-Y9Z6hCoBAsW6eDYBbTg3BwAAroFsCY3z01C0tDtxwnScp2n2AZ7A2dkHncu4wrPtK0T2Ek7+hh8jdXT1cY-TmIe5FOFJ3wfbeLlhB9Yyx-Hidhcn6Cp0+Vc17nwM0KD4OQ9DJCw+gCMrSXs9QPPi9lsvOd11Ant497Wi+7xrbt6YWYXu9DEdh4aZh4EiZWV05F-DiH8CwSQHxaEIBAOAug2IPxKuZQwgJCIRA7KOScvJrSTA7lyM0sEiwyDCB4FwPUFT7GoLAgORgnBuBkuOdkY5e5Wm-h0NYVkEL1W5OYUOMJEisQyguchl0yr2BkoCYwM4xhjjiGEai+DcBrDiMOVw9k+iG1luzCusUBFtnZCEYEXQIhML5AzRMlF+xpgoveFS6ILbO05pjLRv5IiWA8MOUOkEGLWEZvIqc443CqKdmjSWANdr-QcaVOIhEXEWDcU9fonivD-Bjrw1SNjAmmwxitfmYAwnmWfpEM0QDog3nFBmYwIpugJOZsk6x7tjYaKlu7HJ7QnGsJ7gYgU3IRSoISbCOM+DlKPhSbU8W9Subu1dpokyKtfwRNafo-sQ4ylyKjgY-x61bFBNdrgLJTSf72RzMMRC7k3qmCHJZMwFNPrVPSIfMuC8K7nzILsjotgRRQn7gsTM-Z4hjGcmMNk-9royD5O86epc57lyXlnC+wNnmdELJCECA8P4-MMb-TqACrBAPBFcpIQA */
+  /** @xstate-layout N4IgpgJg5mDOIC5SzAQwE4GMAWA6ARgPaEAusJ6qADgMQDKAogCoD6AigKoMBKAmiwGEAMgEkGAOSYBtAAwBdRKCqFYASxKrCAO0UgAHogC0ANgCMAVlwAWAJzGATDIAcNmeYDM9zwBoQAT0QLAHZcYycnIKdTSNcndysAXwTfFAwcAmIyCmp6ZhZGAEFuAQAJfKZuEXEAcVkFJBBlNQ1tXQMEQytjS0cbKyCg0xdwpytzXwCEd2jcGxt3d1Gne273AaSUtCw8IlJySlpGViqRJhECoRYAMREhJh46Ot0m9U0dBvaTR1Cw0ysFpzmLxuCaIKxDXCmdw2cwyFamYyLKIbECpbYZPbZWgAIQA8rimHQKgUAAosAAiuPEDCeDReLXeoE+5iiuCC0Js9isK36phhoIQphkNlC4Ui0RczniphRaPSuyyBxoeIJRO4pIpVJppnqShUr1aHyMLNMbI5XJ5g35-kQZlFESiMSl4NlW3SqggABswDQmLjqtUhAxrrd7txaXrmm82oh4j17C47OYHE5jALHPZcOYuiNxXF3A5XWk8B7vb7-YHgzc7jwpDrnvqGTGEPYgiKvH1ls4gkDugLzBZcAWglygmE22ZjEX0aWfUxeCSqrV5A2o4amcbubM-vY5gsYQiggK21ZIcCZHDjD3wVPkqi3SWvT7CsUShHGo3o0apnEs64HDInj2KYfJxAKiIigOxh9DIgyptCMp3nKj5li+pR1rqH5roy+ixgMkLcjYCLmD2Ep2AKsS4BEMLsi4njuAO07uk+NBCLiBTkiwACyuLcDSK50p+664YKRG4LutjxPYXIXgO9gCiBcxUQ4V7TMsaw2EETF4AAZqonokGA6CqFoUAFFoEB0A+JlQDQEDaGAuDkKghlOQ+uB6QZRk2eZlnWaZ770l+G4dHyMhZuYLJtqmbh-DIVj9qebgjmMgJcg4XTaR5+mGcZpm+VZxY2b6C5LoFQk4e0CKAZCUKjh4qatk4x5ONYgJXpywoIn8t6bMW2VeXlZkWYV2zFWhb4CZGBqVYEgIhF00knsByymAKhieElfLZqBUREYkSHuZ5uU+SN-m2RNGGrjNzZ8osuBuM4MmmAmXLuMekSzHCaz9D25hzFph39cd3n5WdRWmW5-XIcV9laI5JkAG6EAA1o5yEDSdYN+RDUBQ+iMOmQgSOEJgLlvHU5XYbdbjGLMdjCms4w2i2VitZyJFRPY5hZSDQ0Fed+PpITtlGeghDoLgVCei5OkSwAtkLuk5aDw042NkMYyLxNaMjZMMpTU1YTd36jCEcHsv04LAcKCl9F9Xj-D2vMq-z4Ma3jfOY6rdkObgJNo0r3tu+rOA2cHwc2Trevk9ohuYUFwlVZe1jc+K3P9kE4WSg4PNA+ifOnaH2Dh17hemTQYsS1LMskHL6CKxj5dq6NYeQ2XrtRyT+sU-IVMmyFZvWHFuf9giykW3nfXop6hCoBANlcRLYCt9g3BwAArgZsBK7DfsB+j7mz-Pi-L6v6+wFvZC70T3ex1o8fXU236GHydNdPFxj9P9CwrRR3zcx2nMMI3MxhZWPgvUyS90ArwfBfK+O8RaV3QOLSW0tZYKyDhA0+MDz6b23jfKA0dSb30foJamL8XqtSoS9WCrYPBWDGApLw7hxKLRAmzaY4I853i0IQCAcBdDISfsFEShhASsIiK2YcX8rTM0mJ0ECWZtr-G5BYNYcQsoKn2NQERScjBODcFREc7IryyO2utNY4kGJZ0YdzXOMIDrT2Yt6PRs1QqZnCMmScYwrxxDCOBGQdMNEMQsK4KwwonH3mBp3bGq8bJuObOyEIwIcw9jtg7Lwfw0rzEBFEpusSW6C2EeQgeIlIiWA8AOZMGcWZCgWnCBMY5ohf2gu4F2g0i7xM1u5EWiTTYLCzKEmp8jECjmsN9J2U9okF0KQLXGQc4ZgH6SFF6n1aLTBaT2cU6ZoKhCBPEJmHSsZFIWXzFZ5TATWM-hEUZCBCJDivOlREUjui9RmekZu8yPYR2bhc9o+ZrlpLucmEUw4hjO3zp8uZ7s26e1drgJZ-zAgySzMMII3IryczWizf6pozCT3AXPSBUBoGwOLPA7eyKOi2BFFCH+QEezxCYXUv4lgMUOCzg4IYYQiUnygWfOB+Dr59NKc-EKnQByQgYvMRlDCWWTBeoM9KwFslcIsEkJIQA */
   id: "search",
   initial: "bootstrap",
   context: ({ input }) => ({
-    searchOffset: input.initialOffset ?? 0,
-    searchPageSize: input.searchPageSize,
-    facetLimit: input.facetLimit,
-    currentQuery: input.q ?? "",
-    submittedQuery: undefined,
-    searchData: undefined,
-    facetData: undefined,
-    selectedFilters: input.filters ?? {},
-    queryClient: input.queryClient ?? null,
+    searchOffset: input.initialOffset ?? initialContext.searchOffset,
+    searchPageSize: input.searchPageSize ?? initialContext.searchPageSize,
+    facetLimit: input.facetLimit ?? initialContext.facetLimit,
+    currentQuery: input.q ?? initialContext.currentQuery,
+    submittedQuery: initialContext.submittedQuery,
+    searchData: initialContext.searchData,
+    facetData: initialContext.facetData,
+    selectedFilters: input.filters ?? initialContext.selectedFilters,
+    queryClient: input.queryClient ?? initialContext.queryClient,
   }),
   states: {
     bootstrap: {
@@ -24,7 +36,7 @@ export default searchMachineSetup.createMachine({
           actions: ["setQueryClientInContext"],
         },
         SET_SEARCH_STRING: {
-          actions: ["setCurrentQueryInContext", "setSbmittedQueryInContext"],
+          actions: ["setCurrentQueryInContext", "setSubmittedQueryInContext"],
         },
         SET_INITIAL_FILTERS: {
           actions: ["setInitialFiltersInContext"],
@@ -45,7 +57,12 @@ export default searchMachineSetup.createMachine({
         TOGGLE_FILTER: [
           {
             guard: "contextHasSearchString",
-            actions: ["resetSearchData", "toggleFilterInContext", "emitFilterToggled"],
+            actions: [
+              "resetSearchData",
+              "resetOffset",
+              "toggleFilterInContext",
+              "emitFilterToggled",
+            ],
             target: "filteringAndSearching",
           },
           {
@@ -54,17 +71,18 @@ export default searchMachineSetup.createMachine({
         ],
         TYPING: [
           {
-            guard: "eventHasSearchString",
             actions: ["setCurrentQueryInContext"],
-          },
-          {
-            actions: ["emitQDeleted", "resetQuery"],
           },
         ],
         SEARCH: [
           {
             guard: "contextHasSearchString",
-            actions: ["resetSearchData", "resetFilters", "setSbmittedQueryInContext"],
+            actions: [
+              "resetSearchData",
+              "resetFilters",
+              "setSubmittedQueryInContext",
+              "resetOffset",
+            ],
             target: "filteringAndSearching",
           },
           {
@@ -77,11 +95,37 @@ export default searchMachineSetup.createMachine({
           actions: ["setLoadMoreValuesInContext"],
           target: "loadingMoreSearchResults",
         },
+        RESET_BOOTSTRAP_STATE: {
+          target: "bootstrap",
+        },
       },
     },
     filteringAndSearching: {
       type: "parallel",
       initial: "search",
+      on: {
+        TYPING: [
+          {
+            actions: ["setCurrentQueryInContext"],
+          },
+        ],
+        SEARCH: [
+          {
+            guard: "contextHasSearchString",
+            actions: [
+              "resetSearchData",
+              "resetFilters",
+              "resetOffset",
+              "setSubmittedQueryInContext",
+            ],
+            target: "filteringAndSearching",
+          },
+          {
+            actions: ["resetFilters"],
+            target: "idle",
+          },
+        ],
+      },
       states: {
         search: {
           initial: "searching",
@@ -94,6 +138,7 @@ export default searchMachineSetup.createMachine({
                   if (!context.queryClient) {
                     throw new Error("QueryClient is not set in context.")
                   }
+
                   return {
                     q: context.currentQuery,
                     queryClient: context.queryClient,

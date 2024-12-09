@@ -51,6 +51,7 @@ describe.skip("Refresh token test suite", () => {
     })
 
     await testApiHandler({
+      // @ts-ignore
       appHandler: tokenRefreshHandler,
       url: `/?redirect=http://john.johnson.com/john`,
       async test({ fetch }) {
@@ -66,6 +67,7 @@ describe.skip("Refresh token test suite", () => {
     getIronSession.mockResolvedValue(sessionThatShouldBeRefreshed())
 
     await testApiHandler({
+      // @ts-ignore
       appHandler: tokenRefreshHandler,
       url: `/?redirect=http://john.johnson.com/john`,
       async test({ fetch }) {

@@ -16,8 +16,14 @@ const SearchPageLayout = () => {
   const loadMoreRef = useRef(null)
   const isInView = useInView(loadMoreRef)
   const actor = useSearchMachineActor()
-  const { data, isLoadingFacets, isLoadingResults, machineIsReady, searchQuery } =
-    useSearchDataAndLoadingStates()
+  const {
+    data,
+    isLoadingFacets,
+    isLoadingResults,
+    isLoadingMoreResults,
+    machineIsReady,
+    searchQuery,
+  } = useSearchDataAndLoadingStates()
 
   useEffect(() => {
     if (isInView) {
@@ -27,6 +33,10 @@ const SearchPageLayout = () => {
     // because we do not want to add the handleMore callback which changes on every render.
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isInView])
+
+  useEffect(() => {
+    actor.send({ type: "RESET_BOOTSTRAP_STATE" })
+  }, [actor])
 
   const isNoSearchResult = !isLoadingResults && (!data.search || !data.search.pages[0].length)
   const hitCountText = data.search?.hitcount ? `(${data.search.hitcount})` : ""
@@ -75,7 +85,7 @@ const SearchPageLayout = () => {
                     </motion.div>
                   )
               )}
-            {isLoadingResults && <SearchResultsGhost />}
+            {(isLoadingMoreResults || isLoadingResults) && <SearchResultsGhost />}
           </div>
         </>
       ) : (

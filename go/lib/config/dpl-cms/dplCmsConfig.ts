@@ -10,7 +10,7 @@ const queryDplCmsConfig = async (queryClient: QueryClient) => {
     queryKey: useGetDplCmsConfigurationQuery.getKey(),
     queryFn: useGetDplCmsConfigurationQuery.fetcher(),
     // Cache 5 minutes unless invalidated
-    staleTime: 60 * 5,
+    staleTime: 5 * 60 * 1000, // 5 mins
   })
 
   return dplConfiguration ?? null

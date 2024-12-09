@@ -1,141 +1,24 @@
-fragment ManifestationTeaser on Manifestation {
-  ...ManifestationCover
-  ...ManifestationIdentifiers
-}
+# Smaller fragments for specific use cases -------------------------------------
 
 fragment ManifestationCover on Manifestation {
   pid
   materialTypes {
     materialTypeGeneral {
+      display
       code
     }
   }
 }
 
 fragment ManifestationIdentifiers on Manifestation {
+  pid
   identifiers {
     type
     value
   }
 }
 
-fragment Manifestations on Manifestations {
-  all {
-    ...ManifestationsFields
-  }
-  latest {
-    ...ManifestationsFields
-  }
-  bestRepresentation {
-    ...ManifestationsFields
-  }
-}
-
-fragment ManifestationsAccess on Manifestations {
-  all {
-    pid
-    identifiers {
-      type
-      value
-    }
-    access {
-      __typename
-      ... on AccessUrl {
-        origin
-        url
-        loginRequired
-      }
-      ... on InfomediaService {
-        id
-      }
-      ... on InterLibraryLoan {
-        loanIsPossible
-      }
-      ... on Ereol {
-        origin
-        url
-        canAlwaysBeLoaned
-      }
-      ... on DigitalArticleService {
-        issn
-      }
-    }
-  }
-}
-
-fragment ManifestationsFields on Manifestation {
-  pid
-  genreAndForm
-  source
-  # ...WithLanguages
-  titles {
-    main
-    original
-  }
-  fictionNonfiction {
-    display
-    code
-  }
-  materialTypes {
-    materialTypeSpecific {
-      display
-    }
-  }
-  creators {
-    display
-    nameSort
-    __typename
-  }
-  publisher
-  identifiers {
-    value
-  }
-  contributors {
-    display
-    roles {
-      function {
-        singular
-      }
-    }
-  }
-  edition {
-    summary
-    publicationYear {
-      display
-    }
-  }
-  dateFirstEdition {
-    display
-    year
-  }
-  audience {
-    generalAudience
-    ages {
-      display
-    }
-  }
-  notes {
-    display
-  }
-  languages {
-    notes
-  }
-  physicalDescription {
-    summaryFull
-    numberOfPages
-    # playingTime
-  }
-  hostPublication {
-    summary
-  }
-  manifestationParts {
-    parts {
-      title
-    }
-  }
-  accessTypes {
-    code
-  }
+fragment ManifestationAccess on Manifestation {
   access {
     __typename
     ... on AccessUrl {
@@ -158,15 +41,35 @@ fragment ManifestationsFields on Manifestation {
       issn
     }
   }
-  shelfmark {
-    postfix
-    shelfmark
+}
+
+fragment ManifestationTitles on Manifestation {
+  titles {
+    identifyingAddition
+    full
   }
-  workYear {
-    year
+}
+
+fragment ManifestationLanguages on Manifestation {
+  languages {
+    main {
+      display
+      isoCode
+    }
   }
-  catalogueCodes {
-    nationalBibliography
-    otherCatalogues
-  }
+}
+
+# Bigger chunks for specific pages (built from above fragments) ----------------
+
+fragment ManifestationSearchPageTeaser on Manifestation {
+  ...ManifestationIdentifiers
+  ...ManifestationCover
+}
+
+fragment ManifestationWorkPage on Manifestation {
+  ...ManifestationIdentifiers
+  ...ManifestationCover
+  ...ManifestationAccess
+  ...ManifestationTitles
+  ...ManifestationLanguages
 }

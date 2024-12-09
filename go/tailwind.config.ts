@@ -19,6 +19,10 @@ export const extendedTheme = {
   },
   zIndex: {
     "-1": "-1",
+    dialog: "50",
+    drawer: "50",
+    sheet: "50",
+    "slide-select": "10",
   },
   aspectRatio: {
     "1/1": "var(--aspect-1-1)",
@@ -192,6 +196,7 @@ export const extendedTheme = {
       },
       foreground: "var(--foreground)",
       border: "var(--border)",
+      "reader-grey": "var(--reader-grey)",
       content: {
         pink: "var(--content-pink)",
         blue: "var(--content-blue)",
@@ -261,6 +266,11 @@ export const extendedTheme = {
             "accordion-down": "accordion-down 0.2s ease-out",
             "accordion-up": "accordion-up 0.2s ease-out",
           },
+          hyphens: {
+            auto: "auto",
+            manual: "manual",
+            none: "none",
+          },
         },
       },
     },
@@ -324,7 +334,16 @@ const config: Config = {
     "./lib/**/*.{js,ts,jsx,tsx,mdx}",
   ],
   theme: extendedTheme,
-  // eslint-disable-next-line @typescript-eslint/no-require-imports
-  plugins: [require("tailwindcss-animate")],
+  plugins: [
+    // eslint-disable-next-line @typescript-eslint/no-require-imports
+    require("tailwindcss-animate"),
+    function ({ addUtilities }: { addUtilities: ({}) => void }) {
+      addUtilities({
+        ".hyphens-auto": { hyphens: "auto" },
+        ".hyphens-manual": { hyphens: "manual" },
+        ".hyphens-none": { hyphens: "none" },
+      })
+    },
+  ],
 }
 export default config

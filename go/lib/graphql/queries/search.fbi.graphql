@@ -7,7 +7,7 @@ query searchWithPagination(
   search(q: $q, filters: $filters) {
     hitcount
     works(offset: $offset, limit: $limit) {
-      ...WorkTeaser
+      ...WorkTeaserSearchPage
     }
   }
 }
