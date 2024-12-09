@@ -294,8 +294,11 @@ function dpl_event_gin_content_form_routes() : array {
 /**
  * Implements hook_entity_query_TAG_alter().
  *
- * Alter vocabulary queries to hide the vocabulary when the screens feature
- * is disabled.
+ * Deny access to the screen name vocabulary when the feature is disabled.
+ *
+ * This is to totally hide the vocabulary when the feature is disabled.
+ *
+ * hook_entity_query_TAG_alter() is the way to hook into `accessCheck(TRUE)`.
  */
 function dpl_event_entity_query_taxonomy_vocabulary_alter(QueryInterface $query): void {
   if (!\Drupal::config(SettingsForm::CONFIG_NAME)->get('enable_screen_name')) {
