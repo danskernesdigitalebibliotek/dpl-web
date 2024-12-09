@@ -6,7 +6,11 @@ import getQueryClient from "@/lib/getQueryClient"
 
 import { prefetchSearchFacets, prefetchSearchResult } from "./fetchSearchResult.server"
 
-const Page = async ({ searchParams: { q } }: { searchParams: { q: string } }) => {
+const Page = async (props: { searchParams: Promise<{ q: string }> }) => {
+  const searchParams = await props.searchParams
+
+  const { q } = searchParams
+
   const queryClient = getQueryClient()
   await prefetchSearchResult(q, queryClient)
   await prefetchSearchFacets(q, queryClient)
