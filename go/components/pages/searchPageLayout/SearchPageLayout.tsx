@@ -81,7 +81,7 @@ const SearchPageLayout = () => {
                     </motion.div>
                   )
               )}
-            {isLoadingMoreResults && <SearchResultsGhost />}
+            {(isLoadingMoreResults || isLoadingResults) && <SearchResultsGhost />}
           </div>
         </>
       ) : (
