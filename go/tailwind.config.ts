@@ -273,6 +273,9 @@ export const extendedTheme = {
         },
       },
     },
+    transitionDuration: {
+      "dark-mode": "var(--dark-mode-transition)",
+    },
     keyframes: {
       wiggle: {
         "10% 90%": { transform: "rotate(10.0deg)" },
