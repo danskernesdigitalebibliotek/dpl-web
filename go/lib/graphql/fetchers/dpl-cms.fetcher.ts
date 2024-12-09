@@ -1,11 +1,9 @@
-import { getDplCmsGraphqlEndpoint } from "@/lib/helpers/dpl-cms.graphql"
-
 export function fetcher<TData, TVariables>(
   query: string,
   variables?: TVariables,
   options?: RequestInit["headers"]
 ) {
-  const dplCmsGraphqlEndpoint = getDplCmsGraphqlEndpoint()
+  const dplCmsGraphqlEndpoint = process.env.NEXT_PUBLIC_GRAPHQL_SCHEMA_ENDPOINT_DPL_CMS
   const dplCmsGraphqlBasicToken = process.env.NEXT_PUBLIC_GRAPHQL_BASIC_TOKEN_DPL_CMS
 
   if (!dplCmsGraphqlEndpoint || !dplCmsGraphqlBasicToken) {
