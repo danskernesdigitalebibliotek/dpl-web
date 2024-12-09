@@ -200,7 +200,6 @@ hidden:
   body: true
   description: true
   event_relevant_ticket_manager: true
-  event_screen_name: true
   event_state: true
   event_ticket_capacity: true
   field_categories: true

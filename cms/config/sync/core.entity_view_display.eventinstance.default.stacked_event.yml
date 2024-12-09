@@ -84,14 +84,6 @@ content:
     third_party_settings: {  }
     weight: 60
     region: content
-  event_screen_name:
-    type: entity_reference_label
-    label: visible
-    settings:
-      link: true
-    third_party_settings: {  }
-    weight: 60
-    region: content
   event_screen_names:
     type: entity_reference_label
     label: visible
