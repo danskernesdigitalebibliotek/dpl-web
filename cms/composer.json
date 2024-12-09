@@ -102,6 +102,7 @@
         "drupal/antibot": "^2.0",
         "drupal/azure_mailer": "^2.0",
         "drupal/color_field": "^3.0",
+        "drupal/config_filter": "^2.6",
         "drupal/config_ignore": "^3",
         "drupal/config_ignore_auto": "^3",
         "drupal/config_perms": "^2.1",
