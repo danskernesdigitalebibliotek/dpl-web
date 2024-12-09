@@ -52,7 +52,7 @@ export async function getSession(options?: {
   response: NextResponse
 }): Promise<IronSession<TSessionData>> {
   const session = !options
-    ? await getIronSession<TSessionData>(cookies(), sessionOptions)
+    ? await getIronSession<TSessionData>(await cookies(), sessionOptions)
     : await getIronSession<TSessionData>(options.request, options.response, sessionOptions)
   if (!session.isLoggedIn) {
     session.isLoggedIn = false
@@ -68,7 +68,10 @@ export async function getSession(options?: {
   return session
 }
 
-export const setTokensOnSession = (session: IronSession<TSessionData>, tokenSet: TTokenSet) => {
+export const setTokensOnSession = async (
+  session: IronSession<TSessionData>,
+  tokenSet: TTokenSet
+) => {
   session.access_token = tokenSet.access_token
   session.refresh_token = tokenSet.refresh_token
   session.expires = add(new Date(), {
@@ -79,7 +82,9 @@ export const setTokensOnSession = (session: IronSession<TSessionData>, tokenSet:
   })
   // Since we have a limitation in how big cookies can be,
   // we will have to store the user id in a separate cookie.
-  cookies().set("go-session:id_token", tokenSet.id_token)
+  // cookies().set("go-session:id_token", tokenSet.id_token)
+  const cookieStore = await cookies()
+  cookieStore.set("go-session:id_token", tokenSet.id_token)
 }
 
 export const accessTokenShouldBeRefreshed = (session: IronSession<TSessionData>) => {

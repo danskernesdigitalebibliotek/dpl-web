@@ -4,10 +4,12 @@ import React, { useEffect, useState } from "react"
 import { cn } from "@/lib/helpers/helper.cn"
 
 import BadgeButton from "../badge/BadgeButton"
+import Icon from "../icon/Icon"
 
 export type SlideSelectOption = {
   value: string
   render: string
+  icon?: string
 }
 
 export type SlideSelectProps = {
@@ -58,6 +60,7 @@ const SlideSelect = ({ options, initialOption, onOptionSelect }: SlideSelectProp
             }}
             variant="transparent"
             classNames={cn("z-slide-select w-28", selected === index && "text-background")}>
+            {!!option.icon && <Icon className="m-[-7px] h-7 w-7" name={option.icon} />}
             {option.render}
           </BadgeButton>
         )

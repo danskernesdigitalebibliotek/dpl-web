@@ -13,7 +13,7 @@ export async function GET() {
   session.destroy()
 
   // TODO: Distinguish between session types here.
-  const id_token = cookies().get("go-session:id_token")?.value
+  const id_token = (await cookies()).get("go-session:id_token")?.value
   // TODO: Is this where we want to redirect to if id token cannot be resolved?
   if (!id_token) {
     return Response.redirect(appUrl)

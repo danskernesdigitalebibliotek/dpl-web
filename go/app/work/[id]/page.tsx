@@ -5,13 +5,11 @@ import WorkPageLayout from "@/components/pages/workPageLayout/WorkPageLayout"
 import getQueryClient from "@/lib/getQueryClient"
 import { GetMaterialQuery, useGetMaterialQuery } from "@/lib/graphql/generated/fbi/graphql"
 
-type PageProps = {
-  params: {
-    id: string
-  }
-}
+async function Page(props: { params: Promise<{ id: string }> }) {
+  const params = await props.params
 
-async function Page({ params: { id } }: PageProps) {
+  const { id } = params
+
   const queryClient = getQueryClient()
   const decodedWid = decodeURIComponent(id)
 
