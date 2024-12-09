@@ -1,4 +1,4 @@
-import goConfig from "@/lib/config/config"
+import goConfig from "@/lib/config/goConfig"
 import { getRestServiceUrlWithParams } from "@/lib/fetchers/helper"
 
 export const fetcher = async <ResponseType>({

@@ -1,115 +1,73 @@
-fragment SeriesSimple on Series {
-  title
-  isPopular
-  members {
-    numberInSeries
-    work {
-      workId
-      titles {
-        main
-      }
-    }
-  }
-  readThisFirst
-  readThisWhenever
-}
+# Smaller fragments for specific use cases -------------------------------------
 
 fragment WorkAccess on Work {
   workId
   manifestations {
-    ...ManifestationsAccess
+    all {
+      ...ManifestationAccess
+    }
   }
 }
 
-fragment WorkTeaser on Work {
-  workId
-  titles {
-    full
-    original
-  }
-  creators {
-    display
-    __typename
-  }
-  workYear {
-    year
-  }
+fragment WorkMaterialTypes on Work {
   materialTypes {
     materialTypeGeneral {
       display
       code
     }
   }
-  manifestations {
-    all {
-      ...ManifestationTeaser
-    }
-    bestRepresentation {
-      ...ManifestationTeaser
-    }
-  }
 }
 
-fragment WorkFragment on Work {
-  workId
+fragment WorkTitles on Work {
   titles {
     full
     original
   }
-  abstract
+}
+
+fragment WorkCreators on Work {
   creators {
     display
     __typename
   }
-  series {
-    ...SeriesSimple
-  }
+}
+
+fragment WorkPublicationYear on Work {
   workYear {
-    year
+    display
   }
-  genreAndForm
+}
+
+# Bigger chunks for specific pages ---------------------------------------------
+
+fragment WorkTeaserSearchPage on Work {
+  workId
+  ...WorkTitles
+  ...WorkCreators
+  ...WorkMaterialTypes
+  ...WorkPublicationYear
   manifestations {
-    ...Manifestations
-  }
-  materialTypes {
-    materialTypeSpecific {
-      display
-    }
-  }
-  creators {
-    nameSort
-  }
-  mainLanguages {
-    display
-    isoCode
-  }
-  subjects {
     all {
-      display
+      ...ManifestationSearchPageTeaser
     }
-    dbcVerified {
-      display
+    bestRepresentation {
+      ...ManifestationSearchPageTeaser
     }
   }
-  fictionNonfiction {
-    display
-    code
-  }
-  dk5MainEntry {
-    display
-  }
-  relations {
-    hasReview {
-      pid
+}
+
+fragment WorkFullWorkPage on Work {
+  workId
+  ...WorkTitles
+  ...WorkCreators
+  ...WorkMaterialTypes
+  ...WorkPublicationYear
+  manifestations {
+    all {
+      ...ManifestationWorkPage
     }
-    hasAdaptation {
-      ownerWork {
-        workId
-        workTypes
-        titles {
-          main
-        }
-      }
+    bestRepresentation {
+      ...ManifestationWorkPage
     }
   }
 }

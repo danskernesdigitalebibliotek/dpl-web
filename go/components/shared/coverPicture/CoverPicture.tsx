@@ -1,22 +1,28 @@
 import { useWindowSize } from "@uidotdev/usehooks"
 import { motion } from "framer-motion"
 import Image from "next/image"
-import React, { FC, useEffect, useRef, useState } from "react"
+import React, { useEffect, useRef, useState } from "react"
 import Tilt from "react-parallax-tilt"
 
 import { cn } from "@/lib/helpers/helper.cn"
 
 import Icon from "../icon/Icon"
 
-interface Props {
+type CoverPictureProps = {
   lowResSrc: string
   src: string
   className?: string
   alt: string
+  withTilt?: boolean
 }
-export const WorkCardImage: FC<Props> = ({ src, lowResSrc, alt }) => {
+export const CoverPicture = ({
+  src,
+  lowResSrc,
+  alt,
+  withTilt = false,
+  className,
+}: CoverPictureProps) => {
   const size = useWindowSize()
-
   const [imageHeight, setImageHeight] = useState(0)
   const [imageWidth, setImageWidth] = useState(0)
   const imageAspectRatio = imageWidth / imageHeight
@@ -27,22 +33,17 @@ export const WorkCardImage: FC<Props> = ({ src, lowResSrc, alt }) => {
 
   // calculate the max width using image aspect ratio and container width
   const imageWidthByContainerHeight = imageAspectRatio * containerHeight
-  const paddingTop = 100 / imageAspectRatio + "%"
+  const paddingTop = `${100 / imageAspectRatio}%`
 
   useEffect(() => {}, [size.width])
-
   const [imageLoaded, setImageLoaded] = useState(false)
   const [imageError, setImageError] = useState(false)
 
   return (
-    <div className="flex h-full w-full items-center" ref={ref}>
+    <div className={cn("flex h-full w-full items-center", className)} ref={ref}>
       {!imageError && src ? (
-        <Tilt
-          scale={1.05}
-          transitionSpeed={2500}
-          tiltMaxAngleX={10}
-          tiltMaxAngleY={10}
-          tiltReverse={true}
+        <CoverPictureTiltWrapper
+          withTilt={withTilt}
           className={"relative m-auto"}
           style={{ paddingTop, width: `min(100%,${imageWidthByContainerHeight}px)` }}>
           {lowResSrc && (
@@ -87,7 +88,7 @@ export const WorkCardImage: FC<Props> = ({ src, lowResSrc, alt }) => {
               }}
             />
           )}
-        </Tilt>
+        </CoverPictureTiltWrapper>
       ) : (
         <motion.div
           initial={{ opacity: 0 }}
@@ -98,6 +99,35 @@ export const WorkCardImage: FC<Props> = ({ src, lowResSrc, alt }) => {
           <p className="text-center text-typo-caption opacity-50">Billede kunne ikke vises</p>
         </motion.div>
       )}
+    </div>
+  )
+}
+
+const CoverPictureTiltWrapper = ({
+  children,
+  style,
+  className,
+  withTilt,
+}: {
+  children: React.ReactNode
+  style?: React.CSSProperties
+  className?: string
+  withTilt: boolean
+}) => {
+  return withTilt ? (
+    <Tilt
+      scale={1.05}
+      transitionSpeed={2500}
+      tiltMaxAngleX={10}
+      tiltMaxAngleY={10}
+      tiltReverse={true}
+      className={className}
+      style={style}>
+      {children}
+    </Tilt>
+  ) : (
+    <div className={className} style={style}>
+      {children}
     </div>
   )
 }

@@ -1,7 +1,7 @@
 import { QueryClient } from "@tanstack/react-query"
 
 import { getFacetMachineNames } from "@/components/shared/searchFilters/helper"
-import goConfig from "@/lib/config/config"
+import goConfig from "@/lib/config/goConfig"
 import {
   useSearchFacetsQuery,
   useSearchWithPaginationQuery,

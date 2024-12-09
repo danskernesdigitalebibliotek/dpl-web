@@ -1,15 +1,12 @@
 import { ReadonlyURLSearchParams } from "next/navigation"
 import { beforeEach, describe, expect, it, vi } from "vitest"
 
-import {
-  getFacetsForSearchRequest,
-  getSearchQueryArguments,
-} from "@/components/pages/searchPageLayout/helper"
 import { getFacetMachineNames, getFacetTranslation } from "@/components/shared/searchFilters/helper"
-import goConfig from "@/lib/config/config"
+import goConfig from "@/lib/config/goConfig"
 import { FacetFieldEnum } from "@/lib/graphql/generated/fbi/graphql"
+import { correctFacetNames, transformSearchParamsIntoFilters } from "@/lib/machines/search/helpers"
 
-vi.mock(import("@/lib/config/config"), async importOriginal => {
+vi.mock(import("@/lib/config/goConfig"), async importOriginal => {
   const actual = await importOriginal()
   return {
     ...actual,
@@ -62,7 +59,7 @@ describe("Facet functionality", () => {
     ])
   })
 
-  it("getFacetsForSearchRequest should return an object with facet terms grouped by facet machine names", () => {
+  it("transformSearchParamsIntoFilters should return an object with facet terms grouped by facet machine names", () => {
     const searchParams = new URLSearchParams()
     searchParams.append("materialTypesGeneral", "Book")
     searchParams.append("mainLanguages", "Danish")
@@ -81,38 +78,122 @@ describe("Facet functionality", () => {
       subjects: ["Science", "Math"],
     }
 
-    const result = getFacetsForSearchRequest(searchParams as ReadonlyURLSearchParams)
+    const result = transformSearchParamsIntoFilters(searchParams as ReadonlyURLSearchParams)
     expect(result).toStrictEqual(facetFilters)
   })
 
-  it("getSearchQueryArguments should return an object with search query arguments", () => {
-    const facetFilters = {
-      materialTypesGeneral: ["Book"],
-      mainLanguages: ["Danish", "English"],
-      age: ["Adult"],
-      lixRange: ["0-10", "11-20"],
-      subjects: ["Science", "Math"],
-    }
-
-    const result = getSearchQueryArguments({ q: "Harry Potter", currentPage: 0, facetFilters })
-    expect(result).toStrictEqual({
-      q: { all: "Harry Potter" },
-      offset: 0,
-      limit: 9,
-      filters: {
-        branchId: ["11", "22", "33"],
-        materialTypesGeneral: ["Book"],
-        mainLanguages: ["Danish", "English"],
-        age: ["Adult"],
-        lixRange: ["0-10", "11-20"],
-        subjects: ["Science", "Math"],
-      },
-    })
+  it("getFacetTranslation should give a translated facet when given a facet machine name", () => {
+    const translation = getFacetTranslation("lixRange")
+    expect(translation).toBe("Lix")
   })
 
-  it("getFacetTranslation should give a translated facet when given a facet machine name", () => {
-    // @ts-ignore
-    const translation = getFacetTranslation("LIX")
-    expect(translation).toBe("Lix")
+  it("correctFacetNames should translate the facet names to input filter valid names", () => {
+    const facets = [
+      {
+        name: "materialTypesGeneral",
+        values: [
+          {
+            key: "podcasts",
+            term: "podcasts",
+            score: 179,
+          },
+        ],
+      },
+      {
+        name: "mainLanguages",
+        values: [
+          {
+            key: "dan",
+            term: "Dansk",
+            score: 238,
+          },
+        ],
+      },
+      {
+        name: "age",
+        values: [
+          {
+            key: "for 10 år",
+            term: "for 10 år",
+            score: 25,
+          },
+        ],
+      },
+      {
+        name: "lix",
+        values: [
+          {
+            key: "22",
+            term: "22",
+            score: 2,
+          },
+        ],
+      },
+      {
+        name: "subjects",
+        values: [
+          {
+            key: "magi",
+            term: "magi",
+            score: 192,
+          },
+        ],
+      },
+    ]
+
+    const result = correctFacetNames(facets)
+
+    expect(result).toStrictEqual([
+      {
+        name: "materialTypesGeneral",
+        values: [
+          {
+            key: "podcasts",
+            term: "podcasts",
+            score: 179,
+          },
+        ],
+      },
+      {
+        name: "mainLanguages",
+        values: [
+          {
+            key: "dan",
+            term: "Dansk",
+            score: 238,
+          },
+        ],
+      },
+      {
+        name: "age",
+        values: [
+          {
+            key: "for 10 år",
+            term: "for 10 år",
+            score: 25,
+          },
+        ],
+      },
+      {
+        name: "lixRange",
+        values: [
+          {
+            key: "22",
+            term: "22",
+            score: 2,
+          },
+        ],
+      },
+      {
+        name: "subjects",
+        values: [
+          {
+            key: "magi",
+            term: "magi",
+            score: 192,
+          },
+        ],
+      },
+    ])
   })
 })

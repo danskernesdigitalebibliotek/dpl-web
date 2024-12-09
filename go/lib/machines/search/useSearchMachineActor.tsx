@@ -7,17 +7,19 @@ import { useSearchParams } from "next/navigation"
 import { useEffect, useRef, useState } from "react"
 import { AnyEventObject, createActor } from "xstate"
 
-import { getFacetsForSearchRequest } from "@/components/pages/searchPageLayout/helper"
-import goConfig from "@/lib/config/config"
+import goConfig from "@/lib/config/goConfig"
 
+import { transformSearchParamsIntoFilters } from "./helpers"
 import searchMachine from "./search.machine"
 
 const searchActor = createActor(searchMachine, {
   input: {
-    initialOffset: goConfig<number>("search.offset.initial"),
-    searchPageSize: goConfig<number>("search.item.limit"),
-    facetLimit: goConfig<number>("search.facet.limit"),
+    initialOffset: goConfig("search.offset.initial"),
+    searchPageSize: goConfig("search.item.limit"),
+    facetLimit: goConfig("search.facet.limit"),
   },
+  // Uncomment this line to enable event debugging.
+  // inspect: debugEvents,
 }).start()
 
 // Administer search query params when filters are toggled.
@@ -34,28 +36,6 @@ searchActor.on("filterToggled", (emittedEvent: AnyEventObject) => {
   }
 
   window.history.pushState({}, "", url.href)
-})
-
-// Make sure the search query is removed from the URL when the search is cleared.
-// And the same goes for facets.
-searchActor.on("qDeleted", () => {
-  let urlShouldBeUpdated = false
-
-  const url = new URL(window.location.href)
-  if (url.searchParams.get("q")) {
-    url.searchParams.delete("q")
-    urlShouldBeUpdated = true
-  }
-
-  const facets = getFacetsForSearchRequest(url.searchParams as ReadonlyURLSearchParams)
-  for (const filter in facets) {
-    url.searchParams.delete(filter)
-    urlShouldBeUpdated = true
-  }
-
-  if (urlShouldBeUpdated) {
-    window.history.pushState({}, "", url.href)
-  }
 })
 
 /**
@@ -82,7 +62,7 @@ const useSearchMachineActor = () => {
     }
 
     const q = searchParams.get("q")
-    const filters = getFacetsForSearchRequest(searchParams as ReadonlyURLSearchParams)
+    const filters = transformSearchParamsIntoFilters(searchParams as ReadonlyURLSearchParams)
 
     if (!_.isEmpty(filters)) {
       actor.send({ type: "SET_INITIAL_FILTERS", filters })
