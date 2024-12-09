@@ -16,6 +16,7 @@ dependencies:
     - field.field.eventinstance.default.field_event_state
     - field.field.eventinstance.default.field_event_title
     - field.field.eventinstance.default.field_external_admin_link
+    - field.field.eventinstance.default.field_screen_names
     - field.field.eventinstance.default.field_tags
     - field.field.eventinstance.default.field_teaser_image
     - field.field.eventinstance.default.field_teaser_text
@@ -51,6 +52,14 @@ content:
       format: default
       format_custom_false: ''
       format_custom_true: ''
+    third_party_settings: {  }
+    weight: 60
+    region: content
+  event_screen_names:
+    type: entity_reference_label
+    label: visible
+    settings:
+      link: true
     third_party_settings: {  }
     weight: 60
     region: content
@@ -108,6 +117,7 @@ hidden:
   field_event_state: true
   field_event_title: true
   field_external_admin_link: true
+  field_screen_names: true
   field_tags: true
   field_teaser_image: true
   field_ticket_capacity: true

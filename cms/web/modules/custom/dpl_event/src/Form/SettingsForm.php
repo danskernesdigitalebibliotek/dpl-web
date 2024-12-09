@@ -108,6 +108,13 @@ final class SettingsForm extends ConfigFormBase {
       '#description' => $this->t('How much time should pass after an event has occurred before it should be unpublished automatically.', [], ['context' => "DPL event"]),
     ];
 
+    $form['enable_screen_name'] = [
+      '#type' => 'checkbox',
+      '#title' => $this->t('Enable screen names'),
+      '#default_value' => $config->get('enable_screen_name'),
+      '#description' => $this->t('Enable screen names on events. Requires an external system to actually fetch and display the events on real physical screens.'),
+    ];
+
     return parent::buildForm($form, $form_state);
   }
 
@@ -118,6 +125,7 @@ final class SettingsForm extends ConfigFormBase {
     $this->config(self::CONFIG_NAME)
       ->set('price_currency', $form_state->getValue('price_currency'))
       ->set('unpublish_schedule', $form_state->getValue('unpublish_schedule'))
+      ->set('enable_screen_name', $form_state->getValue('enable_screen_name'))
       ->save();
     parent::submitForm($form, $form_state);
 

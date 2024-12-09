@@ -15,6 +15,7 @@ dependencies:
     - field.field.eventseries.default.field_event_place
     - field.field.eventseries.default.field_event_state
     - field.field.eventseries.default.field_relevant_ticket_manager
+    - field.field.eventseries.default.field_screen_names
     - field.field.eventseries.default.field_tags
     - field.field.eventseries.default.field_teaser_image
     - field.field.eventseries.default.field_teaser_text
@@ -80,6 +81,7 @@ hidden:
   field_event_place: true
   field_event_state: true
   field_relevant_ticket_manager: true
+  field_screen_names: true
   field_tags: true
   field_ticket_capacity: true
   field_ticket_categories: true
