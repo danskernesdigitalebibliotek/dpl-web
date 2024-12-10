@@ -109,6 +109,10 @@ function dpl_update_install(): string {
   // $messages[] = dpl_update_update_10025()
   $messages[] = dpl_update_update_10026();
   $messages[] = dpl_update_update_10027();
+  $messages[] = dpl_update_update_10028();
+  $messages[] = dpl_update_update_10029();
+  $messages[] = dpl_update_update_10030();
+
   return implode('\r\n', $messages);
 }
 
@@ -332,4 +336,19 @@ function dpl_update_update_10028(): string {
  */
 function dpl_update_update_10029(): string {
   return _dpl_update_install_modules(['dpl_logging']);
+}
+
+/**
+ * Add initial translation for event display.
+ */
+function dpl_update_update_10030(): string {
+  $return = _dpl_update_update_translation('Expired', 'Afholdt', 'DPL event');
+
+  $return .= _dpl_update_update_translation(
+    'Date',
+    'Dato',
+    'DPL event'
+  );
+
+  return $return;
 }

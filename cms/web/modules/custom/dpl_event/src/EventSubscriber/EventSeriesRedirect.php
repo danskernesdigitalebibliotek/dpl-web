@@ -2,6 +2,8 @@
 
 namespace Drupal\dpl_event\EventSubscriber;
 
+use Drupal\Core\Entity\EntityTypeManagerInterface;
+use Drupal\dpl_event\ReoccurringDateFormatter;
 use Drupal\recurring_events\Entity\EventInstance;
 use Drupal\recurring_events\Entity\EventSeries;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
@@ -19,6 +21,14 @@ class EventSeriesRedirect implements EventSubscriberInterface {
   /**
    * {@inheritdoc}
    */
+  public function __construct(
+    private EntityTypeManagerInterface $entityTypeManager,
+    private ReoccurringDateFormatter $reoccurringDateFormatter,
+  ) {}
+
+  /**
+   * {@inheritdoc}
+   */
   public static function getSubscribedEvents(): array {
     return [
       KernelEvents::REQUEST => 'checkEventSeriesRedirect',
@@ -26,9 +36,7 @@ class EventSeriesRedirect implements EventSubscriberInterface {
   }
 
   /**
-   * Redirects the visit to an event series to the event instance if there is.
-   *
-   * Only one instance.
+   * Redirects the visit to an event series to the event instance if only 1.
    *
    * This is necessary because if a user visits an event series page, but there
    * is only one instance in the series, they should be redirected to the event
@@ -42,15 +50,25 @@ class EventSeriesRedirect implements EventSubscriberInterface {
 
     $request = $event->getRequest();
     $route_name = $request->attributes->get('_route');
-    $eventSeries = $request->attributes->get('eventseries');
+    $event_series = $request->attributes->get('eventseries');
 
-    if ($route_name !== 'entity.eventseries.canonical' || !$eventSeries instanceof EventSeries || $eventSeries->getInstanceCount() > 1) {
+    if ($route_name !== 'entity.eventseries.canonical' || !$event_series instanceof EventSeries) {
       return;
     }
 
-    $eventInstances = $eventSeries->get('event_instances')->referencedEntities();
-    if (count($eventInstances) === 1 && $eventInstances[0] instanceof EventInstance) {
-      $response = new RedirectResponse($eventInstances[0]->toUrl()->toString());
+    $upcoming_ids = $this->reoccurringDateFormatter->getUpcomingEventIds($event_series);
+
+    // Only redirect, if we can find a single eventinstance - otherwise, we
+    // want to stay on the series display.
+    if (count($upcoming_ids) != 1) {
+      return;
+    }
+
+    $event_instance_id = reset($upcoming_ids);
+    $event_instance = $this->entityTypeManager->getStorage('eventinstance')->load($event_instance_id);
+
+    if ($event_instance instanceof EventInstance) {
+      $response = new RedirectResponse($event_instance->toUrl()->toString());
       $event->setResponse($response);
     }
   }

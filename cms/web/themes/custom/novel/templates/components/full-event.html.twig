@@ -5,7 +5,7 @@
       title: label,
       teaser_text: teaser_text,
       categories: categories,
-      date: date,
+      date: expired ? 'Expired'|t({}, {'context': 'DPL event'}) : date,
       media: image.0,
       baseIconPath: baseIconPath,
       cta: cta
