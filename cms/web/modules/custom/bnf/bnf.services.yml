@@ -1,0 +1,12 @@
+---
+services:
+  bnf.importer:
+    class: Drupal\bnf\Services\BnfImporter
+    arguments:
+      - '@entity_type.manager'
+      - '@string_translation'
+      - '@logger.channel.bnf'
+  logger.channel.bnf:
+    parent: logger.channel_base
+    arguments:
+      - 'bnf'
