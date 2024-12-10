@@ -2,6 +2,4 @@ name: 'BNF Common'
 type: module
 description: 'Common code between BNF (Bibliotekernes Nationale Formidling) client and server modules'
 package: 'DPL - BNF'
-# It doesn't make sense to enable this module on its own.
-hidden: true
 core_version_requirement: ^10
