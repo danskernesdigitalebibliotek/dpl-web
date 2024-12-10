@@ -1,2 +1,4 @@
-unpublish_schedule: 0
+unpublish_schedule: '21600'
 price_currency: DKK
+unpublish_enable: 1
+unpublish_series_enable: 0
