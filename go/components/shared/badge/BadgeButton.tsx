@@ -25,14 +25,14 @@ const BadgeButton = ({
     <button
       onClick={onClick}
       className={cn(
-        `focus-visible flex h-[28px] w-auto flex-row gap-2 self-start whitespace-nowrap rounded-full
-        bg-background-overlay px-4 py-2 text-typo-caption`,
+        `focus-visible flex h-[28px] w-auto flex-row justify-center gap-2 self-start whitespace-nowrap
+        rounded-full bg-background-overlay px-4 py-2 text-typo-caption`,
         withAnimation ? "hover:animate-wiggle" : "",
         variant === "transparent" ? "bg-transparent" : "",
         isActive ? "bg-foreground text-background" : "",
-        classNames,
-        ariaLabel
-      )}>
+        classNames
+      )}
+      aria-label={ariaLabel}>
       {children}
     </button>
   )
