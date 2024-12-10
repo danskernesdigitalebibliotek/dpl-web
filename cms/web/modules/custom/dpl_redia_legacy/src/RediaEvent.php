@@ -5,10 +5,9 @@ namespace Drupal\dpl_redia_legacy;
 use Drupal\Core\Controller\ControllerBase;
 use Drupal\Core\Datetime\DrupalDateTime;
 use Drupal\Core\Field\FieldItemListInterface;
-use Drupal\dpl_event\EventWrapper;
+use Drupal\dpl_event\Entity\EventInstance;
 use Drupal\dpl_event\PriceFormatter;
 use Drupal\node\NodeInterface;
-use Drupal\recurring_events\Entity\EventInstance;
 
 /**
  * An event object, containing the properties the RSS feed needs.
@@ -41,11 +40,9 @@ class RediaEvent extends ControllerBase {
   public string $promoted;
 
   public function __construct(EventInstance $event_instance, PriceFormatter $price_formatter) {
-    $event_wrapper = new EventWrapper($event_instance);
-
-    $branch = $event_wrapper->getBranches()[0] ?? NULL;
-    $start_date = $event_wrapper->getStartDate();
-    $end_date = $event_wrapper->getEndDate();
+    $branch = $event_instance->getBranches()[0] ?? NULL;
+    $start_date = $event_instance->getStartDate();
+    $end_date = $event_instance->getEndDate();
 
     $changed_date = DrupalDateTime::createFromFormat('U', strval($event_instance->getChangedTime()));
 
@@ -57,11 +54,11 @@ class RediaEvent extends ControllerBase {
     }
 
     $this->title = $event_instance->label();
-    $this->description = $event_wrapper->getDescription();
+    $this->description = $event_instance->getDescription();
     $this->author = $event_instance->getOwner()->get('field_author_name')->getString();
     $this->id = $event_instance->id();
     $this->date = $changed_date->format('r');
-    $this->subtitle = $event_wrapper->getField('event_description')?->getString();
+    $this->subtitle = $event_instance->getField('event_description')?->getString();
     $this->startTime = $start_date->format('U');
     $this->endTime = $end_date->format('U');
     $this->media = NULL;
@@ -73,10 +70,10 @@ class RediaEvent extends ControllerBase {
     }
 
     $this->branch = $branch;
-    $this->bookingUrl = $event_wrapper->getLink();
+    $this->bookingUrl = $event_instance->getLink();
 
-    if (!$event_wrapper->isFreeToAttend()) {
-      $prices = $event_wrapper->getTicketPrices();
+    if (!$event_instance->isFreeToAttend()) {
+      $prices = $event_instance->getTicketPrices();
       $this->prices = $price_formatter->formatRawPriceRange($prices);
     }
     else {

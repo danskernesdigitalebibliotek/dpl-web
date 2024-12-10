@@ -40,10 +40,10 @@
             "type": "package",
             "package": {
                 "name": "danskernesdigitalebibliotek/dpl-react",
-                "version": "0.0.0-dev",
+                "version": "2024.49.0",
                 "type": "drupal-library",
                 "dist": {
-                    "url": "https://github.com/danskernesdigitalebibliotek/dpl-react/releases/download/branch-develop/dist-develop.zip",
+                    "url": "https://github.com/danskernesdigitalebibliotek/dpl-react/releases/download/2024.49.0/dist-2024-49-0-ccdcf6397ae7b1acd328c0cdd5688c2d7bbf1bd4.zip",
                     "type": "zip"
                 },
                 "require": {
@@ -56,9 +56,9 @@
             "package": {
                 "name": "danskernesdigitalebibliotek/dpl-design-system",
                 "type": "drupal-library",
-                "version": "0.0.0-dev",
+                "version": "2024.49.0",
                 "dist": {
-                    "url": "https://github.com/danskernesdigitalebibliotek/dpl-design-system/releases/download/branch-develop/dist-develop.zip",
+                    "url": "https://github.com/danskernesdigitalebibliotek/dpl-design-system/releases/download/2024.49.0/dist-2024-49-0-6c2891c7ad8ebebab5a41646dc217693f0b49284.zip",
                     "type": "zip"
                 }
             }
@@ -90,8 +90,8 @@
         "composer/installers": "1.12.0",
         "cweagans/composer-patches": "1.7.3",
         "danskernesdigitalebibliotek/cms-api": "*",
-        "danskernesdigitalebibliotek/dpl-design-system": "0.0.0-dev",
-        "danskernesdigitalebibliotek/dpl-react": "0.0.0-dev",
+        "danskernesdigitalebibliotek/dpl-design-system": "2024.49.0",
+        "danskernesdigitalebibliotek/dpl-react": "2024.49.0",
         "danskernesdigitalebibliotek/fbs-client": "*",
         "dealerdirect/phpcodesniffer-composer-installer": "^1.0.0",
         "deoliveiralucas/array-keys-case-transform": "^1.1",
@@ -102,6 +102,7 @@
         "drupal/antibot": "^2.0",
         "drupal/azure_mailer": "^2.0",
         "drupal/color_field": "^3.0",
+        "drupal/config_filter": "^2.6",
         "drupal/config_ignore": "^3",
         "drupal/config_ignore_auto": "^3",
         "drupal/config_perms": "^2.1",
@@ -225,7 +226,7 @@
     "scripts": {
         "post-drupal-scaffold-cmd": [
             "[ ! -d web/sites/default/files/modules_local ] && mkdir -p web/sites/default/files/modules_local || exit 0",
-            "[ ! -L web/modules/local ] && ln -s web/sites/default/files/modules_local web/modules/local || exit 0"
+            "[ ! -L web/modules/local ] && ln -s ../sites/default/files/modules_local web/modules/local || exit 0"
         ]
     },
     "extra": {
@@ -302,7 +303,8 @@
                 "3035578: Add details for AJAX response errors": "https://www.drupal.org/files/issues/2023-07-24/3035578-26.patch",
                 "3293926: Error decorating non-existent service when inner service's module not installed": "https://git.drupalcode.org/project/drupal/-/commit/a64662a3cea209c106b888ce9ef03cc1808f9ffe.patch",
                 "Always assume chmod succeeds": "patches/core-chmod-true.patch",
-                "Debug Form triggering element detection": "patches/form-triggering-element-detection-paragraphs-ee.patch"
+                "Debug Form triggering element detection": "patches/form-triggering-element-detection-paragraphs-ee.patch",
+                "Don't check for file owner in update": "patches/dont-check-fileowner.patch"
             },
             "drupal/date_range_formatter": {
                 "3309324: Fails when start and end date are identical": "https://www.drupal.org/files/issues/2023-12-22/date_range_formatter_3309324_1.patch"
@@ -324,11 +326,6 @@
             },
             "drupal/field_inheritance": {
                 "3454350: Create seperate permission for adding field inheritance": "https://www.drupal.org/files/issues/2024-06-13/field_inheritance_permission.patch"
-            },
-            "drupal/focal_point": {
-                "3462165 (1/3): Preview results in Error: Call to a member function getDefinitions() on null": "https://git.drupalcode.org/project/focal_point/-/commit/e9803fdb1f74fecf4972120518f87a4e260ccf9e.patch",
-                "3462165 (2/3): Preview results in Error: Call to a member function getDefinitions() on null": "https://git.drupalcode.org/project/focal_point/-/commit/7d1c3bba96560d96a6ec5a9834d091eebcb7b9b5.patch",
-                "3462165 (3/3): Preview results in Error: Call to a member function getDefinitions() on null": "https://git.drupalcode.org/project/focal_point/-/commit/72d7a23c5251c2313557fe1f6d01263ddc729963.patch"
             },
             "drupal/job_scheduler": {
                 "3426366: Callables as worker callbacks": "https://git.drupalcode.org/project/job_scheduler/-/commit/da200da280c4c95e6e91f2416581ad3797ab1428.patch"

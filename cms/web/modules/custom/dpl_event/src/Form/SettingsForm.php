@@ -72,6 +72,13 @@ final class SettingsForm extends ConfigFormBase {
       ],
     ];
 
+    $form['enable_screen_name'] = [
+      '#type' => 'checkbox',
+      '#title' => $this->t('Enable screen names'),
+      '#default_value' => $config->get('enable_screen_name'),
+      '#description' => $this->t('Enable screen names on events. Requires an external system to actually fetch and display the events on real physical screens.'),
+    ];
+
     $form['unpublish'] = [
       '#type' => 'fieldset',
       '#title' => $this->t('Automatic unpublication', [], ['context' => 'DPL event']),
@@ -174,6 +181,7 @@ final class SettingsForm extends ConfigFormBase {
       ->set('unpublish_enable', $form_state->getValue('unpublish_enable'))
       ->set('unpublish_schedule', $form_state->getValue('unpublish_schedule'))
       ->set('unpublish_series_enable', $form_state->getValue('unpublish_series_enable'))
+      ->set('enable_screen_name', $form_state->getValue('enable_screen_name'))
       ->save();
     parent::submitForm($form, $form_state);
 

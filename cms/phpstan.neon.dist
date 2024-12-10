@@ -26,6 +26,8 @@ parameters:
     - '#Function .*_theme_suggestions_.*\(\) has parameter .* with no value type specified in iterable type array\.#'
     # Drupal hook_page_attachments functions uses page array which we cannot provide more detailed typing of.
     - '#Function .*_page_attachments\(\) has parameter \$page with no value type specified in iterable type array\.#'
+    # Drupal hook_module_implements_alter functions uses implementations array which we cannot provide more detailed typing of.
+    - '#Function .*_module_implements_alter\(\) has parameter \$implementations with no value type specified in iterable type array\.#'
     # Drupal hook_requirements() implementation returns array which we cannot provide more detailed typing of.
     - '#Function .*_requirements\(\) return type has no value type specified in iterable type array\.#'
     # Drupal hook_schema() implementation returns array which we cannot provide more detailed typing of.

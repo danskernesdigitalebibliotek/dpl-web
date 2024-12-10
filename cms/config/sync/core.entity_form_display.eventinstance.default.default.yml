@@ -15,6 +15,7 @@ dependencies:
     - field.field.eventinstance.default.field_event_state
     - field.field.eventinstance.default.field_event_title
     - field.field.eventinstance.default.field_external_admin_link
+    - field.field.eventinstance.default.field_screen_names
     - field.field.eventinstance.default.field_tags
     - field.field.eventinstance.default.field_teaser_image
     - field.field.eventinstance.default.field_teaser_text
@@ -78,6 +79,22 @@ third_party_settings:
       region: content
       parent_name: ''
       weight: 12
+      format_type: details_sidebar
+      format_settings:
+        classes: ''
+        show_empty_fields: false
+        id: ''
+        open: true
+        description: ''
+        required_fields: true
+        weight: 0
+    group_infoscreen:
+      children:
+        - field_screen_names
+      label: Infoscreen
+      region: content
+      parent_name: ''
+      weight: 15
       format_type: details_sidebar
       format_settings:
         classes: ''
@@ -219,13 +236,23 @@ content:
       placeholder_url: ''
       placeholder_title: ''
     third_party_settings: {  }
-  field_tags:
+  field_screen_names:
     type: select2_entity_reference
     weight: 7
     region: content
     settings:
       width: 100%
       autocomplete: false
+      match_operator: CONTAINS
+      match_limit: 10
+    third_party_settings: {  }
+  field_tags:
+    type: select2_entity_reference
+    weight: 6
+    region: content
+    settings:
+      width: 100%
+      autocomplete: true
       match_operator: CONTAINS
       match_limit: 10
     third_party_settings: {  }
@@ -283,7 +310,7 @@ content:
           dialog_style: tiles
   path:
     type: path
-    weight: 15
+    weight: 16
     region: content
     settings: {  }
     third_party_settings: {  }
