@@ -5562,26 +5562,26 @@
         },
         {
             "name": "drupal/language_neutral_aliases",
-            "version": "3.1.1",
+            "version": "3.2.0",
             "source": {
                 "type": "git",
                 "url": "https://git.drupalcode.org/project/language_neutral_aliases.git",
-                "reference": "3.1.1"
+                "reference": "3.2.0"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://ftp.drupal.org/files/projects/language_neutral_aliases-3.1.1.zip",
-                "reference": "3.1.1",
-                "shasum": "41af20fd8b468d43fcfcebf6e7087f213ba09141"
+                "url": "https://ftp.drupal.org/files/projects/language_neutral_aliases-3.2.0.zip",
+                "reference": "3.2.0",
+                "shasum": "ab0eab68a6efd5329700fd6735eca39db2f707ee"
             },
             "require": {
-                "drupal/core": "^8.8 || ^9 || ^10"
+                "drupal/core": "^8.8 || ^9 || ^10 || ^11"
             },
             "type": "drupal-module",
             "extra": {
                 "drupal": {
-                    "version": "3.1.1",
-                    "datestamp": "1700598474",
+                    "version": "3.2.0",
+                    "datestamp": "1729507726",
                     "security-coverage": {
                         "status": "covered",
                         "message": "Covered by Drupal's security advisory policy"
@@ -5594,7 +5594,7 @@
             ],
             "authors": [
                 {
-                    "name": "Xen",
+                    "name": "xen",
                     "homepage": "https://www.drupal.org/user/91385"
                 }
             ],
