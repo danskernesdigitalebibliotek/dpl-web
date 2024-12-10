@@ -8,15 +8,29 @@
 use Drupal\Core\Datetime\DrupalDateTime;
 use Drupal\Core\Entity\EntityInterface;
 use Drupal\Core\Entity\FieldableEntityInterface;
+use Drupal\Core\Entity\Query\QueryInterface;
+use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\Url;
+use Drupal\dpl_event\Entity\EventInstance;
 use Drupal\dpl_event\EventState;
-use Drupal\dpl_event\EventWrapper;
+use Drupal\dpl_event\Form\SettingsForm;
+use Drupal\dpl_event\ReoccurringDateFormatter;
 use Drupal\dpl_event\Workflows\OccurredSchedule;
 use Drupal\dpl_event\Workflows\UnpublishSchedule;
 use Drupal\drupal_typed\DrupalTyped;
-use Drupal\recurring_events\Entity\EventInstance;
 use Drupal\recurring_events\Entity\EventSeries;
-use Safe\DateTime;
+
+/**
+ * Implements hook_entity_bundle_info_alter().
+ *
+ * @param mixed[] $bundles
+ *   Bundle info for altering.
+ */
+function dpl_event_entity_bundle_info_alter(array &$bundles): void {
+  if (isset($bundles['eventinstance']['default'])) {
+    $bundles['eventinstance']['default']['class'] = EventInstance::class;
+  }
+}
 
 /**
  * Implements hook_cron_job_scheduler_info().
@@ -43,7 +57,7 @@ function dpl_event_eventinstance_insert(EntityInterface $entity): void {
     return;
   }
 
-  (new EventWrapper($entity))->isActive() && $occurred_schedule->scheduleOccurred($entity);
+  $entity->isActive() && $occurred_schedule->scheduleOccurred($entity);
   $unpublish_schedule->scheduleUnpublication($entity);
 }
 
@@ -56,15 +70,15 @@ function dpl_event_eventinstance_update(EntityInterface $entity): void {
   if (!$entity instanceof EventInstance) {
     return;
   }
-  $updated_event = new EventWrapper($entity);
+
   if (isset($entity->original) && $entity->original instanceof EventInstance) {
     // If there are no changes to the date then skip updating schedules.
-    if ($updated_event->hasSameDate($entity->original)) {
+    if ($entity->hasSameDate($entity->original)) {
       return;
     }
   }
 
-  $updated_event->isActive() && $occurred_schedule->scheduleOccurred($entity);
+  $entity->isActive() && $occurred_schedule->scheduleOccurred($entity);
   $unpublish_schedule->scheduleUnpublication($entity);
 }
 
@@ -92,8 +106,7 @@ function dpl_event_preprocess_field(array &$variables): void {
     return;
   }
 
-  $event_wrapper = new EventWrapper($entity);
-  $event_state = $event_wrapper->getState();
+  $event_state = $entity->getState();
 
   // Check if the event state is valid. If not, return early.
   if (!($event_state instanceof EventState)) {
@@ -182,30 +195,23 @@ function dpl_event_preprocess_eventseries(array &$variables): void {
     return;
   }
 
-  $variables['formatted_date'] =
-    \Drupal::service('dpl_event.reoccurring_date_formatter')
-      ->getSeriesDateString($event_series);
+  $service = DrupalTyped::service(ReoccurringDateFormatter::class, 'dpl_event.reoccurring_date_formatter');
+  $upcoming_ids = $service->getUpcomingEventIds($event_series);
 
-  if ($event_series->getInstanceCount() < 2) {
+  $variables['formatted_date'] = $service->getSeriesDateString($event_series);
+
+  if (count($upcoming_ids) < 2) {
     return;
   }
 
-  // Load event instances & filter out past events.
-  $eventinstances_in_series = $event_series->get('event_instances')->referencedEntities();
-  $current_date = (new DateTime())->setTime(0, 0, 0);
-
-  $eventinstances_in_series_filtered = array_filter($eventinstances_in_series, function ($eventInstance) use ($current_date) {
-    $event_start_date = new DateTime($eventInstance->get('date')->start_date);
-    return $event_start_date >= $current_date;
-  });
-
-  $eventinstances_in_series_filtered = array_values($eventinstances_in_series_filtered);
-
+  $instance_storage = \Drupal::entityTypeManager()->getStorage('eventinstance');
+  $event_instances = $instance_storage->loadMultiple($upcoming_ids);
   $viewBuilder = \Drupal::entityTypeManager()->getViewBuilder('eventinstance');
   $variables['event_instances'] = [];
-  foreach ($eventinstances_in_series_filtered as $index => $eventInstance) {
-    $viewMode = $index === 0 ? 'list_teaser_stacked_parent' : 'stacked_event';
-    $renderable_instance = $viewBuilder->view($eventInstance, $viewMode);
+
+  foreach ($event_instances as $index => $event_instance) {
+    $view_mode = $index === 0 ? 'list_teaser_stacked_parent' : 'stacked_event';
+    $renderable_instance = $viewBuilder->view($event_instance, $view_mode);
     $variables['event_instances'][] = $renderable_instance;
   }
 
@@ -266,6 +272,7 @@ function dpl_event_preprocess_eventinstance(array &$variables): void {
       $variables['datetime_attribute'] = $date_formatter->format($start_time->getTimestamp(), DATE_ATOM);
     }
     if ($end_time instanceof DrupalDateTime) {
+      $variables['expired'] = ($end_time->getTimestamp() < \Drupal::time()->getCurrentTime());
       $variables['end_time'] = $date_formatter->format($end_time->getTimestamp(), 'custom', 'H:i');
     }
   }
@@ -286,4 +293,54 @@ function dpl_event_gin_content_form_routes() : array {
     'entity.eventseries.add_instance_form',
     'entity.eventinstance.edit_form',
   ];
+}
+
+/**
+ * Implements hook_entity_query_TAG_alter().
+ *
+ * Deny access to the screen name vocabulary when the feature is disabled.
+ *
+ * This is to totally hide the vocabulary when the feature is disabled.
+ *
+ * hook_entity_query_TAG_alter() is the way to hook into `accessCheck(TRUE)`.
+ */
+function dpl_event_entity_query_taxonomy_vocabulary_alter(QueryInterface $query): void {
+  if (!\Drupal::config(SettingsForm::CONFIG_NAME)->get('enable_screen_name')) {
+    $query->condition('vid', 'screen_name', '<>');
+  }
+}
+
+/**
+ * Implements hook_form_alter().
+ *
+ * Alter event forms to hide screen names when the feature is disabled.
+ */
+function dpl_event_form_alter(array &$form, FormStateInterface $form_state, string $form_id): void {
+  $forms = [
+    'eventseries_default_edit_form',
+    'eventseries_default_add_form',
+    'eventinstance_default_edit_form',
+    'eventinstance_default_add_form',
+  ];
+  if (!in_array($form_id, $forms)) {
+    return;
+  }
+
+  if (!isset($form['field_screen_names'])) {
+    return;
+  }
+
+  // Undo select2s adding of help text.
+  if (isset($form['field_screen_names']['widget']['#description']) &&
+      is_array($form['field_screen_names']['widget']['#description']) &&
+      is_array($form['field_screen_names']['widget']['#description']['#items'])) {
+    $form['field_screen_names']['widget']['#description'] =
+      $form['field_screen_names']['widget']['#description']['#items'][0];
+  }
+
+  if (\Drupal::config(SettingsForm::CONFIG_NAME)->get('enable_screen_name')) {
+    return;
+  }
+
+  $form['field_screen_names']['#access'] = FALSE;
 }
