@@ -1,0 +1,2 @@
+bnf client export nodes:
+  title: 'Can export nodes to BNF'

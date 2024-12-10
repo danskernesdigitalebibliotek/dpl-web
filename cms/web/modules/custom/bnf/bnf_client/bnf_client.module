@@ -1,0 +1,88 @@
+<?php
+
+use Drupal\bnf\Services\BnfImporter;
+use Drupal\bnf_client\Services\BnfExporter;
+use Drupal\Core\Form\FormStateInterface;
+use Drupal\drupal_typed\DrupalTyped;
+
+/**
+ * Implements hook_form_FORM_ID_alter().
+ *
+ * Altering the node form, and adding an option to export the node to BNF.
+ * If checked, a custom form submit handler will take care of the rest.
+ *
+ * @see bnf_client_form_node_form_submit()
+ */
+function bnf_client_form_node_form_alter(array &$form, FormStateInterface $form_state, string $form_id): void {
+  $current_user = \Drupal::currentUser();
+
+  // Setting the UUID field as read-only.
+  if (!empty($form[BnfImporter::UUID_FIELD])) {
+    $form[BnfImporter::UUID_FIELD]['#disabled'] = TRUE;
+  }
+
+  if (!$current_user->hasPermission('bnf client export nodes')) {
+    return;
+  }
+
+  if (empty($form['actions']['submit'])) {
+    \Drupal::logger('bnf_client')->error('Could not find submit button - cannot show BNF export flow.');
+    return;
+  }
+
+  // When adding the submit handler here, it happens after ::save() and any
+  // validation.
+  $form['actions']['submit']['#submit'][] = 'bnf_client_form_node_form_submit';
+
+  // Let's hide the publishing button when BNF is checked, as the value will
+  // be ignored and the node will be published regardless.
+  $form['status']['#states']['invisible'] =
+    [':input[name="bnf"]' => ['checked' => TRUE]];
+
+  $form['bnf'] = [
+    '#type' => 'checkbox',
+    '#title' => t('Publish and submit to BNF'),
+    '#description' => t('Please make sure that all content and media as part of this article is OK to be used by other libraries.'),
+    '#default_value' => FALSE,
+  ];
+}
+
+/**
+ * A custom form submit handler, that publishes node, and "exports" to BNF.
+ */
+function bnf_client_form_node_form_submit(array $form, FormStateInterface $form_state): void {
+
+  if (empty($form_state->getValue('bnf'))) {
+    return;
+  }
+
+  try {
+    /** @var \Drupal\Core\Entity\EntityFormInterface $form_object */
+    $form_object = $form_state->getFormObject();
+
+    /** @var \Drupal\node\NodeInterface $node */
+    $node = $form_object->getEntity();
+    $node->setPublished();
+    $node->save();
+  }
+  catch (\Exception $e) {
+    \Drupal::logger('bnf_client')->error('Could not publish node as part of BNF export. @message', ['@message' => $e->getMessage()]);
+
+    \Drupal::messenger()->addError(
+      t("Could not publish node - will not send to BNF.", [], ['context' => 'BNF'])
+    );
+  }
+
+  try {
+    $service = DrupalTyped::service(BnfExporter::class, 'bnf_client.exporter');
+    $service->exportNode($node);
+
+    \Drupal::messenger()->addStatus(
+      t("Content has been published and sent to BNF.", [], ['context' => 'BNF'])
+    );
+  }
+  catch (\Exception $e) {
+    \Drupal::logger('bnf_client')->error('Could not export node to BNF. @message', ['@message' => $e->getMessage()]);
+    \Drupal::messenger()->addError(t('Could not export node to BNF. @message', ['@message' => $e->getMessage()], ['context' => 'BNF']));
+  }
+}
