@@ -79,6 +79,27 @@ class ImportRequestProducer extends DataProducerPluginBase implements ContainerF
       '@url' => $callbackUrl,
     ]);
 
+    try {
+      $this->importer->importNode($uuid, $callbackUrl, $node_type);
+
+      return [
+        'status' => 'success',
+        'message' => 'Node created successfully.',
+      ];
+    }
+    catch (\Exception $e) {
+      $this->logger->warning('Could not load node of type @node_type with UUID @uuid at @callbackUrl. @message', [
+        '@uuid' => $uuid,
+        '@node_type' => $node_type,
+        '@callbackUrl' => $callbackUrl,
+        '@message' => $e->getMessage(),
+      ]);
+
+      return [
+        'status' => 'failure',
+        'message' => $e->getMessage(),
+      ];
+    }
   }
 
 }
