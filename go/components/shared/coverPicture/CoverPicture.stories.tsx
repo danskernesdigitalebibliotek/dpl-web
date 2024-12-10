@@ -2,8 +2,7 @@ import { INITIAL_VIEWPORTS as viewports } from "@storybook/addon-viewport"
 import type { Meta, StoryObj } from "@storybook/react"
 
 import { darkModeDecorator } from "@/.storybook/decorators"
-
-import { CoverPicture } from "./CoverPicture"
+import { CoverPicture } from "@/components/shared/coverPicture/CoverPicture"
 
 const defaultArgs = {
   src: "https://res.cloudinary.com/dandigbib/image/upload/v1544470826/saxo.dk/9788762722880.jpg",
@@ -52,7 +51,7 @@ export const Default: Story = {
 export const DefaultMobile: Story = {
   args: defaultArgs,
   parameters: {
-    viewport: { defaultViewport: "sm" },
+    viewport: { defaultViewport: "iphone14" },
   },
   render: args => (
     <div
@@ -78,7 +77,7 @@ export const DarkMode: Story = {
 export const DarkModeMobile: Story = {
   args: defaultArgs,
   parameters: {
-    viewport: { defaultViewport: "sm" },
+    viewport: { defaultViewport: "iphone14" },
   },
   decorators: [darkModeDecorator],
   render: args => (
@@ -104,7 +103,7 @@ export const WithTilt: Story = {
 export const WithTiltMobile: Story = {
   args: { ...defaultArgs, withTilt: true },
   parameters: {
-    viewport: { defaultViewport: "sm" },
+    viewport: { defaultViewport: "iphone14" },
   },
   render: args => (
     <div
@@ -131,7 +130,7 @@ export const WithTiltDarkModeMobile: Story = {
   args: { ...defaultArgs, withTilt: true },
   decorators: [darkModeDecorator],
   parameters: {
-    viewport: { defaultViewport: "sm" },
+    viewport: { defaultViewport: "iphone14" },
   },
   render: args => (
     <div
@@ -156,7 +155,7 @@ export const WithoutCover: Story = {
 export const WithoutCoverMobile: Story = {
   args: { ...defaultArgs, src: "", lowResSrc: "" },
   parameters: {
-    viewport: { defaultViewport: "sm" },
+    viewport: { defaultViewport: "iphone14" },
   },
   render: args => (
     <div
@@ -182,7 +181,7 @@ export const WithoutCoverDarkMode: Story = {
 export const WithoutCoverDarkModeMobile: Story = {
   args: { ...defaultArgs, src: "", lowResSrc: "" },
   parameters: {
-    viewport: { defaultViewport: "sm" },
+    viewport: { defaultViewport: "iphone14" },
   },
   decorators: [darkModeDecorator],
   render: args => (
