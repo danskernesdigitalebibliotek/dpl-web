@@ -6,8 +6,8 @@ use Drupal\Component\Utility\NestedArray;
 use Drupal\Core\Cache\CacheableMetadata;
 use Drupal\Core\Cache\CacheableResponse;
 use Drupal\datetime\Plugin\Field\FieldType\DateTimeItemInterface;
+use Drupal\dpl_event\Entity\EventInstance;
 use Drupal\drupal_typed\RequestTyped;
-use Drupal\recurring_events\Entity\EventInstance;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
@@ -243,6 +243,14 @@ final class EventsResource extends EventResourceBase {
                         'format' => 'uri',
                         'description' => 'An absolute URL provided by the third party where editorial users can administer the event. Accessing this URL should require authentication.',
                       ],
+                    ],
+                  ],
+                  'screen_names' => [
+                    'type' => 'array',
+                    'description' => 'The screens this event should be shown on.',
+                    'items' => [
+                      'type' => 'string',
+                      'description' => 'A screen name.',
                     ],
                   ],
                 ],
