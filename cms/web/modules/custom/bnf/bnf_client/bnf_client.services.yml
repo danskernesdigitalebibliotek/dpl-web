@@ -1,0 +1,9 @@
+---
+services:
+  bnf_client.exporter:
+    class: Drupal\bnf_client\Services\BnfExporter
+    arguments:
+      - '@http_client'
+      - '@url_generator'
+      - '@string_translation'
+      - '@logger.channel.bnf'
