@@ -4,6 +4,7 @@ status: true
 dependencies:
   config:
     - core.entity_view_mode.node.nav_spot
+    - field.field.node.article.field_bnf_uuid
     - field.field.node.article.field_branch
     - field.field.node.article.field_canonical_url
     - field.field.node.article.field_categories
@@ -48,6 +49,7 @@ content:
     weight: 1
     region: content
 hidden:
+  field_bnf_uuid: true
   field_branch: true
   field_canonical_url: true
   field_categories: true

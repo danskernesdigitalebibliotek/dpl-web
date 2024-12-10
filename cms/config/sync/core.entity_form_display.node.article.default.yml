@@ -3,6 +3,7 @@ langcode: en
 status: true
 dependencies:
   config:
+    - field.field.node.article.field_bnf_uuid
     - field.field.node.article.field_branch
     - field.field.node.article.field_canonical_url
     - field.field.node.article.field_categories
@@ -32,6 +33,7 @@ third_party_settings:
     group_article_meta_tags:
       children:
         - field_canonical_url
+        - field_bnf_uuid
       label: 'Meta tags'
       region: content
       parent_name: ''
@@ -103,6 +105,14 @@ targetEntityType: node
 bundle: article
 mode: default
 content:
+  field_bnf_uuid:
+    type: string_textfield
+    weight: 7
+    region: content
+    settings:
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
   field_branch:
     type: select2_entity_reference
     weight: 0

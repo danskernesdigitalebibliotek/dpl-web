@@ -3,6 +3,7 @@ langcode: en
 status: true
 dependencies:
   config:
+    - field.field.node.article.field_bnf_uuid
     - field.field.node.article.field_branch
     - field.field.node.article.field_canonical_url
     - field.field.node.article.field_categories
@@ -23,6 +24,14 @@ targetEntityType: node
 bundle: article
 mode: default
 content:
+  field_bnf_uuid:
+    type: string
+    label: above
+    settings:
+      link_to_entity: false
+    third_party_settings: {  }
+    weight: 114
+    region: content
   field_branch:
     type: entity_reference_label
     label: above
