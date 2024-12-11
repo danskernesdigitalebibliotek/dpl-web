@@ -11,7 +11,7 @@ module.exports = {
     await page.waitForTimeout(2000)
 
     await checkA11y(page, "#storybook-root", {
-      axeOptions: {},
+      axeOptions: { preload: true },
       detailedReport: true,
       detailedReportOptions: {
         html: true,
