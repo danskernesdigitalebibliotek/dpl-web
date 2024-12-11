@@ -177,10 +177,33 @@
 }
 
 /**
+  We use the password policy module, which shows it's own password restrictions.
+  We want to hide the standard drupal password suggestions, as they are
+  confusing, as they may give conflicting information.
+  We need to make sure that inline styling also gets overriden, hence [style]
+  and !important.
+ */
+.user-form {
+  .password-suggestions,
+  .password-suggestions[style] {
+    display: none !important;
+  }
+}
+
+/**
  Hide default action button on confirm form.
  Editors should focus on the date-related changes.
  Selector is convoluted due to Gin DOM structure.
 */
 body:has(.eventseries-form--confirm) .form-actions {
   display: none;
+}
+
+/**
+  A very simple element, used in Drupal forms when displaying warnings.
+ */
+.dpl-form-warning {
+  color: #d80404;
+  font-weight: bold;
+  max-width: 500px;
 }

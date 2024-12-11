@@ -7,11 +7,11 @@
     "@lhci/cli": "^0.8",
     "@testing-library/cypress": "^10.0.2",
     "@types/node": "^18.11.11",
-    "@typescript-eslint/eslint-plugin": "^8.16.0",
-    "@typescript-eslint/parser": "^8.16.0",
+    "@typescript-eslint/eslint-plugin": "^8.18.0",
+    "@typescript-eslint/parser": "^8.18.0",
     "chrome-launcher": "^0.15.1",
-    "cypress": "^13.16.0",
-    "cypress-if": "^1.13.1",
+    "cypress": "^13.16.1",
+    "cypress-if": "^1.13.2",
     "cypress-plugin-api": "^2.11.2",
     "dayjs": "^1.11.13",
     "eslint": "^8.57.1",
@@ -24,7 +24,7 @@
     "pa11y-ci": "https://github.com/pa11y/pa11y-ci/archive/5c842cf1b9fe2867b70ff5354851d985be8d71c4.tar.gz",
     "prettier": "^2.7.1",
     "typescript": "^5.7.2",
-    "wiremock-rest-client": "^1.10.0"
+    "wiremock-rest-client": "^1.11.0"
   },
   "scripts": {
     "wiremock:create-mappings": "yarn wiremock:build && node wiremock/build/createMappings.js",

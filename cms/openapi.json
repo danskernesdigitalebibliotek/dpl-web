@@ -1002,6 +1002,14 @@
                       "description": "The name of a tag."
                     }
                   },
+                  "partners": {
+                    "type": "array",
+                    "description": "The partners associated with the event.",
+                    "items": {
+                      "type": "string",
+                      "description": "The name of a partner."
+                    }
+                  },
                   "ticket_categories": {
                     "type": "array",
                     "description": "Ticket categories used for the event. Not present for events without ticketing.",
@@ -1070,6 +1078,14 @@
                         "format": "uri",
                         "description": "An absolute URL provided by the third party where editorial users can administer the event. Accessing this URL should require authentication."
                       }
+                    }
+                  },
+                  "screen_names": {
+                    "type": "array",
+                    "description": "The screens this event should be shown on.",
+                    "items": {
+                      "type": "string",
+                      "description": "A screen name."
                     }
                   }
                 },

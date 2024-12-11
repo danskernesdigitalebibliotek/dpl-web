@@ -181,6 +181,18 @@ class EventsGET200ResponseInner
     protected ?array $tags = null;
 
     /**
+     * The partners associated with the event.
+     *
+     * @var string[]|null
+     * @SerializedName("partners")
+     * @Assert\All({
+     *   @Assert\Type("string")
+     * })
+     * @Type("array<string>")
+     */
+    protected ?array $partners = null;
+
+    /**
      * Ticket categories used for the event. Not present for events without ticketing.
      *
      * @var EventsGET200ResponseInnerTicketCategoriesInner[]|null
@@ -229,6 +241,18 @@ class EventsGET200ResponseInner
     protected ?EventPATCHRequestExternalData $externalData = null;
 
     /**
+     * The screens this event should be shown on.
+     *
+     * @var string[]|null
+     * @SerializedName("screen_names")
+     * @Assert\All({
+     *   @Assert\Type("string")
+     * })
+     * @Type("array<string>")
+     */
+    protected ?array $screenNames = null;
+
+    /**
      * Constructor
      * @param array|null $data Associated array of property values initializing the model
      */
@@ -248,11 +272,13 @@ class EventsGET200ResponseInner
             $this->branches = array_key_exists('branches', $data) ? $data['branches'] : $this->branches;
             $this->address = array_key_exists('address', $data) ? $data['address'] : $this->address;
             $this->tags = array_key_exists('tags', $data) ? $data['tags'] : $this->tags;
+            $this->partners = array_key_exists('partners', $data) ? $data['partners'] : $this->partners;
             $this->ticketCategories = array_key_exists('ticketCategories', $data) ? $data['ticketCategories'] : $this->ticketCategories;
             $this->ticketCapacity = array_key_exists('ticketCapacity', $data) ? $data['ticketCapacity'] : $this->ticketCapacity;
             $this->series = array_key_exists('series', $data) ? $data['series'] : $this->series;
             $this->body = array_key_exists('body', $data) ? $data['body'] : $this->body;
             $this->externalData = array_key_exists('externalData', $data) ? $data['externalData'] : $this->externalData;
+            $this->screenNames = array_key_exists('screenNames', $data) ? $data['screenNames'] : $this->screenNames;
         }
     }
 
@@ -595,6 +621,32 @@ class EventsGET200ResponseInner
     }
 
     /**
+     * Gets partners.
+     *
+     * @return string[]|null
+     */
+    public function getPartners(): ?array
+    {
+        return $this->partners;
+    }
+
+
+
+    /**
+     * Sets partners.
+     *
+     * @param string[]|null $partners  The partners associated with the event.
+     *
+     * @return $this
+     */
+    public function setPartners(?array $partners = null): self
+    {
+        $this->partners = $partners;
+
+        return $this;
+    }
+
+    /**
      * Gets ticketCategories.
      *
      * @return EventsGET200ResponseInnerTicketCategoriesInner[]|null
@@ -720,6 +772,32 @@ class EventsGET200ResponseInner
     public function setExternalData(?EventPATCHRequestExternalData $externalData = null): self
     {
         $this->externalData = $externalData;
+
+        return $this;
+    }
+
+    /**
+     * Gets screenNames.
+     *
+     * @return string[]|null
+     */
+    public function getScreenNames(): ?array
+    {
+        return $this->screenNames;
+    }
+
+
+
+    /**
+     * Sets screenNames.
+     *
+     * @param string[]|null $screenNames  The screens this event should be shown on.
+     *
+     * @return $this
+     */
+    public function setScreenNames(?array $screenNames = null): self
+    {
+        $this->screenNames = $screenNames;
 
         return $this;
     }

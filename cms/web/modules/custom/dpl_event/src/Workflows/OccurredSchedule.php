@@ -3,11 +3,10 @@
 namespace Drupal\dpl_event\Workflows;
 
 use Drupal\Component\Datetime\TimeInterface;
+use Drupal\dpl_event\Entity\EventInstance;
 use Drupal\dpl_event\EventState;
-use Drupal\dpl_event\EventWrapper;
 use Drupal\job_scheduler\Entity\JobSchedule;
 use Drupal\job_scheduler\JobSchedulerInterface;
-use Drupal\recurring_events\Entity\EventInstance;
 use Drupal\recurring_events\EventInstanceStorageInterface;
 use Psr\Log\LoggerInterface;
 
@@ -50,7 +49,7 @@ class OccurredSchedule {
     if (!$event || !$event instanceof EventInstance) {
       return;
     }
-    if ((new EventWrapper($event))->isActive()) {
+    if ($event->isActive()) {
       $event->set("field_event_state", EventState::Occurred);
       $event->save();
     }
@@ -61,7 +60,7 @@ class OccurredSchedule {
    */
   public function scheduleOccurred(EventInstance $event): void {
     $nowTimestamp = $this->time->getCurrentTime();
-    $eventEndDate = (new EventWrapper($event))->getEndDate();
+    $eventEndDate = $event->getEndDate();
 
     $job = [
       'name' => self::JOB_SCHEDULE_NAME,

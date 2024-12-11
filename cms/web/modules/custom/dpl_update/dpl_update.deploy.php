@@ -250,3 +250,10 @@ function dpl_update_deploy_field_relevant_ticket_manager(): string {
 function dpl_update_deploy_update_term_url_aliases(): string {
   return _dpl_update_generate_url_aliases('taxonomy_term');
 }
+
+/**
+ * Link new event_screen_names inheritance on eventinstances.
+ */
+function dpl_update_update_screen_name_field_inheritance(): string {
+  return _dpl_update_field_inheritance('event_screen_names');
+}
