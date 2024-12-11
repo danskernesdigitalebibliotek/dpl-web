@@ -119,10 +119,10 @@ Cypress.Commands.add('drupalCron', () => {
 Cypress.Commands.add('enableDevelMailLog', () => {
   cy.drupalLogin();
   cy.visit('/admin/config/system/mailsystem');
-  cy.get('[data-cy="mailsystem[default_formatter]"]').select('devel_mail_log');
-  cy.get('[data-cy="mailsystem[default_sender]"]').select('devel_mail_log');
-  cy.get('[data-drupal-selector="edit-submit"]').click();
-  cy.drupalLogout();
+  cy.findByLabelText('Formatter').select('devel_mail_log');
+  cy.findByLabelText('Sender').select('devel_mail_log');
+  cy.findByRole('button', { name: 'Save configuration' }).click();
+  cy.anonymousUser();
 });
 
 const adgangsplatformenLoginOauthMappings = ({
