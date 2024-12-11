@@ -63,7 +63,7 @@ const WorkCard = ({ work }: WorkCardProps) => {
           className="relative flex aspect-4/5 h-auto w-full flex-col rounded-base bg-background-overlay px-[15%] pt-[15%]">
           {!!dataPublizon?.product?.costFree && (
             <Badge variant={"blue-title"} className="absolute left-4 top-4 md:left-4 md:top-4">
-              <span className="drop-shadow-lg">BLÅ</span>
+              BLÅ
             </Badge>
           )}
           <div className="relative mx-auto flex h-full w-full items-center justify-center">
