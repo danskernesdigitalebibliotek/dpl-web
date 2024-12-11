@@ -4,7 +4,6 @@ import { SlideSelectOption } from "@/components/shared/slideSelect/SlideSelect"
 import { materialTypeCategories } from "@/components/shared/workCard/helper"
 import {
   GeneralMaterialTypeCodeEnum,
-  IdentifierTypeEnum,
   ManifestationWorkPageFragment,
   WorkFullWorkPageFragment,
   WorkMaterialTypesFragment,
@@ -75,13 +74,6 @@ export const isAudioBook = (manifestation: ManifestationWorkPageFragment | undef
 export const isPodcast = (manifestation: ManifestationWorkPageFragment | undefined | null) => {
   if (!manifestation) return false
   return isOfMaterialType(manifestation, GeneralMaterialTypeCodeEnum.Podcasts)
-}
-
-export const getIsbnsFromManifestation = (
-  manifestaion: ManifestationWorkPageFragment | undefined | null
-) => {
-  if (!manifestaion) return []
-  return manifestaion.identifiers.filter(identifier => identifier.type === IdentifierTypeEnum.Isbn)
 }
 
 export const getManifestationLanguageIsoCode = (
