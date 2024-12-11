@@ -3,24 +3,18 @@ describe('Webforms', () => {
     cy.enableDevelMailLog();
   });
 
-  beforeEach(() => {
-    Cypress.session.clearAllSavedSessions();
-  });
-
   it('Go to the default contact webform page and fill it out successfully.', () => {
     cy.visit('/kontakt');
-    cy.url().should('match', /kontakt/);
-    cy.get('[data-cy="name"]').type('John Doe');
-    cy.get('[data-cy="email"]').type('john@doe.com');
-    cy.get('[data-cy="category"]').select(1);
-    cy.get('[data-cy="subject"]').type('Test');
-    cy.get('[data-cy="message"]').type('Lorem ipsum');
+    cy.findByLabelText('Dit navn').type('John Doe');
+    cy.findByLabelText('Din e-mailadresse').type('john@doe.com');
+    cy.findByLabelText('Kategori').select(1);
+    cy.findByLabelText('Emne').type('Test');
+    cy.findByLabelText('Besked').type('Lorem ipsum');
     // We bypass the linting here, as we need to force waiting as we need to
     // wait for the honeypot timer to run out.
     // eslint-disable-next-line cypress/no-unnecessary-waiting
     cy.wait(6000);
-    cy.get('[data-cy="op"]').click();
-    cy.url().should('match', /kontakt/);
+    cy.findByRole('button', { name: 'Send besked' }).click();
     cy.get('.status-message__description').contains(
       'Your submission has been received. You will receive a confirmation mail soon.',
     );
@@ -28,27 +22,30 @@ describe('Webforms', () => {
 
   it('Go to the default contact webform page and check that required fields are working.', () => {
     cy.visit('/kontakt');
-    cy.url().should('match', /kontakt/);
-    cy.get('[data-cy="op"]').click();
-    cy.url().should('match', /kontakt/);
+    cy.findByRole('button', { name: 'Send besked' }).click();
+    cy.findByLabelText('Dit navn').then(($input) => {
+      expect($input[0].validationMessage).to.eq('Please fill in this field.');
+    });
   });
 
-  it('Check that antibot_key and honeypot_time input elements exists.', () => {
+  it('Check that antibot_key input element exists.', () => {
     cy.visit('/kontakt');
-    cy.url().should('match', /kontakt/);
-    cy.get('[data-cy="honeypot_time"]').should('exist');
-    cy.get('[data-cy="antibot_key"]').should('exist');
+    cy.get('input[name="antibot_key"]').should('exist');
+  });
+
+  it('Check that honeypot_time input elements exists.', () => {
+    cy.visit('/kontakt');
+    cy.get('input[name="honeypot_time"]').should('exist');
   });
 
   it('Check that the honeypot timer is working by submitting form before timer (5000ms) is up.', () => {
     cy.visit('/kontakt');
-    cy.url().should('match', /kontakt/);
-    cy.get('[data-cy="name"]').type('John Doe');
-    cy.get('[data-cy="email"]').type('john@doe.com');
-    cy.get('[data-cy="category"]').select(1);
-    cy.get('[data-cy="subject"]').type('Test');
-    cy.get('[data-cy="message"]').type('Lorem ipsum');
-    cy.get('[data-cy="op"]').click();
+    cy.findByLabelText('Dit navn').type('John Doe');
+    cy.findByLabelText('Din e-mailadresse').type('john@doe.com');
+    cy.findByLabelText('Kategori').select(1);
+    cy.findByLabelText('Emne').type('Test');
+    cy.findByLabelText('Besked').type('Lorem ipsum');
+    cy.findByRole('button', { name: 'Send besked' }).click();
     cy.get('.error-message__description').contains(
       'There was a problem with your form submission.',
     );
@@ -56,28 +53,21 @@ describe('Webforms', () => {
 
   it('Check that the honeypot field is working by filling in hidden honeypot field.', () => {
     cy.visit('/kontakt');
-    cy.url().should('match', /kontakt/);
-    cy.get('[data-cy="name"]').type('John Doe');
-    cy.get('[data-cy="email"]').type('john@doe.com');
-    cy.get('[data-cy="category"]').select(1);
-    cy.get('[data-cy="subject"]').type('Test');
-    cy.get('[data-cy="message"]').type('Lorem ipsum');
-    cy.get('[data-cy="url"]').type('John Doe', { force: true });
+    cy.findByLabelText('Dit navn').type('John Doe');
+    cy.findByLabelText('Din e-mailadresse').type('john@doe.com');
+    cy.findByLabelText('Kategori').select(1);
+    cy.findByLabelText('Emne').type('Test');
+    cy.findByLabelText('Besked').type('Lorem ipsum');
+    cy.findByLabelText('Leave this field blank').type('John Doe', {
+      force: true,
+    });
     // We bypass the linting here, as we need to force waiting as we need to
     // wait for the honeypot timer to run out.
     // eslint-disable-next-line cypress/no-unnecessary-waiting
     cy.wait(6000);
-    cy.get('[data-cy="op"]').click();
+    cy.findByRole('button', { name: 'Send besked' }).click();
     cy.get('.error-message__description').contains(
       'There was a problem with your form submission.',
     );
-  });
-
-  beforeEach(() => {
-    cy.resetMappings();
-  });
-
-  afterEach(() => {
-    cy.logMappingRequests();
   });
 });
