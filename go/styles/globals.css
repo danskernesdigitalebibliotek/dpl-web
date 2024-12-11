@@ -82,7 +82,9 @@
   --content-orange: hsla(34, 100%, 72%, 1);
   --content-blue: hsla(202, 100%, 72%, 1);
 
-  --blue-title: hsla(202, 100%, 60%, 1);
+  /* These two blues provide JUST enough color contrast to pass wcag2.1aa */
+  --blue-title: hsla(202, 100%, 76%, 1);
+  --blue-title-dark: hsla(202, 60%, 30%, 1);
 
   /* CONTENT COLORS */
   --content-pink-100: 320 100% 91%;
@@ -312,6 +314,7 @@
   --background: var(--blue);
   --background-overlay: var(--blue-overlay);
   --foreground: var(--beige);
+  --shadow-add-contrast: hsla(0, 0%, 0%, 0.5);
 }
 
 .content-container {

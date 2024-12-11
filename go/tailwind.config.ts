@@ -195,6 +195,7 @@ export const extendedTheme = {
         overlay: "var(--background-overlay)",
       },
       foreground: "var(--foreground)",
+      blue: "var(--blue)",
       border: "var(--border)",
       "reader-grey": "var(--reader-grey)",
       content: {
@@ -203,7 +204,10 @@ export const extendedTheme = {
         orange: "var(--content-orange)",
         purple: "var(--content-purple)",
       },
-      "blue-title": "var(--blue-title)",
+      "blue-title": {
+        DEFAULT: "var(--blue-title)",
+        dark: "var(--blue-title-dark)",
+      },
       // shadcn colors
       card: {
         DEFAULT: "var(--card)",
