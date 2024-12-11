@@ -28,31 +28,19 @@ export default meta
 type Story = StoryObj<typeof meta>
 
 export const Default: Story = {
-  render: args => (
-    <Badge {...args}>
-      <span className="drop-shadow-lg">Badge</span>
-    </Badge>
-  ),
+  render: args => <Badge {...args}>Badge</Badge>,
 }
 
 export const DefaultMobile: Story = {
   parameters: {
     viewport: { defaultViewport: "iphone14" },
   },
-  render: args => (
-    <Badge {...args}>
-      <span className="drop-shadow-lg">Badge</span>
-    </Badge>
-  ),
+  render: args => <Badge {...args}>Badge</Badge>,
 }
 
 export const DarkMode: Story = {
   decorators: [darkModeDecorator],
-  render: args => (
-    <Badge {...args}>
-      <span className="drop-shadow-lg">Badge</span>
-    </Badge>
-  ),
+  render: args => <Badge {...args}>Badge</Badge>,
 }
 
 export const DarkModeMobile: Story = {
@@ -60,9 +48,5 @@ export const DarkModeMobile: Story = {
     viewport: { defaultViewport: "iphone14" },
   },
   decorators: [darkModeDecorator],
-  render: args => (
-    <Badge {...args}>
-      <span className="drop-shadow-lg">Badge</span>
-    </Badge>
-  ),
+  render: args => <Badge {...args}>Badge</Badge>,
 }
