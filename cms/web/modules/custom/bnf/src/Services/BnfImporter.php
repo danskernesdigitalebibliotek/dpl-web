@@ -31,16 +31,16 @@ class BnfImporter {
   /**
    * Importing a node from a GraphQL source endpoint.
    */
-  public function importNode(string $uuid, string $endpoint_url, string $node_type = 'article'): void {
-    $node_storage = $this->entityTypeManager->getStorage('node');
+  public function importNode(string $uuid, string $endpointUrl, string $nodeType = 'article'): void {
+    $nodeStorage = $this->entityTypeManager->getStorage('node');
 
-    $existing_nodes =
-      $node_storage->loadByProperties([self::UUID_FIELD => $uuid]);
+    $existingNodes =
+      $nodeStorage->loadByProperties([self::UUID_FIELD => $uuid]);
 
-    if (!empty($existing_nodes)) {
+    if (!empty($existingNodes)) {
       $this->logger->error(
         'Cannot import @type @uuid from @url - Node already exists.',
-        ['@type' => $node_type, '@uuid' => $uuid, '@url' => $endpoint_url]
+        ['@type' => $nodeType, '@uuid' => $uuid, '@url' => $endpointUrl]
       );
 
       throw new \Exception((string) $this->translation->translate(
@@ -49,12 +49,12 @@ class BnfImporter {
     }
 
     // Example of GraphQL query: "nodeArticle".
-    $query_name = 'node' . ucfirst($node_type);
+    $queryName = 'node' . ucfirst($nodeType);
 
     // For now, we only support the title of the nodes.
     $query = <<<GRAPHQL
     query {
-      $query_name(id: "$uuid") {
+      $queryName(id: "$uuid") {
         title
       }
     }
@@ -62,7 +62,7 @@ class BnfImporter {
 
     $client = new Client();
 
-    $response = $client->post($endpoint_url, [
+    $response = $client->post($endpointUrl, [
       'headers' => [
         'Content-Type' => 'application/json',
       ],
@@ -75,9 +75,9 @@ class BnfImporter {
     ]);
 
     $data = json_decode($response->getBody()->getContents(), TRUE);
-    $node_data = $data['data'][$query_name] ?? NULL;
+    $nodeData = $data['data'][$queryName] ?? NULL;
 
-    if (empty($node_data)) {
+    if (empty($nodeData)) {
       $this->logger->error('Could not find any node data in GraphQL response.');
 
       throw new \Exception((string) $this->translation->translate(
@@ -86,10 +86,10 @@ class BnfImporter {
     }
 
     try {
-      $node_data['type'] = $node_type;
-      $node_data[self::UUID_FIELD] = $uuid;
+      $nodeData['type'] = $nodeType;
+      $nodeData[self::UUID_FIELD] = $uuid;
 
-      $node = $node_storage->create($node_data);
+      $node = $nodeStorage->create($nodeData);
       $node->save();
     }
     catch (\Exception $e) {
@@ -103,9 +103,9 @@ class BnfImporter {
       ));
     }
 
-    $this->logger->info('Created new @node_type node with BNF ID @uuid', [
+    $this->logger->info('Created new @type node with BNF ID @uuid', [
       '@uuid' => $uuid,
-      '@node_type' => $node_type,
+      '@type' => $nodeType,
     ]);
 
   }
