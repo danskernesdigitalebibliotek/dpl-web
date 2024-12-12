@@ -1,13 +1,13 @@
 import { useSearchParams } from "next/navigation"
 import React, { useState } from "react"
 
+import { useSearchDataAndLoadingStates } from "@/components/pages/searchPageLayout/helper"
 import {
   Accordion,
   AccordionContent,
   AccordionItem,
   AccordionTrigger,
-} from "@/components/accordion/Accordion"
-import { useSearchDataAndLoadingStates } from "@/components/pages/searchPageLayout/helper"
+} from "@/components/shared/accordion/Accordion"
 import BadgeButton from "@/components/shared/badge/BadgeButton"
 import Icon from "@/components/shared/icon/Icon"
 import {

@@ -45,6 +45,10 @@ const SearchPageLayout = () => {
     }, 500)
   }, [])
 
+  useEffect(() => {
+    actor.send({ type: "RESET_BOOTSTRAP_STATE" })
+  }, [actor])
+
   const isNoSearchResult = !isLoadingResults && (!data.search || !data.search.pages[0].length)
   const hitCountText = data.search?.hitcount ? `(${data.search.hitcount})` : ""
   const searchQueryText = searchQuery ? `"${searchQuery}"` : ""
@@ -92,7 +96,7 @@ const SearchPageLayout = () => {
                     </motion.div>
                   )
               )}
-            {isLoadingMoreResults && <SearchResultsGhost />}
+            {(isLoadingMoreResults || isLoadingResults) && <SearchResultsGhost />}
           </div>
         </>
       ) : (

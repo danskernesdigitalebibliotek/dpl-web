@@ -7,7 +7,7 @@ import SmartLink from "@/components/shared/smartLink/SmartLink"
 import { resolveUrl } from "@/lib/helpers/helper.routes"
 import { useSelectedManifestationStore } from "@/store/selectedManifestation.store"
 
-import { isAudioBook, isEbook } from "./helper"
+import { isAudioBook, isEbook, isPodcast } from "./helper"
 
 export type WorkPageButtonsProps = {
   workId: string
@@ -41,7 +41,6 @@ const WorkPageButtons = ({ workId }: WorkPageButtonsProps) => {
           </Button>
         </>
       )}
-
       {isAudioBook(selectedManifestation) && (
         <>
           <Button
@@ -56,6 +55,20 @@ const WorkPageButtons = ({ workId }: WorkPageButtonsProps) => {
           </Button>
         </>
       )}
+      {isPodcast(selectedManifestation) && (
+        <>
+          <Button
+            ariaLabel="Prøv podcast"
+            disabled={!!!identifier}
+            className="mb-grid-gap-half w-full lg:min-w-72 lg:max-w-80"
+            onClick={() => setIsPlayerOpen(!isPlayerOpen)}>
+            Prøv podcast
+          </Button>
+          <Button ariaLabel="Hør podcast" className="w-full lg:min-w-72 lg:max-w-80">
+            Not done yet
+          </Button>
+        </>
+      )}
 
       {/* Reader / Player dialog */}
       {!!selectedManifestation?.identifiers[0].value && (
@@ -64,8 +77,12 @@ const WorkPageButtons = ({ workId }: WorkPageButtonsProps) => {
           onOpenChange={() => {
             setIsPlayerOpen(!isPlayerOpen)
           }}
-          title="Prøv lydbog"
-          description="For at låne lydbogen skal du være oprettet som bruger på GO.">
+          title={`Prøv ${isPodcast(selectedManifestation) ? "Podcast" : "Lydbog"}`}
+          description={
+            isPodcast(selectedManifestation)
+              ? "For at høre podcast skal du være oprettet som bruger på GO."
+              : "For at låne lydbogen skal du være oprettet som bruger på GO."
+          }>
           <Player type="demo" identifier={selectedManifestation.identifiers[0].value} />
         </ResponsiveDialog>
       )}

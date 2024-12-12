@@ -72,6 +72,11 @@ export const isAudioBook = (manifestation: ManifestationWorkPageFragment | undef
   return isOfMaterialType(manifestation, GeneralMaterialTypeCodeEnum.AudioBooks)
 }
 
+export const isPodcast = (manifestation: ManifestationWorkPageFragment | undefined | null) => {
+  if (!manifestation) return false
+  return isOfMaterialType(manifestation, GeneralMaterialTypeCodeEnum.Podcasts)
+}
+
 export const getIsbnsFromManifestation = (
   manifestaion: ManifestationWorkPageFragment | undefined | null
 ) => {
