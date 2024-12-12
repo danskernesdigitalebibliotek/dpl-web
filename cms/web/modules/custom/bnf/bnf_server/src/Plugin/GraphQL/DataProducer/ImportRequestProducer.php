@@ -9,7 +9,11 @@ use Psr\Log\LoggerInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
 /**
- * Resolves the `importRequest` mutation.
+ * Resolves the `importRequest` mutation by handling content import requests.
+ *
+ * This class processes the `importRequest` mutation, which is part of the
+ * GraphQL schema. It accepts a unique identifier (UUID) for the content to be
+ * imported and a callback URL for querying the external system for node data.
  *
  * @DataProducer(
  *   id = "import_request_producer",
@@ -31,7 +35,10 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
 class ImportRequestProducer extends DataProducerPluginBase implements ContainerFactoryPluginInterface {
 
   /**
-   * {@inheritdoc}
+   * Creates an instance of the producer using dependency injection.
+   *
+   * This method ensures the necessary services, such as the logger and importer
+   * are available for processing the import request.
    */
   public static function create(ContainerInterface $container, array $configuration, $plugin_id, $plugin_definition) {
     return new static(
@@ -57,15 +64,23 @@ class ImportRequestProducer extends DataProducerPluginBase implements ContainerF
   }
 
   /**
-   * Resolves the mutation.
+   * Resolves the `importRequest` mutation by importing content based on UUID.
+   *
+   * This method processes an import request by using the provided UUID to
+   * identify the content to import and a callback URL to get the node data.
+   * Currently, it supports only articles as the content type, but it can be
+   * extended in the future to handle other node types.
    *
    * @param string $uuid
-   *   The client UUID.
+   *   The unique identifier of the content to import. This UUID is used to
+   *   locate the content in the external system.
    * @param string $callbackUrl
-   *   The callback URL.
+   *   The external GraphQL endpoint URL to pull node data from.
    *
    * @return string[]
-   *   The response data.
+   *   An associative array containing:
+   *   - 'status': 'success' or 'failure'.
+   *   - 'message': A detailed message about the result of the operation.
    */
   public function resolve(string $uuid, string $callbackUrl): array {
     // For now, we only support articles. In the future, this should be
