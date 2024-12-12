@@ -5,6 +5,7 @@ import { notFound } from "next/navigation"
 import { useSearchParams } from "next/navigation"
 import React, { useEffect } from "react"
 
+import InfoBox from "@/components/shared/infoBox/InfoBox"
 import { GetMaterialQuery, useGetMaterialQuery } from "@/lib/graphql/generated/fbi/graphql"
 import { useSelectedManifestationStore } from "@/store/selectedManifestation.store"
 
@@ -23,8 +24,6 @@ function WorkPageLayout({ workId, dehydratedQueryData }: WorkPageLayoutProps) {
     queryFn: useGetMaterialQuery.fetcher({ wid: workId }),
     initialData: dehydratedQueryData,
   })
-  const pageContainerClasses =
-    "content-container my-grid-gap-2 flex-row flex-wrap space-y-grid-gap-2 lg:space-y-grid-gap-1 lg:my-grid-gap-half"
   const { selectedManifestation, setSelectedManifestation } = useSelectedManifestationStore()
 
   // Cleanup at unmount
@@ -52,7 +51,11 @@ function WorkPageLayout({ workId, dehydratedQueryData }: WorkPageLayoutProps) {
   }, [selectedManifestation])
 
   if (isLoading && !data) {
-    return <div className={pageContainerClasses}>Loading...</div>
+    return (
+      <div className="content-container my-grid-gap-2 flex-row flex-wrap lg:my-grid-gap-half">
+        Loading...
+      </div>
+    )
   }
 
   if (!data || !data.work) {
@@ -60,9 +63,9 @@ function WorkPageLayout({ workId, dehydratedQueryData }: WorkPageLayoutProps) {
   }
 
   return (
-    <div className={pageContainerClasses}>
+    <div className="content-container my-grid-gap-2 flex-row flex-wrap lg:my-grid-gap-half">
       <WorkPageHeader work={data.work} />
-      {/* <WorkPageDescription /> */}
+      <InfoBox work={data.work} />
       {/* <WorkPageDetails /> */}
     </div>
   )
