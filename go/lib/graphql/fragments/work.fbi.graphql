@@ -38,6 +38,10 @@ fragment WorkPublicationYear on Work {
   }
 }
 
+fragment WorkDescription on Work {
+  abstract
+}
+
 # Bigger chunks for specific pages ---------------------------------------------
 
 fragment WorkTeaserSearchPage on Work {
@@ -62,6 +66,7 @@ fragment WorkFullWorkPage on Work {
   ...WorkCreators
   ...WorkMaterialTypes
   ...WorkPublicationYear
+  ...WorkDescription
   manifestations {
     all {
       ...ManifestationWorkPage
