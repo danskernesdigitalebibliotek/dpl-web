@@ -7,6 +7,7 @@ use Drupal\Core\StringTranslation\TranslationInterface;
 use GuzzleHttp\Client;
 use Psr\Log\LoggerInterface;
 use function Safe\json_decode;
+use function Safe\parse_url;
 
 /**
  * Service related to importing content from an external source.
@@ -62,16 +63,31 @@ class BnfImporter {
 
     $client = new Client();
 
+    if (!filter_var($endpointUrl, FILTER_VALIDATE_URL)) {
+      throw new \InvalidArgumentException((string) $this->translation->translate(
+        'The provided callback URL is not valid.', [], ['context' => 'BNF']
+      ));
+    }
+
+    $parsedUrl = parse_url($endpointUrl);
+    $scheme = $parsedUrl['scheme'] ?? NULL;
+
+    if ($scheme !== 'https') {
+      throw new \InvalidArgumentException((string) $this->translation->translate(
+        'The provided callback URL must use HTTPS.', [], ['context' => 'BNF']
+      ));
+    }
+
     $response = $client->post($endpointUrl, [
       'headers' => [
         'Content-Type' => 'application/json',
       ],
-      // @todo Implement actual authentication. Is it OK to use
-      // username/password, or do we need to do oAuth as they do in React?
-      'auth' => ['graphql_consumer', 'test'],
+      'auth' => [getenv('GRAPHQL_USER_NAME'), getenv('GRAPHQL_USER_PASSWORD')],
       'json' => [
         'query' => $query,
       ],
+      // Make sure that the server is HTTPS.
+      'verify' => TRUE,
     ]);
 
     $data = json_decode($response->getBody()->getContents(), TRUE);

@@ -110,8 +110,9 @@ tasks:
             drush user:create patron --password="$PR_DRUPAL_PWD"
             drush user:role:add 'patron' patron
 
-            drush user:create graphql_consumer --password="$PR_DRUPAL_PWD"
-            drush user:role:add 'graphql_consumer' graphql_consumer
+            drush user:create $GRAPHQL_USER_NAME --password="$GRAPHQL_USER_PASSWORD"
+            drush user:role:add 'external_system' $GRAPHQL_USER_NAME
+            drush user:role:add 'graphql_consumer' $GRAPHQL_USER_NAME
           else
             echo "Test users already exist. Skipping creation..."
           fi

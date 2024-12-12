@@ -8,6 +8,7 @@ use Drupal\node\NodeInterface;
 use GuzzleHttp\Client;
 use Psr\Log\LoggerInterface;
 use function Safe\json_decode;
+use function Safe\parse_url;
 
 /**
  * Service, related to exporting our content to BNF.
@@ -33,8 +34,8 @@ class BnfExporter {
   public function exportNode(NodeInterface $node): void {
     // generateFromRoute returns a string if we do not pass TRUE as the
     // fourth argument.
-    /** @var string $callback_url */
-    $callback_url = $this->urlGenerator->generateFromRoute(
+    /** @var string $callbackUrl */
+    $callbackUrl = $this->urlGenerator->generateFromRoute(
       'graphql.query.graphql_compose_server',
       [],
       ['absolute' => TRUE]
@@ -44,25 +45,32 @@ class BnfExporter {
 
     $mutation = <<<GRAPHQL
     mutation {
-      importRequest(uuid: "$uuid", callbackUrl: "$callback_url") {
+      importRequest(uuid: "$uuid", callbackUrl: "$callbackUrl") {
         status
         message
       }
     }
     GRAPHQL;
 
-    // @todo This needs to be the server URL instead. What do we do about local
-    // development?
-    $bnf_server = $callback_url;
-
     try {
-      $response = $this->httpClient->post($bnf_server, [
+      $bnfServer = (string) getenv('BNF_SERVER_GRAPHQL_ENDPOINT');
+
+      if (!filter_var($bnfServer, FILTER_VALIDATE_URL)) {
+        throw new \InvalidArgumentException('The provided BNF server URL is not valid.');
+      }
+
+      $parsedUrl = parse_url($bnfServer);
+      $scheme = $parsedUrl['scheme'] ?? NULL;
+
+      if ($scheme !== 'https') {
+        throw new \InvalidArgumentException('The BNF server URL must use HTTPS.');
+      }
+
+      $response = $this->httpClient->post($bnfServer, [
         'headers' => [
           'Content-Type' => 'application/json',
         ],
-        // @todo Implement actual authentication. Is it OK to use
-        // username/password, or do we need to do oAuth as they do in React?
-        'auth' => ['graphql_consumer', 'test'],
+        'auth' => [getenv('GRAPHQL_USER_NAME'), getenv('GRAPHQL_USER_PASSWORD')],
         'json' => [
           'query' => $mutation,
         ],
