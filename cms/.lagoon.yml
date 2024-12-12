@@ -12,8 +12,15 @@ tasks:
     - run:
         name: Create new GH deployment
         command: |
+          ENVIRONMENT=$LAGOON_ENVIRONMENT
+
+          # We want BNF to show up as a separate environment.
+          if [[ "$LAGOON_PROJECT" == "dpl-bnf" ]]; then
+            ENVIRONMENT=$LAGOON_ENVIRONMENT-bnf
+          fi
+
           GH_DEPLOYMENTS=$(curl -H "Authorization: Bearer $GH_DEPLOYMENT_TOKEN" \
-          "https://api.github.com/repos/danskernesdigitalebibliotek/dpl-cms/deployments?ref=$LAGOON_PR_HEAD_BRANCH&environment=$LAGOON_ENVIRONMENT")
+          "https://api.github.com/repos/danskernesdigitalebibliotek/dpl-cms/deployments?ref=$LAGOON_PR_HEAD_BRANCH&environment=$ENVIRONMENT")
           GH_DEPLOYMENT_ID=$(echo "$GH_DEPLOYMENTS" | grep '"id":' | head -n 1 | sed 's/[^0-9]*\([0-9]*\).*/\1/')
 
           echo "$GH_DEPLOYMENTS"
@@ -41,6 +48,11 @@ tasks:
             else
             # Otherwise install and let drush generate a password.
               drush si --existing-config -y
+            fi
+
+            # Enable the server module on environments in the BNF project.
+            if [[ "$LAGOON_PROJECT" == "dpl-bnf" ]]; then
+              drush pm:enable -y bnf_server
             fi
 
             # Practice shows that the cache needs to be cleared to avoid
