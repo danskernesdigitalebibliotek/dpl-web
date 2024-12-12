@@ -3,14 +3,15 @@
 import { motion, useInView } from "framer-motion"
 import { useEffect, useRef } from "react"
 
-import SearchFiltersMobile from "@/components/shared/searchFilters/SearchFiltersMobile"
-import useSearchMachineActor from "@/lib/machines/search/useSearchMachineActor"
-
+import SearchResults, {
+  SearchResultsGhost,
+} from "@/components/pages/searchPageLayout/SearchResults"
+import { useSearchDataAndLoadingStates } from "@/components/pages/searchPageLayout/helper"
 import SearchFiltersDesktop, {
   SearchFiltersDesktopGhost,
-} from "../../shared/searchFilters/SearchFiltersDesktop"
-import SearchResults, { SearchResultsGhost } from "./SearchResults"
-import { useSearchDataAndLoadingStates } from "./helper"
+} from "@/components/shared/searchFilters/SearchFiltersDesktop"
+import SearchFiltersMobile from "@/components/shared/searchFilters/SearchFiltersMobile"
+import useSearchMachineActor from "@/lib/machines/search/useSearchMachineActor"
 
 const SearchPageLayout = () => {
   const loadMoreRef = useRef(null)

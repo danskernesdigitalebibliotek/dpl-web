@@ -4,9 +4,8 @@ import Image from "next/image"
 import React, { useEffect, useRef, useState } from "react"
 import Tilt from "react-parallax-tilt"
 
+import Icon from "@/components/shared/icon/Icon"
 import { cn } from "@/lib/helpers/helper.cn"
-
-import Icon from "../icon/Icon"
 
 type CoverPictureProps = {
   lowResSrc: string

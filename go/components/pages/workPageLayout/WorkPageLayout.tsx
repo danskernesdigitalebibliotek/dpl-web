@@ -5,12 +5,14 @@ import { notFound } from "next/navigation"
 import { useSearchParams } from "next/navigation"
 import React, { useEffect } from "react"
 
+import WorkPageHeader from "@/components/pages/workPageLayout/WorkPageHeader"
+import {
+  getBestRepresentation,
+  getManifestationByMaterialType,
+} from "@/components/pages/workPageLayout/helper"
 import InfoBox from "@/components/shared/infoBox/InfoBox"
 import { GetMaterialQuery, useGetMaterialQuery } from "@/lib/graphql/generated/fbi/graphql"
 import { useSelectedManifestationStore } from "@/store/selectedManifestation.store"
-
-import WorkPageHeader from "./WorkPageHeader"
-import { getBestRepresentation, getManifestationByMaterialType } from "./helper"
 
 type WorkPageLayoutProps = {
   workId: string

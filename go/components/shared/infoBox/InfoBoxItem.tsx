@@ -1,9 +1,8 @@
 import { useRouter } from "next/navigation"
 import React from "react"
 
+import { Button } from "@/components/shared/button/Button"
 import useSearchMachineActor from "@/lib/machines/search/useSearchMachineActor"
-
-import { Button } from "../button/Button"
 
 type InfoBoxItemProps = {
   term: string
@@ -24,7 +23,7 @@ const InfoBoxItem = ({ term, description, isButtons = false }: InfoBoxItemProps)
 
   return (
     <>
-      <hr className="not-first:mt-7 border-foreground opacity-15" />
+      <hr className="border-foreground opacity-15 not-first:mt-7" />
       <dt className="mt-2 text-typo-caption">{term}</dt>
       {!isButtons && <dd className="mt-6 text-typo-heading-5">{description.join(", ")}</dd>}
       {isButtons && (

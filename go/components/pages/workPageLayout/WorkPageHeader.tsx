@@ -2,6 +2,15 @@ import { motion } from "framer-motion"
 import { useRouter, useSearchParams } from "next/navigation"
 import React, { useEffect, useState } from "react"
 
+import WorkPageButtons from "@/components/pages/workPageLayout/WorkPageButtons"
+import {
+  addMaterialTypeIconToSelectOption,
+  findInitialSliderValue,
+  getIsbnsFromManifestation,
+  getManifestationByMaterialType,
+  getManifestationLanguageIsoCode,
+  getWorkMaterialTypes,
+} from "@/components/pages/workPageLayout/helper"
 import { Badge } from "@/components/shared/badge/Badge"
 import { CoverPicture } from "@/components/shared/coverPicture/CoverPicture"
 import SlideSelect, { SlideSelectOption } from "@/components/shared/slideSelect/SlideSelect"
@@ -12,16 +21,6 @@ import { useGetCoverCollection } from "@/lib/rest/cover-service-api/generated/co
 import { GetCoverCollectionSizesItem } from "@/lib/rest/cover-service-api/generated/model"
 import { useGetV1ProductsIdentifier } from "@/lib/rest/publizon-api/generated/publizon"
 import { useSelectedManifestationStore } from "@/store/selectedManifestation.store"
-
-import WorkPageButtons from "./WorkPageButtons"
-import {
-  addMaterialTypeIconToSelectOption,
-  findInitialSliderValue,
-  getIsbnsFromManifestation,
-  getManifestationByMaterialType,
-  getManifestationLanguageIsoCode,
-  getWorkMaterialTypes,
-} from "./helper"
 
 type WorkPageHeaderProps = {
   work: WorkFullWorkPageFragment

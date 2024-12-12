@@ -1,11 +1,10 @@
 import { motion } from "framer-motion"
 import React from "react"
 
+import InfoBoxItem from "@/components/shared/infoBox/InfoBoxItem"
+import { getSeriesInfo } from "@/components/shared/infoBox/helper"
 import { WorkFullWorkPageFragment } from "@/lib/graphql/generated/fbi/graphql"
 import { useSelectedManifestationStore } from "@/store/selectedManifestation.store"
-
-import InfoBoxItem from "./InfoBoxItem"
-import { getSeriesInfo } from "./helper"
 
 type InfoBoxProps = {
   work: WorkFullWorkPageFragment
