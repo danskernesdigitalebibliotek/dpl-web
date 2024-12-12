@@ -11,7 +11,7 @@
     "codegen:covers": "rm -rf src/lib/rest/cover-service-api/generated/model/*.* && orval --project coverService",
     "codegen:graphql": "graphql-codegen --require tsconfig-paths/register --config codegen.ts",
     "codegen:publizon": "rm -rf lib/rest/publizon-api/generated/model/*.* && orval --project publizonAdapter",
-    "dev:https": "next dev -p 9876 --experimental-https",
+    "dev:https": "next dev --experimental-https",
     "dev": "next dev",
     "format:check": "prettier --check .",
     "format:write": "prettier --write .",
