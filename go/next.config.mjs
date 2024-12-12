@@ -1,8 +1,5 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  experimental: {
-    serverSourceMaps: true,
-  },
   images: {
     remotePatterns: [
       {
