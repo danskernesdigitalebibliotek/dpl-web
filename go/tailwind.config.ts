@@ -348,6 +348,9 @@ const config: Config = {
         ".hyphens-none": { hyphens: "none" },
       })
     },
+    function ({ addVariant }: { addVariant: (name: string, generator: string) => void }) {
+      addVariant("not-first", "&:not(:first-child)")
+    },
   ],
 }
 export default config
