@@ -2,6 +2,7 @@
 
 namespace Drupal\dpl_react_apps\Controller;
 
+use Drupal\Core\Block\BlockManagerInterface;
 use Drupal\Core\Controller\ControllerBase;
 use Drupal\Core\Render\RendererInterface;
 use Drupal\dpl_fbs\Form\FbsSettingsForm;
@@ -13,8 +14,10 @@ use Drupal\dpl_library_agency\FbiProfileType;
 use Drupal\dpl_library_agency\GeneralSettings;
 use Drupal\dpl_library_agency\ReservationSettings;
 use Symfony\Component\DependencyInjection\ContainerInterface;
-use function Safe\json_encode as json_encode;
-use function Safe\preg_replace as preg_replace;
+use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
+use function Safe\json_encode;
+use function Safe\preg_replace;
 
 /**
  * Controller for rendering full page DPL React apps.
@@ -31,6 +34,7 @@ class DplReactAppsController extends ControllerBase {
     protected BranchRepositoryInterface $branchRepository,
     protected DplInstantLoanSettings $instantLoanSettings,
     protected GeneralSettings $generalSettings,
+    protected BlockManagerInterface $blockManager,
   ) {}
 
   /**
@@ -49,6 +53,7 @@ class DplReactAppsController extends ControllerBase {
       $container->get('dpl_library_agency.branch.repository'),
       $container->get('dpl_instant_loan.settings'),
       $container->get('dpl_library_agency.general_settings'),
+      $container->get('plugin.manager.block'),
     );
   }
 
@@ -274,6 +279,7 @@ class DplReactAppsController extends ControllerBase {
       'already-reserved-text' => $this->t('Already reserved', [], ['context' => 'Work Page']),
       'approve-reservation-text' => $this->t('Approve reservation', [], ['context' => 'Work Page']),
       'audience-text' => $this->t('Audience', [], ['context' => 'Work Page']),
+      'audiobook-text' => $this->t('Audiobook', [], ['context' => 'Work Page']),
       'blocked-button-text' => $this->t('Blocked', [], ['context' => 'Work Page']),
       'cannot-see-review-text' => $this->t('The review is not accessible', [], ['context' => 'Work Page']),
       'cant-reserve-text' => $this->t("Can't be reserved", [], ['context' => 'Work Page']),
@@ -309,6 +315,7 @@ class DplReactAppsController extends ControllerBase {
       'details-list-parts-text' => $this->t('Contents', [], ['context' => 'Work Page']),
       'details-of-the-material-text' => $this->t('Details of the material', [], ['context' => 'Work Page']),
       'details-text' => $this->t('Details', [], ['context' => 'Work Page']),
+      'ebook-text' => $this->t('Ebook', [], ['context' => 'Work Page']),
       'edition-text' => $this->t('Edition', [], ['context' => 'Work Page']),
       'editions-text' => $this->t('Editions', [], ['context' => 'Work Page']),
       'expand-more-text' => $this->t('Expand more', [], ['context' => 'Work Page']),
@@ -380,6 +387,7 @@ class DplReactAppsController extends ControllerBase {
       'online-limit-month-audiobook-info-text' => $this->t('You have borrowed @count out of @limit possible audio-books this month', [], ['context' => 'Work Page']),
       'online-limit-month-ebook-info-text' => $this->t('You have borrowed @count out of @limit possible e-books this month', [], ['context' => 'Work Page']),
       'online-limit-month-info-text' => $this->t('You have borrowed @count out of @limit possible e-books this month', [], ['context' => 'Work Page']),
+      'online-material-teaser-text' => $this->t('Try @materialType', [], ['context' => 'Work Page']),
       'open-order-not-owned-ill-loc-text' => $this->t('Your material has been ordered from another library', [], ['context' => 'Work Page']),
       'open-order-owned-own-catalogue-text' => $this->t('Item available, order through the librarys catalogue', [], ['context' => 'Work Page']),
       'open-order-owned-wrong-mediumtype-text' => $this->t('Item available but medium type not accepted', [], ['context' => 'Work Page']),
@@ -405,6 +413,8 @@ class DplReactAppsController extends ControllerBase {
       'order-digital-copy-title-text' => $this->t('Order digital copy', [], ['context' => 'Work Page']),
       'original-title-text' => $this->t('Original title', [], ['context' => 'Work Page']),
       'periodical-select-edition-text' => $this->t('Edition', [], ['context' => 'Work Page']),
+      'player-modal-close-button-text' => $this->t('Close', [], ['context' => 'Work Page']),
+      'player-modal-description-text' => $this->t('Modal for player', [], ['context' => 'Work Page']),
       'periodical-select-year-text' => $this->t('Year', [], ['context' => 'Work Page']),
       'periodikum-select-week-text' => $this->t('Week', [], ['context' => 'Work Page']),
       'periodikum-select-year-text' => $this->t('Year', [], ['context' => 'Work Page']),
@@ -498,6 +508,40 @@ class DplReactAppsController extends ControllerBase {
     }
 
     return $urls;
+  }
+
+  /**
+   * Render the Reader React app.
+   *
+   * @param \Symfony\Component\HttpFoundation\Request $request
+   *   The HTTP request containing query parameters.
+   *
+   * @return mixed[]
+   *   Render array with the Reader app block.
+   *
+   * @throws \Symfony\Component\HttpKernel\Exception\BadRequestHttpException
+   */
+  public function reader(Request $request): array {
+    $identifier = $request->query->get('identifier');
+    $orderid = $request->query->get('orderid');
+
+    if (!$identifier && !$orderid) {
+      throw new BadRequestHttpException('Either identifier or orderid must be provided.');
+    }
+
+    $data = [
+      'identifier' => $identifier ?? NULL,
+      'orderid' => $orderid ?? NULL,
+    ];
+
+    $app = [
+      '#theme' => 'dpl_react_app',
+      '#name' => 'reader',
+      '#data' => $data,
+    ];
+
+    return $app;
+
   }
 
 }

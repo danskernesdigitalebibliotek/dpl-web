@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "f58b7ee6ff24d0da102116095910a003",
+    "content-hash": "997459f511e1355cabc9e817644449f9",
     "packages": [
         {
             "name": "amazeeio/drupal_integrations",
@@ -1166,19 +1166,19 @@
         },
         {
             "name": "danskernesdigitalebibliotek/dpl-design-system",
-            "version": "2024.50.0",
+            "version": "0.0.0-dev",
             "dist": {
                 "type": "zip",
-                "url": "https://github.com/danskernesdigitalebibliotek/dpl-design-system/releases/download/2024.50.0/dist-2024-50-0-fbcaaf96dce9df6ceb2537705578a0f3e882fe08.zip"
+                "url": "https://github.com/danskernesdigitalebibliotek/dpl-design-system/releases/download/branch-DDFBRA-184-anonymous-and-logged-in-user-can-try-audiobook/dist-ddfbra-184-anonymous-and-logged-in-user-can-try-audiobook.zip"
             },
             "type": "drupal-library"
         },
         {
             "name": "danskernesdigitalebibliotek/dpl-react",
-            "version": "2024.50.0",
+            "version": "0.0.0-dev",
             "dist": {
                 "type": "zip",
-                "url": "https://github.com/danskernesdigitalebibliotek/dpl-react/releases/download/2024.50.0/dist-2024-50-0-971e7c3cbc30ed2ea65d95655b798d67a6aa9d75.zip"
+                "url": "https://github.com/danskernesdigitalebibliotek/dpl-react/releases/download/branch-DDFBRA-183-anonymous-and-logged-in-user-can-try-ebook/dist-ddfbra-183-anonymous-and-logged-in-user-can-try-ebook.zip"
             },
             "require": {
                 "composer/installers": "^1.2.0"
@@ -20182,6 +20182,8 @@
     "aliases": [],
     "minimum-stability": "dev",
     "stability-flags": {
+        "danskernesdigitalebibliotek/dpl-design-system": 20,
+        "danskernesdigitalebibliotek/dpl-react": 20,
         "drupal/default_content": 15,
         "drupal/gin": 5,
         "drupal/gin_toolbar": 5,
