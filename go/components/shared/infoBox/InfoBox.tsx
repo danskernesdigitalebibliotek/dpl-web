@@ -19,14 +19,22 @@ const InfoBox = ({ work }: InfoBoxProps) => {
       initial={{ opacity: 0, y: 50 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.5, ease: "easeOut" }}>
-      <section className="relative flex w-full rounded-md bg-background-overlay lg:mt-16 lg:gap-48 lg:px-14 lg:pb-14 lg:pt-36">
+      <section
+        className="relative mt-14 flex w-full flex-col flex-wrap gap-16 rounded-md bg-background-overlay px-6 py-8
+          lg:mt-16 lg:flex-row lg:gap-48 lg:px-14 lg:pb-14 lg:pt-36">
         <div className="flex-1 text-typo-body-md">
-          <h2 className="top-9 text-typo-heading-4 lg:absolute lg:left-14">Beskrivelse</h2>
+          <h2 className="text-typo-heading-4 lg:absolute lg:left-14 lg:top-9">Beskrivelse</h2>
           {!work.abstract ||
-            (!work.abstract.length && <p>Værket har desværre ingen beskrivelse.</p>)}
+            (!work.abstract.length && (
+              <p className="pt-5 lg:pt-0">Værket har desværre ingen beskrivelse.</p>
+            ))}
           {work.abstract &&
             work.abstract.length &&
-            work.abstract.map(abstract => <p key={abstract.substring(0, 30)}>{abstract}</p>)}
+            work.abstract.map(abstract => (
+              <p key={abstract.substring(0, 30)} className="pt-5 lg:pt-0">
+                {abstract}
+              </p>
+            ))}
         </div>
         <dl className="flex-1">
           {!!selectedManifestation?.audience && (
