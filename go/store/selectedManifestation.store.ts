@@ -21,7 +21,7 @@ const useSelectedManifestationStore = create<SelectedManifestationState>()(
           })),
       }),
       {
-        name: "theme-storage",
+        name: "manifistation-storage",
       }
     )
   )

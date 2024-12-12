@@ -42,7 +42,7 @@ import type {
 
 /**
  * Sample **request**:
-            
+
     GET /friendly
     {
         "name": "Some name"

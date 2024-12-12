@@ -1,3 +1,5 @@
+"use client"
+
 import { motion } from "framer-motion"
 import { useRouter, useSearchParams } from "next/navigation"
 import React, { useEffect, useState } from "react"
@@ -8,6 +10,7 @@ import SlideSelect, { SlideSelectOption } from "@/components/shared/slideSelect/
 import { displayCreators } from "@/components/shared/workCard/helper"
 import { WorkFullWorkPageFragment } from "@/lib/graphql/generated/fbi/graphql"
 import { getCoverUrls, getLowResCoverUrl } from "@/lib/helpers/covers"
+import { getIsbnsFromManifestation } from "@/lib/helpers/ids"
 import { useGetCoverCollection } from "@/lib/rest/cover-service-api/generated/cover-service"
 import { GetCoverCollectionSizesItem } from "@/lib/rest/cover-service-api/generated/model"
 import { useGetV1ProductsIdentifier } from "@/lib/rest/publizon-api/generated/publizon"
@@ -17,7 +20,6 @@ import WorkPageButtons from "./WorkPageButtons"
 import {
   addMaterialTypeIconToSelectOption,
   findInitialSliderValue,
-  getIsbnsFromManifestation,
   getManifestationByMaterialType,
   getManifestationLanguageIsoCode,
   getWorkMaterialTypes,
@@ -32,10 +34,10 @@ const WorkPageHeader = ({ work }: WorkPageHeaderProps) => {
   const router = useRouter()
   const { selectedManifestation, setSelectedManifestation } = useSelectedManifestationStore()
   const [slideSelectOptions, setSlideSelectOptions] = useState<SlideSelectOption[] | null>(null)
-  const isbns = getIsbnsFromManifestation(selectedManifestation)
+  const isbns = selectedManifestation ? getIsbnsFromManifestation(selectedManifestation) : []
   const languageIsoCode = getManifestationLanguageIsoCode(selectedManifestation)
   const titleSuffix = selectedManifestation?.titles?.identifyingAddition || ""
-  const [initialSliderValue, setinitialSliderValue] = useState<SlideSelectOption | undefined>(
+  const [initialSliderValue, setInitialSliderValue] = useState<SlideSelectOption | undefined>(
     undefined
   )
   const workMaterialTypes = getWorkMaterialTypes(work).map(materialType => {
@@ -54,11 +56,11 @@ const WorkPageHeader = ({ work }: WorkPageHeaderProps) => {
     { query: { enabled: !!selectedManifestation?.pid } }
   )
 
-  const { data: dataPublizon } = useGetV1ProductsIdentifier(isbns[0]?.value || "", {
+  const { data: publizonData } = useGetV1ProductsIdentifier(isbns?.[0], {
     query: {
       // Publizon / useGetV1ProductsIdentifier is responsible for online
       // materials. It requires an ISBN to do lookups.
-      enabled: isbns && isbns.length > 0,
+      enabled: isbns.length > 0,
     },
   })
 
@@ -92,7 +94,7 @@ const WorkPageHeader = ({ work }: WorkPageHeaderProps) => {
   useEffect(() => {
     // Initialize slideSelect initial value
     const searchParams = new URLSearchParams(window.location.search)
-    setinitialSliderValue(
+    setInitialSliderValue(
       findInitialSliderValue(slideSelectOptions, selectedManifestation, searchParams)
     )
   }, [selectedManifestation, slideSelectOptions])
@@ -137,7 +139,7 @@ const WorkPageHeader = ({ work }: WorkPageHeaderProps) => {
           )}
         </div>
         <div className="col-span-4 flex flex-col items-start justify-end pt-grid-gap-3 lg:pt-0">
-          {!!dataPublizon?.product?.costFree && (
+          {!!publizonData?.product?.costFree && (
             <Badge variant={"blue-title"} className="mb-1 lg:mb-2">
               BLÅ
             </Badge>
