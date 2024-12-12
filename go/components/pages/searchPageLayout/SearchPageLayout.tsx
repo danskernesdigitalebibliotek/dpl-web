@@ -34,6 +34,17 @@ const SearchPageLayout = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isInView])
 
+  useEffect(() => {
+    // Scroll to top on load of the page
+    // Needed e.g. when redirecting from material page by clicking on topics
+    setTimeout(() => {
+      window.scrollTo({
+        top: 0,
+        behavior: "smooth",
+      })
+    }, 500)
+  }, [])
+
   const isNoSearchResult = !isLoadingResults && (!data.search || !data.search.pages[0].length)
   const hitCountText = data.search?.hitcount ? `(${data.search.hitcount})` : ""
   const searchQueryText = searchQuery ? `"${searchQuery}"` : ""
