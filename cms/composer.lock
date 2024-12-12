@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "db4be95fa82e1c8b214e8644a314b435",
+    "content-hash": "5922eacba79b055c55454a0cf03ea50b",
     "packages": [
         {
             "name": "amazeeio/drupal_integrations",
@@ -1178,7 +1178,7 @@
             "version": "0.0.0-dev",
             "dist": {
                 "type": "zip",
-                "url": "https://github.com/danskernesdigitalebibliotek/dpl-react/releases/download/branch-DDFBRA-236-logged-in-user-can-go-from-digital-loans-to-material-to-listen-read/dist-ddfbra-236-logged-in-user-can-go-from-digital-loans-to-material-to-listen-read.zip"
+                "url": "https://github.com/danskernesdigitalebibliotek/dpl-react/releases/download/branch-DDFBRA-251-logged-in-user-can-open-their-loaned-e-material/dist-ddfbra-251-logged-in-user-can-open-their-loaned-e-material.zip"
             },
             "require": {
                 "composer/installers": "^1.2.0"
