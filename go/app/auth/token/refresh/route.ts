@@ -1,3 +1,4 @@
+import { headers } from "next/headers"
 import { NextRequest, NextResponse } from "next/server"
 import * as client from "openid-client"
 import { z } from "zod"
@@ -13,7 +14,11 @@ const sessionTokenSchema = z.object({
   refresh_token: z.string(),
 })
 
-export async function GET(request: NextRequest, response: NextResponse) {
+// TODO: check if headers still work as intended,
+// when reenabling this together with refresh token functionality in the middleware.
+export async function GET(request: NextRequest) {
+  const requestHeaders = await headers()
+
   const appUrl = String(goConfig("app.url"))
   const config = await getUniloginClientConfig()
   // TODO: Fix refresh token flow with new openid-client.
@@ -23,12 +28,12 @@ export async function GET(request: NextRequest, response: NextResponse) {
 
   // If the user is not logged in, we redirect to the frontpage.
   if (!session.isLoggedIn) {
-    return NextResponse.redirect(frontpage, { headers: response.headers })
+    return NextResponse.redirect(frontpage, { headers: requestHeaders })
   }
   const redirect = request.nextUrl.searchParams.get("redirect")
   // We need the redirect URL to be present in the query string.
   if (!redirect) {
-    return NextResponse.redirect(frontpage, { headers: response.headers })
+    return NextResponse.redirect(frontpage, { headers: requestHeaders })
   }
 
   try {
@@ -46,7 +51,7 @@ export async function GET(request: NextRequest, response: NextResponse) {
     const isZodError = error instanceof z.ZodError
     console.error(isZodError ? JSON.stringify(error.errors) : error)
   } finally {
-    return NextResponse.redirect(redirect, { headers: response.headers })
+    return NextResponse.redirect(redirect, { headers: requestHeaders })
   }
 }
 
