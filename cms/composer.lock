@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "997459f511e1355cabc9e817644449f9",
+    "content-hash": "db4be95fa82e1c8b214e8644a314b435",
     "packages": [
         {
             "name": "amazeeio/drupal_integrations",
@@ -1178,7 +1178,7 @@
             "version": "0.0.0-dev",
             "dist": {
                 "type": "zip",
-                "url": "https://github.com/danskernesdigitalebibliotek/dpl-react/releases/download/branch-DDFBRA-183-anonymous-and-logged-in-user-can-try-ebook/dist-ddfbra-183-anonymous-and-logged-in-user-can-try-ebook.zip"
+                "url": "https://github.com/danskernesdigitalebibliotek/dpl-react/releases/download/branch-DDFBRA-236-logged-in-user-can-go-from-digital-loans-to-material-to-listen-read/dist-ddfbra-236-logged-in-user-can-go-from-digital-loans-to-material-to-listen-read.zip"
             },
             "require": {
                 "composer/installers": "^1.2.0"
