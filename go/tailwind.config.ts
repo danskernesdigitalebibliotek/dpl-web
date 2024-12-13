@@ -193,6 +193,7 @@ export const extendedTheme = {
       background: {
         DEFAULT: "var(--background)",
         overlay: "var(--background-overlay)",
+        skeleton: "var(--background-skeleton)",
       },
       foreground: "var(--foreground)",
       blue: "var(--blue)",

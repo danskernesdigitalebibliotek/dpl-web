@@ -67,9 +67,11 @@
 
   --beige: hsla(36, 45%, 98%, 1);
   --beige-overlay: hsla(42, 25%, 35%, 0.05);
+  --beige-skeleton: hsla(42, 25%, 35%, 0.1);
 
   --blue: hsla(228, 100%, 10%, 1);
   --blue-overlay: hsla(238, 54%, 89%, 0.09);
+  --blue-skeleton: hsla(238, 54%, 89%, 0.18);
 
   --border: hsla(48, 4.4%, 77.8%, 1);
   --reader-grey: hsla(0, 0%, 94.1%, 1);
@@ -106,6 +108,7 @@
   /* DYNAMIC COLORS */
   --background: var(--beige);
   --background-overlay: var(--beige-overlay);
+  --background-skeleton: var(--beige-skeleton);
   --foreground: var(--black);
 
   /* TRANSITION DURATIONS */
@@ -313,6 +316,7 @@
 .dark-mode {
   --background: var(--blue);
   --background-overlay: var(--blue-overlay);
+  --background-skeleton: var(--blue-skeleton);
   --foreground: var(--beige);
   --shadow-add-contrast: hsla(0, 0%, 0%, 0.5);
 }
