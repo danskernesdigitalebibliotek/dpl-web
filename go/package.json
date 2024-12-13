@@ -22,7 +22,9 @@
     "test:accessibility": "test-storybook",
     "test:unit:once": "vitest run",
     "test:unit": "vitest",
-    "typecheck": "tsc --noEmit"
+    "typecheck": "tsc --noEmit",
+    "cypress:open": "cypress open",
+    "cypress:run": "cypress run"
   },
   "dependencies": {
     "@next/env": "15.0.3",
@@ -86,6 +88,7 @@
     "@types/react-dom": "npm:types-react-dom@19.0.0-rc.1",
     "@vitejs/plugin-react": "^4.3.2",
     "axe-playwright": "^2.0.3",
+    "cypress": "^13.16.1",
     "eslint": "^8.0.0",
     "eslint-config-next": "15.0.3",
     "eslint-config-prettier": "^9.1.0",
