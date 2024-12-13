@@ -94,15 +94,15 @@ const WorkCard = ({ work }: WorkCardProps) => {
 export const WorkCardSkeleton = () => {
   return (
     <div className="space-y-3 lg:space-y-5">
-      <div className="w-full animate-pulse rounded-base bg-background-overlay">
+      <div className="bg-background-skeleton w-full animate-pulse rounded-base">
         <div className="aspect-4/5 px-[15%] pt-[15%]"></div>
         <div className="py-3 md:py-4">
           <div className="h-6 md:h-10"></div>
         </div>
       </div>
       <div className="space-y-2">
-        <div className="h-5 animate-pulse rounded-base bg-background-overlay lg:h-7"></div>
-        <div className="h-3 animate-pulse rounded-base bg-background-overlay lg:h-4"></div>
+        <div className="bg-background-skeleton h-5 animate-pulse rounded-base lg:h-7"></div>
+        <div className="bg-background-skeleton h-3 animate-pulse rounded-base lg:h-4"></div>
       </div>
     </div>
   )
