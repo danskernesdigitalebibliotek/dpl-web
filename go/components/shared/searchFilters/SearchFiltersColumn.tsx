@@ -106,7 +106,7 @@ const SearchFiltersColumn = ({ facet, isLast }: SearchFiltersColumnProps) => {
   )
 }
 
-export const SearchFiltersColumnGhost = () => {
+export const SearchFiltersColumnSkeleton = () => {
   return (
     <div className="space-y-grid-gap-half">
       <div className="-mb-1 h-4 w-20 animate-pulse rounded-full bg-background-overlay"></div>

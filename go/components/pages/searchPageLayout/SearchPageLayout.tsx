@@ -4,11 +4,11 @@ import { motion, useInView } from "framer-motion"
 import { useEffect, useRef } from "react"
 
 import SearchResults, {
-  SearchResultsGhost,
+  SearchResultsSkeleton,
 } from "@/components/pages/searchPageLayout/SearchResults"
 import { useSearchDataAndLoadingStates } from "@/components/pages/searchPageLayout/helper"
 import SearchFiltersDesktop, {
-  SearchFiltersDesktopGhost,
+  SearchFiltersDesktopSkeleton,
 } from "@/components/shared/searchFilters/SearchFiltersDesktop"
 import SearchFiltersMobile from "@/components/shared/searchFilters/SearchFiltersMobile"
 import useSearchMachineActor from "@/lib/machines/search/useSearchMachineActor"
@@ -63,9 +63,9 @@ const SearchPageLayout = () => {
             </div>
           ) : (
             <>
-              <div className="xl:hidden">{/* <SearchFiltersMobileGhost /> */}</div>
+              <div className="xl:hidden">{/* <SearchFiltersMobileSkeleton /> */}</div>
               <div className="hidden xl:block">
-                <SearchFiltersDesktopGhost />
+                <SearchFiltersDesktopSkeleton />
               </div>
             </>
           )}
@@ -86,7 +86,7 @@ const SearchPageLayout = () => {
                     </motion.div>
                   )
               )}
-            {(isLoadingMoreResults || isLoadingResults) && <SearchResultsGhost />}
+            {(isLoadingMoreResults || isLoadingResults) && <SearchResultsSkeleton />}
           </div>
         </>
       ) : (

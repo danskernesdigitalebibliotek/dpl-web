@@ -93,7 +93,7 @@ const WorkCard = ({ work }: WorkCardProps) => {
   )
 }
 
-export const WorkCardGhost = () => {
+export const WorkCardSkeleton = () => {
   return (
     <div className="space-y-3 lg:space-y-5">
       <div className="w-full animate-pulse rounded-base bg-background-overlay">
