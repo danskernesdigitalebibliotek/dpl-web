@@ -15,8 +15,8 @@ const InfoBox = ({ work }: InfoBoxProps) => {
 
   return (
     <motion.div
-      initial={{ opacity: 0, y: 50 }}
-      animate={{ opacity: 1, y: 0 }}
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
       transition={{ duration: 0.5, ease: "easeOut" }}>
       <section
         className="relative mt-14 flex w-full flex-col flex-wrap gap-16 rounded-md bg-background-overlay px-6 py-8
