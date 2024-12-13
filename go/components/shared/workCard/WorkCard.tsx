@@ -27,14 +27,12 @@ const WorkCard = ({ work }: WorkCardProps) => {
     ],
   })
   const isbns = getIsbnsFromWork(work)
-  const shouldQueryBeEnabled = () => {
-    return isbns && isbns.length > 0
-  }
-  const { data: dataPublizon } = useGetV1ProductsIdentifier(isbns[0] || "", {
+
+  const { data: dataPublizon } = useGetV1ProductsIdentifier(isbns[0], {
     query: {
       // Publizon / useGetV1ProductsIdentifier is responsible for online
       // materials. It requires an ISBN to do lookups.
-      enabled: shouldQueryBeEnabled(),
+      enabled: isbns.length > 0,
     },
   })
 
