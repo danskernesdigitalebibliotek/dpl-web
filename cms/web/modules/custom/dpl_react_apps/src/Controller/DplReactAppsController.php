@@ -2,7 +2,6 @@
 
 namespace Drupal\dpl_react_apps\Controller;
 
-use Drupal\Core\Block\BlockManagerInterface;
 use Drupal\Core\Controller\ControllerBase;
 use Drupal\Core\Render\RendererInterface;
 use Drupal\dpl_fbs\Form\FbsSettingsForm;
@@ -34,7 +33,6 @@ class DplReactAppsController extends ControllerBase {
     protected BranchRepositoryInterface $branchRepository,
     protected DplInstantLoanSettings $instantLoanSettings,
     protected GeneralSettings $generalSettings,
-    protected BlockManagerInterface $blockManager,
   ) {}
 
   /**
@@ -53,7 +51,6 @@ class DplReactAppsController extends ControllerBase {
       $container->get('dpl_library_agency.branch.repository'),
       $container->get('dpl_instant_loan.settings'),
       $container->get('dpl_library_agency.general_settings'),
-      $container->get('plugin.manager.block'),
     );
   }
 
