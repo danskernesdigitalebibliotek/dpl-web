@@ -36,17 +36,6 @@ const SearchPageLayout = () => {
   }, [isInView])
 
   useEffect(() => {
-    // Scroll to top on load of the page
-    // Needed e.g. when redirecting from material page by clicking on topics
-    setTimeout(() => {
-      window.scrollTo({
-        top: 0,
-        behavior: "smooth",
-      })
-    }, 500)
-  }, [])
-
-  useEffect(() => {
     actor.send({ type: "RESET_BOOTSTRAP_STATE" })
   }, [actor])
 

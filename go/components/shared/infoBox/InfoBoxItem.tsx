@@ -17,7 +17,7 @@ const InfoBoxItem = ({ term, description, isButtons = false }: InfoBoxItemProps)
   const handleClick = (text: string) => {
     actor.send({ type: "SEARCH" })
     router.push(`/search?q=${text}`, {
-      scroll: false,
+      scroll: true,
     })
   }
 
