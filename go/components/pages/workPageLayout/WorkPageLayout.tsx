@@ -10,7 +10,10 @@ import {
   getBestRepresentation,
   getManifestationByMaterialType,
 } from "@/components/pages/workPageLayout/helper"
+import { ButtonSkeleton } from "@/components/shared/button/Button"
+import { CoverPictureSkeleton } from "@/components/shared/coverPicture/CoverPicture"
 import InfoBox from "@/components/shared/infoBox/InfoBox"
+import { SlideSelectSkeleton } from "@/components/shared/slideSelect/SlideSelect"
 import { GetMaterialQuery, useGetMaterialQuery } from "@/lib/graphql/generated/fbi/graphql"
 import { useSelectedManifestationStore } from "@/store/selectedManifestation.store"
 
@@ -55,7 +58,7 @@ function WorkPageLayout({ workId, dehydratedQueryData }: WorkPageLayoutProps) {
   if (isLoading && !data) {
     return (
       <div className="content-container my-grid-gap-2 flex-row flex-wrap lg:my-grid-gap-half">
-        Loading...
+        <WorkPageSkeletons />
       </div>
     )
   }
@@ -69,6 +72,28 @@ function WorkPageLayout({ workId, dehydratedQueryData }: WorkPageLayoutProps) {
       <WorkPageHeader work={data.work} />
       <InfoBox work={data.work} />
       {/* <WorkPageDetails /> */}
+    </div>
+  )
+}
+
+export const WorkPageSkeletons = () => {
+  return (
+    <div className="lg:grid-go mt-5">
+      <div className="col-span-4 h-auto lg:order-2">
+        <div className="h-auto w-full flex-col items-center justify-center lg:aspect-4/5">
+          <CoverPictureSkeleton />
+        </div>
+        <div className="flex w-full justify-center pt-12">
+          <SlideSelectSkeleton />
+        </div>
+      </div>
+      <div className="col-span-4 flex flex-col items-start justify-end pt-grid-gap-3 lg:pt-0">
+        <div className="h-[46px] w-full animate-pulse rounded-md bg-background-overlay lg:mt-0" />
+        <div className="mt-grid-gap-2 h-[13px] w-[50%] animate-pulse rounded-md bg-background-overlay lg:mt-7" />
+      </div>
+      <div className="col-span-4 mt-grid-gap-3 flex flex-col items-end justify-end lg:order-3 lg:mt-0">
+        <ButtonSkeleton />
+      </div>
     </div>
   )
 }
