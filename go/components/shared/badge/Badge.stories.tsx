@@ -1,4 +1,3 @@
-import { INITIAL_VIEWPORTS as viewports } from "@storybook/addon-viewport"
 import type { Meta, StoryObj } from "@storybook/react"
 
 import { darkModeDecorator } from "@/.storybook/decorators"
@@ -9,10 +8,6 @@ const meta = {
   component: Badge,
   parameters: {
     layout: "centered",
-    viewport: {
-      viewports: viewports,
-      defaultViewport: "responsive",
-    },
   },
   argTypes: {
     variant: {
@@ -31,22 +26,7 @@ export const Default: Story = {
   render: args => <Badge {...args}>Badge</Badge>,
 }
 
-export const DefaultMobile: Story = {
-  parameters: {
-    viewport: { defaultViewport: "iphone14" },
-  },
-  render: args => <Badge {...args}>Badge</Badge>,
-}
-
 export const DarkMode: Story = {
-  decorators: [darkModeDecorator],
-  render: args => <Badge {...args}>Badge</Badge>,
-}
-
-export const DarkModeMobile: Story = {
-  parameters: {
-    viewport: { defaultViewport: "iphone14" },
-  },
   decorators: [darkModeDecorator],
   render: args => <Badge {...args}>Badge</Badge>,
 }

@@ -1,4 +1,3 @@
-import { INITIAL_VIEWPORTS as viewports } from "@storybook/addon-viewport"
 import type { Meta, StoryObj } from "@storybook/react"
 import { fn } from "@storybook/test"
 
@@ -20,10 +19,6 @@ const meta = {
   component: SlideSelect,
   parameters: {
     layout: "centered",
-    viewport: {
-      viewports: viewports,
-      defaultViewport: "responsive",
-    },
   },
   argTypes: {
     options: {
@@ -46,33 +41,8 @@ export const Default: Story = {
   ),
 }
 
-export const DefaultMobile: Story = {
-  args: defaultArgs,
-  parameters: {
-    viewport: { defaultViewport: "iphone14" },
-  },
-  render: args => (
-    <div className="flex w-full max-w-[90vw] justify-center">
-      <SlideSelect {...args} />
-    </div>
-  ),
-}
-
 export const DarkMode: Story = {
   args: defaultArgs,
-  decorators: [darkModeDecorator],
-  render: args => (
-    <div className="flex w-full max-w-[90vw] justify-center">
-      <SlideSelect {...args} />
-    </div>
-  ),
-}
-
-export const DarkModeMobile: Story = {
-  args: defaultArgs,
-  parameters: {
-    viewport: { defaultViewport: "iphone14" },
-  },
   decorators: [darkModeDecorator],
   render: args => (
     <div className="flex w-full max-w-[90vw] justify-center">

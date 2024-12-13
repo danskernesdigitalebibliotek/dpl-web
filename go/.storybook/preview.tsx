@@ -57,6 +57,17 @@ const preview: Preview = {
         },
       },
     },
+    chromatic: {
+      // Test each story in different viewport modes
+      modes: {
+        mobile: {
+          viewport: "sm",
+        },
+        desktop: {
+          viewport: "xl",
+        },
+      },
+    },
     a11y: {
       config: {
         // Add a global 2-second delay for accessibility tests to make sure
