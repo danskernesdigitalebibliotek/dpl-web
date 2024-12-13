@@ -71,7 +71,9 @@ const SearchPageLayout = () => {
           )}
           <hr className="-mx-grid-edge w-screen border-foreground opacity-10 md:mx-auto md:w-full" />
           <div className="mb-space-y flex flex-col gap-y-[calc(var(--grid-gap-x)*2)]">
-            {isNoSearchResult && <p>Ingen søgeresultat</p>}
+            {isNoSearchResult && (
+              <p className="text-typo-subtitle-lg opacity-35">Ingen søgeresultat</p>
+            )}
             {data.search &&
               data.search.pages.map(
                 (works, i) =>
