@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "5922eacba79b055c55454a0cf03ea50b",
+    "content-hash": "437ec6ad51b120e216307251a0414122",
     "packages": [
         {
             "name": "amazeeio/drupal_integrations",
@@ -1169,7 +1169,7 @@
             "version": "0.0.0-dev",
             "dist": {
                 "type": "zip",
-                "url": "https://github.com/danskernesdigitalebibliotek/dpl-design-system/releases/download/branch-DDFBRA-184-anonymous-and-logged-in-user-can-try-audiobook/dist-ddfbra-184-anonymous-and-logged-in-user-can-try-audiobook.zip"
+                "url": "https://github.com/danskernesdigitalebibliotek/dpl-design-system/releases/download/branch-reader-player-feature/dist-reader-player-feature.zip"
             },
             "type": "drupal-library"
         },
@@ -1178,7 +1178,7 @@
             "version": "0.0.0-dev",
             "dist": {
                 "type": "zip",
-                "url": "https://github.com/danskernesdigitalebibliotek/dpl-react/releases/download/branch-DDFBRA-251-logged-in-user-can-open-their-loaned-e-material/dist-ddfbra-251-logged-in-user-can-open-their-loaned-e-material.zip"
+                "url": "https://github.com/danskernesdigitalebibliotek/dpl-react/releases/download/branch-reader-player-feature/dist-reader-player-feature.zip"
             },
             "require": {
                 "composer/installers": "^1.2.0"

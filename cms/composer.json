@@ -43,7 +43,7 @@
                 "version": "0.0.0-dev",
                 "type": "drupal-library",
                 "dist": {
-                    "url": "https://github.com/danskernesdigitalebibliotek/dpl-react/releases/download/branch-DDFBRA-251-logged-in-user-can-open-their-loaned-e-material/dist-ddfbra-251-logged-in-user-can-open-their-loaned-e-material.zip",
+                    "url": "https://github.com/danskernesdigitalebibliotek/dpl-react/releases/download/branch-reader-player-feature/dist-reader-player-feature.zip",
                     "type": "zip"
                 },
                 "require": {
@@ -58,7 +58,7 @@
                 "type": "drupal-library",
                 "version": "0.0.0-dev",
                 "dist": {
-                    "url": "https://github.com/danskernesdigitalebibliotek/dpl-design-system/releases/download/branch-DDFBRA-184-anonymous-and-logged-in-user-can-try-audiobook/dist-ddfbra-184-anonymous-and-logged-in-user-can-try-audiobook.zip",
+                    "url": "https://github.com/danskernesdigitalebibliotek/dpl-design-system/releases/download/branch-reader-player-feature/dist-reader-player-feature.zip",
                     "type": "zip"
                 }
             }
