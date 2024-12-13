@@ -78,4 +78,21 @@ const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
 
 Button.displayName = "Button"
 
-export { Button, buttonVariants }
+type ButtonSkeletonProps = {
+  size?: "sm" | "md" | "lg"
+}
+
+const ButtonSkeleton = ({ size }: ButtonSkeletonProps) => {
+  return (
+    <div
+      className={cn(
+        "w-12 animate-pulse rounded-full bg-background-overlay",
+        size === "sm" ? "h-[32px]" : "",
+        size === "md" || !size ? "h-[40px]" : "",
+        size === "lg" ? "h-[48px]" : ""
+      )}
+    />
+  )
+}
+
+export { Button, buttonVariants, ButtonSkeleton }
