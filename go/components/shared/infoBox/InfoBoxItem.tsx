@@ -25,9 +25,9 @@ const InfoBoxItem = ({ term, description, isButtons = false }: InfoBoxItemProps)
       {!isButtons && <dd className="mt-6 text-typo-heading-5">{description.join(", ")}</dd>}
       {isButtons && (
         <div className="mt-6 flex flex-row flex-wrap gap-2">
-          {description.map(desc => (
-            <Button key={desc} size={"sm"} className="px-3" onClick={() => handleClick(desc)}>
-              {desc}
+          {description.map(item => (
+            <Button key={item} size={"sm"} className="px-3" onClick={() => handleClick(item)}>
+              {item}
             </Button>
           ))}
         </div>
