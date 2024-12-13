@@ -2,7 +2,6 @@ import { useRouter } from "next/navigation"
 import React from "react"
 
 import { Button } from "@/components/shared/button/Button"
-import useSearchMachineActor from "@/lib/machines/search/useSearchMachineActor"
 
 type InfoBoxItemProps = {
   term: string
@@ -12,10 +11,8 @@ type InfoBoxItemProps = {
 
 const InfoBoxItem = ({ term, description, isButtons = false }: InfoBoxItemProps) => {
   const router = useRouter()
-  const actor = useSearchMachineActor()
 
   const handleClick = (text: string) => {
-    actor.send({ type: "SEARCH" })
     router.push(`/search?q=${text}`, {
       scroll: true,
     })
