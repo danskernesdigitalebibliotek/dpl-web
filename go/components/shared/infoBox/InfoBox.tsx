@@ -19,8 +19,8 @@ const InfoBox = ({ work }: InfoBoxProps) => {
       animate={{ opacity: 1 }}
       transition={{ duration: 0.5, ease: "easeOut" }}>
       <section
-        className="relative mt-14 flex w-full flex-col flex-wrap gap-16 rounded-md bg-background-overlay px-6 py-8
-          lg:mt-16 lg:flex-row lg:gap-48 lg:px-14 lg:pb-14 lg:pt-36">
+        className="relative mt-14 flex w-full flex-col flex-wrap gap-grid-gap-3 rounded-md bg-background-overlay px-6
+          py-8 lg:mt-16 lg:flex-row lg:gap-48 lg:px-14 lg:pb-14 lg:pt-36">
         <div className="flex-1 text-typo-body-md">
           <h2 className="text-typo-heading-4 lg:absolute lg:left-14 lg:top-9">Beskrivelse</h2>
           {!work.abstract ||
