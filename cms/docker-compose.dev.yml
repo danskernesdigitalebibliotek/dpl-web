@@ -17,6 +17,8 @@ services:
       VIRTUAL_PROTO: https
       VIRTUAL_HOST: >-
         ${COMPOSE_PROJECT_NAME:-dapple-cms}.${DEV_TLD:-docker}
+    working_dir: /app
+
+  varnish:
     labels:
       - dev.orbstack.domains=${COMPOSE_PROJECT_NAME:-dapple-cms}.local
-    working_dir: /app

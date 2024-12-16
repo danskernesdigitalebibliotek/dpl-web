@@ -33,8 +33,7 @@ x-environment:
     WEBROOT: web
     GRAPHQL_USER_NAME: graphql_consumer
     GRAPHQL_USER_PASSWORD: test
-    # @todo - what do we set this to?
-    BNF_SERVER_GRAPHQL_ENDPOINT: "https://localhost/graphql"
+    BNF_SERVER_GRAPHQL_ENDPOINT: "https://dpl-cms.local/graphql"
     # Uncomment if you like to have the system behave like in production
     #LAGOON_ENVIRONMENT_TYPE: production
 
