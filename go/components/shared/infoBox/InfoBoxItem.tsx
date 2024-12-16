@@ -20,7 +20,7 @@ const InfoBoxItem = ({ term, description, isButtons = false }: InfoBoxItemProps)
 
   return (
     <>
-      <hr className="border-foreground opacity-15 not-first:mt-7" />
+      <hr className="border-border not-first:mt-7" />
       <dt className="mt-2 text-typo-caption">{term}</dt>
       {!isButtons && <dd className="mt-6 text-typo-heading-5">{description.join(", ")}</dd>}
       {isButtons && (
