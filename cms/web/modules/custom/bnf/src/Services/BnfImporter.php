@@ -2,6 +2,7 @@
 
 namespace Drupal\bnf\Services;
 
+use Drupal\bnf\BnfStateEnum;
 use Drupal\bnf\Exception\AlreadyExistsException;
 use Drupal\Core\Entity\EntityTypeManagerInterface;
 use Drupal\Core\StringTranslation\TranslationInterface;
@@ -18,8 +19,6 @@ use function Safe\parse_url;
  * and the client can also choose to import a content from BNF.
  */
 class BnfImporter {
-
-  const UUID_FIELD = 'field_bnf_uuid';
 
   /**
    * Constructor.
@@ -38,7 +37,7 @@ class BnfImporter {
     $nodeStorage = $this->entityTypeManager->getStorage('node');
 
     $existingNodes =
-      $nodeStorage->loadByProperties([self::UUID_FIELD => $uuid]);
+      $nodeStorage->loadByProperties(['uuid' => $uuid]);
 
     if (!empty($existingNodes)) {
       $this->logger->error(
@@ -95,9 +94,12 @@ class BnfImporter {
 
     try {
       $nodeData['type'] = $nodeType;
-      $nodeData[self::UUID_FIELD] = $uuid;
+      $nodeData['uuid'] = $uuid;
 
       $node = $nodeStorage->create($nodeData);
+      $node->save();
+
+      $node->set(BnfStateEnum::FIELD_NAME, BnfStateEnum::Imported->value);
       $node->save();
     }
     catch (\Exception $e) {

@@ -2,6 +2,7 @@
 
 namespace Drupal\bnf_client\Services;
 
+use Drupal\bnf\BnfStateEnum;
 use Drupal\Core\Routing\UrlGeneratorInterface;
 use Drupal\Core\StringTranslation\TranslationInterface;
 use Drupal\node\NodeInterface;
@@ -96,6 +97,9 @@ class BnfExporter {
         ['@message' => $message]);
       throw new \Exception($message);
     }
+
+    $node->set(BnfStateEnum::FIELD_NAME, BnfStateEnum::Exported->value);
+    $node->save();
 
   }
 

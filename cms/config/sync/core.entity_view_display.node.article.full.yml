@@ -4,7 +4,6 @@ status: true
 dependencies:
   config:
     - core.entity_view_mode.node.full
-    - field.field.node.article.field_bnf_uuid
     - field.field.node.article.field_branch
     - field.field.node.article.field_canonical_url
     - field.field.node.article.field_categories
@@ -71,7 +70,6 @@ content:
     weight: 5
     region: content
 hidden:
-  field_bnf_uuid: true
   field_canonical_url: true
   field_override_author: true
   field_publication_date: true

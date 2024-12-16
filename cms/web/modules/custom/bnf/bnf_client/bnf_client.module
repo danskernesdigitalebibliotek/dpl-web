@@ -1,7 +1,6 @@
 <?php
 
 use Drupal\bnf\Exception\AlreadyExistsException;
-use Drupal\bnf\Services\BnfImporter;
 use Drupal\bnf_client\Services\BnfExporter;
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\drupal_typed\DrupalTyped;
@@ -16,11 +15,6 @@ use Drupal\drupal_typed\DrupalTyped;
  */
 function bnf_client_form_node_form_alter(array &$form, FormStateInterface $form_state, string $form_id): void {
   $current_user = \Drupal::currentUser();
-
-  // Setting the UUID field as read-only.
-  if (!empty($form[BnfImporter::UUID_FIELD])) {
-    $form[BnfImporter::UUID_FIELD]['#disabled'] = TRUE;
-  }
 
   if (!$current_user->hasPermission('bnf client export nodes')) {
     return;
