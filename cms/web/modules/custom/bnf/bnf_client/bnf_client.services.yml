@@ -2,8 +2,6 @@
 services:
   bnf_client.exporter:
     class: Drupal\bnf_client\Services\BnfExporter
+    autowire: true
     arguments:
-      - '@http_client'
-      - '@url_generator'
-      - '@string_translation'
-      - '@logger.channel.bnf'
+      $logger: '@logger.channel.bnf'

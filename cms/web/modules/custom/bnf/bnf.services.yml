@@ -2,10 +2,10 @@
 services:
   bnf.importer:
     class: Drupal\bnf\Services\BnfImporter
+    autowire: true
     arguments:
-      - '@entity_type.manager'
-      - '@string_translation'
-      - '@logger.channel.bnf'
+      $logger: '@logger.channel.bnf'
+
   logger.channel.bnf:
     parent: logger.channel_base
     arguments:

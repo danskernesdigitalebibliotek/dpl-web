@@ -5,7 +5,7 @@ namespace Drupal\bnf_client\Services;
 use Drupal\Core\Routing\UrlGeneratorInterface;
 use Drupal\Core\StringTranslation\TranslationInterface;
 use Drupal\node\NodeInterface;
-use GuzzleHttp\Client;
+use GuzzleHttp\ClientInterface;
 use Psr\Log\LoggerInterface;
 use function Safe\json_decode;
 use function Safe\parse_url;
@@ -22,7 +22,7 @@ class BnfExporter {
    * Constructor.
    */
   public function __construct(
-    protected Client $httpClient,
+    protected ClientInterface $httpClient,
     protected UrlGeneratorInterface $urlGenerator,
     protected TranslationInterface $translation,
     protected LoggerInterface $logger,
@@ -66,7 +66,7 @@ class BnfExporter {
         throw new \InvalidArgumentException('The BNF server URL must use HTTPS.');
       }
 
-      $response = $this->httpClient->post($bnfServer, [
+      $response = $this->httpClient->request('post', $bnfServer, [
         'headers' => [
           'Content-Type' => 'application/json',
         ],

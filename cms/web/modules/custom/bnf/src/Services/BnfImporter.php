@@ -4,7 +4,7 @@ namespace Drupal\bnf\Services;
 
 use Drupal\Core\Entity\EntityTypeManagerInterface;
 use Drupal\Core\StringTranslation\TranslationInterface;
-use GuzzleHttp\Client;
+use GuzzleHttp\ClientInterface;
 use Psr\Log\LoggerInterface;
 use function Safe\json_decode;
 use function Safe\parse_url;
@@ -24,6 +24,7 @@ class BnfImporter {
    * Constructor.
    */
   public function __construct(
+    protected ClientInterface $httpClient,
     protected EntityTypeManagerInterface $entityTypeManager,
     protected TranslationInterface $translation,
     protected LoggerInterface $logger,
@@ -61,8 +62,6 @@ class BnfImporter {
     }
     GRAPHQL;
 
-    $client = new Client();
-
     if (!filter_var($endpointUrl, FILTER_VALIDATE_URL)) {
       throw new \InvalidArgumentException((string) $this->translation->translate(
         'The provided callback URL is not valid.', [], ['context' => 'BNF']
@@ -78,7 +77,7 @@ class BnfImporter {
       ));
     }
 
-    $response = $client->post($endpointUrl, [
+    $response = $this->httpClient->request('post', $endpointUrl, [
       'headers' => [
         'Content-Type' => 'application/json',
       ],
