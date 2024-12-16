@@ -2,6 +2,7 @@
 
 namespace Drupal\bnf\Services;
 
+use Drupal\bnf\Exception\AlreadyExistsException;
 use Drupal\Core\Entity\EntityTypeManagerInterface;
 use Drupal\Core\StringTranslation\TranslationInterface;
 use GuzzleHttp\ClientInterface;
@@ -45,9 +46,7 @@ class BnfImporter {
         ['@type' => $nodeType, '@uuid' => $uuid, '@url' => $endpointUrl]
       );
 
-      throw new \Exception((string) $this->translation->translate(
-        'Cannot import node - already exists.', [], ['context' => 'BNF']
-      ));
+      throw new AlreadyExistsException('Cannot import node - already exists.');
     }
 
     // Example of GraphQL query: "nodeArticle".
@@ -63,18 +62,14 @@ class BnfImporter {
     GRAPHQL;
 
     if (!filter_var($endpointUrl, FILTER_VALIDATE_URL)) {
-      throw new \InvalidArgumentException((string) $this->translation->translate(
-        'The provided callback URL is not valid.', [], ['context' => 'BNF']
-      ));
+      throw new \InvalidArgumentException('The provided callback URL is not valid.');
     }
 
     $parsedUrl = parse_url($endpointUrl);
     $scheme = $parsedUrl['scheme'] ?? NULL;
 
     if ($scheme !== 'https') {
-      throw new \InvalidArgumentException((string) $this->translation->translate(
-        'The provided callback URL must use HTTPS.', [], ['context' => 'BNF']
-      ));
+      throw new \InvalidArgumentException('The provided callback URL must use HTTPS.');
     }
 
     $response = $this->httpClient->request('post', $endpointUrl, [
@@ -95,9 +90,7 @@ class BnfImporter {
     if (empty($nodeData)) {
       $this->logger->error('Could not find any node data in GraphQL response.');
 
-      throw new \Exception((string) $this->translation->translate(
-        'Could not retrieve content values.', [], ['context' => 'BNF']
-      ));
+      throw new \Exception('Could not retrieve content values.');
     }
 
     try {
@@ -113,9 +106,7 @@ class BnfImporter {
         ['@message' => $e->getMessage()]
       );
 
-      throw new \Exception((string) $this->translation->translate(
-        'Could not save content.', [], ['context' => 'BNF']
-      ));
+      throw new \Exception('Could not save content.');
     }
 
     $this->logger->info('Created new @type node with BNF ID @uuid', [

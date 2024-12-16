@@ -83,9 +83,7 @@ class BnfExporter {
         'Failed at exporting node to BNF server. @message',
         ['@message' => $e->getMessage()]);
 
-      throw new \Exception((string) $this->translation->translate(
-        'Could not export node to BNF.', [], ['context' => 'BNF']
-      ));
+      throw new \Exception('Could not export node to BNF.');
     }
 
     $status = $data['data']['importRequest']['status'] ?? NULL;
