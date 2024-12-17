@@ -112,7 +112,7 @@ const WorkPageHeader = ({ work }: WorkPageHeaderProps) => {
     <>
       <motion.div
         key={work.workId}
-        className="lg:grid-go mt-5"
+        className="lg:grid-go mt-5 lg:mb-16"
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ duration: 0.5 }}
