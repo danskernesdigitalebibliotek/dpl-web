@@ -4,9 +4,8 @@ import Image from "next/image"
 import React, { useEffect, useRef, useState } from "react"
 import Tilt from "react-parallax-tilt"
 
+import Icon from "@/components/shared/icon/Icon"
 import { cn } from "@/lib/helpers/helper.cn"
-
-import Icon from "../icon/Icon"
 
 type CoverPictureProps = {
   lowResSrc: string
@@ -95,8 +94,12 @@ export const CoverPicture = ({
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
           className="flex w-full flex-col items-center justify-center">
-          <Icon name="question-mark" className="h-[50px] text-foreground opacity-20 lg:h-[100px]" />
-          <p className="text-center text-typo-caption opacity-50">Billede kunne ikke vises</p>
+          <Icon
+            name="question-mark"
+            className="h-[50px] text-foreground opacity-20 lg:h-[100px]"
+            aria-label="Spørgsmålstegn ikon"
+          />
+          <p className="text-center text-typo-caption opacity-55">Billede kunne ikke vises</p>
         </motion.div>
       )}
     </div>
@@ -130,4 +133,8 @@ const CoverPictureTiltWrapper = ({
       {children}
     </div>
   )
+}
+
+export const CoverPictureSkeleton = () => {
+  return <div className="h-full w-full animate-pulse rounded-md bg-background-skeleton" />
 }

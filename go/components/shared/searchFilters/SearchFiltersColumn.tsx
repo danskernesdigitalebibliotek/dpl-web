@@ -106,15 +106,15 @@ const SearchFiltersColumn = ({ facet, isLast }: SearchFiltersColumnProps) => {
   )
 }
 
-export const SearchFiltersColumnGhost = () => {
+export const SearchFiltersColumnSkeleton = () => {
   return (
     <div className="space-y-grid-gap-half">
-      <div className="-mb-1 h-4 w-20 animate-pulse rounded-full bg-background-overlay"></div>
+      <div className="-mb-1 h-4 w-20 animate-pulse rounded-full bg-background-skeleton"></div>
       <div className="space-y-1">
-        <div className="h-7 w-10 animate-pulse rounded-full bg-background-overlay"></div>
-        <div className="h-7 w-20 animate-pulse rounded-full bg-background-overlay"></div>
-        <div className="h-7 w-32 animate-pulse rounded-full bg-background-overlay"></div>
-        <div className="h-7 w-20 animate-pulse rounded-full bg-background-overlay"></div>
+        <div className="h-7 w-10 animate-pulse rounded-full bg-background-skeleton"></div>
+        <div className="h-7 w-20 animate-pulse rounded-full bg-background-skeleton"></div>
+        <div className="h-7 w-32 animate-pulse rounded-full bg-background-skeleton"></div>
+        <div className="h-7 w-20 animate-pulse rounded-full bg-background-skeleton"></div>
       </div>
     </div>
   )

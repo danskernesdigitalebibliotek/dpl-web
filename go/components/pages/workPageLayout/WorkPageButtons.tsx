@@ -1,13 +1,12 @@
 import React, { useState } from "react"
 
+import { isAudioBook, isEbook, isPodcast } from "@/components/pages/workPageLayout/helper"
 import { Button } from "@/components/shared/button/Button"
 import Player from "@/components/shared/publizonPlayer/PublizonPlayer"
 import ResponsiveDialog from "@/components/shared/responsiveDialog/ResponsiveDialog"
 import SmartLink from "@/components/shared/smartLink/SmartLink"
 import { resolveUrl } from "@/lib/helpers/helper.routes"
 import { useSelectedManifestationStore } from "@/store/selectedManifestation.store"
-
-import { isAudioBook, isEbook, isPodcast } from "./helper"
 
 export type WorkPageButtonsProps = {
   workId: string

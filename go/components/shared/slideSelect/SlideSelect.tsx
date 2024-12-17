@@ -28,7 +28,9 @@ const SlideSelect = ({ options, initialOption, onOptionSelect }: SlideSelectProp
   }, [initialOption, options])
 
   return (
-    <div className="relative flex flex-row flex-nowrap justify-center rounded-full border-2 border-foreground p-1">
+    <div
+      className="relative flex max-w-full flex-row flex-nowrap justify-center rounded-full border-2 border-foreground
+        p-1">
       {/* Animated black background */}
       <motion.div
         className="absolute top-1 h-7 w-auto rounded-full bg-foreground"
@@ -51,22 +53,28 @@ const SlideSelect = ({ options, initialOption, onOptionSelect }: SlideSelectProp
             key={option.value}
             ariaLabel={
               selected === index
-                ? `Nu viser materialet som ${option}`
-                : `Skift til visning af ${option}`
+                ? `Nu viser materialet som ${option.render}`
+                : `Skift til visning af ${option.render}`
             }
             onClick={() => {
               setSelected(index)
               onOptionSelect(option)
             }}
             variant="transparent"
-            classNames={cn("z-slide-select w-28", selected === index && "text-background")}>
-            {!!option.icon && <Icon className="m-[-7px] h-7 w-7" name={option.icon} />}
-            {option.render}
+            classNames={cn("z-slide-select min-w-28", selected === index && "text-background")}>
+            {!!option.icon && (
+              <Icon className="m-[-7px] h-7 w-7 flex-shrink-0" name={option.icon} />
+            )}
+            <span>{option.render}</span>
           </BadgeButton>
         )
       })}
     </div>
   )
+}
+
+export const SlideSelectSkeleton = () => {
+  return <div className="h-[40px] w-60 animate-pulse rounded-full bg-background-skeleton" />
 }
 
 export default SlideSelect

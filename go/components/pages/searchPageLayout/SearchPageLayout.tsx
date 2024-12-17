@@ -3,14 +3,15 @@
 import { motion, useInView } from "framer-motion"
 import { useEffect, useRef } from "react"
 
+import SearchResults, {
+  SearchResultsSkeleton,
+} from "@/components/pages/searchPageLayout/SearchResults"
+import { useSearchDataAndLoadingStates } from "@/components/pages/searchPageLayout/helper"
+import SearchFiltersDesktop, {
+  SearchFiltersDesktopSkeleton,
+} from "@/components/shared/searchFilters/SearchFiltersDesktop"
 import SearchFiltersMobile from "@/components/shared/searchFilters/SearchFiltersMobile"
 import useSearchMachineActor from "@/lib/machines/search/useSearchMachineActor"
-
-import SearchFiltersDesktop, {
-  SearchFiltersDesktopGhost,
-} from "../../shared/searchFilters/SearchFiltersDesktop"
-import SearchResults, { SearchResultsGhost } from "./SearchResults"
-import { useSearchDataAndLoadingStates } from "./helper"
 
 const SearchPageLayout = () => {
   const loadMoreRef = useRef(null)
@@ -62,15 +63,17 @@ const SearchPageLayout = () => {
             </div>
           ) : (
             <>
-              <div className="xl:hidden">{/* <SearchFiltersMobileGhost /> */}</div>
+              <div className="xl:hidden">{/* <SearchFiltersMobileSkeleton /> */}</div>
               <div className="hidden xl:block">
-                <SearchFiltersDesktopGhost />
+                <SearchFiltersDesktopSkeleton />
               </div>
             </>
           )}
           <hr className="-mx-grid-edge w-screen border-foreground opacity-10 md:mx-auto md:w-full" />
           <div className="mb-space-y flex flex-col gap-y-[calc(var(--grid-gap-x)*2)]">
-            {isNoSearchResult && <p>Ingen søgeresultat</p>}
+            {isNoSearchResult && (
+              <p className="text-typo-subtitle-lg opacity-35">Ingen søgeresultat</p>
+            )}
             {data.search &&
               data.search.pages.map(
                 (works, i) =>
@@ -85,7 +88,7 @@ const SearchPageLayout = () => {
                     </motion.div>
                   )
               )}
-            {(isLoadingMoreResults || isLoadingResults) && <SearchResultsGhost />}
+            {(isLoadingMoreResults || isLoadingResults) && <SearchResultsSkeleton />}
           </div>
         </>
       ) : (

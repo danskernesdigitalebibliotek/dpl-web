@@ -67,9 +67,11 @@
 
   --beige: hsla(36, 45%, 98%, 1);
   --beige-overlay: hsla(42, 25%, 35%, 0.05);
+  --beige-skeleton: hsla(42, 25%, 35%, 0.1);
 
   --blue: hsla(228, 100%, 10%, 1);
   --blue-overlay: hsla(238, 54%, 89%, 0.09);
+  --blue-skeleton: hsla(238, 54%, 89%, 0.18);
 
   --border: hsla(48, 4.4%, 77.8%, 1);
   --reader-grey: hsla(0, 0%, 94.1%, 1);
@@ -82,7 +84,9 @@
   --content-orange: hsla(34, 100%, 72%, 1);
   --content-blue: hsla(202, 100%, 72%, 1);
 
-  --blue-title: hsla(202, 100%, 60%, 1);
+  /* These two blues provide JUST enough color contrast to pass wcag2.1aa */
+  --blue-title: hsla(202, 100%, 76%, 1);
+  --blue-title-dark: hsla(202, 60%, 30%, 1);
 
   /* CONTENT COLORS */
   --content-pink-100: 320 100% 91%;
@@ -104,6 +108,7 @@
   /* DYNAMIC COLORS */
   --background: var(--beige);
   --background-overlay: var(--beige-overlay);
+  --background-skeleton: var(--beige-skeleton);
   --foreground: var(--black);
 
   /* TRANSITION DURATIONS */
@@ -181,7 +186,7 @@
   --typo-button-sm-size: 12px;
   --typo-button-sm-weight: 500;
   --typo-button-sm-line-height: 12px;
-  --typo-button-sm-letter-spacing: 0.1em;
+  --typo-button-sm-letter-spacing: 0.04em;
 
   --typo-link-size: 14px;
   --typo-link-weight: 400;
@@ -193,9 +198,9 @@
   --typo-tag-lg-line-height: 12px;
   --typo-tag-lg-letter-spacing: 0.05em;
 
-  --typo-tag-sm-size: 8px;
+  --typo-tag-sm-size: 9px;
   --typo-tag-sm-weight: 500;
-  --typo-tag-sm-line-height: 8px;
+  --typo-tag-sm-line-height: 9px;
   --typo-tag-sm-letter-spacing: 0;
 
   --typo-caption-size: 10px;
@@ -284,7 +289,7 @@
     --typo-button-sm-size: 12px;
     --typo-button-sm-weight: 500;
     --typo-button-sm-line-height: 12px;
-    --typo-button-sm-letter-spacing: 0.1em;
+    --typo-button-sm-letter-spacing: 0.04em;
 
     --typo-link-size: 14px;
     --typo-link-weight: 400;
@@ -311,7 +316,9 @@
 .dark-mode {
   --background: var(--blue);
   --background-overlay: var(--blue-overlay);
+  --background-skeleton: var(--blue-skeleton);
   --foreground: var(--beige);
+  --shadow-add-contrast: hsla(0, 0%, 0%, 0.5);
 }
 
 .content-container {

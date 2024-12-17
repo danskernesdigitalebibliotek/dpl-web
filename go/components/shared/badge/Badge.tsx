@@ -12,7 +12,7 @@ const badgeVariants = cva(
         default: "bg-foreground text-background",
         outline: "bg-secondary border-1 border border-foreground text-foreground",
         destructive: "bg-destructive text-destructive-foreground",
-        "blue-title": "bg-blue-title",
+        "blue-title": "bg-blue-title text-blue-title-dark",
       },
     },
     defaultVariants: {

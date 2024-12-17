@@ -68,6 +68,13 @@ const preview: Preview = {
         },
       },
     },
+    a11y: {
+      config: {
+        // Add a global 2-second delay for accessibility tests to make sure
+        // all animations are completed before the tests run
+        delay: 3000,
+      },
+    },
   },
   decorators: [
     // 👇 Defining the decorator in the preview file applies it to all stories
