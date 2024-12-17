@@ -4947,26 +4947,26 @@
         },
         {
             "name": "drupal/handy_cache_tags",
-            "version": "1.4.0",
+            "version": "1.5.0",
             "source": {
                 "type": "git",
                 "url": "https://git.drupalcode.org/project/handy_cache_tags.git",
-                "reference": "8.x-1.4"
+                "reference": "8.x-1.5"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://ftp.drupal.org/files/projects/handy_cache_tags-8.x-1.4.zip",
-                "reference": "8.x-1.4",
-                "shasum": "cf9fd07629949fdda3e3ff77c68265149a7c4ffd"
+                "url": "https://ftp.drupal.org/files/projects/handy_cache_tags-8.x-1.5.zip",
+                "reference": "8.x-1.5",
+                "shasum": "fe3df06f0e0ed4e895b894cd2b355db475ee77eb"
             },
             "require": {
-                "drupal/core": "^8 || ^9 || ^10"
+                "drupal/core": "^8 || ^9 || ^10 || ^11"
             },
             "type": "drupal-module",
             "extra": {
                 "drupal": {
-                    "version": "8.x-1.4",
-                    "datestamp": "1664207912",
+                    "version": "8.x-1.5",
+                    "datestamp": "1730053712",
                     "security-coverage": {
                         "status": "covered",
                         "message": "Covered by Drupal's security advisory policy"
