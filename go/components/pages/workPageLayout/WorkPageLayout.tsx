@@ -13,6 +13,7 @@ import {
 import { ButtonSkeleton } from "@/components/shared/button/Button"
 import { CoverPictureSkeleton } from "@/components/shared/coverPicture/CoverPicture"
 import InfoBox from "@/components/shared/infoBox/InfoBox"
+import InfoBoxDetails from "@/components/shared/infoBox/InfoBoxDetails"
 import { SlideSelectSkeleton } from "@/components/shared/slideSelect/SlideSelect"
 import { GetMaterialQuery, useGetMaterialQuery } from "@/lib/graphql/generated/fbi/graphql"
 import { useSelectedManifestationStore } from "@/store/selectedManifestation.store"
@@ -71,7 +72,7 @@ function WorkPageLayout({ workId, dehydratedQueryData }: WorkPageLayoutProps) {
     <div className="content-container my-grid-gap-2 flex-row flex-wrap lg:my-grid-gap-half">
       <WorkPageHeader work={data.work} />
       <InfoBox work={data.work} />
-      {/* <WorkPageDetails /> */}
+      <InfoBoxDetails work={data.work} />
     </div>
   )
 }
