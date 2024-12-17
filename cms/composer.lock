@@ -4787,17 +4787,17 @@
         },
         {
             "name": "drupal/graphql",
-            "version": "4.9.0",
+            "version": "4.10.0",
             "source": {
                 "type": "git",
                 "url": "https://git.drupalcode.org/project/graphql.git",
-                "reference": "8.x-4.9"
+                "reference": "8.x-4.10"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://ftp.drupal.org/files/projects/graphql-8.x-4.9.zip",
-                "reference": "8.x-4.9",
-                "shasum": "8045e8f07e82a55f229235bb614ba7df87e718ef"
+                "url": "https://ftp.drupal.org/files/projects/graphql-8.x-4.10.zip",
+                "reference": "8.x-4.10",
+                "shasum": "3647b953a57b0486c179bb740da902d2fa2928b7"
             },
             "require": {
                 "drupal/core": "^10.2 || ^11",
@@ -4806,6 +4806,7 @@
                 "webonyx/graphql-php": "^14.8.0"
             },
             "require-dev": {
+                "drupal/coder": "8.3.26",
                 "drupal/node-node": "*",
                 "drupal/redirect": "^1.0",
                 "jangregor/phpstan-prophecy": "^1.0.0",
@@ -4818,8 +4819,8 @@
             "type": "drupal-module",
             "extra": {
                 "drupal": {
-                    "version": "8.x-4.9",
-                    "datestamp": "1726057421",
+                    "version": "8.x-4.10",
+                    "datestamp": "1733840748",
                     "security-coverage": {
                         "status": "covered",
                         "message": "Covered by Drupal's security advisory policy"
