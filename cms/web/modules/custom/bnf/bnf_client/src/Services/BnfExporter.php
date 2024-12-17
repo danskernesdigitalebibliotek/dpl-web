@@ -3,6 +3,7 @@
 namespace Drupal\bnf_client\Services;
 
 use Drupal\bnf\BnfStateEnum;
+use Drupal\bnf\Exception\AlreadyExistsException;
 use Drupal\Core\Routing\UrlGeneratorInterface;
 use Drupal\Core\StringTranslation\TranslationInterface;
 use Drupal\node\NodeInterface;
@@ -95,6 +96,11 @@ class BnfExporter {
       $this->logger->error(
         'Failed at exporting node to BNF server. @message',
         ['@message' => $message]);
+
+      if ($status === 'duplicate') {
+        throw new AlreadyExistsException();
+      }
+
       throw new \Exception($message);
     }
 

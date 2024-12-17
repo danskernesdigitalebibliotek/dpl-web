@@ -2,6 +2,7 @@
 
 namespace Drupal\bnf_server\Plugin\GraphQL\DataProducer;
 
+use Drupal\bnf\Exception\AlreadyExistsException;
 use Drupal\bnf\Services\BnfImporter;
 use Drupal\Core\Plugin\ContainerFactoryPluginInterface;
 use Drupal\graphql\Plugin\GraphQL\DataProducer\DataProducerPluginBase;
@@ -79,7 +80,7 @@ class ImportRequestProducer extends DataProducerPluginBase implements ContainerF
    *
    * @return string[]
    *   An associative array containing:
-   *   - 'status': 'success' or 'failure'.
+   *   - 'status': 'success', 'failure', 'duplicate'.
    *   - 'message': A detailed message about the result of the operation.
    */
   public function resolve(string $uuid, string $callbackUrl): array {
@@ -111,7 +112,7 @@ class ImportRequestProducer extends DataProducerPluginBase implements ContainerF
       ]);
 
       return [
-        'status' => 'failure',
+        'status' => ($e instanceof AlreadyExistsException) ? 'duplicate' : 'failure',
         'message' => $e->getMessage(),
       ];
     }
