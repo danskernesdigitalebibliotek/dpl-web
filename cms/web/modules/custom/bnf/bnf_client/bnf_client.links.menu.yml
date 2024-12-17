@@ -1,0 +1,6 @@
+---
+bnf_client.import_content:
+  title: 'Import BNF content'
+  parent: system.admin_content
+  route_name: bnf_client.import_form
+  weight: 10

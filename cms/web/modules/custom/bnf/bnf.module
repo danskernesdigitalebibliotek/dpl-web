@@ -3,6 +3,7 @@
 use Drupal\bnf\BnfStateEnum;
 use Drupal\Core\Entity\EntityTypeInterface;
 use Drupal\Core\Field\BaseFieldDefinition;
+use Drupal\node\NodeInterface;
 
 /**
  * Implements hook_entity_base_field_info().
@@ -40,4 +41,29 @@ function bnf_get_bnf_state_allowed_values(): array {
     $values[$case->value] = $case->name;
   }
   return $values;
+}
+
+/**
+ * Implements theme_preprocess_html().
+ *
+ * Adding the node UUID as a metatag, that we can use when the user submits
+ * a URL to the BNF import form.
+ */
+function bnf_preprocess_html(array &$variables): void {
+  $route = \Drupal::routeMatch();
+  $node = $route->getParameter('node');
+
+  if ($route->getRouteName() !== 'entity.node.canonical' || !($node instanceof NodeInterface)) {
+    return;
+  }
+
+  $uuid_metatag = [
+    '#tag' => 'meta',
+    '#attributes' => [
+      'name' => 'uuid',
+      'content' => $node->uuid(),
+    ],
+  ];
+
+  $variables['page']['#attached']['html_head'][] = [$uuid_metatag, 'node-uuid'];
 }
