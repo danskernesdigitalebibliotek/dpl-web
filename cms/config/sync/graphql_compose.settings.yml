@@ -44,6 +44,8 @@ entity_config:
       enabled: false
     filtered_event_list:
       enabled: true
+    go_video:
+      enabled: true
     hero:
       enabled: false
     language_selector:
@@ -206,6 +208,11 @@ field_config:
       field_max_item_amount:
         enabled: true
       field_title:
+        enabled: true
+    go_video:
+      field_embed_video:
+        enabled: true
+      field_go_video_title:
         enabled: true
     manual_event_list:
       field_events:
