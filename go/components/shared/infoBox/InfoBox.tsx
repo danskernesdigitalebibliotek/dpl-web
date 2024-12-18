@@ -28,29 +28,20 @@ const InfoBox = ({ work }: InfoBoxProps) => {
           </div>
           <dl className="flex-1">
             {!!selectedManifestation?.audience?.ages.length && (
-              <>
-                <hr className="border-border not-first:mt-7" />
-                <InfoBoxItem
-                  term="Alder"
-                  description={selectedManifestation.audience.ages.map(age => age.display)}
-                />
-              </>
+              <InfoBoxItem
+                term="Alder"
+                description={selectedManifestation.audience.ages.map(age => age.display)}
+              />
             )}
             {!!selectedManifestation?.series?.length && (
-              <>
-                <hr className="border-border not-first:mt-7" />
-                <InfoBoxItem term="Serie" description={getSeriesInfo(selectedManifestation)} />
-              </>
+              <InfoBoxItem term="Serie" description={getSeriesInfo(selectedManifestation)} />
             )}
             {!!selectedManifestation?.subjects.all?.length && (
-              <>
-                <hr className="border-border not-first:mt-7" />
-                <InfoBoxItem
-                  term="Emneord"
-                  description={selectedManifestation.subjects.all.map(subject => subject.display)}
-                  isButtons
-                />
-              </>
+              <InfoBoxItem
+                term="Emneord"
+                description={selectedManifestation.subjects.all.map(subject => subject.display)}
+                isButtons
+              />
             )}
           </dl>
         </div>
