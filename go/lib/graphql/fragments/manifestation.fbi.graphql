@@ -61,11 +61,9 @@ fragment ManifestationLanguages on Manifestation {
 
 fragment ManifestationDescription on Manifestation {
   audience {
-    generalAudience
     ages {
       display
     }
-    libraryRecommendation
   }
   series {
     numberInSeries
@@ -76,6 +74,21 @@ fragment ManifestationDescription on Manifestation {
       display
     }
   }
+}
+
+fragment ManifestationDetails on Manifestation {
+  physicalDescription {
+    summaryFull
+  }
+  dateFirstEdition {
+    display
+  }
+  genreAndForm
+  publisher
+  contributors {
+    display
+  }
+  contributorsFromDescription
 }
 
 # Bigger chunks for specific pages (built from above fragments) ----------------
@@ -92,4 +105,5 @@ fragment ManifestationWorkPage on Manifestation {
   ...ManifestationTitles
   ...ManifestationLanguages
   ...ManifestationDescription
+  ...ManifestationDetails
 }

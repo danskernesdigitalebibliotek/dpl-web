@@ -29,6 +29,9 @@ const workMock = {
   workYear: {
     display: "2008",
   },
+  abstract: [
+    "Fantasy. Tom er stadig i Gorgonia. Denne gang skal han redde Epos fra den væmmelige hest Skar.",
+  ],
   manifestations: {
     all: [
       {
@@ -77,6 +80,41 @@ const workMock = {
             },
           ],
         },
+        audience: {
+          ages: [
+            {
+              display: "9-11",
+            },
+          ],
+        },
+        series: [
+          {
+            numberInSeries: "Del 14",
+            title: "Monsterjagten",
+          },
+        ],
+        subjects: {
+          all: [
+            {
+              display: "monstre",
+            },
+          ],
+        },
+        physicalDescription: {
+          summaryFull: "61 min.",
+        },
+        dateFirstEdition: null,
+        genreAndForm: ["fantasy", "romaner", "roman"],
+        publisher: ["Gad"],
+        contributors: [
+          {
+            display: "Michael Brostrup",
+          },
+          {
+            display: "Trine Bech",
+          },
+        ],
+        contributorsFromDescription: [],
       },
       {
         pid: "870970-basis:51579623",
@@ -124,6 +162,43 @@ const workMock = {
             },
           ],
         },
+        audience: {
+          ages: [
+            {
+              display: "9-11",
+            },
+          ],
+        },
+        series: [
+          {
+            numberInSeries: "Del 14",
+            title: "Monsterjagten",
+          },
+        ],
+        subjects: {
+          all: [
+            {
+              display: "monstre",
+            },
+          ],
+        },
+        physicalDescription: {
+          summaryFull: "112 sider, ill.",
+        },
+        dateFirstEdition: {
+          display: "2015",
+        },
+        genreAndForm: ["roman", "fantasy"],
+        publisher: ["Flachs"],
+        contributors: [
+          {
+            display: "Trine Bech",
+          },
+          {
+            display: "Steve Sims",
+          },
+        ],
+        contributorsFromDescription: [],
       },
     ],
     bestRepresentation: {
@@ -172,6 +247,41 @@ const workMock = {
           },
         ],
       },
+      audience: {
+        ages: [
+          {
+            display: "9-11",
+          },
+        ],
+      },
+      series: [
+        {
+          numberInSeries: "Del 14",
+          title: "Monsterjagten",
+        },
+      ],
+      subjects: {
+        all: [
+          {
+            display: "monstre",
+          },
+        ],
+      },
+      physicalDescription: {
+        summaryFull: "61 min.",
+      },
+      dateFirstEdition: null,
+      genreAndForm: ["fantasy", "romaner", "roman"],
+      publisher: ["Gad"],
+      contributors: [
+        {
+          display: "Michael Brostrup",
+        },
+        {
+          display: "Trine Bech",
+        },
+      ],
+      contributorsFromDescription: [],
     },
   },
 } as WorkFullWorkPageFragment
