@@ -413,7 +413,7 @@ body {
     --accent-foreground: hsla(0, 0%, 98%, 1);
     --destructive: hsla(0, 84.2%, 60.2%, 1);
     --destructive-foreground: hsla(0, 0%, 98%, 1);
-    --border: hsla(0, 0%, 14.9%, 1);
+    --border: hsla(0, 0%, 40%, 1);
     --input: hsla(0, 0%, 14.9%, 1);
     --ring: hsla(0, 0%, 83.1%, 1);
     --chart-1: hsla(220, 70%, 50%, 1);
