@@ -23,57 +23,83 @@ const InfoBoxDetails = ({ work }: InfoBoxDetailsProps) => {
         <div className="flex w-full flex-col gap-grid-gap-3 lg:flex-row lg:gap-44">
           <dl className="flex-1">
             {!!selectedManifestation && (
-              <InfoBoxItem
-                term="Type"
-                description={selectedManifestation.materialTypes.map(
-                  type => type.materialTypeGeneral.display
-                )}
-              />
+              <>
+                <hr className="border-border not-first:mt-7" />
+                <InfoBoxItem
+                  term="Type"
+                  description={selectedManifestation.materialTypes.map(
+                    type => type.materialTypeGeneral.display
+                  )}
+                />
+              </>
             )}
             {!!selectedManifestation?.languages?.main?.length && (
-              <InfoBoxItem
-                term="Sprog"
-                description={selectedManifestation.languages.main.map(language => language.display)}
-              />
+              <>
+                <hr className="border-border not-first:mt-7" />
+                <InfoBoxItem
+                  term="Sprog"
+                  description={selectedManifestation.languages.main.map(
+                    language => language.display
+                  )}
+                />
+              </>
             )}
             {!!selectedManifestation?.physicalDescription?.summaryFull && (
-              <InfoBoxItem
-                term="Omfang"
-                description={[selectedManifestation.physicalDescription.summaryFull]}
-              />
+              <>
+                <hr className="border-border not-first:mt-7" />
+                <InfoBoxItem
+                  term="Omfang"
+                  description={[selectedManifestation.physicalDescription.summaryFull]}
+                />
+              </>
             )}
             {!!selectedManifestation?.dateFirstEdition?.display ||
               (work.workYear?.display && (
-                <InfoBoxItem
-                  term="Udgivelsesår"
-                  description={[
-                    selectedManifestation?.dateFirstEdition?.display || work.workYear?.display,
-                  ]}
-                />
+                <>
+                  <hr className="border-border not-first:mt-7" />
+                  <InfoBoxItem
+                    term="Udgivelsesår"
+                    description={[
+                      selectedManifestation?.dateFirstEdition?.display || work.workYear?.display,
+                    ]}
+                  />
+                </>
               ))}
           </dl>
           <dl className="flex-1">
             {!!selectedManifestation?.genreAndForm?.length && (
-              <InfoBoxItem term="Genre" description={selectedManifestation.genreAndForm} />
+              <>
+                <hr className="border-border not-first:mt-7" />
+                <InfoBoxItem term="Genre" description={selectedManifestation.genreAndForm} />
+              </>
             )}
             {!!selectedManifestation?.identifiers?.length &&
               !!getIsbnsFromManifestation(selectedManifestation)?.length && (
-                <InfoBoxItem
-                  term="ISBN"
-                  description={getIsbnsFromManifestation(selectedManifestation)}
-                />
+                <>
+                  <hr className="border-border not-first:mt-7" />
+                  <InfoBoxItem
+                    term="ISBN"
+                    description={getIsbnsFromManifestation(selectedManifestation)}
+                  />
+                </>
               )}
             {!!selectedManifestation?.publisher?.length && (
-              <InfoBoxItem term="Forlag" description={selectedManifestation.publisher} />
+              <>
+                <hr className="border-border not-first:mt-7" />
+                <InfoBoxItem term="Forlag" description={selectedManifestation.publisher} />
+              </>
             )}
             {(!!selectedManifestation?.contributors?.length ||
               !!selectedManifestation?.contributorsFromDescription?.length) && (
-              <InfoBoxItem
-                term="Bidragsyder"
-                description={selectedManifestation?.contributors
-                  .map(item => item.display)
-                  .concat(selectedManifestation?.contributorsFromDescription)}
-              />
+              <>
+                <hr className="border-border not-first:mt-7" />
+                <InfoBoxItem
+                  term="Bidragsyder"
+                  description={selectedManifestation?.contributors
+                    .map(item => item.display)
+                    .concat(selectedManifestation?.contributorsFromDescription)}
+                />
+              </>
             )}
           </dl>
         </div>
