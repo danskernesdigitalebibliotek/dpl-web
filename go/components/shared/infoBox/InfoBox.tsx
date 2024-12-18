@@ -22,9 +22,11 @@ const InfoBox = ({ work }: InfoBoxProps) => {
         <h2 className="mb-10 text-typo-heading-4 lg:mb-24">Beskrivelse</h2>
         <div className="flex w-full flex-col gap-grid-gap-3 lg:flex-row lg:gap-44">
           <div className="flex-1 text-typo-body-md">
-            {!work.abstract?.length && <p>Værket har desværre ingen beskrivelse.</p>}
-            {!!work.abstract?.length &&
-              work.abstract.map(abstract => <p key={abstract.substring(0, 30)}>{abstract}</p>)}
+            {!work.abstract?.length ? (
+              <p>Værket har desværre ingen beskrivelse.</p>
+            ) : (
+              work.abstract.map(abstract => <p key={abstract.substring(0, 30)}>{abstract}</p>)
+            )}
           </div>
           <dl className="flex-1">
             {!!selectedManifestation?.audience?.ages.length && (
