@@ -213,7 +213,7 @@ export default searchMachineSetup.createMachine({
               }
             },
             onDone: {
-              actions: ["setSearchDataInContext"],
+              actions: ["addMoreDataInContext"],
               target: "#search.idle",
             },
             onError: {},

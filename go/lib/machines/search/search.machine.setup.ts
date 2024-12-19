@@ -77,6 +77,18 @@ export default setup({
         event: {
           output: { search },
         },
+      }) => {
+        return {
+          hitcount: search.hitcount,
+          pages: [[...search.works]],
+        }
+      },
+    }),
+    addMoreDataInContext: assign({
+      searchData: ({
+        event: {
+          output: { search },
+        },
         context: { searchData },
       }) => {
         return {
