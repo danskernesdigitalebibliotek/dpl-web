@@ -1,11 +1,13 @@
 import {
   GeneralMaterialTypeCodeEnum,
+  ManifestationDetailsFragment,
   SearchWithPaginationQuery,
+  WorkFullWorkPageFragment,
   WorkTeaserSearchPageFragment,
 } from "@/lib/graphql/generated/fbi/graphql"
 
 export const displayCreators = (
-  creators: SearchWithPaginationQuery["search"]["works"][0]["creators"],
+  creators: WorkFullWorkPageFragment["creators"] | ManifestationDetailsFragment["contributors"],
   amount: number
 ) => {
   return creators.reduce((acc, creator, index) => {
@@ -13,7 +15,8 @@ export const displayCreators = (
     if (index === amount) {
       return acc + ", et. al"
     }
-    if (index > amount) {
+    // We don't want to show one person twice
+    if (index > amount || acc.includes(creator.display)) {
       return acc
     }
     return acc + (index > 0 ? ", " : "") + creator.display
