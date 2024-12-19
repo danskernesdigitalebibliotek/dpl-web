@@ -11,6 +11,7 @@ import {
   getManifestationByMaterialType,
   getManifestationLanguageIsoCode,
   getWorkMaterialTypes,
+  translateMaterialTypesForRender,
 } from "@/components/pages/workPageLayout/helper"
 import { Badge } from "@/components/shared/badge/Badge"
 import { CoverPicture } from "@/components/shared/coverPicture/CoverPicture"
@@ -39,7 +40,7 @@ const WorkPageHeader = ({ work }: WorkPageHeaderProps) => {
   const [initialSliderValue, setInitialSliderValue] = useState<SlideSelectOption | undefined>(
     undefined
   )
-  const workMaterialTypes = getWorkMaterialTypes(work).map(materialType => {
+  const workMaterialTypes = getWorkMaterialTypes(work.materialTypes).map(materialType => {
     return { value: materialType.code, render: materialType.display }
   })
 
@@ -79,8 +80,9 @@ const WorkPageHeader = ({ work }: WorkPageHeaderProps) => {
     // Initialize slideSelect options
     const slideSelectOptions = workMaterialTypes.reduce<SlideSelectOption[]>(
       (acc, materialType) => {
+        // We only want unique material types
         if (!acc.some(item => item.value === materialType.value)) {
-          acc.push(addMaterialTypeIconToSelectOption(materialType)) // We only want unique material types
+          acc.push(translateMaterialTypesForRender(addMaterialTypeIconToSelectOption(materialType)))
         }
         return acc
       },

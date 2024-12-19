@@ -10,9 +10,11 @@ import {
 } from "@/lib/graphql/generated/fbi/graphql"
 
 export const getWorkMaterialTypes = (
-  work: WorkFullWorkPageFragment
+  materialTypes:
+    | WorkMaterialTypesFragment["materialTypes"]
+    | ManifestationWorkPageFragment["materialTypes"]
 ): WorkMaterialTypesFragment["materialTypes"][0]["materialTypeGeneral"][] => {
-  return work.materialTypes.map(materialType => materialType.materialTypeGeneral)
+  return materialTypes.map(materialType => materialType.materialTypeGeneral)
 }
 
 export const getManifestationMaterialType = (
