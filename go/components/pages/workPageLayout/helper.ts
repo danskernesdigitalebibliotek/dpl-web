@@ -94,6 +94,24 @@ export const getManifestationLanguageIsoCode = (
   return undefined
 }
 
+export const materialTypeTranslations = {
+  [GeneralMaterialTypeCodeEnum.Articles]: "Artikel",
+  [GeneralMaterialTypeCodeEnum.Books]: "Bog",
+  [GeneralMaterialTypeCodeEnum.Comics]: "Tegneserie",
+  [GeneralMaterialTypeCodeEnum.Ebooks]: "E-bog",
+  [GeneralMaterialTypeCodeEnum.ImageMaterials]: "Billedmateriale",
+  [GeneralMaterialTypeCodeEnum.NewspaperJournals]: "Avis",
+  [GeneralMaterialTypeCodeEnum.AudioBooks]: "Lydbog",
+  [GeneralMaterialTypeCodeEnum.Music]: "Musik",
+  [GeneralMaterialTypeCodeEnum.Podcasts]: "Podcast",
+  [GeneralMaterialTypeCodeEnum.SheetMusic]: "Noder",
+  [GeneralMaterialTypeCodeEnum.BoardGames]: "Brætspil",
+  [GeneralMaterialTypeCodeEnum.ComputerGames]: "Computerspil",
+  [GeneralMaterialTypeCodeEnum.Films]: "Film",
+  [GeneralMaterialTypeCodeEnum.TvSeries]: "Tv-serie",
+  [GeneralMaterialTypeCodeEnum.Other]: "Andet",
+}
+
 export const findInitialSliderValue = (
   sliderOptions: SlideSelectOption[] | undefined | null,
   selectedManifestation: ManifestationWorkPageFragment | undefined | null,
