@@ -112,6 +112,13 @@ export const materialTypeTranslations = {
   [GeneralMaterialTypeCodeEnum.Other]: "Andet",
 }
 
+export const translateMaterialTypesForRender = (option: SlideSelectOption): SlideSelectOption => {
+  return {
+    ...option,
+    render: materialTypeTranslations[option.value as GeneralMaterialTypeCodeEnum],
+  }
+}
+
 export const findInitialSliderValue = (
   sliderOptions: SlideSelectOption[] | undefined | null,
   selectedManifestation: ManifestationWorkPageFragment | undefined | null,
