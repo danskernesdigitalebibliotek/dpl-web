@@ -12,6 +12,7 @@ dependencies:
     - node.type.article
     - node.type.branch
     - node.type.campaign
+    - node.type.go_page
     - node.type.page
     - rest.resource.dpl_opening_hours_create
     - rest.resource.dpl_opening_hours_delete
@@ -108,6 +109,7 @@ permissions:
   - 'create branch content'
   - 'create campaign content'
   - 'create document media'
+  - 'create go_page content'
   - 'create image media'
   - 'create media'
   - 'create page content'
@@ -127,6 +129,7 @@ permissions:
   - 'delete any campaign content'
   - 'delete any document media'
   - 'delete any file'
+  - 'delete any go_page content'
   - 'delete any image media'
   - 'delete any media'
   - 'delete any page content'
@@ -137,6 +140,7 @@ permissions:
   - 'delete campaign revisions'
   - 'delete eventinstance entity'
   - 'delete eventseries entity'
+  - 'delete go_page revisions'
   - 'delete links in admin menu'
   - 'delete links in main menu'
   - 'delete media'
@@ -147,6 +151,7 @@ permissions:
   - 'delete own eventinstance entity'
   - 'delete own eventseries entity'
   - 'delete own files'
+  - 'delete own go_page content'
   - 'delete own image media'
   - 'delete own page content'
   - 'delete own video media'
@@ -163,6 +168,7 @@ permissions:
   - 'edit any branch content'
   - 'edit any campaign content'
   - 'edit any document media'
+  - 'edit any go_page content'
   - 'edit any image media'
   - 'edit any page content'
   - 'edit any video media'
@@ -178,6 +184,7 @@ permissions:
   - 'edit own document media'
   - 'edit own eventinstance entity'
   - 'edit own eventseries entity'
+  - 'edit own go_page content'
   - 'edit own image media'
   - 'edit own page content'
   - 'edit own video media'
@@ -200,6 +207,7 @@ permissions:
   - 'revert all revisions'
   - 'revert article revisions'
   - 'revert campaign revisions'
+  - 'revert go_page revisions'
   - 'revert page revisions'
   - 'role-assign users by role'
   - 'schedule publishing of eventseries'
@@ -217,6 +225,7 @@ permissions:
   - 'view any unpublished content'
   - 'view article revisions'
   - 'view campaign revisions'
+  - 'view go_page revisions'
   - 'view main menu in menu list'
   - 'view own unpublished content'
   - 'view own unpublished media'

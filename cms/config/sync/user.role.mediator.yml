@@ -11,6 +11,7 @@ dependencies:
     - media.type.video
     - node.type.article
     - node.type.campaign
+    - node.type.go_page
     - node.type.page
     - taxonomy.vocabulary.tags
   module:
@@ -59,6 +60,7 @@ permissions:
   - 'create article content'
   - 'create campaign content'
   - 'create document media'
+  - 'create go_page content'
   - 'create image media'
   - 'create media'
   - 'create page content'
@@ -67,6 +69,7 @@ permissions:
   - 'delete any article content'
   - 'delete any campaign content'
   - 'delete any document media'
+  - 'delete any go_page content'
   - 'delete any image media'
   - 'delete any media'
   - 'delete any page content'
@@ -80,6 +83,7 @@ permissions:
   - 'delete own eventinstance entity'
   - 'delete own eventseries entity'
   - 'delete own files'
+  - 'delete own go_page content'
   - 'delete own image media'
   - 'delete own page content'
   - 'delete own video media'
@@ -87,6 +91,7 @@ permissions:
   - 'edit any article content'
   - 'edit any campaign content'
   - 'edit any document media'
+  - 'edit any go_page content'
   - 'edit any image media'
   - 'edit any page content'
   - 'edit any video media'
@@ -97,6 +102,7 @@ permissions:
   - 'edit own document media'
   - 'edit own eventinstance entity'
   - 'edit own eventseries entity'
+  - 'edit own go_page content'
   - 'edit own image media'
   - 'edit own page content'
   - 'edit own video media'
