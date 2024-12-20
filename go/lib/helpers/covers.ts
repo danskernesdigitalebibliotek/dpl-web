@@ -1,8 +1,7 @@
 import { flatten } from "lodash"
 
+import { filterFalsyValuesFromArray } from "@/lib/helpers/helper.arrays"
 import { Cover, CoverImageUrls } from "@/lib/rest/cover-service-api/generated/model"
-
-import { filterFalsyValuesFromArray } from "./arrays"
 
 const removeEmptyCovers = (coverData: Cover[], sizes: (keyof CoverImageUrls)[]) => {
   return coverData.filter((cover: Cover) => {
