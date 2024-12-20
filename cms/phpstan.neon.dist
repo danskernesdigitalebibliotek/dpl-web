@@ -79,3 +79,5 @@ parameters:
     - web/core/modules/locale/locale.batch.inc
     - web/core/modules/locale/locale.bulk.inc
     - web/modules/contrib/config_translation_po/config_translation_po.bulk.inc
+    # Drupal\dpl_webmaster\Form\InstallOrUpdateModule uses this.
+    - web/core/modules/update/update.authorize.inc
