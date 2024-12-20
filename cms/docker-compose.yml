@@ -38,6 +38,27 @@ x-environment:
     #LAGOON_ENVIRONMENT_TYPE: production
 
 services:
+  https:
+    image: ghcr.io/reload/https-proxy:proxy
+    ports:
+      - '80'
+      - '443'
+    depends_on:
+      - varnish
+    labels:
+      lagoon.type: none
+    volumes:
+      - 'projectroot:/app'
+      - '${HOME}/.local/share/mkcert:/rootCA:ro'
+      - '${HOME}/.local/share/dev_certificates:/cert:rw'
+    environment:
+      NGINX_DOCUMENT_ROOT: /app/web
+      NGINX_PROXY_PASS: http://varnish:8080
+      VIRTUAL_PROTO: https
+      VIRTUAL_HOST: >-
+        ${COMPOSE_PROJECT_NAME:-dapple-cms}.${DEV_TLD:-docker}
+    working_dir: /app
+
   varnish: # Caching HTTP reverse proxy that serves (mostly) anonymous requests.
     # https://docs.lagoon.sh/lagoon/docker-images/varnish
     image: uselagoon/varnish-6-drupal:latest
@@ -45,6 +66,7 @@ services:
       - nginx
     labels:
       lagoon.type: varnish
+      dev.orbstack.domains: ${COMPOSE_PROJECT_NAME:-dapple-cms}.local
     links:
       - nginx # links varnish to the nginx in this docker-compose project, or it would try to connect to any nginx running in docker
     << : *default-user # uses the defined user from top
