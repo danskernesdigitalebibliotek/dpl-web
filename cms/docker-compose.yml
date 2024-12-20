@@ -56,7 +56,7 @@ services:
       NGINX_PROXY_PASS: http://varnish:8080
       VIRTUAL_PROTO: https
       VIRTUAL_HOST: >-
-        ${COMPOSE_PROJECT_NAME:-dapple-cms}.${DEV_TLD:-docker}
+        ${COMPOSE_PROJECT_NAME}.${DEV_TLD:-docker}
     working_dir: /app
 
   varnish: # Caching HTTP reverse proxy that serves (mostly) anonymous requests.
@@ -66,7 +66,7 @@ services:
       - nginx
     labels:
       lagoon.type: varnish
-      dev.orbstack.domains: ${COMPOSE_PROJECT_NAME:-dapple-cms}.local
+      dev.orbstack.domains: ${COMPOSE_PROJECT_NAME}.local
     links:
       - nginx # links varnish to the nginx in this docker-compose project, or it would try to connect to any nginx running in docker
     << : *default-user # uses the defined user from top
