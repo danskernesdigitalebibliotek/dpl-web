@@ -3,6 +3,7 @@ import React from "react"
 
 import { WorkTeaserSearchPageFragment } from "@/lib/graphql/generated/fbi/graphql"
 import { getCoverUrls, getLowResCoverUrl } from "@/lib/helpers/covers"
+import { displayCreators } from "@/lib/helpers/helper.creators"
 import { resolveUrl } from "@/lib/helpers/helper.routes"
 import { getIsbnsFromWork } from "@/lib/helpers/ids"
 import { useGetCoverCollection } from "@/lib/rest/cover-service-api/generated/cover-service"
@@ -12,7 +13,7 @@ import { useGetV1ProductsIdentifier } from "@/lib/rest/publizon-api/generated/pu
 import { Badge } from "../badge/Badge"
 import { CoverPicture } from "../coverPicture/CoverPicture"
 import WorkCardAvailabilityRow from "./WorkCardAvailabilityRow"
-import { displayCreators, getAllWorkPids } from "./helper"
+import { getAllWorkPids } from "./helper"
 
 type WorkCardProps = {
   work: WorkTeaserSearchPageFragment
