@@ -10,9 +10,11 @@ import {
 } from "@/lib/graphql/generated/fbi/graphql"
 
 export const getWorkMaterialTypes = (
-  work: WorkFullWorkPageFragment
+  materialTypes:
+    | WorkMaterialTypesFragment["materialTypes"]
+    | ManifestationWorkPageFragment["materialTypes"]
 ): WorkMaterialTypesFragment["materialTypes"][0]["materialTypeGeneral"][] => {
-  return work.materialTypes.map(materialType => materialType.materialTypeGeneral)
+  return materialTypes.map(materialType => materialType.materialTypeGeneral)
 }
 
 export const getManifestationMaterialType = (
@@ -92,6 +94,31 @@ export const getManifestationLanguageIsoCode = (
   }
   // if there is no isoCode it return undefined so that the lang attribute is not set
   return undefined
+}
+
+export const materialTypeTranslations = {
+  [GeneralMaterialTypeCodeEnum.Articles]: "Artikel",
+  [GeneralMaterialTypeCodeEnum.Books]: "Bog",
+  [GeneralMaterialTypeCodeEnum.Comics]: "Tegneserie",
+  [GeneralMaterialTypeCodeEnum.Ebooks]: "E-bog",
+  [GeneralMaterialTypeCodeEnum.ImageMaterials]: "Billedmateriale",
+  [GeneralMaterialTypeCodeEnum.NewspaperJournals]: "Avis",
+  [GeneralMaterialTypeCodeEnum.AudioBooks]: "Lydbog",
+  [GeneralMaterialTypeCodeEnum.Music]: "Musik",
+  [GeneralMaterialTypeCodeEnum.Podcasts]: "Podcast",
+  [GeneralMaterialTypeCodeEnum.SheetMusic]: "Noder",
+  [GeneralMaterialTypeCodeEnum.BoardGames]: "Brætspil",
+  [GeneralMaterialTypeCodeEnum.ComputerGames]: "Computerspil",
+  [GeneralMaterialTypeCodeEnum.Films]: "Film",
+  [GeneralMaterialTypeCodeEnum.TvSeries]: "Tv-serie",
+  [GeneralMaterialTypeCodeEnum.Other]: "Andet",
+}
+
+export const translateMaterialTypesForRender = (option: SlideSelectOption): SlideSelectOption => {
+  return {
+    ...option,
+    render: materialTypeTranslations[option.value as GeneralMaterialTypeCodeEnum],
+  }
 }
 
 export const findInitialSliderValue = (
