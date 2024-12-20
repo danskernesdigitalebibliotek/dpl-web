@@ -2,7 +2,7 @@ import Link from "next/link"
 import React from "react"
 
 import { WorkTeaserSearchPageFragment } from "@/lib/graphql/generated/fbi/graphql"
-import { getCoverUrls, getLowResCoverUrl } from "@/lib/helpers/covers"
+import { getCoverUrls, getLowResCoverUrl } from "@/lib/helpers/helper.covers"
 import { displayCreators } from "@/lib/helpers/helper.creators"
 import { resolveUrl } from "@/lib/helpers/helper.routes"
 import { getIsbnsFromWork } from "@/lib/helpers/ids"
