@@ -7,8 +7,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2024-12-19 11:33+0100\n"
-"PO-Revision-Date: 2024-12-19 11:33+0100\n"
+"POT-Creation-Date: 2024-12-20 11:17+0100\n"
+"PO-Revision-Date: 2024-12-20 11:17+0100\n"
 "Last-Translator: NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
 "MIME-Version: 1.0\n"
@@ -68,6 +68,9 @@ msgstr "Kan ikke hente Drupal-projekt fra %url."
 
 msgid "Provided archive contains no files."
 msgstr "Det angivne arkiv indeholder ingen filer."
+
+msgid "Could not determine module name from archive"
+msgstr ""
 
 msgid "Unable to determine %project name."
 msgstr "Kan ikke fastslå %project navn."
