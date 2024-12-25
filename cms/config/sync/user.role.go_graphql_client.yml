@@ -1,0 +1,12 @@
+uuid: 0f907e2f-f8c2-4979-85f4-bf9ab822603b
+langcode: da
+status: true
+dependencies:
+  module:
+    - graphql
+id: go_graphql_client
+label: 'GO GraphQL Client'
+weight: 10
+is_admin: null
+permissions:
+  - 'execute graphql_compose_server arbitrary graphql requests'
