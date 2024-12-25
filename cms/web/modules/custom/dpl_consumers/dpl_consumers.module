@@ -2,14 +2,6 @@
 
 /**
  * @file
- */
-
-use Drupal\dpl_consumers\Consumer;
-use Drupal\dpl_consumers\ConsumerRole;
-use Drupal\dpl_consumers\ConsumerUser;
-
-/**
- * @file
  * DPL consumers module.
  */
 
