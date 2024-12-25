@@ -38,9 +38,9 @@ function dpl_consumers_deploy_10002(): void {
   // Delete consume and users that we want to handle differently.
   // We want to create consumers and consumer users
   // specifically for the two known consumers (BNF and Go) and connected users.
-  Consumer::deleteByClientId("graphql_consumer");
-  (new ConsumerUser('GraphQL Consumer', ''))->delete();
-  (new ConsumerUser('graphql_consumer', ''))->delete();
+  (new Consumer("graphql_consumer"))->delete();
+  (new ConsumerUser('GraphQL Consumer'))->delete();
+  (new ConsumerUser('graphql_consumer'))->delete();
 
   // Check if we have the necessary secrets for new consumers and their users.
   if (!$bnf_consumer_secret = getenv('BNF_GRAPHQL_CONSUMER_SECRET')) {
@@ -61,12 +61,12 @@ function dpl_consumers_deploy_10002(): void {
   $consumer_handler = \Drupal::service('dpl_consumers.consumer_handler');
   $consumers = [
     [
-      'consumer' => new Consumer('BNF GraphQL', 'bnf_graphql', 'bnf_graphql', $bnf_consumer_secret),
+      'consumer' => new Consumer('bnf_graphql', 'BNF GraphQL', $bnf_consumer_secret),
       'user' => new ConsumerUser('bnf_graphql', $bnf_consumer_user_password),
       'role' => new ConsumerRole('bnf_graphql_client'),
     ],
     [
-      'consumer' => new Consumer('GO GraphQL', 'go_graphql', 'go_graphql', $go_consumer_secret),
+      'consumer' => new Consumer('go_graphql', 'GO GraphQL', $go_consumer_secret),
       'user' => new ConsumerUser('go_graphql', $go_consumer_user_password),
       'role' => new ConsumerRole('go_graphql_client'),
     ],

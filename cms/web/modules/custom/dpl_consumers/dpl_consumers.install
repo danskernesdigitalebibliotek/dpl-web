@@ -14,8 +14,23 @@ use Drupal\dpl_consumers\ConsumerUser;
  * Implements hook_uninstall().
  */
 function dpl_consumers_uninstall(): void {
-  Consumer::deleteByClientId(client_id: "bnf_graphql");
-  Consumer::deleteByClientId(client_id: "go_graphql");
-  (new ConsumerUser('bnf_graphql', ''))->delete();
-  (new ConsumerUser('go_graphql', ''))->delete();
+  // Delete consumers (BNF and Go) and their users.
+  // Roles are handled by config.
+  /** @var \Drupal\dpl_consumers\Services\ConsumerHandler $handler */
+  $consumer_handler = \Drupal::service('dpl_consumers.consumer_handler');
+
+  $consumers = [
+    [
+      'consumer' => new Consumer('bnf_graphql'),
+      'user' => new ConsumerUser('bnf_graphql'),
+    ],
+    [
+      'consumer' => new Consumer('go_graphql'),
+      'user' => new ConsumerUser('go_graphql'),
+    ],
+  ];
+
+  foreach ($consumers as $consumer) {
+    $consumer_handler->setComponents($consumer['consumer'], $consumer['user'])->delete();
+  }
 }

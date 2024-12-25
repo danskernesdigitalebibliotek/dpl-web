@@ -11,28 +11,24 @@ use Drupal\user\UserInterface;
 /**
  * DPL consumer user.
  *
- * This class is responsible for creating, loading and deleting consumer related users.
+ * This class is responsible for creating, loading
+ * and deleting consumer related users.
  */
 class ConsumerUser {
 
-  /**
-   * Summary of __construct.
-   *
-   * @param string $userName
-   *   Adsdas.
-   * @param string $password
-   *   Adsdasf.
-   */
   public function __construct(
     public string $userName,
-    public string $password,
+    public string | NULL $password = NULL,
   ) {}
 
   /**
-   *
+   * Create a user.
    */
   public function create(RoleInterface $role): UserInterface {
-    // Create role.
+    if (!$this->password) {
+      throw new \RuntimeException('Password is required to create a user.');
+    }
+    // Create user and connect role.
     $user = User::create([
       'name' => $this->userName,
       'pass' => $this->password,
@@ -46,7 +42,7 @@ class ConsumerUser {
   }
 
   /**
-   *
+   * Load a user.
    */
   public function load(): UserInterface | NULL {
     $users = \Drupal::entityTypeManager()
@@ -67,7 +63,7 @@ class ConsumerUser {
   }
 
   /**
-   *
+   * Delete a user.
    */
   public function delete() {
     if ($user = $this->load()) {

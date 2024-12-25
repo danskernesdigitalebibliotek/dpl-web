@@ -16,19 +16,20 @@ use Drupal\user\UserInterface;
 class Consumer {
 
   public function __construct(
-    public string $id,
-    public string $label,
     public string $clientId,
-    public string $secret,
+    public string | NULL $label = NULL,
+    public string | NULL $secret = NULL,
   ) {}
 
   /**
    * Create a consumer.
    */
   public function create(UserInterface $user, Role $role): ConsumerInterface {
+    if (!$this->label || !$this->clientId || !$this->secret) {
+      throw new \RuntimeException('Label, client ID and secret are required to create a consumer.');
+    }
     $consumer = \Drupal::entityTypeManager()->getStorage('consumer')->create([
       'label' => $this->label,
-      'id' => $this->id,
       'client_id' => $this->clientId,
       'secret' => $this->secret,
       'third_party' => FALSE,
@@ -48,10 +49,10 @@ class Consumer {
   /**
    * Load a consumer.
    */
-  public static function load(string $client_id): ConsumerInterface | NULL {
+  protected function load(): ConsumerInterface | NULL {
     $consumers = \Drupal::entityTypeManager()
       ->getStorage('consumer')
-      ->loadByProperties(['client_id' => $client_id]);
+      ->loadByProperties(['client_id' => $this->clientId]);
 
     if (empty($consumers)) {
       return NULL;
@@ -69,8 +70,8 @@ class Consumer {
   /**
    * Delete a consumer based on a client ID.
    */
-  public static function deleteByClientId(string $client_id) {
-    if ($consumer = self::load($client_id)) {
+  public function delete() {
+    if ($consumer = $this->load()) {
       $consumer->delete();
     }
   }

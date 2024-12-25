@@ -13,12 +13,6 @@ use Drupal\user\Entity\Role;
  */
 class ConsumerRole {
 
-  /**
-   * Summary of __construct.
-   *
-   * @param string $id
-   *   Role id.
-   */
   public function __construct(
     public string $id,
   ) {}

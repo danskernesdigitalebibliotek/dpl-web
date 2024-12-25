@@ -33,7 +33,7 @@ class ConsumerHandler {
    *
    * @param \Drupal\dpl_consumers\ConsumerRole $role
    */
-  protected ConsumerRole $role;
+  protected ConsumerRole | NULL $role;
 
   /**
    * Constructor.
@@ -45,7 +45,7 @@ class ConsumerHandler {
   /**
    * Set needed components for the handler.
    */
-  public function setComponents(Consumer $consumer, ConsumerUser $user, ConsumerRole $role): self {
+  public function setComponents(Consumer $consumer, ConsumerUser $user, ?ConsumerRole $role = NULL): self {
     $this->consumer = $consumer;
     $this->user = $user;
     $this->role = $role;
@@ -64,6 +64,18 @@ class ConsumerHandler {
       '@consumer' => $consumer->label(),
       '@user' => $user->getAccountName(),
       '@role' => $role->label(),
+    ]);
+  }
+
+  /**
+   * Delete consumer and user connected to the consumer.
+   */
+  public function delete(): void {
+    $this->user->delete();
+    $this->consumer->delete();
+    $this->logger->info('Deleted consumer: @consumer and user: @user', [
+      '@consumer' => $this->consumer->clientId,
+      '@user' => $this->user->userName,
     ]);
   }
 
