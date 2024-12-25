@@ -7,8 +7,6 @@
 
 declare(strict_types=1);
 
-require_once __DIR__ . '/dpl_consumers.crud.php';
-
 /**
  * Implements hook_uninstall().
  */
