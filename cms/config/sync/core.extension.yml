@@ -165,6 +165,7 @@ module:
   serialization: 0
   simple_menu_permissions: 0
   simple_oauth: 0
+  simple_sitemap: 0
   system: 0
   taxonomy: 0
   taxonomy_unique: 0

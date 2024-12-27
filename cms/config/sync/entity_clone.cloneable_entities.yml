@@ -5,3 +5,5 @@ cloneable_entities:
   - paragraph
   - custom_perms_entity
   - password_policy
+  - simple_sitemap_type
+  - simple_sitemap
