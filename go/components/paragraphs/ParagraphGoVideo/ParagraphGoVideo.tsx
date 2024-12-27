@@ -4,7 +4,12 @@ import React, { useEffect } from "react"
 
 import type { ParagraphGoVideo } from "@/lib/graphql/generated/dpl-cms/graphql"
 
-export default function ParagraphGoVideo(paragraphGoVideo: ParagraphGoVideo) {
+type ParagraphGoVideoProps = {
+  goVideoTitle: ParagraphGoVideo["goVideoTitle"]
+  src: string
+}
+
+export default function ParagraphGoVideo(paragraphGoVideo: ParagraphGoVideoProps) {
   const [mounted, setMounted] = React.useState(false)
 
   useEffect(() => {
@@ -20,23 +25,16 @@ export default function ParagraphGoVideo(paragraphGoVideo: ParagraphGoVideo) {
       </div>
 
       <div className="col-span-6 lg:col-span-12">
-        {mounted && (
-          <div className="relative aspect-16/9 w-full overflow-hidden rounded-base">
+        <div className="relative aspect-16/9 w-full overflow-hidden rounded-base">
+          {mounted && (
             <iframe
-              aria-label="Naja Marie Aidt - Oevelser i moerke"
+              aria-label={title || "Video"}
               className="absolute inset-0 h-full w-full"
-              style={{
-                position: "absolute",
-                top: 0,
-                left: 0,
-                width: "100%!important",
-                height: "100%!important",
-              }}
               src="https://media.videotool.dk/?vn=557_2024111913325696587632242634"
               allowFullScreen
               allow="autoplay; fullscreen"></iframe>
-          </div>
-        )}
+          )}
+        </div>
       </div>
     </div>
   )

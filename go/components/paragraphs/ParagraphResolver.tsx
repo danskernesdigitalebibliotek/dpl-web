@@ -2,8 +2,8 @@ import React from "react"
 
 import { ParagraphUnion } from "@/lib/graphql/generated/dpl-cms/graphql"
 
-import ParagraphGoVideo from "./ParagraphGoVideo/ParagraphGoVideo"
 import { ParagraphErrorBoundary } from "./paragraphErrorBoundary/paragraphErrorBoundary"
+import ParagraphGoVideo from "./paragraphGoVideo/ParagraphGoVideo"
 
 function ParagraphResolver({ paragraphs }: { paragraphs: ParagraphUnion[] }) {
   const components = {
@@ -17,10 +17,12 @@ function ParagraphResolver({ paragraphs }: { paragraphs: ParagraphUnion[] }) {
     }
 
     const DynamicComponentType = components[type as keyof typeof components] || null
+    if (DynamicComponentType === null) return null
 
     return (
       <ParagraphErrorBoundary key={index}>
-        {DynamicComponentType ? <DynamicComponentType key={index} {...paragraph} /> : null}
+        {/* @ts-ignore TODO: figure out how to type dynamically imported components */}
+        <DynamicComponentType key={index} {...paragraph} />
       </ParagraphErrorBoundary>
     )
   })
