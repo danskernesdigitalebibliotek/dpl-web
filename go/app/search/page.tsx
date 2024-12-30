@@ -12,8 +12,8 @@ const Page = async (props: { searchParams: Promise<{ q: string }> }) => {
   const { q } = searchParams
 
   const queryClient = getQueryClient()
-  await prefetchSearchResult(q, queryClient)
-  await prefetchSearchFacets(q, queryClient)
+  prefetchSearchResult(q, queryClient)
+  prefetchSearchFacets(q, queryClient)
 
   return (
     <HydrationBoundary state={dehydrate(queryClient)}>
