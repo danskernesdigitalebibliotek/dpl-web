@@ -15,7 +15,7 @@ import useSearchMachineActor from "@/lib/machines/search/useSearchMachineActor"
 
 const SearchPageLayout = () => {
   const loadMoreRef = useRef(null)
-  const isInView = useInView(loadMoreRef)
+  const loadMoreRefIsInView = useInView(loadMoreRef)
   const actor = useSearchMachineActor()
   const {
     data,
@@ -27,13 +27,13 @@ const SearchPageLayout = () => {
   } = useSearchDataAndLoadingStates()
 
   useEffect(() => {
-    if (isInView) {
+    if (loadMoreRefIsInView) {
       actor.send({ type: "LOAD_MORE" })
     }
     // We choose to ignore the eslint warning below
     // because we do not want to add the handleMore callback which changes on every render.
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [isInView])
+  }, [loadMoreRefIsInView])
 
   useEffect(() => {
     actor.send({ type: "RESET_BOOTSTRAP_STATE" })
@@ -100,7 +100,7 @@ const SearchPageLayout = () => {
           )}
         </>
       )}
-      <div ref={loadMoreRef} className="h-0 opacity-0"></div>
+      <div ref={loadMoreRef} className="h-0 -translate-y-[500px] opacity-0"></div>
     </div>
   )
 }
