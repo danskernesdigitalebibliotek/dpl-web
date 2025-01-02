@@ -1,0 +1,9 @@
+---
+bnf_server.cookie_login:
+  path: '/bnf/login'
+  defaults:
+    _controller: '\Drupal\bnf_server\Controller\LoginController::login'
+  requirements:
+    _permission: 'access content'
+  options:
+    no_cache: true
