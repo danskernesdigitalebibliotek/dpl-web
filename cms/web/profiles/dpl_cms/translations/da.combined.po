@@ -7,8 +7,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2025-01-02 14:06+0100\n"
-"PO-Revision-Date: 2025-01-02 14:06+0100\n"
+"POT-Creation-Date: 2025-01-02 14:26+0100\n"
+"PO-Revision-Date: 2025-01-02 14:26+0100\n"
 "Last-Translator: NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
 "MIME-Version: 1.0\n"
@@ -3675,6 +3675,43 @@ msgctxt "BNF"
 msgid "Node already has been exported to BNF."
 msgstr ""
 
+msgctxt "BNF"
+msgid "Confirm import of BNF content"
+msgstr ""
+
+msgctxt "BNF"
+msgid "Cannot import this node from BNF."
+msgstr ""
+
+msgctxt "BNF"
+msgid "Node has previously been imported from BNF."
+msgstr ""
+
+msgctxt "BNF"
+msgid "Content label"
+msgstr ""
+
+msgid "Import content"
+msgstr ""
+
+msgctxt "BNF"
+msgid "Could not import node from BNF."
+msgstr ""
+
+msgctxt "BNF"
+msgid "Import nodes from BNF"
+msgstr ""
+
+msgid "URL or UUID of content"
+msgstr ""
+
+msgid "Preview content"
+msgstr ""
+
+msgctxt "BNF"
+msgid "Invalid URL or UUID."
+msgstr ""
+
 msgctxt "DPL admin UX"
 msgid "Footer columns"
 msgstr "Fodkolonner"
@@ -4804,6 +4841,15 @@ msgstr ""
 msgid ""
 "BNF (Bibliotekernes Nationale Formidling) client, for sharing content with "
 "BNF"
+msgstr ""
+
+msgid "Import"
+msgstr "Importér"
+
+msgid "Confirm import"
+msgstr ""
+
+msgid "Import BNF content"
 msgstr ""
 
 msgid "Footer Settings"
