@@ -58,7 +58,7 @@ class BnfImportConfirmForm implements FormInterface, ContainerInjectionInterface
     $form['#title'] = $this->t('Confirm import of BNF content', [], ['context' => 'BNF']);
 
     $uuid = $this->routeMatch->getParameter('uuid');
-    $bnfServer = (string) getenv('BNF_SERVER_GRAPHQL_ENDPOINT');
+    $bnfServer = (string) getenv('BNF_SERVER_BASE_ENDPOINT') . '/graphql';
 
     $form_state->set('uuid', $uuid);
     $form_state->set('bnfServer', $bnfServer);
