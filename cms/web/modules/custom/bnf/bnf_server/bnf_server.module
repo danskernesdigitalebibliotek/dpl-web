@@ -1,0 +1,45 @@
+<?php
+
+use Drupal\bnf_server\Controller\LoginController;
+use Drupal\node\Entity\Node;
+
+/**
+ * Implements hook_preprocess_HOOK().
+ *
+ * Displaying the "import content to my site" button on nodes, if the user
+ * has logged in and has the callback cookie context.
+ */
+function bnf_server_preprocess_page(array &$variables): void {
+  $node = $variables['node'] ?? NULL;
+  $cookies = \Drupal::request()->cookies;
+  $url = $cookies->get(LoginController::COOKIE_CALLBACK_URL);
+  $name = $cookies->get(LoginController::COOKIE_SITE_NAME);
+  $allowed_cts = ['article'];
+
+  if (!$url || !($node instanceof Node) || !in_array($node->bundle(), $allowed_cts)) {
+    return;
+  }
+
+  $variables['page']['content']['import_link'] = [
+    '#theme' => 'bnf_server_import_link',
+    '#label' => $node->label(),
+    '#name' => $name ?? t('my site', [], ['context' => 'BNF']),
+    '#url' => "$url/admin/bnf/import/{$node->uuid()}",
+    '#cache' => ['max-age' => 0],
+  ];
+}
+
+/**
+ * Implements hook_theme().
+ */
+function bnf_server_theme(): array {
+  return [
+    'bnf_server_import_link' => [
+      'variables' => [
+        'url' => NULL,
+        'name' => NULL,
+        'label' => NULL,
+      ],
+    ],
+  ];
+}
