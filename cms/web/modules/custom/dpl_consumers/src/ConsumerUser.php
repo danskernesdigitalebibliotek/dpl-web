@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Drupal\dpl_consumers;
 
+use Drupal\Core\Entity\EntityTypeManagerInterface;
 use Drupal\user\Entity\User;
 use Drupal\user\RoleInterface;
 use Drupal\user\UserInterface;
@@ -18,6 +19,7 @@ class ConsumerUser {
 
   public function __construct(
     public string $userName,
+    protected EntityTypeManagerInterface $entityTypeManager,
     public string | NULL $password = NULL,
   ) {}
 
@@ -35,7 +37,7 @@ class ConsumerUser {
       'status' => 1,
     ]);
 
-    $user->addRole($role->id());
+    $user->addRole((string) $role->id());
     $user->save();
 
     return $user;
@@ -45,7 +47,7 @@ class ConsumerUser {
    * Load a user.
    */
   public function load(): UserInterface | NULL {
-    $users = \Drupal::entityTypeManager()
+    $users = $this->entityTypeManager
       ->getStorage('user')
       ->loadByProperties(['name' => $this->userName]);
 
@@ -65,7 +67,7 @@ class ConsumerUser {
   /**
    * Delete a user.
    */
-  public function delete() {
+  public function delete(): void {
     if ($user = $this->load()) {
       $user->delete();
     }

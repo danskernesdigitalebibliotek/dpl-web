@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Drupal\dpl_consumers;
 
 use Drupal\consumers\Entity\ConsumerInterface;
+use Drupal\Core\Entity\EntityTypeManagerInterface;
 use Drupal\user\Entity\Role;
 use Drupal\user\UserInterface;
 
@@ -17,6 +18,7 @@ class Consumer {
 
   public function __construct(
     public string $clientId,
+    protected EntityTypeManagerInterface $entityTypeManager,
     public string | NULL $label = NULL,
     public string | NULL $secret = NULL,
   ) {}
@@ -28,7 +30,7 @@ class Consumer {
     if (!$this->label || !$this->clientId || !$this->secret) {
       throw new \RuntimeException('Label, client ID and secret are required to create a consumer.');
     }
-    $consumer = \Drupal::entityTypeManager()->getStorage('consumer')->create([
+    $consumer = $this->entityTypeManager->getStorage('consumer')->create([
       'label' => $this->label,
       'client_id' => $this->clientId,
       'secret' => $this->secret,
@@ -49,9 +51,8 @@ class Consumer {
   /**
    * Load a consumer.
    */
-  protected function load(): ConsumerInterface | NULL {
-    $consumers = \Drupal::entityTypeManager()
-      ->getStorage('consumer')
+  public function load(): ConsumerInterface | NULL {
+    $consumers = $this->entityTypeManager->getStorage('consumer')
       ->loadByProperties(['client_id' => $this->clientId]);
 
     if (empty($consumers)) {
@@ -70,7 +71,7 @@ class Consumer {
   /**
    * Delete a consumer based on a client ID.
    */
-  public function delete() {
+  public function delete(): void {
     if ($consumer = $this->load()) {
       $consumer->delete();
     }

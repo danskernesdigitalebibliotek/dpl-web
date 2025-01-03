@@ -57,7 +57,12 @@ class ConsumerHandler {
    * Create consumer and user connected to the consumer.
    */
   public function create(): void {
-    $role = $this->role->load();
+    if (!$this->role) {
+      throw new \RuntimeException('Role is required to create a consumer.');
+    }
+    if (!$role = $this->role->load()) {
+      throw new \RuntimeException('Role could not be loaded.');
+    }
     $user = $this->user->create($role);
     $consumer = $this->consumer->create($user, $role);
     $this->logger->info('Created consumer: @consumer, user: @user, role: @role', [
