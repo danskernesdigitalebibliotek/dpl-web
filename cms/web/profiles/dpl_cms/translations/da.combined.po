@@ -7,8 +7,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2025-01-03 09:35+0100\n"
-"PO-Revision-Date: 2025-01-03 09:35+0100\n"
+"POT-Creation-Date: 2025-01-03 11:06+0100\n"
+"PO-Revision-Date: 2025-01-03 11:06+0100\n"
 "Last-Translator: NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
 "MIME-Version: 1.0\n"
@@ -7061,32 +7061,6 @@ msgstr "Date range formatter"
 
 msgid "Formats date ranges."
 msgstr "Formaterer datointervaller."
-
-msgid "Exports a single entity"
-msgstr "Eksporterer en enkelt enhed"
-
-msgid "The entity type to export."
-msgstr "Enhedstypen til eksport."
-
-msgid "The ID of the entity to export."
-msgstr "ID'et på enheden der skal eksporteres."
-
-msgid "Write out the exported content to a file instead of stdout"
-msgstr "Skriv det eksporterede indhold til en fil i stedet for stdout"
-
-msgid "Exports an entity and all its referenced entities."
-msgstr "Eksporterer en enhed og alle dens refererede enheder."
-
-msgid ""
-"Folder to export to, entities are grouped by entity type into directories."
-msgstr ""
-"Folder to export to, entities are grouped by entity type into directories."
-
-msgid "Exports all the content defined in a module info file."
-msgstr "Eksporterer alt indhold defineret i en modul-infomationsfil"
-
-msgid "The name of the module."
-msgstr "Modulets navn"
 
 msgid "Default content"
 msgstr "Standardindhold"
