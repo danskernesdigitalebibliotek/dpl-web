@@ -34,7 +34,7 @@ describe('Events', () => {
     });
     setDate('Start date', events.singleEvent.start);
     setDate('End date', events.singleEvent.end);
-    cy.findByRole('button', { name: 'Save' }).click();
+    cy.clickSaveButton();
 
     // Ensure that the core data from the event is displayed on the resulting page.
     // @todo This should probably be replaced by a visual regression test.
