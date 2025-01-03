@@ -230,10 +230,6 @@ tasks:
       - task dev:cli -- drush user:create patron --password="test"
       - task dev:cli -- drush user:role:add 'patron' patron
 
-      - task dev:cli -- drush user:create graphql_consumer --password="test"
-      - task dev:cli -- drush user:role:add 'external_system' graphql_consumer
-      - task dev:cli -- drush user:role:add 'graphql_consumer' graphql_consumer
-
   dev:import-profile-translations:
     desc: Import our custom profile translations. This is done automatically on deploy.
     cmds:
