@@ -112,6 +112,7 @@ function dpl_update_install(): string {
   $messages[] = dpl_update_update_10028();
   $messages[] = dpl_update_update_10029();
   $messages[] = dpl_update_update_10030();
+  $messages[] = dpl_update_update_10031();
 
   return implode('\r\n', $messages);
 }
@@ -351,4 +352,11 @@ function dpl_update_update_10030(): string {
   );
 
   return $return;
+}
+
+/**
+ * Installing simple sitemap.
+ */
+function dpl_update_update_10031(): string {
+  return _dpl_update_install_modules(['simple_sitemap']);
 }

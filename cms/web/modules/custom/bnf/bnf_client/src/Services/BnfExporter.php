@@ -55,7 +55,7 @@ class BnfExporter {
     GRAPHQL;
 
     try {
-      $bnfServer = (string) getenv('BNF_SERVER_GRAPHQL_ENDPOINT');
+      $bnfServer = (string) getenv('BNF_SERVER_BASE_ENDPOINT') . '/graphql';
 
       if (!filter_var($bnfServer, FILTER_VALIDATE_URL)) {
         throw new \InvalidArgumentException('The provided BNF server URL is not valid.');

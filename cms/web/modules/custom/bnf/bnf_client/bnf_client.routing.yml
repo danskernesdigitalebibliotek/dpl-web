@@ -1,0 +1,16 @@
+---
+bnf_client.import_form:
+  path: '/admin/bnf/import'
+  defaults:
+    _form: '\Drupal\bnf_client\Form\BnfImportForm'
+    _title: 'Import'
+  requirements:
+    _permission: 'bnf client import nodes'
+
+bnf_client.import_confirm_form:
+  path: '/admin/bnf/import/{uuid}'
+  defaults:
+    _form: '\Drupal\bnf_client\Form\BnfImportConfirmForm'
+    _title: 'Confirm import'
+  requirements:
+    _permission: 'bnf client import nodes'

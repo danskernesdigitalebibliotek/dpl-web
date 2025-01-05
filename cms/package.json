@@ -18,11 +18,11 @@
     "eslint-config-prettier": "^9.1.0",
     "eslint-plugin-cypress": "^2.12.1",
     "eslint-plugin-drupal-contrib": "^1.2.1",
-    "eslint-plugin-prettier": "^4.2.1",
+    "eslint-plugin-prettier": "^5.2.1",
     "jsome": "^2.5.0",
     "markdownlint-cli2": "^0.16.0",
     "pa11y-ci": "https://github.com/pa11y/pa11y-ci/archive/5c842cf1b9fe2867b70ff5354851d985be8d71c4.tar.gz",
-    "prettier": "^2.7.1",
+    "prettier": "^3.4.2",
     "typescript": "^5.7.2",
     "wiremock-rest-client": "^1.11.0"
   },
@@ -32,5 +32,6 @@
     "wiremock:dev:watch": "tsc -p wiremock -w",
     "wiremock:build": "tsc -p wiremock",
     "wiremock:browser": "yarn wiremock:build && node wiremock/build/goggles.js"
-  }
+  },
+  "packageManager": "yarn@1.22.22+sha1.ac34549e6aa8e7ead463a7407e1c7390f61a6610"
 }
