@@ -30,64 +30,50 @@ final class DplConsumersCommands extends DrushCommands {
   }
 
   /**
-   * Function is used for setting the consumer secret.
+   * Used for setting the consumer secret and password.
    *
-   * The secret is stored as an environment variable.
-   * This command makes sure it is transferred to the database.
+   * The secret and password is stored as environment variables.
+   * This command makes sure they are transferred to the database.
    *
-   * @param string $client_id
+   * @param string $clientId
    *   Client id of the consumer.
    *
-   * @command dpl_consumers:set-consumer-secret
-   * @aliases dpl-scs
-   * @usage dpl_consumers:set-consumer-secret [client_id of the consumer]
+   * @command dpl_consumers:set-consumer-env-credentials
+   * @aliases dpl-scec
+   * @usage dpl_consumers:set-consumer-env-credentials [client_id of the consumer]
    *
    * @throws \Exception
    */
-  public function setConsumerSecret(string $client_id): string {
-    $consumers = $this->getConsumers($client_id);
-    try {
+  public function setConsumerEnvCredentials(string $clientId): string {
+    $consumers = $this->getConsumers($clientId);
 
-      $consumer = $consumers[$client_id];
-      if (!$consumer) {
-        throw new \Exception('Could not find consumer.');
-      }
-      if (!$consumer->secret) {
-        throw new \Exception('Consumer secret not found.');
-      }
-      if (!$consumer_entity = $consumer->load()) {
-        throw new \Exception('Could not load consumer entity.');
-      }
-      $consumer_entity->save();
-      return 'Consumer secret set successfully.';
-    }
-    catch (\Exception $e) {
-      throw new \Exception($e->getMessage());
-    }
+    $consumer = $consumers[$clientId];
+    $consumer->save();
+    return 'Consumer secret set successfully.';
   }
 
   /**
-   * Function is used for printing out the consumer credentials to the console.
+   * Used for printing out the consumer UUID to the console.
    *
-   * @param string $client_id
+   * @param string $clientId
    *   Client id of the consumer.
    *
-   * @command dpl_consumers:consumer-credentials
-   * @aliases dpl-gcc
-   * @usage dpl_consumers:consumer-credentials [client_id of the consumer]
+   * @command dpl_consumers:get-consumer-uuid
+   * @aliases dpl-gcu
+   * @usage dpl_consumers:get-consumer-uuid [client_id of the consumer]
    *
    * @throws \Exception
    */
-  public function getConsumerCredentials(string $client_id): void {
-    $consumers = $this->getConsumers($client_id);
-    $consumer = $consumers[$client_id];
-    $this->output()->writeln(sprintf('Consumer UUID: %s', $consumer->uuid));
+  public function getConsumerUuid(string $clientId): void {
+    $consumers = $this->getConsumers($clientId);
+    $consumer = $consumers[$clientId];
+    $this->output()->writeln(sprintf('Consumer UUID: %s', $consumer->uuid->value));
   }
 
   /**
    * Get consumers.
    *
-   * @param string $client_id
+   * @param string $clientId
    *   Client id of the consumer.
    *
    * @return mixed[]
@@ -95,10 +81,10 @@ final class DplConsumersCommands extends DrushCommands {
    *
    * @throws \Exception
    */
-  protected function getConsumers(string $client_id): array {
+  protected function getConsumers(string $clientId): array {
     $consumers = dpl_consumers_get_known_consumers();
-    if (!in_array($client_id, array_keys($consumers), TRUE)) {
-      throw new \Exception(sprintf('GraphQL consumer %s is not known.', $client_id));
+    if (!in_array($clientId, array_keys($consumers), TRUE)) {
+      throw new \Exception(sprintf('GraphQL consumer %s is not known.', $clientId));
     }
 
     return $consumers;

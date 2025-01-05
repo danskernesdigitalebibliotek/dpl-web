@@ -52,7 +52,7 @@ function dpl_consumers_get_consumer_uuid(string $client_id): string {
  * @return mixed[]
  *   An array of consumers, users and roles.
  */
-function dpl_consumers_known_consumers_users_and_roles(): array {
+function dpl_consumers_known_consumers_settings(): array {
   // Check if we have the necessary secrets for new consumers and their users.
   if (!$bnf_consumer_secret = getenv('BNF_GRAPHQL_CONSUMER_SECRET')) {
     throw new \Exception('BNF_GRAPHQL_CONSUMER_SECRET not found.');
@@ -89,10 +89,10 @@ function dpl_consumers_known_consumers_users_and_roles(): array {
  */
 function dpl_consumers_get_known_consumers(): array {
   return array_reduce(
-    dpl_consumers_known_consumers_users_and_roles(),
-    static function (array $carry, array $consumer): array {
-      $consumer_client_id = $consumer['consumer']->client_id;
-      $carry[$consumer_client_id] = $consumer['consumer'];
+    dpl_consumers_known_consumers_settings(),
+    static function (array $carry, array $settings): array {
+      $consumer_client_id = $settings['consumer']->clientId;
+      $carry[$consumer_client_id] = $settings['consumer']->load();
 
       return $carry;
     },
