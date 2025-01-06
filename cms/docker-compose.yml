@@ -24,8 +24,8 @@ x-user:
 
 x-environment:
   &default-environment
-    # The php cli container needs this to be defined. Otherwise it is not possible to execute drush commands.
-    LAGOON_ROUTE: &default-url http://${COMPOSE_PROJECT_NAME}.${DEV_TLD:-docker}
+    # Lagoon ensures that Drush knows the local site URI using this variable.
+    LAGOON_ROUTE: &default-url https://${COMPOSE_PROJECT_NAME}.${DEV_TLD:-docker}
     # Environment variables which mimic what will be set in a Lagoon cluster locally
     LAGOON_PROJECT: 'dplcms'
     LAGOON_ENVIRONMENT: 'local'
