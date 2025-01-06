@@ -10,7 +10,7 @@ import ProfileButton from "./ProfileButton"
 
 function Header() {
   return (
-    <div>
+    <header>
       <div className="flex h-navigation-top-height items-center justify-center bg-background-overlay">
         <p className="text-typo-caption">Biblioterernes ebøger og lydbøger</p>
       </div>
@@ -43,7 +43,7 @@ function Header() {
           </div>
         </div>
       </div>
-    </div>
+    </header>
   )
 }
 
