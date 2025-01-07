@@ -4,5 +4,6 @@ describe("Front Page Tests", () => {
 
     cy.get("header").should("exist")
     cy.get("footer").should("exist")
+    cy.dataCy("go-logo").should("exist")
   })
 })
