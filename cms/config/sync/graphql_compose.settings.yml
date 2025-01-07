@@ -258,10 +258,17 @@ settings:
   schema_version: '1'
   simple_queries: false
   simple_unions: true
-  site_name: false
+  site_name: true
   site_slogan: false
   site_front: true
   svg_image: false
   svg_filesize: 100
   inflector_langcode: en
   inflector_singularize: false
+  custom:
+    7b700675-a7fa-468a-8468-4afb39168de8:
+      name: url
+      description: null
+      value: '[site:base-url]'
+      type: string
+      weight: 0
