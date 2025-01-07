@@ -6,7 +6,7 @@
     "@apidevtools/swagger-cli": "^4.0.4",
     "@lhci/cli": "^0.8",
     "@testing-library/cypress": "^10.0.2",
-    "@types/node": "^18.11.11",
+    "@types/node": "^20",
     "@typescript-eslint/eslint-plugin": "^8.19.1",
     "@typescript-eslint/parser": "^8.19.1",
     "chrome-launcher": "^0.15.1",
