@@ -17,25 +17,6 @@ use Psr\Log\LoggerInterface;
 class ConsumerHandler {
 
   /**
-   * Consumer used for guarding requests.
-   *
-   * @param \Drupal\dpl_consumers\Consumer $consumer
-   */
-  protected Consumer $consumer;
-  /**
-   * User tied to the consumer.
-   *
-   * @param \Drupal\dpl_consumers\ConsumerUser $user
-   */
-  protected ConsumerUser $user;
-  /**
-   * Role tied to the consumer user.
-   *
-   * @param \Drupal\dpl_consumers\ConsumerRole $role
-   */
-  protected ConsumerRole | NULL $role;
-
-  /**
    * Constructor.
    */
   public function __construct(
@@ -43,44 +24,39 @@ class ConsumerHandler {
   ) {}
 
   /**
-   * Set needed components for the handler.
-   */
-  public function setComponents(Consumer $consumer, ConsumerUser $user, ?ConsumerRole $role = NULL): self {
-    $this->consumer = $consumer;
-    $this->user = $user;
-    $this->role = $role;
-
-    return $this;
-  }
-
-  /**
    * Create consumer and user connected to the consumer.
+   *
+   * @param \Drupal\dpl_consumers\Consumer $consumer
+   *   The consumer to create.
+   * @param \Drupal\dpl_consumers\ConsumerUser $user
+   *   The user to connect the consumer to.
+   * @param \Drupal\dpl_consumers\ConsumerRole $role
+   *   The role to connect the consumer to.
    */
-  public function create(): void {
-    if (!$this->role) {
-      throw new \RuntimeException('Role is required to create a consumer.');
-    }
-    if (!$role = $this->role->load()) {
-      throw new \RuntimeException('Role could not be loaded.');
-    }
-    $user = $this->user->create($role);
-    $consumer = $this->consumer->create($user, $role);
+  public function create(Consumer $consumer, ConsumerUser $user, ConsumerRole $role): void {
+    $createdUser = $user->create($role);
+    $createdConsumer = $consumer->create($user, $role);
     $this->logger->info('Created consumer: @consumer, user: @user, role: @role', [
-      '@consumer' => $consumer->label(),
-      '@user' => $user->getAccountName(),
-      '@role' => $role->label(),
+      '@consumer' => $createdConsumer->label(),
+      '@user' => $createdUser->getAccountName(),
+      '@role' => $role->load()->label(),
     ]);
   }
 
   /**
    * Delete consumer and user connected to the consumer.
+   *
+   * @param \Drupal\dpl_consumers\Consumer $consumer
+   *   The consumer to delete.
+   * @param \Drupal\dpl_consumers\ConsumerUser $user
+   *   The user to delete.
    */
-  public function delete(): void {
-    $this->user->delete();
-    $this->consumer->delete();
+  public function delete(Consumer $consumer, ConsumerUser $user): void {
+    $user->delete();
+    $consumer->delete();
     $this->logger->info('Deleted consumer: @consumer and user: @user', [
-      '@consumer' => $this->consumer->clientId,
-      '@user' => $this->user->userName,
+      '@consumer' => $consumer->clientId,
+      '@user' => $user->userName,
     ]);
   }
 

@@ -31,6 +31,6 @@ function dpl_consumers_uninstall(): void {
   ];
 
   foreach ($consumers as $consumer) {
-    $consumer_handler->setComponents($consumer['consumer'], $consumer['user'])->delete();
+    $consumer_handler->delete($consumer['consumer'], $consumer['user']);
   }
 }

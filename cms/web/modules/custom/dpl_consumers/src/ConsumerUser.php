@@ -6,7 +6,6 @@ namespace Drupal\dpl_consumers;
 
 use Drupal\Core\Entity\EntityTypeManagerInterface;
 use Drupal\user\Entity\User;
-use Drupal\user\RoleInterface;
 use Drupal\user\UserInterface;
 
 /**
@@ -26,7 +25,7 @@ class ConsumerUser {
   /**
    * Create a user.
    */
-  public function create(RoleInterface $role): UserInterface {
+  public function create(ConsumerRole $role): UserInterface {
     if (!$this->password) {
       throw new \RuntimeException('Password is required to create a user.');
     }
@@ -37,7 +36,7 @@ class ConsumerUser {
       'status' => 1,
     ]);
 
-    $user->addRole((string) $role->id());
+    $user->addRole((string) $role->load()->id());
     $user->save();
 
     return $user;

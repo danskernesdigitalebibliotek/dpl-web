@@ -20,7 +20,7 @@ class ConsumerRole {
   /**
    * Load a consumer role.
    */
-  public function load(): Role | NULL {
+  public function load(): Role {
     if (!$role = Role::load($this->id)) {
       throw new \RuntimeException(sprintf('Failed to load role: %s', $this->id));
     }

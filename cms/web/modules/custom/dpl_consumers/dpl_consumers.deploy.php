@@ -45,6 +45,6 @@ function dpl_consumers_deploy_10002(): void {
   /** @var \Drupal\dpl_consumers\Services\ConsumerHandler $consumer_handler */
   $consumer_handler = \Drupal::service('dpl_consumers.consumer_handler');
   foreach (dpl_consumers_known_consumers_settings() as $consumer) {
-    $consumer_handler->setComponents($consumer['consumer'], $consumer['user'], $consumer['role'])->create();
+    $consumer_handler->create($consumer['consumer'], $consumer['user'], $consumer['role']);
   }
 }

@@ -6,8 +6,6 @@ namespace Drupal\dpl_consumers;
 
 use Drupal\consumers\Entity\ConsumerInterface;
 use Drupal\Core\Entity\EntityTypeManagerInterface;
-use Drupal\user\Entity\Role;
-use Drupal\user\UserInterface;
 
 /**
  * DPL consumer.
@@ -26,7 +24,16 @@ class Consumer {
   /**
    * Create a consumer.
    */
-  public function create(UserInterface $user, Role $role): ConsumerInterface {
+
+  /**
+   * Create a consumer.
+   *
+   * @param ConsumerUser $user
+   *   The user to connect the consumer to.
+   * @param ConsumerRole $role
+   *   The role to connect the consumer to.
+   */
+  public function create(ConsumerUser $user, ConsumerRole $role): ConsumerInterface {
     if (!$this->label || !$this->clientId || !$this->secret) {
       throw new \RuntimeException('Label, client ID and secret are required to create a consumer.');
     }
@@ -35,8 +42,8 @@ class Consumer {
       'client_id' => $this->clientId,
       'secret' => $this->secret,
       'third_party' => FALSE,
-      'user_id' => $user->id(),
-      'roles' => [$role->id()],
+      'user_id' => $user->load()->id(),
+      'roles' => [$role->load()->id()],
     ]);
 
     $consumer->save();
