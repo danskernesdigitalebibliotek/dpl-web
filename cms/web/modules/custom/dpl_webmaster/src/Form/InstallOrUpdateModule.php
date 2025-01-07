@@ -198,6 +198,11 @@ class InstallOrUpdateModule extends FormBase {
     // MODULE/) and others list an actual file (i.e., MODULE/README.TXT).
     $project = strtok($files[0], '/\\');
 
+    if (!$project) {
+      $this->messenger()->addError($this->t('Could not determine module name from archive'));
+      return;
+    }
+
     $archive_errors = $this->moduleHandler->invokeAll('verify_update_archive', [$project, $local_cache, $directory]);
     if (!empty($archive_errors)) {
       $this->messenger()->addError(array_shift($archive_errors));
@@ -240,15 +245,11 @@ class InstallOrUpdateModule extends FormBase {
       return;
     }
 
-    // This is where we diverge from UpdateManagerInstall. It simply errors out,
-    // we set a session variable to tell /admin/update/ready which module to
-    // update and redirect to it instead. It'll pick up the files for the module
-    // as we've already extracted it in the directory where it expects to find
-    // it.
+    // This is where we diverge from UpdateManagerInstall and pass over control
+    // to update.php. It'll pick up the files for the module as we've already
+    // extracted it in the directory where it expects to find it.
     if ($updater->isInstalled()) {
-      // Tell UpdateReady form which projects to update.
-      $this->session->set('update_manager_update_projects', [$project => $project]);
-      $form_state->setRedirect('update.confirmation_page');
+      $this->updateProject([$project], $form_state);
       return;
     }
 
@@ -288,6 +289,43 @@ class InstallOrUpdateModule extends FormBase {
       // form.
       system_authorized_init('update_authorize_run_install', __DIR__ . '/../../update.authorize.inc', $arguments, $this->t('Update manager'));
       $form_state->setRedirectUrl(system_authorized_get_url());
+    }
+  }
+
+  /**
+   * Copy uploaded module into place run updates.
+   *
+   * @param string[] $projects
+   *   List of projects to update.
+   * @param \Drupal\Core\Form\FormStateInterface $form_state
+   *   Form state to set redirect on.
+   */
+  protected function updateProject(array $projects, FormStateInterface $form_state): void {
+    // Most of this has been lifted from UpdateReady::submitForm().
+    drupal_get_updaters();
+
+    $updates = [];
+    $directory = _update_manager_extract_directory();
+
+    $project_real_location = NULL;
+    foreach ($projects as $project) {
+      $project_location = $directory . '/' . $project;
+      $updater = Updater::factory($project_location, $this->root);
+      $project_real_location = $this->fileSystem->realpath($project_location);
+      $updates[] = [
+        'project' => $project,
+        'updater_name' => get_class($updater),
+        'local_url' => $project_real_location,
+      ];
+    }
+
+    // Contrary to UpdateReady::submitForm(), we don't check file owners or
+    // support FTP method.
+    $this->moduleHandler->loadInclude('update', 'inc', 'update.authorize');
+    $filetransfer = new Local($this->root, $this->fileSystem);
+    $response = update_authorize_run_update($filetransfer, $updates);
+    if ($response instanceof Response) {
+      $form_state->setResponse($response);
     }
   }
 

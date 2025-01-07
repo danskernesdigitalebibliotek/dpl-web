@@ -7,8 +7,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2024-12-10 13:13+0100\n"
-"PO-Revision-Date: 2024-12-10 13:13+0100\n"
+"POT-Creation-Date: 2025-01-07 11:18+0100\n"
+"PO-Revision-Date: 2025-01-07 11:18+0100\n"
 "Last-Translator: NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
 "MIME-Version: 1.0\n"
@@ -68,6 +68,9 @@ msgstr "Kan ikke hente Drupal-projekt fra %url."
 
 msgid "Provided archive contains no files."
 msgstr "Det angivne arkiv indeholder ingen filer."
+
+msgid "Could not determine module name from archive"
+msgstr "Det er ikke muligt at bestemme modulnavnet fra arkivet."
 
 msgid "Unable to determine %project name."
 msgstr "Kan ikke fastslå %project navn."
@@ -195,7 +198,7 @@ msgstr ""
 
 msgctxt "DPL admin"
 msgid "Reset password"
-msgstr ""
+msgstr "Gendan adgangskode"
 
 msgctxt "DPL admin UX"
 msgid ""
@@ -2684,7 +2687,7 @@ msgstr "Du har fornyet dit lån"
 
 msgctxt "Renew loan"
 msgid "Processing..."
-msgstr "Indlæser...Fornyelsen af dit lån gik iggen igennem"
+msgstr "Indlæser..."
 
 msgctxt "Global"
 msgid "Borrow before @date"
@@ -3584,12 +3587,14 @@ msgid "Euros"
 msgstr "Euro"
 
 msgid "Enable screen names"
-msgstr ""
+msgstr "Enable screen names"
 
 msgid ""
 "Enable screen names on events. Requires an external system to actually fetch "
 "and display the events on real physical screens."
 msgstr ""
+"Enable screen names on events. Requires an external system to actually fetch "
+"and display the events on real physical screens."
 
 msgctxt "DPL event"
 msgid "Automatic unpublication"
@@ -3597,23 +3602,29 @@ msgstr "Automatisk afpublicering"
 
 msgctxt "DPL event"
 msgid "Unpublish eventinstances when they have occured (recommended)"
-msgstr ""
+msgstr "Afpubliser arrangemenstinstancer når de har været afholdt (anbefalet)"
 
 msgctxt "DPL event"
 msgid ""
 "Notice - if you do not choose that eventinstances get unpublished, they may "
 "show up in automatic and manual lists, across the site."
 msgstr ""
+"Vær opmærksom på, at hvis du vælger IKKE at afpublisere "
+"arrangementsinstancer, er det muligt, at de vises i automatiske og manuelle "
+"lister rundt om på siden."
 
 msgctxt "DPL event"
 msgid ""
 "How much time should pass after an eventinstance has occurred before it "
 "should be unpublished?"
 msgstr ""
+"Hvor lang tid skal der gå efter at en arrangementsinstance har været afholdt "
+"til det skal afpubliseres?"
 
 msgctxt "DPL event"
 msgid "Unpublish the series when all instances have occurred (not recommended)"
 msgstr ""
+"Afpubliser serien, når alle instancer har været afholdt (anbefales IKKE)"
 
 msgctxt "DPL event"
 msgid ""
@@ -3621,6 +3632,9 @@ msgid ""
 "If you however keep the series published, expired instances will redirect to "
 "the associated series."
 msgstr ""
+"Vær opmærksom på, at hvis serier bliver afpubliseret, så vil gamle instance-"
+"links ikke virke længere. Hvis du alligevel vælger at bevare publiseringen, "
+"vil udløbne instances blive henvist til de relaterede serier."
 
 msgctxt "DPL Event"
 msgid "Use the address from associated branch as fallback."
@@ -3628,6 +3642,80 @@ msgstr "Brug adressen fra det tilknyttede bibliotek som fallback."
 
 msgid "Updated @count description fields on @entity_type"
 msgstr "Opdaterede @count beskrivelsesfelter på @entity_type"
+
+msgid "BNF State"
+msgstr "BNF status"
+
+msgid ""
+"The BNF state of the entity, defining if it was imported, exported, or "
+"neither."
+msgstr ""
+"BNF status definerer om enheden blev importeret, eksporteret eller hverken "
+"eller. "
+
+msgid "Publish and submit to BNF"
+msgstr "Publicer og send til BNF"
+
+msgid ""
+"Please make sure that all content and media as part of this article is OK to "
+"be used by other libraries."
+msgstr ""
+"Husk at det skal være tilladt, alt indhold i denne artikel må bruges af "
+"andre bibliotker"
+
+msgctxt "BNF"
+msgid "Could not publish node - will not send to BNF."
+msgstr ""
+"Det er ikke muligt at publicere noden og den vil ikke blive sendt til BNF."
+
+msgctxt "BNF"
+msgid "Content has been published and sent to BNF."
+msgstr "Indholdet er blevet publiseret og sendt til BNF"
+
+msgctxt "BNF"
+msgid "Could not export node to BNF."
+msgstr "Det er ikke muligt at ekspotere noden til BNF.,"
+
+msgctxt "BNF"
+msgid "Node already has been exported to BNF."
+msgstr "Node er allerede eksporteret til BNF."
+
+msgctxt "BNF"
+msgid "Confirm import of BNF content"
+msgstr "Bekræft import af BNF indhold"
+
+msgctxt "BNF"
+msgid "Cannot import this node from BNF."
+msgstr "Det er ikke muligt at importere denne node fra BNF"
+
+msgctxt "BNF"
+msgid "Node has previously been imported from BNF."
+msgstr "Denne node er tidligere blevet importeret fra BNF"
+
+msgctxt "BNF"
+msgid "Content label"
+msgstr "Indholdlabel"
+
+msgid "Import content"
+msgstr "Importindhold"
+
+msgctxt "BNF"
+msgid "Could not import node from BNF."
+msgstr "Det er ikke muligt at importere denne node fra BNF"
+
+msgctxt "BNF"
+msgid "Import nodes from BNF"
+msgstr "Importnoder fra BNF"
+
+msgid "URL or UUID of content"
+msgstr "URL eller UUID"
+
+msgid "Preview content"
+msgstr "Forhåndsvisning"
+
+msgctxt "BNF"
+msgid "Invalid URL or UUID."
+msgstr "Fejlagtig URL eller UUID."
 
 msgctxt "DPL admin UX"
 msgid "Footer columns"
@@ -4737,6 +4825,40 @@ msgstr "DPL Consumers"
 
 msgid "Module for adding consumers to DPL CMS"
 msgstr "Module for adding consumers to DPL CMS"
+
+msgid "BNF Common"
+msgstr "BNF fælles"
+
+msgid ""
+"Common code between BNF (Bibliotekernes Nationale Formidling) client and "
+"server modules"
+msgstr ""
+"Fælles kode mellem BNF-klienten (Bibliotekernes Nationale Formidling) og "
+"servermoduler"
+
+msgid "BNF Server"
+msgstr "BNF Server"
+
+msgid "BNF (Bibliotekernes Nationale Formidling) server"
+msgstr "BNF (Bibliotekernes Nationale Formidling) server"
+
+msgid "BNF Client"
+msgstr "BNF klient"
+
+msgid ""
+"BNF (Bibliotekernes Nationale Formidling) client, for sharing content with "
+"BNF"
+msgstr ""
+"BNF (Bibliotekernes Nationale Formidling) klient, hvor indhold kan deles"
+
+msgid "Import"
+msgstr "Importér"
+
+msgid "Confirm import"
+msgstr "Bekræft import"
+
+msgid "Import BNF content"
+msgstr "Importer BNF-indhold"
 
 msgid "Footer Settings"
 msgstr "Footerindstillinger"
@@ -6947,32 +7069,6 @@ msgstr "Date range formatter"
 
 msgid "Formats date ranges."
 msgstr "Formaterer datointervaller."
-
-msgid "Exports a single entity"
-msgstr "Eksporterer en enkelt enhed"
-
-msgid "The entity type to export."
-msgstr "Enhedstypen til eksport."
-
-msgid "The ID of the entity to export."
-msgstr "ID'et på enheden der skal eksporteres."
-
-msgid "Write out the exported content to a file instead of stdout"
-msgstr "Skriv det eksporterede indhold til en fil i stedet for stdout"
-
-msgid "Exports an entity and all its referenced entities."
-msgstr "Eksporterer en enhed og alle dens refererede enheder."
-
-msgid ""
-"Folder to export to, entities are grouped by entity type into directories."
-msgstr ""
-"Folder to export to, entities are grouped by entity type into directories."
-
-msgid "Exports all the content defined in a module info file."
-msgstr "Eksporterer alt indhold defineret i en modul-infomationsfil"
-
-msgid "The name of the module."
-msgstr "Modulets navn"
 
 msgid "Default content"
 msgstr "Standardindhold"
@@ -18498,6 +18594,18 @@ msgctxt "core.base_field_override.node.campaign.promote:settings:off_label"
 msgid "Off"
 msgstr ""
 
+msgctxt "core.base_field_override.node.go_page.promote:label"
+msgid "Promoted to front page"
+msgstr ""
+
+msgctxt "core.base_field_override.node.go_page.promote:settings:on_label"
+msgid "On"
+msgstr ""
+
+msgctxt "core.base_field_override.node.go_page.promote:settings:off_label"
+msgid "Off"
+msgstr ""
+
 msgctxt "core.base_field_override.node.page.promote:label"
 msgid "Promoted to front page"
 msgstr ""
@@ -18743,6 +18851,24 @@ msgctxt ""
 "settings:title_plural"
 msgid "Paragraphs"
 msgstr "Paragraphs"
+
+msgctxt ""
+"core.entity_form_display.node.go_page.default:third_party_settings:"
+"field_group:group_author_date:label"
+msgid "Author & Date"
+msgstr ""
+
+msgctxt ""
+"core.entity_form_display.node.go_page.default:content:field_paragraphs:"
+"settings:title"
+msgid "Paragraph"
+msgstr ""
+
+msgctxt ""
+"core.entity_form_display.node.go_page.default:content:field_paragraphs:"
+"settings:title_plural"
+msgid "Paragraphs"
+msgstr ""
 
 msgctxt ""
 "core.entity_form_display.node.page.default:third_party_settings:field_group:"
@@ -19693,6 +19819,14 @@ msgctxt "field.field.node.campaign.field_campaign_text:label"
 msgid "Text"
 msgstr ""
 
+msgctxt "field.field.node.go_page.field_paragraphs:label"
+msgid "Paragraphs"
+msgstr ""
+
+msgctxt "field.field.node.go_page.field_publication_date:label"
+msgid "Publication date"
+msgstr ""
+
 msgctxt "field.field.node.page.field_branch:label"
 msgid "Branch"
 msgstr ""
@@ -20042,6 +20176,14 @@ msgid ""
 msgstr ""
 
 msgctxt "field.field.paragraph.filtered_event_list.field_title:label"
+msgid "Title"
+msgstr ""
+
+msgctxt "field.field.paragraph.go_video.field_embed_video:label"
+msgid "Embed video"
+msgstr ""
+
+msgctxt "field.field.paragraph.go_video.field_go_video_title:label"
 msgid "Title"
 msgstr ""
 
@@ -21189,6 +21331,17 @@ msgid ""
 "terms"
 msgstr ""
 
+msgctxt "node.type.go_page:name"
+msgid "GO page"
+msgstr ""
+
+msgctxt "node.type.go_page:description"
+msgid ""
+"GO pages will be used for various types of content, which does not belong to "
+"either an article page or an category page. Some examples could be the "
+"frontpage, info pages, etc."
+msgstr ""
+
 msgctxt "node.type.page:name"
 msgid "Page"
 msgstr ""
@@ -21274,6 +21427,14 @@ msgctxt "paragraphs.paragraphs_type.filtered_event_list:description"
 msgid ""
 "This paragraph displays a generated a list of events, based on specified "
 "filters for tags, categories and branches. "
+msgstr ""
+
+msgctxt "paragraphs.paragraphs_type.go_video:label"
+msgid "Go video"
+msgstr ""
+
+msgctxt "paragraphs.paragraphs_type.go_video:description"
+msgid "Enter the URL for the video you want to include."
 msgstr ""
 
 msgctxt "paragraphs.paragraphs_type.hero:label"
@@ -21433,6 +21594,14 @@ msgctxt "paragraphs_ee.paragraphs_category.forms:label"
 msgid "Forms"
 msgstr "Formularer"
 
+msgctxt "paragraphs_ee.paragraphs_category.go_paragraphs:label"
+msgid "GO paragraphs"
+msgstr "GO-paragraffer"
+
+msgctxt "paragraphs_ee.paragraphs_category.go_paragraphs:description:value"
+msgid "<p>Paragraphs used in GO context</p>"
+msgstr "<p>Paragraffer der er anvendt i en GO-sammenhæng</p>"
+
 msgctxt "paragraphs_ee.paragraphs_category.material_dissemination:label"
 msgid "Material Dissemination"
 msgstr "Materialeformidling"
@@ -21520,6 +21689,56 @@ msgstr "Genindlæg token"
 msgctxt "simple_oauth.oauth2_token.bundle.refresh_token:description"
 msgid "The refresh token type."
 msgstr "The refresh token type."
+
+msgctxt "simple_sitemap.sitemap.default:label"
+msgid "Default"
+msgstr "Default"
+
+msgctxt "simple_sitemap.sitemap.default:description"
+msgid ""
+"The default hreflang sitemap - lists URLs to be indexed by modern search "
+"engines."
+msgstr ""
+"The default hreflang sitemap - lists URLs to be indexed by modern search "
+"engines."
+
+msgctxt "simple_sitemap.sitemap.index:label"
+msgid "Sitemap Index"
+msgstr "Sitemap Index"
+
+msgctxt "simple_sitemap.sitemap.index:description"
+msgid ""
+"The sitemap index listing all other sitemaps - useful if there are at least "
+"two other sitemaps. In most cases this sitemap should be last in the "
+"generation queue and set as the default sitemap."
+msgstr ""
+"The sitemap index listing all other sitemaps - useful if there are at least "
+"two other sitemaps. In most cases this sitemap should be last in the "
+"generation queue and set as the default sitemap."
+
+msgctxt "simple_sitemap.type.default_hreflang:label"
+msgid "Default hreflang"
+msgstr "Default hreflang"
+
+msgctxt "simple_sitemap.type.default_hreflang:description"
+msgid ""
+"The default hreflang sitemap type. A sitemap of this type is understood by "
+"most modern search engines."
+msgstr ""
+"The default hreflang sitemap type. A sitemap of this type is understood by "
+"most modern search engines."
+
+msgctxt "simple_sitemap.type.index:label"
+msgid "Sitemap Index"
+msgstr "Sitemap Index"
+
+msgctxt "simple_sitemap.type.index:description"
+msgid ""
+"The sitemap index sitemap type. A sitemap of this type lists sitemaps of all "
+"other types."
+msgstr ""
+"The sitemap index sitemap type. A sitemap of this type lists sitemaps of all "
+"other types."
 
 msgctxt "system.action.eventinstance_break_lock_action:label"
 msgid "Break lock eventinstance"

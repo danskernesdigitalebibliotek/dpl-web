@@ -1,0 +1,26 @@
+uuid: 732b5969-f89f-4cd2-b8d9-9e9f68859205
+langcode: en
+status: true
+dependencies:
+  config:
+    - core.entity_view_mode.node.teaser
+    - field.field.node.go_page.field_paragraphs
+    - field.field.node.go_page.field_publication_date
+    - node.type.go_page
+  module:
+    - user
+id: node.go_page.teaser
+targetEntityType: node
+bundle: go_page
+mode: teaser
+content:
+  links:
+    settings: {  }
+    third_party_settings: {  }
+    weight: 100
+    region: content
+hidden:
+  field_paragraphs: true
+  field_publication_date: true
+  langcode: true
+  search_api_excerpt: true

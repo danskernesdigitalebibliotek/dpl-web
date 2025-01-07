@@ -1,0 +1,69 @@
+<?php
+
+use Drupal\bnf\BnfStateEnum;
+use Drupal\Core\Entity\EntityTypeInterface;
+use Drupal\Core\Field\BaseFieldDefinition;
+use Drupal\node\NodeInterface;
+
+/**
+ * Implements hook_entity_base_field_info().
+ *
+ * Creating our custom programmatic fields.
+ *
+ * @return \Drupal\Core\Field\FieldDefinitionInterface[]
+ *   The field definitions.
+ */
+function bnf_entity_base_field_info(EntityTypeInterface $entity_type): array {
+  $fields = [];
+
+  // Create new fields for node bundle.
+  if ($entity_type->id() === 'node') {
+    $fields[BnfStateEnum::FIELD_NAME] = BaseFieldDefinition::create('list_integer')
+      ->setName(BnfStateEnum::FIELD_NAME)
+      ->setLabel(t('BNF State'))
+      ->setDescription(t('The BNF state of the entity, defining if it was imported, exported, or neither.'))
+      ->setSetting('allowed_values_function', 'bnf_get_bnf_state_allowed_values')
+      ->setDefaultValue(BnfStateEnum::Undefined->value);
+  }
+
+  return $fields;
+}
+
+/**
+ * Provides allowed values for the BNF State field.
+ *
+ * @return string[]
+ *   The enum values of BnfStateEnum.
+ */
+function bnf_get_bnf_state_allowed_values(): array {
+  $values = [];
+  foreach (BnfStateEnum::cases() as $case) {
+    $values[$case->value] = $case->name;
+  }
+  return $values;
+}
+
+/**
+ * Implements theme_preprocess_html().
+ *
+ * Adding the node UUID as a metatag, that we can use when the user submits
+ * a URL to the BNF import form.
+ */
+function bnf_preprocess_html(array &$variables): void {
+  $route = \Drupal::routeMatch();
+  $node = $route->getParameter('node');
+
+  if ($route->getRouteName() !== 'entity.node.canonical' || !($node instanceof NodeInterface)) {
+    return;
+  }
+
+  $uuid_metatag = [
+    '#tag' => 'meta',
+    '#attributes' => [
+      'name' => 'uuid',
+      'content' => $node->uuid(),
+    ],
+  ];
+
+  $variables['page']['#attached']['html_head'][] = [$uuid_metatag, 'node-uuid'];
+}

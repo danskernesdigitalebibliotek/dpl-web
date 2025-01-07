@@ -1,0 +1,35 @@
+uuid: 2718ce7a-df5d-4599-a0d2-5842495bebe1
+langcode: en
+status: true
+dependencies:
+  config:
+    - core.entity_view_mode.node.full
+    - field.field.node.go_page.field_paragraphs
+    - field.field.node.go_page.field_publication_date
+    - node.type.go_page
+  module:
+    - entity_reference_revisions
+    - user
+id: node.go_page.full
+targetEntityType: node
+bundle: go_page
+mode: full
+content:
+  field_paragraphs:
+    type: entity_reference_revisions_entity_view
+    label: hidden
+    settings:
+      view_mode: default
+      link: ''
+    third_party_settings: {  }
+    weight: 4
+    region: content
+  links:
+    settings: {  }
+    third_party_settings: {  }
+    weight: 100
+    region: content
+hidden:
+  field_publication_date: true
+  langcode: true
+  search_api_excerpt: true

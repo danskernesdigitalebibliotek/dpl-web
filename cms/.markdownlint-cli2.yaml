@@ -11,3 +11,5 @@ ignores:
   - 'drush'
   - 'packages/fbs-client'
   - 'packages/cms-api'
+  - 'dev-scripts/dpl-react'
+  - './.github/**/*'
