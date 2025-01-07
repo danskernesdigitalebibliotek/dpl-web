@@ -7,9 +7,6 @@
 
 declare(strict_types=1);
 
-use Drupal\dpl_consumers\Consumer;
-use Drupal\dpl_consumers\ConsumerUser;
-
 /**
  * Run consumer creation on deploy.
  *
@@ -34,16 +31,17 @@ function dpl_consumers_deploy_10001(): void {
  * So we delete previous entities and create new ones.
  */
 function dpl_consumers_deploy_10002(): void {
+  /** @var \Drupal\dpl_consumers\Services\ConsumerHandler $consumer_handler */
+  $consumer_handler = \Drupal::service('dpl_consumers.consumer_handler');
+
   // Delete consume and users that we want to handle differently.
   // We want to create consumers and consumer users
   // specifically for the two known consumers (BNF and Go) and connected users.
-  (new Consumer("graphql_consumer", \Drupal::entityTypeManager()))->delete();
-  (new ConsumerUser('GraphQL Consumer', \Drupal::entityTypeManager()))->delete();
-  (new ConsumerUser('graphql_consumer', \Drupal::entityTypeManager()))->delete();
+  $consumer_handler->getConsumer('graphql_consumer')->delete();
+  $consumer_handler->getConsumerUser('GraphQL Consumer')->delete();
+  $consumer_handler->getConsumerUser('graphql_consumer')->delete();
 
   // Create new consumers (BNF and Go) and their users and roles.
-  /** @var \Drupal\dpl_consumers\Services\ConsumerHandler $consumer_handler */
-  $consumer_handler = \Drupal::service('dpl_consumers.consumer_handler');
   foreach (dpl_consumers_known_consumers_settings() as $consumer) {
     $consumer_handler->create($consumer['consumer'], $consumer['user'], $consumer['role']);
   }

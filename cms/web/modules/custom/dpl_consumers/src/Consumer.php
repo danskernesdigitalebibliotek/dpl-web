@@ -57,19 +57,21 @@ class Consumer {
 
   /**
    * Load a consumer.
+   *
+   * @throws \RuntimeException
    */
-  public function load(): ConsumerInterface | NULL {
+  public function load(): ConsumerInterface {
     $consumers = $this->entityTypeManager->getStorage('consumer')
       ->loadByProperties(['client_id' => $this->clientId]);
 
     if (empty($consumers)) {
-      return NULL;
+      throw new \RuntimeException('Failed to load consumer.');
     }
 
     $consumer = reset($consumers);
 
     if (!($consumer instanceof ConsumerInterface)) {
-      return NULL;
+      throw new \RuntimeException('Failed to load consumer.');
     }
 
     return $consumer;
@@ -79,9 +81,15 @@ class Consumer {
    * Delete a consumer based on a client ID.
    */
   public function delete(): void {
-    if ($consumer = $this->load()) {
-      $consumer->delete();
+    try {
+      $consumer = $this->load();
     }
+    catch (\Exception $e) {
+      // Does not matter if loading fails.
+      // We just do not try to delete the consumer then.
+      return;
+    }
+    $consumer->delete();
   }
 
 }

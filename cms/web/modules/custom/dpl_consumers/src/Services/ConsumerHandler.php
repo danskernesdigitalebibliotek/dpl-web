@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Drupal\dpl_consumers\Services;
 
+use Drupal\Core\Entity\EntityTypeManagerInterface;
 use Drupal\dpl_consumers\Consumer;
 use Drupal\dpl_consumers\ConsumerRole;
 use Drupal\dpl_consumers\ConsumerUser;
@@ -21,6 +22,7 @@ class ConsumerHandler {
    */
   public function __construct(
     protected LoggerInterface $logger,
+    protected EntityTypeManagerInterface $entityTypeManager,
   ) {}
 
   /**
@@ -58,6 +60,26 @@ class ConsumerHandler {
       '@consumer' => $consumer->clientId,
       '@user' => $user->userName,
     ]);
+  }
+
+  /**
+   * Get consumer.
+   *
+   * @param string $clientId
+   *   The client ID of the consumer.
+   */
+  public function getConsumer(string $clientId): Consumer {
+    return new Consumer($clientId, $this->entityTypeManager);
+  }
+
+  /**
+   * Get consumer user.
+   *
+   * @param string $userName
+   *   The user name of the consumer user.
+   */
+  public function getConsumerUser(string $userName): ConsumerUser {
+    return new ConsumerUser($userName, $this->entityTypeManager);
   }
 
 }

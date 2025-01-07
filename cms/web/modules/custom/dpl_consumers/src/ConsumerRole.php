@@ -32,9 +32,15 @@ class ConsumerRole {
    * Delete a consumer role.
    */
   public function delete(): void {
-    if ($role = $this->load()) {
-      $role->delete();
+    try {
+      $role = $this->load();
     }
+    catch (\Exception $e) {
+      // Does not matter if loading fails.
+      // We just do not try to delete the role then.
+      return;
+    }
+    $role->delete();
   }
 
 }

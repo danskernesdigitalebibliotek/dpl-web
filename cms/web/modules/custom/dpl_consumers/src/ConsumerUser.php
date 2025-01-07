@@ -45,19 +45,18 @@ class ConsumerUser {
   /**
    * Load a user.
    */
-  public function load(): UserInterface | NULL {
+  public function load(): UserInterface {
     $users = $this->entityTypeManager
       ->getStorage('user')
       ->loadByProperties(['name' => $this->userName]);
 
     if (empty($users)) {
-      return NULL;
+      throw new \RuntimeException('Failed to load user.');
     }
-
     $user = reset($users);
 
     if (!($user instanceof UserInterface)) {
-      return NULL;
+      throw new \RuntimeException('Failed to load user.');
     }
 
     return $user;
@@ -67,9 +66,15 @@ class ConsumerUser {
    * Delete a user.
    */
   public function delete(): void {
-    if ($user = $this->load()) {
-      $user->delete();
+    try {
+      $user = $this->load();
     }
+    catch (\Exception $e) {
+      // Does not matter if loading fails.
+      // We just do not try to delete the user then.
+      return;
+    }
+    $user->delete();
   }
 
 }

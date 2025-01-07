@@ -1,12 +1,10 @@
 ---
 services:
-  dpl_consumers.consumer_handler:
-    class: Drupal\dpl_consumers\Services\ConsumerHandler
-    autowire: true
-    arguments:
-      $logger: '@logger.channel.dpl_consumers'
-
-  logger.channel.dpl_consumers:
+  dpl_consumers.logger:
     parent: logger.channel_base
     arguments:
       - 'dpl_consumers'
+  dpl_consumers.consumer_handler:
+    class: Drupal\dpl_consumers\Services\ConsumerHandler
+    autowire: true
+    arguments: ['@dpl_breadcrumb.logger', '@entity_type.manager']
