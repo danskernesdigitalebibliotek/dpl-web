@@ -65,6 +65,12 @@ updates:
     directory: "/"
     open-pull-requests-limit: 2
     groups:
+      types-node:
+        patterns:
+          - "@types/node"
+        update-types:
+          - "minor"
+          - "patch"
       minor-js-dependencies:
         update-types:
           - "minor"
