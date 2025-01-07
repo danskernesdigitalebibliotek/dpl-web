@@ -7,8 +7,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2025-01-07 11:18+0100\n"
-"PO-Revision-Date: 2025-01-07 11:18+0100\n"
+"POT-Creation-Date: 2025-01-07 11:50+0100\n"
+"PO-Revision-Date: 2025-01-07 11:50+0100\n"
 "Last-Translator: NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
 "MIME-Version: 1.0\n"
@@ -4856,6 +4856,9 @@ msgstr "Importér"
 
 msgid "Confirm import"
 msgstr "Bekræft import"
+
+msgid "Login to BNF"
+msgstr ""
 
 msgid "Import BNF content"
 msgstr "Importer BNF-indhold"
