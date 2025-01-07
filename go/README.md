@@ -83,6 +83,7 @@ The application is now running at [https://localhost:3000](https://localhost:300
 - [Tailwind CSS][tailwind]
 - [ESLint][eslint] & [Prettier][prettier]
 - [Storybook][storybook] & [Chromatic][chromatic]
+- [cypress][cypress]
 - [Vitest][vitest]
 
 ### Project structure
@@ -237,6 +238,17 @@ This will launch the Storybook server, and you can view the component library in
 
 **_We create Storybook stories strictly on a "render component" basis. This means focusing on smaller atomic components that are not specific to generated code._**
 
+### Cypress
+
+Cypress is an end-to-end testing framework that allows us to write and run tests for the application's core user journeys.
+
+To start Cypress, run the following commands:
+
+```bash
+yarn dev # Start the development server
+yarn cypress:run # Run all Cypress tests
+```
+
 ## Deployment
 
 ### git branches and pull requests
@@ -309,19 +321,22 @@ Quality assurance (QA) is a critical aspect of our development process, ensuring
 
 1. **Automated Unit Testing**: Workflows like `unit-test.yml` run unit tests automatically, ensuring that individual components and utilities function correctly. This helps catch bugs early in the development process.
 
-2. **Code Quality Checks**: Workflows such as `eslint-check.yml` and `prettier-check.yml` enforce coding standards and consistent formatting. This ensures that the codebase remains clean, readable, and maintainable.
+2. **End-to-end Testing**: Workflows such as `e2e-test.yml` run end-to-end tests using Cypress to simulate user interactions and test the application's core user journeys. This helps ensure that the application and important features work as expected. This also helps catch bugs early in the development process.
 
-3. **Type Safety**: The `type-check.yml` workflow runs TypeScript checks to ensure type safety across the project. This helps prevent type-related errors and improves code reliability.
+3. **Code Quality Checks**: Workflows such as `eslint-check.yml` and `prettier-check.yml` enforce coding standards and consistent formatting. This ensures that the codebase remains clean, readable, and maintainable.
 
-4. **Accessibility Testing**: The `accessibility-test.yml` workflow runs accessibility tests on each [Storybook] Story using [Axe] through [Playwright]. This ensures that the application meets accessibility standards and provides a better user experience for all users.
+4. **Type Safety**: The `type-check.yml` workflow runs TypeScript checks to ensure type safety across the project. This helps prevent type-related errors and improves code reliability.
 
-5. **Visual Regression Testing**: The `chromatic.yml` workflow runs Chromatic to visualize and test UI components in [Storybook]. This helps catch visual regressions and ensures that UI changes do not introduce unexpected issues.
+5. **Accessibility Testing**: The `accessibility-test.yml` workflow runs accessibility tests on each [Storybook] Story using [Axe] through [Playwright]. This ensures that the application meets accessibility standards and provides a better user experience for all users.
+
+6. **Visual Regression Testing**: The `chromatic.yml` workflow runs Chromatic to visualize and test UI components in [Storybook]. This helps catch visual regressions and ensures that UI changes do not introduce unexpected issues.
 
 ## Developers
 
 - Adam Antal - adam@reload.dk
 - Mikkel Jakobsen - mikkel@reload.dk
 - Thomas Gross Rasmussen - tgr@reload.dk
+- Jacob Pihl - jacob@reload.dk
 
 [nextjs]: https://nextjs.org/
 [app-router]: https://nextjs.org/docs/app
@@ -339,4 +354,5 @@ Quality assurance (QA) is a critical aspect of our development process, ensuring
 [vitest]: https://vitest.dev/
 [axe]: https://playwright.dev/docs/accessibility-testing
 [playwright]: https://playwright.dev/
+[cypress]: https://www.cypress.io/
 [dpl-cms]: https://github.com/danskernesdigitalebibliotek/dpl-cms
