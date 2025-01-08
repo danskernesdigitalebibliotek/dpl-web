@@ -31,7 +31,6 @@ x-environment:
     LAGOON_ENVIRONMENT: 'local'
     LAGOON_ENVIRONMENT_TYPE: ${LAGOON_ENVIRONMENT_TYPE:-local}
     WEBROOT: web
-    GRAPHQL_USER_PASSWORD: test
     BNF_SERVER_BASE_ENDPOINT: "https://dpl-cms.local"
     # Uncomment if you like to have the system behave like in production
     #LAGOON_ENVIRONMENT_TYPE: production
