@@ -3,23 +3,14 @@ langcode: en
 status: true
 dependencies:
   config:
-    - field.field.node.go_article.body
     - node.type.go_article
   module:
-    - text
     - user
 id: node.go_article.default
 targetEntityType: node
 bundle: go_article
 mode: default
 content:
-  body:
-    type: text_default
-    label: hidden
-    settings: {  }
-    third_party_settings: {  }
-    weight: 101
-    region: content
   links:
     settings: {  }
     third_party_settings: {  }

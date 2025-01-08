@@ -3,27 +3,15 @@ langcode: en
 status: true
 dependencies:
   config:
-    - field.field.node.go_article.body
     - node.type.go_article
   module:
     - path
     - scheduler
-    - text
 id: node.go_article.default
 targetEntityType: node
 bundle: go_article
 mode: default
 content:
-  body:
-    type: text_textarea_with_summary
-    weight: 121
-    region: content
-    settings:
-      rows: 9
-      summary_rows: 3
-      placeholder: ''
-      show_summary: false
-    third_party_settings: {  }
   created:
     type: datetime_timestamp
     weight: 10
