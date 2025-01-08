@@ -7,8 +7,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2025-01-07 15:48+0100\n"
-"PO-Revision-Date: 2025-01-07 15:48+0100\n"
+"POT-Creation-Date: 2025-01-08 11:12+0100\n"
+"PO-Revision-Date: 2025-01-08 11:12+0100\n"
 "Last-Translator: NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
 "MIME-Version: 1.0\n"
@@ -9481,13 +9481,13 @@ msgstr ""
 "Følgende tokens er tilgængelige. Du kan bruge Twig-syntaks i dette felt."
 
 msgid "Meta tags"
-msgstr "Meta-tags"
+msgstr "Meta tags"
 
 msgid "Overridden"
 msgstr "Tilsidesat"
 
 msgid "Using defaults"
-msgstr "Bruger standardindstillinger"
+msgstr "Brug af standardindstillinger"
 
 msgid "Provides support for meta tags used for Google Custom Search Engine."
 msgstr "Leverer support for metatags brugt til Google Custom Search Engine."
@@ -9558,10 +9558,8 @@ msgstr "Stien skal begynde med /"
 msgid "The admin routes should not have metatags."
 msgstr "Administratorruterne bør ikke have metatags."
 
-msgid ""
-"The entities routes metatags must be added by fields. @entity_type - @id"
+msgid "The entities routes metatags must be added by fields."
 msgstr ""
-"Meta tags for enhedsruterne skal tilføjes af felter. @entity_type - @id"
 
 msgid "There are already metatags created for this route."
 msgstr "Der er allerede skabt metatags for denne rute."
@@ -9722,8 +9720,8 @@ msgstr "Meta Tags:"
 msgid "length"
 msgstr "Længde"
 
-msgid "Meta Tags: Trimming Options"
-msgstr "Metatags: Trimmeindstillinger"
+msgid "Trimming options"
+msgstr ""
 
 msgid "Trim the Meta Tag after the word on the given value"
 msgstr "Trim metatagget efter ordet på den givne værdi"
@@ -9733,6 +9731,18 @@ msgstr "Trim metatagget på den givne værdi"
 
 msgid "Trim the Meta Tag before the word on the given value"
 msgstr "Trim metatagget før ordet på den givne værdi"
+
+msgid "Characters to trim"
+msgstr ""
+
+msgid ""
+"A list of characters to trim at the end of all metatags. Provide a single "
+"string without any separators, e.g. \"|,.\" (instead of \"| , .\"). Note "
+"that spaces, tabs, new lines, carriage returns and vertical tabs (\" "
+"\\n\\r\\t\\v\") will be trimmed automatically and do not need to be listed "
+"in this field. The trimming is applied at the very end after the tag is "
+"trimmed for length, and after the trimming option was executed."
+msgstr ""
 
 msgid "Metatag widget options"
 msgstr "Metatag widgetindstillinger"
@@ -9813,6 +9823,14 @@ msgstr "@label af @type @entity-type-label"
 
 msgid "@label of @type"
 msgstr "@label af @type"
+
+msgid "Configuration instance"
+msgstr ""
+
+msgid ""
+"Meta tag configuration, stored as either a serialized array or a JSON-"
+"encoded string."
+msgstr ""
 
 msgid ""
 "Multiple values may be used, separated by `:delimiter`. Note: Tokens that "
@@ -10058,6 +10076,80 @@ msgstr ""
 msgid "URL for a version of this page in %langcode"
 msgstr "URL til en version af denne side i %langcode"
 
+msgid "This module provides support to define and manage custom meta tags."
+msgstr ""
+
+msgid "Intended workflow"
+msgstr "Tilsigtet arbejdsgang"
+
+msgid ""
+"The module provides the option to create different <a href=\":"
+"metatag_custom_tag\">\"Custom Tags\"</a> to use for different purposes."
+msgstr ""
+
+msgid "The best way of using Metatag: Custom Tags is as follows:"
+msgstr ""
+
+msgid ""
+"Create the <a href=\":metatag_custom_tag_create\">\"Custom Tag\"</a>, fill "
+"in the specific values that every page should have."
+msgstr ""
+
+msgid ""
+"Customize the <a href=\":defaults\">global defaults</a>, fill in the "
+"specific values and tokens that every page should have."
+msgstr ""
+"Tilpas de <a href=\":defaults\">globale standarder</a>, udfyld de specifikke "
+"værdier og tokens, som hver side skal have."
+
+msgid "Configure Custom tags below."
+msgstr ""
+
+msgid "Specify the name of the custom tag."
+msgstr ""
+
+msgid "Specify the description of the Custom tag."
+msgstr ""
+
+msgid "Meta"
+msgstr ""
+
+msgid "Select the HTML element of the Custom tag."
+msgstr ""
+
+msgid "Name attribute"
+msgstr ""
+
+msgid "Http Equiv"
+msgstr ""
+
+msgid "Item Prop"
+msgstr ""
+
+msgid "Rel"
+msgstr ""
+
+msgid "Select the Name attribute of the Custom tag."
+msgstr ""
+
+msgid "Value attribute"
+msgstr ""
+
+msgid "Href"
+msgstr ""
+
+msgid "Select the Value attribute of the Custom tag."
+msgstr ""
+
+msgid "Created %label Custom tag."
+msgstr ""
+
+msgid "Updated %label Custom tag."
+msgstr ""
+
+msgid "Edit Custom tag @label"
+msgstr ""
+
 msgid "Tokens related to Metatags."
 msgstr "Tokens relateret til metatags."
 
@@ -10086,9 +10178,6 @@ msgstr ""
 "når det deles på de sociale medier. For yderligere information, se <a "
 "href=\":online\">online dokumentationen for Metatag</a>."
 
-msgid "Intended workflow"
-msgstr "Tilsigtet arbejdsgang"
-
 msgid ""
 "The module uses <a href=\":tokens\">\"tokens\"</a> to automatically fill in "
 "values for different meta tags. Specific values may also be filled in."
@@ -10098,13 +10187,6 @@ msgstr ""
 
 msgid "The best way of using Metatag is as follows:"
 msgstr "Den bedste måde at bruge Metatag er som følgende:"
-
-msgid ""
-"Customize the <a href=\":defaults\">global defaults</a>, fill in the "
-"specific values and tokens that every page should have."
-msgstr ""
-"Tilpas de <a href=\":defaults\">globale standarder</a>, udfyld de specifikke "
-"værdier og tokens, som hver side skal have."
 
 msgid ""
 "Override each of the <a href=\":defaults\">other defaults</a>, fill in "
@@ -10328,7 +10410,7 @@ msgid "Metatag settings for this view."
 msgstr "Metatag-indstillinger for denne visning."
 
 msgid "Street address"
-msgstr "Adresse"
+msgstr "Gadenavn"
 
 msgid "Content type"
 msgstr "Content type"
@@ -10593,7 +10675,7 @@ msgstr ""
 "største billede, ikke nødvendigvis det første."
 
 msgid "Fax number"
-msgstr "Faxnummer"
+msgstr "Fax nummer"
 
 msgid "Postal/ZIP code"
 msgstr "Postnummer"
@@ -10841,7 +10923,7 @@ msgstr ""
 "bør navnet på en bidragsyder bruges til at angive enheden."
 
 msgid "Creator"
-msgstr "Skaber"
+msgstr "Forfatter"
 
 msgid ""
 "An entity primarily responsible for making the resource. Examples of a "
@@ -11586,7 +11668,8 @@ msgid ""
 "Describes the name and version number of the software or publishing tool "
 "used to create the page."
 msgstr ""
-"Beskriver navn og versionsnummer på det værktøj, der har genereret siden."
+"Beskriver navn og versionsnummer på softwaren eller publiceringsværktøjet, "
+"der blev brugt til at oprette siden."
 
 msgid ""
 "A link to the preferred page location or URL of the content of this page, to "
@@ -11829,7 +11912,7 @@ msgstr ""
 "detaljer</a>."
 
 msgid "Abstract"
-msgstr "Resume"
+msgstr "Abstract"
 
 msgid ""
 "A brief and concise summary of the page's content, preferably 150 characters "
@@ -11851,8 +11934,8 @@ msgid ""
 "Provides search engines with specific directions for what to do when this "
 "page is indexed."
 msgstr ""
-"Giver søgemaskiner anvisninger til, hvad de skal gøre, når de indekserer "
-"denne side."
+"Leverer søgemaskiner med specifikke instruktioner for hvad der skal gøres, "
+"når denne side er indekseret."
 
 msgid "Shortlink URL"
 msgstr "Shortlink URL"
@@ -12734,6 +12817,27 @@ msgstr ""
 "Disse metatags er designet til at henvise besøgende til versioner af den "
 "aktuelle side på andre sprog."
 
+msgid "Custom tag"
+msgstr ""
+
+msgid "Custom tags"
+msgstr ""
+
+msgid "@count Custom tag"
+msgid_plural "@count Custom tags"
+msgstr[0] ""
+msgstr[1] ""
+
+msgid "Custom Tag"
+msgstr ""
+
+msgid "This plugin will be cloned from these settings for each custom tag."
+msgstr ""
+
+msgid ""
+"These custom tags are designed to use the custom purpose on the website."
+msgstr ""
+
 msgid "Metatag: Google Plus"
 msgstr "Metatag: Google Plus"
 
@@ -12784,7 +12888,7 @@ msgid "Metatag: Google Custom Search Engine (CSE)"
 msgstr "Metatag: Google Custom Search Engine (CSE)"
 
 msgid "Add default meta tags"
-msgstr "Tilføj standard meta-tag"
+msgstr "Tilføj default meta-tags"
 
 msgid "Delete default meta tags"
 msgstr "Slet standard meta tags"
@@ -12895,6 +12999,21 @@ msgstr ""
 
 msgid "Metatag: Hreflang"
 msgstr "Meta tag: Hreflang"
+
+msgid "Metatag: Custom Tags"
+msgstr ""
+
+msgid "Provides support to define and manage custom meta tags."
+msgstr ""
+
+msgid "Add Custom tag"
+msgstr ""
+
+msgid "Configure Custom tags."
+msgstr ""
+
+msgid "Delete Custom tag"
+msgstr ""
 
 msgid "Multiple Fields Remove Button"
 msgstr "Fjern-knap til flere felter"
