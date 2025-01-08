@@ -7,7 +7,6 @@ dependencies:
   module:
     - field_inheritance
     - recurring_events
-    - search_api
 id: events
 name: Events
 description: ''

@@ -1,0 +1,9 @@
+# Schema for the configuration files of the BNF Client module.
+
+bnf_client.settings:
+  type: config_object
+  label: 'BNF client configuration'
+  mapping:
+    base_url:
+      type: uri
+      label: 'BNF server URL'

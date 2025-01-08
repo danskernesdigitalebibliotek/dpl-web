@@ -1,0 +1,7 @@
+name: 'BNF Server'
+type: module
+description: 'BNF (Bibliotekernes Nationale Formidling) server'
+package: 'DPL - BNF'
+core_version_requirement: ^10
+dependencies:
+  - bnf:bnf

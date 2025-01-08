@@ -65,6 +65,14 @@ updates:
     directory: "/"
     open-pull-requests-limit: 2
     groups:
+      # @types/node are linked to the Node version used within the project.
+      # Bump the package manually when upgrading to a new Node version.
+      types-node:
+        patterns:
+          - "@types/node"
+        update-types:
+          - "minor"
+          - "patch"
       minor-js-dependencies:
         update-types:
           - "minor"

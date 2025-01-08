@@ -6,10 +6,12 @@ dependencies:
     - filter.format.basic
     - filter.format.limited
     - filter.format.underlined_title
+    - media.type.audio
     - media.type.document
     - media.type.image
     - media.type.video
     - node.type.article
+    - node.type.branch
     - node.type.campaign
     - node.type.page
     - taxonomy.vocabulary.tags
@@ -57,6 +59,7 @@ permissions:
   - 'clone eventseries_type entity'
   - 'clone node entity'
   - 'create article content'
+  - 'create audio media'
   - 'create campaign content'
   - 'create document media'
   - 'create image media'
@@ -65,6 +68,7 @@ permissions:
   - 'create terms in tags'
   - 'create video media'
   - 'delete any article content'
+  - 'delete any audio media'
   - 'delete any campaign content'
   - 'delete any document media'
   - 'delete any image media'
@@ -75,6 +79,7 @@ permissions:
   - 'delete eventseries entity'
   - 'delete media'
   - 'delete own article content'
+  - 'delete own audio media'
   - 'delete own campaign content'
   - 'delete own document media'
   - 'delete own eventinstance entity'
@@ -85,6 +90,7 @@ permissions:
   - 'delete own video media'
   - 'dpl admin access pages'
   - 'edit any article content'
+  - 'edit any audio media'
   - 'edit any campaign content'
   - 'edit any document media'
   - 'edit any image media'
@@ -93,6 +99,7 @@ permissions:
   - 'edit eventinstance entity'
   - 'edit eventseries entity'
   - 'edit own article content'
+  - 'edit own audio media'
   - 'edit own campaign content'
   - 'edit own document media'
   - 'edit own eventinstance entity'
@@ -110,7 +117,10 @@ permissions:
   - 'use text format limited'
   - 'use text format underlined_title'
   - 'view all media revisions'
-  - 'view any unpublished content'
+  - 'view any unpublished article content'
+  - 'view any unpublished branch content'
+  - 'view any unpublished campaign content'
+  - 'view any unpublished page content'
   - 'view own unpublished content'
   - 'view own unpublished media'
   - 'view scheduled content'

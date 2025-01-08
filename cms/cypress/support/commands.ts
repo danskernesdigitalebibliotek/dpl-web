@@ -244,6 +244,7 @@ Cypress.Commands.add(
     });
   },
 );
+
 Cypress.Commands.add(
   'setupAdgangsplatformenRegisterMappinngs',
   ({
@@ -330,6 +331,32 @@ Cypress.Commands.add('getBySel', (selector, checkVisible = false, ...args) => {
   return cy.get(`[data-cy="${selector}"]${visible(checkVisible)}`, ...args);
 });
 
+Cypress.Commands.add('clickSaveButton', () => {
+  cy.get('#edit-gin-sticky-actions input[value="Save"]').click();
+});
+
+Cypress.Commands.add('deleteEntitiesIfExists', (name) => {
+  const formattedSearchString = name.toLowerCase().replace(/ /g, '+');
+
+  cy.drupalLogin();
+  cy.visit(
+    `/admin/content?title=${formattedSearchString}&status=All&langcode=All`,
+  );
+
+  cy.get('tbody').then((tbody) => {
+    if (tbody.find('td.views-empty').length) {
+      cy.log('No branches to delete.');
+    } else {
+      cy.get('input[title="Select all rows in this table"]').check({
+        force: true,
+      });
+      cy.get('#edit-action').select('node_delete_action');
+      cy.contains('input', 'Apply to selected items').click();
+      cy.contains('input', 'Delete').click();
+    }
+  });
+});
+
 // According to the documentation of types and Cypress commands
 // the namespace is declared like it is done here. Therefore we'll bypass errors about it.
 /* eslint-disable @typescript-eslint/no-namespace */
@@ -367,6 +394,8 @@ declare global {
         checkVisible?: boolean,
         ...args: unknown[]
       ): Chainable;
+      deleteEntitiesIfExists(name: string): Chainable<null>;
+      clickSaveButton(): Chainable<null>;
     }
   }
 }

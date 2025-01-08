@@ -1,0 +1,7 @@
+---
+services:
+  bnf_client.exporter:
+    class: Drupal\bnf_client\Services\BnfExporter
+    autowire: true
+    arguments:
+      $logger: '@logger.channel.bnf'

@@ -1,0 +1,12 @@
+uuid: acb9efe1-c340-4abb-a4a6-c7acb96e41b3
+langcode: da
+status: true
+dependencies:
+  module:
+    - graphql
+id: bnf_graphql_client
+label: 'BNF GraphQL Client'
+weight: 9
+is_admin: null
+permissions:
+  - 'execute graphql_compose_server arbitrary graphql requests'

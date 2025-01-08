@@ -7,4 +7,6 @@ roles:
   mediator: safe
   patron: unsafe
   external_system: safe
-  graphql_consumer: unsafe
+  bnf_graphql_client: unsafe
+  go_graphql_client: unsafe
+  go_editor: unsafe

@@ -1,0 +1,14 @@
+uuid: 898ac13b-ae50-4933-b48b-73253f6b6275
+langcode: en
+status: true
+dependencies:
+  config:
+    - user.role.go_editor
+  module:
+    - user
+id: user_add_role_action.go_editor
+label: 'Add the GO Editor role to the selected user(s)'
+type: user
+plugin: user_add_role_action
+configuration:
+  rid: go_editor

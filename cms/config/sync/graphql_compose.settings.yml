@@ -2,6 +2,8 @@ _core:
   default_config_hash: Sd_9jXBxw3mGn9d_y94jvlitI0wpvj6x2dQ0p6aGhJo
 entity_config:
   media:
+    audio:
+      enabled: true
     document:
       enabled: true
     image:
@@ -16,6 +18,18 @@ entity_config:
       enabled: false
     campaign:
       enabled: false
+    go_article:
+      enabled: true
+      query_load_enabled: true
+      routes_enabled: true
+    go_category:
+      enabled: true
+      query_load_enabled: true
+      routes_enabled: true
+    go_page:
+      enabled: true
+      query_load_enabled: true
+      routes_enabled: true
     page:
       enabled: false
   paragraph:
@@ -41,6 +55,8 @@ entity_config:
       enabled: false
     filtered_event_list:
       enabled: true
+    go_video:
+      enabled: true
     hero:
       enabled: false
     language_selector:
@@ -50,9 +66,9 @@ entity_config:
     manual_event_list:
       enabled: true
     material_grid_automatic:
-      enabled: false
+      enabled: true
     material_grid_manual:
-      enabled: false
+      enabled: true
     medias:
       enabled: false
     nav_grid_manual:
@@ -74,7 +90,7 @@ entity_config:
     user_registration_section:
       enabled: false
     video:
-      enabled: false
+      enabled: true
     webform:
       enabled: false
   taxonomy_term:
@@ -84,12 +100,17 @@ entity_config:
       enabled: true
     opening_hours_categories:
       enabled: true
+    screen_name:
+      enabled: true
     tags:
       enabled: true
     webform_email_categories:
       enabled: true
 field_config:
   media:
+    audio:
+      field_media_audio_file:
+        enabled: true
     document:
       field_media_file:
         enabled: true
@@ -124,6 +145,41 @@ field_config:
       field_teaser_image:
         enabled: true
       field_teaser_text:
+        enabled: true
+    go_article:
+      field_go_article_image:
+        enabled: true
+      field_override_author:
+        enabled: true
+      field_paragraphs:
+        enabled: true
+      field_publication_date:
+        enabled: true
+      field_show_override_author:
+        enabled: true
+      field_subtitle:
+        enabled: true
+      field_teaser_image:
+        enabled: true
+      field_teaser_text:
+        enabled: true
+    go_category:
+      field_category_menu_color:
+        enabled: true
+      field_category_menu_image:
+        enabled: true
+      field_category_menu_sound:
+        enabled: true
+      field_category_menu_title:
+        enabled: true
+      field_paragraphs:
+        enabled: true
+      field_publication_date:
+        enabled: true
+    go_page:
+      field_paragraphs:
+        enabled: true
+      field_publication_date:
         enabled: true
   paragraph:
     accordion:
@@ -197,13 +253,34 @@ field_config:
         enabled: true
       field_title:
         enabled: true
+    go_video:
+      field_go_video_title:
+        enabled: true
+        name_sdl: title
+      field_url:
+        enabled: true
     manual_event_list:
       field_events:
         enabled: true
       field_title:
         enabled: true
+    material_grid_automatic:
+      field_amount_of_materials:
+        enabled: true
+      field_material_grid_description:
+        enabled: true
+      field_material_grid_title:
+        enabled: true
+    material_grid_manual:
+      field_material_grid_description:
+        enabled: true
+      field_material_grid_title:
+        enabled: true
     text_body:
       field_body:
+        enabled: true
+    video:
+      field_embed_video:
         enabled: true
   taxonomy_term:
     breadcrumb_structure:
@@ -226,10 +303,17 @@ settings:
   schema_version: '1'
   simple_queries: false
   simple_unions: true
-  site_name: false
+  site_name: true
   site_slogan: false
   site_front: true
   svg_image: false
   svg_filesize: 100
   inflector_langcode: en
   inflector_singularize: false
+  custom:
+    7b700675-a7fa-468a-8468-4afb39168de8:
+      name: url
+      description: null
+      value: '[site:base-url]'
+      type: string
+      weight: 0

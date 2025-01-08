@@ -12,8 +12,15 @@ tasks:
     - run:
         name: Create new GH deployment
         command: |
+          ENVIRONMENT=$LAGOON_ENVIRONMENT
+
+          # We want BNF to show up as a separate environment.
+          if [[ "$LAGOON_PROJECT" == "dpl-bnf" ]]; then
+            ENVIRONMENT=$LAGOON_ENVIRONMENT-bnf
+          fi
+
           GH_DEPLOYMENTS=$(curl -H "Authorization: Bearer $GH_DEPLOYMENT_TOKEN" \
-          "https://api.github.com/repos/danskernesdigitalebibliotek/dpl-cms/deployments?ref=$LAGOON_PR_HEAD_BRANCH&environment=$LAGOON_ENVIRONMENT")
+          "https://api.github.com/repos/danskernesdigitalebibliotek/dpl-cms/deployments?ref=$LAGOON_PR_HEAD_BRANCH&environment=$ENVIRONMENT")
           GH_DEPLOYMENT_ID=$(echo "$GH_DEPLOYMENTS" | grep '"id":' | head -n 1 | sed 's/[^0-9]*\([0-9]*\).*/\1/')
 
           echo "$GH_DEPLOYMENTS"
@@ -23,7 +30,7 @@ tasks:
           # file. Environment variables are killed between tasks, apart from
           # the global ones.
           echo "$GH_DEPLOYMENT_ID" > /tmp/GH_DEPLOYMENT_ID
-          LAGOON_DEPLOYS_LOG_URL="https://ui.lagoon.dplplat01.dpl.reload.dk/projects/$LAGOON_PROJECT/dpl-cms-$LAGOON_ENVIRONMENT/deployments"
+          LAGOON_DEPLOYS_LOG_URL="https://ui.lagoon.dplplat01.dpl.reload.dk/projects/$LAGOON_PROJECT/$LAGOON_PROJECT-$LAGOON_ENVIRONMENT/deployments"
           echo "$LAGOON_DEPLOYS_LOG_URL" > /tmp/LAGOON_DEPLOYS_LOG_URL
 
           echo "Creating a initial pending deployment status."
@@ -41,6 +48,14 @@ tasks:
             else
             # Otherwise install and let drush generate a password.
               drush si --existing-config -y
+            fi
+
+            if [[ "$LAGOON_PROJECT" == "dpl-bnf" ]]; then
+              # Enable the server module on environments in the BNF project.
+              drush pm:enable -y bnf_server
+            elif [[ ${LAGOON_PR_TITLE,,} =~ ^bnf: ]]; then
+              # Or configure the client if there's a BNF environment.
+              drush config:set --yes bnf_client.settings base_url https://varnish.$LAGOON_ENVIRONMENT.dpl-bnf.dplplat01.dpl.reload.dk/
             fi
 
             # Practice shows that the cache needs to be cleared to avoid
@@ -109,9 +124,6 @@ tasks:
 
             drush user:create patron --password="$PR_DRUPAL_PWD"
             drush user:role:add 'patron' patron
-
-            drush user:create graphql_consumer --password="$PR_DRUPAL_PWD"
-            drush user:role:add 'graphql_consumer' graphql_consumer
           else
             echo "Test users already exist. Skipping creation..."
           fi

@@ -346,10 +346,10 @@ describe('Campaign creation and endpoint', () => {
     cy.drupalLogin();
 
     // Delete campaigns.
-    deleteCampaign(campaigns.authorCampaign);
-    deleteCampaign(campaigns.booksByJKRowling);
-    deleteCampaign(campaigns.rankingAndCampaign);
-    deleteCampaign(campaigns.rankingOrCampaign);
+    cy.deleteEntitiesIfExists(campaigns.authorCampaign);
+    cy.deleteEntitiesIfExists(campaigns.booksByJKRowling);
+    cy.deleteEntitiesIfExists(campaigns.rankingAndCampaign);
+    cy.deleteEntitiesIfExists(campaigns.rankingOrCampaign);
 
     cy.anonymousUser();
   });
@@ -457,26 +457,7 @@ const createRankingOrCampaign = () => {
 const createCampaign = (callback: () => void) => {
   cy.visit('/node/add/campaign');
   callback();
-  cy.get('input[value="Save"]').click();
-};
-
-const deleteCampaign = (title: string) => {
-  cy.visit('/admin/content');
-  cy.contains(title)
-    .parents('tr')
-    .find('td li.dropbutton-toggle button')
-    .click()
-    .then(($button) => {
-      cy.wrap($button)
-        .parent('.dropbutton-toggle')
-        .parent('ul.dropbutton')
-        .find('li.delete a')
-        .click();
-      cy.get('.ui-dialog .form-submit')
-        .filter(':visible')
-        .should('exist')
-        .click();
-    });
+  cy.clickSaveButton();
 };
 
 const createCampaignMainProperties = (name: string, logic: 'AND' | 'OR') => {

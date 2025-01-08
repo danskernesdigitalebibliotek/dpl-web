@@ -1,0 +1,18 @@
+uuid: 3ca213c6-c907-491e-9d06-f5c1d27d0dc0
+langcode: en
+status: true
+dependencies:
+  config:
+    - core.entity_view_mode.paragraph.preview
+    - field.field.paragraph.go_video.field_go_video_title
+    - field.field.paragraph.go_video.field_url
+    - paragraphs.paragraphs_type.go_video
+id: paragraph.go_video.preview
+targetEntityType: paragraph
+bundle: go_video
+mode: preview
+content: {  }
+hidden:
+  field_go_video_title: true
+  field_url: true
+  search_api_excerpt: true

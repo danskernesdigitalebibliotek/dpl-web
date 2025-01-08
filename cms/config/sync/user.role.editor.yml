@@ -6,6 +6,7 @@ dependencies:
     - filter.format.basic
     - filter.format.limited
     - filter.format.underlined_title
+    - media.type.audio
     - media.type.document
     - media.type.image
     - media.type.video
@@ -71,13 +72,13 @@ permissions:
   - 'administer nodes'
   - 'administer redirects'
   - 'break content lock'
-  - 'bypass node access'
   - 'change own username'
   - 'clone eventinstance entity'
   - 'clone eventseries entity'
   - 'clone eventseries_type entity'
   - 'clone node entity'
   - 'create article content'
+  - 'create audio media'
   - 'create branch content'
   - 'create campaign content'
   - 'create document media'
@@ -93,6 +94,7 @@ permissions:
   - 'create webform'
   - 'delete all revisions'
   - 'delete any article content'
+  - 'delete any audio media'
   - 'delete any branch content'
   - 'delete any campaign content'
   - 'delete any document media'
@@ -108,6 +110,7 @@ permissions:
   - 'delete links in main menu'
   - 'delete media'
   - 'delete own article content'
+  - 'delete own audio media'
   - 'delete own branch content'
   - 'delete own campaign content'
   - 'delete own document media'
@@ -126,6 +129,7 @@ permissions:
   - 'delete terms in webform_email_categories'
   - 'dpl admin access pages'
   - 'edit any article content'
+  - 'edit any audio media'
   - 'edit any branch content'
   - 'edit any campaign content'
   - 'edit any document media'
@@ -138,6 +142,7 @@ permissions:
   - 'edit links in main menu'
   - 'edit main menu'
   - 'edit own article content'
+  - 'edit own audio media'
   - 'edit own branch content'
   - 'edit own campaign content'
   - 'edit own document media'
@@ -171,7 +176,10 @@ permissions:
   - 'use text format underlined_title'
   - 'view all media revisions'
   - 'view all revisions'
-  - 'view any unpublished content'
+  - 'view any unpublished article content'
+  - 'view any unpublished branch content'
+  - 'view any unpublished campaign content'
+  - 'view any unpublished page content'
   - 'view article revisions'
   - 'view campaign revisions'
   - 'view main menu in menu list'

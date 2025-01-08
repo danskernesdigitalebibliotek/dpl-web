@@ -11,7 +11,6 @@ dependencies:
     - search_api.server.db_search
   module:
     - node
-    - search_api
 id: content
 name: Content
 description: ''

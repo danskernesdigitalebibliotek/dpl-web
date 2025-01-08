@@ -1,0 +1,61 @@
+uuid: 4deccfd8-07e3-4316-8218-ecc3a8c6e3b0
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.field.paragraph.go_linkbox.field_go_color
+    - field.field.paragraph.go_linkbox.field_go_description
+    - field.field.paragraph.go_linkbox.field_go_image
+    - field.field.paragraph.go_linkbox.field_go_link
+    - field.field.paragraph.go_linkbox.field_title
+    - paragraphs.paragraphs_type.go_linkbox
+  module:
+    - color_field
+    - link
+    - media_library
+id: paragraph.go_linkbox.default
+targetEntityType: paragraph
+bundle: go_linkbox
+mode: default
+content:
+  field_go_color:
+    type: color_field_widget_box
+    weight: 1
+    region: content
+    settings:
+      default_colors: '#ffd2f0,#dcc3ff,#ffdcb9,#bee6fa,#ff73d7,#9b6eff,#ff9100,#32b4ff,#642850,#6e55aa,#7d460f,#195a7d'
+    third_party_settings: {  }
+  field_go_description:
+    type: string_textarea
+    weight: 4
+    region: content
+    settings:
+      rows: 3
+      placeholder: ''
+    third_party_settings: {  }
+  field_go_image:
+    type: media_library_widget
+    weight: 0
+    region: content
+    settings:
+      media_types: {  }
+    third_party_settings: {  }
+  field_go_link:
+    type: link_default
+    weight: 3
+    region: content
+    settings:
+      placeholder_url: ''
+      placeholder_title: ''
+    third_party_settings: {  }
+  field_title:
+    type: string_textfield
+    weight: 2
+    region: content
+    settings:
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+hidden:
+  created: true
+  status: true
