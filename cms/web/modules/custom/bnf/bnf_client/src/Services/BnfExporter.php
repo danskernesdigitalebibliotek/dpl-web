@@ -72,7 +72,7 @@ class BnfExporter {
         'headers' => [
           'Content-Type' => 'application/json',
         ],
-        'auth' => [getenv('GRAPHQL_USER_NAME'), getenv('GRAPHQL_USER_PASSWORD')],
+        'auth' => ['bnf_graphql', getenv('GRAPHQL_USER_PASSWORD')],
         'json' => [
           'query' => $mutation,
         ],
