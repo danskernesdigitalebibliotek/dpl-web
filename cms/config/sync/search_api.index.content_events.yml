@@ -3,8 +3,8 @@ langcode: en
 status: true
 dependencies:
   config:
-    - field.storage.eventseries.field_event_place
     - field.storage.eventseries.field_description
+    - field.storage.eventseries.field_event_place
     - field.storage.eventseries.field_teaser_text
     - field.storage.node.field_branch
     - field.storage.node.field_hero_title
@@ -12,9 +12,8 @@ dependencies:
     - field.storage.node.field_teaser_text
     - search_api.server.db_search
   module:
-    - recurring_events
     - node
-    - search_api
+    - recurring_events
 id: content_events
 name: 'Content + Events'
 description: ''
