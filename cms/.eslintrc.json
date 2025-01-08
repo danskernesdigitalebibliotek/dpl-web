@@ -1,6 +1,6 @@
 {
   "extends": [
-    "plugin:drupal-contrib/9.x"
+    "plugin:drupal-contrib/passing"
   ],
   "rules": {
     "no-console": ["error", { "allow": ["debug", "warn", "error"] }]
