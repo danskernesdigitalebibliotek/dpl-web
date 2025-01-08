@@ -51,21 +51,20 @@ export async function getSession(options?: {
   request: NextRequest
   response: NextResponse
 }): Promise<IronSession<TSessionData>> {
-  const session = !options
-    ? await getIronSession<TSessionData>(await cookies(), sessionOptions)
-    : await getIronSession<TSessionData>(options.request, options.response, sessionOptions)
-  if (!session.isLoggedIn) {
-    session.isLoggedIn = false
-    session.access_token = defaultSession.access_token
-    session.refresh_token = defaultSession.refresh_token
-    session.id_token = defaultSession.id_token
-    session.expires = defaultSession.expires
-    session.refresh_expires = defaultSession.refresh_expires
-    session.userInfo = defaultSession.userInfo
-    session.type = defaultSession.type
-  }
+  try {
+    const session = !options
+      ? await getIronSession<TSessionData>(await cookies(), sessionOptions)
+      : await getIronSession<TSessionData>(options.request, options.response, sessionOptions)
 
-  return session
+    if (!session?.isLoggedIn) {
+      Object.assign(session, defaultSession)
+    }
+
+    return session
+  } catch (error) {
+    console.error(error)
+    return defaultSession as IronSession<TSessionData>
+  }
 }
 
 export const setTokensOnSession = async (

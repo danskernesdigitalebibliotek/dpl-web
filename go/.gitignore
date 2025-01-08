@@ -39,6 +39,10 @@ next-env.d.ts
 # vscode
 .vscode
 
+# Cypress
+cypress/videos
+cypress/screenshots
+
 
 *storybook.log
 
