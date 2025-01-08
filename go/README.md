@@ -7,7 +7,6 @@
   Drupal CMS can be accessed through Lagoon by generating a one-time login in the preferred environment.
   <br>
   <br>
-  Last updated: 27/11/2024
 </p>
 
 ## URLs
