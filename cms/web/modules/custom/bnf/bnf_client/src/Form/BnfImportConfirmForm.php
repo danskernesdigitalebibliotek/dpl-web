@@ -4,6 +4,7 @@ namespace Drupal\bnf_client\Form;
 
 use Drupal\bnf\Exception\AlreadyExistsException;
 use Drupal\bnf\Services\BnfImporter;
+use Drupal\Core\Config\ConfigFactoryInterface;
 use Drupal\Core\DependencyInjection\AutowireTrait;
 use Drupal\Core\DependencyInjection\ContainerInjectionInterface;
 use Drupal\Core\Form\FormInterface;
@@ -12,15 +13,20 @@ use Drupal\Core\Messenger\MessengerInterface;
 use Drupal\Core\Routing\RouteMatchInterface;
 use Drupal\Core\StringTranslation\StringTranslationTrait;
 use Psr\Log\LoggerInterface;
-use Symfony\Component\DependencyInjection\ContainerInterface;
+use Symfony\Component\DependencyInjection\Attribute\Autowire;
 
 /**
  * Displaying an import preview, and allowing editor to import.
  */
 class BnfImportConfirmForm implements FormInterface, ContainerInjectionInterface {
-  use StringTranslationTrait;
 
   use AutowireTrait;
+  use StringTranslationTrait;
+
+  /**
+   * The BNF site base URL.
+   */
+  protected string $baseUrl;
 
   /**
    * {@inheritDoc}
@@ -29,19 +35,11 @@ class BnfImportConfirmForm implements FormInterface, ContainerInjectionInterface
     protected RouteMatchInterface $routeMatch,
     protected MessengerInterface $messenger,
     protected BnfImporter $bnfImporter,
+    #[Autowire(service: 'logger.channel.bnf')]
     protected LoggerInterface $logger,
-  ) {}
-
-  /**
-   * {@inheritDoc}
-   */
-  public static function create(ContainerInterface $container): static {
-    return new static(
-      $container->get('current_route_match'),
-      $container->get('messenger'),
-      $container->get('bnf.importer'),
-      $container->get('logger.channel.bnf'),
-    );
+    ConfigFactoryInterface $configFactory,
+  ) {
+    $this->baseUrl = $configFactory->get(SettingsForm::CONFIG_NAME)->get('base_url');
   }
 
   /**
@@ -58,7 +56,7 @@ class BnfImportConfirmForm implements FormInterface, ContainerInjectionInterface
     $form['#title'] = $this->t('Confirm import of BNF content', [], ['context' => 'BNF']);
 
     $uuid = $this->routeMatch->getParameter('uuid');
-    $bnfServer = (string) getenv('BNF_SERVER_BASE_ENDPOINT') . '/graphql';
+    $bnfServer = $this->baseUrl . 'graphql';
 
     $form_state->set('uuid', $uuid);
     $form_state->set('bnfServer', $bnfServer);
