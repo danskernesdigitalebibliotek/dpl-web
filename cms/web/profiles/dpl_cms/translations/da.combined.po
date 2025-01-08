@@ -4,23 +4,11 @@
 # #-#-#-#-#  da.config.po (PROJECT VERSION)  #-#-#-#-#
 # da translation of DPL CMS
 #
-#, fuzzy
 msgid ""
 msgstr ""
-"#-#-#-#-#  da.po (PROJECT VERSION)  #-#-#-#-#\n"
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2025-01-08 13:15+0100\n"
-"PO-Revision-Date: 2025-01-08 13:15+0100\n"
-"Last-Translator: NAME <EMAIL@ADDRESS>\n"
-"Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
-"MIME-Version: 1.0\n"
-"Content-Type: text/plain; charset=utf-8\n"
-"Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=2; plural=(n > 1);\n"
-"#-#-#-#-#  da.config.po (PROJECT VERSION)  #-#-#-#-#\n"
-"Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2025-01-08 13:16+0100\n"
-"PO-Revision-Date: 2025-01-08 13:16+0100\n"
+"POT-Creation-Date: 2025-01-08 15:42+0100\n"
+"PO-Revision-Date: 2025-01-08 15:42+0100\n"
 "Last-Translator: NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
 "MIME-Version: 1.0\n"
@@ -36,6 +24,9 @@ msgstr "Search the website"
 
 msgid "Search"
 msgstr "Søg"
+
+msgid "Import \"@label\" to @name"
+msgstr ""
 
 msgid "Open link in new window/tab"
 msgstr "Åbner link i nyt vindue eller tab"
@@ -3654,6 +3645,10 @@ msgstr "Brug adressen fra det tilknyttede bibliotek som fallback."
 
 msgid "Updated @count description fields on @entity_type"
 msgstr "Opdaterede @count beskrivelsesfelter på @entity_type"
+
+msgctxt "BNF"
+msgid "my site"
+msgstr ""
 
 msgid "BNF State"
 msgstr "BNF status"
