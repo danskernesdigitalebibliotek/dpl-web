@@ -10,6 +10,7 @@
     "**/web/libraries/",
     "**/web/modules/contrib/",
     "**/web/sites/**/files/",
+    "**/web/sites/default/default.services.yml",
     "**/web/themes/custom/novel/assets/",
     "**/web/themes/contrib/",
     "**/web/modules/local/",
