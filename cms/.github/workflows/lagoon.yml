@@ -45,6 +45,27 @@ jobs:
 
           echo "deployment_id=$DEPLOYMENT_ID" >> $GITHUB_OUTPUT
 
+  CreateDeploymentBNF:
+    name: Create BNF deployment
+    runs-on: ubuntu-latest
+    if: ${{ startsWith('bnf:', github.event.pull_request.title) && github.event.action == 'opened' || github.event.action == 'reopened' || github.event.action == 'synchronize' }}
+    needs: [BranchNameLength]
+    steps:
+      - run: |
+          LAGOON_DEPLOYS_LOG_URL=$(echo "https://ui.lagoon.dplplat01.dpl.reload.dk/projects/dpl-bnf/dpl-bnf-${{ env.LAGOON_ENVIRONMENT }}/deployments")
+
+          DEPLOYMENT_ID=$(echo '{
+            "ref": "${{ github.head_ref || github.ref_name }}",
+            "environment": "${{ env.LAGOON_ENVIRONMENT }}-bnf",
+            "auto_merge": false,
+            "required_contexts": []
+          }' | gh api --method POST "/repos/${{ env.OWNER }}/${{ env.REPO }}/deployments" --input - --jq '.id')
+
+          gh api --method POST "/repos/${{ env.OWNER }}/${{ env.REPO }}/deployments/$DEPLOYMENT_ID/statuses" \
+            -f "state=in_progress" -f "log_url=$LAGOON_DEPLOYS_LOG_URL"
+
+          echo "deployment_id=$DEPLOYMENT_ID" >> $GITHUB_OUTPUT
+
   # When we close the pull request, we want to set the environment as inactive.
   CloseEnvironment:
     name: Close environment

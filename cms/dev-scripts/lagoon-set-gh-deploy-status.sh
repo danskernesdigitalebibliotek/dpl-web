@@ -12,11 +12,17 @@ DRUPAL_URL=${2:-""}
 
 GH_DEPLOYMENT_ID=$(cat /tmp/GH_DEPLOYMENT_ID)
 LAGOON_DEPLOYS_LOG_URL=$(cat /tmp/LAGOON_DEPLOYS_LOG_URL)
+ENVIRONMENT=$LAGOON_ENVIRONMENT
+
+# We want BNF to show up as a separate environment.
+if [[ "$LAGOON_PROJECT" == "dpl-bnf" ]]; then
+  ENVIRONMENT=$LAGOON_ENVIRONMENT-bnf
+fi
 
 echo "Setting GH deployment status '$GH_DEPLOYMENT_ID': '$STATE'"
 
 # GitHub API request to update deployment status
 curl -L -X POST -H "Authorization: Bearer $GH_DEPLOYMENT_TOKEN" \
   "https://api.github.com/repos/danskernesdigitalebibliotek/dpl-cms/deployments/$GH_DEPLOYMENT_ID/statuses" \
-  -d "{\"environment\":\"$LAGOON_ENVIRONMENT\",\"state\":\"$STATE\", \
+  -d "{\"environment\":\"$ENVIRONMENT\",\"state\":\"$STATE\", \
         \"environment_url\":\"$DRUPAL_URL\", \"log_url\":\"$LAGOON_DEPLOYS_LOG_URL\"}"
