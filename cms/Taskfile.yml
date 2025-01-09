@@ -153,30 +153,7 @@ tasks:
       # Start local environment.
       - task dev:start
       # Install site.
-      - task dev:cli -- drush site-install --existing-config -y
-      # Practice shows that the cache needs to be cleared to avoid configuration
-      # errors even after a site install.
-      - task dev:cache:clear:drupal
-      # Import translations.
-      - |
-        if [ -n "${SKIP_LANGUAGE_IMPORT}" ]; then
-          echo "Skipping language import due to SKIP_LANGUAGE_IMPORT environment variable"
-        else
-          task dev:cli -- drush locale-check
-          task dev:cli -- drush locale-update
-          task dev:cli -- drush dpl_po:import-remote-config-po da https://danskernesdigitalebibliotek.github.io/dpl-cms/translations/da.config.po
-        fi
-      # Clear all caches to ensure we have a pristine setup.
-      - task dev:cache:clear:all
-      # Run deploy hooks.
-      - task dev:cli -- drush deploy -y
-      # Ensure site is reachable and warm any caches
-      - task dev:cli -- curl --silent --show-error --fail --output /dev/null http://varnish:8080/
-      # Enable dev modules.
-      - task dev:enable-dev-tools
-      - task dev:create-users
-      # Show a one-time login to the local site.
-      - task dev:cli -- drush user-login
+      - task dev:cli -- ./dev-scripts/install-site.sh
 
   dev:openid:configure:
     desc: Set openid connect settings based on .env variables. And run cron.
@@ -192,6 +169,7 @@ tasks:
   dev:enable-dev-tools:
     desc: Enable dev modules and settings, which are not to be used in Prod. They are config-ignored
     cmds:
+      # If changing this, keep the corresponding line in ./dev-scripts/install-site.sh in sync.
       - task dev:cli -- drush install -y devel dpl_example_content field_ui purge_ui restui uuid_url views_ui dblog
 
   dev:enable-xdebug:
@@ -208,6 +186,7 @@ tasks:
 
   dev:create-users:
     desc: Create test users, with test roles
+    # If changing this, keep the corresponding lines in ./dev-scripts/install-site.sh in sync.
     cmds:
       - task dev:cli -- drush user:create editor --password="test"
       - task dev:cli -- drush user:role:add 'editor' editor
