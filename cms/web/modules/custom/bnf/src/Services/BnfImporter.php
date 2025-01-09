@@ -23,6 +23,10 @@ use Spawnia\Sailor\Configuration;
  */
 class BnfImporter {
 
+  const ALLOWED_CONTENT_TYPES = [
+    'article',
+  ];
+
   /**
    * Constructor.
    */
@@ -53,6 +57,10 @@ class BnfImporter {
    * Importing a node from a GraphQL source endpoint.
    */
   public function importNode(string $uuid, string $endpointUrl, string $nodeType = 'article'): NodeInterface {
+    if (!in_array($nodeType, self::ALLOWED_CONTENT_TYPES)) {
+      throw new \InvalidArgumentException('The requested content type is not allowed.');
+    }
+
     $nodeStorage = $this->entityTypeManager->getStorage('node');
 
     $existingNodes =

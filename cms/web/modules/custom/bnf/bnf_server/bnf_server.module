@@ -1,7 +1,23 @@
 <?php
 
+use Drupal\bnf\Services\BnfImporter;
 use Drupal\bnf_server\Controller\LoginController;
+use Drupal\Core\Url;
 use Drupal\node\Entity\Node;
+use Drupal\views\ViewExecutable;
+
+/**
+ * Implements hook_views_pre_build().
+ *
+ * Setting the allowed importable content types as contextual filter.
+ */
+function bnf_server_views_pre_build(ViewExecutable $view): void {
+  if ($view->id() === 'importable_content') {
+    $allowed_cts = BnfImporter::ALLOWED_CONTENT_TYPES;
+
+    $view->setArguments([implode('+', $allowed_cts)]);
+  }
+}
 
 /**
  * Implements hook_preprocess_HOOK().
@@ -14,7 +30,7 @@ function bnf_server_preprocess_page(array &$variables): void {
   $cookies = \Drupal::request()->cookies;
   $url = $cookies->get(LoginController::COOKIE_CALLBACK_URL);
   $name = $cookies->get(LoginController::COOKIE_SITE_NAME);
-  $allowed_cts = ['article'];
+  $allowed_cts = BnfImporter::ALLOWED_CONTENT_TYPES;
 
   if (!$url || !($node instanceof Node) || !in_array($node->bundle(), $allowed_cts)) {
     return;
@@ -24,7 +40,7 @@ function bnf_server_preprocess_page(array &$variables): void {
     '#theme' => 'bnf_server_import_link',
     '#label' => $node->label(),
     '#name' => $name ?? t('my site', [], ['context' => 'BNF']),
-    '#url' => "$url/admin/bnf/import/{$node->uuid()}",
+    '#url' => Url::fromRoute('bnf_server.import_redirect', ['uuid' => $node->uuid()]),
     '#cache' => ['max-age' => 0],
   ];
 }
