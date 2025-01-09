@@ -22,3 +22,13 @@ bnf_client.server_redirect:
     _title: 'Login to BNF'
   requirements:
     _permission: 'bnf client import nodes'
+
+bnf_client.settings:
+  path: '/admin/config/services/bnf'
+  defaults:
+    _form: '\Drupal\bnf_client\Form\SettingsForm'
+    _title: 'BNF configuration'
+  requirements:
+    _permission: 'administer site configuration'
+  options:
+    _admin_route: TRUE

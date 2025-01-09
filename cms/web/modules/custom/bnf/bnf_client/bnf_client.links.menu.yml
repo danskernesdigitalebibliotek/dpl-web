@@ -4,8 +4,15 @@ bnf_client.import_content:
   parent: system.admin_content
   route_name: bnf_client.import_form
   weight: 10
+
 bnf_client.login:
   title: 'Login to BNF'
   parent: system.admin_content
   route_name: bnf_client.server_redirect
   weight: 11
+
+bnf_client.settings_form:
+  title: 'BNF configuration'
+  route_name: bnf_client.settings
+  description: 'Configure BNF client.'
+  parent: system.admin_config_services
