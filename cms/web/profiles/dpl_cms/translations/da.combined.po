@@ -7,8 +7,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2025-01-08 15:42+0100\n"
-"PO-Revision-Date: 2025-01-08 15:42+0100\n"
+"POT-Creation-Date: 2025-01-09 14:03+0100\n"
+"PO-Revision-Date: 2025-01-09 14:03+0100\n"
 "Last-Translator: NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
 "MIME-Version: 1.0\n"
@@ -3724,6 +3724,24 @@ msgctxt "BNF"
 msgid "Invalid URL or UUID."
 msgstr "Fejlagtig URL eller UUID."
 
+msgid "BNF configuration"
+msgstr ""
+
+msgid "BNF server URL"
+msgstr ""
+
+msgid "For example <em>https://bibliotekernesnationaleformidling.dk/</em>."
+msgstr ""
+
+msgid "Please enter a valid URL."
+msgstr ""
+
+msgid "Only HTTPS is supported."
+msgstr ""
+
+msgid "URL must end with a /."
+msgstr ""
+
 msgctxt "DPL admin UX"
 msgid "Footer columns"
 msgstr "Fodkolonner"
@@ -4869,6 +4887,9 @@ msgstr ""
 
 msgid "Import BNF content"
 msgstr "Importer BNF-indhold"
+
+msgid "Configure BNF client."
+msgstr ""
 
 msgid "Footer Settings"
 msgstr "Footerindstillinger"
