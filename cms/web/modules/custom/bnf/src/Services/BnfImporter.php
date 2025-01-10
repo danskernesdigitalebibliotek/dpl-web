@@ -15,6 +15,7 @@ use GuzzleHttp\ClientInterface;
 use Psr\Log\LoggerInterface;
 use function Safe\json_decode;
 use function Safe\parse_url;
+use function Safe\preg_grep;
 use function Safe\preg_replace;
 
 /**
@@ -80,8 +81,16 @@ class BnfImporter {
     // Start building the GraphQL query.
     $query = <<<GRAPHQL
     query {
+      info {
+        name
+        url
+      }
       $queryName(id: "$uuid") {
         title
+        path
+        canonicalUrl {
+          url
+        }
         paragraphs {
 
     GRAPHQL;
@@ -233,12 +242,12 @@ class BnfImporter {
   }
 
   /**
-   * Loading the node data from a GraphQL endpoint.
+   * Loading the data from a GraphQL endpoint.
    *
    * @return mixed[]
    *   Array of node values, that we can use to create node entities.
    */
-  public function loadNodeData(string $uuid, string $endpointUrl, string $nodeType = 'article'): array {
+  public function loadData(string $uuid, string $endpointUrl, string $nodeType = 'article'): array {
     $queryName = 'node' . ucfirst($nodeType);
 
     $nodeStorage = $this->entityTypeManager->getStorage('node');
@@ -281,7 +290,7 @@ class BnfImporter {
     ]);
 
     $data = json_decode($response->getBody()->getContents(), TRUE);
-    $nodeData = $data['data'][$queryName] ?? NULL;
+    $nodeData = $data['data'] ?? NULL;
 
     if (empty($nodeData)) {
       $this->logger->error(
@@ -301,14 +310,38 @@ class BnfImporter {
   public function importNode(string $uuid, string $endpointUrl, string $nodeType = 'article'): NodeInterface {
     $nodeStorage = $this->entityTypeManager->getStorage('node');
     try {
-      $nodeData = $this->loadNodeData($uuid, $endpointUrl, $nodeType);
-      $nodeData['type'] = $nodeType;
-      $nodeData['uuid'] = $uuid;
-      $nodeData['field_paragraphs'] = $this->getParagraphs($nodeData);
-      $nodeData['status'] = NodeInterface::NOT_PUBLISHED;
+      $data = $this->loadData($uuid, $endpointUrl, $nodeType);
+      // Find node data, e.g. nodeArticle, nodePage etc.
+      $nodeDataKeys = preg_grep('/^node[A-Z]/', array_keys($data));
+      $nodeDataKey = $nodeDataKeys ? reset($nodeDataKeys) : [];
+      $nodeData = $data[$nodeDataKey] ?? [];
+
+      $baseUrl = $data['info']['url'] ?? NULL;
+      $nodePath = $nodeData['path'] ?? NULL;
+      $canonicalUrl = $nodeData['canonicalUrl']['url'] ?? NULL;
+      $canonicalTitle = $nodeData['canonicalUrl']['title'] ?? NULL;
+
+      // If no custom canonical URL is set, we'll set the context of where
+      // we have exported the data from.
+      if (empty($canonicalUrl) && $baseUrl && $nodePath) {
+        $canonicalUrl = "$baseUrl$nodePath";
+        $canonicalTitle = $data['info']['name'] ?? NULL;
+      }
+
+      $nodeCreation = [
+        'status' => NodeInterface::NOT_PUBLISHED,
+        'type' => $nodeType,
+        'uuid' => $uuid,
+        'title' => $nodeData['title'],
+        'field_paragraphs' => $this->getParagraphs($nodeData),
+        'field_canonical_url' => [
+          'uri' => $canonicalUrl,
+          'title' => $canonicalTitle,
+        ],
+      ];
 
       /** @var \Drupal\node\NodeInterface $node */
-      $node = $nodeStorage->create($nodeData);
+      $node = $nodeStorage->create($nodeCreation);
       $node->save();
 
       $node->set(BnfStateEnum::FIELD_NAME, BnfStateEnum::Imported->value);

@@ -14,6 +14,7 @@ use Drupal\Core\Routing\RouteMatchInterface;
 use Drupal\Core\StringTranslation\StringTranslationTrait;
 use Psr\Log\LoggerInterface;
 use Symfony\Component\DependencyInjection\Attribute\Autowire;
+use function Safe\preg_grep;
 
 /**
  * Displaying an import preview, and allowing editor to import.
@@ -64,7 +65,12 @@ class BnfImportConfirmForm implements FormInterface, ContainerInjectionInterface
     $importable = TRUE;
 
     try {
-      $nodeData = $this->bnfImporter->loadNodeData($uuid, $bnfServer);
+      $data = $this->bnfImporter->loadData($uuid, $bnfServer);
+
+      // Find node data, e.g. nodeArticle, nodePage etc.
+      $nodeDataKeys = preg_grep('/^node[A-Z]/', array_keys($data));
+      $nodeDataKey = $nodeDataKeys ? reset($nodeDataKeys) : [];
+      $nodeData = $data[$nodeDataKey] ?? [];
     }
     catch (\Exception $e) {
       $importable = FALSE;
