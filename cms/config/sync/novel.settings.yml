@@ -5,9 +5,9 @@ features:
   favicon: 1
 logo:
   use_default: 0
-  logo: "public://2024-07/logoeksempelbib.png"
-logo_title: "Eksempel Biblioteket"
-logo_place: "Eksempelvej Bib"
+  logo: 'public://2024-07/logoeksempelbib.png'
+logo_title: 'Eksempel Biblioteket'
+logo_place: 'Eksempelvej Bib'
 favicon:
   use_default: 1
   mimetype: image/vnd.microsoft.icon
