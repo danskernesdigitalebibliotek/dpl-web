@@ -7,8 +7,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2025-01-13 09:58+0100\n"
-"PO-Revision-Date: 2025-01-13 09:58+0100\n"
+"POT-Creation-Date: 2025-01-13 13:54+0100\n"
+"PO-Revision-Date: 2025-01-13 13:54+0100\n"
 "Last-Translator: NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
 "MIME-Version: 1.0\n"
@@ -20329,12 +20329,18 @@ msgctxt "field.field.paragraph.filtered_event_list.field_title:label"
 msgid "Title"
 msgstr ""
 
-msgctxt "field.field.paragraph.go_video.field_embed_video:label"
-msgid "Embed video"
-msgstr ""
-
 msgctxt "field.field.paragraph.go_video.field_go_video_title:label"
 msgid "Title"
+msgstr ""
+
+msgctxt "field.field.paragraph.go_video.field_url:label"
+msgid "URL"
+msgstr ""
+
+msgctxt "field.field.paragraph.go_video.field_url:description"
+msgid ""
+"VideoTool URL. Example: https://media.videotool.dk/?"
+"vn=557_2023103014511477700668916683"
 msgstr ""
 
 msgctxt "field.field.paragraph.hero.field_hero_categories:label"
