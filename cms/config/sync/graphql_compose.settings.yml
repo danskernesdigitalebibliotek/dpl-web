@@ -21,9 +21,11 @@ entity_config:
     go_category_page:
       enabled: true
       query_load_enabled: true
+      routes_enabled: true
     go_page:
       enabled: true
       query_load_enabled: true
+      routes_enabled: true
     page:
       enabled: false
   paragraph:

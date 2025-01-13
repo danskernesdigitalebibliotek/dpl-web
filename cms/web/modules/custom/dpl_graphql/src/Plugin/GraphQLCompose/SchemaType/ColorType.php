@@ -18,7 +18,7 @@ use GraphQL\Type\Definition\Type;
 class ColorType extends GraphQLComposeSchemaTypeBase {
 
   /**
-   * @inheritDoc
+   * {@inheritdoc}
    */
   public function getTypes(): array {
     $types = [];

@@ -7,8 +7,8 @@ namespace Drupal\dpl_graphql\Plugin\GraphQLCompose\FieldType;
 use Drupal\Core\Field\FieldItemInterface;
 use Drupal\graphql\GraphQL\Execution\FieldContext;
 use Drupal\graphql_compose\Plugin\GraphQL\DataProducer\FieldProducerItemInterface;
-use Drupal\graphql_compose\Plugin\GraphQLCompose\GraphQLComposeFieldTypeBase;
 use Drupal\graphql_compose\Plugin\GraphQL\DataProducer\FieldProducerTrait;
+use Drupal\graphql_compose\Plugin\GraphQLCompose\GraphQLComposeFieldTypeBase;
 
 /**
  * {@inheritDoc}
@@ -18,7 +18,7 @@ use Drupal\graphql_compose\Plugin\GraphQL\DataProducer\FieldProducerTrait;
  *   type_sdl = "Color",
  * )
  */
-class ColorItem extends GraphQLComposeFieldTypeBase implements FieldProducerItemInterface{
+class ColorItem extends GraphQLComposeFieldTypeBase implements FieldProducerItemInterface {
 
   use FieldProducerTrait;
 
@@ -28,8 +28,8 @@ class ColorItem extends GraphQLComposeFieldTypeBase implements FieldProducerItem
   public function resolveFieldItem(FieldItemInterface $item, FieldContext $context) {
 
     return [
-      'color' => $item->color,
-      'opacity' => $item->opacity
+      'color' => isset($item->color),
+      'opacity' => isset($item->opacity),
     ];
   }
 
