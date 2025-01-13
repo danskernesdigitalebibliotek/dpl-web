@@ -1,0 +1,19 @@
+uuid: 9e4e840c-18e4-4e87-917c-758057e4327b
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_category_menu_title
+    - node.type.go_category_page
+id: node.go_category_page.field_category_menu_title
+field_name: field_category_menu_title
+entity_type: node
+bundle: go_category_page
+label: 'Category menu title'
+description: "The category title will be shown in the category menu as part of this category's menu element."
+required: true
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: string

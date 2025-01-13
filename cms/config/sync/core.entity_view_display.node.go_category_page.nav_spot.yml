@@ -1,0 +1,34 @@
+uuid: fa0ee0f9-001b-4bc0-89c8-ae11290c05c2
+langcode: en
+status: true
+dependencies:
+  config:
+    - core.entity_view_mode.node.nav_spot
+    - field.field.node.go_category_page.field_category_menu_color
+    - field.field.node.go_category_page.field_category_menu_image
+    - field.field.node.go_category_page.field_category_menu_sound
+    - field.field.node.go_category_page.field_category_menu_title
+    - field.field.node.go_category_page.field_paragraphs
+    - field.field.node.go_category_page.field_publication_date
+    - node.type.go_category_page
+  module:
+    - user
+id: node.go_category_page.nav_spot
+targetEntityType: node
+bundle: go_category_page
+mode: nav_spot
+content:
+  links:
+    settings: {  }
+    third_party_settings: {  }
+    weight: 100
+    region: content
+hidden:
+  field_category_menu_color: true
+  field_category_menu_image: true
+  field_category_menu_sound: true
+  field_category_menu_title: true
+  field_paragraphs: true
+  field_publication_date: true
+  langcode: true
+  search_api_excerpt: true

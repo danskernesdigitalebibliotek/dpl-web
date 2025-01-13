@@ -1,0 +1,11 @@
+uuid: 1d69a544-f028-402d-9105-abcb64fd241e
+langcode: en
+status: true
+dependencies:
+  config:
+    - node.type.go_category_page
+id: node.go_category_page
+target_entity_type_id: node
+target_bundle: go_category_page
+default_langcode: da
+language_alterable: false
