@@ -57,5 +57,10 @@ function bnf_server_theme(): array {
         'label' => NULL,
       ],
     ],
+    'bnf_server_missing_callback' => [
+      'variables' => [
+        'uuid' => NULL,
+      ],
+    ],
   ];
 }
