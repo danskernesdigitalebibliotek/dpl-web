@@ -4,6 +4,7 @@ status: true
 dependencies:
   config:
     - core.entity_view_mode.node.card
+    - field.field.node.go_article.field_publication_date
     - field.field.node.go_article.field_subtitle
     - node.type.go_article
   module:
@@ -26,5 +27,6 @@ content:
     weight: 100
     region: content
 hidden:
+  field_publication_date: true
   langcode: true
   search_api_excerpt: true

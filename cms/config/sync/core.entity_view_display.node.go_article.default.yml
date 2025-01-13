@@ -3,15 +3,26 @@ langcode: en
 status: true
 dependencies:
   config:
+    - field.field.node.go_article.field_publication_date
     - field.field.node.go_article.field_subtitle
     - node.type.go_article
   module:
+    - datetime
     - user
 id: node.go_article.default
 targetEntityType: node
 bundle: go_article
 mode: default
 content:
+  field_publication_date:
+    type: datetime_default
+    label: above
+    settings:
+      timezone_override: ''
+      format_type: medium
+    third_party_settings: {  }
+    weight: 113
+    region: content
   field_subtitle:
     type: basic_string
     label: above

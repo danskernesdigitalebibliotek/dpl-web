@@ -3,107 +3,114 @@ langcode: en
 status: true
 dependencies:
   config:
+    - field.field.node.go_article.field_publication_date
     - field.field.node.go_article.field_subtitle
     - node.type.go_article
   module:
+    - datetime
+    - field_group
     - path
     - scheduler
+    - select2
+third_party_settings:
+  field_group:
+    group_author_date:
+      children:
+        - field_publication_date
+        - uid
+      label: 'Author & Date'
+      region: content
+      parent_name: ''
+      weight: 7
+      format_type: details_sidebar
+      format_settings:
+        classes: ''
+        show_empty_fields: false
+        id: ''
+        label_as_html: false
+        open: true
+        description: ''
+        required_fields: true
+        weight: 0
 id: node.go_article.default
 targetEntityType: node
 bundle: go_article
 mode: default
 content:
-  created:
-    type: datetime_timestamp
-    weight: 10
+  field_publication_date:
+    type: datetime_default
+    weight: 4
     region: content
     settings: {  }
     third_party_settings: {  }
   field_subtitle:
     type: string_textarea
-    weight: 2
+    weight: 1
     region: content
     settings:
       rows: 3
       placeholder: ''
     third_party_settings: {  }
-  langcode:
-    type: language_select
-    weight: 2
-    region: content
-    settings:
-      include_locked: true
-    third_party_settings: {  }
   path:
     type: path
-    weight: 30
+    weight: 9
     region: content
     settings: {  }
     third_party_settings: {  }
-  promote:
-    type: boolean_checkbox
-    weight: 15
-    region: content
-    settings:
-      display_label: true
-    third_party_settings: {  }
   publish_on:
     type: datetime_timestamp_no_default
-    weight: 52
+    weight: 5
     region: content
     settings: {  }
     third_party_settings: {  }
   scheduler_settings:
-    weight: 50
+    weight: 4
     region: content
     settings: {  }
     third_party_settings: {  }
   simple_sitemap:
-    weight: 10
+    weight: 8
     region: content
     settings: {  }
     third_party_settings: {  }
   status:
     type: boolean_checkbox
-    weight: 120
-    region: content
-    settings:
-      display_label: true
-    third_party_settings: {  }
-  sticky:
-    type: boolean_checkbox
-    weight: 16
+    weight: 2
     region: content
     settings:
       display_label: true
     third_party_settings: {  }
   title:
     type: string_textfield
-    weight: -5
+    weight: 0
     region: content
     settings:
       size: 60
       placeholder: ''
     third_party_settings: {  }
   uid:
-    type: entity_reference_autocomplete
+    type: select2_entity_reference
     weight: 5
     region: content
     settings:
+      width: 100%
+      autocomplete: true
       match_operator: CONTAINS
       match_limit: 10
-      size: 60
-      placeholder: ''
     third_party_settings: {  }
   unpublish_on:
     type: datetime_timestamp_no_default
-    weight: 54
+    weight: 6
     region: content
     settings: {  }
     third_party_settings: {  }
   url_redirects:
-    weight: 50
+    weight: 3
     region: content
     settings: {  }
     third_party_settings: {  }
-hidden: {  }
+hidden:
+  created: true
+  langcode: true
+  promote: true
+  sticky: true
