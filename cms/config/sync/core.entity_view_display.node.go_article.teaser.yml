@@ -6,6 +6,8 @@ dependencies:
     - core.entity_view_mode.node.teaser
     - field.field.node.go_article.field_publication_date
     - field.field.node.go_article.field_subtitle
+    - field.field.node.go_article.field_teaser_image
+    - field.field.node.go_article.field_teaser_text
     - node.type.go_article
   module:
     - user
@@ -22,5 +24,7 @@ content:
 hidden:
   field_publication_date: true
   field_subtitle: true
+  field_teaser_image: true
+  field_teaser_text: true
   langcode: true
   search_api_excerpt: true

@@ -5,10 +5,14 @@ dependencies:
   config:
     - field.field.node.go_article.field_publication_date
     - field.field.node.go_article.field_subtitle
+    - field.field.node.go_article.field_teaser_image
+    - field.field.node.go_article.field_teaser_text
     - node.type.go_article
   module:
     - datetime
     - field_group
+    - media_library
+    - media_library_edit
     - path
     - scheduler
     - select2
@@ -22,6 +26,24 @@ third_party_settings:
       region: content
       parent_name: ''
       weight: 7
+      format_type: details_sidebar
+      format_settings:
+        classes: ''
+        show_empty_fields: false
+        id: ''
+        label_as_html: false
+        open: true
+        description: ''
+        required_fields: true
+        weight: 0
+    group_teaser_card:
+      children:
+        - field_teaser_text
+        - field_teaser_image
+      label: 'Teaser card'
+      region: content
+      parent_name: ''
+      weight: 9
       format_type: details_sidebar
       format_settings:
         classes: ''
@@ -51,9 +73,26 @@ content:
       rows: 3
       placeholder: ''
     third_party_settings: {  }
+  field_teaser_image:
+    type: media_library_widget
+    weight: 9
+    region: content
+    settings:
+      media_types: {  }
+    third_party_settings:
+      media_library_edit:
+        show_edit: '1'
+  field_teaser_text:
+    type: string_textfield
+    weight: 8
+    region: content
+    settings:
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
   path:
     type: path
-    weight: 9
+    weight: 10
     region: content
     settings: {  }
     third_party_settings: {  }
