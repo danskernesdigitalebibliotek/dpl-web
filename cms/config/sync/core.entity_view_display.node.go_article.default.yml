@@ -3,6 +3,7 @@ langcode: en
 status: true
 dependencies:
   config:
+    - field.field.node.go_article.field_go_article_image
     - field.field.node.go_article.field_publication_date
     - field.field.node.go_article.field_subtitle
     - field.field.node.go_article.field_teaser_image
@@ -16,6 +17,15 @@ targetEntityType: node
 bundle: go_article
 mode: default
 content:
+  field_go_article_image:
+    type: entity_reference_entity_view
+    label: above
+    settings:
+      view_mode: default
+      link: false
+    third_party_settings: {  }
+    weight: 114
+    region: content
   field_publication_date:
     type: datetime_default
     label: above

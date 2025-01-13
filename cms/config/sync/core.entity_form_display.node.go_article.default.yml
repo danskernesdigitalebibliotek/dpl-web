@@ -3,6 +3,7 @@ langcode: en
 status: true
 dependencies:
   config:
+    - field.field.node.go_article.field_go_article_image
     - field.field.node.go_article.field_publication_date
     - field.field.node.go_article.field_subtitle
     - field.field.node.go_article.field_teaser_image
@@ -25,7 +26,7 @@ third_party_settings:
       label: 'Author & Date'
       region: content
       parent_name: ''
-      weight: 7
+      weight: 8
       format_type: details_sidebar
       format_settings:
         classes: ''
@@ -43,7 +44,7 @@ third_party_settings:
       label: 'Teaser card'
       region: content
       parent_name: ''
-      weight: 9
+      weight: 10
       format_type: details_sidebar
       format_settings:
         classes: ''
@@ -59,6 +60,13 @@ targetEntityType: node
 bundle: go_article
 mode: default
 content:
+  field_go_article_image:
+    type: media_library_widget
+    weight: 1
+    region: content
+    settings:
+      media_types: {  }
+    third_party_settings: {  }
   field_publication_date:
     type: datetime_default
     weight: 4
@@ -67,7 +75,7 @@ content:
     third_party_settings: {  }
   field_subtitle:
     type: string_textarea
-    weight: 1
+    weight: 2
     region: content
     settings:
       rows: 3
@@ -92,29 +100,29 @@ content:
     third_party_settings: {  }
   path:
     type: path
-    weight: 10
+    weight: 11
     region: content
     settings: {  }
     third_party_settings: {  }
   publish_on:
     type: datetime_timestamp_no_default
-    weight: 5
+    weight: 6
     region: content
     settings: {  }
     third_party_settings: {  }
   scheduler_settings:
-    weight: 4
+    weight: 5
     region: content
     settings: {  }
     third_party_settings: {  }
   simple_sitemap:
-    weight: 8
+    weight: 9
     region: content
     settings: {  }
     third_party_settings: {  }
   status:
     type: boolean_checkbox
-    weight: 2
+    weight: 3
     region: content
     settings:
       display_label: true
@@ -139,12 +147,12 @@ content:
     third_party_settings: {  }
   unpublish_on:
     type: datetime_timestamp_no_default
-    weight: 6
+    weight: 7
     region: content
     settings: {  }
     third_party_settings: {  }
   url_redirects:
-    weight: 3
+    weight: 4
     region: content
     settings: {  }
     third_party_settings: {  }

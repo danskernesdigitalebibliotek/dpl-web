@@ -4,6 +4,7 @@ status: true
 dependencies:
   config:
     - core.entity_view_mode.node.nav_teaser
+    - field.field.node.go_article.field_go_article_image
     - field.field.node.go_article.field_publication_date
     - field.field.node.go_article.field_subtitle
     - field.field.node.go_article.field_teaser_image
@@ -29,6 +30,7 @@ content:
     weight: 100
     region: content
 hidden:
+  field_go_article_image: true
   field_publication_date: true
   field_teaser_image: true
   field_teaser_text: true
