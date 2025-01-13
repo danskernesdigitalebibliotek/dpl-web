@@ -210,9 +210,10 @@ field_config:
       field_title:
         enabled: true
     go_video:
-      field_embed_video:
-        enabled: true
       field_go_video_title:
+        enabled: true
+        name_sdl: title
+      field_url:
         enabled: true
     manual_event_list:
       field_events:
