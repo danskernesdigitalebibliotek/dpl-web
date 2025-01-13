@@ -1,23 +1,24 @@
-uuid: 97a1486f-c77b-4a65-b950-ee3b203d7853
+uuid: 5fb8096c-41ca-449c-83f1-fc8893987d3e
 langcode: en
 status: true
 dependencies:
   config:
+    - core.entity_view_mode.node.nav_teaser
     - field.field.node.go_article.field_subtitle
     - node.type.go_article
   module:
     - user
-id: node.go_article.default
+id: node.go_article.nav_teaser
 targetEntityType: node
 bundle: go_article
-mode: default
+mode: nav_teaser
 content:
   field_subtitle:
     type: basic_string
-    label: above
+    label: hidden
     settings: {  }
     third_party_settings: {  }
-    weight: 101
+    weight: 0
     region: content
   links:
     settings: {  }

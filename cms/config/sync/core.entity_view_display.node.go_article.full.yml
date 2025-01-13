@@ -1,23 +1,24 @@
-uuid: 97a1486f-c77b-4a65-b950-ee3b203d7853
+uuid: 22cba7d6-ab66-46a8-b57e-a2e4eedb6d2b
 langcode: en
 status: true
 dependencies:
   config:
+    - core.entity_view_mode.node.full
     - field.field.node.go_article.field_subtitle
     - node.type.go_article
   module:
     - user
-id: node.go_article.default
+id: node.go_article.full
 targetEntityType: node
 bundle: go_article
-mode: default
+mode: full
 content:
   field_subtitle:
     type: basic_string
-    label: above
+    label: hidden
     settings: {  }
     third_party_settings: {  }
-    weight: 101
+    weight: 1
     region: content
   links:
     settings: {  }
