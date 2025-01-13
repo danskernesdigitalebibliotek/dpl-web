@@ -31,3 +31,4 @@ permissions:
   - 'view eventinstance entity'
   - 'view eventseries entity'
   - 'view media'
+  - 'view the administration theme'

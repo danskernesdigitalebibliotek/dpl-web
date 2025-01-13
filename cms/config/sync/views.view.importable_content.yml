@@ -10,11 +10,11 @@ dependencies:
     - taxonomy.vocabulary.categories
     - taxonomy.vocabulary.tags
   module:
+    - dpl_admin
     - link
     - media
     - node
     - taxonomy
-    - user
 id: importable_content
 label: 'Importable content'
 module: views
@@ -657,9 +657,8 @@ display:
           sort_asc_label: Asc
           sort_desc_label: Desc
       access:
-        type: perm
-        options:
-          perm: 'access content overview'
+        type: bnf_server_access
+        options: {  }
       cache:
         type: tag
         options: {  }
@@ -1044,7 +1043,6 @@ display:
         - url
         - url.query_args
         - 'user.node_grants:view'
-        - user.permissions
       tags:
         - 'config:field.storage.node.field_canonical_url'
         - 'config:field.storage.node.field_subtitle'
@@ -1066,7 +1064,6 @@ display:
         - url
         - url.query_args
         - 'user.node_grants:view'
-        - user.permissions
       tags:
         - 'config:field.storage.node.field_canonical_url'
         - 'config:field.storage.node.field_subtitle'
