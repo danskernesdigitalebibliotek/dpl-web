@@ -12,7 +12,7 @@ entity_type: node
 bundle: go_article
 label: 'Teaser image'
 description: 'The teaser fields are used for the card of display.<br />If no image has been selected, the text will be shown instead:<br /><br /><img src="/themes/custom/novel/images/teaser-text-image.jpg" /><br /><br /><hr/>'
-required: false
+required: true
 translatable: false
 default_value: {  }
 default_value_callback: ''
