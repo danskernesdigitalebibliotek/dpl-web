@@ -2,6 +2,17 @@
 
 set -aeo pipefail
 
+SKIP_LANGUAGE_IMPORT=""
+
+while [[ "$#" -gt 0 ]]; do
+  case $1 in
+    --skip-language-import) SKIP_LANGUAGE_IMPORT="true" ;;
+    --no-content) SKIP_CONTENT="true" ;;
+    *) echo "Unknown parameter passed: $1"; exit 1 ;;
+  esac
+  shift
+done
+
 # Install site.
 drush site-install --existing-config -y
 
@@ -10,7 +21,7 @@ drush site-install --existing-config -y
 drush cache:rebuild -y
 
 # Import translations.
-if [ -n "${SKIP_LANGUAGE_IMPORT}" ]; then
+if [[ $SKIP_LANGUAGE_IMPORT == "true" ]]; then
   echo "Skipping language import due to SKIP_LANGUAGE_IMPORT environment variable"
 else
   drush locale-check
@@ -29,7 +40,12 @@ drush deploy -y
 curl --silent --show-error --fail --output /dev/null http://varnish:8080/
 
 # Enable dev modules (see task dev:enable-dev-tools).
-drush install -y devel dpl_example_content field_ui purge_ui restui uuid_url views_ui dblog
+MODULES="devel field_ui purge_ui restui uuid_url views_ui dblog"
+
+if [[ $SKIP_CONTENT != "true" ]]; then
+  MODULES="${MODULES} dpl_example_content"
+fi
+drush install -y $MODULES
 
 # Create test users (see task dev:create-users).
 drush user:create editor --password="test"
@@ -49,6 +65,3 @@ drush user:role:add 'external_system' external_system
 
 drush user:create patron --password="test"
 drush user:role:add 'patron' patron
-
-# Show a one-time login to the local site.
-drush user-login

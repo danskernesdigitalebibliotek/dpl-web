@@ -31,7 +31,9 @@ vars:
   # Where is the docker file(s) we use for our builds residing?
   LAGOON_DIR: "lagoon"
 
-  DOCKER_COMPOSE_FILES_DEFAULT: "-f docker-compose.yml"
+  DOCKER_COMPOSE_FILES_BNF:
+    sh: if [[ -f web/sites/sites.php ]]; then echo "-f docker-compose.bnf.yml"; fi
+  DOCKER_COMPOSE_FILES_DEFAULT: "-f docker-compose.yml {{ .DOCKER_COMPOSE_FILES_BNF}}"
   DOCKER_COMPOSE_FILES: "{{.DOCKER_COMPOSE_FILES | default .DOCKER_COMPOSE_FILES_DEFAULT }}"
   DOCKER_COMPOSE_FILES_CI: "{{.DOCKER_COMPOSE_FILES}} -f docker-compose.ci.yml"
 
@@ -70,6 +72,20 @@ tasks:
       - sh: "[ ! -z {{.CR_PAT}} ]"
         msg: "Env variable CR_PAT is not set or empty."
 
+  dev:bnf:enable:
+    summary: Set env up for BNF development.
+    silent: true
+    cmds:
+      - cp assets/sites.php web/sites
+      - echo 'Enabled, remember to run "task dev:reset"'
+
+  dev:bnf:disable:
+    summary: Reset env to non-BNF development.
+    silent: true
+    cmds:
+      - rm web/sites/sites.php
+      - echo 'Disabled, remember to run "task dev:reset"'
+
   dev:format:
     summary: Lint custom code, and fix when possible
     cmds:
@@ -100,6 +116,13 @@ tasks:
     # log output. dev:cli gets called a lot.
     cmds:
       - docker compose {{ .DOCKER_COMPOSE_FILES }} run --rm cli sh -c "{{.CLI_ARGS}}"
+
+  dev:bnfcli:
+    summary: dev:cli for BNF site, a noop if BNF not enabled
+    status:
+      - "[[ -z \"{{ .DOCKER_COMPOSE_FILES_BNF}}\" ]]"
+    cmds:
+      - docker compose {{ .DOCKER_COMPOSE_FILES }} run --rm bnfcli sh -c "{{.CLI_ARGS}}"
 
   dev:start:
     summary: Run docker compose
@@ -153,7 +176,24 @@ tasks:
       # Start local environment.
       - task dev:start
       # Install site.
-      - task dev:cli -- ./dev-scripts/install-site.sh
+      - task dev:cli -- ./dev-scripts/install-site.sh {{ if .SKIP_LANGUAGE_IMPORT }}--skip-language-import{{ end }}
+      # Possibly install the BNF site.
+      - task dev:bnfcli -- ./dev-scripts/install-site.sh --no-content {{ if .SKIP_LANGUAGE_IMPORT }}--skip-language-import{{ end }}
+      - task dev:bnfcli -- drush --yes pm:enable bnf_server
+      - task dev:bnfcli -- drush --yes config:set system.site name BNF
+      - task: dev:bnf:set-client
+      # Show a one-time login to the local site(s).
+      - task dev:cli -- drush user-login
+      - task dev:bnfcli -- drush user-login
+
+  # Set CMS site to point to BNF site. This needs to be a task so we
+  # can quietly skip it if BNF isn't enabled.
+  dev:bnf:set-client:
+    internal: true
+    status:
+      - "[[ -z \"{{ .DOCKER_COMPOSE_FILES_BNF}}\" ]]"
+    cmds:
+      - task dev:cli -- drush config:set --yes bnf_client.settings base_url https://https/
 
   dev:openid:configure:
     desc: Set openid connect settings based on .env variables. And run cron.
