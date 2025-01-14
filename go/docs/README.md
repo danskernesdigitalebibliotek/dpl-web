@@ -1,4 +1,5 @@
 ![GO logo](../public/icons/logo-white-readme.svg)
+
 <p>
   <br/>
   Website for the public library that uses <a href="https://nextjs.org" target="_blank">Next.js</a> with the <a href="https://nextjs.org/docs/app" target="_blank">App Router</a> for the frontend and <a href="https://www.drupal.org/" target="_blank">Drupal</a> for content management.
@@ -10,8 +11,8 @@
 
 ## URLs
 
-| Description                                             | URL                                                      |
-| ------------------------------------------------------- | -------------------------------------------------------- |
+| Description                                             | URL                                                        |
+| ------------------------------------------------------- | ---------------------------------------------------------- |
 | Demo site (may change)                                  | <https://node.pr-1707.dpl-cms.dplplat01.dpl.reload.dk/>    |
 | Demo site Drupal CMS (may change, login through lagoon) | <https://varnish.pr-1707.dpl-cms.dplplat01.dpl.reload.dk/> |
 
@@ -220,11 +221,11 @@ To add a custom type, create a new file in the `lib/types` directory and define 
 
 ### xState
 
-TODO: write something if relevant
+Read about xState [here](architecture/adr-002-xstate.md).
 
 ### Config handling
 
-Read about configuration[here](architecture/adr-001-configuration.md).
+Read about configuration [here](architecture/adr-001-configuration.md).
 
 ### Storybook
 
