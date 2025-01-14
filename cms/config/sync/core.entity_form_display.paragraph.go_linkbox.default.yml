@@ -1,0 +1,43 @@
+uuid: 4deccfd8-07e3-4316-8218-ecc3a8c6e3b0
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.field.paragraph.go_linkbox.field_go_description
+    - field.field.paragraph.go_linkbox.field_go_link
+    - field.field.paragraph.go_linkbox.field_title
+    - paragraphs.paragraphs_type.go_linkbox
+  module:
+    - link
+id: paragraph.go_linkbox.default
+targetEntityType: paragraph
+bundle: go_linkbox
+mode: default
+content:
+  field_go_description:
+    type: string_textarea
+    weight: 2
+    region: content
+    settings:
+      rows: 3
+      placeholder: ''
+    third_party_settings: {  }
+  field_go_link:
+    type: link_default
+    weight: 1
+    region: content
+    settings:
+      placeholder_url: ''
+      placeholder_title: ''
+    third_party_settings: {  }
+  field_title:
+    type: string_textfield
+    weight: 0
+    region: content
+    settings:
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+hidden:
+  created: true
+  status: true

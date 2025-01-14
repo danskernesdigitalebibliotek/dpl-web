@@ -1,0 +1,16 @@
+uuid: 765c6320-e286-4c53-bf33-57bbd5ff69e4
+langcode: en
+status: true
+dependencies:
+  module:
+    - paragraphs_ee
+third_party_settings:
+  paragraphs_ee:
+    paragraphs_categories:
+      go_paragraphs: go_paragraphs
+id: go_linkbox
+label: 'GO Linkbox'
+icon_uuid: null
+icon_default: null
+description: ''
+behavior_plugins: {  }

@@ -1,0 +1,19 @@
+uuid: 532e315b-8a53-484c-a0b3-215e9d1386e7
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.paragraph.field_go_description
+    - paragraphs.paragraphs_type.go_linkbox
+id: paragraph.go_linkbox.field_go_description
+field_name: field_go_description
+entity_type: paragraph
+bundle: go_linkbox
+label: Description
+description: ''
+required: true
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: string_long
