@@ -8,7 +8,7 @@ loadEnvConfig(process.cwd())
 const config: CodegenConfig = {
   overwrite: true,
   generates: {
-    "lib/graphql/generated/dpl-cms/graphql.tsx": {
+    "lib/graphql/generated/dpl-cms/graphql.ts": {
       documents: "**/*.dpl-cms.graphql",
       // TODO: Make this configurable
       schema: {
@@ -45,7 +45,7 @@ const config: CodegenConfig = {
     //   schema: "http://dapple-cms.docker/graphql",
     //   plugins: ["introspection"],
     // },
-    "lib/graphql/generated/fbi/graphql.tsx": {
+    "lib/graphql/generated/fbi/graphql.ts": {
       documents: "**/*.fbi.graphql",
       schema: [
         {
