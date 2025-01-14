@@ -310,6 +310,7 @@ final class EventsResource extends EventResourceBase {
 
     // Create cache metadata.
     $cache_metadata = new CacheableMetadata();
+    $cache_metadata->setCacheContexts(['url.query_args:from_date']);
     $cache_metadata->setCacheTags(['eventinstance_list', 'eventseries_list']);
 
     // Add cache metadata to the response.
