@@ -40,12 +40,12 @@ drush deploy -y
 curl --silent --show-error --fail --output /dev/null http://varnish:8080/
 
 # Enable dev modules (see task dev:enable-dev-tools).
-MODULES="devel field_ui purge_ui restui uuid_url views_ui dblog"
+MODULES=(devel field_ui purge_ui restui uuid_url views_ui dblog)
 
 if [[ $SKIP_CONTENT != "true" ]]; then
-  MODULES="${MODULES} dpl_example_content"
+  MODULES=("${MODULES[@]}" dpl_example_content)
 fi
-drush install -y $MODULES
+drush install -y "${MODULES[@]}"
 
 # Create test users (see task dev:create-users).
 drush user:create editor --password="test"
