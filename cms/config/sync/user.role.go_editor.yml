@@ -1,4 +1,4 @@
-uuid: 9cb4763e-19ed-475b-8582-2cddd9002d25
+uuid: d2a6c001-46cd-440d-8efd-ff5499ebdee6
 langcode: en
 status: true
 dependencies:
@@ -10,105 +10,85 @@ dependencies:
     - media.type.document
     - media.type.image
     - media.type.video
-    - node.type.article
-    - node.type.branch
-    - node.type.campaign
+    - node.type.go_category_page
+    - node.type.go_page
     - node.type.page
-    - taxonomy.vocabulary.tags
   module:
     - administerusersbyrole
     - content_lock
     - dpl_admin
+    - dpl_unilogin
     - entity_clone
     - field_inheritance
     - file
     - filter
     - media
     - node
-    - override_node_options
     - paragraphs
-    - recurring_events
     - redirect
     - scheduler
     - system
-    - taxonomy
     - toolbar
     - view_unpublished
-id: mediator
-label: Mediator
-weight: 5
+id: go_editor
+label: 'GO Editor'
+weight: 11
 is_admin: null
 permissions:
   - 'access administration pages'
   - 'access content overview'
-  - 'access eventinstance overview'
-  - 'access eventseries overview'
   - 'access media overview'
-  - 'access site in maintenance mode'
-  - 'access taxonomy overview'
   - 'access toolbar'
   - 'access user profiles'
   - 'access users overview'
-  - 'add eventseries entity'
   - 'administer entity field inheritance'
+  - 'administer nodes'
   - 'administer redirects'
+  - 'administer unilogin settings'
   - 'break content lock'
   - 'change own username'
-  - 'clone eventinstance entity'
-  - 'clone eventseries entity'
-  - 'clone eventseries_type entity'
   - 'clone node entity'
-  - 'create article content'
   - 'create audio media'
-  - 'create campaign content'
   - 'create document media'
+  - 'create go_category_page content'
+  - 'create go_page content'
   - 'create image media'
   - 'create media'
-  - 'create page content'
-  - 'create terms in tags'
   - 'create video media'
-  - 'delete any article content'
+  - 'delete all revisions'
   - 'delete any audio media'
-  - 'delete any campaign content'
   - 'delete any document media'
+  - 'delete any go_category_page content'
+  - 'delete any go_page content'
   - 'delete any image media'
   - 'delete any media'
-  - 'delete any page content'
   - 'delete any video media'
-  - 'delete eventinstance entity'
-  - 'delete eventseries entity'
+  - 'delete go_category_page revisions'
+  - 'delete go_page revisions'
   - 'delete media'
-  - 'delete own article content'
   - 'delete own audio media'
-  - 'delete own campaign content'
   - 'delete own document media'
-  - 'delete own eventinstance entity'
-  - 'delete own eventseries entity'
   - 'delete own files'
+  - 'delete own go_category_page content'
+  - 'delete own go_page content'
   - 'delete own image media'
-  - 'delete own page content'
   - 'delete own video media'
   - 'dpl admin access pages'
-  - 'edit any article content'
   - 'edit any audio media'
-  - 'edit any campaign content'
   - 'edit any document media'
+  - 'edit any go_category_page content'
+  - 'edit any go_page content'
   - 'edit any image media'
-  - 'edit any page content'
   - 'edit any video media'
-  - 'edit eventinstance entity'
-  - 'edit eventseries entity'
-  - 'edit own article content'
   - 'edit own audio media'
-  - 'edit own campaign content'
   - 'edit own document media'
-  - 'edit own eventinstance entity'
-  - 'edit own eventseries entity'
+  - 'edit own go_category_page content'
+  - 'edit own go_page content'
   - 'edit own image media'
-  - 'edit own page content'
   - 'edit own video media'
-  - 'edit terms in tags'
-  - 'override all published option'
+  - 'revert all revisions'
+  - 'revert go_category_page revisions'
+  - 'revert go_page revisions'
   - 'schedule publishing of eventseries'
   - 'schedule publishing of nodes'
   - 'update any media'
@@ -117,18 +97,18 @@ permissions:
   - 'use text format limited'
   - 'use text format underlined_title'
   - 'view all media revisions'
-  - 'view any unpublished article content'
-  - 'view any unpublished branch content'
-  - 'view any unpublished campaign content'
-  - 'view any unpublished page content'
+  - 'view all revisions'
+  - 'view any unpublished go_category_page content'
+  - 'view any unpublished go_page content'
+  - 'view go_category_page revisions'
+  - 'view go_page revisions'
   - 'view own unpublished content'
   - 'view own unpublished media'
+  - 'view page revisions'
   - 'view scheduled content'
   - 'view scheduled eventseries'
   - 'view scheduled media'
   - 'view scheduled taxonomy_term'
   - 'view the administration theme'
-  - 'view unpublished eventinstance entity'
-  - 'view unpublished eventseries entity'
   - 'view unpublished paragraphs'
   - 'view users by role'

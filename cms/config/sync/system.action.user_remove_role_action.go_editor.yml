@@ -1,0 +1,14 @@
+uuid: 1cac38fa-25f6-4dbe-94fd-dbc268990be6
+langcode: en
+status: true
+dependencies:
+  config:
+    - user.role.go_editor
+  module:
+    - user
+id: user_remove_role_action.go_editor
+label: 'Remove the GO Editor role from the selected user(s)'
+type: user
+plugin: user_remove_role_action
+configuration:
+  rid: go_editor
