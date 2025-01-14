@@ -6,6 +6,7 @@ dependencies:
     - core.entity_view_mode.node.card
     - field.field.node.go_article.field_go_article_image
     - field.field.node.go_article.field_override_author
+    - field.field.node.go_article.field_paragraphs
     - field.field.node.go_article.field_publication_date
     - field.field.node.go_article.field_show_override_author
     - field.field.node.go_article.field_subtitle
@@ -51,6 +52,7 @@ content:
 hidden:
   field_go_article_image: true
   field_override_author: true
+  field_paragraphs: true
   field_publication_date: true
   field_show_override_author: true
   langcode: true

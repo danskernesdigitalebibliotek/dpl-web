@@ -141,6 +141,8 @@ field_config:
         enabled: true
       field_override_author:
         enabled: true
+      field_paragraphs:
+        enabled: true
       field_publication_date:
         enabled: true
       field_show_override_author:
