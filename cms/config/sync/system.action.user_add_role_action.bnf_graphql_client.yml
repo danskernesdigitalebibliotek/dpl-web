@@ -1,0 +1,14 @@
+uuid: b74f9f26-2491-4676-831b-8bf9e1db2924
+langcode: da
+status: true
+dependencies:
+  config:
+    - user.role.bnf_graphql_client
+  module:
+    - user
+id: user_add_role_action.bnf_graphql_client
+label: 'Add the BNF GraphQL Client role to the selected user(s)'
+type: user
+plugin: user_add_role_action
+configuration:
+  rid: bnf_graphql_client

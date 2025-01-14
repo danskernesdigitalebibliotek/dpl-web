@@ -1,0 +1,15 @@
+{# Super simple styling, placing the button fixed on the screen. #}
+<style>
+  .bnf-import-link {
+    position: fixed;
+    right: 1em;
+    bottom: 1em;
+    z-index: 999;
+  }
+</style>
+
+<div class="bnf-import-link">
+  <a class="btn-primary btn-filled btn-large" href="{{ url }}">
+    {{ 'Import "@label" to @name'|trans({'@label': label, '@name': name}, {"context": "BNF"}) }}
+  </a>
+</div>

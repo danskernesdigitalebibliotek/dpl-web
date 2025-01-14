@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace Drupal\dpl_consumers\Commands;
 
 use Drupal\Core\Entity\EntityTypeManagerInterface;
-use Drupal\dpl_consumers\DplGraphqlConsumersConstants;
 use Drush\Commands\DrushCommands;
 
 /**
@@ -31,48 +30,64 @@ final class DplConsumersCommands extends DrushCommands {
   }
 
   /**
-   * Function is used for setting the consumer secret.
+   * Used for setting the consumer secret and password.
    *
-   * @command dpl_consumers:set-consumer-secret
+   * The secret and password is stored as environment variables.
+   * This command makes sure they are transferred to the database.
+   *
+   * @param string $clientId
+   *   Client id of the consumer.
+   *
+   * @command dpl_consumers:set-consumer-env-credentials
+   * @aliases dpl-scec
+   * @usage dpl_consumers:set-consumer-env-credentials [client_id of the consumer]
    *
    * @throws \Exception
    */
-  public function setConsumerSecret(): string {
-    try {
-      /** @var \Drupal\Core\Entity\EntityStorageInterface $consumer */
-      $consumer = $this->entityTypeManager
-        ->getStorage('consumer')
-        ->loadByProperties(['client_id' => DplGraphqlConsumersConstants::GRAPHQL_CONSUMER_CLIENT_ID]);
+  public function setConsumerEnvCredentials(string $clientId): string {
+    $consumers = $this->getConsumers($clientId);
 
-      $consumer = reset($consumer);
-
-      $secret = getenv('GRAPHQL_CONSUMER_SECRET');
-      if (!empty($secret)) {
-        $consumer->secret = $secret;
-        $consumer->save();
-
-        return 'Consumer secret set successfully.';
-      }
-      else {
-        throw new \Exception('Consumer secret was not found.');
-      }
-    }
-    catch (\Exception $e) {
-      throw new \Exception($e->getMessage());
-    }
+    $consumer = $consumers[$clientId];
+    $consumer->save();
+    return 'Consumer secret set successfully.';
   }
 
   /**
-   * Function is used for printing out the consumer credentials to the console.
+   * Used for printing out the consumer UUID to the console.
    *
-   * @command dpl_consumers:consumer-credentials
+   * @param string $clientId
+   *   Client id of the consumer.
+   *
+   * @command dpl_consumers:get-consumer-uuid
+   * @aliases dpl-gcu
+   * @usage dpl_consumers:get-consumer-uuid [client_id of the consumer]
    *
    * @throws \Exception
    */
-  public function getConsumerCredentials(): void {
-    $graphql_consumer_client_id = DplGraphqlConsumersConstants::GRAPHQL_CONSUMER_CLIENT_ID;
-    $consumer_uuid = dpl_consumers_get_consumer_uuid($graphql_consumer_client_id);
-    $this->output()->writeln('Consumer UUID: ' . $consumer_uuid);
+  public function getConsumerUuid(string $clientId): void {
+    $consumers = $this->getConsumers($clientId);
+    $consumer = $consumers[$clientId];
+    $this->output()->writeln(sprintf('Consumer UUID: %s', $consumer->uuid->value));
+  }
+
+  /**
+   * Get consumers.
+   *
+   * @param string $clientId
+   *   Client id of the consumer.
+   *
+   * @return mixed[]
+   *   An array of consumer keyed by client id.
+   *
+   * @throws \Exception
+   */
+  protected function getConsumers(string $clientId): array {
+    $consumers = dpl_consumers_get_known_consumers();
+    if (!in_array($clientId, array_keys($consumers), TRUE)) {
+      throw new \Exception(sprintf('GraphQL consumer %s is not known.', $clientId));
+    }
+
+    return $consumers;
   }
 
 }

@@ -4,6 +4,8 @@ namespace Drupal\bnf_client\Services;
 
 use Drupal\bnf\BnfStateEnum;
 use Drupal\bnf\Exception\AlreadyExistsException;
+use Drupal\bnf_client\Form\SettingsForm;
+use Drupal\Core\Config\ConfigFactoryInterface;
 use Drupal\Core\Routing\UrlGeneratorInterface;
 use Drupal\Core\StringTranslation\TranslationInterface;
 use Drupal\node\NodeInterface;
@@ -21,6 +23,11 @@ use function Safe\parse_url;
 class BnfExporter {
 
   /**
+   * The BNF site base URL.
+   */
+  protected string $baseUrl;
+
+  /**
    * Constructor.
    */
   public function __construct(
@@ -28,7 +35,10 @@ class BnfExporter {
     protected UrlGeneratorInterface $urlGenerator,
     protected TranslationInterface $translation,
     protected LoggerInterface $logger,
-  ) {}
+    ConfigFactoryInterface $configFactory,
+  ) {
+    $this->baseUrl = $configFactory->get(SettingsForm::CONFIG_NAME)->get('base_url');
+  }
 
   /**
    * Requesting BNF server to import the supplied node.
@@ -55,7 +65,7 @@ class BnfExporter {
     GRAPHQL;
 
     try {
-      $bnfServer = (string) getenv('BNF_SERVER_BASE_ENDPOINT') . '/graphql';
+      $bnfServer = $this->baseUrl . 'graphql';
 
       if (!filter_var($bnfServer, FILTER_VALIDATE_URL)) {
         throw new \InvalidArgumentException('The provided BNF server URL is not valid.');
@@ -72,7 +82,7 @@ class BnfExporter {
         'headers' => [
           'Content-Type' => 'application/json',
         ],
-        'auth' => [getenv('GRAPHQL_USER_NAME'), getenv('GRAPHQL_USER_PASSWORD')],
+        'auth' => ['bnf_graphql', getenv('BNF_GRAPHQL_CONSUMER_USER_PASSWORD')],
         'json' => [
           'query' => $mutation,
         ],

@@ -7,12 +7,30 @@
 
 declare(strict_types=1);
 
-require_once __DIR__ . '/dpl_consumers.crud.php';
+use Drupal\dpl_consumers\Consumer;
+use Drupal\dpl_consumers\ConsumerUser;
 
 /**
  * Implements hook_uninstall().
  */
 function dpl_consumers_uninstall(): void {
-  dpl_consumers_delete_user();
-  dpl_consumers_delete_consumer();
+  // Delete consumers (BNF and Go) and their users.
+  // Roles are handled by config.
+  /** @var \Drupal\dpl_consumers\Services\ConsumerHandler $consumer_handler */
+  $consumer_handler = \Drupal::service('dpl_consumers.consumer_handler');
+
+  $consumers = [
+    [
+      'consumer' => new Consumer('bnf_graphql', \Drupal::entityTypeManager()),
+      'user' => new ConsumerUser('bnf_graphql', \Drupal::entityTypeManager()),
+    ],
+    [
+      'consumer' => new Consumer('go_graphql', \Drupal::entityTypeManager()),
+      'user' => new ConsumerUser('go_graphql', \Drupal::entityTypeManager()),
+    ],
+  ];
+
+  foreach ($consumers as $consumer) {
+    $consumer_handler->delete($consumer['consumer'], $consumer['user']);
+  }
 }
