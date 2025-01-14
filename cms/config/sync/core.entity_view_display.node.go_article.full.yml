@@ -5,7 +5,9 @@ dependencies:
   config:
     - core.entity_view_mode.node.full
     - field.field.node.go_article.field_go_article_image
+    - field.field.node.go_article.field_override_author
     - field.field.node.go_article.field_publication_date
+    - field.field.node.go_article.field_show_override_author
     - field.field.node.go_article.field_subtitle
     - field.field.node.go_article.field_teaser_image
     - field.field.node.go_article.field_teaser_text
@@ -31,7 +33,9 @@ content:
     region: content
 hidden:
   field_go_article_image: true
+  field_override_author: true
   field_publication_date: true
+  field_show_override_author: true
   field_teaser_image: true
   field_teaser_text: true
   langcode: true

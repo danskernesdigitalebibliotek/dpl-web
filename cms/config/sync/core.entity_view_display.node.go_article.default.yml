@@ -4,7 +4,9 @@ status: true
 dependencies:
   config:
     - field.field.node.go_article.field_go_article_image
+    - field.field.node.go_article.field_override_author
     - field.field.node.go_article.field_publication_date
+    - field.field.node.go_article.field_show_override_author
     - field.field.node.go_article.field_subtitle
     - field.field.node.go_article.field_teaser_image
     - field.field.node.go_article.field_teaser_text
@@ -26,6 +28,14 @@ content:
     third_party_settings: {  }
     weight: 114
     region: content
+  field_override_author:
+    type: string
+    label: above
+    settings:
+      link_to_entity: false
+    third_party_settings: {  }
+    weight: 106
+    region: content
   field_publication_date:
     type: datetime_default
     label: above
@@ -34,6 +44,16 @@ content:
       format_type: medium
     third_party_settings: {  }
     weight: 113
+    region: content
+  field_show_override_author:
+    type: boolean
+    label: above
+    settings:
+      format: default
+      format_custom_false: ''
+      format_custom_true: ''
+    third_party_settings: {  }
+    weight: 107
     region: content
   field_subtitle:
     type: basic_string

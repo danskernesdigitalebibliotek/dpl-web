@@ -5,7 +5,9 @@ dependencies:
   config:
     - core.entity_view_mode.node.list_teaser
     - field.field.node.go_article.field_go_article_image
+    - field.field.node.go_article.field_override_author
     - field.field.node.go_article.field_publication_date
+    - field.field.node.go_article.field_show_override_author
     - field.field.node.go_article.field_subtitle
     - field.field.node.go_article.field_teaser_image
     - field.field.node.go_article.field_teaser_text
@@ -17,6 +19,24 @@ targetEntityType: node
 bundle: go_article
 mode: list_teaser
 content:
+  field_override_author:
+    type: string
+    label: hidden
+    settings:
+      link_to_entity: false
+    third_party_settings: {  }
+    weight: 2
+    region: content
+  field_show_override_author:
+    type: boolean
+    label: hidden
+    settings:
+      format: default
+      format_custom_false: ''
+      format_custom_true: ''
+    third_party_settings: {  }
+    weight: 3
+    region: content
   field_subtitle:
     type: basic_string
     label: hidden

@@ -4,7 +4,9 @@ status: true
 dependencies:
   config:
     - field.field.node.go_article.field_go_article_image
+    - field.field.node.go_article.field_override_author
     - field.field.node.go_article.field_publication_date
+    - field.field.node.go_article.field_show_override_author
     - field.field.node.go_article.field_subtitle
     - field.field.node.go_article.field_teaser_image
     - field.field.node.go_article.field_teaser_text
@@ -23,6 +25,8 @@ third_party_settings:
       children:
         - field_publication_date
         - uid
+        - field_show_override_author
+        - field_override_author
       label: 'Author & Date'
       region: content
       parent_name: ''
@@ -67,11 +71,26 @@ content:
     settings:
       media_types: {  }
     third_party_settings: {  }
+  field_override_author:
+    type: string_textfield
+    weight: 7
+    region: content
+    settings:
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
   field_publication_date:
     type: datetime_default
     weight: 4
     region: content
     settings: {  }
+    third_party_settings: {  }
+  field_show_override_author:
+    type: boolean_checkbox
+    weight: 6
+    region: content
+    settings:
+      display_label: true
     third_party_settings: {  }
   field_subtitle:
     type: string_textarea
