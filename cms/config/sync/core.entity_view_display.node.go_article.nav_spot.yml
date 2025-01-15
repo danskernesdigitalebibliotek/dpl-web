@@ -1,0 +1,59 @@
+uuid: a1a33436-c7df-4c27-9b1e-a44d1e4c9452
+langcode: en
+status: true
+dependencies:
+  config:
+    - core.entity_view_mode.node.nav_spot
+    - field.field.node.go_article.field_go_article_image
+    - field.field.node.go_article.field_override_author
+    - field.field.node.go_article.field_paragraphs
+    - field.field.node.go_article.field_publication_date
+    - field.field.node.go_article.field_show_override_author
+    - field.field.node.go_article.field_subtitle
+    - field.field.node.go_article.field_teaser_image
+    - field.field.node.go_article.field_teaser_text
+    - node.type.go_article
+  module:
+    - user
+id: node.go_article.nav_spot
+targetEntityType: node
+bundle: go_article
+mode: nav_spot
+content:
+  field_subtitle:
+    type: basic_string
+    label: hidden
+    settings: {  }
+    third_party_settings: {  }
+    weight: 0
+    region: content
+  field_teaser_image:
+    type: entity_reference_entity_view
+    label: hidden
+    settings:
+      view_mode: hero_wide
+      link: false
+    third_party_settings: {  }
+    weight: 2
+    region: content
+  field_teaser_text:
+    type: string
+    label: hidden
+    settings:
+      link_to_entity: false
+    third_party_settings: {  }
+    weight: 1
+    region: content
+  links:
+    settings: {  }
+    third_party_settings: {  }
+    weight: 100
+    region: content
+hidden:
+  field_go_article_image: true
+  field_override_author: true
+  field_paragraphs: true
+  field_publication_date: true
+  field_show_override_author: true
+  langcode: true
+  search_api_excerpt: true
