@@ -223,6 +223,8 @@ field_config:
     material_grid_automatic:
       field_amount_of_materials:
         enabled: true
+      field_cql_search:
+        enabled: true
       field_material_grid_description:
         enabled: true
       field_material_grid_title:
@@ -231,6 +233,8 @@ field_config:
       field_material_grid_description:
         enabled: true
       field_material_grid_title:
+        enabled: true
+      field_material_grid_work_ids:
         enabled: true
     text_body:
       field_body:
