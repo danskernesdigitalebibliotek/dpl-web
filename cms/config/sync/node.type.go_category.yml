@@ -1,0 +1,34 @@
+uuid: 8863bd71-d163-4445-bdff-b11c2cbd736f
+langcode: en
+status: true
+dependencies:
+  module:
+    - entity_clone_template
+    - menu_ui
+    - scheduler
+third_party_settings:
+  entity_clone_template:
+    entity_clone_template_active: 1
+  menu_ui:
+    available_menus: {  }
+    parent: ''
+  scheduler:
+    expand_fieldset: when_required
+    fields_display_mode: vertical_tab
+    publish_enable: true
+    publish_past_date: error
+    publish_past_date_created: false
+    publish_required: false
+    publish_revision: false
+    publish_touch: true
+    show_message_after_update: true
+    unpublish_enable: true
+    unpublish_required: false
+    unpublish_revision: false
+name: 'GO category'
+type: go_category
+description: "GO category pages will be used for creating a \"landingpage\" for specific categories. \r\nWhen creating and publishing a new category page, the category will automatically be added to the category menu."
+help: null
+new_revision: false
+preview_mode: 1
+display_submitted: false

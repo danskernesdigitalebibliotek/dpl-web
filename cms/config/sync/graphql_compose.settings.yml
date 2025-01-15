@@ -2,6 +2,8 @@ _core:
   default_config_hash: Sd_9jXBxw3mGn9d_y94jvlitI0wpvj6x2dQ0p6aGhJo
 entity_config:
   media:
+    audio:
+      enabled: true
     document:
       enabled: true
     image:
@@ -16,9 +18,14 @@ entity_config:
       enabled: false
     campaign:
       enabled: false
+    go_category:
+      enabled: true
+      query_load_enabled: true
+      routes_enabled: true
     go_page:
       enabled: true
       query_load_enabled: true
+      routes_enabled: true
     page:
       enabled: false
   paragraph:
@@ -97,6 +104,9 @@ entity_config:
       enabled: true
 field_config:
   media:
+    audio:
+      field_media_audio_file:
+        enabled: true
     document:
       field_media_file:
         enabled: true
@@ -131,6 +141,19 @@ field_config:
       field_teaser_image:
         enabled: true
       field_teaser_text:
+        enabled: true
+    go_category:
+      field_category_menu_color:
+        enabled: true
+      field_category_menu_image:
+        enabled: true
+      field_category_menu_sound:
+        enabled: true
+      field_category_menu_title:
+        enabled: true
+      field_paragraphs:
+        enabled: true
+      field_publication_date:
         enabled: true
     go_page:
       field_paragraphs:

@@ -9,3 +9,4 @@ roles:
   external_system: safe
   bnf_graphql_client: unsafe
   go_graphql_client: unsafe
+  go_editor: unsafe
