@@ -3,12 +3,14 @@ langcode: en
 status: true
 dependencies:
   config:
+    - field.field.paragraph.go_linkbox.field_go_color
     - field.field.paragraph.go_linkbox.field_go_description
     - field.field.paragraph.go_linkbox.field_go_image
     - field.field.paragraph.go_linkbox.field_go_link
     - field.field.paragraph.go_linkbox.field_title
     - paragraphs.paragraphs_type.go_linkbox
   module:
+    - color_field
     - link
     - media_library
 id: paragraph.go_linkbox.default
@@ -16,9 +18,16 @@ targetEntityType: paragraph
 bundle: go_linkbox
 mode: default
 content:
+  field_go_color:
+    type: color_field_widget_box
+    weight: 1
+    region: content
+    settings:
+      default_colors: '#ffd2f0,#dcc3ff,#ffdcb9,#bee6fa,#ff73d7,#9b6eff,#ff9100,#32b4ff,#642850,#6e55aa,#7d460f,#195a7d'
+    third_party_settings: {  }
   field_go_description:
     type: string_textarea
-    weight: 3
+    weight: 4
     region: content
     settings:
       rows: 3
@@ -33,7 +42,7 @@ content:
     third_party_settings: {  }
   field_go_link:
     type: link_default
-    weight: 2
+    weight: 3
     region: content
     settings:
       placeholder_url: ''
@@ -41,7 +50,7 @@ content:
     third_party_settings: {  }
   field_title:
     type: string_textfield
-    weight: 1
+    weight: 2
     region: content
     settings:
       size: 60

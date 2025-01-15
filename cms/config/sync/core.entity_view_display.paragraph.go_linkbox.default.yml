@@ -3,18 +3,29 @@ langcode: en
 status: true
 dependencies:
   config:
+    - field.field.paragraph.go_linkbox.field_go_color
     - field.field.paragraph.go_linkbox.field_go_description
     - field.field.paragraph.go_linkbox.field_go_image
     - field.field.paragraph.go_linkbox.field_go_link
     - field.field.paragraph.go_linkbox.field_title
     - paragraphs.paragraphs_type.go_linkbox
   module:
+    - color_field
     - link
 id: paragraph.go_linkbox.default
 targetEntityType: paragraph
 bundle: go_linkbox
 mode: default
 content:
+  field_go_color:
+    type: color_field_formatter_text
+    label: above
+    settings:
+      format: hex
+      opacity: true
+    third_party_settings: {  }
+    weight: 4
+    region: content
   field_go_description:
     type: basic_string
     label: above
