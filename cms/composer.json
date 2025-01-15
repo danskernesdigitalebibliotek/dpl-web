@@ -154,6 +154,7 @@
         "drupal/pathauto": "^1.12",
         "drupal/potion": "dev-2.x#e48d6ee336d960b9d2efb5d88e68402db6d229a6",
         "drupal/purge": "^3.6",
+        "drupal/purge_queues": "^2.1",
         "drupal/recurring_events": "^2",
         "drupal/redirect": "^1.9",
         "drupal/redis": "^1.7",

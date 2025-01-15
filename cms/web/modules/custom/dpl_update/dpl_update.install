@@ -360,3 +360,10 @@ function dpl_update_update_10030(): string {
 function dpl_update_update_10031(): string {
   return _dpl_update_install_modules(['simple_sitemap']);
 }
+
+/**
+ * Installing purge queues.
+ */
+function dpl_update_update_10032(): string {
+  return _dpl_update_install_modules(['purge_queues']);
+}
