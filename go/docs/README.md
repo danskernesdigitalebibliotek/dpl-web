@@ -1,4 +1,4 @@
-![GO logo](./public/icons/logo-white-readme.svg)
+![GO logo](../public/icons/logo-white-readme.svg)
 
 <p>
   <br/>
@@ -11,13 +11,15 @@
 
 ## URLs
 
-| Description                                             | URL                                                      |
-| ------------------------------------------------------- | -------------------------------------------------------- |
-| Demo site (may change)                                  | https://node.pr-1707.dpl-cms.dplplat01.dpl.reload.dk/    |
-| Demo site Drupal CMS (may change, login through lagoon) | https://varnish.pr-1707.dpl-cms.dplplat01.dpl.reload.dk/ |
+| Description                                             | URL                                                        |
+| ------------------------------------------------------- | ---------------------------------------------------------- |
+| Demo site (may change)                                  | <https://node.pr-1707.dpl-cms.dplplat01.dpl.reload.dk/>    |
+| Demo site Drupal CMS (may change, login through lagoon) | <https://varnish.pr-1707.dpl-cms.dplplat01.dpl.reload.dk/> |
 
 ## Table of contents
 
+- [URLs](#urls)
+- [Table of contents](#table-of-contents)
 - [Getting started](#getting-started)
   - [Prerequisites](#prerequisites)
   - [Setup](#setup)
@@ -28,12 +30,19 @@
   - [UI components from shadcn/ui](#ui-components-from-shadcnui)
   - [Tailwind](#tailwind)
   - [Codegen](#codegen)
+  - [Codegen types](#codegen-types)
   - [Custom types](#custom-types)
+  - [xState](#xstate)
+  - [Config handling](#config-handling)
+  - [Storybook](#storybook)
+  - [Cypress](#cypress)
 - [Deployment](#deployment)
   - [git branches and pull requests](#git-branches-and-pull-requests)
   - [Create pull request](#create-pull-request)
   - [Reviewing a PR](#reviewing-a-pr)
   - [Updating the demo site](#updating-the-demo-site)
+    - [Create a release tag in dpl-go based on sprint number](#create-a-release-tag-in-dpl-go-based-on-sprint-number)
+    - [Deploying a release](#deploying-a-release)
 - [Quality assurance](#quality-assurance)
   - [GitHub Workflows for quality assurance](#github-workflows-for-quality-assurance)
 - [Developers](#developers)
@@ -212,11 +221,11 @@ To add a custom type, create a new file in the `lib/types` directory and define 
 
 ### xState
 
-TODO: write something if relevant
+Read about xState [here](architecture/adr-002-xstate.md).
 
 ### Config handling
 
-TODO: MIKKEL: write some nice words
+Read about configuration [here](architecture/adr-001-configuration.md).
 
 ### Storybook
 
@@ -332,14 +341,13 @@ Quality assurance (QA) is a critical aspect of our development process, ensuring
 
 ## Developers
 
-- Adam Antal - adam@reload.dk
-- Mikkel Jakobsen - mikkel@reload.dk
-- Thomas Gross Rasmussen - tgr@reload.dk
-- Jacob Pihl - jacob@reload.dk
+- Adam Antal - <adam@reload.dk>
+- Mikkel Jakobsen - <mikkel@reload.dk>
+- Thomas Gross Rasmussen - <tgr@reload.dk>
+- Jacob Pihl - <jacob@reload.dk>
 
 [nextjs]: https://nextjs.org/
 [app-router]: https://nextjs.org/docs/app
-[dotenv]: https://vault.dotenv.org/ui/ui1/project/KVCj0W
 [react]: https://react.dev/
 [shadcn]: https://ui.shadcn.com/
 [typescript]: https://www.typescriptlang.org/
