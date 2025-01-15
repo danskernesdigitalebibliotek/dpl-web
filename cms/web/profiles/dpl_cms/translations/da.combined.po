@@ -7,8 +7,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2025-01-15 12:43+0100\n"
-"PO-Revision-Date: 2025-01-15 12:43+0100\n"
+"POT-Creation-Date: 2025-01-15 14:20+0100\n"
+"PO-Revision-Date: 2025-01-15 14:20+0100\n"
 "Last-Translator: NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
 "MIME-Version: 1.0\n"
@@ -18753,6 +18753,18 @@ msgctxt "core.base_field_override.node.campaign.promote:settings:off_label"
 msgid "Off"
 msgstr ""
 
+msgctxt "core.base_field_override.node.go_article.promote:label"
+msgid "Promoted to front page"
+msgstr ""
+
+msgctxt "core.base_field_override.node.go_article.promote:settings:on_label"
+msgid "On"
+msgstr ""
+
+msgctxt "core.base_field_override.node.go_article.promote:settings:off_label"
+msgid "Off"
+msgstr ""
+
 msgctxt "core.base_field_override.node.go_category.promote:label"
 msgid "Promoted to front page"
 msgstr ""
@@ -19022,6 +19034,30 @@ msgctxt ""
 "settings:title_plural"
 msgid "Paragraphs"
 msgstr "Paragraphs"
+
+msgctxt ""
+"core.entity_form_display.node.go_article.default:third_party_settings:"
+"field_group:group_author_date:label"
+msgid "Author & Date"
+msgstr ""
+
+msgctxt ""
+"core.entity_form_display.node.go_article.default:third_party_settings:"
+"field_group:group_teaser_card:label"
+msgid "Teaser card"
+msgstr ""
+
+msgctxt ""
+"core.entity_form_display.node.go_article.default:content:field_paragraphs:"
+"settings:title"
+msgid "Paragraph"
+msgstr ""
+
+msgctxt ""
+"core.entity_form_display.node.go_article.default:content:field_paragraphs:"
+"settings:title_plural"
+msgid "Paragraphs"
+msgstr ""
 
 msgctxt ""
 "core.entity_form_display.node.go_category.default:third_party_settings:"
@@ -20035,6 +20071,61 @@ msgstr ""
 
 msgctxt "field.field.node.campaign.field_campaign_text:label"
 msgid "Text"
+msgstr ""
+
+msgctxt "field.field.node.go_article.field_go_article_image:label"
+msgid "Image"
+msgstr ""
+
+msgctxt "field.field.node.go_article.field_override_author:label"
+msgid "Override author"
+msgstr ""
+
+msgctxt "field.field.node.go_article.field_paragraphs:label"
+msgid "Paragraphs"
+msgstr ""
+
+msgctxt "field.field.node.go_article.field_publication_date:label"
+msgid "Publication date"
+msgstr ""
+
+msgctxt "field.field.node.go_article.field_show_override_author:label"
+msgid "Override the author\t"
+msgstr ""
+
+msgctxt "field.field.node.go_article.field_show_override_author:description"
+msgid ""
+"By default, the author is set to the Drupal user that owns the content.<br /"
+"><br />If you want to override this, with a manual text, you can check this."
+msgstr ""
+
+msgctxt ""
+"field.field.node.go_article.field_show_override_author:settings:on_label"
+msgid "On"
+msgstr ""
+
+msgctxt ""
+"field.field.node.go_article.field_show_override_author:settings:off_label"
+msgid "Off"
+msgstr ""
+
+msgctxt "field.field.node.go_article.field_subtitle:label"
+msgid "Subtitle"
+msgstr ""
+
+msgctxt "field.field.node.go_article.field_teaser_image:label"
+msgid "Teaser image"
+msgstr ""
+
+msgctxt "field.field.node.go_article.field_teaser_image:description"
+msgid ""
+"The teaser fields are used for the card of display.<br />If no image has "
+"been selected, the text will be shown instead:<br /><br /><img src=\"/themes/"
+"custom/novel/images/teaser-text-image.jpg\" /><br /><br /><hr/>"
+msgstr ""
+
+msgctxt "field.field.node.go_article.field_teaser_text:label"
+msgid "Teaser text"
 msgstr ""
 
 msgctxt "field.field.node.go_category.field_category_menu_color:label"
@@ -21603,6 +21694,15 @@ msgctxt "node.type.campaign:description"
 msgid ""
 "Campaign to be shown among search results depending on matching facets and "
 "terms"
+msgstr ""
+
+msgctxt "node.type.go_article:name"
+msgid "GO Article"
+msgstr ""
+
+msgctxt "node.type.go_article:description"
+msgid ""
+"Use Go articles for news-worthy content, that does not get updated regularly."
 msgstr ""
 
 msgctxt "node.type.go_category:name"
