@@ -1,0 +1,118 @@
+uuid: 6df3e5db-4dc0-4b92-bc75-e2f164b82803
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_paragraphs
+    - node.type.go_category
+    - paragraphs.paragraphs_type.go_video
+  module:
+    - entity_reference_revisions
+id: node.go_category.field_paragraphs
+field_name: field_paragraphs
+entity_type: node
+bundle: go_category
+label: Paragraphs
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings:
+  handler: 'default:paragraph'
+  handler_settings:
+    target_bundles:
+      go_video: go_video
+    negate: 0
+    target_bundles_drag_drop:
+      accordion:
+        weight: 22
+        enabled: false
+      banner:
+        weight: 32
+        enabled: false
+      breadcrumb_children:
+        weight: 33
+        enabled: false
+      campaign_rule:
+        weight: 2
+        enabled: false
+      card_grid_automatic:
+        weight: 24
+        enabled: false
+      card_grid_manual:
+        weight: 25
+        enabled: false
+      content_slider:
+        weight: 26
+        enabled: false
+      content_slider_automatic:
+        weight: 38
+        enabled: false
+      event_ticket_category:
+        weight: 7
+        enabled: false
+      files:
+        weight: 28
+        enabled: false
+      filtered_event_list:
+        weight: 41
+        enabled: false
+      go_video:
+        weight: 42
+        enabled: true
+      hero:
+        weight: 29
+        enabled: false
+      language_selector:
+        weight: 30
+        enabled: false
+      links:
+        weight: 8
+        enabled: false
+      manual_event_list:
+        weight: 46
+        enabled: false
+      material_grid_automatic:
+        weight: 32
+        enabled: false
+      material_grid_manual:
+        weight: 33
+        enabled: false
+      medias:
+        weight: 9
+        enabled: false
+      nav_grid_manual:
+        weight: 35
+        enabled: false
+      nav_spots_manual:
+        weight: 36
+        enabled: false
+      opening_hours:
+        weight: 37
+        enabled: false
+      recommendation:
+        weight: 38
+        enabled: false
+      simple_links:
+        weight: 54
+        enabled: false
+      text_body:
+        weight: 4
+        enabled: false
+      user_registration_item:
+        weight: 40
+        enabled: false
+      user_registration_linklist:
+        weight: 57
+        enabled: false
+      user_registration_section:
+        weight: 41
+        enabled: false
+      video:
+        weight: 42
+        enabled: false
+      webform:
+        weight: 60
+        enabled: false
+field_type: entity_reference_revisions
