@@ -1,4 +1,6 @@
 /* eslint-disable @typescript-eslint/no-namespace */
+import { Factory } from "fishery"
+
 import { Operations } from "@/lib/graphql/generated/fbi/types"
 
 import { CyKey } from "./constants"
@@ -21,21 +23,25 @@ Cypress.Commands.add("dataCy", selector => {
  * interceptGraphql is used to make a graphQL request that returns fixture data
  *
  * @param {Operations} operationName The name of the operation to be mocked.
- * @param {string} fixtureFilePath The path to the fixture file to use as response
+ * @param {Factory<any>} factory The path to the fixture file to use as response
+ * @param {number} statusCode The status code to return.
  *
  */
 type InterceptGraphqlParams = {
   operationName: Operations
-  fixtureFilePath?: string
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  factory?: Factory<any>
   statusCode?: number
 }
 Cypress.Commands.add(
   "interceptGraphql",
-  ({ operationName, fixtureFilePath, statusCode = 200 }: InterceptGraphqlParams) => {
-    cy.intercept("POST", "**/next*/graphql", req => {
+  ({ operationName, factory, statusCode = 200 }: InterceptGraphqlParams) => {
+    cy.intercept("POST", "**/graphql", req => {
       if (hasOperationName(req, operationName)) {
-        if (fixtureFilePath) {
-          req.reply({ fixture: fixtureFilePath, statusCode })
+        if (factory) {
+          const responseData = factory.build()
+          console.info(responseData)
+          req.reply({ body: { data: responseData }, statusCode })
         } else {
           req.reply({ statusCode })
         }
