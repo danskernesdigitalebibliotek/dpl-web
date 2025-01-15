@@ -4,18 +4,18 @@ status: true
 dependencies:
   config:
     - core.entity_view_mode.node.card
-    - field.field.node.go_category_page.field_category_menu_color
-    - field.field.node.go_category_page.field_category_menu_image
-    - field.field.node.go_category_page.field_category_menu_sound
-    - field.field.node.go_category_page.field_category_menu_title
-    - field.field.node.go_category_page.field_paragraphs
-    - field.field.node.go_category_page.field_publication_date
-    - node.type.go_category_page
+    - field.field.node.go_category.field_category_menu_color
+    - field.field.node.go_category.field_category_menu_image
+    - field.field.node.go_category.field_category_menu_sound
+    - field.field.node.go_category.field_category_menu_title
+    - field.field.node.go_category.field_paragraphs
+    - field.field.node.go_category.field_publication_date
+    - node.type.go_category
   module:
     - user
-id: node.go_category_page.card
+id: node.go_category.card
 targetEntityType: node
-bundle: go_category_page
+bundle: go_category
 mode: card
 content:
   links:

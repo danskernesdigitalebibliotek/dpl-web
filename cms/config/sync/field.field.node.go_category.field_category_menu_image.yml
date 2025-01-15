@@ -5,11 +5,11 @@ dependencies:
   config:
     - field.storage.node.field_category_menu_image
     - media.type.image
-    - node.type.go_category_page
-id: node.go_category_page.field_category_menu_image
+    - node.type.go_category
+id: node.go_category.field_category_menu_image
 field_name: field_category_menu_image
 entity_type: node
-bundle: go_category_page
+bundle: go_category
 label: 'Category menu image'
 description: "The category image will be shown in the category menu as part of this category's menu element."
 required: true

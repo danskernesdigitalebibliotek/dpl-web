@@ -4,14 +4,14 @@ status: true
 dependencies:
   config:
     - field.storage.node.field_paragraphs
-    - node.type.go_category_page
+    - node.type.go_category
     - paragraphs.paragraphs_type.go_video
   module:
     - entity_reference_revisions
-id: node.go_category_page.field_paragraphs
+id: node.go_category.field_paragraphs
 field_name: field_paragraphs
 entity_type: node
-bundle: go_category_page
+bundle: go_category
 label: Paragraphs
 description: ''
 required: false

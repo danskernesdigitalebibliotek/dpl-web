@@ -3,9 +3,9 @@ langcode: en
 status: true
 dependencies:
   config:
-    - node.type.go_category_page
-id: node.go_category_page
+    - node.type.go_category
+id: node.go_category
 target_entity_type_id: node
-target_bundle: go_category_page
+target_bundle: go_category
 default_langcode: da
 language_alterable: false

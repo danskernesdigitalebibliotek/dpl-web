@@ -25,8 +25,8 @@ third_party_settings:
     unpublish_enable: true
     unpublish_required: false
     unpublish_revision: false
-name: 'GO category page'
-type: go_category_page
+name: 'GO category'
+type: go_category
 description: "GO category pages will be used for creating a \"landingpage\" for specific categories. \r\nWhen creating and publishing a new category page, the category will automatically be added to the category menu."
 help: null
 new_revision: false

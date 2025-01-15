@@ -18,7 +18,7 @@ entity_config:
       enabled: false
     campaign:
       enabled: false
-    go_category_page:
+    go_category:
       enabled: true
       query_load_enabled: true
       routes_enabled: true
@@ -142,7 +142,7 @@ field_config:
         enabled: true
       field_teaser_text:
         enabled: true
-    go_category_page:
+    go_category:
       field_category_menu_color:
         enabled: true
       field_category_menu_image:

@@ -4,13 +4,13 @@ status: true
 dependencies:
   config:
     - field.storage.node.field_publication_date
-    - node.type.go_category_page
+    - node.type.go_category
   module:
     - datetime
-id: node.go_category_page.field_publication_date
+id: node.go_category.field_publication_date
 field_name: field_publication_date
 entity_type: node
-bundle: go_category_page
+bundle: go_category
 label: 'Publication date'
 description: ''
 required: true

@@ -5,11 +5,11 @@ dependencies:
   config:
     - field.storage.node.field_category_menu_sound
     - media.type.audio
-    - node.type.go_category_page
-id: node.go_category_page.field_category_menu_sound
+    - node.type.go_category
+id: node.go_category.field_category_menu_sound
 field_name: field_category_menu_sound
 entity_type: node
-bundle: go_category_page
+bundle: go_category
 label: 'Category menu sound'
 description: "The category sound will be able to be played in the category menu as part of this category's menu element."
 required: false

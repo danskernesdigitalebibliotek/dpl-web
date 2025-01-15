@@ -4,13 +4,13 @@ status: true
 dependencies:
   config:
     - field.storage.node.field_category_menu_color
-    - node.type.go_category_page
+    - node.type.go_category
   module:
     - color_field
-id: node.go_category_page.field_category_menu_color
+id: node.go_category.field_category_menu_color
 field_name: field_category_menu_color
 entity_type: node
-bundle: go_category_page
+bundle: go_category
 label: 'Category menu color'
 description: ''
 required: true
