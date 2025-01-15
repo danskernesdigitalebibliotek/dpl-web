@@ -170,9 +170,10 @@ services:
   node:
     image: ghcr.io/danskernesdigitalebibliotek/dpl-go-node:0.0.12
     labels:
-      lagoon.type: node
       provenance: false
-
+      lagoon.type: node-persistent
+      lagoon.persistent: /app/.next
+      lagoon.persistent.size: 500Mi
 volumes:
   projectroot:
     driver: local
