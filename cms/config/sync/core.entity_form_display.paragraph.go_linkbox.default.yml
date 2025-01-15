@@ -4,11 +4,13 @@ status: true
 dependencies:
   config:
     - field.field.paragraph.go_linkbox.field_go_description
+    - field.field.paragraph.go_linkbox.field_go_image
     - field.field.paragraph.go_linkbox.field_go_link
     - field.field.paragraph.go_linkbox.field_title
     - paragraphs.paragraphs_type.go_linkbox
   module:
     - link
+    - media_library
 id: paragraph.go_linkbox.default
 targetEntityType: paragraph
 bundle: go_linkbox
@@ -16,15 +18,22 @@ mode: default
 content:
   field_go_description:
     type: string_textarea
-    weight: 2
+    weight: 3
     region: content
     settings:
       rows: 3
       placeholder: ''
     third_party_settings: {  }
+  field_go_image:
+    type: media_library_widget
+    weight: 0
+    region: content
+    settings:
+      media_types: {  }
+    third_party_settings: {  }
   field_go_link:
     type: link_default
-    weight: 1
+    weight: 2
     region: content
     settings:
       placeholder_url: ''
@@ -32,7 +41,7 @@ content:
     third_party_settings: {  }
   field_title:
     type: string_textfield
-    weight: 0
+    weight: 1
     region: content
     settings:
       size: 60
