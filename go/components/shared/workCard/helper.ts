@@ -4,23 +4,18 @@ import {
   WorkTeaserSearchPageFragment,
 } from "@/lib/graphql/generated/fbi/graphql"
 
-export const materialTypeCategories = {
-  reading: [
-    GeneralMaterialTypeCodeEnum.Articles,
-    GeneralMaterialTypeCodeEnum.Books,
-    GeneralMaterialTypeCodeEnum.Comics,
-    GeneralMaterialTypeCodeEnum.Ebooks,
-    GeneralMaterialTypeCodeEnum.ImageMaterials,
-    GeneralMaterialTypeCodeEnum.NewspaperJournals,
-  ],
-  listening: [
-    GeneralMaterialTypeCodeEnum.AudioBooks,
-    GeneralMaterialTypeCodeEnum.Music,
-    GeneralMaterialTypeCodeEnum.Podcasts,
-    GeneralMaterialTypeCodeEnum.SheetMusic,
-  ],
-  gaming: [GeneralMaterialTypeCodeEnum.BoardGames, GeneralMaterialTypeCodeEnum.ComputerGames],
-  video: [GeneralMaterialTypeCodeEnum.Films, GeneralMaterialTypeCodeEnum.TvSeries],
+type MaterialTypeCategories = {
+  reading: GeneralMaterialTypeCodeEnum[]
+  listening: GeneralMaterialTypeCodeEnum[]
+  gaming: GeneralMaterialTypeCodeEnum[]
+  video: GeneralMaterialTypeCodeEnum[]
+}
+
+export const materialTypeCategories: MaterialTypeCategories = {
+  reading: ["ARTICLES", "BOOKS", "COMICS", "EBOOKS", "IMAGE_MATERIALS", "NEWSPAPER_JOURNALS"],
+  listening: ["AUDIO_BOOKS", "MUSIC", "PODCASTS", "SHEET_MUSIC"],
+  gaming: ["BOARD_GAMES", "COMPUTER_GAMES"],
+  video: ["FILMS", "TV_SERIES"],
 }
 
 export const isOfWorkTypeCategory = (
