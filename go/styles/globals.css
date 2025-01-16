@@ -79,31 +79,26 @@
   --shadow-1: hsla(0, 0%, 0%, 0.5);
   --shadow-2: hsla(0, 0%, 0%, 0.15);
 
-  --content-pink: hsla(317, 100%, 72%, 1);
-  --content-purple: hsla(258, 100%, 72%, 1);
-  --content-orange: hsla(34, 100%, 72%, 1);
-  --content-blue: hsla(202, 100%, 72%, 1);
-
   /* These two blues provide JUST enough color contrast to pass wcag2.1aa */
   --blue-title: hsla(202, 100%, 76%, 1);
   --blue-title-dark: hsla(202, 60%, 30%, 1);
 
   /* CONTENT COLORS */
-  --content-pink-100: 320 100% 91%;
-  --content-pink-200: 317 100% 73%;
-  --content-pink-300: 320 43% 27%;
+  --content-pink-100: hsla(320 100% 91%);
+  --content-pink-200: hsla(317 100% 73%);
+  --content-pink-300: hsla(320 43% 27%);
 
-  --content-purple-100: 265 100% 88%;
-  --content-purple-200: 258 100% 72%;
-  --content-purple-300: 258 33% 50%;
+  --content-purple-100: hsla(265 100% 88%);
+  --content-purple-200: hsla(258 100% 72%);
+  --content-purple-300: hsla(258 33% 50%);
 
-  --content-orange-100: 30 100% 86%;
-  --content-orange-200: 34 100% 50%;
-  --content-orange-300: 30 79% 27%;
+  --content-orange-100: hsla(30 100% 86%);
+  --content-orange-200: hsla(34 100% 50%);
+  --content-orange-300: hsla(30 79% 27%);
 
-  --content-blue-100: 200 86% 86%;
-  --content-blue-200: 202 100% 60%;
-  --content-blue-300: 201 67% 29%;
+  --content-blue-100: hsla(200 86% 86%);
+  --content-blue-200: hsla(202 100% 60%);
+  --content-blue-300: hsla(201 67% 29%);
 
   /* DYNAMIC COLORS */
   --background: var(--beige);
