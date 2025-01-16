@@ -9,7 +9,7 @@
     "ci-check": "yarn typecheck && yarn lint && yarn format:check && yarn test:unit:once",
     "codegen:all-rest-services": "orval",
     "codegen:covers": "rm -rf src/lib/rest/cover-service-api/generated/model/*.* && orval --project coverService",
-    "codegen:graphql": "graphql-codegen --require tsconfig-paths/register --config codegen.ts",
+    "codegen:graphql": "NODE_TLS_REJECT_UNAUTHORIZED=0 graphql-codegen --require tsconfig-paths/register --config codegen.ts",
     "codegen:publizon": "rm -rf lib/rest/publizon-api/generated/model/*.* && orval --project publizonAdapter",
     "dev:https": "next dev --experimental-https",
     "dev": "next dev",
