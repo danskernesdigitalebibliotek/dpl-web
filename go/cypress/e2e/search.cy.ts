@@ -13,6 +13,10 @@ describe("Search Result Tests", () => {
       operationName: "searchFacets",
       factory: SearchFacetsFactory,
     })
+    // Intercept covers request
+    cy.intercept("GET", "**/covers**", {
+      fixture: "covers.json",
+    })
   })
 
   it("Should get results when searching", () => {

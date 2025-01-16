@@ -1,0 +1,48 @@
+[
+  {
+    "id": "870970-basis:38772791",
+    "type": "pid",
+    "imageUrls": {
+      "original": {
+        "url": "https://res.cloudinary.com/dandigbib/image/upload/v1614882257/publizon/9788711917145.jpg",
+        "format": "jpeg",
+        "size": "original"
+      },
+      "default": {
+        "url": "https://res.cloudinary.com/dandigbib/image/upload/t_ddb_cover/v1614882257/publizon/9788711917145.jpg",
+        "format": "jpeg",
+        "size": "default"
+      },
+      "xx-small": {
+        "url": "https://res.cloudinary.com/dandigbib/image/upload/t_ddb_cover_xxs/v1614882257/publizon/9788711917145.jpg",
+        "format": "jpeg",
+        "size": "xx-small"
+      },
+      "small": {
+        "url": "https://res.cloudinary.com/dandigbib/image/upload/t_ddb_cover_small/v1614882257/publizon/9788711917145.jpg",
+        "format": "jpeg",
+        "size": "small"
+      },
+      "small-medium": {
+        "url": "https://res.cloudinary.com/dandigbib/image/upload/t_ddb_cover_sm/v1614882257/publizon/9788711917145.jpg",
+        "format": "jpeg",
+        "size": "small-medium"
+      },
+      "medium": {
+        "url": "https://res.cloudinary.com/dandigbib/image/upload/t_ddb_cover_medium/v1614882257/publizon/9788711917145.jpg",
+        "format": "jpeg",
+        "size": "medium"
+      },
+      "medium-large": {
+        "url": "https://res.cloudinary.com/dandigbib/image/upload/t_ddb_cover_ml/v1614882257/publizon/9788711917145.jpg",
+        "format": "jpeg",
+        "size": "medium-large"
+      },
+      "large": {
+        "url": "https://res.cloudinary.com/dandigbib/image/upload/t_ddb_cover_large/v1614882257/publizon/9788711917145.jpg",
+        "format": "jpeg",
+        "size": "large"
+      }
+    }
+  }
+]
