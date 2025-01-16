@@ -1,0 +1,8 @@
+
+type Adgangsplatformen {
+  user: String
+}
+
+type DplTokens {
+  adgangsplatformen: Adgangsplatformen
+}
