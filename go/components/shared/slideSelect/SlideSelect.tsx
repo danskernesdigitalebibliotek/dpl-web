@@ -1,15 +1,16 @@
 import { motion } from "framer-motion"
 import React, { useEffect, useState } from "react"
 
+import { getIconNameFromMaterialType } from "@/components/pages/workPageLayout/helper"
+import { GeneralMaterialTypeCodeEnum } from "@/lib/graphql/generated/fbi/graphql"
 import { cn } from "@/lib/helpers/helper.cn"
 
 import BadgeButton from "../badge/BadgeButton"
 import Icon from "../icon/Icon"
 
 export type SlideSelectOption = {
-  value: string
+  value: GeneralMaterialTypeCodeEnum
   render: string
-  icon?: string
 }
 
 export type SlideSelectProps = {
@@ -48,6 +49,8 @@ const SlideSelect = ({ options, initialOption, onOptionSelect }: SlideSelectProp
       />
       {/* Render the options */}
       {options.map((option, index) => {
+        const iconName = getIconNameFromMaterialType(option.value)
+
         return (
           <BadgeButton
             key={option.value}
@@ -62,9 +65,7 @@ const SlideSelect = ({ options, initialOption, onOptionSelect }: SlideSelectProp
             }}
             variant="transparent"
             classNames={cn("z-slide-select min-w-36", selected === index && "text-background")}>
-            {!!option.icon && (
-              <Icon className="m-[-7px] h-7 w-7 flex-shrink-0" name={option.icon} />
-            )}
+            {!!iconName && <Icon className="m-[-7px] h-7 w-7 flex-shrink-0" name={iconName} />}
             <span>{option.render}</span>
           </BadgeButton>
         )

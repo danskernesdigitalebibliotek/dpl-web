@@ -16,9 +16,9 @@ export const materialTypeCategories = {
   listening: [
     GeneralMaterialTypeCodeEnum.AudioBooks,
     GeneralMaterialTypeCodeEnum.Music,
-    GeneralMaterialTypeCodeEnum.Podcasts,
     GeneralMaterialTypeCodeEnum.SheetMusic,
   ],
+  podcast: [GeneralMaterialTypeCodeEnum.Podcasts],
   gaming: [GeneralMaterialTypeCodeEnum.BoardGames, GeneralMaterialTypeCodeEnum.ComputerGames],
   video: [GeneralMaterialTypeCodeEnum.Films, GeneralMaterialTypeCodeEnum.TvSeries],
 }

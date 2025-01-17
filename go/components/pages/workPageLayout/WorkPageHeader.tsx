@@ -6,10 +6,10 @@ import React, { useEffect, useState } from "react"
 
 import WorkPageButtons from "@/components/pages/workPageLayout/WorkPageButtons"
 import {
-  addMaterialTypeIconToSelectOption,
   findInitialSliderValue,
   getManifestationByMaterialType,
   getManifestationLanguageIsoCode,
+  getManifestationMaterialType,
   getWorkMaterialTypes,
   translateMaterialTypesForRender,
 } from "@/components/pages/workPageLayout/helper"
@@ -82,7 +82,7 @@ const WorkPageHeader = ({ work }: WorkPageHeaderProps) => {
       (acc, materialType) => {
         // We only want unique material types
         if (!acc.some(item => item.value === materialType.value)) {
-          acc.push(translateMaterialTypesForRender(addMaterialTypeIconToSelectOption(materialType)))
+          acc.push(translateMaterialTypesForRender(materialType))
         }
         return acc
       },
@@ -140,11 +140,13 @@ const WorkPageHeader = ({ work }: WorkPageHeaderProps) => {
           )}
         </div>
         <div className="col-span-4 flex flex-col items-start justify-end pt-grid-gap-3 lg:pt-0">
-          {!!publizonData?.product?.costFree && (
+          {!!publizonData?.product?.costFree ||
+          (selectedManifestation &&
+            getManifestationMaterialType(selectedManifestation) === "podcasts") ? (
             <Badge variant={"blue-title"} className="mb-1 lg:mb-2">
               BLÅ
             </Badge>
-          )}
+          ) : null}
           <h1
             lang={languageIsoCode}
             className="hyphens-auto break-words text-typo-heading-3 lg:mt-0 lg:text-typo-heading-2">

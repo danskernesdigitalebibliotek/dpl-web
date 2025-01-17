@@ -1,23 +1,32 @@
 import Link from "next/link"
 import React from "react"
 
-import { WorkTeaserSearchPageFragment } from "@/lib/graphql/generated/fbi/graphql"
+import { getIconNameFromMaterialType } from "@/components/pages/workPageLayout/helper"
+import {
+  GeneralMaterialTypeCodeEnum,
+  WorkTeaserSearchPageFragment,
+} from "@/lib/graphql/generated/fbi/graphql"
 import { getCoverUrls, getLowResCoverUrl } from "@/lib/helpers/helper.covers"
 import { displayCreators } from "@/lib/helpers/helper.creators"
 import { resolveUrl } from "@/lib/helpers/helper.routes"
-import { getIsbnsFromWork } from "@/lib/helpers/ids"
 import { useGetCoverCollection } from "@/lib/rest/cover-service-api/generated/cover-service"
 import { GetCoverCollectionSizesItem } from "@/lib/rest/cover-service-api/generated/model"
+import { Product } from "@/lib/rest/publizon-api/generated/model"
 import { useGetV1ProductsIdentifier } from "@/lib/rest/publizon-api/generated/publizon"
 
 import { Badge } from "../badge/Badge"
 import { CoverPicture } from "../coverPicture/CoverPicture"
-import WorkCardAvailabilityRow from "./WorkCardAvailabilityRow"
+import MaterialTypeIconWrapper from "./MaterialTypeIconWrapper"
 import { getAllWorkPids } from "./helper"
 
 type WorkCardProps = {
   work: WorkTeaserSearchPageFragment
 }
+
+type TManifestationsWithPublizonData = Array<{
+  isbn: string
+  data?: Product
+}>
 
 const WorkCard = ({ work }: WorkCardProps) => {
   const { data: dataCovers, isLoading: isLoadingCovers } = useGetCoverCollection({
@@ -27,15 +36,28 @@ const WorkCard = ({ work }: WorkCardProps) => {
       "xx-small, small, small-medium, medium, medium-large, large, original, default" as GetCoverCollectionSizesItem,
     ],
   })
-  const isbns = getIsbnsFromWork(work)
 
-  const { data: dataPublizon } = useGetV1ProductsIdentifier(isbns[0], {
-    query: {
-      // Publizon / useGetV1ProductsIdentifier is responsible for online
-      // materials. It requires an ISBN to do lookups.
-      enabled: isbns.length > 0,
-    },
+  const manifestations = work.manifestations.all
+
+  // for each manifestation, get publizon data and add to array
+  const manifestationsWithPublizonData = manifestations.map(manifestation => {
+    // Get ISBN from manifestation
+    const isbn =
+      manifestation.identifiers.find(identifier => identifier.type === "ISBN")?.value || ""
+
+    const { data } = useGetV1ProductsIdentifier(isbn, {
+      query: {
+        // Publizon / useGetV1ProductsIdentifier is responsible for online
+        // materials. It requires an ISBN to do lookups.
+        enabled: isbn.length > 0,
+      },
+    })
+
+    const publizonData = data?.product
+    return { manifestation, publizonData }
   })
+
+  console.log("manifestationsWithPublizonData", manifestationsWithPublizonData)
 
   const bestRepresentation = work.manifestations.bestRepresentation
   const allPids = [bestRepresentation.pid, ...getAllWorkPids(work)]
@@ -52,6 +74,14 @@ const WorkCard = ({ work }: WorkCardProps) => {
 
   const lowResCover = getLowResCoverUrl(dataCovers)
 
+  const isSomeMaterialTypePodcast = work.materialTypes.some(
+    materialType => materialType?.materialTypeGeneral?.code === GeneralMaterialTypeCodeEnum.Podcasts
+  )
+
+  const isSomeManifestationTypeCostFree = manifestationsWithPublizonData.some(
+    manifestation => manifestation.publizonData?.costFree
+  )
+
   return (
     <Link
       className="block space-y-3 lg:space-y-5"
@@ -60,11 +90,11 @@ const WorkCard = ({ work }: WorkCardProps) => {
         <div
           key={work.workId}
           className="relative flex aspect-4/5 h-auto w-full flex-col rounded-base bg-background-overlay px-[15%] pt-[15%]">
-          {!!dataPublizon?.product?.costFree && (
+          {isSomeManifestationTypeCostFree || isSomeMaterialTypePodcast ? (
             <Badge variant={"blue-title"} className="absolute left-4 top-4 md:left-4 md:top-4">
               BLÅ
             </Badge>
-          )}
+          ) : null}
           <div className="relative mx-auto flex h-full w-full items-center justify-center">
             {!isLoadingCovers && (
               <CoverPicture
@@ -77,7 +107,25 @@ const WorkCard = ({ work }: WorkCardProps) => {
             )}
           </div>
           <div className="my-auto flex min-h-[15%] items-center py-3 md:py-4">
-            <WorkCardAvailabilityRow materialTypes={work.materialTypes} />
+            <div className="flex w-full flex-row justify-center gap-2">
+              {/* Loop through all manifestation types */}
+              {manifestationsWithPublizonData.map(manifestationWithPublizonData => {
+                const isCostFree = manifestationWithPublizonData.publizonData?.costFree
+                // find material type general material type
+                const materialType =
+                  manifestationWithPublizonData.manifestation.materialTypes[0].materialTypeGeneral
+                    .code
+                const materialTypeIcon = getIconNameFromMaterialType(materialType) || "book"
+
+                return (
+                  <MaterialTypeIconWrapper
+                    key={manifestationWithPublizonData.manifestation.pid}
+                    costFree={isCostFree}
+                    iconName={materialTypeIcon}
+                  />
+                )
+              })}
+            </div>
           </div>
         </div>
       </div>

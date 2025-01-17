@@ -141,19 +141,21 @@ export const findInitialSliderValue = (
   })
 }
 
-export const addMaterialTypeIconToSelectOption = (option: SlideSelectOption) => {
-  const code = option.value as GeneralMaterialTypeCodeEnum
+export const getIconNameFromMaterialType = (materialType: GeneralMaterialTypeCodeEnum) => {
+  const code = materialType
   if (materialTypeCategories.reading.includes(code)) {
-    return { ...option, icon: "book" }
+    return "book"
   }
   if (materialTypeCategories.listening.includes(code)) {
-    return { ...option, icon: "headphones" }
+    return "headphones"
   }
   if (materialTypeCategories.gaming.includes(code)) {
-    return { ...option, icon: "controller" }
+    return "controller"
   }
   if (materialTypeCategories.video.includes(code)) {
-    return { ...option, icon: "video" }
+    return "video"
   }
-  return option
+  if (materialTypeCategories.podcast.includes(code)) {
+    return "podcast"
+  }
 }
