@@ -203,6 +203,7 @@ export const extendedTheme = {
         "pink-100": "var(--content-pink-100)",
         "pink-200": "var(--content-pink-200)",
         "pink-300": "var(--content-pink-300)",
+        "blue-50": "var(--content-blue-50)",
         "blue-100": "var(--content-blue-100)",
         "blue-200": "var(--content-blue-200)",
         "blue-300": "var(--content-blue-300)",
