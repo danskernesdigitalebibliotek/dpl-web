@@ -15,11 +15,13 @@ import {
 } from "@/components/pages/workPageLayout/helper"
 import { Badge } from "@/components/shared/badge/Badge"
 import { CoverPicture } from "@/components/shared/coverPicture/CoverPicture"
+import { navigateToSearch } from "@/components/shared/searchInput/helper.search"
 import SlideSelect, { SlideSelectOption } from "@/components/shared/slideSelect/SlideSelect"
 import { WorkFullWorkPageFragment } from "@/lib/graphql/generated/fbi/graphql"
 import { getCoverUrls, getLowResCoverUrl } from "@/lib/helpers/helper.covers"
-import { displayCreators } from "@/lib/helpers/helper.creators"
+import { getAllCreators } from "@/lib/helpers/helper.creators"
 import { getIsbnsFromManifestation } from "@/lib/helpers/ids"
+import useSearchMachineActor from "@/lib/machines/search/useSearchMachineActor"
 import { useGetCoverCollection } from "@/lib/rest/cover-service-api/generated/cover-service"
 import { GetCoverCollectionSizesItem } from "@/lib/rest/cover-service-api/generated/model"
 import { useGetV1ProductsIdentifier } from "@/lib/rest/publizon-api/generated/publizon"
@@ -32,6 +34,7 @@ type WorkPageHeaderProps = {
 const WorkPageHeader = ({ work }: WorkPageHeaderProps) => {
   const searchParams = useSearchParams()
   const router = useRouter()
+  const actor = useSearchMachineActor()
   const { selectedManifestation, setSelectedManifestation } = useSelectedManifestationStore()
   const [slideSelectOptions, setSlideSelectOptions] = useState<SlideSelectOption[] | null>(null)
   const isbns = selectedManifestation ? getIsbnsFromManifestation(selectedManifestation) : []
@@ -75,6 +78,8 @@ const WorkPageHeader = ({ work }: WorkPageHeaderProps) => {
     params.set("type", optionSelected.render)
     router.push(`${window.location.pathname}?${params.toString()}`, { scroll: false })
   }
+  const workCreators =
+    getAllCreators(work.creators) || getAllCreators(selectedManifestation?.contributors || [])
 
   useEffect(() => {
     // Initialize slideSelect options
@@ -150,9 +155,24 @@ const WorkPageHeader = ({ work }: WorkPageHeaderProps) => {
             className="hyphens-auto break-words text-typo-heading-3 lg:mt-0 lg:text-typo-heading-2">
             {`${selectedManifestation?.titles?.full || ""}${!!titleSuffix ? ` (${titleSuffix})` : ""}`}
           </h1>
-          <h2 className="mt-grid-gap-2 text-typo-subtitle-sm uppercase lg:mt-7">
-            {`af ${displayCreators(work.creators, 100) || displayCreators(selectedManifestation?.contributors || [], 100)}`}
-          </h2>
+          {!!workCreators.length && (
+            <h2 className="mt-grid-gap-2 text-typo-subtitle-sm uppercase lg:mt-7">
+              {"af "}
+              {workCreators.map((creator, index) => {
+                return (
+                  <>
+                    <span
+                      key={creator}
+                      onClick={() => navigateToSearch(creator, actor, router)}
+                      className="animate-text-underline">
+                      {creator}
+                    </span>
+                    {index + 1 < workCreators.length && ", "}
+                  </>
+                )
+              })}
+            </h2>
+          )}
         </div>
         <div className="col-span-4 mt-grid-gap-3 flex flex-col items-end justify-end lg:order-3 lg:mt-0">
           <WorkPageButtons workId={work.workId} />
