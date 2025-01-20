@@ -18,6 +18,10 @@ entity_config:
       enabled: false
     campaign:
       enabled: false
+    go_article:
+      enabled: true
+      query_load_enabled: true
+      routes_enabled: true
     go_category:
       enabled: true
       query_load_enabled: true
@@ -142,6 +146,23 @@ field_config:
         enabled: true
       field_teaser_text:
         enabled: true
+    go_article:
+      field_go_article_image:
+        enabled: true
+      field_override_author:
+        enabled: true
+      field_paragraphs:
+        enabled: true
+      field_publication_date:
+        enabled: true
+      field_show_override_author:
+        enabled: true
+      field_subtitle:
+        enabled: true
+      field_teaser_image:
+        enabled: true
+      field_teaser_text:
+        enabled: true
     go_category:
       field_category_menu_color:
         enabled: true
@@ -233,8 +254,6 @@ field_config:
       field_title:
         enabled: true
     go_video:
-      field_embed_video:
-        enabled: true
       field_go_video_title:
         enabled: true
     manual_event_list:

@@ -4,11 +4,23 @@
 # #-#-#-#-#  da.config.po (PROJECT VERSION)  #-#-#-#-#
 # da translation of DPL CMS
 #
+#, fuzzy
 msgid ""
 msgstr ""
+"#-#-#-#-#  da.po (PROJECT VERSION)  #-#-#-#-#\n"
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2025-01-14 10:58+0100\n"
-"PO-Revision-Date: 2025-01-14 10:58+0100\n"
+"POT-Creation-Date: 2025-01-20 11:34+0100\n"
+"PO-Revision-Date: 2025-01-20 11:34+0100\n"
+"Last-Translator: NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n > 1);\n"
+"#-#-#-#-#  da.config.po (PROJECT VERSION)  #-#-#-#-#\n"
+"Project-Id-Version: PROJECT VERSION\n"
+"POT-Creation-Date: 2025-01-20 11:35+0100\n"
+"PO-Revision-Date: 2025-01-20 11:35+0100\n"
 "Last-Translator: NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
 "MIME-Version: 1.0\n"
@@ -1211,6 +1223,15 @@ msgid "List of DPL-Go Unilogin configuration."
 msgstr ""
 "\n"
 "List of DPL-Go Unilogin configuration."
+
+msgid "A color field."
+msgstr ""
+
+msgid "The color value in #HEX format."
+msgstr ""
+
+msgid "The opacity value."
+msgstr ""
 
 msgctxt "Library Agency Configuration"
 msgid "Reservations"
@@ -18744,6 +18765,30 @@ msgctxt "core.base_field_override.node.campaign.promote:settings:off_label"
 msgid "Off"
 msgstr ""
 
+msgctxt "core.base_field_override.node.go_article.promote:label"
+msgid "Promoted to front page"
+msgstr ""
+
+msgctxt "core.base_field_override.node.go_article.promote:settings:on_label"
+msgid "On"
+msgstr ""
+
+msgctxt "core.base_field_override.node.go_article.promote:settings:off_label"
+msgid "Off"
+msgstr ""
+
+msgctxt "core.base_field_override.node.go_category.promote:label"
+msgid "Promoted to front page"
+msgstr ""
+
+msgctxt "core.base_field_override.node.go_category.promote:settings:on_label"
+msgid "On"
+msgstr ""
+
+msgctxt "core.base_field_override.node.go_category.promote:settings:off_label"
+msgid "Off"
+msgstr ""
+
 msgctxt "core.base_field_override.node.go_page.promote:label"
 msgid "Promoted to front page"
 msgstr ""
@@ -19003,6 +19048,67 @@ msgid "Paragraphs"
 msgstr "Paragraphs"
 
 msgctxt ""
+"core.entity_form_display.node.go_article.default:third_party_settings:"
+"field_group:group_author_date:label"
+msgid "Author & Date"
+msgstr ""
+
+msgctxt ""
+"core.entity_form_display.node.go_article.default:third_party_settings:"
+"field_group:group_teaser_card:label"
+msgid "Teaser card"
+msgstr ""
+
+msgctxt ""
+"core.entity_form_display.node.go_article.default:content:field_paragraphs:"
+"settings:title"
+msgid "Paragraph"
+msgstr ""
+
+msgctxt ""
+"core.entity_form_display.node.go_article.default:content:field_paragraphs:"
+"settings:title_plural"
+msgid "Paragraphs"
+msgstr ""
+
+msgctxt ""
+"core.entity_form_display.node.go_category.default:third_party_settings:"
+"field_group:group_category_info:label"
+msgid "Category Info"
+msgstr ""
+
+msgctxt ""
+"core.entity_form_display.node.go_category.default:third_party_settings:"
+"field_group:group_category_info:format_settings:description"
+msgid ""
+"These fields are will be used to display this category in the category menu."
+msgstr ""
+
+msgctxt ""
+"core.entity_form_display.node.go_category.default:third_party_settings:"
+"field_group:group_author_date:label"
+msgid "Author & Date"
+msgstr ""
+
+msgctxt ""
+"core.entity_form_display.node.go_category.default:content:"
+"field_category_menu_color:settings:default_colors"
+msgid "#ffd2f0,#dcc3ff,#ffdcb9,#bee6fa"
+msgstr ""
+
+msgctxt ""
+"core.entity_form_display.node.go_category.default:content:field_paragraphs:"
+"settings:title"
+msgid "Paragraph"
+msgstr ""
+
+msgctxt ""
+"core.entity_form_display.node.go_category.default:content:field_paragraphs:"
+"settings:title_plural"
+msgid "Paragraphs"
+msgstr ""
+
+msgctxt ""
 "core.entity_form_display.node.go_page.default:third_party_settings:"
 "field_group:group_author_date:label"
 msgid "Author & Date"
@@ -19102,6 +19208,14 @@ msgctxt ""
 msgid ""
 "Choose the filters, that defines what content is shown. These filters can "
 "have their conditions defined."
+msgstr ""
+
+msgctxt ""
+"core.entity_form_display.paragraph.go_linkbox.default:content:field_go_color:"
+"settings:default_colors"
+msgid ""
+"#ffd2f0,#dcc3ff,#ffdcb9,#bee6fa,#ff73d7,#9b6eff,#ff9100,#32b4ff,#642850,"
+"#6e55aa,#7d460f,#195a7d"
 msgstr ""
 
 msgctxt ""
@@ -19299,6 +19413,18 @@ msgctxt ""
 "core.entity_view_display.eventinstance.default.stacked_event:content:date:"
 "settings:several_years"
 msgid "d. M Y - {d}. {M} {Y}"
+msgstr ""
+
+msgctxt ""
+"core.entity_view_display.node.go_category.default:content:"
+"field_category_menu_color:settings:format"
+msgid "hex"
+msgstr ""
+
+msgctxt ""
+"core.entity_view_display.paragraph.go_linkbox.default:content:field_go_color:"
+"settings:format"
+msgid "hex"
 msgstr ""
 
 msgctxt ""
@@ -19798,6 +19924,10 @@ msgctxt "field.field.eventseries.default.field_ticket_categories:label"
 msgid "Ticket categories"
 msgstr ""
 
+msgctxt "field.field.media.audio.field_media_audio_file:label"
+msgid "Audio file"
+msgstr ""
+
 msgctxt "field.field.media.document.field_media_file:label"
 msgid "File"
 msgstr ""
@@ -19967,6 +20097,103 @@ msgstr ""
 
 msgctxt "field.field.node.campaign.field_campaign_text:label"
 msgid "Text"
+msgstr ""
+
+msgctxt "field.field.node.go_article.field_go_article_image:label"
+msgid "Image"
+msgstr ""
+
+msgctxt "field.field.node.go_article.field_override_author:label"
+msgid "Override author"
+msgstr ""
+
+msgctxt "field.field.node.go_article.field_paragraphs:label"
+msgid "Paragraphs"
+msgstr ""
+
+msgctxt "field.field.node.go_article.field_publication_date:label"
+msgid "Publication date"
+msgstr ""
+
+msgctxt "field.field.node.go_article.field_show_override_author:label"
+msgid "Override the author\t"
+msgstr ""
+
+msgctxt "field.field.node.go_article.field_show_override_author:description"
+msgid ""
+"By default, the author is set to the Drupal user that owns the content.<br /"
+"><br />If you want to override this, with a manual text, you can check this."
+msgstr ""
+
+msgctxt ""
+"field.field.node.go_article.field_show_override_author:settings:on_label"
+msgid "On"
+msgstr ""
+
+msgctxt ""
+"field.field.node.go_article.field_show_override_author:settings:off_label"
+msgid "Off"
+msgstr ""
+
+msgctxt "field.field.node.go_article.field_subtitle:label"
+msgid "Subtitle"
+msgstr ""
+
+msgctxt "field.field.node.go_article.field_teaser_image:label"
+msgid "Teaser image"
+msgstr ""
+
+msgctxt "field.field.node.go_article.field_teaser_image:description"
+msgid ""
+"The teaser fields are used for the card of display.<br />If no image has "
+"been selected, the text will be shown instead:<br /><br /><img src=\"/themes/"
+"custom/novel/images/teaser-text-image.jpg\" /><br /><br /><hr/>"
+msgstr ""
+
+msgctxt "field.field.node.go_article.field_teaser_text:label"
+msgid "Teaser text"
+msgstr ""
+
+msgctxt "field.field.node.go_category.field_category_menu_color:label"
+msgid "Category menu color"
+msgstr ""
+
+msgctxt "field.field.node.go_category.field_category_menu_image:label"
+msgid "Category menu image"
+msgstr ""
+
+msgctxt "field.field.node.go_category.field_category_menu_image:description"
+msgid ""
+"The category image will be shown in the category menu as part of this "
+"category's menu element."
+msgstr ""
+
+msgctxt "field.field.node.go_category.field_category_menu_sound:label"
+msgid "Category menu sound"
+msgstr ""
+
+msgctxt "field.field.node.go_category.field_category_menu_sound:description"
+msgid ""
+"The category sound will be able to be played in the category menu as part of "
+"this category's menu element."
+msgstr ""
+
+msgctxt "field.field.node.go_category.field_category_menu_title:label"
+msgid "Category menu title"
+msgstr ""
+
+msgctxt "field.field.node.go_category.field_category_menu_title:description"
+msgid ""
+"The category title will be shown in the category menu as part of this "
+"category's menu element."
+msgstr ""
+
+msgctxt "field.field.node.go_category.field_paragraphs:label"
+msgid "Paragraphs"
+msgstr ""
+
+msgctxt "field.field.node.go_category.field_publication_date:label"
+msgid "Publication date"
 msgstr ""
 
 msgctxt "field.field.node.go_page.field_paragraphs:label"
@@ -20326,6 +20553,26 @@ msgid ""
 msgstr ""
 
 msgctxt "field.field.paragraph.filtered_event_list.field_title:label"
+msgid "Title"
+msgstr ""
+
+msgctxt "field.field.paragraph.go_linkbox.field_go_color:label"
+msgid "Color"
+msgstr ""
+
+msgctxt "field.field.paragraph.go_linkbox.field_go_description:label"
+msgid "Description"
+msgstr ""
+
+msgctxt "field.field.paragraph.go_linkbox.field_go_image:label"
+msgid "Image"
+msgstr ""
+
+msgctxt "field.field.paragraph.go_linkbox.field_go_link:label"
+msgid "LInk"
+msgstr ""
+
+msgctxt "field.field.paragraph.go_linkbox.field_title:label"
 msgid "Title"
 msgstr ""
 
@@ -20838,6 +21085,10 @@ msgctxt ""
 msgid "OR"
 msgstr ""
 
+msgctxt "field.storage.node.field_category_menu_color:settings:format"
+msgid "#HEXHEX"
+msgstr ""
+
 msgctxt ""
 "field.storage.paragraph.field_amount_of_events:settings:allowed_values:0:"
 "label"
@@ -21060,6 +21311,10 @@ msgctxt ""
 msgid "Must match in each filter-category - \"OUTER-AND\""
 msgstr ""
 
+msgctxt "field.storage.paragraph.field_go_color:settings:format"
+msgid "#HEXHEX"
+msgstr ""
+
 msgctxt ""
 "field.storage.paragraph.field_link_target:settings:allowed_values:0:label"
 msgid "Open the linked document in the same window or tab (default)"
@@ -21276,6 +21531,10 @@ msgctxt "linkit.linkit_profile.default:label"
 msgid "Default"
 msgstr ""
 
+msgctxt "media.type.audio:label"
+msgid "Audio"
+msgstr ""
+
 msgctxt "media.type.document:label"
 msgid "Document"
 msgstr ""
@@ -21487,6 +21746,27 @@ msgid ""
 "terms"
 msgstr ""
 
+msgctxt "node.type.go_article:name"
+msgid "GO Article"
+msgstr ""
+
+msgctxt "node.type.go_article:description"
+msgid ""
+"Use Go articles for news-worthy content, that does not get updated regularly."
+msgstr ""
+
+msgctxt "node.type.go_category:name"
+msgid "GO category"
+msgstr ""
+
+msgctxt "node.type.go_category:description"
+msgid ""
+"GO category pages will be used for creating a \"landingpage\" for specific "
+"categories. \r\n"
+"When creating and publishing a new category page, the category will "
+"automatically be added to the category menu."
+msgstr ""
+
 msgctxt "node.type.go_page:name"
 msgid "GO page"
 msgstr ""
@@ -21583,6 +21863,10 @@ msgctxt "paragraphs.paragraphs_type.filtered_event_list:description"
 msgid ""
 "This paragraph displays a generated a list of events, based on specified "
 "filters for tags, categories and branches. "
+msgstr ""
+
+msgctxt "paragraphs.paragraphs_type.go_linkbox:label"
+msgid "GO Linkbox"
 msgstr ""
 
 msgctxt "paragraphs.paragraphs_type.go_video:label"
@@ -21984,6 +22268,10 @@ msgctxt "system.action.user_add_role_action.external_system:label"
 msgid "Add the External system role to the selected user(s)"
 msgstr ""
 
+msgctxt "system.action.user_add_role_action.go_editor:label"
+msgid "Add the GO Editor role to the selected user(s)"
+msgstr ""
+
 msgctxt "system.action.user_add_role_action.go_graphql_client:label"
 msgid "Add the GO GraphQL Client role to the selected user(s)"
 msgstr "Add the GO GraphQL Client role to the selected user(s)"
@@ -22002,6 +22290,10 @@ msgstr "Remove the BNF GraphQL Client role from the selected user(s)"
 
 msgctxt "system.action.user_remove_role_action.external_system:label"
 msgid "Remove the External system role from the selected user(s)"
+msgstr ""
+
+msgctxt "system.action.user_remove_role_action.go_editor:label"
+msgid "Remove the GO Editor role from the selected user(s)"
 msgstr ""
 
 msgctxt "system.action.user_remove_role_action.go_graphql_client:label"
@@ -22336,6 +22628,10 @@ msgstr ""
 
 msgctxt "user.role.external_system:label"
 msgid "External system"
+msgstr ""
+
+msgctxt "user.role.go_editor:label"
+msgid "GO Editor"
 msgstr ""
 
 msgctxt "user.role.go_graphql_client:label"
