@@ -2,11 +2,11 @@
 
 import React, { useEffect } from "react"
 
-import type { ParagraphGoVideo } from "@/lib/graphql/generated/dpl-cms/graphql"
+import type { ParagraphGoVideo as TParagraphGoVideo } from "@/lib/graphql/generated/dpl-cms/graphql"
 
 type ParagraphGoVideoProps = {
-  title: ParagraphGoVideo["title"]
-  url: ParagraphGoVideo["url"]
+  title: TParagraphGoVideo["title"]
+  url: TParagraphGoVideo["url"]
 }
 
 export default function ParagraphGoVideo(paragraphGoVideo: ParagraphGoVideoProps) {

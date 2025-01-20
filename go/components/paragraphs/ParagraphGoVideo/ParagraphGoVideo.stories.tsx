@@ -1,7 +1,7 @@
 import type { Meta, StoryObj } from "@storybook/react"
 
 import { darkModeDecorator } from "@/.storybook/decorators"
-import ParagraphGoVideo from "@/components/paragraphs/paragraphGoVideo/ParagraphGoVideo"
+import ParagraphGoVideo from "@/components/paragraphs/ParagraphGoVideo/ParagraphGoVideo"
 
 const meta = {
   title: "components/ParagraphGoVideo",
