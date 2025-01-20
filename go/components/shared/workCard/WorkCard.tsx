@@ -1,3 +1,6 @@
+"use client"
+
+import { useQueries } from "@tanstack/react-query"
 import Link from "next/link"
 import React from "react"
 
@@ -11,8 +14,11 @@ import { displayCreators } from "@/lib/helpers/helper.creators"
 import { resolveUrl } from "@/lib/helpers/helper.routes"
 import { useGetCoverCollection } from "@/lib/rest/cover-service-api/generated/cover-service"
 import { GetCoverCollectionSizesItem } from "@/lib/rest/cover-service-api/generated/model"
-import { Product } from "@/lib/rest/publizon-api/generated/model"
-import { useGetV1ProductsIdentifier } from "@/lib/rest/publizon-api/generated/publizon"
+import {
+  getGetV1ProductsIdentifierQueryKey,
+  getV1ProductsIdentifier,
+  useGetV1ProductsIdentifier,
+} from "@/lib/rest/publizon-api/generated/publizon"
 
 import { Badge } from "../badge/Badge"
 import { CoverPicture } from "../coverPicture/CoverPicture"
@@ -22,11 +28,6 @@ import { getAllWorkPids } from "./helper"
 type WorkCardProps = {
   work: WorkTeaserSearchPageFragment
 }
-
-type TManifestationsWithPublizonData = Array<{
-  isbn: string
-  data?: Product
-}>
 
 const WorkCard = ({ work }: WorkCardProps) => {
   const { data: dataCovers, isLoading: isLoadingCovers } = useGetCoverCollection({
@@ -40,24 +41,44 @@ const WorkCard = ({ work }: WorkCardProps) => {
   const manifestations = work.manifestations.all
 
   // for each manifestation, get publizon data and add to array
-  const manifestationsWithPublizonData = manifestations.map(manifestation => {
-    // Get ISBN from manifestation
-    const isbn =
-      manifestation.identifiers.find(identifier => identifier.type === "ISBN")?.value || ""
+  const manifestationsWithPublizonData = useQueries({
+    queries: manifestations.map(manifestation => {
+      const isbn =
+        manifestation.identifiers.find(identifier => identifier.type === "ISBN")?.value || ""
 
-    const { data } = useGetV1ProductsIdentifier(isbn, {
-      query: {
-        // Publizon / useGetV1ProductsIdentifier is responsible for online
-        // materials. It requires an ISBN to do lookups.
-        enabled: isbn.length > 0,
-      },
-    })
+      return {
+        queryKey: getGetV1ProductsIdentifierQueryKey(isbn),
+        queryFn: () => getV1ProductsIdentifier(isbn),
+      }
+    }),
+    combine: results => {
+      console.log("results", results)
 
-    const publizonData = data?.product
-    return { manifestation, publizonData }
+      return {
+        data: results.map(result => result.data),
+        pending: results.some(result => result.isPending),
+      }
+    },
   })
 
-  console.log("manifestationsWithPublizonData", manifestationsWithPublizonData)
+  // console.log("manifestationsWithPublizonData", manifestationsWithPublizonData)
+
+  // const manifestationsWithPublizonData = manifestations.map(manifestation => {
+  //   // Get ISBN from manifestation
+  //   const isbn =
+  //     manifestation.identifiers.find(identifier => identifier.type === "ISBN")?.value || ""
+
+  //   const { data } = useGetV1ProductsIdentifier(isbn, {
+  //     query: {
+  //       // Publizon / useGetV1ProductsIdentifier is responsible for online
+  //       // materials. It requires an ISBN to do lookups.
+  //       enabled: isbn.length > 0,
+  //     },
+  //   })
+
+  //   const publizonData = data?.product
+  //   return { manifestation, publizonData }
+  // })
 
   const bestRepresentation = work.manifestations.bestRepresentation
   const allPids = [bestRepresentation.pid, ...getAllWorkPids(work)]
@@ -78,9 +99,9 @@ const WorkCard = ({ work }: WorkCardProps) => {
     materialType => materialType?.materialTypeGeneral?.code === GeneralMaterialTypeCodeEnum.Podcasts
   )
 
-  const isSomeManifestationTypeCostFree = manifestationsWithPublizonData.some(
-    manifestation => manifestation.publizonData?.costFree
-  )
+  // const isSomeManifestationTypeCostFree = manifestationsWithPublizonData.some(
+  //   manifestation => manifestation.publizonData?.costFree
+  // )
 
   return (
     <Link
@@ -90,11 +111,11 @@ const WorkCard = ({ work }: WorkCardProps) => {
         <div
           key={work.workId}
           className="relative flex aspect-4/5 h-auto w-full flex-col rounded-base bg-background-overlay px-[15%] pt-[15%]">
-          {isSomeManifestationTypeCostFree || isSomeMaterialTypePodcast ? (
+          {/* {isSomeManifestationTypeCostFree || isSomeMaterialTypePodcast ? (
             <Badge variant={"blue-title"} className="absolute left-4 top-4 md:left-4 md:top-4">
               BLÅ
             </Badge>
-          ) : null}
+          ) : null} */}
           <div className="relative mx-auto flex h-full w-full items-center justify-center">
             {!isLoadingCovers && (
               <CoverPicture
@@ -109,7 +130,7 @@ const WorkCard = ({ work }: WorkCardProps) => {
           <div className="my-auto flex min-h-[15%] items-center py-3 md:py-4">
             <div className="flex w-full flex-row justify-center gap-2">
               {/* Loop through all manifestation types */}
-              {manifestationsWithPublizonData.map(manifestationWithPublizonData => {
+              {/* {manifestationsWithPublizonData.map(manifestationWithPublizonData => {
                 const isCostFree = manifestationWithPublizonData.publizonData?.costFree
                 // find material type general material type
                 const materialType =
@@ -124,7 +145,7 @@ const WorkCard = ({ work }: WorkCardProps) => {
                     iconName={materialTypeIcon}
                   />
                 )
-              })}
+              })} */}
             </div>
           </div>
         </div>
