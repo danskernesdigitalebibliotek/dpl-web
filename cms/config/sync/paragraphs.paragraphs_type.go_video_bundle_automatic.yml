@@ -1,0 +1,16 @@
+uuid: 02de1b57-d9b9-41ac-860f-7197b40592c6
+langcode: en
+status: true
+dependencies:
+  module:
+    - paragraphs_ee
+third_party_settings:
+  paragraphs_ee:
+    paragraphs_categories:
+      go_paragraphs: go_paragraphs
+id: go_video_bundle_automatic
+label: 'GO Video Bundle - Automatic'
+icon_uuid: null
+icon_default: null
+description: 'This paragraph is used for displaying a VideoTool video and display a set of related books. The related books is automatically chosen based on a CQL search string. '
+behavior_plugins: {  }

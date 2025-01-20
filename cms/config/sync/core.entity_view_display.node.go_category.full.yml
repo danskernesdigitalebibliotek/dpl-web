@@ -1,0 +1,43 @@
+uuid: 5396c6ea-1b2f-4ed8-80ed-0ee3004672ac
+langcode: en
+status: true
+dependencies:
+  config:
+    - core.entity_view_mode.node.full
+    - field.field.node.go_category.field_category_menu_color
+    - field.field.node.go_category.field_category_menu_image
+    - field.field.node.go_category.field_category_menu_sound
+    - field.field.node.go_category.field_category_menu_title
+    - field.field.node.go_category.field_paragraphs
+    - field.field.node.go_category.field_publication_date
+    - node.type.go_category
+  module:
+    - entity_reference_revisions
+    - user
+id: node.go_category.full
+targetEntityType: node
+bundle: go_category
+mode: full
+content:
+  field_paragraphs:
+    type: entity_reference_revisions_entity_view
+    label: hidden
+    settings:
+      view_mode: default
+      link: ''
+    third_party_settings: {  }
+    weight: 4
+    region: content
+  links:
+    settings: {  }
+    third_party_settings: {  }
+    weight: 100
+    region: content
+hidden:
+  field_category_menu_color: true
+  field_category_menu_image: true
+  field_category_menu_sound: true
+  field_category_menu_title: true
+  field_publication_date: true
+  langcode: true
+  search_api_excerpt: true
