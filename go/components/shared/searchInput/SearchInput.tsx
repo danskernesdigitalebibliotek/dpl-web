@@ -9,6 +9,7 @@ import { cn } from "@/lib/helpers/helper.cn"
 import useSearchMachineActor from "@/lib/machines/search/useSearchMachineActor"
 
 import Icon from "../icon/Icon"
+import { navigateToSearch } from "./helper.search"
 
 type SearchInputProps = {
   className?: string
@@ -38,16 +39,8 @@ const SearchInput = ({ className, placeholder }: SearchInputProps) => {
     const focusedElement = document.activeElement as HTMLElement
 
     if (event.key === "Enter" && focusedElement === inputRef.current) {
-      navigateToSearch(currentQuery)
+      navigateToSearch(currentQuery, actor, router)
     }
-  }
-
-  const navigateToSearch = (q: string) => {
-    if (!q) return
-    actor.send({ type: "SEARCH" })
-    router.push(`/search?q=${q}`, {
-      scroll: false,
-    })
   }
 
   return (
@@ -66,7 +59,7 @@ const SearchInput = ({ className, placeholder }: SearchInputProps) => {
       />
       <button
         className="focus-visible absolute right-3 top-[50%] translate-y-[-50%] rounded-full md:right-[24px]"
-        onClick={() => currentQuery && navigateToSearch(currentQuery)}
+        onClick={() => currentQuery && navigateToSearch(currentQuery, actor, router)}
         aria-label="Søg">
         <Icon className="h-[32px] w-[32px]" name="search" />
       </button>
