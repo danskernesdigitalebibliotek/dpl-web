@@ -10,8 +10,8 @@ const meta = {
     layout: "centered",
   },
   args: {
-    goVideoTitle: "Naja Marie Aidt - Oevelser i moerke",
-    src: "https://media.videotool.dk/?vn=557_2024111913325696587632242634",
+    title: "Adrians bogklub 2.0",
+    url: "https://media.videotool.dk/?vn=557_2025010614502071929993093451",
   },
 } satisfies Meta<typeof ParagraphGoVideo>
 
@@ -19,10 +19,6 @@ export default meta
 type Story = StoryObj<typeof meta>
 
 export const Default: Story = {
-  args: {
-    goVideoTitle: "Naja Marie Aidt - Oeveser i moerke",
-  },
-
   render: args => <ParagraphGoVideo {...args}>ParagraphGoVideo</ParagraphGoVideo>,
 }
 
