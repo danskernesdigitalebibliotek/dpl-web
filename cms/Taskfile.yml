@@ -31,7 +31,9 @@ vars:
   # Where is the docker file(s) we use for our builds residing?
   LAGOON_DIR: "lagoon"
 
-  DOCKER_COMPOSE_FILES_DEFAULT: "-f docker-compose.yml"
+  DOCKER_COMPOSE_FILES_BNF:
+    sh: if [[ -f web/sites/sites.php ]]; then echo "-f docker-compose.bnf.yml"; fi
+  DOCKER_COMPOSE_FILES_DEFAULT: "-f docker-compose.yml {{ .DOCKER_COMPOSE_FILES_BNF}}"
   DOCKER_COMPOSE_FILES: "{{.DOCKER_COMPOSE_FILES | default .DOCKER_COMPOSE_FILES_DEFAULT }}"
   DOCKER_COMPOSE_FILES_CI: "{{.DOCKER_COMPOSE_FILES}} -f docker-compose.ci.yml"
 
@@ -70,6 +72,20 @@ tasks:
       - sh: "[ ! -z {{.CR_PAT}} ]"
         msg: "Env variable CR_PAT is not set or empty."
 
+  dev:bnf:enable:
+    summary: Set env up for BNF development.
+    silent: true
+    cmds:
+      - cp assets/sites.php web/sites
+      - echo 'Enabled, remember to run "task dev:reset"'
+
+  dev:bnf:disable:
+    summary: Reset env to non-BNF development.
+    silent: true
+    cmds:
+      - rm web/sites/sites.php
+      - echo 'Disabled, remember to run "task dev:reset"'
+
   dev:format:
     summary: Lint custom code, and fix when possible
     cmds:
@@ -100,6 +116,13 @@ tasks:
     # log output. dev:cli gets called a lot.
     cmds:
       - docker compose {{ .DOCKER_COMPOSE_FILES }} run --rm cli sh -c "{{.CLI_ARGS}}"
+
+  dev:bnfcli:
+    summary: dev:cli for BNF site, a noop if BNF not enabled
+    status:
+      - "[[ -z \"{{ .DOCKER_COMPOSE_FILES_BNF}}\" ]]"
+    cmds:
+      - docker compose {{ .DOCKER_COMPOSE_FILES }} run --rm bnfcli sh -c "{{.CLI_ARGS}}"
 
   dev:start:
     summary: Run docker compose
@@ -153,30 +176,24 @@ tasks:
       # Start local environment.
       - task dev:start
       # Install site.
-      - task dev:cli -- drush site-install --existing-config -y
-      # Practice shows that the cache needs to be cleared to avoid configuration
-      # errors even after a site install.
-      - task dev:cache:clear:drupal
-      # Import translations.
-      - |
-        if [ -n "${SKIP_LANGUAGE_IMPORT}" ]; then
-          echo "Skipping language import due to SKIP_LANGUAGE_IMPORT environment variable"
-        else
-          task dev:cli -- drush locale-check
-          task dev:cli -- drush locale-update
-          task dev:cli -- drush dpl_po:import-remote-config-po da https://danskernesdigitalebibliotek.github.io/dpl-cms/translations/da.config.po
-        fi
-      # Clear all caches to ensure we have a pristine setup.
-      - task dev:cache:clear:all
-      # Run deploy hooks.
-      - task dev:cli -- drush deploy -y
-      # Ensure site is reachable and warm any caches
-      - task dev:cli -- curl --silent --show-error --fail --output /dev/null http://varnish:8080/
-      # Enable dev modules.
-      - task dev:enable-dev-tools
-      - task dev:create-users
-      # Show a one-time login to the local site.
+      - task dev:cli -- ./dev-scripts/install-site.sh {{ if .SKIP_LANGUAGE_IMPORT }}--skip-language-import{{ end }}
+      # Possibly install the BNF site.
+      - task dev:bnfcli -- ./dev-scripts/install-site.sh --no-content {{ if .SKIP_LANGUAGE_IMPORT }}--skip-language-import{{ end }}
+      - task dev:bnfcli -- drush --yes pm:enable bnf_server
+      - task dev:bnfcli -- drush --yes config:set system.site name BNF
+      - task: dev:bnf:set-client
+      # Show a one-time login to the local site(s).
       - task dev:cli -- drush user-login
+      - task dev:bnfcli -- drush user-login
+
+  # Set CMS site to point to BNF site. This needs to be a task so we
+  # can quietly skip it if BNF isn't enabled.
+  dev:bnf:set-client:
+    internal: true
+    status:
+      - "[[ -z \"{{ .DOCKER_COMPOSE_FILES_BNF}}\" ]]"
+    cmds:
+      - task dev:cli -- drush config:set --yes bnf_client.settings base_url https://https/
 
   dev:openid:configure:
     desc: Set openid connect settings based on .env variables. And run cron.
@@ -192,6 +209,7 @@ tasks:
   dev:enable-dev-tools:
     desc: Enable dev modules and settings, which are not to be used in Prod. They are config-ignored
     cmds:
+      # If changing this, keep the corresponding line in ./dev-scripts/install-site.sh in sync.
       - task dev:cli -- drush install -y devel dpl_example_content field_ui purge_ui restui uuid_url views_ui dblog
 
   dev:enable-xdebug:
@@ -208,6 +226,7 @@ tasks:
 
   dev:create-users:
     desc: Create test users, with test roles
+    # If changing this, keep the corresponding lines in ./dev-scripts/install-site.sh in sync.
     cmds:
       - task dev:cli -- drush user:create editor --password="test"
       - task dev:cli -- drush user:role:add 'editor' editor

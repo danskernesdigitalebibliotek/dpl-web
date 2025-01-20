@@ -1,47 +1,36 @@
-# This docker-compose file follows the best-practicis for a docker-compose setup
-# used by a Lagoon based project.
-# https://docs.lagoon.sh/lagoon/using-lagoon-the-basics/docker-compose-yml
-#
-# Note that this file is not actually processed by lagoon. Instead a specialized
-# version is injected during deployment by the dpl-platform. As a consequence
-# any major changes made to his file, will also need to be made to the version
-# used during deployment.
-#
-# Consult https://github.com/danskernesdigitalebibliotek/dpl-platform for
-# further details.
 
-# This block is used for inclusion in the environment section of each container.
+# These should match the same sections in docker-compose.yml.
 x-volumes:
   &default-volumes
-    # Define all volumes you would like to have real-time mounted into the docker containers
     volumes:
       - 'projectroot:/app'
 
 x-user:
   &default-user
-    # The default user under which the containers should run. Change this if you are on linux and run with another user than id `1000`
     user: ${UID:-1000}
 
 x-environment:
   &default-environment
-    # Lagoon ensures that Drush knows the local site URI using this variable.
-    LAGOON_ROUTE: &default-url https://${COMPOSE_PROJECT_NAME}.${DEV_TLD:-docker}
-    # Environment variables which mimic what will be set in a Lagoon cluster locally
+    # This is the only that differs from docker-compose.yml
+    LAGOON_ROUTE: &default-url https://bnf-${COMPOSE_PROJECT_NAME}.${DEV_TLD:-docker}
     LAGOON_PROJECT: 'dplcms'
     LAGOON_ENVIRONMENT: 'local'
     LAGOON_ENVIRONMENT_TYPE: ${LAGOON_ENVIRONMENT_TYPE:-local}
     WEBROOT: web
-    # Uncomment if you like to have the system behave like in production
-    #LAGOON_ENVIRONMENT_TYPE: production
+    #
+    MARIADB_HOST: bnfmariadb
+    REDIS_HOST: bnfredis
+    VARNISH_BACKEND_HOST: bnfnginx
+    NGINX_FASTCGI_PASS: bnfphp
 
 services:
-  https:
+  bnfhttps:
     image: ghcr.io/reload/https-proxy:proxy
     ports:
       - '80'
       - '443'
     depends_on:
-      - varnish
+      - bnfvarnish
     labels:
       lagoon.type: none
     volumes:
@@ -50,22 +39,21 @@ services:
       - '${HOME}/.local/share/dev_certificates:/cert:rw'
     environment:
       NGINX_DOCUMENT_ROOT: /app/web
-      NGINX_PROXY_PASS: http://varnish:8080
+      NGINX_PROXY_PASS: http://bnfvarnish:8080
       VIRTUAL_PROTO: https
       VIRTUAL_HOST: >-
-        ${COMPOSE_PROJECT_NAME}.${DEV_TLD:-docker}
+        bnf-${COMPOSE_PROJECT_NAME}.${DEV_TLD:-docker}
     working_dir: /app
 
-  varnish: # Caching HTTP reverse proxy that serves (mostly) anonymous requests.
+  bnfvarnish: # Caching HTTP reverse proxy that serves (mostly) anonymous requests.
     # https://docs.lagoon.sh/lagoon/docker-images/varnish
     image: uselagoon/varnish-6-drupal:latest
     depends_on:
-      - nginx
+      - bnfnginx
     labels:
-      lagoon.type: varnish
-      dev.orbstack.domains: ${COMPOSE_PROJECT_NAME}.local
+      dev.orbstack.domains: bnf-${COMPOSE_PROJECT_NAME}.local
     links:
-      - nginx # links varnish to the nginx in this docker-compose project, or it would try to connect to any nginx running in docker
+      - bnfnginx # links varnish to the nginx in this docker-compose project, or it would try to connect to any nginx running in docker
     << : *default-user # uses the defined user from top
     ports:
       # Exposing the port to make it accessible locally without proxies.
@@ -74,10 +62,10 @@ services:
       << : *default-environment
       # VARNISH_BYPASS: "true" # Add this to disable caching in varnish.
       # Is used by [nginx-proxy](https://github.com/nginx-proxy/nginx-proxy) or [dory](https://github.com/FreedomBen/dory)
-      VIRTUAL_HOST: ${COMPOSE_PROJECT_NAME}-varnish.${DEV_TLD:-docker}
+      VIRTUAL_HOST: ${COMPOSE_PROJECT_NAME}-bnfvarnish.${DEV_TLD:-docker}
       VIRTUAL_PORT: 8080
 
-  cli: # cli container, will be used for executing composer and any local commands (drush, drupal, etc.)
+  bnfcli: # cli container, will be used for executing composer and any local commands (drush, drupal, etc.)
     # https://docs.lagoon.sh/lagoon/docker-images/nginx/nginx-drupal
     build:
       context: .
@@ -89,13 +77,8 @@ services:
       << : *default-environment # loads the defined environment variables from the top
       # Uncomment to enable xdebug for cli tools
       #XDEBUG_ENABLE: "true"
-    labels:
-      # Lagoon Labels
-      lagoon.type: cli-persistent
-      lagoon.persistent.name: nginx # mount the persistent storage of nginx into this container
-      lagoon.persistent: /app/web/sites/default/files/ # location where the persistent storage should be mounted
 
-  nginx: # Webserver in front of php-fpm. Serves static assets.
+  bnfnginx: # Webserver in front of php-fpm. Serves static assets.
     # https://docs.lagoon.sh/lagoon/docker-images/nginx/nginx-drupal
     build:
       context: .
@@ -103,19 +86,15 @@ services:
       args:
         CLI_IMAGE: *cli-image # Inject the name of the cli image
     depends_on:
-      - php
+      - bnfphp
     # loads the defined volumes and user from the top
     <<: [*default-volumes, *default-user]
     environment:
       << : *default-environment # loads the defined environment variables from the top
       # Route that should be used locally.
-      VIRTUAL_HOST: nginx.${COMPOSE_PROJECT_NAME}.${DEV_TLD:-docker}
-    labels:
-      lagoon.type: nginx-php-persistent
-      lagoon.persistent: /app/web/sites/default/files/ # define where the persistent storage should be mounted too
-      lagoon.persistent.size: 10Gi
+      VIRTUAL_HOST: bnfnginx.${COMPOSE_PROJECT_NAME}.${DEV_TLD:-docker}
 
-  php: # php-fpm server that executes php requests.
+  bnfphp: # php-fpm server that executes php requests.
     # https://docs.lagoon.sh/lagoon/docker-images/php-fpm
     build:
       context: .
@@ -123,25 +102,19 @@ services:
       args:
         CLI_IMAGE: *cli-image
     depends_on:
-      redis:
+      bnfredis:
         condition: service_started
-      mariadb:
+      bnfmariadb:
         condition: service_healthy
       # loads the defined volumes and user from the top
     <<: [*default-volumes, *default-user]
     environment:
       << : *default-environment # loads the defined environment variables from the top
       XDEBUG_ENABLE: ${XDEBUG_ENABLE:-false}
-    labels:
-      lagoon.type: nginx-php-persistent
-      lagoon.name: nginx # we want this service be part of the nginx pod in Lagoon
-      lagoon.persistent: /app/web/sites/default/files/ # define where the persistent storage should be mounted too
 
-  mariadb: # Main site database.
+  bnfmariadb: # Main site database.
     # https://docs.lagoon.sh/lagoon/docker-images/mariadb/mariadb-drupal
     image: uselagoon/mariadb-10.6-drupal:latest
-    labels:
-      lagoon.type: mariadb
     # Do a periodic healthcheck. This is mainly used to block the php service
     # from starting up before we have a healthy database.
     healthcheck:
@@ -155,30 +128,9 @@ services:
       MARIADB_COLLATION: 'utf8mb4_danish_ci'
       << : *default-environment
 
-  redis: # In-memory key-value database used as the Drupal Core cache backend.
+  bnfredis: # In-memory key-value database used as the Drupal Core cache backend.
     # https://docs.lagoon.sh/lagoon/docker-images/redis
     image: uselagoon/redis-6:latest
-    labels:
-      lagoon.type: redis
     << : *default-user # uses the defined user from top
     environment:
       << : *default-environment
-
-  node:
-    image: ghcr.io/danskernesdigitalebibliotek/dpl-go-node:0.0.12
-    labels:
-      provenance: false
-      lagoon.type: node-persistent
-      lagoon.persistent: /app/.next
-      # The size of the persistent storage for this service
-      # is based on some documentation in Lagoon about hosting a node service:
-      # https://docs.lagoon.sh/docker-images/nodejs/#docker-composeyml-snippet
-      # We could revise in the future if we need more space.
-      lagoon.persistent.size: 500Mi
-volumes:
-  projectroot:
-    driver: local
-    driver_opts:
-      type: none
-      device: ${PWD}
-      o: bind
