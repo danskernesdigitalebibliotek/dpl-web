@@ -11,13 +11,14 @@ import {
   getManifestationByMaterialType,
   getManifestationLanguageIsoCode,
   getWorkMaterialTypes,
+  translateMaterialTypesForRender,
 } from "@/components/pages/workPageLayout/helper"
 import { Badge } from "@/components/shared/badge/Badge"
 import { CoverPicture } from "@/components/shared/coverPicture/CoverPicture"
 import SlideSelect, { SlideSelectOption } from "@/components/shared/slideSelect/SlideSelect"
-import { displayCreators } from "@/components/shared/workCard/helper"
 import { WorkFullWorkPageFragment } from "@/lib/graphql/generated/fbi/graphql"
-import { getCoverUrls, getLowResCoverUrl } from "@/lib/helpers/covers"
+import { getCoverUrls, getLowResCoverUrl } from "@/lib/helpers/helper.covers"
+import { displayCreators } from "@/lib/helpers/helper.creators"
 import { getIsbnsFromManifestation } from "@/lib/helpers/ids"
 import { useGetCoverCollection } from "@/lib/rest/cover-service-api/generated/cover-service"
 import { GetCoverCollectionSizesItem } from "@/lib/rest/cover-service-api/generated/model"
@@ -39,7 +40,7 @@ const WorkPageHeader = ({ work }: WorkPageHeaderProps) => {
   const [initialSliderValue, setInitialSliderValue] = useState<SlideSelectOption | undefined>(
     undefined
   )
-  const workMaterialTypes = getWorkMaterialTypes(work).map(materialType => {
+  const workMaterialTypes = getWorkMaterialTypes(work.materialTypes).map(materialType => {
     return { value: materialType.code, render: materialType.display }
   })
 
@@ -79,8 +80,9 @@ const WorkPageHeader = ({ work }: WorkPageHeaderProps) => {
     // Initialize slideSelect options
     const slideSelectOptions = workMaterialTypes.reduce<SlideSelectOption[]>(
       (acc, materialType) => {
+        // We only want unique material types
         if (!acc.some(item => item.value === materialType.value)) {
-          acc.push(addMaterialTypeIconToSelectOption(materialType)) // We only want unique material types
+          acc.push(translateMaterialTypesForRender(addMaterialTypeIconToSelectOption(materialType)))
         }
         return acc
       },
@@ -148,7 +150,9 @@ const WorkPageHeader = ({ work }: WorkPageHeaderProps) => {
             className="hyphens-auto break-words text-typo-heading-3 lg:mt-0 lg:text-typo-heading-2">
             {`${selectedManifestation?.titles?.full || ""}${!!titleSuffix ? ` (${titleSuffix})` : ""}`}
           </h1>
-          <p className="mt-grid-gap-2 text-typo-caption uppercase lg:mt-7">{`af ${displayCreators(work.creators, 100)}`}</p>
+          <h2 className="mt-grid-gap-2 text-typo-subtitle-sm uppercase lg:mt-7">
+            {`af ${displayCreators(work.creators, 100) || displayCreators(selectedManifestation?.contributors || [], 100)}`}
+          </h2>
         </div>
         <div className="col-span-4 mt-grid-gap-3 flex flex-col items-end justify-end lg:order-3 lg:mt-0">
           <WorkPageButtons workId={work.workId} />

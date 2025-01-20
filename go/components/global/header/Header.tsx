@@ -5,17 +5,18 @@ import DarkModeToggle from "@/components/shared/darkModeToggle/DarkModeToggle"
 import Icon from "@/components/shared/icon/Icon"
 import SearchInput from "@/components/shared/searchInput/SearchInput"
 import SmartLink from "@/components/shared/smartLink/SmartLink"
+import { cyKeys } from "@/cypress/support/constants"
 
 import ProfileButton from "./ProfileButton"
 
 function Header() {
   return (
-    <div>
+    <header>
       <div className="flex h-navigation-top-height items-center justify-center bg-background-overlay">
         <p className="text-typo-caption">Biblioterernes ebøger og lydbøger</p>
       </div>
       <div className="content-container grid h-navigation-height grid-cols-3 items-center">
-        <div className="flex-0 flex items-center">
+        <div className="flex-0 flex items-center" data-cy={cyKeys["go-logo"]}>
           <Button ariaLabel="Gå til forsiden" asChild className="inline-flex px-3">
             <SmartLink href="/" className="inline-flex">
               <Icon name="logo-borderless" />
@@ -43,7 +44,7 @@ function Header() {
           </div>
         </div>
       </div>
-    </div>
+    </header>
   )
 }
 

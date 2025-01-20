@@ -61,7 +61,7 @@ const SlideSelect = ({ options, initialOption, onOptionSelect }: SlideSelectProp
               onOptionSelect(option)
             }}
             variant="transparent"
-            classNames={cn("z-slide-select min-w-28", selected === index && "text-background")}>
+            classNames={cn("z-slide-select min-w-36", selected === index && "text-background")}>
             {!!option.icon && (
               <Icon className="m-[-7px] h-7 w-7 flex-shrink-0" name={option.icon} />
             )}

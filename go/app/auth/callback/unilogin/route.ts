@@ -101,3 +101,5 @@ export async function GET(request: NextRequest) {
     headers,
   })
 }
+
+export const dynamic = "force-dynamic"

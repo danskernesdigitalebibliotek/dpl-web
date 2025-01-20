@@ -1,12 +1,13 @@
 import { flatten } from "lodash"
 
+import { filterFalsyValuesFromArray } from "@/lib/helpers/helper.arrays"
+
 import {
   IdentifierTypeEnum,
   ManifestationIdentifiersFragment,
   ManifestationWorkPageFragment,
   WorkTeaserSearchPageFragment,
 } from "../graphql/generated/fbi/graphql"
-import { filterFalsyValuesFromArray } from "./arrays"
 
 export const getIsbnsFromManifestation = (
   manifestation: ManifestationIdentifiersFragment | ManifestationWorkPageFragment | null
