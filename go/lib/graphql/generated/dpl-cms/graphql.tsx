@@ -51,6 +51,15 @@ export type AddressCountry = {
   name?: Maybe<Scalars['String']['output']>;
 };
 
+/** A color field. */
+export type Color = {
+  __typename?: 'Color';
+  /** The color value in #HEX format. */
+  color?: Maybe<Scalars['String']['output']>;
+  /** The opacity value. */
+  opacity?: Maybe<Scalars['Float']['output']>;
+};
+
 /** A Date range has a start and an end. */
 export type DateRange = {
   __typename?: 'DateRange';
@@ -142,6 +151,27 @@ export type Link = {
 };
 
 /** Entity type media. */
+export type MediaAudio = MediaInterface & {
+  __typename?: 'MediaAudio';
+  /** The time the media item was last edited. */
+  changed: DateTime;
+  /** The time the media item was created. */
+  created: DateTime;
+  /** The Universally Unique IDentifier (UUID). */
+  id: Scalars['ID']['output'];
+  /** Language */
+  langcode: Language;
+  /** Audio file */
+  mediaAudioFile: File;
+  /** Name */
+  name: Scalars['String']['output'];
+  /** Alternativ URL */
+  path: Scalars['String']['output'];
+  /** Published */
+  status: Scalars['Boolean']['output'];
+};
+
+/** Entity type media. */
 export type MediaDocument = MediaInterface & {
   __typename?: 'MediaDocument';
   /** The time the media item was last edited. */
@@ -209,7 +239,7 @@ export type MediaInterface = {
 };
 
 /** Entity type media. */
-export type MediaUnion = MediaDocument | MediaImage | MediaVideo;
+export type MediaUnion = MediaAudio | MediaDocument | MediaImage | MediaVideo;
 
 /** Entity type media. */
 export type MediaVideo = MediaInterface & {
@@ -296,6 +326,90 @@ export type NodeArticle = NodeInterface & {
   title: Scalars['String']['output'];
 };
 
+/** Use Go articles for news-worthy content, that does not get updated regularly. */
+export type NodeGoArticle = NodeInterface & {
+  __typename?: 'NodeGoArticle';
+  /** Tidspunktet hvor indholdselementet sidst blev redigeret. */
+  changed: DateTime;
+  /** The date and time that the content was created. */
+  created: DateTime;
+  /** Image */
+  goArticleImage?: Maybe<MediaUnion>;
+  /** The Universally Unique IDentifier (UUID). */
+  id: Scalars['ID']['output'];
+  /** Language */
+  langcode: Language;
+  /** Override author */
+  overrideAuthor?: Maybe<Scalars['String']['output']>;
+  /** Paragraphs */
+  paragraphs?: Maybe<Array<ParagraphUnion>>;
+  /** Alternativ URL */
+  path: Scalars['String']['output'];
+  /** Forfremmet til forside */
+  promote: Scalars['Boolean']['output'];
+  /** Publication date */
+  publicationDate: DateTime;
+  /**
+   * By default, the author is set to the Drupal user that owns the content.<br
+   * /><br />If you want to override this, with a manual text, you can check this.
+   */
+  showOverrideAuthor?: Maybe<Scalars['Boolean']['output']>;
+  /** Published */
+  status: Scalars['Boolean']['output'];
+  /** Klæbrig */
+  sticky: Scalars['Boolean']['output'];
+  /** Subtitle */
+  subtitle?: Maybe<Scalars['String']['output']>;
+  /**
+   * The teaser fields are used for the card of display.<br />If no image has been
+   * selected, the text will be shown instead:<br /><br /><img
+   * src="/themes/custom/novel/images/teaser-text-image.jpg" /><br /><br /><hr/>
+   */
+  teaserImage: MediaUnion;
+  /** Teaser text */
+  teaserText?: Maybe<Scalars['String']['output']>;
+  /** Title */
+  title: Scalars['String']['output'];
+};
+
+/**
+ * GO category pages will be used for creating a "landingpage" for specific categories.
+ * When creating and publishing a new category page, the category will automatically be added to the category menu.
+ */
+export type NodeGoCategory = NodeInterface & {
+  __typename?: 'NodeGoCategory';
+  /** Category menu color */
+  categoryMenuColor: Color;
+  /** The category image will be shown in the category menu as part of this category's menu element. */
+  categoryMenuImage: MediaUnion;
+  /** The category sound will be able to be played in the category menu as part of this category's menu element. */
+  categoryMenuSound?: Maybe<MediaUnion>;
+  /** The category title will be shown in the category menu as part of this category's menu element. */
+  categoryMenuTitle: Scalars['String']['output'];
+  /** Tidspunktet hvor indholdselementet sidst blev redigeret. */
+  changed: DateTime;
+  /** The date and time that the content was created. */
+  created: DateTime;
+  /** The Universally Unique IDentifier (UUID). */
+  id: Scalars['ID']['output'];
+  /** Language */
+  langcode: Language;
+  /** Paragraphs */
+  paragraphs?: Maybe<Array<ParagraphUnion>>;
+  /** Alternativ URL */
+  path: Scalars['String']['output'];
+  /** Forfremmet til forside */
+  promote: Scalars['Boolean']['output'];
+  /** Publication date */
+  publicationDate: DateTime;
+  /** Published */
+  status: Scalars['Boolean']['output'];
+  /** Klæbrig */
+  sticky: Scalars['Boolean']['output'];
+  /** Title */
+  title: Scalars['String']['output'];
+};
+
 /**
  * GO pages will be used for various types of content, which does not belong to
  * either an article page or an category page. Some examples could be the
@@ -350,7 +464,7 @@ export type NodeInterface = {
 };
 
 /** Entity type node. */
-export type NodeUnion = NodeArticle | NodeGoPage;
+export type NodeUnion = NodeArticle | NodeGoArticle | NodeGoCategory | NodeGoPage;
 
 /** Entity type paragraph. */
 export type ParagraphAccordion = ParagraphInterface & {
@@ -450,7 +564,7 @@ export type ParagraphCardGridManual = ParagraphInterface & {
 };
 
 /** Content */
-export type ParagraphCardGridManualGridContentUnion = NodeArticle | NodeGoPage;
+export type ParagraphCardGridManualGridContentUnion = NodeArticle | NodeGoArticle | NodeGoCategory | NodeGoPage;
 
 /** Entity type paragraph. */
 export type ParagraphContentSlider = ParagraphInterface & {
@@ -499,7 +613,7 @@ export type ParagraphContentSliderAutomatic = ParagraphInterface & {
 };
 
 /** Contents */
-export type ParagraphContentSliderContentReferencesUnion = NodeArticle | NodeGoPage;
+export type ParagraphContentSliderContentReferencesUnion = NodeArticle | NodeGoArticle | NodeGoCategory | NodeGoPage;
 
 /** This paragraph displays a generated a list of events, based on specified filters for tags, categories and branches.  */
 export type ParagraphFilteredEventList = ParagraphInterface & {
@@ -535,16 +649,16 @@ export type ParagraphGoVideo = ParagraphInterface & {
   __typename?: 'ParagraphGoVideo';
   /** The time that the Paragraph was created. */
   created: DateTime;
-  /** Embed video */
-  embedVideo?: Maybe<MediaUnion>;
-  /** Title */
-  goVideoTitle?: Maybe<Scalars['String']['output']>;
   /** The Universally Unique IDentifier (UUID). */
   id: Scalars['ID']['output'];
   /** The paragraphs entity language code. */
   langcode: Language;
   /** Published */
   status: Scalars['Boolean']['output'];
+  /** Title */
+  title?: Maybe<Scalars['String']['output']>;
+  /** VideoTool URL. Example: https://media.videotool.dk/?vn=557_2023103014511477700668916683 */
+  url: Scalars['String']['output'];
 };
 
 /** Entity type paragraph. */
@@ -659,6 +773,10 @@ export type Query = {
   info: SchemaInformation;
   /** Load a NodeArticle entity by id */
   nodeArticle?: Maybe<NodeArticle>;
+  /** Load a NodeGoArticle entity by id */
+  nodeGoArticle?: Maybe<NodeGoArticle>;
+  /** Load a NodeGoCategory entity by id */
+  nodeGoCategory?: Maybe<NodeGoCategory>;
   /** Load a NodeGoPage entity by id */
   nodeGoPage?: Maybe<NodeGoPage>;
   /** Load a Route by path. */
@@ -668,6 +786,22 @@ export type Query = {
 
 /** The schema's entry-point for queries. */
 export type QueryNodeArticleArgs = {
+  id: Scalars['ID']['input'];
+  langcode?: InputMaybe<Scalars['String']['input']>;
+  revision?: InputMaybe<Scalars['ID']['input']>;
+};
+
+
+/** The schema's entry-point for queries. */
+export type QueryNodeGoArticleArgs = {
+  id: Scalars['ID']['input'];
+  langcode?: InputMaybe<Scalars['String']['input']>;
+  revision?: InputMaybe<Scalars['ID']['input']>;
+};
+
+
+/** The schema's entry-point for queries. */
+export type QueryNodeGoCategoryArgs = {
   id: Scalars['ID']['input'];
   langcode?: InputMaybe<Scalars['String']['input']>;
   revision?: InputMaybe<Scalars['ID']['input']>;
@@ -697,7 +831,7 @@ export type Route = {
 };
 
 /** A list of possible entities that can be returned by URL. */
-export type RouteEntityUnion = NodeArticle | NodeGoPage;
+export type RouteEntityUnion = NodeGoArticle | NodeGoCategory | NodeGoPage;
 
 /** Route outside of this website. */
 export type RouteExternal = Route & {
@@ -746,6 +880,9 @@ export type SchemaInformation = {
   home?: Maybe<Scalars['String']['output']>;
   /** List of languages available. */
   languages: Array<Language>;
+  /** The site name. */
+  name?: Maybe<Scalars['String']['output']>;
+  url: Scalars['String']['output'];
   /** The schema version. */
   version?: Maybe<Scalars['String']['output']>;
 };
@@ -1009,7 +1146,7 @@ export type GetPageByPathQueryVariables = Exact<{
 }>;
 
 
-export type GetPageByPathQuery = { __typename?: 'Query', route?: { __typename: 'RouteExternal' } | { __typename: 'RouteInternal', url: string, entity?: { __typename?: 'NodeArticle' } | { __typename?: 'NodeGoPage', paragraphs?: Array<{ __typename?: 'ParagraphAccordion' } | { __typename?: 'ParagraphBanner' } | { __typename?: 'ParagraphBreadcrumbChildren' } | { __typename?: 'ParagraphCardGridAutomatic' } | { __typename?: 'ParagraphCardGridManual' } | { __typename?: 'ParagraphContentSlider' } | { __typename?: 'ParagraphContentSliderAutomatic' } | { __typename?: 'ParagraphFilteredEventList' } | { __typename: 'ParagraphGoVideo', id: string, goVideoTitle?: string | null, status: boolean, created: { __typename?: 'DateTime', timestamp: unknown }, embedVideo?: { __typename?: 'MediaDocument' } | { __typename?: 'MediaImage' } | { __typename?: 'MediaVideo', id: string, mediaOembedVideo: string, name: string, path: string } | null, langcode: { __typename?: 'Language', name?: string | null } } | { __typename?: 'ParagraphManualEventList' } | { __typename?: 'ParagraphMaterialGridAutomatic' } | { __typename?: 'ParagraphMaterialGridManual' } | { __typename?: 'ParagraphTextBody' } | { __typename?: 'ParagraphVideo' }> | null } | null } | { __typename: 'RouteRedirect' } | null };
+export type GetPageByPathQuery = { __typename?: 'Query', route?: { __typename: 'RouteExternal' } | { __typename: 'RouteInternal', url: string, entity?: { __typename?: 'NodeGoArticle' } | { __typename?: 'NodeGoCategory' } | { __typename?: 'NodeGoPage', paragraphs?: Array<{ __typename?: 'ParagraphAccordion' } | { __typename?: 'ParagraphBanner' } | { __typename?: 'ParagraphBreadcrumbChildren' } | { __typename?: 'ParagraphCardGridAutomatic' } | { __typename?: 'ParagraphCardGridManual' } | { __typename?: 'ParagraphContentSlider' } | { __typename?: 'ParagraphContentSliderAutomatic' } | { __typename?: 'ParagraphFilteredEventList' } | { __typename: 'ParagraphGoVideo', id: string, url: string, title?: string | null, status: boolean, created: { __typename?: 'DateTime', timestamp: unknown }, langcode: { __typename?: 'Language', name?: string | null } } | { __typename?: 'ParagraphManualEventList' } | { __typename?: 'ParagraphMaterialGridAutomatic' } | { __typename?: 'ParagraphMaterialGridManual' } | { __typename?: 'ParagraphTextBody' } | { __typename?: 'ParagraphVideo' }> | null } | null } | { __typename: 'RouteRedirect' } | null };
 
 
 
@@ -1133,17 +1270,10 @@ export const GetPageByPathDocument = `
             ... on ParagraphGoVideo {
               __typename
               id
+              url
+              title
               created {
                 timestamp
-              }
-              goVideoTitle
-              embedVideo {
-                ... on MediaVideo {
-                  id
-                  mediaOembedVideo
-                  name
-                  path
-                }
               }
               langcode {
                 name

@@ -5,8 +5,8 @@ import React, { useEffect } from "react"
 import type { ParagraphGoVideo } from "@/lib/graphql/generated/dpl-cms/graphql"
 
 type ParagraphGoVideoProps = {
-  goVideoTitle: ParagraphGoVideo["goVideoTitle"]
-  src: string
+  title: ParagraphGoVideo["title"]
+  url: ParagraphGoVideo["url"]
 }
 
 export default function ParagraphGoVideo(paragraphGoVideo: ParagraphGoVideoProps) {
@@ -16,7 +16,7 @@ export default function ParagraphGoVideo(paragraphGoVideo: ParagraphGoVideoProps
     setMounted(true)
   }, [])
 
-  const { goVideoTitle: title } = paragraphGoVideo
+  const { title, url } = paragraphGoVideo
 
   return (
     <div className="content-container grid-go gap-paragraph-spacing-inner">
@@ -30,7 +30,7 @@ export default function ParagraphGoVideo(paragraphGoVideo: ParagraphGoVideoProps
             <iframe
               aria-label={title || "Video"}
               className="absolute inset-0 h-full w-full"
-              src="https://media.videotool.dk/?vn=557_2024111913325696587632242634"
+              src={url}
               allowFullScreen
               allow="autoplay; fullscreen"></iframe>
           )}

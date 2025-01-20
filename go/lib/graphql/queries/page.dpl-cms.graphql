@@ -9,17 +9,10 @@ query getPageByPath($path: String!) {
             ... on ParagraphGoVideo {
               __typename
               id
+              url
+              title
               created {
                 timestamp
-              }
-              goVideoTitle
-              embedVideo {
-                ... on MediaVideo {
-                  id
-                  mediaOembedVideo
-                  name
-                  path
-                }
               }
               langcode {
                 name
