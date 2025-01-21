@@ -23,14 +23,11 @@ export const displayCreators = (
 export const getAllCreators = (
   creators: WorkFullWorkPageFragment["creators"] | ManifestationDetailsFragment["contributors"]
 ) => {
-  return creators.reduce(
-    (acc, creator) => {
-      // Don't show one person twice
-      if (acc.includes(creator.display)) {
-        return acc
-      }
-      return [...acc, creator.display]
-    },
-    <string[]>[]
-  )
+  return creators.reduce((acc, creator) => {
+    // Don't show one person twice
+    if (acc.includes(creator.display)) {
+      return acc
+    }
+    return [...acc, creator.display]
+  }, [] as string[])
 }
