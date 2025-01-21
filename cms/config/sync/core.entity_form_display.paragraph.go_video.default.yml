@@ -30,4 +30,5 @@ content:
     third_party_settings: {  }
 hidden:
   created: true
+  field_url: true
   status: true

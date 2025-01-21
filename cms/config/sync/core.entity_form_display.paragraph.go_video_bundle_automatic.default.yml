@@ -5,6 +5,7 @@ dependencies:
   config:
     - field.field.paragraph.go_video_bundle_automatic.field_cql_search
     - field.field.paragraph.go_video_bundle_automatic.field_go_video_title
+    - field.field.paragraph.go_video_bundle_automatic.field_url
     - field.field.paragraph.go_video_bundle_automatic.field_video_amount_of_materials
     - paragraphs.paragraphs_type.go_video_bundle_automatic
   module:
@@ -23,6 +24,14 @@ content:
   field_go_video_title:
     type: string_textfield
     weight: 0
+    region: content
+    settings:
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+  field_url:
+    type: string_textfield
+    weight: 4
     region: content
     settings:
       size: 60

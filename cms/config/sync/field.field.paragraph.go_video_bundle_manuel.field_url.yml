@@ -1,0 +1,19 @@
+uuid: 3403baaf-4757-4f51-a4c9-353d00cdac53
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.paragraph.field_url
+    - paragraphs.paragraphs_type.go_video_bundle_manuel
+id: paragraph.go_video_bundle_manuel.field_url
+field_name: field_url
+entity_type: paragraph
+bundle: go_video_bundle_manuel
+label: URL
+description: 'VideoTool URL. Example: https://media.videotool.dk/?vn=557_2023103014511477700668916683'
+required: true
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: string
