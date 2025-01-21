@@ -1,0 +1,21 @@
+uuid: 539db46c-5b23-4319-ac71-44720cbb9f44
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.paragraph.field_material_slider_work_ids
+    - paragraphs.paragraphs_type.go_material_slider_mannual
+  module:
+    - dpl_fbi
+id: paragraph.go_material_slider_mannual.field_material_slider_work_ids
+field_name: field_material_slider_work_ids
+entity_type: paragraph
+bundle: go_material_slider_mannual
+label: 'Work IDs'
+description: 'Here you can choose which materials to display. If you need to link to a specific type, select it from the dropdown and the system will display that, if it is available.<br />Example work ID: work-of:870970-basis:136336282'
+required: true
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: dpl_fbi_work_id

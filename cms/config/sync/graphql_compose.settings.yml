@@ -55,6 +55,12 @@ entity_config:
       enabled: false
     filtered_event_list:
       enabled: true
+    go_linkbox:
+      enabled: true
+    go_material_slider_automatic:
+      enabled: true
+    go_material_slider_mannual:
+      enabled: true
     go_video:
       enabled: true
     hero:
@@ -250,6 +256,29 @@ field_config:
       field_filter_tags:
         enabled: true
       field_max_item_amount:
+        enabled: true
+      field_title:
+        enabled: true
+    go_linkbox:
+      field_go_color:
+        enabled: true
+      field_go_description:
+        enabled: true
+      field_go_image:
+        enabled: true
+      field_go_link:
+        enabled: true
+      field_title:
+        enabled: true
+    go_material_slider_automatic:
+      field_cql_search:
+        enabled: true
+      field_slider_amount_of_materials:
+        enabled: true
+      field_title:
+        enabled: true
+    go_material_slider_mannual:
+      field_material_slider_work_ids:
         enabled: true
       field_title:
         enabled: true

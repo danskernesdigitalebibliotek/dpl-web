@@ -1,0 +1,32 @@
+uuid: 33ab7f6d-016c-47cc-9aef-04903727c169
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.field.paragraph.go_material_slider_mannual.field_material_slider_work_ids
+    - field.field.paragraph.go_material_slider_mannual.field_title
+    - paragraphs.paragraphs_type.go_material_slider_mannual
+  module:
+    - dpl_fbi
+id: paragraph.go_material_slider_mannual.default
+targetEntityType: paragraph
+bundle: go_material_slider_mannual
+mode: default
+content:
+  field_material_slider_work_ids:
+    type: dpl_fbi_work_id_search_for_material
+    weight: 1
+    region: content
+    settings: {  }
+    third_party_settings: {  }
+  field_title:
+    type: string_textfield
+    weight: 0
+    region: content
+    settings:
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+hidden:
+  created: true
+  status: true
