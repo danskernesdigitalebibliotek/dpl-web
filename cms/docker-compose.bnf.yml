@@ -1,0 +1,136 @@
+
+# These should match the same sections in docker-compose.yml.
+x-volumes:
+  &default-volumes
+    volumes:
+      - 'projectroot:/app'
+
+x-user:
+  &default-user
+    user: ${UID:-1000}
+
+x-environment:
+  &default-environment
+    # This is the only that differs from docker-compose.yml
+    LAGOON_ROUTE: &default-url https://bnf-${COMPOSE_PROJECT_NAME}.${DEV_TLD:-docker}
+    LAGOON_PROJECT: 'dplcms'
+    LAGOON_ENVIRONMENT: 'local'
+    LAGOON_ENVIRONMENT_TYPE: ${LAGOON_ENVIRONMENT_TYPE:-local}
+    WEBROOT: web
+    #
+    MARIADB_HOST: bnfmariadb
+    REDIS_HOST: bnfredis
+    VARNISH_BACKEND_HOST: bnfnginx
+    NGINX_FASTCGI_PASS: bnfphp
+
+services:
+  bnfhttps:
+    image: ghcr.io/reload/https-proxy:proxy
+    ports:
+      - '80'
+      - '443'
+    depends_on:
+      - bnfvarnish
+    labels:
+      lagoon.type: none
+    volumes:
+      - 'projectroot:/app'
+      - '${HOME}/.local/share/mkcert:/rootCA:ro'
+      - '${HOME}/.local/share/dev_certificates:/cert:rw'
+    environment:
+      NGINX_DOCUMENT_ROOT: /app/web
+      NGINX_PROXY_PASS: http://bnfvarnish:8080
+      VIRTUAL_PROTO: https
+      VIRTUAL_HOST: >-
+        bnf-${COMPOSE_PROJECT_NAME}.${DEV_TLD:-docker}
+    working_dir: /app
+
+  bnfvarnish: # Caching HTTP reverse proxy that serves (mostly) anonymous requests.
+    # https://docs.lagoon.sh/lagoon/docker-images/varnish
+    image: uselagoon/varnish-6-drupal:latest
+    depends_on:
+      - bnfnginx
+    labels:
+      dev.orbstack.domains: bnf-${COMPOSE_PROJECT_NAME}.local
+    links:
+      - bnfnginx # links varnish to the nginx in this docker-compose project, or it would try to connect to any nginx running in docker
+    << : *default-user # uses the defined user from top
+    ports:
+      # Exposing the port to make it accessible locally without proxies.
+      - "8080"
+    environment:
+      << : *default-environment
+      # VARNISH_BYPASS: "true" # Add this to disable caching in varnish.
+      # Is used by [nginx-proxy](https://github.com/nginx-proxy/nginx-proxy) or [dory](https://github.com/FreedomBen/dory)
+      VIRTUAL_HOST: ${COMPOSE_PROJECT_NAME}-bnfvarnish.${DEV_TLD:-docker}
+      VIRTUAL_PORT: 8080
+
+  bnfcli: # cli container, will be used for executing composer and any local commands (drush, drupal, etc.)
+    # https://docs.lagoon.sh/lagoon/docker-images/nginx/nginx-drupal
+    build:
+      context: .
+      dockerfile: lagoon/cli.dockerfile
+    image: &cli-image uselagoon/php-8.1-cli-drupal:latest # this image will be reused as `CLI_IMAGE` in subsequent Docker builds
+    << : *default-volumes # loads the defined volumes from the top
+    user: root
+    environment:
+      << : *default-environment # loads the defined environment variables from the top
+      # Uncomment to enable xdebug for cli tools
+      #XDEBUG_ENABLE: "true"
+
+  bnfnginx: # Webserver in front of php-fpm. Serves static assets.
+    # https://docs.lagoon.sh/lagoon/docker-images/nginx/nginx-drupal
+    build:
+      context: .
+      dockerfile: lagoon/nginx.dockerfile
+      args:
+        CLI_IMAGE: *cli-image # Inject the name of the cli image
+    depends_on:
+      - bnfphp
+    # loads the defined volumes and user from the top
+    <<: [*default-volumes, *default-user]
+    environment:
+      << : *default-environment # loads the defined environment variables from the top
+      # Route that should be used locally.
+      VIRTUAL_HOST: bnfnginx.${COMPOSE_PROJECT_NAME}.${DEV_TLD:-docker}
+
+  bnfphp: # php-fpm server that executes php requests.
+    # https://docs.lagoon.sh/lagoon/docker-images/php-fpm
+    build:
+      context: .
+      dockerfile: lagoon/php.dockerfile
+      args:
+        CLI_IMAGE: *cli-image
+    depends_on:
+      bnfredis:
+        condition: service_started
+      bnfmariadb:
+        condition: service_healthy
+      # loads the defined volumes and user from the top
+    <<: [*default-volumes, *default-user]
+    environment:
+      << : *default-environment # loads the defined environment variables from the top
+      XDEBUG_ENABLE: ${XDEBUG_ENABLE:-false}
+
+  bnfmariadb: # Main site database.
+    # https://docs.lagoon.sh/lagoon/docker-images/mariadb/mariadb-drupal
+    image: uselagoon/mariadb-10.6-drupal:latest
+    # Do a periodic healthcheck. This is mainly used to block the php service
+    # from starting up before we have a healthy database.
+    healthcheck:
+      test: "/usr/share/container-scripts/mysql/readiness-probe.sh"
+      interval: 10s
+    ports:
+      - "3306" # exposes the port 3306 with a random local port, find it with `docker-compose port mariadb 3306`
+    << : *default-user # uses the defined user from top
+    environment:
+      MARIADB_CHARSET: 'utf8mb4'
+      MARIADB_COLLATION: 'utf8mb4_danish_ci'
+      << : *default-environment
+
+  bnfredis: # In-memory key-value database used as the Drupal Core cache backend.
+    # https://docs.lagoon.sh/lagoon/docker-images/redis
+    image: uselagoon/redis-6:latest
+    << : *default-user # uses the defined user from top
+    environment:
+      << : *default-environment

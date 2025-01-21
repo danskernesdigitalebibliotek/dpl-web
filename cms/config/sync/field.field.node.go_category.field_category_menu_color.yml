@@ -1,0 +1,22 @@
+uuid: 290ef023-4973-4fe2-bed0-6401e7cf38fc
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_category_menu_color
+    - node.type.go_category
+  module:
+    - color_field
+id: node.go_category.field_category_menu_color
+field_name: field_category_menu_color
+entity_type: node
+bundle: go_category
+label: 'Category menu color'
+description: ''
+required: true
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings:
+  opacity: 0
+field_type: color_field_type

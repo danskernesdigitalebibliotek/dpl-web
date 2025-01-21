@@ -20,7 +20,7 @@ x-volumes:
 x-user:
   &default-user
     # The default user under which the containers should run. Change this if you are on linux and run with another user than id `1000`
-    user: '1000'
+    user: ${UID:-1000}
 
 x-environment:
   &default-environment
@@ -167,9 +167,14 @@ services:
   node:
     image: ghcr.io/danskernesdigitalebibliotek/dpl-go-node:0.0.12
     labels:
-      lagoon.type: node
       provenance: false
-
+      lagoon.type: node-persistent
+      lagoon.persistent: /app/.next
+      # The size of the persistent storage for this service
+      # is based on some documentation in Lagoon about hosting a node service:
+      # https://docs.lagoon.sh/docker-images/nodejs/#docker-composeyml-snippet
+      # We could revise in the future if we need more space.
+      lagoon.persistent.size: 500Mi
 volumes:
   projectroot:
     driver: local

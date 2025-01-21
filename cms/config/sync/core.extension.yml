@@ -103,6 +103,7 @@ module:
   gin_toolbar: 0
   graphql: 0
   graphql_compose: 0
+  graphql_compose_routes: 0
   handy_cache_tags: 0
   health_check: 0
   honeypot: 0

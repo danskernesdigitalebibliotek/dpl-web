@@ -1,0 +1,124 @@
+uuid: d2a6c001-46cd-440d-8efd-ff5499ebdee6
+langcode: en
+status: true
+dependencies:
+  config:
+    - filter.format.basic
+    - filter.format.limited
+    - filter.format.underlined_title
+    - media.type.audio
+    - media.type.document
+    - media.type.image
+    - media.type.video
+    - node.type.go_article
+    - node.type.go_category
+    - node.type.go_page
+    - node.type.page
+  module:
+    - administerusersbyrole
+    - content_lock
+    - dpl_admin
+    - dpl_unilogin
+    - entity_clone
+    - field_inheritance
+    - file
+    - filter
+    - media
+    - node
+    - paragraphs
+    - redirect
+    - scheduler
+    - system
+    - toolbar
+    - view_unpublished
+id: go_editor
+label: 'GO Editor'
+weight: 11
+is_admin: null
+permissions:
+  - 'access administration pages'
+  - 'access content overview'
+  - 'access media overview'
+  - 'access toolbar'
+  - 'access user profiles'
+  - 'access users overview'
+  - 'administer entity field inheritance'
+  - 'administer nodes'
+  - 'administer redirects'
+  - 'administer unilogin settings'
+  - 'break content lock'
+  - 'change own username'
+  - 'clone node entity'
+  - 'create audio media'
+  - 'create document media'
+  - 'create go_article content'
+  - 'create go_category content'
+  - 'create go_page content'
+  - 'create image media'
+  - 'create media'
+  - 'create video media'
+  - 'delete all revisions'
+  - 'delete any audio media'
+  - 'delete any document media'
+  - 'delete any go_article content'
+  - 'delete any go_category content'
+  - 'delete any go_page content'
+  - 'delete any image media'
+  - 'delete any media'
+  - 'delete any video media'
+  - 'delete go_article revisions'
+  - 'delete go_category revisions'
+  - 'delete go_page revisions'
+  - 'delete media'
+  - 'delete own audio media'
+  - 'delete own document media'
+  - 'delete own files'
+  - 'delete own go_article content'
+  - 'delete own go_category content'
+  - 'delete own go_page content'
+  - 'delete own image media'
+  - 'delete own video media'
+  - 'dpl admin access pages'
+  - 'edit any audio media'
+  - 'edit any document media'
+  - 'edit any go_article content'
+  - 'edit any go_category content'
+  - 'edit any go_page content'
+  - 'edit any image media'
+  - 'edit any video media'
+  - 'edit own audio media'
+  - 'edit own document media'
+  - 'edit own go_article content'
+  - 'edit own go_category content'
+  - 'edit own go_page content'
+  - 'edit own image media'
+  - 'edit own video media'
+  - 'revert all revisions'
+  - 'revert go_article revisions'
+  - 'revert go_category revisions'
+  - 'revert go_page revisions'
+  - 'schedule publishing of eventseries'
+  - 'schedule publishing of nodes'
+  - 'update any media'
+  - 'update media'
+  - 'use text format basic'
+  - 'use text format limited'
+  - 'use text format underlined_title'
+  - 'view all media revisions'
+  - 'view all revisions'
+  - 'view any unpublished go_article content'
+  - 'view any unpublished go_category content'
+  - 'view any unpublished go_page content'
+  - 'view go_article revisions'
+  - 'view go_category revisions'
+  - 'view go_page revisions'
+  - 'view own unpublished content'
+  - 'view own unpublished media'
+  - 'view page revisions'
+  - 'view scheduled content'
+  - 'view scheduled eventseries'
+  - 'view scheduled media'
+  - 'view scheduled taxonomy_term'
+  - 'view the administration theme'
+  - 'view unpublished paragraphs'
+  - 'view users by role'

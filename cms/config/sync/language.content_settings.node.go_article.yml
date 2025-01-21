@@ -1,0 +1,11 @@
+uuid: 01a7f1b0-7a2d-4227-87fb-6a2c05a52214
+langcode: en
+status: true
+dependencies:
+  config:
+    - node.type.go_article
+id: node.go_article
+target_entity_type_id: node
+target_bundle: go_article
+default_langcode: da
+language_alterable: false
