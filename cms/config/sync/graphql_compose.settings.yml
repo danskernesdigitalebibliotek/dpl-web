@@ -370,7 +370,7 @@ settings:
   field_required_override: false
   schema_description: 'GraphQL Compose'
   schema_version: '1'
-  simple_queries: false
+  simple_queries: true
   simple_unions: true
   site_name: true
   site_slogan: false
