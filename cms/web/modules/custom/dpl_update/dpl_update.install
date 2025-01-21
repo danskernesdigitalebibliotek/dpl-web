@@ -376,3 +376,10 @@ function dpl_update_update_10033(): string {
   \Drupal::configFactory()->getEditable('purge.plugins')->set('queue', 'database_alt')->save();
   return 'Configured purge queue to use database_alt.';
 }
+
+/**
+ * Install state log.
+ */
+function dpl_update_update_10034(): string {
+  return _dpl_update_install_modules(['state_log']);
+}
