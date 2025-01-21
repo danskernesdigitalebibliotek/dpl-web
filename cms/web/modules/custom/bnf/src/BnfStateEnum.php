@@ -8,7 +8,7 @@ namespace Drupal\bnf;
 enum BnfStateEnum: int {
 
   // Nothing has happened, related to BNF.
-  case Undefined = 0;
+  case None = 0;
 
   case Imported = 1;
 

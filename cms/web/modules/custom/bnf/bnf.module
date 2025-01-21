@@ -23,7 +23,7 @@ function bnf_entity_base_field_info(EntityTypeInterface $entity_type): array {
       ->setLabel(t('BNF State'))
       ->setDescription(t('The BNF state of the entity, defining if it was imported, exported, or neither.'))
       ->setSetting('allowed_values_function', 'bnf_get_bnf_state_allowed_values')
-      ->setDefaultValue(BnfStateEnum::Undefined->value);
+      ->setDefaultValue(BnfStateEnum::None->value);
   }
 
   return $fields;
