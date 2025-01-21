@@ -6,9 +6,13 @@ import { NodeGoPage } from "@/lib/graphql/generated/dpl-cms/graphql"
 function BasicPageLayout({ pageData }: { pageData: NodeGoPage }) {
   const { paragraphs } = pageData
 
+  if (!paragraphs) {
+    return null
+  }
+
   return (
     <div className="flex flex-col gap-y-paragraph-spacing">
-      <ParagraphResolver paragraphs={paragraphs ?? []} />
+      <ParagraphResolver paragraphs={paragraphs} />
     </div>
   )
 }

@@ -17,7 +17,7 @@
     "format:write": "prettier --write .",
     "lint": "next lint",
     "start:with-server-source-maps": "NODE_OPTIONS='--enable-source-maps=true' next start",
-    "start": "NODE_EXTRA_CA_CERTS=\"$(mkcert -CAROOT)/rootCA.pem\" next start",
+    "start": "next start",
     "storybook": "storybook dev -p 6006",
     "test:accessibility": "test-storybook",
     "test:unit:once": "vitest run",

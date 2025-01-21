@@ -22,12 +22,12 @@ async function page(props: { params: Promise<{ slug: string[] }> }) {
 
   if (routeType === "RouteRedirect") {
     // TODO: implement redirect
-    return
+    return null
   }
 
   if (routeType === "RouteExternal") {
     // TODO: implement external route redirect
-    return
+    return null
   }
 
   if (!routeType || !data?.route?.entity) {
