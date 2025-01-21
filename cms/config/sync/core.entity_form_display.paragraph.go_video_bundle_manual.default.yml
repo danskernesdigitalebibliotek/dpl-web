@@ -3,15 +3,15 @@ langcode: en
 status: true
 dependencies:
   config:
-    - field.field.paragraph.go_video_bundle_manuel.field_go_video_title
-    - field.field.paragraph.go_video_bundle_manuel.field_url
-    - field.field.paragraph.go_video_bundle_manuel.field_video_bundle_work_ids
-    - paragraphs.paragraphs_type.go_video_bundle_manuel
+    - field.field.paragraph.go_video_bundle_manual.field_go_video_title
+    - field.field.paragraph.go_video_bundle_manual.field_url
+    - field.field.paragraph.go_video_bundle_manual.field_video_bundle_work_ids
+    - paragraphs.paragraphs_type.go_video_bundle_manual
   module:
     - dpl_fbi
-id: paragraph.go_video_bundle_manuel.default
+id: paragraph.go_video_bundle_manual.default
 targetEntityType: paragraph
-bundle: go_video_bundle_manuel
+bundle: go_video_bundle_manual
 mode: default
 content:
   field_go_video_title:

@@ -4,13 +4,13 @@ status: true
 dependencies:
   config:
     - field.storage.paragraph.field_video_bundle_work_ids
-    - paragraphs.paragraphs_type.go_video_bundle_manuel
+    - paragraphs.paragraphs_type.go_video_bundle_manual
   module:
     - dpl_fbi
-id: paragraph.go_video_bundle_manuel.field_video_bundle_work_ids
+id: paragraph.go_video_bundle_manual.field_video_bundle_work_ids
 field_name: field_video_bundle_work_ids
 entity_type: paragraph
-bundle: go_video_bundle_manuel
+bundle: go_video_bundle_manual
 label: 'Work IDs'
 description: 'Here you can choose which materials to display. If you need to link to a specific type, select it from the dropdown and the system will display that, if it is available.<br />Example work ID: work-of:870970-basis:136336282'
 required: false

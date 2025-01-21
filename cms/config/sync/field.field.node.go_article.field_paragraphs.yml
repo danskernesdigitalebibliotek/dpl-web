@@ -8,7 +8,7 @@ dependencies:
     - paragraphs.paragraphs_type.go_linkbox
     - paragraphs.paragraphs_type.go_video
     - paragraphs.paragraphs_type.go_video_bundle_automatic
-    - paragraphs.paragraphs_type.go_video_bundle_manuel
+    - paragraphs.paragraphs_type.go_video_bundle_manual
   module:
     - entity_reference_revisions
 id: node.go_article.field_paragraphs
@@ -28,7 +28,7 @@ settings:
       go_video: go_video
       go_linkbox: go_linkbox
       go_video_bundle_automatic: go_video_bundle_automatic
-      go_video_bundle_manuel: go_video_bundle_manuel
+      go_video_bundle_manual: go_video_bundle_manual
     negate: 0
     target_bundles_drag_drop:
       accordion:
@@ -73,7 +73,7 @@ settings:
       go_video_bundle_automatic:
         weight: 46
         enabled: true
-      go_video_bundle_manuel:
+      go_video_bundle_manual:
         weight: 48
         enabled: true
       hero:

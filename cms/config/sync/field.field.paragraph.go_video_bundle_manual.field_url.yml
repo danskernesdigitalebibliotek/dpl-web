@@ -4,11 +4,11 @@ status: true
 dependencies:
   config:
     - field.storage.paragraph.field_url
-    - paragraphs.paragraphs_type.go_video_bundle_manuel
-id: paragraph.go_video_bundle_manuel.field_url
+    - paragraphs.paragraphs_type.go_video_bundle_manual
+id: paragraph.go_video_bundle_manual.field_url
 field_name: field_url
 entity_type: paragraph
-bundle: go_video_bundle_manuel
+bundle: go_video_bundle_manual
 label: URL
 description: 'VideoTool URL. Example: https://media.videotool.dk/?vn=557_2023103014511477700668916683'
 required: true

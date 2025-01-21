@@ -61,7 +61,7 @@ entity_config:
       enabled: true
     go_video_bundle_automatic:
       enabled: true
-    go_video_bundle_manuel:
+    go_video_bundle_manual:
       enabled: true
     hero:
       enabled: false
@@ -282,7 +282,7 @@ field_config:
         enabled: true
       field_video_amount_of_materials:
         enabled: true
-    go_video_bundle_manuel:
+    go_video_bundle_manual:
       field_go_video_title:
         enabled: true
       field_url:
