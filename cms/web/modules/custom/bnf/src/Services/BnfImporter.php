@@ -271,8 +271,14 @@ class BnfImporter {
     $parsedUrl = parse_url($endpointUrl);
     $scheme = $parsedUrl['scheme'] ?? NULL;
 
-    if ($scheme !== 'https') {
-      throw new \InvalidArgumentException('The provided callback URL must use HTTPS.');
+    // Setting up valid HTTPS in the dual site docker setup is involved, so we
+    // have this env variable to allow regular HTTP. Apart from this exception,
+    // HTTPS should always be used as basic HTTP auth is pretty close to sending
+    // the password in plain-text.
+    if (empty(getenv('BNF_ALLOW_HTTP'))) {
+      if ($scheme !== 'https') {
+        throw new \InvalidArgumentException('The provided callback URL must use HTTPS.');
+      }
     }
 
     $query = $this->getQuery($uuid, $queryName);
