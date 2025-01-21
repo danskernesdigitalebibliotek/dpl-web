@@ -18,7 +18,7 @@ use GraphQL\Type\Definition\Type;
 class CqlSearchType extends GraphQLComposeSchemaTypeBase {
 
   /**
-   * @inheritDoc
+   * {@inheritdoc}
    */
   public function getTypes(): array {
 

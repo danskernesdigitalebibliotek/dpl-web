@@ -23,13 +23,14 @@ class WorkIdItem extends GraphQLComposeFieldTypeBase implements FieldProducerIte
   use FieldProducerTrait;
 
   /**
-   * @inheritDoc
+   * {@inheritdoc}
    */
   public function resolveFieldItem(FieldItemInterface $item, FieldContext $context) {
 
     return [
-      'value' => isset($item->value) ? $item->value : NULL,
-      'material_type' => isset($item->material_type) ? $item->material_type : NULL,
+      'value' => $item->value ?? NULL,
+      'material_type' => $item->material_type ?? NULL,
     ];
   }
+
 }

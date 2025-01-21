@@ -23,12 +23,12 @@ class CqlSearchItem extends GraphQLComposeFieldTypeBase implements FieldProducer
   use FieldProducerTrait;
 
   /**
-   * @inheritDoc
+   * {@inheritDoc}
    */
   public function resolveFieldItem(FieldItemInterface $item, FieldContext $context) {
 
     return [
-      'value' => isset($item->value) ? $item->value : NULL,
+      'value' => $item->value ?? NULL,
     ];
   }
 
