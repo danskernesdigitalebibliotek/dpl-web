@@ -1,4 +1,6 @@
-# Session handling
+# Unilogin & Publizon\_- models and relations
+
+## Session handling
 
 ```mermaid
 erDiagram
@@ -11,7 +13,7 @@ erDiagram
   }
 ```
 
-# DingUniloginUser
+## DingUniloginUser
 
 ```mermaid
 erDiagram
@@ -28,7 +30,7 @@ erDiagram
 
 `name` is the same as the Unilogin username
 
-# Publizon Libraries (local db table)
+## Publizon Libraries (local db table)
 
 ```mermaid
 erDiagram
@@ -42,7 +44,7 @@ erDiagram
     }
 ```
 
-# Institutions og municipalities
+## Institutions og municipalities
 
 ```mermaid
 erDiagram
@@ -61,11 +63,11 @@ erDiagram
     }
 ```
 
-## institutionIds
+### institutionIds
 
 Institution ids are collected via the `DingUniloginWSIbruger` client via `hentBrugersInstitutionsTilknytninger` SOAP service
 
-## municipalitiesIds
+### municipalitiesIds
 
 Municipalities is only represented as id's.
 
@@ -79,7 +81,7 @@ Municipalities are fetched via the `DingUniloginUser::getInstitutionMunicipaliti
 - The `municipalityIds` array is set on `DingUniloginUser.municipalityIds`
 - The `municipalityIds` array is being returned
 
-# Library/libraries
+## Library/libraries
 
 ```mermaid
 erDiagram
@@ -97,51 +99,51 @@ Libraries (`PublizonConfiguredLibrary`) are stored in the db in the table: `publ
 
 Afterwards the libraries are being filtered by the municipalities connected to the user.
 
-## The usage/meaning of a library
+### The usage/meaning of a library
 
 If there is multiple libraries connected to the user, only the first one is being used.
 
 The unilogin_id from the library is being tied to the Drupal user and is being used in future contexts.
 
-# Services
+## Services
 
-## Unilogin services
+### Unilogin services
 
-### Base class: DingUniloginServiceBase
+#### Base class: DingUniloginServiceBase
 
 Uses two methods: `call` and `callWithAuth` depending on if the request needs authentication
 
 `callWithAuth` uses wsuser and wspasswd tied to the `DingUniloginUser` object
 
-### DingUniloginWSIbruger (Unilogin API)
+#### DingUniloginWSIbruger (Unilogin API)
 
-#### WSDL Url
+##### WSDL Url
 
 ```
 https://wsibruger.unilogin.dk/wsibruger-v6/ws?WSDL
 ```
 
-#### Actions
+##### Actions
 
 **hentBrugersInstitutionsTilknytninger**: Finds institutions connected to a user.
 
 ---
 
-### DingUniloginWSIinst (Unilogin API)
+#### DingUniloginWSIinst (Unilogin API)
 
-#### WSDL Url
+##### WSDL Url
 
 ```
 https://wsiinst.unilogin.dk/wsiinst-v5/ws?WSDL
 ```
 
-#### Actions
+##### Actions
 
 **hentInstitution**: Loads a institution given its id.
 
-## Publizon services
+### Publizon services
 
-### Base class: PublizonClient
+#### Base class: PublizonClient
 
 Makes sure that following params are used as well:
 
@@ -150,11 +152,11 @@ Makes sure that following params are used as well:
 - ':retailerid': retailer id tied to user (from library)
 - ':retailerkeycode': retailer id tied to user (from library)
 
-### PublizonUserClient (Publizon API)
+#### PublizonUserClient (Publizon API)
 
-#### Methods
+##### Methods
 
-##### getSupportId
+###### getSupportId
 
 **Endpoint**: get_friendly_cardnumber
 
@@ -162,11 +164,11 @@ Makes sure that following params are used as well:
 
 **Params**: `pub:cardnumber` (uniid), `retailer_id` (from library)
 
-### PublizonLoanClient (Publizon API)
+#### PublizonLoanClient (Publizon API)
 
-#### Methods
+##### Methods
 
-##### createLoan
+###### createLoan
 
 **Endpoint**: createloan.asmx
 
@@ -176,7 +178,7 @@ Makes sure that following params are used as well:
 
 ---
 
-##### getLibraryUserOrderList
+###### getLibraryUserOrderList
 
 **Endpoint**: getlibraryuserorderlist.asmx
 
@@ -184,9 +186,9 @@ Makes sure that following params are used as well:
 
 **Params**: `retailer_id` (from library), `pub:cardnumber` (uniid (username))
 
-# Login flows
+## Login flows
 
-## Unilogin
+### Unilogin
 
 Login flow at Unilogin
 
