@@ -9,8 +9,10 @@ dependencies:
     - paragraphs.paragraphs_type.event_ticket_category
     - paragraphs.paragraphs_type.go_linkbox
     - paragraphs.paragraphs_type.go_material_slider_automatic
-    - paragraphs.paragraphs_type.go_material_slider_mannual
+    - paragraphs.paragraphs_type.go_material_slider_manual
     - paragraphs.paragraphs_type.go_video
+    - paragraphs.paragraphs_type.go_video_bundle_automatic
+    - paragraphs.paragraphs_type.go_video_bundle_manual
     - paragraphs.paragraphs_type.opening_hours
   module:
     - entity_reference_revisions
@@ -33,8 +35,10 @@ settings:
       opening_hours: opening_hours
       go_linkbox: go_linkbox
       go_material_slider_automatic: go_material_slider_automatic
-      go_material_slider_mannual: go_material_slider_mannual
+      go_material_slider_manual: go_material_slider_manual
       go_video: go_video
+      go_video_bundle_automatic: go_video_bundle_automatic
+      go_video_bundle_manual: go_video_bundle_manual
     negate: 1
     target_bundles_drag_drop:
       accordion:
@@ -76,11 +80,17 @@ settings:
       go_material_slider_automatic:
         weight: 46
         enabled: true
-      go_material_slider_mannual:
+      go_material_slider_manual:
         weight: 47
         enabled: true
       go_video:
         weight: 48
+        enabled: true
+      go_video_bundle_automatic:
+        weight: 49
+        enabled: true
+      go_video_bundle_manual:
+        weight: 50
         enabled: true
       hero:
         weight: 29

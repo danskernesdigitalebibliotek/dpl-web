@@ -3,14 +3,14 @@ langcode: en
 status: true
 dependencies:
   config:
-    - field.field.paragraph.go_material_slider_mannual.field_material_slider_work_ids
-    - field.field.paragraph.go_material_slider_mannual.field_title
-    - paragraphs.paragraphs_type.go_material_slider_mannual
+    - field.field.paragraph.go_material_slider_manual.field_material_slider_work_ids
+    - field.field.paragraph.go_material_slider_manual.field_title
+    - paragraphs.paragraphs_type.go_material_slider_manual
   module:
     - dpl_fbi
-id: paragraph.go_material_slider_mannual.default
+id: paragraph.go_material_slider_manual.default
 targetEntityType: paragraph
-bundle: go_material_slider_mannual
+bundle: go_material_slider_manual
 mode: default
 content:
   field_material_slider_work_ids:

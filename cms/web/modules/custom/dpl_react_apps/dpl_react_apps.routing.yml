@@ -18,3 +18,12 @@ dpl_react_apps.work:
     _controller: '\Drupal\dpl_react_apps\Controller\DplReactAppsController::work'
   requirements:
     _permission: 'access content'
+
+dpl_react_apps.reader:
+  path: '/reader'
+  defaults:
+    _controller: '\Drupal\dpl_react_apps\Controller\DplReactAppsController::reader'
+  requirements:
+    _permission: 'access content'
+  options:
+    no_cache: true

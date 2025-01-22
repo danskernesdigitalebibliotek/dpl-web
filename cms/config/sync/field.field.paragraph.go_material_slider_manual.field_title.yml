@@ -4,11 +4,11 @@ status: true
 dependencies:
   config:
     - field.storage.paragraph.field_title
-    - paragraphs.paragraphs_type.go_material_slider_mannual
-id: paragraph.go_material_slider_mannual.field_title
+    - paragraphs.paragraphs_type.go_material_slider_manual
+id: paragraph.go_material_slider_manual.field_title
 field_name: field_title
 entity_type: paragraph
-bundle: go_material_slider_mannual
+bundle: go_material_slider_manual
 label: Title
 description: ''
 required: false
