@@ -15,7 +15,11 @@ import { CoverPictureSkeleton } from "@/components/shared/coverPicture/CoverPict
 import InfoBox from "@/components/shared/infoBox/InfoBox"
 import InfoBoxDetails from "@/components/shared/infoBox/InfoBoxDetails"
 import { SlideSelectSkeleton } from "@/components/shared/slideSelect/SlideSelect"
-import { GetMaterialQuery, useGetMaterialQuery } from "@/lib/graphql/generated/fbi/graphql"
+import {
+  GeneralMaterialTypeCodeEnum,
+  GetMaterialQuery,
+  useGetMaterialQuery,
+} from "@/lib/graphql/generated/fbi/graphql"
 import { useSelectedManifestationStore } from "@/store/selectedManifestation.store"
 
 type WorkPageLayoutProps = {
@@ -47,8 +51,10 @@ function WorkPageLayout({ workId, dehydratedQueryData }: WorkPageLayoutProps) {
     // Select work manifestation on the initial load - 1. by URL params, 2. by best representation
     if (!!searchParams.get("type")) {
       setSelectedManifestation(
-        getManifestationByMaterialType(data.work, searchParams.get("type") as string) ||
-          getBestRepresentation(data.work)
+        getManifestationByMaterialType(
+          data.work,
+          searchParams.get("type") as GeneralMaterialTypeCodeEnum
+        ) || getBestRepresentation(data.work)
       )
     } else {
       setSelectedManifestation(getBestRepresentation(data.work))
