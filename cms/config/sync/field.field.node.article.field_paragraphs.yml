@@ -10,6 +10,7 @@ dependencies:
     - paragraphs.paragraphs_type.go_linkbox
     - paragraphs.paragraphs_type.go_video
     - paragraphs.paragraphs_type.go_video_bundle_automatic
+    - paragraphs.paragraphs_type.go_video_bundle_manual
     - paragraphs.paragraphs_type.opening_hours
   module:
     - entity_reference_revisions
@@ -33,6 +34,7 @@ settings:
       go_linkbox: go_linkbox
       go_video: go_video
       go_video_bundle_automatic: go_video_bundle_automatic
+      go_video_bundle_manual: go_video_bundle_manual
     negate: 1
     target_bundles_drag_drop:
       accordion:
@@ -76,6 +78,9 @@ settings:
         enabled: true
       go_video_bundle_automatic:
         weight: 46
+        enabled: true
+      go_video_bundle_manual:
+        weight: 48
         enabled: true
       hero:
         weight: 29
