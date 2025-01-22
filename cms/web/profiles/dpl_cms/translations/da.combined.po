@@ -7,8 +7,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2025-01-22 08:55+0100\n"
-"PO-Revision-Date: 2025-01-22 08:55+0100\n"
+"POT-Creation-Date: 2025-01-22 11:03+0100\n"
+"PO-Revision-Date: 2025-01-22 11:03+0100\n"
 "Last-Translator: NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
 "MIME-Version: 1.0\n"
@@ -2172,6 +2172,10 @@ msgid "Audience"
 msgstr "Målgruppe"
 
 msgctxt "Work Page"
+msgid "Audiobook"
+msgstr ""
+
+msgctxt "Work Page"
 msgid "Blocked"
 msgstr "Din låner er blokeret"
 
@@ -2302,6 +2306,10 @@ msgstr "Detaljer om materialet"
 msgctxt "Work Page"
 msgid "Details"
 msgstr "Detaljer"
+
+msgctxt "Work Page"
+msgid "Ebook"
+msgstr ""
 
 msgctxt "Work Page"
 msgid "Editions"
@@ -2529,6 +2537,18 @@ msgid "You have borrowed @count out of @limit possible e-books this month"
 msgstr "Du har lånt @count ud af @limit mulige e-bøger denne måned"
 
 msgctxt "Work Page"
+msgid "Listen to @materialType"
+msgstr ""
+
+msgctxt "Work Page"
+msgid "Read @materialType"
+msgstr ""
+
+msgctxt "Work Page"
+msgid "Try @materialType"
+msgstr ""
+
+msgctxt "Work Page"
 msgid "Your material has been ordered from another library"
 msgstr "Bestilt fra et andet bibliotek"
 
@@ -2609,6 +2629,10 @@ msgstr ""
 msgctxt "Work Page"
 msgid "Digital copy ordered"
 msgstr "Digital kopi er bestilt"
+
+msgctxt "Work Page"
+msgid "Modal for player"
+msgstr ""
 
 msgctxt "Work Page"
 msgid "Year"
@@ -3148,8 +3172,8 @@ msgid "Expires"
 msgstr "Udløber"
 
 msgctxt "Global"
-msgid "Go to eReolen"
-msgstr "Gå til eReolen"
+msgid "Go to material"
+msgstr ""
 
 msgctxt "Global"
 msgid "Loan date"
@@ -3551,6 +3575,10 @@ msgstr "Reserveringsdato"
 msgctxt "Global"
 msgid "Borrow before"
 msgstr "Lån før"
+
+msgctxt "Global"
+msgid "Go to eReolen"
+msgstr "Gå til eReolen"
 
 msgctxt "Global"
 msgid "Your reservation expires @date!"
