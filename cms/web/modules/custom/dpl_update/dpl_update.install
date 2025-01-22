@@ -113,6 +113,7 @@ function dpl_update_install(): string {
   $messages[] = dpl_update_update_10029();
   $messages[] = dpl_update_update_10030();
   $messages[] = dpl_update_update_10031();
+  $messages[] = dpl_update_update_10034();
 
   return implode('\r\n', $messages);
 }
@@ -375,4 +376,11 @@ function dpl_update_update_10033(): string {
   // @see https://git.drupalcode.org/project/purge_queues/-/blob/2.0.x/src/Plugin/Purge/Queue/AltDatabaseQueue.php?ref_type=heads#L12
   \Drupal::configFactory()->getEditable('purge.plugins')->set('queue', 'database_alt')->save();
   return 'Configured purge queue to use database_alt.';
+}
+
+/**
+ * Installing graphql_compose_routes.
+ */
+function dpl_update_update_10034(): string {
+  return _dpl_update_install_modules(['graphql_compose_routes']);
 }
