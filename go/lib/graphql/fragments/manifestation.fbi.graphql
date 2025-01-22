@@ -77,6 +77,15 @@ fragment ManifestationDetails on Manifestation {
   dateFirstEdition {
     display
   }
+  edition {
+    publicationYear {
+      display
+      year
+    }
+    contributors
+    edition
+    summary
+  }
   genreAndForm
   publisher
   contributors {
@@ -100,6 +109,7 @@ fragment ManifestationSearchPageTeaser on Manifestation {
   ...ManifestationMaterialTypes
   ...ManifestationIdentifiers
   ...ManifestationCover
+  ...ManifestationDetails
 }
 
 fragment ManifestationWorkPage on Manifestation {

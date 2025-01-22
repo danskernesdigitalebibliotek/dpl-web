@@ -17,7 +17,6 @@ import { GetCoverCollectionSizesItem } from "@/lib/rest/cover-service-api/genera
 import {
   getGetV1ProductsIdentifierQueryKey,
   getV1ProductsIdentifier,
-  useGetV1ProductsIdentifier,
 } from "@/lib/rest/publizon-api/generated/publizon"
 
 import { Badge } from "../badge/Badge"
@@ -52,33 +51,40 @@ const WorkCard = ({ work }: WorkCardProps) => {
       }
     }),
     combine: results => {
-      console.log("results", results)
-
-      return {
-        data: results.map(result => result.data),
-        pending: results.some(result => result.isPending),
-      }
+      // combine manifestation data with publizon data
+      return manifestations.map((manifestation, index) => ({
+        manifestation,
+        publizonData: results[index].data?.product,
+      }))
     },
   })
 
-  // console.log("manifestationsWithPublizonData", manifestationsWithPublizonData)
-
-  // const manifestationsWithPublizonData = manifestations.map(manifestation => {
-  //   // Get ISBN from manifestation
-  //   const isbn =
-  //     manifestation.identifiers.find(identifier => identifier.type === "ISBN")?.value || ""
-
-  //   const { data } = useGetV1ProductsIdentifier(isbn, {
-  //     query: {
-  //       // Publizon / useGetV1ProductsIdentifier is responsible for online
-  //       // materials. It requires an ISBN to do lookups.
-  //       enabled: isbn.length > 0,
-  //     },
-  //   })
-
-  //   const publizonData = data?.product
-  //   return { manifestation, publizonData }
-  // })
+  // if any of the manifestations are the same material type filter out based on newest edition
+  const filteredManifestations = manifestationsWithPublizonData.reduce(
+    (acc, current) => {
+      const existing = acc.find(
+        item =>
+          item.manifestation.materialTypes[0].materialTypeGeneral.code ===
+          current.manifestation.materialTypes[0].materialTypeGeneral.code
+      )
+      if (!existing) {
+        acc.push(current)
+      } else {
+        const existingEdition = existing.manifestation.edition?.publicationYear?.year || 0
+        const currentEdition = current.manifestation.edition?.publicationYear?.year || 0
+        if (currentEdition > existingEdition) {
+          acc = acc.filter(
+            item =>
+              item.manifestation.materialTypes[0].materialTypeGeneral.code !==
+              current.manifestation.materialTypes[0].materialTypeGeneral.code
+          )
+          acc.push(current)
+        }
+      }
+      return acc
+    },
+    [] as typeof manifestationsWithPublizonData
+  )
 
   const bestRepresentation = work.manifestations.bestRepresentation
   const allPids = [bestRepresentation.pid, ...getAllWorkPids(work)]
@@ -99,9 +105,9 @@ const WorkCard = ({ work }: WorkCardProps) => {
     materialType => materialType?.materialTypeGeneral?.code === GeneralMaterialTypeCodeEnum.Podcasts
   )
 
-  // const isSomeManifestationTypeCostFree = manifestationsWithPublizonData.some(
-  //   manifestation => manifestation.publizonData?.costFree
-  // )
+  const isSomeManifestationTypeCostFree = filteredManifestations.some(
+    manifestation => manifestation.publizonData?.costFree
+  )
 
   return (
     <Link
@@ -111,11 +117,11 @@ const WorkCard = ({ work }: WorkCardProps) => {
         <div
           key={work.workId}
           className="relative flex aspect-4/5 h-auto w-full flex-col rounded-base bg-background-overlay px-[15%] pt-[15%]">
-          {/* {isSomeManifestationTypeCostFree || isSomeMaterialTypePodcast ? (
+          {isSomeManifestationTypeCostFree || isSomeMaterialTypePodcast ? (
             <Badge variant={"blue-title"} className="absolute left-4 top-4 md:left-4 md:top-4">
               BLÅ
             </Badge>
-          ) : null} */}
+          ) : null}
           <div className="relative mx-auto flex h-full w-full items-center justify-center">
             {!isLoadingCovers && (
               <CoverPicture
@@ -130,22 +136,22 @@ const WorkCard = ({ work }: WorkCardProps) => {
           <div className="my-auto flex min-h-[15%] items-center py-3 md:py-4">
             <div className="flex w-full flex-row justify-center gap-2">
               {/* Loop through all manifestation types */}
-              {/* {manifestationsWithPublizonData.map(manifestationWithPublizonData => {
-                const isCostFree = manifestationWithPublizonData.publizonData?.costFree
+              {filteredManifestations.map(manifestation => {
+                const isCostFree = manifestation.publizonData?.costFree
+
                 // find material type general material type
                 const materialType =
-                  manifestationWithPublizonData.manifestation.materialTypes[0].materialTypeGeneral
-                    .code
+                  manifestation.manifestation.materialTypes[0].materialTypeGeneral.code
                 const materialTypeIcon = getIconNameFromMaterialType(materialType) || "book"
 
                 return (
                   <MaterialTypeIconWrapper
-                    key={manifestationWithPublizonData.manifestation.pid}
+                    key={manifestation.manifestation.pid}
                     costFree={isCostFree}
                     iconName={materialTypeIcon}
                   />
                 )
-              })} */}
+              })}
             </div>
           </div>
         </div>
