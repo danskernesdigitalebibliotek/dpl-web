@@ -14,11 +14,11 @@ use Drupal\graphql_compose\Plugin\GraphQLCompose\GraphQLComposeFieldTypeBase;
  * {@inheritDoc}
  *
  * @GraphQLComposeFieldType(
- *   id = "color_field_type",
- *   type_sdl = "Color",
+ *   id = "dpl_fbi_work_id",
+ *   type_sdl = "WorkId",
  * )
  */
-class ColorItem extends GraphQLComposeFieldTypeBase implements FieldProducerItemInterface {
+class WorkIdItem extends GraphQLComposeFieldTypeBase implements FieldProducerItemInterface {
 
   use FieldProducerTrait;
 
@@ -28,8 +28,8 @@ class ColorItem extends GraphQLComposeFieldTypeBase implements FieldProducerItem
   public function resolveFieldItem(FieldItemInterface $item, FieldContext $context) {
 
     return [
-      'color' => $item->color ?? NULL,
-      'opacity' => $item->opacity ?? NULL,
+      'value' => $item->value ?? NULL,
+      'material_type' => $item->material_type ?? NULL,
     ];
   }
 

@@ -5,7 +5,10 @@ dependencies:
   config:
     - field.storage.node.field_paragraphs
     - node.type.go_page
+    - paragraphs.paragraphs_type.go_linkbox
     - paragraphs.paragraphs_type.go_video
+    - paragraphs.paragraphs_type.go_video_bundle_automatic
+    - paragraphs.paragraphs_type.go_video_bundle_manual
   module:
     - entity_reference_revisions
 id: node.go_page.field_paragraphs
@@ -23,6 +26,9 @@ settings:
   handler_settings:
     target_bundles:
       go_video: go_video
+      go_linkbox: go_linkbox
+      go_video_bundle_automatic: go_video_bundle_automatic
+      go_video_bundle_manual: go_video_bundle_manual
     negate: 0
     target_bundles_drag_drop:
       accordion:
@@ -58,8 +64,17 @@ settings:
       filtered_event_list:
         weight: 40
         enabled: false
+      go_linkbox:
+        weight: 44
+        enabled: true
       go_video:
         weight: 42
+        enabled: true
+      go_video_bundle_automatic:
+        weight: 46
+        enabled: true
+      go_video_bundle_manual:
+        weight: 48
         enabled: true
       hero:
         weight: 29

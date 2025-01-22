@@ -14,22 +14,21 @@ use Drupal\graphql_compose\Plugin\GraphQLCompose\GraphQLComposeFieldTypeBase;
  * {@inheritDoc}
  *
  * @GraphQLComposeFieldType(
- *   id = "color_field_type",
- *   type_sdl = "Color",
+ *   id = "dpl_fbi_cql_search",
+ *   type_sdl = "CQLSearch",
  * )
  */
-class ColorItem extends GraphQLComposeFieldTypeBase implements FieldProducerItemInterface {
+class CqlSearchItem extends GraphQLComposeFieldTypeBase implements FieldProducerItemInterface {
 
   use FieldProducerTrait;
 
   /**
-   * {@inheritdoc}
+   * {@inheritDoc}
    */
   public function resolveFieldItem(FieldItemInterface $item, FieldContext $context) {
 
     return [
-      'color' => $item->color ?? NULL,
-      'opacity' => $item->opacity ?? NULL,
+      'value' => $item->value ?? NULL,
     ];
   }
 
