@@ -1,0 +1,40 @@
+uuid: 6f705980-9a05-400c-8d20-91442cdcc419
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.field.paragraph.go_material_slider_automatic.field_cql_search
+    - field.field.paragraph.go_material_slider_automatic.field_slider_amount_of_materials
+    - field.field.paragraph.go_material_slider_automatic.field_title
+    - paragraphs.paragraphs_type.go_material_slider_automatic
+  module:
+    - dpl_fbi
+id: paragraph.go_material_slider_automatic.default
+targetEntityType: paragraph
+bundle: go_material_slider_automatic
+mode: default
+content:
+  field_cql_search:
+    type: cql_search_widget
+    weight: 3
+    region: content
+    settings: {  }
+    third_party_settings: {  }
+  field_slider_amount_of_materials:
+    type: number
+    weight: 4
+    region: content
+    settings:
+      placeholder: ''
+    third_party_settings: {  }
+  field_title:
+    type: string_textfield
+    weight: 0
+    region: content
+    settings:
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+hidden:
+  created: true
+  status: true

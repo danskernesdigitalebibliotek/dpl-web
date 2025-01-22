@@ -25,7 +25,7 @@ class CqlSearchItem extends GraphQLComposeFieldTypeBase implements FieldProducer
   /**
    * {@inheritDoc}
    */
-  public function resolveFieldItem(FieldItemInterface $item, FieldContext $context) {
+  public function resolveFieldItem(FieldItemInterface $item, FieldContext $context): mixed {
 
     return [
       'value' => $item->value ?? NULL,

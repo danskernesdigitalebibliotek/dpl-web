@@ -28,7 +28,7 @@ class WorkIdType extends GraphQLComposeSchemaTypeBase {
       'name' => $this->getPluginId(),
       'description' => (string) $this->t('A WorkID field.'),
       'fields' => fn() => [
-        'value' => [
+        'work_id' => [
           'type' => Type::string(),
           'description' => (string) $this->t('The WorkID value'),
         ],

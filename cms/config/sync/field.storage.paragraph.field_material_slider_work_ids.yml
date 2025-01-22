@@ -1,0 +1,19 @@
+uuid: 8fcaabcf-8465-4012-8d29-601169d3bb86
+langcode: en
+status: true
+dependencies:
+  module:
+    - dpl_fbi
+    - paragraphs
+id: paragraph.field_material_slider_work_ids
+field_name: field_material_slider_work_ids
+entity_type: paragraph
+type: dpl_fbi_work_id
+settings: {  }
+module: dpl_fbi
+locked: false
+cardinality: -1
+translatable: true
+indexes: {  }
+persist_with_no_fields: false
+custom_storage: false

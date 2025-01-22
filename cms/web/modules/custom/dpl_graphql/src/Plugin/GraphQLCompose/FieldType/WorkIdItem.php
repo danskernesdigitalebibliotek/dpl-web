@@ -25,10 +25,10 @@ class WorkIdItem extends GraphQLComposeFieldTypeBase implements FieldProducerIte
   /**
    * {@inheritdoc}
    */
-  public function resolveFieldItem(FieldItemInterface $item, FieldContext $context) {
+  public function resolveFieldItem(FieldItemInterface $item, FieldContext $context): mixed {
 
     return [
-      'value' => $item->value ?? NULL,
+      'work_id' => $item->value ?? NULL,
       'material_type' => $item->material_type ?? NULL,
     ];
   }

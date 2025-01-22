@@ -1,0 +1,20 @@
+uuid: aaeb1549-b33c-482c-9120-d8dcce4fed72
+langcode: en
+status: true
+dependencies:
+  module:
+    - paragraphs
+id: paragraph.field_slider_amount_of_materials
+field_name: field_slider_amount_of_materials
+entity_type: paragraph
+type: integer
+settings:
+  unsigned: false
+  size: normal
+module: core
+locked: false
+cardinality: 1
+translatable: true
+indexes: {  }
+persist_with_no_fields: false
+custom_storage: false

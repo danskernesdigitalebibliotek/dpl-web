@@ -25,7 +25,7 @@ class ColorItem extends GraphQLComposeFieldTypeBase implements FieldProducerItem
   /**
    * {@inheritdoc}
    */
-  public function resolveFieldItem(FieldItemInterface $item, FieldContext $context) {
+  public function resolveFieldItem(FieldItemInterface $item, FieldContext $context): mixed {
 
     return [
       'color' => $item->color ?? NULL,

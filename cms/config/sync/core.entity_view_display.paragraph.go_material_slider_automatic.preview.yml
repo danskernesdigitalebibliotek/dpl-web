@@ -1,0 +1,27 @@
+uuid: 03c21782-0e6e-4a7c-941c-3fcc707f7202
+langcode: en
+status: true
+dependencies:
+  config:
+    - core.entity_view_mode.paragraph.preview
+    - field.field.paragraph.go_material_slider_automatic.field_cql_search
+    - field.field.paragraph.go_material_slider_automatic.field_slider_amount_of_materials
+    - field.field.paragraph.go_material_slider_automatic.field_title
+    - paragraphs.paragraphs_type.go_material_slider_automatic
+id: paragraph.go_material_slider_automatic.preview
+targetEntityType: paragraph
+bundle: go_material_slider_automatic
+mode: preview
+content:
+  field_title:
+    type: string
+    label: above
+    settings:
+      link_to_entity: false
+    third_party_settings: {  }
+    weight: 0
+    region: content
+hidden:
+  field_cql_search: true
+  field_slider_amount_of_materials: true
+  search_api_excerpt: true
