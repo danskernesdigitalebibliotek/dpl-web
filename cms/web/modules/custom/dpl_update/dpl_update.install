@@ -114,6 +114,7 @@ function dpl_update_install(): string {
   $messages[] = dpl_update_update_10030();
   $messages[] = dpl_update_update_10031();
   $messages[] = dpl_update_update_10034();
+  $messages[] = dpl_update_update_10035();
 
   return implode('\r\n', $messages);
 }
@@ -383,4 +384,11 @@ function dpl_update_update_10033(): string {
  */
 function dpl_update_update_10034(): string {
   return _dpl_update_install_modules(['graphql_compose_routes']);
+}
+
+/**
+ * Introducing a two module for the Go project and Lagoon handling.
+ */
+function dpl_update_update_10035(): string {
+  return _dpl_update_install_modules(['dpl_go', 'dpl_lagoon']);
 }
