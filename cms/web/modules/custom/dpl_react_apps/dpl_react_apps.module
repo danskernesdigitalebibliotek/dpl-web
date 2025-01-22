@@ -160,7 +160,7 @@ function dpl_react_apps_texts(): array {
     'material-by-author' => t("By", [], ['context' => 'Global']),
     'material-details-close-modal-aria-label' => t('Close material details modal', [], ['context' => 'Global']),
     'material-details-digital-due-date-label' => t("Expires", [], ['context' => 'Global']),
-    'material-details-go-to-ereolen' => t("Go to eReolen", [], ['context' => 'Global']),
+    'material-details-go-to-material' => t('Go to material', [], ['context' => 'Global']),
     'material-details-link-to-page-with-fees' => t('Read more about fees', [], ['context' => 'Global']),
     'material-details-loan-date-label' => t('Loan date', [], ['context' => 'Global']),
     'material-details-material-number-label' => t('Material Item Number', [], ['context' => 'Global']),
