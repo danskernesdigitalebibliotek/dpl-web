@@ -6,11 +6,13 @@ dependencies:
     - rest.resource.campaign.match
     - rest.resource.proxy-url
   module:
+    - graphql
     - rest
 id: patron
 label: Patron
 weight: 6
 is_admin: null
 permissions:
+  - 'execute graphql_compose_server arbitrary graphql requests'
   - 'restful get proxy-url'
   - 'restful post campaign:match'

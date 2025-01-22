@@ -40,10 +40,10 @@
             "type": "package",
             "package": {
                 "name": "danskernesdigitalebibliotek/dpl-react",
-                "version": "0.0.0-dev",
+                "version": "2025.4.0",
                 "type": "drupal-library",
                 "dist": {
-                    "url": "https://github.com/danskernesdigitalebibliotek/dpl-react/releases/download/branch-reader-player-feature/dist-reader-player-feature.zip",
+                    "url": "https://github.com/danskernesdigitalebibliotek/dpl-react/releases/download/2025.4.0/dist-2025-4-0-851fc5159c4be5f290bdac88e85ad118ebf66698.zip",
                     "type": "zip"
                 },
                 "require": {
@@ -56,9 +56,9 @@
             "package": {
                 "name": "danskernesdigitalebibliotek/dpl-design-system",
                 "type": "drupal-library",
-                "version": "0.0.0-dev",
+                "version": "2025.4.0",
                 "dist": {
-                    "url": "https://github.com/danskernesdigitalebibliotek/dpl-design-system/releases/download/branch-reader-player-feature/dist-reader-player-feature.zip",
+                    "url": "https://github.com/danskernesdigitalebibliotek/dpl-design-system/releases/download/2025.4.0/dist-2025-4-0-d4f21c986e88e25924a6c2fe87db1a39199ef649.zip",
                     "type": "zip"
                 }
             }
@@ -90,8 +90,8 @@
         "composer/installers": "1.12.0",
         "cweagans/composer-patches": "1.7.3",
         "danskernesdigitalebibliotek/cms-api": "*",
-        "danskernesdigitalebibliotek/dpl-design-system": "0.0.0-dev",
-        "danskernesdigitalebibliotek/dpl-react": "0.0.0-dev",
+        "danskernesdigitalebibliotek/dpl-design-system": "2025.4.0",
+        "danskernesdigitalebibliotek/dpl-react": "2025.4.0",
         "danskernesdigitalebibliotek/fbs-client": "*",
         "dealerdirect/phpcodesniffer-composer-installer": "^1.0.0",
         "deoliveiralucas/array-keys-case-transform": "^1.1",
@@ -273,9 +273,13 @@
             ],
             "file-mapping": {
                 "[web-root]/sites/default/all.settings.php": "assets/all.settings.php",
+                "[web-root]/sites/bnf/all.settings.php": "assets/all.settings.php",
                 "[web-root]/sites/default/development.settings.php": "assets/development.settings.php",
+                "[web-root]/sites/bnf/development.settings.php": "assets/development.settings.php",
                 "[web-root]/sites/default/local.services.yml": "assets/local.services.yml",
+                "[web-root]/sites/bnf/local.services.yml": "assets/local.services.yml",
                 "[web-root]/sites/default/local.settings.php": "assets/local.settings.php",
+                "[web-root]/sites/bnf/local.settings.php": "assets/local.settings.php",
                 "[project-root]/drush/sites/lagoon.site.yml": "assets/lagoon.site.yml",
                 "[web-root]/.eslintrc.json": false,
                 "[project-root]/.gitattributes": {
