@@ -21,15 +21,11 @@ const meta = {
     },
   ],
   argTypes: {
-    work: {
-      control: { type: "object" },
-    },
     selectedManifestation: {
       control: { type: "object" },
     },
   },
   args: {
-    work: workMock,
     selectedManifestation: manifestationMock,
   },
 } satisfies Meta<typeof InfoBoxDetails>
