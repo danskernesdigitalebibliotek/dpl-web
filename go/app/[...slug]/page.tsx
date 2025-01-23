@@ -1,22 +1,18 @@
 import { notFound } from "next/navigation"
-import React from "react"
+import React, { Suspense } from "react"
 
 import BasicPageLayout from "@/components/pages/basicPageLayout/BasicPageLayout"
-import { fetcher } from "@/lib/graphql/fetchers/dpl-cms.fetcher"
-import {
-  GetPageByPathDocument,
-  GetPageByPathQuery,
-  NodeGoPage,
-} from "@/lib/graphql/generated/dpl-cms/graphql"
+import { NodeGoPage } from "@/lib/graphql/generated/dpl-cms/graphql"
+
+import loadPage from "./loadPage"
 
 async function page(props: { params: Promise<{ slug: string[] }> }) {
   const params = await props.params
 
   const { slug } = params
+  const slugString = slug.join("/")
 
-  const data = await fetcher<GetPageByPathQuery, { path: string }>(GetPageByPathDocument, {
-    path: slug.join("/"),
-  })()
+  const data = await loadPage(slugString)
 
   const routeType = data.route?.__typename
 
@@ -36,7 +32,11 @@ async function page(props: { params: Promise<{ slug: string[] }> }) {
 
   const pageData = data.route.entity
 
-  return <BasicPageLayout pageData={pageData as NodeGoPage} />
+  return (
+    <Suspense fallback={<p>Loading...</p>}>
+      <BasicPageLayout pageData={pageData as NodeGoPage} />
+    </Suspense>
+  )
 }
 
 export default page
