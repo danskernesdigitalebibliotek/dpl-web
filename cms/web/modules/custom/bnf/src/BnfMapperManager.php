@@ -8,6 +8,7 @@ use Drupal\bnf\Attribute\BnfMapper;
 use Drupal\Core\Cache\CacheBackendInterface;
 use Drupal\Core\Extension\ModuleHandlerInterface;
 use Drupal\Core\Plugin\DefaultPluginManager;
+use Spawnia\Sailor\ObjectLike;
 
 /**
  * Manages BNF mapper plugins.
@@ -41,4 +42,19 @@ class BnfMapperManager extends DefaultPluginManager {
     $this->alterInfo('bnf_mapper');
     $this->setCacheBackend($cache_backend, 'bnf_mapper_plugins');
   }
+
+  /**
+   * Get the mapper for a given GraphQL class.
+   */
+  public function getMapper(ObjectLike $object): BnfMapperInterface {
+    $mapper = $this->createInstance($object::class);
+
+    // Make PHPStan happy.
+    if (!$mapper instanceof BnfMapperInterface) {
+      throw new \RuntimeException('Mapper does not implement BnfMapperInterface');
+    }
+
+    return $mapper;
+  }
+
 }

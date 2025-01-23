@@ -4,13 +4,11 @@ declare(strict_types=1);
 
 namespace Drupal\bnf\Plugin\bnf_mapper;
 
-use Drupal\Core\Entity\EntityStorageInterface;
-use Drupal\Core\Entity\EntityTypeManagerInterface;
 use Drupal\bnf\Attribute\BnfMapper;
-use Drupal\bnf\BnfStateEnum;
 use Drupal\bnf\GraphQL\Operations\GetNode\Node\NodeArticle as GraphQLNodeArticle;
 use Drupal\bnf\Plugin\BnfMapperPluginBase;
-use Drupal\node\NodeInterface;
+use Drupal\Core\Entity\EntityStorageInterface;
+use Drupal\Core\Entity\EntityTypeManagerInterface;
 use Spawnia\Sailor\ObjectLike;
 
 /**
@@ -21,6 +19,9 @@ use Spawnia\Sailor\ObjectLike;
 )]
 class NodeArticle extends BnfMapperPluginBase {
 
+  /**
+   * Node storage to create node in.
+   */
   protected EntityStorageInterface $nodeStorage;
 
   /**
@@ -48,14 +49,10 @@ class NodeArticle extends BnfMapperPluginBase {
     /** @var \Drupal\node\Entity\Node $node */
     $node = $this->nodeStorage->create([
       'type' => 'article',
-      'status' => NodeInterface::NOT_PUBLISHED,
       'uuid' => $object->id,
     ]);
 
     $node->set('title', $object->title);
-
-    // Mark the node as imported.
-    $node->set(BnfStateEnum::FIELD_NAME, BnfStateEnum::Imported->value);
 
     return $node;
   }
