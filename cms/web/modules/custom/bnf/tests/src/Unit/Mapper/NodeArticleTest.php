@@ -6,38 +6,33 @@ namespace Drupal\Tests\bnf\Unit\Mapper;
 
 use Drupal\bnf\GraphQL\Operations\GetNode\Node\NodeArticle as GraphQLArticle;
 use Drupal\bnf\Plugin\bnf_mapper\NodeArticle;
-use Drupal\Core\Entity\EntityStorageInterface;
-use Drupal\Core\Entity\EntityTypeManagerInterface;
 use Drupal\node\Entity\Node;
-use Drupal\Tests\UnitTestCase;
 
 /**
  * Test the article node mapper.
  */
-class NodeArticleTest extends UnitTestCase {
+class NodeArticleTest extends EntityMapperTestBase {
+
+  const ENTITY_NAME = 'node';
+  const ENTITY_CLASS = Node::class;
 
   /**
    * Test article node mapping.
    */
   public function testNodeArticleMapping(): void {
-    $entityManagerProphecy = $this->prophesize(EntityTypeManagerInterface::class);
-    $nodeStorageProphecy = $this->prophesize(EntityStorageInterface::class);
-    $entityManagerProphecy->getStorage('node')->willReturn($nodeStorageProphecy);
-    $nodeProphecy = $this->prophesize(Node::class);
-
-    $nodeStorageProphecy->create([
+    $this->storageProphecy->create([
       'type' => 'article',
       'uuid' => '123',
-    ])->willReturn($nodeProphecy);
+    ])->willReturn($this->entityProphecy);
 
-    $mapper = new NodeArticle([], '', [], $entityManagerProphecy->reveal());
+    $mapper = new NodeArticle([], '', [], $this->entityManagerProphecy->reveal());
 
     $graphqlArticle = GraphQLArticle::make('123', 'this is the title');
 
     $node = $mapper->map($graphqlArticle);
 
-    $this->assertSame($node, $nodeProphecy->reveal());
-    $nodeProphecy->set('title', 'this is the title')->shouldHaveBeenCalled();
+    $this->assertSame($node, $this->entityProphecy->reveal());
+    $this->entityProphecy->set('title', 'this is the title')->shouldHaveBeenCalled();
   }
 
 }
