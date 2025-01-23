@@ -7,6 +7,8 @@
   <!-- Exclude built assets used by Novel -->
   <exclude-pattern>web/themes/custom/novel/assets/*</exclude-pattern>
   <file>assets/all.settings.php</file>
+  <!-- Exclude generated client -->
+  <exclude-pattern>web/modules/custom/bnf/src/GraphQL/*</exclude-pattern>
 
   <rule ref="Drupal" />
   <rule ref="DrupalPractice"/>
