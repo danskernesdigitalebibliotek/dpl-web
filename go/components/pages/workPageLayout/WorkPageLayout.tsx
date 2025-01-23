@@ -74,7 +74,7 @@ function WorkPageLayout({ workId }: { workId: string }) {
         <>
           <WorkPageHeader work={work} selectedManifestation={selectedManifestation} />
           <InfoBox work={data.work} selectedManifestation={selectedManifestation} />
-          <InfoBoxDetails work={data.work} selectedManifestation={selectedManifestation} />
+          <InfoBoxDetails selectedManifestation={selectedManifestation} />
         </>
       )}
     </div>

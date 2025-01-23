@@ -6,16 +6,14 @@ import InfoBoxItem from "@/components/shared/infoBox/InfoBoxItem"
 import {
   GeneralMaterialTypeCodeEnum,
   ManifestationWorkPageFragment,
-  WorkFullWorkPageFragment,
 } from "@/lib/graphql/generated/fbi/graphql"
 import { getIsbnsFromManifestation } from "@/lib/helpers/ids"
 
 type InfoBoxDetailsProps = {
-  work: WorkFullWorkPageFragment
   selectedManifestation: ManifestationWorkPageFragment
 }
 
-const InfoBoxDetails = ({ work, selectedManifestation }: InfoBoxDetailsProps) => {
+const InfoBoxDetails = ({ selectedManifestation }: InfoBoxDetailsProps) => {
   // get selectedManifestation materialTypes and translate them for render
   const materialTypeDisplays = selectedManifestation?.materialTypes.map(materialType => {
     return translateMaterialTypesStringForRender(
