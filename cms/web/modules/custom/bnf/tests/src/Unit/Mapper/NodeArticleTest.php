@@ -32,7 +32,7 @@ class NodeArticleTest extends UnitTestCase {
 
     $mapper = new NodeArticle([], '', [], $entityManagerProphecy->reveal());
 
-    $graphqlArticle =    GraphQLArticle::make('123', 'this is the title');
+    $graphqlArticle = GraphQLArticle::make('123', 'this is the title');
 
     $node = $mapper->map($graphqlArticle);
 

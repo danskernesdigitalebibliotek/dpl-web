@@ -84,7 +84,7 @@ entity_config:
     material_grid_manual:
       enabled: true
     medias:
-      enabled: false
+      enabled: true
     nav_grid_manual:
       enabled: false
     nav_spots_manual:
