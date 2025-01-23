@@ -12,6 +12,16 @@ query GetNode($id: ID!) {
             format
           }
         }
+        ... on ParagraphAccordion {
+          accordionDescription {
+            value
+            format
+          }
+          accordionTitle {
+            value
+            format
+          }
+        }
       }
     }
   }

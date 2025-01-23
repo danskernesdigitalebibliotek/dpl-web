@@ -46,6 +46,18 @@ class GetNode extends \Spawnia\Sailor\Operation
                     format
                   }
                 }
+                ... on ParagraphAccordion {
+                  accordionDescription {
+                    __typename
+                    value
+                    format
+                  }
+                  accordionTitle {
+                    __typename
+                    value
+                    format
+                  }
+                }
               }
             }
           }
