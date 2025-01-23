@@ -3,7 +3,6 @@ import type { Meta, StoryObj } from "@storybook/react"
 import { darkModeDecorator } from "@/.storybook/decorators"
 import InfoBoxDetails from "@/components/shared/infoBox/InfoBoxDetails"
 import manifestationMock from "@/lib/mocks/manifestation/infoBox.mock"
-import workMock from "@/lib/mocks/work/infoBox.mock"
 
 const meta = {
   title: "components/InfoBoxDetails",
