@@ -4,5 +4,15 @@ query GetNode($id: ID!) {
       id,
       title
     }
+    ... on NodeArticle {
+      paragraphs {
+        ... on ParagraphTextBody {
+          body {
+            value
+            format
+          }
+        }
+      }
+    }
   }
 }

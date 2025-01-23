@@ -36,6 +36,18 @@ class GetNode extends \Spawnia\Sailor\Operation
               id
               title
             }
+            ... on NodeArticle {
+              paragraphs {
+                __typename
+                ... on ParagraphTextBody {
+                  body {
+                    __typename
+                    value
+                    format
+                  }
+                }
+              }
+            }
           }
         }';
     }
