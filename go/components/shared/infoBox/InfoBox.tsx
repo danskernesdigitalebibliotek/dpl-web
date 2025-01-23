@@ -32,6 +32,8 @@ const InfoBox = ({ work, selectedManifestation }: InfoBoxProps) => {
       .map(series => `${series.numberInSeries ? series.numberInSeries + " i " : ""}${series.title}`)
       .join(", ") || "-"
   const subjects = selectedManifestation?.subjects.all.map(subject => subject.display) || []
+  // Remove duplicates
+  const uniqueSubjects = [...new Set(subjects)]
 
   return (
     <motion.div
@@ -52,8 +54,8 @@ const InfoBox = ({ work, selectedManifestation }: InfoBoxProps) => {
             <InfoBoxItem term="Alder">{ageString}</InfoBoxItem>
             <InfoBoxItem term="Serie">{seriesString}</InfoBoxItem>
             <InfoBoxItem term="Emneord" classname="flex flex-row flex-wrap gap-2">
-              {subjects
-                ? subjects.map(subject => (
+              {uniqueSubjects
+                ? uniqueSubjects.map(subject => (
                     <Button
                       key={subject}
                       size={"sm"}
