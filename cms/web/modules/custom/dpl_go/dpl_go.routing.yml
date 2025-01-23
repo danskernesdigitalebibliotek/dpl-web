@@ -1,0 +1,7 @@
+dpl_go.post_adgangsplatformen_login:
+  path: '/go-login'
+  defaults:
+    _controller: '\Drupal\dpl_go\Controller\GoController::postAdgangsplatformenLoginRoute'
+    _title: 'Post Go Adgangsplatformen Login Route'
+  requirements:
+    _permission: 'access content'

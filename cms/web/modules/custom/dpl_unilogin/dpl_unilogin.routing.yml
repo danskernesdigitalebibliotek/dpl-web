@@ -4,6 +4,6 @@ dpl_unilogin.settings:
     _form: '\Drupal\dpl_unilogin\Form\UniloginConfigurationForm'
     _title: 'Unilogin configuration'
   requirements:
-    _permission: 'aadminister unilogin settings'
+    _permission: 'administer unilogin settings'
   options:
     _admin_route: TRUE
