@@ -42,7 +42,7 @@ const InfoBoxDetails = ({ work, selectedManifestation }: InfoBoxDetailsProps) =>
               {selectedManifestation?.physicalDescription?.summaryFull || "-"}
             </InfoBoxItem>
             <InfoBoxItem term="Udgivelsesår">
-              {selectedManifestation?.dateFirstEdition?.display || !!work.workYear?.display || "-"}
+              {selectedManifestation?.dateFirstEdition?.display || "-"}
             </InfoBoxItem>
           </dl>
           <dl className="flex-1">
