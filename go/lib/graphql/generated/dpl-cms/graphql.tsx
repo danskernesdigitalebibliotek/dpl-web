@@ -888,12 +888,11 @@ export type SchemaInformation = {
 };
 
 /** Sort direction. */
-export enum SortDirection {
+export type SortDirection =
   /** Stigende */
-  Asc = 'ASC',
+  | 'ASC'
   /** Faldende */
-  Desc = 'DESC'
-}
+  | 'DESC';
 
 /** The schema's entry-point for subscriptions. */
 export type Subscription = {
