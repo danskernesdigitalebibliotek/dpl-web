@@ -4,8 +4,8 @@ import * as client from "openid-client"
 
 import goConfig from "@/lib/config/goConfig"
 import { getUniloginClientConfig } from "@/lib/session/oauth/uniloginClient"
-import { getSession, sessionOptions, setTokensOnSession } from "@/lib/session/session"
-import { TTokenSet } from "@/lib/types/session"
+import { getSession, sessionOptions, setUniloginTokensOnSession } from "@/lib/session/session"
+import { TUniloginTokenSet } from "@/lib/types/session"
 
 import schemas from "./schemas"
 
@@ -44,7 +44,7 @@ export async function GET(request: NextRequest) {
       idTokenExpected: true,
     })
 
-    const tokenSet = schemas.tokenSet.parse(tokenSetResponse) as TTokenSet
+    const tokenSet = schemas.tokenSet.parse(tokenSetResponse) as TUniloginTokenSet
 
     const introspectResponse = (await client.tokenIntrospection(
       config,
@@ -63,7 +63,7 @@ export async function GET(request: NextRequest) {
     session.type = "unilogin"
 
     // Set token info.
-    setTokensOnSession(session, tokenSet)
+    setUniloginTokensOnSession(session, tokenSet)
 
     // Set user info.
     session.userInfo = {

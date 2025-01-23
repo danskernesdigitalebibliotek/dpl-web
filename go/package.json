@@ -11,7 +11,7 @@
     "codegen:covers": "rm -rf src/lib/rest/cover-service-api/generated/model/*.* && orval --project coverService",
     "codegen:graphql": "NODE_TLS_REJECT_UNAUTHORIZED=0 graphql-codegen --require tsconfig-paths/register --config codegen.ts",
     "codegen:publizon": "rm -rf lib/rest/publizon-api/generated/model/*.* && orval --project publizonAdapter",
-    "dev:https": "NODE_TLS_REJECT_UNAUTHORIZED=0 next dev --experimental-https",
+    "dev:https": "NODE_TLS_REJECT_UNAUTHORIZED=0 next dev -H dapple-cms.docker --experimental-https",
     "dev": "NODE_EXTRA_CA_CERTS=\"$(mkcert -CAROOT)/rootCA.pem\" next dev",
     "format:check": "prettier --check .",
     "format:write": "prettier --write .",

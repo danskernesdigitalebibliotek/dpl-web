@@ -1180,17 +1180,15 @@ export type GetDplCmsConfigurationQueryVariables = Exact<{ [key: string]: never;
 
 export type GetDplCmsConfigurationQuery = { __typename?: 'Query', dplConfiguration?: { __typename?: 'DplConfiguration', unilogin?: { __typename?: 'UniloginConfiguration', unilogin_api_url?: string | null, unilogin_api_wellknown_url?: string | null, unilogin_api_client_id?: string | null, unilogin_api_client_secret?: string | null } | null } | null };
 
-export type GetPageByPathQueryVariables = Exact<{
-  path: Scalars['String']['input'];
-}>;
-
-
-export type GetPageByPathQuery = { __typename?: 'Query', route?: { __typename: 'RouteExternal' } | { __typename: 'RouteInternal', url: string, entity?: { __typename?: 'NodeGoArticle' } | { __typename?: 'NodeGoCategory' } | { __typename?: 'NodeGoPage', paragraphs?: Array<{ __typename?: 'ParagraphAccordion' } | { __typename?: 'ParagraphBanner' } | { __typename?: 'ParagraphBreadcrumbChildren' } | { __typename?: 'ParagraphCardGridAutomatic' } | { __typename?: 'ParagraphCardGridManual' } | { __typename?: 'ParagraphContentSlider' } | { __typename?: 'ParagraphContentSliderAutomatic' } | { __typename?: 'ParagraphFilteredEventList' } | { __typename: 'ParagraphGoVideo', id: string, url: string, title?: string | null, status: boolean, created: { __typename?: 'DateTime', timestamp: unknown }, langcode: { __typename?: 'Language', name?: string | null } } | { __typename?: 'ParagraphManualEventList' } | { __typename?: 'ParagraphMaterialGridAutomatic' } | { __typename?: 'ParagraphMaterialGridManual' } | { __typename?: 'ParagraphTextBody' } | { __typename?: 'ParagraphVideo' }> | null } | null } | { __typename: 'RouteRedirect' } | null };
-
 export type GetAdgangsplatformenTokensQueryVariables = Exact<{ [key: string]: never; }>;
 
 
 export type GetAdgangsplatformenTokensQuery = { __typename?: 'Query', dplTokens?: { __typename?: 'DplTokens', adgangsplatformen?: { __typename?: 'AdgangsplatformenToken', library?: string | null, user?: string | null } | null } | null };
+
+export type GetAdgangsplatformenUserTokenQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type GetAdgangsplatformenUserTokenQuery = { __typename?: 'Query', dplTokens?: { __typename?: 'DplTokens', adgangsplatformen?: { __typename?: 'AdgangsplatformenToken', user?: string | null } | null } | null };
 
 
 
@@ -1302,75 +1300,6 @@ useSuspenseGetDplCmsConfigurationQuery.getKey = (variables?: GetDplCmsConfigurat
 
 useGetDplCmsConfigurationQuery.fetcher = (variables?: GetDplCmsConfigurationQueryVariables, options?: RequestInit['headers']) => fetcher<GetDplCmsConfigurationQuery, GetDplCmsConfigurationQueryVariables>(GetDplCmsConfigurationDocument, variables, options);
 
-export const GetPageByPathDocument = `
-    query getPageByPath($path: String!) {
-  route(path: $path) {
-    __typename
-    ... on RouteInternal {
-      url
-      entity {
-        ... on NodeGoPage {
-          paragraphs {
-            ... on ParagraphGoVideo {
-              __typename
-              id
-              url
-              title
-              created {
-                timestamp
-              }
-              langcode {
-                name
-              }
-              status
-            }
-          }
-        }
-      }
-    }
-  }
-}
-    `;
-
-export const useGetPageByPathQuery = <
-      TData = GetPageByPathQuery,
-      TError = unknown
-    >(
-      variables: GetPageByPathQueryVariables,
-      options?: Omit<UseQueryOptions<GetPageByPathQuery, TError, TData>, 'queryKey'> & { queryKey?: UseQueryOptions<GetPageByPathQuery, TError, TData>['queryKey'] }
-    ) => {
-
-    return useQuery<GetPageByPathQuery, TError, TData>(
-      {
-    queryKey: ['getPageByPath', variables],
-    queryFn: fetcher<GetPageByPathQuery, GetPageByPathQueryVariables>(GetPageByPathDocument, variables),
-    ...options
-  }
-    )};
-
-useGetPageByPathQuery.getKey = (variables: GetPageByPathQueryVariables) => ['getPageByPath', variables];
-
-export const useSuspenseGetPageByPathQuery = <
-      TData = GetPageByPathQuery,
-      TError = unknown
-    >(
-      variables: GetPageByPathQueryVariables,
-      options?: Omit<UseSuspenseQueryOptions<GetPageByPathQuery, TError, TData>, 'queryKey'> & { queryKey?: UseSuspenseQueryOptions<GetPageByPathQuery, TError, TData>['queryKey'] }
-    ) => {
-
-    return useSuspenseQuery<GetPageByPathQuery, TError, TData>(
-      {
-    queryKey: ['getPageByPathSuspense', variables],
-    queryFn: fetcher<GetPageByPathQuery, GetPageByPathQueryVariables>(GetPageByPathDocument, variables),
-    ...options
-  }
-    )};
-
-useSuspenseGetPageByPathQuery.getKey = (variables: GetPageByPathQueryVariables) => ['getPageByPathSuspense', variables];
-
-
-useGetPageByPathQuery.fetcher = (variables: GetPageByPathQueryVariables, options?: RequestInit['headers']) => fetcher<GetPageByPathQuery, GetPageByPathQueryVariables>(GetPageByPathDocument, variables, options);
-
 export const GetAdgangsplatformenTokensDocument = `
     query getAdgangsplatformenTokens {
   dplTokens {
@@ -1420,3 +1349,52 @@ useSuspenseGetAdgangsplatformenTokensQuery.getKey = (variables?: GetAdgangsplatf
 
 
 useGetAdgangsplatformenTokensQuery.fetcher = (variables?: GetAdgangsplatformenTokensQueryVariables, options?: RequestInit['headers']) => fetcher<GetAdgangsplatformenTokensQuery, GetAdgangsplatformenTokensQueryVariables>(GetAdgangsplatformenTokensDocument, variables, options);
+
+export const GetAdgangsplatformenUserTokenDocument = `
+    query getAdgangsplatformenUserToken {
+  dplTokens {
+    adgangsplatformen {
+      user
+    }
+  }
+}
+    `;
+
+export const useGetAdgangsplatformenUserTokenQuery = <
+      TData = GetAdgangsplatformenUserTokenQuery,
+      TError = unknown
+    >(
+      variables?: GetAdgangsplatformenUserTokenQueryVariables,
+      options?: Omit<UseQueryOptions<GetAdgangsplatformenUserTokenQuery, TError, TData>, 'queryKey'> & { queryKey?: UseQueryOptions<GetAdgangsplatformenUserTokenQuery, TError, TData>['queryKey'] }
+    ) => {
+
+    return useQuery<GetAdgangsplatformenUserTokenQuery, TError, TData>(
+      {
+    queryKey: variables === undefined ? ['getAdgangsplatformenUserToken'] : ['getAdgangsplatformenUserToken', variables],
+    queryFn: fetcher<GetAdgangsplatformenUserTokenQuery, GetAdgangsplatformenUserTokenQueryVariables>(GetAdgangsplatformenUserTokenDocument, variables),
+    ...options
+  }
+    )};
+
+useGetAdgangsplatformenUserTokenQuery.getKey = (variables?: GetAdgangsplatformenUserTokenQueryVariables) => variables === undefined ? ['getAdgangsplatformenUserToken'] : ['getAdgangsplatformenUserToken', variables];
+
+export const useSuspenseGetAdgangsplatformenUserTokenQuery = <
+      TData = GetAdgangsplatformenUserTokenQuery,
+      TError = unknown
+    >(
+      variables?: GetAdgangsplatformenUserTokenQueryVariables,
+      options?: Omit<UseSuspenseQueryOptions<GetAdgangsplatformenUserTokenQuery, TError, TData>, 'queryKey'> & { queryKey?: UseSuspenseQueryOptions<GetAdgangsplatformenUserTokenQuery, TError, TData>['queryKey'] }
+    ) => {
+
+    return useSuspenseQuery<GetAdgangsplatformenUserTokenQuery, TError, TData>(
+      {
+    queryKey: variables === undefined ? ['getAdgangsplatformenUserTokenSuspense'] : ['getAdgangsplatformenUserTokenSuspense', variables],
+    queryFn: fetcher<GetAdgangsplatformenUserTokenQuery, GetAdgangsplatformenUserTokenQueryVariables>(GetAdgangsplatformenUserTokenDocument, variables),
+    ...options
+  }
+    )};
+
+useSuspenseGetAdgangsplatformenUserTokenQuery.getKey = (variables?: GetAdgangsplatformenUserTokenQueryVariables) => variables === undefined ? ['getAdgangsplatformenUserTokenSuspense'] : ['getAdgangsplatformenUserTokenSuspense', variables];
+
+
+useGetAdgangsplatformenUserTokenQuery.fetcher = (variables?: GetAdgangsplatformenUserTokenQueryVariables, options?: RequestInit['headers']) => fetcher<GetAdgangsplatformenUserTokenQuery, GetAdgangsplatformenUserTokenQueryVariables>(GetAdgangsplatformenUserTokenDocument, variables, options);

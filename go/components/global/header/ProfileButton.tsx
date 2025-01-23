@@ -60,6 +60,20 @@ function ProfileButton() {
                 </Button>
               </div>
             </div>
+            <div className="flex flex-col items-center justify-center rounded-sm bg-background-overlay py-space-y">
+              <SheetDescription className="mb-4 text-typo-heading-4 font-bold text-foreground">
+                Log ind med Adgangsplatformen
+              </SheetDescription>
+              <div>
+                <Button
+                  onClick={() =>
+                    router.push(`https://dapple-cms.docker/login?current-path=/go-login`)
+                  }
+                  ariaLabel="Log ind med Adgangsplatformen">
+                  LOG IND
+                </Button>
+              </div>
+            </div>
           </SheetHeader>
         </SheetContent>
       </Sheet>
