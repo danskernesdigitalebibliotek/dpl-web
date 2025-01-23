@@ -1,19 +1,23 @@
 import React, { useState } from "react"
 
-import { isAudioBook, isEbook, isPodcast } from "@/components/pages/workPageLayout/helper"
+import {
+  isManifestationAudioBook,
+  isManifestationEbook,
+  isManifestationPodcast,
+} from "@/components/pages/workPageLayout/helper"
 import { Button } from "@/components/shared/button/Button"
 import Player from "@/components/shared/publizonPlayer/PublizonPlayer"
 import ResponsiveDialog from "@/components/shared/responsiveDialog/ResponsiveDialog"
 import SmartLink from "@/components/shared/smartLink/SmartLink"
+import { Manifestation } from "@/lib/graphql/generated/fbi/graphql"
 import { resolveUrl } from "@/lib/helpers/helper.routes"
-import { useSelectedManifestationStore } from "@/store/selectedManifestation.store"
 
 export type WorkPageButtonsProps = {
   workId: string
+  selectedManifestation: Manifestation
 }
 
-const WorkPageButtons = ({ workId }: WorkPageButtonsProps) => {
-  const { selectedManifestation } = useSelectedManifestationStore()
+const WorkPageButtons = ({ workId, selectedManifestation }: WorkPageButtonsProps) => {
   const identifier = selectedManifestation?.identifiers[0].value
   const url = resolveUrl({
     routeParams: { work: "work", ":wid": workId, read: "read" },
@@ -23,7 +27,7 @@ const WorkPageButtons = ({ workId }: WorkPageButtonsProps) => {
 
   return (
     <>
-      {isEbook(selectedManifestation) && (
+      {isManifestationEbook(selectedManifestation) && (
         <>
           <Button
             ariaLabel="Prøv ebog"
@@ -40,7 +44,7 @@ const WorkPageButtons = ({ workId }: WorkPageButtonsProps) => {
           </Button>
         </>
       )}
-      {isAudioBook(selectedManifestation) && (
+      {isManifestationAudioBook(selectedManifestation) && (
         <>
           <Button
             ariaLabel="Prøv lydbog"
@@ -54,7 +58,7 @@ const WorkPageButtons = ({ workId }: WorkPageButtonsProps) => {
           </Button>
         </>
       )}
-      {isPodcast(selectedManifestation) && (
+      {isManifestationPodcast(selectedManifestation) && (
         <>
           <Button
             ariaLabel="Prøv podcast"
@@ -76,9 +80,9 @@ const WorkPageButtons = ({ workId }: WorkPageButtonsProps) => {
           onOpenChange={() => {
             setIsPlayerOpen(!isPlayerOpen)
           }}
-          title={`Prøv ${isPodcast(selectedManifestation) ? "Podcast" : "Lydbog"}`}
+          title={`Prøv ${isManifestationPodcast(selectedManifestation) ? "Podcast" : "Lydbog"}`}
           description={
-            isPodcast(selectedManifestation)
+            isManifestationPodcast(selectedManifestation)
               ? "For at høre podcast skal du være oprettet som bruger på GO."
               : "For at låne lydbogen skal du være oprettet som bruger på GO."
           }>

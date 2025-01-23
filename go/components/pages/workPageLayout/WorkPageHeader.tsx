@@ -1,48 +1,54 @@
 "use client"
 
 import { motion } from "framer-motion"
-import { useRouter, useSearchParams } from "next/navigation"
-import React, { useEffect, useState } from "react"
+import { useRouter } from "next/navigation"
+import React from "react"
 
 import WorkPageButtons from "@/components/pages/workPageLayout/WorkPageButtons"
 import {
-  findInitialSliderValue,
-  getManifestationByMaterialType,
   getManifestationLanguageIsoCode,
-  getManifestationMaterialType,
   getWorkMaterialTypes,
-  translateMaterialTypesForRender,
+  materialTypeSortPriority,
+  translateMaterialTypesStringForRender,
 } from "@/components/pages/workPageLayout/helper"
 import { Badge } from "@/components/shared/badge/Badge"
 import { CoverPicture } from "@/components/shared/coverPicture/CoverPicture"
 import SlideSelect, { SlideSelectOption } from "@/components/shared/slideSelect/SlideSelect"
-import { WorkFullWorkPageFragment } from "@/lib/graphql/generated/fbi/graphql"
+import {
+  GeneralMaterialTypeCodeEnum,
+  Manifestation,
+  Work,
+  WorkFullWorkPageFragment,
+} from "@/lib/graphql/generated/fbi/graphql"
 import { getCoverUrls, getLowResCoverUrl } from "@/lib/helpers/helper.covers"
 import { displayCreators } from "@/lib/helpers/helper.creators"
+import { resolveUrl } from "@/lib/helpers/helper.routes"
 import { getIsbnsFromManifestation } from "@/lib/helpers/ids"
 import { useGetCoverCollection } from "@/lib/rest/cover-service-api/generated/cover-service"
 import { GetCoverCollectionSizesItem } from "@/lib/rest/cover-service-api/generated/model"
 import { useGetV1ProductsIdentifier } from "@/lib/rest/publizon-api/generated/publizon"
-import { useSelectedManifestationStore } from "@/store/selectedManifestation.store"
 
 type WorkPageHeaderProps = {
   work: WorkFullWorkPageFragment
+  selectedManifestation: Manifestation
 }
 
-const WorkPageHeader = ({ work }: WorkPageHeaderProps) => {
-  const searchParams = useSearchParams()
+const WorkPageHeader = ({ work, selectedManifestation }: WorkPageHeaderProps) => {
   const router = useRouter()
-  const { selectedManifestation, setSelectedManifestation } = useSelectedManifestationStore()
-  const [slideSelectOptions, setSlideSelectOptions] = useState<SlideSelectOption[] | null>(null)
   const isbns = selectedManifestation ? getIsbnsFromManifestation(selectedManifestation) : []
   const languageIsoCode = getManifestationLanguageIsoCode(selectedManifestation)
   const titleSuffix = selectedManifestation?.titles?.identifyingAddition || ""
-  const [initialSliderValue, setInitialSliderValue] = useState<SlideSelectOption | undefined>(
-    undefined
+  const workMaterialTypes = getWorkMaterialTypes(
+    (work?.materialTypes as Work["materialTypes"]) || []
   )
-  const workMaterialTypes = getWorkMaterialTypes(work.materialTypes).map(materialType => {
-    return { value: materialType.code, render: materialType.display }
-  })
+  const workMaterialTypesWithDisplayName = workMaterialTypes.map(materialType => {
+    return {
+      code: materialType.code,
+      display: translateMaterialTypesStringForRender(
+        materialType.code as GeneralMaterialTypeCodeEnum
+      ),
+    }
+  }) as SlideSelectOption[]
 
   const { data: dataCovers, isLoading: isLoadingCovers } = useGetCoverCollection(
     {
@@ -71,44 +77,28 @@ const WorkPageHeader = ({ work }: WorkPageHeaderProps) => {
     ["default", "original", "large", "medium-large", "medium", "small-medium", "small", "xx-small"]
   )
   const onOptionSelect = (optionSelected: SlideSelectOption) => {
-    const params = new URLSearchParams(searchParams)
-    params.set("type", optionSelected.render)
-    router.push(`${window.location.pathname}?${params.toString()}`, { scroll: false })
+    const url = resolveUrl({
+      routeParams: { work: "work", wid: work.workId },
+      queryParams: { type: optionSelected.code },
+    })
+    router.push(url, { scroll: false })
   }
 
-  useEffect(() => {
-    // Initialize slideSelect options
-    const slideSelectOptions = workMaterialTypes.reduce<SlideSelectOption[]>(
-      (acc, materialType) => {
-        // We only want unique material types
-        if (!acc.some(item => item.value === materialType.value)) {
-          acc.push(translateMaterialTypesForRender(materialType))
-        }
-        return acc
-      },
-      []
-    )
-    setSlideSelectOptions(slideSelectOptions)
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [])
+  const slideSelectOptions = workMaterialTypesWithDisplayName
 
-  useEffect(() => {
-    // Initialize slideSelect initial value
-    const searchParams = new URLSearchParams(window.location.search)
-    setInitialSliderValue(
-      findInitialSliderValue(slideSelectOptions, selectedManifestation, searchParams)
-    )
-  }, [selectedManifestation, slideSelectOptions])
+  console.log("slideSelectOptions", slideSelectOptions)
 
-  useEffect(() => {
-    if (!!searchParams.get("type")) {
-      setSelectedManifestation(
-        getManifestationByMaterialType(work, searchParams.get("type") as string) ||
-          selectedManifestation
-      )
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [searchParams])
+  // sort the slideSelectOptions by GeneralMaterialTypeCodeEnum
+  const sortedSlideSelectOptions = slideSelectOptions.sort((a, b) => {
+    // sort by the index of the GeneralMaterialTypeCodeEnum in the materialTypeSortPriority array
+    return materialTypeSortPriority.indexOf(a.code) - materialTypeSortPriority.indexOf(b.code)
+  })
+
+  const selectedManifestationMaterialTypeCode = selectedManifestation?.materialTypes[0]
+    .materialTypeGeneral.code as GeneralMaterialTypeCodeEnum
+
+  const isSelectedManifestationPodcast =
+    selectedManifestationMaterialTypeCode === GeneralMaterialTypeCodeEnum.Podcasts || false
 
   return (
     <>
@@ -132,17 +122,15 @@ const WorkPageHeader = ({ work }: WorkPageHeaderProps) => {
           {slideSelectOptions && (
             <div className="flex w-full justify-center pt-12">
               <SlideSelect
-                options={slideSelectOptions}
-                initialOption={initialSliderValue}
+                options={sortedSlideSelectOptions}
+                selected={selectedManifestationMaterialTypeCode}
                 onOptionSelect={onOptionSelect}
               />
             </div>
           )}
         </div>
         <div className="col-span-4 flex flex-col items-start justify-end pt-grid-gap-3 lg:pt-0">
-          {!!publizonData?.product?.costFree ||
-          (selectedManifestation &&
-            getManifestationMaterialType(selectedManifestation) === "podcasts") ? (
+          {!!publizonData?.product?.costFree || isSelectedManifestationPodcast ? (
             <Badge variant={"blue-title"} className="mb-1 lg:mb-2">
               BLÅ
             </Badge>
@@ -157,7 +145,7 @@ const WorkPageHeader = ({ work }: WorkPageHeaderProps) => {
           </h2>
         </div>
         <div className="col-span-4 mt-grid-gap-3 flex flex-col items-end justify-end lg:order-3 lg:mt-0">
-          <WorkPageButtons workId={work.workId} />
+          <WorkPageButtons workId={work.workId} selectedManifestation={selectedManifestation} />
         </div>
       </motion.div>
     </>

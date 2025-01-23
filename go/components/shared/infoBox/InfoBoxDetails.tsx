@@ -1,19 +1,27 @@
 import { motion } from "framer-motion"
 import React from "react"
 
+import { translateMaterialTypesStringForRender } from "@/components/pages/workPageLayout/helper"
 import InfoBoxItem from "@/components/shared/infoBox/InfoBoxItem"
-import { WorkFullWorkPageFragment } from "@/lib/graphql/generated/fbi/graphql"
+import {
+  GeneralMaterialTypeCodeEnum,
+  Manifestation,
+  WorkFullWorkPageFragment,
+} from "@/lib/graphql/generated/fbi/graphql"
 import { getIsbnsFromManifestation } from "@/lib/helpers/ids"
-import { useSelectedManifestationStore } from "@/store/selectedManifestation.store"
-
-import { getTranslatedMaterialTypes } from "./helper"
 
 type InfoBoxDetailsProps = {
   work: WorkFullWorkPageFragment
+  selectedManifestation: Manifestation
 }
 
-const InfoBoxDetails = ({ work }: InfoBoxDetailsProps) => {
-  const { selectedManifestation } = useSelectedManifestationStore()
+const InfoBoxDetails = ({ work, selectedManifestation }: InfoBoxDetailsProps) => {
+  // get selectedManifestation materialTypes and translate them for render
+  const materialTypeDisplays = selectedManifestation?.materialTypes.map(materialType => {
+    return translateMaterialTypesStringForRender(
+      materialType.materialTypeGeneral.code as GeneralMaterialTypeCodeEnum
+    )
+  })
 
   return (
     <motion.div
@@ -24,54 +32,35 @@ const InfoBoxDetails = ({ work }: InfoBoxDetailsProps) => {
         <h2 className="mb-10 text-typo-heading-4 lg:mb-24">Detaljer</h2>
         <div className="flex w-full flex-col gap-grid-gap-3 lg:flex-row lg:gap-44">
           <dl className="flex-1">
-            {!!selectedManifestation ? (
-              <InfoBoxItem
-                term="Type"
-                description={getTranslatedMaterialTypes(selectedManifestation)}
-              />
-            ) : (
-              <InfoBoxItem term="Type" description={[]} />
-            )}
-            <InfoBoxItem
-              term="Sprog"
-              description={
-                selectedManifestation?.languages?.main?.map(language => language.display) || []
-              }
-            />
-            <InfoBoxItem
-              term="Omfang"
-              description={
-                selectedManifestation?.physicalDescription?.summaryFull
-                  ? [selectedManifestation.physicalDescription.summaryFull]
-                  : []
-              }
-            />
-            <InfoBoxItem
-              term="Udgivelsesår"
-              description={
-                !!selectedManifestation?.dateFirstEdition?.display || !!work.workYear?.display
-                  ? ([
-                      selectedManifestation?.dateFirstEdition?.display || work.workYear?.display,
-                    ] as string[])
-                  : []
-              }
-            />
+            <InfoBoxItem term="Type">
+              {!materialTypeDisplays.length ? "-" : materialTypeDisplays.join(", ")}
+            </InfoBoxItem>
+            <InfoBoxItem term="Sprog">
+              {selectedManifestation?.languages?.main?.map(language => language.display).join(", ")}
+            </InfoBoxItem>
+            <InfoBoxItem term="Omfang">
+              {selectedManifestation?.physicalDescription?.summaryFull}
+            </InfoBoxItem>
+            <InfoBoxItem term="Udgivelsesår">
+              {selectedManifestation?.dateFirstEdition?.display || !!work.workYear?.display}
+            </InfoBoxItem>
           </dl>
           <dl className="flex-1">
-            <InfoBoxItem term="Genre" description={selectedManifestation?.genreAndForm || []} />
-            <InfoBoxItem
-              term="ISBN"
-              description={getIsbnsFromManifestation(selectedManifestation)}
-            />
-            <InfoBoxItem term="Forlag" description={selectedManifestation?.publisher || []} />
-            <InfoBoxItem
-              term="Bidragsyder"
-              description={
-                selectedManifestation?.contributors
-                  .map(item => item.display)
-                  .concat(selectedManifestation?.contributorsFromDescription) || []
-              }
-            />
+            <InfoBoxItem term="Genre">
+              {selectedManifestation?.genreAndForm.map(genre => genre).join(", ")}
+            </InfoBoxItem>
+            <InfoBoxItem term="ISBN">
+              {getIsbnsFromManifestation(selectedManifestation).join(", ")}
+            </InfoBoxItem>
+            <InfoBoxItem term="Forlag">
+              {selectedManifestation?.publisher.map(publisher => publisher).join(", ")}
+            </InfoBoxItem>
+            <InfoBoxItem term="Bidragsyder">
+              {selectedManifestation?.contributors
+                .map(item => item.display)
+                .concat(selectedManifestation?.contributorsFromDescription)
+                .join(", ")}
+            </InfoBoxItem>
           </dl>
         </div>
       </section>

@@ -4,7 +4,10 @@ import { useQueries } from "@tanstack/react-query"
 import Link from "next/link"
 import React from "react"
 
-import { getIconNameFromMaterialType } from "@/components/pages/workPageLayout/helper"
+import {
+  getIconNameFromMaterialType,
+  materialTypeSortPriority,
+} from "@/components/pages/workPageLayout/helper"
 import {
   GeneralMaterialTypeCodeEnum,
   WorkTeaserSearchPageFragment,
@@ -29,15 +32,16 @@ type WorkCardProps = {
 }
 
 const WorkCard = ({ work }: WorkCardProps) => {
+  const manifestations = work.manifestations.all
+  const bestRepresentationManifestation = work.manifestations.bestRepresentation
+
   const { data: dataCovers, isLoading: isLoadingCovers } = useGetCoverCollection({
     type: "pid",
-    identifiers: [getAllWorkPids(work).join(", ")],
+    identifiers: [bestRepresentationManifestation.pid],
     sizes: [
       "xx-small, small, small-medium, medium, medium-large, large, original, default" as GetCoverCollectionSizesItem,
     ],
   })
-
-  const manifestations = work.manifestations.all
 
   // for each manifestation, get publizon data and add to array
   const manifestationsWithPublizonData = useQueries({
@@ -101,18 +105,33 @@ const WorkCard = ({ work }: WorkCardProps) => {
 
   const lowResCover = getLowResCoverUrl(dataCovers)
 
-  const isSomeMaterialTypePodcast = work.materialTypes.some(
-    materialType => materialType?.materialTypeGeneral?.code === GeneralMaterialTypeCodeEnum.Podcasts
-  )
+  const isSomeMaterialTypePodcast = work.materialTypes.some(materialType => {
+    return materialType?.materialTypeGeneral?.code === GeneralMaterialTypeCodeEnum.Podcasts
+  })
 
   const isSomeManifestationTypeCostFree = filteredManifestations.some(
     manifestation => manifestation.publizonData?.costFree
   )
 
+  // sort manifestations by materialTypeSortPriority
+  const sortedManifestations = filteredManifestations.sort((a, b) => {
+    return (
+      materialTypeSortPriority.indexOf(a.manifestation.materialTypes[0].materialTypeGeneral.code) -
+      materialTypeSortPriority.indexOf(b.manifestation.materialTypes[0].materialTypeGeneral.code)
+    )
+  })
+
+  // Get the best representation manifestation material type code for link url
+  const bestRepresentationManifestationMaterialTypeCode =
+    bestRepresentationManifestation.materialTypes[0].materialTypeGeneral.code
+
   return (
     <Link
       className="block space-y-3 lg:space-y-5"
-      href={resolveUrl({ routeParams: { work: "work", wid: work.workId } })}>
+      href={resolveUrl({
+        routeParams: { work: "work", wid: work.workId },
+        queryParams: { type: bestRepresentationManifestationMaterialTypeCode },
+      })}>
       <div>
         <div
           key={work.workId}
@@ -136,18 +155,19 @@ const WorkCard = ({ work }: WorkCardProps) => {
           <div className="my-auto flex min-h-[15%] items-center py-3 md:py-4">
             <div className="flex w-full flex-row justify-center gap-2">
               {/* Loop through all manifestation types */}
-              {filteredManifestations.map(manifestation => {
-                const isCostFree = manifestation.publizonData?.costFree
-
+              {sortedManifestations.map(manifestation => {
                 // find material type general material type
                 const materialType =
                   manifestation.manifestation.materialTypes[0].materialTypeGeneral.code
                 const materialTypeIcon = getIconNameFromMaterialType(materialType) || "book"
 
+                const isCostFree = manifestation.publizonData?.costFree
+                const isPodcast = materialType === GeneralMaterialTypeCodeEnum.Podcasts
+
                 return (
                   <MaterialTypeIconWrapper
                     key={manifestation.manifestation.pid}
-                    costFree={isCostFree}
+                    costFree={isCostFree || isPodcast}
                     iconName={materialTypeIcon}
                   />
                 )

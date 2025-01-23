@@ -3,58 +3,58 @@
 import { useQuery } from "@tanstack/react-query"
 import { notFound } from "next/navigation"
 import { useSearchParams } from "next/navigation"
-import React, { useEffect } from "react"
+import React, { useEffect, useState } from "react"
 
 import WorkPageHeader from "@/components/pages/workPageLayout/WorkPageHeader"
-import {
-  getBestRepresentation,
-  getManifestationByMaterialType,
-} from "@/components/pages/workPageLayout/helper"
 import { ButtonSkeleton } from "@/components/shared/button/Button"
 import { CoverPictureSkeleton } from "@/components/shared/coverPicture/CoverPicture"
 import InfoBox from "@/components/shared/infoBox/InfoBox"
 import InfoBoxDetails from "@/components/shared/infoBox/InfoBoxDetails"
 import { SlideSelectSkeleton } from "@/components/shared/slideSelect/SlideSelect"
-import { GetMaterialQuery, useGetMaterialQuery } from "@/lib/graphql/generated/fbi/graphql"
-import { useSelectedManifestationStore } from "@/store/selectedManifestation.store"
+import {
+  Manifestation,
+  Work,
+  WorkFullWorkPageFragment,
+  useGetMaterialQuery,
+} from "@/lib/graphql/generated/fbi/graphql"
 
-type WorkPageLayoutProps = {
-  workId: string
-  dehydratedQueryData: GetMaterialQuery | undefined
-}
-
-function WorkPageLayout({ workId, dehydratedQueryData }: WorkPageLayoutProps) {
+function WorkPageLayout({ workId }: { workId: string }) {
+  const [selectedManifestation, setSelectedManifestation] = useState<Manifestation>()
   const searchParams = useSearchParams()
+
   const { data, isLoading } = useQuery({
     queryKey: useGetMaterialQuery.getKey({ wid: workId }),
     queryFn: useGetMaterialQuery.fetcher({ wid: workId }),
-    initialData: dehydratedQueryData,
   })
-  const { selectedManifestation, setSelectedManifestation } = useSelectedManifestationStore()
 
-  // Cleanup at unmount
-  useEffect(() => {
-    return () => {
-      setSelectedManifestation(null)
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [])
+  if (!data || !data.work) {
+    notFound()
+  }
+
+  const work = data.work as WorkFullWorkPageFragment
+  const manifestations = work.manifestations.all
 
   useEffect(() => {
-    if (!data || !data.work) return
-    if (selectedManifestation) return
+    const searchParamsMaterialType = searchParams.get("type")
 
-    // Select work manifestation on the initial load - 1. by URL params, 2. by best representation
-    if (!!searchParams.get("type")) {
-      setSelectedManifestation(
-        getManifestationByMaterialType(data.work, searchParams.get("type") as string) ||
-          getBestRepresentation(data.work)
-      )
-    } else {
-      setSelectedManifestation(getBestRepresentation(data.work))
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [selectedManifestation])
+    // filter out manifestations that don't match the search params material type
+    const filteredManifestations = manifestations.filter(manifestation => {
+      return manifestation.materialTypes[0].materialTypeGeneral.code === searchParamsMaterialType
+    })
+
+    if (!filteredManifestations.length) return notFound()
+
+    // get the manifestation that has the newest edition
+    const latestManifestationEdition = filteredManifestations.reduce((latest, current) => {
+      const latestEdition = latest.edition?.publicationYear?.year || 0
+      const currentEdition = current.edition?.publicationYear?.year || 0
+
+      return latestEdition > currentEdition ? latest : current
+    }, filteredManifestations[0]) as Manifestation
+
+    // set the selected manifestation in the state
+    setSelectedManifestation(latestManifestationEdition)
+  }, [manifestations, searchParams])
 
   if (isLoading && !data) {
     return (
@@ -70,9 +70,13 @@ function WorkPageLayout({ workId, dehydratedQueryData }: WorkPageLayoutProps) {
 
   return (
     <div className="content-container my-grid-gap-2 flex-row flex-wrap lg:my-grid-gap-half">
-      <WorkPageHeader work={data.work} />
-      <InfoBox work={data.work} />
-      <InfoBoxDetails work={data.work} />
+      {selectedManifestation && (
+        <>
+          <WorkPageHeader work={work} selectedManifestation={selectedManifestation} />
+          <InfoBox work={data.work} selectedManifestation={selectedManifestation} />
+          <InfoBoxDetails work={data.work} selectedManifestation={selectedManifestation} />
+        </>
+      )}
     </div>
   )
 }
