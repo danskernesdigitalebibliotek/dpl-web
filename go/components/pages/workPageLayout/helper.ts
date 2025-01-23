@@ -1,6 +1,5 @@
 import { head, uniqBy } from "lodash"
 
-import { SlideSelectOption } from "@/components/shared/slideSelect/SlideSelect"
 import { materialTypeCategories } from "@/components/shared/workCard/helper"
 import {
   GeneralMaterialTypeCodeEnum,
@@ -33,28 +32,28 @@ export const getManifestationByMaterialType = (
 }
 
 const isManifestationOfMaterialType = (
-  manifestation: Manifestation,
+  manifestation: ManifestationWorkPageFragment,
   materialType: GeneralMaterialTypeCodeEnum
 ) => {
   return manifestation.materialTypes.some(type => type.materialTypeGeneral.code === materialType)
 }
 
-export const isManifestationEbook = (manifestation: Manifestation) => {
+export const isManifestationEbook = (manifestation: ManifestationWorkPageFragment) => {
   if (!manifestation) return false
   return isManifestationOfMaterialType(manifestation, GeneralMaterialTypeCodeEnum.Ebooks)
 }
 
-export const isManifestationAudioBook = (manifestation: Manifestation) => {
+export const isManifestationAudioBook = (manifestation: ManifestationWorkPageFragment) => {
   if (!manifestation) return false
   return isManifestationOfMaterialType(manifestation, GeneralMaterialTypeCodeEnum.AudioBooks)
 }
 
-export const isManifestationPodcast = (manifestation: Manifestation) => {
+export const isManifestationPodcast = (manifestation: ManifestationWorkPageFragment) => {
   if (!manifestation) return false
   return isManifestationOfMaterialType(manifestation, GeneralMaterialTypeCodeEnum.Podcasts)
 }
 
-export const getManifestationLanguageIsoCode = (manifestation: Manifestation) => {
+export const getManifestationLanguageIsoCode = (manifestation: ManifestationWorkPageFragment) => {
   if (!manifestation) return undefined
 
   const uniqueLanguagesWithIsoCode = uniqBy(manifestation.languages?.main, "isoCode")
@@ -108,7 +107,7 @@ export const materialTypeTranslations = {
 
 export const translateMaterialTypesStringForRender = (
   code: GeneralMaterialTypeCodeEnum
-): String => {
+): string => {
   return materialTypeTranslations[code]
 }
 

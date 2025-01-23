@@ -16,7 +16,7 @@ import { CoverPicture } from "@/components/shared/coverPicture/CoverPicture"
 import SlideSelect, { SlideSelectOption } from "@/components/shared/slideSelect/SlideSelect"
 import {
   GeneralMaterialTypeCodeEnum,
-  Manifestation,
+  ManifestationWorkPageFragment,
   Work,
   WorkFullWorkPageFragment,
 } from "@/lib/graphql/generated/fbi/graphql"
@@ -30,7 +30,7 @@ import { useGetV1ProductsIdentifier } from "@/lib/rest/publizon-api/generated/pu
 
 type WorkPageHeaderProps = {
   work: WorkFullWorkPageFragment
-  selectedManifestation: Manifestation
+  selectedManifestation: ManifestationWorkPageFragment
 }
 
 const WorkPageHeader = ({ work, selectedManifestation }: WorkPageHeaderProps) => {
@@ -85,8 +85,6 @@ const WorkPageHeader = ({ work, selectedManifestation }: WorkPageHeaderProps) =>
   }
 
   const slideSelectOptions = workMaterialTypesWithDisplayName
-
-  console.log("slideSelectOptions", slideSelectOptions)
 
   // sort the slideSelectOptions by GeneralMaterialTypeCodeEnum
   const sortedSlideSelectOptions = slideSelectOptions.sort((a, b) => {

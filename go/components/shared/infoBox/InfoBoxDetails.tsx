@@ -5,14 +5,14 @@ import { translateMaterialTypesStringForRender } from "@/components/pages/workPa
 import InfoBoxItem from "@/components/shared/infoBox/InfoBoxItem"
 import {
   GeneralMaterialTypeCodeEnum,
-  Manifestation,
+  ManifestationWorkPageFragment,
   WorkFullWorkPageFragment,
 } from "@/lib/graphql/generated/fbi/graphql"
 import { getIsbnsFromManifestation } from "@/lib/helpers/ids"
 
 type InfoBoxDetailsProps = {
   work: WorkFullWorkPageFragment
-  selectedManifestation: Manifestation
+  selectedManifestation: ManifestationWorkPageFragment
 }
 
 const InfoBoxDetails = ({ work, selectedManifestation }: InfoBoxDetailsProps) => {

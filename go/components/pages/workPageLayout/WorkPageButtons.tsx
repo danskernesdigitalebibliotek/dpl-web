@@ -9,12 +9,12 @@ import { Button } from "@/components/shared/button/Button"
 import Player from "@/components/shared/publizonPlayer/PublizonPlayer"
 import ResponsiveDialog from "@/components/shared/responsiveDialog/ResponsiveDialog"
 import SmartLink from "@/components/shared/smartLink/SmartLink"
-import { Manifestation } from "@/lib/graphql/generated/fbi/graphql"
+import { ManifestationWorkPageFragment } from "@/lib/graphql/generated/fbi/graphql"
 import { resolveUrl } from "@/lib/helpers/helper.routes"
 
 export type WorkPageButtonsProps = {
   workId: string
-  selectedManifestation: Manifestation
+  selectedManifestation: ManifestationWorkPageFragment
 }
 
 const WorkPageButtons = ({ workId, selectedManifestation }: WorkPageButtonsProps) => {

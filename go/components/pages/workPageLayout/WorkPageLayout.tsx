@@ -12,14 +12,14 @@ import InfoBox from "@/components/shared/infoBox/InfoBox"
 import InfoBoxDetails from "@/components/shared/infoBox/InfoBoxDetails"
 import { SlideSelectSkeleton } from "@/components/shared/slideSelect/SlideSelect"
 import {
-  Manifestation,
-  Work,
+  ManifestationWorkPageFragment,
   WorkFullWorkPageFragment,
   useGetMaterialQuery,
 } from "@/lib/graphql/generated/fbi/graphql"
 
 function WorkPageLayout({ workId }: { workId: string }) {
-  const [selectedManifestation, setSelectedManifestation] = useState<Manifestation>()
+  const [selectedManifestation, setSelectedManifestation] =
+    useState<ManifestationWorkPageFragment>()
   const searchParams = useSearchParams()
 
   const { data, isLoading } = useQuery({
@@ -50,7 +50,7 @@ function WorkPageLayout({ workId }: { workId: string }) {
       const currentEdition = current.edition?.publicationYear?.year || 0
 
       return latestEdition > currentEdition ? latest : current
-    }, filteredManifestations[0]) as Manifestation
+    }, filteredManifestations[0])
 
     // set the selected manifestation in the state
     setSelectedManifestation(latestManifestationEdition)
