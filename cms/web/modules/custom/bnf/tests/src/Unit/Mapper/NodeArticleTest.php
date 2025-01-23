@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Drupal\Tests\bnf\Unit\Mapper;
 
 use Drupal\bnf\GraphQL\Operations\GetNode\Node\NodeArticle as GraphQLArticle;
+use Drupal\bnf\BnfMapperManager;
 use Drupal\bnf\Plugin\bnf_mapper\NodeArticle;
 use Drupal\node\Entity\Node;
 
@@ -25,7 +26,14 @@ class NodeArticleTest extends EntityMapperTestBase {
       'uuid' => '123',
     ])->willReturn($this->entityProphecy);
 
-    $mapper = new NodeArticle([], '', [], $this->entityManagerProphecy->reveal());
+    $manager = $this->prophesize(BnfMapperManager::class);
+    $mapper = new NodeArticle(
+      [],
+      '',
+      [],
+      $manager->reveal(),
+      $this->entityManagerProphecy->reveal(),
+    );
 
     $graphqlArticle = GraphQLArticle::make('123', 'this is the title');
 

@@ -57,4 +57,11 @@ class BnfMapperManager extends DefaultPluginManager {
     return $mapper;
   }
 
+  /**
+   * Map a GraphQL object.
+   */
+  public function map(ObjectLike $object): mixed {
+    return $this->getMapper($object)->map($object);
+  }
+
 }

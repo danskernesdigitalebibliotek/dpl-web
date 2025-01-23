@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Drupal\bnf\Plugin\bnf_mapper;
 
 use Drupal\bnf\Attribute\BnfMapper;
+use Drupal\bnf\BnfMapperManager;
 use Drupal\bnf\GraphQL\Operations\GetNode\Node\NodeArticle as GraphQLNodeArticle;
 use Drupal\bnf\Plugin\BnfMapperPluginBase;
 use Drupal\Core\Entity\EntityStorageInterface;
@@ -31,6 +32,7 @@ class NodeArticle extends BnfMapperPluginBase {
     array $configuration,
     string $pluginId,
     array $pluginDefinition,
+    protected BnfMapperManager $manager,
     EntityTypeManagerInterface $entityTypeManager,
   ) {
     parent::__construct($configuration, $pluginId, $pluginDefinition);
@@ -53,6 +55,17 @@ class NodeArticle extends BnfMapperPluginBase {
     ]);
 
     $node->set('title', $object->title);
+
+    if ($object->paragraphs) {
+      $paragraphs = [];
+
+      foreach ($object->paragraphs as $paragraph) {
+        $paragraphs[] = $this->manager->map($paragraph);
+      }
+
+      $node->set('field_paragraphs', $paragraphs);
+    }
+
 
     return $node;
   }
