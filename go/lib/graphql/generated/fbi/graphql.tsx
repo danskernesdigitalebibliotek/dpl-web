@@ -20,15 +20,14 @@ export type Scalars = {
 
 export type AccessType = {
   __typename?: 'AccessType';
-  code: AccessTypeCodeEnum | '%future added value';
+  code: AccessTypeCodeEnum;
   display: Scalars['String']['output'];
 };
 
-export enum AccessTypeCodeEnum {
-  Online = 'ONLINE',
-  Physical = 'PHYSICAL',
-  Unknown = 'UNKNOWN'
-}
+export type AccessTypeCodeEnum =
+  | 'ONLINE'
+  | 'PHYSICAL'
+  | 'UNKNOWN';
 
 export type AccessUnion = AccessUrl | DigitalArticleService | Ereol | InfomediaService | InterLibraryLoan;
 
@@ -41,21 +40,20 @@ export type AccessUrl = {
   /** The origin, e.g. "DBC Webarkiv" */
   origin: Scalars['String']['output'];
   /** Status from linkcheck */
-  status: LinkStatusEnum | '%future added value';
+  status: LinkStatusEnum;
   /** The type of content that can be found at this URL */
-  type?: Maybe<AccessUrlTypeEnum | '%future added value'>;
+  type?: Maybe<AccessUrlTypeEnum>;
   /** The url where manifestation is located */
   url: Scalars['String']['output'];
 };
 
-export enum AccessUrlTypeEnum {
-  Image = 'IMAGE',
-  Other = 'OTHER',
-  Resource = 'RESOURCE',
-  Sample = 'SAMPLE',
-  TableOfContents = 'TABLE_OF_CONTENTS',
-  Thumbnail = 'THUMBNAIL'
-}
+export type AccessUrlTypeEnum =
+  | 'IMAGE'
+  | 'OTHER'
+  | 'RESOURCE'
+  | 'SAMPLE'
+  | 'TABLE_OF_CONTENTS'
+  | 'THUMBNAIL';
 
 export type Audience = {
   __typename?: 'Audience';
@@ -95,14 +93,13 @@ export type CatalogueCodes = {
 
 export type ChildOrAdult = {
   __typename?: 'ChildOrAdult';
-  code: ChildOrAdultCodeEnum | '%future added value';
+  code: ChildOrAdultCodeEnum;
   display: Scalars['String']['output'];
 };
 
-export enum ChildOrAdultCodeEnum {
-  ForAdults = 'FOR_ADULTS',
-  ForChildren = 'FOR_CHILDREN'
-}
+export type ChildOrAdultCodeEnum =
+  | 'FOR_ADULTS'
+  | 'FOR_CHILDREN';
 
 export type Classification = {
   __typename?: 'Classification';
@@ -113,7 +110,7 @@ export type Classification = {
   /** The dk5Heading for the classification (DK5 only) */
   dk5Heading?: Maybe<Scalars['String']['output']>;
   /** For DK5 only. The DK5 entry type: main entry, national entry, or additional entry */
-  entryType?: Maybe<EntryTypeEnum | '%future added value'>;
+  entryType?: Maybe<EntryTypeEnum>;
   /** Name of the classification system */
   system: Scalars['String']['output'];
 };
@@ -134,54 +131,53 @@ export type ComplexSearchFacetValue = {
 };
 
 /** The supported facet fields */
-export enum ComplexSearchFacetsEnum {
-  Accesstype = 'ACCESSTYPE',
-  Ages = 'AGES',
-  Cataloguecode = 'CATALOGUECODE',
-  Chambermusictype = 'CHAMBERMUSICTYPE',
-  Choirtype = 'CHOIRTYPE',
-  Contributor = 'CONTRIBUTOR',
-  Contributorfunction = 'CONTRIBUTORFUNCTION',
-  Creator = 'CREATOR',
-  Creatorcontributor = 'CREATORCONTRIBUTOR',
-  Creatorcontributorfunction = 'CREATORCONTRIBUTORFUNCTION',
-  Creatorfunction = 'CREATORFUNCTION',
-  Fictionalcharacter = 'FICTIONALCHARACTER',
-  Filmnationality = 'FILMNATIONALITY',
-  Gameplatform = 'GAMEPLATFORM',
-  Generalaudience = 'GENERALAUDIENCE',
-  Generalmaterialtype = 'GENERALMATERIALTYPE',
-  Genreandform = 'GENREANDFORM',
-  Hostpublication = 'HOSTPUBLICATION',
-  Instrument = 'INSTRUMENT',
-  Issue = 'ISSUE',
-  Language = 'LANGUAGE',
-  Let = 'LET',
-  Libraryrecommendation = 'LIBRARYRECOMMENDATION',
-  Lix = 'LIX',
-  Mainlanguage = 'MAINLANGUAGE',
-  Mediacouncilagerestriction = 'MEDIACOUNCILAGERESTRICTION',
-  Mood = 'MOOD',
-  Musicalensembleorcast = 'MUSICALENSEMBLEORCAST',
-  Narrativetechnique = 'NARRATIVETECHNIQUE',
-  Pegi = 'PEGI',
-  Players = 'PLAYERS',
-  Primarytarget = 'PRIMARYTARGET',
-  Publicationyear = 'PUBLICATIONYEAR',
-  Series = 'SERIES',
-  Setting = 'SETTING',
-  Source = 'SOURCE',
-  Specificmaterialtype = 'SPECIFICMATERIALTYPE',
-  Spokenlanguage = 'SPOKENLANGUAGE',
-  Subject = 'SUBJECT',
-  Subtitlelanguage = 'SUBTITLELANGUAGE',
-  Typeofscore = 'TYPEOFSCORE'
-}
+export type ComplexSearchFacetsEnum =
+  | 'ACCESSTYPE'
+  | 'AGES'
+  | 'CATALOGUECODE'
+  | 'CHAMBERMUSICTYPE'
+  | 'CHOIRTYPE'
+  | 'CONTRIBUTOR'
+  | 'CONTRIBUTORFUNCTION'
+  | 'CREATOR'
+  | 'CREATORCONTRIBUTOR'
+  | 'CREATORCONTRIBUTORFUNCTION'
+  | 'CREATORFUNCTION'
+  | 'FICTIONALCHARACTER'
+  | 'FILMNATIONALITY'
+  | 'GAMEPLATFORM'
+  | 'GENERALAUDIENCE'
+  | 'GENERALMATERIALTYPE'
+  | 'GENREANDFORM'
+  | 'HOSTPUBLICATION'
+  | 'INSTRUMENT'
+  | 'ISSUE'
+  | 'LANGUAGE'
+  | 'LET'
+  | 'LIBRARYRECOMMENDATION'
+  | 'LIX'
+  | 'MAINLANGUAGE'
+  | 'MEDIACOUNCILAGERESTRICTION'
+  | 'MOOD'
+  | 'MUSICALENSEMBLEORCAST'
+  | 'NARRATIVETECHNIQUE'
+  | 'PEGI'
+  | 'PLAYERS'
+  | 'PRIMARYTARGET'
+  | 'PUBLICATIONYEAR'
+  | 'SERIES'
+  | 'SETTING'
+  | 'SOURCE'
+  | 'SPECIFICMATERIALTYPE'
+  | 'SPOKENLANGUAGE'
+  | 'SUBJECT'
+  | 'SUBTITLELANGUAGE'
+  | 'TYPEOFSCORE';
 
 /** The facets to ask for */
 export type ComplexSearchFacetsInput = {
   facetLimit: Scalars['Int']['input'];
-  facets?: InputMaybe<Array<ComplexSearchFacetsEnum | '%future added value'>>;
+  facets?: InputMaybe<Array<ComplexSearchFacetsEnum>>;
 };
 
 /** Search Filters */
@@ -203,7 +199,7 @@ export type ComplexSearchFiltersInput = {
   /** Where is the book physically located  (eg. skønlitteratur). */
   location?: InputMaybe<Array<Scalars['String']['input']>>;
   /** Onloan or OnShelf. */
-  status?: InputMaybe<Array<HoldingsStatusEnum | '%future added value'>>;
+  status?: InputMaybe<Array<HoldingsStatusEnum>>;
   /** More specific location (eg. Fantasy). */
   sublocation?: InputMaybe<Array<Scalars['String']['input']>>;
 };
@@ -250,20 +246,19 @@ export type ComplexSuggestResponse = {
   result: Array<ComplexSearchSuggestion>;
 };
 
-export enum ComplexSuggestionTypeEnum {
-  Contributorfunction = 'CONTRIBUTORFUNCTION',
-  Creator = 'CREATOR',
-  Creatorcontributor = 'CREATORCONTRIBUTOR',
-  Creatorcontributorfunction = 'CREATORCONTRIBUTORFUNCTION',
-  Creatorfunction = 'CREATORFUNCTION',
-  Default = 'DEFAULT',
-  Fictionalcharacter = 'FICTIONALCHARACTER',
-  Hostpublication = 'HOSTPUBLICATION',
-  Publisher = 'PUBLISHER',
-  Series = 'SERIES',
-  Subject = 'SUBJECT',
-  Title = 'TITLE'
-}
+export type ComplexSuggestionTypeEnum =
+  | 'CONTRIBUTORFUNCTION'
+  | 'CREATOR'
+  | 'CREATORCONTRIBUTOR'
+  | 'CREATORCONTRIBUTORFUNCTION'
+  | 'CREATORFUNCTION'
+  | 'DEFAULT'
+  | 'FICTIONALCHARACTER'
+  | 'HOSTPUBLICATION'
+  | 'PUBLISHER'
+  | 'SERIES'
+  | 'SUBJECT'
+  | 'TITLE';
 
 export type Complexity = {
   __typename?: 'Complexity';
@@ -292,24 +287,23 @@ export type CopyRequestInput = {
 
 export type CopyRequestResponse = {
   __typename?: 'CopyRequestResponse';
-  status: CopyRequestStatusEnum | '%future added value';
+  status: CopyRequestStatusEnum;
 };
 
-export enum CopyRequestStatusEnum {
-  BorchkUserBlockedByAgency = 'BORCHK_USER_BLOCKED_BY_AGENCY',
-  BorchkUserNotVerified = 'BORCHK_USER_NOT_VERIFIED',
-  BorchkUserNoLongerExistOnAgency = 'BORCHK_USER_NO_LONGER_EXIST_ON_AGENCY',
-  ErrorAgencyNotSubscribed = 'ERROR_AGENCY_NOT_SUBSCRIBED',
-  ErrorInvalidPickupBranch = 'ERROR_INVALID_PICKUP_BRANCH',
-  ErrorMissingClientConfiguration = 'ERROR_MISSING_CLIENT_CONFIGURATION',
-  ErrorMissingMunicipalityagencyid = 'ERROR_MISSING_MUNICIPALITYAGENCYID',
-  ErrorMunicipalityagencyidNotFound = 'ERROR_MUNICIPALITYAGENCYID_NOT_FOUND',
-  ErrorPidNotReservable = 'ERROR_PID_NOT_RESERVABLE',
-  ErrorUnauthenticatedUser = 'ERROR_UNAUTHENTICATED_USER',
-  InternalError = 'INTERNAL_ERROR',
-  Ok = 'OK',
-  UnknownUser = 'UNKNOWN_USER'
-}
+export type CopyRequestStatusEnum =
+  | 'BORCHK_USER_BLOCKED_BY_AGENCY'
+  | 'BORCHK_USER_NOT_VERIFIED'
+  | 'BORCHK_USER_NO_LONGER_EXIST_ON_AGENCY'
+  | 'ERROR_AGENCY_NOT_SUBSCRIBED'
+  | 'ERROR_INVALID_PICKUP_BRANCH'
+  | 'ERROR_MISSING_CLIENT_CONFIGURATION'
+  | 'ERROR_MISSING_MUNICIPALITYAGENCYID'
+  | 'ERROR_MUNICIPALITYAGENCYID_NOT_FOUND'
+  | 'ERROR_PID_NOT_RESERVABLE'
+  | 'ERROR_UNAUTHENTICATED_USER'
+  | 'INTERNAL_ERROR'
+  | 'OK'
+  | 'UNKNOWN_USER';
 
 export type Corporation = CreatorInterface & SubjectInterface & {
   __typename?: 'Corporation';
@@ -331,7 +325,7 @@ export type Corporation = CreatorInterface & SubjectInterface & {
   roles: Array<Role>;
   /** Sub corporation or conference/meeting */
   sub?: Maybe<Scalars['String']['output']>;
-  type: SubjectTypeEnum | '%future added value';
+  type: SubjectTypeEnum;
   /** Year of the conference */
   year?: Maybe<Scalars['String']['output']>;
 };
@@ -423,12 +417,11 @@ export type ElbaServicesPlaceCopyRequestArgs = {
   input: CopyRequestInput;
 };
 
-export enum EntryTypeEnum {
-  AdditionalEntry = 'ADDITIONAL_ENTRY',
-  MainEntry = 'MAIN_ENTRY',
-  NationalBibliographyAdditionalEntry = 'NATIONAL_BIBLIOGRAPHY_ADDITIONAL_ENTRY',
-  NationalBibliographyEntry = 'NATIONAL_BIBLIOGRAPHY_ENTRY'
-}
+export type EntryTypeEnum =
+  | 'ADDITIONAL_ENTRY'
+  | 'MAIN_ENTRY'
+  | 'NATIONAL_BIBLIOGRAPHY_ADDITIONAL_ENTRY'
+  | 'NATIONAL_BIBLIOGRAPHY_ENTRY';
 
 export type Ereol = {
   __typename?: 'Ereol';
@@ -443,28 +436,27 @@ export type Ereol = {
 };
 
 /** The supported facet fields */
-export enum FacetFieldEnum {
-  Accesstypes = 'ACCESSTYPES',
-  Age = 'AGE',
-  Canalwaysbeloaned = 'CANALWAYSBELOANED',
-  Childrenoradults = 'CHILDRENORADULTS',
-  Creators = 'CREATORS',
-  Dk5 = 'DK5',
-  Fictionalcharacters = 'FICTIONALCHARACTERS',
-  Fictionnonfiction = 'FICTIONNONFICTION',
-  Gameplatform = 'GAMEPLATFORM',
-  Generalaudience = 'GENERALAUDIENCE',
-  Genreandform = 'GENREANDFORM',
-  Let = 'LET',
-  Libraryrecommendation = 'LIBRARYRECOMMENDATION',
-  Lix = 'LIX',
-  Mainlanguages = 'MAINLANGUAGES',
-  Materialtypesgeneral = 'MATERIALTYPESGENERAL',
-  Materialtypesspecific = 'MATERIALTYPESSPECIFIC',
-  Subjects = 'SUBJECTS',
-  Worktypes = 'WORKTYPES',
-  Year = 'YEAR'
-}
+export type FacetFieldEnum =
+  | 'ACCESSTYPES'
+  | 'AGE'
+  | 'CANALWAYSBELOANED'
+  | 'CHILDRENORADULTS'
+  | 'CREATORS'
+  | 'DK5'
+  | 'FICTIONALCHARACTERS'
+  | 'FICTIONNONFICTION'
+  | 'GAMEPLATFORM'
+  | 'GENERALAUDIENCE'
+  | 'GENREANDFORM'
+  | 'LET'
+  | 'LIBRARYRECOMMENDATION'
+  | 'LIX'
+  | 'MAINLANGUAGES'
+  | 'MATERIALTYPESGENERAL'
+  | 'MATERIALTYPESSPECIFIC'
+  | 'SUBJECTS'
+  | 'WORKTYPES'
+  | 'YEAR';
 
 /** The result for a specific facet */
 export type FacetResult = {
@@ -472,7 +464,7 @@ export type FacetResult = {
   /** The name of the facet. */
   name: Scalars['String']['output'];
   /** The enum type of the facet. */
-  type: FacetFieldEnum | '%future added value';
+  type: FacetFieldEnum;
   /** The values of thie facet result */
   values: Array<FacetValue>;
 };
@@ -503,49 +495,46 @@ export type FacetValue = {
 export type FictionNonfiction = {
   __typename?: 'FictionNonfiction';
   /** Binary code fiction/nonfiction used for filtering */
-  code: FictionNonfictionCodeEnum | '%future added value';
+  code: FictionNonfictionCodeEnum;
   /** Displayable overall category/genre. In Danish skønlitteratur/faglitteratur for literature, fiktion/nonfiktion for other types. */
   display: Scalars['String']['output'];
 };
 
-export enum FictionNonfictionCodeEnum {
-  Fiction = 'FICTION',
-  Nonfiction = 'NONFICTION',
-  NotSpecified = 'NOT_SPECIFIED'
-}
+export type FictionNonfictionCodeEnum =
+  | 'FICTION'
+  | 'NONFICTION'
+  | 'NOT_SPECIFIED';
 
 export type GeneralMaterialType = {
   __typename?: 'GeneralMaterialType';
   /** code for materialType # @TODO - is this a finite list ?? - and where to get it */
-  code: GeneralMaterialTypeCodeEnum | '%future added value';
+  code: GeneralMaterialTypeCodeEnum;
   /** Ths string to display */
   display: Scalars['String']['output'];
 };
 
-export enum GeneralMaterialTypeCodeEnum {
-  Articles = 'ARTICLES',
-  AudioBooks = 'AUDIO_BOOKS',
-  BoardGames = 'BOARD_GAMES',
-  Books = 'BOOKS',
-  Comics = 'COMICS',
-  ComputerGames = 'COMPUTER_GAMES',
-  Ebooks = 'EBOOKS',
-  Films = 'FILMS',
-  ImageMaterials = 'IMAGE_MATERIALS',
-  Music = 'MUSIC',
-  NewspaperJournals = 'NEWSPAPER_JOURNALS',
-  Other = 'OTHER',
-  Podcasts = 'PODCASTS',
-  SheetMusic = 'SHEET_MUSIC',
-  TvSeries = 'TV_SERIES'
-}
+export type GeneralMaterialTypeCodeEnum =
+  | 'ARTICLES'
+  | 'AUDIO_BOOKS'
+  | 'BOARD_GAMES'
+  | 'BOOKS'
+  | 'COMICS'
+  | 'COMPUTER_GAMES'
+  | 'EBOOKS'
+  | 'FILMS'
+  | 'IMAGE_MATERIALS'
+  | 'MUSIC'
+  | 'NEWSPAPER_JOURNALS'
+  | 'OTHER'
+  | 'PODCASTS'
+  | 'SHEET_MUSIC'
+  | 'TV_SERIES';
 
-export enum HoldingsStatusEnum {
+export type HoldingsStatusEnum =
   /** Holding is on loan */
-  Onloan = 'ONLOAN',
+  | 'ONLOAN'
   /** Holding is physically available at the branch */
-  Onshelf = 'ONSHELF'
-}
+  | 'ONSHELF';
 
 export type HostPublication = {
   __typename?: 'HostPublication';
@@ -578,25 +567,24 @@ export type HostPublication = {
 export type Identifier = {
   __typename?: 'Identifier';
   /** The type of identifier */
-  type: IdentifierTypeEnum | '%future added value';
+  type: IdentifierTypeEnum;
   /** The actual identifier */
   value: Scalars['String']['output'];
 };
 
-export enum IdentifierTypeEnum {
-  Barcode = 'BARCODE',
-  Doi = 'DOI',
-  Isbn = 'ISBN',
-  Ismn = 'ISMN',
-  Issn = 'ISSN',
-  Movie = 'MOVIE',
-  Music = 'MUSIC',
-  NotSpecified = 'NOT_SPECIFIED',
-  OrderNumber = 'ORDER_NUMBER',
-  Publizon = 'PUBLIZON',
-  Upc = 'UPC',
-  Uri = 'URI'
-}
+export type IdentifierTypeEnum =
+  | 'BARCODE'
+  | 'DOI'
+  | 'ISBN'
+  | 'ISMN'
+  | 'ISSN'
+  | 'MOVIE'
+  | 'MUSIC'
+  | 'NOT_SPECIFIED'
+  | 'ORDER_NUMBER'
+  | 'PUBLIZON'
+  | 'UPC'
+  | 'URI';
 
 export type InfomediaArticle = {
   __typename?: 'InfomediaArticle';
@@ -612,24 +600,23 @@ export type InfomediaArticle = {
   text?: Maybe<Scalars['String']['output']>;
 };
 
-export enum InfomediaErrorEnum {
-  BorrowercheckNotAllowed = 'BORROWERCHECK_NOT_ALLOWED',
-  BorrowerNotFound = 'BORROWER_NOT_FOUND',
-  BorrowerNotInMunicipality = 'BORROWER_NOT_IN_MUNICIPALITY',
-  BorrowerNotLoggedIn = 'BORROWER_NOT_LOGGED_IN',
-  ErrorInRequest = 'ERROR_IN_REQUEST',
-  InternalServerError = 'INTERNAL_SERVER_ERROR',
-  LibraryNotFound = 'LIBRARY_NOT_FOUND',
-  NoAgencyid = 'NO_AGENCYID',
-  ServiceNotLicensed = 'SERVICE_NOT_LICENSED',
-  ServiceUnavailable = 'SERVICE_UNAVAILABLE'
-}
+export type InfomediaErrorEnum =
+  | 'BORROWERCHECK_NOT_ALLOWED'
+  | 'BORROWER_NOT_FOUND'
+  | 'BORROWER_NOT_IN_MUNICIPALITY'
+  | 'BORROWER_NOT_LOGGED_IN'
+  | 'ERROR_IN_REQUEST'
+  | 'INTERNAL_SERVER_ERROR'
+  | 'LIBRARY_NOT_FOUND'
+  | 'NO_AGENCYID'
+  | 'SERVICE_NOT_LICENSED'
+  | 'SERVICE_UNAVAILABLE';
 
 export type InfomediaResponse = {
   __typename?: 'InfomediaResponse';
   article?: Maybe<InfomediaArticle>;
   /** Infomedia error */
-  error?: Maybe<InfomediaErrorEnum | '%future added value'>;
+  error?: Maybe<InfomediaErrorEnum>;
 };
 
 export type InfomediaService = {
@@ -690,10 +677,9 @@ export type Language = {
   isoCode: Scalars['String']['output'];
 };
 
-export enum LanguageCodeEnum {
-  Da = 'DA',
-  En = 'EN'
-}
+export type LanguageCodeEnum =
+  | 'DA'
+  | 'EN';
 
 export type Languages = {
   __typename?: 'Languages';
@@ -729,7 +715,7 @@ export type LinkCheckResponse = {
   __typename?: 'LinkCheckResponse';
   brokenSince?: Maybe<Scalars['DateTime']['output']>;
   lastCheckedAt?: Maybe<Scalars['DateTime']['output']>;
-  status: LinkCheckStatusEnum | '%future added value';
+  status: LinkCheckStatusEnum;
   url: Scalars['String']['output'];
 };
 
@@ -743,19 +729,17 @@ export type LinkCheckServiceChecksArgs = {
   urls?: InputMaybe<Array<Scalars['String']['input']>>;
 };
 
-export enum LinkCheckStatusEnum {
-  Broken = 'BROKEN',
-  Gone = 'GONE',
-  Invalid = 'INVALID',
-  Ok = 'OK'
-}
+export type LinkCheckStatusEnum =
+  | 'BROKEN'
+  | 'GONE'
+  | 'INVALID'
+  | 'OK';
 
-export enum LinkStatusEnum {
-  Broken = 'BROKEN',
-  Gone = 'GONE',
-  Invalid = 'INVALID',
-  Ok = 'OK'
-}
+export type LinkStatusEnum =
+  | 'BROKEN'
+  | 'GONE'
+  | 'INVALID'
+  | 'OK';
 
 export type LocalSuggestResponse = {
   __typename?: 'LocalSuggestResponse';
@@ -855,7 +839,7 @@ export type Manifestation = {
   /** Information about on which volume this manifestation is in multi volume work */
   volume?: Maybe<Scalars['String']['output']>;
   /** Worktypes for this manifestations work */
-  workTypes: Array<WorkTypeEnum | '%future added value'>;
+  workTypes: Array<WorkTypeEnum>;
   /** The year this manifestation was originally published or produced */
   workYear?: Maybe<PublicationYear>;
 };
@@ -878,12 +862,11 @@ export type ManifestationPart = {
   title: Scalars['String']['output'];
 };
 
-export enum ManifestationPartTypeEnum {
-  MusicTracks = 'MUSIC_TRACKS',
-  NotSpecified = 'NOT_SPECIFIED',
-  PartsOfBook = 'PARTS_OF_BOOK',
-  SheetMusicContent = 'SHEET_MUSIC_CONTENT'
-}
+export type ManifestationPartTypeEnum =
+  | 'MUSIC_TRACKS'
+  | 'NOT_SPECIFIED'
+  | 'PARTS_OF_BOOK'
+  | 'SHEET_MUSIC_CONTENT';
 
 export type ManifestationParts = {
   __typename?: 'ManifestationParts';
@@ -892,7 +875,7 @@ export type ManifestationParts = {
   /** The creator and title etc of the individual parts */
   parts: Array<ManifestationPart>;
   /** The type of manifestation parts, is this music tracks, book parts etc. */
-  type: ManifestationPartTypeEnum | '%future added value';
+  type: ManifestationPartTypeEnum;
 };
 
 export type ManifestationReview = {
@@ -984,12 +967,12 @@ export type Mood = SubjectInterface & {
   display: Scalars['String']['output'];
   language?: Maybe<Language>;
   local?: Maybe<Scalars['Boolean']['output']>;
-  type: SubjectTypeEnum | '%future added value';
+  type: SubjectTypeEnum;
 };
 
 export type MoodKidsRecommendFiltersInput = {
   difficulty?: InputMaybe<Array<Scalars['Int']['input']>>;
-  fictionNonfiction?: InputMaybe<FictionNonfictionCodeEnum | '%future added value'>;
+  fictionNonfiction?: InputMaybe<FictionNonfictionCodeEnum>;
   illustrationsLevel?: InputMaybe<Array<Scalars['Int']['input']>>;
   length?: InputMaybe<Array<Scalars['Int']['input']>>;
   realisticVsFictional?: InputMaybe<Array<Scalars['Int']['input']>>;
@@ -1071,13 +1054,12 @@ export type MoodRecommendKidsResponseWorksArgs = {
 };
 
 /** Supported fields for moodsearch request */
-export enum MoodSearchFieldValuesEnum {
-  All = 'ALL',
-  Alltags = 'ALLTAGS',
-  Creator = 'CREATOR',
-  Moodtags = 'MOODTAGS',
-  Title = 'TITLE'
-}
+export type MoodSearchFieldValuesEnum =
+  | 'ALL'
+  | 'ALLTAGS'
+  | 'CREATOR'
+  | 'MOODTAGS'
+  | 'TITLE';
 
 /** The reponse from moodsearchkids */
 export type MoodSearchKidsResponse = {
@@ -1107,11 +1089,10 @@ export type MoodSearchResponseWorksArgs = {
 };
 
 /** Type of moodSuggest response */
-export enum MoodSuggestEnum {
-  Creator = 'CREATOR',
-  Tag = 'TAG',
-  Title = 'TITLE'
-}
+export type MoodSuggestEnum =
+  | 'CREATOR'
+  | 'TAG'
+  | 'TITLE';
 
 /** MoodSuggest item */
 export type MoodSuggestItem = {
@@ -1125,7 +1106,7 @@ export type MoodSuggestItem = {
    */
   traceId: Scalars['String']['output'];
   /** The type of suggestion title/creator/tag */
-  type: MoodSuggestEnum | '%future added value';
+  type: MoodSuggestEnum;
   /** A work associated with the suggestion */
   work?: Maybe<Work>;
 };
@@ -1162,7 +1143,7 @@ export type NarrativeTechnique = SubjectInterface & {
   display: Scalars['String']['output'];
   language?: Maybe<Language>;
   local?: Maybe<Scalars['Boolean']['output']>;
-  type: SubjectTypeEnum | '%future added value';
+  type: SubjectTypeEnum;
 };
 
 export type Note = {
@@ -1172,27 +1153,26 @@ export type Note = {
   /** Heading before note */
   heading?: Maybe<Scalars['String']['output']>;
   /** The type of note - e.g. note about language, genre etc, NOT_SPECIFIED if not known.  */
-  type: NoteTypeEnum | '%future added value';
+  type: NoteTypeEnum;
 };
 
-export enum NoteTypeEnum {
-  ConnectionToOtherWorks = 'CONNECTION_TO_OTHER_WORKS',
-  DescriptionOfMaterial = 'DESCRIPTION_OF_MATERIAL',
-  Dissertation = 'DISSERTATION',
-  Edition = 'EDITION',
-  EstimatedPlayingTimeForGames = 'ESTIMATED_PLAYING_TIME_FOR_GAMES',
-  ExpectedPublicationDate = 'EXPECTED_PUBLICATION_DATE',
-  Frequency = 'FREQUENCY',
-  MusicalEnsembleOrCast = 'MUSICAL_ENSEMBLE_OR_CAST',
-  NotSpecified = 'NOT_SPECIFIED',
-  OccasionForPublication = 'OCCASION_FOR_PUBLICATION',
-  OriginalTitle = 'ORIGINAL_TITLE',
-  OriginalVersion = 'ORIGINAL_VERSION',
-  References = 'REFERENCES',
-  RestrictionsOnUse = 'RESTRICTIONS_ON_USE',
-  TechnicalRequirements = 'TECHNICAL_REQUIREMENTS',
-  TypeOfScore = 'TYPE_OF_SCORE'
-}
+export type NoteTypeEnum =
+  | 'CONNECTION_TO_OTHER_WORKS'
+  | 'DESCRIPTION_OF_MATERIAL'
+  | 'DISSERTATION'
+  | 'EDITION'
+  | 'ESTIMATED_PLAYING_TIME_FOR_GAMES'
+  | 'EXPECTED_PUBLICATION_DATE'
+  | 'FREQUENCY'
+  | 'MUSICAL_ENSEMBLE_OR_CAST'
+  | 'NOT_SPECIFIED'
+  | 'OCCASION_FOR_PUBLICATION'
+  | 'ORIGINAL_TITLE'
+  | 'ORIGINAL_VERSION'
+  | 'REFERENCES'
+  | 'RESTRICTIONS_ON_USE'
+  | 'TECHNICAL_REQUIREMENTS'
+  | 'TYPE_OF_SCORE';
 
 export type OrsQuery = {
   __typename?: 'OrsQuery';
@@ -1235,7 +1215,7 @@ export type Person = CreatorInterface & SubjectInterface & {
   roles: Array<Role>;
   /** A roman numeral added to the person, like Christian IV */
   romanNumeral?: Maybe<Scalars['String']['output']>;
-  type: SubjectTypeEnum | '%future added value';
+  type: SubjectTypeEnum;
 };
 
 export type PhysicalUnitDescription = {
@@ -1538,18 +1518,17 @@ export type ReviewElement = {
   heading?: Maybe<Scalars['String']['output']>;
   /** Manifestations that can be used to generate and insert links into 'contentSubsitute'. */
   manifestations?: Maybe<Array<Maybe<Manifestation>>>;
-  type?: Maybe<ReviewElementTypeEnum | '%future added value'>;
+  type?: Maybe<ReviewElementTypeEnum>;
 };
 
-export enum ReviewElementTypeEnum {
-  Abstract = 'ABSTRACT',
-  AcquisitionRecommendations = 'ACQUISITION_RECOMMENDATIONS',
-  Audience = 'AUDIENCE',
-  Conclusion = 'CONCLUSION',
-  Description = 'DESCRIPTION',
-  Evaluation = 'EVALUATION',
-  SimilarMaterials = 'SIMILAR_MATERIALS'
-}
+export type ReviewElementTypeEnum =
+  | 'ABSTRACT'
+  | 'ACQUISITION_RECOMMENDATIONS'
+  | 'AUDIENCE'
+  | 'CONCLUSION'
+  | 'DESCRIPTION'
+  | 'EVALUATION'
+  | 'SIMILAR_MATERIALS';
 
 export type Role = {
   __typename?: 'Role';
@@ -1561,14 +1540,13 @@ export type Role = {
 
 export type SchoolUse = {
   __typename?: 'SchoolUse';
-  code: SchoolUseCodeEnum | '%future added value';
+  code: SchoolUseCodeEnum;
   display: Scalars['String']['output'];
 };
 
-export enum SchoolUseCodeEnum {
-  ForSchoolUse = 'FOR_SCHOOL_USE',
-  ForTeacher = 'FOR_TEACHER'
-}
+export type SchoolUseCodeEnum =
+  | 'FOR_SCHOOL_USE'
+  | 'FOR_TEACHER';
 
 /** Search Filters */
 export type SearchFiltersInput = {
@@ -1593,7 +1571,7 @@ export type SearchFiltersInput = {
   mainLanguages?: InputMaybe<Array<Scalars['String']['input']>>;
   materialTypesGeneral?: InputMaybe<Array<Scalars['String']['input']>>;
   materialTypesSpecific?: InputMaybe<Array<Scalars['String']['input']>>;
-  status?: InputMaybe<Array<HoldingsStatusEnum | '%future added value'>>;
+  status?: InputMaybe<Array<HoldingsStatusEnum>>;
   subjects?: InputMaybe<Array<Scalars['String']['input']>>;
   sublocation?: InputMaybe<Array<Scalars['String']['input']>>;
   workTypes?: InputMaybe<Array<Scalars['String']['input']>>;
@@ -1713,7 +1691,7 @@ export type Setting = SubjectInterface & {
   display: Scalars['String']['output'];
   language?: Maybe<Language>;
   local?: Maybe<Scalars['Boolean']['output']>;
-  type: SubjectTypeEnum | '%future added value';
+  type: SubjectTypeEnum;
 };
 
 export type SheetMusicCategory = {
@@ -1740,13 +1718,12 @@ export type Shelfmark = {
 
 export type SortInput = {
   index: Scalars['String']['input'];
-  order: SortOrderEnum | '%future added value';
+  order: SortOrderEnum;
 };
 
-export enum SortOrderEnum {
-  Asc = 'ASC',
-  Desc = 'DESC'
-}
+export type SortOrderEnum =
+  | 'ASC'
+  | 'DESC';
 
 export type SpecificMaterialType = {
   __typename?: 'SpecificMaterialType';
@@ -1770,7 +1747,7 @@ export type SubjectInterface = {
   language?: Maybe<Language>;
   local?: Maybe<Scalars['Boolean']['output']>;
   /** The type of subject - 'location', 'time period' etc., 'topic' if not specific kind of subject term */
-  type: SubjectTypeEnum | '%future added value';
+  type: SubjectTypeEnum;
 };
 
 /** Details about a single subject recommendation. */
@@ -1791,37 +1768,36 @@ export type SubjectText = SubjectInterface & {
   display: Scalars['String']['output'];
   language?: Maybe<Language>;
   local?: Maybe<Scalars['Boolean']['output']>;
-  type: SubjectTypeEnum | '%future added value';
+  type: SubjectTypeEnum;
 };
 
-export enum SubjectTypeEnum {
-  Corporation = 'CORPORATION',
-  Environment = 'ENVIRONMENT',
-  FictionalCharacter = 'FICTIONAL_CHARACTER',
-  FictionalLocation = 'FICTIONAL_LOCATION',
-  FilmNationality = 'FILM_NATIONALITY',
-  Laesekompasset = 'LAESEKOMPASSET',
-  LibraryOfCongressSubjectHeading = 'LIBRARY_OF_CONGRESS_SUBJECT_HEADING',
-  Location = 'LOCATION',
-  MedicalSubjectHeading = 'MEDICAL_SUBJECT_HEADING',
-  Mood = 'MOOD',
-  MoodChildren = 'MOOD_CHILDREN',
-  MusicalInstrumentation = 'MUSICAL_INSTRUMENTATION',
-  MusicCountryOfOrigin = 'MUSIC_COUNTRY_OF_ORIGIN',
-  MusicTimePeriod = 'MUSIC_TIME_PERIOD',
-  NationalAgriculturalLibrary = 'NATIONAL_AGRICULTURAL_LIBRARY',
+export type SubjectTypeEnum =
+  | 'CORPORATION'
+  | 'ENVIRONMENT'
+  | 'FICTIONAL_CHARACTER'
+  | 'FICTIONAL_LOCATION'
+  | 'FILM_NATIONALITY'
+  | 'LAESEKOMPASSET'
+  | 'LIBRARY_OF_CONGRESS_SUBJECT_HEADING'
+  | 'LOCATION'
+  | 'MEDICAL_SUBJECT_HEADING'
+  | 'MOOD'
+  | 'MOOD_CHILDREN'
+  | 'MUSICAL_INSTRUMENTATION'
+  | 'MUSIC_COUNTRY_OF_ORIGIN'
+  | 'MUSIC_TIME_PERIOD'
+  | 'NATIONAL_AGRICULTURAL_LIBRARY'
   /** added for manifestation.parts.creators/person - they get a type from small-rye */
-  Person = 'PERSON',
-  Perspective = 'PERSPECTIVE',
-  Reality = 'REALITY',
-  Style = 'STYLE',
-  Tempo = 'TEMPO',
-  TimePeriod = 'TIME_PERIOD',
-  Title = 'TITLE',
-  Topic = 'TOPIC',
+  | 'PERSON'
+  | 'PERSPECTIVE'
+  | 'REALITY'
+  | 'STYLE'
+  | 'TEMPO'
+  | 'TIME_PERIOD'
+  | 'TITLE'
+  | 'TOPIC'
   /** Subject describing selected topics for children, and a rating. */
-  TopicChildren = 'TOPIC_CHILDREN'
-}
+  | 'TOPIC_CHILDREN';
 
 export type SubjectWithRating = SubjectInterface & {
   __typename?: 'SubjectWithRating';
@@ -1830,7 +1806,7 @@ export type SubjectWithRating = SubjectInterface & {
   local?: Maybe<Scalars['Boolean']['output']>;
   /** Expressed as integer on a scale from 1 to 5 */
   rating?: Maybe<Scalars['Int']['output']>;
-  type: SubjectTypeEnum | '%future added value';
+  type: SubjectTypeEnum;
 };
 
 export type SuggestResponse = {
@@ -1849,17 +1825,16 @@ export type Suggestion = {
    */
   traceId: Scalars['String']['output'];
   /** The type of suggestion: creator, subject or title */
-  type: SuggestionTypeEnum | '%future added value';
+  type: SuggestionTypeEnum;
   /** A work related to the term */
   work?: Maybe<Work>;
 };
 
-export enum SuggestionTypeEnum {
-  Composit = 'COMPOSIT',
-  Creator = 'CREATOR',
-  Subject = 'SUBJECT',
-  Title = 'TITLE'
-}
+export type SuggestionTypeEnum =
+  | 'COMPOSIT'
+  | 'CREATOR'
+  | 'SUBJECT'
+  | 'TITLE';
 
 export type TableOfContent = {
   __typename?: 'TableOfContent';
@@ -1874,7 +1849,7 @@ export type TimePeriod = SubjectInterface & {
   language?: Maybe<Language>;
   local?: Maybe<Scalars['Boolean']['output']>;
   period: Range;
-  type: SubjectTypeEnum | '%future added value';
+  type: SubjectTypeEnum;
 };
 
 export type Translation = {
@@ -1954,7 +1929,7 @@ export type Universe = {
   /** An id that identifies a universe. */
   universeId?: Maybe<Scalars['String']['output']>;
   /** work types that are in this universe */
-  workTypes: Array<WorkTypeEnum | '%future added value'>;
+  workTypes: Array<WorkTypeEnum>;
   /** All works within the universe but not in any series */
   works: Array<Work>;
 };
@@ -2028,7 +2003,7 @@ export type Work = {
   /** Unique identification of the work based on work-presentation id e.g work-of:870970-basis:54029519 */
   workId: Scalars['String']['output'];
   /** Worktypes for this work - 'none' replaced by 'other' */
-  workTypes: Array<WorkTypeEnum | '%future added value'>;
+  workTypes: Array<WorkTypeEnum>;
   /** The year this work was originally published or produced */
   workYear?: Maybe<PublicationYear>;
 };
@@ -2055,22 +2030,21 @@ export type WorkTitles = {
   tvSeries?: Maybe<TvSeries>;
 };
 
-export enum WorkTypeEnum {
-  Analysis = 'ANALYSIS',
-  Article = 'ARTICLE',
-  Bookdescription = 'BOOKDESCRIPTION',
-  Game = 'GAME',
-  Literature = 'LITERATURE',
-  Map = 'MAP',
-  Movie = 'MOVIE',
-  Music = 'MUSIC',
-  Other = 'OTHER',
-  Periodica = 'PERIODICA',
-  Portrait = 'PORTRAIT',
-  Review = 'REVIEW',
-  Sheetmusic = 'SHEETMUSIC',
-  Track = 'TRACK'
-}
+export type WorkTypeEnum =
+  | 'ANALYSIS'
+  | 'ARTICLE'
+  | 'BOOKDESCRIPTION'
+  | 'GAME'
+  | 'LITERATURE'
+  | 'MAP'
+  | 'MOVIE'
+  | 'MUSIC'
+  | 'OTHER'
+  | 'PERIODICA'
+  | 'PORTRAIT'
+  | 'REVIEW'
+  | 'SHEETMUSIC'
+  | 'TRACK';
 
 export type SearchFacetFragment = { __typename?: 'FacetResult', name: string, values: Array<{ __typename?: 'FacetValue', key: string, term: string, score?: number | null }> };
 
@@ -2378,7 +2352,7 @@ export const useSearchWithPaginationQuery = <
       variables: SearchWithPaginationQueryVariables,
       options?: Omit<UseQueryOptions<SearchWithPaginationQuery, TError, TData>, 'queryKey'> & { queryKey?: UseQueryOptions<SearchWithPaginationQuery, TError, TData>['queryKey'] }
     ) => {
-    
+
     return useQuery<SearchWithPaginationQuery, TError, TData>(
       {
     queryKey: ['searchWithPagination', variables],
@@ -2396,7 +2370,7 @@ export const useSuspenseSearchWithPaginationQuery = <
       variables: SearchWithPaginationQueryVariables,
       options?: Omit<UseSuspenseQueryOptions<SearchWithPaginationQuery, TError, TData>, 'queryKey'> & { queryKey?: UseSuspenseQueryOptions<SearchWithPaginationQuery, TError, TData>['queryKey'] }
     ) => {
-    
+
     return useSuspenseQuery<SearchWithPaginationQuery, TError, TData>(
       {
     queryKey: ['searchWithPaginationSuspense', variables],
@@ -2427,7 +2401,7 @@ export const useSearchFacetsQuery = <
       variables: SearchFacetsQueryVariables,
       options?: Omit<UseQueryOptions<SearchFacetsQuery, TError, TData>, 'queryKey'> & { queryKey?: UseQueryOptions<SearchFacetsQuery, TError, TData>['queryKey'] }
     ) => {
-    
+
     return useQuery<SearchFacetsQuery, TError, TData>(
       {
     queryKey: ['searchFacets', variables],
@@ -2445,7 +2419,7 @@ export const useSuspenseSearchFacetsQuery = <
       variables: SearchFacetsQueryVariables,
       options?: Omit<UseSuspenseQueryOptions<SearchFacetsQuery, TError, TData>, 'queryKey'> & { queryKey?: UseSuspenseQueryOptions<SearchFacetsQuery, TError, TData>['queryKey'] }
     ) => {
-    
+
     return useSuspenseQuery<SearchFacetsQuery, TError, TData>(
       {
     queryKey: ['searchFacetsSuspense', variables],
@@ -2474,7 +2448,7 @@ export const useGetMaterialQuery = <
       variables: GetMaterialQueryVariables,
       options?: Omit<UseQueryOptions<GetMaterialQuery, TError, TData>, 'queryKey'> & { queryKey?: UseQueryOptions<GetMaterialQuery, TError, TData>['queryKey'] }
     ) => {
-    
+
     return useQuery<GetMaterialQuery, TError, TData>(
       {
     queryKey: ['getMaterial', variables],
@@ -2492,7 +2466,7 @@ export const useSuspenseGetMaterialQuery = <
       variables: GetMaterialQueryVariables,
       options?: Omit<UseSuspenseQueryOptions<GetMaterialQuery, TError, TData>, 'queryKey'> & { queryKey?: UseSuspenseQueryOptions<GetMaterialQuery, TError, TData>['queryKey'] }
     ) => {
-    
+
     return useSuspenseQuery<GetMaterialQuery, TError, TData>(
       {
     queryKey: ['getMaterialSuspense', variables],

@@ -31,14 +31,13 @@ const SearchInput = ({ className, placeholder }: SearchInputProps) => {
     // We choose to ignore the eslint warning below
     // because we do not want to add the handleKeydown callback which changes on every render.
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [currentQuery])
+  }, [])
 
   const handleKeydown = () => (event: KeyboardEvent) => {
-    if (!currentQuery) return
     const focusedElement = document.activeElement as HTMLElement
 
     if (event.key === "Enter" && focusedElement === inputRef.current) {
-      navigateToSearch(currentQuery)
+      navigateToSearch(inputRef.current.value)
     }
   }
 

@@ -39,7 +39,7 @@ const InfoBoxDetails = ({ work }: InfoBoxDetailsProps) => {
               }
             />
             <InfoBoxItem
-              term="Omfang"
+              term="Længde"
               description={
                 selectedManifestation?.physicalDescription?.summaryFull
                   ? [selectedManifestation.physicalDescription.summaryFull]

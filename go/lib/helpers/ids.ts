@@ -3,7 +3,6 @@ import { flatten } from "lodash"
 import { filterFalsyValuesFromArray } from "@/lib/helpers/helper.arrays"
 
 import {
-  IdentifierTypeEnum,
   ManifestationIdentifiersFragment,
   ManifestationWorkPageFragment,
   WorkTeaserSearchPageFragment,
@@ -15,7 +14,7 @@ export const getIsbnsFromManifestation = (
   if (!manifestation) return []
 
   return manifestation.identifiers.reduce((acc, identifier) => {
-    if (identifier.type === IdentifierTypeEnum.Isbn) {
+    if (identifier.type === "ISBN") {
       acc.push(identifier.value)
     }
     return acc
