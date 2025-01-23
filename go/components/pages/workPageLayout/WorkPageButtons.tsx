@@ -26,13 +26,13 @@ const WorkPageButtons = ({ workId }: WorkPageButtonsProps) => {
       {isEbook(selectedManifestation) && (
         <>
           <Button
-            ariaLabel="Prøv ebog"
+            ariaLabel="Prøv e-bog"
             size={"default"}
             className="mb-grid-gap-half w-full lg:min-w-72 lg:max-w-80"
             asChild
             disabled={!!identifier}>
             <SmartLink linkType="external" href={url}>
-              Prøv ebog
+              Prøv e-bog
             </SmartLink>
           </Button>
           <Button ariaLabel="Lån/reserver/læse ebog" className="w-full lg:min-w-72 lg:max-w-80">
