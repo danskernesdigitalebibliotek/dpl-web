@@ -8,10 +8,7 @@ import {
   getIconNameFromMaterialType,
   materialTypeSortPriority,
 } from "@/components/pages/workPageLayout/helper"
-import {
-  GeneralMaterialTypeCodeEnum,
-  WorkTeaserSearchPageFragment,
-} from "@/lib/graphql/generated/fbi/graphql"
+import { WorkTeaserSearchPageFragment } from "@/lib/graphql/generated/fbi/graphql"
 import { getCoverUrls, getLowResCoverUrl } from "@/lib/helpers/helper.covers"
 import { displayCreators } from "@/lib/helpers/helper.creators"
 import { resolveUrl } from "@/lib/helpers/helper.routes"
