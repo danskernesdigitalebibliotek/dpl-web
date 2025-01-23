@@ -2,16 +2,16 @@ import type { Meta, StoryObj } from "@storybook/react"
 import { fn } from "@storybook/test"
 
 import { darkModeDecorator } from "@/.storybook/decorators"
-import SlideSelect from "@/components/shared/slideSelect/SlideSelect"
+import SlideSelect, { SlideSelectOption } from "@/components/shared/slideSelect/SlideSelect"
 import { GeneralMaterialTypeCodeEnum } from "@/lib/graphql/generated/fbi/graphql"
 
 const defaultArgs = {
   options: [
-    { code: GeneralMaterialTypeCodeEnum.Books, display: "Book", icon: "book" },
-    { code: GeneralMaterialTypeCodeEnum.Ebooks, display: "E-book", icon: "book" },
-    { code: GeneralMaterialTypeCodeEnum.AudioBooks, display: "Audiobook", icon: "headphones" },
-  ],
-  selected: GeneralMaterialTypeCodeEnum.Books,
+    { code: "BOOKS", display: "Book" },
+    { code: "EBOOKS", display: "E-book" },
+    { code: "AUDIO_BOOKS", display: "Audiobook" },
+  ] as SlideSelectOption[],
+  selected: "BOOKS" as GeneralMaterialTypeCodeEnum,
   onOptionSelect: fn(),
 }
 

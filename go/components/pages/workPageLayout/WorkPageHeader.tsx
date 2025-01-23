@@ -96,7 +96,7 @@ const WorkPageHeader = ({ work, selectedManifestation }: WorkPageHeaderProps) =>
     .materialTypeGeneral.code as GeneralMaterialTypeCodeEnum
 
   const isSelectedManifestationPodcast =
-    selectedManifestationMaterialTypeCode === GeneralMaterialTypeCodeEnum.Podcasts || false
+    selectedManifestationMaterialTypeCode === "PODCASTS" || false
 
   return (
     <>

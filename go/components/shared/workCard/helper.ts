@@ -9,13 +9,15 @@ type MaterialTypeCategories = {
   listening: GeneralMaterialTypeCodeEnum[]
   gaming: GeneralMaterialTypeCodeEnum[]
   video: GeneralMaterialTypeCodeEnum[]
+  podcast: GeneralMaterialTypeCodeEnum[]
 }
 
 export const materialTypeCategories: MaterialTypeCategories = {
   reading: ["ARTICLES", "BOOKS", "COMICS", "EBOOKS", "IMAGE_MATERIALS", "NEWSPAPER_JOURNALS"],
-  listening: ["AUDIO_BOOKS", "MUSIC", "PODCASTS", "SHEET_MUSIC"],
+  listening: ["AUDIO_BOOKS", "MUSIC", "SHEET_MUSIC"],
   gaming: ["BOARD_GAMES", "COMPUTER_GAMES"],
   video: ["FILMS", "TV_SERIES"],
+  podcast: ["PODCASTS"],
 }
 
 export const isOfWorkTypeCategory = (

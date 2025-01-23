@@ -106,7 +106,7 @@ const WorkCard = ({ work }: WorkCardProps) => {
   const lowResCover = getLowResCoverUrl(dataCovers)
 
   const isSomeMaterialTypePodcast = work.materialTypes.some(materialType => {
-    return materialType?.materialTypeGeneral?.code === GeneralMaterialTypeCodeEnum.Podcasts
+    return materialType?.materialTypeGeneral?.code === "PODCASTS"
   })
 
   const isSomeManifestationTypeCostFree = filteredManifestations.some(
@@ -162,7 +162,7 @@ const WorkCard = ({ work }: WorkCardProps) => {
                 const materialTypeIcon = getIconNameFromMaterialType(materialType) || "book"
 
                 const isCostFree = manifestation.publizonData?.costFree
-                const isPodcast = materialType === GeneralMaterialTypeCodeEnum.Podcasts
+                const isPodcast = materialType === "PODCASTS"
 
                 return (
                   <MaterialTypeIconWrapper

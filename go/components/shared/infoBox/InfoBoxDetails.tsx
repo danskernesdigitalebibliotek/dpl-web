@@ -32,34 +32,34 @@ const InfoBoxDetails = ({ work, selectedManifestation }: InfoBoxDetailsProps) =>
         <h2 className="mb-10 text-typo-heading-4 lg:mb-24">Detaljer</h2>
         <div className="flex w-full flex-col gap-grid-gap-3 lg:flex-row lg:gap-44">
           <dl className="flex-1">
-            <InfoBoxItem term="Type">
-              {!materialTypeDisplays.length ? "-" : materialTypeDisplays.join(", ")}
-            </InfoBoxItem>
+            <InfoBoxItem term="Type">{materialTypeDisplays.join(", ") || "-"}</InfoBoxItem>
             <InfoBoxItem term="Sprog">
-              {selectedManifestation?.languages?.main?.map(language => language.display).join(", ")}
+              {selectedManifestation?.languages?.main
+                ?.map(language => language.display)
+                .join(", ") || "-"}
             </InfoBoxItem>
             <InfoBoxItem term="Omfang">
-              {selectedManifestation?.physicalDescription?.summaryFull}
+              {selectedManifestation?.physicalDescription?.summaryFull || "-"}
             </InfoBoxItem>
             <InfoBoxItem term="Udgivelsesår">
-              {selectedManifestation?.dateFirstEdition?.display || !!work.workYear?.display}
+              {selectedManifestation?.dateFirstEdition?.display || !!work.workYear?.display || "-"}
             </InfoBoxItem>
           </dl>
           <dl className="flex-1">
             <InfoBoxItem term="Genre">
-              {selectedManifestation?.genreAndForm.map(genre => genre).join(", ")}
+              {selectedManifestation?.genreAndForm.map(genre => genre).join(", ") || "-"}
             </InfoBoxItem>
             <InfoBoxItem term="ISBN">
-              {getIsbnsFromManifestation(selectedManifestation).join(", ")}
+              {getIsbnsFromManifestation(selectedManifestation).join(", ") || "-"}
             </InfoBoxItem>
             <InfoBoxItem term="Forlag">
-              {selectedManifestation?.publisher.map(publisher => publisher).join(", ")}
+              {selectedManifestation?.publisher.map(publisher => publisher).join(", ") || "-"}
             </InfoBoxItem>
             <InfoBoxItem term="Bidragsyder">
               {selectedManifestation?.contributors
                 .map(item => item.display)
                 .concat(selectedManifestation?.contributorsFromDescription)
-                .join(", ")}
+                .join(", ") || "-"}
             </InfoBoxItem>
           </dl>
         </div>
