@@ -12,8 +12,6 @@
   --grid-gap-3: calc(var(--grid-gap) * 3); /* 36px */
   --grid-gap-x: var(--grid-gap); /* 12px */
 
-  --space-y: 5rem; /* 80px */
-
   /* SIZE OF EACH INDIVIDUAL COLUMN IN THE GRID  */
   --grid-column: calc(
     ((min(var(--page-width), 100vw) - (2 * var(--grid-edge))) - (11 * var(--grid-gap-x))) / 12
@@ -59,7 +57,9 @@
   --aspect-9-16: 9 / 16;
 
   /* SPACING */
-  --block-spacing: 5rem; /* 80px */
+  --paragraph-spacing: 2.5rem; /* 40px */
+  --paragraph-spacing-inner: 2rem; /* 32px */
+  --space-y: 2.5rem; /* 40px */
 
   /* COLORS */
   --black: hsla(0, 0%, 0%, 1);
@@ -215,6 +215,11 @@
     --navigation-top-height: 2rem; /* 32px */
     --navigation-height: 5rem; /* 80px */
     --navigation-search-height: 6.25rem; /* 100px */
+
+    /* SPACING */
+    --paragraph-spacing: 5rem; /* 80px */
+    --paragraph-spacing-inner: 4rem; /* 64px */
+    --space-y: 5rem; /* 80px */
 
     /* FONTS */
     --typo-huge-size: 92px;

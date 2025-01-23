@@ -24,7 +24,7 @@ export const getManifestationMaterialType = (
 
 export const getManifestationByMaterialType = (
   work: WorkFullWorkPageFragment,
-  materialType: GeneralMaterialTypeCodeEnum[0]
+  materialType: GeneralMaterialTypeCodeEnum
 ): ManifestationWorkPageFragment | undefined => {
   return work.manifestations.all.find(manifestation =>
     manifestation.materialTypes.some(type => type.materialTypeGeneral.display === materialType)
@@ -40,17 +40,17 @@ const isManifestationOfMaterialType = (
 
 export const isManifestationEbook = (manifestation: ManifestationWorkPageFragment) => {
   if (!manifestation) return false
-  return isManifestationOfMaterialType(manifestation, GeneralMaterialTypeCodeEnum.Ebooks)
+  return isManifestationOfMaterialType(manifestation, "EBOOKS")
 }
 
 export const isManifestationAudioBook = (manifestation: ManifestationWorkPageFragment) => {
   if (!manifestation) return false
-  return isManifestationOfMaterialType(manifestation, GeneralMaterialTypeCodeEnum.AudioBooks)
+  return isManifestationOfMaterialType(manifestation, "AUDIO_BOOKS")
 }
 
 export const isManifestationPodcast = (manifestation: ManifestationWorkPageFragment) => {
   if (!manifestation) return false
-  return isManifestationOfMaterialType(manifestation, GeneralMaterialTypeCodeEnum.Podcasts)
+  return isManifestationOfMaterialType(manifestation, "PODCASTS")
 }
 
 export const getManifestationLanguageIsoCode = (manifestation: ManifestationWorkPageFragment) => {
@@ -69,40 +69,40 @@ export const getManifestationLanguageIsoCode = (manifestation: ManifestationWork
   return undefined
 }
 
-export const materialTypeSortPriority = [
-  GeneralMaterialTypeCodeEnum.Books,
-  GeneralMaterialTypeCodeEnum.Ebooks,
-  GeneralMaterialTypeCodeEnum.AudioBooks,
-  GeneralMaterialTypeCodeEnum.Podcasts,
-  GeneralMaterialTypeCodeEnum.BoardGames,
-  GeneralMaterialTypeCodeEnum.Articles,
-  GeneralMaterialTypeCodeEnum.Comics,
-  GeneralMaterialTypeCodeEnum.ComputerGames,
-  GeneralMaterialTypeCodeEnum.Films,
-  GeneralMaterialTypeCodeEnum.ImageMaterials,
-  GeneralMaterialTypeCodeEnum.Music,
-  GeneralMaterialTypeCodeEnum.NewspaperJournals,
-  GeneralMaterialTypeCodeEnum.Other,
-  GeneralMaterialTypeCodeEnum.SheetMusic,
-  GeneralMaterialTypeCodeEnum.TvSeries,
+export const materialTypeSortPriority: GeneralMaterialTypeCodeEnum[] = [
+  "BOOKS",
+  "EBOOKS",
+  "AUDIO_BOOKS",
+  "PODCASTS",
+  "BOARD_GAMES",
+  "ARTICLES",
+  "COMICS",
+  "COMPUTER_GAMES",
+  "FILMS",
+  "IMAGE_MATERIALS",
+  "MUSIC",
+  "NEWSPAPER_JOURNALS",
+  "OTHER",
+  "SHEET_MUSIC",
+  "TV_SERIES",
 ]
 
-export const materialTypeTranslations = {
-  [GeneralMaterialTypeCodeEnum.Articles]: "Artikel",
-  [GeneralMaterialTypeCodeEnum.Books]: "Bog",
-  [GeneralMaterialTypeCodeEnum.Comics]: "Tegneserie",
-  [GeneralMaterialTypeCodeEnum.Ebooks]: "E-bog",
-  [GeneralMaterialTypeCodeEnum.ImageMaterials]: "Billedmateriale",
-  [GeneralMaterialTypeCodeEnum.NewspaperJournals]: "Avis",
-  [GeneralMaterialTypeCodeEnum.AudioBooks]: "Lydbog",
-  [GeneralMaterialTypeCodeEnum.Music]: "Musik",
-  [GeneralMaterialTypeCodeEnum.Podcasts]: "Podcast",
-  [GeneralMaterialTypeCodeEnum.SheetMusic]: "Noder",
-  [GeneralMaterialTypeCodeEnum.BoardGames]: "Brætspil",
-  [GeneralMaterialTypeCodeEnum.ComputerGames]: "Computerspil",
-  [GeneralMaterialTypeCodeEnum.Films]: "Film",
-  [GeneralMaterialTypeCodeEnum.TvSeries]: "Tv-serie",
-  [GeneralMaterialTypeCodeEnum.Other]: "Andet",
+export const materialTypeTranslations: { [key in GeneralMaterialTypeCodeEnum]: string } = {
+  ARTICLES: "Artikel",
+  BOOKS: "Bog",
+  COMICS: "Tegneserie",
+  EBOOKS: "E-bog",
+  IMAGE_MATERIALS: "Billedmateriale",
+  NEWSPAPER_JOURNALS: "Avis",
+  AUDIO_BOOKS: "Lydbog",
+  MUSIC: "Musik",
+  PODCASTS: "Podcast",
+  SHEET_MUSIC: "Noder",
+  BOARD_GAMES: "Brætspil",
+  COMPUTER_GAMES: "Computerspil",
+  FILMS: "Film",
+  TV_SERIES: "Tv-serie",
+  OTHER: "Andet",
 }
 
 export const translateMaterialTypesStringForRender = (

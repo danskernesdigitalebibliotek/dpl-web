@@ -1,0 +1,27 @@
+query getPageByPath($path: String!) {
+  route(path: $path) {
+    __typename
+    ... on RouteInternal {
+      url
+      entity {
+        ... on NodeGoPage {
+          paragraphs {
+            ... on ParagraphGoVideo {
+              __typename
+              id
+              url
+              title
+              created {
+                timestamp
+              }
+              langcode {
+                name
+              }
+              status
+            }
+          }
+        }
+      }
+    }
+  }
+}

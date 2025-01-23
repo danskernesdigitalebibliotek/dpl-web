@@ -888,12 +888,11 @@ export type SchemaInformation = {
 };
 
 /** Sort direction. */
-export enum SortDirection {
+export type SortDirection =
   /** Stigende */
-  Asc = 'ASC',
+  | 'ASC'
   /** Faldende */
-  Desc = 'DESC'
-}
+  | 'DESC';
 
 /** The schema's entry-point for subscriptions. */
 export type Subscription = {
@@ -1141,6 +1140,13 @@ export type GetDplCmsConfigurationQueryVariables = Exact<{ [key: string]: never;
 
 export type GetDplCmsConfigurationQuery = { __typename?: 'Query', dplConfiguration?: { __typename?: 'DplConfiguration', unilogin?: { __typename?: 'UniloginConfiguration', unilogin_api_url?: string | null, unilogin_api_wellknown_url?: string | null, unilogin_api_client_id?: string | null, unilogin_api_client_secret?: string | null } | null } | null };
 
+export type GetPageByPathQueryVariables = Exact<{
+  path: Scalars['String']['input'];
+}>;
+
+
+export type GetPageByPathQuery = { __typename?: 'Query', route?: { __typename: 'RouteExternal' } | { __typename: 'RouteInternal', url: string, entity?: { __typename?: 'NodeGoArticle' } | { __typename?: 'NodeGoCategory' } | { __typename?: 'NodeGoPage', paragraphs?: Array<{ __typename?: 'ParagraphAccordion' } | { __typename?: 'ParagraphBanner' } | { __typename?: 'ParagraphBreadcrumbChildren' } | { __typename?: 'ParagraphCardGridAutomatic' } | { __typename?: 'ParagraphCardGridManual' } | { __typename?: 'ParagraphContentSlider' } | { __typename?: 'ParagraphContentSliderAutomatic' } | { __typename?: 'ParagraphFilteredEventList' } | { __typename: 'ParagraphGoVideo', id: string, url: string, title?: string | null, status: boolean, created: { __typename?: 'DateTime', timestamp: unknown }, langcode: { __typename?: 'Language', name?: string | null } } | { __typename?: 'ParagraphManualEventList' } | { __typename?: 'ParagraphMaterialGridAutomatic' } | { __typename?: 'ParagraphMaterialGridManual' } | { __typename?: 'ParagraphTextBody' } | { __typename?: 'ParagraphVideo' }> | null } | null } | { __typename: 'RouteRedirect' } | null };
+
 
 
 export const GetArticleDocument = `
@@ -1250,3 +1256,72 @@ useSuspenseGetDplCmsConfigurationQuery.getKey = (variables?: GetDplCmsConfigurat
 
 
 useGetDplCmsConfigurationQuery.fetcher = (variables?: GetDplCmsConfigurationQueryVariables, options?: RequestInit['headers']) => fetcher<GetDplCmsConfigurationQuery, GetDplCmsConfigurationQueryVariables>(GetDplCmsConfigurationDocument, variables, options);
+
+export const GetPageByPathDocument = `
+    query getPageByPath($path: String!) {
+  route(path: $path) {
+    __typename
+    ... on RouteInternal {
+      url
+      entity {
+        ... on NodeGoPage {
+          paragraphs {
+            ... on ParagraphGoVideo {
+              __typename
+              id
+              url
+              title
+              created {
+                timestamp
+              }
+              langcode {
+                name
+              }
+              status
+            }
+          }
+        }
+      }
+    }
+  }
+}
+    `;
+
+export const useGetPageByPathQuery = <
+      TData = GetPageByPathQuery,
+      TError = unknown
+    >(
+      variables: GetPageByPathQueryVariables,
+      options?: Omit<UseQueryOptions<GetPageByPathQuery, TError, TData>, 'queryKey'> & { queryKey?: UseQueryOptions<GetPageByPathQuery, TError, TData>['queryKey'] }
+    ) => {
+    
+    return useQuery<GetPageByPathQuery, TError, TData>(
+      {
+    queryKey: ['getPageByPath', variables],
+    queryFn: fetcher<GetPageByPathQuery, GetPageByPathQueryVariables>(GetPageByPathDocument, variables),
+    ...options
+  }
+    )};
+
+useGetPageByPathQuery.getKey = (variables: GetPageByPathQueryVariables) => ['getPageByPath', variables];
+
+export const useSuspenseGetPageByPathQuery = <
+      TData = GetPageByPathQuery,
+      TError = unknown
+    >(
+      variables: GetPageByPathQueryVariables,
+      options?: Omit<UseSuspenseQueryOptions<GetPageByPathQuery, TError, TData>, 'queryKey'> & { queryKey?: UseSuspenseQueryOptions<GetPageByPathQuery, TError, TData>['queryKey'] }
+    ) => {
+    
+    return useSuspenseQuery<GetPageByPathQuery, TError, TData>(
+      {
+    queryKey: ['getPageByPathSuspense', variables],
+    queryFn: fetcher<GetPageByPathQuery, GetPageByPathQueryVariables>(GetPageByPathDocument, variables),
+    ...options
+  }
+    )};
+
+useSuspenseGetPageByPathQuery.getKey = (variables: GetPageByPathQueryVariables) => ['getPageByPathSuspense', variables];
+
+
+useGetPageByPathQuery.fetcher = (variables: GetPageByPathQueryVariables, options?: RequestInit['headers']) => fetcher<GetPageByPathQuery, GetPageByPathQueryVariables>(GetPageByPathDocument, variables, options);

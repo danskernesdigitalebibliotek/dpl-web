@@ -14,18 +14,25 @@ vi.mock(import("@/lib/config/goConfig"), async importOriginal => {
   }
 })
 
-export const facets = {
-  [FacetFieldEnum.Materialtypesgeneral]: {
+type Facets = {
+  [key in FacetFieldEnum]?: {
+    filter: string
+    translation: string
+  }
+}
+
+export const facets: Facets = {
+  MATERIALTYPESGENERAL: {
     filter: "materialTypesGeneral",
     translation: "Type",
   },
-  [FacetFieldEnum.Mainlanguages]: {
+  MAINLANGUAGES: {
     filter: "mainLanguages",
     translation: "Sprog",
   },
-  [FacetFieldEnum.Age]: { filter: "age", translation: "Alder" },
-  [FacetFieldEnum.Lix]: { filter: "lixRange", translation: "Lix" },
-  [FacetFieldEnum.Subjects]: { filter: "subjects", translation: "Emne" },
+  AGE: { filter: "age", translation: "Alder" },
+  LIX: { filter: "lixRange", translation: "Lix" },
+  SUBJECTS: { filter: "subjects", translation: "Emne" },
 } as const
 
 beforeEach(() => {

@@ -329,6 +329,8 @@ export const extendedTheme = {
       "grid-gap-x": "var(--grid-gap-x)",
       "grid-edge": "var(--grid-edge)",
       "space-y": "var(--space-y)",
+      "paragraph-spacing": "var(--paragraph-spacing)",
+      "paragraph-spacing-inner": "var(--paragraph-spacing-inner)",
     },
     boxShadow: {
       button: "2px 2px 0 0px var(--foreground)",
