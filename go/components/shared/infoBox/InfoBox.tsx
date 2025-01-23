@@ -26,10 +26,12 @@ const InfoBox = ({ work, selectedManifestation }: InfoBoxProps) => {
     })
   }
 
+  const ageString = selectedManifestation?.audience?.ages.map(age => age.display).join(", ") || "-"
+  const seriesString =
+    selectedManifestation?.series
+      .map(series => `${series.numberInSeries ? series.numberInSeries + " i " : ""}${series.title}`)
+      .join(", ") || "-"
   const subjects = selectedManifestation?.subjects.all.map(subject => subject.display) || []
-  const seriesString = selectedManifestation?.series
-    .map(series => `${series.numberInSeries ? series.numberInSeries + " i " : ""}${series.title}`)
-    .join(", ")
 
   return (
     <motion.div
@@ -47,9 +49,7 @@ const InfoBox = ({ work, selectedManifestation }: InfoBoxProps) => {
             )}
           </div>
           <dl className="flex-1">
-            <InfoBoxItem term="Alder">
-              {selectedManifestation?.audience?.ages.map(age => age.display).join(", ") || "-"}
-            </InfoBoxItem>
+            <InfoBoxItem term="Alder">{ageString}</InfoBoxItem>
             <InfoBoxItem term="Serie">{seriesString}</InfoBoxItem>
             <InfoBoxItem term="Emneord" classname="flex flex-row flex-wrap gap-2">
               {subjects
