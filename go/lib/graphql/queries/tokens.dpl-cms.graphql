@@ -1,0 +1,8 @@
+query getAdgangsplatformenTokens {
+  dplTokens {
+    adgangsplatformen {
+      library
+      user
+    }
+  }
+}
