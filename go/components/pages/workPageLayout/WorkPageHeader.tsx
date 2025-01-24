@@ -17,7 +17,10 @@ import WorkAuthors from "@/components/shared/authors/Authors"
 import { Badge } from "@/components/shared/badge/Badge"
 import { CoverPicture } from "@/components/shared/coverPicture/CoverPicture"
 import SlideSelect, { SlideSelectOption } from "@/components/shared/slideSelect/SlideSelect"
-import { WorkFullWorkPageFragment } from "@/lib/graphql/generated/fbi/graphql"
+import {
+  GeneralMaterialTypeCodeEnum,
+  WorkFullWorkPageFragment,
+} from "@/lib/graphql/generated/fbi/graphql"
 import { getCoverUrls, getLowResCoverUrl } from "@/lib/helpers/helper.covers"
 import { getIsbnsFromManifestation } from "@/lib/helpers/ids"
 import { useGetCoverCollection } from "@/lib/rest/cover-service-api/generated/cover-service"
@@ -103,8 +106,10 @@ const WorkPageHeader = ({ work }: WorkPageHeaderProps) => {
   useEffect(() => {
     if (!!searchParams.get("type")) {
       setSelectedManifestation(
-        getManifestationByMaterialType(work, searchParams.get("type") as string) ||
-          selectedManifestation
+        getManifestationByMaterialType(
+          work,
+          searchParams.get("type") as GeneralMaterialTypeCodeEnum
+        ) || selectedManifestation
       )
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps

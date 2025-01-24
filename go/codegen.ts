@@ -15,13 +15,13 @@ const config: CodegenConfig = {
       schema: {
         [`${process.env.NEXT_PUBLIC_GRAPHQL_SCHEMA_ENDPOINT_DPL_CMS}`]: {
           headers: {
-            Authorization: `Basic ${process.env.GRAPHQL_SCHEMA_ENDPOINT_BASIC_TOKEN_DPL_CMS}`,
+            Authorization: `Basic ${process.env.NEXT_PUBLIC_GRAPHQL_BASIC_TOKEN_DPL_CMS}`,
           },
         },
       },
       plugins: ["typescript", "typescript-operations", "typescript-react-query"],
       config: {
-        futureProofEnums: true,
+        enumsAsTypes: true,
         withHooks: true,
         defaultScalarType: "unknown",
         reactQueryVersion: 5,
@@ -56,7 +56,7 @@ const config: CodegenConfig = {
       ],
       plugins: ["typescript", "typescript-operations", "typescript-react-query"],
       config: {
-        futureProofEnums: true,
+        enumsAsTypes: true,
         withHooks: true,
         defaultScalarType: "unknown",
         reactQueryVersion: 5,

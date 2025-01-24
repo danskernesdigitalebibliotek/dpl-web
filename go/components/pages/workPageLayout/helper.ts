@@ -25,7 +25,7 @@ export const getManifestationMaterialType = (
 
 export const getManifestationByMaterialType = (
   work: WorkFullWorkPageFragment,
-  materialType: GeneralMaterialTypeCodeEnum[0]
+  materialType: GeneralMaterialTypeCodeEnum
 ): ManifestationWorkPageFragment | undefined => {
   return work.manifestations.all.find(manifestation =>
     manifestation.materialTypes.some(type => type.materialTypeGeneral.display === materialType)
@@ -41,15 +41,15 @@ export const getBestRepresentation = (
   }
   // If best representation doesn't exist we choose in the following order:
   // 1. Ebook / 2. Audiobook / 3. Book / 4. First in all manifestations (any)
-  const eBook = getManifestationByMaterialType(work, GeneralMaterialTypeCodeEnum.Ebooks)
+  const eBook = getManifestationByMaterialType(work, "EBOOKS")
   if (eBook) {
     return eBook
   }
-  const audioBook = getManifestationByMaterialType(work, GeneralMaterialTypeCodeEnum.AudioBooks)
+  const audioBook = getManifestationByMaterialType(work, "AUDIO_BOOKS")
   if (audioBook) {
     return audioBook
   }
-  const book = getManifestationByMaterialType(work, GeneralMaterialTypeCodeEnum.Books)
+  const book = getManifestationByMaterialType(work, "BOOKS")
   if (book) {
     return book
   }
@@ -58,24 +58,24 @@ export const getBestRepresentation = (
 
 const isOfMaterialType = (
   manifestation: ManifestationWorkPageFragment,
-  materialType: GeneralMaterialTypeCodeEnum[0]
+  materialType: GeneralMaterialTypeCodeEnum
 ) => {
   return manifestation.materialTypes.some(type => type.materialTypeGeneral.code === materialType)
 }
 
 export const isEbook = (manifestation: ManifestationWorkPageFragment | undefined | null) => {
   if (!manifestation) return false
-  return isOfMaterialType(manifestation, GeneralMaterialTypeCodeEnum.Ebooks)
+  return isOfMaterialType(manifestation, "EBOOKS")
 }
 
 export const isAudioBook = (manifestation: ManifestationWorkPageFragment | undefined | null) => {
   if (!manifestation) return false
-  return isOfMaterialType(manifestation, GeneralMaterialTypeCodeEnum.AudioBooks)
+  return isOfMaterialType(manifestation, "AUDIO_BOOKS")
 }
 
 export const isPodcast = (manifestation: ManifestationWorkPageFragment | undefined | null) => {
   if (!manifestation) return false
-  return isOfMaterialType(manifestation, GeneralMaterialTypeCodeEnum.Podcasts)
+  return isOfMaterialType(manifestation, "PODCASTS")
 }
 
 export const getManifestationLanguageIsoCode = (
@@ -96,22 +96,22 @@ export const getManifestationLanguageIsoCode = (
   return undefined
 }
 
-export const materialTypeTranslations = {
-  [GeneralMaterialTypeCodeEnum.Articles]: "Artikel",
-  [GeneralMaterialTypeCodeEnum.Books]: "Bog",
-  [GeneralMaterialTypeCodeEnum.Comics]: "Tegneserie",
-  [GeneralMaterialTypeCodeEnum.Ebooks]: "E-bog",
-  [GeneralMaterialTypeCodeEnum.ImageMaterials]: "Billedmateriale",
-  [GeneralMaterialTypeCodeEnum.NewspaperJournals]: "Avis",
-  [GeneralMaterialTypeCodeEnum.AudioBooks]: "Lydbog",
-  [GeneralMaterialTypeCodeEnum.Music]: "Musik",
-  [GeneralMaterialTypeCodeEnum.Podcasts]: "Podcast",
-  [GeneralMaterialTypeCodeEnum.SheetMusic]: "Noder",
-  [GeneralMaterialTypeCodeEnum.BoardGames]: "Brætspil",
-  [GeneralMaterialTypeCodeEnum.ComputerGames]: "Computerspil",
-  [GeneralMaterialTypeCodeEnum.Films]: "Film",
-  [GeneralMaterialTypeCodeEnum.TvSeries]: "Tv-serie",
-  [GeneralMaterialTypeCodeEnum.Other]: "Andet",
+export const materialTypeTranslations: { [key in GeneralMaterialTypeCodeEnum]: string } = {
+  ARTICLES: "Artikel",
+  BOOKS: "Bog",
+  COMICS: "Tegneserie",
+  EBOOKS: "E-bog",
+  IMAGE_MATERIALS: "Billedmateriale",
+  NEWSPAPER_JOURNALS: "Avis",
+  AUDIO_BOOKS: "Lydbog",
+  MUSIC: "Musik",
+  PODCASTS: "Podcast",
+  SHEET_MUSIC: "Noder",
+  BOARD_GAMES: "Brætspil",
+  COMPUTER_GAMES: "Computerspil",
+  FILMS: "Film",
+  TV_SERIES: "Tv-serie",
+  OTHER: "Andet",
 }
 
 export const translateMaterialTypesForRender = (option: SlideSelectOption): SlideSelectOption => {
