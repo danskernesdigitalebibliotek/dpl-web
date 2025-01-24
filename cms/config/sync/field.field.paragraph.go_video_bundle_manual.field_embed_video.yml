@@ -1,15 +1,15 @@
-uuid: 9fa7b375-b0cd-493f-ac3e-c8bf333b0da6
+uuid: 2c094a47-ed72-4d31-a0a5-98927ea6d2c8
 langcode: en
 status: true
 dependencies:
   config:
     - field.storage.paragraph.field_embed_video
     - media.type.videotool
-    - paragraphs.paragraphs_type.go_video
-id: paragraph.go_video.field_embed_video
+    - paragraphs.paragraphs_type.go_video_bundle_manual
+id: paragraph.go_video_bundle_manual.field_embed_video
 field_name: field_embed_video
 entity_type: paragraph
-bundle: go_video
+bundle: go_video_bundle_manual
 label: 'Embed video'
 description: ''
 required: true
