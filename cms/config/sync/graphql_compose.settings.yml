@@ -10,6 +10,8 @@ entity_config:
       enabled: true
     video:
       enabled: true
+    videotool:
+      enabled: true
   node:
     article:
       enabled: true
@@ -131,6 +133,9 @@ field_config:
         enabled: true
     video:
       field_media_oembed_video:
+        enabled: true
+    videotool:
+      field_media_videotool:
         enabled: true
   node:
     article:
@@ -287,7 +292,11 @@ field_config:
       field_title:
         enabled: true
     go_video:
+      field_embed_video:
+        enabled: true
       field_go_video_title:
+        enabled: true
+      field_url:
         enabled: true
     go_video_bundle_automatic:
       field_cql_search:

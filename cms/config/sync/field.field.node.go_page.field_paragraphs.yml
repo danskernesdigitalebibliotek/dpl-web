@@ -11,6 +11,7 @@ dependencies:
     - paragraphs.paragraphs_type.go_video
     - paragraphs.paragraphs_type.go_video_bundle_automatic
     - paragraphs.paragraphs_type.go_video_bundle_manual
+    - paragraphs.paragraphs_type.video
   module:
     - entity_reference_revisions
 id: node.go_page.field_paragraphs
@@ -28,10 +29,11 @@ settings:
   handler_settings:
     target_bundles:
       go_video: go_video
+      video: video
       go_linkbox: go_linkbox
       go_material_slider_automatic: go_material_slider_automatic
-      go_material_slider_manual: go_material_slider_manual
       go_video_bundle_automatic: go_video_bundle_automatic
+      go_material_slider_manual: go_material_slider_manual
       go_video_bundle_manual: go_video_bundle_manual
     negate: 0
     target_bundles_drag_drop:
@@ -136,7 +138,7 @@ settings:
         enabled: false
       video:
         weight: 42
-        enabled: false
+        enabled: true
       webform:
         weight: 58
         enabled: false
