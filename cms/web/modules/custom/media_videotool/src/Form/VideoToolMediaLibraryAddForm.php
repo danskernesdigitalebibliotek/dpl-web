@@ -71,8 +71,10 @@ class VideoToolMediaLibraryAddForm extends AddFormBase {
    * {@inheritdoc}
    */
   public function validateForm(array &$form, FormStateInterface $form_state): void {
-    if (!preg_match("(https:\/\/media\.videotool\.dk\/\?vn=([a-z0-9]{3})_([a-z0-9]{28}))", $form_state->getValue('url'))) {
-      $form_state->setError($form, $this->t("The given URL does not match the VideoTool URL pattern."));
+    if ($form_state->getValue('url') !== NULL) {
+      if (!preg_match("(https:\/\/media\.videotool\.dk\/\?vn=([a-z0-9]{3})_([a-z0-9]{28}))", $form_state->getValue('url'))) {
+        $form_state->setError($form, $this->t("The given URL does not match the VideoTool URL pattern."));
+      }
     }
   }
 

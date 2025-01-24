@@ -44,7 +44,6 @@ class VideoToolFormatter extends FormatterBase {
             'allowtransparency' => TRUE,
             'height' => '100%',
             'width' => '100%',
-            'class' => ['media-oembed-content'],
             'data-category-consent' => 'cookie_cat_marketing',
             'data-once' => 'cookieinformation-iframe',
           ],
