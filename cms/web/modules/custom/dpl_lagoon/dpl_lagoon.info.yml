@@ -1,0 +1,6 @@
+name: DPL Lagoon related functionality
+description: Handles Lagoon related functionality, eg. resolving host names
+package: DPL
+
+type: module
+core_version_requirement: ^9 || ^10

@@ -1,0 +1,19 @@
+uuid: 11748c73-4147-4332-b7e3-f3f33a151306
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.paragraph.field_title
+    - paragraphs.paragraphs_type.go_material_slider_manual
+id: paragraph.go_material_slider_manual.field_title
+field_name: field_title
+entity_type: paragraph
+bundle: go_material_slider_manual
+label: Title
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: string

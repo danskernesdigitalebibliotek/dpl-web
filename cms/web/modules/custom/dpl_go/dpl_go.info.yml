@@ -1,0 +1,9 @@
+name: 'DPL Go'
+type: module
+description: 'Module used for handling go specific functionality.'
+package: DPL
+core_version_requirement: ^10 || ^11
+dependencies:
+  - graphql:graphql
+  - dpl_unilogin:dpl_unilogin
+  - dpl_lagoon:dpl_lagoon

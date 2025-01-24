@@ -1,8 +1,8 @@
 
-type Adgangsplatformen {
+type AdgangsplatformenToken {
   user: String
 }
 
 type DplTokens {
-  adgangsplatformen: Adgangsplatformen
+  adgangsplatformen: AdgangsplatformenToken
 }

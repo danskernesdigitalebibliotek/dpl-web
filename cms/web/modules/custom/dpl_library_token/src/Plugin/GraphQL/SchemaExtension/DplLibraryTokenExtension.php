@@ -23,7 +23,7 @@ class DplLibraryTokenExtension extends SdlSchemaExtensionPluginBase {
    */
   public function registerResolvers(ResolverRegistryInterface $registry): void {
     $builder = new ResolverBuilder();
-    $registry->addFieldResolver('Adgangsplatformen', 'library',
+    $registry->addFieldResolver('AdgangsplatformenToken', 'library',
       $builder->produce('adgangsplatformen_library_token_producer')
     );
   }

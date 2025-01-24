@@ -7,6 +7,12 @@ dependencies:
     - node.type.page
     - paragraphs.paragraphs_type.campaign_rule
     - paragraphs.paragraphs_type.event_ticket_category
+    - paragraphs.paragraphs_type.go_linkbox
+    - paragraphs.paragraphs_type.go_material_slider_automatic
+    - paragraphs.paragraphs_type.go_material_slider_manual
+    - paragraphs.paragraphs_type.go_video
+    - paragraphs.paragraphs_type.go_video_bundle_automatic
+    - paragraphs.paragraphs_type.go_video_bundle_manual
     - paragraphs.paragraphs_type.opening_hours
   module:
     - entity_reference_revisions
@@ -27,10 +33,22 @@ settings:
       campaign_rule: campaign_rule
       event_ticket_category: event_ticket_category
       opening_hours: opening_hours
+      go_linkbox: go_linkbox
+      go_material_slider_automatic: go_material_slider_automatic
+      go_material_slider_manual: go_material_slider_manual
+      go_video: go_video
+      go_video_bundle_automatic: go_video_bundle_automatic
+      go_video_bundle_manual: go_video_bundle_manual
     negate: 1
     target_bundles_drag_drop:
       accordion:
         weight: 22
+        enabled: false
+      banner:
+        weight: 35
+        enabled: false
+      breadcrumb_children:
+        weight: 36
         enabled: false
       campaign_rule:
         weight: 2
@@ -44,12 +62,36 @@ settings:
       content_slider:
         weight: 14
         enabled: false
+      content_slider_automatic:
+        weight: 41
+        enabled: false
       event_ticket_category:
         weight: 7
         enabled: true
       files:
         weight: 16
         enabled: false
+      filtered_event_list:
+        weight: 44
+        enabled: false
+      go_linkbox:
+        weight: 45
+        enabled: true
+      go_material_slider_automatic:
+        weight: 46
+        enabled: true
+      go_material_slider_manual:
+        weight: 47
+        enabled: true
+      go_video:
+        weight: 48
+        enabled: true
+      go_video_bundle_automatic:
+        weight: 49
+        enabled: true
+      go_video_bundle_manual:
+        weight: 50
+        enabled: true
       hero:
         weight: 29
         enabled: false
@@ -58,6 +100,9 @@ settings:
         enabled: false
       links:
         weight: 8
+        enabled: false
+      manual_event_list:
+        weight: 52
         enabled: false
       material_grid_automatic:
         weight: 32
@@ -80,16 +125,25 @@ settings:
       recommendation:
         weight: 38
         enabled: false
+      simple_links:
+        weight: 60
+        enabled: false
       text_body:
         weight: 4
         enabled: false
       user_registration_item:
         weight: 40
         enabled: false
+      user_registration_linklist:
+        weight: 63
+        enabled: false
       user_registration_section:
         weight: 41
         enabled: false
       video:
         weight: 20
+        enabled: false
+      webform:
+        weight: 66
         enabled: false
 field_type: entity_reference_revisions
