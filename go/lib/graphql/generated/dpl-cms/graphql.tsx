@@ -673,11 +673,19 @@ export type ParagraphFilteredEventList = ParagraphInterface & {
   title?: Maybe<Scalars['String']['output']>;
 };
 
-/** Enter the URL for the video you want to include. */
-export type ParagraphGoVideo = ParagraphInterface & {
-  __typename?: 'ParagraphGoVideo';
+/** Entity type paragraph. */
+export type ParagraphGoLinkbox = ParagraphInterface & {
+  __typename?: 'ParagraphGoLinkbox';
   /** The time that the Paragraph was created. */
   created: DateTime;
+  /** Color */
+  goColor?: Maybe<Color>;
+  /** Description */
+  goDescription: Scalars['String']['output'];
+  /** Image */
+  goImage?: Maybe<MediaUnion>;
+  /** LInk */
+  goLink: Link;
   /** The Universally Unique IDentifier (UUID). */
   id: Scalars['ID']['output'];
   /** The paragraphs entity language code. */
@@ -685,9 +693,127 @@ export type ParagraphGoVideo = ParagraphInterface & {
   /** Publiceret */
   status: Scalars['Boolean']['output'];
   /** Title */
+  title: Scalars['String']['output'];
+};
+
+/** This paragraph is used for displaying a range of materials based on a CQL search string.  */
+export type ParagraphGoMaterialSliderAutomatic = ParagraphInterface & {
+  __typename?: 'ParagraphGoMaterialSliderAutomatic';
+  /**
+   * This field is for inserting a CQL string based on a search. <br /><br />Please
+   * be aware, that it is necessary to copy the exact CQL string, including the
+   * quotations. i.e: ( 'harry potter')<br /><br />A valid CQL search string can be
+   * generated, by performing a query through the advanced search, and copying the
+   * CQL string from there.
+   */
+  cqlSearch: CqlSearch;
+  /** The time that the Paragraph was created. */
+  created: DateTime;
+  /** The Universally Unique IDentifier (UUID). */
+  id: Scalars['ID']['output'];
+  /** The paragraphs entity language code. */
+  langcode: Language;
+  /** Amount of materials */
+  sliderAmountOfMaterials: Scalars['Int']['output'];
+  /** Publiceret */
+  status: Scalars['Boolean']['output'];
+  /** Title */
   title?: Maybe<Scalars['String']['output']>;
+};
+
+/**
+ * This paragraph is used for displaying a range of materials. The materials can be
+ * chosen by manually searching for available materials.
+ */
+export type ParagraphGoMaterialSliderManual = ParagraphInterface & {
+  __typename?: 'ParagraphGoMaterialSliderManual';
+  /** The time that the Paragraph was created. */
+  created: DateTime;
+  /** The Universally Unique IDentifier (UUID). */
+  id: Scalars['ID']['output'];
+  /** The paragraphs entity language code. */
+  langcode: Language;
+  /**
+   * Here you can choose which materials to display. If you need to link to a
+   * specific type, select it from the dropdown and the system will display that,
+   * if it is available.<br />Example work ID: work-of:870970-basis:136336282
+   */
+  materialSliderWorkIds: Array<WorkId>;
+  /** Publiceret */
+  status: Scalars['Boolean']['output'];
+  /** Title */
+  title?: Maybe<Scalars['String']['output']>;
+};
+
+/** Enter the URL for the video you want to include. */
+export type ParagraphGoVideo = ParagraphInterface & {
+  __typename?: 'ParagraphGoVideo';
+  /** The time that the Paragraph was created. */
+  created: DateTime;
+  /** Title */
+  goVideoTitle?: Maybe<Scalars['String']['output']>;
+  /** The Universally Unique IDentifier (UUID). */
+  id: Scalars['ID']['output'];
+  /** The paragraphs entity language code. */
+  langcode: Language;
+  /** Publiceret */
+  status: Scalars['Boolean']['output'];
+};
+
+/**
+ * This paragraph is used for displaying a VideoTool video and display a set of
+ * related books. The related books is automatically chosen based on a CQL search
+ */
+export type ParagraphGoVideoBundleAutomatic = ParagraphInterface & {
+  __typename?: 'ParagraphGoVideoBundleAutomatic';
+  /**
+   * This field is for inserting a CQL string based on a search. <br /><br />Please
+   * be aware, that it is necessary to copy the exact CQL string, including the
+   * quotations. i.e: ( 'harry potter')<br /><br />A valid CQL search string can be
+   * generated, by performing a query through the advanced search, and copying the
+   * CQL string from there.
+   */
+  cqlSearch: CqlSearch;
+  /** The time that the Paragraph was created. */
+  created: DateTime;
+  /** Title */
+  goVideoTitle: Scalars['String']['output'];
+  /** The Universally Unique IDentifier (UUID). */
+  id: Scalars['ID']['output'];
+  /** The paragraphs entity language code. */
+  langcode: Language;
+  /** Publiceret */
+  status: Scalars['Boolean']['output'];
   /** VideoTool URL. Example: https://media.videotool.dk/?vn=557_2023103014511477700668916683 */
   url: Scalars['String']['output'];
+  /** The amount of related materials that should be shown. */
+  videoAmountOfMaterials: Scalars['Int']['output'];
+};
+
+/**
+ * This paragraph is used for displaying a VideoTool video and display a set of
+ * related or recommended materials. The materials can be selected manually.
+ */
+export type ParagraphGoVideoBundleManual = ParagraphInterface & {
+  __typename?: 'ParagraphGoVideoBundleManual';
+  /** The time that the Paragraph was created. */
+  created: DateTime;
+  /** Title */
+  goVideoTitle: Scalars['String']['output'];
+  /** The Universally Unique IDentifier (UUID). */
+  id: Scalars['ID']['output'];
+  /** The paragraphs entity language code. */
+  langcode: Language;
+  /** Publiceret */
+  status: Scalars['Boolean']['output'];
+  /** VideoTool URL. Example: https://media.videotool.dk/?vn=557_2023103014511477700668916683 */
+  url: Scalars['String']['output'];
+  /**
+   * Here you can choose which materials to display. If you need to link to a
+   * specific type, select it from the dropdown and the system will display that,
+   * if it is available.<br />Example work ID: work-of:870970-basis:136336282
+   */
+  videoBundleWorkIds?: Maybe<Array<WorkId>>;
 };
 
 /** Entity type paragraph. */
@@ -776,7 +902,7 @@ export type ParagraphTextBody = ParagraphInterface & {
 };
 
 /** Entity type paragraph. */
-export type ParagraphUnion = ParagraphAccordion | ParagraphBanner | ParagraphBreadcrumbChildren | ParagraphCardGridAutomatic | ParagraphCardGridManual | ParagraphContentSlider | ParagraphContentSliderAutomatic | ParagraphFilteredEventList | ParagraphGoVideo | ParagraphManualEventList | ParagraphMaterialGridAutomatic | ParagraphMaterialGridManual | ParagraphTextBody | ParagraphVideo;
+export type ParagraphUnion = ParagraphAccordion | ParagraphBanner | ParagraphBreadcrumbChildren | ParagraphCardGridAutomatic | ParagraphCardGridManual | ParagraphContentSlider | ParagraphContentSliderAutomatic | ParagraphFilteredEventList | ParagraphGoLinkbox | ParagraphGoMaterialSliderAutomatic | ParagraphGoMaterialSliderManual | ParagraphGoVideo | ParagraphGoVideoBundleAutomatic | ParagraphGoVideoBundleManual | ParagraphManualEventList | ParagraphMaterialGridAutomatic | ParagraphMaterialGridManual | ParagraphTextBody | ParagraphVideo;
 
 /** Indtast URL'en til den video, du vil indlejre. */
 export type ParagraphVideo = ParagraphInterface & {
@@ -1173,12 +1299,19 @@ export type GetArticleQueryVariables = Exact<{
 }>;
 
 
-export type GetArticleQuery = { __typename?: 'Query', nodeArticle?: { __typename?: 'NodeArticle', title: string, subtitle?: string | null, paragraphs?: Array<{ __typename: 'ParagraphAccordion' } | { __typename: 'ParagraphBanner' } | { __typename: 'ParagraphBreadcrumbChildren' } | { __typename: 'ParagraphCardGridAutomatic' } | { __typename: 'ParagraphCardGridManual' } | { __typename: 'ParagraphContentSlider' } | { __typename: 'ParagraphContentSliderAutomatic' } | { __typename: 'ParagraphFilteredEventList' } | { __typename: 'ParagraphGoVideo' } | { __typename: 'ParagraphManualEventList' } | { __typename: 'ParagraphMaterialGridAutomatic' } | { __typename: 'ParagraphMaterialGridManual' } | { __typename: 'ParagraphTextBody', body?: { __typename?: 'Text', value?: string | null } | null } | { __typename: 'ParagraphVideo' }> | null } | null };
+export type GetArticleQuery = { __typename?: 'Query', nodeArticle?: { __typename?: 'NodeArticle', title: string, subtitle?: string | null, paragraphs?: Array<{ __typename: 'ParagraphAccordion' } | { __typename: 'ParagraphBanner' } | { __typename: 'ParagraphBreadcrumbChildren' } | { __typename: 'ParagraphCardGridAutomatic' } | { __typename: 'ParagraphCardGridManual' } | { __typename: 'ParagraphContentSlider' } | { __typename: 'ParagraphContentSliderAutomatic' } | { __typename: 'ParagraphFilteredEventList' } | { __typename: 'ParagraphGoLinkbox' } | { __typename: 'ParagraphGoMaterialSliderAutomatic' } | { __typename: 'ParagraphGoMaterialSliderManual' } | { __typename: 'ParagraphGoVideo' } | { __typename: 'ParagraphGoVideoBundleAutomatic' } | { __typename: 'ParagraphGoVideoBundleManual' } | { __typename: 'ParagraphManualEventList' } | { __typename: 'ParagraphMaterialGridAutomatic' } | { __typename: 'ParagraphMaterialGridManual' } | { __typename: 'ParagraphTextBody', body?: { __typename?: 'Text', value?: string | null } | null } | { __typename: 'ParagraphVideo' }> | null } | null };
 
 export type GetDplCmsConfigurationQueryVariables = Exact<{ [key: string]: never; }>;
 
 
 export type GetDplCmsConfigurationQuery = { __typename?: 'Query', dplConfiguration?: { __typename?: 'DplConfiguration', unilogin?: { __typename?: 'UniloginConfiguration', unilogin_api_url?: string | null, unilogin_api_wellknown_url?: string | null, unilogin_api_client_id?: string | null, unilogin_api_client_secret?: string | null } | null } | null };
+
+export type GetPageByPathQueryVariables = Exact<{
+  path: Scalars['String']['input'];
+}>;
+
+
+export type GetPageByPathQuery = { __typename?: 'Query', route?: { __typename: 'RouteExternal' } | { __typename: 'RouteInternal', url: string, entity?: { __typename?: 'NodeGoArticle' } | { __typename?: 'NodeGoCategory' } | { __typename?: 'NodeGoPage', paragraphs?: Array<{ __typename?: 'ParagraphAccordion' } | { __typename?: 'ParagraphBanner' } | { __typename?: 'ParagraphBreadcrumbChildren' } | { __typename?: 'ParagraphCardGridAutomatic' } | { __typename?: 'ParagraphCardGridManual' } | { __typename?: 'ParagraphContentSlider' } | { __typename?: 'ParagraphContentSliderAutomatic' } | { __typename?: 'ParagraphFilteredEventList' } | { __typename?: 'ParagraphGoLinkbox' } | { __typename?: 'ParagraphGoMaterialSliderAutomatic' } | { __typename?: 'ParagraphGoMaterialSliderManual' } | { __typename: 'ParagraphGoVideo', id: string, status: boolean, created: { __typename?: 'DateTime', timestamp: unknown }, langcode: { __typename?: 'Language', name?: string | null } } | { __typename?: 'ParagraphGoVideoBundleAutomatic' } | { __typename?: 'ParagraphGoVideoBundleManual' } | { __typename?: 'ParagraphManualEventList' } | { __typename?: 'ParagraphMaterialGridAutomatic' } | { __typename?: 'ParagraphMaterialGridManual' } | { __typename?: 'ParagraphTextBody' } | { __typename?: 'ParagraphVideo' }> | null } | null } | { __typename: 'RouteRedirect' } | null };
 
 export type GetAdgangsplatformenTokensQueryVariables = Exact<{ [key: string]: never; }>;
 
@@ -1216,7 +1349,7 @@ export const useGetArticleQuery = <
       variables: GetArticleQueryVariables,
       options?: Omit<UseQueryOptions<GetArticleQuery, TError, TData>, 'queryKey'> & { queryKey?: UseQueryOptions<GetArticleQuery, TError, TData>['queryKey'] }
     ) => {
-
+    
     return useQuery<GetArticleQuery, TError, TData>(
       {
     queryKey: ['getArticle', variables],
@@ -1234,7 +1367,7 @@ export const useSuspenseGetArticleQuery = <
       variables: GetArticleQueryVariables,
       options?: Omit<UseSuspenseQueryOptions<GetArticleQuery, TError, TData>, 'queryKey'> & { queryKey?: UseSuspenseQueryOptions<GetArticleQuery, TError, TData>['queryKey'] }
     ) => {
-
+    
     return useSuspenseQuery<GetArticleQuery, TError, TData>(
       {
     queryKey: ['getArticleSuspense', variables],
@@ -1268,7 +1401,7 @@ export const useGetDplCmsConfigurationQuery = <
       variables?: GetDplCmsConfigurationQueryVariables,
       options?: Omit<UseQueryOptions<GetDplCmsConfigurationQuery, TError, TData>, 'queryKey'> & { queryKey?: UseQueryOptions<GetDplCmsConfigurationQuery, TError, TData>['queryKey'] }
     ) => {
-
+    
     return useQuery<GetDplCmsConfigurationQuery, TError, TData>(
       {
     queryKey: variables === undefined ? ['getDplCmsConfiguration'] : ['getDplCmsConfiguration', variables],
@@ -1286,7 +1419,7 @@ export const useSuspenseGetDplCmsConfigurationQuery = <
       variables?: GetDplCmsConfigurationQueryVariables,
       options?: Omit<UseSuspenseQueryOptions<GetDplCmsConfigurationQuery, TError, TData>, 'queryKey'> & { queryKey?: UseSuspenseQueryOptions<GetDplCmsConfigurationQuery, TError, TData>['queryKey'] }
     ) => {
-
+    
     return useSuspenseQuery<GetDplCmsConfigurationQuery, TError, TData>(
       {
     queryKey: variables === undefined ? ['getDplCmsConfigurationSuspense'] : ['getDplCmsConfigurationSuspense', variables],
@@ -1299,6 +1432,73 @@ useSuspenseGetDplCmsConfigurationQuery.getKey = (variables?: GetDplCmsConfigurat
 
 
 useGetDplCmsConfigurationQuery.fetcher = (variables?: GetDplCmsConfigurationQueryVariables, options?: RequestInit['headers']) => fetcher<GetDplCmsConfigurationQuery, GetDplCmsConfigurationQueryVariables>(GetDplCmsConfigurationDocument, variables, options);
+
+export const GetPageByPathDocument = `
+    query getPageByPath($path: String!) {
+  route(path: $path) {
+    __typename
+    ... on RouteInternal {
+      url
+      entity {
+        ... on NodeGoPage {
+          paragraphs {
+            ... on ParagraphGoVideo {
+              __typename
+              id
+              created {
+                timestamp
+              }
+              langcode {
+                name
+              }
+              status
+            }
+          }
+        }
+      }
+    }
+  }
+}
+    `;
+
+export const useGetPageByPathQuery = <
+      TData = GetPageByPathQuery,
+      TError = unknown
+    >(
+      variables: GetPageByPathQueryVariables,
+      options?: Omit<UseQueryOptions<GetPageByPathQuery, TError, TData>, 'queryKey'> & { queryKey?: UseQueryOptions<GetPageByPathQuery, TError, TData>['queryKey'] }
+    ) => {
+    
+    return useQuery<GetPageByPathQuery, TError, TData>(
+      {
+    queryKey: ['getPageByPath', variables],
+    queryFn: fetcher<GetPageByPathQuery, GetPageByPathQueryVariables>(GetPageByPathDocument, variables),
+    ...options
+  }
+    )};
+
+useGetPageByPathQuery.getKey = (variables: GetPageByPathQueryVariables) => ['getPageByPath', variables];
+
+export const useSuspenseGetPageByPathQuery = <
+      TData = GetPageByPathQuery,
+      TError = unknown
+    >(
+      variables: GetPageByPathQueryVariables,
+      options?: Omit<UseSuspenseQueryOptions<GetPageByPathQuery, TError, TData>, 'queryKey'> & { queryKey?: UseSuspenseQueryOptions<GetPageByPathQuery, TError, TData>['queryKey'] }
+    ) => {
+    
+    return useSuspenseQuery<GetPageByPathQuery, TError, TData>(
+      {
+    queryKey: ['getPageByPathSuspense', variables],
+    queryFn: fetcher<GetPageByPathQuery, GetPageByPathQueryVariables>(GetPageByPathDocument, variables),
+    ...options
+  }
+    )};
+
+useSuspenseGetPageByPathQuery.getKey = (variables: GetPageByPathQueryVariables) => ['getPageByPathSuspense', variables];
+
+
+useGetPageByPathQuery.fetcher = (variables: GetPageByPathQueryVariables, options?: RequestInit['headers']) => fetcher<GetPageByPathQuery, GetPageByPathQueryVariables>(GetPageByPathDocument, variables, options);
 
 export const GetAdgangsplatformenTokensDocument = `
     query getAdgangsplatformenTokens {
@@ -1318,7 +1518,7 @@ export const useGetAdgangsplatformenTokensQuery = <
       variables?: GetAdgangsplatformenTokensQueryVariables,
       options?: Omit<UseQueryOptions<GetAdgangsplatformenTokensQuery, TError, TData>, 'queryKey'> & { queryKey?: UseQueryOptions<GetAdgangsplatformenTokensQuery, TError, TData>['queryKey'] }
     ) => {
-
+    
     return useQuery<GetAdgangsplatformenTokensQuery, TError, TData>(
       {
     queryKey: variables === undefined ? ['getAdgangsplatformenTokens'] : ['getAdgangsplatformenTokens', variables],
@@ -1336,7 +1536,7 @@ export const useSuspenseGetAdgangsplatformenTokensQuery = <
       variables?: GetAdgangsplatformenTokensQueryVariables,
       options?: Omit<UseSuspenseQueryOptions<GetAdgangsplatformenTokensQuery, TError, TData>, 'queryKey'> & { queryKey?: UseSuspenseQueryOptions<GetAdgangsplatformenTokensQuery, TError, TData>['queryKey'] }
     ) => {
-
+    
     return useSuspenseQuery<GetAdgangsplatformenTokensQuery, TError, TData>(
       {
     queryKey: variables === undefined ? ['getAdgangsplatformenTokensSuspense'] : ['getAdgangsplatformenTokensSuspense', variables],
@@ -1367,7 +1567,7 @@ export const useGetAdgangsplatformenUserTokenQuery = <
       variables?: GetAdgangsplatformenUserTokenQueryVariables,
       options?: Omit<UseQueryOptions<GetAdgangsplatformenUserTokenQuery, TError, TData>, 'queryKey'> & { queryKey?: UseQueryOptions<GetAdgangsplatformenUserTokenQuery, TError, TData>['queryKey'] }
     ) => {
-
+    
     return useQuery<GetAdgangsplatformenUserTokenQuery, TError, TData>(
       {
     queryKey: variables === undefined ? ['getAdgangsplatformenUserToken'] : ['getAdgangsplatformenUserToken', variables],
@@ -1385,7 +1585,7 @@ export const useSuspenseGetAdgangsplatformenUserTokenQuery = <
       variables?: GetAdgangsplatformenUserTokenQueryVariables,
       options?: Omit<UseSuspenseQueryOptions<GetAdgangsplatformenUserTokenQuery, TError, TData>, 'queryKey'> & { queryKey?: UseSuspenseQueryOptions<GetAdgangsplatformenUserTokenQuery, TError, TData>['queryKey'] }
     ) => {
-
+    
     return useSuspenseQuery<GetAdgangsplatformenUserTokenQuery, TError, TData>(
       {
     queryKey: variables === undefined ? ['getAdgangsplatformenUserTokenSuspense'] : ['getAdgangsplatformenUserTokenSuspense', variables],
