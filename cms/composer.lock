@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "a68f8d65a724a298c899ed2cbc399a84",
+    "content-hash": "13c2c6d274b3bf6d87c454788874ef70",
     "packages": [
         {
             "name": "amazeeio/drupal_integrations",
@@ -7707,6 +7707,52 @@
             "support": {
                 "source": "https://cgit.drupalcode.org/simple_sitemap",
                 "issues": "https://drupal.org/project/issues/simple_sitemap"
+            }
+        },
+        {
+            "name": "drupal/state_log",
+            "version": "2.2.0",
+            "source": {
+                "type": "git",
+                "url": "https://git.drupalcode.org/project/state_log.git",
+                "reference": "8.x-2.2"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://ftp.drupal.org/files/projects/state_log-8.x-2.2.zip",
+                "reference": "8.x-2.2",
+                "shasum": "23a3f60d4b571d5db76e39052014aefef7354c52"
+            },
+            "require": {
+                "drupal/core": "^8 || ^9 || ^10"
+            },
+            "type": "drupal-module",
+            "extra": {
+                "drupal": {
+                    "version": "8.x-2.2",
+                    "datestamp": "1688162796",
+                    "security-coverage": {
+                        "status": "covered",
+                        "message": "Covered by Drupal's security advisory policy"
+                    }
+                }
+            },
+            "notification-url": "https://packages.drupal.org/8/downloads",
+            "license": [
+                "GPL-2.0-or-later"
+            ],
+            "authors": [
+                {
+                    "name": "George Anderson (geoanders)",
+                    "homepage": "https://www.drupal.org/u/geoanders",
+                    "role": "Maintainer"
+                }
+            ],
+            "description": "Module that logs changes to state.",
+            "homepage": "https://drupal.org/project/state_log",
+            "support": {
+                "source": "https://git.drupalcode.org/project/state_log",
+                "issues": "https://drupal.org/project/issues/state_log"
             }
         },
         {
@@ -20267,6 +20313,8 @@
     "platform": {
         "php": "8.1.*"
     },
-    "platform-dev": {},
+    "platform-dev": {
+        "ext-dom": "*"
+    },
     "plugin-api-version": "2.6.0"
 }

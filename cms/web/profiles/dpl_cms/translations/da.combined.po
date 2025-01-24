@@ -7,8 +7,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2025-01-22 14:05+0100\n"
-"PO-Revision-Date: 2025-01-22 14:05+0100\n"
+"POT-Creation-Date: 2025-01-24 14:13+0100\n"
+"PO-Revision-Date: 2025-01-24 14:13+0100\n"
 "Last-Translator: NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
 "MIME-Version: 1.0\n"
@@ -4896,6 +4896,12 @@ msgstr ""
 "Disse moduler håndterer beskyttede noder ved at tjekke, om en node bliver "
 "brugt som reference i konfigurationen."
 
+msgid "DPL Lagoon related functionality"
+msgstr ""
+
+msgid "Handles Lagoon related functionality, eg. resolving host names"
+msgstr ""
+
 msgid "Loans"
 msgstr "Lån"
 
@@ -4979,6 +4985,15 @@ msgstr "Integration med Mapp Intelligence for at tracke brugen af hjemmesiden"
 
 msgid "Mapp Intelligence settings"
 msgstr "Mapp Intelligence indstillinger"
+
+msgid "Post Go Adgangsplatformen Login Route"
+msgstr ""
+
+msgid "DPL Go"
+msgstr ""
+
+msgid "Module used for handling go specific functionality."
+msgstr ""
 
 msgid "FBI integration"
 msgstr "FBI integration"
@@ -20607,6 +20622,51 @@ msgctxt "field.field.paragraph.go_linkbox.field_title:label"
 msgid "Title"
 msgstr ""
 
+msgctxt ""
+"field.field.paragraph.go_material_slider_automatic.field_cql_search:label"
+msgid "CQL Search"
+msgstr ""
+
+msgctxt ""
+"field.field.paragraph.go_material_slider_automatic.field_cql_search:"
+"description"
+msgid ""
+"This field is for inserting a CQL string based on a search. <br /><br /"
+">Please be aware, that it is necessary to copy the exact CQL string, "
+"including the quotations. i.e: ( 'harry potter')<br /><br />A valid CQL "
+"search string can be generated, by performing a query through the advanced "
+"search, and copying the CQL string from there. "
+msgstr ""
+
+msgctxt ""
+"field.field.paragraph.go_material_slider_automatic."
+"field_slider_amount_of_materials:label"
+msgid "Amount of materials"
+msgstr ""
+
+msgctxt "field.field.paragraph.go_material_slider_automatic.field_title:label"
+msgid "Title"
+msgstr ""
+
+msgctxt ""
+"field.field.paragraph.go_material_slider_manual."
+"field_material_slider_work_ids:label"
+msgid "Work IDs"
+msgstr ""
+
+msgctxt ""
+"field.field.paragraph.go_material_slider_manual."
+"field_material_slider_work_ids:description"
+msgid ""
+"Here you can choose which materials to display. If you need to link to a "
+"specific type, select it from the dropdown and the system will display that, "
+"if it is available.<br />Example work ID: work-of:870970-basis:136336282"
+msgstr ""
+
+msgctxt "field.field.paragraph.go_material_slider_manual.field_title:label"
+msgid "Title"
+msgstr ""
+
 msgctxt "field.field.paragraph.go_video.field_embed_video:label"
 msgid "Embed video"
 msgstr ""
@@ -21974,6 +22034,26 @@ msgstr ""
 
 msgctxt "paragraphs.paragraphs_type.go_linkbox:label"
 msgid "GO Linkbox"
+msgstr ""
+
+msgctxt "paragraphs.paragraphs_type.go_material_slider_automatic:label"
+msgid "GO Material Slider - Automatic"
+msgstr ""
+
+msgctxt "paragraphs.paragraphs_type.go_material_slider_automatic:description"
+msgid ""
+"This paragraph is used for displaying a range of materials based on a CQL "
+"search string. "
+msgstr ""
+
+msgctxt "paragraphs.paragraphs_type.go_material_slider_manual:label"
+msgid "GO Material Slider - Manual"
+msgstr ""
+
+msgctxt "paragraphs.paragraphs_type.go_material_slider_manual:description"
+msgid ""
+"This paragraph is used for displaying a range of materials. The materials "
+"can be chosen by manually searching for available materials."
 msgstr ""
 
 msgctxt "paragraphs.paragraphs_type.go_video:label"

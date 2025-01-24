@@ -174,11 +174,15 @@ final class OpeningHoursResource extends OpeningHoursResourceBase {
   public function toLegacyResponse(OpeningHoursInstance $instance) : OpeningHoursLegacyResponse {
     return (new OpeningHoursLegacyResponse())
       ->setNid(intval($instance->branch->id()))
-      ->setCategoryTid(intval($instance->categoryTerm->id()))
       ->setDate(new DateTime($instance->startTime->format('Y-m-d')))
       ->setStartTime($instance->startTime->format("H:i"))
       ->setEndTime($instance->endTime->format('H:i'))
-      ->setNotice(NULL);
+      // The Redia app will display the notice as the title of opening hours
+      // if defined regardless of the category. This is a simple way to show the
+      // right title instead of providing a separate API exposing categories
+      // with ids and titles.
+      ->setCategoryTid(intval($instance->categoryTerm->id()))
+      ->setNotice($instance->categoryTerm->getName());
   }
 
   /**

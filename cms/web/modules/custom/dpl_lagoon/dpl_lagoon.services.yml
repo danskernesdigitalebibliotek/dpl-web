@@ -1,0 +1,3 @@
+services:
+  dpl_lagoon.host_resolver:
+    class: Drupal\dpl_lagoon\Services\LagoonRouteResolver

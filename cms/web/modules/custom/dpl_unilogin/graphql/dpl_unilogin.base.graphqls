@@ -1,0 +1,16 @@
+type UniloginConfiguration {
+ unilogin_api_url: String
+ unilogin_api_wellknown_url: String
+ unilogin_api_client_id: String
+ unilogin_api_client_secret: String
+}
+
+type AdgangsplatformenConfiguration {
+  goLoginUrl: String
+}
+
+type DplConfiguration {
+  unilogin: UniloginConfiguration
+  adgangsplatformen: AdgangsplatformenConfiguration
+}
+
