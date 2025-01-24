@@ -51,7 +51,7 @@ function ProfileButton() {
           <SheetHeader>
             <SheetTitle className="mb-space-y text-typo-heading-3">Log ind</SheetTitle>
             <div className="flex flex-col items-center justify-center rounded-sm bg-background-overlay py-space-y">
-              <SheetDescription className="mb-4 text-typo-heading-4 font-bold text-foreground">
+              <SheetDescription className="mb-4 text-typo-heading-4 text-foreground">
                 Log ind med UNI•Login
               </SheetDescription>
               <div>
@@ -61,8 +61,14 @@ function ProfileButton() {
               </div>
             </div>
             <div className="flex flex-col items-center justify-center rounded-sm bg-background-overlay py-space-y">
-              <SheetDescription className="mb-4 text-typo-heading-4 font-bold text-foreground">
-                Log ind med Adgangsplatformen
+              <div className="mb-4">
+                <Icon name="adgangsplatformen" />
+              </div>
+              <SheetDescription className="text-typo-heading-4 text-foreground">
+                Login via Biblotekernes
+              </SheetDescription>
+              <SheetDescription className="mb-4 text-typo-heading-4 text-foreground">
+                fælles loginside
               </SheetDescription>
               <div>
                 <Button
