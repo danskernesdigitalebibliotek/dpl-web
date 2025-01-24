@@ -342,30 +342,6 @@ const config: Config = {
   plugins: [
     // eslint-disable-next-line @typescript-eslint/no-require-imports
     require("tailwindcss-animate"),
-    function ({ addUtilities }: { addUtilities: ({}) => void }) {
-      addUtilities({
-        ".hyphens-auto": { hyphens: "auto" },
-        ".hyphens-manual": { hyphens: "manual" },
-        ".hyphens-none": { hyphens: "none" },
-        ".animate-text-underline": {
-          position: "relative",
-          cursor: "pointer",
-        },
-        ".animate-text-underline::after": {
-          content: '""',
-          position: "absolute",
-          bottom: "-5px",
-          left: "0",
-          width: "0",
-          height: "1px",
-          backgroundColor: "var(--foreground)",
-          transition: "width 0.3s ease",
-        },
-        ".animate-text-underline:hover::after": {
-          width: "100%",
-        },
-      })
-    },
     function ({ addVariant }: { addVariant: (name: string, generator: string) => void }) {
       addVariant("not-first", "&:not(:first-child)")
     },
