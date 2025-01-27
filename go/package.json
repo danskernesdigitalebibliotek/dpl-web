@@ -5,7 +5,7 @@
   "type": "module",
   "scripts": {
     "build-storybook": "storybook build",
-    "build": "NODE_EXTRA_CA_CERTS=\"$(mkcert -CAROOT)/rootCA.pem\" next build",
+    "build": "next build",
     "ci-check": "yarn typecheck && yarn lint && yarn format:check && yarn test:unit:once",
     "codegen:all-rest-services": "orval",
     "codegen:covers": "rm -rf src/lib/rest/cover-service-api/generated/model/*.* && orval --project coverService",
