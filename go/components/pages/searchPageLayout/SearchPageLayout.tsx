@@ -1,6 +1,5 @@
 "use client"
 
-import { useSelector } from "@xstate/react"
 import { motion, useInView } from "framer-motion"
 import { useEffect, useRef } from "react"
 
