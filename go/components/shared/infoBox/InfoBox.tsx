@@ -36,6 +36,7 @@ const InfoBox = ({ work }: InfoBoxProps) => {
             <InfoBoxItem
               term="Serie"
               description={selectedManifestation ? getSeriesInfo(selectedManifestation) : []}
+              isSearchable
             />
             <InfoBoxItem
               term="Emneord"
