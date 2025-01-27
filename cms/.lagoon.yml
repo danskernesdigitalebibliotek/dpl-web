@@ -55,6 +55,7 @@ tasks:
               drush pm:enable -y bnf_server
             elif [[ ${LAGOON_PR_TITLE,,} =~ ^bnf: ]]; then
               # Or configure the client if there's a BNF environment.
+              drush --yes pm:enable bnf_client
               drush config:set --yes bnf_client.settings base_url https://varnish.$LAGOON_ENVIRONMENT.dpl-bnf.dplplat01.dpl.reload.dk/
             fi
 
