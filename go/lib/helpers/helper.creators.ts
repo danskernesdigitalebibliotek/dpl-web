@@ -19,3 +19,9 @@ export const displayCreators = (
     return acc + (index > 0 ? ", " : "") + creator.display
   }, "")
 }
+
+export const getAllCreators = (
+  creators: WorkFullWorkPageFragment["creators"] | ManifestationDetailsFragment["contributors"]
+) => {
+  return [...new Set(creators.map(creator => creator.display))]
+}

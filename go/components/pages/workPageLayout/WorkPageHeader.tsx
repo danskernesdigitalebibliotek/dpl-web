@@ -13,6 +13,7 @@ import {
   getWorkMaterialTypes,
   translateMaterialTypesForRender,
 } from "@/components/pages/workPageLayout/helper"
+import WorkAuthors from "@/components/shared/authors/Authors"
 import { Badge } from "@/components/shared/badge/Badge"
 import { CoverPicture } from "@/components/shared/coverPicture/CoverPicture"
 import SlideSelect, { SlideSelectOption } from "@/components/shared/slideSelect/SlideSelect"
@@ -21,7 +22,6 @@ import {
   WorkFullWorkPageFragment,
 } from "@/lib/graphql/generated/fbi/graphql"
 import { getCoverUrls, getLowResCoverUrl } from "@/lib/helpers/helper.covers"
-import { displayCreators } from "@/lib/helpers/helper.creators"
 import { getIsbnsFromManifestation } from "@/lib/helpers/ids"
 import { useGetCoverCollection } from "@/lib/rest/cover-service-api/generated/cover-service"
 import { GetCoverCollectionSizesItem } from "@/lib/rest/cover-service-api/generated/model"
@@ -155,9 +155,7 @@ const WorkPageHeader = ({ work }: WorkPageHeaderProps) => {
             className="hyphens-auto break-words text-typo-heading-3 lg:mt-0 lg:text-typo-heading-2">
             {`${selectedManifestation?.titles?.full || ""}${!!titleSuffix ? ` (${titleSuffix})` : ""}`}
           </h1>
-          <h2 className="mt-grid-gap-2 text-typo-subtitle-sm uppercase lg:mt-7">
-            {`af ${displayCreators(work.creators, 100) || displayCreators(selectedManifestation?.contributors || [], 100)}`}
-          </h2>
+          <WorkAuthors creators={work.creators || selectedManifestation?.contributors} />
         </div>
         <div className="col-span-4 mt-grid-gap-3 flex flex-col items-end justify-end lg:order-3 lg:mt-0">
           <WorkPageButtons workId={work.workId} />

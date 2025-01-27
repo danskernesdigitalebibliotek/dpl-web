@@ -344,13 +344,6 @@ const config: Config = {
   plugins: [
     // eslint-disable-next-line @typescript-eslint/no-require-imports
     require("tailwindcss-animate"),
-    function ({ addUtilities }: { addUtilities: ({}) => void }) {
-      addUtilities({
-        ".hyphens-auto": { hyphens: "auto" },
-        ".hyphens-manual": { hyphens: "manual" },
-        ".hyphens-none": { hyphens: "none" },
-      })
-    },
     function ({ addVariant }: { addVariant: (name: string, generator: string) => void }) {
       addVariant("not-first", "&:not(:first-child)")
     },
