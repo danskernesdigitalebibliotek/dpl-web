@@ -33,3 +33,5 @@ export async function GET() {
 
   return Response.redirect(`${appUrl.toString()}?reload-session=true`)
 }
+
+export const dynamic = "force-dynamic"

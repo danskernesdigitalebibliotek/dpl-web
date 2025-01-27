@@ -26,3 +26,5 @@ export async function GET() {
   await session.save()
   return Response.redirect(redirectTo)
 }
+
+export const dynamic = "force-dynamic"
