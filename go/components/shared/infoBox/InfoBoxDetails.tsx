@@ -15,7 +15,7 @@ type InfoBoxDetailsProps = {
 
 const InfoBoxDetails = ({ selectedManifestation }: InfoBoxDetailsProps) => {
   // get selectedManifestation materialTypes and translate them for render
-  const materialTypeDisplays = selectedManifestation?.materialTypes.map(materialType => {
+  const materialTypeDisplays = selectedManifestation.materialTypes.map(materialType => {
     return translateMaterialTypesStringForRender(
       materialType.materialTypeGeneral.code as GeneralMaterialTypeCodeEnum
     )
