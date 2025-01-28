@@ -15,6 +15,7 @@ import { Badge } from "@/components/shared/badge/Badge"
 import { CoverPicture } from "@/components/shared/coverPicture/CoverPicture"
 import SlideSelect, { SlideSelectOption } from "@/components/shared/slideSelect/SlideSelect"
 import {
+  GeneralMaterialType,
   GeneralMaterialTypeCodeEnum,
   ManifestationWorkPageFragment,
   Work,
@@ -33,6 +34,17 @@ type WorkPageHeaderProps = {
   selectedManifestation: ManifestationWorkPageFragment
 }
 
+const slideSelectOptionsFromMaterialTypes = (workMaterialTypes: GeneralMaterialType[]) => {
+  return workMaterialTypes.map(materialType => {
+    return {
+      code: materialType.code,
+      display: translateMaterialTypesStringForRender(
+        materialType.code as GeneralMaterialTypeCodeEnum
+      ),
+    }
+  }) as SlideSelectOption[]
+}
+
 const WorkPageHeader = ({ work, selectedManifestation }: WorkPageHeaderProps) => {
   const router = useRouter()
   const isbns = selectedManifestation ? getIsbnsFromManifestation(selectedManifestation) : []
@@ -41,14 +53,7 @@ const WorkPageHeader = ({ work, selectedManifestation }: WorkPageHeaderProps) =>
   const workMaterialTypes = getWorkMaterialTypes(
     (work?.materialTypes as Work["materialTypes"]) || []
   )
-  const workMaterialTypesWithDisplayName = workMaterialTypes.map(materialType => {
-    return {
-      code: materialType.code,
-      display: translateMaterialTypesStringForRender(
-        materialType.code as GeneralMaterialTypeCodeEnum
-      ),
-    }
-  }) as SlideSelectOption[]
+  const workMaterialTypesWithDisplayName = slideSelectOptionsFromMaterialTypes(workMaterialTypes)
 
   const { data: dataCovers, isLoading: isLoadingCovers } = useGetCoverCollection(
     {
