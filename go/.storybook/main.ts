@@ -1,30 +1,4 @@
 import type { StorybookConfig } from "@storybook/nextjs"
-import webpack from "webpack"
-
-const injectVars = Object.keys(process.env).reduce((c, key) => {
-  if (/^NEXT_PUBLIC_/.test(key)) {
-    c[`process.env.${key}`] = JSON.stringify(process.env[key])
-  }
-  return c
-}, {})
-
-function injectEnv(definitions) {
-  const env = "process.env"
-
-  if (!definitions[env]) {
-    return {
-      ...definitions,
-      [env]: JSON.stringify(
-        Object.fromEntries(
-          Object.entries(definitions)
-            .filter(([key]) => key.startsWith(env))
-            .map(([key, value]) => [key.substring(env.length + 1), JSON.parse(value)])
-        )
-      ),
-    }
-  }
-  return definitions
-}
 
 const config: StorybookConfig = {
   stories: ["../components/**/*.stories.@(js|jsx|mjs|ts|tsx)"],
@@ -39,6 +13,7 @@ const config: StorybookConfig = {
     name: "@storybook/nextjs",
     options: {},
   },
+
   staticDirs: ["../public"],
   webpackFinal: async (config: any) => {
     // This modifies the existing image rule to exclude `.svg` files
@@ -57,26 +32,7 @@ const config: StorybookConfig = {
       use: ["@svgr/webpack"],
     })
 
-    config.plugins = config.plugins.reduce((c, plugin) => {
-      if (plugin instanceof webpack.DefinePlugin) {
-        return [
-          ...c,
-          new webpack.DefinePlugin(
-            injectEnv({
-              ...plugin.definitions,
-              ...injectVars,
-            })
-          ),
-        ]
-      }
-
-      return [...c, plugin]
-    }, [])
-
-    return config
-
     return config
   },
 }
-
 export default config
