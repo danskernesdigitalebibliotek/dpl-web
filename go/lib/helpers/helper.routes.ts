@@ -1,4 +1,4 @@
-import goConfig from "../config/goConfig"
+import { env } from "process"
 
 type RouteParams = { [key: string]: string | number }
 type QueryParams = { [key: string]: string | number }
@@ -18,7 +18,7 @@ export function buildRoute({
     }, routeParams)
   }
 
-  const url = new URL(routeParams, goConfig("app.url"))
+  const url = new URL(routeParams, env.NEXT_PUBLIC_APP_URL)
   if (query) {
     Object.keys(query).forEach(key => {
       url.searchParams.append(key, query[key].toString())
