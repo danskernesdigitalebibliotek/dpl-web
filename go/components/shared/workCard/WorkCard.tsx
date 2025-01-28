@@ -59,6 +59,7 @@ const WorkCard = ({ work }: WorkCardProps) => {
   })
 
   // if any of the manifestations are the same material type filter out based on newest edition
+  // TODO: isolate this logic to a helper function and test it
   const filteredManifestations = manifestationsWithPublizonData.reduce(
     (acc, current) => {
       const existing = acc.find(
