@@ -8,12 +8,12 @@ import WorkPageButtons from "@/components/pages/workPageLayout/WorkPageButtons"
 import {
   getManifestationLanguageIsoCode,
   getWorkMaterialTypes,
-  materialTypeSortPriority,
   translateMaterialTypesStringForRender,
 } from "@/components/pages/workPageLayout/helper"
 import { Badge } from "@/components/shared/badge/Badge"
 import { CoverPicture } from "@/components/shared/coverPicture/CoverPicture"
 import SlideSelect, { SlideSelectOption } from "@/components/shared/slideSelect/SlideSelect"
+import goConfig from "@/lib/config/goConfig"
 import {
   GeneralMaterialType,
   GeneralMaterialTypeCodeEnum,
@@ -94,7 +94,10 @@ const WorkPageHeader = ({ work, selectedManifestation }: WorkPageHeaderProps) =>
   // sort the slideSelectOptions by GeneralMaterialTypeCodeEnum
   const sortedSlideSelectOptions = slideSelectOptions.sort((a, b) => {
     // sort by the index of the GeneralMaterialTypeCodeEnum in the materialTypeSortPriority array
-    return materialTypeSortPriority.indexOf(a.code) - materialTypeSortPriority.indexOf(b.code)
+    return (
+      goConfig("materialtypes.sortpriority").indexOf(a.code) -
+      goConfig("materialtypes.sortpriority").indexOf(b.code)
+    )
   })
 
   const selectedManifestationMaterialTypeCode = selectedManifestation?.materialTypes[0]

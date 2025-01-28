@@ -4,10 +4,8 @@ import { useQueries } from "@tanstack/react-query"
 import Link from "next/link"
 import React from "react"
 
-import {
-  getIconNameFromMaterialType,
-  materialTypeSortPriority,
-} from "@/components/pages/workPageLayout/helper"
+import { getIconNameFromMaterialType } from "@/components/pages/workPageLayout/helper"
+import goConfig from "@/lib/config/goConfig"
 import { WorkTeaserSearchPageFragment } from "@/lib/graphql/generated/fbi/graphql"
 import { getCoverUrls, getLowResCoverUrl } from "@/lib/helpers/helper.covers"
 import { displayCreators } from "@/lib/helpers/helper.creators"
@@ -113,8 +111,12 @@ const WorkCard = ({ work }: WorkCardProps) => {
   // sort manifestations by materialTypeSortPriority
   const sortedManifestations = filteredManifestations.sort((a, b) => {
     return (
-      materialTypeSortPriority.indexOf(a.manifestation.materialTypes[0].materialTypeGeneral.code) -
-      materialTypeSortPriority.indexOf(b.manifestation.materialTypes[0].materialTypeGeneral.code)
+      goConfig("materialtypes.sortpriority").indexOf(
+        a.manifestation.materialTypes[0].materialTypeGeneral.code
+      ) -
+      goConfig("materialtypes.sortpriority").indexOf(
+        b.manifestation.materialTypes[0].materialTypeGeneral.code
+      )
     )
   })
 

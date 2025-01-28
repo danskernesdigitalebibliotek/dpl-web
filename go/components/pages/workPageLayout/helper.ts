@@ -1,6 +1,7 @@
 import { head, uniqBy } from "lodash"
 
 import { materialTypeCategories } from "@/components/shared/workCard/helper"
+import goConfig from "@/lib/config/goConfig"
 import {
   GeneralMaterialTypeCodeEnum,
   Manifestation,
@@ -69,46 +70,10 @@ export const getManifestationLanguageIsoCode = (manifestation: ManifestationWork
   return undefined
 }
 
-export const materialTypeSortPriority: GeneralMaterialTypeCodeEnum[] = [
-  "BOOKS",
-  "EBOOKS",
-  "AUDIO_BOOKS",
-  "PODCASTS",
-  "BOARD_GAMES",
-  "ARTICLES",
-  "COMICS",
-  "COMPUTER_GAMES",
-  "FILMS",
-  "IMAGE_MATERIALS",
-  "MUSIC",
-  "NEWSPAPER_JOURNALS",
-  "OTHER",
-  "SHEET_MUSIC",
-  "TV_SERIES",
-]
-
-export const materialTypeTranslations: { [key in GeneralMaterialTypeCodeEnum]: string } = {
-  ARTICLES: "Artikel",
-  BOOKS: "Bog",
-  COMICS: "Tegneserie",
-  EBOOKS: "E-bog",
-  IMAGE_MATERIALS: "Billedmateriale",
-  NEWSPAPER_JOURNALS: "Avis",
-  AUDIO_BOOKS: "Lydbog",
-  MUSIC: "Musik",
-  PODCASTS: "Podcast",
-  SHEET_MUSIC: "Noder",
-  BOARD_GAMES: "Brætspil",
-  COMPUTER_GAMES: "Computerspil",
-  FILMS: "Film",
-  TV_SERIES: "Tv-serie",
-  OTHER: "Andet",
-}
-
 export const translateMaterialTypesStringForRender = (
   code: GeneralMaterialTypeCodeEnum
 ): string => {
-  return materialTypeTranslations[code]
+  return goConfig("materialtypes.translations")[code]
 }
 
 export const getIconNameFromMaterialType = (materialType: GeneralMaterialTypeCodeEnum) => {
