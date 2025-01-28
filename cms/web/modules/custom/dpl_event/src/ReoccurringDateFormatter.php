@@ -97,6 +97,7 @@ class ReoccurringDateFormatter {
    */
   public function getUpcomingEventIds(EventSeries $event_series): array {
     $date = new DrupalDateTime();
+    $date->setTimezone(new \DateTimezone(DateTimeItemInterface::STORAGE_TIMEZONE));
     $formatted = $date->format(DateTimeItemInterface::DATETIME_STORAGE_FORMAT);
 
     // Find the next upcoming eventinstance in this series - e.g., the
