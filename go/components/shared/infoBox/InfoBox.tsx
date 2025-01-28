@@ -42,13 +42,13 @@ const InfoBox = ({ work, selectedManifestation }: InfoBoxProps) => {
             <InfoBoxItem term="Serie">
               {selectedManifestation.series.length
                 ? selectedManifestation.series.map((series, index) => {
-                    if (!series.numberInSeries || !series.title) {
+                    if (!series.title) {
                       return <span key={index}>{"-"}</span>
                     }
 
                     return (
                       <div key={index}>
-                        <span>{`${series.numberInSeries} i`} </span>
+                        {series.numberInSeries && <span>{`${series.numberInSeries} i`} </span>}
                         <Link
                           className="animate-text-underline"
                           href={resolveUrl({
