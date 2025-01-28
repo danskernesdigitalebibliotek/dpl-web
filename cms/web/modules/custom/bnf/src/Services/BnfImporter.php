@@ -9,11 +9,8 @@ use Drupal\bnf\GraphQL\Operations\GetNode;
 use Drupal\bnf\GraphQL\Operations\GetNodeTitle;
 use Drupal\bnf\MangleUrl;
 use Drupal\bnf\SailorEndpointConfig;
-use Drupal\Core\Entity\EntityFieldManagerInterface;
 use Drupal\Core\Entity\EntityTypeManagerInterface;
-use Drupal\Core\StringTranslation\TranslationInterface;
 use Drupal\node\NodeInterface;
-use GuzzleHttp\ClientInterface;
 use Psr\Log\LoggerInterface;
 use Spawnia\Sailor\Configuration;
 
@@ -30,10 +27,7 @@ class BnfImporter {
    * Constructor.
    */
   public function __construct(
-    protected ClientInterface $httpClient,
-    protected EntityFieldManagerInterface $entityFieldManager,
     protected EntityTypeManagerInterface $entityTypeManager,
-    protected TranslationInterface $translation,
     protected LoggerInterface $logger,
     protected BnfMapperManager $mapperManager,
   ) {}
