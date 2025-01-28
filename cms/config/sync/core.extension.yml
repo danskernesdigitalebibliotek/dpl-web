@@ -44,8 +44,10 @@ module:
   dpl_fees: 0
   dpl_filter_paragraphs: 0
   dpl_footer: 0
+  dpl_go: 0
   dpl_graphql: 0
   dpl_instant_loan: 0
+  dpl_lagoon: 0
   dpl_library_agency: 0
   dpl_library_token: 0
   dpl_link: 0
@@ -168,6 +170,7 @@ module:
   simple_menu_permissions: 0
   simple_oauth: 0
   simple_sitemap: 0
+  state_log: 0
   system: 0
   taxonomy: 0
   taxonomy_unique: 0

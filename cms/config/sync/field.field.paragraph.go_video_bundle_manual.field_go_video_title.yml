@@ -1,0 +1,19 @@
+uuid: 654901fa-512c-4a72-bd42-cc2679b7dde2
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.paragraph.field_go_video_title
+    - paragraphs.paragraphs_type.go_video_bundle_manual
+id: paragraph.go_video_bundle_manual.field_go_video_title
+field_name: field_go_video_title
+entity_type: paragraph
+bundle: go_video_bundle_manual
+label: Title
+description: ''
+required: true
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: string

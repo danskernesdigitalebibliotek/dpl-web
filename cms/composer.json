@@ -40,10 +40,10 @@
             "type": "package",
             "package": {
                 "name": "danskernesdigitalebibliotek/dpl-react",
-                "version": "2025.4.0",
+                "version": "2025.5.0",
                 "type": "drupal-library",
                 "dist": {
-                    "url": "https://github.com/danskernesdigitalebibliotek/dpl-react/releases/download/2025.4.0/dist-2025-4-0-851fc5159c4be5f290bdac88e85ad118ebf66698.zip",
+                    "url": "https://github.com/danskernesdigitalebibliotek/dpl-react/releases/download/2025.5.0/dist-2025-5-0-4e9b3bc8f618a6c5d10539259227af30aa3f8f05.zip",
                     "type": "zip"
                 },
                 "require": {
@@ -56,9 +56,9 @@
             "package": {
                 "name": "danskernesdigitalebibliotek/dpl-design-system",
                 "type": "drupal-library",
-                "version": "2025.4.0",
+                "version": "2025.5.0",
                 "dist": {
-                    "url": "https://github.com/danskernesdigitalebibliotek/dpl-design-system/releases/download/2025.4.0/dist-2025-4-0-d4f21c986e88e25924a6c2fe87db1a39199ef649.zip",
+                    "url": "https://github.com/danskernesdigitalebibliotek/dpl-design-system/releases/download/2025.5.0/dist-2025-5-0-7f96af5c1f15eec0a3d060fd8c20d369d34ec298.zip",
                     "type": "zip"
                 }
             }
@@ -90,8 +90,8 @@
         "composer/installers": "1.12.0",
         "cweagans/composer-patches": "1.7.3",
         "danskernesdigitalebibliotek/cms-api": "*",
-        "danskernesdigitalebibliotek/dpl-design-system": "2025.4.0",
-        "danskernesdigitalebibliotek/dpl-react": "2025.4.0",
+        "danskernesdigitalebibliotek/dpl-design-system": "2025.5.0",
+        "danskernesdigitalebibliotek/dpl-react": "2025.5.0",
         "danskernesdigitalebibliotek/fbs-client": "*",
         "dealerdirect/phpcodesniffer-composer-installer": "^1.0.0",
         "deoliveiralucas/array-keys-case-transform": "^1.1",
@@ -166,6 +166,7 @@
         "drupal/simple_menu_permissions": "^2.0",
         "drupal/simple_oauth": "^5.2",
         "drupal/simple_sitemap": "^4.2",
+        "drupal/state_log": "^2.2",
         "drupal/taxonomy_unique": "^2.5",
         "drupal/telephone_formatter": "^1.2",
         "drupal/theme_permission": "^2.0",
@@ -371,6 +372,9 @@
                 "3468521: (4/4)": "https://git.drupalcode.org/project/recurring_events/-/commit/ad99ae79f5c55fc2db17427e9936ab141314609d.patch",
                 "3468300: Update EventSeriesSettings to use datetime form element.": "https://git.drupalcode.org/project/recurring_events/-/commit/5d9bc3b1cf7c00972f053f3d14873012b1ad7140.patch",
                 "3487412: Fix WSOD when EventInstance has invalid translation.": "https://git.drupalcode.org/project/recurring_events/-/commit/996052eeb7518ce591df968a0bb12c4819fb4edf.patch"
+            },
+            "drupal/state_log": {
+                "3501178: Call to undefined method Drupal\\state_log\\StateLog::destruct()": "https://git.drupalcode.org/project/state_log/-/commit/8d63dd4827a930f5294004a1d13f051487ec4269.patch"
             },
             "drupal/theme_permission": {
                 "3105637: Edit, install and uninstall permission": "https://www.drupal.org/files/issues/2024-02-01/theme-permission-edit-install-uninstall-3105637-7.patch"

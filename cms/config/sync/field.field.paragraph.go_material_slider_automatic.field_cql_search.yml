@@ -1,0 +1,21 @@
+uuid: b86f36ef-76d5-4e82-bd16-17f1efe33e60
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.paragraph.field_cql_search
+    - paragraphs.paragraphs_type.go_material_slider_automatic
+  module:
+    - dpl_fbi
+id: paragraph.go_material_slider_automatic.field_cql_search
+field_name: field_cql_search
+entity_type: paragraph
+bundle: go_material_slider_automatic
+label: 'CQL Search'
+description: "This field is for inserting a CQL string based on a search. <br /><br />Please be aware, that it is necessary to copy the exact CQL string, including the quotations. i.e: ( 'harry potter')<br /><br />A valid CQL search string can be generated, by performing a query through the advanced search, and copying the CQL string from there. "
+required: true
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: dpl_fbi_cql_search

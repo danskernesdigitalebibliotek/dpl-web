@@ -1,0 +1,19 @@
+uuid: f5dcce8b-2cfc-4518-9efe-c9134a752b19
+langcode: en
+status: true
+dependencies:
+  module:
+    - dpl_fbi
+    - paragraphs
+id: paragraph.field_video_bundle_work_ids
+field_name: field_video_bundle_work_ids
+entity_type: paragraph
+type: dpl_fbi_work_id
+settings: {  }
+module: dpl_fbi
+locked: false
+cardinality: -1
+translatable: true
+indexes: {  }
+persist_with_no_fields: false
+custom_storage: false
