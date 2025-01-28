@@ -1,5 +1,13 @@
 import { GeneralMaterialTypeCodeEnum } from "@/lib/graphql/generated/fbi/graphql"
 
+export type TMaterialTypeCategories = {
+  reading: GeneralMaterialTypeCodeEnum[]
+  listening: GeneralMaterialTypeCodeEnum[]
+  gaming: GeneralMaterialTypeCodeEnum[]
+  video: GeneralMaterialTypeCodeEnum[]
+  podcast: GeneralMaterialTypeCodeEnum[]
+}
+
 const materialTypes = {
   "materialtypes.sortpriority": [
     "BOOKS",
@@ -36,6 +44,14 @@ const materialTypes = {
     TV_SERIES: "Tv-serie",
     OTHER: "Andet",
   } as { [key in GeneralMaterialTypeCodeEnum]: string },
+
+  "materialtypes.categories": {
+    reading: ["ARTICLES", "BOOKS", "COMICS", "EBOOKS", "IMAGE_MATERIALS", "NEWSPAPER_JOURNALS"],
+    listening: ["AUDIO_BOOKS", "MUSIC", "SHEET_MUSIC"],
+    gaming: ["BOARD_GAMES", "COMPUTER_GAMES"],
+    video: ["FILMS", "TV_SERIES"],
+    podcast: ["PODCASTS"],
+  },
 }
 
 export default materialTypes

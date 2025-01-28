@@ -1,6 +1,5 @@
 import { head, uniqBy } from "lodash"
 
-import { materialTypeCategories } from "@/components/shared/workCard/helper"
 import goConfig from "@/lib/config/goConfig"
 import {
   GeneralMaterialTypeCodeEnum,
@@ -78,19 +77,19 @@ export const translateMaterialTypesStringForRender = (
 
 export const getIconNameFromMaterialType = (materialType: GeneralMaterialTypeCodeEnum) => {
   const code = materialType
-  if (materialTypeCategories.reading.includes(code)) {
+  if (goConfig("materialtypes.categories").reading.includes(code)) {
     return "book"
   }
-  if (materialTypeCategories.listening.includes(code)) {
+  if (goConfig("materialtypes.categories").listening.includes(code)) {
     return "headphones"
   }
-  if (materialTypeCategories.gaming.includes(code)) {
+  if (goConfig("materialtypes.categories").gaming.includes(code)) {
     return "controller"
   }
-  if (materialTypeCategories.video.includes(code)) {
+  if (goConfig("materialtypes.categories").video.includes(code)) {
     return "video"
   }
-  if (materialTypeCategories.podcast.includes(code)) {
+  if (goConfig("materialtypes.categories").podcast.includes(code)) {
     return "podcast"
   }
 }
