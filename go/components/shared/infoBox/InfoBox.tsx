@@ -63,7 +63,7 @@ const InfoBox = ({ work, selectedManifestation }: InfoBoxProps) => {
                 : "-"}
             </InfoBoxItem>
             <InfoBoxItem term="Emneord" classname="flex flex-row flex-wrap gap-2">
-              {uniqueSubjects
+              {uniqueSubjects.length
                 ? uniqueSubjects.map((subject, index) => (
                     <Button key={index} asChild size={"sm"} className="px-3">
                       <Link
