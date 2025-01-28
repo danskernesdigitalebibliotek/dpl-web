@@ -5,6 +5,7 @@ dependencies:
   config:
     - field.field.paragraph.go_video.field_embed_video
     - field.field.paragraph.go_video.field_go_video_title
+    - field.field.paragraph.go_video.field_url
     - paragraphs.paragraphs_type.go_video
   module:
     - media_library
@@ -28,7 +29,14 @@ content:
       size: 60
       placeholder: ''
     third_party_settings: {  }
+  field_url:
+    type: string_textfield
+    weight: 2
+    region: content
+    settings:
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
 hidden:
   created: true
-  field_url: true
   status: true
