@@ -309,7 +309,8 @@
                 "3293926: Error decorating non-existent service when inner service's module not installed": "https://git.drupalcode.org/project/drupal/-/commit/a64662a3cea209c106b888ce9ef03cc1808f9ffe.patch",
                 "Always assume chmod succeeds": "patches/core-chmod-true.patch",
                 "Debug Form triggering element detection": "patches/form-triggering-element-detection-paragraphs-ee.patch",
-                "Don't check for file owner in update": "patches/dont-check-fileowner.patch"
+                "Don't check for file owner in update": "patches/dont-check-fileowner.patch",
+                "Do not throw error when non-existent permission exist": "https://www.drupal.org/files/issues/2024-06-03/3358586-36.patch"
             },
             "drupal/date_range_formatter": {
                 "3309324: Fails when start and end date are identical": "https://www.drupal.org/files/issues/2023-12-22/date_range_formatter_3309324_1.patch"
