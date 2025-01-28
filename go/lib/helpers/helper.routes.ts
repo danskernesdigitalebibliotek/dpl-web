@@ -1,3 +1,5 @@
+import isChromatic from "chromatic/isChromatic"
+
 import goConfig from "../config/goConfig"
 
 type RouteParams = { [key: string]: string | number }
@@ -18,7 +20,10 @@ export function buildRoute({
     }, routeParams)
   }
 
-  const url = new URL(routeParams, goConfig("app.url"))
+  const url = new URL(
+    routeParams,
+    !isChromatic ? goConfig("app.url") : "https://hellboy.the-movie.com"
+  )
   if (query) {
     Object.keys(query).forEach(key => {
       url.searchParams.append(key, query[key].toString())
