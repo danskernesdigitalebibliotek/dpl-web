@@ -3,6 +3,7 @@
 namespace Drupal\bnf\Services;
 
 use Drupal\bnf\BnfStateEnum;
+use Drupal\bnf\MangleUrl;
 use Drupal\bnf\Exception\AlreadyExistsException;
 use Drupal\Core\Entity\EntityFieldManagerInterface;
 use Drupal\Core\Entity\EntityTypeManagerInterface;
@@ -14,8 +15,6 @@ use Drupal\paragraphs\ParagraphInterface;
 use GuzzleHttp\ClientInterface;
 use Psr\Log\LoggerInterface;
 use function Safe\json_decode;
-use function Safe\parse_url;
-use function Safe\preg_grep;
 use function Safe\preg_replace;
 
 /**
@@ -283,7 +282,7 @@ class BnfImporter {
 
     $query = $this->getQuery($uuid, $queryName);
 
-    $response = $this->httpClient->request('post', $endpointUrl, [
+    $response = $this->httpClient->request('post', MangleUrl::server($endpointUrl), [
       'headers' => [
         'Content-Type' => 'application/json',
       ],

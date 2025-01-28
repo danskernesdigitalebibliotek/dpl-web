@@ -22,7 +22,6 @@ x-environment:
     REDIS_HOST: bnfredis
     VARNISH_BACKEND_HOST: bnfnginx
     NGINX_FASTCGI_PASS: bnfphp
-    BNF_ALLOW_HTTP: true
 
 services:
   bnfhttps:

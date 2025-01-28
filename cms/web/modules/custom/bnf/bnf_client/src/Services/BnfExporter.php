@@ -4,6 +4,7 @@ namespace Drupal\bnf_client\Services;
 
 use Drupal\bnf\BnfStateEnum;
 use Drupal\bnf\Exception\AlreadyExistsException;
+use Drupal\bnf\MangleUrl;
 use Drupal\bnf_client\Form\SettingsForm;
 use Drupal\Core\Config\ConfigFactoryInterface;
 use Drupal\Core\Routing\UrlGeneratorInterface;
@@ -67,18 +68,7 @@ class BnfExporter {
     try {
       $bnfServer = $this->baseUrl . 'graphql';
 
-      if (!filter_var($bnfServer, FILTER_VALIDATE_URL)) {
-        throw new \InvalidArgumentException('The provided BNF server URL is not valid.');
-      }
-
-      $parsedUrl = parse_url($bnfServer);
-      $scheme = $parsedUrl['scheme'] ?? NULL;
-
-      if ($scheme !== 'https') {
-        throw new \InvalidArgumentException('The BNF server URL must use HTTPS.');
-      }
-
-      $response = $this->httpClient->request('post', $bnfServer, [
+      $response = $this->httpClient->request('post', MangleUrl::server($bnfServer), [
         'headers' => [
           'Content-Type' => 'application/json',
         ],
