@@ -7,3 +7,8 @@ bnf_client.settings:
     base_url:
       type: uri
       label: 'BNF server URL'
+      constraints:
+        IsHttps: ~
+        Regex:
+          pattern: '/\/$/'
+          message: 'URL must end with a /.'
