@@ -2,6 +2,8 @@
 
 namespace Drupal\bnf_client\Form;
 
+use Drupal\Core\Entity\EntityStorageInterface;
+use Drupal\Core\Entity\EntityTypeManagerInterface;
 use Drupal\bnf\Exception\AlreadyExistsException;
 use Drupal\bnf\Services\BnfImporter;
 use Drupal\Core\Config\ConfigFactoryInterface;
@@ -30,6 +32,11 @@ class BnfImportConfirmForm implements FormInterface, ContainerInjectionInterface
   protected string $baseUrl;
 
   /**
+   * The node storage.
+   */
+  protected EntityStorageInterface $nodeStorage;
+
+  /**
    * {@inheritDoc}
    */
   public function __construct(
@@ -39,8 +46,10 @@ class BnfImportConfirmForm implements FormInterface, ContainerInjectionInterface
     #[Autowire(service: 'logger.channel.bnf')]
     protected LoggerInterface $logger,
     ConfigFactoryInterface $configFactory,
+    EntityTypeManagerInterface $entityTypeManager,
   ) {
     $this->baseUrl = $configFactory->get(SettingsForm::CONFIG_NAME)->get('base_url');
+    $this->nodeStorage = $entityTypeManager->getStorage('node');
   }
 
   /**
@@ -54,6 +63,15 @@ class BnfImportConfirmForm implements FormInterface, ContainerInjectionInterface
    * {@inheritDoc}
    */
   public function buildForm(array $form, FormStateInterface $form_state): array {
+    $uuid = $this->routeMatch->getParameter('uuid');
+    $existingNodes = $this->nodeStorage->loadByProperties(['uuid' => $uuid]);
+
+    if (!empty($existingNodes)) {
+      return [
+        '#markup' => $this->t('Node has previously been imported from BNF.', [], ['context' => 'BNF']),
+      ];
+    }
+
     $form['#title'] = $this->t('Confirm import of BNF content', [], ['context' => 'BNF']);
 
     $uuid = $this->routeMatch->getParameter('uuid');
@@ -71,10 +89,6 @@ class BnfImportConfirmForm implements FormInterface, ContainerInjectionInterface
       $importable = FALSE;
 
       $this->messenger->addError($this->t('Cannot import this node from BNF.', [], ['context' => 'BNF']));
-
-      if ($e instanceof AlreadyExistsException) {
-        $this->messenger->addError($this->t('Node has previously been imported from BNF.', [], ['context' => 'BNF']));
-      }
     }
 
     $form['uuid'] = [
