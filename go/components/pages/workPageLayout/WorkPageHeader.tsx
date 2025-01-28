@@ -10,6 +10,7 @@ import {
   getWorkMaterialTypes,
   translateMaterialTypesStringForRender,
 } from "@/components/pages/workPageLayout/helper"
+import WorkAuthors from "@/components/shared/authors/Authors"
 import { Badge } from "@/components/shared/badge/Badge"
 import { CoverPicture } from "@/components/shared/coverPicture/CoverPicture"
 import SlideSelect, { SlideSelectOption } from "@/components/shared/slideSelect/SlideSelect"
@@ -146,9 +147,7 @@ const WorkPageHeader = ({ work, selectedManifestation }: WorkPageHeaderProps) =>
             className="hyphens-auto break-words text-typo-heading-3 lg:mt-0 lg:text-typo-heading-2">
             {`${selectedManifestation?.titles?.full || ""}${!!titleSuffix ? ` (${titleSuffix})` : ""}`}
           </h1>
-          <h2 className="mt-grid-gap-2 text-typo-subtitle-sm uppercase lg:mt-7">
-            {`af ${displayCreators(work.creators, 100) || displayCreators(selectedManifestation?.contributors || [], 100)}`}
-          </h2>
+          <WorkAuthors creators={work.creators || selectedManifestation?.contributors} />
         </div>
         <div className="col-span-4 mt-grid-gap-3 flex flex-col items-end justify-end lg:order-3 lg:mt-0">
           <WorkPageButtons workId={work.workId} selectedManifestation={selectedManifestation} />

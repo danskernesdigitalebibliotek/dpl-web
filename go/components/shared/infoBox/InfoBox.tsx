@@ -1,5 +1,5 @@
 import { motion } from "framer-motion"
-import { useRouter } from "next/navigation"
+import Link from "next/link"
 import React from "react"
 
 import InfoBoxItem from "@/components/shared/infoBox/InfoBoxItem"
@@ -17,20 +17,7 @@ type InfoBoxProps = {
 }
 
 const InfoBox = ({ work, selectedManifestation }: InfoBoxProps) => {
-  const router = useRouter()
-
-  const handleClick = (text: string) => {
-    const url = resolveUrl({ routeParams: { search: "search" }, queryParams: { q: text } })
-    router.push(url, {
-      scroll: true,
-    })
-  }
-
   const ageString = selectedManifestation?.audience?.ages.map(age => age.display).join(", ") || "-"
-  const seriesString =
-    selectedManifestation?.series
-      .map(series => `${series.numberInSeries ? series.numberInSeries + " i " : ""}${series.title}`)
-      .join(", ") || "-"
   const subjects = selectedManifestation?.subjects.all.map(subject => subject.display) || []
   // Remove duplicates
   const uniqueSubjects = [...new Set(subjects)]
@@ -52,16 +39,40 @@ const InfoBox = ({ work, selectedManifestation }: InfoBoxProps) => {
           </div>
           <dl className="flex-1">
             <InfoBoxItem term="Alder">{ageString}</InfoBoxItem>
-            <InfoBoxItem term="Serie">{seriesString}</InfoBoxItem>
+            <InfoBoxItem term="Serie">
+              {selectedManifestation.series.length
+                ? selectedManifestation.series.map((series, index) => {
+                    if (!series.numberInSeries || !series.title) {
+                      return <span key={index}>{"-"}</span>
+                    }
+
+                    return (
+                      <div key={index}>
+                        <span>{`${series.numberInSeries} i`} </span>
+                        <Link
+                          className="animate-text-underline"
+                          href={resolveUrl({
+                            routeParams: { search: "search" },
+                            queryParams: { q: series.title },
+                          })}>
+                          {series.title}
+                        </Link>
+                      </div>
+                    )
+                  })
+                : "-"}
+            </InfoBoxItem>
             <InfoBoxItem term="Emneord" classname="flex flex-row flex-wrap gap-2">
               {uniqueSubjects
-                ? uniqueSubjects.map(subject => (
-                    <Button
-                      key={subject}
-                      size={"sm"}
-                      className="px-3"
-                      onClick={() => handleClick(subject)}>
-                      {subject}
+                ? uniqueSubjects.map((subject, index) => (
+                    <Button key={index} asChild size={"sm"} className="px-3">
+                      <Link
+                        href={resolveUrl({
+                          routeParams: { search: "search" },
+                          queryParams: { q: subject },
+                        })}>
+                        {subject}
+                      </Link>
                     </Button>
                   ))
                 : "-"}

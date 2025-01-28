@@ -6,6 +6,7 @@ import React from "react"
 import { useEffect, useRef } from "react"
 
 import { cn } from "@/lib/helpers/helper.cn"
+import { resolveUrl } from "@/lib/helpers/helper.routes"
 import useSearchMachineActor from "@/lib/machines/search/useSearchMachineActor"
 
 import Icon from "../icon/Icon"
@@ -16,8 +17,8 @@ type SearchInputProps = {
 }
 
 const SearchInput = ({ className, placeholder }: SearchInputProps) => {
-  const inputRef = useRef<HTMLInputElement>(null)
   const router = useRouter()
+  const inputRef = useRef<HTMLInputElement>(null)
   const actor = useSearchMachineActor()
   const currentQuery = useSelector(actor, snapshot => {
     return snapshot.context.currentQuery
@@ -37,16 +38,17 @@ const SearchInput = ({ className, placeholder }: SearchInputProps) => {
     const focusedElement = document.activeElement as HTMLElement
 
     if (event.key === "Enter" && focusedElement === inputRef.current) {
-      navigateToSearch(inputRef.current.value)
+      searchAndNavigate(inputRef.current.value)
     }
   }
 
-  const navigateToSearch = (q: string) => {
-    if (!q) return
-    actor.send({ type: "SEARCH" })
-    router.push(`/search?q=${q}`, {
-      scroll: false,
+  const searchAndNavigate = (query: string) => {
+    const url = resolveUrl({
+      routeParams: { search: "search" },
+      queryParams: { q: query },
     })
+    router.push(url)
+    actor.send({ type: "SEARCH" })
   }
 
   return (
@@ -65,7 +67,7 @@ const SearchInput = ({ className, placeholder }: SearchInputProps) => {
       />
       <button
         className="focus-visible absolute right-3 top-[50%] translate-y-[-50%] rounded-full md:right-[24px]"
-        onClick={() => currentQuery && navigateToSearch(currentQuery)}
+        onClick={() => searchAndNavigate(currentQuery)}
         aria-label="Søg">
         <Icon className="h-[32px] w-[32px]" name="search" />
       </button>

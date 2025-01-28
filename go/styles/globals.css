@@ -368,6 +368,38 @@ body {
   .grid-go {
     @apply grid-cols-go grid gap-x-[--grid-gap-x];
   }
+
+  .hyphens-auto {
+    hyphens: auto;
+  }
+
+  .hyphens-manual {
+    hyphens: manual;
+  }
+
+  .hyphens-none {
+    hyphens: none;
+  }
+
+  .animate-text-underline {
+    position: relative;
+    cursor: pointer;
+  }
+
+  .animate-text-underline::after {
+    content: "";
+    position: absolute;
+    bottom: -5px;
+    left: 0;
+    width: 100%;
+    height: 1px;
+    background-color: var(--foreground);
+    transition: width 0.3s ease;
+  }
+
+  .animate-text-underline:hover::after {
+    width: 0%;
+  }
 }
 
 /* shadcn variables */
