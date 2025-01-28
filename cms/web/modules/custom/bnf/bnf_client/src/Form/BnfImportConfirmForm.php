@@ -65,12 +65,7 @@ class BnfImportConfirmForm implements FormInterface, ContainerInjectionInterface
     $importable = TRUE;
 
     try {
-      $data = $this->bnfImporter->loadData($uuid, $bnfServer);
-
-      // Find node data, e.g. nodeArticle, nodePage etc.
-      $nodeDataKeys = preg_grep('/^node[A-Z]/', array_keys($data));
-      $nodeDataKey = $nodeDataKeys ? reset($nodeDataKeys) : [];
-      $nodeData = $data[$nodeDataKey] ?? [];
+      $title = $this->bnfImporter->getNodeTitle($uuid, $bnfServer);
     }
     catch (\Exception $e) {
       $importable = FALSE;
@@ -92,7 +87,7 @@ class BnfImportConfirmForm implements FormInterface, ContainerInjectionInterface
     $form['label'] = [
       '#title' => $this->t('Content label', [], ['context' => 'BNF']),
       '#type' => 'textfield',
-      '#default_value' => $nodeData['title'] ?? NULL,
+      '#default_value' => $title ?? NULL,
       '#disabled' => TRUE,
     ];
 

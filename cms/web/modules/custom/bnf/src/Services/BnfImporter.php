@@ -6,6 +6,7 @@ use Drupal\bnf\BnfMapperManager;
 use Drupal\bnf\BnfStateEnum;
 use Drupal\bnf\Exception\AlreadyExistsException;
 use Drupal\bnf\GraphQL\Operations\GetNode;
+use Drupal\bnf\GraphQL\Operations\GetNodeTitle;
 use Drupal\bnf\MangleUrl;
 use Drupal\bnf\SailorEndpointConfig;
 use Drupal\Core\Entity\EntityFieldManagerInterface;
@@ -36,6 +37,23 @@ class BnfImporter {
     protected LoggerInterface $logger,
     protected BnfMapperManager $mapperManager,
   ) {}
+
+  /**
+   * Get node title from BNF.
+   */
+  public function getNodeTitle(string $uuid, string $endpointUrl): string {
+    $endpointConfig = new SailorEndpointConfig(MangleUrl::server($endpointUrl));
+    Configuration::setEndpointFor(GetNodeTitle::class, $endpointConfig);
+    $response = GetNodeTitle::execute($uuid);
+
+    $nodeData = $response->data?->node;
+
+    if (!$nodeData) {
+      throw new \RuntimeException('Could not fetch content.');
+    }
+
+    return $nodeData->title;
+  }
 
   /**
    * Importing a node from a GraphQL source endpoint.

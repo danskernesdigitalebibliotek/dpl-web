@@ -1,6 +1,6 @@
 query GetNode($id: ID!) {
   node(id: $id) {
-    ... on NodeInterface{
+    ... on NodeInterface {
       id,
       title
     }
