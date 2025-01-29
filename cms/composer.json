@@ -40,10 +40,10 @@
             "type": "package",
             "package": {
                 "name": "danskernesdigitalebibliotek/dpl-react",
-                "version": "2025.5.0",
+                "version": "2025.5.1",
                 "type": "drupal-library",
                 "dist": {
-                    "url": "https://github.com/danskernesdigitalebibliotek/dpl-react/releases/download/2025.5.0/dist-2025-5-0-4e9b3bc8f618a6c5d10539259227af30aa3f8f05.zip",
+                    "url": "https://github.com/danskernesdigitalebibliotek/dpl-react/releases/download/2025.5.1/dist-2025-5-1-4e9b3bc8f618a6c5d10539259227af30aa3f8f05.zip",
                     "type": "zip"
                 },
                 "require": {
@@ -56,9 +56,9 @@
             "package": {
                 "name": "danskernesdigitalebibliotek/dpl-design-system",
                 "type": "drupal-library",
-                "version": "2025.5.0",
+                "version": "2025.5.1",
                 "dist": {
-                    "url": "https://github.com/danskernesdigitalebibliotek/dpl-design-system/releases/download/2025.5.0/dist-2025-5-0-7f96af5c1f15eec0a3d060fd8c20d369d34ec298.zip",
+                    "url": "https://github.com/danskernesdigitalebibliotek/dpl-design-system/releases/download/2025.5.1/dist-2025-5-1-7f96af5c1f15eec0a3d060fd8c20d369d34ec298.zip",
                     "type": "zip"
                 }
             }
@@ -90,8 +90,8 @@
         "composer/installers": "1.12.0",
         "cweagans/composer-patches": "1.7.3",
         "danskernesdigitalebibliotek/cms-api": "*",
-        "danskernesdigitalebibliotek/dpl-design-system": "2025.5.0",
-        "danskernesdigitalebibliotek/dpl-react": "2025.5.0",
+        "danskernesdigitalebibliotek/dpl-design-system": "2025.5.1",
+        "danskernesdigitalebibliotek/dpl-react": "2025.5.1",
         "danskernesdigitalebibliotek/fbs-client": "*",
         "dealerdirect/phpcodesniffer-composer-installer": "^1.0.0",
         "deoliveiralucas/array-keys-case-transform": "^1.1",
