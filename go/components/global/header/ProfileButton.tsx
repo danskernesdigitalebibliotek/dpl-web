@@ -47,20 +47,26 @@ function ProfileButton() {
           className={buttonVariants({ variant: "icon" })}>
           <Icon className="h-[24px] w-[24px]" name="profile" />
         </SheetTrigger>
-        <SheetContent className="w-full max-w-[560px] p-grid-edge">
-          <SheetHeader>
-            <SheetTitle className="mb-space-y text-typo-heading-3">Log ind</SheetTitle>
-            <div className="flex flex-col items-center justify-center rounded-sm bg-background-overlay py-space-y">
+        <SheetContent className="grid w-full max-w-[560px] grid-rows-[min-content,1fr] p-grid-edge">
+          <SheetHeader className="mb-8">
+            <SheetTitle className="text-typo-heading-3">Log ind</SheetTitle>
+          </SheetHeader>
+          <div className="flex h-full flex-col justify-center space-y-8">
+            <div className="flex min-h-[300px] flex-col items-center justify-center rounded-sm bg-background-overlay py-space-y">
               <SheetDescription className="mb-4 text-typo-heading-4 text-foreground">
                 Log ind med UNI•Login
               </SheetDescription>
               <div>
-                <Button onClick={() => router.push("/auth/login/unilogin")} ariaLabel="Log ind">
+                <Button
+                  theme="primary"
+                  onClick={() => router.push("/auth/login/unilogin")}
+                  ariaLabel="Log ind">
                   LOG IND
                 </Button>
               </div>
             </div>
-            <div className="flex flex-col items-center justify-center rounded-sm bg-background-overlay py-space-y">
+            <hr className="mx-auto w-full border-foreground opacity-10 md:w-full" />
+            <div className="flex min-h-[300px] flex-col items-center justify-center rounded-sm bg-background-overlay py-space-y">
               <div className="mb-4">
                 <Icon name="adgangsplatformen" />
               </div>
@@ -72,6 +78,7 @@ function ProfileButton() {
               </SheetDescription>
               <div>
                 <Button
+                  theme="primary"
                   onClick={() =>
                     router.push(`https://dapple-cms.docker/login?current-path=/go-login`)
                   }
@@ -80,7 +87,7 @@ function ProfileButton() {
                 </Button>
               </div>
             </div>
-          </SheetHeader>
+          </div>
         </SheetContent>
       </Sheet>
     )
