@@ -18,10 +18,11 @@ const config: StorybookConfig = {
     name: "@storybook/nextjs",
     options: {},
   },
-  // env: config => ({
-  //   ...config,
-  //   NEXT_PUBLIC_APP_URL: "https://hellboy.the-movie.com",
-  // }),
+  env: config => ({
+    ...config,
+    NEXT_PUBLIC_APP_URL: "https://hellboy.the-movie.com",
+    ...process.env,
+  }),
   staticDirs: ["../public"],
   webpackFinal: async (config: any) => {
     // This modifies the existing image rule to exclude `.svg` files

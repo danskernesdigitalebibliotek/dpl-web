@@ -4,7 +4,7 @@ const Fonts = () => {
   return (
     <div className="space-y-10">
       <h1 className="text-typo-huge">{process.env.NEXT_PUBLIC_APP_URL}</h1>
-      <h1 className="text-typo-huge">{process.env.UNILOGIN_SESSION_SECRET}</h1>
+      <h1 className="text-typo-huge">{process.env.UNILOGIN_WELLKNOWN_URL}</h1>
 
       <h1 className="text-typo-huge">text-typo-huge</h1>
       <h1 className="text-typo-heading-1">text-typo-heading-1</h1>
