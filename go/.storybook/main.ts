@@ -1,6 +1,7 @@
 import type { StorybookConfig } from "@storybook/nextjs"
 
 const { loadEnvConfig } = require("@next/env")
+const webpack = require("webpack")
 
 loadEnvConfig(`${process.cwd()}/../../`)
 
@@ -38,6 +39,14 @@ const config: StorybookConfig = {
       test: /\.svg$/,
       use: ["@svgr/webpack"],
     })
+
+    config.plugins.push(
+      new webpack.DefinePlugin(
+        Object.keys(process.env)
+          .filter(key => key.startsWith("NEXT_PUBLIC_"))
+          .reduce((state, nextKey) => ({ ...state, [nextKey]: process.env[nextKey] }), {})
+      )
+    )
 
     return config
   },
