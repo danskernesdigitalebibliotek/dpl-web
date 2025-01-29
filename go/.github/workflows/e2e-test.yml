@@ -14,7 +14,7 @@ jobs:
     runs-on: ubuntu-latest
     env:
       NEXT_PUBLIC_APP_URL: http://localhost:3000
-      UNILOGIN_SESSION_SECRET: XXX
+      GO_SESSION_SECRET: XXX
     steps:
       - name: Checkout code
         uses: actions/checkout@v4

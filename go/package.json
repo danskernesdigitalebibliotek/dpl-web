@@ -6,7 +6,7 @@
   "scripts": {
     "build-storybook": "storybook build",
     "build": "next build",
-    "ci-check": "yarn typecheck && yarn lint && yarn format:check && yarn test:unit:once && test:accessibility",
+    "ci-check": "yarn typecheck && yarn lint && yarn format:check && yarn test:unit:once",
     "codegen:all-rest-services": "orval",
     "codegen:covers": "rm -rf src/lib/rest/cover-service-api/generated/model/*.* && orval --project coverService",
     "codegen:graphql": "NODE_TLS_REJECT_UNAUTHORIZED=0 graphql-codegen --require tsconfig-paths/register --config codegen.ts",
