@@ -12,9 +12,6 @@ jobs:
 
     runs-on: ubuntu-latest
 
-    env:
-      NEXT_PUBLIC_APP_URL: "https://hellboy.the-movie.com"
-
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
