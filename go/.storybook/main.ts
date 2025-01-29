@@ -1,9 +1,5 @@
 import type { StorybookConfig } from "@storybook/nextjs"
 
-// Needed to load the env variables
-const { loadEnvConfig } = require("@next/env")
-loadEnvConfig(`${process.cwd()}/../../`)
-
 const config: StorybookConfig = {
   stories: ["../components/**/*.stories.@(js|jsx|mjs|ts|tsx)"],
   addons: [
