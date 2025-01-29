@@ -1,10 +1,5 @@
 import type { StorybookConfig } from "@storybook/nextjs"
 
-const { loadEnvConfig } = require("@next/env")
-const webpack = require("webpack")
-
-loadEnvConfig(`${process.cwd()}/../../`)
-
 const config: StorybookConfig = {
   stories: ["../components/**/*.stories.@(js|jsx|mjs|ts|tsx)"],
   addons: [
@@ -21,7 +16,10 @@ const config: StorybookConfig = {
   env: config => ({
     ...config,
     NEXT_PUBLIC_APP_URL: "https://hellboy.the-movie.com",
-    ...process.env,
+    // take all values in env that start with NEXT_PUBLIC_ and pass them to the storybook
+    ...Object.keys(process.env)
+      .filter(key => key.startsWith("NEXT_PUBLIC_"))
+      .reduce((state, nextKey) => ({ ...state, [nextKey]: process.env[nextKey] }), {}),
   }),
   staticDirs: ["../public"],
   webpackFinal: async (config: any) => {
@@ -40,14 +38,6 @@ const config: StorybookConfig = {
       test: /\.svg$/,
       use: ["@svgr/webpack"],
     })
-
-    config.plugins.push(
-      new webpack.DefinePlugin(
-        Object.keys(process.env)
-          .filter(key => key.startsWith("NEXT_PUBLIC_"))
-          .reduce((state, nextKey) => ({ ...state, [nextKey]: process.env[nextKey] }), {})
-      )
-    )
 
     return config
   },
