@@ -1,5 +1,9 @@
 import type { StorybookConfig } from "@storybook/nextjs"
 
+const { loadEnvConfig } = require("@next/env")
+
+loadEnvConfig(`${process.cwd()}/../../`)
+
 const config: StorybookConfig = {
   stories: ["../components/**/*.stories.@(js|jsx|mjs|ts|tsx)"],
   addons: [
@@ -13,10 +17,10 @@ const config: StorybookConfig = {
     name: "@storybook/nextjs",
     options: {},
   },
-  env: config => ({
-    ...config,
-    NEXT_PUBLIC_APP_URL: "https://hellboy.the-movie.com",
-  }),
+  // env: config => ({
+  //   ...config,
+  //   NEXT_PUBLIC_APP_URL: "https://hellboy.the-movie.com",
+  // }),
   staticDirs: ["../public"],
   webpackFinal: async (config: any) => {
     // This modifies the existing image rule to exclude `.svg` files
