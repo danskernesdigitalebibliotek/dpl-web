@@ -5,6 +5,7 @@ dependencies:
   config:
     - field.field.paragraph.material_grid_link_automatic.field_amount_of_materials
     - field.field.paragraph.material_grid_link_automatic.field_material_grid_description
+    - field.field.paragraph.material_grid_link_automatic.field_material_grid_link
     - field.field.paragraph.material_grid_link_automatic.field_material_grid_title
     - paragraphs.paragraphs_type.material_grid_link_automatic
   module:
@@ -27,6 +28,13 @@ content:
     settings: {  }
     third_party_settings: {  }
     weight: 1
+    region: content
+  field_material_grid_link:
+    type: basic_string
+    label: above
+    settings: {  }
+    third_party_settings: {  }
+    weight: 3
     region: content
   field_material_grid_title:
     type: string

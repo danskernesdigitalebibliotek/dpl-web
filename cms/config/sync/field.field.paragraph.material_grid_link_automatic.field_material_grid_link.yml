@@ -1,0 +1,19 @@
+uuid: 4d4c607c-2f28-4cc0-94dd-54f5d39bc78e
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.paragraph.field_material_grid_link
+    - paragraphs.paragraphs_type.material_grid_link_automatic
+id: paragraph.material_grid_link_automatic.field_material_grid_link
+field_name: field_material_grid_link
+entity_type: paragraph
+bundle: material_grid_link_automatic
+label: 'Material grid link'
+description: 'This field is for inserting a link string based on a search, e.g.: https://dapple-cms.docker/advanced-search?sublocation=fantasy&advancedSearchCql=%27harry%27&linked=true<br /><br />Please be aware that it is necessary to copy the exact link string.<br /><br />A valid link search string can be generated, by performing a query through the advanced search and copying the link string from there.'
+required: true
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: string_long
