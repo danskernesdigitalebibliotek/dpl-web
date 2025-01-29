@@ -1,4 +1,4 @@
-import { useRouter } from "next/navigation"
+import Link from "next/link"
 import React from "react"
 
 import {
@@ -7,7 +7,6 @@ import {
 } from "@/lib/graphql/generated/fbi/graphql"
 import { getAllCreators } from "@/lib/helpers/helper.creators"
 import { resolveUrl } from "@/lib/helpers/helper.routes"
-import useSearchMachineActor from "@/lib/machines/search/useSearchMachineActor"
 
 type AuthorsProps = {
   creators: WorkFullWorkPageFragment["creators"] | ManifestationDetailsFragment["contributors"]
@@ -15,8 +14,6 @@ type AuthorsProps = {
 
 const Authors = ({ creators }: AuthorsProps) => {
   const workCreators = getAllCreators(creators)
-  const router = useRouter()
-  const actor = useSearchMachineActor()
 
   return (
     <>
@@ -25,17 +22,15 @@ const Authors = ({ creators }: AuthorsProps) => {
           {"af "}
           {workCreators.map((creator, index) => {
             return (
-              <span key={creator}>
-                <span
-                  onClick={() => {
-                    router.push(
-                      resolveUrl({ routeParams: { search: "search" }, queryParams: { q: creator } })
-                    )
-                    actor.send({ type: "SEARCH" })
-                  }}
+              <span key={index}>
+                <Link
+                  href={resolveUrl({
+                    routeParams: { search: "search" },
+                    queryParams: { q: creator },
+                  })}
                   className="animate-text-underline">
                   {creator}
-                </span>
+                </Link>
                 {index + 1 < creators.length && ", "}
               </span>
             )

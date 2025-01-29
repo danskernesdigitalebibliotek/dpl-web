@@ -1,18 +1,25 @@
+"use client"
+
+import { useQueries } from "@tanstack/react-query"
 import Link from "next/link"
 import React from "react"
 
+import { getIconNameFromMaterialType } from "@/components/pages/workPageLayout/helper"
+import goConfig from "@/lib/config/goConfig"
 import { WorkTeaserSearchPageFragment } from "@/lib/graphql/generated/fbi/graphql"
 import { getCoverUrls, getLowResCoverUrl } from "@/lib/helpers/helper.covers"
 import { displayCreators } from "@/lib/helpers/helper.creators"
 import { resolveUrl } from "@/lib/helpers/helper.routes"
-import { getIsbnsFromWork } from "@/lib/helpers/ids"
 import { useGetCoverCollection } from "@/lib/rest/cover-service-api/generated/cover-service"
 import { GetCoverCollectionSizesItem } from "@/lib/rest/cover-service-api/generated/model"
-import { useGetV1ProductsIdentifier } from "@/lib/rest/publizon-api/generated/publizon"
+import {
+  getGetV1ProductsIdentifierQueryKey,
+  getV1ProductsIdentifier,
+} from "@/lib/rest/publizon-api/generated/publizon"
 
 import { Badge } from "../badge/Badge"
 import { CoverPicture } from "../coverPicture/CoverPicture"
-import WorkCardAvailabilityRow from "./WorkCardAvailabilityRow"
+import MaterialTypeIconWrapper from "./MaterialTypeIconWrapper"
 import { getAllWorkPids } from "./helper"
 
 type WorkCardProps = {
@@ -20,22 +27,64 @@ type WorkCardProps = {
 }
 
 const WorkCard = ({ work }: WorkCardProps) => {
+  const manifestations = work.manifestations.all
+  const bestRepresentationManifestation = work.manifestations.bestRepresentation
+
   const { data: dataCovers, isLoading: isLoadingCovers } = useGetCoverCollection({
     type: "pid",
-    identifiers: [getAllWorkPids(work).join(", ")],
+    identifiers: [bestRepresentationManifestation.pid],
     sizes: [
       "xx-small, small, small-medium, medium, medium-large, large, original, default" as GetCoverCollectionSizesItem,
     ],
   })
-  const isbns = getIsbnsFromWork(work)
 
-  const { data: dataPublizon } = useGetV1ProductsIdentifier(isbns[0], {
-    query: {
-      // Publizon / useGetV1ProductsIdentifier is responsible for online
-      // materials. It requires an ISBN to do lookups.
-      enabled: isbns.length > 0,
+  // for each manifestation, get publizon data and add to array
+  const manifestationsWithPublizonData = useQueries({
+    queries: manifestations.map(manifestation => {
+      const isbn =
+        manifestation.identifiers.find(identifier => identifier.type === "ISBN")?.value || ""
+
+      return {
+        queryKey: getGetV1ProductsIdentifierQueryKey(isbn),
+        queryFn: () => getV1ProductsIdentifier(isbn),
+      }
+    }),
+    combine: results => {
+      // combine manifestation data with publizon data
+      return manifestations.map((manifestation, index) => ({
+        manifestation,
+        publizonData: results[index].data?.product,
+      }))
     },
   })
+
+  // if any of the manifestations are the same material type filter out based on newest edition
+  // TODO: isolate this logic to a helper function and test it
+  const filteredManifestations = manifestationsWithPublizonData.reduce(
+    (acc, current) => {
+      const existing = acc.find(
+        item =>
+          item.manifestation.materialTypes[0].materialTypeGeneral.code ===
+          current.manifestation.materialTypes[0].materialTypeGeneral.code
+      )
+      if (!existing) {
+        acc.push(current)
+      } else {
+        const existingEdition = existing.manifestation.edition?.publicationYear?.year || 0
+        const currentEdition = current.manifestation.edition?.publicationYear?.year || 0
+        if (currentEdition > existingEdition) {
+          acc = acc.filter(
+            item =>
+              item.manifestation.materialTypes[0].materialTypeGeneral.code !==
+              current.manifestation.materialTypes[0].materialTypeGeneral.code
+          )
+          acc.push(current)
+        }
+      }
+      return acc
+    },
+    [] as typeof manifestationsWithPublizonData
+  )
 
   const bestRepresentation = work.manifestations.bestRepresentation
   const allPids = [bestRepresentation.pid, ...getAllWorkPids(work)]
@@ -52,19 +101,46 @@ const WorkCard = ({ work }: WorkCardProps) => {
 
   const lowResCover = getLowResCoverUrl(dataCovers)
 
+  const isSomeMaterialTypePodcast = work.materialTypes.some(materialType => {
+    return materialType?.materialTypeGeneral?.code === "PODCASTS"
+  })
+
+  const isSomeManifestationTypeCostFree = filteredManifestations.some(
+    manifestation => manifestation.publizonData?.costFree
+  )
+
+  // sort manifestations by materialTypeSortPriority
+  const sortedManifestations = filteredManifestations.sort((a, b) => {
+    return (
+      goConfig("materialtypes.sortpriority").indexOf(
+        a.manifestation.materialTypes[0].materialTypeGeneral.code
+      ) -
+      goConfig("materialtypes.sortpriority").indexOf(
+        b.manifestation.materialTypes[0].materialTypeGeneral.code
+      )
+    )
+  })
+
+  // Get the best representation manifestation material type code for link url
+  const bestRepresentationManifestationMaterialTypeCode =
+    bestRepresentationManifestation.materialTypes[0].materialTypeGeneral.code
+
   return (
     <Link
       className="block space-y-3 lg:space-y-5"
-      href={resolveUrl({ routeParams: { work: "work", wid: work.workId } })}>
+      href={resolveUrl({
+        routeParams: { work: "work", wid: work.workId },
+        queryParams: { type: bestRepresentationManifestationMaterialTypeCode },
+      })}>
       <div>
         <div
           key={work.workId}
           className="relative flex aspect-4/5 h-auto w-full flex-col rounded-base bg-background-overlay px-[15%] pt-[15%]">
-          {!!dataPublizon?.product?.costFree && (
+          {isSomeManifestationTypeCostFree || isSomeMaterialTypePodcast ? (
             <Badge variant={"blue-title"} className="absolute left-4 top-4 md:left-4 md:top-4">
               BLÅ
             </Badge>
-          )}
+          ) : null}
           <div className="relative mx-auto flex h-full w-full items-center justify-center">
             {!isLoadingCovers && (
               <CoverPicture
@@ -77,7 +153,26 @@ const WorkCard = ({ work }: WorkCardProps) => {
             )}
           </div>
           <div className="my-auto flex min-h-[15%] items-center py-3 md:py-4">
-            <WorkCardAvailabilityRow materialTypes={work.materialTypes} />
+            <div className="flex w-full flex-row justify-center gap-2">
+              {/* Loop through all manifestation types */}
+              {sortedManifestations.map(manifestation => {
+                // find material type general material type
+                const materialType =
+                  manifestation.manifestation.materialTypes[0].materialTypeGeneral.code
+                const materialTypeIcon = getIconNameFromMaterialType(materialType) || "book"
+
+                const isCostFree = manifestation.publizonData?.costFree
+                const isPodcast = materialType === "PODCASTS"
+
+                return (
+                  <MaterialTypeIconWrapper
+                    key={manifestation.manifestation.pid}
+                    costFree={isCostFree || isPodcast}
+                    iconName={materialTypeIcon}
+                  />
+                )
+              })}
+            </div>
           </div>
         </div>
       </div>
