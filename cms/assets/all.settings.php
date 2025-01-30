@@ -99,15 +99,15 @@ if (getenv('CI')) {
   $config['dpl_fbs.settings'] = ['base_url' => 'http://fbs-openplatform.dbc.dk'];
   $config['dpl_publizon.settings'] = ['base_url' => 'http://pubhub-openplatform.dbc.dk'];
   // Adgangsplatformen OpenID Connect client.
-  $config['openid_connect.settings.adgangsplatformen']['settings']['authorization_endpoint'] = 'http://login.bib.dk/oauth/authorize';
-  $config['openid_connect.settings.adgangsplatformen']['settings']['token_endpoint'] = 'http://login.bib.dk/oauth/token/';
-  $config['openid_connect.settings.adgangsplatformen']['settings']['userinfo_endpoint'] = 'http://login.bib.dk/userinfo/';
-  $config['openid_connect.settings.adgangsplatformen']['settings']['logout_endpoint'] = 'http://login.bib.dk/logout';
+  $config['openid_connect.client.adgangsplatformen']['settings']['authorization_endpoint'] = 'http://login.bib.dk/oauth/authorize';
+  $config['openid_connect.client.adgangsplatformen']['settings']['token_endpoint'] = 'http://login.bib.dk/oauth/token/';
+  $config['openid_connect.client.adgangsplatformen']['settings']['userinfo_endpoint'] = 'http://login.bib.dk/userinfo/';
+  $config['openid_connect.client.adgangsplatformen']['settings']['logout_endpoint'] = 'http://login.bib.dk/logout';
   // The actual values here are not important. The primary thing is that the
   // Adgangsplatformen OpenID Connect client is configured.
-  $config['openid_connect.settings.adgangsplatformen']['settings']['client_id'] = 'dummy-id';
-  $config['openid_connect.settings.adgangsplatformen']['settings']['client_id'] = 'dummy-secret';
-  $config['openid_connect.settings.adgangsplatformen']['settings']['agency_id'] = '100200';
+  $config['openid_connect.client.adgangsplatformen']['settings']['client_id'] = 'dummy-id';
+  $config['openid_connect.client.adgangsplatformen']['settings']['client_id'] = 'dummy-secret';
+  $config['openid_connect.client.adgangsplatformen']['settings']['agency_id'] = '100200';
 
   // Set service base urls for the react apps.
   // We need http domains for testing in CI context.

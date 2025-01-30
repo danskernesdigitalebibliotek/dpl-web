@@ -63,8 +63,8 @@ function dpl_login_install(): void {
   // If the global openid_connect settings were saved
   // we enable the Adgangsplatform plugin.
   if ($openid_connect_conf instanceof Config) {
-    \Drupal::configFactory()->getEditable('openid_connect.settings.adgangsplatformen')
-      ->set('enabled', TRUE)
+    \Drupal::configFactory()->getEditable('openid_connect.client.adgangsplatformen')
+      ->set('status', TRUE)
       ->save();
   }
 

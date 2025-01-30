@@ -274,7 +274,7 @@ function _dpl_login_user_has_been_processed(array $openid_connect_context): bool
  * Implements hook_dpl_react_apps_data().
  */
 function dpl_login_dpl_react_apps_data(array &$data, array &$variables): void {
-  $openid_config = \Drupal::config('openid_connect.settings.adgangsplatformen');
+  $openid_config = \Drupal::config('openid_connect.client.adgangsplatformen');
   // Make sure that changed settings are invalidating the cache.
   $cache_metadata = CacheableMetadata::createFromRenderArray($variables);
   $cache_metadata->addCacheableDependency($openid_config);
