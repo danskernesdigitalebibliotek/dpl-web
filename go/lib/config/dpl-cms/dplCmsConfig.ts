@@ -1,5 +1,6 @@
 import { QueryClient } from "@tanstack/react-query"
 
+import getQueryClient from "@/lib/getQueryClient"
 import {
   GetDplCmsConfigurationQuery,
   useGetDplCmsConfigurationQuery,
@@ -12,7 +13,6 @@ const queryDplCmsConfig = async (queryClient: QueryClient) => {
     // TODO: Set this when caching strategy is implemented.
     // Choosing half a minute for now.
     staleTime: 30000,
-    initialData: {},
   })
 
   return dplConfiguration ?? null
@@ -28,11 +28,9 @@ export const ensureDplCmsConfig = async (queryClient: QueryClient) => {
   })
 }
 
-// eslint-disable-next-line prefer-const
-let dplCmsConfigClient = new QueryClient({})
-
 export const getDplCmsUniloginConfig = async () => {
-  const config = await queryDplCmsConfig(dplCmsConfigClient)
+  const queryClient = getQueryClient()
+  const config = await queryDplCmsConfig(queryClient)
 
   return {
     wellknownUrl: process.env.UNILOGIN_WELLKNOWN_URL
