@@ -57,8 +57,8 @@ class ParagraphAccordion extends BnfMapperPluginBase {
     ]);
 
     $paragraph->set('field_accordion_description', [
-      'value' => $object->accordionDescription->value,
-      'format' => $object->accordionDescription->format,
+      'value' => $object->accordionDescription->value ?? '',
+      'format' => $object->accordionDescription->format ?? '',
     ]);
 
     return $paragraph;

@@ -52,8 +52,8 @@ class ParagraphTextBody extends BnfMapperPluginBase {
     ]);
 
     $paragraph->set('field_body', [
-      'value' => $object->body->value,
-      'format' => $object->body->format,
+      'value' => $object->body->value ?? '',
+      'format' => $object->body->format ?? '',
     ]);
 
     return $paragraph;
