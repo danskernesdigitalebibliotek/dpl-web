@@ -5,7 +5,7 @@ _meta:
   bundle: default
   default_langcode: en
   depends:
-    4661e96d-a06b-4a01-b85e-f58a5c7a0dd9: eventinstance
+    8e8bc5d1-69d9-4f39-a4d9-a156295b112e: eventinstance
     e539b26b-2992-406b-accf-03e549522c0d: taxonomy_term
     d6d67fd2-775c-46e7-a1bf-6af46290a5c8: media
     4704c566-afc2-4131-ab81-3d636f2451bf: taxonomy_term
@@ -98,12 +98,12 @@ default:
       tag: meta
       attributes:
         property: 'og:image'
-        content: 'http://dapple-cms.docker/sites/default/files/styles/open_graph/public/2024-02/markus-spiske-i5tesTFPBjw-unsplash.jpg?h=82e97bbe&itok=v6X6_ju5'
+        content: 'https://dapple-cms.docker/sites/default/files/styles/open_graph/public/2024-02/markus-spiske-i5tesTFPBjw-unsplash.jpg?h=82e97bbe&itok=MhinjWA-'
     -
       tag: meta
       attributes:
         property: 'og:image:url'
-        content: 'http://dapple-cms.docker/sites/default/files/styles/open_graph/public/2024-02/markus-spiske-i5tesTFPBjw-unsplash.jpg?h=82e97bbe&itok=v6X6_ju5'
+        content: 'https://dapple-cms.docker/sites/default/files/styles/open_graph/public/2024-02/markus-spiske-i5tesTFPBjw-unsplash.jpg?h=82e97bbe&itok=MhinjWA-'
     -
       tag: meta
       attributes:
@@ -121,7 +121,7 @@ default:
       pathauto: 1
   event_instances:
     -
-      entity: 4661e96d-a06b-4a01-b85e-f58a5c7a0dd9
+      entity: 8e8bc5d1-69d9-4f39-a4d9-a156295b112e
   field_categories:
     -
       entity: e539b26b-2992-406b-accf-03e549522c0d
@@ -135,6 +135,7 @@ default:
       locality: Aarhus
       postal_code: '8000'
       address_line1: 'Kampmanns Plads 2'
+      address_line3: ''
   field_event_image:
     -
       entity: d6d67fd2-775c-46e7-a1bf-6af46290a5c8
