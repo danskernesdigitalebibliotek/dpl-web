@@ -792,6 +792,38 @@ type ParagraphContentSliderAutomatic implements ParagraphInterface {
 """Contents"""
 union ParagraphContentSliderContentReferencesUnion = NodeArticle | NodeGoArticle | NodeGoCategory | NodeGoPage
 
+"""A combination of ticket category name and price for an event. """
+type ParagraphEventTicketCategory implements ParagraphInterface {
+  """The Universally Unique IDentifier (UUID)."""
+  id: ID!
+
+  """The time that the Paragraph was created."""
+  created: DateTime!
+
+  """The paragraphs entity language code."""
+  langcode: Language!
+
+  """Published"""
+  status: Boolean!
+}
+
+"""
+Links with icons. Designed for jpg, jpeg, png, pdf, mp3, mov, mp4, mpeg files
+"""
+type ParagraphFiles implements ParagraphInterface {
+  """The Universally Unique IDentifier (UUID)."""
+  id: ID!
+
+  """The time that the Paragraph was created."""
+  created: DateTime!
+
+  """The paragraphs entity language code."""
+  langcode: Language!
+
+  """Published"""
+  status: Boolean!
+}
+
 """
 This paragraph displays a generated a list of events, based on specified filters for tags, categories and branches. 
 """
@@ -1010,8 +1042,57 @@ type ParagraphGoVideoBundleManual implements ParagraphInterface {
   videoBundleWorkIds: [WorkId!]
 }
 
+"""
+A hero section with an image, informative text, category, and a "call to action" link.
+"""
+type ParagraphHero implements ParagraphInterface {
+  """The Universally Unique IDentifier (UUID)."""
+  id: ID!
+
+  """The time that the Paragraph was created."""
+  created: DateTime!
+
+  """The paragraphs entity language code."""
+  langcode: Language!
+
+  """Published"""
+  status: Boolean!
+}
+
 """Entity type paragraph."""
 interface ParagraphInterface {
+  """The Universally Unique IDentifier (UUID)."""
+  id: ID!
+
+  """The time that the Paragraph was created."""
+  created: DateTime!
+
+  """The paragraphs entity language code."""
+  langcode: Language!
+
+  """Published"""
+  status: Boolean!
+}
+
+"""Enables website visitors to choose their preferred language."""
+type ParagraphLanguageSelector implements ParagraphInterface {
+  """The Universally Unique IDentifier (UUID)."""
+  id: ID!
+
+  """The time that the Paragraph was created."""
+  created: DateTime!
+
+  """The paragraphs entity language code."""
+  langcode: Language!
+
+  """Published"""
+  status: Boolean!
+}
+
+"""
+Links with icons. Designed for internal/external links and links to search results. 
+"""
+type ParagraphLinks implements ParagraphInterface {
   """The Universally Unique IDentifier (UUID)."""
   id: ID!
 
@@ -1121,6 +1202,85 @@ type ParagraphMedias implements ParagraphInterface {
   status: Boolean!
 }
 
+"""Entity type paragraph."""
+type ParagraphNavGridManual implements ParagraphInterface {
+  """The Universally Unique IDentifier (UUID)."""
+  id: ID!
+
+  """The time that the Paragraph was created."""
+  created: DateTime!
+
+  """The paragraphs entity language code."""
+  langcode: Language!
+
+  """Published"""
+  status: Boolean!
+}
+
+"""Entity type paragraph."""
+type ParagraphNavSpotsManual implements ParagraphInterface {
+  """The Universally Unique IDentifier (UUID)."""
+  id: ID!
+
+  """The time that the Paragraph was created."""
+  created: DateTime!
+
+  """The paragraphs entity language code."""
+  langcode: Language!
+
+  """Published"""
+  status: Boolean!
+}
+
+"""
+This is a paragraph for displaying the opening hours for the branch it is applied to. 
+
+Opening hours are created under the settings of a branch. 
+"""
+type ParagraphOpeningHours implements ParagraphInterface {
+  """The Universally Unique IDentifier (UUID)."""
+  id: ID!
+
+  """The time that the Paragraph was created."""
+  created: DateTime!
+
+  """The paragraphs entity language code."""
+  langcode: Language!
+
+  """Published"""
+  status: Boolean!
+}
+
+"""This paragraph is used to recommend a material. """
+type ParagraphRecommendation implements ParagraphInterface {
+  """The Universally Unique IDentifier (UUID)."""
+  id: ID!
+
+  """The time that the Paragraph was created."""
+  created: DateTime!
+
+  """The paragraphs entity language code."""
+  langcode: Language!
+
+  """Published"""
+  status: Boolean!
+}
+
+"""This is paragraph that will display links without icons. """
+type ParagraphSimpleLinks implements ParagraphInterface {
+  """The Universally Unique IDentifier (UUID)."""
+  id: ID!
+
+  """The time that the Paragraph was created."""
+  created: DateTime!
+
+  """The paragraphs entity language code."""
+  langcode: Language!
+
+  """Published"""
+  status: Boolean!
+}
+
 """A basic, formatted body of text."""
 type ParagraphTextBody implements ParagraphInterface {
   """The Universally Unique IDentifier (UUID)."""
@@ -1140,7 +1300,60 @@ type ParagraphTextBody implements ParagraphInterface {
 }
 
 """Entity type paragraph."""
-union ParagraphUnion = ParagraphAccordion | ParagraphBanner | ParagraphBreadcrumbChildren | ParagraphCardGridAutomatic | ParagraphCardGridManual | ParagraphContentSlider | ParagraphContentSliderAutomatic | ParagraphFilteredEventList | ParagraphGoLinkbox | ParagraphGoMaterialSliderAutomatic | ParagraphGoMaterialSliderManual | ParagraphGoVideo | ParagraphGoVideoBundleAutomatic | ParagraphGoVideoBundleManual | ParagraphManualEventList | ParagraphMaterialGridAutomatic | ParagraphMaterialGridManual | ParagraphMedias | ParagraphTextBody | ParagraphVideo
+union ParagraphUnion = ParagraphAccordion | ParagraphBanner | ParagraphBreadcrumbChildren | ParagraphCardGridAutomatic | ParagraphCardGridManual | ParagraphContentSlider | ParagraphContentSliderAutomatic | ParagraphEventTicketCategory | ParagraphFiles | ParagraphFilteredEventList | ParagraphGoLinkbox | ParagraphGoMaterialSliderAutomatic | ParagraphGoMaterialSliderManual | ParagraphGoVideo | ParagraphGoVideoBundleAutomatic | ParagraphGoVideoBundleManual | ParagraphHero | ParagraphLanguageSelector | ParagraphLinks | ParagraphManualEventList | ParagraphMaterialGridAutomatic | ParagraphMaterialGridManual | ParagraphMedias | ParagraphNavGridManual | ParagraphNavSpotsManual | ParagraphOpeningHours | ParagraphRecommendation | ParagraphSimpleLinks | ParagraphTextBody | ParagraphUserRegistrationItem | ParagraphUserRegistrationLinklist | ParagraphUserRegistrationSection | ParagraphVideo | ParagraphWebform
+
+"""
+The "User registration item" paragraph type is used to display relevant information about the user registration process.
+"""
+type ParagraphUserRegistrationItem implements ParagraphInterface {
+  """The Universally Unique IDentifier (UUID)."""
+  id: ID!
+
+  """The time that the Paragraph was created."""
+  created: DateTime!
+
+  """The paragraphs entity language code."""
+  langcode: Language!
+
+  """Published"""
+  status: Boolean!
+}
+
+"""
+This paragraph determines the placement of shortcuts to individual User
+Registration Section paragraphs. It allows administrators to specify where these
+shortcuts should appear.
+"""
+type ParagraphUserRegistrationLinklist implements ParagraphInterface {
+  """The Universally Unique IDentifier (UUID)."""
+  id: ID!
+
+  """The time that the Paragraph was created."""
+  created: DateTime!
+
+  """The paragraphs entity language code."""
+  langcode: Language!
+
+  """Published"""
+  status: Boolean!
+}
+
+"""
+The "User registration section" paragraph type is used to display "User registration item" paragraphs.
+"""
+type ParagraphUserRegistrationSection implements ParagraphInterface {
+  """The Universally Unique IDentifier (UUID)."""
+  id: ID!
+
+  """The time that the Paragraph was created."""
+  created: DateTime!
+
+  """The paragraphs entity language code."""
+  langcode: Language!
+
+  """Published"""
+  status: Boolean!
+}
 
 """Enter the URL for the video you want to include."""
 type ParagraphVideo implements ParagraphInterface {
@@ -1152,6 +1365,21 @@ type ParagraphVideo implements ParagraphInterface {
 
   """Embed video"""
   embedVideo: MediaUnion
+
+  """The paragraphs entity language code."""
+  langcode: Language!
+
+  """Published"""
+  status: Boolean!
+}
+
+"""Paragraph used for embedding a webform."""
+type ParagraphWebform implements ParagraphInterface {
+  """The Universally Unique IDentifier (UUID)."""
+  id: ID!
+
+  """The time that the Paragraph was created."""
+  created: DateTime!
 
   """The paragraphs entity language code."""
   langcode: Language!
