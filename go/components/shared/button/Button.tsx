@@ -5,7 +5,7 @@ import * as React from "react"
 import { cn } from "@/lib/helpers/helper.cn"
 
 const buttonVariants = cva(
-  `inline-flex border border-foreground uppercase text-typo-button-lg text-foreground shadow-button rounded-full items-center justify-center
+  `inline-flex border uppercase text-typo-button-lg shadow-button rounded-full items-center justify-center
   whitespace-nowrap focus-visible disabled:pointer-events-none disabled:opacity-50 hover:translate-x-[1px] hover:translate-y-[1px] transition
   hover:shadow-buttonHover active:translate-x-[4px] active:translate-y-[4px] active:shadow-none`,
   {
@@ -19,6 +19,10 @@ const buttonVariants = cva(
         sm: "h-[32px]",
         md: "h-[40px]",
         lg: "h-[48px]",
+      },
+      theme: {
+        primary: "border-background text-background bg-foreground",
+        secondary: "border-foreground text-foreground",
       },
     },
     compoundVariants: [
@@ -51,6 +55,7 @@ const buttonVariants = cva(
     defaultVariants: {
       variant: "default",
       size: "default",
+      theme: "secondary",
     },
   }
 )
@@ -63,11 +68,11 @@ export interface ButtonProps
 }
 
 const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
-  ({ className, ariaLabel, variant, size, asChild = false, ...props }, ref) => {
+  ({ className, ariaLabel, variant, theme, size, asChild = false, ...props }, ref) => {
     const Comp = asChild ? Slot : "button"
     return (
       <Comp
-        className={cn(buttonVariants({ variant, size }), className)}
+        className={cn(buttonVariants({ variant, size, theme }), className)}
         ref={ref}
         {...props}
         aria-label={ariaLabel || ""}
