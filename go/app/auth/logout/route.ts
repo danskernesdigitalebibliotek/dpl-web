@@ -10,6 +10,10 @@ export async function GET() {
   const config = await getUniloginClientConfig()
   const appUrl = new URL(String(goConfig("app.url")))
 
+  if (!config) {
+    return Response.redirect(appUrl)
+  }
+
   session.destroy()
 
   // TODO: Distinguish between session types here.

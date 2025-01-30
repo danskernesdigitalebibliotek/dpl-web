@@ -27,9 +27,10 @@ export async function GET(request: NextRequest) {
   const frontpage = `${appUrl}/`
 
   // If the user is not logged in, we redirect to the frontpage.
-  if (!session.isLoggedIn) {
+  if (!session.isLoggedIn || !config) {
     return NextResponse.redirect(frontpage, { headers: requestHeaders })
   }
+
   const redirect = request.nextUrl.searchParams.get("redirect")
   // We need the redirect URL to be present in the query string.
   if (!redirect) {
