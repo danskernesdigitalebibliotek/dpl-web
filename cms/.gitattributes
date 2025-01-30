@@ -66,3 +66,6 @@ core/.phpstan-baseline.php text eol=lf whitespace=blank-at-eol,-blank-at-eof,-sp
 # Mark FBS client and CMS API produced by OpenAPI Generator as generated.
 packages/fbs-client/**/*.* linguist-generated=true
 packages/cms-api/**/*.* linguist-generated=true
+
+# Mark Sailor generated GraphQL classes as generated.
+web/modules/custom/bnf/src/GraphQL/**/*.* linguist-generated=true
