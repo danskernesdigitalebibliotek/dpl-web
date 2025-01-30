@@ -41,7 +41,7 @@ class SettingsForm extends ConfigFormBase {
       '#title' => $this->t('BNF server URL'),
       '#description' => $this->t('For example <em>https://bibliotekernesnationaleformidling.dk/</em>.'),
       '#required' => TRUE,
-      '#config_target' => self::CONFIG_NAME . ':base_url'
+      '#config_target' => self::CONFIG_NAME . ':base_url',
     ];
 
     return parent::buildForm($form, $form_state);

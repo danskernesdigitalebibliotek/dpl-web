@@ -18,12 +18,7 @@ use Spawnia\Sailor\EndpointConfig;
  */
 class SailorEndpointConfig extends EndpointConfig {
 
-  public function __construct(
-    protected string $uri,
-
-  ) {
-
-  }
+  public function __construct(protected string $uri) {}
 
   /**
    * {@inheritdoc}

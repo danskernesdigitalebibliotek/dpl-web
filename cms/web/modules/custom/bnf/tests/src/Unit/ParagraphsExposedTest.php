@@ -15,6 +15,13 @@ use Symfony\Component\Yaml\Yaml;
  */
 class ParagraphsExposedTest extends UnitTestCase {
 
+  /**
+   * Test that all paragraph types is exposed in config.
+   *
+   * GraphQL compose throw a hard error when it encounters an unexposed
+   * paragraph type on a node. This results in an unhelpful JSON parsing error
+   * on the receiving side, so we try to catch the problem earlier.
+   */
   public function testAllParagraphsEnabled(): void {
     $config = Yaml::parseFile(DRUPAL_ROOT . '/../config/sync/graphql_compose.settings.yml');
 

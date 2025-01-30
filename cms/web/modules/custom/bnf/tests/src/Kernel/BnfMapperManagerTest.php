@@ -4,16 +4,18 @@ declare(strict_types=1);
 
 namespace Drupal\Tests\bnf\Kernel;
 
+use Drupal\bnf\GraphQL\Operations\GetNode\Node\NodeArticle;
+use Drupal\bnf\GraphQL\Operations\GetNode\Node\Paragraphs\Body\Text;
+use Drupal\bnf\GraphQL\Operations\GetNode\Node\Paragraphs\ParagraphTextBody;
 use Drupal\Core\Entity\EntityStorageInterface;
 use Drupal\Core\Entity\EntityTypeManagerInterface;
 use Drupal\KernelTests\KernelTestBase;
-use Drupal\bnf\GraphQL\Operations\GetNode\Node\NodeArticle;
-use Drupal\bnf\GraphQL\Operations\GetNode\Node\Paragraphs\ParagraphTextBody;
-use Drupal\bnf\GraphQL\Operations\GetNode\Node\Paragraphs\Body\Text;
 use Drupal\node\Entity\Node;
 use Drupal\paragraphs\Entity\Paragraph;
-use Drupal\node\NodeInterface;
 
+/**
+ * Test BnfMapperManager.
+ */
 class BnfMapperManagerTest extends KernelTestBase {
 
   /**
@@ -26,13 +28,6 @@ class BnfMapperManagerTest extends KernelTestBase {
     // Needed for the bnf_state base field.
     'options',
   ];
-
-  /**
-   * {@inheritdoc}
-   */
-  public function setUp(): void {
-    parent::setUp();
-  }
 
   /**
    * Test that the mapper will properly map a response with sub-mappings.
@@ -66,7 +61,6 @@ class BnfMapperManagerTest extends KernelTestBase {
         ParagraphTextBody::make(Text::make('text', 'format')),
       ]
     );
-
 
     $mapper = $manager->getMapper($graphqlNode);
     $node = $mapper->map($graphqlNode);
