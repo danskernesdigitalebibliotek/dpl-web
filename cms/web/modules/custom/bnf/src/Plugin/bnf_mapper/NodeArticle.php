@@ -66,7 +66,6 @@ class NodeArticle extends BnfMapperPluginBase {
       $node->set('field_paragraphs', $paragraphs);
     }
 
-
     return $node;
   }
 

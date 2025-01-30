@@ -6,21 +6,15 @@ namespace Drupal\Tests\bnf\Kernel;
 
 use Drupal\Core\Entity\EntityStorageInterface;
 use Drupal\Core\Entity\EntityTypeManagerInterface;
-use Drupal\Core\Site\Settings;
 use Drupal\KernelTests\KernelTestBase;
-use Drupal\bnf\GraphQL\Operations\GetNode;
 use Drupal\bnf\GraphQL\Operations\GetNode\Node\NodeArticle;
 use Drupal\bnf\GraphQL\Operations\GetNode\Node\Paragraphs\ParagraphTextBody;
 use Drupal\bnf\GraphQL\Operations\GetNode\Node\Paragraphs\Body\Text;
 use Drupal\node\Entity\Node;
 use Drupal\paragraphs\Entity\Paragraph;
 use Drupal\node\NodeInterface;
-use Spawnia\Sailor\Testing\UsesSailorMocks;
-use Prophecy\Argument;
 
 class BnfMapperManagerTest extends KernelTestBase {
-
-  use UsesSailorMocks;
 
   /**
    * {@inheritdoc}
@@ -33,10 +27,16 @@ class BnfMapperManagerTest extends KernelTestBase {
     'options',
   ];
 
+  /**
+   * {@inheritdoc}
+   */
   public function setUp(): void {
     parent::setUp();
   }
 
+  /**
+   * Test that the mapper will properly map a response with sub-mappings.
+   */
   public function testBnfArticleMapper(): void {
     $manager = $this->container->get('plugin.manager.bnf_mapper');
 
