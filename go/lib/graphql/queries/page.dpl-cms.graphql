@@ -17,6 +17,29 @@ query getPageByPath($path: String!) {
               }
               status
             }
+            ... on ParagraphGoLinkbox {
+              __typename
+              title
+              id
+              created {
+                timestamp
+              }
+              goColor {
+                color
+              }
+              goDescription
+              goImage {
+                __typename
+              }
+              goLink {
+                url
+                title
+              }
+              langcode {
+                name
+              }
+              status
+            }
           }
         }
       }
