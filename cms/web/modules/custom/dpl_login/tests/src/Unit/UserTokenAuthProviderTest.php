@@ -5,7 +5,7 @@ namespace Drupal\Tests\dpl_login\Unit;
 use Drupal\Core\Extension\ModuleHandlerInterface;
 use Drupal\Core\Session\AccountInterface;
 use Drupal\dpl_login\UserTokenAuthProvider;
-use Drupal\openid_connect\OpenIDConnectAuthmap;
+use Drupal\externalauth\ExternalAuthInterface;
 use Drupal\openid_connect\Plugin\OpenIDConnectClientInterface;
 use Drupal\Tests\UnitTestCase;
 use Prophecy\Prophecy\ObjectProphecy;
@@ -35,7 +35,7 @@ class UserTokenAuthProviderTest extends UnitTestCase {
   /**
    * Mock authmap to map user ids to user accounts.
    *
-   * @var \Prophecy\Prophecy\ObjectProphecy<OpenIDConnectAuthmap>
+   * @var \Prophecy\Prophecy\ObjectProphecy<ExternalAuthInterface>
    */
   private ObjectProphecy $authMap;
 
@@ -47,7 +47,7 @@ class UserTokenAuthProviderTest extends UnitTestCase {
 
     $this->openIdClient = $this->prophesize(OpenIDConnectClientInterface::class);
     $this->moduleInvoker = $this->prophesize(ModuleHandlerInterface::class);
-    $this->authMap = $this->prophesize(OpenIDConnectAuthmap::class);
+    $this->authMap = $this->prophesize(ExternalAuthInterface::class);
   }
 
   /**
@@ -75,7 +75,7 @@ class UserTokenAuthProviderTest extends UnitTestCase {
    */
   public function testKnownBearerTokenAuthenticatesUser(): void {
     $user = ($this->prophesize(AccountInterface::class))->reveal();
-    $this->authMap->userLoadBySub('unique-patron-id', 'adgangsplatformen')->willReturn($user);
+    $this->authMap->load('unique-patron-id', 'adgangsplatformen')->willReturn($user);
     $this->openIdClient->retrieveUserInfo('abcd1234')->willReturn([
       'sub' => 'unique-patron-id',
     ]);
@@ -109,7 +109,7 @@ class UserTokenAuthProviderTest extends UnitTestCase {
    * A request with a known bearer token mapping to an unknown user does not.
    */
   public function testUnknownPatronIdDoesNotAuthenticateUser(): void {
-    $this->authMap->userLoadBySub('unknown-patron-id', 'adgangsplatformen')->willReturn(FALSE);
+    $this->authMap->load('unknown-patron-id', 'adgangsplatformen')->willReturn(FALSE);
     $this->openIdClient->retrieveUserInfo('abcd1234')->willReturn([
       'sub' => 'unknown-patron-id',
     ]);
