@@ -43,7 +43,7 @@ const Player = ({ type, orderId, identifier }: ReaderType) => {
       <iframe
         style={{ height: "300px" }}
         src={`https://play.pubhub.dk/index141.html?i=${identifier}`}
-        className="player h-full w-full rounded-base"
+        className="player rounded-base h-full w-full"
       />
     )
   }

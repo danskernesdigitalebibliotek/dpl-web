@@ -1,4 +1,4 @@
-@import 'tailwindcss';
+@import "tailwindcss";
 
 @custom-variant dark (&:is(.dark *));
 
@@ -73,21 +73,15 @@
   --text-typo-subtitle-lg: var(--typo-subtitle-lg-size);
   --text-typo-subtitle-lg--line-height: var(--typo-subtitle-lg-line-height);
   --text-typo-subtitle-lg--font-weight: var(--typo-subtitle-lg-weight);
-  --text-typo-subtitle-lg--letter-spacing: var(
-    --typo-subtitle-lg-letter-spacing
-  );
+  --text-typo-subtitle-lg--letter-spacing: var(--typo-subtitle-lg-letter-spacing);
   --text-typo-subtitle-md: var(--typo-subtitle-md-size);
   --text-typo-subtitle-md--line-height: var(--typo-subtitle-md-line-height);
   --text-typo-subtitle-md--font-weight: var(--typo-subtitle-md-weight);
-  --text-typo-subtitle-md--letter-spacing: var(
-    --typo-subtitle-md-letter-spacing
-  );
+  --text-typo-subtitle-md--letter-spacing: var(--typo-subtitle-md-letter-spacing);
   --text-typo-subtitle-sm: var(--typo-subtitle-sm-size);
   --text-typo-subtitle-sm--line-height: var(--typo-subtitle-sm-line-height);
   --text-typo-subtitle-sm--font-weight: var(--typo-subtitle-sm-weight);
-  --text-typo-subtitle-sm--letter-spacing: var(
-    --typo-subtitle-sm-letter-spacing
-  );
+  --text-typo-subtitle-sm--letter-spacing: var(--typo-subtitle-sm-letter-spacing);
   --text-typo-body-lg: var(--typo-body-lg-size);
   --text-typo-body-lg--line-height: var(--typo-body-lg-line-height);
   --text-typo-body-lg--font-weight: var(--typo-body-lg-weight);
@@ -183,13 +177,9 @@
 
   --color-theme-extend-keyframes-accordion-down-from-height: 0;
 
-  --color-theme-extend-keyframes-accordion-down-to-height: var(
-    --radix-accordion-content-height
-  );
+  --color-theme-extend-keyframes-accordion-down-to-height: var(--radix-accordion-content-height);
 
-  --color-theme-extend-keyframes-accordion-up-from-height: var(
-    --radix-accordion-content-height
-  );
+  --color-theme-extend-keyframes-accordion-up-from-height: var(--radix-accordion-content-height);
 
   --color-theme-extend-keyframes-accordion-up-to-height: 0;
 
@@ -208,9 +198,7 @@
   --spacing-navigation-height: var(--navigation-height);
   --spacing-navigation-search-height: var(--navigation-search-height);
   --spacing-navigation-combined-height: calc(var(--navigation-combined-height));
-  --spacing-screen-minus-navigation-height: var(
-    --screen-minus-navigation-height
-  );
+  --spacing-screen-minus-navigation-height: var(--screen-minus-navigation-height);
   --spacing-grid-column-12: var(--grid-column-12);
   --spacing-grid-column-11: var(--grid-column-11);
   --spacing-grid-column-10: var(--grid-column-10);
@@ -237,8 +225,7 @@
 
   --shadow-button: 2px 2px 0 0px var(--foreground);
   --shadow-button-hover: 1px 1px 0 0px var(--foreground);
-  --shadow-cover-picture: -1px 1px 10px 0 var(--shadow-1),
-    -3px 3px 20px 0 var(--shadow-2);
+  --shadow-cover-picture: -1px 1px 10px 0 var(--shadow-1), -3px 3px 20px 0 var(--shadow-2);
 
   @keyframes wiggle {
     10% 90% {
@@ -307,7 +294,7 @@
   cursor: pointer;
 
   &::after {
-    content: '';
+    content: "";
     position: absolute;
     bottom: -5px;
     left: 0;
@@ -335,11 +322,7 @@
 
     /* SIZE OF EACH INDIVIDUAL COLUMN IN THE GRID  */
     --grid-column: calc(
-      (
-          (min(var(--page-width), 100vw) - (2 * var(--grid-edge))) -
-            (11 * var(--grid-gap-x))
-        ) /
-        12
+      ((min(var(--page-width), 100vw) - (2 * var(--grid-edge))) - (11 * var(--grid-gap-x))) / 12
     );
     --grid-column-12: calc(var(--grid-column) * 12 + var(--grid-gap-x) * 11);
     --grid-column-11: calc(var(--grid-column) * 11 + var(--grid-gap-x) * 10);
@@ -358,12 +341,9 @@
     --navigation-height: 3.5rem; /* 56px */
     --navigation-search-height: 4rem; /* 64px */
     --navigation-combined-height: calc(
-      var(--navigation-height) + var(--navigation-search-height) +
-        var(--navigation-top-height)
+      var(--navigation-height) + var(--navigation-search-height) + var(--navigation-top-height)
     );
-    --screen-minus-navigation-height: calc(
-      100vh - var(--navigation-combined-height)
-    );
+    --screen-minus-navigation-height: calc(100vh - var(--navigation-combined-height));
 
     /* BORDER RADIUS */
     --base-radius: 0.625rem; /* 10px */
@@ -438,7 +418,7 @@
     /* TRANSITION DURATIONS */
     --dark-mode-transition: 1000ms;
 
-    --font-headline: 'GT Flexa', sans-serif;
+    --font-headline: "GT Flexa", sans-serif;
     --font-body: helvetica, sans-serif;
 
     /* FONTS MOBILE */
@@ -655,15 +635,15 @@
   }
 
   .dark-mode-transition {
-    @apply transition-[background] duration-dark-mode;
+    @apply duration-dark-mode transition-[background];
   }
 
   body {
-    @apply bg-background font-body text-foreground transition-all duration-dark-mode;
+    @apply bg-background font-body text-foreground duration-dark-mode transition-all;
   }
 
   .focus-visible {
-    @apply focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-foreground focus-visible:ring-offset-2;
+    @apply focus-visible:ring-foreground focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:outline-hidden;
   }
 
   .text-typo-huge,
