@@ -62,7 +62,7 @@ const SlideSelect = ({ options, selected, onOptionSelect }: SlideSelectProps) =>
               "z-slide-select min-w-36 flex items-center justify-center",
               selectedOptionIndex === index && "text-background"
             )}>
-            {!!iconName && <Icon className="m-[-7px] h-7 w-7 flex-shrink-0" name={iconName} />}
+            {!!iconName && <Icon className="m-[-7px] h-7 w-7 shrink-0" name={iconName} />}
             <span>{option.display}</span>
           </BadgeButton>
         )

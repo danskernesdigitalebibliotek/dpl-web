@@ -15,7 +15,7 @@ const SheetTrigger = React.forwardRef<
 >(({ className, ...props }, ref) => (
   <SheetPrimitive.Trigger
     ref={ref}
-    className={cn("focus-visible rounded-full outline-none", className)}
+    className={cn("focus-visible rounded-full outline-hidden", className)}
     {...props}
   />
 ))

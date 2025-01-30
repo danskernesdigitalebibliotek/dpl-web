@@ -47,7 +47,7 @@ function ProfileButton() {
           className={buttonVariants({ variant: "icon" })}>
           <Icon className="h-[24px] w-[24px]" name="profile" />
         </SheetTrigger>
-        <SheetContent className="grid w-full max-w-[560px] grid-rows-[min-content,1fr] p-grid-edge">
+        <SheetContent className="grid w-full max-w-[560px] grid-rows-[min-content_1fr] p-grid-edge">
           <SheetHeader className="mb-8">
             <SheetTitle className="text-typo-heading-3">Log ind</SheetTitle>
           </SheetHeader>
