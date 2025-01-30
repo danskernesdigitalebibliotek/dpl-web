@@ -33,6 +33,10 @@ use Psr\Log\LogLevel;
  * @throws Exception
  */
 function dpl_login_openid_connect_userinfo_alter(array &$userinfo, array $context): void {
+  if (!dpl_login_check_if_plugin_id_is_adgangsplatformen($context['plugin_id'])) {
+    return;
+  }
+
   $service = \Drupal::service('dpl_login.openid_user_info');
   $userinfo = array_merge(
     $userinfo,
@@ -51,6 +55,10 @@ function dpl_login_openid_connect_userinfo_alter(array &$userinfo, array $contex
  * @throws \Drupal\dpl_login\Exception\MissingConfigurationException
  */
 function dpl_login_openid_connect_pre_authorize(AccountInterface|FALSE $account, array $context): bool {
+  if (!dpl_login_check_if_plugin_id_is_adgangsplatformen($context['plugin_id'])) {
+    return FALSE;
+  }
+
   $logger = _dpl_login_get_authorization_logger();
 
   try {
@@ -128,6 +136,9 @@ function _dpl_login_get_patron(AccessToken $token): AuthenticatedPatronV6 {
  *   Various openid_connect context. Tokens etc.
  */
 function dpl_login_openid_connect_post_authorize(AccountInterface $account, array $context): void {
+  if (!dpl_login_check_if_plugin_id_is_adgangsplatformen($context['plugin_id'])) {
+    return;
+  }
   $access_token = AccessToken::createFromOpenidConnectContext($context);
   $token_provider = _dpl_login_get_access_token_provider($access_token);
   $logger = _dpl_login_get_authorization_logger($access_token);
@@ -150,6 +161,10 @@ function dpl_login_openid_connect_post_authorize(AccountInterface $account, arra
  *   Various openid_connect context. Tokens etc.
  */
 function dpl_login_openid_connect_userinfo_save(UserInterface $account, array $context): void {
+  if (!dpl_login_check_if_plugin_id_is_adgangsplatformen($context['plugin_id'])) {
+    return;
+  }
+
   // If the user is new we attach a role to the user.
   if (!_dpl_login_user_has_been_processed($context)) {
     $account->addRole(DplLoginInterface::ROLE_PATRON);
@@ -320,4 +335,8 @@ function dpl_login_openid_connect_admin_settings_submit(array &$form, FormStateI
   if (!$handler->retrieveAndStoreToken(TRUE)) {
     $messenger->addMessage(t('Unable to retrieve token from Adgangsplatformen. Please check if the provided Agency ID is correct.', [], ['context' => 'OpenId Connect Settings']), LogLevel::ERROR);
   }
+}
+
+function dpl_login_check_if_plugin_id_is_adgangsplatformen(string $plugin_id): bool {
+  return $plugin_id === 'adgangsplatformen';
 }
