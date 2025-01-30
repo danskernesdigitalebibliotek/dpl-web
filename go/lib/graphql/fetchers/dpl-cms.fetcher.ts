@@ -1,7 +1,24 @@
+const getHeaders = (headers: RequestInit["headers"] | undefined) => {
+  const contentTypeHeader = {
+    "Content-Type": "application/json",
+  }
+
+  if (headers && headers.hasOwnProperty("Cookie")) {
+    return { ...contentTypeHeader, ...headers }
+  }
+  const dplCmsGraphqlBasicToken = process.env.NEXT_PUBLIC_GRAPHQL_BASIC_TOKEN_DPL_CMS
+
+  return {
+    ...contentTypeHeader,
+    Authorization: `Basic ${dplCmsGraphqlBasicToken}`,
+    ...headers,
+  }
+}
+
 export function fetcher<TData, TVariables>(
   query: string,
   variables?: TVariables,
-  options?: RequestInit["headers"]
+  headers?: RequestInit["headers"]
 ) {
   const dplCmsGraphqlEndpoint = process.env.NEXT_PUBLIC_GRAPHQL_SCHEMA_ENDPOINT_DPL_CMS
   const dplCmsGraphqlBasicToken = process.env.NEXT_PUBLIC_GRAPHQL_BASIC_TOKEN_DPL_CMS
@@ -13,20 +30,14 @@ export function fetcher<TData, TVariables>(
   return async (): Promise<TData> => {
     const res = await fetch(dplCmsGraphqlEndpoint, {
       method: "POST",
-      ...{
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Basic ${dplCmsGraphqlBasicToken}`,
-          ...options,
-        },
-      },
+      headers: getHeaders(headers),
       body: JSON.stringify({ query, variables }),
     })
 
     const json = await res.json()
 
-    if (json.errors) {
-      const { message } = json.errors[0]
+    if (res.status !== 200) {
+      const { message } = json
 
       throw new Error(message)
     }

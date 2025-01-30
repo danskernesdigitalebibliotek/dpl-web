@@ -5,8 +5,8 @@ import { z } from "zod"
 
 import goConfig from "@/lib/config/goConfig"
 import { getUniloginClientConfig } from "@/lib/session/oauth/uniloginClient"
-import { getSession, setTokensOnSession } from "@/lib/session/session"
-import { TTokenSet } from "@/lib/types/session"
+import { getSession, setUniloginTokensOnSession } from "@/lib/session/session"
+import { TUniloginTokenSet } from "@/lib/types/session"
 
 const sessionTokenSchema = z.object({
   isLoggedIn: z.boolean(),
@@ -39,8 +39,11 @@ export async function GET(request: NextRequest) {
   try {
     // TODO: Consider if we want to handle different types of sessions than unilogin.
     const tokens = sessionTokenSchema.parse(session)
-    const newTokens = client.refreshTokenGrant(config, tokens.refresh_token) as unknown as TTokenSet
-    setTokensOnSession(session, newTokens)
+    const newTokens = client.refreshTokenGrant(
+      config,
+      tokens.refresh_token
+    ) as unknown as TUniloginTokenSet
+    setUniloginTokensOnSession(session, newTokens)
     await session.save()
   } catch (error) {
     // TODO: maybe distinguish between ZodError and other errors?

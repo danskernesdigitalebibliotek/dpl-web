@@ -2,11 +2,13 @@
 
 import React from "react"
 
-import type { ParagraphGoVideo as TParagraphGoVideo } from "@/lib/graphql/generated/dpl-cms/graphql"
-
 type ParagraphGoVideoProps = {
-  title: TParagraphGoVideo["title"]
-  url: TParagraphGoVideo["url"]
+  // TODO: Something has changed and removed the title from the type. Please check.
+  // title: TParagraphGoVideo["title"]
+  title: string
+  // TODO: Something has changed and removed the url from the type. Please check.
+  // url: TParagraphGoVideo["url"]
+  url: string
 }
 
 export default function ParagraphGoVideo(paragraphGoVideo: ParagraphGoVideoProps) {

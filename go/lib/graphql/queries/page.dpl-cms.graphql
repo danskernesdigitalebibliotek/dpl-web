@@ -9,8 +9,6 @@ query getPageByPath($path: String!) {
             ... on ParagraphGoVideo {
               __typename
               id
-              url
-              title
               created {
                 timestamp
               }
