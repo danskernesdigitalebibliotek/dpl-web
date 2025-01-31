@@ -1,0 +1,36 @@
+uuid: c8209755-e72b-4ff6-9160-4ee174a2bc66
+langcode: en
+status: true
+dependencies:
+  module:
+    - node
+    - options
+id: node.field_go_color
+field_name: field_go_color
+entity_type: node
+type: list_string
+settings:
+  allowed_values:
+    -
+      value: content_color_1
+      label: 'Content Color 1'
+    -
+      value: content_color_2
+      label: 'Content Color 2'
+    -
+      value: content_color_3
+      label: 'Content Color 3'
+    -
+      value: content_color_4
+      label: 'Content Color 4'
+    -
+      value: content_color_5
+      label: 'Content Color 5'
+  allowed_values_function: ''
+module: options
+locked: false
+cardinality: 1
+translatable: true
+indexes: {  }
+persist_with_no_fields: false
+custom_storage: false

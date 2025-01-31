@@ -174,13 +174,13 @@ field_config:
       field_teaser_text:
         enabled: true
     go_category:
-      field_category_menu_color:
-        enabled: true
       field_category_menu_image:
         enabled: true
       field_category_menu_sound:
         enabled: true
       field_category_menu_title:
+        enabled: true
+      field_go_color:
         enabled: true
       field_paragraphs:
         enabled: true
