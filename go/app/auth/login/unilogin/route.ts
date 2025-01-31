@@ -8,13 +8,18 @@ export async function GET() {
   const session = await getSession()
   const config = await getUniloginClientConfig()
   const appUrl = goConfig("app.url")
-  const redirect_uri = `${appUrl}/auth/callback/unilogin`
 
+  if (!config) {
+    return Response.redirect(String(appUrl))
+  }
+
+  const redirect_uri = `${appUrl}/auth/callback/unilogin`
   const code_verifier = client.randomPKCECodeVerifier()
   const code_challenge = await client.calculatePKCECodeChallenge(code_verifier)
   const code_challenge_method = "S256"
 
   session.code_verifier = code_verifier
+  await session.save()
 
   const redirectTo = client.buildAuthorizationUrl(config, {
     redirect_uri,
@@ -23,7 +28,6 @@ export async function GET() {
     code_challenge_method,
   })
 
-  await session.save()
   return Response.redirect(redirectTo)
 }
 

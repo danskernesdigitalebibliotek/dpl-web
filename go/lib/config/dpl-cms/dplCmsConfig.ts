@@ -1,5 +1,6 @@
 import { QueryClient } from "@tanstack/react-query"
 
+import getQueryClient from "@/lib/getQueryClient"
 import {
   GetDplCmsConfigurationQuery,
   useGetDplCmsConfigurationQuery,
@@ -9,25 +10,38 @@ const queryDplCmsConfig = async (queryClient: QueryClient) => {
   const { dplConfiguration } = await queryClient.fetchQuery<GetDplCmsConfigurationQuery>({
     queryKey: useGetDplCmsConfigurationQuery.getKey(),
     queryFn: useGetDplCmsConfigurationQuery.fetcher(),
-    // Cache 5 minutes unless invalidated
-    staleTime: 5 * 60 * 1000, // 5 mins
-    initialData: {},
+    // TODO: Set this when caching strategy is implemented.
+    // Choosing half a minute for now.
+    staleTime: 30000,
   })
 
   return dplConfiguration ?? null
 }
 
-// eslint-disable-next-line prefer-const
-let dplCmsConfigClient = new QueryClient({})
-
-const getDplCmsConfig = async () => {
-  const result = await queryDplCmsConfig(dplCmsConfigClient)
-
-  return result
+export const ensureDplCmsConfig = async (queryClient: QueryClient) => {
+  await queryClient.ensureQueryData({
+    queryKey: useGetDplCmsConfigurationQuery.getKey(),
+    queryFn: useGetDplCmsConfigurationQuery.fetcher(),
+    // TODO: Set this when caching strategy is implemented.
+    // Choosing a minute for now.
+    staleTime: 60000,
+  })
 }
 
 export const getDplCmsUniloginConfig = async () => {
-  const config = await getDplCmsConfig()
+  const queryClient = getQueryClient()
+  const config = await queryDplCmsConfig(queryClient)
 
-  return config?.unilogin ?? null
+  return {
+    wellknownUrl: process.env.UNILOGIN_WELLKNOWN_URL
+      ? process.env.UNILOGIN_WELLKNOWN_URL
+      : (config?.unilogin?.unilogin_api_wellknown_url ?? null),
+    clientId: process.env.UNILOGIN_CLIENT_ID
+      ? process.env.UNILOGIN_CLIENT_ID
+      : (config?.unilogin?.unilogin_api_client_id ?? null),
+    clientSecret: process.env.UNILOGIN_CLIENT_SECRET
+      ? process.env.UNILOGIN_WELLKNOWN_URL
+      : (config?.unilogin?.unilogin_api_client_secret ?? null),
+    apiData: config?.unilogin ?? null,
+  }
 }
