@@ -10,7 +10,6 @@ dependencies:
     - field.field.paragraph.go_linkbox.field_title
     - paragraphs.paragraphs_type.go_linkbox
   module:
-    - color_field
     - link
     - media_library
 id: paragraph.go_linkbox.default
@@ -19,11 +18,10 @@ bundle: go_linkbox
 mode: default
 content:
   field_go_color:
-    type: color_field_widget_box
-    weight: 1
+    type: options_select
+    weight: 5
     region: content
-    settings:
-      default_colors: '#ffd2f0,#dcc3ff,#ffdcb9,#bee6fa,#ff73d7,#9b6eff,#ff9100,#32b4ff,#642850,#6e55aa,#7d460f,#195a7d'
+    settings: {  }
     third_party_settings: {  }
   field_go_description:
     type: string_textarea

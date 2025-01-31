@@ -10,19 +10,17 @@ dependencies:
     - field.field.paragraph.go_linkbox.field_title
     - paragraphs.paragraphs_type.go_linkbox
   module:
-    - color_field
     - link
+    - options
 id: paragraph.go_linkbox.default
 targetEntityType: paragraph
 bundle: go_linkbox
 mode: default
 content:
   field_go_color:
-    type: color_field_formatter_text
+    type: list_default
     label: above
-    settings:
-      format: hex
-      opacity: true
+    settings: {  }
     third_party_settings: {  }
     weight: 4
     region: content
