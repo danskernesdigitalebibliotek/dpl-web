@@ -43,7 +43,7 @@ export function fetcher<TData, TVariables>(
     if (res.status !== 200) {
       const { message } = json
 
-      throw new Error(message)
+      // throw new Error(message)
     }
 
     return json.data
