@@ -16,7 +16,7 @@ fi
 # Define the mapping of environment variables to keys
 declare -A mapping=(
   ["UNILOGIN_CLIENT_ID"]="unilogin_api_client_id"
-  ["OPENID_CLIENT_SECRET"]="unilogin_api_client_secret"
+  ["UNILOGIN_CLIENT_SECRET"]="unilogin_api_client_secret"
 )
 
 # Iterate over the mapping and execute the command
