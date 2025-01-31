@@ -143,8 +143,8 @@ type Image {
 }
 
 type ImportRequestResponse {
-  status: String
-  message: String
+  status: String!
+  message: String!
 }
 
 """Generic input for key-value pairs."""
@@ -326,7 +326,7 @@ type MediaVideo implements MediaInterface {
 type Mutation {
   """Placeholder for mutation extension."""
   _: Boolean!
-  importRequest(uuid: String!, callbackUrl: String!): ImportRequestResponse
+  importRequest(uuid: String!, callbackUrl: String!): ImportRequestResponse!
 }
 
 """

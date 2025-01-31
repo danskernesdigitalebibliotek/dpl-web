@@ -4,6 +4,7 @@ namespace Drupal\bnf_server\Plugin\GraphQL\DataProducer;
 
 use Drupal\bnf\Exception\AlreadyExistsException;
 use Drupal\bnf\Services\BnfImporter;
+use Drupal\bnf_server\GraphQL\ImportRequestResponse;
 use Drupal\Core\Plugin\ContainerFactoryPluginInterface;
 use Drupal\graphql\Plugin\GraphQL\DataProducer\DataProducerPluginBase;
 use Psr\Log\LoggerInterface;
@@ -77,13 +78,9 @@ class ImportRequestProducer extends DataProducerPluginBase implements ContainerF
    *   locate the content in the external system.
    * @param string $callbackUrl
    *   The external GraphQL endpoint URL to pull node data from.
-   *
-   * @return string[]
-   *   An associative array containing:
-   *   - 'status': 'success', 'failure', 'duplicate'.
-   *   - 'message': A detailed message about the result of the operation.
    */
-  public function resolve(string $uuid, string $callbackUrl): array {
+  public function resolve(string $uuid, string $callbackUrl): ImportRequestResponse {
+    $result = new ImportRequestResponse();
     // For now, we only support articles. In the future, this should be
     // sent along as a parameter, as GraphQL exposes different queries
     // for each node type (nodeArticle)
@@ -98,10 +95,8 @@ class ImportRequestProducer extends DataProducerPluginBase implements ContainerF
     try {
       $this->importer->importNode($uuid, $callbackUrl, $node_type);
 
-      return [
-        'status' => 'success',
-        'message' => 'Node created successfully.',
-      ];
+      $result->status = 'success';
+      $result->message = 'Node created successfully.';
     }
     catch (\Exception $e) {
       if (!$e instanceof AlreadyExistsException) {
@@ -113,11 +108,11 @@ class ImportRequestProducer extends DataProducerPluginBase implements ContainerF
         ]);
       }
 
-      return [
-        'status' => ($e instanceof AlreadyExistsException) ? 'duplicate' : 'failure',
-        'message' => $e->getMessage(),
-      ];
+      $result->status = ($e instanceof AlreadyExistsException) ? 'duplicate' : 'failure';
+      $result->message = $e->getMessage();
     }
+
+    return $result;
   }
 
 }

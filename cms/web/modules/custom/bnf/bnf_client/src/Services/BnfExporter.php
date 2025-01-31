@@ -74,10 +74,10 @@ class BnfExporter {
       throw new \Exception('Could not export node to BNF.');
     }
 
-    $status = $result->data->importRequest->status ?? NULL;
+    $status = $result->data->importRequest->status;
 
     if ($status !== 'success') {
-      $message = $result->data->importRequest->message ?? '';
+      $message = $result->data->importRequest->message;
 
       $this->logger->error(
         'Failed at exporting node to BNF server. @message',

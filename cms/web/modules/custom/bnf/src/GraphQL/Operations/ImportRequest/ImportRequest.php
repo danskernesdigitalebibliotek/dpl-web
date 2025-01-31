@@ -3,23 +3,22 @@
 namespace Drupal\bnf\GraphQL\Operations\ImportRequest;
 
 /**
+ * @property \Drupal\bnf\GraphQL\Operations\ImportRequest\ImportRequest\ImportRequestResponse $importRequest
  * @property string $__typename
- * @property \Drupal\bnf\GraphQL\Operations\ImportRequest\ImportRequest\ImportRequestResponse|null $importRequest
  */
 class ImportRequest extends \Spawnia\Sailor\ObjectLike
 {
     /**
-     * @param \Drupal\bnf\GraphQL\Operations\ImportRequest\ImportRequest\ImportRequestResponse|null $importRequest
+     * @param \Drupal\bnf\GraphQL\Operations\ImportRequest\ImportRequest\ImportRequestResponse $importRequest
      */
-    public static function make(
-        $importRequest = 'Special default value that allows Sailor to differentiate between explicitly passing null and not passing a value at all.',
-    ): self {
+    public static function make($importRequest): self
+    {
         $instance = new self;
 
-        $instance->__typename = 'Mutation';
         if ($importRequest !== self::UNDEFINED) {
             $instance->importRequest = $importRequest;
         }
+        $instance->__typename = 'Mutation';
 
         return $instance;
     }
@@ -29,8 +28,8 @@ class ImportRequest extends \Spawnia\Sailor\ObjectLike
         static $converters;
 
         return $converters ??= [
+            'importRequest' => new \Spawnia\Sailor\Convert\NonNullConverter(new \Drupal\bnf\GraphQL\Operations\ImportRequest\ImportRequest\ImportRequestResponse),
             '__typename' => new \Spawnia\Sailor\Convert\NonNullConverter(new \Spawnia\Sailor\Convert\StringConverter),
-            'importRequest' => new \Spawnia\Sailor\Convert\NullConverter(new \Drupal\bnf\GraphQL\Operations\ImportRequest\ImportRequest\ImportRequestResponse),
         ];
     }
 
