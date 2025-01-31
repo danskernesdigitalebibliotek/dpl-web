@@ -5,9 +5,9 @@ declare(strict_types=1);
 namespace Drupal\bnf_server\GraphQL;
 
 /**
- * Response for the ImportRequest mutation.
+ * Response for the import mutation.
  */
-class ImportRequestResponse {
+class ImportResponse {
 
   /**
    * Result of the import.

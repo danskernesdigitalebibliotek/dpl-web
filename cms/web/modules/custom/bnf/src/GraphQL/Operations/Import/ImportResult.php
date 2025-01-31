@@ -1,14 +1,14 @@
 <?php declare(strict_types=1);
 
-namespace Drupal\bnf\GraphQL\Operations\ImportRequest;
+namespace Drupal\bnf\GraphQL\Operations\Import;
 
-class ImportRequestResult extends \Spawnia\Sailor\Result
+class ImportResult extends \Spawnia\Sailor\Result
 {
-    public ?ImportRequest $data = null;
+    public ?Import $data = null;
 
     protected function setData(\stdClass $data): void
     {
-        $this->data = ImportRequest::fromStdClass($data);
+        $this->data = Import::fromStdClass($data);
     }
 
     /**
@@ -16,7 +16,7 @@ class ImportRequestResult extends \Spawnia\Sailor\Result
      *
      * @return static
      */
-    public static function fromData(ImportRequest $data): self
+    public static function fromData(Import $data): self
     {
         $instance = new static;
         $instance->data = $data;
@@ -24,9 +24,9 @@ class ImportRequestResult extends \Spawnia\Sailor\Result
         return $instance;
     }
 
-    public function errorFree(): ImportRequestErrorFreeResult
+    public function errorFree(): ImportErrorFreeResult
     {
-        return ImportRequestErrorFreeResult::fromResult($this);
+        return ImportErrorFreeResult::fromResult($this);
     }
 
     public static function endpoint(): string

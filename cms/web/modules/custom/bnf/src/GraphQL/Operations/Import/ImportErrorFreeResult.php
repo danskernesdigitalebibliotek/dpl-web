@@ -1,10 +1,10 @@
 <?php declare(strict_types=1);
 
-namespace Drupal\bnf\GraphQL\Operations\ImportRequest;
+namespace Drupal\bnf\GraphQL\Operations\Import;
 
-class ImportRequestErrorFreeResult extends \Spawnia\Sailor\ErrorFreeResult
+class ImportErrorFreeResult extends \Spawnia\Sailor\ErrorFreeResult
 {
-    public ImportRequest $data;
+    public Import $data;
 
     public static function endpoint(): string
     {

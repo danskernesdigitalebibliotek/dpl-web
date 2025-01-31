@@ -3,15 +3,15 @@
 namespace Drupal\bnf\GraphQL\Operations;
 
 /**
- * @extends \Spawnia\Sailor\Operation<\Drupal\bnf\GraphQL\Operations\ImportRequest\ImportRequestResult>
+ * @extends \Spawnia\Sailor\Operation<\Drupal\bnf\GraphQL\Operations\Import\ImportResult>
  */
-class ImportRequest extends \Spawnia\Sailor\Operation
+class Import extends \Spawnia\Sailor\Operation
 {
     /**
      * @param string $uuid
      * @param string $callbackUrl
      */
-    public static function execute($uuid, $callbackUrl): ImportRequest\ImportRequestResult
+    public static function execute($uuid, $callbackUrl): Import\ImportResult
     {
         return self::executeOperation(
             $uuid,
@@ -31,9 +31,9 @@ class ImportRequest extends \Spawnia\Sailor\Operation
 
     public static function document(): string
     {
-        return /* @lang GraphQL */ 'mutation ImportRequest($uuid: String!, $callbackUrl: String!) {
+        return /* @lang GraphQL */ 'mutation Import($uuid: String!, $callbackUrl: String!) {
           __typename
-          importRequest(uuid: $uuid, callbackUrl: $callbackUrl) {
+          import(uuid: $uuid, callbackUrl: $callbackUrl) {
             __typename
             status
             message

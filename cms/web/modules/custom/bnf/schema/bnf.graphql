@@ -142,7 +142,7 @@ type Image {
   mime: String
 }
 
-type ImportRequestResponse {
+type ImportResponse {
   status: String!
   message: String!
 }
@@ -326,7 +326,7 @@ type MediaVideo implements MediaInterface {
 type Mutation {
   """Placeholder for mutation extension."""
   _: Boolean!
-  importRequest(uuid: String!, callbackUrl: String!): ImportRequestResponse!
+  import(uuid: String!, callbackUrl: String!): ImportResponse!
 }
 
 """
@@ -666,6 +666,21 @@ type ParagraphBreadcrumbChildren implements ParagraphInterface {
   status: Boolean!
 }
 
+"""A rule for selecting a matching campaign"""
+type ParagraphCampaignRule implements ParagraphInterface {
+  """The Universally Unique IDentifier (UUID)."""
+  id: ID!
+
+  """The time that the Paragraph was created."""
+  created: DateTime!
+
+  """The paragraphs entity language code."""
+  langcode: Language!
+
+  """Published"""
+  status: Boolean!
+}
+
 """Entity type paragraph."""
 type ParagraphCardGridAutomatic implements ParagraphInterface {
   """The Universally Unique IDentifier (UUID)."""
@@ -961,14 +976,19 @@ type ParagraphGoVideo implements ParagraphInterface {
   """The time that the Paragraph was created."""
   created: DateTime!
 
-  """Title"""
-  goVideoTitle: String
-
   """The paragraphs entity language code."""
   langcode: Language!
 
   """Published"""
   status: Boolean!
+
+  """Title"""
+  title: String
+
+  """
+  VideoTool URL. Example: https://media.videotool.dk/?vn=557_2023103014511477700668916683
+  """
+  url: String!
 }
 
 """
@@ -1300,7 +1320,7 @@ type ParagraphTextBody implements ParagraphInterface {
 }
 
 """Entity type paragraph."""
-union ParagraphUnion = ParagraphAccordion | ParagraphBanner | ParagraphBreadcrumbChildren | ParagraphCardGridAutomatic | ParagraphCardGridManual | ParagraphContentSlider | ParagraphContentSliderAutomatic | ParagraphEventTicketCategory | ParagraphFiles | ParagraphFilteredEventList | ParagraphGoLinkbox | ParagraphGoMaterialSliderAutomatic | ParagraphGoMaterialSliderManual | ParagraphGoVideo | ParagraphGoVideoBundleAutomatic | ParagraphGoVideoBundleManual | ParagraphHero | ParagraphLanguageSelector | ParagraphLinks | ParagraphManualEventList | ParagraphMaterialGridAutomatic | ParagraphMaterialGridManual | ParagraphMedias | ParagraphNavGridManual | ParagraphNavSpotsManual | ParagraphOpeningHours | ParagraphRecommendation | ParagraphSimpleLinks | ParagraphTextBody | ParagraphUserRegistrationItem | ParagraphUserRegistrationLinklist | ParagraphUserRegistrationSection | ParagraphVideo | ParagraphWebform
+union ParagraphUnion = ParagraphAccordion | ParagraphBanner | ParagraphBreadcrumbChildren | ParagraphCampaignRule | ParagraphCardGridAutomatic | ParagraphCardGridManual | ParagraphContentSlider | ParagraphContentSliderAutomatic | ParagraphEventTicketCategory | ParagraphFiles | ParagraphFilteredEventList | ParagraphGoLinkbox | ParagraphGoMaterialSliderAutomatic | ParagraphGoMaterialSliderManual | ParagraphGoVideo | ParagraphGoVideoBundleAutomatic | ParagraphGoVideoBundleManual | ParagraphHero | ParagraphLanguageSelector | ParagraphLinks | ParagraphManualEventList | ParagraphMaterialGridAutomatic | ParagraphMaterialGridManual | ParagraphMedias | ParagraphNavGridManual | ParagraphNavSpotsManual | ParagraphOpeningHours | ParagraphRecommendation | ParagraphSimpleLinks | ParagraphTextBody | ParagraphUserRegistrationItem | ParagraphUserRegistrationLinklist | ParagraphUserRegistrationSection | ParagraphVideo | ParagraphWebform
 
 """
 The "User registration item" paragraph type is used to display relevant information about the user registration process.

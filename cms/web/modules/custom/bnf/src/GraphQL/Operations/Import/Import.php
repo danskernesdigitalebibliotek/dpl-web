@@ -1,22 +1,22 @@
 <?php declare(strict_types=1);
 
-namespace Drupal\bnf\GraphQL\Operations\ImportRequest;
+namespace Drupal\bnf\GraphQL\Operations\Import;
 
 /**
- * @property \Drupal\bnf\GraphQL\Operations\ImportRequest\ImportRequest\ImportRequestResponse $importRequest
+ * @property \Drupal\bnf\GraphQL\Operations\Import\Import\ImportResponse $import
  * @property string $__typename
  */
-class ImportRequest extends \Spawnia\Sailor\ObjectLike
+class Import extends \Spawnia\Sailor\ObjectLike
 {
     /**
-     * @param \Drupal\bnf\GraphQL\Operations\ImportRequest\ImportRequest\ImportRequestResponse $importRequest
+     * @param \Drupal\bnf\GraphQL\Operations\Import\Import\ImportResponse $import
      */
-    public static function make($importRequest): self
+    public static function make($import): self
     {
         $instance = new self;
 
-        if ($importRequest !== self::UNDEFINED) {
-            $instance->importRequest = $importRequest;
+        if ($import !== self::UNDEFINED) {
+            $instance->import = $import;
         }
         $instance->__typename = 'Mutation';
 
@@ -28,7 +28,7 @@ class ImportRequest extends \Spawnia\Sailor\ObjectLike
         static $converters;
 
         return $converters ??= [
-            'importRequest' => new \Spawnia\Sailor\Convert\NonNullConverter(new \Drupal\bnf\GraphQL\Operations\ImportRequest\ImportRequest\ImportRequestResponse),
+            'import' => new \Spawnia\Sailor\Convert\NonNullConverter(new \Drupal\bnf\GraphQL\Operations\Import\Import\ImportResponse),
             '__typename' => new \Spawnia\Sailor\Convert\NonNullConverter(new \Spawnia\Sailor\Convert\StringConverter),
         ];
     }

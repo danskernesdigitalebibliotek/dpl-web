@@ -1,13 +1,13 @@
 <?php declare(strict_types=1);
 
-namespace Drupal\bnf\GraphQL\Operations\ImportRequest\ImportRequest;
+namespace Drupal\bnf\GraphQL\Operations\Import\Import;
 
 /**
  * @property string $status
  * @property string $message
  * @property string $__typename
  */
-class ImportRequestResponse extends \Spawnia\Sailor\ObjectLike
+class ImportResponse extends \Spawnia\Sailor\ObjectLike
 {
     /**
      * @param string $status
@@ -23,7 +23,7 @@ class ImportRequestResponse extends \Spawnia\Sailor\ObjectLike
         if ($message !== self::UNDEFINED) {
             $instance->message = $message;
         }
-        $instance->__typename = 'ImportRequestResponse';
+        $instance->__typename = 'ImportResponse';
 
         return $instance;
     }

@@ -4,7 +4,7 @@ namespace Drupal\bnf_client\Services;
 
 use Drupal\bnf\BnfStateEnum;
 use Drupal\bnf\Exception\AlreadyExistsException;
-use Drupal\bnf\GraphQL\Operations\ImportRequest;
+use Drupal\bnf\GraphQL\Operations\Import;
 use Drupal\bnf\MangleUrl;
 use Drupal\bnf\SailorEndpointConfig;
 use Drupal\bnf_client\Form\SettingsForm;
@@ -19,7 +19,7 @@ use Spawnia\Sailor\Configuration;
 /**
  * Service, related to exporting our content to BNF.
  *
- * We send an Import Request to BNF using GraphQL, along with information
+ * We send an import request to BNF using GraphQL, along with information
  * about the content and where they can access it using our GraphQL endpoint.
  */
 class BnfExporter {
@@ -62,8 +62,8 @@ class BnfExporter {
       $bnfServer = $this->baseUrl . 'graphql';
 
       $endpointConfig = new SailorEndpointConfig(MangleUrl::server($bnfServer));
-      Configuration::setEndpointFor(ImportRequest::class, $endpointConfig);
-      $result = ImportRequest::execute($uuid, $callbackUrl)->errorFree();
+      Configuration::setEndpointFor(Import::class, $endpointConfig);
+      $result = Import::execute($uuid, $callbackUrl)->errorFree();
 
     }
     catch (\Exception $e) {
@@ -74,10 +74,10 @@ class BnfExporter {
       throw new \Exception('Could not export node to BNF.');
     }
 
-    $status = $result->data->importRequest->status;
+    $status = $result->data->import->status;
 
     if ($status !== 'success') {
-      $message = $result->data->importRequest->message;
+      $message = $result->data->import->message;
 
       $this->logger->error(
         'Failed at exporting node to BNF server. @message',
