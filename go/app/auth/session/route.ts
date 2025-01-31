@@ -3,6 +3,7 @@ import { defaultSession, getSession } from "@/lib/session/session"
 export async function GET() {
   try {
     const session = await getSession()
+
     if (!session) {
       return Response.json({ defaultSession })
     }

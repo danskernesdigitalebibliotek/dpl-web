@@ -4,7 +4,7 @@ import * as client from "openid-client"
 
 import goConfig from "@/lib/config/goConfig"
 import { getUniloginClientConfig } from "@/lib/session/oauth/uniloginClient"
-import { getSession, sessionOptions, setUniloginTokensOnSession } from "@/lib/session/session"
+import { getSession, getSessionOptions, setUniloginTokensOnSession } from "@/lib/session/session"
 import { TUniloginTokenSet } from "@/lib/types/session"
 
 import schemas from "./schemas"
@@ -15,10 +15,16 @@ export interface TIntrospectionResponse extends client.IntrospectionResponse {
 }
 
 export async function GET(request: NextRequest) {
-  const session = await getSession({ request, response: NextResponse.next() })
+  const session = await getSession()
   const config = await getUniloginClientConfig()
+  const appUrl = String(goConfig("app.url"))
+  const sessionOptions = await getSessionOptions()
+
+  if (!config || !sessionOptions) {
+    return NextResponse.redirect(appUrl)
+  }
+
   const currentSearchParams = request.nextUrl.searchParams
-  const appUrl = goConfig("app.url")
   const redirectUri = new URL(`${appUrl}/auth/callback/unilogin`)
   currentSearchParams.forEach((value, key) => {
     redirectUri.searchParams.append(key, value)

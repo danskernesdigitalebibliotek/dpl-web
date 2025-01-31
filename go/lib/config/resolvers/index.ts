@@ -2,14 +2,12 @@ import app from "./app"
 import materialTypes from "./materialTypes"
 import search from "./search"
 import serviceFbi from "./service.fbi"
-import serviceUnilogin from "./service.unilogin"
 import token from "./token"
 import urls from "./urls"
 
 export const resolvers = {
   ...app,
   ...serviceFbi,
-  ...serviceUnilogin,
   ...search,
   ...token,
   ...materialTypes,
