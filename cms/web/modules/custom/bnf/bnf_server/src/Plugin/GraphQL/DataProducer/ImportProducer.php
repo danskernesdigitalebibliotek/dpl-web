@@ -3,8 +3,10 @@
 namespace Drupal\bnf_server\Plugin\GraphQL\DataProducer;
 
 use Drupal\bnf\Exception\AlreadyExistsException;
+use Drupal\bnf\GraphQL\Operations\Import;
 use Drupal\bnf\Services\BnfImporter;
 use Drupal\bnf_server\GraphQL\ImportResponse;
+use Drupal\bnf_server\GraphQL\ImportStatus;
 use Drupal\Core\Plugin\ContainerFactoryPluginInterface;
 use Drupal\graphql\Plugin\GraphQL\DataProducer\DataProducerPluginBase;
 use Psr\Log\LoggerInterface;
@@ -95,7 +97,7 @@ class ImportProducer extends DataProducerPluginBase implements ContainerFactoryP
     try {
       $this->importer->importNode($uuid, $callbackUrl, $node_type);
 
-      $result->status = 'success';
+      $result->status = ImportStatus::Success;
       $result->message = 'Node created successfully.';
     }
     catch (\Exception $e) {
@@ -108,7 +110,7 @@ class ImportProducer extends DataProducerPluginBase implements ContainerFactoryP
         ]);
       }
 
-      $result->status = ($e instanceof AlreadyExistsException) ? 'duplicate' : 'failure';
+      $result->status = ($e instanceof AlreadyExistsException) ? ImportStatus::Duplicate : ImportStatus::Failure;
       $result->message = $e->getMessage();
     }
 

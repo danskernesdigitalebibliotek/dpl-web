@@ -5,6 +5,7 @@ namespace Drupal\bnf_client\Services;
 use Drupal\bnf\BnfStateEnum;
 use Drupal\bnf\Exception\AlreadyExistsException;
 use Drupal\bnf\GraphQL\Operations\Import;
+use Drupal\bnf\GraphQL\Types\ImportStatus;
 use Drupal\bnf\MangleUrl;
 use Drupal\bnf\SailorEndpointConfig;
 use Drupal\bnf_client\Form\SettingsForm;
@@ -76,14 +77,14 @@ class BnfExporter {
 
     $status = $result->data->import->status;
 
-    if ($status !== 'success') {
+    if ($status !== ImportStatus::success) {
       $message = $result->data->import->message;
 
       $this->logger->error(
         'Failed at exporting node to BNF server. @message',
         ['@message' => $message]);
 
-      if ($status === 'duplicate') {
+      if ($status === ImportStatus::failure) {
         throw new AlreadyExistsException();
       }
 

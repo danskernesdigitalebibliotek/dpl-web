@@ -143,8 +143,14 @@ type Image {
 }
 
 type ImportResponse {
-  status: String!
+  status: ImportStatus!
   message: String!
+}
+
+enum ImportStatus {
+  success
+  failure
+  duplicate
 }
 
 """Generic input for key-value pairs."""

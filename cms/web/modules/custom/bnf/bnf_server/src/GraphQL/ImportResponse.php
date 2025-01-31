@@ -14,7 +14,7 @@ class ImportResponse {
    *
    * Either 'success', 'failure' or 'duplicate'.
    */
-  public string $status = 'failure';
+  public ImportStatus $status = ImportStatus::Failure;
 
   /**
    * User friendly message.

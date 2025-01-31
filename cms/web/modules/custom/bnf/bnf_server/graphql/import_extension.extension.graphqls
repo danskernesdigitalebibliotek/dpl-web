@@ -3,6 +3,12 @@ extend type Mutation {
 }
 
 type ImportResponse {
-  status: String!
+  status: ImportStatus!
   message: String!
+}
+
+enum ImportStatus {
+     success
+     failure
+     duplicate
 }
