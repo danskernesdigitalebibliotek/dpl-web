@@ -12,9 +12,6 @@ jobs:
   check:
     name: E2E job with Cypress
     runs-on: ubuntu-latest
-    env:
-      NEXT_PUBLIC_APP_URL: http://localhost:3000
-      GO_SESSION_SECRET: XXX
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
@@ -29,6 +26,11 @@ jobs:
 
       - name: Install dependencies
         run: yarn install --frozen-lockfile --no-progress --non-interactive
+
+      - name: Load environment variables
+        uses: cardinalby/export-env-action@v2
+        with:
+          envFile: ".env.test"
 
       - name: Build the Nextjs app and run Cypress tests
         uses: cypress-io/github-action@v4
