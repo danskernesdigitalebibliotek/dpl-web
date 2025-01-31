@@ -12,9 +12,6 @@ jobs:
 
     runs-on: ubuntu-latest
 
-    env:
-      NEXT_PUBLIC_APP_URL: "https://hellboy.the-movie.com"
-
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
@@ -30,6 +27,11 @@ jobs:
 
       - name: Install dependencies
         run: yarn
+
+      - name: Load environment variables
+        uses: cardinalby/export-env-action@v2
+        with:
+          envFile: ".env.test"
 
       - name: Install Playwright
         run: npx playwright install --with-deps
