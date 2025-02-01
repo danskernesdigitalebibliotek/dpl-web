@@ -40,7 +40,7 @@ class GoController extends ControllerBase {
    */
   public function postAdgangsplatformenLoginRoute(): TrustedRedirectResponse {
     // @todo We should make it configurable which path to redirect to.
-    $externalGoUrl = sprintf('%s/user/profile', $this->getGoDomain());
+    $externalGoUrl = sprintf('%s/auth/callback/adgangsplatformen', $this->getGoDomain());
     $response = new TrustedRedirectResponse($externalGoUrl);
 
     return $response;

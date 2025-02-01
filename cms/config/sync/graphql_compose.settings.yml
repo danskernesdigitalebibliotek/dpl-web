@@ -296,6 +296,7 @@ field_config:
         enabled: true
       field_go_video_title:
         enabled: true
+        name_sdl: title
       field_url:
         enabled: true
     go_video_bundle_automatic:
