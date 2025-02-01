@@ -13,6 +13,7 @@ use Drupal\Core\Form\FormStateInterface;
 use Drupal\media\MediaInterface;
 use Drupal\media\MediaSourceBase;
 use Drupal\media\MediaTypeInterface;
+use Drupal\media_videotool\Traits\HasVideoToolFeaturesTrait;
 use GuzzleHttp\ClientInterface;
 use GuzzleHttp\Exception\RequestException;
 use Psr\Log\LoggerInterface;
@@ -36,61 +37,42 @@ use function Safe\preg_match;
  */
 class VideoTool extends MediaSourceBase {
 
+  use HasVideoToolFeaturesTrait;
+
   /**
    * Key for "Name" metadata attribute.
    *
    * @var string
    */
-  const METADATA_ATTRIBUTE_NAME = 'og:title';
+  private const METADATA_ATTRIBUTE_NAME = 'og:title';
 
   /**
    * Key for "Description" metadata attribute.
    *
    * @var string
    */
-  const METADATA_ATTRIBUTE_DESCRIPTION = 'og:description';
+  private const METADATA_ATTRIBUTE_DESCRIPTION = 'og:description';
 
   /**
    * Key for "URL" metadata attribute.
    *
    * @var string
    */
-  const METADATA_ATTRIBUTE_URL = 'og:url';
+  public const METADATA_ATTRIBUTE_URL = 'og:url';
 
   /**
    * Key for "Image" metadata attribute.
    *
    * @var string
    */
-  const METADATA_ATTRIBUTE_IMAGE = 'og:image';
+  private const METADATA_ATTRIBUTE_IMAGE = 'og:image';
 
   /**
    * Key for "type" metadata attribute.
    *
    * @var string
    */
-  const METADATA_ATTRIBUTE_TYPE = 'og:type';
-
-  /**
-   * The file system.
-   *
-   * @var \Drupal\Core\File\FileSystemInterface
-   */
-  protected FileSystemInterface $fileSystem;
-
-  /**
-   * The HTTP client.
-   *
-   * @var \GuzzleHttp\ClientInterface
-   */
-  protected ClientInterface $httpClient;
-
-  /**
-   * The logger channel for media.
-   *
-   * @var \Psr\Log\LoggerInterface
-   */
-  protected LoggerInterface $logger;
+  private const METADATA_ATTRIBUTE_TYPE = 'og:type';
 
   public function __construct(
     array $configuration,
@@ -100,9 +82,9 @@ class VideoTool extends MediaSourceBase {
     EntityFieldManagerInterface $entity_field_manager,
     $field_type_manager,
     $config_factory,
-    ClientInterface $http_client,
-    FileSystemInterface $file_system,
-    LoggerInterface $logger,
+    protected ClientInterface $httpClient,
+    protected FileSystemInterface $fileSystem,
+    protected LoggerInterface $logger,
   ) {
     parent::__construct(
       $configuration,
@@ -113,10 +95,6 @@ class VideoTool extends MediaSourceBase {
       $field_type_manager,
       $config_factory
     );
-
-    $this->fileSystem = $file_system;
-    $this->httpClient = $http_client;
-    $this->logger = $logger;
   }
 
   /**
@@ -147,11 +125,11 @@ class VideoTool extends MediaSourceBase {
    */
   public function getMetadataAttributes(): array {
     return [
-      static::METADATA_ATTRIBUTE_NAME => $this->t('Name'),
-      static::METADATA_ATTRIBUTE_DESCRIPTION => $this->t('Description'),
-      static::METADATA_ATTRIBUTE_URL => $this->t('Url'),
-      static::METADATA_ATTRIBUTE_IMAGE => $this->t('Image'),
-      static::METADATA_ATTRIBUTE_TYPE => $this->t('Media type'),
+      self::METADATA_ATTRIBUTE_NAME => $this->t('Name'),
+      self::METADATA_ATTRIBUTE_DESCRIPTION => $this->t('Description'),
+      self::METADATA_ATTRIBUTE_URL => $this->t('Url'),
+      self::METADATA_ATTRIBUTE_IMAGE => $this->t('Image'),
+      self::METADATA_ATTRIBUTE_TYPE => $this->t('Media type'),
     ];
   }
 
@@ -167,7 +145,7 @@ class VideoTool extends MediaSourceBase {
       return NULL;
     }
 
-    if (!preg_match("(https:\/\/media\.videotool\.dk\/\?vn=([a-z0-9]{3})_([a-z0-9]{28}))", $media_url, $matches)) {
+    if (!self::isValidVideoToolUrl($media_url)) {
       return NULL;
     }
 
@@ -187,11 +165,11 @@ class VideoTool extends MediaSourceBase {
     }
 
     return match ($attribute_name) {
-      'default_name', static::METADATA_ATTRIBUTE_NAME => $metaData['og:title'],
-      static::METADATA_ATTRIBUTE_DESCRIPTION => $metaData['og:description'],
-      static::METADATA_ATTRIBUTE_URL => $metaData['og:url'],
-      static::METADATA_ATTRIBUTE_IMAGE, 'thumbnail_uri' => $this->getLocalThumbnailUri($media_url, $metaData['og:image']),
-      static::METADATA_ATTRIBUTE_TYPE => $metaData['og:type'],
+      self::METADATA_ATTRIBUTE_NAME, 'default_name' => $metaData['og:title'],
+      self::METADATA_ATTRIBUTE_DESCRIPTION => $metaData['og:description'],
+      self::METADATA_ATTRIBUTE_URL => $metaData['og:url'],
+      self::METADATA_ATTRIBUTE_IMAGE, 'thumbnail_uri' => $this->getLocalThumbnailUri($media_url, $metaData['og:image']),
+      self::METADATA_ATTRIBUTE_TYPE => $metaData['og:type'],
       default => parent::getMetadata($media, $attribute_name),
     };
   }

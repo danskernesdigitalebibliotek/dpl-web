@@ -8,9 +8,7 @@ use Drupal\Core\Field\FieldItemListInterface;
 use Drupal\Core\Field\Plugin\Field\FieldWidget\StringTextfieldWidget;
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\StringTranslation\TranslatableMarkup;
-use Drupal\media\Entity\MediaType;
-use Drupal\media_videotool\Plugin\media\Source\VideoTool;
-use function Safe\preg_match;
+use Drupal\media_videotool\Traits\HasVideoToolFeaturesTrait;
 
 /**
  * Plugin implementation of the 'videotool_textfield' widget.
@@ -21,6 +19,8 @@ use function Safe\preg_match;
   field_types: ['string'],
 )]
 class VideoToolWidget extends StringTextfieldWidget {
+
+  use HasVideoToolFeaturesTrait;
 
   /**
    * {@inheritdoc}
@@ -56,7 +56,7 @@ class VideoToolWidget extends StringTextfieldWidget {
    * @throws \Safe\Exceptions\PcreException
    */
   public static function validateElement(array $element, FormStateInterface $form_state): void {
-    if (!preg_match("(https:\/\/media\.videotool\.dk\/\?vn=([a-z0-9]{3})_([a-z0-9]{28}))", $element['value']['#value'])) {
+    if (!self::isValidVideoToolUrl($element['value']['#value'])) {
       $form_state->setError($element, t("The given URL does not match the VideoTool URL pattern."));
     }
   }
@@ -65,19 +65,7 @@ class VideoToolWidget extends StringTextfieldWidget {
    * {@inheritdoc}
    */
   public static function isApplicable(FieldDefinitionInterface $field_definition): bool {
-    if ($field_definition->getTargetEntityTypeId() !== 'media') {
-      return FALSE;
-    }
-
-    if (parent::isApplicable($field_definition)) {
-      $media_type = $field_definition->getTargetBundle();
-
-      if ($media_type) {
-        $media_type = MediaType::load($media_type);
-        return $media_type && $media_type->getSource() instanceof VideoTool;
-      }
-    }
-    return FALSE;
+    return self::targetEntityIsVideoTool($field_definition, parent::isApplicable(...));
   }
 
 }

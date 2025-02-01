@@ -8,12 +8,14 @@ use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\Url;
 use Drupal\media\MediaTypeInterface;
 use Drupal\media_library\Form\AddFormBase;
-use function Safe\preg_match;
+use Drupal\media_videotool\Traits\HasVideoToolFeaturesTrait;
 
 /**
  * Creates a form to create VideoTool media entities from within Media Library.
  */
 class VideoToolMediaLibraryAddForm extends AddFormBase {
+
+  use HasVideoToolFeaturesTrait;
 
   /**
    * {@inheritdoc}
@@ -72,7 +74,7 @@ class VideoToolMediaLibraryAddForm extends AddFormBase {
    */
   public function validateForm(array &$form, FormStateInterface $form_state): void {
     if ($form_state->getValue('url') !== NULL) {
-      if (!preg_match("(https:\/\/media\.videotool\.dk\/\?vn=([a-z0-9]{3})_([a-z0-9]{28}))", $form_state->getValue('url'))) {
+      if (!self::isValidVideoToolUrl($form_state->getValue('url'))) {
         $form_state->setError($form, $this->t("The given URL does not match the VideoTool URL pattern."));
       }
     }

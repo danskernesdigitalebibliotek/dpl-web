@@ -7,8 +7,8 @@ use Drupal\Core\Field\FieldDefinitionInterface;
 use Drupal\Core\Field\FieldItemListInterface;
 use Drupal\Core\Field\FormatterBase;
 use Drupal\Core\StringTranslation\TranslatableMarkup;
-use Drupal\media\Entity\MediaType;
 use Drupal\media_videotool\Plugin\media\Source\VideoTool;
+use Drupal\media_videotool\Traits\HasVideoToolFeaturesTrait;
 
 /**
  * Plugin implementation of the 'VideoTool embed' formatter.
@@ -22,6 +22,8 @@ use Drupal\media_videotool\Plugin\media\Source\VideoTool;
 )]
 class VideoToolFormatter extends FormatterBase {
 
+  use HasVideoToolFeaturesTrait;
+
   /**
    * {@inheritdoc}
    */
@@ -30,7 +32,10 @@ class VideoToolFormatter extends FormatterBase {
 
     /** @var \Drupal\media\MediaInterface $media */
     $media = $items->getEntity();
+
+    /** @var \Drupal\media_videotool\Plugin\media\Source\VideoTool $videotool */
     $videotool = $media->getSource();
+
     foreach ($items as $delta => $item) {
       $url = $videotool->getMetadata($media, VideoTool::METADATA_ATTRIBUTE_URL);
       if ($url) {
@@ -63,19 +68,7 @@ class VideoToolFormatter extends FormatterBase {
    * {@inheritdoc}
    */
   public static function isApplicable(FieldDefinitionInterface $field_definition): bool {
-    if ($field_definition->getTargetEntityTypeId() !== 'media') {
-      return FALSE;
-    }
-
-    if (parent::isApplicable($field_definition)) {
-      $media_type = $field_definition->getTargetBundle();
-
-      if ($media_type) {
-        $media_type = MediaType::load($media_type);
-        return $media_type && $media_type->getSource() instanceof VideoTool;
-      }
-    }
-    return FALSE;
+    return self::targetEntityIsVideoTool($field_definition, parent::isApplicable(...));
   }
 
 }
