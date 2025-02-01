@@ -40,7 +40,7 @@ export const getDplCmsUniloginConfig = async () => {
       ? process.env.UNILOGIN_CLIENT_ID
       : (config?.unilogin?.unilogin_api_client_id ?? null),
     clientSecret: process.env.UNILOGIN_CLIENT_SECRET
-      ? process.env.UNILOGIN_WELLKNOWN_URL
+      ? process.env.UNILOGIN_CLIENT_SECRET
       : (config?.unilogin?.unilogin_api_client_secret ?? null),
     apiData: config?.unilogin ?? null,
   }
