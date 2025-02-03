@@ -51,6 +51,19 @@ export type AddressCountry = {
   name?: Maybe<Scalars['String']['output']>;
 };
 
+export type AdgangsplatformenToken = {
+  __typename?: 'AdgangsplatformenToken';
+  library?: Maybe<Scalars['String']['output']>;
+  user?: Maybe<Scalars['String']['output']>;
+};
+
+/** A CQL search string. */
+export type CqlSearch = {
+  __typename?: 'CQLSearch';
+  /** The CQL search string. */
+  value?: Maybe<Scalars['String']['output']>;
+};
+
 /** A color field. */
 export type Color = {
   __typename?: 'Color';
@@ -88,6 +101,11 @@ export type DplConfiguration = {
   unilogin?: Maybe<UniloginConfiguration>;
 };
 
+export type DplTokens = {
+  __typename?: 'DplTokens';
+  adgangsplatformen?: Maybe<AdgangsplatformenToken>;
+};
+
 /** A file object to represent an managed file. */
 export type File = {
   __typename?: 'File';
@@ -101,6 +119,17 @@ export type File = {
   size: Scalars['Int']['output'];
   /** The URL of the file. */
   url: Scalars['String']['output'];
+};
+
+export type GoConfiguration = {
+  __typename?: 'GoConfiguration';
+  loginUrls?: Maybe<GoLoginUrls>;
+  unilogin?: Maybe<UniloginConfiguration>;
+};
+
+export type GoLoginUrls = {
+  __typename?: 'GoLoginUrls';
+  adgangsplatformen?: Maybe<Scalars['String']['output']>;
 };
 
 /** A image object to represent an managed file. */
@@ -644,6 +673,78 @@ export type ParagraphFilteredEventList = ParagraphInterface & {
   title?: Maybe<Scalars['String']['output']>;
 };
 
+/** Entity type paragraph. */
+export type ParagraphGoLinkbox = ParagraphInterface & {
+  __typename?: 'ParagraphGoLinkbox';
+  /** The time that the Paragraph was created. */
+  created: DateTime;
+  /** Color */
+  goColor?: Maybe<Color>;
+  /** Description */
+  goDescription: Scalars['String']['output'];
+  /** Image */
+  goImage?: Maybe<MediaUnion>;
+  /** LInk */
+  goLink: Link;
+  /** The Universally Unique IDentifier (UUID). */
+  id: Scalars['ID']['output'];
+  /** The paragraphs entity language code. */
+  langcode: Language;
+  /** Published */
+  status: Scalars['Boolean']['output'];
+  /** Title */
+  title: Scalars['String']['output'];
+};
+
+/** This paragraph is used for displaying a range of materials based on a CQL search string.  */
+export type ParagraphGoMaterialSliderAutomatic = ParagraphInterface & {
+  __typename?: 'ParagraphGoMaterialSliderAutomatic';
+  /**
+   * This field is for inserting a CQL string based on a search. <br /><br />Please
+   * be aware, that it is necessary to copy the exact CQL string, including the
+   * quotations. i.e: ( 'harry potter')<br /><br />A valid CQL search string can be
+   * generated, by performing a query through the advanced search, and copying the
+   * CQL string from there.
+   */
+  cqlSearch: CqlSearch;
+  /** The time that the Paragraph was created. */
+  created: DateTime;
+  /** The Universally Unique IDentifier (UUID). */
+  id: Scalars['ID']['output'];
+  /** The paragraphs entity language code. */
+  langcode: Language;
+  /** Amount of materials */
+  sliderAmountOfMaterials: Scalars['Int']['output'];
+  /** Published */
+  status: Scalars['Boolean']['output'];
+  /** Title */
+  title?: Maybe<Scalars['String']['output']>;
+};
+
+/**
+ * This paragraph is used for displaying a range of materials. The materials can be
+ * chosen by manually searching for available materials.
+ */
+export type ParagraphGoMaterialSliderManual = ParagraphInterface & {
+  __typename?: 'ParagraphGoMaterialSliderManual';
+  /** The time that the Paragraph was created. */
+  created: DateTime;
+  /** The Universally Unique IDentifier (UUID). */
+  id: Scalars['ID']['output'];
+  /** The paragraphs entity language code. */
+  langcode: Language;
+  /**
+   * Here you can choose which materials to display. If you need to link to a
+   * specific type, select it from the dropdown and the system will display that,
+   * if it is available.<br />Example work ID: work-of:870970-basis:136336282
+   */
+  materialSliderWorkIds: Array<WorkId>;
+  /** Published */
+  status: Scalars['Boolean']['output'];
+  /** Title */
+  title?: Maybe<Scalars['String']['output']>;
+};
+
 /** Enter the URL for the video you want to include. */
 export type ParagraphGoVideo = ParagraphInterface & {
   __typename?: 'ParagraphGoVideo';
@@ -659,6 +760,62 @@ export type ParagraphGoVideo = ParagraphInterface & {
   title?: Maybe<Scalars['String']['output']>;
   /** VideoTool URL. Example: https://media.videotool.dk/?vn=557_2023103014511477700668916683 */
   url: Scalars['String']['output'];
+};
+
+/**
+ * This paragraph is used for displaying a VideoTool video and display a set of
+ * related books. The related books is automatically chosen based on a CQL search
+ */
+export type ParagraphGoVideoBundleAutomatic = ParagraphInterface & {
+  __typename?: 'ParagraphGoVideoBundleAutomatic';
+  /**
+   * This field is for inserting a CQL string based on a search. <br /><br />Please
+   * be aware, that it is necessary to copy the exact CQL string, including the
+   * quotations. i.e: ( 'harry potter')<br /><br />A valid CQL search string can be
+   * generated, by performing a query through the advanced search, and copying the
+   * CQL string from there.
+   */
+  cqlSearch: CqlSearch;
+  /** The time that the Paragraph was created. */
+  created: DateTime;
+  /** Title */
+  goVideoTitle: Scalars['String']['output'];
+  /** The Universally Unique IDentifier (UUID). */
+  id: Scalars['ID']['output'];
+  /** The paragraphs entity language code. */
+  langcode: Language;
+  /** Published */
+  status: Scalars['Boolean']['output'];
+  /** VideoTool URL. Example: https://media.videotool.dk/?vn=557_2023103014511477700668916683 */
+  url: Scalars['String']['output'];
+  /** The amount of related materials that should be shown. */
+  videoAmountOfMaterials: Scalars['Int']['output'];
+};
+
+/**
+ * This paragraph is used for displaying a VideoTool video and display a set of
+ * related or recommended materials. The materials can be selected manually.
+ */
+export type ParagraphGoVideoBundleManual = ParagraphInterface & {
+  __typename?: 'ParagraphGoVideoBundleManual';
+  /** The time that the Paragraph was created. */
+  created: DateTime;
+  /** Title */
+  goVideoTitle: Scalars['String']['output'];
+  /** The Universally Unique IDentifier (UUID). */
+  id: Scalars['ID']['output'];
+  /** The paragraphs entity language code. */
+  langcode: Language;
+  /** Published */
+  status: Scalars['Boolean']['output'];
+  /** VideoTool URL. Example: https://media.videotool.dk/?vn=557_2023103014511477700668916683 */
+  url: Scalars['String']['output'];
+  /**
+   * Here you can choose which materials to display. If you need to link to a
+   * specific type, select it from the dropdown and the system will display that,
+   * if it is available.<br />Example work ID: work-of:870970-basis:136336282
+   */
+  videoBundleWorkIds?: Maybe<Array<WorkId>>;
 };
 
 /** Entity type paragraph. */
@@ -747,7 +904,7 @@ export type ParagraphTextBody = ParagraphInterface & {
 };
 
 /** Entity type paragraph. */
-export type ParagraphUnion = ParagraphAccordion | ParagraphBanner | ParagraphBreadcrumbChildren | ParagraphCardGridAutomatic | ParagraphCardGridManual | ParagraphContentSlider | ParagraphContentSliderAutomatic | ParagraphFilteredEventList | ParagraphGoVideo | ParagraphManualEventList | ParagraphMaterialGridAutomatic | ParagraphMaterialGridManual | ParagraphTextBody | ParagraphVideo;
+export type ParagraphUnion = ParagraphAccordion | ParagraphBanner | ParagraphBreadcrumbChildren | ParagraphCardGridAutomatic | ParagraphCardGridManual | ParagraphContentSlider | ParagraphContentSliderAutomatic | ParagraphFilteredEventList | ParagraphGoLinkbox | ParagraphGoMaterialSliderAutomatic | ParagraphGoMaterialSliderManual | ParagraphGoVideo | ParagraphGoVideoBundleAutomatic | ParagraphGoVideoBundleManual | ParagraphManualEventList | ParagraphMaterialGridAutomatic | ParagraphMaterialGridManual | ParagraphTextBody | ParagraphVideo;
 
 /** Enter the URL for the video you want to include. */
 export type ParagraphVideo = ParagraphInterface & {
@@ -769,6 +926,8 @@ export type Query = {
   __typename?: 'Query';
   /** DPL Configuration */
   dplConfiguration?: Maybe<DplConfiguration>;
+  dplTokens?: Maybe<DplTokens>;
+  goConfiguration?: Maybe<GoConfiguration>;
   /** Schema information. */
   info: SchemaInformation;
   /** Load a NodeArticle entity by id */
@@ -1128,12 +1287,21 @@ export type UnsupportedType = {
   unsupported?: Maybe<Scalars['Boolean']['output']>;
 };
 
+/** A WorkID field. */
+export type WorkId = {
+  __typename?: 'WorkId';
+  /** The material type (e.g., bog, e-bog). */
+  material_type?: Maybe<Scalars['String']['output']>;
+  /** The WorkID value */
+  work_id?: Maybe<Scalars['String']['output']>;
+};
+
 export type GetArticleQueryVariables = Exact<{
   id: Scalars['ID']['input'];
 }>;
 
 
-export type GetArticleQuery = { __typename?: 'Query', nodeArticle?: { __typename?: 'NodeArticle', title: string, subtitle?: string | null, paragraphs?: Array<{ __typename: 'ParagraphAccordion' } | { __typename: 'ParagraphBanner' } | { __typename: 'ParagraphBreadcrumbChildren' } | { __typename: 'ParagraphCardGridAutomatic' } | { __typename: 'ParagraphCardGridManual' } | { __typename: 'ParagraphContentSlider' } | { __typename: 'ParagraphContentSliderAutomatic' } | { __typename: 'ParagraphFilteredEventList' } | { __typename: 'ParagraphGoVideo' } | { __typename: 'ParagraphManualEventList' } | { __typename: 'ParagraphMaterialGridAutomatic' } | { __typename: 'ParagraphMaterialGridManual' } | { __typename: 'ParagraphTextBody', body?: { __typename?: 'Text', value?: string | null } | null } | { __typename: 'ParagraphVideo' }> | null } | null };
+export type GetArticleQuery = { __typename?: 'Query', nodeArticle?: { __typename?: 'NodeArticle', title: string, subtitle?: string | null, paragraphs?: Array<{ __typename: 'ParagraphAccordion' } | { __typename: 'ParagraphBanner' } | { __typename: 'ParagraphBreadcrumbChildren' } | { __typename: 'ParagraphCardGridAutomatic' } | { __typename: 'ParagraphCardGridManual' } | { __typename: 'ParagraphContentSlider' } | { __typename: 'ParagraphContentSliderAutomatic' } | { __typename: 'ParagraphFilteredEventList' } | { __typename: 'ParagraphGoLinkbox' } | { __typename: 'ParagraphGoMaterialSliderAutomatic' } | { __typename: 'ParagraphGoMaterialSliderManual' } | { __typename: 'ParagraphGoVideo' } | { __typename: 'ParagraphGoVideoBundleAutomatic' } | { __typename: 'ParagraphGoVideoBundleManual' } | { __typename: 'ParagraphManualEventList' } | { __typename: 'ParagraphMaterialGridAutomatic' } | { __typename: 'ParagraphMaterialGridManual' } | { __typename: 'ParagraphTextBody', body?: { __typename?: 'Text', value?: string | null } | null } | { __typename: 'ParagraphVideo' }> | null } | null };
 
 export type GetDplCmsConfigurationQueryVariables = Exact<{ [key: string]: never; }>;
 
@@ -1145,7 +1313,7 @@ export type GetPageByPathQueryVariables = Exact<{
 }>;
 
 
-export type GetPageByPathQuery = { __typename?: 'Query', route?: { __typename: 'RouteExternal' } | { __typename: 'RouteInternal', url: string, entity?: { __typename?: 'NodeGoArticle' } | { __typename?: 'NodeGoCategory' } | { __typename?: 'NodeGoPage', paragraphs?: Array<{ __typename?: 'ParagraphAccordion' } | { __typename?: 'ParagraphBanner' } | { __typename?: 'ParagraphBreadcrumbChildren' } | { __typename?: 'ParagraphCardGridAutomatic' } | { __typename?: 'ParagraphCardGridManual' } | { __typename?: 'ParagraphContentSlider' } | { __typename?: 'ParagraphContentSliderAutomatic' } | { __typename?: 'ParagraphFilteredEventList' } | { __typename: 'ParagraphGoVideo', id: string, url: string, title?: string | null, status: boolean, created: { __typename?: 'DateTime', timestamp: unknown }, langcode: { __typename?: 'Language', name?: string | null } } | { __typename?: 'ParagraphManualEventList' } | { __typename?: 'ParagraphMaterialGridAutomatic' } | { __typename?: 'ParagraphMaterialGridManual' } | { __typename?: 'ParagraphTextBody' } | { __typename?: 'ParagraphVideo' }> | null } | null } | { __typename: 'RouteRedirect' } | null };
+export type GetPageByPathQuery = { __typename?: 'Query', route?: { __typename: 'RouteExternal' } | { __typename: 'RouteInternal', url: string, entity?: { __typename?: 'NodeGoArticle' } | { __typename?: 'NodeGoCategory' } | { __typename?: 'NodeGoPage', paragraphs?: Array<{ __typename?: 'ParagraphAccordion' } | { __typename?: 'ParagraphBanner' } | { __typename?: 'ParagraphBreadcrumbChildren' } | { __typename?: 'ParagraphCardGridAutomatic' } | { __typename?: 'ParagraphCardGridManual' } | { __typename?: 'ParagraphContentSlider' } | { __typename?: 'ParagraphContentSliderAutomatic' } | { __typename?: 'ParagraphFilteredEventList' } | { __typename?: 'ParagraphGoLinkbox' } | { __typename?: 'ParagraphGoMaterialSliderAutomatic' } | { __typename?: 'ParagraphGoMaterialSliderManual' } | { __typename: 'ParagraphGoVideo', id: string, url: string, title?: string | null, status: boolean, created: { __typename?: 'DateTime', timestamp: unknown }, langcode: { __typename?: 'Language', name?: string | null } } | { __typename?: 'ParagraphGoVideoBundleAutomatic' } | { __typename?: 'ParagraphGoVideoBundleManual' } | { __typename?: 'ParagraphManualEventList' } | { __typename?: 'ParagraphMaterialGridAutomatic' } | { __typename?: 'ParagraphMaterialGridManual' } | { __typename?: 'ParagraphTextBody' } | { __typename?: 'ParagraphVideo' }> | null } | null } | { __typename: 'RouteRedirect' } | null };
 
 
 

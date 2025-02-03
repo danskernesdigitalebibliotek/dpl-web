@@ -2102,6 +2102,16 @@ export type SearchFacetsQueryVariables = Exact<{
 
 export type SearchFacetsQuery = { __typename?: 'Query', search: { __typename?: 'SearchResponse', facets: Array<{ __typename?: 'FacetResult', name: string, values: Array<{ __typename?: 'FacetValue', key: string, term: string, score?: number | null }> }> } };
 
+export type ComplexSearchForWorkTeaserQueryVariables = Exact<{
+  cql: Scalars['String']['input'];
+  offset: Scalars['Int']['input'];
+  limit: Scalars['PaginationLimitScalar']['input'];
+  filters: ComplexSearchFiltersInput;
+}>;
+
+
+export type ComplexSearchForWorkTeaserQuery = { __typename?: 'Query', complexSearch: { __typename?: 'ComplexSearchResponse', hitcount: number, works: Array<{ __typename?: 'Work', workId: string, manifestations: { __typename?: 'Manifestations', all: Array<{ __typename?: 'Manifestation', pid: string, identifiers: Array<{ __typename?: 'Identifier', type: IdentifierTypeEnum, value: string }>, materialTypes: Array<{ __typename?: 'MaterialType', materialTypeGeneral: { __typename?: 'GeneralMaterialType', display: string, code: GeneralMaterialTypeCodeEnum } }> }>, bestRepresentation: { __typename?: 'Manifestation', pid: string, identifiers: Array<{ __typename?: 'Identifier', type: IdentifierTypeEnum, value: string }>, materialTypes: Array<{ __typename?: 'MaterialType', materialTypeGeneral: { __typename?: 'GeneralMaterialType', display: string, code: GeneralMaterialTypeCodeEnum } }> } }, titles: { __typename?: 'WorkTitles', full: Array<string>, original?: Array<string> | null }, creators: Array<{ __typename: 'Corporation', display: string } | { __typename: 'Person', display: string }>, materialTypes: Array<{ __typename?: 'MaterialType', materialTypeGeneral: { __typename?: 'GeneralMaterialType', display: string, code: GeneralMaterialTypeCodeEnum } }>, workYear?: { __typename?: 'PublicationYear', display: string } | null }> } };
+
 export type GetMaterialQueryVariables = Exact<{
   wid: Scalars['String']['input'];
 }>;
@@ -2432,6 +2442,56 @@ useSuspenseSearchFacetsQuery.getKey = (variables: SearchFacetsQueryVariables) =>
 
 
 useSearchFacetsQuery.fetcher = (variables: SearchFacetsQueryVariables, options?: RequestInit['headers']) => fetchData<SearchFacetsQuery, SearchFacetsQueryVariables>(SearchFacetsDocument, variables, options);
+
+export const ComplexSearchForWorkTeaserDocument = `
+    query complexSearchForWorkTeaser($cql: String!, $offset: Int!, $limit: PaginationLimitScalar!, $filters: ComplexSearchFiltersInput!) {
+  complexSearch(cql: $cql, filters: $filters) {
+    hitcount
+    works(offset: $offset, limit: $limit) {
+      ...WorkTeaserSearchPage
+    }
+  }
+}
+    ${WorkTeaserSearchPageFragmentDoc}`;
+
+export const useComplexSearchForWorkTeaserQuery = <
+      TData = ComplexSearchForWorkTeaserQuery,
+      TError = unknown
+    >(
+      variables: ComplexSearchForWorkTeaserQueryVariables,
+      options?: Omit<UseQueryOptions<ComplexSearchForWorkTeaserQuery, TError, TData>, 'queryKey'> & { queryKey?: UseQueryOptions<ComplexSearchForWorkTeaserQuery, TError, TData>['queryKey'] }
+    ) => {
+    
+    return useQuery<ComplexSearchForWorkTeaserQuery, TError, TData>(
+      {
+    queryKey: ['complexSearchForWorkTeaser', variables],
+    queryFn: fetchData<ComplexSearchForWorkTeaserQuery, ComplexSearchForWorkTeaserQueryVariables>(ComplexSearchForWorkTeaserDocument, variables),
+    ...options
+  }
+    )};
+
+useComplexSearchForWorkTeaserQuery.getKey = (variables: ComplexSearchForWorkTeaserQueryVariables) => ['complexSearchForWorkTeaser', variables];
+
+export const useSuspenseComplexSearchForWorkTeaserQuery = <
+      TData = ComplexSearchForWorkTeaserQuery,
+      TError = unknown
+    >(
+      variables: ComplexSearchForWorkTeaserQueryVariables,
+      options?: Omit<UseSuspenseQueryOptions<ComplexSearchForWorkTeaserQuery, TError, TData>, 'queryKey'> & { queryKey?: UseSuspenseQueryOptions<ComplexSearchForWorkTeaserQuery, TError, TData>['queryKey'] }
+    ) => {
+    
+    return useSuspenseQuery<ComplexSearchForWorkTeaserQuery, TError, TData>(
+      {
+    queryKey: ['complexSearchForWorkTeaserSuspense', variables],
+    queryFn: fetchData<ComplexSearchForWorkTeaserQuery, ComplexSearchForWorkTeaserQueryVariables>(ComplexSearchForWorkTeaserDocument, variables),
+    ...options
+  }
+    )};
+
+useSuspenseComplexSearchForWorkTeaserQuery.getKey = (variables: ComplexSearchForWorkTeaserQueryVariables) => ['complexSearchForWorkTeaserSuspense', variables];
+
+
+useComplexSearchForWorkTeaserQuery.fetcher = (variables: ComplexSearchForWorkTeaserQueryVariables, options?: RequestInit['headers']) => fetchData<ComplexSearchForWorkTeaserQuery, ComplexSearchForWorkTeaserQueryVariables>(ComplexSearchForWorkTeaserDocument, variables, options);
 
 export const GetMaterialDocument = `
     query getMaterial($wid: String!) {
