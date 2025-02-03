@@ -4,7 +4,7 @@ status: true
 dependencies:
   config:
     - field.storage.paragraph.field_embed_video
-    - media.type.videotool
+    - media.type.video
     - paragraphs.paragraphs_type.go_video
 id: paragraph.go_video.field_embed_video
 field_name: field_embed_video
@@ -12,7 +12,7 @@ entity_type: paragraph
 bundle: go_video
 label: 'Embed video'
 description: ''
-required: true
+required: false
 translatable: false
 default_value: {  }
 default_value_callback: ''
@@ -20,10 +20,10 @@ settings:
   handler: 'default:media'
   handler_settings:
     target_bundles:
-      videotool: videotool
+      video: video
     sort:
       field: name
       direction: ASC
     auto_create: false
-    auto_create_bundle: video
+    auto_create_bundle: ''
 field_type: entity_reference
