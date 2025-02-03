@@ -2,17 +2,19 @@
 
 import React from "react"
 
+import {
+  MediaVideotool,
+  ParagraphGoVideo as TParagraphGoVideo,
+} from "@/lib/graphql/generated/dpl-cms/graphql"
+
 type ParagraphGoVideoProps = {
-  // TODO: Something has changed and removed the title from the type. Please check.
-  // title: TParagraphGoVideo["title"]
-  title: string
-  // TODO: Something has changed and removed the url from the type. Please check.
-  // url: TParagraphGoVideo["url"]
-  url: string
+  title: TParagraphGoVideo["title"]
+  url: TParagraphGoVideo["url"]
+  embedVideo: MediaVideotool
 }
 
 export default function ParagraphGoVideo(paragraphGoVideo: ParagraphGoVideoProps) {
-  const { title, url } = paragraphGoVideo
+  const { title, embedVideo } = paragraphGoVideo
 
   return (
     <div className="content-container grid-go gap-paragraph-spacing-inner">
@@ -24,7 +26,7 @@ export default function ParagraphGoVideo(paragraphGoVideo: ParagraphGoVideoProps
           <iframe
             aria-label={title || "Video"}
             className="absolute inset-0 h-full w-full"
-            src={url}
+            src={embedVideo?.mediaVideotool}
             allowFullScreen
             allow="autoplay; fullscreen"></iframe>
         </div>
