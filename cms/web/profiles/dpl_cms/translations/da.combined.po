@@ -7,8 +7,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2025-02-03 10:07+0100\n"
-"PO-Revision-Date: 2025-02-03 10:07+0100\n"
+"POT-Creation-Date: 2025-02-03 15:05+0100\n"
+"PO-Revision-Date: 2025-02-03 15:05+0100\n"
 "Last-Translator: NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
 "MIME-Version: 1.0\n"
@@ -4008,6 +4008,52 @@ msgctxt "Dpl Publizon"
 msgid "Publizon service url"
 msgstr "Publizon service URL"
 
+msgid "Add @type"
+msgstr "Tilføj @type"
+
+msgid "Add @type video via URL"
+msgstr ""
+
+msgid ""
+"VideoTool URL example: https://media.videotool.dk/?"
+"vn=557_2023103014511477700668916683"
+msgstr ""
+
+msgid "Add"
+msgstr "Tilføj"
+
+msgid "The given URL does not match the VideoTool URL pattern."
+msgstr ""
+
+msgid "VideoTool URL"
+msgstr ""
+
+msgid "VideoTool embed"
+msgstr ""
+
+msgid "Name"
+msgstr "Name"
+
+msgid "Description"
+msgstr "Beskrivelse"
+
+msgid "Url"
+msgstr "URL"
+
+msgid "Image"
+msgstr "Billede"
+
+msgid "Media type"
+msgstr "Media type"
+
+msgid "Generate thumbnails"
+msgstr ""
+
+msgid ""
+"If checked, Drupal will automatically generate thumbnails from VideoTool "
+"provided images."
+msgstr ""
+
 msgctxt "dpl_search"
 msgid "Showing web results for \"@input\" (@total_results)"
 msgstr "Viser hjemmesidens indhold for \"@input\" (@total_results)"
@@ -4376,6 +4422,12 @@ msgstr "Opdater enkelte åbningstider"
 
 msgid "List all opening hours"
 msgstr "Vis alle åbningstider"
+
+msgid "VideoTool"
+msgstr ""
+
+msgid "Embed VideoTool content."
+msgstr ""
 
 msgid "CQL Search Widget"
 msgstr "CQL søgewidget"
@@ -4967,6 +5019,9 @@ msgstr "DPL Publizon"
 
 msgid "Handle publizon configuration"
 msgstr "Håndter indstillinger for Publizon"
+
+msgid "Integrate the VideoTool video platform into the Media module"
+msgstr ""
 
 msgid "DPL Search"
 msgstr "DPL Search"
@@ -6843,12 +6898,6 @@ msgstr "Revideringslog"
 
 msgid "The log entry explaining the changes in this revision."
 msgstr "Logbeskeden som beskriver ændringerne i denne version."
-
-msgid "Name"
-msgstr "Name"
-
-msgid "Description"
-msgstr "Beskrivelse"
 
 msgid "Aspect Ratio"
 msgstr "Aspekt ratio"
@@ -10163,9 +10212,6 @@ msgstr "Language"
 msgid "@language (original)"
 msgstr "@language (original)"
 
-msgid "Add"
-msgstr "Tilføj"
-
 msgid ""
 "To view a list of displays with meta tags set up, click on a view name. To "
 "view a summary of meta tags configuration for a particular display, click on "
@@ -10783,9 +10829,6 @@ msgstr ""
 "Se <a href='https://w3c.github.io/webappsec/specs/referrer-policy/'>W3C-"
 "specifikationerne</a> for yderligere detaljer. Bemærk: Dette tjener samme "
 "formål som HTTP-headeren med samme navn."
-
-msgid "Image"
-msgstr "Billede"
 
 msgid ""
 "An image associated with this page, for use as a thumbnail in social "
@@ -15058,9 +15101,6 @@ msgstr "Gruppe arrangementsserie (@type)"
 
 msgid "Adds %type content to groups both publicly and privately."
 msgstr "Tilføjer %type indhold til både offentlige og private grupper."
-
-msgid "Add @type"
-msgstr "Tilføj @type"
 
 msgid ""
 "This field has been disabled by the plugin to guarantee the functionality "
@@ -20005,6 +20045,10 @@ msgctxt "field.field.media.video.field_media_oembed_video:label"
 msgid "Remote video URL"
 msgstr ""
 
+msgctxt "field.field.media.videotool.field_media_videotool:label"
+msgid "VideoTool URL"
+msgstr ""
+
 msgctxt "field.field.node.article.field_branch:label"
 msgid "Branch"
 msgstr ""
@@ -20701,6 +20745,11 @@ msgid ""
 msgstr ""
 
 msgctxt ""
+"field.field.paragraph.go_video_bundle_automatic.field_embed_video:label"
+msgid "Embed video"
+msgstr ""
+
+msgctxt ""
 "field.field.paragraph.go_video_bundle_automatic.field_go_video_title:label"
 msgid "Title"
 msgstr ""
@@ -20725,6 +20774,10 @@ msgctxt ""
 "field.field.paragraph.go_video_bundle_automatic."
 "field_video_amount_of_materials:description"
 msgid "The amount of related materials that should be shown."
+msgstr ""
+
+msgctxt "field.field.paragraph.go_video_bundle_manual.field_embed_video:label"
+msgid "Embed video"
 msgstr ""
 
 msgctxt ""
@@ -21712,6 +21765,10 @@ msgstr ""
 
 msgctxt "media.type.video:label"
 msgid "Video"
+msgstr ""
+
+msgctxt "media.type.videotool:label"
+msgid "VideoTool"
 msgstr ""
 
 msgctxt "metatag.metatag_defaults.403:label"
