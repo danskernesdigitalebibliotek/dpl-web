@@ -1,9 +1,9 @@
 const GO_FRONT_PAGE_SLUG = "go-frontpage"
 
-const urls = {
-  "url.gofrontpage": () => {
+const routes = {
+  "routes.gofrontpage": () => {
     return GO_FRONT_PAGE_SLUG
   },
 }
 
-export default urls
+export default routes

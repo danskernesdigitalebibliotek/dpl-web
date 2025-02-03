@@ -1,9 +1,9 @@
 import app from "./app"
 import materialTypes from "./materialTypes"
+import routes from "./routes"
 import search from "./search"
 import serviceFbi from "./service.fbi"
 import token from "./token"
-import urls from "./urls"
 
 export const resolvers = {
   ...app,
@@ -11,7 +11,7 @@ export const resolvers = {
   ...search,
   ...token,
   ...materialTypes,
-  ...urls,
+  ...routes,
 }
 
 export type TResolvers = typeof resolvers
