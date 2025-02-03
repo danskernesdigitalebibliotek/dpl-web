@@ -5,7 +5,6 @@ dependencies:
   config:
     - field.storage.paragraph.field_embed_video
     - media.type.video
-    - media.type.videotool
     - paragraphs.paragraphs_type.video
 id: paragraph.video.field_embed_video
 field_name: field_embed_video
@@ -22,10 +21,9 @@ settings:
   handler_settings:
     target_bundles:
       video: video
-      videotool: videotool
     sort:
       field: name
       direction: ASC
     auto_create: false
-    auto_create_bundle: video
+    auto_create_bundle: ''
 field_type: entity_reference

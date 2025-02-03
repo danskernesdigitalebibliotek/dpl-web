@@ -4,7 +4,6 @@ status: true
 dependencies:
   config:
     - field.field.paragraph.go_video_bundle_automatic.field_cql_search
-    - field.field.paragraph.go_video_bundle_automatic.field_embed_video
     - field.field.paragraph.go_video_bundle_automatic.field_go_video_title
     - field.field.paragraph.go_video_bundle_automatic.field_url
     - field.field.paragraph.go_video_bundle_automatic.field_video_amount_of_materials
@@ -22,15 +21,6 @@ content:
     settings: {  }
     third_party_settings: {  }
     weight: 3
-    region: content
-  field_embed_video:
-    type: entity_reference_entity_view
-    label: hidden
-    settings:
-      view_mode: full
-      link: false
-    third_party_settings: {  }
-    weight: 0
     region: content
   field_go_video_title:
     type: string

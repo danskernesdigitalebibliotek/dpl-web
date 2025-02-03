@@ -11,7 +11,7 @@ entity_type: paragraph
 bundle: go_video
 label: URL
 description: 'VideoTool URL. Example: https://media.videotool.dk/?vn=557_2023103014511477700668916683'
-required: false
+required: true
 translatable: false
 default_value: {  }
 default_value_callback: ''
