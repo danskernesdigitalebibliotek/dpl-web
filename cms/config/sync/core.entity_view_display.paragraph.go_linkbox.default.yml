@@ -10,7 +10,7 @@ dependencies:
     - field.field.paragraph.go_linkbox.field_title
     - paragraphs.paragraphs_type.go_linkbox
   module:
-    - link
+    - entity_reference_revisions
     - options
 id: paragraph.go_linkbox.default
 targetEntityType: paragraph
@@ -41,16 +41,13 @@ content:
     weight: 3
     region: content
   field_go_link:
-    type: link
+    type: entity_reference_revisions_entity_view
     label: above
     settings:
-      trim_length: 80
-      url_only: false
-      url_plain: false
-      rel: ''
-      target: ''
+      view_mode: default
+      link: ''
     third_party_settings: {  }
-    weight: 1
+    weight: 5
     region: content
   field_title:
     type: string
