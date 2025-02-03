@@ -1,36 +1,23 @@
-import { QueryClient } from "@tanstack/react-query"
-
-import getQueryClient from "@/lib/getQueryClient"
+import { fetcher } from "@/lib/graphql/fetchers/dpl-cms.fetcher"
 import {
+  GetDplCmsConfigurationDocument,
   GetDplCmsConfigurationQuery,
-  useGetDplCmsConfigurationQuery,
+  GetDplCmsConfigurationQueryVariables,
 } from "@/lib/graphql/generated/dpl-cms/graphql"
 
-const queryDplCmsConfig = async (queryClient: QueryClient) => {
-  const { dplConfiguration } = await queryClient.fetchQuery<GetDplCmsConfigurationQuery>({
-    queryKey: useGetDplCmsConfigurationQuery.getKey(),
-    queryFn: useGetDplCmsConfigurationQuery.fetcher(),
-    // TODO: Set this when caching strategy is implemented.
-    // Choosing half a minute for now.
-    staleTime: 30000,
-  })
+const queryDplCmsConfig = async () => {
+  const { dplConfiguration } = await fetcher<
+    GetDplCmsConfigurationQuery,
+    GetDplCmsConfigurationQueryVariables
+  >(GetDplCmsConfigurationDocument, undefined, {
+    next: { revalidate: 30 },
+  })()
 
   return dplConfiguration ?? null
 }
 
-export const ensureDplCmsConfig = async (queryClient: QueryClient) => {
-  await queryClient.ensureQueryData({
-    queryKey: useGetDplCmsConfigurationQuery.getKey(),
-    queryFn: useGetDplCmsConfigurationQuery.fetcher(),
-    // TODO: Set this when caching strategy is implemented.
-    // Choosing a minute for now.
-    staleTime: 60000,
-  })
-}
-
 export const getDplCmsUniloginConfig = async () => {
-  const queryClient = getQueryClient()
-  const config = await queryDplCmsConfig(queryClient)
+  const config = await queryDplCmsConfig()
 
   return {
     wellknownUrl: process.env.UNILOGIN_WELLKNOWN_URL
