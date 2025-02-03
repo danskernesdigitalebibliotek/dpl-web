@@ -2,17 +2,23 @@ import { notFound } from "next/navigation"
 import React, { Suspense } from "react"
 
 import BasicPageLayout from "@/components/pages/basicPageLayout/BasicPageLayout"
-import { NodeGoPage } from "@/lib/graphql/generated/dpl-cms/graphql"
+import goConfig from "@/lib/config/goConfig"
+import { GetPageByPathQuery, NodeGoPage } from "@/lib/graphql/generated/dpl-cms/graphql"
 
 import loadPage from "./loadPage"
 
 async function page(props: { params: Promise<{ slug: string[] }> }) {
   const params = await props.params
-
   const { slug } = params
-  const slugString = slug.join("/")
 
-  const data = await loadPage(slugString)
+  let data: GetPageByPathQuery
+  // If no slug is provided, load the frontpage
+  if (!slug) {
+    data = await loadPage(goConfig("routes.gofrontpage"))
+  } else {
+    const slugString = slug.join("/")
+    data = await loadPage(slugString)
+  }
 
   const routeType = data.route?.__typename
 

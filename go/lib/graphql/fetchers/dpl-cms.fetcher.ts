@@ -23,8 +23,12 @@ export function fetcher<TData, TVariables>(
   const dplCmsGraphqlEndpoint = process.env.NEXT_PUBLIC_GRAPHQL_SCHEMA_ENDPOINT_DPL_CMS
   const dplCmsGraphqlBasicToken = process.env.NEXT_PUBLIC_GRAPHQL_BASIC_TOKEN_DPL_CMS
 
-  if (!dplCmsGraphqlEndpoint || !dplCmsGraphqlBasicToken) {
-    throw new Error("Missing DPL CMS GraphQL endpoint or basic token")
+  // Check if the environment variables are set
+  if (!dplCmsGraphqlEndpoint) {
+    throw new Error("Missing DPL CMS GraphQL endpoint")
+  }
+  if (!dplCmsGraphqlBasicToken) {
+    throw new Error("Missing DPL CMS GraphQL basic token")
   }
 
   return async (): Promise<TData> => {
