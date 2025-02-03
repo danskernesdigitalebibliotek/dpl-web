@@ -327,6 +327,7 @@ export const extendedTheme = {
       button: "2px 2px 0 0px var(--foreground)",
       buttonHover: "1px 1px 0 0px var(--foreground)",
       "cover-picture": "-1px 1px 10px 0 var(--shadow-1), -3px 3px 20px 0 var(--shadow-2)",
+      "stacked-card": "-1px 1px 5px 0px var(--shadow-2), -1px 1px 10px 3px var(--shadow-2);",
     },
   },
 } satisfies Config["theme"]
