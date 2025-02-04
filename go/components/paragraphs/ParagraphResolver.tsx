@@ -2,12 +2,14 @@ import React from "react"
 
 import { ParagraphUnion } from "@/lib/graphql/generated/dpl-cms/graphql"
 
-import ParagraphGoVideo from "./ParagraphGoVideo/ParagraphGoVideo"
+import Video from "./Video/Video"
+import VideoBundle from "./VideoBundle/VideoBundle"
 import { ParagraphErrorBoundary } from "./paragraphErrorBoundary/paragraphErrorBoundary"
 
 function ParagraphResolver({ paragraphs }: { paragraphs: ParagraphUnion[] }) {
   const components = {
-    ParagraphGoVideo,
+    Video,
+    VideoBundle,
   }
 
   return paragraphs.map((paragraph, index) => {
