@@ -10,11 +10,11 @@ export default function Footer() {
         <div className="grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-4">
           <div>
             <h2 className="mb-4 text-xl font-semibold">Åbningstider</h2>
-            <p className="mb-4 text-sm">
+            <p className="mb-4">
               Bibliotekerne lorem ipsum consectetur, adipisci velit, sed quia non numquam eius modi
               tempora incidunt ut labore.
             </p>
-            <Link href="#" className="text-sm underline">
+            <Link href="#" className="underline">
               Se bibliotekernes åbningstider
             </Link>
           </div>
@@ -33,7 +33,7 @@ export default function Footer() {
                 "Nyhedsbrev",
               ].map(item => (
                 <li key={item}>
-                  <Link href="#" className="text-sm hover:underline">
+                  <Link href="#" className="hover:underline">
                     {item}
                   </Link>
                 </li>
@@ -46,7 +46,7 @@ export default function Footer() {
             <ul className="mb-8 space-y-2">
               {["Litteratursiden", "Bibliotek.dk", "eReolen", "Filmstriben"].map(item => (
                 <li key={item}>
-                  <Link href="#" className="text-sm hover:underline">
+                  <Link href="#" className="hover:underline">
                     {item}
                   </Link>
                 </li>
@@ -61,7 +61,7 @@ export default function Footer() {
                 "Adipisci velit le lorem",
               ].map(item => (
                 <li key={item}>
-                  <Link href="#" className="text-sm hover:underline">
+                  <Link href="#" className="hover:underline">
                     {item}
                   </Link>
                 </li>
@@ -71,26 +71,26 @@ export default function Footer() {
 
           <div>
             <h2 className="mb-4 text-xl font-semibold">Kontakt</h2>
-            <p className="mb-4 text-sm">
+            <p className="mb-4">
               Lyngby-Taarbæk Bibliotekerne
               <br />
               Lyngby Hovedgade 28
               <br />
               2800 Kgs. Lyngby
             </p>
-            <p className="mb-4 text-sm">
+            <p className="mb-4">
               +45 45 97 37 00
               <br />
               Man - fre / Kl. 10-16
             </p>
-            <Link href="mailto:info@ltk.dk" className="text-sm underline">
+            <Link href="mailto:info@ltk.dk" className="underline">
               info@ltk.dk
             </Link>
           </div>
         </div>
 
         <div className="border-border mt-8 flex justify-between border-b pb-8">
-          <select className="rounded border px-2 py-1 text-sm">
+          <select className="rounded border px-2 py-1">
             <option>DK</option>
           </select>
           <Icon className="h-[40px]" name="library-logo" />
@@ -107,7 +107,7 @@ export default function Footer() {
               <span className="sr-only">Instagram</span>
             </Link>
           </div>
-          <div className="flex flex-wrap justify-center space-x-4 text-sm md:justify-end">
+          <div className="flex flex-wrap justify-center space-x-4 md:justify-end">
             <Link href="#" className="hover:underline">
               Behandling af persondata
             </Link>
