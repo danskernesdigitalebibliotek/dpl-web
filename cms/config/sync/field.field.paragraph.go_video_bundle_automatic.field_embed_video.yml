@@ -1,19 +1,18 @@
-uuid: a4b6b9dd-ed61-4134-89a8-29de11861556
+uuid: 57e2355f-a212-4847-a729-efe3c48f041d
 langcode: en
 status: true
 dependencies:
   config:
     - field.storage.paragraph.field_embed_video
-    - media.type.video
     - media.type.videotool
-    - paragraphs.paragraphs_type.video
-id: paragraph.video.field_embed_video
+    - paragraphs.paragraphs_type.go_video_bundle_automatic
+id: paragraph.go_video_bundle_automatic.field_embed_video
 field_name: field_embed_video
 entity_type: paragraph
-bundle: video
+bundle: go_video_bundle_automatic
 label: 'Embed video'
 description: ''
-required: false
+required: true
 translatable: false
 default_value: {  }
 default_value_callback: ''
@@ -21,7 +20,6 @@ settings:
   handler: 'default:media'
   handler_settings:
     target_bundles:
-      video: video
       videotool: videotool
     sort:
       field: name
