@@ -1,6 +1,6 @@
 /* Home for our custom Tailwind theme */
 
-@theme {
+@theme inline {
   --breakpoint-*: initial;
   --breakpoint-sm: 640px;
   --breakpoint-md: 768px;
