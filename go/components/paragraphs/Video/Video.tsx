@@ -2,15 +2,15 @@
 
 import React from "react"
 
-import type { ParagraphGoVideo as TParagraphGoVideo } from "@/lib/graphql/generated/dpl-cms/graphql"
+import type { ParagraphGoVideo as Video } from "@/lib/graphql/generated/dpl-cms/graphql"
 
-type ParagraphGoVideoProps = {
-  title: TParagraphGoVideo["title"]
-  url: TParagraphGoVideo["url"]
+type VideoProps = {
+  title: Video["title"]
+  url: Video["url"]
 }
 
-export default function ParagraphGoVideo(paragraphGoVideo: ParagraphGoVideoProps) {
-  const { title, url } = paragraphGoVideo
+const Video = (Video: VideoProps) => {
+  const { title, url } = Video
 
   return (
     <div className="content-container grid-go gap-paragraph-spacing-inner">
@@ -30,3 +30,5 @@ export default function ParagraphGoVideo(paragraphGoVideo: ParagraphGoVideoProps
     </div>
   )
 }
+
+export default Video
