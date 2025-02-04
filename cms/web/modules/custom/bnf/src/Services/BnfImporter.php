@@ -84,9 +84,6 @@ class BnfImporter {
 
       $node->set('status', NodeInterface::NOT_PUBLISHED);
 
-      // @todo Deal with canonical URL.
-      // CMS -> BNF: Set to site URL.
-      // BNF -> CMS: Copy whatever BNF says.
       $node->save();
     }
     catch (\Throwable $e) {
