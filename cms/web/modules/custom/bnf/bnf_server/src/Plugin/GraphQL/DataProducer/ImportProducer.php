@@ -3,7 +3,6 @@
 namespace Drupal\bnf_server\Plugin\GraphQL\DataProducer;
 
 use Drupal\bnf\Exception\AlreadyExistsException;
-use Drupal\bnf\GraphQL\Operations\Import;
 use Drupal\bnf\Services\BnfImporter;
 use Drupal\bnf_server\GraphQL\ImportResponse;
 use Drupal\bnf_server\GraphQL\ImportStatus;

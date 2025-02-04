@@ -32,8 +32,8 @@ class ImportExtension extends SdlSchemaExtensionPluginBase {
     $builder = new ResolverBuilder();
     $registry->addFieldResolver('Mutation', 'import',
       $builder->produce('import_producer')
-      ->map('uuid', $builder->fromArgument('uuid'))
-      ->map('callbackUrl', $builder->fromArgument('callbackUrl'))
+        ->map('uuid', $builder->fromArgument('uuid'))
+        ->map('callbackUrl', $builder->fromArgument('callbackUrl'))
     );
   }
 
