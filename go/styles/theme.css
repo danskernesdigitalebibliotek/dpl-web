@@ -117,6 +117,7 @@
   --text-typo-caption--font-weight: var(--typo-caption-weight);
   --text-typo-caption--letter-spacing: var(--typo-caption-letter-spacing);
 
+  --color-*: initial;
   --color-background: var(--background);
   --color-background-overlay: var(--background-overlay);
   --color-background-skeleton: var(--background-skeleton);
