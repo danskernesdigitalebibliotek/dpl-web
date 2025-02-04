@@ -4,3 +4,5 @@ packages/cms-api/**/*.* linguist-generated=true
 
 # Mark Sailor generated GraphQL classes as generated.
 web/modules/custom/bnf/src/GraphQL/**/*.* linguist-generated=true
+# And the schema file we keep around.
+web/modules/custom/bnf/schema/bnf.graphql
