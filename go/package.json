@@ -53,7 +53,7 @@
     "react-dom": "^19.0.0",
     "react-error-boundary": "^5.0.0",
     "react-parallax-tilt": "^1.7.252",
-    "tailwind-merge": "^2.5.2",
+    "tailwind-merge": "^3.0.1",
     "tailwindcss-animate": "^1.0.7",
     "vaul": "^1.1.1",
     "xstate": "^5.18.2",
