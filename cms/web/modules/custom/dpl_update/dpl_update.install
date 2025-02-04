@@ -115,6 +115,7 @@ function dpl_update_install(): string {
   $messages[] = dpl_update_update_10031();
   $messages[] = dpl_update_update_10034();
   $messages[] = dpl_update_update_10035();
+  $messages[] = dpl_update_update_10037();
 
   return implode('\r\n', $messages);
 }
@@ -398,4 +399,11 @@ function dpl_update_update_10035(): string {
  */
 function dpl_update_update_10036(): string {
   return _dpl_update_install_modules(['state_log']);
+}
+
+/**
+ * Installing Media VideoTool.
+ */
+function dpl_update_update_10037(): string {
+  return _dpl_update_install_modules(['media_videotool']);
 }

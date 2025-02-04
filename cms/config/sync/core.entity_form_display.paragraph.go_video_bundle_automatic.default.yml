@@ -4,12 +4,14 @@ status: true
 dependencies:
   config:
     - field.field.paragraph.go_video_bundle_automatic.field_cql_search
+    - field.field.paragraph.go_video_bundle_automatic.field_embed_video
     - field.field.paragraph.go_video_bundle_automatic.field_go_video_title
     - field.field.paragraph.go_video_bundle_automatic.field_url
     - field.field.paragraph.go_video_bundle_automatic.field_video_amount_of_materials
     - paragraphs.paragraphs_type.go_video_bundle_automatic
   module:
     - dpl_fbi
+    - media_library
 id: paragraph.go_video_bundle_automatic.default
 targetEntityType: paragraph
 bundle: go_video_bundle_automatic
@@ -17,9 +19,16 @@ mode: default
 content:
   field_cql_search:
     type: cql_search_widget
-    weight: 3
+    weight: 2
     region: content
     settings: {  }
+    third_party_settings: {  }
+  field_embed_video:
+    type: media_library_widget
+    weight: 1
+    region: content
+    settings:
+      media_types: {  }
     third_party_settings: {  }
   field_go_video_title:
     type: string_textfield
@@ -39,7 +48,7 @@ content:
     third_party_settings: {  }
   field_video_amount_of_materials:
     type: number
-    weight: 0
+    weight: 3
     region: content
     settings:
       placeholder: ''

@@ -84,6 +84,7 @@
     ],
     "require": {
         "php": "8.1.*",
+        "ext-dom": "*",
         "amazeeio/drupal_integrations": "^0.5",
         "bower-asset/jsnlog": "^2.30",
         "brick/math": "^0.12.1",
