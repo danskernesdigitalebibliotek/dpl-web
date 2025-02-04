@@ -335,10 +335,6 @@
     @apply duration-dark-mode transition-[background];
   }
 
-  body {
-    @apply bg-background font-body text-foreground duration-dark-mode transition-all;
-  }
-
   .focus-visible {
     @apply focus-visible:ring-foreground focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:outline-hidden;
   }
@@ -422,6 +418,6 @@
     @apply border-border;
   }
   body {
-    @apply bg-background text-foreground;
+    @apply bg-background font-body text-foreground duration-dark-mode transition-all;
   }
 }
