@@ -9,8 +9,10 @@ import {
 
 type ParagraphGoVideoProps = {
   title: TParagraphGoVideo["title"]
-  url: TParagraphGoVideo["url"]
-  embedVideo: MediaVideotool
+  embedVideo: {
+    mediaVideotool: MediaVideotool["mediaVideotool"]
+    name: MediaVideotool["name"]
+  }
 }
 
 export default function ParagraphGoVideo(paragraphGoVideo: ParagraphGoVideoProps) {

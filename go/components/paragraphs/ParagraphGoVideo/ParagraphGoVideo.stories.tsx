@@ -11,7 +11,10 @@ const meta = {
   },
   args: {
     title: "Adrians bogklub 2.0",
-    url: "https://media.videotool.dk/?vn=557_2025010614502071929993093451",
+    embedVideo: {
+      mediaVideotool: "https://media.videotool.dk/?vn=557_2025010614502071929993093451",
+      name: "Sample Video",
+    },
   },
 } satisfies Meta<typeof ParagraphGoVideo>
 
