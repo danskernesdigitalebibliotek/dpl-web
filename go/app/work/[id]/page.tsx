@@ -3,7 +3,7 @@ import React from "react"
 
 import WorkPageLayout from "@/components/pages/workPageLayout/WorkPageLayout"
 import getQueryClient from "@/lib/getQueryClient"
-import { GetMaterialQuery, useGetMaterialQuery } from "@/lib/graphql/generated/fbi/graphql"
+import { useGetMaterialQuery } from "@/lib/graphql/generated/fbi/graphql"
 
 async function Page(props: { params: Promise<{ id: string }> }) {
   const params = await props.params
@@ -13,7 +13,6 @@ async function Page(props: { params: Promise<{ id: string }> }) {
   const queryClient = getQueryClient()
   const decodedWid = decodeURIComponent(id)
 
-  // Wait for the query to finish fetching before dehydrating
   await queryClient.prefetchQuery({
     queryKey: useGetMaterialQuery.getKey({ wid: decodedWid }),
     queryFn: useGetMaterialQuery.fetcher({ wid: decodedWid }),
@@ -22,18 +21,9 @@ async function Page(props: { params: Promise<{ id: string }> }) {
   // Dehydrate the query data after ensuring it is fetched
   const dehydratedState = dehydrate(queryClient)
 
-  // Get the preloaded data from the query client
-  const dehydratedQueryData: GetMaterialQuery | undefined = queryClient.getQueryData(
-    useGetMaterialQuery.getKey({ wid: decodedWid })
-  )
-
   return (
     <HydrationBoundary state={dehydratedState}>
-      <WorkPageLayout
-        key={decodedWid}
-        workId={decodedWid}
-        dehydratedQueryData={dehydratedQueryData}
-      />
+      <WorkPageLayout workId={decodedWid} />
     </HydrationBoundary>
   )
 }

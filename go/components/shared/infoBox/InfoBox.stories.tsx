@@ -4,7 +4,6 @@ import { darkModeDecorator } from "@/.storybook/decorators"
 import InfoBox from "@/components/shared/infoBox/InfoBox"
 import manifestationMock from "@/lib/mocks/manifestation/infoBox.mock"
 import workMock from "@/lib/mocks/work/infoBox.mock"
-import { useSelectedManifestationStore } from "@/store/selectedManifestation.store"
 
 const meta = {
   title: "components/InfoBox",
@@ -12,19 +11,6 @@ const meta = {
   parameters: {
     layout: "centered",
   },
-  decorators: [
-    Story => {
-      // Set Zustand state before rendering the story
-      const { setSelectedManifestation } = useSelectedManifestationStore.getState()
-      setSelectedManifestation(manifestationMock)
-
-      return (
-        <div className="content-container my-grid-gap-2 flex-row flex-wrap lg:my-grid-gap-half">
-          <Story />
-        </div>
-      )
-    },
-  ],
   argTypes: {
     work: {
       control: { type: "object" },
@@ -32,6 +18,7 @@ const meta = {
   },
   args: {
     work: workMock,
+    selectedManifestation: manifestationMock,
   },
 } satisfies Meta<typeof InfoBox>
 

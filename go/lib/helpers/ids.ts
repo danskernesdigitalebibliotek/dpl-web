@@ -3,14 +3,11 @@ import { flatten } from "lodash"
 import { filterFalsyValuesFromArray } from "@/lib/helpers/helper.arrays"
 
 import {
-  ManifestationIdentifiersFragment,
   ManifestationWorkPageFragment,
-  WorkTeaserSearchPageFragment,
+  WorkFullWorkPageFragment,
 } from "../graphql/generated/fbi/graphql"
 
-export const getIsbnsFromManifestation = (
-  manifestation: ManifestationIdentifiersFragment | ManifestationWorkPageFragment | null
-) => {
+export const getIsbnsFromManifestation = (manifestation: ManifestationWorkPageFragment) => {
   if (!manifestation) return []
 
   return manifestation.identifiers.reduce((acc, identifier) => {
@@ -21,7 +18,7 @@ export const getIsbnsFromManifestation = (
   }, [] as string[])
 }
 
-export const getIsbnsFromWork = (work: WorkTeaserSearchPageFragment) => {
+export const getIsbnsFromWork = (work: WorkFullWorkPageFragment) => {
   const isbnsnested = work.manifestations.all.map(manifestation =>
     getIsbnsFromManifestation(manifestation)
   )

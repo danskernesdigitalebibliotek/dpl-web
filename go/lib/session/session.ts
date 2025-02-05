@@ -1,22 +1,29 @@
 import { add, isPast, sub } from "date-fns"
-import { IronSession, SessionOptions, getIronSession } from "iron-session"
+import { IronSession, getIronSession } from "iron-session"
 import { cookies } from "next/headers"
 import { NextRequest, NextResponse } from "next/server"
 
-import goConfig from "../config/goConfig"
-import { TSessionType, TTokenSet } from "../types/session"
+import { TSessionType, TUniloginTokenSet } from "../types/session"
 
-export const sessionOptions: SessionOptions = {
-  // TODO: generate a random password and store it in a secure place
-  password: String(goConfig("service.unilogin.session.secret")),
-  cookieName: "go-session",
-  cookieOptions: {
-    // secure only works in `https` environments
-    // if your localhost is not on `https`, then use: `secure: process.env.NODE_ENV === "production"`
-    secure: process.env.NODE_ENV === "production",
-  },
-  // TODO: Decide on the session ttl.
-  ttl: 60 * 60 * 24 * 7, // 1 week
+export const getSessionOptions = async () => {
+  const sessionSecret = process.env.GO_SESSION_SECRET ?? null
+
+  if (!sessionSecret) {
+    console.error("Missing Go session secret")
+    return null
+  }
+
+  return {
+    password: sessionSecret,
+    cookieName: "go-session",
+    cookieOptions: {
+      // secure only works in `https` environments
+      // if your localhost is not on `https`, then use: `secure: process.env.NODE_ENV === "production"`
+      secure: process.env.NODE_ENV === "production",
+    },
+    // TODO: Decide on the session ttl.
+    ttl: 60 * 60 * 24 * 7, // 1 week
+  }
 }
 
 export interface TSessionData {
@@ -32,6 +39,7 @@ export interface TSessionData {
     uniid: string
     institutionIds: string
   }
+  adgangsplatformenUserToken?: string
   type: TSessionType
 }
 
@@ -44,6 +52,7 @@ export const defaultSession: TSessionData = {
   refresh_expires: undefined,
   code_verifier: undefined,
   userInfo: undefined,
+  adgangsplatformenUserToken: undefined,
   type: "anonymous",
 }
 
@@ -51,13 +60,24 @@ export async function getSession(options?: {
   request: NextRequest
   response: NextResponse
 }): Promise<IronSession<TSessionData>> {
+  const sessionOptions = await getSessionOptions()
+  if (!sessionOptions) {
+    return defaultSession as IronSession<TSessionData>
+  }
+
   try {
     const session = !options
       ? await getIronSession<TSessionData>(await cookies(), sessionOptions)
       : await getIronSession<TSessionData>(options.request, options.response, sessionOptions)
 
     if (!session?.isLoggedIn) {
-      Object.assign(session, defaultSession)
+      // Return the default session if the session is not logged in.
+      // But if the session has a code_verifier, we will keep that.
+      // The code_verifier is used for verifying the PKCE challenge
+      // when coming back from Unilogin.
+      return Object.assign(session, defaultSession, {
+        ...(session.code_verifier ? { code_verifier: session.code_verifier } : {}),
+      }) as IronSession<TSessionData>
     }
 
     return session
@@ -67,9 +87,9 @@ export async function getSession(options?: {
   }
 }
 
-export const setTokensOnSession = async (
+export const setUniloginTokensOnSession = async (
   session: IronSession<TSessionData>,
-  tokenSet: TTokenSet
+  tokenSet: TUniloginTokenSet
 ) => {
   session.access_token = tokenSet.access_token
   session.refresh_token = tokenSet.refresh_token
@@ -84,6 +104,18 @@ export const setTokensOnSession = async (
   // cookies().set("go-session:id_token", tokenSet.id_token)
   const cookieStore = await cookies()
   cookieStore.set("go-session:id_token", tokenSet.id_token)
+}
+
+export const setAdgangsplatformenUserTokenOnSession = async (
+  session: IronSession<TSessionData>,
+  token: string
+) => {
+  session.adgangsplatformenUserToken = token
+  session.expires = add(new Date(), {
+    // Three weeks.
+    // TODO: Get TTL from the tokenSet (API should return it).
+    seconds: 3 * 7 * 24 * 60 * 60,
+  })
 }
 
 export const accessTokenShouldBeRefreshed = (session: IronSession<TSessionData>) => {

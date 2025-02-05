@@ -2,15 +2,21 @@
 
 import React from "react"
 
-import type { ParagraphGoVideo as Video } from "@/lib/graphql/generated/dpl-cms/graphql"
+import type {
+  MediaVideotool,
+  ParagraphGoVideo as Video,
+} from "@/lib/graphql/generated/dpl-cms/graphql"
 
 type VideoProps = {
   title: Video["title"]
-  url: Video["url"]
+  embedVideo: {
+    mediaVideotool: MediaVideotool["mediaVideotool"]
+    name: MediaVideotool["name"]
+  }
 }
 
 const Video = (Video: VideoProps) => {
-  const { title, url } = Video
+  const { title, embedVideo } = Video
 
   return (
     <div className="content-container grid-go gap-paragraph-spacing-inner">
@@ -22,7 +28,7 @@ const Video = (Video: VideoProps) => {
           <iframe
             aria-label={title || "Video"}
             className="absolute inset-0 h-full w-full"
-            src={url}
+            src={embedVideo?.mediaVideotool}
             allowFullScreen
             allow="autoplay; fullscreen"></iframe>
         </div>

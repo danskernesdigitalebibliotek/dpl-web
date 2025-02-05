@@ -2,12 +2,6 @@
 
 fragment ManifestationCover on Manifestation {
   pid
-  materialTypes {
-    materialTypeGeneral {
-      display
-      code
-    }
-  }
 }
 
 fragment ManifestationIdentifiers on Manifestation {
@@ -83,6 +77,15 @@ fragment ManifestationDetails on Manifestation {
   dateFirstEdition {
     display
   }
+  edition {
+    publicationYear {
+      display
+      year
+    }
+    contributors
+    edition
+    summary
+  }
   genreAndForm
   publisher
   contributors {
@@ -91,14 +94,26 @@ fragment ManifestationDetails on Manifestation {
   contributorsFromDescription
 }
 
+fragment ManifestationMaterialTypes on Manifestation {
+  materialTypes {
+    materialTypeGeneral {
+      code
+      display
+    }
+  }
+}
+
 # Bigger chunks for specific pages (built from above fragments) ----------------
 
 fragment ManifestationSearchPageTeaser on Manifestation {
+  ...ManifestationMaterialTypes
   ...ManifestationIdentifiers
   ...ManifestationCover
+  ...ManifestationDetails
 }
 
 fragment ManifestationWorkPage on Manifestation {
+  ...ManifestationMaterialTypes
   ...ManifestationIdentifiers
   ...ManifestationCover
   ...ManifestationAccess

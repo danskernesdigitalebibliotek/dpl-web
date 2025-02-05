@@ -13,6 +13,13 @@ const config: StorybookConfig = {
     name: "@storybook/nextjs",
     options: {},
   },
+  env: config => ({
+    ...config,
+    // Take all values in env that start with NEXT_PUBLIC_ and pass them to the storybook
+    ...Object.keys(process.env)
+      .filter(key => key.startsWith("NEXT_PUBLIC_"))
+      .reduce((state, nextKey) => ({ ...state, [nextKey]: process.env[nextKey] }), {}),
+  }),
   staticDirs: ["../public"],
   webpackFinal: async (config: any) => {
     // This modifies the existing image rule to exclude `.svg` files

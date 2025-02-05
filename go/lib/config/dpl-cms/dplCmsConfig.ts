@@ -1,32 +1,34 @@
-import { QueryClient } from "@tanstack/react-query"
-
+import { fetcher } from "@/lib/graphql/fetchers/dpl-cms.fetcher"
 import {
+  GetDplCmsConfigurationDocument,
   GetDplCmsConfigurationQuery,
-  useGetDplCmsConfigurationQuery,
+  GetDplCmsConfigurationQueryVariables,
 } from "@/lib/graphql/generated/dpl-cms/graphql"
 
-const queryDplCmsConfig = async (queryClient: QueryClient) => {
-  const { dplConfiguration } = await queryClient.fetchQuery<GetDplCmsConfigurationQuery>({
-    queryKey: useGetDplCmsConfigurationQuery.getKey(),
-    queryFn: useGetDplCmsConfigurationQuery.fetcher(),
-    // Cache 5 minutes unless invalidated
-    staleTime: 5 * 60 * 1000, // 5 mins
-  })
+const queryDplCmsConfig = async () => {
+  const { dplConfiguration } = await fetcher<
+    GetDplCmsConfigurationQuery,
+    GetDplCmsConfigurationQueryVariables
+  >(GetDplCmsConfigurationDocument, undefined, {
+    next: { revalidate: 30 },
+  })()
 
   return dplConfiguration ?? null
 }
 
-// eslint-disable-next-line prefer-const
-let dplCmsConfigClient = new QueryClient({})
-
-const getDplCmsConfig = async () => {
-  const result = await queryDplCmsConfig(dplCmsConfigClient)
-
-  return result
-}
-
 export const getDplCmsUniloginConfig = async () => {
-  const config = await getDplCmsConfig()
+  const config = await queryDplCmsConfig()
 
-  return config?.unilogin ?? null
+  return {
+    wellknownUrl: process.env.UNILOGIN_WELLKNOWN_URL
+      ? process.env.UNILOGIN_WELLKNOWN_URL
+      : (config?.unilogin?.unilogin_api_wellknown_url ?? null),
+    clientId: process.env.UNILOGIN_CLIENT_ID
+      ? process.env.UNILOGIN_CLIENT_ID
+      : (config?.unilogin?.unilogin_api_client_id ?? null),
+    clientSecret: process.env.UNILOGIN_CLIENT_SECRET
+      ? process.env.UNILOGIN_CLIENT_SECRET
+      : (config?.unilogin?.unilogin_api_client_secret ?? null),
+    apiData: config?.unilogin ?? null,
+  }
 }
