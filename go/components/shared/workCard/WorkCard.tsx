@@ -205,7 +205,10 @@ const WorkCard = ({ work, isStacked, orderNumber, zIndex, className }: WorkCardP
       </div>
 
       <div className={cn("space-y-2", { hidden: isStacked && orderNumber !== 0 })}>
-        <p className="mr-grid-column-half break-words text-typo-subtitle-lg">
+        <p
+          className={cn("mr-grid-column-half break-words text-typo-subtitle-lg", {
+            "max-h-[4.5rem] overflow-scroll": isStacked,
+          })}>
           {work.titles.full[0]}
         </p>
         <p className="text-typo-caption opacity-60">{displayCreators(work.creators, 2)}</p>

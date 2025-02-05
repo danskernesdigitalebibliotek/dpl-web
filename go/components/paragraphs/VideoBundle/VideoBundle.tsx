@@ -111,7 +111,7 @@ const VideoBundle = ({
           />
         </div>
         <div className="flex w-[25%] flex-row flex-wrap justify-center gap-grid-gap pl-4 text-left">
-          <div className="relative h-[512px] w-[300px]">
+          <div className="relative h-[545px] w-[300px]">
             {!!dataAutomatic
               ? dataAutomatic.complexSearch.works
                   .slice()
