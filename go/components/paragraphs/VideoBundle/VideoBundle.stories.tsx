@@ -6,6 +6,8 @@ import VideoBundle, { VideoBundleMaterial } from "@/components/paragraphs/VideoB
 
 const queryClient = new QueryClient()
 
+// TODO: fix this typing of StoryComponent
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 const withQueryClient = (StoryComponent: any) => (
   <QueryClientProvider client={queryClient}>
     <StoryComponent />
