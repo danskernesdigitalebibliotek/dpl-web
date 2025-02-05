@@ -20,7 +20,7 @@ function Page() {
 
   return (
     <div className="absolute inset-0 h-screen w-screen">
-      <div className="absolute h-full w-full bg-reader-grey"></div>
+      <div className="bg-reader-grey absolute h-full w-full"></div>
       <Reader onBackCallback={() => handleBack()} type="demo" identifier={id} />
     </div>
   )

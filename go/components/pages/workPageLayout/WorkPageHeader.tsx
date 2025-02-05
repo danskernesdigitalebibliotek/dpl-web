@@ -116,7 +116,7 @@ const WorkPageHeader = ({ work, selectedManifestation }: WorkPageHeaderProps) =>
         transition={{ duration: 0.5 }}
         exit={{ opacity: 0 }}>
         <div className="col-span-4 h-auto lg:order-2">
-          <div className="flex aspect-1/1 h-auto w-full flex-col items-center justify-center rounded-base lg:aspect-4/5">
+          <div className="rounded-base flex aspect-1/1 h-auto w-full flex-col items-center justify-center lg:aspect-4/5">
             {!isLoadingCovers && (
               <CoverPicture
                 alt="Forsidebillede på værket"
@@ -135,7 +135,7 @@ const WorkPageHeader = ({ work, selectedManifestation }: WorkPageHeaderProps) =>
             </div>
           )}
         </div>
-        <div className="col-span-4 flex flex-col items-start justify-end pt-grid-gap-3 lg:pt-0">
+        <div className="pt-grid-gap-3 col-span-4 flex flex-col items-start justify-end lg:pt-0">
           {!!publizonData?.product?.costFree || isSelectedManifestationPodcast ? (
             <Badge variant={"blue-title"} className="mb-1 lg:mb-2">
               BLÅ
@@ -143,12 +143,12 @@ const WorkPageHeader = ({ work, selectedManifestation }: WorkPageHeaderProps) =>
           ) : null}
           <h1
             lang={languageIsoCode}
-            className="hyphens-auto break-words text-typo-heading-3 lg:mt-0 lg:text-typo-heading-2">
+            className="text-typo-heading-3 lg:text-typo-heading-2 break-words hyphens-auto lg:mt-0">
             {`${selectedManifestation?.titles?.full || ""}${!!titleSuffix ? ` (${titleSuffix})` : ""}`}
           </h1>
           <WorkAuthors creators={work.creators || selectedManifestation?.contributors} />
         </div>
-        <div className="col-span-4 mt-grid-gap-3 flex flex-col items-end justify-end lg:order-3 lg:mt-0">
+        <div className="mt-grid-gap-3 col-span-4 flex flex-col items-end justify-end lg:order-3 lg:mt-0">
           <WorkPageButtons workId={work.workId} selectedManifestation={selectedManifestation} />
         </div>
       </motion.div>

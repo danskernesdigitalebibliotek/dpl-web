@@ -29,10 +29,10 @@ const InfoBox = ({ work, selectedManifestation }: InfoBoxProps) => {
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       transition={{ duration: 0.5, ease: "easeOut" }}>
-      <section className="mt-14 w-full rounded-md bg-background-overlay px-6 pb-14 pt-8 lg:flex-row lg:px-14">
-        <h2 className="mb-10 text-typo-heading-4 lg:mb-24">Beskrivelse</h2>
-        <div className="flex w-full flex-col gap-grid-gap-3 lg:flex-row lg:gap-44">
-          <div className="flex-1 text-typo-body-md">
+      <section className="bg-background-overlay mt-14 w-full rounded-md px-6 pt-8 pb-14 lg:flex-row lg:px-14">
+        <h2 className="text-typo-heading-4 mb-10 lg:mb-24">Beskrivelse</h2>
+        <div className="gap-grid-gap-3 flex w-full flex-col lg:flex-row lg:gap-44">
+          <div className="text-typo-body-md flex-1">
             {!work.abstract?.length ? (
               <p>Værket har desværre ingen beskrivelse.</p>
             ) : (

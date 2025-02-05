@@ -1,3 +1,7 @@
+type TFetcherOptions = (RequestInit | RequestInit["headers"]) & {
+  next?: NextFetchRequestConfig
+}
+
 const getHeaders = (headers: RequestInit["headers"] | undefined) => {
   const contentTypeHeader = {
     "Content-Type": "application/json",
@@ -18,23 +22,44 @@ const getHeaders = (headers: RequestInit["headers"] | undefined) => {
 export function fetcher<TData, TVariables>(
   query: string,
   variables?: TVariables,
-  headers?: RequestInit["headers"]
+  options?: TFetcherOptions
 ) {
   const dplCmsGraphqlEndpoint = process.env.NEXT_PUBLIC_GRAPHQL_SCHEMA_ENDPOINT_DPL_CMS
   const dplCmsGraphqlBasicToken = process.env.NEXT_PUBLIC_GRAPHQL_BASIC_TOKEN_DPL_CMS
 
-  if (!dplCmsGraphqlEndpoint || !dplCmsGraphqlBasicToken) {
-    throw new Error("Missing DPL CMS GraphQL endpoint or basic token")
+  // Check if the environment variables are set
+  if (!dplCmsGraphqlEndpoint) {
+    throw new Error("Missing DPL CMS GraphQL endpoint")
   }
+  if (!dplCmsGraphqlBasicToken) {
+    throw new Error("Missing DPL CMS GraphQL basic token")
+  }
+  const { next, ...restOptions } = options || {}
+  const headers = restOptions as RequestInit["headers"]
 
   return async (): Promise<TData> => {
     const res = await fetch(dplCmsGraphqlEndpoint, {
       method: "POST",
       headers: getHeaders(headers),
       body: JSON.stringify({ query, variables }),
+      next,
     })
 
+    // TODO: Remove console logs when we are more confident
+    // in dpl-cms fetching and caching of data.
+    // eslint-disable-next-line no-console
+    console.log({ body: JSON.stringify({ query, variables }) })
+
     const json = await res.json()
+
+    // TODO: Remove console logs when we are more confident
+    // in dpl-cms fetching and caching of data.
+    // eslint-disable-next-line no-console
+    console.log({ dplConfiguration: json?.data?.dplConfiguration })
+    // TODO: Remove console logs when we are more confident
+    // in dpl-cms fetching and caching of data.
+    // eslint-disable-next-line no-console
+    console.log({ adgangsplatformenTokens: json?.data?.dplTokens?.adgangsplatformen })
 
     if (res.status !== 200) {
       const { message } = json

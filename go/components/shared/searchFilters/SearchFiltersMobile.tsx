@@ -44,7 +44,7 @@ const SearchFiltersMobile = ({ facets }: SearchFiltersMobileProps) => {
         <SheetTrigger
           aria-label="Vis filtreringsmuligheder"
           onClick={() => setIsSheetOpen(!isSheetOpen)}
-          className="flex flex-row items-center gap-1 text-typo-link">
+          className="text-typo-link flex flex-row items-center gap-1">
           <Button asChild ariaLabel="VIS FILTRE">
             <div>
               <Icon name="adjust" className="h-[40px]" />

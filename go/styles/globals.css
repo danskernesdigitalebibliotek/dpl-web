@@ -1,404 +1,360 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+/* Home for all global custom styles */
 
-:root {
-  /* GRID */
-  --page-width: 1600px;
-  --grid-edge: 1rem; /* 16px */
-  --grid-gap: 0.75rem; /* 12px */
-  --grid-gap-half: calc(var(--grid-gap) / 2); /* 6px */
-  --grid-gap-2: calc(var(--grid-gap) * 2); /* 24px */
-  --grid-gap-3: calc(var(--grid-gap) * 3); /* 36px */
-  --grid-gap-x: var(--grid-gap); /* 12px */
+@import "tailwindcss";
+@import "./theme.css";
+@import "./utilities.css";
 
-  /* SIZE OF EACH INDIVIDUAL COLUMN IN THE GRID  */
-  --grid-column: calc(
-    ((min(var(--page-width), 100vw) - (2 * var(--grid-edge))) - (11 * var(--grid-gap-x))) / 12
-  );
-  --grid-column-12: calc(var(--grid-column) * 12 + var(--grid-gap-x) * 11);
-  --grid-column-11: calc(var(--grid-column) * 11 + var(--grid-gap-x) * 10);
-  --grid-column-10: calc(var(--grid-column) * 10 + var(--grid-gap-x) * 9);
-  --grid-column-9: calc(var(--grid-column) * 9 + var(--grid-gap-x) * 8);
-  --grid-column-8: calc(var(--grid-column) * 8 + var(--grid-gap-x) * 7);
-  --grid-column-7: calc(var(--grid-column) * 7 + var(--grid-gap-x) * 6);
-  --grid-column-6: calc(var(--grid-column) * 6 + var(--grid-gap-x) * 5);
-  --grid-column-5: calc(var(--grid-column) * 5 + var(--grid-gap-x) * 4);
-  --grid-column-4: calc(var(--grid-column) * 4 + var(--grid-gap-x) * 3);
-  --grid-column-3: calc(var(--grid-column) * 3 + var(--grid-gap-x) * 2);
-  --grid-column-2: calc(var(--grid-column) * 2 + var(--grid-gap-x) * 1);
+@custom-variant dark (&:is(.dark *));
 
-  /* NAVIGATION */
-  --navigation-top-height: 1.375rem; /* 22px */
-  --navigation-height: 3.5rem; /* 56px */
-  --navigation-search-height: 4rem; /* 64px */
-  --navigation-combined-height: calc(
-    var(--navigation-height) + var(--navigation-search-height) + var(--navigation-top-height)
-  );
-  --screen-minus-navigation-height: calc(100vh - var(--navigation-combined-height));
-
-  /* BORDER RADIUS */
-  --base-radius: 0.625rem; /* 10px */
-  --input-radius: 0.375rem; /* 5px */
-
-  /* ASPECT RATIOS */
-  --aspect-1-1: 1 / 1;
-  --aspect-1-2: 1 / 2;
-  --aspect-2-1: 2 / 1;
-  --aspect-2-3: 2 / 3;
-  --aspect-3-2: 3 / 2;
-  --aspect-3-4: 3 / 4;
-  --aspect-4-3: 4 / 3;
-  --aspect-4-5: 4 / 5;
-  --aspect-5-2: 5 / 2;
-  --aspect-5-4: 5 / 4;
-  --aspect-7-9: 7 / 9;
-  --aspect-16-9: 16 / 9;
-  --aspect-9-16: 9 / 16;
-
-  /* SPACING */
-  --paragraph-spacing: 2.5rem; /* 40px */
-  --paragraph-spacing-inner: 2rem; /* 32px */
-  --space-y: 2.5rem; /* 40px */
-
-  /* COLORS */
-  --black: hsla(0, 0%, 0%, 1);
-  --white: hsla(255, 100%, 100%, 1);
-
-  --beige: hsla(36, 45%, 98%, 1);
-  --beige-overlay: hsla(42, 25%, 35%, 0.05);
-  --beige-skeleton: hsla(42, 25%, 35%, 0.1);
-
-  --blue: hsla(228, 100%, 10%, 1);
-  --blue-overlay: hsla(238, 54%, 89%, 0.09);
-  --blue-skeleton: hsla(238, 54%, 89%, 0.18);
-
-  --border: hsla(48, 4.4%, 77.8%, 1);
-  --reader-grey: hsla(0, 0%, 94.1%, 1);
-
-  --shadow-1: hsla(0, 0%, 0%, 0.5);
-  --shadow-2: hsla(0, 0%, 0%, 0.15);
-
-  /* These two blues provide JUST enough color contrast to pass wcag2.1aa */
-  --blue-title: hsla(202, 100%, 76%, 1);
-  --blue-title-dark: hsla(202, 60%, 30%, 1);
-
-  /* CONTENT COLORS */
-  --content-pink-100: hsla(320, 100%, 91%, 1);
-  --content-pink-200: hsla(317, 100%, 73%, 1);
-  --content-pink-300: hsla(320, 43%, 27%, 1);
-
-  --content-purple-100: hsla(265, 100%, 88%, 1);
-  --content-purple-200: hsla(258, 100%, 72%, 1);
-  --content-purple-300: hsla(258, 33%, 50%, 1);
-
-  --content-orange-100: hsla(30, 100%, 86%, 1);
-  --content-orange-200: hsla(34, 100%, 50%, 1);
-  --content-orange-300: hsla(30, 79%, 27%, 1);
-
-  --content-blue-50: hsla(200, 86%, 86%, 0.4);
-  --content-blue-100: hsla(200, 86%, 86%, 1);
-  --content-blue-200: hsla(202, 100%, 60%, 1);
-  --content-blue-300: hsla(201, 67%, 29%, 1);
-
-  /* DYNAMIC COLORS */
-  --background: var(--beige);
-  --background-overlay: var(--beige-overlay);
-  --background-skeleton: var(--beige-skeleton);
-  --foreground: var(--black);
-
-  /* TRANSITION DURATIONS */
-  --dark-mode-transition: 1000ms;
-
-  --font-headline: "GT Flexa", sans-serif;
-  --font-body: helvetica, sans-serif;
-
-  /* FONTS MOBILE */
-  --typo-huge-size: 52px;
-  --typo-huge-weight: 500;
-  --typo-huge-line-height: 58px;
-  --typo-huge-letter-spacing: 0;
-
-  --typo-heading-1-size: 42px;
-  --typo-heading-1-weight: 500;
-  --typo-heading-1-line-height: 46px;
-  --typo-heading-1-letter-spacing: 0;
-
-  --typo-heading-2-size: 32px;
-  --typo-heading-2-weight: 500;
-  --typo-heading-2-line-height: 36px;
-  --typo-heading-2-letter-spacing: 0;
-
-  --typo-heading-3-size: 24px;
-  --typo-heading-3-weight: 500;
-  --typo-heading-3-line-height: 27px;
-  --typo-heading-3-letter-spacing: 0;
-
-  --typo-heading-4-size: 20px;
-  --typo-heading-4-weight: 500;
-  --typo-heading-4-line-height: 22px;
-  --typo-heading-4-letter-spacing: 0;
-
-  --typo-heading-5-size: 20px;
-  --typo-heading-5-weight: 500;
-  --typo-heading-5-line-height: 20px;
-  --typo-heading-5-letter-spacing: 0;
-
-  --typo-subtitle-lg-size: 16px;
-  --typo-subtitle-lg-weight: 400;
-  --typo-subtitle-lg-line-height: 18px;
-  --typo-subtitle-lg-letter-spacing: 0;
-
-  --typo-subtitle-md-size: 16px;
-  --typo-subtitle-md-weight: 400;
-  --typo-subtitle-md-line-height: 18px;
-  --typo-subtitle-md-letter-spacing: 0;
-
-  --typo-subtitle-sm-size: 14px;
-  --typo-subtitle-sm-weight: 400;
-  --typo-subtitle-sm-line-height: 16px;
-  --typo-subtitle-sm-letter-spacing: 0;
-
-  --typo-body-lg-size: 18px;
-  --typo-body-lg-weight: 300;
-  --typo-body-lg-line-height: 26px;
-  --typo-body-lg-letter-spacing: 0.01em;
-
-  --typo-body-md-size: 16px;
-  --typo-body-md-weight: 300;
-  --typo-body-md-line-height: 22px;
-  --typo-body-md-letter-spacing: 0.01em;
-
-  --typo-body-sm-size: 14px;
-  --typo-body-sm-weight: 300;
-  --typo-body-sm-line-height: 18px;
-  --typo-body-sm-letter-spacing: 0.01em;
-
-  --typo-button-lg-size: 14px;
-  --typo-button-lg-weight: 500;
-  --typo-button-lg-line-height: 14px;
-  --typo-button-lg-letter-spacing: 0.1em;
-
-  --typo-button-sm-size: 12px;
-  --typo-button-sm-weight: 500;
-  --typo-button-sm-line-height: 12px;
-  --typo-button-sm-letter-spacing: 0.04em;
-
-  --typo-link-size: 14px;
-  --typo-link-weight: 400;
-  --typo-link-line-height: 14px;
-  --typo-link-letter-spacing: 0;
-
-  --typo-tag-lg-size: 12px;
-  --typo-tag-lg-weight: 500;
-  --typo-tag-lg-line-height: 12px;
-  --typo-tag-lg-letter-spacing: 0.05em;
-
-  --typo-tag-sm-size: 9px;
-  --typo-tag-sm-weight: 500;
-  --typo-tag-sm-line-height: 9px;
-  --typo-tag-sm-letter-spacing: 0;
-
-  --typo-caption-size: 10px;
-  --typo-caption-weight: 400;
-  --typo-caption-line-height: 13px;
-  --typo-caption-letter-spacing: 0;
-}
-
-@screen lg {
+@layer utilities {
   :root {
     /* GRID */
-    --grid-edge: 2.5rem; /* 40px */
-    --grid-gap: 1.5rem; /* 24px */
+    --page-width: 1600px;
+    --grid-edge: 1rem; /* 16px */
+    --grid-gap: 0.75rem; /* 12px */
+    --grid-gap-half: calc(var(--grid-gap) / 2); /* 6px */
+    --grid-gap-2: calc(var(--grid-gap) * 2); /* 24px */
+    --grid-gap-3: calc(var(--grid-gap) * 3); /* 36px */
+    --grid-gap-x: var(--grid-gap); /* 12px */
+
+    /* SIZE OF EACH INDIVIDUAL COLUMN IN THE GRID  */
+    --grid-column: calc(
+      ((min(var(--page-width), 100vw) - (2 * var(--grid-edge))) - (11 * var(--grid-gap-x))) / 12
+    );
+    --grid-column-12: calc(var(--grid-column) * 12 + var(--grid-gap-x) * 11);
+    --grid-column-11: calc(var(--grid-column) * 11 + var(--grid-gap-x) * 10);
+    --grid-column-10: calc(var(--grid-column) * 10 + var(--grid-gap-x) * 9);
+    --grid-column-9: calc(var(--grid-column) * 9 + var(--grid-gap-x) * 8);
+    --grid-column-8: calc(var(--grid-column) * 8 + var(--grid-gap-x) * 7);
+    --grid-column-7: calc(var(--grid-column) * 7 + var(--grid-gap-x) * 6);
+    --grid-column-6: calc(var(--grid-column) * 6 + var(--grid-gap-x) * 5);
+    --grid-column-5: calc(var(--grid-column) * 5 + var(--grid-gap-x) * 4);
+    --grid-column-4: calc(var(--grid-column) * 4 + var(--grid-gap-x) * 3);
+    --grid-column-3: calc(var(--grid-column) * 3 + var(--grid-gap-x) * 2);
+    --grid-column-2: calc(var(--grid-column) * 2 + var(--grid-gap-x) * 1);
 
     /* NAVIGATION */
-    --navigation-top-height: 2rem; /* 32px */
-    --navigation-height: 5rem; /* 80px */
-    --navigation-search-height: 6.25rem; /* 100px */
+    --navigation-top-height: 1.375rem; /* 22px */
+    --navigation-height: 3.5rem; /* 56px */
+    --navigation-search-height: 4rem; /* 64px */
+    --navigation-combined-height: calc(
+      var(--navigation-height) + var(--navigation-search-height) + var(--navigation-top-height)
+    );
+    --screen-minus-navigation-height: calc(100vh - var(--navigation-combined-height));
+
+    /* BORDER RADIUS */
+    --base-radius: 0.625rem; /* 10px */
+    --input-radius: 0.375rem; /* 5px */
+
+    /* ASPECT RATIOS */
+    --aspect-1-1: 1 / 1;
+    --aspect-1-2: 1 / 2;
+    --aspect-2-1: 2 / 1;
+    --aspect-2-3: 2 / 3;
+    --aspect-3-2: 3 / 2;
+    --aspect-3-4: 3 / 4;
+    --aspect-4-3: 4 / 3;
+    --aspect-4-5: 4 / 5;
+    --aspect-5-2: 5 / 2;
+    --aspect-5-4: 5 / 4;
+    --aspect-7-9: 7 / 9;
+    --aspect-16-9: 16 / 9;
+    --aspect-9-16: 9 / 16;
 
     /* SPACING */
-    --paragraph-spacing: 5rem; /* 80px */
-    --paragraph-spacing-inner: 4rem; /* 64px */
-    --space-y: 5rem; /* 80px */
+    --paragraph-spacing: 2.5rem; /* 40px */
+    --paragraph-spacing-inner: 2rem; /* 32px */
+    --space-y: 2.5rem; /* 40px */
 
-    /* FONTS */
-    --typo-huge-size: 92px;
+    /* COLORS */
+    --black: hsla(0, 0%, 0%, 1);
+    --white: hsla(255, 100%, 100%, 1);
+
+    --beige: hsla(36, 45%, 98%, 1);
+    --beige-overlay: hsla(42, 25%, 35%, 0.05);
+    --beige-skeleton: hsla(42, 25%, 35%, 0.1);
+
+    --blue: hsla(228, 100%, 10%, 1);
+    --blue-overlay: hsla(238, 54%, 89%, 0.09);
+    --blue-skeleton: hsla(238, 54%, 89%, 0.18);
+
+    --border: hsla(48, 4.4%, 77.8%, 1);
+    --reader-grey: hsla(0, 0%, 94.1%, 1);
+
+    --shadow-1: hsla(0, 0%, 0%, 0.5);
+    --shadow-2: hsla(0, 0%, 0%, 0.15);
+
+    /* These two blues provide JUST enough color contrast to pass wcag2.1aa */
+    --blue-title: hsla(202, 100%, 76%, 1);
+    --blue-title-dark: hsla(202, 60%, 30%, 1);
+
+    /* CONTENT COLORS */
+    --content-pink-100: hsla(320, 100%, 91%, 1);
+    --content-pink-200: hsla(317, 100%, 73%, 1);
+    --content-pink-300: hsla(320, 43%, 27%, 1);
+
+    --content-purple-100: hsla(265, 100%, 88%, 1);
+    --content-purple-200: hsla(258, 100%, 72%, 1);
+    --content-purple-300: hsla(258, 33%, 50%, 1);
+
+    --content-orange-100: hsla(30, 100%, 86%, 1);
+    --content-orange-200: hsla(34, 100%, 50%, 1);
+    --content-orange-300: hsla(30, 79%, 27%, 1);
+
+    --content-blue-50: hsla(200, 86%, 86%, 0.4);
+    --content-blue-100: hsla(200, 86%, 86%, 1);
+    --content-blue-200: hsla(202, 100%, 60%, 1);
+    --content-blue-300: hsla(201, 67%, 29%, 1);
+
+    /* DYNAMIC COLORS */
+    --background: var(--beige);
+    --background-overlay: var(--beige-overlay);
+    --background-skeleton: var(--beige-skeleton);
+    --foreground: var(--black);
+
+    /* TRANSITION DURATIONS */
+    --dark-mode-transition: 1000ms;
+
+    --font-headline: "GT Flexa", sans-serif;
+    --font-body: helvetica, sans-serif;
+
+    /* FONTS MOBILE */
+    --typo-huge-size: 42px;
     --typo-huge-weight: 500;
-    --typo-huge-line-height: 92px;
+    --typo-huge-line-height: 42px;
     --typo-huge-letter-spacing: 0;
 
-    --typo-heading-1-size: 52px;
+    --typo-heading-1-size: 24px;
     --typo-heading-1-weight: 500;
-    --typo-heading-1-line-height: 58px;
+    --typo-heading-1-line-height: 28px;
     --typo-heading-1-letter-spacing: 0;
 
-    --typo-heading-2-size: 42px;
+    --typo-heading-2-size: 22px;
     --typo-heading-2-weight: 500;
-    --typo-heading-2-line-height: 46px;
+    --typo-heading-2-line-height: 26px;
     --typo-heading-2-letter-spacing: 0;
 
-    --typo-heading-3-size: 32px;
+    --typo-heading-3-size: 20px;
     --typo-heading-3-weight: 500;
-    --typo-heading-3-line-height: 36px;
+    --typo-heading-3-line-height: 24px;
     --typo-heading-3-letter-spacing: 0;
 
-    --typo-heading-4-size: 24px;
+    --typo-heading-4-size: 18px;
     --typo-heading-4-weight: 500;
-    --typo-heading-4-line-height: 27px;
+    --typo-heading-4-line-height: 22px;
     --typo-heading-4-letter-spacing: 0;
 
-    --typo-heading-5-size: 20px;
+    --typo-heading-5-size: 16px;
     --typo-heading-5-weight: 500;
-    --typo-heading-5-line-height: 22px;
+    --typo-heading-5-line-height: 19px;
     --typo-heading-5-letter-spacing: 0;
 
-    --typo-subtitle-lg-size: 22px;
+    --typo-subtitle-lg-size: 16px;
     --typo-subtitle-lg-weight: 400;
-    --typo-subtitle-lg-line-height: 24px;
+    --typo-subtitle-lg-line-height: 18px;
     --typo-subtitle-lg-letter-spacing: 0;
 
-    --typo-subtitle-md-size: 18px;
+    --typo-subtitle-md-size: 12px;
     --typo-subtitle-md-weight: 400;
-    --typo-subtitle-md-line-height: 20px;
+    --typo-subtitle-md-line-height: 14px;
     --typo-subtitle-md-letter-spacing: 0;
 
-    --typo-subtitle-sm-size: 14px;
+    --typo-subtitle-sm-size: 10px;
     --typo-subtitle-sm-weight: 400;
-    --typo-subtitle-sm-line-height: 16px;
+    --typo-subtitle-sm-line-height: 12px;
     --typo-subtitle-sm-letter-spacing: 0;
 
-    --typo-body-lg-size: 18px;
+    --typo-body-lg-size: 16px;
     --typo-body-lg-weight: 300;
-    --typo-body-lg-line-height: 26px;
+    --typo-body-lg-line-height: 22px;
     --typo-body-lg-letter-spacing: 0.01em;
 
-    --typo-body-md-size: 16px;
+    --typo-body-md-size: 14px;
     --typo-body-md-weight: 300;
-    --typo-body-md-line-height: 22px;
+    --typo-body-md-line-height: 18px;
     --typo-body-md-letter-spacing: 0.01em;
 
-    --typo-body-sm-size: 14px;
+    --typo-body-sm-size: 12px;
     --typo-body-sm-weight: 300;
-    --typo-body-sm-line-height: 18px;
+    --typo-body-sm-line-height: 16px;
     --typo-body-sm-letter-spacing: 0.01em;
 
-    --typo-button-lg-size: 14px;
+    --typo-button-lg-size: 12px;
     --typo-button-lg-weight: 500;
-    --typo-button-lg-line-height: 14px;
+    --typo-button-lg-line-height: 12px;
     --typo-button-lg-letter-spacing: 0.1em;
 
-    --typo-button-sm-size: 12px;
+    --typo-button-sm-size: 9px;
     --typo-button-sm-weight: 500;
-    --typo-button-sm-line-height: 12px;
+    --typo-button-sm-line-height: 9px;
     --typo-button-sm-letter-spacing: 0.04em;
 
-    --typo-link-size: 14px;
+    --typo-link-size: 12px;
     --typo-link-weight: 400;
-    --typo-link-line-height: 14px;
+    --typo-link-line-height: 12px;
     --typo-link-letter-spacing: 0;
 
-    --typo-tag-lg-size: 12px;
+    --typo-tag-lg-size: 10px;
     --typo-tag-lg-weight: 500;
-    --typo-tag-lg-line-height: 12px;
+    --typo-tag-lg-line-height: 10px;
     --typo-tag-lg-letter-spacing: 0.05em;
 
     --typo-tag-sm-size: 8px;
     --typo-tag-sm-weight: 500;
-    --typo-tag-sm-line-height: 8px;
+    --typo-tag-sm-line-height: 10px;
     --typo-tag-sm-letter-spacing: 0;
 
-    --typo-caption-size: 10px;
+    --typo-caption-size: 8px;
     --typo-caption-weight: 400;
-    --typo-caption-line-height: 13px;
+    --typo-caption-line-height: 8px;
     --typo-caption-letter-spacing: 0;
   }
-}
 
-.dark-mode {
-  --background: var(--blue);
-  --background-overlay: var(--blue-overlay);
-  --background-skeleton: var(--blue-skeleton);
-  --foreground: var(--beige);
-  --shadow-add-contrast: hsla(0, 0%, 0%, 0.5);
-}
+  @media (width >= theme(--breakpoint-lg)) {
+    :root {
+      /* GRID */
+      --grid-edge: 2.5rem; /* 40px */
+      --grid-gap: 1.5rem; /* 24px */
 
-.content-container {
-  @apply mx-auto w-full max-w-[var(--page-width)] px-[var(--grid-edge)];
-}
+      /* NAVIGATION */
+      --navigation-top-height: 2rem; /* 32px */
+      --navigation-height: 5rem; /* 80px */
+      --navigation-search-height: 6.25rem; /* 100px */
 
-.dark-mode-transition {
-  @apply transition-[background] duration-dark-mode;
-}
+      /* SPACING */
+      --paragraph-spacing: 5rem; /* 80px */
+      --paragraph-spacing-inner: 4rem; /* 64px */
+      --space-y: 5rem; /* 80px */
 
-body {
-  @apply bg-background font-body text-foreground transition-all duration-dark-mode;
-}
+      /* FONTS */
+      --typo-huge-size: 92px;
+      --typo-huge-weight: 500;
+      --typo-huge-line-height: 92px;
+      --typo-huge-letter-spacing: 0;
 
-.focus-visible {
-  @apply focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-foreground focus-visible:ring-offset-2;
-}
+      --typo-heading-1-size: 52px;
+      --typo-heading-1-weight: 500;
+      --typo-heading-1-line-height: 58px;
+      --typo-heading-1-letter-spacing: 0;
 
-.text-typo-huge,
-.text-typo-heading-1,
-.text-typo-heading-2,
-.text-typo-heading-3,
-.text-typo-heading-4,
-.text-typo-heading-5,
-.text-typo-subtitle-lg,
-.text-typo-subtitle-md,
-.text-typo-subtitle-sm,
-.text-typo-button-lg,
-.text-typo-button-sm,
-.text-typo-link,
-.text-typo-tag-lg,
-.text-typo-tag-sm,
-.text-typo-caption {
-  @apply font-headline;
-}
+      --typo-heading-2-size: 42px;
+      --typo-heading-2-weight: 500;
+      --typo-heading-2-line-height: 46px;
+      --typo-heading-2-letter-spacing: 0;
 
-@layer utilities {
-  .text-balance {
-    text-wrap: balance;
+      --typo-heading-3-size: 32px;
+      --typo-heading-3-weight: 500;
+      --typo-heading-3-line-height: 36px;
+      --typo-heading-3-letter-spacing: 0;
+
+      --typo-heading-4-size: 24px;
+      --typo-heading-4-weight: 500;
+      --typo-heading-4-line-height: 27px;
+      --typo-heading-4-letter-spacing: 0;
+
+      --typo-heading-5-size: 20px;
+      --typo-heading-5-weight: 500;
+      --typo-heading-5-line-height: 22px;
+      --typo-heading-5-letter-spacing: 0;
+
+      --typo-subtitle-lg-size: 22px;
+      --typo-subtitle-lg-weight: 400;
+      --typo-subtitle-lg-line-height: 24px;
+      --typo-subtitle-lg-letter-spacing: 0;
+
+      --typo-subtitle-md-size: 18px;
+      --typo-subtitle-md-weight: 400;
+      --typo-subtitle-md-line-height: 20px;
+      --typo-subtitle-md-letter-spacing: 0;
+
+      --typo-subtitle-sm-size: 14px;
+      --typo-subtitle-sm-weight: 400;
+      --typo-subtitle-sm-line-height: 16px;
+      --typo-subtitle-sm-letter-spacing: 0;
+
+      --typo-body-lg-size: 18px;
+      --typo-body-lg-weight: 300;
+      --typo-body-lg-line-height: 26px;
+      --typo-body-lg-letter-spacing: 0.01em;
+
+      --typo-body-md-size: 16px;
+      --typo-body-md-weight: 300;
+      --typo-body-md-line-height: 22px;
+      --typo-body-md-letter-spacing: 0.01em;
+
+      --typo-body-sm-size: 14px;
+      --typo-body-sm-weight: 300;
+      --typo-body-sm-line-height: 18px;
+      --typo-body-sm-letter-spacing: 0.01em;
+
+      --typo-button-lg-size: 14px;
+      --typo-button-lg-weight: 500;
+      --typo-button-lg-line-height: 14px;
+      --typo-button-lg-letter-spacing: 0.1em;
+
+      --typo-button-sm-size: 12px;
+      --typo-button-sm-weight: 500;
+      --typo-button-sm-line-height: 12px;
+      --typo-button-sm-letter-spacing: 0.04em;
+
+      --typo-link-size: 14px;
+      --typo-link-weight: 400;
+      --typo-link-line-height: 14px;
+      --typo-link-letter-spacing: 0;
+
+      --typo-tag-lg-size: 12px;
+      --typo-tag-lg-weight: 500;
+      --typo-tag-lg-line-height: 12px;
+      --typo-tag-lg-letter-spacing: 0.05em;
+
+      --typo-tag-sm-size: 8px;
+      --typo-tag-sm-weight: 500;
+      --typo-tag-sm-line-height: 8px;
+      --typo-tag-sm-letter-spacing: 0;
+
+      --typo-caption-size: 10px;
+      --typo-caption-weight: 400;
+      --typo-caption-line-height: 13px;
+      --typo-caption-letter-spacing: 0;
+    }
   }
 
-  .grid-cols-go {
-    @apply grid-cols-6 lg:grid-cols-12;
+  .dark-mode {
+    --background: var(--blue);
+    --background-overlay: var(--blue-overlay);
+    --background-skeleton: var(--blue-skeleton);
+    --foreground: var(--beige);
+    --shadow-add-contrast: hsla(0, 0%, 0%, 0.5);
   }
 
-  .grid-go {
-    @apply grid-cols-go grid gap-x-[--grid-gap-x];
+  .content-container {
+    @apply mx-auto w-full max-w-[var(--page-width)] px-[var(--grid-edge)];
   }
 
-  .hyphens-auto {
-    hyphens: auto;
+  .dark-mode-transition {
+    @apply duration-dark-mode transition-[background];
   }
 
-  .hyphens-manual {
-    hyphens: manual;
+  .focus-visible {
+    @apply focus-visible:ring-foreground focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:outline-hidden;
   }
 
-  .hyphens-none {
-    hyphens: none;
-  }
-
-  .animate-text-underline {
-    position: relative;
-    cursor: pointer;
-  }
-
-  .animate-text-underline::after {
-    content: "";
-    position: absolute;
-    bottom: -5px;
-    left: 0;
-    width: 100%;
-    height: 1px;
-    background-color: var(--foreground);
-    transition: width 0.3s ease;
-  }
-
-  .animate-text-underline:hover::after {
-    width: 0%;
+  .text-typo-huge,
+  .text-typo-heading-1,
+  .text-typo-heading-2,
+  .text-typo-heading-3,
+  .text-typo-heading-4,
+  .text-typo-heading-5,
+  .text-typo-subtitle-lg,
+  .text-typo-subtitle-md,
+  .text-typo-subtitle-sm,
+  .text-typo-button-lg,
+  .text-typo-button-sm,
+  .text-typo-link,
+  .text-typo-tag-lg,
+  .text-typo-tag-sm,
+  .text-typo-caption {
+    @apply font-headline;
   }
 }
 
@@ -462,6 +418,6 @@ body {
     @apply border-border;
   }
   body {
-    @apply bg-background text-foreground;
+    @apply bg-background font-body text-foreground duration-dark-mode transition-all;
   }
 }

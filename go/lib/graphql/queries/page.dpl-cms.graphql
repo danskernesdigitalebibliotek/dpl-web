@@ -12,10 +12,14 @@ query getPageByPath($path: String!) {
               created {
                 timestamp
               }
-              langcode {
-                name
+              title
+              embedVideo {
+                ... on MediaVideotool {
+                  id
+                  name
+                  mediaVideotool
+                }
               }
-              status
             }
             ... on ParagraphGoLinkbox {
               __typename

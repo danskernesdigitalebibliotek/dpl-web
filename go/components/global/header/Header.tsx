@@ -12,11 +12,11 @@ import ProfileButton from "./ProfileButton"
 function Header() {
   return (
     <header>
-      <div className="flex h-navigation-top-height items-center justify-center bg-background-overlay">
+      <div className="h-navigation-top-height bg-background-overlay flex items-center justify-center">
         <p className="text-typo-caption">Biblioterernes ebøger og lydbøger</p>
       </div>
-      <div className="content-container grid h-navigation-height grid-cols-3 items-center">
-        <div className="flex-0 flex items-center" data-cy={cyKeys["go-logo"]}>
+      <div className="content-container h-navigation-height grid grid-cols-3 items-center">
+        <div className="flex flex-0 items-center" data-cy={cyKeys["go-logo"]}>
           <Button ariaLabel="Gå til forsiden" asChild className="inline-flex px-3">
             <SmartLink href="/" className="inline-flex">
               <Icon name="logo-borderless" />
@@ -26,7 +26,7 @@ function Header() {
         <div className="flex flex-1 justify-center">
           <DarkModeToggle />
         </div>
-        <div className="flex-0 flex justify-end space-x-4 pr-1">
+        <div className="flex flex-0 justify-end space-x-4 pr-1">
           <Button variant="icon" ariaLabel="Tilgå hjælpesiden">
             <Icon className="h-[24px] w-[24px]" name="question-mark" />
           </Button>
