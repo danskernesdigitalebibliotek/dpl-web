@@ -57,6 +57,8 @@ entity_config:
       enabled: false
     filtered_event_list:
       enabled: true
+    go_link:
+      enabled: true
     go_linkbox:
       enabled: true
     go_material_slider_automatic:
@@ -179,13 +181,13 @@ field_config:
       field_teaser_text:
         enabled: true
     go_category:
-      field_category_menu_color:
-        enabled: true
       field_category_menu_image:
         enabled: true
       field_category_menu_sound:
         enabled: true
       field_category_menu_title:
+        enabled: true
+      field_go_color:
         enabled: true
       field_paragraphs:
         enabled: true
@@ -267,6 +269,13 @@ field_config:
       field_max_item_amount:
         enabled: true
       field_title:
+        enabled: true
+    go_link:
+      field_aria_label:
+        enabled: true
+      field_link:
+        enabled: true
+      field_target_blank:
         enabled: true
     go_linkbox:
       field_go_color:

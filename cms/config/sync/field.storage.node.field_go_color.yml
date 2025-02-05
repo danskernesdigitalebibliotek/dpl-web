@@ -1,13 +1,13 @@
-uuid: c5bd3c61-a79a-47d2-9d49-43682c992d5d
+uuid: c8209755-e72b-4ff6-9160-4ee174a2bc66
 langcode: en
 status: true
 dependencies:
   module:
+    - node
     - options
-    - paragraphs
-id: paragraph.field_go_color
+id: node.field_go_color
 field_name: field_go_color
-entity_type: paragraph
+entity_type: node
 type: list_string
 settings:
   allowed_values:
