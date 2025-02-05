@@ -175,13 +175,9 @@
   --color-chart-5: var(--chart-5);
 
   --color-theme-extend-keyframes-accordion-down-from-height: 0;
-
   --color-theme-extend-keyframes-accordion-down-to-height: var(--radix-accordion-content-height);
-
   --color-theme-extend-keyframes-accordion-up-from-height: var(--radix-accordion-content-height);
-
   --color-theme-extend-keyframes-accordion-up-to-height: 0;
-
   --color-theme-extend-animation-accordion-down: accordion-down 0.2s ease-out;
   --color-theme-extend-animation-accordion-up: accordion-up 0.2s ease-out;
 

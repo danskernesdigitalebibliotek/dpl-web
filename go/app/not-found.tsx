@@ -5,7 +5,7 @@ import { Button } from "@/components/shared/button/Button"
 export default function NotFound() {
   return (
     <div
-      className="content-container flex-column lg:space-y-grid-gap-1 my-grid-gap-2 h-[] space-y-grid-gap-2
+      className="content-container flex-column lg:space-y-grid-gap-1 my-grid-gap-2 space-y-grid-gap-2
         lg:my-grid-gap-half w-full">
       <h2 className="text-typo-huge">Oopsie..</h2>
       <p className="text-typo-body-lg">Vi kan desværre ikke loade siden.</p>
