@@ -32,14 +32,14 @@ const WorkPageButtons = ({ workId, selectedManifestation }: WorkPageButtonsProps
           <Button
             ariaLabel="Prøv e-bog"
             size={"default"}
-            className="mb-grid-gap-half w-full lg:min-w-72 lg:max-w-80"
+            className="mb-grid-gap-half w-full lg:max-w-80 lg:min-w-72"
             asChild
             disabled={!!identifier}>
             <SmartLink linkType="external" href={url}>
               Prøv e-bog
             </SmartLink>
           </Button>
-          <Button ariaLabel="Lån/reserver/læse ebog" className="w-full lg:min-w-72 lg:max-w-80">
+          <Button ariaLabel="Lån/reserver/læse ebog" className="w-full lg:max-w-80 lg:min-w-72">
             Not done yet
           </Button>
         </>
@@ -49,11 +49,11 @@ const WorkPageButtons = ({ workId, selectedManifestation }: WorkPageButtonsProps
           <Button
             ariaLabel="Prøv lydbog"
             disabled={!!!identifier}
-            className="mb-grid-gap-half w-full lg:min-w-72 lg:max-w-80"
+            className="mb-grid-gap-half w-full lg:max-w-80 lg:min-w-72"
             onClick={() => setIsPlayerOpen(!isPlayerOpen)}>
             Prøv lydbog
           </Button>
-          <Button ariaLabel="Lån/reserver/læse lydbog" className="w-full lg:min-w-72 lg:max-w-80">
+          <Button ariaLabel="Lån/reserver/læse lydbog" className="w-full lg:max-w-80 lg:min-w-72">
             Not done yet
           </Button>
         </>
@@ -63,11 +63,11 @@ const WorkPageButtons = ({ workId, selectedManifestation }: WorkPageButtonsProps
           <Button
             ariaLabel="Prøv podcast"
             disabled={!!!identifier}
-            className="mb-grid-gap-half w-full lg:min-w-72 lg:max-w-80"
+            className="mb-grid-gap-half w-full lg:max-w-80 lg:min-w-72"
             onClick={() => setIsPlayerOpen(!isPlayerOpen)}>
             Prøv podcast
           </Button>
-          <Button ariaLabel="Hør podcast" className="w-full lg:min-w-72 lg:max-w-80">
+          <Button ariaLabel="Hør podcast" className="w-full lg:max-w-80 lg:min-w-72">
             Not done yet
           </Button>
         </>

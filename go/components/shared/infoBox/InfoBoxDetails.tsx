@@ -26,9 +26,9 @@ const InfoBoxDetails = ({ selectedManifestation }: InfoBoxDetailsProps) => {
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       transition={{ duration: 0.5, ease: "easeOut" }}>
-      <section className="mt-14 w-full rounded-md bg-background-overlay px-6 pb-14 pt-8 lg:flex-row lg:px-14">
-        <h2 className="mb-10 text-typo-heading-4 lg:mb-24">Detaljer</h2>
-        <div className="flex w-full flex-col gap-grid-gap-3 lg:flex-row lg:gap-44">
+      <section className="bg-background-overlay mt-14 w-full rounded-md px-6 pt-8 pb-14 lg:flex-row lg:px-14">
+        <h2 className="text-typo-heading-4 mb-10 lg:mb-24">Detaljer</h2>
+        <div className="gap-grid-gap-3 flex w-full flex-col lg:flex-row lg:gap-44">
           <dl className="flex-1">
             <InfoBoxItem term="Type">{materialTypeDisplays.join(", ") || "-"}</InfoBoxItem>
             <InfoBoxItem term="Sprog">

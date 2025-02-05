@@ -26,12 +26,12 @@ function GridHelper() {
   return (
     <>
       {isShowing ? (
-        <div className="content-container pointer-events-none fixed inset-0 z-[1000] mx-auto bg-transparent">
+        <div className="content-container pointer-events-none fixed inset-0 z-1000 mx-auto bg-transparent">
           <div className="grid-go h-full">
             {Array.from({ length: columns }).map((e, index) => (
               <div
                 key={`gridHelper-column-${index}`}
-                className="h-full w-full bg-green-600 bg-opacity-10"
+                className="bg-opacity-10 h-full w-full bg-green-600"
               />
             ))}
           </div>

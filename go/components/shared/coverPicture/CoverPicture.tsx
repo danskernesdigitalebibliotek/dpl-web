@@ -75,7 +75,7 @@ export const CoverPicture = ({
               sizes="100vw"
               loading="lazy"
               className={cn(
-                `absolute inset-0 h-auto w-full overflow-hidden rounded-sm object-contain shadow-cover-picture
+                `shadow-cover-picture absolute inset-0 h-auto w-full overflow-hidden rounded-sm object-contain
                   transition-all duration-500 will-change-transform`,
                 imageLoaded ? "opacity-100" : "opacity-0"
               )}
@@ -96,10 +96,10 @@ export const CoverPicture = ({
           className="flex w-full flex-col items-center justify-center">
           <Icon
             name="question-mark"
-            className="h-[50px] text-foreground opacity-20 lg:h-[100px]"
+            className="text-foreground h-[50px] opacity-20 lg:h-[100px]"
             aria-label="Spørgsmålstegn ikon"
           />
-          <p className="text-center text-typo-caption opacity-55">Billede kunne ikke vises</p>
+          <p className="text-typo-caption text-center opacity-55">Billede kunne ikke vises</p>
         </motion.div>
       )}
     </div>
@@ -136,5 +136,5 @@ const CoverPictureTiltWrapper = ({
 }
 
 export const CoverPictureSkeleton = () => {
-  return <div className="h-full w-full animate-pulse rounded-md bg-background-skeleton" />
+  return <div className="bg-background-skeleton h-full w-full animate-pulse rounded-md" />
 }

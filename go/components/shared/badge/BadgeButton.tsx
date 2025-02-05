@@ -25,8 +25,8 @@ const BadgeButton = ({
     <button
       onClick={onClick}
       className={cn(
-        `focus-visible flex h-[28px] w-auto flex-row justify-center gap-2 self-start whitespace-nowrap
-        rounded-full bg-background-overlay px-4 py-2 text-typo-caption`,
+        `focus-visible bg-background-overlay text-typo-caption flex h-[28px] w-auto flex-row justify-center
+        gap-2 self-start rounded-full px-4 py-2 whitespace-nowrap`,
         withAnimation ? "hover:animate-wiggle" : "",
         variant === "transparent" ? "bg-transparent" : "",
         isActive ? "bg-foreground text-background" : "",

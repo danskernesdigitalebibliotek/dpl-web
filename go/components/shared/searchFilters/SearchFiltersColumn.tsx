@@ -57,7 +57,7 @@ const SearchFiltersColumn = ({ facet, isLast }: SearchFiltersColumnProps) => {
       <div
         key={facet.name}
         className={cn(
-          "relative space-y-grid-gap-half",
+          "space-y-grid-gap-half relative",
           !isLast && "min-w-32 flex-1",
           isLast && "flex-2"
         )}>
@@ -66,7 +66,7 @@ const SearchFiltersColumn = ({ facet, isLast }: SearchFiltersColumnProps) => {
         <AnimateChangeInHeight className="overflow-visible">
           <div
             className={cn(
-              "mx-[-10px] mt-[-10px] flex gap-1 px-[10px] pt-[10px] text-typo-caption",
+              "text-typo-caption mx-[-10px] mt-[-10px] flex gap-1 px-[10px] pt-[10px]",
               isLast ? "flex-row flex-wrap content-start" : "flex-col",
               {
                 "h-[102px] overflow-hidden": !isExpanded,
@@ -109,12 +109,12 @@ const SearchFiltersColumn = ({ facet, isLast }: SearchFiltersColumnProps) => {
 export const SearchFiltersColumnSkeleton = () => {
   return (
     <div className="space-y-grid-gap-half">
-      <div className="-mb-1 h-4 w-20 animate-pulse rounded-full bg-background-skeleton"></div>
+      <div className="bg-background-skeleton -mb-1 h-4 w-20 animate-pulse rounded-full"></div>
       <div className="space-y-1">
-        <div className="h-7 w-10 animate-pulse rounded-full bg-background-skeleton"></div>
-        <div className="h-7 w-20 animate-pulse rounded-full bg-background-skeleton"></div>
-        <div className="h-7 w-32 animate-pulse rounded-full bg-background-skeleton"></div>
-        <div className="h-7 w-20 animate-pulse rounded-full bg-background-skeleton"></div>
+        <div className="bg-background-skeleton h-7 w-10 animate-pulse rounded-full"></div>
+        <div className="bg-background-skeleton h-7 w-20 animate-pulse rounded-full"></div>
+        <div className="bg-background-skeleton h-7 w-32 animate-pulse rounded-full"></div>
+        <div className="bg-background-skeleton h-7 w-20 animate-pulse rounded-full"></div>
       </div>
     </div>
   )
