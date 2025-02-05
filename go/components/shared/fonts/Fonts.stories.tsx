@@ -25,7 +25,7 @@ export const FontsDarkMode: Story = {
 
 export const FontsOnOverlay: Story = {
   render: () => (
-    <div className="bg-background-overlay">
+    <div className="bg-foreground">
       <Fonts />
     </div>
   ),
