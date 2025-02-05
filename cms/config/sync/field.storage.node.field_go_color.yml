@@ -23,9 +23,6 @@ settings:
     -
       value: content_color_4
       label: 'Content Color 4'
-    -
-      value: content_color_5
-      label: 'Content Color 5'
   allowed_values_function: ''
 module: options
 locked: false
