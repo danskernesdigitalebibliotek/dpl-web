@@ -91,7 +91,7 @@ class BnfExporter {
       throw new \Exception($message);
     }
 
-    $node->set(BnfStateEnum::FIELD_NAME, BnfStateEnum::Exported->value);
+    $node->set(BnfStateEnum::FIELD_NAME, BnfStateEnum::Exported);
     $node->save();
 
   }

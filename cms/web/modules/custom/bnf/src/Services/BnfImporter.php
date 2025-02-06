@@ -80,7 +80,7 @@ class BnfImporter {
 
       $node = $this->mapperManager->map($nodeData);
 
-      $node->set(BnfStateEnum::FIELD_NAME, BnfStateEnum::Imported->value);
+      $node->set(BnfStateEnum::FIELD_NAME, BnfStateEnum::Imported);
 
       $node->set('status', NodeInterface::NOT_PUBLISHED);
 
