@@ -27,7 +27,13 @@ query getPageByPath($path: String!) {
                 value
               }
               goVideoTitle
-              url
+              embedVideo {
+                ... on MediaVideotool {
+                  id
+                  name
+                  mediaVideotool
+                }
+              }
               videoAmountOfMaterials
               id
             }
@@ -35,7 +41,13 @@ query getPageByPath($path: String!) {
               __typename
               id
               goVideoTitle
-              url
+              embedVideo {
+                ... on MediaVideotool {
+                  id
+                  name
+                  mediaVideotool
+                }
+              }
               videoBundleWorkIds {
                 material_type
                 work_id
