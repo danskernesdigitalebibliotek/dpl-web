@@ -407,3 +407,10 @@ function dpl_update_update_10036(): string {
 function dpl_update_update_10037(): string {
   return _dpl_update_install_modules(['media_videotool']);
 }
+
+/**
+ * Adding autowire_plugin_trait for BNF.
+ */
+function dpl_update_update_10038(): string {
+  return _dpl_update_install_modules(['autowire_plugin_trait']);
+}

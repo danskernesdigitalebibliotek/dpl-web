@@ -42,7 +42,7 @@ entity_config:
     breadcrumb_children:
       enabled: true
     campaign_rule:
-      enabled: false
+      enabled: true
     card_grid_automatic:
       enabled: true
     card_grid_manual:
@@ -52,9 +52,9 @@ entity_config:
     content_slider_automatic:
       enabled: true
     event_ticket_category:
-      enabled: false
+      enabled: true
     files:
-      enabled: false
+      enabled: true
     filtered_event_list:
       enabled: true
     go_link:
@@ -72,11 +72,11 @@ entity_config:
     go_video_bundle_manual:
       enabled: true
     hero:
-      enabled: false
+      enabled: true
     language_selector:
-      enabled: false
+      enabled: true
     links:
-      enabled: false
+      enabled: true
     manual_event_list:
       enabled: true
     material_grid_automatic:
@@ -84,29 +84,29 @@ entity_config:
     material_grid_manual:
       enabled: true
     medias:
-      enabled: false
+      enabled: true
     nav_grid_manual:
-      enabled: false
+      enabled: true
     nav_spots_manual:
-      enabled: false
+      enabled: true
     opening_hours:
-      enabled: false
+      enabled: true
     recommendation:
-      enabled: false
+      enabled: true
     simple_links:
-      enabled: false
+      enabled: true
     text_body:
       enabled: true
     user_registration_item:
-      enabled: false
+      enabled: true
     user_registration_linklist:
-      enabled: false
+      enabled: true
     user_registration_section:
-      enabled: false
+      enabled: true
     video:
       enabled: true
     webform:
-      enabled: false
+      enabled: true
   taxonomy_term:
     breadcrumb_structure:
       enabled: true
@@ -370,7 +370,7 @@ settings:
   field_required_override: false
   schema_description: 'GraphQL Compose'
   schema_version: '1'
-  simple_queries: false
+  simple_queries: true
   simple_unions: true
   site_name: true
   site_slogan: false

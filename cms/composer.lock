@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "6a7b44110ec78f9b7f617b699e25e4e2",
+    "content-hash": "0a6dfc5939c2104eef5aff36cb648d61",
     "packages": [
         {
             "name": "amazeeio/drupal_integrations",
@@ -2607,6 +2607,50 @@
             "homepage": "https://www.drupal.org/project/antibot",
             "support": {
                 "source": "https://git.drupalcode.org/project/antibot"
+            }
+        },
+        {
+            "name": "drupal/autowire_plugin_trait",
+            "version": "1.0.0",
+            "source": {
+                "type": "git",
+                "url": "https://git.drupalcode.org/project/autowire_plugin_trait.git",
+                "reference": "1.0.0"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://ftp.drupal.org/files/projects/autowire_plugin_trait-1.0.0.zip",
+                "reference": "1.0.0",
+                "shasum": "dda1fa378669817a7b0089b92570b276c37f05a5"
+            },
+            "require": {
+                "drupal/core": "^10 || ^11"
+            },
+            "type": "drupal-module",
+            "extra": {
+                "drupal": {
+                    "version": "1.0.0",
+                    "datestamp": "1718100412",
+                    "security-coverage": {
+                        "status": "not-covered",
+                        "message": "Project has not opted into security advisory coverage!"
+                    }
+                }
+            },
+            "notification-url": "https://packages.drupal.org/8/downloads",
+            "license": [
+                "GPL-2.0-or-later"
+            ],
+            "authors": [
+                {
+                    "name": "arnested",
+                    "homepage": "https://www.drupal.org/user/245635"
+                }
+            ],
+            "description": "A autowire plugin trait",
+            "homepage": "https://www.drupal.org/project/autowire_plugin_trait",
+            "support": {
+                "source": "https://git.drupalcode.org/project/autowire_plugin_trait"
             }
         },
         {
@@ -10579,6 +10623,161 @@
             "time": "2025-01-14T11:49:03+00:00"
         },
         {
+            "name": "nette/php-generator",
+            "version": "v4.1.7",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/nette/php-generator.git",
+                "reference": "d201c9bc217e0969d1b678d286be49302972fb56"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/nette/php-generator/zipball/d201c9bc217e0969d1b678d286be49302972fb56",
+                "reference": "d201c9bc217e0969d1b678d286be49302972fb56",
+                "shasum": ""
+            },
+            "require": {
+                "nette/utils": "^3.2.9 || ^4.0",
+                "php": "8.0 - 8.4"
+            },
+            "require-dev": {
+                "jetbrains/phpstorm-attributes": "dev-master",
+                "nette/tester": "^2.4",
+                "nikic/php-parser": "^4.18 || ^5.0",
+                "phpstan/phpstan": "^1.0",
+                "tracy/tracy": "^2.8"
+            },
+            "suggest": {
+                "nikic/php-parser": "to use ClassType::from(withBodies: true) & ClassType::fromCode()"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "4.1-dev"
+                }
+            },
+            "autoload": {
+                "classmap": [
+                    "src/"
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "BSD-3-Clause",
+                "GPL-2.0-only",
+                "GPL-3.0-only"
+            ],
+            "authors": [
+                {
+                    "name": "David Grudl",
+                    "homepage": "https://davidgrudl.com"
+                },
+                {
+                    "name": "Nette Community",
+                    "homepage": "https://nette.org/contributors"
+                }
+            ],
+            "description": "🐘 Nette PHP Generator: generates neat PHP code for you. Supports new PHP 8.4 features.",
+            "homepage": "https://nette.org",
+            "keywords": [
+                "code",
+                "nette",
+                "php",
+                "scaffolding"
+            ],
+            "support": {
+                "issues": "https://github.com/nette/php-generator/issues",
+                "source": "https://github.com/nette/php-generator/tree/v4.1.7"
+            },
+            "time": "2024-11-29T01:41:18+00:00"
+        },
+        {
+            "name": "nette/utils",
+            "version": "v4.0.5",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/nette/utils.git",
+                "reference": "736c567e257dbe0fcf6ce81b4d6dbe05c6899f96"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/nette/utils/zipball/736c567e257dbe0fcf6ce81b4d6dbe05c6899f96",
+                "reference": "736c567e257dbe0fcf6ce81b4d6dbe05c6899f96",
+                "shasum": ""
+            },
+            "require": {
+                "php": "8.0 - 8.4"
+            },
+            "conflict": {
+                "nette/finder": "<3",
+                "nette/schema": "<1.2.2"
+            },
+            "require-dev": {
+                "jetbrains/phpstorm-attributes": "dev-master",
+                "nette/tester": "^2.5",
+                "phpstan/phpstan": "^1.0",
+                "tracy/tracy": "^2.9"
+            },
+            "suggest": {
+                "ext-gd": "to use Image",
+                "ext-iconv": "to use Strings::webalize(), toAscii(), chr() and reverse()",
+                "ext-intl": "to use Strings::webalize(), toAscii(), normalize() and compare()",
+                "ext-json": "to use Nette\\Utils\\Json",
+                "ext-mbstring": "to use Strings::lower() etc...",
+                "ext-tokenizer": "to use Nette\\Utils\\Reflection::getUseStatements()"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "4.0-dev"
+                }
+            },
+            "autoload": {
+                "classmap": [
+                    "src/"
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "BSD-3-Clause",
+                "GPL-2.0-only",
+                "GPL-3.0-only"
+            ],
+            "authors": [
+                {
+                    "name": "David Grudl",
+                    "homepage": "https://davidgrudl.com"
+                },
+                {
+                    "name": "Nette Community",
+                    "homepage": "https://nette.org/contributors"
+                }
+            ],
+            "description": "🛠  Nette Utils: lightweight utilities for string & array manipulation, image handling, safe JSON encoding/decoding, validation, slug or strong password generating etc.",
+            "homepage": "https://nette.org",
+            "keywords": [
+                "array",
+                "core",
+                "datetime",
+                "images",
+                "json",
+                "nette",
+                "paginator",
+                "password",
+                "slugify",
+                "string",
+                "unicode",
+                "utf-8",
+                "utility",
+                "validation"
+            ],
+            "support": {
+                "issues": "https://github.com/nette/utils/issues",
+                "source": "https://github.com/nette/utils/tree/v4.0.5"
+            },
+            "time": "2024-08-07T15:39:19+00:00"
+        },
+        {
             "name": "nikic/php-parser",
             "version": "v5.4.0",
             "source": {
@@ -12162,6 +12361,90 @@
                 }
             ],
             "time": "2024-12-30T14:23:15+00:00"
+        },
+        {
+            "name": "spawnia/sailor",
+            "version": "v0.35.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/spawnia/sailor.git",
+                "reference": "66306dd2a47659ef469b7f0bc800982607ebcb3d"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/spawnia/sailor/zipball/66306dd2a47659ef469b7f0bc800982607ebcb3d",
+                "reference": "66306dd2a47659ef469b7f0bc800982607ebcb3d",
+                "shasum": ""
+            },
+            "require": {
+                "ext-json": "*",
+                "nette/php-generator": "^3.6.7 || ^4",
+                "php": "^7.4 || ^8",
+                "psr/http-client": "^1",
+                "symfony/console": "^5 || ^6 || ^7",
+                "symfony/var-exporter": "^5.3 || ^6 || ^7",
+                "thecodingmachine/safe": "^1 || ^2",
+                "webonyx/graphql-php": "^14.11.3 || ^15"
+            },
+            "require-dev": {
+                "bensampo/laravel-enum": "^3 || ^4.1 || ^5 || ^6",
+                "composer/composer": "^2",
+                "ergebnis/composer-normalize": "^2.13",
+                "friendsofphp/php-cs-fixer": "~3.63.0",
+                "guzzlehttp/guzzle": "^7",
+                "jangregor/phpstan-prophecy": "^1",
+                "mll-lab/php-cs-fixer-config": "^5",
+                "mockery/mockery": "^1.4",
+                "nyholm/psr7": "^1.4",
+                "php-http/httplug": "^2",
+                "php-http/mock-client": "^1.4",
+                "phpstan/extension-installer": "^1",
+                "phpstan/phpstan": "^1",
+                "phpstan/phpstan-mockery": "^1",
+                "phpstan/phpstan-phpunit": "^1",
+                "phpstan/phpstan-strict-rules": "^1",
+                "phpunit/phpunit": "^9.5.2 || ^10 || ^11",
+                "spawnia/phpunit-assert-directory": "^2",
+                "symfony/var-dumper": "^5.2.3",
+                "thecodingmachine/phpstan-safe-rule": "^1.1"
+            },
+            "suggest": {
+                "bensampo/laravel-enum": "Use with BenSampoEnumTypeConfig",
+                "guzzlehttp/guzzle": "Enables using the built-in default Client",
+                "mockery/mockery": "Used in Operation::mock()"
+            },
+            "bin": [
+                "sailor"
+            ],
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Spawnia\\Sailor\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Benedikt Franke",
+                    "email": "benedikt@franke.tech"
+                }
+            ],
+            "description": "A typesafe GraphQL client for PHP",
+            "homepage": "https://github.com/spawnia/sailor",
+            "support": {
+                "issues": "https://github.com/spawnia/sailor/issues",
+                "source": "https://github.com/spawnia/sailor"
+            },
+            "funding": [
+                {
+                    "url": "https://github.com/spawnia",
+                    "type": "github"
+                }
+            ],
+            "time": "2024-11-08T11:25:49+00:00"
         },
         {
             "name": "squizlabs/php_codesniffer",
