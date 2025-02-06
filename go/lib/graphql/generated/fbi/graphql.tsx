@@ -1654,6 +1654,8 @@ export type Series = {
   alternativeTitles: Array<Scalars['String']['output']>;
   /** Description of the series */
   description?: Maybe<Scalars['String']['output']>;
+  /** The number of members in the series */
+  hitcount: Scalars['Int']['output'];
   /** Additional information  */
   identifyingAddition?: Maybe<Scalars['String']['output']>;
   /** Whether this is a popular series or general series */
