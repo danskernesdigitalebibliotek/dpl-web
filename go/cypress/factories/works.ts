@@ -1,11 +1,11 @@
 import { Factory } from "fishery"
 
-import { SearchWithPaginationQuery } from "@/lib/graphql/generated/fbi/graphql"
+import { WorkTeaserSearchPageFragment } from "@/lib/graphql/generated/fbi/graphql"
 
-import { audioBookManifistationFactory, eBookManifistationFactory } from "./manifistations"
+import { audioBookManifestationFactory, eBookManifestationFactory } from "./manifestations"
 import { audioBookFactory, eBookFactory } from "./materials"
 
-export type Work = SearchWithPaginationQuery["search"]["works"][0]
+export type Work = WorkTeaserSearchPageFragment
 
 export const AudioBookFactory = Factory.define<Work>(({ sequence }) => ({
   workId: `work-of:870970-basis:38772805-${sequence}`,
@@ -20,7 +20,7 @@ export const AudioBookFactory = Factory.define<Work>(({ sequence }) => ({
   ],
   materialTypes: [eBookFactory.build(), audioBookFactory.build()],
   manifestations: {
-    all: [eBookManifistationFactory.build(), audioBookManifistationFactory.build()],
-    bestRepresentation: audioBookManifistationFactory.build(),
+    all: [eBookManifestationFactory.build(), audioBookManifestationFactory.build()],
+    bestRepresentation: audioBookManifestationFactory.build(),
   },
 }))
