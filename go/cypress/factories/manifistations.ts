@@ -7,6 +7,10 @@ type Manifestation = Work["manifestations"]["all"][0]
 
 export const eBookManifistationFactory = Factory.define<Manifestation>(() => ({
   pid: "870970-basis:38772791",
+  genreAndForm: ["myter", "billedbøger"],
+  publisher: ["Publisher Name"],
+  contributorsFromDescription: [],
+  contributors: manifistationContributorFactory.buildList(2),
   identifiers: [
     {
       type: "PUBLIZON",
@@ -22,6 +26,10 @@ export const eBookManifistationFactory = Factory.define<Manifestation>(() => ({
 
 export const audioBookManifistationFactory = Factory.define<Manifestation>(() => ({
   pid: "870970-basis:38786768",
+  genreAndForm: ["myter", "billedbøger"],
+  publisher: ["Publisher Name"],
+  contributorsFromDescription: [],
+  contributors: manifistationContributorFactory.buildList(1),
   identifiers: [
     {
       type: "PUBLIZON",
@@ -34,3 +42,7 @@ export const audioBookManifistationFactory = Factory.define<Manifestation>(() =>
   ],
   materialTypes: [audioBookFactory.build()],
 }))
+
+export const manifistationContributorFactory = Factory.define<Manifestation["contributors"][0]>(
+  ({ sequence }) => ({ display: `Contributor ${sequence}` })
+)
