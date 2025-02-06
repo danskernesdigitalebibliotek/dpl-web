@@ -55,7 +55,7 @@ function ProfileButton() {
             <SheetTitle className="text-typo-heading-3">Log ind</SheetTitle>
           </SheetHeader>
           <div className="flex h-full flex-col justify-center space-y-8">
-            <div className="bg-background-overlay py-space-y flex min-h-[300px] flex-col items-center justify-center rounded-sm">
+            <div className="bg-background-overlay py-space-y flex h-[300px] flex-col items-center justify-center rounded-sm">
               <SheetDescription className="text-typo-heading-4 text-foreground mb-4">
                 Log ind med UNI•Login
               </SheetDescription>
@@ -71,7 +71,7 @@ function ProfileButton() {
             {adgangsplatformenLoginUrl && (
               <>
                 <hr className="border-foreground mx-auto w-full opacity-10 md:w-full" />
-                <div className="bg-background-overlay py-space-y flex min-h-[300px] flex-col items-center justify-center rounded-sm">
+                <div className="bg-background-overlay py-space-y flex h-[300px] flex-col items-center justify-center rounded-sm">
                   <div className="mb-4">
                     <Icon name="adgangsplatformen" />
                   </div>
