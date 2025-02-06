@@ -36,6 +36,7 @@ export const extendedTheme = {
     "5/2": "var(--aspect-5-2)",
     "5/4": "var(--aspect-5-4)",
     "7/9": "var(--aspect-7-9)",
+    "8/15": "var(--aspect-8-15)",
     "16/9": "var(--aspect-16-9)",
   },
   fontFamily: {

@@ -125,7 +125,7 @@ const VideoBundle = ({
                 className="mr-auto md:ml-10 md:h-20 md:w-20 lg:hidden">
                 <Icon className="h-[24px] w-[24px] md:h-10 md:w-10" name="arrow-left" />
               </Button>
-              <div className="relative h-[350px] w-[177px] md:h-[545px] md:w-[300px]">
+              <div className="aspect-8/15 relative w-[177px] md:w-[300px]">
                 {!!dataAutomatic
                   ? dataAutomatic.complexSearch.works
                       .slice()
