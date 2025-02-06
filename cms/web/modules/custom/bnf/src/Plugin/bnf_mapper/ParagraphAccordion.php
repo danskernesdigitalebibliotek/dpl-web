@@ -12,7 +12,7 @@ use Drupal\Core\Entity\EntityTypeManagerInterface;
 use Spawnia\Sailor\ObjectLike;
 
 /**
- * Maps article nodes.
+ * Maps accordion paragraphs.
  */
 #[BnfMapper(
   id: GraphQLParagraphAccordion::class,
@@ -20,7 +20,7 @@ use Spawnia\Sailor\ObjectLike;
 class ParagraphAccordion extends BnfMapperPluginBase {
 
   /**
-   * Paragraph storage to create node in.
+   * Entity storage to create paragroph in.
    */
   protected EntityStorageInterface $paragraphStorage;
 
@@ -46,7 +46,7 @@ class ParagraphAccordion extends BnfMapperPluginBase {
       throw new \RuntimeException('Wrong class handed to mapper');
     }
 
-    /** @var \Drupal\paragraphs\Entity\Paragraph $paragraph */
+    /** @var \Drupal\paragraphs\ParagraphInterface $paragraph */
     $paragraph = $this->paragraphStorage->create([
       'type' => 'accordion',
     ]);

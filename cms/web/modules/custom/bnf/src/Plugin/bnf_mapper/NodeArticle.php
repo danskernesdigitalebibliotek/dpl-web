@@ -21,7 +21,7 @@ use Spawnia\Sailor\ObjectLike;
 class NodeArticle extends BnfMapperPluginBase {
 
   /**
-   * Node storage to create node in.
+   * Entity storage to create node in.
    */
   protected EntityStorageInterface $nodeStorage;
 

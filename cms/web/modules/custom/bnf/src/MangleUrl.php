@@ -21,10 +21,10 @@ use function Safe\preg_match;
  * challenge.
  *
  * This sidesteps the issue by replacing the "outside" URL with the "inside"
- * HTTP URL for site to site connections. Code that sends the URL to the browser
- * should just use the configured URL, while code thot does cross site requests
- * should pass the URL through `MangleUrl::server()` first, and not worry about
- * HTTPS as that's handled for them.
+ * HTTP URL for server to server connections. Code that sends the URL to the
+ * browser should just use the configured URL, while code that does cross site
+ * requests should pass the URL through `MangleUrl::server()` first, and not
+ * worry about HTTPS as that's handled for them.
  */
 class MangleUrl {
 
@@ -36,6 +36,9 @@ class MangleUrl {
     $host = $parsedUrl['host'] ?? '';
 
     if (preg_match('/(docker|local)$/', $host)) {
+      // These URLs are using the service names defined in `docker-compose.yml`
+      // and `docker-compose.bnf.yml`. All other hostnames might wary depending
+      // on setup, but using the service name will always work.
       if (preg_match('/^bnf-/', $host)) {
         return 'http://bnfnginx:8080/graphql';
       }
