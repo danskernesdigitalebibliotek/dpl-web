@@ -34,6 +34,8 @@ const config: CodegenConfig = {
         fetcher: "@/lib/graphql/fetchers/dpl-cms.fetcher#fetcher",
       },
       hooks: {
+        // Correcting the codegen output.
+        // First off, we correct the type of the options for the fetcher.
         afterOneFileWrite: ["yarn post-process-dpl-cms-graphql", "yarn eslint --fix"],
       },
     },
