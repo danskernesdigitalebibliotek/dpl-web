@@ -16,7 +16,6 @@ class LibraryTokenHandler {
 
   const LIBRARY_TOKEN_KEY = 'library_token';
   const TOKEN_COLLECTION_KEY = 'dpl_library_token';
-  const NEXT_EXECUTION_KEY = 'dpl_library_token.next_execution';
   const LOGGER_KEY = 'dpl_library_tokens';
 
   /**
@@ -115,24 +114,29 @@ class LibraryTokenHandler {
    * Fetches and returns library token from remote service.
    *
    * @return \Drupal\dpl_library_token\LibraryToken|null
-   *   If token was fetched it is returned. Otherwise NULL.
+   *   If token was fetched it is returned. Otherwise, return NULL.
    */
-  public function fetchToken(): ?LibraryToken {
+  public function fetchToken(
+    string $agencyId = NULL,
+    string $clientId = NULL,
+    string $clientSecret = NULL,
+    string $tokenEndpoint = NULL
+  ): ?LibraryToken {
     $token = NULL;
 
     try {
-      $agency = sprintf('@%d', $this->adgangsplatformenConfig->getAgencyId());
+      $agency = sprintf('@%d', $agencyId ?? $this->adgangsplatformenConfig->getAgencyId());
 
       $response = $this->httpClient
-        ->request('POST', $this->adgangsplatformenConfig->getTokenEndpoint(), [
+        ->request('POST', $tokenEndpoint ?? $this->adgangsplatformenConfig->getTokenEndpoint(), [
           'form_params' => [
             'grant_type' => 'password',
             'username' => $agency,
             'password' => $agency,
           ],
           'auth' => [
-            $this->adgangsplatformenConfig->getClientId(),
-            $this->adgangsplatformenConfig->getClientSecret(),
+            $clientId ?? $this->adgangsplatformenConfig->getClientId(),
+            $clientSecret ?? $this->adgangsplatformenConfig->getClientSecret(),
           ],
         ]);
 
