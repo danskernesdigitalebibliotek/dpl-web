@@ -66,9 +66,9 @@ class BnfImportConfirmForm implements FormInterface, ContainerInjectionInterface
     $existingNodes = $this->nodeStorage->loadByProperties(['uuid' => $uuid]);
 
     if (!empty($existingNodes)) {
-      return [
-        '#markup' => $this->t('Node has previously been imported from BNF.', [], ['context' => 'BNF']),
-      ];
+      $this->messenger->addError($this->t('Node has previously been imported from BNF.', [], ['context' => 'BNF']));
+
+      return [];
     }
 
     $form['#title'] = $this->t('Confirm import of BNF content', [], ['context' => 'BNF']);
