@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Drupal\bnf\Plugin\bnf_mapper;
 
 use Drupal\bnf\Attribute\BnfMapper;
-use Drupal\bnf\GraphQL\Operations\GetNode\Node\Paragraphs\ParagraphAccordion as GraphQLParagraphAccordion;
+use Drupal\bnf\GraphQL\Operations\GetNode\Node\Paragraphs\ParagraphAccordion;
 use Drupal\bnf\Plugin\BnfMapperPluginBase;
 use Drupal\Core\Entity\EntityStorageInterface;
 use Drupal\Core\Entity\EntityTypeManagerInterface;
@@ -15,9 +15,9 @@ use Spawnia\Sailor\ObjectLike;
  * Maps accordion paragraphs.
  */
 #[BnfMapper(
-  id: GraphQLParagraphAccordion::class,
+  id: ParagraphAccordion::class,
   )]
-class ParagraphAccordion extends BnfMapperPluginBase {
+class ParagraphAccordionMapper extends BnfMapperPluginBase {
 
   /**
    * Entity storage to create paragroph in.
@@ -42,7 +42,7 @@ class ParagraphAccordion extends BnfMapperPluginBase {
    * {@inheritdoc}
    */
   public function map(ObjectLike $object): mixed {
-    if (!$object instanceof GraphQLParagraphAccordion) {
+    if (!$object instanceof ParagraphAccordion) {
       throw new \RuntimeException('Wrong class handed to mapper');
     }
 

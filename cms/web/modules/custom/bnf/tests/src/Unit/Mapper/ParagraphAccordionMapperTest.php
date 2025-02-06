@@ -4,16 +4,16 @@ declare(strict_types=1);
 
 namespace Drupal\Tests\bnf\Unit\Mapper;
 
-use Drupal\bnf\GraphQL\Operations\GetNode\Node\Paragraphs\AccordionDescription\Text as GraphqlDescriptionText;
-use Drupal\bnf\GraphQL\Operations\GetNode\Node\Paragraphs\AccordionTitle\Text as GraphqlTitleText;
-use Drupal\bnf\GraphQL\Operations\GetNode\Node\Paragraphs\ParagraphAccordion as GraphqlParagraphAccordion;
-use Drupal\bnf\Plugin\bnf_mapper\ParagraphAccordion;
+use Drupal\bnf\GraphQL\Operations\GetNode\Node\Paragraphs\AccordionDescription\Text as DescriptionText;
+use Drupal\bnf\GraphQL\Operations\GetNode\Node\Paragraphs\AccordionTitle\Text as TitleText;
+use Drupal\bnf\GraphQL\Operations\GetNode\Node\Paragraphs\ParagraphAccordion;
+use Drupal\bnf\Plugin\bnf_mapper\ParagraphAccordionMapper;
 use Drupal\paragraphs\Entity\Paragraph;
 
 /**
  * Tests the text_body paragraph mapper.
  */
-class ParagraphAccordionTest extends EntityMapperTestBase {
+class ParagraphAccordionMapperTest extends EntityMapperTestBase {
 
   const ENTITY_NAME = 'paragraph';
   const ENTITY_CLASS = Paragraph::class;
@@ -26,11 +26,11 @@ class ParagraphAccordionTest extends EntityMapperTestBase {
       'type' => 'accordion',
     ])->willReturn($this->entityProphecy);
 
-    $mapper = new ParagraphAccordion([], '', [], $this->entityManagerProphecy->reveal());
+    $mapper = new ParagraphAccordionMapper([], '', [], $this->entityManagerProphecy->reveal());
 
-    $graphqlArticle = GraphqlParagraphAccordion::make(
-      GraphqlTitleText::make('This is the title', 'format1'),
-      GraphqlDescriptionText::make('This is the description', 'format2'),
+    $graphqlArticle = ParagraphAccordion::make(
+      TitleText::make('This is the title', 'format1'),
+      DescriptionText::make('This is the description', 'format2'),
     );
 
     $paragraph = $mapper->map($graphqlArticle);

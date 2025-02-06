@@ -4,15 +4,15 @@ declare(strict_types=1);
 
 namespace Drupal\Tests\bnf\Unit\Mapper;
 
-use Drupal\bnf\GraphQL\Operations\GetNode\Node\Paragraphs\Body\Text as GraphqlText;
-use Drupal\bnf\GraphQL\Operations\GetNode\Node\Paragraphs\ParagraphTextBody as GraphqlParagraphTextBody;
-use Drupal\bnf\Plugin\bnf_mapper\ParagraphTextBody;
+use Drupal\bnf\GraphQL\Operations\GetNode\Node\Paragraphs\Body\Text;
+use Drupal\bnf\GraphQL\Operations\GetNode\Node\Paragraphs\ParagraphTextBody;
+use Drupal\bnf\Plugin\bnf_mapper\ParagraphTextBodyMapper;
 use Drupal\paragraphs\Entity\Paragraph;
 
 /**
  * Tests the text_body paragraph mapper.
  */
-class ParagraphTextBodyTest extends EntityMapperTestBase {
+class ParagraphTextBodyMapperTest extends EntityMapperTestBase {
 
   const ENTITY_NAME = 'paragraph';
   const ENTITY_CLASS = Paragraph::class;
@@ -25,10 +25,10 @@ class ParagraphTextBodyTest extends EntityMapperTestBase {
       'type' => 'text_body',
     ])->willReturn($this->entityProphecy);
 
-    $mapper = new ParagraphTextBody([], '', [], $this->entityManagerProphecy->reveal());
+    $mapper = new ParagraphTextBodyMapper([], '', [], $this->entityManagerProphecy->reveal());
 
-    $graphqlArticle = GraphqlParagraphTextBody::make(
-      GraphqlText::make('This is the text', 'with_format')
+    $graphqlArticle = ParagraphTextBody::make(
+      Text::make('This is the text', 'with_format')
     );
 
     $paragraph = $mapper->map($graphqlArticle);
