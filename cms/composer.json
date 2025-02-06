@@ -375,7 +375,8 @@
                 "3468521: (3/4)": "https://git.drupalcode.org/project/recurring_events/-/commit/ad8a4294b1ffb754a338bb2cfa0146f203aa6fc1.patch",
                 "3468521: (4/4)": "https://git.drupalcode.org/project/recurring_events/-/commit/ad99ae79f5c55fc2db17427e9936ab141314609d.patch",
                 "3468300: Update EventSeriesSettings to use datetime form element.": "https://git.drupalcode.org/project/recurring_events/-/commit/5d9bc3b1cf7c00972f053f3d14873012b1ad7140.patch",
-                "3487412: Fix WSOD when EventInstance has invalid translation.": "https://git.drupalcode.org/project/recurring_events/-/commit/996052eeb7518ce591df968a0bb12c4819fb4edf.patch"
+                "3487412: Fix WSOD when EventInstance has invalid translation.": "https://git.drupalcode.org/project/recurring_events/-/commit/996052eeb7518ce591df968a0bb12c4819fb4edf.patch",
+                "3504806: Clean up orphaned eventinstances automatically": "https://www.drupal.org/files/issues/2025-02-06/reccuring_events_auto_delete_orphaned.patch"
             },
             "drupal/state_log": {
                 "3501178: Call to undefined method Drupal\\state_log\\StateLog::destruct()": "https://git.drupalcode.org/project/state_log/-/commit/8d63dd4827a930f5294004a1d13f051487ec4269.patch"
