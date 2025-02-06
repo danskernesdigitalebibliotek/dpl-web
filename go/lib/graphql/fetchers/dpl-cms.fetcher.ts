@@ -18,7 +18,7 @@ const getHeaders = (headers: RequestInit["headers"] | undefined) => {
 export function fetcher<TData, TVariables>(
   query: string,
   variables?: TVariables,
-  options?: RequestInit
+  options?: RequestInit & { next?: NextFetchRequestConfig }
 ) {
   const dplCmsGraphqlEndpoint = process.env.NEXT_PUBLIC_GRAPHQL_SCHEMA_ENDPOINT_DPL_CMS
   const dplCmsGraphqlBasicToken = process.env.NEXT_PUBLIC_GRAPHQL_BASIC_TOKEN_DPL_CMS
@@ -30,8 +30,7 @@ export function fetcher<TData, TVariables>(
   if (!dplCmsGraphqlBasicToken) {
     throw new Error("Missing DPL CMS GraphQL basic token")
   }
-  const { next, ...restOptions } = options || {}
-  const headers = restOptions as RequestInit["headers"]
+  const { next, headers } = options || {}
 
   return async (): Promise<TData> => {
     const res = await fetch(dplCmsGraphqlEndpoint, {
@@ -51,7 +50,7 @@ export function fetcher<TData, TVariables>(
     // TODO: Remove console logs when we are more confident
     // in dpl-cms fetching and caching of data.
     // eslint-disable-next-line no-console
-    console.log({ dplConfiguration: json?.data?.dplConfiguration })
+    console.log({ goConfiguration: json?.data?.goConfiguration })
     // TODO: Remove console logs when we are more confident
     // in dpl-cms fetching and caching of data.
     // eslint-disable-next-line no-console
