@@ -15,8 +15,19 @@ use Drupal\paragraphs\Entity\Paragraph;
  */
 class ParagraphAccordionMapperTest extends EntityMapperTestBase {
 
-  const ENTITY_NAME = 'paragraph';
-  const ENTITY_CLASS = Paragraph::class;
+  /**
+   * {@inheritdoc}
+   */
+  protected function getEntityName(): string {
+    return 'paragraph';
+  }
+
+  /**
+   * {@inheritdoc}
+   */
+  protected function getEntityClass(): string {
+    return Paragraph::class;
+  }
 
   /**
    * Test text paragraph mapping.

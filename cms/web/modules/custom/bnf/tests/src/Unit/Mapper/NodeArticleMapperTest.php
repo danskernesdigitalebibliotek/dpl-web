@@ -12,10 +12,21 @@ use Drupal\node\Entity\Node;
 /**
  * Test the article node mapper.
  */
-class NodeArticleTestMapper extends EntityMapperTestBase {
+class NodeArticleMapperTest extends EntityMapperTestBase {
 
-  const ENTITY_NAME = 'node';
-  const ENTITY_CLASS = Node::class;
+  /**
+   * {@inheritdoc}
+   */
+  protected function getEntityName(): string {
+    return 'node';
+  }
+
+  /**
+   * {@inheritdoc}
+   */
+  protected function getEntityClass(): string {
+    return Node::class;
+  }
 
   /**
    * Test article node mapping.
