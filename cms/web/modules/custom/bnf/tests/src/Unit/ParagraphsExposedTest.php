@@ -34,7 +34,7 @@ class ParagraphsExposedTest extends UnitTestCase {
     $this->assertArrayHasKey(
       'paragraph',
       $config['entity_config'],
-      'Could not find `entity_config` in graphql_compose config file'
+      'Could not find `paragraph` entry within `entity_config` in graphql_compose config file'
     );
 
     foreach ($config['entity_config']['paragraph'] as $name => $paragraph) {
