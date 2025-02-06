@@ -6,7 +6,7 @@ namespace Drupal\bnf\Plugin\bnf_mapper;
 
 use Drupal\bnf\Attribute\BnfMapper;
 use Drupal\bnf\BnfMapperManager;
-use Drupal\bnf\GraphQL\Operations\GetNode\Node\NodeArticle as GraphQLNodeArticle;
+use Drupal\bnf\GraphQL\Operations\GetNode\Node\NodeArticle;
 use Drupal\bnf\Plugin\BnfMapperPluginBase;
 use Drupal\Core\Entity\EntityStorageInterface;
 use Drupal\Core\Entity\EntityTypeManagerInterface;
@@ -16,9 +16,9 @@ use Spawnia\Sailor\ObjectLike;
  * Maps article nodes.
  */
 #[BnfMapper(
-  id: GraphQLNodeArticle::class,
+  id: NodeArticle::class,
 )]
-class NodeArticle extends BnfMapperPluginBase {
+class NodeArticleMapper extends BnfMapperPluginBase {
 
   /**
    * Entity storage to create node in.
@@ -44,7 +44,7 @@ class NodeArticle extends BnfMapperPluginBase {
    * {@inheritdoc}
    */
   public function map(ObjectLike $object): mixed {
-    if (!$object instanceof GraphQLNodeArticle) {
+    if (!$object instanceof NodeArticle) {
       throw new \RuntimeException('Wrong class handed to mapper');
     }
 

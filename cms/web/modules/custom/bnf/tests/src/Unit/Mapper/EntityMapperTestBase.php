@@ -12,10 +12,7 @@ use Prophecy\Prophecy\ObjectProphecy;
 /**
  * Base class for testing mappers that produce entities.
  */
-class EntityMapperTestBase extends UnitTestCase {
-
-  const ENTITY_NAME = '';
-  const ENTITY_CLASS = '';
+abstract class EntityMapperTestBase extends UnitTestCase {
 
   /**
    * EntityManager prophecy.
@@ -44,14 +41,20 @@ class EntityMapperTestBase extends UnitTestCase {
   public function setUp(): void {
     parent::setUp();
 
-    if (empty(static::ENTITY_NAME) || empty(static::ENTITY_CLASS)) {
-      throw new \LogicException('Test classes should define ENTITY_CLASS and ENTITY_NAME constants');
-    }
-
     $this->entityManagerProphecy = $this->prophesize(EntityTypeManagerInterface::class);
     $this->storageProphecy = $this->prophesize(EntityStorageInterface::class);
-    $this->entityManagerProphecy->getStorage(static::ENTITY_NAME)->willReturn($this->storageProphecy);
-    $this->entityProphecy = $this->prophesize(static::ENTITY_CLASS);
+    $this->entityManagerProphecy->getStorage($this->getEntityName())->willReturn($this->storageProphecy);
+    $this->entityProphecy = $this->prophesize($this->getEntityClass());
   }
+
+  /**
+   * Return the name of the entity type to work with.
+   */
+  abstract protected function getEntityName(): string;
+
+  /**
+   * Return the class name of the entity to work with.
+   */
+  abstract protected function getEntityClass(): string;
 
 }

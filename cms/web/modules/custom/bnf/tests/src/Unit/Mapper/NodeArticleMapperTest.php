@@ -5,17 +5,28 @@ declare(strict_types=1);
 namespace Drupal\Tests\bnf\Unit\Mapper;
 
 use Drupal\bnf\BnfMapperManager;
-use Drupal\bnf\GraphQL\Operations\GetNode\Node\NodeArticle as GraphQLArticle;
-use Drupal\bnf\Plugin\bnf_mapper\NodeArticle;
+use Drupal\bnf\GraphQL\Operations\GetNode\Node\NodeArticle;
+use Drupal\bnf\Plugin\bnf_mapper\NodeArticleMapper;
 use Drupal\node\Entity\Node;
 
 /**
  * Test the article node mapper.
  */
-class NodeArticleTest extends EntityMapperTestBase {
+class NodeArticleMapperTest extends EntityMapperTestBase {
 
-  const ENTITY_NAME = 'node';
-  const ENTITY_CLASS = Node::class;
+  /**
+   * {@inheritdoc}
+   */
+  protected function getEntityName(): string {
+    return 'node';
+  }
+
+  /**
+   * {@inheritdoc}
+   */
+  protected function getEntityClass(): string {
+    return Node::class;
+  }
 
   /**
    * Test article node mapping.
@@ -27,7 +38,7 @@ class NodeArticleTest extends EntityMapperTestBase {
     ])->willReturn($this->entityProphecy);
 
     $manager = $this->prophesize(BnfMapperManager::class);
-    $mapper = new NodeArticle(
+    $mapper = new NodeArticleMapper(
       [],
       '',
       [],
@@ -35,7 +46,7 @@ class NodeArticleTest extends EntityMapperTestBase {
       $this->entityManagerProphecy->reveal(),
     );
 
-    $graphqlArticle = GraphQLArticle::make('123', 'this is the title');
+    $graphqlArticle = NodeArticle::make('123', 'this is the title');
 
     $node = $mapper->map($graphqlArticle);
 
