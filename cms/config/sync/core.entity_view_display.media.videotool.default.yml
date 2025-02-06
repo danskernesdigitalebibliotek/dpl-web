@@ -1,0 +1,28 @@
+uuid: 8ff2c8f8-73b2-45a2-9968-9eea44a64301
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.field.media.videotool.field_media_videotool
+    - media.type.videotool
+  module:
+    - media_videotool
+id: media.videotool.default
+targetEntityType: media
+bundle: videotool
+mode: default
+content:
+  field_media_videotool:
+    type: media_videotool_embed
+    label: visually_hidden
+    settings: {  }
+    third_party_settings: {  }
+    weight: 0
+    region: content
+hidden:
+  created: true
+  langcode: true
+  name: true
+  search_api_excerpt: true
+  thumbnail: true
+  uid: true

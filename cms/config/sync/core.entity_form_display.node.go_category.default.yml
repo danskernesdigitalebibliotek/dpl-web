@@ -3,15 +3,14 @@ langcode: en
 status: true
 dependencies:
   config:
-    - field.field.node.go_category.field_category_menu_color
     - field.field.node.go_category.field_category_menu_image
     - field.field.node.go_category.field_category_menu_sound
     - field.field.node.go_category.field_category_menu_title
+    - field.field.node.go_category.field_go_color
     - field.field.node.go_category.field_paragraphs
     - field.field.node.go_category.field_publication_date
     - node.type.go_category
   module:
-    - color_field
     - datetime
     - field_group
     - media_library
@@ -64,13 +63,6 @@ targetEntityType: node
 bundle: go_category
 mode: default
 content:
-  field_category_menu_color:
-    type: color_field_widget_box
-    weight: 28
-    region: content
-    settings:
-      default_colors: '#ffd2f0,#dcc3ff,#ffdcb9,#bee6fa'
-    third_party_settings: {  }
   field_category_menu_image:
     type: media_library_widget
     weight: 29
@@ -92,6 +84,12 @@ content:
     settings:
       size: 60
       placeholder: ''
+    third_party_settings: {  }
+  field_go_color:
+    type: options_select
+    weight: 31
+    region: content
+    settings: {  }
     third_party_settings: {  }
   field_paragraphs:
     type: paragraphs

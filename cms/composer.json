@@ -40,10 +40,10 @@
             "type": "package",
             "package": {
                 "name": "danskernesdigitalebibliotek/dpl-react",
-                "version": "0.0.0-dev",
+                "version": "2025.6.0",
                 "type": "drupal-library",
                 "dist": {
-                    "url": "https://github.com/danskernesdigitalebibliotek/dpl-react/releases/download/branch-develop/dist-develop.zip",
+                    "url": "https://github.com/danskernesdigitalebibliotek/dpl-react/releases/download/2025.6.0/dist-2025-6-0-9e92fbd4e3a1f48f64cc932639ad2cc5a9c15f80.zip",
                     "type": "zip"
                 },
                 "require": {
@@ -56,9 +56,9 @@
             "package": {
                 "name": "danskernesdigitalebibliotek/dpl-design-system",
                 "type": "drupal-library",
-                "version": "0.0.0-dev",
+                "version": "2025.6.0",
                 "dist": {
-                    "url": "https://github.com/danskernesdigitalebibliotek/dpl-design-system/releases/download/branch-develop/dist-develop.zip",
+                    "url": "https://github.com/danskernesdigitalebibliotek/dpl-design-system/releases/download/2025.6.0/dist-2025-6-0-36f712576fe66e978382ee702a46c66379395d95.zip",
                     "type": "zip"
                 }
             }
@@ -84,14 +84,15 @@
     ],
     "require": {
         "php": "8.1.*",
+        "ext-dom": "*",
         "amazeeio/drupal_integrations": "^0.5",
         "bower-asset/jsnlog": "^2.30",
         "brick/math": "^0.12.1",
         "composer/installers": "1.12.0",
         "cweagans/composer-patches": "1.7.3",
         "danskernesdigitalebibliotek/cms-api": "*",
-        "danskernesdigitalebibliotek/dpl-design-system": "0.0.0-dev",
-        "danskernesdigitalebibliotek/dpl-react": "0.0.0-dev",
+        "danskernesdigitalebibliotek/dpl-design-system": "^2025.6",
+        "danskernesdigitalebibliotek/dpl-react": "^2025.6",
         "danskernesdigitalebibliotek/fbs-client": "*",
         "dealerdirect/phpcodesniffer-composer-installer": "^1.0.0",
         "deoliveiralucas/array-keys-case-transform": "^1.1",
@@ -310,7 +311,8 @@
                 "3293926: Error decorating non-existent service when inner service's module not installed": "https://git.drupalcode.org/project/drupal/-/commit/a64662a3cea209c106b888ce9ef03cc1808f9ffe.patch",
                 "Always assume chmod succeeds": "patches/core-chmod-true.patch",
                 "Debug Form triggering element detection": "patches/form-triggering-element-detection-paragraphs-ee.patch",
-                "Don't check for file owner in update": "patches/dont-check-fileowner.patch"
+                "Don't check for file owner in update": "patches/dont-check-fileowner.patch",
+                "Do not throw error when non-existent permission exist": "https://www.drupal.org/files/issues/2024-06-03/3358586-36.patch"
             },
             "drupal/date_range_formatter": {
                 "3309324: Fails when start and end date are identical": "https://www.drupal.org/files/issues/2023-12-22/date_range_formatter_3309324_1.patch"

@@ -1,16 +1,17 @@
-uuid: 7cd8565b-a09b-4ff5-9264-a681efc16938
+uuid: 21293302-f1f1-4d53-8ffe-4e5f06701647
 langcode: en
 status: true
 dependencies:
   module:
-    - link
+    - entity_reference_revisions
     - paragraphs
 id: paragraph.field_go_link
 field_name: field_go_link
 entity_type: paragraph
-type: link
-settings: {  }
-module: link
+type: entity_reference_revisions
+settings:
+  target_type: paragraph
+module: entity_reference_revisions
 locked: false
 cardinality: 1
 translatable: true

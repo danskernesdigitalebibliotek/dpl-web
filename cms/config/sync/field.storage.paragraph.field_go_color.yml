@@ -1,17 +1,30 @@
-uuid: 2426e40e-69f8-4e8c-ab47-ad72896b6e2f
+uuid: c5bd3c61-a79a-47d2-9d49-43682c992d5d
 langcode: en
 status: true
 dependencies:
   module:
-    - color_field
+    - options
     - paragraphs
 id: paragraph.field_go_color
 field_name: field_go_color
 entity_type: paragraph
-type: color_field_type
+type: list_string
 settings:
-  format: '#HEXHEX'
-module: color_field
+  allowed_values:
+    -
+      value: content_color_1
+      label: 'Content Color 1'
+    -
+      value: content_color_2
+      label: 'Content Color 2'
+    -
+      value: content_color_3
+      label: 'Content Color 3'
+    -
+      value: content_color_4
+      label: 'Content Color 4'
+  allowed_values_function: ''
+module: options
 locked: false
 cardinality: 1
 translatable: true
