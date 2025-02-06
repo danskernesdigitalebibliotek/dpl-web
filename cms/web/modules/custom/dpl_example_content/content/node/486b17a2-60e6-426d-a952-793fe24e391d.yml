@@ -60,6 +60,7 @@ default:
       postal_code: '1172'
       address_line1: 'Krystalgade 15'
       address_line2: ''
+      address_line3: ''
   field_promoted_on_lists:
     -
       value: false
