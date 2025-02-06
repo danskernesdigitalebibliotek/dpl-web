@@ -4,11 +4,23 @@
 # #-#-#-#-#  da.config.po (PROJECT VERSION)  #-#-#-#-#
 # da translation of DPL CMS
 #
+#, fuzzy
 msgid ""
 msgstr ""
+"#-#-#-#-#  da.po (PROJECT VERSION)  #-#-#-#-#\n"
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2025-02-05 07:46+0100\n"
-"PO-Revision-Date: 2025-02-05 07:46+0100\n"
+"POT-Creation-Date: 2025-02-06 13:09+0100\n"
+"PO-Revision-Date: 2025-02-06 13:09+0100\n"
+"Last-Translator: NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n > 1);\n"
+"#-#-#-#-#  da.config.po (PROJECT VERSION)  #-#-#-#-#\n"
+"Project-Id-Version: PROJECT VERSION\n"
+"POT-Creation-Date: 2025-02-06 13:10+0100\n"
+"PO-Revision-Date: 2025-02-06 13:10+0100\n"
 "Last-Translator: NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
 "MIME-Version: 1.0\n"
@@ -485,14 +497,9 @@ msgstr ""
 msgid "For example <em>https://bibliotekernesnationaleformidling.dk/</em>."
 msgstr ""
 
-msgid "Please enter a valid URL."
-msgstr ""
-
-msgid "Only HTTPS is supported."
-msgstr ""
-
-msgid "URL must end with a /."
-msgstr ""
+msgctxt "BNF"
+msgid "Node has previously been imported from BNF."
+msgstr "Denne node er tidligere blevet importeret fra BNF"
 
 msgctxt "BNF"
 msgid "Confirm import of BNF content"
@@ -501,10 +508,6 @@ msgstr "Bekræft import af BNF indhold"
 msgctxt "BNF"
 msgid "Cannot import this node from BNF."
 msgstr "Det er ikke muligt at importere denne node fra BNF"
-
-msgctxt "BNF"
-msgid "Node has previously been imported from BNF."
-msgstr "Denne node er tidligere blevet importeret fra BNF"
 
 msgctxt "BNF"
 msgid "Content label"
@@ -516,6 +519,10 @@ msgstr "Importindhold"
 msgctxt "BNF"
 msgid "Could not import node from BNF."
 msgstr "Det er ikke muligt at importere denne node fra BNF"
+
+msgctxt "Validation"
+msgid "IsHttps"
+msgstr ""
 
 msgid "Publish and submit to BNF"
 msgstr "Publicer og send til BNF"
