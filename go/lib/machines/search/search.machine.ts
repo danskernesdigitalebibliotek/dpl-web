@@ -96,6 +96,7 @@ export default searchMachineSetup.createMachine({
           target: "loadingMoreSearchResults",
         },
         RESET_BOOTSTRAP_STATE: {
+          actions: ["resetSearchData", "resetFilters", "setSubmittedQueryInContext", "resetOffset"],
           target: "bootstrap",
         },
       },

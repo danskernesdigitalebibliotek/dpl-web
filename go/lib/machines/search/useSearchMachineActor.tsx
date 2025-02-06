@@ -1,8 +1,9 @@
 "use client"
 
 import { useQueryClient } from "@tanstack/react-query"
+import { useSelector } from "@xstate/react"
 import _ from "lodash"
-import { ReadonlyURLSearchParams } from "next/navigation"
+import { ReadonlyURLSearchParams, usePathname } from "next/navigation"
 import { useSearchParams } from "next/navigation"
 import { useEffect, useRef, useState } from "react"
 import { AnyEventObject, createActor } from "xstate"
@@ -51,13 +52,24 @@ searchActor.on("filterToggled", (emittedEvent: AnyEventObject) => {
  */
 const useSearchMachineActor = () => {
   const searchParams = useSearchParams()
+  const pathname = usePathname()
+  const urlQ = searchParams.get("q")
+  const [previousPathname, setPreviousPathname] = useState<string | undefined>(undefined)
+  const searchParamString = searchParams.toString()
   const queryClient = useQueryClient()
-  const [isBootstrapped, setIsBootstrapped] = useState(false)
   const actorRef = useRef(searchActor)
   const actor = actorRef.current
 
+  const searchQuery = useSelector(actor, snapshot => {
+    return snapshot.context.submittedQuery
+  })
+  const storedQueryClient = useSelector(actor, snapshot => {
+    return snapshot.context.queryClient
+  })
+
+  // Handle bootstrapping of the machine.
   useEffect(() => {
-    if (!actor.getSnapshot().matches("bootstrap") || isBootstrapped) {
+    if (!actor.getSnapshot().matches("bootstrap")) {
       return
     }
 
@@ -71,15 +83,29 @@ const useSearchMachineActor = () => {
       actor.send({ type: "SET_SEARCH_STRING", q })
     }
 
-    actor.send({ type: "SET_QUERY_CLIENT", queryClient })
+    // Only set query client if it is not already set.
+    if (!storedQueryClient) {
+      actor.send({ type: "SET_QUERY_CLIENT", queryClient })
+    }
 
     actor.send({ type: "BOOTSTRAP_DONE" })
+  })
 
-    setIsBootstrapped(true)
-    // We choose to ignore the eslint warning below
-    // because we want to make sure it only reruns if isBootstrapped changes.
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [isBootstrapped])
+  // Handle route changes.
+  // If the search query changes, reset the machine state.
+  // This is necessary because the machine state is not reset when the URL changes.
+  useEffect(() => {
+    if (!urlQ) {
+      return
+    }
+    const currentPathname = `${pathname}${searchParamString}`
+
+    if (previousPathname && currentPathname !== previousPathname) {
+      actor.send({ type: "RESET_BOOTSTRAP_STATE" })
+    }
+
+    setPreviousPathname(currentPathname)
+  }, [searchParamString, searchQuery, pathname])
 
   return actor
 }
