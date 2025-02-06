@@ -1,6 +1,0 @@
-mutation ImportRequest($uuid: String!, $callbackUrl: String!) {
-  importRequest(uuid: $uuid, callbackUrl: $callbackUrl) {
-    status
-    message
-  }
-}

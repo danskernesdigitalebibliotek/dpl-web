@@ -4,22 +4,24 @@ namespace Drupal\bnf_server\Plugin\GraphQL\DataProducer;
 
 use Drupal\bnf\Exception\AlreadyExistsException;
 use Drupal\bnf\Services\BnfImporter;
+use Drupal\bnf_server\GraphQL\ImportResponse;
+use Drupal\bnf_server\GraphQL\ImportStatus;
 use Drupal\Core\Plugin\ContainerFactoryPluginInterface;
 use Drupal\graphql\Plugin\GraphQL\DataProducer\DataProducerPluginBase;
 use Psr\Log\LoggerInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
 /**
- * Resolves the `importRequest` mutation by handling content import requests.
+ * Resolves the `import` mutation by handling content import requests.
  *
- * This class processes the `importRequest` mutation, which is part of the
+ * This class processes the `import` mutation, which is part of the
  * GraphQL schema. It accepts a unique identifier (UUID) for the content to be
  * imported and a callback URL for querying the external system for node data.
  *
  * @DataProducer(
- *   id = "import_request_producer",
- *   name = "Import Request Producer",
- *   description = "Handles the importRequest mutation.",
+ *   id = "import_producer",
+ *   name = "Import Producer",
+ *   description = "Handles the import mutation.",
  *   produces = @ContextDefinition("any",
  *     label = "Request Response"
  *   ),
@@ -33,7 +35,7 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
  *   }
  * )
  */
-class ImportRequestProducer extends DataProducerPluginBase implements ContainerFactoryPluginInterface {
+class ImportProducer extends DataProducerPluginBase implements ContainerFactoryPluginInterface {
 
   /**
    * Creates an instance of the producer using dependency injection.
@@ -65,7 +67,7 @@ class ImportRequestProducer extends DataProducerPluginBase implements ContainerF
   }
 
   /**
-   * Resolves the `importRequest` mutation by importing content based on UUID.
+   * Resolves the `import` mutation by importing content based on UUID.
    *
    * This method processes an import request by using the provided UUID to
    * identify the content to import and a callback URL to get the node data.
@@ -77,13 +79,9 @@ class ImportRequestProducer extends DataProducerPluginBase implements ContainerF
    *   locate the content in the external system.
    * @param string $callbackUrl
    *   The external GraphQL endpoint URL to pull node data from.
-   *
-   * @return string[]
-   *   An associative array containing:
-   *   - 'status': 'success', 'failure', 'duplicate'.
-   *   - 'message': A detailed message about the result of the operation.
    */
-  public function resolve(string $uuid, string $callbackUrl): array {
+  public function resolve(string $uuid, string $callbackUrl): ImportResponse {
+    $result = new ImportResponse();
     // For now, we only support articles. In the future, this should be
     // sent along as a parameter, as GraphQL exposes different queries
     // for each node type (nodeArticle)
@@ -98,10 +96,8 @@ class ImportRequestProducer extends DataProducerPluginBase implements ContainerF
     try {
       $this->importer->importNode($uuid, $callbackUrl, $node_type);
 
-      return [
-        'status' => 'success',
-        'message' => 'Node created successfully.',
-      ];
+      $result->status = ImportStatus::Success;
+      $result->message = 'Node created successfully.';
     }
     catch (\Exception $e) {
       if (!$e instanceof AlreadyExistsException) {
@@ -113,11 +109,11 @@ class ImportRequestProducer extends DataProducerPluginBase implements ContainerF
         ]);
       }
 
-      return [
-        'status' => ($e instanceof AlreadyExistsException) ? 'duplicate' : 'failure',
-        'message' => $e->getMessage(),
-      ];
+      $result->status = ($e instanceof AlreadyExistsException) ? ImportStatus::Duplicate : ImportStatus::Failure;
+      $result->message = $e->getMessage();
     }
+
+    return $result;
   }
 
 }

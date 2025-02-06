@@ -1,8 +1,0 @@
-extend type Mutation {
-  importRequest(uuid: String!, callbackUrl: String!): ImportRequestResponse
-}
-
-type ImportRequestResponse {
-  status: String
-  message: String
-}
