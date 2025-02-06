@@ -3,6 +3,7 @@
 namespace Drupal\dpl_login\Controller;
 
 use Drupal\Core\Controller\ControllerBase;
+use Drupal\Core\Entity\EntityTypeManagerInterface;
 use Drupal\Core\Routing\TrustedRedirectResponse;
 use Drupal\Core\StringTranslation\StringTranslationTrait;
 use Drupal\Core\Url;
@@ -10,6 +11,7 @@ use Drupal\dpl_login\Adgangsplatformen\Config;
 use Drupal\dpl_login\Exception\MissingConfigurationException;
 use Drupal\dpl_login\UserTokens;
 use Drupal\openid_connect\OpenIDConnectClaims;
+use Drupal\openid_connect\OpenIDConnectSessionInterface;
 use Drupal\openid_connect\Plugin\OpenIDConnectClientInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\HttpFoundation\RedirectResponse;
@@ -20,6 +22,7 @@ use Symfony\Component\HttpFoundation\Response;
  * DPL React Controller.
  */
 class DplLoginController extends ControllerBase {
+
   use StringTranslationTrait;
 
   /**
@@ -30,7 +33,11 @@ class DplLoginController extends ControllerBase {
     protected Config $config,
     protected OpenIDConnectClientInterface $client,
     protected OpenIDConnectClaims $claims,
-  ) {}
+    protected OpenIDConnectSessionInterface $session,
+    protected EntityTypeManagerInterface $entity_type_manager,
+  ) {
+    $this->entityTypeManager = $entity_type_manager;
+  }
 
   /**
    * {@inheritdoc}
@@ -45,7 +52,9 @@ class DplLoginController extends ControllerBase {
       $container->get('dpl_login.user_tokens'),
       $container->get('dpl_login.adgangsplatformen.config'),
       $container->get('dpl_login.adgangsplatformen.client'),
-      $container->get('openid_connect.claims')
+      $container->get('openid_connect.claims'),
+      $container->get('openid_connect.session'),
+      $container->get('entity_type.manager'),
     );
   }
 
@@ -114,13 +123,18 @@ class DplLoginController extends ControllerBase {
    *   A redirect to the authorization endpoint.
    */
   public function login(Request $request): Response {
-    $_SESSION['openid_connect_op'] = 'login';
-    if ($current_path = $request->query->get('current-path')) {
-      $_SESSION['openid_connect_destination'] = $current_path;
+    $this->session->saveOp('login');
+    if ($current_path = (string) $request->query->get('current-path')) {
+      $this->session->saveTargetLinkUri($current_path);
     }
 
-    $scopes = $this->claims->getScopes($this->client);
-    return $this->client->authorize($scopes);
+    $client_name = 'adgangsplatformen';
+    /** @var \Drupal\openid_connect\OpenIDConnectClientEntityInterface $client */
+    $client = $this->entityTypeManager->getStorage('openid_connect_client')->loadByProperties(['id' => $client_name])[$client_name];
+
+    $plugin = $client->getPlugin();
+    $scopes = $this->claims->getScopes($plugin);
+    return $plugin->authorize($scopes);
   }
 
 }

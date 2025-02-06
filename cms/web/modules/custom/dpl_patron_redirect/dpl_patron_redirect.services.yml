@@ -9,6 +9,7 @@ services:
         '@config.factory',
         '@current_user',
         '@page_cache_kill_switch',
+        '@openid_connect.session',
       ]
     tags:
       - { name: event_subscriber }

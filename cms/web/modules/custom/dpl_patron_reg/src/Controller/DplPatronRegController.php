@@ -5,6 +5,7 @@ namespace Drupal\dpl_patron_reg\Controller;
 use Drupal\Component\Utility\UrlHelper;
 use Drupal\Core\Block\BlockManagerInterface;
 use Drupal\Core\Controller\ControllerBase;
+use Drupal\Core\Entity\EntityTypeManagerInterface;
 use Drupal\Core\Render\RendererInterface;
 use Drupal\Core\Routing\TrustedRedirectResponse;
 use Drupal\Core\Url;
@@ -38,7 +39,9 @@ class DplPatronRegController extends ControllerBase {
     protected BlockManagerInterface $blockManager,
     protected RendererInterface $renderer,
     protected DplReactConfigInterface $patronRegSettings,
+    protected EntityTypeManagerInterface $entity_type_manager,
   ) {
+    $this->entityTypeManager = $entity_type_manager;
   }
 
   /**
@@ -55,7 +58,8 @@ class DplPatronRegController extends ControllerBase {
       $container->get('dpl_library_agency.branch.repository'),
       $container->get('plugin.manager.block'),
       $container->get('renderer'),
-      $container->get('dpl_patron_reg.settings')
+      $container->get('dpl_patron_reg.settings'),
+      $container->get('entity_type.manager'),
     );
   }
 
@@ -75,25 +79,22 @@ class DplPatronRegController extends ControllerBase {
   public function authRedirect(Request $request, string $client_name): TrustedRedirectResponse {
     $this->session->saveDestination();
 
-    $configuration = $this->config('openid_connect.settings.' . $client_name)
-      ->get('settings');
-    /** @var \Drupal\openid_connect\Plugin\OpenIDConnectClientInterface $client */
-    $client = $this->pluginManager->createInstance(
-      $client_name,
-      $configuration
-    );
-    $scopes = $this->claims->getScopes($client);
-    $_SESSION['openid_connect_op'] = 'login';
+    /** @var \Drupal\openid_connect\OpenIDConnectClientEntityInterface $client */
+    $client = $this->entityTypeManager->getStorage('openid_connect_client')->loadByProperties(['id' => $client_name])[$client_name];
+
+    $plugin = $client->getPlugin();
+    $scopes = $this->claims->getScopes($plugin);
+    $this->session->saveOp('login');
 
     /** @var \Drupal\Core\Routing\TrustedRedirectResponse $response */
-    $response = $client->authorize($scopes);
+    $response = $plugin->authorize($scopes);
 
     // Set redirect Url after login. If you use the $request->getSession()
     // object this trick simply do not work and the redirect after login is
     // ignored.
     /** @var \Drupal\Core\GeneratedUrl $url */
     $url = Url::fromRoute('dpl_patron_reg.create')->toString(TRUE);
-    $_SESSION['openid_connect_destination'] = $url->getGeneratedUrl();
+    $this->session->saveTargetLinkUri($url->getGeneratedUrl());
 
     // Get redirect URL from OpenID connect and add forced nem-login idp into
     // the URL.
