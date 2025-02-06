@@ -132,12 +132,13 @@ class BnfImportConfirmForm implements FormInterface, ContainerInjectionInterface
       $form_state->setRedirect('entity.node.edit_form', ['node' => $node->id()]);
     }
     catch (\Exception $e) {
-      $this->logger->error('Could not import node from BNF. @message', ['@message' => $e->getMessage()]);
-
       $this->messenger->addError($this->t('Could not import node from BNF.', [], ['context' => 'BNF']));
 
       if ($e instanceof AlreadyExistsException) {
         $this->messenger->addError($this->t('Node has previously been imported from BNF.', [], ['context' => 'BNF']));
+      }
+      else {
+        $this->logger->error('Could not import node from BNF. @message', ['@message' => $e->getMessage()]);
       }
     }
 

@@ -104,12 +104,14 @@ class ImportRequestProducer extends DataProducerPluginBase implements ContainerF
       ];
     }
     catch (\Exception $e) {
-      $this->logger->warning('Could not load node of type @node_type with UUID @uuid at @callbackUrl. @message', [
-        '@uuid' => $uuid,
-        '@node_type' => $node_type,
-        '@callbackUrl' => $callbackUrl,
-        '@message' => $e->getMessage(),
-      ]);
+      if (!$e instanceof AlreadyExistsException) {
+        $this->logger->warning('Could not load node of type @node_type with UUID @uuid at @callbackUrl. @message', [
+          '@uuid' => $uuid,
+          '@node_type' => $node_type,
+          '@callbackUrl' => $callbackUrl,
+          '@message' => $e->getMessage(),
+        ]);
+      }
 
       return [
         'status' => ($e instanceof AlreadyExistsException) ? 'duplicate' : 'failure',
