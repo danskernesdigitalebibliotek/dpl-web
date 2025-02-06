@@ -6,37 +6,40 @@ import { Button } from "@/components/shared/button/Button"
 import Icon from "@/components/shared/icon/Icon"
 import Timer from "@/components/shared/timer/Timer"
 import WorkCard from "@/components/shared/workCard/WorkCard"
+import type {
+  MediaVideotool,
+  ParagraphGoVideoBundleAutomatic as VideoBundleAutomaticType,
+  ParagraphGoVideoBundleManual as VideoBundleManualType,
+} from "@/lib/graphql/generated/dpl-cms/graphql"
 import { useComplexSearchForWorkTeaserQuery } from "@/lib/graphql/generated/fbi/graphql"
 import { WorkId } from "@/lib/types/ids"
 
 type VideoBundleAutomatic = {
-  cqlSearchString: string
-  amountOfMaterials: number
-  materials?: never
-}
-
-export type VideoBundleMaterial = {
-  materialType: string
-  workId: WorkId
+  cqlSearch: VideoBundleAutomaticType["cqlSearch"]
+  videoAmountOfMaterials: VideoBundleAutomaticType["videoAmountOfMaterials"]
+  videoBundleWorkIds?: never
 }
 
 type VideoBundleManual = {
-  cqlSearchString?: never
-  amountOfMaterials?: never
-  materials: VideoBundleMaterial[]
+  cqlSearch?: never
+  videoAmountOfMaterials?: never
+  videoBundleWorkIds: VideoBundleManualType["videoBundleWorkIds"]
 }
 
 export type VideoBundleProps = {
-  title: string
-  url: string
+  title: VideoBundleAutomaticType["goVideoTitle"] | VideoBundleManualType["goVideoTitle"]
+  embedVideo: {
+    mediaVideotool: MediaVideotool["mediaVideotool"]
+    name: MediaVideotool["name"]
+  }
 } & (VideoBundleAutomatic | VideoBundleManual)
 
 const VideoBundle = ({
   title,
-  url,
-  cqlSearchString,
-  amountOfMaterials,
-  materials,
+  embedVideo,
+  cqlSearch,
+  videoAmountOfMaterials,
+  videoBundleWorkIds,
 }: VideoBundleProps) => {
   const [materialOrder, setMaterialOrder] = useState<WorkId[]>([])
   const [currentItemNumber, setCurrentItemNumber] = useState<number>(1)
@@ -58,21 +61,21 @@ const VideoBundle = ({
 
   const { data: dataAutomatic, isLoading: isLoadingAutomatic } = useComplexSearchForWorkTeaserQuery(
     {
-      cql: cqlSearchString || "",
+      cql: cqlSearch?.value || "",
       offset: 0,
-      limit: amountOfMaterials,
+      limit: videoAmountOfMaterials,
       filters: {},
     },
-    { enabled: !!cqlSearchString }
+    { enabled: !!cqlSearch }
   )
   const { data: dataManual, isLoading: isLoadingManual } = useComplexSearchForWorkTeaserQuery(
     {
-      cql: materials?.map(material => `workId=${material.workId}`).join(" OR ") || "",
+      cql: videoBundleWorkIds?.map(material => `workId=${material.work_id}`).join(" OR ") || "",
       offset: 0,
       limit: 100,
       filters: {},
     },
-    { enabled: !!materials }
+    { enabled: !!videoBundleWorkIds }
   )
 
   useEffect(() => {
@@ -98,95 +101,99 @@ const VideoBundle = ({
   }
 
   return (
-    <div
-      className="content-container w-full gap-paragraph-spacing-inner bg-background-overlay px-10 py-4 text-center
-        md:py-12 lg:py-16">
-      <h2 className="mb-4 block text-typo-heading-2 md:mb-10 lg:text-typo-heading-1">{title}</h2>
-      <div className="flex w-full flex-col items-start gap-11 lg:flex-row lg:gap-0">
-        <div className="relative aspect-16/9 w-full overflow-hidden rounded-base lg:w-[75%]">
-          <iframe
-            aria-label={title || "Video"}
-            className="absolute inset-0 h-full w-full"
-            src={url}
-            allowFullScreen
-            allow="autoplay; fullscreen"
-          />
-        </div>
-        <div className="flex w-full flex-row flex-wrap items-center justify-center gap-grid-gap pl-4 text-left lg:w-[25%]">
-          <Button
-            onClick={moveToPreviousMaterial}
-            variant="icon"
-            ariaLabel="Vis forrige værk"
-            className="mr-auto md:ml-10 md:h-20 md:w-20 lg:hidden">
-            <Icon className="h-[24px] w-[24px] md:h-10 md:w-10" name="arrow-left" />
-          </Button>
-          <div className="relative h-[350px] w-[177px] md:h-[545px] md:w-[300px]">
-            {!!dataAutomatic
-              ? dataAutomatic.complexSearch.works
-                  .slice()
-                  .reverse()
-                  .map(work => (
-                    <WorkCard
-                      key={work.workId}
-                      work={work}
-                      isStacked
-                      zIndex={
-                        materialOrder
-                          .slice()
-                          .reverse()
-                          .indexOf(work.workId as WorkId) * 10
-                      }
-                      orderNumber={materialOrder.indexOf(work.workId as WorkId)}
-                    />
-                  ))
-              : dataManual?.complexSearch.works
-                  .slice()
-                  .reverse()
-                  .map(work => (
-                    <WorkCard
-                      key={work.workId}
-                      work={work}
-                      isStacked
-                      zIndex={
-                        materialOrder
-                          .slice()
-                          .reverse()
-                          .indexOf(work.workId as WorkId) * 10
-                      }
-                      orderNumber={materialOrder.indexOf(work.workId as WorkId)}
-                    />
-                  ))}
-          </div>
-          <Button
-            onClick={moveToNextMaterial}
-            variant="icon"
-            ariaLabel="Vis næste værk"
-            className="ml-auto md:mr-10 md:h-20 md:w-20 lg:hidden">
-            <Icon className="h-[24px] w-[24px] md:h-10 md:w-10" name="arrow-right" />
-          </Button>
-          <div className="hidden lg:flex lg:w-full lg:items-center">
-            <Timer
-              durationInSeconds={10}
-              currentItemNumber={currentItemNumber}
-              totalItems={materialOrder.length}
-              fullCircleAction={moveToNextMaterial}
-              setResetTimer={resetFn => (resetTimerRef.current = resetFn)}
-              className="ml-2 mr-auto"
-            />
-            <Button
-              onClick={moveToPreviousMaterial}
-              variant="icon"
-              ariaLabel="Vis forrige værk"
-              className="">
-              <Icon className="h-[24px] w-[24px]" name="arrow-left" />
-            </Button>
-            <Button
-              onClick={moveToNextMaterial}
-              variant="icon"
-              ariaLabel="Vis næste værk"
-              className="mx-2">
-              <Icon className="h-[24px] w-[24px]" name="arrow-right" />
-            </Button>
+    <div className="bg-background-overlay">
+      <div className="content-container">
+        <div className="w-full gap-paragraph-spacing-inner py-4 text-center md:py-12 lg:py-16">
+          <h2 className="mb-4 block text-typo-heading-2 md:mb-10 lg:text-typo-heading-1">
+            {title}
+          </h2>
+          <div className="flex w-full flex-col items-start gap-11 lg:flex-row lg:gap-0">
+            <div className="relative aspect-16/9 w-full overflow-hidden rounded-base lg:w-[75%]">
+              <iframe
+                aria-label={title || "Video"}
+                className="absolute inset-0 h-full w-full"
+                src={embedVideo.mediaVideotool}
+                allowFullScreen
+                allow="autoplay; fullscreen"
+              />
+            </div>
+            <div className="flex w-full flex-row flex-wrap items-center justify-center gap-grid-gap pl-4 text-left lg:w-[25%]">
+              <Button
+                onClick={moveToPreviousMaterial}
+                variant="icon"
+                ariaLabel="Vis forrige værk"
+                className="mr-auto md:ml-10 md:h-20 md:w-20 lg:hidden">
+                <Icon className="h-[24px] w-[24px] md:h-10 md:w-10" name="arrow-left" />
+              </Button>
+              <div className="relative h-[350px] w-[177px] md:h-[545px] md:w-[300px]">
+                {!!dataAutomatic
+                  ? dataAutomatic.complexSearch.works
+                      .slice()
+                      .reverse()
+                      .map(work => (
+                        <WorkCard
+                          key={work.workId}
+                          work={work}
+                          isStacked
+                          zIndex={
+                            materialOrder
+                              .slice()
+                              .reverse()
+                              .indexOf(work.workId as WorkId) * 10
+                          }
+                          orderNumber={materialOrder.indexOf(work.workId as WorkId)}
+                        />
+                      ))
+                  : dataManual?.complexSearch.works
+                      .slice()
+                      .reverse()
+                      .map(work => (
+                        <WorkCard
+                          key={work.workId}
+                          work={work}
+                          isStacked
+                          zIndex={
+                            materialOrder
+                              .slice()
+                              .reverse()
+                              .indexOf(work.workId as WorkId) * 10
+                          }
+                          orderNumber={materialOrder.indexOf(work.workId as WorkId)}
+                        />
+                      ))}
+              </div>
+              <Button
+                onClick={moveToNextMaterial}
+                variant="icon"
+                ariaLabel="Vis næste værk"
+                className="ml-auto md:mr-10 md:h-20 md:w-20 lg:hidden">
+                <Icon className="h-[24px] w-[24px] md:h-10 md:w-10" name="arrow-right" />
+              </Button>
+              <div className="hidden lg:flex lg:w-full lg:items-center">
+                <Timer
+                  durationInSeconds={10}
+                  currentItemNumber={currentItemNumber}
+                  totalItems={materialOrder.length}
+                  fullCircleAction={moveToNextMaterial}
+                  setResetTimer={resetFn => (resetTimerRef.current = resetFn)}
+                  className="ml-2 mr-auto"
+                />
+                <Button
+                  onClick={moveToPreviousMaterial}
+                  variant="icon"
+                  ariaLabel="Vis forrige værk"
+                  className="">
+                  <Icon className="h-[24px] w-[24px]" name="arrow-left" />
+                </Button>
+                <Button
+                  onClick={moveToNextMaterial}
+                  variant="icon"
+                  ariaLabel="Vis næste værk"
+                  className="mx-2">
+                  <Icon className="h-[24px] w-[24px]" name="arrow-right" />
+                </Button>
+              </div>
+            </div>
           </div>
         </div>
       </div>
