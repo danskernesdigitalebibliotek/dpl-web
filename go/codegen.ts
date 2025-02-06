@@ -34,7 +34,7 @@ const config: CodegenConfig = {
         fetcher: "@/lib/graphql/fetchers/dpl-cms.fetcher#fetcher",
       },
       hooks: {
-        afterOneFileWrite: ["yarn eslint --fix"],
+        afterOneFileWrite: ["yarn post-process-dpl-cms-graphql", "yarn eslint --fix"],
       },
     },
     // "lib/graphql/generated/dpl-cms/graphql.schema.json": {
