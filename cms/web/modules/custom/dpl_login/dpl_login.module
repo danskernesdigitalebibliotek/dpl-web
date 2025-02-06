@@ -307,6 +307,9 @@ function dpl_login_preprocess_html(array &$variables): void {
   }
 }
 
+/**
+ * Helper function for checking if the plugin id is "adgangsplatformen".
+ */
 function dpl_login_check_if_plugin_id_is_adgangsplatformen(string $plugin_id): bool {
   return $plugin_id === 'adgangsplatformen';
 }

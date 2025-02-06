@@ -40,7 +40,7 @@ class Adgangsplatformen extends OpenIDConnectClientBase {
     OpenIDConnectStateTokenInterface $state_token,
     OpenIDConnectAutoDiscover $auto_discover,
     protected LibraryTokenHandler $libraryTokenHandler,
-    MessengerInterface $messenger
+    MessengerInterface $messenger,
   ) {
     parent::__construct(
       $configuration,
@@ -145,9 +145,7 @@ class Adgangsplatformen extends OpenIDConnectClientBase {
   }
 
   /**
-   * Check if the provided configuration can be used to fetch
-   * the library token. If not, the form is invalid and should not
-   * be submitted.
+   * Check if the provided configuration can be used to fetch the library token.
    *
    * @param mixed[] $form
    *   Drupal form.
@@ -219,20 +217,6 @@ class Adgangsplatformen extends OpenIDConnectClientBase {
     $options['query'] += ['agency' => $this->configuration['agency_id']];
 
     return $options;
-  }
-
-  /**
-   * {@inheritdoc}
-   *
-   * Adgangsplatformen doesn't return an ID Token. The inherited method cannot
-   * handle / decode the missing / null value so we hardcode the decoded value
-   * to be an empty array.
-   *
-   * @return mixed[]
-   *   Decoded id token.
-   */
-  public function decodeIdToken($id_token): array {
-    return [];
   }
 
 }

@@ -120,7 +120,7 @@ class LibraryTokenHandler {
     string $agencyId = NULL,
     string $clientId = NULL,
     string $clientSecret = NULL,
-    string $tokenEndpoint = NULL
+    string $tokenEndpoint = NULL,
   ): ?LibraryToken {
     $token = NULL;
 
