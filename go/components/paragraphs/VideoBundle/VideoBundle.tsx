@@ -98,10 +98,12 @@ const VideoBundle = ({
   }
 
   return (
-    <div className="content-container w-full gap-paragraph-spacing-inner bg-background-overlay px-10 py-16 text-center">
-      <h2 className="mb-10 block text-typo-heading-2">{title}</h2>
-      <div className="flex w-full flex-row items-start">
-        <div className="relative aspect-16/9 w-[75%] overflow-hidden rounded-base">
+    <div
+      className="content-container w-full gap-paragraph-spacing-inner bg-background-overlay px-10 py-4 text-center
+        md:py-12 lg:py-16">
+      <h2 className="mb-4 block text-typo-heading-2 md:mb-10 lg:text-typo-heading-1">{title}</h2>
+      <div className="flex w-full flex-col items-start gap-11 lg:flex-row lg:gap-0">
+        <div className="relative aspect-16/9 w-full overflow-hidden rounded-base lg:w-[75%]">
           <iframe
             aria-label={title || "Video"}
             className="absolute inset-0 h-full w-full"
@@ -110,8 +112,15 @@ const VideoBundle = ({
             allow="autoplay; fullscreen"
           />
         </div>
-        <div className="flex w-[25%] flex-row flex-wrap justify-center gap-grid-gap pl-4 text-left">
-          <div className="relative h-[545px] w-[300px]">
+        <div className="flex w-full flex-row flex-wrap items-center justify-center gap-grid-gap pl-4 text-left lg:w-[25%]">
+          <Button
+            onClick={moveToPreviousMaterial}
+            variant="icon"
+            ariaLabel="Vis forrige værk"
+            className="mr-auto md:ml-10 md:h-20 md:w-20 lg:hidden">
+            <Icon className="h-[24px] w-[24px] md:h-10 md:w-10" name="arrow-left" />
+          </Button>
+          <div className="relative h-[350px] w-[177px] md:h-[545px] md:w-[300px]">
             {!!dataAutomatic
               ? dataAutomatic.complexSearch.works
                   .slice()
@@ -148,7 +157,14 @@ const VideoBundle = ({
                     />
                   ))}
           </div>
-          <div className="flex w-full items-center">
+          <Button
+            onClick={moveToNextMaterial}
+            variant="icon"
+            ariaLabel="Vis næste værk"
+            className="ml-auto md:mr-10 md:h-20 md:w-20 lg:hidden">
+            <Icon className="h-[24px] w-[24px] md:h-10 md:w-10" name="arrow-right" />
+          </Button>
+          <div className="hidden lg:flex lg:w-full lg:items-center">
             <Timer
               durationInSeconds={10}
               currentItemNumber={currentItemNumber}
