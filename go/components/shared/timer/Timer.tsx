@@ -91,7 +91,7 @@ const Timer = ({
           }}
         />
       </svg>
-      <span className="font-bold text-foreground">{`${currentItemNumber}/${totalItems}`}</span>
+      <span className="text-foreground font-bold">{`${currentItemNumber}/${totalItems}`}</span>
     </div>
   )
 }

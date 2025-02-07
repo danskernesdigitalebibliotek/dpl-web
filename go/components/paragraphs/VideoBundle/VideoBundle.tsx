@@ -104,12 +104,12 @@ const VideoBundle = ({
   return (
     <div className="bg-background-overlay">
       <div className="content-container">
-        <div className="w-full gap-paragraph-spacing-inner py-4 text-center md:py-12 lg:py-16">
-          <h2 className="mb-4 block text-typo-heading-2 md:mb-10 lg:text-typo-heading-1">
+        <div className="gap-paragraph-spacing-inner w-full py-4 text-center md:py-12 lg:py-16">
+          <h2 className="text-typo-heading-2 lg:text-typo-heading-1 mb-4 block md:mb-10">
             {title}
           </h2>
           <div className="flex w-full flex-col items-start gap-11 lg:flex-row lg:gap-0">
-            <div className="relative aspect-16/9 w-full overflow-hidden rounded-base lg:w-[75%]">
+            <div className="rounded-base relative aspect-16/9 w-full overflow-hidden lg:w-[75%]">
               <iframe
                 aria-label={title || "Video"}
                 className="absolute inset-0 h-full w-full"
@@ -119,13 +119,13 @@ const VideoBundle = ({
               />
             </div>
             <div
-              className="flex w-full flex-row flex-wrap items-center justify-center gap-grid-gap text-left lg:w-[25%]
+              className="gap-grid-gap flex w-full flex-row flex-wrap items-center justify-center text-left lg:w-[25%]
                 lg:justify-end lg:pl-4">
               <Button
                 onClick={moveToPreviousMaterial}
                 variant="icon"
                 ariaLabel="Vis forrige værk"
-                className="mr-auto md:ml-grid-column-2 lg:hidden">
+                className="md:ml-grid-column-2 mr-auto lg:hidden">
                 <Icon className="h-[24px] w-[24px]" name="arrow-left" />
               </Button>
               <div className="relative aspect-4/9 w-[177px] md:aspect-3/5 md:w-[300px] lg:aspect-1/2 xl:aspect-8/15">
@@ -149,7 +149,7 @@ const VideoBundle = ({
                 onClick={moveToNextMaterial}
                 variant="icon"
                 ariaLabel="Vis næste værk"
-                className="ml-auto md:mr-grid-column-2 lg:hidden">
+                className="md:mr-grid-column-2 ml-auto lg:hidden">
                 <Icon className="h-[24px] w-[24px]" name="arrow-right" />
               </Button>
               <div className="hidden lg:flex lg:w-[300px] lg:items-center">
