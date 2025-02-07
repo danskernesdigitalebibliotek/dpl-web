@@ -1,19 +1,11 @@
-import { fetcher } from "@/lib/graphql/fetchers/dpl-cms.fetcher"
-import {
-  GetDplCmsConfigurationDocument,
-  GetDplCmsConfigurationQuery,
-  GetDplCmsConfigurationQueryVariables,
-} from "@/lib/graphql/generated/dpl-cms/graphql"
+import { useGetDplCmsConfigurationQuery } from "@/lib/graphql/generated/dpl-cms/graphql"
 
 const queryDplCmsConfig = async () => {
-  const { dplConfiguration } = await fetcher<
-    GetDplCmsConfigurationQuery,
-    GetDplCmsConfigurationQueryVariables
-  >(GetDplCmsConfigurationDocument, undefined, {
+  const { goConfiguration } = await useGetDplCmsConfigurationQuery.fetcher(undefined, {
     next: { revalidate: 30 },
   })()
 
-  return dplConfiguration ?? null
+  return goConfiguration ?? null
 }
 
 export const getDplCmsUniloginConfig = async () => {

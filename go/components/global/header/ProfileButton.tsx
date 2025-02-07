@@ -14,6 +14,7 @@ import {
   SheetTrigger,
 } from "@/components/shared/sheet/Sheet"
 import useSession from "@/hooks/useSession"
+import useGetDplCmsLoginUrls from "@/lib/config/dpl-cms/useGetDplCmsLoginUrls"
 
 const HeaderButton = ({
   onClick,
@@ -31,6 +32,8 @@ const HeaderButton = ({
 function ProfileButton() {
   const { session, isLoading } = useSession()
   const router = useRouter()
+  const { adgangsplatformen: adgangsplatformenLoginUrl } = useGetDplCmsLoginUrls()
+
   if (isLoading) {
     return (
       <>
@@ -47,13 +50,13 @@ function ProfileButton() {
           className={buttonVariants({ variant: "icon" })}>
           <Icon className="h-[24px] w-[24px]" name="profile" />
         </SheetTrigger>
-        <SheetContent className="grid w-full max-w-[560px] grid-rows-[min-content,1fr] p-grid-edge">
+        <SheetContent className="p-grid-edge grid w-full max-w-[560px] grid-rows-[min-content_1fr]">
           <SheetHeader className="mb-8">
             <SheetTitle className="text-typo-heading-3">Log ind</SheetTitle>
           </SheetHeader>
           <div className="flex h-full flex-col justify-center space-y-8">
-            <div className="flex min-h-[300px] flex-col items-center justify-center rounded-sm bg-background-overlay py-space-y">
-              <SheetDescription className="mb-4 text-typo-heading-4 text-foreground">
+            <div className="bg-background-overlay flex min-h-[300px] flex-col items-center justify-center rounded-sm p-8">
+              <SheetDescription className="text-typo-heading-4 text-foreground mb-4 text-center">
                 Log ind med UNI•Login
               </SheetDescription>
               <div>
@@ -65,28 +68,27 @@ function ProfileButton() {
                 </Button>
               </div>
             </div>
-            <hr className="mx-auto w-full border-foreground opacity-10 md:w-full" />
-            <div className="flex min-h-[300px] flex-col items-center justify-center rounded-sm bg-background-overlay py-space-y">
-              <div className="mb-4">
-                <Icon name="adgangsplatformen" />
-              </div>
-              <SheetDescription className="text-typo-heading-4 text-foreground">
-                Login via Biblotekernes
-              </SheetDescription>
-              <SheetDescription className="mb-4 text-typo-heading-4 text-foreground">
-                fælles loginside
-              </SheetDescription>
-              <div>
-                <Button
-                  theme="primary"
-                  onClick={() =>
-                    router.push(`https://dapple-cms.docker/login?current-path=/go-login`)
-                  }
-                  ariaLabel="Log ind med Adgangsplatformen">
-                  LOG IND
-                </Button>
-              </div>
-            </div>
+            {adgangsplatformenLoginUrl && (
+              <>
+                <hr className="border-foreground mx-auto w-full opacity-10 md:w-full" />
+                <div className="bg-background-overlay flex min-h-[300px] flex-col items-center justify-center rounded-sm p-8">
+                  <div className="mb-4">
+                    <Icon name="adgangsplatformen" />
+                  </div>
+                  <SheetDescription className="text-typo-heading-4 text-foreground mb-4 text-center">
+                    Login via Biblotekernes fælles loginside
+                  </SheetDescription>
+                  <div>
+                    <Button
+                      theme="primary"
+                      onClick={() => router.push(adgangsplatformenLoginUrl)}
+                      ariaLabel="Log ind med Adgangsplatformen">
+                      LOG IND
+                    </Button>
+                  </div>
+                </div>
+              </>
+            )}
           </div>
         </SheetContent>
       </Sheet>

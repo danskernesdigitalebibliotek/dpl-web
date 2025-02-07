@@ -151,11 +151,11 @@ const WorkCard = ({
         <div
           key={work.workId}
           className={cn(
-            "relative flex aspect-4/5 h-auto w-full flex-col rounded-base bg-background-overlay px-[15%] pt-[15%]",
+            "rounded-base bg-background-overlay relative flex aspect-4/5 h-auto w-full flex-col px-[15%] pt-[15%]",
             className
           )}>
           {isSomeManifestationTypeCostFree || isSomeMaterialTypePodcast ? (
-            <Badge variant={"blue-title"} className="absolute left-4 top-4 md:left-4 md:top-4">
+            <Badge variant={"blue-title"} className="absolute top-4 left-4 md:top-4 md:left-4">
               BLÅ
             </Badge>
           ) : null}
@@ -197,7 +197,7 @@ const WorkCard = ({
 
       <div className={cn("space-y-2", { hidden: stackPosition !== 0 })}>
         <p
-          className={cn("mr-grid-column-half break-words text-typo-subtitle-lg", {
+          className={cn("mr-grid-column-half text-typo-subtitle-lg break-words", {
             "overflow-scroll lg:max-h-[72px]": !!stackPosition,
           })}>
           {work.titles.full[0]}
@@ -211,15 +211,15 @@ const WorkCard = ({
 export const WorkCardSkeleton = () => {
   return (
     <div className="space-y-3 lg:space-y-5">
-      <div className="w-full animate-pulse rounded-base bg-background-skeleton">
+      <div className="rounded-base bg-background-skeleton w-full animate-pulse">
         <div className="aspect-4/5 px-[15%] pt-[15%]"></div>
         <div className="py-3 md:py-4">
           <div className="h-6 md:h-10"></div>
         </div>
       </div>
       <div className="space-y-2">
-        <div className="h-5 animate-pulse rounded-base bg-background-skeleton lg:h-7"></div>
-        <div className="h-3 animate-pulse rounded-base bg-background-skeleton lg:h-4"></div>
+        <div className="rounded-base bg-background-skeleton h-5 animate-pulse lg:h-7"></div>
+        <div className="rounded-base bg-background-skeleton h-3 animate-pulse lg:h-4"></div>
       </div>
     </div>
   )

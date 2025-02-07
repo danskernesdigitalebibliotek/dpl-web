@@ -91,7 +91,7 @@ const ButtonSkeleton = ({ size }: ButtonSkeletonProps) => {
   return (
     <div
       className={cn(
-        "mb-grid-gap-half w-full animate-pulse rounded-full bg-background-skeleton lg:min-w-72 lg:max-w-80",
+        "mb-grid-gap-half bg-background-skeleton w-full animate-pulse rounded-full lg:max-w-80 lg:min-w-72",
         size === "sm" ? "h-[32px]" : "",
         size === "md" || !size ? "h-[40px]" : "",
         size === "lg" ? "h-[48px]" : ""

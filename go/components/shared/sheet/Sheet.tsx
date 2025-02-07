@@ -15,7 +15,7 @@ const SheetTrigger = React.forwardRef<
 >(({ className, ...props }, ref) => (
   <SheetPrimitive.Trigger
     ref={ref}
-    className={cn("focus-visible rounded-full outline-none", className)}
+    className={cn("focus-visible rounded-full outline-hidden", className)}
     {...props}
   />
 ))
@@ -31,8 +31,8 @@ const SheetOverlay = React.forwardRef<
 >(({ className, ...props }, ref) => (
   <SheetPrimitive.Overlay
     className={cn(
-      `fixed inset-0 z-sheet bg-black/80 data-[state=open]:animate-in data-[state=closed]:animate-out
-      data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0`,
+      `z-sheet data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0
+      data-[state=open]:fade-in-0 fixed inset-0 bg-black/80`,
       className
     )}
     {...props}
@@ -71,8 +71,8 @@ const SheetContent = React.forwardRef<
     <SheetOverlay />
     <SheetPrimitive.Content ref={ref} className={cn(sheetVariants({ side }), className)} {...props}>
       <SheetPrimitive.Close
-        className="focus-visible absolute right-grid-edge top-grid-edge rounded-sm ring-offset-background
-          transition-opacity hover:opacity-100 disabled:pointer-events-none data-[state=open]:bg-secondary">
+        className="focus-visible right-grid-edge top-grid-edge ring-offset-background data-[state=open]:bg-secondary
+          absolute rounded-sm transition-opacity hover:opacity-100 disabled:pointer-events-none">
         <Cross2Icon className="h-8 w-8" />
         <span className="sr-only">Close</span>
       </SheetPrimitive.Close>

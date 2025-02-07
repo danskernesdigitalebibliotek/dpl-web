@@ -13,7 +13,7 @@ const meta = {
   decorators: [
     Story => {
       return (
-        <div className="content-container my-grid-gap-2 flex-row flex-wrap lg:my-grid-gap-half">
+        <div className="content-container my-grid-gap-2 lg:my-grid-gap-half flex-row flex-wrap">
           <Story />
         </div>
       )

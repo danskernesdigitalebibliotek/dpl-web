@@ -11,7 +11,7 @@ function BasicPageLayout({ pageData }: { pageData: NodeGoPage }) {
   }
 
   return (
-    <div className="flex w-full flex-col gap-paragraph-spacing">
+    <div className="gap-y-paragraph-spacing flex w-full flex-col">
       <ParagraphResolver paragraphs={paragraphs} />
     </div>
   )

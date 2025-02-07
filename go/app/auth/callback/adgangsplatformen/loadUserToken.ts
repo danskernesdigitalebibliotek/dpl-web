@@ -20,7 +20,9 @@ const loadUserToken = async () => {
   const data = await queryClient.fetchQuery<GetAdgangsplatformenUserTokenQuery>({
     queryKey: useGetAdgangsplatformenUserTokenQuery.getKey(),
     queryFn: useGetAdgangsplatformenUserTokenQuery.fetcher(undefined, {
-      Cookie: `${sessionCookie.name}=${sessionCookie.value}`,
+      headers: {
+        Cookie: `${sessionCookie.name}=${sessionCookie.value}`,
+      },
     }),
     initialData: {},
     staleTime: 0,

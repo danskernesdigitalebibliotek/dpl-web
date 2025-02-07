@@ -25,11 +25,11 @@ const SlideSelect = ({ options, selected, onOptionSelect }: SlideSelectProps) =>
 
   return (
     <div
-      className="relative flex max-w-full flex-row flex-nowrap justify-center rounded-full border-2 border-foreground
+      className="border-foreground relative flex max-w-full flex-row flex-nowrap justify-center rounded-full border-2
         p-1">
       {/* Animated black background */}
       <motion.div
-        className="absolute top-1 h-7 w-auto rounded-full bg-foreground"
+        className="bg-foreground absolute top-1 h-7 w-auto rounded-full"
         layout // Framer Motion automatically animates layout changes
         initial={false} // Prevents the initial animation
         transition={{
@@ -62,7 +62,7 @@ const SlideSelect = ({ options, selected, onOptionSelect }: SlideSelectProps) =>
               "z-slide-select min-w-36 flex items-center justify-center",
               selectedOptionIndex === index && "text-background"
             )}>
-            {!!iconName && <Icon className="m-[-7px] h-7 w-7 flex-shrink-0" name={iconName} />}
+            {!!iconName && <Icon className="m-[-7px] h-7 w-7 shrink-0" name={iconName} />}
             <span>{option.display}</span>
           </BadgeButton>
         )
@@ -72,7 +72,7 @@ const SlideSelect = ({ options, selected, onOptionSelect }: SlideSelectProps) =>
 }
 
 export const SlideSelectSkeleton = () => {
-  return <div className="h-[40px] w-60 animate-pulse rounded-full bg-background-skeleton" />
+  return <div className="bg-background-skeleton h-[40px] w-60 animate-pulse rounded-full" />
 }
 
 export default SlideSelect
