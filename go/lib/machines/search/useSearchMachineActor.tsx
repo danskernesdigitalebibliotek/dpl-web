@@ -53,13 +53,12 @@ searchActor.on("filterToggled", (emittedEvent: AnyEventObject) => {
 const useSearchMachineActor = () => {
   const searchParams = useSearchParams()
   const pathname = usePathname()
-  const urlQ = searchParams.get("q")
+  const isSearchPage = (path: string) => path === `/${goConfig("routes.search")}`
   const [previousPathname, setPreviousPathname] = useState<string | undefined>(undefined)
   const searchParamString = searchParams.toString()
   const queryClient = useQueryClient()
   const actorRef = useRef(searchActor)
   const actor = actorRef.current
-
   const searchQuery = useSelector(actor, snapshot => {
     return snapshot.context.submittedQuery
   })
@@ -72,7 +71,6 @@ const useSearchMachineActor = () => {
     if (!actor.getSnapshot().matches("bootstrap")) {
       return
     }
-
     const q = searchParams.get("q")
     const filters = transformSearchParamsIntoFilters(searchParams as ReadonlyURLSearchParams)
 
@@ -95,11 +93,13 @@ const useSearchMachineActor = () => {
   // If the search query changes, reset the machine state.
   // This is necessary because the machine state is not reset when the URL changes.
   useEffect(() => {
-    if (!urlQ) {
+    // We are only interested in rebooting the search machine
+    // if we are on the search page.
+    if (!isSearchPage(pathname)) {
       return
     }
-    const currentPathname = `${pathname}${searchParamString}`
 
+    const currentPathname = `${pathname}${searchParamString}`
     if (previousPathname && currentPathname !== previousPathname) {
       actor.send({ type: "RESET_BOOTSTRAP_STATE" })
     }
