@@ -25,7 +25,8 @@
     "test:unit": "vitest",
     "typecheck": "tsc --noEmit",
     "cypress:open": "cypress open",
-    "cypress:run": "cypress run"
+    "cypress:run": "cypress run",
+    "post-process-dpl-cms-graphql": "NODE_OPTIONS='--loader=ts-node/esm' ts-node ./graphql-codegen-scripts/post-process-dpl-cms-graphql.ts"
   },
   "dependencies": {
     "@next/env": "15.0.3",
@@ -53,8 +54,10 @@
     "react-dom": "^19.0.0",
     "react-error-boundary": "^5.0.0",
     "react-parallax-tilt": "^1.7.252",
+    "replace-in-file": "^8.3.0",
     "tailwind-merge": "^3.0.1",
     "tailwindcss-animate": "^1.0.7",
+    "ts-node": "^10.9.2",
     "vaul": "^1.1.1",
     "xstate": "^5.18.2",
     "zod": "^3.23.8",
