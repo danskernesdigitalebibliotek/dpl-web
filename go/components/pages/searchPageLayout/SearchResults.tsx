@@ -14,7 +14,7 @@ const SearchResults = ({ works }: SearchResultProps) => {
     <div className="grid-go gap-x-grid-gap-x gap-y-[calc(var(--grid-gap-x)*2)]">
       {works.map(work => (
         <div key={work.workId} className="col-span-3 lg:col-span-4">
-          <WorkCard work={work} />
+          <WorkCard work={work} isWithTilt />
         </div>
       ))}
     </div>

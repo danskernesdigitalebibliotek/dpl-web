@@ -30,6 +30,7 @@ export type WorkCardProps = {
   isHidden?: boolean
   zIndex?: number
   stackPosition?: number
+  isWithTilt?: boolean
 }
 
 const WorkCard = ({
@@ -39,6 +40,7 @@ const WorkCard = ({
   isHidden,
   zIndex,
   stackPosition,
+  isWithTilt = false,
 }: WorkCardProps) => {
   const manifestations = work.manifestations.all
   const bestRepresentationManifestation = work.manifestations.bestRepresentation
@@ -165,7 +167,7 @@ const WorkCard = ({
                 lowResSrc={lowResCover || ""}
                 src={coverSrc?.[0] || ""}
                 alt={`${work.titles.full[0]} cover billede`}
-                withTilt={!stackPosition}
+                withTilt={isWithTilt}
                 className="select-none"
               />
             )}
@@ -195,7 +197,7 @@ const WorkCard = ({
         </div>
       </div>
 
-      <div className={cn("space-y-2", { hidden: stackPosition !== 0 })}>
+      <div className={cn("space-y-2", { hidden: stackPosition && stackPosition !== 0 })}>
         <p
           className={cn("mr-grid-column-half text-typo-subtitle-lg break-words", {
             "overflow-scroll lg:max-h-[72px]": !!stackPosition,
