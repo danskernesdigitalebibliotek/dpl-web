@@ -18,7 +18,12 @@ const config: CodegenConfig = {
           },
         },
       },
-      plugins: ["typescript", "typescript-operations", "typescript-react-query"],
+      plugins: [
+        "typescript",
+        "typescript-operations",
+        "typescript-react-query",
+        "named-operations-object",
+      ],
       config: {
         enumsAsTypes: true,
         withHooks: true,
@@ -33,6 +38,7 @@ const config: CodegenConfig = {
         },
         dedupeFragments: true,
         fetcher: "@/lib/graphql/fetchers/dpl-cms.fetcher#fetcher",
+        identifierName: "operationNames",
       },
       hooks: {
         // Correcting the codegen output.
