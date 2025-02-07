@@ -8,7 +8,7 @@ import { audioBookFactory, eBookFactory } from "./materials"
 export type Work = WorkTeaserSearchPageFragment
 
 export const AudioBookFactory = Factory.define<Work>(({ sequence }) => ({
-  workId: `work-of:870970-basis:38772805-${sequence}`,
+  workId: sequence.toString(),
   titles: {
     full: ["Kender du J.K. Rowling? : historien om kvinden, der skabte Harry Potter"],
   },

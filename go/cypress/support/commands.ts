@@ -54,19 +54,19 @@ Cypress.Commands.add(
 /**
  * interceptCovers is used to intercept cover request that returns fishery data
  *
- * @param {Covers[]} covers The array of overs which will be returned.
+ * @param {Covers} covers The array of overs which will be returned.
  * @param {number} statusCode The status code to return.
  *
  */
 type InterceptCoversParams = {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  covers: Cover[]
+  covers: Cover
   statusCode?: number
 }
 Cypress.Commands.add("interceptCovers", ({ covers, statusCode = 200 }: InterceptCoversParams) => {
   cy.intercept("GET", "**/covers**", req => {
     if (covers) {
-      req.reply({ body: { data: covers }, statusCode })
+      req.reply({ body: [covers], statusCode })
     } else {
       req.reply({ statusCode })
     }

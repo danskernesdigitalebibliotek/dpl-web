@@ -1,6 +1,6 @@
 import { Factory } from "fishery"
 
-import { Cover, CoverImageUrls } from "@/lib/rest/cover-service-api/generated/model"
+import { Cover, CoverImageUrls, imageUrlSize } from "@/lib/rest/cover-service-api/generated/model"
 
 type Params = {
   type: Cover["type"]
@@ -13,13 +13,14 @@ export default Factory.define<Cover, Params>(({ sequence, transientParams }) => 
 }))
 
 const getImageUrls = (): CoverImageUrls => {
+  const sizes = Object.keys(imageUrlSize) as Array<keyof typeof imageUrlSize>
   const imageUrls: CoverImageUrls = {}
 
-  ;(Object.keys(imageUrls) as Array<keyof CoverImageUrls>).forEach(key => {
-    imageUrls[key] = {
+  sizes.forEach(size => {
+    imageUrls[size] = {
       url: "https://placehold.co/375x540",
-      format: "jpg",
-      size: key,
+      format: "jpeg",
+      size: size,
     }
   })
 

@@ -16,7 +16,7 @@ describe("Search Result Tests", () => {
     })
     // Intercept covers request
     cy.interceptCovers({
-      covers: coverService.buildList(10),
+      covers: coverService.build(),
     })
   })
 
