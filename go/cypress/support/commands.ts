@@ -1,10 +1,10 @@
 /* eslint-disable @typescript-eslint/no-namespace */
 import { Factory } from "fishery"
 
-import { Operations } from "@/lib/graphql/generated/fbi/types"
 import { Cover } from "@/lib/rest/cover-service-api/generated/model"
 
 import { CyKey } from "./constants"
+import { Operations } from "./utils"
 import { hasOperationName } from "./utils"
 
 declare global {
