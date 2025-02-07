@@ -1,3 +1,4 @@
+import coverService from "../factories/coverService"
 import SearchFacetsFactory from "../factories/searchFacets"
 import SearchWithPaginationFactory from "../factories/searchWithPagination"
 
@@ -14,13 +15,13 @@ describe("Search Result Tests", () => {
       factory: SearchFacetsFactory,
     })
     // Intercept covers request
-    cy.intercept("GET", "**/covers**", {
-      fixture: "covers.json",
+    cy.interceptCovers({
+      covers: coverService.buildList(10),
     })
   })
 
   it("Should get results when searching", () => {
-    cy.visit("/")
+    cy.visit("/search")
 
     // Search for harry potter and press enter
     cy.dataCy("search-input").should("exist").focus().type("harry potter{enter}")
