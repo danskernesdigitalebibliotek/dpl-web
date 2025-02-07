@@ -207,7 +207,7 @@ const WorkCard = ({ work, isStacked, orderNumber, zIndex, className }: WorkCardP
       <div className={cn("space-y-2", { hidden: isStacked && orderNumber !== 0 })}>
         <p
           className={cn("mr-grid-column-half break-words text-typo-subtitle-lg", {
-            "lg:max-h-[4.5rem]": isStacked,
+            "overflow-scroll lg:max-h-[72px]": isStacked,
           })}>
           {work.titles.full[0]}
         </p>

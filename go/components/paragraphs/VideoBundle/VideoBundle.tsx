@@ -117,15 +117,17 @@ const VideoBundle = ({
                 allow="autoplay; fullscreen"
               />
             </div>
-            <div className="flex w-full flex-row flex-wrap items-center justify-center gap-grid-gap pl-4 text-left lg:w-[25%]">
+            <div
+              className="flex w-full flex-row flex-wrap items-center justify-center gap-grid-gap text-left lg:w-[25%]
+                lg:justify-end lg:pl-4">
               <Button
                 onClick={moveToPreviousMaterial}
                 variant="icon"
                 ariaLabel="Vis forrige værk"
-                className="mr-auto md:ml-10 md:h-20 md:w-20 lg:hidden">
-                <Icon className="h-[24px] w-[24px] md:h-10 md:w-10" name="arrow-left" />
+                className="mr-auto md:ml-grid-column-2 lg:hidden">
+                <Icon className="h-[24px] w-[24px]" name="arrow-left" />
               </Button>
-              <div className="lg:aspect-8/15 aspect-4/9 relative w-[177px] md:w-[300px]">
+              <div className="md:aspect-3/5 relative aspect-4/9 w-[177px] md:w-[300px] lg:aspect-1/2 xl:aspect-8/15">
                 {!!dataAutomatic
                   ? dataAutomatic.complexSearch.works
                       .slice()
@@ -166,17 +168,17 @@ const VideoBundle = ({
                 onClick={moveToNextMaterial}
                 variant="icon"
                 ariaLabel="Vis næste værk"
-                className="ml-auto md:mr-10 md:h-20 md:w-20 lg:hidden">
-                <Icon className="h-[24px] w-[24px] md:h-10 md:w-10" name="arrow-right" />
+                className="ml-auto md:mr-grid-column-2 lg:hidden">
+                <Icon className="h-[24px] w-[24px]" name="arrow-right" />
               </Button>
-              <div className="hidden lg:flex lg:w-full lg:items-center">
+              <div className="hidden lg:flex lg:w-[300px] lg:items-center">
                 <Timer
                   durationInSeconds={10}
                   currentItemNumber={currentItemNumber}
                   totalItems={materialOrder.length}
                   fullCircleAction={moveToNextMaterial}
                   setResetTimer={resetFn => (resetTimerRef.current = resetFn)}
-                  className="ml-2 mr-auto"
+                  className="mr-auto"
                 />
                 <Button
                   onClick={moveToPreviousMaterial}
@@ -189,7 +191,7 @@ const VideoBundle = ({
                   onClick={moveToNextMaterial}
                   variant="icon"
                   ariaLabel="Vis næste værk"
-                  className="mx-2">
+                  className="ml-2">
                   <Icon className="h-[24px] w-[24px]" name="arrow-right" />
                 </Button>
               </div>

@@ -31,6 +31,7 @@ export const extendedTheme = {
     "2/3": "var(--aspect-2-3)",
     "3/2": "var(--aspect-3-2)",
     "3/4": "var(--aspect-3-4)",
+    "3/5": "var(--aspect-3-5)",
     "4/3": "var(--aspect-4-3)",
     "4/5": "var(--aspect-4-5)",
     "4/9": "var(--aspect-4-9)",
