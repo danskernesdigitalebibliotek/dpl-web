@@ -23,25 +23,23 @@ import { CoverPicture } from "../coverPicture/CoverPicture"
 import MaterialTypeIconWrapper from "./MaterialTypeIconWrapper"
 import { getAllWorkPids } from "./helper"
 
-type StackedCard = {
-  isStacked: true
-  orderNumber: number
-  zIndex: number
-}
-
-type NonStackedCard = {
-  isStacked?: never
-  orderNumber?: never
-  zIndex?: never
-}
-
-type WorkCardProps = {
+export type WorkCardProps = {
   work: WorkTeaserSearchPageFragment
-  isStacked?: boolean
+  classNameWrapper?: string
   className?: string
-} & (StackedCard | NonStackedCard)
+  isHidden?: boolean
+  zIndex?: number
+  stackPosition?: number
+}
 
-const WorkCard = ({ work, isStacked, orderNumber, zIndex, className }: WorkCardProps) => {
+const WorkCard = ({
+  work,
+  classNameWrapper,
+  className,
+  isHidden,
+  zIndex,
+  stackPosition,
+}: WorkCardProps) => {
   const manifestations = work.manifestations.all
   const bestRepresentationManifestation = work.manifestations.bestRepresentation
   const { data: dataCovers, isLoading: isLoadingCovers } = useGetCoverCollection({
@@ -141,27 +139,20 @@ const WorkCard = ({ work, isStacked, orderNumber, zIndex, className }: WorkCardP
 
   return (
     <Link
-      className={cn("block space-y-3 lg:space-y-5", className, {
-        "absolute left-0 top-0 h-full w-full": isStacked,
-      })}
+      className={cn("block space-y-3 lg:space-y-5", classNameWrapper)}
       href={resolveUrl({
         routeParams: { work: "work", wid: work.workId },
         queryParams: { type: bestRepresentationManifestationMaterialTypeCode },
       })}
-      aria-hidden={isStacked && orderNumber !== 0}
-      tabIndex={isStacked && orderNumber !== 0 ? -1 : 0}
-      style={isStacked ? { zIndex } : undefined}>
-      <div className={cn({ "relative mb-6": isStacked })}>
+      aria-hidden={isHidden}
+      tabIndex={isHidden ? -1 : 0}
+      style={{ zIndex }}>
+      <div className={cn({ "relative mb-6": !!stackPosition })}>
         <div
           key={work.workId}
           className={cn(
             "relative flex aspect-4/5 h-auto w-full flex-col rounded-base bg-background-overlay px-[15%] pt-[15%]",
-            {
-              "bg-background": isStacked,
-              "shadow-stacked-card": isStacked && orderNumber < 3,
-              "rotate-3": isStacked && orderNumber === 1,
-              "-rotate-3": isStacked && orderNumber === 2,
-            }
+            className
           )}>
           {isSomeManifestationTypeCostFree || isSomeMaterialTypePodcast ? (
             <Badge variant={"blue-title"} className="absolute left-4 top-4 md:left-4 md:top-4">
@@ -174,7 +165,7 @@ const WorkCard = ({ work, isStacked, orderNumber, zIndex, className }: WorkCardP
                 lowResSrc={lowResCover || ""}
                 src={coverSrc?.[0] || ""}
                 alt={`${work.titles.full[0]} cover billede`}
-                withTilt={!isStacked}
+                withTilt={!stackPosition}
                 className="select-none"
               />
             )}
@@ -204,10 +195,10 @@ const WorkCard = ({ work, isStacked, orderNumber, zIndex, className }: WorkCardP
         </div>
       </div>
 
-      <div className={cn("space-y-2", { hidden: isStacked && orderNumber !== 0 })}>
+      <div className={cn("space-y-2", { hidden: stackPosition !== 0 })}>
         <p
           className={cn("mr-grid-column-half break-words text-typo-subtitle-lg", {
-            "overflow-scroll lg:max-h-[72px]": isStacked,
+            "overflow-scroll lg:max-h-[72px]": !!stackPosition,
           })}>
           {work.titles.full[0]}
         </p>

@@ -6,6 +6,7 @@ import { Button } from "@/components/shared/button/Button"
 import Icon from "@/components/shared/icon/Icon"
 import Timer from "@/components/shared/timer/Timer"
 import WorkCard from "@/components/shared/workCard/WorkCard"
+import WorkCardStacked from "@/components/shared/workCard/WorkCardStacked"
 import type {
   MediaVideotool,
   ParagraphGoVideoBundleAutomatic as VideoBundleAutomaticType,
@@ -127,42 +128,22 @@ const VideoBundle = ({
                 className="mr-auto md:ml-grid-column-2 lg:hidden">
                 <Icon className="h-[24px] w-[24px]" name="arrow-left" />
               </Button>
-              <div className="md:aspect-3/5 relative aspect-4/9 w-[177px] md:w-[300px] lg:aspect-1/2 xl:aspect-8/15">
-                {!!dataAutomatic
-                  ? dataAutomatic.complexSearch.works
-                      .slice()
-                      .reverse()
-                      .map(work => (
-                        <WorkCard
-                          key={work.workId}
-                          work={work}
-                          isStacked
-                          zIndex={
-                            materialOrder
-                              .slice()
-                              .reverse()
-                              .indexOf(work.workId as WorkId) * 10
-                          }
-                          orderNumber={materialOrder.indexOf(work.workId as WorkId)}
-                        />
-                      ))
-                  : dataManual?.complexSearch.works
-                      .slice()
-                      .reverse()
-                      .map(work => (
-                        <WorkCard
-                          key={work.workId}
-                          work={work}
-                          isStacked
-                          zIndex={
-                            materialOrder
-                              .slice()
-                              .reverse()
-                              .indexOf(work.workId as WorkId) * 10
-                          }
-                          orderNumber={materialOrder.indexOf(work.workId as WorkId)}
-                        />
-                      ))}
+              <div className="relative aspect-4/9 w-[177px] md:aspect-3/5 md:w-[300px] lg:aspect-1/2 xl:aspect-8/15">
+                <WorkCardStacked
+                  works={
+                    dataAutomatic?.complexSearch.works || dataManual?.complexSearch.works || []
+                  }
+                  materialOrder={materialOrder}>
+                  {!!dataAutomatic
+                    ? dataAutomatic.complexSearch.works
+                        .slice()
+                        .reverse()
+                        .map(work => <WorkCard key={work.workId} work={work} />)
+                    : dataManual?.complexSearch.works
+                        .slice()
+                        .reverse()
+                        .map(work => <WorkCard key={work.workId} work={work} />)}
+                </WorkCardStacked>
               </div>
               <Button
                 onClick={moveToNextMaterial}
