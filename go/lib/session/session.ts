@@ -118,9 +118,20 @@ export const setAdgangsplatformenUserTokenOnSession = async (
   })
 }
 
-export const accessTokenShouldBeRefreshed = (session: IronSession<TSessionData>) => {
-  // If the session is not logged in, we don't need to refresh the access token.
-  if (!session.isLoggedIn) {
+export const saveAdgangsplatformenSession = async (
+  session: IronSession<TSessionData>,
+  userToken: string
+) => {
+  session.isLoggedIn = true
+  session.type = "adgangsplatformen"
+  setAdgangsplatformenUserTokenOnSession(session, userToken)
+  await session.save()
+}
+
+export const uniLoginAccessTokenShouldBeRefreshed = (session: IronSession<TSessionData>) => {
+  // If the session is not logged in, or it is not a Unilogin session
+  // we don't need to refresh the access token.
+  if (!session.isLoggedIn || session.type !== "unilogin" || !session.refresh_token) {
     return false
   }
 
