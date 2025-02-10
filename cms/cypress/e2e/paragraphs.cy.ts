@@ -1,181 +1,19 @@
+import {
+  addAndSaveBannerParagraph,
+  verifyBannerParagraph,
+} from '../helpers/helper-banner';
+import { typeInCkEditor } from '../helpers/helper-ckeditor';
+import { checkImageSrc, mediaLibrarySelect } from '../helpers/helper-media';
+import { createTestPageAndOpenParagraphModal } from '../helpers/helper-page';
+import { addAnotherParagraph, addParagraph } from '../helpers/helper-paragraph';
+import { addSimpleLink, verifySimpleLink } from '../helpers/helper-simplelink';
+
 const pageName = 'Test page';
-
-const createTestPageAndOpenParagraphModal = () => {
-  cy.drupalLogin('/node/add/page');
-  cy.findByLabelText('Title').type(pageName);
-  cy.openParagraphsModal();
-};
-
-const addParagraph = (paragraphType: string) => {
-  cy.get(`button[value="${paragraphType}"]`).click({
-    multiple: true,
-    force: true,
-  });
-};
-
-const addAnotherParagraph = () => {
-  cy.get("button[title='Show all Paragraphs']")
-    .should('be.visible')
-    .eq(1)
-    .click();
-};
-
-// INSPRIATION: https://drupal.stackexchange.com/questions/315635/how-to-write-in-a-ckdeditor-textarea-with-cypress
-const typeInCkEditor = (content: string) => {
-  // Ensure the CKEditor is visible
-  cy.get('.ck-editor__editable').should('be.visible');
-
-  cy.window().then((win) => {
-    // @ts-expect-error - Drupal may not exist on the window object
-    if (win.Drupal && win.Drupal.CKEditor5Instances) {
-      // @ts-expect-error - CKEditor5Instances may not match expected structure
-      win.Drupal.CKEditor5Instances.forEach(
-        (editor: { setData: (content: string) => void }) => {
-          editor.setData(content);
-        },
-      );
-    }
-  });
-};
-
-// INSPRIATION: https://github.com/kanopi/shrubs/blob/main/mediaLibrarySelect.js
-const mediaLibrarySelect = (selector: string, fileName: string, index = 0) => {
-  // Create unique intercepts for each media library select
-  const mediaNodeEditAjax = `mediaNodeEditAjax${index}`;
-  const mediaLibraryAjax = `mediaLibraryAjax${index}`;
-  const viewsAjax = `viewsAjax${index}`;
-
-  cy.intercept('POST', '/node/*/**').as(mediaNodeEditAjax);
-  cy.intercept('POST', '/media-library**').as(mediaLibraryAjax);
-  cy.intercept('GET', '/views/ajax?**').as(viewsAjax);
-
-  cy.get(selector).within(() => {
-    cy.get('input[value="Add media"]').click();
-  });
-
-  cy.wait(`@${mediaNodeEditAjax}`).its('response.statusCode').should('eq', 200);
-
-  cy.get('.media-library-widget-modal').within(() => {
-    cy.get('.views-exposed-form input[name="search"]').clear().type(fileName);
-    cy.get('.views-exposed-form input[type="submit"]').click();
-    cy.wait(`@${viewsAjax}`, { timeout: 10000 })
-      .its('response.statusCode')
-      .should('eq', 200);
-    cy.get('.media-library-views-form .views-row').first().click();
-
-    cy.get('.form-actions button').contains('Insert selected').click();
-  });
-
-  cy.wait(`@${mediaNodeEditAjax}`).its('response.statusCode').should('eq', 200);
-
-  // Validate the image appears in the preview to address flakiness in GH actions.
-  cy.get('.media-library-item__preview-wrapper')
-    .eq(index)
-    .within(() => {
-      cy.get('.field--name-field-media-image img')
-        .should('exist')
-        .and('have.attr', 'src')
-        .and('include', fileName);
-    });
-};
-
-type CheckImageSrcType = {
-  selector: string;
-  expectedInSrc: string;
-};
-
-const checkImageSrc = ({ selector, expectedInSrc }: CheckImageSrcType) => {
-  cy.get(selector).should('have.attr', 'src').should('include', expectedInSrc);
-};
-
-const addSimpleLink = ({ link, index = 0 }) => {
-  if (index > 0) {
-    cy.get(`input[value="Add another item"]`).click();
-  }
-  cy.findAllByLabelText('URL').eq(index).type(link.url);
-  cy.findAllByLabelText('Link text').eq(index).type(link.text);
-  if (link.targetBlank) {
-    cy.findAllByLabelText('Open link in new window/tab').eq(index).check();
-  }
-};
-
-const verifySimpleLink = ({ link, index = 0 }) => {
-  cy.get('.paragraphs__item--simple_links a')
-    .eq(index)
-    .should('contain', link.text)
-    .and('have.attr', 'href', link.url);
-  if (link.targetBlank) {
-    cy.get('.paragraphs__item--simple_links a')
-      .eq(index)
-      .should('have.attr', 'target', '_blank');
-  }
-};
-
-type AddBannerOptionsType = {
-  bannerContent: {
-    title: string;
-    description: string;
-    link: string;
-  };
-  openInNewTab?: boolean;
-};
-
-const addAndSaveBannerParagraph = ({
-  bannerContent,
-  openInNewTab = false,
-}: AddBannerOptionsType) => {
-  addParagraph('Banner');
-  cy.findByLabelText('Banner Link').type(bannerContent.link);
-  if (openInNewTab) {
-    cy.findByLabelText('Open link in new window/tab').check();
-  }
-  typeInCkEditor(bannerContent.title);
-  cy.findByLabelText('Banner description').type(bannerContent.description);
-  mediaLibrarySelect(
-    '#field_banner_image-media-library-wrapper-field_paragraphs-0-subform',
-    'paige-cody',
-  );
-  cy.clickSaveButton();
-};
-
-type BannerVerificationOptions = {
-  link: string;
-  title: string;
-  description: string;
-  underlineText?: string;
-  openInNewTab?: boolean;
-};
-
-const verifyBannerParagraph = ({
-  link,
-  title,
-  description,
-  underlineText,
-  openInNewTab = false,
-}: BannerVerificationOptions) => {
-  cy.get('.banner')
-    .should('have.attr', 'style')
-    .and('match', /background-image: url\(.+paige-cody.+\)/);
-
-  cy.get('.banner').should('have.attr', 'href', link);
-  if (openInNewTab) {
-    cy.get('.banner').should('have.attr', 'target', '_blank');
-  }
-
-  cy.get('.banner__title').should('contain', title);
-  if (underlineText) {
-    cy.get('.banner__title').within(() => {
-      cy.get('u').should('contain.text', underlineText);
-    });
-  }
-
-  cy.get('.banner__content').should('contain', description);
-};
 
 describe('Paragraphs module', () => {
   beforeEach(() => {
     cy.deleteEntitiesIfExists(pageName);
-    createTestPageAndOpenParagraphModal();
+    createTestPageAndOpenParagraphModal(pageName);
   });
 
   it("Adds 'Text body' paragraph and verifies CKEditor content", () => {
