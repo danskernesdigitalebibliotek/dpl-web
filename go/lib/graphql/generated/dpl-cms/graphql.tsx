@@ -567,6 +567,19 @@ export type ParagraphBreadcrumbChildren = ParagraphInterface & {
   status: Scalars['Boolean']['output'];
 };
 
+/** A rule for selecting a matching campaign */
+export type ParagraphCampaignRule = ParagraphInterface & {
+  __typename?: 'ParagraphCampaignRule';
+  /** The time that the Paragraph was created. */
+  created: DateTime;
+  /** The Universally Unique IDentifier (UUID). */
+  id: Scalars['ID']['output'];
+  /** The paragraphs entity language code. */
+  langcode: Language;
+  /** Published */
+  status: Scalars['Boolean']['output'];
+};
+
 /** Entity type paragraph. */
 export type ParagraphCardGridAutomatic = ParagraphInterface & {
   __typename?: 'ParagraphCardGridAutomatic';
@@ -665,6 +678,32 @@ export type ParagraphContentSliderAutomatic = ParagraphInterface & {
 /** Contents */
 export type ParagraphContentSliderContentReferencesUnion = NodeArticle | NodeGoArticle | NodeGoCategory | NodeGoPage;
 
+/** A combination of ticket category name and price for an event.  */
+export type ParagraphEventTicketCategory = ParagraphInterface & {
+  __typename?: 'ParagraphEventTicketCategory';
+  /** The time that the Paragraph was created. */
+  created: DateTime;
+  /** The Universally Unique IDentifier (UUID). */
+  id: Scalars['ID']['output'];
+  /** The paragraphs entity language code. */
+  langcode: Language;
+  /** Published */
+  status: Scalars['Boolean']['output'];
+};
+
+/** Links with icons. Designed for jpg, jpeg, png, pdf, mp3, mov, mp4, mpeg files */
+export type ParagraphFiles = ParagraphInterface & {
+  __typename?: 'ParagraphFiles';
+  /** The time that the Paragraph was created. */
+  created: DateTime;
+  /** The Universally Unique IDentifier (UUID). */
+  id: Scalars['ID']['output'];
+  /** The paragraphs entity language code. */
+  langcode: Language;
+  /** Published */
+  status: Scalars['Boolean']['output'];
+};
+
 /** This paragraph displays a generated a list of events, based on specified filters for tags, categories and branches.  */
 export type ParagraphFilteredEventList = ParagraphInterface & {
   __typename?: 'ParagraphFilteredEventList';
@@ -705,12 +744,12 @@ export type ParagraphGoLink = ParagraphInterface & {
   ariaLabel?: Maybe<Scalars['String']['output']>;
   /** The time that the Paragraph was created. */
   created: DateTime;
+  /** Link */
+  goLink: Link;
   /** The Universally Unique IDentifier (UUID). */
   id: Scalars['ID']['output'];
   /** The paragraphs entity language code. */
   langcode: Language;
-  /** Link */
-  link: Array<Link>;
   /** Published */
   status: Scalars['Boolean']['output'];
   /** Open link in a new window */
@@ -729,7 +768,7 @@ export type ParagraphGoLinkbox = ParagraphInterface & {
   /** Image */
   goImage?: Maybe<MediaUnion>;
   /** Link */
-  goLink: ParagraphUnion;
+  goLinkParagraph: ParagraphUnion;
   /** The Universally Unique IDentifier (UUID). */
   id: Scalars['ID']['output'];
   /** The paragraphs entity language code. */
@@ -868,8 +907,47 @@ export type ParagraphGoVideoBundleManual = ParagraphInterface & {
   videoBundleWorkIds?: Maybe<Array<WorkId>>;
 };
 
+/** A hero section with an image, informative text, category, and a "call to action" link. */
+export type ParagraphHero = ParagraphInterface & {
+  __typename?: 'ParagraphHero';
+  /** The time that the Paragraph was created. */
+  created: DateTime;
+  /** The Universally Unique IDentifier (UUID). */
+  id: Scalars['ID']['output'];
+  /** The paragraphs entity language code. */
+  langcode: Language;
+  /** Published */
+  status: Scalars['Boolean']['output'];
+};
+
 /** Entity type paragraph. */
 export type ParagraphInterface = {
+  /** The time that the Paragraph was created. */
+  created: DateTime;
+  /** The Universally Unique IDentifier (UUID). */
+  id: Scalars['ID']['output'];
+  /** The paragraphs entity language code. */
+  langcode: Language;
+  /** Published */
+  status: Scalars['Boolean']['output'];
+};
+
+/** Enables website visitors to choose their preferred language. */
+export type ParagraphLanguageSelector = ParagraphInterface & {
+  __typename?: 'ParagraphLanguageSelector';
+  /** The time that the Paragraph was created. */
+  created: DateTime;
+  /** The Universally Unique IDentifier (UUID). */
+  id: Scalars['ID']['output'];
+  /** The paragraphs entity language code. */
+  langcode: Language;
+  /** Published */
+  status: Scalars['Boolean']['output'];
+};
+
+/** Links with icons. Designed for internal/external links and links to search results.  */
+export type ParagraphLinks = ParagraphInterface & {
+  __typename?: 'ParagraphLinks';
   /** The time that the Paragraph was created. */
   created: DateTime;
   /** The Universally Unique IDentifier (UUID). */
@@ -897,7 +975,10 @@ export type ParagraphManualEventList = ParagraphInterface & {
   title?: Maybe<Scalars['String']['output']>;
 };
 
-/** A grid representation of recommended materials, based on a CQL search string.  */
+/**
+ * Please use the "Material grid link automatically" instead! This paragraph will be deprecated in the future.
+ * A grid representation of recommended materials, based on a CQL search string.
+ */
 export type ParagraphMaterialGridAutomatic = ParagraphInterface & {
   __typename?: 'ParagraphMaterialGridAutomatic';
   /**
@@ -938,6 +1019,88 @@ export type ParagraphMaterialGridManual = ParagraphInterface & {
   status: Scalars['Boolean']['output'];
 };
 
+/** Entity type paragraph. */
+export type ParagraphMedias = ParagraphInterface & {
+  __typename?: 'ParagraphMedias';
+  /** The time that the Paragraph was created. */
+  created: DateTime;
+  /** The Universally Unique IDentifier (UUID). */
+  id: Scalars['ID']['output'];
+  /** The paragraphs entity language code. */
+  langcode: Language;
+  /** Published */
+  status: Scalars['Boolean']['output'];
+};
+
+/** Entity type paragraph. */
+export type ParagraphNavGridManual = ParagraphInterface & {
+  __typename?: 'ParagraphNavGridManual';
+  /** The time that the Paragraph was created. */
+  created: DateTime;
+  /** The Universally Unique IDentifier (UUID). */
+  id: Scalars['ID']['output'];
+  /** The paragraphs entity language code. */
+  langcode: Language;
+  /** Published */
+  status: Scalars['Boolean']['output'];
+};
+
+/** Entity type paragraph. */
+export type ParagraphNavSpotsManual = ParagraphInterface & {
+  __typename?: 'ParagraphNavSpotsManual';
+  /** The time that the Paragraph was created. */
+  created: DateTime;
+  /** The Universally Unique IDentifier (UUID). */
+  id: Scalars['ID']['output'];
+  /** The paragraphs entity language code. */
+  langcode: Language;
+  /** Published */
+  status: Scalars['Boolean']['output'];
+};
+
+/**
+ * This is a paragraph for displaying the opening hours for the branch it is applied to.
+ *
+ * Opening hours are created under the settings of a branch.
+ */
+export type ParagraphOpeningHours = ParagraphInterface & {
+  __typename?: 'ParagraphOpeningHours';
+  /** The time that the Paragraph was created. */
+  created: DateTime;
+  /** The Universally Unique IDentifier (UUID). */
+  id: Scalars['ID']['output'];
+  /** The paragraphs entity language code. */
+  langcode: Language;
+  /** Published */
+  status: Scalars['Boolean']['output'];
+};
+
+/** This paragraph is used to recommend a material.  */
+export type ParagraphRecommendation = ParagraphInterface & {
+  __typename?: 'ParagraphRecommendation';
+  /** The time that the Paragraph was created. */
+  created: DateTime;
+  /** The Universally Unique IDentifier (UUID). */
+  id: Scalars['ID']['output'];
+  /** The paragraphs entity language code. */
+  langcode: Language;
+  /** Published */
+  status: Scalars['Boolean']['output'];
+};
+
+/** This is paragraph that will display links without icons.  */
+export type ParagraphSimpleLinks = ParagraphInterface & {
+  __typename?: 'ParagraphSimpleLinks';
+  /** The time that the Paragraph was created. */
+  created: DateTime;
+  /** The Universally Unique IDentifier (UUID). */
+  id: Scalars['ID']['output'];
+  /** The paragraphs entity language code. */
+  langcode: Language;
+  /** Published */
+  status: Scalars['Boolean']['output'];
+};
+
 /** A basic, formatted body of text. */
 export type ParagraphTextBody = ParagraphInterface & {
   __typename?: 'ParagraphTextBody';
@@ -954,7 +1117,50 @@ export type ParagraphTextBody = ParagraphInterface & {
 };
 
 /** Entity type paragraph. */
-export type ParagraphUnion = ParagraphAccordion | ParagraphBanner | ParagraphBreadcrumbChildren | ParagraphCardGridAutomatic | ParagraphCardGridManual | ParagraphContentSlider | ParagraphContentSliderAutomatic | ParagraphFilteredEventList | ParagraphGoLink | ParagraphGoLinkbox | ParagraphGoMaterialSliderAutomatic | ParagraphGoMaterialSliderManual | ParagraphGoVideo | ParagraphGoVideoBundleAutomatic | ParagraphGoVideoBundleManual | ParagraphManualEventList | ParagraphMaterialGridAutomatic | ParagraphMaterialGridManual | ParagraphTextBody | ParagraphVideo;
+export type ParagraphUnion = ParagraphAccordion | ParagraphBanner | ParagraphBreadcrumbChildren | ParagraphCampaignRule | ParagraphCardGridAutomatic | ParagraphCardGridManual | ParagraphContentSlider | ParagraphContentSliderAutomatic | ParagraphEventTicketCategory | ParagraphFiles | ParagraphFilteredEventList | ParagraphGoLink | ParagraphGoLinkbox | ParagraphGoMaterialSliderAutomatic | ParagraphGoMaterialSliderManual | ParagraphGoVideo | ParagraphGoVideoBundleAutomatic | ParagraphGoVideoBundleManual | ParagraphHero | ParagraphLanguageSelector | ParagraphLinks | ParagraphManualEventList | ParagraphMaterialGridAutomatic | ParagraphMaterialGridManual | ParagraphMedias | ParagraphNavGridManual | ParagraphNavSpotsManual | ParagraphOpeningHours | ParagraphRecommendation | ParagraphSimpleLinks | ParagraphTextBody | ParagraphUserRegistrationItem | ParagraphUserRegistrationLinklist | ParagraphUserRegistrationSection | ParagraphVideo | ParagraphWebform;
+
+/** The "User registration item" paragraph type is used to display relevant information about the user registration process. */
+export type ParagraphUserRegistrationItem = ParagraphInterface & {
+  __typename?: 'ParagraphUserRegistrationItem';
+  /** The time that the Paragraph was created. */
+  created: DateTime;
+  /** The Universally Unique IDentifier (UUID). */
+  id: Scalars['ID']['output'];
+  /** The paragraphs entity language code. */
+  langcode: Language;
+  /** Published */
+  status: Scalars['Boolean']['output'];
+};
+
+/**
+ * This paragraph determines the placement of shortcuts to individual User
+ * Registration Section paragraphs. It allows administrators to specify where these
+ * shortcuts should appear.
+ */
+export type ParagraphUserRegistrationLinklist = ParagraphInterface & {
+  __typename?: 'ParagraphUserRegistrationLinklist';
+  /** The time that the Paragraph was created. */
+  created: DateTime;
+  /** The Universally Unique IDentifier (UUID). */
+  id: Scalars['ID']['output'];
+  /** The paragraphs entity language code. */
+  langcode: Language;
+  /** Published */
+  status: Scalars['Boolean']['output'];
+};
+
+/** The "User registration section" paragraph type is used to display "User registration item" paragraphs. */
+export type ParagraphUserRegistrationSection = ParagraphInterface & {
+  __typename?: 'ParagraphUserRegistrationSection';
+  /** The time that the Paragraph was created. */
+  created: DateTime;
+  /** The Universally Unique IDentifier (UUID). */
+  id: Scalars['ID']['output'];
+  /** The paragraphs entity language code. */
+  langcode: Language;
+  /** Published */
+  status: Scalars['Boolean']['output'];
+};
 
 /** Enter the URL for the video you want to include. */
 export type ParagraphVideo = ParagraphInterface & {
@@ -963,6 +1169,19 @@ export type ParagraphVideo = ParagraphInterface & {
   created: DateTime;
   /** Embed video */
   embedVideo?: Maybe<MediaUnion>;
+  /** The Universally Unique IDentifier (UUID). */
+  id: Scalars['ID']['output'];
+  /** The paragraphs entity language code. */
+  langcode: Language;
+  /** Published */
+  status: Scalars['Boolean']['output'];
+};
+
+/** Paragraph used for embedding a webform. */
+export type ParagraphWebform = ParagraphInterface & {
+  __typename?: 'ParagraphWebform';
+  /** The time that the Paragraph was created. */
+  created: DateTime;
   /** The Universally Unique IDentifier (UUID). */
   id: Scalars['ID']['output'];
   /** The paragraphs entity language code. */
@@ -980,45 +1199,15 @@ export type Query = {
   goConfiguration?: Maybe<GoConfiguration>;
   /** Schema information. */
   info: SchemaInformation;
-  /** Load a NodeArticle entity by id */
-  nodeArticle?: Maybe<NodeArticle>;
-  /** Load a NodeGoArticle entity by id */
-  nodeGoArticle?: Maybe<NodeGoArticle>;
-  /** Load a NodeGoCategory entity by id */
-  nodeGoCategory?: Maybe<NodeGoCategory>;
-  /** Load a NodeGoPage entity by id */
-  nodeGoPage?: Maybe<NodeGoPage>;
+  /** Load a Node entity by id. */
+  node?: Maybe<NodeUnion>;
   /** Load a Route by path. */
   route?: Maybe<RouteUnion>;
 };
 
 
 /** The schema's entry-point for queries. */
-export type QueryNodeArticleArgs = {
-  id: Scalars['ID']['input'];
-  langcode?: InputMaybe<Scalars['String']['input']>;
-  revision?: InputMaybe<Scalars['ID']['input']>;
-};
-
-
-/** The schema's entry-point for queries. */
-export type QueryNodeGoArticleArgs = {
-  id: Scalars['ID']['input'];
-  langcode?: InputMaybe<Scalars['String']['input']>;
-  revision?: InputMaybe<Scalars['ID']['input']>;
-};
-
-
-/** The schema's entry-point for queries. */
-export type QueryNodeGoCategoryArgs = {
-  id: Scalars['ID']['input'];
-  langcode?: InputMaybe<Scalars['String']['input']>;
-  revision?: InputMaybe<Scalars['ID']['input']>;
-};
-
-
-/** The schema's entry-point for queries. */
-export type QueryNodeGoPageArgs = {
+export type QueryNodeArgs = {
   id: Scalars['ID']['input'];
   langcode?: InputMaybe<Scalars['String']['input']>;
   revision?: InputMaybe<Scalars['ID']['input']>;
@@ -1346,13 +1535,6 @@ export type WorkId = {
   work_id?: Maybe<Scalars['String']['output']>;
 };
 
-export type GetArticleQueryVariables = Exact<{
-  id: Scalars['ID']['input'];
-}>;
-
-
-export type GetArticleQuery = { __typename?: 'Query', nodeArticle?: { __typename?: 'NodeArticle', title: string, subtitle?: string | null, paragraphs?: Array<{ __typename: 'ParagraphAccordion' } | { __typename: 'ParagraphBanner' } | { __typename: 'ParagraphBreadcrumbChildren' } | { __typename: 'ParagraphCardGridAutomatic' } | { __typename: 'ParagraphCardGridManual' } | { __typename: 'ParagraphContentSlider' } | { __typename: 'ParagraphContentSliderAutomatic' } | { __typename: 'ParagraphFilteredEventList' } | { __typename: 'ParagraphGoLink' } | { __typename: 'ParagraphGoLinkbox' } | { __typename: 'ParagraphGoMaterialSliderAutomatic' } | { __typename: 'ParagraphGoMaterialSliderManual' } | { __typename: 'ParagraphGoVideo' } | { __typename: 'ParagraphGoVideoBundleAutomatic' } | { __typename: 'ParagraphGoVideoBundleManual' } | { __typename: 'ParagraphManualEventList' } | { __typename: 'ParagraphMaterialGridAutomatic' } | { __typename: 'ParagraphMaterialGridManual' } | { __typename: 'ParagraphTextBody', body?: { __typename?: 'Text', value?: string | null } | null } | { __typename: 'ParagraphVideo' }> | null } | null };
-
 export type GetDplCmsConfigurationQueryVariables = Exact<{ [key: string]: never; }>;
 
 
@@ -1368,7 +1550,7 @@ export type GetPageByPathQueryVariables = Exact<{
 }>;
 
 
-export type GetPageByPathQuery = { __typename?: 'Query', route?: { __typename: 'RouteExternal' } | { __typename: 'RouteInternal', url: string, entity?: { __typename?: 'NodeGoArticle' } | { __typename?: 'NodeGoCategory' } | { __typename?: 'NodeGoPage', paragraphs?: Array<{ __typename?: 'ParagraphAccordion' } | { __typename?: 'ParagraphBanner' } | { __typename?: 'ParagraphBreadcrumbChildren' } | { __typename?: 'ParagraphCardGridAutomatic' } | { __typename?: 'ParagraphCardGridManual' } | { __typename?: 'ParagraphContentSlider' } | { __typename?: 'ParagraphContentSliderAutomatic' } | { __typename?: 'ParagraphFilteredEventList' } | { __typename?: 'ParagraphGoLink' } | { __typename?: 'ParagraphGoLinkbox' } | { __typename?: 'ParagraphGoMaterialSliderAutomatic' } | { __typename?: 'ParagraphGoMaterialSliderManual' } | { __typename: 'ParagraphGoVideo', id: string, title: string, created: { __typename?: 'DateTime', timestamp: unknown }, embedVideo: { __typename?: 'MediaAudio' } | { __typename?: 'MediaDocument' } | { __typename?: 'MediaImage' } | { __typename?: 'MediaVideo' } | { __typename?: 'MediaVideotool', id: string, name: string, mediaVideotool: string } } | { __typename: 'ParagraphGoVideoBundleAutomatic', goVideoTitle: string, videoAmountOfMaterials: number, id: string, cqlSearch: { __typename?: 'CQLSearch', value?: string | null }, embedVideo: { __typename?: 'MediaAudio' } | { __typename?: 'MediaDocument' } | { __typename?: 'MediaImage' } | { __typename?: 'MediaVideo' } | { __typename?: 'MediaVideotool', id: string, name: string, mediaVideotool: string } } | { __typename: 'ParagraphGoVideoBundleManual', id: string, goVideoTitle: string, embedVideo: { __typename?: 'MediaAudio' } | { __typename?: 'MediaDocument' } | { __typename?: 'MediaImage' } | { __typename?: 'MediaVideo' } | { __typename?: 'MediaVideotool', id: string, name: string, mediaVideotool: string }, videoBundleWorkIds?: Array<{ __typename?: 'WorkId', material_type?: string | null, work_id?: string | null }> | null } | { __typename?: 'ParagraphManualEventList' } | { __typename?: 'ParagraphMaterialGridAutomatic' } | { __typename?: 'ParagraphMaterialGridManual' } | { __typename?: 'ParagraphTextBody' } | { __typename?: 'ParagraphVideo' }> | null } | null } | { __typename: 'RouteRedirect' } | null };
+export type GetPageByPathQuery = { __typename?: 'Query', route?: { __typename: 'RouteExternal' } | { __typename: 'RouteInternal', url: string, entity?: { __typename?: 'NodeGoArticle' } | { __typename?: 'NodeGoCategory' } | { __typename?: 'NodeGoPage', paragraphs?: Array<{ __typename?: 'ParagraphAccordion' } | { __typename?: 'ParagraphBanner' } | { __typename?: 'ParagraphBreadcrumbChildren' } | { __typename?: 'ParagraphCampaignRule' } | { __typename?: 'ParagraphCardGridAutomatic' } | { __typename?: 'ParagraphCardGridManual' } | { __typename?: 'ParagraphContentSlider' } | { __typename?: 'ParagraphContentSliderAutomatic' } | { __typename?: 'ParagraphEventTicketCategory' } | { __typename?: 'ParagraphFiles' } | { __typename?: 'ParagraphFilteredEventList' } | { __typename?: 'ParagraphGoLink' } | { __typename?: 'ParagraphGoLinkbox' } | { __typename?: 'ParagraphGoMaterialSliderAutomatic' } | { __typename?: 'ParagraphGoMaterialSliderManual' } | { __typename: 'ParagraphGoVideo', id: string, title: string, created: { __typename?: 'DateTime', timestamp: unknown }, embedVideo: { __typename?: 'MediaAudio' } | { __typename?: 'MediaDocument' } | { __typename?: 'MediaImage' } | { __typename?: 'MediaVideo' } | { __typename?: 'MediaVideotool', id: string, name: string, mediaVideotool: string } } | { __typename: 'ParagraphGoVideoBundleAutomatic', goVideoTitle: string, videoAmountOfMaterials: number, id: string, cqlSearch: { __typename?: 'CQLSearch', value?: string | null }, embedVideo: { __typename?: 'MediaAudio' } | { __typename?: 'MediaDocument' } | { __typename?: 'MediaImage' } | { __typename?: 'MediaVideo' } | { __typename?: 'MediaVideotool', id: string, name: string, mediaVideotool: string } } | { __typename: 'ParagraphGoVideoBundleManual', id: string, goVideoTitle: string, embedVideo: { __typename?: 'MediaAudio' } | { __typename?: 'MediaDocument' } | { __typename?: 'MediaImage' } | { __typename?: 'MediaVideo' } | { __typename?: 'MediaVideotool', id: string, name: string, mediaVideotool: string }, videoBundleWorkIds?: Array<{ __typename?: 'WorkId', material_type?: string | null, work_id?: string | null }> | null } | { __typename?: 'ParagraphHero' } | { __typename?: 'ParagraphLanguageSelector' } | { __typename?: 'ParagraphLinks' } | { __typename?: 'ParagraphManualEventList' } | { __typename?: 'ParagraphMaterialGridAutomatic' } | { __typename?: 'ParagraphMaterialGridManual' } | { __typename?: 'ParagraphMedias' } | { __typename?: 'ParagraphNavGridManual' } | { __typename?: 'ParagraphNavSpotsManual' } | { __typename?: 'ParagraphOpeningHours' } | { __typename?: 'ParagraphRecommendation' } | { __typename?: 'ParagraphSimpleLinks' } | { __typename?: 'ParagraphTextBody' } | { __typename?: 'ParagraphUserRegistrationItem' } | { __typename?: 'ParagraphUserRegistrationLinklist' } | { __typename?: 'ParagraphUserRegistrationSection' } | { __typename?: 'ParagraphVideo' } | { __typename?: 'ParagraphWebform' }> | null } | null } | { __typename: 'RouteRedirect' } | null };
 
 export type GetAdgangsplatformenTokensQueryVariables = Exact<{ [key: string]: never; }>;
 
@@ -1381,62 +1563,6 @@ export type GetAdgangsplatformenUserTokenQueryVariables = Exact<{ [key: string]:
 export type GetAdgangsplatformenUserTokenQuery = { __typename?: 'Query', dplTokens?: { __typename?: 'DplTokens', adgangsplatformen?: { __typename?: 'AdgangsplatformenToken', user?: string | null } | null } | null };
 
 
-
-export const GetArticleDocument = `
-    query getArticle($id: ID!) {
-  nodeArticle(id: $id) {
-    title
-    subtitle
-    paragraphs {
-      __typename
-      ... on ParagraphTextBody {
-        body {
-          value
-        }
-      }
-    }
-  }
-}
-    `;
-
-export const useGetArticleQuery = <
-      TData = GetArticleQuery,
-      TError = unknown
-    >(
-      variables: GetArticleQueryVariables,
-      options?: Omit<UseQueryOptions<GetArticleQuery, TError, TData>, 'queryKey'> & { queryKey?: UseQueryOptions<GetArticleQuery, TError, TData>['queryKey'] }
-    ) => {
-    
-    return useQuery<GetArticleQuery, TError, TData>(
-      {
-    queryKey: ['getArticle', variables],
-    queryFn: fetcher<GetArticleQuery, GetArticleQueryVariables>(GetArticleDocument, variables),
-    ...options
-  }
-    )};
-
-useGetArticleQuery.getKey = (variables: GetArticleQueryVariables) => ['getArticle', variables];
-
-export const useSuspenseGetArticleQuery = <
-      TData = GetArticleQuery,
-      TError = unknown
-    >(
-      variables: GetArticleQueryVariables,
-      options?: Omit<UseSuspenseQueryOptions<GetArticleQuery, TError, TData>, 'queryKey'> & { queryKey?: UseSuspenseQueryOptions<GetArticleQuery, TError, TData>['queryKey'] }
-    ) => {
-    
-    return useSuspenseQuery<GetArticleQuery, TError, TData>(
-      {
-    queryKey: ['getArticleSuspense', variables],
-    queryFn: fetcher<GetArticleQuery, GetArticleQueryVariables>(GetArticleDocument, variables),
-    ...options
-  }
-    )};
-
-useSuspenseGetArticleQuery.getKey = (variables: GetArticleQueryVariables) => ['getArticleSuspense', variables];
-
-
-useGetArticleQuery.fetcher = (variables: GetArticleQueryVariables, options?: RequestInit & { next?: NextFetchRequestConfig }) => fetcher<GetArticleQuery, GetArticleQueryVariables>(GetArticleDocument, variables, options);
 
 export const GetDplCmsConfigurationDocument = `
     query getDplCmsConfiguration {
