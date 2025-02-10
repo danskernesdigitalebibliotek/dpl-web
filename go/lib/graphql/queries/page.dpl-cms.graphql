@@ -24,25 +24,33 @@ query getPageByPath($path: String!) {
             ... on ParagraphGoLinkbox {
               __typename
               title
-              id
-              created {
-                timestamp
-              }
-              goColor {
-                color
-              }
-              goDescription
               goImage {
-                __typename
+                ... on MediaImage {
+                  name
+                  mediaImage {
+                    url
+                    alt
+                    height
+                    mime
+                    size
+                    title
+                    width
+                  }
+                  byline
+                }
               }
+              goColor
+              goDescription
               goLink {
-                url
-                title
+                ... on ParagraphGoLink {
+                  link {
+                    title
+                    url
+                  }
+                  ariaLabel
+                  targetBlank
+                }
               }
-              langcode {
-                name
-              }
-              status
             }
           }
         }

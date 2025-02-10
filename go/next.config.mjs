@@ -1,3 +1,6 @@
+import withPlaiceholder from "@plaiceholder/next"
+import { env } from "process"
+
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   images: {
@@ -5,6 +8,11 @@ const nextConfig = {
       {
         protocol: "https",
         hostname: "res.cloudinary.com",
+        pathname: "/**",
+      },
+      {
+        protocol: "https",
+        hostname: env.NEXT_PUBLIC_GRAPHQL_URL,
         pathname: "/**",
       },
     ],
@@ -24,4 +32,4 @@ const nextConfig = {
   },
 }
 
-export default nextConfig
+export default withPlaiceholder(nextConfig)
