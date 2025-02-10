@@ -53,9 +53,14 @@ class AdgangsplatformenLibraryTokenProducer extends DataProducerPluginBase imple
 
   /**
    * Resolves the library access token.
+   *
+   * @return mixed[]
+   *   The library access token.
    */
-  public function resolve(): string | null {
-    return $this->libraryTokenHandler->getToken();
+  public function resolve(): array | null {
+    return [
+      "token" => $this->libraryTokenHandler->getToken(),
+    ];
   }
 
 }

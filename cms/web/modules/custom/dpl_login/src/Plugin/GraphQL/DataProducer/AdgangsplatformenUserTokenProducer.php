@@ -3,6 +3,7 @@
 namespace Drupal\dpl_login\Plugin\GraphQL\DataProducer;
 
 use Drupal\Core\Plugin\ContainerFactoryPluginInterface;
+use Drupal\dpl_login\AccessToken;
 use Drupal\dpl_login\UserTokens;
 use Drupal\graphql\Plugin\GraphQL\DataProducer\DataProducerPluginBase;
 use Symfony\Component\DependencyInjection\ContainerInterface;
@@ -54,8 +55,8 @@ class AdgangsplatformenUserTokenProducer extends DataProducerPluginBase implemen
   /**
    * Resolves the access token based on the token type.
    */
-  public function resolve(): string | null {
-    return $this->userTokens->getCurrent()?->token;
+  public function resolve(): AccessToken | null {
+    return $this->userTokens->getCurrent();
   }
 
 }
