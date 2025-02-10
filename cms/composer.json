@@ -378,7 +378,8 @@
                 "3487412: Fix WSOD when EventInstance has invalid translation.": "https://git.drupalcode.org/project/recurring_events/-/commit/996052eeb7518ce591df968a0bb12c4819fb4edf.patch"
             },
             "drupal/state_log": {
-                "3501178: Call to undefined method Drupal\\state_log\\StateLog::destruct()": "https://git.drupalcode.org/project/state_log/-/commit/8d63dd4827a930f5294004a1d13f051487ec4269.patch"
+                "3501178: Call to undefined method Drupal\\state_log\\StateLog::destruct()": "https://git.drupalcode.org/project/state_log/-/commit/8d63dd4827a930f5294004a1d13f051487ec4269.patch",
+                "3505648: var_export does not handle circular references": "https://git.drupalcode.org/project/state_log/-/commit/10afc5f782869420d345bb38979250e69b55872d.patch"
             },
             "drupal/theme_permission": {
                 "3105637: Edit, install and uninstall permission": "https://www.drupal.org/files/issues/2024-02-01/theme-permission-edit-install-uninstall-3105637-7.patch"
