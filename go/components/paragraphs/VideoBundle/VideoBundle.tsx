@@ -28,7 +28,7 @@ type VideoBundleManual = {
 }
 
 export type VideoBundleProps = {
-  title: VideoBundleAutomaticType["goVideoTitle"] | VideoBundleManualType["goVideoTitle"]
+  goVideoTitle: VideoBundleAutomaticType["goVideoTitle"] | VideoBundleManualType["goVideoTitle"]
   embedVideo: {
     mediaVideotool: MediaVideotool["mediaVideotool"]
     name: MediaVideotool["name"]
@@ -36,7 +36,7 @@ export type VideoBundleProps = {
 } & (VideoBundleAutomatic | VideoBundleManual)
 
 const VideoBundle = ({
-  title,
+  goVideoTitle,
   embedVideo,
   cqlSearch,
   videoAmountOfMaterials,
@@ -89,7 +89,7 @@ const VideoBundle = ({
   }, [dataAutomatic, dataManual])
 
   if (isLoadingAutomatic || isLoadingManual) {
-    return <div>Loading...</div>
+    return <SearchFiltersDesktopSkeleton />
   }
 
   if (
@@ -106,12 +106,12 @@ const VideoBundle = ({
       <div className="content-container">
         <div className="gap-paragraph-spacing-inner w-full py-4 text-center md:py-12 lg:py-16">
           <h2 className="text-typo-heading-2 lg:text-typo-heading-1 mb-4 block md:mb-10">
-            {title}
+            {goVideoTitle}
           </h2>
           <div className="flex w-full flex-col items-start gap-11 lg:flex-row lg:gap-0">
             <div className="rounded-base relative aspect-16/9 w-full overflow-hidden lg:w-[75%]">
               <iframe
-                aria-label={title || "Video"}
+                aria-label={goVideoTitle || "Video"}
                 className="absolute inset-0 h-full w-full"
                 src={embedVideo.mediaVideotool}
                 allowFullScreen
