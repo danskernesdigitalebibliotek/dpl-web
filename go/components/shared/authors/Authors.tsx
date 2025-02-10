@@ -22,17 +22,19 @@ const Authors = ({ creators }: AuthorsProps) => {
           {"af "}
           {workCreators.map((creator, index) => {
             return (
-              <span key={index}>
-                <Link
-                  href={resolveUrl({
-                    routeParams: { search: "search" },
-                    queryParams: { q: creator },
-                  })}
-                  className="animate-text-underline">
-                  {creator}
-                </Link>
+              <React.Fragment key={index}>
+                <span className="animate-text-underline">
+                  <Link
+                    href={resolveUrl({
+                      routeParams: { search: "search" },
+                      queryParams: { q: creator },
+                    })}
+                    className="animate-text-underline">
+                    {creator}
+                  </Link>
+                </span>
                 {index + 1 < creators.length && ", "}
-              </span>
+              </React.Fragment>
             )
           })}
         </h2>
