@@ -1,5 +1,6 @@
 import { NextResponse } from "next/server"
 import type { NextFetchEvent, NextRequest } from "next/server"
+import { z } from "zod"
 
 import loadUserToken from "./app/auth/callback/adgangsplatformen/loadUserToken"
 import goConfig from "./lib/config/goConfig"
@@ -29,9 +30,17 @@ export async function middleware(request: NextRequest, event: NextFetchEvent) {
   // }
 
   if (!session.isLoggedIn) {
-    const adgangsplatformenUserToken = await loadUserToken()
-    if (adgangsplatformenUserToken) {
-      saveAdgangsplatformenSession(session, adgangsplatformenUserToken)
+    const tokenData = await loadUserToken()
+
+    const validation = z
+      .object({
+        token: z.string(),
+        expire: z.number(),
+      })
+      .safeParse(tokenData)
+
+    if (validation.success) {
+      await saveAdgangsplatformenSession(session, validation.data)
     }
   }
 

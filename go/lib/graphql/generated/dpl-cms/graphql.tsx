@@ -51,10 +51,21 @@ export type AddressCountry = {
   name?: Maybe<Scalars['String']['output']>;
 };
 
-export type AdgangsplatformenToken = {
-  __typename?: 'AdgangsplatformenToken';
-  library?: Maybe<Scalars['String']['output']>;
-  user?: Maybe<Scalars['String']['output']>;
+export type AdgangsplatformenLibraryToken = {
+  __typename?: 'AdgangsplatformenLibraryToken';
+  token?: Maybe<Scalars['String']['output']>;
+};
+
+export type AdgangsplatformenTokens = {
+  __typename?: 'AdgangsplatformenTokens';
+  library?: Maybe<AdgangsplatformenLibraryToken>;
+  user?: Maybe<AdgangsplatformenUserToken>;
+};
+
+export type AdgangsplatformenUserToken = {
+  __typename?: 'AdgangsplatformenUserToken';
+  expire?: Maybe<Scalars['Int']['output']>;
+  token?: Maybe<Scalars['String']['output']>;
 };
 
 /** A CQL search string. */
@@ -103,7 +114,7 @@ export type DplConfiguration = {
 
 export type DplTokens = {
   __typename?: 'DplTokens';
-  adgangsplatformen?: Maybe<AdgangsplatformenToken>;
+  adgangsplatformen?: Maybe<AdgangsplatformenTokens>;
 };
 
 /** A file object to represent an managed file. */
@@ -1373,12 +1384,12 @@ export type GetPageByPathQuery = { __typename?: 'Query', route?: { __typename: '
 export type GetAdgangsplatformenTokensQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type GetAdgangsplatformenTokensQuery = { __typename?: 'Query', dplTokens?: { __typename?: 'DplTokens', adgangsplatformen?: { __typename?: 'AdgangsplatformenToken', library?: string | null, user?: string | null } | null } | null };
+export type GetAdgangsplatformenTokensQuery = { __typename?: 'Query', dplTokens?: { __typename?: 'DplTokens', adgangsplatformen?: { __typename?: 'AdgangsplatformenTokens', library?: { __typename?: 'AdgangsplatformenLibraryToken', token?: string | null } | null, user?: { __typename?: 'AdgangsplatformenUserToken', expire?: number | null, token?: string | null } | null } | null } | null };
 
 export type GetAdgangsplatformenUserTokenQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type GetAdgangsplatformenUserTokenQuery = { __typename?: 'Query', dplTokens?: { __typename?: 'DplTokens', adgangsplatformen?: { __typename?: 'AdgangsplatformenToken', user?: string | null } | null } | null };
+export type GetAdgangsplatformenUserTokenQuery = { __typename?: 'Query', dplTokens?: { __typename?: 'DplTokens', adgangsplatformen?: { __typename?: 'AdgangsplatformenTokens', user?: { __typename?: 'AdgangsplatformenUserToken', expire?: number | null, token?: string | null } | null } | null } | null };
 
 
 
@@ -1614,8 +1625,13 @@ export const GetAdgangsplatformenTokensDocument = `
     query getAdgangsplatformenTokens {
   dplTokens {
     adgangsplatformen {
-      library
-      user
+      library {
+        token
+      }
+      user {
+        expire
+        token
+      }
     }
   }
 }
@@ -1664,7 +1680,10 @@ export const GetAdgangsplatformenUserTokenDocument = `
     query getAdgangsplatformenUserToken {
   dplTokens {
     adgangsplatformen {
-      user
+      user {
+        expire
+        token
+      }
     }
   }
 }

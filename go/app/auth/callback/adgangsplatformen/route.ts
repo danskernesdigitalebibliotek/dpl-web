@@ -1,4 +1,5 @@
 import { NextResponse } from "next/server"
+import { z } from "zod"
 
 import goConfig from "@/lib/config/goConfig"
 import {
@@ -10,18 +11,24 @@ import {
 import loadUserToken from "./loadUserToken"
 
 export async function GET() {
-  const userToken = await loadUserToken()
+  const userTokenData = await loadUserToken()
 
-  if (!userToken) {
-    // We could not retrieve the user token.
-    // So we redirect to the frontpage without setting the session.
-    return NextResponse.redirect(goConfig("app.url") ?? "/")
+  if (userTokenData) {
+    const validation = z
+      .object({
+        token: z.string(),
+        expire: z.number(),
+      })
+      .safeParse(userTokenData)
+
+    if (validation.success) {
+      const session = await getSession()
+      await saveAdgangsplatformenSession(session, validation.data)
+      return NextResponse.redirect(`${goConfig("app.url")}/user/profile`)
+    }
   }
 
-  const session = await getSession()
-  saveAdgangsplatformenSession(session, userToken)
-
-  return NextResponse.redirect(`${goConfig("app.url")}/user/profile`)
+  return NextResponse.redirect(goConfig("app.url") ?? "/")
 }
 
 export const dynamic = "force-dynamic"
