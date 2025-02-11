@@ -1,3 +1,8 @@
 # Mark FBS client and CMS API produced by OpenAPI Generator as generated.
 packages/fbs-client/**/*.* linguist-generated=true
 packages/cms-api/**/*.* linguist-generated=true
+
+# Mark Sailor generated GraphQL classes as generated.
+web/modules/custom/bnf/src/GraphQL/**/*.* linguist-generated=true
+# And the schema file we keep around.
+web/modules/custom/bnf/schema/bnf.graphql

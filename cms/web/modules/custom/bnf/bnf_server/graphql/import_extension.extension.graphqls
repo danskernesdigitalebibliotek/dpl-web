@@ -1,0 +1,14 @@
+extend type Mutation {
+  import(uuid: String!, callbackUrl: String!): ImportResponse!
+}
+
+type ImportResponse {
+  status: ImportStatus!
+  message: String!
+}
+
+enum ImportStatus {
+     success
+     failure
+     duplicate
+}

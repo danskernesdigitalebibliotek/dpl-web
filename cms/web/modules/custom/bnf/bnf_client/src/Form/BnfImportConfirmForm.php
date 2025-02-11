@@ -7,6 +7,8 @@ use Drupal\bnf\Services\BnfImporter;
 use Drupal\Core\Config\ConfigFactoryInterface;
 use Drupal\Core\DependencyInjection\AutowireTrait;
 use Drupal\Core\DependencyInjection\ContainerInjectionInterface;
+use Drupal\Core\Entity\EntityStorageInterface;
+use Drupal\Core\Entity\EntityTypeManagerInterface;
 use Drupal\Core\Form\FormInterface;
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\Messenger\MessengerInterface;
@@ -14,7 +16,6 @@ use Drupal\Core\Routing\RouteMatchInterface;
 use Drupal\Core\StringTranslation\StringTranslationTrait;
 use Psr\Log\LoggerInterface;
 use Symfony\Component\DependencyInjection\Attribute\Autowire;
-use function Safe\preg_grep;
 
 /**
  * Displaying an import preview, and allowing editor to import.
@@ -30,6 +31,11 @@ class BnfImportConfirmForm implements FormInterface, ContainerInjectionInterface
   protected string $baseUrl;
 
   /**
+   * The node storage.
+   */
+  protected EntityStorageInterface $nodeStorage;
+
+  /**
    * {@inheritDoc}
    */
   public function __construct(
@@ -39,8 +45,10 @@ class BnfImportConfirmForm implements FormInterface, ContainerInjectionInterface
     #[Autowire(service: 'logger.channel.bnf')]
     protected LoggerInterface $logger,
     ConfigFactoryInterface $configFactory,
+    EntityTypeManagerInterface $entityTypeManager,
   ) {
     $this->baseUrl = $configFactory->get(SettingsForm::CONFIG_NAME)->get('base_url');
+    $this->nodeStorage = $entityTypeManager->getStorage('node');
   }
 
   /**
@@ -54,6 +62,15 @@ class BnfImportConfirmForm implements FormInterface, ContainerInjectionInterface
    * {@inheritDoc}
    */
   public function buildForm(array $form, FormStateInterface $form_state): array {
+    $uuid = $this->routeMatch->getParameter('uuid');
+    $existingNodes = $this->nodeStorage->loadByProperties(['uuid' => $uuid]);
+
+    if (!empty($existingNodes)) {
+      $this->messenger->addError($this->t('Node has previously been imported from BNF.', [], ['context' => 'BNF']));
+
+      return [];
+    }
+
     $form['#title'] = $this->t('Confirm import of BNF content', [], ['context' => 'BNF']);
 
     $uuid = $this->routeMatch->getParameter('uuid');
@@ -65,21 +82,12 @@ class BnfImportConfirmForm implements FormInterface, ContainerInjectionInterface
     $importable = TRUE;
 
     try {
-      $data = $this->bnfImporter->loadData($uuid, $bnfServer);
-
-      // Find node data, e.g. nodeArticle, nodePage etc.
-      $nodeDataKeys = preg_grep('/^node[A-Z]/', array_keys($data));
-      $nodeDataKey = $nodeDataKeys ? reset($nodeDataKeys) : [];
-      $nodeData = $data[$nodeDataKey] ?? [];
+      $title = $this->bnfImporter->getNodeTitle($uuid, $bnfServer);
     }
     catch (\Exception $e) {
       $importable = FALSE;
 
       $this->messenger->addError($this->t('Cannot import this node from BNF.', [], ['context' => 'BNF']));
-
-      if ($e instanceof AlreadyExistsException) {
-        $this->messenger->addError($this->t('Node has previously been imported from BNF.', [], ['context' => 'BNF']));
-      }
     }
 
     $form['uuid'] = [
@@ -92,7 +100,7 @@ class BnfImportConfirmForm implements FormInterface, ContainerInjectionInterface
     $form['label'] = [
       '#title' => $this->t('Content label', [], ['context' => 'BNF']),
       '#type' => 'textfield',
-      '#default_value' => $nodeData['title'] ?? NULL,
+      '#default_value' => $title ?? NULL,
       '#disabled' => TRUE,
     ];
 
@@ -124,12 +132,13 @@ class BnfImportConfirmForm implements FormInterface, ContainerInjectionInterface
       $form_state->setRedirect('entity.node.edit_form', ['node' => $node->id()]);
     }
     catch (\Exception $e) {
-      $this->logger->error('Could not import node from BNF. @message', ['@message' => $e->getMessage()]);
-
       $this->messenger->addError($this->t('Could not import node from BNF.', [], ['context' => 'BNF']));
 
       if ($e instanceof AlreadyExistsException) {
         $this->messenger->addError($this->t('Node has previously been imported from BNF.', [], ['context' => 'BNF']));
+      }
+      else {
+        $this->logger->error('Could not import node from BNF. @message', ['@message' => $e->getMessage()]);
       }
     }
 

@@ -12,6 +12,7 @@ use Drupal\Core\StringTranslation\TranslationInterface;
 use Drupal\node\NodeInterface;
 use Drupal\pathauto\AliasCleanerInterface;
 use Drupal\recurring_events\Entity\EventInstance;
+use Drupal\recurring_events\Entity\EventSeries;
 use Drupal\taxonomy\TermInterface;
 use Psr\Log\LoggerInterface;
 use Safe\DateTime;
@@ -258,8 +259,20 @@ class BreadcrumbHelper {
    */
   public function getEventInstanceBreadcrumbSuffix(EventInstance $instance, Breadcrumb $breadcrumb): Breadcrumb {
     $series = $instance->getEventSeries();
+
+    // If the eventinstance is orphaned, it means that we cannot get the series
+    // ID - this should hopefully never happen.
+    if (!($series instanceof EventSeries)) {
+      return $breadcrumb;
+    }
+
     $instance_count =
-      $this->entityTypeManager->getStorage('eventinstance')->getQuery()->condition('eventseries_id', $series->id())->accessCheck()->count()->execute();
+      $this->entityTypeManager->getStorage('eventinstance')
+        ->getQuery()
+        ->condition('eventseries_id', $series->id())
+        ->accessCheck()
+        ->count()
+        ->execute();
 
     // Technically an instance date may be a range over several days or months,
     // but this quickly becomes very complicated, both to display for the user,

@@ -191,9 +191,26 @@ tasks:
   dev:bnf:set-client:
     internal: true
     status:
-      - "[[ -z \"{{ .DOCKER_COMPOSE_FILES_BNF}}\" ]]"
+      - "[[ -z \"{{ .DOCKER_COMPOSE_FILES_BNF }}\" ]]"
     cmds:
-      - task dev:cli -- drush config:set --yes bnf_client.settings base_url https://https/
+      - task: dev:bnf:set-client-for-reals
+
+   # But as vars are done before status, we need to wrap it in another
+   # task, else the var setting command would fail before status has a
+   # chance to say it should be skipped.
+  dev:bnf:set-client-for-reals:
+    internal: true
+    status:
+      - "[[ -z \"{{ .DOCKER_COMPOSE_FILES_BNF }}\" ]]"
+    vars:
+      BNF_HOSTNAME:
+        # Get the hostname from the VIRTUAL_HOST environment variable
+        # inside the https container.
+        sh: docker compose {{ .DOCKER_COMPOSE_FILES }} exec bnfhttps sh -c 'echo $VIRTUAL_HOST'
+    cmds:
+      - task dev:cli -- drush --yes pm:enable bnf_client
+      # This should match the hostname matched in web/modules/custom/bnf/src/MangleUrl.php.
+      - task dev:cli -- drush config:set --yes bnf_client.settings base_url https://{{ .BNF_HOSTNAME }}/
 
   dev:openid:configure:
     desc: Set openid connect settings based on .env variables. And run cron.

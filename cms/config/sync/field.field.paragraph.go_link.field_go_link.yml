@@ -1,23 +1,23 @@
-uuid: 91381c4d-093f-49a7-92e5-5fb2de7ed018
+uuid: fc4613d5-10dd-468b-b47f-9721055f73ef
 langcode: en
 status: true
 dependencies:
   config:
     - field.storage.paragraph.field_go_link
-    - paragraphs.paragraphs_type.go_linkbox
+    - paragraphs.paragraphs_type.go_link
   module:
     - link
-id: paragraph.go_linkbox.field_go_link
+id: paragraph.go_link.field_go_link
 field_name: field_go_link
 entity_type: paragraph
-bundle: go_linkbox
-label: LInk
+bundle: go_link
+label: Link
 description: ''
 required: true
 translatable: false
 default_value: {  }
 default_value_callback: ''
 settings:
-  title: 0
+  title: 2
   link_type: 17
 field_type: link

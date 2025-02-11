@@ -1,0 +1,23 @@
+uuid: 2d27877f-5ba2-4059-954d-4ead3d65267f
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.paragraph.field_target_blank
+    - paragraphs.paragraphs_type.go_link
+id: paragraph.go_link.field_target_blank
+field_name: field_target_blank
+entity_type: paragraph
+bundle: go_link
+label: 'Open link in a new window'
+description: ''
+required: false
+translatable: false
+default_value:
+  -
+    value: 0
+default_value_callback: ''
+settings:
+  on_label: 'Open link in a new window'
+  off_label: 'Open link in the same window'
+field_type: boolean

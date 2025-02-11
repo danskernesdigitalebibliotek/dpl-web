@@ -6,28 +6,28 @@ dependencies:
     - field.field.paragraph.go_linkbox.field_go_color
     - field.field.paragraph.go_linkbox.field_go_description
     - field.field.paragraph.go_linkbox.field_go_image
-    - field.field.paragraph.go_linkbox.field_go_link
+    - field.field.paragraph.go_linkbox.field_go_link_paragraph
     - field.field.paragraph.go_linkbox.field_title
     - paragraphs.paragraphs_type.go_linkbox
   module:
-    - color_field
-    - link
     - media_library
+    - paragraphs
+    - paragraphs_ee
+    - paragraphs_features
 id: paragraph.go_linkbox.default
 targetEntityType: paragraph
 bundle: go_linkbox
 mode: default
 content:
   field_go_color:
-    type: color_field_widget_box
-    weight: 1
+    type: options_select
+    weight: 4
     region: content
-    settings:
-      default_colors: '#ffd2f0,#dcc3ff,#ffdcb9,#bee6fa,#ff73d7,#9b6eff,#ff9100,#32b4ff,#642850,#6e55aa,#7d460f,#195a7d'
+    settings: {  }
     third_party_settings: {  }
   field_go_description:
     type: string_textarea
-    weight: 4
+    weight: 2
     region: content
     settings:
       rows: 3
@@ -40,17 +40,40 @@ content:
     settings:
       media_types: {  }
     third_party_settings: {  }
-  field_go_link:
-    type: link_default
+  field_go_link_paragraph:
+    type: paragraphs
     weight: 3
     region: content
     settings:
-      placeholder_url: ''
-      placeholder_title: ''
-    third_party_settings: {  }
+      title: Paragraph
+      title_plural: Paragraphs
+      edit_mode: open
+      closed_mode: summary
+      autocollapse: none
+      closed_mode_threshold: 0
+      add_mode: dropdown
+      form_display_mode: default
+      default_paragraph_type: go_link
+      features:
+        add_above: '0'
+        collapse_edit_all: '0'
+        convert: '0'
+        duplicate: '0'
+    third_party_settings:
+      paragraphs_features:
+        add_in_between: false
+        add_in_between_link_count: 3
+        delete_confirmation: false
+        show_drag_and_drop: false
+        show_collapse_all: false
+      paragraphs_ee:
+        paragraphs_ee:
+          dialog_off_canvas: false
+          dialog_style: tiles
+          drag_drop: false
   field_title:
     type: string_textfield
-    weight: 2
+    weight: 1
     region: content
     settings:
       size: 60

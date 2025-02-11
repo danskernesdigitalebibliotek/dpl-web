@@ -1,0 +1,28 @@
+query GetNode($id: ID!) {
+  node(id: $id) {
+    ... on NodeInterface {
+      id,
+      title
+    }
+    ... on NodeArticle {
+      paragraphs {
+        ... on ParagraphTextBody {
+          body {
+            value
+            format
+          }
+        }
+        ... on ParagraphAccordion {
+          accordionDescription {
+            value
+            format
+          }
+          accordionTitle {
+            value
+            format
+          }
+        }
+      }
+    }
+  }
+}

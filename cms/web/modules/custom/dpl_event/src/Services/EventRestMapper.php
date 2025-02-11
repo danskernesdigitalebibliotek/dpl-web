@@ -18,6 +18,7 @@ use Drupal\dpl_event\Form\SettingsForm;
 use Drupal\file\FileInterface;
 use Drupal\media\MediaInterface;
 use Drupal\paragraphs\ParagraphInterface;
+use Drupal\recurring_events\Entity\EventSeries;
 use Safe\DateTime;
 
 /**
@@ -44,7 +45,7 @@ class EventRestMapper {
   public function getResponse(EventInstance $event_instance): EventsGET200ResponseInner {
     $this->event = $event_instance;
 
-    return new EventsGET200ResponseInner([
+    $response = new EventsGET200ResponseInner([
       'title' => $this->getValue('title'),
       'uuid' => $this->event->uuid(),
       'url' => $this->event->toUrl()->setAbsolute(TRUE)->toString(TRUE)->getGeneratedUrl(),
@@ -63,11 +64,18 @@ class EventRestMapper {
       'updatedAt' => $this->event->getUpdatedDate(),
       'dateTime' => $this->getDate(),
       'externalData' => $this->getExternalData(),
-      'series' => new EventsGET200ResponseInnerSeries([
-        'uuid' => $this->event->getEventSeries()->uuid(),
-      ]),
       'screenNames' => $this->event->getScreenNames(),
     ]);
+
+    $series = $this->event->getEventSeries();
+
+    if ($series instanceof EventSeries) {
+      $response->setSeries(new EventsGET200ResponseInnerSeries([
+        'uuid' => $series->uuid(),
+      ]));
+    }
+
+    return $response;
   }
 
   /**
@@ -290,7 +298,7 @@ class EventRestMapper {
   private function getSeriesValue(string $field_name): ?string {
     $series = $this->event->getEventSeries();
 
-    if (!$series->hasField($field_name)) {
+    if (!($series instanceof EventSeries) || !$series->hasField($field_name)) {
       return NULL;
     }
 

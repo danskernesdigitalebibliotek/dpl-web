@@ -40,10 +40,10 @@
             "type": "package",
             "package": {
                 "name": "danskernesdigitalebibliotek/dpl-react",
-                "version": "2025.6.0",
+                "version": "2025.7.0",
                 "type": "drupal-library",
                 "dist": {
-                    "url": "https://github.com/danskernesdigitalebibliotek/dpl-react/releases/download/2025.6.0/dist-2025-6-0-9e92fbd4e3a1f48f64cc932639ad2cc5a9c15f80.zip",
+                    "url": "https://github.com/danskernesdigitalebibliotek/dpl-react/releases/download/2025.7.0/dist-2025-7-0-1dcff041f0d20269b2d42fe5072fda869e4b6c24.zip",
                     "type": "zip"
                 },
                 "require": {
@@ -56,9 +56,9 @@
             "package": {
                 "name": "danskernesdigitalebibliotek/dpl-design-system",
                 "type": "drupal-library",
-                "version": "2025.6.0",
+                "version": "2025.7.0",
                 "dist": {
-                    "url": "https://github.com/danskernesdigitalebibliotek/dpl-design-system/releases/download/2025.6.0/dist-2025-6-0-36f712576fe66e978382ee702a46c66379395d95.zip",
+                    "url": "https://github.com/danskernesdigitalebibliotek/dpl-design-system/releases/download/2025.7.0/dist-2025-7-0-6333b0569d507fb564d17273b66b1ca15f570790.zip",
                     "type": "zip"
                 }
             }
@@ -91,8 +91,8 @@
         "composer/installers": "1.12.0",
         "cweagans/composer-patches": "1.7.3",
         "danskernesdigitalebibliotek/cms-api": "*",
-        "danskernesdigitalebibliotek/dpl-design-system": "2025.6.0",
-        "danskernesdigitalebibliotek/dpl-react": "2025.6.0",
+        "danskernesdigitalebibliotek/dpl-design-system": "2025.7.0",
+        "danskernesdigitalebibliotek/dpl-react": "2025.7.0",
         "danskernesdigitalebibliotek/fbs-client": "*",
         "dealerdirect/phpcodesniffer-composer-installer": "^1.0.0",
         "deoliveiralucas/array-keys-case-transform": "^1.1",
@@ -101,6 +101,7 @@
         "drupal/admin_user_language": "^1.1",
         "drupal/administerusersbyrole": "^3.4",
         "drupal/antibot": "^2.0",
+        "drupal/autowire_plugin_trait": "^1.0",
         "drupal/azure_mailer": "^2.0",
         "drupal/color_field": "^3.0",
         "drupal/config_filter": "^2.6",
@@ -186,6 +187,7 @@
         "oomphinc/composer-installers-extender": "^2.0",
         "phpdocumentor/reflection-docblock": "^5.3",
         "spatie/color": "^1.5",
+        "spawnia/sailor": "^0.35.0",
         "symfony/property-access": "^6.2",
         "symfony/property-info": "^6.2",
         "thecodingmachine/safe": "^2.5.0",
@@ -373,10 +375,12 @@
                 "3468521: (3/4)": "https://git.drupalcode.org/project/recurring_events/-/commit/ad8a4294b1ffb754a338bb2cfa0146f203aa6fc1.patch",
                 "3468521: (4/4)": "https://git.drupalcode.org/project/recurring_events/-/commit/ad99ae79f5c55fc2db17427e9936ab141314609d.patch",
                 "3468300: Update EventSeriesSettings to use datetime form element.": "https://git.drupalcode.org/project/recurring_events/-/commit/5d9bc3b1cf7c00972f053f3d14873012b1ad7140.patch",
-                "3487412: Fix WSOD when EventInstance has invalid translation.": "https://git.drupalcode.org/project/recurring_events/-/commit/996052eeb7518ce591df968a0bb12c4819fb4edf.patch"
+                "3487412: Fix WSOD when EventInstance has invalid translation.": "https://git.drupalcode.org/project/recurring_events/-/commit/996052eeb7518ce591df968a0bb12c4819fb4edf.patch",
+                "3504806: Clean up orphaned eventinstances automatically": "https://www.drupal.org/files/issues/2025-02-06/reccuring_events_auto_delete_orphaned.patch"
             },
             "drupal/state_log": {
-                "3501178: Call to undefined method Drupal\\state_log\\StateLog::destruct()": "https://git.drupalcode.org/project/state_log/-/commit/8d63dd4827a930f5294004a1d13f051487ec4269.patch"
+                "3501178: Call to undefined method Drupal\\state_log\\StateLog::destruct()": "https://git.drupalcode.org/project/state_log/-/commit/8d63dd4827a930f5294004a1d13f051487ec4269.patch",
+                "3505648: var_export does not handle circular references": "https://git.drupalcode.org/project/state_log/-/commit/707c51dff86a0ccb8cb1b0923c4ff9dbfab8bb8d.patch"
             },
             "drupal/theme_permission": {
                 "3105637: Edit, install and uninstall permission": "https://www.drupal.org/files/issues/2024-02-01/theme-permission-edit-install-uninstall-3105637-7.patch"

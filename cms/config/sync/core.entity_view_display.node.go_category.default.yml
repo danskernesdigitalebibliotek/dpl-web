@@ -3,31 +3,22 @@ langcode: en
 status: true
 dependencies:
   config:
-    - field.field.node.go_category.field_category_menu_color
     - field.field.node.go_category.field_category_menu_image
     - field.field.node.go_category.field_category_menu_sound
     - field.field.node.go_category.field_category_menu_title
+    - field.field.node.go_category.field_go_color
     - field.field.node.go_category.field_paragraphs
     - field.field.node.go_category.field_publication_date
     - node.type.go_category
   module:
-    - color_field
     - datetime
+    - options
     - user
 id: node.go_category.default
 targetEntityType: node
 bundle: go_category
 mode: default
 content:
-  field_category_menu_color:
-    type: color_field_formatter_text
-    label: above
-    settings:
-      format: hex
-      opacity: true
-    third_party_settings: {  }
-    weight: 118
-    region: content
   field_category_menu_image:
     type: entity_reference_entity_view
     label: above
@@ -53,6 +44,13 @@ content:
       link_to_entity: false
     third_party_settings: {  }
     weight: 115
+    region: content
+  field_go_color:
+    type: list_default
+    label: above
+    settings: {  }
+    third_party_settings: {  }
+    weight: 118
     region: content
   field_publication_date:
     type: datetime_default

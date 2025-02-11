@@ -4,10 +4,10 @@ status: true
 dependencies:
   config:
     - core.entity_view_mode.node.full
-    - field.field.node.go_category.field_category_menu_color
     - field.field.node.go_category.field_category_menu_image
     - field.field.node.go_category.field_category_menu_sound
     - field.field.node.go_category.field_category_menu_title
+    - field.field.node.go_category.field_go_color
     - field.field.node.go_category.field_paragraphs
     - field.field.node.go_category.field_publication_date
     - node.type.go_category
@@ -34,10 +34,10 @@ content:
     weight: 100
     region: content
 hidden:
-  field_category_menu_color: true
   field_category_menu_image: true
   field_category_menu_sound: true
   field_category_menu_title: true
+  field_go_color: true
   field_publication_date: true
   langcode: true
   search_api_excerpt: true

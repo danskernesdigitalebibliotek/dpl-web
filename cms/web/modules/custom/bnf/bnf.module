@@ -18,29 +18,15 @@ function bnf_entity_base_field_info(EntityTypeInterface $entity_type): array {
 
   // Create new fields for node bundle.
   if ($entity_type->id() === 'node') {
-    $fields[BnfStateEnum::FIELD_NAME] = BaseFieldDefinition::create('list_integer')
+    $fields[BnfStateEnum::FIELD_NAME] = BaseFieldDefinition::create('enum_integer')
       ->setName(BnfStateEnum::FIELD_NAME)
       ->setLabel(t('BNF State'))
       ->setDescription(t('The BNF state of the entity, defining if it was imported, exported, or neither.'))
-      ->setSetting('allowed_values_function', 'bnf_get_bnf_state_allowed_values')
-      ->setDefaultValue(BnfStateEnum::Undefined->value);
+      ->setSetting('enum_class', BnfStateEnum::class)
+      ->setDefaultValue(BnfStateEnum::None);
   }
 
   return $fields;
-}
-
-/**
- * Provides allowed values for the BNF State field.
- *
- * @return string[]
- *   The enum values of BnfStateEnum.
- */
-function bnf_get_bnf_state_allowed_values(): array {
-  $values = [];
-  foreach (BnfStateEnum::cases() as $case) {
-    $values[$case->value] = $case->name;
-  }
-  return $values;
 }
 
 /**
