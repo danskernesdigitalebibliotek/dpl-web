@@ -77,7 +77,12 @@ class LibraryTokenHandler {
     }
 
     // Try to fetch token, if not possible return false.
-    if (!$token = $this->fetchToken()) {
+    if (!$token = $this->fetchToken(
+      $this->adgangsplatformenConfig->getAgencyId(),
+      $this->adgangsplatformenConfig->getClientId(),
+      $this->adgangsplatformenConfig->getClientSecret(),
+      $this->adgangsplatformenConfig->getTokenEndpoint(),
+    )) {
       return FALSE;
     }
 
@@ -116,27 +121,22 @@ class LibraryTokenHandler {
    * @return \Drupal\dpl_library_token\LibraryToken|null
    *   If token was fetched it is returned. Otherwise, return NULL.
    */
-  public function fetchToken(
-    string $agencyId = NULL,
-    string $clientId = NULL,
-    string $clientSecret = NULL,
-    string $tokenEndpoint = NULL,
-  ): ?LibraryToken {
+  public function fetchToken(string $agencyId, string $clientId, string $clientSecret, string $tokenEndpoint,): ?LibraryToken {
     $token = NULL;
 
     try {
-      $agency = sprintf('@%d', $agencyId ?? $this->adgangsplatformenConfig->getAgencyId());
+      $agency = sprintf('@%d', $agencyId);
 
       $response = $this->httpClient
-        ->request('POST', $tokenEndpoint ?? $this->adgangsplatformenConfig->getTokenEndpoint(), [
+        ->request('POST', $tokenEndpoint, [
           'form_params' => [
             'grant_type' => 'password',
             'username' => $agency,
             'password' => $agency,
           ],
           'auth' => [
-            $clientId ?? $this->adgangsplatformenConfig->getClientId(),
-            $clientSecret ?? $this->adgangsplatformenConfig->getClientSecret(),
+            $clientId,
+            $clientSecret,
           ],
         ]);
 
