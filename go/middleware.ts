@@ -1,13 +1,12 @@
 import { NextResponse } from "next/server"
 import type { NextFetchEvent, NextRequest } from "next/server"
-import { z } from "zod"
 
 import loadUserToken from "./app/auth/callback/adgangsplatformen/loadUserToken"
 import goConfig from "./lib/config/goConfig"
 import {
+  accessTokenShouldBeRefreshed,
   getSession,
   saveAdgangsplatformenSession,
-  uniLoginAccessTokenShouldBeRefreshed,
 } from "./lib/session/session"
 
 export async function middleware(request: NextRequest, event: NextFetchEvent) {
@@ -29,22 +28,26 @@ export async function middleware(request: NextRequest, event: NextFetchEvent) {
   //   return NextResponse.redirect(new URL('/', request.url), { headers: response.headers });
   // }
 
+  // If the session is not logged in we will try to see
+  // if we have an ongoing Adgangsplatformen Drupal session.
+  // If we have an active Drupal session we will try to load the user token from dpl-cms.
   if (!session.isLoggedIn) {
     const tokenData = await loadUserToken()
-
-    const validation = z
-      .object({
-        token: z.string(),
-        expire: z.number(),
-      })
-      .safeParse(tokenData)
-
-    if (validation.success) {
-      await saveAdgangsplatformenSession(session, validation.data)
+    if (tokenData) {
+      await saveAdgangsplatformenSession(session, tokenData)
     }
   }
 
-  if (uniLoginAccessTokenShouldBeRefreshed(session)) {
+  // If the Adgangsplatformen user token is about to expire we will reload it from dpl-cms.
+  // TODO: Investigate if we have a better way to handle this. Eg. force the dpl-cms to refresh the token.
+  if (accessTokenShouldBeRefreshed(session, "adgangsplatformen")) {
+    const tokenData = await loadUserToken()
+    if (tokenData) {
+      await saveAdgangsplatformenSession(session, tokenData)
+    }
+  }
+
+  if (accessTokenShouldBeRefreshed(session, "unilogin")) {
     const currentPath = new URL(request.nextUrl.pathname, goConfig("app.url")).toString()
     const url = goConfig("app.url")
     return NextResponse.redirect(`${url}/auth/token/refresh?redirect=${currentPath}`, {

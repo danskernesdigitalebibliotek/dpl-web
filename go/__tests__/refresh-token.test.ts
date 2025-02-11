@@ -93,44 +93,56 @@ describe.skip("Refresh token test suite", () => {
     // Since there is a buffer of 1 minute added to the refresh time,
     // the access token should be refreshed 1 minute before it expires.
     expect(
-      accessTokenShouldBeRefreshed({
-        type: "unilogin",
-        expires: add(new Date(), { seconds: 59 }),
-        refresh_expires: add(new Date(), { seconds: 59 }),
-        isLoggedIn: true,
-      } as IronSession<TSessionData>)
+      accessTokenShouldBeRefreshed(
+        {
+          type: "unilogin",
+          expires: add(new Date(), { seconds: 59 }),
+          refresh_expires: add(new Date(), { seconds: 59 }),
+          isLoggedIn: true,
+        } as IronSession<TSessionData>,
+        "unilogin"
+      )
     ).toBe(true)
 
     // Since there is a buffer of 1 minute added to the refresh time,
     // the access token should be refreshed 1 minute before it expires.
     // The tipping point in this case is the 60th second.
     expect(
-      accessTokenShouldBeRefreshed({
-        type: "unilogin",
-        expires: add(new Date(), { seconds: 60 }),
-        refresh_expires: add(new Date(), { seconds: 60 }),
-        isLoggedIn: true,
-      } as IronSession<TSessionData>)
+      accessTokenShouldBeRefreshed(
+        {
+          type: "unilogin",
+          expires: add(new Date(), { seconds: 60 }),
+          refresh_expires: add(new Date(), { seconds: 60 }),
+          isLoggedIn: true,
+        } as IronSession<TSessionData>,
+        "unilogin"
+      )
     ).toBe(false)
 
     // The refresh logic looks at both expires and refresh_expires.
     // Here the expires is the tipping point.
     expect(
-      accessTokenShouldBeRefreshed({
-        type: "unilogin",
-        expires: add(new Date(), { seconds: 59 }),
-        refresh_expires: add(new Date(), { seconds: 1800 }),
-        isLoggedIn: true,
-      } as IronSession<TSessionData>)
+      accessTokenShouldBeRefreshed(
+        {
+          type: "unilogin",
+          expires: add(new Date(), { seconds: 59 }),
+          refresh_expires: add(new Date(), { seconds: 1800 }),
+          isLoggedIn: true,
+        } as IronSession<TSessionData>,
+        "unilogin"
+      )
     ).toBe(true)
     // Here the refresh_expires is the tipping point.
     expect(
-      accessTokenShouldBeRefreshed({
-        type: "unilogin",
-        expires: add(new Date(), { seconds: 300 }),
-        refresh_expires: add(new Date(), { seconds: 59 }),
-        isLoggedIn: true,
-      } as IronSession<TSessionData>)
+      accessTokenShouldBeRefreshed(
+        {
+          type: "unilogin",
+          expires: add(new Date(), { seconds: 300 }),
+          refresh_expires: add(new Date(), { seconds: 59 }),
+          isLoggedIn: true,
+        } as IronSession<TSessionData>,
+        "unilogin"
+      )
     ).toBe(true)
   })
 })

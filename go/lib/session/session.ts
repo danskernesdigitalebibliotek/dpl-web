@@ -131,10 +131,13 @@ export const saveAdgangsplatformenSession = async (
   await session.save()
 }
 
-export const uniLoginAccessTokenShouldBeRefreshed = (session: IronSession<TSessionData>) => {
-  // If the session is not logged in, or it is not a Unilogin session
+export const accessTokenShouldBeRefreshed = (
+  session: IronSession<TSessionData>,
+  sessionType: TSessionType
+) => {
+  // If the session is not logged in, or it is not of the specified type
   // we don't need to refresh the access token.
-  if (!session.isLoggedIn || session.type !== "unilogin" || !session.refresh_token) {
+  if (!session.isLoggedIn || session.type !== sessionType || !session.refresh_token) {
     return false
   }
 

@@ -1,12 +1,7 @@
 import { NextResponse } from "next/server"
-import { z } from "zod"
 
 import goConfig from "@/lib/config/goConfig"
-import {
-  getSession,
-  saveAdgangsplatformenSession,
-  setAdgangsplatformenUserTokenOnSession,
-} from "@/lib/session/session"
+import { getSession, saveAdgangsplatformenSession } from "@/lib/session/session"
 
 import loadUserToken from "./loadUserToken"
 
@@ -14,20 +9,13 @@ export async function GET() {
   const userTokenData = await loadUserToken()
 
   if (userTokenData) {
-    const validation = z
-      .object({
-        token: z.string(),
-        expire: z.number(),
-      })
-      .safeParse(userTokenData)
-
-    if (validation.success) {
-      const session = await getSession()
-      await saveAdgangsplatformenSession(session, validation.data)
-      return NextResponse.redirect(`${goConfig("app.url")}/user/profile`)
-    }
+    const session = await getSession()
+    await saveAdgangsplatformenSession(session, userTokenData)
+    return NextResponse.redirect(`${goConfig("app.url")}/user/profile`)
   }
 
+  // We could not retrieve the user token.
+  // So we redirect to the frontpage without setting the session.
   return NextResponse.redirect(goConfig("app.url") ?? "/")
 }
 
