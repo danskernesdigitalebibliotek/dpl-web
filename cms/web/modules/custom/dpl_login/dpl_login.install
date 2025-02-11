@@ -54,7 +54,7 @@ function dpl_login_install(): void {
   \Drupal::configFactory()
     ->getEditable('openid_connect.settings')
     ->set('always_save_userinfo', TRUE)
-    ->set('connect_existing_users', TRUE)
+    ->set('connect_existing_users', FALSE)
     ->set('override_registration_settings', TRUE)
     ->set('user_login_display', 'below')
     ->save();
