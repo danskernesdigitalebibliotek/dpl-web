@@ -8,6 +8,7 @@ use Drupal\dpl_event\EventState;
 use Drupal\drupal_typed\DrupalTyped;
 use Drupal\paragraphs\ParagraphInterface;
 use Drupal\recurring_events\Entity\EventInstance as RecurringEventInstance;
+use Drupal\recurring_events\Entity\EventSeries;
 use Psr\Log\LoggerInterface;
 use Safe\DateTime;
 use Safe\DateTimeImmutable;
@@ -213,7 +214,7 @@ class EventInstance extends RecurringEventInstance {
     $series = $this->getEventSeries();
 
     $changed_instance = $this->getChangedTime();
-    $changed_series = $series->getChangedTime();
+    $changed_series = ($series instanceof EventSeries) ? $series->getChangedTime() : 0;
 
     // Setting the timestamp to whichever is the larger.
     $timestamp = ($changed_instance > $changed_series) ?
