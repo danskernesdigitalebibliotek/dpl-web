@@ -15,7 +15,6 @@ use Drupal\dpl_login\UserTokensProviderInterface;
 use Drupal\dpl_react\DplReactConfigInterface;
 use Drupal\openid_connect\OpenIDConnectClaims;
 use Drupal\openid_connect\OpenIDConnectSession;
-use Drupal\openid_connect\Plugin\OpenIDConnectClientManager;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
@@ -32,7 +31,6 @@ class DplPatronRegController extends ControllerBase {
     protected UserTokensProviderInterface $userTokensProvider,
     protected UserTokensProviderInterface $unregisteredUserTokensProvider,
     protected OpenIDConnectSession $session,
-    protected OpenIDConnectClientManager $pluginManager,
     protected OpenIDConnectClaims $claims,
     protected BranchSettings $branchSettings,
     protected BranchRepositoryInterface $branchRepository,
@@ -52,7 +50,6 @@ class DplPatronRegController extends ControllerBase {
       $container->get('dpl_login.registered_user_tokens'),
       $container->get('dpl_login.unregistered_user_tokens'),
       $container->get('openid_connect.session'),
-      $container->get('plugin.manager.openid_connect_client'),
       $container->get('openid_connect.claims'),
       $container->get('dpl_library_agency.branch_settings'),
       $container->get('dpl_library_agency.branch.repository'),
