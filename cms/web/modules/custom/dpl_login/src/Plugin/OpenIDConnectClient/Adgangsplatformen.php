@@ -7,7 +7,6 @@ use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\GeneratedUrl;
 use Drupal\Core\Language\LanguageManagerInterface;
 use Drupal\Core\Logger\LoggerChannelFactoryInterface;
-use Drupal\Core\Messenger\MessengerInterface;
 use Drupal\Core\PageCache\ResponsePolicy\KillSwitch;
 use Drupal\dpl_library_token\LibraryTokenHandler;
 use Drupal\openid_connect\OpenIDConnectAutoDiscover;
@@ -40,7 +39,6 @@ class Adgangsplatformen extends OpenIDConnectClientBase {
     OpenIDConnectStateTokenInterface $state_token,
     OpenIDConnectAutoDiscover $auto_discover,
     protected LibraryTokenHandler $libraryTokenHandler,
-    MessengerInterface $messenger,
   ) {
     parent::__construct(
       $configuration,
@@ -55,7 +53,6 @@ class Adgangsplatformen extends OpenIDConnectClientBase {
       $state_token,
       $auto_discover,
     );
-    $this->messenger = $messenger;
   }
 
   /**
@@ -80,7 +77,6 @@ class Adgangsplatformen extends OpenIDConnectClientBase {
       $container->get('openid_connect.state_token'),
       $container->get('openid_connect.autodiscover'),
       $container->get(id: 'dpl_library_token.handler'),
-      $container->get(id: 'messenger'),
     );
   }
 
