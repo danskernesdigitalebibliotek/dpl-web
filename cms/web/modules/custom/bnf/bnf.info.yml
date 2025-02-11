@@ -3,3 +3,5 @@ type: module
 description: 'Common code between BNF (Bibliotekernes Nationale Formidling) client and server modules'
 package: 'DPL - BNF'
 core_version_requirement: ^10
+dependencies:
+  - autowire_plugin_trait:autowire_plugin_trait

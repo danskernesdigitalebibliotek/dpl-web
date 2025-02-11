@@ -52,12 +52,12 @@ default:
       tag: meta
       attributes:
         property: 'og:image'
-        content: 'http://dapple-cms.docker/sites/default/files/styles/open_graph/public/2024-01/inaki-del-olmo-NIJuEQw0RKg-unsplash_0.jpg?h=4c1fc98e&itok=GxrsA3jV'
+        content: 'https://dapple-cms.docker/sites/default/files/styles/open_graph/public/2024-01/inaki-del-olmo-NIJuEQw0RKg-unsplash_0.jpg?h=4c1fc98e&itok=ElUarce9'
     -
       tag: meta
       attributes:
         property: 'og:image:url'
-        content: 'http://dapple-cms.docker/sites/default/files/styles/open_graph/public/2024-01/inaki-del-olmo-NIJuEQw0RKg-unsplash_0.jpg?h=4c1fc98e&itok=GxrsA3jV'
+        content: 'https://dapple-cms.docker/sites/default/files/styles/open_graph/public/2024-01/inaki-del-olmo-NIJuEQw0RKg-unsplash_0.jpg?h=4c1fc98e&itok=ElUarce9'
     -
       tag: meta
       attributes:
@@ -81,6 +81,7 @@ default:
       postal_code: '1172'
       address_line1: 'Krystalgade 15'
       address_line2: ''
+      address_line3: ''
   field_main_media:
     -
       entity: 7b9d1894-7f9a-4f96-a7dc-efa3af5fc902

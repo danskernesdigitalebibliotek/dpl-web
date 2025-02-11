@@ -60,6 +60,7 @@ default:
       postal_code: ''
       address_line1: ''
       address_line2: ''
+      address_line3: ''
   field_promoted_on_lists:
     -
       value: false

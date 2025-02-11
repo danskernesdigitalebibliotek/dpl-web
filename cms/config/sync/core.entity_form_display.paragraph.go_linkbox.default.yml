@@ -6,7 +6,7 @@ dependencies:
     - field.field.paragraph.go_linkbox.field_go_color
     - field.field.paragraph.go_linkbox.field_go_description
     - field.field.paragraph.go_linkbox.field_go_image
-    - field.field.paragraph.go_linkbox.field_go_link
+    - field.field.paragraph.go_linkbox.field_go_link_paragraph
     - field.field.paragraph.go_linkbox.field_title
     - paragraphs.paragraphs_type.go_linkbox
   module:
@@ -40,7 +40,7 @@ content:
     settings:
       media_types: {  }
     third_party_settings: {  }
-  field_go_link:
+  field_go_link_paragraph:
     type: paragraphs
     weight: 3
     region: content

@@ -4,6 +4,10 @@ namespace Drupal\bnf_client\Services;
 
 use Drupal\bnf\BnfStateEnum;
 use Drupal\bnf\Exception\AlreadyExistsException;
+use Drupal\bnf\GraphQL\Operations\Import;
+use Drupal\bnf\GraphQL\Types\ImportStatus;
+use Drupal\bnf\MangleUrl;
+use Drupal\bnf\SailorEndpointConfig;
 use Drupal\bnf_client\Form\SettingsForm;
 use Drupal\Core\Config\ConfigFactoryInterface;
 use Drupal\Core\Routing\UrlGeneratorInterface;
@@ -11,13 +15,12 @@ use Drupal\Core\StringTranslation\TranslationInterface;
 use Drupal\node\NodeInterface;
 use GuzzleHttp\ClientInterface;
 use Psr\Log\LoggerInterface;
-use function Safe\json_decode;
-use function Safe\parse_url;
+use Spawnia\Sailor\Configuration;
 
 /**
  * Service, related to exporting our content to BNF.
  *
- * We send an Import Request to BNF using GraphQL, along with information
+ * We send an import request to BNF using GraphQL, along with information
  * about the content and where they can access it using our GraphQL endpoint.
  */
 class BnfExporter {
@@ -53,42 +56,16 @@ class BnfExporter {
       ['absolute' => TRUE]
     );
 
+    /** @var string $uuid */
     $uuid = $node->uuid();
-
-    $mutation = <<<GRAPHQL
-    mutation {
-      importRequest(uuid: "$uuid", callbackUrl: "$callbackUrl") {
-        status
-        message
-      }
-    }
-    GRAPHQL;
 
     try {
       $bnfServer = $this->baseUrl . 'graphql';
 
-      if (!filter_var($bnfServer, FILTER_VALIDATE_URL)) {
-        throw new \InvalidArgumentException('The provided BNF server URL is not valid.');
-      }
+      $endpointConfig = new SailorEndpointConfig(MangleUrl::server($bnfServer));
+      Configuration::setEndpointFor(Import::class, $endpointConfig);
+      $result = Import::execute($uuid, $callbackUrl)->errorFree();
 
-      $parsedUrl = parse_url($bnfServer);
-      $scheme = $parsedUrl['scheme'] ?? NULL;
-
-      if ($scheme !== 'https') {
-        throw new \InvalidArgumentException('The BNF server URL must use HTTPS.');
-      }
-
-      $response = $this->httpClient->request('post', $bnfServer, [
-        'headers' => [
-          'Content-Type' => 'application/json',
-        ],
-        'auth' => ['bnf_graphql', getenv('BNF_GRAPHQL_CONSUMER_USER_PASSWORD')],
-        'json' => [
-          'query' => $mutation,
-        ],
-      ]);
-
-      $data = json_decode($response->getBody()->getContents(), TRUE);
     }
     catch (\Exception $e) {
       $this->logger->error(
@@ -98,23 +75,23 @@ class BnfExporter {
       throw new \Exception('Could not export node to BNF.');
     }
 
-    $status = $data['data']['importRequest']['status'] ?? NULL;
+    $status = $result->data->import->status;
 
-    if ($status !== 'success') {
-      $message = $data['data']['importRequest']['message'] ?? NULL;
+    if ($status !== ImportStatus::success) {
+      $message = $result->data->import->message;
 
       $this->logger->error(
         'Failed at exporting node to BNF server. @message',
         ['@message' => $message]);
 
-      if ($status === 'duplicate') {
+      if ($status === ImportStatus::failure) {
         throw new AlreadyExistsException();
       }
 
       throw new \Exception($message);
     }
 
-    $node->set(BnfStateEnum::FIELD_NAME, BnfStateEnum::Exported->value);
+    $node->set(BnfStateEnum::FIELD_NAME, BnfStateEnum::Exported);
     $node->save();
 
   }

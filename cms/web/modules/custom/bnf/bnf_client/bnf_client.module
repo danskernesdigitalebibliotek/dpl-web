@@ -77,12 +77,13 @@ function bnf_client_form_node_form_submit(array $form, FormStateInterface $form_
     );
   }
   catch (\Throwable $e) {
-    \Drupal::logger('bnf_client')->error('Could not export node to BNF. @message', ['@message' => $e->getMessage()]);
-
     \Drupal::messenger()->addError(t('Could not export node to BNF.', [], ['context' => 'BNF']));
 
     if ($e instanceof AlreadyExistsException) {
       \Drupal::messenger()->addError(t('Node already has been exported to BNF.', [], ['context' => 'BNF']));
+    }
+    else {
+      \Drupal::logger('bnf_client')->error('Could not export node to BNF. @message', ['@message' => $e->getMessage()]);
     }
 
   }

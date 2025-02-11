@@ -117,6 +117,7 @@ function dpl_update_install(): string {
   $messages[] = dpl_update_update_10035();
   $messages[] = dpl_update_update_10037();
   $messages[] = dpl_update_update_10038();
+  $messages[] = dpl_update_update_10039();
 
   return implode('\r\n', $messages);
 }
@@ -410,8 +411,15 @@ function dpl_update_update_10037(): string {
 }
 
 /**
- * Installing External Auth module.
+ * Adding autowire_plugin_trait for BNF.
  */
 function dpl_update_update_10038(): string {
+  return _dpl_update_install_modules(['autowire_plugin_trait']);
+}
+
+/**
+ * Installing External Auth module.
+ */
+function dpl_update_update_10039(): string {
   return _dpl_update_install_modules(['externalauth']);
 }

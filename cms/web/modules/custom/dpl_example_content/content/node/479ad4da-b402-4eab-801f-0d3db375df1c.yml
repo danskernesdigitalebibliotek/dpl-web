@@ -55,12 +55,12 @@ default:
       tag: meta
       attributes:
         property: 'og:image'
-        content: 'http://dapple-cms.docker/sites/default/files/styles/open_graph/public/2024-02/robert-collins-tvc5imO5pXk-unsplash_0.jpg?h=9b4b1e73&itok=c0pEJg9w'
+        content: 'https://dapple-cms.docker/sites/default/files/styles/open_graph/public/2024-02/robert-collins-tvc5imO5pXk-unsplash_0.jpg?h=9b4b1e73&itok=61q2gezO'
     -
       tag: meta
       attributes:
         property: 'og:image:url'
-        content: 'http://dapple-cms.docker/sites/default/files/styles/open_graph/public/2024-02/robert-collins-tvc5imO5pXk-unsplash_0.jpg?h=9b4b1e73&itok=c0pEJg9w'
+        content: 'https://dapple-cms.docker/sites/default/files/styles/open_graph/public/2024-02/robert-collins-tvc5imO5pXk-unsplash_0.jpg?h=9b4b1e73&itok=61q2gezO'
     -
       tag: meta
       attributes:
