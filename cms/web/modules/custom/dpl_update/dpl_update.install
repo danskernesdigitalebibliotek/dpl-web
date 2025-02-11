@@ -116,6 +116,7 @@ function dpl_update_install(): string {
   $messages[] = dpl_update_update_10034();
   $messages[] = dpl_update_update_10035();
   $messages[] = dpl_update_update_10037();
+  $messages[] = dpl_update_update_10038();
 
   return implode('\r\n', $messages);
 }
@@ -406,4 +407,11 @@ function dpl_update_update_10036(): string {
  */
 function dpl_update_update_10037(): string {
   return _dpl_update_install_modules(['media_videotool']);
+}
+
+/**
+ * Installing External Auth module.
+ */
+function dpl_update_update_10038(): string {
+  return _dpl_update_install_modules(['externalauth']);
 }
