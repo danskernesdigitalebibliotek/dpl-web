@@ -16,7 +16,7 @@ const withQueryClient = (StoryComponent: any) => (
 )
 
 const manualBundleArgs = {
-  title: "Video Bundle - Manual",
+  goVideoTitle: "Video Bundle - Manual",
   embedVideo: {
     mediaVideotool: "https://media.videotool.dk/?vn=557_2022121911105390173777808898",
     name: "Video Title",
@@ -34,7 +34,7 @@ const meta = {
   component: VideoBundle,
   parameters: { layout: "centered" },
   args: {
-    title: "Video Bundle - Automatic",
+    goVideoTitle: "Video Bundle - Automatic",
     embedVideo: {
       mediaVideotool: "https://media.videotool.dk/?vn=557_2022121911105390173777808898",
       name: "Video Title",
