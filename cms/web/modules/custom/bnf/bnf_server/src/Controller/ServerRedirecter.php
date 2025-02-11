@@ -18,8 +18,8 @@ class ServerRedirecter extends ControllerBase {
    *   A redirect, or a notice page.
    */
   public function import(string $uuid, Request $request): TrustedRedirectResponse|array {
-    $cookies = $request->cookies;
-    $url = $cookies->get(LoginController::COOKIE_CALLBACK_URL);
+    $session = $request->getSession();
+    $url = $session->get(LoginController::CALLBACK_URL_KEY);
 
     // If we have no URL to redirect to, we'll display a notice template,
     // with info to the user of how they can manually import the content.

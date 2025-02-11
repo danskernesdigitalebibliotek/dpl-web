@@ -27,9 +27,10 @@ function bnf_server_views_pre_build(ViewExecutable $view): void {
  */
 function bnf_server_preprocess_page(array &$variables): void {
   $node = $variables['node'] ?? NULL;
-  $cookies = \Drupal::request()->cookies;
-  $url = $cookies->get(LoginController::COOKIE_CALLBACK_URL);
-  $name = $cookies->get(LoginController::COOKIE_SITE_NAME);
+  $session = \Drupal::request()->getSession();
+
+  $url = $session->get(LoginController::CALLBACK_URL_KEY);
+  $name = $session->get(LoginController::SITE_NAME_KEY);
   $allowed_cts = BnfImporter::ALLOWED_CONTENT_TYPES;
 
   if (!$url || !($node instanceof Node) || !in_array($node->bundle(), $allowed_cts)) {
