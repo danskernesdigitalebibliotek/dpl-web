@@ -31,7 +31,7 @@ use Psr\Log\LoggerInterface;
  * @throws Exception
  */
 function dpl_login_openid_connect_userinfo_alter(array &$userinfo, array $context): void {
-  if (!dpl_login_check_if_plugin_id_is_adgangsplatformen($context['plugin_id'])) {
+  if ($context['plugin_id'] !== DplLoginInterface::PLUGIN_ID_ADGANGSPLATFORMEN) {
     return;
   }
 
@@ -53,8 +53,8 @@ function dpl_login_openid_connect_userinfo_alter(array &$userinfo, array $contex
  * @throws \Drupal\dpl_login\Exception\MissingConfigurationException
  */
 function dpl_login_openid_connect_pre_authorize(AccountInterface|FALSE $account, array $context): bool {
-  if (!dpl_login_check_if_plugin_id_is_adgangsplatformen($context['plugin_id'])) {
-    return FALSE;
+  if ($context['plugin_id'] !== DplLoginInterface::PLUGIN_ID_ADGANGSPLATFORMEN) {
+    return TRUE;
   }
 
   $logger = _dpl_login_get_authorization_logger();
@@ -134,7 +134,7 @@ function _dpl_login_get_patron(AccessToken $token): AuthenticatedPatronV6 {
  *   Various openid_connect context. Tokens etc.
  */
 function dpl_login_openid_connect_post_authorize(AccountInterface $account, array $context): void {
-  if (!dpl_login_check_if_plugin_id_is_adgangsplatformen($context['plugin_id'])) {
+  if ($context['plugin_id'] !== DplLoginInterface::PLUGIN_ID_ADGANGSPLATFORMEN) {
     return;
   }
   $access_token = AccessToken::createFromOpenidConnectContext($context);
@@ -159,7 +159,7 @@ function dpl_login_openid_connect_post_authorize(AccountInterface $account, arra
  *   Various openid_connect context. Tokens etc.
  */
 function dpl_login_openid_connect_userinfo_save(UserInterface $account, array $context): void {
-  if (!dpl_login_check_if_plugin_id_is_adgangsplatformen($context['plugin_id'])) {
+  if ($context['plugin_id'] !== DplLoginInterface::PLUGIN_ID_ADGANGSPLATFORMEN) {
     return;
   }
 
@@ -305,11 +305,4 @@ function dpl_login_preprocess_html(array &$variables): void {
   if (\Drupal::currentUser()->isAuthenticated()) {
     $variables['head_title'][] = t('Logged in', [], ['context' => 'dpl_login']);
   }
-}
-
-/**
- * Helper function for checking if the plugin id is "adgangsplatformen".
- */
-function dpl_login_check_if_plugin_id_is_adgangsplatformen(string $plugin_id): bool {
-  return $plugin_id === 'adgangsplatformen';
 }
