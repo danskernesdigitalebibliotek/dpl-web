@@ -238,7 +238,7 @@ export const WorkCardEmpty = () => {
             className="text-foreground h-[50px] opacity-20 lg:h-[100px]"
             aria-label="Spørgsmålstegn ikon"
           />
-          <p className="text-typo-caption text-center opacity-55">Kunne ikke vises</p>
+          <p className="text-typo-caption text-center">Kunne ikke vises</p>
         </div>
         <div className="py-3 md:py-4">
           <div className="h-6 md:h-10"></div>
