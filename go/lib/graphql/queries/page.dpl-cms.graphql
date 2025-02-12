@@ -21,6 +21,22 @@ query getPageByPath($path: String!) {
                 }
               }
             }
+            ... on ParagraphGoMaterialSliderAutomatic {
+              __typename
+              cqlSearch {
+                value
+              }
+              titleOptional: title
+              sliderAmountOfMaterials
+            }
+            ... on ParagraphGoMaterialSliderManual {
+              __typename
+              titleOptional: title
+              materialSliderWorkIds {
+                material_type
+                work_id
+              }
+            }
           }
         }
       }
