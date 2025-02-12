@@ -1,6 +1,6 @@
 import React from "react"
 
-import WorkCard from "@/components/shared/workCard/WorkCard"
+import WorkCard, { WorkCardEmpty } from "@/components/shared/workCard/WorkCard"
 import { WorkTeaserSearchPageFragment } from "@/lib/graphql/generated/fbi/graphql"
 import { cn } from "@/lib/helpers/helper.cn"
 import { WorkId } from "@/lib/types/ids"
@@ -12,6 +12,9 @@ type WorkCardStackedProps = {
 
 const WorkCardStacked = ({ works, materialOrder }: WorkCardStackedProps) => {
   const reversedMaterialOrder = materialOrder.slice().reverse()
+
+  if (works.length === 0) return <WorkCardEmpty />
+
   return (
     <div>
       {works
