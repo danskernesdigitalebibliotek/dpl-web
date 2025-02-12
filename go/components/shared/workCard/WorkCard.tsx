@@ -7,6 +7,7 @@ import React from "react"
 import { getIconNameFromMaterialType } from "@/components/pages/workPageLayout/helper"
 import goConfig from "@/lib/config/goConfig"
 import { WorkTeaserSearchPageFragment } from "@/lib/graphql/generated/fbi/graphql"
+import { cn } from "@/lib/helpers/helper.cn"
 import { getCoverUrls, getLowResCoverUrl } from "@/lib/helpers/helper.covers"
 import { displayCreators } from "@/lib/helpers/helper.creators"
 import { resolveUrl } from "@/lib/helpers/helper.routes"
@@ -24,9 +25,11 @@ import { getAllWorkPids } from "./helper"
 
 type WorkCardProps = {
   work: WorkTeaserSearchPageFragment
+  classNameWrapper?: string
+  className?: string
 }
 
-const WorkCard = ({ work }: WorkCardProps) => {
+const WorkCard = ({ work, classNameWrapper, className }: WorkCardProps) => {
   const manifestations = work.manifestations.all
   const bestRepresentationManifestation = work.manifestations.bestRepresentation
 
@@ -127,7 +130,7 @@ const WorkCard = ({ work }: WorkCardProps) => {
 
   return (
     <Link
-      className="block space-y-3 lg:space-y-5"
+      className={cn("block space-y-3 lg:space-y-5", classNameWrapper)}
       href={resolveUrl({
         routeParams: { work: "work", wid: work.workId },
         queryParams: { type: bestRepresentationManifestationMaterialTypeCode },
@@ -135,7 +138,10 @@ const WorkCard = ({ work }: WorkCardProps) => {
       <div>
         <div
           key={work.workId}
-          className="rounded-base bg-background-overlay relative flex aspect-4/5 h-auto w-full flex-col px-[15%] pt-[15%]">
+          className={cn(
+            "rounded-base bg-background-overlay relative flex aspect-4/5 h-auto w-full flex-col px-[15%] pt-[15%]",
+            className
+          )}>
           {isSomeManifestationTypeCostFree || isSomeMaterialTypePodcast ? (
             <Badge variant={"blue-title"} className="absolute top-4 left-4 md:top-4 md:left-4">
               BLÅ
