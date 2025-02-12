@@ -51,7 +51,7 @@ const VideoBundle = ({ works, title, videoUrl }: VideoBundleProps) => {
     <div className="bg-background-overlay">
       <div className="content-container">
         <div className="gap-paragraph-spacing-inner w-full py-4 text-center md:py-12 lg:py-16">
-          <h2 className="text-typo-heading-2 lg:text-typo-heading-1 mb-4 block md:mb-10">
+          <h2 className="text-typo-heading-1 lg:text-typo-heading-1 mb-4 block md:mb-10">
             {title}
           </h2>
           <div className="flex w-full flex-col items-start gap-11 lg:flex-row lg:gap-0">
