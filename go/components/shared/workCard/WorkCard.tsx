@@ -20,6 +20,7 @@ import {
 
 import { Badge } from "../badge/Badge"
 import { CoverPicture } from "../coverPicture/CoverPicture"
+import Icon from "../icon/Icon"
 import MaterialTypeIconWrapper from "./MaterialTypeIconWrapper"
 import { getAllWorkPids } from "./helper"
 
@@ -222,6 +223,26 @@ export const WorkCardSkeleton = () => {
       <div className="space-y-2">
         <div className="rounded-base bg-background-skeleton h-5 animate-pulse lg:h-7"></div>
         <div className="rounded-base bg-background-skeleton h-3 animate-pulse lg:h-4"></div>
+      </div>
+    </div>
+  )
+}
+
+export const WorkCardEmpty = () => {
+  return (
+    <div className="space-y-3 lg:space-y-5">
+      <div className="rounded-base bg-background-skeleton w-full">
+        <div className="flex aspect-4/5 w-full flex-col items-center justify-center">
+          <Icon
+            name="question-mark"
+            className="text-foreground h-[50px] opacity-20 lg:h-[100px]"
+            aria-label="Spørgsmålstegn ikon"
+          />
+          <p className="text-typo-caption text-center opacity-55">Kunne ikke vises</p>
+        </div>
+        <div className="py-3 md:py-4">
+          <div className="h-6 md:h-10"></div>
+        </div>
       </div>
     </div>
   )
