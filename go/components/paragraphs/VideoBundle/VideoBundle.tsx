@@ -43,6 +43,7 @@ const VideoBundle = ({
 }: VideoBundleProps) => {
   const [materialOrder, setMaterialOrder] = useState<WorkId[]>([])
   const [currentItemNumber, setCurrentItemNumber] = useState<number>(1)
+  const [isEmpty, setIsEmpty] = useState<boolean>(false)
   const resetTimerRef = useRef<
     ((nextItemNumber?: number | ((prev: number) => number)) => void) | null
   >(null)
@@ -87,17 +88,19 @@ const VideoBundle = ({
     }
   }, [dataAutomatic, dataManual])
 
-  if (isLoadingAutomatic || isLoadingManual) {
-    return <SearchFiltersDesktopSkeleton />
-  }
+  useEffect(() => {
+    if (
+      !isLoadingAutomatic &&
+      !dataAutomatic?.complexSearch?.hitcount &&
+      !isLoadingManual &&
+      !dataManual?.complexSearch?.hitcount
+    ) {
+      setIsEmpty(true)
+    }
+  }, [isLoadingAutomatic, isLoadingManual, dataAutomatic, dataManual])
 
-  if (
-    !isLoadingAutomatic &&
-    !dataAutomatic?.complexSearch?.hitcount &&
-    !isLoadingManual &&
-    !dataManual?.complexSearch?.hitcount
-  ) {
-    return <div>No data</div>
+  if (isLoadingAutomatic || isLoadingManual) {
+    return <VideoBundleLoading />
   }
 
   return (
@@ -124,7 +127,8 @@ const VideoBundle = ({
                 onClick={moveToPreviousMaterial}
                 variant="icon"
                 ariaLabel="Vis forrige værk"
-                className="md:ml-grid-column-2 mr-auto lg:hidden">
+                className="md:ml-grid-column-2 mr-auto lg:hidden"
+                disabled={isEmpty}>
                 <Icon className="h-[24px] w-[24px]" name="arrow-left" />
               </Button>
               <div className="relative aspect-4/9 w-[177px] md:aspect-3/5 md:w-[300px] lg:aspect-1/2 xl:aspect-8/15">
@@ -139,7 +143,8 @@ const VideoBundle = ({
                 onClick={moveToNextMaterial}
                 variant="icon"
                 ariaLabel="Vis næste værk"
-                className="md:mr-grid-column-2 ml-auto lg:hidden">
+                className="md:mr-grid-column-2 ml-auto lg:hidden"
+                disabled={isEmpty}>
                 <Icon className="h-[24px] w-[24px]" name="arrow-right" />
               </Button>
               <div className="hidden lg:flex lg:w-[300px] lg:items-center">
@@ -150,19 +155,22 @@ const VideoBundle = ({
                   fullCircleAction={moveToNextMaterial}
                   setResetTimer={resetFn => (resetTimerRef.current = resetFn)}
                   className="mr-auto"
+                  isStopped={isEmpty}
                 />
                 <Button
                   onClick={moveToPreviousMaterial}
                   variant="icon"
                   ariaLabel="Vis forrige værk"
-                  className="">
+                  className=""
+                  disabled={isEmpty}>
                   <Icon className="h-[24px] w-[24px]" name="arrow-left" />
                 </Button>
                 <Button
                   onClick={moveToNextMaterial}
                   variant="icon"
                   ariaLabel="Vis næste værk"
-                  className="ml-2">
+                  className="ml-2"
+                  disabled={isEmpty}>
                   <Icon className="h-[24px] w-[24px]" name="arrow-right" />
                 </Button>
               </div>
@@ -174,7 +182,7 @@ const VideoBundle = ({
   )
 }
 
-export const SearchFiltersDesktopSkeleton = () => {
+export const VideoBundleLoading = () => {
   return (
     <div className="bg-background-skeleton">
       <div className="content-container">
