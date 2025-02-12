@@ -23,35 +23,37 @@ const Timer = ({
 }: TimerProps) => {
   const [progress, setProgress] = useState(0)
   const [isResetting, setIsResetting] = useState(false)
-  const delayBetweenResets = 100 / durationInSeconds
+  const totalProgressPercentage = 100
+  const progressIncrement = totalProgressPercentage / durationInSeconds
 
   const resetTimer = useCallback(() => {
     setIsResetting(true)
     setTimeout(() => {
       setProgress(0)
       setIsResetting(false)
-    }, delayBetweenResets)
-  }, [delayBetweenResets])
+    }, progressIncrement)
+  }, [progressIncrement])
 
+  // Reset timer when reaching 100% progress
   useEffect(() => {
-    if (progress >= 100 + delayBetweenResets) {
+    if (progress >= totalProgressPercentage + progressIncrement) {
       setTimeout(() => {
         setIsResetting(true)
         setProgress(0)
         setIsResetting(false)
         fullCircleAction()
-      }, delayBetweenResets * 2)
+      }, progressIncrement * 2)
     }
-  }, [progress, fullCircleAction, totalItems, delayBetweenResets])
+  }, [progress, fullCircleAction, totalItems, progressIncrement])
 
   // Timer counting up logic
   useEffect(() => {
     if (isStopped) return
     const interval = setInterval(() => {
-      setProgress(prev => prev + delayBetweenResets)
+      setProgress(prev => prev + progressIncrement)
     }, 1000)
     return () => clearInterval(interval)
-  }, [delayBetweenResets, durationInSeconds, isStopped])
+  }, [progressIncrement, isStopped])
 
   // Provide reset function to parent component if external handling is needed
   useEffect(() => {
@@ -64,7 +66,7 @@ const Timer = ({
   const circumference = 2 * Math.PI * radius
   const strokeDashOffset = isResetting
     ? circumference // Instantly reset to empty
-    : circumference * (1 - progress / 100) // Normal countdown
+    : circumference * (1 - progress / totalProgressPercentage) // Normal countdown
 
   return (
     <div className={cn("relative flex h-[40px] w-[40px] items-center justify-center", className)}>
