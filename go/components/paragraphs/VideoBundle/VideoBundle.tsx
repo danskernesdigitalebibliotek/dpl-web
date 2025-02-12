@@ -5,7 +5,6 @@ import React, { useEffect, useRef, useState } from "react"
 import { Button } from "@/components/shared/button/Button"
 import Icon from "@/components/shared/icon/Icon"
 import Timer from "@/components/shared/timer/Timer"
-import WorkCard from "@/components/shared/workCard/WorkCard"
 import WorkCardStacked from "@/components/shared/workCard/WorkCardStacked"
 import type {
   MediaVideotool,
@@ -133,17 +132,8 @@ const VideoBundle = ({
                   works={
                     dataAutomatic?.complexSearch.works || dataManual?.complexSearch.works || []
                   }
-                  materialOrder={materialOrder}>
-                  {!!dataAutomatic
-                    ? dataAutomatic.complexSearch.works
-                        .slice()
-                        .reverse()
-                        .map(work => <WorkCard key={work.workId} work={work} />)
-                    : dataManual?.complexSearch.works
-                        .slice()
-                        .reverse()
-                        .map(work => <WorkCard key={work.workId} work={work} />)}
-                </WorkCardStacked>
+                  materialOrder={materialOrder}
+                />
               </div>
               <Button
                 onClick={moveToNextMaterial}
