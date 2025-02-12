@@ -1,10 +1,10 @@
-uuid: 987ca6b6-5a43-4189-98f4-919808d4216a
+uuid: 149c4c93-19c3-422b-af2f-8d70e8c249b9
 langcode: en
 status: true
 dependencies:
   config:
     - field.field.paragraph.go_link.field_aria_label
-    - field.field.paragraph.go_link.field_go_link
+    - field.field.paragraph.go_link.field_link
     - field.field.paragraph.go_link.field_target_blank
     - paragraphs.paragraphs_type.go_link
   module:
@@ -20,17 +20,17 @@ content:
     settings:
       link_to_entity: false
     third_party_settings: {  }
-    weight: 2
+    weight: 1
     region: content
-  field_go_link:
+  field_link:
     type: link
-    label: above
+    label: hidden
     settings:
-      trim_length: 80
+      trim_length: null
       url_only: false
       url_plain: false
-      rel: ''
-      target: ''
+      rel: '0'
+      target: '0'
     third_party_settings: {  }
     weight: 0
     region: content
@@ -42,7 +42,7 @@ content:
       format_custom_false: ''
       format_custom_true: ''
     third_party_settings: {  }
-    weight: 1
+    weight: 2
     region: content
 hidden:
   search_api_excerpt: true
