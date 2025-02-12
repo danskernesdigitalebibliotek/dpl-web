@@ -1,10 +1,10 @@
-uuid: 856b0a56-5938-485d-b19d-281982a026bc
+uuid: aea77006-ef8e-4082-be55-079008cf2399
 langcode: en
 status: true
 dependencies:
   config:
     - field.field.paragraph.go_link.field_aria_label
-    - field.field.paragraph.go_link.field_go_link
+    - field.field.paragraph.go_link.field_link
     - field.field.paragraph.go_link.field_target_blank
     - paragraphs.paragraphs_type.go_link
   module:
@@ -22,7 +22,7 @@ content:
       size: 60
       placeholder: ''
     third_party_settings: {  }
-  field_go_link:
+  field_link:
     type: linkit
     weight: 0
     region: content

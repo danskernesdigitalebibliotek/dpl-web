@@ -1,15 +1,15 @@
-uuid: 777de8e5-6114-4e88-b8e4-c8e53a7367d4
+uuid: 11d0e9cf-02a4-4073-8d16-98c6d0796551
 langcode: en
 status: true
 dependencies:
   config:
-    - field.storage.paragraph.field_go_link_paragraph
+    - field.storage.paragraph.field_go_link
     - paragraphs.paragraphs_type.go_link
     - paragraphs.paragraphs_type.go_linkbox
   module:
     - entity_reference_revisions
-id: paragraph.go_linkbox.field_go_link_paragraph
-field_name: field_go_link_paragraph
+id: paragraph.go_linkbox.field_go_link
+field_name: field_go_link
 entity_type: paragraph
 bundle: go_linkbox
 label: Link
