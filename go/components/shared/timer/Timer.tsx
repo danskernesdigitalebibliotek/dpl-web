@@ -9,6 +9,7 @@ interface TimerProps {
   fullCircleAction: () => void
   setResetTimer?: (resetFn: (nextItemNumber?: number | ((prev: number) => number)) => void) => void
   className?: string
+  isStopped?: boolean
 }
 
 const Timer = ({
@@ -18,6 +19,7 @@ const Timer = ({
   fullCircleAction,
   setResetTimer,
   className,
+  isStopped = false,
 }: TimerProps) => {
   const [progress, setProgress] = useState(0)
   const [isResetting, setIsResetting] = useState(false)
@@ -44,11 +46,12 @@ const Timer = ({
 
   // Timer counting up logic
   useEffect(() => {
+    if (isStopped) return
     const interval = setInterval(() => {
       setProgress(prev => prev + delayBetweenResets)
     }, 1000)
     return () => clearInterval(interval)
-  }, [delayBetweenResets, durationInSeconds])
+  }, [delayBetweenResets, durationInSeconds, isStopped])
 
   // Provide reset function to parent component if external handling is needed
   useEffect(() => {
@@ -91,7 +94,9 @@ const Timer = ({
           }}
         />
       </svg>
-      <span className="text-foreground font-bold">{`${currentItemNumber}/${totalItems}`}</span>
+      <span className="text-foreground font-bold">
+        {totalItems > 0 ? `${currentItemNumber}/${totalItems}` : "0/0"}
+      </span>
     </div>
   )
 }
