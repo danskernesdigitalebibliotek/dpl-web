@@ -3,8 +3,8 @@ import React from "react"
 import { ParagraphUnion } from "@/lib/graphql/generated/dpl-cms/graphql"
 
 import ParagraphGoVideo from "./Video/Video"
-import ParagraphGoVideoBundleAutomatic from "./VideoBundle/VideoBundle"
-import ParagraphGoVideoBundleManual from "./VideoBundle/VideoBundle"
+import ParagraphGoVideoBundleAutomatic from "./VideoBundle/VideoBundleAutomatic"
+import ParagraphGoVideoBundleManual from "./VideoBundle/VideoBundleManual"
 import { ParagraphErrorBoundary } from "./paragraphErrorBoundary/paragraphErrorBoundary"
 
 function ParagraphResolver({ paragraphs }: { paragraphs: ParagraphUnion[] }) {

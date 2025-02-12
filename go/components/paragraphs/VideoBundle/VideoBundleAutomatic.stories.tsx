@@ -2,8 +2,7 @@ import type { Meta, StoryObj } from "@storybook/react"
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query"
 
 import { darkModeDecorator } from "@/.storybook/decorators"
-import VideoBundle, { VideoBundleProps } from "@/components/paragraphs/VideoBundle/VideoBundle"
-import { WorkId } from "@/lib/types/ids"
+import VideoBundleAutomatic from "@/components/paragraphs/VideoBundle/VideoBundleAutomatic"
 
 const queryClient = new QueryClient()
 
@@ -15,23 +14,9 @@ const withQueryClient = (StoryComponent: any) => (
   </QueryClientProvider>
 )
 
-const manualBundleArgs = {
-  goVideoTitle: "Video Bundle - Manual",
-  embedVideo: {
-    mediaVideotool: "https://media.videotool.dk/?vn=557_2022121911105390173777808898",
-    name: "Video Title",
-  },
-  videoBundleWorkIds: [
-    "work-of:870970-basis:52516749",
-    "work-of:870970-basis:53559700",
-    "work-of:870971-tsart:82862382",
-    "work-of:870971-avis:36769580",
-  ] as WorkId[],
-} as VideoBundleProps
-
 const meta = {
   title: "components/VideoBundle",
-  component: VideoBundle,
+  component: VideoBundleAutomatic,
   parameters: { layout: "centered" },
   args: {
     goVideoTitle: "Video Bundle - Automatic",
@@ -47,7 +32,7 @@ const meta = {
     videoAmountOfMaterials: 5,
   },
   decorators: [withQueryClient],
-} satisfies Meta<typeof VideoBundle>
+} satisfies Meta<typeof VideoBundleAutomatic>
 
 export default meta
 type Story = StoryObj<typeof meta>
@@ -55,7 +40,7 @@ type Story = StoryObj<typeof meta>
 export const Automatic: Story = {
   render: args => (
     <div className="my-grid-gap-2 space-y-grid-gap-2 h-full w-[100vw]">
-      <VideoBundle {...args} />
+      <VideoBundleAutomatic {...args} />
     </div>
   ),
 }
@@ -63,27 +48,8 @@ export const Automatic: Story = {
 export const AutomaticDarkMode: Story = {
   decorators: [darkModeDecorator],
   render: args => (
-    <div className="my-grid-gap-2 space-y-grid-gap-2">
-      <VideoBundle {...args} />
-    </div>
-  ),
-}
-
-export const Manual: Story = {
-  args: { ...manualBundleArgs },
-  render: args => (
-    <div className="my-grid-gap-2 space-y-grid-gap-2">
-      <VideoBundle {...args} />
-    </div>
-  ),
-}
-
-export const ManualDarkMode: Story = {
-  args: { ...manualBundleArgs },
-  decorators: [darkModeDecorator],
-  render: args => (
-    <div className="my-grid-gap-2 space-y-grid-gap-2">
-      <VideoBundle {...args} />
+    <div className="my-grid-gap-2 space-y-grid-gap-2 h-full w-[100vw]">
+      <VideoBundleAutomatic {...args} />
     </div>
   ),
 }

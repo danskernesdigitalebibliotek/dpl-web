@@ -7,43 +7,21 @@ import Icon from "@/components/shared/icon/Icon"
 import Timer from "@/components/shared/timer/Timer"
 import WorkCardStacked from "@/components/shared/workCard/WorkCardStacked"
 import type {
-  MediaVideotool,
   ParagraphGoVideoBundleAutomatic as VideoBundleAutomaticType,
   ParagraphGoVideoBundleManual as VideoBundleManualType,
 } from "@/lib/graphql/generated/dpl-cms/graphql"
-import { useComplexSearchForWorkTeaserQuery } from "@/lib/graphql/generated/fbi/graphql"
+import { ComplexSearchForWorkTeaserQuery } from "@/lib/graphql/generated/fbi/graphql"
 import { WorkId } from "@/lib/types/ids"
 
-type VideoBundleAutomatic = {
-  cqlSearch: VideoBundleAutomaticType["cqlSearch"]
-  videoAmountOfMaterials: VideoBundleAutomaticType["videoAmountOfMaterials"]
-  videoBundleWorkIds?: never
-}
-
-type VideoBundleManual = {
-  cqlSearch?: never
-  videoAmountOfMaterials?: never
-  videoBundleWorkIds: VideoBundleManualType["videoBundleWorkIds"]
-}
-
 export type VideoBundleProps = {
-  goVideoTitle: VideoBundleAutomaticType["goVideoTitle"] | VideoBundleManualType["goVideoTitle"]
-  embedVideo: {
-    mediaVideotool: MediaVideotool["mediaVideotool"]
-    name: MediaVideotool["name"]
-  }
-} & (VideoBundleAutomatic | VideoBundleManual)
+  works: ComplexSearchForWorkTeaserQuery["complexSearch"]["works"] | undefined
+  title: VideoBundleAutomaticType["goVideoTitle"] | VideoBundleManualType["goVideoTitle"]
+  videoUrl: string
+}
 
-const VideoBundle = ({
-  goVideoTitle,
-  embedVideo,
-  cqlSearch,
-  videoAmountOfMaterials,
-  videoBundleWorkIds,
-}: VideoBundleProps) => {
+const VideoBundle = ({ works, title, videoUrl }: VideoBundleProps) => {
   const [materialOrder, setMaterialOrder] = useState<WorkId[]>([])
   const [currentItemNumber, setCurrentItemNumber] = useState<number>(1)
-  const [isEmpty, setIsEmpty] = useState<boolean>(false)
   const resetTimerRef = useRef<
     ((nextItemNumber?: number | ((prev: number) => number)) => void) | null
   >(null)
@@ -60,62 +38,28 @@ const VideoBundle = ({
     resetTimerRef.current?.()
   }
 
-  const { data: dataAutomatic, isLoading: isLoadingAutomatic } = useComplexSearchForWorkTeaserQuery(
-    {
-      cql: cqlSearch?.value || "",
-      offset: 0,
-      limit: videoAmountOfMaterials,
-      filters: {},
-    },
-    { enabled: !!cqlSearch }
-  )
-  const { data: dataManual, isLoading: isLoadingManual } = useComplexSearchForWorkTeaserQuery(
-    {
-      cql: videoBundleWorkIds?.map(material => `workId=${material.work_id}`).join(" OR ") || "",
-      offset: 0,
-      limit: 100,
-      filters: {},
-    },
-    { enabled: !!videoBundleWorkIds }
-  )
-
   useEffect(() => {
-    if (!!dataAutomatic) {
-      setMaterialOrder(dataAutomatic.complexSearch.works.map(work => work.workId as WorkId))
+    if (!!works) {
+      setMaterialOrder(works.map(work => work.workId as WorkId))
     }
-    if (!!dataManual) {
-      setMaterialOrder(dataManual.complexSearch.works.map(material => material.workId as WorkId))
+    if (!!works) {
+      setMaterialOrder(works.map(material => material.workId as WorkId))
     }
-  }, [dataAutomatic, dataManual])
-
-  useEffect(() => {
-    if (
-      !isLoadingAutomatic &&
-      !dataAutomatic?.complexSearch?.hitcount &&
-      !isLoadingManual &&
-      !dataManual?.complexSearch?.hitcount
-    ) {
-      setIsEmpty(true)
-    }
-  }, [isLoadingAutomatic, isLoadingManual, dataAutomatic, dataManual])
-
-  if (isLoadingAutomatic || isLoadingManual) {
-    return <VideoBundleLoading />
-  }
+  }, [works])
 
   return (
     <div className="bg-background-overlay">
       <div className="content-container">
         <div className="gap-paragraph-spacing-inner w-full py-4 text-center md:py-12 lg:py-16">
           <h2 className="text-typo-heading-2 lg:text-typo-heading-1 mb-4 block md:mb-10">
-            {goVideoTitle}
+            {title}
           </h2>
           <div className="flex w-full flex-col items-start gap-11 lg:flex-row lg:gap-0">
             <div className="rounded-base relative aspect-16/9 w-full overflow-hidden lg:w-[75%]">
               <iframe
-                aria-label={goVideoTitle || "Video"}
+                aria-label={title || "Video"}
                 className="absolute inset-0 h-full w-full"
-                src={embedVideo.mediaVideotool}
+                src={videoUrl}
                 allowFullScreen
                 allow="autoplay; fullscreen"
               />
@@ -128,23 +72,18 @@ const VideoBundle = ({
                 variant="icon"
                 ariaLabel="Vis forrige værk"
                 className="md:ml-grid-column-2 mr-auto lg:hidden"
-                disabled={isEmpty}>
+                disabled={!works}>
                 <Icon className="h-[24px] w-[24px]" name="arrow-left" />
               </Button>
               <div className="relative aspect-4/9 w-[177px] md:aspect-3/5 md:w-[300px] lg:aspect-1/2 xl:aspect-8/15">
-                <WorkCardStacked
-                  works={
-                    dataAutomatic?.complexSearch.works || dataManual?.complexSearch.works || []
-                  }
-                  materialOrder={materialOrder}
-                />
+                <WorkCardStacked works={works || []} materialOrder={materialOrder} />
               </div>
               <Button
                 onClick={moveToNextMaterial}
                 variant="icon"
                 ariaLabel="Vis næste værk"
                 className="md:mr-grid-column-2 ml-auto lg:hidden"
-                disabled={isEmpty}>
+                disabled={!works}>
                 <Icon className="h-[24px] w-[24px]" name="arrow-right" />
               </Button>
               <div className="hidden lg:flex lg:w-[300px] lg:items-center">
@@ -155,14 +94,14 @@ const VideoBundle = ({
                   fullCircleAction={moveToNextMaterial}
                   setResetTimer={resetFn => (resetTimerRef.current = resetFn)}
                   className="mr-auto"
-                  isStopped={isEmpty}
+                  isStopped={!works}
                 />
                 <Button
                   onClick={moveToPreviousMaterial}
                   variant="icon"
                   ariaLabel="Vis forrige værk"
                   className=""
-                  disabled={isEmpty}>
+                  disabled={!works}>
                   <Icon className="h-[24px] w-[24px]" name="arrow-left" />
                 </Button>
                 <Button
@@ -170,7 +109,7 @@ const VideoBundle = ({
                   variant="icon"
                   ariaLabel="Vis næste værk"
                   className="ml-2"
-                  disabled={isEmpty}>
+                  disabled={!works}>
                   <Icon className="h-[24px] w-[24px]" name="arrow-right" />
                 </Button>
               </div>
@@ -182,7 +121,7 @@ const VideoBundle = ({
   )
 }
 
-export const VideoBundleLoading = () => {
+export const VideoBundleSkeleton = () => {
   return (
     <div className="bg-background-skeleton">
       <div className="content-container">
