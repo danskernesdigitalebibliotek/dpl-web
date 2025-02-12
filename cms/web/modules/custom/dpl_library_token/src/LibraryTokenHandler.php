@@ -69,9 +69,11 @@ class LibraryTokenHandler {
 
   /**
    * Retrieve token from external service and save it.
+   *
+   * @throws \Drupal\dpl_login\Exception\MissingConfigurationException
    */
   public function retrieveAndStoreToken(bool $force = FALSE): null|bool {
-    // If force is False and if token is already stored.
+    // If force is FALSE and if token is already stored.
     if (!$force && $this->getToken()) {
       return NULL;
     }
