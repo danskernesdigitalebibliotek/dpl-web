@@ -50,12 +50,12 @@ const VideoBundle = ({ works, title, videoUrl }: VideoBundleProps) => {
   return (
     <div className="bg-background-overlay">
       <div className="content-container">
-        <div className="gap-paragraph-spacing-inner w-full py-4 text-center md:py-12 lg:py-16">
+        <div className="w-full py-4 text-center md:py-12 lg:py-16">
           <h2 className="text-typo-heading-1 lg:text-typo-heading-1 mb-4 block md:mb-10">
             {title}
           </h2>
-          <div className="flex w-full flex-col items-start gap-11 lg:flex-row lg:gap-0">
-            <div className="rounded-base relative aspect-16/9 w-full overflow-hidden lg:w-[75%]">
+          <div className="grid-go col-span-full items-start">
+            <div className="rounded-base relative col-span-full mb-11 aspect-16/9 overflow-hidden lg:col-span-9 lg:mb-0">
               <iframe
                 aria-label={title || "Video"}
                 className="absolute inset-0 h-full w-full"
@@ -65,8 +65,8 @@ const VideoBundle = ({ works, title, videoUrl }: VideoBundleProps) => {
               />
             </div>
             <div
-              className="gap-grid-gap flex w-full flex-row flex-wrap items-center justify-center text-left lg:w-[25%]
-                lg:justify-end lg:pl-4">
+              className="gap-grid-gap col-span-full flex flex-row flex-wrap items-center justify-center text-left
+                lg:col-span-3 lg:justify-end lg:pl-4">
               <Button
                 onClick={moveToPreviousMaterial}
                 variant="icon"
