@@ -53,7 +53,7 @@ async function ParagraphGoLinkbox(paragraphGoLinkboxProps: TParagraphGoLinkboxPr
             <div
               className={cn(
                 "relative aspect-1/1 overflow-hidden rounded-md",
-                color ? "m-grid-column" : ""
+                color ? "m-grid-column-2 lg:m-grid-column" : ""
               )}>
               {goImage.mediaImage.url && (
                 <ImageBaseWithPlaceholder
