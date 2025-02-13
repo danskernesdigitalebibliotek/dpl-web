@@ -94,14 +94,14 @@ const VideoBundle = ({ works, title, videoUrl }: VideoBundleProps) => {
                   fullCircleAction={moveToNextMaterial}
                   setResetTimer={resetFn => (resetTimerRef.current = resetFn)}
                   className="mr-auto"
-                  isStopped={!works}
+                  isStopped={!works?.length}
                 />
                 <Button
                   onClick={moveToPreviousMaterial}
                   variant="icon"
                   ariaLabel="Vis forrige værk"
                   className=""
-                  disabled={!works}>
+                  disabled={!works?.length}>
                   <Icon className="h-[24px] w-[24px]" name="arrow-left" />
                 </Button>
                 <Button
@@ -109,7 +109,7 @@ const VideoBundle = ({ works, title, videoUrl }: VideoBundleProps) => {
                   variant="icon"
                   ariaLabel="Vis næste værk"
                   className="ml-2"
-                  disabled={!works}>
+                  disabled={!works?.length}>
                   <Icon className="h-[24px] w-[24px]" name="arrow-right" />
                 </Button>
               </div>
