@@ -31,7 +31,7 @@ function GridHelper() {
             {Array.from({ length: columns }).map((e, index) => (
               <div
                 key={`gridHelper-column-${index}`}
-                className="bg-opacity-10 h-full w-full bg-green-600"
+                className="bg-content-purple-100 h-full w-full opacity-50"
               />
             ))}
           </div>
