@@ -1,7 +1,7 @@
 "use client"
 
 import Image from "next/image"
-import { ComponentProps, useEffect, useState } from "react"
+import { useState } from "react"
 
 import { cn } from "@/lib/helpers/helper.cn"
 

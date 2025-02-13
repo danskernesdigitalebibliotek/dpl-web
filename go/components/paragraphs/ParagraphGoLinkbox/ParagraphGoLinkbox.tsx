@@ -75,7 +75,9 @@ async function ParagraphGoLinkbox(paragraphGoLinkboxProps: TParagraphGoLinkboxPr
             <p className="mr-grid-column-half">{description}</p>
             {linkUrl && linkTitle && (
               <Button asChild>
-                <Link href={linkUrl}>{linkTitle}</Link>
+                <Link title={linkTitle} href={linkUrl}>
+                  {linkTitle}
+                </Link>
               </Button>
             )}
           </div>
