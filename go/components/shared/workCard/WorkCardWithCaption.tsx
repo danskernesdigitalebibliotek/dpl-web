@@ -1,0 +1,38 @@
+import React from "react"
+
+import { cn } from "@/lib/helpers/helper.cn"
+import { displayCreators } from "@/lib/helpers/helper.creators"
+
+import WorkCard, { WorkCardProps } from "./WorkCard"
+
+type WorkCardWithCaptionProps = {
+  classNameCaption?: string
+} & WorkCardProps
+
+const WorkCardWithCaption = ({
+  work,
+  classNameCaption,
+  className,
+  stackPosition,
+  isWithTilt,
+}: WorkCardWithCaptionProps) => {
+  return (
+    <div className="block space-y-3 lg:space-y-5">
+      <WorkCard work={work} className={className} isWithTilt={isWithTilt} />
+      <div
+        className={cn("space-y-2", classNameCaption, {
+          hidden: stackPosition && stackPosition !== 0,
+        })}>
+        <p
+          className={cn("mr-grid-column-half text-typo-subtitle-lg break-words", {
+            "overflow-scroll lg:max-h-[72px]": !!stackPosition,
+          })}>
+          {work.titles.full[0]}
+        </p>
+        <p className="text-typo-caption opacity-60">{displayCreators(work.creators, 2)}</p>
+      </div>
+    </div>
+  )
+}
+
+export default WorkCardWithCaption
