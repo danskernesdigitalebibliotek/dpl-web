@@ -53,33 +53,39 @@ const MaterialSlider = ({ works, title }: MaterialSliderProps) => {
       <div className="content-container flex flex-row flex-wrap">
         <h2 className="text-typo-heading-2 my-12 w-full">{title}</h2>
         <hr className="border-foreground mb-6 w-full opacity-10" />
-        <Button
-          onClick={() => {
-            scroll("left")
-          }}
-          variant="icon"
-          ariaLabel="Vis forrige værker"
-          className="ml-auto"
-          disabled={!canScrollLeft || areButtonsDisabled}>
-          <Icon className="h-[24px] w-[24px]" name="arrow-left" />
-        </Button>
-        <Button
-          onClick={() => {
-            scroll("right")
-          }}
-          variant="icon"
-          ariaLabel="Vis næste værker"
-          className="ml-6"
-          disabled={!canScrollRight || areButtonsDisabled}>
-          <Icon className="h-[24px] w-[24px]" name="arrow-right" />
-        </Button>
-        <div ref={sliderRef} className={"flex w-full flex-row gap-6 overflow-x-hidden py-12"}>
+        {(canScrollLeft || canScrollRight) && (
+          <>
+            <Button
+              onClick={() => {
+                scroll("left")
+              }}
+              variant="icon"
+              ariaLabel="Vis forrige værker"
+              className="ml-auto hidden xl:inline-flex"
+              disabled={!canScrollLeft || areButtonsDisabled}>
+              <Icon className="h-[24px] w-[24px]" name="arrow-left" />
+            </Button>
+            <Button
+              onClick={() => {
+                scroll("right")
+              }}
+              variant="icon"
+              ariaLabel="Vis næste værker"
+              className="ml-6 hidden xl:inline-flex"
+              disabled={!canScrollRight || areButtonsDisabled}>
+              <Icon className="h-[24px] w-[24px]" name="arrow-right" />
+            </Button>
+          </>
+        )}
+        <div
+          ref={sliderRef}
+          className={"flex w-full flex-row gap-6 overflow-x-scroll py-12 xl:overflow-x-hidden"}>
           {works.map(work => (
             <WorkCard
               key={work.workId}
               work={work}
-              className={`bg-background w-[${cardWidth}px]`}
-              classNameWrapper={`max-w-[${cardWidth}px]`}
+              className={"bg-background w-48 lg:w-96 xl:w-[436px]"}
+              classNameWrapper={`max-w-48 lg:max-w-96 xl:max-w-[436px]`}
             />
           ))}
         </div>
