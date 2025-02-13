@@ -9,8 +9,6 @@ import MaterialSlider, { MaterialSliderEmpty, MaterialSliderSkeleton } from "./M
 
 type MaterialSliderManual = {
   titleOptional: ParagraphGoMaterialSliderManual["title"]
-  cqlSearch?: never
-  sliderAmountOfMaterials?: never
   materialSliderWorkIds: ParagraphGoMaterialSliderManual["materialSliderWorkIds"]
 }
 

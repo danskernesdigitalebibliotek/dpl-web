@@ -11,7 +11,6 @@ type MaterialSliderAutomatic = {
   titleOptional: ParagraphGoMaterialSliderAutomatic["title"]
   cqlSearch: ParagraphGoMaterialSliderAutomatic["cqlSearch"]
   sliderAmountOfMaterials: ParagraphGoMaterialSliderAutomatic["sliderAmountOfMaterials"]
-  materialSliderWorkIds?: never
 }
 
 const MaterialSliderAutomatic = ({
