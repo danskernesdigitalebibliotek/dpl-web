@@ -38,11 +38,7 @@ async function page(props: { params: Promise<{ slug: string[] }> }) {
 
   const pageData = data.route.entity
 
-  return (
-    <Suspense fallback={<p>Loading...</p>}>
-      <BasicPageLayout pageData={pageData as NodeGoPage} />
-    </Suspense>
-  )
+  return <BasicPageLayout pageData={pageData as NodeGoPage} />
 }
 
 export default page

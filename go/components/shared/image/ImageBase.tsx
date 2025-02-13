@@ -13,11 +13,11 @@ export type TImageBaseProps = {
   width: number
   height: number
   alt: string
-  base64: string
-  className: string
+  base64?: string
+  className?: string
 }
 
-export default async function ImageBase({
+export default function ImageBase({
   imageSizing = "intrinsic",
   src,
   sizes = "100vw",
@@ -35,8 +35,7 @@ export default async function ImageBase({
       {imageSizing === "fillParent" && (
         <Image
           className={cn(
-            `absolute inset-0 h-full w-full bg-gray-50 object-cover transition-all duration-500
-            will-change-transform`,
+            "absolute inset-0 h-full w-full object-cover transition-all duration-500 will-change-transform",
             imageLoaded ? "" : "blur-sm",
             className
           )}
@@ -47,19 +46,26 @@ export default async function ImageBase({
           height={height}
           alt={alt}
           onLoad={() => setImageLoaded(true)}
-          style={{
-            backgroundImage: `url('${base64}')`,
-            backgroundSize: "cover",
-            height: "100%",
-            width: "100%",
-          }}
+          style={
+            base64
+              ? {
+                  backgroundImage: `linear-gradient(rgba(255, 255, 255, 0.35), rgba(255, 255, 255, 0.35)), url('${base64}')`,
+                  backgroundSize: "cover",
+                  height: "100%",
+                  width: "100%",
+                  objectPosition: "50% 50%",
+                  backgroundPosition: "50% 50%",
+                }
+              : {}
+          }
         />
       )}
 
       {imageSizing === "intrinsic" && (
         <Image
           className={cn(
-            "h-auto w-full bg-gray-50 object-contain transition-all will-change-transform",
+            "h-auto w-full object-contain transition-all will-change-transform",
+            imageLoaded ? "" : "blur-sm",
             className
           )}
           priority={priority}
@@ -68,6 +74,18 @@ export default async function ImageBase({
           width={width}
           height={height}
           alt={alt}
+          onLoad={() => setImageLoaded(true)}
+          style={
+            base64
+              ? {
+                  backgroundImage: `linear-gradient(rgba(255, 255, 255, 0.35), rgba(255, 255, 255, 0.35)), url('${base64}')`,
+                  backgroundRepeat: "no-repeat",
+                  backgroundSize: "contain",
+                  objectPosition: "50% 50%",
+                  backgroundPosition: "50% 50%",
+                }
+              : {}
+          }
         />
       )}
     </>

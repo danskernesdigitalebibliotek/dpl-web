@@ -1,17 +1,11 @@
-
-import 'server-only'
-
 import Link from "next/link"
-import { getPlaiceholder } from "plaiceholder"
-import React, { Suspense } from "react"
+import React from "react"
 
 import { Button } from "@/components/shared/button/Button"
-import ImageBase from "@/components/shared/image/ImageBase"
-import ImageWrapper from "@/components/shared/image/ImageWrapper"
+import ImageBaseWithPlaceholder from "@/components/shared/image/ImageBaseWithPlaceholder"
 import {
   MediaImage,
   ParagraphGoLink,
-  ParagraphUnion,
   ParagraphGoLinkbox as TParagraphGoLinkbox,
 } from "@/lib/graphql/generated/dpl-cms/graphql"
 import { cn } from "@/lib/helpers/helper.cn"
@@ -44,15 +38,10 @@ async function ParagraphGoLinkbox(paragraphGoLinkboxProps: TParagraphGoLinkboxPr
   const linkTitle = link?.link[0].title
   const linkUrl = link?.link[0].url
 
-  const buffer = await fetch(goImage?.mediaImage.url.toString()).then(async res =>
-    Buffer.from(await res.arrayBuffer())
-  )
-  const { base64 } = await getPlaiceholder(buffer, { size: 50 })
-
   return (
     <div className="content-container">
-      <div className="grid-go">
-        <div className="relative col-span-5 col-start-2">
+      <div className="grid-go gap-y-8">
+        <div className="relative col-span-full md:col-span-6 xl:col-span-5 xl:col-start-2">
           <div className="relative aspect-1/1 overflow-hidden rounded-md">
             {goColor && (
               <div
@@ -66,11 +55,10 @@ async function ParagraphGoLinkbox(paragraphGoLinkboxProps: TParagraphGoLinkboxPr
                 "relative aspect-1/1 overflow-hidden rounded-md",
                 color ? "m-grid-column" : ""
               )}>
-              {base64 && goImage.mediaImage.url && (
-                <ImageBase
+              {goImage.mediaImage.url && (
+                <ImageBaseWithPlaceholder
                   className={cn("rounded-base")}
                   sizes="100vw"
-                  base64={base64}
                   imageSizing="fillParent"
                   src={goImage?.mediaImage.url}
                   width={goImage?.mediaImage.width || 0}
@@ -81,8 +69,8 @@ async function ParagraphGoLinkbox(paragraphGoLinkboxProps: TParagraphGoLinkboxPr
             </div>
           </div>
         </div>
-        <div className="col-span-4 col-start-8 flex items-center">
-          <div className="-mx-grid-gap space-y-8">
+        <div className="col-span-full flex items-center lg:col-span-6 xl:col-span-4 xl:col-start-8">
+          <div className="lg:ml-grid-column-half xl:-mx-grid-gap space-y-8">
             <h2 className="text-typo-heading-1">{title}</h2>
             <p className="mr-grid-column-half">{description}</p>
             {linkUrl && linkTitle && (
@@ -93,8 +81,6 @@ async function ParagraphGoLinkbox(paragraphGoLinkboxProps: TParagraphGoLinkboxPr
           </div>
         </div>
       </div>
-
-      {/* <pre>{JSON.stringify(paragraphGoLinkboxProps, null, 2)}</pre> */}
     </div>
   )
 }
