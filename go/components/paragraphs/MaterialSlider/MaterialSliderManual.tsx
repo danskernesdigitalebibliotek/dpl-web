@@ -5,7 +5,7 @@ import React from "react"
 import { ParagraphGoMaterialSliderManual } from "@/lib/graphql/generated/dpl-cms/graphql"
 import { useComplexSearchForWorkTeaserQuery } from "@/lib/graphql/generated/fbi/graphql"
 
-import MaterialSlider, { MaterialSliderEmpty, MaterialSliderSkeleton } from "./MaterialSlider"
+import MaterialSlider, { MaterialSliderSkeleton } from "./MaterialSlider"
 
 type MaterialSliderManual = {
   titleOptional: ParagraphGoMaterialSliderManual["title"]
@@ -24,9 +24,7 @@ const MaterialSliderManual = ({ titleOptional, materialSliderWorkIds }: Material
   )
   if (isLoading) return <MaterialSliderSkeleton />
 
-  if (!data) return <MaterialSliderEmpty />
-
-  return <MaterialSlider works={data.complexSearch.works} title={titleOptional} />
+  return <MaterialSlider works={data?.complexSearch.works} title={titleOptional} />
 }
 
 export default MaterialSliderManual

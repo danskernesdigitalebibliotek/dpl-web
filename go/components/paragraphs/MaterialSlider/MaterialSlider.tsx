@@ -3,6 +3,7 @@ import React, { useEffect, useRef, useState } from "react"
 
 import { Button } from "@/components/shared/button/Button"
 import Icon from "@/components/shared/icon/Icon"
+import { WorkCardEmpty, WorkCardSkeleton } from "@/components/shared/workCard/WorkCard"
 import WorkCardWithCaption from "@/components/shared/workCard/WorkCardWithCaption"
 import {
   ParagraphGoMaterialSliderAutomatic,
@@ -13,7 +14,7 @@ import { displayCreators } from "@/lib/helpers/helper.creators"
 import { resolveUrl } from "@/lib/helpers/helper.routes"
 
 type MaterialSliderProps = {
-  works: ComplexSearchForWorkTeaserQuery["complexSearch"]["works"]
+  works: ComplexSearchForWorkTeaserQuery["complexSearch"]["works"] | undefined
   title: ParagraphGoMaterialSliderAutomatic["title"] | ParagraphGoMaterialSliderManual["title"]
 }
 
@@ -88,25 +89,29 @@ const MaterialSlider = ({ works, title }: MaterialSliderProps) => {
         <div
           ref={sliderRef}
           className={"col-span-full flex flex-row gap-6 overflow-x-scroll pb-12 xl:py-12"}>
-          {works.map(work => (
-            <Link
-              key={work.workId}
-              aria-label={`Tilgå værket ${work.titles.full[0]} af ${displayCreators(work.creators, 1)}`}
-              className="focus-visible w-[70%] shrink-0 sm:w-[40%] lg:w-[30%]"
-              href={resolveUrl({
-                routeParams: { work: "work", wid: work.workId },
-                queryParams: {
-                  type: work.manifestations.bestRepresentation.materialTypes[0].materialTypeGeneral
-                    .code,
-                },
-              })}>
-              <WorkCardWithCaption
-                work={work}
-                classNameWorkCard={"bg-background dark-mode-transition w-[100%]"}
-                className="max-w-[100%]"
-              />
-            </Link>
-          ))}
+          {works ? (
+            works.map(work => (
+              <Link
+                key={work.workId}
+                aria-label={`Tilgå værket ${work.titles.full[0]} af ${displayCreators(work.creators, 1)}`}
+                className="focus-visible w-[70%] shrink-0 sm:w-[40%] lg:w-[30%]"
+                href={resolveUrl({
+                  routeParams: { work: "work", wid: work.workId },
+                  queryParams: {
+                    type: work.manifestations.bestRepresentation.materialTypes[0]
+                      .materialTypeGeneral.code,
+                  },
+                })}>
+                <WorkCardWithCaption
+                  work={work}
+                  classNameWorkCard={"bg-background dark-mode-transition w-[100%]"}
+                  className="max-w-[100%]"
+                />
+              </Link>
+            ))
+          ) : (
+            <WorkCardEmpty />
+          )}
         </div>
       </div>
     </div>
