@@ -273,6 +273,9 @@ field_config:
     go_link:
       field_aria_label:
         enabled: true
+      field_go_link:
+        enabled: true
+        name_sdl: link
       field_target_blank:
         enabled: true
     go_linkbox:
@@ -281,6 +284,8 @@ field_config:
       field_go_description:
         enabled: true
       field_go_image:
+        enabled: true
+      field_go_link_paragraph:
         enabled: true
       field_title:
         enabled: true
