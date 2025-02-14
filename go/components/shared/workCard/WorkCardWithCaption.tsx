@@ -21,7 +21,7 @@ const WorkCardWithCaption = ({
     <div className={cn("block space-y-3 lg:space-y-5", className)}>
       <WorkCard work={work} className={classNameWorkCard} isWithTilt={isWithTilt} />
       <div className={cn("space-y-2", classNameCaption)}>
-        <p className="mr-grid-column-half text-typo-subtitle-lg overflow-y-auto break-words lg:max-h-[72px]">
+        <p className="text-typo-subtitle-lg max-h-[72px] overflow-y-auto break-words">
           {work.titles.full[0]}
         </p>
         <p className="text-typo-caption opacity-60">{displayCreators(work.creators, 2)}</p>
