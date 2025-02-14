@@ -42,7 +42,7 @@ const WorkCardStackedWithCaption = ({ works, materialOrder }: WorkCardStackedWit
             <WorkCardWithCaption
               work={work}
               classNameCaption={cn({ hidden: stackPositionIndex && stackPositionIndex !== 0 })}
-              classNameWorkCard={`${cn("bg-background", {
+              classNameWorkCard={`${cn("bg-background dark-mode-transition", {
                 "shadow-stacked-card": stackPositionIndex < 3,
                 "rotate-3": stackPositionIndex === 1,
                 "-rotate-3": stackPositionIndex === 2,
