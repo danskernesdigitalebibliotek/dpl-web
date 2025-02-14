@@ -63,7 +63,7 @@ const MaterialSlider = ({ works, title }: MaterialSliderProps) => {
     <div className="bg-background-overlay">
       <div className="content-container grid-go">
         <h2 className="text-typo-heading-2 col-span-full my-12">{title}</h2>
-        <hr className="border-foreground col-span-full mb-6 opacity-10" />
+        <hr className="divider-go col-span-full mb-6" />
         {(canScrollLeft || canScrollRight) && (
           <div className="gap-grid-gap col-span-full flex flex-row justify-end">
             <Button
@@ -123,7 +123,7 @@ export const MaterialSliderSkeleton = () => {
     <div className="bg-background-overlay">
       <div className="content-container flex flex-row flex-wrap">
         <h2 className="text-typo-heading-2 bg-background-skeleton my-12 h-11 w-[50%] animate-pulse rounded-full" />
-        <hr className="border-foreground mb-6 w-full opacity-10" />
+        <hr className="divider-go mb-6" />
         <div className="flex w-full flex-row justify-end gap-6">
           <div className="bg-background-skeleton h-[40px] w-[40px] animate-pulse rounded-full" />
           <div className="bg-background-skeleton h-[40px] w-[40px] animate-pulse rounded-full" />

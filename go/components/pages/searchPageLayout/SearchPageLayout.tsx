@@ -69,7 +69,7 @@ const SearchPageLayout = () => {
               </div>
             </>
           )}
-          <hr className="-mx-grid-edge border-foreground w-screen opacity-10 md:mx-auto md:w-full" />
+          <hr className="divider-go" />
           <div className="mb-space-y flex flex-col gap-y-[calc(var(--grid-gap-x)*2)]">
             {isNoSearchResult && (
               <p className="text-typo-subtitle-lg opacity-35">Ingen søgeresultat</p>

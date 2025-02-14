@@ -11,7 +11,7 @@ type InfoBoxItemProps = {
 const InfoBoxItem = ({ term, children, classname }: InfoBoxItemProps) => {
   return (
     <>
-      <hr className="border-border not-first:mt-7" aria-hidden="true" />
+      <hr className="divider-go not-first:mt-7" aria-hidden="true" />
       <dt className="text-typo-caption mt-2">{term}</dt>
       <dd className={cn("text-typo-heading-5 mt-6", classname)}>{children}</dd>
     </>
