@@ -65,7 +65,7 @@ const MaterialSlider = ({ works, title }: MaterialSliderProps) => {
         <h2 className="text-typo-heading-2 col-span-full my-12">{title}</h2>
         <hr className="border-foreground col-span-full mb-6 opacity-10" />
         {(canScrollLeft || canScrollRight) && (
-          <div className="col-span-full flex flex-row justify-end gap-6">
+          <div className="gap-grid-gap col-span-full flex flex-row justify-end">
             <Button
               onClick={() => {
                 scroll("left")
@@ -88,7 +88,7 @@ const MaterialSlider = ({ works, title }: MaterialSliderProps) => {
         )}
         <div
           ref={sliderRef}
-          className={"col-span-full flex flex-row gap-6 overflow-x-scroll pb-12 xl:py-12"}>
+          className={"gap-grid-gap col-span-full flex flex-row overflow-x-scroll py-6 md:py-12"}>
           {works ? (
             works.map(work => (
               <Link
