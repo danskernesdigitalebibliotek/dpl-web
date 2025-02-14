@@ -5,7 +5,7 @@ import React, { useEffect, useRef, useState } from "react"
 import { Button } from "@/components/shared/button/Button"
 import Icon from "@/components/shared/icon/Icon"
 import Timer from "@/components/shared/timer/Timer"
-import WorkCardStacked from "@/components/shared/workCard/WorkCardStacked"
+import WorkCardStackedWithCaption from "@/components/shared/workCard/WorkCardStackedWithCaption"
 import type {
   ParagraphGoVideoBundleAutomatic as VideoBundleAutomaticType,
   ParagraphGoVideoBundleManual as VideoBundleManualType,
@@ -76,7 +76,7 @@ const VideoBundle = ({ works, title, videoUrl }: VideoBundleProps) => {
                 <Icon className="h-[24px] w-[24px]" name="arrow-left" />
               </Button>
               <div className="relative aspect-4/9 w-[177px] md:aspect-3/5 md:w-[300px] lg:aspect-1/2 xl:aspect-8/15">
-                <WorkCardStacked works={works || []} materialOrder={materialOrder} />
+                <WorkCardStackedWithCaption works={works || []} materialOrder={materialOrder} />
               </div>
               <Button
                 onClick={moveToNextMaterial}

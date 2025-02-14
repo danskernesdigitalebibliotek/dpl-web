@@ -9,12 +9,12 @@ import { WorkId } from "@/lib/types/ids"
 
 import WorkCardWithCaption from "./WorkCardWithCaption"
 
-type WorkCardStackedProps = {
+type WorkCardStackedWithCaptionProps = {
   works: WorkTeaserSearchPageFragment[]
   materialOrder: WorkId[]
 }
 
-const WorkCardStacked = ({ works, materialOrder }: WorkCardStackedProps) => {
+const WorkCardStackedWithCaption = ({ works, materialOrder }: WorkCardStackedWithCaptionProps) => {
   if (works.length === 0) return <WorkCardEmpty />
 
   return (
@@ -42,8 +42,11 @@ const WorkCardStacked = ({ works, materialOrder }: WorkCardStackedProps) => {
             <WorkCardWithCaption
               work={work}
               classNameCaption={cn({ hidden: stackPositionIndex && stackPositionIndex !== 0 })}
-              className={`${cn("bg-background", { "shadow-stacked-card": stackPositionIndex < 3, "rotate-3":
-              stackPositionIndex === 1, "-rotate-3": stackPositionIndex === 2, })}`}
+              classNameWorkCard={`${cn("bg-background", {
+                "shadow-stacked-card": stackPositionIndex < 3,
+                "rotate-3": stackPositionIndex === 1,
+                "-rotate-3": stackPositionIndex === 2,
+              })}`}
             />
           </Link>
         )
@@ -52,4 +55,4 @@ const WorkCardStacked = ({ works, materialOrder }: WorkCardStackedProps) => {
   )
 }
 
-export default WorkCardStacked
+export default WorkCardStackedWithCaption

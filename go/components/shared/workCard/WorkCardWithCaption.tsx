@@ -7,18 +7,20 @@ import WorkCard, { WorkCardProps } from "./WorkCard"
 
 type WorkCardWithCaptionProps = {
   classNameCaption?: string
+  classNameWorkCard?: string
 } & WorkCardProps
 
 const WorkCardWithCaption = ({
   work,
   classNameCaption,
+  classNameWorkCard,
   className,
   stackPosition,
   isWithTilt,
 }: WorkCardWithCaptionProps) => {
   return (
-    <div className="block space-y-3 lg:space-y-5">
-      <WorkCard work={work} className={className} isWithTilt={isWithTilt} />
+    <div className={cn("block space-y-3 lg:space-y-5", className)}>
+      <WorkCard work={work} className={classNameWorkCard} isWithTilt={isWithTilt} />
       <div
         className={cn("space-y-2", classNameCaption, {
           hidden: stackPosition && stackPosition !== 0,
