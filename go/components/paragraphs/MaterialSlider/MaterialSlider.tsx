@@ -23,9 +23,6 @@ const MaterialSlider = ({ works, title }: MaterialSliderProps) => {
   const [canScrollLeft, setCanScrollLeft] = useState(false)
   const [canScrollRight, setCanScrollRight] = useState(true)
 
-  const cardWidth = 436
-  const scrollAmount = cardWidth * 3
-
   const updateScrollButtons = () => {
     if (!sliderRef.current) return
     const { scrollLeft, scrollWidth, clientWidth } = sliderRef.current
@@ -39,6 +36,7 @@ const MaterialSlider = ({ works, title }: MaterialSliderProps) => {
 
   const scroll = (direction: "left" | "right") => {
     if (!sliderRef.current) return
+    const scrollAmount = sliderRef.current.clientWidth * 0.9
     const finalScrollAmount = direction === "left" ? -scrollAmount : scrollAmount
     setAreButtonsDisabled(true)
     sliderRef.current.scrollBy({ left: finalScrollAmount, behavior: "smooth" })
@@ -62,18 +60,17 @@ const MaterialSlider = ({ works, title }: MaterialSliderProps) => {
 
   return (
     <div className="bg-background-overlay">
-      <div className="content-container flex flex-row flex-wrap">
-        <h2 className="text-typo-heading-2 my-12 w-full">{title}</h2>
-        <hr className="border-foreground mb-6 w-full opacity-10" />
+      <div className="content-container grid-go">
+        <h2 className="text-typo-heading-2 col-span-full my-12">{title}</h2>
+        <hr className="border-foreground col-span-full mb-6 opacity-10" />
         {(canScrollLeft || canScrollRight) && (
-          <>
+          <div className="col-span-full flex flex-row justify-end gap-6">
             <Button
               onClick={() => {
                 scroll("left")
               }}
               variant="icon"
               ariaLabel="Vis forrige værker"
-              className="ml-auto hidden xl:inline-flex"
               disabled={!canScrollLeft || areButtonsDisabled}>
               <Icon className="h-[24px] w-[24px]" name="arrow-left" />
             </Button>
@@ -83,20 +80,19 @@ const MaterialSlider = ({ works, title }: MaterialSliderProps) => {
               }}
               variant="icon"
               ariaLabel="Vis næste værker"
-              className="ml-6 hidden xl:inline-flex"
               disabled={!canScrollRight || areButtonsDisabled}>
               <Icon className="h-[24px] w-[24px]" name="arrow-right" />
             </Button>
-          </>
+          </div>
         )}
         <div
           ref={sliderRef}
-          className={"flex w-full flex-row gap-6 overflow-x-scroll pb-12 xl:py-12"}>
+          className={"col-span-full flex flex-row gap-6 overflow-x-scroll pb-12 xl:py-12"}>
           {works.map(work => (
             <Link
               key={work.workId}
               aria-label={`Tilgå værket ${work.titles.full[0]} af ${displayCreators(work.creators, 1)}`}
-              className="focus-visible"
+              className="focus-visible w-[70%] shrink-0 sm:w-[40%] lg:w-[30%]"
               href={resolveUrl({
                 routeParams: { work: "work", wid: work.workId },
                 queryParams: {
@@ -106,8 +102,8 @@ const MaterialSlider = ({ works, title }: MaterialSliderProps) => {
               })}>
               <WorkCardWithCaption
                 work={work}
-                classNameWorkCard={"bg-background dark-mode-transition w-48 lg:w-96 xl:w-[436px]"}
-                className={"max-w-48 lg:max-w-96 xl:max-w-[436px]"}
+                classNameWorkCard={"bg-background dark-mode-transition w-[100%]"}
+                className="max-w-[100%]"
               />
             </Link>
           ))}
