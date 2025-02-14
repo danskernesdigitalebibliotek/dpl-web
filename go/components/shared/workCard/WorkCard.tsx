@@ -23,7 +23,6 @@ import {
 export type WorkCardProps = {
   work: WorkTeaserSearchPageFragment
   className?: string
-  stackPosition?: number
   isWithTilt?: boolean
 }
 

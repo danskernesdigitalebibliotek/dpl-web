@@ -15,20 +15,13 @@ const WorkCardWithCaption = ({
   classNameCaption,
   classNameWorkCard,
   className,
-  stackPosition,
   isWithTilt,
 }: WorkCardWithCaptionProps) => {
   return (
     <div className={cn("block space-y-3 lg:space-y-5", className)}>
       <WorkCard work={work} className={classNameWorkCard} isWithTilt={isWithTilt} />
-      <div
-        className={cn("space-y-2", classNameCaption, {
-          hidden: stackPosition && stackPosition !== 0,
-        })}>
-        <p
-          className={cn("mr-grid-column-half text-typo-subtitle-lg break-words", {
-            "overflow-scroll lg:max-h-[72px]": !!stackPosition,
-          })}>
+      <div className={cn("space-y-2", classNameCaption)}>
+        <p className="mr-grid-column-half text-typo-subtitle-lg overflow-y-auto break-words lg:max-h-[72px]">
           {work.titles.full[0]}
         </p>
         <p className="text-typo-caption opacity-60">{displayCreators(work.creators, 2)}</p>
