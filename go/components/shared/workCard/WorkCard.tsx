@@ -1,16 +1,18 @@
 "use client"
 
 import { useQueries } from "@tanstack/react-query"
-import Link from "next/link"
 import React from "react"
 
 import { getIconNameFromMaterialType } from "@/components/pages/workPageLayout/helper"
+import { Badge } from "@/components/shared/badge/Badge"
+import { CoverPicture } from "@/components/shared/coverPicture/CoverPicture"
+import Icon from "@/components/shared/icon/Icon"
+import MaterialTypeIconWrapper from "@/components/shared/workCard/MaterialTypeIconWrapper"
+import { getAllWorkPids } from "@/components/shared/workCard/helper"
 import goConfig from "@/lib/config/goConfig"
 import { WorkTeaserSearchPageFragment } from "@/lib/graphql/generated/fbi/graphql"
 import { cn } from "@/lib/helpers/helper.cn"
 import { getCoverUrls, getLowResCoverUrl } from "@/lib/helpers/helper.covers"
-import { displayCreators } from "@/lib/helpers/helper.creators"
-import { resolveUrl } from "@/lib/helpers/helper.routes"
 import { useGetCoverCollection } from "@/lib/rest/cover-service-api/generated/cover-service"
 import { GetCoverCollectionSizesItem } from "@/lib/rest/cover-service-api/generated/model"
 import {
@@ -18,24 +20,18 @@ import {
   getV1ProductsIdentifier,
 } from "@/lib/rest/publizon-api/generated/publizon"
 
-import { Badge } from "../badge/Badge"
-import { CoverPicture } from "../coverPicture/CoverPicture"
-import MaterialTypeIconWrapper from "./MaterialTypeIconWrapper"
-import { getAllWorkPids } from "./helper"
-
-type WorkCardProps = {
+export type WorkCardProps = {
   work: WorkTeaserSearchPageFragment
-  classNameWrapper?: string
   className?: string
+  isWithTilt?: boolean
 }
 
-const WorkCard = ({ work, classNameWrapper, className }: WorkCardProps) => {
+const WorkCard = ({ work, className, isWithTilt = false }: WorkCardProps) => {
   const manifestations = work.manifestations.all
-  const bestRepresentationManifestation = work.manifestations.bestRepresentation
-
+  const bestRepresentation = work.manifestations.bestRepresentation
   const { data: dataCovers, isLoading: isLoadingCovers } = useGetCoverCollection({
     type: "pid",
-    identifiers: [bestRepresentationManifestation.pid],
+    identifiers: [bestRepresentation.pid],
     sizes: [
       "xx-small, small, small-medium, medium, medium-large, large, original, default" as GetCoverCollectionSizesItem,
     ],
@@ -88,8 +84,6 @@ const WorkCard = ({ work, classNameWrapper, className }: WorkCardProps) => {
     },
     [] as typeof manifestationsWithPublizonData
   )
-
-  const bestRepresentation = work.manifestations.bestRepresentation
   const allPids = [bestRepresentation.pid, ...getAllWorkPids(work)]
   const coverSrc = getCoverUrls(dataCovers, allPids || [], [
     "default",
@@ -124,72 +118,51 @@ const WorkCard = ({ work, classNameWrapper, className }: WorkCardProps) => {
     )
   })
 
-  // Get the best representation manifestation material type code for link url
-  const bestRepresentationManifestationMaterialTypeCode =
-    bestRepresentationManifestation.materialTypes[0].materialTypeGeneral.code
-
   return (
-    <Link
-      className={cn("block space-y-3 lg:space-y-5", classNameWrapper)}
-      href={resolveUrl({
-        routeParams: { work: "work", wid: work.workId },
-        queryParams: { type: bestRepresentationManifestationMaterialTypeCode },
-      })}>
-      <div>
-        <div
-          key={work.workId}
-          className={cn(
-            "rounded-base bg-background-overlay relative flex aspect-4/5 h-auto w-full flex-col px-[15%] pt-[15%]",
-            className
-          )}>
-          {isSomeManifestationTypeCostFree || isSomeMaterialTypePodcast ? (
-            <Badge variant={"blue-title"} className="absolute top-4 left-4 md:top-4 md:left-4">
-              BLÅ
-            </Badge>
-          ) : null}
-          <div className="relative mx-auto flex h-full w-full items-center justify-center">
-            {!isLoadingCovers && (
-              <CoverPicture
-                lowResSrc={lowResCover || ""}
-                src={coverSrc?.[0] || ""}
-                alt={`${work.titles.full[0]} cover billede`}
-                withTilt
-                className="select-none"
+    <div
+      key={work.workId}
+      className={cn(
+        `rounded-base bg-background-overlay relative mb-6 flex aspect-4/5 h-auto w-full flex-col px-[15%]
+        pt-[15%]`,
+        className
+      )}>
+      {isSomeManifestationTypeCostFree || isSomeMaterialTypePodcast ? (
+        <Badge variant={"blue-title"} className="absolute top-4 left-4 md:top-4 md:left-4">
+          BLÅ
+        </Badge>
+      ) : null}
+      <div className="relative mx-auto flex h-full w-full items-center justify-center">
+        {!isLoadingCovers && (
+          <CoverPicture
+            lowResSrc={lowResCover || ""}
+            src={coverSrc?.[0] || ""}
+            alt={`${work.titles.full[0]} cover billede`}
+            withTilt={isWithTilt}
+            className="select-none"
+          />
+        )}
+      </div>
+      <div className="my-auto flex min-h-[15%] items-center py-3 md:py-4">
+        <div className="flex w-full flex-row justify-center gap-2">
+          {/* Loop through all manifestation types */}
+          {sortedManifestations.map(manifestation => {
+            // find material type general material type
+            const materialType =
+              manifestation.manifestation.materialTypes[0].materialTypeGeneral.code
+            const materialTypeIcon = getIconNameFromMaterialType(materialType) || "book"
+            const isCostFree = manifestation.publizonData?.costFree
+            const isPodcast = materialType === "PODCASTS"
+            return (
+              <MaterialTypeIconWrapper
+                key={manifestation.manifestation.pid}
+                costFree={isCostFree || isPodcast}
+                iconName={materialTypeIcon}
               />
-            )}
-          </div>
-          <div className="my-auto flex min-h-[15%] items-center py-3 md:py-4">
-            <div className="flex w-full flex-row justify-center gap-2">
-              {/* Loop through all manifestation types */}
-              {sortedManifestations.map(manifestation => {
-                // find material type general material type
-                const materialType =
-                  manifestation.manifestation.materialTypes[0].materialTypeGeneral.code
-                const materialTypeIcon = getIconNameFromMaterialType(materialType) || "book"
-
-                const isCostFree = manifestation.publizonData?.costFree
-                const isPodcast = materialType === "PODCASTS"
-
-                return (
-                  <MaterialTypeIconWrapper
-                    key={manifestation.manifestation.pid}
-                    costFree={isCostFree || isPodcast}
-                    iconName={materialTypeIcon}
-                  />
-                )
-              })}
-            </div>
-          </div>
+            )
+          })}
         </div>
       </div>
-
-      <div className="space-y-2">
-        <p className="mr-grid-column-half text-typo-subtitle-lg break-words">
-          {work.titles.full[0]}
-        </p>
-        <p className="text-typo-caption opacity-60">{displayCreators(work.creators, 2)}</p>
-      </div>
-    </Link>
+    </div>
   )
 }
 
@@ -205,6 +178,26 @@ export const WorkCardSkeleton = () => {
       <div className="space-y-2">
         <div className="rounded-base bg-background-skeleton h-5 animate-pulse lg:h-7"></div>
         <div className="rounded-base bg-background-skeleton h-3 animate-pulse lg:h-4"></div>
+      </div>
+    </div>
+  )
+}
+
+export const WorkCardEmpty = () => {
+  return (
+    <div className="space-y-3 lg:space-y-5">
+      <div className="rounded-base bg-background-skeleton w-full">
+        <div className="flex aspect-4/5 w-full flex-col items-center justify-center">
+          <Icon
+            name="question-mark"
+            className="text-foreground h-[50px] opacity-20 lg:h-[100px]"
+            aria-label="Spørgsmålstegn ikon"
+          />
+          <p className="text-typo-caption text-center">Kunne ikke vises</p>
+        </div>
+        <div className="py-3 md:py-4">
+          <div className="h-6 md:h-10"></div>
+        </div>
       </div>
     </div>
   )

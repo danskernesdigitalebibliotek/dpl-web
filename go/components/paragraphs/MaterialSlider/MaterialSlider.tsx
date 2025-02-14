@@ -1,13 +1,16 @@
+import Link from "next/link"
 import React, { useEffect, useRef, useState } from "react"
 
 import { Button } from "@/components/shared/button/Button"
 import Icon from "@/components/shared/icon/Icon"
-import WorkCard from "@/components/shared/workCard/WorkCard"
+import WorkCardWithCaption from "@/components/shared/workCard/WorkCardWithCaption"
 import {
   ParagraphGoMaterialSliderAutomatic,
   ParagraphGoMaterialSliderManual,
 } from "@/lib/graphql/generated/dpl-cms/graphql"
 import { ComplexSearchForWorkTeaserQuery } from "@/lib/graphql/generated/fbi/graphql"
+import { displayCreators } from "@/lib/helpers/helper.creators"
+import { resolveUrl } from "@/lib/helpers/helper.routes"
 
 type MaterialSliderProps = {
   works: ComplexSearchForWorkTeaserQuery["complexSearch"]["works"]
@@ -81,12 +84,23 @@ const MaterialSlider = ({ works, title }: MaterialSliderProps) => {
           ref={sliderRef}
           className={"flex w-full flex-row gap-6 overflow-x-scroll py-12 xl:overflow-x-hidden"}>
           {works.map(work => (
-            <WorkCard
+            <Link
               key={work.workId}
-              work={work}
-              className={"bg-background w-48 lg:w-96 xl:w-[436px]"}
-              classNameWrapper={`max-w-48 lg:max-w-96 xl:max-w-[436px]`}
-            />
+              aria-label={`Tilgå værket ${work.titles.full[0]} af ${displayCreators(work.creators, 1)}`}
+              className="focus-visible"
+              href={resolveUrl({
+                routeParams: { work: "work", wid: work.workId },
+                queryParams: {
+                  type: work.manifestations.bestRepresentation.materialTypes[0].materialTypeGeneral
+                    .code,
+                },
+              })}>
+              <WorkCardWithCaption
+                work={work}
+                classNameWorkCard={"bg-background dark-mode-transition w-48 lg:w-96 xl:w-[436px]"}
+                className={"max-w-48 lg:max-w-96 xl:max-w-[436px]"}
+              />
+            </Link>
           ))}
         </div>
       </div>

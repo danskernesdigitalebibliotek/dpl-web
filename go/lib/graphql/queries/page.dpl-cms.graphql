@@ -21,6 +21,38 @@ query getPageByPath($path: String!) {
                 }
               }
             }
+            ... on ParagraphGoVideoBundleAutomatic {
+              __typename
+              cqlSearch {
+                value
+              }
+              goVideoTitle
+              embedVideo {
+                ... on MediaVideotool {
+                  id
+                  name
+                  mediaVideotool
+                }
+              }
+              videoAmountOfMaterials
+              id
+            }
+            ... on ParagraphGoVideoBundleManual {
+              __typename
+              id
+              goVideoTitle
+              embedVideo {
+                ... on MediaVideotool {
+                  id
+                  name
+                  mediaVideotool
+                }
+              }
+              videoBundleWorkIds {
+                material_type
+                work_id
+              }
+            }
             ... on ParagraphGoMaterialSliderAutomatic {
               __typename
               cqlSearch {

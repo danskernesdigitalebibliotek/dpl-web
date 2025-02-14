@@ -1,11 +1,11 @@
 import type { Meta, StoryObj } from "@storybook/react"
 
 import { darkModeDecorator } from "@/.storybook/decorators"
-import ParagraphGoVideo from "@/components/paragraphs/ParagraphGoVideo/ParagraphGoVideo"
+import Video from "@/components/paragraphs/Video/Video"
 
 const meta = {
-  title: "components/ParagraphGoVideo",
-  component: ParagraphGoVideo,
+  title: "components/Video",
+  component: Video,
   parameters: {
     layout: "centered",
   },
@@ -16,16 +16,16 @@ const meta = {
       name: "Sample Video",
     },
   },
-} satisfies Meta<typeof ParagraphGoVideo>
+} satisfies Meta<typeof Video>
 
 export default meta
 type Story = StoryObj<typeof meta>
 
 export const Default: Story = {
-  render: args => <ParagraphGoVideo {...args}>ParagraphGoVideo</ParagraphGoVideo>,
+  render: args => <Video {...args}>Video</Video>,
 }
 
 export const DarkMode: Story = {
   decorators: [darkModeDecorator],
-  render: args => <ParagraphGoVideo {...args}>ParagraphGoVideo</ParagraphGoVideo>,
+  render: args => <Video {...args}>Video</Video>,
 }
