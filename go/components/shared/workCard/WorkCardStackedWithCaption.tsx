@@ -4,6 +4,7 @@ import React from "react"
 import { WorkCardEmpty } from "@/components/shared/workCard/WorkCard"
 import { WorkTeaserSearchPageFragment } from "@/lib/graphql/generated/fbi/graphql"
 import { cn } from "@/lib/helpers/helper.cn"
+import { displayCreators } from "@/lib/helpers/helper.creators"
 import { resolveUrl } from "@/lib/helpers/helper.routes"
 import { WorkId } from "@/lib/types/ids"
 
@@ -29,7 +30,7 @@ const WorkCardStackedWithCaption = ({ works, materialOrder }: WorkCardStackedWit
         return (
           <Link
             key={work.workId}
-            aria-label={`Tilgå værket ${work.titles.full[0]}`}
+            aria-label={`Tilgå værket ${work.titles.full[0]} af ${displayCreators(work.creators, 1)}`}
             className="focus-visible absolute top-0 left-0 block h-full w-full space-y-3 lg:space-y-5"
             href={resolveUrl({
               routeParams: { work: "work", wid: work.workId },

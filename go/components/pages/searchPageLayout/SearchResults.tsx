@@ -6,6 +6,7 @@ import React from "react"
 import { WorkCardSkeleton } from "@/components/shared/workCard/WorkCard"
 import WorkCardWithCaption from "@/components/shared/workCard/WorkCardWithCaption"
 import { WorkTeaserSearchPageFragment } from "@/lib/graphql/generated/fbi/graphql"
+import { displayCreators } from "@/lib/helpers/helper.creators"
 import { resolveUrl } from "@/lib/helpers/helper.routes"
 
 type SearchResultProps = {
@@ -20,6 +21,8 @@ const SearchResults = ({ works }: SearchResultProps) => {
         return (
           <div key={work.workId} className="col-span-3 lg:col-span-4">
             <Link
+              aria-label={`Tilgå værket ${work.titles.full[0]} af ${displayCreators(work.creators, 1)}`}
+              className="focus-visible"
               href={resolveUrl({
                 routeParams: { work: "work", wid: work.workId },
                 queryParams: { type: bestRepresentation.materialTypes[0].materialTypeGeneral.code },
