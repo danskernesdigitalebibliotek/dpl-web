@@ -7,7 +7,6 @@ dependencies:
     - field.field.paragraph.go_linkbox.field_go_color
     - field.field.paragraph.go_linkbox.field_go_description
     - field.field.paragraph.go_linkbox.field_go_image
-    - field.field.paragraph.go_linkbox.field_go_link
     - field.field.paragraph.go_linkbox.field_title
     - paragraphs.paragraphs_type.go_linkbox
 id: paragraph.go_linkbox.preview
@@ -27,5 +26,4 @@ hidden:
   field_go_color: true
   field_go_description: true
   field_go_image: true
-  field_go_link: true
   search_api_excerpt: true

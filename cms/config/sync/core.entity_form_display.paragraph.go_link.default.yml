@@ -4,11 +4,8 @@ status: true
 dependencies:
   config:
     - field.field.paragraph.go_link.field_aria_label
-    - field.field.paragraph.go_link.field_link
     - field.field.paragraph.go_link.field_target_blank
     - paragraphs.paragraphs_type.go_link
-  module:
-    - linkit
 id: paragraph.go_link.default
 targetEntityType: paragraph
 bundle: go_link
@@ -21,16 +18,6 @@ content:
     settings:
       size: 60
       placeholder: ''
-    third_party_settings: {  }
-  field_link:
-    type: linkit
-    weight: 0
-    region: content
-    settings:
-      placeholder_url: ''
-      placeholder_title: ''
-      linkit_profile: default
-      linkit_auto_link_text: false
     third_party_settings: {  }
   field_target_blank:
     type: boolean_checkbox

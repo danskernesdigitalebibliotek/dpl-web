@@ -6,11 +6,9 @@ dependencies:
     - field.field.paragraph.go_linkbox.field_go_color
     - field.field.paragraph.go_linkbox.field_go_description
     - field.field.paragraph.go_linkbox.field_go_image
-    - field.field.paragraph.go_linkbox.field_go_link
     - field.field.paragraph.go_linkbox.field_title
     - paragraphs.paragraphs_type.go_linkbox
   module:
-    - entity_reference_revisions
     - options
 id: paragraph.go_linkbox.default
 targetEntityType: paragraph
@@ -39,15 +37,6 @@ content:
       link: false
     third_party_settings: {  }
     weight: 3
-    region: content
-  field_go_link:
-    type: entity_reference_revisions_entity_view
-    label: above
-    settings:
-      view_mode: default
-      link: ''
-    third_party_settings: {  }
-    weight: 5
     region: content
   field_title:
     type: string
