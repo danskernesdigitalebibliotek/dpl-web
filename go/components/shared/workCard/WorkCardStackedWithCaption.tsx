@@ -29,7 +29,8 @@ const WorkCardStackedWithCaption = ({ works, materialOrder }: WorkCardStackedWit
         return (
           <Link
             key={work.workId}
-            className="absolute top-0 left-0 block h-full w-full space-y-3 lg:space-y-5"
+            aria-label={`Tilgå værket ${work.titles.full[0]}`}
+            className="focus-visible absolute top-0 left-0 block h-full w-full space-y-3 lg:space-y-5"
             href={resolveUrl({
               routeParams: { work: "work", wid: work.workId },
               queryParams: {
