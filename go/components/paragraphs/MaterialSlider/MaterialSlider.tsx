@@ -110,7 +110,9 @@ const MaterialSlider = ({ works, title }: MaterialSliderProps) => {
               </Link>
             ))
           ) : (
-            <WorkCardEmpty />
+            <div className="w-[70%] shrink-0 sm:w-[40%] lg:w-[30%]">
+              <WorkCardEmpty />
+            </div>
           )}
         </div>
       </div>
