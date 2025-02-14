@@ -37,19 +37,28 @@ const MaterialSlider = ({ works, title }: MaterialSliderProps) => {
     updateScrollButtons()
   }, [works])
 
-  const handleScrollEnd = () => {
-    updateScrollButtons()
-    setAreButtonsDisabled(false)
-    sliderRef.current?.removeEventListener("scrollend", handleScrollEnd)
-  }
-
   const scroll = (direction: "left" | "right") => {
     if (!sliderRef.current) return
     const finalScrollAmount = direction === "left" ? -scrollAmount : scrollAmount
     setAreButtonsDisabled(true)
     sliderRef.current.scrollBy({ left: finalScrollAmount, behavior: "smooth" })
-    sliderRef.current.addEventListener("scrollend", handleScrollEnd)
+    setTimeout(() => {
+      updateScrollButtons()
+      setAreButtonsDisabled(false)
+    }, 500)
   }
+
+  useEffect(() => {
+    const slider = sliderRef.current
+    if (!slider) return
+    const handleScroll = () => {
+      updateScrollButtons()
+    }
+    slider.addEventListener("scroll", handleScroll)
+    return () => {
+      slider.removeEventListener("scroll", handleScroll)
+    }
+  }, [])
 
   return (
     <div className="bg-background-overlay">
@@ -82,7 +91,7 @@ const MaterialSlider = ({ works, title }: MaterialSliderProps) => {
         )}
         <div
           ref={sliderRef}
-          className={"flex w-full flex-row gap-6 overflow-x-scroll py-12 xl:overflow-x-hidden"}>
+          className={"flex w-full flex-row gap-6 overflow-x-scroll pb-12 xl:py-12"}>
           {works.map(work => (
             <Link
               key={work.workId}
