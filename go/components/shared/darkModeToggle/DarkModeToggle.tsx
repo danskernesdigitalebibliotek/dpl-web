@@ -15,7 +15,7 @@ function DarkModeToggle() {
       aria-label="Skift mellem 'light mode' og 'dark mode'"
       className="focus-visible border-foreground text-typo-button-lg text-foreground shadow-button relative
         inline-flex h-[40px] w-[75px] items-center rounded-full border px-[3px] whitespace-nowrap uppercase
-        transition disabled:pointer-events-none disabled:opacity-50">
+        transition hover:cursor-pointer disabled:pointer-events-none disabled:opacity-50">
       <div
         className={cn(
           "bg-foreground relative h-[32px] w-[32px] rounded-full transition-transform duration-300 ease-out",

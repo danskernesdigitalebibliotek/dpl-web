@@ -22,3 +22,20 @@ export const Default: Story = {}
 export const FontsDarkMode: Story = {
   decorators: [darkModeDecorator],
 }
+
+export const FontsOnOverlay: Story = {
+  render: () => (
+    <div className="bg-background-overlay">
+      <Fonts />
+    </div>
+  ),
+}
+
+export const FontsOnOverlayDarkMode: Story = {
+  decorators: [darkModeDecorator],
+  render: () => (
+    <div className="bg-background-overlay">
+      <Fonts />
+    </div>
+  ),
+}

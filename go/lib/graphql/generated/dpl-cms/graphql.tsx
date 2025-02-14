@@ -188,15 +188,15 @@ export type MediaAudio = MediaInterface & {
   created: DateTime;
   /** The Universally Unique IDentifier (UUID). */
   id: Scalars['ID']['output'];
-  /** Sprog */
+  /** Language */
   langcode: Language;
   /** Audio file */
   mediaAudioFile: File;
-  /** Navn */
+  /** Name */
   name: Scalars['String']['output'];
   /** Alternativ URL */
   path: Scalars['String']['output'];
-  /** Publiceret */
+  /** Published */
   status: Scalars['Boolean']['output'];
 };
 
@@ -209,22 +209,22 @@ export type MediaDocument = MediaInterface & {
   created: DateTime;
   /** The Universally Unique IDentifier (UUID). */
   id: Scalars['ID']['output'];
-  /** Sprog */
+  /** Language */
   langcode: Language;
-  /** Fil */
+  /** File */
   mediaFile: File;
-  /** Navn */
+  /** Name */
   name: Scalars['String']['output'];
   /** Alternativ URL */
   path: Scalars['String']['output'];
-  /** Publiceret */
+  /** Published */
   status: Scalars['Boolean']['output'];
 };
 
 /** Entity type media. */
 export type MediaImage = MediaInterface & {
   __typename?: 'MediaImage';
-  /** Bruges til fotokreditering og info om copyright. Vises som regel ved siden af billedet. */
+  /** Used for public credit and copyright information. Will usually be displayed along with the media. */
   byline?: Maybe<Scalars['String']['output']>;
   /** The time the media item was last edited. */
   changed: DateTime;
@@ -232,21 +232,20 @@ export type MediaImage = MediaInterface & {
   created: DateTime;
   /** The Universally Unique IDentifier (UUID). */
   id: Scalars['ID']['output'];
-  /** Sprog */
+  /** Language */
   langcode: Language;
   /**
-   * Du kan indstille et fokuspunkt ved at klikke på forhåndsvisningen af
-   * billedet og flytte det hvide mål.<br /><br />Ved at indstille et fokuspunkt
-   * fortæller du systemet, hvilken del af billedet der skal være i fokus, når
-   * det beskæres.<br /><br />Brug funktionen "forhåndsvisning" til at se,
-   * hvordan dit billede vil blive beskåret på tværs af billedstil.
+   * You can set a focal point, by clicking on the preview on the image, moving the
+   * white target.<br /><br />By setting a focal point, you tell the system which
+   * part of the image to keep in focus when it gets cropped.<br /><br />Use the
+   * "preview" function, to see how your image will be cropped across image styles.
    */
   mediaImage: Image;
-  /** Navn */
+  /** Name */
   name: Scalars['String']['output'];
   /** Alternativ URL */
   path: Scalars['String']['output'];
-  /** Publiceret */
+  /** Published */
   status: Scalars['Boolean']['output'];
 };
 
@@ -258,13 +257,13 @@ export type MediaInterface = {
   created: DateTime;
   /** The Universally Unique IDentifier (UUID). */
   id: Scalars['ID']['output'];
-  /** Sprog */
+  /** Language */
   langcode: Language;
-  /** Navn */
+  /** Name */
   name: Scalars['String']['output'];
   /** Alternativ URL */
   path: Scalars['String']['output'];
-  /** Publiceret */
+  /** Published */
   status: Scalars['Boolean']['output'];
 };
 
@@ -280,15 +279,15 @@ export type MediaVideo = MediaInterface & {
   created: DateTime;
   /** The Universally Unique IDentifier (UUID). */
   id: Scalars['ID']['output'];
-  /** Sprog */
+  /** Language */
   langcode: Language;
-  /** URL til video */
+  /** Remote video URL */
   mediaOembedVideo: Scalars['String']['output'];
-  /** Navn */
+  /** Name */
   name: Scalars['String']['output'];
   /** Alternativ URL */
   path: Scalars['String']['output'];
-  /** Publiceret */
+  /** Published */
   status: Scalars['Boolean']['output'];
 };
 
@@ -301,15 +300,15 @@ export type MediaVideotool = MediaInterface & {
   created: DateTime;
   /** The Universally Unique IDentifier (UUID). */
   id: Scalars['ID']['output'];
-  /** Sprog */
+  /** Language */
   langcode: Language;
   /** VideoTool URL */
   mediaVideotool: Scalars['String']['output'];
-  /** Navn */
+  /** Name */
   name: Scalars['String']['output'];
   /** Alternativ URL */
   path: Scalars['String']['output'];
-  /** Publiceret */
+  /** Published */
   status: Scalars['Boolean']['output'];
 };
 
@@ -320,19 +319,19 @@ export type Mutation = {
   _: Scalars['Boolean']['output'];
 };
 
-/** Brug artikler til nyhedspræget indhold med en begrænset levetid. */
+/** Use articles for news-worthy content, that does not get updated regularly. */
 export type NodeArticle = NodeInterface & {
   __typename?: 'NodeArticle';
-  /** Bibliotek */
+  /** Branch */
   branch?: Maybe<NodeUnion>;
   /**
-   * Oplys en canonical URL hvis indholdet i artiklen er kopieret fra en anden
-   * hjemmeside (fx kopieret fra et andet biblioteks hjemmeside). Dette hjælper
-   * med at signalere til søgemaskiner at kilden til indholdet er den
-   * specificerede side, og sikrer at den originale kilde krediteres.
+   * Please provide a canonical URL if this content has been duplicated from other
+   * websites. This helps signal to search engines that the preferred source of
+   * this content is the specified canonical URL, preventing potential duplicate
+   * content issues and ensuring proper attribution to the original source.
    */
   canonicalUrl?: Maybe<Link>;
-  /** Kategorier */
+  /** Categories */
   categories?: Maybe<TermUnion>;
   /** Tidspunktet hvor indholdselementet sidst blev redigeret. */
   changed: DateTime;
@@ -340,54 +339,7 @@ export type NodeArticle = NodeInterface & {
   created: DateTime;
   /** The Universally Unique IDentifier (UUID). */
   id: Scalars['ID']['output'];
-  /** Sprog */
-  langcode: Language;
-  /** Overskriv forfatter */
-  overrideAuthor?: Maybe<Scalars['String']['output']>;
-  /** Paragraphs */
-  paragraphs?: Maybe<Array<ParagraphUnion>>;
-  /** Alternativ URL */
-  path: Scalars['String']['output'];
-  /** Forfremmet til forside */
-  promote: Scalars['Boolean']['output'];
-  /** Publication date */
-  publicationDate: DateTime;
-  /**
-   * Som standard er forfatteren sat til den Drupal-bruger, der ejer indholdet.<br
-   * /><br />Hvis du ønsker at tilsidesætte dette med din egen tekst, kan du
-   */
-  showOverrideAuthor?: Maybe<Scalars['Boolean']['output']>;
-  /** Publiceret */
-  status: Scalars['Boolean']['output'];
-  /** Klæbrig */
-  sticky: Scalars['Boolean']['output'];
-  /** Manchet */
-  subtitle?: Maybe<Scalars['String']['output']>;
-  /** Tags */
-  tags?: Maybe<Array<TermUnion>>;
-  /**
-   * Teaserfelterne bruges til cards som blikfang for indholdet. Hvis der ikke er
-   * valgt et teaserbillede, vil teksten vises i stedet.
-   */
-  teaserImage?: Maybe<MediaUnion>;
-  /** Teasertekst */
-  teaserText?: Maybe<Scalars['String']['output']>;
-  /** Titel */
-  title: Scalars['String']['output'];
-};
-
-/** Use Go articles for news-worthy content, that does not get updated regularly. */
-export type NodeGoArticle = NodeInterface & {
-  __typename?: 'NodeGoArticle';
-  /** Tidspunktet hvor indholdselementet sidst blev redigeret. */
-  changed: DateTime;
-  /** The date and time that the content was created. */
-  created: DateTime;
-  /** Image */
-  goArticleImage?: Maybe<MediaUnion>;
-  /** The Universally Unique IDentifier (UUID). */
-  id: Scalars['ID']['output'];
-  /** Sprog */
+  /** Language */
   langcode: Language;
   /** Override author */
   overrideAuthor?: Maybe<Scalars['String']['output']>;
@@ -404,7 +356,55 @@ export type NodeGoArticle = NodeInterface & {
    * /><br />If you want to override this, with a manual text, you can check this.
    */
   showOverrideAuthor?: Maybe<Scalars['Boolean']['output']>;
-  /** Publiceret */
+  /** Published */
+  status: Scalars['Boolean']['output'];
+  /** Klæbrig */
+  sticky: Scalars['Boolean']['output'];
+  /** Subtitle */
+  subtitle?: Maybe<Scalars['String']['output']>;
+  /** Tags */
+  tags?: Maybe<Array<TermUnion>>;
+  /**
+   * The teaser fields are used for the card of display.<br />If no image has been
+   * selected, the text will be shown instead:<br /><br /><img
+   * src="/themes/custom/novel/images/teaser-text-image.jpg" /><br /><br /><hr/>
+   */
+  teaserImage?: Maybe<MediaUnion>;
+  /** Teaser text */
+  teaserText?: Maybe<Scalars['String']['output']>;
+  /** Title */
+  title: Scalars['String']['output'];
+};
+
+/** Use Go articles for news-worthy content, that does not get updated regularly. */
+export type NodeGoArticle = NodeInterface & {
+  __typename?: 'NodeGoArticle';
+  /** Tidspunktet hvor indholdselementet sidst blev redigeret. */
+  changed: DateTime;
+  /** The date and time that the content was created. */
+  created: DateTime;
+  /** Image */
+  goArticleImage?: Maybe<MediaUnion>;
+  /** The Universally Unique IDentifier (UUID). */
+  id: Scalars['ID']['output'];
+  /** Language */
+  langcode: Language;
+  /** Override author */
+  overrideAuthor?: Maybe<Scalars['String']['output']>;
+  /** Paragraphs */
+  paragraphs?: Maybe<Array<ParagraphUnion>>;
+  /** Alternativ URL */
+  path: Scalars['String']['output'];
+  /** Forfremmet til forside */
+  promote: Scalars['Boolean']['output'];
+  /** Publication date */
+  publicationDate: DateTime;
+  /**
+   * By default, the author is set to the Drupal user that owns the content.<br
+   * /><br />If you want to override this, with a manual text, you can check this.
+   */
+  showOverrideAuthor?: Maybe<Scalars['Boolean']['output']>;
+  /** Published */
   status: Scalars['Boolean']['output'];
   /** Klæbrig */
   sticky: Scalars['Boolean']['output'];
@@ -418,7 +418,7 @@ export type NodeGoArticle = NodeInterface & {
   teaserImage: MediaUnion;
   /** Teaser text */
   teaserText?: Maybe<Scalars['String']['output']>;
-  /** Titel */
+  /** Title */
   title: Scalars['String']['output'];
 };
 
@@ -442,7 +442,7 @@ export type NodeGoCategory = NodeInterface & {
   goColor?: Maybe<Scalars['String']['output']>;
   /** The Universally Unique IDentifier (UUID). */
   id: Scalars['ID']['output'];
-  /** Sprog */
+  /** Language */
   langcode: Language;
   /** Paragraphs */
   paragraphs?: Maybe<Array<ParagraphUnion>>;
@@ -452,11 +452,11 @@ export type NodeGoCategory = NodeInterface & {
   promote: Scalars['Boolean']['output'];
   /** Publication date */
   publicationDate: DateTime;
-  /** Publiceret */
+  /** Published */
   status: Scalars['Boolean']['output'];
   /** Klæbrig */
   sticky: Scalars['Boolean']['output'];
-  /** Titel */
+  /** Title */
   title: Scalars['String']['output'];
 };
 
@@ -473,7 +473,7 @@ export type NodeGoPage = NodeInterface & {
   created: DateTime;
   /** The Universally Unique IDentifier (UUID). */
   id: Scalars['ID']['output'];
-  /** Sprog */
+  /** Language */
   langcode: Language;
   /** Paragraphs */
   paragraphs?: Maybe<Array<ParagraphUnion>>;
@@ -483,11 +483,11 @@ export type NodeGoPage = NodeInterface & {
   promote: Scalars['Boolean']['output'];
   /** Publication date */
   publicationDate: DateTime;
-  /** Publiceret */
+  /** Published */
   status: Scalars['Boolean']['output'];
   /** Klæbrig */
   sticky: Scalars['Boolean']['output'];
-  /** Titel */
+  /** Title */
   title: Scalars['String']['output'];
 };
 
@@ -499,17 +499,17 @@ export type NodeInterface = {
   created: DateTime;
   /** The Universally Unique IDentifier (UUID). */
   id: Scalars['ID']['output'];
-  /** Sprog */
+  /** Language */
   langcode: Language;
   /** Alternativ URL */
   path: Scalars['String']['output'];
   /** Forfremmet til forside */
   promote: Scalars['Boolean']['output'];
-  /** Publiceret */
+  /** Published */
   status: Scalars['Boolean']['output'];
   /** Klæbrig */
   sticky: Scalars['Boolean']['output'];
-  /** Titel */
+  /** Title */
   title: Scalars['String']['output'];
 };
 
@@ -519,9 +519,9 @@ export type NodeUnion = NodeArticle | NodeGoArticle | NodeGoCategory | NodeGoPag
 /** Entity type paragraph. */
 export type ParagraphAccordion = ParagraphInterface & {
   __typename?: 'ParagraphAccordion';
-  /** Accordion beskrivelse */
+  /** Accordion description */
   accordionDescription?: Maybe<Text>;
-  /** Accordion titel */
+  /** Accordion title */
   accordionTitle: Text;
   /** The time that the Paragraph was created. */
   created: DateTime;
@@ -529,7 +529,7 @@ export type ParagraphAccordion = ParagraphInterface & {
   id: Scalars['ID']['output'];
   /** The paragraphs entity language code. */
   langcode: Language;
-  /** Publiceret */
+  /** Published */
   status: Scalars['Boolean']['output'];
 };
 
@@ -548,13 +548,13 @@ export type ParagraphBanner = ParagraphInterface & {
   id: Scalars['ID']['output'];
   /** The paragraphs entity language code. */
   langcode: Language;
-  /** Publiceret */
+  /** Published */
   status: Scalars['Boolean']['output'];
   /** Underlined title */
   underlinedTitle?: Maybe<Text>;
 };
 
-/** Vis automatisk alt indhold, som refererer til dit valgte brødkrumme element. */
+/** Automatically display all content that is referencing your chosen breadcrumb item. */
 export type ParagraphBreadcrumbChildren = ParagraphInterface & {
   __typename?: 'ParagraphBreadcrumbChildren';
   /** The time that the Paragraph was created. */
@@ -563,7 +563,20 @@ export type ParagraphBreadcrumbChildren = ParagraphInterface & {
   id: Scalars['ID']['output'];
   /** The paragraphs entity language code. */
   langcode: Language;
-  /** Publiceret */
+  /** Published */
+  status: Scalars['Boolean']['output'];
+};
+
+/** A rule for selecting a matching campaign */
+export type ParagraphCampaignRule = ParagraphInterface & {
+  __typename?: 'ParagraphCampaignRule';
+  /** The time that the Paragraph was created. */
+  created: DateTime;
+  /** The Universally Unique IDentifier (UUID). */
+  id: Scalars['ID']['output'];
+  /** The paragraphs entity language code. */
+  langcode: Language;
+  /** Published */
   status: Scalars['Boolean']['output'];
 };
 
@@ -574,13 +587,13 @@ export type ParagraphCardGridAutomatic = ParagraphInterface & {
   created: DateTime;
   /** If nothing is selected, all will be chosen. */
   filterBranches?: Maybe<Array<NodeUnion>>;
-  /** Filter efter kategorier */
+  /** Filter by categories */
   filterCategories?: Maybe<Array<TermUnion>>;
   /** Condition type */
   filterCondType: Scalars['String']['output'];
   /** If nothing is selected, all will be chosen. */
   filterContentTypes?: Maybe<Array<Scalars['String']['output']>>;
-  /** Filter efter tags */
+  /** Filter by tags */
   filterTags?: Maybe<Array<TermUnion>>;
   /** The Universally Unique IDentifier (UUID). */
   id: Scalars['ID']['output'];
@@ -588,9 +601,9 @@ export type ParagraphCardGridAutomatic = ParagraphInterface & {
   langcode: Language;
   /** More link */
   moreLink?: Maybe<Link>;
-  /** Publiceret */
+  /** Published */
   status: Scalars['Boolean']['output'];
-  /** Titel */
+  /** Title */
   title?: Maybe<Scalars['String']['output']>;
 };
 
@@ -599,7 +612,7 @@ export type ParagraphCardGridManual = ParagraphInterface & {
   __typename?: 'ParagraphCardGridManual';
   /** The time that the Paragraph was created. */
   created: DateTime;
-  /** Indhold */
+  /** Content */
   gridContent?: Maybe<Array<ParagraphCardGridManualGridContentUnion>>;
   /** The Universally Unique IDentifier (UUID). */
   id: Scalars['ID']['output'];
@@ -607,19 +620,19 @@ export type ParagraphCardGridManual = ParagraphInterface & {
   langcode: Language;
   /** More link */
   moreLink?: Maybe<Link>;
-  /** Publiceret */
+  /** Published */
   status: Scalars['Boolean']['output'];
-  /** Overskrift */
+  /** Title */
   title?: Maybe<Scalars['String']['output']>;
 };
 
-/** Indhold */
+/** Content */
 export type ParagraphCardGridManualGridContentUnion = NodeArticle | NodeGoArticle | NodeGoCategory | NodeGoPage;
 
 /** Entity type paragraph. */
 export type ParagraphContentSlider = ParagraphInterface & {
   __typename?: 'ParagraphContentSlider';
-  /** Indhold */
+  /** Contents */
   contentReferences?: Maybe<Array<ParagraphContentSliderContentReferencesUnion>>;
   /** The time that the Paragraph was created. */
   created: DateTime;
@@ -627,7 +640,7 @@ export type ParagraphContentSlider = ParagraphInterface & {
   id: Scalars['ID']['output'];
   /** The paragraphs entity language code. */
   langcode: Language;
-  /** Publiceret */
+  /** Published */
   status: Scalars['Boolean']['output'];
   /** deprecated */
   title?: Maybe<Scalars['String']['output']>;
@@ -654,7 +667,7 @@ export type ParagraphContentSliderAutomatic = ParagraphInterface & {
   id: Scalars['ID']['output'];
   /** The paragraphs entity language code. */
   langcode: Language;
-  /** Publiceret */
+  /** Published */
   status: Scalars['Boolean']['output'];
   /** deprecated */
   title?: Maybe<Scalars['String']['output']>;
@@ -662,21 +675,47 @@ export type ParagraphContentSliderAutomatic = ParagraphInterface & {
   underlinedTitle?: Maybe<Text>;
 };
 
-/** Indhold */
+/** Contents */
 export type ParagraphContentSliderContentReferencesUnion = NodeArticle | NodeGoArticle | NodeGoCategory | NodeGoPage;
 
-/** Denne paragraph viser en liste af arrangementer filtreret på kategori, tags og filialer. */
+/** A combination of ticket category name and price for an event.  */
+export type ParagraphEventTicketCategory = ParagraphInterface & {
+  __typename?: 'ParagraphEventTicketCategory';
+  /** The time that the Paragraph was created. */
+  created: DateTime;
+  /** The Universally Unique IDentifier (UUID). */
+  id: Scalars['ID']['output'];
+  /** The paragraphs entity language code. */
+  langcode: Language;
+  /** Published */
+  status: Scalars['Boolean']['output'];
+};
+
+/** Links with icons. Designed for jpg, jpeg, png, pdf, mp3, mov, mp4, mpeg files */
+export type ParagraphFiles = ParagraphInterface & {
+  __typename?: 'ParagraphFiles';
+  /** The time that the Paragraph was created. */
+  created: DateTime;
+  /** The Universally Unique IDentifier (UUID). */
+  id: Scalars['ID']['output'];
+  /** The paragraphs entity language code. */
+  langcode: Language;
+  /** Published */
+  status: Scalars['Boolean']['output'];
+};
+
+/** This paragraph displays a generated a list of events, based on specified filters for tags, categories and branches.  */
 export type ParagraphFilteredEventList = ParagraphInterface & {
   __typename?: 'ParagraphFilteredEventList';
   /** The time that the Paragraph was created. */
   created: DateTime;
-  /** Tilføj enhver forgrening, du vil inkludere */
+  /** If nothing is selected, all will be chosen. */
   filterBranches?: Maybe<Array<NodeUnion>>;
-  /** Tilføj en kategori, du vil inkludere */
+  /** Add a category you want to include */
   filterCategories?: Maybe<Array<TermUnion>>;
   /** Condition type */
   filterCondType: Scalars['String']['output'];
-  /** Tilføj et tag, du vil inkludere */
+  /** Add a tag you want to include */
   filterTags?: Maybe<Array<TermUnion>>;
   /** The Universally Unique IDentifier (UUID). */
   id: Scalars['ID']['output'];
@@ -688,9 +727,9 @@ export type ParagraphFilteredEventList = ParagraphInterface & {
    * enough results based on your selected filters.
    */
   maxItemAmount: Scalars['String']['output'];
-  /** Publiceret */
+  /** Published */
   status: Scalars['Boolean']['output'];
-  /** Titel */
+  /** Title */
   title?: Maybe<Scalars['String']['output']>;
 };
 
@@ -705,13 +744,13 @@ export type ParagraphGoLink = ParagraphInterface & {
   ariaLabel?: Maybe<Scalars['String']['output']>;
   /** The time that the Paragraph was created. */
   created: DateTime;
+  /** Link */
+  goLink: Link;
   /** The Universally Unique IDentifier (UUID). */
   id: Scalars['ID']['output'];
   /** The paragraphs entity language code. */
   langcode: Language;
-  /** Link */
-  link: Array<Link>;
-  /** Publiceret */
+  /** Published */
   status: Scalars['Boolean']['output'];
   /** Open link in a new window */
   targetBlank?: Maybe<Scalars['Boolean']['output']>;
@@ -729,12 +768,12 @@ export type ParagraphGoLinkbox = ParagraphInterface & {
   /** Image */
   goImage?: Maybe<MediaUnion>;
   /** Link */
-  goLink: ParagraphUnion;
+  goLinkParagraph: ParagraphUnion;
   /** The Universally Unique IDentifier (UUID). */
   id: Scalars['ID']['output'];
   /** The paragraphs entity language code. */
   langcode: Language;
-  /** Publiceret */
+  /** Published */
   status: Scalars['Boolean']['output'];
   /** Title */
   title: Scalars['String']['output'];
@@ -759,7 +798,7 @@ export type ParagraphGoMaterialSliderAutomatic = ParagraphInterface & {
   langcode: Language;
   /** Amount of materials */
   sliderAmountOfMaterials: Scalars['Int']['output'];
-  /** Publiceret */
+  /** Published */
   status: Scalars['Boolean']['output'];
   /** Title */
   title?: Maybe<Scalars['String']['output']>;
@@ -783,7 +822,7 @@ export type ParagraphGoMaterialSliderManual = ParagraphInterface & {
    * if it is available.<br />Example work ID: work-of:870970-basis:136336282
    */
   materialSliderWorkIds: Array<WorkId>;
-  /** Publiceret */
+  /** Published */
   status: Scalars['Boolean']['output'];
   /** Title */
   title?: Maybe<Scalars['String']['output']>;
@@ -800,7 +839,7 @@ export type ParagraphGoVideo = ParagraphInterface & {
   id: Scalars['ID']['output'];
   /** The paragraphs entity language code. */
   langcode: Language;
-  /** Publiceret */
+  /** Published */
   status: Scalars['Boolean']['output'];
   /** Title */
   title: Scalars['String']['output'];
@@ -832,7 +871,7 @@ export type ParagraphGoVideoBundleAutomatic = ParagraphInterface & {
   id: Scalars['ID']['output'];
   /** The paragraphs entity language code. */
   langcode: Language;
-  /** Publiceret */
+  /** Published */
   status: Scalars['Boolean']['output'];
   /** VideoTool URL. Example: https://media.videotool.dk/?vn=557_2023103014511477700668916683 */
   url?: Maybe<Scalars['String']['output']>;
@@ -856,7 +895,7 @@ export type ParagraphGoVideoBundleManual = ParagraphInterface & {
   id: Scalars['ID']['output'];
   /** The paragraphs entity language code. */
   langcode: Language;
-  /** Publiceret */
+  /** Published */
   status: Scalars['Boolean']['output'];
   /** VideoTool URL. Example: https://media.videotool.dk/?vn=557_2023103014511477700668916683 */
   url?: Maybe<Scalars['String']['output']>;
@@ -868,6 +907,19 @@ export type ParagraphGoVideoBundleManual = ParagraphInterface & {
   videoBundleWorkIds?: Maybe<Array<WorkId>>;
 };
 
+/** A hero section with an image, informative text, category, and a "call to action" link. */
+export type ParagraphHero = ParagraphInterface & {
+  __typename?: 'ParagraphHero';
+  /** The time that the Paragraph was created. */
+  created: DateTime;
+  /** The Universally Unique IDentifier (UUID). */
+  id: Scalars['ID']['output'];
+  /** The paragraphs entity language code. */
+  langcode: Language;
+  /** Published */
+  status: Scalars['Boolean']['output'];
+};
+
 /** Entity type paragraph. */
 export type ParagraphInterface = {
   /** The time that the Paragraph was created. */
@@ -876,35 +928,64 @@ export type ParagraphInterface = {
   id: Scalars['ID']['output'];
   /** The paragraphs entity language code. */
   langcode: Language;
-  /** Publiceret */
+  /** Published */
   status: Scalars['Boolean']['output'];
 };
 
-/** Dette afsnit vil vise en liste over arrangementer, der er manuelt valgt. */
+/** Enables website visitors to choose their preferred language. */
+export type ParagraphLanguageSelector = ParagraphInterface & {
+  __typename?: 'ParagraphLanguageSelector';
+  /** The time that the Paragraph was created. */
+  created: DateTime;
+  /** The Universally Unique IDentifier (UUID). */
+  id: Scalars['ID']['output'];
+  /** The paragraphs entity language code. */
+  langcode: Language;
+  /** Published */
+  status: Scalars['Boolean']['output'];
+};
+
+/** Links with icons. Designed for internal/external links and links to search results.  */
+export type ParagraphLinks = ParagraphInterface & {
+  __typename?: 'ParagraphLinks';
+  /** The time that the Paragraph was created. */
+  created: DateTime;
+  /** The Universally Unique IDentifier (UUID). */
+  id: Scalars['ID']['output'];
+  /** The paragraphs entity language code. */
+  langcode: Language;
+  /** Published */
+  status: Scalars['Boolean']['output'];
+};
+
+/** This paragraph will show a list of events that are manually selected. */
 export type ParagraphManualEventList = ParagraphInterface & {
   __typename?: 'ParagraphManualEventList';
   /** The time that the Paragraph was created. */
   created: DateTime;
-  /** Arrangementer */
+  /** Events */
   events?: Maybe<Array<UnsupportedType>>;
   /** The Universally Unique IDentifier (UUID). */
   id: Scalars['ID']['output'];
   /** The paragraphs entity language code. */
   langcode: Language;
-  /** Publiceret */
+  /** Published */
   status: Scalars['Boolean']['output'];
-  /** Titel */
+  /** Title */
   title?: Maybe<Scalars['String']['output']>;
 };
 
-/** En visning af fremhævede værker, baseret på en CQL søgestreng. */
+/**
+ * Please use the "Material grid link automatically" instead! This paragraph will be deprecated in the future.
+ * A grid representation of recommended materials, based on a CQL search string.
+ */
 export type ParagraphMaterialGridAutomatic = ParagraphInterface & {
   __typename?: 'ParagraphMaterialGridAutomatic';
   /**
-   * Bestemmer mængden af materialer, der vil blive vist, baseret på
-   * CQL-strengen. <br /><br />Obs: Hvis for eksempel en CQL-streng har 11
-   * resultater, og en redaktør vælger 12. Listen vil vise 8 i stedet for 11, da
-   * gitteret skal kunne øges med 4.
+   * Determines the amount of materials that will be shown, based on the CQL
+   * string. <br /><br />Obs: If for example a CQL string has 11 results, and an
+   * editor chooses 12. The list will display 8 instead of 11, since the grid
+   * should be able to increment by 4.
    */
   amountOfMaterials: Scalars['Int']['output'];
   /** The time that the Paragraph was created. */
@@ -915,13 +996,13 @@ export type ParagraphMaterialGridAutomatic = ParagraphInterface & {
   langcode: Language;
   /** This is the optional description for the material grid. <br />Leave blank if you do not want a description. */
   materialGridDescription?: Maybe<Scalars['String']['output']>;
-  /** Titel på materialekomponenten. Efterlad dette felt blankt, hvis du ikke vil give den en overskrift. */
+  /** The title for the material grid. Leave this blank if you do not want a title.  */
   materialGridTitle?: Maybe<Scalars['String']['output']>;
-  /** Publiceret */
+  /** Published */
   status: Scalars['Boolean']['output'];
 };
 
-/** En komponent som viser en liste af manuelt udvalgte værker. */
+/** A grid displaying a list of recommended materials selected manually. */
 export type ParagraphMaterialGridManual = ParagraphInterface & {
   __typename?: 'ParagraphMaterialGridManual';
   /** The time that the Paragraph was created. */
@@ -932,16 +1013,98 @@ export type ParagraphMaterialGridManual = ParagraphInterface & {
   langcode: Language;
   /** This is the optional description for the material grid. <br />Leave blank if you do not want a description. */
   materialGridDescription?: Maybe<Scalars['String']['output']>;
-  /** Titel på materialekomponenten. Efterlad dette felt blankt, hvis du ikke vil give den en overskrift. */
+  /** The title for the material grid. Leave this blank if you do not want a title.  */
   materialGridTitle?: Maybe<Scalars['String']['output']>;
-  /** Publiceret */
+  /** Published */
   status: Scalars['Boolean']['output'];
 };
 
-/** En basal, formateret brødtekst */
+/** Entity type paragraph. */
+export type ParagraphMedias = ParagraphInterface & {
+  __typename?: 'ParagraphMedias';
+  /** The time that the Paragraph was created. */
+  created: DateTime;
+  /** The Universally Unique IDentifier (UUID). */
+  id: Scalars['ID']['output'];
+  /** The paragraphs entity language code. */
+  langcode: Language;
+  /** Published */
+  status: Scalars['Boolean']['output'];
+};
+
+/** Entity type paragraph. */
+export type ParagraphNavGridManual = ParagraphInterface & {
+  __typename?: 'ParagraphNavGridManual';
+  /** The time that the Paragraph was created. */
+  created: DateTime;
+  /** The Universally Unique IDentifier (UUID). */
+  id: Scalars['ID']['output'];
+  /** The paragraphs entity language code. */
+  langcode: Language;
+  /** Published */
+  status: Scalars['Boolean']['output'];
+};
+
+/** Entity type paragraph. */
+export type ParagraphNavSpotsManual = ParagraphInterface & {
+  __typename?: 'ParagraphNavSpotsManual';
+  /** The time that the Paragraph was created. */
+  created: DateTime;
+  /** The Universally Unique IDentifier (UUID). */
+  id: Scalars['ID']['output'];
+  /** The paragraphs entity language code. */
+  langcode: Language;
+  /** Published */
+  status: Scalars['Boolean']['output'];
+};
+
+/**
+ * This is a paragraph for displaying the opening hours for the branch it is applied to.
+ *
+ * Opening hours are created under the settings of a branch.
+ */
+export type ParagraphOpeningHours = ParagraphInterface & {
+  __typename?: 'ParagraphOpeningHours';
+  /** The time that the Paragraph was created. */
+  created: DateTime;
+  /** The Universally Unique IDentifier (UUID). */
+  id: Scalars['ID']['output'];
+  /** The paragraphs entity language code. */
+  langcode: Language;
+  /** Published */
+  status: Scalars['Boolean']['output'];
+};
+
+/** This paragraph is used to recommend a material.  */
+export type ParagraphRecommendation = ParagraphInterface & {
+  __typename?: 'ParagraphRecommendation';
+  /** The time that the Paragraph was created. */
+  created: DateTime;
+  /** The Universally Unique IDentifier (UUID). */
+  id: Scalars['ID']['output'];
+  /** The paragraphs entity language code. */
+  langcode: Language;
+  /** Published */
+  status: Scalars['Boolean']['output'];
+};
+
+/** This is paragraph that will display links without icons.  */
+export type ParagraphSimpleLinks = ParagraphInterface & {
+  __typename?: 'ParagraphSimpleLinks';
+  /** The time that the Paragraph was created. */
+  created: DateTime;
+  /** The Universally Unique IDentifier (UUID). */
+  id: Scalars['ID']['output'];
+  /** The paragraphs entity language code. */
+  langcode: Language;
+  /** Published */
+  status: Scalars['Boolean']['output'];
+};
+
+/** A basic, formatted body of text. */
 export type ParagraphTextBody = ParagraphInterface & {
   __typename?: 'ParagraphTextBody';
-  /** Brødtekst */
+  /** Body */
   body?: Maybe<Text>;
   /** The time that the Paragraph was created. */
   created: DateTime;
@@ -949,25 +1112,81 @@ export type ParagraphTextBody = ParagraphInterface & {
   id: Scalars['ID']['output'];
   /** The paragraphs entity language code. */
   langcode: Language;
-  /** Publiceret */
+  /** Published */
   status: Scalars['Boolean']['output'];
 };
 
 /** Entity type paragraph. */
-export type ParagraphUnion = ParagraphAccordion | ParagraphBanner | ParagraphBreadcrumbChildren | ParagraphCardGridAutomatic | ParagraphCardGridManual | ParagraphContentSlider | ParagraphContentSliderAutomatic | ParagraphFilteredEventList | ParagraphGoLink | ParagraphGoLinkbox | ParagraphGoMaterialSliderAutomatic | ParagraphGoMaterialSliderManual | ParagraphGoVideo | ParagraphGoVideoBundleAutomatic | ParagraphGoVideoBundleManual | ParagraphManualEventList | ParagraphMaterialGridAutomatic | ParagraphMaterialGridManual | ParagraphTextBody | ParagraphVideo;
+export type ParagraphUnion = ParagraphAccordion | ParagraphBanner | ParagraphBreadcrumbChildren | ParagraphCampaignRule | ParagraphCardGridAutomatic | ParagraphCardGridManual | ParagraphContentSlider | ParagraphContentSliderAutomatic | ParagraphEventTicketCategory | ParagraphFiles | ParagraphFilteredEventList | ParagraphGoLink | ParagraphGoLinkbox | ParagraphGoMaterialSliderAutomatic | ParagraphGoMaterialSliderManual | ParagraphGoVideo | ParagraphGoVideoBundleAutomatic | ParagraphGoVideoBundleManual | ParagraphHero | ParagraphLanguageSelector | ParagraphLinks | ParagraphManualEventList | ParagraphMaterialGridAutomatic | ParagraphMaterialGridManual | ParagraphMedias | ParagraphNavGridManual | ParagraphNavSpotsManual | ParagraphOpeningHours | ParagraphRecommendation | ParagraphSimpleLinks | ParagraphTextBody | ParagraphUserRegistrationItem | ParagraphUserRegistrationLinklist | ParagraphUserRegistrationSection | ParagraphVideo | ParagraphWebform;
 
-/** Indtast URL'en til den video, du vil indlejre. */
+/** The "User registration item" paragraph type is used to display relevant information about the user registration process. */
+export type ParagraphUserRegistrationItem = ParagraphInterface & {
+  __typename?: 'ParagraphUserRegistrationItem';
+  /** The time that the Paragraph was created. */
+  created: DateTime;
+  /** The Universally Unique IDentifier (UUID). */
+  id: Scalars['ID']['output'];
+  /** The paragraphs entity language code. */
+  langcode: Language;
+  /** Published */
+  status: Scalars['Boolean']['output'];
+};
+
+/**
+ * This paragraph determines the placement of shortcuts to individual User
+ * Registration Section paragraphs. It allows administrators to specify where these
+ * shortcuts should appear.
+ */
+export type ParagraphUserRegistrationLinklist = ParagraphInterface & {
+  __typename?: 'ParagraphUserRegistrationLinklist';
+  /** The time that the Paragraph was created. */
+  created: DateTime;
+  /** The Universally Unique IDentifier (UUID). */
+  id: Scalars['ID']['output'];
+  /** The paragraphs entity language code. */
+  langcode: Language;
+  /** Published */
+  status: Scalars['Boolean']['output'];
+};
+
+/** The "User registration section" paragraph type is used to display "User registration item" paragraphs. */
+export type ParagraphUserRegistrationSection = ParagraphInterface & {
+  __typename?: 'ParagraphUserRegistrationSection';
+  /** The time that the Paragraph was created. */
+  created: DateTime;
+  /** The Universally Unique IDentifier (UUID). */
+  id: Scalars['ID']['output'];
+  /** The paragraphs entity language code. */
+  langcode: Language;
+  /** Published */
+  status: Scalars['Boolean']['output'];
+};
+
+/** Enter the URL for the video you want to include. */
 export type ParagraphVideo = ParagraphInterface & {
   __typename?: 'ParagraphVideo';
   /** The time that the Paragraph was created. */
   created: DateTime;
-  /** Indlejr video */
+  /** Embed video */
   embedVideo?: Maybe<MediaUnion>;
   /** The Universally Unique IDentifier (UUID). */
   id: Scalars['ID']['output'];
   /** The paragraphs entity language code. */
   langcode: Language;
-  /** Publiceret */
+  /** Published */
+  status: Scalars['Boolean']['output'];
+};
+
+/** Paragraph used for embedding a webform. */
+export type ParagraphWebform = ParagraphInterface & {
+  __typename?: 'ParagraphWebform';
+  /** The time that the Paragraph was created. */
+  created: DateTime;
+  /** The Universally Unique IDentifier (UUID). */
+  id: Scalars['ID']['output'];
+  /** The paragraphs entity language code. */
+  langcode: Language;
+  /** Published */
   status: Scalars['Boolean']['output'];
 };
 
@@ -980,45 +1199,15 @@ export type Query = {
   goConfiguration?: Maybe<GoConfiguration>;
   /** Schema information. */
   info: SchemaInformation;
-  /** Load a NodeArticle entity by id */
-  nodeArticle?: Maybe<NodeArticle>;
-  /** Load a NodeGoArticle entity by id */
-  nodeGoArticle?: Maybe<NodeGoArticle>;
-  /** Load a NodeGoCategory entity by id */
-  nodeGoCategory?: Maybe<NodeGoCategory>;
-  /** Load a NodeGoPage entity by id */
-  nodeGoPage?: Maybe<NodeGoPage>;
+  /** Load a Node entity by id. */
+  node?: Maybe<NodeUnion>;
   /** Load a Route by path. */
   route?: Maybe<RouteUnion>;
 };
 
 
 /** The schema's entry-point for queries. */
-export type QueryNodeArticleArgs = {
-  id: Scalars['ID']['input'];
-  langcode?: InputMaybe<Scalars['String']['input']>;
-  revision?: InputMaybe<Scalars['ID']['input']>;
-};
-
-
-/** The schema's entry-point for queries. */
-export type QueryNodeGoArticleArgs = {
-  id: Scalars['ID']['input'];
-  langcode?: InputMaybe<Scalars['String']['input']>;
-  revision?: InputMaybe<Scalars['ID']['input']>;
-};
-
-
-/** The schema's entry-point for queries. */
-export type QueryNodeGoCategoryArgs = {
-  id: Scalars['ID']['input'];
-  langcode?: InputMaybe<Scalars['String']['input']>;
-  revision?: InputMaybe<Scalars['ID']['input']>;
-};
-
-
-/** The schema's entry-point for queries. */
-export type QueryNodeGoPageArgs = {
+export type QueryNodeArgs = {
   id: Scalars['ID']['input'];
   langcode?: InputMaybe<Scalars['String']['input']>;
   revision?: InputMaybe<Scalars['ID']['input']>;
@@ -1115,9 +1304,9 @@ export type TermBreadcrumbStructure = TermInterface & {
   __typename?: 'TermBreadcrumbStructure';
   /** Datoen hvor termen senest blev redigeret. */
   changed: DateTime;
-  /** Titlen, der vises over listen af refereret indhold. Vil ikke blive vist, hvis der ikke vises nogen børn. */
+  /** The title that is shown above the list of referenced content. Will not be shown, if there are no children displayed. */
   childrenTitle?: Maybe<Scalars['String']['output']>;
-  /** Indhold der linkes til */
+  /** Content */
   content: NodeUnion;
   /** Beskrivelse */
   description: Text;
@@ -1125,17 +1314,17 @@ export type TermBreadcrumbStructure = TermInterface & {
   id: Scalars['ID']['output'];
   /** Term sprogkode. */
   langcode: Language;
-  /** Navn */
+  /** Name */
   name: Scalars['String']['output'];
   /** Denne terms overordnede termer. */
   parent?: Maybe<TermUnion>;
   /** Alternativ URL */
   path: Scalars['String']['output'];
-  /** Vis en automatisk liste med indhold, som refererer til dette brødkrumme element, på denne side. */
+  /** Should a list of contents that reference this breadcrumb, be shown automatically on this page? */
   showChildren?: Maybe<Scalars['Boolean']['output']>;
   /** If this is checked, the children teasers will be expanded with possible subtitle descriptions. */
   showChildrenSubtitles?: Maybe<Scalars['Boolean']['output']>;
-  /** Publiceret */
+  /** Published */
   status: Scalars['Boolean']['output'];
   /** Vægten af denne term i forhold til andre termer. */
   weight: Scalars['Int']['output'];
@@ -1152,13 +1341,13 @@ export type TermCategories = TermInterface & {
   id: Scalars['ID']['output'];
   /** Term sprogkode. */
   langcode: Language;
-  /** Navn */
+  /** Name */
   name: Scalars['String']['output'];
   /** Denne terms overordnede termer. */
   parent?: Maybe<TermUnion>;
   /** Alternativ URL */
   path: Scalars['String']['output'];
-  /** Publiceret */
+  /** Published */
   status: Scalars['Boolean']['output'];
   /** Vægten af denne term i forhold til andre termer. */
   weight: Scalars['Int']['output'];
@@ -1174,19 +1363,19 @@ export type TermInterface = {
   id: Scalars['ID']['output'];
   /** Term sprogkode. */
   langcode: Language;
-  /** Navn */
+  /** Name */
   name: Scalars['String']['output'];
   /** Denne terms overordnede termer. */
   parent?: Maybe<TermUnion>;
   /** Alternativ URL */
   path: Scalars['String']['output'];
-  /** Publiceret */
+  /** Published */
   status: Scalars['Boolean']['output'];
   /** Vægten af denne term i forhold til andre termer. */
   weight: Scalars['Int']['output'];
 };
 
-/** This is for adding types of opening hours, e.g. "open" or "Telephone time" */
+/** Kategorier af åbningstider, f.eks. "Åbent" eller "Telefontid" */
 export type TermOpeningHoursCategories = TermInterface & {
   __typename?: 'TermOpeningHoursCategories';
   /** Datoen hvor termen senest blev redigeret. */
@@ -1197,13 +1386,13 @@ export type TermOpeningHoursCategories = TermInterface & {
   id: Scalars['ID']['output'];
   /** Term sprogkode. */
   langcode: Language;
-  /** Navn */
+  /** Name */
   name: Scalars['String']['output'];
   /** Denne terms overordnede termer. */
   parent?: Maybe<TermUnion>;
   /** Alternativ URL */
   path: Scalars['String']['output'];
-  /** Publiceret */
+  /** Published */
   status: Scalars['Boolean']['output'];
   /** Vægten af denne term i forhold til andre termer. */
   weight: Scalars['Int']['output'];
@@ -1220,13 +1409,13 @@ export type TermScreenName = TermInterface & {
   id: Scalars['ID']['output'];
   /** Term sprogkode. */
   langcode: Language;
-  /** Navn */
+  /** Name */
   name: Scalars['String']['output'];
   /** Denne terms overordnede termer. */
   parent?: Maybe<TermUnion>;
   /** Alternativ URL */
   path: Scalars['String']['output'];
-  /** Publiceret */
+  /** Published */
   status: Scalars['Boolean']['output'];
   /** Vægten af denne term i forhold til andre termer. */
   weight: Scalars['Int']['output'];
@@ -1243,13 +1432,13 @@ export type TermTags = TermInterface & {
   id: Scalars['ID']['output'];
   /** Term sprogkode. */
   langcode: Language;
-  /** Navn */
+  /** Name */
   name: Scalars['String']['output'];
   /** Denne terms overordnede termer. */
   parent?: Maybe<TermUnion>;
   /** Alternativ URL */
   path: Scalars['String']['output'];
-  /** Publiceret */
+  /** Published */
   status: Scalars['Boolean']['output'];
   /** Vægten af denne term i forhold til andre termer. */
   weight: Scalars['Int']['output'];
@@ -1271,13 +1460,13 @@ export type TermWebformEmailCategories = TermInterface & {
   id: Scalars['ID']['output'];
   /** Term sprogkode. */
   langcode: Language;
-  /** Navn */
+  /** Name */
   name: Scalars['String']['output'];
   /** Denne terms overordnede termer. */
   parent?: Maybe<TermUnion>;
   /** Alternativ URL */
   path: Scalars['String']['output'];
-  /** Publiceret */
+  /** Published */
   status: Scalars['Boolean']['output'];
   /** Vægten af denne term i forhold til andre termer. */
   weight: Scalars['Int']['output'];
@@ -1346,13 +1535,6 @@ export type WorkId = {
   work_id?: Maybe<Scalars['String']['output']>;
 };
 
-export type GetArticleQueryVariables = Exact<{
-  id: Scalars['ID']['input'];
-}>;
-
-
-export type GetArticleQuery = { __typename?: 'Query', nodeArticle?: { __typename?: 'NodeArticle', title: string, subtitle?: string | null, paragraphs?: Array<{ __typename: 'ParagraphAccordion' } | { __typename: 'ParagraphBanner' } | { __typename: 'ParagraphBreadcrumbChildren' } | { __typename: 'ParagraphCardGridAutomatic' } | { __typename: 'ParagraphCardGridManual' } | { __typename: 'ParagraphContentSlider' } | { __typename: 'ParagraphContentSliderAutomatic' } | { __typename: 'ParagraphFilteredEventList' } | { __typename: 'ParagraphGoLink' } | { __typename: 'ParagraphGoLinkbox' } | { __typename: 'ParagraphGoMaterialSliderAutomatic' } | { __typename: 'ParagraphGoMaterialSliderManual' } | { __typename: 'ParagraphGoVideo' } | { __typename: 'ParagraphGoVideoBundleAutomatic' } | { __typename: 'ParagraphGoVideoBundleManual' } | { __typename: 'ParagraphManualEventList' } | { __typename: 'ParagraphMaterialGridAutomatic' } | { __typename: 'ParagraphMaterialGridManual' } | { __typename: 'ParagraphTextBody', body?: { __typename?: 'Text', value?: string | null } | null } | { __typename: 'ParagraphVideo' }> | null } | null };
-
 export type GetDplCmsConfigurationQueryVariables = Exact<{ [key: string]: never; }>;
 
 
@@ -1368,7 +1550,7 @@ export type GetPageByPathQueryVariables = Exact<{
 }>;
 
 
-export type GetPageByPathQuery = { __typename?: 'Query', route?: { __typename: 'RouteExternal' } | { __typename: 'RouteInternal', url: string, entity?: { __typename?: 'NodeGoArticle' } | { __typename?: 'NodeGoCategory' } | { __typename?: 'NodeGoPage', paragraphs?: Array<{ __typename?: 'ParagraphAccordion' } | { __typename?: 'ParagraphBanner' } | { __typename?: 'ParagraphBreadcrumbChildren' } | { __typename?: 'ParagraphCardGridAutomatic' } | { __typename?: 'ParagraphCardGridManual' } | { __typename?: 'ParagraphContentSlider' } | { __typename?: 'ParagraphContentSliderAutomatic' } | { __typename?: 'ParagraphFilteredEventList' } | { __typename?: 'ParagraphGoLink' } | { __typename?: 'ParagraphGoLinkbox' } | { __typename?: 'ParagraphGoMaterialSliderAutomatic' } | { __typename?: 'ParagraphGoMaterialSliderManual' } | { __typename: 'ParagraphGoVideo', id: string, title: string, created: { __typename?: 'DateTime', timestamp: unknown }, embedVideo: { __typename?: 'MediaAudio' } | { __typename?: 'MediaDocument' } | { __typename?: 'MediaImage' } | { __typename?: 'MediaVideo' } | { __typename?: 'MediaVideotool', id: string, name: string, mediaVideotool: string } } | { __typename?: 'ParagraphGoVideoBundleAutomatic' } | { __typename?: 'ParagraphGoVideoBundleManual' } | { __typename?: 'ParagraphManualEventList' } | { __typename?: 'ParagraphMaterialGridAutomatic' } | { __typename?: 'ParagraphMaterialGridManual' } | { __typename?: 'ParagraphTextBody' } | { __typename?: 'ParagraphVideo' }> | null } | null } | { __typename: 'RouteRedirect' } | null };
+export type GetPageByPathQuery = { __typename?: 'Query', route?: { __typename: 'RouteExternal' } | { __typename: 'RouteInternal', url: string, entity?: { __typename?: 'NodeGoArticle' } | { __typename?: 'NodeGoCategory' } | { __typename?: 'NodeGoPage', paragraphs?: Array<{ __typename?: 'ParagraphAccordion' } | { __typename?: 'ParagraphBanner' } | { __typename?: 'ParagraphBreadcrumbChildren' } | { __typename?: 'ParagraphCampaignRule' } | { __typename?: 'ParagraphCardGridAutomatic' } | { __typename?: 'ParagraphCardGridManual' } | { __typename?: 'ParagraphContentSlider' } | { __typename?: 'ParagraphContentSliderAutomatic' } | { __typename?: 'ParagraphEventTicketCategory' } | { __typename?: 'ParagraphFiles' } | { __typename?: 'ParagraphFilteredEventList' } | { __typename?: 'ParagraphGoLink' } | { __typename?: 'ParagraphGoLinkbox' } | { __typename?: 'ParagraphGoMaterialSliderAutomatic' } | { __typename?: 'ParagraphGoMaterialSliderManual' } | { __typename: 'ParagraphGoVideo', id: string, title: string, created: { __typename?: 'DateTime', timestamp: unknown }, embedVideo: { __typename?: 'MediaAudio' } | { __typename?: 'MediaDocument' } | { __typename?: 'MediaImage' } | { __typename?: 'MediaVideo' } | { __typename?: 'MediaVideotool', id: string, name: string, mediaVideotool: string } } | { __typename: 'ParagraphGoVideoBundleAutomatic', goVideoTitle: string, videoAmountOfMaterials: number, id: string, cqlSearch: { __typename?: 'CQLSearch', value?: string | null }, embedVideo: { __typename?: 'MediaAudio' } | { __typename?: 'MediaDocument' } | { __typename?: 'MediaImage' } | { __typename?: 'MediaVideo' } | { __typename?: 'MediaVideotool', id: string, name: string, mediaVideotool: string } } | { __typename: 'ParagraphGoVideoBundleManual', id: string, goVideoTitle: string, embedVideo: { __typename?: 'MediaAudio' } | { __typename?: 'MediaDocument' } | { __typename?: 'MediaImage' } | { __typename?: 'MediaVideo' } | { __typename?: 'MediaVideotool', id: string, name: string, mediaVideotool: string }, videoBundleWorkIds?: Array<{ __typename?: 'WorkId', material_type?: string | null, work_id?: string | null }> | null } | { __typename?: 'ParagraphHero' } | { __typename?: 'ParagraphLanguageSelector' } | { __typename?: 'ParagraphLinks' } | { __typename?: 'ParagraphManualEventList' } | { __typename?: 'ParagraphMaterialGridAutomatic' } | { __typename?: 'ParagraphMaterialGridManual' } | { __typename?: 'ParagraphMedias' } | { __typename?: 'ParagraphNavGridManual' } | { __typename?: 'ParagraphNavSpotsManual' } | { __typename?: 'ParagraphOpeningHours' } | { __typename?: 'ParagraphRecommendation' } | { __typename?: 'ParagraphSimpleLinks' } | { __typename?: 'ParagraphTextBody' } | { __typename?: 'ParagraphUserRegistrationItem' } | { __typename?: 'ParagraphUserRegistrationLinklist' } | { __typename?: 'ParagraphUserRegistrationSection' } | { __typename?: 'ParagraphVideo' } | { __typename?: 'ParagraphWebform' }> | null } | null } | { __typename: 'RouteRedirect' } | null };
 
 export type GetAdgangsplatformenTokensQueryVariables = Exact<{ [key: string]: never; }>;
 
@@ -1381,62 +1563,6 @@ export type GetAdgangsplatformenUserTokenQueryVariables = Exact<{ [key: string]:
 export type GetAdgangsplatformenUserTokenQuery = { __typename?: 'Query', dplTokens?: { __typename?: 'DplTokens', adgangsplatformen?: { __typename?: 'AdgangsplatformenToken', user?: string | null } | null } | null };
 
 
-
-export const GetArticleDocument = `
-    query getArticle($id: ID!) {
-  nodeArticle(id: $id) {
-    title
-    subtitle
-    paragraphs {
-      __typename
-      ... on ParagraphTextBody {
-        body {
-          value
-        }
-      }
-    }
-  }
-}
-    `;
-
-export const useGetArticleQuery = <
-      TData = GetArticleQuery,
-      TError = unknown
-    >(
-      variables: GetArticleQueryVariables,
-      options?: Omit<UseQueryOptions<GetArticleQuery, TError, TData>, 'queryKey'> & { queryKey?: UseQueryOptions<GetArticleQuery, TError, TData>['queryKey'] }
-    ) => {
-    
-    return useQuery<GetArticleQuery, TError, TData>(
-      {
-    queryKey: ['getArticle', variables],
-    queryFn: fetcher<GetArticleQuery, GetArticleQueryVariables>(GetArticleDocument, variables),
-    ...options
-  }
-    )};
-
-useGetArticleQuery.getKey = (variables: GetArticleQueryVariables) => ['getArticle', variables];
-
-export const useSuspenseGetArticleQuery = <
-      TData = GetArticleQuery,
-      TError = unknown
-    >(
-      variables: GetArticleQueryVariables,
-      options?: Omit<UseSuspenseQueryOptions<GetArticleQuery, TError, TData>, 'queryKey'> & { queryKey?: UseSuspenseQueryOptions<GetArticleQuery, TError, TData>['queryKey'] }
-    ) => {
-    
-    return useSuspenseQuery<GetArticleQuery, TError, TData>(
-      {
-    queryKey: ['getArticleSuspense', variables],
-    queryFn: fetcher<GetArticleQuery, GetArticleQueryVariables>(GetArticleDocument, variables),
-    ...options
-  }
-    )};
-
-useSuspenseGetArticleQuery.getKey = (variables: GetArticleQueryVariables) => ['getArticleSuspense', variables];
-
-
-useGetArticleQuery.fetcher = (variables: GetArticleQueryVariables, options?: RequestInit & { next?: NextFetchRequestConfig }) => fetcher<GetArticleQuery, GetArticleQueryVariables>(GetArticleDocument, variables, options);
 
 export const GetDplCmsConfigurationDocument = `
     query getDplCmsConfiguration {
@@ -1561,6 +1687,38 @@ export const GetPageByPathDocument = `
                   name
                   mediaVideotool
                 }
+              }
+            }
+            ... on ParagraphGoVideoBundleAutomatic {
+              __typename
+              cqlSearch {
+                value
+              }
+              goVideoTitle
+              embedVideo {
+                ... on MediaVideotool {
+                  id
+                  name
+                  mediaVideotool
+                }
+              }
+              videoAmountOfMaterials
+              id
+            }
+            ... on ParagraphGoVideoBundleManual {
+              __typename
+              id
+              goVideoTitle
+              embedVideo {
+                ... on MediaVideotool {
+                  id
+                  name
+                  mediaVideotool
+                }
+              }
+              videoBundleWorkIds {
+                material_type
+                work_id
               }
             }
           }

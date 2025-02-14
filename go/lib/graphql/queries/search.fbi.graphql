@@ -24,3 +24,17 @@ query searchFacets(
     }
   }
 }
+
+query complexSearchForWorkTeaser(
+  $cql: String!
+  $offset: Int!
+  $limit: PaginationLimitScalar!
+  $filters: ComplexSearchFiltersInput!
+) {
+  complexSearch(cql: $cql, filters: $filters) {
+    hitcount
+    works(offset: $offset, limit: $limit) {
+      ...WorkTeaserSearchPage
+    }
+  }
+}
