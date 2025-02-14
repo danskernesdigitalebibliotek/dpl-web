@@ -25,7 +25,7 @@ const VideoBundleManual = ({
 }: VideoBundleManualProps) => {
   const { data, isLoading } = useComplexSearchForWorkTeaserQuery(
     {
-      cql: videoBundleWorkIds?.map(id => `workId=${id}`).join(" OR ") || "",
+      cql: videoBundleWorkIds?.map(id => `workId=${id.work_id}`).join(" OR ") || "",
       offset: 0,
       limit: 100,
       filters: {},
