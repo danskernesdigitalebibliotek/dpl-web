@@ -44,3 +44,9 @@
     width: 0%;
   }
 }
+
+hr {
+  border-color: var(--foreground);
+  width: 100%;
+  opacity: 0.1;
+}

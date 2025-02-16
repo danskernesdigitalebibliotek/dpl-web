@@ -2,6 +2,8 @@ import React from "react"
 
 import { ParagraphUnion } from "@/lib/graphql/generated/dpl-cms/graphql"
 
+import ParagraphGoMaterialSliderAutomatic from "./MaterialSlider/MaterialSliderAutomatic"
+import ParagraphGoMaterialSliderManual from "./MaterialSlider/MaterialSliderManual"
 import ParagraphGoVideo from "./Video/Video"
 import ParagraphGoVideoBundleAutomatic from "./VideoBundle/VideoBundleAutomatic"
 import ParagraphGoVideoBundleManual from "./VideoBundle/VideoBundleManual"
@@ -10,6 +12,8 @@ import { ParagraphErrorBoundary } from "./paragraphErrorBoundary/paragraphErrorB
 function ParagraphResolver({ paragraphs }: { paragraphs: ParagraphUnion[] }) {
   const components = {
     ParagraphGoVideo,
+    ParagraphGoMaterialSliderAutomatic,
+    ParagraphGoMaterialSliderManual,
     ParagraphGoVideoBundleAutomatic,
     ParagraphGoVideoBundleManual,
   }
