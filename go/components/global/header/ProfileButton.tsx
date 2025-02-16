@@ -70,7 +70,7 @@ function ProfileButton() {
             </div>
             {adgangsplatformenLoginUrl && (
               <>
-                <hr className="divider-go mx-auto" />
+                <hr className="mx-auto" />
                 <div className="bg-background-overlay flex min-h-[300px] flex-col items-center justify-center rounded-sm p-8">
                   <div className="mb-4">
                     <Icon name="adgangsplatformen" />

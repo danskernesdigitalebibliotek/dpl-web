@@ -14,7 +14,7 @@ const AccordionItem = React.forwardRef<
 >(({ className, children, ...props }, ref) => (
   <AccordionPrimitive.Item ref={ref} className={cn(className)} {...props}>
     {children}
-    <hr className="divider-go mt-1 mb-1" />
+    <hr className="mt-1 mb-1" />
   </AccordionPrimitive.Item>
 ))
 AccordionItem.displayName = "AccordionItem"
