@@ -68,6 +68,12 @@ const useSearchMachineActor = () => {
 
   // Handle bootstrapping of the machine.
   useEffect(() => {
+    // We are only interested in bootstrapping the search machine
+    // if we are on the search page.
+    if (!isSearchPage(pathname)) {
+      return
+    }
+
     if (!actor.getSnapshot().matches("bootstrap")) {
       return
     }
