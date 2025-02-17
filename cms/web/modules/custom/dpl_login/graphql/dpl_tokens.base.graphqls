@@ -1,8 +1,12 @@
+type AdgangsplatformenUserToken {
+  token: String
+  expire: Int
+}
 
-type AdgangsplatformenToken {
-  user: String
+type AdgangsplatformenTokens {
+  user: AdgangsplatformenUserToken
 }
 
 type DplTokens {
-  adgangsplatformen: AdgangsplatformenToken
+  adgangsplatformen: AdgangsplatformenTokens
 }
