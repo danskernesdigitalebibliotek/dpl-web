@@ -4,11 +4,23 @@
 # #-#-#-#-#  da.config.po (PROJECT VERSION)  #-#-#-#-#
 # da translation of DPL CMS
 #
+#, fuzzy
 msgid ""
 msgstr ""
+"#-#-#-#-#  da.po (PROJECT VERSION)  #-#-#-#-#\n"
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2025-02-17 11:23+0100\n"
-"PO-Revision-Date: 2025-02-17 11:23+0100\n"
+"POT-Creation-Date: 2025-02-17 13:46+0100\n"
+"PO-Revision-Date: 2025-02-17 13:46+0100\n"
+"Last-Translator: NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n > 1);\n"
+"#-#-#-#-#  da.config.po (PROJECT VERSION)  #-#-#-#-#\n"
+"Project-Id-Version: PROJECT VERSION\n"
+"POT-Creation-Date: 2025-02-17 13:47+0100\n"
+"PO-Revision-Date: 2025-02-17 13:47+0100\n"
 "Last-Translator: NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
 "MIME-Version: 1.0\n"
@@ -19294,14 +19306,14 @@ msgid ""
 msgstr ""
 
 msgctxt ""
-"core.entity_form_display.paragraph.go_linkbox.default:content:field_go_link:"
-"settings:title"
+"core.entity_form_display.paragraph.go_linkbox.default:content:"
+"field_go_link_paragraph:settings:title"
 msgid "Paragraph"
 msgstr ""
 
 msgctxt ""
-"core.entity_form_display.paragraph.go_linkbox.default:content:field_go_link:"
-"settings:title_plural"
+"core.entity_form_display.paragraph.go_linkbox.default:content:"
+"field_go_link_paragraph:settings:title_plural"
 msgid "Paragraphs"
 msgstr ""
 
@@ -20639,7 +20651,7 @@ msgctxt "field.field.paragraph.go_link.field_aria_label:label"
 msgid "Aria Label"
 msgstr ""
 
-msgctxt "field.field.paragraph.go_link.field_link:label"
+msgctxt "field.field.paragraph.go_link.field_go_link:label"
 msgid "Link"
 msgstr ""
 
@@ -20667,7 +20679,7 @@ msgctxt "field.field.paragraph.go_linkbox.field_go_image:label"
 msgid "Image"
 msgstr ""
 
-msgctxt "field.field.paragraph.go_linkbox.field_go_link:label"
+msgctxt "field.field.paragraph.go_linkbox.field_go_link_paragraph:label"
 msgid "Link"
 msgstr ""
 
