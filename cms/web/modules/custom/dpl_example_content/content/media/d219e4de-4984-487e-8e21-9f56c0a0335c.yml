@@ -1,0 +1,36 @@
+_meta:
+  version: '1.0'
+  entity_type: media
+  uuid: d219e4de-4984-487e-8e21-9f56c0a0335c
+  bundle: videotool
+  default_langcode: en
+default:
+  status:
+    -
+      value: true
+  uid:
+    -
+      target_id: 1
+  name:
+    -
+      value: 'Emilie bliver KIDNAPPET! | Suget Ind |'
+  created:
+    -
+      value: 1739798527
+  revision_translation_affected:
+    -
+      value: true
+  metatag:
+    -
+      tag: meta
+      attributes:
+        name: title
+        content: '| DPL CMS'
+  path:
+    -
+      alias: ''
+      langcode: en
+      pathauto: 0
+  field_media_videotool:
+    -
+      value: 'https://media.videotool.dk/?vn=557_2023103014511477700668916683'

@@ -29,6 +29,8 @@ default_content:
     - 02858224-6bd4-41df-95e3-c2a9a6ad29b7
     - 33a56f4a-fa42-42e1-9097-84f759bbbe4c
     - 4ead3326-3b15-447e-851e-a30a49f8a77a
+    # GO Pages
+    - 5395582b-a4a4-4f57-952e-38caae27d9aa
   eventseries:
     # https://www.figma.com/file/Zx9GrkFA3l4ISvyZD2q0Qi/Designsystem?type=design&node-id=7477-39713&mode=dev
     - c8177097-1438-493e-8177-e8ef968cc133
@@ -55,6 +57,8 @@ default_content:
     - e8283d3c-968a-4e74-ae02-9f02b76bb839
     - 35166ac7-4b0e-4644-8a60-3f29f3c8ecbe
     - f58aac7e-eabe-4a5f-aa07-3d3bc7027134
+    - ddd4f544-aff0-40d4-8c8e-651ca39e8db6
+    - d219e4de-4984-487e-8e21-9f56c0a0335c
   file:
     - b0fea511-57df-4b49-b127-1c445beacfe7
     - f19a4a4c-80b0-4290-a098-4f2f5fc137a2
@@ -71,6 +75,7 @@ default_content:
     - e00e1460-169e-468d-9835-d664f06d0969
     - c57495b6-2b50-4558-b6ad-a50d24c5310c
     - a6715bb0-3282-4d03-9404-bc8de03b7f5a
+    - 264dd76d-ab5f-452b-a2f9-c36756fae74d
   taxonomy_term:
     - f457c4c2-dc28-45cd-9b6e-fda4248d9d45
     - 92033694-15ac-4d9e-b275-ddfd18e48d9f

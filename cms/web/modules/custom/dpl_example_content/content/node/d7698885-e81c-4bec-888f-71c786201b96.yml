@@ -55,12 +55,12 @@ default:
       tag: meta
       attributes:
         property: 'og:image'
-        content: 'https://dapple-cms.docker/sites/default/files/styles/open_graph/public/2024-04/laeseklubber.jpg?h=bf621e20&itok=uM41utVL'
+        content: 'https://dapple-cms.docker/sites/default/files/styles/open_graph/public/2024-04/laeseklubber.jpg?h=bf621e20&itok=NAXViMzN'
     -
       tag: meta
       attributes:
         property: 'og:image:url'
-        content: 'https://dapple-cms.docker/sites/default/files/styles/open_graph/public/2024-04/laeseklubber.jpg?h=bf621e20&itok=uM41utVL'
+        content: 'https://dapple-cms.docker/sites/default/files/styles/open_graph/public/2024-04/laeseklubber.jpg?h=bf621e20&itok=NAXViMzN'
     -
       tag: meta
       attributes:
