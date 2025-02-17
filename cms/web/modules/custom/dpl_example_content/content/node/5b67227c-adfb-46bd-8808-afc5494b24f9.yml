@@ -1,0 +1,212 @@
+_meta:
+  version: '1.0'
+  entity_type: node
+  uuid: 5b67227c-adfb-46bd-8808-afc5494b24f9
+  bundle: go_page
+  default_langcode: da
+  depends:
+    ddd4f544-aff0-40d4-8c8e-651ca39e8db6: media
+    d219e4de-4984-487e-8e21-9f56c0a0335c: media
+default:
+  revision_uid:
+    -
+      target_id: 1
+  status:
+    -
+      value: true
+  uid:
+    -
+      target_id: 1
+  title:
+    -
+      value: 'GO Frontpage'
+  created:
+    -
+      value: 1739800074
+  promote:
+    -
+      value: false
+  sticky:
+    -
+      value: false
+  revision_translation_affected:
+    -
+      value: true
+  entity_clone_template_active:
+    -
+      value: false
+  metatag:
+    -
+      tag: meta
+      attributes:
+        name: title
+        content: 'GO Frontpage | DPL CMS'
+  path:
+    -
+      alias: /go-frontpage
+      langcode: und
+      pathauto: 1
+  field_paragraphs:
+    -
+      entity:
+        _meta:
+          version: '1.0'
+          entity_type: paragraph
+          uuid: 93c2f91a-b300-4a49-b98e-d55ede875b71
+          bundle: go_linkbox
+          default_langcode: da
+        default:
+          status:
+            -
+              value: true
+          created:
+            -
+              value: 1739800074
+          behavior_settings:
+            -
+              value: {  }
+          revision_translation_affected:
+            -
+              value: true
+          field_go_color:
+            -
+              value: content_color_1
+          field_go_description:
+            -
+              value: 'Elsker du bøger, og kan du lide en god konkurrence? Så er BogBattle lige noget for dig! Det er den ultimative quizkamp for bogorme, hvor du kan dyste mod venner, familie eller fremmede i en hæsblæsende battle om litterær viden.'
+          field_go_image:
+            -
+              entity: ddd4f544-aff0-40d4-8c8e-651ca39e8db6
+          field_go_link_paragraph:
+            -
+              entity:
+                _meta:
+                  version: '1.0'
+                  entity_type: paragraph
+                  uuid: dffdf9aa-9cae-495b-b389-6c93f82ceea8
+                  bundle: go_link
+                  default_langcode: da
+                default:
+                  status:
+                    -
+                      value: true
+                  created:
+                    -
+                      value: 1739800074
+                  behavior_settings:
+                    -
+                      value: {  }
+                  revision_translation_affected:
+                    -
+                      value: true
+                  field_aria_label:
+                    -
+                      value: 'Læs mere on BogBattle'
+                  field_go_link:
+                    -
+                      uri: 'https://www.google.com/'
+                      title: 'Læs mere'
+                      options:
+                        href: 'https://www.google.com/'
+                        data-entity-type: ''
+                        data-entity-uuid: ''
+                        data-entity-substitution: ''
+                  field_target_blank:
+                    -
+                      value: false
+          field_title:
+            -
+              value: 'BogBattle Hold kæft det er sjovt!'
+    -
+      entity:
+        _meta:
+          version: '1.0'
+          entity_type: paragraph
+          uuid: 202c5ecb-f7ad-4c7e-ba5b-f5a06f455b8f
+          bundle: go_video
+          default_langcode: da
+        default:
+          status:
+            -
+              value: true
+          created:
+            -
+              value: 1739800291
+          behavior_settings:
+            -
+              value: {  }
+          revision_translation_affected:
+            -
+              value: true
+          field_embed_video:
+            -
+              entity: d219e4de-4984-487e-8e21-9f56c0a0335c
+          field_go_video_title:
+            -
+              value: Børnegyser
+    -
+      entity:
+        _meta:
+          version: '1.0'
+          entity_type: paragraph
+          uuid: f1d673f2-fbc6-4c4a-80ef-297471430c51
+          bundle: go_material_slider_automatic
+          default_langcode: da
+        default:
+          status:
+            -
+              value: true
+          created:
+            -
+              value: 1739800322
+          behavior_settings:
+            -
+              value: {  }
+          revision_translation_affected:
+            -
+              value: true
+          field_cql_search:
+            -
+              value: "'harry'"
+          field_slider_amount_of_materials:
+            -
+              value: 8
+          field_title:
+            -
+              value: 'GO’ læsning'
+    -
+      entity:
+        _meta:
+          version: '1.0'
+          entity_type: paragraph
+          uuid: 8e6e951b-6ff2-4af9-8750-8d078351585d
+          bundle: go_video_bundle_automatic
+          default_langcode: da
+        default:
+          status:
+            -
+              value: true
+          created:
+            -
+              value: 1739800365
+          behavior_settings:
+            -
+              value: {  }
+          revision_translation_affected:
+            -
+              value: true
+          field_cql_search:
+            -
+              value: "'Emilie'"
+          field_embed_video:
+            -
+              entity: d219e4de-4984-487e-8e21-9f56c0a0335c
+          field_go_video_title:
+            -
+              value: Emilie
+          field_video_amount_of_materials:
+            -
+              value: 5
+  field_publication_date:
+    -
+      value: '2025-02-17'

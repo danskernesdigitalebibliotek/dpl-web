@@ -31,6 +31,7 @@ default_content:
     - 4ead3326-3b15-447e-851e-a30a49f8a77a
     # GO Pages
     - 5395582b-a4a4-4f57-952e-38caae27d9aa
+    - 5b67227c-adfb-46bd-8808-afc5494b24f9
   eventseries:
     # https://www.figma.com/file/Zx9GrkFA3l4ISvyZD2q0Qi/Designsystem?type=design&node-id=7477-39713&mode=dev
     - c8177097-1438-493e-8177-e8ef968cc133
