@@ -4879,22 +4879,22 @@
         },
         {
             "name": "drupal/graphql_compose",
-            "version": "2.2.1",
+            "version": "2.3.0",
             "source": {
                 "type": "git",
                 "url": "https://git.drupalcode.org/project/graphql_compose.git",
-                "reference": "2.2.1"
+                "reference": "2.3.0"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://ftp.drupal.org/files/projects/graphql_compose-2.2.1.zip",
-                "reference": "2.2.1",
-                "shasum": "2293a62f322a109f7d38d9549769bcaa65137d2e"
+                "url": "https://ftp.drupal.org/files/projects/graphql_compose-2.3.0.zip",
+                "reference": "2.3.0",
+                "shasum": "4f02a57354a3a17879df4f24a8e20753333efd6b"
             },
             "require": {
                 "doctrine/inflector": "^2",
-                "drupal/core": "^10.1 || ^11",
-                "drupal/graphql": "^4.8",
+                "drupal/core": "^10.2 || ^11",
+                "drupal/graphql": "^4.9",
                 "php": "^8.1"
             },
             "require-dev": {
@@ -4910,14 +4910,16 @@
                 "drupal/graphql_compose_edges": "*",
                 "drupal/graphql_compose_layouts": "*",
                 "drupal/graphql_compose_routes": "*",
-                "drupal/layout_paragraphs": "2.0.x-dev@dev",
-                "drupal/menu_item_extras": "3.0.x-dev@dev",
+                "drupal/layout_paragraphs": "^2",
+                "drupal/link_attributes": "^2",
+                "drupal/menu_item_extras": "^3",
+                "drupal/menu_link_attributes": "^1",
                 "drupal/metatag": "^2",
-                "drupal/paragraphs": "1.x-dev@dev",
+                "drupal/paragraphs": "^1",
                 "drupal/redirect": "^1",
                 "drupal/schema_metatag": "^3",
                 "drupal/search_api": "^1",
-                "drupal/social_media_links": "2.x-dev@dev",
+                "drupal/social_media_links": "^2",
                 "drupal/svg_image": "^3",
                 "drupal/token": "^1",
                 "drupal/triples_field": "^1",
@@ -4926,8 +4928,8 @@
             "type": "drupal-module",
             "extra": {
                 "drupal": {
-                    "version": "2.2.1",
-                    "datestamp": "1726380157",
+                    "version": "2.3.0",
+                    "datestamp": "1739387377",
                     "security-coverage": {
                         "status": "covered",
                         "message": "Covered by Drupal's security advisory policy"
@@ -17605,16 +17607,16 @@
         },
         {
             "name": "myclabs/deep-copy",
-            "version": "1.12.1",
+            "version": "1.13.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/myclabs/DeepCopy.git",
-                "reference": "123267b2c49fbf30d78a7b2d333f6be754b94845"
+                "reference": "024473a478be9df5fdaca2c793f2232fe788e414"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/myclabs/DeepCopy/zipball/123267b2c49fbf30d78a7b2d333f6be754b94845",
-                "reference": "123267b2c49fbf30d78a7b2d333f6be754b94845",
+                "url": "https://api.github.com/repos/myclabs/DeepCopy/zipball/024473a478be9df5fdaca2c793f2232fe788e414",
+                "reference": "024473a478be9df5fdaca2c793f2232fe788e414",
                 "shasum": ""
             },
             "require": {
@@ -17653,7 +17655,7 @@
             ],
             "support": {
                 "issues": "https://github.com/myclabs/DeepCopy/issues",
-                "source": "https://github.com/myclabs/DeepCopy/tree/1.12.1"
+                "source": "https://github.com/myclabs/DeepCopy/tree/1.13.0"
             },
             "funding": [
                 {
@@ -17661,7 +17663,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2024-11-08T17:47:46+00:00"
+            "time": "2025-02-12T12:17:51+00:00"
         },
         {
             "name": "palantirnet/drupal-rector",
@@ -20605,6 +20607,6 @@
         "php": "8.1.*",
         "ext-dom": "*"
     },
-    "platform-dev": {},
-    "plugin-api-version": "2.6.0"
+    "platform-dev": [],
+    "plugin-api-version": "2.3.0"
 }
