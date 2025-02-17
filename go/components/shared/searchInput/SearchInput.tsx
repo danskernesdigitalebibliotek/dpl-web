@@ -47,8 +47,8 @@ const SearchInput = ({ className, placeholder }: SearchInputProps) => {
       routeParams: { search: "search" },
       queryParams: { q: query },
     })
+
     router.push(url)
-    actor.send({ type: "SEARCH" })
   }
 
   return (
