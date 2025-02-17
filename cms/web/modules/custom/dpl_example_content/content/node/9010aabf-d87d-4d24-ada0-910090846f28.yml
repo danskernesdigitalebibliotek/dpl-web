@@ -1,0 +1,116 @@
+_meta:
+  version: '1.0'
+  entity_type: node
+  uuid: 9010aabf-d87d-4d24-ada0-910090846f28
+  bundle: go_article
+  default_langcode: da
+  depends:
+    06fbedf9-cbc7-4d70-b911-cbda63c4efca: media
+default:
+  revision_uid:
+    -
+      target_id: 1
+  status:
+    -
+      value: true
+  uid:
+    -
+      target_id: 1
+  title:
+    -
+      value: 'De nominerede til Orlaprisen 2023'
+  created:
+    -
+      value: 1739800498
+  promote:
+    -
+      value: false
+  sticky:
+    -
+      value: false
+  revision_translation_affected:
+    -
+      value: true
+  entity_clone_template_active:
+    -
+      value: false
+  metatag:
+    -
+      tag: meta
+      attributes:
+        name: title
+        content: 'De nominerede til Orlaprisen 2023 | DPL CMS'
+    -
+      tag: meta
+      attributes:
+        property: 'og:image'
+        content: 'https://dapple-cms.docker/sites/default/files/styles/open_graph/public/2025-02/9be293774cb794b63cb93e2e51546cc8_0.jpeg?h=f7de6fbe&itok=1FRCDV64'
+    -
+      tag: meta
+      attributes:
+        property: 'og:image:url'
+        content: 'https://dapple-cms.docker/sites/default/files/styles/open_graph/public/2025-02/9be293774cb794b63cb93e2e51546cc8_0.jpeg?h=f7de6fbe&itok=1FRCDV64'
+    -
+      tag: meta
+      attributes:
+        property: 'og:image:width'
+        content: '1200'
+    -
+      tag: meta
+      attributes:
+        property: 'og:image:height'
+        content: '630'
+  path:
+    -
+      alias: /go-article
+      langcode: und
+      pathauto: 0
+  field_go_article_image:
+    -
+      entity: 06fbedf9-cbc7-4d70-b911-cbda63c4efca
+  field_paragraphs:
+    -
+      entity:
+        _meta:
+          version: '1.0'
+          entity_type: paragraph
+          uuid: f873b722-d08c-45ce-b307-bb06806d34c1
+          bundle: go_material_slider_automatic
+          default_langcode: da
+        default:
+          status:
+            -
+              value: true
+          created:
+            -
+              value: 1739800811
+          behavior_settings:
+            -
+              value: {  }
+          revision_translation_affected:
+            -
+              value: true
+          field_cql_search:
+            -
+              value: "'Det ydre rum'"
+          field_slider_amount_of_materials:
+            -
+              value: 8
+          field_title:
+            -
+              value: 'Det ydre rum'
+  field_publication_date:
+    -
+      value: '2025-02-17'
+  field_show_override_author:
+    -
+      value: false
+  field_subtitle:
+    -
+      value: 'Børnejuryen har talt, og de nominerede til Orlaprisen 2023 er fundet!'
+  field_teaser_image:
+    -
+      entity: 06fbedf9-cbc7-4d70-b911-cbda63c4efca
+  field_teaser_text:
+    -
+      value: 'GO Article'
