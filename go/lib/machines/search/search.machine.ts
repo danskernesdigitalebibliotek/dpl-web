@@ -50,6 +50,11 @@ export default searchMachineSetup.createMachine({
             target: "idle",
           },
         ],
+        TYPING: [
+          {
+            actions: ["setCurrentQueryInContext"],
+          },
+        ],
       },
     },
     idle: {
