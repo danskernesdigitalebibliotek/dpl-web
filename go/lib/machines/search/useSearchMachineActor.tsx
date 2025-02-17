@@ -59,9 +59,6 @@ const useSearchMachineActor = () => {
   const queryClient = useQueryClient()
   const actorRef = useRef(searchActor)
   const actor = actorRef.current
-  const searchQuery = useSelector(actor, snapshot => {
-    return snapshot.context.submittedQuery
-  })
   const storedQueryClient = useSelector(actor, snapshot => {
     return snapshot.context.queryClient
   })
@@ -111,7 +108,7 @@ const useSearchMachineActor = () => {
     }
 
     setPreviousPathname(currentPathname)
-  }, [searchParamString, searchQuery, pathname])
+  }, [pathname, searchParamString, previousPathname, actor])
 
   return actor
 }
