@@ -116,8 +116,8 @@ function dpl_update_install(): string {
   $messages[] = dpl_update_update_10034();
   $messages[] = dpl_update_update_10035();
   $messages[] = dpl_update_update_10037();
-  $messages[] = dpl_update_update_10038();
   $messages[] = dpl_update_update_10039();
+  $messages[] = dpl_update_update_10040();
 
   return implode('\r\n', $messages);
 }
@@ -418,8 +418,43 @@ function dpl_update_update_10038(): string {
 }
 
 /**
- * Installing External Auth module.
+ * Remove old field instances and storage for paragraph fields.
  */
 function dpl_update_update_10039(): string {
+  $messages = [];
+
+  $instance = \Drupal::entityTypeManager()
+    ->getStorage('field_config')
+    ->load('paragraph.go_linkbox.field_go_link');
+  if ($instance) {
+    $instance->delete();
+    $messages[] = 'Deleted field.instance: paragraph.go_linkbox.field_go_link';
+  }
+
+  $instance = \Drupal::entityTypeManager()
+    ->getStorage('field_config')
+    ->load('paragraph.go_link.field_link');
+  if ($instance) {
+    $instance->delete();
+    $messages[] = 'Deleted field.instance: paragraph.go_link.field_link';
+  }
+
+  $storage = \Drupal::entityTypeManager()
+    ->getStorage('field_storage_config')
+    ->load('paragraph.field_go_link');
+  if ($storage) {
+    $storage->delete();
+    $messages[] = 'Deleted field.storage: paragraph.field_go_link';
+  }
+
+  return $messages
+    ? implode('; ', $messages)
+    : 'No stale paragraph field configs found.';
+}
+
+/**
+ * Installing External Auth module.
+ */
+function dpl_update_update_10040(): string {
   return _dpl_update_install_modules(['externalauth']);
 }

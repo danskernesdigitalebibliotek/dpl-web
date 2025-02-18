@@ -4,7 +4,7 @@ status: true
 dependencies:
   config:
     - field.field.paragraph.go_link.field_aria_label
-    - field.field.paragraph.go_link.field_link
+    - field.field.paragraph.go_link.field_go_link
     - field.field.paragraph.go_link.field_target_blank
     - paragraphs.paragraphs_type.go_link
   module:
@@ -22,17 +22,17 @@ content:
     third_party_settings: {  }
     weight: 1
     region: content
-  field_link:
+  field_go_link:
     type: link
-    label: hidden
+    label: above
     settings:
-      trim_length: null
+      trim_length: 80
       url_only: false
       url_plain: false
-      rel: '0'
-      target: '0'
+      rel: ''
+      target: ''
     third_party_settings: {  }
-    weight: 0
+    weight: 3
     region: content
   field_target_blank:
     type: boolean

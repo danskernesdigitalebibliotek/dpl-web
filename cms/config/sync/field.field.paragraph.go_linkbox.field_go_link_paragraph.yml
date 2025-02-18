@@ -1,15 +1,15 @@
-uuid: 11d0e9cf-02a4-4073-8d16-98c6d0796551
+uuid: d5d35cc3-72f4-4d31-b5b5-c60f8b52add3
 langcode: en
 status: true
 dependencies:
   config:
-    - field.storage.paragraph.field_go_link
+    - field.storage.paragraph.field_go_link_paragraph
     - paragraphs.paragraphs_type.go_link
     - paragraphs.paragraphs_type.go_linkbox
   module:
     - entity_reference_revisions
-id: paragraph.go_linkbox.field_go_link
-field_name: field_go_link
+id: paragraph.go_linkbox.field_go_link_paragraph
+field_name: field_go_link_paragraph
 entity_type: paragraph
 bundle: go_linkbox
 label: Link
@@ -26,111 +26,114 @@ settings:
     negate: 0
     target_bundles_drag_drop:
       accordion:
-        weight: 37
-        enabled: false
-      banner:
-        weight: 38
-        enabled: false
-      breadcrumb_children:
         weight: 39
         enabled: false
-      campaign_rule:
+      banner:
         weight: 40
         enabled: false
-      card_grid_automatic:
+      breadcrumb_children:
         weight: 41
         enabled: false
-      card_grid_manual:
+      campaign_rule:
         weight: 42
         enabled: false
-      content_slider:
+      card_grid_automatic:
         weight: 43
         enabled: false
-      content_slider_automatic:
+      card_grid_manual:
         weight: 44
         enabled: false
-      event_ticket_category:
+      content_slider:
         weight: 45
         enabled: false
-      files:
+      content_slider_automatic:
         weight: 46
         enabled: false
-      filtered_event_list:
+      event_ticket_category:
         weight: 47
         enabled: false
-      go_link:
-        weight: 49
-        enabled: true
-      go_linkbox:
-        weight: 36
-        enabled: false
-      go_material_slider_automatic:
+      files:
         weight: 48
         enabled: false
-      go_material_slider_manual:
+      filtered_event_list:
         weight: 49
         enabled: false
-      go_video:
+      go_link:
         weight: 50
+        enabled: true
+      go_linkbox:
+        weight: 38
         enabled: false
-      go_video_bundle_automatic:
+      go_material_slider_automatic:
         weight: 51
         enabled: false
-      go_video_bundle_manual:
+      go_material_slider_manual:
         weight: 52
         enabled: false
-      hero:
+      go_video:
         weight: 53
         enabled: false
-      language_selector:
+      go_video_bundle_automatic:
         weight: 54
         enabled: false
-      links:
+      go_video_bundle_manual:
         weight: 55
         enabled: false
-      manual_event_list:
+      hero:
         weight: 56
         enabled: false
-      material_grid_automatic:
+      language_selector:
         weight: 57
         enabled: false
-      material_grid_manual:
+      links:
         weight: 58
         enabled: false
-      medias:
+      manual_event_list:
         weight: 59
         enabled: false
-      nav_grid_manual:
+      material_grid_automatic:
         weight: 60
         enabled: false
-      nav_spots_manual:
+      material_grid_link_automatic:
         weight: 61
         enabled: false
-      opening_hours:
+      material_grid_manual:
         weight: 62
         enabled: false
-      recommendation:
+      medias:
         weight: 63
         enabled: false
-      simple_links:
+      nav_grid_manual:
         weight: 64
         enabled: false
-      text_body:
+      nav_spots_manual:
         weight: 65
         enabled: false
-      user_registration_item:
+      opening_hours:
         weight: 66
         enabled: false
-      user_registration_linklist:
+      recommendation:
         weight: 67
         enabled: false
-      user_registration_section:
+      simple_links:
         weight: 68
         enabled: false
-      video:
+      text_body:
         weight: 69
         enabled: false
-      webform:
+      user_registration_item:
         weight: 70
+        enabled: false
+      user_registration_linklist:
+        weight: 71
+        enabled: false
+      user_registration_section:
+        weight: 72
+        enabled: false
+      video:
+        weight: 73
+        enabled: false
+      webform:
+        weight: 74
         enabled: false
 field_type: entity_reference_revisions
