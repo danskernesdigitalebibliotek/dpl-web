@@ -10,7 +10,14 @@ getLagoonUrl() {
 }
 
 # Make sure app.url is set in application
-app_url=$(getLagoonUrl node)
+goUrlPrefix="go."
+# If the project is "dpl-cms", we are running in a PR environment
+# and then the goUrlPrefix should be go-.
+# Otherwise we are in production and the goUrlPrefix should be "go.".
+if [ "$LAGOON_PROJECT" = "dpl-cms" ]; then
+  goUrlPrefix="go-"
+fi
+app_url=$(getLagoonUrl $goUrlPrefix)
 if [ -z "$app_url" ]; then
   echo "Error: Unable to determine app URL"
   exit 1
