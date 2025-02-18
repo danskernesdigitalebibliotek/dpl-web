@@ -7,8 +7,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2025-02-18 10:11+0100\n"
-"PO-Revision-Date: 2025-02-18 10:11+0100\n"
+"POT-Creation-Date: 2025-02-18 16:10+0100\n"
+"PO-Revision-Date: 2025-02-18 16:10+0100\n"
 "Last-Translator: NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
 "MIME-Version: 1.0\n"
@@ -3558,14 +3558,6 @@ msgctxt "dpl_login"
 msgid "Logged in"
 msgstr "Logget ind"
 
-msgctxt "OpenId Connect Settings"
-msgid ""
-"Unable to retrieve token from Adgangsplatformen. Please check if the "
-"provided Agency ID is correct."
-msgstr ""
-"Kan ikke hente token fra Adgangsplatformen. Tjek venligst, om det angivne "
-"Agency ID er korrekt."
-
 msgctxt "Dpl Login"
 msgid "Authorization endpoint"
 msgstr "Autorisations endpoint"
@@ -3585,6 +3577,12 @@ msgstr "Logout endpoint"
 msgctxt "Dpl Login"
 msgid "Agency ID"
 msgstr "Agency ID"
+
+msgctxt "Dpl Login"
+msgid ""
+"Unable to retrieve token from Adgangsplatformen. Please check if the "
+"provided Client ID, Client Secret and Agency ID is correct."
+msgstr ""
 
 msgid "Adgangsplatformen"
 msgstr "Adgangsplatformen"
@@ -13251,11 +13249,14 @@ msgstr ""
 "Dette kan føre til sikkerhedsrisici. Det er <strong>kraftigt anbefalet</"
 "strong> at <a href=\":url\">deaktivere denne mulighed</a>."
 
-msgid "The e-mail address is not valid: @email"
-msgstr "Emailadressen er ikke gyldig: @email"
+msgid "OpenID Connect client"
+msgstr ""
 
-msgid "The e-mail address is already taken: @email"
-msgstr "Emailadressen benyttes allerede: @email"
+msgid "The email address is not valid: @email"
+msgstr ""
+
+msgid "The email address is already taken: @email"
+msgstr ""
 
 msgid "Only administrators can register new accounts."
 msgstr "Kun administratorer kan registrere nye konti."
@@ -13273,21 +13274,8 @@ msgstr "Brugernavnet %name er blokeret eller ikke aktiveret."
 msgid "Another user is already connected to this @provider account."
 msgstr "En anden bruger er allerede forbundet til denne @provider konto."
 
-msgid "Enabled OpenID Connect clients"
-msgstr "Aktiverede OpenID Connect klienter"
-
-msgid "Choose enabled OpenID Connect clients."
-msgstr "Vælg aktiverede OpenID Connect-klienter."
-
-msgid "Override registration settings"
-msgstr "Tilsidesæt registreringsindstillinger"
-
-msgid ""
-"If enabled, a user will be registered even if registration is set to "
-"\"Administrators only\"."
+msgid "Create OpenID Connect client"
 msgstr ""
-"Hvis aktiveret, vil en bruger blive registreret, selv hvis registrering er "
-"sat til \"Kun administratorer\"."
 
 msgid "Save user claims on every login"
 msgstr "Gem brugerkrav ved hvert login"
@@ -13297,6 +13285,26 @@ msgid ""
 "created."
 msgstr ""
 "Hvis deaktiveret, vil brugerkrav kun blive gemt, når kontoen først oprettes."
+
+msgid "Override registration settings"
+msgstr "Tilsidesæt registreringsindstillinger"
+
+msgid ""
+"If enabled, user creation will always be allowed, even if the registration "
+"setting is set to require admin approval, or only allowing admins to create "
+"users."
+msgstr ""
+"Hvis aktiveret, vil oprettelse af bruger altid være tilladt, selv hvis "
+"registreringsindstillingen kræver admin-godkendelse, eller kun tillader "
+"admin at oprette brugere."
+
+msgid "Logout from identity provider"
+msgstr ""
+
+msgid ""
+"If enabled and supported by the identity provider, logging out from Drupal "
+"will also logout the user from the identity provider."
+msgstr ""
 
 msgid "OpenID buttons display in user login form"
 msgstr "OpenID knapper vises i brugers login-formular"
@@ -13321,20 +13329,36 @@ msgstr ""
 "send 'showcore' URL-parameteren for at vende tilbage til en adgangskode-"
 "baseret loginform."
 
+msgid "Login"
+msgstr "Login"
+
+msgid "Path to redirect to on client login"
+msgstr ""
+
+msgid "Path to redirect to on client logout"
+msgstr ""
+
 msgid "User claims mapping"
 msgstr "Kortlægning af brugerkrav"
 
-msgid ""
-"If enabled, user creation will always be allowed, even if the registration "
-"setting is set to require admin approval, or only allowing admins to create "
-"users."
-msgstr ""
-"Hvis aktiveret, vil oprettelse af bruger altid være tilladt, selv hvis "
-"registreringsindstillingen kræver admin-godkendelse, eller kun tillader "
-"admin at oprette brugere."
-
 msgid "- No mapping -"
 msgstr "- Ingen kortlægning -"
+
+msgid "User role mapping"
+msgstr ""
+
+msgid ""
+"For each Drupal role, provide the sets of equivalent external groups, "
+"separated by spaces. A user belonging to one of the provided groups will be "
+"assigned the configured Drupal role."
+msgstr ""
+
+msgid ""
+"<br/><strong>Note:</strong> The module will not update user roles with no "
+"mapped external groups. If all mappings to one of the roles are removed, "
+"users will keep that role until it is removed in the Drupal user "
+"administration."
+msgstr ""
 
 msgid "Automatically connect existing users"
 msgstr "Forbind automatisk eksisterende brugere"
@@ -13361,26 +13385,50 @@ msgstr "Du kan forbinde din bruger med disse eksterne udbydere."
 msgid "Provider: @title"
 msgstr "Udbyder: @title"
 
-msgid "Not connected"
-msgstr "Ingen forbindelse"
-
 msgid "Connected as %sub"
 msgstr "Forbundet som %sub"
 
 msgid "Disconnect from @client_title"
 msgstr "Afkobl fra @client_title"
 
+msgid "Not connected"
+msgstr "Ingen forbindelse"
+
 msgid "Connect with @client_title"
 msgstr "Forbind med @client_title"
-
-msgid "Account successfully disconnected from @client."
-msgstr "Kontoen er succesfuldt fjernet fra @client."
 
 msgid "You cannot connect another user's account."
 msgstr "Du kan ikke tilslutte en anden brugers konto."
 
+msgid "Account successfully disconnected from @client."
+msgstr "Kontoen er succesfuldt fjernet fra @client."
+
+msgid "Are you sure you want to delete OpenID Connect client %label?"
+msgstr ""
+
+msgid "OpenID Connect client %label was deleted."
+msgstr ""
+
+msgid "Error when trying to delete OpenID Connect client %label."
+msgstr ""
+
+msgid "Redirect URL"
+msgstr "Omdirigér til URL"
+
+msgid "OpenID Connect client %label has been updated."
+msgstr ""
+
+msgid "OpenID Connect client %label has been added."
+msgstr ""
+
+msgid "Pending name input"
+msgstr ""
+
 msgid "Log in with @client_title"
 msgstr "Log ind med @client_title"
+
+msgid "OpenID Connect Client"
+msgstr ""
 
 msgid "Logging in with @provider has been canceled."
 msgstr "Kunne ikke logge ind. Kontakt venligst biblioteket."
@@ -13407,8 +13455,16 @@ msgstr ""
 "Mislykkedes med at få autentificeringstokens for @provider. Tjek logs for "
 "yderligere detaljer."
 
-msgid "Redirect URL"
-msgstr "Omdirigér til URL"
+msgid ""
+"@provider does not support log out. You are logged out of this site but not "
+"out of the OpenID Connect provider."
+msgstr ""
+
+msgid "The %label client has been enabled."
+msgstr ""
+
+msgid "The %label client has been disabled."
+msgstr ""
 
 msgid "Client ID"
 msgstr "Klient ID"
@@ -13416,14 +13472,31 @@ msgstr "Klient ID"
 msgid "Client secret"
 msgstr "Klienthemmelighed"
 
-msgid "The client ID is missing for @provider."
-msgstr "ClientID'et mangler for @provider."
+msgid "Allowed domains"
+msgstr ""
 
-msgid "The client secret is missing for @provider."
-msgstr "Client Secret mangler for @provider."
+msgid "Enter one domain per line that are allowed to initiate SSO using ISS."
+msgstr ""
 
 msgid "Okta domain"
 msgstr "Okta domæne"
+
+msgid "Scopes"
+msgstr ""
+
+msgid "Custom scopes, separated by spaces, for example: openid email"
+msgstr ""
+
+msgid "Auto discover endpoints"
+msgstr ""
+
+msgid ""
+"Requires IDP support for \"<a href=\"@url\" target=\"_blank\">OpenID Connect "
+"Discovery</a>\"."
+msgstr ""
+
+msgid "Issuer URL"
+msgstr ""
 
 msgid "Authorization endpoint"
 msgstr "Autorisationsendpoint"
@@ -13433,6 +13506,12 @@ msgstr "Token endpoint"
 
 msgid "UserInfo endpoint"
 msgstr "UserInfo slutpunkt"
+
+msgid "End Session endpoint"
+msgstr ""
+
+msgid "The issuer URL @url appears to be invalid."
+msgstr ""
 
 msgid "API Version"
 msgstr "API-version"
@@ -13505,14 +13584,14 @@ msgstr "Website"
 msgid "Web page or blog URL"
 msgstr "Web side eller blog URL"
 
-msgid "Preferred e-mail address"
-msgstr "Foretrukken e-mailadresse"
+msgid "Preferred email address"
+msgstr ""
 
 msgid "Email verified"
 msgstr "Email verificeret"
 
-msgid "True if the e-mail address has been verified; otherwise false"
-msgstr "Sandt, hvis e-mailadressen er blevet verificeret; ellers falsk"
+msgid "True if the email address has been verified; otherwise false"
+msgstr ""
 
 msgid "Birthdate"
 msgstr "Fødselsdag"
@@ -13609,8 +13688,8 @@ msgstr "Login til Adgangsplatformen"
 msgid "Okta"
 msgstr "Okta"
 
-msgid "Generic"
-msgstr "Generisk"
+msgid "Generic OAuth 2.0"
+msgstr ""
 
 msgid "LinkedIn"
 msgstr "LinkedIn"
@@ -13618,17 +13697,50 @@ msgstr "LinkedIn"
 msgid "GitHub"
 msgstr "GitHub"
 
-msgid "Configure OpenID Connect, choose active OpenID Connect clients etc."
-msgstr "Indstil credentials til adgangsplatformen, ID og secret."
+msgid "Configure OpenID Connect clients."
+msgstr ""
 
 msgid "Connected Accounts"
 msgstr "Forbundne konti"
 
+msgid "Clients"
+msgstr "Klienter"
+
 msgid "A pluggable client implementation for the OpenID Connect protocol."
 msgstr "En udskiftelig klientimplementering for OpenID Connect-protokollen."
 
+msgid "OpenID Connect clients"
+msgstr ""
+
+msgid "Add OpenID Connect client"
+msgstr ""
+
+msgid "Edit OpenID Connect client"
+msgstr ""
+
+msgid "Delete OpenID Connect client"
+msgstr ""
+
+msgid "Enable an OpenID Connect client"
+msgstr ""
+
+msgid "Disable an OpenID Connect client"
+msgstr ""
+
+msgid "OpenID Connect Settings"
+msgstr ""
+
 msgid "OpenID Connect redirect page"
 msgstr "OpenID Connect omdirigeringsside"
+
+msgid "End session"
+msgstr ""
+
+msgid "Log in via OpenID Connect"
+msgstr ""
+
+msgid "OpenID Connect initiate redirect page"
+msgstr ""
 
 msgid "Categories"
 msgstr "Kategorier"
