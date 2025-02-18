@@ -23,7 +23,7 @@ services:
     arguments:
       - '@dpl_login.adgangsplatformen.client'
       - '@module_handler'
-      - '@openid_connect.authmap'
+      - '@externalauth.externalauth'
     tags:
       - {
           name: authentication_provider,

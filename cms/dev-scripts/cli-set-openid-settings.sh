@@ -28,6 +28,6 @@ declare -A mapping=(
 # Iterate over the mapping and execute the command
 for key in "${!mapping[@]}"; do
   value="${mapping[$key]}"
-  command="drush cset -y openid_connect.settings.adgangsplatformen settings.$value ${!key}"
+  command="drush cset -y openid_connect.client.adgangsplatformen settings.$value ${!key}"
   eval "$command"
 done
