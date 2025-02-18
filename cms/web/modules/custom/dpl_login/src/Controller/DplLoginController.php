@@ -12,7 +12,6 @@ use Drupal\dpl_login\Exception\MissingConfigurationException;
 use Drupal\dpl_login\UserTokens;
 use Drupal\openid_connect\OpenIDConnectClaims;
 use Drupal\openid_connect\OpenIDConnectSessionInterface;
-use Drupal\openid_connect\Plugin\OpenIDConnectClientInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -31,7 +30,6 @@ class DplLoginController extends ControllerBase {
   public function __construct(
     protected UserTokens $userTokens,
     protected Config $config,
-    protected OpenIDConnectClientInterface $client,
     protected OpenIDConnectClaims $claims,
     protected OpenIDConnectSessionInterface $session,
     protected EntityTypeManagerInterface $entity_type_manager,
@@ -51,7 +49,6 @@ class DplLoginController extends ControllerBase {
     return new static(
       $container->get('dpl_login.user_tokens'),
       $container->get('dpl_login.adgangsplatformen.config'),
-      $container->get('dpl_login.adgangsplatformen.client'),
       $container->get('openid_connect.claims'),
       $container->get('openid_connect.session'),
       $container->get('entity_type.manager'),
