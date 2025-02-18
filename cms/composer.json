@@ -354,7 +354,8 @@
                 "3343816: Specification includes disabled resources": "https://git.drupalcode.org/project/openapi_rest/-/commit/6618157334feca93fad1041583375eed660b9085.patch"
             },
             "drupal/openid_connect": {
-                "3393143: Add try/catch block for catching Integrity constraints violations on duplicate entries": "https://git.drupalcode.org/project/openid_connect/-/commit/312d6282fbc032e2c84f87d6ffdf30676b7534ca.patch"
+                "3393143: Add try/catch block for catching Integrity constraints violations on duplicate entries": "https://git.drupalcode.org/project/openid_connect/-/commit/312d6282fbc032e2c84f87d6ffdf30676b7534ca.patch",
+                "3375886: Add update hook for setting the missing 'iss_allowed_domains' on client plugin entity configuration ": "https://git.drupalcode.org/project/openid_connect/-/commit/dcc97e846e2aceb2a381d58fc0710cad07d24f71.patch"
             },
             "drupal/paragraphs_ee": {
                 "3106254: Sorting paragraph list alphabetically in modal": "https://www.drupal.org/files/issues/2023-03-30/paragraphs_ee_sort.patch"
