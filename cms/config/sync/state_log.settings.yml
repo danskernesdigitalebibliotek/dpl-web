@@ -20,10 +20,14 @@ log_ignored_state:
   36: search_api.index.events.has_reindexed
   38: system.cron_key
   40: system.cron_last
-  42: system.private_key
-  44: system.profile.files
-  46: update.last_check
-  48: update.last_email_notification
-  50: views.view_route_names
-  52: webform.element.message
-  54: webform.version
+  42: system.javascript_parsed
+  44: system.module.files
+  46: system.private_key
+  48: system.profile.files
+  50: system.theme.files
+  52: twig_extension_hash_prefix
+  54: update.last_check
+  56: update.last_email_notification
+  58: views.view_route_names
+  60: webform.element.message
+  62: webform.version
