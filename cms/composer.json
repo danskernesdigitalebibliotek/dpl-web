@@ -40,10 +40,10 @@
             "type": "package",
             "package": {
                 "name": "danskernesdigitalebibliotek/dpl-react",
-                "version": "2025.7.0",
+                "version": "2025.8.0",
                 "type": "drupal-library",
                 "dist": {
-                    "url": "https://github.com/danskernesdigitalebibliotek/dpl-react/releases/download/2025.7.0/dist-2025-7-0-1dcff041f0d20269b2d42fe5072fda869e4b6c24.zip",
+                    "url": "https://github.com/danskernesdigitalebibliotek/dpl-react/releases/download/2025.8.0/dist-2025-8-0-7957f1b1ca10b4f5844bc77fe64cc46517bc1de7.zip",
                     "type": "zip"
                 },
                 "require": {
@@ -56,9 +56,9 @@
             "package": {
                 "name": "danskernesdigitalebibliotek/dpl-design-system",
                 "type": "drupal-library",
-                "version": "2025.7.0",
+                "version": "2025.8.0",
                 "dist": {
-                    "url": "https://github.com/danskernesdigitalebibliotek/dpl-design-system/releases/download/2025.7.0/dist-2025-7-0-6333b0569d507fb564d17273b66b1ca15f570790.zip",
+                    "url": "https://github.com/danskernesdigitalebibliotek/dpl-design-system/releases/download/2025.8.0/dist-2025-8-0-4c90885f3e99874a9d067ed83ae96c3b329a09b4.zip",
                     "type": "zip"
                 }
             }
@@ -91,8 +91,8 @@
         "composer/installers": "1.12.0",
         "cweagans/composer-patches": "1.7.3",
         "danskernesdigitalebibliotek/cms-api": "*",
-        "danskernesdigitalebibliotek/dpl-design-system": "2025.7.0",
-        "danskernesdigitalebibliotek/dpl-react": "2025.7.0",
+        "danskernesdigitalebibliotek/dpl-design-system": "2025.8.0",
+        "danskernesdigitalebibliotek/dpl-react": "2025.8.0",
         "danskernesdigitalebibliotek/fbs-client": "*",
         "dealerdirect/phpcodesniffer-composer-installer": "^1.0.0",
         "deoliveiralucas/array-keys-case-transform": "^1.1",
@@ -122,6 +122,7 @@
         "drupal/entity_clone_template": "^2.0",
         "drupal/entity_reference_revisions": "^1.11.0",
         "drupal/enum_field": "^1.0",
+        "drupal/externalauth": "^2.0",
         "drupal/facets": "^2.0",
         "drupal/field_group": "^3.4",
         "drupal/field_inheritance": "^2.0",
@@ -148,7 +149,7 @@
         "drupal/openapi": "^2.1",
         "drupal/openapi_rest": "^2.0@RC",
         "drupal/openapi_ui_swagger": "^1.0",
-        "drupal/openid_connect": "^1.4",
+        "drupal/openid_connect": "^3.0@alpha",
         "drupal/override_node_options": "^2.8",
         "drupal/paragraphs": "^1.16",
         "drupal/paragraphs_ee": "^10",
@@ -351,6 +352,10 @@
             "drupal/openapi_rest": {
                 "3171530 + 3116760: Add support for parameter and response descriptions": "patches/openapi-parameter-response-descriptions-14-3.patch",
                 "3343816: Specification includes disabled resources": "https://git.drupalcode.org/project/openapi_rest/-/commit/6618157334feca93fad1041583375eed660b9085.patch"
+            },
+            "drupal/openid_connect": {
+                "3393143: Add try/catch block for catching Integrity constraints violations on duplicate entries": "https://git.drupalcode.org/project/openid_connect/-/commit/312d6282fbc032e2c84f87d6ffdf30676b7534ca.patch",
+                "3375886: Add update hook for setting the missing 'iss_allowed_domains' on client plugin entity configuration ": "https://git.drupalcode.org/project/openid_connect/-/commit/dcc97e846e2aceb2a381d58fc0710cad07d24f71.patch"
             },
             "drupal/paragraphs_ee": {
                 "3106254: Sorting paragraph list alphabetically in modal": "https://www.drupal.org/files/issues/2023-03-30/paragraphs_ee_sort.patch"

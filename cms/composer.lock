@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "4596acedaf6ba814e6392b966d23b0e0",
+    "content-hash": "2feb776f6b0137dda077a56fdbe1a955",
     "packages": [
         {
             "name": "amazeeio/drupal_integrations",
@@ -1166,19 +1166,19 @@
         },
         {
             "name": "danskernesdigitalebibliotek/dpl-design-system",
-            "version": "2025.7.0",
+            "version": "2025.8.0",
             "dist": {
                 "type": "zip",
-                "url": "https://github.com/danskernesdigitalebibliotek/dpl-design-system/releases/download/2025.7.0/dist-2025-7-0-6333b0569d507fb564d17273b66b1ca15f570790.zip"
+                "url": "https://github.com/danskernesdigitalebibliotek/dpl-design-system/releases/download/2025.8.0/dist-2025-8-0-4c90885f3e99874a9d067ed83ae96c3b329a09b4.zip"
             },
             "type": "drupal-library"
         },
         {
             "name": "danskernesdigitalebibliotek/dpl-react",
-            "version": "2025.7.0",
+            "version": "2025.8.0",
             "dist": {
                 "type": "zip",
-                "url": "https://github.com/danskernesdigitalebibliotek/dpl-react/releases/download/2025.7.0/dist-2025-7-0-1dcff041f0d20269b2d42fe5072fda869e4b6c24.zip"
+                "url": "https://github.com/danskernesdigitalebibliotek/dpl-react/releases/download/2025.8.0/dist-2025-8-0-7957f1b1ca10b4f5844bc77fe64cc46517bc1de7.zip"
             },
             "require": {
                 "composer/installers": "^1.2.0"
@@ -4319,6 +4319,60 @@
             }
         },
         {
+            "name": "drupal/externalauth",
+            "version": "2.0.7",
+            "source": {
+                "type": "git",
+                "url": "https://git.drupalcode.org/project/externalauth.git",
+                "reference": "2.0.7"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://ftp.drupal.org/files/projects/externalauth-2.0.7.zip",
+                "reference": "2.0.7",
+                "shasum": "93c2b15f21172f931bb81cc365c828c12be377c3"
+            },
+            "require": {
+                "drupal/core": "^9.5 || ^10 || ^11"
+            },
+            "type": "drupal-module",
+            "extra": {
+                "drupal": {
+                    "version": "2.0.7",
+                    "datestamp": "1735897906",
+                    "security-coverage": {
+                        "status": "covered",
+                        "message": "Covered by Drupal's security advisory policy"
+                    }
+                }
+            },
+            "notification-url": "https://packages.drupal.org/8/downloads",
+            "license": [
+                "GPL-2.0-or-later"
+            ],
+            "authors": [
+                {
+                    "name": "Sven Decabooter",
+                    "homepage": "https://www.drupal.org/u/svendecabooter",
+                    "role": "Maintainer"
+                },
+                {
+                    "name": "snufkin",
+                    "homepage": "https://www.drupal.org/user/58645"
+                },
+                {
+                    "name": "svendecabooter",
+                    "homepage": "https://www.drupal.org/user/35369"
+                }
+            ],
+            "description": "Helper module to authenticate users using an external site / service and storing identification details",
+            "homepage": "https://drupal.org/project/externalauth",
+            "support": {
+                "source": "https://git.drupalcode.org/project/externalauth",
+                "issues": "https://www.drupal.org/project/issues/externalauth"
+            }
+        },
+        {
             "name": "drupal/facets",
             "version": "2.0.9",
             "source": {
@@ -4879,22 +4933,22 @@
         },
         {
             "name": "drupal/graphql_compose",
-            "version": "2.2.1",
+            "version": "2.3.0",
             "source": {
                 "type": "git",
                 "url": "https://git.drupalcode.org/project/graphql_compose.git",
-                "reference": "2.2.1"
+                "reference": "2.3.0"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://ftp.drupal.org/files/projects/graphql_compose-2.2.1.zip",
-                "reference": "2.2.1",
-                "shasum": "2293a62f322a109f7d38d9549769bcaa65137d2e"
+                "url": "https://ftp.drupal.org/files/projects/graphql_compose-2.3.0.zip",
+                "reference": "2.3.0",
+                "shasum": "4f02a57354a3a17879df4f24a8e20753333efd6b"
             },
             "require": {
                 "doctrine/inflector": "^2",
-                "drupal/core": "^10.1 || ^11",
-                "drupal/graphql": "^4.8",
+                "drupal/core": "^10.2 || ^11",
+                "drupal/graphql": "^4.9",
                 "php": "^8.1"
             },
             "require-dev": {
@@ -4910,14 +4964,16 @@
                 "drupal/graphql_compose_edges": "*",
                 "drupal/graphql_compose_layouts": "*",
                 "drupal/graphql_compose_routes": "*",
-                "drupal/layout_paragraphs": "2.0.x-dev@dev",
-                "drupal/menu_item_extras": "3.0.x-dev@dev",
+                "drupal/layout_paragraphs": "^2",
+                "drupal/link_attributes": "^2",
+                "drupal/menu_item_extras": "^3",
+                "drupal/menu_link_attributes": "^1",
                 "drupal/metatag": "^2",
-                "drupal/paragraphs": "1.x-dev@dev",
+                "drupal/paragraphs": "^1",
                 "drupal/redirect": "^1",
                 "drupal/schema_metatag": "^3",
                 "drupal/search_api": "^1",
-                "drupal/social_media_links": "2.x-dev@dev",
+                "drupal/social_media_links": "^2",
                 "drupal/svg_image": "^3",
                 "drupal/token": "^1",
                 "drupal/triples_field": "^1",
@@ -4926,8 +4982,8 @@
             "type": "drupal-module",
             "extra": {
                 "drupal": {
-                    "version": "2.2.1",
-                    "datestamp": "1726380157",
+                    "version": "2.3.0",
+                    "datestamp": "1739387377",
                     "security-coverage": {
                         "status": "covered",
                         "message": "Covered by Drupal's security advisory policy"
@@ -6290,30 +6346,32 @@
         },
         {
             "name": "drupal/openid_connect",
-            "version": "1.4.0",
+            "version": "3.0.0-alpha5",
             "source": {
                 "type": "git",
                 "url": "https://git.drupalcode.org/project/openid_connect.git",
-                "reference": "8.x-1.4"
+                "reference": "3.0.0-alpha5"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://ftp.drupal.org/files/projects/openid_connect-8.x-1.4.zip",
-                "reference": "8.x-1.4",
-                "shasum": "9bdbfa6365d10b2029bdaee9fbd82265aa6d4fa4"
+                "url": "https://ftp.drupal.org/files/projects/openid_connect-3.0.0-alpha5.zip",
+                "reference": "3.0.0-alpha5",
+                "shasum": "6bca4f7ac0f675370008a0631095722347379b04"
             },
             "require": {
-                "drupal/core": "^9.5 || ^10",
-                "ext-json": "*"
+                "drupal/core": "^9.5 || ^10.2 || ^11",
+                "drupal/externalauth": "^2.0",
+                "ext-json": "*",
+                "php": ">=8.1.0"
             },
             "type": "drupal-module",
             "extra": {
                 "drupal": {
-                    "version": "8.x-1.4",
-                    "datestamp": "1698170385",
+                    "version": "3.0.0-alpha5",
+                    "datestamp": "1735590945",
                     "security-coverage": {
-                        "status": "covered",
-                        "message": "Covered by Drupal's security advisory policy"
+                        "status": "not-covered",
+                        "message": "Alpha releases are not covered by Drupal security advisories."
                     }
                 }
             },
@@ -6329,6 +6387,10 @@
                 {
                     "name": "jcnventura",
                     "homepage": "https://www.drupal.org/user/122464"
+                },
+                {
+                    "name": "mstrelan",
+                    "homepage": "https://www.drupal.org/user/314289"
                 },
                 {
                     "name": "pfrilling",
@@ -17605,16 +17667,16 @@
         },
         {
             "name": "myclabs/deep-copy",
-            "version": "1.12.1",
+            "version": "1.13.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/myclabs/DeepCopy.git",
-                "reference": "123267b2c49fbf30d78a7b2d333f6be754b94845"
+                "reference": "024473a478be9df5fdaca2c793f2232fe788e414"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/myclabs/DeepCopy/zipball/123267b2c49fbf30d78a7b2d333f6be754b94845",
-                "reference": "123267b2c49fbf30d78a7b2d333f6be754b94845",
+                "url": "https://api.github.com/repos/myclabs/DeepCopy/zipball/024473a478be9df5fdaca2c793f2232fe788e414",
+                "reference": "024473a478be9df5fdaca2c793f2232fe788e414",
                 "shasum": ""
             },
             "require": {
@@ -17653,7 +17715,7 @@
             ],
             "support": {
                 "issues": "https://github.com/myclabs/DeepCopy/issues",
-                "source": "https://github.com/myclabs/DeepCopy/tree/1.12.1"
+                "source": "https://github.com/myclabs/DeepCopy/tree/1.13.0"
             },
             "funding": [
                 {
@@ -17661,7 +17723,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2024-11-08T17:47:46+00:00"
+            "time": "2025-02-12T12:17:51+00:00"
         },
         {
             "name": "palantirnet/drupal-rector",
@@ -20597,6 +20659,7 @@
         "drupal/gin_toolbar": 5,
         "drupal/multivalue_form_element": 10,
         "drupal/openapi_rest": 5,
+        "drupal/openid_connect": 15,
         "drupal/potion": 20
     },
     "prefer-stable": true,

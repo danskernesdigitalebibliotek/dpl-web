@@ -5,7 +5,7 @@ namespace Drupal\dpl_login;
 use Drupal\Core\Authentication\AuthenticationProviderInterface;
 use Drupal\Core\Extension\ModuleHandlerInterface;
 use Drupal\Core\Session\AccountInterface;
-use Drupal\openid_connect\OpenIDConnectAuthmap;
+use Drupal\externalauth\ExternalAuthInterface;
 use Drupal\openid_connect\Plugin\OpenIDConnectClientInterface;
 use Symfony\Component\HttpFoundation\Request;
 use function Safe\preg_match as preg_match;
@@ -28,7 +28,7 @@ class UserTokenAuthProvider implements AuthenticationProviderInterface {
   public function __construct(
     private OpenIDConnectClientInterface $client,
     private ModuleHandlerInterface $moduleHandler,
-    private OpenIDConnectAuthmap $authmap,
+    private ExternalAuthInterface $externalAuth,
   ) {}
 
   /**
@@ -90,7 +90,7 @@ class UserTokenAuthProvider implements AuthenticationProviderInterface {
         // case continue.
       }
       if (isset($user_info['sub'])) {
-        $user = $this->authmap->userLoadBySub($user_info['sub'], $this->client->getPluginId());
+        $user = $this->externalAuth->load($user_info['sub'], $this->client->getPluginId());
         $return = ($user instanceof AccountInterface) ? $user : NULL;
       }
     }

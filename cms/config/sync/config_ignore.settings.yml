@@ -21,6 +21,6 @@ ignored_config_entities:
   - dpl_unilogin.settings
   - dpl_url_proxy.settings
   - novel.settings
-  - openid_connect.settings.adgangsplatformen
+  - openid_connect.client.adgangsplatformen
   - system.site
   - 'webform.webform.*'
