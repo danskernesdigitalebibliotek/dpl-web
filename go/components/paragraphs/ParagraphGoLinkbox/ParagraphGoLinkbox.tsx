@@ -15,8 +15,8 @@ type TParagraphGoLinkboxProps = {
   title: TParagraphGoLinkbox["title"]
   goColor?: TParagraphGoLinkbox["goColor"]
   goDescription: TParagraphGoLinkbox["goDescription"]
-  goImage: TParagraphGoLinkbox["goImage"] & { mediaImage: Image }
-  goLinkParagraph: ParagraphGoLink
+  goImage: { mediaImage: Image }
+  goLinkParagraph: Omit<ParagraphGoLink, "id" | "langcode" | "status" | "created">
 }
 
 const colorMap = {
@@ -26,7 +26,7 @@ const colorMap = {
   content_color_4: "bg-content-4",
 }
 
-async function ParagraphGoLinkbox(paragraphGoLinkboxProps: TParagraphGoLinkboxProps) {
+function ParagraphGoLinkbox(paragraphGoLinkboxProps: TParagraphGoLinkboxProps) {
   const {
     title,
     goDescription: description,
@@ -37,7 +37,7 @@ async function ParagraphGoLinkbox(paragraphGoLinkboxProps: TParagraphGoLinkboxPr
 
   const color = goColor as keyof typeof colorMap
   const linkTitle = goLinkParagraph.link.title
-  const linkUrl = `${env.NEXT_PUBLIC_APP_URL}${goLinkParagraph.link.url}`
+  const linkUrl = goLinkParagraph.link.url
   const areaLabel = goLinkParagraph.ariaLabel
   const targetBlank = goLinkParagraph.targetBlank
 
@@ -66,7 +66,7 @@ async function ParagraphGoLinkbox(paragraphGoLinkboxProps: TParagraphGoLinkboxPr
                   src={goImage?.mediaImage.url}
                   width={goImage?.mediaImage.width || 0}
                   height={goImage?.mediaImage.height || 0}
-                  alt={goImage?.mediaImage.alt || goImage.name}
+                  alt={goImage?.mediaImage.alt || ""}
                 />
               )}
             </div>

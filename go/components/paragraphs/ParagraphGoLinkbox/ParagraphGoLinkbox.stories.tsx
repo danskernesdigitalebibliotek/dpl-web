@@ -15,19 +15,21 @@ const meta = {
     goColor: "content_color_1",
     goImage: {
       mediaImage: {
-        url: "https://via.placeholder.com/800x800",
+        url: "",
+        alt: "Placeholder",
+        height: 0,
+        size: 0,
+        width: 0,
       },
     },
-    goLink: {
-      id: "1",
-      status: true,
-      link: [
-        {
-          title: "Adrians bogklub 2.0",
-          url: "/",
-          internal: false,
-        },
-      ],
+    goLinkParagraph: {
+      link: {
+        title: "Læs mere",
+        url: "/",
+        internal: false,
+      },
+      ariaLabel: "Adrians bogklub 2.0",
+      targetBlank: false,
     },
   },
 } satisfies Meta<typeof ParagraphGoLinkbox>
@@ -36,10 +38,10 @@ export default meta
 type Story = StoryObj<typeof meta>
 
 export const Default: Story = {
-  render: args => <ParagraphGoLinkbox {...args}>ParagraphGoLinkbox</ParagraphGoLinkbox>,
+  render: args => <ParagraphGoLinkbox {...args} />,
 }
 
 export const DarkMode: Story = {
   decorators: [darkModeDecorator],
-  render: args => <ParagraphGoLinkbox {...args}>ParagraphGoLinkbox</ParagraphGoLinkbox>,
+  render: args => <ParagraphGoLinkbox {...args} />,
 }

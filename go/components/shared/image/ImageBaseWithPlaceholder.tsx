@@ -19,7 +19,7 @@ export default async function ImageBaseWithPlaceholder(props: TImageWrapperProps
   const base64 = data?.base64
 
   if (!base64) {
-    return <div>Image not found</div>
+    return null
   }
 
   return <ImageBase src={src} base64={base64} {...otherProps} />
