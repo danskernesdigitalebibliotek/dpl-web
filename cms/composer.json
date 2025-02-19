@@ -91,8 +91,8 @@
         "composer/installers": "1.12.0",
         "cweagans/composer-patches": "1.7.3",
         "danskernesdigitalebibliotek/cms-api": "*",
-        "danskernesdigitalebibliotek/dpl-design-system": "2025.8.0",
-        "danskernesdigitalebibliotek/dpl-react": "2025.8.0",
+        "danskernesdigitalebibliotek/dpl-design-system": "^2025.8",
+        "danskernesdigitalebibliotek/dpl-react": "^2025.8",
         "danskernesdigitalebibliotek/fbs-client": "*",
         "dealerdirect/phpcodesniffer-composer-installer": "^1.0.0",
         "deoliveiralucas/array-keys-case-transform": "^1.1",
@@ -278,6 +278,7 @@
             ],
             "file-mapping": {
                 "[web-root]/sites/default/all.settings.php": "assets/all.settings.php",
+                "[web-root]/sites/default/all.services.yml": "assets/all.services.yml",
                 "[web-root]/sites/bnf/all.settings.php": "assets/all.settings.php",
                 "[web-root]/sites/default/development.settings.php": "assets/development.settings.php",
                 "[web-root]/sites/bnf/development.settings.php": "assets/development.settings.php",
