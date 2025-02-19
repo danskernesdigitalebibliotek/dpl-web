@@ -24,8 +24,14 @@ if [ -z "$app_url" ]; then
 fi
 
 # Make sure the DPL CMS graphql schema endpoint is set in application
-cms_url=$(getLagoonUrl nginx)
-
+goCmsUrlPrefix="nginx."
+# If the project is "dpl-cms", we are running in a PR environment
+# and then the goUrlPrefix should be gocms-.
+# Otherwise we are in production and the goUrlPrefix should be "nginx.".
+if [ "$LAGOON_PROJECT" = "dpl-cms" ]; then
+  goCmsUrlPrefix="gocms-"
+fi
+cms_url=$(getLagoonUrl $goCmsUrlPrefix)
 if [ -z "$cms_url" ]; then
   echo "Error: Unable to determine CMS URL"
   exit 1
