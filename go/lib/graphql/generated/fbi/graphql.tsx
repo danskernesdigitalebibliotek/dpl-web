@@ -57,7 +57,10 @@ export type AccessUrlTypeEnum =
 
 export type Audience = {
   __typename?: 'Audience';
-  /** PEGI age rating for games  */
+  /**
+   * PEGI age rating for games
+   * @deprecated Use 'Audience.pegi' instead expires: 01/06-2025
+   */
   PEGI?: Maybe<Pegi>;
   /** Range of numbers with either beginning of range or end of range or both e.g. 6-10, 1980-1999 */
   ages: Array<Range>;
@@ -75,6 +78,8 @@ export type Audience = {
   lix?: Maybe<Scalars['String']['output']>;
   /** Media council age recommendation */
   mediaCouncilAgeRestriction?: Maybe<MediaCouncilAgeRestriction>;
+  /** PEGI age rating for games  */
+  pegi?: Maybe<Pegi>;
   /** Number of players in the game. */
   players?: Maybe<Players>;
   /** Primary target audience for this manifestation */
