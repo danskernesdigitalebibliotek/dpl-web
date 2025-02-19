@@ -12,7 +12,7 @@ const nextConfig = {
       },
       {
         protocol: "https",
-        hostname: env.NEXT_PUBLIC_GRAPHQL_URL,
+        hostname: env.NEXT_PUBLIC_GRAPHQL_HOSTNAME,
         pathname: "/**",
       },
     ],
