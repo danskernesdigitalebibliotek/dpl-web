@@ -32,11 +32,14 @@
   --aspect-2\/3: var(--aspect-2-3);
   --aspect-3\/2: var(--aspect-3-2);
   --aspect-3\/4: var(--aspect-3-4);
+  --aspect-3\/5: var(--aspect-3-5);
   --aspect-4\/3: var(--aspect-4-3);
   --aspect-4\/5: var(--aspect-4-5);
+  --aspect-4\/9: var(--aspect-4-9);
   --aspect-5\/2: var(--aspect-5-2);
   --aspect-5\/4: var(--aspect-5-4);
   --aspect-7\/9: var(--aspect-7-9);
+  --aspect-8\/15: var(--aspect-8-15);
   --aspect-16\/9: var(--aspect-16-9);
 
   --font-*: initial;
@@ -226,6 +229,7 @@
   --shadow-button: 2px 2px 0 0px var(--foreground);
   --shadow-button-hover: 1px 1px 0 0px var(--foreground);
   --shadow-cover-picture: -1px 1px 10px 0 var(--shadow-1), -3px 3px 20px 0 var(--shadow-2);
+  --shadow-stacked-card: -1px 1px 5px 0 var(--shadow-2), -1px 1px 10px 3px var(--shadow-2);
 
   @keyframes wiggle {
     10% 90% {

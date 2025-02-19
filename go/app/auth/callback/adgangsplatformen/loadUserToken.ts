@@ -1,4 +1,5 @@
 import { cookies } from "next/headers"
+import { z } from "zod"
 
 import getQueryClient from "@/lib/getQueryClient"
 import {
@@ -20,17 +21,26 @@ const loadUserToken = async () => {
   const data = await queryClient.fetchQuery<GetAdgangsplatformenUserTokenQuery>({
     queryKey: useGetAdgangsplatformenUserTokenQuery.getKey(),
     queryFn: useGetAdgangsplatformenUserTokenQuery.fetcher(undefined, {
-      Cookie: `${sessionCookie.name}=${sessionCookie.value}`,
+      headers: {
+        Cookie: `${sessionCookie.name}=${sessionCookie.value}`,
+      },
     }),
     initialData: {},
     staleTime: 0,
   })
 
-  if (!data?.dplTokens?.adgangsplatformen?.user) {
+  const validateUserToken = z
+    .object({
+      token: z.string(),
+      expire: z.number(),
+    })
+    .safeParse(data?.dplTokens?.adgangsplatformen?.user)
+
+  if (validateUserToken.error) {
     return null
   }
 
-  return data.dplTokens.adgangsplatformen.user
+  return validateUserToken.data
 }
 
 export default loadUserToken

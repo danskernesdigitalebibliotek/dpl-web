@@ -1,8 +1,7 @@
 import type { CodegenConfig } from "@graphql-codegen/cli"
+import { loadEnvConfig } from "@next/env"
 
 import goConfig from "./lib/config/goConfig"
-
-const { loadEnvConfig } = require("@next/env")
 
 loadEnvConfig(process.cwd())
 
@@ -35,7 +34,9 @@ const config: CodegenConfig = {
         fetcher: "@/lib/graphql/fetchers/dpl-cms.fetcher#fetcher",
       },
       hooks: {
-        afterOneFileWrite: ["yarn eslint --fix"],
+        // Correcting the codegen output.
+        // First off, we correct the type of the options for the fetcher.
+        afterOneFileWrite: ["yarn post-process-dpl-cms-graphql", "yarn eslint --fix"],
       },
     },
     // "lib/graphql/generated/dpl-cms/graphql.schema.json": {

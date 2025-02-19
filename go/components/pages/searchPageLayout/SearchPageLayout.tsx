@@ -35,10 +35,6 @@ const SearchPageLayout = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [loadMoreRefIsInView])
 
-  useEffect(() => {
-    actor.send({ type: "RESET_BOOTSTRAP_STATE" })
-  }, [actor])
-
   const isNoSearchResult = !isLoadingResults && (!data.search || !data.search.pages[0].length)
   const hitCountText = data.search?.hitcount ? `(${data.search.hitcount})` : ""
   const searchQueryText = searchQuery ? `"${searchQuery}"` : ""
@@ -69,7 +65,7 @@ const SearchPageLayout = () => {
               </div>
             </>
           )}
-          <hr className="-mx-grid-edge border-foreground w-screen opacity-10 md:mx-auto md:w-full" />
+          <hr />
           <div className="mb-space-y flex flex-col gap-y-[calc(var(--grid-gap-x)*2)]">
             {isNoSearchResult && (
               <p className="text-typo-subtitle-lg opacity-35">Ingen søgeresultat</p>

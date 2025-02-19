@@ -14,7 +14,7 @@ async function page(props: { params: Promise<{ slug: string[] }> }) {
   let data: GetPageByPathQuery
   // If no slug is provided, load the frontpage
   if (!slug) {
-    data = await loadPage(goConfig("routes.gofrontpage"))
+    data = await loadPage(goConfig("routes.frontpage"))
   } else {
     const slugString = slug.join("/")
     data = await loadPage(slugString)

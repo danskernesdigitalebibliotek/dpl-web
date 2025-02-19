@@ -1,15 +1,18 @@
-import getQueryClient from "@/lib/getQueryClient"
-import { GetArticleQuery, useGetArticleQuery } from "@/lib/graphql/generated/dpl-cms/graphql"
+// TODO: This folder has been commented out due to a codegenerating error that we
+// decided to proceed to fix once we work on the article page during a future sprint.
 
-const loadArticle = async (id: string) => {
-  const queryClient = getQueryClient()
+// import getQueryClient from "@/lib/getQueryClient"
+// import { GetArticleQuery, useGetArticleQuery } from "@/lib/graphql/generated/dpl-cms/graphql"
 
-  const data = await queryClient.fetchQuery<GetArticleQuery>({
-    queryKey: useGetArticleQuery.getKey({ id }),
-    queryFn: useGetArticleQuery.fetcher({ id }),
-  })
+// const loadArticle = async (id: string) => {
+//   const queryClient = getQueryClient()
 
-  return data
-}
+//   const data = await queryClient.fetchQuery<GetArticleQuery>({
+//     queryKey: useGetArticleQuery.getKey({ id }),
+//     queryFn: useGetArticleQuery.fetcher({ id }),
+//   })
 
-export default loadArticle
+//   return data
+// }
+
+// export default loadArticle

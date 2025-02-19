@@ -1,8 +1,13 @@
 query getAdgangsplatformenTokens {
   dplTokens {
     adgangsplatformen {
-      library
-      user
+      library {
+        token
+      }
+      user {
+        expire
+        token
+      }
     }
   }
 }
@@ -10,7 +15,10 @@ query getAdgangsplatformenTokens {
 query getAdgangsplatformenUserToken {
   dplTokens {
     adgangsplatformen {
-      user
+      user {
+        expire
+        token
+      }
     }
   }
 }

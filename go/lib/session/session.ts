@@ -106,21 +106,38 @@ export const setUniloginTokensOnSession = async (
   cookieStore.set("go-session:id_token", tokenSet.id_token)
 }
 
+type TAdgangsplatformenUserToken = {
+  token: string
+  expire: number
+}
+
 export const setAdgangsplatformenUserTokenOnSession = async (
   session: IronSession<TSessionData>,
-  token: string
+  token: TAdgangsplatformenUserToken
 ) => {
-  session.adgangsplatformenUserToken = token
+  session.adgangsplatformenUserToken = token.token
   session.expires = add(new Date(), {
-    // Three weeks.
-    // TODO: Get TTL from the tokenSet (API should return it).
-    seconds: 3 * 7 * 24 * 60 * 60,
+    seconds: token.expire,
   })
 }
 
-export const accessTokenShouldBeRefreshed = (session: IronSession<TSessionData>) => {
-  // If the session is not logged in, we don't need to refresh the access token.
-  if (!session.isLoggedIn) {
+export const saveAdgangsplatformenSession = async (
+  session: IronSession<TSessionData>,
+  userToken: TAdgangsplatformenUserToken
+) => {
+  session.isLoggedIn = true
+  session.type = "adgangsplatformen"
+  setAdgangsplatformenUserTokenOnSession(session, userToken)
+  await session.save()
+}
+
+export const accessTokenShouldBeRefreshed = (
+  session: IronSession<TSessionData>,
+  sessionType: TSessionType
+) => {
+  // If the session is not logged in, or it is not of the specified type
+  // we don't need to refresh the access token.
+  if (!session.isLoggedIn || session.type !== sessionType || !session.refresh_token) {
     return false
   }
 
