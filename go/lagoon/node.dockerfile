@@ -15,4 +15,8 @@ EXPOSE 3000
 RUN mkdir -p /app/.next/trace
 RUN chmod -R 777 /app/.next
 
+# Vercel does it. So let's try it.
+# https://github.com/vercel/next.js/blob/canary/examples/with-docker/Dockerfile
+ENV NODE_ENV=production
+
 CMD ["/app/lagoon/start.sh"]
