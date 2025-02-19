@@ -41,14 +41,14 @@ query getPageByPath($path: String!) {
               }
               goColor
               goDescription
-              goLink {
+              goLinkParagraph {
                 ... on ParagraphGoLink {
                   link {
                     title
                     url
                   }
-                  ariaLabel
                   targetBlank
+                  ariaLabel
                 }
               }
             }

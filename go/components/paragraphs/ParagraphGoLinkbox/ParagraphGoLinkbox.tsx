@@ -1,10 +1,11 @@
 import Link from "next/link"
+import { env } from "process"
 import React from "react"
 
 import { Button } from "@/components/shared/button/Button"
 import ImageBaseWithPlaceholder from "@/components/shared/image/ImageBaseWithPlaceholder"
 import {
-  MediaImage,
+  Image,
   ParagraphGoLink,
   ParagraphGoLinkbox as TParagraphGoLinkbox,
 } from "@/lib/graphql/generated/dpl-cms/graphql"
@@ -14,8 +15,8 @@ type TParagraphGoLinkboxProps = {
   title: TParagraphGoLinkbox["title"]
   goColor?: TParagraphGoLinkbox["goColor"]
   goDescription: TParagraphGoLinkbox["goDescription"]
-  goImage: MediaImage & { alt?: string; height?: number; width?: number }
-  goLink?: ParagraphGoLink
+  goImage: TParagraphGoLinkbox["goImage"] & { mediaImage: Image }
+  goLinkParagraph: ParagraphGoLink
 }
 
 const colorMap = {
@@ -29,14 +30,16 @@ async function ParagraphGoLinkbox(paragraphGoLinkboxProps: TParagraphGoLinkboxPr
   const {
     title,
     goDescription: description,
-    goLink: link,
+    goLinkParagraph,
     goColor,
     goImage,
   } = paragraphGoLinkboxProps
 
   const color = goColor as keyof typeof colorMap
-  const linkTitle = link?.link[0].title
-  const linkUrl = link?.link[0].url
+  const linkTitle = goLinkParagraph.link.title
+  const linkUrl = `${env.NEXT_PUBLIC_APP_URL}${goLinkParagraph.link.url}`
+  const areaLabel = goLinkParagraph.ariaLabel
+  const targetBlank = goLinkParagraph.targetBlank
 
   return (
     <div className="content-container">
@@ -55,7 +58,7 @@ async function ParagraphGoLinkbox(paragraphGoLinkboxProps: TParagraphGoLinkboxPr
                 "relative aspect-1/1 overflow-hidden rounded-md",
                 color ? "m-grid-column-2 lg:m-grid-column" : ""
               )}>
-              {goImage.mediaImage.url && (
+              {goImage?.mediaImage.url && (
                 <ImageBaseWithPlaceholder
                   className={cn("rounded-base")}
                   sizes="100vw"
@@ -63,7 +66,7 @@ async function ParagraphGoLinkbox(paragraphGoLinkboxProps: TParagraphGoLinkboxPr
                   src={goImage?.mediaImage.url}
                   width={goImage?.mediaImage.width || 0}
                   height={goImage?.mediaImage.height || 0}
-                  alt={goImage?.alt || ""}
+                  alt={goImage?.mediaImage.alt || goImage.name}
                 />
               )}
             </div>
@@ -75,7 +78,11 @@ async function ParagraphGoLinkbox(paragraphGoLinkboxProps: TParagraphGoLinkboxPr
             <p className="mr-grid-column-half">{description}</p>
             {linkUrl && linkTitle && (
               <Button asChild>
-                <Link title={linkTitle} href={linkUrl}>
+                <Link
+                  title={linkTitle}
+                  href={linkUrl}
+                  area-label={areaLabel || linkTitle}
+                  target={targetBlank ? "_blank" : undefined}>
                   {linkTitle}
                 </Link>
               </Button>
