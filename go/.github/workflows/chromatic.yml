@@ -50,7 +50,7 @@ jobs:
           envFile: ".env.test"
 
       - name: Install dependencies
-        run: npm install --legacy-peer-deps
+        run: npm install --frozen-lockfile
 
       - name: Publish to Chromatic
         uses: chromaui/action@v1
