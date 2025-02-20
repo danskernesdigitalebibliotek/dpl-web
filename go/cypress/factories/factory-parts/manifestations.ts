@@ -6,7 +6,7 @@ import { Work } from "./works"
 type Manifestation = Work["manifestations"]["all"][0]
 
 export const eBookManifestationFactory = Factory.define<Manifestation>(() => ({
-  pid: "870970-basis:38772791",
+  pid: "1",
   genreAndForm: ["myter", "billedbøger"],
   publisher: ["Publisher Name"],
   contributorsFromDescription: [],
@@ -25,7 +25,7 @@ export const eBookManifestationFactory = Factory.define<Manifestation>(() => ({
 }))
 
 export const audioBookManifestationFactory = Factory.define<Manifestation>(() => ({
-  pid: "870970-basis:38786768",
+  pid: "2",
   genreAndForm: ["myter", "billedbøger"],
   publisher: ["Publisher Name"],
   contributorsFromDescription: [],
