@@ -1,3 +1,7 @@
 extend type Mutation {
   import(uuid: String!, callbackUrl: String!): ImportResponse!
 }
+
+extend type Query {
+  newContent(uuid: String!, since: Time!): NewContentResponse!
+}

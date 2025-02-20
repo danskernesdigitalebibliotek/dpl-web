@@ -8,3 +8,10 @@ enum ImportStatus {
      failure
      duplicate
 }
+
+scalar Violation
+
+type NewContentResponse {
+  uuids: [String!]!
+  errors: [Violation]
+}
