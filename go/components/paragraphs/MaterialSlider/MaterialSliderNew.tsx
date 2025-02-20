@@ -150,30 +150,30 @@ const MaterialSliderNew = ({ works, title }: MaterialSliderProps) => {
   }
 
   return (
-    <div className="bg-background-overlay">
-      <div className="content-container grid-go overflow-hidden">
-        <h2 className="text-typo-heading-2 col-span-full my-12">{title}</h2>
-        <hr className="col-span-full mb-6" />
-
-        <div className="gap-grid-gap col-span-full flex flex-row justify-end">
-          <Button
-            disabled={reachedStart}
-            variant="icon"
-            ariaLabel="Vis forrige værker"
-            onClick={() => onLeftClick()}>
-            <Icon className="h-[24px] w-[24px]" name="arrow-left" />
-          </Button>
-          <Button
-            disabled={reachedEnd}
-            variant="icon"
-            ariaLabel="Vis næste værker"
-            onClick={() => onRightClick()}>
-            <Icon className="h-[24px] w-[24px]" name="arrow-right" />
-          </Button>
+    <div className="bg-background-overlay overflow-hidden">
+      <div className="content-container grid-go">
+        <div className="pt-paragraph-spacing col-span-full flex items-center justify-between">
+          <h2 className="text-typo-heading-2">{title}</h2>
+          <div className="flex flex-row justify-end gap-x-4">
+            <Button
+              disabled={reachedStart}
+              variant="icon"
+              ariaLabel="Vis forrige værker"
+              onClick={() => onLeftClick()}>
+              <Icon className="h-[24px] w-[24px]" name="arrow-left" />
+            </Button>
+            <Button
+              disabled={reachedEnd}
+              variant="icon"
+              ariaLabel="Vis næste værker"
+              onClick={() => onRightClick()}>
+              <Icon className="h-[24px] w-[24px]" name="arrow-right" />
+            </Button>
+          </div>
         </div>
 
-        <div className="-mx-grid-edge px-grid-edge col-span-full overflow-hidden">
-          <div className="my-paragraph-spacing-inner relative">
+        <div className="-mx-grid-edge px-grid-edge col-span-full">
+          <div className="my-paragraph-spacing">
             <div ref={sliderRef} className={"keen-slider !overflow-visible"}>
               {works ? (
                 works.map((work, index) => (

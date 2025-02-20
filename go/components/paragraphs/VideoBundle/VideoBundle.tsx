@@ -47,10 +47,8 @@ const VideoBundle = ({ works, title, videoUrl }: VideoBundleProps) => {
   return (
     <div className="bg-background-overlay">
       <div className="content-container">
-        <div className="w-full py-4 text-center md:py-12 lg:py-16">
-          <h2 className="text-typo-heading-1 lg:text-typo-heading-1 mb-4 block md:mb-10">
-            {title}
-          </h2>
+        <div className="my-paragraph-spacing w-full text-center">
+          <h2 className="text-typo-heading-2 mb-paragraph-spacing">{title}</h2>
           <div className="grid-go col-span-full items-start">
             <div className="rounded-base relative col-span-full mb-11 aspect-16/9 overflow-hidden lg:col-span-9 lg:mb-0">
               <iframe

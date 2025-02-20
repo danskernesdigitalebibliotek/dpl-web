@@ -26,7 +26,7 @@ function Header() {
         <div className="flex flex-1 justify-center">
           <DarkModeToggle />
         </div>
-        <div className="gap-grid-gap flex flex-0 justify-end">
+        <div className="flex flex-0 justify-end gap-x-4">
           <Button variant="icon" ariaLabel="Tilgå hjælpesiden">
             <Icon className="h-[24px] w-[24px]" name="question-mark" />
           </Button>

@@ -216,7 +216,7 @@
   @media (width >= theme(--breakpoint-lg)) {
     :root {
       /* GRID */
-      --grid-edge: 2.5rem; /* 40px */
+      --grid-edge: 4rem; /* 64px */
       --grid-gap: 1.5rem; /* 24px */
 
       /* NAVIGATION */
@@ -225,8 +225,8 @@
       --navigation-search-height: 6.25rem; /* 100px */
 
       /* SPACING */
-      --paragraph-spacing: 5rem; /* 80px */
-      --paragraph-spacing-inner: 4rem; /* 64px */
+      --paragraph-spacing: 4rem; /* 64px */
+      --paragraph-spacing-inner: 3rem; /* 48px */
       --space-y: 5rem; /* 80px */
 
       /* FONTS */
