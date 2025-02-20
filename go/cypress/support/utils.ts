@@ -1,9 +1,8 @@
 import { CyHttpMessages } from "node_modules/cypress/types/net-stubbing"
 
-import { Operations as CmsOperations } from "@/lib/graphql/generated/dpl-cms/types"
 import { Operations as FbiOperations } from "@/lib/graphql/generated/fbi/types"
 
-export type Operations = FbiOperations | CmsOperations
+export type Operations = FbiOperations
 
 // Utility to match GraphQL mutation based on the operation name
 export const hasOperationName = (
