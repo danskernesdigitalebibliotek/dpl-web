@@ -5,8 +5,7 @@ import React from "react"
 import { ParagraphGoMaterialSliderAutomatic } from "@/lib/graphql/generated/dpl-cms/graphql"
 import { useComplexSearchForWorkTeaserQuery } from "@/lib/graphql/generated/fbi/graphql"
 
-import { MaterialSliderSkeleton } from "./MaterialSlider"
-import MaterialSliderNew from "./MaterialSliderNew"
+import MaterialSliderNew, { MaterialSliderSkeleton } from "./MaterialSliderNew"
 
 type MaterialSliderAutomatic = {
   titleOptional: ParagraphGoMaterialSliderAutomatic["title"]
