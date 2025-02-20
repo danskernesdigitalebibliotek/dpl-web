@@ -18,7 +18,7 @@ const getImageUrls = (): CoverImageUrls => {
 
   sizes.forEach(size => {
     imageUrls[size] = {
-      url: "https://placehold.co/375x540",
+      url: "https://placehold.co/375x375.jpg",
       format: "jpeg",
       size: size,
     }

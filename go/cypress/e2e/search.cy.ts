@@ -7,24 +7,23 @@ describe("Search Result Tests", () => {
     // Intercept search request
     cy.interceptGraphql({
       operationName: "searchWithPagination",
-      factory: SearchWithPaginationFactory,
+      data: SearchWithPaginationFactory.build(),
     })
     // Intercept search facets
     cy.interceptGraphql({
       operationName: "searchFacets",
-      factory: SearchFacetsFactory,
+      data: SearchFacetsFactory.build(),
     })
     // Intercept covers request
     cy.interceptCovers({
       covers: coverService.build(),
     })
-  })
 
-  it("Should get results when searching", () => {
     cy.visit("/search")
 
     // Search for harry potter and press enter
     cy.dataCy("search-input").should("exist").focus().type("harry potter{enter}")
+  })
 
   it("Should get results when searching", () => {
     // Check if search results are displayed

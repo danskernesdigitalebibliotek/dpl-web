@@ -1,6 +1,4 @@
 /* eslint-disable @typescript-eslint/no-namespace */
-import { Factory } from "fishery"
-
 import { Cover } from "@/lib/rest/cover-service-api/generated/model"
 
 import { CyKey } from "./constants"
@@ -25,24 +23,23 @@ Cypress.Commands.add("dataCy", selector => {
  * interceptGraphql is used to intercept a graphQL request that returns fishery data
  *
  * @param {Operations} operationName The name of the operation to be mocked.
- * @param {Factory<any>} factory The fishory factory to use for response data
+ * @param {Data<object>} factory The data to use for response data
  * @param {number} statusCode The status code to return.
  *
  */
 type InterceptGraphqlParams = {
   operationName: Operations
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  factory?: Factory<any>
+  data?: object
   statusCode?: number
 }
 Cypress.Commands.add(
   "interceptGraphql",
-  ({ operationName, factory, statusCode = 200 }: InterceptGraphqlParams) => {
+  ({ operationName, data, statusCode = 200 }: InterceptGraphqlParams) => {
     cy.intercept("POST", "**/graphql", req => {
       if (hasOperationName(req, operationName)) {
-        if (factory) {
-          const responseData = factory.build()
-          req.reply({ body: { data: responseData }, statusCode })
+        if (data) {
+          req.reply({ body: { data }, statusCode })
         } else {
           req.reply({ statusCode })
         }
