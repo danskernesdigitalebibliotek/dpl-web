@@ -37,7 +37,7 @@ const defaultSliderOptions: KeenSliderOptions = {
         origin: "auto",
         spacing: 12,
         perView: () => {
-          return 3
+          return 2
         },
       },
     },
@@ -47,12 +47,6 @@ const defaultSliderOptions: KeenSliderOptions = {
         perView: () => {
           return 3
         },
-      },
-    },
-    "(min-width: 1440px)": {
-      slides: {
-        spacing: 24,
-        perView: 3,
       },
     },
   },
