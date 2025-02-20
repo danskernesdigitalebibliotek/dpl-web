@@ -63,12 +63,12 @@ default:
       tag: meta
       attributes:
         property: 'og:image'
-        content: 'https://dapple-cms.docker/sites/default/files/styles/open_graph/public/2023-12/jilbert-ebrahimi-HAwA1N2gjo8-unsplash.jpg?h=e5aec6c8&itok=27n9invy'
+        content: 'https://dapple-cms.docker/sites/default/files/styles/open_graph/public/2023-12/jilbert-ebrahimi-HAwA1N2gjo8-unsplash.jpg?h=e5aec6c8&itok=J7Yegdgw'
     -
       tag: meta
       attributes:
         property: 'og:image:url'
-        content: 'https://dapple-cms.docker/sites/default/files/styles/open_graph/public/2023-12/jilbert-ebrahimi-HAwA1N2gjo8-unsplash.jpg?h=e5aec6c8&itok=27n9invy'
+        content: 'https://dapple-cms.docker/sites/default/files/styles/open_graph/public/2023-12/jilbert-ebrahimi-HAwA1N2gjo8-unsplash.jpg?h=e5aec6c8&itok=J7Yegdgw'
     -
       tag: meta
       attributes:

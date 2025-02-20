@@ -1,0 +1,365 @@
+_meta:
+  version: '1.0'
+  entity_type: node
+  uuid: 5395582b-a4a4-4f57-952e-38caae27d9aa
+  bundle: go_page
+  default_langcode: da
+  depends:
+    264dd76d-ab5f-452b-a2f9-c36756fae74d: file
+    ddd4f544-aff0-40d4-8c8e-651ca39e8db6: media
+    e8283d3c-968a-4e74-ae02-9f02b76bb839: media
+    d219e4de-4984-487e-8e21-9f56c0a0335c: media
+default:
+  revision_uid:
+    -
+      target_id: 1
+  status:
+    -
+      value: true
+  uid:
+    -
+      target_id: 1
+  title:
+    -
+      value: 'GO Paragraphs'
+  created:
+    -
+      value: 1739797930
+  promote:
+    -
+      value: false
+  sticky:
+    -
+      value: false
+  revision_translation_affected:
+    -
+      value: true
+  entity_clone_template_active:
+    -
+      value: false
+  entity_clone_template_image:
+    -
+      entity: 264dd76d-ab5f-452b-a2f9-c36756fae74d
+      alt: ''
+      title: ''
+      width: 3944
+      height: 2616
+  metatag:
+    -
+      tag: meta
+      attributes:
+        name: title
+        content: 'GO Paragraphs | DPL CMS'
+  path:
+    -
+      alias: /go-paragraphs
+      langcode: und
+      pathauto: 1
+  field_paragraphs:
+    -
+      entity:
+        _meta:
+          version: '1.0'
+          entity_type: paragraph
+          uuid: afeec80d-b19a-4d68-861e-7da9d37cf37b
+          bundle: go_linkbox
+          default_langcode: da
+        default:
+          status:
+            -
+              value: true
+          created:
+            -
+              value: 1739797930
+          behavior_settings:
+            -
+              value: {  }
+          revision_translation_affected:
+            -
+              value: true
+          field_go_color:
+            -
+              value: content_color_1
+          field_go_description:
+            -
+              value: 'Det er endelig blevet forår. Alt spirer og gror og får nyt liv. Vi får lyst til at komme ud og være aktive i naturen. Så her er samlet lidt inspiration til både aktiviteter og til den efterfølgende hyggestund i sofaen.'
+          field_go_image:
+            -
+              entity: ddd4f544-aff0-40d4-8c8e-651ca39e8db6
+          field_go_link_paragraph:
+            -
+              entity:
+                _meta:
+                  version: '1.0'
+                  entity_type: paragraph
+                  uuid: ea4d26bb-ef2a-492e-9424-8f306a958285
+                  bundle: go_link
+                  default_langcode: da
+                default:
+                  status:
+                    -
+                      value: true
+                  created:
+                    -
+                      value: 1739797930
+                  behavior_settings:
+                    -
+                      value: {  }
+                  revision_translation_affected:
+                    -
+                      value: true
+                  field_aria_label:
+                    -
+                      value: 'Læs mere om BogBattle'
+                  field_go_link:
+                    -
+                      uri: 'https://www.google.com/'
+                      title: 'Læs mere'
+                      options:
+                        href: 'https://www.google.com/'
+                        data-entity-type: ''
+                        data-entity-uuid: ''
+                        data-entity-substitution: ''
+                  field_target_blank:
+                    -
+                      value: false
+          field_title:
+            -
+              value: 'Linkbox: BogBattle Hold kæft det er sjovt!'
+    -
+      entity:
+        _meta:
+          version: '1.0'
+          entity_type: paragraph
+          uuid: d4d9d1ea-7e44-448d-8c0c-baa16e637c25
+          bundle: go_linkbox
+          default_langcode: da
+        default:
+          status:
+            -
+              value: true
+          created:
+            -
+              value: 1739797930
+          behavior_settings:
+            -
+              value: {  }
+          revision_translation_affected:
+            -
+              value: true
+          field_go_color:
+            -
+              value: content_color_2
+          field_go_description:
+            -
+              value: 'Det er endelig blevet forår. Alt spirer og gror og får nyt liv. Vi får lyst til at komme ud og være aktive i naturen. Så her er samlet lidt inspiration til både aktiviteter og til den efterfølgende hyggestund i sofaen.'
+          field_go_image:
+            -
+              entity: e8283d3c-968a-4e74-ae02-9f02b76bb839
+          field_go_link_paragraph:
+            -
+              entity:
+                _meta:
+                  version: '1.0'
+                  entity_type: paragraph
+                  uuid: db7bfaf6-7a3b-4922-8adf-6eaaf36abec0
+                  bundle: go_link
+                  default_langcode: da
+                default:
+                  status:
+                    -
+                      value: true
+                  created:
+                    -
+                      value: 1739797930
+                  behavior_settings:
+                    -
+                      value: {  }
+                  revision_translation_affected:
+                    -
+                      value: true
+                  field_aria_label:
+                    -
+                      value: 'Se mere om Eventyr i skoven og sjove naturaktiviteter for børn'
+                  field_go_link:
+                    -
+                      uri: 'https://www.google.com/'
+                      title: 'Læs mere'
+                      options:
+                        href: 'https://www.google.com/'
+                        data-entity-type: ''
+                        data-entity-uuid: ''
+                        data-entity-substitution: ''
+                  field_target_blank:
+                    -
+                      value: true
+          field_title:
+            -
+              value: 'Linkbox: Eventyr i skoven – (Open link in a new window)'
+    -
+      entity:
+        _meta:
+          version: '1.0'
+          entity_type: paragraph
+          uuid: 057e5b94-4c34-426d-b02b-05f662f96ee5
+          bundle: go_video
+          default_langcode: da
+        default:
+          status:
+            -
+              value: true
+          created:
+            -
+              value: 1739798512
+          behavior_settings:
+            -
+              value: {  }
+          revision_translation_affected:
+            -
+              value: true
+          field_embed_video:
+            -
+              entity: d219e4de-4984-487e-8e21-9f56c0a0335c
+          field_go_video_title:
+            -
+              value: 'GO Video (Embed video)'
+    -
+      entity:
+        _meta:
+          version: '1.0'
+          entity_type: paragraph
+          uuid: 40265f81-7060-48aa-8532-39c6147551f8
+          bundle: go_material_slider_automatic
+          default_langcode: da
+        default:
+          status:
+            -
+              value: true
+          created:
+            -
+              value: 1739798656
+          behavior_settings:
+            -
+              value: {  }
+          revision_translation_affected:
+            -
+              value: true
+          field_cql_search:
+            -
+              value: "'harry'"
+          field_slider_amount_of_materials:
+            -
+              value: 8
+          field_title:
+            -
+              value: 'GO Material Slider - Automatic'
+    -
+      entity:
+        _meta:
+          version: '1.0'
+          entity_type: paragraph
+          uuid: 322e13a6-7a51-430c-b858-46c71dfd1bb6
+          bundle: go_video_bundle_automatic
+          default_langcode: da
+        default:
+          status:
+            -
+              value: true
+          created:
+            -
+              value: 1739798742
+          behavior_settings:
+            -
+              value: {  }
+          revision_translation_affected:
+            -
+              value: true
+          field_cql_search:
+            -
+              value: "'emilie'"
+          field_embed_video:
+            -
+              entity: d219e4de-4984-487e-8e21-9f56c0a0335c
+          field_go_video_title:
+            -
+              value: 'GO Video Bundle - Automatic'
+          field_video_amount_of_materials:
+            -
+              value: 5
+    -
+      entity:
+        _meta:
+          version: '1.0'
+          entity_type: paragraph
+          uuid: 4297f53e-dbae-42a3-a599-4aba54872fb5
+          bundle: go_material_slider_manual
+          default_langcode: da
+        default:
+          status:
+            -
+              value: true
+          created:
+            -
+              value: 1739798834
+          behavior_settings:
+            -
+              value: {  }
+          revision_translation_affected:
+            -
+              value: true
+          field_material_slider_work_ids:
+            -
+              value: 'work-of:870970-basis:139690508'
+              material_type: 'billedbog (online)'
+            -
+              value: 'work-of:870970-basis:137686864'
+              material_type: 'lydbog (online)'
+            -
+              value: 'work-of:870970-basis:27262546'
+              material_type: billedbog
+            -
+              value: 'work-of:870970-basis:136351885'
+              material_type: e-bog
+          field_title:
+            -
+              value: 'GO Material Slider - Manual'
+    -
+      entity:
+        _meta:
+          version: '1.0'
+          entity_type: paragraph
+          uuid: 6b471bec-8038-4387-ae62-b53cd311752d
+          bundle: go_video_bundle_manual
+          default_langcode: da
+        default:
+          status:
+            -
+              value: true
+          created:
+            -
+              value: 1739799121
+          behavior_settings:
+            -
+              value: {  }
+          revision_translation_affected:
+            -
+              value: true
+          field_embed_video:
+            -
+              entity: d219e4de-4984-487e-8e21-9f56c0a0335c
+          field_go_video_title:
+            -
+              value: 'GO Video Bundle - Manual'
+          field_video_bundle_work_ids:
+            -
+              value: 'work-of:870970-basis:46132203'
+              material_type: bog
+            -
+              value: 'work-of:870970-basis:28045913'
+              material_type: 'billedbog (online)'
+            -
+              value: 'work-of:870970-basis:27654053'
+              material_type: billedbog
+  field_publication_date:
+    -
+      value: '2025-02-17'

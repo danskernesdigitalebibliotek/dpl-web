@@ -1,0 +1,42 @@
+_meta:
+  version: '1.0'
+  entity_type: media
+  uuid: ddd4f544-aff0-40d4-8c8e-651ca39e8db6
+  bundle: image
+  default_langcode: da
+  depends:
+    264dd76d-ab5f-452b-a2f9-c36756fae74d: file
+default:
+  status:
+    -
+      value: true
+  uid:
+    -
+      target_id: 1
+  name:
+    -
+      value: kids-with-medal.jpg
+  created:
+    -
+      value: 1739798339
+  revision_translation_affected:
+    -
+      value: true
+  metatag:
+    -
+      tag: meta
+      attributes:
+        name: title
+        content: '| DPL CMS'
+  path:
+    -
+      alias: ''
+      langcode: da
+      pathauto: 0
+  field_media_image:
+    -
+      entity: 264dd76d-ab5f-452b-a2f9-c36756fae74d
+      alt: 'kids with medal'
+      title: ''
+      width: 3944
+      height: 2616

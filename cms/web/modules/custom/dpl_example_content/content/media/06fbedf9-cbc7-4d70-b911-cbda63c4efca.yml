@@ -1,0 +1,42 @@
+_meta:
+  version: '1.0'
+  entity_type: media
+  uuid: 06fbedf9-cbc7-4d70-b911-cbda63c4efca
+  bundle: image
+  default_langcode: da
+  depends:
+    1c164019-9bac-49ee-8132-2bcce1414ec1: file
+default:
+  status:
+    -
+      value: true
+  uid:
+    -
+      target_id: 1
+  name:
+    -
+      value: orla_2023.jpeg
+  created:
+    -
+      value: 1739800507
+  revision_translation_affected:
+    -
+      value: true
+  metatag:
+    -
+      tag: meta
+      attributes:
+        name: title
+        content: '| DPL CMS'
+  path:
+    -
+      alias: ''
+      langcode: da
+      pathauto: 0
+  field_media_image:
+    -
+      entity: 1c164019-9bac-49ee-8132-2bcce1414ec1
+      alt: 'Orla prisen 2023'
+      title: ''
+      width: 900
+      height: 300
