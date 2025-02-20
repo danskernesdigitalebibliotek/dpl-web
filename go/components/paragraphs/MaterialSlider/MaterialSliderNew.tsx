@@ -2,7 +2,7 @@
 
 import { useWindowSize } from "@uidotdev/usehooks"
 import "keen-slider/keen-slider.min.css"
-import { KeenSliderOptions, useKeenSlider } from "keen-slider/react"
+import { KeenSliderOptions, KeenSliderPlugin, useKeenSlider } from "keen-slider/react"
 import Link from "next/link"
 import React, { useEffect, useRef, useState } from "react"
 
@@ -58,10 +58,72 @@ const defaultSliderOptions: KeenSliderOptions = {
   },
 }
 
+const WheelControls: KeenSliderPlugin = slider => {
+  let touchTimeout: ReturnType<typeof setTimeout>
+  let position: {
+    x: number
+    y: number
+  }
+  let wheelActive: boolean
+
+  function dispatch(e: WheelEvent, name: string) {
+    position.x -= e.deltaX
+    position.y -= e.deltaY
+    slider.container.dispatchEvent(
+      new CustomEvent(name, {
+        detail: {
+          x: position.x,
+          y: position.y,
+        },
+      })
+    )
+  }
+
+  function wheelStart(e: WheelEvent) {
+    position = {
+      x: e.pageX,
+      y: e.pageY,
+    }
+    dispatch(e, "ksDragStart")
+  }
+
+  function wheel(e: WheelEvent) {
+    dispatch(e, "ksDrag")
+  }
+
+  function wheelEnd(e: WheelEvent) {
+    dispatch(e, "ksDragEnd")
+  }
+
+  function eventWheel(e: WheelEvent) {
+    if (e.deltaX === 0) {
+      return
+    }
+
+    e.preventDefault()
+    if (!wheelActive) {
+      wheelStart(e)
+      wheelActive = true
+    }
+    wheel(e)
+    clearTimeout(touchTimeout)
+    touchTimeout = setTimeout(() => {
+      wheelActive = false
+      wheelEnd(e)
+    }, 50)
+  }
+
+  slider.on("created", () => {
+    slider.container.addEventListener("wheel", eventWheel, {
+      passive: false,
+    })
+  })
+}
+
 const MaterialSliderNew = ({ works, title }: MaterialSliderProps) => {
-  const [sliderRef, internalSlider] = useKeenSlider(defaultSliderOptions)
-  const [isStart, setIsStart] = useState(true)
-  const [isEnd, setIsEnd] = useState(true)
+  const [sliderRef, internalSlider] = useKeenSlider(defaultSliderOptions, [WheelControls])
+  const [reachedStart, setReachStart] = useState(true)
+  const [reachedEnd, setReachEnd] = useState(true)
   const size = useWindowSize()
 
   useEffect(() => {
@@ -79,8 +141,8 @@ const MaterialSliderNew = ({ works, title }: MaterialSliderProps) => {
   }, [size.width, internalSlider])
 
   const updateSlidePosition = () => {
-    setIsStart(internalSlider.current?.track.details.rel === 0)
-    setIsEnd(
+    setReachStart(internalSlider.current?.track.details.rel === 0)
+    setReachEnd(
       internalSlider.current?.track.details.maxIdx === internalSlider.current?.track.details.rel
     )
   }
@@ -101,14 +163,14 @@ const MaterialSliderNew = ({ works, title }: MaterialSliderProps) => {
 
         <div className="gap-grid-gap col-span-full flex flex-row justify-end">
           <Button
-            disabled={isStart}
+            disabled={reachedStart}
             variant="icon"
             ariaLabel="Vis forrige værker"
             onClick={() => onLeftClick()}>
             <Icon className="h-[24px] w-[24px]" name="arrow-left" />
           </Button>
           <Button
-            disabled={isEnd}
+            disabled={reachedEnd}
             variant="icon"
             ariaLabel="Vis næste værker"
             onClick={() => onRightClick()}>
@@ -116,15 +178,15 @@ const MaterialSliderNew = ({ works, title }: MaterialSliderProps) => {
           </Button>
         </div>
 
-        <div className="my-paragraph-spacing-inner relative col-span-full">
-          <div ref={sliderRef} className={"keen-slider !overflow-visible"}>
-            {works ? (
-              works.map((work, index) => (
-                <div key={index} className={cn("keen-slider__slide transition-opacity")}>
+        <div className="-mx-grid-edge px-grid-edge col-span-full overflow-hidden">
+          <div className="my-paragraph-spacing-inner relative">
+            <div ref={sliderRef} className={"keen-slider !overflow-visible"}>
+              {works ? (
+                works.map((work, index) => (
                   <Link
                     key={work.workId}
                     aria-label={`Tilgå værket ${work.titles.full[0]} af ${displayCreators(work.creators, 1)}`}
-                    className="focus-visible outline-accent-foreground focus:outline-offset-2"
+                    className="keen-slider__slide focus-visible outline-accent-foreground focus:outline-offset-2"
                     href={resolveUrl({
                       routeParams: { work: "work", wid: work.workId },
                       queryParams: {
@@ -132,20 +194,15 @@ const MaterialSliderNew = ({ works, title }: MaterialSliderProps) => {
                           .materialTypeGeneral.code,
                       },
                     })}>
-                    <WorkCardWithCaption
-                      work={work}
-                      classNameWorkCard={"bg-background dark-mode-transition w-[100%]"}
-                      className="max-w-[100%]"
-                      isWithTilt
-                    />
+                    <WorkCardWithCaption work={work} isWithTilt />
                   </Link>
+                ))
+              ) : (
+                <div className="">
+                  <WorkCardEmpty />
                 </div>
-              ))
-            ) : (
-              <div className="">
-                <WorkCardEmpty />
-              </div>
-            )}
+              )}
+            </div>
           </div>
         </div>
       </div>
