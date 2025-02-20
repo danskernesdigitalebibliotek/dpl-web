@@ -123,6 +123,7 @@ const WorkCard = ({ work, className, isWithTilt = false }: WorkCardProps) => {
   return (
     <div
       key={work.workId}
+      data-cy={cyKeys["work-card"]}
       className={cn(
         `rounded-base bg-background-overlay relative mb-6 flex aspect-5/7 w-full flex-col overflow-hidden
         px-[15%] pt-[15%]`,

@@ -4,6 +4,7 @@ import { useSearchDataAndLoadingStates } from "@/components/pages/searchPageLayo
 import BadgeButton from "@/components/shared/badge/BadgeButton"
 import Icon from "@/components/shared/icon/Icon"
 import { createToggleFilterCallback } from "@/components/shared/searchFilters/helper"
+import { cyKeys } from "@/cypress/support/constants"
 import { SearchFacetFragment } from "@/lib/graphql/generated/fbi/graphql"
 import { TFilters } from "@/lib/machines/search/types"
 import useSearchMachineActor from "@/lib/machines/search/useSearchMachineActor"
@@ -37,7 +38,8 @@ const SearchFiltersMobile = ({ facets }: SearchFiltersMobileProps) => {
                     key={value}
                     ariaLabel={value}
                     isActive
-                    classNames="flex flex-row items-center pr-1">
+                    classNames="flex flex-row items-center pr-1"
+                    data-cy={cyKeys["filter-button"]}>
                     {value}
                     <Icon name="close" className="w-[25px]" />
                   </BadgeButton>
