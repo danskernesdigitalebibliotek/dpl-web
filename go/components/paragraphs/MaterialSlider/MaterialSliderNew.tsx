@@ -29,7 +29,7 @@ const defaultSliderOptions: KeenSliderOptions = {
   slides: {
     origin: "auto",
     spacing: 12,
-    perView: 1.2,
+    perView: 1.1,
   },
   breakpoints: {
     "(min-width: 768px)": {
@@ -37,7 +37,7 @@ const defaultSliderOptions: KeenSliderOptions = {
         origin: "auto",
         spacing: 12,
         perView: () => {
-          return 2
+          return 2.1
         },
       },
     },
