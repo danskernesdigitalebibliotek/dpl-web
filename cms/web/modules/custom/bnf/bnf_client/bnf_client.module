@@ -11,7 +11,11 @@ use Drupal\node\NodeInterface;
 /**
  * Implements hook_form_alter().
  *
+<<<<<<< HEAD
  * Altering the node form, and adding an option to export the node to BNF.
+=======
+ * Altering the node edit form, and adding an option to export the node to BNF.
+>>>>>>> 911237f61 (Support go_article nodetypes, for BNF support.)
  * If checked, a custom form submit handler will take care of the rest.
  *
  * @see bnf_client_form_node_form_submit()
