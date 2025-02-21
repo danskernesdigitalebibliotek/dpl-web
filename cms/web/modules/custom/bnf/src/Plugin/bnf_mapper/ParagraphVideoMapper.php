@@ -5,32 +5,32 @@ declare(strict_types=1);
 namespace Drupal\bnf\Plugin\bnf_mapper;
 
 use Drupal\bnf\Attribute\BnfMapper;
-use Drupal\bnf\GraphQL\Operations\GetNode\Node\Paragraphs\ParagraphTextBody;
+use Drupal\bnf\GraphQL\Operations\GetNode\Node\Paragraphs\ParagraphVideo;
 use Drupal\bnf\Plugin\BnfMapperPluginParagraphBase;
+use Drupal\bnf\Plugin\FieldTypeTraits\EmbedVideoTrait;
 use Spawnia\Sailor\ObjectLike;
 
 /**
- * Mapping ParagraphTextBody => text_body.
+ * Mapping ParagraphVideo => video.
  */
 #[BnfMapper(
-  id: ParagraphTextBody::class,
+  id: ParagraphVideo::class,
   )]
-class ParagraphTextBodyMapper extends BnfMapperPluginParagraphBase {
+class ParagraphVideoMapper extends BnfMapperPluginParagraphBase {
+
+  use EmbedVideoTrait;
 
   /**
    * {@inheritdoc}
    */
   public function map(ObjectLike $object): mixed {
-    if (!$object instanceof ParagraphTextBody) {
+    if (!($object instanceof ParagraphVideo)) {
       throw new \RuntimeException('Wrong class handed to mapper');
     }
 
     return $this->paragraphStorage->create([
-      'type' => 'text_body',
-      'field_body' => [
-        'value' => $object->body->value ?? '',
-        'format' => $object->body->format ?? '',
-      ],
+      'type' => 'video',
+      'field_embed_video' => $this->getEmbedVideoValue($object->embedVideo),
     ]);
 
   }
