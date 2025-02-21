@@ -115,7 +115,7 @@ class GetNode extends \Spawnia\Sailor\Operation
                 ... on ParagraphGoLink {
                   id
                   targetBlank
-                  link {
+                  singleLink: link {
                     __typename
                     url
                     title
@@ -270,7 +270,7 @@ class GetNode extends \Spawnia\Sailor\Operation
                       id
                     }
                   }
-                  goLink {
+                  goLinkParagraph {
                     __typename
                     ... on ParagraphGoLink {
                       id

@@ -5,21 +5,18 @@ namespace Drupal\bnf\GraphQL\Operations\GetNode\Node\Paragraphs;
 /**
  * @property string $id
  * @property array<int, \Drupal\bnf\GraphQL\Operations\GetNode\Node\Paragraphs\MaterialSliderWorkIds\WorkId> $materialSliderWorkIds
+ * @property string $title
  * @property string $__typename
- * @property string|null $title
  */
 class ParagraphGoMaterialSliderManual extends \Spawnia\Sailor\ObjectLike
 {
     /**
      * @param string $id
      * @param array<int, \Drupal\bnf\GraphQL\Operations\GetNode\Node\Paragraphs\MaterialSliderWorkIds\WorkId> $materialSliderWorkIds
-     * @param string|null $title
+     * @param string $title
      */
-    public static function make(
-        $id,
-        $materialSliderWorkIds,
-        $title = 'Special default value that allows Sailor to differentiate between explicitly passing null and not passing a value at all.',
-    ): self {
+    public static function make($id, $materialSliderWorkIds, $title): self
+    {
         $instance = new self;
 
         if ($id !== self::UNDEFINED) {
@@ -28,10 +25,10 @@ class ParagraphGoMaterialSliderManual extends \Spawnia\Sailor\ObjectLike
         if ($materialSliderWorkIds !== self::UNDEFINED) {
             $instance->materialSliderWorkIds = $materialSliderWorkIds;
         }
-        $instance->__typename = 'ParagraphGoMaterialSliderManual';
         if ($title !== self::UNDEFINED) {
             $instance->title = $title;
         }
+        $instance->__typename = 'ParagraphGoMaterialSliderManual';
 
         return $instance;
     }
@@ -43,8 +40,8 @@ class ParagraphGoMaterialSliderManual extends \Spawnia\Sailor\ObjectLike
         return $converters ??= [
             'id' => new \Spawnia\Sailor\Convert\NonNullConverter(new \Spawnia\Sailor\Convert\IDConverter),
             'materialSliderWorkIds' => new \Spawnia\Sailor\Convert\NonNullConverter(new \Spawnia\Sailor\Convert\ListConverter(new \Spawnia\Sailor\Convert\NonNullConverter(new \Drupal\bnf\GraphQL\Operations\GetNode\Node\Paragraphs\MaterialSliderWorkIds\WorkId))),
+            'title' => new \Spawnia\Sailor\Convert\NonNullConverter(new \Spawnia\Sailor\Convert\StringConverter),
             '__typename' => new \Spawnia\Sailor\Convert\NonNullConverter(new \Spawnia\Sailor\Convert\StringConverter),
-            'title' => new \Spawnia\Sailor\Convert\NullConverter(new \Spawnia\Sailor\Convert\StringConverter),
         ];
     }
 

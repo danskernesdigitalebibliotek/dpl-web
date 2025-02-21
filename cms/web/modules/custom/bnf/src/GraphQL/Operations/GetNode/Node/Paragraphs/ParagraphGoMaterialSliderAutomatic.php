@@ -6,8 +6,8 @@ namespace Drupal\bnf\GraphQL\Operations\GetNode\Node\Paragraphs;
  * @property string $id
  * @property \Drupal\bnf\GraphQL\Operations\GetNode\Node\Paragraphs\CqlSearch\CQLSearch $cqlSearch
  * @property int $sliderAmountOfMaterials
+ * @property string $title
  * @property string $__typename
- * @property string|null $title
  */
 class ParagraphGoMaterialSliderAutomatic extends \Spawnia\Sailor\ObjectLike
 {
@@ -15,14 +15,10 @@ class ParagraphGoMaterialSliderAutomatic extends \Spawnia\Sailor\ObjectLike
      * @param string $id
      * @param \Drupal\bnf\GraphQL\Operations\GetNode\Node\Paragraphs\CqlSearch\CQLSearch $cqlSearch
      * @param int $sliderAmountOfMaterials
-     * @param string|null $title
+     * @param string $title
      */
-    public static function make(
-        $id,
-        $cqlSearch,
-        $sliderAmountOfMaterials,
-        $title = 'Special default value that allows Sailor to differentiate between explicitly passing null and not passing a value at all.',
-    ): self {
+    public static function make($id, $cqlSearch, $sliderAmountOfMaterials, $title): self
+    {
         $instance = new self;
 
         if ($id !== self::UNDEFINED) {
@@ -34,10 +30,10 @@ class ParagraphGoMaterialSliderAutomatic extends \Spawnia\Sailor\ObjectLike
         if ($sliderAmountOfMaterials !== self::UNDEFINED) {
             $instance->sliderAmountOfMaterials = $sliderAmountOfMaterials;
         }
-        $instance->__typename = 'ParagraphGoMaterialSliderAutomatic';
         if ($title !== self::UNDEFINED) {
             $instance->title = $title;
         }
+        $instance->__typename = 'ParagraphGoMaterialSliderAutomatic';
 
         return $instance;
     }
@@ -50,8 +46,8 @@ class ParagraphGoMaterialSliderAutomatic extends \Spawnia\Sailor\ObjectLike
             'id' => new \Spawnia\Sailor\Convert\NonNullConverter(new \Spawnia\Sailor\Convert\IDConverter),
             'cqlSearch' => new \Spawnia\Sailor\Convert\NonNullConverter(new \Drupal\bnf\GraphQL\Operations\GetNode\Node\Paragraphs\CqlSearch\CQLSearch),
             'sliderAmountOfMaterials' => new \Spawnia\Sailor\Convert\NonNullConverter(new \Spawnia\Sailor\Convert\IntConverter),
+            'title' => new \Spawnia\Sailor\Convert\NonNullConverter(new \Spawnia\Sailor\Convert\StringConverter),
             '__typename' => new \Spawnia\Sailor\Convert\NonNullConverter(new \Spawnia\Sailor\Convert\StringConverter),
-            'title' => new \Spawnia\Sailor\Convert\NullConverter(new \Spawnia\Sailor\Convert\StringConverter),
         ];
     }
 

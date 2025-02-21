@@ -72,7 +72,7 @@ query GetNode($id: ID!) {
         ... on ParagraphGoLink {
           id
           targetBlank
-          link {
+          singleLink: link {
             url
             title
             internal
@@ -209,7 +209,7 @@ query GetNode($id: ID!) {
               id
             }
           }
-          goLink {
+          goLinkParagraph {
             ... on ParagraphGoLink {
               id
               link {
