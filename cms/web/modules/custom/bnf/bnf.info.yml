@@ -5,3 +5,4 @@ package: 'DPL - BNF'
 core_version_requirement: ^10
 dependencies:
   - autowire_plugin_trait:autowire_plugin_trait
+  - drupal:enum_field
