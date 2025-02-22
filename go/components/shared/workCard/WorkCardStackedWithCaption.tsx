@@ -24,9 +24,10 @@ const WorkCardStackedWithCaption = ({
   if (works.length === 0) return <WorkCardEmpty />
 
   return (
-    <div>
+    <div className="relative">
       {[...Array(2)].map((_, index) => (
         <div
+          key={index}
           className={cn("rounded-base absolute top-0 right-0 left-0 aspect-5/7 w-full", {
             "shadow-stacked-card": index < 3,
             "rotate-3": index === 0,
@@ -34,10 +35,6 @@ const WorkCardStackedWithCaption = ({
           })}></div>
       ))}
       {works.map((work, index) => {
-        const stackPositionIndex = materialOrder
-          .slice()
-          .reverse()
-          .indexOf(work.workId as WorkId)
         const bestRepresentation = work.manifestations.bestRepresentation
         const zIndex = materialOrder.indexOf(work.workId as WorkId)
         return (
