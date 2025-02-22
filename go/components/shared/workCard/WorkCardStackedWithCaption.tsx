@@ -28,11 +28,15 @@ const WorkCardStackedWithCaption = ({
       {[...Array(2)].map((_, index) => (
         <div
           key={index}
-          className={cn("rounded-base absolute top-0 right-0 left-0 aspect-5/7 w-full", {
-            "shadow-stacked-card": index < 3,
-            "rotate-3": index === 0,
-            "-rotate-3": index === 1,
-          })}></div>
+          className={cn(
+            `rounded-base bg-background dark:bg-background-overlay-solid absolute top-0 right-0 left-0 aspect-5/7
+            w-full`,
+            {
+              "shadow-stacked-card": index < 3,
+              "rotate-3": index === 0,
+              "-rotate-3": index === 1,
+            }
+          )}></div>
       ))}
       {works.map((work, index) => {
         const bestRepresentation = work.manifestations.bestRepresentation
@@ -60,7 +64,10 @@ const WorkCardStackedWithCaption = ({
                   ? "pointer-events-auto h-auto overflow-visible opacity-100"
                   : "pointer-events-none h-0 overflow-hidden opacity-0"
               )}>
-              <WorkCard className={cn("bg-background shadow-stacked-card")} work={work} />
+              <WorkCard
+                className={cn("bg-background dark:bg-background-overlay-solid shadow-stacked-card")}
+                work={work}
+              />
             </WorkCardWithCaption>
           </Link>
         )

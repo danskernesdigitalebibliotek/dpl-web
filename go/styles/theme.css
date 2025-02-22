@@ -124,6 +124,7 @@
   --color-*: initial;
   --color-background: var(--background);
   --color-background-overlay: var(--background-overlay);
+  --color-background-overlay-solid: var(--background-overlay-solid);
   --color-background-skeleton: var(--background-skeleton);
 
   --color-foreground: var(--foreground);
