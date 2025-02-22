@@ -211,8 +211,8 @@ const MaterialSliderNew = ({ works, title }: MaterialSliderProps) => {
 
 export const MaterialSliderSkeleton = () => {
   return (
-    <div className="bg-background-overlay">
-      <div className="content-container gap-paragraph-spacing pt-paragraph-spacing flex flex-col">
+    <div className="bg-background-overlay overflow-hidden">
+      <div className="content-container gap-paragraph-spacing py-paragraph-spacing flex flex-col">
         <div className="flex items-center justify-between">
           <h2 className="text-typo-heading-3 bg-background-skeleton h-11 w-[50%] animate-pulse rounded-full" />
           <div className="flex gap-x-4">
@@ -220,11 +220,16 @@ export const MaterialSliderSkeleton = () => {
             <div className="bg-background-skeleton h-[40px] w-[40px] animate-pulse rounded-full" />
           </div>
         </div>
-        <div className="flex w-full flex-row gap-6 overflow-x-scroll pb-12 xl:py-12">
-          <div className="w-[70%] shrink-0 sm:w-[40%] lg:w-[30%]">
+        <div className="grid-go flex flex-row">
+          <div className="col-span-full min-w-[calc(90%+6px)] md:min-w-[calc(100%/2-28px)] lg:min-w-[calc(100%/3-16px)]">
             <WorkCardSkeleton />
           </div>
-          <div className="w-[70%] shrink-0 sm:w-[40%] lg:w-[30%]">
+          <div className="col-span-full block min-w-[calc(90%+6px)] md:min-w-[calc(100%/2-28px)] lg:min-w-[calc(100%/3-16px)]">
+            <WorkCardSkeleton />
+          </div>
+          <div
+            className="col-span-full hidden w-full md:col-span-2 md:block md:min-w-[calc(100%/2-28px)]
+              lg:min-w-[calc(100%/3-16px)]">
             <WorkCardSkeleton />
           </div>
         </div>

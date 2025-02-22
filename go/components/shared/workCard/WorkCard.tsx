@@ -170,12 +170,9 @@ const WorkCard = ({ work, className, isWithTilt = false }: WorkCardProps) => {
 
 export const WorkCardSkeleton = () => {
   return (
-    <div className="space-y-3 lg:space-y-5">
+    <div className="h-full w-full space-y-3 lg:space-y-5">
       <div className="rounded-base bg-background-skeleton w-full animate-pulse">
-        <div className="aspect-4/5 px-[15%] pt-[15%]"></div>
-        <div className="py-3 md:py-4">
-          <div className="h-6 md:h-10"></div>
-        </div>
+        <div className="aspect-5/7 px-[15%] pt-[15%]"></div>
       </div>
       <div className="space-y-2">
         <div className="rounded-base bg-background-skeleton h-5 animate-pulse lg:h-7"></div>
