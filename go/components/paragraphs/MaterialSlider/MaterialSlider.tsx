@@ -212,12 +212,13 @@ const MaterialSliderNew = ({ works, title }: MaterialSliderProps) => {
 export const MaterialSliderSkeleton = () => {
   return (
     <div className="bg-background-overlay">
-      <div className="content-container flex flex-row flex-wrap">
-        <h2 className="text-typo-heading-2 bg-background-skeleton my-12 h-11 w-[50%] animate-pulse rounded-full" />
-        <hr className="mb-6" />
-        <div className="flex w-full flex-row justify-end gap-6">
-          <div className="bg-background-skeleton h-[40px] w-[40px] animate-pulse rounded-full" />
-          <div className="bg-background-skeleton h-[40px] w-[40px] animate-pulse rounded-full" />
+      <div className="content-container gap-paragraph-spacing pt-paragraph-spacing flex flex-col">
+        <div className="flex items-center justify-between">
+          <h2 className="text-typo-heading-3 bg-background-skeleton h-11 w-[50%] animate-pulse rounded-full" />
+          <div className="flex gap-x-4">
+            <div className="bg-background-skeleton h-[40px] w-[40px] animate-pulse rounded-full" />
+            <div className="bg-background-skeleton h-[40px] w-[40px] animate-pulse rounded-full" />
+          </div>
         </div>
         <div className="flex w-full flex-row gap-6 overflow-x-scroll pb-12 xl:py-12">
           <div className="w-[70%] shrink-0 sm:w-[40%] lg:w-[30%]">
