@@ -13,27 +13,14 @@ import WorkCardWithCaption from "./WorkCardWithCaption"
 type WorkCardStackedWithCaptionProps = {
   works: WorkTeaserSearchPageFragment[]
   materialOrder: WorkId[]
-  currentItemNumber: number
 }
 
-const WorkCardStackedWithCaption = ({
-  works,
-  materialOrder,
-  currentItemNumber,
-}: WorkCardStackedWithCaptionProps) => {
+const WorkCardStackedWithCaption = ({ works, materialOrder }: WorkCardStackedWithCaptionProps) => {
   if (works.length === 0) return <WorkCardEmpty />
 
   return (
     <div>
-      {[...Array(2)].map((_, index) => (
-        <div
-          className={cn("rounded-base absolute top-0 right-0 left-0 aspect-5/7 w-full", {
-            "shadow-stacked-card": index < 3,
-            "rotate-3": index === 0,
-            "-rotate-3": index === 1,
-          })}></div>
-      ))}
-      {works.map((work, index) => {
+      {works.map(work => {
         const stackPositionIndex = materialOrder
           .slice()
           .reverse()
@@ -44,26 +31,28 @@ const WorkCardStackedWithCaption = ({
           <Link
             key={work.workId}
             aria-label={`Tilgå værket ${work.titles.full[0]} af ${displayCreators(work.creators, 1)}`}
-            className="focus-visible block h-full w-full space-y-3 lg:space-y-5"
+            className="focus-visible absolute top-0 left-0 block h-full w-full space-y-3 lg:space-y-5"
             href={resolveUrl({
               routeParams: { work: "work", wid: work.workId },
               queryParams: {
                 type: bestRepresentation.materialTypes[0].materialTypeGeneral.code,
               },
             })}
-            aria-hidden={currentItemNumber - 1 !== index}
-            tabIndex={currentItemNumber - 1 !== index ? -1 : undefined}
+            aria-hidden={stackPositionIndex !== 0}
+            tabIndex={stackPositionIndex ? -1 : 0}
             style={{ zIndex }}>
             <WorkCardWithCaption
               creators={work.creators || []}
               title={work.titles.full[0]}
-              className={cn(
-                "relative",
-                currentItemNumber - 1 === index
-                  ? "pointer-events-auto h-auto overflow-visible opacity-100"
-                  : "pointer-events-none h-0 overflow-hidden opacity-0"
-              )}>
-              <WorkCard className={cn("bg-background shadow-stacked-card")} work={work} />
+              className={cn({ hidden: stackPositionIndex && stackPositionIndex !== 0 })}>
+              <WorkCard
+                className={cn("bg-background", {
+                  "shadow-stacked-card": stackPositionIndex < 3,
+                  "rotate-3": stackPositionIndex === 1,
+                  "-rotate-3": stackPositionIndex === 2,
+                })}
+                work={work}
+              />
             </WorkCardWithCaption>
           </Link>
         )

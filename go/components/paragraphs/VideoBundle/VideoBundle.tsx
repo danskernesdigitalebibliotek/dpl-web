@@ -71,7 +71,11 @@ const VideoBundle = ({ works, title, videoUrl }: VideoBundleProps) => {
                 <Icon className="h-[24px] w-[24px]" name="arrow-left" />
               </Button>
               <div className="relative aspect-4/9 w-[177px] md:aspect-3/5 md:w-[300px] lg:aspect-1/2 xl:aspect-8/15">
-                <WorkCardStackedWithCaption works={works || []} materialOrder={materialOrder} />
+                <WorkCardStackedWithCaption
+                  currentItemNumber={currentItemNumber}
+                  works={works || []}
+                  materialOrder={materialOrder}
+                />
               </div>
               <Button
                 onClick={moveToNextMaterial}

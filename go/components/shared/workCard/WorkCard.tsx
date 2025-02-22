@@ -122,8 +122,8 @@ const WorkCard = ({ work, className, isWithTilt = false }: WorkCardProps) => {
     <div
       key={work.workId}
       className={cn(
-        `rounded-base bg-background-overlay relative mb-6 flex aspect-4/5 h-auto w-full flex-col px-[15%]
-        pt-[15%]`,
+        `rounded-base bg-background-overlay relative mb-6 flex aspect-5/7 w-full flex-col overflow-hidden
+        px-[15%] pt-[15%]`,
         className
       )}>
       {isSomeManifestationTypeCostFree || isSomeMaterialTypePodcast ? (
@@ -131,16 +131,18 @@ const WorkCard = ({ work, className, isWithTilt = false }: WorkCardProps) => {
           BLÅ
         </Badge>
       ) : null}
-      <div className="relative mx-auto flex h-full w-full items-center justify-center">
-        {!isLoadingCovers && (
-          <CoverPicture
-            lowResSrc={lowResCover || ""}
-            src={coverSrc?.[0] || ""}
-            alt={`${work.titles.full[0]} cover billede`}
-            withTilt={isWithTilt}
-            className="select-none"
-          />
-        )}
+      <div className="relative mx-auto flex aspect-5/7 h-full w-full">
+        <div className="h-full w-full">
+          {!isLoadingCovers && (
+            <CoverPicture
+              lowResSrc={lowResCover || ""}
+              src={coverSrc?.[0] || ""}
+              alt={`${work.titles.full[0]} cover billede`}
+              withTilt={isWithTilt}
+              className="select-none"
+            />
+          )}
+        </div>
       </div>
       <div className="my-auto flex min-h-[15%] items-center py-3 md:py-4">
         <div className="flex w-full flex-row justify-center gap-2">

@@ -8,7 +8,7 @@ import React, { useEffect, useRef, useState } from "react"
 
 import { Button } from "@/components/shared/button/Button"
 import Icon from "@/components/shared/icon/Icon"
-import { WorkCardEmpty, WorkCardSkeleton } from "@/components/shared/workCard/WorkCard"
+import WorkCard, { WorkCardEmpty, WorkCardSkeleton } from "@/components/shared/workCard/WorkCard"
 import WorkCardWithCaption from "@/components/shared/workCard/WorkCardWithCaption"
 import {
   ParagraphGoMaterialSliderAutomatic,
@@ -188,7 +188,9 @@ const MaterialSliderNew = ({ works, title }: MaterialSliderProps) => {
                           .materialTypeGeneral.code,
                       },
                     })}>
-                    <WorkCardWithCaption work={work} isWithTilt />
+                    <WorkCardWithCaption title={work.titles.full[0]} creators={work.creators || []}>
+                      <WorkCard className="bg-background" work={work} isWithTilt={true} />
+                    </WorkCardWithCaption>
                   </Link>
                 ))
               ) : (
