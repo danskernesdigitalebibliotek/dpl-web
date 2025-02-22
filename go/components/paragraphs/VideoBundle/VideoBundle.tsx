@@ -49,8 +49,8 @@ const VideoBundle = ({ works, title, videoUrl }: VideoBundleProps) => {
       <div className="content-container">
         <div className="my-paragraph-spacing w-full text-center">
           <h2 className="text-typo-heading-2 mb-paragraph-spacing">{title}</h2>
-          <div className="grid-go col-span-full items-start">
-            <div className="rounded-base relative col-span-full mb-11 aspect-16/9 overflow-hidden lg:col-span-9 lg:mb-0">
+          <div className="grid-go items-start">
+            <div className="rounded-base relative col-span-full aspect-16/9 overflow-hidden lg:col-span-9 lg:mb-0">
               <iframe
                 aria-label={title || "Video"}
                 className="absolute inset-0 h-full w-full"
@@ -59,58 +59,69 @@ const VideoBundle = ({ works, title, videoUrl }: VideoBundleProps) => {
                 allow="autoplay; fullscreen"
               />
             </div>
-            <div
-              className="gap-grid-gap col-span-full flex flex-row flex-wrap items-center justify-center text-left
-                lg:col-span-3 lg:justify-end lg:pl-4">
-              <Button
-                onClick={moveToPreviousMaterial}
-                variant="icon"
-                ariaLabel="Vis forrige værk"
-                className="md:ml-grid-column-2 mr-auto lg:hidden"
-                disabled={!works}>
-                <Icon className="h-[24px] w-[24px]" name="arrow-left" />
-              </Button>
-              <div className="relative aspect-4/9 w-[177px] md:aspect-3/5 md:w-[300px] lg:aspect-1/2 xl:aspect-8/15">
+            <div className="grid-go mt-paragraph-spacing col-span-full items-center lg:col-span-3 lg:hidden">
+              <div className="col-span-1">
+                <Button
+                  onClick={moveToPreviousMaterial}
+                  variant="icon"
+                  ariaLabel="Vis forrige værk"
+                  disabled={!works}>
+                  <Icon className="h-[24px] w-[24px]" name="arrow-left" />
+                </Button>
+              </div>
+              <div className="col-span-4">
                 <WorkCardStackedWithCaption
                   currentItemNumber={currentItemNumber}
                   works={works || []}
                   materialOrder={materialOrder}
                 />
               </div>
-              <Button
-                onClick={moveToNextMaterial}
-                variant="icon"
-                ariaLabel="Vis næste værk"
-                className="md:mr-grid-column-2 ml-auto lg:hidden"
-                disabled={!works}>
-                <Icon className="h-[24px] w-[24px]" name="arrow-right" />
-              </Button>
-              <div className="hidden lg:flex lg:w-[300px] lg:items-center">
-                <Timer
-                  durationInSeconds={10}
-                  currentItemNumber={currentItemNumber}
-                  totalItems={materialOrder.length}
-                  fullCircleAction={moveToNextMaterial}
-                  setResetTimer={resetFn => (resetTimerRef.current = resetFn)}
-                  className="mr-auto"
-                  isStopped={!works?.length}
-                />
-                <Button
-                  onClick={moveToPreviousMaterial}
-                  variant="icon"
-                  ariaLabel="Vis forrige værk"
-                  className=""
-                  disabled={!works?.length}>
-                  <Icon className="h-[24px] w-[24px]" name="arrow-left" />
-                </Button>
+              <div className="col-span-1">
                 <Button
                   onClick={moveToNextMaterial}
                   variant="icon"
                   ariaLabel="Vis næste værk"
-                  className="ml-2"
-                  disabled={!works?.length}>
+                  disabled={!works}>
                   <Icon className="h-[24px] w-[24px]" name="arrow-right" />
                 </Button>
+              </div>
+            </div>
+            <div className="col-span-full hidden flex-col items-center justify-center text-left lg:col-span-3 lg:flex">
+              <div className="pl-grid-gap-half flex w-full flex-col gap-y-8">
+                <div className="relative w-full">
+                  <WorkCardStackedWithCaption
+                    currentItemNumber={currentItemNumber}
+                    works={works || []}
+                    materialOrder={materialOrder}
+                  />
+                </div>
+                <div className="hidden lg:flex lg:items-center">
+                  <Timer
+                    durationInSeconds={10}
+                    currentItemNumber={currentItemNumber}
+                    totalItems={materialOrder.length}
+                    fullCircleAction={moveToNextMaterial}
+                    setResetTimer={resetFn => (resetTimerRef.current = resetFn)}
+                    className="mr-auto"
+                    isStopped={!works?.length}
+                  />
+                  <div className="space-x-grid-gap-half">
+                    <Button
+                      onClick={moveToPreviousMaterial}
+                      variant="icon"
+                      ariaLabel="Vis forrige værk"
+                      disabled={!works?.length}>
+                      <Icon className="h-[24px] w-[24px]" name="arrow-left" />
+                    </Button>
+                    <Button
+                      onClick={moveToNextMaterial}
+                      variant="icon"
+                      ariaLabel="Vis næste værk"
+                      disabled={!works?.length}>
+                      <Icon className="h-[24px] w-[24px]" name="arrow-right" />
+                    </Button>
+                  </div>
+                </div>
               </div>
             </div>
           </div>
