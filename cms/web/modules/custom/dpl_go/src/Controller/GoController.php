@@ -47,6 +47,16 @@ class GoController extends ControllerBase {
   }
 
   /**
+   * Redirects back to the external Go app after successful login.
+   */
+  public function postAdgangsplatformenLogoutRoute(): TrustedRedirectResponse {
+    // @todo We should make it configurable which path to redirect to.
+    $response = new TrustedRedirectResponse($this->getGoDomain());
+
+    return $response;
+  }
+
+  /**
    * Get the external Go domain.
    */
   protected function getGoDomain(): string {
