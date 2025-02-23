@@ -4,10 +4,10 @@
 
 When a user click logout we need to handle that the current session either can be:
 
-* Adgangsplatformen
-* Unilogin
-* Anonymous
-* In a, for some reason, broken state
+- Adgangsplatformen
+- Unilogin
+- Anonymous
+- In a, for some reason, broken state
 
 This chart shows how we handle the various types:
 
@@ -24,9 +24,8 @@ flowchart TD
 
     IsUnknown --> DestroySession[Destroy Go session - and id token]
 
-
     IsAdgangsplatformen --> DestroySessionBeforeRedirect[
-      Destroy Go session - and id token
+      Destroy Go session - and id token, if it exist
     ]
     DestroySessionBeforeRedirect ---> RedirectToAdgangsplatformenLogout[
       Redirect to CMS Adgangsplatformen logout - with current_path url arg
@@ -45,3 +44,4 @@ flowchart TD
     DestroySession --> RedirectToFrontpage[Redirect to frontpage]
 
     SessionExist ---->|No| RedirectToFrontpage
+```

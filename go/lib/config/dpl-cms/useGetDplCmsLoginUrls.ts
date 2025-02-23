@@ -4,6 +4,7 @@ import { GetLoginUrlsQuery, useGetLoginUrlsQuery } from "@/lib/graphql/generated
 
 const queryDplCmsConfig = async () => {
   const { goConfiguration } = await useGetLoginUrlsQuery.fetcher(undefined, {
+    // @todo As a part of the caching initiative we should find out what to do here.
     next: { revalidate: 30 },
   })()
 

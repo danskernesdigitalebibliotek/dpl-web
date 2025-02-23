@@ -41,7 +41,7 @@ const loadUserToken = async () => {
     }
 
     return validateUserToken.data
-  } catch (error) {
+  } catch {
     return null
   }
 }
