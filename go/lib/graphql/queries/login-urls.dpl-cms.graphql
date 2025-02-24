@@ -1,7 +1,0 @@
-query getLoginUrls {
-  goConfiguration {
-    loginUrls {
-      adgangsplatformen
-    }
-  }
-}
