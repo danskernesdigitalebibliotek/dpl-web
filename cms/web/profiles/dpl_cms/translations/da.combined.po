@@ -7,8 +7,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2025-02-24 10:11+0100\n"
-"PO-Revision-Date: 2025-02-24 10:11+0100\n"
+"POT-Creation-Date: 2025-02-24 12:35+0100\n"
+"PO-Revision-Date: 2025-02-24 12:35+0100\n"
 "Last-Translator: NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
 "MIME-Version: 1.0\n"
@@ -4484,6 +4484,9 @@ msgid "Handle the favorites list material component pages"
 msgstr "Håndter indstillinger for huskeliste komponent"
 
 msgid "Post Go Adgangsplatformen Login Route"
+msgstr ""
+
+msgid "Post Go Adgangsplatformen Logout Route"
 msgstr ""
 
 msgid "DPL Go"
