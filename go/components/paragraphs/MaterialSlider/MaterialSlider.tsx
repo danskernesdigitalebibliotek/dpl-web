@@ -134,9 +134,9 @@ const MaterialSliderNew = ({ works, title }: MaterialSliderProps) => {
   }, [size.width, internalSlider])
 
   const updateSlidePosition = () => {
-    setReachStart(internalSlider.current?.track.details.rel === 0)
+    setReachStart(internalSlider.current?.track?.details?.rel === 0)
     setReachEnd(
-      internalSlider.current?.track.details.maxIdx === internalSlider.current?.track.details.rel
+      internalSlider.current?.track?.details?.maxIdx === internalSlider.current?.track?.details?.rel
     )
   }
 
