@@ -13,5 +13,6 @@ scalar Violation
 
 type NewContentResponse {
   uuids: [String!]!
+  youngest: Time!
   errors: [Violation]
 }

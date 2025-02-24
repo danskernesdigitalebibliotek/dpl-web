@@ -82,7 +82,14 @@ class NewContentProducer extends DataProducerPluginBase implements ContainerFact
     );
 
     $nids = $query->accessCheck(TRUE)->execute();
+
+    /** @var \Drupal\node\Entity\Node[] $nodes */
     $nodes = $this->nodeStorage->loadMultiple(array_keys($nids));
+
+    $youngest = array_reduce($nodes, fn ($youngest, $node) => max($youngest, $node->updated->value), 0);
+    $youngest = new DateTime('@' . $youngest);
+    $result->youngest = $youngest->format(\DateTimeInterface::RFC3339);
+
     $result->uuids = array_map(fn ($node) => (string) $node->uuid(), $nodes);
 
     return $result;
