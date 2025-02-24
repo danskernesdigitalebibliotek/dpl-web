@@ -47,7 +47,7 @@ class GoController extends ControllerBase {
   }
 
   /**
-   * Redirects back to the external Go app after successful login.
+   * Redirects back to the external Go app after successful logout.
    */
   public function postAdgangsplatformenLogoutRoute(): TrustedRedirectResponse {
     // @todo We should make it configurable which path to redirect to.
