@@ -19,11 +19,13 @@ const meta = {
 export default meta
 type Story = StoryObj<typeof meta>
 
-export const Default: Story = {
-  render: args => <VideoBundle {...args} />,
-}
+// TODO: add VideoBundle to the story when request mocking through fishery is implemented
+// export const Default: Story = {
+//   render: args => <VideoBundle {...args} />,
+// }
 
-export const AutomaticDarkMode: Story = {
-  decorators: [darkModeDecorator],
-  render: args => <VideoBundle {...args} />,
-}
+// TODO: add VideoBundle to the story when request mocking through fishery is implemented
+// export const AutomaticDarkMode: Story = {
+//   decorators: [darkModeDecorator],
+//   render: args => <VideoBundle {...args} />,
+// }
