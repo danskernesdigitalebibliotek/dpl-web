@@ -2,8 +2,9 @@ import type { Meta, StoryObj } from "@storybook/react"
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query"
 
 import { darkModeDecorator } from "@/.storybook/decorators"
-import MaterialSliderManual from "@/components/paragraphs/MaterialSlider/MaterialSliderManual"
-import { ParagraphGoMaterialSliderManual } from "@/lib/graphql/generated/dpl-cms/graphql"
+import MaterialSlider from "@/components/paragraphs/MaterialSlider/MaterialSlider"
+
+import { worksMock } from "./MaterialSlider.mockData"
 
 const queryClient = new QueryClient()
 
@@ -17,35 +18,31 @@ const withQueryClient = (StoryComponent: any) => (
 
 const meta = {
   title: "components/MaterialSlider",
-  component: MaterialSliderManual,
+  component: MaterialSlider,
   parameters: { layout: "centered" },
   args: {
-    titleOptional: "Material Slider - Manual",
-    materialSliderWorkIds: [
-      { material_type: "e-bog", work_id: "work-of:870970-basis:138232743" },
-      { material_type: "e-bog", work_id: "work-of:870970-basis:139172957" },
-      { material_type: "e-bog", work_id: "work-of:870970-basis:136089471" },
-    ] as ParagraphGoMaterialSliderManual["materialSliderWorkIds"],
+    title: "Material Slider",
+    works: worksMock,
   },
   decorators: [withQueryClient],
-} satisfies Meta<typeof MaterialSliderManual>
+} satisfies Meta<typeof MaterialSlider>
 
 export default meta
 type Story = StoryObj<typeof meta>
 
-export const Manual: Story = {
+export const Default: Story = {
   render: args => (
     <div className="h-full w-[100vw]">
-      <MaterialSliderManual {...args} />
+      <MaterialSlider {...args} />
     </div>
   ),
 }
 
-export const ManualDarkMode: Story = {
+export const MaterialSliderDarkMode: Story = {
   decorators: [darkModeDecorator],
   render: args => (
     <div className="h-full w-[100vw]">
-      <MaterialSliderManual {...args} />
+      <MaterialSlider {...args} />
     </div>
   ),
 }
