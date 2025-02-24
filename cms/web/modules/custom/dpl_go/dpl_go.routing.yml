@@ -5,3 +5,11 @@ dpl_go.post_adgangsplatformen_login:
     _title: 'Post Go Adgangsplatformen Login Route'
   requirements:
     _permission: 'access content'
+
+dpl_go.post_adgangsplatformen_logout:
+  path: '/go-logout'
+  defaults:
+    _controller: '\Drupal\dpl_go\Controller\GoController::postAdgangsplatformenLogoutRoute'
+    _title: 'Post Go Adgangsplatformen Logout Route'
+  requirements:
+    _permission: 'access content'
