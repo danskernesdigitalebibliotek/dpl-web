@@ -26,7 +26,7 @@ const LogoutButton = () => {
 
   return (
     <>
-      <Button onClick={handleClick} ariaLabel="Log ud">
+      <Button onClick={handleClick} ariaLabel="Log ud" disabled={logoutWasClicked}>
         Log ud
       </Button>
     </>
