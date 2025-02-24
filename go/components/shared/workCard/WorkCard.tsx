@@ -184,12 +184,12 @@ export const WorkCardSkeleton = () => {
 
 export const WorkCardEmpty = () => {
   return (
-    <div className="space-y-3 lg:space-y-5">
+    <div className="h-full w-full space-y-3 lg:space-y-5">
       <div className="rounded-base bg-background-skeleton w-full">
         <div className="flex aspect-4/5 w-full flex-col items-center justify-center">
           <Icon
             name="question-mark"
-            className="text-foreground h-[50px] opacity-20 lg:h-[100px]"
+            className="text-foreground opacity-20"
             aria-label="Spørgsmålstegn ikon"
           />
           <p className="text-typo-caption text-center">Kunne ikke vises</p>

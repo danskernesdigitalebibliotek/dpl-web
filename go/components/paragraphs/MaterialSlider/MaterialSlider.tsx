@@ -8,7 +8,7 @@ import React, { useEffect, useState } from "react"
 
 import { Button } from "@/components/shared/button/Button"
 import Icon from "@/components/shared/icon/Icon"
-import WorkCard, { WorkCardEmpty, WorkCardSkeleton } from "@/components/shared/workCard/WorkCard"
+import WorkCard, { WorkCardSkeleton } from "@/components/shared/workCard/WorkCard"
 import WorkCardWithCaption from "@/components/shared/workCard/WorkCardWithCaption"
 import {
   ParagraphGoMaterialSliderAutomatic,
@@ -174,7 +174,7 @@ const MaterialSliderNew = ({ works, title }: MaterialSliderProps) => {
         <div className="-mx-grid-edge px-grid-edge col-span-full">
           <div className="my-paragraph-spacing">
             <div ref={sliderRef} className={"keen-slider !overflow-visible"}>
-              {works ? (
+              {works &&
                 works.map(work => (
                   <Link
                     key={work.workId}
@@ -195,12 +195,7 @@ const MaterialSliderNew = ({ works, title }: MaterialSliderProps) => {
                       />
                     </WorkCardWithCaption>
                   </Link>
-                ))
-              ) : (
-                <div className="">
-                  <WorkCardEmpty />
-                </div>
-              )}
+                ))}
             </div>
           </div>
         </div>
