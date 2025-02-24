@@ -1,4 +1,3 @@
-import { cookies } from "next/headers"
 import { z } from "zod"
 
 import getQueryClient from "@/lib/getQueryClient"
@@ -6,14 +5,11 @@ import {
   GetAdgangsplatformenUserTokenQuery,
   useGetAdgangsplatformenUserTokenQuery,
 } from "@/lib/graphql/generated/dpl-cms/graphql"
+import { getDplCmsSessionCookie } from "@/lib/session/session"
 
 const loadUserToken = async () => {
   const queryClient = getQueryClient()
-
-  const cookieStore = await cookies()
-  const allCookies = cookieStore.getAll()
-
-  const sessionCookie = allCookies.find(cookie => cookie.name.startsWith("SSESS"))
+  const sessionCookie = await getDplCmsSessionCookie()
   if (!sessionCookie) {
     return null
   }
