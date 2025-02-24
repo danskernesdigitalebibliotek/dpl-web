@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "559a7e9145bbdba750900d584f4be5cc",
+    "content-hash": "76be70356ffee52404cdc5aeba94db17",
     "packages": [
         {
             "name": "amazeeio/drupal_integrations",
@@ -3553,47 +3553,6 @@
                 "source": "https://github.com/drupal/core-composer-scaffold/tree/10.3.13"
             },
             "time": "2024-08-22T14:31:34+00:00"
-        },
-        {
-            "name": "drupal/core-project-message",
-            "version": "10.3.13",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/drupal/core-project-message.git",
-                "reference": "d1da83722735cb0f7ccabf9fef7b5607b442c3a8"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/drupal/core-project-message/zipball/d1da83722735cb0f7ccabf9fef7b5607b442c3a8",
-                "reference": "d1da83722735cb0f7ccabf9fef7b5607b442c3a8",
-                "shasum": ""
-            },
-            "require": {
-                "composer-plugin-api": "^2",
-                "php": ">=7.3.0"
-            },
-            "type": "composer-plugin",
-            "extra": {
-                "class": "Drupal\\Composer\\Plugin\\ProjectMessage\\MessagePlugin"
-            },
-            "autoload": {
-                "psr-4": {
-                    "Drupal\\Composer\\Plugin\\ProjectMessage\\": "."
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "GPL-2.0-or-later"
-            ],
-            "description": "Adds a message after Composer installation.",
-            "homepage": "https://www.drupal.org/project/drupal",
-            "keywords": [
-                "drupal"
-            ],
-            "support": {
-                "source": "https://github.com/drupal/core-project-message/tree/11.1.3"
-            },
-            "time": "2023-07-24T07:55:25+00:00"
         },
         {
             "name": "drupal/core-recommended",
