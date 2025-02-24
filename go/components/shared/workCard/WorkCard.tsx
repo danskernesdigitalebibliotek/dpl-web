@@ -38,6 +38,7 @@ const WorkCard = ({ work, className, isWithTilt = false }: WorkCardProps) => {
   })
 
   // for each manifestation, get publizon data and add to array
+  // TODO: in storybook, request don't work, so we need make a mock request using fishery
   const manifestationsWithPublizonData = useQueries({
     queries: manifestations.map(manifestation => {
       const isbn =
