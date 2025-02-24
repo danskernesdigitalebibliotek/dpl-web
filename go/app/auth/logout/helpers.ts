@@ -75,6 +75,6 @@ export const handleAdgangsplatformenLogout = async (session: IronSession<TSessio
     return NextResponse.redirect(logoutUrl)
   } else {
     console.error("Could not resolve Adgangsplatformen logout url.")
-    destroySessionAndRedirectToFrontPage(session)
+    return destroySessionAndRedirectToFrontPage(session)
   }
 }
