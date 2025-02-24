@@ -36,7 +36,7 @@ const InfoBoxDetails = ({ selectedManifestation }: InfoBoxDetailsProps) => {
                 ?.map(language => language.display)
                 .join(", ") || "-"}
             </InfoBoxItem>
-            <InfoBoxItem term="Omfang">
+            <InfoBoxItem term="Længde">
               {selectedManifestation?.physicalDescription?.summaryFull || "-"}
             </InfoBoxItem>
             <InfoBoxItem term="Udgivelsesår">
