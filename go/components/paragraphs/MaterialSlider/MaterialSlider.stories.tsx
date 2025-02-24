@@ -1,7 +1,6 @@
 import type { Meta, StoryObj } from "@storybook/react"
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query"
 
-// import { darkModeDecorator } from "@/.storybook/decorators"
 import MaterialSlider from "@/components/paragraphs/MaterialSlider/MaterialSlider"
 
 import { worksMock } from "./MaterialSlider.mockData"
@@ -31,13 +30,9 @@ export default meta
 type Story = StoryObj<typeof meta>
 
 // TODO: add MaterialSlider to the story when request mocking through fishery is implemented
-// export const Default: Story = {
-//   render: args => (
-//     <div className="h-full w-[100vw]">
-//       <MaterialSlider {...args} />
-//     </div>
-//   ),
-// }
+export const Default: Story = {
+  render: () => <div className="h-full w-[100vw]">{/* <MaterialSlider {...args} /> */}</div>,
+}
 
 // TODO: add MaterialSlider to the story when request mocking through fishery is implemented
 // export const MaterialSliderDarkMode: Story = {

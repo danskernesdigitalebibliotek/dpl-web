@@ -1,6 +1,5 @@
 import type { Meta, StoryObj } from "@storybook/react"
 
-import { darkModeDecorator } from "@/.storybook/decorators"
 import VideoBundle from "@/components/paragraphs/VideoBundle/VideoBundle"
 
 import { worksMock } from "./VideoBundle.mockData"
@@ -20,9 +19,9 @@ export default meta
 type Story = StoryObj<typeof meta>
 
 // TODO: add VideoBundle to the story when request mocking through fishery is implemented
-// export const Default: Story = {
-//   render: args => <VideoBundle {...args} />,
-// }
+export const Default: Story = {
+  render: () => <div>{/* <VideoBundle {...args} /> */}</div>,
+}
 
 // TODO: add VideoBundle to the story when request mocking through fishery is implemented
 // export const AutomaticDarkMode: Story = {
