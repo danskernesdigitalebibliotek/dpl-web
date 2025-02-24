@@ -113,7 +113,7 @@ const WheelControls: KeenSliderPlugin = slider => {
   })
 }
 
-const MaterialSliderNew = ({ works, title }: MaterialSliderProps) => {
+const MaterialSlider = ({ works, title }: MaterialSliderProps) => {
   const [sliderRef, internalSlider] = useKeenSlider(defaultSliderOptions, [WheelControls])
   const [reachedStart, setReachStart] = useState(true)
   const [reachedEnd, setReachEnd] = useState(true)
@@ -233,4 +233,4 @@ export const MaterialSliderSkeleton = () => {
   )
 }
 
-export default MaterialSliderNew
+export default MaterialSlider
