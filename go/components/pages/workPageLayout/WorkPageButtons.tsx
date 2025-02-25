@@ -81,11 +81,7 @@ const WorkPageButtons = ({ workId, selectedManifestation }: WorkPageButtonsProps
             setIsPlayerOpen(!isPlayerOpen)
           }}
           title={`Prøv ${isManifestationPodcast(selectedManifestation) ? "Podcast" : "Lydbog"}`}
-          description={
-            isManifestationPodcast(selectedManifestation)
-              ? "For at høre podcast skal du være oprettet som bruger på GO."
-              : "For at låne lydbogen skal du være oprettet som bruger på GO."
-          }>
+          description={`For at låne ${isManifestationPodcast(selectedManifestation) ? "podcast" : "lydbogen"} skal du være oprettet som bruger på GO.`}>
           <Player type="demo" identifier={selectedManifestation.identifiers[0].value} />
         </ResponsiveDialog>
       )}
