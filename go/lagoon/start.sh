@@ -37,16 +37,16 @@ if [ -z "$cms_url" ]; then
   exit 1
 fi
 
+# Remove the protocol from the URL
 removeProtocol() {
   local url=$1
-
-  echo "$url" | sed -e 's/https\?:\/\///'
+  echo "${url#*://}" | sed 's:/*$::'
 }
 
 # Set the environment variables.
 # These ones are varying from environment to environment.
 export NEXT_PUBLIC_APP_URL="$app_url"
-export NEXT_PUBLIC_DPL_CMS_HOSTNAME=removeProtocol($cms_url)
+export NEXT_PUBLIC_DPL_CMS_HOSTNAME=$(removeProtocol "$cms_url")
 export NEXT_PUBLIC_GRAPHQL_SCHEMA_ENDPOINT_DPL_CMS="$cms_url/graphql"
 
 # Go to the app directory if it doesn't exist then never mind.
