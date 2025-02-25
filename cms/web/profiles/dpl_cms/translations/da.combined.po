@@ -27449,12 +27449,12 @@ msgstr ""
 #: 
 msgctxt "Work Page"
 msgid "Listen to @materialType"
-msgstr ""
+msgstr "Lyt til @materialType"
 
 #: 
 msgctxt "Work Page"
 msgid "Read @materialType"
-msgstr ""
+msgstr "Læs @materialType"
 
 #: 
 msgctxt "Work Page"
@@ -27908,7 +27908,7 @@ msgstr ""
 
 #: 
 msgid "The email address is already taken: @email"
-msgstr ""
+msgstr "Denne email adresse er allerede i brug: @email"
 
 #: 
 msgid "Create OpenID Connect client"
