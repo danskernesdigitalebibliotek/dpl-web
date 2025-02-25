@@ -189,7 +189,7 @@ const MaterialSlider = ({ works, title }: MaterialSliderProps) => {
                     })}>
                     <WorkCardWithCaption title={work.titles.full[0]} creators={work.creators || []}>
                       <WorkCard
-                        className="dark:bg-background-overlay bg-background"
+                        className="dark:bg-background-overlay !dark:bg-background"
                         work={work}
                         isWithTilt={true}
                       />
