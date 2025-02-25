@@ -4,11 +4,23 @@
 # #-#-#-#-#  da.config.po (PROJECT VERSION)  #-#-#-#-#
 # da translation of DPL CMS
 #
+#, fuzzy
 msgid ""
 msgstr ""
+"#-#-#-#-#  da.po (PROJECT VERSION)  #-#-#-#-#\n"
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2025-02-24 19:12+0100\n"
-"PO-Revision-Date: 2025-02-24 19:12+0100\n"
+"POT-Creation-Date: 2025-02-25 09:28+0100\n"
+"PO-Revision-Date: 2025-02-25 09:28+0100\n"
+"Last-Translator: NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n > 1);\n"
+"#-#-#-#-#  da.config.po (PROJECT VERSION)  #-#-#-#-#\n"
+"Project-Id-Version: PROJECT VERSION\n"
+"POT-Creation-Date: 2025-02-25 09:29+0100\n"
+"PO-Revision-Date: 2025-02-25 09:29+0100\n"
 "Last-Translator: NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
 "MIME-Version: 1.0\n"
@@ -18558,9 +18570,6 @@ msgid ""
 msgstr ""
 "Du skal opsætte Varnish til at lytte til anmodningsmetoden URIBAN. Eksempel:"
 
-msgid "Adminster"
-msgstr "Administrer"
-
 msgid "By default every image belonging to any entity is purged."
 msgstr "Som standard renses alle billeder, der tilhører enhver enhed."
 
@@ -18576,12 +18585,9 @@ msgstr "Ingen indholds-entiteter blev fundet"
 
 msgid ""
 "Configure bundles of entity types that Varnish image purge should be used "
-"for, if none selected, all bundles form all entity types will be used. Just "
-"the fields of type image will be purge."
+"for, if none selected, all bundles from all entity types will be used. Just "
+"the fields of type image will be purged."
 msgstr ""
-"Konfigurer bundter af enhedstyper, som Varnish-billedrensning skal bruges "
-"til; hvis ingen er valgt, vil alle bundter fra alle enhedstyper blive brugt. "
-"Kun felter af typen billede vil blive renset."
 
 msgid "Purge focal point entities after they are updated"
 msgstr "Slet fokuspunktsenheder efter de er opdateret"
