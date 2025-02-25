@@ -638,33 +638,6 @@ export type InterLibraryLoan = {
   loanIsPossible: Scalars['Boolean']['output'];
 };
 
-export type ItemIdResponse = {
-  __typename?: 'ItemIdResponse';
-  /** ItemId response object. */
-  itemOrderEntity?: Maybe<ItemOrderEntity>;
-  /** Message field in case of an error. */
-  message?: Maybe<Scalars['String']['output']>;
-};
-
-export type ItemOrderEntity = {
-  __typename?: 'ItemOrderEntity';
-  /** Item ID, the same value that was queried. */
-  itemId: Scalars['String']['output'];
-  /** Key for the row in the database, can be ignored as it's only relevant for ORS. */
-  itemOrderKey: Scalars['Int']['output'];
-  /** Order ID associated with the item ID. */
-  orderId: Scalars['String']['output'];
-  /** Agency ID of the borrower of the material. */
-  requesterId: Scalars['String']['output'];
-  /** Agency ID of the lender of the material. */
-  responderId: Scalars['String']['output'];
-  /**
-   * Timestamp of when the row was created in the database.
-   * Example: "2024-09-09T07:32:24.081+00:00"
-   */
-  timestamp: Scalars['String']['output'];
-};
-
 export type KidRecommenderTagsInput = {
   tag?: InputMaybe<Scalars['String']['input']>;
   weight?: InputMaybe<Scalars['Int']['input']>;
@@ -1179,17 +1152,6 @@ export type NoteTypeEnum =
   | 'TECHNICAL_REQUIREMENTS'
   | 'TYPE_OF_SCORE';
 
-export type OrsQuery = {
-  __typename?: 'OrsQuery';
-  /** Method to retrieve sender and receiver information from ORS based on an itemId. */
-  itemOrder: ItemIdResponse;
-};
-
-
-export type OrsQueryItemOrderArgs = {
-  itemId: Scalars['String']['input'];
-};
-
 export type Pegi = {
   __typename?: 'PEGI';
   /** Display string for PEGI minimum age */
@@ -1278,7 +1240,6 @@ export type Query = {
   /** Field for presenting bibliographic records in MARC format */
   marc: Marc;
   mood: MoodQueries;
-  ors: OrsQuery;
   /** Get recommendations */
   recommend: RecommendationResponse;
   /** Access to various types of recommendations. */
