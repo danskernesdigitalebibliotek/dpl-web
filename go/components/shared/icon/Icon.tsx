@@ -6,7 +6,6 @@ type IconProps = {
 export default function Icon({ name, className }: IconProps) {
   try {
     if (!name) return null
-    // TODO: Find a way to import SVGs dynamically
     // eslint-disable-next-line @typescript-eslint/no-require-imports
     const SVG = require(`../../../public/icons/${name}.svg`)?.default
     if (!SVG) return null

@@ -1,3 +1,5 @@
+import AccessForbiddenError from "./AccessForbiddenError"
+
 const getHeaders = (headers: RequestInit["headers"] | undefined) => {
   const contentTypeHeader = {
     "Content-Type": "application/json",
@@ -58,8 +60,11 @@ export function fetcher<TData, TVariables>(
 
     if (res.status !== 200) {
       const { message } = json
-
-      throw new Error(message)
+      if (res.status === 403) {
+        throw new AccessForbiddenError(message)
+      } else {
+        throw new Error(message)
+      }
     }
 
     return json.data

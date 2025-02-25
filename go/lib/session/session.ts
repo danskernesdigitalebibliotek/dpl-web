@@ -3,6 +3,7 @@ import { IronSession, getIronSession } from "iron-session"
 import { cookies } from "next/headers"
 import { NextRequest, NextResponse } from "next/server"
 
+import goConfig from "../config/goConfig"
 import { TSessionType, TUniloginTokenSet } from "../types/session"
 
 export const getSessionOptions = async () => {
@@ -101,9 +102,8 @@ export const setUniloginTokensOnSession = async (
   })
   // Since we have a limitation in how big cookies can be,
   // we will have to store the user id in a separate cookie.
-  // cookies().set("go-session:id_token", tokenSet.id_token)
   const cookieStore = await cookies()
-  cookieStore.set("go-session:id_token", tokenSet.id_token)
+  cookieStore.set(goConfig("auth.id-token"), tokenSet.id_token)
 }
 
 type TAdgangsplatformenUserToken = {
@@ -171,4 +171,17 @@ export const accessTokenIsExpired = (session: IronSession<TSessionData>) => {
   }
 
   return session.expires && isPast(session.expires)
+}
+
+export const getUniloginIdToken = async () =>
+  (await cookies()).get(goConfig("auth.id-token"))?.value
+
+export const deleteUniloginIdToken = async () => (await cookies()).delete(goConfig("auth.id-token"))
+
+export const getDplCmsSessionCookie = async () => {
+  const cookieStore = await cookies()
+  const allCookies = cookieStore.getAll()
+
+  const sessionCookie = allCookies.find(cookie => cookie.name.startsWith("SSESS"))
+  return sessionCookie ?? null
 }

@@ -42,7 +42,7 @@ export const SearchResultsSkeleton = () => {
   const skeletonItems = Array.from({ length: 6 })
 
   return (
-    <div className="grid-go gap-x-grid-gap-x gap-y-[calc(var(--grid-gap-x)*2)]">
+    <div className="grid-go gap-y-[calc(var(--grid-gap-x)*2)]">
       {skeletonItems.map((_, index) => (
         <div className="col-span-3 lg:col-span-4" key={index}>
           <WorkCardSkeleton />
