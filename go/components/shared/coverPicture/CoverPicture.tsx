@@ -42,12 +42,6 @@ export const CoverPicture = ({
   const [imageLoaded, setImageLoaded] = useState(false)
   const [imageError, setImageError] = useState(false)
 
-  // if the image is bigger than the container set the width to the container width minus the overflow width
-  const width =
-    containerHeight > imageHeightByContainerWidth
-      ? imageWidthByContainerHeight
-      : imageWidthByContainerHeight
-
   // adjust the padding top based on the image aspect ratio and the container width
   const paddingTop =
     containerHeight > imageHeightByContainerWidth
@@ -60,7 +54,7 @@ export const CoverPicture = ({
         <CoverPictureTiltWrapper
           withTilt={withTilt}
           className={"relative m-auto"}
-          style={{ paddingTop, width: `${width}px` }}>
+          style={{ paddingTop, width: `${imageWidthByContainerHeight}px` }}>
           {lowResSrc && (
             <Image
               src={lowResSrc}

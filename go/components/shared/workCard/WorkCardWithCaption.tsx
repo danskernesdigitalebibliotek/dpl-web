@@ -20,7 +20,6 @@ const WorkCardWithCaption = ({
   return (
     <div className={cn("block space-y-3 lg:space-y-5", className)}>
       {children}
-
       <div className={cn("space-y-2")}>
         <p className="text-typo-subtitle-lg break-words">{title}</p>
         <p className="text-typo-caption opacity-60">{displayCreators(creators, 2)}</p>
