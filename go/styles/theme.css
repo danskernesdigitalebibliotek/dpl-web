@@ -144,6 +144,11 @@
   --color-content-purple-200: var(--content-purple-200);
   --color-content-purple-300: var(--content-purple-300);
 
+  --color-content-1: var(--content-pink-100);
+  --color-content-2: var(--content-blue-100);
+  --color-content-3: var(--content-green-100);
+  --color-content-4: var(--content-yellow-100);
+
   --color-blue-title: var(--blue-title);
   --color-blue-title-dark: var(--blue-title-dark);
 
