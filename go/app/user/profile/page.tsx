@@ -7,8 +7,8 @@ const Page = () => {
   return (
     <div className="content-container">
       <h1 className="text-typo-heading-3 pb-5 font-bold">Profile</h1>
-      <LogoutButton />
       <Suspense fallback={<p>Loading...</p>}>
+        <LogoutButton />
         <DebuggingSession />
       </Suspense>
     </div>

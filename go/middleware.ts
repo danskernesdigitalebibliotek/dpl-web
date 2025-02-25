@@ -5,6 +5,7 @@ import loadUserToken from "./app/auth/callback/adgangsplatformen/loadUserToken"
 import goConfig from "./lib/config/goConfig"
 import {
   accessTokenShouldBeRefreshed,
+  getDplCmsSessionCookie,
   getSession,
   saveAdgangsplatformenSession,
 } from "./lib/session/session"
@@ -35,6 +36,14 @@ export async function middleware(request: NextRequest, event: NextFetchEvent) {
     const tokenData = await loadUserToken()
     if (tokenData) {
       await saveAdgangsplatformenSession(session, tokenData)
+    }
+  }
+
+  // Destroy the session if we have an active session but no dpl cms session cookie.
+  if (session.isLoggedIn && session.type === "adgangsplatformen") {
+    const sessionCookie = await getDplCmsSessionCookie()
+    if (!sessionCookie) {
+      session.destroy()
     }
   }
 

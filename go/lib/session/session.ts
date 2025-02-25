@@ -177,3 +177,11 @@ export const getUniloginIdToken = async () =>
   (await cookies()).get(goConfig("auth.id-token"))?.value
 
 export const deleteUniloginIdToken = async () => (await cookies()).delete(goConfig("auth.id-token"))
+
+export const getDplCmsSessionCookie = async () => {
+  const cookieStore = await cookies()
+  const allCookies = cookieStore.getAll()
+
+  const sessionCookie = allCookies.find(cookie => cookie.name.startsWith("SSESS"))
+  return sessionCookie ?? null
+}
