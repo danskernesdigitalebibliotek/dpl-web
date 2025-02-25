@@ -143,7 +143,7 @@ const WorkPageHeader = ({ work, selectedManifestation }: WorkPageHeaderProps) =>
           ) : null}
           <h1
             lang={languageIsoCode}
-            className="text-typo-heading-3 lg:text-typo-heading-2 break-words hyphens-auto lg:mt-0">
+            className="text-typo-heading-3 break-words hyphens-auto lg:mt-0">
             {`${selectedManifestation?.titles?.full || ""}${!!titleSuffix ? ` (${titleSuffix})` : ""}`}
           </h1>
           <WorkAuthors creators={work.creators || selectedManifestation?.contributors} />

@@ -10,15 +10,28 @@ getLagoonUrl() {
 }
 
 # Make sure app.url is set in application
-app_url=$(getLagoonUrl node)
+goUrlPrefix="go."
+# If the project is "dpl-cms", we are running in a PR environment
+# and then the goUrlPrefix should be go-.
+# Otherwise we are in production and the goUrlPrefix should be "go.".
+if [ "$LAGOON_PROJECT" = "dpl-cms" ]; then
+  goUrlPrefix="go-"
+fi
+app_url=$(getLagoonUrl $goUrlPrefix)
 if [ -z "$app_url" ]; then
   echo "Error: Unable to determine app URL"
   exit 1
 fi
 
 # Make sure the DPL CMS graphql schema endpoint is set in application
-cms_url=$(getLagoonUrl nginx)
-
+goCmsUrlPrefix="nginx."
+# If the project is "dpl-cms", we are running in a PR environment
+# and then the goUrlPrefix should be cms-.
+# Otherwise we are in production and the goUrlPrefix should be "nginx.".
+if [ "$LAGOON_PROJECT" = "dpl-cms" ]; then
+  goCmsUrlPrefix="cms-"
+fi
+cms_url=$(getLagoonUrl $goCmsUrlPrefix)
 if [ -z "$cms_url" ]; then
   echo "Error: Unable to determine CMS URL"
   exit 1
@@ -38,7 +51,6 @@ export NEXT_PUBLIC_GRAPHQL_SCHEMA_ENDPOINT_DPL_CMS="$cms_url/graphql"
 
 # Go to the app directory if it doesn't exist then never mind.
 cd /app || exit 1
-# TODO: Remember to adjust the following line before deploying to production.
-# Using `yarn start:with-server-source-maps` is probably adding a performance overhead.
-yarn build && yarn start:with-server-source-maps
+
+yarn build && yarn start
 exit 0
