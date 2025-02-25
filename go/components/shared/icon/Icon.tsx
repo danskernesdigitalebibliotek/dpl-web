@@ -1,5 +1,3 @@
-import { cn } from "@/lib/helpers/helper.cn"
-
 type IconProps = {
   name: string
   className?: string
