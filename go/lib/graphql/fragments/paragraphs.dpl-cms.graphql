@@ -1,0 +1,67 @@
+fragment goVideo on ParagraphGoVideo {
+  __typename
+  id
+  created {
+    timestamp
+  }
+  title
+  embedVideo {
+    ... on MediaVideotool {
+      id
+      name
+      mediaVideotool
+    }
+  }
+}
+
+fragment goVideoBundleAutomatic on ParagraphGoVideoBundleAutomatic {
+  __typename
+  cqlSearch {
+    value
+  }
+  goVideoTitle
+  embedVideo {
+    ... on MediaVideotool {
+      id
+      name
+      mediaVideotool
+    }
+  }
+  videoAmountOfMaterials
+  id
+}
+
+fragment goVideoBundleManual on ParagraphGoVideoBundleManual {
+  __typename
+  id
+  goVideoTitle
+  embedVideo {
+    ... on MediaVideotool {
+      id
+      name
+      mediaVideotool
+    }
+  }
+  videoBundleWorkIds {
+    material_type
+    work_id
+  }
+}
+
+fragment goMaterialSliderAutomatic on ParagraphGoMaterialSliderAutomatic {
+  __typename
+  cqlSearch {
+    value
+  }
+  titleOptional: title
+  sliderAmountOfMaterials
+}
+
+fragment goMaterialSliderManual on ParagraphGoMaterialSliderManual {
+  __typename
+  titleOptional: title
+  materialSliderWorkIds {
+    material_type
+    work_id
+  }
+}

@@ -6,69 +6,11 @@ query getPageByPath($path: String!) {
       entity {
         ... on NodeGoPage {
           paragraphs {
-            ... on ParagraphGoVideo {
-              __typename
-              id
-              created {
-                timestamp
-              }
-              title
-              embedVideo {
-                ... on MediaVideotool {
-                  id
-                  name
-                  mediaVideotool
-                }
-              }
-            }
-            ... on ParagraphGoVideoBundleAutomatic {
-              __typename
-              cqlSearch {
-                value
-              }
-              goVideoTitle
-              embedVideo {
-                ... on MediaVideotool {
-                  id
-                  name
-                  mediaVideotool
-                }
-              }
-              videoAmountOfMaterials
-              id
-            }
-            ... on ParagraphGoVideoBundleManual {
-              __typename
-              id
-              goVideoTitle
-              embedVideo {
-                ... on MediaVideotool {
-                  id
-                  name
-                  mediaVideotool
-                }
-              }
-              videoBundleWorkIds {
-                material_type
-                work_id
-              }
-            }
-            ... on ParagraphGoMaterialSliderAutomatic {
-              __typename
-              cqlSearch {
-                value
-              }
-              titleOptional: title
-              sliderAmountOfMaterials
-            }
-            ... on ParagraphGoMaterialSliderManual {
-              __typename
-              titleOptional: title
-              materialSliderWorkIds {
-                material_type
-                work_id
-              }
-            }
+            ...goVideo
+            ...goVideoBundleAutomatic
+            ...goVideoBundleManual
+            ...goMaterialSliderAutomatic
+            ...goMaterialSliderManual
           }
         }
       }
