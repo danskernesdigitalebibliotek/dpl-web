@@ -3,7 +3,7 @@
 import Link from "next/link"
 import React from "react"
 
-import { WorkCardSkeleton } from "@/components/shared/workCard/WorkCard"
+import WorkCard, { WorkCardSkeleton } from "@/components/shared/workCard/WorkCard"
 import WorkCardWithCaption from "@/components/shared/workCard/WorkCardWithCaption"
 import { WorkTeaserSearchPageFragment } from "@/lib/graphql/generated/fbi/graphql"
 import { displayCreators } from "@/lib/helpers/helper.creators"
@@ -27,7 +27,9 @@ const SearchResults = ({ works }: SearchResultProps) => {
                 routeParams: { work: "work", wid: work.workId },
                 queryParams: { type: bestRepresentation.materialTypes[0].materialTypeGeneral.code },
               })}>
-              <WorkCardWithCaption work={work} isWithTilt />
+              <WorkCardWithCaption title={work.titles.full[0]} creators={work.creators || []}>
+                <WorkCard work={work} isWithTilt />
+              </WorkCardWithCaption>
             </Link>
           </div>
         )

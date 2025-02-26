@@ -4,7 +4,7 @@
 @import "./theme.css";
 @import "./utilities.css";
 
-@custom-variant dark (&:is(.dark *));
+@custom-variant dark (&:where(.dark-mode, .dark-mode *));
 
 @layer utilities {
   :root {
@@ -59,6 +59,7 @@
     --aspect-4-9: 4 / 9;
     --aspect-5-2: 5 / 2;
     --aspect-5-4: 5 / 4;
+    --aspect-5-7: 5 / 7;
     --aspect-7-9: 7 / 9;
     --aspect-8-15: 8 / 15;
     --aspect-16-9: 16 / 9;
@@ -75,10 +76,12 @@
 
     --beige: hsla(36, 45%, 98%, 1);
     --beige-overlay: hsla(42, 25%, 35%, 0.05);
+    --beige-overlay-solid: hsl(26, 28%, 95%);
     --beige-skeleton: hsla(42, 25%, 35%, 0.1);
 
     --blue: hsla(228, 100%, 10%, 1);
     --blue-overlay: hsla(238, 54%, 89%, 0.09);
+    --blue-overlay-solid: hsl(230, 40%, 24%);
     --blue-skeleton: hsla(238, 54%, 89%, 0.18);
 
     --border: hsla(48, 4.4%, 77.8%, 1);
@@ -112,6 +115,7 @@
     /* DYNAMIC COLORS */
     --background: var(--beige);
     --background-overlay: var(--beige-overlay);
+    --background-overlay-solid: var(--beige-overlay-solid);
     --background-skeleton: var(--beige-skeleton);
     --foreground: var(--black);
 
@@ -216,7 +220,7 @@
   @media (width >= theme(--breakpoint-lg)) {
     :root {
       /* GRID */
-      --grid-edge: 2.5rem; /* 40px */
+      --grid-edge: 4rem; /* 64px */
       --grid-gap: 1.5rem; /* 24px */
 
       /* NAVIGATION */
@@ -225,8 +229,8 @@
       --navigation-search-height: 6.25rem; /* 100px */
 
       /* SPACING */
-      --paragraph-spacing: 5rem; /* 80px */
-      --paragraph-spacing-inner: 4rem; /* 64px */
+      --paragraph-spacing: 4rem; /* 64px */
+      --paragraph-spacing-inner: 3rem; /* 48px */
       --space-y: 5rem; /* 80px */
 
       /* FONTS */
@@ -325,6 +329,7 @@
   .dark-mode {
     --background: var(--blue);
     --background-overlay: var(--blue-overlay);
+    --background-overlay-solid: var(--blue-overlay-solid);
     --background-skeleton: var(--blue-skeleton);
     --foreground: var(--beige);
     --shadow-add-contrast: hsla(0, 0%, 0%, 0.5);

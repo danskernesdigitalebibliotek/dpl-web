@@ -38,6 +38,7 @@ const WorkCard = ({ work, className, isWithTilt = false }: WorkCardProps) => {
   })
 
   // for each manifestation, get publizon data and add to array
+  // TODO: in storybook, request don't work, so we need make a mock request using fishery
   const manifestationsWithPublizonData = useQueries({
     queries: manifestations.map(manifestation => {
       const isbn =
@@ -122,8 +123,8 @@ const WorkCard = ({ work, className, isWithTilt = false }: WorkCardProps) => {
     <div
       key={work.workId}
       className={cn(
-        `rounded-base bg-background-overlay relative mb-6 flex aspect-4/5 h-auto w-full flex-col px-[15%]
-        pt-[15%]`,
+        `rounded-base bg-background-overlay relative mb-6 flex aspect-5/7 w-full flex-col overflow-hidden
+        px-[15%] pt-[15%]`,
         className
       )}>
       {isSomeManifestationTypeCostFree || isSomeMaterialTypePodcast ? (
@@ -131,16 +132,18 @@ const WorkCard = ({ work, className, isWithTilt = false }: WorkCardProps) => {
           BLÅ
         </Badge>
       ) : null}
-      <div className="relative mx-auto flex h-full w-full items-center justify-center">
-        {!isLoadingCovers && (
-          <CoverPicture
-            lowResSrc={lowResCover || ""}
-            src={coverSrc?.[0] || ""}
-            alt={`${work.titles.full[0]} cover billede`}
-            withTilt={isWithTilt}
-            className="select-none"
-          />
-        )}
+      <div className="relative mx-auto flex aspect-5/7 h-full w-full">
+        <div className="h-full w-full">
+          {!isLoadingCovers && (
+            <CoverPicture
+              lowResSrc={lowResCover || ""}
+              src={coverSrc?.[0] || ""}
+              alt={`${work.titles.full[0]} cover billede`}
+              withTilt={isWithTilt}
+              className="select-none"
+            />
+          )}
+        </div>
       </div>
       <div className="my-auto flex min-h-[15%] items-center py-3 md:py-4">
         <div className="flex w-full flex-row justify-center gap-2">
@@ -168,12 +171,9 @@ const WorkCard = ({ work, className, isWithTilt = false }: WorkCardProps) => {
 
 export const WorkCardSkeleton = () => {
   return (
-    <div className="space-y-3 lg:space-y-5">
+    <div className="h-full w-full space-y-3 lg:space-y-5">
       <div className="rounded-base bg-background-skeleton w-full animate-pulse">
-        <div className="aspect-4/5 px-[15%] pt-[15%]"></div>
-        <div className="py-3 md:py-4">
-          <div className="h-6 md:h-10"></div>
-        </div>
+        <div className="aspect-5/7 px-[15%] pt-[15%]"></div>
       </div>
       <div className="space-y-2">
         <div className="rounded-base bg-background-skeleton h-5 animate-pulse lg:h-7"></div>
@@ -185,12 +185,12 @@ export const WorkCardSkeleton = () => {
 
 export const WorkCardEmpty = () => {
   return (
-    <div className="space-y-3 lg:space-y-5">
+    <div className="h-full w-full space-y-3 lg:space-y-5">
       <div className="rounded-base bg-background-skeleton w-full">
         <div className="flex aspect-4/5 w-full flex-col items-center justify-center">
           <Icon
             name="question-mark"
-            className="text-foreground h-[50px] opacity-20 lg:h-[100px]"
+            className="text-foreground opacity-20"
             aria-label="Spørgsmålstegn ikon"
           />
           <p className="text-typo-caption text-center">Kunne ikke vises</p>
