@@ -1,0 +1,14 @@
+<?php
+
+/**
+ * @file
+ * Install, update and uninstall functions for the bnf module.
+ */
+
+/**
+ * Add the last field to subscriptions.
+ */
+function bnf_client_update_10101(): void {
+  $entity_type = \Drupal::service('entity_type.manager')->getDefinition('bnf_subscription');
+  \Drupal::entityDefinitionUpdateManager()->updateEntityType($entity_type);
+}

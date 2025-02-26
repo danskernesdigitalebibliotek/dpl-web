@@ -79,7 +79,7 @@ class SubscriptionCommands extends DrushCommands {
     'uuid' => 'UUID',
     'subscription_uuid' => 'Subscription UUID',
     'created' => 'Created',
-
+    'last' => 'Last update',
   ])]
   public function listSubscriptions(): RowsOfFields {
     /** @var \Drupal\bnf_client\Entity\Subscription[] $subscriptions */
@@ -92,6 +92,7 @@ class SubscriptionCommands extends DrushCommands {
         'uuid' => $subscription->uuid->value,
         'subscription_uuid' => $subscription->subscription_uuid->value,
         'created' => $subscription->created->value,
+        'last' => $subscription->last->value,
       ];
     }
 

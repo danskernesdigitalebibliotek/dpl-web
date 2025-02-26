@@ -62,6 +62,10 @@ class Subscription extends ContentEntityBase implements ContentEntityInterface {
       ->setLabel('Created')
       ->setDescription('The timestamp the subscription was made.');
 
+    $fields['last'] = BaseFieldDefinition::create('timestamp')
+      ->setLabel('Last seen')
+      ->setDescription('The timestamp of the last synced content.');
+
     return $fields;
   }
 
