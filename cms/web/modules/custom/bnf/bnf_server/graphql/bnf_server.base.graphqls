@@ -9,10 +9,12 @@ enum ImportStatus {
      duplicate
 }
 
-scalar Violation
+type Error {
+  message: String!
+}
 
 type NewContentResponse {
   uuids: [String!]!
   youngest: Time!
-  errors: [Violation]
+  errors: [Error!]!
 }
