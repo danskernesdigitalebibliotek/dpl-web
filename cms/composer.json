@@ -40,10 +40,10 @@
             "type": "package",
             "package": {
                 "name": "danskernesdigitalebibliotek/dpl-react",
-                "version": "2025.8.0",
+                "version": "2025.9.0",
                 "type": "drupal-library",
                 "dist": {
-                    "url": "https://github.com/danskernesdigitalebibliotek/dpl-react/releases/download/2025.8.0/dist-2025-8-0-7957f1b1ca10b4f5844bc77fe64cc46517bc1de7.zip",
+                    "url": "https://github.com/danskernesdigitalebibliotek/dpl-react/releases/download/2025.9.0/dist-2025-9-0-ed99b212b48905011d3353dde4b6b0d3ac4fcb90.zip",
                     "type": "zip"
                 },
                 "require": {
@@ -56,9 +56,9 @@
             "package": {
                 "name": "danskernesdigitalebibliotek/dpl-design-system",
                 "type": "drupal-library",
-                "version": "2025.8.0",
+                "version": "2025.9.0",
                 "dist": {
-                    "url": "https://github.com/danskernesdigitalebibliotek/dpl-design-system/releases/download/2025.8.0/dist-2025-8-0-4c90885f3e99874a9d067ed83ae96c3b329a09b4.zip",
+                    "url": "https://github.com/danskernesdigitalebibliotek/dpl-design-system/releases/download/2025.9.0/dist-2025-9-0-2bbb04989d41c5d95b63b46eaac3d0bee160bfbe.zip",
                     "type": "zip"
                 }
             }
@@ -91,8 +91,8 @@
         "composer/installers": "1.12.0",
         "cweagans/composer-patches": "1.7.3",
         "danskernesdigitalebibliotek/cms-api": "*",
-        "danskernesdigitalebibliotek/dpl-design-system": "2025.8.0",
-        "danskernesdigitalebibliotek/dpl-react": "2025.8.0",
+        "danskernesdigitalebibliotek/dpl-design-system": "2025.9.0",
+        "danskernesdigitalebibliotek/dpl-react": "2025.9.0",
         "danskernesdigitalebibliotek/fbs-client": "*",
         "dealerdirect/phpcodesniffer-composer-installer": "^1.0.0",
         "deoliveiralucas/array-keys-case-transform": "^1.1",
@@ -113,7 +113,6 @@
         "drupal/content_lock": "^2.3",
         "drupal/cookieinformation": "^2.1",
         "drupal/core-composer-scaffold": "10.3.13",
-        "drupal/core-project-message": "10.3.13",
         "drupal/core-recommended": "10.3.13",
         "drupal/date_range_formatter": "^4.0",
         "drupal/default_content": "^2.0@alpha",
@@ -223,7 +222,6 @@
             "dealerdirect/phpcodesniffer-composer-installer": true,
             "drupal/console-extend-plugin": true,
             "drupal/core-composer-scaffold": true,
-            "drupal/core-project-message": true,
             "mnsami/composer-custom-directory-installer": true,
             "oomphinc/composer-installers-extender": true,
             "phpstan/extension-installer": true,
@@ -280,6 +278,7 @@
             ],
             "file-mapping": {
                 "[web-root]/sites/default/all.settings.php": "assets/all.settings.php",
+                "[web-root]/sites/default/all.services.yml": "assets/all.services.yml",
                 "[web-root]/sites/bnf/all.settings.php": "assets/all.settings.php",
                 "[web-root]/sites/default/development.settings.php": "assets/development.settings.php",
                 "[web-root]/sites/bnf/development.settings.php": "assets/development.settings.php",

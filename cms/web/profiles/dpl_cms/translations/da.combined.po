@@ -7,8 +7,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2025-02-18 20:11+0100\n"
-"PO-Revision-Date: 2025-02-18 20:11+0100\n"
+"POT-Creation-Date: 2025-02-26 07:45+0100\n"
+"PO-Revision-Date: 2025-02-26 07:45+0100\n"
 "Last-Translator: NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
 "MIME-Version: 1.0\n"
@@ -1672,8 +1672,8 @@ msgid ""
 "Pause your reservations early, since reservations that are already being "
 "processed, will not be paused."
 msgstr ""
-"Sæt dine reserveringer på pause i god tid, da reserveringer som allerede er "
-"i proces ikke kan sættes på hold "
+"Sæt dine reserveringer på fysiske materialer på pause i god tid, da "
+"reserveringer som allerede er i proces ikke kan sættes på hold."
 
 msgctxt "Global"
 msgid "Cancel pause"
@@ -1807,7 +1807,7 @@ msgstr ""
 
 msgctxt "Global"
 msgid "You have renewed your loans"
-msgstr "Du har fornyet dine lån"
+msgstr "Du har fornyet de lån, der kunne fornys"
 
 msgctxt "Global"
 msgid "Something went wrong renewing your loan. Please try again."
@@ -2803,15 +2803,15 @@ msgstr "Du har lånt @count ud af @limit mulige e-bøger denne måned"
 
 msgctxt "Work Page"
 msgid "Listen to @materialType"
-msgstr ""
+msgstr "Lyt til @materialType"
 
 msgctxt "Work Page"
 msgid "Read @materialType"
-msgstr ""
+msgstr "Læs @materialType"
 
 msgctxt "Work Page"
 msgid "Try @materialType"
-msgstr ""
+msgstr "Prøv @materialType"
 
 msgctxt "Work Page"
 msgid "Your material has been ordered from another library"
@@ -4435,6 +4435,12 @@ msgstr "List alle åbningstider for ældre API"
 msgid "Get campaign matching search result facets"
 msgstr "Hent kampagne som matcher facetter fra søgeresultatet"
 
+msgid "Subscription"
+msgstr ""
+
+msgid "Subscriptions"
+msgstr ""
+
 msgid "Update single events"
 msgstr "Opdater enkeltstående arrangementer"
 
@@ -4484,6 +4490,9 @@ msgid "Handle the favorites list material component pages"
 msgstr "Håndter indstillinger for huskeliste komponent"
 
 msgid "Post Go Adgangsplatformen Login Route"
+msgstr ""
+
+msgid "Post Go Adgangsplatformen Logout Route"
 msgstr ""
 
 msgid "DPL Go"
@@ -13256,7 +13265,7 @@ msgid "The email address is not valid: @email"
 msgstr ""
 
 msgid "The email address is already taken: @email"
-msgstr ""
+msgstr "Denne email adresse er allerede i brug: @email"
 
 msgid "Only administrators can register new accounts."
 msgstr "Kun administratorer kan registrere nye konti."
@@ -18549,9 +18558,6 @@ msgid ""
 msgstr ""
 "Du skal opsætte Varnish til at lytte til anmodningsmetoden URIBAN. Eksempel:"
 
-msgid "Adminster"
-msgstr "Administrer"
-
 msgid "By default every image belonging to any entity is purged."
 msgstr "Som standard renses alle billeder, der tilhører enhver enhed."
 
@@ -18567,12 +18573,9 @@ msgstr "Ingen indholds-entiteter blev fundet"
 
 msgid ""
 "Configure bundles of entity types that Varnish image purge should be used "
-"for, if none selected, all bundles form all entity types will be used. Just "
-"the fields of type image will be purge."
+"for, if none selected, all bundles from all entity types will be used. Just "
+"the fields of type image will be purged."
 msgstr ""
-"Konfigurer bundter af enhedstyper, som Varnish-billedrensning skal bruges "
-"til; hvis ingen er valgt, vil alle bundter fra alle enhedstyper blive brugt. "
-"Kun felter af typen billede vil blive renset."
 
 msgid "Purge focal point entities after they are updated"
 msgstr "Slet fokuspunktsenheder efter de er opdateret"
