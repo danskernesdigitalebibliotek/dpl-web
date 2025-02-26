@@ -29,10 +29,10 @@ x-environment:
     # Environment variables which mimic what will be set in a Lagoon cluster locally
     LAGOON_PROJECT: 'dplcms'
     LAGOON_ENVIRONMENT: 'local'
-    LAGOON_ENVIRONMENT_TYPE: ${LAGOON_ENVIRONMENT_TYPE:-local}
+    #LAGOON_ENVIRONMENT_TYPE: ${LAGOON_ENVIRONMENT_TYPE:-local}
     WEBROOT: web
     # Uncomment if you like to have the system behave like in production
-    #LAGOON_ENVIRONMENT_TYPE: production
+    LAGOON_ENVIRONMENT_TYPE: production
 
 services:
   https:
@@ -58,7 +58,9 @@ services:
 
   varnish: # Caching HTTP reverse proxy that serves (mostly) anonymous requests.
     # https://docs.lagoon.sh/lagoon/docker-images/varnish
-    image: uselagoon/varnish-6-drupal:latest
+    build:
+      context: .
+      dockerfile: lagoon/varnish.dockerfile
     depends_on:
       - nginx
     labels:
