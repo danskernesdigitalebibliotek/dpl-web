@@ -1,9 +1,11 @@
 <?php
 
 use Drupal\bnf\Exception\AlreadyExistsException;
-use Drupal\bnf\Services\BnfImporter;
+use Drupal\bnf_client\Hook\SubscriptionHooks;
 use Drupal\bnf_client\Services\BnfExporter;
+use Drupal\Core\Entity\EntityInterface;
 use Drupal\Core\Form\FormStateInterface;
+use Drupal\Core\Hook\Attribute\LegacyHook;
 use Drupal\drupal_typed\DrupalTyped;
 use Drupal\node\NodeForm;
 use Drupal\node\NodeInterface;
@@ -103,4 +105,20 @@ function bnf_client_form_node_form_submit(array $form, FormStateInterface $form_
     }
 
   }
+}
+
+/**
+ * Implements hook_ENTITY_TYPE_insert().
+ */
+#[LegacyHook]
+function bnf_client_bnf_subscription_insert(EntityInterface $entity): void {
+  \Drupal::service(SubscriptionHooks::class)->queueUpdate($entity);
+}
+
+/**
+ * Implements hook_ENTITY_TYPE_update().
+ */
+#[LegacyHook]
+function bnf_client_bnf_subscription_update(EntityInterface $entity): void {
+  \Drupal::service(SubscriptionHooks::class)->queueUpdate($entity);
 }

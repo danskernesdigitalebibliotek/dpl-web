@@ -7,11 +7,13 @@ use Drupal\bnf\BnfStateEnum;
 use Drupal\bnf\Exception\AlreadyExistsException;
 use Drupal\bnf\GraphQL\Operations\GetNode;
 use Drupal\bnf\GraphQL\Operations\GetNodeTitle;
+use Drupal\bnf\GraphQL\Operations\NewContent;
 use Drupal\bnf\MangleUrl;
 use Drupal\bnf\SailorEndpointConfig;
 use Drupal\Core\Entity\EntityTypeManagerInterface;
 use Drupal\node\NodeInterface;
 use Psr\Log\LoggerInterface;
+use Safe\DateTimeImmutable;
 use Spawnia\Sailor\Configuration;
 
 /**
@@ -122,6 +124,48 @@ class BnfImporter {
     ]);
 
     return $node;
+  }
+
+  /**
+   * Get new content on subscription.
+   *
+   * Returns UUIDs of new/updated content, and the timestamp of the last change
+   * (suitable for passing to this function as `since` the next time round).
+   *
+   * @return array{'uuids': string[], 'youngest': int}
+   *   Updated content data.
+   */
+  public function newContent(string $uuid, int $since, string $endpointUrl): array {
+    // @todo $this->setEndpoint() which does this.
+    $endpointConfig = new SailorEndpointConfig(MangleUrl::server($endpointUrl));
+    Configuration::setEndpointFor(NewContent::class, $endpointConfig);
+
+    try {
+      $response = NewContent::execute($uuid, (new DateTimeImmutable('@' . $since))->format(\DateTimeInterface::RFC3339));
+      $newContent = $response->errorFree()->data->newContent;
+
+      if ($newContent->errors) {
+        foreach ($newContent->errors as $error) {
+          $this->logger->error('GraphQL error querying new content: @message', ['@message' => $error->message]);
+        }
+      }
+
+      if ($newContent->uuids) {
+        return [
+          'uuids' => $newContent->uuids,
+          'youngest' => $newContent->youngest,
+        ];
+      }
+    }
+    catch (\Throwable $e) {
+      $this->logger->error('Error querying new content: @message', ['@message' => $e->getMessage()]);
+    }
+
+    // "nothing new" repsponse both when there aren't, and in case of error.
+    return [
+      'uuids' => [],
+      'youngest' => $since,
+    ];
   }
 
 }

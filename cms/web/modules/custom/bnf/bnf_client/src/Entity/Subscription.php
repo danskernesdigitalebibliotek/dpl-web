@@ -29,6 +29,11 @@ use Drupal\Core\Field\BaseFieldDefinition;
 class Subscription extends ContentEntityBase implements ContentEntityInterface {
 
   /**
+   * Flag to tell the update hook not to queue a new content check.
+   */
+  public bool $noCheck = FALSE;
+
+  /**
    * {@inheritDoc}
    *
    * @param array<string, mixed> $values
@@ -67,6 +72,27 @@ class Subscription extends ContentEntityBase implements ContentEntityInterface {
       ->setDescription('The timestamp of the last synced content.');
 
     return $fields;
+  }
+
+  /**
+   * Get the UUID subscribed to.
+   */
+  public function getSubscriptionUuid(): string {
+    return $this->subscription_uuid->value;
+  }
+
+  /**
+   * Get timestamp of the last synced content.
+   */
+  public function getLast(): int {
+    return (int) ($this->last->value ?? 0);
+  }
+
+  /**
+   * Set timestamp of the last synced content.
+   */
+  public function setLast(int $last): void {
+    $this->last->value = $last;
   }
 
 }
