@@ -382,6 +382,9 @@ sub vcl_deliver {
     unset resp.http.Cache-Tags;
   }
 
+  # Unset s-maxage to avoid response caching in external shared proxies
+  set resp.http.cache-control = regsub(resp.http.cache-control, "(,\s*s-maxage=[0-9]+\s*$)|(\s*s-maxage=[0-9]+\s*,)","");
+
   unset resp.http.X-Generator;
   unset resp.http.Server;
   # Inject information about grace
