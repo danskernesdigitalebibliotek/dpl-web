@@ -85,7 +85,7 @@ const VideoBundle = ({ works, title, videoUrl }: VideoBundleProps) => {
               </Button>
               <div className="hidden lg:flex lg:w-[300px] lg:items-center">
                 <Timer
-                  durationInSeconds={10}
+                  durationInSeconds={5}
                   currentItemNumber={currentItemNumber}
                   totalItems={materialOrder.length}
                   fullCircleAction={moveToNextMaterial}
