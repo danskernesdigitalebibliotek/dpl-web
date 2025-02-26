@@ -27,7 +27,7 @@ import { resolveUrl } from "@/lib/helpers/helper.routes"
 import { getIsbnsFromManifestation } from "@/lib/helpers/ids"
 import { useGetCoverCollection } from "@/lib/rest/cover-service-api/generated/cover-service"
 import { GetCoverCollectionSizesItem } from "@/lib/rest/cover-service-api/generated/model"
-import { useGetV1ProductsIdentifier } from "@/lib/rest/publizon-api/generated/publizon"
+import { useGetV1ProductsIdentifierAdapter } from "@/lib/rest/publizon/adapter/generated/publizon"
 
 type WorkPageHeaderProps = {
   work: WorkFullWorkPageFragment
@@ -67,7 +67,7 @@ const WorkPageHeader = ({ work, selectedManifestation }: WorkPageHeaderProps) =>
     { query: { enabled: !!selectedManifestation?.pid } }
   )
 
-  const { data: publizonData } = useGetV1ProductsIdentifier(isbns?.[0], {
+  const { data: publizonData } = useGetV1ProductsIdentifierAdapter(isbns?.[0], {
     query: {
       // Publizon / useGetV1ProductsIdentifier is responsible for online
       // materials. It requires an ISBN to do lookups.
