@@ -1,0 +1,30 @@
+query getArticleByPath($path: String!) {
+  route(path: $path) {
+    ... on RouteInternal {
+      entity {
+        ... on NodeGoArticle {
+          id
+          title
+          subtitle
+          goArticleImage {
+            ... on MediaImage {
+              id
+              name
+              path
+            }
+          }
+          publicationDate {
+            timestamp
+          }
+          paragraphs {
+            ...goVideo
+            ...goVideoBundleAutomatic
+            ...goVideoBundleManual
+            ...goMaterialSliderAutomatic
+            ...goMaterialSliderManual
+          }
+        }
+      }
+    }
+  }
+}
