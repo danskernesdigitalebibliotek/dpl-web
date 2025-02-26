@@ -27279,12 +27279,12 @@ msgstr ""
 #: 
 msgctxt "media.type.audio:label"
 msgid "Audio"
-msgstr ""
+msgstr "Audio"
 
 #: 
 msgctxt "node.type.go_category:name"
 msgid "GO category"
-msgstr ""
+msgstr "GO kategori"
 
 #: 
 msgctxt "node.type.go_category:description"
