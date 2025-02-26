@@ -36,7 +36,7 @@ const reverseDateString = (date: string) => date.split('-').reverse().join('-');
 const createTestBranchAndVisitOpeningHoursAdmin = () => {
   cy.drupalLogin('/node/add/branch');
   cy.get('#edit-title-0-value').type(branchTitle);
-  cy.get('button[title="Show all Paragraphs"]').click();
+  cy.openParagraphsModal();
   // Forcing and multiple was the only way I could get this to work
   cy.get('button[value="Opening Hours"]').click({
     multiple: true,
