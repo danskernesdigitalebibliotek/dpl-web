@@ -380,6 +380,7 @@ type Mutation {
 
 type NewContentResponse {
   uuids: [String!]!
+  youngest: Time!
   errors: [Violation]
 }
 
