@@ -2,8 +2,8 @@ import { notFound } from "next/navigation"
 import React, { Suspense } from "react"
 
 import loadArticle from "@/app/artikel/[...slug]/loadArticle"
-import BasicPageLayout from "@/components/pages/basicPageLayout/BasicPageLayout"
-import { NodeGoPage } from "@/lib/graphql/generated/dpl-cms/graphql"
+import ArticlePageLayout from "@/components/pages/articlePageLayout/ArticlePageLayout"
+import { GetArticleByPathQuery, NodeGoArticle } from "@/lib/graphql/generated/dpl-cms/graphql"
 
 async function page(props: { params: Promise<{ slug: string[] }> }) {
   const params = await props.params
@@ -11,11 +11,11 @@ async function page(props: { params: Promise<{ slug: string[] }> }) {
 
   const slugString = slug.join("/")
 
-  console.log({ slugString })
-
-  const data = await loadArticle(slugString)
+  const data: GetArticleByPathQuery = await loadArticle(slugString)
 
   const routeType = data.route?.__typename
+
+  console.log({ data, routeType })
 
   if (routeType === "RouteRedirect") {
     // TODO: implement redirect
@@ -33,13 +33,9 @@ async function page(props: { params: Promise<{ slug: string[] }> }) {
 
   const pageData = data.route.entity
 
-  console.log("test server")
-
-  console.log({ pageData })
-
   return (
     <Suspense fallback={<p>Loading...</p>}>
-      <BasicPageLayout pageData={pageData as NodeGoPage} />
+      <ArticlePageLayout pageData={pageData as NodeGoArticle} />
     </Suspense>
   )
 }

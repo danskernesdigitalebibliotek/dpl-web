@@ -65,3 +65,35 @@ fragment goMaterialSliderManual on ParagraphGoMaterialSliderManual {
     work_id
   }
 }
+
+fragment goLinkbox on ParagraphGoLinkbox {
+  __typename
+  title
+  goImage {
+    ... on MediaImage {
+      name
+      mediaImage {
+        url
+        alt
+        height
+        mime
+        size
+        title
+        width
+      }
+      byline
+    }
+  }
+  goColor
+  goDescription
+  goLinkParagraph {
+    ... on ParagraphGoLink {
+      link {
+        title
+        url
+      }
+      targetBlank
+      ariaLabel
+    }
+  }
+}

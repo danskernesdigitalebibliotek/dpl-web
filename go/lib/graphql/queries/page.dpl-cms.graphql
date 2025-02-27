@@ -11,6 +11,7 @@ query getPageByPath($path: String!) {
             ...goVideoBundleManual
             ...goMaterialSliderAutomatic
             ...goMaterialSliderManual
+            ...goLinkbox
           }
         }
       }

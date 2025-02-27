@@ -1114,6 +1114,13 @@ export type MusicalExercise = {
 export type Mutation = {
   __typename?: 'Mutation';
   elba: ElbaServices;
+  submitOrder?: Maybe<SubmitOrder>;
+};
+
+
+export type MutationSubmitOrderArgs = {
+  dryRun?: InputMaybe<Scalars['Boolean']['input']>;
+  input: SubmitOrderInput;
 };
 
 export type NarrativeTechnique = SubjectInterface & {
@@ -1151,6 +1158,14 @@ export type NoteTypeEnum =
   | 'RESTRICTIONS_ON_USE'
   | 'TECHNICAL_REQUIREMENTS'
   | 'TYPE_OF_SCORE';
+
+export type OrderTypeEnum =
+  | 'ESTIMATE'
+  | 'HOLD'
+  | 'LOAN'
+  | 'NON_RETURNABLE_COPY'
+  | 'NORMAL'
+  | 'STACK_RETRIEVAL';
 
 export type Pegi = {
   __typename?: 'PEGI';
@@ -1775,6 +1790,88 @@ export type SubjectWithRating = SubjectInterface & {
   /** Expressed as integer on a scale from 1 to 5 */
   rating?: Maybe<Scalars['Int']['output']>;
   type: SubjectTypeEnum;
+};
+
+export type SubmitOrder = {
+  __typename?: 'SubmitOrder';
+  deleted?: Maybe<Scalars['Boolean']['output']>;
+  message?: Maybe<Scalars['String']['output']>;
+  /** if order was submitted successfully */
+  ok?: Maybe<Scalars['Boolean']['output']>;
+  orderId?: Maybe<Scalars['String']['output']>;
+  orsId?: Maybe<Scalars['String']['output']>;
+  status: SubmitOrderStatusEnum;
+};
+
+export type SubmitOrderInput = {
+  author?: InputMaybe<Scalars['String']['input']>;
+  authorOfComponent?: InputMaybe<Scalars['String']['input']>;
+  exactEdition?: InputMaybe<Scalars['Boolean']['input']>;
+  /** expires is required to be iso 8601 dateTime eg. "2024-03-15T12:24:32Z" */
+  expires?: InputMaybe<Scalars['String']['input']>;
+  key?: InputMaybe<Scalars['String']['input']>;
+  orderType?: InputMaybe<OrderTypeEnum>;
+  pagination?: InputMaybe<Scalars['String']['input']>;
+  pickUpBranch: Scalars['String']['input'];
+  pids: Array<Scalars['String']['input']>;
+  publicationDate?: InputMaybe<Scalars['String']['input']>;
+  publicationDateOfComponent?: InputMaybe<Scalars['String']['input']>;
+  title?: InputMaybe<Scalars['String']['input']>;
+  titleOfComponent?: InputMaybe<Scalars['String']['input']>;
+  userParameters: SubmitOrderUserParametersInput;
+  volume?: InputMaybe<Scalars['String']['input']>;
+};
+
+export type SubmitOrderStatusEnum =
+  /** Authentication error */
+  | 'AUTHENTICATION_ERROR'
+  /** Borchk: User is blocked by agency */
+  | 'BORCHK_USER_BLOCKED_BY_AGENCY'
+  /** Borchk: User could not be verified */
+  | 'BORCHK_USER_NOT_VERIFIED'
+  /** Borchk: User is no longer loaner at the provided pickupbranch */
+  | 'BORCHK_USER_NO_LONGER_EXIST_ON_AGENCY'
+  /** Pincode was not found in arguments */
+  | 'ERROR_MISSING_PINCODE'
+  /** Order does not validate */
+  | 'INVALID_ORDER'
+  /** Item not available at pickupAgency, item localised for ILL */
+  | 'NOT_OWNED_ILL_LOC'
+  /** Item not available at pickupAgency, item not localised for ILL */
+  | 'NOT_OWNED_NO_ILL_LOC'
+  /** Item not available at pickupAgency, ILL of mediumType not accepted */
+  | 'NOT_OWNED_WRONG_ILL_MEDIUMTYPE'
+  /** ServiceRequester is obligatory */
+  | 'NO_SERVICEREQUESTER'
+  /** Error sending order to ORS */
+  | 'ORS_ERROR'
+  /** Item available at pickupAgency, order accepted */
+  | 'OWNED_ACCEPTED'
+  /** Item available at pickupAgency, item may be ordered through the library's catalogue */
+  | 'OWNED_OWN_CATALOGUE'
+  /** Item available at pickupAgency, order of mediumType not accepted */
+  | 'OWNED_WRONG_MEDIUMTYPE'
+  /** Service unavailable */
+  | 'SERVICE_UNAVAILABLE'
+  /** Unknown error occured, status is unknown */
+  | 'UNKNOWN_ERROR'
+  /** PickupAgency not found */
+  | 'UNKNOWN_PICKUPAGENCY'
+  /** User not found */
+  | 'UNKNOWN_USER';
+
+export type SubmitOrderUserParametersInput = {
+  barcode?: InputMaybe<Scalars['String']['input']>;
+  cardno?: InputMaybe<Scalars['String']['input']>;
+  cpr?: InputMaybe<Scalars['String']['input']>;
+  customId?: InputMaybe<Scalars['String']['input']>;
+  pincode?: InputMaybe<Scalars['String']['input']>;
+  userAddress?: InputMaybe<Scalars['String']['input']>;
+  userDateOfBirth?: InputMaybe<Scalars['String']['input']>;
+  userId?: InputMaybe<Scalars['String']['input']>;
+  userMail?: InputMaybe<Scalars['String']['input']>;
+  userName?: InputMaybe<Scalars['String']['input']>;
+  userTelephone?: InputMaybe<Scalars['String']['input']>;
 };
 
 export type SuggestResponse = {

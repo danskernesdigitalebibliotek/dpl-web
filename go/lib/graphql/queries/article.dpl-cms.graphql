@@ -1,6 +1,8 @@
 query getArticleByPath($path: String!) {
   route(path: $path) {
+    __typename
     ... on RouteInternal {
+      url
       entity {
         ... on NodeGoArticle {
           id
@@ -22,6 +24,7 @@ query getArticleByPath($path: String!) {
             ...goVideoBundleManual
             ...goMaterialSliderAutomatic
             ...goMaterialSliderManual
+            ...goLinkbox
           }
         }
       }
