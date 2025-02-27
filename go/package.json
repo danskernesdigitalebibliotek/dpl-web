@@ -64,6 +64,7 @@
     "tailwindcss-animate": "^1.0.7",
     "ts-node": "^10.9.2",
     "vaul": "^1.1.1",
+    "wsdl-tsclient": "^1.7.1",
     "xstate": "^5.18.2",
     "zod": "^3.23.8",
     "zustand": "^5.0.0-rc.2"
