@@ -9,11 +9,7 @@ query getArticleByPath($path: String!) {
           title
           subtitle
           goArticleImage {
-            ... on MediaImage {
-              id
-              name
-              path
-            }
+            ...imageFragment
           }
           publicationDate {
             timestamp

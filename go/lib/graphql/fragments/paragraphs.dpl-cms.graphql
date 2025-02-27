@@ -6,11 +6,7 @@ fragment goVideo on ParagraphGoVideo {
   }
   title
   embedVideo {
-    ... on MediaVideotool {
-      id
-      name
-      mediaVideotool
-    }
+    ...mediaVideotoolFragment
   }
 }
 
@@ -21,11 +17,7 @@ fragment goVideoBundleAutomatic on ParagraphGoVideoBundleAutomatic {
   }
   goVideoTitle
   embedVideo {
-    ... on MediaVideotool {
-      id
-      name
-      mediaVideotool
-    }
+    ...mediaVideotoolFragment
   }
   videoAmountOfMaterials
   id
@@ -36,11 +28,7 @@ fragment goVideoBundleManual on ParagraphGoVideoBundleManual {
   id
   goVideoTitle
   embedVideo {
-    ... on MediaVideotool {
-      id
-      name
-      mediaVideotool
-    }
+    ...mediaVideotoolFragment
   }
   videoBundleWorkIds {
     material_type
@@ -70,19 +58,7 @@ fragment goLinkbox on ParagraphGoLinkbox {
   __typename
   title
   goImage {
-    ... on MediaImage {
-      name
-      mediaImage {
-        url
-        alt
-        height
-        mime
-        size
-        title
-        width
-      }
-      byline
-    }
+    ...imageFragment
   }
   goColor
   goDescription
