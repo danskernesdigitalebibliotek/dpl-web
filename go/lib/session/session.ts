@@ -38,7 +38,7 @@ export interface TSessionData {
   userInfo?: {
     sub: string
     uniid: string
-    institutionIds: string
+    institution_ids: string
   }
   adgangsplatformenUserToken?: string
   type: TSessionType

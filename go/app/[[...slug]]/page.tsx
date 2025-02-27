@@ -1,5 +1,5 @@
 import { notFound } from "next/navigation"
-import React, { Suspense } from "react"
+import React from "react"
 
 import loadPage from "@/app/[[...slug]]/loadPage"
 import BasicPageLayout from "@/components/pages/basicPageLayout/BasicPageLayout"
@@ -37,11 +37,7 @@ async function page(props: { params: Promise<{ slug: string[] }> }) {
 
   const pageData = data.route.entity
 
-  return (
-    <Suspense fallback={<p>Loading...</p>}>
-      <BasicPageLayout pageData={pageData as NodeGoPage} />
-    </Suspense>
-  )
+  return <BasicPageLayout pageData={pageData as NodeGoPage} />
 }
 
 export default page

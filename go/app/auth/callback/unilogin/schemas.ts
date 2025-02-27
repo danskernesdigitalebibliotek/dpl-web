@@ -10,7 +10,7 @@ const schemas = {
   }),
   introspect: z.object({
     uniid: z.string(),
-    institutionIds: z.string(),
+    institution_ids: z.string(),
   }),
   userInfo: z.object({
     sub: z.string(),

@@ -29,14 +29,24 @@ export const CoverPicture = ({
   // get the container height
   const ref = useRef<HTMLDivElement>(null)
   const containerHeight = ref.current?.getBoundingClientRect().height || 0
+  const containerWidth = ref.current?.getBoundingClientRect().width || 0
+
+  // calculate container aspect ratio
+  const containerAspectRatio = containerWidth / containerHeight
 
   // calculate the max width using image aspect ratio and container width
   const imageWidthByContainerHeight = imageAspectRatio * containerHeight
-  const paddingTop = `${100 / imageAspectRatio}%`
+  const imageHeightByContainerWidth = containerWidth / imageAspectRatio
 
   useEffect(() => {}, [size.width])
   const [imageLoaded, setImageLoaded] = useState(false)
   const [imageError, setImageError] = useState(false)
+
+  // adjust the padding top based on the image aspect ratio and the container width
+  const paddingTop =
+    containerHeight > imageHeightByContainerWidth
+      ? `${100 / imageAspectRatio}%`
+      : `${100 / containerAspectRatio}%`
 
   return (
     <div className={cn("flex h-full w-full items-center", className)} ref={ref}>
@@ -44,7 +54,7 @@ export const CoverPicture = ({
         <CoverPictureTiltWrapper
           withTilt={withTilt}
           className={"relative m-auto"}
-          style={{ paddingTop, width: `min(100%,${imageWidthByContainerHeight}px)` }}>
+          style={{ paddingTop, width: `${imageWidthByContainerHeight}px` }}>
           {lowResSrc && (
             <Image
               src={lowResSrc}
@@ -61,6 +71,7 @@ export const CoverPicture = ({
               onLoad={({ target }) => {
                 // get the intrinsic dimensions of the image
                 const { naturalWidth, naturalHeight } = target as HTMLImageElement
+
                 setImageHeight(naturalHeight)
                 setImageWidth(naturalWidth)
               }}

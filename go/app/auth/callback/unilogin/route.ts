@@ -11,7 +11,7 @@ import schemas from "./schemas"
 
 export interface TIntrospectionResponse extends client.IntrospectionResponse {
   uniid: string
-  institutionIds: string
+  institution_ids: string
 }
 
 export async function GET(request: NextRequest) {
@@ -75,7 +75,7 @@ export async function GET(request: NextRequest) {
     session.userInfo = {
       sub: userinfo.sub,
       uniid: introspect.uniid,
-      institutionIds: introspect.institutionIds,
+      institution_ids: introspect.institution_ids,
     }
 
     // TODO: When we have verified that it works in Lagoon

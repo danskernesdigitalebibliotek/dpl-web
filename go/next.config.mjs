@@ -1,3 +1,6 @@
+import withPlaiceholder from "@plaiceholder/next"
+import { env } from "process"
+
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   typescript: {
@@ -19,6 +22,11 @@ const nextConfig = {
         hostname: "res.cloudinary.com",
         pathname: "/**",
       },
+      {
+        protocol: "https",
+        hostname: env.NEXT_PUBLIC_DPL_CMS_HOSTNAME || "",
+        pathname: "/**",
+      },
     ],
   },
   webpack: (config, options) => {
@@ -36,4 +44,4 @@ const nextConfig = {
   },
 }
 
-export default nextConfig
+export default withPlaiceholder(nextConfig)
