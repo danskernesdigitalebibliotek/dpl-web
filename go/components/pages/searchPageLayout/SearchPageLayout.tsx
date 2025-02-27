@@ -40,7 +40,7 @@ const SearchPageLayout = () => {
   const searchQueryText = searchQuery ? `"${searchQuery}"` : ""
 
   return (
-    <div className="content-container my-grid-gap-2 space-y-grid-gap-2">
+    <div className="content-container space-y-grid-gap-2">
       {searchQuery && (
         <h1 className="text-typo-heading-3 lg:text-typo-heading-2">
           {`Viser resultater for ${searchQueryText} ${hitCountText}`}

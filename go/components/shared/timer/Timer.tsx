@@ -96,7 +96,7 @@ const Timer = ({
           }}
         />
       </svg>
-      <span className="text-foreground font-bold">
+      <span className="text-typo-caption text-foreground">
         {totalItems > 0 ? `${currentItemNumber}/${totalItems}` : "0/0"}
       </span>
     </div>

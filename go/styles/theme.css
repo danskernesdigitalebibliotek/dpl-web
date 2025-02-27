@@ -38,6 +38,7 @@
   --aspect-4\/9: var(--aspect-4-9);
   --aspect-5\/2: var(--aspect-5-2);
   --aspect-5\/4: var(--aspect-5-4);
+  --aspect-5\/7: var(--aspect-5-7);
   --aspect-7\/9: var(--aspect-7-9);
   --aspect-8\/15: var(--aspect-8-15);
   --aspect-16\/9: var(--aspect-16-9);
@@ -123,6 +124,7 @@
   --color-*: initial;
   --color-background: var(--background);
   --color-background-overlay: var(--background-overlay);
+  --color-background-overlay-solid: var(--background-overlay-solid);
   --color-background-skeleton: var(--background-skeleton);
 
   --color-foreground: var(--foreground);

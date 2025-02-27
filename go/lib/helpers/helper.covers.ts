@@ -4,7 +4,7 @@ import { filterFalsyValuesFromArray } from "@/lib/helpers/helper.arrays"
 import { Cover, CoverImageUrls } from "@/lib/rest/cover-service-api/generated/model"
 
 const removeEmptyCovers = (coverData: Cover[], sizes: (keyof CoverImageUrls)[]) => {
-  return coverData.filter((cover: Cover) => {
+  return coverData?.filter((cover: Cover) => {
     return sizes.map(size => cover.imageUrls?.[size]?.url)
   })
 }

@@ -73,7 +73,7 @@ const SheetContent = React.forwardRef<
       <SheetPrimitive.Close
         className="focus-visible right-grid-edge top-grid-edge ring-offset-background data-[state=open]:bg-secondary
           absolute rounded-sm transition-opacity hover:cursor-pointer hover:opacity-100
-          disabled:pointer-events-none">
+          disabled:pointer-events-none lg:top-8 lg:right-8">
         <Cross2Icon className="h-8 w-8" />
         <span className="sr-only">Close</span>
       </SheetPrimitive.Close>
