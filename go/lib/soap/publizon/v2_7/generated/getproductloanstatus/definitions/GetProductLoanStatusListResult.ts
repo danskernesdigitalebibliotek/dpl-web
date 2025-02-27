@@ -1,0 +1,4 @@
+
+/** GetProductLoanStatusListResult */
+export interface GetProductLoanStatusListResult {
+}
