@@ -14,10 +14,10 @@ use Spawnia\Sailor\ObjectLike;
 trait EmbedVideoTrait {
   use AutowirePluginTrait;
 
-  public function __construct(
-    protected EntityTypeManagerInterface $entityTypeManager,
-  ) {
-  }
+  /**
+   * The entity type manager.
+   */
+  protected EntityTypeManagerInterface $entityTypeManager;
 
   /**
    * Getting Drupal-ready value from object.

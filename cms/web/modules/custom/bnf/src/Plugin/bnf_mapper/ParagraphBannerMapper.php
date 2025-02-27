@@ -8,6 +8,9 @@ use Drupal\bnf\Attribute\BnfMapper;
 use Drupal\bnf\GraphQL\Operations\GetNode\Node\Paragraphs\ParagraphBanner;
 use Drupal\bnf\Plugin\BnfMapperPluginParagraphBase;
 use Drupal\bnf\Plugin\FieldTypeTraits\ImageTrait;
+use Drupal\Core\Entity\EntityTypeManagerInterface;
+use Drupal\Core\File\FileSystemInterface;
+use Drupal\file\FileRepositoryInterface;
 use Spawnia\Sailor\ObjectLike;
 
 /**
@@ -18,6 +21,20 @@ use Spawnia\Sailor\ObjectLike;
 )]
 class ParagraphBannerMapper extends BnfMapperPluginParagraphBase {
   use ImageTrait;
+
+  /**
+   * {@inheritdoc}
+   */
+  public function __construct(
+    array $configuration,
+    string $pluginId,
+    array $pluginDefinition,
+    protected EntityTypeManagerInterface $entityTypeManager,
+    protected FileSystemInterface $fileSystem,
+    protected FileRepositoryInterface $fileRepository,
+  ) {
+    parent::__construct($configuration, $pluginId, $pluginDefinition, $entityTypeManager);
+  }
 
   /**
    * {@inheritdoc}

@@ -20,13 +20,19 @@ use function Safe\parse_url;
  */
 trait FileTrait {
   use AutowirePluginTrait;
+  /**
+   * The entity type manager.
+   */
+  protected EntityTypeManagerInterface $entityTypeManager;
+  /**
+   * File system manager.
+   */
+  protected FileSystemInterface $fileSystem;
 
-  public function __construct(
-    protected EntityTypeManagerInterface $entityTypeManager,
-    protected FileSystemInterface $fileSystem,
-    protected FileRepositoryInterface $fileRepository,
-  ) {
-  }
+  /**
+   * File repository.
+   */
+  protected FileRepositoryInterface $fileRepository;
 
   /**
    * Downloading and creating a file from an external file URL.
