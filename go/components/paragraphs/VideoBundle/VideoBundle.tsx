@@ -97,7 +97,7 @@ const VideoBundle = ({ works, title, videoUrl }: VideoBundleProps) => {
                 </div>
                 <div className="hidden lg:flex lg:items-center">
                   <Timer
-                    durationInSeconds={10}
+                    durationInSeconds={5}
                     currentItemNumber={currentItemNumber}
                     totalItems={materialOrder.length}
                     fullCircleAction={moveToNextMaterial}
