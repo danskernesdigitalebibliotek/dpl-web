@@ -5,6 +5,7 @@ query getArticleByPath($path: String!) {
       url
       entity {
         ... on NodeGoArticle {
+          __typename
           id
           title
           subtitle

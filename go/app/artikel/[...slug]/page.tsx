@@ -2,42 +2,34 @@ import { notFound } from "next/navigation"
 import React, { Suspense } from "react"
 
 import loadArticle from "@/app/artikel/[...slug]/loadArticle"
-import ArticlePageLayout from "@/components/pages/articlePageLayout/ArticlePageLayout"
-import { GetArticleByPathQuery, NodeGoArticle } from "@/lib/graphql/generated/dpl-cms/graphql"
+import ArticlePageLayout, {
+  TArticlePageLayoutProps,
+} from "@/components/pages/articlePageLayout/ArticlePageLayout"
 
 async function page(props: { params: Promise<{ slug: string[] }> }) {
   const params = await props.params
   const { slug } = params
-
   const slugString = slug.join("/")
-
-  const data: GetArticleByPathQuery = await loadArticle(slugString)
-
+  const data = await loadArticle(slugString)
   const routeType = data.route?.__typename
-
-  console.log({ data, routeType })
 
   if (routeType === "RouteRedirect") {
     // TODO: implement redirect
-    return null
+    return notFound()
   }
-
   if (routeType === "RouteExternal") {
     // TODO: implement external route redirect
-    return null
+    return notFound()
   }
-
-  if (!routeType || !data?.route?.entity) {
+  if (!routeType) {
+    return notFound()
+  }
+  if (data.route?.entity?.__typename !== "NodeGoArticle") {
     return notFound()
   }
 
   const pageData = data.route.entity
-
-  return (
-    <Suspense fallback={<p>Loading...</p>}>
-      <ArticlePageLayout pageData={pageData as NodeGoArticle} />
-    </Suspense>
-  )
+  return <ArticlePageLayout pageData={pageData as TArticlePageLayoutProps} />
 }
 
 export default page
