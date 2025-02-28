@@ -21,7 +21,7 @@ export const fetcher = async <ResponseType>({
 
   const body = data ? JSON.stringify(data) : null
   const serviceUrl = getRestServiceUrlWithParams({
-    baseUrl: "https://pubhub-openplatform.test.dbc.dk",
+    baseUrl: `${process.env.NEXT_PUBLIC_APP_URL}/pubhub`,
     url,
     params,
   })
