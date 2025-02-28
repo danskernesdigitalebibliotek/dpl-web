@@ -4,7 +4,7 @@ const kebabToPascal = word =>
     .map(part => part.charAt(0).toUpperCase() + part.slice(1))
     .join("")
 
-const biff = type => inputSchema => ({
+const transformer = type => inputSchema => ({
   ...inputSchema,
   paths: Object.entries(inputSchema.paths).reduce(
     (acc, [path, pathItem]) => ({
@@ -26,4 +26,4 @@ const biff = type => inputSchema => ({
   ),
 })
 
-export default biff
+export default transformer
