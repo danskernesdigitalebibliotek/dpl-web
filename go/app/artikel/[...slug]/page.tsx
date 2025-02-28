@@ -1,5 +1,5 @@
 import { notFound } from "next/navigation"
-import React, { Suspense } from "react"
+import React from "react"
 
 import loadArticle from "@/app/artikel/[...slug]/loadArticle"
 import ArticlePageLayout, {
