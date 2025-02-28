@@ -29,12 +29,21 @@
       "@/*": ["./*"]
     }
   },
-  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts", "cypress"],
+  "include": [
+    "next-env.d.ts",
+    "**/*.ts",
+    "**/*.tsx",
+    ".next/types/**/*.ts",
+    "cypress",
+    "add-operation-suffix.js"
+  ],
   "exclude": [
     ".next",
+    ".history",
     "node_modules",
     "lib/rest/cover-service-api/model",
     "lib/rest/cover-service-api/cover-service.ts",
-    "lib/graphql/generated/**/*.tsx"
+    "lib/graphql/generated/**/*.tsx",
+    "lib/soap/publizon/v2_7/generated/getlibraryuserorderlist/index.ts"
   ]
 }
