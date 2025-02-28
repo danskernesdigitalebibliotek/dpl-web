@@ -65,6 +65,8 @@ entity_config:
       enabled: true
     go_material_slider_manual:
       enabled: true
+    go_text_body:
+      enabled: true
     go_video:
       enabled: true
     go_video_bundle_automatic:
@@ -300,6 +302,9 @@ field_config:
       field_material_slider_work_ids:
         enabled: true
       field_title:
+        enabled: true
+    go_text_body:
+      field_body:
         enabled: true
     go_video:
       field_embed_video:
