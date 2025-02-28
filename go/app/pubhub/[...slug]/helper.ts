@@ -11,7 +11,7 @@ const getPublizonServiceParameters = () => {
   }
 }
 
-export const getPublizonResources = async () => {
+export const getPublizonResources = async (cardNumber: string) => {
   const uniloginConfig = await getDplCmsUniloginConfig()
   const uniloginClientid = uniloginConfig.clientId ?? null
 
@@ -23,13 +23,23 @@ export const getPublizonResources = async () => {
   return {
     "/pubhub/v1/user/loans": {
       GET: {
+        one: async (identifier: string) => {
+          const client = await createClientAsync(
+            "./lib/soap/publizon/v2_7/wsdl/getlibraryuserorderlist.wsdl"
+          )
+          return await client.GetLibraryUserOrderAsync({
+            ...getPublizonServiceParameters(),
+            cardnumber: cardNumber,
+            ebookid: identifier,
+          })
+        },
         all: async () => {
           const client = await createClientAsync(
             "./lib/soap/publizon/v2_7/wsdl/getlibraryuserorderlist.wsdl"
           )
           return await client.GetLibraryUserOrderListAsync({
             ...getPublizonServiceParameters(),
-            cardnumber: process.env.TMP_PUBLIZON_GET_LIBRARY_USER_ORDER_LIST_CARD_NUMBER ?? "",
+            cardnumber: cardNumber,
           })
         },
       },
