@@ -185,3 +185,23 @@ export const getDplCmsSessionCookie = async () => {
   const sessionCookie = allCookies.find(cookie => cookie.name.startsWith("SSESS"))
   return sessionCookie ?? null
 }
+
+export const destroySession = async (session: IronSession<TSessionData>) => {
+  // Destroy session and id token.
+  session.destroy()
+  const id_token = await getUniloginIdToken()
+  if (id_token) {
+    await deleteUniloginIdToken()
+  }
+}
+
+export const destroySessionAndRedirectToFrontPage = async (session: IronSession<TSessionData>) => {
+  await destroySession(session)
+  return redirectToFrontPageAndReloadSession()
+}
+
+export const redirectToFrontPageAndReloadSession = async () => {
+  const appUrl = new URL(String(goConfig("app.url")))
+
+  return NextResponse.redirect(`${appUrl.toString()}?reload-session=true`)
+}
