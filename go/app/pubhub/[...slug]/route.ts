@@ -1,38 +1,62 @@
 import { notFound } from "next/navigation"
 import { NextRequest } from "next/server"
+import { z } from "zod"
 
-import { createClientAsync } from "@/lib/soap/publizon/v2_7/generated/getlibraryuserorderlist"
+import { getSession } from "@/lib/session/session"
 
-const resources = {
-  "/pubhub/v1/user/loans": {
-    GET: {
-      all: async () => {
-        const client = await createClientAsync(
-          "./lib/soap/publizon/v2_7/wsdl/getlibraryuserorderlist.wsdl"
-        )
-        return await client.GetLibraryUserOrderListAsync({
-          cardnumber: "1234567890",
-          clientid: "1234567890",
-          retailerid: "1234567890",
-          retailerkeycode: "1234567890",
-        })
-      },
-    },
-  },
-}
+import { TRoute, publizonResources } from "./publizonResources"
 
-type TRoute = keyof typeof resources
+export async function GET(
+  request: NextRequest,
+  {
+    params,
+  }: {
+    params: Promise<{ slug: string }>
+  }
+) {
+  const session = await getSession()
 
-export async function GET(request: NextRequest) {
-  const currentPath = request.nextUrl.pathname as TRoute
-  const resource = resources[currentPath]
-  if (!resource) {
-    return notFound()
+  try {
+    z.object({
+      isLoggedIn: z.literal(true),
+      type: z.literal("unilogin"),
+    }).parse(session)
+  } catch (error) {
+    console.error(error)
+    return new Response("Not Authorized", { status: 401 })
   }
 
-  // @todo Support loading identifier as well.
-  const result = await resource.GET.all()
-  return new Response(JSON.stringify({ result }))
+  try {
+    const userInfo = z
+      .object({
+        uniid: z.string(),
+        institution_ids: z.string().regex(/^\[.+\]+$/),
+      })
+      .parse(session?.userInfo)
+
+    const slug = (await params).slug
+    const resources = await publizonResources(userInfo.uniid)
+    const currentPath = request.nextUrl.pathname as TRoute
+    const currentPathMinusIdentifier = currentPath.replace(/(.*)\/[^\/]+$/, "$1") as TRoute
+    const singleResourceMatch = resources[currentPathMinusIdentifier]
+    const allResourceMatch = resources[currentPath]
+
+    if (singleResourceMatch) {
+      const identifier = slug[slug.length - 1]
+      const [data] = await singleResourceMatch.GET.one(identifier)
+      return new Response(JSON.stringify(data))
+    }
+
+    if (allResourceMatch) {
+      const [data] = await allResourceMatch.GET.all()
+      return new Response(JSON.stringify(data))
+    }
+
+    return notFound()
+  } catch (error) {
+    console.error(error)
+    return new Response("Unprocessable content", { status: 422 })
+  }
 }
 
 export const dynamic = "force-dynamic"
