@@ -1,10 +1,6 @@
-import { getSession } from "@/lib/session/session"
+import { destroySessionAndRedirectToFrontPage, getSession } from "@/lib/session/session"
 
-import {
-  destroySessionAndRedirectToFrontPage,
-  handleAdgangsplatformenLogout,
-  handleUniloginLogout,
-} from "./helpers"
+import { handleAdgangsplatformenLogout, handleUniloginLogout } from "./helpers"
 
 export async function GET() {
   const session = await getSession()
