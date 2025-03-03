@@ -9,31 +9,26 @@ import { isOrderItem } from "./(lib)/types"
 
 async function getLibraryUserOrder(request: NextRequest, context: { userInfo: TUserInfo }) {
   const { userInfo } = context
+  const libraryUserOrderList = libraryUserOrderListSchema.transform(orderListData => {
+    const orderItem = orderListData.response.data.orderitem
+    const orderItems = isOrderItem(orderItem) ? [orderItem] : orderItem
+    return {
+      loans: orderItems.map(orderItem => {
+        return {
+          libraryBook: {
+            identifier: orderItem.book.attributes.id,
+          },
+        }
+      }),
+    }
+  })
+
   try {
     const responseData = await getLibraryUserOrderListRequest(userInfo)
-    const libraryUserOrderList = libraryUserOrderListSchema.transform(orderListData => {
-      const orderItem = orderListData.response.data.orderitem
-      const orderItems = isOrderItem(orderItem) ? [orderItem] : orderItem
-      return {
-        loans: orderItems.map(orderItem => {
-          return {
-            libraryBook: {
-              identifier: orderItem.book.attributes.id,
-            },
-          }
-        }),
-      }
-    })
-
-    try {
-      return NextResponse.json(libraryUserOrderList.parse(responseData))
-    } catch (error) {
-      console.error(error)
-      throw new Response("Unprocessable content", { status: 422 })
-    }
+    return NextResponse.json(libraryUserOrderList.parse(responseData))
   } catch (error) {
     console.error(error)
-    return new Response("Unprocessable content", { status: 422 })
+    throw new Response("Unprocessable content", { status: 422 })
   }
 }
 
