@@ -16,9 +16,9 @@ import { getCoverUrls, getLowResCoverUrl } from "@/lib/helpers/helper.covers"
 import { useGetCoverCollection } from "@/lib/rest/cover-service-api/generated/cover-service"
 import { GetCoverCollectionSizesItem } from "@/lib/rest/cover-service-api/generated/model"
 import {
-  getGetV1ProductsIdentifierQueryKey,
-  getV1ProductsIdentifier,
-} from "@/lib/rest/publizon-api/generated/publizon"
+  getGetV1ProductsIdentifierAdapterQueryKey,
+  getV1ProductsIdentifierAdapter,
+} from "@/lib/rest/publizon/adapter/generated/publizon"
 
 export type WorkCardProps = {
   work: WorkTeaserSearchPageFragment
@@ -45,8 +45,8 @@ const WorkCard = ({ work, className, isWithTilt = false }: WorkCardProps) => {
         manifestation.identifiers.find(identifier => identifier.type === "ISBN")?.value || ""
 
       return {
-        queryKey: getGetV1ProductsIdentifierQueryKey(isbn),
-        queryFn: () => getV1ProductsIdentifier(isbn),
+        queryKey: getGetV1ProductsIdentifierAdapterQueryKey(isbn),
+        queryFn: () => getV1ProductsIdentifierAdapter(isbn),
       }
     }),
     combine: results => {

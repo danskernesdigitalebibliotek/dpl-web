@@ -11,7 +11,7 @@
     "codegen:all-rest-services": "orval",
     "codegen:covers": "rm -rf src/lib/rest/cover-service-api/generated/model/*.* && orval --project coverService",
     "codegen:graphql": "NODE_TLS_REJECT_UNAUTHORIZED=0 graphql-codegen --require tsconfig-paths/register --config codegen.ts",
-    "codegen:publizon": "rm -rf lib/rest/publizon-api/generated/model/*.* && orval --project publizonAdapter",
+    "codegen:publizon": "rm -rf lib/rest/publizon/adapter/generated/* &&  orval --project publizonAdapter && rm -rf lib/rest/publizon/local-adapter/generated/* && orval --project publizonLocalAdapter",
     "dev:https": "NEXT_PUBLIC_APP_URL=https://dapple-cms.docker:3000 NODE_TLS_REJECT_UNAUTHORIZED=0 next dev -H dapple-cms.docker --experimental-https",
     "dev": "NODE_TLS_REJECT_UNAUTHORIZED=0 next dev",
     "format:check": "prettier --check .",
@@ -28,7 +28,7 @@
     "cypress:open": "cypress open",
     "cypress:run": "cypress run",
     "shadcn:add": "npx shadcn@canary add $MODULE",
-    "post-process-dpl-cms-graphql": "NODE_OPTIONS='--loader=ts-node/esm' ts-node ./graphql-codegen-scripts/post-process-dpl-cms-graphql.ts"
+    "post-process-dpl-cms-graphql": "NODE_OPTIONS='--loader=ts-node/esm' ts-node ./scripts/graphql-codegen/post-process-dpl-cms-graphql.ts"
   },
   "dependencies": {
     "@next/env": "15.0.3",
@@ -44,6 +44,7 @@
     "@xstate/react": "^5.0.0",
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
+    "cookies-next": "^5.1.0",
     "date-fns": "^4.1.0",
     "framer-motion": "12.0.0-alpha.1",
     "graphql": "^16.9.0",
