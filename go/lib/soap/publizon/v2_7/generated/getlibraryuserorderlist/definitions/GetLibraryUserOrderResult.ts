@@ -1,0 +1,4 @@
+
+/** GetLibraryUserOrderResult */
+export interface GetLibraryUserOrderResult {
+}
