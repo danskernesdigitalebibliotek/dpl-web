@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Drupal\bnf_client\Hook;
 
-use Drupal\Core\Entity\EntityTypeManager;
+use Drupal\Core\Entity\EntityTypeManagerInterface;
 use Drupal\Core\Hook\Attribute\Hook;
 use Drupal\Core\Queue\QueueFactory;
 use Drupal\job_scheduler\Entity\JobSchedule;
@@ -20,7 +20,7 @@ class JobSchedulerHooks {
    * Constructor.
    */
   public function __construct(
-    protected EntityTypeManager $entityTypeManager,
+    protected EntityTypeManagerInterface $entityTypeManager,
     protected QueueFactory $queueFactory,
   ) {}
 

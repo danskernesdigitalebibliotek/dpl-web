@@ -11,6 +11,8 @@ use Drupal\Core\Config\ConfigFactoryInterface;
 use Drupal\Core\Entity\EntityStorageInterface;
 use Drupal\Core\Entity\EntityTypeManagerInterface;
 use Drupal\Core\Plugin\ContainerFactoryPluginInterface;
+use Drupal\Core\Queue\QueueFactory;
+use Drupal\Core\Queue\QueueInterface;
 use Drupal\Core\Queue\QueueWorkerBase;
 
 /**
@@ -37,6 +39,11 @@ class SubscriptionNewContent extends QueueWorkerBase implements ContainerFactory
   protected EntityStorageInterface $storage;
 
   /**
+   * Node update queue.
+   */
+  protected QueueInterface $nodeQueue;
+
+  /**
    * Constructor.
    *
    * @param array $configuration
@@ -51,6 +58,8 @@ class SubscriptionNewContent extends QueueWorkerBase implements ContainerFactory
    *   Config factory.
    * @param \Drupal\bnf\Services\BnfImporter $importer
    *   BNF importer.
+   * @param \Drupal\Core\Queue\QueueFactory $queueFactory
+   *   Queue factory.
    */
   public function __construct(
     array $configuration,
@@ -59,11 +68,14 @@ class SubscriptionNewContent extends QueueWorkerBase implements ContainerFactory
     EntityTypeManagerInterface $entityTypeManager,
     ConfigFactoryInterface $configFactory,
     protected BnfImporter $importer,
+    QueueFactory $queueFactory,
   ) {
     parent::__construct($configuration, $pluginId, $pluginDefinition);
 
     $this->storage = $entityTypeManager->getStorage('bnf_subscription');
     $this->baseUrl = $configFactory->get(SettingsForm::CONFIG_NAME)->get('base_url');
+
+    $this->nodeQueue = $queueFactory->get('bnf_client_node_update');
   }
 
   /**
@@ -79,9 +91,14 @@ class SubscriptionNewContent extends QueueWorkerBase implements ContainerFactory
       return;
     }
 
-    $newContent = $this->importer->newContent($subscription->getSubscriptionUuid(), 0, $this->baseUrl . 'graphql');
+    $newContent = $this->importer->newContent(
+      $subscription->getSubscriptionUuid(),
+      $subscription->getLast(),
+      $this->baseUrl . 'graphql'
+    );
+
     foreach ($newContent['uuids'] as $uuid) {
-      // @todo queue job to update node.
+      $this->nodeQueue->createItem(['uuid' => $uuid]);
     }
 
     if ($subscription->getLast() !== $newContent['youngest']) {
