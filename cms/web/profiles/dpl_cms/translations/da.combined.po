@@ -7,8 +7,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2025-03-03 11:29+0100\n"
-"PO-Revision-Date: 2025-03-03 11:29+0100\n"
+"POT-Creation-Date: 2025-03-03 15:55+0100\n"
+"PO-Revision-Date: 2025-03-03 15:55+0100\n"
 "Last-Translator: NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
 "MIME-Version: 1.0\n"
@@ -2706,16 +2706,16 @@ msgid "Already reserved"
 msgstr "Allerede reserveret"
 
 msgctxt "Work Page"
+msgid "Approve loan"
+msgstr ""
+
+msgctxt "Work Page"
 msgid "Approve reservation"
 msgstr "Godkend reservering"
 
 msgctxt "Work Page"
 msgid "Audience"
 msgstr "Målgruppe"
-
-msgctxt "Work Page"
-msgid "Audiobook"
-msgstr "Lydbog"
 
 msgctxt "Work Page"
 msgid "Blocked"
@@ -2850,10 +2850,6 @@ msgid "Details"
 msgstr "Detaljer"
 
 msgctxt "Work Page"
-msgid "Ebook"
-msgstr "E-bog"
-
-msgctxt "Work Page"
 msgid "Editions"
 msgstr "Udgaver"
 
@@ -2976,6 +2972,10 @@ msgid "Listen online"
 msgstr "Lyt online"
 
 msgctxt "Work Page"
+msgid "Loan @materialType"
+msgstr ""
+
+msgctxt "Work Page"
 msgid "Log in to read the review"
 msgstr "Log ind for at læse anmeldelsen"
 
@@ -3069,6 +3069,65 @@ msgstr "Du er nummer @number i køen."
 msgctxt "Work Page"
 msgid "Ok"
 msgstr "OK"
+
+msgctxt "Work Page"
+msgid "Close reader/player modal"
+msgstr ""
+
+msgctxt "Work Page"
+msgid "Modal for reader/player material"
+msgstr ""
+
+msgctxt "Work Page"
+msgid ""
+"If you wish to receive notifications when the material is ready for loan, "
+"you need to add your email address or phone number."
+msgstr ""
+
+msgctxt "Work Page"
+msgid "@title could not be borrowed or reserved"
+msgstr ""
+
+msgctxt "Work Page"
+msgid "Something went wrong."
+msgstr ""
+
+msgctxt "Work Page"
+msgid "@title is borrowed to you"
+msgstr ""
+
+msgctxt "Work Page"
+msgid "You have now borrowed the material!"
+msgstr ""
+
+msgctxt "Work Page"
+msgid "@title is reserved for you"
+msgstr ""
+
+msgctxt "Work Page"
+msgid "The material is now reserved for you!"
+msgstr ""
+
+msgctxt "Work Page"
+msgid "Something went wrong"
+msgstr ""
+
+msgctxt "Work Page"
+msgid "You can read/listen to the material until @expirationDate"
+msgstr ""
+
+msgctxt "Work Page"
+msgid ""
+"You have reserved the material. If you have provided an phonenumber or email "
+"during the reservation, you will receive a notification when the material is "
+"ready. Please note that the loan does not happen automatically."
+msgstr ""
+
+msgctxt "Work Page"
+msgid ""
+"Please note that the loan does not happen automatically. You must manually "
+"borrow the digital material yourself within 48 hours"
+msgstr ""
 
 msgctxt "Work Page"
 msgid "You have borrowed @count out of @limit possible audio-books this month"
@@ -3191,6 +3250,90 @@ msgstr "Afhentes på"
 msgctxt "Work Page"
 msgid "possible"
 msgstr "mulige"
+
+msgctxt "Work Page"
+msgid "An unexpected error occurred"
+msgstr ""
+
+msgctxt "Work Page"
+msgid "The book can be borrowed again 90 days after the last loan expires"
+msgstr ""
+
+msgctxt "Work Page"
+msgid "The book can only be renewed once"
+msgstr ""
+
+msgctxt "Work Page"
+msgid "The book cannot be borrowed"
+msgstr ""
+
+msgctxt "Work Page"
+msgid "The book is not available for loan"
+msgstr ""
+
+msgctxt "Work Page"
+msgid "The book is unfortunately not available for loan"
+msgstr ""
+
+msgctxt "Work Page"
+msgid ""
+"The card is temporarily blocked due to too many failed login attempts. Try "
+"again in 2 hours."
+msgstr ""
+
+msgctxt "Work Page"
+msgid "Invalid card number and/or PIN code."
+msgstr ""
+
+msgctxt "Work Page"
+msgid "Invalid email address"
+msgstr ""
+
+msgctxt "Work Page"
+msgid "Invalid phone number"
+msgstr ""
+
+msgctxt "Work Page"
+msgid "The library's server is not responding – try logging in again later."
+msgstr ""
+
+msgctxt "Work Page"
+msgid "Your library has reached the limit for the number of loans this month"
+msgstr ""
+
+msgctxt "Work Page"
+msgid ""
+"You do not have access to eReolen from this library as you are not "
+"registered as a resident in the municipality. Contact the library."
+msgstr ""
+
+msgctxt "Work Page"
+msgid "No country could be found with the given country code"
+msgstr ""
+
+msgctxt "Work Page"
+msgid "The number of simultaneous loans of blue titles has been exceeded"
+msgstr ""
+
+msgctxt "Work Page"
+msgid "The number of simultaneous loans has been exceeded"
+msgstr ""
+
+msgctxt "Work Page"
+msgid "The book is already reserved"
+msgstr ""
+
+msgctxt "Work Page"
+msgid "Unknown error at the library – try logging in again later."
+msgstr ""
+
+msgctxt "Work Page"
+msgid "Unknown error."
+msgstr ""
+
+msgctxt "Work Page"
+msgid "You can reserve up to 3 titles"
+msgstr ""
 
 msgctxt "Work Page"
 msgid "in queue"
@@ -3714,8 +3857,8 @@ msgid "Expires"
 msgstr "Udløber"
 
 msgctxt "Global"
-msgid "Go to material"
-msgstr "Gå til materiale"
+msgid "View material"
+msgstr ""
 
 msgctxt "Global"
 msgid "Loan date"
