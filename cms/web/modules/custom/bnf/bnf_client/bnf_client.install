@@ -12,3 +12,11 @@ function bnf_client_update_10101(): void {
   $entity_type = \Drupal::service('entity_type.manager')->getDefinition('bnf_subscription');
   \Drupal::entityDefinitionUpdateManager()->updateEntityType($entity_type);
 }
+
+/**
+ * Trigger job_scheduler rebuild.
+ */
+function bnf_client_update_10102(): void {
+  // Rebuild scheduler info so it notices our new periodic job.
+  job_scheduler_rebuild_all();
+}

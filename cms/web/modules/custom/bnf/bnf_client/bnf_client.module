@@ -2,6 +2,7 @@
 
 use Drupal\bnf\Exception\AlreadyExistsException;
 use Drupal\bnf_client\Hook\SubscriptionHooks;
+use Drupal\bnf_client\Hook\JobSchedulerHooks;
 use Drupal\bnf_client\Services\BnfExporter;
 use Drupal\Core\Entity\EntityInterface;
 use Drupal\Core\Form\FormStateInterface;
@@ -107,6 +108,12 @@ function bnf_client_form_node_form_submit(array $form, FormStateInterface $form_
   }
 }
 
+/*
+ * The following hook functions is for Drupal 10, they can be removed, together
+ * with the hook class service in `bnf_client.services.yml` when upgrading to
+ * Drupal 11.
+ */
+
 /**
  * Implements hook_ENTITY_TYPE_insert().
  */
@@ -121,4 +128,15 @@ function bnf_client_bnf_subscription_insert(EntityInterface $entity): void {
 #[LegacyHook]
 function bnf_client_bnf_subscription_update(EntityInterface $entity): void {
   \Drupal::service(SubscriptionHooks::class)->queueUpdate($entity);
+}
+
+/**
+ * Implements hook_cron_job_scheduler_info().
+ *
+ * @return non-empty-array<string, array{'worker callback': callable}>
+ *   Job scheduler information.
+ */
+#[LegacyHook]
+function bnf_client_cron_job_scheduler_info(): array {
+  return \Drupal::service(JobSchedulerHooks::class)->subscriptionsUpdateJobSchedule();
 }
