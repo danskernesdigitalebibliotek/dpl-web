@@ -37,7 +37,6 @@ export const fetcher = async <ResponseType>({
     })
 
     if (!response.ok) {
-      // eslint-disable-next-line no-console
       console.error(response.status, response.statusText, serviceUrl)
     }
 
@@ -54,7 +53,6 @@ export const fetcher = async <ResponseType>({
     }
 
     const message = error instanceof Error ? error.message : "Unknown error"
-    // eslint-disable-next-line no-console
     console.error(message, serviceUrl)
   }
 
