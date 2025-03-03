@@ -5,7 +5,10 @@ import { getPublizonServiceParameters } from "@/app/pubhub/helper"
 import { getSession } from "@/lib/session/session"
 import { createClientAsync } from "@/lib/soap/publizon/v2_7/generated/getlibraryuserorderlist"
 
-export async function GET() {
+export async function GET(props: { params: Promise<{ slug: string[] }> }) {
+  const params = await props.params
+  console.log(params)
+
   const session = await getSession()
 
   try {
@@ -65,7 +68,7 @@ export async function GET() {
       })
 
     try {
-      return libraryUserOrderListSchema.parse(responseData)
+      return NextResponse.json(libraryUserOrderListSchema.parse(responseData))
     } catch (error) {
       console.error(error)
       throw new Response("Unprocessable content", { status: 422 })
