@@ -1,5 +1,4 @@
-import { notFound } from "next/navigation"
-import { NextRequest } from "next/server"
+import { NextResponse } from "next/server"
 import { z } from "zod"
 
 import { getPublizonServiceParameters } from "@/app/pubhub/helper"
