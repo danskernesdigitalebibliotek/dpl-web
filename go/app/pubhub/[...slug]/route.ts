@@ -48,7 +48,7 @@ export async function GET(
     }
 
     if (allResourceMatch) {
-      const [data] = await allResourceMatch.GET.all()
+      const data = await allResourceMatch.GET.all()
       return new Response(JSON.stringify(data))
     }
 
