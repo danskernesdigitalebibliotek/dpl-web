@@ -15,8 +15,6 @@ export const getPublizonServiceParameters = () => {
 }
 
 // WithAuth middleware.
-type Handler = (req: NextRequest, context?: any) => Promise<Response>
-
 export function withAuth(handler: Handler): Handler {
   return async (req, context) => {
     const session = await getSession()

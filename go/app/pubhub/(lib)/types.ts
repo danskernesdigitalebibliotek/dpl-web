@@ -2,4 +2,4 @@ import { z } from "zod"
 
 import { userInfoSchema } from "./schemas"
 
-export type TuserInfo = z.infer<typeof userInfoSchema>
+export type TUserInfo = z.infer<typeof userInfoSchema>

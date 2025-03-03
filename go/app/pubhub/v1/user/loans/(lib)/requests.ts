@@ -1,8 +1,10 @@
 import { getPublizonServiceParameters } from "@/app/pubhub/(lib)/helper"
-import { TuserInfo } from "@/app/pubhub/(lib)/types"
+import { TUserInfo } from "@/app/pubhub/(lib)/types"
 import { createClientAsync } from "@/lib/soap/publizon/v2_7/generated/getlibraryuserorderlist"
 
-export const getLibraryUserOrderListRequest = async (userInfo: TuserInfo) => {
+import { TLibraryUserOrderList } from "./types"
+
+export const getLibraryUserOrderListRequest = async (userInfo: TUserInfo) => {
   const client = await createClientAsync(
     "./lib/soap/publizon/v2_7/wsdl/getlibraryuserorderlist.wsdl"
   )
@@ -10,5 +12,5 @@ export const getLibraryUserOrderListRequest = async (userInfo: TuserInfo) => {
     ...getPublizonServiceParameters(),
     cardnumber: userInfo.uniid,
   })
-  return response.GetLibraryUserOrderListResult
+  return response.GetLibraryUserOrderListResult as TLibraryUserOrderList
 }
