@@ -135,7 +135,14 @@ class LibraryTokenHandlerTest extends UnitTestCase {
       ->willReturn($collection->reveal())
       ->shouldBeCalledTimes(1);
 
-    $this->expectExceptionMessage($message);
+    $logger = $this->prophesize(LoggerChannelInterface::class);
+    $logger->log(LogLevel::ERROR, Argument::any(), Argument::that(function(array $context) use ($message) {
+      return $context['@error_message'] == $message;
+    }))->shouldBeCalledTimes(1);
+    $logger_factory = $this->prophesize(LoggerChannelFactoryInterface::class);
+    $logger_factory->get(LibraryTokenHandler::LOGGER_KEY)->willReturn($logger->reveal());
+
+    //$this->expectExceptionMessage($message);
 
     $client = $this->prophesize(ClientInterface::class);
 
@@ -145,7 +152,7 @@ class LibraryTokenHandlerTest extends UnitTestCase {
     $handler = $this->createTokenHandler(
       $key_value_factory->reveal(),
       $client->reveal(),
-      NULL,
+      $logger->reveal(),
       $config->reveal()
     );
 
