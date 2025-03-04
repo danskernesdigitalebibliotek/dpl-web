@@ -8,6 +8,7 @@ dependencies:
     - paragraphs.paragraphs_type.go_linkbox
     - paragraphs.paragraphs_type.go_material_slider_automatic
     - paragraphs.paragraphs_type.go_material_slider_manual
+    - paragraphs.paragraphs_type.go_text_body
     - paragraphs.paragraphs_type.go_video
     - paragraphs.paragraphs_type.go_video_bundle_automatic
     - paragraphs.paragraphs_type.go_video_bundle_manual
@@ -30,9 +31,10 @@ settings:
       go_video: go_video
       go_linkbox: go_linkbox
       go_material_slider_automatic: go_material_slider_automatic
-      go_material_slider_manual: go_material_slider_manual
       go_video_bundle_automatic: go_video_bundle_automatic
+      go_material_slider_manual: go_material_slider_manual
       go_video_bundle_manual: go_video_bundle_manual
+      go_text_body: go_text_body
     negate: 0
     target_bundles_drag_drop:
       accordion:
@@ -68,6 +70,9 @@ settings:
       filtered_event_list:
         weight: 41
         enabled: false
+      go_link:
+        weight: 50
+        enabled: false
       go_linkbox:
         weight: 43
         enabled: true
@@ -76,6 +81,9 @@ settings:
         enabled: true
       go_material_slider_manual:
         weight: 47
+        enabled: true
+      go_text_body:
+        weight: 54
         enabled: true
       go_video:
         weight: 42
@@ -100,6 +108,9 @@ settings:
         enabled: false
       material_grid_automatic:
         weight: 32
+        enabled: false
+      material_grid_link_automatic:
+        weight: 63
         enabled: false
       material_grid_manual:
         weight: 33

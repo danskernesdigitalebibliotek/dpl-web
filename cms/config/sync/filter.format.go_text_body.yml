@@ -1,0 +1,17 @@
+uuid: 1d91725f-dc71-4628-9368-a2c501365a2f
+langcode: en
+status: true
+dependencies: {  }
+name: 'GO Text body'
+format: go_text_body
+weight: 0
+filters:
+  filter_html:
+    id: filter_html
+    provider: filter
+    status: true
+    weight: -10
+    settings:
+      allowed_html: '<br> <p> <h2> <h3> <strong> <em> <u> <a href target="_blank" data-entity-type data-entity-uuid data-entity-substitution> <ul> <ol reversed start> <li>'
+      filter_html_help: true
+      filter_html_nofollow: false
