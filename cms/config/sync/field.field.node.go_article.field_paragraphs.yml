@@ -9,6 +9,7 @@ dependencies:
     - paragraphs.paragraphs_type.go_linkbox
     - paragraphs.paragraphs_type.go_material_slider_automatic
     - paragraphs.paragraphs_type.go_material_slider_manual
+    - paragraphs.paragraphs_type.go_text_body
     - paragraphs.paragraphs_type.go_video
     - paragraphs.paragraphs_type.go_video_bundle_automatic
     - paragraphs.paragraphs_type.go_video_bundle_manual
@@ -35,6 +36,7 @@ settings:
       go_material_slider_manual: go_material_slider_manual
       go_video_bundle_manual: go_video_bundle_manual
       go_images: go_images
+      go_text_body: go_text_body
     negate: 0
     target_bundles_drag_drop:
       accordion:
@@ -84,6 +86,9 @@ settings:
         enabled: true
       go_material_slider_manual:
         weight: 47
+        enabled: true
+      go_text_body:
+        weight: 54
         enabled: true
       go_video:
         weight: 42

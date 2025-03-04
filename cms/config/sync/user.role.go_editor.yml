@@ -4,6 +4,7 @@ status: true
 dependencies:
   config:
     - filter.format.basic
+    - filter.format.go_text_body
     - filter.format.limited
     - filter.format.underlined_title
     - media.type.audio
@@ -102,6 +103,7 @@ permissions:
   - 'update any media'
   - 'update media'
   - 'use text format basic'
+  - 'use text format go_text_body'
   - 'use text format limited'
   - 'use text format underlined_title'
   - 'view all media revisions'
