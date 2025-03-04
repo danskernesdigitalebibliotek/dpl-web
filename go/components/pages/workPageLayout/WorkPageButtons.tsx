@@ -1,4 +1,4 @@
-import React, { useState } from "react"
+import React, { useMemo, useState } from "react"
 
 import {
   isManifestationAudioBook,
@@ -11,6 +11,7 @@ import ResponsiveDialog from "@/components/shared/responsiveDialog/ResponsiveDia
 import SmartLink from "@/components/shared/smartLink/SmartLink"
 import { ManifestationWorkPageFragment } from "@/lib/graphql/generated/fbi/graphql"
 import { resolveUrl } from "@/lib/helpers/helper.routes"
+import useGetV1UserLoans from "@/lib/rest/publizon/useGetV1UserLoans"
 
 export type WorkPageButtonsProps = {
   workId: string
@@ -24,23 +25,44 @@ const WorkPageButtons = ({ workId, selectedManifestation }: WorkPageButtonsProps
     queryParams: { id: identifier || "" },
   })
   const [isPlayerOpen, setIsPlayerOpen] = useState(false)
+  const getV1UserLoans = useGetV1UserLoans()
+  const { data: dataLoans, isLoading: isLoadingLoans, isError: isErrorLoans } = getV1UserLoans()
+  const isLoanButtonDisabled = isLoadingLoans || isErrorLoans
+  const isLoaned = useMemo(() => {
+    return dataLoans?.loans?.some(loan => loan.libraryBook?.identifier === identifier)
+  }, [dataLoans?.loans, identifier])
+
+  if (isLoadingLoans) {
+    return (
+      <>
+        <div className="bg-background-skeleton mb-grid-gap-half h-10 w-full animate-pulse rounded-full lg:w-80" />
+        <div className="bg-background-skeleton h-10 w-full animate-pulse rounded-full lg:w-80" />
+      </>
+    )
+  }
 
   return (
     <>
       {isManifestationEbook(selectedManifestation) && (
         <>
+          {!isLoaned && (
+            <Button
+              ariaLabel="Prøv e-bog"
+              size={"default"}
+              className="mb-grid-gap-half w-full lg:max-w-80 lg:min-w-72"
+              asChild
+              disabled={!!identifier}>
+              <SmartLink linkType="external" href={url}>
+                Prøv e-bog
+              </SmartLink>
+            </Button>
+          )}
           <Button
-            ariaLabel="Prøv e-bog"
-            size={"default"}
-            className="mb-grid-gap-half w-full lg:max-w-80 lg:min-w-72"
-            asChild
-            disabled={!!identifier}>
-            <SmartLink linkType="external" href={url}>
-              Prøv e-bog
-            </SmartLink>
-          </Button>
-          <Button ariaLabel="Lån/reserver/læse ebog" className="w-full lg:max-w-80 lg:min-w-72">
-            Not done yet
+            ariaLabel={isLoaned ? "Læs e-bog" : "Lån e-bog"}
+            className="w-full lg:max-w-80 lg:min-w-72"
+            theme={"primary"}
+            disabled={isLoanButtonDisabled}>
+            {isLoaned ? "Læs e-bog" : "Lån e-bog"}
           </Button>
         </>
       )}
@@ -53,8 +75,12 @@ const WorkPageButtons = ({ workId, selectedManifestation }: WorkPageButtonsProps
             onClick={() => setIsPlayerOpen(!isPlayerOpen)}>
             Prøv lydbog
           </Button>
-          <Button ariaLabel="Lån/reserver/læse lydbog" className="w-full lg:max-w-80 lg:min-w-72">
-            Not done yet
+          <Button
+            ariaLabel={isLoaned ? "Læs lydbog" : "Lån lydbog"}
+            className="w-full lg:max-w-80 lg:min-w-72"
+            theme={"primary"}
+            disabled={isLoanButtonDisabled}>
+            {isLoaned ? "Læs lydbog" : "Lån lydbog"}
           </Button>
         </>
       )}
@@ -67,8 +93,12 @@ const WorkPageButtons = ({ workId, selectedManifestation }: WorkPageButtonsProps
             onClick={() => setIsPlayerOpen(!isPlayerOpen)}>
             Prøv podcast
           </Button>
-          <Button ariaLabel="Hør podcast" className="w-full lg:max-w-80 lg:min-w-72">
-            Not done yet
+          <Button
+            ariaLabel={isLoaned ? "Læs podcast" : "Hør podcast"}
+            className="w-full lg:max-w-80 lg:min-w-72"
+            theme={"primary"}
+            disabled={isLoanButtonDisabled}>
+            {isLoaned ? "Læs podcast" : "Hør podcast"}
           </Button>
         </>
       )}
