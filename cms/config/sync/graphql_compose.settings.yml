@@ -57,6 +57,8 @@ entity_config:
       enabled: true
     filtered_event_list:
       enabled: true
+    go_images:
+      enabled: true
     go_link:
       enabled: true
     go_linkbox:
@@ -80,6 +82,8 @@ entity_config:
     manual_event_list:
       enabled: true
     material_grid_automatic:
+      enabled: true
+    material_grid_link_automatic:
       enabled: true
     material_grid_manual:
       enabled: true
@@ -270,6 +274,9 @@ field_config:
         enabled: true
       field_title:
         enabled: true
+    go_images:
+      field_go_images:
+        enabled: true
     go_link:
       field_aria_label:
         enabled: true
@@ -332,6 +339,15 @@ field_config:
       field_amount_of_materials:
         enabled: true
       field_material_grid_description:
+        enabled: true
+      field_material_grid_title:
+        enabled: true
+    material_grid_link_automatic:
+      field_amount_of_materials:
+        enabled: true
+      field_material_grid_description:
+        enabled: true
+      field_material_grid_link:
         enabled: true
       field_material_grid_title:
         enabled: true
