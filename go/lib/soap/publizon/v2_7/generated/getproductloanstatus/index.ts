@@ -1,5 +1,5 @@
+// This is generated code thus no need for type checking...
 // @ts-nocheck
-
 export { GetProductLoanStatus } from "./definitions/GetProductLoanStatus";
 export { GetProductLoanStatusResponse } from "./definitions/GetProductLoanStatusResponse";
 export { GetProductLoanStatusResult } from "./definitions/GetProductLoanStatusResult";
