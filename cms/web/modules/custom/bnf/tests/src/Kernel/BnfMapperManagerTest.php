@@ -50,6 +50,10 @@ class BnfMapperManagerTest extends KernelTestBase {
 
     $paragraphStorageProphecy->create([
       'type' => 'text_body',
+      'field_body' => [
+        'value' => 'This is the text',
+        'format' => 'with_format',
+      ],
     ])->willReturn($paragraphProphecy);
 
     $this->container->set('entity_type.manager', $entityManagerProphecy->reveal());
@@ -58,7 +62,10 @@ class BnfMapperManagerTest extends KernelTestBase {
       '982e0d87-f6b8-4b84-8de8-c8c8bcfef557',
       'Bibliotekarerne anbefaler læsning til den mørke tid',
       [
-        ParagraphTextBody::make(Text::make('text', 'format')),
+        ParagraphTextBody::make(
+          '982e0d87-f6b8-4b84-8de8-c8c8bcfef999',
+          Text::make('This is the text', 'with_format')
+        ),
       ]
     );
 
@@ -68,10 +75,6 @@ class BnfMapperManagerTest extends KernelTestBase {
     $this->assertSame($node, $nodeProphecy->reveal());
     $nodeProphecy->set('title', 'Bibliotekarerne anbefaler læsning til den mørke tid')->shouldHaveBeenCalled();
     $nodeProphecy->set('field_paragraphs', [$paragraphProphecy->reveal()])->shouldHaveBeenCalled();
-    $paragraphProphecy->set('field_body', [
-      'value' => 'text',
-      'format' => 'format',
-    ])->shouldHaveBeenCalled();
   }
 
 }

@@ -16,8 +16,8 @@ query GetNode($id: ID!) {
         ... on ParagraphLinks {
           id
           link {
-            url
             title
+            url
             internal
           }
         }
@@ -28,15 +28,15 @@ query GetNode($id: ID!) {
               id
               name
               mediaImage {
+                title
                 url
                 alt
-                title
               }
             }
           }
           underlinedTitle {
-            format
             value
+            format
           }
           bannerDescription
           bannerLink {
@@ -47,12 +47,12 @@ query GetNode($id: ID!) {
         ... on ParagraphAccordion {
           id
           accordionDescription {
-            format
             value
+            format
           }
           accordionTitle {
-            format
             value
+            format
           }
         }
         ... on ParagraphFiles {
@@ -73,8 +73,8 @@ query GetNode($id: ID!) {
           id
           targetBlank
           singleLink: link {
-            url
             title
+            url
             internal
           }
         }
@@ -88,8 +88,8 @@ query GetNode($id: ID!) {
           }
           heroContentType
           heroDescription {
-            format
             value
+            format
           }
           heroDate {
             timestamp
@@ -101,9 +101,9 @@ query GetNode($id: ID!) {
               id
               name
               mediaImage {
+                title
                 url
                 alt
-                title
               }
             }
           }
@@ -146,9 +146,9 @@ query GetNode($id: ID!) {
               id
               name
               mediaImage {
+                title
                 url
                 alt
-                title
               }
             }
           }
@@ -158,8 +158,8 @@ query GetNode($id: ID!) {
           imagePositionRight
           recommendationDescription
           recommendationTitle {
-            format
             value
+            format
           }
           recommendationWorkId {
             material_type
@@ -202,8 +202,8 @@ query GetNode($id: ID!) {
             ... on MediaImage {
               name
               mediaImage {
-                url
                 title
+                url
                 alt
               }
               id

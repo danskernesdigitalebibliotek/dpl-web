@@ -28,8 +28,8 @@ class ParagraphAccordionMapper extends BnfMapperPluginParagraphBase {
     return $this->paragraphStorage->create([
       'type' => 'accordion',
       'field_accordion_title' => [
-        'value' => $object->accordionTitle->value,
-        'format' => $object->accordionTitle->format,
+        'value' => $object->accordionTitle->value ?? '',
+        'format' => $object->accordionTitle->format ?? '',
       ],
       'field_accordion_description' => [
         'value' => $object->accordionDescription->value ?? '',

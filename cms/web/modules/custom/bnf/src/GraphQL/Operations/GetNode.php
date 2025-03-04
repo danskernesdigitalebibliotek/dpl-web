@@ -51,8 +51,8 @@ class GetNode extends \Spawnia\Sailor\Operation
                   id
                   link {
                     __typename
-                    url
                     title
+                    url
                     internal
                   }
                 }
@@ -65,16 +65,16 @@ class GetNode extends \Spawnia\Sailor\Operation
                       name
                       mediaImage {
                         __typename
+                        title
                         url
                         alt
-                        title
                       }
                     }
                   }
                   underlinedTitle {
                     __typename
-                    format
                     value
+                    format
                   }
                   bannerDescription
                   bannerLink {
@@ -87,13 +87,13 @@ class GetNode extends \Spawnia\Sailor\Operation
                   id
                   accordionDescription {
                     __typename
-                    format
                     value
+                    format
                   }
                   accordionTitle {
                     __typename
-                    format
                     value
+                    format
                   }
                 }
                 ... on ParagraphFiles {
@@ -117,8 +117,8 @@ class GetNode extends \Spawnia\Sailor\Operation
                   targetBlank
                   singleLink: link {
                     __typename
-                    url
                     title
+                    url
                     internal
                   }
                 }
@@ -134,8 +134,8 @@ class GetNode extends \Spawnia\Sailor\Operation
                   heroContentType
                   heroDescription {
                     __typename
-                    format
                     value
+                    format
                   }
                   heroDate {
                     __typename
@@ -150,9 +150,9 @@ class GetNode extends \Spawnia\Sailor\Operation
                       name
                       mediaImage {
                         __typename
+                        title
                         url
                         alt
-                        title
                       }
                     }
                   }
@@ -200,9 +200,9 @@ class GetNode extends \Spawnia\Sailor\Operation
                       name
                       mediaImage {
                         __typename
+                        title
                         url
                         alt
-                        title
                       }
                     }
                   }
@@ -213,8 +213,8 @@ class GetNode extends \Spawnia\Sailor\Operation
                   recommendationDescription
                   recommendationTitle {
                     __typename
-                    format
                     value
+                    format
                   }
                   recommendationWorkId {
                     __typename
@@ -263,8 +263,8 @@ class GetNode extends \Spawnia\Sailor\Operation
                       name
                       mediaImage {
                         __typename
-                        url
                         title
+                        url
                         alt
                       }
                       id
