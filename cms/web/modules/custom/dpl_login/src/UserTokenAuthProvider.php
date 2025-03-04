@@ -78,8 +78,8 @@ class UserTokenAuthProvider implements AuthenticationProviderInterface {
       // Allow modules to alter the user info.
       // This allows this module to add a "sub" entry denoting the unique
       // end-user (subject) identifier. This is needed for us to load the
-      // associated Drupal user from the OpenID Connect authmap.
-      $context = [];
+      // associated Drupal user from the ExternalAuth authmap.
+      $context['plugin_id'] = $this->client->getPluginId();
       try {
         $this->moduleHandler->alter('openid_connect_userinfo', $user_info, $context);
       }

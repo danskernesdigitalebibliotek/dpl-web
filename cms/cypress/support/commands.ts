@@ -357,6 +357,10 @@ Cypress.Commands.add('deleteEntitiesIfExists', (name) => {
   });
 });
 
+Cypress.Commands.add('openParagraphsModal', () => {
+  cy.get('button[title="Show all Paragraphs"]').click();
+});
+
 // According to the documentation of types and Cypress commands
 // the namespace is declared like it is done here. Therefore we'll bypass errors about it.
 /* eslint-disable @typescript-eslint/no-namespace */
@@ -396,6 +400,7 @@ declare global {
       ): Chainable;
       deleteEntitiesIfExists(name: string): Chainable<null>;
       clickSaveButton(): Chainable<null>;
+      openParagraphsModal(): Chainable<null>;
     }
   }
 }
