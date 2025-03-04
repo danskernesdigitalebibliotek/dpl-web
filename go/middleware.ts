@@ -22,10 +22,13 @@ export async function middleware(request: NextRequest, event: NextFetchEvent) {
 
   const session = await getSession({ request, response })
 
+  // Apparently the timespan is too short for the session to be expired.
+  // The result is that the session is destroyed too soon.
+  // @todo: Investigate how to increase the timespan for the session.
   // If the session is expired then destroy it.
-  if (accessTokenIsExpired(session)) {
-    destroySession(session)
-  }
+  // if (accessTokenIsExpired(session)) {
+  //   destroySession(session)
+  // }
 
   // If the session is not logged in we will try to see
   // if we have an ongoing Adgangsplatformen Drupal session.
