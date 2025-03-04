@@ -5,6 +5,7 @@ _meta:
   bundle: go_page
   default_langcode: da
   depends:
+    a6715bb0-3282-4d03-9404-bc8de03b7f5a: file
     ddd4f544-aff0-40d4-8c8e-651ca39e8db6: media
     d219e4de-4984-487e-8e21-9f56c0a0335c: media
 default:
@@ -35,6 +36,13 @@ default:
   entity_clone_template_active:
     -
       value: false
+  entity_clone_template_image:
+    -
+      entity: a6715bb0-3282-4d03-9404-bc8de03b7f5a
+      alt: ''
+      title: ''
+      width: 220
+      height: 100
   metatag:
     -
       tag: meta

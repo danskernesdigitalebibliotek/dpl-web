@@ -5,6 +5,7 @@ _meta:
   bundle: go_article
   default_langcode: da
   depends:
+    a6715bb0-3282-4d03-9404-bc8de03b7f5a: file
     06fbedf9-cbc7-4d70-b911-cbda63c4efca: media
 default:
   revision_uid:
@@ -34,6 +35,13 @@ default:
   entity_clone_template_active:
     -
       value: false
+  entity_clone_template_image:
+    -
+      entity: a6715bb0-3282-4d03-9404-bc8de03b7f5a
+      alt: ''
+      title: ''
+      width: 220
+      height: 100
   metatag:
     -
       tag: meta
@@ -44,12 +52,12 @@ default:
       tag: meta
       attributes:
         property: 'og:image'
-        content: 'https://dapple-cms.docker/sites/default/files/styles/open_graph/public/2025-02/9be293774cb794b63cb93e2e51546cc8_0.jpeg?h=f7de6fbe&itok=1FRCDV64'
+        content: 'https://dapple-cms.docker/sites/default/files/styles/open_graph/public/2025-02/9be293774cb794b63cb93e2e51546cc8_0.jpeg?h=374ecb1b&itok=QVdp7abf'
     -
       tag: meta
       attributes:
         property: 'og:image:url'
-        content: 'https://dapple-cms.docker/sites/default/files/styles/open_graph/public/2025-02/9be293774cb794b63cb93e2e51546cc8_0.jpeg?h=f7de6fbe&itok=1FRCDV64'
+        content: 'https://dapple-cms.docker/sites/default/files/styles/open_graph/public/2025-02/9be293774cb794b63cb93e2e51546cc8_0.jpeg?h=374ecb1b&itok=QVdp7abf'
     -
       tag: meta
       attributes:
@@ -69,6 +77,31 @@ default:
     -
       entity: 06fbedf9-cbc7-4d70-b911-cbda63c4efca
   field_paragraphs:
+    -
+      entity:
+        _meta:
+          version: '1.0'
+          entity_type: paragraph
+          uuid: 61b23d82-ec3c-44df-9105-c2bc753bfc64
+          bundle: go_text_body
+          default_langcode: da
+        default:
+          status:
+            -
+              value: true
+          created:
+            -
+              value: 1740991909
+          behavior_settings:
+            -
+              value: {  }
+          revision_translation_affected:
+            -
+              value: true
+          field_body:
+            -
+              value: '<h2>Børnejuryen har talt, og de nominerede til Orlaprisen 2023 er fundet!</h2><p>Der er nomineret i alt 15 bøger fordelt på 5 kategorier. Se alle de nominerede til Orlaprisen 2023 herunder.</p><p>Du kan stemme her på orlaprisen.dk fra d. 5. oktober til den 5. november. Vinderne af Orlaprisen 2023 offentliggøres d. 23. november.</p>'
+              format: go_text_body
     -
       entity:
         _meta:
@@ -99,6 +132,81 @@ default:
           field_title:
             -
               value: 'Det ydre rum'
+    -
+      entity:
+        _meta:
+          version: '1.0'
+          entity_type: paragraph
+          uuid: 5a65ee60-907e-482b-ac16-75c351dc3b6e
+          bundle: go_text_body
+          default_langcode: da
+        default:
+          status:
+            -
+              value: true
+          created:
+            -
+              value: 1740992149
+          behavior_settings:
+            -
+              value: {  }
+          revision_translation_affected:
+            -
+              value: true
+          field_body:
+            -
+              value: '<h3>Fantasy - Bogen der sendte mig til andre verdener</h3><ol><li>Troldmanden i træet af John Kenn Mortensen</li><li>De glemte vogtere af Andreas Boeskov</li><li>Gro af Adam O.</li></ol>'
+              format: go_text_body
+    -
+      entity:
+        _meta:
+          version: '1.0'
+          entity_type: paragraph
+          uuid: 6c2a50e6-7eed-48f3-a023-82d123886af7
+          bundle: go_text_body
+          default_langcode: da
+        default:
+          status:
+            -
+              value: true
+          created:
+            -
+              value: 1740992194
+          behavior_settings:
+            -
+              value: {  }
+          revision_translation_affected:
+            -
+              value: true
+          field_body:
+            -
+              value: '<h2>Når pomfritter er grøntsager, og de forbudte ord</h2><p>Thomas Brunstrøm (f. 1977) er journalist, filmanmelder og børnebogsforfatter. Han har sammen med Thorbjørn Christoffersen skabt den populære børnebogsserie Sallys far, bøgerne om Sallys lillebror Eddie, og billedbogsserien om Anton og farmor, som er en hyldest til fantasien – og ikke mindst bedsteforældre.</p><p>Serien om Sallys far var Makkerparrets gode ide at skrive en bog om pigen Sally, hvis far er ekstraordinær legesyg og barnlig – ofte skæg, men af og til mest pinlig. Serien tæller adskillelige bøger og er blevet en populær oplæsningsserie blandt danske børn.</p>'
+              format: go_text_body
+    -
+      entity:
+        _meta:
+          version: '1.0'
+          entity_type: paragraph
+          uuid: 95e275bd-9abf-4bd5-b2ce-f4777ffc504a
+          bundle: go_text_body
+          default_langcode: da
+        default:
+          status:
+            -
+              value: true
+          created:
+            -
+              value: 1740992493
+          behavior_settings:
+            -
+              value: {  }
+          revision_translation_affected:
+            -
+              value: true
+          field_body:
+            -
+              value: '<p><a href="https://www.google.com/">Læs vores anmeldelse af “Rampen”</a></p>'
+              format: go_text_body
   field_publication_date:
     -
       value: '2025-02-17'
