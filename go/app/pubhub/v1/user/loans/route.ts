@@ -10,16 +10,25 @@ import { isOrderItem } from "./(lib)/types"
 async function getLibraryUserOrder(request: NextRequest, context: { userInfo: TUserInfo }) {
   const { userInfo } = context
   const libraryUserOrderList = libraryUserOrderListSchema.transform(orderListData => {
-    const orderItem = orderListData.response.data.orderitem
+    const orderListResponse = orderListData.response
+    const orderItem = orderListResponse.data.orderitem
     const orderItems = isOrderItem(orderItem) ? [orderItem] : orderItem
     return {
       loans: orderItems.map(orderItem => {
         return {
+          orderId: orderItem.retailerordernumber,
+          orderDateUtc: orderItem.orderdate,
+          loanExpireDateUtc: orderItem.loanexpiredate,
           libraryBook: {
             identifier: orderItem.book.attributes.id,
           },
         }
       }),
+      userData: {
+        totalLoans: orderListResponse.status.LibraryExtension.usertotalloans,
+        totalEbookLoans: orderListResponse.status.LibraryExtension.usertotalebookloans,
+        totalAudioLoans: orderListResponse.status.LibraryExtension.usertotalsoundloans,
+      },
     }
   })
 
