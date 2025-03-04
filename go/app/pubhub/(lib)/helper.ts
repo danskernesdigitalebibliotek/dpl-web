@@ -13,6 +13,7 @@ export const getPublizonServiceParameters = () => {
     retailerkeycode: md5(process.env.UNLILOGIN_PUBHUB_RETAILER_KEY_CODE ?? ""),
   }
 }
+type Handler = <TContext>(req: NextRequest, context?: TContext) => Promise<Response>
 
 // WithAuth middleware.
 export function withAuth(handler: Handler): Handler {

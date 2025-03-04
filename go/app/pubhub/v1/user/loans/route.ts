@@ -32,6 +32,8 @@ async function getLibraryUserOrder(request: NextRequest, context: { userInfo: TU
   }
 }
 
+// @todo Fix ts problem about context here.
+// @ts-ignore
 export const GET = withAuth(getLibraryUserOrder)
 
 export const dynamic = "force-dynamic"
