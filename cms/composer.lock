@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "a0a8bd10034bd631d85cc75d0d9e354c",
+    "content-hash": "167a2668a3d1b1b60a72191ecb0a6c25",
     "packages": [
         {
             "name": "amazeeio/drupal_integrations",
@@ -1166,19 +1166,19 @@
         },
         {
             "name": "danskernesdigitalebibliotek/dpl-design-system",
-            "version": "2025.9.0",
+            "version": "2025.10.0",
             "dist": {
                 "type": "zip",
-                "url": "https://github.com/danskernesdigitalebibliotek/dpl-design-system/releases/download/2025.9.0/dist-2025-9-0-2bbb04989d41c5d95b63b46eaac3d0bee160bfbe.zip"
+                "url": "https://github.com/danskernesdigitalebibliotek/dpl-design-system/releases/download/2025.10.0/dist-2025-10-0-532c06064772620aa8949f55786bc0a3b4fff5a8.zip"
             },
             "type": "drupal-library"
         },
         {
             "name": "danskernesdigitalebibliotek/dpl-react",
-            "version": "0.0.0-dev",
+            "version": "2025.10.0",
             "dist": {
                 "type": "zip",
-                "url": "https://github.com/danskernesdigitalebibliotek/dpl-react/releases/download/branch-develop/dist-develop.zip"
+                "url": "https://github.com/danskernesdigitalebibliotek/dpl-react/releases/download/2025.10.0/dist-2025-10-0-d5fce5f008e94780078ea16087d22c15ddae8495.zip"
             },
             "require": {
                 "composer/installers": "^1.2.0"
@@ -20660,7 +20660,6 @@
     "aliases": [],
     "minimum-stability": "dev",
     "stability-flags": {
-        "danskernesdigitalebibliotek/dpl-react": 20,
         "drupal/default_content": 15,
         "drupal/gin": 5,
         "drupal/gin_toolbar": 5,
@@ -20675,6 +20674,6 @@
         "php": "8.1.*",
         "ext-dom": "*"
     },
-    "platform-dev": [],
-    "plugin-api-version": "2.3.0"
+    "platform-dev": {},
+    "plugin-api-version": "2.6.0"
 }
