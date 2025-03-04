@@ -2,7 +2,6 @@
 
 namespace Drupal\bnf_client\Form;
 
-use Drupal\bnf\Exception\AlreadyExistsException;
 use Drupal\bnf\Services\BnfImporter;
 use Drupal\Core\Config\ConfigFactoryInterface;
 use Drupal\Core\DependencyInjection\AutowireTrait;
@@ -135,12 +134,7 @@ class BnfImportConfirmForm implements FormInterface, ContainerInjectionInterface
     catch (\Exception $e) {
       $this->messenger->addError($this->t('Could not import node from BNF.', [], ['context' => 'BNF']));
 
-      if ($e instanceof AlreadyExistsException) {
-        $this->messenger->addError($this->t('Node has previously been imported from BNF.', [], ['context' => 'BNF']));
-      }
-      else {
-        $this->logger->error('Could not import node from BNF. @message', ['@message' => $e->getMessage()]);
-      }
+      $this->logger->error('Could not import node from BNF. @message', ['@message' => $e->getMessage()]);
     }
 
   }

@@ -169,7 +169,6 @@ type ImportResponse {
 enum ImportStatus {
   success
   failure
-  duplicate
 }
 
 """Generic input for key-value pairs."""

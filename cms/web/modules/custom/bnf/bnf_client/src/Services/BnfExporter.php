@@ -3,7 +3,6 @@
 namespace Drupal\bnf_client\Services;
 
 use Drupal\bnf\BnfStateEnum;
-use Drupal\bnf\Exception\AlreadyExistsException;
 use Drupal\bnf\GraphQL\Operations\Import;
 use Drupal\bnf\GraphQL\Types\ImportStatus;
 use Drupal\bnf\MangleUrl;
@@ -83,10 +82,6 @@ class BnfExporter {
       $this->logger->error(
         'Failed at exporting node to BNF server. @message',
         ['@message' => $message]);
-
-      if ($status === ImportStatus::failure) {
-        throw new AlreadyExistsException();
-      }
 
       throw new \Exception($message);
     }

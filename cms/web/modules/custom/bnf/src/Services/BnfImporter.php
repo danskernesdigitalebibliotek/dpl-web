@@ -4,13 +4,11 @@ namespace Drupal\bnf\Services;
 
 use Drupal\bnf\BnfMapperManager;
 use Drupal\bnf\BnfStateEnum;
-use Drupal\bnf\Exception\AlreadyExistsException;
 use Drupal\bnf\GraphQL\Operations\GetNode;
 use Drupal\bnf\GraphQL\Operations\GetNodeTitle;
 use Drupal\bnf\GraphQL\Operations\NewContent;
 use Drupal\bnf\MangleUrl;
 use Drupal\bnf\SailorEndpointConfig;
-use Drupal\Core\Entity\EntityTypeManagerInterface;
 use Drupal\node\NodeInterface;
 use Psr\Log\LoggerInterface;
 use Safe\DateTimeImmutable;
@@ -37,7 +35,6 @@ class BnfImporter {
    * Constructor.
    */
   public function __construct(
-    protected EntityTypeManagerInterface $entityTypeManager,
     protected LoggerInterface $logger,
     protected BnfMapperManager $mapperManager,
   ) {}
@@ -64,20 +61,6 @@ class BnfImporter {
    */
   public function importNode(string $uuid, string $endpointUrl): NodeInterface {
     $this->setEndpoint($endpointUrl);
-
-    $nodeStorage = $this->entityTypeManager->getStorage('node');
-
-    $existingNodes =
-      $nodeStorage->loadByProperties(['uuid' => $uuid]);
-
-    if (!empty($existingNodes)) {
-      $this->logger->error(
-        'Cannot import @uuid from @url - Node already exists.',
-        ['@uuid' => $uuid, '@url' => $endpointUrl]
-      );
-
-      throw new AlreadyExistsException('Cannot import node - already exists.');
-    }
 
     try {
       $response = GetNode::execute($uuid);

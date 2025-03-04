@@ -2,7 +2,6 @@
 
 namespace Drupal\bnf_server\Plugin\GraphQL\DataProducer;
 
-use Drupal\bnf\Exception\AlreadyExistsException;
 use Drupal\bnf\Services\BnfImporter;
 use Drupal\bnf_server\GraphQL\ImportResponse;
 use Drupal\bnf_server\GraphQL\ImportStatus;
@@ -95,15 +94,7 @@ class ImportProducer extends DataProducerPluginBase implements ContainerFactoryP
       $result->message = 'Node created successfully.';
     }
     catch (\Exception $e) {
-      if (!$e instanceof AlreadyExistsException) {
-        $this->logger->warning('Could not load node with UUID @uuid at @callbackUrl. @message', [
-          '@uuid' => $uuid,
-          '@callbackUrl' => $callbackUrl,
-          '@message' => $e->getMessage(),
-        ]);
-      }
-
-      $result->status = ($e instanceof AlreadyExistsException) ? ImportStatus::Duplicate : ImportStatus::Failure;
+      $result->status = ImportStatus::Failure;
       $result->message = $e->getMessage();
     }
 

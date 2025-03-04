@@ -38,6 +38,7 @@ class NodeArticleMapperTest extends EntityMapperTestBase {
    * Test article node mapping.
    */
   public function testNodeArticleMapping(): void {
+    $this->storageProphecy->loadByProperties(['uuid' => '123'])->willReturn([]);
     $this->storageProphecy->create([
       'type' => 'article',
       'uuid' => '123',

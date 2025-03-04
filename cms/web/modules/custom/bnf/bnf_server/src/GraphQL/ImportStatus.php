@@ -10,5 +10,4 @@ namespace Drupal\bnf_server\GraphQL;
 enum ImportStatus: string {
   case Success = 'success';
   case Failure = 'failure';
-  case Duplicate = 'duplicate';
 }

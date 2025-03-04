@@ -6,7 +6,6 @@ type ImportResponse {
 enum ImportStatus {
      success
      failure
-     duplicate
 }
 
 type Error {
