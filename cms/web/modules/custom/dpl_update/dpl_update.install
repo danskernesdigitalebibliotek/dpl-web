@@ -458,3 +458,10 @@ function dpl_update_update_10039(): string {
 function dpl_update_update_10040(): string {
   return _dpl_update_install_modules(['externalauth']);
 }
+
+/**
+ * Install HTTP cache control module.
+ */
+function dpl_update_update_10041(): string {
+  return _dpl_update_install_modules(['http_cache_control']);
+}
