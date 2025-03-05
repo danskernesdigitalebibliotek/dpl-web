@@ -7,6 +7,8 @@ import { getUniloginClientConfig } from "@/lib/session/oauth/uniloginClient"
 import { getSession, getSessionOptions, setUniloginTokensOnSession } from "@/lib/session/session"
 import { TUniloginTokenSet } from "@/lib/types/session"
 
+import { handleUniloginLogout } from "../../logout/helpers"
+import { isUniloginUserAuthorizedToLogIn } from "./helper"
 import schemas from "./schemas"
 
 export interface TIntrospectionResponse extends client.IntrospectionResponse {
@@ -71,6 +73,17 @@ export async function GET(request: NextRequest) {
     // Set token info.
     setUniloginTokensOnSession(session, tokenSet)
 
+    // Check if user is authorized to log.
+    const isAuthorized = await isUniloginUserAuthorizedToLogIn(introspect)
+    if (!isAuthorized) {
+      // Make sure that the user is logged out remotely first.
+      await handleUniloginLogout(session)
+      // Redirect user to login not authorized page.
+      return NextResponse.redirect(
+        `${goConfig("app.url")}/${goConfig("routes.login-not-authorized")}`
+      )
+    }
+
     // Set user info.
     session.userInfo = {
       sub: userinfo.sub,
@@ -83,8 +96,9 @@ export async function GET(request: NextRequest) {
     // await session.save()
   } catch (error) {
     console.error(error)
-    // TODO: Error page or redirect to login page.
-    // return NextResponse.redirect(goConfig("app.url"))
+    // Make sure that the user is logged out remotely first.
+    await handleUniloginLogout(session)
+    return NextResponse.redirect(`${goConfig("app.url")}/${goConfig("routes.login-failed")}`)
   }
 
   const sealed = await sealData(
