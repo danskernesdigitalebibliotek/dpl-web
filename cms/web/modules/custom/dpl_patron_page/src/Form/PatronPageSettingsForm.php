@@ -78,12 +78,6 @@ class PatronPageSettingsForm extends ConfigFormBase {
       '#default_value' => $config->get('delete_patron_url') ?? '',
     ];
 
-    $form['settings']['always_available_ereolen'] = [
-      '#type' => 'url',
-      '#title' => $this->t('Ereolen always available', [], ['context' => 'Patron page settings form']),
-      '#default_value' => $config->get('always_available_ereolen') ?? DplPatronPageSettings::ALWAYS_AVAILABLE_EREOLEN,
-    ];
-
     $form['settings']['pincode_length_min'] = [
       '#type' => 'number',
       '#title' => $this->t('Pincode length (min)', [], ['context' => 'Patron page settings form']),
@@ -111,7 +105,6 @@ class PatronPageSettingsForm extends ConfigFormBase {
 
     $this->config($this->configService->getConfigKey())
       ->set('delete_patron_url', $form_state->getValue('delete_patron_url'))
-      ->set('always_available_ereolen', $form_state->getValue('always_available_ereolen'))
       ->set('pincode_length_min', $form_state->getValue('pincode_length_min'))
       ->set('pincode_length_max', $form_state->getValue('pincode_length_max'))
       ->save();

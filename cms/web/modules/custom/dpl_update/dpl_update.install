@@ -118,6 +118,8 @@ function dpl_update_install(): string {
   $messages[] = dpl_update_update_10037();
   $messages[] = dpl_update_update_10039();
   $messages[] = dpl_update_update_10040();
+  $messages[] = dpl_update_update_10042();
+  $messages[] = dpl_update_update_10043();
 
   return implode('\r\n', $messages);
 }
@@ -471,4 +473,22 @@ function dpl_update_update_10041(): string {
  */
 function dpl_update_update_10042(): string {
   return _dpl_update_uninstall_modules(['jsnlog']);
+}
+
+/**
+ * Remove old ereolen config settings from both agency and patron configs.
+ */
+function dpl_update_update_10043(): string {
+  \Drupal::configFactory()
+    ->getEditable('dpl_library_agency.settings')
+    ->clear('ereolen_my_page_url')
+    ->clear('ereolen_homepage_url')
+    ->save();
+
+  \Drupal::configFactory()
+    ->getEditable('dpl_patron_page.settings')
+    ->clear('always_available_ereolen')
+    ->save();
+
+  return 'Removed old ereolen config keys from dpl_library_agency.settings and dpl_patron_page.settings.';
 }
