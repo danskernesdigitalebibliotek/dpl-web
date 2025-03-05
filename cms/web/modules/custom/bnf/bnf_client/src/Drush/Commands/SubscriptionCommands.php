@@ -71,6 +71,21 @@ class SubscriptionCommands extends DrushCommands {
   }
 
   /**
+   * Delete all subscription.
+   */
+  #[Command(name: 'bnf:subscription:delete-all')]
+  #[Help(description: 'Delete all subscriptions')]
+  #[Usage(
+    name: 'drush bnf:subscription:delete-all 4b426ec8-482d-401c-af0e-7f15dc9bfa5c',
+    description: 'Delete all subscriptions'
+  )]
+  public function deleteAllSubscriptions(): void {
+    $entities = $this->storage->loadMultiple();
+
+    $this->storage->delete($entities);
+  }
+
+  /**
    * List subscriptions.
    */
   #[Command(name: 'bnf:subscription:list')]
