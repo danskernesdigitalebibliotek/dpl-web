@@ -28,7 +28,7 @@ class VideoToolWidget extends StringTextfieldWidget {
   public function formElement(FieldItemListInterface $items, $delta, array $element, array &$form, FormStateInterface $form_state) {
     $element = parent::formElement($items, $delta, $element, $form, $form_state);
 
-    $message = $this->t('VideoTool URL example: https://media.videotool.dk/?vn=557_2023103014511477700668916683');
+    $message = $this->t('VideoTool URL example: https://media.videotool.dk?vn=557_2023103014511477700668916683');
 
     if (!empty($element['value']['#description'])) {
       $element['value']['#description'] = [

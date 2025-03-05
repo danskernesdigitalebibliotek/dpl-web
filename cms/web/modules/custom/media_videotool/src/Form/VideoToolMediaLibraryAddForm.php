@@ -42,7 +42,7 @@ class VideoToolMediaLibraryAddForm extends AddFormBase {
       '#title' => $this->t('Add @type video via URL', [
         '@type' => $media_type->label(),
       ]),
-      '#description' => $this->t('VideoTool URL example: https://media.videotool.dk/?vn=557_2023103014511477700668916683'),
+      '#description' => $this->t('VideoTool URL example: https://media.videotool.dk?vn=557_2023103014511477700668916683'),
       '#required' => TRUE,
       '#attributes' => [
         'placeholder' => 'https://',

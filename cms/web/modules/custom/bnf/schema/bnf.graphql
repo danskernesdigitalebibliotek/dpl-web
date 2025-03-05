@@ -992,7 +992,7 @@ type ParagraphGoVideo implements ParagraphInterface {
   title: String
 
   """
-  VideoTool URL. Example: https://media.videotool.dk/?vn=557_2023103014511477700668916683
+  VideoTool URL. Example: https://media.videotool.dk?vn=557_2023103014511477700668916683
   """
   url: String!
 }
@@ -1027,7 +1027,7 @@ type ParagraphGoVideoBundleAutomatic implements ParagraphInterface {
   status: Boolean!
 
   """
-  VideoTool URL. Example: https://media.videotool.dk/?vn=557_2023103014511477700668916683
+  VideoTool URL. Example: https://media.videotool.dk?vn=557_2023103014511477700668916683
   """
   url: String!
 
@@ -1056,7 +1056,7 @@ type ParagraphGoVideoBundleManual implements ParagraphInterface {
   status: Boolean!
 
   """
-  VideoTool URL. Example: https://media.videotool.dk/?vn=557_2023103014511477700668916683
+  VideoTool URL. Example: https://media.videotool.dk?vn=557_2023103014511477700668916683
   """
   url: String!
 
