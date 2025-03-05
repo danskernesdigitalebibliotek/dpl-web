@@ -26,15 +26,12 @@ const Reader = ({ type, onBackCallback, identifier, orderId }: ReaderType) => {
     readerAssets.forEach(appendAsset)
 
     // Attach the onReaderBackCallback function to the window object to be able to enable callback methods calls through the close button
-    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
     // @ts-ignore
-    // eslint-disable-next-line @typescript-eslint/no-shadow
     window.onReaderBackCallback = () => {
       onBackCallback()
     }
 
     return () => {
-      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
       // @ts-ignore
       delete window.onReaderBackCallback
       readerAssets.forEach(removeAsset)
@@ -47,7 +44,6 @@ const Reader = ({ type, onBackCallback, identifier, orderId }: ReaderType) => {
         <p>orderId: {orderId}</p>
         <div
           id="pubhub-reader"
-          // eslint-disable-next-line react/no-unknown-property
           order-id={orderId}
           role="button"
           tabIndex={0}
@@ -62,9 +58,7 @@ const Reader = ({ type, onBackCallback, identifier, orderId }: ReaderType) => {
     return (
       <div
         id="pubhub-reader"
-        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
         // @ts-ignore
-        // eslint-disable-next-line react/no-unknown-property
         identifier={identifier}
         close-href="javascript:window.onReaderBackCallback()"
         role="button"
