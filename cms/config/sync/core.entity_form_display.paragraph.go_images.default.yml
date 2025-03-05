@@ -1,0 +1,28 @@
+uuid: 47b69d43-6e7a-4015-a79f-c7ef30c49525
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.field.paragraph.go_images.field_go_images
+    - paragraphs.paragraphs_type.go_images
+  module:
+    - media_library
+    - media_library_edit
+id: paragraph.go_images.default
+targetEntityType: paragraph
+bundle: go_images
+mode: default
+content:
+  field_go_images:
+    type: media_library_widget
+    weight: 0
+    region: content
+    settings:
+      media_types: {  }
+    third_party_settings:
+      media_library_edit:
+        show_edit: '1'
+        edit_form_mode: default
+hidden:
+  created: true
+  status: true

@@ -6,6 +6,7 @@ dependencies:
     - field.storage.eventinstance.field_event_paragraphs
     - paragraphs.paragraphs_type.campaign_rule
     - paragraphs.paragraphs_type.event_ticket_category
+    - paragraphs.paragraphs_type.go_images
     - paragraphs.paragraphs_type.go_link
     - paragraphs.paragraphs_type.go_linkbox
     - paragraphs.paragraphs_type.go_material_slider_automatic
@@ -34,6 +35,7 @@ settings:
       campaign_rule: campaign_rule
       event_ticket_category: event_ticket_category
       go_link: go_link
+      go_images: go_images
       go_linkbox: go_linkbox
       go_material_slider_automatic: go_material_slider_automatic
       go_material_slider_manual: go_material_slider_manual
@@ -76,6 +78,9 @@ settings:
       filtered_event_list:
         weight: 49
         enabled: false
+      go_images:
+        weight: 51
+        enabled: true
       go_link:
         weight: 50
         enabled: true

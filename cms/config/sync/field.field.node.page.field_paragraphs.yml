@@ -7,6 +7,7 @@ dependencies:
     - node.type.page
     - paragraphs.paragraphs_type.campaign_rule
     - paragraphs.paragraphs_type.event_ticket_category
+    - paragraphs.paragraphs_type.go_images
     - paragraphs.paragraphs_type.go_link
     - paragraphs.paragraphs_type.go_linkbox
     - paragraphs.paragraphs_type.go_material_slider_automatic
@@ -42,6 +43,7 @@ settings:
       go_video_bundle_automatic: go_video_bundle_automatic
       go_link: go_link
       go_video_bundle_manual: go_video_bundle_manual
+      go_images: go_images
       go_text_body: go_text_body
     negate: 1
     target_bundles_drag_drop:
@@ -78,6 +80,9 @@ settings:
       filtered_event_list:
         weight: 44
         enabled: false
+      go_images:
+        weight: 51
+        enabled: true
       go_link:
         weight: 50
         enabled: true
