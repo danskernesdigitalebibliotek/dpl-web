@@ -4,14 +4,21 @@ import { useRouter } from "next/navigation"
 import { useState } from "react"
 
 import { Button } from "@/components/shared/button/Button"
+import Icon from "@/components/shared/icon/Icon"
 import useSession from "@/hooks/useSession"
 
 const LogoutButton = () => {
   const [logoutWasClicked, setLogoutWasClicked] = useState(false)
-  const session = useSession()
+  const { session, isLoading } = useSession()
   const router = useRouter()
 
-  if (!session?.session?.isLoggedIn) {
+  if (isLoading) {
+    return (
+      <div className="bg-background-skeleton mb-grid-gap-half h-10 w-44 animate-pulse rounded-full lg:w-80" />
+    )
+  }
+
+  if (!session?.isLoggedIn) {
     return null
   }
 
@@ -27,7 +34,7 @@ const LogoutButton = () => {
   return (
     <>
       <Button onClick={handleClick} ariaLabel="Log ud" disabled={logoutWasClicked}>
-        Log ud
+        <Icon className="mr-3 h-[20px] w-[20px]" name="lock" /> Log ud
       </Button>
     </>
   )
