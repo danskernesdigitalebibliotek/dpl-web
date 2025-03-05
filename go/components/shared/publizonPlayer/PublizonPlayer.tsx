@@ -31,8 +31,9 @@ const Player = ({ type, orderId, identifier }: ReaderType) => {
   if (type === "rent") {
     return (
       <iframe
-        style={{ height: "300px" }}
+        title="Publizon Player"
         src={`https://play.pubhub.dk/index141.html?o=${orderId}`}
+        style={{ height: "300px" }}
         className="player h-full w-full"
       />
     )
@@ -41,8 +42,9 @@ const Player = ({ type, orderId, identifier }: ReaderType) => {
   if (type === "demo") {
     return (
       <iframe
-        style={{ height: "300px" }}
+        title="Publizon Player"
         src={`https://play.pubhub.dk/index141.html?i=${identifier}`}
+        style={{ height: "300px" }}
         className="player rounded-base h-full w-full"
       />
     )

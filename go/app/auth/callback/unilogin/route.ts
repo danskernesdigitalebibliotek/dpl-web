@@ -1,6 +1,7 @@
 import { sealData } from "iron-session"
 import { NextRequest, NextResponse } from "next/server"
 import * as client from "openid-client"
+import type { IntrospectionResponse } from "openid-client"
 
 import goConfig from "@/lib/config/goConfig"
 import { getUniloginClientConfig } from "@/lib/session/oauth/uniloginClient"
@@ -9,7 +10,7 @@ import { TUniloginTokenSet } from "@/lib/types/session"
 
 import schemas from "./schemas"
 
-export interface TIntrospectionResponse extends client.IntrospectionResponse {
+export interface TIntrospectionResponse extends IntrospectionResponse {
   uniid: string
   institution_ids: string
 }

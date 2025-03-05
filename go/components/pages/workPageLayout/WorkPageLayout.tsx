@@ -1,8 +1,7 @@
 "use client"
 
 import { useQuery } from "@tanstack/react-query"
-import { notFound } from "next/navigation"
-import { useSearchParams } from "next/navigation"
+import { notFound, useSearchParams } from "next/navigation"
 import React, { useEffect, useState } from "react"
 
 import WorkPageHeader from "@/components/pages/workPageLayout/WorkPageHeader"

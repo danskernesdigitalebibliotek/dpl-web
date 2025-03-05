@@ -209,7 +209,7 @@ export const MaterialSliderSkeleton = () => {
     <div className="bg-background-overlay overflow-hidden">
       <div className="content-container gap-paragraph-spacing py-paragraph-spacing flex flex-col">
         <div className="flex items-center justify-between">
-          <h2 className="text-typo-heading-3 bg-background-skeleton h-11 w-[50%] animate-pulse rounded-full" />
+          <div className="text-typo-heading-3 bg-background-skeleton h-11 w-[50%] animate-pulse rounded-full" />
           <div className="flex gap-x-4">
             <div className="bg-background-skeleton h-[40px] w-[40px] animate-pulse rounded-full" />
             <div className="bg-background-skeleton h-[40px] w-[40px] animate-pulse rounded-full" />
