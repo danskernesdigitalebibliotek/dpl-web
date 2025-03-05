@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from "next/server"
 
 import { withAuth } from "@/app/pubhub/(lib)/helper"
 import { TUserInfo } from "@/app/pubhub/(lib)/types"
+import { transformTimeToUtcString } from "@/app/pubhub/helper"
 
 import { getLibraryUserOrderListRequest } from "./(lib)/requests"
 import { libraryUserOrderListSchema } from "./(lib)/schemas"
@@ -17,17 +18,17 @@ async function getLibraryUserOrder(request: NextRequest, context: { userInfo: TU
       loans: orderItems.map(orderItem => {
         return {
           orderId: orderItem.retailerordernumber,
-          orderDateUtc: orderItem.orderdate,
-          loanExpireDateUtc: orderItem.loanexpiredate,
+          orderDateUtc: transformTimeToUtcString(orderItem.orderdate),
+          loanExpireDateUtc: transformTimeToUtcString(orderItem.loanexpiredate),
           libraryBook: {
             identifier: orderItem.book.attributes.id,
           },
         }
       }),
       userData: {
-        totalLoans: orderListResponse.status.LibraryExtension.usertotalloans,
-        totalEbookLoans: orderListResponse.status.LibraryExtension.usertotalebookloans,
-        totalAudioLoans: orderListResponse.status.LibraryExtension.usertotalsoundloans,
+        totalLoans: Number(orderListResponse.status.LibraryExtension.usertotalloans),
+        totalEbookLoans: Number(orderListResponse.status.LibraryExtension.usertotalebookloans),
+        totalAudioLoans: Number(orderListResponse.status.LibraryExtension.usertotalsoundloans),
       },
     }
   })
