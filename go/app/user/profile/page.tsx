@@ -1,5 +1,7 @@
 "use client"
 
+import { Suspense } from "react"
+
 import DebuggingSession from "./DebuggingSession"
 import LoanList from "./LoanList"
 import LogoutButton from "./LogoutButton"
@@ -15,7 +17,9 @@ const Page = () => {
         </p>
       </div>
       <LoanList />
-      <DebuggingSession />
+      <Suspense fallback={<p>Loading...</p>}>
+        <DebuggingSession />
+      </Suspense>
     </div>
   )
 }
