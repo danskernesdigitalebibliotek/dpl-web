@@ -96,9 +96,7 @@ export async function GET(request: NextRequest) {
       institution_ids: introspect.institution_ids,
     }
 
-    // TODO: When we have verified that it works in Lagoon
-    // then see if we can reintroduce this, instead of the "handmade" cookie in the end.
-    // await session.save()
+    await session.save()
   } catch (error) {
     console.error(error)
     // Make sure that the user is logged out remotely first. And destroy session.
@@ -107,7 +105,6 @@ export async function GET(request: NextRequest) {
     return NextResponse.redirect(`${goConfig("app.url")}/${goConfig("routes.login-failed")}`)
   }
 
-  await session.save()
   return NextResponse.redirect(`${goConfig("app.url")}/user/profile`)
 }
 
