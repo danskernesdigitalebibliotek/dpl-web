@@ -4,7 +4,9 @@ import type { NextFetchEvent, NextRequest } from "next/server"
 import loadUserToken from "./app/auth/callback/adgangsplatformen/loadUserToken"
 import goConfig from "./lib/config/goConfig"
 import {
+  accessTokenIsExpired,
   accessTokenShouldBeRefreshed,
+  destroySession,
   getDplCmsSessionCookie,
   getSession,
   saveAdgangsplatformenSession,
@@ -20,13 +22,12 @@ export async function middleware(request: NextRequest, event: NextFetchEvent) {
 
   const session = await getSession({ request, response })
 
-  // TODO: Check if we need to destroy the session if the refresh token is expired.
-  // const session = await getIronSession<TSessionData>(request, response, sessionOptions);
-  // const isExpired = accessTokenIsExpired(session);
-  // console.log({ isExpired });
-  // if (isExpired) {
-  //   session.destroy();
-  //   return NextResponse.redirect(new URL('/', request.url), { headers: response.headers });
+  // Apparently the timespan is too short for the session to be expired.
+  // The result is that the session is destroyed too soon.
+  // @todo: Investigate how to increase the timespan for the session.
+  // If the session is expired then destroy it.
+  // if (accessTokenIsExpired(session)) {
+  //   destroySession(session)
   // }
 
   // If the session is not logged in we will try to see
@@ -43,7 +44,7 @@ export async function middleware(request: NextRequest, event: NextFetchEvent) {
   if (session.isLoggedIn && session.type === "adgangsplatformen") {
     const sessionCookie = await getDplCmsSessionCookie()
     if (!sessionCookie) {
-      session.destroy()
+      destroySession(session)
     }
   }
 

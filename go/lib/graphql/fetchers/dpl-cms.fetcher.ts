@@ -42,21 +42,7 @@ export function fetcher<TData, TVariables>(
       next,
     })
 
-    // TODO: Remove console logs when we are more confident
-    // in dpl-cms fetching and caching of data.
-    // eslint-disable-next-line no-console
-    // console.log({ body: JSON.stringify({ query, variables }) })
-
     const json = await res.json()
-
-    // TODO: Remove console logs when we are more confident
-    // in dpl-cms fetching and caching of data.
-    // eslint-disable-next-line no-console
-    // console.log({ goConfiguration: json?.data?.goConfiguration })
-    // TODO: Remove console logs when we are more confident
-    // in dpl-cms fetching and caching of data.
-    // eslint-disable-next-line no-console
-    // console.log({ adgangsplatformenTokens: json?.data?.dplTokens?.adgangsplatformen })
 
     if (res.status !== 200) {
       const { message } = json

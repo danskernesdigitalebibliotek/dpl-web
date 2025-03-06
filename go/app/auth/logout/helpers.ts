@@ -2,29 +2,16 @@ import { IronSession } from "iron-session"
 import { NextResponse } from "next/server"
 import * as client from "openid-client"
 
-import goConfig from "@/lib/config/goConfig"
 import { getUniloginClientConfig } from "@/lib/session/oauth/uniloginClient"
-import { TSessionData, deleteUniloginIdToken, getUniloginIdToken } from "@/lib/session/session"
+import {
+  TSessionData,
+  destroySession,
+  destroySessionAndRedirectToFrontPage,
+  getUniloginIdToken,
+  redirectToFrontPageAndReloadSession,
+} from "@/lib/session/session"
 
 import loadAdgangsplatformenLogoutUrl from "./loadAdgangsplatformenLogoutUrl"
-
-export const destroySessionAndRedirectToFrontPage = async (session: IronSession<TSessionData>) => {
-  const appUrl = new URL(String(goConfig("app.url")))
-
-  const id_token = await getUniloginIdToken()
-  if (id_token) {
-    await deleteUniloginIdToken()
-  }
-
-  session.destroy()
-  return NextResponse.redirect(`${appUrl.toString()}?reload-session=true`)
-}
-
-export const redirectToFrontPage = async () => {
-  const appUrl = new URL(String(goConfig("app.url")))
-
-  return NextResponse.redirect(appUrl)
-}
 
 export const handleUniloginLogout = async (session: IronSession<TSessionData>) => {
   const config = await getUniloginClientConfig()
@@ -62,12 +49,7 @@ export const handleUniloginLogout = async (session: IronSession<TSessionData>) =
 }
 
 export const handleAdgangsplatformenLogout = async (session: IronSession<TSessionData>) => {
-  // Destroy session and id token.
-  session.destroy()
-  const id_token = await getUniloginIdToken()
-  if (id_token) {
-    await deleteUniloginIdToken()
-  }
+  await destroySession(session)
 
   // Redirect to the logout url if available.
   const logoutUrl = await loadAdgangsplatformenLogoutUrl()
@@ -75,6 +57,6 @@ export const handleAdgangsplatformenLogout = async (session: IronSession<TSessio
     return NextResponse.redirect(logoutUrl)
   } else {
     console.error("Could not resolve Adgangsplatformen logout url.")
-    return destroySessionAndRedirectToFrontPage(session)
+    return redirectToFrontPageAndReloadSession()
   }
 }
