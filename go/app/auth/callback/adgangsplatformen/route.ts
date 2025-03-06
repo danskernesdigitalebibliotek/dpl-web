@@ -15,7 +15,7 @@ export async function GET() {
   }
 
   // We could not retrieve the user token.
-  // So we redirect to the frontpage without setting the session.
+  // So we redirect to the login failed page  without setting the session.
   console.error("Could not retrieve Adgangsplatformen user token.")
   return NextResponse.redirect(`${goConfig("app.url")}/${goConfig("routes.login-failed")}`)
 }
