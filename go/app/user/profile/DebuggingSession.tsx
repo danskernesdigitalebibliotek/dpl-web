@@ -7,8 +7,8 @@ const DebuggingSession = () => {
 
   return (
     <>
-      <h2 className="text-typo-heading-5 mt-5">Debugging:</h2>
-      <div className="mt-3">
+      <h2 className="text-typo-heading-5 col-span-full mt-40">Debugging:</h2>
+      <div className="col-span-full mt-3">
         <pre>{JSON.stringify(session, null, 2)}</pre>
       </div>
     </>
