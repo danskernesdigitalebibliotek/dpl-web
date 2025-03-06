@@ -1,4 +1,3 @@
-import { md5 } from "js-md5"
 import { NextRequest } from "next/server"
 import { z } from "zod"
 

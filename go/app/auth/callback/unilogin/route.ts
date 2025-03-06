@@ -1,4 +1,3 @@
-import { sealData } from "iron-session"
 import { NextRequest, NextResponse } from "next/server"
 import * as client from "openid-client"
 
@@ -102,30 +101,14 @@ export async function GET(request: NextRequest) {
     // await session.save()
   } catch (error) {
     console.error(error)
-    // Make sure that the user is logged out remotely first.
-    await handleUniloginLogout(session)
+    // Make sure that the user is logged out remotely first. And destroy session.
+    await logoutUniloginSSO(session)
+    await destroySession(session)
     return NextResponse.redirect(`${goConfig("app.url")}/${goConfig("routes.login-failed")}`)
   }
 
-  const sealed = await sealData(
-    {
-      ...session,
-    },
-    sessionOptions
-  )
-
-  // TODO: When we have verified that it works in Lagoon
-  // then see if we can use the session.save() instead of the "handmade" cookie here.
-  // Also we  probably would like to go to different URL's depending on the try/catch above.
-  const headers = new Headers(request.headers)
-  headers.set(
-    "Set-Cookie",
-    `${sessionOptions.cookieName}=${sealed}; Max-Age=${sessionOptions.ttl}; Path=/; HttpOnly; ${sessionOptions.cookieOptions?.secure && "Secure"}`
-  )
-
-  return NextResponse.redirect(`${goConfig("app.url")}/user/profile`, {
-    headers,
-  })
+  await session.save()
+  return NextResponse.redirect(`${goConfig("app.url")}/user/profile`)
 }
 
 export const dynamic = "force-dynamic"
