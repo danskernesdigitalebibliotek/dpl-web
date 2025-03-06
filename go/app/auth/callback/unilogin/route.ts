@@ -4,10 +4,15 @@ import * as client from "openid-client"
 
 import goConfig from "@/lib/config/goConfig"
 import { getUniloginClientConfig } from "@/lib/session/oauth/uniloginClient"
-import { getSession, getSessionOptions, setUniloginTokensOnSession } from "@/lib/session/session"
+import {
+  destroySession,
+  getSession,
+  getSessionOptions,
+  setUniloginTokensOnSession,
+} from "@/lib/session/session"
 import { TUniloginTokenSet } from "@/lib/types/session"
 
-import { handleUniloginLogout } from "../../logout/helpers"
+import { logoutUniloginSSO } from "../../logout/helpers"
 import { isUniloginUserAuthorizedToLogIn } from "./helper"
 import schemas from "./schemas"
 
@@ -76,8 +81,9 @@ export async function GET(request: NextRequest) {
     // Check if user is authorized to log.
     const isAuthorized = await isUniloginUserAuthorizedToLogIn(introspect)
     if (!isAuthorized) {
-      // Make sure that the user is logged out remotely first.
-      await handleUniloginLogout(session)
+      // Make sure that the user is logged out remotely first. And destroy session.
+      await logoutUniloginSSO(session)
+      await destroySession(session)
       // Redirect user to login not authorized page.
       return NextResponse.redirect(
         `${goConfig("app.url")}/${goConfig("routes.login-not-authorized")}`
