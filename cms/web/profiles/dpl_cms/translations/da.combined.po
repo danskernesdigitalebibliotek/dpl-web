@@ -28228,7 +28228,7 @@ msgstr "Du kan højest reservere 3 titler"
 #: 
 msgctxt "Global"
 msgid "View material"
-msgstr ""
+msgstr "Se materiale"
 
 #: 
 msgctxt "field.field.paragraph.go_text_body.field_body:label"
