@@ -7,15 +7,24 @@ import { Button } from "@/components/shared/button/Button"
 import Icon from "@/components/shared/icon/Icon"
 import useSession from "@/hooks/useSession"
 
-const LogoutButton = () => {
+export const LogoutButtonSkeleton = () => (
+  <div
+    className={`bg-background-skeleton mb-grid-gap-half ml-auto h-8 w-44 animate-pulse justify-end rounded-full
+      lg:order-2`}
+  />
+)
+
+export type LogoutButtonProps = {
+  className?: string
+}
+
+const LogoutButton = ({ className }: LogoutButtonProps) => {
   const [logoutWasClicked, setLogoutWasClicked] = useState(false)
   const { session, isLoading } = useSession()
   const router = useRouter()
 
   if (isLoading) {
-    return (
-      <div className="bg-background-skeleton mb-grid-gap-half h-10 w-44 animate-pulse rounded-full lg:w-80" />
-    )
+    return <LogoutButtonSkeleton />
   }
 
   if (!session?.isLoggedIn) {
@@ -33,8 +42,14 @@ const LogoutButton = () => {
 
   return (
     <>
-      <Button onClick={handleClick} ariaLabel="Log ud" disabled={logoutWasClicked}>
-        <Icon className="mr-3 h-[20px] w-[20px]" name="lock" /> Log ud
+      <Button
+        size={"sm"}
+        onClick={handleClick}
+        className={className}
+        ariaLabel="Log ud"
+        disabled={logoutWasClicked}>
+        <Icon className="mr-3 h-[20px] w-[20px]" name="lock" />
+        <p>Log ud</p>
       </Button>
     </>
   )
