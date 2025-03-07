@@ -3,9 +3,11 @@ import React from "react"
 import ParagraphResolver from "@/components/paragraphs/ParagraphResolver"
 import ImageBaseWithPlaceholder from "@/components/shared/image/ImageBaseWithPlaceholder"
 import { Maybe, MediaImage, NodeGoArticle } from "@/lib/graphql/generated/dpl-cms/graphql"
+import { localeDateStringFromDate } from "@/lib/helpers/helper.dates"
 
 export type TArticlePageLayoutProps = {
   goArticleImage?: Maybe<MediaImage>
+  publicationDate: { timestamp: string }
 } & NodeGoArticle
 
 function ArticlePageLayout({ pageData }: { pageData: TArticlePageLayoutProps }) {
@@ -18,13 +20,8 @@ function ArticlePageLayout({ pageData }: { pageData: TArticlePageLayoutProps }) 
 
   const mediaImage = goArticleImage?.mediaImage
 
-  const localeDateString = new Date(
-    pageData.publicationDate.timestamp as string
-  ).toLocaleDateString("da-DK", {
-    day: "numeric",
-    month: "long",
-    year: "numeric",
-  })
+  const publicationDate = new Date(pageData.publicationDate.timestamp)
+  const localeDateString = localeDateStringFromDate(publicationDate)
 
   return (
     <div className="gap-y-paragraph-spacing flex flex-col">
@@ -33,11 +30,11 @@ function ArticlePageLayout({ pageData }: { pageData: TArticlePageLayoutProps }) 
           {pageData.title}
         </h1>
         <div className="col-span-full">
-          <div className="rounded-base relative aspect-16/9 overflow-hidden">
+          <div className="rounded-base relative overflow-hidden">
             <ImageBaseWithPlaceholder
               className="rounded-base"
               sizes="100vw"
-              imageSizing="fillParent"
+              imageSizing="intrinsic"
               src={mediaImage?.url || ""}
               width={mediaImage?.width || 0}
               height={mediaImage?.height || 0}

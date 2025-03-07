@@ -5,6 +5,7 @@ import { ParagraphUnion } from "@/lib/graphql/generated/dpl-cms/graphql"
 import ParagraphGoMaterialSliderAutomatic from "./MaterialSlider/MaterialSliderAutomatic"
 import ParagraphGoMaterialSliderManual from "./MaterialSlider/MaterialSliderManual"
 import ParagraphGoLinkbox from "./ParagraphGoLinkbox/ParagraphGoLinkbox"
+import ParagraphGoTextBody from "./TextBody/TextBody"
 import ParagraphGoVideo from "./Video/Video"
 import ParagraphGoVideoBundleAutomatic from "./VideoBundle/VideoBundleAutomatic"
 import ParagraphGoVideoBundleManual from "./VideoBundle/VideoBundleManual"
@@ -18,6 +19,7 @@ function ParagraphResolver({ paragraphs }: { paragraphs: ParagraphUnion[] }) {
     ParagraphGoMaterialSliderManual,
     ParagraphGoVideoBundleAutomatic,
     ParagraphGoVideoBundleManual,
+    ParagraphGoTextBody,
   }
 
   return paragraphs.map((paragraph, index) => {

@@ -73,3 +73,11 @@ fragment goLinkbox on ParagraphGoLinkbox {
     }
   }
 }
+
+fragment goTextBody on ParagraphGoTextBody {
+  __typename
+  body {
+    value
+  }
+}
+

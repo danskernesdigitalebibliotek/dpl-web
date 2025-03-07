@@ -209,6 +209,18 @@ export type ComplexSearchFiltersInput = {
   sublocation?: InputMaybe<Array<Scalars['String']['input']>>;
 };
 
+export type ComplexSearchIndex = {
+  __typename?: 'ComplexSearchIndex';
+  /** Can be used for faceting */
+  facet: Scalars['Boolean']['output'];
+  /** The name of a Complex Search index */
+  index: Scalars['String']['output'];
+  /** Can be used for searching */
+  search: Scalars['Boolean']['output'];
+  /** Can be used for sorting */
+  sort: Scalars['Boolean']['output'];
+};
+
 /** The search response */
 export type ComplexSearchResponse = {
   __typename?: 'ComplexSearchResponse';
@@ -342,8 +354,19 @@ export type Cover = {
   detail_117?: Maybe<Scalars['String']['output']>;
   detail_207?: Maybe<Scalars['String']['output']>;
   detail_500?: Maybe<Scalars['String']['output']>;
+  large?: Maybe<CoverDetails>;
+  medium?: Maybe<CoverDetails>;
   origin?: Maybe<Scalars['String']['output']>;
+  small?: Maybe<CoverDetails>;
   thumbnail?: Maybe<Scalars['String']['output']>;
+  xSmall?: Maybe<CoverDetails>;
+};
+
+export type CoverDetails = {
+  __typename?: 'CoverDetails';
+  height?: Maybe<Scalars['Int']['output']>;
+  url?: Maybe<Scalars['String']['output']>;
+  width?: Maybe<Scalars['Int']['output']>;
 };
 
 export type CreatorInterface = {
@@ -892,20 +915,18 @@ export type Manifestations = {
   __typename?: 'Manifestations';
   all: Array<Manifestation>;
   bestRepresentation: Manifestation;
+  bestRepresentations: Array<Manifestation>;
   first: Manifestation;
   latest: Manifestation;
   mostRelevant: Array<Manifestation>;
-};
-
-export type Marc = {
-  __typename?: 'Marc';
-  /** Gets the MARC record collection for the given record identifier, containing either standalone or head and/or section and volume records. */
-  getMarcByRecordId?: Maybe<MarcRecord>;
-};
-
-
-export type MarcGetMarcByRecordIdArgs = {
-  recordId: Scalars['String']['input'];
+  /**
+   * A list of manifestations that matched the search query.
+   *
+   * This field is populated only when a work is retrieved within a search context.
+   * Each entry is a SearchHit object representing a manifestation that matched the search criteria.
+   * Only one manifestation per unit is returned.
+   */
+  searchHits?: Maybe<Array<SearchHit>>;
 };
 
 export type MarcRecord = {
@@ -1143,6 +1164,7 @@ export type Note = {
 
 export type NoteTypeEnum =
   | 'CONNECTION_TO_OTHER_WORKS'
+  | 'CONTAINS_AI_GENERATED_CONTENT'
   | 'DESCRIPTION_OF_MATERIAL'
   | 'DISSERTATION'
   | 'EDITION'
@@ -1157,7 +1179,8 @@ export type NoteTypeEnum =
   | 'REFERENCES'
   | 'RESTRICTIONS_ON_USE'
   | 'TECHNICAL_REQUIREMENTS'
-  | 'TYPE_OF_SCORE';
+  | 'TYPE_OF_SCORE'
+  | 'WITHDRAWN_PUBLICATION';
 
 export type OrderTypeEnum =
   | 'ESTIMATE'
@@ -1245,6 +1268,8 @@ export type PublicationYear = {
 export type Query = {
   __typename?: 'Query';
   complexSearch: ComplexSearchResponse;
+  /** All indexes in complex search */
+  complexSearchIndexes?: Maybe<Array<ComplexSearchIndex>>;
   complexSuggest: ComplexSuggestResponse;
   debug?: Maybe<Debug>;
   infomedia: InfomediaResponse;
@@ -1252,8 +1277,6 @@ export type Query = {
   localSuggest: LocalSuggestResponse;
   manifestation?: Maybe<Manifestation>;
   manifestations: Array<Maybe<Manifestation>>;
-  /** Field for presenting bibliographic records in MARC format */
-  marc: Marc;
   mood: MoodQueries;
   /** Get recommendations */
   recommend: RecommendationResponse;
@@ -1557,6 +1580,13 @@ export type SearchFiltersInput = {
   sublocation?: InputMaybe<Array<Scalars['String']['input']>>;
   workTypes?: InputMaybe<Array<Scalars['String']['input']>>;
   year?: InputMaybe<Array<Scalars['String']['input']>>;
+};
+
+/** A search hit that encapsulates a matched manifestation from a search query. */
+export type SearchHit = {
+  __typename?: 'SearchHit';
+  /** The manifestation that was matched during the search. */
+  match?: Maybe<Manifestation>;
 };
 
 /** The supported fields to query */

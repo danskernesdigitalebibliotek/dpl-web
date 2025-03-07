@@ -368,6 +368,47 @@
   .text-typo-caption {
     @apply font-headline;
   }
+
+  .wysiwyg > *:first-child {
+    @apply mt-0;
+  }
+
+  .wysiwyg > *:last-child {
+    @apply mb-0;
+  }
+
+  .wysiwyg h2 {
+    @apply font-headline text-typo-heading-3 my-8;
+  }
+
+  .wysiwyg h3 {
+    @apply font-headline text-typo-heading-4 my-6;
+  }
+
+  .wysiwyg p {
+    @apply text-typo-body-md dark:text-foreground/90 text-foreground/70 my-4;
+  }
+
+  .wysiwyg a {
+    @apply text-typo-body-md underline;
+  }
+
+  .wysiwyg ul,
+  .wysiwyg ol {
+    @apply text-typo-body-md dark:text-foreground/90 text-foreground/70 my-4 space-y-2 font-light;
+  }
+
+  .wysiwyg ul {
+    @apply ml-4 list-disc lg:ml-5;
+  }
+
+  .wysiwyg ol {
+    @apply list-inside list-decimal;
+  }
+
+  .wysiwyg li::marker {
+    @apply font-headline;
+  }
 }
 
 @layer base {

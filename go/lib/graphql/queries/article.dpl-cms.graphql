@@ -22,6 +22,7 @@ query getArticleByPath($path: String!) {
             ...goMaterialSliderAutomatic
             ...goMaterialSliderManual
             ...goLinkbox
+            ...goTextBody
           }
         }
       }
