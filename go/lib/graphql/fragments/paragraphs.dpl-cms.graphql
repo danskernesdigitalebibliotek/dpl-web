@@ -81,3 +81,9 @@ fragment goTextBody on ParagraphGoTextBody {
   }
 }
 
+fragment goImages on ParagraphGoImages {
+  __typename
+  goImages {
+    ...imageFragment
+  }
+}

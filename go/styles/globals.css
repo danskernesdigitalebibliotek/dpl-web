@@ -369,6 +369,7 @@
     @apply font-headline;
   }
 
+  /* wysiwyg */
   .wysiwyg > *:first-child {
     @apply mt-0;
   }
@@ -390,7 +391,7 @@
   }
 
   .wysiwyg a {
-    @apply text-typo-body-md underline;
+    @apply text-typo-body-md text-foreground underline;
   }
 
   .wysiwyg ul,

@@ -2,6 +2,7 @@ import React from "react"
 
 import ParagraphResolver from "@/components/paragraphs/ParagraphResolver"
 import ImageBaseWithPlaceholder from "@/components/shared/image/ImageBaseWithPlaceholder"
+import ImageCaptionWrapper from "@/components/shared/image/ImageCaptionWrapper"
 import { Maybe, MediaImage, NodeGoArticle } from "@/lib/graphql/generated/dpl-cms/graphql"
 import { localeDateStringFromDate } from "@/lib/helpers/helper.dates"
 
@@ -26,10 +27,11 @@ function ArticlePageLayout({ pageData }: { pageData: TArticlePageLayoutProps }) 
   return (
     <div className="gap-y-paragraph-spacing flex flex-col">
       <div className="content-container gap-y-paragraph-spacing grid-go">
-        <h1 className="text-typo-huge px-grid-column-half col-span-full text-center">
+        <h1 className="text-typo-heading-1 xs:text-typo-huge md:px-grid-column-half col-span-full text-center">
           {pageData.title}
         </h1>
-        <div className="col-span-full">
+
+        <ImageCaptionWrapper caption={goArticleImage?.byline || ""} className="col-span-full">
           <div className="rounded-base relative overflow-hidden">
             <ImageBaseWithPlaceholder
               className="rounded-base"
@@ -41,8 +43,7 @@ function ArticlePageLayout({ pageData }: { pageData: TArticlePageLayoutProps }) 
               alt={mediaImage?.alt || ""}
             />
           </div>
-          <p className="text-typo-caption text-foreground/80 mt-1">{goArticleImage?.byline}</p>
-        </div>
+        </ImageCaptionWrapper>
 
         <p className="text-typo-subtitle-lg max-w-article-max-width col-span-full mx-auto">
           {pageData.subtitle}

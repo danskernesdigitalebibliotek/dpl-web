@@ -13,6 +13,7 @@ query getPageByPath($path: String!) {
             ...goMaterialSliderManual
             ...goLinkbox
             ...goTextBody
+            ...goImages
           }
         }
       }

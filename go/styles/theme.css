@@ -2,6 +2,7 @@
 
 @theme inline {
   --breakpoint-*: initial;
+  --breakpoint-xs: 500px;
   --breakpoint-sm: 640px;
   --breakpoint-md: 768px;
   --breakpoint-lg: 1024px;

@@ -2,6 +2,7 @@ import React from "react"
 
 import { ParagraphUnion } from "@/lib/graphql/generated/dpl-cms/graphql"
 
+import ParagraphGoImages from "./Images/Images"
 import ParagraphGoMaterialSliderAutomatic from "./MaterialSlider/MaterialSliderAutomatic"
 import ParagraphGoMaterialSliderManual from "./MaterialSlider/MaterialSliderManual"
 import ParagraphGoLinkbox from "./ParagraphGoLinkbox/ParagraphGoLinkbox"
@@ -20,6 +21,7 @@ function ParagraphResolver({ paragraphs }: { paragraphs: ParagraphUnion[] }) {
     ParagraphGoVideoBundleAutomatic,
     ParagraphGoVideoBundleManual,
     ParagraphGoTextBody,
+    ParagraphGoImages,
   }
 
   return paragraphs.map((paragraph, index) => {
