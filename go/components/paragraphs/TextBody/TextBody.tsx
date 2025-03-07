@@ -1,6 +1,10 @@
 import { ParagraphGoTextBody } from "@/lib/graphql/generated/dpl-cms/graphql"
 
-const TextBody = (props: ParagraphGoTextBody) => {
+type TParagraphGoTextBodyProps = {
+  body: ParagraphGoTextBody["body"]
+}
+
+const TextBody = (props: TParagraphGoTextBodyProps) => {
   const html = props.body.value || ""
 
   if (!html) {
