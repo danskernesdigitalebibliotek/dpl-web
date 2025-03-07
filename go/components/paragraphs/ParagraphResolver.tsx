@@ -36,7 +36,7 @@ function ParagraphResolver({ paragraphs }: { paragraphs: ParagraphUnion[] }) {
     return (
       <ParagraphErrorBoundary key={index}>
         {/* @ts-ignore TODO: figure out how to type dynamically imported components */}
-        <DynamicComponentType key={index} {...paragraph} />
+        <DynamicComponentType {...paragraph} />
       </ParagraphErrorBoundary>
     )
   })
