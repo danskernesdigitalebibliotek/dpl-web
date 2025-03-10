@@ -26,6 +26,7 @@ const Video = (Video: VideoProps) => {
       <div className="col-span-6 lg:col-span-12">
         <div className="rounded-base relative aspect-16/9 w-full overflow-hidden">
           <iframe
+            title={title || "Video"}
             aria-label={title || "Video"}
             className="absolute inset-0 h-full w-full"
             src={embedVideo?.mediaVideotool}

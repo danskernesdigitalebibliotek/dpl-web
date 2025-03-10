@@ -3,8 +3,7 @@
 import { useQueryClient } from "@tanstack/react-query"
 import { useSelector } from "@xstate/react"
 import _ from "lodash"
-import { ReadonlyURLSearchParams, usePathname } from "next/navigation"
-import { useSearchParams } from "next/navigation"
+import { ReadonlyURLSearchParams, usePathname, useSearchParams } from "next/navigation"
 import { useEffect, useRef, useState } from "react"
 import { AnyEventObject, createActor } from "xstate"
 

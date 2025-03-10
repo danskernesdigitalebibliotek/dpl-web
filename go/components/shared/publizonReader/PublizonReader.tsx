@@ -47,6 +47,7 @@ const Reader = ({ type, onBackCallback, identifier, orderId }: ReaderType) => {
           order-id={orderId}
           role="button"
           tabIndex={0}
+          // eslint-disable-next-line no-script-url
           close-href="javascript:window.onReaderBackCallback()"
           aria-label="Go back"
         />
@@ -60,6 +61,7 @@ const Reader = ({ type, onBackCallback, identifier, orderId }: ReaderType) => {
         id="pubhub-reader"
         // @ts-ignore
         identifier={identifier}
+        // eslint-disable-next-line no-script-url
         close-href="javascript:window.onReaderBackCallback()"
         role="button"
         tabIndex={0}

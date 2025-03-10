@@ -2,8 +2,7 @@
 
 import { useSelector } from "@xstate/react"
 import { useRouter } from "next/navigation"
-import React from "react"
-import { useEffect, useRef } from "react"
+import React, { useEffect, useRef } from "react"
 
 import { cn } from "@/lib/helpers/helper.cn"
 import { resolveUrl } from "@/lib/helpers/helper.routes"
