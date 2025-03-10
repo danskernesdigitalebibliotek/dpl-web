@@ -2,7 +2,6 @@ import { z } from "zod"
 
 const regexDate = /^[0-9]{4}-[0-9]{2}-[0-9]{2} [0-9]{2}:[0-9]{2}:[0-9]{2}[\.0-9]*$/
 
-// Zod schemas
 export const orderItemSchema = z.object({
   retailerordernumber: z.string(),
   orderdate: z.string().regex(regexDate),

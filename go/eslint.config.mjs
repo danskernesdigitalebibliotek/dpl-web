@@ -17,6 +17,7 @@ const eslintConfig = [
       "lib/rest/cover-service-api/generated/",
       "lib/rest/cover-service-api/generated/cover-service.ts",
       "lib/soap/publizon/v2_7/generated/",
+      "lib/soap/unilogin/wsiinst-v5/generated/",
       "**/.history/",
     ],
   },

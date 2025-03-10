@@ -14,6 +14,11 @@ import {
 import loadAdgangsplatformenLogoutUrl from "./loadAdgangsplatformenLogoutUrl"
 
 export const handleUniloginLogout = async (session: IronSession<TSessionData>) => {
+  await logoutUniloginSSO(session)
+  return destroySessionAndRedirectToFrontPage(session)
+}
+
+export const logoutUniloginSSO = async (session: IronSession<TSessionData>) => {
   const config = await getUniloginClientConfig()
   const id_token = await getUniloginIdToken()
 
@@ -44,8 +49,6 @@ export const handleUniloginLogout = async (session: IronSession<TSessionData>) =
     id_token_hint: id_token,
   })
   await fetch(endSessionUrl)
-
-  return destroySessionAndRedirectToFrontPage(session)
 }
 
 export const handleAdgangsplatformenLogout = async (session: IronSession<TSessionData>) => {

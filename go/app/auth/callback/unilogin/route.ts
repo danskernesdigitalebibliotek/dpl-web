@@ -1,12 +1,18 @@
-import { sealData } from "iron-session"
 import { NextRequest, NextResponse } from "next/server"
 import * as client from "openid-client"
 
 import goConfig from "@/lib/config/goConfig"
 import { getUniloginClientConfig } from "@/lib/session/oauth/uniloginClient"
-import { getSession, getSessionOptions, setUniloginTokensOnSession } from "@/lib/session/session"
+import {
+  destroySession,
+  getSession,
+  getSessionOptions,
+  setUniloginTokensOnSession,
+} from "@/lib/session/session"
 import { TUniloginTokenSet } from "@/lib/types/session"
 
+import { logoutUniloginSSO } from "../../logout/helpers"
+import { isUniloginUserAuthorizedToLogIn } from "./helper"
 import schemas from "./schemas"
 
 export interface TIntrospectionResponse extends client.IntrospectionResponse {
@@ -71,6 +77,18 @@ export async function GET(request: NextRequest) {
     // Set token info.
     setUniloginTokensOnSession(session, tokenSet)
 
+    // Check if user is authorized to log.
+    const isAuthorized = await isUniloginUserAuthorizedToLogIn(introspect)
+    if (!isAuthorized) {
+      // Make sure that the user is logged out remotely first. And destroy session.
+      await logoutUniloginSSO(session)
+      await destroySession(session)
+      // Redirect user to login not authorized page.
+      return NextResponse.redirect(
+        `${goConfig("app.url")}/${goConfig("routes.login-not-authorized")}`
+      )
+    }
+
     // Set user info.
     session.userInfo = {
       sub: userinfo.sub,
@@ -78,34 +96,16 @@ export async function GET(request: NextRequest) {
       institution_ids: introspect.institution_ids,
     }
 
-    // TODO: When we have verified that it works in Lagoon
-    // then see if we can reintroduce this, instead of the "handmade" cookie in the end.
-    // await session.save()
+    await session.save()
   } catch (error) {
     console.error(error)
-    // TODO: Error page or redirect to login page.
-    // return NextResponse.redirect(goConfig("app.url"))
+    // Make sure that the user is logged out remotely first. And destroy session.
+    await logoutUniloginSSO(session)
+    await destroySession(session)
+    return NextResponse.redirect(`${goConfig("app.url")}/${goConfig("routes.login-failed")}`)
   }
 
-  const sealed = await sealData(
-    {
-      ...session,
-    },
-    sessionOptions
-  )
-
-  // TODO: When we have verified that it works in Lagoon
-  // then see if we can use the session.save() instead of the "handmade" cookie here.
-  // Also we  probably would like to go to different URL's depending on the try/catch above.
-  const headers = new Headers(request.headers)
-  headers.set(
-    "Set-Cookie",
-    `${sessionOptions.cookieName}=${sealed}; Max-Age=${sessionOptions.ttl}; Path=/; HttpOnly; ${sessionOptions.cookieOptions?.secure && "Secure"}`
-  )
-
-  return NextResponse.redirect(`${goConfig("app.url")}/user/profile`, {
-    headers,
-  })
+  return NextResponse.redirect(`${goConfig("app.url")}/user/profile`)
 }
 
 export const dynamic = "force-dynamic"

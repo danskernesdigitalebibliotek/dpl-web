@@ -1,5 +1,5 @@
-import { getPublizonServiceParameters } from "@/app/pubhub/(lib)/helper"
 import { TUserInfo } from "@/app/pubhub/(lib)/types"
+import { getPublizonServiceParameters } from "@/lib/helpers/publizon"
 import { createClientAsync } from "@/lib/soap/publizon/v2_7/generated/getlibraryuserorderlist"
 
 import { TLibraryUserOrderList } from "./types"
