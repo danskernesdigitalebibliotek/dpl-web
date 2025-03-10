@@ -4,7 +4,7 @@ import ParagraphResolver from "@/components/paragraphs/ParagraphResolver"
 import ImageBaseWithPlaceholder from "@/components/shared/image/ImageBaseWithPlaceholder"
 import ImageCaptionWrapper from "@/components/shared/image/ImageCaptionWrapper"
 import { Maybe, MediaImage, NodeGoArticle } from "@/lib/graphql/generated/dpl-cms/graphql"
-import { localeDateStringFromDate } from "@/lib/helpers/helper.dates"
+import { generalGoDateFormat } from "@/lib/helpers/helper.dates"
 
 export type TArticlePageLayoutProps = {
   goArticleImage?: Maybe<MediaImage>
@@ -22,7 +22,7 @@ function ArticlePageLayout({ pageData }: { pageData: TArticlePageLayoutProps }) 
   const mediaImage = goArticleImage?.mediaImage
 
   const publicationDate = new Date(pageData.publicationDate.timestamp)
-  const localeDateString = localeDateStringFromDate(publicationDate)
+  const localeDateString = generalGoDateFormat(publicationDate)
 
   return (
     <div className="gap-y-paragraph-spacing flex flex-col">
