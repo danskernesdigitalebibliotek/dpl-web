@@ -1,0 +1,89 @@
+fragment goVideo on ParagraphGoVideo {
+  __typename
+  id
+  created {
+    timestamp
+  }
+  title
+  embedVideo {
+    ...mediaVideotoolFragment
+  }
+}
+
+fragment goVideoBundleAutomatic on ParagraphGoVideoBundleAutomatic {
+  __typename
+  cqlSearch {
+    value
+  }
+  goVideoTitle
+  embedVideo {
+    ...mediaVideotoolFragment
+  }
+  videoAmountOfMaterials
+  id
+}
+
+fragment goVideoBundleManual on ParagraphGoVideoBundleManual {
+  __typename
+  id
+  goVideoTitle
+  embedVideo {
+    ...mediaVideotoolFragment
+  }
+  videoBundleWorkIds {
+    material_type
+    work_id
+  }
+}
+
+fragment goMaterialSliderAutomatic on ParagraphGoMaterialSliderAutomatic {
+  __typename
+  cqlSearch {
+    value
+  }
+  titleOptional: title
+  sliderAmountOfMaterials
+}
+
+fragment goMaterialSliderManual on ParagraphGoMaterialSliderManual {
+  __typename
+  titleOptional: title
+  materialSliderWorkIds {
+    material_type
+    work_id
+  }
+}
+
+fragment goLinkbox on ParagraphGoLinkbox {
+  __typename
+  title
+  goImage {
+    ...imageFragment
+  }
+  goColor
+  goDescription
+  goLinkParagraph {
+    ... on ParagraphGoLink {
+      link {
+        title
+        url
+      }
+      targetBlank
+      ariaLabel
+    }
+  }
+}
+
+fragment goTextBody on ParagraphGoTextBody {
+  __typename
+  body {
+    value
+  }
+}
+
+fragment goImages on ParagraphGoImages {
+  __typename
+  goImages {
+    ...imageFragment
+  }
+}

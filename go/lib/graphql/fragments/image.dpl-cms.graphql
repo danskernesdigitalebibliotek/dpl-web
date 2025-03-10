@@ -1,0 +1,13 @@
+fragment imageFragment on MediaImage {
+  name
+  mediaImage {
+    url
+    alt
+    height
+    width
+    mime
+    size
+    title
+  }
+  byline
+}

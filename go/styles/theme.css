@@ -2,6 +2,7 @@
 
 @theme inline {
   --breakpoint-*: initial;
+  --breakpoint-xs: 500px;
   --breakpoint-sm: 640px;
   --breakpoint-md: 768px;
   --breakpoint-lg: 1024px;
@@ -227,6 +228,7 @@
   --spacing-grid-gap-3: var(--grid-gap-3);
   --spacing-grid-gap-x: var(--grid-gap-x);
   --spacing-grid-edge: var(--grid-edge);
+  --spacing-article-max-width: var(--article-max-width);
   --spacing-space-y: var(--space-y);
   --spacing-paragraph-spacing: var(--paragraph-spacing);
   --spacing-paragraph-spacing-inner: var(--paragraph-spacing-inner);

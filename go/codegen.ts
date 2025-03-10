@@ -31,6 +31,7 @@ const config: CodegenConfig = {
           typeNames: "change-case-all#pascalCase",
           transformUnderscore: true,
         },
+        dedupeFragments: true,
         fetcher: "@/lib/graphql/fetchers/dpl-cms.fetcher#fetcher",
       },
       hooks: {

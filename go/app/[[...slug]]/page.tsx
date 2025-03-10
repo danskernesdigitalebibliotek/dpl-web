@@ -1,11 +1,10 @@
 import { notFound } from "next/navigation"
 import React from "react"
 
+import loadPage from "@/app/[[...slug]]/loadPage"
 import BasicPageLayout from "@/components/pages/basicPageLayout/BasicPageLayout"
 import goConfig from "@/lib/config/goConfig"
 import { GetPageByPathQuery, NodeGoPage } from "@/lib/graphql/generated/dpl-cms/graphql"
-
-import loadPage from "./loadPage"
 
 async function page(props: { params: Promise<{ slug: string[] }> }) {
   const params = await props.params

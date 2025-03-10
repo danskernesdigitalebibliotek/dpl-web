@@ -1,10 +1,20 @@
-query getPageByPath($path: String!) {
+query getArticleByPath($path: String!) {
   route(path: $path) {
     __typename
     ... on RouteInternal {
       url
       entity {
-        ... on NodeGoPage {
+        ... on NodeGoArticle {
+          __typename
+          id
+          title
+          subtitle
+          goArticleImage {
+            ...imageFragment
+          }
+          publicationDate {
+            timestamp
+          }
           paragraphs {
             ...goVideo
             ...goVideoBundleAutomatic
