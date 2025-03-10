@@ -45,7 +45,7 @@ function ArticlePageLayout({ pageData }: { pageData: TArticlePageLayoutProps }) 
           </div>
         </ImageCaptionWrapper>
 
-        <p className="text-typo-subtitle-lg max-w-article-max-width col-span-full mx-auto">
+        <p className="max-w-article-max-width text-typo-subtitle-lg col-span-full mx-auto w-full">
           {pageData.subtitle}
         </p>
         <div className="col-span-full space-y-4">
