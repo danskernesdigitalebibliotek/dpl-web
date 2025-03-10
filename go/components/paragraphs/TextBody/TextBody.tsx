@@ -14,6 +14,7 @@ const TextBody = (props: TParagraphGoTextBodyProps) => {
   return (
     <div className="content-container">
       <div className="max-w-article-max-width mx-auto w-full">
+        {/* eslint-disable-next-line react/no-danger */}
         <div className="wysiwyg" dangerouslySetInnerHTML={{ __html: html }} />
       </div>
     </div>

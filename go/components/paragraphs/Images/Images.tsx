@@ -1,7 +1,6 @@
 import ImageBaseWithPlaceholder from "@/components/shared/image/ImageBaseWithPlaceholder"
 import ImageCaptionWrapper from "@/components/shared/image/ImageCaptionWrapper"
-import { ParagraphGoImages } from "@/lib/graphql/generated/dpl-cms/graphql"
-import { MediaImage } from "@/lib/graphql/generated/dpl-cms/graphql"
+import { MediaImage, ParagraphGoImages } from "@/lib/graphql/generated/dpl-cms/graphql"
 import { cn } from "@/lib/helpers/helper.cn"
 
 type TParagraphGoImagesProps = {
