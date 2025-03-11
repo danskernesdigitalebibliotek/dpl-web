@@ -313,7 +313,7 @@ function dpl_event_entity_query_taxonomy_vocabulary_alter(QueryInterface $query)
 /**
  * Implements hook_form_alter().
  *
- * - Move the "Published" checkbox below "Create new revision" on edit forms.
+ * - Move the "Published" checkbox gin sticky action header.
  * - Hide screen names if the feature is disabled.
  */
 function dpl_event_form_alter(array &$form, FormStateInterface $form_state, string $form_id): void {
@@ -328,9 +328,9 @@ function dpl_event_form_alter(array &$form, FormStateInterface $form_state, stri
     return;
   }
 
-  // Move the "Published" checkbox below "Create new revision".
-  if (isset($form['status']) && isset($form['revision_information'])) {
-    $form['status']['#group'] = 'revision_information';
+  // Move the "Published" checkbox to the gin sticky action header.
+  if (isset($form['status'])) {
+    $form['status']['#group'] = 'status';
   }
 
   if (!isset($form['field_screen_names'])) {
