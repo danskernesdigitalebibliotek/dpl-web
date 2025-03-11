@@ -10,6 +10,9 @@ bnf_client.login:
   parent: system.admin_content
   route_name: bnf_client.server_redirect
   weight: 11
+  options:
+    attributes:
+      target: '_blank'
 
 bnf_client.settings_form:
   title: 'BNF configuration'

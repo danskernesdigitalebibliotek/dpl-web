@@ -1,3 +1,11 @@
+---
 services:
   dpl_admin.version_helper:
     class: Drupal\dpl_admin\Services\VersionHelper
+  dpl_admin.bnf_server_access:
+    class: Drupal\dpl_admin\Plugin\views\access\BnfServerEnabledAccess
+    arguments:
+      $configuration: []
+      $plugin_id: 'dpl_admin.bnf_server_access'
+      $plugin_definition: []
+      $module_handler: '@module_handler'

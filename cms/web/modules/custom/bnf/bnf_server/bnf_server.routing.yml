@@ -7,3 +7,11 @@ bnf_server.cookie_login:
     _permission: 'access content'
   options:
     no_cache: true
+bnf_server.import_redirect:
+  path: '/bnf/export/{uuid}'
+  defaults:
+    _controller: '\Drupal\bnf_server\Controller\ServerRedirecter::import'
+  requirements:
+    _permission: 'access content'
+  options:
+    no_cache: true
