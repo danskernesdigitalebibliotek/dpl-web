@@ -176,11 +176,17 @@ class Adgangsplatformen extends OpenIDConnectClientBase {
    *
    * @return void
    *   Drupal form array.
+   *
+   * @throws \GuzzleHttp\Exception\GuzzleException
    */
   public function submitConfigurationForm(array &$form, FormStateInterface $form_state): void {
     parent::submitConfigurationForm($form, $form_state);
+    $agencyId = $form_state->getValue('agency_id');
+    $clientId = $form_state->getValue('client_id');
+    $clientSecret = $form_state->getValue('client_secret');
+    $tokenEndpoint = $form_state->getValue('token_endpoint');
 
-    $this->libraryTokenHandler->retrieveAndStoreToken(TRUE);
+    $this->libraryTokenHandler->retrieveAndStoreToken($agencyId, $clientId, $clientSecret, $tokenEndpoint, TRUE);
   }
 
   /**

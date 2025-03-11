@@ -69,13 +69,11 @@ class LibraryTokenHandler {
   }
 
   /**
-   * Retrieve token from external service and save it.
+   * Refresh the Library Token using configuration.
+   *
+   * @throws \GuzzleHttp\Exception\GuzzleException
    */
-  public function retrieveAndStoreToken(bool $force = FALSE): null|bool {
-    // If force is FALSE and if token is already stored.
-    if (!$force && $this->getToken()) {
-      return NULL;
-    }
+  public function refreshTokenUsingConfig(): null|bool {
 
     try {
       $agencyId = $this->adgangsplatformenConfig->getAgencyId();
@@ -92,6 +90,27 @@ class LibraryTokenHandler {
 
       $this->logger->log(LogLevel::ERROR, '@message. Details: @error_message', $variables);
       return FALSE;
+    }
+
+    return $this->retrieveAndStoreToken($agencyId, $clientId, $clientSecret, $tokenEndpoint);
+  }
+
+  /**
+   * Retrieve token from external service and save it.
+   *
+   * @throws \GuzzleHttp\Exception\GuzzleException
+   */
+  public function retrieveAndStoreToken(
+    string $agencyId,
+    string $clientId,
+    string $clientSecret,
+    string $tokenEndpoint,
+    bool $force = FALSE,
+  ): null|bool {
+
+    // If force is FALSE and if token is already stored.
+    if (!$force && $this->getToken()) {
+      return NULL;
     }
 
     // Try to fetch token, if not possible return false.

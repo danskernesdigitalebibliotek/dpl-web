@@ -9,9 +9,12 @@
 
 /**
  * Implements hook_cron.
+ *
+ * @throws \GuzzleHttp\Exception\GuzzleException
  */
 function dpl_library_token_cron(): void {
+
   /** @var Drupal\dpl_library_token\LibraryTokenHandler $handler */
   $handler = Drupal::service('dpl_library_token.handler');
-  $handler->retrieveAndStoreToken();
+  $handler->refreshTokenUsingConfig();
 }

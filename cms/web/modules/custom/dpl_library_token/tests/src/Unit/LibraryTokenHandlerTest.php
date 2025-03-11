@@ -30,6 +30,8 @@ class LibraryTokenHandlerTest extends UnitTestCase {
 
   /**
    * Test behaviour when no token has been stored yet.
+   *
+   * @throws \GuzzleHttp\Exception\GuzzleException
    */
   public function testIfNoTokenHasBeenStoredANewOneIsFetched(): void {
     $collection = $this->prophesize(KeyValueStoreExpirableInterface::class);
@@ -69,11 +71,13 @@ class LibraryTokenHandlerTest extends UnitTestCase {
       $key_value_factory->reveal(),
       $client->reveal()
     );
-    $handler->retrieveAndStoreToken();
+    $handler->refreshTokenUsingConfig();
   }
 
   /**
    * Log entry when the json from the library token response is malformed.
+   *
+   * @throws \GuzzleHttp\Exception\GuzzleException
    */
   public function testItCanLogWhenTokenResponseIsMalformed(): void {
     $collection = $this->prophesize(KeyValueStoreExpirableInterface::class);
@@ -113,7 +117,7 @@ class LibraryTokenHandlerTest extends UnitTestCase {
       $client->reveal(),
       $logger->reveal()
     );
-    $handler->retrieveAndStoreToken();
+    $handler->refreshTokenUsingConfig();
   }
 
   /**
@@ -127,6 +131,7 @@ class LibraryTokenHandlerTest extends UnitTestCase {
    *   The expected error message.
    *
    * @throws \Drupal\dpl_login\Exception\MissingConfigurationException
+   * @throws \GuzzleHttp\Exception\GuzzleException
    */
   public function testItComplainsIfConfigurationIsNotSet(?array $settings, string $message): void {
     $collection = $this->prophesize(KeyValueStoreExpirableInterface::class);
@@ -156,7 +161,7 @@ class LibraryTokenHandlerTest extends UnitTestCase {
       $config->reveal()
     );
 
-    $handler->retrieveAndStoreToken();
+    $handler->refreshTokenUsingConfig();
   }
 
   /**
