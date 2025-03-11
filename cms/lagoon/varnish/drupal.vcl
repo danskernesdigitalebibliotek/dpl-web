@@ -319,6 +319,11 @@ sub vcl_backend_response {
     return (deliver);
   }
 
+  # Don't cache empty files
+  if (beresp.http.Content-Length ~ "0" && bereq.retries < 2 && bereq.url ~ "(?i)\.(css|js)(\.gz)?(\?.*)?$") {
+      return (retry)
+  }
+
   # Don't allow static files to set cookies.
   if (bereq.url ~ "(?i)\.(css|js|jpg|jpeg|gif|ico|png|tiff|tif|img|tga|wmf|swf|html|htm|woff|woff2|mp4|ttf|eot|svg)(\?.*)?$") {
     unset beresp.http.set-cookie;
