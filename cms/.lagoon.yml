@@ -163,6 +163,11 @@ environments:
         schedule: "M/30 * * * *"
         command: drush dpl_po:import-remote-config-po da https://danskernesdigitalebibliotek.github.io/dpl-cms/translations/da.config.po
         service: cli
+      # Purge orphaned paragraphs.
+      - name: drush err:purge
+        schedule: "M * * * *"
+        command: drush err:purge paragraph
+        service: cli
   pr-1501:
     cronjobs:
       - name: drush cron
