@@ -58,9 +58,9 @@ const SheetContent = React.forwardRef<
       className={cn(
         `z-sheet bg-background data-[state=open]:animate-in data-[state=closed]:animate-out
         max-sm:data-[state=open]:slide-in-from-bottom max-sm:data-[state=closed]:slide-out-to-bottom
-        sm:data-[state=closed]:slide-out-to-right sm:data-[state=open]:slide-in-from-right fixed inset-y-0
-        bottom-0 h-full overflow-scroll pb-24 shadow-lg transition ease-in-out
-        data-[state=closed]:duration-300 data-[state=open]:duration-500 sm:right-0`,
+        sm:data-[state=closed]:slide-out-to-right sm:data-[state=open]:slide-in-from-right p-grid-edge fixed
+        inset-y-0 bottom-0 h-full w-full max-w-[560px] overflow-scroll pb-24 shadow-lg transition
+        ease-in-out data-[state=closed]:duration-300 data-[state=open]:duration-500 sm:right-0 lg:p-8`,
         className
       )}
       {...props}>

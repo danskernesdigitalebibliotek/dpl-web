@@ -15,45 +15,47 @@ function LoginSheet({ open }: { open: boolean }) {
 
   return (
     <Sheet open={open} onOpenChange={(open: boolean) => (open ? null : sheetStore.closeSheet())}>
-      <SheetContent className="grid w-full max-w-[560px] grid-rows-[min-content_1fr] p-8">
+      <SheetContent className="grid grid-rows-[min-content_1fr]">
         <SheetHeader className="mb-8">
           <SheetTitle className="text-typo-heading-3">Log ind</SheetTitle>
         </SheetHeader>
-        <div className="flex h-full flex-col justify-center space-y-8">
-          <div className="bg-background-overlay flex min-h-[300px] flex-col items-center justify-center rounded-sm p-8">
-            <SheetDescription className="text-typo-heading-4 text-foreground mb-4 text-center">
-              Log ind med UNI•Login
-            </SheetDescription>
-            <div>
-              <Button
-                theme="primary"
-                onClick={() => router.push("/auth/login/unilogin")}
-                ariaLabel="Log ind">
-                LOG IND
-              </Button>
-            </div>
-          </div>
-
-          <>
-            <hr className="mx-auto" />
+        <SheetDescription>
+          <div className="flex h-full flex-col justify-center space-y-8">
             <div className="bg-background-overlay flex min-h-[300px] flex-col items-center justify-center rounded-sm p-8">
-              <div className="mb-4">
-                <Icon name="adgangsplatformen" />
+              <div className="text-typo-heading-4 text-foreground mb-4 text-center">
+                Log ind med UNI•Login
               </div>
-              <SheetDescription className="text-typo-heading-4 text-foreground mb-4 text-center">
-                Login via Biblotekernes fælles loginside
-              </SheetDescription>
               <div>
                 <Button
                   theme="primary"
-                  onClick={() => router.push(adgangsplatformenLoginUrl || "")}
-                  ariaLabel="Log ind med Adgangsplatformen">
+                  onClick={() => router.push("/auth/login/unilogin")}
+                  ariaLabel="Log ind">
                   LOG IND
                 </Button>
               </div>
             </div>
-          </>
-        </div>
+
+            <>
+              <hr className="mx-auto" />
+              <div className="bg-background-overlay flex min-h-[300px] flex-col items-center justify-center rounded-sm p-8">
+                <div className="mb-4">
+                  <Icon name="adgangsplatformen" />
+                </div>
+                <div className="text-typo-heading-4 text-foreground mb-4 text-center">
+                  Login via Biblotekernes fælles loginside
+                </div>
+                <div>
+                  <Button
+                    theme="primary"
+                    onClick={() => router.push(adgangsplatformenLoginUrl || "")}
+                    ariaLabel="Log ind med Adgangsplatformen">
+                    LOG IND
+                  </Button>
+                </div>
+              </div>
+            </>
+          </div>
+        </SheetDescription>
       </SheetContent>
     </Sheet>
   )

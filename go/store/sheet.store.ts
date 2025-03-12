@@ -7,17 +7,20 @@ type TSheetTypes = keyof typeof SheetContentComponentTypes | null
 type themeState = {
   open: boolean
   sheetType: TSheetTypes
-  openSheet: (params: { sheetType: TSheetTypes }) => void
+  props?: object | null
+  openSheet: (params: { sheetType: TSheetTypes; props?: object }) => void
   closeSheet: () => void
 }
 
 const useSheetStore = create<themeState>()(set => ({
   sheetType: null,
   open: false,
-  openSheet: ({ sheetType }: { sheetType: TSheetTypes }) =>
+  props: null,
+  openSheet: ({ sheetType, props }: { sheetType: TSheetTypes; props?: object }) =>
     set(() => ({
       open: true,
       sheetType: sheetType,
+      props: props,
     })),
   closeSheet: () =>
     set({
