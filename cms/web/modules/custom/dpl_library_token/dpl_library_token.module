@@ -7,12 +7,8 @@
  * Handles fetching and storage of a library token.
  */
 
-use Drupal\Core\Logger\LoggerChannelFactoryInterface;
-use Drupal\dpl_library_token\LibraryTokenHandler;
 use Drupal\dpl_login\Adgangsplatformen\Config;
-use Drupal\dpl_login\Exception\MissingConfigurationException;
 use Drupal\drupal_typed\DrupalTyped;
-use Psr\Log\LogLevel;
 
 /**
  * Implements hook_cron.
@@ -20,23 +16,13 @@ use Psr\Log\LogLevel;
  * @throws \GuzzleHttp\Exception\GuzzleException
  */
 function dpl_library_token_cron(): void {
-  try {
-    /** @var Drupal\dpl_library_token\LibraryTokenHandler $handler */
-    $handler = Drupal::service('dpl_library_token.handler');
-    $config = DrupalTyped::service(Config::class, 'dpl_login.adgangsplatformen.config');
-    $handler->retrieveAndStoreToken(
-      $config->getAgencyId(),
-      $config->getClientId(),
-      $config->getClientSecret(),
-      $config->getTokenEndpoint()
-    );
-  }
-  catch (MissingConfigurationException $e) {
-    $variables = [
-      '@message' => 'Could not retrieve library token',
-      '@error_message' => $e->getMessage(),
-    ];
-    $loggerFactory = DrupalTyped::service(LoggerChannelFactoryInterface::class, 'logger.factory');
-    $loggerFactory->get(LibraryTokenHandler::LOGGER_KEY)->log(LogLevel::ERROR, '@message. Details: @error_message', $variables);
-  }
+  /** @var Drupal\dpl_library_token\LibraryTokenHandler $handler */
+  $handler = Drupal::service('dpl_library_token.handler');
+  $config = DrupalTyped::service(Config::class, 'dpl_login.adgangsplatformen.config');
+  $handler->retrieveAndStoreToken(
+    $config->getAgencyId(),
+    $config->getClientId(),
+    $config->getClientSecret(),
+    $config->getTokenEndpoint()
+  );
 }
