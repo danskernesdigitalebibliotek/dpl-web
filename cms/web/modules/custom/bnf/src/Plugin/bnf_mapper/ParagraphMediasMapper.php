@@ -6,8 +6,8 @@ namespace Drupal\bnf\Plugin\bnf_mapper;
 
 use Drupal\bnf\Attribute\BnfMapper;
 use Drupal\bnf\GraphQL\Operations\GetNode\Node\Paragraphs\ParagraphMedias;
-use Drupal\bnf\Plugin\BnfMapperPluginParagraphBase;
-use Drupal\bnf\Plugin\FieldTypeTraits\ImageTrait;
+use Drupal\bnf\Plugin\BnfMapperParagraphPluginBase;
+use Drupal\bnf\Plugin\Traits\ImageTrait;
 use Drupal\Core\Entity\EntityTypeManagerInterface;
 use Drupal\Core\File\FileSystemInterface;
 use Drupal\file\FileRepositoryInterface;
@@ -19,7 +19,7 @@ use Spawnia\Sailor\ObjectLike;
 #[BnfMapper(
   id: ParagraphMedias::class,
 )]
-class ParagraphMediasMapper extends BnfMapperPluginParagraphBase {
+class ParagraphMediasMapper extends BnfMapperParagraphPluginBase {
   use ImageTrait;
 
   /**

@@ -6,8 +6,8 @@ namespace Drupal\bnf\Plugin\bnf_mapper;
 
 use Drupal\bnf\Attribute\BnfMapper;
 use Drupal\bnf\GraphQL\Operations\GetNode\Node\Paragraphs\ParagraphVideo;
-use Drupal\bnf\Plugin\BnfMapperPluginParagraphBase;
-use Drupal\bnf\Plugin\FieldTypeTraits\EmbedVideoTrait;
+use Drupal\bnf\Plugin\BnfMapperParagraphPluginBase;
+use Drupal\bnf\Plugin\Traits\EmbedVideoTrait;
 use Spawnia\Sailor\ObjectLike;
 
 /**
@@ -16,7 +16,7 @@ use Spawnia\Sailor\ObjectLike;
 #[BnfMapper(
   id: ParagraphVideo::class,
   )]
-class ParagraphVideoMapper extends BnfMapperPluginParagraphBase {
+class ParagraphVideoMapper extends BnfMapperParagraphPluginBase {
 
   use EmbedVideoTrait;
 

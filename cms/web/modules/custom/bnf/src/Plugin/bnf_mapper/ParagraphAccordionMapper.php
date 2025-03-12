@@ -6,7 +6,7 @@ namespace Drupal\bnf\Plugin\bnf_mapper;
 
 use Drupal\bnf\Attribute\BnfMapper;
 use Drupal\bnf\GraphQL\Operations\GetNode\Node\Paragraphs\ParagraphAccordion;
-use Drupal\bnf\Plugin\BnfMapperPluginParagraphBase;
+use Drupal\bnf\Plugin\BnfMapperParagraphPluginBase;
 use Spawnia\Sailor\ObjectLike;
 
 /**
@@ -15,7 +15,7 @@ use Spawnia\Sailor\ObjectLike;
 #[BnfMapper(
   id: ParagraphAccordion::class,
   )]
-class ParagraphAccordionMapper extends BnfMapperPluginParagraphBase {
+class ParagraphAccordionMapper extends BnfMapperParagraphPluginBase {
 
   /**
    * {@inheritdoc}
@@ -25,17 +25,22 @@ class ParagraphAccordionMapper extends BnfMapperPluginParagraphBase {
       throw new \RuntimeException('Wrong class handed to mapper');
     }
 
-    return $this->paragraphStorage->create([
+    /** @var \Drupal\paragraphs\ParagraphInterface $paragraph */
+    $paragraph = $this->paragraphStorage->create([
       'type' => 'accordion',
-      'field_accordion_title' => [
-        'value' => $object->accordionTitle->value ?? '',
-        'format' => $object->accordionTitle->format ?? '',
-      ],
-      'field_accordion_description' => [
-        'value' => $object->accordionDescription->value ?? '',
-        'format' => $object->accordionDescription->format ?? '',
-      ],
     ]);
+
+    $paragraph->set('field_accordion_title', [
+      'value' => $object->accordionTitle->value ?? '',
+      'format' => $object->accordionTitle->format ?? '',
+    ]);
+
+    $paragraph->set('field_accordion_description', [
+      'value' => $object->accordionDescription->value ?? '',
+      'format' => $object->accordionDescription->format ?? '',
+    ]);
+
+    return $paragraph;
   }
 
 }

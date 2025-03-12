@@ -1,6 +1,6 @@
 <?php
 
-namespace Drupal\bnf\Plugin\FieldTypeTraits;
+namespace Drupal\bnf\Plugin\Traits;
 
 use Drupal\bnf\GraphQL\Operations\GetNode\Node\Paragraphs\RecommendationWorkId\WorkId;
 use Spawnia\Sailor\ObjectLike;

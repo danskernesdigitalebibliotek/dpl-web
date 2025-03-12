@@ -6,9 +6,9 @@ namespace Drupal\bnf\Plugin\bnf_mapper;
 
 use Drupal\bnf\Attribute\BnfMapper;
 use Drupal\bnf\GraphQL\Operations\GetNode\Node\Paragraphs\ParagraphGoLinkbox;
-use Drupal\bnf\Plugin\BnfMapperPluginParagraphBase;
-use Drupal\bnf\Plugin\FieldTypeTraits\ImageTrait;
-use Drupal\bnf\Plugin\FieldTypeTraits\LinkTrait;
+use Drupal\bnf\Plugin\BnfMapperParagraphPluginBase;
+use Drupal\bnf\Plugin\Traits\ImageTrait;
+use Drupal\bnf\Plugin\Traits\LinkTrait;
 use Drupal\Core\Entity\EntityTypeManagerInterface;
 use Drupal\Core\File\FileSystemInterface;
 use Drupal\file\FileRepositoryInterface;
@@ -20,7 +20,7 @@ use Spawnia\Sailor\ObjectLike;
 #[BnfMapper(
   id: ParagraphGoLinkbox::class,
 )]
-class ParagraphGoLinkboxMapper extends BnfMapperPluginParagraphBase {
+class ParagraphGoLinkboxMapper extends BnfMapperParagraphPluginBase {
 
   use LinkTrait;
   use ImageTrait;

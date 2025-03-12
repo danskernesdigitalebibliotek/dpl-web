@@ -14,7 +14,7 @@ use Drupal\Core\Plugin\ContainerFactoryPluginInterface;
 /**
  * Base class for BNF mapper plugins.
  */
-abstract class BnfMapperPluginParagraphBase extends PluginBase implements BnfMapperInterface, ContainerFactoryPluginInterface {
+abstract class BnfMapperParagraphPluginBase extends PluginBase implements BnfMapperInterface, ContainerFactoryPluginInterface {
   use AutowirePluginTrait;
 
   /**

@@ -6,9 +6,9 @@ namespace Drupal\bnf\Plugin\bnf_mapper;
 
 use Drupal\bnf\Attribute\BnfMapper;
 use Drupal\bnf\GraphQL\Operations\GetNode\Node\Paragraphs\ParagraphGoVideoBundleManual;
-use Drupal\bnf\Plugin\BnfMapperPluginParagraphBase;
-use Drupal\bnf\Plugin\FieldTypeTraits\EmbedVideoTrait;
-use Drupal\bnf\Plugin\FieldTypeTraits\MaterialWorkIdTrait;
+use Drupal\bnf\Plugin\BnfMapperParagraphPluginBase;
+use Drupal\bnf\Plugin\Traits\EmbedVideoTrait;
+use Drupal\bnf\Plugin\Traits\MaterialWorkIdTrait;
 use Spawnia\Sailor\ObjectLike;
 
 /**
@@ -17,7 +17,7 @@ use Spawnia\Sailor\ObjectLike;
 #[BnfMapper(
   id: ParagraphGoVideoBundleManual::class,
 )]
-class ParagraphGoVideoBundleManualMapper extends BnfMapperPluginParagraphBase {
+class ParagraphGoVideoBundleManualMapper extends BnfMapperParagraphPluginBase {
 
   use MaterialWorkIdTrait;
   use EmbedVideoTrait;

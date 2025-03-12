@@ -35,14 +35,6 @@ class ParagraphAccordionMapperTest extends EntityMapperTestBase {
   public function testParagraphAccordionMapping(): void {
     $this->storageProphecy->create([
       'type' => 'accordion',
-      'field_accordion_title' => [
-        'value' => 'This is the title',
-        'format' => 'format1',
-      ],
-      'field_accordion_description' => [
-        'value' => 'This is the description',
-        'format' => 'format2',
-      ],
     ])->willReturn($this->entityProphecy);
 
     $mapper = new ParagraphAccordionMapper([], '', [], $this->entityManagerProphecy->reveal());
@@ -56,6 +48,17 @@ class ParagraphAccordionMapperTest extends EntityMapperTestBase {
     $paragraph = $mapper->map($graphqlElement);
 
     $this->assertSame($paragraph, $this->entityProphecy->reveal());
+
+    $this->entityProphecy->set('field_accordion_title', [
+      'value' => 'This is the title',
+      'format' => 'format1',
+    ])->shouldHaveBeenCalled();
+
+    $this->entityProphecy->set('field_accordion_description',
+      [
+        'value' => 'This is the description',
+        'format' => 'format2',
+      ])->shouldHaveBeenCalled();
   }
 
 }

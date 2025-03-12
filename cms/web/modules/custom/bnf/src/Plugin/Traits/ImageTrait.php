@@ -1,6 +1,6 @@
 <?php
 
-namespace Drupal\bnf\Plugin\FieldTypeTraits;
+namespace Drupal\bnf\Plugin\Traits;
 
 use Drupal\autowire_plugin_trait\AutowirePluginTrait;
 use Drupal\bnf\GraphQL\Operations\GetNode\Node\Paragraphs\Medias\MediaImage;

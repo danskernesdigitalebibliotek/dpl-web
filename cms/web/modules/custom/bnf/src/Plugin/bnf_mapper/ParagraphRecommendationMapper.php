@@ -6,8 +6,8 @@ namespace Drupal\bnf\Plugin\bnf_mapper;
 
 use Drupal\bnf\Attribute\BnfMapper;
 use Drupal\bnf\GraphQL\Operations\GetNode\Node\Paragraphs\ParagraphRecommendation;
-use Drupal\bnf\Plugin\BnfMapperPluginParagraphBase;
-use Drupal\bnf\Plugin\FieldTypeTraits\MaterialWorkIdTrait;
+use Drupal\bnf\Plugin\BnfMapperParagraphPluginBase;
+use Drupal\bnf\Plugin\Traits\MaterialWorkIdTrait;
 use Spawnia\Sailor\ObjectLike;
 
 /**
@@ -16,7 +16,7 @@ use Spawnia\Sailor\ObjectLike;
 #[BnfMapper(
   id: ParagraphRecommendation::class,
 )]
-class ParagraphRecommendationMapper extends BnfMapperPluginParagraphBase {
+class ParagraphRecommendationMapper extends BnfMapperParagraphPluginBase {
 
   use MaterialWorkIdTrait;
 

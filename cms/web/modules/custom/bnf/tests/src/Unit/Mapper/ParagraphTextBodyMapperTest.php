@@ -34,10 +34,6 @@ class ParagraphTextBodyMapperTest extends EntityMapperTestBase {
   public function testParagraphTextBodyMapping(): void {
     $this->storageProphecy->create([
       'type' => 'text_body',
-      'field_body' => [
-        'value' => 'This is the text',
-        'format' => 'with_format',
-      ],
     ])->willReturn($this->entityProphecy);
 
     $mapper = new ParagraphTextBodyMapper([], '', [], $this->entityManagerProphecy->reveal());
@@ -50,6 +46,11 @@ class ParagraphTextBodyMapperTest extends EntityMapperTestBase {
     $paragraph = $mapper->map($graphqlElement);
 
     $this->assertSame($paragraph, $this->entityProphecy->reveal());
+
+    $this->entityProphecy->set('field_body', [
+      'value' => 'This is the text',
+      'format' => 'with_format',
+    ])->shouldHaveBeenCalled();
   }
 
 }

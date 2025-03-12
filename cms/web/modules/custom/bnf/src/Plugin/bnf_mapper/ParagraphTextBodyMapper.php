@@ -6,7 +6,7 @@ namespace Drupal\bnf\Plugin\bnf_mapper;
 
 use Drupal\bnf\Attribute\BnfMapper;
 use Drupal\bnf\GraphQL\Operations\GetNode\Node\Paragraphs\ParagraphTextBody;
-use Drupal\bnf\Plugin\BnfMapperPluginParagraphBase;
+use Drupal\bnf\Plugin\BnfMapperParagraphPluginBase;
 use Spawnia\Sailor\ObjectLike;
 
 /**
@@ -15,7 +15,7 @@ use Spawnia\Sailor\ObjectLike;
 #[BnfMapper(
   id: ParagraphTextBody::class,
   )]
-class ParagraphTextBodyMapper extends BnfMapperPluginParagraphBase {
+class ParagraphTextBodyMapper extends BnfMapperParagraphPluginBase {
 
   /**
    * {@inheritdoc}
@@ -25,14 +25,17 @@ class ParagraphTextBodyMapper extends BnfMapperPluginParagraphBase {
       throw new \RuntimeException('Wrong class handed to mapper');
     }
 
-    return $this->paragraphStorage->create([
+    /** @var \Drupal\paragraphs\ParagraphInterface $paragraph */
+    $paragraph = $this->paragraphStorage->create([
       'type' => 'text_body',
-      'field_body' => [
-        'value' => $object->body->value ?? '',
-        'format' => $object->body->format ?? '',
-      ],
     ]);
 
+    $paragraph->set('field_body', [
+      'value' => $object->body->value ?? '',
+      'format' => $object->body->format ?? '',
+    ]);
+
+    return $paragraph;
   }
 
 }
