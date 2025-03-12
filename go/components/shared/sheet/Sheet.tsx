@@ -2,7 +2,6 @@
 
 import * as SheetPrimitive from "@radix-ui/react-dialog"
 import { Cross2Icon } from "@radix-ui/react-icons"
-import { type VariantProps, cva } from "class-variance-authority"
 import * as React from "react"
 
 import { cn } from "@/lib/helpers/helper.cn"
@@ -32,7 +31,7 @@ const SheetOverlay = React.forwardRef<
   <SheetPrimitive.Overlay
     className={cn(
       `z-sheet data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0
-      data-[state=open]:fade-in-0 fixed inset-0 bg-black/80`,
+      data-[state=open]:fade-in-0 fixed inset-0 bg-black/80 dark:bg-black/50`,
       className
     )}
     {...props}
@@ -41,35 +40,30 @@ const SheetOverlay = React.forwardRef<
 ))
 SheetOverlay.displayName = SheetPrimitive.Overlay.displayName
 
-const sheetVariants = cva(
-  `fixed z-sheet bg-background shadow-lg transition ease-in-out data-[state=closed]:duration-300
-  data-[state=open]:duration-500 data-[state=open]:animate-in data-[state=closed]:animate-out overflow-scroll pb-24`,
-  {
-    variants: {
-      side: {
-        right: `inset-y-0 bottom-0 sm:right-0 h-full max-sm:data-[state=open]:slide-in-from-bottom
-          max-sm:data-[state=closed]:slide-out-to-bottom sm:data-[state=closed]:slide-out-to-right
-          sm:data-[state=open]:slide-in-from-right`,
-        bottom: `data-[state=closed]:slide-out-to-bottom data-[state=open]:slide-in-from-bottom h-full inset-0`,
-      },
-    },
-    defaultVariants: {
-      side: "right",
-    },
-  }
-)
-
-interface SheetContentProps
-  extends React.ComponentPropsWithoutRef<typeof SheetPrimitive.Content>,
-    VariantProps<typeof sheetVariants> {}
-
 const SheetContent = React.forwardRef<
   React.ElementRef<typeof SheetPrimitive.Content>,
-  SheetContentProps
->(({ side = "right", className, children, ...props }, ref) => (
-  <SheetPortal>
+  React.ComponentPropsWithoutRef<typeof SheetPrimitive.Content>
+>(({ className, children, ...props }, ref) => (
+  <div>
     <SheetOverlay />
-    <SheetPrimitive.Content ref={ref} className={cn(sheetVariants({ side }), className)} {...props}>
+    <SheetPrimitive.Content
+      ref={ref}
+      // TODO: This is added to ensure slide animation works properly. "slide-in-from-right" and "slide-out-to-right" are Tailwind animate classes and only set a translate-x value of 4px. Seems to be a problem caused by the tailwind 4 update.
+      style={
+        {
+          "--tw-enter-translate-x": "100%",
+          "--tw-exit-translate-x": "100%",
+        } as React.CSSProperties
+      }
+      className={cn(
+        `z-sheet bg-background data-[state=open]:animate-in data-[state=closed]:animate-out
+        max-sm:data-[state=open]:slide-in-from-bottom max-sm:data-[state=closed]:slide-out-to-bottom
+        sm:data-[state=closed]:slide-out-to-right sm:data-[state=open]:slide-in-from-right fixed inset-y-0
+        bottom-0 h-full overflow-scroll pb-24 shadow-lg transition ease-in-out
+        data-[state=closed]:duration-300 data-[state=open]:duration-500 sm:right-0`,
+        className
+      )}
+      {...props}>
       <SheetPrimitive.Close
         className="focus-visible right-grid-edge top-grid-edge ring-offset-background data-[state=open]:bg-secondary
           absolute rounded-sm transition-opacity hover:cursor-pointer hover:opacity-100
@@ -79,7 +73,7 @@ const SheetContent = React.forwardRef<
       </SheetPrimitive.Close>
       {children}
     </SheetPrimitive.Content>
-  </SheetPortal>
+  </div>
 ))
 SheetContent.displayName = SheetPrimitive.Content.displayName
 

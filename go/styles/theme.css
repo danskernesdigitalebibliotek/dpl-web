@@ -123,6 +123,9 @@
   --text-typo-caption--letter-spacing: var(--typo-caption-letter-spacing);
 
   --color-*: initial;
+  --color-black: var(--black);
+  --color-white: var(--white);
+
   --color-background: var(--background);
   --color-background-overlay: var(--background-overlay);
   --color-background-overlay-solid: var(--background-overlay-solid);
