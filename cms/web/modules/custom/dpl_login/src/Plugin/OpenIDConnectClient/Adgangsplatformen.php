@@ -186,7 +186,10 @@ class Adgangsplatformen extends OpenIDConnectClientBase {
     $clientSecret = $form_state->getValue('client_secret');
     $tokenEndpoint = $form_state->getValue('token_endpoint');
 
-    $this->libraryTokenHandler->retrieveAndStoreToken($agencyId, $clientId, $clientSecret, $tokenEndpoint, TRUE);
+    $token = $this->libraryTokenHandler->fetchToken($agencyId, $clientId, $clientSecret, $tokenEndpoint);
+    if ($token) {
+      $this->libraryTokenHandler->setToken($token);
+    }
   }
 
   /**
