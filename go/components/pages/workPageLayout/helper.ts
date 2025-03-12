@@ -20,8 +20,23 @@ export const getWorkMaterialTypes = (
 
 export const getManifestationMaterialType = (
   manifestation: ManifestationWorkPageFragment
-): WorkMaterialTypesFragment["materialTypes"][0]["materialTypeGeneral"]["display"] => {
-  return manifestation.materialTypes[0].materialTypeGeneral.display
+): WorkMaterialTypesFragment["materialTypes"][0]["materialTypeGeneral"] => {
+  return manifestation.materialTypes[0].materialTypeGeneral
+}
+
+export const getManifestationMaterialTypeSpecific = (
+  manifestation: ManifestationWorkPageFragment
+): "e-bog" | "lydbog" | "podcast" | undefined => {
+  if (isManifestationEbook(manifestation)) {
+    return "e-bog"
+  }
+  if (isManifestationAudioBook(manifestation)) {
+    return "lydbog"
+  }
+  if (isManifestationPodcast(manifestation)) {
+    return "podcast"
+  }
+  return undefined
 }
 
 export const getManifestationByMaterialType = (
