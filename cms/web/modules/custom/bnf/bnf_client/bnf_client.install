@@ -6,6 +6,14 @@
  */
 
 /**
+ * Implements hook_install().
+ */
+function bnf_client_install(): void {
+  // Rebuild scheduler info so it notices our periodic job.
+  job_scheduler_rebuild_all();
+}
+
+/**
  * Add the last field to subscriptions.
  */
 function bnf_client_update_10101(): void {
