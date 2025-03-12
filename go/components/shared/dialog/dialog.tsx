@@ -74,7 +74,7 @@ const DialogBody = ({ className, ...props }: React.HTMLAttributes<HTMLDivElement
     return <div className={cn("animate-content-grow space-y-4", className)} {...props} />
   }
 }
-DialogHeader.displayName = "DialogBody"
+DialogBody.displayName = "DialogBody"
 
 const DialogFooter = ({ className, ...props }: React.HTMLAttributes<HTMLDivElement>) => (
   <div
