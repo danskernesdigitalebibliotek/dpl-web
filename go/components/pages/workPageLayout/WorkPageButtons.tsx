@@ -171,7 +171,7 @@ const WorkPageButtons = ({ workId, selectedManifestation }: WorkPageButtonsProps
             className="bg-background absolute -bottom-6 h-10 w-10"
           />
         </div>
-        <p className="text-typo-body-lg mt-10 w-full text-center lg:mt-5">
+        <p className="text-typo-body-lg mt-10 mb-5 w-full text-center">
           Er du sikker på at du vil låne denne{" "}
           {getManifestationMaterialTypeSpecific(selectedManifestation) || "material"}?
         </p>
