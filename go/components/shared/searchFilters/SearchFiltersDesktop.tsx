@@ -2,9 +2,10 @@
 
 import React from "react"
 
+import SearchFiltersColumn, {
+  SearchFiltersColumnSkeleton,
+} from "@/components/shared/searchFilters/SearchFiltersColumn"
 import { SearchFacetFragment } from "@/lib/graphql/generated/fbi/graphql"
-
-import SearchFiltersColumn, { SearchFiltersColumnSkeleton } from "./SearchFiltersColumn"
 
 const SearchFiltersDesktop = ({ facets }: { facets: SearchFacetFragment[] }) => {
   return (
