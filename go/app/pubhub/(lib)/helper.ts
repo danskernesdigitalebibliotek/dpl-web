@@ -1,4 +1,3 @@
-import { md5 } from "js-md5"
 import { NextRequest } from "next/server"
 import { z } from "zod"
 
@@ -6,13 +5,6 @@ import { getSession } from "@/lib/session/session"
 
 import { userInfoSchema } from "./schemas"
 
-export const getPublizonServiceParameters = () => {
-  return {
-    clientid: process.env.UNLILOGIN_PUBHUB_CLIENT_ID ?? "",
-    retailerid: process.env.UNLILOGIN_PUBHUB_RETAILER_ID ?? "",
-    retailerkeycode: md5(process.env.UNLILOGIN_PUBHUB_RETAILER_KEY_CODE ?? ""),
-  }
-}
 type Handler = <TContext>(req: NextRequest, context?: TContext) => Promise<Response>
 
 // WithAuth middleware.

@@ -17,25 +17,94 @@ const eslintConfig = [
       "lib/rest/cover-service-api/generated/",
       "lib/rest/cover-service-api/generated/cover-service.ts",
       "lib/soap/publizon/v2_7/generated/",
+      "lib/soap/unilogin/wsiinst-v5/generated/",
       "**/.history/",
     ],
   },
   ...compat.extends(
     "next/core-web-vitals",
     "next/typescript",
+    "prettier",
     "plugin:storybook/recommended",
-    "prettier"
+    "plugin:cypress/recommended",
+    "plugin:import/recommended",
+    "plugin:import/errors",
+    "plugin:import/warnings",
+    "plugin:import/typescript",
+    "plugin:jsx-a11y/recommended"
   ),
   {
     rules: {
       "no-console": [
         "error",
         {
+          //TODO: this allow list should be removed before going live
           allow: ["warn", "error", "info"],
         },
       ],
 
+      "no-alert": "error",
+      "no-script-url": "error",
+      "prefer-arrow-callback": [
+        "error",
+        {
+          allowNamedFunctions: false,
+          allowUnboundThis: true,
+        },
+      ],
+
+      "react/function-component-definition": "off",
+      "react/no-danger": "error",
+
+      "@typescript-eslint/comma-dangle": "off",
+      "@typescript-eslint/lines-between-class-members": "off",
+      "@typescript-eslint/no-throw-literal": "off",
       "@typescript-eslint/ban-ts-comment": "off",
+
+      "react-hooks/exhaustive-deps": ["warn"],
+    },
+  },
+  {
+    files: ["**/*.js", "**/*.jsx"],
+
+    rules: {
+      "react/jsx-no-bind": "off",
+      "react/function-component-definition": "off",
+      "react/forbid-prop-types": "off",
+      "react/destructuring-assignment": "off",
+      "@typescript-eslint/return-await": "off",
+      "no-param-reassign": "off",
+      "@typescript-eslint/no-var-requires": "off",
+    },
+  },
+  {
+    files: ["**/*.tsx", "**/*.ts"],
+
+    rules: {
+      "react/prop-types": "off",
+      "react/require-default-props": "off",
+      "react/no-unused-prop-types": "off",
+      "react/display-name": "off",
+
+      "no-underscore-dangle": [
+        "error",
+        {
+          allow: ["__typename"],
+        },
+      ],
+
+      "react/forbid-elements": [
+        1,
+        {
+          forbid: [
+            {
+              element: "main",
+              message:
+                "dpl-cms provide a <main> to render react in, therefore you must use <section> to avoid duplicate main",
+            },
+          ],
+        },
+      ],
     },
   },
 ]

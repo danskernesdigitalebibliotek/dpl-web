@@ -52,6 +52,7 @@ const VideoBundle = ({ works, title, videoUrl }: VideoBundleProps) => {
           <div className="grid-go items-start">
             <div className="rounded-base relative col-span-full aspect-16/9 overflow-hidden lg:col-span-9 lg:mb-0">
               <iframe
+                title={title || "Video"}
                 aria-label={title || "Video"}
                 className="absolute inset-0 h-full w-full"
                 src={videoUrl}

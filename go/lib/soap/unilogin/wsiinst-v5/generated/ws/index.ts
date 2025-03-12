@@ -1,0 +1,38 @@
+// This is generated code thus no need for type checking...
+// @ts-nocheck
+export { TnsnoArgs } from "./definitions/TnsnoArgs";
+export { TnshelloWorldResponse } from "./definitions/TnshelloWorldResponse";
+export { Tnscredentials } from "./definitions/Tnscredentials";
+export { TnshelloWorldResponse1 } from "./definitions/TnshelloWorldResponse1";
+export { TnsnoArgs1 } from "./definitions/TnsnoArgs1";
+export { TnshelloWorldResponse2 } from "./definitions/TnshelloWorldResponse2";
+export { TnshentGrupper } from "./definitions/TnshentGrupper";
+export { TnshentGrupperResponse } from "./definitions/TnshentGrupperResponse";
+export { Gruppe } from "./definitions/Gruppe";
+export { TnshentBrugereIGruppe } from "./definitions/TnshentBrugereIGruppe";
+export { TnshentBrugereIGruppeResponse } from "./definitions/TnshentBrugereIGruppeResponse";
+export { Brugertilknytning } from "./definitions/Brugertilknytning";
+export { Elev } from "./definitions/Elev";
+export { Ansat } from "./definitions/Ansat";
+export { Ekstern } from "./definitions/Ekstern";
+export { TnshentGruppersLicenser } from "./definitions/TnshentGruppersLicenser";
+export { TnshentGruppersLicenserResponse } from "./definitions/TnshentGruppersLicenserResponse";
+export { GruppeLicens } from "./definitions/GruppeLicens";
+export { Licens } from "./definitions/Licens";
+export { Tjeneste } from "./definitions/Tjeneste";
+export { TnshentInstitution } from "./definitions/TnshentInstitution";
+export { TnshentInstitutionResponse } from "./definitions/TnshentInstitutionResponse";
+export { Institution } from "./definitions/Institution";
+export { TnshentInstitutioner } from "./definitions/TnshentInstitutioner";
+export { TnshentInstitutionerResponse } from "./definitions/TnshentInstitutionerResponse";
+export { TnshentInstBruger } from "./definitions/TnshentInstBruger";
+export { TnshentInstBrugerResponse } from "./definitions/TnshentInstBrugerResponse";
+export { InstBruger } from "./definitions/InstBruger";
+export { Elev1 } from "./definitions/Elev1";
+export { Ansat1 } from "./definitions/Ansat1";
+export { Ekstern1 } from "./definitions/Ekstern1";
+export { Tnscredentials1 } from "./definitions/Tnscredentials1";
+export { TnshentDataAftalerResponse } from "./definitions/TnshentDataAftalerResponse";
+export { createClientAsync, WsClient } from "./client";
+export { WsiInst } from "./services/WsiInst";
+export { WsiInstPort } from "./ports/WsiInstPort";
