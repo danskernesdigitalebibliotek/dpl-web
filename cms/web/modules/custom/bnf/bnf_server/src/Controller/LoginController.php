@@ -3,7 +3,6 @@
 namespace Drupal\bnf_server\Controller;
 
 use Drupal\Core\Controller\ControllerBase;
-use Symfony\Component\HttpFoundation\Cookie;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
@@ -16,8 +15,8 @@ use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
  * a button for importing content.
  */
 class LoginController extends ControllerBase {
-  const COOKIE_CALLBACK_URL = 'bnf_server_login_callback_url';
-  const COOKIE_SITE_NAME = 'bnf_server_login_site_name';
+  const CALLBACK_URL_KEY = 'bnf_server_login_callback_url';
+  const SITE_NAME_KEY = 'bnf_server_login_site_name';
 
   /**
    * Receiving the login.
@@ -31,12 +30,11 @@ class LoginController extends ControllerBase {
       throw new BadRequestHttpException('Callback URL cannot be empty.');
     }
 
-    $response = new RedirectResponse('/');
+    $session = $request->getSession();
+    $session->set(self::CALLBACK_URL_KEY, $url);
+    $session->set(self::SITE_NAME_KEY, $name);
 
-    $response->headers->setCookie(new Cookie(self::COOKIE_CALLBACK_URL, $url));
-    $response->headers->setCookie(new Cookie(self::COOKIE_SITE_NAME, $name));
-
-    return $response;
+    return new RedirectResponse('/');
   }
 
 }

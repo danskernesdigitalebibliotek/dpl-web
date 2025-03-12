@@ -48,7 +48,7 @@ jobs:
   CreateDeploymentBNF:
     name: Create BNF deployment
     runs-on: ubuntu-latest
-    if: ${{ startsWith('bnf:', github.event.pull_request.title) && github.event.action == 'opened' || github.event.action == 'reopened' || github.event.action == 'synchronize' }}
+    if: ${{ (startsWith(github.event.pull_request.title, 'bnf:')) && (github.event.action == 'opened' || github.event.action == 'reopened' || github.event.action == 'synchronize') }}
     needs: [BranchNameLength]
     steps:
       - run: |

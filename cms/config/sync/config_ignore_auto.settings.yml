@@ -10,6 +10,7 @@ whitelist_config_entities:
   - user.role.external_system
   - user.role.mediator
   - user.role.patron
+  - bnf_client.settings.yml
 direction_operations:
   - import_create
   - import_update

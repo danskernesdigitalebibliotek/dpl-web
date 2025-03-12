@@ -17,7 +17,7 @@ trait HasVideoToolFeaturesTrait {
    * Function for checking if a URL match the VideoTool URL format.
    */
   protected static function isValidVideoToolUrl(string $url): bool {
-    return (bool) preg_match('/^https:\/\/media\.videotool\.dk\/\?vn=\d+_\d+$/', $url);
+    return (bool) preg_match('/^https:\/\/media\.videotool\.dk\?vn=\d+_\d+$/', $url);
   }
 
   /**

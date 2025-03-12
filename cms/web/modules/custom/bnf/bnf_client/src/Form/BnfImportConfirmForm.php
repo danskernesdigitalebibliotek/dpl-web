@@ -87,6 +87,7 @@ class BnfImportConfirmForm implements FormInterface, ContainerInjectionInterface
     catch (\Exception $e) {
       $importable = FALSE;
 
+      $this->logger->error('Could not import node from BNF. @message', ['@message' => $e->getMessage()]);
       $this->messenger->addError($this->t('Cannot import this node from BNF.', [], ['context' => 'BNF']));
     }
 

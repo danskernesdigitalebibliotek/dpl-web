@@ -33,4 +33,4 @@ default:
       pathauto: 0
   field_media_videotool:
     -
-      value: 'https://media.videotool.dk/?vn=557_2023103014511477700668916683'
+      value: 'https://media.videotool.dk?vn=557_2023103014511477700668916683'

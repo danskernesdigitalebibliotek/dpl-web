@@ -5,6 +5,7 @@ dependencies:
   config:
     - field.storage.node.field_paragraphs
     - node.type.go_article
+    - paragraphs.paragraphs_type.go_images
     - paragraphs.paragraphs_type.go_linkbox
     - paragraphs.paragraphs_type.go_material_slider_automatic
     - paragraphs.paragraphs_type.go_material_slider_manual
@@ -34,6 +35,7 @@ settings:
       go_video_bundle_automatic: go_video_bundle_automatic
       go_material_slider_manual: go_material_slider_manual
       go_video_bundle_manual: go_video_bundle_manual
+      go_images: go_images
       go_text_body: go_text_body
     negate: 0
     target_bundles_drag_drop:
@@ -70,8 +72,11 @@ settings:
       filtered_event_list:
         weight: 41
         enabled: false
-      go_link:
+      go_images:
         weight: 50
+        enabled: true
+      go_link:
+        weight: 51
         enabled: false
       go_linkbox:
         weight: 43

@@ -1,19 +1,35 @@
 <?php
 
 use Drupal\bnf\Exception\AlreadyExistsException;
+use Drupal\bnf\Services\BnfImporter;
 use Drupal\bnf_client\Services\BnfExporter;
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\drupal_typed\DrupalTyped;
+use Drupal\node\NodeForm;
+use Drupal\node\NodeInterface;
 
 /**
- * Implements hook_form_FORM_ID_alter().
+ * Implements hook_form_alter().
  *
- * Altering the article form, and adding an option to export the node to BNF.
+ * Altering the node form, and adding an option to export the node to BNF.
  * If checked, a custom form submit handler will take care of the rest.
  *
  * @see bnf_client_form_node_form_submit()
  */
-function bnf_client_form_node_article_edit_form_alter(array &$form, FormStateInterface $form_state, string $form_id): void {
+function bnf_client_form_alter(array &$form, FormStateInterface $form_state, string $form_id): void {
+  $form_object = $form_state->getFormObject();
+
+  if (!($form_object instanceof NodeForm)) {
+    return;
+  }
+
+  $node = $form_object->getEntity();
+  $allowed_cts = BnfImporter::ALLOWED_CONTENT_TYPES;
+
+  if ((!$node instanceof NodeInterface) || !in_array($node->bundle(), $allowed_cts)) {
+    return;
+  }
+
   $current_user = \Drupal::currentUser();
 
   if (!$current_user->hasPermission('bnf client export nodes')) {
