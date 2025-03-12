@@ -321,7 +321,7 @@ sub vcl_backend_response {
 
   # Don't cache empty files
   if (beresp.http.Content-Length ~ "0" && bereq.retries < 2 && bereq.url ~ "(?i)\.(css|js)(\.gz)?(\?.*)?$") {
-      return (retry)
+    return (retry);
   }
 
   # Don't allow static files to set cookies.
