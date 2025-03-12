@@ -1,5 +1,6 @@
 <?php
 
+use Drupal\bnf\Services\BnfImporter;
 use Drupal\bnf_client\Hook\JobSchedulerHooks;
 use Drupal\bnf_client\Hook\SubscriptionHooks;
 use Drupal\bnf_client\Services\BnfExporter;
