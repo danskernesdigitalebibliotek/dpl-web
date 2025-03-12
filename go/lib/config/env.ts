@@ -21,6 +21,7 @@ const envs = {
   UNLILOGIN_PUBHUB_RETAILER_KEY_CODE: process.env.UNLILOGIN_PUBHUB_RETAILER_KEY_CODE,
   UNLILOGIN_SERVICES_WS_USER: process.env.UNLILOGIN_SERVICES_WS_USER,
   UNLILOGIN_SERVICES_WS_PASSWORD: process.env.UNLILOGIN_SERVICES_WS_PASSWORD,
+  UNILOGIN_MUNICIPALITY_ID: process.env.UNILOGIN_MUNICIPALITY_ID,
 }
 
 const EnvSchema = z.object({
@@ -46,6 +47,7 @@ const EnvServerSchema = z.object({
   UNLILOGIN_PUBHUB_RETAILER_KEY_CODE: z.string(),
   UNLILOGIN_SERVICES_WS_USER: z.string(),
   UNLILOGIN_SERVICES_WS_PASSWORD: z.string(),
+  UNILOGIN_MUNICIPALITY_ID: z.string(),
 })
 
 type EnvSchema = z.infer<typeof EnvSchema>

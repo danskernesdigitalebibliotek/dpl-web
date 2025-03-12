@@ -1,7 +1,9 @@
+import { getEnv } from "../env"
+
 const serviceFbi = {
   "service.fbi.graphql.endpoint": () => {
-    if (process.env.NEXT_PUBLIC_GRAPHQL_SCHEMA_ENDPOINT_FBI) {
-      return process.env.NEXT_PUBLIC_GRAPHQL_SCHEMA_ENDPOINT_FBI
+    if (getEnv("GRAPHQL_SCHEMA_ENDPOINT_FBI")) {
+      return getEnv("GRAPHQL_SCHEMA_ENDPOINT_FBI")
     }
   },
 }

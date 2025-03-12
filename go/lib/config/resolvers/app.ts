@@ -1,7 +1,9 @@
+import { getEnv } from "../env"
+
 const app = {
   "app.url": () => {
-    if (process.env.NEXT_PUBLIC_APP_URL) {
-      return process.env.NEXT_PUBLIC_APP_URL
+    if (getEnv("APP_URL")) {
+      return getEnv("APP_URL")
     }
   },
 }

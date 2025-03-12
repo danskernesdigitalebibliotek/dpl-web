@@ -1,6 +1,7 @@
 import type { CodegenConfig } from "@graphql-codegen/cli"
 import { loadEnvConfig } from "@next/env"
 
+import { getEnv } from "./lib/config/env"
 import goConfig from "./lib/config/goConfig"
 
 loadEnvConfig(process.cwd())
@@ -12,9 +13,9 @@ const config: CodegenConfig = {
       documents: "**/*.dpl-cms.graphql",
       // TODO: Make this configurable
       schema: {
-        [`${process.env.NEXT_PUBLIC_GRAPHQL_SCHEMA_ENDPOINT_DPL_CMS}`]: {
+        [getEnv("GRAPHQL_SCHEMA_ENDPOINT_DPL_CMS")]: {
           headers: {
-            Authorization: `Basic ${process.env.NEXT_PUBLIC_GRAPHQL_BASIC_TOKEN_DPL_CMS}`,
+            Authorization: `Basic ${getEnv("GRAPHQL_BASIC_TOKEN_DPL_CMS")}`,
           },
         },
       },

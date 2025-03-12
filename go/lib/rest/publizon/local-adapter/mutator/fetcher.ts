@@ -21,7 +21,7 @@ export const fetcher = async <ResponseType>({
 
   const body = data ? JSON.stringify(data) : null
   const serviceUrl = getRestServiceUrlWithParams({
-    baseUrl: `${process.env.NEXT_PUBLIC_APP_URL}/${goConfig("routes.pubhub")}`,
+    baseUrl: `${goConfig("app.url")}/${goConfig("routes.pubhub")}`,
     url,
     params,
   })

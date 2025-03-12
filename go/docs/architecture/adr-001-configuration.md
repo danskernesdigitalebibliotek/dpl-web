@@ -34,8 +34,8 @@ const search = {
 ```typescript
 {
   "service.fbi.graphql.endpoint": () => {
-    if (process.env.NEXT_PUBLIC_GRAPHQL_SCHEMA_ENDPOINT_FBI) {
-      return process.env.NEXT_PUBLIC_GRAPHQL_SCHEMA_ENDPOINT_FBI
+    if (getEnv("GRAPHQL_SCHEMA_ENDPOINT_FBI")) {
+      return getEnv("GRAPHQL_SCHEMA_ENDPOINT_FBI")
     }
   },
 }
@@ -46,8 +46,8 @@ const search = {
 ```typescript
 {
   "service.unilogin.api.url": async () => {
-    if (process.env.UNILOGIN_API_URL) {
-      return process.env.UNILOGIN_API_URL
+    if (getEnv("UNILOGIN_API_URL")) {
+      return getEnv("UNILOGIN_API_URL")
     }
 
     const config = await getDplCmsUniloginConfig()
