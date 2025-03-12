@@ -177,9 +177,21 @@ export const accessTokenIsExpired = (session: IronSession<TSessionData>) => {
 }
 
 export const getUniloginIdToken = async () =>
-  (await cookies()).get(goConfig("auth.id-token"))?.value
+  (await cookies()).get(goConfig("auth.cookie-name.id-token"))?.value
 
-export const deleteUniloginIdToken = async () => (await cookies()).delete(goConfig("auth.id-token"))
+export const getSessionTypeToken = async () =>
+  (await cookies()).get(goConfig("auth.cookie-name.id-token"))?.value
+
+const deleteGoSessionCookies = async () => {
+  const cookieStore = await cookies()
+  const allCookies = cookieStore.getAll()
+
+  allCookies.map(async cookie => {
+    if (cookie.name.startsWith("go-session:")) {
+      ;(await cookies()).delete(cookie.name)
+    }
+  })
+}
 
 export const getDplCmsSessionCookie = async () => {
   const cookieStore = await cookies()
@@ -190,12 +202,9 @@ export const getDplCmsSessionCookie = async () => {
 }
 
 export const destroySession = async (session: IronSession<TSessionData>) => {
-  // Destroy session and id token.
+  // Destroy session and additional go-session cookies.
   session.destroy()
-  const id_token = await getUniloginIdToken()
-  if (id_token) {
-    await deleteUniloginIdToken()
-  }
+  await deleteGoSessionCookies()
 }
 
 export const destroySessionAndRedirectToFrontPage = async (session: IronSession<TSessionData>) => {
