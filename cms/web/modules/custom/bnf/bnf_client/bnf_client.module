@@ -1,7 +1,7 @@
 <?php
 
-use Drupal\bnf_client\Hook\SubscriptionHooks;
 use Drupal\bnf_client\Hook\JobSchedulerHooks;
+use Drupal\bnf_client\Hook\SubscriptionHooks;
 use Drupal\bnf_client\Services\BnfExporter;
 use Drupal\Core\Entity\EntityInterface;
 use Drupal\Core\Form\FormStateInterface;
