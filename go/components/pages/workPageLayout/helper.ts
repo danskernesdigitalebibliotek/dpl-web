@@ -1,7 +1,9 @@
 import { head, uniqBy } from "lodash"
 
+import { SlideSelectOption } from "@/components/shared/slideSelect/SlideSelect"
 import goConfig from "@/lib/config/goConfig"
 import {
+  GeneralMaterialType,
   GeneralMaterialTypeCodeEnum,
   Manifestation,
   ManifestationWorkPageFragment,
@@ -92,4 +94,30 @@ export const getIconNameFromMaterialType = (materialType: GeneralMaterialTypeCod
   if (goConfig("materialtypes.categories").podcast.includes(code)) {
     return "podcast"
   }
+}
+
+export const slideSelectOptionsFromMaterialTypes = (workMaterialTypes: GeneralMaterialType[]) => {
+  return workMaterialTypes.map(materialType => {
+    return {
+      code: materialType.code,
+      display: translateMaterialTypesStringForRender(
+        materialType.code as GeneralMaterialTypeCodeEnum
+      ),
+    }
+  }) as SlideSelectOption[]
+}
+
+export const sortSlideSelectOptions = (options: SlideSelectOption[]) => {
+  return options.sort((a, b) => {
+    // sort by the index of the GeneralMaterialTypeCodeEnum in the materialTypeSortPriority array
+    return (
+      goConfig("materialtypes.sortpriority").indexOf(a.code) -
+      goConfig("materialtypes.sortpriority").indexOf(b.code)
+    )
+  })
+}
+
+export const getManifestationMaterialTypeIcon = (manifestation: ManifestationWorkPageFragment) => {
+  const materialType = getManifestationMaterialType(manifestation)
+  return getIconNameFromMaterialType(materialType.code) || "book"
 }
