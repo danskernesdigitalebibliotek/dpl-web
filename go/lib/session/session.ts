@@ -103,7 +103,8 @@ export const setUniloginTokensOnSession = async (
   // Since we have a limitation in how big cookies can be,
   // we will have to store the user id in a separate cookie.
   const cookieStore = await cookies()
-  cookieStore.set(goConfig("auth.id-token"), tokenSet.id_token)
+  cookieStore.set(goConfig("auth.cookie-name.id-token"), tokenSet.id_token)
+  cookieStore.set(goConfig("auth.cookie-names.session-type"), "unilogin")
 }
 
 type TAdgangsplatformenUserToken = {
@@ -119,6 +120,8 @@ export const setAdgangsplatformenUserTokenOnSession = async (
   session.expires = add(new Date(), {
     seconds: token.expire,
   })
+  const cookieStore = await cookies()
+  cookieStore.set(goConfig("auth.cookie-names.session-type"), "adgansplatformen")
 }
 
 export const saveAdgangsplatformenSession = async (
