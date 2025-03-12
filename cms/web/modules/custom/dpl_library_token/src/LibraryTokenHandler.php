@@ -58,8 +58,6 @@ class LibraryTokenHandler {
 
   /**
    * Retrieve token from external service and save it if necessary.
-   *
-   * @throws \GuzzleHttp\Exception\GuzzleException
    */
   public function retrieveAndStoreToken(
     string $agencyId,
@@ -111,8 +109,6 @@ class LibraryTokenHandler {
    *
    * @return \Drupal\dpl_library_token\LibraryToken|null
    *   If token was fetched it is returned. Otherwise, return NULL.
-   *
-   * @throws \GuzzleHttp\Exception\GuzzleException
    */
   public function fetchToken(string $agencyId, string $clientId, string $clientSecret, string $tokenEndpoint,): ?LibraryToken {
     $token = NULL;

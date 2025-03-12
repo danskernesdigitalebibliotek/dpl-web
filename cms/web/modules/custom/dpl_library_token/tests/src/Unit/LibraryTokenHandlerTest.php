@@ -30,8 +30,6 @@ class LibraryTokenHandlerTest extends UnitTestCase {
 
   /**
    * Test behaviour when no token has been stored yet.
-   *
-   * @throws \GuzzleHttp\Exception\GuzzleException
    */
   public function testIfNoTokenHasBeenStoredANewOneIsFetched(): void {
     $collection = $this->prophesize(KeyValueStoreExpirableInterface::class);
@@ -81,8 +79,6 @@ class LibraryTokenHandlerTest extends UnitTestCase {
 
   /**
    * Log entry when the json from the library token response is malformed.
-   *
-   * @throws \GuzzleHttp\Exception\GuzzleException
    */
   public function testItCanLogWhenTokenResponseIsMalformed(): void {
     $key_value_factory = $this->prophesize(KeyValueExpirableFactoryInterface::class);

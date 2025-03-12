@@ -176,8 +176,6 @@ class Adgangsplatformen extends OpenIDConnectClientBase {
    *
    * @return void
    *   Drupal form array.
-   *
-   * @throws \GuzzleHttp\Exception\GuzzleException
    */
   public function submitConfigurationForm(array &$form, FormStateInterface $form_state): void {
     parent::submitConfigurationForm($form, $form_state);
