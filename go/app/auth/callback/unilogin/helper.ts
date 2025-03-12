@@ -8,5 +8,9 @@ export const isUniloginUserAuthorizedToLogIn = async (introspect: TIntrospection
   const institutionId = institutionIds[0]
   const institution = await getInstitution(institutionId)
   const municipalityId = getLibraryMunicipalityId()
+  // If the institution is DDF we are using a test user and therefore allow access
+  if (institution.instnr === "A04441") {
+    return true
+  }
   return institution.kommunenr === municipalityId
 }
