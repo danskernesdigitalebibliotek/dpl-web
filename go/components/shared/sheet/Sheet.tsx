@@ -32,7 +32,7 @@ const SheetOverlay = React.forwardRef<
   <SheetPrimitive.Overlay
     className={cn(
       `z-sheet data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0
-      data-[state=open]:fade-in-0 fixed inset-0 bg-black/80`,
+      data-[state=open]:fade-in-0 bg-foreground/80 fixed inset-0`,
       className
     )}
     {...props}
@@ -75,7 +75,7 @@ const SheetContent = React.forwardRef<
           absolute rounded-sm transition-opacity hover:cursor-pointer hover:opacity-100
           disabled:pointer-events-none lg:top-8 lg:right-8">
         <Cross2Icon className="h-8 w-8" />
-        <span className="sr-only">Close</span>
+        <span className="sr-only">Luk</span>
       </SheetPrimitive.Close>
       {children}
     </SheetPrimitive.Content>
