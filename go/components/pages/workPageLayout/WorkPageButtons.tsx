@@ -36,8 +36,8 @@ const WorkPageButtons = ({ workId, selectedManifestation }: WorkPageButtonsProps
   if (isLoadingLoans) {
     return (
       <>
-        <div className="bg-background-skeleton mb-grid-gap-half h-10 w-full animate-pulse rounded-full lg:w-80" />
-        <div className="bg-background-skeleton h-10 w-full animate-pulse rounded-full lg:w-80" />
+        <div className="bg-background-skeleton mb-grid-gap-half h-12 w-full animate-pulse rounded-full lg:w-80" />
+        <div className="bg-background-skeleton h-12 w-full animate-pulse rounded-full lg:w-80" />
       </>
     )
   }
