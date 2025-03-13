@@ -306,7 +306,6 @@ class GetNode extends \Spawnia\Sailor\Operation
                 }
                 ... on ParagraphGoVideo {
                   id
-                  url
                   embedVideo {
                     __typename
                     ... on MediaVideo {
@@ -343,7 +342,6 @@ class GetNode extends \Spawnia\Sailor\Operation
                   }
                   goVideoTitle
                   videoAmountOfMaterials
-                  url
                 }
                 ... on ParagraphGoVideoBundleManual {
                   id
@@ -366,7 +364,6 @@ class GetNode extends \Spawnia\Sailor\Operation
                     material_type
                     work_id
                   }
-                  url
                 }
               }
             }

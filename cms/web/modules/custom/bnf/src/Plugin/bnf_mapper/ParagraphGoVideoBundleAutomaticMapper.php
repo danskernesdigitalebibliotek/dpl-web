@@ -31,7 +31,6 @@ class ParagraphGoVideoBundleAutomaticMapper extends BnfMapperParagraphPluginBase
     return $this->paragraphStorage->create([
       'type' => 'go_video_bundle_automatic',
       'field_go_video_title' => $object->goVideoTitle,
-      'field_url' => $object->url,
       'field_embed_video' => $this->getEmbedVideoValue($object->embedVideo),
       'field_video_amount_of_materials' => $object->videoAmountOfMaterials,
       'field_cql_search' => ['value' => $object->cqlSearch->value],

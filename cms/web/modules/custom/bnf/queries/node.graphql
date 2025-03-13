@@ -241,7 +241,6 @@ query GetNode($id: ID!) {
         }
         ... on ParagraphGoVideo {
           id
-          url
           embedVideo {
             ... on MediaVideo {
               id
@@ -275,7 +274,6 @@ query GetNode($id: ID!) {
           }
           goVideoTitle
           videoAmountOfMaterials
-          url
         }
         ... on ParagraphGoVideoBundleManual {
           id
@@ -296,7 +294,6 @@ query GetNode($id: ID!) {
             material_type
             work_id
           }
-          url
         }
       }
     }

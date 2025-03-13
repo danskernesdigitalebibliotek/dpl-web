@@ -34,7 +34,6 @@ class ParagraphGoVideoMapper extends BnfMapperParagraphPluginBase {
       'type' => 'video',
       'field_go_video_title' => $object->titleRequired,
       'field_embed_video' => $this->getEmbedVideoValue($object->embedVideo),
-      'field_url' => $object->url,
     ]);
 
   }

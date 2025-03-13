@@ -41,7 +41,6 @@ class ParagraphGoVideoBundleManualMapper extends BnfMapperParagraphPluginBase {
       'type' => 'go_video_bundle_manual',
       'field_go_video_title' => $object->goVideoTitle,
       'field_video_bundle_work_ids' => $workIdsValues,
-      'field_url' => $object->url,
       'field_embed_video' => $this->getEmbedVideoValue($object->embedVideo),
     ]);
 
