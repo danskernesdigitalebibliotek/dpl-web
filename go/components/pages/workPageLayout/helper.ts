@@ -38,6 +38,11 @@ const isManifestationOfMaterialType = (
   return manifestation.materialTypes.some(type => type.materialTypeGeneral.code === materialType)
 }
 
+export const isManifestationBook = (manifestation: ManifestationWorkPageFragment) => {
+  if (!manifestation) return false
+  return isManifestationOfMaterialType(manifestation, "BOOKS")
+}
+
 export const isManifestationEbook = (manifestation: ManifestationWorkPageFragment) => {
   if (!manifestation) return false
   return isManifestationOfMaterialType(manifestation, "EBOOKS")
