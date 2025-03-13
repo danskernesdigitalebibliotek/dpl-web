@@ -80,6 +80,9 @@ export const getIconNameFromMaterialType = (materialType: GeneralMaterialTypeCod
   if (goConfig("materialtypes.categories").reading.includes(code)) {
     return "book"
   }
+  if (goConfig("materialtypes.categories").ebook.includes(code)) {
+    return "ebook"
+  }
   if (goConfig("materialtypes.categories").listening.includes(code)) {
     return "headphones"
   }
