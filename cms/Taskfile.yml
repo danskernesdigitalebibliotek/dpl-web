@@ -212,6 +212,12 @@ tasks:
       # This should match the hostname matched in web/modules/custom/bnf/src/MangleUrl.php.
       - task dev:cli -- drush config:set --yes bnf_client.settings base_url https://{{ .BNF_HOSTNAME }}/
 
+  dev:bnf:generate-graphql:
+    desc: Generate graphQL client classes. See web/modules/custom/bnf/queries/README.md
+    cmds:
+      - task dev:bnfcli -- ./vendor/bin/sailor introspect
+      - task dev:bnfcli -- ./vendor/bin/sailor
+
   dev:openid:configure:
     desc: Set openid connect settings based on .env variables. And run cron.
     cmds:
