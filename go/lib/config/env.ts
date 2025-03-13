@@ -34,13 +34,10 @@ const EnvSchema = z.object({
   NODE_ENV: z.union([z.literal("development"), z.literal("production"), z.literal("test")]),
 })
 
-// Environment variables only available in Nodejs. Should only be fetched with
-// getServerEnv().
+// Environment variables only available in Nodejs.
+// Should only be fetched with getServerEnv().
 const EnvServerSchema = z.object({
   UNILOGIN_API_URL: z.string().refine(validateUrl),
-  UNILOGIN_CLIENT_ID: z.string(),
-  UNILOGIN_CLIENT_SECRET: z.string(),
-  UNILOGIN_WELLKNOWN_URL: z.string().refine(validateUrl),
   GO_SESSION_SECRET: z.string().length(32),
   UNLILOGIN_PUBHUB_CLIENT_ID: z.string(),
   UNLILOGIN_PUBHUB_RETAILER_ID: z.string(),
@@ -48,6 +45,10 @@ const EnvServerSchema = z.object({
   UNLILOGIN_SERVICES_WS_USER: z.string(),
   UNLILOGIN_SERVICES_WS_PASSWORD: z.string(),
   UNILOGIN_MUNICIPALITY_ID: z.string(),
+  // Is fetched from dpl-cms, but can be overridden by env vars
+  UNILOGIN_CLIENT_ID: z.string().optional(),
+  UNILOGIN_CLIENT_SECRET: z.string().optional(),
+  UNILOGIN_WELLKNOWN_URL: z.string().refine(validateUrl).optional(),
 })
 
 type EnvSchema = z.infer<typeof EnvSchema>
