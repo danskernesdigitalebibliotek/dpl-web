@@ -6,7 +6,7 @@ namespace Drupal\bnf\Plugin\bnf_mapper;
 
 use Drupal\bnf\Attribute\BnfMapper;
 use Drupal\bnf\GraphQL\Operations\GetNode\Node\Paragraphs\ParagraphGoLinkbox;
-use Drupal\bnf\Plugin\BnfMapperParagraphPluginBase;
+
 use Drupal\bnf\Plugin\Traits\ImageTrait;
 use Drupal\bnf\Plugin\Traits\LinkTrait;
 use Drupal\Core\Entity\EntityTypeManagerInterface;

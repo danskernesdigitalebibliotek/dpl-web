@@ -6,7 +6,7 @@ namespace Drupal\bnf\Plugin\bnf_mapper;
 
 use Drupal\bnf\Attribute\BnfMapper;
 use Drupal\bnf\GraphQL\Operations\GetNode\Node\Paragraphs\ParagraphFiles;
-use Drupal\bnf\Plugin\BnfMapperParagraphPluginBase;
+
 use Drupal\bnf\Plugin\Traits\FileTrait;
 use Drupal\Core\Entity\EntityTypeManagerInterface;
 use Drupal\Core\File\FileSystemInterface;

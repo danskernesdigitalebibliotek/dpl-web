@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Drupal\bnf\Plugin;
+namespace Drupal\bnf\Plugin\bnf_mapper;
 
 use Drupal\autowire_plugin_trait\AutowirePluginTrait;
 use Drupal\bnf\BnfMapperInterface;
@@ -16,6 +16,11 @@ use Drupal\Core\Plugin\ContainerFactoryPluginInterface;
  */
 abstract class BnfMapperParagraphPluginBase extends PluginBase implements BnfMapperInterface, ContainerFactoryPluginInterface {
   use AutowirePluginTrait;
+
+  /**
+   * Entity type manager.
+   */
+  protected EntityTypeManagerInterface $entityTypeManager;
 
   /**
    * Entity storage to create paragraph in.
@@ -33,6 +38,7 @@ abstract class BnfMapperParagraphPluginBase extends PluginBase implements BnfMap
   ) {
     parent::__construct($configuration, $pluginId, $pluginDefinition);
 
+    $this->entityTypeManager = $entityTypeManager;
     $this->paragraphStorage = $entityTypeManager->getStorage('paragraph');
   }
 

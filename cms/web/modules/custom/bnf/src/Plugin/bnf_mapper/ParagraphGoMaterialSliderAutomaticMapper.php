@@ -6,7 +6,7 @@ namespace Drupal\bnf\Plugin\bnf_mapper;
 
 use Drupal\bnf\Attribute\BnfMapper;
 use Drupal\bnf\GraphQL\Operations\GetNode\Node\Paragraphs\ParagraphGoMaterialSliderAutomatic;
-use Drupal\bnf\Plugin\BnfMapperParagraphPluginBase;
+
 use Spawnia\Sailor\ObjectLike;
 
 /**

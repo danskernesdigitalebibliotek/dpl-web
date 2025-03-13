@@ -6,7 +6,7 @@ namespace Drupal\bnf\Plugin\bnf_mapper;
 
 use Drupal\bnf\Attribute\BnfMapper;
 use Drupal\bnf\GraphQL\Operations\GetNode\Node\Paragraphs\ParagraphHero;
-use Drupal\bnf\Plugin\BnfMapperParagraphPluginBase;
+
 use Drupal\bnf\Plugin\Traits\DateTimeTrait;
 use Drupal\bnf\Plugin\Traits\ImageTrait;
 use Drupal\bnf\Plugin\Traits\LinkTrait;
