@@ -7,8 +7,7 @@ import useGetV1UserLoans from "@/lib/rest/publizon/useGetV1UserLoans"
 import Loan from "./Loan"
 
 const LoanList = () => {
-  const getV1UserLoans = useGetV1UserLoans()
-  const { data: dataLoans, isLoading: isLoadingLoans } = getV1UserLoans()
+  const { data: dataLoans, isLoading: isLoadingLoans } = useGetV1UserLoans()
 
   return (
     <div className="bg-background-overlay rounded-base col-span-full space-y-8 overflow-hidden py-10">

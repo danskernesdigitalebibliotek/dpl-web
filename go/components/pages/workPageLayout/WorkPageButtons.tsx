@@ -27,8 +27,7 @@ const WorkPageButtons = ({ workId, selectedManifestation }: WorkPageButtonsProps
     queryParams: { id: identifier || "" },
   })
   const [isPlayerOpen, setIsPlayerOpen] = useState(false)
-  const getV1UserLoans = useGetV1UserLoans()
-  const { data: dataLoans, isLoading: isLoadingLoans, isError: isErrorLoans } = getV1UserLoans()
+  const { data: dataLoans, isLoading: isLoadingLoans, isError: isErrorLoans } = useGetV1UserLoans()
   const isLoanButtonDisabled = isLoadingLoans || isErrorLoans
   const isLoaned = useMemo(() => {
     return dataLoans?.loans?.some(loan => loan.libraryBook?.identifier === identifier)
