@@ -881,6 +881,9 @@ type ParagraphFiles implements ParagraphInterface {
   """The time that the Paragraph was created."""
   created: DateTime!
 
+  """Filer"""
+  files: [MediaUnion!]
+
   """The paragraphs entity language code."""
   langcode: Language!
 
@@ -1185,6 +1188,27 @@ type ParagraphHero implements ParagraphInterface {
   """The time that the Paragraph was created."""
   created: DateTime!
 
+  """Hero kategori"""
+  heroCategories: TermUnion
+
+  """Hero indholdstype"""
+  heroContentType: String
+
+  """Hero dato"""
+  heroDate: DateTime
+
+  """Hero beskrivelse"""
+  heroDescription: Text
+
+  """Hero billede"""
+  heroImage: MediaUnion
+
+  """Hero link"""
+  heroLink: Link
+
+  """Overskrift"""
+  heroTitle: String!
+
   """The paragraphs entity language code."""
   langcode: Language!
 
@@ -1235,6 +1259,9 @@ type ParagraphLinks implements ParagraphInterface {
   """The paragraphs entity language code."""
   langcode: Language!
 
+  """Link"""
+  link: [Link!]!
+
   """Publiceret"""
   status: Boolean!
 }
@@ -1274,6 +1301,15 @@ type ParagraphMaterialGridAutomatic implements ParagraphInterface {
   gitteret skal kunne øges med 4.
   """
   amountOfMaterials: Int!
+
+  """
+  Dette felt er til indsættelse af en CQL-streng baseret på en søgning. <br
+  /><br />Vær opmærksom på, at det er nødvendigt at kopiere den nøjagtige
+  CQL-streng, inklusive anførselstegnene. dvs: ('harry potter')<br /><br />En
+  gyldig CQL-søgestreng kan genereres ved at udføre en forespørgsel gennem
+  den avancerede søgning og kopiere CQL-strengen derfra.
+  """
+  cqlSearch: CQLSearch!
 
   """The time that the Paragraph was created."""
   created: DateTime!
@@ -1361,6 +1397,14 @@ type ParagraphMaterialGridManual implements ParagraphInterface {
   """
   materialGridTitle: String
 
+  """
+  Gitteret vil kun vise materialer i intervaller af 4. <br /><br />Eksempel
+  arbejds ID: work-of:870970-basis:136336282.<br /><br />Hvis du skal linke til
+  en specifik type, vælg den fra dropdown-menuen og systemet vil vise den, hvis
+  den er tilgængelig.
+  """
+  materialGridWorkIds: [WorkId!]
+
   """Publiceret"""
   status: Boolean!
 }
@@ -1375,6 +1419,9 @@ type ParagraphMedias implements ParagraphInterface {
 
   """The paragraphs entity language code."""
   langcode: Language!
+
+  """Billeder"""
+  medias: [MediaUnion!]!
 
   """Publiceret"""
   status: Boolean!
@@ -1437,8 +1484,36 @@ type ParagraphRecommendation implements ParagraphInterface {
   """The time that the Paragraph was created."""
   created: DateTime!
 
+  """
+  Dette bestemmer om, et billede skal positioneres til venstre eller højre. <br
+  />Hvis den ikke er slået til (standardadfærd), placeres billedet til
+  venstre, hvis den er slået til, placeres billedet til højre.␣
+  """
+  imagePositionRight: Boolean
+
   """The paragraphs entity language code."""
   langcode: Language!
+
+  """
+  Dette er beskrivelsen af det anbefalede materiale. Hvis du tilføjer en
+  beskrivelsestekst, vil titlen på materialet ikke blive autoudfyldt.
+  """
+  recommendationDescription: String
+
+  """
+  Titlen på det anbefalede materiale. Hvis du tilføjer en titel, vil
+  beskrivelsesteksten af materialet ikke blive autoudfyldt.
+  """
+  recommendationTitle: Text
+
+  """
+  Dette er det arbejds-ID, der bruges til at hente materialeoplysningerne.
+  Eksempel: work-of:870970-basis:136336282.<br />I øjeblikket hentes dette ved
+  at udføre en søgning efter et materiale manuelt og kopiere denne værdi fra
+  URL'en.<br />Hvis du har brug for at linke til en bestemt type, skal du vælge
+  den fra rullemenuen, og systemet vil vise den, hvis den er tilgængelig.
+  """
+  recommendationWorkId: WorkId
 
   """Publiceret"""
   status: Boolean!
@@ -1454,6 +1529,9 @@ type ParagraphSimpleLinks implements ParagraphInterface {
 
   """The paragraphs entity language code."""
   langcode: Language!
+
+  """Link"""
+  link: [Link!]!
 
   """Publiceret"""
   status: Boolean!

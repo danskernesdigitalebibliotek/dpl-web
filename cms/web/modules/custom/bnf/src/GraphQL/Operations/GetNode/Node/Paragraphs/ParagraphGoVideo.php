@@ -7,7 +7,6 @@ namespace Drupal\bnf\GraphQL\Operations\GetNode\Node\Paragraphs;
  * @property \Drupal\bnf\GraphQL\Operations\GetNode\Node\Paragraphs\EmbedVideo\MediaAudio|\Drupal\bnf\GraphQL\Operations\GetNode\Node\Paragraphs\EmbedVideo\MediaDocument|\Drupal\bnf\GraphQL\Operations\GetNode\Node\Paragraphs\EmbedVideo\MediaImage|\Drupal\bnf\GraphQL\Operations\GetNode\Node\Paragraphs\EmbedVideo\MediaVideo|\Drupal\bnf\GraphQL\Operations\GetNode\Node\Paragraphs\EmbedVideo\MediaVideotool $embedVideo
  * @property string $titleRequired
  * @property string $__typename
- * @property string|null $url
  */
 class ParagraphGoVideo extends \Spawnia\Sailor\ObjectLike
 {
@@ -15,14 +14,9 @@ class ParagraphGoVideo extends \Spawnia\Sailor\ObjectLike
      * @param string $id
      * @param \Drupal\bnf\GraphQL\Operations\GetNode\Node\Paragraphs\EmbedVideo\MediaAudio|\Drupal\bnf\GraphQL\Operations\GetNode\Node\Paragraphs\EmbedVideo\MediaDocument|\Drupal\bnf\GraphQL\Operations\GetNode\Node\Paragraphs\EmbedVideo\MediaImage|\Drupal\bnf\GraphQL\Operations\GetNode\Node\Paragraphs\EmbedVideo\MediaVideo|\Drupal\bnf\GraphQL\Operations\GetNode\Node\Paragraphs\EmbedVideo\MediaVideotool $embedVideo
      * @param string $titleRequired
-     * @param string|null $url
      */
-    public static function make(
-        $id,
-        $embedVideo,
-        $titleRequired,
-        $url = 'Special default value that allows Sailor to differentiate between explicitly passing null and not passing a value at all.',
-    ): self {
+    public static function make($id, $embedVideo, $titleRequired): self
+    {
         $instance = new self;
 
         if ($id !== self::UNDEFINED) {
@@ -35,9 +29,6 @@ class ParagraphGoVideo extends \Spawnia\Sailor\ObjectLike
             $instance->titleRequired = $titleRequired;
         }
         $instance->__typename = 'ParagraphGoVideo';
-        if ($url !== self::UNDEFINED) {
-            $instance->url = $url;
-        }
 
         return $instance;
     }
@@ -57,7 +48,6 @@ class ParagraphGoVideo extends \Spawnia\Sailor\ObjectLike
         ])),
             'titleRequired' => new \Spawnia\Sailor\Convert\NonNullConverter(new \Spawnia\Sailor\Convert\StringConverter),
             '__typename' => new \Spawnia\Sailor\Convert\NonNullConverter(new \Spawnia\Sailor\Convert\StringConverter),
-            'url' => new \Spawnia\Sailor\Convert\NullConverter(new \Spawnia\Sailor\Convert\StringConverter),
         ];
     }
 

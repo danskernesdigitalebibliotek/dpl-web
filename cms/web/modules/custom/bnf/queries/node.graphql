@@ -176,7 +176,7 @@ query GetNode($id: ID!) {
         }
         ... on ParagraphVideo {
           id
-          embedVideo {
+          embedVideoRequired: embedVideo {
             ... on MediaVideo {
               id
               name

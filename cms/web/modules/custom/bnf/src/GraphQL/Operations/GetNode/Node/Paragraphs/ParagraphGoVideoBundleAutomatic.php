@@ -9,7 +9,6 @@ namespace Drupal\bnf\GraphQL\Operations\GetNode\Node\Paragraphs;
  * @property string $goVideoTitle
  * @property int $videoAmountOfMaterials
  * @property string $__typename
- * @property string|null $url
  */
 class ParagraphGoVideoBundleAutomatic extends \Spawnia\Sailor\ObjectLike
 {
@@ -19,16 +18,9 @@ class ParagraphGoVideoBundleAutomatic extends \Spawnia\Sailor\ObjectLike
      * @param \Drupal\bnf\GraphQL\Operations\GetNode\Node\Paragraphs\EmbedVideo\MediaAudio|\Drupal\bnf\GraphQL\Operations\GetNode\Node\Paragraphs\EmbedVideo\MediaDocument|\Drupal\bnf\GraphQL\Operations\GetNode\Node\Paragraphs\EmbedVideo\MediaImage|\Drupal\bnf\GraphQL\Operations\GetNode\Node\Paragraphs\EmbedVideo\MediaVideo|\Drupal\bnf\GraphQL\Operations\GetNode\Node\Paragraphs\EmbedVideo\MediaVideotool $embedVideo
      * @param string $goVideoTitle
      * @param int $videoAmountOfMaterials
-     * @param string|null $url
      */
-    public static function make(
-        $id,
-        $cqlSearch,
-        $embedVideo,
-        $goVideoTitle,
-        $videoAmountOfMaterials,
-        $url = 'Special default value that allows Sailor to differentiate between explicitly passing null and not passing a value at all.',
-    ): self {
+    public static function make($id, $cqlSearch, $embedVideo, $goVideoTitle, $videoAmountOfMaterials): self
+    {
         $instance = new self;
 
         if ($id !== self::UNDEFINED) {
@@ -47,9 +39,6 @@ class ParagraphGoVideoBundleAutomatic extends \Spawnia\Sailor\ObjectLike
             $instance->videoAmountOfMaterials = $videoAmountOfMaterials;
         }
         $instance->__typename = 'ParagraphGoVideoBundleAutomatic';
-        if ($url !== self::UNDEFINED) {
-            $instance->url = $url;
-        }
 
         return $instance;
     }
@@ -71,7 +60,6 @@ class ParagraphGoVideoBundleAutomatic extends \Spawnia\Sailor\ObjectLike
             'goVideoTitle' => new \Spawnia\Sailor\Convert\NonNullConverter(new \Spawnia\Sailor\Convert\StringConverter),
             'videoAmountOfMaterials' => new \Spawnia\Sailor\Convert\NonNullConverter(new \Spawnia\Sailor\Convert\IntConverter),
             '__typename' => new \Spawnia\Sailor\Convert\NonNullConverter(new \Spawnia\Sailor\Convert\StringConverter),
-            'url' => new \Spawnia\Sailor\Convert\NullConverter(new \Spawnia\Sailor\Convert\StringConverter),
         ];
     }
 

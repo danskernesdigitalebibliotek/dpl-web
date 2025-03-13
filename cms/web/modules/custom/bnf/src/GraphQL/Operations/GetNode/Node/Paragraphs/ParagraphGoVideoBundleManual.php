@@ -8,7 +8,6 @@ namespace Drupal\bnf\GraphQL\Operations\GetNode\Node\Paragraphs;
  * @property string $goVideoTitle
  * @property string $__typename
  * @property array<int, \Drupal\bnf\GraphQL\Operations\GetNode\Node\Paragraphs\VideoBundleWorkIds\WorkId>|null $videoBundleWorkIds
- * @property string|null $url
  */
 class ParagraphGoVideoBundleManual extends \Spawnia\Sailor\ObjectLike
 {
@@ -17,14 +16,12 @@ class ParagraphGoVideoBundleManual extends \Spawnia\Sailor\ObjectLike
      * @param \Drupal\bnf\GraphQL\Operations\GetNode\Node\Paragraphs\EmbedVideo\MediaAudio|\Drupal\bnf\GraphQL\Operations\GetNode\Node\Paragraphs\EmbedVideo\MediaDocument|\Drupal\bnf\GraphQL\Operations\GetNode\Node\Paragraphs\EmbedVideo\MediaImage|\Drupal\bnf\GraphQL\Operations\GetNode\Node\Paragraphs\EmbedVideo\MediaVideo|\Drupal\bnf\GraphQL\Operations\GetNode\Node\Paragraphs\EmbedVideo\MediaVideotool $embedVideo
      * @param string $goVideoTitle
      * @param array<int, \Drupal\bnf\GraphQL\Operations\GetNode\Node\Paragraphs\VideoBundleWorkIds\WorkId>|null $videoBundleWorkIds
-     * @param string|null $url
      */
     public static function make(
         $id,
         $embedVideo,
         $goVideoTitle,
         $videoBundleWorkIds = 'Special default value that allows Sailor to differentiate between explicitly passing null and not passing a value at all.',
-        $url = 'Special default value that allows Sailor to differentiate between explicitly passing null and not passing a value at all.',
     ): self {
         $instance = new self;
 
@@ -40,9 +37,6 @@ class ParagraphGoVideoBundleManual extends \Spawnia\Sailor\ObjectLike
         $instance->__typename = 'ParagraphGoVideoBundleManual';
         if ($videoBundleWorkIds !== self::UNDEFINED) {
             $instance->videoBundleWorkIds = $videoBundleWorkIds;
-        }
-        if ($url !== self::UNDEFINED) {
-            $instance->url = $url;
         }
 
         return $instance;
@@ -64,7 +58,6 @@ class ParagraphGoVideoBundleManual extends \Spawnia\Sailor\ObjectLike
             'goVideoTitle' => new \Spawnia\Sailor\Convert\NonNullConverter(new \Spawnia\Sailor\Convert\StringConverter),
             '__typename' => new \Spawnia\Sailor\Convert\NonNullConverter(new \Spawnia\Sailor\Convert\StringConverter),
             'videoBundleWorkIds' => new \Spawnia\Sailor\Convert\NullConverter(new \Spawnia\Sailor\Convert\ListConverter(new \Spawnia\Sailor\Convert\NonNullConverter(new \Drupal\bnf\GraphQL\Operations\GetNode\Node\Paragraphs\VideoBundleWorkIds\WorkId))),
-            'url' => new \Spawnia\Sailor\Convert\NullConverter(new \Spawnia\Sailor\Convert\StringConverter),
         ];
     }
 

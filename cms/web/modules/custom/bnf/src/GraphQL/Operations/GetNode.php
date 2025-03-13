@@ -233,7 +233,7 @@ class GetNode extends \Spawnia\Sailor\Operation
                 }
                 ... on ParagraphVideo {
                   id
-                  embedVideo {
+                  embedVideoRequired: embedVideo {
                     __typename
                     ... on MediaVideo {
                       id
