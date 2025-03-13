@@ -5,6 +5,7 @@ namespace Drupal\bnf\Plugin\Traits;
 use Drupal\autowire_plugin_trait\AutowirePluginTrait;
 use Drupal\bnf\GraphQL\Operations\GetNode\Node\Paragraphs\Medias\MediaImage;
 use Drupal\Core\Entity\EntityTypeManagerInterface;
+use Drupal\media\Entity\Media;
 use Spawnia\Sailor\ObjectLike;
 
 /**
@@ -37,8 +38,7 @@ trait ImageTrait {
 
     $mediaStorage = $this->entityTypeManager->getStorage('media');
 
-    // Create the media entity.
-    $media = $mediaStorage->create([
+    $properties = [
       'bundle' => 'image',
       'name' => $file->getFilename(),
       'status' => TRUE,
@@ -46,8 +46,16 @@ trait ImageTrait {
         'target_id' => $file->id(),
         'alt' => $alt,
       ],
-    ]);
-    $media->save();
+    ];
+
+    // Look up existing media - if it exists, referer to that, otherwise create.
+    $medias = $mediaStorage->loadByProperties($properties);
+    $media = reset($medias);
+
+    if (!($media instanceof Media)) {
+      $media = $mediaStorage->create($properties);
+      $media->save();
+    }
 
     return ['target_id' => $media->id()];
   }

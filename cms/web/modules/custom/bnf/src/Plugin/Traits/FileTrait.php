@@ -9,6 +9,7 @@ use Drupal\Core\File\FileExists;
 use Drupal\Core\File\FileSystemInterface;
 use Drupal\file\FileInterface;
 use Drupal\file\FileRepositoryInterface;
+use Drupal\media\Entity\Media;
 use Spawnia\Sailor\ObjectLike;
 use function Safe\file_get_contents;
 use function Safe\parse_url;
@@ -62,7 +63,11 @@ trait FileTrait {
     }
 
     // Save the file using the file.repository service.
-    return $this->fileRepository->writeData($data, $destination, FileExists::Rename);
+    // If the file name already exists, we replace it. This is to avoid the disk
+    // getting filled up with copies of the same file.
+    // The filename consists of the URL of the original site, so this should
+    // be specific enough that it won't replace.
+    return $this->fileRepository->writeData($data, $destination, FileExists::Replace);
   }
 
   /**
@@ -71,7 +76,7 @@ trait FileTrait {
    * @return mixed[]
    *   The value that can be used with Drupal ->set().
    */
-  public function getFileValue(MediaDocument|ObjectLike|null $document): array {
+  public function getMediaDocumentValue(MediaDocument|ObjectLike|null $document): array {
     if (is_null($document)) {
       return [];
     }
@@ -81,10 +86,8 @@ trait FileTrait {
 
     $mediaStorage = $this->entityTypeManager->getStorage('media');
 
-    // Create the media entity.
-    $media = $mediaStorage->create([
+    $properties = [
       'bundle' => 'document',
-
       'status' => TRUE,
       'field_media_file' => [
         'target_id' => $file->id(),
@@ -92,9 +95,16 @@ trait FileTrait {
         'description' => $document->mediaFile->description,
       ],
       'name' => $document->mediaFile->name,
+    ];
 
-    ]);
-    $media->save();
+    // Look up existing media - if it exists, referer to that, otherwise create.
+    $medias = $mediaStorage->loadByProperties($properties);
+    $media = reset($medias);
+
+    if (!($media instanceof Media)) {
+      $media = $mediaStorage->create($properties);
+      $media->save();
+    }
 
     return ['target_id' => $media->id()];
   }

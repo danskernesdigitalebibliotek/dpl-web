@@ -49,7 +49,7 @@ class ParagraphFilesMapper extends BnfMapperParagraphPluginBase {
     $filesValues = [];
 
     foreach ($files as $file) {
-      $filesValues[] = $this->getFileValue($file);
+      $filesValues[] = $this->getMediaDocumentValue($file);
     }
 
     return $this->paragraphStorage->create([
