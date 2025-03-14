@@ -474,20 +474,9 @@ function dpl_update_update_10042(): string {
 }
 
 /**
- * Configure "system.performance".
- *
- * Set "system.performance" aggregate css and js files and remove it from config
- * ignore list.
+ * Make sure to remove "system.performance" from config ignore list.
  */
 function dpl_update_update_10043(): string {
-
-  // Set "system.performance" to aggregate css and js files.
-  $config = \Drupal::configFactory()->getEditable('system.performance');
-  $config->set('css.preprocess', TRUE)->save();
-  $config->set('js.preprocess', TRUE)->save();
-
-  $feedback[] = "Configured system.performance to aggregate css and js files.";
-
   $config_ignore_settings = \Drupal::configFactory()->getEditable('config_ignore.settings');
   $ignored_configs = $config_ignore_settings->get('ignored_config_entities');
 
@@ -495,11 +484,9 @@ function dpl_update_update_10043(): string {
   if (($key = array_search('system.performance', $ignored_configs)) !== FALSE) {
     unset($ignored_configs[$key]);
     $config_ignore_settings->set('ignored_config_entities', $ignored_configs)->save();
-    $feedback[] = "Removed 'system.performance' from ignored_config_entities.";
+    return "Removed 'system.performance' from ignored_config_entities.";
   }
   else {
-    $feedback[] = "Config 'system.performance' not found in ignored_config_entities.";
+    return "Config 'system.performance' not found in ignored_config_entities.";
   }
-
-  return implode("\n", $feedback);
 }
