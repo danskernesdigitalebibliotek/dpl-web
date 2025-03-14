@@ -8,7 +8,7 @@ const MaterialTypeIconWrapper = ({
   iconName,
   costFree,
 }: {
-  iconName: "book" | "headphones" | "controller" | "video" | "podcast"
+  iconName: "ebook" | "book" | "headphones" | "controller" | "video" | "podcast"
   costFree?: boolean
 }) => {
   return (

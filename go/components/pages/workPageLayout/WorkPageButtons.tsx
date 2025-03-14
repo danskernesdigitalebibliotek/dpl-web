@@ -2,14 +2,17 @@ import React, { useMemo, useState } from "react"
 
 import {
   isManifestationAudioBook,
+  isManifestationBook,
   isManifestationEbook,
   isManifestationPodcast,
 } from "@/components/pages/workPageLayout/helper"
 import { Button } from "@/components/shared/button/Button"
+import Icon from "@/components/shared/icon/Icon"
 import Player from "@/components/shared/publizonPlayer/PublizonPlayer"
 import ResponsiveDialog from "@/components/shared/responsiveDialog/ResponsiveDialog"
 import SmartLink from "@/components/shared/smartLink/SmartLink"
 import { ManifestationWorkPageFragment } from "@/lib/graphql/generated/fbi/graphql"
+import { cn } from "@/lib/helpers/helper.cn"
 import { resolveUrl } from "@/lib/helpers/helper.routes"
 import useGetV1UserLoans from "@/lib/rest/publizon/useGetV1UserLoans"
 
@@ -43,6 +46,12 @@ const WorkPageButtons = ({ workId, selectedManifestation }: WorkPageButtonsProps
 
   return (
     <>
+      {isManifestationBook(selectedManifestation) && (
+        <div className="bg-background-overlay relative mr-auto flex items-center gap-4 rounded-md p-8 lg:mr-0 lg:w-auto">
+          <Icon className={cn("top-4 left-4 h-5 w-5")} name="alert" />
+          <h3 className="text-typo-link w-full">Bogen kan lånes på dit bibliotek</h3>
+        </div>
+      )}
       {isManifestationEbook(selectedManifestation) && (
         <>
           {!isLoaned && (

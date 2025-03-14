@@ -417,7 +417,7 @@
     @apply border-border;
   }
   body {
-    @apply bg-background font-body text-foreground duration-dark-mode transition-all;
+    @apply bg-background font-body text-foreground;
   }
 }
 
